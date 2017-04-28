@@ -8,14 +8,14 @@ export const voronoiContainerMixin = (base) => class VictoryVoronoiContainer ext
   static displayName = "VictoryVoronoiContainer";
   static propTypes = {
     ...VictoryContainer.propTypes,
-    onActivated: PropTypes.func,
-    onDeactivated: PropTypes.func,
-    standalone: PropTypes.bool,
-    radius: PropTypes.number,
-    voronoiPadding: PropTypes.number,
+    dimension: PropTypes.oneOf(["x", "y"]),
     labelComponent: PropTypes.element,
     labels: PropTypes.func,
-    dimension: PropTypes.oneOf(["x", "y"])
+    onActivated: PropTypes.func,
+    onDeactivated: PropTypes.func,
+    radius: PropTypes.number,
+    standalone: PropTypes.bool,
+    voronoiPadding: PropTypes.number
   };
   static defaultProps = {
     ...VictoryContainer.defaultProps,

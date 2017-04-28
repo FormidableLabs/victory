@@ -7,21 +7,21 @@ export const selectionContainerMixin = (base) => class VictorySelectionContainer
   static displayName = "VictorySelectionContainer";
   static propTypes = {
     ...VictoryContainer.propTypes,
-    selectionStyle: PropTypes.object,
+    dimension: PropTypes.oneOf(["x", "y"]),
     onSelection: PropTypes.func,
     onSelectionCleared: PropTypes.func,
-    dimension: PropTypes.oneOf(["x", "y"]),
-    standalone: PropTypes.bool,
-    selectionComponent: PropTypes.element
+    selectionComponent: PropTypes.element,
+    selectionStyle: PropTypes.object,
+    standalone: PropTypes.bool
   };
   static defaultProps = {
     ...VictoryContainer.defaultProps,
+    selectionComponent: <rect/>,
     selectionStyle: {
       stroke: "transparent",
       fill: "black",
       fillOpacity: 0.1
-    },
-    selectionComponent: <rect/>
+    }
   };
 
   static defaultEvents = [{

@@ -44,9 +44,9 @@ const symbolStyle = {
 
 class CatPoint extends React.Component {
   static propTypes = {
+    symbol: PropTypes.string,
     x: PropTypes.number,
-    y: PropTypes.number,
-    symbol: PropTypes.string
+    y: PropTypes.number
   };
 
   render() {

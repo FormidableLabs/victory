@@ -530,13 +530,13 @@ export default class App extends React.Component {
 
 class ChartWrap extends React.Component {
   static propTypes = {
-    width: PropTypes.number,
+    children: PropTypes.any,
     height: PropTypes.number,
-    children: PropTypes.any
+    width: PropTypes.number
   };
   static defaultProps = {
-    width: 350,
-    height: 250
+    height: 250,
+    width: 350
   };
   // renders both a standalone chart, and a version wrapped in VictoryChart,
   // to test both cases at once

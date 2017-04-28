@@ -62,6 +62,7 @@ export default class VictoryChart extends React.Component {
     ]),
     groupComponent: PropTypes.element,
     height: CustomPropTypes.nonNegative,
+    modifyChildren: PropTypes.func,
     padding: PropTypes.oneOfType([
       PropTypes.number,
       PropTypes.shape({
@@ -80,19 +81,18 @@ export default class VictoryChart extends React.Component {
     standalone: PropTypes.bool,
     style: PropTypes.object,
     theme: PropTypes.object,
-    width: CustomPropTypes.nonNegative,
-    modifyChildren: PropTypes.func
+    width: CustomPropTypes.nonNegative
   };
 
   static defaultProps = {
-    standalone: true,
     containerComponent: <VictoryContainer/>,
-    groupComponent: <g/>,
-    theme: VictoryTheme.grayscale,
     defaultAxes: {
       independent: <VictoryAxis/>,
       dependent: <VictoryAxis dependentAxis/>
-    }
+    },
+    groupComponent: <g/>,
+    standalone: true,
+    theme: VictoryTheme.grayscale
   };
 
   static expectedComponents = [

@@ -38,6 +38,7 @@ export default class VictoryGroup extends React.Component {
     ]),
     containerComponent: PropTypes.element,
     data: PropTypes.array,
+    dataComponent: PropTypes.element,
     domainPadding: PropTypes.oneOfType([
       PropTypes.shape({
         x: PropTypes.oneOfType([ PropTypes.number, CustomPropTypes.domain ]),
@@ -45,7 +46,6 @@ export default class VictoryGroup extends React.Component {
       }),
       PropTypes.number
     ]),
-    dataComponent: PropTypes.element,
     domain: PropTypes.oneOfType([
       CustomPropTypes.domain,
       PropTypes.shape({ x: CustomPropTypes.domain, y: CustomPropTypes.domain })
@@ -74,6 +74,7 @@ export default class VictoryGroup extends React.Component {
     horizontal: PropTypes.bool,
     labels: PropTypes.oneOfType([ PropTypes.func, PropTypes.array ]),
     labelComponent: PropTypes.element,
+    modifyChildren: PropTypes.func,
     name: PropTypes.string,
     offset: PropTypes.number,
     padding: PropTypes.oneOfType([
@@ -109,16 +110,15 @@ export default class VictoryGroup extends React.Component {
       CustomPropTypes.allOfType([CustomPropTypes.integer, CustomPropTypes.nonNegative]),
       PropTypes.string,
       PropTypes.arrayOf(PropTypes.string)
-    ]),
-    modifyChildren: PropTypes.func
+    ])
   };
 
   static defaultProps = {
+    containerComponent: <VictoryContainer/>,
+    groupComponent: <g/>,
     samples: 50,
     scale: "linear",
     standalone: true,
-    containerComponent: <VictoryContainer/>,
-    groupComponent: <g/>,
     theme: VictoryTheme.grayscale
   };
 

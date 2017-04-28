@@ -8,32 +8,32 @@ export const brushContainerMixin = (base) => class VictoryBrushContainer extends
   static displayName = "VictoryBrushContainer";
   static propTypes = {
     ...VictoryContainer.propTypes,
-    selectionStyle: PropTypes.object,
-    handleStyle: PropTypes.object,
     dimension: PropTypes.oneOf(["x", "y"]),
+    handleComponent: PropTypes.element,
+    handleStyle: PropTypes.object,
+    handleWidth: PropTypes.number,
+    onDomainChange: PropTypes.func,
     selectedDomain: PropTypes.shape({
       x: PropTypes.array,
       y: PropTypes.array
     }),
-    onDomainChange: PropTypes.func,
-    handleWidth: PropTypes.number,
     selectionComponent: PropTypes.element,
-    handleComponent: PropTypes.element
+    selectionStyle: PropTypes.object
   };
   static defaultProps = {
     ...VictoryContainer.defaultProps,
-    selectionStyle: {
-      stroke: "transparent",
-      fill: "black",
-      fillOpacity: 0.1
-    },
+    handleComponent: <rect/>,
     handleStyle: {
       stroke: "transparent",
       fill: "transparent"
     },
     handleWidth: 8,
     selectionComponent: <rect/>,
-    handleComponent: <rect/>
+    selectionStyle: {
+      stroke: "transparent",
+      fill: "black",
+      fillOpacity: 0.1
+    }
   };
 
   static defaultEvents = [{

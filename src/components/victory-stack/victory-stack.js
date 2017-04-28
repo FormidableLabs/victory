@@ -36,17 +36,17 @@ export default class VictoryStack extends React.Component {
       ])
     ]),
     containerComponent: PropTypes.element,
+    dataComponent: PropTypes.element,
+    domain: PropTypes.oneOfType([
+      CustomPropTypes.domain,
+      PropTypes.shape({ x: CustomPropTypes.domain, y: CustomPropTypes.domain })
+    ]),
     domainPadding: PropTypes.oneOfType([
       PropTypes.shape({
         x: PropTypes.oneOfType([ PropTypes.number, CustomPropTypes.domain ]),
         y: PropTypes.oneOfType([ PropTypes.number, CustomPropTypes.domain ])
       }),
       PropTypes.number
-    ]),
-    dataComponent: PropTypes.element,
-    domain: PropTypes.oneOfType([
-      CustomPropTypes.domain,
-      PropTypes.shape({ x: CustomPropTypes.domain, y: CustomPropTypes.domain })
     ]),
     events: PropTypes.arrayOf(PropTypes.shape({
       childName: PropTypes.oneOfType([
@@ -99,10 +99,10 @@ export default class VictoryStack extends React.Component {
   };
 
   static defaultProps = {
-    scale: "linear",
-    standalone: true,
     containerComponent: <VictoryContainer/>,
     groupComponent: <g/>,
+    scale: "linear",
+    standalone: true,
     theme: VictoryTheme. grayscale
   };
 
