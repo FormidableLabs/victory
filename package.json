@@ -28,21 +28,23 @@
   },
   "dependencies": {
     "builder": "^3.2.1",
-    "builder-victory-component": "^3.1.0",
+    "builder-victory-component": "^3.2.3",
     "d3-shape": "^1.0.0",
     "lodash": "^4.12.0",
     "victory-core": "^14.0.7"
   },
   "devDependencies": {
     "@kadira/storybook": "^1.25.0",
-    "builder-victory-component-dev": "^3.1.0",
+    "builder-victory-component-dev": "^3.2.3",
     "chai": "^3.2.0",
     "chai-enzyme": "0.4.1",
     "enzyme": "^2.3.0",
     "mocha": "^2.2.5",
-    "react": "~15.1.0",
-    "react-addons-test-utils": "~15.1.0",
-    "react-dom": "~15.1.0",
+    "prop-types": "^15.5.8",
+    "react": "^15.5.4",
+    "react-addons-test-utils": "^15.5.1",
+    "react-dom": "^15.5.4",
+    "react-test-renderer": "^15.5.4",
     "sinon": "^1.15.4",
     "sinon-chai": "^2.8.0"
   },
