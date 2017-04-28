@@ -13,7 +13,7 @@ import {
   VictoryClipContainer,
   addEvents, Collection, Data, DefaultTransitions, Domain, Events, Helpers, Log,
   PropTypes, Scale, Style, TextSize, Transitions, Selection
-} from "victory-core"; // eslint-disable-line import/no-unresolved
+} from "victory-core";
 
 import {
   VictoryAxis,
@@ -36,7 +36,7 @@ import {
   combineContainerMixins, createContainer
 } from "victory-chart"; // eslint-disable-line import/no-unresolved
 
-import { VictoryPie } from "victory-pie"; // eslint-disable-line import/no-unresolved
+import { VictoryPie } from "victory-pie";
 
 export {
   Area, Bar, Candle, ClipPath, Curve, ErrorBar, Line, Point, Slice, Voronoi, Flyout,
