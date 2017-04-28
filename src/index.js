@@ -34,7 +34,7 @@ import {
   VictoryBrushContainer, BrushHelpers, brushContainerMixin,
   VictoryVoronoiContainer, VoronoiHelpers, voronoiContainerMixin,
   combineContainerMixins, createContainer
-} from "victory-chart"; // eslint-disable-line import/no-unresolved
+} from "victory-chart";
 
 import { VictoryPie } from "victory-pie";
 
