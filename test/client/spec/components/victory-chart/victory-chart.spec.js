@@ -71,7 +71,7 @@ describe("components/victory-chart", () => {
         <VictoryChart
           events={[{
             target: "parent",
-            eventHandlers: {onClick: clickHandler}
+            eventHandlers: { onClick: clickHandler }
           }]}
         />
       );

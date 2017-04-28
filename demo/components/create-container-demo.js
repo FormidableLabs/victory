@@ -1,3 +1,4 @@
+/*eslint-disable no-magic-numbers,react/no-multi-comp */
 import React from "react";
 import {
   VictoryChart, VictoryGroup, VictoryStack, VictoryScatter, VictoryBar, VictoryLine,
@@ -6,7 +7,7 @@ import {
 
 import { VictoryTooltip } from "victory-core";
 
-const Charts = ({CustomContainer}) => {
+const Charts = ({ CustomContainer }) => { // eslint-disable-line react/prop-types
   const containerStyle = {
     display: "flex",
     flexDirection: "row",
@@ -15,55 +16,55 @@ const Charts = ({CustomContainer}) => {
     justifyContent: "center"
   };
 
-  const chartStyle = {parent: {border: "1px solid #ccc", margin: "2%", maxWidth: "40%"}};
+  const chartStyle = { parent: { border: "1px solid #ccc", margin: "2%", maxWidth: "40%" } };
 
   return (
     <div className="demo">
       <div style={containerStyle}>
         <VictoryChart style={chartStyle}
-          domainPadding={{y: 2}}
+          domainPadding={{ y: 2 }}
           containerComponent={
             <CustomContainer dimension="x"
               labels={(d) => `y: ${d.y}`}
-              labelComponent={<VictoryTooltip cornerRadius={0} flyoutStyle={{fill: "white"}}/>}
-              selectedDomain={{x: [1.5, 2]}}
+              labelComponent={<VictoryTooltip cornerRadius={0} flyoutStyle={{ fill: "white" }}/>}
+              selectedDomain={{ x: [1.5, 2] }}
             />
           }
         >
           <VictoryLine
             data={[
-              {x: 1, y: 5, l: "one"},
-              {x: 1.5, y: 5, l: "one point five"},
-              {x: 2, y: 4, l: "two"},
-              {x: 3, y: -2, l: "three"}
+              { x: 1, y: 5, l: "one" },
+              { x: 1.5, y: 5, l: "one point five" },
+              { x: 2, y: 4, l: "two" },
+              { x: 3, y: -2, l: "three" }
             ]}
             style={{
-              data: { stroke: "tomato", strokeWidth: (d, active) => active ? 4 : 2},
-              labels: {fill: "tomato"}
+              data: { stroke: "tomato", strokeWidth: (d, active) => active ? 4 : 2 },
+              labels: { fill: "tomato" }
             }}
           />
 
           <VictoryLine
             data={[
-              {x: 1, y: -3, l: "red"},
-              {x: 2, y: 5, l: "green"},
-              {x: 3, y: 3, l: "blue"}
+              { x: 1, y: -3, l: "red" },
+              { x: 2, y: 5, l: "green" },
+              { x: 3, y: 3, l: "blue" }
             ]}
             style={{
-              data: { stroke: "blue", strokeWidth: (d, active) => active ? 4 : 2},
-              labels: {fill: "blue"}
+              data: { stroke: "blue", strokeWidth: (d, active) => active ? 4 : 2 },
+              labels: { fill: "blue" }
             }}
           />
 
           <VictoryLine
             data={[
-              {x: 1, y: 5, l: "cat"},
-              {x: 2, y: -4, l: "dog"},
-              {x: 3, y: -2, l: "bird"}
+              { x: 1, y: 5, l: "cat" },
+              { x: 2, y: -4, l: "dog" },
+              { x: 3, y: -2, l: "bird" }
             ]}
             style={{
-              data: { stroke: "black", strokeWidth: (d, active) => active ? 4 : 2},
-              labels: {fill: "black"}
+              data: { stroke: "black", strokeWidth: (d, active) => active ? 4 : 2 },
+              labels: { fill: "black" }
             }}
           />
         </VictoryChart>
@@ -80,7 +81,7 @@ const Charts = ({CustomContainer}) => {
               selectionStyle={{
                 stroke: "tomato", strokeWidth: 2, fill: "tomato", fillOpacity: 0.1
               }}
-              selectedDomain={{x: [0.4, 0.95], y: [0.5, 0.8]}}
+              selectedDomain={{ x: [0.4, 0.95], y: [0.5, 0.8] }}
             />
           }
           size={(datum, active) => active ? 5 : 3}
@@ -89,52 +90,52 @@ const Charts = ({CustomContainer}) => {
 
         <VictoryChart
           style={chartStyle}
-          containerComponent={<CustomContainer selectedDomain={{x: [0, 0]}} />}
+          containerComponent={<CustomContainer selectedDomain={{ x: [0, 0] }} />}
         >
           <VictoryGroup style={chartStyle}>
             <VictoryScatter
               style={{
-                data: {fill: "tomato"}
+                data: { fill: "tomato" }
               }}
               size={(datum, active) => active ? 5 : 3}
               labels={(d) => d.y}
               labelComponent={<VictoryTooltip/>}
               data={[
-                {x: 1, y: -5},
-                {x: 2, y: 4},
-                {x: 3, y: 2},
-                {x: 4, y: 0},
-                {x: 5, y: 1},
-                {x: 6, y: -3},
-                {x: 7, y: 3}
+                { x: 1, y: -5 },
+                { x: 2, y: 4 },
+                { x: 3, y: 2 },
+                { x: 4, y: 0 },
+                { x: 5, y: 1 },
+                { x: 6, y: -3 },
+                { x: 7, y: 3 }
               ]}
             />
             <VictoryScatter
               style={{
-                data: {fill: "blue"}
+                data: { fill: "blue" }
               }}
               size={(datum, active) => active ? 5 : 3}
               labels={(d) => d.y}
               labelComponent={<VictoryTooltip/>}
               data={[
-                {x: 1, y: -3},
-                {x: 2, y: 5},
-                {x: 3, y: 3},
-                {x: 4, y: 0},
-                {x: 5, y: -2},
-                {x: 6, y: -2},
-                {x: 7, y: 5}
+                { x: 1, y: -3 },
+                { x: 2, y: 5 },
+                { x: 3, y: 3 },
+                { x: 4, y: 0 },
+                { x: 5, y: -2 },
+                { x: 6, y: -2 },
+                { x: 7, y: 5 }
               ]}
             />
             <VictoryScatter
               data={[
-                {x: 1, y: 5},
-                {x: 2, y: -4},
-                {x: 3, y: -2},
-                {x: 4, y: -3},
-                {x: 5, y: -1},
-                {x: 6, y: 3},
-                {x: 7, y: -3}
+                { x: 1, y: 5 },
+                { x: 2, y: -4 },
+                { x: 3, y: -2 },
+                { x: 4, y: -3 },
+                { x: 5, y: -1 },
+                { x: 6, y: 3 },
+                { x: 7, y: -3 }
               ]}
               labels={(d) => d.y}
               labelComponent={<VictoryTooltip/>}
@@ -145,7 +146,7 @@ const Charts = ({CustomContainer}) => {
 
         <VictoryStack
           style={chartStyle}
-          containerComponent={<CustomContainer selectedDomain={{x: [1.5, 2.5], y: [-3, 4]}} />}
+          containerComponent={<CustomContainer selectedDomain={{ x: [1.5, 2.5], y: [-3, 4] }} />}
         >
           <VictoryBar
             style={{
@@ -157,13 +158,13 @@ const Charts = ({CustomContainer}) => {
             }}
             size={(datum, active) => active ? 5 : 3}
             data={[
-              {x: 1, y: -5},
-              {x: 2, y: 4},
-              {x: 3, y: 2},
-              {x: 4, y: 3},
-              {x: 5, y: 1},
-              {x: 6, y: -3},
-              {x: 7, y: 3}
+              { x: 1, y: -5 },
+              { x: 2, y: 4 },
+              { x: 3, y: 2 },
+              { x: 4, y: 3 },
+              { x: 5, y: 1 },
+              { x: 6, y: -3 },
+              { x: 7, y: 3 }
             ]}
           />
           <VictoryBar
@@ -176,13 +177,13 @@ const Charts = ({CustomContainer}) => {
             }}
             size={(datum, active) => active ? 5 : 3}
             data={[
-              {x: 1, y: -3},
-              {x: 2, y: 5},
-              {x: 3, y: 3},
-              {x: 4, y: 0},
-              {x: 5, y: -2},
-              {x: 6, y: -2},
-              {x: 7, y: 5}
+              { x: 1, y: -3 },
+              { x: 2, y: 5 },
+              { x: 3, y: 3 },
+              { x: 4, y: 0 },
+              { x: 5, y: -2 },
+              { x: 6, y: -2 },
+              { x: 7, y: 5 }
             ]}
           />
           <VictoryBar
@@ -194,13 +195,13 @@ const Charts = ({CustomContainer}) => {
               }
             }}
             data={[
-              {x: 1, y: 5},
-              {x: 2, y: -4},
-              {x: 3, y: -2},
-              {x: 4, y: -3},
-              {x: 5, y: -1},
-              {x: 6, y: 3},
-              {x: 7, y: -3}
+              { x: 1, y: 5 },
+              { x: 2, y: -4 },
+              { x: 3, y: -2 },
+              { x: 4, y: -3 },
+              { x: 5, y: -1 },
+              { x: 6, y: 3 },
+              { x: 7, y: -3 }
             ]}
           />
         </VictoryStack>

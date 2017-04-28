@@ -1,4 +1,5 @@
 /*global window:false*/
+/*eslint-disable no-magic-numbers */
 import React from "react";
 import {
   VictoryChart, VictoryGroup, VictoryStack, VictoryScatter, VictoryBar, VictoryLine,
@@ -33,7 +34,7 @@ class App extends React.Component {
   getData() {
     const bars = random(6, 10);
     return range(bars).map((bar) => {
-      return {a: bar + 1, b: random(2, 10)};
+      return { a: bar + 1, b: random(2, 10) };
     });
   }
 
@@ -46,21 +47,21 @@ class App extends React.Component {
       justifyContent: "center"
     };
 
-    const chartStyle = {parent: {border: "1px solid #ccc", margin: "2%", maxWidth: "40%"}};
+    const chartStyle = { parent: { border: "1px solid #ccc", margin: "2%", maxWidth: "40%" } };
 
     return (
       <div className="demo">
         <div style={containerStyle}>
           <VictoryChart style={chartStyle}
             theme={VictoryTheme.material}
-            domainPadding={{y: 2}}
+            domainPadding={{ y: 2 }}
             containerComponent={
               <VictoryVoronoiContainer dimension="x"
                 labels={(d) => `y:${d.y}`}
                 labelComponent={
                   <VictoryTooltip
-                    flyoutStyle={{fill: "white"}}
-                    style={{fontSize: 10}}
+                    flyoutStyle={{ fill: "white" }}
+                    style={{ fontSize: 10 }}
                   />
                 }
               />
@@ -68,44 +69,44 @@ class App extends React.Component {
           >
             <VictoryLine
               data={[
-                {x: 1, y: 5, l: "one"},
-                {x: 1.5, y: 5, l: "one point five"},
-                {x: 2, y: 4, l: "two"},
-                {x: 3, y: -2, l: "three"}
+                { x: 1, y: 5, l: "one" },
+                { x: 1.5, y: 5, l: "one point five" },
+                { x: 2, y: 4, l: "two" },
+                { x: 3, y: -2, l: "three" }
               ]}
               style={{
-                data: { stroke: "tomato", strokeWidth: (d, active) => active ? 4 : 2},
-                labels: {fill: "tomato"}
+                data: { stroke: "tomato", strokeWidth: (d, active) => active ? 4 : 2 },
+                labels: { fill: "tomato" }
               }}
             />
 
             <VictoryLine
               data={[
-                {x: 1, y: -3, l: "red"},
-                {x: 2, y: 5, l: "green"},
-                {x: 3, y: 3, l: "blue"}
+                { x: 1, y: -3, l: "red" },
+                { x: 2, y: 5, l: "green" },
+                { x: 3, y: 3, l: "blue" }
               ]}
               style={{
-                data: { stroke: "blue", strokeWidth: (d, active) => active ? 4 : 2},
-                labels: {fill: "blue"}
+                data: { stroke: "blue", strokeWidth: (d, active) => active ? 4 : 2 },
+                labels: { fill: "blue" }
               }}
             />
 
             <VictoryLine
               data={[
-                {x: 1, y: 5, l: "cat"},
-                {x: 2, y: -4, l: "dog"},
-                {x: 3, y: -2, l: "bird"}
+                { x: 1, y: 5, l: "cat" },
+                { x: 2, y: -4, l: "dog" },
+                { x: 3, y: -2, l: "bird" }
               ]}
               style={{
-                data: { stroke: "black", strokeWidth: (d, active) => active ? 4 : 2},
-                labels: {fill: "black"}
+                data: { stroke: "black", strokeWidth: (d, active) => active ? 4 : 2 },
+                labels: { fill: "black" }
               }}
             />
           </VictoryChart>
 
           <VictoryScatter
-            animate={{duration: 1000}}
+            animate={{ duration: 1000 }}
             style={{
               parent: chartStyle.parent,
               data: {
@@ -141,47 +142,47 @@ class App extends React.Component {
             <VictoryGroup style={chartStyle}>
               <VictoryScatter
                 style={{
-                  data: {fill: "tomato"}
+                  data: { fill: "tomato" }
                 }}
                 size={(datum, active) => active ? 5 : 3}
                 labels={(d) => d.y}
                 labelComponent={<VictoryTooltip/>}
                 data={[
-                  {x: 1, y: -5},
-                  {x: 2, y: 4},
-                  {x: 3, y: 2},
-                  {x: 4, y: 0},
-                  {x: 5, y: 1},
-                  {x: 6, y: -3},
-                  {x: 7, y: 3}
+                  { x: 1, y: -5 },
+                  { x: 2, y: 4 },
+                  { x: 3, y: 2 },
+                  { x: 4, y: 0 },
+                  { x: 5, y: 1 },
+                  { x: 6, y: -3 },
+                  { x: 7, y: 3 }
                 ]}
               />
               <VictoryScatter
                 style={{
-                  data: {fill: "blue"}
+                  data: { fill: "blue" }
                 }}
                 size={(datum, active) => active ? 5 : 3}
                 labels={(d) => d.y}
                 labelComponent={<VictoryTooltip/>}
                 data={[
-                  {x: 1, y: -3},
-                  {x: 2, y: 5},
-                  {x: 3, y: 3},
-                  {x: 4, y: 0},
-                  {x: 5, y: -2},
-                  {x: 6, y: -2},
-                  {x: 7, y: 5}
+                  { x: 1, y: -3 },
+                  { x: 2, y: 5 },
+                  { x: 3, y: 3 },
+                  { x: 4, y: 0 },
+                  { x: 5, y: -2 },
+                  { x: 6, y: -2 },
+                  { x: 7, y: 5 }
                 ]}
               />
               <VictoryScatter
                 data={[
-                  {x: 1, y: 5},
-                  {x: 2, y: -4},
-                  {x: 3, y: -2},
-                  {x: 4, y: -3},
-                  {x: 5, y: -1},
-                  {x: 6, y: 3},
-                  {x: 7, y: -3}
+                  { x: 1, y: 5 },
+                  { x: 2, y: -4 },
+                  { x: 3, y: -2 },
+                  { x: 4, y: -3 },
+                  { x: 5, y: -1 },
+                  { x: 6, y: 3 },
+                  { x: 7, y: -3 }
                 ]}
                 labels={(d) => d.y}
                 labelComponent={<VictoryTooltip/>}
@@ -201,13 +202,13 @@ class App extends React.Component {
               }}
               size={(datum, active) => active ? 5 : 3}
               data={[
-                {x: 1, y: -5},
-                {x: 2, y: 4},
-                {x: 3, y: 2},
-                {x: 4, y: 3},
-                {x: 5, y: 1},
-                {x: 6, y: -3},
-                {x: 7, y: 3}
+                { x: 1, y: -5 },
+                { x: 2, y: 4 },
+                { x: 3, y: 2 },
+                { x: 4, y: 3 },
+                { x: 5, y: 1 },
+                { x: 6, y: -3 },
+                { x: 7, y: 3 }
               ]}
             />
             <VictoryBar
@@ -220,13 +221,13 @@ class App extends React.Component {
               }}
               size={(datum, active) => active ? 5 : 3}
               data={[
-                {x: 1, y: -3},
-                {x: 2, y: 5},
-                {x: 3, y: 3},
-                {x: 4, y: 0},
-                {x: 5, y: -2},
-                {x: 6, y: -2},
-                {x: 7, y: 5}
+                { x: 1, y: -3 },
+                { x: 2, y: 5 },
+                { x: 3, y: 3 },
+                { x: 4, y: 0 },
+                { x: 5, y: -2 },
+                { x: 6, y: -2 },
+                { x: 7, y: 5 }
               ]}
             />
             <VictoryBar
@@ -238,13 +239,13 @@ class App extends React.Component {
                 }
               }}
               data={[
-                {x: 1, y: 5},
-                {x: 2, y: -4},
-                {x: 3, y: -2},
-                {x: 4, y: -3},
-                {x: 5, y: -1},
-                {x: 6, y: 3},
-                {x: 7, y: -3}
+                { x: 1, y: 5 },
+                { x: 2, y: -4 },
+                { x: 3, y: -2 },
+                { x: 4, y: -3 },
+                { x: 5, y: -1 },
+                { x: 6, y: 3 },
+                { x: 7, y: -3 }
               ]}
             />
           </VictoryStack>

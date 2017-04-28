@@ -1,6 +1,7 @@
 /*global window:false */
+/*eslint-disable no-magic-numbers */
 import React from "react";
-import {VictoryVoronoi, VictoryVoronoiTooltip} from "../../src/index";
+import { VictoryVoronoi, VictoryVoronoiTooltip } from "../../src/index";
 import { range, random } from "lodash";
 
 const getData = () => {
@@ -45,24 +46,24 @@ class App extends React.Component {
       justifyContent: "center"
     };
 
-    const parentStyle = {border: "1px solid #ccc", margin: "2%", maxWidth: "40%"};
-    const visible = {fill: "gray", opacity: 0.1, stroke: "black", strokeWidth: 2};
+    const parentStyle = { border: "1px solid #ccc", margin: "2%", maxWidth: "40%" };
+    const visible = { fill: "gray", opacity: 0.1, stroke: "black", strokeWidth: 2 };
 
     return (
       <div className="demo">
         <div style={containerStyle}>
           <VictoryVoronoi
-            style={{parent: parentStyle, data: visible}}
+            style={{ parent: parentStyle, data: visible }}
           />
 
           <VictoryVoronoi
-            style={{parent: parentStyle, data: visible}}
+            style={{ parent: parentStyle, data: visible }}
             data={[
-              {x: 1, y: 1},
-              {x: 2, y: 2},
-              {x: 3, y: 3},
-              {x: 4, y: 2},
-              {x: 5, y: 1}
+              { x: 1, y: 1 },
+              { x: 2, y: 2 },
+              { x: 3, y: 3 },
+              { x: 4, y: 2 },
+              { x: 5, y: 1 }
             ]}
             events={[
               {
@@ -72,7 +73,7 @@ class App extends React.Component {
                     return [
                       {
                         mutation: () => {
-                          return {style: {fill: "orange"}};
+                          return { style: { fill: "orange" } };
                         }
                       }
                     ];
@@ -83,42 +84,42 @@ class App extends React.Component {
           />
 
           <VictoryVoronoi
-            style={{parent: parentStyle, data: visible}}
+            style={{ parent: parentStyle, data: visible }}
             size={40}
             data={[
-              {x: 1, y: 1},
-              {x: 2, y: 2},
-              {x: 3, y: 3},
-              {x: 4, y: 2},
-              {x: 5, y: 1}
+              { x: 1, y: 1 },
+              { x: 2, y: 2 },
+              { x: 3, y: 3 },
+              { x: 4, y: 2 },
+              { x: 5, y: 1 }
             ]}
           />
 
           <VictoryVoronoiTooltip
-            style={{parent: parentStyle, data: visible}}
+            style={{ parent: parentStyle, data: visible }}
             size={40}
             labels={(d) => d.y}
             data={[
-              {x: 1, y: 1},
-              {x: 2, y: 2},
-              {x: 3, y: 3},
-              {x: 4, y: 2},
-              {x: 5, y: 1}
+              { x: 1, y: 1 },
+              { x: 2, y: 2 },
+              { x: 3, y: 3 },
+              { x: 4, y: 2 },
+              { x: 5, y: 1 }
             ]}
           />
 
           <VictoryVoronoiTooltip
-            animate={{duration: 2000}}
-            style={{parent: parentStyle, data: visible}}
+            animate={{ duration: 2000 }}
+            style={{ parent: parentStyle, data: visible }}
             size={20}
             data={this.state.data}
           />
 
           <VictoryVoronoiTooltip
-            animate={{duration: 2000}}
-            style={{parent: parentStyle, data: visible}}
+            animate={{ duration: 2000 }}
+            style={{ parent: parentStyle, data: visible }}
             data={this.state.data}
-            flyoutProps={{cornerRadius: 0}}
+            flyoutProps={{ cornerRadius: 0 }}
           />
         </div>
       </div>

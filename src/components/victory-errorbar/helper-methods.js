@@ -8,7 +8,7 @@ export default {
     const { groupComponent, height, width, borderWidth, standalone, theme } = props;
     const initialChildProps = { parent: {
       domain, style: style.parent, scale, data, height, width, standalone, theme
-    }};
+    } };
 
     return data.reduce((childProps, datum, index) => {
       const eventKey = datum.eventKey || index;
@@ -35,7 +35,7 @@ export default {
   },
 
   getLabelProps(dataProps, text, calculatedStyle) {
-    const { x, index, scale, errorY} = dataProps;
+    const { x, index, scale, errorY } = dataProps;
     const error = errorY && Array.isArray(errorY) ? errorY[0] : errorY;
     const y = error || dataProps.y;
     const labelStyle = this.getLabelStyle(calculatedStyle.labels, dataProps) || {};
@@ -76,7 +76,7 @@ export default {
      * @return {String or Array}
      */
 
-    const errorNames = {x: "errorX", y: "errorY"};
+    const errorNames = { x: "errorX", y: "errorY" };
     const errors = datum[errorNames[axis]];
     if (errors === 0) {
       return false;
@@ -213,7 +213,7 @@ export default {
       y: Scale.getBaseScale(props, "y").domain(domain.y).range(range.y)
     };
 
-    return {domain, data, scale, style};
+    return { domain, data, scale, style };
   },
 
   getDataStyles(datum, style) {
@@ -232,7 +232,7 @@ export default {
     labelStyle = labelStyle || {};
     const { size, style } = dataProps;
     const matchedStyle = pick(style, ["opacity", "fill"]);
-    const padding = labelStyle.padding || size * 0.25;
-    return defaults({}, labelStyle, matchedStyle, {padding}) || {};
+    const padding = labelStyle.padding || size * 0.25; // eslint-disable-line no-magic-numbers
+    return defaults({}, labelStyle, matchedStyle, { padding }) || {};
   }
 };

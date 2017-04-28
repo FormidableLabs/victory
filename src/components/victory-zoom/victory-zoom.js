@@ -1,6 +1,7 @@
 /*
   This component is being temporarily re-added to suppprt an upgrade to `victory-native`
 */
+/*global requestAnimationFrame:false*/
 import React, { Component } from "react";
 import PropTypes from "prop-types";
 import { assign, isEqual } from "lodash";
@@ -21,14 +22,14 @@ class VictoryZoom extends Component {
   static role = "zoom";
 
   static propTypes = {
+    allowZoom: PropTypes.bool,
     children: PropTypes.node,
+    clipContainerComponent: PropTypes.element.isRequired,
+    onDomainChange: PropTypes.func,
     zoomDomain: PropTypes.shape({
       x: CustomPropTypes.domain,
       y: CustomPropTypes.domain
-    }),
-    onDomainChange: PropTypes.func,
-    clipContainerComponent: PropTypes.element.isRequired,
-    allowZoom: PropTypes.bool
+    })
   }
 
   static childContextTypes = {
@@ -64,31 +65,31 @@ class VictoryZoom extends Component {
     };
   }
 
+  componentWillMount() {
+    this.getChartRef = (chart) => { this.chartRef = chart; };
+  }
+
+  componentWillReceiveProps({ allowZoom: nextAllowZoom, zoomDomain: nextDomain }) {
+    const { allowZoom, zoomDomain } = this.props;
+    if (!isEqual(zoomDomain, nextDomain)) {
+      this.setState({ domain: nextDomain });
+    }
+
+    if (allowZoom !== nextAllowZoom) {
+      this.events = this.getEvents(nextAllowZoom);
+    }
+  }
+
+  componentWillUnmount() {
+    this.getTimer().stop();
+  }
+
   getTimer() {
     if (!this.timer) {
       this.timer = new Timer();
     }
     return this.timer;
   }
-
-  componentWillMount() {
-    this.getChartRef = (chart) => { this.chartRef = chart; };
-  }
-
- componentWillUnmount() {
-   this.getTimer().stop();
- }
-
- componentWillReceiveProps({allowZoom: nextAllowZoom, zoomDomain: nextDomain}) {
-   const {allowZoom, zoomDomain} = this.props;
-   if (!isEqual(zoomDomain, nextDomain)) {
-     this.setState({domain: nextDomain});
-   }
-
-   if (allowZoom !== nextAllowZoom) {
-     this.events = this.getEvents(nextAllowZoom);
-   }
- }
 
   getDataDomain() {
     const chart = React.Children.only(this.props.children);
@@ -113,13 +114,13 @@ class VictoryZoom extends Component {
       onMouseMove: (evt) => {
         const clientX = evt.clientX;
         if (this.isPanning) {
-          requestAnimationFrame(() => { // eslint-disable-line no-undef
+          requestAnimationFrame(() => {
             const domain = this.getDataDomain();
             const delta = this.startX - (clientX - this.targetBounds.left);
             const calculatedDx = delta / this.getDomainScale();
             const nextXDomain = ZoomHelpers.pan(this.lastDomain.x, domain.x, calculatedDx);
-            this.setDomain({x: nextXDomain});
-            this.setState({domain: {x: nextXDomain}});
+            this.setDomain({ x: nextXDomain });
+            this.setState({ domain: { x: nextXDomain } });
           });
         }
       }
@@ -128,13 +129,14 @@ class VictoryZoom extends Component {
       onWheel: (evt) => {
         evt.preventDefault();
         const deltaY = evt.deltaY;
-        requestAnimationFrame(() => { // eslint-disable-line no-undef
-          const {x} = this.state.domain;
+        requestAnimationFrame(() => {
+          const { x } = this.state.domain;
           const xBounds = this.getDataDomain().x;
 
           // TODO: Check scale factor
+          // eslint-disable-next-line no-magic-numbers
           const nextXDomain = ZoomHelpers.scale(x, xBounds, 1 + (deltaY / 300));
-          this.setDomain({x: nextXDomain});
+          this.setDomain({ x: nextXDomain });
         });
       }
     };
@@ -146,14 +148,14 @@ class VictoryZoom extends Component {
   }
 
   setDomain(domain) {
-    const {onDomainChange} = this.props;
+    const { onDomainChange } = this.props;
     this.getTimer().bypassAnimation();
-    this.setState({domain}, () => this.getTimer().resumeAnimation());
+    this.setState({ domain }, () => this.getTimer().resumeAnimation());
     if (onDomainChange) { onDomainChange(domain); }
   }
 
   getDomainScale() {
-    const {x: [from, to]} = this.lastDomain;
+    const { x: [from, to] } = this.lastDomain;
     const ratio = this.targetBounds.width / this.width;
     const absoluteAxisWidth = ratio * this.plottableWidth;
     return absoluteAxisWidth / (to - from);

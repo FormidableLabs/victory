@@ -47,7 +47,7 @@ describe("components/victory-errorbar", () => {
 
   describe("symmetric error, rendering data", () => {
     it("renders injected errors for {x, y}", () => {
-      const data = range(10).map((i) => ({x: i, y: i, errorX: 0.1, errorY: 0.2}));
+      const data = range(10).map((i) => ({ x: i, y: i, errorX: 0.1, errorY: 0.2 }));
       const wrapper = shallow(
         <VictoryErrorBar data={data} dataComponent={<MyErrorBar />} />
       );
@@ -57,7 +57,7 @@ describe("components/victory-errorbar", () => {
     });
 
     it("renders errors for {x, y}", () => {
-      const data = range(10).map((i) => ({x: i, y: i, errorX: 0.1, errorY: 0.2}));
+      const data = range(10).map((i) => ({ x: i, y: i, errorX: 0.1, errorY: 0.2 }));
       const wrapper = shallow(
         <VictoryErrorBar data={data}/>
       );
@@ -66,7 +66,7 @@ describe("components/victory-errorbar", () => {
     });
 
     it("sorts data by sortKey prop", () => {
-      const data = range(5).map((i) => ({x: i, y: i, errorX: 0.1, errorY: 0.2})).reverse();
+      const data = range(5).map((i) => ({ x: i, y: i, errorX: 0.1, errorY: 0.2 })).reverse();
       const wrapper = shallow(
         <VictoryErrorBar data={data} sortKey="x"/>
       );
@@ -75,13 +75,13 @@ describe("components/victory-errorbar", () => {
     });
 
     it("renders errors with error bars, check total svg lines", () => {
-      const svgDimensions = {width: 350, height: 200, padding: 75};
+      const svgDimensions = { width: 350, height: 200, padding: 75 };
       const wrapper = render(
         <VictoryErrorBar
           data={[
-            {x: 0, y: 0, errorX: 0.1, errorY: 0.2},
-            {x: 2, y: 3, errorX: 0.1, errorY: 0.2},
-            {x: 5, y: 5, errorX: 0.1, errorY: 0.2}
+            { x: 0, y: 0, errorX: 0.1, errorY: 0.2 },
+            { x: 2, y: 3, errorX: 0.1, errorY: 0.2 },
+            { x: 5, y: 5, errorX: 0.1, errorY: 0.2 }
           ]}
           {...svgDimensions}
         />
@@ -90,12 +90,12 @@ describe("components/victory-errorbar", () => {
     });
 
     it("should check right border of error bars positions", () => {
-      const svgDimensions = {width: 350, height: 200, padding: 75};
+      const svgDimensions = { width: 350, height: 200, padding: 75 };
       const borderWidth = 10;
       const data = [
-        {x: 0, y: 0, errorX: 0.1, errorY: 0.2},
-        {x: 2, y: 3, errorX: 0.1, errorY: 0.2},
-        {x: 5, y: 5, errorX: 0.1, errorY: 0.2}
+        { x: 0, y: 0, errorX: 0.1, errorY: 0.2 },
+        { x: 2, y: 3, errorX: 0.1, errorY: 0.2 },
+        { x: 5, y: 5, errorX: 0.1, errorY: 0.2 }
       ];
       const wrapper = mount(
         <VictoryErrorBar
@@ -132,12 +132,12 @@ describe("components/victory-errorbar", () => {
     });
 
     it("should check left border of error bars positions", () => {
-      const svgDimensions = {width: 350, height: 200, padding: 75};
+      const svgDimensions = { width: 350, height: 200, padding: 75 };
       const borderWidth = 10;
       const data = [
-        {x: 0, y: 0, errorX: 0.1, errorY: 0.2},
-        {x: 2, y: 3, errorX: 0.1, errorY: 0.2},
-        {x: 5, y: 5, errorX: 0.1, errorY: 0.2}
+        { x: 0, y: 0, errorX: 0.1, errorY: 0.2 },
+        { x: 2, y: 3, errorX: 0.1, errorY: 0.2 },
+        { x: 5, y: 5, errorX: 0.1, errorY: 0.2 }
       ];
       const wrapper = mount(
         <VictoryErrorBar
@@ -174,12 +174,12 @@ describe("components/victory-errorbar", () => {
     });
 
     it("should check bottom border of error bars positions", () => {
-      const svgDimensions = {width: 350, height: 200, padding: 75};
+      const svgDimensions = { width: 350, height: 200, padding: 75 };
       const borderWidth = 10;
       const data = [
-        {x: 0, y: 0, errorX: 0.1, errorY: 0.2},
-        {x: 2, y: 3, errorX: 0.1, errorY: 0.2},
-        {x: 5, y: 5, errorX: 0.1, errorY: 0.2}
+        { x: 0, y: 0, errorX: 0.1, errorY: 0.2 },
+        { x: 2, y: 3, errorX: 0.1, errorY: 0.2 },
+        { x: 5, y: 5, errorX: 0.1, errorY: 0.2 }
       ];
       const wrapper = mount(
         <VictoryErrorBar
@@ -216,12 +216,12 @@ describe("components/victory-errorbar", () => {
     });
 
     it("should check top border of error bars positions", () => {
-      const svgDimensions = {width: 350, height: 200, padding: 75};
+      const svgDimensions = { width: 350, height: 200, padding: 75 };
       const borderWidth = 10;
       const data = [
-        {x: 0, y: 0, errorX: 0.1, errorY: 0.2},
-        {x: 2, y: 3, errorX: 0.1, errorY: 0.2},
-        {x: 5, y: 5, errorX: 0.1, errorY: 0.2}
+        { x: 0, y: 0, errorX: 0.1, errorY: 0.2 },
+        { x: 2, y: 3, errorX: 0.1, errorY: 0.2 },
+        { x: 5, y: 5, errorX: 0.1, errorY: 0.2 }
       ];
       const wrapper = mount(
         <VictoryErrorBar
@@ -258,11 +258,11 @@ describe("components/victory-errorbar", () => {
     });
 
     it("should check top cross line of error bars positions", () => {
-      const svgDimensions = {width: 350, height: 200, padding: 75};
+      const svgDimensions = { width: 350, height: 200, padding: 75 };
       const data = [
-        {x: 0, y: 0, errorX: 0.1, errorY: 0.2},
-        {x: 2, y: 3, errorX: 0.1, errorY: 0.2},
-        {x: 5, y: 5, errorX: 0.1, errorY: 0.2}
+        { x: 0, y: 0, errorX: 0.1, errorY: 0.2 },
+        { x: 2, y: 3, errorX: 0.1, errorY: 0.2 },
+        { x: 5, y: 5, errorX: 0.1, errorY: 0.2 }
       ];
       const wrapper = mount(
         <VictoryErrorBar
@@ -298,11 +298,11 @@ describe("components/victory-errorbar", () => {
     });
 
     it("should check bottom cross line of error bars positions", () => {
-      const svgDimensions = {width: 350, height: 200, padding: 75};
+      const svgDimensions = { width: 350, height: 200, padding: 75 };
       const data = [
-        {x: 0, y: 0, errorX: 0.1, errorY: 0.2},
-        {x: 2, y: 3, errorX: 0.1, errorY: 0.2},
-        {x: 5, y: 5, errorX: 0.1, errorY: 0.2}
+        { x: 0, y: 0, errorX: 0.1, errorY: 0.2 },
+        { x: 2, y: 3, errorX: 0.1, errorY: 0.2 },
+        { x: 5, y: 5, errorX: 0.1, errorY: 0.2 }
       ];
       const wrapper = mount(
         <VictoryErrorBar
@@ -338,11 +338,11 @@ describe("components/victory-errorbar", () => {
     });
 
     it("should check left cross line of error bars positions", () => {
-      const svgDimensions = {width: 350, height: 200, padding: 75};
+      const svgDimensions = { width: 350, height: 200, padding: 75 };
       const data = [
-        {x: 0, y: 0, errorX: 0.1, errorY: 0.2},
-        {x: 2, y: 3, errorX: 0.1, errorY: 0.2},
-        {x: 5, y: 5, errorX: 0.1, errorY: 0.2}
+        { x: 0, y: 0, errorX: 0.1, errorY: 0.2 },
+        { x: 2, y: 3, errorX: 0.1, errorY: 0.2 },
+        { x: 5, y: 5, errorX: 0.1, errorY: 0.2 }
       ];
       const wrapper = mount(
         <VictoryErrorBar
@@ -378,11 +378,11 @@ describe("components/victory-errorbar", () => {
     });
 
     it("should check right cross line of error bars positions", () => {
-      const svgDimensions = {width: 350, height: 200, padding: 75};
+      const svgDimensions = { width: 350, height: 200, padding: 75 };
       const data = [
-        {x: 0, y: 0, errorX: 0.1, errorY: 0.2},
-        {x: 2, y: 3, errorX: 0.1, errorY: 0.2},
-        {x: 5, y: 5, errorX: 0.1, errorY: 0.2}
+        { x: 0, y: 0, errorX: 0.1, errorY: 0.2 },
+        { x: 2, y: 3, errorX: 0.1, errorY: 0.2 },
+        { x: 5, y: 5, errorX: 0.1, errorY: 0.2 }
       ];
       const wrapper = mount(
         <VictoryErrorBar
@@ -420,7 +420,7 @@ describe("components/victory-errorbar", () => {
 
   describe("asymmetric error, rendering data", () => {
     it("renders injected errors for {x, y}", () => {
-      const data = range(10).map((i) => ({x: i, y: i, errorX: [0.1, 0.2], errorY: [0.2, 0.5]}));
+      const data = range(10).map((i) => ({ x: i, y: i, errorX: [0.1, 0.2], errorY: [0.2, 0.5] }));
       const wrapper = shallow(
         <VictoryErrorBar data={data} dataComponent={<MyErrorBar />} />
       );
@@ -430,7 +430,7 @@ describe("components/victory-errorbar", () => {
     });
 
     it("renders errors for {x, y}", () => {
-      const data = range(10).map((i) => ({x: i, y: i, errorX: [0.1, 0.2], errorY: [0.2, 1]}));
+      const data = range(10).map((i) => ({ x: i, y: i, errorX: [0.1, 0.2], errorY: [0.2, 1] }));
       const wrapper = shallow(
         <VictoryErrorBar data={data}/>
       );
@@ -439,13 +439,13 @@ describe("components/victory-errorbar", () => {
     });
 
     it("renders errors with error bars, check total svg lines", () => {
-      const svgDimensions = {width: 350, height: 200, padding: 75};
+      const svgDimensions = { width: 350, height: 200, padding: 75 };
       const wrapper = render(
         <VictoryErrorBar
           data={[
-            {x: 0, y: 0, errorX: [0.1, 0.5], errorY: [0.2, 0.3]},
-            {x: 2, y: 3, errorX: [0.1, 0.5], errorY: [0.2, 0.4]},
-            {x: 5, y: 5, errorX: [0.1, 0.5], errorY: [0.2, 0.1]}
+            { x: 0, y: 0, errorX: [0.1, 0.5], errorY: [0.2, 0.3] },
+            { x: 2, y: 3, errorX: [0.1, 0.5], errorY: [0.2, 0.4] },
+            { x: 5, y: 5, errorX: [0.1, 0.5], errorY: [0.2, 0.1] }
           ]}
           {...svgDimensions}
         />
@@ -454,12 +454,12 @@ describe("components/victory-errorbar", () => {
     });
 
     it("should check right border of error bars positions", () => {
-      const svgDimensions = {width: 350, height: 200, padding: 75};
+      const svgDimensions = { width: 350, height: 200, padding: 75 };
       const borderWidth = 10;
       const data = [
-        {x: 0, y: 0, errorX: [0.1, 0.3], errorY: [0.2, 0.5]},
-        {x: 2, y: 3, errorX: [0.1, 0.2], errorY: [0.2, 0.3]},
-        {x: 5, y: 5, errorX: [0.1, 0.6], errorY: [0.2, 0.1]}
+        { x: 0, y: 0, errorX: [0.1, 0.3], errorY: [0.2, 0.5] },
+        { x: 2, y: 3, errorX: [0.1, 0.2], errorY: [0.2, 0.3] },
+        { x: 5, y: 5, errorX: [0.1, 0.6], errorY: [0.2, 0.1] }
       ];
       const wrapper = mount(
         <VictoryErrorBar
@@ -496,12 +496,12 @@ describe("components/victory-errorbar", () => {
     });
 
     it("should check left border of error bars positions", () => {
-      const svgDimensions = {width: 350, height: 200, padding: 75};
+      const svgDimensions = { width: 350, height: 200, padding: 75 };
       const borderWidth = 10;
       const data = [
-        {x: 0, y: 0, errorX: [0.1, 0.3], errorY: [0.2, 0.5]},
-        {x: 2, y: 3, errorX: [0.1, 0.2], errorY: [0.2, 0.3]},
-        {x: 5, y: 5, errorX: [0.1, 0.6], errorY: [0.2, 0.1]}
+        { x: 0, y: 0, errorX: [0.1, 0.3], errorY: [0.2, 0.5] },
+        { x: 2, y: 3, errorX: [0.1, 0.2], errorY: [0.2, 0.3] },
+        { x: 5, y: 5, errorX: [0.1, 0.6], errorY: [0.2, 0.1] }
       ];
       const wrapper = mount(
         <VictoryErrorBar
@@ -538,12 +538,12 @@ describe("components/victory-errorbar", () => {
     });
 
     it("should check bottom border of error bars positions", () => {
-      const svgDimensions = {width: 350, height: 200, padding: 75};
+      const svgDimensions = { width: 350, height: 200, padding: 75 };
       const borderWidth = 10;
       const data = [
-        {x: 0, y: 0, errorX: [0.1, 0.3], errorY: [0.2, 0.5]},
-        {x: 2, y: 3, errorX: [0.1, 0.2], errorY: [0.2, 0.3]},
-        {x: 5, y: 5, errorX: [0.1, 0.6], errorY: [0.2, 0.1]}
+        { x: 0, y: 0, errorX: [0.1, 0.3], errorY: [0.2, 0.5] },
+        { x: 2, y: 3, errorX: [0.1, 0.2], errorY: [0.2, 0.3] },
+        { x: 5, y: 5, errorX: [0.1, 0.6], errorY: [0.2, 0.1] }
       ];
       const wrapper = mount(
         <VictoryErrorBar
@@ -580,12 +580,12 @@ describe("components/victory-errorbar", () => {
     });
 
     it("should check top border of error bars positions", () => {
-      const svgDimensions = {width: 350, height: 200, padding: 75};
+      const svgDimensions = { width: 350, height: 200, padding: 75 };
       const borderWidth = 10;
       const data = [
-        {x: 0, y: 0, errorX: [0.1, 0.3], errorY: [0.2, 0.5]},
-        {x: 2, y: 3, errorX: [0.1, 0.2], errorY: [0.2, 0.3]},
-        {x: 5, y: 5, errorX: [0.1, 0.6], errorY: [0.2, 0.1]}
+        { x: 0, y: 0, errorX: [0.1, 0.3], errorY: [0.2, 0.5] },
+        { x: 2, y: 3, errorX: [0.1, 0.2], errorY: [0.2, 0.3] },
+        { x: 5, y: 5, errorX: [0.1, 0.6], errorY: [0.2, 0.1] }
       ];
       const wrapper = mount(
         <VictoryErrorBar
@@ -622,11 +622,11 @@ describe("components/victory-errorbar", () => {
     });
 
     it("should check top cross line of error bars positions", () => {
-      const svgDimensions = {width: 350, height: 200, padding: 75};
+      const svgDimensions = { width: 350, height: 200, padding: 75 };
       const data = [
-        {x: 0, y: 0, errorX: [0.1, 0.3], errorY: [0.2, 0.5]},
-        {x: 2, y: 3, errorX: [0.1, 0.2], errorY: [0.2, 0.3]},
-        {x: 5, y: 5, errorX: [0.1, 0.6], errorY: [0.2, 0.1]}
+        { x: 0, y: 0, errorX: [0.1, 0.3], errorY: [0.2, 0.5] },
+        { x: 2, y: 3, errorX: [0.1, 0.2], errorY: [0.2, 0.3] },
+        { x: 5, y: 5, errorX: [0.1, 0.6], errorY: [0.2, 0.1] }
       ];
       const wrapper = mount(
         <VictoryErrorBar
@@ -662,11 +662,11 @@ describe("components/victory-errorbar", () => {
     });
 
     it("should check bottom cross line of error bars positions", () => {
-      const svgDimensions = {width: 350, height: 200, padding: 75};
+      const svgDimensions = { width: 350, height: 200, padding: 75 };
       const data = [
-        {x: 0, y: 0, errorX: [0.1, 0.3], errorY: [0.2, 0.5]},
-        {x: 2, y: 3, errorX: [0.1, 0.2], errorY: [0.2, 0.3]},
-        {x: 5, y: 5, errorX: [0.1, 0.6], errorY: [0.2, 0.1]}
+        { x: 0, y: 0, errorX: [0.1, 0.3], errorY: [0.2, 0.5] },
+        { x: 2, y: 3, errorX: [0.1, 0.2], errorY: [0.2, 0.3] },
+        { x: 5, y: 5, errorX: [0.1, 0.6], errorY: [0.2, 0.1] }
       ];
       const wrapper = mount(
         <VictoryErrorBar
@@ -702,11 +702,11 @@ describe("components/victory-errorbar", () => {
     });
 
     it("should check left cross line of error bars positions", () => {
-      const svgDimensions = {width: 350, height: 200, padding: 75};
+      const svgDimensions = { width: 350, height: 200, padding: 75 };
       const data = [
-        {x: 0, y: 0, errorX: [0.1, 0.3], errorY: [0.2, 0.5]},
-        {x: 2, y: 3, errorX: [0.1, 0.2], errorY: [0.2, 0.3]},
-        {x: 5, y: 5, errorX: [0.1, 0.6], errorY: [0.2, 0.1]}
+        { x: 0, y: 0, errorX: [0.1, 0.3], errorY: [0.2, 0.5] },
+        { x: 2, y: 3, errorX: [0.1, 0.2], errorY: [0.2, 0.3] },
+        { x: 5, y: 5, errorX: [0.1, 0.6], errorY: [0.2, 0.1] }
       ];
       const wrapper = mount(
         <VictoryErrorBar
@@ -742,11 +742,11 @@ describe("components/victory-errorbar", () => {
     });
 
     it("should check right cross line of error bars positions", () => {
-      const svgDimensions = {width: 350, height: 200, padding: 75};
+      const svgDimensions = { width: 350, height: 200, padding: 75 };
       const data = [
-        {x: 0, y: 0, errorX: [0.1, 0.3], errorY: [0.2, 0.5]},
-        {x: 2, y: 3, errorX: [0.1, 0.2], errorY: [0.2, 0.3]},
-        {x: 5, y: 5, errorX: [0.1, 0.6], errorY: [0.2, 0.1]}
+        { x: 0, y: 0, errorX: [0.1, 0.3], errorY: [0.2, 0.5] },
+        { x: 2, y: 3, errorX: [0.1, 0.2], errorY: [0.2, 0.3] },
+        { x: 5, y: 5, errorX: [0.1, 0.6], errorY: [0.2, 0.1] }
       ];
       const wrapper = mount(
         <VictoryErrorBar
@@ -789,7 +789,7 @@ describe("components/victory-errorbar", () => {
         <VictoryErrorBar
           events={[{
             target: "parent",
-            eventHandlers: {onClick: clickHandler}
+            eventHandlers: { onClick: clickHandler }
           }]}
         />
       );
@@ -807,7 +807,7 @@ describe("components/victory-errorbar", () => {
         <VictoryErrorBar
           events={[{
             target: "data",
-            eventHandlers: {onClick: clickHandler}
+            eventHandlers: { onClick: clickHandler }
           }]}
         />
       );
@@ -830,7 +830,7 @@ describe("components/victory-errorbar", () => {
         <VictoryErrorBar
           events={[{
             target: "data",
-            eventHandlers: {onClick: clickHandler}
+            eventHandlers: { onClick: clickHandler }
           }]}
         />
       );

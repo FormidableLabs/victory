@@ -1,11 +1,12 @@
-import { Selection} from "victory-core";
+/*eslint no-magic-numbers: ["error", { "ignore": [0, 1, 2] }]*/
+import { Selection } from "victory-core";
 import { assign, throttle, isFunction, isEqual, defaults } from "lodash";
 import { attachId } from "../../helpers/event-handlers.js";
 
 const Helpers = {
   withinBounds(point, bounds, padding) {
-    const {x1, x2, y1, y2} = bounds;
-    const {x, y} = point;
+    const { x1, x2, y1, y2 } = bounds;
+    const { x, y } = point;
     padding = padding ? padding / 2 : 0;
     return x + padding >= Math.min(x1, x2) &&
       x - padding <= Math.max(x1, x2) &&
@@ -29,17 +30,17 @@ const Helpers = {
   },
 
   getHandles(props, domainBox) {
-    const {x1, x2, y1, y2} = domainBox;
+    const { x1, x2, y1, y2 } = domainBox;
     const minX = Math.min(x1, x2);
     const maxX = Math.max(x1, x2);
     const minY = Math.min(y1, y2);
     const maxY = Math.max(y1, y2);
     const handleWidth = props.handleWidth / 2;
     return {
-      left: {x1: minX - handleWidth, x2: minX + handleWidth, y1, y2},
-      right: {x1: maxX - handleWidth, x2: maxX + handleWidth, y1, y2},
-      top: {x1, x2, y1: minY + handleWidth, y2: minY - handleWidth},
-      bottom: {x1, x2, y1: maxY + handleWidth, y2: maxY - handleWidth}
+      left: { x1: minX - handleWidth, x2: minX + handleWidth, y1, y2 },
+      right: { x1: maxX - handleWidth, x2: maxX + handleWidth, y1, y2 },
+      top: { x1, x2, y1: minY + handleWidth, y2: minY - handleWidth },
+      bottom: { x1, x2, y1: maxY + handleWidth, y2: maxY - handleWidth }
     };
   },
 
@@ -53,12 +54,12 @@ const Helpers = {
   },
 
   getResizeMutation(box, handles) {
-    const {x1, y1, x2, y2} = box;
+    const { x1, y1, x2, y2 } = box;
     const mutations = {
-      left: {x1: Math.max(x1, x2), x2: Math.min(x1, x2), y1, y2},
-      right: {x1: Math.min(x1, x2), x2: Math.max(x1, x2), y1, y2},
-      top: {y1: Math.max(y1, y2), y2: Math.min(y1, y2), x1, x2},
-      bottom: {y1: Math.min(y1, y2), y2: Math.max(y1, y2), x1, x2}
+      left: { x1: Math.max(x1, x2), x2: Math.min(x1, x2), y1, y2 },
+      right: { x1: Math.min(x1, x2), x2: Math.max(x1, x2), y1, y2 },
+      top: { y1: Math.max(y1, y2), y2: Math.min(y1, y2), x1, x2 },
+      bottom: { y1: Math.min(y1, y2), y2: Math.max(y1, y2), x1, x2 }
     };
     return handles.reduce((memo, current) => {
       return assign(memo, mutations[current]);
@@ -66,12 +67,12 @@ const Helpers = {
   },
 
   getMinimumDomain() {
-    return {x: [0, 1 / Number.MAX_SAFE_INTEGER], y: [0, 1 / Number.MAX_SAFE_INTEGER]};
+    return { x: [0, 1 / Number.MAX_SAFE_INTEGER], y: [0, 1 / Number.MAX_SAFE_INTEGER] };
   },
 
   getSelectionMutation(point, box, dimension) {
-    const {x, y} = point;
-    const {x1, x2, y1, y2} = box;
+    const { x, y } = point;
+    const { x1, x2, y1, y2 } = box;
     return {
       x1: dimension !== "y" ? x : x1,
       y1: dimension !== "x" ? y : y1,
@@ -81,13 +82,13 @@ const Helpers = {
   },
 
   panBox(props, point) {
-    const {dimension, domain, startX, startY} = props;
+    const { dimension, domain, startX, startY } = props;
     const selectedDomain = defaults({}, props.selectedDomain, domain);
     const fullDomain = defaults({}, props.fullDomain, domain);
-    const {x1, x2, y1, y2} = props.x1 ?
+    const { x1, x2, y1, y2 } = props.x1 ?
       props : this.getDomainBox(props, fullDomain, selectedDomain);
 
-    const {x, y} = point;
+    const { x, y } = point;
     const delta = {
       x: startX ? startX - x : 0,
       y: startY ? startY - y : 0
@@ -101,7 +102,7 @@ const Helpers = {
   },
 
   constrainBox(box, fullDomainBox) {
-    const {x1, y1, x2, y2} = fullDomainBox;
+    const { x1, y1, x2, y2 } = fullDomainBox;
     return {
       x1: box.x2 > x2 ? x2 - Math.abs(box.x2 - box.x1) : Math.max(box.x1, x1),
       y1: box.y2 > y2 ? y2 - Math.abs(box.y2 - box.y1) : Math.max(box.y1, y1),
@@ -120,13 +121,13 @@ const Helpers = {
       this.getDomainBox(targetProps, domain);
     const currentDomain = isEqual(selectedDomain, cachedSelectedDomain) ?
       targetProps.currentDomain || selectedDomain || domain : selectedDomain || domain;
-    const {x, y} = Selection.getSVGEventCoordinates(evt);
+    const { x, y } = Selection.getSVGEventCoordinates(evt);
     // Ignore events that occur outside of the maximum domain region
-    if (!this.withinBounds({x, y}, fullDomainBox, handleWidth)) {
+    if (!this.withinBounds({ x, y }, fullDomainBox, handleWidth)) {
       return {};
     }
     const domainBox = this.getDomainBox(targetProps, domain, currentDomain);
-    const activeHandles = this.getActiveHandles({x, y}, targetProps, domainBox);
+    const activeHandles = this.getActiveHandles({ x, y }, targetProps, domainBox);
     // If the event occurs in any of the handle regions, start a resize
     if (activeHandles) {
       return [{
@@ -140,7 +141,7 @@ const Helpers = {
         }
       }];
     } else if (
-        this.withinBounds({x, y}, domainBox) &&
+        this.withinBounds({ x, y }, domainBox) &&
         !isEqual(domain, currentDomain)
       ) {
       // if the event occurs within a selected region start a panning event, unless the whole
@@ -166,7 +167,7 @@ const Helpers = {
             isSelecting: true, domainBox, fullDomainBox,
             cachedSelectedDomain: selectedDomain,
             currentDomain: this.getMinimumDomain(),
-            ...this.getSelectionMutation({x, y}, domainBox, dimension)
+            ...this.getSelectionMutation({ x, y }, domainBox, dimension)
           };
         }
       }];
@@ -181,16 +182,16 @@ const Helpers = {
     const {
       dimension, scale, isPanning, isSelecting, fullDomainBox, onDomainChange
     } = targetProps;
-    const {x, y} = Selection.getSVGEventCoordinates(evt);
+    const { x, y } = Selection.getSVGEventCoordinates(evt);
       // Ignore events that occur outside of the maximum domain region
-    if (!this.withinBounds({x, y}, fullDomainBox)) {
+    if (!this.withinBounds({ x, y }, fullDomainBox)) {
       return {};
     }
     if (isPanning) {
-      const {startX, startY} = targetProps;
-      const pannedBox = this.panBox(targetProps, {x, y});
+      const { startX, startY } = targetProps;
+      const pannedBox = this.panBox(targetProps, { x, y });
       const constrainedBox = this.constrainBox(pannedBox, fullDomainBox);
-      const currentDomain = Selection.getBounds({...constrainedBox, scale});
+      const currentDomain = Selection.getBounds({ ...constrainedBox, scale });
       if (isFunction(onDomainChange)) {
         onDomainChange(currentDomain);
       }
@@ -211,7 +212,7 @@ const Helpers = {
       const x2 = dimension !== "y" ? x : targetProps.x2;
       const y2 = dimension !== "x" ? y : targetProps.y2;
       const currentDomain =
-        Selection.getBounds({x2, y2, x1: targetProps.x1, y1: targetProps.y1, scale});
+        Selection.getBounds({ x2, y2, x1: targetProps.x1, y1: targetProps.y1, scale });
       if (isFunction(onDomainChange)) {
         onDomainChange(currentDomain);
       }
@@ -224,10 +225,11 @@ const Helpers = {
         }
       }];
     }
+    return {};
   },
 
   onMouseUp(evt, targetProps) {
-    const {x1, y1, x2, y2, onDomainChange, domain} = targetProps;
+    const { x1, y1, x2, y2, onDomainChange, domain } = targetProps;
     // if the mouse hasn't moved since a mouseDown event, select the whole domain region
     if (x1 === x2 || y1 === y2) {
       if (isFunction(onDomainChange)) {
@@ -262,7 +264,7 @@ export default {
   onMouseLeave: Helpers.onMouseLeave.bind(Helpers),
   onMouseMove: throttle(
     attachId(Helpers.onMouseMove.bind(Helpers)),
-    16,
-    {leading: true, trailing: false}
+    16, // eslint-disable-line no-magic-numbers
+    { leading: true, trailing: false }
   )
 };

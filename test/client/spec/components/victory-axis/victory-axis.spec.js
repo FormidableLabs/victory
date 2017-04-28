@@ -61,7 +61,7 @@ describe("components/victory-axis", () => {
 
   describe("dependentAxis prop", () => {
     it("renders a horizontal axis by default", () => {
-      const props = {padding: 50, width: 300};
+      const props = { padding: 50, width: 300 };
       const wrapper = shallow(
         <VictoryAxis {...props}/>
       );
@@ -70,7 +70,7 @@ describe("components/victory-axis", () => {
     });
 
     it("renders a vertical axis if specified", () => {
-      const props = {padding: 50, height: 300};
+      const props = { padding: 50, height: 300 };
       const wrapper = shallow(
         <VictoryAxis dependentAxis {...props}/>
       );
@@ -86,7 +86,7 @@ describe("components/victory-axis", () => {
         <VictoryAxis
           events={[{
             target: "parent",
-            eventHandlers: {onClick: clickHandler}
+            eventHandlers: { onClick: clickHandler }
           }]}
         />
       );
@@ -104,7 +104,7 @@ describe("components/victory-axis", () => {
         <VictoryAxis
           events={[{
             target: "axis",
-            eventHandlers: {onClick: clickHandler}
+            eventHandlers: { onClick: clickHandler }
           }]}
         />
       );

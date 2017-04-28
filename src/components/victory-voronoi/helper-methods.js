@@ -9,7 +9,7 @@ export default {
     const { width, height, standalone, theme, events, sharedEvents } = props;
     const initialChildProps = { parent: {
       style: style.parent, scale, domain, data, standalone, height, width, theme
-    }};
+    } };
 
     return data.reduce((childProps, datum, index) => {
       const polygon = without(polygons[index], "data");
@@ -69,7 +69,7 @@ export default {
     };
     const voronoi = this.getVoronoi(range, scale);
     const polygons = voronoi.polygons(data);
-    return {domain, data, scale, style, polygons};
+    return { domain, data, scale, style, polygons };
   },
 
   getVoronoi(range, scale) {

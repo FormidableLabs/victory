@@ -39,8 +39,8 @@ describe("components/victory-voronoi-tooltip", () => {
         width: 400,
         height: 300,
         padding: 50,
-        domain: {x: [0, 5], y: [0, 5]},
-        data: [{x: 0, y: 0}, {x: 2, y: 3}, {x: 4, y: 1}]
+        domain: { x: [0, 5], y: [0, 5] },
+        data: [{ x: 0, y: 0 }, { x: 2, y: 3 }, { x: 4, y: 1 }]
       };
       const wrapper = shallow(
         <VictoryVoronoiTooltip {...props}/>
@@ -53,7 +53,7 @@ describe("components/victory-voronoi-tooltip", () => {
     });
 
     it("sorts data by sortKey prop", () => {
-      const data = range(5).map((i) => ({x: i, y: i})).reverse();
+      const data = range(5).map((i) => ({ x: i, y: i })).reverse();
       const wrapper = shallow(
         <VictoryVoronoiTooltip data={data} sortKey="x"/>
       );
@@ -70,7 +70,7 @@ describe("components/victory-voronoi-tooltip", () => {
         <VictoryVoronoiTooltip
           events={[{
             target: "parent",
-            eventHandlers: {onClick: clickHandler}
+            eventHandlers: { onClick: clickHandler }
           }]}
         />
       );
@@ -86,18 +86,18 @@ describe("components/victory-voronoi-tooltip", () => {
       const wrapper = mount(
         <VictoryVoronoiTooltip
           data={[
-            {x: 1, y: -5, label: "yo"},
-            {x: 2, y: 4, label: "yo"},
-            {x: 3, y: 2, label: "yo"}
+            { x: 1, y: -5, label: "yo" },
+            { x: 2, y: 4, label: "yo" },
+            { x: 3, y: 2, label: "yo" }
           ]}
         />
       );
       const Data = wrapper.find(Voronoi);
       Data.forEach((node, index) => {
         const tooltip = wrapper.find(VictoryTooltip);
-        expect(tooltip.at(index).props()).to.contain({active: false});
+        expect(tooltip.at(index).props()).to.contain({ active: false });
         node.simulate("mouseOver");
-        expect(tooltip.at(index).props()).to.contain({active: true});
+        expect(tooltip.at(index).props()).to.contain({ active: true });
       });
     });
 
@@ -107,7 +107,7 @@ describe("components/victory-voronoi-tooltip", () => {
         <VictoryVoronoiTooltip
           events={[{
             target: "data",
-            eventHandlers: {onClick: clickHandler}
+            eventHandlers: { onClick: clickHandler }
           }]}
         />
       );
@@ -130,7 +130,7 @@ describe("components/victory-voronoi-tooltip", () => {
           label="okay"
           events={[{
             target: "labels",
-            eventHandlers: {onClick: clickHandler}
+            eventHandlers: { onClick: clickHandler }
           }]}
         />
       );
@@ -139,7 +139,7 @@ describe("components/victory-voronoi-tooltip", () => {
         node.childAt(0).simulate("click");
         expect(clickHandler).called;
         // the first argument is the standard evt object
-        expect(clickHandler.args[index][1]).to.contain({text: "okay"});
+        expect(clickHandler.args[index][1]).to.contain({ text: "okay" });
       });
     });
   });
@@ -148,7 +148,7 @@ describe("components/victory-voronoi-tooltip", () => {
     it("adds an area role to the path area", () => {
       const wrapper = mount(<VictoryVoronoiTooltip/>);
       wrapper.find("path").nodes.forEach((p) => {
-        const {attributes: attr} = p;
+        const { attributes: attr } = p;
         const role = attr.getNamedItem("role");
         if (role) {
           const roleValue = role.value;

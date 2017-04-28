@@ -43,7 +43,7 @@ describe("components/victory-line", () => {
     it("renders no line segments for single data points", () => {
       const log = console;
       const warningStub = sinon.stub(log, "warn");
-      const data = [{x: 1, y: 1}];
+      const data = [{ x: 1, y: 1 }];
       const wrapper = mount(
         <VictoryLine data={data}/>
       );
@@ -55,13 +55,13 @@ describe("components/victory-line", () => {
 
     it("renders one dataComponent for the line", () => {
       const data = [
-        {x: 1, y: 1},
-        {x: 2, y: 4},
-        {x: 3, y: 5},
-        {x: 4, y: 2},
-        {x: 5, y: 3},
-        {x: 6, y: 4},
-        {x: 7, y: 6}
+        { x: 1, y: 1 },
+        { x: 2, y: 4 },
+        { x: 3, y: 5 },
+        { x: 4, y: 2 },
+        { x: 5, y: 3 },
+        { x: 6, y: 4 },
+        { x: 7, y: 6 }
       ];
       const wrapper = shallow(
         <VictoryLine
@@ -76,13 +76,13 @@ describe("components/victory-line", () => {
 
     it("renders one line segment for the line", () => {
       const data = [
-        {x: 1, y: 1},
-        {x: 2, y: 4},
-        {x: 3, y: 5},
-        {x: 4, y: 2},
-        {x: 5, y: 3},
-        {x: 6, y: 4},
-        {x: 7, y: 6}
+        { x: 1, y: 1 },
+        { x: 2, y: 4 },
+        { x: 3, y: 5 },
+        { x: 4, y: 2 },
+        { x: 5, y: 3 },
+        { x: 6, y: 4 },
+        { x: 7, y: 6 }
       ];
       const wrapper = shallow(
         <VictoryLine data={data}/>
@@ -98,7 +98,7 @@ describe("components/victory-line", () => {
         padding: 50,
         width: 400,
         height: 300,
-        data: [{x: 0, y: 0}, {x: 1, y: 1}, {x: 2, y: 2}]
+        data: [{ x: 0, y: 0 }, { x: 1, y: 1 }, { x: 2, y: 2 }]
       };
       const wrapper = shallow(
         <VictoryLine {...props}/>
@@ -111,13 +111,13 @@ describe("components/victory-line", () => {
   describe("rendering with null data", () => {
     it("renders two line segments when there are two continuous sections of data", () => {
       const data = [
-        {x: 1, y: 1},
-        {x: 2, y: 4},
-        {x: 3, y: 5},
-        {x: 4, y: 2},
-        {x: 5, y: null},
-        {x: 6, y: 4},
-        {x: 7, y: 6}
+        { x: 1, y: 1 },
+        { x: 2, y: 4 },
+        { x: 3, y: 5 },
+        { x: 4, y: 2 },
+        { x: 5, y: null },
+        { x: 6, y: 4 },
+        { x: 7, y: 6 }
       ];
       const wrapper = mount(
         <VictoryLine data={data}/>
@@ -128,13 +128,13 @@ describe("components/victory-line", () => {
 
     it("renders two lines for two continuous sections of data with multiple nulls", () => {
       const data = [
-        {x: 1, y: 1},
-        {x: 2, y: 4},
-        {x: 3, y: 5},
-        {x: 4, y: null},
-        {x: 5, y: null},
-        {x: 6, y: 4},
-        {x: 7, y: 6}
+        { x: 1, y: 1 },
+        { x: 2, y: 4 },
+        { x: 3, y: 5 },
+        { x: 4, y: null },
+        { x: 5, y: null },
+        { x: 6, y: 4 },
+        { x: 7, y: 6 }
       ];
       const wrapper = mount(
         <VictoryLine data={data}/>
@@ -145,13 +145,13 @@ describe("components/victory-line", () => {
 
     it("renders two lines for two sections of data with multiple nulls out of order", () => {
       const data = [
-        {x: 1, y: 1},
-        {x: 2, y: 4},
-        {x: 4, y: null},
-        {x: 3, y: 5},
-        {x: 5, y: null},
-        {x: 6, y: 4},
-        {x: 7, y: 6}
+        { x: 1, y: 1 },
+        { x: 2, y: 4 },
+        { x: 4, y: null },
+        { x: 3, y: 5 },
+        { x: 5, y: null },
+        { x: 6, y: 4 },
+        { x: 7, y: 6 }
       ];
       const wrapper = mount(
         <VictoryLine data={data}/>
@@ -162,13 +162,13 @@ describe("components/victory-line", () => {
 
     it("renders two lines for two sections of data with starting/ending nulls", () => {
       const data = [
-        {x: 1, y: null},
-        {x: 2, y: 4},
-        {x: 3, y: 3},
-        {x: 4, y: null},
-        {x: 5, y: 2},
-        {x: 6, y: 4},
-        {x: 7, y: null}
+        { x: 1, y: null },
+        { x: 2, y: 4 },
+        { x: 3, y: 3 },
+        { x: 4, y: null },
+        { x: 5, y: 2 },
+        { x: 6, y: 4 },
+        { x: 7, y: null }
       ];
       const wrapper = mount(
         <VictoryLine data={data}/>
@@ -179,14 +179,14 @@ describe("components/victory-line", () => {
 
     it("renders three lines for three continuous sections of data", () => {
       const data = [
-        {x: 1, y: 2},
-        {x: 2, y: 4},
-        {x: 3, y: null},
-        {x: 4, y: 4},
-        {x: 5, y: 2},
-        {x: 6, y: null},
-        {x: 7, y: 5},
-        {x: 8, y: 3}
+        { x: 1, y: 2 },
+        { x: 2, y: 4 },
+        { x: 3, y: null },
+        { x: 4, y: 4 },
+        { x: 5, y: 2 },
+        { x: 6, y: null },
+        { x: 7, y: 5 },
+        { x: 8, y: 3 }
       ];
       const wrapper = mount(
         <VictoryLine data={data}/>
@@ -220,8 +220,8 @@ describe("components/victory-line", () => {
 
     it("renders deeply nested data", () => {
       const data = [
-        {a: {b: [{x: 1, y: 2}]}},
-        {a: {b: [{x: 3, y: 4}]}}
+        { a: { b: [{ x: 1, y: 2 }] } },
+        { a: { b: [{ x: 3, y: 4 }] } }
       ];
       const wrapper = shallow(
         <VictoryLine data={data} x={'a.b[0].x'} y={'a.b.0.y'} />
@@ -236,7 +236,7 @@ describe("components/victory-line", () => {
         { t: 1 /*x:  9, y: 1*/}
       ];
       const wrapper = shallow(
-        <VictoryLine data={data} x={({t}) => 10 - t} y={() => 1} />
+        <VictoryLine data={data} x={({ t }) => 10 - t} y={() => 1} />
       );
       const lines = wrapper.find(Curve);
 
@@ -250,7 +250,7 @@ describe("components/victory-line", () => {
         { t: 1 /*x:  9, y: 1*/}
       ];
       const wrapper = shallow(
-        <VictoryLine data={data} sortKey={'t'} x={({t}) => 10 - t} y={() => 1} />
+        <VictoryLine data={data} sortKey={'t'} x={({ t }) => 10 - t} y={() => 1} />
       );
       const lines = wrapper.find(Curve);
 
@@ -266,7 +266,7 @@ describe("components/victory-line", () => {
         <VictoryLine
           events={[{
             target: "parent",
-            eventHandlers: {onClick: clickHandler}
+            eventHandlers: { onClick: clickHandler }
           }]}
         />
       );
@@ -284,7 +284,7 @@ describe("components/victory-line", () => {
         <VictoryLine
           events={[{
             target: "data",
-            eventHandlers: {onClick: clickHandler}
+            eventHandlers: { onClick: clickHandler }
           }]}
         />
       );
@@ -306,7 +306,7 @@ describe("components/victory-line", () => {
           label="okay"
           events={[{
             target: "labels",
-            eventHandlers: {onClick: clickHandler}
+            eventHandlers: { onClick: clickHandler }
           }]}
         />
       );
@@ -314,7 +314,7 @@ describe("components/victory-line", () => {
       Labels.forEach((node, index) => {
         node.childAt(0).simulate("click");
         expect(clickHandler).called;
-        expect(clickHandler.args[index][1]).to.contain({text: "okay"});
+        expect(clickHandler.args[index][1]).to.contain({ text: "okay" });
       });
     });
   });
@@ -325,7 +325,7 @@ describe("components/victory-line", () => {
       const wrapper = mount(<VictoryLine />);
       const p = wrapper.find("path").node;
 
-      const {attributes: attr} = p;
+      const { attributes: attr } = p;
       const roleValue = attr.getNamedItem("role").value;
       expect(roleValue).to.be.a("string");
       expect(roleValue).to.equal("presentation");
@@ -333,21 +333,21 @@ describe("components/victory-line", () => {
 
     it("adds an area role to each line segment", () => {
       const data = [
-        {x: 1, y: 1},
-        {x: 2, y: 3},
-        {x: 3, y: 5},
-        {x: 4, y: 2},
-        {x: 5, y: null},
-        {x: 6, y: null},
-        {x: 7, y: 6},
-        {x: 8, y: 7},
-        {x: 9, y: 8},
-        {x: 10, y: 12}
+        { x: 1, y: 1 },
+        { x: 2, y: 3 },
+        { x: 3, y: 5 },
+        { x: 4, y: 2 },
+        { x: 5, y: null },
+        { x: 6, y: null },
+        { x: 7, y: 6 },
+        { x: 8, y: 7 },
+        { x: 9, y: 8 },
+        { x: 10, y: 12 }
       ];
       const wrapper = mount(<VictoryLine data={data} />);
 
       wrapper.find("path").nodes.forEach((p) => {
-        const {attributes: attr} = p;
+        const { attributes: attr } = p;
         const roleValue = attr.getNamedItem("role").value;
         expect(roleValue).to.be.a("string");
         expect(roleValue).to.equal("presentation");

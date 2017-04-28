@@ -44,6 +44,11 @@ export default class VictoryChart extends React.Component {
       }),
       PropTypes.number
     ]),
+    eventKey: PropTypes.oneOfType([
+      PropTypes.func,
+      CustomPropTypes.allOfType([CustomPropTypes.integer, CustomPropTypes.nonNegative]),
+      PropTypes.string
+    ]),
     events: PropTypes.arrayOf(PropTypes.shape({
       childName: PropTypes.oneOfType([ PropTypes.string, PropTypes.array ]),
       target: PropTypes.string,
@@ -55,11 +60,6 @@ export default class VictoryChart extends React.Component {
       ]),
       eventHandlers: PropTypes.object
     })),
-    eventKey: PropTypes.oneOfType([
-      PropTypes.func,
-      CustomPropTypes.allOfType([CustomPropTypes.integer, CustomPropTypes.nonNegative]),
-      PropTypes.string
-    ]),
     groupComponent: PropTypes.element,
     height: CustomPropTypes.nonNegative,
     modifyChildren: PropTypes.func,
@@ -133,7 +133,7 @@ export default class VictoryChart extends React.Component {
         userSelect: "none"
       },
       styleProps
-    )};
+    ) };
   }
 
   getAxisProps(child, props, calculatedProps) {
@@ -236,7 +236,7 @@ export default class VictoryChart extends React.Component {
     const getAnimationProps = Wrapper.getAnimationProps.bind(this);
 
     return childComponents.map((child, index) => {
-      const style = defaults({}, child.props.style, {parent: baseStyle});
+      const style = defaults({}, child.props.style, { parent: baseStyle });
       const childProps = this.getChildProps(child, props, calculatedProps);
       const newProps = defaults({
         animate: getAnimationProps(props, child, index),

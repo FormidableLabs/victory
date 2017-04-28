@@ -1,3 +1,4 @@
+/*eslint no-magic-numbers: ["error", { "ignore": [0, 1, 2] }]*/
 import PropTypes from "prop-types";
 import React from "react";
 import { VictoryContainer, Selection } from "victory-core";
@@ -49,6 +50,8 @@ export const brushContainerMixin = (base) => class VictoryBrushContainer extends
           this.mouseMoveMutationId = mutations.id; // eslint-disable-line
           return mutations.mutations;
         }
+
+        return undefined;
       },
       onMouseUp: (evt, targetProps) => {
         return BrushHelpers.onMouseUp(evt, targetProps);
@@ -60,8 +63,8 @@ export const brushContainerMixin = (base) => class VictoryBrushContainer extends
   }];
 
   getSelectBox(props, coordinates) {
-    const {x, y} = coordinates;
-    const {selectionStyle, selectionComponent} = props;
+    const { x, y } = coordinates;
+    const { selectionStyle, selectionComponent } = props;
     const selectionComponentStyle = selectionComponent.props && selectionComponent.props.style;
     return x[0] !== x[1] && y[0] !== y[1] ?
       React.cloneElement(selectionComponent, {
@@ -75,25 +78,25 @@ export const brushContainerMixin = (base) => class VictoryBrushContainer extends
   }
 
   getHandles(props, coordinates) {
-    const {dimension, handleWidth, handleStyle, handleComponent} = props;
-    const {x, y} = coordinates;
+    const { dimension, handleWidth, handleStyle, handleComponent } = props;
+    const { x, y } = coordinates;
     const width = Math.abs(x[1] - x[0]) || 1;
     const height = Math.abs(y[1] - y[0]) || 1;
     const handleComponentStyle = handleComponent.props && handleComponent.props.style || {};
     const style = defaults({}, handleComponentStyle, handleStyle);
-    const yProps = { style, width, height: handleWidth, cursor: "ns-resize"};
-    const xProps = { style, width: handleWidth, height, cursor: "ew-resize"};
+    const yProps = { style, width, height: handleWidth, cursor: "ns-resize" };
+    const xProps = { style, width: handleWidth, height, cursor: "ew-resize" };
     const handleProps = {
-      top: dimension !== "x" && assign({x: x[0], y: y[1] - (handleWidth / 2)}, yProps),
-      bottom: dimension !== "x" && assign({x: x[0], y: y[0] - (handleWidth / 2)}, yProps),
-      left: dimension !== "y" && assign({y: y[1], x: x[0] - (handleWidth / 2)}, xProps),
-      right: dimension !== "y" && assign({y: y[1], x: x[1] - (handleWidth / 2)}, xProps)
+      top: dimension !== "x" && assign({ x: x[0], y: y[1] - (handleWidth / 2) }, yProps),
+      bottom: dimension !== "x" && assign({ x: x[0], y: y[0] - (handleWidth / 2) }, yProps),
+      left: dimension !== "y" && assign({ y: y[1], x: x[0] - (handleWidth / 2) }, xProps),
+      right: dimension !== "y" && assign({ y: y[1], x: x[1] - (handleWidth / 2) }, xProps)
     };
     const handles = ["top", "bottom", "left", "right"].reduce((memo, curr) => {
       memo = handleProps[curr] ?
         memo.concat(React.cloneElement(
           handleComponent,
-          assign({key: `handle-${curr}`}, handleProps[curr]
+          assign({ key: `handle-${curr}` }, handleProps[curr]
         ))) : memo;
       return memo;
     }, []);
@@ -101,7 +104,7 @@ export const brushContainerMixin = (base) => class VictoryBrushContainer extends
   }
 
   getRect(props) {
-    const {currentDomain, cachedSelectedDomain, scale} = props;
+    const { currentDomain, cachedSelectedDomain, scale } = props;
     const selectedDomain = defaults({}, props.selectedDomain, props.domain);
     const domain = isEqual(selectedDomain, cachedSelectedDomain) ?
       defaults({}, currentDomain, selectedDomain) : selectedDomain;
@@ -120,7 +123,7 @@ export const brushContainerMixin = (base) => class VictoryBrushContainer extends
   getChildren(props) {
     const children = React.Children.toArray(props.children);
     return [...children, this.getRect(props)].map((component, i) => {
-      return component ? React.cloneElement(component, {key: i}) : null;
+      return component ? React.cloneElement(component, { key: i }) : null;
     });
   }
 };

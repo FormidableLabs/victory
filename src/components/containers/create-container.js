@@ -68,13 +68,13 @@ export const combineContainerMixins = (mixins, Container) => {
 
     static propTypes =
       Classes.reduce(
-        (propTypes, Class) => ({...propTypes, ...Class.propTypes}),
+        (propTypes, Class) => ({ ...propTypes, ...Class.propTypes }),
         {}
       );
 
     static defaultProps =
       Classes.reduce(
-        (defaultProps, Class) => ({...defaultProps, ...Class.defaultProps}),
+        (defaultProps, Class) => ({ ...defaultProps, ...Class.defaultProps }),
         {}
       );
 

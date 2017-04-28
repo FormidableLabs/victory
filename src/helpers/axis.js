@@ -10,7 +10,7 @@ export default {
    */
   getAxis(props) {
     if (props.orientation) {
-      const vertical = {top: "x", bottom: "x", left: "y", right: "y"};
+      const vertical = { top: "x", bottom: "x", left: "y", right: "y" };
       return vertical[props.orientation];
     }
     return props.dependentAxis ? "y" : "x";
@@ -120,12 +120,12 @@ export default {
     }
     const sign = originSign || "positive";
     const typicalOrientations = {
-      positive: {x: "bottom", y: "left"},
-      negative: {x: "top", y: "right"}
+      positive: { x: "bottom", y: "left" },
+      negative: { x: "top", y: "right" }
     };
     const flippedOrientations = {
-      positive: {x: "left", y: "bottom"},
-      negative: {x: "right", y: "top"}
+      positive: { x: "left", y: "bottom" },
+      negative: { x: "right", y: "top" }
     };
     if (!component) {
       return typicalOrientations[sign][axis];
@@ -152,7 +152,7 @@ export default {
    */
   isVertical(props) {
     const orientation = props.orientation || (props.dependentAxis ? "left" : "bottom");
-    const vertical = {top: false, bottom: false, left: true, right: true};
+    const vertical = { top: false, bottom: false, left: true, right: true };
     return vertical[orientation];
   },
 

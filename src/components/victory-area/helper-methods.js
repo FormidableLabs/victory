@@ -1,3 +1,4 @@
+/*eslint no-magic-numbers: ["error", { "ignore": [-1, 0, 1, 2] }]*/
 import { assign, defaults } from "lodash";
 import { Helpers, Log, Data, Domain, Scale } from "victory-core";
 
@@ -6,7 +7,7 @@ export default {
   getBaseProps(props, fallbackProps) {
     props = Helpers.modifyProps(props, fallbackProps, "area");
     const calculatedValues = this.getCalculatedValues(props);
-    const {scale, style, data, domain} = calculatedValues;
+    const { scale, style, data, domain } = calculatedValues;
     const {
       standalone, interpolation, events, sharedEvents, width, height, groupComponent, theme
     } = props;
@@ -21,7 +22,7 @@ export default {
       const text = this.getLabelText(props, datum, index);
       if (text !== undefined && text !== null || events || sharedEvents) {
         const eventKey = datum.eventKey || index;
-        childProps[eventKey] = {labels: this.getLabelProps(text, index, calculatedValues)};
+        childProps[eventKey] = { labels: this.getLabelProps(text, index, calculatedValues) };
       }
       return childProps;
     }, initialChildProps);
@@ -51,7 +52,7 @@ export default {
   getLabelProps(text, index, calculatedProps) {
     const { scale, data, style } = calculatedProps;
     const datum = data[index];
-    const {x, y} = this.getLabelPosition(datum, scale);
+    const { x, y } = this.getLabelPosition(datum, scale);
     const labelStyle = this.getLabelStyle(style) || {};
     const sign = (datum._y1 || datum._y) < 0 ? -1 : 1;
     return {
@@ -90,7 +91,7 @@ export default {
     // use fill instead of stroke for text
     const fill = dataStyle.stroke;
     const padding = labelStyle.padding || 0;
-    return defaults({}, labelStyle, {opacity, fill, padding});
+    return defaults({}, labelStyle, { opacity, fill, padding });
   },
 
 
@@ -108,7 +109,7 @@ export default {
     return data.map((datum) => {
       const _y1 = datum._y1 !== undefined ? datum._y1 : datum._y;
       const _y0 = datum._y0 !== undefined ? datum._y0 : minY;
-      return assign({}, datum, {_y0, _y1});
+      return assign({}, datum, { _y0, _y1 });
     });
   }
 };

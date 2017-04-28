@@ -9,7 +9,7 @@ export default {
     const { data, style, scale, domain } = calculatedValues;
     const initialChildProps = { parent: {
       style: style.parent, scale, domain, data, height, width, standalone, theme
-    }};
+    } };
 
     return data.reduce((childProps, datum, index) => {
       const eventKey = datum.eventKey;
@@ -69,7 +69,7 @@ export default {
       y: Scale.getBaseScale(props, "y").domain(domain.y).range(range.y)
     };
     const z = props.bubbleProperty || "z";
-    return {domain, data, scale, style, z};
+    return { domain, data, scale, style, z };
   },
 
   getDataStyles(datum, style) {
@@ -87,8 +87,8 @@ export default {
   getLabelStyle(labelStyle, dataProps) {
     const { size, style } = dataProps;
     const matchedStyle = pick(style, ["opacity", "fill"]);
-    const padding = labelStyle.padding || size * 0.25;
-    return defaults({}, labelStyle, matchedStyle, {padding});
+    const padding = labelStyle.padding || size * 0.25; // eslint-disable-line no-magic-numbers
+    return defaults({}, labelStyle, matchedStyle, { padding });
   },
 
   getSymbol(data, props) {
@@ -99,16 +99,16 @@ export default {
   },
 
   getBubbleSize(datum, props, calculatedValues) {
-    const {data, z} = calculatedValues;
+    const { data, z } = calculatedValues;
     const getMaxRadius = () => {
       const minPadding = Math.min(...values(Helpers.getPadding(props)));
-      return Math.max(minPadding, 5);
+      return Math.max(minPadding, 5); // eslint-disable-line no-magic-numbers
     };
     const zData = data.map((point) => point[z]);
     const zMin = Math.min(...zData);
     const zMax = Math.max(...zData);
     const maxRadius = props.maxBubbleSize || getMaxRadius();
-    const maxArea = Math.PI * Math.pow(maxRadius, 2);
+    const maxArea = Math.PI * Math.pow(maxRadius, 2); // eslint-disable-line no-magic-numbers
     const area = ((datum[z] - zMin) / (zMax - zMin)) * maxArea;
     const radius = Math.sqrt(area / Math.PI);
     return Math.max(radius, 1);

@@ -1,3 +1,4 @@
+/*eslint no-magic-numbers: ["error", { "ignore": [2] }]*/
 import { Collection } from "victory-core";
 export default {
   /**

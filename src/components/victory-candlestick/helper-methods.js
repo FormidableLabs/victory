@@ -1,3 +1,4 @@
+/*eslint no-magic-numbers: ["error", { "ignore": [0, 1] }]*/
 import { assign, pick, sortBy, omit, defaults } from "lodash";
 import { Helpers, Log, Scale, Domain, Data } from "victory-core";
 
@@ -7,9 +8,9 @@ export default {
     const calculatedValues = this.getCalculatedValues(props);
     const { data, style, scale, domain } = calculatedValues;
     const { groupComponent, width, height, padding, standalone, theme } = props;
-    const initialChildProps = {parent: {
+    const initialChildProps = { parent: {
       domain, scale, width, height, data, standalone, theme, style: style.parent
-    }};
+    } };
 
     return data.reduce((childProps, datum, index) => {
       const eventKey = datum.eventKey || index;
@@ -37,7 +38,7 @@ export default {
   },
 
   getLabelProps(dataProps, text, calculatedStyle) {
-    const {x, y1, index, scale, datum, data } = dataProps;
+    const { x, y1, index, scale, datum, data } = dataProps;
     const labelStyle = this.getLabelStyle(calculatedStyle.labels, dataProps) || {};
     return {
       style: labelStyle,
@@ -72,7 +73,7 @@ export default {
       x: Scale.getBaseScale(props, "x").domain(domain.x).range(range.x),
       y: Scale.getBaseScale(props, "y").domain(domain.y).range(range.y)
     };
-    return {domain, data, scale, style};
+    return { domain, data, scale, style };
   },
 
   getData(props) {
@@ -102,7 +103,7 @@ export default {
       return assign(
         {},
         datum,
-        {_x, _y, _open, _close, _high, _low},
+        { _x, _y, _open, _close, _high, _low },
         typeof _x === "string" ? { _x: stringMap.x[_x], x: _x } : {}
       );
     }), props.sortKey);
@@ -163,7 +164,7 @@ export default {
     const fill = datum.fill || style.fill || candleColor;
     const strokeColor = datum.stroke || style.stroke;
     const stroke = this.isTransparent(strokeColor) ? fill : strokeColor || "black";
-    return defaults({}, stylesFromData, {stroke, fill}, style);
+    return defaults({}, stylesFromData, { stroke, fill }, style);
   },
 
   getLabelText(props, datum, index) {
@@ -175,7 +176,7 @@ export default {
     labelStyle = labelStyle || {};
     const { size, style } = dataProps;
     const matchedStyle = pick(style, ["opacity", "fill"]);
-    const padding = labelStyle.padding || size * 0.25;
-    return defaults({}, labelStyle, matchedStyle, {padding});
+    const padding = labelStyle.padding || size * 0.25; // eslint-disable-line no-magic-numbers
+    return defaults({}, labelStyle, matchedStyle, { padding });
   }
 };

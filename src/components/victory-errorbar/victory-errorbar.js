@@ -14,10 +14,10 @@ const fallbackProps = {
 };
 
 const defaultData = [
-  {x: 1, y: 1, errorX: 0.1, errorY: 0.1},
-  {x: 2, y: 2, errorX: 0.2, errorY: 0.2},
-  {x: 3, y: 3, errorX: 0.3, errorY: 0.3},
-  {x: 4, y: 4, errorX: 0.4, errorY: 0.4}
+  { x: 1, y: 1, errorX: 0.1, errorY: 0.1 },
+  { x: 2, y: 2, errorX: 0.2, errorY: 0.2 },
+  { x: 3, y: 3, errorX: 0.3, errorY: 0.3 },
+  { x: 4, y: 4, errorX: 0.4, errorY: 0.4 }
 ];
 
 const animationWhitelist = [
@@ -41,17 +41,17 @@ class VictoryErrorBar extends React.Component {
     ]),
     containerComponent: PropTypes.element,
     data: PropTypes.array,
+    dataComponent: PropTypes.element,
+    domain: PropTypes.oneOfType([
+      CustomPropTypes.domain,
+      PropTypes.shape({ x: CustomPropTypes.domain, y: CustomPropTypes.domain })
+    ]),
     domainPadding: PropTypes.oneOfType([
       PropTypes.shape({
         x: PropTypes.oneOfType([ PropTypes.number, CustomPropTypes.domain ]),
         y: PropTypes.oneOfType([ PropTypes.number, CustomPropTypes.domain ])
       }),
       PropTypes.number
-    ]),
-    dataComponent: PropTypes.element,
-    domain: PropTypes.oneOfType([
-      CustomPropTypes.domain,
-      PropTypes.shape({ x: CustomPropTypes.domain, y: CustomPropTypes.domain })
     ]),
     errorX: PropTypes.oneOfType([
       PropTypes.func,
@@ -65,6 +65,11 @@ class VictoryErrorBar extends React.Component {
       PropTypes.string,
       PropTypes.arrayOf(PropTypes.string)
     ]),
+    eventKey: PropTypes.oneOfType([
+      PropTypes.func,
+      CustomPropTypes.allOfType([CustomPropTypes.integer, CustomPropTypes.nonNegative]),
+      PropTypes.string
+    ]),
     events: PropTypes.arrayOf(PropTypes.shape({
       target: PropTypes.oneOf(["data", "labels", "parent"]),
       eventKey: PropTypes.oneOfType([
@@ -74,16 +79,11 @@ class VictoryErrorBar extends React.Component {
       ]),
       eventHandlers: PropTypes.object
     })),
-    eventKey: PropTypes.oneOfType([
-      PropTypes.func,
-      CustomPropTypes.allOfType([CustomPropTypes.integer, CustomPropTypes.nonNegative]),
-      PropTypes.string
-    ]),
     groupComponent: PropTypes.element,
     height: CustomPropTypes.nonNegative,
     horizontal: PropTypes.bool,
-    labels: PropTypes.oneOfType([ PropTypes.func, PropTypes.array ]),
     labelComponent: PropTypes.element,
+    labels: PropTypes.oneOfType([ PropTypes.func, PropTypes.array ]),
     name: PropTypes.string,
     padding: PropTypes.oneOfType([
       PropTypes.number,
@@ -160,6 +160,7 @@ class VictoryErrorBar extends React.Component {
       if (labelProps.text !== undefined && labelProps.text !== null) {
         return React.cloneElement(labelComponent, labelProps);
       }
+      return undefined;
     }).filter(Boolean);
 
     const children = [...dataComponents, ...labelComponents];
@@ -177,7 +178,7 @@ class VictoryErrorBar extends React.Component {
   }
 
   render() {
-    const {role} = this.constructor;
+    const { role } = this.constructor;
     const props = Helpers.modifyProps(this.props, fallbackProps, role);
     if (this.shouldAnimate()) {
       return (

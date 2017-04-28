@@ -52,14 +52,14 @@ describe("components/victory-bar", () => {
 
   describe("rendering data", () => {
     it("renders bars for {x, y} shaped data (default)", () => {
-      const data = range(10).map((i) => ({x: i, y: i}));
+      const data = range(10).map((i) => ({ x: i, y: i }));
       const wrapper = shallow(<VictoryBar data={data}/>);
       const bars = wrapper.find(Bar);
       expect(bars.length).to.equal(10);
     });
 
     it("renders ordered bars when sortKey is passed", () => {
-      const data = range(5).map((i) => ({x: i, y: i})).reverse();
+      const data = range(5).map((i) => ({ x: i, y: i })).reverse();
       const wrapper = shallow(<VictoryBar data={data} sortKey="x"/>);
       const xValues = wrapper.find(Bar).map((bar) => bar.prop("datum")._x);
       expect(xValues).to.eql([0, 1, 2, 3, 4]);
@@ -73,7 +73,7 @@ describe("components/victory-bar", () => {
     });
 
     it("renders bars for deeply-nested data", () => {
-      const data = range(40).map((i) => ({a: {b: [{x: i, y: i}]}}));
+      const data = range(40).map((i) => ({ a: { b: [{ x: i, y: i }] } }));
       const wrapper = shallow(
         <VictoryBar data={data} x="a.b[0].x" y="a.b[0].y"/>
       );
@@ -92,7 +92,7 @@ describe("components/victory-bar", () => {
 
     it("renders bars with appropriate relative heights", () => {
       const wrapper = shallow(
-        <VictoryBar data={[{x: 1, y: 1}, {x: 2, y: 2}, {x: 3, y: 3}]}/>
+        <VictoryBar data={[{ x: 1, y: 1 }, { x: 2, y: 2 }, { x: 3, y: 3 }]}/>
       );
       const bars = wrapper.find(Bar);
       const heights = bars.map(SvgTestHelper.getBarHeight);
@@ -109,7 +109,7 @@ describe("components/victory-bar", () => {
         <VictoryBar
           events={[{
             target: "parent",
-            eventHandlers: {onClick: clickHandler}
+            eventHandlers: { onClick: clickHandler }
           }]}
         />
       );
@@ -127,7 +127,7 @@ describe("components/victory-bar", () => {
         <VictoryBar
           events={[{
             target: "data",
-            eventHandlers: {onClick: clickHandler}
+            eventHandlers: { onClick: clickHandler }
           }]}
         />
       );
@@ -145,15 +145,15 @@ describe("components/victory-bar", () => {
     it("attaches an event to a label", () => {
       const clickHandler = sinon.spy();
       const data = [
-        {x: 0, y: 0, label: "0"},
-        {x: 1, y: 1, label: "1"},
-        {x: 2, y: 2, label: "2"}
+        { x: 0, y: 0, label: "0" },
+        { x: 1, y: 1, label: "1" },
+        { x: 2, y: 2, label: "2" }
       ];
       const wrapper = mount(
         <VictoryBar data={data}
           events={[{
             target: "labels",
-            eventHandlers: {onClick: clickHandler}
+            eventHandlers: { onClick: clickHandler }
           }]}
         />
       );
@@ -162,7 +162,7 @@ describe("components/victory-bar", () => {
         node.childAt(0).simulate("click");
         expect(clickHandler).called;
         // the first argument is the standard evt object
-        expect(clickHandler.args[index][1]).to.contain({text: `${index}`});
+        expect(clickHandler.args[index][1]).to.contain({ text: `${index}` });
         expect(`${clickHandler.args[index][2]}`).to.eql(`${index}`);
       });
     });
@@ -170,11 +170,11 @@ describe("components/victory-bar", () => {
 
   describe("accessibility", () => {
     it("adds an area role to each bar in the series", () => {
-      const data = range(20).map((y, x) => ({x, y}));
+      const data = range(20).map((y, x) => ({ x, y }));
       const wrapper = mount(<VictoryBar data={data} />);
 
       wrapper.find("path").nodes.forEach((p) => {
-        const {attributes: attr} = p;
+        const { attributes: attr } = p;
         const roleValue = attr.getNamedItem("role").value;
         expect(roleValue).to.be.a("string");
         expect(roleValue).to.equal("presentation");

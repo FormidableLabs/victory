@@ -1,11 +1,13 @@
+/*eslint no-magic-numbers: ["error", { "ignore": [-1, 0, 1, 2] }]*/
 import { assign, defaults, omit } from "lodash";
 import { Helpers, Data, Domain, Scale } from "victory-core";
 
 export default {
 
   getBarWidth(props) {
-    const {style, width, data} = props;
+    const { style, width, data } = props;
     const padding = props.padding.left || props.padding;
+    // eslint-disable-next-line no-magic-numbers
     const defaultWidth = data.length === 0 ? 8 : (width - 2 * padding) / data.length;
     return style && style.width ? style.width : defaultWidth;
   },
@@ -95,11 +97,11 @@ export default {
 
   getBaseProps(props, fallbackProps) {
     props = Helpers.modifyProps(props, fallbackProps, "bar");
-    const {style, data, scale, domain } = this.getCalculatedValues(props);
+    const { style, data, scale, domain } = this.getCalculatedValues(props);
     const { horizontal, width, height, padding, standalone, theme } = props;
-    const initialChildProps = {parent: {
+    const initialChildProps = { parent: {
       domain, scale, width, height, data, standalone, theme, style: style.parent
-    }};
+    } };
 
     return data.reduce((childProps, datum, index) => {
       const eventKey = datum.eventKey || index;

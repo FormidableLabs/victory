@@ -14,10 +14,10 @@ const fallbackProps = {
 };
 
 const defaultData = [
-  {x: 1, y: 1},
-  {x: 2, y: 2},
-  {x: 3, y: 3},
-  {x: 4, y: 4}
+  { x: 1, y: 1 },
+  { x: 2, y: 2 },
+  { x: 3, y: 3 },
+  { x: 4, y: 4 }
 ];
 
 const animationWhitelist = ["data", "domain", "height", "padding", "style", "width"];
@@ -54,6 +54,11 @@ class VictoryBar extends React.Component {
     ]),
     containerComponent: PropTypes.element,
     data: PropTypes.array,
+    dataComponent: PropTypes.element,
+    domain: PropTypes.oneOfType([
+      CustomPropTypes.domain,
+      PropTypes.shape({ x: CustomPropTypes.domain, y: CustomPropTypes.domain })
+    ]),
     domainPadding: PropTypes.oneOfType([
       PropTypes.shape({
         x: PropTypes.oneOfType([ PropTypes.number, CustomPropTypes.domain ]),
@@ -61,10 +66,10 @@ class VictoryBar extends React.Component {
       }),
       PropTypes.number
     ]),
-    dataComponent: PropTypes.element,
-    domain: PropTypes.oneOfType([
-      CustomPropTypes.domain,
-      PropTypes.shape({ x: CustomPropTypes.domain, y: CustomPropTypes.domain })
+    eventKey: PropTypes.oneOfType([
+      PropTypes.func,
+      CustomPropTypes.allOfType([CustomPropTypes.integer, CustomPropTypes.nonNegative]),
+      PropTypes.string
     ]),
     events: PropTypes.arrayOf(PropTypes.shape({
       target: PropTypes.oneOf(["data", "labels", "parent"]),
@@ -75,16 +80,11 @@ class VictoryBar extends React.Component {
       ]),
       eventHandlers: PropTypes.object
     })),
-    eventKey: PropTypes.oneOfType([
-      PropTypes.func,
-      CustomPropTypes.allOfType([CustomPropTypes.integer, CustomPropTypes.nonNegative]),
-      PropTypes.string
-    ]),
     groupComponent: PropTypes.element,
     height: CustomPropTypes.nonNegative,
     horizontal: PropTypes.bool,
-    labels: PropTypes.oneOfType([ PropTypes.func, PropTypes.array ]),
     labelComponent: PropTypes.element,
+    labels: PropTypes.oneOfType([ PropTypes.func, PropTypes.array ]),
     name: PropTypes.string,
     padding: PropTypes.oneOfType([
       PropTypes.number,
@@ -159,11 +159,11 @@ class VictoryBar extends React.Component {
       if (labelProps.text !== undefined && labelProps.text !== null) {
         return React.cloneElement(labelComponent, labelProps);
       }
+      return undefined;
     }).filter(Boolean);
 
     const children = [...dataComponents, ...labelComponents];
     return this.renderContainer(groupComponent, children);
-
   }
 
   shouldAnimate() {

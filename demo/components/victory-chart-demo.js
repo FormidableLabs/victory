@@ -1,14 +1,13 @@
 /*global window:false */
+/*eslint-disable no-magic-numbers,react/no-multi-comp */
 import React from "react";
 import PropTypes from "prop-types";
-import { merge, random, range, omit } from "lodash";
+import { assign, merge, random, range, omit } from "lodash";
 import {
   VictoryChart, VictoryLine, VictoryAxis, VictoryBar, VictoryArea,
   VictoryScatter, VictoryStack, VictoryGroup
 } from "../../src/index";
 import { VictoryLabel, VictoryTheme, VictoryClipContainer } from "victory-core";
-import { assign } from "lodash";
-
 
 const UPDATE_INTERVAL = 3000;
 
@@ -50,6 +49,25 @@ class App extends React.Component {
       multiBarTransitionData: this.getMultiBarTransitionData(),
       lineStyle: this.getStyles()
     };
+  }
+
+  componentDidMount() {
+    /* eslint-disable react/no-did-mount-set-state */
+    this.setStateInterval = window.setInterval(() => {
+      this.setState({
+        scatterData: this.getScatterData(),
+        lineData: this.getData(),
+        barData: this.getBarData(),
+        barTransitionData: this.getBarTransitionData(),
+        multiBarTransitionData: this.getMultiBarTransitionData(),
+        numericBarData: this.getNumericBarData(),
+        lineStyle: this.getStyles()
+      });
+    }, UPDATE_INTERVAL);
+  }
+
+  componentWillUnmount() {
+    window.clearInterval(this.setStateInterval);
   }
 
   getData() {
@@ -102,7 +120,7 @@ class App extends React.Component {
   getBarTransitionData() {
     const bars = random(6, 10);
     return range(bars).map((bar) => {
-      return {x: bar, y: random(2, 10)};
+      return { x: bar, y: random(2, 10) };
     });
   }
 
@@ -110,7 +128,7 @@ class App extends React.Component {
     const bars = random(6, 10);
     return range(5).map(() => {
       return range(bars).map((bar) => {
-        return {x: bar, y: random(2, 10)};
+        return { x: bar, y: random(2, 10) };
       });
     });
   }
@@ -141,25 +159,6 @@ class App extends React.Component {
     };
   }
 
-  componentDidMount() {
-    /* eslint-disable react/no-did-mount-set-state */
-    this.setStateInterval = window.setInterval(() => {
-      this.setState({
-        scatterData: this.getScatterData(),
-        lineData: this.getData(),
-        barData: this.getBarData(),
-        barTransitionData: this.getBarTransitionData(),
-        multiBarTransitionData: this.getMultiBarTransitionData(),
-        numericBarData: this.getNumericBarData(),
-        lineStyle: this.getStyles()
-      });
-    }, UPDATE_INTERVAL);
-  }
-
-  componentWillUnmount() {
-    window.clearInterval(this.setStateInterval);
-  }
-
   render() {
     const containerStyle = {
       display: "flex",
@@ -168,12 +167,12 @@ class App extends React.Component {
       alignItems: "center",
       justifyContent: "center"
     };
-    const chartStyle = {parent: {border: "1px solid #ccc", margin: "2%", maxWidth: "40%"}};
+    const chartStyle = { parent: { border: "1px solid #ccc", margin: "2%", maxWidth: "40%" } };
     const axisStyle = {
-      grid: {stroke: "grey", strokeWidth: 1},
-      axis: {stroke: "transparent"},
-      ticks: {stroke: "transparent"},
-      tickLabels: {fill: "none"}
+      grid: { stroke: "grey", strokeWidth: 1 },
+      axis: { stroke: "transparent" },
+      ticks: { stroke: "transparent" },
+      tickLabels: { fill: "none" }
     };
     return (
       <div className="demo">
@@ -181,11 +180,11 @@ class App extends React.Component {
         <div style={containerStyle}>
           <VictoryChart style={chartStyle}>
             <VictoryScatter
-              data={[{x: 0, y: 0}, {x: -2, y: -2}, {x: -3, y: -3}]}
+              data={[{ x: 0, y: 0 }, { x: -2, y: -2 }, { x: -3, y: -3 }]}
             />
           </VictoryChart>
 
-          <VictoryChart style={chartStyle} domainPadding={{x: [0, 20]}}>
+          <VictoryChart style={chartStyle} domainPadding={{ x: [0, 20] }}>
             <VictoryAxis
               dependentAxis
               style={axisStyle}
@@ -193,15 +192,15 @@ class App extends React.Component {
           <VictoryAxis style={axisStyle} tickCount={6} />
             <VictoryBar
               data={[
-                {x: 1, y: 1},
-                {x: 2, y: 2},
-                {x: 3, y: 3},
-                {x: 4, y: 4},
-                {x: 5, y: 5},
-                {x: 6, y: 4},
-                {x: 7, y: 3},
-                {x: 8, y: 2},
-                {x: 9, y: 1}
+                { x: 1, y: 1 },
+                { x: 2, y: 2 },
+                { x: 3, y: 3 },
+                { x: 4, y: 4 },
+                { x: 5, y: 5 },
+                { x: 6, y: 4 },
+                { x: 7, y: 3 },
+                { x: 8, y: 2 },
+                { x: 9, y: 1 }
               ]}
             />
           </VictoryChart>
@@ -209,11 +208,11 @@ class App extends React.Component {
           <VictoryChart style={chartStyle}>
             <VictoryBar
               groupComponent={<VictoryClipContainer/>}
-              style={{data: {fill: "tomato", width: 20}}}
+              style={{ data: { fill: "tomato", width: 20 } }}
               data={[
-                {x: 1, y: 1},
-                {x: 2, y: 2},
-                {x: 3, y: 7}
+                { x: 1, y: 1 },
+                { x: 2, y: 2 },
+                { x: 3, y: 7 }
               ]}
             />
          </VictoryChart>
@@ -227,23 +226,23 @@ class App extends React.Component {
             >
               <VictoryBar
                 data={[
-                  {x: 1, y: 1},
-                  {x: 2, y: 2},
-                  {x: 3, y: 5}
+                  { x: 1, y: 1 },
+                  { x: 2, y: 2 },
+                  { x: 3, y: 5 }
                 ]}
               />
               <VictoryBar
                 data={[
-                  {x: 1, y: 2},
-                  {x: 2, y: 1},
-                  {x: 3, y: 7}
+                  { x: 1, y: 2 },
+                  { x: 2, y: 1 },
+                  { x: 3, y: 7 }
                 ]}
               />
               <VictoryBar
                 data={[
-                  {x: 1, y: 3},
-                  {x: 2, y: 4},
-                  {x: 3, y: 9}
+                  { x: 1, y: 3 },
+                  { x: 2, y: 4 },
+                  { x: 3, y: 9 }
                 ]}
               />
             </VictoryGroup>
@@ -256,23 +255,23 @@ class App extends React.Component {
             >
               <VictoryBar
                 data={[
-                  {x: 1, y: 1},
-                  {x: 2, y: 2},
-                  {x: 3, y: 5}
+                  { x: 1, y: 1 },
+                  { x: 2, y: 2 },
+                  { x: 3, y: 5 }
                 ]}
               />
               <VictoryBar
                 data={[
-                  {x: 1, y: 2},
-                  {x: 2, y: 1},
-                  {x: 3, y: 7}
+                  { x: 1, y: 2 },
+                  { x: 2, y: 1 },
+                  { x: 3, y: 7 }
                 ]}
               />
               <VictoryBar
                 data={[
-                  {x: 1, y: 3},
-                  {x: 2, y: 4},
-                  {x: 3, y: 9}
+                  { x: 1, y: 3 },
+                  { x: 2, y: 4 },
+                  { x: 3, y: 9 }
                 ]}
               />
             </VictoryGroup>
@@ -285,23 +284,23 @@ class App extends React.Component {
             >
               <VictoryBar
                 data={[
-                  {x: 1, y: 1},
-                  {x: 2, y: 2},
-                  {x: 3, y: 5}
+                  { x: 1, y: 1 },
+                  { x: 2, y: 2 },
+                  { x: 3, y: 5 }
                 ]}
               />
               <VictoryBar
                 data={[
-                  {x: 1, y: 2},
-                  {x: 2, y: 1},
-                  {x: 3, y: 7}
+                  { x: 1, y: 2 },
+                  { x: 2, y: 1 },
+                  { x: 3, y: 7 }
                 ]}
               />
               <VictoryBar
                 data={[
-                  {x: 1, y: 3},
-                  {x: 2, y: 4},
-                  {x: 3, y: 9}
+                  { x: 1, y: 3 },
+                  { x: 2, y: 4 },
+                  { x: 3, y: 9 }
                 ]}
               />
             </VictoryStack>
@@ -313,23 +312,23 @@ class App extends React.Component {
             >
               <VictoryBar
                 data={[
-                  {x: 1, y: 1},
-                  {x: 2, y: 2},
-                  {x: 3, y: 5}
+                  { x: 1, y: 1 },
+                  { x: 2, y: 2 },
+                  { x: 3, y: 5 }
                 ]}
               />
               <VictoryBar
                 data={[
-                  {x: 1, y: 2},
-                  {x: 2, y: 1},
-                  {x: 3, y: 7}
+                  { x: 1, y: 2 },
+                  { x: 2, y: 1 },
+                  { x: 3, y: 7 }
                 ]}
               />
               <VictoryBar
                 data={[
-                  {x: 1, y: 3},
-                  {x: 2, y: 4},
-                  {x: 3, y: 9}
+                  { x: 1, y: 3 },
+                  { x: 2, y: 4 },
+                  { x: 3, y: 9 }
                 ]}
               />
             </VictoryStack>
@@ -350,7 +349,7 @@ class App extends React.Component {
             />
           </VictoryChart>
 
-          <VictoryChart style={chartStyle} animate={{duration: 1000}}>
+          <VictoryChart style={chartStyle} animate={{ duration: 1000 }}>
             <VictoryStack colorScale={"warm"}>
               {this.state.multiBarTransitionData.map((data, index) => {
                 return <VictoryBar key={index} data={data}/>;
@@ -383,7 +382,7 @@ class App extends React.Component {
                     return [
                       {
                         mutation: () => {
-                          return {style: {fill: "orange"}};
+                          return { style: { fill: "orange" } };
                         }
                       }
                     ];
@@ -398,7 +397,7 @@ class App extends React.Component {
                         childName: "bar",
                         target: "labels",
                         mutation: () => {
-                          return {text: "o shit"};
+                          return { text: "o shit" };
                         }
                       }
                     ];
@@ -416,27 +415,27 @@ class App extends React.Component {
             <VictoryAxis label={"A LABEL"} dependentAxis crossAxis={false} offsetX={30}/>
 
               <VictoryLine
-                style={{data:
-                  {stroke: "red", strokeWidth: 4}
+                style={{ data:
+                  { stroke: "red", strokeWidth: 4 }
                 }}
                 y={(data) => Math.sin(2 * Math.PI * data.x)}
               />
 
             <VictoryLine
-              style={{data:
-                {stroke: "blue", strokeWidth: 4}
+              style={{ data:
+                { stroke: "blue", strokeWidth: 4 }
               }}
               y={(data) => Math.cos(2 * Math.PI * data.x)}
             />
           </VictoryChart>
 
-          <VictoryChart style={chartStyle} animate={{duration: 2000}}>
+          <VictoryChart style={chartStyle} animate={{ duration: 2000 }}>
             <VictoryAxis label={"A LABEL"} dependentAxis
-              orientation="left" style={{grid: {strokeWidth: 1}}}
+              orientation="left" style={{ grid: { strokeWidth: 1 } }}
             />
             <VictoryLine
               data={this.state.lineData}
-              style={{data: this.state.lineStyle}}
+              style={{ data: this.state.lineStyle }}
             />
           </VictoryChart>
 
@@ -459,19 +458,19 @@ class App extends React.Component {
             />
             <VictoryLine
               style={{
-                data: {stroke: "red", strokeWidth: 5},
-                labels: {fontSize: 12}
+                data: { stroke: "red", strokeWidth: 5 },
+                labels: { fontSize: 12 }
               }}
               label={this.state.label}
               data={[
-                {x: new Date(1982, 1, 1), y: 125},
-                {x: new Date(1987, 1, 1), y: 257},
-                {x: new Date(1993, 1, 1), y: 345},
-                {x: new Date(1997, 1, 1), y: 515},
-                {x: new Date(2001, 1, 1), y: 132},
-                {x: new Date(2005, 1, 1), y: 305},
-                {x: new Date(2011, 1, 1), y: 270},
-                {x: new Date(2015, 1, 1), y: 470}
+                { x: new Date(1982, 1, 1), y: 125 },
+                { x: new Date(1987, 1, 1), y: 257 },
+                { x: new Date(1993, 1, 1), y: 345 },
+                { x: new Date(1997, 1, 1), y: 515 },
+                { x: new Date(2001, 1, 1), y: 132 },
+                { x: new Date(2005, 1, 1), y: 305 },
+                { x: new Date(2011, 1, 1), y: 270 },
+                { x: new Date(2015, 1, 1), y: 470 }
               ]}
             />
           </VictoryChart>
@@ -483,7 +482,7 @@ class App extends React.Component {
               animate={{
                 onExit: {
                   duration: 500,
-                  before: () => ({opacity: 0.3})
+                  before: () => ({ opacity: 0.3 })
                 },
                 onEnter: {
                   duration: 500,
@@ -497,12 +496,12 @@ class App extends React.Component {
           <VictoryChart style={chartStyle}>
             <VictoryAxis label={"A LABEL"} dependentAxis orientation="right"/>
             <VictoryAxis label={"A LABEL"} orientation="top"/>
-              <VictoryLine y={(d) => 0.5 * d.x + 0.5} style={{data: {stroke: "red"}}}/>
-              <VictoryScatter y={(d) => d.x * d.x} style={{data: {stroke: "red"}}}/>
+              <VictoryLine y={(d) => 0.5 * d.x + 0.5} style={{ data: { stroke: "red" } }}/>
+              <VictoryScatter y={(d) => d.x * d.x} style={{ data: { stroke: "red" } }}/>
           </VictoryChart>
 
-          <VictoryChart style={chartStyle} animate={{duration: 2000}}
-            domainPadding={{x: 100}}
+          <VictoryChart style={chartStyle} animate={{ duration: 2000 }}
+            domainPadding={{ x: 100 }}
           >
             <VictoryStack>
               {this.state.barData.map((data, index) => {
@@ -510,7 +509,7 @@ class App extends React.Component {
               })}
             </VictoryStack>
           </VictoryChart>
-          <VictoryChart style={chartStyle} domainPadding={{x: 30, y: 30}}
+          <VictoryChart style={chartStyle} domainPadding={{ x: 30, y: 30 }}
             events={[{
               childName: "bar",
               target: "data",
@@ -520,14 +519,14 @@ class App extends React.Component {
                     {
                       target: "labels",
                       mutation: () => {
-                        return {text: "o shit"};
+                        return { text: "o shit" };
                       }
                     }, {
                       childName: "line",
                       target: "data",
                       eventKey: "all",
                       mutation: (props) => {
-                        return {style: merge({}, props.style, {stroke: "lime"})};
+                        return { style: merge({}, props.style, { stroke: "lime" }) };
                       }
                     }, {
                       childName: "line",
@@ -535,7 +534,7 @@ class App extends React.Component {
                       eventKey: "all",
                       mutation: (props) => {
                         return {
-                          style: merge({}, props.style, {fill: "green"}),
+                          style: merge({}, props.style, { fill: "green" }),
                           text: "waddup"
                         };
                       }
@@ -546,30 +545,30 @@ class App extends React.Component {
             }]}
           >
             <VictoryBar name="bar"
-              style={{data: {width: 15, fill: "green"}}}
+              style={{ data: { width: 15, fill: "green" } }}
               data={[
-                {x: 1, y: 1},
-                {x: 2, y: 2},
-                {x: 3, y: 3},
-                {x: 4, y: 2},
-                {x: 5, y: 1},
-                {x: 6, y: 2},
-                {x: 7, y: 3},
-                {x: 8, y: 2},
-                {x: 9, y: 1},
-                {x: 10, y: 2},
-                {x: 11, y: 3},
-                {x: 12, y: 2},
-                {x: 13, y: 1}
+                { x: 1, y: 1 },
+                { x: 2, y: 2 },
+                { x: 3, y: 3 },
+                { x: 4, y: 2 },
+                { x: 5, y: 1 },
+                { x: 6, y: 2 },
+                { x: 7, y: 3 },
+                { x: 8, y: 2 },
+                { x: 9, y: 1 },
+                { x: 10, y: 2 },
+                { x: 11, y: 3 },
+                { x: 12, y: 2 },
+                { x: 13, y: 1 }
               ]}
             />
             <VictoryLine name="line"
               y={() => 0.5}
-              style={{data: {stroke: "blue", strokeWidth: 5}}}
+              style={{ data: { stroke: "blue", strokeWidth: 5 } }}
               label="LINE"
             />
           </VictoryChart>
-          <VictoryChart style={chartStyle} domainPadding={{x: 50}} animate={{duration: 2000}}>
+          <VictoryChart style={chartStyle} domainPadding={{ x: 50 }} animate={{ duration: 2000 }}>
             <VictoryGroup offset={15}>
               <VictoryStack colorScale={"red"}>
                 {this.getBarData().map((data, index) => {
@@ -600,14 +599,14 @@ class App extends React.Component {
                       childName: "area-2",
                       target: "data",
                       mutation: (props) => {
-                        return {style: merge({}, props.style, {fill: "gold"})};
+                        return { style: merge({}, props.style, { fill: "gold" }) };
                       }
                     }, {
                       childName: "area-3",
                       target: "data",
                       mutation: (props) => {
                         return {
-                          style: merge({}, props.style, {fill: "orange"})
+                          style: merge({}, props.style, { fill: "orange" })
                         };
                       }
                     }, {
@@ -615,7 +614,7 @@ class App extends React.Component {
                       target: "data",
                       mutation: (props) => {
                         return {
-                          style: merge({}, props.style, {fill: "red"})
+                          style: merge({}, props.style, { fill: "red" })
                         };
                       }
                     }
@@ -627,22 +626,38 @@ class App extends React.Component {
             <VictoryStack>
               <VictoryArea name="area-1"
                 data={[
-                  {x: "a", y: 2}, {x: "b", y: 3}, {x: "c", y: 5}, {x: "d", y: 4}, {x: "e", y: 7}
+                  { x: "a", y: 2 },
+                  { x: "b", y: 3 },
+                  { x: "c", y: 5 },
+                  { x: "d", y: 4 },
+                  { x: "e", y: 7 }
                 ]}
               />
               <VictoryArea name="area-2"
                 data={[
-                  {x: "a", y: 1}, {x: "b", y: 4}, {x: "c", y: 5}, {x: "d", y: 7}, {x: "e", y: 5}
+                  { x: "a", y: 1 },
+                  { x: "b", y: 4 },
+                  { x: "c", y: 5 },
+                  { x: "d", y: 7 },
+                  { x: "e", y: 5 }
                 ]}
               />
               <VictoryArea name="area-3"
                 data={[
-                  {x: "a", y: 3}, {x: "b", y: 2}, {x: "c", y: 6}, {x: "d", y: 2}, {x: "e", y: 6}
+                  { x: "a", y: 3 },
+                  { x: "b", y: 2 },
+                  { x: "c", y: 6 },
+                  { x: "d", y: 2 },
+                  { x: "e", y: 6 }
                 ]}
               />
               <VictoryArea name="area-4"
                 data={[
-                  {x: "a", y: 2}, {x: "b", y: 3}, {x: "c", y: 3}, {x: "d", y: 4}, {x: "e", y: 7}
+                  { x: "a", y: 2 },
+                  { x: "b", y: 3 },
+                  { x: "c", y: 3 },
+                  { x: "d", y: 4 },
+                  { x: "e", y: 7 }
                 ]}
               />
             </VictoryStack>

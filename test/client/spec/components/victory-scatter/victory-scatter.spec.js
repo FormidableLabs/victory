@@ -55,7 +55,7 @@ describe("components/victory-scatter", () => {
 
   describe("rendering data", () => {
     it("renders injected points for {x, y} shaped data (default)", () => {
-      const data = range(10).map((i) => ({x: i, y: i}));
+      const data = range(10).map((i) => ({ x: i, y: i }));
       const wrapper = shallow(
         <VictoryScatter data={data} dataComponent={<MyPoint />} />
       );
@@ -65,7 +65,7 @@ describe("components/victory-scatter", () => {
     });
 
     it("renders points for {x, y} shaped data (default)", () => {
-      const data = range(10).map((i) => ({x: i, y: i}));
+      const data = range(10).map((i) => ({ x: i, y: i }));
       const wrapper = shallow(
         <VictoryScatter data={data}/>
       );
@@ -74,7 +74,7 @@ describe("components/victory-scatter", () => {
     });
 
     it("sorts data by sortKey prop", () => {
-      const data = range(5).map((i) => ({x: i, y: i})).reverse();
+      const data = range(5).map((i) => ({ x: i, y: i })).reverse();
       const wrapper = shallow(
         <VictoryScatter data={data} sortKey="x"/>
       );
@@ -92,7 +92,7 @@ describe("components/victory-scatter", () => {
     });
 
     it("renders points for deeply-nested data", () => {
-      const data = range(40).map((i) => ({a: {b: [{x: i, y: i}]}}));
+      const data = range(40).map((i) => ({ a: { b: [{ x: i, y: i }] } }));
       const wrapper = shallow(
         <VictoryScatter data={data} x="a.b[0].x" y="a.b[0].y"/>
       );
@@ -110,14 +110,14 @@ describe("components/victory-scatter", () => {
     });
 
     it("renders points in the correct positions", () => {
-      const svgDimensions = {width: 350, height: 200, padding: 75};
+      const svgDimensions = { width: 350, height: 200, padding: 75 };
       const wrapper = shallow(
         <VictoryScatter
-          data={[{x: 0, y: 0}, {x: 2, y: 3}, {x: 5, y: 5}]}
+          data={[{ x: 0, y: 0 }, { x: 2, y: 3 }, { x: 5, y: 5 }]}
           {...svgDimensions}
         />
       );
-      const domain = {x: [0, 5], y: [0, 5]};
+      const domain = { x: [0, 5], y: [0, 5] };
 
       const points = wrapper.find(Point);
       const svgCoordinates = points.map(SvgTestHelper.getSvgPointCoordinates);
@@ -140,7 +140,7 @@ describe("components/victory-scatter", () => {
         <VictoryScatter
           events={[{
             target: "parent",
-            eventHandlers: {onClick: clickHandler}
+            eventHandlers: { onClick: clickHandler }
           }]}
         />
       );
@@ -158,7 +158,7 @@ describe("components/victory-scatter", () => {
         <VictoryScatter
           events={[{
             target: "data",
-            eventHandlers: {onClick: clickHandler}
+            eventHandlers: { onClick: clickHandler }
           }]}
         />
       );
@@ -177,16 +177,16 @@ describe("components/victory-scatter", () => {
     it("attaches an event to a label", () => {
       const clickHandler = sinon.spy();
       const data = [
-        {eventKey: 0, _x: 0, _y: 0, x: 0, y: 0, label: "0"},
-        {eventKey: 1, _x: 1, _y: 1, x: 1, y: 1, label: "1"},
-        {eventKey: 2, _x: 2, _y: 2, x: 2, y: 2, label: "2"}
+        { eventKey: 0, _x: 0, _y: 0, x: 0, y: 0, label: "0" },
+        { eventKey: 1, _x: 1, _y: 1, x: 1, y: 1, label: "1" },
+        { eventKey: 2, _x: 2, _y: 2, x: 2, y: 2, label: "2" }
       ];
       const wrapper = mount(
         <VictoryScatter
           data={data}
           events={[{
             target: "labels",
-            eventHandlers: {onClick: clickHandler}
+            eventHandlers: { onClick: clickHandler }
           }]}
         />
       );
@@ -204,11 +204,11 @@ describe("components/victory-scatter", () => {
 
   describe("accessibility", () => {
     it("adds an area role to each point in the series", () => {
-      const data = range(20).map((y, x) => ({x, y}));
+      const data = range(20).map((y, x) => ({ x, y }));
       const wrapper = mount(<VictoryScatter data={data} />);
 
       wrapper.find("path").nodes.forEach((p) => {
-        const {attributes: attr} = p;
+        const { attributes: attr } = p;
         const roleValue = attr.getNamedItem("role").value;
         expect(roleValue).to.be.a("string");
         expect(roleValue).to.equal("presentation");

@@ -33,17 +33,17 @@ class VictoryLine extends React.Component {
     ]),
     containerComponent: PropTypes.element,
     data: PropTypes.array,
+    dataComponent: PropTypes.element,
+    domain: PropTypes.oneOfType([
+      CustomPropTypes.domain,
+      PropTypes.shape({ x: CustomPropTypes.domain, y: CustomPropTypes.domain })
+    ]),
     domainPadding: PropTypes.oneOfType([
       PropTypes.shape({
         x: PropTypes.oneOfType([ PropTypes.number, CustomPropTypes.domain ]),
         y: PropTypes.oneOfType([ PropTypes.number, CustomPropTypes.domain ])
       }),
       PropTypes.number
-    ]),
-    dataComponent: PropTypes.element,
-    domain: PropTypes.oneOfType([
-      CustomPropTypes.domain,
-      PropTypes.shape({ x: CustomPropTypes.domain, y: CustomPropTypes.domain })
     ]),
     events: PropTypes.arrayOf(PropTypes.shape({
       target: PropTypes.oneOf(["data", "labels", "parent"]),
@@ -64,8 +64,8 @@ class VictoryLine extends React.Component {
       PropTypes.string,
       "Use `labels` instead for individual data labels"
     ),
-    labels: PropTypes.oneOfType([ PropTypes.func, PropTypes.array ]),
     labelComponent: PropTypes.element,
+    labels: PropTypes.oneOfType([ PropTypes.func, PropTypes.array ]),
     name: PropTypes.string,
     padding: PropTypes.oneOfType([
       PropTypes.number,
@@ -155,7 +155,7 @@ class VictoryLine extends React.Component {
   }
 
   render() {
-    const {role} = this.constructor;
+    const { role } = this.constructor;
     const props = Helpers.modifyProps(this.props, fallbackProps, role);
     if (this.shouldAnimate()) {
       return (

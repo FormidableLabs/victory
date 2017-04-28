@@ -1,3 +1,4 @@
+/*eslint no-magic-numbers: ["error", { "ignore": [0, 1, 2] }]*/
 import { assign, defaults, flatten, isFunction, partialRight, uniq, some } from "lodash";
 import React from "react";
 import Axis from "./axis";
@@ -27,8 +28,8 @@ export default {
     }
     const { offset, children } = groupComponent[0].props;
     const defaultDomainPadding = horizontal ?
-      {y: (offset * children.length) / 2} :
-      {x: (offset * children.length) / 2};
+      { y: (offset * children.length) / 2 } :
+      { x: (offset * children.length) / 2 };
     return defaultDomainPadding[axis];
   },
 
@@ -44,7 +45,7 @@ export default {
     const min = Collection.getMinValue([...dataDomain, ...childDomain]);
     const max = Collection.getMaxValue([...dataDomain, ...childDomain]);
     const domainPadding = this.getDefaultDomainPadding(props, axis, childComponents);
-    const paddedDomain = Domain.padDomain([min, max], assign({domainPadding}, props), axis);
+    const paddedDomain = Domain.padDomain([min, max], assign({ domainPadding }, props), axis);
     return Domain.cleanDomain(paddedDomain, props, axis);
 
   },
@@ -56,7 +57,7 @@ export default {
     if (props.animate.parentState) {
       const nodesWillExit = props.animate.parentState.nodesWillExit;
       const oldProps = nodesWillExit ? props : null;
-      this.setState(defaults({oldProps, nextProps}, props.animate.parentState));
+      this.setState(defaults({ oldProps, nextProps }, props.animate.parentState));
     } else {
       const oldChildren = React.Children.toArray(props.children);
       const nextChildren = React.Children.toArray(nextProps.children);
@@ -106,7 +107,7 @@ export default {
       let childrenTransitions = this.state && this.state.childrenTransitions;
       childrenTransitions = Collection.isArrayOfArrays(childrenTransitions) ?
         childrenTransitions[index] : childrenTransitions;
-      return defaults({childrenTransitions}, this.state);
+      return defaults({ childrenTransitions }, this.state);
     };
 
     let getTransitions = props.animate && props.animate.getTransitions;
@@ -120,7 +121,7 @@ export default {
       );
       getTransitions = partialRight(getTransitionProps, index);
     }
-    return defaults({getTransitions, parentState}, props.animate, child.props.animate);
+    return defaults({ getTransitions, parentState }, props.animate, child.props.animate);
   },
 
   getDomainFromChildren(props, axis, childComponents) { // eslint-disable-line max-statements, complexity, max-len
@@ -144,7 +145,7 @@ export default {
       if (child.type && isFunction(child.type.getDomain)) {
         const parentData = props.data ? Data.getData(props, axis) : undefined;
         const sharedProps = parentData ?
-          assign({}, child.props, {data: parentData}) : child.props;
+          assign({}, child.props, { data: parentData }) : child.props;
         const childDomain = child.props && child.type.getDomain(sharedProps, currentAxis);
         if (childDomain) {
           const childDomainLength = childDomain.length;
@@ -241,7 +242,7 @@ export default {
     const defaultFill = role === "stack" ?
       undefined : this.getColor(calculatedProps, child, index);
     const defaultColor = role === "line" ?
-      {fill: "none", stroke: defaultFill} : {fill: defaultFill};
+      { fill: "none", stroke: defaultFill } : { fill: defaultFill };
     const childStyle = child.props.style || {};
     const dataStyle = defaults({}, childStyle.data, assign({}, style.data, defaultColor));
     const labelsStyle = defaults({}, childStyle.labels, style.labels);

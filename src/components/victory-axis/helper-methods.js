@@ -1,3 +1,4 @@
+/*eslint no-magic-numbers: ["error", { "ignore": [-90, -1, 0, 1, 2] }]*/
 import { includes, defaults, defaultsDeep, isFunction, range, without } from "lodash";
 import { Helpers, Scale, Domain } from "victory-core";
 
@@ -44,12 +45,12 @@ export default {
   // exposed for use by VictoryChart
   getAxis(props, flipped) {
     if (props.orientation) {
-      const vertical = {top: "x", bottom: "x", left: "y", right: "y"};
+      const vertical = { top: "x", bottom: "x", left: "y", right: "y" };
       return vertical[props.orientation];
     }
     const axisType = props.dependentAxis ? "dependent" : "independent";
-    const flippedAxis = { dependent: "x", independent: "y"};
-    const normalAxis = { independent: "x", dependent: "y"};
+    const flippedAxis = { dependent: "x", independent: "y" };
+    const normalAxis = { independent: "x", dependent: "y" };
     return flipped ? flippedAxis[axisType] : normalAxis[axisType];
   },
 
@@ -118,7 +119,7 @@ export default {
   },
 
   getGridProps(layout, style, datum) {
-    const {edge, transform} = layout;
+    const { edge, transform } = layout;
     return {
       x1: transform.x,
       y1: transform.y,
@@ -198,7 +199,7 @@ export default {
     const axisLabelProps = this.getAxisLabelProps(props, calculatedValues, globalTransform);
     const initialChildProps = { parent: {
       style: style.parent, ticks, scale, width, height, domain, standalone, theme
-    }};
+    } };
 
     return ticks.reduce((childProps, indexedTick, index) => {
       const tick = stringTicks ? tickValues[indexedTick - 1] : indexedTick;
@@ -254,7 +255,7 @@ export default {
   },
 
   getAxisLabelProps(props, calculatedValues, globalTransform) {
-    const {style, orientation, padding, labelPadding, isVertical} = calculatedValues;
+    const { style, orientation, padding, labelPadding, isVertical } = calculatedValues;
     const sign = orientationSign[orientation];
     const hPadding = padding.left + padding.right;
     const vPadding = padding.top + padding.bottom;
@@ -326,8 +327,10 @@ export default {
     }
     const isVertical = Helpers.isVertical(props);
     // TODO: magic numbers
+    /*eslint-disable no-magic-numbers*/
     const fontSize = labelStyle.fontSize || 14;
     return props.label ? (fontSize * (isVertical ? 2.3 : 1.6)) : 0;
+    /*eslint-enable no-magic-numbers*/
   },
 
   getOffset(props, calculatedValues) {
@@ -336,7 +339,7 @@ export default {
     } = calculatedValues;
     const xPadding = orientation === "right" ? padding.right : padding.left;
     const yPadding = orientation === "top" ? padding.top : padding.bottom;
-    const fontSize = style.axisLabel.fontSize || 14;
+    const fontSize = style.axisLabel.fontSize || 14; // eslint-disable-line no-magic-numbers
     const offsetX = (props.offsetX !== null) && (props.offsetX !== undefined)
       ? props.offsetX : xPadding;
     const offsetY = (props.offsetY !== null) && (props.offsetY !== undefined)
@@ -347,7 +350,7 @@ export default {
       return tickStyle.size || 0;
     });
     const totalPadding = fontSize + (2 * Math.max(...tickSizes)) + labelPadding;
-    const minimumPadding = 1.2 * fontSize; // TODO: magic numbers
+    const minimumPadding = 1.2 * fontSize; // eslint-disable-line no-magic-numbers
     const x = isVertical ? totalPadding : minimumPadding;
     const y = isVertical ? minimumPadding : totalPadding;
     return {
@@ -357,17 +360,17 @@ export default {
   },
 
   getTransform(props, calculatedValues, offset) {
-    const {orientation} = calculatedValues;
+    const { orientation } = calculatedValues;
     return {
-      top: {x: 0, y: offset.y},
-      bottom: {x: 0, y: props.height - offset.y},
-      left: {x: offset.x, y: 0},
-      right: {x: props.width - offset.x, y: 0}
+      top: { x: 0, y: offset.y },
+      bottom: { x: 0, y: props.height - offset.y },
+      left: { x: offset.x, y: 0 },
+      right: { x: props.width - offset.x, y: 0 }
     }[orientation];
   },
 
   getTickPosition(style, orientation, isVertical) {
-    const {tickStyle, labelStyle} = style;
+    const { tickStyle, labelStyle } = style;
     const size = tickStyle.size || 0;
     const tickPadding = tickStyle.padding || 0;
     const labelPadding = labelStyle.padding || 0;
@@ -389,17 +392,17 @@ export default {
   },
 
   getGridEdge(props, calculatedValues) {
-    const {orientation, padding, isVertical} = calculatedValues;
+    const { orientation, padding, isVertical } = calculatedValues;
     const sign = -orientationSign[orientation];
     const x = isVertical ?
       sign * (props.width - (padding.left + padding.right)) : 0;
     const y = isVertical ?
       0 : sign * (props.height - (padding.top + padding.bottom));
-    return {x, y};
+    return { x, y };
   },
 
   getGridOffset(props, calculatedValues, offset) {
-    const {padding, orientation } = calculatedValues;
+    const { padding, orientation } = calculatedValues;
     const xPadding = orientation === "right" ? padding.right : padding.left;
     const yPadding = orientation === "top" ? padding.top : padding.bottom;
     return {

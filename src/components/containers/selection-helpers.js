@@ -6,7 +6,7 @@ import { attachId } from "../../helpers/event-handlers.js";
 const SelectionHelpers = {
   getDatasets(props) {
     if (props.data) {
-      return [{data: props.data}];
+      return [{ data: props.data }];
     }
 
     const getData = (childProps) => {
@@ -20,10 +20,10 @@ const SelectionHelpers = {
       } else if (child.type && isFunction(child.type.getData)) {
         child = parent ? React.cloneElement(child, parent.props) : child;
         const childData = child.props && child.type.getData(child.props);
-        return childData ? {childName, data: childData} : null;
+        return childData ? { childName, data: childData } : null;
       } else {
         const childData = getData(child.props);
-        return childData ? {childName, data: childData} : null;
+        return childData ? { childName, data: childData } : null;
       }
     };
     return Helpers.reduceChildren(React.Children.toArray(props.children), iteratee);
@@ -43,7 +43,7 @@ const SelectionHelpers = {
   },
 
   getSelectedData(dataset, bounds) {
-    const {x, y} = bounds;
+    const { x, y } = bounds;
     const withinBounds = (d) => {
       return d._x >= x[0] && d._x <= x[1] && d._y >= y[0] && d._y <= y[1];
     };
@@ -58,14 +58,14 @@ const SelectionHelpers = {
         count++;
       }
     }
-    return count > 0 ? {eventKey, data} : null;
+    return count > 0 ? { eventKey, data } : null;
   },
 
   onMouseDown(evt, targetProps) {
     evt.preventDefault();
     const { dimension, scale } = targetProps;
     const datasets = targetProps.datasets || [];
-    const {x, y} = Selection.getSVGEventCoordinates(evt);
+    const { x, y } = Selection.getSVGEventCoordinates(evt);
     const x1 = dimension !== "y" ? x : Selection.getDomainCoordinates(scale).x[0];
     const y1 = dimension !== "x" ? y : Selection.getDomainCoordinates(scale).y[0];
     const x2 = dimension !== "y" ? x : Selection.getDomainCoordinates(scale).x[1];
@@ -77,7 +77,7 @@ const SelectionHelpers = {
       {
         target: "parent",
         mutation: () => {
-          return {x1, y1, select: true, x2, y2};
+          return { x1, y1, select: true, x2, y2 };
         }
       }, {
         target: "data",
@@ -89,11 +89,11 @@ const SelectionHelpers = {
   },
 
   onMouseMove(evt, targetProps) {
-    const {dimension, scale, select} = targetProps;
+    const { dimension, scale, select } = targetProps;
     if (!select) {
       return {};
     } else {
-      const {x, y} = Selection.getSVGEventCoordinates(evt);
+      const { x, y } = Selection.getSVGEventCoordinates(evt);
       const x2 = dimension !== "y" ? x : Selection.getDomainCoordinates(scale).x[1];
       const y2 = dimension !== "x" ? y : Selection.getDomainCoordinates(scale).y[1];
       return {
@@ -106,7 +106,7 @@ const SelectionHelpers = {
   },
 
   onMouseUp(evt, targetProps) {
-    const {x2, y2} = targetProps;
+    const { x2, y2 } = targetProps;
     if (!x2 || !y2) {
       return [{
         target: "parent",
@@ -133,7 +133,7 @@ const SelectionHelpers = {
         return {
           childName: d.childName, eventKey: d.eventKey, target: "data",
           mutation: () => {
-            return assign({active: true}, callbackMutation);
+            return assign({ active: true }, callbackMutation);
           }
         };
       }) : [];
@@ -147,6 +147,6 @@ export default {
   onMouseUp: SelectionHelpers.onMouseUp.bind(SelectionHelpers),
   onMouseMove: throttle(
     attachId(SelectionHelpers.onMouseMove.bind(SelectionHelpers)),
-    16,
-    {leading: true, trailing: false})
+    16, // eslint-disable-line no-magic-numbers
+    { leading: true, trailing: false })
 };

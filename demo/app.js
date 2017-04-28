@@ -1,5 +1,5 @@
-/*global window*/
-/*global document*/
+/*global document:false window:false */
+/*eslint-disable react/no-multi-comp */
 import React from "react";
 import ReactDOM from "react-dom";
 

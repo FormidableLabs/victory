@@ -1,8 +1,9 @@
 /*global window:false */
+/*eslint-disable no-magic-numbers,react/no-multi-comp */
 import React from "react";
 import PropTypes from "prop-types";
 import { merge, random, range } from "lodash";
-import {VictoryLine, VictoryChart} from "../../src/index";
+import { VictoryLine, VictoryChart } from "../../src/index";
 import { VictoryContainer, VictoryTheme, Curve, Point } from "victory-core";
 
 class PointedLine extends React.Component {
@@ -15,10 +16,10 @@ class PointedLine extends React.Component {
   }
 
   renderPoints(props) {
-    const {index, data, scale} = props;
+    const { index, data, scale } = props;
     return (data.map(
       (datum, pointIndex) => {
-        const {_x, _y} = datum;
+        const { _x, _y } = datum;
 
         const position = {
           x: scale.x(_x),
@@ -40,7 +41,7 @@ class PointedLine extends React.Component {
   }
 
   render() {
-    const {index} = this.props;
+    const { index } = this.props;
 
     return (
       <g key={`line-point-group-${index}`}>
@@ -65,10 +66,25 @@ export default class App extends React.Component {
     };
   }
 
+  componentDidMount() {
+    /* eslint-disable react/no-did-mount-set-state */
+    this.setStateInterval = window.setInterval(() => {
+      this.setState({
+        data: this.getData(),
+        transitionData: this.getTransitionData(),
+        style: this.getStyles()
+      });
+    }, 3000);
+  }
+
+  componentWillUnmount() {
+    window.clearInterval(this.setStateInterval);
+  }
+
   getTransitionData() {
     const lines = random(6, 10);
     return range(lines).map((line) => {
-      return {x: line, y: random(2, 10)};
+      return { x: line, y: random(2, 10) };
     });
   }
 
@@ -92,30 +108,15 @@ export default class App extends React.Component {
     };
   }
 
-  componentDidMount() {
-    /* eslint-disable react/no-did-mount-set-state */
-    this.setStateInterval = window.setInterval(() => {
-      this.setState({
-        data: this.getData(),
-        transitionData: this.getTransitionData(),
-        style: this.getStyles()
-      });
-    }, 3000);
-  }
-
-  componentWillUnmount() {
-    window.clearInterval(this.setStateInterval);
-  }
-
   render() {
-    const parentStyle = {border: "1px solid #ccc", margin: "2%", maxWidth: "40%"};
+    const parentStyle = { border: "1px solid #ccc", margin: "2%", maxWidth: "40%" };
     return (
       <div className="demo">
         <h1>VictoryLine</h1>
 
 
         <VictoryLine
-          style={{parent: parentStyle, data: {stroke: "blue"}}}
+          style={{ parent: parentStyle, data: { stroke: "blue" } }}
           y={(d) => Math.sin(2 * Math.PI * d.x)}
           sample={25}
         />
@@ -123,7 +124,7 @@ export default class App extends React.Component {
         <VictoryLine
           style={{
             parent: parentStyle,
-            data: {stroke: "red", strokeWidth: 6}
+            data: { stroke: "red", strokeWidth: 6 }
           }}
           events={[{
             target: "data",
@@ -132,13 +133,13 @@ export default class App extends React.Component {
                 return [
                   {
                     mutation: (props) => {
-                      return {style: merge({}, props.style, {stroke: "orange"})};
+                      return { style: merge({}, props.style, { stroke: "orange" }) };
                     }
                   }, {
                     target: "labels",
                     eventKey: 99,
                     mutation: () => {
-                      return {text: "hey"};
+                      return { text: "hey" };
                     }
                   }
                 ];
@@ -150,7 +151,7 @@ export default class App extends React.Component {
         />
 
         <VictoryLine
-          style={{parent: parentStyle}}
+          style={{ parent: parentStyle }}
           data={this.state.arrayData}
           x={0}
           y={1}
@@ -158,53 +159,53 @@ export default class App extends React.Component {
         />
 
         <VictoryLine
-          style={{parent: parentStyle}}
+          style={{ parent: parentStyle }}
           data={this.state.arrayData}
           x={0}
           y={1}
         />
 
         <VictoryLine
-          style={{parent: parentStyle}}
+          style={{ parent: parentStyle }}
           labels={(d) => Math.round(d.y)}
           data={[
-            {x: new Date(1982, 1, 1), y: 125},
-            {x: new Date(1987, 1, 1), y: 257},
-            {x: new Date(1993, 1, 1), y: 345},
-            {x: new Date(1997, 1, 1), y: 515},
-            {x: new Date(2001, 1, 1), y: 132},
-            {x: new Date(2005, 1, 1), y: 305},
-            {x: new Date(2011, 1, 1), y: 270},
-            {x: new Date(2015, 1, 1), y: 470}
+            { x: new Date(1982, 1, 1), y: 125 },
+            { x: new Date(1987, 1, 1), y: 257 },
+            { x: new Date(1993, 1, 1), y: 345 },
+            { x: new Date(1997, 1, 1), y: 515 },
+            { x: new Date(2001, 1, 1), y: 132 },
+            { x: new Date(2005, 1, 1), y: 305 },
+            { x: new Date(2011, 1, 1), y: 270 },
+            { x: new Date(2015, 1, 1), y: 470 }
           ]}
         />
 
         <VictoryLine
-          style={{parent: parentStyle}}
+          style={{ parent: parentStyle }}
           data={[
-            {x: 1, y: 1},
-            {x: 2, y: 3},
-            {x: 3, y: 5},
-            {x: 4, y: 2},
-            {x: 5, y: null},
-            {x: 6, y: null},
-            {x: 7, y: 6},
-            {x: 8, y: 7},
-            {x: 9, y: 8},
-            {x: 10, y: 12}
+            { x: 1, y: 1 },
+            { x: 2, y: 3 },
+            { x: 3, y: 5 },
+            { x: 4, y: 2 },
+            { x: 5, y: null },
+            { x: 6, y: null },
+            { x: 7, y: 6 },
+            { x: 8, y: 7 },
+            { x: 9, y: 8 },
+            { x: 10, y: 12 }
           ]}
         />
 
         <VictoryChart
-          scale={{x: "linear", y: "log"}}
+          scale={{ x: "linear", y: "log" }}
         >
         <VictoryLine
-          style={{parent: parentStyle}}
+          style={{ parent: parentStyle }}
         />
         </VictoryChart>
 
         <VictoryLine
-          style={{parent: parentStyle}}
+          style={{ parent: parentStyle }}
           data={this.state.arrayData}
           x={0}
           y={1}
@@ -215,7 +216,7 @@ export default class App extends React.Component {
           theme={VictoryTheme.grayscale}
         >
           <VictoryLine
-            style={{parent: parentStyle}}
+            style={{ parent: parentStyle }}
             data={this.state.arrayData}
             x={0}
             y={1}
@@ -230,56 +231,56 @@ export default class App extends React.Component {
       >
         <VictoryLine
           data={[
-            {x: new Date(1960, 1, 1), y: 125},
-            {x: new Date(1987, 1, 1), y: 257},
-            {x: new Date(1993, 1, 1), y: 345},
-            {x: new Date(1997, 1, 1), y: 515},
-            {x: new Date(2001, 1, 1), y: 132},
-            {x: new Date(2005, 1, 1), y: 305},
-            {x: new Date(2011, 1, 1), y: 270},
-            {x: new Date(2015, 1, 1), y: 470}
+            { x: new Date(1960, 1, 1), y: 125 },
+            { x: new Date(1987, 1, 1), y: 257 },
+            { x: new Date(1993, 1, 1), y: 345 },
+            { x: new Date(1997, 1, 1), y: 515 },
+            { x: new Date(2001, 1, 1), y: 132 },
+            { x: new Date(2005, 1, 1), y: 305 },
+            { x: new Date(2011, 1, 1), y: 270 },
+            { x: new Date(2015, 1, 1), y: 470 }
           ]}
         />
       </VictoryChart>
 
         <VictoryLine
-          style={{parent: parentStyle}}
+          style={{ parent: parentStyle }}
           data={[
-            {x: 1, y: 1},
-            {x: 2, y: 3},
-            {x: 3, y: 5},
-            {x: 4, y: 2},
-            {x: 5, y: null},
-            {x: 6, y: null},
-            {x: 7, y: 6},
-            {x: 8, y: 7},
-            {x: 9, y: 8},
-            {x: 10, y: 12}
+            { x: 1, y: 1 },
+            { x: 2, y: 3 },
+            { x: 3, y: 5 },
+            { x: 4, y: 2 },
+            { x: 5, y: null },
+            { x: 6, y: null },
+            { x: 7, y: 6 },
+            { x: 8, y: 7 },
+            { x: 9, y: 8 },
+            { x: 10, y: 12 }
           ]}
         />
 
         <VictoryLine
-          style={{parent: parentStyle}}
-          scale={{x: "linear", y: "log"}}
+          style={{ parent: parentStyle }}
+          scale={{ x: "linear", y: "log" }}
         />
 
         <VictoryLine
-          style={{parent: parentStyle}}
+          style={{ parent: parentStyle }}
           data={this.state.arrayData}
           x={0}
-          domainPadding={{x: [0, 100]}}
+          domainPadding={{ x: [0, 100] }}
           y={1}
           theme={VictoryTheme.material}
         />
 
         <VictoryChart
-          style={{parent: parentStyle}}
+          style={{ parent: parentStyle }}
           theme={VictoryTheme.material}
         >
           <VictoryLine
-            style={{parent: parentStyle, data: this.state.style}}
+            style={{ parent: parentStyle, data: this.state.style }}
             data={this.state.transitionData}
-            animate={{duration: 1500}}
+            animate={{ duration: 1500 }}
             containerComponent={
               <VictoryContainer
                 title="Line Chart"
@@ -290,21 +291,21 @@ export default class App extends React.Component {
         </VictoryChart>
 
         <VictoryChart
-          style={{parent: parentStyle}}
+          style={{ parent: parentStyle }}
           theme={VictoryTheme.material}
         >
             <VictoryLine
-              style={{parent: parentStyle}}
+              style={{ parent: parentStyle }}
               data={[]}
             />
         </VictoryChart>
 
         <VictoryLine
-          style={{parent: parentStyle}}
-          data={range(0, 2 * Math.PI, 0.01).map((t) => ({t}))}
+          style={{ parent: parentStyle }}
+          data={range(0, 2 * Math.PI, 0.01).map((t) => ({ t }))}
           sortKey={'t'}
-          x={({t}) => Math.sin(3 * t + (2 * Math.PI))}
-          y={({t}) => Math.sin(2 * t)}
+          x={({ t }) => Math.sin(3 * t + (2 * Math.PI))}
+          y={({ t }) => Math.sin(2 * t)}
         />
       </div>
     );

@@ -41,7 +41,7 @@ describe("components/victory-area", () => {
         padding: 50,
         scale: "linear",
         interpolation: "linear",
-        data: [{x: 0, y: 0, y0: 0}, {x: 2, y: 3, y0: 0}, {x: 4, y: 1, y0: 0}]
+        data: [{ x: 0, y: 0, y0: 0 }, { x: 2, y: 3, y0: 0 }, { x: 4, y: 1, y0: 0 }]
       };
       const wrapper = shallow(
         <VictoryArea {...props}/>
@@ -56,7 +56,7 @@ describe("components/victory-area", () => {
         scale: "linear",
         interpolation: "linear",
         sortKey: "x",
-        data: range(5).map((i) => ({x: i, y: i, y0: 0})).reverse()
+        data: range(5).map((i) => ({ x: i, y: i, y0: 0 })).reverse()
       };
       const wrapper = shallow(
         <VictoryArea {...props}/>
@@ -78,7 +78,7 @@ describe("components/victory-area", () => {
         <VictoryArea
           events={[{
             target: "parent",
-            eventHandlers: {onClick: clickHandler}
+            eventHandlers: { onClick: clickHandler }
           }]}
         />
       );
@@ -96,7 +96,7 @@ describe("components/victory-area", () => {
         <VictoryArea
           events={[{
             target: "data",
-            eventHandlers: {onClick: clickHandler}
+            eventHandlers: { onClick: clickHandler }
           }]}
         />
       );
@@ -118,7 +118,7 @@ describe("components/victory-area", () => {
           label="okay"
           events={[{
             target: "labels",
-            eventHandlers: {onClick: clickHandler}
+            eventHandlers: { onClick: clickHandler }
           }]}
         />
       );
@@ -127,7 +127,7 @@ describe("components/victory-area", () => {
         node.childAt(0).simulate("click");
         expect(clickHandler).called;
         // the first argument is the standard evt object
-        expect(clickHandler.args[index][1]).to.contain({text: "okay"});
+        expect(clickHandler.args[index][1]).to.contain({ text: "okay" });
       });
     });
   });
@@ -136,7 +136,7 @@ describe("components/victory-area", () => {
     it("adds an area role to the path area", () => {
       const wrapper = mount(<VictoryArea />);
       wrapper.find("path").nodes.forEach((p) => {
-        const {attributes: attr} = p;
+        const { attributes: attr } = p;
         const role = attr.getNamedItem("role");
         if (role) {
           const roleValue = role.value;

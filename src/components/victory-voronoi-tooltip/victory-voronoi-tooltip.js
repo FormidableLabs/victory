@@ -32,6 +32,11 @@ class VictoryVoronoiTooltip extends React.Component {
     ]),
     containerComponent: PropTypes.element,
     data: PropTypes.array,
+    dataComponent: PropTypes.element,
+    domain: PropTypes.oneOfType([
+      CustomPropTypes.domain,
+      PropTypes.shape({ x: CustomPropTypes.domain, y: CustomPropTypes.domain })
+    ]),
     domainPadding: PropTypes.oneOfType([
       PropTypes.shape({
         x: PropTypes.oneOfType([ PropTypes.number, CustomPropTypes.domain ]),
@@ -39,10 +44,10 @@ class VictoryVoronoiTooltip extends React.Component {
       }),
       PropTypes.number
     ]),
-    dataComponent: PropTypes.element,
-    domain: PropTypes.oneOfType([
-      CustomPropTypes.domain,
-      PropTypes.shape({ x: CustomPropTypes.domain, y: CustomPropTypes.domain })
+    eventKey: PropTypes.oneOfType([
+      PropTypes.func,
+      CustomPropTypes.allOfType([CustomPropTypes.integer, CustomPropTypes.nonNegative]),
+      PropTypes.string
     ]),
     events: PropTypes.arrayOf(PropTypes.shape({
       target: PropTypes.oneOf(["data", "labels", "parent"]),
@@ -53,15 +58,10 @@ class VictoryVoronoiTooltip extends React.Component {
       ]),
       eventHandlers: PropTypes.object
     })),
-    eventKey: PropTypes.oneOfType([
-      PropTypes.func,
-      CustomPropTypes.allOfType([CustomPropTypes.integer, CustomPropTypes.nonNegative]),
-      PropTypes.string
-    ]),
     groupComponent: PropTypes.element,
     height: CustomPropTypes.nonNegative,
-    labels: PropTypes.oneOfType([ PropTypes.func, PropTypes.array ]),
     labelComponent: PropTypes.element,
+    labels: PropTypes.oneOfType([ PropTypes.func, PropTypes.array ]),
     name: PropTypes.string,
     padding: PropTypes.oneOfType([
       PropTypes.number,
@@ -79,13 +79,13 @@ class VictoryVoronoiTooltip extends React.Component {
       events: PropTypes.array,
       getEventState: PropTypes.func
     }),
+    size: CustomPropTypes.nonNegative,
     sortKey: PropTypes.oneOfType([
       PropTypes.func,
       CustomPropTypes.allOfType([CustomPropTypes.integer, CustomPropTypes.nonNegative]),
       PropTypes.string,
       PropTypes.arrayOf(PropTypes.string)
     ]),
-    size: CustomPropTypes.nonNegative,
     standalone: PropTypes.bool,
     style: PropTypes.shape({
       parent: PropTypes.object,
@@ -147,6 +147,7 @@ class VictoryVoronoiTooltip extends React.Component {
       if (labelProps.text !== undefined && labelProps.text !== null) {
         return React.cloneElement(labelComponent, labelProps);
       }
+      return undefined;
     }).filter(Boolean);
 
     return labelComponents.length > 0 ?
@@ -159,13 +160,13 @@ class VictoryVoronoiTooltip extends React.Component {
   }
 
   renderContainer(props, children) {
-    const {containerComponent} = props;
+    const { containerComponent } = props;
     const parentProps = this.getComponentProps(containerComponent, "parent", "parent");
     return React.cloneElement(containerComponent, parentProps, children);
   }
 
   render() {
-    const {role} = this.constructor;
+    const { role } = this.constructor;
     const props = Helpers.modifyProps(this.props, fallbackProps, role);
     if (this.shouldAnimate()) {
       return (

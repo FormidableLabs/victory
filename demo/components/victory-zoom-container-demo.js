@@ -1,4 +1,5 @@
 /* globals window */
+/*eslint-disable no-magic-numbers,react/no-multi-comp */
 import React from "react";
 import { range, merge, random } from "lodash";
 import {
@@ -8,11 +9,6 @@ import {
 import { VictoryTheme, VictoryClipContainer } from "victory-core";
 
 export default class App extends React.Component {
-
-  state = {
-    barData: range(-50, 75).map((i) => ({x: i, y: Math.random()}))
-  };
-
   constructor() {
     super();
     this.state = {
@@ -27,6 +23,25 @@ export default class App extends React.Component {
     };
   }
 
+  state = {
+    barData: range(-50, 75).map((i) => ({ x: i, y: Math.random() }))
+  };
+
+  componentDidMount() {
+    /* eslint-disable react/no-did-mount-set-state */
+    this.setStateInterval = window.setInterval(() => {
+      this.setState({
+        data: this.getData(),
+        transitionData: this.getTransitionData(),
+        style: this.getStyles()
+      });
+    }, 3000);
+  }
+
+  componentWillUnmount() {
+    window.clearInterval(this.setStateInterval);
+  }
+
   getZoomDomain() {
     return {
       x: [random(0, 0.5, 0.1), random(0.5, 1, 0.1)]
@@ -36,7 +51,7 @@ export default class App extends React.Component {
   getTransitionData() {
     const lines = random(6, 10);
     return range(lines).map((line) => {
-      return {x: line, y: random(2, 10)};
+      return { x: line, y: random(2, 10) };
     });
   }
 
@@ -60,45 +75,30 @@ export default class App extends React.Component {
     };
   }
 
-  componentDidMount() {
-    /* eslint-disable react/no-did-mount-set-state */
-    this.setStateInterval = window.setInterval(() => {
-      this.setState({
-        data: this.getData(),
-        transitionData: this.getTransitionData(),
-        style: this.getStyles()
-      });
-    }, 3000);
-  }
-
-  componentWillUnmount() {
-    window.clearInterval(this.setStateInterval);
-  }
-
   render() {
-    const parentStyle = {border: "1px solid #ccc", margin: "2%", maxWidth: "40%"};
+    const parentStyle = { border: "1px solid #ccc", margin: "2%", maxWidth: "40%" };
     return (
       <div className="demo">
         <h1>VictoryZoomContainer</h1>
 
           <VictoryLine
             containerComponent={<VictoryZoomContainer/>}
-            animate={{duration: 1500}}
-            style={{parent: parentStyle, data: this.state.style}}
+            animate={{ duration: 1500 }}
+            style={{ parent: parentStyle, data: this.state.style }}
             data={this.state.transitionData}
           />
 
           <VictoryGroup
             containerComponent={<VictoryZoomContainer/>}
-            style={{parent: parentStyle}} data={this.state.transitionData}
+            style={{ parent: parentStyle }} data={this.state.transitionData}
           >
-            <VictoryLine animate={{duration: 1500}} style={{data: this.state.style}} />
+            <VictoryLine animate={{ duration: 1500 }} style={{ data: this.state.style }} />
           </VictoryGroup>
 
-          <VictoryChart style={{parent: parentStyle}}
+          <VictoryChart style={{ parent: parentStyle }}
             containerComponent={
               <VictoryZoomContainer
-                zoomDomain={{x: [new Date(1993, 1, 1), new Date(2005, 1, 1)]}}
+                zoomDomain={{ x: [new Date(1993, 1, 1), new Date(2005, 1, 1)] }}
               />
             }
             scale={{
@@ -110,48 +110,48 @@ export default class App extends React.Component {
             />
             <VictoryLine
               style={{
-                data: {stroke: "red", strokeWidth: 5}
+                data: { stroke: "red", strokeWidth: 5 }
               }}
               data={[
-                {x: new Date(1982, 1, 1), y: 125},
-                {x: new Date(1987, 1, 1), y: 257},
-                {x: new Date(1993, 1, 1), y: 345},
-                {x: new Date(1997, 1, 1), y: 515},
-                {x: new Date(2001, 1, 1), y: 132},
-                {x: new Date(2005, 1, 1), y: 305},
-                {x: new Date(2011, 1, 1), y: 270},
-                {x: new Date(2015, 1, 1), y: 470}
+                { x: new Date(1982, 1, 1), y: 125 },
+                { x: new Date(1987, 1, 1), y: 257 },
+                { x: new Date(1993, 1, 1), y: 345 },
+                { x: new Date(1997, 1, 1), y: 515 },
+                { x: new Date(2001, 1, 1), y: 132 },
+                { x: new Date(2005, 1, 1), y: 305 },
+                { x: new Date(2011, 1, 1), y: 270 },
+                { x: new Date(2015, 1, 1), y: 470 }
               ]}
             />
           </VictoryChart>
 
-          <VictoryChart style={{parent: parentStyle}}
-            animate={{duration: 1500}}
-            domainPadding={{x: 20, y: 0}}
+          <VictoryChart style={{ parent: parentStyle }}
+            animate={{ duration: 1500 }}
+            domainPadding={{ x: 20, y: 0 }}
             containerComponent={
               <VictoryZoomContainer
-                minimumZoom={{x: 5}}
+                minimumZoom={{ x: 5 }}
                 clipContainerComponent={
-                  <VictoryClipContainer clipPadding={{top: 15, bottom: 15}}/>
+                  <VictoryClipContainer clipPadding={{ top: 15, bottom: 15 }}/>
                 }
               />
             }
           >
             <VictoryScatter
-              style={{parent: parentStyle, data: {fill: "orange"}}}
+              style={{ parent: parentStyle, data: { fill: "orange" } }}
               size={15}
               data={this.state.data}
             />
           </VictoryChart>
 
-        <button onClick={() => this.setState({zoomDomain: this.getZoomDomain()})}>
+        <button onClick={() => this.setState({ zoomDomain: this.getZoomDomain() })}>
           New domain
         </button>
 
           <VictoryChart
             containerComponent={<VictoryZoomContainer zoomDomain={this.state.zoomDomain}/>}
-            animate={{duration: 1500}}
-            style={{parent: parentStyle}}
+            animate={{ duration: 1500 }}
+            style={{ parent: parentStyle }}
             events={[{
               target: "data",
               childName: "line",
@@ -161,7 +161,7 @@ export default class App extends React.Component {
                     {
                       mutation: (props) => {
                         const strokeWidth = props.style.strokeWidth + 1;
-                        return {style: merge({}, props.style, {strokeWidth})};
+                        return { style: merge({}, props.style, { strokeWidth }) };
                       }
                     }
                   ];
@@ -171,17 +171,20 @@ export default class App extends React.Component {
           >
             <VictoryLine
               name="line"
-              style={{parent: parentStyle, data: {stroke: "blue"}}}
+              style={{ parent: parentStyle, data: { stroke: "blue" } }}
               y={(d) => Math.sin(2 * Math.PI * d.x)}
               sample={25}
             />
           </VictoryChart>
 
-          <VictoryChart style={{parent: parentStyle}} containerComponent={<VictoryZoomContainer/>}>
+          <VictoryChart
+            style={{ parent: parentStyle }}
+            containerComponent={<VictoryZoomContainer/>}
+          >
             <VictoryLine
               style={{
                 parent: parentStyle,
-                data: {stroke: "red", strokeWidth: 6}
+                data: { stroke: "red", strokeWidth: 6 }
               }}
               events={[{
                 target: "data",
@@ -190,12 +193,12 @@ export default class App extends React.Component {
                     return [
                       {
                         mutation: (props) => {
-                          return {style: merge({}, props.style, {stroke: "orange"})};
+                          return { style: merge({}, props.style, { stroke: "orange" }) };
                         }
                       }, {
                         target: "labels",
                         mutation: () => {
-                          return {text: "hey"};
+                          return { text: "hey" };
                         }
                       }
                     ];
@@ -207,9 +210,12 @@ export default class App extends React.Component {
             />
           </VictoryChart>
 
-          <VictoryChart style={{parent: parentStyle}} containerComponent={<VictoryZoomContainer/>}>
+          <VictoryChart
+            style={{ parent: parentStyle }}
+            containerComponent={<VictoryZoomContainer/>}
+          >
             <VictoryArea
-              style={{parent: parentStyle, data: {stroke: "#333", fill: "#888", opacity: 0.4}}}
+              style={{ parent: parentStyle, data: { stroke: "#333", fill: "#888", opacity: 0.4 } }}
               data={this.state.data}
               interpolation="stepBefore"
             />
@@ -218,7 +224,7 @@ export default class App extends React.Component {
             <VictoryAxis dependentAxis/>
           </VictoryChart>
 
-          <VictoryChart style={{parent: parentStyle}}
+          <VictoryChart style={{ parent: parentStyle }}
             containerComponent={<VictoryZoomContainer/>}
             theme={VictoryTheme.material}
             events={[{
@@ -231,14 +237,14 @@ export default class App extends React.Component {
                       childName: "area-2",
                       target: "data",
                       mutation: (props) => {
-                        return {style: merge({}, props.style, {fill: "gold"})};
+                        return { style: merge({}, props.style, { fill: "gold" }) };
                       }
                     }, {
                       childName: "area-3",
                       target: "data",
                       mutation: (props) => {
                         return {
-                          style: merge({}, props.style, {fill: "orange"})
+                          style: merge({}, props.style, { fill: "orange" })
                         };
                       }
                     }, {
@@ -246,7 +252,7 @@ export default class App extends React.Component {
                       target: "data",
                       mutation: (props) => {
                         return {
-                          style: merge({}, props.style, {fill: "red"})
+                          style: merge({}, props.style, { fill: "red" })
                         };
                       }
                     }
@@ -259,22 +265,38 @@ export default class App extends React.Component {
             <VictoryStack>
               <VictoryArea name="area-1"
                 data={[
-                  {x: "a", y: 2}, {x: "b", y: 3}, {x: "c", y: 5}, {x: "d", y: 4}, {x: "e", y: 7}
+                  { x: "a", y: 2 },
+                  { x: "b", y: 3 },
+                  { x: "c", y: 5 },
+                  { x: "d", y: 4 },
+                  { x: "e", y: 7 }
                 ]}
               />
               <VictoryArea name="area-2"
                 data={[
-                  {x: "a", y: 1}, {x: "b", y: 4}, {x: "c", y: 5}, {x: "d", y: 7}, {x: "e", y: 5}
+                  { x: "a", y: 1 },
+                  { x: "b", y: 4 },
+                  { x: "c", y: 5 },
+                  { x: "d", y: 7 },
+                  { x: "e", y: 5 }
                 ]}
               />
               <VictoryArea name="area-3"
                 data={[
-                  {x: "a", y: 3}, {x: "b", y: 2}, {x: "c", y: 6}, {x: "d", y: 2}, {x: "e", y: 6}
+                  { x: "a", y: 3 },
+                  { x: "b", y: 2 },
+                  { x: "c", y: 6 },
+                  { x: "d", y: 2 },
+                  { x: "e", y: 6 }
                 ]}
               />
               <VictoryArea name="area-4"
                 data={[
-                  {x: "a", y: 2}, {x: "b", y: 3}, {x: "c", y: 3}, {x: "d", y: 4}, {x: "e", y: 7}
+                  { x: "a", y: 2 },
+                  { x: "b", y: 3 },
+                  { x: "c", y: 3 },
+                  { x: "d", y: 4 },
+                  { x: "e", y: 7 }
                 ]}
               />
             </VictoryStack>

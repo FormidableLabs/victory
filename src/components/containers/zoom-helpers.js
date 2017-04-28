@@ -1,3 +1,4 @@
+/*eslint no-magic-numbers: ["error", { "ignore": [-1, 0, 1, 2, 1000] }]*/
 import { Selection, Collection } from "victory-core";
 import { throttle, isFunction, defaults } from "lodash";
 import { attachId } from "../../helpers/event-handlers.js";
@@ -45,7 +46,7 @@ const Helpers = {
   },
 
   getMinimumDomain(point, props, axis) {
-    const {minimumZoom } = props;
+    const { minimumZoom } = props;
     const originalDomain = this.getDomain(props)[axis];
     const [from, to] = originalDomain;
     const defaultMin = Math.abs(from - to) / 1000;
@@ -60,6 +61,7 @@ const Helpers = {
 
   getScaleFactor(evt) {
     const sign = evt.deltaY > 0 ? 1 : -1;
+   // eslint-disable-next-line no-magic-numbers
     const delta = Math.min(Math.abs(evt.deltaY / 300), 0.5); // TODO: Check scale factor
     return Math.abs(1 + sign * delta);
   },
@@ -72,7 +74,7 @@ const Helpers = {
   },
 
   getPosition(evt, props, originalDomain) {
-    const {x, y} = Selection.getSVGEventCoordinates(evt);
+    const { x, y } = Selection.getSVGEventCoordinates(evt);
     const originalScale = {
       x: props.scale.x.domain(originalDomain.x),
       y: props.scale.y.domain(originalDomain.y)
@@ -123,22 +125,23 @@ const Helpers = {
       return isFunction(getTimer().resumeAnimation) ?
         () => getTimer().resumeAnimation() : undefined;
     }
+    return undefined;
   },
 
   getDomain(props) {
-    const {originalDomain, domain, scale} = props;
+    const { originalDomain, domain, scale } = props;
     const scaleDomain = { x: scale.x.domain(), y: scale.y.domain() };
     return defaults({}, originalDomain, domain, scaleDomain);
   },
 
   onMouseDown(evt, targetProps) {
     evt.preventDefault();
-    const {domain, zoomDomain} = targetProps;
+    const { domain, zoomDomain } = targetProps;
     const originalDomain = this.getDomain(targetProps);
     const currentDomain = defaults(
       {}, targetProps.currentDomain || zoomDomain || originalDomain, domain
     );
-    const {x, y} = Selection.getSVGEventCoordinates(evt);
+    const { x, y } = Selection.getSVGEventCoordinates(evt);
     return [{
       target: "parent",
       mutation: () => {
@@ -155,7 +158,7 @@ const Helpers = {
     return [{
       target: "parent",
       mutation: () => {
-        return {panning: false};
+        return { panning: false };
       }
     }];
   },
@@ -164,7 +167,7 @@ const Helpers = {
     return [{
       target: "parent",
       mutation: () => {
-        return {panning: false};
+        return { panning: false };
       }
     }];
   },
@@ -172,7 +175,7 @@ const Helpers = {
   onMouseMove(evt, targetProps, eventKey, ctx) { // eslint-disable-line max-params
     if (targetProps.panning) {
       const { scale, startX, startY, onDomainChange, dimension, domain, zoomDomain } = targetProps;
-      const {x, y} = Selection.getSVGEventCoordinates(evt);
+      const { x, y } = Selection.getSVGEventCoordinates(evt);
       const originalDomain = this.getDomain(targetProps);
       const lastDomain = defaults(
         {}, targetProps.currentDomain || zoomDomain || originalDomain, domain
@@ -198,6 +201,7 @@ const Helpers = {
         }
       }];
     }
+    return undefined;
   },
 
   onWheel(evt, targetProps, eventKey, ctx) { // eslint-disable-line max-params
@@ -209,7 +213,7 @@ const Helpers = {
     const lastDomain = defaults(
       {}, targetProps.currentDomain || zoomDomain || originalDomain, domain
     );
-    const {x, y} = lastDomain;
+    const { x, y } = lastDomain;
     const currentDomain = {
       x: dimension === "y" ? lastDomain.x : this.scale(x, evt, targetProps, "x"),
       y: dimension === "x" ? lastDomain.y : this.scale(y, evt, targetProps, "y")
@@ -239,12 +243,12 @@ export default {
   onMouseLeave: Helpers.onMouseLeave.bind(Helpers),
   onMouseMove: throttle(
     attachId(Helpers.onMouseMove.bind(Helpers)),
-    16,
-    {leading: true, trailing: false}
+    16, // eslint-disable-line no-magic-numbers
+    { leading: true, trailing: false }
   ),
   onWheel: throttle(
     attachId(Helpers.onWheel.bind(Helpers)),
-    16,
-    {leading: true, trailing: false}
+    16, // eslint-disable-line no-magic-numbers
+    { leading: true, trailing: false }
   )
 };

@@ -6,9 +6,9 @@ import { attachId } from "../../helpers/event-handlers.js";
 
 const VoronoiHelpers = {
   withinBounds(props, point) {
-    const {width, height, voronoiPadding} = props;
+    const { width, height, voronoiPadding } = props;
     const padding = voronoiPadding || 0;
-    const {x, y} = point;
+    const { x, y } = point;
     return x >= padding && x <= width - padding && y >= padding && y <= height - padding;
   },
 
@@ -54,7 +54,7 @@ const VoronoiHelpers = {
   // returns an array of objects with point and data where point is an x, y coordinate, and data is
   // an array of points belonging to that coordinate
   mergeDatasets(props, datasets) {
-    const {scale} = props;
+    const { scale } = props;
     const points = groupBy(datasets, (datum) => {
       const x = scale.x(datum ._voronoiX);
       const y = scale.y(datum ._voronoiY);
@@ -71,7 +71,7 @@ const VoronoiHelpers = {
   },
 
   getVoronoi(props, mousePosition) {
-    const {width, height, voronoiPadding} = props;
+    const { width, height, voronoiPadding } = props;
     const padding = voronoiPadding || 0;
     const voronoiFunction = d3Voronoi()
       .x((d) => d.x)
@@ -84,18 +84,18 @@ const VoronoiHelpers = {
   },
 
   getActiveMutations(props, point) {
-    const {childName, continuous} = point;
+    const { childName, continuous } = point;
     const targets = props.labels ? ["data"] : ["data", "labels"];
     return targets.map((target) => {
       const eventKey = continuous === true && target === "data" ? "all" : point.eventKey;
       return {
-        childName, eventKey, target, mutation: () => ({active: true })
+        childName, eventKey, target, mutation: () => ({ active: true })
       };
     });
   },
 
   getInactiveMutations(props, point) {
-    const {childName, continuous} = point;
+    const { childName, continuous } = point;
     const targets = props.labels ? ["data"] : ["data", "labels"];
     return targets.map((target) => {
       const eventKey = continuous && target === "data" ? "all" : point.eventKey;
@@ -163,6 +163,6 @@ export default {
   onMouseLeave: VoronoiHelpers.onMouseLeave.bind(VoronoiHelpers),
   onMouseMove: throttle(
     attachId(VoronoiHelpers.onMouseMove.bind(VoronoiHelpers)),
-    32,
-    {leading: true, trailing: false})
+    32, // eslint-disable-line no-magic-numbers
+    { leading: true, trailing: false })
 };

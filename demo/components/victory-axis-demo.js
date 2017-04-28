@@ -1,9 +1,9 @@
 /*global window:false */
+/*eslint-disable no-magic-numbers */
 import React from "react";
 import { VictoryAxis } from "../../src/index";
-import { VictoryLabel } from "victory-core";
+import { VictoryLabel, VictoryContainer, VictoryTheme } from "victory-core";
 import { merge, random, range } from "lodash";
-import { VictoryContainer, VictoryTheme } from "victory-core";
 import XYTheme from "../theme/victory-axis-differential-styling-theme";
 
 export default class App extends React.Component {
@@ -13,17 +13,6 @@ export default class App extends React.Component {
       tickValues: [5, 10, 25, 31, 42],
       domain: [-5, 5]
     };
-  }
-
-  getTickValues() {
-    return range(5).map((i) => {
-      return 10 * i + random(5);
-    });
-  }
-
-  getDomain() {
-    const someNumber = random(2, 5);
-    return [-someNumber, someNumber];
   }
 
   componentDidMount() {
@@ -40,13 +29,24 @@ export default class App extends React.Component {
     window.clearInterval(this.setStateInterval);
   }
 
+  getTickValues() {
+    return range(5).map((i) => {
+      return 10 * i + random(5);
+    });
+  }
+
+  getDomain() {
+    const someNumber = random(2, 5);
+    return [-someNumber, someNumber];
+  }
+
   render() {
     const style = {
-      parent: {border: "1px solid #ccc", margin: "2%", maxWidth: "40%"}
+      parent: { border: "1px solid #ccc", margin: "2%", maxWidth: "40%" }
     };
 
     const styleOverrides = {
-      parent: {border: "1px solid #ccc", margin: "2%", maxWidth: "40%"},
+      parent: { border: "1px solid #ccc", margin: "2%", maxWidth: "40%" },
       axis: {
         stroke: "black"
       },
@@ -84,7 +84,7 @@ export default class App extends React.Component {
             tickValues={this.state.tickValues}
             theme={VictoryTheme.material}
             tickFormat={["first", "second", "third", "fourth", "fifth"]}
-            animate={{duration: 2000}}
+            animate={{ duration: 2000 }}
             containerComponent={
               <VictoryContainer
                 title="Axis Example"
@@ -100,7 +100,7 @@ export default class App extends React.Component {
             style={{
               parent: style.parent,
               axis: { strokeWidth: 3 },
-              tickLabels: { angle: 45},
+              tickLabels: { angle: 45 },
               grid: { stroke: "#F4511E", strokeWidth: 2 }
             }}
             containerComponent={
@@ -116,12 +116,12 @@ export default class App extends React.Component {
                     return [
                       {
                         mutation: (props) => {
-                          return {style: merge({}, props.style, {stroke: "orange"})};
+                          return { style: merge({}, props.style, { stroke: "orange" }) };
                         }
                       }, {
                         target: "tickLabels",
                         mutation: () => {
-                          return {text: "hey"};
+                          return { text: "hey" };
                         }
                       }
                     ];
@@ -186,10 +186,10 @@ export default class App extends React.Component {
           <VictoryAxis
             style={{
               parent: style.parent,
-              axisLabel: { padding: 45}
+              axisLabel: { padding: 45 }
             }}
             label="cool log axis"
-            padding={{top: 30, bottom: 30, left: 80, right: 30}}
+            padding={{ top: 30, bottom: 30, left: 80, right: 30 }}
             orientation="left"
             scale={"log"}
             domain={[1, 5]}
@@ -197,10 +197,10 @@ export default class App extends React.Component {
           <VictoryAxis
             style={{
               parent: style.parent,
-              axisLabel: { padding: 45}
+              axisLabel: { padding: 45 }
             }}
             label="cool log axis"
-            padding={{top: 40, bottom: 40, right: 80}}
+            padding={{ top: 40, bottom: 40, right: 80 }}
             orientation="right"
             scale={"log"}
             domain={[1, 5]}
@@ -210,7 +210,7 @@ export default class App extends React.Component {
           <h2>Ordinal Scales</h2>
           <VictoryAxis
             label="TEAMS"
-            padding={{top: 90, bottom: 40, left: 40, right: 40}}
+            padding={{ top: 90, bottom: 40, left: 40, right: 40 }}
             orientation="top"
             style={styleOverrides}
             tickValues={[
@@ -223,7 +223,7 @@ export default class App extends React.Component {
           />
           <VictoryAxis
             label="TEAMS"
-            padding={{top: 40, bottom: 40, left: 40, right: 90}}
+            padding={{ top: 40, bottom: 40, left: 40, right: 90 }}
             orientation="right"
             style={styleOverrides}
             tickValues={[
@@ -237,7 +237,7 @@ export default class App extends React.Component {
           <VictoryAxis
             label="TEAMS"
             orientation="bottom"
-            padding={{top: 40, bottom: 90, left: 40, right: 40}}
+            padding={{ top: 40, bottom: 90, left: 40, right: 40 }}
             style={styleOverrides}
             tickValues={[
               "Mets\nNY",
@@ -250,7 +250,7 @@ export default class App extends React.Component {
 
           <VictoryAxis
             label="TEAMS"
-            padding={{top: 40, bottom: 40, left: 90, right: 40}}
+            padding={{ top: 40, bottom: 40, left: 90, right: 40 }}
             orientation="left"
             style={styleOverrides}
             tickValues={[

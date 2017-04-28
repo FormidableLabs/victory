@@ -39,8 +39,8 @@ describe("components/victory-voronoi", () => {
         width: 400,
         height: 300,
         padding: 50,
-        domain: {x: [0, 5], y: [0, 5]},
-        data: [{x: 0, y: 0}, {x: 2, y: 3}, {x: 4, y: 1}]
+        domain: { x: [0, 5], y: [0, 5] },
+        data: [{ x: 0, y: 0 }, { x: 2, y: 3 }, { x: 4, y: 1 }]
       };
       const wrapper = shallow(
         <VictoryVoronoi {...props}/>
@@ -53,7 +53,7 @@ describe("components/victory-voronoi", () => {
     });
 
     it("sorts data by sortKey prop", () => {
-      const data = range(5).map((i) => ({x: i, y: i})).reverse();
+      const data = range(5).map((i) => ({ x: i, y: i })).reverse();
       const wrapper = shallow(
         <VictoryVoronoi data={data} sortKey="x"/>
       );
@@ -70,7 +70,7 @@ describe("components/victory-voronoi", () => {
         <VictoryVoronoi
           events={[{
             target: "parent",
-            eventHandlers: {onClick: clickHandler}
+            eventHandlers: { onClick: clickHandler }
           }]}
         />
       );
@@ -88,7 +88,7 @@ describe("components/victory-voronoi", () => {
         <VictoryVoronoi
           events={[{
             target: "data",
-            eventHandlers: {onClick: clickHandler}
+            eventHandlers: { onClick: clickHandler }
           }]}
         />
       );
@@ -111,7 +111,7 @@ describe("components/victory-voronoi", () => {
           label="okay"
           events={[{
             target: "labels",
-            eventHandlers: {onClick: clickHandler}
+            eventHandlers: { onClick: clickHandler }
           }]}
         />
       );
@@ -120,7 +120,7 @@ describe("components/victory-voronoi", () => {
         node.childAt(0).simulate("click");
         expect(clickHandler).called;
         // the first argument is the standard evt object
-        expect(clickHandler.args[index][1]).to.contain({text: "okay"});
+        expect(clickHandler.args[index][1]).to.contain({ text: "okay" });
       });
     });
   });
@@ -129,7 +129,7 @@ describe("components/victory-voronoi", () => {
     it("adds an area role to the path area", () => {
       const wrapper = mount(<VictoryVoronoi/>);
       wrapper.find("path").nodes.forEach((p) => {
-        const {attributes: attr} = p;
+        const { attributes: attr } = p;
         const role = attr.getNamedItem("role");
         if (role) {
           const roleValue = role.value;
