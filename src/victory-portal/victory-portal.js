@@ -9,9 +9,9 @@ export default class VictoryPortal extends React.Component {
   };
 
   static contextTypes = {
-    portalUpdate: PropTypes.func,
+    portalDeregister: PropTypes.func,
     portalRegister: PropTypes.func,
-    portalDeregister: PropTypes.func
+    portalUpdate: PropTypes.func
   }
 
   componentDidMount() {

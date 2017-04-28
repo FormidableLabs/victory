@@ -7,25 +7,23 @@ export default class VictoryClipContainer extends React.Component {
   static displayName = "VictoryClipContainer";
   static role = "container";
   static propTypes = {
-    className: PropTypes.string,
-    style: PropTypes.object,
-    clipPadding: PropTypes.shape({
-      top: PropTypes.number,
-      bottom: PropTypes.number,
-      left: PropTypes.number,
-      right: PropTypes.number
-    }),
-    clipHeight: PropTypes.number,
-    clipWidth: PropTypes.number,
-    events: PropTypes.object,
     children: PropTypes.oneOfType([
       PropTypes.arrayOf(PropTypes.node),
       PropTypes.node
     ]),
+    className: PropTypes.string,
+    clipHeight: PropTypes.number,
+    clipPadding: PropTypes.shape({
+      top: PropTypes.number, bottom: PropTypes.number,
+      left: PropTypes.number, right: PropTypes.number
+    }),
     clipPathComponent: PropTypes.element,
+    clipWidth: PropTypes.number,
+    events: PropTypes.object,
+    style: PropTypes.object,
+    transform: PropTypes.string,
     translateX: PropTypes.number,
-    translateY: PropTypes.number,
-    transform: PropTypes.string
+    translateY: PropTypes.number
   }
 
   static defaultProps = {

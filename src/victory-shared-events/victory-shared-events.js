@@ -14,7 +14,6 @@ export default class VictorySharedEvents extends React.Component {
       PropTypes.node
     ]),
     container: PropTypes.node,
-    groupComponent: PropTypes.node,
     events: PropTypes.arrayOf(PropTypes.shape({
       childName: PropTypes.oneOfType([
         PropTypes.string,
@@ -34,7 +33,8 @@ export default class VictorySharedEvents extends React.Component {
       PropTypes.func,
       CustomPropTypes.allOfType([CustomPropTypes.integer, CustomPropTypes.nonNegative]),
       PropTypes.string
-    ])
+    ]),
+    groupComponent: PropTypes.node
   };
 
   static defaultProps = {

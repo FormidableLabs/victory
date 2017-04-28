@@ -9,8 +9,8 @@ export default class VictoryTransition extends React.Component {
 
   static propTypes = {
     animate: PropTypes.object,
-    children: PropTypes.node,
-    animationWhitelist: PropTypes.array
+    animationWhitelist: PropTypes.array,
+    children: PropTypes.node
   };
 
   constructor(props) {

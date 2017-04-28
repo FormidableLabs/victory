@@ -8,21 +8,21 @@ export default class VictoryContainer extends React.Component {
   static displayName = "VictoryContainer";
   static role = "container";
   static propTypes = {
-    className: PropTypes.string,
-    style: PropTypes.object,
-    height: PropTypes.number,
-    width: PropTypes.number,
-    events: PropTypes.object,
     children: PropTypes.oneOfType([
       PropTypes.arrayOf(PropTypes.node),
       PropTypes.node
     ]),
-    title: PropTypes.string,
+    className: PropTypes.string,
     desc: PropTypes.string,
+    events: PropTypes.object,
+    height: PropTypes.number,
     portalComponent: PropTypes.element,
     responsive: PropTypes.bool,
     standalone: PropTypes.bool,
-    theme: PropTypes.object
+    style: PropTypes.object,
+    theme: PropTypes.object,
+    title: PropTypes.string,
+    width: PropTypes.number
   }
 
   static defaultProps = {

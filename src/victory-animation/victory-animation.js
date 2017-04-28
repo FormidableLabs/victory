@@ -9,6 +9,11 @@ export default class VictoryAnimation extends React.Component {
 
   static propTypes = {
     children: PropTypes.func,
+    data: PropTypes.oneOfType([
+      PropTypes.object,
+      PropTypes.array
+    ]),
+    delay: PropTypes.number,
     duration: PropTypes.number,
     easing: PropTypes.oneOf([
       "back", "backIn", "backOut", "backInOut",
@@ -22,19 +27,14 @@ export default class VictoryAnimation extends React.Component {
       "quad", "quadIn", "quadOut", "quadInOut",
       "sin", "sinIn", "sinOut", "sinInOut"
     ]),
-    delay: PropTypes.number,
-    onEnd: PropTypes.func,
-    data: PropTypes.oneOfType([
-      PropTypes.object,
-      PropTypes.array
-    ])
+    onEnd: PropTypes.func
   };
 
   static defaultProps = {
-    duration: 1000,
-    easing: "quadInOut",
+    data: {},
     delay: 0,
-    data: {}
+    duration: 1000,
+    easing: "quadInOut"
   };
 
   static contextTypes = {
