@@ -1,42 +1,62 @@
-/*global document:false */
+/*global document:false, window:false */
 import React from "react";
 import ReactDOM from "react-dom";
 import AnimationDemo from "./victory-animation-demo";
 import LabelDemo from "./victory-label-demo";
 import LegendDemo from "./victory-legend-demo";
 import TooltipDemo from "./victory-tooltip-demo";
-import { Router, Route, Link, hashHistory } from "react-router";
 
-const content = document.getElementById("content");
-
-const App = React.createClass({
-  propTypes: {
-    children: React.PropTypes.element
-  },
-
+class Home extends React.Component {
   render() {
     return (
+      <h1>Pick A Demo</h1>
+    );
+  }
+}
+
+class App extends React.Component {
+  constructor() {
+    super();
+    this.state = {
+      route: window.location.hash.substr(1)
+    };
+  }
+
+  componentWillMount() {
+    window.addEventListener("hashchange", () => {
+      this.setState({
+        route: window.location.hash.substr(1)
+      });
+    });
+  }
+
+  getDemo() { // eslint-disable-line complexity
+    let Child;
+    switch (this.state.route) {
+    case "/animation": Child = AnimationDemo; break;
+    case "/label": Child = LabelDemo; break;
+    case "/legend": Child = LegendDemo; break;
+    case "/tooltip": Child = TooltipDemo; break;
+    default: Child = Home;
+    }
+    return Child;
+  }
+
+  render() {
+    const Child = this.getDemo();
+    return (
       <div>
-        <h1>App</h1>
+        <h1>Demos</h1>
         <ul>
-          <li><Link to="/animation">Victory Animation Demo</Link></li>
-          <li><Link to="/label">Victory Label Demo</Link></li>
-          <li><Link to="/legend">Victory Legend</Link></li>
-          <li><Link to="/tooltip">Victory Tooltip Demo</Link></li>
+          <li><a href="#/animation">Victory Animation Demo</a></li>
+          <li><a href="#/label">Victory Label Demo</a></li>
+          <li><a href="#/legend">Victory Legend</a></li>
+          <li><a href="#/tooltip">Victory Tooltip Demo</a></li>
         </ul>
-        {this.props.children}
+        <Child/>
       </div>
     );
   }
-});
+}
 
-ReactDOM.render((
-  <Router history={hashHistory}>
-    <Route path="/" component={App}>
-      <Route path="animation" component={AnimationDemo}/>
-      <Route path="label" component={LabelDemo}/>
-      <Route path="legend" component={LegendDemo}/>
-      <Route path="tooltip" component={TooltipDemo}/>
-    </Route>
-  </Router>
-), content);
+ReactDOM.render(<App/>, document.getElementById("content"));

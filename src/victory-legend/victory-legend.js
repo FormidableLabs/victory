@@ -1,4 +1,5 @@
-import React, { PropTypes } from "react";
+import React from "react";
+import PropTypes from "prop-types";
 import { PropTypes as CustomPropTypes, Style, TextSize, Helpers } from "../victory-util/index";
 import { merge, isEmpty, defaults, sumBy, maxBy } from "lodash";
 import VictoryLabel from "../victory-label/victory-label";

@@ -1,4 +1,5 @@
-import React, { PropTypes } from "react";
+import React from "react";
+import PropTypes from "prop-types";
 import Helpers from "../victory-util/helpers";
 import pathHelpers from "./path-helpers";
 import { isEqual } from "lodash";
@@ -16,7 +17,7 @@ export default class Point extends React.Component {
       PropTypes.number,
       PropTypes.func
     ]),
-    shapeRendering: React.PropTypes.string,
+    shapeRendering: PropTypes.string,
     symbol: PropTypes.oneOfType([
       PropTypes.oneOf([
         "circle", "diamond", "plus", "square", "star", "triangleDown", "triangleUp"

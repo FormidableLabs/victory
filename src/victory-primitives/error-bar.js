@@ -1,5 +1,6 @@
 /* eslint-disable max-statements */
-import React, { PropTypes } from "react";
+import React from "react";
+import PropTypes from "prop-types";
 import { Helpers, Collection } from "../victory-util";
 import { assign } from "lodash";
 

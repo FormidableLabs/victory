@@ -1,4 +1,5 @@
 import React from "react";
+import PropTypes from "prop-types";
 import * as d3Ease from "d3-ease";
 import { victoryInterpolator } from "./util";
 import Timer from "../victory-util/timer";
@@ -7,9 +8,14 @@ export default class VictoryAnimation extends React.Component {
   static displayName = "VictoryAnimation";
 
   static propTypes = {
-    children: React.PropTypes.func,
-    duration: React.PropTypes.number,
-    easing: React.PropTypes.oneOf([
+    children: PropTypes.func,
+    data: PropTypes.oneOfType([
+      PropTypes.object,
+      PropTypes.array
+    ]),
+    delay: PropTypes.number,
+    duration: PropTypes.number,
+    easing: PropTypes.oneOf([
       "back", "backIn", "backOut", "backInOut",
       "bounce", "bounceIn", "bounceOut", "bounceInOut",
       "circle", "circleIn", "circleOut", "circleInOut",
@@ -21,23 +27,18 @@ export default class VictoryAnimation extends React.Component {
       "quad", "quadIn", "quadOut", "quadInOut",
       "sin", "sinIn", "sinOut", "sinInOut"
     ]),
-    delay: React.PropTypes.number,
-    onEnd: React.PropTypes.func,
-    data: React.PropTypes.oneOfType([
-      React.PropTypes.object,
-      React.PropTypes.array
-    ])
+    onEnd: PropTypes.func
   };
 
   static defaultProps = {
-    duration: 1000,
-    easing: "quadInOut",
+    data: {},
     delay: 0,
-    data: {}
+    duration: 1000,
+    easing: "quadInOut"
   };
 
   static contextTypes = {
-    getTimer: React.PropTypes.func
+    getTimer: PropTypes.func
   };
 
   constructor(props) {
@@ -57,7 +58,7 @@ export default class VictoryAnimation extends React.Component {
     /* build easing function */
     this.ease = d3Ease[this.toNewName(this.props.easing)];
     /*
-      unlike React.createClass({}), there is no autobinding of this in ES6 classes
+      There is no autobinding of this in ES6 classes
       so we bind functionToBeRunEachFrame to current instance of victory animation class
     */
     this.functionToBeRunEachFrame = this.functionToBeRunEachFrame.bind(this);

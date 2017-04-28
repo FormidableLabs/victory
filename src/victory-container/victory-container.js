@@ -1,4 +1,5 @@
-import React, { PropTypes } from "react";
+import React from "react";
+import PropTypes from "prop-types";
 import { assign, omit, defaults } from "lodash";
 import Portal from "../victory-portal/portal";
 import { Timer } from "../victory-util/index";
@@ -7,21 +8,21 @@ export default class VictoryContainer extends React.Component {
   static displayName = "VictoryContainer";
   static role = "container";
   static propTypes = {
-    className: PropTypes.string,
-    style: PropTypes.object,
-    height: PropTypes.number,
-    width: PropTypes.number,
-    events: PropTypes.object,
-    children: React.PropTypes.oneOfType([
-      React.PropTypes.arrayOf(React.PropTypes.node),
-      React.PropTypes.node
+    children: PropTypes.oneOfType([
+      PropTypes.arrayOf(PropTypes.node),
+      PropTypes.node
     ]),
-    title: PropTypes.string,
+    className: PropTypes.string,
     desc: PropTypes.string,
+    events: PropTypes.object,
+    height: PropTypes.number,
     portalComponent: PropTypes.element,
     responsive: PropTypes.bool,
     standalone: PropTypes.bool,
-    theme: PropTypes.object
+    style: PropTypes.object,
+    theme: PropTypes.object,
+    title: PropTypes.string,
+    width: PropTypes.number
   }
 
   static defaultProps = {
@@ -30,14 +31,14 @@ export default class VictoryContainer extends React.Component {
   }
 
   static contextTypes = {
-    getTimer: React.PropTypes.func
+    getTimer: PropTypes.func
   }
 
   static childContextTypes = {
-    portalUpdate: React.PropTypes.func,
-    portalRegister: React.PropTypes.func,
-    portalDeregister: React.PropTypes.func,
-    getTimer: React.PropTypes.func
+    portalUpdate: PropTypes.func,
+    portalRegister: PropTypes.func,
+    portalDeregister: PropTypes.func,
+    getTimer: PropTypes.func
   }
 
   constructor(props) {

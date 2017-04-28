@@ -1,4 +1,5 @@
-import React, { PropTypes } from "react";
+import React from "react";
+import PropTypes from "prop-types";
 import { Collection, Helpers } from "../victory-util";
 import { assign, isEqual } from "lodash";
 import * as d3Shape from "d3-shape";
