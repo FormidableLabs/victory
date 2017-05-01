@@ -9,6 +9,7 @@ import VictoryAxis from "../victory-axis/victory-axis";
 import ChartHelpers from "./helper-methods";
 import Axis from "../../helpers/axis";
 import Wrapper from "../../helpers/wrapper";
+import { BaseProps } from "../../helpers/common-props";
 
 const fallbackProps = {
   width: 450,
@@ -20,68 +21,15 @@ export default class VictoryChart extends React.Component {
   static displayName = "VictoryChart";
 
   static propTypes = {
-    animate: PropTypes.object,
+    ...BaseProps,
     children: PropTypes.oneOfType([
       PropTypes.arrayOf(PropTypes.node),
       PropTypes.node
     ]),
-    containerComponent: PropTypes.element,
     defaultAxes: PropTypes.shape({
       independent: PropTypes.element,
       dependent: PropTypes.element
-    }),
-    domain: PropTypes.oneOfType([
-      CustomPropTypes.domain,
-      PropTypes.shape({
-        x: CustomPropTypes.domain,
-        y: CustomPropTypes.domain
-      })
-    ]),
-    domainPadding: PropTypes.oneOfType([
-      PropTypes.shape({
-        x: PropTypes.oneOfType([ PropTypes.number, CustomPropTypes.domain ]),
-        y: PropTypes.oneOfType([ PropTypes.number, CustomPropTypes.domain ])
-      }),
-      PropTypes.number
-    ]),
-    eventKey: PropTypes.oneOfType([
-      PropTypes.func,
-      CustomPropTypes.allOfType([CustomPropTypes.integer, CustomPropTypes.nonNegative]),
-      PropTypes.string
-    ]),
-    events: PropTypes.arrayOf(PropTypes.shape({
-      childName: PropTypes.oneOfType([ PropTypes.string, PropTypes.array ]),
-      target: PropTypes.string,
-      eventKey: PropTypes.oneOfType([
-        PropTypes.array,
-        PropTypes.func,
-        CustomPropTypes.allOfType([CustomPropTypes.integer, CustomPropTypes.nonNegative]),
-        PropTypes.string
-      ]),
-      eventHandlers: PropTypes.object
-    })),
-    groupComponent: PropTypes.element,
-    height: CustomPropTypes.nonNegative,
-    modifyChildren: PropTypes.func,
-    padding: PropTypes.oneOfType([
-      PropTypes.number,
-      PropTypes.shape({
-        top: PropTypes.number, bottom: PropTypes.number,
-        left: PropTypes.number, right: PropTypes.number
-      })
-    ]),
-    scale: PropTypes.oneOfType([
-      CustomPropTypes.scale,
-      PropTypes.shape({ x: CustomPropTypes.scale, y: CustomPropTypes.scale })
-    ]),
-    sharedEvents: PropTypes.shape({
-      events: PropTypes.array,
-      getEventState: PropTypes.func
-    }),
-    standalone: PropTypes.bool,
-    style: PropTypes.object,
-    theme: PropTypes.object,
-    width: CustomPropTypes.nonNegative
+    })
   };
 
   static defaultProps = {
@@ -276,10 +224,7 @@ export default class VictoryChart extends React.Component {
     const childComponents = ChartHelpers.getChildComponents(modifiedProps,
       modifiedProps.defaultAxes);
     const calculatedProps = this.getCalculatedProps(modifiedProps, childComponents);
-    let newChildren = this.getNewChildren(modifiedProps, childComponents, calculatedProps);
-    if (this.props.modifyChildren) {
-      newChildren = this.props.modifyChildren(newChildren, modifiedProps);
-    }
+    const newChildren = this.getNewChildren(modifiedProps, childComponents, calculatedProps);
     const containerProps = this.getContainerProps(modifiedProps, calculatedProps);
     const container = this.renderContainer(containerComponent, containerProps);
     if (this.events) {
