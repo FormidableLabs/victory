@@ -1,9 +1,9 @@
-import { partialRight, without } from "lodash";
+import { partialRight } from "lodash";
 import PropTypes from "prop-types";
 import React from "react";
 import AreaHelpers from "./helper-methods";
 import {
-  PropTypes as CustomPropTypes, Helpers, VictoryTransition, VictoryLabel, VictoryContainer,
+  PropTypes as CustomPropTypes, Helpers, VictoryLabel, VictoryContainer,
   DefaultTransitions, Area, VictoryClipContainer, addEvents, VictoryTheme, Data, Domain
 } from "victory-core";
 import { BaseProps, DataProps } from "../../helpers/common-props";
@@ -54,28 +54,7 @@ class VictoryArea extends React.Component {
     "dataComponent", "labelComponent", "groupComponent", "containerComponent"
   ];
 
-
-  renderData(props) {
-    const { dataComponent, labelComponent, groupComponent } = props;
-    const dataKeys = without(this.dataKeys, "all");
-    const labelComponents = dataKeys.reduce((memo, key) => {
-      const labelProps = this.getComponentProps(labelComponent, "labels", key);
-      if (labelProps && labelProps.text !== undefined && labelProps.text !== null) {
-        memo = memo.concat(React.cloneElement(labelComponent, labelProps));
-      }
-      return memo;
-    }, []);
-    const dataProps = this.getComponentProps(dataComponent, "data", "all");
-    const children = [React.cloneElement(dataComponent, dataProps), ...labelComponents];
-    return this.renderContainer(groupComponent, children);
-  }
-
-  renderContainer(component, children) {
-    const isContainer = component.type && component.type.role === "container";
-    const parentProps = isContainer ? this.getComponentProps(component, "parent", "parent") : {};
-    return React.cloneElement(component, parentProps, children);
-  }
-
+  // Overridden in native versions
   shouldAnimate() {
     return !!this.props.animate;
   }
@@ -85,13 +64,9 @@ class VictoryArea extends React.Component {
     const props = Helpers.modifyProps(this.props, fallbackProps, role);
 
     if (this.shouldAnimate()) {
-      return (
-        <VictoryTransition animate={props.animate} animationWhitelist={animationWhitelist}>
-          {React.createElement(this.constructor, props)}
-        </VictoryTransition>
-      );
+      return this.animateComponent(props, animationWhitelist);
     }
-    const children = this.renderData(props);
+    const children = this.renderContinuousData(props);
     return this.renderContainer(props.containerComponent, children);
   }
 }

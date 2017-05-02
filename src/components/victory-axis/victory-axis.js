@@ -2,7 +2,7 @@ import PropTypes from "prop-types";
 import React from "react";
 import { assign, partialRight } from "lodash";
 import {
-  PropTypes as CustomPropTypes, Helpers, VictoryTransition, VictoryLabel,
+  PropTypes as CustomPropTypes, Helpers, VictoryLabel,
   VictoryContainer, VictoryTheme, Line, TextSize, addEvents
 } from "victory-core";
 import AxisHelpers from "./helper-methods";
@@ -151,12 +151,7 @@ class VictoryAxis extends React.Component {
     return sorted.filter((gridAndTick, index) => index % divider === 0);
   }
 
-  renderContainer(component, children) {
-    const isContainer = component.type && component.type.role === "container";
-    const parentProps = isContainer ? this.getComponentProps(component, "parent", "parent") : {};
-    return React.cloneElement(component, parentProps, children);
-  }
-
+  // Overridden in native versions
   shouldAnimate() {
     return !!this.props.animate;
   }
@@ -164,11 +159,7 @@ class VictoryAxis extends React.Component {
   render() {
     const props = Helpers.modifyProps(this.props, fallbackProps, "axis");
     if (this.shouldAnimate()) {
-      return (
-        <VictoryTransition animate={props.animate} animationWhitelist={animationWhitelist}>
-          {React.createElement(this.constructor, props)}
-        </VictoryTransition>
-      );
+      return this.animateComponent(props, animationWhitelist);
     }
 
     const gridAndTicks = this.renderGridAndTicks(props);

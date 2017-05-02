@@ -1,10 +1,7 @@
 import { assign, defaults } from "lodash";
 import PropTypes from "prop-types";
 import React from "react";
-import {
-  PropTypes as CustomPropTypes, Helpers, VictorySharedEvents, VictoryContainer,
-  VictoryTheme, Scale
-} from "victory-core";
+import { Helpers, VictorySharedEvents, VictoryContainer, VictoryTheme, Scale } from "victory-core";
 import Wrapper from "../../helpers/wrapper";
 import { BaseProps } from "../../helpers/common-props";
 
