@@ -6,7 +6,10 @@ VictoryCore
 
 This package contains shared libraries and components for [Victory][].
 
-## Issues 
+## Requirements
+Projects using Victory should also depend on [React][] and [prop-types][].
+
+## Issues
 To make it easier to manage issues across all of Victory, we have disabled issued on this repo. [Please open issues in the main victory repo instead](https://github.com/FormidableLabs/victory/issues). You can track our progress on issues [here](https://github.com/FormidableLabs/victory/projects/1)
 
 
@@ -29,6 +32,8 @@ For more on the development environment, see [DEVELOPMENT](https://github.com/Fo
 Please see [CONTRIBUTING](https://github.com/FormidableLabs/builder-victory-component-dev/blob/master/CONTRIBUTING.md) in the project builder archetype.
 
 [Victory]: https://github.com/FormidableLabs/victory
+[React]: https://facebook.github.io/react/
+[prop-types]: https://github.com/reactjs/prop-types
 [trav_img]: https://api.travis-ci.org/FormidableLabs/victory-core.svg
 [trav_site]: https://travis-ci.org/FormidableLabs/victory-core
 
