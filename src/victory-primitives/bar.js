@@ -3,25 +3,18 @@ import React from "react";
 import PropTypes from "prop-types";
 import Helpers from "../victory-util/helpers";
 import { assign, isEqual } from "lodash";
+import CommonProps from "./common-props";
 
 export default class Bar extends React.Component {
 
   static propTypes = {
-    active: PropTypes.bool,
-    className: PropTypes.string,
-    data: PropTypes.array,
+    ...CommonProps,
     datum: PropTypes.object,
-    events: PropTypes.object,
     horizontal: PropTypes.bool,
-    index: PropTypes.number,
     padding: PropTypes.oneOfType([
       PropTypes.number,
       PropTypes.object
     ]),
-    role: PropTypes.string,
-    scale: PropTypes.object,
-    shapeRendering: PropTypes.string,
-    style: PropTypes.object,
     width: PropTypes.number,
     x: PropTypes.number,
     y: PropTypes.number,

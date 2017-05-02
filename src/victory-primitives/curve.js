@@ -3,20 +3,13 @@ import PropTypes from "prop-types";
 import { Collection, Helpers } from "../victory-util";
 import { assign, isEqual } from "lodash";
 import * as d3Shape from "d3-shape";
+import CommonProps from "./common-props";
 
 export default class Curve extends React.Component {
   static propTypes = {
-    active: PropTypes.bool,
-    className: PropTypes.string,
-    data: PropTypes.array,
-    events: PropTypes.object,
+    ...CommonProps,
     groupComponent: PropTypes.element,
-    index: PropTypes.oneOfType([PropTypes.number, PropTypes.string]),
-    interpolation: PropTypes.string,
-    role: PropTypes.string,
-    scale: PropTypes.object,
-    shapeRendering: PropTypes.string,
-    style: PropTypes.object
+    interpolation: PropTypes.string
   };
 
   static defaultProps = {

@@ -3,26 +3,18 @@ import React from "react";
 import PropTypes from "prop-types";
 import { Helpers, Collection } from "../victory-util";
 import { assign } from "lodash";
+import CommonProps from "./common-props";
 
 export default class Candle extends React.Component {
   static propTypes = {
-
-    active: PropTypes.bool,
+    ...CommonProps,
     candleHeight: PropTypes.number,
-    className: PropTypes.string,
-    data: PropTypes.array,
     datum: PropTypes.object,
-    events: PropTypes.object,
     groupComponent: PropTypes.element,
-    index: PropTypes.number,
     padding: PropTypes.oneOfType([
       PropTypes.number,
       PropTypes.object
     ]),
-    role: PropTypes.string,
-    scale: PropTypes.object,
-    shapeRendering: PropTypes.string,
-    style: PropTypes.object,
     width: PropTypes.number,
     x: PropTypes.number,
     y: PropTypes.number,

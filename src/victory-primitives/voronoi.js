@@ -3,21 +3,14 @@ import React from "react";
 import PropTypes from "prop-types";
 import Helpers from "../victory-util/helpers";
 import { isEqual } from "lodash";
+import CommonProps from "./common-props";
 
 export default class Voronoi extends React.Component {
   static propTypes = {
-    active: PropTypes.bool,
-    className: PropTypes.string,
-    data: PropTypes.array,
+    ...CommonProps,
     datum: PropTypes.object,
-    events: PropTypes.object,
-    index: PropTypes.number,
     polygon: PropTypes.array,
-    role: PropTypes.string,
-    scale: PropTypes.object,
-    shapeRendering: PropTypes.string,
     size: PropTypes.number,
-    style: PropTypes.object,
     x: PropTypes.number,
     y: PropTypes.number
   };

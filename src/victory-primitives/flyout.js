@@ -3,26 +3,20 @@ import React from "react";
 import PropTypes from "prop-types";
 import { isEqual } from "lodash";
 import Helpers from "../victory-util/helpers";
+import CommonProps from "./common-props";
 
 export default class Flyout extends React.Component {
 
   static propTypes = {
-    active: PropTypes.bool,
-    className: PropTypes.string,
+    ...CommonProps,
     cornerRadius: PropTypes.number,
-    data: PropTypes.array,
     datum: PropTypes.object,
     dx: PropTypes.number,
     dy: PropTypes.number,
-    events: PropTypes.object,
     height: PropTypes.number,
-    index: PropTypes.number,
     orientation: PropTypes.oneOf(["top", "bottom", "left", "right"]),
     pointerLength: PropTypes.number,
     pointerWidth: PropTypes.number,
-    role: PropTypes.string,
-    shapeRendering: PropTypes.string,
-    style: PropTypes.object,
     width: PropTypes.number,
     x: PropTypes.number,
     y: PropTypes.number

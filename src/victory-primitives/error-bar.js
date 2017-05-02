@@ -3,13 +3,12 @@ import React from "react";
 import PropTypes from "prop-types";
 import { Helpers, Collection } from "../victory-util";
 import { assign } from "lodash";
+import CommonProps from "./common-props";
 
 export default class ErrorBar extends React.Component {
   static propTypes = {
-    active: PropTypes.bool,
+    ...CommonProps,
     borderWidth: PropTypes.number,
-    className: PropTypes.string,
-    data: PropTypes.array,
     datum: PropTypes.object,
     errorX: PropTypes.oneOfType([
       PropTypes.number,
@@ -21,13 +20,7 @@ export default class ErrorBar extends React.Component {
       PropTypes.array,
       PropTypes.bool
     ]),
-    events: PropTypes.object,
     groupComponent: PropTypes.element,
-    index: PropTypes.number,
-    role: PropTypes.string,
-    scale: PropTypes.object,
-    shapeRendering: PropTypes.string,
-    style: PropTypes.object,
     x: PropTypes.number,
     y: PropTypes.number
   };
