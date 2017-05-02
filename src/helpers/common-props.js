@@ -44,10 +44,11 @@ export default {
     ]),
     domainPadding: PropTypes.oneOfType([
       PropTypes.shape({
-        x: PropTypes.oneOfType([ PropTypes.number, CustomPropTypes.domain ]),
-        y: PropTypes.oneOfType([ PropTypes.number, CustomPropTypes.domain ])
+        x: PropTypes.oneOfType([ PropTypes.number, PropTypes.arrayOf(PropTypes.number) ]),
+        y: PropTypes.oneOfType([ PropTypes.number, PropTypes.arrayOf(PropTypes.number) ])
       }),
-      PropTypes.number
+      PropTypes.number,
+      PropTypes.arrayOf(PropTypes.number)
     ]),
     eventKey: PropTypes.oneOfType([
       PropTypes.func,
