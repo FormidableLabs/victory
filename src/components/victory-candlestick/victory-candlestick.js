@@ -2,10 +2,11 @@ import PropTypes from "prop-types";
 import React from "react";
 import { partialRight } from "lodash";
 import {
-  PropTypes as CustomPropTypes, Helpers, VictoryTransition, VictoryLabel, addEvents,
+  PropTypes as CustomPropTypes, Helpers, VictoryLabel, addEvents,
   VictoryContainer, VictoryTheme, DefaultTransitions, Candle
 } from "victory-core";
 import CandlestickHelpers from "./helper-methods";
+import { BaseProps, DataProps } from "../../helpers/common-props";
 
 /*eslint-disable no-magic-numbers */
 const fallbackProps = {
@@ -40,105 +41,28 @@ class VictoryCandlestick extends React.Component {
   static defaultTransitions = DefaultTransitions.discreteTransitions();
 
   static propTypes = {
-    animate: PropTypes.object,
+    ...BaseProps,
+    ...DataProps,
     candleColors: PropTypes.shape({ positive: PropTypes.string, negative: PropTypes.string }),
-    categories: PropTypes.oneOfType([
-      PropTypes.arrayOf(PropTypes.string),
-      PropTypes.shape({
-        x: PropTypes.arrayOf(PropTypes.string), y: PropTypes.arrayOf(PropTypes.string)
-      })
-    ]),
     close: PropTypes.oneOfType([
       PropTypes.func,
       CustomPropTypes.allOfType([CustomPropTypes.integer, CustomPropTypes.nonNegative]),
       PropTypes.string,
       PropTypes.arrayOf(PropTypes.string)
     ]),
-    containerComponent: PropTypes.element,
-    data: PropTypes.array,
-    dataComponent: PropTypes.element,
-    domain: PropTypes.oneOfType([
-      CustomPropTypes.domain,
-      PropTypes.shape({ x: CustomPropTypes.domain, y: CustomPropTypes.domain })
-    ]),
-    domainPadding: PropTypes.oneOfType([
-      PropTypes.shape({
-        x: PropTypes.oneOfType([ PropTypes.number, CustomPropTypes.domain ]),
-        y: PropTypes.oneOfType([ PropTypes.number, CustomPropTypes.domain ])
-      }),
-      PropTypes.number
-    ]),
-    eventKey: PropTypes.oneOfType([
-      PropTypes.func,
-      CustomPropTypes.allOfType([CustomPropTypes.integer, CustomPropTypes.nonNegative]),
-      PropTypes.string
-    ]),
-    events: PropTypes.arrayOf(PropTypes.shape({
-      target: PropTypes.oneOf(["data", "labels", "parent"]),
-      eventKey: PropTypes.oneOfType([
-        PropTypes.array,
-        PropTypes.func,
-        CustomPropTypes.allOfType([CustomPropTypes.integer, CustomPropTypes.nonNegative]),
-        PropTypes.string
-      ]),
-      eventHandlers: PropTypes.object
-    })),
-    groupComponent: PropTypes.element,
-    height: CustomPropTypes.nonNegative,
     high: PropTypes.oneOfType([
       PropTypes.func,
       CustomPropTypes.allOfType([CustomPropTypes.integer, CustomPropTypes.nonNegative]),
       PropTypes.string,
       PropTypes.arrayOf(PropTypes.string)
     ]),
-    labelComponent: PropTypes.element,
-    labels: PropTypes.oneOfType([ PropTypes.func, PropTypes.array ]),
     low: PropTypes.oneOfType([
       PropTypes.func,
       CustomPropTypes.allOfType([CustomPropTypes.integer, CustomPropTypes.nonNegative]),
       PropTypes.string,
       PropTypes.arrayOf(PropTypes.string)
     ]),
-    name: PropTypes.string,
     open: PropTypes.oneOfType([
-      PropTypes.func,
-      CustomPropTypes.allOfType([CustomPropTypes.integer, CustomPropTypes.nonNegative]),
-      PropTypes.string,
-      PropTypes.arrayOf(PropTypes.string)
-    ]),
-    padding: PropTypes.oneOfType([
-      PropTypes.number,
-      PropTypes.shape({
-        top: PropTypes.number, bottom: PropTypes.number,
-        left: PropTypes.number, right: PropTypes.number
-      })
-    ]),
-    samples: CustomPropTypes.nonNegative,
-    scale: PropTypes.oneOfType([
-      CustomPropTypes.scale,
-      PropTypes.shape({ x: CustomPropTypes.scale, y: CustomPropTypes.scale })
-    ]),
-    sharedEvents: PropTypes.shape({
-      events: PropTypes.array,
-      getEventState: PropTypes.func
-    }),
-    size: PropTypes.oneOfType([
-      CustomPropTypes.nonNegative,
-      PropTypes.func
-    ]),
-    sortKey: PropTypes.oneOfType([
-      PropTypes.func,
-      CustomPropTypes.allOfType([CustomPropTypes.integer, CustomPropTypes.nonNegative]),
-      PropTypes.string,
-      PropTypes.arrayOf(PropTypes.string)
-    ]),
-    standalone: PropTypes.bool,
-    style: PropTypes.shape({
-      parent: PropTypes.object, data: PropTypes.object, labels: PropTypes.object
-    }),
-    theme: PropTypes.object,
-    width: CustomPropTypes.nonNegative,
-    x: PropTypes.oneOfType([
       PropTypes.func,
       CustomPropTypes.allOfType([CustomPropTypes.integer, CustomPropTypes.nonNegative]),
       PropTypes.string,
@@ -166,45 +90,16 @@ class VictoryCandlestick extends React.Component {
     "dataComponent", "labelComponent", "groupComponent", "containerComponent"
   ];
 
-  renderData(props) {
-    const { dataComponent, labelComponent, groupComponent } = props;
-
-    const dataComponents = this.dataKeys.map((_dataKey, index) => {
-      const dataProps = this.getComponentProps(dataComponent, "data", index);
-      return React.cloneElement(dataComponent, dataProps);
-    });
-
-    const labelComponents = this.dataKeys.map((_dataKey, index) => {
-      const labelProps = this.getComponentProps(labelComponent, "labels", index);
-      if (labelProps.text !== undefined && labelProps.text !== null) {
-        return React.cloneElement(labelComponent, labelProps);
-      }
-      return undefined;
-    }).filter(Boolean);
-
-    const children = [...dataComponents, ...labelComponents];
-    return this.renderContainer(groupComponent, children);
-  }
-
+  // Overridden in native versions
   shouldAnimate() {
     return !!this.props.animate;
-  }
-
-  renderContainer(component, children) {
-    const isContainer = component.type && component.type.role === "container";
-    const parentProps = isContainer ? this.getComponentProps(component, "parent", "parent") : {};
-    return React.cloneElement(component, parentProps, children);
   }
 
   render() {
     const { role } = this.constructor;
     const props = Helpers.modifyProps(this.props, fallbackProps, role);
     if (this.shouldAnimate()) {
-      return (
-        <VictoryTransition animate={props.animate} animationWhitelist={animationWhitelist}>
-          {React.createElement(this.constructor, props)}
-        </VictoryTransition>
-      );
+      return this.animateComponent(props, animationWhitelist);
     }
     const children = this.renderData(props);
     return this.renderContainer(props.containerComponent, children);

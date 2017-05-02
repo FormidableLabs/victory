@@ -9,9 +9,6 @@ export { default as VictoryStack } from "./components/victory-stack/victory-stac
 export { default as VictoryErrorBar } from "./components/victory-errorbar/victory-errorbar";
 export { default as VictoryVoronoi } from "./components/victory-voronoi/victory-voronoi";
 export {
-  default as VictoryVoronoiTooltip
-} from "./components/victory-voronoi-tooltip/victory-voronoi-tooltip";
-export {
   default as VictoryCandlestick
 } from "./components/victory-candlestick/victory-candlestick";
 export {
@@ -35,7 +32,6 @@ export {
   makeCreateContainerFunction,
   default as createContainer
 } from "./components/containers/create-container";
-export { default as VictoryZoom } from "./components/victory-zoom/victory-zoom";
 export { default as BrushHelpers } from "./components/containers/brush-helpers";
 export { default as SelectionHelpers } from "./components/containers/selection-helpers";
 export { default as VoronoiHelpers } from "./components/containers/voronoi-helpers";

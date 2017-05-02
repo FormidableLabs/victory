@@ -2,11 +2,13 @@ import PropTypes from "prop-types";
 import React from "react";
 import { assign, partialRight } from "lodash";
 import {
-  PropTypes as CustomPropTypes, Helpers, VictoryTransition, VictoryLabel,
+  PropTypes as CustomPropTypes, Helpers, VictoryLabel,
   VictoryContainer, VictoryTheme, Line, TextSize, addEvents
 } from "victory-core";
 import AxisHelpers from "./helper-methods";
 import Axis from "../../helpers/axis";
+import { BaseProps } from "../../helpers/common-props";
+
 
 const fallbackProps = {
   width: 450,
@@ -34,67 +36,29 @@ class VictoryAxis extends React.Component {
   };
 
   static propTypes = {
-    animate: PropTypes.object,
+    ...BaseProps,
     axisComponent: PropTypes.element,
     axisLabelComponent: PropTypes.element,
-    containerComponent: PropTypes.element,
     crossAxis: PropTypes.bool,
     dependentAxis: PropTypes.bool,
-    domain: PropTypes.oneOfType([
-      CustomPropTypes.domain,
-      PropTypes.shape({ x: CustomPropTypes.domain, y: CustomPropTypes.domain })
-    ]),
-    domainPadding: PropTypes.oneOfType([
-      PropTypes.shape({
-        x: PropTypes.oneOfType([ PropTypes.number, CustomPropTypes.domain ]),
-        y: PropTypes.oneOfType([ PropTypes.number, CustomPropTypes.domain ])
-      }),
-      PropTypes.number
-    ]),
-    events: PropTypes.arrayOf(PropTypes.shape({
-      target: PropTypes.oneOf(["axis", "axisLabel", "grid", "ticks", "tickLabels", "parent"]),
-      eventKey: PropTypes.oneOfType([
-        PropTypes.array,
-        CustomPropTypes.allOfType([CustomPropTypes.integer, CustomPropTypes.nonNegative]),
-        PropTypes.string
-      ]),
-      eventHandlers: PropTypes.object
-    })),
     fixLabelOverlap: PropTypes.bool,
     gridComponent: PropTypes.element,
     groupComponent: PropTypes.element,
-    height: CustomPropTypes.nonNegative,
     label: PropTypes.any,
-    name: PropTypes.string,
     offsetX: PropTypes.number,
     offsetY: PropTypes.number,
     orientation: PropTypes.oneOf(["top", "bottom", "left", "right"]),
-    padding: PropTypes.oneOfType([
-      PropTypes.number,
-      PropTypes.shape({
-        top: PropTypes.number, bottom: PropTypes.number,
-        left: PropTypes.number, right: PropTypes.number
-      })
-    ]),
-    scale: PropTypes.oneOfType([
-      CustomPropTypes.scale,
-      PropTypes.shape({ x: CustomPropTypes.scale, y: CustomPropTypes.scale })
-    ]),
-    sharedEvents: PropTypes.shape({ events: PropTypes.array, getEventState: PropTypes.func }),
-    standalone: PropTypes.bool,
     style: PropTypes.shape({
       parent: PropTypes.object, axis: PropTypes.object, axisLabel: PropTypes.object,
       grid: PropTypes.object, ticks: PropTypes.object, tickLabels: PropTypes.object
     }),
-    theme: PropTypes.object,
     tickComponent: PropTypes.element,
     tickCount: CustomPropTypes.allOfType([
       CustomPropTypes.integer, CustomPropTypes.greaterThanZero
     ]),
     tickFormat: PropTypes.oneOfType([ PropTypes.func, CustomPropTypes.homogeneousArray ]),
     tickLabelComponent: PropTypes.element,
-    tickValues: CustomPropTypes.homogeneousArray,
-    width: CustomPropTypes.nonNegative
+    tickValues: CustomPropTypes.homogeneousArray
   };
 
   static defaultProps = {
@@ -187,12 +151,7 @@ class VictoryAxis extends React.Component {
     return sorted.filter((gridAndTick, index) => index % divider === 0);
   }
 
-  renderContainer(component, children) {
-    const isContainer = component.type && component.type.role === "container";
-    const parentProps = isContainer ? this.getComponentProps(component, "parent", "parent") : {};
-    return React.cloneElement(component, parentProps, children);
-  }
-
+  // Overridden in native versions
   shouldAnimate() {
     return !!this.props.animate;
   }
@@ -200,11 +159,7 @@ class VictoryAxis extends React.Component {
   render() {
     const props = Helpers.modifyProps(this.props, fallbackProps, "axis");
     if (this.shouldAnimate()) {
-      return (
-        <VictoryTransition animate={props.animate} animationWhitelist={animationWhitelist}>
-          {React.createElement(this.constructor, props)}
-        </VictoryTransition>
-      );
+      return this.animateComponent(props, animationWhitelist);
     }
 
     const gridAndTicks = this.renderGridAndTicks(props);
