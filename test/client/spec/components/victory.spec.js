@@ -24,7 +24,6 @@ describe("victory", () => {
     expect(Victory.VictoryTransition).not.to.equal(undefined);
     expect(Victory.VictorySharedEvents).not.to.equal(undefined);
     expect(Victory.VictoryTooltip).not.to.equal(undefined);
-    expect(Victory.VictoryVoronoiTooltip).not.to.equal(undefined);
     expect(Victory.VictoryVoronoi).not.to.equal(undefined);
     expect(Victory.Area).not.to.equal(undefined);
     expect(Victory.Bar).not.to.equal(undefined);
@@ -54,7 +53,6 @@ describe("victory", () => {
     expect(Victory.TextSize).not.to.equal(undefined);
     expect(Victory.Transitions).not.to.equal(undefined);
     expect(Victory.Selection).not.to.equal(undefined);
-    expect(Victory.VictoryZoom).not.to.equal(undefined);
     expect(Victory.VictoryZoomContainer).not.to.equal(undefined);
     expect(Victory.VictorySelectionContainer).not.to.equal(undefined);
     expect(Victory.VictoryBrushContainer).not.to.equal(undefined);

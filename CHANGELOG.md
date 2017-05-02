@@ -6,6 +6,7 @@
 - Updates to `react@^15.5.0`
 - Uses separate `prop-types` package
 - Projects using Victory must also depend on `prop-types`
+- Removes `VictoryVoronoiTooltip`
 
 ## 0.18.4 (2017-04-04)
 
