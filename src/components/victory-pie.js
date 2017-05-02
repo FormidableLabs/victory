@@ -3,15 +3,8 @@ import React from "react";
 import PropTypes from "prop-types";
 import { partialRight, assign } from "lodash";
 import {
-  addEvents,
-  Helpers,
-  Data,
-  PropTypes as CustomPropTypes,
-  Slice,
-  VictoryContainer,
-  VictoryLabel,
-  VictoryTheme,
-  VictoryTransition
+  addEvents, Helpers, Data, PropTypes as CustomPropTypes, Slice,
+  VictoryContainer, VictoryLabel, VictoryTheme
 } from "victory-core";
 import PieHelpers from "./helper-methods";
 
@@ -152,7 +145,7 @@ class VictoryPie extends React.Component {
     "dataComponent", "labelComponent", "groupComponent", "containerComponent"
   ];
 
-  renderData(props) {
+  renderPieData(props) {
     const { dataComponent, labelComponent } = props;
     const dataComponents = [];
     const labelComponents = [];
@@ -191,12 +184,7 @@ class VictoryPie extends React.Component {
     };
   }
 
-  renderContainer(component, children) {
-    const isContainer = component.type && component.type.role === "container";
-    const parentProps = isContainer ? this.getComponentProps(component, "parent", "parent") : {};
-    return React.cloneElement(component, parentProps, children);
-  }
-
+  // Overridden in victory-native
   shouldAnimate() {
     return Boolean(this.props.animate);
   }
@@ -205,14 +193,10 @@ class VictoryPie extends React.Component {
     const { role } = this.constructor;
     const props = Helpers.modifyProps(this.props, fallbackProps, role);
     if (this.shouldAnimate()) {
-      return (
-        <VictoryTransition animate={props.animate} animationWhitelist={animationWhitelist}>
-          { React.createElement(this.constructor, props) }
-        </VictoryTransition>
-      );
+      return this.animateComponent(props, animationWhitelist);
     }
 
-    const children = this.renderData(props);
+    const children = this.renderPieData(props);
     return this.renderContainer(props.containerComponent, children);
   }
 }
