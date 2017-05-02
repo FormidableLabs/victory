@@ -6,10 +6,13 @@ VictoryPie
 
 `VictoryPie` draws an SVG pie or donut chart with [React][]. Styles and data can be customized by passing in your own values as properties to the component.
 
+## Requirements
+Projects using Victory should also depend on [React][] and [prop-types][].
+
 ## API Documentation
 Detailed documentation and interactive examples can be found at http://formidable.com/open-source/victory/docs/victory-pie.
 
-## Issues 
+## Issues
 To make it easier to manage issues across all of Victory, we have disabled issues for this repo. [Please open issues in the main victory repo instead](https://github.com/FormidableLabs/victory/issues). You can track our progress on issues [here](https://github.com/FormidableLabs/victory/projects/1)
 
 ## Development
@@ -39,6 +42,7 @@ This project is in a pre-release state. We're hard at work fixing bugs and impro
 
 **Caveats** git installs using npm 2 may fail in postinstall. If you are consuming Victory via git installs please use npm >=3.0.0
 
-[React]: https://github.com/facebook/react
+[React]: https://facebook.github.io/react/
+[prop-types]: https://github.com/reactjs/prop-types
 [trav_img]: https://api.travis-ci.org/FormidableLabs/victory-pie.svg
 [trav_site]: https://travis-ci.org/FormidableLabs/victory-pie
