@@ -1,5 +1,13 @@
 # Victory Changelog
 
+## 0.19.0 (2017-05-02)
+
+**BREAKING CHANGE**
+- Updates to `react@^15.5.0`
+- Uses separate `prop-types` package
+- Projects using Victory must also depend on `prop-types`
+- Removes `VictoryVoronoiTooltip`
+
 ## 0.18.4 (2017-04-04)
 
 - Supports combining container behaviors with the `createContainer` method.
