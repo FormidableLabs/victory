@@ -3,23 +3,16 @@ import PropTypes from "prop-types";
 import Helpers from "../victory-util/helpers";
 import pathHelpers from "./path-helpers";
 import { isEqual } from "lodash";
+import CommonProps from "./common-props";
 
 export default class Point extends React.Component {
   static propTypes = {
-    active: PropTypes.bool,
-    className: PropTypes.string,
-    data: PropTypes.array,
+    ...CommonProps,
     datum: PropTypes.object,
-    events: PropTypes.object,
-    index: PropTypes.number,
-    role: PropTypes.string,
-    scale: PropTypes.object,
-    shapeRendering: PropTypes.string,
     size: PropTypes.oneOfType([
       PropTypes.number,
       PropTypes.func
     ]),
-    style: PropTypes.object,
     symbol: PropTypes.oneOfType([
       PropTypes.oneOf([
         "circle", "diamond", "plus", "square", "star", "triangleDown", "triangleUp"

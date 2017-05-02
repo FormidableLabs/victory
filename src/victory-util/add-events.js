@@ -1,5 +1,7 @@
-import { defaults, assign, isFunction, partialRight, pick } from "lodash";
+import React from "react";
+import { defaults, assign, isFunction, partialRight, pick, without } from "lodash";
 import Events from "./events";
+import VictoryTransition from "../victory-transition/victory-transition";
 
 export default (WrappedComponent) => {
   return class addEvents extends WrappedComponent {
@@ -82,6 +84,56 @@ export default (WrappedComponent) => {
         baseProps
       );
     }
+
+    renderContainer(component, children) {
+      const isContainer = component.type && component.type.role === "container";
+      const parentProps = isContainer ? this.getComponentProps(component, "parent", "parent") : {};
+      return React.cloneElement(component, parentProps, children);
+    }
+
+    animateComponent(props, animationWhitelist) {
+      return (
+        <VictoryTransition animate={props.animate} animationWhitelist={animationWhitelist}>
+          {React.createElement(this.constructor, props)}
+        </VictoryTransition>
+      );
+    }
+
+    // Used by `VictoryLine` and `VictoryArea`
+    renderContinuousData(props) {
+      const { dataComponent, labelComponent, groupComponent } = props;
+      const dataKeys = without(this.dataKeys, "all");
+      const labelComponents = dataKeys.reduce((memo, key) => {
+        const labelProps = this.getComponentProps(labelComponent, "labels", key);
+        if (labelProps && labelProps.text !== undefined && labelProps.text !== null) {
+          memo = memo.concat(React.cloneElement(labelComponent, labelProps));
+        }
+        return memo;
+      }, []);
+      const dataProps = this.getComponentProps(dataComponent, "data", "all");
+      const children = [React.cloneElement(dataComponent, dataProps), ...labelComponents];
+      return this.renderContainer(groupComponent, children);
+    }
+
+    renderData(props) {
+      const { dataComponent, labelComponent, groupComponent } = props;
+      const dataComponents = this.dataKeys.map((_dataKey, index) => {
+        const dataProps = this.getComponentProps(dataComponent, "data", index);
+        return React.cloneElement(dataComponent, dataProps);
+      });
+
+      const labelComponents = this.dataKeys.map((_dataKey, index) => {
+        const labelProps = this.getComponentProps(labelComponent, "labels", index);
+        if (labelProps.text !== undefined && labelProps.text !== null) {
+          return React.cloneElement(labelComponent, labelProps);
+        }
+        return undefined;
+      }).filter(Boolean);
+
+      const children = [...dataComponents, ...labelComponents];
+      return this.renderContainer(groupComponent, children);
+    }
+
   };
 };
 

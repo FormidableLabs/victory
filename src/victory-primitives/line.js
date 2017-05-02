@@ -2,18 +2,12 @@ import React from "react";
 import PropTypes from "prop-types";
 import Helpers from "../victory-util/helpers";
 import { assign, isEqual } from "lodash";
+import CommonProps from "./common-props";
 
 export default class Line extends React.Component {
   static propTypes = {
-    active: PropTypes.bool,
-    className: PropTypes.string,
-    data: PropTypes.array,
+    ...CommonProps,
     datum: PropTypes.any,
-    events: PropTypes.object,
-    index: PropTypes.number,
-    role: PropTypes.string,
-    shapeRendering: PropTypes.string,
-    style: PropTypes.object,
     x1: PropTypes.number,
     x2: PropTypes.number,
     y1: PropTypes.number,

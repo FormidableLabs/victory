@@ -1,0 +1,17 @@
+import PropTypes from "prop-types";
+import { PropTypes as CustomPropTypes } from "../victory-util";
+
+export default {
+  active: PropTypes.bool,
+  className: PropTypes.string,
+  data: PropTypes.array,
+  events: PropTypes.object,
+  index: PropTypes.oneOfType([PropTypes.number, PropTypes.string]),
+  role: PropTypes.string,
+  scale: PropTypes.oneOfType([
+    CustomPropTypes.scale,
+    PropTypes.shape({ x: CustomPropTypes.scale, y: CustomPropTypes.scale })
+  ]),
+  shapeRendering: PropTypes.string,
+  style: PropTypes.object
+};

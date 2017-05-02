@@ -2,20 +2,14 @@ import React from "react";
 import PropTypes from "prop-types";
 import Helpers from "../victory-util/helpers";
 import { isEqual } from "lodash";
+import CommonProps from "./common-props";
 
 export default class Slice extends React.Component {
   static propTypes = {
-    active: PropTypes.bool,
-    className: PropTypes.string,
-    data: PropTypes.array,
+    ...CommonProps,
     datum: PropTypes.object,
-    events: PropTypes.object,
-    index: PropTypes.number,
     pathFunction: PropTypes.func,
-    role: PropTypes.string,
-    shapeRendering: PropTypes.string,
-    slice: PropTypes.object,
-    style: PropTypes.object
+    slice: PropTypes.object
   };
 
   componentWillMount() {
