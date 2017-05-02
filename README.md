@@ -57,6 +57,9 @@
   <img align="center" width="471" alt="pie" src="https://cloud.githubusercontent.com/assets/3719995/20915779/b51e3652-bb3c-11e6-8243-6e7521a59115.png">
 </p>
 
+## Requirements
+Projects using Victory should also depend on [React][] and [prop-types][].
+
 ## Victory Native
 Want to use `Victory` with React Native? Check out [victory-native](https://github.com/FormidableLabs/victory-native)
 Victory Native shares most of its code with Victory, and has a nearly identical api!
@@ -100,6 +103,7 @@ _This project is in alpha release. We're hard at work fixing bugs and improving 
 
 **Caveats** git installs using npm 2 may fail in postinstall. If you are consuming Victory via git installs please use npm >=3.0.0
 
-
+[React]: https://facebook.github.io/react/
+[prop-types]: https://github.com/reactjs/prop-types
 [trav_img]: https://api.travis-ci.org/FormidableLabs/victory.svg
 [trav_site]: https://travis-ci.org/FormidableLabs/victory
