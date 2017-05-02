@@ -1,5 +1,12 @@
 # VictoryChart Changelog
 
+## 19.0.0 (2017-05-02)
+
+**BREAKING CHANGE**
+- Updates to `react@^15.5.0`
+- Uses separate `prop-types` package
+- Projects using Victory must also depend on `prop-types`
+
 ## 18.2.1 (2017-04-20)
 
 - add `RawZoomHelpers` and `makeCreateContainerFunction`

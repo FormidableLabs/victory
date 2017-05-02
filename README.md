@@ -19,7 +19,10 @@ VictoryChart includes:
 ## API Documentation
 Detailed documentation and interactive examples can be found at http://formidable.com/open-source/victory/docs/victory-chart
 
-## Issues 
+## Requirements
+Projects using Victory should also depend on [React][] and [prop-types][].
+
+## Issues
 To make it easier to manage issues across all of Victory, we have disabled issued on this repo. [Please open issues in the main victory repo instead](https://github.com/FormidableLabs/victory/issues). You can track our progress on issues [here](https://github.com/FormidableLabs/victory/projects/1)
 
 
@@ -49,6 +52,7 @@ For a detailed contribution guide, please see [CONTRIBUTING](https://github.com/
 ## _IMPORTANT_
 
 This project is in a pre-release state. We're hard at work fixing bugs and improving the API. Be prepared for breaking changes!
-
+[React]: https://facebook.github.io/react/
+[prop-types]: https://github.com/reactjs/prop-types
 [trav_img]: https://api.travis-ci.org/FormidableLabs/victory-chart.svg
 [trav_site]: https://travis-ci.org/FormidableLabs/victory-chart
