@@ -10,7 +10,7 @@ export { default as VictoryTooltip } from "./victory-tooltip/victory-tooltip";
 export { default as VictoryPortal } from "./victory-portal/victory-portal";
 export { default as Portal } from "./victory-portal/portal";
 export {
-  Area, Bar, Candle, Circle, ClipPath, Curve, ErrorBar, Line, Point, Slice, Voronoi, Flyout
+  Arc, Area, Bar, Candle, Circle, ClipPath, Curve, ErrorBar, Line, Point, Slice, Voronoi, Flyout
 } from "./victory-primitives/index";
 export {
   addEvents, Collection, Data, DefaultTransitions, Domain, Events, Helpers, Log,
