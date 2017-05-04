@@ -21,6 +21,7 @@ import CreateContainerDemo from "./components/create-container-demo";
 import BrushContainerDemo from "./components/victory-brush-container-demo";
 import AnimationDemo from "./components/animation-demo";
 import SelectionDemo from "./components/selection-demo";
+import PolarDemo from "./components/victory-polar-chart-demo";
 
 class Home extends React.Component {
   render() {
@@ -67,6 +68,7 @@ class App extends React.Component {
     case "/animation": Child = AnimationDemo; break;
     case "/selection-container": Child = SelectionDemo; break;
     case "/create-container": Child = CreateContainerDemo; break;
+    case "/polar": Child = PolarDemo; break;
     default: Child = Home;
     }
     return Child;
@@ -96,6 +98,7 @@ class App extends React.Component {
           <li><a href="#/animation">Animation Demo</a></li>
           <li><a href="#/selection-container">Victory Selection Container Demo</a></li>
           <li><a href="#/create-container">createContainer Demo</a></li>
+          <li><a href="#/polar">Polar Demo</a></li>
         </ul>
         <Child/>
       </div>
@@ -104,3 +107,5 @@ class App extends React.Component {
 }
 
 ReactDOM.render(<App/>, document.getElementById("content"));
+
+
