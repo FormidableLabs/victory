@@ -3,7 +3,7 @@ import PropTypes from "prop-types";
 import { partialRight } from "lodash";
 import {
   PropTypes as CustomPropTypes, Helpers, VictoryLabel,
-  VictoryContainer, VictoryTheme, Line, addEvents, Circle
+  VictoryContainer, VictoryTheme, Line, addEvents, Circle, Arc
 } from "victory-core";
 import AxisHelpers from "./helper-methods";
 import Axis from "../../helpers/axis";
@@ -42,9 +42,11 @@ class VictoryPolarAxis extends React.Component {
     circularGridComponent: PropTypes.element,
     containerComponent: PropTypes.element,
     dependentAxis: PropTypes.bool,
+    endAngle: PropTypes.number,
     gridComponent: PropTypes.element,
     labelPlacement: PropTypes.oneOf(["parallel", "perpendicular"]),
     radius: PropTypes.number,
+    startAngle: PropTypes.number,
     style: PropTypes.shape({
       parent: PropTypes.object, axis: PropTypes.object, axisLabel: PropTypes.object,
       grid: PropTypes.object, ticks: PropTypes.object, tickLabels: PropTypes.object
@@ -61,13 +63,15 @@ class VictoryPolarAxis extends React.Component {
   static defaultProps = {
     axisComponent: <Line type={"axis"}/>,
     axisLabelComponent: <VictoryLabel/>,
-    circularAxisComponent: <Circle type={"axis"}/>,
-    circularGridComponent: <Circle type={"grid"}/>,
+    circularAxisComponent: <Arc type={"axis"}/>,
+    circularGridComponent: <Arc type={"grid"}/>,
     containerComponent: <VictoryContainer />,
+    endAngle: 360,
     gridComponent: <Line type={"grid"}/>,
     groupComponent: <g role="presentation"/>,
     labelPlacement: "parallel",
     scale: "linear",
+    startAngle: 0,
     standalone: true,
     theme: VictoryTheme.grayscale,
     tickComponent: <Line type={"tick"}/>,

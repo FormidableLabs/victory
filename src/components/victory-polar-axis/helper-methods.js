@@ -71,7 +71,9 @@ export default {
 
   getRange(props, axis) {
     if (axis === "x") {
-      return [0, 2 * Math.PI];
+      const startAngle = this.degreesToRadians(props.startAngle);
+      const endAngle = this.degreesToRadians(props.endAngle);
+      return [startAngle, endAngle];
     }
 
     const radius = props.radius || this.getDefaultRadius(props);
@@ -147,7 +149,7 @@ export default {
     const { tickStyle } = this.getEvaluatedStyles(style, tick, index);
     const tickPadding = tickStyle.padding || 0;
     const angularPadding = tickPadding; // TODO: do some geometry
-    const axisAngle = props.axisAngle || 90;
+    const axisAngle = props.axisAngle || props.startAngle;
     return axisType === "angular" ?
       {
         index, datum: tick, style: tickStyle,
@@ -169,7 +171,7 @@ export default {
     const { labelStyle } = this.getEvaluatedStyles(style, tick, index);
     const tickPadding = labelStyle.padding || 0;
     const angularPadding = 0; // TODO: do some geometry
-    const axisAngle = props.axisAngle || 90;
+    const axisAngle = props.axisAngle || props.startAngle;
     const labelAngle = axisType === "angular" ?
       scale(tick) : this.degreesToRadians(axisAngle + angularPadding);
     const textAngle = labelStyle.angle || this.getTextAngle(props, labelAngle);
@@ -209,6 +211,7 @@ export default {
 
   getGridProps(props, calculatedValues, tick, index) { //eslint-disable-line max-params
     const { axisType, origin, radius, style, scale } = calculatedValues;
+    const { startAngle, endAngle } = props;
     const { gridStyle } = this.getEvaluatedStyles(style, tick, index);
     return axisType === "angular" ?
       {
@@ -219,13 +222,14 @@ export default {
         y2: origin.y
       } : {
         style: gridStyle, index, datum: tick,
-        cx: origin.x, cy: origin.y, r: scale(tick)
+        cx: origin.x, cy: origin.y, r: scale(tick), startAngle, endAngle
       };
   },
 
   getAxisProps(modifiedProps, calculatedValues) {
     const { style, axisType, origin, radius } = calculatedValues;
-    const axisAngle = modifiedProps.axisAngle || 90;
+    const { startAngle, endAngle } = modifiedProps;
+    const axisAngle = modifiedProps.axisAngle || startAngle;
     return axisType === "radial" ?
       {
         style: style.axis,
@@ -235,7 +239,7 @@ export default {
         y2: origin.y + radius * Math.cos(this.degreesToRadians(axisAngle))
       } : {
         style: style.axis,
-        cx: origin.x, cy: origin.y, r: radius
+        cx: origin.x, cy: origin.y, r: radius, startAngle, endAngle
       };
   },
 
@@ -283,8 +287,7 @@ export default {
       { style: style.parent, ticks, scale, width, height, domain, standalone, theme }
     };
 
-    return ticks.reduce((childProps, indexedTick, index) => {
-      const tick = stringTicks ? tickValues[indexedTick - 1] : indexedTick;
+    return ticks.reduce((childProps, tick, index) => {
       childProps[index] = {
         axis: axisProps,
         ticks: this.getTickProps(props, calculatedValues, tick, index),
@@ -298,9 +301,14 @@ export default {
 
   getTicks(props, scale) {
     const { tickValues, tickCount } = props;
-    if (props.tickValues) {
+    if (tickValues && Array.isArray(tickValues)) {
       if (Helpers.stringTicks(props)) {
-        return lodashRange(1, props.tickValues.length + 1);
+        const domain = scale.domain();
+        const extent = Math.abs(domain[1] - domain[0]);
+        const step = extent / (tickValues.length - 1);
+        return tickValues.map((t, i) => {
+          return domain[0] + i * step;
+        });
       }
       return tickValues.length ? tickValues : scale.domain();
     } else if (scale.ticks && isFunction(scale.ticks)) {
