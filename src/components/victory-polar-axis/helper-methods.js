@@ -1,4 +1,7 @@
-import { includes, defaults, defaultsDeep, isFunction, range, without } from "lodash";
+/*eslint no-magic-numbers: ["error", { "ignore": [-1, 0, 1, 2, 90, 180, 270, 360] }]*/
+import {
+  includes, defaults, defaultsDeep, isFunction, range as lodashRange, without
+} from "lodash";
 import { Helpers, Scale, Domain } from "victory-core";
 
 export default {
@@ -18,7 +21,7 @@ export default {
       props.width - padding.left - padding.right,
       props.height - padding.top - padding.bottom
     ) / 2;
-    const origin = this.getOrigin(props)
+    const origin = this.getOrigin(props);
     return {
       style, padding, stringTicks, axisType, origin,
       scale, ticks, tickFormat, domain, range, radius
@@ -61,8 +64,8 @@ export default {
 
 
   getDefaultRadius(props) {
-    const {left, right, top, bottom} = Helpers.getPadding(props);
-    const {width, height} = props;
+    const { left, right, top, bottom } = Helpers.getPadding(props);
+    const { width, height } = props;
     return Math.min(width - left - right, height - top - bottom) / 2;
   },
 
@@ -136,10 +139,10 @@ export default {
   },
 
   radiansToDegrees(radians) {
-    return radians / (Math.PI / 180)
+    return radians / (Math.PI / 180);
   },
 
-  getTickProps(props, calculatedValues, tick, index) {
+  getTickProps(props, calculatedValues, tick, index) { //eslint-disable-line max-params
     const { axisType, origin, radius, scale, style } = calculatedValues;
     const { tickStyle } = this.getEvaluatedStyles(style, tick, index);
     const tickPadding = tickStyle.padding || 0;
@@ -150,8 +153,8 @@ export default {
         index, datum: tick, style: tickStyle,
         x1: origin.x + radius * Math.sin(scale(tick)),
         y1: origin.y + radius * Math.cos(scale(tick)),
-        x2: origin.x + (radius + tickPadding) *  Math.sin(scale(tick)),
-        y2: origin.y + (radius + tickPadding) *  Math.cos(scale(tick))
+        x2: origin.x + (radius + tickPadding) * Math.sin(scale(tick)),
+        y2: origin.y + (radius + tickPadding) * Math.cos(scale(tick))
       } : {
         style, index, datum: tick,
         x1: origin.x + (scale(tick) / 2) * Math.sin(axisAngle - angularPadding),
@@ -161,7 +164,7 @@ export default {
       };
   },
 
-  getTickLabelProps(props, calculatedValues, tick, index) {
+  getTickLabelProps(props, calculatedValues, tick, index) { //eslint-disable-line max-params
     const { axisType, origin, radius, tickFormat, style, scale } = calculatedValues;
     const { labelStyle } = this.getEvaluatedStyles(style, tick, index);
     const tickPadding = labelStyle.padding || 0;
@@ -169,12 +172,12 @@ export default {
     const axisAngle = props.axisAngle || 90;
     const labelAngle = axisType === "angular" ?
       scale(tick) : this.degreesToRadians(axisAngle + angularPadding);
-    const textAngle = labelStyle.angle || this.getTextAngle(props, labelAngle)
+    const textAngle = labelStyle.angle || this.getTextAngle(props, labelAngle);
     const labelRadius = axisType === "angular" ? radius + tickPadding : scale(tick);
     return {
       index, datum: tick, style: labelStyle,
       angle: textAngle,
-      textAnchor: labelStyle.textAnchor || this.getTextAnchor(labelAngle, axisType),
+      textAnchor: labelStyle.textAnchor || this.getTextAnchor(labelAngle, props.labelPlacement),
       text: tickFormat(tick, index),
       x: origin.x + (labelRadius) * Math.sin(labelAngle),
       y: origin.y + (labelRadius) * Math.cos(labelAngle)
@@ -183,7 +186,7 @@ export default {
 
   getTextAngle(props, baseAngle) {
     const degrees = this.radiansToDegrees(baseAngle);
-    const sign = degrees < 180 ? 1 : -1;
+    const sign = (degrees > 90 && degrees < 180 || degrees > 270) ? 1 : -1;
     let angle;
     if (degrees === 0 || degrees === 180) {
       angle = 90;
@@ -192,19 +195,21 @@ export default {
     } else if (degrees > 180 && degrees < 360) {
       angle = 270 - degrees;
     }
-    const labelRotation = props.labelRotation || 0;
+    const labelRotation = props.labelPlacement === "perpendicular" ? 90 : 0;
     return angle + sign * labelRotation;
   },
 
-  getTextAnchor(baseAngle, axisType) {
+  getTextAnchor(baseAngle, labelPlacement) {
+    if (labelPlacement === "perpendicular") {
+      return "middle";
+    }
     const angle = this.radiansToDegrees(baseAngle);
     return angle < 180 ? "start" : "end";
   },
 
-  getGridProps(props, calculatedValues, tick, index) {
+  getGridProps(props, calculatedValues, tick, index) { //eslint-disable-line max-params
     const { axisType, origin, radius, style, scale } = calculatedValues;
     const { gridStyle } = this.getEvaluatedStyles(style, tick, index);
-    const axisAngle = props.axisAngle || 90;
     return axisType === "angular" ?
       {
         index, datum: tick, style: gridStyle,
@@ -270,19 +275,16 @@ export default {
     const role = this.getRole(props);
     props = this.modifyProps(props, fallbackProps, role);
     const calculatedValues = this.getCalculatedValues(props);
-    const {
-      style, scale, ticks, tickFormat, stringTicks, domain, origin, axisType
-    } = calculatedValues;
+    const { style, scale, ticks, stringTicks, domain } = calculatedValues;
     const { width, height, standalone, theme, tickValues } = props;
 
     const axisProps = this.getAxisProps(props, calculatedValues);
-    const initialChildProps = { parent: {
-      style: style.parent, ticks, scale, width, height, domain, standalone, theme
-    }};
+    const initialChildProps = { parent:
+      { style: style.parent, ticks, scale, width, height, domain, standalone, theme }
+    };
 
     return ticks.reduce((childProps, indexedTick, index) => {
       const tick = stringTicks ? tickValues[indexedTick - 1] : indexedTick;
-
       childProps[index] = {
         axis: axisProps,
         ticks: this.getTickProps(props, calculatedValues, tick, index),
@@ -295,10 +297,10 @@ export default {
   },
 
   getTicks(props, scale) {
-    const { tickValues, tickCount, crossAxis } = props;
+    const { tickValues, tickCount } = props;
     if (props.tickValues) {
       if (Helpers.stringTicks(props)) {
-        return range(1, props.tickValues.length + 1);
+        return lodashRange(1, props.tickValues.length + 1);
       }
       return tickValues.length ? tickValues : scale.domain();
     } else if (scale.ticks && isFunction(scale.ticks)) {
