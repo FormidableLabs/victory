@@ -73,7 +73,8 @@ class App extends React.Component {
                 { x: 45, y: 20 },
                 { x: 90, y: 30 },
                 { x: 135, y: 75 },
-                { x: 180, y: 50 }
+                { x: 180, y: 50 },
+                { x: 270, y: 40 }
               ]}
             />
 
@@ -84,7 +85,20 @@ class App extends React.Component {
                 { x: 45, y: 20 },
                 { x: 90, y: 30 },
                 { x: 135, y: 75 },
-                { x: 180, y: 50 }
+                { x: 180, y: 50 },
+                { x: 270, y: 40 }
+              ]}
+            />
+
+            <VictoryLine
+              groupComponent={<g/>}
+              style={{ data: { stroke: "tomato" } }}
+              data={[
+                { x: 45, y: 20 },
+                { x: 90, y: 30 },
+                { x: 135, y: 75 },
+                { x: 180, y: 50 },
+                { x: 270, y: 40 }
               ]}
             />
           </VictoryPolarChart>
@@ -132,7 +146,8 @@ class App extends React.Component {
           <VictoryPolarAxis
             theme={VictoryTheme.material}
             style={chartStyle}
-            labelPlacement="perpendicular"
+            labelPlacement="vertical"
+            startAngle={20} endAngle={380}
             domain={[0, 360]}
             tickValues={[0, 20, 45, 65, 90, 120, 135, 180, 225, 250, 270, 300, 315]}
           />
