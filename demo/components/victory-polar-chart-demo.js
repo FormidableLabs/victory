@@ -59,41 +59,72 @@ class App extends React.Component {
             <VictoryPolarAxis dependentAxis
               labelPlacement="vertical"
               style={{ axis: { stroke: "none" } }}
-              axisAngle={90}
+              axisAngle={270}
               tickValues={[25, 50, 75]}
             />
             <VictoryPolarAxis
               labelPlacement="parallel"
-              tickValues={[45, 135, 225, 315]}
+              tickValues={[0, 45, 90, 135, 180, 225, 315]}
             />
             <VictoryScatter
               style={{ data: { fill: "tomato" } }}
               size={5}
               data={[
-                { x: 0, y: 10, label: "a" },
-                { x: 90, y: 25, label: "b" },
-                { x: 180, y: 40, label: "c" },
-                { x: 270, y: 50, label: "d" }
+                { x: 45, y: 20 },
+                { x: 90, y: 30 },
+                { x: 135, y: 75 },
+                { x: 180, y: 50 }
               ]}
             />
-            <VictoryLine
+
+            <VictoryArea
               groupComponent={<g/>}
-              style={{ data: { stroke: "tomato" } }}
+              style={{ data: { fill: "tomato", opacity: 0.6 } }}
               data={[
-                { x: 0, y: 10 },
-                { x: 90, y: 25 },
-                { x: 180, y: 40 },
-                { x: 270, y: 50 }
+                { x: 45, y: 20 },
+                { x: 90, y: 30 },
+                { x: 135, y: 75 },
+                { x: 180, y: 50 }
+              ]}
+            />
+          </VictoryPolarChart>
+
+          <VictoryPolarChart
+            domain={{ x: [1, 6], y: [0, 75] }}
+            theme={VictoryTheme.material}
+            style={chartStyle}
+          >
+            <VictoryPolarAxis dependentAxis
+              labelPlacement="vertical"
+              style={{ axis: { stroke: "none" } }}
+              axisAngle={90}
+              tickValues={[25, 50, 75]}
+            />
+            <VictoryPolarAxis
+              labelPlacement="perpendicular"
+              tickValues={[1, 2, 3, 4, 5]}
+              tickFormat={["strength", "intelligence", "stealth", "luck", "charisma"]}
+            />
+            <VictoryScatter
+              style={{ data: { fill: "tomato" } }}
+              size={5}
+              data={[
+                { x: 1, y: 10 },
+                { x: 2, y: 25 },
+                { x: 3, y: 40 },
+                { x: 4, y: 50 },
+                { x: 5, y: 50 }
               ]}
             />
             <VictoryArea
               groupComponent={<g/>}
               style={{ data: { fill: "tomato", opacity: 0.6 } }}
               data={[
-                { x: 0, y: 20 },
-                { x: 90, y: 35 },
-                { x: 180, y: 50 },
-                { x: 270, y: 60 }
+                { x: 1, y: 10 },
+                { x: 2, y: 25 },
+                { x: 3, y: 40 },
+                { x: 4, y: 50 },
+                { x: 5, y: 50 }
               ]}
             />
           </VictoryPolarChart>
@@ -107,7 +138,7 @@ class App extends React.Component {
           />
 
           <VictoryPolarAxis
-            startAngle={90} endAngle={270}
+            startAngle={0} endAngle={180}
             domain={[0, 180]}
             theme={VictoryTheme.material}
             style={chartStyle}
@@ -116,7 +147,7 @@ class App extends React.Component {
           />
 
           <VictoryPolarAxis
-            startAngle={90} endAngle={270}
+            startAngle={0} endAngle={180}
             theme={VictoryTheme.material}
             style={chartStyle}
             labelPlacement="perpendicular"

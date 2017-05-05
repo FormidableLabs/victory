@@ -139,16 +139,16 @@ export default {
     return axisType === "angular" ?
       {
         index, datum: tick, style: tickStyle,
-        x1: radius * Math.sin(scale(tick)),
-        y1: radius * Math.cos(scale(tick)),
-        x2: (radius + tickPadding) * Math.sin(scale(tick)),
-        y2: (radius + tickPadding) * Math.cos(scale(tick))
+        x1: radius * Math.cos(scale(tick)),
+        y1: -radius * Math.sin(scale(tick)),
+        x2: (radius + tickPadding) * Math.cos(scale(tick)),
+        y2: -(radius + tickPadding) * Math.sin(scale(tick))
       } : {
         style, index, datum: tick,
-        x1: (scale(tick) / 2) * Math.sin(axisAngle - angularPadding),
-        x2: (scale(tick) / 2) * Math.sin(axisAngle + angularPadding),
-        y1: (scale(tick) / 2) * Math.cos(axisAngle - angularPadding),
-        y2: (scale(tick) / 2) * Math.cos(axisAngle + angularPadding)
+        x1: (scale(tick) / 2) * Math.cos(axisAngle - angularPadding),
+        x2: (scale(tick) / 2) * Math.cos(axisAngle + angularPadding),
+        y1: -(scale(tick) / 2) * Math.sin(axisAngle - angularPadding),
+        y2: -(scale(tick) / 2) * Math.sin(axisAngle + angularPadding)
       };
   },
 
@@ -167,8 +167,8 @@ export default {
       angle: textAngle,
       textAnchor: labelStyle.textAnchor || this.getTextAnchor(labelAngle, props.labelPlacement),
       text: tickFormat(tick, index),
-      x: labelRadius * Math.sin(labelAngle),
-      y: labelRadius * Math.cos(labelAngle)
+      x: labelRadius * Math.cos(labelAngle),
+      y: -labelRadius * Math.sin(labelAngle)
     };
   },
 
@@ -205,8 +205,8 @@ export default {
     return axisType === "angular" ?
       {
         index, datum: tick, style: gridStyle,
-        x1: radius * Math.sin(scale(tick)),
-        y1: radius * Math.cos(scale(tick)),
+        x1: radius * Math.cos(scale(tick)),
+        y1: -radius * Math.sin(scale(tick)),
         x2: 0, y2: 0
       } : {
         style: gridStyle, index, datum: tick,
@@ -222,9 +222,9 @@ export default {
       {
         style: style.axis,
         x1: 0,
-        x2: radius * Math.sin(this.degreesToRadians(axisAngle)),
+        x2: radius * Math.cos(this.degreesToRadians(axisAngle)),
         y1: 0,
-        y2: radius * Math.cos(this.degreesToRadians(axisAngle))
+        y2: -radius * Math.sin(this.degreesToRadians(axisAngle))
       } : {
         style: style.axis,
         cx: 0, cy: 0, r: radius, startAngle, endAngle
