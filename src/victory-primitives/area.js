@@ -1,4 +1,4 @@
-/*eslint no-magic-numbers: ["error", { "ignore": [0, 1, 2] }]*/
+/*eslint no-magic-numbers: ["error", { "ignore": [-1, 0, 1, 2] }]*/
 import React from "react";
 import PropTypes from "prop-types";
 import { Collection, Helpers } from "../victory-util";
@@ -44,7 +44,7 @@ export default class Area extends React.Component {
     return polar ?
       d3Shape.radialLine()
         .curve(d3Shape[`${interpolation}Closed`])
-        .angle((d) => getX(d) + Math.PI / 2)
+        .angle((d) => -1 * getX(d) + Math.PI / 2)
         .radius((d) => getY(d)) :
       d3Shape.line()
         .curve(d3Shape[interpolation])
@@ -61,7 +61,7 @@ export default class Area extends React.Component {
     return polar ?
       d3Shape.radialArea()
         .curve(d3Shape[`${interpolation}Closed`])
-        .angle((d) => getX(d) + Math.PI / 2)
+        .angle((d) => -1 * getX(d) + Math.PI / 2)
         .outerRadius((d) => getY(d))
         .innerRadius((d) => getY0(d)) :
       d3Shape.area()

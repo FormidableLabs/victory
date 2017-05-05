@@ -21,7 +21,7 @@ export default {
     const y = scale.y(datum._y1 !== undefined ? datum._y1 : datum._y);
     return {
       x: props.polar ? y * Math.cos(x) : x,
-      y: props.polar ? y * Math.sin(x) : y
+      y: props.polar ? -y * Math.sin(x) : y
     };
   },
 
