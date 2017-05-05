@@ -12,7 +12,9 @@ export default {
     } = props;
     const initialChildProps = {
       parent: { style: style.parent, scale, data, height, width, domain, standalone },
-      all: { data: { scale, data, interpolation, groupComponent, theme, style: style.data } }
+      all: { data:
+        { polar: props.polar, scale, data, interpolation, groupComponent, theme, style: style.data }
+      }
     };
     return data.reduce((childProps, datum, index) => {
       const text = this.getLabelText(props, datum, index);

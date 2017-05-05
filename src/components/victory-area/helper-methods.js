@@ -15,7 +15,7 @@ export default {
     const initialChildProps = {
       parent: { style: style.parent, width, height, scale, data, domain, standalone, theme },
       all: {
-        data: { scale, data, interpolation, groupComponent, style: style.data }
+        data: { polar: props.polar, scale, data, interpolation, groupComponent, style: style.data }
       }
     };
     return data.reduce((childProps, datum, index) => {

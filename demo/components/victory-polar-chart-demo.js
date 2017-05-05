@@ -2,7 +2,7 @@
 /*eslint no-magic-numbers:0*/
 import React from "react";
 import {
-  VictoryPolarAxis, VictoryPolarChart, VictoryScatter
+  VictoryPolarAxis, VictoryPolarChart, VictoryScatter, VictoryLine, VictoryArea
 } from "../../src/index";
 import { random, range } from "lodash";
 
@@ -51,13 +51,49 @@ class App extends React.Component {
     return (
       <div className="demo">
         <div style={containerStyle}>
-          <VictoryPolarChart theme={VictoryTheme.material} style={chartStyle}>
+          <VictoryPolarChart
+            domain={{ x: [0, 360], y: [0, 75] }}
+            theme={VictoryTheme.material}
+            style={chartStyle}
+          >
+            <VictoryPolarAxis dependentAxis
+              labelPlacement="vertical"
+              style={{ axis: { stroke: "none" } }}
+              axisAngle={90}
+              tickValues={[25, 50, 75]}
+            />
+            <VictoryPolarAxis
+              labelPlacement="parallel"
+              tickValues={[45, 135, 225, 315]}
+            />
             <VictoryScatter
+              style={{ data: { fill: "tomato" } }}
+              size={5}
               data={[
-                { x: 0, y: 1 },
-                { x: 90, y: 2 },
-                { x: 180, y: 3 },
-                { x: 270, y: 2 }
+                { x: 0, y: 10, label: "a" },
+                { x: 90, y: 25, label: "b" },
+                { x: 180, y: 40, label: "c" },
+                { x: 270, y: 50, label: "d" }
+              ]}
+            />
+            <VictoryLine
+              groupComponent={<g/>}
+              style={{ data: { stroke: "tomato" } }}
+              data={[
+                { x: 0, y: 10 },
+                { x: 90, y: 25 },
+                { x: 180, y: 40 },
+                { x: 270, y: 50 }
+              ]}
+            />
+            <VictoryArea
+              groupComponent={<g/>}
+              style={{ data: { fill: "tomato", opacity: 0.6 } }}
+              data={[
+                { x: 0, y: 20 },
+                { x: 90, y: 35 },
+                { x: 180, y: 50 },
+                { x: 270, y: 60 }
               ]}
             />
           </VictoryPolarChart>
@@ -96,7 +132,6 @@ class App extends React.Component {
           />
 
           <VictoryPolarAxis dependentAxis
-            standalone={false}
             axisAngle={200}
             theme={VictoryTheme.material}
             style={chartStyle}

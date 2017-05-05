@@ -1,6 +1,6 @@
 import React from "react";
 import PropTypes from "prop-types";
-import { partialRight } from "lodash";
+import { assign, partialRight } from "lodash";
 import {
   PropTypes as CustomPropTypes, Helpers, VictoryLabel,
   VictoryContainer, VictoryTheme, Line, addEvents, Circle, Arc
@@ -89,28 +89,45 @@ class VictoryPolarAxis extends React.Component {
     "tickComponent", "tickLabelComponent", "gridComponent", "circularGridComponent"
   ];
 
-  renderLine(props) {
-    const axisComponent = props.dependentAxis ? props.axisComponent : props.circularAxisComponent;
-    const axisProps = this.getComponentProps(axisComponent, "axis", 0);
-    return React.cloneElement(axisComponent, axisProps);
+  getTransform(props) {
+    const groupComponentProps = props.groupComponent.props || {};
+    const origin = Helpers.getOrigin(props);
+    const transform = `translate(${origin.x}, ${origin.y})`;
+    return groupComponentProps.transform || transform;
   }
 
-  renderGridAndTicks(props) {
-    const { tickComponent, tickLabelComponent } = props;
+  renderAxis(props) {
+    const { tickComponent, tickLabelComponent, groupComponent } = props;
     const axisType = props.dependentAxis ? "radial" : "angular";
     const gridComponent = axisType === "radial" ? props.circularGridComponent : props.gridComponent;
-    return this.dataKeys.map((key, index) => {
-      const tickProps = this.getComponentProps(tickComponent, "ticks", index);
-      const TickComponent = React.cloneElement(tickComponent, tickProps);
-      const gridProps = this.getComponentProps(gridComponent, "grid", index);
-      const GridComponent = React.cloneElement(gridComponent, gridProps);
-      const tickLabelProps = this.getComponentProps(tickLabelComponent, "tickLabels", index);
-      const TickLabel = React.cloneElement(tickLabelComponent, tickLabelProps);
+    const axisComponent = props.dependentAxis ? props.axisComponent : props.circularAxisComponent;
+    const axisProps = this.getComponentProps(axisComponent, "axis", 0);
 
-      return React.cloneElement(
-        props.groupComponent, { key: `tick-group-${key}` }, GridComponent, TickComponent, TickLabel
+    const tickComponents = this.dataKeys.map((key, index) => {
+      const tickProps = assign(
+        { key: `tick-${key}` }, this.getComponentProps(tickComponent, "ticks", index)
       );
+      return React.cloneElement(tickComponent, tickProps);
     });
+
+    const gridComponents = this.dataKeys.map((key, index) => {
+      const gridProps = assign(
+        { key: `grid-${key}` }, this.getComponentProps(gridComponent, "grid", index)
+      );
+      return React.cloneElement(gridComponent, gridProps);
+    });
+
+    const tickLabelComponents = this.dataKeys.map((key, index) => {
+      const tickLabelProps = assign(
+        { key: `tick-${key}` }, this.getComponentProps(tickLabelComponent, "tickLabels", index)
+      );
+      return React.cloneElement(tickLabelComponent, tickLabelProps);
+    });
+    const children = [
+      React.cloneElement(axisComponent, axisProps),
+      ...tickComponents, ...gridComponents, ...tickLabelComponents
+    ];
+    return React.cloneElement(groupComponent, { transform: this.getTransform(props) }, children);
   }
 
   shouldAnimate() {
@@ -122,13 +139,7 @@ class VictoryPolarAxis extends React.Component {
     if (this.shouldAnimate()) {
       return this.animateComponent(props, animationWhitelist);
     }
-
-    const gridAndTicks = this.renderGridAndTicks(props);
-    const children = [
-      ...gridAndTicks,
-      this.renderLine(props)
-    ];
-    return this.renderContainer(props.containerComponent, children);
+    return this.renderContainer(props.containerComponent, this.renderAxis(props));
   }
 }
 
