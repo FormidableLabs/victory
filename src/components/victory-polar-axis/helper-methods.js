@@ -186,7 +186,7 @@ export default {
     } else if (degrees > 180 && degrees < 360) {
       angle = 270 - degrees;
     }
-    const labelRotation = props.labelPlacement === "perpendicular" ? 90 : 0;
+    const labelRotation = props.labelPlacement === "perpendicular" ? 0 : 90;
     return angle + sign * labelRotation;
   },
 
@@ -195,7 +195,7 @@ export default {
       return "middle";
     }
     const angle = this.radiansToDegrees(baseAngle);
-    return angle < 180 ? "start" : "end";
+    return angle <= 90 || angle > 270 ? "start" : "end";
   },
 
   getGridProps(props, calculatedValues, tick, index) { //eslint-disable-line max-params
