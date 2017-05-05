@@ -3,6 +3,28 @@ import Collection from "./collection";
 import React from "react";
 
 export default {
+
+  getOrigin(props) {
+    const { width, height } = props;
+    const { top, bottom, left, right } = this.getPadding(props);
+    const radius = props.radius || Math.min(width - left - right, height - top - bottom) / 2;
+    const offsetWidth = width / 2 + left - right;
+    const offsetHeight = height / 2 + top - bottom;
+    return {
+      x: offsetWidth + radius > width ? radius + left - right : offsetWidth,
+      y: offsetHeight + radius > height ? radius + top - bottom : offsetHeight
+    };
+  },
+
+  scalePoint(props, scale, datum) {
+    const x = scale.x(datum._x1 !== undefined ? datum._x1 : datum._x);
+    const y = scale.y(datum._y1 !== undefined ? datum._y1 : datum._y);
+    return {
+      x: props.polar ? y * Math.cos(x) : x,
+      y: props.polar ? y * Math.sin(x) : y
+    };
+  },
+
   getPadding(props) {
     const padding = typeof props.padding === "number" ? props.padding : 0;
     const paddingObj = typeof props.padding === "object" ? props.padding : {};
@@ -46,6 +68,11 @@ export default {
 
   getRange(props, axis) {
     // determine how to lay the axis and what direction positive and negative are
+    if (props.range && props.range[axis]) {
+      return props.range[axis];
+    } else if (props.range && Array.isArray(props.range)) {
+      return props.range;
+    }
     const isVertical = axis !== "x";
     const padding = this.getPadding(props);
     if (isVertical) {

@@ -1,3 +1,4 @@
+/*eslint no-magic-numbers: ["error", { "ignore": [0, 1, 2] }]*/
 import React from "react";
 import PropTypes from "prop-types";
 import { Collection, Helpers } from "../victory-util";
@@ -9,7 +10,8 @@ export default class Curve extends React.Component {
   static propTypes = {
     ...CommonProps,
     groupComponent: PropTypes.element,
-    interpolation: PropTypes.string
+    interpolation: PropTypes.string,
+    polar: PropTypes.bool
   };
 
   static defaultProps = {
@@ -32,15 +34,25 @@ export default class Curve extends React.Component {
     return false;
   }
 
+  getLineFunction(props) {
+    const { polar, scale, interpolation } = props;
+    const getX = (d) => scale.x(d._x1 !== undefined ? d._x1 : d._x);
+    const getY = (d) => scale.y(d._y1 !== undefined ? d._y1 : d._y);
+    return polar ?
+      d3Shape.radialLine()
+        .curve(d3Shape[this.toNewName(interpolation)])
+        .angle((d) => getX(d) + Math.PI / 2)
+        .radius((d) => getY(d)) :
+      d3Shape.line()
+        .curve(d3Shape[this.toNewName(interpolation)])
+        .x((d) => getX(d))
+        .y((d) => getY(d));
+  }
+
   calculateAttributes(props) {
-    const { style, data, active, scale, interpolation } = props;
+    const { style, data, active } = props;
     const dataSegments = this.getDataSegments(data);
-    const xScale = scale.x;
-    const yScale = scale.y;
-    const lineFunction = d3Shape.line()
-      .curve(d3Shape[this.toNewName(interpolation)])
-      .x((d) => xScale(d._x1 !== undefined ? d._x1 : d._x))
-      .y((d) => yScale(d._y1 !== undefined ? d._y1 : d._y));
+    const lineFunction = this.getLineFunction(props);
     return {
       style: Helpers.evaluateStyle(
         assign({ fill: "none", stroke: "black" }, style), data, active

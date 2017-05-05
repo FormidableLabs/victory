@@ -1,3 +1,4 @@
+/*eslint no-magic-numbers: ["error", { "ignore": [0, 1, 2] }]*/
 import React from "react";
 import PropTypes from "prop-types";
 import { Collection, Helpers } from "../victory-util";
@@ -9,7 +10,8 @@ export default class Area extends React.Component {
   static propTypes = {
     ...CommonProps,
     groupComponent: PropTypes.element,
-    interpolation: PropTypes.string
+    interpolation: PropTypes.string,
+    polar: PropTypes.bool
   };
 
   static defaultProps = {
@@ -34,21 +36,46 @@ export default class Area extends React.Component {
     return false;
   }
 
-  calculateAttributes(props) {
-    const { style, data, active, scale } = props;
-    const dataSegments = this.getDataSegments(data);
-    const xScale = scale.x;
-    const yScale = scale.y;
+  getLineFunction(props) {
+    const { polar, scale } = props;
     const interpolation = this.toNewName(props.interpolation);
-    const areaFunction = d3Shape.area()
-      .curve(d3Shape[interpolation])
-      .x((d) => xScale(d._x1 !== undefined ? d._x1 : d._x))
-      .y1((d) => yScale(d._y1 !== undefined ? d._y1 : d._y))
-      .y0((d) => yScale(d._y0));
-    const lineFunction = d3Shape.line()
-      .curve(d3Shape[interpolation])
-      .x((d) => xScale(d._x1 !== undefined ? d._x1 : d._x))
-      .y((d) => yScale(d._y1));
+    const getX = (d) => scale.x(d._x1 !== undefined ? d._x1 : d._x);
+    const getY = (d) => scale.y(d._y1 !== undefined ? d._y1 : d._y);
+    return polar ?
+      d3Shape.radialLine()
+        .curve(d3Shape[`${interpolation}Closed`])
+        .angle((d) => getX(d) + Math.PI / 2)
+        .radius((d) => getY(d)) :
+      d3Shape.line()
+        .curve(d3Shape[interpolation])
+        .x((d) => getX(d))
+        .y((d) => getY(d));
+  }
+
+  getAreaFunction(props) {
+    const { polar, scale } = props;
+    const interpolation = this.toNewName(props.interpolation);
+    const getX = (d) => scale.x(d._x1 !== undefined ? d._x1 : d._x);
+    const getY = (d) => scale.y(d._y1 !== undefined ? d._y1 : d._y);
+    const getY0 = (d) => scale.y(d._y0);
+    return polar ?
+      d3Shape.radialArea()
+        .curve(d3Shape[`${interpolation}Closed`])
+        .angle((d) => getX(d) + Math.PI / 2)
+        .outerRadius((d) => getY(d))
+        .innerRadius((d) => getY0(d)) :
+      d3Shape.area()
+       .curve(d3Shape[interpolation])
+       .x((d) => getX(d))
+       .y1((d) => getY(d))
+      . y0((d) => getY0(d));
+  }
+
+  calculateAttributes(props) {
+    const { style, data, active } = props;
+    const dataSegments = this.getDataSegments(data);
+    const areaFunction = this.getAreaFunction(props);
+    const lineFunction = this.getLineFunction(props);
     return {
       style: Helpers.evaluateStyle(assign({ fill: "black" }, style), data, active),
       areaPaths: dataSegments.map((segment) => areaFunction(segment)),
