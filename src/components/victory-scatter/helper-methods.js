@@ -13,8 +13,7 @@ export default {
 
     return data.reduce((childProps, datum, index) => {
       const eventKey = datum.eventKey;
-      const x = scale.x(datum._x1 !== undefined ? datum._x1 : datum._x);
-      const y = scale.y(datum._y1 !== undefined ? datum._y1 : datum._y);
+      const { x, y } = Helpers.getPoint(props, scale, datum);
       const dataProps = {
         x, y, datum, data, index, scale,
         size: this.getSize(datum, props, calculatedValues),

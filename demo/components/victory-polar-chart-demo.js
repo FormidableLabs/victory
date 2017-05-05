@@ -2,7 +2,7 @@
 /*eslint no-magic-numbers:0*/
 import React from "react";
 import {
-  VictoryPolarAxis
+  VictoryPolarAxis, VictoryPolarChart, VictoryScatter
 } from "../../src/index";
 import { random, range } from "lodash";
 
@@ -51,16 +51,28 @@ class App extends React.Component {
     return (
       <div className="demo">
         <div style={containerStyle}>
+          <VictoryPolarChart theme={VictoryTheme.material} style={chartStyle}>
+            <VictoryScatter
+              data={[
+                { x: 0, y: 1 },
+                { x: 90, y: 2 },
+                { x: 180, y: 3 },
+                { x: 270, y: 2 }
+              ]}
+            />
+          </VictoryPolarChart>
+
           <VictoryPolarAxis
             theme={VictoryTheme.material}
             style={chartStyle}
             labelPlacement="perpendicular"
+            domain={[0, 360]}
             tickValues={[0, 20, 45, 65, 90, 120, 135, 180, 225, 250, 270, 300, 315]}
           />
 
           <VictoryPolarAxis
             startAngle={90} endAngle={270}
-            domain={{ x: [0, 180] }}
+            domain={[0, 180]}
             theme={VictoryTheme.material}
             style={chartStyle}
             labelPlacement="perpendicular"
@@ -69,11 +81,27 @@ class App extends React.Component {
 
           <VictoryPolarAxis
             startAngle={90} endAngle={270}
-            domain={{ x: [0, 180] }}
             theme={VictoryTheme.material}
             style={chartStyle}
             labelPlacement="perpendicular"
             tickValues={["Cat", "Dog", "Bird", "Snake"]}
+          />
+
+          <VictoryPolarAxis
+            theme={VictoryTheme.material}
+            style={chartStyle}
+            domain={[0, 10]}
+            labelPlacement="vertical"
+            tickValues={[3, 5, 10, 7, 8, 2, 1]}
+          />
+
+          <VictoryPolarAxis dependentAxis
+            standalone={false}
+            axisAngle={200}
+            theme={VictoryTheme.material}
+            style={chartStyle}
+            domain={[0, 10]}
+            tickValues={[2, 4, 6, 8, 10]}
           />
 
           <svg width={350} height={350}>
@@ -81,6 +109,7 @@ class App extends React.Component {
               standalone={false}
               theme={VictoryTheme.material}
               style={chartStyle}
+              domain={[0, 360]}
               tickValues={[0, 45, 90, 135, 180, 225, 270, 315]}
             />
 

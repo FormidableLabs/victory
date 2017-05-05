@@ -53,10 +53,10 @@ export default {
       domain = props.domain;
     } else if (props.domain && props.domain[inherentAxis]) {
       domain = props.domain[inherentAxis];
-    } else if (axis === "x") {
-      return [0, 360];
     } else if (Array.isArray(props.tickValues) && props.tickValues.length > 1) {
       domain = Domain.getDomainFromTickValues(props);
+    } else {
+      return axis === "x" ? [0, 360] : [0, 1];
     }
     const paddedDomain = Domain.padDomain(domain, props, inherentAxis);
     return domain ? Domain.cleanDomain(paddedDomain, props, inherentAxis) : undefined;
@@ -187,6 +187,9 @@ export default {
   },
 
   getTextAngle(props, baseAngle) {
+    if (props.labelPlacement === "vertical") {
+      return 0;
+    }
     const degrees = this.radiansToDegrees(baseAngle);
     const sign = (degrees > 90 && degrees < 180 || degrees > 270) ? 1 : -1;
     let angle;
@@ -279,8 +282,8 @@ export default {
     const role = this.getRole(props);
     props = this.modifyProps(props, fallbackProps, role);
     const calculatedValues = this.getCalculatedValues(props);
-    const { style, scale, ticks, stringTicks, domain } = calculatedValues;
-    const { width, height, standalone, theme, tickValues } = props;
+    const { style, scale, ticks, domain } = calculatedValues;
+    const { width, height, standalone, theme } = props;
 
     const axisProps = this.getAxisProps(props, calculatedValues);
     const initialChildProps = { parent:
@@ -303,12 +306,7 @@ export default {
     const { tickValues, tickCount } = props;
     if (tickValues && Array.isArray(tickValues)) {
       if (Helpers.stringTicks(props)) {
-        const domain = scale.domain();
-        const extent = Math.abs(domain[1] - domain[0]);
-        const step = extent / (tickValues.length - 1);
-        return tickValues.map((t, i) => {
-          return domain[0] + i * step;
-        });
+        return lodashRange(1, props.tickValues.length + 1);
       }
       return tickValues.length ? tickValues : scale.domain();
     } else if (scale.ticks && isFunction(scale.ticks)) {

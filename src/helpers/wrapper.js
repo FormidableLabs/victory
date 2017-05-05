@@ -161,7 +161,7 @@ export default {
         }
       }
     }
-
+    console.log(childDomains)
     const min = Collection.getMinValue(childDomains);
     const max = Collection.getMaxValue(childDomains);
     return childDomains.length === 0 ?

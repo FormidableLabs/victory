@@ -2,7 +2,7 @@ import { defaults } from "lodash";
 import PropTypes from "prop-types";
 import React from "react";
 import { Helpers, VictorySharedEvents, VictoryContainer, VictoryTheme, Scale } from "victory-core";
-import VictoryAxis from "../victory-axis/victory-axis";
+import VictoryPolarAxis from "../victory-polar-axis/victory-polar-axis";
 import ChartHelpers from "./helper-methods";
 import Axis from "../../helpers/axis";
 import Wrapper from "../../helpers/wrapper";
@@ -32,8 +32,8 @@ export default class VictoryChart extends React.Component {
   static defaultProps = {
     containerComponent: <VictoryContainer/>,
     defaultAxes: {
-      independent: <VictoryAxis/>,
-      dependent: <VictoryAxis dependentAxis/>
+      independent: <VictoryPolarAxis/>,
+      dependent: <VictoryPolarAxis dependentAxis/>
     },
     groupComponent: <g/>,
     standalone: true,
@@ -110,11 +110,8 @@ export default class VictoryChart extends React.Component {
     if (axisChild.length > 0) {
       return this.getAxisProps(axisChild[0], props, calculatedProps);
     }
-    return {
-      domain: calculatedProps.domain,
-      scale: calculatedProps.scale,
-      categories: calculatedProps.categories
-    };
+    const { categories, domain, range, scale } = calculatedProps;
+    return { categories, domain, range, scale };
   }
 
   getCalculatedProps(props, childComponents) {
@@ -131,8 +128,8 @@ export default class VictoryChart extends React.Component {
       y: ChartHelpers.getDomain(props, "y", childComponents)
     };
     const range = {
-      x: Helpers.getRange(props, "x"),
-      y: Helpers.getRange(props, "y")
+      x: this.getRange(props, "x"),
+      y: this.getRange(props, "y")
     };
     const baseScale = {
       x: Scale.getScaleFromProps(props, "x") ||
@@ -171,9 +168,31 @@ export default class VictoryChart extends React.Component {
     const defaultDomainPadding = ChartHelpers.getDefaultDomainPadding(childComponents, horizontal);
 
     return {
-      axisComponents, categories, domain, horizontal, scale, stringMap,
+      axisComponents, categories, domain, range, horizontal, scale, stringMap,
       style, origin, originSign, defaultDomainPadding
     };
+  }
+
+  degreesToRadians(degrees) {
+    return degrees * (Math.PI / 180);
+  }
+
+  getDefaultRadius(props) {
+    const { left, right, top, bottom } = Helpers.getPadding(props);
+    const { width, height } = props;
+    return Math.min(width - left - right, height - top - bottom) / 2;
+  }
+
+  getRange(props, axis) {
+    if (axis === "x") {
+      const startAngle = this.degreesToRadians(props.startAngle || 0);
+      const endAngle = this.degreesToRadians(props.endAngle || 360);
+      return [startAngle, endAngle];
+    }
+
+    const radius = props.radius || this.getDefaultRadius(props);
+    const innerRadius = props.innerRadius || 0;
+    return [innerRadius, radius];
   }
 
   getNewChildren(props, childComponents, calculatedProps) {
@@ -191,6 +210,7 @@ export default class VictoryChart extends React.Component {
         key: index,
         theme: props.theme,
         standalone: false,
+        polar: true,
         style
       }, childProps);
 

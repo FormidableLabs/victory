@@ -135,7 +135,7 @@ export default class VictoryGroup extends React.Component {
   }
 
   getChildProps(props, calculatedProps) {
-    const { categories, domain, scale, horizontal } = calculatedProps;
+    const { categories, domain, range, scale, horizontal } = calculatedProps;
     return {
       height: props.height,
       width: props.width,
@@ -144,6 +144,7 @@ export default class VictoryGroup extends React.Component {
       theme: props.theme,
       categories,
       domain,
+      range,
       scale,
       horizontal
     };

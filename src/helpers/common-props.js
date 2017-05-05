@@ -74,6 +74,10 @@ export default {
         left: PropTypes.number, right: PropTypes.number
       })
     ]),
+    range: PropTypes.oneOfType([
+      CustomPropTypes.domain,
+      PropTypes.shape({ x: CustomPropTypes.domain, y: CustomPropTypes.domain })
+    ]),
     scale: PropTypes.oneOfType([
       CustomPropTypes.scale,
       PropTypes.shape({ x: CustomPropTypes.scale, y: CustomPropTypes.scale })

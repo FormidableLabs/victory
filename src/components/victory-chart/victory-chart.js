@@ -110,11 +110,8 @@ export default class VictoryChart extends React.Component {
     if (axisChild.length > 0) {
       return this.getAxisProps(axisChild[0], props, calculatedProps);
     }
-    return {
-      domain: calculatedProps.domain,
-      scale: calculatedProps.scale,
-      categories: calculatedProps.categories
-    };
+    const { categories, domain, range, scale } = calculatedProps;
+    return { categories, domain, range, scale };
   }
 
   getCalculatedProps(props, childComponents) {
@@ -171,7 +168,7 @@ export default class VictoryChart extends React.Component {
     const defaultDomainPadding = ChartHelpers.getDefaultDomainPadding(childComponents, horizontal);
 
     return {
-      axisComponents, categories, domain, horizontal, scale, stringMap,
+      axisComponents, categories, domain, range, horizontal, scale, stringMap,
       style, origin, originSign, defaultDomainPadding
     };
   }
