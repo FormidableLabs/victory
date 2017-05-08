@@ -23,7 +23,7 @@ Detailed documentation and interactive examples can be found at http://formidabl
 Projects using Victory should also depend on [React][] and [prop-types][].
 
 ## Issues
-To make it easier to manage issues across all of Victory, we have disabled issued on this repo. [Please open issues in the main victory repo instead](https://github.com/FormidableLabs/victory/issues). You can track our progress on issues [here](https://github.com/FormidableLabs/victory/projects/1)
+To make it easier to manage issues across all of Victory, we have disabled issues on this repo. [Please open issues in the main victory repo instead](https://github.com/FormidableLabs/victory/issues). You can track our progress on issues [here](https://github.com/FormidableLabs/victory/projects/1)
 
 
 ## Development
