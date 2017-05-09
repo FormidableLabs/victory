@@ -2,7 +2,6 @@ import Area from "./area";
 import Arc from "./arc";
 import Bar from "./bar";
 import Candle from "./candle";
-import Circle from "./circle";
 import ClipPath from "./clip-path";
 import Curve from "./curve";
 import ErrorBar from "./error-bar";
@@ -14,5 +13,5 @@ import Flyout from "./flyout";
 
 
 export {
-  Arc, Area, Bar, Candle, Circle, ClipPath, Curve, ErrorBar, Line, Point, Slice, Voronoi, Flyout
+  Arc, Area, Bar, Candle, ClipPath, Curve, ErrorBar, Line, Point, Slice, Voronoi, Flyout
 };
