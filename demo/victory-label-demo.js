@@ -18,6 +18,15 @@ export default class App extends React.Component {
           />
 
 
+          <circle cx="200" cy="50" r="2" fill="red"/>
+          <VictoryLabel
+            x={200} y={50}
+            title={"Victory is awesome. This is a title."}
+            desc={"Victory is awesome. This is a description."}
+            text={"Victory is awesome.\nThis has a title and description."}
+          />
+
+
           <circle cx="0" cy="75" r="2" fill="red"/>
           <VictoryLabel
             x={0} y={75}

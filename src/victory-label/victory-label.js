@@ -28,6 +28,7 @@ export default class VictoryLabel extends React.Component {
     className: PropTypes.string,
     data: PropTypes.array,
     datum: PropTypes.any,
+    desc: PropTypes.string,
     dx: PropTypes.oneOfType([
       PropTypes.number,
       PropTypes.string,
@@ -64,6 +65,7 @@ export default class VictoryLabel extends React.Component {
       ]),
       PropTypes.func
     ]),
+    title: PropTypes.string,
     transform: PropTypes.oneOfType([
       PropTypes.string,
       PropTypes.object,
@@ -222,6 +224,8 @@ export default class VictoryLabel extends React.Component {
       <text {...textProps}
         {...props.events}
       >
+        {this.props.title && <title>{this.props.title}</title>}
+        {this.props.desc && <desc>{this.props.desc}</desc>}
         {this.content.map((line, i) => {
           const style = this.style[i] || this.style[0];
           const lastStyle = this.style[i - 1] || this.style[0];

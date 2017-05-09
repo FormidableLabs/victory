@@ -56,6 +56,28 @@ describe("components/victory-label", () => {
     expect(output.length).to.equal(3);
   });
 
+  it("renders title and desc if provided ", () => {
+    const wrapper = shallow(
+      <VictoryLabel text="title and desc" title="title" desc="desc" />
+    );
+
+    const wrapper2 = shallow(
+      <VictoryLabel text="title and desc"/>
+    );
+
+    const title = wrapper.find("title");
+    expect(title.length).to.equal(1);
+
+    const desc = wrapper.find("desc");
+    expect(desc.length).to.equal(1);
+
+    const noTitle = wrapper2.find("title");
+    expect(noTitle.length).to.equal(0);
+
+    const noDesc = wrapper2.find("desc");
+    expect(noDesc.length).to.equal(0);
+  });
+
   it("renders styles tspand independently when `style` is an array", () => {
     const fill = ["red", "green", "blue"];
     const wrapper = shallow(
