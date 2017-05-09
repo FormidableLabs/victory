@@ -45,7 +45,6 @@ class VictoryPolarAxis extends React.Component {
     endAngle: PropTypes.number,
     gridComponent: PropTypes.element,
     labelPlacement: PropTypes.oneOf(["parallel", "perpendicular", "vertical"]),
-    radius: PropTypes.number,
     startAngle: PropTypes.number,
     style: PropTypes.shape({
       parent: PropTypes.object, axis: PropTypes.object, axisLabel: PropTypes.object,

@@ -17,10 +17,7 @@ export default {
     const scale = this.getScale(props);
     const ticks = this.getTicks(props, scale);
     const tickFormat = this.getTickFormat(props, scale, ticks);
-    const radius = Math.min(
-      props.width - padding.left - padding.right,
-      props.height - padding.top - padding.bottom
-    ) / 2;
+    const radius = this.getRadius(props);
     return {
       style, padding, stringTicks, axisType, scale, ticks, tickFormat, domain, range, radius
     };
@@ -61,21 +58,27 @@ export default {
   },
 
 
-  getDefaultRadius(props) {
+  getRadius(props) {
     const { left, right, top, bottom } = Helpers.getPadding(props);
     const { width, height } = props;
     return Math.min(width - left - right, height - top - bottom) / 2;
   },
 
   getRange(props, axis) {
+    // Return the range from props if one is given.
+    if (props.range && props.range[axis]) {
+      return props.range[axis];
+    } else if (props.range && Array.isArray(props.range)) {
+      return props.range;
+    }
+
     if (axis === "x") {
       const startAngle = this.degreesToRadians(props.startAngle);
       const endAngle = this.degreesToRadians(props.endAngle);
       return [startAngle, endAngle];
     }
-    const radius = props.radius || this.getDefaultRadius(props);
-    const innerRadius = props.innerRadius || 0;
-    return [innerRadius, radius];
+    const radius = this.getRadius(props);
+    return [0, radius];
   },
 
   // exposed for use by VictoryChart
