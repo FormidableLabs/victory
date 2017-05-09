@@ -50,8 +50,6 @@ export default {
       domain = props.domain[inherentAxis];
     } else if (Array.isArray(props.tickValues) && props.tickValues.length > 1) {
       domain = Domain.getDomainFromTickValues(props);
-    } else {
-      return axis === "x" ? [0, 360] : [0, 1];
     }
     const paddedDomain = Domain.padDomain(domain, props, inherentAxis);
     return domain ? Domain.cleanDomain(paddedDomain, props, inherentAxis) : undefined;

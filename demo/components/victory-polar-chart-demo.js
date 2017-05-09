@@ -52,7 +52,7 @@ class App extends React.Component {
       <div className="demo">
         <div style={containerStyle}>
           <VictoryPolarChart
-            domain={{ x: [0, 360], y: [0, 75] }}
+            domain={{ x: [0, 360] }}
             theme={VictoryTheme.material}
             style={chartStyle}
           >
