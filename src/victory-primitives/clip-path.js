@@ -1,8 +1,8 @@
 import React from "react";
 import PropTypes from "prop-types";
-import {
-  PropTypes as CustomPropTypes, Helpers, Collection
-} from "../victory-util";
+import CustomPropTypes from "../victory-util/prop-types";
+import Helpers from "../victory-util/helpers";
+import Collection from "../victory-util/collection";
 
 export default class ClipPath extends React.Component {
   static propTypes = {
