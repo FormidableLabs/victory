@@ -245,14 +245,14 @@ export default class VictoryTooltip extends React.Component {
   getFlyoutProps(props, calculatedValues) {
     const { flyoutDimensions, flyoutStyle } = calculatedValues;
     const {
-      x, y, dx, dy, orientation, pointerLength, pointerWidth, cornerRadius,
-      events, flyoutComponent, index
+      x, y, dx, dy, datum, index, orientation, pointerLength, pointerWidth,
+      cornerRadius, events, flyoutComponent
     } = props;
     return defaults(
       {},
       flyoutComponent.props,
       {
-        x, y, dx, dy, orientation, pointerLength, pointerWidth, cornerRadius, events,
+        x, y, dx, dy, datum, index, orientation, pointerLength, pointerWidth, cornerRadius, events,
         key: `flyout-${index}`,
         width: flyoutDimensions.width,
         height: flyoutDimensions.height,
