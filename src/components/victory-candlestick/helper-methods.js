@@ -7,9 +7,9 @@ export default {
     props = Helpers.modifyProps(props, fallbackProps, "candlestick");
     const calculatedValues = this.getCalculatedValues(props);
     const { data, style, scale, domain } = calculatedValues;
-    const { groupComponent, width, height, padding, standalone, theme } = props;
+    const { groupComponent, width, height, padding, standalone, theme, polar } = props;
     const initialChildProps = { parent: {
-      domain, scale, width, height, data, standalone, theme, style: style.parent
+      domain, scale, width, height, data, standalone, theme, polar, style: style.parent, padding
     } };
 
     return data.reduce((childProps, datum, index) => {

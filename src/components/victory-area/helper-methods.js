@@ -9,13 +9,16 @@ export default {
     const calculatedValues = this.getCalculatedValues(props);
     const { scale, style, data, domain } = calculatedValues;
     const {
-      standalone, interpolation, events, sharedEvents, width, height, groupComponent, theme
+      standalone, interpolation, events, sharedEvents, width, height, groupComponent, theme,
+      polar, padding
     } = props;
 
     const initialChildProps = {
-      parent: { style: style.parent, width, height, scale, data, domain, standalone, theme },
+      parent: {
+        style: style.parent, width, height, scale, data, domain, standalone, theme, polar, padding
+      },
       all: {
-        data: { polar: props.polar, scale, data, interpolation, groupComponent, style: style.data }
+        data: { polar, scale, data, interpolation, groupComponent, style: style.data }
       }
     };
     return data.reduce((childProps, datum, index) => {

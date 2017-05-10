@@ -6,9 +6,9 @@ export default {
   getBaseProps(props, fallbackProps) {
     props = Helpers.modifyProps(props, fallbackProps, "voronoi");
     const { data, style, scale, polygons, domain } = this.getCalculatedValues(props);
-    const { width, height, standalone, theme, events, sharedEvents } = props;
+    const { width, height, standalone, theme, events, sharedEvents, polar, padding } = props;
     const initialChildProps = { parent: {
-      style: style.parent, scale, domain, data, standalone, height, width, theme
+      style: style.parent, scale, domain, data, standalone, height, width, theme, polar, padding
     } };
 
     return data.reduce((childProps, datum, index) => {

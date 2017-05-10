@@ -190,7 +190,7 @@ export default {
     const {
       style, orientation, isVertical, scale, ticks, tickFormat, stringTicks, anchors, domain
     } = calculatedValues;
-    const { width, height, standalone, theme, tickValues } = props;
+    const { width, height, standalone, theme, tickValues, polar, padding } = props;
     const {
       globalTransform, gridOffset, gridEdge
     } = this.getLayoutProps(props, calculatedValues);
@@ -198,7 +198,7 @@ export default {
     const axisProps = this.getAxisProps(props, calculatedValues, globalTransform);
     const axisLabelProps = this.getAxisLabelProps(props, calculatedValues, globalTransform);
     const initialChildProps = { parent: {
-      style: style.parent, ticks, scale, width, height, domain, standalone, theme
+      style: style.parent, ticks, scale, width, height, domain, standalone, theme, polar, padding
     } };
 
     return ticks.reduce((childProps, indexedTick, index) => {

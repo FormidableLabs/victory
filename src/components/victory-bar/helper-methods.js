@@ -98,9 +98,9 @@ export default {
   getBaseProps(props, fallbackProps) {
     props = Helpers.modifyProps(props, fallbackProps, "bar");
     const { style, data, scale, domain } = this.getCalculatedValues(props);
-    const { horizontal, width, height, padding, standalone, theme } = props;
+    const { horizontal, width, height, padding, standalone, theme, polar } = props;
     const initialChildProps = { parent: {
-      domain, scale, width, height, data, standalone, theme, style: style.parent
+      domain, scale, width, height, data, standalone, theme, polar, padding, style: style.parent
     } };
 
     return data.reduce((childProps, datum, index) => {

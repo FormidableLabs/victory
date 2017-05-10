@@ -5,10 +5,10 @@ export default {
   getBaseProps(props, fallbackProps) {
     props = Helpers.modifyProps(props, fallbackProps, "scatter");
     const calculatedValues = this.getCalculatedValues(props);
-    const { height, width, standalone, theme } = props;
+    const { height, width, standalone, theme, polar, padding } = props;
     const { data, style, scale, domain } = calculatedValues;
     const initialChildProps = { parent: {
-      style: style.parent, scale, domain, data, height, width, standalone, theme
+      style: style.parent, scale, domain, data, height, width, standalone, theme, polar, padding
     } };
 
     return data.reduce((childProps, datum, index) => {
