@@ -2,6 +2,7 @@
 import React from "react";
 import PropTypes from "prop-types";
 import { PropTypes as CustomPropTypes, Helpers, Style, Log } from "../victory-util/index";
+import { default as VictoryPortal } from "../victory-portal/victory-portal";
 import { assign, merge, isEqual } from "lodash";
 
 const defaultStyles = {
@@ -46,6 +47,7 @@ export default class VictoryLabel extends React.Component {
       CustomPropTypes.nonNegative,
       PropTypes.func
     ]),
+    renderInPortal: PropTypes.bool,
     style: PropTypes.oneOfType([
       PropTypes.object,
       PropTypes.array
@@ -243,6 +245,7 @@ export default class VictoryLabel extends React.Component {
   }
 
   render() {
-    return this.renderElements(this.props);
+    const label = this.renderElements(this.props);
+    return this.props.renderInPortal ? <VictoryPortal>{label}</VictoryPortal> : label;
   }
 }
