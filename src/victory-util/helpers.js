@@ -14,7 +14,7 @@ export default {
     };
   },
 
-  getStyles(style, defaultStyles) {  // eslint-disable-line max-params
+  getStyles(style, defaultStyles) {
     const width = "100%";
     const height = "100%";
     if (!style) {

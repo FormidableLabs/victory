@@ -18,7 +18,6 @@ export default class VictoryContainer extends React.Component {
     height: PropTypes.number,
     portalComponent: PropTypes.element,
     responsive: PropTypes.bool,
-    standalone: PropTypes.bool,
     style: PropTypes.object,
     theme: PropTypes.object,
     title: PropTypes.string,
@@ -47,13 +46,12 @@ export default class VictoryContainer extends React.Component {
   }
 
   getChildContext() {
-    return this.props.standalone !== false ?
-      {
-        portalUpdate: this.portalUpdate,
-        portalRegister: this.portalRegister,
-        portalDeregister: this.portalDeregister,
-        getTimer: this.getTimer
-      } : {};
+    return {
+      portalUpdate: this.portalUpdate,
+      portalRegister: this.portalRegister,
+      portalDeregister: this.portalDeregister,
+      getTimer: this.getTimer
+    };
   }
 
   componentWillMount() {
