@@ -17,16 +17,16 @@ describe("components/victory-voronoi", () => {
       const wrapper = mount(
         <VictoryVoronoi/>
       );
-      const svg = wrapper.find("svg");
+      const svg = wrapper.find("svg").at(0);
       expect(svg.prop("style").width).to.equal("100%");
-      expect(svg.prop("style").height).to.equal("auto");
+      expect(svg.prop("style").height).to.equal("100%");
     });
 
     it("renders an svg with the correct viewbox", () => {
       const wrapper = mount(
         <VictoryVoronoi/>
       );
-      const svg = wrapper.find("svg");
+      const svg = wrapper.find("svg").at(0);
       const viewBoxValue =
         `0 0 ${450} ${300}`;
       expect(svg.prop("viewBox")).to.equal(viewBoxValue);
@@ -74,7 +74,7 @@ describe("components/victory-voronoi", () => {
           }]}
         />
       );
-      const svg = wrapper.find("svg");
+      const svg = wrapper.find("svg").at(0);
       svg.simulate("click");
       expect(clickHandler).called;
       // the first argument is the standard evt object
