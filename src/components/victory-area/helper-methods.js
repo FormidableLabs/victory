@@ -31,7 +31,7 @@ export default {
   getCalculatedValues(props) {
     const { theme } = props;
     const defaultStyles = theme && theme.area && theme.area.style ? theme.area.style : {};
-    const style = Helpers.getStyles(props.style, defaultStyles, "auto", "100%");
+    const style = Helpers.getStyles(props.style, defaultStyles);
     const range = {
       x: Helpers.getRange(props, "x"),
       y: Helpers.getRange(props, "y")

@@ -67,7 +67,7 @@ class VictoryArea extends React.Component {
       return this.animateComponent(props, animationWhitelist);
     }
     const children = this.renderContinuousData(props);
-    return this.renderContainer(props.containerComponent, children);
+    return props.standalone ? this.renderContainer(props.containerComponent, children) : children;
   }
 }
 

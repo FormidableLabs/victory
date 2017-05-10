@@ -44,6 +44,10 @@ export default class VictoryGroup extends React.Component {
     theme: VictoryTheme.grayscale
   };
 
+  static expectedComponents = [
+    "groupComponent", "containerComponent", "labelComponent"
+  ];
+
   static getDomain = Wrapper.getDomain.bind(Wrapper);
   static getData = Wrapper.getData.bind(Wrapper);
 
@@ -208,7 +212,7 @@ export default class VictoryGroup extends React.Component {
 
   getStyle(theme, style, role) {
     const defaultStyle = theme && theme[role] && theme[role].style ? theme[role].style : {};
-    return Helpers.getStyles(style, defaultStyle, "auto", "100%");
+    return Helpers.getStyles(style, defaultStyle);
   }
 
   render() {
@@ -216,7 +220,7 @@ export default class VictoryGroup extends React.Component {
     const props = this.state && this.state.nodesWillExit ?
       this.state.oldProps || this.props : this.props;
     const modifiedProps = Helpers.modifyProps(props, fallbackProps, role);
-    const { eventKey, containerComponent } = modifiedProps;
+    const { eventKey, containerComponent, standalone, groupComponent } = modifiedProps;
     const childComponents = React.Children.toArray(modifiedProps.children);
     const calculatedProps = this.getCalculatedProps(modifiedProps, childComponents);
     const newChildren = this.getNewChildren(modifiedProps, childComponents, calculatedProps);
@@ -229,6 +233,8 @@ export default class VictoryGroup extends React.Component {
         </VictorySharedEvents>
       );
     }
-    return React.cloneElement(container, container.props, newChildren);
+    return standalone ?
+      React.cloneElement(container, container.props, newChildren) :
+      React.cloneElement(groupComponent, {}, newChildren);
   }
 }

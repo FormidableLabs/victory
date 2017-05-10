@@ -197,7 +197,7 @@ export default {
   getCalculatedValues(props) {
     const defaultStyles = props.theme && props.theme.errorbar && props.theme.errorbar.style ?
       props.theme.errorbar.style : {};
-    const style = Helpers.getStyles(props.style, defaultStyles, "auto", "100%") || {};
+    const style = Helpers.getStyles(props.style, defaultStyles) || {};
     const dataWithErrors = assign(Data.getData(props), this.getErrorData(props));
     const data = Data.addEventKeys(props, dataWithErrors);
     const range = {

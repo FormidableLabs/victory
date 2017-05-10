@@ -81,9 +81,9 @@ export default {
   getStyles(props, styleObject) {
     const style = props.style || {};
     styleObject = styleObject || {};
-    const parentStyleProps = { height: "auto", width: "100%" };
+    const parentStyleProps = { height: "100%", width: "100%" };
     return {
-      parent: defaults(parentStyleProps, style.parent, styleObject.parent),
+      parent: defaults(style.parent, styleObject.parent, parentStyleProps),
       axis: defaults({}, style.axis, styleObject.axis),
       axisLabel: defaults({}, style.axisLabel, styleObject.axisLabel),
       grid: defaults({}, style.grid, styleObject.grid),
