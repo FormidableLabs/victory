@@ -37,15 +37,13 @@ export default class Portal extends React.Component {
 
   // Overridden in victory-core-native
   render() {
-    return (
-      <svg width={450} height={300} viewBox="0 0 450 300" overflow="visible">
-        <g>
-          {Object.keys(this.map).map((key) => {
-            const el = this.map[key];
-            return el ? React.cloneElement(el, { key }) : el;
-          })}
-        </g>
-      </svg>
+    return React.cloneElement(
+      this.props.groupComponent,
+      {},
+      Object.keys(this.map).map((key) => {
+        const el = this.map[key];
+        return el ? React.cloneElement(el, { key }) : el;
+      })
     );
   }
 }
