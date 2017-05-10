@@ -126,13 +126,12 @@ export default class VictoryLabel extends React.Component {
 
   calculateAttributes(props) {
     const style = this.getStyles(props);
-    const fontSize = style[0].fontSize;
     const lineHeight = this.getHeight(props, "lineHeight");
     const textAnchor = props.textAnchor ?
       Helpers.evaluateProp(props.textAnchor, props.datum) : "start";
     const content = this.getContent(props);
     const dx = props.dx ? Helpers.evaluateProp(this.props.dx, props.datum) : 0;
-    const dy = this.getDy(props, style, content, lineHeight) * fontSize;
+    const dy = this.getDy(props, style, content, lineHeight);
     const transform = this.getTransform(props, style);
     return {
       style, dx, dy, content, lineHeight, textAnchor, transform
