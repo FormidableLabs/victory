@@ -34,7 +34,7 @@ class VictoryArea extends React.Component {
 
   static defaultProps = {
     dataComponent: <Area/>,
-    labelComponent: <VictoryLabel/>,
+    labelComponent: <VictoryLabel renderInPortal/>,
     scale: "linear",
     samples: 50,
     standalone: true,

@@ -42,7 +42,7 @@ class VictoryLine extends React.Component {
     standalone: true,
     sortKey: "x",
     dataComponent: <Curve/>,
-    labelComponent: <VictoryLabel/>,
+    labelComponent: <VictoryLabel renderInPortal/>,
     containerComponent: <VictoryContainer/>,
     groupComponent: <VictoryClipContainer/>,
     theme: VictoryTheme.grayscale
