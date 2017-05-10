@@ -14,7 +14,7 @@ describe("components/victory-container", () => {
     const wrapper = shallow(
       <VictoryContainer />
     );
-    const output = wrapper.find("svg");
+    const output = wrapper.find("svg").at(0);
     expect(output.prop("role")).to.contain("img");
   });
 
@@ -40,7 +40,7 @@ describe("components/victory-container", () => {
     const wrapper = shallow(
       <VictoryContainer width={width} height={height}/>
     );
-    const svg = wrapper.find("svg");
+    const svg = wrapper.find("svg").at(0);
     const viewBoxValue =
       `0 0 ${width} ${height}`;
     expect(svg.prop("viewBox")).to.equal(viewBoxValue);
@@ -51,7 +51,7 @@ describe("components/victory-container", () => {
     const wrapper = mount(
       <VictoryContainer events={{ onClick: clickHandler }}/>
     );
-    const svg = wrapper.find("svg");
+    const svg = wrapper.find("svg").at(0);
     svg.simulate("click");
     expect(clickHandler).called;
   });

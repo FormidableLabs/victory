@@ -89,31 +89,28 @@ export default class VictoryContainer extends React.Component {
 
   // Overridden in victory-core-native
   renderContainer(props, svgProps, style) {
-    const { title, desc, portalComponent, className, standalone } = props;
+    const { title, desc, portalComponent, className } = props;
     const children = this.getChildren(props);
     const parentProps = defaults({ style, className }, svgProps);
-    const groupComponent = props.groupComponent || <g/>;
-    return standalone !== false ?
-      (
+    return (
+      <svg {...parentProps} overflow="visible">
         <svg {...parentProps}>
+          {children}
+        </svg>
           {title ? <title id="title">{title}</title> : null}
           {desc ? <desc id="desc">{desc}</desc> : null}
-          {children}
-          {React.cloneElement(portalComponent, { ref: this.savePortalRef })}
-        </svg>
-      ) :
-      React.cloneElement(groupComponent, parentProps, children);
+        {React.cloneElement(portalComponent, { ref: this.savePortalRef })}
+      </svg>
+    );
   }
 
   render() {
-    const { width, height, responsive, events, standalone } = this.props;
+    const { width, height, responsive, events } = this.props;
     const style = responsive ? this.props.style : omit(this.props.style, ["height", "width"]);
     const svgProps = assign(
       {
-        width, height,
-        "aria-labelledby": standalone !== false ? "title desc" : undefined,
-        role: standalone !== false ? "img" : "presentation",
-        viewBox: responsive && standalone !== false ? `0 0 ${width} ${height}` : undefined
+        width, height, "aria-labelledby": "title desc", role: "img",
+        viewBox: responsive ? `0 0 ${width} ${height}` : undefined
       },
       events
     );
