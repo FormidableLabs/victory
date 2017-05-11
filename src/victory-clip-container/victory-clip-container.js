@@ -1,7 +1,7 @@
 import React from "react";
 import PropTypes from "prop-types";
 import { defaults, isFunction } from "lodash";
-import { ClipPath } from "../victory-primitives/index";
+import ClipPath from "../victory-primitives/clip-path";
 
 export default class VictoryClipContainer extends React.Component {
   static displayName = "VictoryClipContainer";

@@ -8,8 +8,10 @@ import VictoryLabel from "src/victory-label/victory-label";
 import VictoryTooltip from "src/victory-tooltip/victory-tooltip";
 import Flyout from "src/victory-primitives/flyout";
 
-describe("components/victory-label", () => {
-  const baseProps = { x: 0, y: 0, active: true, text: "such text, wow" };
+describe("components/victory-tooltip", () => {
+  const baseProps = { x: 0, y: 0, datum: { some: "object" }, index: 3,
+    active: true, text: "such text, wow" };
+
   it("renders nothing when not active", () => {
     const wrapper = mount(
       <VictoryTooltip {...baseProps} active={false}/>
@@ -34,6 +36,15 @@ describe("components/victory-label", () => {
     const flyout = wrapper.find(Flyout);
     expect(label.length).to.equal(1);
     expect(flyout.length).to.equal(1);
+  });
+
+  it("passes datum and index to flyout component", () => {
+    const wrapper = mount(
+      <VictoryTooltip {...baseProps}/>
+    );
+    const flyout = wrapper.find(Flyout);
+    expect(flyout.prop("datum")).to.eql({ some: "object" });
+    expect(flyout.prop("index")).to.eql(3);
   });
 
   describe("event handling", () => {

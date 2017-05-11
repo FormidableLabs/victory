@@ -1,8 +1,11 @@
 /*eslint no-magic-numbers: ["error", { "ignore": [0, 0.5, 1, 2] }]*/
 import React from "react";
 import PropTypes from "prop-types";
-import { PropTypes as CustomPropTypes, Helpers, Style, Log } from "../victory-util/index";
-import { default as VictoryPortal } from "../victory-portal/victory-portal";
+import VictoryPortal from "../victory-portal/victory-portal";
+import CustomPropTypes from "../victory-util/prop-types";
+import Helpers from "../victory-util/helpers";
+import Style from "../victory-util/style";
+import Log from "../victory-util/log";
 import { assign, merge, isEqual } from "lodash";
 
 const defaultStyles = {

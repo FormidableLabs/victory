@@ -1,6 +1,6 @@
 import React from "react";
 import PropTypes from "prop-types";
-import { Log } from "../victory-util/index";
+import Log from "../victory-util/log";
 import { defaults, omit } from "lodash";
 
 export default class VictoryPortal extends React.Component {
