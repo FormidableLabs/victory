@@ -17,6 +17,7 @@ import VoronoiDemo from "./components/victory-voronoi-demo";
 import TooltipDemo from "./components/victory-tooltip-demo";
 import ZoomContainerDemo from "./components/victory-zoom-container-demo";
 import VoronoiContainerDemo from "./components/victory-voronoi-container-demo";
+import CursorContainerDemo from "./components/victory-cursor-container-demo";
 import CreateContainerDemo from "./components/create-container-demo";
 import BrushContainerDemo from "./components/victory-brush-container-demo";
 import AnimationDemo from "./components/animation-demo";
@@ -63,6 +64,7 @@ class App extends React.Component {
     case "/tooltip": Child = TooltipDemo; break;
     case "/zoom-container": Child = ZoomContainerDemo; break;
     case "/voronoi-container": Child = VoronoiContainerDemo; break;
+    case "/cursor-container": Child = CursorContainerDemo; break;
     case "/brush-container": Child = BrushContainerDemo; break;
     case "/animation": Child = AnimationDemo; break;
     case "/selection-container": Child = SelectionDemo; break;
@@ -92,6 +94,7 @@ class App extends React.Component {
           <li><a href="#/tooltip">Victory Tooltip Demo</a></li>
           <li><a href="#/zoom-container">Victory Zoom Container Demo</a></li>
           <li><a href="#/voronoi-container">Victory Voronoi Container Demo</a></li>
+          <li><a href="#/cursor-container">Victory Cursor Container Demo</a></li>
           <li><a href="#/brush-container">Victory Brush Container Demo</a></li>
           <li><a href="#/animation">Animation Demo</a></li>
           <li><a href="#/selection-container">Victory Selection Container Demo</a></li>

@@ -259,6 +259,7 @@ const Helpers = {
 };
 
 export default {
+  ...Helpers,
   onMouseDown: Helpers.onMouseDown.bind(Helpers),
   onMouseUp: Helpers.onMouseUp.bind(Helpers),
   onMouseLeave: Helpers.onMouseLeave.bind(Helpers),

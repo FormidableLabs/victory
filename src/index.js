@@ -24,6 +24,10 @@ export {
   default as VictoryVoronoiContainer
 } from "./components/containers/victory-voronoi-container";
 export {
+  cursorContainerMixin,
+  default as VictoryCursorContainer
+} from "./components/containers/victory-cursor-container";
+export {
   zoomContainerMixin,
   default as VictoryZoomContainer
 } from "./components/containers/victory-zoom-container";

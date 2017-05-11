@@ -78,6 +78,7 @@ const Charts = ({ CustomContainer }) => { // eslint-disable-line react/prop-type
           }}
           containerComponent={
             <CustomContainer
+              dimension="x"
               selectionStyle={{
                 stroke: "tomato", strokeWidth: 2, fill: "tomato", fillOpacity: 0.1
               }}
@@ -90,7 +91,12 @@ const Charts = ({ CustomContainer }) => { // eslint-disable-line react/prop-type
 
         <VictoryChart
           style={chartStyle}
-          containerComponent={<CustomContainer selectedDomain={{ x: [0, 0] }} />}
+          containerComponent={
+            <CustomContainer
+              selectedDomain={{ x: [0, 0] }}
+              dimension="y"
+            />
+          }
         >
           <VictoryGroup style={chartStyle}>
             <VictoryScatter
@@ -218,6 +224,8 @@ class App extends React.Component {
         <Charts CustomContainer={createContainer("brush", "voronoi")} />
         <pre>createContainer("zoom", "voronoi")</pre>
         <Charts CustomContainer={createContainer("zoom", "voronoi")} />
+        <pre>createContainer("cursor", "voronoi")</pre>
+        <Charts CustomContainer={createContainer("cursor", "voronoi")} />
       </div>
     );
   }
