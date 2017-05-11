@@ -1,6 +1,6 @@
 import React from "react";
 import { shallow } from "enzyme";
-import { Area } from "src/victory-primitives";
+import Area from "src/victory-primitives/area";
 import { merge } from "lodash";
 
 describe("victory-primitives/area", () => {

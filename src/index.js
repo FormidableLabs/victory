@@ -9,10 +9,29 @@ export { default as VictoryLegend } from "./victory-legend/victory-legend";
 export { default as VictoryTooltip } from "./victory-tooltip/victory-tooltip";
 export { default as VictoryPortal } from "./victory-portal/victory-portal";
 export { default as Portal } from "./victory-portal/portal";
-export {
-  Area, Bar, Candle, ClipPath, Curve, ErrorBar, Line, Point, Slice, Voronoi, Flyout
-} from "./victory-primitives/index";
-export {
-  addEvents, Collection, Data, DefaultTransitions, Domain, Events, Helpers, Log,
-  PropTypes, Scale, Style, TextSize, Timer, Transitions, Selection
-} from "./victory-util/index";
+export { default as Area } from "./victory-primitives/area";
+export { default as Bar } from "./victory-primitives/bar";
+export { default as Candle } from "./victory-primitives/candle";
+export { default as ClipPath } from "./victory-primitives/clip-path";
+export { default as Curve } from "./victory-primitives/curve";
+export { default as ErrorBar } from "./victory-primitives/error-bar";
+export { default as Line } from "./victory-primitives/line";
+export { default as Point } from "./victory-primitives/point";
+export { default as Slice } from "./victory-primitives/slice";
+export { default as Voronoi } from "./victory-primitives/voronoi";
+export { default as Flyout } from "./victory-primitives/flyout";
+export { default as addEvents } from "./victory-util/add-events";
+export { default as Collection } from "./victory-util/collection";
+export { default as Data } from "./victory-util/data";
+export { default as DefaultTransitions } from "./victory-util/default-transitions";
+export { default as Domain } from "./victory-util/domain";
+export { default as Events } from "./victory-util/events";
+export { default as Helpers } from "./victory-util/helpers";
+export { default as Log } from "./victory-util/log";
+export { default as PropTypes } from "./victory-util/prop-types";
+export { default as Scale } from "./victory-util/scale";
+export { default as Selection } from "./victory-util/selection";
+export { default as Style } from "./victory-util/style";
+export { default as TextSize } from "./victory-util/textsize";
+export { default as Timer } from "./victory-util/timer";
+export { default as Transitions } from "./victory-util/transitions";

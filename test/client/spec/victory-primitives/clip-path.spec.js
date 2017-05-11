@@ -1,6 +1,6 @@
 import React from "react";
 import { shallow } from "enzyme";
-import { ClipPath } from "src/victory-primitives";
+import ClipPath from "src/victory-primitives/clip-path";
 import { forEach } from "lodash";
 
 describe("victory-primitives/clip-path", () => {

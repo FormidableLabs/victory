@@ -1,8 +1,11 @@
 /*eslint no-magic-numbers: ["error", { "ignore": [1, 2, 2.5, 3] }]*/
 import React from "react";
 import PropTypes from "prop-types";
-import { PropTypes as CustomPropTypes, Style, TextSize, Helpers } from "../victory-util/index";
 import { merge, isEmpty, defaults, sumBy, maxBy } from "lodash";
+import CustomPropTypes from "../victory-util/prop-types";
+import Style from "../victory-util/style";
+import TextSize from "../victory-util/textsize";
+import Helpers from "../victory-util/helpers";
 import VictoryLabel from "../victory-label/victory-label";
 import VictoryContainer from "../victory-container/victory-container";
 import VictoryTheme from "../victory-theme/victory-theme";
