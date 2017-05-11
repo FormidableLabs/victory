@@ -1,6 +1,7 @@
 /*eslint no-magic-numbers: ["error", { "ignore": [0, 0.5, 1, 2] }]*/
 import React from "react";
 import PropTypes from "prop-types";
+import VictoryPortal from "../victory-portal/victory-portal";
 import CustomPropTypes from "../victory-util/prop-types";
 import Helpers from "../victory-util/helpers";
 import Style from "../victory-util/style";
@@ -49,6 +50,7 @@ export default class VictoryLabel extends React.Component {
       CustomPropTypes.nonNegative,
       PropTypes.func
     ]),
+    renderInPortal: PropTypes.bool,
     style: PropTypes.oneOfType([
       PropTypes.object,
       PropTypes.array
@@ -246,6 +248,7 @@ export default class VictoryLabel extends React.Component {
   }
 
   render() {
-    return this.renderElements(this.props);
+    const label = this.renderElements(this.props);
+    return this.props.renderInPortal ? <VictoryPortal>{label}</VictoryPortal> : label;
   }
 }

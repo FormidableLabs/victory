@@ -49,10 +49,8 @@ describe("helpers", () => {
     };
     it("merges styles", () => {
       const style = { data: { fill: "red" }, labels: { fontSize: 12 } };
-      const width = 500;
-      const height = 500;
-      const styles = Helpers.getStyles(style, defaultStyles, height, width);
-      expect(styles.parent).to.deep.equal({ border: "black", width: 500, height: 500 });
+      const styles = Helpers.getStyles(style, defaultStyles);
+      expect(styles.parent).to.deep.equal({ border: "black", width: "100%", height: "100%" });
       expect(styles.data).to.deep.equal({ fill: "red", stroke: "black" });
       expect(styles.labels).to.deep.equal({ fontSize: 12, fontFamily: "Helvetica" });
     });
