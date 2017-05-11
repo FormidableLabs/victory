@@ -1,7 +1,10 @@
 import React from "react";
 import PropTypes from "prop-types";
 import VictoryAnimation from "../victory-animation/victory-animation";
-import { Transitions, Collection, Timer, Helpers } from "../victory-util/index";
+import Collection from "../victory-util/collection";
+import Helpers from "../victory-util/helpers";
+import Timer from "../victory-util/timer";
+import Transitions from "../victory-util/transitions";
 import { defaults, isFunction, pick } from "lodash";
 
 export default class VictoryTransition extends React.Component {

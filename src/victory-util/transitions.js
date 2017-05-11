@@ -72,7 +72,7 @@ function getChildData(child) {
  *                                    - childrenTransitions
  *                                    - nodesShouldEnter
  */
-export function getInitialTransitionState(oldChildren, nextChildren) {
+function getInitialTransitionState(oldChildren, nextChildren) {
   let nodesWillExit = false;
   let nodesWillEnter = false;
 
@@ -232,7 +232,7 @@ function getChildPropsOnEnter(animate, data, enteringNodes, cb) { // eslint-disa
  *
  * @return {Function}              Child-prop transformation function.
  */
-export function getTransitionPropsFactory(props, state, setState) {
+function getTransitionPropsFactory(props, state, setState) {
   const nodesWillExit = state && state.nodesWillExit;
   const nodesWillEnter = state && state.nodesWillEnter;
   const nodesShouldEnter = state && state.nodesShouldEnter;
@@ -339,3 +339,8 @@ export function getTransitionPropsFactory(props, state, setState) {
     return { animate, data };
   };
 }
+
+export default {
+  getInitialTransitionState,
+  getTransitionPropsFactory
+};

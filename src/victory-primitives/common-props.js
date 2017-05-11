@@ -1,5 +1,5 @@
 import PropTypes from "prop-types";
-import { PropTypes as CustomPropTypes } from "../victory-util";
+import CustomPropTypes from "../victory-util/prop-types";
 
 export default {
   active: PropTypes.bool,

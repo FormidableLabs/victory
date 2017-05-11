@@ -1,7 +1,7 @@
 /*eslint-disable max-nested-callbacks,no-unused-expressions,max-len */
 import React from "react";
 import { shallow } from "enzyme";
-import { Flyout } from "src/victory-primitives";
+import Flyout from "src/victory-primitives/flyout";
 import SvgTestHelper from "../svg-test-helper";
 
 describe("victory-primitives/slice", () => {
