@@ -1,5 +1,13 @@
 # VictoryPie Changelog
 
+## 11.1.0 (2017-05-12)
+
+- [victory-core/243](https://github.com/FormidableLabs/victory-core/pull/243) Impovements to `VictoryContainer`
+  - Automatic `overflow: "visible"` for elements rendered in `VictoryPortal` (tooltips)
+  - `VictoryContainer` no longer renders `g` tags (this was causing confusion with evented containers)
+  - Default responsive styles are now `width: "100%"` `height: "100%"` (fixes a bug in safari)
+  - Changes the merge order for responsive styles so that `width` and `height` attrs may be overridden
+
 ## 11.0.0 (2017-05-02)
 
 **BREAKING CHANGE**
