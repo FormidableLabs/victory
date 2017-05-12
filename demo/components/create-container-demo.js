@@ -1,5 +1,6 @@
 /*eslint-disable no-magic-numbers,react/no-multi-comp */
 import React from "react";
+import { round } from "lodash";
 import {
   VictoryChart, VictoryGroup, VictoryStack, VictoryScatter, VictoryBar, VictoryLine,
   createContainer
@@ -21,6 +22,7 @@ const Charts = ({ CustomContainer }) => { // eslint-disable-line react/prop-type
   return (
     <div className="demo">
       <div style={containerStyle}>
+        {/* A */}
         <VictoryChart style={chartStyle}
           domainPadding={{ y: 2 }}
           containerComponent={
@@ -69,6 +71,7 @@ const Charts = ({ CustomContainer }) => { // eslint-disable-line react/prop-type
           />
         </VictoryChart>
 
+        {/* B */}
         <VictoryScatter
           style={{
             parent: chartStyle.parent,
@@ -79,10 +82,12 @@ const Charts = ({ CustomContainer }) => { // eslint-disable-line react/prop-type
           containerComponent={
             <CustomContainer
               dimension="x"
+              cursorLabel={(d) => round(d.x, 2)}
               selectionStyle={{
                 stroke: "tomato", strokeWidth: 2, fill: "tomato", fillOpacity: 0.1
               }}
               selectedDomain={{ x: [0.4, 0.95], y: [0.5, 0.8] }}
+              defaultCursorValue={0.99}
             />
           }
           size={(datum, active) => active ? 5 : 3}
@@ -150,9 +155,14 @@ const Charts = ({ CustomContainer }) => { // eslint-disable-line react/prop-type
           </VictoryGroup>
         </VictoryChart>
 
+        {/* C */}
         <VictoryStack
           style={chartStyle}
-          containerComponent={<CustomContainer selectedDomain={{ x: [1.5, 2.5], y: [-3, 4] }} />}
+          containerComponent={
+            <CustomContainer
+              selectedDomain={{ x: [1.5, 2.5], y: [-3, 4] }}
+            />
+          }
         >
           <VictoryBar
             style={{

@@ -9,6 +9,15 @@ export const cursorContainerMixin = (base) => class VictoryCursorContainer exten
   static displayName = "VictoryCursorContainer";
   static propTypes = {
     ...VictoryContainer.propTypes,
+    cursorLabel: PropTypes.func,
+    cursorLabelComponent: PropTypes.element,
+    cursorLabelOffset: PropTypes.oneOfType([
+      PropTypes.number,
+      PropTypes.shape({
+        x: PropTypes.number,
+        y: PropTypes.number
+      })
+    ]),
     defaultCursorValue: PropTypes.oneOfType([
       PropTypes.number,
       PropTypes.shape({
@@ -17,22 +26,13 @@ export const cursorContainerMixin = (base) => class VictoryCursorContainer exten
       })
     ]),
     dimension: PropTypes.oneOf(["x", "y"]),
-    labelComponent: PropTypes.element,
-    labelOffset: PropTypes.oneOfType([
-      PropTypes.number,
-      PropTypes.shape({
-        x: PropTypes.number,
-        y: PropTypes.number
-      })
-    ]),
-    labels: PropTypes.func,
     onChange: PropTypes.func,
     standalone: PropTypes.bool
   };
   static defaultProps = {
     ...VictoryContainer.defaultProps,
-    labelComponent: <VictoryLabel/>,
-    labelOffset: {
+    cursorLabelComponent: <VictoryLabel/>,
+    cursorLabelOffset: {
       x: 5,
       y: -10
     },
@@ -73,25 +73,25 @@ export const cursorContainerMixin = (base) => class VictoryCursorContainer exten
     return defaultCursorValue;
   }
 
-  getLabelOffset(props) {
-    const { labelOffset } = props;
+  getCursorLabelOffset(props) {
+    const { cursorLabelOffset } = props;
 
-    if (isNumber(labelOffset)) {
+    if (isNumber(cursorLabelOffset)) {
       return {
-        x: labelOffset,
-        y: labelOffset
+        x: cursorLabelOffset,
+        y: cursorLabelOffset
       };
     }
 
-    return labelOffset;
+    return cursorLabelOffset;
   }
 
   getCursorElements(props) {
     const {
-      scale, domain, dimension, labelComponent, labels, cursorComponent
+      scale, domain, dimension, cursorLabelComponent, cursorLabel, cursorComponent
     } = props;
     const cursorValue = this.getCursorPosition(props);
-    const labelOffset = this.getLabelOffset(props);
+    const cursorLabelOffset = this.getCursorLabelOffset(props);
 
     if (!cursorValue) { return []; }
 
@@ -102,11 +102,11 @@ export const cursorContainerMixin = (base) => class VictoryCursorContainer exten
       x: scale.x(cursorValue.x),
       y: scale.y(cursorValue.y)
     };
-    if (labels) {
-      newElements.push(React.cloneElement(labelComponent, {
-        x: cursorCoordinates.x + labelOffset.x,
-        y: cursorCoordinates.y + labelOffset.y,
-        text: Helpers.evaluateProp(labels, cursorValue, true),
+    if (cursorLabel) {
+      newElements.push(React.cloneElement(cursorLabelComponent, {
+        x: cursorCoordinates.x + cursorLabelOffset.x,
+        y: cursorCoordinates.y + cursorLabelOffset.y,
+        text: Helpers.evaluateProp(cursorLabel, cursorValue, true),
         active: true,
         key: "cursor-label"
       }));

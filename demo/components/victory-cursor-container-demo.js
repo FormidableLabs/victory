@@ -51,7 +51,7 @@ class App extends React.Component {
 
     const chartStyle = { parent: { border: "1px solid #ccc", margin: "2%", maxWidth: "40%" } };
 
-    const labels = (d) => (
+    const cursorLabel = (d) => (
       `${round(d.x, 2)} , ${round(d.y, 2)}`
     );
 
@@ -64,7 +64,7 @@ class App extends React.Component {
             domainPadding={{ y: 2 }}
             containerComponent={
               <VictoryCursorContainer
-                labels={labels}
+                cursorLabel={cursorLabel}
                 defaultCursorValue={this.defaultCursorValue}
                 onChange={(cursorValue) => this.setState({ cursorValue })}
               />
@@ -124,7 +124,7 @@ class App extends React.Component {
             }}
             containerComponent={
               <VictoryCursorContainer
-                labels={(d) => `${round(d.x, 2)}`}
+                cursorLabel={(d) => `${round(d.x, 2)}`}
                 dimension="x"
                 defaultCursorValue={1}
               />
@@ -159,8 +159,8 @@ class App extends React.Component {
               <VictoryCursorContainer
                 defaultCursorValue={2}
                 dimension="x"
-                labels={(datum) => round(datum.x, 2)}
-                labelOffset={15}
+                cursorLabel={(datum) => round(datum.x, 2)}
+                cursorLabelOffset={15}
               />
             }
           >
