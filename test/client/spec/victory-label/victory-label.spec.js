@@ -16,6 +16,16 @@ describe("components/victory-label", () => {
     expect(output.html()).to.contain("such text, wow");
   });
 
+  it("sets dx and dy for text element", () => {
+    const wrapper = shallow(
+      <VictoryLabel dx={30} dy={30} text={"such text, wow"}/>
+    );
+    const output = wrapper.find("text");
+    expect(output.prop("dx")).to.eql(30);
+    // dy = props.dy + (capHeight(0.71) / 2 + (0.5 - length(1) / 2) * lineHeight(1)) * fontSize(14);
+    expect(output.prop("dy")).to.eql(34.97);
+  });
+
   it("has a transform property that rotates the text to match the labelAngle prop", () => {
     const wrapper = shallow(
       <VictoryLabel angle={46} text={"such text, wow"}/>
