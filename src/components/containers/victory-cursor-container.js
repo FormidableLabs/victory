@@ -18,6 +18,13 @@ export const cursorContainerMixin = (base) => class VictoryCursorContainer exten
     ]),
     dimension: PropTypes.oneOf(["x", "y"]),
     labelComponent: PropTypes.element,
+    labelOffset: PropTypes.oneOfType([
+      PropTypes.number,
+      PropTypes.shape({
+        x: PropTypes.number,
+        y: PropTypes.number
+      })
+    ]),
     labels: PropTypes.func,
     onChange: PropTypes.func,
     standalone: PropTypes.bool
@@ -25,6 +32,10 @@ export const cursorContainerMixin = (base) => class VictoryCursorContainer exten
   static defaultProps = {
     ...VictoryContainer.defaultProps,
     labelComponent: <VictoryLabel/>,
+    labelOffset: {
+      x: 5,
+      y: -10
+    },
     cursorComponent: <Line/>
   };
 
@@ -62,11 +73,25 @@ export const cursorContainerMixin = (base) => class VictoryCursorContainer exten
     return defaultCursorValue;
   }
 
+  getLabelOffset(props) {
+    const { labelOffset } = props;
+
+    if (isNumber(labelOffset)) {
+      return {
+        x: labelOffset,
+        y: labelOffset
+      };
+    }
+
+    return labelOffset;
+  }
+
   getCursorElements(props) {
     const {
       scale, domain, dimension, labelComponent, labels, cursorComponent
     } = props;
     const cursorValue = this.getCursorPosition(props);
+    const labelOffset = this.getLabelOffset(props);
 
     if (!cursorValue) { return []; }
 
@@ -79,8 +104,8 @@ export const cursorContainerMixin = (base) => class VictoryCursorContainer exten
     };
     if (labels) {
       newElements.push(React.cloneElement(labelComponent, {
-        x: cursorCoordinates.x + 5,
-        y: cursorCoordinates.y - 10,
+        x: cursorCoordinates.x + labelOffset.x,
+        y: cursorCoordinates.y + labelOffset.y,
         text: Helpers.evaluateProp(labels, cursorValue, true),
         active: true,
         key: "cursor-label"

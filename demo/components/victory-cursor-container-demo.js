@@ -160,6 +160,7 @@ class App extends React.Component {
                 defaultCursorValue={2}
                 dimension="x"
                 labels={(datum) => round(datum.x, 2)}
+                labelOffset={15}
               />
             }
           >
