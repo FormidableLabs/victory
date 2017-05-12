@@ -20,16 +20,16 @@ describe("components/victory-pie", () => {
       const wrapper = mount(
         <VictoryPie/>
       );
-      const svg = wrapper.find("svg");
+      const svg = wrapper.find("svg").at(0);
       expect(svg.prop("style").width).to.equal("100%");
-      expect(svg.prop("style").height).to.equal("auto");
+      expect(svg.prop("style").height).to.equal("100%");
     });
 
     it("renders an svg with the correct viewBox", () => {
       const wrapper = mount(
         <VictoryPie/>
       );
-      const svg = wrapper.find("svg");
+      const svg = wrapper.find("svg").at(0);
       expect(svg.prop("viewBox")).to.equal("0 0 400 400");
     });
 
@@ -216,8 +216,8 @@ describe("components/victory-pie", () => {
       const wrapper = mount(
         <VictoryPie width={width} />
       );
-
-      expect(wrapper.find("svg")).to.have.prop("viewBox", `0 0 ${width} 400`);
+      const svg = wrapper.find("svg").at(0);
+      expect(svg).to.have.prop("viewBox", `0 0 ${width} 400`);
     });
   });
 
@@ -227,8 +227,8 @@ describe("components/victory-pie", () => {
       const wrapper = mount(
         <VictoryPie height={height} />
       );
-
-      expect(wrapper.find("svg")).to.have.prop("viewBox", `0 0 400 ${height}`);
+      const svg = wrapper.find("svg").at(0);
+      expect(svg).to.have.prop("viewBox", `0 0 400 ${height}`);
     });
   });
 
@@ -302,7 +302,7 @@ describe("components/victory-pie", () => {
           }]}
         />
       );
-      const svg = wrapper.find("svg");
+      const svg = wrapper.find("svg").at(0);
       svg.simulate("click");
       expect(clickHandler).called;
       // the first argument is the standard evt object
