@@ -62,7 +62,7 @@ describe("victory", () => {
     expect(Victory.SelectionHelpers).not.to.equal(undefined);
     expect(Victory.ZoomHelpers).not.to.equal(undefined);
     expect(Victory.VoronoiHelpers).not.to.equal(undefined);
-    expect(Victory.CursoriHelpers).not.to.equal(undefined);
+    expect(Victory.CursorHelpers).not.to.equal(undefined);
     expect(Victory.voronoiContainerMixin).not.to.equal(undefined);
     expect(Victory.zoomContainerMixin).not.to.equal(undefined);
     expect(Victory.brushContainerMixin).not.to.equal(undefined);
