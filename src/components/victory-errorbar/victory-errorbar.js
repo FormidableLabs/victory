@@ -81,7 +81,7 @@ class VictoryErrorBar extends React.Component {
       return this.animateComponent(props, animationWhitelist);
     }
     const children = this.renderData(props);
-    return this.renderContainer(props.containerComponent, children);
+    return props.standalone ? this.renderContainer(props.containerComponent, children) : children;
   }
 }
 

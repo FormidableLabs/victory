@@ -76,7 +76,7 @@ export default {
   getCalculatedValues(props) {
     const { theme, horizontal } = props;
     const defaultStyles = theme && theme.bar && theme.bar.style ? theme.bar.style : {};
-    const style = Helpers.getStyles(props.style, defaultStyles, "auto", "100%");
+    const style = Helpers.getStyles(props.style, defaultStyles);
     const data = Data.getData(props);
     const range = {
       x: Helpers.getRange(props, "x"),
