@@ -1,5 +1,9 @@
 # VictoryChart Changelog
 
+## 19.1.1 (2017-05-12)
+
+- Export `CursorHelpers`
+
 ## 19.1.0 (2017-05-12)
 
 - [469](https://github.com/FormidableLabs/victory-chart/pull/469) Adds `VictoryCursorContainer`
