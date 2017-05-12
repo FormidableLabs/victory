@@ -197,7 +197,7 @@ class VictoryPie extends React.Component {
     }
 
     const children = this.renderPieData(props);
-    return this.renderContainer(props.containerComponent, children);
+    return props.standalone ? this.renderContainer(props.containerComponent, children) : children;
   }
 }
 
