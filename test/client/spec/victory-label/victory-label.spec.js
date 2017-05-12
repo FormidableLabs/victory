@@ -22,8 +22,8 @@ describe("components/victory-label", () => {
     );
     const output = wrapper.find("text");
     expect(output.prop("dx")).to.eql(30);
-    // dy = props.dy + capHeight(0.71) / 2 + (0.5 - length(1) / 2) * lineHeight(1);
-    expect(output.prop("dy")).to.eql(30.355);
+    // dy = props.dy + (capHeight(0.71) / 2 + (0.5 - length(1) / 2) * lineHeight(1)) * fontSize(14);
+    expect(output.prop("dy")).to.eql(34.97);
   });
 
   it("has a transform property that rotates the text to match the labelAngle prop", () => {
