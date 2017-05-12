@@ -1,6 +1,17 @@
 VictoryCore Changelog
 =====================
 
+## 15.1.0 (2017-05-12)
+
+- [241](https://github.com/FormidableLabs/victory-core/pull/241) Adds optional `title` an `desc` props to `VictoryLabel`
+- [243](https://github.com/FormidableLabs/victory-core/pull/243) Impovements to `VictoryContainer`
+  - Automatic `overflow: "visible"` for elements rendered in `VictoryPortal` (tooltips)
+  - `VictoryContainer` no longer renders `g` tags (this was causing confusion with evented containers)
+  - Default responsive styles are now `width: "100%"` `height: "100%"` (fixes a bug in safari)
+  - Changes the merge order for responsive styles so that `width` and `height` attrs may be overridden
+- [244](https://github.com/FormidableLabs/victory-core/pull/244) adds missing `index` and `datum` props to `Flyout`
+- [245](https://github.com/FormidableLabs/victory-core/pull/245) fixes `dy` calculation in `VictoryLabel`
+
 ## 15.0.0 (2017-05-02)
 
 **BREAKING CHANGE**
