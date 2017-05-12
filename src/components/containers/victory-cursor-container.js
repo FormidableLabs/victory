@@ -1,4 +1,4 @@
-/*eslint no-magic-numbers: ["error", { "ignore": [0, 1, 5, 10] }]*/
+/*eslint no-magic-numbers: ["error", { "ignore": [0, 1, 2] }]*/
 import PropTypes from "prop-types";
 import React from "react";
 import { VictoryContainer, VictoryLabel, Line, Selection, Helpers } from "victory-core";
@@ -9,7 +9,13 @@ export const cursorContainerMixin = (base) => class VictoryCursorContainer exten
   static displayName = "VictoryCursorContainer";
   static propTypes = {
     ...VictoryContainer.propTypes,
-    defaultCursorValue: PropTypes.oneOfType([PropTypes.number, PropTypes.object]),
+    defaultCursorValue: PropTypes.oneOfType([
+      PropTypes.number,
+      PropTypes.shape({
+        x: PropTypes.number,
+        y: PropTypes.number
+      })
+    ]),
     dimension: PropTypes.oneOf(["x", "y"]),
     labelComponent: PropTypes.element,
     labels: PropTypes.func,
@@ -42,13 +48,13 @@ export const cursorContainerMixin = (base) => class VictoryCursorContainer exten
   }];
 
   getCursorPosition(props) {
-    const { cursorPosition, defaultCursorValue, dimension } = props;
-    if (cursorPosition) { return cursorPosition; }
+    const { cursorValue, defaultCursorValue, dimension, domain } = props;
+    if (cursorValue) { return cursorValue; }
 
     if (isNumber(defaultCursorValue)) {
       return {
-        x: 0,
-        y: 0,
+        x: (domain.x[0] + domain.x[1]) / 2,
+        y: (domain.y[0] + domain.y[1]) / 2,
         [dimension]: defaultCursorValue
       };
     }
@@ -60,24 +66,24 @@ export const cursorContainerMixin = (base) => class VictoryCursorContainer exten
     const {
       scale, domain, dimension, labelComponent, labels, cursorComponent
     } = props;
-    const cursorPosition = this.getCursorPosition(props);
+    const cursorValue = this.getCursorPosition(props);
 
-    if (!cursorPosition) { return []; }
+    if (!cursorValue) { return []; }
 
     const newElements = [];
     const domainCoordinates = Selection.getDomainCoordinates(scale, domain);
 
     const cursorCoordinates = {
-      x: scale.x(cursorPosition.x),
-      y: scale.y(cursorPosition.y)
+      x: scale.x(cursorValue.x),
+      y: scale.y(cursorValue.y)
     };
     if (labels) {
       newElements.push(React.cloneElement(labelComponent, {
         x: cursorCoordinates.x + 5,
         y: cursorCoordinates.y - 10,
-        text: Helpers.evaluateProp(labels, cursorPosition, true),
+        text: Helpers.evaluateProp(labels, cursorValue, true),
         active: true,
-        key: "cursor-tooltip"
+        key: "cursor-label"
       }));
     }
 
@@ -102,20 +108,11 @@ export const cursorContainerMixin = (base) => class VictoryCursorContainer exten
     return newElements;
   }
 
-  getTooltip(props) {
-    const { labels, labelComponent, cursorPosition } = props;
-    if (!labels || !cursorPosition) {
-      return null;
-    }
-    return React.cloneElement(labelComponent, this.getLabelProps(cursorPosition));
-  }
-
   // Overrides method in VictoryContainer
   getChildren(props) {
     return [
       ...React.Children.toArray(props.children),
-      ...this.getCursorElements(props),
-      this.getTooltip
+      ...this.getCursorElements(props)
     ];
   }
 };

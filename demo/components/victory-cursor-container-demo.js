@@ -153,7 +153,16 @@ class App extends React.Component {
             y={(d) => d.x * d.x}
           />
 
-          <VictoryChart style={chartStyle} containerComponent={<VictoryCursorContainer/>}>
+          <VictoryChart
+            style={chartStyle}
+            containerComponent={
+              <VictoryCursorContainer
+                defaultCursorValue={2}
+                dimension="x"
+                labels={(datum) => round(datum.x, 2)}
+              />
+            }
+          >
             <VictoryGroup style={chartStyle}>
               <VictoryScatter
                 style={{

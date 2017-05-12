@@ -7,13 +7,13 @@ const CursorHelpers = {
   onMouseMove(evt, targetProps) {
     const { onChange, dimension, domain } = targetProps;
     const cursorSVGPosition = Selection.getSVGEventCoordinates(evt);
-    let cursorPosition = Selection.getDataCoordinates(
+    let cursorValue = Selection.getDataCoordinates(
       targetProps.scale,
       cursorSVGPosition.x,
       cursorSVGPosition.y
     );
 
-    const inBounds = BrushHelpers.withinBounds(cursorPosition, {
+    const inBounds = BrushHelpers.withinBounds(cursorValue, {
       x1: domain.x[0],
       x2: domain.x[1],
       y1: domain.y[0],
@@ -21,14 +21,14 @@ const CursorHelpers = {
     });
 
     if (!inBounds) {
-      cursorPosition = null;
+      cursorValue = null;
     }
 
     if (isFunction(onChange)) {
       if (inBounds) {
-        const value = dimension ? cursorPosition[dimension] : cursorPosition;
+        const value = dimension ? cursorValue[dimension] : cursorValue;
         onChange(value);
-      } else if (cursorPosition !== targetProps.cursorPosition) {
+      } else if (cursorValue !== targetProps.cursorValue) {
         onChange(targetProps.defaultCursorValue || null);
       }
     }
@@ -36,7 +36,7 @@ const CursorHelpers = {
     return [{
       target: "parent",
       eventKey: "parent",
-      mutation: () => ({ cursorPosition })
+      mutation: () => ({ cursorValue })
     }];
   }
 };
