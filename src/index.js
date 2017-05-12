@@ -31,6 +31,7 @@ import {
   VictorySelectionContainer, SelectionHelpers, selectionContainerMixin,
   VictoryBrushContainer, BrushHelpers, brushContainerMixin,
   VictoryVoronoiContainer, VoronoiHelpers, voronoiContainerMixin,
+  VictoryCursorContainer, CursorHelpers, cursorContainerMixin,
   combineContainerMixins, createContainer
 } from "victory-chart";
 
@@ -63,6 +64,7 @@ export {
   VictoryZoomContainer, ZoomHelpers, zoomContainerMixin,
   VictorySelectionContainer, SelectionHelpers, selectionContainerMixin,
   VictoryBrushContainer, BrushHelpers, brushContainerMixin,
+  VictoryCursorContainer, CursorHelpers, cursorContainerMixin,
   VictoryVoronoiContainer, VoronoiHelpers, voronoiContainerMixin,
   combineContainerMixins, createContainer,
   addEvents, Collection, Data, DefaultTransitions, Domain, Events, Helpers, Log,

@@ -57,14 +57,17 @@ describe("victory", () => {
     expect(Victory.VictorySelectionContainer).not.to.equal(undefined);
     expect(Victory.VictoryBrushContainer).not.to.equal(undefined);
     expect(Victory.VictoryVoronoiContainer).not.to.equal(undefined);
+    expect(Victory.VictoryCursorContainer).not.to.equal(undefined);
     expect(Victory.BrushHelpers).not.to.equal(undefined);
     expect(Victory.SelectionHelpers).not.to.equal(undefined);
     expect(Victory.ZoomHelpers).not.to.equal(undefined);
     expect(Victory.VoronoiHelpers).not.to.equal(undefined);
+    expect(Victory.CursorHelpers).not.to.equal(undefined);
     expect(Victory.voronoiContainerMixin).not.to.equal(undefined);
     expect(Victory.zoomContainerMixin).not.to.equal(undefined);
     expect(Victory.brushContainerMixin).not.to.equal(undefined);
     expect(Victory.selectionContainerMixin).not.to.equal(undefined);
+    expect(Victory.cursorContainerMixin).not.to.equal(undefined);
     expect(Victory.combineContainerMixins).not.to.equal(undefined);
     expect(Victory.createContainer).not.to.equal(undefined);
   });
