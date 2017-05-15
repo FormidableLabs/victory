@@ -59,7 +59,7 @@ export default {
     const { theme } = props;
     const defaultStyle = theme && theme.candlestick && theme.candlestick.style ?
       theme.candlestick.style : {};
-    const style = Helpers.getStyles(props.style, defaultStyle, "auto", "100%");
+    const style = Helpers.getStyles(props.style, defaultStyle);
     const data = Data.addEventKeys(props, this.getData(props));
     const range = {
       x: Helpers.getRange(props, "x"),

@@ -53,7 +53,7 @@ export default {
   getCalculatedValues(props) {
     const defaultStyles = props.theme && props.theme.scatter && props.theme.scatter.style ?
       props.theme.scatter.style : {};
-    const style = Helpers.getStyles(props.style, defaultStyles, "auto", "100%");
+    const style = Helpers.getStyles(props.style, defaultStyles);
     const data = Data.getData(props);
     const range = {
       x: Helpers.getRange(props, "x"),

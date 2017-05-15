@@ -51,6 +51,10 @@ export default class VictoryStack extends React.Component {
     theme: VictoryTheme. grayscale
   };
 
+  static expectedComponents = [
+    "groupComponent", "containerComponent", "labelComponent"
+  ];
+
   static getDomain = Wrapper.getStackedDomain.bind(Wrapper);
   static getData = Wrapper.getData.bind(Wrapper);
 
@@ -196,7 +200,7 @@ export default class VictoryStack extends React.Component {
 
   getStyle(theme, style, role) {
     const defaultStyle = theme && theme[role] && theme[role].style ? theme[role].style : {};
-    return Helpers.getStyles(style, defaultStyle, "auto", "100%");
+    return Helpers.getStyles(style, defaultStyle);
   }
 
   render() {
@@ -204,12 +208,14 @@ export default class VictoryStack extends React.Component {
     const props = this.state && this.state.nodesWillExit ?
       this.state.oldProps || this.props : this.props;
     const modifiedProps = Helpers.modifyProps(props, fallbackProps, role);
-    const { eventKey, containerComponent } = modifiedProps;
+    const { eventKey, containerComponent, standalone, groupComponent } = modifiedProps;
     const childComponents = React.Children.toArray(modifiedProps.children);
     const calculatedProps = this.getCalculatedProps(modifiedProps, childComponents);
     const newChildren = this.getNewChildren(modifiedProps, childComponents, calculatedProps);
     const containerProps = this.getContainerProps(modifiedProps, calculatedProps);
-    const container = this.renderContainer(containerComponent, containerProps);
+    const container = standalone ?
+      this.renderContainer(containerComponent, containerProps) :
+      React.cloneElement(groupComponent, {});
     if (this.events) {
       return (
         <VictorySharedEvents events={this.events} eventKey={eventKey} container={container}>

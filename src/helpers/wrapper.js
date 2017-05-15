@@ -90,7 +90,7 @@ export default {
   },
 
   getAllEvents(props) {
-    const components = ["groupComponent", "containerComponent"];
+    const components = ["groupComponent", "containerComponent", "labelComponent"];
     this.componentEvents = Events.getComponentEvents(props, components);
     if (Array.isArray(this.componentEvents)) {
       return Array.isArray(props.events) ?

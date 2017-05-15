@@ -52,7 +52,7 @@ export default {
 
     const defaultStyles = props.theme && props.theme.line && props.theme.line.style ?
       props.theme.line.style : {};
-    const style = Helpers.getStyles(props.style, defaultStyles, "auto", "100%");
+    const style = Helpers.getStyles(props.style, defaultStyles);
 
     return { domain, data, scale, style };
   },

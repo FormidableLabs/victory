@@ -171,7 +171,9 @@ class VictoryAxis extends React.Component {
       this.renderLine(props),
       this.renderLabel(props)
     ];
-    return this.renderContainer(props.containerComponent, children);
+    return props.standalone ?
+      this.renderContainer(props.containerComponent, children) :
+      React.cloneElement(props.groupComponent, {}, children);
   }
 }
 

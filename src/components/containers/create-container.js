@@ -5,6 +5,7 @@ import { voronoiContainerMixin } from "./victory-voronoi-container";
 import { zoomContainerMixin } from "./victory-zoom-container";
 import { selectionContainerMixin } from "./victory-selection-container";
 import { brushContainerMixin } from "./victory-brush-container";
+import { cursorContainerMixin } from "./victory-cursor-container";
 
 const ensureArray = (thing) => {
   if (!thing) {
@@ -63,8 +64,13 @@ export const combineContainerMixins = (mixins, Container) => {
   const instances = Classes.map((Class) => new Class());
   const NaiveCombinedContainer = flow(mixins)(Container);
 
+  const displayType = Classes.map((Class) => {
+    const match = Class.displayName.match(/Victory(.*)Container/);
+    return match[1] || "";
+  }).join("");
+
   return class VictoryCombinedContainer extends NaiveCombinedContainer {
-    static displayName = "CustomVictoryContainer";
+    static displayName = `Victory${displayType}Container`;
 
     static propTypes =
       Classes.reduce(
@@ -126,5 +132,6 @@ export default makeCreateContainerFunction({
   zoom: [zoomContainerMixin],
   voronoi: [voronoiContainerMixin],
   selection: [selectionContainerMixin],
+  cursor: [cursorContainerMixin],
   brush: [brushContainerMixin]
 }, VictoryContainer);

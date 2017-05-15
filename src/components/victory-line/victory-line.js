@@ -42,7 +42,7 @@ class VictoryLine extends React.Component {
     standalone: true,
     sortKey: "x",
     dataComponent: <Curve/>,
-    labelComponent: <VictoryLabel/>,
+    labelComponent: <VictoryLabel renderInPortal/>,
     containerComponent: <VictoryContainer/>,
     groupComponent: <VictoryClipContainer/>,
     theme: VictoryTheme.grayscale
@@ -68,7 +68,7 @@ class VictoryLine extends React.Component {
       return this.animateComponent(props, animationWhitelist);
     }
     const children = this.renderContinuousData(props);
-    return this.renderContainer(props.containerComponent, children);
+    return props.standalone ? this.renderContainer(props.containerComponent, children) : children;
   }
 }
 export default addEvents(VictoryLine);

@@ -26,6 +26,10 @@ export {
   default as VictoryVoronoiContainer
 } from "./components/containers/victory-voronoi-container";
 export {
+  cursorContainerMixin,
+  default as VictoryCursorContainer
+} from "./components/containers/victory-cursor-container";
+export {
   zoomContainerMixin,
   default as VictoryZoomContainer
 } from "./components/containers/victory-zoom-container";
@@ -35,6 +39,7 @@ export {
   default as createContainer
 } from "./components/containers/create-container";
 export { default as BrushHelpers } from "./components/containers/brush-helpers";
+export { default as CursorHelpers } from "./components/containers/cursor-helpers";
 export { default as SelectionHelpers } from "./components/containers/selection-helpers";
 export { default as VoronoiHelpers } from "./components/containers/voronoi-helpers";
 export { default as ZoomHelpers, RawZoomHelpers } from "./components/containers/zoom-helpers";
