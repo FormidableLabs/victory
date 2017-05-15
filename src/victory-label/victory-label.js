@@ -1,7 +1,11 @@
 /*eslint no-magic-numbers: ["error", { "ignore": [0, 0.5, 1, 2] }]*/
 import React from "react";
 import PropTypes from "prop-types";
-import { PropTypes as CustomPropTypes, Helpers, Style, Log } from "../victory-util/index";
+import VictoryPortal from "../victory-portal/victory-portal";
+import CustomPropTypes from "../victory-util/prop-types";
+import Helpers from "../victory-util/helpers";
+import Style from "../victory-util/style";
+import Log from "../victory-util/log";
 import { assign, merge, isEqual } from "lodash";
 
 const defaultStyles = {
@@ -28,6 +32,7 @@ export default class VictoryLabel extends React.Component {
     className: PropTypes.string,
     data: PropTypes.array,
     datum: PropTypes.any,
+    desc: PropTypes.string,
     dx: PropTypes.oneOfType([
       PropTypes.number,
       PropTypes.string,
@@ -45,6 +50,7 @@ export default class VictoryLabel extends React.Component {
       CustomPropTypes.nonNegative,
       PropTypes.func
     ]),
+    renderInPortal: PropTypes.bool,
     style: PropTypes.oneOfType([
       PropTypes.object,
       PropTypes.array
@@ -64,6 +70,7 @@ export default class VictoryLabel extends React.Component {
       ]),
       PropTypes.func
     ]),
+    title: PropTypes.string,
     transform: PropTypes.oneOfType([
       PropTypes.string,
       PropTypes.object,
@@ -124,13 +131,12 @@ export default class VictoryLabel extends React.Component {
 
   calculateAttributes(props) {
     const style = this.getStyles(props);
-    const fontSize = style[0].fontSize;
     const lineHeight = this.getHeight(props, "lineHeight");
     const textAnchor = props.textAnchor ?
       Helpers.evaluateProp(props.textAnchor, props.datum) : "start";
     const content = this.getContent(props);
     const dx = props.dx ? Helpers.evaluateProp(this.props.dx, props.datum) : 0;
-    const dy = this.getDy(props, style, content, lineHeight) * fontSize;
+    const dy = this.getDy(props, style, content, lineHeight);
     const transform = this.getTransform(props, style);
     return {
       style, dx, dy, content, lineHeight, textAnchor, transform
@@ -167,6 +173,7 @@ export default class VictoryLabel extends React.Component {
   }
 
   getDy(props, style, content, lineHeight) { //eslint-disable-line max-params
+    const fontSize = style[0].fontSize;
     const datum = props.datum || props.data;
     const dy = props.dy ? Helpers.evaluateProp(props.dy, datum) : 0;
     const length = content.length;
@@ -176,11 +183,11 @@ export default class VictoryLabel extends React.Component {
       Helpers.evaluateProp(verticalAnchor, datum) : "middle";
     switch (anchor) {
     case "end":
-      return dy + capHeight / 2 + (0.5 - length) * lineHeight;
+      return dy + (capHeight / 2 + (0.5 - length) * lineHeight) * fontSize;
     case "middle":
-      return dy + capHeight / 2 + (0.5 - length / 2) * lineHeight;
+      return dy + (capHeight / 2 + (0.5 - length / 2) * lineHeight) * fontSize;
     default:
-      return dy + capHeight / 2 + lineHeight / 2;
+      return dy + (capHeight / 2 + lineHeight / 2) * fontSize;
     }
   }
 
@@ -222,6 +229,8 @@ export default class VictoryLabel extends React.Component {
       <text {...textProps}
         {...props.events}
       >
+        {this.props.title && <title>{this.props.title}</title>}
+        {this.props.desc && <desc>{this.props.desc}</desc>}
         {this.content.map((line, i) => {
           const style = this.style[i] || this.style[0];
           const lastStyle = this.style[i - 1] || this.style[0];
@@ -239,6 +248,7 @@ export default class VictoryLabel extends React.Component {
   }
 
   render() {
-    return this.renderElements(this.props);
+    const label = this.renderElements(this.props);
+    return this.props.renderInPortal ? <VictoryPortal>{label}</VictoryPortal> : label;
   }
 }

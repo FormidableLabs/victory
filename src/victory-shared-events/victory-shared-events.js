@@ -1,7 +1,10 @@
 import { assign, isFunction, partialRight, defaults, fromPairs } from "lodash";
 import React from "react";
 import PropTypes from "prop-types";
-import { PropTypes as CustomPropTypes, Events, Timer, Helpers } from "../victory-util/index";
+import CustomPropTypes from "../victory-util/prop-types";
+import Events from "../victory-util/events";
+import Helpers from "../victory-util/helpers";
+import Timer from "../victory-util/timer";
 
 export default class VictorySharedEvents extends React.Component {
   static displayName = "VictorySharedEvents";

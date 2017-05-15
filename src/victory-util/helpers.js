@@ -36,7 +36,9 @@ export default {
     };
   },
 
-  getStyles(style, defaultStyles, height, width) {  // eslint-disable-line max-params
+  getStyles(style, defaultStyles) {
+    const width = "100%";
+    const height = "100%";
     if (!style) {
       return defaults({ parent: { height, width } }, defaultStyles);
     }
@@ -46,7 +48,7 @@ export default {
     const defaultLabels = defaultStyles && defaultStyles.labels || {};
     const defaultData = defaultStyles && defaultStyles.data || {};
     return {
-      parent: defaults({ height, width }, parent, defaultParent),
+      parent: defaults({}, parent, defaultParent, { width, height }),
       labels: defaults({}, labels, defaultLabels),
       data: defaults({}, data, defaultData)
     };

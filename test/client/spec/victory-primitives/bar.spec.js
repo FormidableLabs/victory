@@ -1,6 +1,6 @@
 import React from "react";
 import { shallow } from "enzyme";
-import { Bar } from "src/victory-primitives";
+import Bar from "src/victory-primitives/bar";
 import SvgTestHelper from "../svg-test-helper";
 import { merge } from "lodash";
 

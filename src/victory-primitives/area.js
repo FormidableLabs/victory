@@ -1,7 +1,8 @@
 /*eslint no-magic-numbers: ["error", { "ignore": [-1, 0, 1, 2] }]*/
 import React from "react";
 import PropTypes from "prop-types";
-import { Collection, Helpers } from "../victory-util";
+import Collection from "../victory-util/collection";
+import Helpers from "../victory-util/helpers";
 import { assign, isEqual } from "lodash";
 import * as d3Shape from "d3-shape";
 import CommonProps from "./common-props";
