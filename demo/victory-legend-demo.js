@@ -1,7 +1,7 @@
 import React from "react";
 import { VictoryLegend } from "../src/index";
 
-const svgStyle = { border: "1px solid darkgray" };
+const legendStyle = { parent: { display: "block", marginBottom: 20 }};
 const data = [{
   name: "Series 1",
   symbol: {
@@ -34,21 +34,39 @@ const data = [{
   labels: {
     fill: "purple"
   }
+}, {
+  name: "Series 6",
+  symbol: {
+    type: "circle",
+    fill: "orange"
+  },
+  labels: {
+    fill: "blue"
+  }
 }];
 
 const LegendDemo = () => (
   <div className="demo">
-    <VictoryLegend data={data} />
+    <VictoryLegend
+      data={data}
+      style={legendStyle}
+    />
+    <VictoryLegend
+      data={data}
+      itemsPerRow={4}
+      orientation="horizontal"
+      style={legendStyle}
+    />
     <svg
-      height={56}
-      width={525}
-      style={svgStyle}
+      height={100}
+      width={244}
+      style={{ border: "1px solid #ccc" }}
     >
       <VictoryLegend
         data={data}
-        padding={20}
+        padding={15}
+        itemsPerRow={3}
         standalone={false}
-        orientation="horizontal"
         style={{ labels: { fill: "darkgray" } }}
       />
     </svg>
