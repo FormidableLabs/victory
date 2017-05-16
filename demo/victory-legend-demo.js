@@ -1,7 +1,7 @@
 import React from "react";
 import { VictoryLegend } from "../src/index";
 
-const legendStyle = { parent: { display: "block", marginBottom: 20 }};
+const legendStyle = { parent: { display: "block", marginBottom: 20 } };
 const data = [{
   name: "Series 1",
   symbol: {
