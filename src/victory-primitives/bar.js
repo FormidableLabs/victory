@@ -48,12 +48,19 @@ export default class Bar extends React.Component {
     return { style, path };
   }
 
-  getVerticalBarPath(props, width) {
+  getPosition(props, width) {
     const size = width / 2;
-    const y0 = Math.round(props.y0);
-    const y1 = Math.round(props.y);
-    const x0 = Math.round(props.x - size);
-    const x1 = Math.round(props.x + size);
+    const { x, y, y0 } = props;
+    return {
+      y0: Math.round(y0),
+      y1: Math.round(y),
+      x0: Math.round(x - size),
+      x1: Math.round(x + size)
+    };
+  }
+
+  getVerticalBarPath(props, width) {
+    const { x0, x1, y0, y1 } = this.getPosition(props, width);
     return `M ${x0}, ${y0}
       L ${x0}, ${y1}
       L ${x1}, ${y1}
@@ -63,11 +70,7 @@ export default class Bar extends React.Component {
   }
 
   getHorizontalBarPath(props, width) {
-    const size = width / 2;
-    const y0 = Math.round(props.y0);
-    const y1 = Math.round(props.y);
-    const x0 = Math.round(props.x - size);
-    const x1 = Math.round(props.x + size);
+    const { x0, x1, y0, y1 } = this.getPosition(props, width);
     return `M ${y0}, ${x0}
       L ${y0}, ${x1}
       L ${y1}, ${x1}

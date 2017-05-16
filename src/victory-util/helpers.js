@@ -16,12 +16,25 @@ export default {
     };
   },
 
-  scalePoint(props, scale, datum) {
-    const x = scale.x(datum._x1 !== undefined ? datum._x1 : datum._x);
-    const y = scale.y(datum._y1 !== undefined ? datum._y1 : datum._y);
+  getPoint(datum) {
     return {
-      x: props.polar ? y * Math.cos(x) : x,
-      y: props.polar ? -y * Math.sin(x) : y
+      x: datum._x1 !== undefined ? datum._x1 : datum._x,
+      x0: datum._x0 !== undefined ? datum._x0 : datum._x,
+      y: datum._y1 !== undefined ? datum._y1 : datum._y,
+      y0: datum._y0 !== undefined ? datum._y0 : datum._y
+    };
+  },
+
+  scalePoint(point, scale, polar) {
+    const x = scale.x(point.x);
+    const x0 = point.x0 !== undefined ? scale.x(point.x0) : x;
+    const y = scale.y(point.y);
+    const y0 = point.y0 !== undefined ? scale.y(point.y0) : y;
+    return {
+      x: polar ? y * Math.cos(x) : x,
+      x0: polar ? y0 * Math.cos(x0) : x0,
+      y: polar ? -y * Math.sin(x) : y,
+      y0: polar ? -y0 * Math.sin(x0) : y0
     };
   },
 

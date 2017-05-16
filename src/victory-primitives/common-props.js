@@ -7,6 +7,7 @@ export default {
   data: PropTypes.array,
   events: PropTypes.object,
   index: PropTypes.oneOfType([PropTypes.number, PropTypes.string]),
+  polar: PropTypes.bool,
   role: PropTypes.string,
   scale: PropTypes.oneOfType([
     CustomPropTypes.scale,
