@@ -43,6 +43,7 @@ export default class VictoryLegend extends React.Component {
       CustomPropTypes.nonNegative,
       PropTypes.func
     ]),
+    itemsPerRow: PropTypes.number,
     labelComponent: PropTypes.element,
     orientation: PropTypes.oneOf(["horizontal", "vertical"]),
     padding: PropTypes.oneOfType([
@@ -87,46 +88,54 @@ export default class VictoryLegend extends React.Component {
   };
 
   calculateLegendHeight(textSizes, padding, isHorizontal) {
-    const { data, gutter } = this.props;
+    const { gutter, itemsPerRow } = this.props;
+    const itemCount = textSizes.length;
+    const rowCount = itemsPerRow ? Math.ceil(itemCount / itemsPerRow) : 1;
     const contentHeight = isHorizontal
-      ? maxBy(textSizes, "height").height
-      : sumBy(textSizes, "height") + gutter * (data.length - 1);
+      ? maxBy(textSizes, "height").height * rowCount + gutter * (rowCount - 1)
+      : (sumBy(textSizes, "height") + gutter * (itemCount - 1)) / rowCount;
 
     return padding.top + contentHeight + padding.bottom;
   }
 
-  calculateLegendWidth(textSizes, padding, isHorizontal) {
-    const { data, gutter, symbolSpacer } = this.props;
-    const contentWidth = isHorizontal
-      ? sumBy(textSizes, "width") + (gutter + symbolSpacer * 3) * (data.length - 1)
-      : maxBy(textSizes, "width").width + symbolSpacer * 2;
+  // eslint-disable-next-line max-params
+  calculateLegendWidth(itemCount, padding, isHorizontal, maxTextWidth) {
+    const { gutter, itemsPerRow, symbolSpacer } = this.props;
+    const rowCount = itemsPerRow ? Math.ceil(itemCount / itemsPerRow) : 1;
+    const rowItemCount = itemsPerRow || itemCount;
+    let contentWidth;
+
+    if (isHorizontal) {
+      const gutterWidth = gutter * rowItemCount;
+      const symbolWidth = symbolSpacer * 3 * rowItemCount;
+      const textWidth = maxTextWidth * rowItemCount;
+      contentWidth = symbolWidth + textWidth + gutterWidth;
+    } else {
+      contentWidth = (maxTextWidth + symbolSpacer * 2 + gutter) * rowCount;
+    }
 
     return padding.left + contentWidth + padding.right;
   }
 
   getColorScale(theme) {
-    const { colorScale } = this.props;
-    let colorScaleOptions = colorScale || theme.colorScale;
-
+    let colorScaleOptions = this.props.colorScale || theme.colorScale;
     if (typeof colorScaleOptions === "string") {
       colorScaleOptions = Style.getColorScale(colorScaleOptions);
     }
-
     return !isEmpty(theme) ? colorScaleOptions || theme.colorScale : colorScaleOptions || [];
   }
 
   getCalculatedProps() { // eslint-disable-line max-statements
     const { role } = this.constructor;
     const { data, orientation, theme } = this.props;
-    let { height, padding, width } = this.props;
-
     const legendTheme = theme && theme[role] ? theme[role] : {};
     const parentStyles = this.getStyles({}, legendTheme, "parent");
     const colorScale = this.getColorScale(legendTheme);
     const isHorizontal = orientation === "horizontal";
     const symbolStyles = [];
     const labelStyles = [];
-    let leftOffset = 0;
+    let { height, padding, width } = this.props;
+    let maxTextWidth = 0;
 
     padding = Helpers.getPadding({ padding: padding || theme.padding });
     height = Helpers.evaluateProp(height || theme.height, data);
@@ -134,13 +143,10 @@ export default class VictoryLegend extends React.Component {
 
     const textSizes = data.map((datum, i) => {
       const labelStyle = this.getStyles(datum, legendTheme, "labels");
+      const textSize = TextSize.approximateTextSize(datum.name, labelStyle);
+      maxTextWidth = textSize.width > maxTextWidth ? textSize.width : maxTextWidth;
       symbolStyles[i] = this.getStyles(datum, legendTheme, "symbol", colorScale[i]);
       labelStyles[i] = labelStyle;
-
-      const textSize = TextSize.approximateTextSize(datum.name, labelStyle);
-      textSize.leftOffset = leftOffset;
-      leftOffset += textSize.width;
-
       return textSize;
     });
 
@@ -148,13 +154,19 @@ export default class VictoryLegend extends React.Component {
       height = this.calculateLegendHeight(textSizes, padding, isHorizontal);
     }
     if (!width) {
-      width = this.calculateLegendWidth(textSizes, padding, isHorizontal);
+      width = this.calculateLegendWidth(textSizes.length, padding, isHorizontal, maxTextWidth);
     }
 
-    return Object.assign({},
-      this.props,
-      { isHorizontal, height, labelStyles, padding, parentStyles, symbolStyles, textSizes, width }
-    );
+    return Object.assign({}, this.props, {
+      isHorizontal,
+      height,
+      labelStyles,
+      maxTextWidth,
+      padding,
+      parentStyles,
+      symbolStyles,
+      width
+    });
   }
 
   getStyles(datum, theme, key, color) { // eslint-disable-line max-params
@@ -171,59 +183,89 @@ export default class VictoryLegend extends React.Component {
 
   getSymbolProps(datum, props, i) {
     const {
-      dataComponent, gutter, labelStyles, isHorizontal,
-      padding, symbolSpacer, symbolStyles, textSizes
+      dataComponent,
+      gutter,
+      isHorizontal,
+      itemsPerRow,
+      labelStyles,
+      maxTextWidth,
+      padding,
+      symbolSpacer,
+      symbolStyles
     } = props;
-    const { leftOffset } = textSizes[i];
+
     const { fontSize } = labelStyles[i];
     const symbolShift = fontSize / 2;
     const style = symbolStyles[i];
+    const rowHeight = fontSize + gutter;
+    let itemIndex = i;
+    let rowSpacer = 0;
+    let rowIndex = 0;
+
+    if (itemsPerRow) {
+      rowIndex = Math.floor(i / itemsPerRow);
+      rowSpacer = rowHeight * rowIndex;
+      itemIndex = i % itemsPerRow;
+    }
 
     const symbolCoords = isHorizontal ? {
-      x: padding.left + leftOffset + symbolShift + (fontSize + symbolSpacer + gutter) * i,
-      y: padding.top + symbolShift
+      x: padding.left + symbolShift + (fontSize + symbolSpacer + maxTextWidth + gutter) * itemIndex,
+      y: padding.top + symbolShift + rowSpacer
     } : {
-      x: padding.left + symbolShift,
-      y: padding.top + symbolShift + (fontSize + gutter) * i
+      x: padding.left + symbolShift + (rowHeight + maxTextWidth) * rowIndex,
+      y: padding.top + symbolShift + rowHeight * itemIndex
     };
 
-    return defaults({},
-      dataComponent.props,
-      {
-        key: `symbol-${i}`,
-        style,
-        size: this.getSymbolSize(datum, fontSize),
-        symbol: style.type,
-        ...symbolCoords
-      }
-    );
+    return defaults({}, dataComponent.props, {
+      key: `symbol-${i}`,
+      style,
+      size: this.getSymbolSize(datum, fontSize),
+      symbol: style.type,
+      ...symbolCoords
+    });
   }
 
   getLabelProps(datum, props, i) {
     const {
-      gutter, isHorizontal, symbolSpacer, labelComponent, labelStyles, textSizes, padding
+      gutter,
+      isHorizontal,
+      itemsPerRow,
+      labelComponent,
+      labelStyles,
+      maxTextWidth,
+      padding,
+      symbolSpacer
     } = props;
+
     const style = labelStyles[i];
     const { fontSize } = style;
     const symbolShift = fontSize / 2;
+    const rowHeight = fontSize + gutter;
+    const symbolWidth = fontSize + symbolSpacer;
+    let itemIndex = i;
+    let rowSpacer = 0;
+    let rowIndex = 0;
+
+    if (itemsPerRow) {
+      rowIndex = Math.floor(i / itemsPerRow);
+      rowSpacer = rowHeight * rowIndex;
+      itemIndex = i % itemsPerRow;
+    }
 
     const labelCoords = isHorizontal ? {
-      x: padding.left + textSizes[i].leftOffset + (fontSize + symbolSpacer) * (i + 1) + gutter * i,
-      y: padding.top + symbolShift
+      x: padding.left + symbolWidth * (itemIndex + 1) + (maxTextWidth + gutter) * itemIndex,
+      y: padding.top + symbolShift + rowSpacer
     } : {
-      x: padding.left + fontSize + symbolSpacer,
-      y: padding.top + symbolShift + (fontSize + gutter) * i
+      x: padding.left + symbolWidth + (rowHeight + maxTextWidth) * rowIndex,
+      y: padding.top + symbolShift + rowHeight * itemIndex
     };
 
-    return defaults({},
-      labelComponent.props,
-      {
-        key: `label-${i}`,
-        style,
-        text: datum.name,
-        ...labelCoords
-      }
-    );
+    return defaults({}, labelComponent.props, {
+      key: `label-${i}`,
+      style,
+      text: datum.name,
+      ...labelCoords
+    });
   }
 
   renderLegendItems(props) {
@@ -236,7 +278,6 @@ export default class VictoryLegend extends React.Component {
         this.getSymbolProps(datum, props, i)
       );
     });
-
     const labelComponents = legendData.map((datum, i) => {
       return React.cloneElement(
         labelComponent,
@@ -248,23 +289,27 @@ export default class VictoryLegend extends React.Component {
   }
 
   renderGroup(props, children) {
-    const { groupComponent, height, standalone, width, x, y } = props;
-    const style = props.style || {};
+    const { groupComponent, height, parentStyles, standalone, width, x, y } = props;
     let groupProps = { role: "presentation" };
-    const transform = `translate(${x}, ${y})`;
+
     if (!standalone) {
-      groupProps = Object.assign(groupProps, { height, width, transform, style: style.parent });
+      groupProps = {
+        height,
+        width,
+        transform: `translate(${x}, ${y})`,
+        style: parentStyles,
+        ...groupProps
+      };
     }
 
     return React.cloneElement(groupComponent, groupProps, children);
   }
 
   renderContainer(props, children) {
-    const { containerComponent, height, width } = props;
-    const style = props.style || {};
+    const { containerComponent, height, parentStyles, width } = props;
     return React.cloneElement(
       containerComponent,
-      { height, width, style: style.parent },
+      { height, width, style: parentStyles },
       children
     );
   }
