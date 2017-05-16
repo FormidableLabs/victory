@@ -13,20 +13,13 @@ export default {
   },
 
   getBarPosition(props, datum, scale) {
-    const defaultMin = Scale.getType(scale.y) === "log" ?
-      1 / Number.MAX_SAFE_INTEGER : 0;
-
-    const y0 = datum._y0 !== undefined ? datum._y0 : defaultMin;
-    const formatValue = (value, axis) => {
-      return datum[axis] instanceof Date ? new Date(value) : value;
+    const getDefaultMin = () => {
+      const defaultMin = Scale.getType(scale.y) === "log" ? 1 / Number.MAX_SAFE_INTEGER : 0;
+      return datum._y instanceof Date ? new Date(defaultMin) : defaultMin;
     };
-    const x = datum._x1 !== undefined ? datum._x1 : datum._x;
-    const y1 = datum._y1 !== undefined ? datum._y1 : datum._y;
-    return {
-      x: scale.x(formatValue(x, "x")),
-      y0: scale.y(formatValue(y0, "y")),
-      y: scale.y(formatValue(y1, "y"))
-    };
+    const { x, y } = Helpers.getPoint(datum);
+    const y0 = datum._y0 !== undefined ? datum._y0 : getDefaultMin();
+    return Helpers.scalePoint({ x, y, y0 }, scale, props.polar);
   },
 
   getBarStyle(datum, baseStyle) {
@@ -105,29 +98,20 @@ export default {
 
     return data.reduce((childProps, datum, index) => {
       const eventKey = datum.eventKey || index;
-      const position = this.getBarPosition(props, datum, scale);
-      const dataProps = assign(
-        {
-          style: this.getBarStyle(datum, style.data),
-          index,
-          datum,
-          scale,
-          horizontal,
-          padding,
-          width,
-          data
-        },
-        position
-      );
+      const { x, y, y0 } = this.getBarPosition(props, datum, scale);
+      const barStyle = this.getBarStyle(datum, style.data);
+      const dataProps = {
+        data, datum, horizontal, index, padding, polar, scale, style: barStyle, width, x, y, y0
+      };
 
       childProps[eventKey] = {
         data: dataProps
       };
+
       const text = this.getLabel(props, datum, index);
       if (text !== undefined && text !== null || props.events || props.sharedEvents) {
         childProps[eventKey].labels = this.getLabelProps(dataProps, text, style);
       }
-
       return childProps;
     }, initialChildProps);
   },

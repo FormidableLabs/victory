@@ -36,7 +36,7 @@ export default {
     } else if (props.domain && props.domain[inherentAxis]) {
       domain = props.domain[inherentAxis];
     } else if (Array.isArray(props.tickValues) && props.tickValues.length > 1) {
-      domain = Domain.getDomainFromTickValues(props);
+      domain = Domain.getDomainFromTickValues(props, axis);
     }
     const paddedDomain = Domain.padDomain(domain, props, inherentAxis);
     return domain ? Domain.cleanDomain(paddedDomain, props, inherentAxis) : undefined;

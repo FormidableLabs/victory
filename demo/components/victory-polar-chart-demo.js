@@ -52,7 +52,6 @@ class App extends React.Component {
       <div className="demo">
         <div style={containerStyle}>
           <VictoryPolarChart
-            domain={{ x: [0, 360] }}
             theme={VictoryTheme.material}
             style={chartStyle}
           >
@@ -104,7 +103,6 @@ class App extends React.Component {
           </VictoryPolarChart>
 
           <VictoryPolarChart
-            domain={{ x: [1, 6], y: [0, 75] }}
             theme={VictoryTheme.material}
             style={chartStyle}
           >
@@ -116,7 +114,6 @@ class App extends React.Component {
             />
             <VictoryPolarAxis
               labelPlacement="perpendicular"
-              tickValues={[1, 2, 3, 4, 5]}
               tickFormat={["strength", "intelligence", "stealth", "luck", "charisma"]}
             />
             <VictoryScatter

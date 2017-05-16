@@ -14,8 +14,7 @@ export default {
     return data.reduce((childProps, datum, index) => {
       const polygon = without(polygons[index], "data");
       const eventKey = datum.eventKey;
-      const x = scale.x(datum._x1 !== undefined ? datum._x1 : datum._x);
-      const y = scale.y(datum._y1 !== undefined ? datum._y1 : datum._y);
+      const { x, y } = Helpers.scalePoint(Helpers.getPoint(datum), scale, polar);
       const dataProps = {
         x, y, datum, data, index, scale, polygon,
         size: props.size,

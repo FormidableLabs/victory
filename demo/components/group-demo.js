@@ -2,7 +2,7 @@
 import React from "react";
 import {
   VictoryChart, VictoryStack, VictoryBar, VictoryLine,
-  VictoryGroup, VictoryScatter, VictoryErrorBar, VictoryVoronoiTooltip
+  VictoryGroup, VictoryScatter, VictoryErrorBar
 } from "../../src/index";
 import { range, random } from "lodash";
 
@@ -142,7 +142,6 @@ class App extends React.Component {
               ]}
             >
               <VictoryLine/>
-              <VictoryVoronoiTooltip/>
             </VictoryGroup>
           </VictoryChart>
 
@@ -151,7 +150,6 @@ class App extends React.Component {
               y={(data) => Math.sin(2 * Math.PI * data.x)}
             >
               <VictoryLine/>
-              <VictoryVoronoiTooltip labels={(d) => d.y}/>
             </VictoryGroup>
           </VictoryChart>
 

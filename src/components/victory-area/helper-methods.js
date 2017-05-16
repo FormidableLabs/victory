@@ -25,7 +25,7 @@ export default {
       const text = this.getLabelText(props, datum, index);
       if (text !== undefined && text !== null || events || sharedEvents) {
         const eventKey = datum.eventKey || index;
-        childProps[eventKey] = { labels: this.getLabelProps(text, index, calculatedValues) };
+        childProps[eventKey] = { labels: this.getLabelProps(text, index, props, calculatedValues) };
       }
       return childProps;
     }, initialChildProps);
@@ -52,10 +52,10 @@ export default {
     return { style, data, scale, domain };
   },
 
-  getLabelProps(text, index, calculatedProps) {
+  getLabelProps(text, index, props, calculatedProps) { // eslint-disable-line max-params
     const { scale, data, style } = calculatedProps;
     const datum = data[index];
-    const { x, y } = this.getLabelPosition(datum, scale);
+    const { x, y } = Helpers.scalePoint(Helpers.getPoint(datum), scale, props.polar);
     const labelStyle = this.getLabelStyle(style) || {};
     const sign = (datum._y1 || datum._y) < 0 ? -1 : 1;
     return {
@@ -76,13 +76,6 @@ export default {
   getLabelText(props, datum, index) {
     return datum.label || (Array.isArray(props.labels) ?
       props.labels[index] : props.labels);
-  },
-
-  getLabelPosition(datum, scale) {
-    return {
-      x: scale.x(datum._x1 !== undefined ? datum._x1 : datum._x),
-      y: scale.y(datum._y1 !== undefined ? datum._y1 : datum._y)
-    };
   },
 
   getLabelStyle(style) {

@@ -139,13 +139,15 @@ export default {
     const horizontal = props && props.horizontal || horizontalChildren.length > 0;
     const currentAxis = Axis.getCurrentAxis(axis, horizontal);
 
+    const parentData = props.data ? Data.getData(props, axis) : undefined;
+    const parentProps = parentData ?
+      { data: parentData, polar: props.polar } : { polar: props.polar };
+
     while (childrenLength > 0) {
       const child = children[--childrenLength];
 
       if (child.type && isFunction(child.type.getDomain)) {
-        const parentData = props.data ? Data.getData(props, axis) : undefined;
-        const sharedProps = parentData ?
-          assign({}, child.props, { data: parentData }) : child.props;
+        const sharedProps = assign({}, child.props, parentProps);
         const childDomain = child.props && child.type.getDomain(sharedProps, currentAxis);
         if (childDomain) {
           const childDomainLength = childDomain.length;

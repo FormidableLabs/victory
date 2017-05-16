@@ -26,10 +26,12 @@ export default class VictoryChart extends React.Component {
     defaultAxes: PropTypes.shape({
       independent: PropTypes.element,
       dependent: PropTypes.element
-    })
+    }),
+    polar: PropTypes.bool
   };
 
   static defaultProps = {
+    polar: true,
     containerComponent: <VictoryContainer/>,
     defaultAxes: {
       independent: <VictoryPolarAxis/>,

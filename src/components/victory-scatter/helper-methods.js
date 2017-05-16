@@ -13,9 +13,9 @@ export default {
 
     return data.reduce((childProps, datum, index) => {
       const eventKey = datum.eventKey;
-      const { x, y } = Helpers.scalePoint(props, scale, datum);
+      const { x, y } = Helpers.scalePoint(Helpers.getPoint(datum), scale, polar);
       const dataProps = {
-        x, y, datum, data, index, scale,
+        x, y, datum, data, index, scale, polar,
         size: this.getSize(datum, props, calculatedValues),
         symbol: this.getSymbol(datum, props),
         style: this.getDataStyles(datum, style.data)
