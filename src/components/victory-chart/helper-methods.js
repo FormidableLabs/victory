@@ -1,5 +1,5 @@
 /*eslint no-magic-numbers: ["error", { "ignore": [0, 1, 2] }]*/
-import { invert, sortBy, values } from "lodash";
+import { isFunction, flow, invert, sortBy, values } from "lodash";
 import Axis from "../../helpers/axis";
 import Wrapper from "../../helpers/wrapper";
 import React from "react";
@@ -124,24 +124,62 @@ export default {
     return this.getTicksFromAxis(...args) || this.getTicksFromData(...args);
   },
 
-  getTickFormat(component, axis, calculatedProps) {
-    const currentAxis = Helpers.getCurrentAxis(axis, calculatedProps.horizontal);
-    const stringMap = calculatedProps.stringMap[currentAxis];
-    const tickValues = component.props.tickValues;
-    const useIdentity = tickValues && !Collection.containsStrings(tickValues) &&
-      !Collection.containsDates(tickValues);
-    if (useIdentity) {
-      return identity;
-    } else if (stringMap !== null) {
+  getArrayFormatter(tickValues, tickFormat) {
+    // For tickFormat lists, use the list in order
+    if (Array.isArray(tickFormat)) {
+      return index => tick => tickFormat[index];
+    }
+
+    // For non-numerical tickValues lists, use the list in order
+    if (Array.isArray(tickValues) && !Collection.containsNumbers(tickValues)) {
+      return index => tick => tickValues[index];
+    }
+
+    // identity
+    return index => tick => tick;
+  },
+
+  getFunctionFormatter(tickFormat) {
+    return isFunction(tickFormat) ? tickFormat : identity;
+  },
+
+  getStringMapFormatter(stringMap) {
+    // When string maps are present, convert tick to string
+    if (stringMap !== null) {
       const tickValueArray = sortBy(values(stringMap), (n) => n);
       const invertedStringMap = invert(stringMap);
       const dataNames = tickValueArray.map((tick) => invertedStringMap[tick]);
       // string ticks should have one tick of padding at the beginning
       const dataTicks = ["", ...dataNames, ""];
       return (x) => dataTicks[x];
-    } else {
-      return calculatedProps.scale[currentAxis].tickFormat() || identity;
     }
+
+    return identity;
+  },
+
+  getScaleFormatter(stringMap, tickFormat, tickValues, calculatedProps, currentAxis) {
+    if (stringMap || tickFormat || tickValues) {
+      return identity;
+    }
+
+    return calculatedProps.scale[currentAxis].tickFormat();
+  },
+
+  getTickFormat(component, axis, calculatedProps) {
+    const { tickFormat, tickValues } = component.props;
+    const currentAxis = Helpers.getCurrentAxis(axis, calculatedProps.horizontal);
+    const stringMap = calculatedProps.stringMap[currentAxis];
+
+    return (tick, index) => {
+      const tickFormatterPipeline = [
+        this.getScaleFormatter(stringMap, tickFormat, tickValues, calculatedProps, currentAxis),
+        this.getStringMapFormatter(stringMap),
+        this.getFunctionFormatter(tickFormat),
+        this.getArrayFormatter(tickValues, tickFormat)(index),
+      ];
+
+      return flow(tickFormatterPipeline)(tick);
+    };
   },
 
   createStringMap(props, axis, childComponents) {
