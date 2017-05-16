@@ -127,16 +127,16 @@ export default {
   getArrayFormatter(tickValues, tickFormat) {
     // For tickFormat lists, use the list in order
     if (Array.isArray(tickFormat)) {
-      return index => tick => tickFormat[index];
+      return (index) => () => tickFormat[index];
     }
 
     // For non-numerical tickValues lists, use the list in order
     if (Array.isArray(tickValues) && !Collection.containsNumbers(tickValues)) {
-      return index => tick => tickValues[index];
+      return (index) => () => tickValues[index];
     }
 
     // identity
-    return index => tick => tick;
+    return () => (tick) => tick;
   },
 
   getFunctionFormatter(tickFormat) {
@@ -157,7 +157,7 @@ export default {
     return identity;
   },
 
-  getScaleFormatter(stringMap, tickFormat, tickValues, calculatedProps, currentAxis) {
+  getScaleFormatter(stringMap, tickFormat, tickValues, calculatedProps, currentAxis) { // eslint-disable-line
     if (stringMap || tickFormat || tickValues) {
       return identity;
     }
@@ -175,7 +175,7 @@ export default {
         this.getScaleFormatter(stringMap, tickFormat, tickValues, calculatedProps, currentAxis),
         this.getStringMapFormatter(stringMap),
         this.getFunctionFormatter(tickFormat),
-        this.getArrayFormatter(tickValues, tickFormat)(index),
+        this.getArrayFormatter(tickValues, tickFormat)(index)
       ];
 
       return flow(tickFormatterPipeline)(tick);

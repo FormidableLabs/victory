@@ -3,7 +3,7 @@
 import Helpers from "src/components/victory-chart/helper-methods";
 import React from "react";
 import { VictoryAxis, VictoryLine, VictoryBar } from "src/index";
-import { Log, Data, Scale } from "victory-core";
+import { Log, Data } from "victory-core";
 import Wrapper from "src/helpers/wrapper";
 
 describe("victory-chart/helpers-methods", () => {
@@ -159,7 +159,7 @@ describe("victory-chart/helpers-methods", () => {
   describe("getTickFormat", () => {
     const stringMap = { x: { "a": 1, "b": 2, "c": 3 } };
     const nullStringMap = { x: null };
-    const scale = { x: { tickFormat: () => (tick) => "scaleFormatTick" } };
+    const scale = { x: { tickFormat: () => () => "scaleFormatTick" } };
 
     it("returns the identity function when tickValues are numerical", () => {
       const props = { tickValues: [1, 2, 3] };
@@ -194,7 +194,7 @@ describe("victory-chart/helpers-methods", () => {
     });
 
     it("passes string map result to custom tickFormat prop", () => {
-      const props = { tickFormat: (tick) => tick + " yo" };
+      const props = { tickFormat: (tick) => `${tick} yo` };
       const victoryAxis = getVictoryAxis(props);
       const formatResult = Helpers.getTickFormat(victoryAxis, "x", { stringMap });
       expect(formatResult).to.be.a("function");
