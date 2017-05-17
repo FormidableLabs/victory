@@ -227,6 +227,14 @@ describe("victory-chart/helpers-methods", () => {
       expect(formatResult(5, 0)).to.equal("orange");
       expect(formatResult(5, 2)).to.equal("apple");
     });
+
+    it("runs tickFormat fn after tick values are applied", () => {
+      const props = { tickValues: ["a", "b", "c"], tickFormat: (tick) => `${tick} yo` };
+      const victoryAxis = getVictoryAxis(props);
+      const formatResult = Helpers.getTickFormat(victoryAxis, "x", { stringMap: nullStringMap });
+      expect(formatResult).to.be.a("function");
+      expect(formatResult(1, 1)).to.equal("b yo");
+    });
   });
 
   describe("getTicks", () => {

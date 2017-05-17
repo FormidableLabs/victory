@@ -174,8 +174,8 @@ export default {
       const tickFormatterPipeline = [
         this.getScaleFormatter(stringMap, tickFormat, tickValues, calculatedProps, currentAxis),
         this.getStringMapFormatter(stringMap),
-        this.getFunctionFormatter(tickFormat),
-        this.getArrayFormatter(tickValues, tickFormat)(index)
+        this.getArrayFormatter(tickValues, tickFormat)(index),
+        this.getFunctionFormatter(tickFormat)
       ];
 
       return flow(tickFormatterPipeline)(tick);
