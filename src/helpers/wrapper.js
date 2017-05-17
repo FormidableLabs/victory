@@ -237,6 +237,17 @@ export default {
     return color || colors[index % colors.length];
   },
 
+  getWidth(style, props) {
+    const { datasets, scale, horizontal } = props;
+    const range = horizontal ? scale.y.range() : scale.x.range();
+    const extent = Math.abs(range[1] - range[0]);
+    const bars = datasets.length * datasets[0].length;
+    const space = 0.5;
+    const unit = 1 / (bars);
+    const barFraction = 1 / (space + 1);
+    return { width: unit * barFraction * extent };
+  },
+
   getChildStyle(child, index, calculatedProps) {
     const { style } = calculatedProps;
     const role = child.type && child.type.role;
@@ -245,7 +256,10 @@ export default {
     const defaultColor = role === "line" ?
       { fill: "none", stroke: defaultFill } : { fill: defaultFill };
     const childStyle = child.props.style || {};
-    const dataStyle = defaults({}, childStyle.data, assign({}, style.data, defaultColor));
+    const dataWidth = this.getWidth(childStyle, calculatedProps);
+    const dataStyle = defaults(
+      {}, childStyle.data, assign({}, dataWidth, style.data, defaultColor)
+    );
     const labelsStyle = defaults({}, childStyle.labels, style.labels);
     return {
       parent: style.parent,

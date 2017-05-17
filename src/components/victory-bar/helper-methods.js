@@ -13,13 +13,14 @@ export default {
   },
 
   getBarPosition(props, datum, scale) {
-    const getDefaultMin = () => {
-      const defaultMin = Scale.getType(scale.y) === "log" ? 1 / Number.MAX_SAFE_INTEGER : 0;
-      return datum._y instanceof Date ? new Date(defaultMin) : defaultMin;
+    const getDefaultMin = (axis) => {
+      const defaultMin = Scale.getType(scale[axis]) === "log" ? 1 / Number.MAX_SAFE_INTEGER : 0;
+      return datum[`_${axis}`] instanceof Date ? new Date(defaultMin) : defaultMin;
     };
     const { x, y } = Helpers.getPoint(datum);
-    const y0 = datum._y0 !== undefined ? datum._y0 : getDefaultMin();
-    return Helpers.scalePoint({ x, y, y0 }, scale, props.polar);
+    const y0 = datum._y0 !== undefined ? datum._y0 : getDefaultMin("y");
+    const x0 = datum._x0 !== undefined ? datum._x0 : getDefaultMin("x");
+    return Helpers.scalePoint({ x, y, y0, x0 }, scale, props.polar);
   },
 
   getBarStyle(datum, baseStyle) {
@@ -98,10 +99,10 @@ export default {
 
     return data.reduce((childProps, datum, index) => {
       const eventKey = datum.eventKey || index;
-      const { x, y, y0 } = this.getBarPosition(props, datum, scale);
+      const { x, y, y0, x0 } = this.getBarPosition(props, datum, scale);
       const barStyle = this.getBarStyle(datum, style.data);
       const dataProps = {
-        data, datum, horizontal, index, padding, polar, scale, style: barStyle, width, x, y, y0
+        data, datum, horizontal, index, padding, polar, scale, style: barStyle, width, height, x, y, y0, x0
       };
 
       childProps[eventKey] = {

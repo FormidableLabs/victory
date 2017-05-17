@@ -263,7 +263,7 @@ export default class App extends React.Component {
           theme={VictoryTheme.material}
         >
           <VictoryGroup
-            offset={15}
+            offset={12}
             animate={{ duration: 1000 }}
             colorScale={"warm"}
           >
@@ -283,7 +283,7 @@ export default class App extends React.Component {
           })}
         </VictoryGroup>
 
-        <VictoryGroup horizontal style={{ parent: parentStyle }} offset={10}
+        <VictoryGroup horizontal style={{ parent: parentStyle }} offset={15}
           colorScale={"cool"} animate={{ duration: 2000 }} labels={["a", "b", "c"]}
         >
           {this.getBarData().map((data, index) => {
@@ -291,7 +291,7 @@ export default class App extends React.Component {
           })}
         </VictoryGroup>
 
-        <VictoryGroup style={{ parent: parentStyle }} offset={15} animate={{ duration: 2000 }}>
+        <VictoryGroup style={{ parent: parentStyle }} offset={25} animate={{ duration: 2000 }}>
           <VictoryStack colorScale={"red"}>
             {this.getBarData().map((data, index) => {
               return <VictoryBar key={index} data={data}/>;

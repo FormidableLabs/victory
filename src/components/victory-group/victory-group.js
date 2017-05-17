@@ -79,6 +79,7 @@ export default class VictoryGroup extends React.Component {
     const { role } = this.constructor;
     const style = this.getStyle(props.theme, props.style, role);
     const modifiedProps = Helpers.modifyProps(props, fallbackProps);
+    const { offset, colorScale, color } = modifiedProps;
     const horizontal = modifiedProps.horizontal || childComponents.every(
       (component) => component.props && component.props.horizontal
     );
@@ -105,9 +106,9 @@ export default class VictoryGroup extends React.Component {
       x: Wrapper.getCategories(modifiedProps, "x"),
       y: Wrapper.getCategories(modifiedProps, "y")
     };
-    const colorScale = modifiedProps.colorScale;
-    const color = modifiedProps.color;
-    return { datasets, categories, range, domain, horizontal, scale, style, colorScale, color };
+    return {
+      datasets, categories, range, domain, horizontal, scale, style, colorScale, color, offset
+    };
   }
 
   pixelsToValue(props, axis, calculatedProps) {
