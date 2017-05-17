@@ -13,6 +13,10 @@ export default {
     return Array.isArray(collection) && collection.some((value) => value instanceof Date);
   },
 
+  containsNumbers(collection) {
+    return Array.isArray(collection) && collection.some((value) => typeof value === "number");
+  },
+
   containsOnlyStrings(collection) {
     return this.isNonEmptyArray(collection) &&
       collection.every((value) => typeof value === "string");
