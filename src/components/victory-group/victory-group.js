@@ -182,7 +182,7 @@ export default class VictoryGroup extends React.Component {
     return childComponents.map((child, index) => {
       const role = child.type && child.type.role;
       const xOffset = this.getXO(props, calculatedProps, index);
-      const style = role === "voronoi" || role === "tooltip" ?
+      const style = role === "voronoi" || role === "tooltip" || role === "label" ?
         child.props.style : Wrapper.getChildStyle(child, index, calculatedProps);
       const labels = props.labels ? this.getLabels(props, datasets, index) : child.props.labels;
       return React.cloneElement(child, assign({
