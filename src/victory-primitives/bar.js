@@ -1,4 +1,4 @@
-/*eslint no-magic-numbers: ["error", { "ignore": [0, 1, 2] }]*/
+/*eslint no-magic-numbers: ["error", { "ignore": [-1, 0, 1, 2] }]*/
 import React from "react";
 import PropTypes from "prop-types";
 import Helpers from "../victory-util/helpers";
@@ -50,46 +50,13 @@ export default class Bar extends React.Component {
 
   getPosition(props, width) {
     const size = width / 2;
-    const { x, x0, y, y0, polar } = props;
+    const { x, y, y0 } = props;
     return {
       y0: Math.round(y0),
       y1: Math.round(y),
-      x0: polar ? Math.round(x0) : Math.round(x - size),
-      x1: polar ? Math.round(x) : Math.round(x + size)
+      x0: Math.round(x - size),
+      x1: Math.round(x + size)
     };
-  }
-
-  getPolarPosition(props) {
-    const { datum } = props;
-    const widthFunction = this.getPolarWidth(props);
-    const width = widthFunction(datum);
-    const size = 8;
-    const { x, x0, y, y0, polar } = props;
-    return {
-      y0: Math.round(y0),
-      y1: Math.round(y),
-      x0: polar ? Math.round(x0) : Math.round(x - size),
-      x1: polar ? Math.round(x) : Math.round(x + size)
-    };
-  }
-
-  getDefaultAngularWidth(data, index) {
-    const previous = index === 0 ? data[data.length - 1] : data[index - 1];
-    const next = index === data.length - 1 ? data[0] : data[index + 1];
-    const startAngle = (previous._x + 360) % 360;
-    const endAngle = (next._x + 360) % 360;
-    console.log(startAngle, endAngle)
-    return () => {
-      return endAngle - startAngle / 2;
-    };
-  }
-
-  getPolarWidth(props) {
-    const { data, index, style } = props;
-    if (style.width) {
-      return this.getAngularWidth(style.width);
-    }
-    return this.getDefaultAngularWidth(data, index);
   }
 
   getVerticalBarPath(props, width) {
@@ -112,67 +79,73 @@ export default class Bar extends React.Component {
       z`;
   }
 
-  getAngle(datum, scale) {
-    const x = datum._x;
-    return -1 * scale.x(x) + Math.PI / 2;
+  transformAngle(angle) {
+    return -1 * angle + (Math.PI / 2);
   }
 
+  degreesToRadians(degrees) {
+    return degrees * (Math.PI / 180);
+  }
 
   getAngularWidth(datum, width) {
     const r = datum._y;
-    return (width / (2 * Math.PI * r)) * 360;
+    const angle = (width / (2 * Math.PI * r)) * 360;
+    return this.degreesToRadians(angle);
   }
 
-  getStartAngle(datum, props) {
-    const { style, data, index, scale } = props;
-    const currentAngle = this.getAngle(datum, scale);
-    if (style.width) {
-      const width = this.getAngularWidth(datum, style.width);
-      return currentAngle - (width / 2);
-    }
-    const previous = index === 0 ? data[data.length - 1] : data[index - 1];
-    const previousAngle = this.getAngle(previous, scale);
-    const width = (currentAngle - previousAngle);
-    return currentAngle - (width / 2);
+  getStartAngle(props, index) {
+    const { data, scale } = props;
+    const current = data[index];
+    const currentAngle = scale.x(current._x);
+    const minAngle = this.getMinimumAngle(props);
+    return currentAngle - (minAngle / 2);
   }
 
-  getEndAngle(datum, props) {
-    const { style, data, index, scale } = props;
-    const currentAngle = this.getAngle(datum, scale);
-    if (style.width) {
-      const width = this.getAngularWidth(datum, style.width);
-      return currentAngle + (width / 2);
-    }
+  getEndAngle(props, index) {
+    const { data, scale } = props;
     const next = index === data.length - 1 ? data[0] : data[index + 1];
-    const nextAngle = this.getAngle(next, scale);
-    const width = (nextAngle - currentAngle);
-    return currentAngle + (width / 2);
+    const nextAngle = scale.x(next._x);
+    const end = index === data.length - 1 ? nextAngle + (Math.PI * 2) : nextAngle;
+    const minAngle = this.getMinimumAngle(props);
+    return end - (minAngle / 2);
+  }
+
+  getMinimumAngle(props) {
+    const { data, scale } = props;
+    const lastAngle = scale.x(data[0]._x) + (Math.PI * 2);
+    const differences = data.map((d, i) => {
+      const nextAngle = i === data.length - 1 ? lastAngle : scale.x(data[i + 1]._x);
+      const currentAngle = scale.x(d._x);
+      return nextAngle - currentAngle;
+    });
+    return Math.min(...differences);
   }
 
   getVerticalPolarBarPath(props) {
-    const { datum, scale } = props;
+    const { datum, scale, style, index } = props;
     const r1 = scale.y(datum._y0 || 0);
     const r2 = scale.y(datum._y1 !== undefined ? datum._y1 : datum._y);
     const currentAngle = scale.x(datum._x);
-    const startAngle = this.getStartAngle(datum, props);
-    const endAngle = this.getEndAngle(datum, props);
-    console.log(datum.fill, startAngle, currentAngle, endAngle)
+    let start;
+    let end;
+    if (style.width) {
+      const width = this.getAngularWidth(datum, style.width);
+      start = currentAngle - (width / 2);
+      end = currentAngle + (width / 2);
+    } else {
+      start = this.getStartAngle(props, index);
+      end = this.getEndAngle(props, index);
+    }
     const path = d3Shape.arc()
       .innerRadius(r1)
       .outerRadius(r2)
-      .startAngle(startAngle)
-      .endAngle(endAngle);
+      .startAngle(this.transformAngle(start))
+      .endAngle(this.transformAngle(end));
     return path();
   }
 
-  getHorizontalPolarBarPath(props, width) {
-    // const { x0, x1, y0, y1 } = this.getPosition(props, width);
-    // return `M ${y0}, ${x0}
-    //   L ${y0}, ${x1}
-    //   L ${y1}, ${x1}
-    //   L ${y1}, ${x0}
-    //   L ${y0}, ${x0}
-    //   z`;
+  getHorizontalPolarBarPath(props) {
+    // TODO
   }
 
   getBarPath(props, width) {
@@ -180,9 +153,9 @@ export default class Bar extends React.Component {
       this.getHorizontalBarPath(props, width) : this.getVerticalBarPath(props, width);
   }
 
-  getPolarBarPath(props, width) {
+  getPolarBarPath(props) {
     return this.props.horizontal ?
-      this.getHorizontalPolarBarPath(props, width) : this.getVerticalPolarBarPath(props, width);
+      this.getHorizontalPolarBarPath(props) : this.getVerticalPolarBarPath(props);
   }
 
   getBarWidth(props, style) {
