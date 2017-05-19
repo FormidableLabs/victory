@@ -180,7 +180,8 @@ export default class VictoryStack extends React.Component {
         labelComponent: props.labelComponent || child.props.labelComponent,
         style,
         colorScale: this.getColorScale(props, child),
-        data
+        data,
+        polar: props.polar
       }, childProps));
     });
   }

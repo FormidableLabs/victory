@@ -9,8 +9,8 @@ export default {
     const defaultStyles = this.getStyleObject(props);
     const style = this.getStyles(props, defaultStyles);
     const padding = Helpers.getPadding(props);
-    const axisType = props.dependentAxis ? "radial" : "angular";
-    const axis = props.dependentAxis ? "y" : "x";
+    const axis = this.getAxis(props);
+    const axisType = this.getAxisType(props);
     const stringTicks = Helpers.stringTicks(props);
     const domain = this.getDomain(props, axis);
     const range = this.getRange(props, axis);
@@ -19,7 +19,7 @@ export default {
     const tickFormat = this.getTickFormat(props, scale, ticks);
     const radius = this.getRadius(props);
     return {
-      style, padding, stringTicks, axisType, scale, ticks, tickFormat, domain, range, radius
+      axis, style, padding, stringTicks, axisType, scale, ticks, tickFormat, domain, range, radius
     };
   },
 
@@ -69,8 +69,8 @@ export default {
     } else if (props.range && Array.isArray(props.range)) {
       return props.range;
     }
-
-    if (axis === "x") {
+    const axisType = this.getAxisType(props);
+    if (axisType === "angular") {
       const startAngle = this.degreesToRadians(props.startAngle);
       const endAngle = this.degreesToRadians(props.endAngle);
       return [startAngle, endAngle];
@@ -80,8 +80,16 @@ export default {
   },
 
   // exposed for use by VictoryChart
-  getAxis(props) {
-    return props.dependentAxis ? "y" : "x";
+  getAxis(props, flipped) {
+    const typicalAxis = props.dependentAxis ? "y" : "x";
+    const invertedAxis = typicalAxis === "x" ? "y" : "x";
+    return flipped ? invertedAxis : typicalAxis;
+  },
+
+  getAxisType(props) {
+    const typicalType = props.dependentAxis ? "radial" : "angular";
+    const invertedType = typicalType === "angular" ? "radial" : "angular";
+    return props.horizontal ? invertedType : typicalType;
   },
 
   // exposed for use by VictoryChart (necessary?)
@@ -200,7 +208,7 @@ export default {
   },
 
   getGridProps(props, calculatedValues, tick, index) { //eslint-disable-line max-params
-    const { axisType, radius, style, scale } = calculatedValues;
+    const { axisType, radius, style, scale, axis } = calculatedValues;
     const { startAngle, endAngle } = props;
     const { gridStyle } = this.getEvaluatedStyles(style, tick, index);
     return axisType === "angular" ?

@@ -27,6 +27,7 @@ export default class VictoryChart extends React.Component {
       independent: PropTypes.element,
       dependent: PropTypes.element
     }),
+    horizontal: PropTypes.bool,
     polar: PropTypes.bool
   };
 
@@ -84,8 +85,8 @@ export default class VictoryChart extends React.Component {
   }
 
   getAxisProps(child, props, calculatedProps) {
-    const { domain, scale, originSign } = calculatedProps;
-    const axis = child.type.getAxis(child.props);
+    const { domain, scale, originSign, horizontal } = calculatedProps;
+    const axis = child.type.getAxis(child.props, horizontal);
     const axisOffset = ChartHelpers.getAxisOffset(props, calculatedProps);
     const tickValues = ChartHelpers.getTicks(calculatedProps, axis, child);
     const tickFormat =
@@ -102,9 +103,9 @@ export default class VictoryChart extends React.Component {
       offsetY: child.props.offsetY !== undefined ? child.props.offsetY : offsetY,
       offsetX: child.props.offsetX !== undefined ? child.props.offsetX : offsetX,
       crossAxis,
-      orientation
+      orientation,
+      horizontal
     };
-
   }
 
   getChildProps(child, props, calculatedProps) {
@@ -183,6 +184,12 @@ export default class VictoryChart extends React.Component {
     const { left, right, top, bottom } = Helpers.getPadding(props);
     const { width, height } = props;
     return Math.min(width - left - right, height - top - bottom) / 2;
+  }
+
+  getAxisType(props, axis) {
+    const typicalType = axis === "y" ? "radial" : "angular";
+    const invertedType = typicalType === "angular" ? "radial" : "angular";
+    return props.horizontal ? invertedType : typicalType;
   }
 
   getRange(props, axis) {

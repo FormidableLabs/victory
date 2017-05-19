@@ -3,10 +3,9 @@ import PropTypes from "prop-types";
 import { assign, partialRight } from "lodash";
 import {
   PropTypes as CustomPropTypes, Helpers, VictoryLabel,
-  VictoryContainer, VictoryTheme, Line, addEvents, Circle, Arc
+  VictoryContainer, VictoryTheme, Line, addEvents, Arc
 } from "victory-core";
 import AxisHelpers from "./helper-methods";
-import Axis from "../../helpers/axis";
 import { BaseProps } from "../../helpers/common-props";
 
 const fallbackProps = {
@@ -79,7 +78,7 @@ class VictoryPolarAxis extends React.Component {
   };
 
   static getDomain = AxisHelpers.getDomain.bind(AxisHelpers);
-  static getAxis = Axis.getAxis.bind(Axis);
+  static getAxis = AxisHelpers.getAxis.bind(AxisHelpers);
   static getScale = AxisHelpers.getScale.bind(AxisHelpers);
   static getStyles = partialRight(AxisHelpers.getStyles.bind(AxisHelpers), fallbackProps.style);
   static getBaseProps = partialRight(AxisHelpers.getBaseProps.bind(AxisHelpers), fallbackProps);
