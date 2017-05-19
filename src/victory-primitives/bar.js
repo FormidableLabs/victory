@@ -93,32 +93,28 @@ export default class Bar extends React.Component {
     return this.degreesToRadians(angle);
   }
 
-  getStartAngle(props, index) {
+  getAngle(props, index) {
     const { data, scale } = props;
-    const current = data[index];
-    const currentAngle = scale.x(current._x);
-    const minAngle = this.getMinimumAngle(props);
-    return currentAngle - (minAngle / 2);
+    const x = data[index]._x1 === undefined ? "_x" : "_x1";
+    return scale.x(data[index][x]);
+  }
+
+  getStartAngle(props, index) {
+    const { data } = props;
+    const currentAngle = this.getAngle(props, index);
+    const previousAngle = index === 0 ?
+      this.getAngle(props, data.length - 1) - (Math.PI * 2) :
+      this.getAngle(props, index - 1);
+    return (currentAngle + previousAngle) / 2;
   }
 
   getEndAngle(props, index) {
-    const { data, scale } = props;
-    const next = index === data.length - 1 ? data[0] : data[index + 1];
-    const nextAngle = scale.x(next._x);
-    const end = index === data.length - 1 ? nextAngle + (Math.PI * 2) : nextAngle;
-    const minAngle = this.getMinimumAngle(props);
-    return end - (minAngle / 2);
-  }
-
-  getMinimumAngle(props) {
-    const { data, scale } = props;
-    const lastAngle = scale.x(data[0]._x) + (Math.PI * 2);
-    const differences = data.map((d, i) => {
-      const nextAngle = i === data.length - 1 ? lastAngle : scale.x(data[i + 1]._x);
-      const currentAngle = scale.x(d._x);
-      return nextAngle - currentAngle;
-    });
-    return Math.min(...differences);
+    const { data } = props;
+    const currentAngle = this.getAngle(props, index);
+    const nextAngle = index === data.length - 1 ?
+      this.getAngle(props, 0) + (Math.PI * 2) :
+      this.getAngle(props, index + 1);
+    return (currentAngle + nextAngle) / 2;
   }
 
   getVerticalPolarBarPath(props) {
@@ -145,7 +141,25 @@ export default class Bar extends React.Component {
   }
 
   getHorizontalPolarBarPath(props) {
-    // TODO
+    // const { datum, scale, style } = props;
+    // const radialDomain = scale.x.domain();
+    // const radialExtent = Math.abs(radialDomain[1] - radialDomain[0]);
+    // const x = datum._x1 !== undefined ? datum._x1 : datum._x;
+    // const baseR = (x / radialExtent) + radialDomain[0];
+    // const r = scale.y(baseR);
+    // const width = this.getBarWidth(props, style);
+    // const domain = scale.x.domain();
+    // const extent = Math.abs(domain[1] - domain[0]);
+    // const zeroAngle = scale.x.domain()[0];
+    // const start = (scale.y(datum._x0 || 0) / extent) * (2 * Math.PI);
+    // const end = (scale.x(datum._x1 !== undefined ? datum._x1 : datum._x) / extent) * (2 * Math.PI);
+    // console.log(r, start, end, zeroAngle)
+    // const path = d3Shape.arc()`
+    //   .innerRadius(r - width)
+    //   .outerRadius(r + width)
+    //   .startAngle(this.transformAngle(start + zeroAngle))
+    //   .endAngle(this.transformAngle(end + zeroAngle));
+    // return path();
   }
 
   getBarPath(props, width) {
@@ -162,15 +176,14 @@ export default class Bar extends React.Component {
     if (style.width) {
       return style.width;
     }
-
     const { scale, data, horizontal } = props;
-    const padding = style.padding || 0;
-    // eslint-disable-next-line no-magic-numbers
     const range = horizontal ? scale.y.range() : scale.x.range();
     const extent = Math.abs(range[1] - range[0]);
-    const totalPadding = padding * 2 * (data.length + 1);
-    const defaultWidth = data.length > 2 ? 8 : (extent - totalPadding) / (data.length + 2);
-    return defaultWidth;
+    const bars = data.length + 2;
+    const barRatio = 0.5;
+    // eslint-disable-next-line no-magic-numbers
+    const defaultWidth = data.length < 2 ? 8 : (barRatio * extent / bars);
+    return Math.round(defaultWidth);
   }
 
   // Overridden in victory-core-native
