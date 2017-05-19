@@ -10,7 +10,6 @@ class Wrapper extends React.Component {
   static propTypes = {
     children: PropTypes.oneOfType([
       PropTypes.arrayOf(PropTypes.node),
-      PropTypes.node
     ])
   };
 
@@ -291,7 +290,11 @@ export default class App extends React.Component {
           })}
         </VictoryGroup>
 
-        <VictoryGroup style={{ parent: parentStyle }} offset={25} animate={{ duration: 2000 }}>
+        <VictoryGroup
+          style={{ parent: parentStyle, data: { width: 20 } }}
+          offset={25}
+          animate={{ duration: 2000 }}
+        >
           <VictoryStack colorScale={"red"}>
             {this.getBarData().map((data, index) => {
               return <VictoryBar key={index} data={data}/>;

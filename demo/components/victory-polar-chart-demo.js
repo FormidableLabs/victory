@@ -54,6 +54,46 @@ class App extends React.Component {
 
           <VictoryPolarChart
             theme={VictoryTheme.material}
+            style={chartStyle}
+          >
+            <VictoryPolarAxis dependentAxis
+              labelPlacement="vertical"
+              style={{ axis: { stroke: "none" } }}
+              axisAngle={270}
+              tickValues={[25, 50, 75]}
+              tickFormat={() => ""}
+            />
+            <VictoryPolarAxis
+              labelPlacement="parallel"
+              tickValues={[0, 45, 90, 135, 180, 225, 270, 315]}
+            />
+            <VictoryBar
+              horizontal
+              style={{ data: { fill: "tomato", width: 15, opacity: 0.4 } }}
+              data={[
+                { x: 45, y: 20, label: 1, fill: "red" },
+                { x: 90, y: 30, label: 2, fill: "orange" },
+                { x: 135, y: 65, label: 3, fill: "gold" },
+                { x: 250, y: 50, label: 4, fill: "blue" },
+                { x: 270, y: 40, label: 5, fill: "cyan" },
+                { x: 295, y: 30, label: 6, fill: "green" }
+              ]}
+            />
+            <VictoryScatter
+              style={{ data: { fill: "black" } }}
+              data={[
+                { x: 45, y: 20 },
+                { x: 90, y: 30 },
+                { x: 135, y: 65 },
+                { x: 250, y: 50 },
+                { x: 270, y: 40 },
+                { x: 295, y: 30 }
+              ]}
+            />
+          </VictoryPolarChart>
+
+          <VictoryPolarChart
+            theme={VictoryTheme.material}
             domain={{ x: [0, 360] }}
             style={chartStyle}
           >
@@ -74,9 +114,9 @@ class App extends React.Component {
                 { x: 45, y: 20, label: 1, fill: "red" },
                 { x: 90, y: 30, label: 2, fill: "orange" },
                 { x: 135, y: 65, label: 3, fill: "gold" },
-                { x: 180, y: 50, label: 4, fill: "blue" },
+                { x: 250, y: 50, label: 4, fill: "blue" },
                 { x: 270, y: 40, label: 5, fill: "cyan" },
-                { x: 315, y: 30, label: 6, fill: "green" }
+                { x: 295, y: 30, label: 6, fill: "green" }
               ]}
             />
             <VictoryScatter
@@ -85,9 +125,9 @@ class App extends React.Component {
                 { x: 45, y: 20 },
                 { x: 90, y: 30 },
                 { x: 135, y: 65 },
-                { x: 180, y: 50 },
+                { x: 250, y: 50 },
                 { x: 270, y: 40 },
-                { x: 315, y: 30 }
+                { x: 295, y: 30 }
               ]}
             />
           </VictoryPolarChart>
@@ -114,9 +154,9 @@ class App extends React.Component {
                 { x: 45, y: 20, label: 1, fill: "red" },
                 { x: 90, y: 30, label: 2, fill: "orange" },
                 { x: 135, y: 65, label: 3, fill: "gold" },
-                { x: 180, y: 50, label: 4, fill: "blue" },
+                { x: 250, y: 50, label: 4, fill: "blue" },
                 { x: 270, y: 40, label: 5, fill: "cyan" },
-                { x: 315, y: 30, label: 6, fill: "green" }
+                { x: 295, y: 30, label: 6, fill: "green" }
               ]}
             />
             <VictoryScatter
@@ -125,9 +165,9 @@ class App extends React.Component {
                 { x: 45, y: 20 },
                 { x: 90, y: 30 },
                 { x: 135, y: 65 },
-                { x: 180, y: 50 },
+                { x: 250, y: 50 },
                 { x: 270, y: 40 },
-                { x: 315, y: 30 }
+                { x: 295, y: 30 }
               ]}
             />
           </VictoryPolarChart>

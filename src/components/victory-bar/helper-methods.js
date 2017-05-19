@@ -1,16 +1,8 @@
 /*eslint no-magic-numbers: ["error", { "ignore": [-1, 0, 1, 2] }]*/
-import { assign, defaults, omit } from "lodash";
+import { defaults, omit } from "lodash";
 import { Helpers, Data, Domain, Scale } from "victory-core";
 
 export default {
-
-  getBarWidth(props) {
-    const { style, width, data } = props;
-    const padding = props.padding.left || props.padding;
-    // eslint-disable-next-line no-magic-numbers
-    const defaultWidth = data.length === 0 ? 8 : (width - 2 * padding) / data.length;
-    return style && style.width ? style.width : defaultWidth;
-  },
 
   getBarPosition(props, datum, scale) {
     const getDefaultMin = (axis) => {

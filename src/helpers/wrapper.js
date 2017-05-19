@@ -237,26 +237,24 @@ export default {
     return color || colors[index % colors.length];
   },
 
-  getWidth(style, props) {
+  getWidth(props) {
     const { datasets, scale, horizontal } = props;
     const range = horizontal ? scale.y.range() : scale.x.range();
     const extent = Math.abs(range[1] - range[0]);
-    const bars = datasets.length * datasets[0].length;
-    const space = 0.5;
-    const unit = 1 / (bars);
-    const barFraction = 1 / (space + 1);
-    return { width: unit * barFraction * extent };
+    const bars = datasets.length * (datasets[0].length || 1) + 2;
+    const barRatio = 0.5;
+    return { width: Math.round(barRatio * extent / bars) };
   },
 
   getChildStyle(child, index, calculatedProps) {
-    const { style } = calculatedProps;
-    const role = child.type && child.type.role;
-    const defaultFill = role === "stack" ?
+    const { style, role } = calculatedProps;
+    const childRole = child.type && child.type.role;
+    const defaultFill = childRole === "stack" ?
       undefined : this.getColor(calculatedProps, child, index);
-    const defaultColor = role === "line" ?
+    const defaultColor = childRole === "line" ?
       { fill: "none", stroke: defaultFill } : { fill: defaultFill };
     const childStyle = child.props.style || {};
-    const dataWidth = this.getWidth(childStyle, calculatedProps);
+    const dataWidth = role === "stack" ? {} : this.getWidth(calculatedProps);
     const dataStyle = defaults(
       {}, childStyle.data, assign({}, dataWidth, style.data, defaultColor)
     );

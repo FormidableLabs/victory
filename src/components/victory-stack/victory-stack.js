@@ -112,7 +112,7 @@ export default class VictoryStack extends React.Component {
       y: Wrapper.getCategories(props, "y")
     };
     const colorScale = props.colorScale;
-    return { datasets, categories, range, domain, horizontal, scale, style, colorScale };
+    return { datasets, categories, range, domain, horizontal, scale, style, colorScale, role };
   }
 
   addLayoutData(props, calculatedProps, datasets, index) { // eslint-disable-line max-params
