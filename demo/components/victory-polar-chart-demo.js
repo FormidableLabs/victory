@@ -2,7 +2,8 @@
 /*eslint no-magic-numbers:0*/
 import React from "react";
 import {
-  VictoryPolarAxis, VictoryPolarChart, VictoryScatter, VictoryLine, VictoryArea, VictoryBar, VictoryStack
+  VictoryPolarAxis, VictoryPolarChart, VictoryScatter, VictoryLine, VictoryArea, VictoryBar,
+  VictoryStack
 } from "../../src/index";
 import { random, range } from "lodash";
 
