@@ -28,14 +28,14 @@
   },
   "dependencies": {
     "builder": "^3.2.1",
-    "builder-victory-component": "^4.0.0",
+    "builder-victory-component": "^4.0.2",
     "d3-shape": "^1.0.0",
     "lodash": "^4.17.4",
     "victory-core": "^15.1.0"
   },
   "devDependencies": {
     "@kadira/storybook": "^1.25.0",
-    "builder-victory-component-dev": "^4.0.0",
+    "builder-victory-component-dev": "^4.0.2",
     "chai": "^3.5.0",
     "chai-enzyme": "0.4.1",
     "enzyme": "^2.4.1",
@@ -53,6 +53,9 @@
     ],
     "files": {
       ".npmignore": ".npmignore.publishr"
+    },
+    "scripts": {
+      "postinstall": ""
     }
   }
 }
