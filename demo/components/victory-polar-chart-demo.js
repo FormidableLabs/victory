@@ -5,9 +5,9 @@ import {
   VictoryPolarAxis, VictoryPolarChart, VictoryScatter, VictoryLine, VictoryArea, VictoryBar,
   VictoryStack
 } from "../../src/index";
-import { random, range } from "lodash";
+import { random, range, merge } from "lodash";
 
-import { VictoryTheme } from "victory-core";
+import { VictoryTheme, Curve } from "victory-core";
 class App extends React.Component {
 
   constructor() {
@@ -57,11 +57,41 @@ class App extends React.Component {
             theme={VictoryTheme.material}
             domain={{ x: [0, 360] }}
             style={chartStyle}
+            events={[{
+              childName: "all",
+              target: "data",
+              eventHandlers: {
+                onMouseOver: (evt, props) => {
+                  return [
+                    {
+                      childName: "bar-2",
+                      mutation: () => {
+                        return { style: merge({}, props.style, { fill: "cyan" }) };
+                      }
+                    }, {
+                      childName: "bar-3",
+                      mutation: () => {
+                        return { style: merge({}, props.style, { fill: "blue" }) };
+                      }
+                    }
+                  ];
+                },
+                onMouseOut: () => {
+                  return [
+                    {
+                      childName: "all",
+                      mutation: () => {
+                        return { style: undefined };
+                      }
+                    }
+                  ];
+                }
+              }
+            }]}
           >
             <VictoryPolarAxis dependentAxis
               labelPlacement="vertical"
               style={{ axis: { stroke: "none" } }}
-              axisAngle={270}
               tickFormat={() => ""}
             />
             <VictoryPolarAxis
@@ -69,7 +99,7 @@ class App extends React.Component {
               tickValues={[0, 45, 90, 135, 180, 225, 270, 315]}
             />
             <VictoryStack>
-              <VictoryBar
+              <VictoryBar name="bar-1"
                 style={{ data: { fill: "tomato", width: 15 } }}
                 data={[
                   { x: 45, y: 20 },
@@ -80,7 +110,7 @@ class App extends React.Component {
                   { x: 315, y: 30 }
                 ]}
               />
-              <VictoryBar
+              <VictoryBar name="bar-2"
                 style={{ data: { fill: "orange", width: 15 } }}
                 data={[
                   { x: 45, y: 20 },
@@ -91,8 +121,95 @@ class App extends React.Component {
                   { x: 315, y: 30 }
                 ]}
               />
-              <VictoryBar
+              <VictoryBar name="bar-3"
                 style={{ data: { fill: "gold", width: 15 } }}
+                data={[
+                  { x: 45, y: 20 },
+                  { x: 90, y: 30 },
+                  { x: 135, y: 65 },
+                  { x: 180, y: 50 },
+                  { x: 270, y: 40 },
+                  { x: 315, y: 30 }
+                ]}
+              />
+            </VictoryStack>
+          </VictoryPolarChart>
+
+          <VictoryPolarChart
+            theme={VictoryTheme.material}
+            domain={{ x: [0, 360] }}
+            style={chartStyle}
+            events={[{
+              childName: "all",
+              target: "data",
+              eventHandlers: {
+                onMouseOver: (evt, props) => {
+                  return [
+                    {
+                      mutation: () => {
+                        return { style: merge({}, props.style, { fill: "cyan", stroke: "cyan" }) };
+                      }
+                    }
+                  ];
+                },
+                onMouseOut: () => {
+                  return [
+                    {
+                      mutation: () => {
+                        return { style: undefined };
+                      }
+                    }
+                  ];
+                }
+              }
+            }]}
+          >
+            <VictoryPolarAxis dependentAxis
+              labelPlacement="vertical"
+              style={{ axis: { stroke: "none" } }}
+              tickFormat={() => ""}
+            />
+            <VictoryPolarAxis
+              labelPlacement="parallel"
+              tickValues={[0, 45, 90, 135, 180, 225, 270, 315]}
+            />
+            <VictoryStack>
+              <VictoryArea name="area-1"
+                interpolation="cardinal"
+                groupComponent={<g/>}
+                style={{
+                  data: { fill: "tomato", stroke: "tomato", fillOpacity: 0.5, strokeWidth: 2 }
+                }}
+                data={[
+                  { x: 45, y: 20 },
+                  { x: 90, y: 30 },
+                  { x: 135, y: 65 },
+                  { x: 180, y: 50 },
+                  { x: 270, y: 40 },
+                  { x: 315, y: 30 }
+                ]}
+              />
+              <VictoryArea name="area-2"
+                interpolation="cardinal"
+                groupComponent={<g/>}
+                style={{
+                  data: { fill: "orange", stroke: "orange", fillOpacity: 0.5, strokeWidth: 2 }
+                }}
+                data={[
+                  { x: 45, y: 20 },
+                  { x: 90, y: 30 },
+                  { x: 135, y: 65 },
+                  { x: 180, y: 50 },
+                  { x: 270, y: 40 },
+                  { x: 315, y: 30 }
+                ]}
+              />
+              <VictoryArea name="area-3"
+                interpolation="cardinal"
+                groupComponent={<g/>}
+                style={{
+                  data: { fill: "gold", stroke: "gold", fillOpacity: 0.5, strokeWidth: 2 }
+                }}
                 data={[
                   { x: 45, y: 20 },
                   { x: 90, y: 30 },
@@ -113,51 +230,28 @@ class App extends React.Component {
             <VictoryPolarAxis dependentAxis
               labelPlacement="vertical"
               style={{ axis: { stroke: "none" } }}
-              axisAngle={270}
               tickFormat={() => ""}
             />
             <VictoryPolarAxis
               labelPlacement="parallel"
               tickValues={[0, 45, 90, 135, 180, 225, 270, 315]}
             />
-            <VictoryStack>
-              <VictoryArea
-                groupComponent={<g/>}
-                style={{ data: { fill: "tomato" } }}
-                data={[
-                  { x: 45, y: 20 },
-                  { x: 90, y: 30 },
-                  { x: 135, y: 65 },
-                  { x: 180, y: 50 },
-                  { x: 270, y: 40 },
-                  { x: 315, y: 30 }
-                ]}
-              />
-              <VictoryArea
-                groupComponent={<g/>}
-                style={{ data: { fill: "orange" } }}
-                data={[
-                  { x: 45, y: 20 },
-                  { x: 90, y: 30 },
-                  { x: 135, y: 65 },
-                  { x: 180, y: 50 },
-                  { x: 270, y: 40 },
-                  { x: 315, y: 30 }
-                ]}
-              />
-              <VictoryArea
-                groupComponent={<g/>}
-                style={{ data: { fill: "gold" } }}
-                data={[
-                  { x: 45, y: 20 },
-                  { x: 90, y: 30 },
-                  { x: 135, y: 65 },
-                  { x: 180, y: 50 },
-                  { x: 270, y: 40 },
-                  { x: 315, y: 30 }
-                ]}
-              />
-            </VictoryStack>
+            <VictoryLine
+              interpolation="cardinal"
+              dataComponent={<Curve closed/>}
+              groupComponent={<g/>}
+              style={{
+                data: { stroke: "tomato", strokeWidth: 2 }
+              }}
+              data={[
+                { x: 45, y: 20 },
+                { x: 90, y: 30 },
+                { x: 135, y: 65 },
+                { x: 180, y: 50 },
+                { x: 270, y: 40 },
+                { x: 315, y: 30 }
+              ]}
+            />
           </VictoryPolarChart>
 
           <VictoryPolarChart
