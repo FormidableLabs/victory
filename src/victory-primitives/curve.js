@@ -10,6 +10,7 @@ import CommonProps from "./common-props";
 export default class Curve extends React.Component {
   static propTypes = {
     ...CommonProps,
+    closed: PropTypes.bool,
     groupComponent: PropTypes.element,
     interpolation: PropTypes.string,
     polar: PropTypes.bool
@@ -36,16 +37,18 @@ export default class Curve extends React.Component {
   }
 
   getLineFunction(props) {
-    const { polar, scale, interpolation } = props;
+    const { polar, scale, closed } = props;
     const getX = (d) => scale.x(d._x1 !== undefined ? d._x1 : d._x);
     const getY = (d) => scale.y(d._y1 !== undefined ? d._y1 : d._y);
+    const interpolation = polar && closed ?
+      `${this.toNewName(props.interpolation)}Closed` : this.toNewName(props.interpolation);
     return polar ?
       d3Shape.radialLine()
-        .curve(d3Shape[this.toNewName(interpolation)])
+        .curve(d3Shape[interpolation])
         .angle((d) => -1 * getX(d) + Math.PI / 2)
         .radius((d) => getY(d)) :
       d3Shape.line()
-        .curve(d3Shape[this.toNewName(interpolation)])
+        .curve(d3Shape[interpolation])
         .x((d) => getX(d))
         .y((d) => getY(d));
   }
