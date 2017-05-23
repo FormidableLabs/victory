@@ -1,6 +1,6 @@
 /*eslint no-magic-numbers: ["error", { "ignore": [-1, 0, 1, 2] }]*/
 import { defaults } from "lodash";
-import { Helpers, Log, Data, Domain, Scale } from "victory-core";
+import { Helpers, Data, Domain, Scale } from "victory-core";
 
 export default {
   getBaseProps(props, fallbackProps) {
@@ -28,7 +28,6 @@ export default {
     let data = Data.getData(props);
 
     if (data.length < 2) {
-      Log.warn("VictoryLine needs at least two data points to render properly.");
       data = [];
     }
 

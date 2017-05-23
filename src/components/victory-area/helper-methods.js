@@ -1,6 +1,6 @@
 /*eslint no-magic-numbers: ["error", { "ignore": [-1, 0, 1, 2] }]*/
 import { assign, defaults } from "lodash";
-import { Helpers, Log, Data, Domain, Scale } from "victory-core";
+import { Helpers, Data, Domain, Scale } from "victory-core";
 
 export default {
 
@@ -99,7 +99,6 @@ export default {
     let data = Data.getData(props);
 
     if (data.length < 2) {
-      Log.warn("Area requires at least two data points.");
       data = [];
     }
     const defaultMin = Scale.getType(scale.y) === "log" ? 1 / Number.MAX_SAFE_INTEGER : 0;
