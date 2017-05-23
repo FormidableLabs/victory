@@ -3,7 +3,7 @@
 import React from "react";
 import PropTypes from "prop-types";
 import { merge, random, range } from "lodash";
-import { VictoryScatter, VictoryChart } from "../../src/index";
+import { VictoryScatter } from "../../src/index";
 import { VictoryLabel, VictoryContainer, VictoryTheme } from "victory-core";
 import bubbleData from "./bubble-data.js";
 import symbolData from "./symbol-data.js";
@@ -99,7 +99,6 @@ export default class App extends React.Component {
   render() {
     return (
       <div className="demo">
-      <VictoryContainer />
         <h1>VictoryScatter</h1>
         <VictoryScatter
           style={style}
@@ -161,7 +160,7 @@ export default class App extends React.Component {
           data={bubbleData}
         />
 
-      <svg style={style} width={500} height={300}>
+        <svg style={style} width={500} height={300}>
           <VictoryScatter
             style={style}
             standalone={false}
@@ -209,26 +208,6 @@ export default class App extends React.Component {
 
         <VictoryScatter
           style={style}
-          data={range(0, 50)}
-          x={null}
-          y={(d) => d * d * Math.random()}
-          domainPadding={200}
-        />
-
-        <VictoryChart
-          style={style}
-          theme={VictoryTheme.material}
-        >
-          <VictoryScatter
-            style={style}
-            data={range(0, 100).map((i) => [i, i * 3287 % 100])}
-            x={0}
-            y={1}
-          />
-        </VictoryChart>
-
-        <VictoryScatter
-          style={style}
           theme={VictoryTheme.material}
           data={range(0, 200).map((i) => {
             return { a: { b: [{ y: i * Math.sin(i * 0.3) }], x: Math.cos(i * 0.3) } };
@@ -236,14 +215,6 @@ export default class App extends React.Component {
           x="a.x"
           y="a.b[0]y"
         />
-
-        <VictoryChart>
-          <VictoryScatter
-            style={style}
-            theme={VictoryTheme.material}
-            data={[]}
-          />
-        </VictoryChart>
 
       </div>
     );

@@ -1,7 +1,8 @@
 /*global window:false */
 /*eslint-disable no-magic-numbers */
 import React from "react";
-import { VictoryVoronoi, VictoryVoronoiTooltip } from "../../src/index";
+import { VictoryVoronoi } from "../../src/index";
+import { VictoryTooltip } from "victory-core";
 import { range, random } from "lodash";
 
 const getData = () => {
@@ -95,27 +96,16 @@ class App extends React.Component {
             ]}
           />
 
-          <VictoryVoronoiTooltip
-            style={{ parent: parentStyle, data: visible }}
-            size={40}
-            labels={(d) => d.y}
-            data={[
-              { x: 1, y: 1 },
-              { x: 2, y: 2 },
-              { x: 3, y: 3 },
-              { x: 4, y: 2 },
-              { x: 5, y: 1 }
-            ]}
-          />
-
-          <VictoryVoronoiTooltip
+          <VictoryVoronoi
+            labelComponent={<VictoryTooltip/>}
             animate={{ duration: 2000 }}
             style={{ parent: parentStyle, data: visible }}
             size={20}
             data={this.state.data}
           />
 
-          <VictoryVoronoiTooltip
+          <VictoryVoronoi
+            labelComponent={<VictoryTooltip/>}
             animate={{ duration: 2000 }}
             style={{ parent: parentStyle, data: visible }}
             data={this.state.data}
