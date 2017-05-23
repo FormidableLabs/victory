@@ -2,7 +2,7 @@ import React from "react";
 import PropTypes from "prop-types";
 import Collection from "../victory-util/collection";
 import Helpers from "../victory-util/helpers";
-import { assign, isEqual } from "lodash";
+import { assign } from "lodash";
 import * as d3Shape from "d3-shape";
 import CommonProps from "./common-props";
 
@@ -26,7 +26,14 @@ export default class Area extends React.Component {
 
   shouldComponentUpdate(nextProps) {
     const { style, areaPaths, linePaths } = this.calculateAttributes(nextProps);
-    if (!isEqual(linePaths, this.linePaths) || !isEqual(style, this.style)) {
+    const { className, interpolation } = this.props;
+    if (!Collection.allSetsEqual([
+      [className, nextProps.className],
+      [interpolation, nextProps.interpolation],
+      [linePaths, this.linePaths],
+      [areaPaths, this.areaPaths],
+      [style, this.style]
+    ])) {
       this.style = style;
       this.areaPaths = areaPaths;
       this.linePaths = linePaths;

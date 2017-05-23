@@ -29,8 +29,13 @@ export default class ClipPath extends React.Component {
 
   shouldComponentUpdate(nextProps) {
     const calculatedAttributes = this.calculateAttributes(nextProps);
+    const { className, clipId, clipWidth, translateX, translateY } = this.props;
     if (!Collection.allSetsEqual([
-      [this.props.clipId, nextProps.clipId],
+      [className, nextProps.className],
+      [clipId, nextProps.clipId],
+      [clipWidth, nextProps.clipWidth],
+      [translateX, nextProps.translateX],
+      [translateY, nextProps.translateY],
       [this.x, calculatedAttributes.x],
       [this.y, calculatedAttributes.y],
       [this.height, calculatedAttributes.height],

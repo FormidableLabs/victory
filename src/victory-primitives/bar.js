@@ -2,7 +2,8 @@
 import React from "react";
 import PropTypes from "prop-types";
 import Helpers from "../victory-util/helpers";
-import { assign, isEqual } from "lodash";
+import Collection from "../victory-util/collection";
+import { assign } from "lodash";
 import CommonProps from "./common-props";
 
 export default class Bar extends React.Component {
@@ -29,7 +30,17 @@ export default class Bar extends React.Component {
 
   shouldComponentUpdate(nextProps) {
     const { style, path } = this.calculateAttributes(nextProps);
-    if (path !== this.path || !isEqual(style, this.style)) {
+    const { className, datum, horizontal, x, y, y0 } = this.props;
+    if (!Collection.allSetsEqual([
+      [className, nextProps.className],
+      [x, nextProps.x],
+      [y, nextProps.y],
+      [y0, nextProps.y0],
+      [horizontal, nextProps.horizontal],
+      [path, this.path],
+      [style, this.style],
+      [datum, nextProps.datum]
+    ])) {
       this.style = style;
       this.path = path;
       return true;
