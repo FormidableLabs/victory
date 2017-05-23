@@ -1,7 +1,6 @@
 import { assign, uniq, range, last, isFunction, property, sortBy } from "lodash";
 import Helpers from "./helpers";
 import Collection from "./collection";
-import Log from "./log";
 import Scale from "./scale";
 
 export default {
@@ -14,7 +13,6 @@ export default {
     let data;
     if (props.data) {
       if (props.data.length < 1) {
-        Log.warn("This is an empty dataset.");
         return [];
       } else {
         data = this.formatData(props.data, props);
