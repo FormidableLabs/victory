@@ -52,8 +52,10 @@ export default {
   },
 
   getLabelText(props, datum, index) {
-    return datum.label || (Array.isArray(props.labels) ?
-      props.labels[index] : props.labels);
+    if (datum.label !== undefined) {
+      return datum.label;
+    }
+    return Array.isArray(props.labels) ? props.labels[index] : props.labels;
   },
 
   getLabelProps(text, index, calculatedProps) {
