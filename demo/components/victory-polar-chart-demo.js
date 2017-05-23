@@ -236,6 +236,37 @@ class App extends React.Component {
               labelPlacement="parallel"
               tickValues={[0, 45, 90, 135, 180, 225, 270, 315]}
             />
+            <VictoryArea
+              interpolation="cardinal"
+              groupComponent={<g/>}
+              style={{
+                data: { fill: "tomato" }
+              }}
+              data={[
+                { x: 45, y: 20, _y0: 10 },
+                { x: 90, y: 30, _y0: 15 },
+                { x: 135, y: 65, _y0: 30 },
+                { x: 180, y: 50, _y0: 25 },
+                { x: 270, y: 40, _y0: 20 },
+                { x: 315, y: 30, _y0: 15 }
+              ]}
+            />
+          </VictoryPolarChart>
+
+          <VictoryPolarChart
+            theme={VictoryTheme.material}
+            domain={{ x: [0, 360] }}
+            style={chartStyle}
+          >
+            <VictoryPolarAxis dependentAxis
+              labelPlacement="vertical"
+              style={{ axis: { stroke: "none" } }}
+              tickFormat={() => ""}
+            />
+            <VictoryPolarAxis
+              labelPlacement="parallel"
+              tickValues={[0, 45, 90, 135, 180, 225, 270, 315]}
+            />
             <VictoryLine
               interpolation="cardinal"
               dataComponent={<Curve closed/>}
