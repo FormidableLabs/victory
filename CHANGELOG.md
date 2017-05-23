@@ -1,6 +1,14 @@
 VictoryCore Changelog
 =====================
 
+## 15.2.0 (2017-05-22)
+
+-[244](https://github.com/FormidableLabs/victory-core/pull/244) Passes missing `datum` and `index` props to `Flyout`
+-[246](https://github.com/FormidableLabs/victory-core/pull/246) Adds an `itemsPerRow` prop to `VictoryLegend` to support automatic legend wrapping
+-[249](https://github.com/FormidableLabs/victory-core/pull/249) Adds support for a y0 accessor so that users can have granular control over the baseline of components like `VictoryArea`
+-[250](https://github.com/FormidableLabs/victory-core/pull/250) Audits `shouldComponentUpdate` logic for all primitive components so that changes to optional props like `className` will cause components to re-render.
+
+
 ## 15.1.0 (2017-05-12)
 
 - [241](https://github.com/FormidableLabs/victory-core/pull/241) Adds optional `title` an `desc` props to `VictoryLabel`
