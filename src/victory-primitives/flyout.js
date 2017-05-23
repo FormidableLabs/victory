@@ -1,8 +1,8 @@
 /*eslint no-magic-numbers: ["error", { "ignore": [-1, 0, 1, 2] }]*/
 import React from "react";
 import PropTypes from "prop-types";
-import { isEqual } from "lodash";
 import Helpers from "../victory-util/helpers";
+import Collection from "../victory-util/collection";
 import CommonProps from "./common-props";
 
 export default class Flyout extends React.Component {
@@ -30,7 +30,26 @@ export default class Flyout extends React.Component {
 
   shouldComponentUpdate(nextProps) {
     const { style, path } = this.calculateAttributes(nextProps);
-    if (path !== this.path || !isEqual(style, this.style)) {
+    const {
+      className, cornerRadius, datum, dx, dy, height, width,
+      orientation, pointerLength, pointerWidth, x, y
+    } = this.props;
+    if (!Collection.allSetsEqual([
+      [className, nextProps.className],
+      [cornerRadius, nextProps.cornerRadius],
+      [dx, nextProps.dx],
+      [dy, nextProps.dy],
+      [x, nextProps.x],
+      [y, nextProps.y],
+      [height, nextProps.height],
+      [width, nextProps.width],
+      [orientation, nextProps.orientation],
+      [pointerLength, nextProps.pointerLength],
+      [pointerWidth, nextProps.pointerWidth],
+      [path, this.path],
+      [style, this.style],
+      [datum, nextProps.datum]
+    ])) {
       this.style = style;
       this.path = path;
       return true;

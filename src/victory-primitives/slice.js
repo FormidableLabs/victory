@@ -1,7 +1,7 @@
 import React from "react";
 import PropTypes from "prop-types";
 import Helpers from "../victory-util/helpers";
-import { isEqual } from "lodash";
+import Collection from "../victory-util/collection";
 import CommonProps from "./common-props";
 
 export default class Slice extends React.Component {
@@ -20,7 +20,14 @@ export default class Slice extends React.Component {
 
   shouldComponentUpdate(nextProps) {
     const { style, path } = this.calculateAttributes(nextProps);
-    if (path !== this.path || !isEqual(style, this.style)) {
+    const { className, datum, slice } = this.props;
+    if (!Collection.allSetsEqual([
+      [className, nextProps.className],
+      [path, this.path],
+      [style, this.style],
+      [datum, nextProps.datum],
+      [slice, nextProps.slice]
+    ])) {
       this.style = style;
       this.path = path;
       return true;

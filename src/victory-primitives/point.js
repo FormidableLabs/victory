@@ -1,8 +1,8 @@
 import React from "react";
 import PropTypes from "prop-types";
 import Helpers from "../victory-util/helpers";
+import Collection from "../victory-util/collection";
 import pathHelpers from "./path-helpers";
-import { isEqual } from "lodash";
 import CommonProps from "./common-props";
 
 export default class Point extends React.Component {
@@ -31,7 +31,17 @@ export default class Point extends React.Component {
 
   shouldComponentUpdate(nextProps) {
     const { style, path } = this.calculateAttributes(nextProps);
-    if (path !== this.path || !isEqual(style, this.style)) {
+    const { className, datum, x, y, size, symbol } = this.props;
+    if (!Collection.allSetsEqual([
+      [className, nextProps.className],
+      [x, nextProps.x],
+      [y, nextProps.y],
+      [size, nextProps.size],
+      [symbol, nextProps.symbol],
+      [path, this.path],
+      [style, this.style],
+      [datum, nextProps.datum]
+    ])) {
       this.style = style;
       this.path = path;
       return true;

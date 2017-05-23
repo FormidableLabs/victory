@@ -2,7 +2,7 @@ import React from "react";
 import PropTypes from "prop-types";
 import Helpers from "../victory-util/helpers";
 import Collection from "../victory-util/collection";
-import { assign, isEqual } from "lodash";
+import { assign } from "lodash";
 import * as d3Shape from "d3-shape";
 import CommonProps from "./common-props";
 
@@ -25,7 +25,13 @@ export default class Curve extends React.Component {
 
   shouldComponentUpdate(nextProps) {
     const { style, paths } = this.calculateAttributes(nextProps);
-    if (!isEqual(paths, this.paths) || !isEqual(style, this.style)) {
+    const { className, interpolation } = this.props;
+    if (!Collection.allSetsEqual([
+      [className, nextProps.className],
+      [interpolation, nextProps.interpolation],
+      [paths, this.paths],
+      [style, this.style]
+    ])) {
       this.style = style;
       this.paths = paths;
       return true;
