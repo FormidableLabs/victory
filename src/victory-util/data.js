@@ -81,10 +81,10 @@ export default {
       const y0 = datum._y0 !== undefined ? datum._y0 : accessor.y0(datum);
       const x = evaluatedX !== undefined ? evaluatedX : index;
       const y = evaluatedY !== undefined ? evaluatedY : datum;
+      const originalValues = y0 === undefined ? { x, y } : { x, y, y0 };
+      const privateValues = y0 === undefined ? { _x: x, _y: y } : { _x: x, _y: y, _y0: y0 };
       return assign(
-          { x, y, y0 },
-          datum,
-          { _x: x, _y: y, _y0: y0 },
+          originalValues, datum, privateValues,
           // map string data to numeric values, and add names
           typeof x === "string" ? { _x: stringMap.x[x], xName: x } : {},
           typeof y === "string" ? { _y: stringMap.y[y], yName: y } : {},
