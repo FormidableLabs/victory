@@ -1,5 +1,15 @@
 # VictoryChart Changelog
 
+## 20.0.0 (2017-05-24)
+
+*Breaking Changes*
+-[471](https://github.com/FormidableLabs/victory-chart/pull/471) Passes the string value of ticks to the tickFormat function rather than the associated index. **This may be a breaking change for users who are using categorical data and formatting tick values by index**
+
+*Minor Changes*
+-[474](https://github.com/FormidableLabs/victory-chart/pull/474) Adds support for a y0 accessor so that users can have granular control over the baseline of components like `VictoryArea`
+-[472](https://github.com/FormidableLabs/victory-chart/pull/472) Fixes a bug that was cuasing VictoryGroup to override styles on any independent VictoryLabel children
+
+
 ## 19.1.1 (2017-05-12)
 
 - Export `CursorHelpers`
