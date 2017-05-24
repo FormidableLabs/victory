@@ -134,7 +134,6 @@ class App extends React.Component {
           <VictoryLine name="line"
             y={() => 0.5}
             style={{ data: { stroke: "blue", strokeWidth: 5 } }}
-            label="LINE"
           />
         </VictoryChart>
 
