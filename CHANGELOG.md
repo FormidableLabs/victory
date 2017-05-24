@@ -1,5 +1,21 @@
 # Victory Changelog
 
+## 0.2.0 (2017-05-24)
+
+*Breaking Changes*
+-[victory-chart/471](https://github.com/FormidableLabs/victory-chart/pull/471) Passes the string value of ticks to the `tickFormat` function rather than the associated index. **This may be a breaking change for users who are using categorical data and formatting tick values by index**
+
+*New Features*
+-[victory-chart/474](https://github.com/FormidableLabs/victory-chart/pull/474) Adds support for a y0 accessor so that users can have granular control over the baseline of components like `VictoryArea`
+-[victory-core/246](https://github.com/FormidableLabs/victory-core/pull/246) Adds an `itemsPerRow` prop to `VictoryLegend` to support automatic legend wrapping
+
+*Minor Changes*
+-[victory-chart/472](https://github.com/FormidableLabs/victory-chart/pull/472) Fixes a bug that was causing `VictoryGroup` to override styles on any independent `VictoryLabel` children
+-[victory-core/244](https://github.com/FormidableLabs/victory-core/pull/244) Passes missing `datum` and `index` props to `Flyout`
+-[victory-chart/250](https://github.com/FormidableLabs/victory-core/pull/250) Audits `shouldComponentUpdate` logic for all primitive components so that changes to optional props like `className` will cause components to re-render.
+-[victory-pie/146](https://github.com/FormidableLabs/victory-pie/pull/146) Rounds label positions for `VictoryPie`
+
+
 ## 0.19.1 (2017-05-12)
 
 - [victory-chart/469](https://github.com/FormidableLabs/victory-chart/pull/469) Adds `VictoryCursorContainer`
