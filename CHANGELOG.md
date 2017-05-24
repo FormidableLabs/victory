@@ -1,5 +1,9 @@
 # VictoryPie Changelog
 
+## 11.1.1 (2017-05-24)
+
+-[146](https://github.com/FormidableLabs/victory-pie/pull/146) Rounds label positions
+
 ## 11.1.0 (2017-05-12)
 
 - [victory-core/243](https://github.com/FormidableLabs/victory-core/pull/243) Impovements to `VictoryContainer`
