@@ -63,8 +63,8 @@ export default {
     return {
       index, datum, data, slice, orientation,
       style: labelStyle,
-      x: position[0],
-      y: position[1],
+      x: Math.round(position[0]),
+      y: Math.round(position[1]),
       text: this.getLabelText(props, datum, index),
       textAnchor: labelStyle.textAnchor || this.getTextAnchor(orientation),
       verticalAnchor: labelStyle.verticalAnchor || this.getVerticalAnchor(orientation),
@@ -103,7 +103,6 @@ export default {
   },
 
   getLabelPosition(radius, labelRadius, style) {
-    // TODO: better label positioning
     const padding = style && style.padding || 0;
     const arcRadius = labelRadius || radius + padding;
     return d3Shape.arc()
