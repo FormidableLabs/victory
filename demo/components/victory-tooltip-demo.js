@@ -1,7 +1,7 @@
 /*eslint-disable no-magic-numbers */
 import React from "react";
 import {
-  VictoryChart, VictoryLine, VictoryBar, VictoryArea,
+  VictoryChart, VictoryBar,
   VictoryScatter, VictoryStack, VictoryGroup, VictoryAxis,
   VictoryCandlestick, VictoryErrorBar
 } from "../../src/index";
@@ -46,32 +46,6 @@ class App extends React.Component {
             labelComponent={<VictoryTooltip/>}
             labels={(d) => `hello #${d.x}`}
             size={(d, active) => active ? 5 : 3}
-            data={[
-              { x: 1, y: 1 },
-              { x: 2, y: 2 },
-              { x: 3, y: 3 },
-              { x: 4, y: 2 },
-              { x: 5, y: 1 }
-            ]}
-          />
-
-          <VictoryLine
-            style={{ parent: parentStyle }}
-            labelComponent={<VictoryTooltip/>}
-            label="hello"
-            data={[
-              { x: 1, y: 1 },
-              { x: 2, y: 2 },
-              { x: 3, y: 3 },
-              { x: 4, y: 2 },
-              { x: 5, y: 1 }
-            ]}
-          />
-
-          <VictoryArea
-            style={{ parent: parentStyle }}
-            labelComponent={<VictoryTooltip/>}
-            label="hello"
             data={[
               { x: 1, y: 1 },
               { x: 2, y: 2 },

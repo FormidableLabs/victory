@@ -461,7 +461,6 @@ class App extends React.Component {
                 data: { stroke: "red", strokeWidth: 5 },
                 labels: { fontSize: 12 }
               }}
-              label={this.state.label}
               data={[
                 { x: new Date(1982, 1, 1), y: 125 },
                 { x: new Date(1987, 1, 1), y: 257 },
@@ -565,7 +564,6 @@ class App extends React.Component {
             <VictoryLine name="line"
               y={() => 0.5}
               style={{ data: { stroke: "blue", strokeWidth: 5 } }}
-              label="LINE"
             />
           </VictoryChart>
           <VictoryChart style={chartStyle} domainPadding={{ x: 50 }} animate={{ duration: 2000 }}>

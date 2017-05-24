@@ -30,9 +30,11 @@ export default {
     }, style);
   },
 
-  getLabel(props, datum, index) {
-    return datum.label || (Array.isArray(props.labels) ?
-      props.labels[index] : props.labels);
+  getLabelText(props, datum, index) {
+    if (datum.label !== undefined) {
+      return datum.label;
+    }
+    return Array.isArray(props.labels) ? props.labels[index] : props.labels;
   },
 
   getLabelAnchors(datum, horizontal) {
@@ -101,7 +103,7 @@ export default {
         data: dataProps
       };
 
-      const text = this.getLabel(props, datum, index);
+      const text = this.getLabelText(props, datum, index);
       if (text !== undefined && text !== null || props.events || props.sharedEvents) {
         childProps[eventKey].labels = this.getLabelProps(dataProps, text, style);
       }

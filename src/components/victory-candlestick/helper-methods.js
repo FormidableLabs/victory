@@ -1,6 +1,6 @@
 /*eslint no-magic-numbers: ["error", { "ignore": [0, 1] }]*/
 import { assign, pick, sortBy, omit, defaults } from "lodash";
-import { Helpers, Log, Scale, Domain, Data } from "victory-core";
+import { Helpers, Scale, Domain, Data } from "victory-core";
 
 export default {
   getBaseProps(props, fallbackProps) { // eslint-disable-line max-statements
@@ -78,7 +78,6 @@ export default {
 
   getData(props) {
     if (!props.data || props.data.length < 1) {
-      Log.warn("This is an empty dataset.");
       return [];
     }
     const stringMap = {
@@ -168,8 +167,10 @@ export default {
   },
 
   getLabelText(props, datum, index) {
-    return datum.label || (Array.isArray(props.labels) ?
-      props.labels[index] : props.labels);
+    if (datum.label !== undefined) {
+      return datum.label;
+    }
+    return Array.isArray(props.labels) ? props.labels[index] : props.labels;
   },
 
   getLabelStyle(labelStyle, dataProps) {

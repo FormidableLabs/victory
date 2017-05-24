@@ -325,33 +325,6 @@ export default class App extends React.Component {
 
         <ChartWrap>
           <VictoryBar
-            labels={["a", "b", "c"]}
-            data={[[0, 1], [2, 3], [4, 5]]}
-            x={0}
-            y={1}
-          />
-        </ChartWrap>
-
-        <ChartWrap>
-          <VictoryBar
-            labels={["a", "b", "c"]}
-            data={[[0, -1], [2, -3], [4, -5]]}
-            x={0}
-            y={1}
-          />
-        </ChartWrap>
-
-        <ChartWrap>
-          <VictoryBar
-            height={250}
-            data={[["a", 1], ["b", 3], ["c", 5]]}
-            x={0}
-            y={1}
-          />
-        </ChartWrap>
-
-        <ChartWrap>
-          <VictoryBar
             height={250}
             data={[{ a: { b: { c: 1, d: 1 } } }, { a: { b: { c: 2, d: 3 } } }]}
             x={"a.b.c"}

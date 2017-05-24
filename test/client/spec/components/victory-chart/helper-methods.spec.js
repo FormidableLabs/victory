@@ -3,7 +3,7 @@
 import Helpers from "src/components/victory-chart/helper-methods";
 import React from "react";
 import { VictoryAxis, VictoryLine, VictoryBar } from "src/index";
-import { Log, Data, Scale } from "victory-core";
+import { Log, Data } from "victory-core";
 import Wrapper from "src/helpers/wrapper";
 
 describe("victory-chart/helpers-methods", () => {
@@ -158,20 +158,21 @@ describe("victory-chart/helpers-methods", () => {
 
   describe("getTickFormat", () => {
     const stringMap = { x: { "a": 1, "b": 2, "c": 3 } };
-    const scale = { x: Scale.getBaseScale({ scale: "linear" }, "x") };
+    const nullStringMap = { x: null };
+    const scale = { x: { tickFormat: () => () => "scaleFormatTick" } };
 
-    it("returns the identity function when tickValues are not strings", () => {
+    it("returns the identity function when tickValues are numerical", () => {
       const props = { tickValues: [1, 2, 3] };
       const victoryAxis = getVictoryAxis(props);
-      const formatResult = Helpers.getTickFormat(victoryAxis, "x", { stringMap, scale });
-      const val = { a: 3 };
+      const formatResult = Helpers.getTickFormat(victoryAxis, "x", { stringMap: nullStringMap });
+      const val = 2;
       expect(formatResult).to.be.a("function");
       expect(formatResult(val)).to.equal(val);
     });
 
     it("returns a function from a string map", () => {
       const victoryAxis = getVictoryAxis({});
-      const formatResult = Helpers.getTickFormat(victoryAxis, "x", { stringMap, scale });
+      const formatResult = Helpers.getTickFormat(victoryAxis, "x", { stringMap });
       expect(formatResult).to.be.a("function");
       expect(formatResult(1)).to.equal("a");
     });
@@ -179,9 +180,60 @@ describe("victory-chart/helpers-methods", () => {
     it("returns the tickFormat function from scale", () => {
       const victoryAxis = getVictoryAxis({});
       const formatResult = Helpers.getTickFormat(
-        victoryAxis, "x", { stringMap: { x: null }, scale }
+        victoryAxis, "x", { stringMap: nullStringMap, scale }
       );
-      expect(formatResult(1)).to.equal(scale.x.tickFormat()(1));
+      expect(formatResult(1)).to.equal("scaleFormatTick");
+    });
+
+    it("uses custom tickFormat", () => {
+      const props = { tickFormat: (tick) => tick + 1 };
+      const victoryAxis = getVictoryAxis(props);
+      const formatResult = Helpers.getTickFormat(victoryAxis, "x", { stringMap: nullStringMap });
+      expect(formatResult).to.be.a("function");
+      expect(formatResult(1)).to.equal(2);
+    });
+
+    it("passes string map result to custom tickFormat prop", () => {
+      const props = { tickFormat: (tick) => `${tick} yo` };
+      const victoryAxis = getVictoryAxis(props);
+      const formatResult = Helpers.getTickFormat(victoryAxis, "x", { stringMap });
+      expect(formatResult).to.be.a("function");
+      expect(formatResult(1)).to.equal("a yo");
+    });
+
+    it("uses string array tickValues for tick formatting", () => {
+      const props = { tickValues: ["orange", "banana", "apple"] };
+      const victoryAxis = getVictoryAxis(props);
+      const formatResult = Helpers.getTickFormat(victoryAxis, "x", { stringMap: nullStringMap });
+      expect(formatResult).to.be.a("function");
+      expect(formatResult(5, 0)).to.equal("orange");
+      expect(formatResult(5, 2)).to.equal("apple");
+    });
+
+    it("uses string array tickFormat for tick formatting", () => {
+      const props = { tickFormat: ["orange", "banana", "apple"] };
+      const victoryAxis = getVictoryAxis(props);
+      const formatResult = Helpers.getTickFormat(victoryAxis, "x", { stringMap: nullStringMap });
+      expect(formatResult).to.be.a("function");
+      expect(formatResult(5, 0)).to.equal("orange");
+      expect(formatResult(5, 2)).to.equal("apple");
+    });
+
+    it("uses tickFormat array over tickValues", () => {
+      const props = { tickValues: [1, 2, 3], tickFormat: ["orange", "banana", "apple"] };
+      const victoryAxis = getVictoryAxis(props);
+      const formatResult = Helpers.getTickFormat(victoryAxis, "x", { stringMap: nullStringMap });
+      expect(formatResult).to.be.a("function");
+      expect(formatResult(5, 0)).to.equal("orange");
+      expect(formatResult(5, 2)).to.equal("apple");
+    });
+
+    it("runs tickFormat fn after tick values are applied", () => {
+      const props = { tickValues: ["a", "b", "c"], tickFormat: (tick) => `${tick} yo` };
+      const victoryAxis = getVictoryAxis(props);
+      const formatResult = Helpers.getTickFormat(victoryAxis, "x", { stringMap: nullStringMap });
+      expect(formatResult).to.be.a("function");
+      expect(formatResult(1, 1)).to.equal("b yo");
     });
   });
 

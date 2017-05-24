@@ -1,6 +1,6 @@
 {
   "name": "victory-chart",
-  "version": "19.1.1",
+  "version": "20.0.0",
   "description": "Chart Component for Victory",
   "main": "lib/index.js",
   "repository": {
@@ -28,13 +28,13 @@
   },
   "dependencies": {
     "builder": "^3.2.1",
-    "builder-victory-component": "^4.0.0",
+    "builder-victory-component": "^4.0.2",
     "d3-voronoi": "^1.1.2",
     "lodash": "^4.17.4",
     "victory-core": "git://github.com/formidablelabs/victory-core#experiment/polar"
   },
   "devDependencies": {
-    "builder-victory-component-dev": "^4.0.0",
+    "builder-victory-component-dev": "^4.0.2",
     "chai": "^3.5.0",
     "d3-scale": "^1.0.0",
     "d3-shape": "^1.0.0",
@@ -53,6 +53,9 @@
     ],
     "files": {
       ".npmignore": ".npmignore.publishr"
+    },
+    "scripts": {
+      "postinstall": ""
     }
   }
 }

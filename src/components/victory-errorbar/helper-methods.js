@@ -1,5 +1,5 @@
 import { assign, omit, defaults, isArray, flatten, sortBy, pick } from "lodash";
-import { Helpers, Log, Scale, Domain, Data } from "victory-core";
+import { Helpers, Scale, Domain, Data } from "victory-core";
 
 export default {
   getBaseProps(props, fallbackProps) {
@@ -57,7 +57,6 @@ export default {
   getErrorData(props) {
     if (props.data) {
       if (props.data.length < 1) {
-        Log.warn("This is an empty dataset.");
         return [];
       }
 
@@ -224,8 +223,10 @@ export default {
   },
 
   getLabelText(props, datum, index) {
-    return datum.label || Array.isArray(props.labels) ?
-      props.labels[index] : props.labels;
+    if (datum.label !== undefined) {
+      return datum.label;
+    }
+    return Array.isArray(props.labels) ? props.labels[index] : props.labels;
   },
 
   getLabelStyle(labelStyle, dataProps) {
