@@ -1,7 +1,8 @@
 import React from "react";
 import PropTypes from "prop-types";
 import Helpers from "../victory-util/helpers";
-import { assign, isEqual } from "lodash";
+import Collection from "../victory-util/collection";
+import { assign } from "lodash";
 import CommonProps from "./common-props";
 
 export default class Line extends React.Component {
@@ -19,18 +20,20 @@ export default class Line extends React.Component {
   }
 
   shouldComponentUpdate(nextProps) {
-    const { x1, x2, y1, y2 } = this.props;
+    const { className, datum, x1, x2, y1, y2 } = this.props;
     const style = this.getStyle(nextProps);
-    if (x1 !== nextProps.x1 || x2 !== nextProps.x2 || y1 !== nextProps.y1 || y2 !== nextProps.y2) {
+    if (!Collection.allSetsEqual([
+      [className, nextProps.className],
+      [x1, nextProps.x1],
+      [x2, nextProps.x2],
+      [y1, nextProps.y1],
+      [y2, nextProps.y2],
+      [style, this.style],
+      [datum, nextProps.datum]
+    ])) {
       this.style = style;
       return true;
     }
-
-    if (!isEqual(style, this.style)) {
-      this.style = style;
-      return true;
-    }
-
     return false;
   }
 

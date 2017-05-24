@@ -1,7 +1,6 @@
 import { assign, uniq, range, last, isFunction, property, sortBy } from "lodash";
 import Helpers from "./helpers";
 import Collection from "./collection";
-import Log from "./log";
 import Scale from "./scale";
 
 export default {
@@ -14,7 +13,6 @@ export default {
     let data;
     if (props.data) {
       if (props.data.length < 1) {
-        Log.warn("This is an empty dataset.");
         return [];
       } else {
         data = this.formatData(props.data, props);
@@ -74,20 +72,23 @@ export default {
     };
     const accessor = {
       x: Helpers.createAccessor(props.x !== undefined ? props.x : "x"),
-      y: Helpers.createAccessor(props.y !== undefined ? props.y : "y")
+      y: Helpers.createAccessor(props.y !== undefined ? props.y : "y"),
+      y0: Helpers.createAccessor(props.y0 !== undefined ? props.y0 : "y0")
     };
     const data = dataset.map((datum, index) => {
       const evaluatedX = datum._x !== undefined ? datum._x : accessor.x(datum);
       const evaluatedY = datum._y !== undefined ? datum._y : accessor.y(datum);
+      const y0 = datum._y0 !== undefined ? datum._y0 : accessor.y0(datum);
       const x = evaluatedX !== undefined ? evaluatedX : index;
       const y = evaluatedY !== undefined ? evaluatedY : datum;
+      const originalValues = y0 === undefined ? { x, y } : { x, y, y0 };
+      const privateValues = y0 === undefined ? { _x: x, _y: y } : { _x: x, _y: y, _y0: y0 };
       return assign(
-          { x, y },
-          datum,
-          { _x: x, _y: y },
+          originalValues, datum, privateValues,
           // map string data to numeric values, and add names
           typeof x === "string" ? { _x: stringMap.x[x], xName: x } : {},
-          typeof y === "string" ? { _y: stringMap.y[y], yName: y } : {}
+          typeof y === "string" ? { _y: stringMap.y[y], yName: y } : {},
+          typeof y0 === "string" ? { _y0: stringMap.y[y0], yName: y0 } : {}
         );
     });
 
@@ -136,7 +137,7 @@ export default {
       return scaleType[axis] === "log" ? datum[`_${axis}`] !== 0 : true;
     };
     return dataset.filter((datum) => {
-      return rules(datum, "x") && rules(datum, "y");
+      return rules(datum, "x") && rules(datum, "y") && rules(datum, "y0");
     });
   },
 

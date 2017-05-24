@@ -144,4 +144,64 @@ describe("components/victory-legend", () => {
       expect(outputLabels.get(1).props.style.fill).to.equal("#252525");
     });
   });
+
+  describe("itemsPerRow", () => {
+    const legendData = [{
+      name: "Thing 1"
+    }, {
+      name: "Thing 2"
+    }, {
+      name: "Thing 3"
+    }, {
+      name: "Thing 4"
+    }, {
+      name: "Thing 5"
+    }, {
+      name: "Thing 6"
+    }];
+
+    it("displays items in columns", () => {
+      wrapper = shallow(<VictoryLegend data={legendData} itemsPerRow={3} />);
+      const outputLabels = wrapper.find("VictoryLabel");
+      const outputPoints = wrapper.find("Point");
+
+      // items line up between columns
+      expect(outputPoints.get(0).props.y).to.equal(outputPoints.get(3).props.y);
+      expect(outputLabels.get(0).props.y).to.equal(outputLabels.get(3).props.y);
+      expect(outputPoints.get(1).props.y).to.equal(outputPoints.get(4).props.y);
+      expect(outputLabels.get(1).props.y).to.equal(outputLabels.get(4).props.y);
+      expect(outputPoints.get(2).props.y).to.equal(outputPoints.get(5).props.y);
+      expect(outputLabels.get(2).props.y).to.equal(outputLabels.get(2).props.y);
+
+      // columns are the same distance apart
+      expect(outputPoints.get(0).props.x - outputPoints.get(3).props.x)
+        .to.equal(outputPoints.get(1).props.x - outputPoints.get(4).props.x).and
+        .to.equal(outputPoints.get(2).props.x - outputPoints.get(5).props.x);
+    });
+
+    it("displays items in rows", () => {
+      wrapper = shallow(
+        <VictoryLegend
+          data={legendData}
+          itemsPerRow={3}
+          orientation="horizontal"
+        />
+      );
+      const outputLabels = wrapper.find("VictoryLabel");
+      const outputPoints = wrapper.find("Point");
+
+      // items line up between rows
+      expect(outputPoints.get(0).props.x).to.equal(outputPoints.get(3).props.x);
+      expect(outputLabels.get(0).props.x).to.equal(outputLabels.get(3).props.x);
+      expect(outputPoints.get(1).props.x).to.equal(outputPoints.get(4).props.x);
+      expect(outputLabels.get(1).props.x).to.equal(outputLabels.get(4).props.x);
+      expect(outputPoints.get(2).props.x).to.equal(outputPoints.get(5).props.x);
+      expect(outputLabels.get(2).props.x).to.equal(outputLabels.get(2).props.x);
+
+      // rows are the same distance apart
+      expect(outputPoints.get(0).props.y - outputPoints.get(3).props.y)
+        .to.equal(outputPoints.get(1).props.y - outputPoints.get(4).props.y).and
+        .to.equal(outputPoints.get(2).props.y - outputPoints.get(5).props.y);
+    });
+  });
 });

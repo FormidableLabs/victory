@@ -2,7 +2,7 @@
 import React from "react";
 import PropTypes from "prop-types";
 import Helpers from "../victory-util/helpers";
-import { isEqual } from "lodash";
+import Collection from "../victory-util/collection";
 import CommonProps from "./common-props";
 
 export default class Voronoi extends React.Component {
@@ -24,7 +24,16 @@ export default class Voronoi extends React.Component {
 
   shouldComponentUpdate(nextProps) {
     const { style, circle, voronoi } = this.calculateAttributes(nextProps);
-    if (circle !== this.circle || voronoi !== this.voronoi || !isEqual(style, this.style)) {
+    const { className, x, y, datum } = this.props;
+    if (!Collection.allSetsEqual([
+      [className, nextProps.className],
+      [x, nextProps.x],
+      [y, nextProps.y],
+      [circle, this.circle],
+      [voronoi, this.voronoi],
+      [style, this.style],
+      [datum, nextProps.datum]
+    ])) {
       this.style = style;
       this.circle = circle;
       this.voronoi = voronoi;

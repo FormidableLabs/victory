@@ -3,10 +3,11 @@ import React from "react";
 import PropTypes from "prop-types";
 import VictoryPortal from "../victory-portal/victory-portal";
 import CustomPropTypes from "../victory-util/prop-types";
+import Collection from "../victory-util/collection";
 import Helpers from "../victory-util/helpers";
 import Style from "../victory-util/style";
 import Log from "../victory-util/log";
-import { assign, merge, isEqual } from "lodash";
+import { assign, merge } from "lodash";
 
 const defaultStyles = {
   fill: "#252525",
@@ -100,18 +101,21 @@ export default class VictoryLabel extends React.Component {
   shouldComponentUpdate(nextProps) {
     const attrs = this.calculateAttributes(nextProps);
     const { style, dx, dy, content, lineHeight, textAnchor, transform } = attrs;
-    const { x, y } = this.props;
-    if (
-      x !== nextProps.x ||
-      y !== nextProps.y ||
-      dx !== this.dx ||
-      dy !== this.dy ||
-      lineHeight !== this.lineHeight ||
-      transform !== this.transform ||
-      textAnchor !== this.textAnchor ||
-      !isEqual(content, this.content) ||
-      !isEqual(style, this.style)
-    ) {
+    const { angle, className, datum, x, y } = this.props;
+    if (!Collection.allSetsEqual([
+      [angle, nextProps.angle],
+      [className, nextProps.className],
+      [x, nextProps.x],
+      [y, nextProps.y],
+      [dx, this.dx],
+      [dy, this.dy],
+      [lineHeight, this.lineHeight],
+      [textAnchor, this.textAnchor],
+      [transform, this.transform],
+      [content, this.content],
+      [style, this.style],
+      [datum, nextProps.datum]
+    ])) {
       this.cacheAttributes(attrs);
       return true;
     }

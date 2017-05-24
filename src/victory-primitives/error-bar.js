@@ -40,15 +40,18 @@ export default class ErrorBar extends React.Component {
   }
 
   shouldComponentUpdate(nextProps) {
-    const { x, y, errorX, errorY } = this.props;
+    const { borderWidth, className, datum, x, y, errorX, errorY } = this.props;
     const nextStyle = this.getStyle(nextProps);
 
     if (!Collection.allSetsEqual([
+      [borderWidth, nextProps.borderWidth],
+      [className, nextProps.className],
       [x, nextProps.x],
       [y, nextProps.y],
       [errorX, nextProps.errorX],
       [errorY, nextProps.errorY],
-      [this.style, nextStyle]
+      [this.style, nextStyle],
+      [datum, nextProps.datum]
     ])) {
       this.style = nextStyle;
       return true;

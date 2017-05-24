@@ -16,7 +16,6 @@ class Home extends React.Component {
 }
 
 class App extends React.Component {
-
   constructor() {
     super();
     this.state = {
@@ -52,7 +51,7 @@ class App extends React.Component {
         <ul>
           <li><a href="#/animation">Victory Animation Demo</a></li>
           <li><a href="#/label">Victory Label Demo</a></li>
-          <li><a href="#/legend">Victory Legend</a></li>
+          <li><a href="#/legend">Victory Legend Demo</a></li>
           <li><a href="#/tooltip">Victory Tooltip Demo</a></li>
         </ul>
         <Child/>
