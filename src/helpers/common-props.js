@@ -13,9 +13,6 @@ export default {
     dataComponent: PropTypes.element,
     labelComponent: PropTypes.element,
     labels: PropTypes.oneOfType([ PropTypes.func, PropTypes.array ]),
-    origin: PropTypes.shape({
-      x: PropTypes.number, y: PropTypes.number
-    }),
     samples: CustomPropTypes.nonNegative,
     sortKey: PropTypes.oneOfType([
       PropTypes.func,

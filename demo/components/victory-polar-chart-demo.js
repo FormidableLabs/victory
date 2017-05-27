@@ -255,7 +255,7 @@ class App extends React.Component {
 
           <VictoryPolarChart
             theme={VictoryTheme.material}
-            domain={{ x: [0, 360], y: [0, 65] }}
+            domain={{ x: [0, 360] }}
             style={chartStyle}
           >
             <VictoryPolarAxis dependentAxis

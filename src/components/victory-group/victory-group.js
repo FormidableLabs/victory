@@ -177,7 +177,7 @@ export default class VictoryGroup extends React.Component {
   // the old ones were bad
   getNewChildren(props, childComponents, calculatedProps) {
     const { datasets, horizontal, domain } = calculatedProps;
-    const { theme, labelComponent, polar, origin } = props;
+    const { theme, labelComponent, polar } = props;
     const childProps = this.getChildProps(props, calculatedProps);
     const getAnimationProps = Wrapper.getAnimationProps.bind(this);
 
@@ -188,7 +188,7 @@ export default class VictoryGroup extends React.Component {
         child.props.style : Wrapper.getChildStyle(child, index, calculatedProps);
       const labels = props.labels ? this.getLabels(props, datasets, index) : child.props.labels;
       return React.cloneElement(child, assign({
-        domain, labels, style, theme, horizontal, polar, origin,
+        domain, labels, style, theme, horizontal, polar,
         data: this.getDataWithOffset(props, datasets[index], xOffset),
         animate: getAnimationProps(props, child, index),
         colorScale: this.getColorScale(props, child),
