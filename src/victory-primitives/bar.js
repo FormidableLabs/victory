@@ -199,10 +199,12 @@ export default class Bar extends React.Component {
 
   // Overridden in victory-core-native
   renderBar(path, style, events) {
-    const { role, shapeRendering, className } = this.props;
+    const { role, shapeRendering, className, polar, origin } = this.props;
+    const transform = polar ? `translate(${origin.x}, ${origin.y})` : undefined;
     return (
       <path
         d={path}
+        transform={transform}
         className={className}
         style={style}
         role={role || "presentation"}

@@ -2,6 +2,7 @@
 import React from "react";
 import PropTypes from "prop-types";
 import Helpers from "../victory-util/helpers";
+import { defined, getXAccessor, getYAccessor, getAngleAccessor } from "./helpers";
 import Collection from "../victory-util/collection";
 import { assign } from "lodash";
 import * as d3Shape from "d3-shape";
@@ -11,32 +12,28 @@ export default class Curve extends React.Component {
   static propTypes = {
     ...CommonProps,
     closed: PropTypes.bool,
-    groupComponent: PropTypes.element,
     interpolation: PropTypes.string,
+    origin: PropTypes.object,
     polar: PropTypes.bool
   };
 
-  static defaultProps = {
-    groupComponent: <g/>
-  };
-
   componentWillMount() {
-    const { style, paths } = this.calculateAttributes(this.props);
+    const { style, path } = this.calculateAttributes(this.props);
     this.style = style;
-    this.paths = paths;
+    this.path = path;
   }
 
   shouldComponentUpdate(nextProps) {
-    const { style, paths } = this.calculateAttributes(nextProps);
+    const { style, path } = this.calculateAttributes(nextProps);
     const { className, interpolation } = this.props;
     if (!Collection.allSetsEqual([
       [className, nextProps.className],
       [interpolation, nextProps.interpolation],
-      [paths, this.paths],
+      [path, this.path],
       [style, this.style]
     ])) {
       this.style = style;
-      this.paths = paths;
+      this.path = path;
       return true;
     }
     return false;
@@ -44,39 +41,30 @@ export default class Curve extends React.Component {
 
   getLineFunction(props) {
     const { polar, scale, closed } = props;
-    const getX = (d) => scale.x(d._x1 !== undefined ? d._x1 : d._x);
-    const getY = (d) => scale.y(d._y1 !== undefined ? d._y1 : d._y);
     const interpolation = polar && closed ?
       `${this.toNewName(props.interpolation)}Closed` : this.toNewName(props.interpolation);
     return polar ?
-      d3Shape.radialLine()
+      d3Shape.lineRadial()
+        .defined(defined)
         .curve(d3Shape[interpolation])
-        .angle((d) => -1 * getX(d) + Math.PI / 2)
-        .radius((d) => getY(d)) :
+        .angle(getAngleAccessor(scale))
+        .radius(getYAccessor(scale)) :
       d3Shape.line()
+        .defined(defined)
         .curve(d3Shape[interpolation])
-        .x((d) => getX(d))
-        .y((d) => getY(d));
+        .x(getXAccessor(scale))
+        .y(getYAccessor(scale));
   }
 
   calculateAttributes(props) {
     const { style, data, active } = props;
-    const dataSegments = this.getDataSegments(data);
     const lineFunction = this.getLineFunction(props);
     return {
       style: Helpers.evaluateStyle(
         assign({ fill: "none", stroke: "black" }, style), data, active
       ),
-      paths: dataSegments.map((d) => lineFunction(d))
+      path: lineFunction(data)
     };
-  }
-
-  getDataSegments(data) {
-    return Collection.splitArray(data, (datum) => {
-      const yDatum = datum.y1 !== undefined ? datum._y1 : datum._y;
-
-      return yDatum === null || typeof yDatum === "undefined";
-    }).filter((segment) => segment.length > 1);
   }
 
   toNewName(interpolation) {
@@ -86,26 +74,24 @@ export default class Curve extends React.Component {
   }
 
   // Overridden in victory-core-native
-  renderLine(paths, style, events) {
-    const { role, shapeRendering, className } = this.props;
-    return paths.map((path, index) => {
-      return (
-        <path
-          key={`area-stroke-${index}`}
-          style={style}
-          shapeRendering={shapeRendering || "auto"}
-          role={role || "presentation"}
-          d={path}
-          className={className}
-          {...events}
-        />
-      );
-    });
+  renderLine(path, style, events) {
+    const { role, shapeRendering, className, polar, origin } = this.props;
+    const transform = polar ? `translate(${origin.x}, ${origin.y})` : undefined;
+    return (
+      <path
+        style={style}
+        shapeRendering={shapeRendering || "auto"}
+        role={role || "presentation"}
+        d={path}
+        transform={transform}
+        className={className}
+        {...events}
+      />
+    );
   }
 
   render() {
-    const { events, groupComponent } = this.props;
-    const children = this.renderLine(this.paths, this.style, events);
-    return children.length === 1 ? children[0] : React.cloneElement(groupComponent, {}, children);
+    const { events } = this.props;
+    return this.renderLine(this.path, this.style, events);
   }
 }

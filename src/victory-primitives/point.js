@@ -75,11 +75,13 @@ export default class Point extends React.Component {
 
   // Overridden in victory-core-native
   renderPoint(path, style, events) {
-    const { role, shapeRendering, className } = this.props;
+    const { role, shapeRendering, className, polar, origin } = this.props;
+    const transform = polar ? `translate(${origin.x}, ${origin.y})` : undefined;
     return (
       <path
         {...events}
         d={path}
+        transform={transform}
         className={className}
         role={role || "presentation"}
         shapeRendering={shapeRendering || "auto"}
