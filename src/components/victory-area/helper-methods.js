@@ -10,15 +10,15 @@ export default {
     const { scale, style, data, domain } = calculatedValues;
     const {
       standalone, interpolation, events, sharedEvents, width, height, groupComponent, theme,
-      polar, padding
+      polar, padding, origin
     } = props;
-
     const initialChildProps = {
       parent: {
-        style: style.parent, width, height, scale, data, domain, standalone, theme, polar, padding
+        style: style.parent, width, height, scale, data,
+        domain, standalone, theme, polar, padding, origin
       },
       all: {
-        data: { polar, scale, data, interpolation, groupComponent, style: style.data }
+        data: { polar, scale, data, interpolation, groupComponent, style: style.data, origin }
       }
     };
     return data.reduce((childProps, datum, index) => {

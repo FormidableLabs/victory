@@ -86,9 +86,10 @@ export default {
   getBaseProps(props, fallbackProps) {
     props = Helpers.modifyProps(props, fallbackProps, "bar");
     const { style, data, scale, domain } = this.getCalculatedValues(props);
-    const { horizontal, width, height, padding, standalone, theme, polar } = props;
+    const { horizontal, width, height, padding, standalone, theme, polar, origin } = props;
     const initialChildProps = { parent: {
-      domain, scale, width, height, data, standalone, theme, polar, padding, style: style.parent
+      domain, scale, width, height, data, standalone,
+      theme, polar, origin, padding, style: style.parent
     } };
 
     return data.reduce((childProps, datum, index) => {
@@ -96,7 +97,8 @@ export default {
       const { x, y, y0, x0 } = this.getBarPosition(props, datum, scale);
       const barStyle = this.getBarStyle(datum, style.data);
       const dataProps = {
-        data, datum, horizontal, index, padding, polar, scale, style: barStyle, width, height, x, y, y0, x0
+        data, datum, horizontal, index, padding, polar, origin,
+        scale, style: barStyle, width, height, x, y, y0, x0
       };
 
       childProps[eventKey] = {

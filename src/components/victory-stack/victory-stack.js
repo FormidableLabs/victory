@@ -181,7 +181,8 @@ export default class VictoryStack extends React.Component {
         style,
         colorScale: this.getColorScale(props, child),
         data,
-        polar: props.polar
+        polar: props.polar,
+        origin: props.origin
       }, childProps));
     });
   }

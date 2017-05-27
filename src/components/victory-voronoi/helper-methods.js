@@ -6,9 +6,10 @@ export default {
   getBaseProps(props, fallbackProps) {
     props = Helpers.modifyProps(props, fallbackProps, "voronoi");
     const { data, style, scale, polygons, domain } = this.getCalculatedValues(props);
-    const { width, height, standalone, theme, events, sharedEvents, polar, padding } = props;
+    const { width, height, standalone, theme, events, sharedEvents, polar, padding, origin } = props;
     const initialChildProps = { parent: {
-      style: style.parent, scale, domain, data, standalone, height, width, theme, polar, padding
+      style: style.parent, scale, domain, data, standalone, height, width,
+      theme, polar, padding, origin
     } };
 
     return data.reduce((childProps, datum, index) => {
@@ -16,7 +17,7 @@ export default {
       const eventKey = datum.eventKey;
       const { x, y } = Helpers.scalePoint(Helpers.getPoint(datum), scale, polar);
       const dataProps = {
-        x, y, datum, data, index, scale, polygon,
+        x, y, datum, data, index, scale, polygon, polar, origin,
         size: props.size,
         style: this.getDataStyles(datum, style.data)
       };

@@ -85,7 +85,7 @@ export default class VictoryChart extends React.Component {
   }
 
   getAxisProps(child, props, calculatedProps) {
-    const { domain, scale, originSign, horizontal } = calculatedProps;
+    const { domain, scale, originSign, horizontal, origin } = calculatedProps;
     const axis = child.type.getAxis(child.props, horizontal);
     const axisOffset = ChartHelpers.getAxisOffset(props, calculatedProps);
     const tickValues = ChartHelpers.getTicks(calculatedProps, axis, child);
@@ -211,7 +211,6 @@ export default class VictoryChart extends React.Component {
     return childComponents.map((child, index) => {
       const style = defaults({}, child.props.style, { parent: baseStyle });
       const childProps = this.getChildProps(child, props, calculatedProps);
-      const transform = `translate(${origin.x}, ${origin.y})`;
       const newProps = defaults({
         animate: getAnimationProps(props, child, index),
         height: props.height,
@@ -221,7 +220,7 @@ export default class VictoryChart extends React.Component {
         theme: props.theme,
         standalone: false,
         polar: true,
-        groupComponent: React.cloneElement(child.props.groupComponent, { transform }),
+        origin,
         style
       }, childProps);
 
@@ -237,8 +236,9 @@ export default class VictoryChart extends React.Component {
   getContainerProps(props, calculatedProps) {
     const { width, height, standalone, theme } = props;
     const { domain, scale, style } = calculatedProps;
+    const origin = Helpers.getOrigin(props);
     return {
-      domain, scale, width, height, standalone, theme, style: style.parent
+      domain, scale, width, height, standalone, theme, style: style.parent, origin
     };
   }
 

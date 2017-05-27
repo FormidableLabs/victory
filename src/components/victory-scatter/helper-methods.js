@@ -5,17 +5,18 @@ export default {
   getBaseProps(props, fallbackProps) {
     props = Helpers.modifyProps(props, fallbackProps, "scatter");
     const calculatedValues = this.getCalculatedValues(props);
-    const { height, width, standalone, theme, polar, padding } = props;
+    const { height, width, standalone, theme, polar, padding, origin } = props;
     const { data, style, scale, domain } = calculatedValues;
     const initialChildProps = { parent: {
-      style: style.parent, scale, domain, data, height, width, standalone, theme, polar, padding
+      style: style.parent, scale, domain, data, height, width,
+      standalone, theme, polar, padding, origin
     } };
 
     return data.reduce((childProps, datum, index) => {
       const eventKey = datum.eventKey;
       const { x, y } = Helpers.scalePoint(Helpers.getPoint(datum), scale, polar);
       const dataProps = {
-        x, y, datum, data, index, scale, polar,
+        x, y, datum, data, index, scale, polar, origin,
         size: this.getSize(datum, props, calculatedValues),
         symbol: this.getSymbol(datum, props),
         style: this.getDataStyles(datum, style.data)
