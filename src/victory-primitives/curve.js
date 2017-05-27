@@ -75,15 +75,13 @@ export default class Curve extends React.Component {
 
   // Overridden in victory-core-native
   renderLine(path, style, events) {
-    const { role, shapeRendering, className, polar, origin } = this.props;
-    const transform = polar ? `translate(${origin.x}, ${origin.y})` : undefined;
+    const { role, shapeRendering, className } = this.props;
     return (
       <path
         style={style}
         shapeRendering={shapeRendering || "auto"}
         role={role || "presentation"}
         d={path}
-        transform={transform}
         className={className}
         {...events}
       />

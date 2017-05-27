@@ -100,8 +100,7 @@ export default class Area extends React.Component {
   renderArea(path, style, events) {
     const areaStroke = style.stroke ? "none" : style.fill;
     const areaStyle = assign({}, style, { stroke: areaStroke });
-    const { role, shapeRendering, className, polar, origin } = this.props;
-    const transform = polar ? `translate(${origin.x}, ${origin.y})` : undefined;
+    const { role, shapeRendering, className } = this.props;
     return (
       <path
         key={"area"}
@@ -109,7 +108,6 @@ export default class Area extends React.Component {
         shapeRendering={shapeRendering || "auto"}
         role={role || "presentation"}
         d={path}
-        transform={transform}
         className={className}
         {...events}
       />
@@ -121,8 +119,7 @@ export default class Area extends React.Component {
     if (!style.stroke || style.stroke === "none" || style.stroke === "transparent") {
       return [];
     }
-    const { role, shapeRendering, className, polar, origin } = this.props;
-    const transform = polar ? `translate(${origin.x}, ${origin.y})` : undefined;
+    const { role, shapeRendering, className } = this.props;
     const lineStyle = assign({}, style, { fill: "none" });
     return (
       <path
@@ -131,7 +128,6 @@ export default class Area extends React.Component {
         shapeRendering={shapeRendering || "auto"}
         role={role || "presentation"}
         d={path}
-        transform={transform}
         className={className}
         {...events}
       />
