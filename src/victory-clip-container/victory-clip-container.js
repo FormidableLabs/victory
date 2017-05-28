@@ -20,6 +20,7 @@ export default class VictoryClipContainer extends React.Component {
     clipPathComponent: PropTypes.element,
     clipWidth: PropTypes.number,
     events: PropTypes.object,
+    polar: PropTypes.bool,
     style: PropTypes.object,
     transform: PropTypes.string,
     translateX: PropTypes.number,
@@ -109,7 +110,7 @@ export default class VictoryClipContainer extends React.Component {
   render() {
     const clipHeight = this.getClipValue(this.props, "y");
     const clipWidth = this.getClipValue(this.props, "x");
-    if (clipWidth === undefined || clipHeight === undefined) {
+    if (this.props.polar || clipWidth === undefined || clipHeight === undefined) {
       return this.renderGroup(this.props);
     }
     const translateX = this.getTranslateValue(this.props, "x");
