@@ -27,10 +27,7 @@ export default {
           const prev = index === 0 ? data[data.length - 1] : data[index - 1];
           const next = index === data.length - 1 ? data[0] : data[index + 1];
           const average = (attr) => {
-            if (attr !== "_x") {
-              return index === 0 ? next[attr] : prev[attr];
-            }
-            return ((prev[attr] + next[attr]) / 2);
+            return index === 0 ? next[attr] : prev[attr];
           };
           return { _x: average("_x"), _y: average("_y"), _y0: average("_y0") };
         }
@@ -41,10 +38,7 @@ export default {
           const prev = index === 0 ? data[data.length - 1] : data[index - 1];
           const next = index === data.length - 1 ? data[0] : data[index + 1];
           const average = (attr) => {
-            if (attr !== "_x") {
-              return index === 0 ? next[attr] : prev[attr];
-            }
-            return ((prev[attr] + next[attr]) / 2);
+            return index === 0 ? next[attr] : prev[attr];
           };
           return { _x: average("_x"), _y: average("_y"), _y0: average("_y0") };
         },
