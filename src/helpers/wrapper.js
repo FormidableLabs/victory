@@ -66,7 +66,7 @@ export default {
         return Array.isArray(child) ? some(child, check) : check(child);
       };
 
-      const continuous = some(oldChildren, (child) => {
+      const continuous = !props.polar && some(oldChildren, (child) => {
         return isContinuous(child) || child.props.children && isContinuous(child.props.children);
       });
       const {

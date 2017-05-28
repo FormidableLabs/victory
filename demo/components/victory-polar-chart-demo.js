@@ -13,7 +13,8 @@ class App extends React.Component {
   constructor() {
     super();
     this.state = {
-      data: this.getData()
+      data: this.getData(),
+      staticData: this.getStaticData()
     };
   }
 
@@ -21,9 +22,10 @@ class App extends React.Component {
     /* eslint-disable react/no-did-mount-set-state */
     this.setStateInterval = window.setInterval(() => {
       this.setState({
-        data: this.getData()
+        data: this.getData(),
+        staticData: this.getStaticData()
       });
-    }, 3000);
+    }, 2000);
   }
 
   componentWillUnmount() {
@@ -34,7 +36,16 @@ class App extends React.Component {
   getData() {
     const bars = random(6, 10);
     return range(bars).map((bar) => {
-      return { a: bar + 1, b: random(2, 10) };
+      const y = random(2, 10);
+      return { x: bar + 1, y, y0: y - 2 };
+    });
+  }
+
+  getStaticData() {
+    const points = [ 1, 2, 3, 4, 5, 6 ];
+    return points.map((bar) => {
+      const y = random(2, 10);
+      return { x: bar + 1, y };
     });
   }
 
@@ -176,7 +187,6 @@ class App extends React.Component {
             <VictoryStack>
               <VictoryArea name="area-1"
                 interpolation="cardinal"
-                groupComponent={<g/>}
                 style={{
                   data: { fill: "tomato", stroke: "tomato", fillOpacity: 0.5, strokeWidth: 2 }
                 }}
@@ -191,7 +201,6 @@ class App extends React.Component {
               />
               <VictoryArea name="area-2"
                 interpolation="cardinal"
-                groupComponent={<g/>}
                 style={{
                   data: { fill: "orange", stroke: "orange", fillOpacity: 0.5, strokeWidth: 2 }
                 }}
@@ -206,7 +215,6 @@ class App extends React.Component {
               />
               <VictoryArea name="area-3"
                 interpolation="cardinal"
-                groupComponent={<g/>}
                 style={{
                   data: { fill: "gold", stroke: "gold", fillOpacity: 0.5, strokeWidth: 2 }
                 }}
@@ -223,8 +231,9 @@ class App extends React.Component {
           </VictoryPolarChart>
 
           <VictoryPolarChart
+            animate={{ duration: 500 }}
             theme={VictoryTheme.material}
-            domain={{ x: [0, 360] }}
+            domain={{ y: [0, 10] }}
             style={chartStyle}
           >
             <VictoryPolarAxis dependentAxis
@@ -234,28 +243,20 @@ class App extends React.Component {
             />
             <VictoryPolarAxis
               labelPlacement="parallel"
-              tickValues={[0, 45, 90, 135, 180, 225, 270, 315]}
             />
             <VictoryArea
               interpolation="cardinal"
-              groupComponent={<g/>}
               style={{
                 data: { fill: "tomato" }
               }}
-              data={[
-                { x: 45, y: 20, _y0: 10 },
-                { x: 90, y: 30, _y0: 15 },
-                { x: 135, y: 65, _y0: 30 },
-                { x: 180, y: 50, _y0: 25 },
-                { x: 270, y: 40, _y0: 20 },
-                { x: 315, y: 30, _y0: 15 }
-              ]}
+              data={this.state.data}
             />
           </VictoryPolarChart>
 
           <VictoryPolarChart
+            animate={{ duration: 500 }}
+            domain={{ y: [0, 10] }}
             theme={VictoryTheme.material}
-            domain={{ x: [0, 360] }}
             style={chartStyle}
           >
             <VictoryPolarAxis dependentAxis
@@ -265,63 +266,36 @@ class App extends React.Component {
             />
             <VictoryPolarAxis
               labelPlacement="parallel"
-              tickValues={[0, 45, 90, 135, 180, 225, 270, 315]}
             />
             <VictoryLine
-              interpolation="cardinal"
               dataComponent={<Curve closed/>}
-              groupComponent={<g/>}
               style={{
                 data: { stroke: "tomato", strokeWidth: 2 }
               }}
-              data={[
-                { x: 45, y: 20 },
-                { x: 90, y: 30 },
-                { x: 135, y: 65 },
-                { x: 180, y: 50 },
-                { x: 270, y: 40 },
-                { x: 315, y: 30 }
-              ]}
+              data={this.state.data}
             />
           </VictoryPolarChart>
 
           <VictoryPolarChart
+            animate={{ duration: 2000 }}
             theme={VictoryTheme.material}
-            domain={{ x: [0, 360] }}
             style={chartStyle}
           >
             <VictoryPolarAxis dependentAxis
               labelPlacement="vertical"
               style={{ axis: { stroke: "none" } }}
-              axisAngle={270}
-              tickValues={[25, 50, 75]}
               tickFormat={() => ""}
             />
             <VictoryPolarAxis
               labelPlacement="parallel"
-              tickValues={[0, 45, 90, 135, 180, 225, 270, 315]}
             />
             <VictoryBar
-              style={{ data: { fill: "tomato", width: 15, opacity: 0.4 } }}
-              data={[
-                { x: 45, y: 20, label: 1, fill: "red" },
-                { x: 90, y: 30, label: 2, fill: "orange" },
-                { x: 135, y: 65, label: 3, fill: "gold" },
-                { x: 250, y: 50, label: 4, fill: "blue" },
-                { x: 270, y: 40, label: 5, fill: "cyan" },
-                { x: 295, y: 30, label: 6, fill: "green" }
-              ]}
+              style={{ data: { fill: "tomato", width: .5, fillOpacity: 0.4, stroke: "tomato", strokeWidth: 2 } }}
+              data={this.state.staticData}
             />
             <VictoryScatter
               style={{ data: { fill: "black" } }}
-              data={[
-                { x: 45, y: 20 },
-                { x: 90, y: 30 },
-                { x: 135, y: 65 },
-                { x: 250, y: 50 },
-                { x: 270, y: 40 },
-                { x: 295, y: 30 }
-              ]}
+              data={this.state.staticData}
             />
           </VictoryPolarChart>
 
@@ -467,7 +441,6 @@ class App extends React.Component {
             />
 
             <VictoryArea
-              groupComponent={<g/>}
               style={{ data: { fill: "tomato", opacity: 0.6 } }}
               data={[
                 { x: 45, y: 20 },
@@ -479,7 +452,6 @@ class App extends React.Component {
             />
 
             <VictoryLine
-              groupComponent={<g/>}
               style={{ data: { stroke: "tomato" } }}
               data={[
                 { x: 45, y: 20 },
@@ -517,7 +489,6 @@ class App extends React.Component {
               ]}
             />
             <VictoryArea
-              groupComponent={<g/>}
               style={{ data: { fill: "tomato", opacity: 0.6 } }}
               data={[
                 { x: 1, y: 10 },

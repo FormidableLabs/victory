@@ -21,6 +21,7 @@ class VictoryLine extends React.Component {
   static displayName = "VictoryLine";
   static role = "line";
   static defaultTransitions = DefaultTransitions.continuousTransitions();
+  static defaultPolarTransitions = DefaultTransitions.continuousPolarTransitions();
   static continuous = true;
 
   static propTypes = {
