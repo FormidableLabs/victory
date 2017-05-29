@@ -1,6 +1,6 @@
 # Victory Changelog
 
-## 0.2.0 (2017-05-24)
+## 0.20.0 (2017-05-24)
 
 *Breaking Changes*
 -[victory-chart/471](https://github.com/FormidableLabs/victory-chart/pull/471) Passes the string value of ticks to the `tickFormat` function rather than the associated index. **This may be a breaking change for users who are using categorical data and formatting tick values by index**
