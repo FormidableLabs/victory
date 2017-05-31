@@ -34,18 +34,18 @@ class App extends React.Component {
 
 
   getData() {
-    const bars = random(6, 10);
-    return range(bars).map((bar) => {
+    const points = random(6, 10);
+    return range(points).map((point) => {
       const y = random(2, 10);
-      return { x: bar + 1, y, y0: y - 2 };
+      return { x: point + 1, y };
     });
   }
 
   getStaticData() {
     const points = [ 1, 2, 3, 4, 5, 6 ];
-    return points.map((bar) => {
+    return points.map((point) => {
       const y = random(2, 10);
-      return { x: bar + 1, y };
+      return { x: point + 1, y };
     });
   }
 
@@ -111,7 +111,7 @@ class App extends React.Component {
             />
             <VictoryStack>
               <VictoryBar name="bar-1"
-                style={{ data: { fill: "tomato", width: 15 } }}
+                style={{ data: { fill: "tomato", width: 10 } }}
                 data={[
                   { x: 45, y: 20 },
                   { x: 90, y: 30 },
@@ -122,7 +122,7 @@ class App extends React.Component {
                 ]}
               />
               <VictoryBar name="bar-2"
-                style={{ data: { fill: "orange", width: 15 } }}
+                style={{ data: { fill: "orange", width: 10 } }}
                 data={[
                   { x: 45, y: 20 },
                   { x: 90, y: 30 },
@@ -133,7 +133,7 @@ class App extends React.Component {
                 ]}
               />
               <VictoryBar name="bar-3"
-                style={{ data: { fill: "gold", width: 15 } }}
+                style={{ data: { fill: "gold", width: 10 } }}
                 data={[
                   { x: 45, y: 20 },
                   { x: 90, y: 30 },
@@ -245,7 +245,7 @@ class App extends React.Component {
               labelPlacement="parallel"
             />
             <VictoryArea
-              interpolation="cardinal"
+              interpolation="catmullRom"
               style={{
                 data: { fill: "tomato" }
               }}
@@ -269,6 +269,7 @@ class App extends React.Component {
             />
             <VictoryLine
               dataComponent={<Curve closed/>}
+              interpolation="linear"
               style={{
                 data: { stroke: "tomato", strokeWidth: 2 }
               }}
@@ -290,7 +291,7 @@ class App extends React.Component {
               labelPlacement="parallel"
             />
             <VictoryBar
-              style={{ data: { fill: "tomato", width: .5, fillOpacity: 0.4, stroke: "tomato", strokeWidth: 2 } }}
+              style={{ data: { fill: "tomato", width: 5, fillOpacity: 0.4, stroke: "tomato", strokeWidth: 2 } }}
               data={this.state.staticData}
             />
             <VictoryScatter
@@ -353,7 +354,6 @@ class App extends React.Component {
               labelPlacement="parallel"
             />
             <VictoryBar
-              style={{ data: { fill: "tomato", opacity: 0.5 } }}
               data={[
                 { x: 15, y: 20, label: 1, fill: "red" },
                 { x: 25, y: 30, label: 2, fill: "orange" },
@@ -383,32 +383,30 @@ class App extends React.Component {
             <VictoryPolarAxis dependentAxis
               labelPlacement="vertical"
               style={{ axis: { stroke: "none" } }}
-              axisAngle={270}
-              tickValues={[25, 50, 75]}
             />
             <VictoryPolarAxis
               labelPlacement="parallel"
             />
             <VictoryBar
-              style={{ data: { fill: "tomato", width: 15 } }}
+              style={{ data: { fill: "tomato", width: 10 } }}
               data={[
-                { x: 15, y: 20, label: 1, fill: "red" },
-                { x: 25, y: 30, label: 2, fill: "orange" },
-                { x: 35, y: 65, label: 3, fill: "gold" },
-                { x: 40, y: 50, label: 4, fill: "blue" },
-                { x: 45, y: 40, label: 5, fill: "cyan" },
-                { x: 50, y: 30, label: 6, fill: "green" }
+                { x: 1, y: 2, label: 1, fill: "red" },
+                { x: 2, y: 3, label: 2, fill: "orange" },
+                { x: 3, y: 6, label: 3, fill: "gold" },
+                { x: 4, y: 5, label: 4, fill: "blue" },
+                { x: 5, y: 4, label: 5, fill: "cyan" },
+                { x: 6, y: 3, label: 6, fill: "green" }
               ]}
             />
             <VictoryScatter
               style={{ data: { fill: "black" } }}
               data={[
-                { x: 15, y: 20 },
-                { x: 25, y: 30 },
-                { x: 35, y: 65 },
-                { x: 40, y: 50 },
-                { x: 45, y: 40 },
-                { x: 50, y: 30 }
+                { x: 1, y: 2 },
+                { x: 2, y: 3 },
+                { x: 3, y: 6 },
+                { x: 4, y: 5 },
+                { x: 5, y: 4 },
+                { x: 6, y: 3 }
               ]}
             />
           </VictoryPolarChart>

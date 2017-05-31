@@ -1,6 +1,6 @@
 /*eslint no-magic-numbers: ["error", { "ignore": [-1, 0, 1, 2, 90, 180, 270, 360] }]*/
 import {
-  includes, defaults, defaultsDeep, isFunction, range as lodashRange, without
+  uniqBy, includes, defaults, defaultsDeep, isFunction, range as lodashRange, without
 } from "lodash";
 import { Helpers, Scale, Domain } from "victory-core";
 
@@ -15,7 +15,8 @@ export default {
     const domain = this.getDomain(props, axis);
     const range = this.getRange(props, axis);
     const scale = this.getScale(props);
-    const ticks = this.getTicks(props, scale);
+    const initialTicks = this.getTicks(props, scale);
+    const ticks = axisType === "angular" ? this.filterTicks(initialTicks, scale) : initialTicks;
     const tickFormat = this.getTickFormat(props, scale, ticks);
     const radius = this.getRadius(props);
     return {
@@ -208,7 +209,7 @@ export default {
   },
 
   getGridProps(props, calculatedValues, tick, index) { //eslint-disable-line max-params
-    const { axisType, radius, style, scale, axis } = calculatedValues;
+    const { axisType, radius, style, scale } = calculatedValues;
     const { startAngle, endAngle } = props;
     const { gridStyle } = this.getEvaluatedStyles(style, tick, index);
     return axisType === "angular" ?
@@ -310,6 +311,11 @@ export default {
       return filteredTicks.length ? filteredTicks : ticks;
     }
     return scale.domain();
+  },
+
+  filterTicks(ticks, scale) {
+    const compareTicks = (t) => scale(t) % (2 * Math.PI);
+    return uniqBy(ticks, compareTicks);
   },
 
   getTickFormat(props, scale) {
