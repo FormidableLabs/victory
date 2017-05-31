@@ -96,6 +96,25 @@ export default {
     return [padding.left, props.width - padding.right];
   },
 
+  degreesToRadians(degrees) {
+    return degrees * (Math.PI / 180);
+  },
+
+  getDefaultRadius(props) {
+    const { left, right, top, bottom } = this.getPadding(props);
+    const { width, height } = props;
+    return Math.min(width - left - right, height - top - bottom) / 2;
+  },
+
+  getPolarRange(props, axis) {
+    if (axis === "x") {
+      const startAngle = this.degreesToRadians(props.startAngle || 0);
+      const endAngle = this.degreesToRadians(props.endAngle || 360);
+      return [startAngle, endAngle];
+    }
+    return [0, this.getDefaultRadius(props)];
+  },
+
   createAccessor(key) {
     // creates a data accessor function
     // given a property key, path, array index, or null for identity.

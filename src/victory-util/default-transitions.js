@@ -24,23 +24,21 @@ export default {
       onExit: {
         duration: 500,
         before: (datum, index, data) => {
-          const prev = index === 0 ? data[data.length - 1] : data[index - 1];
-          const next = index === data.length - 1 ? data[0] : data[index + 1];
-          const average = (attr) => {
-            return index === 0 ? next[attr] : prev[attr];
+          const adjacent = (attr) => {
+            const adj = index === 0 ? data[index + 1] : data[index - 1];
+            return adj[attr];
           };
-          return { _x: average("_x"), _y: average("_y"), _y0: average("_y0") };
+          return { _x: adjacent("_x"), _y: adjacent("_y"), _y0: adjacent("_y0") };
         }
       },
       onEnter: {
         duration: 500,
         before: (datum, index, data) => {
-          const prev = index === 0 ? data[data.length - 1] : data[index - 1];
-          const next = index === data.length - 1 ? data[0] : data[index + 1];
-          const average = (attr) => {
-            return index === 0 ? next[attr] : prev[attr];
+          const adjacent = (attr) => {
+            const adj = index === 0 ? data[index + 1] : data[index - 1];
+            return adj[attr];
           };
-          return { _x: average("_x"), _y: average("_y"), _y0: average("_y0") };
+          return { _x: adjacent("_x"), _y: adjacent("_y"), _y0: adjacent("_y0") };
         },
         after: (datum) => ({ _x: datum._x, _y: datum._y, _y1: datum._y1, _y0: datum._y0 })
       }
