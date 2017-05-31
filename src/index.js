@@ -1,5 +1,4 @@
 export { default as VictoryChart } from "./components/victory-chart/victory-chart";
-export { default as VictoryPolarChart } from "./components/victory-polar-chart/victory-polar-chart";
 export { default as VictoryLine } from "./components/victory-line/victory-line";
 export { default as VictoryAxis } from "./components/victory-axis/victory-axis";
 export { default as VictoryPolarAxis } from "./components/victory-polar-axis/victory-polar-axis";

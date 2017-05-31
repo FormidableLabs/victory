@@ -2,8 +2,8 @@
 /*eslint no-magic-numbers:0*/
 import React from "react";
 import {
-  VictoryPolarAxis, VictoryPolarChart, VictoryScatter, VictoryLine, VictoryArea, VictoryBar,
-  VictoryStack
+  VictoryPolarAxis, VictoryScatter, VictoryLine, VictoryArea, VictoryBar,
+  VictoryStack, VictoryChart
 } from "../../src/index";
 import { random, range, merge } from "lodash";
 
@@ -25,7 +25,7 @@ class App extends React.Component {
         data: this.getData(),
         staticData: this.getStaticData()
       });
-    }, 2000);
+    }, 3000);
   }
 
   componentWillUnmount() {
@@ -42,10 +42,11 @@ class App extends React.Component {
   }
 
   getStaticData() {
-    const points = [ 1, 2, 3, 4, 5, 6 ];
+    const points = [ 10, 20, 30, 40, 50, 60];
     return points.map((point) => {
       const y = random(2, 10);
-      return { x: point + 1, y };
+      const x = point + random(0, 8);
+      return { x, y };
     });
   }
 
@@ -64,7 +65,7 @@ class App extends React.Component {
       <div className="demo">
         <div style={containerStyle}>
 
-          <VictoryPolarChart
+          <VictoryChart polar
             theme={VictoryTheme.material}
             domain={{ x: [0, 360] }}
             style={chartStyle}
@@ -144,9 +145,9 @@ class App extends React.Component {
                 ]}
               />
             </VictoryStack>
-          </VictoryPolarChart>
+          </VictoryChart>
 
-          <VictoryPolarChart
+          <VictoryChart polar
             theme={VictoryTheme.material}
             domain={{ x: [0, 360] }}
             style={chartStyle}
@@ -228,9 +229,9 @@ class App extends React.Component {
                 ]}
               />
             </VictoryStack>
-          </VictoryPolarChart>
+          </VictoryChart>
 
-          <VictoryPolarChart
+          <VictoryChart polar
             animate={{ duration: 500 }}
             theme={VictoryTheme.material}
             domain={{ y: [0, 10] }}
@@ -251,9 +252,9 @@ class App extends React.Component {
               }}
               data={this.state.data}
             />
-          </VictoryPolarChart>
+          </VictoryChart>
 
-          <VictoryPolarChart
+          <VictoryChart polar
             animate={{ duration: 500 }}
             domain={{ y: [0, 10] }}
             theme={VictoryTheme.material}
@@ -275,9 +276,9 @@ class App extends React.Component {
               }}
               data={this.state.data}
             />
-          </VictoryPolarChart>
+          </VictoryChart>
 
-          <VictoryPolarChart
+          <VictoryChart polar
             animate={{ duration: 2000 }}
             theme={VictoryTheme.material}
             style={chartStyle}
@@ -291,16 +292,32 @@ class App extends React.Component {
               labelPlacement="parallel"
             />
             <VictoryBar
-              style={{ data: { fill: "tomato", width: 5, fillOpacity: 0.4, stroke: "tomato", strokeWidth: 2 } }}
+              style={{ data: { fill: "tomato", width: 10, fillOpacity: 0.4, stroke: "tomato", strokeWidth: 2 } }}
               data={this.state.staticData}
             />
-            <VictoryScatter
-              style={{ data: { fill: "black" } }}
-              data={this.state.staticData}
-            />
-          </VictoryPolarChart>
+          </VictoryChart>
 
-          <VictoryPolarChart
+          <VictoryChart polar
+            animate={{ duration: 2000 }}
+            theme={VictoryTheme.material}
+            style={chartStyle}
+          >
+            <VictoryPolarAxis dependentAxis
+              labelPlacement="vertical"
+              style={{ axis: { stroke: "none" } }}
+              tickFormat={() => ""}
+            />
+            <VictoryPolarAxis
+              labelPlacement="parallel"
+            />
+            <VictoryBar
+              style={{ data: { fill: "tomato", fillOpacity: 0.4, stroke: "tomato", strokeWidth: 2 } }}
+              data={this.state.staticData}
+            />
+          </VictoryChart>
+
+
+          <VictoryChart polar
             theme={VictoryTheme.material}
             domain={{ x: [0, 360] }}
             style={chartStyle}
@@ -338,21 +355,12 @@ class App extends React.Component {
                 { x: 295, y: 30 }
               ]}
             />
-          </VictoryPolarChart>
+          </VictoryChart>
 
-          <VictoryPolarChart
+          <VictoryChart polar
             theme={VictoryTheme.material}
             style={chartStyle}
           >
-            <VictoryPolarAxis dependentAxis
-              labelPlacement="vertical"
-              style={{ axis: { stroke: "none" } }}
-              axisAngle={270}
-              tickValues={[25, 50, 75]}
-            />
-            <VictoryPolarAxis
-              labelPlacement="parallel"
-            />
             <VictoryBar
               data={[
                 { x: 15, y: 20, label: 1, fill: "red" },
@@ -374,19 +382,12 @@ class App extends React.Component {
                 { x: 50, y: 30 }
               ]}
             />
-          </VictoryPolarChart>
+          </VictoryChart>
 
-          <VictoryPolarChart
+          <VictoryChart polar
             theme={VictoryTheme.material}
             style={chartStyle}
           >
-            <VictoryPolarAxis dependentAxis
-              labelPlacement="vertical"
-              style={{ axis: { stroke: "none" } }}
-            />
-            <VictoryPolarAxis
-              labelPlacement="parallel"
-            />
             <VictoryBar
               style={{ data: { fill: "tomato", width: 10 } }}
               data={[
@@ -409,10 +410,10 @@ class App extends React.Component {
                 { x: 6, y: 3 }
               ]}
             />
-          </VictoryPolarChart>
+          </VictoryChart>
 
 
-          <VictoryPolarChart
+          <VictoryChart polar
             theme={VictoryTheme.material}
             style={chartStyle}
           >
@@ -459,9 +460,9 @@ class App extends React.Component {
                 { x: 270, y: 40 }
               ]}
             />
-          </VictoryPolarChart>
+          </VictoryChart>
 
-          <VictoryPolarChart
+          <VictoryChart polar
             theme={VictoryTheme.material}
             style={chartStyle}
           >
@@ -496,7 +497,7 @@ class App extends React.Component {
                 { x: 5, y: 50 }
               ]}
             />
-          </VictoryPolarChart>
+          </VictoryChart>
 
           <VictoryPolarAxis
             theme={VictoryTheme.material}

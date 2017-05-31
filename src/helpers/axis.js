@@ -1,4 +1,4 @@
-import { Collection } from "victory-core";
+import { Collection, Helpers } from "victory-core";
 import { identity } from "lodash";
 import React from "react";
 
@@ -91,14 +91,30 @@ export default {
   },
 
   getOrigin(domain) {
-    const getSingleOrigin = () => {
-      const domainMin = Math.min(...domain);
-      const domainMax = Math.max(...domain);
+    const getSingleOrigin = (d) => {
+      const domainMin = Math.min(...d);
+      const domainMax = Math.max(...d);
       return domainMax < 0 ? domainMax : Math.max(0, domainMin);
     };
 
-    return Collection.containsDates(domain) ?
-      new Date(Math.min(...domain)) : getSingleOrigin();
+    return {
+      x: Collection.containsDates(domain.x) ?
+        new Date(Math.min(...domain.x)) : getSingleOrigin(domain.x),
+      y: Collection.containsDates(domain.y) ?
+        new Date(Math.min(...domain.y)) : getSingleOrigin(domain.y)
+    };
+  },
+
+  getPolarOrigin(props) {
+    const { width, height } = props;
+    const { top, bottom, left, right } = Helpers.getPadding(props);
+    const radius = Math.min(width - left - right, height - top - bottom) / 2;
+    const offsetWidth = width / 2 + left - right;
+    const offsetHeight = height / 2 + top - bottom;
+    return {
+      x: offsetWidth + radius > width ? radius + left - right : offsetWidth,
+      y: offsetHeight + radius > height ? radius + top - bottom : offsetHeight
+    };
   },
 
   getOriginSign(origin, domain) {
