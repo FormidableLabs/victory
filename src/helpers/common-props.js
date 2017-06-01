@@ -80,6 +80,7 @@ export default {
         left: PropTypes.number, right: PropTypes.number
       })
     ]),
+    polar: PropTypes.bool,
     range: PropTypes.oneOfType([
       CustomPropTypes.domain,
       PropTypes.shape({ x: CustomPropTypes.domain, y: CustomPropTypes.domain })

@@ -140,8 +140,9 @@ export default {
     const currentAxis = Axis.getCurrentAxis(axis, horizontal);
 
     const parentData = props.data ? Data.getData(props, axis) : undefined;
+    const { polar, startAngle, endAngle } = props;
     const parentProps = parentData ?
-      { data: parentData, polar: props.polar } : { polar: props.polar };
+      { data: parentData, polar, startAngle, endAngle } : { polar, startAngle, endAngle };
 
     while (childrenLength > 0) {
       const child = children[--childrenLength];

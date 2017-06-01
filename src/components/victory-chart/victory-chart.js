@@ -31,7 +31,9 @@ export default class VictoryChart extends React.Component {
     defaultPolarAxes: PropTypes.shape({
       independent: PropTypes.element,
       dependent: PropTypes.element
-    })
+    }),
+    endAngle: PropTypes.number,
+    startAngle: PropTypes.number
   };
 
   static defaultProps = {
@@ -103,6 +105,8 @@ export default class VictoryChart extends React.Component {
     const crossAxis = child.props.crossAxis === false ? false : true;
     const orientation = Axis.getOrientation(child, axis, originSign[axis]);
     return {
+      startAngle: props.startAngle,
+      endAngle: props.endAngle,
       domain: domain[axis],
       scale: scale[axis],
       tickValues,
