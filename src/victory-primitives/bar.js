@@ -112,21 +112,26 @@ export default class Bar extends React.Component {
   }
 
   getStartAngle(props, index) {
-    const { data } = props;
+    const { data, scale } = props;
     const currentAngle = this.getAngle(props, index);
+    const angularRange = Math.abs(scale.x.range()[1] - scale.x.range()[0]);
     const previousAngle = index === 0 ?
       this.getAngle(props, data.length - 1) - (Math.PI * 2) :
       this.getAngle(props, index - 1);
-    return (currentAngle + previousAngle) / 2;
+    return index === 0 && angularRange < (2 * Math.PI) ?
+      scale.x.range()[0] : (currentAngle + previousAngle) / 2;
   }
 
   getEndAngle(props, index) {
-    const { data } = props;
+    const { data, scale } = props;
     const currentAngle = this.getAngle(props, index);
+    const angularRange = Math.abs(scale.x.range()[1] - scale.x.range()[0]);
+    const lastAngle = scale.x.range()[1] === (2 * Math.PI) ?
+      this.getAngle(props, 0) + (Math.PI * 2) : scale.x.range()[1];
     const nextAngle = index === data.length - 1 ?
-      this.getAngle(props, 0) + (Math.PI * 2) :
-      this.getAngle(props, index + 1);
-    return (currentAngle + nextAngle) / 2;
+      this.getAngle(props, 0) + (Math.PI * 2) : this.getAngle(props, index + 1);
+    return index === data.length - 1 && angularRange < (2 * Math.PI) ?
+      lastAngle : (currentAngle + nextAngle) / 2;
   }
 
   getVerticalPolarBarPath(props) {
@@ -165,7 +170,6 @@ export default class Bar extends React.Component {
     // const zeroAngle = scale.x.domain()[0];
     // const start = (scale.y(datum._x0 || 0) / extent) * (2 * Math.PI);
     // const end = (scale.x(datum._x1 !== undefined ? datum._x1 : datum._x) / extent) * (2 * Math.PI);
-    // console.log(r, start, end, zeroAngle)
     // const path = d3Shape.arc()`
     //   .innerRadius(r - width)
     //   .outerRadius(r + width)

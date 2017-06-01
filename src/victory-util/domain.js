@@ -121,7 +121,9 @@ export default {
       return [0, adjustedMax];
     }
     const domain = [min, max];
-    return props.polar && axis === "x" ? this.getSymmetricDomain(domain, allData) : domain;
+    const angularRange = Math.abs((props.startAngle || 0) - (props.endAngle || 360));
+    return props.polar && axis === "x" && angularRange === 360 ?
+      this.getSymmetricDomain(domain, allData) : domain;
   },
 
   getSymmetricDomain(domain, data) {
