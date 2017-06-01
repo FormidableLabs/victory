@@ -1,6 +1,6 @@
 /*eslint no-magic-numbers: ["error", { "ignore": [-1, 0, 1, 2, 1000] }]*/
 import { Selection, Collection } from "victory-core";
-import { throttle, isFunction, defaults } from "lodash";
+import { throttle, isFunction, defaults, isEqual } from "lodash";
 import { attachId } from "../../helpers/event-handlers.js";
 
 const Helpers = {
@@ -128,26 +128,32 @@ const Helpers = {
     return undefined;
   },
 
+  getLastDomain(targetProps, originalDomain) {
+    const { zoomDomain, cachedZoomDomain, currentDomain, domain } = targetProps;
+    if (zoomDomain && !isEqual(zoomDomain, cachedZoomDomain)) {
+      return defaults(
+        {}, zoomDomain, domain
+      );
+    }
+    return defaults(
+      {}, currentDomain || zoomDomain || originalDomain, domain
+    );
+  },
+
   getDomain(props) {
     const { originalDomain, domain, scale } = props;
     const scaleDomain = { x: scale.x.domain(), y: scale.y.domain() };
     return defaults({}, originalDomain, domain, scaleDomain);
   },
 
-  onMouseDown(evt, targetProps) {
+  onMouseDown(evt) {
     evt.preventDefault();
-    const { domain, zoomDomain } = targetProps;
-    const originalDomain = this.getDomain(targetProps);
-    const currentDomain = defaults(
-      {}, targetProps.currentDomain || zoomDomain || originalDomain, domain
-    );
     const { x, y } = Selection.getSVGEventCoordinates(evt);
     return [{
       target: "parent",
       mutation: () => {
         return {
-          startX: x, startY: y, domain: currentDomain, cachedZoomDomain: zoomDomain,
-          originalDomain, currentDomain, panning: true,
+          startX: x, startY: y, panning: true,
           parentControlledProps: ["domain"]
         };
       }
@@ -174,12 +180,10 @@ const Helpers = {
 
   onMouseMove(evt, targetProps, eventKey, ctx) { // eslint-disable-line max-params
     if (targetProps.panning) {
-      const { scale, startX, startY, onDomainChange, dimension, domain, zoomDomain } = targetProps;
+      const { scale, startX, startY, onDomainChange, dimension, zoomDomain } = targetProps;
       const { x, y } = Selection.getSVGEventCoordinates(evt);
       const originalDomain = this.getDomain(targetProps);
-      const lastDomain = defaults(
-        {}, targetProps.currentDomain || zoomDomain || originalDomain, domain
-      );
+      const lastDomain = this.getLastDomain(targetProps, originalDomain);
       const dx = (startX - x) / this.getDomainScale(lastDomain, scale, "x");
       const dy = (y - startY) / this.getDomainScale(lastDomain, scale, "y");
       const currentDomain = {
@@ -208,11 +212,9 @@ const Helpers = {
     if (!targetProps.allowZoom) {
       return {};
     }
-    const { onDomainChange, dimension, domain, zoomDomain } = targetProps;
+    const { onDomainChange, dimension, zoomDomain } = targetProps;
     const originalDomain = this.getDomain(targetProps);
-    const lastDomain = defaults(
-      {}, targetProps.currentDomain || zoomDomain || originalDomain, domain
-    );
+    const lastDomain = this.getLastDomain(targetProps, originalDomain);
     const { x, y } = lastDomain;
     const currentDomain = {
       x: dimension === "y" ? lastDomain.x : this.scale(x, evt, targetProps, "x"),
