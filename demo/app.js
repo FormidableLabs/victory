@@ -22,6 +22,7 @@ import CreateContainerDemo from "./components/create-container-demo";
 import BrushContainerDemo from "./components/victory-brush-container-demo";
 import AnimationDemo from "./components/animation-demo";
 import SelectionDemo from "./components/selection-demo";
+import DebugDemo from "./components/debug-demo";
 
 class Home extends React.Component {
   render() {
@@ -69,6 +70,7 @@ class App extends React.Component {
     case "/animation": Child = AnimationDemo; break;
     case "/selection-container": Child = SelectionDemo; break;
     case "/create-container": Child = CreateContainerDemo; break;
+    case "/debug": Child = DebugDemo; break;
     default: Child = Home;
     }
     return Child;

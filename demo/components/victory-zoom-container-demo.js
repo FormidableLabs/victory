@@ -89,7 +89,7 @@ export default class App extends React.Component {
           />
 
           <VictoryGroup
-            containerComponent={<VictoryZoomContainer/>}
+            containerComponent={<VictoryZoomContainer dimension="y"/>}
             style={{ parent: parentStyle }} data={this.state.transitionData}
           >
             <VictoryLine animate={{ duration: 1500 }} style={{ data: this.state.style }} />
@@ -99,6 +99,7 @@ export default class App extends React.Component {
             containerComponent={
               <VictoryZoomContainer
                 zoomDomain={{ x: [new Date(1993, 1, 1), new Date(2005, 1, 1)] }}
+                dimension="x"
               />
             }
             scale={{

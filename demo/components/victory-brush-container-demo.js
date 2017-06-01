@@ -12,10 +12,6 @@ class App extends React.Component {
   }
 
   handleZoom(domain) {
-    this.setState({ selectedDomain: domain });
-  }
-
-  handleBrush(domain) {
     this.setState({ zoomDomain: domain });
   }
 
@@ -37,6 +33,7 @@ class App extends React.Component {
             containerComponent={
               <VictoryZoomContainer responsive={false}
                 zoomDomain={this.state.zoomDomain}
+                dimension="x"
                 onDomainChange={this.handleZoom.bind(this)}
               />
             }
@@ -63,8 +60,9 @@ class App extends React.Component {
             width={800} height={100} scale={{ x: "time" }}
             containerComponent={
               <VictoryBrushContainer responsive={false}
-                selectedDomain={this.state.selectedDomain}
-                onDomainChange={this.handleBrush.bind(this)}
+                selectedDomain={this.state.zoomDomain}
+                dimension="x"
+                onDomainChange={this.handleZoom.bind(this)}
               />
             }
           >
