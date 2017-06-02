@@ -6,10 +6,11 @@ export default {
   getBaseProps(props, fallbackProps) { // eslint-disable-line max-statements
     props = Helpers.modifyProps(props, fallbackProps, "candlestick");
     const calculatedValues = this.getCalculatedValues(props);
-    const { data, style, scale, domain } = calculatedValues;
+    const { data, style, scale, domain, origin } = calculatedValues;
     const { groupComponent, width, height, padding, standalone, theme, polar } = props;
     const initialChildProps = { parent: {
-      domain, scale, width, height, data, standalone, theme, polar, style: style.parent, padding
+      domain, scale, width, height, data, standalone, theme, polar, origin,
+      style: style.parent, padding
     } };
 
     return data.reduce((childProps, datum, index) => {
@@ -22,7 +23,7 @@ export default {
       const dataStyle = this.getDataStyles(datum, style.data, props);
       const dataProps = {
         x, y, y1, y2, candleHeight, scale, data, datum, groupComponent,
-        index, style: dataStyle, padding, width
+        index, style: dataStyle, padding, width, polar, origin
       };
 
       childProps[eventKey] = {
@@ -56,7 +57,7 @@ export default {
   },
 
   getCalculatedValues(props) {
-    const { theme } = props;
+    const { theme, polar } = props;
     const defaultStyle = theme && theme.candlestick && theme.candlestick.style ?
       theme.candlestick.style : {};
     const style = Helpers.getStyles(props.style, defaultStyle);
@@ -73,7 +74,8 @@ export default {
       x: Scale.getBaseScale(props, "x").domain(domain.x).range(range.x),
       y: Scale.getBaseScale(props, "y").domain(domain.y).range(range.y)
     };
-    return { domain, data, scale, style };
+    const origin = polar ? props.origin || Helpers.getPolarOrigin(props) : undefined;
+    return { domain, data, scale, style, origin };
   },
 
   getData(props) {

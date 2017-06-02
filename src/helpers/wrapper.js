@@ -47,7 +47,6 @@ export default {
     const domainPadding = this.getDefaultDomainPadding(props, axis, childComponents);
     const paddedDomain = Domain.padDomain([min, max], assign({ domainPadding }, props), axis);
     return Domain.cleanDomain(paddedDomain, props, axis);
-
   },
 
   setAnimationState(props, nextProps) {

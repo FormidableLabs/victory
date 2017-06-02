@@ -7,7 +7,7 @@ export default {
   getBaseProps(props, fallbackProps) {
     props = Helpers.modifyProps(props, fallbackProps, "area");
     const calculatedValues = this.getCalculatedValues(props);
-    const { scale, style, data, domain } = calculatedValues;
+    const { scale, style, data, domain, origin } = calculatedValues;
     const {
       standalone, interpolation, events, sharedEvents, width, height, groupComponent, theme,
       polar, padding
@@ -15,10 +15,11 @@ export default {
 
     const initialChildProps = {
       parent: {
-        style: style.parent, width, height, scale, data, domain, standalone, theme, polar, padding
+        style: style.parent, width, height, scale, data, domain,
+        standalone, theme, polar, origin, padding
       },
       all: {
-        data: { polar, scale, data, interpolation, groupComponent, style: style.data }
+        data: { polar, origin, scale, data, interpolation, groupComponent, style: style.data }
       }
     };
     return data.reduce((childProps, datum, index) => {
@@ -32,7 +33,7 @@ export default {
   },
 
   getCalculatedValues(props) {
-    const { theme } = props;
+    const { theme, polar } = props;
     const defaultStyles = theme && theme.area && theme.area.style ? theme.area.style : {};
     const style = Helpers.getStyles(props.style, defaultStyles);
     const range = {
@@ -47,9 +48,9 @@ export default {
       x: Scale.getBaseScale(props, "x").domain(domain.x).range(range.x),
       y: Scale.getBaseScale(props, "y").domain(domain.y).range(range.y)
     };
-
+    const origin = polar ? props.origin || Helpers.getPolarOrigin(props) : undefined;
     const data = this.getDataWithBaseline(props, scale);
-    return { style, data, scale, domain };
+    return { style, data, scale, domain, origin };
   },
 
   getLabelProps(text, index, props, calculatedProps) { // eslint-disable-line max-params

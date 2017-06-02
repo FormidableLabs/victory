@@ -105,18 +105,6 @@ export default {
     };
   },
 
-  getPolarOrigin(props) {
-    const { width, height } = props;
-    const { top, bottom, left, right } = Helpers.getPadding(props);
-    const radius = Math.min(width - left - right, height - top - bottom) / 2;
-    const offsetWidth = width / 2 + left - right;
-    const offsetHeight = height / 2 + top - bottom;
-    return {
-      x: offsetWidth + radius > width ? radius + left - right : offsetWidth,
-      y: offsetHeight + radius > height ? radius + top - bottom : offsetHeight
-    };
-  },
-
   getOriginSign(origin, domain) {
     const getSign = () => {
       return origin <= 0 && Math.max(...domain) <= 0 ? "negative" : "positive";

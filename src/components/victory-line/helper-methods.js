@@ -6,17 +6,17 @@ export default {
   getBaseProps(props, fallbackProps) {
     props = Helpers.modifyProps(props, fallbackProps, "line");
     const calculatedValues = this.getCalculatedValues(props);
-    const { scale, data, domain, style } = calculatedValues;
+    const { scale, data, domain, style, origin } = calculatedValues;
     const {
       interpolation, width, height, events, sharedEvents, standalone, groupComponent, theme,
       polar, padding
     } = props;
     const initialChildProps = {
       parent: {
-        style: style.parent, scale, data, height, width, domain, standalone, polar, padding
+        style: style.parent, scale, data, height, width, domain, standalone, polar, origin, padding
       },
       all: { data:
-        { polar, scale, data, interpolation, groupComponent, theme, style: style.data }
+        { polar, origin, scale, data, interpolation, groupComponent, theme, style: style.data }
       }
     };
     return data.reduce((childProps, datum, index) => {
@@ -48,12 +48,12 @@ export default {
       x: Scale.getBaseScale(props, "x").domain(domain.x).range(range.x),
       y: Scale.getBaseScale(props, "y").domain(domain.y).range(range.y)
     };
-
+    const origin = props.polar ? props.origin || Helpers.getPolarOrigin(props) : undefined;
     const defaultStyles = props.theme && props.theme.line && props.theme.line.style ?
       props.theme.line.style : {};
     const style = Helpers.getStyles(props.style, defaultStyles);
 
-    return { domain, data, scale, style };
+    return { domain, data, scale, style, origin };
   },
 
   getLabelText(props, datum, index) {

@@ -5,10 +5,11 @@ import { voronoi as d3Voronoi } from "d3-voronoi";
 export default {
   getBaseProps(props, fallbackProps) {
     props = Helpers.modifyProps(props, fallbackProps, "voronoi");
-    const { data, style, scale, polygons, domain } = this.getCalculatedValues(props);
+    const { data, style, scale, polygons, domain, origin } = this.getCalculatedValues(props);
     const { width, height, standalone, theme, events, sharedEvents, polar, padding } = props;
     const initialChildProps = { parent: {
-      style: style.parent, scale, domain, data, standalone, height, width, theme, polar, padding
+      style: style.parent, scale, domain, data, standalone, height, width, theme,
+      origin, polar, padding
     } };
 
     return data.reduce((childProps, datum, index) => {
@@ -16,7 +17,7 @@ export default {
       const eventKey = datum.eventKey;
       const { x, y } = Helpers.scalePoint(Helpers.getPoint(datum), scale, polar);
       const dataProps = {
-        x, y, datum, data, index, scale, polygon,
+        x, y, datum, data, index, scale, polygon, origin,
         size: props.size,
         style: this.getDataStyles(datum, style.data)
       };
@@ -68,7 +69,8 @@ export default {
     };
     const voronoi = this.getVoronoi(range, scale);
     const polygons = voronoi.polygons(data);
-    return { domain, data, scale, style, polygons };
+    const origin = props.polar ? props.origin || Helpers.getPolarOrigin(props) : undefined;
+    return { domain, data, scale, style, polygons, origin };
   },
 
   getVoronoi(range, scale) {

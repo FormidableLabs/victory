@@ -157,7 +157,7 @@ export default class VictoryChart extends React.Component {
       y: baseScale.y.domain(domain.y).range(range.y)
     };
 
-    const origin = props.polar ? Axis.getPolarOrigin(props) : Axis.getOrigin(domain);
+    const origin = props.polar ? Helpers.getPolarOrigin(props) : Axis.getOrigin(domain);
 
     const originSign = {
       x: Axis.getOriginSign(origin.x, domain.x),
@@ -188,19 +188,15 @@ export default class VictoryChart extends React.Component {
     const getAnimationProps = Wrapper.getAnimationProps.bind(this);
     const { height, polar, theme, width } = props;
     const { origin } = calculatedProps;
-    const transform = polar && `translate(${origin.x}, ${origin.y})`;
     return childComponents.map((child, index) => {
       const style = defaults({}, child.props.style, { parent: baseStyle });
       const childProps = this.getChildProps(child, props, calculatedProps);
       const newProps = defaults({
-        height, polar, theme, width,
+        height, polar, theme, width, origin, style,
         animate: getAnimationProps(props, child, index),
         padding: Helpers.getPadding(props),
         key: index,
-        standalone: false,
-        groupComponent: polar ?
-          React.cloneElement(child.props.groupComponent, { transform }) : undefined,
-        style
+        standalone: false
       }, childProps);
 
       return React.cloneElement(child, newProps);

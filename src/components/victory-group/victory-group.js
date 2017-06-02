@@ -79,7 +79,7 @@ export default class VictoryGroup extends React.Component {
     const { role } = this.constructor;
     const style = this.getStyle(props.theme, props.style, role);
     const modifiedProps = Helpers.modifyProps(props, fallbackProps);
-    const { offset, colorScale, color } = modifiedProps;
+    const { offset, colorScale, color, polar } = modifiedProps;
     const horizontal = modifiedProps.horizontal || childComponents.every(
       (component) => component.props && component.props.horizontal
     );
@@ -106,8 +106,11 @@ export default class VictoryGroup extends React.Component {
       x: Wrapper.getCategories(modifiedProps, "x"),
       y: Wrapper.getCategories(modifiedProps, "y")
     };
+    const origin = polar ? props.origin : Helpers.getPolarOrigin(modifiedProps);
+    const padding = Helpers.getPadding(props);
     return {
-      datasets, categories, range, domain, horizontal, scale, style, colorScale, color, offset
+      datasets, categories, range, domain, horizontal,
+      scale, style, colorScale, color, offset, origin, padding
     };
   }
 
@@ -126,10 +129,23 @@ export default class VictoryGroup extends React.Component {
     return domainExtent / rangeExtent * props.offset;
   }
 
-  getXO(props, calculatedProps, index) {
+  getX0(props, calculatedProps, index) {
     const center = (calculatedProps.datasets.length - 1) / 2;
     const totalWidth = this.pixelsToValue(props, "x", calculatedProps);
     return (index - center) * totalWidth;
+  }
+
+  getPolarX0(props, calculatedProps, index) {
+    const center = (calculatedProps.datasets.length - 1) / 2;
+    const width = this.getAngularWidth(props, calculatedProps);
+    return (index - center) * width;
+  }
+
+  getAngularWidth(props, calculatedProps) {
+    const { range } = calculatedProps;
+    const angularRange = Math.abs(range.x[1] - range.x[0]);
+    const r = Math.max(...range.y);
+    return (props.offset / (2 * Math.PI * r)) * angularRange;
   }
 
   getLabels(props, datasets, index) {
@@ -140,18 +156,11 @@ export default class VictoryGroup extends React.Component {
   }
 
   getChildProps(props, calculatedProps) {
-    const { categories, domain, range, scale, horizontal } = calculatedProps;
+    const { categories, domain, range, scale, horizontal, origin, padding } = calculatedProps;
+    const { width, height, theme, polar } = props;
     return {
-      height: props.height,
-      width: props.width,
-      padding: Helpers.getPadding(props),
-      standalone: false,
-      theme: props.theme,
-      categories,
-      domain,
-      range,
-      scale,
-      horizontal
+      height, width, theme, polar, origin, categories, domain, range, scale, horizontal, padding,
+      standalone: false
     };
   }
 
@@ -165,10 +174,12 @@ export default class VictoryGroup extends React.Component {
     : colorScaleOptions;
   }
 
-  getDataWithOffset(props, defaultDataset, offset) {
-    const dataset = props.data || props.y ? Data.getData(props) : defaultDataset;
-    const xOffset = offset || 0;
-    return dataset.map((datum) => {
+  getDataWithOffset(props, calculatedProps, index) {
+    const { datasets } = calculatedProps;
+    const { polar } = props;
+    const xOffset = polar ?
+      this.getPolarX0(props, calculatedProps, index) : this.getX0(props, calculatedProps, index);
+    return datasets[index].map((datum) => {
       const _x1 = datum._x instanceof Date ? new Date(datum._x + xOffset) : datum._x + xOffset;
       return assign({}, datum, { _x1 });
     });
@@ -176,23 +187,23 @@ export default class VictoryGroup extends React.Component {
 
   // the old ones were bad
   getNewChildren(props, childComponents, calculatedProps) {
-    const { datasets, horizontal, domain } = calculatedProps;
-    const { theme, labelComponent, polar } = props;
+    const { datasets } = calculatedProps;
+    const { labelComponent, polar } = props;
     const childProps = this.getChildProps(props, calculatedProps);
     const getAnimationProps = Wrapper.getAnimationProps.bind(this);
 
     return childComponents.map((child, index) => {
       const role = child.type && child.type.role;
-      const xOffset = this.getXO(props, calculatedProps, index);
+      const xOffset = polar ?
+          this.getPolarX0(props, calculatedProps, index) : this.getX0(props, calculatedProps, index);
       const style = role === "voronoi" || role === "tooltip" || role === "label" ?
         child.props.style : Wrapper.getChildStyle(child, index, calculatedProps);
       const labels = props.labels ? this.getLabels(props, datasets, index) : child.props.labels;
       return React.cloneElement(child, assign({
-        domain, labels, style, theme, horizontal, polar,
-        data: this.getDataWithOffset(props, datasets[index], xOffset),
+        labels, style, key: index,
+        data: this.getDataWithOffset(props, calculatedProps, index),
         animate: getAnimationProps(props, child, index),
         colorScale: this.getColorScale(props, child),
-        key: index,
         labelComponent: labelComponent || child.props.labelComponent,
         xOffset: role === "stack" ? xOffset : undefined
       }, childProps));

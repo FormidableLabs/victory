@@ -6,16 +6,17 @@ export default {
     props = Helpers.modifyProps(props, fallbackProps, "scatter");
     const calculatedValues = this.getCalculatedValues(props);
     const { height, width, standalone, theme, polar, padding } = props;
-    const { data, style, scale, domain } = calculatedValues;
+    const { data, style, scale, domain, origin } = calculatedValues;
     const initialChildProps = { parent: {
-      style: style.parent, scale, domain, data, height, width, standalone, theme, polar, padding
+      style: style.parent, scale, domain, data, height, width, standalone, theme,
+      origin, polar, padding
     } };
 
     return data.reduce((childProps, datum, index) => {
       const eventKey = datum.eventKey;
       const { x, y } = Helpers.scalePoint(Helpers.getPoint(datum), scale, polar);
       const dataProps = {
-        x, y, datum, data, index, scale, polar,
+        x, y, datum, data, index, scale, polar, origin,
         size: this.getSize(datum, props, calculatedValues),
         symbol: this.getSymbol(datum, props),
         style: this.getDataStyles(datum, style.data)
@@ -32,13 +33,13 @@ export default {
   },
 
   getLabelProps(dataProps, text, calculatedStyle) {
-    const { x, y, index, scale, datum, data } = dataProps;
+    const { x, y, index, scale, datum, data, origin } = dataProps;
     const labelStyle = this.getLabelStyle(calculatedStyle.labels, dataProps) || {};
     const sign = (datum._y1 || datum._y) < 0 ? -1 : 1;
     return {
       style: labelStyle,
-      x,
-      y: y - sign * (labelStyle.padding || 0),
+      x: x + (origin.x || 0),
+      y: y - (sign * (labelStyle.padding || 0)) + (origin.y || 0),
       text,
       index,
       scale,
@@ -67,8 +68,9 @@ export default {
       x: Scale.getBaseScale(props, "x").domain(domain.x).range(range.x),
       y: Scale.getBaseScale(props, "y").domain(domain.y).range(range.y)
     };
+    const origin = props.polar ? props.origin || Helpers.getPolarOrigin(props) : undefined;
     const z = props.bubbleProperty || "z";
-    return { domain, data, scale, style, z };
+    return { domain, data, scale, style, origin, z };
   },
 
   getDataStyles(datum, style) {

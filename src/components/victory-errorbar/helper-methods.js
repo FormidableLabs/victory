@@ -4,10 +4,11 @@ import { Helpers, Scale, Domain, Data } from "victory-core";
 export default {
   getBaseProps(props, fallbackProps) {
     props = Helpers.modifyProps(props, fallbackProps, "errorbar");
-    const { data, style, scale, domain } = this.getCalculatedValues(props, fallbackProps);
+    const { data, style, scale, domain, origin } = this.getCalculatedValues(props, fallbackProps);
     const { groupComponent, height, width, borderWidth, standalone, theme, polar, padding } = props;
     const initialChildProps = { parent: {
-      domain, style: style.parent, scale, data, height, width, standalone, theme, polar, padding
+      domain, scale, data, height, width, standalone, theme, polar, origin,
+      padding, style: style.parent
     } };
 
     return data.reduce((childProps, datum, index) => {
@@ -211,8 +212,8 @@ export default {
       x: Scale.getBaseScale(props, "x").domain(domain.x).range(range.x),
       y: Scale.getBaseScale(props, "y").domain(domain.y).range(range.y)
     };
-
-    return { domain, data, scale, style };
+    const origin = props.polar ? props.origin || Helpers.getPolarOrigin(props) : undefined;
+    return { domain, data, scale, style, origin };
   },
 
   getDataStyles(datum, style) {

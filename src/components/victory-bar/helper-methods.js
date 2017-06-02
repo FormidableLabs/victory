@@ -62,7 +62,7 @@ export default {
   },
 
   getCalculatedValues(props) {
-    const { theme, horizontal } = props;
+    const { theme, horizontal, polar } = props;
     const defaultStyles = theme && theme.bar && theme.bar.style ? theme.bar.style : {};
     const style = Helpers.getStyles(props.style, defaultStyles);
     const data = Data.getData(props);
@@ -80,15 +80,17 @@ export default {
       x: horizontal ? yScale : xScale,
       y: horizontal ? xScale : yScale
     };
-    return { style, data, scale, domain };
+    const origin = polar ? props.origin || Helpers.getPolarOrigin(props) : undefined;
+    return { style, data, scale, domain, origin };
   },
 
   getBaseProps(props, fallbackProps) {
     props = Helpers.modifyProps(props, fallbackProps, "bar");
-    const { style, data, scale, domain } = this.getCalculatedValues(props);
+    const { style, data, scale, domain, origin } = this.getCalculatedValues(props);
     const { horizontal, width, height, padding, standalone, theme, polar } = props;
     const initialChildProps = { parent: {
-      domain, scale, width, height, data, standalone, theme, polar, padding, style: style.parent
+      domain, scale, width, height, data, standalone,
+      theme, polar, origin, padding, style: style.parent
     } };
 
     return data.reduce((childProps, datum, index) => {
@@ -96,7 +98,8 @@ export default {
       const { x, y, y0, x0 } = this.getBarPosition(props, datum, scale);
       const barStyle = this.getBarStyle(datum, style.data);
       const dataProps = {
-        data, datum, horizontal, index, padding, polar, scale, style: barStyle, width, height, x, y, y0, x0
+        data, datum, horizontal, index, padding, polar, origin,
+        scale, style: barStyle, width, height, x, y, y0, x0
       };
 
       childProps[eventKey] = {

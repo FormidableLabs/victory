@@ -89,7 +89,7 @@ class VictoryPolarAxis extends React.Component {
 
   getTransform(props) {
     const groupComponentProps = props.groupComponent.props || {};
-    const origin = Helpers.getOrigin(props);
+    const origin = Helpers.getPolarOrigin(props);
     const transform = `translate(${origin.x}, ${origin.y})`;
     return groupComponentProps.transform || transform;
   }
