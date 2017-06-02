@@ -101,8 +101,8 @@ export default class Bar extends React.Component {
   getAngularWidth(props, datum, width) {
     const { scale } = props;
     const r = scale.y(datum._y);
-    const angle = (width / (2 * Math.PI * r)) * 360;
-    return this.degreesToRadians(angle);
+    const angularRange = Math.abs(scale.x.range()[1] - scale.x.range()[0]);
+    return (width / (2 * Math.PI * r)) * angularRange;
   }
 
   getAngle(props, index) {
@@ -138,7 +138,7 @@ export default class Bar extends React.Component {
     const { datum, scale, style, index } = props;
     const r1 = scale.y(datum._y0 || 0);
     const r2 = scale.y(datum._y1 !== undefined ? datum._y1 : datum._y);
-    const currentAngle = scale.x(datum._x);
+    const currentAngle = scale.x(datum._x1 !== undefined ? datum._x1 : datum._x);
     let start;
     let end;
     if (style.width) {
@@ -204,10 +204,12 @@ export default class Bar extends React.Component {
 
   // Overridden in victory-core-native
   renderBar(path, style, events) {
-    const { role, shapeRendering, className } = this.props;
+    const { role, shapeRendering, className, origin, polar } = this.props;
+    const transform = polar && origin ? `translate(${origin.x}, ${origin.y})` : undefined;
     return (
       <path
         d={path}
+        transform={transform}
         className={className}
         style={style}
         role={role || "presentation"}

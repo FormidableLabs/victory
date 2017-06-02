@@ -46,11 +46,14 @@ export default class VictoryLabel extends React.Component {
     ]),
     events: PropTypes.object,
     index: PropTypes.oneOfType([PropTypes.number, PropTypes.string]),
+    labelPlacement: PropTypes.oneOf(["parallel", "perpendicular", "vertical"]),
     lineHeight: PropTypes.oneOfType([
       PropTypes.string,
       CustomPropTypes.nonNegative,
       PropTypes.func
     ]),
+    origin: PropTypes.shape({ x: PropTypes.number, y: PropTypes.number }),
+    polar: PropTypes.bool,
     renderInPortal: PropTypes.bool,
     style: PropTypes.oneOfType([
       PropTypes.object,

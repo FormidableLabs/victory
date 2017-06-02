@@ -3,19 +3,6 @@ import Collection from "./collection";
 import React from "react";
 
 export default {
-
-  getOrigin(props) {
-    const { width, height } = props;
-    const { top, bottom, left, right } = this.getPadding(props);
-    const radius = props.radius || Math.min(width - left - right, height - top - bottom) / 2;
-    const offsetWidth = width / 2 + left - right;
-    const offsetHeight = height / 2 + top - bottom;
-    return {
-      x: offsetWidth + radius > width ? radius + left - right : offsetWidth,
-      y: offsetHeight + radius > height ? radius + top - bottom : offsetHeight
-    };
-  },
-
   getPoint(datum) {
     return {
       x: datum._x1 !== undefined ? datum._x1 : datum._x,
@@ -81,21 +68,6 @@ export default {
     }, {});
   },
 
-  getRange(props, axis) {
-    // determine how to lay the axis and what direction positive and negative are
-    if (props.range && props.range[axis]) {
-      return props.range[axis];
-    } else if (props.range && Array.isArray(props.range)) {
-      return props.range;
-    }
-    const isVertical = axis !== "x";
-    const padding = this.getPadding(props);
-    if (isVertical) {
-      return [props.height - padding.bottom, padding.top];
-    }
-    return [padding.left, props.width - padding.right];
-  },
-
   degreesToRadians(degrees) {
     return degrees * (Math.PI / 180);
   },
@@ -104,6 +76,37 @@ export default {
     const { left, right, top, bottom } = this.getPadding(props);
     const { width, height } = props;
     return Math.min(width - left - right, height - top - bottom) / 2;
+  },
+
+  getPolarOrigin(props) {
+    const { width, height } = props;
+    const { top, bottom, left, right } = this.getPadding(props);
+    const radius = Math.min(width - left - right, height - top - bottom) / 2;
+    const offsetWidth = width / 2 + left - right;
+    const offsetHeight = height / 2 + top - bottom;
+    return {
+      x: offsetWidth + radius > width ? radius + left - right : offsetWidth,
+      y: offsetHeight + radius > height ? radius + top - bottom : offsetHeight
+    };
+  },
+
+  getRange(props, axis) {
+    if (props.range && props.range[axis]) {
+      return props.range[axis];
+    } else if (props.range && Array.isArray(props.range)) {
+      return props.range;
+    }
+    return props.polar ? this.getPolarRange(props, axis) : this.getCartesianRange(props, axis);
+  },
+
+  getCartesianRange(props, axis) {
+    // determine how to lay the axis and what direction positive and negative are
+    const isVertical = axis !== "x";
+    const padding = this.getPadding(props);
+    if (isVertical) {
+      return [props.height - padding.bottom, padding.top];
+    }
+    return [padding.left, props.width - padding.right];
   },
 
   getPolarRange(props, axis) {
