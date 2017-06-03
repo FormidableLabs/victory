@@ -1,7 +1,9 @@
 /*eslint no-magic-numbers: ["error", { "ignore": [-1, 0, 1, 2, 1000] }]*/
+import { Children } from "react";
 import { Selection, Collection } from "victory-core";
 import { throttle, isFunction, defaults, isEqual } from "lodash";
 import { attachId } from "../../helpers/event-handlers.js";
+import Wrapper from "../../helpers/wrapper";
 
 const Helpers = {
 
@@ -141,9 +143,18 @@ const Helpers = {
   },
 
   getDomain(props) {
-    const { originalDomain, domain, scale } = props;
-    const scaleDomain = { x: scale.x.domain(), y: scale.y.domain() };
-    return defaults({}, originalDomain, domain, scaleDomain);
+    const { originalDomain, domain, children, dimension } = props;
+    const childComponents = Children.toArray(children);
+    let childrenDomain = {};
+    if (childComponents.length) {
+      childrenDomain = dimension ?
+        { [dimension]: Wrapper.getDomainFromChildren(props, dimension, childComponents) }
+        : ({
+          x: Wrapper.getDomainFromChildren(props, "x", childComponents),
+          y: Wrapper.getDomainFromChildren(props, "y", childComponents)
+        });
+    }
+    return defaults({}, childrenDomain, originalDomain, domain);
   },
 
   onMouseDown(evt) {
