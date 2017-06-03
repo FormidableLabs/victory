@@ -157,7 +157,7 @@ export default class Bar extends React.Component {
     return path();
   }
 
-  getHorizontalPolarBarPath(props) {
+  getHorizontalPolarBarPath() {
     // const { datum, scale, style } = props;
     // const radialDomain = scale.x.domain();
     // const radialExtent = Math.abs(radialDomain[1] - radialDomain[0]);
@@ -169,7 +169,7 @@ export default class Bar extends React.Component {
     // const extent = Math.abs(domain[1] - domain[0]);
     // const zeroAngle = scale.x.domain()[0];
     // const start = (scale.y(datum._x0 || 0) / extent) * (2 * Math.PI);
-    // const end = (scale.x(datum._x1 !== undefined ? datum._x1 : datum._x) / extent) * (2 * Math.PI);
+    // const end = scale.x(datum._x1 !== undefined ? datum._x1 : datum._x) / extent * (2 * Math.PI);
     // const path = d3Shape.arc()`
     //   .innerRadius(r - width)
     //   .outerRadius(r + width)
