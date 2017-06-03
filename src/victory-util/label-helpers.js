@@ -63,6 +63,32 @@ export default {
     };
   },
 
+  getTextAngle(props, baseAngle) {
+    if (props.labelPlacement === "vertical") {
+      return 0;
+    }
+    const degrees = this.radiansToDegrees(baseAngle);
+    const sign = (degrees > 90 && degrees < 180 || degrees > 270) ? 1 : -1;
+    let angle;
+    if (degrees === 0 || degrees === 180) {
+      angle = 90;
+    } else if (degrees > 0 && degrees < 180) {
+      angle = 90 - degrees;
+    } else if (degrees > 180 && degrees < 360) {
+      angle = 270 - degrees;
+    }
+    const labelRotation = props.labelPlacement === "perpendicular" ? 0 : 90;
+    return angle + sign * labelRotation;
+  },
+
+  getPolarTextAnchor(baseAngle, labelPlacement) {
+    if (labelPlacement === "perpendicular") {
+      return "middle";
+    }
+    const angle = this.radiansToDegrees(baseAngle);
+    return angle <= 90 || angle > 270 ? "start" : "end";
+  },
+
   getProps(props, calculatedProps, index) {
     const { scale, data, style } = calculatedProps;
     const { horizontal } = props;
