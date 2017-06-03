@@ -150,7 +150,8 @@ const Helpers = {
         target: "parent",
         mutation: () => ({
           isPanning: true, startX: x, startY: y, domainBox, fullDomainBox, currentDomain,
-          cachedSelectedDomain: selectedDomain
+          cachedSelectedDomain: selectedDomain,
+          ...domainBox // set x1, x2, y1, y2
         })
       }];
     } else {
