@@ -1,6 +1,6 @@
 /*eslint no-magic-numbers: ["error", { "ignore": [-1, 0, 1, 2] }]*/
 import { defaults, omit } from "lodash";
-import { Helpers, Data, Domain, Scale } from "victory-core";
+import { Helpers, LabelHelpers, Data, Domain, Scale } from "victory-core";
 
 export default {
 
@@ -20,45 +20,6 @@ export default {
       "xName", "yName", "x", "y", "label", "errorX", "errorY", "eventKey"
     ]);
     return defaults({}, styleData, baseStyle);
-  },
-
-  getLabelStyle(style, datum) {
-    return defaults({}, {
-      angle: datum.angle,
-      textAnchor: datum.textAnchor,
-      verticalAnchor: datum.verticalAnchor
-    }, style);
-  },
-
-  getLabelText(props, datum, index) {
-    if (datum.label !== undefined) {
-      return datum.label;
-    }
-    return Array.isArray(props.labels) ? props.labels[index] : props.labels;
-  },
-
-  getLabelAnchors(datum, horizontal) {
-    const sign = datum._y >= 0 ? 1 : -1;
-    if (!horizontal) {
-      return {
-        vertical: sign >= 0 ? "end" : "start",
-        text: "middle"
-      };
-    } else {
-      return {
-        vertical: "middle",
-        text: sign >= 0 ? "start" : "end"
-      };
-    }
-  },
-
-  getlabelPadding(style, datum, horizontal) {
-    const defaultPadding = style.padding || 0;
-    const sign = datum._y < 0 ? -1 : 1;
-    return {
-      x: horizontal ? sign * defaultPadding : 0,
-      y: horizontal ? 0 : sign * defaultPadding
-    };
   },
 
   getCalculatedValues(props) {
@@ -86,7 +47,8 @@ export default {
 
   getBaseProps(props, fallbackProps) {
     props = Helpers.modifyProps(props, fallbackProps, "bar");
-    const { style, data, scale, domain, origin } = this.getCalculatedValues(props);
+    const calculatedValues = this.getCalculatedValues(props);
+    const { style, data, scale, domain, origin } = calculatedValues;
     const { horizontal, width, height, padding, standalone, theme, polar } = props;
     const initialChildProps = { parent: {
       domain, scale, width, height, data, standalone,
@@ -106,33 +68,11 @@ export default {
         data: dataProps
       };
 
-      const text = this.getLabelText(props, datum, index);
+      const text = LabelHelpers.getText(props, datum, index);
       if (text !== undefined && text !== null || props.events || props.sharedEvents) {
-        childProps[eventKey].labels = this.getLabelProps(dataProps, text, style);
+        childProps[eventKey].labels = LabelHelpers.getProps(props, calculatedValues, index);
       }
       return childProps;
     }, initialChildProps);
-  },
-
-  getLabelProps(dataProps, text, calculatedStyle) {
-    const { datum, data, horizontal, x, y, y0, index, scale } = dataProps;
-    const labelStyle = this.getLabelStyle(calculatedStyle.labels, datum);
-    const labelPadding = this.getlabelPadding(labelStyle, datum, horizontal);
-    const anchors = this.getLabelAnchors(datum, horizontal);
-    return {
-      style: labelStyle,
-      x: horizontal ? y + labelPadding.x : x + labelPadding.x,
-      y: horizontal ? x + labelPadding.y : y - labelPadding.y,
-      y0,
-      text,
-      index,
-      scale,
-      datum,
-      data,
-      horizontal,
-      textAnchor: labelStyle.textAnchor || anchors.text,
-      verticalAnchor: labelStyle.verticalAnchor || anchors.vertical,
-      angle: labelStyle.angle
-    };
   }
 };

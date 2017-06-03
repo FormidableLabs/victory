@@ -1,4 +1,4 @@
-import { Collection, Helpers } from "victory-core";
+import { Collection } from "victory-core";
 import { identity } from "lodash";
 import React from "react";
 

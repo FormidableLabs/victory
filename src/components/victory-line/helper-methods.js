@@ -1,6 +1,5 @@
 /*eslint no-magic-numbers: ["error", { "ignore": [-1, 0, 1, 2] }]*/
-import { defaults } from "lodash";
-import { Helpers, Data, Domain, Scale } from "victory-core";
+import { Helpers, LabelHelpers, Data, Domain, Scale } from "victory-core";
 
 export default {
   getBaseProps(props, fallbackProps) {
@@ -20,10 +19,10 @@ export default {
       }
     };
     return data.reduce((childProps, datum, index) => {
-      const text = this.getLabelText(props, datum, index);
+      const text = LabelHelpers.getText(props, datum, index);
       if (text !== undefined && text !== null || events || sharedEvents) {
         const eventKey = datum.eventKey || index;
-        childProps[eventKey] = { labels: this.getLabelProps(text, index, props, calculatedValues) };
+        childProps[eventKey] = { labels: LabelHelpers.getProps(props, calculatedValues, index) };
       }
       return childProps;
     }, initialChildProps);
@@ -54,52 +53,5 @@ export default {
     const style = Helpers.getStyles(props.style, defaultStyles);
 
     return { domain, data, scale, style, origin };
-  },
-
-  getLabelText(props, datum, index) {
-    if (datum.label !== undefined) {
-      return datum.label;
-    }
-    return Array.isArray(props.labels) ? props.labels[index] : props.labels;
-  },
-
-  getLabelProps(text, index, props, calculatedProps) { // eslint-disable-line max-params
-    const { scale, data, style } = calculatedProps;
-    const datum = data[index];
-    const { x, y } = Helpers.scalePoint(Helpers.getPoint(datum), scale, props.polar);
-    const labelStyle = this.getLabelStyle(style) || {};
-    const sign = (datum._y1 || datum._y) < 0 ? -1 : 1;
-    return {
-      style: labelStyle,
-      x,
-      y: y - sign * (labelStyle.padding || 0),
-      text,
-      index,
-      scale,
-      datum,
-      data,
-      textAnchor: labelStyle.textAnchor,
-      verticalAnchor: labelStyle.verticalAnchor || "end",
-      angle: labelStyle.angle
-    };
-  },
-
-  getLabelPosition(datum, scale) {
-    return {
-      x: scale.x(datum._x1 !== undefined ? datum._x1 : datum._x),
-      y: scale.y(datum._y1 !== undefined ? datum._y1 : datum._y)
-    };
-  },
-
-  getLabelStyle(style) {
-    const dataStyle = style.data || {};
-    const labelStyle = style.labels || {};
-    // match labels styles to data style by default (fill, opacity, others?)
-    const opacity = dataStyle.opacity;
-    // match label color to data color if it is not given.
-    // use fill instead of stroke for text
-    const fill = dataStyle.stroke;
-    const padding = labelStyle.padding || 0;
-    return defaults({}, labelStyle, { opacity, fill, padding });
   }
 };

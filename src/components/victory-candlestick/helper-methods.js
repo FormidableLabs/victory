@@ -1,6 +1,6 @@
 /*eslint no-magic-numbers: ["error", { "ignore": [0, 1] }]*/
-import { assign, pick, sortBy, omit, defaults } from "lodash";
-import { Helpers, Scale, Domain, Data } from "victory-core";
+import { assign, sortBy, omit, defaults } from "lodash";
+import { Helpers, LabelHelpers, Scale, Domain, Data } from "victory-core";
 
 export default {
   getBaseProps(props, fallbackProps) { // eslint-disable-line max-statements
@@ -29,7 +29,7 @@ export default {
       childProps[eventKey] = {
         data: dataProps
       };
-      const text = this.getLabelText(props, datum, index);
+      const text = LabelHelpers.getText(props, datum, index);
       if (text !== undefined && text !== null || props.events || props.sharedEvents) {
         childProps[eventKey].labels = this.getLabelProps(dataProps, text, style);
       }
@@ -38,9 +38,9 @@ export default {
     }, initialChildProps);
   },
 
-  getLabelProps(dataProps, text, calculatedStyle) {
+  getLabelProps(dataProps, text, style) {
     const { x, y1, index, scale, datum, data } = dataProps;
-    const labelStyle = this.getLabelStyle(calculatedStyle.labels, dataProps) || {};
+    const labelStyle = style.labels || {};
     return {
       style: labelStyle,
       y: y1 - (labelStyle.padding || 0),
@@ -166,20 +166,5 @@ export default {
     const strokeColor = datum.stroke || style.stroke;
     const stroke = this.isTransparent(strokeColor) ? fill : strokeColor || "black";
     return defaults({}, stylesFromData, { stroke, fill }, style);
-  },
-
-  getLabelText(props, datum, index) {
-    if (datum.label !== undefined) {
-      return datum.label;
-    }
-    return Array.isArray(props.labels) ? props.labels[index] : props.labels;
-  },
-
-  getLabelStyle(labelStyle, dataProps) {
-    labelStyle = labelStyle || {};
-    const { size, style } = dataProps;
-    const matchedStyle = pick(style, ["opacity", "fill"]);
-    const padding = labelStyle.padding || size * 0.25; // eslint-disable-line no-magic-numbers
-    return defaults({}, labelStyle, matchedStyle, { padding });
   }
 };

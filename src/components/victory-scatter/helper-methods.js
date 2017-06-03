@@ -1,5 +1,5 @@
-import { values, pick, omit, defaults } from "lodash";
-import { Helpers, Data, Domain, Scale } from "victory-core";
+import { values, omit, defaults } from "lodash";
+import { Helpers, LabelHelpers, Data, Domain, Scale } from "victory-core";
 
 export default {
   getBaseProps(props, fallbackProps) {
@@ -23,32 +23,13 @@ export default {
       };
 
       childProps[eventKey] = { data: dataProps };
-      const text = this.getLabelText(props, datum, index);
+      const text = LabelHelpers.getText(props, datum, index);
       if (text !== undefined && text !== null || props.events || props.sharedEvents) {
-        childProps[eventKey].labels = this.getLabelProps(dataProps, text, style);
+        childProps[eventKey].labels = LabelHelpers.getProps(props, calculatedValues, index);
       }
 
       return childProps;
     }, initialChildProps);
-  },
-
-  getLabelProps(dataProps, text, calculatedStyle) {
-    const { x, y, index, scale, datum, data, origin } = dataProps;
-    const labelStyle = this.getLabelStyle(calculatedStyle.labels, dataProps) || {};
-    const sign = (datum._y1 || datum._y) < 0 ? -1 : 1;
-    return {
-      style: labelStyle,
-      x: x + (origin.x || 0),
-      y: y - (sign * (labelStyle.padding || 0)) + (origin.y || 0),
-      text,
-      index,
-      scale,
-      datum,
-      data,
-      textAnchor: labelStyle.textAnchor,
-      verticalAnchor: labelStyle.verticalAnchor || "end",
-      angle: labelStyle.angle
-    };
   },
 
   getCalculatedValues(props) {
@@ -78,20 +59,6 @@ export default {
       "_x", "_y", "z", "size", "symbol", "name", "label", "eventKey"
     ]);
     return defaults({}, stylesFromData, style);
-  },
-
-  getLabelText(props, datum, index) {
-    if (datum.label !== undefined) {
-      return datum.label;
-    }
-    return Array.isArray(props.labels) ? props.labels[index] : props.labels;
-  },
-
-  getLabelStyle(labelStyle, dataProps) {
-    const { size, style } = dataProps;
-    const matchedStyle = pick(style, ["opacity", "fill"]);
-    const padding = labelStyle.padding || size * 0.25; // eslint-disable-line no-magic-numbers
-    return defaults({}, labelStyle, matchedStyle, { padding });
   },
 
   getSymbol(data, props) {

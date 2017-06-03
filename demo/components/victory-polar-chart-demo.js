@@ -413,7 +413,11 @@ class App extends React.Component {
               labelPlacement="parallel"
             />
             <VictoryBar
-              style={{ data: { fill: "tomato", width: 10, fillOpacity: 0.4, stroke: "tomato", strokeWidth: 2 } }}
+              style={{
+                data: {
+                  fill: "tomato", width: 10, fillOpacity: 0.4, stroke: "tomato", strokeWidth: 2
+                }
+              }}
               data={this.state.staticData}
             />
           </VictoryChart>
@@ -432,7 +436,11 @@ class App extends React.Component {
               labelPlacement="parallel"
             />
             <VictoryBar
-              style={{ data: { fill: "tomato", fillOpacity: 0.4, stroke: "tomato", strokeWidth: 2 } }}
+              style={{
+                data: {
+                  fill: "tomato", fillOpacity: 0.4, stroke: "tomato", strokeWidth: 2
+                }
+              }}
               data={this.state.staticData}
             />
           </VictoryChart>

@@ -2,9 +2,7 @@
 import { assign, defaults } from "lodash";
 import PropTypes from "prop-types";
 import React from "react";
-import {
-  Helpers, VictorySharedEvents, VictoryContainer, VictoryTheme, Scale, Data
-} from "victory-core";
+import { Helpers, VictorySharedEvents, VictoryContainer, VictoryTheme, Scale } from "victory-core";
 import Wrapper from "../../helpers/wrapper";
 import { BaseProps, DataProps } from "../../helpers/common-props";
 
@@ -75,6 +73,7 @@ export default class VictoryGroup extends React.Component {
     this.events = Wrapper.getAllEvents(nextProps);
   }
 
+  // eslint-disable-next-line max-statements
   getCalculatedProps(props, childComponents) {
     const { role } = this.constructor;
     const style = this.getStyle(props.theme, props.style, role);
@@ -195,7 +194,7 @@ export default class VictoryGroup extends React.Component {
     return childComponents.map((child, index) => {
       const role = child.type && child.type.role;
       const xOffset = polar ?
-          this.getPolarX0(props, calculatedProps, index) : this.getX0(props, calculatedProps, index);
+        this.getPolarX0(props, calculatedProps, index) : this.getX0(props, calculatedProps, index);
       const style = role === "voronoi" || role === "tooltip" || role === "label" ?
         child.props.style : Wrapper.getChildStyle(child, index, calculatedProps);
       const labels = props.labels ? this.getLabels(props, datasets, index) : child.props.labels;
