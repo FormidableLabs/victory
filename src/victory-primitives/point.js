@@ -58,9 +58,7 @@ export default class Point extends React.Component {
   }
 
   getPath(props) {
-    const { datum, active, polar, origin } = props;
-    const x = polar ? props.x + (origin.x || 0) : props.x;
-    const y = polar ? props.y + (origin.y || 0) : props.y;
+    const { datum, active, x, y } = props;
     const pathFunctions = {
       circle: pathHelpers.circle,
       square: pathHelpers.square,

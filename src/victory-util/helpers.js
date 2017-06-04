@@ -5,23 +5,25 @@ import React from "react";
 export default {
   getPoint(datum) {
     return {
-      x: datum._x1 !== undefined ? datum._x1 : datum._x,
-      x0: datum._x0 !== undefined ? datum._x0 : datum._x,
-      y: datum._y1 !== undefined ? datum._y1 : datum._y,
-      y0: datum._y0 !== undefined ? datum._y0 : datum._y
+      _x: datum._x1 !== undefined ? datum._x1 : datum._x,
+      _x0: datum._x0 !== undefined ? datum._x0 : datum._x,
+      _y: datum._y1 !== undefined ? datum._y1 : datum._y,
+      _y0: datum._y0 !== undefined ? datum._y0 : datum._y
     };
   },
 
-  scalePoint(point, scale, polar) {
-    const x = scale.x(point.x);
-    const x0 = point.x0 !== undefined ? scale.x(point.x0) : x;
-    const y = scale.y(point.y);
-    const y0 = point.y0 !== undefined ? scale.y(point.y0) : y;
+  scalePoint(props, datum) {
+    const { scale, polar } = props;
+    const origin = props.origin || { x: 0, y: 0 };
+    const x = scale.x(datum._x);
+    const x0 = datum._x0 !== undefined ? scale.x(datum._x0) : x;
+    const y = scale.y(datum._y);
+    const y0 = datum._y0 !== undefined ? scale.y(datum._y0) : y;
     return {
-      x: polar ? y * Math.cos(x) : x,
-      x0: polar ? y0 * Math.cos(x0) : x0,
-      y: polar ? -y * Math.sin(x) : y,
-      y0: polar ? -y0 * Math.sin(x0) : y0
+      x: polar ? y * Math.cos(x) + origin.x : x,
+      x0: polar ? y0 * Math.cos(x0) + origin.x : x0,
+      y: polar ? -y * Math.sin(x) + origin.y : y,
+      y0: polar ? -y0 * Math.sin(x0) + origin.x : y0
     };
   },
 
