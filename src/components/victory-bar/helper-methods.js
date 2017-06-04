@@ -1,18 +1,19 @@
 /*eslint no-magic-numbers: ["error", { "ignore": [-1, 0, 1, 2] }]*/
-import { defaults, omit } from "lodash";
+import { assign, defaults, omit } from "lodash";
 import { Helpers, LabelHelpers, Data, Domain, Scale } from "victory-core";
 
 export default {
 
-  getBarPosition(props, datum, scale) {
+  getBarPosition(props, datum) {
     const getDefaultMin = (axis) => {
-      const defaultMin = Scale.getType(scale[axis]) === "log" ? 1 / Number.MAX_SAFE_INTEGER : 0;
+      const defaultMin = Scale.getType(props.scale[axis]) === "log" ?
+        1 / Number.MAX_SAFE_INTEGER : 0;
       return datum[`_${axis}`] instanceof Date ? new Date(defaultMin) : defaultMin;
     };
-    const { x, y } = Helpers.getPoint(datum);
-    const y0 = datum._y0 !== undefined ? datum._y0 : getDefaultMin("y");
-    const x0 = datum._x0 !== undefined ? datum._x0 : getDefaultMin("x");
-    return Helpers.scalePoint({ x, y, y0, x0 }, scale, props.polar);
+    const { _x, _y } = Helpers.getPoint(datum);
+    const _y0 = datum._y0 !== undefined ? datum._y0 : getDefaultMin("y");
+    const _x0 = datum._x0 !== undefined ? datum._x0 : getDefaultMin("x");
+    return Helpers.scalePoint(props, { _x, _y, _y0, _x0 });
   },
 
   getBarStyle(datum, baseStyle) {
@@ -46,10 +47,12 @@ export default {
   },
 
   getBaseProps(props, fallbackProps) {
-    props = Helpers.modifyProps(props, fallbackProps, "bar");
-    const calculatedValues = this.getCalculatedValues(props);
-    const { style, data, scale, domain, origin } = calculatedValues;
-    const { horizontal, width, height, padding, standalone, theme, polar } = props;
+    const modifiedProps = Helpers.modifyProps(props, fallbackProps, "bar");
+    props = assign({}, modifiedProps, this.getCalculatedValues(modifiedProps));
+    const {
+      data, domain, events, height, horizontal, origin, padding, polar,
+      scale, sharedEvents, standalone, style, theme, width
+    } = props;
     const initialChildProps = { parent: {
       domain, scale, width, height, data, standalone,
       theme, polar, origin, padding, style: style.parent
@@ -57,7 +60,7 @@ export default {
 
     return data.reduce((childProps, datum, index) => {
       const eventKey = datum.eventKey || index;
-      const { x, y, y0, x0 } = this.getBarPosition(props, datum, scale);
+      const { x, y, y0, x0 } = this.getBarPosition(props, datum);
       const barStyle = this.getBarStyle(datum, style.data);
       const dataProps = {
         data, datum, horizontal, index, padding, polar, origin,
@@ -69,8 +72,8 @@ export default {
       };
 
       const text = LabelHelpers.getText(props, datum, index);
-      if (text !== undefined && text !== null || props.events || props.sharedEvents) {
-        childProps[eventKey].labels = LabelHelpers.getProps(props, calculatedValues, index);
+      if (text !== undefined && text !== null || events || sharedEvents) {
+        childProps[eventKey].labels = LabelHelpers.getProps(props, index);
       }
       return childProps;
     }, initialChildProps);

@@ -1,12 +1,14 @@
-import { values, omit, defaults } from "lodash";
+import { assign, values, omit, defaults } from "lodash";
 import { Helpers, LabelHelpers, Data, Domain, Scale } from "victory-core";
 
 export default {
   getBaseProps(props, fallbackProps) {
-    props = Helpers.modifyProps(props, fallbackProps, "scatter");
-    const calculatedValues = this.getCalculatedValues(props);
-    const { height, width, standalone, theme, polar, padding } = props;
-    const { data, style, scale, domain, origin } = calculatedValues;
+    const modifiedProps = Helpers.modifyProps(props, fallbackProps, "scatter");
+    props = assign({}, modifiedProps, this.getCalculatedValues(modifiedProps));
+    const {
+      data, domain, events, height, origin, padding, polar, scale,
+      sharedEvents, standalone, style, theme, width
+    } = props;
     const initialChildProps = { parent: {
       style: style.parent, scale, domain, data, height, width, standalone, theme,
       origin, polar, padding
@@ -14,18 +16,18 @@ export default {
 
     return data.reduce((childProps, datum, index) => {
       const eventKey = datum.eventKey;
-      const { x, y } = Helpers.scalePoint(Helpers.getPoint(datum), scale, polar);
+      const { x, y } = Helpers.scalePoint(props, datum);
       const dataProps = {
         x, y, datum, data, index, scale, polar, origin,
-        size: this.getSize(datum, props, calculatedValues),
+        size: this.getSize(datum, props),
         symbol: this.getSymbol(datum, props),
         style: this.getDataStyles(datum, style.data)
       };
 
       childProps[eventKey] = { data: dataProps };
       const text = LabelHelpers.getText(props, datum, index);
-      if (text !== undefined && text !== null || props.events || props.sharedEvents) {
-        childProps[eventKey].labels = LabelHelpers.getProps(props, calculatedValues, index);
+      if (text !== undefined && text !== null || events || sharedEvents) {
+        childProps[eventKey].labels = LabelHelpers.getProps(props, index);
       }
 
       return childProps;
@@ -68,8 +70,8 @@ export default {
     return data.symbol || props.symbol;
   },
 
-  getBubbleSize(datum, props, calculatedValues) {
-    const { data, z } = calculatedValues;
+  getBubbleSize(datum, props) {
+    const { data, z } = props;
     const getMaxRadius = () => {
       const minPadding = Math.min(...values(Helpers.getPadding(props)));
       return Math.max(minPadding, 5); // eslint-disable-line no-magic-numbers
@@ -84,13 +86,13 @@ export default {
     return Math.max(radius, 1);
   },
 
-  getSize(data, props, calculatedValues) {
+  getSize(data, props) {
     if (data.size) {
       return typeof data.size === "function" ? data.size : Math.max(data.size, 1);
     } else if (typeof props.size === "function") {
       return props.size;
-    } else if (data[calculatedValues.z]) {
-      return this.getBubbleSize(data, props, calculatedValues);
+    } else if (data[props.z]) {
+      return this.getBubbleSize(data, props);
     } else {
       return Math.max(props.size, 1);
     }

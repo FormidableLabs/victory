@@ -5,14 +5,12 @@ import { Helpers, LabelHelpers, Data, Domain, Scale } from "victory-core";
 export default {
 
   getBaseProps(props, fallbackProps) {
-    props = Helpers.modifyProps(props, fallbackProps, "area");
-    const calculatedValues = this.getCalculatedValues(props);
-    const { scale, style, data, domain, origin } = calculatedValues;
+    const modifiedProps = Helpers.modifyProps(props, fallbackProps, "area");
+    props = assign({}, modifiedProps, this.getCalculatedValues(modifiedProps));
     const {
-      standalone, interpolation, events, sharedEvents, width, height, groupComponent, theme,
-      polar, padding
+      data, domain, events, groupComponent, height, interpolation, origin, padding, polar,
+      scale, sharedEvents, standalone, style, theme, width
     } = props;
-
     const initialChildProps = {
       parent: {
         style: style.parent, width, height, scale, data, domain,
@@ -26,7 +24,7 @@ export default {
       const text = LabelHelpers.getText(props, datum, index);
       if (text !== undefined && text !== null || events || sharedEvents) {
         const eventKey = datum.eventKey || index;
-        childProps[eventKey] = { labels: LabelHelpers.getProps(props, calculatedValues, index) };
+        childProps[eventKey] = { labels: LabelHelpers.getProps(props, index) };
       }
       return childProps;
     }, initialChildProps);

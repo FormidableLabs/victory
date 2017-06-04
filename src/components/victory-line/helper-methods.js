@@ -1,14 +1,14 @@
 /*eslint no-magic-numbers: ["error", { "ignore": [-1, 0, 1, 2] }]*/
+import { assign } from "lodash";
 import { Helpers, LabelHelpers, Data, Domain, Scale } from "victory-core";
 
 export default {
   getBaseProps(props, fallbackProps) {
-    props = Helpers.modifyProps(props, fallbackProps, "line");
-    const calculatedValues = this.getCalculatedValues(props);
-    const { scale, data, domain, style, origin } = calculatedValues;
+    const modifiedProps = Helpers.modifyProps(props, fallbackProps, "line");
+    props = assign({}, modifiedProps, this.getCalculatedValues(modifiedProps));
     const {
-      interpolation, width, height, events, sharedEvents, standalone, groupComponent, theme,
-      polar, padding
+      data, domain, events, groupComponent, height, interpolation, origin, padding, polar,
+      scale, sharedEvents, standalone, style, theme, width
     } = props;
     const initialChildProps = {
       parent: {
@@ -22,7 +22,7 @@ export default {
       const text = LabelHelpers.getText(props, datum, index);
       if (text !== undefined && text !== null || events || sharedEvents) {
         const eventKey = datum.eventKey || index;
-        childProps[eventKey] = { labels: LabelHelpers.getProps(props, calculatedValues, index) };
+        childProps[eventKey] = { labels: LabelHelpers.getProps(props, index) };
       }
       return childProps;
     }, initialChildProps);

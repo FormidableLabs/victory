@@ -1,13 +1,15 @@
-import { omit, defaults, without } from "lodash";
+import { assign, omit, defaults, without } from "lodash";
 import { Helpers, LabelHelpers, Scale, Domain, Data } from "victory-core";
 import { voronoi as d3Voronoi } from "d3-voronoi";
 
 export default {
   getBaseProps(props, fallbackProps) {
-    props = Helpers.modifyProps(props, fallbackProps, "voronoi");
-    const calculatedValues = this.getCalculatedValues(props);
-    const { data, style, scale, polygons, domain, origin } = calculatedValues;
-    const { width, height, standalone, theme, events, sharedEvents, polar, padding } = props;
+    const modifiedProps = Helpers.modifyProps(props, fallbackProps, "scatter");
+    props = assign({}, modifiedProps, this.getCalculatedValues(modifiedProps));
+    const {
+      data, domain, events, height, origin, padding, polar, polygons,
+      scale, sharedEvents, standalone, style, theme, width
+    } = props;
     const initialChildProps = { parent: {
       style: style.parent, scale, domain, data, standalone, height, width, theme,
       origin, polar, padding
@@ -16,7 +18,7 @@ export default {
     return data.reduce((childProps, datum, index) => {
       const polygon = without(polygons[index], "data");
       const eventKey = datum.eventKey;
-      const { x, y } = Helpers.scalePoint(Helpers.getPoint(datum), scale, polar);
+      const { x, y } = Helpers.scalePoint(props, datum);
       const dataProps = {
         x, y, datum, data, index, scale, polygon, origin,
         size: props.size,
@@ -26,7 +28,7 @@ export default {
       childProps[eventKey] = { data: dataProps };
       const text = LabelHelpers.getText(props, datum, index);
       if (text !== undefined && text !== null || events || sharedEvents) {
-        childProps[eventKey].labels = LabelHelpers.getProps(props, calculatedValues, index);
+        childProps[eventKey].labels = LabelHelpers.getProps(props, index);
       }
 
       return childProps;
