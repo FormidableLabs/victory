@@ -1,10 +1,10 @@
 /*eslint-disable no-magic-numbers */
 import React from "react";
 import {
-  VictoryChart, VictoryLine, VictoryGroup, VictoryZoomContainer
+  VictoryChart, VictoryLine, VictoryGroup, VictoryBrushContainer
 } from "../../src/index";
 
-const edata = [
+const data = [
   { x: 1, y: -3 },
   { x: 2, y: 5 },
   { x: 3, y: 3 },
@@ -17,47 +17,36 @@ const edata = [
 class App extends React.Component {
   constructor() {
     super();
-    this.state = { data: edata.slice(3) };
+    this.state = {};
   }
-
-
-  handleDomainChange(domain) {
-    this.setState({ selectedDomain: domain });
-  }
-  changeDataSet(data) {
+  handleSelectionChange(domain) {
     this.setState({
-      data,
-      selectedDomain: { x: [data[0].x, data[data.length - 1].x] }
+      selectedDomain: domain
     });
   }
-
+  changeSelection(a, b) {
+    this.setState({
+      selectedDomain: { x: [a, b] }
+    });
+  }
   render() {
     return (
       <div style={{ width: 300 }}>
-        <button onClick={() => this.changeDataSet(edata.slice(3))}>Part</button>
-        <button onClick={() => this.changeDataSet(edata)}>All</button>
+        <button onClick={() => this.changeSelection(1, 3)}>1-3</button>
+        <button onClick={() => this.changeSelection(3, 6)}>3-6</button>
         <VictoryChart
           containerComponent={
-            <VictoryZoomContainer
+            <VictoryBrushContainer
               dimension="x"
-              onDomainChange={this.handleDomainChange.bind(this)}
-              zoomDomain={this.state.selectedDomain}
+              onDomainChange={this.handleSelectionChange.bind(this)}
+              selectedDomain={this.state.selectedDomain}
             />
           }
-          style={{ parent: { cursor: "pointer" } }}
         >
-            <VictoryGroup
-
-              data={this.state.data}
-            >
-              <VictoryLine/>
-            </VictoryGroup>
-         </VictoryChart>
-         <p>
-           currentDomain (domain),
-           domain,
-           cachedZoomDomain
-         </p>
+          <VictoryGroup data={data}>
+            <VictoryLine/>
+          </VictoryGroup>
+       </VictoryChart>
       </div>
     );
   }
