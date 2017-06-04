@@ -79,6 +79,10 @@ export default {
     return degrees * (Math.PI / 180);
   },
 
+  radiansToDegrees(radians) {
+    return radians / (Math.PI / 180);
+  },
+
   getRadius(props) {
     const { left, right, top, bottom } = this.getPadding(props);
     const { width, height } = props;
