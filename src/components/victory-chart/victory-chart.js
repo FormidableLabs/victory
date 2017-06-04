@@ -210,9 +210,9 @@ export default class VictoryChart extends React.Component {
 
   getContainerProps(props, calculatedProps) {
     const { width, height, standalone, theme, polar } = props;
-    const { domain, scale, style, origin } = calculatedProps;
+    const { domain, scale, style, origin, radius } = calculatedProps;
     return {
-      domain, scale, width, height, standalone, theme, style: style.parent, polar, origin
+      domain, scale, width, height, standalone, theme, style: style.parent, polar, origin, radius
     };
   }
 

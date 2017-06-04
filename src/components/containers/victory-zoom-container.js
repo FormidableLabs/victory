@@ -2,7 +2,9 @@ import PropTypes from "prop-types";
 import React from "react";
 import { defaults, isEqual } from "lodash";
 import ZoomHelpers from "./zoom-helpers";
-import { VictoryContainer, VictoryClipContainer, PropTypes as CustomPropTypes } from "victory-core";
+import {
+  Helpers, VictoryContainer, VictoryClipContainer, PropTypes as CustomPropTypes
+} from "victory-core";
 
 export const zoomContainerMixin = (base) => class VictoryZoomContainer extends base {
   static displayName = "VictoryZoomContainer";
@@ -67,7 +69,7 @@ export const zoomContainerMixin = (base) => class VictoryZoomContainer extends b
   }];
 
   clipDataComponents(children, props) { //eslint-disable-line max-statements
-    const { scale, clipContainerComponent } = props;
+    const { scale, clipContainerComponent, polar, origin } = props;
     const rangeX = scale.x.range();
     const rangeY = scale.y.range();
     const plottableWidth = Math.abs(rangeX[0] - rangeX[1]);
@@ -75,7 +77,7 @@ export const zoomContainerMixin = (base) => class VictoryZoomContainer extends b
     const childComponents = [];
     let group = [];
     let groupNumber = 0;
-
+    const radius = Math.max(...rangeY);
     const makeGroup = (arr, index) => {
       return Array.isArray(arr) && arr.length ?
         React.cloneElement(clipContainerComponent, {
@@ -84,7 +86,8 @@ export const zoomContainerMixin = (base) => class VictoryZoomContainer extends b
           clipHeight: plottableHeight,
           translateX: Math.min(...rangeX),
           translateY: Math.min(...rangeY),
-          children: arr
+          children: arr,
+          polar, origin, radius
         }) :
         null;
     };
@@ -113,18 +116,28 @@ export const zoomContainerMixin = (base) => class VictoryZoomContainer extends b
     return childComponents.filter(Boolean);
   }
 
+  modifyPolarDomain(domain, originalDomain) {
+    // Only zoom the radius of polar charts. Zooming angles is very confusing
+    return {
+      x: originalDomain.x,
+      y: [0, domain.y[1]]
+    };
+  }
+
   modifyChildren(props) {
     const childComponents = React.Children.toArray(props.children);
 
     return childComponents.map((child) => {
       const { currentDomain } = props;
-      const originalDomain = defaults({}, props.original, props.domain);
+      const originalDomain = defaults({}, props.originalDomain, props.domain);
       const zoomDomain = defaults({}, props.zoomDomain, props.domain);
       const cachedZoomDomain = defaults({}, props.cachedZoomDomain, props.domain);
       const domain = isEqual(zoomDomain, cachedZoomDomain) ?
         defaults({}, currentDomain, originalDomain) : zoomDomain;
+      const newProps = props.polar ?
+        { domain: this.modifyPolarDomain(domain, originalDomain) } : { domain };
       return React.cloneElement(
-        child, defaults({ domain }, child.props)
+        child, defaults(newProps, child.props)
       );
     });
   }

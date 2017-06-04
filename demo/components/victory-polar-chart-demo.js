@@ -3,7 +3,7 @@
 import React from "react";
 import {
   VictoryPolarAxis, VictoryScatter, VictoryLine, VictoryArea, VictoryBar,
-  VictoryStack, VictoryChart, VictoryGroup, VictoryVoronoiContainer
+  VictoryStack, VictoryChart, VictoryGroup, VictoryVoronoiContainer, VictoryZoomContainer
 } from "../../src/index";
 import { random, range, merge } from "lodash";
 
@@ -456,14 +456,14 @@ class App extends React.Component {
 
           <VictoryChart polar
             theme={VictoryTheme.material}
-            domain={{ x: [0, 360] }}
+            domain={{ x: [0, 360], y: [0, 80] }}
             style={chartStyle}
+            containerComponent={<VictoryZoomContainer/>}
           >
             <VictoryPolarAxis dependentAxis
               labelPlacement="vertical"
               style={{ axis: { stroke: "none" } }}
               axisAngle={270}
-              tickValues={[25, 50, 75]}
               tickFormat={() => ""}
             />
             <VictoryPolarAxis
@@ -499,6 +499,7 @@ class App extends React.Component {
             style={chartStyle}
           >
             <VictoryBar
+              style={{ data: { fill: "tomato", opacity: 0.5 } }}
               data={[
                 { x: 15, y: 20, label: 1, fill: "red" },
                 { x: 25, y: 30, label: 2, fill: "orange" },
