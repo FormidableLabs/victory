@@ -4,21 +4,26 @@ import React from "react";
 
 export default {
   getPoint(datum) {
+    const exists = (val) => val !== undefined;
+    const { _x, _x1, _x0, _voronoiX, _y, _y1, _y0, _voronoiY } = datum;
+    const defaultX = exists(_x1) ? _x1 : _x;
+    const defaultY = exists(_y1) ? _y1 : _y;
     return {
-      _x: datum._x1 !== undefined ? datum._x1 : datum._x,
-      _x0: datum._x0 !== undefined ? datum._x0 : datum._x,
-      _y: datum._y1 !== undefined ? datum._y1 : datum._y,
-      _y0: datum._y0 !== undefined ? datum._y0 : datum._y
+      x: exists(_voronoiX) ? _voronoiX : defaultX,
+      x0: exists(_x0) ? _x0 : _x,
+      y: exists(_voronoiY) ? _voronoiY : defaultY,
+      y0: exists(_y0) ? _y0 : _y
     };
   },
 
   scalePoint(props, datum) {
     const { scale, polar } = props;
+    const d = this.getPoint(datum);
     const origin = props.origin || { x: 0, y: 0 };
-    const x = scale.x(datum._x);
-    const x0 = datum._x0 !== undefined ? scale.x(datum._x0) : x;
-    const y = scale.y(datum._y);
-    const y0 = datum._y0 !== undefined ? scale.y(datum._y0) : y;
+    const x = scale.x(d.x);
+    const x0 = scale.x(d.x0);
+    const y = scale.y(d.y);
+    const y0 = scale.y(d.y0);
     return {
       x: polar ? y * Math.cos(x) + origin.x : x,
       x0: polar ? y0 * Math.cos(x0) + origin.x : x0,
@@ -74,7 +79,7 @@ export default {
     return degrees * (Math.PI / 180);
   },
 
-  getDefaultRadius(props) {
+  getRadius(props) {
     const { left, right, top, bottom } = this.getPadding(props);
     const { width, height } = props;
     return Math.min(width - left - right, height - top - bottom) / 2;
@@ -117,7 +122,7 @@ export default {
       const endAngle = this.degreesToRadians(props.endAngle || 360);
       return [startAngle, endAngle];
     }
-    return [0, this.getDefaultRadius(props)];
+    return [0, this.getRadius(props)];
   },
 
   createAccessor(key) {
