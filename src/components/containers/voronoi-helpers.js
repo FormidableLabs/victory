@@ -10,9 +10,9 @@ const VoronoiHelpers = {
     const padding = voronoiPadding || 0;
     const { x, y } = point;
     if (polar) {
-      const distance = Math.pow(x - origin.x, 2) + Math.pow(y - origin.y, 2);
-      const radius = scale.y.range()[1];
-      return distance < Math.pow(radius, 2);
+      const distanceSquared = Math.pow(x - origin.x, 2) + Math.pow(y - origin.y, 2);
+      const radius = Math.max(...scale.y.range());
+      return distanceSquared < Math.pow(radius, 2);
     } else {
       return x >= padding && x <= width - padding && y >= padding && y <= height - padding;
     }
