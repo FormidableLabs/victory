@@ -3,11 +3,11 @@
 import React from "react";
 import {
   VictoryPolarAxis, VictoryScatter, VictoryLine, VictoryArea, VictoryBar,
-  VictoryStack, VictoryChart, VictoryGroup
+  VictoryStack, VictoryChart, VictoryGroup, VictoryVoronoiContainer
 } from "../../src/index";
 import { random, range, merge } from "lodash";
 
-import { VictoryTheme, Curve } from "victory-core";
+import { VictoryTheme, Curve, VictoryTooltip } from "victory-core";
 class App extends React.Component {
 
   constructor() {
@@ -131,8 +131,7 @@ class App extends React.Component {
           <VictoryChart polar
             theme={VictoryTheme.material}
             style={chartStyle}
-            startAngle={0}
-            endAngle={180}
+            containerComponent={<VictoryVoronoiContainer/>}
           >
             <VictoryPolarAxis dependentAxis
               labelPlacement="vertical"
@@ -145,14 +144,20 @@ class App extends React.Component {
             />
             <VictoryBar
               style={{
-                data: { fill: "tomato", fillOpacity: 0.6, stroke: "tomato", strokeWidth: 2 }
+                data: {
+                  fill: (d, a) => a ? "blue" : "tomato",
+                  fillOpacity: 0.6,
+                  stroke: (d, a) => a ? "blue" : "tomato",
+                  strokeWidth: 2
+                }
               }}
+              labelComponent={<VictoryTooltip/>}
               data={[
-                { x: "strength", y: 10 },
-                { x: "intelligence", y: 25 },
-                { x: "stealth", y: 40 },
-                { x: "luck", y: 50 },
-                { x: "charisma", y: 50 }
+                { x: "strength", y: 10, label: "one" },
+                { x: "intelligence", y: 25, label: "two" },
+                { x: "stealth", y: 40, label: "three" },
+                { x: "luck", y: 50, label: "four" },
+                { x: "charisma", y: 50, label: "five" }
               ]}
             />
           </VictoryChart>
@@ -380,6 +385,7 @@ class App extends React.Component {
             domain={{ y: [0, 10] }}
             theme={VictoryTheme.material}
             style={chartStyle}
+            containerComponent={<VictoryVoronoiContainer/>}
           >
             <VictoryPolarAxis dependentAxis
               labelPlacement="vertical"
@@ -391,6 +397,8 @@ class App extends React.Component {
             />
             <VictoryLine
               dataComponent={<Curve closed/>}
+              labelComponent={<VictoryTooltip/>}
+              labels={(d) => d.x}
               interpolation="linear"
               style={{
                 data: { stroke: "tomato", strokeWidth: 2 }

@@ -6,10 +6,16 @@ import { attachId } from "../../helpers/event-handlers.js";
 
 const VoronoiHelpers = {
   withinBounds(props, point) {
-    const { width, height, voronoiPadding } = props;
+    const { width, height, voronoiPadding, polar, origin, scale } = props;
     const padding = voronoiPadding || 0;
     const { x, y } = point;
-    return x >= padding && x <= width - padding && y >= padding && y <= height - padding;
+    if (polar) {
+      const distance = Math.pow(x - origin.x, 2) + Math.pow(y - origin.y, 2);
+      const radius = scale.y.range()[1];
+      return distance < Math.pow(radius, 2);
+    } else {
+      return x >= padding && x <= width - padding && y >= padding && y <= height - padding;
+    }
   },
 
   getDatasets(props) {
@@ -17,8 +23,7 @@ const VoronoiHelpers = {
       const continuous = child && child.type && child.type.continuous;
       const style = child ? child.props && child.props.style : props.style;
       return data.map((datum, index) => {
-        const x = datum._x1 !== undefined ? datum._x1 : datum._x;
-        const y = datum._y1 !== undefined ? datum._y1 : datum._y;
+        const { x, y } = Helpers.getPoint(datum);
         return assign({
           _voronoiX: props.dimension === "y" ? 0 : x,
           _voronoiY: props.dimension === "x" ? 0 : y,
@@ -54,10 +59,8 @@ const VoronoiHelpers = {
   // returns an array of objects with point and data where point is an x, y coordinate, and data is
   // an array of points belonging to that coordinate
   mergeDatasets(props, datasets) {
-    const { scale } = props;
     const points = groupBy(datasets, (datum) => {
-      const x = scale.x(datum ._voronoiX);
-      const y = scale.y(datum ._voronoiY);
+      const { x, y } = Helpers.scalePoint(props, datum);
       return `${x},${y}`;
     });
     return keys(points).map((key) => {
