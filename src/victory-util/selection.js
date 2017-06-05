@@ -70,8 +70,8 @@ export default {
 
   getBounds(props) {
     const { x1, x2, y1, y2, scale } = props;
-    const point1 = this.getDataCoordinates(scale, x1, y1);
-    const point2 = this.getDataCoordinates(scale, x2, y2);
+    const point1 = this.getDataCoordinates(props, scale, x1, y1);
+    const point2 = this.getDataCoordinates(props, scale, x2, y2);
     const makeBound = (a, b) => {
       return [ Collection.getMinValue([a, b]), Collection.getMaxValue([a, b]) ];
     };
