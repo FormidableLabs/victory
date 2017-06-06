@@ -1,4 +1,3 @@
-/*eslint no-magic-numbers: ["error", { "ignore": [-1, 0, 1, 2] }]*/
 import React from "react";
 import PropTypes from "prop-types";
 import CustomPropTypes from "../victory-util/prop-types";
@@ -215,11 +214,13 @@ export default class VictoryTooltip extends React.Component {
 
   getTransform(props) {
     const { x, y, style } = props;
-    const angle = style.angle || props.angle || this.getDefaultAngle(props);
+    const labelStyle = style || {};
+    const angle = labelStyle.angle || props.angle || this.getDefaultAngle(props);
     return angle ? `rotate(${angle} ${x} ${y})` : undefined;
 
   }
 
+  // eslint-disable-next-line complexity
   getDefaultAngle(props) {
     const { polar, labelPlacement, orientation, datum } = props;
     if (!polar || !labelPlacement || labelPlacement === "vertical") {
@@ -230,7 +231,7 @@ export default class VictoryTooltip extends React.Component {
     const labelRotation = labelPlacement === "perpendicular" ? 0 : 90;
     let angle;
     if (degrees === 0 || degrees === 180) {
-      angle = orientation === "top" && degrees === 180 ? -90 : 90;
+      angle = orientation === "top" && degrees === 180 ? 270 : 90;
     } else if (degrees > 0 && degrees < 180) {
       angle = 90 - degrees;
     } else if (degrees > 180 && degrees < 360) {

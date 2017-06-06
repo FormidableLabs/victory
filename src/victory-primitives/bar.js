@@ -1,4 +1,3 @@
-/*eslint no-magic-numbers: ["error", { "ignore": [-1, 0, 1, 2] }]*/
 import React from "react";
 import PropTypes from "prop-types";
 import Helpers from "../victory-util/helpers";
@@ -157,35 +156,14 @@ export default class Bar extends React.Component {
     return path();
   }
 
-  getHorizontalPolarBarPath() {
-    // const { datum, scale, style } = props;
-    // const radialDomain = scale.x.domain();
-    // const radialExtent = Math.abs(radialDomain[1] - radialDomain[0]);
-    // const x = datum._x1 !== undefined ? datum._x1 : datum._x;
-    // const baseR = (x / radialExtent) + radialDomain[0];
-    // const r = scale.y(baseR);
-    // const width = this.getBarWidth(props, style);
-    // const domain = scale.x.domain();
-    // const extent = Math.abs(domain[1] - domain[0]);
-    // const zeroAngle = scale.x.domain()[0];
-    // const start = (scale.y(datum._x0 || 0) / extent) * (2 * Math.PI);
-    // const end = scale.x(datum._x1 !== undefined ? datum._x1 : datum._x) / extent * (2 * Math.PI);
-    // const path = d3Shape.arc()`
-    //   .innerRadius(r - width)
-    //   .outerRadius(r + width)
-    //   .startAngle(this.transformAngle(start + zeroAngle))
-    //   .endAngle(this.transformAngle(end + zeroAngle));
-    // return path();
-  }
-
   getBarPath(props, width) {
     return this.props.horizontal ?
       this.getHorizontalBarPath(props, width) : this.getVerticalBarPath(props, width);
   }
 
   getPolarBarPath(props) {
-    return this.props.horizontal ?
-      this.getHorizontalPolarBarPath(props) : this.getVerticalPolarBarPath(props);
+    // TODO Radial bars
+    return this.getVerticalPolarBarPath(props);
   }
 
   getBarWidth(props, style) {
@@ -199,7 +177,7 @@ export default class Bar extends React.Component {
     const barRatio = 0.5;
     // eslint-disable-next-line no-magic-numbers
     const defaultWidth = data.length < 2 ? 8 : (barRatio * extent / bars);
-    return Math.round(defaultWidth);
+    return Math.max(1, Math.round(defaultWidth));
   }
 
   // Overridden in victory-core-native

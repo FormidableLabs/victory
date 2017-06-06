@@ -2,6 +2,7 @@ import React from "react";
 import { shallow } from "enzyme";
 import Bar from "src/victory-primitives/bar";
 import SvgTestHelper from "../svg-test-helper";
+import * as d3Scale from "d3-scale";
 import { merge } from "lodash";
 
 describe("victory-primitives/bar", () => {
@@ -15,7 +16,11 @@ describe("victory-primitives/bar", () => {
     y: 10,
     y0: 0,
     width: 5,
-    padding: 2
+    padding: 2,
+    scale: {
+      x: d3Scale.scaleLinear(),
+      y: d3Scale.scaleLinear()
+    }
   };
 
   it("should render a vertical bar", () => {
@@ -35,8 +40,6 @@ describe("victory-primitives/bar", () => {
   });
 
   it("should render a default bar width when one is not provided", () => {
-    // defaultWidth = (width - (2 * padding)) / data.length
-
     const props = merge({}, baseProps, {
       width: 10,
       padding: 1,
@@ -46,7 +49,7 @@ describe("victory-primitives/bar", () => {
     const wrapper = shallow(<Bar {...props}/>);
     const barShape = SvgTestHelper.getBarShape(wrapper);
 
-    expect(barShape.width).to.eql(2);
+    expect(barShape.width).to.eql(1);
   });
 
   it("should allow override of width by passing a style", () => {
