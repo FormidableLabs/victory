@@ -8,6 +8,7 @@ describe("victory", () => {
     expect(Victory.VictoryAnimation).not.to.equal(undefined);
     expect(Victory.VictoryArea).not.to.equal(undefined);
     expect(Victory.VictoryAxis).not.to.equal(undefined);
+    expect(Victory.VictoryPolarAxis).not.to.equal(undefined);
     expect(Victory.VictoryBar).not.to.equal(undefined);
     expect(Victory.VictoryCandlestick).not.to.equal(undefined);
     expect(Victory.VictoryChart).not.to.equal(undefined);
@@ -46,6 +47,7 @@ describe("victory", () => {
     expect(Victory.Domain).not.to.equal(undefined);
     expect(Victory.Events).not.to.equal(undefined);
     expect(Victory.Helpers).not.to.equal(undefined);
+    expect(Victory.LabelHelpers).not.to.equal(undefined);
     expect(Victory.Log).not.to.equal(undefined);
     expect(Victory.PropTypes).not.to.equal(undefined);
     expect(Victory.Scale).not.to.equal(undefined);
