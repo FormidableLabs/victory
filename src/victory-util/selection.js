@@ -39,7 +39,8 @@ export default {
       d * target + f : a * target + e;
   },
 
-  getDomainCoordinates(scale, domain) {
+  getDomainCoordinates(props, domain) {
+    const { scale } = props;
     domain = domain || { x: scale.x.domain(), y: scale.y.domain() };
     return {
       x: [scale.x(domain.x[0]), scale.x(domain.x[1])],

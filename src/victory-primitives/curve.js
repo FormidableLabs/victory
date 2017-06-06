@@ -11,8 +11,8 @@ import CommonProps from "./common-props";
 export default class Curve extends React.Component {
   static propTypes = {
     ...CommonProps,
-    closed: PropTypes.bool,
     interpolation: PropTypes.string,
+    openCurve: PropTypes.bool,
     origin: PropTypes.object,
     polar: PropTypes.bool
   };
@@ -40,8 +40,8 @@ export default class Curve extends React.Component {
   }
 
   getLineFunction(props) {
-    const { polar, scale, closed } = props;
-    const interpolation = polar && closed ?
+    const { polar, scale, openCurve } = props;
+    const interpolation = polar && !openCurve ?
       `${this.toNewName(props.interpolation)}Closed` : this.toNewName(props.interpolation);
     return polar ?
       d3Shape.lineRadial()
