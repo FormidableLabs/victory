@@ -1,5 +1,9 @@
 # VictoryPie Changelog
 
+## 11.1.2 (2017-06-06)
+
+- updates `victory-core`
+
 ## 11.1.1 (2017-05-24)
 
 -[146](https://github.com/FormidableLabs/victory-pie/pull/146) Rounds label positions
