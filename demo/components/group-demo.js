@@ -160,7 +160,6 @@ class App extends React.Component {
               />
             </VictoryGroup>
           </VictoryChart>
-
         </div>
       </div>
     );

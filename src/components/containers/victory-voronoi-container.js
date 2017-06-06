@@ -1,4 +1,3 @@
-/*eslint no-magic-numbers: ["error", { "ignore": [-1, 0, 1, 2] }]*/
 import PropTypes from "prop-types";
 import React from "react";
 import { VictoryContainer, VictoryTooltip, Helpers, TextSize } from "victory-core";
@@ -102,18 +101,17 @@ export const voronoiContainerMixin = (base) => class VictoryVoronoiContainer ext
 
   getLabelPosition(props, points, labelProps) {
     const { mousePosition, dimension, scale, voronoiPadding } = props;
-    const dataX = points[0]._x1 !== undefined ? points[0]._x1 : points[0]._x;
-    const dataY = points[0]._y1 !== undefined ? points[0]._y1 : points[0]._y;
-    const basePosition = {
-      x: scale.x(dataX),
-      y: scale.y(dataY)
-    };
+    const basePosition = Helpers.scalePoint(props, omit(points[0], ["_voronoiX", "_voronoiY"]));
     if (!dimension || points.length < 2) {
       return basePosition;
     }
 
     const x = dimension === "y" ? mousePosition.x : basePosition.x;
     const y = dimension === "x" ? mousePosition.y : basePosition.y;
+    if (props.polar) {
+      // TODO: Should multi-point tooltips be constrained within a circular chart?
+      return { x, y };
+    }
     const range = { x: scale.x.range(), y: scale.y.range() };
     const extent = {
       x: [Math.min(...range.x) + voronoiPadding, Math.max(...range.x) - voronoiPadding],

@@ -1,53 +1,38 @@
-import { omit, defaults, without } from "lodash";
-import { Helpers, Scale, Domain, Data } from "victory-core";
+import { assign, omit, defaults, without } from "lodash";
+import { Helpers, LabelHelpers, Scale, Domain, Data } from "victory-core";
 import { voronoi as d3Voronoi } from "d3-voronoi";
 
 export default {
   getBaseProps(props, fallbackProps) {
-    props = Helpers.modifyProps(props, fallbackProps, "voronoi");
-    const { data, style, scale, polygons, domain } = this.getCalculatedValues(props);
-    const { width, height, standalone, theme, events, sharedEvents } = props;
+    const modifiedProps = Helpers.modifyProps(props, fallbackProps, "scatter");
+    props = assign({}, modifiedProps, this.getCalculatedValues(modifiedProps));
+    const {
+      data, domain, events, height, origin, padding, polar, polygons,
+      scale, sharedEvents, standalone, style, theme, width
+    } = props;
     const initialChildProps = { parent: {
-      style: style.parent, scale, domain, data, standalone, height, width, theme
+      style: style.parent, scale, domain, data, standalone, height, width, theme,
+      origin, polar, padding
     } };
 
     return data.reduce((childProps, datum, index) => {
       const polygon = without(polygons[index], "data");
       const eventKey = datum.eventKey;
-      const x = scale.x(datum._x1 !== undefined ? datum._x1 : datum._x);
-      const y = scale.y(datum._y1 !== undefined ? datum._y1 : datum._y);
+      const { x, y } = Helpers.scalePoint(props, datum);
       const dataProps = {
-        x, y, datum, data, index, scale, polygon,
+        x, y, datum, data, index, scale, polygon, origin,
         size: props.size,
         style: this.getDataStyles(datum, style.data)
       };
 
       childProps[eventKey] = { data: dataProps };
-      const text = this.getLabelText(props, datum, index);
+      const text = LabelHelpers.getText(props, datum, index);
       if (text !== undefined && text !== null || events || sharedEvents) {
-        childProps[eventKey].labels = this.getLabelProps(dataProps, text, style);
+        childProps[eventKey].labels = LabelHelpers.getProps(props, index);
       }
 
       return childProps;
     }, initialChildProps);
-  },
-
-  getLabelProps(dataProps, text, calculatedStyle) {
-    const { x, y, index, scale, datum, data } = dataProps;
-    const labelStyle = this.getLabelStyle(calculatedStyle.labels, dataProps) || {};
-    return {
-      style: labelStyle,
-      x,
-      y: y - (labelStyle.padding || 0),
-      text,
-      index,
-      scale,
-      datum,
-      data,
-      textAnchor: labelStyle.textAnchor,
-      verticalAnchor: labelStyle.verticalAnchor || "end",
-      angle: labelStyle.angle
-    };
   },
 
   getCalculatedValues(props) {
@@ -67,16 +52,22 @@ export default {
       x: Scale.getBaseScale(props, "x").domain(domain.x).range(range.x),
       y: Scale.getBaseScale(props, "y").domain(domain.y).range(range.y)
     };
-    const voronoi = this.getVoronoi(range, scale);
+    const voronoi = this.getVoronoi(props, range, scale);
     const polygons = voronoi.polygons(data);
-    return { domain, data, scale, style, polygons };
+    const origin = props.polar ? props.origin || Helpers.getPolarOrigin(props) : undefined;
+    return { domain, data, scale, style, polygons, origin };
   },
 
-  getVoronoi(range, scale) {
+  getVoronoi(props, range, scale) {
     const minRange = [Math.min(...range.x), Math.min(...range.y)];
     const maxRange = [Math.max(...range.x), Math.max(...range.y)];
+    const angleAccessor = (d) => {
+      const x = scale.x(d._x1 !== undefined ? d._x1 : d._x);
+      return -1 * x + Math.PI / 2;
+    };
+    const xAccessor = (d) => scale.x(d._x1 !== undefined ? d._x1 : d._x);
     return d3Voronoi()
-      .x((d) => scale.x(d._x1 !== undefined ? d._x1 : d._x))
+      .x((d) => props.polar ? angleAccessor(d) : xAccessor(d))
       .y((d) => scale.y(d._y1 !== undefined ? d._y1 : d._y))
       .extent([minRange, maxRange]);
   },
@@ -86,20 +77,5 @@ export default {
       "_x", "_y", "name", "label"
     ]);
     return defaults({}, stylesFromData, style);
-  },
-
-  getLabelText(props, datum, index) {
-    if (datum.label !== undefined) {
-      return datum.label;
-    }
-    return Array.isArray(props.labels) ? props.labels[index] : props.labels;
-  },
-
-  getLabelStyle(style, datum) {
-    return defaults({}, {
-      angle: datum.angle,
-      textAnchor: datum.textAnchor,
-      verticalAnchor: datum.verticalAnchor
-    }, style);
   }
 };

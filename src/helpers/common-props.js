@@ -73,12 +73,18 @@ export default {
     groupComponent: PropTypes.element,
     height: CustomPropTypes.nonNegative,
     name: PropTypes.string,
+    origin: PropTypes.shape({ x: PropTypes.number, y: PropTypes.number }),
     padding: PropTypes.oneOfType([
       PropTypes.number,
       PropTypes.shape({
         top: PropTypes.number, bottom: PropTypes.number,
         left: PropTypes.number, right: PropTypes.number
       })
+    ]),
+    polar: PropTypes.bool,
+    range: PropTypes.oneOfType([
+      CustomPropTypes.domain,
+      PropTypes.shape({ x: CustomPropTypes.domain, y: CustomPropTypes.domain })
     ]),
     scale: PropTypes.oneOfType([
       CustomPropTypes.scale,

@@ -112,7 +112,7 @@ export default class VictoryStack extends React.Component {
       y: Wrapper.getCategories(props, "y")
     };
     const colorScale = props.colorScale;
-    return { datasets, categories, range, domain, horizontal, scale, style, colorScale };
+    return { datasets, categories, range, domain, horizontal, scale, style, colorScale, role };
   }
 
   addLayoutData(props, calculatedProps, datasets, index) { // eslint-disable-line max-params
@@ -135,7 +135,7 @@ export default class VictoryStack extends React.Component {
   }
 
   getChildProps(props, calculatedProps) {
-    const { categories, domain, scale, horizontal } = calculatedProps;
+    const { categories, domain, range, scale, horizontal } = calculatedProps;
     return {
       height: props.height,
       width: props.width,
@@ -144,6 +144,7 @@ export default class VictoryStack extends React.Component {
       theme: props.theme,
       categories,
       domain,
+      range,
       scale,
       horizontal
     };
@@ -179,7 +180,8 @@ export default class VictoryStack extends React.Component {
         labelComponent: props.labelComponent || child.props.labelComponent,
         style,
         colorScale: this.getColorScale(props, child),
-        data
+        data,
+        polar: props.polar
       }, childProps));
     });
   }
@@ -190,10 +192,10 @@ export default class VictoryStack extends React.Component {
   }
 
   getContainerProps(props, calculatedProps) {
-    const { width, height, standalone, theme } = props;
-    const { domain, scale, style } = calculatedProps;
+    const { width, height, standalone, theme, polar } = props;
+    const { domain, scale, style, origin } = calculatedProps;
     return {
-      domain, scale, width, height, standalone, theme, style: style.parent
+      domain, scale, width, height, standalone, theme, style: style.parent, polar, origin
     };
   }
 

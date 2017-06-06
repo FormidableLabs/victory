@@ -47,6 +47,7 @@ class VictoryArea extends React.Component {
   static role = "area";
   static continuous = true;
   static defaultTransitions = DefaultTransitions.continuousTransitions();
+  static defaultPolarTransitions = DefaultTransitions.continuousPolarTransitions();
   static getDomain = Domain.getDomainWithZero.bind(Domain);
   static getData = Data.getData.bind(Data);
   static getBaseProps = partialRight(AreaHelpers.getBaseProps.bind(AreaHelpers), fallbackProps);

@@ -1,4 +1,3 @@
-/*eslint no-magic-numbers: ["error", { "ignore": [0, 1, 2] }]*/
 import { assign, defaults, flatten, isFunction, partialRight, uniq, some } from "lodash";
 import React from "react";
 import Axis from "./axis";
@@ -44,10 +43,10 @@ export default {
     const childDomain = this.getDomainFromChildren(props, axis, childComponents);
     const min = Collection.getMinValue([...dataDomain, ...childDomain]);
     const max = Collection.getMaxValue([...dataDomain, ...childDomain]);
-    const domainPadding = this.getDefaultDomainPadding(props, axis, childComponents);
+    const domainPadding = props.polar ?
+      0 : this.getDefaultDomainPadding(props, axis, childComponents);
     const paddedDomain = Domain.padDomain([min, max], assign({ domainPadding }, props), axis);
     return Domain.cleanDomain(paddedDomain, props, axis);
-
   },
 
   setAnimationState(props, nextProps) {
@@ -66,7 +65,7 @@ export default {
         return Array.isArray(child) ? some(child, check) : check(child);
       };
 
-      const continuous = some(oldChildren, (child) => {
+      const continuous = !props.polar && some(oldChildren, (child) => {
         return isContinuous(child) || child.props.children && isContinuous(child.props.children);
       });
       const {
@@ -139,13 +138,16 @@ export default {
     const horizontal = props && props.horizontal || horizontalChildren.length > 0;
     const currentAxis = Axis.getCurrentAxis(axis, horizontal);
 
+    const parentData = props.data ? Data.getData(props, axis) : undefined;
+    const { polar, startAngle, endAngle } = props;
+    const parentProps = parentData ?
+      { data: parentData, polar, startAngle, endAngle } : { polar, startAngle, endAngle };
+
     while (childrenLength > 0) {
       const child = children[--childrenLength];
 
       if (child.type && isFunction(child.type.getDomain)) {
-        const parentData = props.data ? Data.getData(props, axis) : undefined;
-        const sharedProps = parentData ?
-          assign({}, child.props, { data: parentData }) : child.props;
+        const sharedProps = assign({}, child.props, parentProps);
         const childDomain = child.props && child.type.getDomain(sharedProps, currentAxis);
         if (childDomain) {
           const childDomainLength = childDomain.length;
@@ -161,7 +163,6 @@ export default {
         }
       }
     }
-
     const min = Collection.getMinValue(childDomains);
     const max = Collection.getMaxValue(childDomains);
     return childDomains.length === 0 ?
@@ -236,15 +237,27 @@ export default {
     return color || colors[index % colors.length];
   },
 
+  getWidth(props) {
+    const { datasets, scale, horizontal } = props;
+    const range = horizontal ? scale.y.range() : scale.x.range();
+    const extent = Math.abs(range[1] - range[0]);
+    const bars = datasets.length * (datasets[0].length || 1) + 2;
+    const barRatio = 0.5;
+    return { width: Math.round(barRatio * extent / bars) };
+  },
+
   getChildStyle(child, index, calculatedProps) {
-    const { style } = calculatedProps;
-    const role = child.type && child.type.role;
-    const defaultFill = role === "stack" ?
+    const { style, role } = calculatedProps;
+    const childRole = child.type && child.type.role;
+    const defaultFill = childRole === "stack" ?
       undefined : this.getColor(calculatedProps, child, index);
-    const defaultColor = role === "line" ?
+    const defaultColor = childRole === "line" ?
       { fill: "none", stroke: defaultFill } : { fill: defaultFill };
     const childStyle = child.props.style || {};
-    const dataStyle = defaults({}, childStyle.data, assign({}, style.data, defaultColor));
+    const dataWidth = role === "stack" ? {} : this.getWidth(calculatedProps);
+    const dataStyle = defaults(
+      {}, childStyle.data, assign({}, dataWidth, style.data, defaultColor)
+    );
     const labelsStyle = defaults({}, childStyle.labels, style.labels);
     return {
       parent: style.parent,

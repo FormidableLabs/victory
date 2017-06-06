@@ -208,7 +208,7 @@ class App extends React.Component {
           <VictoryChart style={chartStyle}>
             <VictoryBar
               groupComponent={<VictoryClipContainer/>}
-              style={{ data: { fill: "tomato", width: 20 } }}
+              style={{ data: { fill: "tomato" } }}
               data={[
                 { x: 1, y: 1 },
                 { x: 2, y: 2 },
@@ -544,7 +544,7 @@ class App extends React.Component {
             }]}
           >
             <VictoryBar name="bar"
-              style={{ data: { width: 15, fill: "green" } }}
+              style={{ data: { fill: "green" } }}
               data={[
                 { x: 1, y: 1 },
                 { x: 2, y: 2 },
@@ -567,7 +567,7 @@ class App extends React.Component {
             />
           </VictoryChart>
           <VictoryChart style={chartStyle} domainPadding={{ x: 50 }} animate={{ duration: 2000 }}>
-            <VictoryGroup offset={15}>
+            <VictoryGroup offset={20} style={{ data: { width: 15 } }}>
               <VictoryStack colorScale={"red"}>
                 {this.getBarData().map((data, index) => {
                   return <VictoryBar key={index} data={data}/>;

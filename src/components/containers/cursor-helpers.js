@@ -8,6 +8,7 @@ const CursorHelpers = {
     const { onChange, dimension, domain } = targetProps;
     const cursorSVGPosition = Selection.getSVGEventCoordinates(evt);
     let cursorValue = Selection.getDataCoordinates(
+      targetProps,
       targetProps.scale,
       cursorSVGPosition.x,
       cursorSVGPosition.y

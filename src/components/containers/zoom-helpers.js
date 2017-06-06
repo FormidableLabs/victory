@@ -81,7 +81,7 @@ const Helpers = {
       x: props.scale.x.domain(originalDomain.x),
       y: props.scale.y.domain(originalDomain.y)
     };
-    return Selection.getDataCoordinates(originalScale, x, y);
+    return Selection.getDataCoordinates(props, originalScale, x, y);
   },
 
   /**

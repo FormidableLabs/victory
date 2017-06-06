@@ -91,14 +91,18 @@ export default {
   },
 
   getOrigin(domain) {
-    const getSingleOrigin = () => {
-      const domainMin = Math.min(...domain);
-      const domainMax = Math.max(...domain);
+    const getSingleOrigin = (d) => {
+      const domainMin = Math.min(...d);
+      const domainMax = Math.max(...d);
       return domainMax < 0 ? domainMax : Math.max(0, domainMin);
     };
 
-    return Collection.containsDates(domain) ?
-      new Date(Math.min(...domain)) : getSingleOrigin();
+    return {
+      x: Collection.containsDates(domain.x) ?
+        new Date(Math.min(...domain.x)) : getSingleOrigin(domain.x),
+      y: Collection.containsDates(domain.y) ?
+        new Date(Math.min(...domain.y)) : getSingleOrigin(domain.y)
+    };
   },
 
   getOriginSign(origin, domain) {

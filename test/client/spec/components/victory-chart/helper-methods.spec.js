@@ -5,6 +5,7 @@ import React from "react";
 import { VictoryAxis, VictoryLine, VictoryBar } from "src/index";
 import { Log, Data } from "victory-core";
 import Wrapper from "src/helpers/wrapper";
+import { assign } from "lodash";
 
 describe("victory-chart/helpers-methods", () => {
   const getVictoryLine = (props) => React.createElement(VictoryLine, props);
@@ -101,9 +102,10 @@ describe("victory-chart/helpers-methods", () => {
 
     it("calculates a domain from child components", () => {
       const props = {};
+      const polarProps = { polar: undefined, startAngle: undefined, endAngle: undefined };
       const domainResultX = Helpers.getDomain(props, "x", childComponents);
       expect(Wrapper.getDomain).calledWith(props, "x", childComponents);
-      expect(victoryLine.type.getDomain).calledWith(victoryLine.props);
+      expect(victoryLine.type.getDomain).calledWith(assign({}, victoryLine.props, polarProps));
       expect(domainResultX).to.eql(victoryLine.props.domain);
     });
   });

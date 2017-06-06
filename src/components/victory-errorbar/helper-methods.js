@@ -1,13 +1,14 @@
-import { assign, omit, defaults, isArray, flatten, sortBy, pick } from "lodash";
-import { Helpers, Scale, Domain, Data } from "victory-core";
+import { assign, omit, defaults, isArray, flatten, sortBy } from "lodash";
+import { Helpers, LabelHelpers, Scale, Domain, Data } from "victory-core";
 
 export default {
   getBaseProps(props, fallbackProps) {
     props = Helpers.modifyProps(props, fallbackProps, "errorbar");
-    const { data, style, scale, domain } = this.getCalculatedValues(props, fallbackProps);
-    const { groupComponent, height, width, borderWidth, standalone, theme } = props;
+    const { data, style, scale, domain, origin } = this.getCalculatedValues(props, fallbackProps);
+    const { groupComponent, height, width, borderWidth, standalone, theme, polar, padding } = props;
     const initialChildProps = { parent: {
-      domain, style: style.parent, scale, data, height, width, standalone, theme
+      domain, scale, data, height, width, standalone, theme, polar, origin,
+      padding, style: style.parent
     } };
 
     return data.reduce((childProps, datum, index) => {
@@ -25,7 +26,7 @@ export default {
       childProps[eventKey] = {
         data: dataProps
       };
-      const text = this.getLabelText(props, datum, index);
+      const text = LabelHelpers.getText(props, datum, index);
       if (text !== undefined && text !== null || props.events || props.sharedEvents) {
         childProps[eventKey].labels = this.getLabelProps(dataProps, text, style);
       }
@@ -34,11 +35,11 @@ export default {
     }, initialChildProps);
   },
 
-  getLabelProps(dataProps, text, calculatedStyle) {
+  getLabelProps(dataProps, text, style) {
     const { x, index, scale, errorY } = dataProps;
     const error = errorY && Array.isArray(errorY) ? errorY[0] : errorY;
     const y = error || dataProps.y;
-    const labelStyle = this.getLabelStyle(calculatedStyle.labels, dataProps) || {};
+    const labelStyle = style.labels || {};
     return {
       style: labelStyle,
       y: y - (labelStyle.padding || 0),
@@ -211,8 +212,8 @@ export default {
       x: Scale.getBaseScale(props, "x").domain(domain.x).range(range.x),
       y: Scale.getBaseScale(props, "y").domain(domain.y).range(range.y)
     };
-
-    return { domain, data, scale, style };
+    const origin = props.polar ? props.origin || Helpers.getPolarOrigin(props) : undefined;
+    return { domain, data, scale, style, origin };
   },
 
   getDataStyles(datum, style) {
@@ -220,20 +221,5 @@ export default {
       "x", "y", "name", "errorX", "errorY", "eventKey"
     ]);
     return defaults({}, stylesFromData, style);
-  },
-
-  getLabelText(props, datum, index) {
-    if (datum.label !== undefined) {
-      return datum.label;
-    }
-    return Array.isArray(props.labels) ? props.labels[index] : props.labels;
-  },
-
-  getLabelStyle(labelStyle, dataProps) {
-    labelStyle = labelStyle || {};
-    const { size, style } = dataProps;
-    const matchedStyle = pick(style, ["opacity", "fill"]);
-    const padding = labelStyle.padding || size * 0.25; // eslint-disable-line no-magic-numbers
-    return defaults({}, labelStyle, matchedStyle, { padding }) || {};
   }
 };

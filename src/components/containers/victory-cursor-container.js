@@ -1,4 +1,3 @@
-/*eslint no-magic-numbers: ["error", { "ignore": [0, 1, 2] }]*/
 import PropTypes from "prop-types";
 import React from "react";
 import { VictoryContainer, VictoryLabel, Line, Selection, Helpers } from "victory-core";
@@ -96,7 +95,7 @@ export const cursorContainerMixin = (base) => class VictoryCursorContainer exten
     if (!cursorValue) { return []; }
 
     const newElements = [];
-    const domainCoordinates = Selection.getDomainCoordinates(scale, domain);
+    const domainCoordinates = Selection.getDomainCoordinates(props, domain);
 
     const cursorCoordinates = {
       x: scale.x(cursorValue.x),

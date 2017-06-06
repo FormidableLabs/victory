@@ -1,15 +1,15 @@
-/*eslint no-magic-numbers: ["error", { "ignore": [0, 1] }]*/
-import { assign, pick, sortBy, omit, defaults } from "lodash";
-import { Helpers, Scale, Domain, Data } from "victory-core";
+import { assign, sortBy, omit, defaults } from "lodash";
+import { Helpers, LabelHelpers, Scale, Domain, Data } from "victory-core";
 
 export default {
   getBaseProps(props, fallbackProps) { // eslint-disable-line max-statements
     props = Helpers.modifyProps(props, fallbackProps, "candlestick");
     const calculatedValues = this.getCalculatedValues(props);
-    const { data, style, scale, domain } = calculatedValues;
-    const { groupComponent, width, height, padding, standalone, theme } = props;
+    const { data, style, scale, domain, origin } = calculatedValues;
+    const { groupComponent, width, height, padding, standalone, theme, polar } = props;
     const initialChildProps = { parent: {
-      domain, scale, width, height, data, standalone, theme, style: style.parent
+      domain, scale, width, height, data, standalone, theme, polar, origin,
+      style: style.parent, padding
     } };
 
     return data.reduce((childProps, datum, index) => {
@@ -22,13 +22,13 @@ export default {
       const dataStyle = this.getDataStyles(datum, style.data, props);
       const dataProps = {
         x, y, y1, y2, candleHeight, scale, data, datum, groupComponent,
-        index, style: dataStyle, padding, width
+        index, style: dataStyle, padding, width, polar, origin
       };
 
       childProps[eventKey] = {
         data: dataProps
       };
-      const text = this.getLabelText(props, datum, index);
+      const text = LabelHelpers.getText(props, datum, index);
       if (text !== undefined && text !== null || props.events || props.sharedEvents) {
         childProps[eventKey].labels = this.getLabelProps(dataProps, text, style);
       }
@@ -37,9 +37,9 @@ export default {
     }, initialChildProps);
   },
 
-  getLabelProps(dataProps, text, calculatedStyle) {
+  getLabelProps(dataProps, text, style) {
     const { x, y1, index, scale, datum, data } = dataProps;
-    const labelStyle = this.getLabelStyle(calculatedStyle.labels, dataProps) || {};
+    const labelStyle = style.labels || {};
     return {
       style: labelStyle,
       y: y1 - (labelStyle.padding || 0),
@@ -56,7 +56,7 @@ export default {
   },
 
   getCalculatedValues(props) {
-    const { theme } = props;
+    const { theme, polar } = props;
     const defaultStyle = theme && theme.candlestick && theme.candlestick.style ?
       theme.candlestick.style : {};
     const style = Helpers.getStyles(props.style, defaultStyle);
@@ -73,7 +73,8 @@ export default {
       x: Scale.getBaseScale(props, "x").domain(domain.x).range(range.x),
       y: Scale.getBaseScale(props, "y").domain(domain.y).range(range.y)
     };
-    return { domain, data, scale, style };
+    const origin = polar ? props.origin || Helpers.getPolarOrigin(props) : undefined;
+    return { domain, data, scale, style, origin };
   },
 
   getData(props) {
@@ -164,20 +165,5 @@ export default {
     const strokeColor = datum.stroke || style.stroke;
     const stroke = this.isTransparent(strokeColor) ? fill : strokeColor || "black";
     return defaults({}, stylesFromData, { stroke, fill }, style);
-  },
-
-  getLabelText(props, datum, index) {
-    if (datum.label !== undefined) {
-      return datum.label;
-    }
-    return Array.isArray(props.labels) ? props.labels[index] : props.labels;
-  },
-
-  getLabelStyle(labelStyle, dataProps) {
-    labelStyle = labelStyle || {};
-    const { size, style } = dataProps;
-    const matchedStyle = pick(style, ["opacity", "fill"]);
-    const padding = labelStyle.padding || size * 0.25; // eslint-disable-line no-magic-numbers
-    return defaults({}, labelStyle, matchedStyle, { padding });
   }
 };

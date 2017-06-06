@@ -1,35 +1,36 @@
-/*eslint no-magic-numbers: ["error", { "ignore": [-1, 0, 1, 2] }]*/
-import { assign, defaults } from "lodash";
-import { Helpers, Data, Domain, Scale } from "victory-core";
+import { assign } from "lodash";
+import { Helpers, LabelHelpers, Data, Domain, Scale } from "victory-core";
 
 export default {
 
   getBaseProps(props, fallbackProps) {
-    props = Helpers.modifyProps(props, fallbackProps, "area");
-    const calculatedValues = this.getCalculatedValues(props);
-    const { scale, style, data, domain } = calculatedValues;
+    const modifiedProps = Helpers.modifyProps(props, fallbackProps, "area");
+    props = assign({}, modifiedProps, this.getCalculatedValues(modifiedProps));
     const {
-      standalone, interpolation, events, sharedEvents, width, height, groupComponent, theme
+      data, domain, events, groupComponent, height, interpolation, origin, padding, polar,
+      scale, sharedEvents, standalone, style, theme, width
     } = props;
-
     const initialChildProps = {
-      parent: { style: style.parent, width, height, scale, data, domain, standalone, theme },
+      parent: {
+        style: style.parent, width, height, scale, data, domain,
+        standalone, theme, polar, origin, padding
+      },
       all: {
-        data: { scale, data, interpolation, groupComponent, style: style.data }
+        data: { polar, origin, scale, data, interpolation, groupComponent, style: style.data }
       }
     };
     return data.reduce((childProps, datum, index) => {
-      const text = this.getLabelText(props, datum, index);
+      const text = LabelHelpers.getText(props, datum, index);
       if (text !== undefined && text !== null || events || sharedEvents) {
         const eventKey = datum.eventKey || index;
-        childProps[eventKey] = { labels: this.getLabelProps(text, index, calculatedValues) };
+        childProps[eventKey] = { labels: LabelHelpers.getProps(props, index) };
       }
       return childProps;
     }, initialChildProps);
   },
 
   getCalculatedValues(props) {
-    const { theme } = props;
+    const { theme, polar } = props;
     const defaultStyles = theme && theme.area && theme.area.style ? theme.area.style : {};
     const style = Helpers.getStyles(props.style, defaultStyles);
     const range = {
@@ -44,58 +45,10 @@ export default {
       x: Scale.getBaseScale(props, "x").domain(domain.x).range(range.x),
       y: Scale.getBaseScale(props, "y").domain(domain.y).range(range.y)
     };
-
+    const origin = polar ? props.origin || Helpers.getPolarOrigin(props) : undefined;
     const data = this.getDataWithBaseline(props, scale);
-    return { style, data, scale, domain };
+    return { style, data, scale, domain, origin };
   },
-
-  getLabelProps(text, index, calculatedProps) {
-    const { scale, data, style } = calculatedProps;
-    const datum = data[index];
-    const { x, y } = this.getLabelPosition(datum, scale);
-    const labelStyle = this.getLabelStyle(style) || {};
-    const sign = (datum._y1 || datum._y) < 0 ? -1 : 1;
-    return {
-      style: labelStyle,
-      x,
-      y: y - sign * (labelStyle.padding || 0),
-      text,
-      index,
-      scale,
-      datum,
-      data,
-      textAnchor: labelStyle.textAnchor,
-      verticalAnchor: labelStyle.verticalAnchor || "end",
-      angle: labelStyle.angle
-    };
-  },
-
-  getLabelText(props, datum, index) {
-    if (datum.label !== undefined) {
-      return datum.label;
-    }
-    return Array.isArray(props.labels) ? props.labels[index] : props.labels;
-  },
-
-  getLabelPosition(datum, scale) {
-    return {
-      x: scale.x(datum._x1 !== undefined ? datum._x1 : datum._x),
-      y: scale.y(datum._y1 !== undefined ? datum._y1 : datum._y)
-    };
-  },
-
-  getLabelStyle(style) {
-    const dataStyle = style.data || {};
-    const labelStyle = style.labels || {};
-    // match labels styles to data style by default (fill, opacity, others?)
-    const opacity = dataStyle.opacity;
-    // match label color to data color if it is not given.
-    // use fill instead of stroke for text
-    const fill = dataStyle.stroke;
-    const padding = labelStyle.padding || 0;
-    return defaults({}, labelStyle, { opacity, fill, padding });
-  },
-
 
   getDataWithBaseline(props, scale) {
     let data = Data.getData(props);

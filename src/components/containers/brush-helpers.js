@@ -1,4 +1,3 @@
-/*eslint no-magic-numbers: ["error", { "ignore": [0, 1, 2] }]*/
 import { Selection } from "victory-core";
 import { assign, throttle, isFunction, isEqual, defaults } from "lodash";
 import { attachId } from "../../helpers/event-handlers.js";
@@ -15,11 +14,11 @@ const Helpers = {
   },
 
   getDomainBox(props, fullDomain, selectedDomain) {
-    const { dimension, scale } = props;
+    const { dimension } = props;
     fullDomain = defaults({}, fullDomain, props.domain);
     selectedDomain = defaults({}, selectedDomain, fullDomain);
-    const fullCoordinates = Selection.getDomainCoordinates(scale, fullDomain);
-    const selectedCoordinates = Selection.getDomainCoordinates(scale, selectedDomain);
+    const fullCoordinates = Selection.getDomainCoordinates(props, fullDomain);
+    const selectedCoordinates = Selection.getDomainCoordinates(props, selectedDomain);
 
     return {
       x1: dimension !== "y" ? Math.min(...selectedCoordinates.x) : Math.min(...fullCoordinates.x),
