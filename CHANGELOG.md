@@ -2,10 +2,10 @@
 
 ## 0.21.0 (2017-06-06)
 
-[victory-core/240](https://github.com/FormidableLabs/victory-core/pull/240) Polar Charts
-[victory-chart/466](https://github.com/FormidableLabs/victory-chart/pull/466) Polar Charts
-[victory-chart/475](https://github.com/FormidableLabs/victory-chart/pull/475) Brush and Zoom fixes
-[victory-chart/476](https://github.com/FormidableLabs/victory-chart/pull/476) Zoom Improvements
+  - [victory-core/240](https://github.com/FormidableLabs/victory-core/pull/240) Polar Charts
+  - [victory-chart/466](https://github.com/FormidableLabs/victory-chart/pull/466) Polar Charts
+  - [victory-chart/475](https://github.com/FormidableLabs/victory-chart/pull/475) Brush and Zoom fixes
+  - [victory-chart/476](https://github.com/FormidableLabs/victory-chart/pull/476) Zoom Improvements
 
 **Breaking Changes**
   - Removes default bar width from themes
