@@ -31,7 +31,7 @@
     "builder-victory-component": "^4.0.2",
     "d3-shape": "^1.0.0",
     "lodash": "^4.17.4",
-    "victory-core": "^15.1.0"
+    "victory-core": "^16.0.0"
   },
   "devDependencies": {
     "@kadira/storybook": "^1.25.0",
