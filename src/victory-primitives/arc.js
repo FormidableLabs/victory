@@ -40,20 +40,16 @@ export default class Arc extends React.Component {
     return Helpers.evaluateStyle(assign({ stroke: "black", fill: "none" }, style), datum, active);
   }
 
-  degreesToRadians(degrees) {
-    return degrees * (Math.PI / 180);
-  }
-
   getArcPath(props) {
     const { cx, cy, r, startAngle, endAngle, closedPath } = props;
     // Always draw the path as two arcs so that complete circles may be rendered.
     const halfAngle = (Math.abs(endAngle - startAngle) / 2) + startAngle;
-    const x1 = cx + r * Math.cos(this.degreesToRadians(startAngle));
-    const y1 = cy - r * Math.sin(this.degreesToRadians(startAngle));
-    const x2 = cx + r * Math.cos(this.degreesToRadians(halfAngle));
-    const y2 = cy - r * Math.sin(this.degreesToRadians(halfAngle));
-    const x3 = cx + r * Math.cos(this.degreesToRadians(endAngle));
-    const y3 = cy - r * Math.sin(this.degreesToRadians(endAngle));
+    const x1 = cx + r * Math.cos(Helpers.degreesToRadians(startAngle));
+    const y1 = cy - r * Math.sin(Helpers.degreesToRadians(startAngle));
+    const x2 = cx + r * Math.cos(Helpers.degreesToRadians(halfAngle));
+    const y2 = cy - r * Math.sin(Helpers.degreesToRadians(halfAngle));
+    const x3 = cx + r * Math.cos(Helpers.degreesToRadians(endAngle));
+    const y3 = cy - r * Math.sin(Helpers.degreesToRadians(endAngle));
     const largerArcFlag1 = halfAngle - startAngle <= 180 ? 0 : 1;
     const largerArcFlag2 = endAngle - halfAngle <= 180 ? 0 : 1;
     const arcStart = closedPath ? ` M ${cx}, ${cy} L ${x1}, ${y1}` : `M ${x1}, ${y1}`;

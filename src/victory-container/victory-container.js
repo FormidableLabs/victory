@@ -16,6 +16,8 @@ export default class VictoryContainer extends React.Component {
     desc: PropTypes.string,
     events: PropTypes.object,
     height: PropTypes.number,
+    origin: PropTypes.shape({ x: PropTypes.number, y: PropTypes.number }),
+    polar: PropTypes.bool,
     portalComponent: PropTypes.element,
     responsive: PropTypes.bool,
     style: PropTypes.object,
