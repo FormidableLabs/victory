@@ -44,7 +44,8 @@ export default {
     const childDomain = this.getDomainFromChildren(props, axis, childComponents);
     const min = Collection.getMinValue([...dataDomain, ...childDomain]);
     const max = Collection.getMaxValue([...dataDomain, ...childDomain]);
-    const domainPadding = this.getDefaultDomainPadding(props, axis, childComponents);
+    const domainPadding = props.polar ?
+      0 : this.getDefaultDomainPadding(props, axis, childComponents);
     const paddedDomain = Domain.padDomain([min, max], assign({ domainPadding }, props), axis);
     return Domain.cleanDomain(paddedDomain, props, axis);
   },
