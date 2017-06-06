@@ -1,4 +1,4 @@
-import { flatten, includes, isPlainObject } from "lodash";
+import { flatten, includes, isPlainObject, sortedUniq } from "lodash";
 import Data from "./data";
 import Scale from "./scale";
 import Helpers from "./helpers";
@@ -120,22 +120,34 @@ export default {
       const adjustedMax = max === 0 ? 1 : max;
       return [0, adjustedMax];
     }
-    return [min, max];
+    const domain = [min, max];
+    const angularRange = Math.abs((props.startAngle || 0) - (props.endAngle || 360));
+    return props.polar && axis === "x" && angularRange === 360 ?
+      this.getSymmetricDomain(domain, allData) : domain;
+  },
+
+  getSymmetricDomain(domain, data) {
+    const processedData = sortedUniq(data.sort((a, b) => a - b));
+    const step = processedData[1] - processedData[0];
+    return [domain[0], domain[1] + step];
   },
 
   /**
    * Returns a domain based tickValues
    * @param {Object} props: the props object
+   * @param {String} axis: either x or y
    * @returns {Array} returns a domain from tickValues
    */
-  getDomainFromTickValues(props) {
+  getDomainFromTickValues(props, axis) {
     let domain;
     if (Helpers.stringTicks(props)) {
       domain = [1, props.tickValues.length];
     } else {
       // coerce ticks to numbers
       const ticks = props.tickValues.map((value) => +value);
-      domain = [Collection.getMinValue(ticks), Collection.getMaxValue(ticks)];
+      const initialDomain = [Collection.getMinValue(ticks), Collection.getMaxValue(ticks)];
+      domain = props.polar && axis === "x" ?
+        this.getSymmetricDomain(initialDomain, ticks) : initialDomain;
     }
     if (Helpers.isVertical(props)) {
       domain.reverse();

@@ -1,6 +1,6 @@
 import React from "react";
 import PropTypes from "prop-types";
-import { defaults, isFunction } from "lodash";
+import { assign, defaults, isFunction } from "lodash";
 import ClipPath from "../victory-primitives/clip-path";
 
 export default class VictoryClipContainer extends React.Component {
@@ -20,6 +20,9 @@ export default class VictoryClipContainer extends React.Component {
     clipPathComponent: PropTypes.element,
     clipWidth: PropTypes.number,
     events: PropTypes.object,
+    origin: PropTypes.shape({ x: PropTypes.number, y: PropTypes.number }),
+    polar: PropTypes.bool,
+    radius: PropTypes.bool,
     style: PropTypes.object,
     transform: PropTypes.string,
     translateX: PropTypes.number,
@@ -71,12 +74,9 @@ export default class VictoryClipContainer extends React.Component {
 
   // Overridden in victory-core-native
   renderClipComponent(props, clipId) {
-    const {
-      clipPadding, translateX, translateY, clipHeight, clipWidth, clipPathComponent
-    } = props;
     return React.cloneElement(
-      clipPathComponent,
-      { clipPadding, clipId, translateX, translateY, clipWidth, clipHeight }
+      props.clipPathComponent,
+      assign({}, props, { clipId })
     );
   }
 

@@ -105,8 +105,7 @@ export default {
       data: {
         fill: blueGrey700,
         padding,
-        strokeWidth: 0,
-        width: 5
+        strokeWidth: 0
       },
       labels: baseLabelStyles
     }

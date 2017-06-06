@@ -1,6 +1,29 @@
 VictoryCore Changelog
 =====================
 
+## 16.0.0 (2017-06-06)
+
+-[240](https://github.com/FormidableLabs/victory-core/pull/240) Polar Charts
+
+*Breaking Changes*
+  - Removes default bar width from themes
+  - Changes how default bar widths are calculated
+  - Changes render methods for `Area`, `Bar` and `Curve` primitives (Breaking change for `victory-native` and others extending primitives)
+  - Changes function sigintures for `Selection.getDomainCoordinates` and `Selection.getDataCoordinates` (Breaking change for `victory-native`)
+
+*Features*
+  - Adds a new `Arc` primitive which is used for polar axes and grid lines
+  - Adds `polar` and `origin` props to rendered components (primitives, `VictoryLabel`, `VictoryClipContainer` `VictoryContainer`)
+  - Supports radial areas for `Area` and `Curve`. These props have no effect for cartesian charts
+  - Adds an `openPath` prop for `Curve`. This prop is used to determine whether radial curves should be closed. Curves are closed by default, but when this prop is set to true they will not be. This prop has no effect for cartesian charts
+  - Supports polar bars in the `Bar` primitive. (Angular bars only, radial bars are not yet supported)
+  - Adds a `labelPlacement` prop to `VictoryLabel` and `VictoryTooltip`. Values are "parallel", "perpendicular", and "vertical". These flags help to appropriately position labels in polar charts. Polar charts will use "parallel" label placement by default. Cartesian charts will only use "'vertical" placement.
+  - Adds support for circular clipPath
+  - Adds support for polar animation transitions for continuous chart types. During `onLoad`, all points grow from zero. During `onEnter` and `onExit` new points are added / removed at the location of an adjacent point to keep path interpolation as smooth as possible. This implementation obviates the need for radial clip-path animations for these chart types.
+  - `before` and `after` callbacks for `onLoad`, `onEnter` and `onExit` are now called with `datum`, `index`, and `data` instead of only `datum`.
+  - Adds `LabelHelpers`
+  - Adds helper methods for polar charts
+
 ## 15.2.0 (2017-05-22)
 
 -[244](https://github.com/FormidableLabs/victory-core/pull/244) Passes missing `datum` and `index` props to `Flyout`

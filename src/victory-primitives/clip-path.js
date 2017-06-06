@@ -19,6 +19,9 @@ export default class ClipPath extends React.Component {
       })
     ]),
     clipWidth: CustomPropTypes.nonNegative,
+    origin: PropTypes.shape({ x: PropTypes.number, y: PropTypes.number }),
+    polar: PropTypes.bool,
+    radius: PropTypes.number,
     translateX: PropTypes.number,
     translateY: PropTypes.number
   };
@@ -48,14 +51,16 @@ export default class ClipPath extends React.Component {
   }
 
   calculateAttributes(props) {
-    const { clipWidth = 0, clipHeight = 0, translateX = 0, translateY = 0 } = props;
+    const {
+      polar, origin, clipWidth = 0, clipHeight = 0, translateX = 0, translateY = 0
+    } = props;
     const clipPadding = Helpers.getPadding({ padding: props.clipPadding });
-
+    const radius = props.radius || Helpers.getRadius(props);
     return {
-      x: translateX - clipPadding.left,
-      y: translateY - clipPadding.top,
-      width: Math.max(clipWidth + clipPadding.left + clipPadding.right, 0),
-      height: Math.max(clipHeight + clipPadding.top + clipPadding.bottom, 0)
+      x: (polar ? origin.x : translateX) - clipPadding.left,
+      y: (polar ? origin.y : translateY) - clipPadding.top,
+      width: Math.max((polar ? radius : clipWidth) + clipPadding.left + clipPadding.right, 0),
+      height: Math.max((polar ? radius : clipHeight) + clipPadding.top + clipPadding.bottom, 0)
     };
   }
 
@@ -70,9 +75,22 @@ export default class ClipPath extends React.Component {
     );
   }
 
+  renderPolarClipPath(props, id) {
+    return (
+      <defs>
+        <clipPath id={id}>
+          <circle {...props}/>
+        </clipPath>
+      </defs>
+    );
+  }
+
   render() {
-    const { clipId, className } = this.props;
-    const clipProps = { className, x: this.x, y: this.y, width: this.width, height: this.height };
-    return this.renderClipPath(clipProps, clipId);
+    const { clipId, className, polar } = this.props;
+    const clipProps = polar ?
+      { className, cx: this.x, cy: this.y, r: Math.max(this.width, this.height) } :
+      { className, x: this.x, y: this.y, width: this.width, height: this.height };
+    return polar ?
+      this.renderPolarClipPath(clipProps, clipId) : this.renderClipPath(clipProps, clipId);
   }
 }

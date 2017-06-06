@@ -23,7 +23,8 @@ export default class VictoryTransition extends React.Component {
       nodesDoneLoad: false
     };
     const child = this.props.children;
-    this.continuous = child.type && child.type.continuous === true;
+    const polar = child.props.polar;
+    this.continuous = !polar && child.type && child.type.continuous === true;
     this.getTransitionState = this.getTransitionState.bind(this);
     this.getTimer = this.getTimer.bind(this);
   }

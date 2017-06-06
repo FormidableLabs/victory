@@ -1,10 +1,10 @@
-/*eslint no-magic-numbers: ["error", { "ignore": [2] }]*/
 import React from "react";
 import PropTypes from "prop-types";
 import Helpers from "../victory-util/helpers";
 import Collection from "../victory-util/collection";
 import { assign } from "lodash";
 import CommonProps from "./common-props";
+import * as d3Shape from "d3-shape";
 
 export default class Bar extends React.Component {
 
@@ -49,22 +49,28 @@ export default class Bar extends React.Component {
   }
 
   calculateAttributes(props) {
-    const { datum, active, x, y } = props;
+    const { datum, active, polar } = props;
     const stroke = props.style && props.style.fill || "black";
     const baseStyle = { fill: "black", stroke };
     const style = Helpers.evaluateStyle(assign(baseStyle, props.style), datum, active);
     const width = this.getBarWidth(props, style);
-    const path = typeof x === "number" && typeof y === "number" ?
-      this.getBarPath(props, width) : undefined;
+    const path = polar ? this.getPolarBarPath(props, width) : this.getBarPath(props, width);
     return { style, path };
   }
 
-  getVerticalBarPath(props, width) {
+  getPosition(props, width) {
     const size = width / 2;
-    const y0 = Math.round(props.y0);
-    const y1 = Math.round(props.y);
-    const x0 = Math.round(props.x - size);
-    const x1 = Math.round(props.x + size);
+    const { x, y, y0 } = props;
+    return {
+      y0: Math.round(y0),
+      y1: Math.round(y),
+      x0: Math.round(x - size),
+      x1: Math.round(x + size)
+    };
+  }
+
+  getVerticalBarPath(props, width) {
+    const { x0, x1, y0, y1 } = this.getPosition(props, width);
     return `M ${x0}, ${y0}
       L ${x0}, ${y1}
       L ${x1}, ${y1}
@@ -74,11 +80,7 @@ export default class Bar extends React.Component {
   }
 
   getHorizontalBarPath(props, width) {
-    const size = width / 2;
-    const y0 = Math.round(props.y0);
-    const y1 = Math.round(props.y);
-    const x0 = Math.round(props.x - size);
-    const x1 = Math.round(props.x + size);
+    const { x0, x1, y0, y1 } = this.getPosition(props, width);
     return `M ${y0}, ${x0}
       L ${y0}, ${x1}
       L ${y1}, ${x1}
@@ -87,29 +89,101 @@ export default class Bar extends React.Component {
       z`;
   }
 
+  transformAngle(angle) {
+    return -1 * angle + (Math.PI / 2);
+  }
+
+  getAngularWidth(props, datum, width) {
+    const { scale } = props;
+    const r = scale.y(datum._y);
+    const angularRange = Math.abs(scale.x.range()[1] - scale.x.range()[0]);
+    return (width / (2 * Math.PI * r)) * angularRange;
+  }
+
+  getAngle(props, index) {
+    const { data, scale } = props;
+    const x = data[index]._x1 === undefined ? "_x" : "_x1";
+    return scale.x(data[index][x]);
+  }
+
+  getStartAngle(props, index) {
+    const { data, scale } = props;
+    const currentAngle = this.getAngle(props, index);
+    const angularRange = Math.abs(scale.x.range()[1] - scale.x.range()[0]);
+    const previousAngle = index === 0 ?
+      this.getAngle(props, data.length - 1) - (Math.PI * 2) :
+      this.getAngle(props, index - 1);
+    return index === 0 && angularRange < (2 * Math.PI) ?
+      scale.x.range()[0] : (currentAngle + previousAngle) / 2;
+  }
+
+  getEndAngle(props, index) {
+    const { data, scale } = props;
+    const currentAngle = this.getAngle(props, index);
+    const angularRange = Math.abs(scale.x.range()[1] - scale.x.range()[0]);
+    const lastAngle = scale.x.range()[1] === (2 * Math.PI) ?
+      this.getAngle(props, 0) + (Math.PI * 2) : scale.x.range()[1];
+    const nextAngle = index === data.length - 1 ?
+      this.getAngle(props, 0) + (Math.PI * 2) : this.getAngle(props, index + 1);
+    return index === data.length - 1 && angularRange < (2 * Math.PI) ?
+      lastAngle : (currentAngle + nextAngle) / 2;
+  }
+
+  getVerticalPolarBarPath(props) {
+    const { datum, scale, style, index } = props;
+    const r1 = scale.y(datum._y0 || 0);
+    const r2 = scale.y(datum._y1 !== undefined ? datum._y1 : datum._y);
+    const currentAngle = scale.x(datum._x1 !== undefined ? datum._x1 : datum._x);
+    let start;
+    let end;
+    if (style.width) {
+      const width = this.getAngularWidth(props, datum, style.width);
+      start = currentAngle - (width / 2);
+      end = currentAngle + (width / 2);
+    } else {
+      start = this.getStartAngle(props, index);
+      end = this.getEndAngle(props, index);
+    }
+    const path = d3Shape.arc()
+      .innerRadius(r1)
+      .outerRadius(r2)
+      .startAngle(this.transformAngle(start))
+      .endAngle(this.transformAngle(end));
+    return path();
+  }
+
   getBarPath(props, width) {
     return this.props.horizontal ?
       this.getHorizontalBarPath(props, width) : this.getVerticalBarPath(props, width);
+  }
+
+  getPolarBarPath(props) {
+    // TODO Radial bars
+    return this.getVerticalPolarBarPath(props);
   }
 
   getBarWidth(props, style) {
     if (style.width) {
       return style.width;
     }
-
-    const { width, data } = props;
-    const padding = props.padding.left || props.padding;
+    const { scale, data, horizontal } = props;
+    const range = horizontal ? scale.y.range() : scale.x.range();
+    const extent = Math.abs(range[1] - range[0]);
+    const bars = data.length + 2;
+    const barRatio = 0.5;
     // eslint-disable-next-line no-magic-numbers
-    const defaultWidth = data.length === 0 ? 8 : (width - 2 * padding) / data.length;
-    return defaultWidth;
+    const defaultWidth = data.length < 2 ? 8 : (barRatio * extent / bars);
+    return Math.max(1, Math.round(defaultWidth));
   }
 
   // Overridden in victory-core-native
   renderBar(path, style, events) {
-    const { role, shapeRendering, className } = this.props;
+    const { role, shapeRendering, className, origin, polar } = this.props;
+    const transform = polar && origin ? `translate(${origin.x}, ${origin.y})` : undefined;
     return (
       <path
         d={path}
+        transform={transform}
         className={className}
         style={style}
         role={role || "presentation"}

@@ -123,7 +123,7 @@ function getInitialTransitionState(oldChildren, nextChildren) {
 function getInitialChildProps(animate, data) {
   const after = animate.onEnter && animate.onEnter.after ? animate.onEnter.after : identity;
   return {
-    data: data.map((datum) => assign({}, datum, after(datum)))
+    data: data.map((datum, idx) => assign({}, datum, after(datum, idx, data)))
   };
 }
 
@@ -134,8 +134,8 @@ function getChildBeforeLoad(animate, child, data, cb) { // eslint-disable-line m
   }
   const before = animate.onLoad && animate.onLoad.before ? animate.onLoad.before : identity;
   // If nodes need to exit, transform them with the provided onLoad.before function.
-  data = data.map((datum) => {
-    return assign({}, datum, before(datum));
+  data = data.map((datum, idx) => {
+    return assign({}, datum, before(datum, idx, data));
   });
 
   return { animate, data, clipWidth: 0 };
@@ -148,8 +148,8 @@ function getChildOnLoad(animate, data, cb) { // eslint-disable-line max-params
   }
   const after = animate.onLoad && animate.onLoad.after ? animate.onLoad.after : identity;
   // If nodes need to exit, transform them with the provided onLoad.after function.
-  data = data.map((datum) => {
-    return assign({}, datum, after(datum));
+  data = data.map((datum, idx) => {
+    return assign({}, datum, after(datum, idx, data));
   });
 
   return { animate, data };
@@ -169,7 +169,7 @@ function getChildPropsOnExit(animate, child, data, exitingNodes, cb) { // eslint
     // If nodes need to exit, transform them with the provided onExit.before function.
     data = data.map((datum, idx) => {
       const key = (datum.key || idx).toString();
-      return exitingNodes[key] ? assign({}, datum, before(datum)) : datum;
+      return exitingNodes[key] ? assign({}, datum, before(datum, idx, data)) : datum;
     });
   }
 
@@ -187,7 +187,7 @@ function getChildPropsBeforeEnter(animate, child, data, enteringNodes, cb) { // 
     // so perform the `onEnter.before` transformation on each node.
     data = data.map((datum, idx) => {
       const key = (datum.key || idx).toString();
-      return enteringNodes[key] ? assign({}, datum, before(datum)) : datum;
+      return enteringNodes[key] ? assign({}, datum, before(datum, idx, data)) : datum;
     });
   }
 
@@ -208,7 +208,7 @@ function getChildPropsOnEnter(animate, data, enteringNodes, cb) { // eslint-disa
     const after = animate.onEnter && animate.onEnter.after ? animate.onEnter.after : identity;
     data = data.map((datum, idx) => {
       const key = getDatumKey(datum, idx);
-      return enteringNodes[key] ? assign({}, datum, after(datum)) : datum;
+      return enteringNodes[key] ? assign({}, datum, after(datum, idx, data)) : datum;
     });
   }
   return { animate, data };
@@ -278,28 +278,36 @@ function getTransitionPropsFactory(props, state, setState) {
 
   const getChildTransitionDuration = function (child, type) {
     const animate = child.props.animate;
-    const defaultTransitions = child.type && child.type.defaultTransitions;
+    if (!child.type) {
+      return {};
+    }
+    const defaultTransitions = child.props && child.props.polar ?
+      child.type.defaultPolarTransitions || child.type.defaultTransitions :
+      child.type.defaultTransitions;
     if (defaultTransitions) {
       const animationDuration = animate[type] && animate[type].duration;
       return animationDuration !== undefined ?
         animationDuration : defaultTransitions[type] && defaultTransitions[type].duration;
+    } else {
+      return {};
     }
-
-    return {};
   };
 
   return function getTransitionProps(child, index) { // eslint-disable-line max-statements, complexity, max-len
     const data = getChildData(child) || [];
     const animate = defaults({}, props.animate, child.props.animate);
+    const defaultTransitions = child.props.polar ?
+      child.type.defaultPolarTransitions || child.type.defaultTransitions :
+      child.type.defaultTransitions;
 
     animate.onExit = defaults(
-      {}, animate.onExit, child.type.defaultTransitions && child.type.defaultTransitions.onExit
+      {}, animate.onExit, defaultTransitions && defaultTransitions.onExit
     );
     animate.onEnter = defaults(
-      {}, animate.onEnter, child.type.defaultTransitions && child.type.defaultTransitions.onEnter
+      {}, animate.onEnter, defaultTransitions && defaultTransitions.onEnter
     );
     animate.onLoad = defaults(
-      {}, animate.onLoad, child.type.defaultTransitions && child.type.defaultTransitions.onLoad
+      {}, animate.onLoad, defaultTransitions && defaultTransitions.onLoad
     );
 
     const childTransitions = childrenTransitions[index] || childrenTransitions[0];

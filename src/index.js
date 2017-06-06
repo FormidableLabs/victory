@@ -9,6 +9,7 @@ export { default as VictoryLegend } from "./victory-legend/victory-legend";
 export { default as VictoryTooltip } from "./victory-tooltip/victory-tooltip";
 export { default as VictoryPortal } from "./victory-portal/victory-portal";
 export { default as Portal } from "./victory-portal/portal";
+export { default as Arc } from "./victory-primitives/arc";
 export { default as Area } from "./victory-primitives/area";
 export { default as Bar } from "./victory-primitives/bar";
 export { default as Candle } from "./victory-primitives/candle";
@@ -27,6 +28,7 @@ export { default as DefaultTransitions } from "./victory-util/default-transition
 export { default as Domain } from "./victory-util/domain";
 export { default as Events } from "./victory-util/events";
 export { default as Helpers } from "./victory-util/helpers";
+export { default as LabelHelpers } from "./victory-util/label-helpers";
 export { default as Log } from "./victory-util/log";
 export { default as PropTypes } from "./victory-util/prop-types";
 export { default as Scale } from "./victory-util/scale";

@@ -3,6 +3,35 @@ import Collection from "./collection";
 import React from "react";
 
 export default {
+  getPoint(datum) {
+    const exists = (val) => val !== undefined;
+    const { _x, _x1, _x0, _voronoiX, _y, _y1, _y0, _voronoiY } = datum;
+    const defaultX = exists(_x1) ? _x1 : _x;
+    const defaultY = exists(_y1) ? _y1 : _y;
+    return {
+      x: exists(_voronoiX) ? _voronoiX : defaultX,
+      x0: exists(_x0) ? _x0 : _x,
+      y: exists(_voronoiY) ? _voronoiY : defaultY,
+      y0: exists(_y0) ? _y0 : _y
+    };
+  },
+
+  scalePoint(props, datum) {
+    const { scale, polar } = props;
+    const d = this.getPoint(datum);
+    const origin = props.origin || { x: 0, y: 0 };
+    const x = scale.x(d.x);
+    const x0 = scale.x(d.x0);
+    const y = scale.y(d.y);
+    const y0 = scale.y(d.y0);
+    return {
+      x: polar ? y * Math.cos(x) + origin.x : x,
+      x0: polar ? y0 * Math.cos(x0) + origin.x : x0,
+      y: polar ? -y * Math.sin(x) + origin.y : y,
+      y0: polar ? -y0 * Math.sin(x0) + origin.x : y0
+    };
+  },
+
   getPadding(props) {
     const padding = typeof props.padding === "number" ? props.padding : 0;
     const paddingObj = typeof props.padding === "object" ? props.padding : {};
@@ -46,7 +75,42 @@ export default {
     }, {});
   },
 
+  degreesToRadians(degrees) {
+    return degrees * (Math.PI / 180);
+  },
+
+  radiansToDegrees(radians) {
+    return radians / (Math.PI / 180);
+  },
+
+  getRadius(props) {
+    const { left, right, top, bottom } = this.getPadding(props);
+    const { width, height } = props;
+    return Math.min(width - left - right, height - top - bottom) / 2;
+  },
+
+  getPolarOrigin(props) {
+    const { width, height } = props;
+    const { top, bottom, left, right } = this.getPadding(props);
+    const radius = Math.min(width - left - right, height - top - bottom) / 2;
+    const offsetWidth = width / 2 + left - right;
+    const offsetHeight = height / 2 + top - bottom;
+    return {
+      x: offsetWidth + radius > width ? radius + left - right : offsetWidth,
+      y: offsetHeight + radius > height ? radius + top - bottom : offsetHeight
+    };
+  },
+
   getRange(props, axis) {
+    if (props.range && props.range[axis]) {
+      return props.range[axis];
+    } else if (props.range && Array.isArray(props.range)) {
+      return props.range;
+    }
+    return props.polar ? this.getPolarRange(props, axis) : this.getCartesianRange(props, axis);
+  },
+
+  getCartesianRange(props, axis) {
     // determine how to lay the axis and what direction positive and negative are
     const isVertical = axis !== "x";
     const padding = this.getPadding(props);
@@ -54,6 +118,15 @@ export default {
       return [props.height - padding.bottom, padding.top];
     }
     return [padding.left, props.width - padding.right];
+  },
+
+  getPolarRange(props, axis) {
+    if (axis === "x") {
+      const startAngle = this.degreesToRadians(props.startAngle || 0);
+      const endAngle = this.degreesToRadians(props.endAngle || 360);
+      return [startAngle, endAngle];
+    }
+    return [0, this.getRadius(props)];
   },
 
   createAccessor(key) {

@@ -43,7 +43,8 @@ describe("helpers/selection", () => {
     let sandbox;
     beforeEach(() => {
       sandbox = sinon.sandbox.create();
-      sandbox.stub(Selection, "getDataCoordinates", (scale, x, y) => {
+      // eslint-disable-next-line max-params
+      sandbox.stub(Selection, "getDataCoordinates", (props, scale, x, y) => {
         return { x, y };
       });
     });

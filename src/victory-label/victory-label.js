@@ -1,10 +1,10 @@
-/*eslint no-magic-numbers: ["error", { "ignore": [0, 0.5, 1, 2] }]*/
 import React from "react";
 import PropTypes from "prop-types";
 import VictoryPortal from "../victory-portal/victory-portal";
 import CustomPropTypes from "../victory-util/prop-types";
 import Collection from "../victory-util/collection";
 import Helpers from "../victory-util/helpers";
+import LabelHelpers from "../victory-util/label-helpers";
 import Style from "../victory-util/style";
 import Log from "../victory-util/log";
 import { assign, merge } from "lodash";
@@ -46,11 +46,14 @@ export default class VictoryLabel extends React.Component {
     ]),
     events: PropTypes.object,
     index: PropTypes.oneOfType([PropTypes.number, PropTypes.string]),
+    labelPlacement: PropTypes.oneOf(["parallel", "perpendicular", "vertical"]),
     lineHeight: PropTypes.oneOfType([
       PropTypes.string,
       CustomPropTypes.nonNegative,
       PropTypes.func
     ]),
+    origin: PropTypes.shape({ x: PropTypes.number, y: PropTypes.number }),
+    polar: PropTypes.bool,
     renderInPortal: PropTypes.bool,
     style: PropTypes.oneOfType([
       PropTypes.object,
@@ -197,12 +200,31 @@ export default class VictoryLabel extends React.Component {
 
   getTransform(props, style) {
     const { datum, x, y } = props;
-    const angle = style.angle || props.angle;
+    const angle = style.angle || props.angle || this.getDefaultAngle(props);
     const transform = props.transform || style.transform;
     const transformPart = transform && Helpers.evaluateProp(transform, datum);
     const rotatePart = angle && { rotate: [angle, x, y] };
     return transformPart || angle ?
       Style.toTransformString(transformPart, rotatePart) : undefined;
+  }
+
+  getDefaultAngle(props) {
+    const { polar, labelPlacement, datum } = props;
+    if (!polar || !labelPlacement || labelPlacement === "vertical") {
+      return 0;
+    }
+    const degrees = LabelHelpers.getDegrees(props, datum);
+    const sign = (degrees > 90 && degrees < 180 || degrees > 270) ? 1 : -1;
+    let angle;
+    if (degrees === 0 || degrees === 180) {
+      angle = 90;
+    } else if (degrees > 0 && degrees < 180) {
+      angle = 90 - degrees;
+    } else if (degrees > 180 && degrees < 360) {
+      angle = 270 - degrees;
+    }
+    const labelRotation = labelPlacement === "perpendicular" ? 0 : 90;
+    return angle + sign * labelRotation;
   }
 
   getFontSize(style) {

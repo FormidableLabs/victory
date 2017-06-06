@@ -39,7 +39,8 @@ export default {
       d * target + f : a * target + e;
   },
 
-  getDomainCoordinates(scale, domain) {
+  getDomainCoordinates(props, domain) {
+    const { scale } = props;
     domain = domain || { x: scale.x.domain(), y: scale.y.domain() };
     return {
       x: [scale.x(domain.x[0]), scale.x(domain.x[1])],
@@ -47,17 +48,31 @@ export default {
     };
   },
 
-  getDataCoordinates(scale, x, y) {
-    return {
-      x: scale.x.invert(x),
-      y: scale.y.invert(y)
-    };
+  // eslint-disable-next-line max-params
+  getDataCoordinates(props, scale, x, y) {
+    const { polar } = props;
+    if (!polar) {
+      return {
+        x: scale.x.invert(x),
+        y: scale.y.invert(y)
+      };
+    } else {
+      const origin = props.origin || { x: 0, y: 0 };
+      const baseX = x - origin.x;
+      const baseY = y - origin.y;
+      const radius = Math.abs(baseX * Math.sqrt(1 + Math.pow((-baseY / baseX), 2)));
+      const angle = (-Math.atan2(baseY, baseX) + (Math.PI * 2)) % (Math.PI * 2);
+      return {
+        x: scale.x.invert(angle),
+        y: scale.y.invert(radius)
+      };
+    }
   },
 
   getBounds(props) {
     const { x1, x2, y1, y2, scale } = props;
-    const point1 = this.getDataCoordinates(scale, x1, y1);
-    const point2 = this.getDataCoordinates(scale, x2, y2);
+    const point1 = this.getDataCoordinates(props, scale, x1, y1);
+    const point2 = this.getDataCoordinates(props, scale, x2, y2);
     const makeBound = (a, b) => {
       return [ Collection.getMinValue([a, b]), Collection.getMaxValue([a, b]) ];
     };

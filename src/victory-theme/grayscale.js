@@ -86,9 +86,8 @@ export default {
     style: {
       data: {
         fill: charcoal,
-        padding: 10,
-        strokeWidth: 0,
-        width: 8
+        padding: 8,
+        strokeWidth: 0
       },
       labels: baseLabelStyles
     }
