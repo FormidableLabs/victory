@@ -39,15 +39,6 @@ describe("components/victory-line", () => {
   });
 
   describe("rendering with data", () => {
-    it("renders no line segments for single data points", () => {
-      const data = [{ x: 1, y: 1 }];
-      const wrapper = mount(
-        <VictoryLine data={data}/>
-      );
-      const lines = wrapper.find("path");
-      expect(lines.length).to.equal(0);
-    });
-
     it("renders one dataComponent for the line", () => {
       const data = [
         { x: 1, y: 1 },
@@ -100,94 +91,6 @@ describe("components/victory-line", () => {
       );
       const line = wrapper.find(Curve);
       SvgTestHelper.expectCorrectD3Path(line, props, "line");
-    });
-  });
-
-  describe("rendering with null data", () => {
-    it("renders two line segments when there are two continuous sections of data", () => {
-      const data = [
-        { x: 1, y: 1 },
-        { x: 2, y: 4 },
-        { x: 3, y: 5 },
-        { x: 4, y: 2 },
-        { x: 5, y: null },
-        { x: 6, y: 4 },
-        { x: 7, y: 6 }
-      ];
-      const wrapper = mount(
-        <VictoryLine data={data}/>
-      );
-      const lines = wrapper.find("path");
-      expect(lines.length).to.equal(2);
-    });
-
-    it("renders two lines for two continuous sections of data with multiple nulls", () => {
-      const data = [
-        { x: 1, y: 1 },
-        { x: 2, y: 4 },
-        { x: 3, y: 5 },
-        { x: 4, y: null },
-        { x: 5, y: null },
-        { x: 6, y: 4 },
-        { x: 7, y: 6 }
-      ];
-      const wrapper = mount(
-        <VictoryLine data={data}/>
-      );
-      const lines = wrapper.find("path");
-      expect(lines.length).to.equal(2);
-    });
-
-    it("renders two lines for two sections of data with multiple nulls out of order", () => {
-      const data = [
-        { x: 1, y: 1 },
-        { x: 2, y: 4 },
-        { x: 4, y: null },
-        { x: 3, y: 5 },
-        { x: 5, y: null },
-        { x: 6, y: 4 },
-        { x: 7, y: 6 }
-      ];
-      const wrapper = mount(
-        <VictoryLine data={data}/>
-      );
-      const lines = wrapper.find("path");
-      expect(lines.length).to.equal(2);
-    });
-
-    it("renders two lines for two sections of data with starting/ending nulls", () => {
-      const data = [
-        { x: 1, y: null },
-        { x: 2, y: 4 },
-        { x: 3, y: 3 },
-        { x: 4, y: null },
-        { x: 5, y: 2 },
-        { x: 6, y: 4 },
-        { x: 7, y: null }
-      ];
-      const wrapper = mount(
-        <VictoryLine data={data}/>
-      );
-      const lines = wrapper.find("path");
-      expect(lines.length).to.equal(2);
-    });
-
-    it("renders three lines for three continuous sections of data", () => {
-      const data = [
-        { x: 1, y: 2 },
-        { x: 2, y: 4 },
-        { x: 3, y: null },
-        { x: 4, y: 4 },
-        { x: 5, y: 2 },
-        { x: 6, y: null },
-        { x: 7, y: 5 },
-        { x: 8, y: 3 }
-      ];
-      const wrapper = mount(
-        <VictoryLine data={data}/>
-      );
-      const lines = wrapper.find("path");
-      expect(lines.length).to.equal(3);
     });
   });
 

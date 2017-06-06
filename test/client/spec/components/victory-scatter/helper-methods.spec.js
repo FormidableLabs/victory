@@ -7,7 +7,7 @@ describe("victory-scatter/helper-methods", () => {
     let sandbox;
     beforeEach(() => {
       sandbox = sinon.sandbox.create();
-      const fakeBubbleSize = (data, props, calculatedProps) => data[calculatedProps.z];
+      const fakeBubbleSize = (data, props) => data[props.z];
       sandbox.stub(Helpers, "getBubbleSize", fakeBubbleSize);
     });
 
@@ -17,27 +17,27 @@ describe("victory-scatter/helper-methods", () => {
     const data = { x: 1, y: 2, t: 4, z: 5 };
     it("returns a size attribute from data", () => {
       const point = { size: 3, ...data };
-      const sizeResult = Helpers.getSize(point, {}, {});
+      const sizeResult = Helpers.getSize(point, {});
       expect(Helpers.getBubbleSize).notCalled;
       expect(sizeResult).to.equal(3);
     });
 
     it("returns 1 if the size attribute is less than one", () => {
       const point = { size: -2, ...data };
-      const sizeResult = Helpers.getSize(point, {}, {});
+      const sizeResult = Helpers.getSize(point, {});
       expect(Helpers.getBubbleSize).notCalled;
       expect(sizeResult).to.equal(1);
     });
 
     it("returns size from props, if no size is set on data", () => {
-      const sizeResult = Helpers.getSize(data, { size: 2 }, {});
+      const sizeResult = Helpers.getSize(data, { data, size: 2 });
       expect(Helpers.getBubbleSize).notCalled;
       expect(sizeResult).to.equal(2);
     });
 
     it("calculates a bubbleSize if a bubbleProperty is specified, and size is not set", () => {
-      const sizeResult = Helpers.getSize(data, {}, { z: "t" });
-      expect(Helpers.getBubbleSize).calledWith(data, {}, { z: "t" });
+      const sizeResult = Helpers.getSize(data, { data, z: "t" });
+      expect(Helpers.getBubbleSize).calledWith(data, { data, z: "t" });
       expect(sizeResult).to.equal(4);
     });
   });
@@ -45,8 +45,8 @@ describe("victory-scatter/helper-methods", () => {
   describe("getBubbleSize", () => {
     it("determines the size of a point", () => {
       const data = [{ x: 1, y: 2, z: 5 }, { x: 2, y: 3, z: 1 }];
-      const calculatedProps = { data, z: "z" };
-      const sizeResult = Helpers.getBubbleSize(data[0], {}, calculatedProps);
+      const props = { data, z: "z" };
+      const sizeResult = Helpers.getBubbleSize(data[0], props);
       expect(sizeResult).to.equal(5);
     });
   });

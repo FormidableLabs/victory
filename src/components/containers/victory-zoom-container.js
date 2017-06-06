@@ -3,7 +3,7 @@ import React from "react";
 import { defaults, isEqual } from "lodash";
 import ZoomHelpers from "./zoom-helpers";
 import {
-  Helpers, VictoryContainer, VictoryClipContainer, PropTypes as CustomPropTypes
+  VictoryContainer, VictoryClipContainer, PropTypes as CustomPropTypes
 } from "victory-core";
 
 export const zoomContainerMixin = (base) => class VictoryZoomContainer extends base {

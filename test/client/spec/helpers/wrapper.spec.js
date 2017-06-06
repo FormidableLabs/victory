@@ -3,6 +3,7 @@
 import Wrapper from "src/helpers/wrapper";
 import React from "react";
 import { VictoryAxis, VictoryLine } from "src/index";
+import { assign } from "lodash";
 
 
 describe("helpers/wrapper", () => {
@@ -56,9 +57,10 @@ describe("helpers/wrapper", () => {
 
     it("calculates a domain from child components", () => {
       const props = { children: childComponents };
+      const polarProps = { polar: undefined, startAngle: undefined, endAngle: undefined };
       const domainResultX = Wrapper.getDomain(props, "x", childComponents);
       expect(Wrapper.getDomainFromChildren).calledWith(props, "x", childComponents);
-      expect(victoryLine.type.getDomain).calledWith(victoryLine.props);
+      expect(victoryLine.type.getDomain).calledWith(assign({}, victoryLine.props, polarProps));
       expect(domainResultX).to.eql(victoryLine.props.domain);
     });
   });

@@ -71,7 +71,7 @@ export default {
   },
 
   getBubbleSize(datum, props) {
-    const { data, z } = props;
+    const { data, z, maxBubbleSize } = props;
     const getMaxRadius = () => {
       const minPadding = Math.min(...values(Helpers.getPadding(props)));
       return Math.max(minPadding, 5); // eslint-disable-line no-magic-numbers
@@ -79,22 +79,23 @@ export default {
     const zData = data.map((point) => point[z]);
     const zMin = Math.min(...zData);
     const zMax = Math.max(...zData);
-    const maxRadius = props.maxBubbleSize || getMaxRadius();
+    const maxRadius = maxBubbleSize || getMaxRadius();
     const maxArea = Math.PI * Math.pow(maxRadius, 2); // eslint-disable-line no-magic-numbers
     const area = ((datum[z] - zMin) / (zMax - zMin)) * maxArea;
     const radius = Math.sqrt(area / Math.PI);
     return Math.max(radius, 1);
   },
 
-  getSize(data, props) {
-    if (data.size) {
-      return typeof data.size === "function" ? data.size : Math.max(data.size, 1);
+  getSize(datum, props) {
+    const { size, z } = props;
+    if (datum.size) {
+      return typeof datum.size === "function" ? datum.size : Math.max(datum.size, 1);
     } else if (typeof props.size === "function") {
-      return props.size;
-    } else if (data[props.z]) {
-      return this.getBubbleSize(data, props);
+      return size;
+    } else if (datum[z]) {
+      return this.getBubbleSize(datum, props);
     } else {
-      return Math.max(props.size, 1);
+      return Math.max(size || 0, 1);
     }
   }
 };
