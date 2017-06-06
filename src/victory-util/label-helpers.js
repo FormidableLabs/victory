@@ -50,61 +50,88 @@ export default {
   },
 
   getPosition(props, datum) {
-    const { horizontal } = props;
+    const { horizontal, polar } = props;
     const { x, y } = Helpers.scalePoint(props, datum);
     const padding = this.getPadding(props, datum);
+    if (!polar) {
+      return {
+        x: horizontal ? y + padding.x : x + padding.x,
+        y: horizontal ? x + padding.y : y - padding.y
+      };
+    } else {
+      const degrees = this.getDegrees(props, datum);
+      const polarPadding = this.getPolarPadding(props, degrees);
+      return {
+        x: x + polarPadding.x,
+        y: y + polarPadding.y
+      };
+    }
+  },
+
+  getPolarPadding(props, degrees) {
+    const labelStyle = props.style.labels || {};
+    const padding = labelStyle.padding || 0;
+    const angle = Helpers.degreesToRadians(degrees);
     return {
-      x: horizontal ? y + padding.x : x + padding.x,
-      y: horizontal ? x + padding.y : y - padding.y
+      x: padding * Math.cos(angle), y: -padding * Math.sin(angle)
     };
   },
 
-  getTextAngle(props, baseAngle) {
-    if (props.labelPlacement === "vertical") {
-      return 0;
-    }
-    const degrees = this.radiansToDegrees(baseAngle);
-    const sign = (degrees > 90 && degrees < 180 || degrees > 270) ? 1 : -1;
-    let angle;
-    if (degrees === 0 || degrees === 180) {
-      angle = 90;
-    } else if (degrees > 0 && degrees < 180) {
-      angle = 90 - degrees;
-    } else if (degrees > 180 && degrees < 360) {
-      angle = 270 - degrees;
-    }
-    const labelRotation = props.labelPlacement === "perpendicular" ? 0 : 90;
-    return angle + sign * labelRotation;
+  getLabelPlacement(props) {
+    const { labelComponent, labelPlacement } = props;
+    return labelPlacement ?
+      labelPlacement :
+      labelComponent.props && labelComponent.props.labelPlacement || "vertical";
   },
 
-  getPolarTextAnchor(baseAngle, labelPlacement) {
-    if (labelPlacement === "perpendicular") {
+  getPolarOrientation(degrees) {
+    if (degrees < 45 || degrees > 315) { // eslint-disable-line no-magic-numbers
+      return "right";
+    } else if (degrees >= 45 && degrees <= 135) { // eslint-disable-line no-magic-numbers
+      return "top";
+    } else if (degrees > 135 && degrees < 225) { // eslint-disable-line no-magic-numbers
+      return "left";
+    } else {
+      return "bottom";
+    }
+  },
+
+  getPolarTextAnchor(props, degrees) {
+    const labelPlacement = this.getLabelPlacement(props);
+    if (labelPlacement === "perpendicular" || degrees === 90 || degrees === 270) {
       return "middle";
     }
-    const angle = this.radiansToDegrees(baseAngle);
-    return angle <= 90 || angle > 270 ? "start" : "end";
+    return degrees < 90 || degrees > 270 ? "start" : "end";
+  },
+
+  getPolarVerticalAnchor(props, degrees) {
+    const labelPlacement = this.getLabelPlacement(props);
+    const orientation = this.getPolarOrientation(degrees);
+    if (labelPlacement === "parallel" || orientation === "left" || orientation === "right") {
+      return "middle";
+    }
+    return orientation === "top" ? "end" : "start";
+  },
+
+  getDegrees(props, datum) {
+    const { x } = Helpers.getPoint(datum);
+    return Helpers.radiansToDegrees(props.scale.x(x));
   },
 
   getProps(props, index) {
-    const { scale, data, style, horizontal } = props;
+    const { scale, data, style, horizontal, polar } = props;
     const datum = data[index];
-    const textAnchor = this.getTextAnchor(props, datum);
-    const verticalAnchor = this.getVerticalAnchor(props, datum);
+    const degrees = this.getDegrees(props, datum);
+    const textAnchor = polar ?
+      this.getPolarTextAnchor(props, degrees) : this.getTextAnchor(props, datum);
+    const verticalAnchor = polar ?
+       this.getPolarVerticalAnchor(props, degrees) : this.getVerticalAnchor(props, datum);
     const angle = this.getAngle(props, datum);
     const text = this.getText(props, datum, index);
     const { x, y } = this.getPosition(props, datum);
     return {
-      style: style.labels,
-      x, y,
-      text,
-      index,
-      scale,
-      datum,
-      data,
-      textAnchor,
-      verticalAnchor,
-      angle,
-      horizontal
+      angle, data, datum, horizontal, index, polar, scale,
+      text, textAnchor, verticalAnchor, x, y, style: style.labels
     };
   }
 };
