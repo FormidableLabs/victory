@@ -193,8 +193,7 @@ export default class VictoryTooltip extends React.Component {
   }
 
   getCalculatedValues(props) {
-    const { style, text, datum, theme, active, polar } = props;
-    const labelPlacement = props.labelPlacement || "vertical";
+    const { style, text, datum, theme, active } = props;
     const defaultLabelStyles = theme && theme.tooltip && theme.tooltip.style ?
       theme.tooltip.style : {};
     const baseLabelStyle = Array.isArray(style) ?

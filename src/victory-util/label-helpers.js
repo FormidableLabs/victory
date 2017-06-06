@@ -78,10 +78,11 @@ export default {
   },
 
   getLabelPlacement(props) {
-    const { labelComponent, labelPlacement } = props;
+    const { labelComponent, labelPlacement, polar } = props;
+    const defaultLabelPlacement = polar ? "perpendicular" : "vertical";
     return labelPlacement ?
       labelPlacement :
-      labelComponent.props && labelComponent.props.labelPlacement || "vertical";
+      labelComponent.props && labelComponent.props.labelPlacement || defaultLabelPlacement;
   },
 
   getPolarOrientation(degrees) {
@@ -128,9 +129,10 @@ export default {
        this.getPolarVerticalAnchor(props, degrees) : this.getVerticalAnchor(props, datum);
     const angle = this.getAngle(props, datum);
     const text = this.getText(props, datum, index);
+    const labelPlacement = this.getLabelPlacement(props);
     const { x, y } = this.getPosition(props, datum);
     return {
-      angle, data, datum, horizontal, index, polar, scale,
+      angle, data, datum, horizontal, index, polar, scale, labelPlacement,
       text, textAnchor, verticalAnchor, x, y, style: style.labels
     };
   }
