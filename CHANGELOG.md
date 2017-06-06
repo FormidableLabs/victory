@@ -6,11 +6,11 @@
 [475](https://github.com/FormidableLabs/victory-chart/pull/475) Brush and Zoom fixes
 [476](https://github.com/FormidableLabs/victory-chart/pull/476) Zoom Improvements
 
-*Breaking Changes*
+**Breaking Changes**
 - Changes how default widths are calculated for `VictoryBar` and groups of bars
 - Removes default bar widths from themes
 
-*Overview*
+**Overview**
  - Supports polar charts by adding the `polar` prop to charts.
  - Polar charts are supported for `VictoryArea`, `VictoryChart`, `VictoryGroup`, `VictoryLine`, `VictoryScatter` `VictoryStack` and `VictoryVoronoi`
  - Polar charts are supported for `VictoryBar`, but horizontal (radial) bars are not yet supported
@@ -18,13 +18,13 @@
  - Polar charts work with `VictorySelectionContainer`, but the dimension prop is not supported for polar selections
  - Polar charts work with `VictoryZoomContainer`, but zooming is limited to centered radial zooming. Panning has no effect.
  - Polar-specific default animations for `VictoryLine` and `VictoryArea`
- - **horizontal polar charts are not yet supported**
- - **`VictoryCandlestick` and `VictoryErrorBar` do not yet work with polar charts
- - **`VictoryCursorContainer` does not yet work with polar charts
- - **`VictoryBrushContainer` does not work with polar charts
- - **`VictoryZoomContainer` has limitations for polar charts
+ - *horizontal polar charts are not yet supported*
+ - *`VictoryCandlestick` and `VictoryErrorBar` do not yet work with polar charts*
+ - *`VictoryCursorContainer` does not yet work with polar charts*
+ - *`VictoryBrushContainer` does not work with polar charts*
+ - *`VictoryZoomContainer` has limitations for polar charts*
 
-*Planned additional work*
+**Planned additional work**
   - Support for radial bars
   - Support for spider charts (i.e. linear grid lines rather than arcs on polar charts)
   - Support separate theming for polar charts (at least axes)
@@ -32,7 +32,7 @@
   - Minimal support for polar versions of `VictoryCandleStick` and `VictoryErrorBar` (Elements will be correctly positioned and angled, but path elements will not be altered to reflect curvature, _i.e._ candles will still be `rects` rather than arc paths)
   - Investigate hollow polar charts
 
-*Details*
+**Details**
 - Adds `VictoryPolarAxis` with new props: `axisAngle` `startAngle`, `endAngle`, and `labelPlacement`
 - Adds `polar`, `startAngle`, `endAngle`, and `defaultPolarAxes` props for `VictoryChart`
 - Adds `polar`, `origin`, and `range` props to all chart types.
@@ -42,10 +42,10 @@
 
 ## 20.0.0 (2017-05-24)
 
-*Breaking Changes*
+**Breaking Changes**
 -[471](https://github.com/FormidableLabs/victory-chart/pull/471) Passes the string value of ticks to the tickFormat function rather than the associated index. **This may be a breaking change for users who are using categorical data and formatting tick values by index**
 
-*Minor Changes*
+**Minor Changes**
 -[474](https://github.com/FormidableLabs/victory-chart/pull/474) Adds support for a y0 accessor so that users can have granular control over the baseline of components like `VictoryArea`
 -[472](https://github.com/FormidableLabs/victory-chart/pull/472) Fixes a bug that was cuasing VictoryGroup to override styles on any independent VictoryLabel children
 
