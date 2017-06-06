@@ -12,11 +12,12 @@ import {
   Portal,
   VictoryClipContainer,
   addEvents, Collection, Data, DefaultTransitions, Domain, Events, Helpers, Log,
-  PropTypes, Scale, Style, TextSize, Transitions, Selection
+  PropTypes, Scale, Style, TextSize, Transitions, Selection, LabelHelpers
 } from "victory-core";
 
 import {
   VictoryAxis,
+  VictoryPolarAxis,
   VictoryArea,
   VictoryBar,
   VictoryCandlestick,
@@ -42,6 +43,7 @@ export {
   VictoryAnimation,
   VictoryArea,
   VictoryAxis,
+  VictoryPolarAxis,
   VictoryBar,
   VictoryCandlestick,
   VictoryChart,
@@ -68,5 +70,5 @@ export {
   VictoryVoronoiContainer, VoronoiHelpers, voronoiContainerMixin,
   combineContainerMixins, createContainer,
   addEvents, Collection, Data, DefaultTransitions, Domain, Events, Helpers, Log,
-  PropTypes, Scale, Style, TextSize, Transitions, Selection
+  PropTypes, Scale, Style, TextSize, Transitions, Selection, LabelHelpers
 };

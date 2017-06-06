@@ -1,6 +1,60 @@
 # Victory Changelog
 
-## 0.2.0 (2017-05-24)
+## 0.21.0 (2017-06-06)
+
+[victory-core/240](https://github.com/FormidableLabs/victory-core/pull/240) Polar Charts
+[victory-chart/466](https://github.com/FormidableLabs/victory-chart/pull/466) Polar Charts
+[victory-chart/475](https://github.com/FormidableLabs/victory-chart/pull/475) Brush and Zoom fixes
+[victory-chart/476](https://github.com/FormidableLabs/victory-chart/pull/476) Zoom Improvements
+
+*Breaking Changes*
+  - Removes default bar width from themes
+  - Changes how default bar widths are calculated
+  - Changes render methods for `Area`, `Bar` and `Curve` primitives (Breaking change for `victory-native` and others extending primitives)
+  - Changes function sigintures for `Selection.getDomainCoordinates` and `Selection.getDataCoordinates` (Breaking change for `victory-native`)
+
+*Overview*
+ - Supports polar charts by adding the `polar` prop to charts.
+ - Polar charts are supported for `VictoryArea`, `VictoryChart`, `VictoryGroup`, `VictoryLine`, `VictoryScatter` `VictoryStack` and `VictoryVoronoi`
+ - Polar charts are supported for `VictoryBar`, but horizontal (radial) bars are not yet supported
+ - Polar charts work with `VictoryVoronoiContainer`
+ - Polar charts work with `VictorySelectionContainer`, but the dimension prop is not supported for polar selections
+ - Polar charts work with `VictoryZoomContainer`, but zooming is limited to centered radial zooming. Panning has no effect.
+ - Polar-specific default animations for `VictoryLine` and `VictoryArea`
+ - **horizontal polar charts are not yet supported**
+ - **`VictoryCandlestick` and `VictoryErrorBar` do not yet work with polar charts
+ - **`VictoryCursorContainer` does not yet work with polar charts
+ - **`VictoryBrushContainer` does not work with polar charts
+ - **`VictoryZoomContainer` has limitations for polar charts
+
+*Planned additional work*
+  - Support for radial bars
+  - Support for spider charts (i.e. linear grid lines rather than arcs on polar charts)
+  - Support separate theming for polar charts (at least axes)
+  - Support for a polar version of `VictoryCursorContainer`
+  - Minimal support for polar versions of `VictoryCandleStick` and `VictoryErrorBar` (Elements will be correctly positioned and angled, but path elements will not be altered to reflect curvature, _i.e._ candles will still be `rects` rather than arc paths)
+  - Investigate hollow polar charts
+
+*Details*
+  - Adds `VictoryPolarAxis` with new props: `axisAngle` `startAngle`, `endAngle`, and `labelPlacement`
+  - Adds `polar`, `startAngle`, `endAngle`, and `defaultPolarAxes` props for `VictoryChart`
+  - Adds `polar`, `origin`, and `range` props to all chart types.
+  - Adds `defaultPolarTransitions` static methods to `VictoryLine` and `VictoryArea`
+  - Uses `LabelHelpers` to simplify all `helper-methods`
+  - Adds a new `Arc` primitive which is used for polar axes and grid lines
+  - Adds `polar` and `origin` props to rendered components (primitives, `VictoryLabel`, `VictoryClipContainer` `VictoryContainer`)
+  - Supports radial areas for `Area` and `Curve`. These props have no effect for cartesian charts
+  - Adds an `openPath` prop for `Curve`. This prop is used to determine whether radial curves should be closed. Curves are closed by default, but when this prop is set to true they will not be. This prop has no effect for cartesian charts
+  - Supports polar bars in the `Bar` primitive. (Angular bars only, radial bars are not yet supported)
+  - Adds a `labelPlacement` prop to `VictoryLabel` and `VictoryTooltip`. Values are "parallel", "perpendicular", and "vertical". These flags help to appropriately position labels in polar charts. Polar charts will use "parallel" label placement by default. Cartesian charts will only use "'vertical" placement.
+  - Adds support for circular clipPath
+  - Adds support for polar animation transitions for continuous chart types. During `onLoad`, all points grow from zero. During `onEnter` and `onExit` new points are added / removed at the location of an adjacent point to keep path interpolation as smooth as possible. This implementation obviates the need for radial clip-path animations for these chart types.
+  - `before` and `after` callbacks for `onLoad`, `onEnter` and `onExit` are now called with `datum`, `index`, and `data` instead of only `datum`.
+  - Adds `LabelHelpers`
+  - Adds helper methods for polar charts
+
+
+## 0.20.0 (2017-05-24)
 
 *Breaking Changes*
 -[victory-chart/471](https://github.com/FormidableLabs/victory-chart/pull/471) Passes the string value of ticks to the `tickFormat` function rather than the associated index. **This may be a breaking change for users who are using categorical data and formatting tick values by index**
