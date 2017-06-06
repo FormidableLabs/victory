@@ -1,4 +1,3 @@
-/*eslint no-magic-numbers: ["error", { "ignore": [-1, 0, 1, 2, 90, 180, 270, 360] }]*/
 import {
   uniqBy, includes, defaults, defaultsDeep, isFunction, range as lodashRange, without
 } from "lodash";
@@ -72,8 +71,8 @@ export default {
     }
     const axisType = this.getAxisType(props);
     if (axisType === "angular") {
-      const startAngle = this.degreesToRadians(props.startAngle);
-      const endAngle = this.degreesToRadians(props.endAngle);
+      const startAngle = Helpers.degreesToRadians(props.startAngle);
+      const endAngle = Helpers.degreesToRadians(props.endAngle);
       return [startAngle, endAngle];
     }
     const radius = this.getRadius(props);
@@ -131,15 +130,6 @@ export default {
     };
   },
 
-
-  degreesToRadians(degrees) {
-    return degrees * (Math.PI / 180);
-  },
-
-  radiansToDegrees(radians) {
-    return radians / (Math.PI / 180);
-  },
-
   getTickProps(props, calculatedValues, tick, index) { //eslint-disable-line max-params
     const { axisType, radius, scale, style } = calculatedValues;
     const { tickStyle } = this.getEvaluatedStyles(style, tick, index);
@@ -169,7 +159,7 @@ export default {
     const angularPadding = 0; // TODO: do some geometry
     const axisAngle = props.axisAngle || props.startAngle;
     const labelAngle = axisType === "angular" ?
-      scale(tick) : this.degreesToRadians(axisAngle + angularPadding);
+      scale(tick) : Helpers.degreesToRadians(axisAngle + angularPadding);
     const textAngle = labelStyle.angle || this.getTextAngle(props, labelAngle);
     const labelRadius = axisType === "angular" ? radius + tickPadding : scale(tick);
     return {
@@ -186,7 +176,7 @@ export default {
     if (props.labelPlacement === "vertical") {
       return 0;
     }
-    const degrees = this.radiansToDegrees(baseAngle);
+    const degrees = Helpers.radiansToDegrees(baseAngle);
     const sign = (degrees > 90 && degrees < 180 || degrees > 270) ? 1 : -1;
     let angle;
     if (degrees === 0 || degrees === 180) {
@@ -204,7 +194,7 @@ export default {
     if (labelPlacement === "perpendicular") {
       return "middle";
     }
-    const angle = this.radiansToDegrees(baseAngle);
+    const angle = Helpers.radiansToDegrees(baseAngle);
     return angle <= 90 || angle > 270 ? "start" : "end";
   },
 
@@ -232,9 +222,9 @@ export default {
       {
         style: style.axis,
         x1: 0,
-        x2: radius * Math.cos(this.degreesToRadians(axisAngle)),
+        x2: radius * Math.cos(Helpers.degreesToRadians(axisAngle)),
         y1: 0,
-        y2: -radius * Math.sin(this.degreesToRadians(axisAngle))
+        y2: -radius * Math.sin(Helpers.degreesToRadians(axisAngle))
       } : {
         style: style.axis,
         cx: 0, cy: 0, r: radius, startAngle, endAngle

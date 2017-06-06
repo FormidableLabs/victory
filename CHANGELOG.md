@@ -1,5 +1,45 @@
 # VictoryChart Changelog
 
+## 21.0.0 (2017-06-06)
+
+[466](https://github.com/FormidableLabs/victory-chart/pull/466) Polar Charts
+[475](https://github.com/FormidableLabs/victory-chart/pull/475) Brush and Zoom fixes
+[476](https://github.com/FormidableLabs/victory-chart/pull/476) Zoom Improvements
+
+*Breaking Changes*
+- Changes how default widths are calculated for `VictoryBar` and groups of bars
+- Removes default bar widths from themes
+
+*Overview*
+ - Supports polar charts by adding the `polar` prop to charts.
+ - Polar charts are supported for `VictoryArea`, `VictoryChart`, `VictoryGroup`, `VictoryLine`, `VictoryScatter` `VictoryStack` and `VictoryVoronoi`
+ - Polar charts are supported for `VictoryBar`, but horizontal (radial) bars are not yet supported
+ - Polar charts work with `VictoryVoronoiContainer`
+ - Polar charts work with `VictorySelectionContainer`, but the dimension prop is not supported for polar selections
+ - Polar charts work with `VictoryZoomContainer`, but zooming is limited to centered radial zooming. Panning has no effect.
+ - Polar-specific default animations for `VictoryLine` and `VictoryArea`
+ - **horizontal polar charts are not yet supported**
+ - **`VictoryCandlestick` and `VictoryErrorBar` do not yet work with polar charts
+ - **`VictoryCursorContainer` does not yet work with polar charts
+ - **`VictoryBrushContainer` does not work with polar charts
+ - **`VictoryZoomContainer` has limitations for polar charts
+
+*Planned additional work*
+  - Support for radial bars
+  - Support for spider charts (i.e. linear grid lines rather than arcs on polar charts)
+  - Support separate theming for polar charts (at least axes)
+  - Support for a polar version of `VictoryCursorContainer`
+  - Minimal support for polar versions of `VictoryCandleStick` and `VictoryErrorBar` (Elements will be correctly positioned and angled, but path elements will not be altered to reflect curvature, _i.e._ candles will still be `rects` rather than arc paths)
+  - Investigate hollow polar charts
+
+*Details*
+- Adds `VictoryPolarAxis` with new props: `axisAngle` `startAngle`, `endAngle`, and `labelPlacement`
+- Adds `polar`, `startAngle`, `endAngle`, and `defaultPolarAxes` props for `VictoryChart`
+- Adds `polar`, `origin`, and `range` props to all chart types.
+- Adds `defaultPolarTransitions` static methods to `VictoryLine` and `VictoryArea`
+- Uses `LabelHelpers` to simplify all `helper-methods`
+
+
 ## 20.0.0 (2017-05-24)
 
 *Breaking Changes*

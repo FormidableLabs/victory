@@ -1,4 +1,3 @@
-/*eslint no-magic-numbers: ["error", { "ignore": [0, 1, 2] }]*/
 import { assign, defaults } from "lodash";
 import PropTypes from "prop-types";
 import React from "react";

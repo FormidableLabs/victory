@@ -1,4 +1,3 @@
-/*eslint no-magic-numbers: ["error", { "ignore": [0, 1, 2] }]*/
 import { assign, defaults, flatten, isFunction, partialRight, uniq, some } from "lodash";
 import React from "react";
 import Axis from "./axis";

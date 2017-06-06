@@ -1,4 +1,3 @@
-/*eslint no-magic-numbers: ["error", { "ignore": [0, 1, 2] }]*/
 import PropTypes from "prop-types";
 import React from "react";
 import { VictoryContainer, VictoryLabel, Line, Selection, Helpers } from "victory-core";

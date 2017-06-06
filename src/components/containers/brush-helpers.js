@@ -1,4 +1,3 @@
-/*eslint no-magic-numbers: ["error", { "ignore": [0, 1, 2] }]*/
 import { Selection } from "victory-core";
 import { assign, throttle, isFunction, isEqual, defaults } from "lodash";
 import { attachId } from "../../helpers/event-handlers.js";

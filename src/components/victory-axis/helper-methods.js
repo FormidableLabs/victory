@@ -1,4 +1,3 @@
-/*eslint no-magic-numbers: ["error", { "ignore": [-90, -1, 0, 1, 2] }]*/
 import { includes, defaults, defaultsDeep, isFunction, range, without } from "lodash";
 import { Helpers, Scale, Domain } from "victory-core";
 
@@ -261,7 +260,7 @@ export default {
     const vPadding = padding.top + padding.bottom;
     const verticalAnchor = sign < 0 ? "end" : "start";
     const labelStyle = style.axisLabel;
-    const angle = isVertical ? -90 : 0;
+    const angle = isVertical ? -90 : 0; // eslint-disable-line no-magic-numbers
     const x = isVertical ? globalTransform.x + (sign * labelPadding) :
       ((props.width - hPadding) / 2) + padding.left + globalTransform.x;
     const y = isVertical ?

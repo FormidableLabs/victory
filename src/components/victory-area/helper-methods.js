@@ -1,4 +1,3 @@
-/*eslint no-magic-numbers: ["error", { "ignore": [-1, 0, 1, 2] }]*/
 import { assign } from "lodash";
 import { Helpers, LabelHelpers, Data, Domain, Scale } from "victory-core";
 
