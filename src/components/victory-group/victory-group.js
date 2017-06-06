@@ -2,7 +2,9 @@
 import { assign, defaults } from "lodash";
 import PropTypes from "prop-types";
 import React from "react";
-import { Helpers, VictorySharedEvents, VictoryContainer, VictoryTheme, Scale } from "victory-core";
+import {
+  Helpers, VictorySharedEvents, VictoryContainer, VictoryTheme, Scale, Data
+} from "victory-core";
 import Wrapper from "../../helpers/wrapper";
 import { BaseProps, DataProps } from "../../helpers/common-props";
 
@@ -114,7 +116,7 @@ export default class VictoryGroup extends React.Component {
   }
 
   pixelsToValue(props, axis, calculatedProps) {
-    if (props.offset === 0) {
+    if (!props.offset) {
       return 0;
     }
     const childComponents = React.Children.toArray(props.children);
@@ -173,12 +175,10 @@ export default class VictoryGroup extends React.Component {
     : colorScaleOptions;
   }
 
-  getDataWithOffset(props, calculatedProps, index) {
-    const { datasets } = calculatedProps;
-    const { polar } = props;
-    const xOffset = polar ?
-      this.getPolarX0(props, calculatedProps, index) : this.getX0(props, calculatedProps, index);
-    return datasets[index].map((datum) => {
+  getDataWithOffset(props, defaultDataset, offset) {
+    const dataset = props.data || props.y ? Data.getData(props) : defaultDataset;
+    const xOffset = offset || 0;
+    return dataset.map((datum) => {
       const _x1 = datum._x instanceof Date ? new Date(datum._x + xOffset) : datum._x + xOffset;
       return assign({}, datum, { _x1 });
     });
@@ -200,7 +200,7 @@ export default class VictoryGroup extends React.Component {
       const labels = props.labels ? this.getLabels(props, datasets, index) : child.props.labels;
       return React.cloneElement(child, assign({
         labels, style, key: index,
-        data: this.getDataWithOffset(props, calculatedProps, index),
+        data: this.getDataWithOffset(props, datasets[index], xOffset),
         animate: getAnimationProps(props, child, index),
         colorScale: this.getColorScale(props, child),
         labelComponent: labelComponent || child.props.labelComponent,

@@ -104,11 +104,11 @@ export const brushContainerMixin = (base) => class VictoryBrushContainer extends
   }
 
   getRect(props) {
-    const { currentDomain, cachedSelectedDomain, scale } = props;
+    const { currentDomain, cachedSelectedDomain } = props;
     const selectedDomain = defaults({}, props.selectedDomain, props.domain);
     const domain = isEqual(selectedDomain, cachedSelectedDomain) ?
       defaults({}, currentDomain, selectedDomain) : selectedDomain;
-    const coordinates = Selection.getDomainCoordinates(scale, domain);
+    const coordinates = Selection.getDomainCoordinates(props, domain);
     const selectBox = this.getSelectBox(props, coordinates);
     return selectBox ?
       (

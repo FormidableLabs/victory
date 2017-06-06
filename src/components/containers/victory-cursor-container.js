@@ -96,7 +96,7 @@ export const cursorContainerMixin = (base) => class VictoryCursorContainer exten
     if (!cursorValue) { return []; }
 
     const newElements = [];
-    const domainCoordinates = Selection.getDomainCoordinates(scale, domain);
+    const domainCoordinates = Selection.getDomainCoordinates(props, domain);
 
     const cursorCoordinates = {
       x: scale.x(cursorValue.x),

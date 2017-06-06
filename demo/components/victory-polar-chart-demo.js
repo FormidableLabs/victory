@@ -2,12 +2,12 @@
 /*eslint no-magic-numbers:0*/
 import React from "react";
 import {
-  VictoryPolarAxis, VictoryScatter, VictoryLine, VictoryArea, VictoryBar,
+  VictoryPolarAxis, VictoryScatter, VictoryLine, VictoryArea, VictoryBar, VictorySelectionContainer,
   VictoryStack, VictoryChart, VictoryGroup, VictoryVoronoiContainer, VictoryZoomContainer
 } from "../../src/index";
 import { random, range, merge } from "lodash";
 
-import { VictoryTheme, Curve, VictoryTooltip } from "victory-core";
+import { VictoryTheme, VictoryTooltip } from "victory-core";
 class App extends React.Component {
 
   constructor() {
@@ -64,6 +64,67 @@ class App extends React.Component {
     return (
       <div className="demo">
         <div style={containerStyle}>
+
+          <VictoryChart polar
+            theme={VictoryTheme.material}
+            style={chartStyle}
+            containerComponent={<VictorySelectionContainer/>}
+          >
+            <VictoryPolarAxis
+              labelPlacement="perpendicular"
+            />
+            <VictoryGroup
+              data={[
+                { x: 1, y: 5 },
+                { x: 2, y: 3 },
+                { x: 3, y: 1 },
+                { x: 4, y: 2 },
+                { x: 5, y: 4 }
+              ]}
+            >
+              <VictoryLine style={{ data: { stroke: "tomato" } }}/>
+              <VictoryScatter
+                style={{ data: { fill: (d, active) => active ? "tomato" : "gray" } }}
+                labels={(d) => d.y}
+                labelComponent={<VictoryTooltip/>}
+              />
+            </VictoryGroup>
+
+            <VictoryGroup
+              data={[
+                { x: 1, y: 3 },
+                { x: 2, y: 5 },
+                { x: 3, y: 3 },
+                { x: 3, y: 2 },
+                { x: 4, y: 2 },
+                { x: 5, y: 1 }
+              ]}
+            >
+              <VictoryLine style={{ data: { stroke: "blue" } }}/>
+              <VictoryScatter
+                style={{ data: { fill: (d, active) => active ? "blue" : "gray" } }}
+                labels={(d) => d.y}
+                labelComponent={<VictoryTooltip/>}
+              />
+            </VictoryGroup>
+
+            <VictoryGroup
+              data={[
+                { x: 1, y: 5 },
+                { x: 2, y: 4 },
+                { x: 3, y: 2 },
+                { x: 4, y: 4 },
+                { x: 5, y: 2 }
+              ]}
+            >
+              <VictoryLine style={{ data: { stroke: "black" } }}/>
+              <VictoryScatter
+                style={{ data: { fill: (d, active) => active ? "black" : "gray" } }}
+                labels={(d) => d.y}
+                labelComponent={<VictoryTooltip/>}
+              />
+            </VictoryGroup>
+          </VictoryChart>
 
           <VictoryChart polar
             theme={VictoryTheme.material}
@@ -375,7 +436,6 @@ class App extends React.Component {
               labelPlacement="parallel"
             />
             <VictoryLine
-              dataComponent={<Curve closed/>}
               labelComponent={<VictoryTooltip/>}
               labels={(d) => d.x}
               interpolation="linear"

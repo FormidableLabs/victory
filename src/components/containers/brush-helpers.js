@@ -15,11 +15,11 @@ const Helpers = {
   },
 
   getDomainBox(props, fullDomain, selectedDomain) {
-    const { dimension, scale } = props;
+    const { dimension } = props;
     fullDomain = defaults({}, fullDomain, props.domain);
     selectedDomain = defaults({}, selectedDomain, fullDomain);
-    const fullCoordinates = Selection.getDomainCoordinates(scale, fullDomain);
-    const selectedCoordinates = Selection.getDomainCoordinates(scale, selectedDomain);
+    const fullCoordinates = Selection.getDomainCoordinates(props, fullDomain);
+    const selectedCoordinates = Selection.getDomainCoordinates(props, selectedDomain);
 
     return {
       x1: dimension !== "y" ? Math.min(...selectedCoordinates.x) : Math.min(...fullCoordinates.x),

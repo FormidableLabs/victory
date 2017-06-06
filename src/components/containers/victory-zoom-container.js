@@ -2,9 +2,7 @@ import PropTypes from "prop-types";
 import React from "react";
 import { defaults, isEqual } from "lodash";
 import ZoomHelpers from "./zoom-helpers";
-import {
-  VictoryContainer, VictoryClipContainer, PropTypes as CustomPropTypes
-} from "victory-core";
+import { VictoryContainer, VictoryClipContainer, PropTypes as CustomPropTypes } from "victory-core";
 
 export const zoomContainerMixin = (base) => class VictoryZoomContainer extends base {
   static displayName = "VictoryZoomContainer";
@@ -87,7 +85,9 @@ export const zoomContainerMixin = (base) => class VictoryZoomContainer extends b
           translateX: Math.min(...rangeX),
           translateY: Math.min(...rangeY),
           children: arr,
-          polar, origin, radius
+          polar,
+          origin: polar ? origin : undefined,
+          radius: polar ? radius : undefined
         }) :
         null;
     };
