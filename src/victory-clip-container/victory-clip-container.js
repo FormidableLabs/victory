@@ -13,6 +13,7 @@ export default class VictoryClipContainer extends React.Component {
     ]),
     className: PropTypes.string,
     clipHeight: PropTypes.number,
+    clipId: PropTypes.number,
     clipPadding: PropTypes.shape({
       top: PropTypes.number, bottom: PropTypes.number,
       left: PropTypes.number, right: PropTypes.number
@@ -35,7 +36,9 @@ export default class VictoryClipContainer extends React.Component {
 
   constructor(props) {
     super(props);
-    this.clipId = Math.round(Math.random() * 10000); // eslint-disable-line no-magic-numbers
+    this.clipId = props.clipId !== undefined ?
+      props.clipId :
+      Math.round(Math.random() * 10000); // eslint-disable-line no-magic-numbers
   }
 
   // Overridden in victory-core-native
