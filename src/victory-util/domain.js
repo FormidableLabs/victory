@@ -114,16 +114,21 @@ export default {
 
     const min = Collection.getMinValue(allData);
     const max = Collection.getMaxValue(allData);
-    // TODO: is this the correct behavior, or should we just error. How do we
-    // handle charts with just one data point?
+    let domain;
     if (min === max) {
-      const adjustedMax = max === 0 ? 1 : max;
-      return [0, adjustedMax];
+      domain = this.getSinglePointDomain(max);
     }
-    const domain = [min, max];
+    domain = [min, max];
     const angularRange = Math.abs((props.startAngle || 0) - (props.endAngle || 360));
     return props.polar && axis === "x" && angularRange === 360 ?
       this.getSymmetricDomain(domain, allData) : domain;
+  },
+
+  getSinglePointDomain(val) {
+    const verySmallNumber = 1 / Number.MAX_SAFE_INTEGER;
+    const adjustedMin = val instanceof Date ? new Date(val - 1) : val - verySmallNumber;
+    const adjustedMax = val instanceof Date ? new Date(val + 1) : val + verySmallNumber;
+    return [adjustedMin, adjustedMax];
   },
 
   getSymmetricDomain(domain, data) {
@@ -214,11 +219,8 @@ export default {
     // use greatest min / max
     const domainMin = cumulativeMin < 0 ? cumulativeMin : Collection.getMinValue(globalDomain);
     const domainMax = Collection.getMaxValue(globalDomain, ...cumulativeMaxArray);
-    // TODO: is this the correct behavior, or should we just error. How do we
-    // handle charts with just one data point?
     if (domainMin === domainMax) {
-      const adjustedMax = domainMax === 0 ? 1 : domainMax;
-      return [0, adjustedMax];
+      return this.getSinglePointDomain(domainMax);
     }
     return [domainMin, domainMax];
   },
