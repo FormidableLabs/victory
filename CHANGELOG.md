@@ -1,6 +1,11 @@
 VictoryCore Changelog
 =====================
 
+## 16.0.1 (2017-06-06)
+
+-[251](https://github.com/FormidableLabs/victory-core/pull/251) Adds an optional `clipId` prop to `VictoryClipContainer`
+-[252](https://github.com/FormidableLabs/victory-core/pull/252) Changes domain calculation for single data point components so that domains aren't forced to include zero
+
 ## 16.0.0 (2017-06-06)
 
 -[240](https://github.com/FormidableLabs/victory-core/pull/240) Polar Charts
