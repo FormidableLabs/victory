@@ -94,13 +94,26 @@ class VictoryPolarAxis extends React.Component {
     return groupComponentProps.transform || transform;
   }
 
+  renderAxisLine(props) {
+    const { dependentAxis } = props;
+    const axisComponent = dependentAxis ? props.axisComponent : props.circularAxisComponent;
+    const axisProps = this.getComponentProps(axisComponent, "axis", 0);
+    return React.cloneElement(axisComponent, axisProps);
+  }
+
+  renderLabel(props) {
+    const { axisLabelComponent, dependentAxis, label } = props;
+    if (!label || !dependentAxis) {
+      return null;
+    }
+    const axisLabelProps = this.getComponentProps(axisLabelComponent, "axisLabel", 0);
+    return React.cloneElement(axisLabelComponent, axisLabelProps);
+  }
+
   renderAxis(props) {
     const { tickComponent, tickLabelComponent, groupComponent } = props;
     const axisType = props.dependentAxis ? "radial" : "angular";
     const gridComponent = axisType === "radial" ? props.circularGridComponent : props.gridComponent;
-    const axisComponent = props.dependentAxis ? props.axisComponent : props.circularAxisComponent;
-    const axisProps = this.getComponentProps(axisComponent, "axis", 0);
-
     const tickComponents = this.dataKeys.map((key, index) => {
       const tickProps = assign(
         { key: `tick-${key}` }, this.getComponentProps(tickComponent, "ticks", index)
@@ -121,9 +134,10 @@ class VictoryPolarAxis extends React.Component {
       );
       return React.cloneElement(tickLabelComponent, tickLabelProps);
     });
+    const axis = this.renderAxisLine(props);
+    const axisLabel = this.renderLabel(props);
     const children = [
-      React.cloneElement(axisComponent, axisProps),
-      ...tickComponents, ...gridComponents, ...tickLabelComponents
+      axis, axisLabel, ...tickComponents, ...gridComponents, ...tickLabelComponents
     ];
     return React.cloneElement(groupComponent, { transform: this.getTransform(props) }, children);
   }
@@ -137,7 +151,8 @@ class VictoryPolarAxis extends React.Component {
     if (this.shouldAnimate()) {
       return this.animateComponent(props, animationWhitelist);
     }
-    return this.renderContainer(props.containerComponent, this.renderAxis(props));
+    const children = this.renderAxis(props);
+    return props.standalone ? this.renderContainer(props.containerComponent, children) : children;
   }
 }
 

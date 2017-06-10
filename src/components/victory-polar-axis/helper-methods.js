@@ -1,7 +1,7 @@
 import {
   uniqBy, includes, defaults, defaultsDeep, isFunction, range as lodashRange, without
 } from "lodash";
-import { Helpers, Scale, Domain } from "victory-core";
+import { Helpers, LabelHelpers, Scale, Domain } from "victory-core";
 
 export default {
   getCalculatedValues(props) {
@@ -155,17 +155,19 @@ export default {
   getTickLabelProps(props, calculatedValues, tick, index) { //eslint-disable-line max-params
     const { axisType, radius, tickFormat, style, scale } = calculatedValues;
     const { labelStyle } = this.getEvaluatedStyles(style, tick, index);
+    const { labelPlacement, startAngle } = props;
     const tickPadding = labelStyle.padding || 0;
     const angularPadding = 0; // TODO: do some geometry
-    const axisAngle = props.axisAngle || props.startAngle;
+    const axisAngle = props.axisAngle || startAngle;
     const labelAngle = axisType === "angular" ?
       scale(tick) : Helpers.degreesToRadians(axisAngle + angularPadding);
     const textAngle = labelStyle.angle || this.getTextAngle(props, labelAngle);
     const labelRadius = axisType === "angular" ? radius + tickPadding : scale(tick);
+    const textAnchor = labelStyle.textAnchor || this.getTextAnchor(labelAngle, labelPlacement);
     return {
       index, datum: tick, style: labelStyle,
       angle: textAngle,
-      textAnchor: labelStyle.textAnchor || this.getTextAnchor(labelAngle, props.labelPlacement),
+      textAnchor,
       text: tickFormat(tick, index),
       x: labelRadius * Math.cos(labelAngle),
       y: -labelRadius * Math.sin(labelAngle)
@@ -198,6 +200,16 @@ export default {
     return angle <= 90 || angle > 270 ? "start" : "end";
   },
 
+  getVerticalAnchor(baseAngle, labelPlacement) {
+    const degrees = Helpers.radiansToDegrees(baseAngle);
+    const orientation = LabelHelpers.getPolarOrientation(degrees);
+    if (labelPlacement === "parallel" || orientation === "left" || orientation === "right") {
+      return "middle";
+    }
+    return orientation === "top" ? "end" : "start";
+  },
+
+
   getGridProps(props, calculatedValues, tick, index) { //eslint-disable-line max-params
     const { axisType, radius, style, scale } = calculatedValues;
     const { startAngle, endAngle } = props;
@@ -212,6 +224,31 @@ export default {
         style: gridStyle, index, datum: tick,
         cx: 0, cy: 0, r: scale(tick), startAngle, endAngle
       };
+  },
+
+  getAxisLabelProps(props, calculatedValues) {
+    const { axisType, radius, style } = calculatedValues;
+    const { labelPlacement, label, startAngle } = props;
+    if (axisType !== "radial") {
+      return {};
+    }
+    const labelStyle = style && style.axisLabel || {};
+    const axisAngle = props.axisAngle !== undefined ? props.axisAngle : startAngle;
+    const labelAngle = Helpers.degreesToRadians(axisAngle);
+    const textAngle = labelStyle.angle || this.getTextAngle(props, labelAngle);
+    const labelRadius = radius + (labelStyle.padding || 0);
+    const textAnchor = labelStyle.textAnchor || this.getTextAnchor(labelAngle, labelPlacement);
+    const verticalAnchor = labelStyle.verticalAnchor ||
+      this.getVerticalAnchor(labelAngle, labelPlacement);
+    return {
+      style: labelStyle,
+      angle: textAngle,
+      textAnchor,
+      verticalAnchor,
+      text: label,
+      x: labelRadius * Math.cos(labelAngle),
+      y: -labelRadius * Math.sin(labelAngle)
+    };
   },
 
   getAxisProps(modifiedProps, calculatedValues) {
@@ -269,8 +306,8 @@ export default {
     const calculatedValues = this.getCalculatedValues(props);
     const { style, scale, ticks, domain } = calculatedValues;
     const { width, height, standalone, theme } = props;
-
     const axisProps = this.getAxisProps(props, calculatedValues);
+    const axisLabelProps = this.getAxisLabelProps(props, calculatedValues);
     const initialChildProps = { parent:
       { style: style.parent, ticks, scale, width, height, domain, standalone, theme }
     };
@@ -278,6 +315,7 @@ export default {
     return ticks.reduce((childProps, tick, index) => {
       childProps[index] = {
         axis: axisProps,
+        axisLabel: axisLabelProps,
         ticks: this.getTickProps(props, calculatedValues, tick, index),
         tickLabels: this.getTickLabelProps(props, calculatedValues, tick, index),
         grid: this.getGridProps(props, calculatedValues, tick, index)

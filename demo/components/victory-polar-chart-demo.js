@@ -131,13 +131,22 @@ class App extends React.Component {
             style={chartStyle}
           >
             <VictoryPolarAxis dependentAxis
-              labelPlacement="vertical"
-              style={{ axis: { stroke: "none" } }}
-              axisAngle={90}
-            />
-            <VictoryPolarAxis
               labelPlacement="perpendicular"
+              style={{ axis: { stroke: "none" } }}
+              axisAngle={120}
+              label={"THING 1"}
+              tickValues={[1, 5, 9]}
             />
+
+            <VictoryPolarAxis dependentAxis
+              labelPlacement="perpendicular"
+              style={{ axis: { stroke: "none" } }}
+              axisAngle={0}
+              label={"THING 2"}
+              tickValues={[2, 6, 8]}
+            />
+
+
             <VictoryGroup
               style={{ data: { width: 10 } }}
               labels={["a", "b", "c"]}
