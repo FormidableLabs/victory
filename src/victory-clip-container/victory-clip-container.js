@@ -23,7 +23,7 @@ export default class VictoryClipContainer extends React.Component {
     events: PropTypes.object,
     origin: PropTypes.shape({ x: PropTypes.number, y: PropTypes.number }),
     polar: PropTypes.bool,
-    radius: PropTypes.bool,
+    radius: PropTypes.number,
     style: PropTypes.object,
     transform: PropTypes.string,
     translateX: PropTypes.number,
