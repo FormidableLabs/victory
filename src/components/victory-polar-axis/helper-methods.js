@@ -124,10 +124,20 @@ export default {
     return {
       parent: defaults(parentStyleProps, style.parent, styleObject.parent),
       axis: defaults({}, style.axis, styleObject.axis),
+      axisLabel: defaults({}, style.axisLabel, styleObject.axisLabel),
       grid: defaults({}, style.grid, styleObject.grid),
       ticks: defaults({}, style.ticks, styleObject.ticks),
       tickLabels: defaults({}, style.tickLabels, styleObject.tickLabels)
     };
+  },
+
+  getAxisAngle(props) {
+    const { axisAngle, startAngle, axisValue, dependentAxis, scale } = props;
+    const otherAxis = this.getAxis(props) === "y" ? "x" : "y";
+    if (axisValue === undefined || !dependentAxis || scale[otherAxis] === undefined) {
+      return axisAngle || startAngle;
+    }
+    return Helpers.radiansToDegrees(scale.x(axisValue));
   },
 
   getTickProps(props, calculatedValues, tick, index) { //eslint-disable-line max-params
@@ -135,7 +145,7 @@ export default {
     const { tickStyle } = this.getEvaluatedStyles(style, tick, index);
     const tickPadding = tickStyle.padding || 0;
     const angularPadding = tickPadding; // TODO: do some geometry
-    const axisAngle = props.axisAngle || props.startAngle;
+    const axisAngle = axisType === "radial" ? this.getAxisAngle(props, scale) : undefined;
     return axisType === "angular" ?
       {
         index, datum: tick, style: tickStyle,
@@ -155,10 +165,10 @@ export default {
   getTickLabelProps(props, calculatedValues, tick, index) { //eslint-disable-line max-params
     const { axisType, radius, tickFormat, style, scale } = calculatedValues;
     const { labelStyle } = this.getEvaluatedStyles(style, tick, index);
-    const { labelPlacement, startAngle } = props;
+    const { labelPlacement } = props;
     const tickPadding = labelStyle.padding || 0;
     const angularPadding = 0; // TODO: do some geometry
-    const axisAngle = props.axisAngle || startAngle;
+    const axisAngle = axisType === "radial" ? this.getAxisAngle(props, scale) : undefined;
     const labelAngle = axisType === "angular" ?
       scale(tick) : Helpers.degreesToRadians(axisAngle + angularPadding);
     const textAngle = labelStyle.angle || this.getTextAngle(props, labelAngle);
@@ -227,13 +237,13 @@ export default {
   },
 
   getAxisLabelProps(props, calculatedValues) {
-    const { axisType, radius, style } = calculatedValues;
-    const { labelPlacement, label, startAngle } = props;
+    const { axisType, radius, style, scale } = calculatedValues;
+    const { labelPlacement, label } = props;
     if (axisType !== "radial") {
       return {};
     }
     const labelStyle = style && style.axisLabel || {};
-    const axisAngle = props.axisAngle !== undefined ? props.axisAngle : startAngle;
+    const axisAngle = axisType === "radial" ? this.getAxisAngle(props, scale) : undefined;
     const labelAngle = Helpers.degreesToRadians(axisAngle);
     const textAngle = labelStyle.angle || this.getTextAngle(props, labelAngle);
     const labelRadius = radius + (labelStyle.padding || 0);
@@ -252,9 +262,9 @@ export default {
   },
 
   getAxisProps(modifiedProps, calculatedValues) {
-    const { style, axisType, radius } = calculatedValues;
+    const { style, axisType, radius, scale } = calculatedValues;
     const { startAngle, endAngle } = modifiedProps;
-    const axisAngle = modifiedProps.axisAngle || startAngle;
+    const axisAngle = axisType === "radial" ? this.getAxisAngle(modifiedProps, scale) : undefined;
     return axisType === "radial" ?
       {
         style: style.axis,

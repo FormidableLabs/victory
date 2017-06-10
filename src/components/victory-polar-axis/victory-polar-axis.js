@@ -37,6 +37,7 @@ class VictoryPolarAxis extends React.Component {
     axisAngle: PropTypes.number,
     axisComponent: PropTypes.element,
     axisLabelComponent: PropTypes.element,
+    axisValue: PropTypes.oneOfType([PropTypes.number, PropTypes.string]),
     circularAxisComponent: PropTypes.element,
     circularGridComponent: PropTypes.element,
     containerComponent: PropTypes.element,
