@@ -188,8 +188,7 @@ export default {
     // TODO: is this the correct behavior, or should we just error. How do we
     // handle charts with just one data point?
     if (min === max) {
-      const adjustedMax = max === 0 ? 1 : max;
-      return [0, adjustedMax];
+      return Domain.getSinglePointDomain(max);
     }
     return [min, max];
   },
