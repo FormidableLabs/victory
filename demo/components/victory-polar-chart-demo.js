@@ -10,9 +10,9 @@ import { VictoryTheme, VictoryTooltip } from "victory-core";
 
 
 const multiAxisData = [
-  { strength: 1, intelligence: 250, stealth: 45, charisma: 1000 },
-  { strength: 2, intelligence: 300, stealth: 75, charisma: 2000 },
-  { strength: 5, intelligence: 225, stealth: 60, charisma: 1500 }
+  { strength: 1, intelligence: 250, stealth: 45 },
+  { strength: 2, intelligence: 300, stealth: 75 },
+  { strength: 5, intelligence: 225, stealth: 60 }
 ];
 
 class App extends React.Component {
