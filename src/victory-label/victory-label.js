@@ -199,32 +199,14 @@ export default class VictoryLabel extends React.Component {
   }
 
   getTransform(props, style) {
-    const { datum, x, y } = props;
-    const angle = style.angle || props.angle || this.getDefaultAngle(props);
+    const { datum, x, y, polar } = props;
+    const defaultAngle = polar ? LabelHelpers.getPolarAngle(props) : 0;
+    const angle = style.angle || props.angle || defaultAngle;
     const transform = props.transform || style.transform;
     const transformPart = transform && Helpers.evaluateProp(transform, datum);
     const rotatePart = angle && { rotate: [angle, x, y] };
     return transformPart || angle ?
       Style.toTransformString(transformPart, rotatePart) : undefined;
-  }
-
-  getDefaultAngle(props) {
-    const { polar, labelPlacement, datum } = props;
-    if (!polar || !labelPlacement || labelPlacement === "vertical") {
-      return 0;
-    }
-    const degrees = LabelHelpers.getDegrees(props, datum);
-    const sign = (degrees > 90 && degrees < 180 || degrees > 270) ? 1 : -1;
-    let angle;
-    if (degrees === 0 || degrees === 180) {
-      angle = 90;
-    } else if (degrees > 0 && degrees < 180) {
-      angle = 90 - degrees;
-    } else if (degrees > 180 && degrees < 360) {
-      angle = 270 - degrees;
-    }
-    const labelRotation = labelPlacement === "perpendicular" ? 0 : 90;
-    return angle + sign * labelRotation;
   }
 
   getFontSize(style) {
