@@ -52,10 +52,10 @@ describe("victory-chart/helpers-methods", () => {
       expect(result[0].props).to.eql(axis.props);
     });
 
-    it("only ever returns one axis of a particular type", () => {
+    it("only ever returns one independent axis", () => {
       const children = [
-        getVictoryAxis({ dependentAxis: true }),
-        getVictoryAxis({ dependentAxis: true, orientation: "right" })
+        getVictoryAxis({ orientation: "top" }),
+        getVictoryAxis({ orientation: "right" })
       ];
       const result = Helpers.getChildComponents({ children }, defaultAxes);
       expect(result).to.have.length(1);

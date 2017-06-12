@@ -93,7 +93,10 @@ class VictoryAxis extends React.Component {
   }
 
   renderLabel(props) {
-    const { axisLabelComponent } = props;
+    const { axisLabelComponent, label } = props;
+    if (!label) {
+      return null;
+    }
     const axisLabelProps = this.getComponentProps(axisLabelComponent, "axisLabel", 0);
     return React.cloneElement(axisLabelComponent, axisLabelProps);
   }

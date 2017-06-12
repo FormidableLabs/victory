@@ -21,14 +21,14 @@ export default {
     if (axisComponents.dependent.length === 0 && axisComponents.independent.length === 0) {
       return childComponents.concat([defaultAxes.independent, defaultAxes.dependent]);
     }
-    if (axisComponents.dependent.length > 1 || axisComponents.independent.length > 1) {
-      const msg = "Only one VictoryAxis component of each axis type is allowed when " +
+    if (axisComponents.independent.length > 1) {
+      const msg = "Only one independent VictoryAxis component is allowed when " +
         "using the VictoryChart wrapper. Only the first axis will be used. Please compose " +
         "multi-axis charts manually";
       Log.warn(msg);
       const dataComponents = this.getDataComponents(childComponents);
       return Collection.removeUndefined(
-        dataComponents.concat([axisComponents.dependent[0], axisComponents.independent[0]])
+        dataComponents.concat([...axisComponents.dependent, axisComponents.independent[0]])
       );
     }
     return childComponents;

@@ -180,7 +180,7 @@ class App extends React.Component {
         <div style={containerStyle}>
           <VictoryChart style={chartStyle}>
             <VictoryScatter
-              data={[{ x: 0, y: 0 }, { x: -2, y: -2 }, { x: -3, y: -3 }]}
+              data={[{ x: -3, y: -3 }]}
             />
           </VictoryChart>
 
@@ -189,7 +189,7 @@ class App extends React.Component {
               dependentAxis
               style={axisStyle}
             />
-          <VictoryAxis style={axisStyle} tickCount={6} />
+          <VictoryAxis style={axisStyle} tickCount={6}/>
             <VictoryBar
               data={[
                 { x: 1, y: 1 },

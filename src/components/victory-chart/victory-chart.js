@@ -107,8 +107,8 @@ export default class VictoryChart extends React.Component {
     return {
       startAngle: props.startAngle,
       endAngle: props.endAngle,
-      domain: domain[axis],
-      scale: scale[axis],
+      domain,
+      scale,
       tickValues,
       tickFormat,
       offsetY: child.props.offsetY !== undefined ? child.props.offsetY : offsetY,
@@ -212,7 +212,8 @@ export default class VictoryChart extends React.Component {
     const { width, height, standalone, theme, polar } = props;
     const { domain, scale, style, origin, radius } = calculatedProps;
     return {
-      domain, scale, width, height, standalone, theme, style: style.parent, polar, origin, radius
+      domain, scale, width, height, standalone, theme, style: style.parent, polar, radius,
+      origin: polar ? origin : undefined
     };
   }
 

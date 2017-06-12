@@ -5,16 +5,25 @@ import {
   VictoryPolarAxis, VictoryScatter, VictoryLine, VictoryArea, VictoryBar, VictorySelectionContainer,
   VictoryStack, VictoryChart, VictoryGroup, VictoryVoronoiContainer, VictoryZoomContainer
 } from "../../src/index";
-import { random, range, merge } from "lodash";
+import { random, range, merge, keys } from "lodash";
+import { VictoryTheme, VictoryTooltip, VictoryLabel } from "victory-core";
 
-import { VictoryTheme, VictoryTooltip } from "victory-core";
+
+const multiAxisData = [
+  { strength: 1, intelligence: 250, stealth: 45 },
+  { strength: 2, intelligence: 300, stealth: 75 },
+  { strength: 5, intelligence: 225, stealth: 60 }
+];
+
 class App extends React.Component {
 
   constructor() {
     super();
     this.state = {
       data: this.getData(),
-      staticData: this.getStaticData()
+      staticData: this.getStaticData(),
+      multiAxisData: this.processMultiAxisData(multiAxisData),
+      multiAxisMaxima: this.getMaxData(multiAxisData)
     };
   }
 
@@ -50,6 +59,27 @@ class App extends React.Component {
     });
   }
 
+  getMaxData(data) {
+    const groupedData = keys(data[0]).reduce((memo, key) => {
+      memo[key] = data.map((d) => d[key]);
+      return memo;
+    }, {});
+    return keys(groupedData).reduce((memo, key) => {
+      memo[key] = Math.max(...groupedData[key]);
+      return memo;
+    }, {});
+  }
+
+  processMultiAxisData(data) {
+    const maxByGroup = this.getMaxData(data);
+    const makeDataArray = (d) => {
+      return keys(d).map((key) => {
+        return { x: key, y: d[key] / maxByGroup[key] };
+      });
+    };
+    return data.map((datum) => makeDataArray(datum));
+  }
+
   render() {
     const containerStyle = {
       display: "flex",
@@ -64,6 +94,38 @@ class App extends React.Component {
     return (
       <div className="demo">
         <div style={containerStyle}>
+
+        <VictoryChart polar
+          theme={VictoryTheme.material}
+          domain={{ y: [ 0, 1 ] }}
+          style={chartStyle}
+        >
+          {
+            keys(this.state.multiAxisMaxima).map((key, i) => {
+              return (
+                <VictoryPolarAxis key={i} dependentAxis
+                  style={{
+                    axisLabel: { padding: 10 }
+                  }}
+                  tickLabelComponent={<VictoryLabel labelPlacement="vertical"/>}
+                  labelPlacement="perpendicular"
+                  axisValue={i + 1} label={key}
+                  tickFormat={(t) => t * this.state.multiAxisMaxima[key]}
+                  tickValues={[0.25, 0.5, 0.75]}
+                />
+              );
+            })
+          }
+            <VictoryPolarAxis
+              labelPlacement="parallel"
+              tickFormat={() => ""}
+            />
+            <VictoryGroup colorScale="warm">
+              {this.state.multiAxisData.map((data, i) => {
+                return <VictoryLine key={i} data={data}/>;
+              })}
+            </VictoryGroup>
+          </VictoryChart>
 
           <VictoryChart polar
             theme={VictoryTheme.material}
@@ -103,7 +165,7 @@ class App extends React.Component {
               <VictoryLine style={{ data: { stroke: "blue" } }}/>
               <VictoryScatter
                 style={{ data: { fill: (d, active) => active ? "blue" : "gray" } }}
-                labels={(d) => d.y}
+                labels={(d) => `y: ${d.y}`}
                 labelComponent={<VictoryTooltip/>}
               />
             </VictoryGroup>
@@ -130,14 +192,12 @@ class App extends React.Component {
             theme={VictoryTheme.material}
             style={chartStyle}
           >
+
             <VictoryPolarAxis dependentAxis
-              labelPlacement="vertical"
-              style={{ axis: { stroke: "none" } }}
-              axisAngle={90}
+              tickValues={[2, 6, 8]}
             />
-            <VictoryPolarAxis
-              labelPlacement="perpendicular"
-            />
+
+
             <VictoryGroup
               style={{ data: { width: 10 } }}
               labels={["a", "b", "c"]}
@@ -436,8 +496,8 @@ class App extends React.Component {
               labelPlacement="parallel"
             />
             <VictoryLine
-              labelComponent={<VictoryTooltip/>}
-              labels={(d) => d.x}
+              labelComponent={<VictoryLabel labelPlacement="parallel"/>}
+              labels={(d) => `y: ${Math.round(d.y)}`}
               interpolation="linear"
               style={{
                 data: { stroke: "tomato", strokeWidth: 2 }
