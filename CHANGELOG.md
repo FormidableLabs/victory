@@ -1,5 +1,16 @@
 # VictoryChart Changelog
 
+## 21.1.0 (2017-06-12)
+
+
+[479](https://github.com/FormidableLabs/victory-chart/pull/479)
+  - Allows multiple dependent axes in `VictoryChart` (all will use the same domain, so normalizing data is necessary)
+  - Fixes axis labels for `VictoryPolarAxis`
+  - Adds an `axisValue` convenience helper so that users don't need to calculate an `axisAngle` for a given x value
+
+[478](https://github.com/FormidableLabs/victory-chart/pull/478)
+  - Changes how domains are calculated when there is only one data point. After this change, domains will no longer be arbitrarily include zero.
+
 ## 21.0.0 (2017-06-06)
 
 [466](https://github.com/FormidableLabs/victory-chart/pull/466) Polar Charts
