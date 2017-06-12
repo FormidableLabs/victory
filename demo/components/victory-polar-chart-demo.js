@@ -6,7 +6,7 @@ import {
   VictoryStack, VictoryChart, VictoryGroup, VictoryVoronoiContainer, VictoryZoomContainer
 } from "../../src/index";
 import { random, range, merge, keys } from "lodash";
-import { VictoryTheme, VictoryTooltip } from "victory-core";
+import { VictoryTheme, VictoryTooltip, VictoryLabel } from "victory-core";
 
 
 const multiAxisData = [
@@ -97,7 +97,6 @@ class App extends React.Component {
 
         <VictoryChart polar
           theme={VictoryTheme.material}
-          startAngle={0}
           domain={{ y: [ 0, 1 ] }}
           style={chartStyle}
         >
@@ -108,6 +107,7 @@ class App extends React.Component {
                   style={{
                     axisLabel: { padding: 10 }
                   }}
+                  tickLabelComponent={<VictoryLabel labelPlacement="vertical"/>}
                   labelPlacement="perpendicular"
                   axisValue={i + 1} label={key}
                   tickFormat={(t) => t * this.state.multiAxisMaxima[key]}
@@ -165,7 +165,7 @@ class App extends React.Component {
               <VictoryLine style={{ data: { stroke: "blue" } }}/>
               <VictoryScatter
                 style={{ data: { fill: (d, active) => active ? "blue" : "gray" } }}
-                labels={(d) => d.y}
+                labels={(d) => `y: ${d.y}`}
                 labelComponent={<VictoryTooltip/>}
               />
             </VictoryGroup>
@@ -496,8 +496,8 @@ class App extends React.Component {
               labelPlacement="parallel"
             />
             <VictoryLine
-              labelComponent={<VictoryTooltip/>}
-              labels={(d) => d.x}
+              labelComponent={<VictoryLabel labelPlacement="parallel"/>}
+              labels={(d) => `y: ${Math.round(d.y)}`}
               interpolation="linear"
               style={{
                 data: { stroke: "tomato", strokeWidth: 2 }

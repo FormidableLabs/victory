@@ -1,5 +1,5 @@
 import {
-  uniqBy, includes, defaults, defaultsDeep, isFunction, range as lodashRange, without
+  assign, uniqBy, includes, defaults, defaultsDeep, isFunction, range as lodashRange, without
 } from "lodash";
 import { Helpers, LabelHelpers, Scale, Domain } from "victory-core";
 
@@ -165,60 +165,28 @@ export default {
   getTickLabelProps(props, calculatedValues, tick, index) { //eslint-disable-line max-params
     const { axisType, radius, tickFormat, style, scale } = calculatedValues;
     const { labelStyle } = this.getEvaluatedStyles(style, tick, index);
-    const { labelPlacement } = props;
+    const { tickLabelComponent } = props;
+    const labelPlacement = tickLabelComponent.props && tickLabelComponent.props.labelPlacement ?
+      tickLabelComponent.props.labelPlacement : props.labelPlacement;
     const tickPadding = labelStyle.padding || 0;
     const angularPadding = 0; // TODO: do some geometry
     const axisAngle = axisType === "radial" ? this.getAxisAngle(props, scale) : undefined;
     const labelAngle = axisType === "angular" ?
-      scale(tick) : Helpers.degreesToRadians(axisAngle + angularPadding);
-    const textAngle = labelStyle.angle || this.getTextAngle(props, labelAngle);
+      Helpers.radiansToDegrees(scale(tick)) : axisAngle + angularPadding;
+    const textAngle = labelStyle.angle ||
+      LabelHelpers.getPolarAngle(assign({}, props, { labelPlacement }), labelAngle);
     const labelRadius = axisType === "angular" ? radius + tickPadding : scale(tick);
-    const textAnchor = labelStyle.textAnchor || this.getTextAnchor(labelAngle, labelPlacement);
+    const textAnchor = labelStyle.textAnchor ||
+      LabelHelpers.getPolarTextAnchor(assign({}, props, { labelPlacement }), labelAngle);
     return {
       index, datum: tick, style: labelStyle,
       angle: textAngle,
       textAnchor,
       text: tickFormat(tick, index),
-      x: labelRadius * Math.cos(labelAngle),
-      y: -labelRadius * Math.sin(labelAngle)
+      x: labelRadius * Math.cos(Helpers.degreesToRadians(labelAngle)),
+      y: -labelRadius * Math.sin(Helpers.degreesToRadians(labelAngle))
     };
   },
-
-  getTextAngle(props, baseAngle) {
-    if (props.labelPlacement === "vertical") {
-      return 0;
-    }
-    const degrees = Helpers.radiansToDegrees(baseAngle);
-    const sign = (degrees > 90 && degrees < 180 || degrees > 270) ? 1 : -1;
-    let angle;
-    if (degrees === 0 || degrees === 180) {
-      angle = 90;
-    } else if (degrees > 0 && degrees < 180) {
-      angle = 90 - degrees;
-    } else if (degrees > 180 && degrees < 360) {
-      angle = 270 - degrees;
-    }
-    const labelRotation = props.labelPlacement === "perpendicular" ? 0 : 90;
-    return angle + sign * labelRotation;
-  },
-
-  getTextAnchor(baseAngle, labelPlacement) {
-    if (labelPlacement === "perpendicular") {
-      return "middle";
-    }
-    const angle = Helpers.radiansToDegrees(baseAngle);
-    return angle <= 90 || angle > 270 ? "start" : "end";
-  },
-
-  getVerticalAnchor(baseAngle, labelPlacement) {
-    const degrees = Helpers.radiansToDegrees(baseAngle);
-    const orientation = LabelHelpers.getPolarOrientation(degrees);
-    if (labelPlacement === "parallel" || orientation === "left" || orientation === "right") {
-      return "middle";
-    }
-    return orientation === "top" ? "end" : "start";
-  },
-
 
   getGridProps(props, calculatedValues, tick, index) { //eslint-disable-line max-params
     const { axisType, radius, style, scale } = calculatedValues;
@@ -238,26 +206,29 @@ export default {
 
   getAxisLabelProps(props, calculatedValues) {
     const { axisType, radius, style, scale } = calculatedValues;
-    const { labelPlacement, label } = props;
+    const { axisLabelComponent } = props;
     if (axisType !== "radial") {
       return {};
     }
+    const labelPlacement = axisLabelComponent.props && axisLabelComponent.props.labelPlacement ?
+      axisLabelComponent.props.labelPlacement : props.labelPlacement;
     const labelStyle = style && style.axisLabel || {};
     const axisAngle = axisType === "radial" ? this.getAxisAngle(props, scale) : undefined;
-    const labelAngle = Helpers.degreesToRadians(axisAngle);
-    const textAngle = labelStyle.angle || this.getTextAngle(props, labelAngle);
+    const textAngle = labelStyle.angle ||
+      LabelHelpers.getPolarAngle(assign({}, props, { labelPlacement }), axisAngle);
     const labelRadius = radius + (labelStyle.padding || 0);
-    const textAnchor = labelStyle.textAnchor || this.getTextAnchor(labelAngle, labelPlacement);
+    const textAnchor = labelStyle.textAnchor ||
+      LabelHelpers.getTextPolarAnchor(assign({}, props, { labelPlacement }), axisAngle);
     const verticalAnchor = labelStyle.verticalAnchor ||
-      this.getVerticalAnchor(labelAngle, labelPlacement);
+      LabelHelpers.getPolarVerticalAnchor(assign({}, props, { labelPlacement }), axisAngle);
     return {
       style: labelStyle,
       angle: textAngle,
       textAnchor,
       verticalAnchor,
-      text: label,
-      x: labelRadius * Math.cos(labelAngle),
-      y: -labelRadius * Math.sin(labelAngle)
+      text: props.label,
+      x: labelRadius * Math.cos(Helpers.degreesToRadians(axisAngle)),
+      y: -labelRadius * Math.sin(Helpers.degreesToRadians(axisAngle))
     };
   },
 
