@@ -99,10 +99,13 @@ export default {
 
   getPolarTextAnchor(props, degrees) {
     const labelPlacement = this.getLabelPlacement(props);
-    if (labelPlacement === "perpendicular" || degrees === 90 || degrees === 270) {
+    if (
+      labelPlacement === "perpendicular" ||
+      labelPlacement === "vertical" && (degrees === 90 || degrees === 270)
+    ) {
       return "middle";
     }
-    return degrees < 90 || degrees > 270 ? "start" : "end";
+    return degrees <= 90 || degrees > 270 ? "start" : "end";
   },
 
   getPolarVerticalAnchor(props, degrees) {
@@ -112,6 +115,25 @@ export default {
       return "middle";
     }
     return orientation === "top" ? "end" : "start";
+  },
+
+  getPolarAngle(props, baseAngle) {
+    const { labelPlacement, datum } = props;
+    if (!labelPlacement || labelPlacement === "vertical") {
+      return 0;
+    }
+    const degrees = baseAngle !== undefined ? baseAngle : this.getDegrees(props, datum);
+    const sign = (degrees > 90 && degrees < 180 || degrees > 270) ? 1 : -1;
+    let angle;
+    if (degrees === 0 || degrees === 180) {
+      angle = 90;
+    } else if (degrees > 0 && degrees < 180) {
+      angle = 90 - degrees;
+    } else if (degrees > 180 && degrees < 360) {
+      angle = 270 - degrees;
+    }
+    const labelRotation = labelPlacement === "perpendicular" ? 0 : 90;
+    return angle + sign * labelRotation;
   },
 
   getDegrees(props, datum) {
