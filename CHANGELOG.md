@@ -1,6 +1,10 @@
 VictoryCore Changelog
 =====================
 
+## 16.0.2 (2017-06-12)
+
+-[254](https://github.com/FormidableLabs/victory-core/pull/254) Generalize label angle helper
+
 ## 16.0.1 (2017-06-06)
 
 -[251](https://github.com/FormidableLabs/victory-core/pull/251) Adds an optional `clipId` prop to `VictoryClipContainer`
