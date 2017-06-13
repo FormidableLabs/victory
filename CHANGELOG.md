@@ -1,7 +1,10 @@
 # VictoryChart Changelog
 
-## 21.1.0 (2017-06-12)
+## 21.1.1 (2017-06-13)
 
+- Use explicit minimum version of `victory-core`
+
+## 21.1.0 (2017-06-12)
 
 [479](https://github.com/FormidableLabs/victory-chart/pull/479)
   - Allows multiple dependent axes in `VictoryChart` (all will use the same domain, so normalizing data is necessary)
