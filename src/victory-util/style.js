@@ -54,6 +54,6 @@ export default {
       blue: ["#002C61", "#004B8F", "#006BC9", "#3795E5", "#65B4F4"],
       green: ["#354722", "#466631", "#649146", "#8AB25C", "#A9C97E"]
     };
-    return name ? scales[name] : scales.greyscale;
+    return name ? scales[name] : scales.grayscale;
   }
 };
