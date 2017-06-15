@@ -1,5 +1,9 @@
 # VictoryChart Changelog
 
+## 21.1.2 (2017-06-15)
+
+[480](https://github.com/FormidableLabs/victory-chart/pull/480) Refactors `VictoryPolarAxis` to support native version
+
 ## 21.1.1 (2017-06-13)
 
 - Use explicit minimum version of `victory-core`
