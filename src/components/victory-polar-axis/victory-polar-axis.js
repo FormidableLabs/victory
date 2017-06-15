@@ -88,13 +88,6 @@ class VictoryPolarAxis extends React.Component {
     "tickComponent", "tickLabelComponent", "gridComponent", "circularGridComponent"
   ];
 
-  getTransform(props) {
-    const groupComponentProps = props.groupComponent.props || {};
-    const origin = Helpers.getPolarOrigin(props);
-    const transform = `translate(${origin.x}, ${origin.y})`;
-    return groupComponentProps.transform || transform;
-  }
-
   renderAxisLine(props) {
     const { dependentAxis } = props;
     const axisComponent = dependentAxis ? props.axisComponent : props.circularAxisComponent;
@@ -112,7 +105,7 @@ class VictoryPolarAxis extends React.Component {
   }
 
   renderAxis(props) {
-    const { tickComponent, tickLabelComponent, groupComponent } = props;
+    const { tickComponent, tickLabelComponent } = props;
     const axisType = props.dependentAxis ? "radial" : "angular";
     const gridComponent = axisType === "radial" ? props.circularGridComponent : props.gridComponent;
     const tickComponents = this.dataKeys.map((key, index) => {
@@ -140,7 +133,16 @@ class VictoryPolarAxis extends React.Component {
     const children = [
       axis, axisLabel, ...tickComponents, ...gridComponents, ...tickLabelComponents
     ];
-    return React.cloneElement(groupComponent, { transform: this.getTransform(props) }, children);
+    return this.renderGroup(props, children);
+  }
+
+  // Overridden in victory-native
+  renderGroup(props, children) {
+    const { groupComponent } = props;
+    const groupComponentProps = groupComponent.props || {};
+    const origin = Helpers.getPolarOrigin(props);
+    const transform = groupComponentProps.transform || `translate(${origin.x}, ${origin.y})`;
+    return React.cloneElement(groupComponent, { transform }, children);
   }
 
   shouldAnimate() {
