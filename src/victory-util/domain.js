@@ -125,7 +125,9 @@ export default {
   },
 
   getSinglePointDomain(val) {
-    const verySmallNumber = 1 / Number.MAX_SAFE_INTEGER;
+    // d3-scale does not properly resolve very small differences.
+    // eslint-disable-next-line no-magic-numbers
+    const verySmallNumber = Math.pow(10, -15);
     const adjustedMin = val instanceof Date ? new Date(val - 1) : val - verySmallNumber;
     const adjustedMax = val instanceof Date ? new Date(val + 1) : val + verySmallNumber;
     return [adjustedMin, adjustedMax];
