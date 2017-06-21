@@ -53,7 +53,10 @@ export const zoomContainerMixin = (base) => class VictoryZoomContainer extends b
         return undefined;
       },
       onWheel: (evt, targetProps, eventKey, ctx) => { // eslint-disable-line max-params
-        evt.preventDefault();
+        if (targetProps.allowZoom) {
+          evt.preventDefault();
+        }
+
         const mutations = ZoomHelpers.onWheel(evt, targetProps, eventKey, ctx);
 
         if (mutations.id !== this.wheelMutationId) { // eslint-disable-line
