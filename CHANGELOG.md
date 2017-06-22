@@ -1,5 +1,9 @@
 # VictoryChart Changelog
 
+## 21.1.4 (2017-06-22)
+
+[482](https://github.com/FormidableLabs/victory-chart/pull/482) Add `minBubbleSize` prop to `VictoryScatter`
+
 ## 21.1.3 (2017-06-21)
 
 [481](https://github.com/FormidableLabs/victory-chart/pull/481) Conditional `preventDefault` for `VictoryZoomContainer`
