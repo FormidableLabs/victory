@@ -71,7 +71,7 @@ export default {
   },
 
   getBubbleSize(datum, props) {
-    const { data, z, maxBubbleSize } = props;
+    const { data, z, maxBubbleSize, minBubbleSize } = props;
     const getMaxRadius = () => {
       const minPadding = Math.min(...values(Helpers.getPadding(props)));
       return Math.max(minPadding, 5); // eslint-disable-line no-magic-numbers
@@ -80,8 +80,11 @@ export default {
     const zMin = Math.min(...zData);
     const zMax = Math.max(...zData);
     const maxRadius = maxBubbleSize || getMaxRadius();
-    const maxArea = Math.PI * Math.pow(maxRadius, 2); // eslint-disable-line no-magic-numbers
-    const area = ((datum[z] - zMin) / (zMax - zMin)) * maxArea;
+    const minRadius = minBubbleSize || maxRadius * 0.1; // eslint-disable-line no-magic-numbers
+    const maxArea = Math.PI * Math.pow(maxRadius, 2);
+    const minArea = Math.PI * Math.pow(minRadius, 2);
+    const pointArea = ((datum[z] - zMin) / (zMax - zMin)) * maxArea;
+    const area = Math.max(pointArea, minArea);
     const radius = Math.sqrt(area / Math.PI);
     return Math.max(radius, 1);
   },
