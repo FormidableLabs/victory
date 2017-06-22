@@ -1,5 +1,9 @@
 # VictoryChart Changelog
 
+## 21.1.3 (2017-06-21)
+
+[481](https://github.com/FormidableLabs/victory-chart/pull/481) Conditional `preventDefault` for `VictoryZoomContainer`
+
 ## 21.1.2 (2017-06-15)
 
 [480](https://github.com/FormidableLabs/victory-chart/pull/480) Refactors `VictoryPolarAxis` to support native version
