@@ -30,6 +30,7 @@ class VictoryScatter extends React.Component {
     ...DataProps,
     bubbleProperty: PropTypes.string,
     maxBubbleSize: CustomPropTypes.nonNegative,
+    minBubbleSize: CustomPropTypes.nonNegative,
     size: PropTypes.oneOfType([ CustomPropTypes.nonNegative, PropTypes.func ]),
     symbol: PropTypes.oneOfType([
       PropTypes.oneOf([
