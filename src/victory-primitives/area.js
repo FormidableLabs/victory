@@ -145,7 +145,7 @@ export default class Area extends React.Component {
     if (!line) {
       return area;
     }
-    const children = [line, area].map((el, i) =>
+    const children = [area, line].map((el, i) =>
       React.cloneElement(el, { key: i })
     );
     return React.cloneElement(groupComponent, {}, children);
