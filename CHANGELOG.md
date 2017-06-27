@@ -1,6 +1,14 @@
 VictoryCore Changelog
 =====================
 
+## 16.0.3 (2017-06-27)
+
+Minor bug fixes:
+  - [255](https://github.com/FormidableLabs/victory-core/pull/255)
+  - [257](https://github.com/FormidableLabs/victory-core/pull/257)
+  - [259](https://github.com/FormidableLabs/victory-core/pull/259)
+  - [260](https://github.com/FormidableLabs/victory-core/pull/260)
+
 ## 16.0.2 (2017-06-12)
 
 -[254](https://github.com/FormidableLabs/victory-core/pull/254) Generalize label angle helper
