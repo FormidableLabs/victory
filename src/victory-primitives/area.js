@@ -118,7 +118,7 @@ export default class Area extends React.Component {
   // Overridden in victory-core-native
   renderLine(path, style, events) {
     if (!style.stroke || style.stroke === "none" || style.stroke === "transparent") {
-      return [];
+      return null;
     }
     const { role, shapeRendering, className, polar, origin } = this.props;
     const transform = polar && origin ? `translate(${origin.x}, ${origin.y})` : undefined;
@@ -141,7 +141,13 @@ export default class Area extends React.Component {
     const { events, groupComponent } = this.props;
     const area = this.renderArea(this.areaPath, this.style, events);
     const line = this.renderLine(this.linePath, this.style, events);
-    const children = [line, area];
-    return children.length === 1 ? children[0] : React.cloneElement(groupComponent, {}, children);
+
+    if (!line) {
+      return area;
+    }
+    const children = [line, area].map((el, i) =>
+      React.cloneElement(el, { key: i })
+    );
+    return React.cloneElement(groupComponent, {}, children);
   }
 }
