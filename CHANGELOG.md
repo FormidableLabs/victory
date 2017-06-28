@@ -1,6 +1,10 @@
 VictoryCore Changelog
 =====================
 
+## 16.0.4 (2017-06-28)
+
+- [515](https://github.com/FormidableLabs/victory/issues/515) Bugfix for ARIA title and desc. Now both have unique IDs. 
+
 ## 16.0.3 (2017-06-27)
 
 Minor bug fixes:
