@@ -1,6 +1,6 @@
 import React from "react";
 import PropTypes from "prop-types";
-import { assign, omit, defaults } from "lodash";
+import { assign, omit, defaults, uniqueId } from "lodash";
 import Portal from "../victory-portal/portal";
 import Timer from "../victory-util/timer";
 
@@ -45,6 +45,7 @@ export default class VictoryContainer extends React.Component {
   constructor(props) {
     super(props);
     this.getTimer = this.getTimer.bind(this);
+    this.containerId = uniqueId("victory-container-");
   }
 
   getChildContext() {
@@ -82,6 +83,10 @@ export default class VictoryContainer extends React.Component {
     return this.timer;
   }
 
+  getIdForElement(elementName) {
+    return `${this.containerId}-${elementName}`;
+  }
+
   // overridden in custom containers
   getChildren(props) {
     return props.children;
@@ -97,8 +102,8 @@ export default class VictoryContainer extends React.Component {
         <svg {...parentProps}>
           {children}
         </svg>
-          {title ? <title id="title">{title}</title> : null}
-          {desc ? <desc id="desc">{desc}</desc> : null}
+          {title ? <title id={this.getIdForElement("title")}>{title}</title> : null}
+          {desc ? <desc id={this.getIdForElement("desc")}>{desc}</desc> : null}
         {React.cloneElement(portalComponent, { ref: this.savePortalRef })}
       </svg>
     );
@@ -109,7 +114,8 @@ export default class VictoryContainer extends React.Component {
     const style = responsive ? this.props.style : omit(this.props.style, ["height", "width"]);
     const svgProps = assign(
       {
-        width, height, "aria-labelledby": "title desc", role: "img",
+        width, height, role: "img",
+        "aria-labelledby": `${this.getIdForElement("title")} ${this.getIdForElement("desc")}`,
         viewBox: responsive ? `0 0 ${width} ${height}` : undefined
       },
       events

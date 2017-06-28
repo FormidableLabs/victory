@@ -1,5 +1,5 @@
 import React from "react";
-import { VictoryTooltip } from "../src/index";
+import { VictoryTooltip, VictoryContainer } from "../src/index";
 
 export default class App extends React.Component {
 
@@ -27,12 +27,16 @@ export default class App extends React.Component {
     return (
       <div className="demo" style={containerStyle}>
         <svg {...svgProps}>
-          <VictoryTooltip {...baseTooltipProps} text={"what up?\nnot much, you?"}/>
+          <VictoryContainer width={100} height={100} desc="first description" title="first title">
+            <VictoryTooltip {...baseTooltipProps} text={"what up?\nnot much, you?"}/>
+          </VictoryContainer>
           <circle cx="75" cy="75" r="2" fill="red"/>
         </svg>
 
         <svg {...svgProps}>
-          <VictoryTooltip {...baseTooltipProps} text={"o shit\nwaddup"}/>
+          <VictoryContainer width={100} height={100} desc="second description" title="second title">
+            <VictoryTooltip {...baseTooltipProps} text={"o shit\nwaddup"}/>
+          </VictoryContainer>
           <circle cx="75" cy="75" r="2" fill="red"/>
         </svg>
 
