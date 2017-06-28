@@ -105,15 +105,4 @@ describe("helpers/wrapper", () => {
       expect(Wrapper.getStringsFromData([], "x")).to.eql([]);
     });
   });
-
-  describe("getCategories", () => {
-    it.skip("returns a set of categories from a component", () => {
-      // const categoryResult = Wrapper.getCategories();
-    });
-
-    it.skip("returns undefined if no categories are defined", () => {
-
-    });
-  });
-
 });
