@@ -103,7 +103,7 @@ describe("components/victory-area", () => {
       const DataComponent = wrapper.find(Area);
       DataComponent.forEach((node, index) => {
         const initialProps = DataComponent.at(index).props();
-        node.childAt(0).simulate("click");
+        node.simulate("click");
         expect(clickHandler).called;
         // the first argument is the standard evt object
         expect(omit(clickHandler.args[index][1], ["events", "key"]))
