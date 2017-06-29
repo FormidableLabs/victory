@@ -1,9 +1,14 @@
 VictoryCore Changelog
 =====================
 
+## 16.1.0 (2017-06-29)
+
+- [262](https://github.com/FormidableLabs/victory-core/pull/262) Consistent widths for polar bars.
+**This change may require style adjustments to maintain visual continuity**
+
 ## 16.0.4 (2017-06-28)
 
-- [515](https://github.com/FormidableLabs/victory/issues/515) Bugfix for ARIA title and desc. Now both have unique IDs. 
+- [515](https://github.com/FormidableLabs/victory/issues/515) Bugfix for ARIA title and desc. Now both have unique IDs.
 
 ## 16.0.3 (2017-06-27)
 
