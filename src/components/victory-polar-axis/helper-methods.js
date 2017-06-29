@@ -1,7 +1,7 @@
 import {
   assign, uniqBy, includes, defaults, defaultsDeep, isFunction, range as lodashRange, without
 } from "lodash";
-import { Helpers, LabelHelpers, Scale, Domain } from "victory-core";
+import { Helpers, LabelHelpers, Scale, Domain, Collection } from "victory-core";
 
 export default {
   getCalculatedValues(props) {
@@ -49,12 +49,22 @@ export default {
     } else if (props.domain && props.domain[inherentAxis]) {
       domain = props.domain[inherentAxis];
     } else if (Array.isArray(props.tickValues) && props.tickValues.length > 1) {
-      domain = Domain.getDomainFromTickValues(props, axis);
+      domain = this.getDomainFromTickValues(props, axis);
     }
     const paddedDomain = Domain.padDomain(domain, props, inherentAxis);
     return domain ? Domain.cleanDomain(paddedDomain, props, inherentAxis) : undefined;
   },
 
+  getDomainFromTickValues(props, axis) {
+    if (Helpers.stringTicks(props)) {
+      return [1, props.tickValues.length];
+    } else {
+      const ticks = props.tickValues.map((value) => +value);
+      const initialDomain = [Collection.getMinValue(ticks), Collection.getMaxValue(ticks)];
+      return axis === "x" ?
+        Domain.getSymmetricDomain(initialDomain, ticks) : initialDomain;
+    }
+  },
 
   getRadius(props) {
     const { left, right, top, bottom } = Helpers.getPadding(props);

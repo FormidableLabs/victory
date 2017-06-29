@@ -791,7 +791,6 @@ class App extends React.Component {
               axisAngle={200}
               theme={VictoryTheme.material}
               style={chartStyle}
-              domain={[0, 10]}
               tickValues={[2, 4, 6, 8, 10]}
             />
           </svg>
