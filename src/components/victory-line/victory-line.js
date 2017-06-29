@@ -29,7 +29,7 @@ class VictoryLine extends React.Component {
     ...DataProps,
     interpolation: PropTypes.oneOf([
       "basis", "bundle", "cardinal", "catmullRom", "linear", "monotoneX",
-      "monotoneY", "natural", "radial", "step", "stepAfter", "stepBefore"
+      "monotoneY", "natural", "step", "stepAfter", "stepBefore"
     ]),
     label: CustomPropTypes.deprecated(
       PropTypes.string,
