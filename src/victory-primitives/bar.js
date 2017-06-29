@@ -93,7 +93,7 @@ export default class Bar extends React.Component {
     return -1 * angle + (Math.PI / 2);
   }
 
-  getAngularWidth(props, datum, width) {
+  getAngularWidth(props, width) {
     const { scale } = props;
     const range = scale.y.range();
     const r = Math.max(...range);
@@ -134,12 +134,11 @@ export default class Bar extends React.Component {
     const { datum, scale, style, index } = props;
     const r1 = scale.y(datum._y0 || 0);
     const r2 = scale.y(datum._y1 !== undefined ? datum._y1 : datum._y);
-    console.log(datum.y, r1, r2)
     const currentAngle = scale.x(datum._x1 !== undefined ? datum._x1 : datum._x);
     let start;
     let end;
     if (style.width) {
-      const width = this.getAngularWidth(props, datum, style.width);
+      const width = this.getAngularWidth(props, style.width);
       start = currentAngle - (width / 2);
       end = currentAngle + (width / 2);
     } else {
