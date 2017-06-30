@@ -1,5 +1,25 @@
 # Victory Changelog
 
+## 0.21.1 (2017-06-29)
+
+Minor bug fixes:
+
+VictoryCore
+  - [victory-core/255](https://github.com/FormidableLabs/victory-core/pull/255) style typo
+  - [victory-core/257](https://github.com/FormidableLabs/victory-core/pull/257) single point domain calculation bug
+  - [victory-core/259](https://github.com/FormidableLabs/victory-core/pull/259) Area render bug
+  - [victory-core/260](https://github.com/FormidableLabs/victory-core/pull/260) Area render order
+  - [victory-core/515](https://github.com/FormidableLabs/victory/issues/515) Bugfix for ARIA title and desc. Now both have unique IDs.
+  - [victory-core/262](https://github.com/FormidableLabs/victory-core/pull/262) Consistent widths for polar bars. **This change may require style adjustments to maintain visual continuity**
+
+VictoryChart
+  - [victory-chart/482](https://github.com/FormidableLabs/victory-chart/pull/482) Add `minBubbleSize` prop to `VictoryScatter`
+  - [victory-chart/484](https://github.com/FormidableLabs/victory-chart/pull/484) Remove inappropriate interpolation options for `VictoryArea` and `VictoryLine`
+  - [victory-chart/487](https://github.com/FormidableLabs/victory-chart/pull/487) Fix a bug in `VictoryPolarAxis` domain calculation
+
+
+
+
 ## 0.21.0 (2017-06-06)
 
   - [victory-core/240](https://github.com/FormidableLabs/victory-core/pull/240) Polar Charts
