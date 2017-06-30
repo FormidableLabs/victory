@@ -1,5 +1,10 @@
 # VictoryChart Changelog
 
+## 21.2.0 (2017-06-29)
+
+[484](https://github.com/FormidableLabs/victory-chart/pull/484) Remove inappropriate interpolation options for `VictoryArea` and `VictoryLine`
+[487](https://github.com/FormidableLabs/victory-chart/pull/487) Fix a bug in `VictoryPolarAxis` domain calculation
+
 ## 21.1.4 (2017-06-22)
 
 [482](https://github.com/FormidableLabs/victory-chart/pull/482) Add `minBubbleSize` prop to `VictoryScatter`
