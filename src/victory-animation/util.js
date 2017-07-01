@@ -138,6 +138,13 @@ export const interpolateObject = function (a, b) {
   };
 };
 
+export const interpolateString = function (a, b) {
+  const format = (val) => {
+    return typeof val === "string" ? val.replace(/,/g, "") : val;
+  };
+
+  return interpolate(format(a), format(b));
+};
 
 /**
  * By default, the list of interpolators used by `d3.interpolate` has a few
@@ -174,6 +181,9 @@ export const victoryInterpolator = function (a, b) {
   }
   if (isPlainObject(a) || isPlainObject(b)) {
     return interpolateObject(a, b);
+  }
+  if (typeof a === "string" || typeof b === "string") {
+    return interpolateString(a, b);
   }
   return interpolate(a, b);
 };
