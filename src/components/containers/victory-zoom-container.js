@@ -137,10 +137,16 @@ export const zoomContainerMixin = (base) => class VictoryZoomContainer extends b
       const cachedZoomDomain = defaults({}, props.cachedZoomDomain, props.domain);
       const domain = isEqual(zoomDomain, cachedZoomDomain) ?
         defaults({}, currentDomain, originalDomain) : zoomDomain;
-      const newProps = props.polar ?
-        { domain: this.modifyPolarDomain(domain, originalDomain) } : { domain };
+      let newDomain = props.polar ? this.modifyPolarDomain(domain, originalDomain) : domain;
+      if (props.dimension) {
+        // if zooming is restricted to a dimension, don't squash changes to zoomDomain in other dim
+        newDomain = {
+          ...zoomDomain,
+          [props.dimension]: newDomain[props.dimension]
+        };
+      }
       return React.cloneElement(
-        child, defaults(newProps, child.props)
+        child, defaults({ domain: newDomain }, child.props)
       );
     });
   }

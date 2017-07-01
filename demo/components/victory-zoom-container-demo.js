@@ -44,7 +44,7 @@ export default class App extends React.Component {
 
   getZoomDomain() {
     return {
-      x: [random(0, 0.5, 0.1), random(0.5, 1, 0.1)]
+      y: [random(0, 0.4, 0.1), random(0.6, 1, 0.1)]
     };
   }
 
@@ -80,13 +80,6 @@ export default class App extends React.Component {
     return (
       <div className="demo">
         <h1>VictoryZoomContainer</h1>
-
-          <VictoryLine
-            containerComponent={<VictoryZoomContainer/>}
-            animate={{ duration: 1500 }}
-            style={{ parent: parentStyle, data: this.state.style }}
-            data={this.state.transitionData}
-          />
 
           <VictoryGroup
             containerComponent={<VictoryZoomContainer dimension="y"/>}
@@ -132,6 +125,7 @@ export default class App extends React.Component {
             containerComponent={
               <VictoryZoomContainer
                 minimumZoom={{ x: 5 }}
+                dimension="x"
                 clipContainerComponent={
                   <VictoryClipContainer clipPadding={{ top: 15, bottom: 15 }}/>
                 }
@@ -142,39 +136,6 @@ export default class App extends React.Component {
               style={{ parent: parentStyle, data: { fill: "orange" } }}
               size={15}
               data={this.state.data}
-            />
-          </VictoryChart>
-
-        <button onClick={() => this.setState({ zoomDomain: this.getZoomDomain() })}>
-          New domain
-        </button>
-
-          <VictoryChart
-            containerComponent={<VictoryZoomContainer zoomDomain={this.state.zoomDomain}/>}
-            animate={{ duration: 1500 }}
-            style={{ parent: parentStyle }}
-            events={[{
-              target: "data",
-              childName: "line",
-              eventHandlers: {
-                onClick: () => {
-                  return [
-                    {
-                      mutation: (props) => {
-                        const strokeWidth = props.style.strokeWidth + 1;
-                        return { style: merge({}, props.style, { strokeWidth }) };
-                      }
-                    }
-                  ];
-                }
-              }
-            }]}
-          >
-            <VictoryLine
-              name="line"
-              style={{ parent: parentStyle, data: { stroke: "blue" } }}
-              y={(d) => Math.sin(2 * Math.PI * d.x)}
-              sample={25}
             />
           </VictoryChart>
 
@@ -302,6 +263,25 @@ export default class App extends React.Component {
               />
             </VictoryStack>
             <VictoryAxis dependentAxis/>
+          </VictoryChart>
+
+          <button onClick={() => this.setState({ zoomDomain: this.getZoomDomain() })}>
+            random y domain
+          </button>
+
+          <VictoryChart
+            containerComponent={
+              <VictoryZoomContainer dimension="x" zoomDomain={this.state.zoomDomain} />
+            }
+            animate={{ duration: 500 }}
+            style={{ parent: parentStyle }}
+          >
+            <VictoryLine
+              name="line"
+              style={{ parent: parentStyle, data: { stroke: "blue" } }}
+              y={(d) => Math.sin(2 * Math.PI * d.x)}
+              sample={25}
+            />
           </VictoryChart>
       </div>
     );
