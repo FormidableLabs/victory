@@ -1,5 +1,10 @@
 # VictoryChart Changelog
 
+## 21.2.1 (2017-07-02)
+
+- [488](https://github.com/FormidableLabs/victory-chart/pull/488) `VictoryZoomContainer` only updates the domain in the dimension it controls
+- [489](https://github.com/FormidableLabs/victory-chart/pull/489) Adds support for `innerRadius` on polar charts
+
 ## 21.2.0 (2017-06-29)
 
 [484](https://github.com/FormidableLabs/victory-chart/pull/484) Remove inappropriate interpolation options for `VictoryArea` and `VictoryLine`
