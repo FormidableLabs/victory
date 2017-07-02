@@ -49,20 +49,18 @@ export default {
     } else if (props.domain && props.domain[inherentAxis]) {
       domain = props.domain[inherentAxis];
     } else if (Array.isArray(props.tickValues) && props.tickValues.length > 1) {
-      domain = this.getDomainFromTickValues(props, axis);
+      domain = this.getDomainFromTickValues(props);
     }
     const paddedDomain = Domain.padDomain(domain, props, inherentAxis);
     return domain ? Domain.cleanDomain(paddedDomain, props, inherentAxis) : undefined;
   },
 
-  getDomainFromTickValues(props, axis) {
+  getDomainFromTickValues(props) {
     if (Helpers.stringTicks(props)) {
       return [1, props.tickValues.length];
     } else {
       const ticks = props.tickValues.map((value) => +value);
-      const initialDomain = [Collection.getMinValue(ticks), Collection.getMaxValue(ticks)];
-      return axis === "x" ?
-        Domain.getSymmetricDomain(initialDomain, ticks) : initialDomain;
+      return [Collection.getMinValue(ticks), Collection.getMaxValue(ticks)];
     }
   },
 
@@ -86,7 +84,7 @@ export default {
       return [startAngle, endAngle];
     }
     const radius = this.getRadius(props);
-    return [0, radius];
+    return [props.innerRadius || 0, radius];
   },
 
   // exposed for use by VictoryChart
@@ -200,14 +198,19 @@ export default {
 
   getGridProps(props, calculatedValues, tick, index) { //eslint-disable-line max-params
     const { axisType, radius, style, scale } = calculatedValues;
-    const { startAngle, endAngle } = props;
+    const { startAngle, endAngle, innerRadius = 0 } = props;
     const { gridStyle } = this.getEvaluatedStyles(style, tick, index);
+    const getPosition = (r, axis) => {
+      return axis === "x" ? r * Math.cos(scale(tick)) : -r * Math.sin(scale(tick));
+    };
+
     return axisType === "angular" ?
       {
         index, datum: tick, style: gridStyle,
-        x1: radius * Math.cos(scale(tick)),
-        y1: -radius * Math.sin(scale(tick)),
-        x2: 0, y2: 0
+        x1: getPosition(radius, "x"),
+        y1: getPosition(radius, "y"),
+        x2: getPosition(innerRadius, "x"),
+        y2: getPosition(innerRadius, "y")
       } : {
         style: gridStyle, index, datum: tick,
         cx: 0, cy: 0, r: scale(tick), startAngle, endAngle
