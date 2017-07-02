@@ -1,7 +1,9 @@
 import { defaults } from "lodash";
 import PropTypes from "prop-types";
 import React from "react";
-import { Helpers, VictorySharedEvents, VictoryContainer, VictoryTheme, Scale } from "victory-core";
+import {
+  Helpers, VictorySharedEvents, VictoryContainer, VictoryTheme, Scale, PropTypes as CustomPropTypes
+} from "victory-core";
 import VictoryAxis from "../victory-axis/victory-axis";
 import VictoryPolarAxis from "../victory-polar-axis/victory-polar-axis";
 import ChartHelpers from "./helper-methods";
@@ -33,7 +35,7 @@ export default class VictoryChart extends React.Component {
       dependent: PropTypes.element
     }),
     endAngle: PropTypes.number,
-    innerRadius: PropTypes.number,
+    innerRadius: CustomPropTypes.nonNegative,
     startAngle: PropTypes.number
   };
 
