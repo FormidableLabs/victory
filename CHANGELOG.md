@@ -1,5 +1,9 @@
 # VictoryChart Changelog
 
+## 21.2.2 (2017-07-02)
+
+- [490](https://github.com/FormidableLabs/victory-chart/pull/490) Fixes a bug in domain calculation for polar axes
+
 ## 21.2.1 (2017-07-02)
 
 - [488](https://github.com/FormidableLabs/victory-chart/pull/488) `VictoryZoomContainer` only updates the domain in the dimension it controls
