@@ -33,6 +33,7 @@ export default class VictoryChart extends React.Component {
       dependent: PropTypes.element
     }),
     endAngle: PropTypes.number,
+    innerRadius: PropTypes.number,
     startAngle: PropTypes.number
   };
 
@@ -107,6 +108,7 @@ export default class VictoryChart extends React.Component {
     return {
       startAngle: props.startAngle,
       endAngle: props.endAngle,
+      innerRadius: props.innerRadius,
       domain,
       scale,
       tickValues,

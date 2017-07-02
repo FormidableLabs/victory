@@ -84,7 +84,7 @@ export default {
       return [startAngle, endAngle];
     }
     const radius = this.getRadius(props);
-    return [0, radius];
+    return [props.innerRadius || 0, radius];
   },
 
   // exposed for use by VictoryChart
@@ -198,14 +198,19 @@ export default {
 
   getGridProps(props, calculatedValues, tick, index) { //eslint-disable-line max-params
     const { axisType, radius, style, scale } = calculatedValues;
-    const { startAngle, endAngle } = props;
+    const { startAngle, endAngle, innerRadius = 0 } = props;
     const { gridStyle } = this.getEvaluatedStyles(style, tick, index);
+    const getPosition = (r, axis) => {
+      return axis === "x" ? r * Math.cos(scale(tick)) : -r * Math.sin(scale(tick));
+    };
+
     return axisType === "angular" ?
       {
         index, datum: tick, style: gridStyle,
-        x1: radius * Math.cos(scale(tick)),
-        y1: -radius * Math.sin(scale(tick)),
-        x2: 0, y2: 0
+        x1: getPosition(radius, "x"),
+        y1: getPosition(radius, "y"),
+        x2: getPosition(innerRadius, "x"),
+        y2: getPosition(innerRadius, "y")
       } : {
         style: gridStyle, index, datum: tick,
         cx: 0, cy: 0, r: scale(tick), startAngle, endAngle

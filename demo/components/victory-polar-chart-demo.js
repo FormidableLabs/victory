@@ -294,6 +294,7 @@ class App extends React.Component {
           <VictoryChart polar
             theme={VictoryTheme.material}
             domain={{ x: [0, 360] }}
+            innerRadius={50}
             style={chartStyle}
             events={[{
               childName: "all",
@@ -338,7 +339,7 @@ class App extends React.Component {
             />
             <VictoryStack>
               <VictoryBar name="bar-1"
-                style={{ data: { fill: "tomato", width: 10 } }}
+                style={{ data: { fill: "tomato", width: 20 } }}
                 data={[
                   { x: 45, y: 20 },
                   { x: 90, y: 30 },
@@ -349,7 +350,7 @@ class App extends React.Component {
                 ]}
               />
               <VictoryBar name="bar-2"
-                style={{ data: { fill: "orange", width: 10 } }}
+                style={{ data: { fill: "orange", width: 20 } }}
                 data={[
                   { x: 45, y: 20 },
                   { x: 90, y: 30 },
@@ -360,7 +361,7 @@ class App extends React.Component {
                 ]}
               />
               <VictoryBar name="bar-3"
-                style={{ data: { fill: "gold", width: 10 } }}
+                style={{ data: { fill: "gold", width: 20 } }}
                 data={[
                   { x: 45, y: 20 },
                   { x: 90, y: 30 },
