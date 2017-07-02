@@ -126,7 +126,7 @@ export default {
       const endAngle = this.degreesToRadians(props.endAngle || 360);
       return [startAngle, endAngle];
     }
-    return [0, this.getRadius(props)];
+    return [props.innerRadius || 0, this.getRadius(props)];
   },
 
   createAccessor(key) {
