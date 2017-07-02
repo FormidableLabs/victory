@@ -49,20 +49,18 @@ export default {
     } else if (props.domain && props.domain[inherentAxis]) {
       domain = props.domain[inherentAxis];
     } else if (Array.isArray(props.tickValues) && props.tickValues.length > 1) {
-      domain = this.getDomainFromTickValues(props, axis);
+      domain = this.getDomainFromTickValues(props);
     }
     const paddedDomain = Domain.padDomain(domain, props, inherentAxis);
     return domain ? Domain.cleanDomain(paddedDomain, props, inherentAxis) : undefined;
   },
 
-  getDomainFromTickValues(props, axis) {
+  getDomainFromTickValues(props) {
     if (Helpers.stringTicks(props)) {
       return [1, props.tickValues.length];
     } else {
       const ticks = props.tickValues.map((value) => +value);
-      const initialDomain = [Collection.getMinValue(ticks), Collection.getMaxValue(ticks)];
-      return axis === "x" ?
-        Domain.getSymmetricDomain(initialDomain, ticks) : initialDomain;
+      return [Collection.getMinValue(ticks), Collection.getMaxValue(ticks)];
     }
   },
 
