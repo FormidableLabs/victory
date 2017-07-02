@@ -49,18 +49,21 @@ export default {
     } else if (props.domain && props.domain[inherentAxis]) {
       domain = props.domain[inherentAxis];
     } else if (Array.isArray(props.tickValues) && props.tickValues.length > 1) {
-      domain = this.getDomainFromTickValues(props);
+      domain = this.getDomainFromTickValues(props, axis);
     }
     const paddedDomain = Domain.padDomain(domain, props, inherentAxis);
     return domain ? Domain.cleanDomain(paddedDomain, props, inherentAxis) : undefined;
   },
 
-  getDomainFromTickValues(props) {
+  getDomainFromTickValues(props, axis) {
+    const { tickValues, startAngle = 0, endAngle = 360 } = props;
     if (Helpers.stringTicks(props)) {
-      return [1, props.tickValues.length];
+      return [1, tickValues.length];
     } else {
-      const ticks = props.tickValues.map((value) => +value);
-      return [Collection.getMinValue(ticks), Collection.getMaxValue(ticks)];
+      const ticks = tickValues.map((value) => +value);
+      const domain = [Collection.getMinValue(ticks), Collection.getMaxValue(ticks)];
+      return axis === "x" && Math.abs(startAngle - endAngle) === 360 ?
+        Domain.getSymmetricDomain(domain, ticks) : domain;
     }
   },
 
