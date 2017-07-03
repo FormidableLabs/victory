@@ -1,5 +1,9 @@
 # VictoryChart Changelog
 
+## 21.2.3 (2017-07-02)
+
+- [491](https://github.com/FormidableLabs/victory-chart/pull/491) Corrects dependent axis for `innerRadius`
+
 ## 21.2.2 (2017-07-02)
 
 - [490](https://github.com/FormidableLabs/victory-chart/pull/490) Fixes a bug in domain calculation for polar axes
