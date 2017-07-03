@@ -203,17 +203,14 @@ export default {
     const { axisType, radius, style, scale } = calculatedValues;
     const { startAngle, endAngle, innerRadius = 0 } = props;
     const { gridStyle } = this.getEvaluatedStyles(style, tick, index);
-    const getPosition = (r, axis) => {
-      return axis === "x" ? r * Math.cos(scale(tick)) : -r * Math.sin(scale(tick));
-    };
-
+    const angle = scale(tick);
     return axisType === "angular" ?
       {
         index, datum: tick, style: gridStyle,
-        x1: getPosition(radius, "x"),
-        y1: getPosition(radius, "y"),
-        x2: getPosition(innerRadius, "x"),
-        y2: getPosition(innerRadius, "y")
+        x1: this.getPosition(radius, angle, "x"),
+        y1: this.getPosition(radius, angle, "y"),
+        x2: this.getPosition(innerRadius, angle, "x"),
+        y2: this.getPosition(innerRadius, angle, "y")
       } : {
         style: gridStyle, index, datum: tick,
         cx: 0, cy: 0, r: scale(tick), startAngle, endAngle
@@ -243,22 +240,27 @@ export default {
       textAnchor,
       verticalAnchor,
       text: props.label,
-      x: labelRadius * Math.cos(Helpers.degreesToRadians(axisAngle)),
-      y: -labelRadius * Math.sin(Helpers.degreesToRadians(axisAngle))
+      x: this.getPosition(labelRadius, Helpers.degreesToRadians(axisAngle), "x"),
+      y: this.getPosition(labelRadius, Helpers.degreesToRadians(axisAngle), "y")
     };
+  },
+
+  getPosition(r, angle, axis) {
+    return axis === "x" ? r * Math.cos(angle) : -r * Math.sin(angle);
   },
 
   getAxisProps(modifiedProps, calculatedValues) {
     const { style, axisType, radius, scale } = calculatedValues;
-    const { startAngle, endAngle } = modifiedProps;
-    const axisAngle = axisType === "radial" ? this.getAxisAngle(modifiedProps, scale) : undefined;
+    const { startAngle, endAngle, innerRadius = 0 } = modifiedProps;
+    const axisAngle = axisType === "radial" ?
+      Helpers.degreesToRadians(this.getAxisAngle(modifiedProps, scale)) : undefined;
     return axisType === "radial" ?
       {
         style: style.axis,
-        x1: 0,
-        x2: radius * Math.cos(Helpers.degreesToRadians(axisAngle)),
-        y1: 0,
-        y2: -radius * Math.sin(Helpers.degreesToRadians(axisAngle))
+        x1: this.getPosition(innerRadius, axisAngle, "x"),
+        x2: this.getPosition(radius, axisAngle, "x"),
+        y1: this.getPosition(innerRadius, axisAngle, "y"),
+        y2: this.getPosition(radius, axisAngle, "y")
       } : {
         style: style.axis,
         cx: 0, cy: 0, r: radius, startAngle, endAngle
