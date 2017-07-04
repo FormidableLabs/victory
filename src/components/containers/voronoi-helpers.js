@@ -46,10 +46,11 @@ const VoronoiHelpers = {
         return null;
       } else if (child.type && isFunction(child.type.getData)) {
         child = parent ? React.cloneElement(child, parent.props) : child;
-        const childData = child.props && child.type.getData(child.props);
+        const childData = child.props
+          && child.type.getData({ ...child.props, domain: props.domain });
         return childData ? addMeta(childData, childName, child) : null;
       } else {
-        const childData = getData(child.props);
+        const childData = getData({ ...child.props, domain: props.domain });
         return childData ? addMeta(childData, childName, child) : null;
       }
     };

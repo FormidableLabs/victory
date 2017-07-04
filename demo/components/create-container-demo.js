@@ -8,7 +8,7 @@ import {
 
 import { VictoryTooltip } from "victory-core";
 
-const Charts = ({ CustomContainer }) => { // eslint-disable-line react/prop-types
+const Charts = ({ behaviors }) => { // eslint-disable-line react/prop-types
   const containerStyle = {
     display: "flex",
     flexDirection: "row",
@@ -16,11 +16,13 @@ const Charts = ({ CustomContainer }) => { // eslint-disable-line react/prop-type
     alignItems: "center",
     justifyContent: "center"
   };
-
   const chartStyle = { parent: { border: "1px solid #ccc", margin: "2%", maxWidth: "40%" } };
+  const CustomContainer = createContainer(...behaviors);
+  const behaviorsList = behaviors.map((behavior) => `"${behavior}"`).join(", ");
 
   return (
     <div className="demo">
+      <pre>{`createContainer(${behaviorsList})`}</pre>
       <div style={containerStyle}>
         {/* A */}
         <VictoryChart style={chartStyle}
@@ -72,16 +74,11 @@ const Charts = ({ CustomContainer }) => { // eslint-disable-line react/prop-type
         </VictoryChart>
 
         {/* B */}
-        <VictoryScatter
-          style={{
-            parent: chartStyle.parent,
-            data: {
-              fill: (datum, active) => active ? "tomato" : "black"
-            }
-          }}
+        <VictoryChart
+          style={{ parent: chartStyle.parent }}
           containerComponent={
             <CustomContainer
-              dimension="x"
+              labels={(d) => round(d.x, 2)}
               cursorLabel={(d) => round(d.x, 2)}
               selectionStyle={{
                 stroke: "tomato", strokeWidth: 2, fill: "tomato", fillOpacity: 0.1
@@ -90,16 +87,24 @@ const Charts = ({ CustomContainer }) => { // eslint-disable-line react/prop-type
               defaultCursorValue={0.99}
             />
           }
-          size={(datum, active) => active ? 5 : 3}
-          y={(d) => d.x * d.x}
-        />
+        >
+          <VictoryScatter
+            style={{
+              data: {
+                fill: (datum, active) => active ? "tomato" : "black"
+              }
+            }}
+            size={(datum, active) => active ? 5 : 3}
+            y={(d) => d.x * d.x}
+          />
+        </VictoryChart>
 
+        {/* C */}
         <VictoryChart
           style={chartStyle}
           containerComponent={
             <CustomContainer
               selectedDomain={{ x: [0, 0] }}
-              dimension="y"
             />
           }
         >
@@ -155,7 +160,7 @@ const Charts = ({ CustomContainer }) => { // eslint-disable-line react/prop-type
           </VictoryGroup>
         </VictoryChart>
 
-        {/* C */}
+        {/* D */}
         <VictoryStack
           style={chartStyle}
           containerComponent={
@@ -230,12 +235,10 @@ class App extends React.Component {
   render() {
     return (
       <div className="demo">
-        <pre>createContainer("brush", "voronoi")</pre>
-        <Charts CustomContainer={createContainer("brush", "voronoi")} />
-        <pre>createContainer("zoom", "voronoi")</pre>
-        <Charts CustomContainer={createContainer("zoom", "voronoi")} />
-        <pre>createContainer("cursor", "voronoi")</pre>
-        <Charts CustomContainer={createContainer("cursor", "voronoi")} />
+        <Charts behaviors={["zoom", "voronoi"]} />
+        <Charts behaviors={["zoom", "cursor"]} />
+        <Charts behaviors={["cursor", "voronoi"]} />
+        <Charts behaviors={["brush", "voronoi"]} />
       </div>
     );
   }

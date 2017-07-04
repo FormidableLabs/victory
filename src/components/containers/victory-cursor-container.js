@@ -1,7 +1,7 @@
 import PropTypes from "prop-types";
 import React from "react";
-import { VictoryContainer, VictoryLabel, Line, Selection, Helpers } from "victory-core";
-import { isNumber } from "lodash";
+import { VictoryContainer, VictoryLabel, Line, Helpers } from "victory-core";
+import { isNumber, isUndefined } from "lodash";
 import CursorHelpers from "./cursor-helpers";
 
 export const cursorContainerMixin = (base) => class VictoryCursorContainer extends base {
@@ -85,9 +85,18 @@ export const cursorContainerMixin = (base) => class VictoryCursorContainer exten
     return cursorLabelOffset;
   }
 
+  getPadding(props) {
+    if (isUndefined(props.padding)) {
+      const child = props.children.find((c) => !isUndefined(c.props.padding));
+      return Helpers.getPadding(child.props);
+    } else {
+      return Helpers.getPadding(props);
+    }
+  }
+
   getCursorElements(props) {
     const {
-      scale, domain, dimension, cursorLabelComponent, cursorLabel, cursorComponent
+      scale, dimension, cursorLabelComponent, cursorLabel, cursorComponent, width, height
     } = props;
     const cursorValue = this.getCursorPosition(props);
     const cursorLabelOffset = this.getCursorLabelOffset(props);
@@ -95,8 +104,7 @@ export const cursorContainerMixin = (base) => class VictoryCursorContainer exten
     if (!cursorValue) { return []; }
 
     const newElements = [];
-    const domainCoordinates = Selection.getDomainCoordinates(props, domain);
-
+    const padding = this.getPadding(props);
     const cursorCoordinates = {
       x: scale.x(cursorValue.x),
       y: scale.y(cursorValue.y)
@@ -116,15 +124,15 @@ export const cursorContainerMixin = (base) => class VictoryCursorContainer exten
         key: "x-cursor",
         x1: cursorCoordinates.x,
         x2: cursorCoordinates.x,
-        y1: domainCoordinates.y[0],
-        y2: domainCoordinates.y[1]
+        y1: padding.top,
+        y2: (height - padding.left)
       }));
     }
     if (dimension === "y" || dimension === undefined) {
       newElements.push(React.cloneElement(cursorComponent, {
         key: "y-cursor",
-        x1: domainCoordinates.x[0],
-        x2: domainCoordinates.x[1],
+        x1: padding.left,
+        x2: (width - padding.right),
         y1: cursorCoordinates.y,
         y2: cursorCoordinates.y
       }));
