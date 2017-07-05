@@ -107,3 +107,20 @@ _This project is in alpha release. We're hard at work fixing bugs and improving 
 [prop-types]: https://github.com/reactjs/prop-types
 [trav_img]: https://api.travis-ci.org/FormidableLabs/victory.svg
 [trav_site]: https://travis-ci.org/FormidableLabs/victory
+
+## Issues
+### Jest Snapshots
+
+If you want to use [Jest snapshot testing](https://github.com/storybooks/storybook/tree/master/addons/storyshots)
+with Victory, you may encounter a problem where the Jest snapshot changes every time, due to a randomly generated `clipId`
+being used for a `VictoryClipContainer` group component.
+The solution to this is to set a static `clipId` on your `VictoryClipContainer`.
+
+For example, when creating a `VictoryLine` component, you can pass a `groupComponent` prop:
+```js
+<VictoryLine
+  groupComponent={<VictoryClipContainer clipId={1} />}
+/>
+```
+
+Now the `clipId` attached to your `VictoryLine` component will always be the same, and your snapshot will not change with each test run.  
