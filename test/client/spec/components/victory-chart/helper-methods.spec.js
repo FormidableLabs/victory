@@ -186,57 +186,6 @@ describe("victory-chart/helpers-methods", () => {
       );
       expect(formatResult(1)).to.equal("scaleFormatTick");
     });
-
-    it("uses custom tickFormat", () => {
-      const props = { tickFormat: (tick) => tick + 1 };
-      const victoryAxis = getVictoryAxis(props);
-      const formatResult = Helpers.getTickFormat(victoryAxis, "x", { stringMap: nullStringMap });
-      expect(formatResult).to.be.a("function");
-      expect(formatResult(1)).to.equal(2);
-    });
-
-    it("passes string map result to custom tickFormat prop", () => {
-      const props = { tickFormat: (tick) => `${tick} yo` };
-      const victoryAxis = getVictoryAxis(props);
-      const formatResult = Helpers.getTickFormat(victoryAxis, "x", { stringMap });
-      expect(formatResult).to.be.a("function");
-      expect(formatResult(1)).to.equal("a yo");
-    });
-
-    it("uses string array tickValues for tick formatting", () => {
-      const props = { tickValues: ["orange", "banana", "apple"] };
-      const victoryAxis = getVictoryAxis(props);
-      const formatResult = Helpers.getTickFormat(victoryAxis, "x", { stringMap: nullStringMap });
-      expect(formatResult).to.be.a("function");
-      expect(formatResult(5, 0)).to.equal("orange");
-      expect(formatResult(5, 2)).to.equal("apple");
-    });
-
-    it("uses string array tickFormat for tick formatting", () => {
-      const props = { tickFormat: ["orange", "banana", "apple"] };
-      const victoryAxis = getVictoryAxis(props);
-      const formatResult = Helpers.getTickFormat(victoryAxis, "x", { stringMap: nullStringMap });
-      expect(formatResult).to.be.a("function");
-      expect(formatResult(5, 0)).to.equal("orange");
-      expect(formatResult(5, 2)).to.equal("apple");
-    });
-
-    it("uses tickFormat array over tickValues", () => {
-      const props = { tickValues: [1, 2, 3], tickFormat: ["orange", "banana", "apple"] };
-      const victoryAxis = getVictoryAxis(props);
-      const formatResult = Helpers.getTickFormat(victoryAxis, "x", { stringMap: nullStringMap });
-      expect(formatResult).to.be.a("function");
-      expect(formatResult(5, 0)).to.equal("orange");
-      expect(formatResult(5, 2)).to.equal("apple");
-    });
-
-    it("runs tickFormat fn after tick values are applied", () => {
-      const props = { tickValues: ["a", "b", "c"], tickFormat: (tick) => `${tick} yo` };
-      const victoryAxis = getVictoryAxis(props);
-      const formatResult = Helpers.getTickFormat(victoryAxis, "x", { stringMap: nullStringMap });
-      expect(formatResult).to.be.a("function");
-      expect(formatResult(1, 1)).to.equal("b yo");
-    });
   });
 
   describe("getTicks", () => {

@@ -98,11 +98,13 @@ export default class VictoryChart extends React.Component {
   }
 
   getAxisProps(child, props, calculatedProps) {
-    const { domain, scale, originSign } = calculatedProps;
+    const { domain, scale, originSign, stringMap } = calculatedProps;
     const axis = child.type.getAxis(child.props);
     const axisOffset = ChartHelpers.getAxisOffset(props, calculatedProps);
     const tickValues = ChartHelpers.getTicks(calculatedProps, axis, child);
-    const tickFormat = ChartHelpers.getTickFormat(child, axis, calculatedProps);
+    const tickFormat = child.props.tickFormat ?
+      Axis.getTickFormat(child.props, scale, stringMap) :
+      ChartHelpers.getTickFormat(child, axis, calculatedProps);
     const offsetY = axis === "y" ? undefined : axisOffset.y;
     const offsetX = axis === "x" ? undefined : axisOffset.x;
     const crossAxis = child.props.crossAxis === false ? false : true;
