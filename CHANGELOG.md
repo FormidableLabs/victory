@@ -1,5 +1,9 @@
 # VictoryChart Changelog
 
+## 21.2.4 (2017-07-09)
+
+- [494](https://github.com/FormidableLabs/victory-chart/pull/494) Ensure that `tickFormat` has access to `tick`, `index`, and `ticks`
+
 ## 21.2.3 (2017-07-02)
 
 - [491](https://github.com/FormidableLabs/victory-chart/pull/491) Corrects dependent axis for `innerRadius`
