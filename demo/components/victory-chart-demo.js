@@ -206,13 +206,14 @@ class App extends React.Component {
           </VictoryChart>
 
           <VictoryChart style={chartStyle}>
+            <VictoryAxis tickFormat={(t, i, ts) => `${t}s ${i} ${ts[0]}`}/>
             <VictoryBar
               groupComponent={<VictoryClipContainer/>}
               style={{ data: { fill: "tomato" } }}
               data={[
-                { x: 1, y: 1 },
-                { x: 2, y: 2 },
-                { x: 3, y: 7 }
+                { x: "one", y: 1 },
+                { x: "two", y: 2 },
+                { x: "three", y: 7 }
               ]}
             />
          </VictoryChart>

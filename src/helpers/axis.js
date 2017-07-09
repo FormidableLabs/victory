@@ -1,5 +1,5 @@
 import { Collection } from "victory-core";
-import { identity } from "lodash";
+import { identity, isFunction, invert } from "lodash";
 import React from "react";
 
 export default {
@@ -166,5 +166,26 @@ export default {
    */
   stringTicks(props) {
     return props.tickValues !== undefined && Collection.containsStrings(props.tickValues);
+  },
+
+  getTickFormat(props, scale, stringMap) {
+    const stringTicks = this.stringTicks(props);
+    const axis = this.getAxis(props);
+    const applyStringTicks = (tick, index, ticks) => {
+      const invertedStringMap = invert(stringMap[axis]);
+      const stringTickArray = ticks.map((t) => invertedStringMap[t]);
+      return props.tickFormat(invertedStringMap[tick], index, stringTickArray);
+    };
+    if (props.tickFormat && isFunction(props.tickFormat)) {
+      return stringMap && stringMap[axis] ? applyStringTicks : props.tickFormat;
+    } else if (props.tickFormat && Array.isArray(props.tickFormat)) {
+      return (x, index) => props.tickFormat[index];
+    } else if (stringTicks) {
+      return (x, index) => props.tickValues[index];
+    } else if (scale.tickFormat && isFunction(scale.tickFormat)) {
+      return scale.tickFormat();
+    } else {
+      return (x) => x;
+    }
   }
 };

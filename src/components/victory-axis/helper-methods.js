@@ -1,4 +1,5 @@
 import { includes, defaults, defaultsDeep, isFunction, range, without } from "lodash";
+import Axis from "../../helpers/axis";
 import { Helpers, Scale, Domain } from "victory-core";
 
 const orientationSign = {
@@ -224,7 +225,7 @@ export default {
         axisLabel: axisLabelProps,
         ticks: this.getTickProps(tickLayout, styles.tickStyle, tick),
         tickLabels: this.getTickLabelProps(
-          tickLayout, styles.labelStyle, anchors, tick, tickFormat(tick, index)
+          tickLayout, styles.labelStyle, anchors, tick, tickFormat(tick, index, ticks)
         ),
         grid: this.getGridProps(gridLayout, styles.gridStyle, tick)
       };
@@ -244,7 +245,7 @@ export default {
     const scale = this.getScale(props);
     const domain = this.getDomain(props);
     const ticks = this.getTicks(props, scale);
-    const tickFormat = this.getTickFormat(props, scale, ticks);
+    const tickFormat = Axis.getTickFormat(props, scale);
     const anchors = this.getAnchors(orientation, isVertical);
 
     return {
@@ -304,20 +305,6 @@ export default {
       textAnchor: isVertical ? anchor : "middle",
       verticalAnchor: isVertical ? "middle" : anchor
     };
-  },
-
-  getTickFormat(props, scale) {
-    if (props.tickFormat && isFunction(props.tickFormat)) {
-      return props.tickFormat;
-    } else if (props.tickFormat && Array.isArray(props.tickFormat)) {
-      return (x, index) => props.tickFormat[index];
-    } else if (Helpers.stringTicks(props)) {
-      return (x, index) => props.tickValues[index];
-    } else if (scale.tickFormat && isFunction(scale.tickFormat)) {
-      return scale.tickFormat();
-    } else {
-      return (x) => x;
-    }
   },
 
   getLabelPadding(props, style) {
