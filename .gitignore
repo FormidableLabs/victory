@@ -27,6 +27,7 @@ Desktop.ini
 $RECYCLE.BIN/
 
 # App specific
+.vscode
 bower_components
 coverage
 dist
