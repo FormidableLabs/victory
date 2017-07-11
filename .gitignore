@@ -27,6 +27,7 @@ $RECYCLE.BIN/
 
 # App specific
 .tmp
+.vscode
 bower_components
 coverage
 dist

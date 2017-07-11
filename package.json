@@ -3,6 +3,8 @@
   "version": "11.1.2",
   "description": "D3 pie & donut chart component for React",
   "main": "lib/index.js",
+  "module": "es/index.js",
+  "jsnext:main": "es/index.js",
   "repository": {
     "type": "git",
     "url": "https://github.com/FormidableLabs/victory-pie.git"
