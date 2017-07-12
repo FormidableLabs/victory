@@ -27,7 +27,7 @@ export default {
   getBaseProps(props, fallbackProps) {
     props = Helpers.modifyProps(props, fallbackProps, "pie");
     const calculatedValues = this.getCalculatedValues(props);
-    const { slices, style, pathFunction, data } = calculatedValues;
+    const { slices, style, pathFunction, data, origin } = calculatedValues;
     const childProps = {
       parent: {
         standalone: props.standalone, slices, pathFunction,
@@ -40,7 +40,7 @@ export default {
       const datum = data[index];
       const eventKey = datum.eventKey || index;
       const dataProps = {
-        index, slice, pathFunction, datum, data,
+        index, slice, pathFunction, datum, data, origin,
         style: this.getSliceStyle(datum, index, calculatedValues)
       };
 
@@ -54,7 +54,7 @@ export default {
 
   getLabelProps(props, dataProps, calculatedValues) {
     const { index, datum, data, slice } = dataProps;
-    const { style, radius } = calculatedValues;
+    const { style, radius, origin } = calculatedValues;
     const labelStyle = assign({ padding: 0 }, style.labels);
     const labelRadius = Helpers.evaluateProp(props.labelRadius, datum);
     const labelPosition = this.getLabelPosition(radius, labelRadius, labelStyle);
@@ -63,8 +63,8 @@ export default {
     return {
       index, datum, data, slice, orientation,
       style: labelStyle,
-      x: Math.round(position[0]),
-      y: Math.round(position[1]),
+      x: Math.round(position[0]) + origin.x,
+      y: Math.round(position[1]) + origin.y,
       text: this.getLabelText(props, datum, index),
       textAnchor: labelStyle.textAnchor || this.getTextAnchor(orientation),
       verticalAnchor: labelStyle.verticalAnchor || this.getVerticalAnchor(orientation),
@@ -73,19 +73,25 @@ export default {
   },
 
   getCalculatedValues(props) {
-    const { theme, colorScale } = props;
+    const { theme, colorScale, width, height } = props;
     const styleObject = theme && theme.pie && theme.pie.style ? theme.pie.style : {};
     const style = Helpers.getStyles(props.style, styleObject, "auto", "100%");
     const colors = Array.isArray(colorScale) ? colorScale : Style.getColorScale(colorScale);
     const padding = Helpers.getPadding(props);
     const radius = this.getRadius(props, padding);
+    const offsetWidth = width / 2 + padding.left - padding.right;
+    const offsetHeight = height / 2 + padding.top - padding.bottom;
+    const origin = {
+      x: offsetWidth + radius > width ? radius + padding.left - padding.right : offsetWidth,
+      y: offsetHeight + radius > height ? radius + padding.top - padding.bottom : offsetHeight
+    };
     const data = Data.getData(props);
     const slices = this.getSlices(props, data);
     const pathFunction = d3Shape.arc()
       .cornerRadius(props.cornerRadius)
       .outerRadius(radius)
       .innerRadius(props.innerRadius);
-    return { style, colors, padding, radius, data, slices, pathFunction };
+    return { style, colors, padding, radius, data, slices, pathFunction, origin };
   },
 
   getColor(style, colors, index) {
