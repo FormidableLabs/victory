@@ -1,7 +1,7 @@
 /*eslint no-magic-numbers: ["error", { "ignore": [-1, 0, 1, 2] }]*/
 import React from "react";
 import PropTypes from "prop-types";
-import { partialRight, assign } from "lodash";
+import { partialRight } from "lodash";
 import {
   addEvents, Helpers, Data, PropTypes as CustomPropTypes, Slice,
   VictoryContainer, VictoryLabel, VictoryTheme
