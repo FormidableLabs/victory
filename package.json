@@ -19,7 +19,7 @@
     "npm": ">=2.0.0"
   },
   "scripts": {
-    "postinstall": "cd lib || builder run npm:postinstall",
+    "postinstall": "builder run npm:postinstall",
     "preversion": "builder run npm:preversion",
     "postversion": "builder run npm:postversion",
     "postpublish": "builder run npm:postpublish",
