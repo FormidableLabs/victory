@@ -25,7 +25,7 @@
   },
   "homepage": "https://github.com/formidablelabs/victory",
   "scripts": {
-    "postinstall": "cd lib || builder run npm:postinstall || (echo 'POSTINSTALL FAILED: If using npm v2, please upgrade to npm v3. See bug https://github.com/FormidableLabs/builder/issues/35' && exit 1)",
+    "postinstall": "builder run npm:postinstall",
     "preversion": "builder run npm:preversion",
     "postversion": "builder run npm:postversion",
     "postpublish": "builder run npm:postpublish",
