@@ -1,7 +1,7 @@
 /*eslint no-magic-numbers: ["error", { "ignore": [-1, 0, 1, 2] }]*/
 import React from "react";
 import PropTypes from "prop-types";
-import { partialRight, assign } from "lodash";
+import { partialRight } from "lodash";
 import {
   addEvents, Helpers, Data, PropTypes as CustomPropTypes, Slice,
   VictoryContainer, VictoryLabel, VictoryTheme
@@ -145,45 +145,6 @@ class VictoryPie extends React.Component {
     "dataComponent", "labelComponent", "groupComponent", "containerComponent"
   ];
 
-  renderPieData(props) {
-    const { dataComponent, labelComponent } = props;
-    const dataComponents = [];
-    const labelComponents = [];
-    for (let index = 0, len = this.dataKeys.length; index < len; index++) {
-      const dataProps = this.getComponentProps(dataComponent, "data", index);
-      dataComponents[index] = React.cloneElement(dataComponent, dataProps);
-
-      const labelProps = this.getComponentProps(labelComponent, "labels", index);
-      if (labelProps && labelProps.text !== undefined && labelProps.text !== null) {
-        labelComponents[index] = React.cloneElement(
-          labelComponent, assign({}, labelProps, { renderInPortal: false })
-          );
-      }
-    }
-    const children = [...dataComponents, ...labelComponents];
-    return this.renderGroup(props, children);
-  }
-
-  // Overridden in victory-native
-  renderGroup(props, children) {
-    const offset = this.getOffset(props);
-    const transform = `translate(${offset.x}, ${offset.y})`;
-    const groupComponent = React.cloneElement(props.groupComponent, { transform });
-    return this.renderContainer(groupComponent, children);
-  }
-
-  getOffset(props) {
-    const { width, height } = props;
-    const calculatedProps = PieHelpers.getCalculatedValues(props);
-    const { padding, radius } = calculatedProps;
-    const offsetWidth = width / 2 + padding.left - padding.right;
-    const offsetHeight = height / 2 + padding.top - padding.bottom;
-    return {
-      x: offsetWidth + radius > width ? radius + padding.left - padding.right : offsetWidth,
-      y: offsetHeight + radius > height ? radius + padding.top - padding.bottom : offsetHeight
-    };
-  }
-
   // Overridden in victory-native
   shouldAnimate() {
     return Boolean(this.props.animate);
@@ -196,7 +157,7 @@ class VictoryPie extends React.Component {
       return this.animateComponent(props, animationWhitelist);
     }
 
-    const children = this.renderPieData(props);
+    const children = this.renderData(props);
     return props.standalone ? this.renderContainer(props.containerComponent, children) : children;
   }
 }

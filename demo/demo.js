@@ -5,7 +5,7 @@ import PropTypes from "prop-types";
 import React from "react";
 import { VictoryPie } from "../src/index";
 import {
-  VictoryContainer, VictoryTheme, Slice, VictoryTooltip
+  VictoryContainer, VictoryTheme, Slice, VictoryTooltip, VictoryLabel
 } from "victory-core";
 
 class BorderLabelSlice extends React.Component {
@@ -174,6 +174,7 @@ export default class App extends React.Component {
               parent: { ...parentStyle, padding: "1% 3%" }
             }}
             theme={VictoryTheme.material}
+            labelComponent={<VictoryLabel renderInPortal />}
             labels={() => "click me!"}
             events={[{
               target: "data",
