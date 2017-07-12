@@ -2,7 +2,7 @@
 import { Children } from "react";
 import { Selection, Collection } from "victory-core";
 import { throttle, isFunction, defaults, isEqual } from "lodash";
-import { attachId } from "../../helpers/event-handlers.js";
+import { attachId } from "../../helpers/event-handlers";
 import Wrapper from "../../helpers/wrapper";
 
 const Helpers = {

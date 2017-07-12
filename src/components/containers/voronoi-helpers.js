@@ -2,7 +2,7 @@ import { Selection, Data, Helpers } from "victory-core";
 import { assign, throttle, isFunction, groupBy, keys, isEqual } from "lodash";
 import { voronoi as d3Voronoi } from "d3-voronoi";
 import React from "react";
-import { attachId } from "../../helpers/event-handlers.js";
+import { attachId } from "../../helpers/event-handlers";
 
 const VoronoiHelpers = {
   withinBounds(props, point) {
