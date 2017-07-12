@@ -45,13 +45,15 @@ export default class Slice extends React.Component {
 
   // Overridden in victory-core-native
   renderSlice(path, style, events) {
-    const { role, shapeRendering, className } = this.props;
+    const { role, shapeRendering, className, origin } = this.props;
+    const transform = origin ? `translate(${origin.x}, ${origin.y})` : undefined;
     return (
       <path
         d={path}
         className={className}
         role={role || "presentation"}
         style={style}
+        transform={transform}
         shapeRendering={shapeRendering || "auto"}
         {...events}
       />
