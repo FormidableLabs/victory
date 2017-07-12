@@ -1,6 +1,10 @@
 VictoryCore Changelog
 =====================
 
+## 16.2.0 (2017-07-12)
+
+- [265](https://github.com/FormidableLabs/victory-core/pull/265) Translates `Slice` when an `origin` prop is given
+
 ## 16.1.1 (2017-07-02)
 
 - [263](https://github.com/FormidableLabs/victory-core/pull/263) Removes commas prior to interpolating strings
