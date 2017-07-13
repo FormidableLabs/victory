@@ -1,6 +1,10 @@
 VictoryCore Changelog
 =====================
 
+## 16.3.0 (2017-07-13)
+
+- [266](https://github.com/FormidableLabs/victory-core/pull/266) Support Webpack 3 and ES6 exports
+
 ## 16.2.0 (2017-07-12)
 
 - [265](https://github.com/FormidableLabs/victory-core/pull/265) Translates `Slice` when an `origin` prop is given
