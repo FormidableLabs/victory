@@ -1,6 +1,6 @@
 import { Selection } from "victory-core";
 import { assign, throttle, isFunction, isEqual, defaults } from "lodash";
-import { attachId } from "../../helpers/event-handlers.js";
+import { attachId } from "../../helpers/event-handlers";
 
 const Helpers = {
   withinBounds(point, bounds, padding) {

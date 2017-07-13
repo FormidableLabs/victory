@@ -1,7 +1,7 @@
 import { Selection, Data, Helpers } from "victory-core";
 import { assign, throttle, isFunction } from "lodash";
 import React from "react";
-import { attachId } from "../../helpers/event-handlers.js";
+import { attachId } from "../../helpers/event-handlers";
 
 const SelectionHelpers = {
   getDatasets(props) {
