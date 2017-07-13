@@ -1,5 +1,9 @@
 # VictoryChart Changelog
 
+## 21.3.0 (2017-07-13)
+
+- [495](https://github.com/FormidableLabs/victory-chart/pull/495) Support Webpack 3 and ES6 exports
+
 ## 21.2.4 (2017-07-09)
 
 - [494](https://github.com/FormidableLabs/victory-chart/pull/494) Ensure that `tickFormat` has access to `tick`, `index`, and `ticks`
