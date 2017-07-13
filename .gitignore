@@ -27,10 +27,12 @@ Desktop.ini
 $RECYCLE.BIN/
 
 # App specific
+.vscode
 bower_components
 coverage
 dist
 lib
+es
 node_modules
 npm-debug.log*
 yarn.lock
