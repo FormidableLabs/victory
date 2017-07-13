@@ -33,7 +33,7 @@
     "builder-victory-component": "^5.0.1",
     "d3-voronoi": "^1.1.2",
     "lodash": "^4.17.4",
-    "victory-core": "^16.1.0"
+    "victory-core": "^16.3.0"
   },
   "devDependencies": {
     "builder-victory-component-dev": "^5.0.1",
