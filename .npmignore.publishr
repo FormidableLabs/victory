@@ -1,6 +1,7 @@
 /*
 !/dist
 dist/*.map
+!/es
 !/lib
 !/src
 !LICENSE.txt
