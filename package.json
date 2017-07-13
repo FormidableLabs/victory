@@ -29,7 +29,7 @@
   },
   "dependencies": {
     "builder": "^3.2.1",
-    "builder-victory-component": "^4.0.4",
+    "builder-victory-component": "^5.0.0",
     "d3-ease": "^1.0.0",
     "d3-interpolate": "^1.1.1",
     "d3-scale": "^1.0.0",
@@ -38,7 +38,7 @@
     "lodash": "^4.17.4"
   },
   "devDependencies": {
-    "builder-victory-component-dev": "^4.0.4",
+    "builder-victory-component-dev": "^5.0.0",
     "chai": "^3.5.0",
     "enzyme": "^2.4.1",
     "mocha": "^3.0.2",
