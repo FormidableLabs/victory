@@ -30,14 +30,14 @@
   },
   "dependencies": {
     "builder": "^3.2.1",
-    "builder-victory-component": "^5.0.0",
+    "builder-victory-component": "^5.0.1",
     "d3-shape": "^1.0.0",
     "lodash": "^4.17.4",
     "victory-core": "^16.1.0"
   },
   "devDependencies": {
     "@kadira/storybook": "^1.25.0",
-    "builder-victory-component-dev": "^5.0.0",
+    "builder-victory-component-dev": "^5.0.1",
     "chai": "^3.5.0",
     "chai-enzyme": "0.4.1",
     "enzyme": "^2.4.1",
