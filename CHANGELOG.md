@@ -1,5 +1,26 @@
 # Victory Changelog
 
+## 0.21.2 (2017-07-13)
+
+Victory:
+  - [651](https://github.com/FormidableLabs/victory/pull/651) Support Webpack 3 and ES6 exports
+
+VictoryCore:
+  - [266](https://github.com/FormidableLabs/victory-core/pull/266) Support Webpack 3 and ES6 exports
+  - [265](https://github.com/FormidableLabs/victory-core/pull/265) Translates `Slice` when an `origin` prop is given
+
+VictoryChart:
+  - [495](https://github.com/FormidableLabs/victory-chart/pull/495) Support Webpack 3 and ES6 exports
+  - [494](https://github.com/FormidableLabs/victory-chart/pull/494) Ensure that `tickFormat` has access to `tick`, `index`, and `ticks`
+  - [491](https://github.com/FormidableLabs/victory-chart/pull/491) Corrects dependent axis for `innerRadius`
+  - [490](https://github.com/FormidableLabs/victory-chart/pull/490) Fixes a bug in domain calculation for polar axes
+  - [488](https://github.com/FormidableLabs/victory-chart/pull/488) `VictoryZoomContainer` only updates the domain in the dimension it controls
+  - [489](https://github.com/FormidableLabs/victory-chart/pull/489) Adds support for `innerRadius` on polar charts
+
+VictoryPie:
+  - [149](https://github.com/FormidableLabs/victory-pie/pull/149) Support Webpack 3 and ES6 exports
+  - [148](https://github.com/FormidableLabs/victory-pie/pull/148) Translates individual slices rather than an entire group translation for pie and labels
+
 ## 0.21.1 (2017-06-29)
 
 Minor bug fixes:
