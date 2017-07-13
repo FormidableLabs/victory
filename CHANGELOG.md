@@ -1,5 +1,9 @@
 # VictoryPie Changelog
 
+## 11.3.0 (2017-07-13)
+
+- [149](https://github.com/FormidableLabs/victory-pie/pull/149) Support Webpack 3 and ES6 exports
+
 ## 11.2.0 (2017-07-12)
 
 - [148](https://github.com/FormidableLabs/victory-pie/pull/148) Translates individual slices rather than an entire group translation for pie and labels
