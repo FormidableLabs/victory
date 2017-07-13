@@ -3,6 +3,8 @@
   "version": "11.2.0",
   "description": "D3 pie & donut chart component for React",
   "main": "lib/index.js",
+  "module": "es/index.js",
+  "jsnext:main": "es/index.js",
   "repository": {
     "type": "git",
     "url": "https://github.com/FormidableLabs/victory-pie.git"
@@ -17,7 +19,7 @@
     "npm": ">=2.0.0"
   },
   "scripts": {
-    "postinstall": "cd lib || builder run npm:postinstall",
+    "postinstall": "builder run npm:postinstall",
     "preversion": "builder run npm:preversion",
     "postversion": "builder run npm:postversion",
     "postpublish": "builder run npm:postpublish",
@@ -28,14 +30,14 @@
   },
   "dependencies": {
     "builder": "^3.2.1",
-    "builder-victory-component": "^4.0.2",
+    "builder-victory-component": "^5.0.1",
     "d3-shape": "^1.0.0",
     "lodash": "^4.17.4",
-    "victory-core": "^16.2.0"
+    "victory-core": "^16.3.0"
   },
   "devDependencies": {
     "@kadira/storybook": "^1.25.0",
-    "builder-victory-component-dev": "^4.0.2",
+    "builder-victory-component-dev": "^5.0.1",
     "chai": "^3.5.0",
     "chai-enzyme": "0.4.1",
     "enzyme": "^2.4.1",
