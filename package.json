@@ -35,13 +35,13 @@
   },
   "dependencies": {
     "builder": "^3.2.1",
-    "builder-victory-component": "^5.0.0",
+    "builder-victory-component": "^5.0.1",
     "victory-chart": "^21.2.0",
     "victory-core": "^16.1.0",
     "victory-pie": "^11.1.2"
   },
   "devDependencies": {
-    "builder-victory-component-dev": "^5.0.0",
+    "builder-victory-component-dev": "^5.0.1",
     "chai": "^3.5.0",
     "lodash": "^4.17.4",
     "mocha": "^3.0.2",
