@@ -12,7 +12,6 @@ VictoryCore Changelog
 ## 16.1.1 (2017-07-02)
 
 - [263](https://github.com/FormidableLabs/victory-core/pull/263) Removes commas prior to interpolating strings
-- [264](https://github.com/FormidableLabs/victory-core/pull/264) Adds support for `innerRadius` on polar charts
 
 ## 16.1.0 (2017-06-29)
 
