@@ -26,7 +26,8 @@ export const zoomContainerMixin = (base) => class VictoryZoomContainer extends b
   static defaultProps = {
     ...VictoryContainer.defaultProps,
     clipContainerComponent: <VictoryClipContainer/>,
-    allowZoom: true
+    allowZoom: true,
+    zoomActive: false
   };
 
   static defaultEvents = [{
@@ -131,12 +132,23 @@ export const zoomContainerMixin = (base) => class VictoryZoomContainer extends b
     const childComponents = React.Children.toArray(props.children);
 
     return childComponents.map((child) => {
-      const { currentDomain } = props;
+      const { currentDomain, zoomActive } = props;
       const originalDomain = defaults({}, props.originalDomain, props.domain);
       const zoomDomain = defaults({}, props.zoomDomain, props.domain);
       const cachedZoomDomain = defaults({}, props.cachedZoomDomain, props.domain);
-      const domain = isEqual(zoomDomain, cachedZoomDomain) ?
-        defaults({}, currentDomain, originalDomain) : zoomDomain;
+
+      let domain;
+      if (!isEqual(zoomDomain, cachedZoomDomain)) {
+        // if zoomDomain has been changed, use it
+        domain = zoomDomain;
+      } else if (!zoomActive) {
+        // if user has zoomed all the way out, use the child domain
+        domain = child.props.domain;
+      } else {
+        // default: use currentDomain, set by the event handlers
+        domain = defaults({}, currentDomain, originalDomain);
+      }
+
       let newDomain = props.polar ? this.modifyPolarDomain(domain, originalDomain) : domain;
       if (props.dimension) {
         // if zooming is restricted to a dimension, don't squash changes to zoomDomain in other dim
