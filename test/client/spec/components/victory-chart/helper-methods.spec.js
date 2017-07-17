@@ -161,7 +161,6 @@ describe("victory-chart/helpers-methods", () => {
   describe("getTickFormat", () => {
     const stringMap = { x: { "a": 1, "b": 2, "c": 3 } };
     const nullStringMap = { x: null };
-    const scale = { x: { tickFormat: () => () => "scaleFormatTick" } };
 
     it("returns the identity function when tickValues are numerical", () => {
       const props = { tickValues: [1, 2, 3] };
@@ -179,12 +178,12 @@ describe("victory-chart/helpers-methods", () => {
       expect(formatResult(1)).to.equal("a");
     });
 
-    it("returns the tickFormat function from scale", () => {
+    it("returns undefined if no tickValues or stringMaps exist", () => {
       const victoryAxis = getVictoryAxis({});
       const formatResult = Helpers.getTickFormat(
-        victoryAxis, "x", { stringMap: nullStringMap, scale }
+        victoryAxis, "x", { stringMap: nullStringMap }
       );
-      expect(formatResult(1)).to.equal("scaleFormatTick");
+      expect(formatResult).to.equal(undefined);
     });
   });
 
