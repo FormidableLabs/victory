@@ -139,7 +139,7 @@ export default {
       const dataTicks = ["", ...dataNames, ""];
       return (x) => dataTicks[x];
     } else {
-      return calculatedProps.scale[currentAxis].tickFormat() || identity;
+      return undefined;
     }
   },
 
