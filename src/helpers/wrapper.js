@@ -35,17 +35,20 @@ export default {
   getDomain(props, axis, childComponents) {
     childComponents = childComponents || React.Children.toArray(props.children);
     const propsDomain = Domain.getDomainFromProps(props, axis);
-    if (propsDomain) {
-      return propsDomain;
-    }
-    const dataset = (props.data || props.y) && Data.getData(props);
-    const dataDomain = dataset ? Domain.getDomainFromData(props, axis, dataset) : [];
-    const childDomain = this.getDomainFromChildren(props, axis, childComponents);
-    const min = Collection.getMinValue([...dataDomain, ...childDomain]);
-    const max = Collection.getMaxValue([...dataDomain, ...childDomain]);
     const domainPadding = props.polar ?
       0 : this.getDefaultDomainPadding(props, axis, childComponents);
-    const paddedDomain = Domain.padDomain([min, max], assign({ domainPadding }, props), axis);
+    let domain;
+    if (propsDomain) {
+      domain = propsDomain;
+    } else {
+      const dataset = (props.data || props.y) && Data.getData(props);
+      const dataDomain = dataset ? Domain.getDomainFromData(props, axis, dataset) : [];
+      const childDomain = this.getDomainFromChildren(props, axis, childComponents);
+      const min = Collection.getMinValue([...dataDomain, ...childDomain]);
+      const max = Collection.getMaxValue([...dataDomain, ...childDomain]);
+      domain = [min, max];
+    }
+    const paddedDomain = Domain.padDomain(domain, assign({ domainPadding }, props), axis);
     return Domain.cleanDomain(paddedDomain, props, axis);
   },
 
