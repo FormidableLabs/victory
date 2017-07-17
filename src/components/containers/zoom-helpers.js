@@ -61,8 +61,12 @@ const Helpers = {
     ];
   },
 
+  zoommingOut(evt) {
+    return evt.deltaY > 0;
+  },
+
   getScaleFactor(evt) {
-    const sign = evt.deltaY > 0 ? 1 : -1;
+    const sign = this.zoommingOut(evt) ? 1 : -1;
    // eslint-disable-next-line no-magic-numbers
     const delta = Math.min(Math.abs(evt.deltaY / 300), 0.5); // TODO: Check scale factor
     return Math.abs(1 + sign * delta);
@@ -232,16 +236,22 @@ const Helpers = {
       y: dimension === "x" ? lastDomain.y : this.scale(y, evt, targetProps, "y")
     };
     const resumeAnimation = this.handleAnimation(ctx);
+
+    const zoomActive = !this.zoommingOut(evt) // if zoomming in or
+      // if zoomActive is already set AND user hasn't zoommed out all the way
+      || (targetProps.zoomActive && !isEqual(originalDomain, lastDomain));
+
     if (isFunction(onDomainChange)) {
       onDomainChange(currentDomain);
     }
+
     return [{
       target: "parent",
       callback: resumeAnimation,
       mutation: () => {
         return {
           domain: currentDomain, currentDomain, originalDomain, cachedZoomDomain: zoomDomain,
-          parentControlledProps: ["domain"], panning: false
+          parentControlledProps: ["domain"], panning: false, zoomActive
         };
       }
     }];
