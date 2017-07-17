@@ -202,11 +202,9 @@ export default {
       return this.getDomainFromCategories(props, axis);
     }
     const globalDomain = this.getDomainFromData(props, axis, datasets);
-
     // find the cumulative max for stacked chart types
     const cumulativeData = !dependent ?
       this.getCumulativeData(props, axis, datasets) : [];
-
     const cumulativeMaxArray = cumulativeData.map((dataset) => {
       return dataset.reduce((memo, val) => {
         return val > 0 ? +val + +memo : memo;
@@ -237,14 +235,15 @@ export default {
    */
   getCumulativeData(props, axis, datasets) {
     const currentAxis = Helpers.getCurrentAxis(axis, props.horizontal);
+    const otherAxis = currentAxis === "x" ? "y" : "x";
     const categories = [];
     const axisValues = [];
     datasets.forEach((dataset) => {
       dataset.forEach((data) => {
         if (data.category !== undefined && !includes(categories, data.category)) {
           categories.push(data.category);
-        } else if (!includes(axisValues, data[currentAxis])) {
-          axisValues.push(data[currentAxis]);
+        } else if (!includes(axisValues, data[`_${otherAxis}`])) {
+          axisValues.push(data[`_${otherAxis}`]);
         }
       });
     });
@@ -252,7 +251,7 @@ export default {
     const _dataByCategory = () => {
       return categories.map((value) => {
         return datasets.reduce((prev, data) => {
-          return data.category === value ? prev.concat(data[axis]) : prev;
+          return data.category === value ? prev.concat(data[`_${axis}`]) : prev;
         }, []);
       });
     };
@@ -262,7 +261,6 @@ export default {
         return datasets.map((data) => data[index] && data[index][`_${currentAxis}`]);
       });
     };
-
     return categories.length === 0 ? _dataByIndex() : _dataByCategory();
   },
 
