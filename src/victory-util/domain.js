@@ -117,8 +117,9 @@ export default {
     let domain;
     if (min === max) {
       domain = this.getSinglePointDomain(max);
+    } else {
+      domain = [min, max];
     }
-    domain = [min, max];
     const angularRange = Math.abs((props.startAngle || 0) - (props.endAngle || 360));
     return props.polar && axis === "x" && angularRange === 360 ?
       this.getSymmetricDomain(domain, allData) : domain;
