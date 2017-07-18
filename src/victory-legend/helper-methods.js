@@ -23,7 +23,7 @@ const calculateLegendWidth = (props, itemCount, maxTextWidth) => {
 
   if (isHorizontal) {
     const gutterWidth = gutter * rowItemCount;
-    const symbolWidth = symbolSpacer * 3 * rowItemCount;
+    const symbolWidth = symbolSpacer * 3 * rowItemCount; // eslint-disable-line no-magic-numbers
     const textWidth = maxTextWidth * rowItemCount;
     contentWidth = symbolWidth + textWidth + gutterWidth;
   } else {
@@ -65,6 +65,7 @@ const getCalculatedValues = (props) => {
 
 
 const getSymbolSize = (datum, fontSize) => {
+  // eslint-disable-next-line no-magic-numbers
   return datum.symbol && datum.symbol.size ? datum.symbol.size : fontSize / 2.5;
 };
 
@@ -100,7 +101,7 @@ export default (props, fallbackProps) => {
 
     const dataProps = {
       key: `legend-symbol-${i}`,
-      symbol: style.type || "circle",
+      symbol: dataStyle.type || "circle",
       size: getSymbolSize(datum, fontSize),
       style: dataStyle,
       y,

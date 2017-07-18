@@ -1,4 +1,3 @@
-/*eslint no-magic-numbers: ["error", { "ignore": [1, 2, 2.5, 3] }]*/
 import React from "react";
 import PropTypes from "prop-types";
 import { partialRight } from "lodash";
