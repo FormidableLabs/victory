@@ -42,7 +42,7 @@ const getLabelStyles = (props) => {
   const { data, style } = props;
   return data.map((datum) => {
     const baseLabelStyles = defaults({}, datum.labels, style.labels);
-    return Helpers.evaulateStyle(baseLabelStyles, datum);
+    return Helpers.evaluateStyle(baseLabelStyles, datum);
   });
 };
 
@@ -119,7 +119,7 @@ export default (props, fallbackProps) => {
         padding.left + symbolWidth + (rowHeight + maxTextWidth) * rowIndex
     };
 
-    childProps[eventKey] = { data: dataProps, label: labelProps };
+    childProps[eventKey] = { data: dataProps, labels: labelProps };
 
     return childProps;
   }, initialChildProps);
