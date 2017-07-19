@@ -79,8 +79,8 @@ export default (props, fallbackProps) => {
   const labelStyles = getLabelStyles(props);
   const textSizes = getTextSizes(props, labelStyles);
   const maxTextWidth = Math.max(...textSizes.map((text) => text.width));
-  const height = calculateLegendHeight(props, textSizes);
-  const width = calculateLegendWidth(props, textSizes.width, maxTextWidth);
+  const height = props.height || calculateLegendHeight(props, textSizes);
+  const width = props.width || calculateLegendWidth(props, textSizes.width, maxTextWidth);
   const initialChildProps = { parent: {
     width, height, data, standalone, theme, padding, style: style.parent
   } };

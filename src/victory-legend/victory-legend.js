@@ -11,10 +11,7 @@ import VictoryTheme from "../victory-theme/victory-theme";
 import Point from "../victory-primitives/point";
 
 const fallbackProps = {
-  width: 450,
-  height: 300,
   orientation: "vertical",
-  padding: 50,
   x: 0,
   y: 0
 };
