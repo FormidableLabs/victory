@@ -88,8 +88,14 @@ export default class VictoryLabel extends React.Component {
       ]),
       PropTypes.func
     ]),
-    x: PropTypes.number,
-    y: PropTypes.number
+    x: PropTypes.oneOfType([
+      PropTypes.number,
+      PropTypes.string
+    ]),
+    y: PropTypes.oneOfType([
+      PropTypes.number,
+      PropTypes.string
+    ])
   };
 
   static defaultProps = {
