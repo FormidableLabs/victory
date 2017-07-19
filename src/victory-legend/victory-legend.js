@@ -42,6 +42,20 @@ class VictoryLegend extends React.Component {
       })
     ),
     dataComponent: PropTypes.element,
+    eventKey: PropTypes.oneOfType([
+      PropTypes.func,
+      CustomPropTypes.allOfType([CustomPropTypes.integer, CustomPropTypes.nonNegative]),
+      PropTypes.string
+    ]),
+    events: PropTypes.arrayOf(PropTypes.shape({
+      target: PropTypes.oneOf(["data", "labels", "parent"]),
+      eventKey: PropTypes.oneOfType([
+        PropTypes.array,
+        CustomPropTypes.allOfType([CustomPropTypes.integer, CustomPropTypes.nonNegative]),
+        PropTypes.string
+      ]),
+      eventHandlers: PropTypes.object
+    })),
     groupComponent: PropTypes.element,
     gutter: PropTypes.number,
     height: PropTypes.oneOfType([
@@ -60,6 +74,10 @@ class VictoryLegend extends React.Component {
         right: PropTypes.number
       })
     ]),
+    sharedEvents: PropTypes.shape({
+      events: PropTypes.array,
+      getEventState: PropTypes.func
+    }),
     standalone: PropTypes.bool,
     style: PropTypes.shape({
       data: PropTypes.object,
