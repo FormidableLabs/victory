@@ -1,7 +1,15 @@
 import React from "react";
 import { VictoryLegend } from "../src/index";
 
-const legendStyle = { parent: { display: "block", marginBottom: 20 } };
+const containerStyle = {
+  display: "flex",
+  flexDirection: "row",
+  flexWrap: "wrap",
+  alignItems: "center",
+  justifyContent: "center"
+};
+
+const legendStyle = { parent: { border: "1px solid #ccc", margin: "2%", maxHeight: 300 } };
 const data = [{
   name: "Series 1",
   symbol: {
@@ -46,21 +54,22 @@ const data = [{
 }];
 
 const LegendDemo = () => (
-  <div className="demo">
-    <VictoryLegend
-      data={data}
-      style={legendStyle}
-    />
-    <VictoryLegend
-      data={data}
-      itemsPerRow={4}
-      orientation="horizontal"
-      style={legendStyle}
-    />
+  <div className="demo" style={containerStyle}>
+    <svg
+      height={150}
+      width={150}
+      style={{ border: "1px solid #ccc", margin: "2%" }}
+    >
+      <VictoryLegend
+        standalone={false}
+        data={data}
+        style={legendStyle}
+      />
+    </svg>
     <svg
       height={100}
       width={244}
-      style={{ border: "1px solid #ccc" }}
+      style={{ border: "1px solid #ccc", margin: "2%" }}
     >
       <VictoryLegend
         data={data}
@@ -70,6 +79,12 @@ const LegendDemo = () => (
         style={{ labels: { fill: "darkgray" } }}
       />
     </svg>
+    <VictoryLegend
+      data={data}
+      itemsPerRow={4}
+      orientation="horizontal"
+      style={legendStyle}
+    />
   </div>
 );
 
