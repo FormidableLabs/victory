@@ -97,7 +97,7 @@ export default (props, fallbackProps) => {
     const y = isHorizontal ?
       padding.top + symbolShift + rowSpacer : padding.top + symbolShift + rowHeight * itemIndex;
     const color = colorScale[i % colorScale.length];
-    const dataStyle = defaults({}, datum.symbol, { fill: color }, style.data);
+    const dataStyle = defaults({}, datum.symbol, style.data, { fill: color });
 
     const dataProps = {
       key: `legend-symbol-${i}`,
