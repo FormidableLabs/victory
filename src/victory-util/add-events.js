@@ -1,6 +1,6 @@
 import React from "react";
 import {
-  defaults, assign, isFunction, partialRight, pick, without, isEqual, cloneDeep
+  defaults, assign, isFunction, partialRight, pick, without, isEqual, cloneDeep, get
 } from "lodash";
 import Events from "./events";
 import VictoryTransition from "../victory-transition/victory-transition";
@@ -36,12 +36,12 @@ export default (WrappedComponent) => {
     }
 
     shouldComponentUpdate(nextProps, nextState) {
-      if (this.props.animating || this.props.forceUpdate) { return true; }
+      if (this.props.animating || get(nextProps, "sharedEvents.events.length")) {
+        return true;
+      }
 
       const stateChange = !isEqual(this.stateCopy, nextState);
-
       this.stateCopy = cloneDeep(this.state); // save state copy, as events.js must mutate in-place
-
       if (stateChange) {
         return true;
       }
