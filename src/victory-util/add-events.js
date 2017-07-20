@@ -1,7 +1,24 @@
 import React from "react";
-import { defaults, assign, isFunction, partialRight, pick, without } from "lodash";
+import {
+  defaults, assign, isFunction, partialRight, pick, without, isEqual, cloneDeep
+} from "lodash";
 import Events from "./events";
 import VictoryTransition from "../victory-transition/victory-transition";
+
+const areVictoryPropsEqual = (a, b) => (
+  Object.keys(a).reduce((equal, key) => {
+    if (!equal) { return false; } // exit early if inequality found
+    const aProp = a[key];
+    const bProp = b[key];
+    if (key === "sharedEvents") { // go deeper on these props
+      return areVictoryPropsEqual(aProp, bProp);
+    } else if (key === "getEvents" || key === "getEventState") {
+      return true; // mark these props equal at all times
+    } else {
+      return isEqual(aProp, bProp);
+    }
+  }, true)
+);
 
 export default (WrappedComponent) => {
   return class addEvents extends WrappedComponent {
@@ -11,10 +28,29 @@ export default (WrappedComponent) => {
         super.componentWillMount();
       }
       this.state = this.state || {};
+      this.stateCopy = {}; // start with an empty object so any change triggers rerender
       const getScopedEvents = Events.getScopedEvents.bind(this);
       this.getEvents = partialRight(Events.getEvents.bind(this), getScopedEvents);
       this.getEventState = Events.getEventState.bind(this);
       this.setupEvents(this.props);
+    }
+
+    shouldComponentUpdate(nextProps, nextState) {
+      if (this.props.animating || this.props.forceUpdate) { return true; }
+
+      const stateChange = !isEqual(this.stateCopy, nextState);
+
+      this.stateCopy = cloneDeep(this.state); // save state copy, as events.js must mutate in-place
+
+      if (stateChange) {
+        return true;
+      }
+
+      if (!areVictoryPropsEqual(this.props, nextProps)) {
+        return true;
+      }
+
+      return false;
     }
 
     componentWillUpdate(newProps) {
@@ -136,4 +172,3 @@ export default (WrappedComponent) => {
 
   };
 };
-
