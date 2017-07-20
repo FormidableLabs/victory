@@ -28,7 +28,8 @@ export default (WrappedComponent) => {
         super.componentWillMount();
       }
       this.state = this.state || {};
-      this.stateCopy = {}; // start with an empty object so any change triggers rerender
+      this.stateCopy = cloneDeep({ ...this.state }); // idk why cloneDeep(this.state) doesn't work,
+      // but using cloneDeep(this.state) fails, as the first state change is missed
       const getScopedEvents = Events.getScopedEvents.bind(this);
       this.getEvents = partialRight(Events.getEvents.bind(this), getScopedEvents);
       this.getEventState = Events.getEventState.bind(this);
@@ -36,12 +37,18 @@ export default (WrappedComponent) => {
     }
 
     shouldComponentUpdate(nextProps, nextState) {
-      if (this.props.animating || get(nextProps, "sharedEvents.events.length")) {
+      if (
+        this.props.animating // cannot use props.animate, as this is set to null during animation
+        || get(nextProps, "sharedEvents.events.length") // for parent events
+      ) {
         return true;
       }
 
+      // save state copy; state is edited in-place so this.state is the SAME OBJECT has nextState.
+      // i tried to replace _.extend in events.js with data copies, but that broke events;
+      // there must be logic that relies on the mutation
       const stateChange = !isEqual(this.stateCopy, nextState);
-      this.stateCopy = cloneDeep(this.state); // save state copy, as events.js must mutate in-place
+      this.stateCopy = cloneDeep(this.state);
       if (stateChange) {
         return true;
       }
