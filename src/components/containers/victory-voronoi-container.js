@@ -138,13 +138,17 @@ export const voronoiContainerMixin = (base) => class VictoryVoronoiContainer ext
     const { labels, labelComponent, theme } = props;
     const componentProps = labelComponent.props || {};
     const themeStyles = theme && theme.voronoi && theme.voronoi.style ? theme.voronoi.style : {};
-    const componentStyle = type === "flyout" ? componentProps.flyoutStyle : componentProps.style;
-    const defaultStyles = defaults({}, componentStyle, themeStyles[type]);
-    return points.reduce((memo, point) => {
+    const componentStyleArray = type === "flyout" ?
+      componentProps.flyoutStyle : componentProps.style;
+    return points.reduce((memo, point, index) => {
       const text = Helpers.evaluateProp(labels, point, true);
       const textArray = text ? `${text}`.split("\n") : [];
       const baseStyle = point.style && point.style[type] || {};
-      const style = Helpers.evaluateStyle(defaults({}, baseStyle, defaultStyles), point, true);
+      const componentStyle = Array.isArray(componentStyleArray) ?
+        componentStyleArray[index] : componentStyleArray;
+      const style = Helpers.evaluateStyle(
+        defaults({}, componentStyle, baseStyle, themeStyles[type]), point, true
+      );
       const styleArray = textArray.length ? textArray.map(() => style) : [style];
       memo = memo.concat(styleArray);
       return memo;
@@ -170,20 +174,22 @@ export const voronoiContainerMixin = (base) => class VictoryVoronoiContainer ext
       memo = memo.concat(`${t}`.split("\n"));
       return memo;
     }, []);
+    const componentProps = labelComponent.props || {};
     const style = this.getStyle(props, points, "labels");
+
     const labelProps = defaults(
-      labelComponent.props,
       {
-        theme, style, text, scale,
         active: true,
-        renderInPortal: false,
+        datum: omit(points[0], ["childName", "style", "continuous"]),
         flyoutStyle: this.getStyle(props, points, "flyout")[0],
-        datum: omit(points[0], ["childName", "style", "continuous"])
+        renderInPortal: false,
+        scale, style, theme, text
       },
-      this.getDefaultLabelProps(props, points)
+      componentProps,
+      this.getDefaultLabelProps(props, points),
     );
     const labelPosition = this.getLabelPosition(props, points, labelProps);
-    return { ...labelProps, ...labelPosition };
+    return { ...labelPosition, ...labelProps };
   }
 
   getTooltip(props) {

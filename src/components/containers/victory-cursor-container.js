@@ -1,7 +1,7 @@
 import PropTypes from "prop-types";
 import React from "react";
 import { VictoryContainer, VictoryLabel, Line, Helpers } from "victory-core";
-import { isNumber, isUndefined } from "lodash";
+import { defaults, isNumber, isUndefined } from "lodash";
 import CursorHelpers from "./cursor-helpers";
 
 export const cursorContainerMixin = (base) => class VictoryCursorContainer extends base {
@@ -110,13 +110,20 @@ export const cursorContainerMixin = (base) => class VictoryCursorContainer exten
       y: scale.y(cursorValue.y)
     };
     if (cursorLabel) {
-      newElements.push(React.cloneElement(cursorLabelComponent, {
-        x: cursorCoordinates.x + cursorLabelOffset.x,
-        y: cursorCoordinates.y + cursorLabelOffset.y,
-        text: Helpers.evaluateProp(cursorLabel, cursorValue, true),
-        active: true,
-        key: "cursor-label"
-      }));
+      newElements.push(React.cloneElement(
+        cursorLabelComponent,
+        defaults(
+          { active: true },
+          cursorLabelComponent.props,
+          {
+            x: cursorCoordinates.x + cursorLabelOffset.x,
+            y: cursorCoordinates.y + cursorLabelOffset.y,
+            text: Helpers.evaluateProp(cursorLabel, cursorValue, true),
+            active: true,
+            key: "cursor-label"
+          }
+        )
+      ));
     }
 
     if (dimension === "x" || dimension === undefined) {

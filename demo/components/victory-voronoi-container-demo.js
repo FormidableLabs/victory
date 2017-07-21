@@ -60,8 +60,9 @@ class App extends React.Component {
                 labels={(d) => `y:${d.y}`}
                 labelComponent={
                   <VictoryTooltip
+                    y={150}
                     flyoutStyle={{ fill: "white" }}
-                    style={{ fontSize: 10 }}
+                    style={[{ fill: "green" }, { fill: "magenta" }]}
                   />
                 }
               />
