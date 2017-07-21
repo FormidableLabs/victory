@@ -185,11 +185,14 @@ export default {
   }, baseProps),
   legend: {
     colorScale: colors,
+    gutter: 10,
+    orientation: "vertical",
     style: {
       data: {
         type: "circle"
       },
       labels: baseLabelStyles
-    }
+    },
+    symbolSpacer: 8
   }
 };
