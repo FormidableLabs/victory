@@ -172,6 +172,7 @@ export const voronoiContainerMixin = (base) => class VictoryVoronoiContainer ext
     }, []);
     const style = this.getStyle(props, points, "labels");
     const labelProps = defaults(
+      labelComponent.props,
       {
         theme, style, text, scale,
         active: true,
@@ -179,7 +180,6 @@ export const voronoiContainerMixin = (base) => class VictoryVoronoiContainer ext
         flyoutStyle: this.getStyle(props, points, "flyout")[0],
         datum: omit(points[0], ["childName", "style", "continuous"])
       },
-      labelComponent.props,
       this.getDefaultLabelProps(props, points)
     );
     const labelPosition = this.getLabelPosition(props, points, labelProps);
