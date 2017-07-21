@@ -64,6 +64,16 @@ const LegendDemo = () => (
         standalone={false}
         data={data}
         style={legendStyle}
+        events={[{
+          target: "data",
+          eventHandlers: {
+            onClick: () => {
+              return [{
+                mutation: () => ({ symbol: "star" })
+              }];
+            }
+          }
+        }]}
       />
     </svg>
     <svg
