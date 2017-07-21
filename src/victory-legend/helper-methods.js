@@ -100,6 +100,8 @@ export default (props, fallbackProps) => {
     const dataStyle = defaults({}, datum.symbol, style.data, { fill: color });
 
     const dataProps = {
+      index: i,
+      data, datum,
       key: `legend-symbol-${i}`,
       symbol: dataStyle.type || "circle",
       size: getSymbolSize(datum, fontSize),
@@ -111,6 +113,7 @@ export default (props, fallbackProps) => {
     };
 
     const labelProps = {
+      datum, data,
       key: `legend-label-${i}`,
       text: datum.name,
       style: labelStyles[i],
