@@ -39,8 +39,13 @@ export default (WrappedComponent) => {
     shouldComponentUpdate(nextProps, nextState) {
       if (
         this.props.animating // cannot use props.animate, as this is set to null during animation
-        || get(nextProps, "sharedEvents.events.length") // for parent events
+        || get(nextProps, "sharedEvents.events.length") // [semi-HACK] for parent events
       ) {
+        return true;
+      }
+
+      // [HACK] this is sloppy: if a standalone component with an evented container, force rerender
+      if (this.props.standalone && this.props.containerComponent.type.defaultEvents) {
         return true;
       }
 
