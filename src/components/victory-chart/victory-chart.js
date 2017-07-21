@@ -198,7 +198,8 @@ export default class VictoryChart extends React.Component {
       const style = defaults({}, child.props.style, { parent: baseStyle });
       const childProps = this.getChildProps(child, props, calculatedProps);
       const newProps = defaults({
-        height, polar, theme, width, origin, style,
+        height, polar, theme, width, style,
+        origin: polar ? origin : undefined,
         animate: getAnimationProps(props, child, index),
         padding: Helpers.getPadding(props),
         key: index,
