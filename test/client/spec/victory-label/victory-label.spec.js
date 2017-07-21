@@ -26,6 +26,15 @@ describe("components/victory-label", () => {
     expect(output.prop("dy")).to.eql(34.97);
   });
 
+  it("sets x and y for text element", () => {
+    const wrapper = shallow(
+      <VictoryLabel x={"100%"} y={30} text={"such text, wow"}/>
+    );
+    const output = wrapper.find("text");
+    expect(output.prop("x")).to.eql("100%");
+    expect(output.prop("y")).to.eql(30);
+  });
+
   it("has a transform property that rotates the text to match the labelAngle prop", () => {
     const wrapper = shallow(
       <VictoryLabel angle={46} text={"such text, wow"}/>
