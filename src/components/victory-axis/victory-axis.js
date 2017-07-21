@@ -48,6 +48,7 @@ class VictoryAxis extends React.Component {
     offsetX: PropTypes.number,
     offsetY: PropTypes.number,
     orientation: PropTypes.oneOf(["top", "bottom", "left", "right"]),
+    origin: PropTypes.shape({ x: PropTypes.number, y: PropTypes.number }),
     style: PropTypes.shape({
       parent: PropTypes.object, axis: PropTypes.object, axisLabel: PropTypes.object,
       grid: PropTypes.object, ticks: PropTypes.object, tickLabels: PropTypes.object
