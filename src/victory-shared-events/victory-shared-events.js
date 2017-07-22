@@ -1,4 +1,4 @@
-import { assign, isFunction, partialRight, defaults, fromPairs } from "lodash";
+import { assign, cloneDeep, isFunction, partialRight, defaults, fromPairs } from "lodash";
 import React from "react";
 import PropTypes from "prop-types";
 import CustomPropTypes from "../victory-util/prop-types";
@@ -54,7 +54,7 @@ export default class VictorySharedEvents extends React.Component {
 
   constructor() {
     super();
-    this.state = this.state || {};
+    this.state = cloneDeep({ ...this.state }) || {};
     this.getScopedEvents = Events.getScopedEvents.bind(this);
     this.getEventState = Events.getEventState.bind(this);
     this.getTimer = this.getTimer.bind(this);
