@@ -52,7 +52,7 @@ export default (WrappedComponent, options) => {
     getCalculatedProps(props, calculatedValues) {
       options = options || {};
       const components = options.components || defaultComponents;
-      const getProps = partialRight(this.getComponentProps.bind(this), calculatedValues);
+      const getProps = partialRight(this.getComponentProps.bind(this), calculatedValues, props);
 
       // isEqual does not support equality checking on functions, and will return false
       // filter out any functions on calculated props objects (_i.e._ scale)
@@ -72,14 +72,16 @@ export default (WrappedComponent, options) => {
       };
 
       return components.reduce((memo, component) => {
-        const componentProps = component.index !== undefined ?
-          filterProps(getProps(props[component.component], component.name, component.index)) :
-          calculatedValues.dataKeys.map((key, i) => {
-            return filterProps(getProps(props[component.component], component.name, i));
-          });
-        // don't check for changes on parent props for non-standalone components
-        memo[component.name] = !props.standalone && component.name === "parent" ?
-          {} : componentProps;
+        if (!props.standalone && component.name === "parent") {
+           // don't check for changes on parent props for non-standalone components
+          memo[component.name] = {};
+        } else {
+          memo[component.name] = component.index !== undefined ?
+            filterProps(getProps(props[component.component], component.name, component.index)) :
+            calculatedValues.dataKeys.map((key, i) => {
+              return filterProps(getProps(props[component.component], component.name, i));
+            });
+        }
         return memo;
       }, {});
     }
@@ -94,11 +96,9 @@ export default (WrappedComponent, options) => {
       const dataKeys = Object.keys(baseProps).filter((key) => key !== "parent");
       const hasEvents = props.events || props.sharedEvents || componentEvents;
       const events = this.getAllEvents(props);
-      const values = {
+      return {
         componentEvents, getSharedEventState, baseProps, dataKeys, hasEvents, events
       };
-      this.cacheValues(values);
-      return assign({}, values, { props });
     }
 
     cacheValues(obj) {
@@ -128,15 +128,15 @@ export default (WrappedComponent, options) => {
     }
 
     // eslint-disable-next-line max-params
-    getComponentProps(component, type, index, calculatedValues) {
+    getComponentProps(component, type, index, calculatedValues, props) {
       component = component || {};
       calculatedValues = calculatedValues || {};
+      props = props || this.props;
       const { role } = WrappedComponent;
       const {
         dataKeys = this.dataKeys,
         baseProps = this.baseProps,
         hasEvents = this.hasEvents,
-        props = this.props,
         getSharedEventState = this.getSharedEventState
       } = calculatedValues;
       const key = dataKeys && dataKeys[index] || index;

@@ -197,15 +197,14 @@ export default {
    * a particular element
    */
   getEventState(eventKey, namespace, childType) {
-    const state = this.state;
     if (!childType) {
       return eventKey === "parent" ?
-        state[eventKey] && state[eventKey][namespace] || state[eventKey] :
-        state[eventKey] && state[eventKey][namespace];
+        this.state[eventKey] && this.state[eventKey][namespace] || this.state[eventKey] :
+        this.state[eventKey] && this.state[eventKey][namespace];
     }
-    return state[childType] &&
-      state[childType][eventKey] &&
-      state[childType][eventKey][namespace];
+    return this.state[childType] &&
+      this.state[childType][eventKey] &&
+      this.state[childType][eventKey][namespace];
 
   },
 
