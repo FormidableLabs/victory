@@ -6,17 +6,9 @@ import Events from "./events";
 import VictoryTransition from "../victory-transition/victory-transition";
 
 //  used for checking calculated props. Expected components can be passed in via options
-const defaultComponents = [{
-  component: "containerComponent",
-  name: "parent",
-  index: "parent"
-}, {
-  component: "dataComponent",
-  name: "data"
-}, {
-  component: "labelComponent",
-  name: "labels"
-}];
+const defaultComponents = [
+  { name: "parent", index: "parent" }, { name: "data" }, { name: "labels" }
+];
 
 export default (WrappedComponent, options) => {
   return class addEvents extends WrappedComponent {
@@ -31,7 +23,7 @@ export default (WrappedComponent, options) => {
       this.getEventState = Events.getEventState.bind(this);
       const calculatedValues = this.getCalculatedValues(this.props);
       this.cacheValues(calculatedValues);
-      this.calculatedProps = this.getCalculatedProps(this.props, calculatedValues);
+      this.stateChanges = this.getStateChanges(this.props, calculatedValues);
     }
 
     shouldComponentUpdate(nextProps) {
@@ -39,51 +31,57 @@ export default (WrappedComponent, options) => {
       if (this.props.animate || this.props.animating) {
         this.cacheValues(calculatedValues);
         return true;
-      }
-      const nextCalculatedProps = this.getCalculatedProps(nextProps, calculatedValues);
-      if (!isEqual(this.calculatedProps, nextCalculatedProps)) {
-        this.calculatedProps = nextCalculatedProps;
+      } if (!isEqual(this.filterProps(this.props), this.filterProps(nextProps))) {
         this.cacheValues(calculatedValues);
+        return true;
+      }
+      const calculatedState = this.getStateChanges(nextProps, calculatedValues);
+      if (!isEqual(this.calculatedState, calculatedState)) {
+        this.cacheValues(calculatedValues);
+        this.calculatedState = calculatedState;
         return true;
       }
       return false;
     }
 
-    getCalculatedProps(props, calculatedValues) {
-      options = options || {};
-      const components = options.components || defaultComponents;
-      const getProps = partialRight(this.getComponentProps.bind(this), calculatedValues, props);
+    // isEqual does not support equality checking on functions, and will return false
+    // filter out any functions on calculated props objects (_i.e._ scale)
+    filterProps(obj) {
+      const removeFunctions = (o, allKeys) => {
+        return allKeys.reduce((memo, key) => {
+          const val = o[key];
+          if (isPlainObject(val) && !isEmpty(val)) {
+            memo[key] = removeFunctions(val, keys(val));
+          } else {
+            memo[key] = isFunction(val) ? null : val;
+          }
+          return memo;
+        }, {});
+      };
+      return isPlainObject(obj) ? removeFunctions(obj, keys(obj)) : obj;
+    }
 
-      // isEqual does not support equality checking on functions, and will return false
-      // filter out any functions on calculated props objects (_i.e._ scale)
-      const filterProps = (obj) => {
-        const removeFunctions = (o, allKeys) => {
-          return allKeys.reduce((memo, key) => {
-            const val = o[key];
-            if (isPlainObject(val) && !isEmpty(val)) {
-              memo[key] = removeFunctions(val, keys(val));
-            } else {
-              memo[key] = isFunction(val) ? null : val;
-            }
-            return memo;
-          }, {});
-        };
-        return isPlainObject(obj) ? removeFunctions(obj, keys(obj)) : obj;
+    getStateChanges(props, calculatedValues) {
+      const { hasEvents, getSharedEventState } = calculatedValues;
+      if (!hasEvents) { return {}; }
+
+      const getState = (key, type) => {
+        const result = defaults({}, this.getEventState(key, type), getSharedEventState(key, type));
+        return isEmpty(result) ? undefined : result;
       };
 
-      return components.reduce((memo, component) => {
+      options = options || {};
+      const components = options.components || defaultComponents;
+      return components.map((component) => {
         if (!props.standalone && component.name === "parent") {
            // don't check for changes on parent props for non-standalone components
-          memo[component.name] = {};
+          return undefined;
         } else {
-          memo[component.name] = component.index !== undefined ?
-            filterProps(getProps(props[component.component], component.name, component.index)) :
-            calculatedValues.dataKeys.map((key, i) => {
-              return filterProps(getProps(props[component.component], component.name, i));
-            });
+          return component.index !== undefined ?
+          getState(component.index, component.name) :
+          calculatedValues.dataKeys.map((key) => getState(key, component.name));
         }
-        return memo;
-      }, {});
+      }).filter(Boolean);
     }
 
     getCalculatedValues(props) {
