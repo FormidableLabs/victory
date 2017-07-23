@@ -125,31 +125,21 @@ export default (WrappedComponent, options) => {
       return props.events;
     }
 
-    // eslint-disable-next-line max-params
-    getComponentProps(component, type, index, calculatedValues, props) {
-      component = component || {};
-      calculatedValues = calculatedValues || {};
-      props = props || this.props;
+    getComponentProps(component, type, index) {
       const { role } = WrappedComponent;
-      const {
-        dataKeys = this.dataKeys,
-        baseProps = this.baseProps,
-        hasEvents = this.hasEvents,
-        getSharedEventState = this.getSharedEventState
-      } = calculatedValues;
-      const key = dataKeys && dataKeys[index] || index;
-      const originalProps = baseProps[key][type] || baseProps[key];
-      if (!originalProps && !hasEvents) {
+      const key = this.dataKeys && this.dataKeys[index] || index;
+      const baseProps = this.baseProps[key][type] || this.baseProps[key];
+      if (!baseProps && !this.hasEvents) {
         return undefined;
       }
-      if (hasEvents) {
-        const baseEvents = this.getEvents(props, type, key);
+      if (this.hasEvents) {
+        const baseEvents = this.getEvents(this.props, type, key);
         const componentProps = defaults(
           { index, key: `${role}-${type}-${key}` },
           this.getEventState(key, type),
-          getSharedEventState(key, type),
+          this.getSharedEventState(key, type),
           component.props,
-          originalProps
+          baseProps
         );
         const events = defaults(
           {}, Events.getPartialEvents(baseEvents, key, componentProps), componentProps.events
@@ -161,7 +151,7 @@ export default (WrappedComponent, options) => {
       return defaults(
         { index, key: `${role}-${type}-${key}` },
         component.props,
-        originalProps
+        baseProps
       );
     }
 
