@@ -28,19 +28,27 @@ export default (WrappedComponent, options) => {
 
     shouldComponentUpdate(nextProps) {
       const calculatedValues = this.getCalculatedValues(nextProps);
+
+      // re-render without additional checks when component is animated
       if (this.props.animate || this.props.animating) {
         this.cacheValues(calculatedValues);
         return true;
-      } if (!isEqual(this.filterProps(this.props), this.filterProps(nextProps))) {
-        this.cacheValues(calculatedValues);
-        return true;
       }
+
+      // check for any state changes triggered by events or shared events
       const calculatedState = this.getStateChanges(nextProps, calculatedValues);
       if (!isEqual(this.calculatedState, calculatedState)) {
         this.cacheValues(calculatedValues);
         this.calculatedState = calculatedState;
         return true;
       }
+
+      // check whether props have changed
+      if (!isEqual(this.filterProps(this.props), this.filterProps(nextProps))) {
+        this.cacheValues(calculatedValues);
+        return true;
+      }
+
       return false;
     }
 
@@ -61,6 +69,8 @@ export default (WrappedComponent, options) => {
       return isPlainObject(obj) ? removeFunctions(obj, keys(obj)) : obj;
     }
 
+    // compile all state changes from own and parent state. Order doesn't matter, as any state
+    // state change should trigger a re-render
     getStateChanges(props, calculatedValues) {
       const { hasEvents, getSharedEventState } = calculatedValues;
       if (!hasEvents) { return {}; }
