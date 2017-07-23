@@ -69,11 +69,11 @@ export default {
       return {};
     }
 
-    baseProps = baseProps || cloneDeep({ ...this.baseProps });
+    baseProps = baseProps || this.baseProps;
     // returns the original base props or base state of a given target element
     const getTargetProps = (identifier, type) => {
       const { childName, target, key } = identifier;
-      const baseType = type === "props" ? baseProps : cloneDeep({ ...this.state });
+      const baseType = type === "props" ? baseProps : this.state;
       const base = (childName === undefined || childName === null || !baseType[childName]) ?
         baseType : baseType[childName];
       return key === "parent" ? base.parent : base[key] && base[key][target];
@@ -108,17 +108,16 @@ export default {
         const mutatedProps = mutation(
           assign({}, mutationTargetProps, mutationTargetState), baseProps
         );
-        const stateCopy = cloneDeep({ ...this.state });
-        const childState = stateCopy[childName] || {};
+        const childState = this.state[childName] || {};
         const extendState = (state) => {
           return target === "parent" ?
             extend(state[key], mutatedProps) : extend(state[key], { [target]: mutatedProps });
         };
         return childName !== undefined && childName !== null ?
-          extend(stateCopy, {
+          extend(this.state, {
             [childName]: extend(childState, { [key]: extendState(childState) })
           }) :
-          extend(stateCopy, { [key]: extendState(stateCopy) });
+          extend(this.state, { [key]: extendState(this.state) });
       };
 
       // returns entire mutated state for a given childName
@@ -198,7 +197,7 @@ export default {
    * a particular element
    */
   getEventState(eventKey, namespace, childType) {
-    const state = cloneDeep({ ...this.state });
+    const state = this.state;
     if (!childType) {
       return eventKey === "parent" ?
         state[eventKey] && state[eventKey][namespace] || state[eventKey] :
