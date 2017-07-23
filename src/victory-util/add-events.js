@@ -5,10 +5,33 @@ import {
 import Events from "./events";
 import VictoryTransition from "../victory-transition/victory-transition";
 
-//  used for checking calculated props. Expected components can be passed in via options
+//  used for checking state changes. Expected components can be passed in via options
 const defaultComponents = [
   { name: "parent", index: "parent" }, { name: "data" }, { name: "labels" }
 ];
+
+const areVictoryPropsEqual = (a, b) => {
+  const checkEquality = (o1, o2) => {
+    const keys1 = keys(o1);
+    const keys2 = keys(o2);
+    if (keys1.length !== keys2.length) { return false; }
+    return keys1.reduce((equal, key) => {
+      if (!equal) { return false; }
+      const val1 = o1[key];
+      const val2 = o2[key];
+      if (isPlainObject(val1) || Array.isArray(val1) && !isEmpty(val1)) {
+        return checkEquality(val1, val2);
+      } else if (isFunction(val1)) {
+        // isEqual does not support equality checking on functions,
+        // so just check that both are functions
+        return isFunction(val2);
+      } else {
+        return isEqual(val1, val2);
+      }
+    }, true);
+  };
+  return checkEquality(a, b);
+};
 
 export default (WrappedComponent, options) => {
   return class addEvents extends WrappedComponent {
@@ -37,36 +60,19 @@ export default (WrappedComponent, options) => {
 
       // check for any state changes triggered by events or shared events
       const calculatedState = this.getStateChanges(nextProps, calculatedValues);
-      if (!isEqual(this.calculatedState, calculatedState)) {
+      if (!areVictoryPropsEqual(this.calculatedState, calculatedState)) {
         this.cacheValues(calculatedValues);
         this.calculatedState = calculatedState;
         return true;
       }
 
       // check whether props have changed
-      if (!isEqual(this.filterProps(this.props), this.filterProps(nextProps))) {
+      if (!areVictoryPropsEqual(this.props, nextProps)) {
         this.cacheValues(calculatedValues);
         return true;
       }
 
       return false;
-    }
-
-    // isEqual does not support equality checking on functions, and will return false
-    // filter out any functions on calculated props objects (_i.e._ scale)
-    filterProps(obj) {
-      const removeFunctions = (o, allKeys) => {
-        return allKeys.reduce((memo, key) => {
-          const val = o[key];
-          if (isPlainObject(val) && !isEmpty(val)) {
-            memo[key] = removeFunctions(val, keys(val));
-          } else {
-            memo[key] = isFunction(val) ? null : val;
-          }
-          return memo;
-        }, {});
-      };
-      return isPlainObject(obj) ? removeFunctions(obj, keys(obj)) : obj;
     }
 
     // compile all state changes from own and parent state. Order doesn't matter, as any state
