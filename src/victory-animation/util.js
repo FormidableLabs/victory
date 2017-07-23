@@ -1,5 +1,5 @@
 import { interpolate } from "d3-interpolate";
-import { cloneDeep, isPlainObject } from "lodash";
+import { isPlainObject } from "lodash";
 
 export const isInterpolatable = function (obj) {
   // d3 turns null into 0 and undefined into NaN, which we don't want.
@@ -169,12 +169,10 @@ export const interpolateString = function (a, b) {
  * @param {any} b - End value.
  * @returns {Function|undefined} An interpolation function, if necessary.
  */
-export const victoryInterpolator = function (a1, b1) {
+export const victoryInterpolator = function (a, b) {
   // If the values are strictly equal, or either value is not interpolatable,
   // just use either the start value `a` or end value `b` at every step, as
   // there is no reasonable in-between value.
-  const a = cloneDeep(a1);
-  const b = cloneDeep(b1);
   if (a === b || !isInterpolatable(a) || !isInterpolatable(b)) {
     return interpolateImmediate(a, b);
   }
