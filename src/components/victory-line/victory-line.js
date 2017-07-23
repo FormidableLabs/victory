@@ -15,6 +15,12 @@ const fallbackProps = {
   interpolation: "linear"
 };
 
+const options = {
+  components: [
+    { name: "parent", index: "parent" }, { name: "data", index: "all" }, { name: "labels" }
+  ]
+};
+
 const animationWhitelist = ["data", "domain", "height", "padding", "samples", "style", "width"];
 
 class VictoryLine extends React.Component {
@@ -72,4 +78,4 @@ class VictoryLine extends React.Component {
     return props.standalone ? this.renderContainer(props.containerComponent, children) : children;
   }
 }
-export default addEvents(VictoryLine);
+export default addEvents(VictoryLine, options);
