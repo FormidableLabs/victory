@@ -95,9 +95,9 @@ export default (WrappedComponent, options) => {
            // don't check for changes on parent props for non-standalone components
           return undefined;
         } else {
-          return component.index !== undefined ?
-          getState(component.index, component.name) :
-          calculatedValues.dataKeys.map((key) => getState(key, component.name));
+          return typeof component.index !== "undefined" ?
+            getState(component.index, component.name) :
+            calculatedValues.dataKeys.map((key) => getState(key, component.name));
         }
       }).filter(Boolean);
     }
@@ -109,7 +109,7 @@ export default (WrappedComponent, options) => {
       const getSharedEventState = sharedEvents && isFunction(sharedEvents.getEventState) ?
         sharedEvents.getEventState : () => undefined;
       const baseProps = this.getBaseProps(props, getSharedEventState);
-      const dataKeys = Object.keys(baseProps).filter((key) => key !== "parent");
+      const dataKeys = keys(baseProps).filter((key) => key !== "parent");
       const hasEvents = props.events || props.sharedEvents || componentEvents;
       const events = this.getAllEvents(props);
       return {
@@ -193,7 +193,7 @@ export default (WrappedComponent, options) => {
       const dataKeys = without(this.dataKeys, "all");
       const labelComponents = dataKeys.reduce((memo, key) => {
         const labelProps = this.getComponentProps(labelComponent, "labels", key);
-        if (labelProps && labelProps.text !== undefined && labelProps.text !== null) {
+        if (labelProps && typeof labelProps.text !== "undefined" && labelProps.text !== null) {
           memo = memo.concat(React.cloneElement(labelComponent, labelProps));
         }
         return memo;
@@ -212,7 +212,7 @@ export default (WrappedComponent, options) => {
 
       const labelComponents = this.dataKeys.map((_dataKey, index) => {
         const labelProps = this.getComponentProps(labelComponent, "labels", index);
-        if (labelProps.text !== undefined && labelProps.text !== null) {
+        if (typeof labelProps.text !== "undefined" && labelProps.text !== null) {
           return React.cloneElement(labelComponent, labelProps);
         }
         return undefined;

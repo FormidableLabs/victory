@@ -31,7 +31,7 @@ export default {
 
       const selectedEvents = getSelectedEvents();
       return Array.isArray(selectedEvents) && selectedEvents.reduce((memo, event) => {
-        return event ? assign({}, memo, event.eventHandlers) : memo;
+        return event ? assign(memo, event.eventHandlers) : memo;
       }, {});
     };
 
@@ -125,7 +125,7 @@ export default {
         const mutationKeys = getKeys(childName);
         return Array.isArray(mutationKeys) ?
           mutationKeys.reduce((memo, key) => {
-            return assign({}, memo, getMutationObject(key, childName));
+            return assign(memo, getMutationObject(key, childName));
           }, {}) :
           getMutationObject(mutationKeys, childName);
       };
@@ -134,7 +134,7 @@ export default {
       const allChildNames = childNames === "all" ?
         without(Object.keys(baseProps), "parent") : childNames;
       return Array.isArray(allChildNames) ? allChildNames.reduce((memo, childName) => {
-        return assign({}, memo, getReturnByChild(childName));
+        return assign(memo, getReturnByChild(childName));
       }, {}) : getReturnByChild(allChildNames);
     };
 
