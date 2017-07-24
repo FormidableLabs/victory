@@ -29,7 +29,7 @@ export const voronoiContainerMixin = (base) => class VictoryVoronoiContainer ext
       onMouseLeave: (evt, targetProps) => {
         return VoronoiHelpers.onMouseLeave(evt, targetProps);
       },
-      onTouchEnd: (evt, targetProps) => {
+      onTouchCancel: (evt, targetProps) => {
         return VoronoiHelpers.onMouseLeave(evt, targetProps);
       },
       onMouseMove: (evt, targetProps) => {

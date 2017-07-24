@@ -44,7 +44,20 @@ export const cursorContainerMixin = (base) => class VictoryCursorContainer exten
       onMouseLeave: () => {
         return [];
       },
+      onTouchCancel: () => {
+        return [];
+      },
       onMouseMove: (evt, targetProps) => {
+        const mutations = CursorHelpers.onMouseMove(evt, targetProps);
+
+        if (mutations.id !== this.mouseMoveMutationId) { // eslint-disable-line
+          this.mouseMoveMutationId = mutations.id; // eslint-disable-line
+          return mutations.mutations;
+        }
+
+        return [];
+      },
+      onTouchMove: (evt, targetProps) => {
         const mutations = CursorHelpers.onMouseMove(evt, targetProps);
 
         if (mutations.id !== this.mouseMoveMutationId) { // eslint-disable-line
