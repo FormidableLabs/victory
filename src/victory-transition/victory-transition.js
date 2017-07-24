@@ -165,11 +165,12 @@ export default class VictoryTransition extends React.Component {
               ) :
               child.props.groupComponent;
             return React.cloneElement(
-              child, defaults({ animate: null, groupComponent }, newProps, combinedProps)
+              child,
+              defaults({ animate: null, animating: true, groupComponent }, newProps, combinedProps)
             );
           }
           return React.cloneElement(
-            child, defaults({ animate: null }, newProps, combinedProps)
+            child, defaults({ animate: null, animating: true }, newProps, combinedProps)
           );
         }}
       </VictoryAnimation>
