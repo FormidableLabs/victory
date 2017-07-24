@@ -21,6 +21,17 @@ const animationWhitelist = [
   "offsetX", "offsetY", "padding", "width", "height"
 ];
 
+const options = {
+  components: [
+    { name: "axis", index: 0 },
+    { name: "axisLabel", index: 0 },
+    { name: "grid" },
+    { name: "parent", index: "parent" },
+    { name: "ticks" },
+    { name: "tickLabels" }
+  ]
+};
+
 class VictoryAxis extends React.Component {
   static displayName = "VictoryAxis";
 
@@ -41,6 +52,15 @@ class VictoryAxis extends React.Component {
     axisLabelComponent: PropTypes.element,
     crossAxis: PropTypes.bool,
     dependentAxis: PropTypes.bool,
+    events: PropTypes.arrayOf(PropTypes.shape({
+      target: PropTypes.oneOf(["axis", "axisLabel", "grid", "ticks", "tickLabels"]),
+      eventKey: PropTypes.oneOfType([
+        PropTypes.array,
+        CustomPropTypes.allOfType([CustomPropTypes.integer, CustomPropTypes.nonNegative]),
+        PropTypes.string
+      ]),
+      eventHandlers: PropTypes.object
+    })),
     fixLabelOverlap: PropTypes.bool,
     gridComponent: PropTypes.element,
     groupComponent: PropTypes.element,
@@ -181,4 +201,4 @@ class VictoryAxis extends React.Component {
   }
 }
 
-export default addEvents(VictoryAxis);
+export default addEvents(VictoryAxis, options);

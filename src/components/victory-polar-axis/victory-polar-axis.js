@@ -18,6 +18,17 @@ const animationWhitelist = [
   "style", "domain", "range", "tickCount", "tickValues", "padding", "width", "height"
 ];
 
+const options = {
+  components: [
+    { name: "axis", index: 0 },
+    { name: "axisLabel", index: 0 },
+    { name: "grid" },
+    { name: "parent", index: "parent" },
+    { name: "ticks" },
+    { name: "tickLabels" }
+  ]
+};
+
 class VictoryPolarAxis extends React.Component {
   static displayName = "VictoryAxis";
 
@@ -43,6 +54,15 @@ class VictoryPolarAxis extends React.Component {
     containerComponent: PropTypes.element,
     dependentAxis: PropTypes.bool,
     endAngle: PropTypes.number,
+    events: PropTypes.arrayOf(PropTypes.shape({
+      target: PropTypes.oneOf(["axis", "axisLabel", "grid", "ticks", "tickLabels"]),
+      eventKey: PropTypes.oneOfType([
+        PropTypes.array,
+        CustomPropTypes.allOfType([CustomPropTypes.integer, CustomPropTypes.nonNegative]),
+        PropTypes.string
+      ]),
+      eventHandlers: PropTypes.object
+    })),
     gridComponent: PropTypes.element,
     innerRadius: CustomPropTypes.nonNegative,
     labelPlacement: PropTypes.oneOf(["parallel", "perpendicular", "vertical"]),
@@ -160,4 +180,4 @@ class VictoryPolarAxis extends React.Component {
   }
 }
 
-export default addEvents(VictoryPolarAxis);
+export default addEvents(VictoryPolarAxis, options);

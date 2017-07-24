@@ -8,6 +8,8 @@ import {
 } from "../../src/index";
 import { VictoryTooltip, VictoryTheme, VictoryLabel } from "victory-core";
 
+const makeData = () => range(15000).map((x) => ({ x, y: x + 10 * Math.random() }));
+
 class App extends React.Component {
 
   constructor() {
@@ -15,7 +17,8 @@ class App extends React.Component {
     this.defaultCursorValue = { x: 2.25, y: 1.75 };
     this.state = {
       data: this.getData(),
-      cursorValue: this.defaultCursorValue
+      cursorValue: this.defaultCursorValue,
+      bigData: makeData()
     };
   }
 
@@ -58,6 +61,17 @@ class App extends React.Component {
     return (
       <div className="demo">
         <div style={containerStyle}>
+
+          <VictoryChart style={chartStyle}
+            theme={VictoryTheme.material}
+            containerComponent={
+              <VictoryCursorContainer
+                cursorLabel={cursorLabel}
+              />
+            }
+          >
+            <VictoryLine data={this.state.bigData}/>
+          </VictoryChart>
 
           <VictoryChart style={chartStyle}
             theme={VictoryTheme.material}
