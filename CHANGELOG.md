@@ -1,6 +1,14 @@
 VictoryCore Changelog
 =====================
 
+## 17.0.0 (2017-07-24)
+
+- [267](https://github.com/FormidableLabs/victory-core/pull/267) Correct single-point domain logic
+- [268](https://github.com/FormidableLabs/victory-core/pull/268) Correct stacked domain logic
+- [269](https://github.com/FormidableLabs/victory-core/pull/269) `VictoryLabel` accepts percentage values for `x` and `y`
+- [270](https://github.com/FormidableLabs/victory-core/pull/270) `VictoryLegend` supports events
+- [272](https://github.com/FormidableLabs/victory-core/pull/272) Aggressive `shouldComponentUpdate` logic for evented Victory components *Breaking change for some components using `addEvents`
+
 ## 16.3.0 (2017-07-13)
 
 - [266](https://github.com/FormidableLabs/victory-core/pull/266) Support Webpack 3 and ES6 exports
