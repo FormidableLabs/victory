@@ -52,6 +52,15 @@ class VictoryAxis extends React.Component {
     axisLabelComponent: PropTypes.element,
     crossAxis: PropTypes.bool,
     dependentAxis: PropTypes.bool,
+    events: PropTypes.arrayOf(PropTypes.shape({
+      target: PropTypes.oneOf(["axis", "axisLabel", "grid", "ticks", "tickLabels"]),
+      eventKey: PropTypes.oneOfType([
+        PropTypes.array,
+        CustomPropTypes.allOfType([CustomPropTypes.integer, CustomPropTypes.nonNegative]),
+        PropTypes.string
+      ]),
+      eventHandlers: PropTypes.object
+    })),
     fixLabelOverlap: PropTypes.bool,
     gridComponent: PropTypes.element,
     groupComponent: PropTypes.element,
