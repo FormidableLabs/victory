@@ -1,39 +1,15 @@
 import React from "react";
 import {
-  defaults, assign, keys, isFunction, partialRight, pick, without, isEqual, isEmpty, isPlainObject
+  defaults, assign, keys, isFunction, partialRight, pick, without, isEmpty
 } from "lodash";
 import Events from "./events";
+import Collection from "./collection";
 import VictoryTransition from "../victory-transition/victory-transition";
 
 //  used for checking state changes. Expected components can be passed in via options
 const defaultComponents = [
   { name: "parent", index: "parent" }, { name: "data" }, { name: "labels" }
 ];
-
-const areVictoryPropsEqual = (a, b) => {
-  const checkEquality = (o1, o2) => {
-    if (o1 === o2) { return true; }
-    const keys1 = keys(o1);
-    const keys2 = keys(o2);
-    if (keys1.length !== keys2.length) { return false; }
-    return keys1.reduce((equal, key) => {
-      if (!equal) { return false; }
-      const val1 = o1[key];
-      const val2 = o2[key];
-      if (val1 === val2) { return true; }
-      if (isPlainObject(val1) || Array.isArray(val1) && !isEmpty(val1)) {
-        return checkEquality(val1, val2);
-      } else if (isFunction(val1)) {
-        // isEqual does not support equality checking on functions,
-        // so just check that both are functions
-        return isFunction(val2);
-      } else {
-        return isEqual(val1, val2);
-      }
-    }, true);
-  };
-  return checkEquality(a, b);
-};
 
 export default (WrappedComponent, options) => {
   return class addEvents extends WrappedComponent {
@@ -62,14 +38,14 @@ export default (WrappedComponent, options) => {
 
       // check for any state changes triggered by events or shared events
       const calculatedState = this.getStateChanges(nextProps, calculatedValues);
-      if (!areVictoryPropsEqual(this.calculatedState, calculatedState)) {
+      if (!Collection.areVictoryPropsEqual(this.calculatedState, calculatedState)) {
         this.cacheValues(calculatedValues);
         this.calculatedState = calculatedState;
         return true;
       }
 
       // check whether props have changed
-      if (!areVictoryPropsEqual(this.props, nextProps)) {
+      if (!Collection.areVictoryPropsEqual(this.props, nextProps)) {
         this.cacheValues(calculatedValues);
         return true;
       }

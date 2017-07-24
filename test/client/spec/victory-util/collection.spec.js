@@ -1,4 +1,8 @@
+/* eslint no-unused-expressions: 0 */
+/* global sinon */
+
 import { Collection } from "src/index";
+// import { isEqual } from "lodash";
 
 describe("collections", () => {
 
@@ -172,6 +176,52 @@ describe("collections", () => {
       ];
 
       expect(Collection.allSetsEqual(comparisons)).to.eql(false);
+    });
+  });
+
+
+  describe("areVictoryPropsEqual", () => {
+    let sandbox;
+    beforeEach(() => {
+      sandbox = sinon.sandbox.create();
+      sandbox.spy(Collection, "checkEquality");
+    });
+    afterEach(() => {
+      sandbox.restore();
+    });
+
+    it("returns early when nested collections are strictly equal", () => {
+      const a = { test: { nested: "a" } };
+      const b = a;
+      expect(Collection.areVictoryPropsEqual(a, b)).to.equal(true);
+      expect(Collection.checkEquality).calledOnce.and.returned(true);
+    });
+
+    it("returns early when nested collections are not the same length", () => {
+      const a = { test: { nested: "a" }, test2: { nested: "b" } };
+      const b = { test: { nested: "a" } };
+      expect(Collection.areVictoryPropsEqual(a, b)).to.equal(false);
+      expect(Collection.checkEquality).calledOnce.and.returned(false);
+    });
+
+    it("ignores functions when checking equlity", () => {
+      const a = { test: () => "a" };
+      const b = { test: () => "a" };
+      expect(Collection.areVictoryPropsEqual(a, b)).to.equal(true);
+    });
+
+    it("returns early when nested elements are empty", () => {
+      const a = { a: [] };
+      const b = { a: [] };
+      expect(Collection.areVictoryPropsEqual(a, b)).to.equal(true);
+      expect(Collection.checkEquality).calledOnce.and.returned(true);
+    });
+
+    it("recursively checks equality for nested collections", () => {
+      const a = { test: { nested: "a" }, test2: { nested: "a" } };
+      const b = { test: { nested: "a" }, test2: { nested: "a" } };
+      expect(Collection.areVictoryPropsEqual(a, b)).to.equal(true);
+      expect(Collection.checkEquality).calledThrice;
     });
   });
 });

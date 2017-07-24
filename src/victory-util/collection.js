@@ -1,4 +1,4 @@
-import { isEqual } from "lodash";
+import { isEqual, keys, isEmpty, isPlainObject, isFunction } from "lodash";
 
 export default {
   isNonEmptyArray(collection) {
@@ -27,7 +27,7 @@ export default {
   },
 
   removeUndefined(arr) {
-    return arr.filter((el) => el !== undefined);
+    return arr.filter((el) => typeof el !== "undefined");
   },
 
   getMaxValue(arr, ...values) {
@@ -95,5 +95,32 @@ export default {
     return itemSets.every((comparisonSet) => {
       return isEqual(comparisonSet[0], comparisonSet[1]);
     });
+  },
+
+  // for ease of unit testing
+  checkEquality(o1, o2) {
+    if (o1 === o2) { return true; }
+    const keys1 = keys(o1);
+    const keys2 = keys(o2);
+    if (keys1.length !== keys2.length) { return false; }
+    return keys1.reduce((equal, key) => {
+      if (!equal) { return false; }
+      const val1 = o1[key];
+      const val2 = o2[key];
+      if (val1 === val2) { return true; }
+      if (isPlainObject(val1) || Array.isArray(val1)) {
+        return isEmpty(val1) && isEmpty(val2) ? true : this.checkEquality(val1, val2);
+      } else if (isFunction(val1)) {
+        // isEqual does not support equality checking on functions,
+        // so just check that both are functions
+        return isFunction(val2);
+      } else {
+        return isEqual(val1, val2);
+      }
+    }, true);
+  },
+
+  areVictoryPropsEqual(a, b) {
+    return this.checkEquality(a, b);
   }
 };
