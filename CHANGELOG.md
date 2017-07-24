@@ -1,5 +1,21 @@
 # Victory Changelog
 
+## 0.21.3 (2017-07-24)
+
+VictoryCore
+  - [267](https://github.com/FormidableLabs/victory-core/pull/267) Correct single-point domain logic
+  - [268](https://github.com/FormidableLabs/victory-core/pull/268) Correct stacked domain logic
+  - [269](https://github.com/FormidableLabs/victory-core/pull/269) `VictoryLabel` accepts percentage values for `x` and `y`
+  - [270](https://github.com/FormidableLabs/victory-core/pull/270) `VictoryLegend` supports events
+  - [272](https://github.com/FormidableLabs/victory-core/pull/272) Aggressive `shouldComponentUpdate` logic for evented Victory components *Breaking change for some components using `addEvents`
+
+VictoryChart
+  - [496](https://github.com/FormidableLabs/victory-chart/pull/496) `VictoryZoomContainer` improvements for real-time, updating data
+  - [497](https://github.com/FormidableLabs/victory-chart/pull/497) bugfix: apply `domainPadding` to explicit domains
+  - [498](https://github.com/FormidableLabs/victory-chart/pull/498) `VictoryAxis` determines its own default `tickFormat`
+  - [499](https://github.com/FormidableLabs/victory-chart/pull/499) Fix label prop merge order for `VictoryVoronoiContainer` labels
+  - [500](https://github.com/FormidableLabs/victory-chart/pull/500) Support performance improvements for evented components _e.g._ `VictoryArea`, `VictoryBar` ...
+
 ## 0.21.2 (2017-07-13)
 
 Victory:
