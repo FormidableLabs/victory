@@ -97,7 +97,12 @@ export default {
     });
   },
 
-  // for ease of unit testing
+  // Custom equality checking for props in shouldComponentUpdate.
+  areVictoryPropsEqual(a, b) {
+    return this.checkEquality(a, b);
+  },
+
+  // Broken into a separate method for ease of unit testing
   checkEquality(o1, o2) {
     if (o1 === o2) { return true; }
     const keys1 = keys(o1);
@@ -108,19 +113,16 @@ export default {
       const val1 = o1[key];
       const val2 = o2[key];
       if (val1 === val2) { return true; }
+      if (typeof val1 !== typeof val2) { return false; }
       if (isPlainObject(val1) || Array.isArray(val1)) {
         return isEmpty(val1) && isEmpty(val2) ? true : this.checkEquality(val1, val2);
       } else if (isFunction(val1)) {
         // isEqual does not support equality checking on functions,
-        // so just check that both are functions
-        return isFunction(val2);
+        // so just return true when both values are functions
+        return true;
       } else {
         return isEqual(val1, val2);
       }
     }, true);
-  },
-
-  areVictoryPropsEqual(a, b) {
-    return this.checkEquality(a, b);
   }
 };

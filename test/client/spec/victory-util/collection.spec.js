@@ -2,7 +2,6 @@
 /* global sinon */
 
 import { Collection } from "src/index";
-// import { isEqual } from "lodash";
 
 describe("collections", () => {
 
@@ -204,10 +203,11 @@ describe("collections", () => {
       expect(Collection.checkEquality).calledOnce.and.returned(false);
     });
 
-    it("ignores functions when checking equlity", () => {
-      const a = { test: () => "a" };
+    it("returns early if values are not the same type", () => {
+      const a = { test: { nested: "a" } };
       const b = { test: () => "a" };
-      expect(Collection.areVictoryPropsEqual(a, b)).to.equal(true);
+      expect(Collection.areVictoryPropsEqual(a, b)).to.equal(false);
+      expect(Collection.checkEquality).calledOnce.and.returned(false);
     });
 
     it("returns early when nested elements are empty", () => {
@@ -217,11 +217,31 @@ describe("collections", () => {
       expect(Collection.checkEquality).calledOnce.and.returned(true);
     });
 
+    it("returns true if values are functions", () => {
+      const a = { test: () => "a" };
+      const b = { test: () => "a" };
+      expect(Collection.areVictoryPropsEqual(a, b)).to.equal(true);
+    });
+
     it("recursively checks equality for nested collections", () => {
       const a = { test: { nested: "a" }, test2: { nested: "a" } };
       const b = { test: { nested: "a" }, test2: { nested: "a" } };
       expect(Collection.areVictoryPropsEqual(a, b)).to.equal(true);
       expect(Collection.checkEquality).calledThrice;
     });
+
+    it("does not recursively check date objects", () => {
+      const a = { test: new Date(), test2: new Date() };
+      const b = { test: new Date(), test2: new Date() };
+      expect(Collection.areVictoryPropsEqual(a, b)).to.equal(true);
+      expect(Collection.checkEquality).calledOnce.and.returned(true);
+    });
+
+    it("returns equal for equivalent date objects", () => {
+      const a = { test: new Date(2010, 1, 1) };
+      const b = { test: new Date("Mon Feb 01 2010 00:00:00 GMT-0800 (PST)") };
+      expect(Collection.areVictoryPropsEqual(a, b)).to.equal(true);
+    });
+
   });
 });
