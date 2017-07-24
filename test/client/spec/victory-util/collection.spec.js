@@ -231,8 +231,8 @@ describe("collections", () => {
     });
 
     it("does not recursively check date objects", () => {
-      const a = { test: new Date(), test2: new Date() };
-      const b = { test: new Date(), test2: new Date() };
+      const a = { test: new Date(2010, 2, 1), test2: new Date(2010, 1, 1) };
+      const b = { test: new Date(2010, 2, 1), test2: new Date(2010, 1, 1) };
       expect(Collection.areVictoryPropsEqual(a, b)).to.equal(true);
       expect(Collection.checkEquality).calledOnce.and.returned(true);
     });
