@@ -1,5 +1,9 @@
 # VictoryPie Changelog
 
+## 11.4.0 (2017-07-24)
+
+- [150](https://github.com/FormidableLabs/victory-pie/pull/150) aggressive `shouldComponentUpdate` for evented components like `VictoryPie`
+
 ## 11.3.0 (2017-07-13)
 
 - [149](https://github.com/FormidableLabs/victory-pie/pull/149) Support Webpack 3 and ES6 exports
