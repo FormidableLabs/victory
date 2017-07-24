@@ -12,6 +12,7 @@ const defaultComponents = [
 
 const areVictoryPropsEqual = (a, b) => {
   const checkEquality = (o1, o2) => {
+    if (o1 === o2) { return true; }
     const keys1 = keys(o1);
     const keys2 = keys(o2);
     if (keys1.length !== keys2.length) { return false; }
@@ -19,6 +20,7 @@ const areVictoryPropsEqual = (a, b) => {
       if (!equal) { return false; }
       const val1 = o1[key];
       const val2 = o2[key];
+      if (val1 === val2) { return true; }
       if (isPlainObject(val1) || Array.isArray(val1) && !isEmpty(val1)) {
         return checkEquality(val1, val2);
       } else if (isFunction(val1)) {
