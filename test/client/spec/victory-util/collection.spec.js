@@ -217,6 +217,13 @@ describe("collections", () => {
       expect(Collection.checkEquality).calledOnce.and.returned(true);
     });
 
+    it("returns false mixed objects and arrays", () => {
+      const a = { a: [] };
+      const b = { a: {} };
+      expect(Collection.areVictoryPropsEqual(a, b)).to.equal(false);
+      expect(Collection.checkEquality).calledOnce.and.returned(false);
+    });
+
     it("returns true if values are functions", () => {
       const a = { test: () => "a" };
       const b = { test: () => "a" };
@@ -237,9 +244,9 @@ describe("collections", () => {
       expect(Collection.checkEquality).calledOnce.and.returned(true);
     });
 
-    it("returns equal for equivalent date objects", () => {
+    it("returns equal for date objects", () => {
       const a = { test: new Date(2010, 1, 1) };
-      const b = { test: new Date("Mon Feb 01 2010 00:00:00 GMT-0800 (PST)") };
+      const b = { test: new Date("Mon Feb 01 2010") };
       expect(Collection.areVictoryPropsEqual(a, b)).to.equal(true);
     });
 

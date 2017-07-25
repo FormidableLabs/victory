@@ -114,8 +114,12 @@ export default {
       const val2 = o2[key];
       if (val1 === val2) { return true; }
       if (typeof val1 !== typeof val2) { return false; }
-      if (isPlainObject(val1) || Array.isArray(val1)) {
-        return isEmpty(val1) && isEmpty(val2) ? true : this.checkEquality(val1, val2);
+      if (isPlainObject(val1)) {
+        return !isPlainObject(val2) ?
+          false : (isEmpty(val1) && isEmpty(val2)) || this.checkEquality(val1, val2);
+      } else if (Array.isArray(val1)) {
+        return !Array.isArray(val2) ?
+          false : (isEmpty(val1) && isEmpty(val2)) || this.checkEquality(val1, val2);
       } else if (isFunction(val1)) {
         // isEqual does not support equality checking on functions,
         // so just return true when both values are functions
