@@ -217,7 +217,7 @@ describe("collections", () => {
       expect(Collection.checkEquality).calledOnce.and.returned(true);
     });
 
-    it("returns false mixed objects and arrays", () => {
+    it("returns false for mixed objects and arrays", () => {
       const a = { a: [] };
       const b = { a: {} };
       expect(Collection.areVictoryPropsEqual(a, b)).to.equal(false);
@@ -237,6 +237,12 @@ describe("collections", () => {
       expect(Collection.checkEquality).calledThrice;
     });
 
+    it("compares objects regardless of key order", () => {
+      const a = { test2: { nested: "a" }, test: { nested: "b" } };
+      const b = { test: { nested: "b" }, test2: { nested: "a" } };
+      expect(Collection.areVictoryPropsEqual(a, b)).to.equal(true);
+    });
+
     it("does not recursively check date objects", () => {
       const a = { test: new Date(2010, 2, 1), test2: new Date(2010, 1, 1) };
       const b = { test: new Date(2010, 2, 1), test2: new Date(2010, 1, 1) };
@@ -244,11 +250,31 @@ describe("collections", () => {
       expect(Collection.checkEquality).calledOnce.and.returned(true);
     });
 
-    it("returns equal for date objects", () => {
+    it("returns equal for equivalent date objects", () => {
       const a = { test: new Date(2010, 1, 1) };
       const b = { test: new Date("Mon Feb 01 2010") };
       expect(Collection.areVictoryPropsEqual(a, b)).to.equal(true);
     });
 
+    const pairs = [
+      [1, 1, true], [1, "1", false], [1, 2, false], [-0, -0, true], [0, 0, true],
+      [Object(0), Object(0), true], [-0, 0, true], [0, "0", false], [0, null, false],
+      [NaN, NaN, true], [Object(NaN), Object(NaN), true], [NaN, "a", false], [NaN, Infinity, false],
+      ["a", "a", true], [Object("a"), Object("a"), true], ["a", "b", false], ["a", ["a"], false],
+      [true, true, true], [Object(true), Object(true), true], [true, 1, false], [true, "a", false],
+      [false, false, true], [Object(false), Object(false), true], [false, 0, false],
+      [false, "", false], [null, null, true], [null, undefined, false], [null, {}, false],
+      [null, "", false], [undefined, undefined, true], [undefined, null, false],
+      [undefined, "", false]
+    ];
+
+    pairs.forEach((vals) => {
+      it(`matches lodash primitive comparison: ${vals}`, () => {
+        const a = vals[0];
+        const b = vals[1];
+        const expected = vals[2];
+        expect(Collection.areVictoryPropsEqual(a, b)).to.equal(expected);
+      });
+    });
   });
 });

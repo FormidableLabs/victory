@@ -1,4 +1,4 @@
-import { isEqual, keys, isEmpty, isPlainObject, isFunction } from "lodash";
+import { isEqual, keys, isEmpty, isPlainObject } from "lodash";
 
 export default {
   isNonEmptyArray(collection) {
@@ -102,28 +102,33 @@ export default {
     return this.checkEquality(a, b);
   },
 
+  basicEqualityCheck(a, b) {
+    if (a === b) { return true; }
+    if (typeof a !== typeof b) { return false; }
+    // isEqual does not support equality checking on functions
+    // return true if a and b are both functions
+    if (typeof a === "function") { return true; }
+    if (typeof a === "object" && keys(a).length !== keys(b).length) { return false; }
+    if (typeof a !== "object" || keys(a).length === 0) { return isEqual(a, b); }
+    return undefined;
+  },
+
   // Broken into a separate method for ease of unit testing
   checkEquality(o1, o2) {
-    if (o1 === o2) { return true; }
-    const keys1 = keys(o1);
-    const keys2 = keys(o2);
-    if (keys1.length !== keys2.length) { return false; }
-    return keys1.reduce((equal, key) => {
+    const initialEquality = this.basicEqualityCheck(o1, o2);
+    if (typeof initialEquality === "boolean") { return initialEquality; }
+    return keys(o1).reduce((equal, key) => {
       if (!equal) { return false; }
       const val1 = o1[key];
       const val2 = o2[key];
-      if (val1 === val2) { return true; }
-      if (typeof val1 !== typeof val2) { return false; }
+      const equality = this.basicEqualityCheck(val1, val2);
+      if (typeof equality === "boolean") { return equality; }
       if (isPlainObject(val1)) {
         return !isPlainObject(val2) ?
           false : (isEmpty(val1) && isEmpty(val2)) || this.checkEquality(val1, val2);
       } else if (Array.isArray(val1)) {
         return !Array.isArray(val2) ?
           false : (isEmpty(val1) && isEmpty(val2)) || this.checkEquality(val1, val2);
-      } else if (isFunction(val1)) {
-        // isEqual does not support equality checking on functions,
-        // so just return true when both values are functions
-        return true;
       } else {
         return isEqual(val1, val2);
       }
