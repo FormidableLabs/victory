@@ -231,9 +231,51 @@ describe("collections", () => {
       expect(Collection.areVictoryPropsEqual(a, b)).to.equal(true);
     });
 
-    it("recursively checks equality for nested collections", () => {
+    it("recursively checks equality for nested objects", () => {
       const a = { test: { nested: "a" }, test2: { nested: "a" } };
       const b = { test: { nested: "a" }, test2: { nested: "a" } };
+      expect(Collection.areVictoryPropsEqual(a, b)).to.equal(true);
+      expect(Collection.checkEquality).calledThrice;
+    });
+
+    it("finds differences in deeply nested objects", () => {
+      const a = { a: 1, b: 2, test: { nested: { deep: "a" } } };
+      const b = { a: 1, b: 2, test: { nested: { deep: "b" } } };
+      expect(Collection.areVictoryPropsEqual(a, b)).to.equal(false);
+      expect(Collection.checkEquality).calledThrice;
+    });
+
+    it("returns early when shallow differences are found in deeply nested objects", () => {
+      const a = { a: 1, b: 2, test: { nested: { deep: "a" } } };
+      const b = { a: 2, b: 2, test: { nested: { deep: "b" } } };
+      expect(Collection.areVictoryPropsEqual(a, b)).to.equal(false);
+      expect(Collection.checkEquality).calledOnce;
+    });
+
+    it("recursively checks equality for nested arrays", () => {
+      const a = [ 1, [2, "3", [4]]];
+      const b = [ 1, [2, "3", [4]]];
+      expect(Collection.areVictoryPropsEqual(a, b)).to.equal(true);
+      expect(Collection.checkEquality).calledThrice;
+    });
+
+    it("finds differences in deeply nested arrays", () => {
+      const a = [ 1, [2, "3", [4]]];
+      const b = [ 1, [2, "3", [5]]];
+      expect(Collection.areVictoryPropsEqual(a, b)).to.equal(false);
+      expect(Collection.checkEquality).calledThrice;
+    });
+
+    it("returns early when shallow differences are found in deeply nested arrays", () => {
+      const a = [ 1, [2, "3", [4]]];
+      const b = [ 2, [2, "3", [5]]];
+      expect(Collection.areVictoryPropsEqual(a, b)).to.equal(false);
+      expect(Collection.checkEquality).calledOnce;
+    });
+
+    it("recursively checks equality for mixed collections", () => {
+      const a = [ 1, [2, "3", { a: 4 }]];
+      const b = [ 1, [2, "3", { a: 4 }]];
       expect(Collection.areVictoryPropsEqual(a, b)).to.equal(true);
       expect(Collection.checkEquality).calledThrice;
     });
