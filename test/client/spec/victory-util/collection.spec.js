@@ -1,4 +1,5 @@
 /* eslint no-unused-expressions: 0 */
+/* eslint max-statements: 0 */
 /* global sinon */
 
 import { Collection } from "src/index";
@@ -256,20 +257,51 @@ describe("collections", () => {
       expect(Collection.areVictoryPropsEqual(a, b)).to.equal(true);
     });
 
-    const pairs = [
-      [1, 1, true], [1, "1", false], [1, 2, false], [-0, -0, true], [0, 0, true],
-      [Object(0), Object(0), true], [-0, 0, true], [0, "0", false], [0, null, false],
-      [NaN, NaN, true], [Object(NaN), Object(NaN), true], [NaN, "a", false], [NaN, Infinity, false],
-      ["a", "a", true], [Object("a"), Object("a"), true], ["a", "b", false], ["a", ["a"], false],
-      [true, true, true], [Object(true), Object(true), true], [true, 1, false], [true, "a", false],
-      [false, false, true], [Object(false), Object(false), true], [false, 0, false],
-      [false, "", false], [null, null, true], [null, undefined, false], [null, {}, false],
-      [null, "", false], [undefined, undefined, true], [undefined, null, false],
-      [undefined, "", false]
-    ];
+    it("correctly compares numbers", () => {
+      const pairs = [
+        [1, 1, true], [1, 2, false], [-0, -0, true], [0, 0, true], [-0, 0, true], [-1, 1, false]
+      ];
+      pairs.forEach((vals) => {
+        const a = vals[0];
+        const b = vals[1];
+        const expected = vals[2];
+        expect(Collection.areVictoryPropsEqual(a, b)).to.equal(expected);
+      });
+    });
 
-    pairs.forEach((vals) => {
-      it(`matches lodash primitive comparison: ${vals}`, () => {
+    it("correctly compares strings", () => {
+      const pairs = [
+         ["a", "a", true], ["a", "b", false], ["a", "A", false], [1, "1", false], [0, "0", false],
+         ["a", ["a"], false]
+      ];
+      pairs.forEach((vals) => {
+        const a = vals[0];
+        const b = vals[1];
+        const expected = vals[2];
+        expect(Collection.areVictoryPropsEqual(a, b)).to.equal(expected);
+      });
+    });
+
+    it("correctly distinguishes boolean values", () => {
+      const pairs = [
+         [true, true, true], [true, 1, false], [true, "a", false], [false, false, true],
+         [false, 0, false], [false, "", false]
+      ];
+      pairs.forEach((vals) => {
+        const a = vals[0];
+        const b = vals[1];
+        const expected = vals[2];
+        expect(Collection.areVictoryPropsEqual(a, b)).to.equal(expected);
+      });
+    });
+
+    it("correctly distinguishes null, NaN and undefined", () => {
+      const pairs = [
+        [null, null, true], [null, undefined, false], [null, {}, false], [null, "", false],
+        [null, 0, false], [undefined, undefined, true], [undefined, null, false],
+        [undefined, "", false], [NaN, NaN, true], [NaN, "a", false], [NaN, Infinity, false]
+      ];
+      pairs.forEach((vals) => {
         const a = vals[0];
         const b = vals[1];
         const expected = vals[2];

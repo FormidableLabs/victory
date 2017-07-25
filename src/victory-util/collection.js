@@ -97,7 +97,14 @@ export default {
     });
   },
 
-  // Custom equality checking for props in shouldComponentUpdate.
+  /*
+  Custom equality checking for props in shouldComponentUpdate.
+  `areVictoryPropsEqual` differs from lodash `isEqual` in the following ways:
+    - Functions are marked as equal (this was the main impetus for writing a new function)
+    - Does not handle symbols or maps
+    - Returns false when checking the equality of things like `1` vs. `Object(1)`
+    - Does not handle circular references in objects and arrays
+  */
   areVictoryPropsEqual(a, b) {
     return this.checkEquality(a, b);
   },
