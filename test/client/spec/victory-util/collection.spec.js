@@ -257,6 +257,10 @@ describe("collections", () => {
       expect(Collection.areVictoryPropsEqual(a, b)).to.equal(true);
     });
 
+    /*
+      Tests for primitive comparisons are heavily influenced by tests for lodash isEqual
+      https://github.com/lodash/lodash/blob/4.17.4/test/test.js#L9477
+    */
     it("correctly compares numbers", () => {
       const pairs = [
         [1, 1, true], [1, 2, false], [-0, -0, true], [0, 0, true], [-0, 0, true], [-1, 1, false]
