@@ -109,26 +109,30 @@ export default {
     return this.checkEquality(a, b);
   },
 
-  basicEqualityCheck(a, b) {
-    if (a === b) { return true; }
-    if (typeof a !== typeof b) { return false; }
-    // isEqual does not support equality checking on functions
-    // return true if a and b are both functions
-    if (typeof a === "function") { return true; }
-    if (typeof a === "object" && keys(a).length !== keys(b).length) { return false; }
-    if (typeof a !== "object" || keys(a).length === 0) { return isEqual(a, b); }
-    return undefined;
-  },
-
   // Broken into a separate method for ease of unit testing
   checkEquality(o1, o2) {
-    const initialEquality = this.basicEqualityCheck(o1, o2);
+    /*
+      tri-state equality checker: returns `true`, `false`, or `undefined`. When `undefined` is
+      returned this indicates that further (resursive) equality checking is required
+    */
+    const basicEqualityCheck = (a, b) => {
+      if (a === b) { return true; }
+      if (typeof a !== typeof b) { return false; }
+      // isEqual does not support equality checking on functions
+      // return true if a and b are both functions
+      if (typeof a === "function") { return true; }
+      if (typeof a === "object" && keys(a).length !== keys(b).length) { return false; }
+      if (typeof a !== "object" || keys(a).length === 0) { return isEqual(a, b); }
+      return undefined;
+    };
+
+    const initialEquality = basicEqualityCheck(o1, o2);
     if (typeof initialEquality === "boolean") { return initialEquality; }
     return keys(o1).reduce((equal, key) => {
       if (!equal) { return false; }
       const val1 = o1[key];
       const val2 = o2[key];
-      const equality = this.basicEqualityCheck(val1, val2);
+      const equality = basicEqualityCheck(val1, val2);
       if (typeof equality === "boolean") { return equality; }
       if (isPlainObject(val1)) {
         return !isPlainObject(val2) ?
