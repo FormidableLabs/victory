@@ -167,8 +167,8 @@ export default class Bar extends React.Component {
     if (style.width) {
       return style.width;
     }
-    const { scale, data, horizontal } = props;
-    const range = horizontal ? scale.y.range() : scale.x.range();
+    const { scale, data } = props;
+    const range = scale.x.range();
     const extent = Math.abs(range[1] - range[0]);
     const bars = data.length + 2;
     const barRatio = 0.5;
