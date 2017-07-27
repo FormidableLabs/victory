@@ -1,39 +1,15 @@
 import React from "react";
 import {
-  defaults, assign, keys, isFunction, partialRight, pick, without, isEqual, isEmpty, isPlainObject
+  defaults, assign, keys, isFunction, partialRight, pick, without, isEmpty
 } from "lodash";
 import Events from "./events";
+import Collection from "./collection";
 import VictoryTransition from "../victory-transition/victory-transition";
 
 //  used for checking state changes. Expected components can be passed in via options
 const defaultComponents = [
   { name: "parent", index: "parent" }, { name: "data" }, { name: "labels" }
 ];
-
-const areVictoryPropsEqual = (a, b) => {
-  const checkEquality = (o1, o2) => {
-    if (o1 === o2) { return true; }
-    const keys1 = keys(o1);
-    const keys2 = keys(o2);
-    if (keys1.length !== keys2.length) { return false; }
-    return keys1.reduce((equal, key) => {
-      if (!equal) { return false; }
-      const val1 = o1[key];
-      const val2 = o2[key];
-      if (val1 === val2) { return true; }
-      if (isPlainObject(val1) || Array.isArray(val1) && !isEmpty(val1)) {
-        return checkEquality(val1, val2);
-      } else if (isFunction(val1)) {
-        // isEqual does not support equality checking on functions,
-        // so just check that both are functions
-        return isFunction(val2);
-      } else {
-        return isEqual(val1, val2);
-      }
-    }, true);
-  };
-  return checkEquality(a, b);
-};
 
 export default (WrappedComponent, options) => {
   return class addEvents extends WrappedComponent {
@@ -62,14 +38,14 @@ export default (WrappedComponent, options) => {
 
       // check for any state changes triggered by events or shared events
       const calculatedState = this.getStateChanges(nextProps, calculatedValues);
-      if (!areVictoryPropsEqual(this.calculatedState, calculatedState)) {
+      if (!Collection.areVictoryPropsEqual(this.calculatedState, calculatedState)) {
         this.cacheValues(calculatedValues);
         this.calculatedState = calculatedState;
         return true;
       }
 
       // check whether props have changed
-      if (!areVictoryPropsEqual(this.props, nextProps)) {
+      if (!Collection.areVictoryPropsEqual(this.props, nextProps)) {
         this.cacheValues(calculatedValues);
         return true;
       }
@@ -95,9 +71,9 @@ export default (WrappedComponent, options) => {
            // don't check for changes on parent props for non-standalone components
           return undefined;
         } else {
-          return component.index !== undefined ?
-          getState(component.index, component.name) :
-          calculatedValues.dataKeys.map((key) => getState(key, component.name));
+          return typeof component.index !== "undefined" ?
+            getState(component.index, component.name) :
+            calculatedValues.dataKeys.map((key) => getState(key, component.name));
         }
       }).filter(Boolean);
     }
@@ -109,7 +85,7 @@ export default (WrappedComponent, options) => {
       const getSharedEventState = sharedEvents && isFunction(sharedEvents.getEventState) ?
         sharedEvents.getEventState : () => undefined;
       const baseProps = this.getBaseProps(props, getSharedEventState);
-      const dataKeys = Object.keys(baseProps).filter((key) => key !== "parent");
+      const dataKeys = keys(baseProps).filter((key) => key !== "parent");
       const hasEvents = props.events || props.sharedEvents || componentEvents;
       const events = this.getAllEvents(props);
       return {
@@ -193,7 +169,7 @@ export default (WrappedComponent, options) => {
       const dataKeys = without(this.dataKeys, "all");
       const labelComponents = dataKeys.reduce((memo, key) => {
         const labelProps = this.getComponentProps(labelComponent, "labels", key);
-        if (labelProps && labelProps.text !== undefined && labelProps.text !== null) {
+        if (labelProps && typeof labelProps.text !== "undefined" && labelProps.text !== null) {
           memo = memo.concat(React.cloneElement(labelComponent, labelProps));
         }
         return memo;
@@ -212,7 +188,7 @@ export default (WrappedComponent, options) => {
 
       const labelComponents = this.dataKeys.map((_dataKey, index) => {
         const labelProps = this.getComponentProps(labelComponent, "labels", index);
-        if (labelProps.text !== undefined && labelProps.text !== null) {
+        if (typeof labelProps.text !== "undefined" && labelProps.text !== null) {
           return React.cloneElement(labelComponent, labelProps);
         }
         return undefined;
