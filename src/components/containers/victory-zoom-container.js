@@ -155,9 +155,9 @@ export const zoomContainerMixin = (base) => class VictoryZoomContainer extends b
     if (startIndex !== 0) { startIndex -= 1; }
     if (endIndex !== -1) { endIndex += 1; }
 
-    const visableData = data.slice(startIndex, endIndex);
+    const visibleData = data.slice(startIndex, endIndex);
 
-    return Data.downsampleZoomFriendly(visableData, maxPoints, startIndex);
+    return Data.downsampleZoomFriendly(visibleData, maxPoints, startIndex);
   }
 
   modifyChildren(props) {
