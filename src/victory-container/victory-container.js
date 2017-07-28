@@ -13,6 +13,7 @@ export default class VictoryContainer extends React.Component {
       PropTypes.node
     ]),
     className: PropTypes.string,
+    containerId: PropTypes.oneOfType([PropTypes.number, PropTypes.string]),
     desc: PropTypes.string,
     events: PropTypes.object,
     height: PropTypes.number,
@@ -45,7 +46,8 @@ export default class VictoryContainer extends React.Component {
   constructor(props) {
     super(props);
     this.getTimer = this.getTimer.bind(this);
-    this.containerId = uniqueId("victory-container-");
+    this.containerId = typeof this.props.containerId === "undefined" ?
+      uniqueId("victory-container-") : this.props.containerId;
   }
 
   getChildContext() {
