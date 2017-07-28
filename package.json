@@ -26,7 +26,9 @@
     "start": "builder run dev",
     "test": "builder run check",
     "benchmark": "builder run check-perf",
-    "version": "builder run npm:version"
+    "version": "builder run npm:version",
+    "lank-watch": "lank exec -u -- builder run build-watch",
+    "lank-run": "lank exec -m victory-chart -uq -- builder run dev --expand-archetype"
   },
   "dependencies": {
     "builder": "^3.2.1",
@@ -41,6 +43,7 @@
     "d3-scale": "^1.0.0",
     "d3-shape": "^1.0.0",
     "enzyme": "^2.4.1",
+    "lank": "^0.2.0",
     "mocha": "^3.0.2",
     "prop-types": "^15.5.8",
     "react": "^15.5.4",
