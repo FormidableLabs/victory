@@ -150,7 +150,7 @@ export const zoomContainerMixin = (base) => class VictoryZoomContainer extends b
       }
 
       let newDomain = props.polar ? this.modifyPolarDomain(domain, originalDomain) : domain;
-      if (props.dimension) {
+      if (newDomain && props.dimension) {
         // if zooming is restricted to a dimension, don't squash changes to zoomDomain in other dim
         newDomain = {
           ...zoomDomain,
