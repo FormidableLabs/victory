@@ -132,7 +132,7 @@ export const cursorContainerMixin = (base) => class VictoryCursorContainer exten
         x1: cursorCoordinates.x,
         x2: cursorCoordinates.x,
         y1: padding.top,
-        y2: (height - padding.left)
+        y2: (height - padding.bottom)
       }));
     }
     if (dimension === "y" || dimension === undefined) {
