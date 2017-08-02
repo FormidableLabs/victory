@@ -1,8 +1,12 @@
 import PropTypes from "prop-types";
 import React from "react";
-import { defaults, isEqual } from "lodash";
+import { defaults, isEqual, get } from "lodash";
 import ZoomHelpers from "./zoom-helpers";
-import { VictoryContainer, VictoryClipContainer, PropTypes as CustomPropTypes } from "victory-core";
+import {
+  VictoryContainer, VictoryClipContainer, Data, PropTypes as CustomPropTypes
+} from "victory-core";
+
+const DEFAULT_DOWNSAMPLE = 150;
 
 export const zoomContainerMixin = (base) => class VictoryZoomContainer extends base {
   static displayName = "VictoryZoomContainer";
@@ -12,6 +16,10 @@ export const zoomContainerMixin = (base) => class VictoryZoomContainer extends b
     allowZoom: PropTypes.bool,
     clipContainerComponent: PropTypes.element.isRequired,
     dimension: PropTypes.oneOf(["x", "y"]),
+    downsample: PropTypes.oneOfType([
+      PropTypes.bool,
+      PropTypes.number
+    ]),
     minimumZoom: PropTypes.shape({
       x: PropTypes.number,
       y: PropTypes.number
@@ -128,6 +136,30 @@ export const zoomContainerMixin = (base) => class VictoryZoomContainer extends b
     };
   }
 
+  downsampleZoomData(props, childProps, domain) {
+    const { downsample } = props;
+    const rawData = get(childProps, "data");
+    // return undefined if downsample is not run, then default() will replace with child.props.data
+    if (!downsample || !rawData || !domain) { return undefined; }
+
+    // if data accessors are not used, skip calling expensive Data.formatData
+    const data = (childProps.x || childProps.y) ? Data.formatData(rawData, childProps) : rawData;
+    const maxPoints = (downsample === true) ? DEFAULT_DOWNSAMPLE : downsample;
+    const dimension = props.dimension || "x";
+
+    // important: assumes data is ordered by dimension
+    // get the start and end of the data that is in the current visible domain
+    let startIndex = data.findIndex((d) => d[dimension] >= domain[dimension][0]);
+    let endIndex = data.findIndex((d) => d[dimension] > domain[dimension][1]);
+    // pick one more point (if available) at each end so that VictoryLine, VictoryArea connect
+    if (startIndex !== 0) { startIndex -= 1; }
+    if (endIndex !== -1) { endIndex += 1; }
+
+    const visibleData = data.slice(startIndex, endIndex);
+
+    return Data.downsample(visibleData, maxPoints, startIndex);
+  }
+
   modifyChildren(props) {
     const childComponents = React.Children.toArray(props.children);
 
@@ -158,7 +190,11 @@ export const zoomContainerMixin = (base) => class VictoryZoomContainer extends b
         };
       }
       return React.cloneElement(
-        child, defaults({ domain: newDomain }, child.props)
+        child,
+        defaults({
+          domain: newDomain,
+          data: this.downsampleZoomData(props, child.props, newDomain)
+        }, child.props)
       );
     });
   }
