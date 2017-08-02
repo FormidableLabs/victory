@@ -1,6 +1,12 @@
 VictoryCore Changelog
 =====================
 
+## 17.1.0 (2017-08-02)
+
+- [274](https://github.com/FormidableLabs/victory-core/pull/274) Fixes automatic bar width calculation for horizontal bars
+- [275](https://github.com/FormidableLabs/victory-core/pull/275) Adds an optional `containerId` prop for all Victory containers
+- [276](https://github.com/FormidableLabs/victory-core/pull/276) Adds `downsample` method for `Data`
+
 ## 17.0.0 (2017-07-24)
 
 - [267](https://github.com/FormidableLabs/victory-core/pull/267) Correct single-point domain logic
