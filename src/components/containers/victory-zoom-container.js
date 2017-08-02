@@ -157,7 +157,7 @@ export const zoomContainerMixin = (base) => class VictoryZoomContainer extends b
 
     const visibleData = data.slice(startIndex, endIndex);
 
-    return Data.downsampleZoomFriendly(visibleData, maxPoints, startIndex);
+    return Data.downsample(visibleData, maxPoints, startIndex);
   }
 
   modifyChildren(props) {
