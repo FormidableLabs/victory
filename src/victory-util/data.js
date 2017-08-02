@@ -244,5 +244,27 @@ export default {
   getCategories(props, axis) {
     return props.categories && !Array.isArray(props.categories) ?
       props.categories[axis] : props.categories;
+  },
+
+  /**
+   * Reduces the size of a data array, such that it is <= maxPoints.
+   * @param {Array} data: an array of data; must be sorted
+   * @param {Number} maxPoints: maximum number of data points to return
+   * @param {Number} startingIndex: the index of the data[0] *in the entire dataset*; this function
+                     assumes `data` param is a subset of larger dataset that has been zoommed
+   * @returns {Array} an array of data, a subset of data param
+   */
+  downsample(data, maxPoints, startingIndex = 0) {
+    // ensures that the downampling of data while zooming looks good.
+    if (data.length > maxPoints) {
+      // limit k to powers of 2, e.g. 64, 128, 256
+      // so that the same points will be chosen reliably, reducing flicker on zoom
+      const k = Math.pow(2, Math.ceil(Math.log2(data.length / maxPoints)));
+      return data.filter(
+        // ensure modulo is always calculated from same reference: i + startingIndex
+        (d, i) => (((i + startingIndex) % k) === 0)
+      );
+    }
+    return data;
   }
 };
