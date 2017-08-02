@@ -247,34 +247,15 @@ export default {
   },
 
   /**
-   * Reduces the size of a data array, such that data.length <= maxPoints.
-   * @param {Array} data: an array of data; must be sorted
-   * @param {Number} maxPoints: maximum number of data points to return
-   * @returns {Array} an array of data, a subset of data param
-   */
-  downsampleSimple(data, maxPoints) {
-    // crude (but fast!) downsampling that simply selects every `k`th point
-    if (data.length > maxPoints) {
-      const k = Math.ceil(data.length / maxPoints);
-      return data.filter(
-        (d, i) => ((i % k) === 0)
-      );
-    }
-    return data;
-  },
-
-  /**
-   * Reduces the size of a data array, such that it is <= maxPoints. Specialized for zoommed data.
+   * Reduces the size of a data array, such that it is <= maxPoints.
    * @param {Array} data: an array of data; must be sorted
    * @param {Number} maxPoints: maximum number of data points to return
    * @param {Number} startingIndex: the index of the data[0] *in the entire dataset*; this function
                      assumes `data` param is a subset of larger dataset that has been zoommed
    * @returns {Array} an array of data, a subset of data param
    */
-  downsampleZoomFriendly(data, maxPoints, startingIndex = 0) {
+  downsample(data, maxPoints, startingIndex = 0) {
     // ensures that the downampling of data while zooming looks good.
-    // simply using downsampleSimple would result in a "flicker" of data points while zoomming
-    // downsize: always returns fewer points than downsampleSimple (and requires a bit more math)
     if (data.length > maxPoints) {
       // limit k to powers of 2, e.g. 64, 128, 256
       // so that the same points will be chosen reliably, reducing flicker on zoom
