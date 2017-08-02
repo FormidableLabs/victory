@@ -107,7 +107,29 @@ export default class VictoryTooltip extends React.Component {
           }
         ];
       },
+      onTouchStart: (targetProps) => {
+        return [
+          {
+            target: "labels",
+            mutation: () => ({ active: true })
+          }, {
+            target: "data",
+            mutation: () => targetProps.activateData ? ({ active: true }) : ({ active: undefined })
+          }
+        ];
+      },
       onMouseOut: () => {
+        return [
+          {
+            target: "labels",
+            mutation: () => ({ active: undefined })
+          }, {
+            target: "data",
+            mutation: () => ({ active: undefined })
+          }
+        ];
+      },
+      onTouchEnd: () => {
         return [
           {
             target: "labels",
