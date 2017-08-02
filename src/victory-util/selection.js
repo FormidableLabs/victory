@@ -25,7 +25,7 @@ export default {
         y: evt.nativeEvent.locationY
       };
     }
-    evt = evt.changedTouches ? evt.changedTouches[0] : evt;
+    evt = evt.changedTouches && evt.changedTouches.length ? evt.changedTouches[0] : evt;
     const svg = this.getParentSVG(evt.target);
     const matrix = this.getTransformationMatrix(svg);
     return {
