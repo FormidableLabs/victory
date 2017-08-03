@@ -195,7 +195,9 @@ export default class VictoryChart extends React.Component {
     const { height, polar, theme, width } = props;
     const { origin } = calculatedProps;
     return childComponents.map((child, index) => {
-      const style = defaults({}, child.props.style, { parent: baseStyle });
+      const style = Array.isArray(child.props.style) ?
+        child.props.style :
+        defaults({}, child.props.style, { parent: baseStyle });
       const childProps = this.getChildProps(child, props, calculatedProps);
       const newProps = defaults({
         height, polar, theme, width, style,
