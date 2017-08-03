@@ -119,13 +119,13 @@ const VoronoiHelpers = {
 
   onActivated(props, points) {
     if (isFunction(props.onActivated)) {
-      props.onActivated(points);
+      props.onActivated(points, props);
     }
   },
 
   onDeactivated(props, points) {
     if (isFunction(props.onDeactivated)) {
-      props.onDeactivated(points);
+      props.onDeactivated(points, props);
     }
   },
 
