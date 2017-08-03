@@ -333,7 +333,7 @@ export default class VictoryTooltip extends React.Component {
       flyoutComponent, labelComponent, groupComponent, active, renderInPortal
     } = evaluatedProps;
     if (!active) {
-      return null;
+      return renderInPortal ? <VictoryPortal>{null}</VictoryPortal> : null;
     }
     const calculatedValues = this.getCalculatedValues(evaluatedProps);
     const children = [
