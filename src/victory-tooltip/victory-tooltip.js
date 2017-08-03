@@ -3,6 +3,7 @@ import PropTypes from "prop-types";
 import CustomPropTypes from "../victory-util/prop-types";
 import TextSize from "../victory-util/textsize";
 import Helpers from "../victory-util/helpers";
+import Collection from "../victory-util/collection";
 import LabelHelpers from "../victory-util/label-helpers";
 import VictoryLabel from "../victory-label/victory-label";
 import VictoryTheme from "../victory-theme/victory-theme";
@@ -122,7 +123,7 @@ export default class VictoryTooltip extends React.Component {
   }];
 
   shouldComponentUpdate(nextProps) {
-    return this.props.active !== nextProps.active;
+    return !Collection.areVictoryPropsEqual(this.props, nextProps);
   }
 
   getDefaultOrientation(props) {
