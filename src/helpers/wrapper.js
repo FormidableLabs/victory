@@ -251,12 +251,15 @@ export default {
 
   getChildStyle(child, index, calculatedProps) {
     const { style, role } = calculatedProps;
+    const childStyle = child.props.style || {};
+    if (Array.isArray(childStyle)) {
+      return childStyle;
+    }
     const childRole = child.type && child.type.role;
     const defaultFill = childRole === "stack" ?
       undefined : this.getColor(calculatedProps, child, index);
     const defaultColor = childRole === "line" ?
       { fill: "none", stroke: defaultFill } : { fill: defaultFill };
-    const childStyle = child.props.style || {};
     const dataWidth = role === "stack" ? {} : this.getWidth(calculatedProps);
     const dataStyle = defaults(
       {}, childStyle.data, assign({}, dataWidth, style.data, defaultColor)
