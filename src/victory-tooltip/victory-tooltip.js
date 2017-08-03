@@ -121,6 +121,10 @@ export default class VictoryTooltip extends React.Component {
     }
   }];
 
+  shouldComponentUpdate(nextProps) {
+    return this.props.active !== nextProps.active;
+  }
+
   getDefaultOrientation(props) {
     const { datum, horizontal, polar } = props;
     if (!polar) {
