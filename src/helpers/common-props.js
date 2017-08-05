@@ -43,7 +43,7 @@ export const DataProps = {
 };
 
 export const BaseProps = {
-  animate: PropTypes.object,
+  animate: PropTypes.oneOfType([PropTypes.bool, PropTypes.object]),
   containerComponent: PropTypes.element,
   domain: PropTypes.oneOfType([
     CustomPropTypes.domain,
