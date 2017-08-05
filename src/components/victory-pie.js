@@ -51,7 +51,7 @@ class VictoryPie extends React.Component {
   };
 
   static propTypes = {
-    animate: PropTypes.object,
+    animate: PropTypes.oneOfType([PropTypes.bool, PropTypes.object]),
     colorScale: PropTypes.oneOfType([
       PropTypes.arrayOf(PropTypes.string),
       PropTypes.oneOf([
