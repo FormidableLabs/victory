@@ -55,7 +55,9 @@ export default {
   getLabelProps(props, dataProps, calculatedValues) {
     const { index, datum, data, slice } = dataProps;
     const { style, radius, origin } = calculatedValues;
-    const labelStyle = assign({ padding: 0 }, style.labels);
+    const labelStyle = Helpers.evaluateStyle(
+      assign({ padding: 0 }, style.labels), datum, props.active
+    );
     const labelRadius = Helpers.evaluateProp(props.labelRadius, datum);
     const labelPosition = this.getLabelPosition(radius, labelRadius, labelStyle);
     const position = labelPosition.centroid(slice);
