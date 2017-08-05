@@ -110,8 +110,9 @@ export default class VictoryLabel extends React.Component {
   shouldComponentUpdate(nextProps) {
     const attrs = this.calculateAttributes(nextProps);
     const { style, dx, dy, content, lineHeight, textAnchor, transform } = attrs;
-    const { angle, className, datum, x, y } = this.props;
+    const { angle, className, datum, x, y, active } = this.props;
     if (!Collection.allSetsEqual([
+      [active, nextProps.active],
       [angle, nextProps.angle],
       [className, nextProps.className],
       [x, nextProps.x],
