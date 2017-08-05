@@ -39,9 +39,9 @@ export default {
   },
 
   getPadding(props, datum) {
-    const { horizontal, style } = props;
+    const { horizontal, style, active } = props;
     const labelStyle = style.labels || {};
-    const defaultPadding = labelStyle.padding || 0;
+    const defaultPadding = Helpers.evaluateProp(labelStyle.padding, datum, active) || 0;
     const sign = datum._y < 0 ? -1 : 1;
     return {
       x: horizontal ? sign * defaultPadding : 0,
@@ -59,8 +59,7 @@ export default {
         y: horizontal ? x + padding.y : y - padding.y
       };
     } else {
-      const degrees = this.getDegrees(props, datum);
-      const polarPadding = this.getPolarPadding(props, degrees);
+      const polarPadding = this.getPolarPadding(props, datum);
       return {
         x: x + polarPadding.x,
         y: y + polarPadding.y
@@ -68,9 +67,11 @@ export default {
     }
   },
 
-  getPolarPadding(props, degrees) {
-    const labelStyle = props.style.labels || {};
-    const padding = labelStyle.padding || 0;
+  getPolarPadding(props, datum) {
+    const { active, style } = props;
+    const degrees = this.getDegrees(props, datum);
+    const labelStyle = style.labels || {};
+    const padding = Helpers.evaluateProp(labelStyle.padding, datum, active) || 0;
     const angle = Helpers.degreesToRadians(degrees);
     return {
       x: padding * Math.cos(angle), y: -padding * Math.sin(angle)
