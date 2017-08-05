@@ -101,14 +101,14 @@ export default class App extends React.Component {
       <div className="demo">
 
         <VictoryArea
-          style={style} animate={{ duration: 1000 }}
+          style={style} animate
           data={this.state.areaTransitionData}
           x={(d) => d.x}
           theme={VictoryTheme.material}
         />
 
         <VictoryChart
-          style={style} animate={{ duration: 1000 }}
+          style={style} animate
           theme={VictoryTheme.material}
         >
           <VictoryArea
@@ -118,7 +118,7 @@ export default class App extends React.Component {
 
         <VictoryStack
           style={style}
-          animate={{ duration: 1000 }}
+          animate
           theme={VictoryTheme.material}
           colorScale={"warm"}
         >
@@ -135,7 +135,7 @@ export default class App extends React.Component {
 
         <VictoryChart
           style={style}
-          animate={{ duration: 1000 }}
+          animate
           theme={VictoryTheme.material}
         >
           <VictoryStack
