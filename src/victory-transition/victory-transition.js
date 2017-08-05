@@ -5,13 +5,13 @@ import Collection from "../victory-util/collection";
 import Helpers from "../victory-util/helpers";
 import Timer from "../victory-util/timer";
 import Transitions from "../victory-util/transitions";
-import { defaults, isFunction, pick } from "lodash";
+import { defaults, isFunction, pick, isObject } from "lodash";
 
 export default class VictoryTransition extends React.Component {
   static displayName = "VictoryTransition";
 
   static propTypes = {
-    animate: PropTypes.object,
+    animate: PropTypes.oneOfType([PropTypes.bool, PropTypes.object]),
     animationWhitelist: PropTypes.array,
     children: PropTypes.node
   };
@@ -116,7 +116,7 @@ export default class VictoryTransition extends React.Component {
   }
 
   pickDomainProps(props) {
-    const parentState = props.animate && props.animate.parentState;
+    const parentState = isObject(props.animate) && props.animate.parentState;
     if (parentState && parentState.nodesWillExit) {
       return this.continous || parentState.continuous ?
         parentState.nextProps || this.state.nextProps || props : props;
@@ -135,7 +135,7 @@ export default class VictoryTransition extends React.Component {
 
   render() {
     const props = this.pickProps();
-    const getTransitionProps = this.props.animate && this.props.animate.getTransitions ?
+    const getTransitionProps = isObject(this.props.animate) && this.props.animate.getTransitions ?
       this.props.animate.getTransitions :
       Transitions.getTransitionPropsFactory(
         props,
