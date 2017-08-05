@@ -169,6 +169,7 @@ export default class VictorySharedEvents extends React.Component {
       getEventState: partialRight(this.getEventState, null)
     } : null;
     const container = this.props.container || this.props.groupComponent;
+    const role = container.type && container.type.role;
     const containerProps = container.props || {};
     const boundGetEvents = Events.getEvents.bind(this);
     const parentEvents = sharedEvents && boundGetEvents({ sharedEvents }, "parent");
@@ -182,7 +183,9 @@ export default class VictorySharedEvents extends React.Component {
     const events = defaults(
       {}, Events.getPartialEvents(parentEvents, "parent", parentProps), containerProps.events
     );
-    return React.cloneElement(container, assign({}, parentProps, { events }));
+    return role === "container" ?
+      React.cloneElement(container, assign({}, parentProps, { events })) :
+      React.cloneElement(container, events, children);
   }
 
   render() {
