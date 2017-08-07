@@ -1,6 +1,15 @@
 VictoryCore Changelog
 =====================
 
+## 17.2.0 (2017-08-07)
+
+- [278](https://github.com/FormidableLabs/victory-core/pull/278) Support touch events
+- [280](https://github.com/FormidableLabs/victory-core/pull/280) Fix tooltip rendering in VictoryPortal
+- [281](https://github.com/FormidableLabs/victory-core/pull/281) bugfix: functional label padding
+- [282](https://github.com/FormidableLabs/victory-core/pull/282) bugfix: fix "unknown props on `<g>` tag" warning
+- [283](https://github.com/FormidableLabs/victory-core/pull/283) Allow boolean value for animate prop
+- [284](https://github.com/FormidableLabs/victory-core/pull/284) Sort arrays by "key" when animating. See [#684](https://github.com/FormidableLabs/victory/issues/684)
+
 ## 17.1.0 (2017-08-02)
 
 - [274](https://github.com/FormidableLabs/victory-core/pull/274) Fixes automatic bar width calculation for horizontal bars
