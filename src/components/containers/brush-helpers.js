@@ -157,24 +157,25 @@ const Helpers = {
       // if the event occurs outside the region, or if the whole domain is selected,
       // start a new selection
       const minimumDomain = this.getMinimumDomain();
+
+      const mutatedProps = {
+        isSelecting: true, domainBox, fullDomainBox,
+        cachedSelectedDomain: selectedDomain,
+        currentDomain: this.getMinimumDomain(),
+        ...this.getSelectionMutation({ x, y }, domainBox, dimension)
+      };
+
       if (isFunction(onDomainChange)) {
-        onDomainChange(minimumDomain);
+        onDomainChange(minimumDomain, defaults({}, mutatedProps, targetProps));
       }
       return [{
         target: "parent",
-        mutation: () => {
-          return {
-            isSelecting: true, domainBox, fullDomainBox,
-            cachedSelectedDomain: selectedDomain,
-            currentDomain: this.getMinimumDomain(),
-            ...this.getSelectionMutation({ x, y }, domainBox, dimension)
-          };
-        }
+        mutation: () => mutatedProps
       }];
     }
   },
 
-  onMouseMove(evt, targetProps) { // eslint-disable-line max-statements
+  onMouseMove(evt, targetProps) { // eslint-disable-line max-statements, complexity
     // if a panning or selection has not been started, ignore the event
     if (!targetProps.isPanning && !targetProps.isSelecting) {
       return {};
@@ -192,37 +193,35 @@ const Helpers = {
       const pannedBox = this.panBox(targetProps, { x, y });
       const constrainedBox = this.constrainBox(pannedBox, fullDomainBox);
       const currentDomain = Selection.getBounds({ ...constrainedBox, scale });
+      const mutatedProps = {
+        currentDomain,
+        startX: pannedBox.x2 >= fullDomainBox.x2 || pannedBox.x1 <= fullDomainBox.x1 ?
+          startX : x,
+        startY: pannedBox.y2 >= fullDomainBox.y2 || pannedBox.y1 <= fullDomainBox.y1 ?
+          startY : y,
+        ...constrainedBox
+      };
+
       if (isFunction(onDomainChange)) {
-        onDomainChange(currentDomain);
+        onDomainChange(currentDomain, defaults({}, mutatedProps, targetProps));
       }
       return [{
         target: "parent",
-        mutation: () => {
-          return {
-            currentDomain,
-            startX: pannedBox.x2 >= fullDomainBox.x2 || pannedBox.x1 <= fullDomainBox.x1 ?
-              startX : x,
-            startY: pannedBox.y2 >= fullDomainBox.y2 || pannedBox.y1 <= fullDomainBox.y1 ?
-              startY : y,
-            ...constrainedBox
-          };
-        }
+        mutation: () => mutatedProps
       }];
     } else if (isSelecting) {
       const x2 = dimension !== "y" ? x : targetProps.x2;
       const y2 = dimension !== "x" ? y : targetProps.y2;
       const currentDomain =
         Selection.getBounds({ x2, y2, x1: targetProps.x1, y1: targetProps.y1, scale });
+
+      const mutatedProps = { x2, y2, currentDomain };
       if (isFunction(onDomainChange)) {
-        onDomainChange(currentDomain);
+        onDomainChange(currentDomain, defaults({}, mutatedProps, targetProps));
       }
       return [{
         target: "parent",
-        mutation: () => {
-          return {
-            x2, y2, currentDomain
-          };
-        }
+        mutation: () => mutatedProps
       }];
     }
     return {};
@@ -232,16 +231,13 @@ const Helpers = {
     const { x1, y1, x2, y2, onDomainChange, domain } = targetProps;
     // if the mouse hasn't moved since a mouseDown event, select the whole domain region
     if (x1 === x2 || y1 === y2) {
+      const mutatedProps = { isPanning: false, isSelecting: false, currentDomain: domain };
       if (isFunction(onDomainChange)) {
-        onDomainChange(domain);
+        onDomainChange(domain, defaults({}, mutatedProps, targetProps));
       }
       return [{
         target: "parent",
-        mutation: () => {
-          return {
-            isPanning: false, isSelecting: false, currentDomain: domain
-          };
-        }
+        mutation: () => mutatedProps
       }];
     }
     return [{

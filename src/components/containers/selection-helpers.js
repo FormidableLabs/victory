@@ -1,5 +1,5 @@
 import { Selection, Data, Helpers } from "victory-core";
-import { assign, throttle, isFunction } from "lodash";
+import { assign, defaults, throttle, isFunction } from "lodash";
 import React from "react";
 import { attachId } from "../../helpers/event-handlers";
 
@@ -73,15 +73,15 @@ const SelectionHelpers = {
     const y1 = polar || dimension !== "x" ? y : Selection.getDomainCoordinates(targetProps).y[0];
     const x2 = polar || dimension !== "y" ? x : Selection.getDomainCoordinates(targetProps).x[1];
     const y2 = polar || dimension !== "x" ? y : Selection.getDomainCoordinates(targetProps).y[1];
+
+    const mutatedProps = { x1, y1, select: true, x2, y2 };
     if (isFunction(targetProps.onSelectionCleared)) {
-      targetProps.onSelectionCleared();
+      targetProps.onSelectionCleared(defaults({}, mutatedProps, targetProps));
     }
     return [
       {
         target: "parent",
-        mutation: () => {
-          return { x1, y1, select: true, x2, y2 };
-        }
+        mutation: () => mutatedProps
       }, {
         target: "data",
         childName: targetProps.children || datasets.length ? "all" : undefined,
@@ -121,14 +121,13 @@ const SelectionHelpers = {
     const datasets = this.getDatasets(targetProps);
     const bounds = Selection.getBounds(targetProps);
     const selectedData = this.filterDatasets(targetProps, datasets, bounds);
+    const mutatedProps = { datasets, select: false, x1: null, x2: null, y1: null, y2: null };
     const callbackMutation = selectedData && isFunction(targetProps.onSelection) ?
-      targetProps.onSelection(selectedData, bounds) : {};
+      targetProps.onSelection(selectedData, bounds, defaults({}, mutatedProps, targetProps)) : {};
 
     const parentMutation = [{
       target: "parent",
-      mutation: () => {
-        return { datasets, select: false, x1: null, x2: null, y1: null, y2: null };
-      }
+      mutation: () => mutatedProps
     }];
 
     const dataMutation = selectedData ?

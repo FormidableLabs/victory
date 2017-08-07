@@ -206,18 +206,17 @@ const Helpers = {
         y: dimension === "x" ? originalDomain.y : this.pan(lastDomain.y, originalDomain.y, dy)
       };
       const resumeAnimation = this.handleAnimation(ctx);
+      const mutatedProps = {
+        parentControlledProps: ["domain"], startX: x, startY: y,
+        domain: currentDomain, currentDomain, originalDomain, cachedZoomDomain: zoomDomain
+      };
       if (isFunction(onDomainChange)) {
-        onDomainChange(currentDomain);
+        onDomainChange(currentDomain, defaults({}, mutatedProps, targetProps));
       }
       return [{
         target: "parent",
         callback: resumeAnimation,
-        mutation: () => {
-          return {
-            parentControlledProps: ["domain"], startX: x, startY: y,
-            domain: currentDomain, currentDomain, originalDomain, cachedZoomDomain: zoomDomain
-          };
-        }
+        mutation: () => mutatedProps
       }];
     }
     return undefined;
@@ -241,19 +240,19 @@ const Helpers = {
       // if zoomActive is already set AND user hasn't zoommed out all the way
       || (targetProps.zoomActive && !isEqual(originalDomain, lastDomain));
 
+    const mutatedProps = {
+      domain: currentDomain, currentDomain, originalDomain, cachedZoomDomain: zoomDomain,
+      parentControlledProps: ["domain"], panning: false, zoomActive
+    };
+
     if (isFunction(onDomainChange)) {
-      onDomainChange(currentDomain);
+      onDomainChange(currentDomain, defaults({}, mutatedProps, targetProps));
     }
 
     return [{
       target: "parent",
       callback: resumeAnimation,
-      mutation: () => {
-        return {
-          domain: currentDomain, currentDomain, originalDomain, cachedZoomDomain: zoomDomain,
-          parentControlledProps: ["domain"], panning: false, zoomActive
-        };
-      }
+      mutation: () => mutatedProps
     }];
   }
 };
