@@ -44,13 +44,33 @@ export const zoomContainerMixin = (base) => class VictoryZoomContainer extends b
       onMouseDown: (evt, targetProps) => {
         return ZoomHelpers.onMouseDown(evt, targetProps);
       },
+      onTouchStart: (evt, targetProps) => {
+        return ZoomHelpers.onMouseDown(evt, targetProps);
+      },
       onMouseUp: (evt, targetProps) => {
+        return ZoomHelpers.onMouseUp(evt, targetProps);
+      },
+      onTouchEnd: (evt, targetProps) => {
         return ZoomHelpers.onMouseUp(evt, targetProps);
       },
       onMouseLeave: (evt, targetProps) => {
         return ZoomHelpers.onMouseLeave(evt, targetProps);
       },
+      onTouchCancel: (evt, targetProps) => {
+        return ZoomHelpers.onMouseLeave(evt, targetProps);
+      },
       onMouseMove: (evt, targetProps, eventKey, ctx) => { // eslint-disable-line max-params
+        evt.preventDefault();
+        const mutations = ZoomHelpers.onMouseMove(evt, targetProps, eventKey, ctx);
+
+        if (mutations.id !== this.mouseMoveMutationId) { // eslint-disable-line
+          this.mouseMoveMutationId = mutations.id; // eslint-disable-line
+          return mutations.mutations;
+        }
+
+        return undefined;
+      },
+      onTouchMove: (evt, targetProps, eventKey, ctx) => { // eslint-disable-line max-params
         evt.preventDefault();
         const mutations = ZoomHelpers.onMouseMove(evt, targetProps, eventKey, ctx);
 

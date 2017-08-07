@@ -29,7 +29,20 @@ export const voronoiContainerMixin = (base) => class VictoryVoronoiContainer ext
       onMouseLeave: (evt, targetProps) => {
         return VoronoiHelpers.onMouseLeave(evt, targetProps);
       },
+      onTouchCancel: (evt, targetProps) => {
+        return VoronoiHelpers.onMouseLeave(evt, targetProps);
+      },
       onMouseMove: (evt, targetProps) => {
+        const mutations = VoronoiHelpers.onMouseMove(evt, targetProps);
+
+        if (mutations.id !== this.mouseMoveMutationId) { // eslint-disable-line
+          this.mouseMoveMutationId = mutations.id; // eslint-disable-line
+          return mutations.mutations;
+        }
+
+        return undefined;
+      },
+      onTouchMove: (evt, targetProps) => {
         const mutations = VoronoiHelpers.onMouseMove(evt, targetProps);
 
         if (mutations.id !== this.mouseMoveMutationId) { // eslint-disable-line
