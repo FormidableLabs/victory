@@ -1,5 +1,10 @@
 # VictoryPie Changelog
 
+## 11.4.1 (2017-08-07)
+
+- [151](https://github.com/FormidableLabs/victory-pie/pull/151) bugfix: support functional padding for labels
+- [152](https://github.com/FormidableLabs/victory-pie/pull/152) Support boolean animate prop
+
 ## 11.4.0 (2017-07-24)
 
 - [150](https://github.com/FormidableLabs/victory-pie/pull/150) aggressive `shouldComponentUpdate` for evented components like `VictoryPie`
