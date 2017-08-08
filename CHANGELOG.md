@@ -1,5 +1,34 @@
 # Victory Changelog
 
+## 0.21.4 (2017-08-07)
+
+VictoryCore
+- [285](https://github.com/FormidableLabs/victory-core/pull/285) bugfix: tooltips with `activateData`
+- [278](https://github.com/FormidableLabs/victory-core/pull/278) Support touch events
+- [280](https://github.com/FormidableLabs/victory-core/pull/280) Fix tooltip rendering in VictoryPortal
+- [281](https://github.com/FormidableLabs/victory-core/pull/281) bugfix: functional label padding
+- [282](https://github.com/FormidableLabs/victory-core/pull/282) bugfix: fix "unknown props on `<g>` tag" warning
+- [283](https://github.com/FormidableLabs/victory-core/pull/283) Allow boolean value for animate prop
+- [284](https://github.com/FormidableLabs/victory-core/pull/284) Sort arrays by "key" when animating. See [#684](https://github.com/FormidableLabs/victory/issues/684)
+- [274](https://github.com/FormidableLabs/victory-core/pull/274) Fixes automatic bar width calculation for horizontal bars
+- [275](https://github.com/FormidableLabs/victory-core/pull/275) Adds an optional `containerId` prop for all Victory containers
+- [276](https://github.com/FormidableLabs/victory-core/pull/276) Adds `downsample` method for `Data`
+
+VictoryChart
+- [504](https://github.com/FormidableLabs/victory-chart/pull/504) bugfix: padding bug in `VictoryCursorContainer`
+- [505](https://github.com/FormidableLabs/victory-chart/pull/505) Support touch events on all containers
+- [506](https://github.com/FormidableLabs/victory-chart/pull/506) Add `props` argument for `VictoryVoronoiContainer` callbacks
+- [507](https://github.com/FormidableLabs/victory-chart/pull/507) bugfix: Support array styles for `VictoryLabel` when it is used as a direct child of `VictoryChart` or other wrappers
+- [508](https://github.com/FormidableLabs/victory-chart/pull/508) Add support for `animate` as a boolean prop
+- [509](https://github.com/FormidableLabs/victory-chart/pull/509) Add `props` as the last argument for all container callbacks
+- [502](https://github.com/FormidableLabs/victory-chart/pull/502) Fix bug in `VictoryZoomContainer`
+- [503](https://github.com/FormidableLabs/victory-chart/pull/503) Add downsample option for `VictoryZoomContainer`
+- [504](https://github.com/FormidableLabs/victory-chart/pull/504) Fix padding bug in `VictoryCursorContainer`
+
+VictoryPie
+- [151](https://github.com/FormidableLabs/victory-pie/pull/151) bugfix: support functional padding for labels
+- [152](https://github.com/FormidableLabs/victory-pie/pull/152) Support boolean animate prop
+
 ## 0.21.3 (2017-07-24)
 
 VictoryCore
