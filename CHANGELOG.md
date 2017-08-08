@@ -1,6 +1,10 @@
 VictoryCore Changelog
 =====================
 
+## 17.2.1 (2017-08-07)
+
+-[285](https://github.com/FormidableLabs/victory-core/pull/285) bugfix: tooltips with `activateData`
+
 ## 17.2.0 (2017-08-07)
 
 - [278](https://github.com/FormidableLabs/victory-core/pull/278) Support touch events
