@@ -28,9 +28,9 @@ const CursorHelpers = {
     if (isFunction(onChange)) {
       if (inBounds) {
         const value = dimension ? cursorValue[dimension] : cursorValue;
-        onChange(value);
+        onChange(value, targetProps);
       } else if (cursorValue !== targetProps.cursorValue) {
-        onChange(targetProps.defaultCursorValue || null);
+        onChange(targetProps.defaultCursorValue || null, targetProps);
       }
     }
 
