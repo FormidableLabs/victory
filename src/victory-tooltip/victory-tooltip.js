@@ -260,12 +260,13 @@ export default class VictoryTooltip extends React.Component {
   getFlyoutCenter(props, dimensions) {
     const { x, y, dx, dy, pointerLength, orientation } = props;
     const { height, width } = dimensions;
-    const sign = orientation === "right" || orientation === "top" ? 1 : -1;
+    const xSign = orientation === "left" ? -1 : 1;
+    const ySign = orientation === "bottom" ? -1 : 1;
     return {
       x: orientation === "left" || orientation === "right" ?
-        x + sign * (pointerLength + (width / 2) + dx) : x + sign * dx,
+        x + xSign * (pointerLength + (width / 2) + dx) : x + dx,
       y: orientation === "top" || orientation === "bottom" ?
-        y - sign * (pointerLength + (height / 2) + dy) : y - sign * dy
+        y - ySign * (pointerLength + (height / 2) + dy) : y - dy
     };
   }
 
