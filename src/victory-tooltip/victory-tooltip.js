@@ -94,55 +94,45 @@ export default class VictoryTooltip extends React.Component {
     groupComponent: <g/>
   };
 
-  static defaultEvents = [{
-    target: "data",
-    eventHandlers: {
-      onMouseOver: (targetProps) => {
-        return [
-          {
-            target: "labels",
-            mutation: () => ({ active: true })
-          }, {
-            target: "data",
-            mutation: () => targetProps.activateData ? ({ active: true }) : ({ active: undefined })
-          }
-        ];
-      },
-      onTouchStart: (targetProps) => {
-        return [
-          {
-            target: "labels",
-            mutation: () => ({ active: true })
-          }, {
-            target: "data",
-            mutation: () => targetProps.activateData ? ({ active: true }) : ({ active: undefined })
-          }
-        ];
-      },
-      onMouseOut: () => {
-        return [
-          {
-            target: "labels",
-            mutation: () => ({ active: undefined })
-          }, {
-            target: "data",
-            mutation: () => ({ active: undefined })
-          }
-        ];
-      },
-      onTouchEnd: () => {
-        return [
-          {
-            target: "labels",
-            mutation: () => ({ active: undefined })
-          }, {
-            target: "data",
-            mutation: () => ({ active: undefined })
-          }
-        ];
+  static defaultEvents = (props) => {
+    return [{
+      target: "data",
+      eventHandlers: {
+        onMouseOver: () => {
+          return props.activateData ?
+            [
+              { target: "labels", mutation: () => ({ active: true }) },
+              { target: "data", mutation: () => ({ active: true }) }
+            ] :
+            [{ target: "labels", mutation: () => ({ active: true }) }];
+        },
+        onTouchStart: () => {
+          return props.activateData ?
+            [
+              { target: "labels", mutation: () => ({ active: true }) },
+              { target: "data", mutation: () => ({ active: true }) }
+            ] :
+            [{ target: "labels", mutation: () => ({ active: true }) }];
+        },
+        onMouseOut: () => {
+          return props.activateData ?
+            [
+              { target: "labels", mutation: () => ({ active: false }) },
+              { target: "data", mutation: () => ({ active: false }) }
+            ] :
+            [{ target: "labels", mutation: () => ({ active: false }) }];
+        },
+        onTouchEnd: () => {
+          return props.activateData ?
+            [
+              { target: "labels", mutation: () => ({ active: false }) },
+              { target: "data", mutation: () => ({ active: false }) }
+            ] :
+            [{ target: "labels", mutation: () => ({ active: false }) }];
+        }
       }
-    }
-  }];
+    }];
+  };
 
   shouldComponentUpdate(nextProps) {
     return !Collection.areVictoryPropsEqual(this.props, nextProps);
