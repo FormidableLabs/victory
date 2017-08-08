@@ -1,5 +1,8 @@
 VictoryCore Changelog
 =====================
+## 17.2.2 (2017-08-08)
+
+- [286](https://github.com/FormidableLabs/victory-core/pull/286) bugfix: tooltip positioning with `dx` and `dy`
 
 ## 17.2.1 (2017-08-07)
 
