@@ -214,7 +214,9 @@ export default {
   getComponentEvents(props, components) {
     const events = Array.isArray(components) && components.reduce((memo, componentName) => {
       const component = props[componentName];
-      const componentEvents = component && component.type && component.type.defaultEvents;
+      const defaultEvents = component && component.type && component.type.defaultEvents;
+      const componentEvents = isFunction(defaultEvents) ?
+        defaultEvents(component.props) : defaultEvents;
       memo = Array.isArray(componentEvents) ? memo.concat(...componentEvents) : memo;
       return memo;
     }, []);
