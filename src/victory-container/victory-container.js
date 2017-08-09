@@ -114,7 +114,7 @@ export default class VictoryContainer extends React.Component {
   render() {
     const { width, height, responsive, events } = this.props;
     const style = responsive ? this.props.style : omit(this.props.style, ["height", "width"]);
-    const touchStyle = assign({}, style, { touchAction: "none" });
+    const touchStyle = defaults({}, style, { touchAction: "none" });
     const svgProps = assign(
       {
         width, height, role: "img",
