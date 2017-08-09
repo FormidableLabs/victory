@@ -191,9 +191,9 @@ class VictoryAxis extends React.Component {
       ? this.fixLabelOverlap(gridAndTicks, props)
       : gridAndTicks;
     const children = [
-      ...modifiedGridAndTicks,
       this.renderLine(props),
-      this.renderLabel(props)
+      this.renderLabel(props),
+      ...modifiedGridAndTicks
     ];
     return props.standalone ?
       this.renderContainer(props.containerComponent, children) :
