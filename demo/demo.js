@@ -136,7 +136,14 @@ export default class App extends React.Component {
 
         <div style={containerStyle}>
           <VictoryPie
+            startAngle={90} endAngle={-90}
             style={{ parent: parentStyle }}
+            padding={{ bottom: 50, left: 50, right: 10 }}
+            width={400} height={200}
+          />
+          <VictoryPie
+            style={{ parent: parentStyle }}
+            padding={{ bottom: 50, left: 50, right: 10 }}
             width={400} height={200}
           />
 

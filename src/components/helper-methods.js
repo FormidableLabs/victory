@@ -81,12 +81,9 @@ export default {
     const colors = Array.isArray(colorScale) ? colorScale : Style.getColorScale(colorScale);
     const padding = Helpers.getPadding(props);
     const radius = this.getRadius(props, padding);
-    const offsetWidth = width / 2 + padding.left - padding.right;
-    const offsetHeight = height / 2 + padding.top - padding.bottom;
-    const origin = {
-      x: offsetWidth + radius > width ? radius + padding.left - padding.right : offsetWidth,
-      y: offsetHeight + radius > height ? radius + padding.top - padding.bottom : offsetHeight
-    };
+    const offsetWidth = ((radius + padding.left) + (width - radius - padding.right)) / 2;
+    const offsetHeight = ((radius + padding.top) + (height - radius - padding.bottom)) / 2;
+    const origin = { x: offsetWidth, y: offsetHeight };
     const data = Data.getData(props);
     const slices = this.getSlices(props, data);
     const pathFunction = d3Shape.arc()
