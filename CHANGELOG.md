@@ -1,5 +1,9 @@
 VictoryCore Changelog
 =====================
+
+## 17.2.4 (2017-08-13)
+- [288](https://github.com/FormidableLabs/victory-core/pull/288) Bugfix: containerId
+
 ## 17.2.3 (2017-08-09)
 
 - [287](https://github.com/FormidableLabs/victory-core/pull/287) Allow users to override `touchAction` style in containers
