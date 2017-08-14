@@ -1,6 +1,6 @@
 import React from "react";
 import PropTypes from "prop-types";
-import { assign, omit, defaults, uniqueId } from "lodash";
+import { assign, omit, defaults, uniqueId, isObject } from "lodash";
 import Portal from "../victory-portal/portal";
 import Timer from "../victory-util/timer";
 
@@ -46,7 +46,7 @@ export default class VictoryContainer extends React.Component {
   constructor(props) {
     super(props);
     this.getTimer = this.getTimer.bind(this);
-    this.containerId = typeof props.containerId === "undefined" ?
+    this.containerId = !(isObject(props) && typeof props.containerId === "undefined") ?
       uniqueId("victory-container-") : props.containerId;
   }
 
