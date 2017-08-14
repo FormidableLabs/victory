@@ -1,5 +1,9 @@
 # VictoryPie Changelog
 
+## 11.4.2 (2017-08-14)
+
+- [153](https://github.com/FormidableLabs/victory-pie/pull/153) Bugfix for axymmetric padding
+
 ## 11.4.1 (2017-08-07)
 
 - [151](https://github.com/FormidableLabs/victory-pie/pull/151) bugfix: support functional padding for labels
