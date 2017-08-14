@@ -1,7 +1,12 @@
 VictoryCore Changelog
 =====================
 
+## 17.2.5 (2017-08-14)
+
+- [289](https://github.com/FormidableLabs/victory-core/pull/289) Bugfix: createContainer + containerId
+
 ## 17.2.4 (2017-08-13)
+
 - [288](https://github.com/FormidableLabs/victory-core/pull/288) Bugfix: containerId
 
 ## 17.2.3 (2017-08-09)
