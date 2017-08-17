@@ -1,5 +1,20 @@
 # Victory Changelog
 
+## 0.21.5 (2017-08-17)
+
+VictoryCore
+
+- [289](https://github.com/FormidableLabs/victory-core/pull/289) Bugfix: createContainer + containerId
+- [287](https://github.com/FormidableLabs/victory-core/pull/287) Allow users to override `touchAction` style in containers
+- [286](https://github.com/FormidableLabs/victory-core/pull/286) bugfix: tooltip positioning with `dx` and `dy`
+
+VictoryChart
+- [510](https://github.com/FormidableLabs/victory-chart/pull/510) Render axis line under other axis elements
+
+VictoryPie
+- [153](https://github.com/FormidableLabs/victory-pie/pull/153) Bugfix for axymmetric padding
+
+
 ## 0.21.4 (2017-08-07)
 
 VictoryCore
@@ -36,7 +51,7 @@ VictoryCore
   - [268](https://github.com/FormidableLabs/victory-core/pull/268) Correct stacked domain logic
   - [269](https://github.com/FormidableLabs/victory-core/pull/269) `VictoryLabel` accepts percentage values for `x` and `y`
   - [270](https://github.com/FormidableLabs/victory-core/pull/270) `VictoryLegend` supports events. Also enforces consistent parent styles as other Victory components. **Breaking style change for VictoryLegend**
-  - [272](https://github.com/FormidableLabs/victory-core/pull/272) Aggressive `shouldComponentUpdate` logic for evented Victory components **Breaking change for some components using `addEvents`** 
+  - [272](https://github.com/FormidableLabs/victory-core/pull/272) Aggressive `shouldComponentUpdate` logic for evented Victory components **Breaking change for some components using `addEvents`**
 
 VictoryChart
   - [496](https://github.com/FormidableLabs/victory-chart/pull/496) `VictoryZoomContainer` improvements for real-time, updating data
