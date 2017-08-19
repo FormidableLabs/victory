@@ -171,7 +171,7 @@ export const zoomContainerMixin = (base) => class VictoryZoomContainer extends b
       const role = child && child.type && child.type.role;
       const currentChild = role === "portal" ?
         React.Children.toArray(child.props.children)[0] : child;
-      const { currentDomain, zoomActive } = props;
+      const { currentDomain, zoomActive, allowZoom } = props;
       const originalDomain = defaults({}, props.originalDomain, props.domain);
       const zoomDomain = defaults({}, props.zoomDomain, props.domain);
       const cachedZoomDomain = defaults({}, props.cachedZoomDomain, props.domain);
@@ -180,7 +180,7 @@ export const zoomContainerMixin = (base) => class VictoryZoomContainer extends b
       if (!isEqual(zoomDomain, cachedZoomDomain)) {
         // if zoomDomain has been changed, use it
         domain = zoomDomain;
-      } else if (!zoomActive) {
+      } else if (allowZoom && !zoomActive) {
         // if user has zoomed all the way out, use the child domain
         domain = currentChild.props.domain;
       } else {
