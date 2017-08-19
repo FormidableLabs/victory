@@ -6,7 +6,7 @@ import {
   VictoryChart, VictoryZoomContainer, VictoryArea, VictoryLine,
   VictoryAxis, VictoryGroup, VictoryStack, VictoryScatter
 } from "../../src/index";
-import { VictoryTheme, VictoryClipContainer } from "victory-core";
+import { VictoryTheme, VictoryClipContainer, VictoryPortal } from "victory-core";
 
 export default class App extends React.Component {
   constructor() {
@@ -132,11 +132,13 @@ export default class App extends React.Component {
               />
             }
           >
-            <VictoryScatter
-              style={{ parent: parentStyle, data: { fill: "orange" } }}
-              size={15}
-              data={this.state.data}
-            />
+            <VictoryPortal>
+              <VictoryScatter
+                style={{ parent: parentStyle, data: { fill: "orange" } }}
+                size={15}
+                data={this.state.data}
+              />
+            </VictoryPortal>
           </VictoryChart>
 
           <VictoryChart
