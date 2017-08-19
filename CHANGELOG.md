@@ -1,5 +1,10 @@
 # VictoryChart Changelog
 
+## 21.6.2 (2017-08-19)
+
+- [511](https://github.com/FormidableLabs/victory-chart/pull/511) Bugfix: VictoryZoomContainer works properly with VictoryPortal wrapped children
+- [512](https://github.com/FormidableLabs/victory-chart/pull/512) Bugfix: fix allowZoom prop for panning only (broken by [496](https://github.com/FormidableLabs/victory-chart/pull/496))
+
 ## 21.6.1 (2017-08-09)
 
 - [510](https://github.com/FormidableLabs/victory-chart/pull/510) Render axis line under other axis elements
