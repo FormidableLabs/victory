@@ -98,54 +98,37 @@ export const zoomContainerMixin = (base) => class VictoryZoomContainer extends b
     }
   }];
 
-  clipDataComponents(children, props) { //eslint-disable-line max-statements
+  clipDataComponents(children, props) {
     const { scale, clipContainerComponent, polar, origin } = props;
     const rangeX = scale.x.range();
     const rangeY = scale.y.range();
     const plottableWidth = Math.abs(rangeX[0] - rangeX[1]);
     const plottableHeight = Math.abs(rangeY[0] - rangeY[1]);
-    const childComponents = [];
-    let group = [];
-    let groupNumber = 0;
     const radius = Math.max(...rangeY);
-    const makeGroup = (arr, index) => {
-      return Array.isArray(arr) && arr.length ?
-        React.cloneElement(clipContainerComponent, {
-          key: `ZoomClipContainer-${index}`,
-          clipWidth: plottableWidth,
-          clipHeight: plottableHeight,
-          translateX: Math.min(...rangeX),
-          translateY: Math.min(...rangeY),
-          children: arr,
-          polar,
-          origin: polar ? origin : undefined,
-          radius: polar ? radius : undefined
-        }) :
-        null;
+    const makeGroup = (child, index) => {
+      return React.cloneElement(clipContainerComponent, {
+        key: `ZoomClipContainer-${index}`,
+        clipWidth: plottableWidth,
+        clipHeight: plottableHeight,
+        translateX: Math.min(...rangeX),
+        translateY: Math.min(...rangeY),
+        children: child,
+        polar,
+        origin: polar ? origin : undefined,
+        radius: polar ? radius : undefined
+      });
     };
-
-    const findNextAxis = (start) => {
-      const subset = children.slice(start);
-      return subset.findIndex((child) => child.type.displayName === "VictoryAxis") + start;
-    };
-
-    let axisIndex = findNextAxis(0);
-
-    if (axisIndex === -1) {
-      return makeGroup(children, groupNumber);
-    }
-    for (let i = 0, len = children.length; i < len; i++) {
-      if (i === axisIndex) {
-        childComponents.push(makeGroup(group, groupNumber), children[i]);
-        axisIndex = findNextAxis(i + 1);
-        group = [];
-        groupNumber++;
+    return React.Children.toArray(children).map((child, index) => {
+      const role = child && child.type && child.type.role;
+      if (role === "axis") {
+        return child;
+      } else if (role === "portal") {
+        const group = makeGroup(child.props.children, index);
+        return React.cloneElement(child, { children: group, key: `ZoomPortal-${index}` });
       } else {
-        group.push(children[i]);
+        return makeGroup(child, index);
       }
-    }
-    childComponents.push(makeGroup(group, groupNumber));
-    return childComponents.filter(Boolean);
+    });
   }
 
   modifyPolarDomain(domain, originalDomain) {
@@ -183,7 +166,11 @@ export const zoomContainerMixin = (base) => class VictoryZoomContainer extends b
   modifyChildren(props) {
     const childComponents = React.Children.toArray(props.children);
 
+    //eslint-disable-next-line max-statements
     return childComponents.map((child) => {
+      const role = child && child.type && child.type.role;
+      const currentChild = role === "portal" ?
+        React.Children.toArray(child.props.children)[0] : child;
       const { currentDomain, zoomActive } = props;
       const originalDomain = defaults({}, props.originalDomain, props.domain);
       const zoomDomain = defaults({}, props.zoomDomain, props.domain);
@@ -195,7 +182,7 @@ export const zoomContainerMixin = (base) => class VictoryZoomContainer extends b
         domain = zoomDomain;
       } else if (!zoomActive) {
         // if user has zoomed all the way out, use the child domain
-        domain = child.props.domain;
+        domain = currentChild.props.domain;
       } else {
         // default: use currentDomain, set by the event handlers
         domain = defaults({}, currentDomain, originalDomain);
@@ -209,13 +196,14 @@ export const zoomContainerMixin = (base) => class VictoryZoomContainer extends b
           [props.dimension]: newDomain[props.dimension]
         };
       }
-      return React.cloneElement(
-        child,
+      const newChild = React.cloneElement(
+        currentChild,
         defaults({
           domain: newDomain,
-          data: this.downsampleZoomData(props, child.props, newDomain)
-        }, child.props)
+          data: this.downsampleZoomData(props, currentChild.props, newDomain)
+        }, currentChild.props)
       );
+      return role === "portal" ? React.cloneElement(child, { children: newChild }) : newChild;
     });
   }
 
