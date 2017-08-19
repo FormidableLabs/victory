@@ -4,6 +4,10 @@ import Log from "../victory-util/log";
 import { defaults, omit } from "lodash";
 
 export default class VictoryPortal extends React.Component {
+  static displayName = "VictoryPortal";
+
+  static role = "portal";
+
   static propTypes = {
     children: PropTypes.node
   };
@@ -12,7 +16,7 @@ export default class VictoryPortal extends React.Component {
     portalDeregister: PropTypes.func,
     portalRegister: PropTypes.func,
     portalUpdate: PropTypes.func
-  }
+  };
 
   componentDidMount() {
     if (!this.checkedContext) {
@@ -50,7 +54,8 @@ export default class VictoryPortal extends React.Component {
   }
 
   render() {
-    const { children } = this.props;
+    const children = Array.isArray(this.props.children) ?
+      this.props.children[0] : this.props.children;
     const childProps = children && children.props || {};
     const child = children && React.cloneElement(
       children, defaults({}, childProps, omit(this.props, "children"))
