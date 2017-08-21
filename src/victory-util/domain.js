@@ -106,13 +106,20 @@ export default {
    */
   getDomainFromData(props, axis, dataset) {
     const currentAxis = Helpers.getCurrentAxis(axis, props.horizontal);
-    const allData = flatten(dataset).map((datum) => datum[`_${currentAxis}`]);
-
+    const flatData = flatten(dataset);
+    const allData = flatData.map((datum) => {
+      return typeof datum[`_${currentAxis}1`] === "undefined" ?
+        datum[`_${currentAxis}`] : datum[`_${currentAxis}1`];
+    });
+    const allMinData = flatData.map((datum) => {
+      return typeof datum[`_${currentAxis}0`] === "undefined" ?
+        datum[`_${currentAxis}`] : datum[`_${currentAxis}0`];
+    });
     if (allData.length < 1) {
       return Scale.getBaseScale(props, axis).domain();
     }
 
-    const min = Collection.getMinValue(allData);
+    const min = Collection.getMinValue(allMinData);
     const max = Collection.getMaxValue(allData);
     let domain;
     if (min === max) {
