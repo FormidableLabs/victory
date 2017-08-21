@@ -66,19 +66,28 @@ export default {
       return this.cleanDomain(this.padDomain(propsDomain, props, axis), props, axis);
     }
     const { horizontal } = props;
-    const ensureZero = (domain) => {
-      const isDependent = (axis === "y" && !horizontal) || (axis === "x" && horizontal);
-      const min = Collection.getMinValue(domain, 0);
-      const max = Collection.getMaxValue(domain, 0);
-      const zeroDomain = isDependent ? [min, max] : domain;
-      return this.padDomain(zeroDomain, props, axis);
+    const ensureZero = (domain, dataset) => {
+      const currentAxis = Helpers.getCurrentAxis(axis, horizontal);
+      if (currentAxis === "x") {
+        return domain;
+      } else if (!dataset) {
+        return [Collection.getMinValue(domain, 0), Collection.getMaxValue(domain, 0)];
+      }
+      const flatData = flatten(dataset);
+      const minData = flatData.map((datum) => datum[`_${currentAxis}0`] || 0);
+      const maxData = flatData.map((datum) => {
+        return datum[`_${currentAxis}1`] || datum[`_${currentAxis}`] || 0;
+      });
+      const min = Collection.getMinValue([...domain, ...minData]);
+      const max = Collection.getMaxValue([...domain, ...maxData]);
+      return [min, max];
     };
     const categoryDomain = this.getDomainFromCategories(props, axis);
     if (categoryDomain) {
       return this.cleanDomain(this.padDomain(ensureZero(categoryDomain), props, axis), props, axis);
     }
     const dataset = Data.getData(props);
-    const domain = ensureZero(this.getDomainFromData(props, axis, dataset));
+    const domain = ensureZero(this.getDomainFromData(props, axis, dataset), dataset);
     return this.cleanDomain(this.padDomain(domain, props, axis), props, axis);
   },
 
