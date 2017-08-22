@@ -187,7 +187,7 @@ export default {
     const max = Math.max(...allData);
     // TODO: is this the correct behavior, or should we just error. How do we
     // handle charts with just one data point?
-    if (min === max) {
+    if (+min === +max) {
       return Domain.getSinglePointDomain(max);
     }
     return [min, max];

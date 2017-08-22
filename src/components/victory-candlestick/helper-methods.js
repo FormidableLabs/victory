@@ -141,7 +141,7 @@ export default {
 
       const min = Math.min(...allData);
       const max = Math.max(...allData);
-      if (min === max) {
+      if (+min === +max) {
         return Domain.getSinglePointDomain(max);
       }
       domain = [min, max];
