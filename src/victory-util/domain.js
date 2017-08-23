@@ -131,7 +131,7 @@ export default {
     const min = Collection.getMinValue(allMinData);
     const max = Collection.getMaxValue(allData);
     let domain;
-    if (min === max) {
+    if (+min === +max) {
       domain = this.getSinglePointDomain(max);
     } else {
       domain = [min, max];
@@ -144,10 +144,11 @@ export default {
   getSinglePointDomain(val) {
     // d3-scale does not properly resolve very small differences.
     // eslint-disable-next-line no-magic-numbers
-    const verySmallNumber = Math.pow(10, -15);
-    const adjustedMin = val instanceof Date ? new Date(val - 1) : val - verySmallNumber;
-    const adjustedMax = val instanceof Date ? new Date(val + 1) : val + verySmallNumber;
-    return [adjustedMin, adjustedMax];
+    const verySmallNumber = Math.pow(10, -10);
+    const verySmallDate = 1;
+    const min = val instanceof Date ? new Date(+val - verySmallDate) : val - verySmallNumber;
+    const max = val instanceof Date ? new Date(+val + verySmallDate) : val + verySmallNumber;
+    return [min, max];
   },
 
   getSymmetricDomain(domain, data) {
@@ -236,8 +237,8 @@ export default {
     // use greatest min / max
     const domainMin = cumulativeMin < 0 ? cumulativeMin : Collection.getMinValue(globalDomain);
     const domainMax = Collection.getMaxValue(globalDomain, ...cumulativeMaxArray);
-    if (domainMin === domainMax) {
-      return this.getSinglePointDomain(domainMax);
+    if (+domainMin === +domainMax) {
+      return this.getSinglePointDomain(domainMin);
     }
     return [domainMin, domainMax];
   },
