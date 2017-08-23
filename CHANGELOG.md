@@ -1,6 +1,11 @@
 VictoryCore Changelog
 =====================
 
+## 17.2.7 (2017-08-22)
+
+- [291](https://github.com/FormidableLabs/victory-core/pull/291) Domain should include negative y0 values
+- [292](https://github.com/FormidableLabs/victory-core/pull/292) Fix single point domain logic for dates
+
 ## 17.2.6 (2017-08-19)
 
 - [290](https://github.com/FormidableLabs/victory-core/pull/290) Bugfix: VictoryPortal with VictoryZoomContainer
