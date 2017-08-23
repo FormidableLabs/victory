@@ -86,7 +86,6 @@ export default class VictoryTooltip extends React.Component {
   };
 
   static defaultProps = {
-    theme: VictoryTheme.grayscale,
     active: false,
     renderInPortal: true,
     labelComponent: <VictoryLabel/>,
@@ -209,7 +208,8 @@ export default class VictoryTooltip extends React.Component {
   }
 
   getCalculatedValues(props) {
-    const { style, text, datum, theme, active } = props;
+    const { style, text, datum, active } = props;
+    const theme = props.theme || VictoryTheme.grayscale;
     const defaultLabelStyles = theme && theme.tooltip && theme.tooltip.style ?
       theme.tooltip.style : {};
     const baseLabelStyle = Array.isArray(style) ?
