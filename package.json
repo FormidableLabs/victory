@@ -1,6 +1,6 @@
 {
   "name": "victory-core",
-  "version": "17.2.6",
+  "version": "17.2.7",
   "description": "Victory Core",
   "main": "lib/index.js",
   "module": "es/index.js",
