@@ -9,9 +9,12 @@ import VictoryLabel from "../victory-label/victory-label";
 import VictoryContainer from "../victory-container/victory-container";
 import VictoryTheme from "../victory-theme/victory-theme";
 import Point from "../victory-primitives/point";
+import Border from "../victory-primitives/border";
 
 const fallbackProps = {
   orientation: "vertical",
+  width: 450,
+  height: 300,
   x: 0,
   y: 0
 };
@@ -27,6 +30,18 @@ class VictoryLegend extends React.Component {
   static role = "legend";
 
   static propTypes = {
+    borderComponent: PropTypes.element,
+    borderHeight: CustomPropTypes.nonNegative,
+    borderPadding: PropTypes.oneOfType([
+      PropTypes.number,
+      PropTypes.shape({
+        top: PropTypes.number,
+        bottom: PropTypes.number,
+        left: PropTypes.number,
+        right: PropTypes.number
+      })
+    ]),
+    borderWidth: CustomPropTypes.nonNegative,
     colorScale: PropTypes.oneOfType([
       PropTypes.arrayOf(PropTypes.string),
       PropTypes.oneOf([
@@ -58,10 +73,7 @@ class VictoryLegend extends React.Component {
     })),
     groupComponent: PropTypes.element,
     gutter: PropTypes.number,
-    height: PropTypes.oneOfType([
-      CustomPropTypes.nonNegative,
-      PropTypes.func
-    ]),
+    height: CustomPropTypes.nonNegative,
     itemsPerRow: PropTypes.number,
     labelComponent: PropTypes.element,
     orientation: PropTypes.oneOf(["horizontal", "vertical"]),
@@ -80,21 +92,20 @@ class VictoryLegend extends React.Component {
     }),
     standalone: PropTypes.bool,
     style: PropTypes.shape({
+      border: PropTypes.object,
       data: PropTypes.object,
       labels: PropTypes.object,
       parent: PropTypes.object
     }),
     symbolSpacer: PropTypes.number,
     theme: PropTypes.object,
-    width: PropTypes.oneOfType([
-      CustomPropTypes.nonNegative,
-      PropTypes.func
-    ]),
+    width: CustomPropTypes.nonNegative,
     x: PropTypes.number,
     y: PropTypes.number
   };
 
   static defaultProps = {
+    borderComponent: <Border/>,
     data: defaultLegendData,
     containerComponent: <VictoryContainer/>,
     dataComponent: <Point/>,
@@ -109,11 +120,36 @@ class VictoryLegend extends React.Component {
     "dataComponent", "labelComponent", "groupComponent", "containerComponent"
   ];
 
+  renderChildren(props) {
+    const { dataComponent, labelComponent } = props;
+    const dataComponents = this.dataKeys.map((_dataKey, index) => {
+      const dataProps = this.getComponentProps(dataComponent, "data", index);
+      return React.cloneElement(dataComponent, dataProps);
+    });
+
+    const labelComponents = this.dataKeys.map((_dataKey, index) => {
+      const labelProps = this.getComponentProps(labelComponent, "labels", index);
+      if (typeof labelProps.text !== "undefined" && labelProps.text !== null) {
+        return React.cloneElement(labelComponent, labelProps);
+      }
+      return undefined;
+    }).filter(Boolean);
+
+    const borderProps = this.getComponentProps(props.borderComponent, "border", 0);
+    const borderComponent = React.cloneElement(props.borderComponent, borderProps);
+    return [borderComponent, ...dataComponents, ...labelComponents];
+  }
+
+
+
+
   render() {
     const { role } = this.constructor;
     const props = Helpers.modifyProps((this.props), fallbackProps, role);
-    const children = this.renderData(props);
-    return props.standalone ? this.renderContainer(props.containerComponent, children) : children;
+    const children = [this.renderChildren(props)];
+    return props.standalone ?
+      this.renderContainer(props.containerComponent, children) :
+      React.cloneElement(props.groupComponent, {}, children);
   }
 }
 

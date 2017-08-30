@@ -9,7 +9,11 @@ const containerStyle = {
   justifyContent: "center"
 };
 
-const legendStyle = { parent: { border: "1px solid #ccc", margin: "2%", maxHeight: 300 } };
+const legendStyle = {
+  parent: { border: "1px solid #ccc", margin: "2%" },
+  labels: { fontSize: 14 },
+  border: { stroke: "black", strokeWidth: 2 }
+};
 const data = [{
   name: "Series 1",
   symbol: {
@@ -43,7 +47,7 @@ const data = [{
     fill: "purple"
   }
 }, {
-  name: "Series 6",
+  name: "Series 6: also quite long",
   symbol: {
     type: "circle",
     fill: "orange"
@@ -56,12 +60,16 @@ const data = [{
 const LegendDemo = () => (
   <div className="demo" style={containerStyle}>
     <svg
-      height={150}
-      width={150}
+      height={300}
+      width={500}
       style={{ border: "1px solid #ccc", margin: "2%" }}
     >
       <VictoryLegend
         standalone={false}
+        width={500} height={300}
+        x={25} y={120}
+        gutter={30}
+        itemsPerRow={2}
         data={data}
         style={legendStyle}
         events={[{
@@ -76,25 +84,7 @@ const LegendDemo = () => (
         }]}
       />
     </svg>
-    <svg
-      height={100}
-      width={244}
-      style={{ border: "1px solid #ccc", margin: "2%" }}
-    >
-      <VictoryLegend
-        data={data}
-        padding={15}
-        itemsPerRow={3}
-        standalone={false}
-        style={{ labels: { fill: "darkgray" } }}
-      />
-    </svg>
-    <VictoryLegend
-      data={data}
-      itemsPerRow={4}
-      orientation="horizontal"
-      style={legendStyle}
-    />
+
   </div>
 );
 
