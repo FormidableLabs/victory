@@ -41,8 +41,7 @@ const relativeMeasurementUnitsCoef = {
 
 const coefficients = {
   averageFontConstant: 2.1675, // Average pixels per glyph in existing font.
-  widthOverlapCoef: 1.25, // Coefficient for width value to prevent overlap.
-  heightOverlapCoef: 1.05, // Coefficient for height value to prevent overlap.
+  widthOverlapCoef: 1.2, // Coefficient for width value to prevent overlap.
   lineCapitalCoef: 1.15, // Coefficient for height value. Reserve space for capital chars.
   lineSpaceHeightCoef: 0.2 // Coefficient for height value. Reserve space between lines.
 };
@@ -84,7 +83,7 @@ const convertLengthToPixels = (length, fontSize) => {
   if (absoluteMeasurementUnitsToPixels.hasOwnProperty(attribute)) {
     result = value * absoluteMeasurementUnitsToPixels[attribute];
   } else if (relativeMeasurementUnitsCoef.hasOwnProperty(attribute)) {
-    result = (fontSize ? value * fontSize : value * coefficients.defaultFontSize)
+    result = (fontSize ? value * fontSize : value * defaultStyle.fontSize)
       * relativeMeasurementUnitsCoef[attribute];
   } else {
     result = value;
@@ -116,7 +115,8 @@ const _approximateTextWidthInternal = (text, style) => {
 const _approximateTextHeightInternal = (text, style) => {
   return _splitToLines(text).reduce((total, line, index) => {
     const lineStyle = _prepareParams(style, index);
-    const height = lineStyle.fontSize * coefficients.lineCapitalCoef;
+    const height = line.match(/[(A-Z)(0-9)]/) ?
+      lineStyle.fontSize * coefficients.lineCapitalCoef : lineStyle.fontSize;
     const emptySpace = index === 0 ? 0 : lineStyle.fontSize * coefficients.lineSpaceHeightCoef;
     return total + lineStyle.lineHeight * (height + emptySpace);
   }, 0);
@@ -142,7 +142,7 @@ const approximateTextSize = (text, style) => {
   const heightWithRotate = angle ? _getSizeWithRotate(height, width, angle) : height;
   return {
     width: widthWithRotate * coefficients.widthOverlapCoef,
-    height: heightWithRotate * coefficients.heightOverlapCoef
+    height: heightWithRotate
   };
 };
 
