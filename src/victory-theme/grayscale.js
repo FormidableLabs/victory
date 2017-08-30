@@ -192,7 +192,6 @@ export default {
         type: "circle"
       },
       labels: baseLabelStyles
-    },
-    symbolSpacer: 8
+    }
   }
 };

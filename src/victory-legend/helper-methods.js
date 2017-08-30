@@ -3,44 +3,6 @@ import Helpers from "../victory-util/helpers";
 import Style from "../victory-util/style";
 import TextSize from "../victory-util/textsize";
 
-
-const calculateLegendHeight = (props, textSizes) => {
-  if (props.standalone) {
-    return props.height;
-  }
-  const { gutter, itemsPerRow, isHorizontal, borderPadding } = props;
-  const { top = 0, bottom = 0 } = borderPadding;
-  const itemCount = textSizes.length;
-  const rowCount = itemsPerRow ? Math.ceil(itemCount / itemsPerRow) : 1;
-  const contentHeight = isHorizontal
-    ? maxBy(textSizes, "height").height * rowCount + gutter * (rowCount - 1)
-    : (sumBy(textSizes, "height") + gutter * (itemCount - 2)) / rowCount;
-
-  return top + contentHeight + bottom;
-};
-
-const calculateLegendWidth = (props, itemCount, maxTextWidth) => {
-  if (props.standalone) {
-    return props.width;
-  }
-  const { gutter, itemsPerRow, symbolSpacer, isHorizontal, borderPadding } = props;
-  const { left = 0, right = 0 } = borderPadding;
-  const rowCount = itemsPerRow ? Math.ceil(itemCount / itemsPerRow) : 1;
-  const rowItemCount = itemsPerRow || itemCount;
-  let contentWidth;
-
-  if (isHorizontal) {
-    const gutterWidth = gutter * rowItemCount;
-    const symbolWidth = symbolSpacer * 3 * rowItemCount; // eslint-disable-line no-magic-numbers
-    const textWidth = maxTextWidth * rowItemCount;
-    contentWidth = symbolWidth + textWidth + gutterWidth;
-  } else {
-    contentWidth = (maxTextWidth + symbolSpacer * 2 + gutter) * rowCount;
-  }
-
-  return left + contentWidth + right;
-};
-
 const getColorScale = (props) => {
   const { colorScale } = props;
   return typeof colorScale === "string" ? Style.getColorScale(colorScale) : colorScale || [];
@@ -51,12 +13,6 @@ const getLabelStyles = (props) => {
   return data.map((datum) => {
     const baseLabelStyles = defaults({}, datum.labels, style.labels);
     return Helpers.evaluateStyle(baseLabelStyles, datum);
-  });
-};
-
-const getTextSizes = (props, labelStyles) => {
-  return props.data.map((datum, i) => {
-    return TextSize.approximateTextSize(datum.name, labelStyles[i]);
   });
 };
 
@@ -85,7 +41,7 @@ const getCalculatedValues = (props) => {
 const getColumn = (props, index) => {
   const { itemsPerRow, isHorizontal } = props;
   if (!itemsPerRow) {
-    return isHorizontal ? index : 1;
+    return isHorizontal ? index : 0;
   }
   return isHorizontal ? index % itemsPerRow : Math.floor(index / itemsPerRow);
 };
@@ -93,7 +49,7 @@ const getColumn = (props, index) => {
 const getRow = (props, index) => {
   const { itemsPerRow, isHorizontal } = props;
   if (!itemsPerRow) {
-    return isHorizontal ? 1 : index;
+    return isHorizontal ? 0 : index;
   }
   return isHorizontal ? Math.floor(index / itemsPerRow) : index % itemsPerRow;
 };
@@ -104,13 +60,14 @@ const getSymbolSize = (datum, fontSize) => {
 };
 
 const groupData = (props) => {
-  const { data } = props;
+  const { data, symbolSpacer } = props;
   const labelStyles = getLabelStyles(props);
   return data.map((datum, index) => {
     const { fontSize } = labelStyles[index];
     return {
       ...datum,
       size: getSymbolSize(datum, fontSize),
+      symbolSpacer: symbolSpacer || fontSize,
       textSize: TextSize.approximateTextSize(datum.name, labelStyles[index]),
       column: getColumn(props, index),
       row: getRow(props, index)
@@ -119,13 +76,12 @@ const groupData = (props) => {
 };
 
 const getColumnWidths = (props, data) => {
-  const { symbolSpacer = 0 } = props;
   const dataByColumn = groupBy(data, "column");
   const columns = keys(dataByColumn);
   return columns.reduce((memo, curr, index) => {
     const gutter = index === columns.length - 1 ? 0 : props.gutter;
     const lengths = dataByColumn[curr].map((d) => {
-      return d.textSize.width + d.size + symbolSpacer + gutter;
+      return d.textSize.width + d.size + d.symbolSpacer + gutter;
     });
     memo[index] = Math.max(...lengths);
     return memo;
@@ -133,10 +89,12 @@ const getColumnWidths = (props, data) => {
 };
 
 const getRowHeights = (props, data) => {
-  const dataByColumn = groupBy(data, "row");
-  return keys(dataByColumn).reduce((memo, curr, index) => {
-    const datum = dataByColumn[curr];
-    const lengths = datum.map((d) => d.textSize.height + d.size);
+  const dataByRow = groupBy(data, "row");
+  return keys(dataByRow).reduce((memo, curr, index) => {
+    const rows = dataByRow[curr];
+    const lengths = rows.map((d) => {
+      return d.textSize.height + d.size;
+    });
     memo[index] = Math.max(...lengths);
     return memo;
   }, []);
@@ -148,7 +106,7 @@ export default (props, fallbackProps) => {
   props = assign({}, modifiedProps, getCalculatedValues(modifiedProps));
   const {
     data, standalone, theme, padding, style, colorScale, width, height,
-   symbolSpacer = 0, borderPadding, x = 0, y = 0
+    borderPadding, x = 0, y = 0
   } = props;
   const groupedData = groupData(props);
   const columnWidths = getColumnWidths(props, groupedData);
@@ -176,8 +134,8 @@ export default (props, fallbackProps) => {
     const dataStyle = defaults({}, datum.symbol, style.data, { fill: color });
     const eventKey = datum.eventKey || i;
     const offset = getOffset(datum);
-    const originY = y + borderPadding.top + (datum.size / 2) + symbolSpacer;
-    const originX = x + borderPadding.left + (datum.size / 2) + symbolSpacer;
+    const originY = y + borderPadding.top + (datum.size);
+    const originX = x + borderPadding.left + datum.size;
     const dataProps = {
       index: i,
       data, datum,
@@ -195,7 +153,7 @@ export default (props, fallbackProps) => {
       text: datum.name,
       style: labelStyles[i],
       y: originY + offset.y,
-      x: originX + offset.x + symbolSpacer + (datum.size / 2)
+      x: originX + offset.x + datum.symbolSpacer + (datum.size / 2)
     };
     childProps[eventKey] = { data: dataProps, labels: labelProps, border: borderProps };
 

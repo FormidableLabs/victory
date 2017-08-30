@@ -115,7 +115,9 @@ const _approximateTextWidthInternal = (text, style) => {
 const _approximateTextHeightInternal = (text, style) => {
   return _splitToLines(text).reduce((total, line, index) => {
     const lineStyle = _prepareParams(style, index);
-    const height = line.match(/[(A-Z)(0-9)]/) ?
+    // const containsCaps = line.match(/[(A-Z)(0-9)]/);
+    const containsCaps = true;
+    const height = containsCaps ?
       lineStyle.fontSize * coefficients.lineCapitalCoef : lineStyle.fontSize;
     const emptySpace = index === 0 ? 0 : lineStyle.fontSize * coefficients.lineSpaceHeightCoef;
     return total + lineStyle.lineHeight * (height + emptySpace);
