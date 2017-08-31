@@ -76,6 +76,7 @@ class VictoryLegend extends React.Component {
     height: CustomPropTypes.nonNegative,
     itemsPerRow: PropTypes.number,
     labelComponent: PropTypes.element,
+
     orientation: PropTypes.oneOf(["horizontal", "vertical"]),
     padding: PropTypes.oneOfType([
       PropTypes.number,
@@ -139,9 +140,6 @@ class VictoryLegend extends React.Component {
     const borderComponent = React.cloneElement(props.borderComponent, borderProps);
     return [borderComponent, ...dataComponents, ...labelComponents];
   }
-
-
-
 
   render() {
     const { role } = this.constructor;

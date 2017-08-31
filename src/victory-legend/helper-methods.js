@@ -1,4 +1,4 @@
-import { defaults, assign, maxBy, sumBy, groupBy, keys, sum, range } from "lodash";
+import { defaults, assign, groupBy, keys, sum, range } from "lodash";
 import Helpers from "../victory-util/helpers";
 import Style from "../victory-util/style";
 import TextSize from "../victory-util/textsize";
@@ -60,14 +60,14 @@ const getSymbolSize = (datum, fontSize) => {
 };
 
 const groupData = (props) => {
-  const { data, symbolSpacer } = props;
+  const { data } = props;
   const labelStyles = getLabelStyles(props);
   return data.map((datum, index) => {
     const { fontSize } = labelStyles[index];
+    const size = getSymbolSize(datum, fontSize);
+    const symbolSpacer = props.symbolSpacer || Math.max(size, fontSize);
     return {
-      ...datum,
-      size: getSymbolSize(datum, fontSize),
-      symbolSpacer: symbolSpacer || fontSize,
+      ...datum, size, symbolSpacer, fontSize,
       textSize: TextSize.approximateTextSize(datum.name, labelStyles[index]),
       column: getColumn(props, index),
       row: getRow(props, index)
@@ -81,7 +81,8 @@ const getColumnWidths = (props, data) => {
   return columns.reduce((memo, curr, index) => {
     const gutter = index === columns.length - 1 ? 0 : props.gutter;
     const lengths = dataByColumn[curr].map((d) => {
-      return d.textSize.width + d.size + d.symbolSpacer + gutter;
+      const symbolWidth = index && index === columns.length - 1 ? 0 : d.size + d.symbolSpacer;
+      return d.textSize.width + gutter + symbolWidth;
     });
     memo[index] = Math.max(...lengths);
     return memo;
@@ -92,9 +93,7 @@ const getRowHeights = (props, data) => {
   const dataByRow = groupBy(data, "row");
   return keys(dataByRow).reduce((memo, curr, index) => {
     const rows = dataByRow[curr];
-    const lengths = rows.map((d) => {
-      return d.textSize.height + d.size;
-    });
+    const lengths = rows.map((d) => d.textSize.height + d.symbolSpacer);
     memo[index] = Math.max(...lengths);
     return memo;
   }, []);
@@ -124,8 +123,14 @@ export default (props, fallbackProps) => {
   const getOffset = (datum) => {
     const { column, row } = datum;
     return {
-      x: range(column).reduce((memo, curr) => (memo += columnWidths[curr]), 0),
-      y: range(row).reduce((memo, curr) => (memo += rowHeights[curr]), 0)
+      x: range(column).reduce((memo, curr) => {
+        memo += columnWidths[curr];
+        return memo;
+      }, 0),
+      y: range(row).reduce((memo, curr) => {
+        memo += rowHeights[curr];
+        return memo;
+      }, 0)
     };
   };
 
@@ -134,8 +139,8 @@ export default (props, fallbackProps) => {
     const dataStyle = defaults({}, datum.symbol, style.data, { fill: color });
     const eventKey = datum.eventKey || i;
     const offset = getOffset(datum);
-    const originY = y + borderPadding.top + (datum.size);
-    const originX = x + borderPadding.left + datum.size;
+    const originY = y + borderPadding.top + datum.symbolSpacer;
+    const originX = x + borderPadding.left + datum.symbolSpacer;
     const dataProps = {
       index: i,
       data, datum,
