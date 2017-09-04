@@ -204,11 +204,13 @@ export default {
     colorScale: colors,
     gutter: 10,
     orientation: "vertical",
+    titleOrientation: "top",
     style: {
       data: {
         type: "circle"
       },
-      labels: baseLabelStyles
+      labels: baseLabelStyles,
+      title: baseLabelStyles
     }
   }
 };

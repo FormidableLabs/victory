@@ -42,6 +42,7 @@ class VictoryLegend extends React.Component {
       })
     ]),
     borderWidth: CustomPropTypes.nonNegative,
+    centerTitle: PropTypes.bool,
     colorScale: PropTypes.oneOfType([
       PropTypes.arrayOf(PropTypes.string),
       PropTypes.oneOf([
@@ -76,7 +77,6 @@ class VictoryLegend extends React.Component {
     height: CustomPropTypes.nonNegative,
     itemsPerRow: PropTypes.number,
     labelComponent: PropTypes.element,
-
     orientation: PropTypes.oneOf(["horizontal", "vertical"]),
     padding: PropTypes.oneOfType([
       PropTypes.number,
@@ -96,10 +96,14 @@ class VictoryLegend extends React.Component {
       border: PropTypes.object,
       data: PropTypes.object,
       labels: PropTypes.object,
-      parent: PropTypes.object
+      parent: PropTypes.object,
+      title: PropTypes.object
     }),
     symbolSpacer: PropTypes.number,
     theme: PropTypes.object,
+    title: PropTypes.oneOfType([PropTypes.string, PropTypes.array]),
+    titleComponent: PropTypes.element,
+    titleOrientation: PropTypes.oneOf(["top", "bottom", "left", "right"]),
     width: CustomPropTypes.nonNegative,
     x: PropTypes.number,
     y: PropTypes.number
@@ -113,7 +117,8 @@ class VictoryLegend extends React.Component {
     groupComponent: <g/>,
     labelComponent: <VictoryLabel/>,
     standalone: true,
-    theme: VictoryTheme.grayscale
+    theme: VictoryTheme.grayscale,
+    titleComponent: <VictoryLabel/>
   };
 
   static getBaseProps = partialRight(getBaseProps, fallbackProps);
@@ -122,7 +127,7 @@ class VictoryLegend extends React.Component {
   ];
 
   renderChildren(props) {
-    const { dataComponent, labelComponent } = props;
+    const { dataComponent, labelComponent, title } = props;
     const dataComponents = this.dataKeys.map((_dataKey, index) => {
       const dataProps = this.getComponentProps(dataComponent, "data", index);
       return React.cloneElement(dataComponent, dataProps);
@@ -138,6 +143,11 @@ class VictoryLegend extends React.Component {
 
     const borderProps = this.getComponentProps(props.borderComponent, "border", 0);
     const borderComponent = React.cloneElement(props.borderComponent, borderProps);
+    if (title) {
+      const titleProps = this.getComponentProps(props.title, "title", 0);
+      const titleComponent = React.cloneElement(props.titleComponent, titleProps);
+      return [borderComponent, ...dataComponents, titleComponent, ...labelComponents];
+    }
     return [borderComponent, ...dataComponents, ...labelComponents];
   }
 

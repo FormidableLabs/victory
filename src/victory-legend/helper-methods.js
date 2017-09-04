@@ -24,7 +24,8 @@ const getStyles = (props, styleObject) => {
     parent: defaults(style.parent, styleObject.parent, parentStyleProps),
     data: defaults({}, style.data, styleObject.data),
     labels: defaults({}, style.labels, styleObject.labels),
-    border: defaults({}, style.border, styleObject.border)
+    border: defaults({}, style.border, styleObject.border),
+    title: defaults({}, style.title, styleObject.title)
   };
 };
 
@@ -61,10 +62,11 @@ const getSymbolSize = (datum, fontSize) => {
 
 const groupData = (props) => {
   const { data } = props;
+  const style = props.style && props.style.data || {};
   const labelStyles = getLabelStyles(props);
   return data.map((datum, index) => {
     const { fontSize } = labelStyles[index];
-    const size = getSymbolSize(datum, fontSize);
+    const size = style.size || getSymbolSize(datum, fontSize);
     const symbolSpacer = props.symbolSpacer || Math.max(size, fontSize);
     return {
       ...datum, size, symbolSpacer, fontSize,
@@ -99,57 +101,128 @@ const getRowHeights = (props, data) => {
   }, []);
 };
 
+const getTitleDimensions = (props) => {
+  const style = props.style && props.style.title || {};
+  const textSize = TextSize.approximateTextSize(props.title, style);
+  const padding = style.padding || 0;
+  return { height: textSize.height + 2 * padding || 0, width: textSize.width + 2 * padding || 0 };
+};
+
+const getOffset = (datum, rowHeights, columnWidths) => {
+  const { column, row } = datum;
+  return {
+    x: range(column).reduce((memo, curr) => {
+      memo += columnWidths[curr];
+      return memo;
+    }, 0),
+    y: range(row).reduce((memo, curr) => {
+      memo += rowHeights[curr];
+      return memo;
+    }, 0)
+  };
+};
+
+const getAnchors = (titleOrientation, centerTitle) => {
+  let textAnchor;
+  let verticalAnchor;
+  if (centerTitle) {
+    textAnchor = "middle";
+  } else {
+    textAnchor = titleOrientation === "right" ? "end" : "start";
+  }
+  if (titleOrientation === "left" || titleOrientation === "right") {
+    verticalAnchor = "middle";
+  } else {
+    verticalAnchor = titleOrientation === "top" ? "start" : "end";
+  }
+  return { textAnchor, verticalAnchor };
+};
+
+const getTitleProps = (props, borderProps) => {
+  const { title, titleOrientation, centerTitle, borderPadding } = props;
+  const { height, width } = borderProps;
+  const baseStyle = props.style && props.style.title || {};
+  const style = defaults({}, baseStyle, getAnchors(titleOrientation, centerTitle));
+  const origin = {
+    x: titleOrientation === "right" ? props.x + width : props.x,
+    y: titleOrientation === "bottom" ? props.y + height : props.y
+  };
+  const sign = titleOrientation === "bottom" || titleOrientation === "right" ? -1 : 1;
+  if (titleOrientation === "top" || titleOrientation === "bottom") {
+    return {
+      x: centerTitle ?
+        origin.x + sign * (width / 2) : origin.x + (borderPadding.left || style.fontSize),
+      y: origin.y + sign * (borderPadding[titleOrientation] || style.fontSize),
+      style,
+      text: title
+    };
+  } else {
+    return {
+      x: origin.x + sign * (borderPadding[titleOrientation] || style.fontSize),
+      y: centerTitle ?
+        origin.y + sign * (height / 2) : origin.y + (borderPadding.top || style.fontSize),
+      style,
+      text: title
+    };
+  }
+};
+
+const getBorderProps = (props, contentHeight, contentWidth) => {
+  const { x, y, borderPadding, style, borderHeight, borderWidth } = props;
+  const height = borderHeight || contentHeight + borderPadding.top + borderPadding.bottom;
+  const width = borderWidth || contentWidth + borderPadding.left + borderPadding.right;
+  return { x, y, height, width, style: style.border };
+};
 
 export default (props, fallbackProps) => {
   const modifiedProps = Helpers.modifyProps(props, fallbackProps, "legend");
   props = assign({}, modifiedProps, getCalculatedValues(modifiedProps));
   const {
-    data, standalone, theme, padding, style, colorScale, width, height,
-    borderPadding, x = 0, y = 0
+    data, standalone, theme, padding, style, colorScale,
+    borderPadding, title, titleOrientation, x = 0, y = 0
   } = props;
   const groupedData = groupData(props);
   const columnWidths = getColumnWidths(props, groupedData);
   const rowHeights = getRowHeights(props, groupedData);
   const labelStyles = getLabelStyles(props);
-  const initialChildProps = {
-    parent: { height, width, data, standalone, theme, padding, style: style.parent }
-  };
-  const borderProps = {
-    x, y, style: style.border,
-    height: sum(rowHeights),
-    width: sum(columnWidths)
+  const titleDimensions = title ? getTitleDimensions(props) : { height: 0, width: 0 };
+  const titleOffset = {
+    x: titleOrientation === "left" ? titleDimensions.width : 0,
+    y: titleOrientation === "top" ? titleDimensions.height : 0
   };
 
-  const getOffset = (datum) => {
-    const { column, row } = datum;
-    return {
-      x: range(column).reduce((memo, curr) => {
-        memo += columnWidths[curr];
-        return memo;
-      }, 0),
-      y: range(row).reduce((memo, curr) => {
-        memo += rowHeights[curr];
-        return memo;
-      }, 0)
-    };
+  const contentHeight = titleOrientation === "left" || titleOrientation === "right" ?
+    Math.max(sum(rowHeights), titleDimensions.height) : sum(rowHeights) + titleDimensions.height;
+  const contentWidth = titleOrientation === "top" || titleOrientation === "bottom" ?
+    sum(columnWidths) + titleDimensions.width : Math.max(sum(columnWidths), titleDimensions.width);
+
+  const initialProps = {
+    parent: {
+      data, standalone, theme, padding,
+      height: props.height,
+      width: props.width,
+      style: style.parent
+    }
   };
+  const borderProps = getBorderProps(props, contentHeight, contentWidth);
+  const titleProps = getTitleProps(props, borderProps);
 
   return groupedData.reduce((childProps, datum, i) => {
     const color = colorScale[i % colorScale.length];
     const dataStyle = defaults({}, datum.symbol, style.data, { fill: color });
     const eventKey = datum.eventKey || i;
-    const offset = getOffset(datum);
+    const offset = getOffset(datum, rowHeights, columnWidths);
     const originY = y + borderPadding.top + datum.symbolSpacer;
     const originX = x + borderPadding.left + datum.symbolSpacer;
     const dataProps = {
       index: i,
       data, datum,
       key: `legend-symbol-${i}`,
-      symbol: dataStyle.type || "circle",
+      symbol: dataStyle.type || dataStyle.symbol || "circle",
       size: datum.size,
       style: dataStyle,
-      y: originY + offset.y,
-      x: originX + offset.x
+      y: originY + offset.y + titleOffset.y,
+      x: originX + offset.x + titleOffset.x
     };
 
     const labelProps = {
@@ -157,12 +230,14 @@ export default (props, fallbackProps) => {
       key: `legend-label-${i}`,
       text: datum.name,
       style: labelStyles[i],
-      y: originY + offset.y,
-      x: originX + offset.x + datum.symbolSpacer + (datum.size / 2)
+      y: originY + offset.y + titleOffset.y,
+      x: originX + offset.x + titleOffset.x + datum.symbolSpacer + (datum.size / 2)
     };
-    childProps[eventKey] = { data: dataProps, labels: labelProps, border: borderProps };
+    childProps[eventKey] = eventKey === 0 ?
+      { data: dataProps, labels: labelProps, border: borderProps, title: titleProps } :
+      { data: dataProps, labels: labelProps };
 
     return childProps;
-  }, initialChildProps);
+  }, initialProps);
 };
 

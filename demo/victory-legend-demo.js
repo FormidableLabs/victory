@@ -77,6 +77,8 @@ const LegendDemo = () => (
         standalone={false}
         x={25} y={20}
         itemsPerRow={2}
+        centerTitle
+        title={["Yaaaas", "a title!"]}
         data={data}
         symbolSpacer={symbolSpacer}
         style={legendStyle}
