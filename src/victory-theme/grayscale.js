@@ -193,7 +193,7 @@ export default {
         type: "circle"
       },
       labels: baseLabelStyles,
-      title: baseLabelStyles
+      title: assign({}, baseLabelStyles, { padding: 5 })
     }
   }
 };

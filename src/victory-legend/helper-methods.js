@@ -105,7 +105,7 @@ const getTitleDimensions = (props) => {
   const style = props.style && props.style.title || {};
   const textSize = TextSize.approximateTextSize(props.title, style);
   const padding = style.padding || 0;
-  return { height: textSize.height + 2 * padding || 0, width: textSize.width + 2 * padding || 0 };
+  return { height: textSize.height + padding || 0, width: textSize.width + padding || 0 };
 };
 
 const getOffset = (datum, rowHeights, columnWidths) => {
@@ -123,35 +123,44 @@ const getOffset = (datum, rowHeights, columnWidths) => {
 };
 
 const getAnchors = (titleOrientation, centerTitle) => {
-  let textAnchor;
-  let verticalAnchor;
+  const standardAnchors = {
+    textAncor: titleOrientation === "right" ? "end" : "start",
+    verticalAnchor: titleOrientation === "bottom" ? "end" : "start"
+  };
   if (centerTitle) {
-    textAnchor = "middle";
+    const horizontal = titleOrientation === "top" || titleOrientation === "bottom";
+    return {
+      textAnchor: horizontal ? "middle" : standardAnchors.textAnchor,
+      verticalAnchor: horizontal ? standardAnchors.verticalAnchor : "middle"
+    };
   } else {
-    textAnchor = titleOrientation === "right" ? "end" : "start";
+    return standardAnchors;
   }
-  if (titleOrientation === "left" || titleOrientation === "right") {
-    verticalAnchor = "middle";
-  } else {
-    verticalAnchor = titleOrientation === "top" ? "start" : "end";
-  }
-  return { textAnchor, verticalAnchor };
+};
+
+const getTitleStyle = (props) => {
+  const { titleOrientation, centerTitle, titleComponent } = props;
+  const baseStyle = props.style && props.style.title || {};
+  const componentStyle = titleComponent.props && titleComponent.props.style || {};
+  const anchors = getAnchors(titleOrientation, centerTitle);
+  return Array.isArray(componentStyle) ?
+    componentStyle.map((obj) => defaults({}, obj, baseStyle, anchors)) :
+    defaults({}, componentStyle, baseStyle, anchors);
 };
 
 // eslint-disable-next-line complexity
 const getTitleProps = (props, borderProps) => {
   const { title, titleOrientation, centerTitle, borderPadding } = props;
   const { height, width } = borderProps;
-  const baseStyle = props.style && props.style.title || {};
-  const style = defaults({}, baseStyle, getAnchors(titleOrientation, centerTitle));
-
+  const style = getTitleStyle(props);
+  const padding = Array.isArray(style) ? style[0].padding : style.padding;
   const horizontal = titleOrientation === "top" || titleOrientation === "bottom";
   const standardPadding = {
-    x: centerTitle ? width / 2 : (borderPadding.left || style.fontSize) + (style.padding || 0),
-    y: centerTitle ? height / 2 : (borderPadding.top || style.fontSize) + (style.padding || 0)
+    x: centerTitle ? width / 2 : borderPadding.left + (padding || 0),
+    y: centerTitle ? height / 2 : borderPadding.top + (padding || 0)
   };
   const getPadding = () => {
-    return (borderPadding[titleOrientation] || style.fontSize) + (style.padding || 0);
+    return borderPadding[titleOrientation] + (padding || 0);
   };
   const xOffset = horizontal ? standardPadding.x : getPadding();
   const yOffset = horizontal ? getPadding() : standardPadding.y;
@@ -203,7 +212,6 @@ export default (props, fallbackProps) => {
   };
   const borderProps = getBorderProps(props, contentHeight, contentWidth);
   const titleProps = getTitleProps(props, borderProps);
-
   return groupedData.reduce((childProps, datum, i) => {
     const color = colorScale[i % colorScale.length];
     const dataStyle = defaults({}, datum.symbol, style.data, { fill: color });

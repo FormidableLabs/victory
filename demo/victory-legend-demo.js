@@ -1,5 +1,5 @@
 import React from "react";
-import { VictoryLegend } from "../src/index";
+import { VictoryLegend, VictoryLabel } from "../src/index";
 
 const containerStyle = {
   display: "flex",
@@ -77,11 +77,11 @@ const LegendDemo = () => (
         standalone={false}
         x={25} y={20}
         itemsPerRow={2}
-        centerTitle
-        title={["Yaaaas", "a title!"]}
+        title={["My Legend title", "with some explanatory substitle"]}
         data={data}
         symbolSpacer={symbolSpacer}
         style={legendStyle}
+        titleComponent={<VictoryLabel style={[{ fontSize: 20 }, { fontSize: 10 }]}/>}
         events={[{
           target: "data",
           eventHandlers: {
@@ -95,7 +95,6 @@ const LegendDemo = () => (
       />
       <VictoryLegend
         standalone={false}
-        centerTitle
         titleOrientation="left"
         title={["TITLE"]}
         x={25} y={150}
@@ -124,7 +123,7 @@ const LegendDemo = () => (
         x={600} y={20}
         titleOrientation="bottom"
         centerTitle
-        title={["TITLE", "subtitle"]}
+        title={["TITLE", "subtitle", "more"]}
         symbolSpacer={symbolSpacer}
         gutter={30}
         data={data}
@@ -132,7 +131,7 @@ const LegendDemo = () => (
       />
       <VictoryLegend
         titleOrientation="left"
-        title={["TITLE"]}
+        title={["TITLE", "subtitle"]}
         orientation="horizontal"
         standalone={false}
         x={25} y={400}
