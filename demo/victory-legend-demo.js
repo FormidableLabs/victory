@@ -95,6 +95,9 @@ const LegendDemo = () => (
       />
       <VictoryLegend
         standalone={false}
+        centerTitle
+        titleOrientation="left"
+        title={["TITLE"]}
         x={25} y={150}
         gutter={30}
         symbolSpacer={symbolSpacer}
@@ -102,8 +105,11 @@ const LegendDemo = () => (
         data={data}
         style={legendStyle}
       />
+
       <VictoryLegend
         orientation="horizontal"
+        titleOrientation="left"
+        title={["TITLE"]}
         standalone={false}
         x={25} y={300}
         symbolSpacer={symbolSpacer}
@@ -116,12 +122,17 @@ const LegendDemo = () => (
       <VictoryLegend
         standalone={false}
         x={600} y={20}
+        titleOrientation="bottom"
+        centerTitle
+        title={["TITLE", "subtitle"]}
         symbolSpacer={symbolSpacer}
         gutter={30}
         data={data}
         style={legendStyle}
       />
       <VictoryLegend
+        titleOrientation="left"
+        title={["TITLE"]}
         orientation="horizontal"
         standalone={false}
         x={25} y={400}

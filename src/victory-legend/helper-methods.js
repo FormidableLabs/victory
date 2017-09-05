@@ -138,33 +138,30 @@ const getAnchors = (titleOrientation, centerTitle) => {
   return { textAnchor, verticalAnchor };
 };
 
+// eslint-disable-next-line complexity
 const getTitleProps = (props, borderProps) => {
   const { title, titleOrientation, centerTitle, borderPadding } = props;
   const { height, width } = borderProps;
   const baseStyle = props.style && props.style.title || {};
   const style = defaults({}, baseStyle, getAnchors(titleOrientation, centerTitle));
-  const origin = {
-    x: titleOrientation === "right" ? props.x + width : props.x,
-    y: titleOrientation === "bottom" ? props.y + height : props.y
+
+  const horizontal = titleOrientation === "top" || titleOrientation === "bottom";
+  const standardPadding = {
+    x: centerTitle ? width / 2 : (borderPadding.left || style.fontSize) + (style.padding || 0),
+    y: centerTitle ? height / 2 : (borderPadding.top || style.fontSize) + (style.padding || 0)
   };
-  const sign = titleOrientation === "bottom" || titleOrientation === "right" ? -1 : 1;
-  if (titleOrientation === "top" || titleOrientation === "bottom") {
-    return {
-      x: centerTitle ?
-        origin.x + sign * (width / 2) : origin.x + (borderPadding.left || style.fontSize),
-      y: origin.y + sign * (borderPadding[titleOrientation] || style.fontSize),
-      style,
-      text: title
-    };
-  } else {
-    return {
-      x: origin.x + sign * (borderPadding[titleOrientation] || style.fontSize),
-      y: centerTitle ?
-        origin.y + sign * (height / 2) : origin.y + (borderPadding.top || style.fontSize),
-      style,
-      text: title
-    };
-  }
+  const getPadding = () => {
+    return (borderPadding[titleOrientation] || style.fontSize) + (style.padding || 0);
+  };
+  const xOffset = horizontal ? standardPadding.x : getPadding();
+  const yOffset = horizontal ? getPadding() : standardPadding.y;
+
+  return {
+    x: titleOrientation === "right" ? props.x + width - xOffset : props.x + xOffset,
+    y: titleOrientation === "bottom" ? props.y + height - yOffset : props.y + yOffset,
+    style,
+    text: title
+  };
 };
 
 const getBorderProps = (props, contentHeight, contentWidth) => {
@@ -193,7 +190,7 @@ export default (props, fallbackProps) => {
 
   const contentHeight = titleOrientation === "left" || titleOrientation === "right" ?
     Math.max(sum(rowHeights), titleDimensions.height) : sum(rowHeights) + titleDimensions.height;
-  const contentWidth = titleOrientation === "top" || titleOrientation === "bottom" ?
+  const contentWidth = titleOrientation === "left" || titleOrientation === "right" ?
     sum(columnWidths) + titleDimensions.width : Math.max(sum(columnWidths), titleDimensions.width);
 
   const initialProps = {
