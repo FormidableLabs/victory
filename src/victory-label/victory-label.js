@@ -187,7 +187,8 @@ export default class VictoryLabel extends React.Component {
   }
 
   getDy(props, style, content, lineHeight) { //eslint-disable-line max-params
-    const fontSize = style[0].fontSize;
+    style = Array.isArray(style) ? style[0] : style;
+    const fontSize = style.fontSize;
     const datum = props.datum || props.data;
     const dy = props.dy ? Helpers.evaluateProp(props.dy, datum) : 0;
     const length = content.length;

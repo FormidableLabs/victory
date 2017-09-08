@@ -84,7 +84,7 @@ const convertLengthToPixels = (length, fontSize) => {
   if (absoluteMeasurementUnitsToPixels.hasOwnProperty(attribute)) {
     result = value * absoluteMeasurementUnitsToPixels[attribute];
   } else if (relativeMeasurementUnitsCoef.hasOwnProperty(attribute)) {
-    result = (fontSize ? value * fontSize : value * coefficients.defaultFontSize)
+    result = (fontSize ? value * fontSize : value * defaultStyle.fontSize)
       * relativeMeasurementUnitsCoef[attribute];
   } else {
     result = value;
@@ -116,7 +116,9 @@ const _approximateTextWidthInternal = (text, style) => {
 const _approximateTextHeightInternal = (text, style) => {
   return _splitToLines(text).reduce((total, line, index) => {
     const lineStyle = _prepareParams(style, index);
-    const height = lineStyle.fontSize * coefficients.lineCapitalCoef;
+    const containsCaps = line.match(/[(A-Z)(0-9)]/);
+    const height = containsCaps ?
+      lineStyle.fontSize * coefficients.lineCapitalCoef : lineStyle.fontSize;
     const emptySpace = index === 0 ? 0 : lineStyle.fontSize * coefficients.lineSpaceHeightCoef;
     return total + lineStyle.lineHeight * (height + emptySpace);
   }, 0);

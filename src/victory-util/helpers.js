@@ -32,15 +32,19 @@ export default {
     };
   },
 
-  getPadding(props) {
-    const padding = typeof props.padding === "number" ? props.padding : 0;
-    const paddingObj = typeof props.padding === "object" ? props.padding : {};
+  formatPadding(padding) {
+    const paddingVal = typeof padding === "number" ? padding : 0;
+    const paddingObj = typeof padding === "object" ? padding : {};
     return {
-      top: paddingObj.top || padding,
-      bottom: paddingObj.bottom || padding,
-      left: paddingObj.left || padding,
-      right: paddingObj.right || padding
+      top: paddingObj.top || paddingVal,
+      bottom: paddingObj.bottom || paddingVal,
+      left: paddingObj.left || paddingVal,
+      right: paddingObj.right || paddingVal
     };
+  },
+
+  getPadding(props) {
+    return this.formatPadding(props.padding);
   },
 
   getStyles(style, defaultStyles) {
