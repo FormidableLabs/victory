@@ -33,40 +33,40 @@ describe("components/victory-legend", () => {
     const wrappedLegend = shallow(<VictoryLegend data={initialData} orientation="horizontal" />);
     const output = wrappedLegend.find("Point");
 
-    expect(output.at(0).prop("x")).to.equal(7);
-    expect(output.at(1).prop("x")).to.equal(95.68016194331983);
-    expect(output.at(0).prop("y")).to.equal(7);
-    expect(output.at(1).prop("y")).to.equal(7);
+    expect(output.at(0).prop("x")).to.equal(14);
+    expect(output.at(1).prop("x")).to.equal(100.28016194331983);
+    expect(output.at(0).prop("y")).to.equal(14);
+    expect(output.at(1).prop("y")).to.equal(14);
   });
 
   it("has expected vertical symbol position", () => {
     const wrappedLegend = shallow(<VictoryLegend data={initialData} orientation="vertical" />);
     const output = wrappedLegend.find("Point");
 
-    expect(output.at(0).prop("x")).to.equal(7);
-    expect(output.at(1).prop("x")).to.equal(7);
-    expect(output.at(0).prop("y")).to.equal(7);
-    expect(output.at(1).prop("y")).to.equal(31);
+    expect(output.at(0).prop("x")).to.equal(14);
+    expect(output.at(1).prop("x")).to.equal(14);
+    expect(output.at(0).prop("y")).to.equal(14);
+    expect(output.at(1).prop("y")).to.equal(44.905);
   });
 
   it("has expected horizontal legend labels position", () => {
     const wrappedLegend = render(<VictoryLegend data={initialData} orientation="horizontal" />);
     const output = wrappedLegend.find("text");
 
-    expect(output.eq(0).prop("x")).to.equal("22");
-    expect(output.eq(1).prop("x")).to.equal("110.68016194331983");
-    expect(output.eq(0).prop("y")).to.equal("7");
-    expect(output.eq(1).prop("y")).to.equal("7");
+    expect(output.eq(0).prop("x")).to.equal("30.8");
+    expect(output.eq(1).prop("x")).to.equal("117.08016194331982");
+    expect(output.eq(0).prop("y")).to.equal("14");
+    expect(output.eq(1).prop("y")).to.equal("14");
   });
 
   it("has expected vertical legend labels position", () => {
     const wrappedLegend = render(<VictoryLegend data={initialData} orientation="vertical" />);
     const output = wrappedLegend.find("text");
 
-    expect(output.eq(0).prop("x")).to.equal("22");
-    expect(output.eq(1).prop("x")).to.equal("22");
-    expect(output.eq(0).prop("y")).to.equal("7");
-    expect(output.eq(1).prop("y")).to.equal("31");
+    expect(output.eq(0).prop("x")).to.equal("30.8");
+    expect(output.eq(1).prop("x")).to.equal("30.8");
+    expect(output.eq(0).prop("y")).to.equal("14");
+    expect(output.eq(1).prop("y")).to.equal("44.905");
   });
 
   describe("symbols", () => {
