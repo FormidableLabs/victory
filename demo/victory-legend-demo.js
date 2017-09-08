@@ -1,5 +1,5 @@
 import React from "react";
-import { VictoryLegend, VictoryLabel } from "../src/index";
+import { VictoryLegend, VictoryLabel, Border } from "../src/index";
 
 const containerStyle = {
   display: "flex",
@@ -139,8 +139,7 @@ const LegendDemo = () => (
       />
     </svg>
     <VictoryLegend
-      borderWidth={430}
-      borderHeight={110}
+      borderComponent={<Border width={430} height={110}/>}
       centerTitle
       title={["TITLE"]}
       gutter={30}

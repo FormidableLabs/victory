@@ -176,9 +176,9 @@ const getTitleProps = (props, borderProps) => {
 };
 
 const getBorderProps = (props, contentHeight, contentWidth) => {
-  const { x, y, borderPadding, style, borderHeight, borderWidth } = props;
-  const height = borderHeight || contentHeight + borderPadding.top + borderPadding.bottom;
-  const width = borderWidth || contentWidth + borderPadding.left + borderPadding.right;
+  const { x, y, borderPadding, style } = props;
+  const height = contentHeight + borderPadding.top + borderPadding.bottom;
+  const width = contentWidth + borderPadding.left + borderPadding.right;
   return { x, y, height, width, style: style.border };
 };
 

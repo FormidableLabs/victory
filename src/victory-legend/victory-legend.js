@@ -31,7 +31,6 @@ class VictoryLegend extends React.Component {
 
   static propTypes = {
     borderComponent: PropTypes.element,
-    borderHeight: CustomPropTypes.nonNegative,
     borderPadding: PropTypes.oneOfType([
       PropTypes.number,
       PropTypes.shape({
@@ -41,7 +40,6 @@ class VictoryLegend extends React.Component {
         right: PropTypes.number
       })
     ]),
-    borderWidth: CustomPropTypes.nonNegative,
     centerTitle: PropTypes.bool,
     colorScale: PropTypes.oneOfType([
       PropTypes.arrayOf(PropTypes.string),
