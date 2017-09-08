@@ -130,8 +130,6 @@ const LegendDemo = () => (
         style={legendStyle}
       />
       <VictoryLegend
-        titleOrientation="left"
-        title={["TITLE", "subtitle"]}
         orientation="horizontal"
         standalone={false}
         x={25} y={400}
