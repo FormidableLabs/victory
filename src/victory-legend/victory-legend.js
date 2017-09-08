@@ -121,7 +121,8 @@ class VictoryLegend extends React.Component {
 
   static getBaseProps = partialRight(getBaseProps, fallbackProps);
   static expectedComponents = [
-    "dataComponent", "labelComponent", "groupComponent", "containerComponent"
+    "borderComponent", "containerComponent", "dataComponent",
+    "groupComponent", "labelComponent", "titleComponent"
   ];
 
   renderChildren(props) {
