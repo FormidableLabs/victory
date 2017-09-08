@@ -105,7 +105,7 @@ const getTitleDimensions = (props) => {
   const style = props.style && props.style.title || {};
   const textSize = TextSize.approximateTextSize(props.title, style);
   const padding = style.padding || 0;
-  return { height: textSize.height + padding || 0, width: textSize.width + padding || 0 };
+  return { height: textSize.height + 2 * padding || 0, width: textSize.width + 2 * padding || 0 };
 };
 
 const getOffset = (datum, rowHeights, columnWidths) => {
@@ -124,7 +124,7 @@ const getOffset = (datum, rowHeights, columnWidths) => {
 
 const getAnchors = (titleOrientation, centerTitle) => {
   const standardAnchors = {
-    textAncor: titleOrientation === "right" ? "end" : "start",
+    textAnchor: titleOrientation === "right" ? "end" : "start",
     verticalAnchor: titleOrientation === "bottom" ? "end" : "start"
   };
   if (centerTitle) {
@@ -155,9 +155,11 @@ const getTitleProps = (props, borderProps) => {
   const style = getTitleStyle(props);
   const padding = Array.isArray(style) ? style[0].padding : style.padding;
   const horizontal = titleOrientation === "top" || titleOrientation === "bottom";
+  const xOrientation = titleOrientation === "bottom" ? "bottom" : "top";
+  const yOrientation = titleOrientation === "right" ? "right" : "left";
   const standardPadding = {
-    x: centerTitle ? width / 2 : borderPadding.left + (padding || 0),
-    y: centerTitle ? height / 2 : borderPadding.top + (padding || 0)
+    x: centerTitle ? width / 2 : borderPadding[xOrientation] + (padding || 0),
+    y: centerTitle ? height / 2 : borderPadding[yOrientation] + (padding || 0)
   };
   const getPadding = () => {
     return borderPadding[titleOrientation] + (padding || 0);

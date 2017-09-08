@@ -12,7 +12,8 @@ const containerStyle = {
 const legendStyle = {
   parent: { border: "1px solid #ccc", margin: "2%" },
   labels: { fontSize: 14, fontFamily: "Palatino" },
-  border: { stroke: "black", strokeWidth: 2 }
+  border: { stroke: "black", strokeWidth: 2 },
+  title: { padding: 5, fill: "red" }
 };
 
 const symbolSize = 5;
@@ -95,7 +96,7 @@ const LegendDemo = () => (
       />
       <VictoryLegend
         standalone={false}
-        titleOrientation="left"
+        titleOrientation="right"
         title={["TITLE"]}
         x={25} y={150}
         gutter={30}
@@ -122,7 +123,6 @@ const LegendDemo = () => (
         standalone={false}
         x={600} y={20}
         titleOrientation="bottom"
-        centerTitle
         title={["TITLE", "subtitle", "more"]}
         symbolSpacer={symbolSpacer}
         gutter={30}
