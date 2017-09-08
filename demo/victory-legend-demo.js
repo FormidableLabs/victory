@@ -10,7 +10,6 @@ const containerStyle = {
 };
 
 const legendStyle = {
-  parent: { border: "1px solid #ccc", margin: "2%" },
   labels: { fontSize: 14, fontFamily: "Palatino" },
   border: { stroke: "black", strokeWidth: 2 },
   title: { padding: 5, fill: "red" }
@@ -70,7 +69,7 @@ const data = [{
 const LegendDemo = () => (
   <div className="demo" style={containerStyle}>
     <svg
-      height={800}
+      height={500}
       width={1000}
       style={{ border: "1px solid #ccc", margin: "2%" }}
     >
@@ -97,6 +96,7 @@ const LegendDemo = () => (
       <VictoryLegend
         standalone={false}
         titleOrientation="right"
+        centerTitle
         title={["TITLE"]}
         x={25} y={150}
         gutter={30}
@@ -138,6 +138,17 @@ const LegendDemo = () => (
         style={legendStyle}
       />
     </svg>
+    <VictoryLegend
+      borderWidth={430}
+      borderHeight={110}
+      centerTitle
+      title={["TITLE"]}
+      gutter={30}
+      symbolSpacer={symbolSpacer}
+      itemsPerRow={3}
+      data={data}
+      style={legendStyle}
+    />
   </div>
 );
 
