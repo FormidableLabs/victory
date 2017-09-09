@@ -18,7 +18,6 @@ export default (WrappedComponent, options) => {
       if (isFunction(super.componentWillMount)) {
         super.componentWillMount();
       }
-      this.state = this.state || {};
       const getScopedEvents = Events.getScopedEvents.bind(this);
       this.getEvents = partialRight(Events.getEvents.bind(this), getScopedEvents);
       this.getEventState = Events.getEventState.bind(this);

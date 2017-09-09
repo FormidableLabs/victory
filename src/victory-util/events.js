@@ -73,7 +73,7 @@ export default {
     // returns the original base props or base state of a given target element
     const getTargetProps = (identifier, type) => {
       const { childName, target, key } = identifier;
-      const baseType = type === "props" ? baseProps : this.state;
+      const baseType = type === "props" ? baseProps : this.state || {};
       const base = (childName === undefined || childName === null || !baseType[childName]) ?
         baseType : baseType[childName];
       return key === "parent" ? base.parent : base[key] && base[key][target];
@@ -108,16 +108,17 @@ export default {
         const mutatedProps = mutation(
           assign({}, mutationTargetProps, mutationTargetState), baseProps
         );
-        const childState = this.state[childName] || {};
+        const baseState = this.state || {};
+        const childState = baseState[childName] || {};
         const extendState = (state) => {
           return target === "parent" ?
             extend(state[key], mutatedProps) : extend(state[key], { [target]: mutatedProps });
         };
         return childName !== undefined && childName !== null ?
-          extend(this.state, {
+          extend(baseState, {
             [childName]: extend(childState, { [key]: extendState(childState) })
           }) :
-          extend(this.state, { [key]: extendState(this.state) });
+          extend(baseState, { [key]: extendState(baseState) });
       };
 
       // returns entire mutated state for a given childName
@@ -197,14 +198,15 @@ export default {
    * a particular element
    */
   getEventState(eventKey, namespace, childType) {
+    const state = this.state || {};
     if (!childType) {
       return eventKey === "parent" ?
-        this.state[eventKey] && this.state[eventKey][namespace] || this.state[eventKey] :
-        this.state[eventKey] && this.state[eventKey][namespace];
+        state[eventKey] && state[eventKey][namespace] || state[eventKey] :
+        state[eventKey] && state[eventKey][namespace];
     }
-    return this.state[childType] &&
-      this.state[childType][eventKey] &&
-      this.state[childType][eventKey][namespace];
+    return state[childType] &&
+      state[childType][eventKey] &&
+      state[childType][eventKey][namespace];
 
   },
 
