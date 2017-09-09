@@ -19,14 +19,11 @@ class BorderLabelSlice extends React.Component {
   }
 
   renderLabel(props) {
-    const { pathFunction, datum, slice, index } = props;
-
+    const { pathFunction, datum, slice, index, origin } = props;
     const path = pathFunction({ ...slice, endAngle: slice.startAngle });
-
     const pathId = `textPath-path-${index}`;
-
     return (
-      <g>
+      <g transform={`translate(${origin.x}, ${origin.y})`}>
         <path id={pathId} d={path} />
         <text>
           <textPath xlinkHref={`#${pathId}`}>
@@ -137,12 +134,14 @@ export default class App extends React.Component {
         <div style={containerStyle}>
           <VictoryPie
             startAngle={90} endAngle={-90}
-            style={{ parent: parentStyle }}
+            style={{ parent: parentStyle, labels: { fill: "white", fontSize: 10 } }}
+            labelRadius={60}
             padding={{ bottom: 50, left: 50, right: 10 }}
             width={400} height={200}
           />
           <VictoryPie
-            style={{ parent: parentStyle }}
+            style={{ parent: parentStyle, labels: { fill: "white", fontSize: 10 } }}
+            labelRadius={60}
             padding={{ bottom: 50, left: 50, right: 10 }}
             width={400} height={200}
           />
