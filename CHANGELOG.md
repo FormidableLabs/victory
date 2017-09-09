@@ -1,5 +1,22 @@
 # Victory Changelog
 
+## 0.22.0 (2017-09-09)
+
+**BREAKING CHANGES:** Styling and layout for `VictoryTooltip` and `VictoryLegend` are impacted
+
+- [victory-core/293](https://github.com/FormidableLabs/victory-core/pull/293) **This may be a breaking change**
+Removes the default theme from `VictoryTooltip`. See PR for additional details.
+- [victory-core/294](https://github.com/FormidableLabs/victory-core/pull/294) **This may be a breaking change** Improvements for `VictoryLegend`
+  - Adds a legend border that can be styled or replaced with a custom component
+    - new props: `borderComponent={<Border/>}` and `borderPadding`
+    - new style / event namespace: "border"
+  - Adds new primitive component `Border` which renders a `rect` element
+    - props: common props + `width`, `height`, `x` and `y`
+  - Adds a legend title with supporting props for positioning and centering titles
+    - new props: title, titleComponent={<VictoryLabel/>}, titleOrientation, centerTitle
+    - new style / event namespace: "title"
+- [victory-core/295](https://github.com/FormidableLabs/victory-core/pull/295) Fixes deprecation error for React 16
+
 ## 0.21.5 (2017-08-17)
 
 VictoryCore
