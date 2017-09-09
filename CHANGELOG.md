@@ -1,5 +1,9 @@
 # VictoryPie Changelog
 
+## 12.0.0 (2017-09-09)
+
+- Updates to `victory-core@18.0.0` which includes breaking changes for `VictoryTooltip` styling.
+
 ## 11.4.2 (2017-08-14)
 
 - [153](https://github.com/FormidableLabs/victory-pie/pull/153) Bugfix for axymmetric padding
