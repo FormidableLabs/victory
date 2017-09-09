@@ -1,5 +1,9 @@
 # VictoryChart Changelog
 
+## 22.0.0 (2017-09-09)
+
+- Updates to `victory-core@18.0.0` which includes breaking changes for `VictoryTooltip` styling.
+
 ## 21.6.2 (2017-08-19)
 
 - [511](https://github.com/FormidableLabs/victory-chart/pull/511) Bugfix: VictoryZoomContainer works properly with VictoryPortal wrapped children
