@@ -28,6 +28,7 @@ describe("victory", () => {
     expect(Victory.VictoryVoronoi).not.to.equal(undefined);
     expect(Victory.Area).not.to.equal(undefined);
     expect(Victory.Bar).not.to.equal(undefined);
+    expect(Victory.Border).not.to.equal(undefined);
     expect(Victory.Candle).not.to.equal(undefined);
     expect(Victory.ClipPath).not.to.equal(undefined);
     expect(Victory.Curve).not.to.equal(undefined);
