@@ -55,18 +55,15 @@ const getRow = (props, index) => {
   return isHorizontal ? Math.floor(index / itemsPerRow) : index % itemsPerRow;
 };
 
-const getSymbolSize = (datum, fontSize) => {
-  // eslint-disable-next-line no-magic-numbers
-  return datum.symbol && datum.symbol.size ? datum.symbol.size : fontSize / 2.5;
-};
-
 const groupData = (props) => {
   const { data } = props;
   const style = props.style && props.style.data || {};
   const labelStyles = getLabelStyles(props);
   return data.map((datum, index) => {
+    const symbol = datum.symbol || {};
     const { fontSize } = labelStyles[index];
-    const size = style.size || getSymbolSize(datum, fontSize);
+    // eslint-disable-next-line no-magic-numbers
+    const size = symbol.size || style.size || fontSize / 2.5;
     const symbolSpacer = props.symbolSpacer || Math.max(size, fontSize);
     return {
       ...datum, size, symbolSpacer, fontSize,
@@ -81,8 +78,8 @@ const getColumnWidths = (props, data) => {
   const dataByColumn = groupBy(data, "column");
   const columns = keys(dataByColumn);
   return columns.reduce((memo, curr, index) => {
-    const gutter = index === columns.length - 1 ? 0 : props.gutter;
     const lengths = dataByColumn[curr].map((d) => {
+      const gutter = columns.length === 1 ? 0 : props.gutter;
       const symbolWidth = index && index === columns.length - 1 ? 0 : d.size + d.symbolSpacer;
       return d.textSize.width + gutter + symbolWidth;
     });
