@@ -1,5 +1,9 @@
 # Victory Changelog
 
+## 0.22.1 (2017-09-09)
+
+- [victory-core/296](https://github.com/FormidableLabs/victory-core/pull/296) Fixes layout bug in `VictoryLegend`
+
 ## 0.22.0 (2017-09-09)
 
 **BREAKING CHANGES:** Styling and layout for `VictoryTooltip` and `VictoryLegend` are impacted
