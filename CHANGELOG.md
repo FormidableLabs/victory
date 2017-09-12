@@ -1,5 +1,10 @@
 # Victory Changelog
 
+## 0.22.2 (2017-09-12)
+
+- [victory-core/297](https://github.com/FormidableLabs/victory-core/pull/297) Adjusts automatic width in `VictoryLegend`
+
+
 ## 0.22.1 (2017-09-09)
 
 - [victory-core/296](https://github.com/FormidableLabs/victory-core/pull/296) Fixes layout bug in `VictoryLegend`
