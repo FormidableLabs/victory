@@ -79,9 +79,7 @@ const getColumnWidths = (props, data) => {
   const columns = keys(dataByColumn);
   return columns.reduce((memo, curr, index) => {
     const lengths = dataByColumn[curr].map((d) => {
-      const gutter = columns.length === 1 ? 0 : props.gutter;
-      const symbolWidth = index && index === columns.length - 1 ? 0 : d.size + d.symbolSpacer;
-      return d.textSize.width + gutter + symbolWidth;
+      return d.textSize.width + props.gutter + d.size + d.symbolSpacer;
     });
     memo[index] = Math.max(...lengths);
     return memo;
