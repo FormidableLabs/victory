@@ -95,25 +95,24 @@ export default class VictoryContainer extends React.Component {
   }
 
   renderContainer(props, svgProps, style) {
-    const { title, desc, portalComponent, className, width, height } = props;
+    const { title, desc, portalComponent, className } = props;
     const children = this.getChildren(props);
     const parentProps = defaults({ style, className }, svgProps);
-    const percent = `${-height / width * 100}%`;
     return (
-      <div style={Object.assign(style, { position: "relative" })}>
-        <svg viewBox={parentProps.viewBox} style={{ width: "100%", height: "100%" }}>
+        <svg {...parentProps} overflow="visible">
+        <svg>
           {children}
         </svg>
           {title ? <title id={this.getIdForElement("title")}>{title}</title> : null}
           {desc ? <desc id={this.getIdForElement("desc")}>{desc}</desc> : null}
         <foreignObject>
-          <div style={{ zIndex: 1, position: "relative", marginTop: percent, pointerEvents: "none" }}>
-            <svg viewBox={parentProps.viewBox} style={{ width: "100%", height: "100%" }} overflow="visible">
+          <div style={{ zIndex: 1, position: "relative", pointerEvents: "none" }}>
+            <svg overflow="visible">
               {React.cloneElement(portalComponent, { ref: this.savePortalRef })}
             </svg>
           </div>
         </foreignObject>
-      </div>
+        </svg>
     );
   }
 
