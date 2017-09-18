@@ -373,8 +373,8 @@ export default class VictoryTooltip extends React.Component {
         </div>
       </foreignObject>
     );
-    // return renderInPortal ? <VictoryPortal>{tooltip}</VictoryPortal> : tooltip;
-    return renderInPortal ? <VictoryPortal>{zIndexTooltips}</VictoryPortal> : zIndexTooltips;
+    return renderInPortal ? <VictoryPortal>{tooltip}</VictoryPortal> : tooltip;
+    // return renderInPortal ? <VictoryPortal>{zIndexTooltips}</VictoryPortal> : zIndexTooltips;
   }
 
   render() {

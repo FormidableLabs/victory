@@ -94,20 +94,25 @@ export default class VictoryContainer extends React.Component {
     return props.children;
   }
 
-  // Overridden in victory-core-native
   renderContainer(props, svgProps, style) {
-    const { title, desc, portalComponent, className } = props;
+    const { title, desc, portalComponent, className, width, height } = props;
     const children = this.getChildren(props);
     const parentProps = defaults({ style, className }, svgProps);
     return (
-      <svg {...parentProps} overflow="visible">
-        <svg {...parentProps}>
+      <div style={Object.assign(style, { position: "relative" })}>
+        <svg viewBox={parentProps.viewBox} style={{ width: "100%", height: "100%" }}>
           {children}
         </svg>
           {title ? <title id={this.getIdForElement("title")}>{title}</title> : null}
           {desc ? <desc id={this.getIdForElement("desc")}>{desc}</desc> : null}
-        {React.cloneElement(portalComponent, { ref: this.savePortalRef })}
-      </svg>
+        <foreignObject>
+          <div style={{ zIndex: 1, position: "relative", marginTop: -height, pointerEvents: "none" }}>
+            <svg viewBox={parentProps.viewBox} style={{ width: "100%", height: "100%" }} overflow="visible">
+              {React.cloneElement(portalComponent, { ref: this.savePortalRef })}
+            </svg>
+          </div>
+        </foreignObject>
+      </div>
     );
   }
 
