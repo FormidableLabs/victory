@@ -354,8 +354,9 @@ export default class VictoryTooltip extends React.Component {
       return renderInPortal ? <VictoryPortal>{null}</VictoryPortal> : null;
     }
     const calculatedValues = this.getCalculatedValues(evaluatedProps);
+    const flyoutProps = this.getFlyoutProps(evaluatedProps, calculatedValues);
     const children = [
-      React.cloneElement(flyoutComponent, this.getFlyoutProps(evaluatedProps, calculatedValues)),
+      React.cloneElement(flyoutComponent, flyoutProps),
       React.cloneElement(labelComponent, this.getLabelProps(evaluatedProps, calculatedValues))
     ];
     const tooltip = React.cloneElement(
@@ -363,7 +364,17 @@ export default class VictoryTooltip extends React.Component {
       { role: "presentation", transform: calculatedValues.transform },
       children
     );
-    return renderInPortal ? <VictoryPortal>{tooltip}</VictoryPortal> : tooltip;
+    const zIndexTooltips = (
+      <foreignObject>
+        <div style={{ position: "relative", zIndex: 100 }}>
+          <svg overflow="visible">
+            {tooltip}
+          </svg>
+        </div>
+      </foreignObject>
+    );
+    // return renderInPortal ? <VictoryPortal>{tooltip}</VictoryPortal> : tooltip;
+    return renderInPortal ? <VictoryPortal>{zIndexTooltips}</VictoryPortal> : zIndexTooltips;
   }
 
   render() {
