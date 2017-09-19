@@ -95,24 +95,26 @@ export default class VictoryContainer extends React.Component {
   }
 
   renderContainer(props, svgProps, style) {
-    const { title, desc, portalComponent, className } = props;
+    const { title, desc, portalComponent, className, width, height } = props;
     const children = this.getChildren(props);
-    const parentProps = defaults({ style, className }, svgProps);
+    const parentSvgStyle = {
+      width: "100%", height: "100%", maxWidth: "100%", maxHeight: "100%", pointerEvents: "all"
+    };
+    const portalSvgStyle = { width: "100%", height: "100%", overflow: "visible" };
+    const marginTop = `-${100 * height / width}%`; //eslint-disable-line no-magic-numbers
     return (
-        <svg {...parentProps} overflow="visible">
-        <svg>
+      <div style={assign(style, { pointerEvents: "none" })} className={className}>
+        <svg {...svgProps} style={parentSvgStyle}>
           {children}
         </svg>
           {title ? <title id={this.getIdForElement("title")}>{title}</title> : null}
           {desc ? <desc id={this.getIdForElement("desc")}>{desc}</desc> : null}
-        <foreignObject>
-          <div style={{ zIndex: 1, position: "relative", pointerEvents: "none" }}>
-            <svg overflow="visible">
+          <div style={{ zIndex: 1, position: "relative", pointerEvents: "none", marginTop }}>
+            <svg {...svgProps} style={portalSvgStyle}>
               {React.cloneElement(portalComponent, { ref: this.savePortalRef })}
             </svg>
           </div>
-        </foreignObject>
-        </svg>
+        </div>
     );
   }
 
