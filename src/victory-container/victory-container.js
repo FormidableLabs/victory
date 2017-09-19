@@ -46,7 +46,7 @@ export default class VictoryContainer extends React.Component {
   constructor(props) {
     super(props);
     this.getTimer = this.getTimer.bind(this);
-    this.containerId = !(isObject(props) && typeof props.containerId === "undefined") ?
+    this.containerId = !isObject(props) || typeof props.containerId === "undefined" ?
       uniqueId("victory-container-") : props.containerId;
   }
 
@@ -97,20 +97,19 @@ export default class VictoryContainer extends React.Component {
   renderContainer(props, svgProps, style) {
     const { title, desc, portalComponent, className, width, height } = props;
     const children = this.getChildren(props);
-    const parentSvgStyle = {
-      width: "100%", height: "100%", maxWidth: "100%", maxHeight: "100%", pointerEvents: "all"
-    };
-    const portalSvgStyle = { width: "100%", height: "100%", overflow: "visible" };
-    const marginTop = `-${100 * height / width}%`; //eslint-disable-line no-magic-numbers
+    const divStyle = { pointerEvents: "none", touchAction: "none" };
+    const svgStyle = { width: "100%", height: "100%" };
+    //eslint-disable-next-line no-magic-numbers
+    const marginTop = `-${Math.round(100 * height / width)}%`;
     return (
-      <div style={assign(style, { pointerEvents: "none" })} className={className}>
-        <svg {...svgProps} style={parentSvgStyle}>
-          {children}
-        </svg>
+      <div style={defaults({}, style, divStyle)} className={className}>
+        <svg {...svgProps} style={{ ...svgStyle, pointerEvents: "all" }}>
           {title ? <title id={this.getIdForElement("title")}>{title}</title> : null}
           {desc ? <desc id={this.getIdForElement("desc")}>{desc}</desc> : null}
-          <div style={{ zIndex: 1, position: "relative", pointerEvents: "none", marginTop }}>
-            <svg {...svgProps} style={portalSvgStyle}>
+          {children}
+        </svg>
+          <div style={{ ...divStyle, zIndex: 1, position: "relative", marginTop }}>
+            <svg {...svgProps} style={{ ...svgStyle, overflow: "visible" }}>
               {React.cloneElement(portalComponent, { ref: this.savePortalRef })}
             </svg>
           </div>
@@ -121,7 +120,6 @@ export default class VictoryContainer extends React.Component {
   render() {
     const { width, height, responsive, events } = this.props;
     const style = responsive ? this.props.style : omit(this.props.style, ["height", "width"]);
-    const touchStyle = defaults({}, style, { touchAction: "none" });
     const svgProps = assign(
       {
         width, height, role: "img",
@@ -130,6 +128,6 @@ export default class VictoryContainer extends React.Component {
       },
       events
     );
-    return this.renderContainer(this.props, svgProps, touchStyle);
+    return this.renderContainer(this.props, svgProps, style);
   }
 }
