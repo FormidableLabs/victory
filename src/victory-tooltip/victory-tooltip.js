@@ -354,9 +354,8 @@ export default class VictoryTooltip extends React.Component {
       return renderInPortal ? <VictoryPortal>{null}</VictoryPortal> : null;
     }
     const calculatedValues = this.getCalculatedValues(evaluatedProps);
-    const flyoutProps = this.getFlyoutProps(evaluatedProps, calculatedValues);
     const children = [
-      React.cloneElement(flyoutComponent, flyoutProps),
+      React.cloneElement(flyoutComponent, this.getFlyoutProps(evaluatedProps, calculatedValues)),
       React.cloneElement(labelComponent, this.getLabelProps(evaluatedProps, calculatedValues))
     ];
     const tooltip = React.cloneElement(
