@@ -71,9 +71,9 @@ class VictoryLegend extends React.Component {
       eventHandlers: PropTypes.object
     })),
     groupComponent: PropTypes.element,
-    gutter: PropTypes.number,
+    gutter: CustomPropTypes.nonNegative,
     height: CustomPropTypes.nonNegative,
-    itemsPerRow: PropTypes.number,
+    itemsPerRow: CustomPropTypes.nonNegative,
     labelComponent: PropTypes.element,
     orientation: PropTypes.oneOf(["horizontal", "vertical"]),
     padding: PropTypes.oneOfType([
@@ -103,8 +103,8 @@ class VictoryLegend extends React.Component {
     titleComponent: PropTypes.element,
     titleOrientation: PropTypes.oneOf(["top", "bottom", "left", "right"]),
     width: CustomPropTypes.nonNegative,
-    x: PropTypes.number,
-    y: PropTypes.number
+    x: CustomPropTypes.nonNegative,
+    y: CustomPropTypes.nonNegative
   };
 
   static defaultProps = {

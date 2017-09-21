@@ -81,8 +81,8 @@ export default class VictoryTooltip extends React.Component {
       CustomPropTypes.nonNegative,
       PropTypes.func
     ]),
-    x: PropTypes.number,
-    y: PropTypes.number
+    x: CustomPropTypes.nonNegative,
+    y: CustomPropTypes.nonNegative
   };
 
   static defaultProps = {
@@ -364,17 +364,7 @@ export default class VictoryTooltip extends React.Component {
       { role: "presentation", transform: calculatedValues.transform },
       children
     );
-    const zIndexTooltips = (
-      <foreignObject>
-        <div style={{ position: "relative", zIndex: 100 }}>
-          <svg overflow="visible">
-            {tooltip}
-          </svg>
-        </div>
-      </foreignObject>
-    );
     return renderInPortal ? <VictoryPortal>{tooltip}</VictoryPortal> : tooltip;
-    // return renderInPortal ? <VictoryPortal>{zIndexTooltips}</VictoryPortal> : zIndexTooltips;
   }
 
   render() {

@@ -1,5 +1,6 @@
 import React from "react";
 import PropTypes from "prop-types";
+import CustomPropTypes from "../victory-util/prop-types";
 import { assign, defaults, isFunction } from "lodash";
 import ClipPath from "../victory-primitives/clip-path";
 
@@ -12,18 +13,18 @@ export default class VictoryClipContainer extends React.Component {
       PropTypes.node
     ]),
     className: PropTypes.string,
-    clipHeight: PropTypes.number,
+    clipHeight: CustomPropTypes.nonNegative,
     clipId: PropTypes.number,
     clipPadding: PropTypes.shape({
       top: PropTypes.number, bottom: PropTypes.number,
       left: PropTypes.number, right: PropTypes.number
     }),
     clipPathComponent: PropTypes.element,
-    clipWidth: PropTypes.number,
+    clipWidth: CustomPropTypes.nonNegative,
     events: PropTypes.object,
-    origin: PropTypes.shape({ x: PropTypes.number, y: PropTypes.number }),
+    origin: PropTypes.shape({ x: CustomPropTypes.nonNegative, y: CustomPropTypes.nonNegative }),
     polar: PropTypes.bool,
-    radius: PropTypes.number,
+    radius: CustomPropTypes.nonNegative,
     style: PropTypes.object,
     transform: PropTypes.string,
     translateX: PropTypes.number,
