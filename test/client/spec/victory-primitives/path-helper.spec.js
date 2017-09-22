@@ -16,7 +16,7 @@ describe("path-helpers", () => {
     it("draws a path for a square at the correct location", () => {
       const pathResult = PathHelpers.square(x, y, size);
       const baseSize = 0.87 * size;
-      expect(pathResult).to.contain(`M ${Math.round(x - baseSize)}, ${Math.round(y + baseSize)}`);
+      expect(pathResult).to.contain(`M ${Math.floor(x - baseSize)}, ${Math.floor(y + baseSize)}`);
     });
   });
 
@@ -48,7 +48,7 @@ describe("path-helpers", () => {
       const pathResult = PathHelpers.plus(0, 0, 1);
       const baseSize = 1.1 * size;
       expect(pathResult).to.contain(
-        `M ${Math.round(x - baseSize / 2.5)}, ${Math.round(y + baseSize)}`
+        `M ${Math.floor(x - baseSize / 2.5)}, ${Math.floor(y + baseSize)}`
       );
     });
   });
