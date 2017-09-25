@@ -1,16 +1,17 @@
 import React from "react";
 import PropTypes from "prop-types";
+import CustomPropTypes from "../victory-util/prop-types";
 
 export default class Portal extends React.Component {
   static displayName = "Portal";
 
   static propTypes = {
-    groupComponent: PropTypes.element
+    className: PropTypes.string,
+    height: CustomPropTypes.nonNegative,
+    style: PropTypes.object,
+    viewBox: PropTypes.string,
+    width: CustomPropTypes.nonNegative
   }
-
-  static defaultProps = {
-    groupComponent: <g/>
-  };
 
   constructor(props) {
     super(props);
@@ -34,15 +35,15 @@ export default class Portal extends React.Component {
     delete this.map[key];
   }
 
+  getChildren() {
+    return Object.keys(this.map).map((key) => {
+      const el = this.map[key];
+      return el ? React.cloneElement(el, { key }) : el;
+    });
+  }
+
   // Overridden in victory-core-native
   render() {
-    return React.cloneElement(
-      this.props.groupComponent,
-      {},
-      Object.keys(this.map).map((key) => {
-        const el = this.map[key];
-        return el ? React.cloneElement(el, { key }) : el;
-      })
-    );
+    return <svg {...this.props}>{this.getChildren()}</svg>;
   }
 }

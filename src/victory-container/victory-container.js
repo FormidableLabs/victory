@@ -1,5 +1,6 @@
 import React from "react";
 import PropTypes from "prop-types";
+import CustomPropTypes from "../victory-util/prop-types";
 import { assign, omit, defaults, uniqueId, isObject } from "lodash";
 import Portal from "../victory-portal/portal";
 import Timer from "../victory-util/timer";
@@ -16,19 +17,21 @@ export default class VictoryContainer extends React.Component {
     containerId: PropTypes.oneOfType([PropTypes.number, PropTypes.string]),
     desc: PropTypes.string,
     events: PropTypes.object,
-    height: PropTypes.number,
-    origin: PropTypes.shape({ x: PropTypes.number, y: PropTypes.number }),
+    height: CustomPropTypes.nonNegative,
+    origin: PropTypes.shape({ x: CustomPropTypes.nonNegative, y: CustomPropTypes.nonNegative }),
     polar: PropTypes.bool,
     portalComponent: PropTypes.element,
+    portalZIndex: CustomPropTypes.integer,
     responsive: PropTypes.bool,
     style: PropTypes.object,
     theme: PropTypes.object,
     title: PropTypes.string,
-    width: PropTypes.number
+    width: CustomPropTypes.nonNegative
   }
 
   static defaultProps = {
     portalComponent: <Portal/>,
+    portalZIndex: 99,
     responsive: true
   }
 
@@ -46,7 +49,7 @@ export default class VictoryContainer extends React.Component {
   constructor(props) {
     super(props);
     this.getTimer = this.getTimer.bind(this);
-    this.containerId = !(isObject(props) && typeof props.containerId === "undefined") ?
+    this.containerId = !isObject(props) || typeof props.containerId === "undefined" ?
       uniqueId("victory-container-") : props.containerId;
   }
 
@@ -94,27 +97,33 @@ export default class VictoryContainer extends React.Component {
     return props.children;
   }
 
-  // Overridden in victory-core-native
   renderContainer(props, svgProps, style) {
-    const { title, desc, portalComponent, className } = props;
+    const { title, desc, portalComponent, className, width, height, portalZIndex } = props;
     const children = this.getChildren(props);
-    const parentProps = defaults({ style, className }, svgProps);
+    const divStyle = { pointerEvents: "none", touchAction: "none" };
+    const svgStyle = { width: "100%", height: "100%" };
+    //eslint-disable-next-line no-magic-numbers
+    const marginTop = `-${Math.round(100 * height / width)}%`;
+    const portalProps = {
+      width, height, viewBox: svgProps.viewBox, style: assign({}, svgStyle, { overflow: "visible" })
+    };
     return (
-      <svg {...parentProps} overflow="visible">
-        <svg {...parentProps}>
-          {children}
-        </svg>
+      <div style={defaults({}, style, divStyle)} className={className}>
+        <svg {...svgProps} style={{ ...svgStyle, pointerEvents: "all" }}>
           {title ? <title id={this.getIdForElement("title")}>{title}</title> : null}
           {desc ? <desc id={this.getIdForElement("desc")}>{desc}</desc> : null}
-        {React.cloneElement(portalComponent, { ref: this.savePortalRef })}
-      </svg>
+          {children}
+        </svg>
+          <div style={{ ...divStyle, zIndex: portalZIndex, position: "relative", marginTop }}>
+            {React.cloneElement(portalComponent, { ...portalProps, ref: this.savePortalRef })}
+          </div>
+        </div>
     );
   }
 
   render() {
     const { width, height, responsive, events } = this.props;
     const style = responsive ? this.props.style : omit(this.props.style, ["height", "width"]);
-    const touchStyle = defaults({}, style, { touchAction: "none" });
     const svgProps = assign(
       {
         width, height, role: "img",
@@ -123,6 +132,6 @@ export default class VictoryContainer extends React.Component {
       },
       events
     );
-    return this.renderContainer(this.props, svgProps, touchStyle);
+    return this.renderContainer(this.props, svgProps, style);
   }
 }

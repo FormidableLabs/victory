@@ -52,7 +52,7 @@ export default class VictoryLabel extends React.Component {
       CustomPropTypes.nonNegative,
       PropTypes.func
     ]),
-    origin: PropTypes.shape({ x: PropTypes.number, y: PropTypes.number }),
+    origin: PropTypes.shape({ x: CustomPropTypes.nonNegative, y: CustomPropTypes.nonNegative }),
     polar: PropTypes.bool,
     renderInPortal: PropTypes.bool,
     style: PropTypes.oneOfType([
@@ -89,11 +89,11 @@ export default class VictoryLabel extends React.Component {
       PropTypes.func
     ]),
     x: PropTypes.oneOfType([
-      PropTypes.number,
+      CustomPropTypes.nonNegative,
       PropTypes.string
     ]),
     y: PropTypes.oneOfType([
-      PropTypes.number,
+      CustomPropTypes.nonNegative,
       PropTypes.string
     ])
   };
