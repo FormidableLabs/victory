@@ -56,7 +56,7 @@ class App extends React.Component {
             theme={VictoryTheme.material}
             domainPadding={{ y: 2 }}
             containerComponent={
-              <VictoryVoronoiContainer dimension="x"
+              <VictoryVoronoiContainer voronoiDimension="x"
                 labels={(d) => `y:${d.y}`}
                 labelComponent={
                   <VictoryTooltip
@@ -114,7 +114,7 @@ class App extends React.Component {
                 fill: (datum, active) => active ? "tomato" : "black"
               }
             }}
-            containerComponent={<VictoryVoronoiContainer dimension="x"/>}
+            containerComponent={<VictoryVoronoiContainer voronoiDimension="x"/>}
             size={(datum, active) => active ? 5 : 3}
             data={this.state.data}
             x="a"

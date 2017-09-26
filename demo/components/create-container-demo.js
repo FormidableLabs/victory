@@ -30,7 +30,7 @@ const Charts = ({ behaviors }) => { // eslint-disable-line react/prop-types
           padding={{ top: 100, bottom: 50, left: 50, right: 50 }}
           domainPadding={{ y: 2 }}
           containerComponent={
-            <CustomContainer dimension="x"
+            <CustomContainer voronoiDimension="x"
               labels={(d) => `y: ${d.y}`}
               labelComponent={<VictoryTooltip cornerRadius={0} flyoutStyle={{ fill: "white" }}/>}
               selectedDomain={{ x: [1.5, 2] }}

@@ -14,17 +14,17 @@ const Helpers = {
   },
 
   getDomainBox(props, fullDomain, selectedDomain) {
-    const { dimension } = props;
+    const { brushDimension } = props;
     fullDomain = defaults({}, fullDomain, props.domain);
     selectedDomain = defaults({}, selectedDomain, fullDomain);
-    const fullCoordinates = Selection.getDomainCoordinates(props, fullDomain);
-    const selectedCoordinates = Selection.getDomainCoordinates(props, selectedDomain);
+    const fullCoords = Selection.getDomainCoordinates(props, fullDomain);
+    const selectedCoords = Selection.getDomainCoordinates(props, selectedDomain);
 
     return {
-      x1: dimension !== "y" ? Math.min(...selectedCoordinates.x) : Math.min(...fullCoordinates.x),
-      x2: dimension !== "y" ? Math.max(...selectedCoordinates.x) : Math.max(...fullCoordinates.x),
-      y1: dimension !== "x" ? Math.min(...selectedCoordinates.y) : Math.min(...fullCoordinates.y),
-      y2: dimension !== "x" ? Math.max(...selectedCoordinates.y) : Math.max(...fullCoordinates.y)
+      x1: brushDimension !== "y" ? Math.min(...selectedCoords.x) : Math.min(...fullCoords.x),
+      x2: brushDimension !== "y" ? Math.max(...selectedCoords.x) : Math.max(...fullCoords.x),
+      y1: brushDimension !== "x" ? Math.min(...selectedCoords.y) : Math.min(...fullCoords.y),
+      y2: brushDimension !== "x" ? Math.max(...selectedCoords.y) : Math.max(...fullCoords.y)
     };
   },
 
@@ -69,23 +69,23 @@ const Helpers = {
     return { x: [0, 1 / Number.MAX_SAFE_INTEGER], y: [0, 1 / Number.MAX_SAFE_INTEGER] };
   },
 
-  getSelectionMutation(point, box, dimension) {
+  getSelectionMutation(point, box, brushDimension) {
     const { x, y } = point;
     const { x1, x2, y1, y2 } = box;
     return {
-      x1: dimension !== "y" ? x : x1,
-      y1: dimension !== "x" ? y : y1,
-      x2: dimension !== "y" ? x : x2,
-      y2: dimension !== "x" ? y : y2
+      x1: brushDimension !== "y" ? x : x1,
+      y1: brushDimension !== "x" ? y : y1,
+      x2: brushDimension !== "y" ? x : x2,
+      y2: brushDimension !== "x" ? y : y2
     };
   },
 
   panBox(props, point) {
-    const { dimension, domain, startX, startY } = props;
-    const selectedDomain = defaults({}, props.selectedDomain, domain);
+    const { brushDimension, domain, startX, startY } = props;
+    const brushDomain = defaults({}, props.brushDomain, domain);
     const fullDomain = defaults({}, props.fullDomain, domain);
     const { x1, x2, y1, y2 } = props.x1 ?
-      props : this.getDomainBox(props, fullDomain, selectedDomain);
+      props : this.getDomainBox(props, fullDomain, brushDomain);
 
     const { x, y } = point;
     const delta = {
@@ -93,10 +93,10 @@ const Helpers = {
       y: startY ? startY - y : 0
     };
     return {
-      x1: dimension !== "y" ? Math.min(x1, x2) - delta.x : Math.min(x1, x2),
-      x2: dimension !== "y" ? Math.max(x1, x2) - delta.x : Math.max(x1, x2),
-      y1: dimension !== "x" ? Math.min(y1, y2) - delta.y : Math.min(y1, y2),
-      y2: dimension !== "x" ? Math.max(y1, y2) - delta.y : Math.max(y1, y2)
+      x1: brushDimension !== "y" ? Math.min(x1, x2) - delta.x : Math.min(x1, x2),
+      x2: brushDimension !== "y" ? Math.max(x1, x2) - delta.x : Math.max(x1, x2),
+      y1: brushDimension !== "x" ? Math.min(y1, y2) - delta.y : Math.min(y1, y2),
+      y2: brushDimension !== "x" ? Math.max(y1, y2) - delta.y : Math.max(y1, y2)
     };
   },
 
@@ -113,13 +113,13 @@ const Helpers = {
   onMouseDown(evt, targetProps) { // eslint-disable-line max-statements
     evt.preventDefault();
     const {
-      dimension, handleWidth, onDomainChange, cachedSelectedDomain, domain
+      brushDimension, handleWidth, onBrushDomainChange, cachedBrushDomain, domain
     } = targetProps;
-    const selectedDomain = defaults({}, targetProps.selectedDomain, domain);
+    const brushDomain = defaults({}, targetProps.brushDomain, domain);
     const fullDomainBox = targetProps.fullDomainBox ||
       this.getDomainBox(targetProps, domain);
-    const currentDomain = isEqual(selectedDomain, cachedSelectedDomain) ?
-      targetProps.currentDomain || selectedDomain || domain : selectedDomain || domain;
+    const currentDomain = isEqual(brushDomain, cachedBrushDomain) ?
+      targetProps.currentDomain || brushDomain || domain : brushDomain || domain;
     const { x, y } = Selection.getSVGEventCoordinates(evt);
     // Ignore events that occur outside of the maximum domain region
     if (!this.withinBounds({ x, y }, fullDomainBox, handleWidth)) {
@@ -134,7 +134,7 @@ const Helpers = {
         mutation: () => {
           return {
             isSelecting: true, domainBox, fullDomainBox,
-            cachedSelectedDomain: selectedDomain, currentDomain,
+            cachedBrushDomain: brushDomain, currentDomain,
             ...this.getResizeMutation(domainBox, activeHandles)
           };
         }
@@ -149,7 +149,7 @@ const Helpers = {
         target: "parent",
         mutation: () => ({
           isPanning: true, startX: x, startY: y, domainBox, fullDomainBox, currentDomain,
-          cachedSelectedDomain: selectedDomain,
+          cachedBrushDomain: brushDomain,
           ...domainBox // set x1, x2, y1, y2
         })
       }];
@@ -160,13 +160,13 @@ const Helpers = {
 
       const mutatedProps = {
         isSelecting: true, domainBox, fullDomainBox,
-        cachedSelectedDomain: selectedDomain,
+        cachedBrushDomain: brushDomain,
         currentDomain: this.getMinimumDomain(),
-        ...this.getSelectionMutation({ x, y }, domainBox, dimension)
+        ...this.getSelectionMutation({ x, y }, domainBox, brushDimension)
       };
 
-      if (isFunction(onDomainChange)) {
-        onDomainChange(minimumDomain, defaults({}, mutatedProps, targetProps));
+      if (isFunction(onBrushDomainChange)) {
+        onBrushDomainChange(minimumDomain, defaults({}, mutatedProps, targetProps));
       }
       return [{
         target: "parent",
@@ -181,7 +181,7 @@ const Helpers = {
       return {};
     }
     const {
-      dimension, scale, isPanning, isSelecting, fullDomainBox, onDomainChange
+      brushDimension, scale, isPanning, isSelecting, fullDomainBox, onBrushDomainChange
     } = targetProps;
     const { x, y } = Selection.getSVGEventCoordinates(evt);
       // Ignore events that occur outside of the maximum domain region
@@ -202,22 +202,22 @@ const Helpers = {
         ...constrainedBox
       };
 
-      if (isFunction(onDomainChange)) {
-        onDomainChange(currentDomain, defaults({}, mutatedProps, targetProps));
+      if (isFunction(onBrushDomainChange)) {
+        onBrushDomainChange(currentDomain, defaults({}, mutatedProps, targetProps));
       }
       return [{
         target: "parent",
         mutation: () => mutatedProps
       }];
     } else if (isSelecting) {
-      const x2 = dimension !== "y" ? x : targetProps.x2;
-      const y2 = dimension !== "x" ? y : targetProps.y2;
+      const x2 = brushDimension !== "y" ? x : targetProps.x2;
+      const y2 = brushDimension !== "x" ? y : targetProps.y2;
       const currentDomain =
         Selection.getBounds({ x2, y2, x1: targetProps.x1, y1: targetProps.y1, scale });
 
       const mutatedProps = { x2, y2, currentDomain };
-      if (isFunction(onDomainChange)) {
-        onDomainChange(currentDomain, defaults({}, mutatedProps, targetProps));
+      if (isFunction(onBrushDomainChange)) {
+        onBrushDomainChange(currentDomain, defaults({}, mutatedProps, targetProps));
       }
       return [{
         target: "parent",
@@ -228,12 +228,12 @@ const Helpers = {
   },
 
   onMouseUp(evt, targetProps) {
-    const { x1, y1, x2, y2, onDomainChange, domain } = targetProps;
+    const { x1, y1, x2, y2, onBrushDomainChange, domain } = targetProps;
     // if the mouse hasn't moved since a mouseDown event, select the whole domain region
     if (x1 === x2 || y1 === y2) {
       const mutatedProps = { isPanning: false, isSelecting: false, currentDomain: domain };
-      if (isFunction(onDomainChange)) {
-        onDomainChange(domain, defaults({}, mutatedProps, targetProps));
+      if (isFunction(onBrushDomainChange)) {
+        onBrushDomainChange(domain, defaults({}, mutatedProps, targetProps));
       }
       return [{
         target: "parent",

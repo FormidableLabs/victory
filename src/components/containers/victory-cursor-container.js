@@ -1,13 +1,14 @@
 import PropTypes from "prop-types";
 import React from "react";
 import { VictoryContainer, VictoryLabel, Line, Helpers } from "victory-core";
-import { defaults, isNumber, isUndefined } from "lodash";
+import { defaults, isNumber, isUndefined, isObject } from "lodash";
 import CursorHelpers from "./cursor-helpers";
 
 export const cursorContainerMixin = (base) => class VictoryCursorContainer extends base {
   static displayName = "VictoryCursorContainer";
   static propTypes = {
     ...VictoryContainer.propTypes,
+    cursorDimension: PropTypes.oneOf(["x", "y"]),
     cursorLabel: PropTypes.func,
     cursorLabelComponent: PropTypes.element,
     cursorLabelOffset: PropTypes.oneOfType([
@@ -24,9 +25,7 @@ export const cursorContainerMixin = (base) => class VictoryCursorContainer exten
         y: PropTypes.number
       })
     ]),
-    dimension: PropTypes.oneOf(["x", "y"]),
-    onChange: PropTypes.func,
-    standalone: PropTypes.bool
+    onCursorChange: PropTypes.func
   };
   static defaultProps = {
     ...VictoryContainer.defaultProps,
@@ -100,7 +99,9 @@ export const cursorContainerMixin = (base) => class VictoryCursorContainer exten
 
   getPadding(props) {
     if (isUndefined(props.padding)) {
-      const child = props.children.find((c) => !isUndefined(c.props.padding));
+      const child = props.children.find((c) => {
+        return isObject(c.props) && !isUndefined(c.props.padding);
+      });
       return Helpers.getPadding(child.props);
     } else {
       return Helpers.getPadding(props);

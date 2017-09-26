@@ -7,12 +7,11 @@ export const selectionContainerMixin = (base) => class VictorySelectionContainer
   static displayName = "VictorySelectionContainer";
   static propTypes = {
     ...VictoryContainer.propTypes,
-    dimension: PropTypes.oneOf(["x", "y"]),
     onSelection: PropTypes.func,
     onSelectionCleared: PropTypes.func,
     selectionComponent: PropTypes.element,
-    selectionStyle: PropTypes.object,
-    standalone: PropTypes.bool
+    selectionDimension: PropTypes.oneOf(["x", "y"]),
+    selectionStyle: PropTypes.object
   };
   static defaultProps = {
     ...VictoryContainer.defaultProps,
