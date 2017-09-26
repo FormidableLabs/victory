@@ -120,7 +120,7 @@ export const zoomContainerMixin = (base) => class VictoryZoomContainer extends b
     };
     return React.Children.toArray(children).map((child, index) => {
       const role = child && child.type && child.type.role;
-      if (role === "axis") {
+      if (role === "axis" || role === "legend" || role === "label") {
         return child;
       } else if (role === "portal") {
         const group = makeGroup(child.props.children, index);
@@ -200,7 +200,8 @@ export const zoomContainerMixin = (base) => class VictoryZoomContainer extends b
         currentChild,
         defaults({
           domain: newDomain,
-          data: this.downsampleZoomData(props, currentChild.props, newDomain)
+          data: role === "legend" ?
+            undefined : this.downsampleZoomData(props, currentChild.props, newDomain)
         }, currentChild.props)
       );
       return role === "portal" ? React.cloneElement(child, { children: newChild }) : newChild;
