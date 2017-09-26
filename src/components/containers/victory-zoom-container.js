@@ -115,7 +115,8 @@ export const zoomContainerMixin = (base) => class VictoryZoomContainer extends b
         children: child,
         polar,
         origin: polar ? origin : undefined,
-        radius: polar ? radius : undefined
+        radius: polar ? radius : undefined,
+        ...clipContainerComponent.props
       });
     };
     return React.Children.toArray(children).map((child, index) => {
