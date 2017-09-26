@@ -6,7 +6,7 @@ import {
   VictoryChart, VictoryZoomContainer, VictoryArea, VictoryLine,
   VictoryAxis, VictoryGroup, VictoryStack, VictoryScatter
 } from "../../src/index";
-import { VictoryTheme, VictoryClipContainer, VictoryPortal } from "victory-core";
+import { VictoryTheme, VictoryClipContainer, VictoryPortal, VictoryLegend } from "victory-core";
 
 export default class App extends React.Component {
   constructor() {
@@ -77,10 +77,16 @@ export default class App extends React.Component {
 
   render() {
     const parentStyle = { border: "1px solid #ccc", margin: "2%", maxWidth: "40%" };
-    return (
-      <div className="demo">
-        <h1>VictoryZoomContainer</h1>
+    const containerStyle = {
+      display: "flex",
+      flexDirection: "row",
+      flexWrap: "wrap",
+      alignItems: "center",
+      justifyContent: "center"
+    };
 
+    return (
+      <div className="demo" style={containerStyle}>
           <VictoryGroup
             containerComponent={<VictoryZoomContainer dimension="y"/>}
             style={{ parent: parentStyle }} data={this.state.transitionData}
@@ -188,7 +194,28 @@ export default class App extends React.Component {
             <VictoryAxis dependentAxis/>
           </VictoryChart>
 
+          <button onClick={() => this.setState({ zoomDomain: this.getZoomDomain() })}>
+            random y domain
+          </button>
+
+          <VictoryChart
+            containerComponent={
+              <VictoryZoomContainer dimension="x" zoomDomain={this.state.zoomDomain} />
+            }
+            animate={{ duration: 500 }}
+            style={{ parent: parentStyle }}
+          >
+            <VictoryLine
+              name="line"
+              style={{ parent: parentStyle, data: { stroke: "blue" } }}
+              y={(d) => Math.sin(2 * Math.PI * d.x)}
+              sample={25}
+            />
+          </VictoryChart>
+
           <VictoryChart style={{ parent: parentStyle }}
+            height={400}
+            padding={{ top: 80, bottom: 50, left: 50, right: 50 }}
             containerComponent={<VictoryZoomContainer/>}
             theme={VictoryTheme.material}
             events={[{
@@ -225,6 +252,18 @@ export default class App extends React.Component {
               }
             }]}
           >
+          <VictoryLegend x={83} y={10}
+            title="Legend"
+            centerTitle
+            orientation="horizontal"
+            gutter={20}
+            style={{ border: { stroke: "black" }, title: { fontSize: 20 } }}
+            data={[
+              { name: "One", symbol: { fill: "tomato" } },
+              { name: "Two", symbol: { fill: "orange" } },
+              { name: "Three", symbol: { fill: "gold" } }
+            ]}
+          />
             <VictoryAxis/>
             <VictoryStack>
               <VictoryArea name="area-1"
@@ -267,24 +306,7 @@ export default class App extends React.Component {
             <VictoryAxis dependentAxis/>
           </VictoryChart>
 
-          <button onClick={() => this.setState({ zoomDomain: this.getZoomDomain() })}>
-            random y domain
-          </button>
 
-          <VictoryChart
-            containerComponent={
-              <VictoryZoomContainer dimension="x" zoomDomain={this.state.zoomDomain} />
-            }
-            animate={{ duration: 500 }}
-            style={{ parent: parentStyle }}
-          >
-            <VictoryLine
-              name="line"
-              style={{ parent: parentStyle, data: { stroke: "blue" } }}
-              y={(d) => Math.sin(2 * Math.PI * d.x)}
-              sample={25}
-            />
-          </VictoryChart>
       </div>
     );
   }

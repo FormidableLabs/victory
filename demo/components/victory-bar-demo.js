@@ -112,9 +112,16 @@ export default class App extends React.Component {
   render() {
     const parentStyle = { border: "1px solid #ccc", margin: "2%", maxWidth: "40%" };
 
+    const containerStyle = {
+      display: "flex",
+      flexDirection: "row",
+      flexWrap: "wrap",
+      alignItems: "center",
+      justifyContent: "center"
+    };
+
     return (
-      <div className="demo">
-        <h1>VictoryBar</h1>
+      <div className="demo" style={containerStyle}>
 
         <ChartWrap scale={{ x: "log", y: "linear" }}>
           <VictoryBar
@@ -519,13 +526,11 @@ class ChartWrap extends React.Component {
   // to test both cases at once
   render() {
     const parentStyle = { border: "1px solid #ccc", margin: "2%", maxWidth: "40%" };
-    const childProps = this.props.children.props;
-    const style = Object.assign({}, childProps.style, { parent: parentStyle });
-    const props = Object.assign({}, childProps, { style });
+
     return (
-      <div>
-        {React.cloneElement(this.props.children, props)}
-        <VictoryChart {...this.props} style={{ parent: parentStyle }}>
+      <div style={{ parent: parentStyle }}>
+        {React.cloneElement(this.props.children)}
+        <VictoryChart {...this.props}>
           {this.props.children}
         </VictoryChart>
       </div>

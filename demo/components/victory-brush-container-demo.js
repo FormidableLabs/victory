@@ -4,6 +4,7 @@ import {
   VictoryChart, VictoryGroup, VictoryStack, VictoryScatter, VictoryBar, VictoryLine,
   VictoryBrushContainer, VictoryZoomContainer, VictoryAxis
 } from "../../src/index";
+import { VictoryLegend } from "victory-core";
 
 class App extends React.Component {
   constructor() {
@@ -96,10 +97,24 @@ class App extends React.Component {
           </VictoryChart>
 
           <VictoryChart style={chartStyle}
+            height={400}
+            padding={{ top: 100, bottom: 50, left: 50, right: 50 }}
             containerComponent={
               <VictoryBrushContainer dimension={null}/>
             }
           >
+            <VictoryLegend x={120} y={20}
+              title="Legend"
+              centerTitle
+              orientation="horizontal"
+              gutter={20}
+              style={{ border: { stroke: "black" }, title: { fontSize: 20 } }}
+              data={[
+                { name: "One", symbol: { fill: "tomato" } },
+                { name: "Two", symbol: { fill: "orange" } },
+                { name: "Three", symbol: { fill: "gold" } }
+              ]}
+            />
             <VictoryLine
               style={{
                 data: { stroke: "tomato" }

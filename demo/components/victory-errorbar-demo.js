@@ -52,18 +52,24 @@ export default class App extends React.Component {
   }
 
   render() {
-    return (
-      <div className="demo">
-        <h1>VictoryErrorBar</h1>
+    const containerStyle = {
+      display: "flex",
+      flexDirection: "row",
+      flexWrap: "wrap",
+      alignItems: "center",
+      justifyContent: "center"
+    };
 
-        <VictoryChart>
+    return (
+      <div className="demo" style={containerStyle}>
+        <VictoryChart style={style}>
           <VictoryErrorBar
             data={basicData}
           />
           <VictoryScatter data={basicData}/>
         </VictoryChart>
 
-        <VictoryChart>
+        <VictoryChart style={style}>
           <VictoryErrorBar data={basicData}/>
           <VictoryLine
             data={basicData}
@@ -144,7 +150,7 @@ export default class App extends React.Component {
           }]}
         />
 
-        <VictoryChart
+        <VictoryChart style={style}
           theme={VictoryTheme.material}
         >
           <VictoryErrorBar
@@ -153,7 +159,7 @@ export default class App extends React.Component {
           />
         </VictoryChart>
 
-        <VictoryChart
+        <VictoryChart style={style}
           theme={VictoryTheme.material}
         >
           <VictoryErrorBar

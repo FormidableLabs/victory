@@ -6,7 +6,7 @@ import {
   createContainer
 } from "../../src/index";
 
-import { VictoryTooltip } from "victory-core";
+import { VictoryTooltip, VictoryLegend } from "victory-core";
 
 const Charts = ({ behaviors }) => { // eslint-disable-line react/prop-types
   const containerStyle = {
@@ -26,6 +26,8 @@ const Charts = ({ behaviors }) => { // eslint-disable-line react/prop-types
       <div style={containerStyle}>
         {/* A */}
         <VictoryChart style={chartStyle}
+          height={400}
+          padding={{ top: 100, bottom: 50, left: 50, right: 50 }}
           domainPadding={{ y: 2 }}
           containerComponent={
             <CustomContainer dimension="x"
@@ -35,6 +37,18 @@ const Charts = ({ behaviors }) => { // eslint-disable-line react/prop-types
             />
           }
         >
+            <VictoryLegend x={120} y={20}
+              title="Legend"
+              centerTitle
+              orientation="horizontal"
+              gutter={20}
+              style={{ border: { stroke: "black" }, title: { fontSize: 20 } }}
+              data={[
+                { name: "One", symbol: { fill: "tomato" } },
+                { name: "Two", symbol: { fill: "orange" } },
+                { name: "Three", symbol: { fill: "gold" } }
+              ]}
+            />
           <VictoryLine
             data={[
               { x: 1, y: 5, l: "one" },
