@@ -7,7 +7,7 @@ import {
 } from "../../src/index";
 import { random, range } from "lodash";
 
-import { VictoryTooltip, VictoryTheme } from "victory-core";
+import { VictoryTooltip, VictoryTheme, VictoryLegend } from "victory-core";
 class App extends React.Component {
 
   constructor() {
@@ -139,7 +139,23 @@ class App extends React.Component {
             y={(d) => d.x * d.x}
           />
 
-          <VictoryChart style={chartStyle} containerComponent={<VictoryVoronoiContainer/>}>
+          <VictoryChart
+            height={450}
+            padding={{ top: 100, bottom: 20, left: 50, right: 50 }}
+            style={chartStyle} containerComponent={<VictoryVoronoiContainer/>}
+          >
+            <VictoryLegend x={140} y={10}
+              title="Legend"
+              centerTitle
+              orientation="horizontal"
+              gutter={20}
+              style={{ border: { stroke: "black" }, title: { fontSize: 20 } }}
+              data={[
+                { name: "One", symbol: { fill: "tomato" } },
+                { name: "Two", symbol: { fill: "orange" } },
+                { name: "Three", symbol: { fill: "gold" } }
+              ]}
+            />
             <VictoryGroup style={chartStyle}>
               <VictoryScatter
                 style={{

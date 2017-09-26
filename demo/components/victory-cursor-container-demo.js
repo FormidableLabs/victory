@@ -6,9 +6,9 @@ import {
   VictoryChart, VictoryGroup, VictoryStack, VictoryScatter, VictoryBar, VictoryLine,
   VictoryCursorContainer
 } from "../../src/index";
-import { VictoryTooltip, VictoryTheme, VictoryLabel } from "victory-core";
+import { VictoryTooltip, VictoryTheme, VictoryLabel, VictoryLegend } from "victory-core";
 
-const makeData = () => range(15000).map((x) => ({ x, y: x + 10 * Math.random() }));
+const makeData = () => range(1500).map((x) => ({ x, y: x + 10 * Math.random() }));
 
 class App extends React.Component {
 
@@ -64,12 +64,26 @@ class App extends React.Component {
 
           <VictoryChart style={chartStyle}
             theme={VictoryTheme.material}
+            height={400}
+            padding={{ top: 100, bottom: 40, left: 50, right: 50 }}
             containerComponent={
               <VictoryCursorContainer
                 cursorLabel={cursorLabel}
               />
             }
           >
+            <VictoryLegend x={90} y={10}
+              title="Legend"
+              centerTitle
+              orientation="horizontal"
+              gutter={20}
+              style={{ border: { stroke: "black" }, title: { fontSize: 20 } }}
+              data={[
+                { name: "One", symbol: { fill: "tomato" } },
+                { name: "Two", symbol: { fill: "orange" } },
+                { name: "Three", symbol: { fill: "gold" } }
+              ]}
+            />
             <VictoryLine data={this.state.bigData}/>
           </VictoryChart>
 

@@ -65,9 +65,16 @@ export default class App extends React.Component {
   }
 
   render() {
+    const containerStyle = {
+      display: "flex",
+      flexDirection: "row",
+      flexWrap: "wrap",
+      alignItems: "center",
+      justifyContent: "center"
+    };
+
     return (
-      <div className="demo">
-        <h1>Victory Candlestick</h1>
+      <div className="demo" style={containerStyle}>
         <svg height={500} width={500}>
         <VictoryCandlestick
           style={{ data: { width: 10 }, parent: style.parent }}
@@ -153,9 +160,7 @@ export default class App extends React.Component {
 
         <VictoryChart
           scale={{ x: "time" }}
-          style={{
-            parent: style.parent
-          }}
+          style={style}
           domainPadding={{ x: [20, 50] }}
         >
           <VictoryCandlestick
@@ -175,11 +180,11 @@ export default class App extends React.Component {
           }}
         />
 
-        <VictoryCandlestick
+        <VictoryCandlestick style={style}
           size={1}
         />
 
-        <VictoryChart>
+        <VictoryChart style={style}>
           <VictoryCandlestick
             data={[]}
           />

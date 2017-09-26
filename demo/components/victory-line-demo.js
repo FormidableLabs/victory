@@ -110,11 +110,16 @@ export default class App extends React.Component {
 
   render() {
     const parentStyle = { border: "1px solid #ccc", margin: "2%", maxWidth: "40%" };
+    const containerStyle = {
+      display: "flex",
+      flexDirection: "row",
+      flexWrap: "wrap",
+      alignItems: "center",
+      justifyContent: "center"
+    };
+
     return (
-      <div className="demo">
-        <h1>VictoryLine</h1>
-
-
+      <div className="demo" style={containerStyle}>
         <VictoryLine
           style={{ parent: parentStyle, data: { stroke: "blue" } }}
           y={(d) => Math.sin(2 * Math.PI * d.x)}
@@ -196,12 +201,10 @@ export default class App extends React.Component {
           ]}
         />
 
-        <VictoryChart
+        <VictoryChart style={{ parent: parentStyle }}
           scale={{ x: "linear", y: "log" }}
         >
-        <VictoryLine
-          style={{ parent: parentStyle }}
-        />
+          <VictoryLine/>
         </VictoryChart>
 
         <VictoryLine
@@ -212,18 +215,17 @@ export default class App extends React.Component {
           theme={VictoryTheme.grayscale}
         />
 
-        <VictoryChart
+        <VictoryChart style={{ parent: parentStyle }}
           theme={VictoryTheme.grayscale}
         >
           <VictoryLine
-            style={{ parent: parentStyle }}
             data={this.state.arrayData}
             x={0}
             y={1}
           />
       </VictoryChart>
 
-      <VictoryChart
+      <VictoryChart style={{ parent: parentStyle }}
         height={450}
         scale={{
           x: "time"

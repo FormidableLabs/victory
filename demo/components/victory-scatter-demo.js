@@ -30,6 +30,14 @@ const style = {
   parent: { border: "1px solid #ccc", margin: "2%", maxWidth: "40%" }
 };
 
+const containerStyle = {
+  display: "flex",
+  flexDirection: "row",
+  flexWrap: "wrap",
+  alignItems: "center",
+  justifyContent: "center"
+};
+
 const symbolStyle = {
   parent: { border: "1px solid #ccc", margin: "2%", maxWidth: "40%" },
   data: {
@@ -98,8 +106,7 @@ export default class App extends React.Component {
 
   render() {
     return (
-      <div className="demo">
-        <h1>VictoryScatter</h1>
+      <div className="demo" style={containerStyle}>
         <VictoryScatter
           style={style}
           width={500}

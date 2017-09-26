@@ -97,8 +97,16 @@ export default class App extends React.Component {
       parent: { border: "1px solid #ccc", margin: "2%", maxWidth: "40%" }
     };
 
+    const containerStyle = {
+      display: "flex",
+      flexDirection: "row",
+      flexWrap: "wrap",
+      alignItems: "center",
+      justifyContent: "center"
+    };
+
     return (
-      <div className="demo">
+      <div className="demo" style={containerStyle}>
 
         <VictoryArea
           style={style} animate

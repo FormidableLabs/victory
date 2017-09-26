@@ -4,7 +4,7 @@ import {
   VictoryChart, VictoryGroup, VictoryStack, VictoryScatter, VictoryBar, VictoryLine,
   VictorySelectionContainer
 } from "../../src/index";
-import { VictoryTooltip } from "victory-core";
+import { VictoryTooltip, VictoryLegend } from "victory-core";
 
 class App extends React.Component {
 
@@ -58,6 +58,8 @@ class App extends React.Component {
         <div style={containerStyle}>
           {this.listData()}
           <VictoryChart style={chartStyle}
+            height={400}
+            padding={{ top: 100, bottom: 50, left: 50, right: 50 }}
             containerComponent={
               <VictorySelectionContainer
                 selectionStyle={{
@@ -68,6 +70,18 @@ class App extends React.Component {
               />
             }
           >
+            <VictoryLegend x={120} y={20}
+              title="Legend"
+              centerTitle
+              orientation="horizontal"
+              gutter={20}
+              style={{ border: { stroke: "black" }, title: { fontSize: 20 } }}
+              data={[
+                { name: "One", symbol: { fill: "tomato" } },
+                { name: "Two", symbol: { fill: "orange" } },
+                { name: "Three", symbol: { fill: "gold" } }
+              ]}
+            />
             <VictoryLine
               style={{
                 data: { stroke: "tomato" }

@@ -47,7 +47,7 @@ class App extends React.Component {
             labels={(d) => `hello #${d.x}`}
             size={(d, active) => active ? 5 : 3}
             data={[
-              { x: 1, y: 1 },
+              { x: 1, y: 5 },
               { x: 2, y: 2 },
               { x: 3, y: 3 },
               { x: 4, y: 2 },
@@ -86,9 +86,9 @@ class App extends React.Component {
               labels={["a", "b", "c"]}
               labelComponent={<VictoryTooltip/>}
               horizontal
-              offset={35}
+              offset={16}
               colorScale={"qualitative"}
-              style={{ data: { width: 20, pointerEvents: "all" } }}
+              style={{ data: { width: 15 } }}
             >
               <VictoryBar
                 data={[
@@ -120,7 +120,7 @@ class App extends React.Component {
               colorScale={"qualitative"}
               labels={["a", "b", "c"]}
               labelComponent={<VictoryTooltip/>}
-              style={{ data: { width: 30, pointerEvents: "visible" } }}
+              style={{ data: { width: 30 } }}
             >
               <VictoryBar
                 data={[
