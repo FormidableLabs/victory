@@ -184,10 +184,9 @@ export default class App extends React.Component {
         </ChartWrap>
 
         <VictoryChart
-          domainPadding={{ x: 20 }}
+          domainPadding={{ y: 20 }}
         >
           <VictoryBar
-            horizontal
             data={[
               { x: 1, y: "Alpha" },
               { x: 7, y: "Beta" },
@@ -200,10 +199,10 @@ export default class App extends React.Component {
         <VictoryChart
           style={{ parent: parentStyle }}
           theme={VictoryTheme.material}
-          scale={{ x: "linear", y: "log" }}
         >
           <VictoryBar
             horizontal
+            alignment="start"
             data={[
               { x: 2, y: "Echo" },
               { x: 6, y: "Foxtrot" },
