@@ -10,6 +10,7 @@ export default class Bar extends React.Component {
 
   static propTypes = {
     ...CommonProps,
+    alignment: PropTypes.oneOf(["start", "middle", "end"]),
     datum: PropTypes.object,
     horizontal: PropTypes.bool,
     padding: PropTypes.oneOfType([
@@ -59,13 +60,17 @@ export default class Bar extends React.Component {
   }
 
   getPosition(props, width) {
-    const size = width / 2;
-    const { x, y, y0 } = props;
+    const { x, y, y0, horizontal } = props;
+    const alignment = props.alignment || "middle";
+    const size = alignment === "middle" ? width / 2 : width;
+    const sign = horizontal ? -1 : 1;
+    const x0 = alignment === "start" ? x : x - (sign * size);
+    const x1 = alignment === "end" ? x : x + (sign * size);
     return {
       y0: Math.round(y0),
       y1: Math.round(y),
-      x0: Math.round(x - size),
-      x1: Math.round(x + size)
+      x0: Math.round(x0),
+      x1: Math.round(x1)
     };
   }
 
@@ -108,30 +113,40 @@ export default class Bar extends React.Component {
   }
 
   getStartAngle(props, index) {
-    const { data, scale } = props;
+    const { data, scale, alignment } = props;
     const currentAngle = this.getAngle(props, index);
     const angularRange = Math.abs(scale.x.range()[1] - scale.x.range()[0]);
     const previousAngle = index === 0 ?
       this.getAngle(props, data.length - 1) - (Math.PI * 2) :
       this.getAngle(props, index - 1);
-    return index === 0 && angularRange < (2 * Math.PI) ?
-      scale.x.range()[0] : (currentAngle + previousAngle) / 2;
+    if (index === 0 && angularRange < (2 * Math.PI)) {
+      return scale.x.range()[0];
+    } else if (alignment === "start" || alignment === "end") {
+      return alignment === "start" ? previousAngle : currentAngle;
+    } else {
+      return (currentAngle + previousAngle) / 2;
+    }
   }
 
   getEndAngle(props, index) {
-    const { data, scale } = props;
+    const { data, scale, alignment } = props;
     const currentAngle = this.getAngle(props, index);
     const angularRange = Math.abs(scale.x.range()[1] - scale.x.range()[0]);
     const lastAngle = scale.x.range()[1] === (2 * Math.PI) ?
       this.getAngle(props, 0) + (Math.PI * 2) : scale.x.range()[1];
     const nextAngle = index === data.length - 1 ?
       this.getAngle(props, 0) + (Math.PI * 2) : this.getAngle(props, index + 1);
-    return index === data.length - 1 && angularRange < (2 * Math.PI) ?
-      lastAngle : (currentAngle + nextAngle) / 2;
+    if (index === data.length - 1 && angularRange < (2 * Math.PI)) {
+      return lastAngle;
+    } else if (alignment === "start" || alignment === "end") {
+      return alignment === "start" ? currentAngle : nextAngle;
+    } else {
+      return (currentAngle + nextAngle) / 2;
+    }
   }
 
   getVerticalPolarBarPath(props) {
-    const { datum, scale, style, index } = props;
+    const { datum, scale, style, index, alignment } = props;
     const r1 = scale.y(datum._y0 || 0);
     const r2 = scale.y(datum._y1 !== undefined ? datum._y1 : datum._y);
     const currentAngle = scale.x(datum._x1 !== undefined ? datum._x1 : datum._x);
@@ -139,8 +154,9 @@ export default class Bar extends React.Component {
     let end;
     if (style.width) {
       const width = this.getAngularWidth(props, style.width);
-      start = currentAngle - (width / 2);
-      end = currentAngle + (width / 2);
+      const size = alignment === "middle" ? width / 2 : width;
+      start = alignment === "start" ? currentAngle : currentAngle - size;
+      end = alignment === "end" ? currentAngle : currentAngle + size;
     } else {
       start = this.getStartAngle(props, index);
       end = this.getEndAngle(props, index);
