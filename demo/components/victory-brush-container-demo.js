@@ -34,8 +34,8 @@ class App extends React.Component {
             containerComponent={
               <VictoryZoomContainer responsive={false}
                 zoomDomain={this.state.zoomDomain}
-                dimension="x"
-                onDomainChange={this.handleZoom.bind(this)}
+                zoomDimension="x"
+                onZoomDomainChange={this.handleZoom.bind(this)}
               />
             }
           >
@@ -61,9 +61,9 @@ class App extends React.Component {
             width={800} height={100} scale={{ x: "time" }}
             containerComponent={
               <VictoryBrushContainer responsive={false}
-                selectedDomain={this.state.zoomDomain}
-                dimension="x"
-                onDomainChange={this.handleZoom.bind(this)}
+                brushDomain={this.state.zoomDomain}
+                brushDimension="x"
+                onBrushDomainChange={this.handleZoom.bind(this)}
               />
             }
           >
@@ -100,7 +100,7 @@ class App extends React.Component {
             height={400}
             padding={{ top: 100, bottom: 50, left: 50, right: 50 }}
             containerComponent={
-              <VictoryBrushContainer dimension={null}/>
+              <VictoryBrushContainer brushDimension={null}/>
             }
           >
             <VictoryLegend x={120} y={20}
@@ -166,7 +166,7 @@ class App extends React.Component {
             domain={{ x: [0, 10], y: [-5, 5] }}
             containerComponent={
               <VictoryBrushContainer
-                selectedDomain={{ x: [0, 10] }}
+                brushDomain={{ x: [0, 10] }}
               />
             }
             size={(datum, active) => active ? 5 : 3}
@@ -310,8 +310,8 @@ class App extends React.Component {
           <VictoryLine style={chartStyle}
             containerComponent={
               <VictoryBrushContainer
-                selectedDomain={{ y: [-3, 3] }}
-                selectionComponent={<rect style={{ fill: "teal" }}/>}
+                brushDomain={{ y: [-3, 3] }}
+                brushComponent={<rect style={{ fill: "teal" }}/>}
               />
             }
             style={{

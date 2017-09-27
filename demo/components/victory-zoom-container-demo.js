@@ -200,7 +200,7 @@ export default class App extends React.Component {
 
           <VictoryChart
             containerComponent={
-              <VictoryZoomContainer dimension="x" zoomDomain={this.state.zoomDomain} />
+              <VictoryZoomContainer zoomDimension="x" zoomDomain={this.state.zoomDomain} />
             }
             animate={{ duration: 500 }}
             style={{ parent: parentStyle }}

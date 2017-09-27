@@ -147,12 +147,12 @@ const Helpers = {
   },
 
   getDomain(props) {
-    const { originalDomain, domain, children, dimension } = props;
+    const { originalDomain, domain, children, zoomDimension } = props;
     const childComponents = Children.toArray(children);
     let childrenDomain = {};
     if (childComponents.length) {
-      childrenDomain = dimension ?
-        { [dimension]: Wrapper.getDomainFromChildren(props, dimension, childComponents) }
+      childrenDomain = zoomDimension ?
+        { [zoomDimension]: Wrapper.getDomainFromChildren(props, zoomDimension, childComponents) }
         : ({
           x: Wrapper.getDomainFromChildren(props, "x", childComponents),
           y: Wrapper.getDomainFromChildren(props, "y", childComponents)
@@ -195,23 +195,23 @@ const Helpers = {
 
   onMouseMove(evt, targetProps, eventKey, ctx) { // eslint-disable-line max-params
     if (targetProps.panning) {
-      const { scale, startX, startY, onDomainChange, dimension, zoomDomain } = targetProps;
+      const { scale, startX, startY, onZoomDomainChange, zoomDimension, zoomDomain } = targetProps;
       const { x, y } = Selection.getSVGEventCoordinates(evt);
       const originalDomain = this.getDomain(targetProps);
       const lastDomain = this.getLastDomain(targetProps, originalDomain);
       const dx = (startX - x) / this.getDomainScale(lastDomain, scale, "x");
       const dy = (y - startY) / this.getDomainScale(lastDomain, scale, "y");
       const currentDomain = {
-        x: dimension === "y" ? originalDomain.x : this.pan(lastDomain.x, originalDomain.x, dx),
-        y: dimension === "x" ? originalDomain.y : this.pan(lastDomain.y, originalDomain.y, dy)
+        x: zoomDimension === "y" ? originalDomain.x : this.pan(lastDomain.x, originalDomain.x, dx),
+        y: zoomDimension === "x" ? originalDomain.y : this.pan(lastDomain.y, originalDomain.y, dy)
       };
       const resumeAnimation = this.handleAnimation(ctx);
       const mutatedProps = {
         parentControlledProps: ["domain"], startX: x, startY: y,
         domain: currentDomain, currentDomain, originalDomain, cachedZoomDomain: zoomDomain
       };
-      if (isFunction(onDomainChange)) {
-        onDomainChange(currentDomain, defaults({}, mutatedProps, targetProps));
+      if (isFunction(onZoomDomainChange)) {
+        onZoomDomainChange(currentDomain, defaults({}, mutatedProps, targetProps));
       }
       return [{
         target: "parent",
@@ -226,13 +226,13 @@ const Helpers = {
     if (!targetProps.allowZoom) {
       return {};
     }
-    const { onDomainChange, dimension, zoomDomain } = targetProps;
+    const { onZoomDomainChange, zoomDimension, zoomDomain } = targetProps;
     const originalDomain = this.getDomain(targetProps);
     const lastDomain = this.getLastDomain(targetProps, originalDomain);
     const { x, y } = lastDomain;
     const currentDomain = {
-      x: dimension === "y" ? lastDomain.x : this.scale(x, evt, targetProps, "x"),
-      y: dimension === "x" ? lastDomain.y : this.scale(y, evt, targetProps, "y")
+      x: zoomDimension === "y" ? lastDomain.x : this.scale(x, evt, targetProps, "x"),
+      y: zoomDimension === "x" ? lastDomain.y : this.scale(y, evt, targetProps, "y")
     };
     const resumeAnimation = this.handleAnimation(ctx);
 
@@ -245,8 +245,8 @@ const Helpers = {
       parentControlledProps: ["domain"], panning: false, zoomActive
     };
 
-    if (isFunction(onDomainChange)) {
-      onDomainChange(currentDomain, defaults({}, mutatedProps, targetProps));
+    if (isFunction(onZoomDomainChange)) {
+      onZoomDomainChange(currentDomain, defaults({}, mutatedProps, targetProps));
     }
 
     return [{

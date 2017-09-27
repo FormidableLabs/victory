@@ -25,8 +25,8 @@ const VoronoiHelpers = {
       return data.map((datum, index) => {
         const { x, y } = Helpers.getPoint(datum);
         return assign({
-          _voronoiX: props.dimension === "y" ? 0 : x,
-          _voronoiY: props.dimension === "x" ? 0 : y,
+          _voronoiX: props.voronoiDimension === "y" ? 0 : x,
+          _voronoiY: props.voronoiDimension === "x" ? 0 : y,
           childName: name, eventKey: index, continuous, style
         }, datum);
       });
@@ -83,7 +83,7 @@ const VoronoiHelpers = {
       .extent([[padding, padding], [width - padding, height - padding]]);
     const datasets = this.getDatasets(props);
     const voronoi = voronoiFunction(this.mergeDatasets(props, datasets));
-    const size = props.dimension ? undefined : props.radius;
+    const size = props.voronoiDimension ? undefined : props.radius;
     return voronoi.find(mousePosition.x, mousePosition.y, size);
   },
 

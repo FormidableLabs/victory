@@ -8,32 +8,32 @@ export const brushContainerMixin = (base) => class VictoryBrushContainer extends
   static displayName = "VictoryBrushContainer";
   static propTypes = {
     ...VictoryContainer.propTypes,
-    dimension: PropTypes.oneOf(["x", "y"]),
-    handleComponent: PropTypes.element,
-    handleStyle: PropTypes.object,
-    handleWidth: PropTypes.number,
-    onDomainChange: PropTypes.func,
-    selectedDomain: PropTypes.shape({
+    brushComponent: PropTypes.element,
+    brushDimension: PropTypes.oneOf(["x", "y"]),
+    brushDomain: PropTypes.shape({
       x: PropTypes.array,
       y: PropTypes.array
     }),
-    selectionComponent: PropTypes.element,
-    selectionStyle: PropTypes.object
+    brushStyle: PropTypes.object,
+    handleComponent: PropTypes.element,
+    handleStyle: PropTypes.object,
+    handleWidth: PropTypes.number,
+    onBrushDomainChange: PropTypes.func
   };
   static defaultProps = {
     ...VictoryContainer.defaultProps,
+    brushComponent: <rect/>,
+    brushStyle: {
+      stroke: "transparent",
+      fill: "black",
+      fillOpacity: 0.1
+    },
     handleComponent: <rect/>,
     handleStyle: {
       stroke: "transparent",
       fill: "transparent"
     },
-    handleWidth: 8,
-    selectionComponent: <rect/>,
-    selectionStyle: {
-      stroke: "transparent",
-      fill: "black",
-      fillOpacity: 0.1
-    }
+    handleWidth: 8
   };
 
   static defaultEvents = [{
@@ -82,21 +82,21 @@ export const brushContainerMixin = (base) => class VictoryBrushContainer extends
 
   getSelectBox(props, coordinates) {
     const { x, y } = coordinates;
-    const { selectionStyle, selectionComponent } = props;
-    const selectionComponentStyle = selectionComponent.props && selectionComponent.props.style;
+    const { brushStyle, brushComponent } = props;
+    const brushComponentStyle = brushComponent.props && brushComponent.props.style;
     return x[0] !== x[1] && y[0] !== y[1] ?
-      React.cloneElement(selectionComponent, {
+      React.cloneElement(brushComponent, {
         width: Math.abs(x[1] - x[0]) || 1,
         height: Math.abs(y[1] - y[0]) || 1,
         x: Math.min(x[0], x[1]),
         y: Math.min(y[0], y[1]),
         cursor: "move",
-        style: defaults({}, selectionComponentStyle, selectionStyle)
+        style: defaults({}, brushComponentStyle, brushStyle)
       }) : null;
   }
 
   getHandles(props, coordinates) {
-    const { dimension, handleWidth, handleStyle, handleComponent } = props;
+    const { brushDimension, handleWidth, handleStyle, handleComponent } = props;
     const { x, y } = coordinates;
     const width = Math.abs(x[1] - x[0]) || 1;
     const height = Math.abs(y[1] - y[0]) || 1;
@@ -105,10 +105,10 @@ export const brushContainerMixin = (base) => class VictoryBrushContainer extends
     const yProps = { style, width, height: handleWidth, cursor: "ns-resize" };
     const xProps = { style, width: handleWidth, height, cursor: "ew-resize" };
     const handleProps = {
-      top: dimension !== "x" && assign({ x: x[0], y: y[1] - (handleWidth / 2) }, yProps),
-      bottom: dimension !== "x" && assign({ x: x[0], y: y[0] - (handleWidth / 2) }, yProps),
-      left: dimension !== "y" && assign({ y: y[1], x: x[0] - (handleWidth / 2) }, xProps),
-      right: dimension !== "y" && assign({ y: y[1], x: x[1] - (handleWidth / 2) }, xProps)
+      top: brushDimension !== "x" && assign({ x: x[0], y: y[1] - (handleWidth / 2) }, yProps),
+      bottom: brushDimension !== "x" && assign({ x: x[0], y: y[0] - (handleWidth / 2) }, yProps),
+      left: brushDimension !== "y" && assign({ y: y[1], x: x[0] - (handleWidth / 2) }, xProps),
+      right: brushDimension !== "y" && assign({ y: y[1], x: x[1] - (handleWidth / 2) }, xProps)
     };
     const handles = ["top", "bottom", "left", "right"].reduce((memo, curr) => {
       memo = handleProps[curr] ?
@@ -122,10 +122,10 @@ export const brushContainerMixin = (base) => class VictoryBrushContainer extends
   }
 
   getRect(props) {
-    const { currentDomain, cachedSelectedDomain } = props;
-    const selectedDomain = defaults({}, props.selectedDomain, props.domain);
-    const domain = isEqual(selectedDomain, cachedSelectedDomain) ?
-      defaults({}, currentDomain, selectedDomain) : selectedDomain;
+    const { currentDomain, cachedBrushDomain } = props;
+    const brushDomain = defaults({}, props.brushDomain, props.domain);
+    const domain = isEqual(brushDomain, cachedBrushDomain) ?
+      defaults({}, currentDomain, brushDomain) : brushDomain;
     const coordinates = Selection.getDomainCoordinates(props, domain);
     const selectBox = this.getSelectBox(props, coordinates);
     return selectBox ?

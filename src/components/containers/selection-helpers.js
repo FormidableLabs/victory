@@ -66,7 +66,8 @@ const SelectionHelpers = {
   // eslint-disable-next-line complexity
   onMouseDown(evt, targetProps) {
     evt.preventDefault();
-    const { dimension, polar } = targetProps;
+    const { polar } = targetProps;
+    const dimension = targetProps.selectionDimension;
     const datasets = targetProps.datasets || [];
     const { x, y } = Selection.getSVGEventCoordinates(evt);
     const x1 = polar || dimension !== "y" ? x : Selection.getDomainCoordinates(targetProps).x[0];
@@ -92,7 +93,8 @@ const SelectionHelpers = {
   },
 
   onMouseMove(evt, targetProps) {
-    const { dimension, select, polar } = targetProps;
+    const { select, polar } = targetProps;
+    const dimension = targetProps.selectionDimension;
     if (!select) {
       return {};
     } else {

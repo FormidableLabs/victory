@@ -15,7 +15,6 @@ export const zoomContainerMixin = (base) => class VictoryZoomContainer extends b
     ...VictoryContainer.propTypes,
     allowZoom: PropTypes.bool,
     clipContainerComponent: PropTypes.element.isRequired,
-    dimension: PropTypes.oneOf(["x", "y"]),
     downsample: PropTypes.oneOfType([
       PropTypes.bool,
       PropTypes.number
@@ -24,7 +23,8 @@ export const zoomContainerMixin = (base) => class VictoryZoomContainer extends b
       x: PropTypes.number,
       y: PropTypes.number
     }),
-    onDomainChange: PropTypes.func,
+    onZoomDomainChange: PropTypes.func,
+    zoomDimension: PropTypes.oneOf(["x", "y"]),
     zoomDomain: PropTypes.shape({
       x: CustomPropTypes.domain,
       y: CustomPropTypes.domain
@@ -149,7 +149,7 @@ export const zoomContainerMixin = (base) => class VictoryZoomContainer extends b
     // if data accessors are not used, skip calling expensive Data.formatData
     const data = (childProps.x || childProps.y) ? Data.formatData(rawData, childProps) : rawData;
     const maxPoints = (downsample === true) ? DEFAULT_DOWNSAMPLE : downsample;
-    const dimension = props.dimension || "x";
+    const dimension = props.zoomDimension || "x";
 
     // important: assumes data is ordered by dimension
     // get the start and end of the data that is in the current visible domain
@@ -190,11 +190,11 @@ export const zoomContainerMixin = (base) => class VictoryZoomContainer extends b
       }
 
       let newDomain = props.polar ? this.modifyPolarDomain(domain, originalDomain) : domain;
-      if (newDomain && props.dimension) {
+      if (newDomain && props.zoomDimension) {
         // if zooming is restricted to a dimension, don't squash changes to zoomDomain in other dim
         newDomain = {
           ...zoomDomain,
-          [props.dimension]: newDomain[props.dimension]
+          [props.zoomDimension]: newDomain[props.zoomDimension]
         };
       }
       const newChild = React.cloneElement(

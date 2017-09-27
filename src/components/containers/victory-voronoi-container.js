@@ -8,13 +8,12 @@ export const voronoiContainerMixin = (base) => class VictoryVoronoiContainer ext
   static displayName = "VictoryVoronoiContainer";
   static propTypes = {
     ...VictoryContainer.propTypes,
-    dimension: PropTypes.oneOf(["x", "y"]),
     labelComponent: PropTypes.element,
     labels: PropTypes.func,
     onActivated: PropTypes.func,
     onDeactivated: PropTypes.func,
     radius: PropTypes.number,
-    standalone: PropTypes.bool,
+    voronoiDimension: PropTypes.oneOf(["x", "y"]),
     voronoiPadding: PropTypes.number
   };
   static defaultProps = {
@@ -113,14 +112,14 @@ export const voronoiContainerMixin = (base) => class VictoryVoronoiContainer ext
   }
 
   getLabelPosition(props, points, labelProps) {
-    const { mousePosition, dimension, scale, voronoiPadding } = props;
+    const { mousePosition, voronoiDimension, scale, voronoiPadding } = props;
     const basePosition = Helpers.scalePoint(props, omit(points[0], ["_voronoiX", "_voronoiY"]));
-    if (!dimension || points.length < 2) {
+    if (!voronoiDimension || points.length < 2) {
       return basePosition;
     }
 
-    const x = dimension === "y" ? mousePosition.x : basePosition.x;
-    const y = dimension === "x" ? mousePosition.y : basePosition.y;
+    const x = voronoiDimension === "y" ? mousePosition.x : basePosition.x;
+    const y = voronoiDimension === "x" ? mousePosition.y : basePosition.y;
     if (props.polar) {
       // TODO: Should multi-point tooltips be constrained within a circular chart?
       return { x, y };
@@ -169,8 +168,8 @@ export const voronoiContainerMixin = (base) => class VictoryVoronoiContainer ext
   }
 
   getDefaultLabelProps(props, points) {
-    const { dimension } = props;
-    const multiPoint = dimension && points.length > 1;
+    const { voronoiDimension } = props;
+    const multiPoint = voronoiDimension && points.length > 1;
     return {
       orientation: multiPoint ? "top" : undefined,
       pointerLength: multiPoint ? 0 : undefined
