@@ -47,6 +47,7 @@ class VictoryBar extends React.Component {
   static propTypes = {
     ...BaseProps,
     ...DataProps,
+    alignment: PropTypes.oneOf(["start", "middle", "end"]),
     horizontal: PropTypes.bool
   };
 

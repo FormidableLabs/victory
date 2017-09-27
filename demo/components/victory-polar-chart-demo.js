@@ -571,6 +571,7 @@ class App extends React.Component {
               tickValues={[0, 45, 90, 135, 180, 225, 270, 315]}
             />
             <VictoryBar
+              alignment="start"
               style={{ data: { fill: "tomato", opacity: 0.5 } }}
               data={[
                 { x: 45, y: 20, label: 1, fill: "red" },
@@ -599,6 +600,7 @@ class App extends React.Component {
             style={chartStyle}
           >
             <VictoryBar
+              alignment="start"
               style={{ data: { fill: "tomato", opacity: 0.5 } }}
               data={[
                 { x: 15, y: 20, label: 1, fill: "red" },
