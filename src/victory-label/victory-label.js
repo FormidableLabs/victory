@@ -89,11 +89,11 @@ export default class VictoryLabel extends React.Component {
       PropTypes.func
     ]),
     x: PropTypes.oneOfType([
-      CustomPropTypes.nonNegative,
+      PropTypes.number,
       PropTypes.string
     ]),
     y: PropTypes.oneOfType([
-      CustomPropTypes.nonNegative,
+      PropTypes.number,
       PropTypes.string
     ])
   };

@@ -81,8 +81,8 @@ export default class VictoryTooltip extends React.Component {
       CustomPropTypes.nonNegative,
       PropTypes.func
     ]),
-    x: CustomPropTypes.nonNegative,
-    y: CustomPropTypes.nonNegative
+    x: PropTypes.number,
+    y: PropTypes.number
   };
 
   static defaultProps = {
