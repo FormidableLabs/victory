@@ -70,7 +70,9 @@ export default class Point extends React.Component {
     };
     const symbol = Helpers.evaluateProp(props.symbol, datum, active);
     const size = Helpers.evaluateProp(props.size, datum, active);
-    return pathFunctions[symbol].call(null, x, y, size);
+    const symbolFunction = typeof pathFunctions[symbol] === "function" ?
+      pathFunctions[symbol] : pathFunctions.circle;
+    return symbolFunction(x, y, size);
   }
 
   // Overridden in victory-core-native
