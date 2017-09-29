@@ -1,7 +1,7 @@
 import React from "react";
 import PropTypes from "prop-types";
 import CustomPropTypes from "../victory-util/prop-types";
-import { assign, defaults, isFunction } from "lodash";
+import { assign, defaults, isFunction, isObject, uniqueId } from "lodash";
 import ClipPath from "../victory-primitives/clip-path";
 
 export default class VictoryClipContainer extends React.Component {
@@ -37,9 +37,8 @@ export default class VictoryClipContainer extends React.Component {
 
   constructor(props) {
     super(props);
-    this.clipId = props.clipId !== undefined ?
-      props.clipId :
-      Math.round(Math.random() * 10000); // eslint-disable-line no-magic-numbers
+    this.clipId = !isObject(props) || typeof props.clipId === "undefined" ?
+      uniqueId("victory-clip-") : props.clipId;
   }
 
   // Overridden in victory-core-native
