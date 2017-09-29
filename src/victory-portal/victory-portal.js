@@ -9,7 +9,12 @@ export default class VictoryPortal extends React.Component {
   static role = "portal";
 
   static propTypes = {
-    children: PropTypes.node
+    children: PropTypes.node,
+    groupComponent: PropTypes.element
+  };
+
+  static defaultProps = {
+    groupComponent: <g/>
   };
 
   static contextTypes = {
@@ -56,10 +61,13 @@ export default class VictoryPortal extends React.Component {
   render() {
     const children = Array.isArray(this.props.children) ?
       this.props.children[0] : this.props.children;
+    const { groupComponent } = this.props;
     const childProps = children && children.props || {};
-    const child = children && React.cloneElement(
-      children, defaults({}, childProps, omit(this.props, "children"))
+    const standardProps = childProps.groupComponent ? { groupComponent, standalone: false } : {};
+    const newProps = defaults(
+      standardProps, childProps, omit(this.props, ["children", "groupComponent"])
     );
+    const child = children && React.cloneElement(children, newProps);
     return this.renderPortal(child);
   }
 }
