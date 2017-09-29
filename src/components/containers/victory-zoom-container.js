@@ -13,6 +13,7 @@ export const zoomContainerMixin = (base) => class VictoryZoomContainer extends b
 
   static propTypes = {
     ...VictoryContainer.propTypes,
+    allowPan: PropTypes.bool,
     allowZoom: PropTypes.bool,
     clipContainerComponent: PropTypes.element.isRequired,
     downsample: PropTypes.oneOfType([
@@ -34,6 +35,7 @@ export const zoomContainerMixin = (base) => class VictoryZoomContainer extends b
   static defaultProps = {
     ...VictoryContainer.defaultProps,
     clipContainerComponent: <VictoryClipContainer/>,
+    allowPan: true,
     allowZoom: true,
     zoomActive: false
   };
