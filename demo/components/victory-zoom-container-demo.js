@@ -6,7 +6,9 @@ import {
   VictoryChart, VictoryZoomContainer, VictoryArea, VictoryLine,
   VictoryAxis, VictoryGroup, VictoryStack, VictoryScatter
 } from "../../src/index";
-import { VictoryTheme, VictoryClipContainer, VictoryPortal, VictoryLegend } from "victory-core";
+import {
+  VictoryTheme, VictoryClipContainer, VictoryPortal, VictoryLegend, VictoryTooltip
+} from "victory-core";
 
 export default class App extends React.Component {
   constructor() {
@@ -56,7 +58,7 @@ export default class App extends React.Component {
   }
 
   getData() {
-    return range(100).map((i) => {
+    return range(50).map((i) => {
       return {
         x: i + 20,
         y: Math.random()
@@ -145,6 +147,28 @@ export default class App extends React.Component {
                 data={this.state.data}
               />
             </VictoryPortal>
+          </VictoryChart>
+
+          <VictoryChart style={{ parent: parentStyle }}
+            animate={{ duration: 1500 }}
+            domainPadding={{ x: 20, y: 0 }}
+            containerComponent={
+              <VictoryZoomContainer
+                minimumZoom={{ x: 5 }}
+                dimension="x"
+                clipContainerComponent={
+                  <VictoryClipContainer clipPadding={{ top: 15, bottom: 15 }}/>
+                }
+              />
+            }
+          >
+            <VictoryScatter
+              style={{ parent: parentStyle, data: { fill: "orange" } }}
+              size={15}
+              data={this.state.data}
+              labels={(d) => d.x}
+              labelComponent={<VictoryTooltip/>}
+            />
           </VictoryChart>
 
           <VictoryChart

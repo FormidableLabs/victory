@@ -107,29 +107,22 @@ export const zoomContainerMixin = (base) => class VictoryZoomContainer extends b
     const plottableWidth = Math.abs(rangeX[0] - rangeX[1]);
     const plottableHeight = Math.abs(rangeY[0] - rangeY[1]);
     const radius = Math.max(...rangeY);
-    const makeGroup = (child, index) => {
-      return React.cloneElement(clipContainerComponent, {
-        key: `ZoomClipContainer-${index}`,
-        clipWidth: plottableWidth,
-        clipHeight: plottableHeight,
-        translateX: Math.min(...rangeX),
-        translateY: Math.min(...rangeY),
-        children: child,
-        polar,
-        origin: polar ? origin : undefined,
-        radius: polar ? radius : undefined,
-        ...clipContainerComponent.props
-      });
-    };
-    return React.Children.toArray(children).map((child, index) => {
+    const groupComponent = React.cloneElement(clipContainerComponent, {
+      clipWidth: plottableWidth,
+      clipHeight: plottableHeight,
+      translateX: Math.min(...rangeX),
+      translateY: Math.min(...rangeY),
+      polar,
+      origin: polar ? origin : undefined,
+      radius: polar ? radius : undefined,
+      ...clipContainerComponent.props
+    });
+    return React.Children.toArray(children).map((child) => {
       const role = child && child.type && child.type.role;
       if (role === "axis" || role === "legend" || role === "label") {
         return child;
-      } else if (role === "portal") {
-        const group = makeGroup(child.props.children, index);
-        return React.cloneElement(child, { children: group, key: `ZoomPortal-${index}` });
       } else {
-        return makeGroup(child, index);
+        return React.cloneElement(child, { groupComponent });
       }
     });
   }
@@ -172,8 +165,7 @@ export const zoomContainerMixin = (base) => class VictoryZoomContainer extends b
     //eslint-disable-next-line max-statements
     return childComponents.map((child) => {
       const role = child && child.type && child.type.role;
-      const currentChild = role === "portal" ?
-        React.Children.toArray(child.props.children)[0] : child;
+      const currentChild = child;
       const { currentDomain, zoomActive, allowZoom } = props;
       const originalDomain = defaults({}, props.originalDomain, props.domain);
       const zoomDomain = defaults({}, props.zoomDomain, props.domain);
@@ -207,7 +199,7 @@ export const zoomContainerMixin = (base) => class VictoryZoomContainer extends b
             undefined : this.downsampleZoomData(props, currentChild.props, newDomain)
         }, currentChild.props)
       );
-      return role === "portal" ? React.cloneElement(child, { children: newChild }) : newChild;
+      return newChild;
     });
   }
 
