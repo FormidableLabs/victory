@@ -8,7 +8,7 @@ export default class ClipPath extends React.Component {
   static propTypes = {
     className: PropTypes.string,
     clipHeight: CustomPropTypes.nonNegative,
-    clipId: PropTypes.number,
+    clipId: PropTypes.oneOfType([PropTypes.number, PropTypes.string]),
     clipPadding: PropTypes.oneOfType([
       PropTypes.number,
       PropTypes.shape({
