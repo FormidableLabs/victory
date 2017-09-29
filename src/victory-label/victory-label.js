@@ -55,6 +55,7 @@ export default class VictoryLabel extends React.Component {
     origin: PropTypes.shape({ x: CustomPropTypes.nonNegative, y: CustomPropTypes.nonNegative }),
     polar: PropTypes.bool,
     renderInPortal: PropTypes.bool,
+    scale: PropTypes.shape({ x: CustomPropTypes.scale, y: CustomPropTypes.scale }),
     style: PropTypes.oneOfType([
       PropTypes.object,
       PropTypes.array
@@ -109,14 +110,14 @@ export default class VictoryLabel extends React.Component {
 
   shouldComponentUpdate(nextProps) {
     const attrs = this.calculateAttributes(nextProps);
-    const { style, dx, dy, content, lineHeight, textAnchor, transform } = attrs;
-    const { angle, className, datum, x, y, active } = this.props;
+    const { style, dx, dy, x, y, content, lineHeight, textAnchor, transform } = attrs;
+    const { angle, className, datum, active } = this.props;
     if (!Collection.allSetsEqual([
       [active, nextProps.active],
       [angle, nextProps.angle],
       [className, nextProps.className],
-      [x, nextProps.x],
-      [y, nextProps.y],
+      [x, this.x],
+      [y, this.y],
       [dx, this.dx],
       [dy, this.dy],
       [lineHeight, this.lineHeight],
@@ -133,10 +134,12 @@ export default class VictoryLabel extends React.Component {
   }
 
   cacheAttributes(attrs) {
-    const { style, dx, dy, content, textAnchor, transform, lineHeight } = attrs;
+    const { style, dx, dy, x, y, content, textAnchor, transform, lineHeight } = attrs;
     this.style = style;
     this.dx = dx;
     this.dy = dy;
+    this.x = x;
+    this.y = y;
     this.content = content;
     this.textAnchor = textAnchor;
     this.lineHeight = lineHeight;
@@ -149,12 +152,22 @@ export default class VictoryLabel extends React.Component {
     const textAnchor = props.textAnchor ?
       Helpers.evaluateProp(props.textAnchor, props.datum) : "start";
     const content = this.getContent(props);
-    const dx = props.dx ? Helpers.evaluateProp(this.props.dx, props.datum) : 0;
+    const dx = props.dx ? Helpers.evaluateProp(props.dx, props.datum) : 0;
     const dy = this.getDy(props, style, content, lineHeight);
     const transform = this.getTransform(props, style);
+    const x = typeof props.x !== "undefined" ? props.x : this.getPosition(props, "x");
+    const y = typeof props.y !== "undefined" ? props.y : this.getPosition(props, "y");
     return {
-      style, dx, dy, content, lineHeight, textAnchor, transform
+      style, dx, dy, content, lineHeight, textAnchor, transform, x, y
     };
+  }
+
+  getPosition(props, dimension) {
+    if (!props.datum) {
+      return 0;
+    }
+    const scaledPoint = Helpers.scalePoint(props, props.datum);
+    return scaledPoint[dimension];
   }
 
   getStyle(props, style) {
@@ -238,7 +251,7 @@ export default class VictoryLabel extends React.Component {
   // Overridden in victory-core-native
   renderElements(props) {
     const textProps = {
-      dx: this.dx, dy: this.dy, x: props.x, y: props.y,
+      dx: this.dx, dy: this.dy, x: this.x, y: this.y,
       transform: this.transform, className: props.className
     };
     return (
