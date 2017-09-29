@@ -161,8 +161,11 @@ const Helpers = {
     return defaults({}, childrenDomain, originalDomain, domain);
   },
 
-  onMouseDown(evt) {
+  onMouseDown(evt, targetProps) {
     evt.preventDefault();
+    if (!targetProps.allowPan) {
+      return undefined;
+    }
     const { x, y } = Selection.getSVGEventCoordinates(evt);
     return [{
       target: "parent",
@@ -175,7 +178,10 @@ const Helpers = {
     }];
   },
 
-  onMouseUp() {
+  onMouseUp(evt, targetProps) {
+    if (!targetProps.allowPan) {
+      return undefined;
+    }
     return [{
       target: "parent",
       mutation: () => {
@@ -184,7 +190,10 @@ const Helpers = {
     }];
   },
 
-  onMouseLeave() {
+  onMouseLeave(evt, targetProps) {
+    if (!targetProps.allowPan) {
+      return undefined;
+    }
     return [{
       target: "parent",
       mutation: () => {
@@ -194,7 +203,7 @@ const Helpers = {
   },
 
   onMouseMove(evt, targetProps, eventKey, ctx) { // eslint-disable-line max-params
-    if (targetProps.panning) {
+    if (targetProps.panning && targetProps.allowPan) {
       const { scale, startX, startY, onZoomDomainChange, zoomDimension, zoomDomain } = targetProps;
       const { x, y } = Selection.getSVGEventCoordinates(evt);
       const originalDomain = this.getDomain(targetProps);
@@ -224,7 +233,7 @@ const Helpers = {
 
   onWheel(evt, targetProps, eventKey, ctx) { // eslint-disable-line max-params
     if (!targetProps.allowZoom) {
-      return {};
+      return undefined;
     }
     const { onZoomDomainChange, zoomDimension, zoomDomain } = targetProps;
     const originalDomain = this.getDomain(targetProps);
