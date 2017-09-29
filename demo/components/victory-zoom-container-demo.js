@@ -1,7 +1,8 @@
 /* globals window */
 /*eslint-disable no-magic-numbers,react/no-multi-comp */
 import React from "react";
-import { range, merge, random } from "lodash";
+import PropTypes from "prop-types";
+import { range, merge, random, minBy, maxBy, last, round } from "lodash";
 import {
   VictoryChart, VictoryZoomContainer, VictoryArea, VictoryLine,
   VictoryAxis, VictoryGroup, VictoryStack, VictoryScatter
@@ -9,6 +10,81 @@ import {
 import {
   VictoryTheme, VictoryClipContainer, VictoryPortal, VictoryLegend, VictoryTooltip
 } from "victory-core";
+
+const allData = range(0, 10, 0.001).map(x => ({
+  x: x,
+y: Math.sin(Math.PI*x/2) * x / 10
+}));
+
+class CustomChart extends React.Component {
+  static propTypes = {
+    data: PropTypes.array,
+    maxPoints: PropTypes.number,
+    style: PropTypes.object
+  };
+
+  constructor(props) {
+    super();
+    this.entireDomain = this.getEntireDomain(props);
+    this.state = {
+      zoomedXDomain: this.entireDomain.x
+    };
+  }
+
+  onDomainChange(domain) {
+    this.setState({
+      zoomedXDomain: domain.x
+    });
+  }
+
+  getData() {
+    const { zoomedXDomain } = this.state;
+    const { data, maxPoints } = this.props;
+    const filtered = data.filter(
+      (d) => (d.x >= zoomedXDomain[0] && d.x <= zoomedXDomain[1])
+    );
+
+    if (filtered.length > maxPoints) {
+      const k = Math.ceil(filtered.length / maxPoints);
+      return filtered.filter(
+        (d, i) => ((i % k) === 0)
+      );
+    }
+    return filtered;
+  }
+
+  getEntireDomain(props) {
+    const { data } = props;
+    return {
+      y: [minBy(data, (d) => d.y).y, maxBy(data, (d) => d.y).y],
+      x: [ data[0].x, last(data).x ]
+    };
+  }
+  getZoomFactor() {
+    const { zoomedXDomain } = this.state;
+    const factor = 10 / (zoomedXDomain[1] - zoomedXDomain[0]);
+    return round(factor, factor < 3 ? 1 : 0);
+  }
+
+  render() {
+    const renderedData = this.getData();
+    return (
+      <VictoryChart
+        style={this.props.style}
+        domain={this.entireDomain}
+        containerComponent={
+          <VictoryZoomContainer
+            zoomDimension="x"
+            onZoomDomainChange={this.onDomainChange.bind(this)}
+            minimumZoom={{ x: 1 / 10000 }}
+          />
+        }
+      >
+        <VictoryScatter data={renderedData} />
+      </VictoryChart>
+    );
+  }
+}
 
 export default class App extends React.Component {
   constructor() {
@@ -76,7 +152,6 @@ export default class App extends React.Component {
       strokeWidth: random(1, 5)
     };
   }
-
   render() {
     const parentStyle = { border: "1px solid #ccc", margin: "2%", maxWidth: "40%" };
     const containerStyle = {
@@ -89,6 +164,9 @@ export default class App extends React.Component {
 
     return (
       <div className="demo" style={containerStyle}>
+
+        <CustomChart style={{ parent: parentStyle }} data={allData} maxPoints={120}/>
+
           <VictoryGroup
             containerComponent={<VictoryZoomContainer dimension="y"/>}
             style={{ parent: parentStyle }} data={this.state.transitionData}
