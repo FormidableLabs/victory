@@ -1,6 +1,6 @@
 import PropTypes from "prop-types";
 import React from "react";
-import { defaults, isEqual, get } from "lodash";
+import { defaults, get } from "lodash";
 import ZoomHelpers from "./zoom-helpers";
 import {
   VictoryContainer, VictoryClipContainer, Data, PropTypes as CustomPropTypes
@@ -170,9 +170,14 @@ export const zoomContainerMixin = (base) => class VictoryZoomContainer extends b
       const originalDomain = defaults({}, props.originalDomain, props.domain);
       const zoomDomain = defaults({}, props.zoomDomain, props.domain);
       const cachedZoomDomain = defaults({}, props.cachedZoomDomain, props.domain);
-
+      const checkDomainEquality = (a, b) => {
+        return +a.x[0] === +b.x[0] &&
+          +a.x[1] === +b.x[1] &&
+          +a.y[0] === +b.y[0] &&
+          +a.y[1] === +b.y[1];
+      };
       let domain;
-      if (!isEqual(zoomDomain, cachedZoomDomain)) {
+      if (!checkDomainEquality(zoomDomain, cachedZoomDomain)) {
         // if zoomDomain has been changed, use it
         domain = zoomDomain;
       } else if (allowZoom && !zoomActive) {

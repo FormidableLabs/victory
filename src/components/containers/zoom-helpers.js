@@ -6,7 +6,19 @@ import { attachId } from "../../helpers/event-handlers";
 import Wrapper from "../../helpers/wrapper";
 
 const Helpers = {
-
+  checkDomainEquality(a, b) {
+    const checkDimension = (dim) => {
+      const val1 = a && a[dim];
+      const val2 = b && b[dim];
+      if (!val1 && !val2) {
+        return true;
+      } else if (!val1 || !val2) {
+        return false;
+      }
+      return +val1[0] === +val2[0] && +val1[1] === +val2[1];
+    };
+    return checkDimension("x") && checkDimension("y");
+  },
   /**
    * Generates a new domain scaled by factor and constrained by the original domain.
    * @param  {[Number, Number]} currentDomain  The domain to be scaled.
@@ -136,7 +148,7 @@ const Helpers = {
 
   getLastDomain(targetProps, originalDomain) {
     const { zoomDomain, cachedZoomDomain, currentDomain, domain } = targetProps;
-    if (zoomDomain && !isEqual(zoomDomain, cachedZoomDomain)) {
+    if (zoomDomain && !this.checkDomainEquality(zoomDomain, cachedZoomDomain)) {
       return defaults(
         {}, zoomDomain, domain
       );
