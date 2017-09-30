@@ -1,5 +1,50 @@
 # Victory Changelog
 
+## 0.23.0 (2017-09-30)
+
+**BREAKING CHANGES:**
+
+**[victory-core/299](https://github.com/FormidableLabs/victory-core/pull/299) Containers are now rendered in parent divs.** This may be a breaking change for parent styles.
+
+
+**[victory-chart/518](https://github.com/FormidableLabs/victory-chart/pull/518) Naming changes for container props**
+
+`VictoryBrushContainer`
+- `dimension` -> `brushDimension`
+- `selectionComponent` -> `brushComponent`
+- `selectedDomain` -> `brushDomain`
+- `selectionStyle` -> `brushStyle`
+- `onDomainChange` -> `onBrushDomainChange`
+
+`VictoryCursorContainer`
+- `dimension` -> `cursorDimension`
+- `onChange` -> `onCursorChange`
+
+`VictorySelectionContainer`
+- `dimension` -> `selectionDimension`
+
+`VictoryVoronoiContainer`
+- `dimension` -> `voronoiDimension`
+
+`VictoryZoomContainer`
+- `dimension` -> `zoomDimension`
+- `onDomainChange` -> `onZoomDomainChange`
+
+**Other Changes**
+
+- [victory-core/300](https://github.com/FormidableLabs/victory-core/pull/300) Fixes path rendering for decimal values
+- [victory-core/302](https://github.com/FormidableLabs/victory-core/pull/302) Adds an `alignment` prop for `<Bar/>` so that bars may be rendered with "start", "middle" (default), or "end" alignment relative to their value.
+- [victory-core/304](https://github.com/FormidableLabs/victory-core/pull/304) `VictoryLabel` positioning is calculated from `datum` when `x` and `y` positioning props are not provided. This features supports data annotations
+- [victory-core/305](https://github.com/FormidableLabs/victory-core/pull/305) Adds a `groupComponent` prop for `VictoryPortal`. This prop is used by `VictoryZoomContainer` so that children rendered within `VictoryPortal` may still be clipped when zooming
+
+
+- [victory-chart/516](https://github.com/FormidableLabs/victory-chart/pull/516) Ensure that `VictoryZoomContainer` respects `clipId`
+- [victory-chart/517](https://github.com/FormidableLabs/victory-chart/pull/517) `VictoryZoomContainer` and `VictoryVoronoiCOntainer` should ignore legend children
+- [victory-chart/519](https://github.com/FormidableLabs/victory-chart/pull/519) Adds an `alignment` prop for `VictoryBar` so that bars may be rendered with "start", "middle" (default), or "end" alignment relative to their value.
+- [victory-chart/520](https://github.com/FormidableLabs/victory-chart/pull/520) Adds an `allowPan` prop for `VictoryZoomContainer`. (Default true)
+- [victory-chart/521](https://github.com/FormidableLabs/victory-chart/pull/521) Changes how children of `VictoryZoomContainer` are clipped to enable better zooming for `VictoryPortal`
+- [victory-chart/522](https://github.com/FormidableLabs/victory-chart/pull/522) Fixes a bug in `VictoryZoomContainer` that effected time scale charts with `zoomDomain` specified
+
 ## 0.22.2 (2017-09-12)
 
 - [victory-core/297](https://github.com/FormidableLabs/victory-core/pull/297) Adjusts automatic width in `VictoryLegend`
