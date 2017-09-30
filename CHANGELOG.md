@@ -1,5 +1,11 @@
 # VictoryPie Changelog
 
+## 13.0.0 (2017-09-30)
+
+**BREAKING CHANGES:**
+
+**[victory-core/299](https://github.com/FormidableLabs/victory-core/pull/299) Containers are now rendered in parent divs.** This may be a breaking change for parent styles.
+
 ## 12.0.0 (2017-09-09)
 
 - Updates to `victory-core@18.0.0` which includes breaking changes for `VictoryTooltip` styling.
