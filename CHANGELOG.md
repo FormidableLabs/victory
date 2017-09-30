@@ -1,6 +1,16 @@
 VictoryCore Changelog
 =====================
 
+## 19.0.0 (2017-09-30)
+
+**BREAKING CHANGES:** Containers are now rendered in parent divs. This may be a breaking change for parent styles.
+
+- [299](https://github.com/FormidableLabs/victory-core/pull/299) Renders charts and portals in `div` elements to give z-index control to portals
+- [300](https://github.com/FormidableLabs/victory-core/pull/300) Fixes path rendering for decimal values
+- [302](https://github.com/FormidableLabs/victory-core/pull/302) Adds an `alignment` prop for `<Bar/>` so that bars may be rendered with "start", "middle" (default), or "end" alignment relative to their value.
+- [304](https://github.com/FormidableLabs/victory-core/pull/304) `VictoryLabel` positioning is calculated from `datum` when `x` and `y` positioning props are not provided. This features supports data annotations
+- [305](https://github.com/FormidableLabs/victory-core/pull/305) Adds a `groupComponent` prop for `VictoryPortal`. This prop is used by `VictoryZoomContainer` so that children rendered within `VictoryPortal` may still be clipped when zooming
+
 ## 18.0.2 (2017-09-12)
 
 - [297](https://github.com/FormidableLabs/victory-core/pull/297) Adjusts automatic width in `VictoryLegend`
