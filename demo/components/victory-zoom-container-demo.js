@@ -11,9 +11,8 @@ import {
   VictoryTheme, VictoryClipContainer, VictoryPortal, VictoryLegend, VictoryTooltip
 } from "victory-core";
 
-const allData = range(0, 10, 0.001).map(x => ({
-  x: x,
-y: Math.sin(Math.PI*x/2) * x / 10
+const allData = range(0, 10, 0.001).map((x) => ({
+  x, y: Math.sin(Math.PI * x / 2) * x / 10
 }));
 
 class CustomChart extends React.Component {
