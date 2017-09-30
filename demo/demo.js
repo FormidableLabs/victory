@@ -53,6 +53,7 @@ export default class App extends React.Component {
                   },
                   {
                     childName: "line",
+                    eventKey: "all",
                     target: "data",
                     mutation: () => {
                       return { style: { stroke: "lime" } };
@@ -60,6 +61,7 @@ export default class App extends React.Component {
                   },
                   {
                     childName: "line",
+                    eventKey: 0,
                     target: "labels",
                     mutation: () => {
                       return {
@@ -94,7 +96,7 @@ export default class App extends React.Component {
           <VictoryLine name="line"
             y={() => 0.5}
             style={{ data: { stroke: "blue", strokeWidth: 5 } }}
-            label="LINE"
+            labels={["LINE"]}
           />
         </VictoryChart>
 
@@ -137,7 +139,7 @@ export default class App extends React.Component {
           />
           <VictoryLine y={() => 0.5}
             style={{ data: { stroke: "gold", strokeWidth: 3 } }}
-            label="LINE"
+            labels={["LINE"]}
           />
         </VictoryChart>
 
