@@ -3,13 +3,11 @@
 ## 23.0.0 (2017-09-30)
 
 **BREAKING CHANGES:**
-- Containers are now rendered in parent divs. This may be a breaking change for parent styles.
-- Naming changes for container props
 
-- [victory-core/299](https://github.com/FormidableLabs/victory-core/pull/299) Renders charts and portals in `div` elements to give z-index control to portals
+**[victory-core/299](https://github.com/FormidableLabs/victory-core/pull/299) Containers are now rendered in parent divs.** This may be a breaking change for parent styles.
 
-- [518](https://github.com/FormidableLabs/victory-chart/pull/518) No naming overlap for containers
-**Naming Changes:**
+
+**[518](https://github.com/FormidableLabs/victory-chart/pull/518) Naming changes for container props**
 
 `VictoryBrushContainer`
 - `dimension` -> `brushDimension`
@@ -32,15 +30,13 @@
 - `dimension` -> `zoomDimension`
 - `onDomainChange` -> `onZoomDomainChange`
 
-
+**Other Changes**
 - [516](https://github.com/FormidableLabs/victory-chart/pull/516) Ensure that `VictoryZoomContainer` respects `clipId`
 - [517](https://github.com/FormidableLabs/victory-chart/pull/517) `VictoryZoomContainer` and `VictoryVoronoiCOntainer` should ignore legend children
 - [519](https://github.com/FormidableLabs/victory-chart/pull/519) Adds an `alignment` prop for `VictoryBar` so that bars may be rendered with "start", "middle" (default), or "end" alignment relative to their value.
 - [520](https://github.com/FormidableLabs/victory-chart/pull/520) Adds an `allowPan` prop for `VictoryZoomContainer`. (Default true)
 - [521](https://github.com/FormidableLabs/victory-chart/pull/521) Changes how children of `VictoryZoomContainer` are clipped to enable better zooming for `VictoryPortal`
 - [522](https://github.com/FormidableLabs/victory-chart/pull/522) Fixes a bug in `VictoryZoomContainer` that effected time scale charts with `zoomDomain` specified
-
-
 
 ## 22.0.0 (2017-09-09)
 
