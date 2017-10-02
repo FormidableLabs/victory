@@ -1,6 +1,10 @@
 VictoryCore Changelog
 =====================
 
+## 19.0.1 (2017-10-02)
+
+- [306](https://github.com/FormidableLabs/victory-core/pull/306) Simplify container styling
+
 ## 19.0.0 (2017-09-30)
 
 **BREAKING CHANGES:** Containers are now rendered in parent divs. This may be a breaking change for parent styles.
