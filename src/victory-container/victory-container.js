@@ -30,6 +30,7 @@ export default class VictoryContainer extends React.Component {
   }
 
   static defaultProps = {
+    className: "VictoryContainer",
     portalComponent: <Portal/>,
     portalZIndex: 99,
     responsive: true
@@ -101,7 +102,7 @@ export default class VictoryContainer extends React.Component {
     const { title, desc, portalComponent, className, width, height, portalZIndex } = props;
     const children = this.getChildren(props);
     const divStyle = { pointerEvents: "none", touchAction: "none", position: "relative" };
-    const svgStyle = { width: "100%", height: "100%", top: 0, left: 0 };
+    const svgStyle = { width: "100%", height: "100%" };
     const portalProps = {
       width, height, viewBox: svgProps.viewBox, style: assign({}, svgStyle, { overflow: "visible" })
     };
@@ -112,7 +113,7 @@ export default class VictoryContainer extends React.Component {
           {desc ? <desc id={this.getIdForElement("desc")}>{desc}</desc> : null}
           {children}
         </svg>
-          <div style={{ ...svgStyle, zIndex: portalZIndex, position: "absolute" }}>
+          <div style={{ ...svgStyle, zIndex: portalZIndex, position: "absolute", top: 0, left: 0 }}>
             {React.cloneElement(portalComponent, { ...portalProps, ref: this.savePortalRef })}
           </div>
         </div>
