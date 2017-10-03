@@ -70,14 +70,14 @@ export const cursorContainerMixin = (base) => class VictoryCursorContainer exten
   }];
 
   getCursorPosition(props) {
-    const { cursorValue, defaultCursorValue, dimension, domain } = props;
+    const { cursorValue, defaultCursorValue, cursorDimension, domain } = props;
     if (cursorValue) { return cursorValue; }
 
     if (isNumber(defaultCursorValue)) {
       return {
         x: (domain.x[0] + domain.x[1]) / 2,
         y: (domain.y[0] + domain.y[1]) / 2,
-        [dimension]: defaultCursorValue
+        [cursorDimension]: defaultCursorValue
       };
     }
 
@@ -110,7 +110,7 @@ export const cursorContainerMixin = (base) => class VictoryCursorContainer exten
 
   getCursorElements(props) {
     const {
-      scale, dimension, cursorLabelComponent, cursorLabel, cursorComponent, width, height
+      scale, cursorDimension, cursorLabelComponent, cursorLabel, cursorComponent, width, height
     } = props;
     const cursorValue = this.getCursorPosition(props);
     const cursorLabelOffset = this.getCursorLabelOffset(props);
@@ -140,7 +140,7 @@ export const cursorContainerMixin = (base) => class VictoryCursorContainer exten
       ));
     }
 
-    if (dimension === "x" || dimension === undefined) {
+    if (cursorDimension === "x" || cursorDimension === undefined) {
       newElements.push(React.cloneElement(cursorComponent, {
         key: "x-cursor",
         x1: cursorCoordinates.x,
@@ -149,7 +149,7 @@ export const cursorContainerMixin = (base) => class VictoryCursorContainer exten
         y2: (height - padding.bottom)
       }));
     }
-    if (dimension === "y" || dimension === undefined) {
+    if (cursorDimension === "y" || cursorDimension === undefined) {
       newElements.push(React.cloneElement(cursorComponent, {
         key: "y-cursor",
         x1: padding.left,
