@@ -5,7 +5,7 @@ import BrushHelpers from "./brush-helpers";
 
 const CursorHelpers = {
   onMouseMove(evt, targetProps) {
-    const { onChange, dimension, domain } = targetProps;
+    const { onCursorChange, cursorDimension, domain } = targetProps;
     const cursorSVGPosition = Selection.getSVGEventCoordinates(evt);
     let cursorValue = Selection.getDataCoordinates(
       targetProps,
@@ -25,12 +25,12 @@ const CursorHelpers = {
       cursorValue = null;
     }
 
-    if (isFunction(onChange)) {
+    if (isFunction(onCursorChange)) {
       if (inBounds) {
-        const value = dimension ? cursorValue[dimension] : cursorValue;
-        onChange(value, targetProps);
+        const value = cursorDimension ? cursorValue[cursorDimension] : cursorValue;
+        onCursorChange(value, targetProps);
       } else if (cursorValue !== targetProps.cursorValue) {
-        onChange(targetProps.defaultCursorValue || null, targetProps);
+        onCursorChange(targetProps.defaultCursorValue || null, targetProps);
       }
     }
 
