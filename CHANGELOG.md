@@ -1,6 +1,10 @@
 VictoryCore Changelog
 =====================
 
+## 19.0.2 (2017-10-02)
+
+- [307](https://github.com/FormidableLabs/victory-core/pull/307) Adds a default className for containers
+
 ## 19.0.1 (2017-10-02)
 
 - [306](https://github.com/FormidableLabs/victory-core/pull/306) Simplify container styling
