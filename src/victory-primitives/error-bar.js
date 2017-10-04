@@ -27,7 +27,6 @@ export default class ErrorBar extends React.Component {
   };
 
   static defaultProps = {
-    borderWidth: 10,
     groupComponent: <g/>
   }
 

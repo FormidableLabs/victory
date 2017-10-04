@@ -124,6 +124,7 @@ export default {
   }, baseProps),
   chart: baseProps,
   errorbar: assign({
+    borderWidth: 8,
     style: {
       data: {
         fill: "transparent",
