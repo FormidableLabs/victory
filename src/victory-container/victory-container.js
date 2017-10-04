@@ -15,6 +15,7 @@ export default class VictoryContainer extends React.Component {
     ]),
     className: PropTypes.string,
     containerId: PropTypes.oneOfType([PropTypes.number, PropTypes.string]),
+    containerRef: PropTypes.func,
     desc: PropTypes.string,
     events: PropTypes.object,
     height: CustomPropTypes.nonNegative,
@@ -99,21 +100,30 @@ export default class VictoryContainer extends React.Component {
   }
 
   renderContainer(props, svgProps, style) {
-    const { title, desc, portalComponent, className, width, height, portalZIndex } = props;
+    const {
+      title, desc, portalComponent, className, width, height, portalZIndex, responsive
+    } = props;
     const children = this.getChildren(props);
-    const divStyle = { pointerEvents: "none", touchAction: "none", position: "relative" };
-    const svgStyle = { width: "100%", height: "100%" };
+    const dimensions = responsive ? { width: "100%", height: "100%" } : { width, height };
+    const divStyle = assign(
+      { pointerEvents: "none", touchAction: "none", position: "relative" }, dimensions
+    );
+    const portalDivStyle = assign(
+      { zIndex: portalZIndex, position: "absolute", top: 0, left: 0 }, dimensions
+    );
+    const svgStyle = assign({ pointerEvents: "all" }, dimensions);
+    const portalSvgStyle = assign({ overflow: "visible" }, dimensions);
     const portalProps = {
-      width, height, viewBox: svgProps.viewBox, style: assign({}, svgStyle, { overflow: "visible" })
+      width, height, viewBox: svgProps.viewBox, style: portalSvgStyle
     };
     return (
-      <div style={defaults({}, style, divStyle)} className={className}>
-        <svg {...svgProps} style={{ ...svgStyle, pointerEvents: "all" }}>
+      <div style={defaults({}, style, divStyle)} className={className} ref={props.containerRef}>
+        <svg {...svgProps} style={svgStyle}>
           {title ? <title id={this.getIdForElement("title")}>{title}</title> : null}
           {desc ? <desc id={this.getIdForElement("desc")}>{desc}</desc> : null}
           {children}
         </svg>
-          <div style={{ ...svgStyle, zIndex: portalZIndex, position: "absolute", top: 0, left: 0 }}>
+          <div style={portalDivStyle}>
             {React.cloneElement(portalComponent, { ...portalProps, ref: this.savePortalRef })}
           </div>
         </div>
