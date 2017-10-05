@@ -100,6 +100,7 @@ describe("components/victory-errorbar", () => {
       const wrapper = mount(
         <VictoryErrorBar
           data={data}
+          borderWidth={borderWidth}
           {...svgDimensions}
         />
       );
@@ -142,6 +143,7 @@ describe("components/victory-errorbar", () => {
       const wrapper = mount(
         <VictoryErrorBar
           data={data}
+          borderWidth={borderWidth}
           {...svgDimensions}
         />
       );
@@ -184,6 +186,7 @@ describe("components/victory-errorbar", () => {
       const wrapper = mount(
         <VictoryErrorBar
           data={data}
+          borderWidth={borderWidth}
           {...svgDimensions}
         />
       );
@@ -226,6 +229,7 @@ describe("components/victory-errorbar", () => {
       const wrapper = mount(
         <VictoryErrorBar
           data={data}
+          borderWidth={borderWidth}
           {...svgDimensions}
         />
       );
@@ -464,6 +468,7 @@ describe("components/victory-errorbar", () => {
       const wrapper = mount(
         <VictoryErrorBar
           data={data}
+          borderWidth={borderWidth}
           {...svgDimensions}
         />
       );
@@ -506,6 +511,7 @@ describe("components/victory-errorbar", () => {
       const wrapper = mount(
         <VictoryErrorBar
           data={data}
+          borderWidth={borderWidth}
           {...svgDimensions}
         />
       );
@@ -548,6 +554,7 @@ describe("components/victory-errorbar", () => {
       const wrapper = mount(
         <VictoryErrorBar
           data={data}
+          borderWidth={borderWidth}
           {...svgDimensions}
         />
       );
@@ -590,6 +597,7 @@ describe("components/victory-errorbar", () => {
       const wrapper = mount(
         <VictoryErrorBar
           data={data}
+          borderWidth={borderWidth}
           {...svgDimensions}
         />
       );
