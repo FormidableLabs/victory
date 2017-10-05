@@ -1,5 +1,9 @@
 # VictoryChart Changelog
 
+## 23.0.1 ( 2017-10-04)
+
+-[524](https://github.com/FormidableLabs/victory-chart/pull/524) Fix naming changes for `VictoryCursorContainer`
+
 ## 23.0.0 (2017-09-30)
 
 **BREAKING CHANGES:**
