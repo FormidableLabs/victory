@@ -1,5 +1,12 @@
 # Victory Changelog
 
+## 0.23.1 (2017-10-04)
+
+- [victory-core/307](https://github.com/FormidableLabs/victory-core/pull/307) Adds a default className for containers
+- [victory-core/308](https://github.com/FormidableLabs/victory-core/pull/308) Fix borderWidth on error bars
+- [victory-core/309](https://github.com/FormidableLabs/victory-core/pull/309) Fix non-responsive container styles, add container ref
+- [victory-chart/524](https://github.com/FormidableLabs/victory-chart/pull/524) Fix naming changes for `VictoryCursorContainer`
+
 ## 0.23.0 (2017-09-30)
 
 **BREAKING CHANGES:**
