@@ -1,6 +1,11 @@
 VictoryCore Changelog
 =====================
 
+## 19.0.3 (2017-10-04)
+
+- [308](https://github.com/FormidableLabs/victory-core/pull/308) Fix borderWidth on error bars
+- [309](https://github.com/FormidableLabs/victory-core/pull/309) Fix non-responsive container styles, add container ref
+
 ## 19.0.2 (2017-10-02)
 
 - [307](https://github.com/FormidableLabs/victory-core/pull/307) Adds a default className for containers
