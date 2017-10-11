@@ -78,8 +78,8 @@ export default {
     const { top, bottom, left, right } = padding;
     // make the axes line up, and cross when appropriate
     const axisOrientations = {
-      x: Axis.getOrientation(axisComponents.x, "x", originSign.x),
-      y: Axis.getOrientation(axisComponents.y, "y", originSign.y)
+      x: Axis.getOrientation(axisComponents.x, "x", originSign.y),
+      y: Axis.getOrientation(axisComponents.y, "y", originSign.x)
     };
     const orientationOffset = {
       y: axisOrientations.x === "bottom" ? bottom : top,

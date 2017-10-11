@@ -157,6 +157,12 @@ class App extends React.Component {
               tickValues={[3]}
             />
           </VictoryChart>
+
+          <VictoryChart style={chartStyle}>
+            <VictoryScatter
+              data={[{ x: 1, y: -3 }, { x: 2, y: -2 }, { x: 3, y: -1 }]}
+            />
+          </VictoryChart>
         </div>
       </div>
     );

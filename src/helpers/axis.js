@@ -140,17 +140,6 @@ export default {
   },
 
   /**
-   * @param {Array} childComponents: an array of children
-   * @returns {Object} an object with orientations specified for x and y
-   */
-  getAxisOrientations(childComponents) {
-    return {
-      x: this.getOrientation(this.getAxisComponent(childComponents, "x"), "x"),
-      y: this.getOrientation(this.getAxisComponent(childComponents, "y"), "y")
-    };
-  },
-
-  /**
    * @param {Object} props: axis component props
    * @returns {Boolean} true when the axis is vertical
    */
