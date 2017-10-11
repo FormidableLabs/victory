@@ -183,9 +183,11 @@ export default class VictoryChart extends React.Component {
 
     const defaultDomainPadding = ChartHelpers.getDefaultDomainPadding(childComponents, horizontal);
 
+    const padding = Helpers.getPadding(props);
+
     return {
       axisComponents, categories, domain, range, horizontal, scale, stringMap,
-      style, origin, originSign, defaultDomainPadding
+      style, origin, originSign, defaultDomainPadding, padding
     };
   }
 
@@ -203,7 +205,7 @@ export default class VictoryChart extends React.Component {
         height, polar, theme, width, style,
         origin: polar ? origin : undefined,
         animate: getAnimationProps(props, child, index),
-        padding: Helpers.getPadding(props),
+        padding: calculatedProps.padding,
         key: index,
         standalone: false
       }, childProps);

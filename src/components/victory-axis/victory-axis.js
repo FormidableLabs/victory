@@ -64,6 +64,7 @@ class VictoryAxis extends React.Component {
     fixLabelOverlap: PropTypes.bool,
     gridComponent: PropTypes.element,
     groupComponent: PropTypes.element,
+    invertAxis: PropTypes.bool,
     label: PropTypes.any,
     offsetX: PropTypes.number,
     offsetY: PropTypes.number,

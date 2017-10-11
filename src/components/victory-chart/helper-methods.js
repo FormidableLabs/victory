@@ -2,7 +2,7 @@ import { invert, sortBy, values } from "lodash";
 import Axis from "../../helpers/axis";
 import Wrapper from "../../helpers/wrapper";
 import React from "react";
-import { Helpers, Collection, Log, Domain } from "victory-core";
+import { Helpers, Collection, Log } from "victory-core";
 
 const identity = (x) => x;
 
@@ -67,24 +67,35 @@ export default {
   getDomain(props, axis, childComponents) {
     childComponents = childComponents || React.Children.toArray(props.children);
     const domain = Wrapper.getDomain(props, axis, childComponents);
-    const orientations = Axis.getAxisOrientations(childComponents);
-    return Domain.orientDomain(domain, orientations, axis);
+    const axisComponent = Axis.getAxisComponent(childComponents, axis);
+    const invertDomain = axisComponent && axisComponent.props && axisComponent.props.invertAxis;
+    return invertDomain ? domain.concat().reverse() : domain;
   },
 
+  // eslint-disable-next-line complexity
   getAxisOffset(props, calculatedProps) {
-    const { axisComponents, scale, origin, originSign } = calculatedProps;
+    const { axisComponents, scale, origin, domain, originSign, padding } = calculatedProps;
+    const { top, bottom, left, right } = padding;
     // make the axes line up, and cross when appropriate
     const axisOrientations = {
       x: Axis.getOrientation(axisComponents.x, "x", originSign.x),
       y: Axis.getOrientation(axisComponents.y, "y", originSign.y)
     };
     const orientationOffset = {
+      y: axisOrientations.x === "bottom" ? bottom : top,
+      x: axisOrientations.y === "left" ? left : right
+    };
+    const originOffset = {
       x: axisOrientations.y === "left" ? 0 : props.width,
       y: axisOrientations.x === "bottom" ? props.height : 0
     };
+    const originPosition = {
+      x: origin.x === domain.x[0] || origin.x === domain.x[1] ? 0 : scale.x(origin.x),
+      y: origin.y === domain.y[0] || origin.y === domain.y[1] ? 0 : scale.y(origin.y)
+    };
     const calculatedOffset = {
-      x: Math.abs(orientationOffset.x - scale.x(origin.x)),
-      y: Math.abs(orientationOffset.y - scale.y(origin.y))
+      x: originPosition.x ? Math.abs(originOffset.x - originPosition.x) : orientationOffset.x,
+      y: originPosition.y ? Math.abs(originOffset.y - originPosition.y) : orientationOffset.y
     };
 
     return {
