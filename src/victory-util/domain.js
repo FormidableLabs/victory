@@ -349,28 +349,5 @@ export default {
 
     return domainMin instanceof Date || domainMax instanceof Date ?
       [new Date(finalDomain.min), new Date(finalDomain.max)] : [finalDomain.min, finalDomain.max];
-  },
-
-  /**
-   * Returns the domain or the reversed domain depending on orientation
-   * @param {Array} domain: the original domain
-   * @param {Object} orientations: the x and y orientations
-   * @param {String} axis: the current axis
-   * @returns {Array} the domain or the reversed domain
-   */
-  orientDomain(domain, orientations, axis) {
-    // If the other axis is in a reversed orientation, the domain of this axis
-    // needs to be reversed
-    const otherAxis = axis === "x" ? "y" : "x";
-    const defaultOrientation = (ax) => ax === "x" ? "bottom" : "left";
-    const flippedAxis = orientations.x === "left" || orientations.x === "right";
-    const standardOrientation = flippedAxis ?
-      orientations[otherAxis] === defaultOrientation(axis) :
-      orientations[otherAxis] === defaultOrientation(otherAxis);
-    if (flippedAxis) {
-      return standardOrientation ? domain.concat().reverse() : domain;
-    } else {
-      return standardOrientation ? domain : domain.concat().reverse();
-    }
   }
 };
