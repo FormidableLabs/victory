@@ -9,6 +9,7 @@ export default class Point extends React.Component {
   static propTypes = {
     ...CommonProps,
     datum: PropTypes.object,
+    getPath: PropTypes.func,
     size: PropTypes.oneOfType([
       PropTypes.number,
       PropTypes.func
@@ -59,6 +60,10 @@ export default class Point extends React.Component {
 
   getPath(props) {
     const { datum, active, x, y } = props;
+    const size = Helpers.evaluateProp(props.size, datum, active);
+    if (props.getPath) {
+      return props.getPath(x, y, size);
+    }
     const pathFunctions = {
       circle: pathHelpers.circle,
       square: pathHelpers.square,
@@ -69,7 +74,6 @@ export default class Point extends React.Component {
       star: pathHelpers.star
     };
     const symbol = Helpers.evaluateProp(props.symbol, datum, active);
-    const size = Helpers.evaluateProp(props.size, datum, active);
     const symbolFunction = typeof pathFunctions[symbol] === "function" ?
       pathFunctions[symbol] : pathFunctions.circle;
     return symbolFunction(x, y, size);
