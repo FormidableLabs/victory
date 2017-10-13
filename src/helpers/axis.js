@@ -1,5 +1,5 @@
 import { Collection } from "victory-core";
-import { identity, isFunction, invert } from "lodash";
+import { identity, isFunction, invert, uniq } from "lodash";
 import React from "react";
 
 export default {
@@ -176,6 +176,11 @@ export default {
     } else {
       return (x) => x;
     }
+  },
+
+  getTickArray(tickValues, tickFormat) {
+    const tickArray = tickValues ? uniq(tickValues) : tickFormat;
+    return Array.isArray(tickArray) && tickArray.length ? tickArray : undefined;
   },
 
   downsampleTicks(ticks, tickCount) {

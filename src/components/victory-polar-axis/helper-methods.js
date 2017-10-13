@@ -327,8 +327,8 @@ export default {
 
   getTicks(props, scale) {
     const { tickCount } = props;
-    const tickValues = props.tickValues || props.tickFormat;
-    if (Array.isArray(tickValues) && tickValues.length) {
+    const tickValues = Axis.getTickArray(props.tickValues, props.tickFormat);
+    if (tickValues) {
       return Helpers.stringTicks(props) ?
         Axis.downsampleTicks(lodashRange(1, tickValues.length + 1), tickCount) :
         Axis.downsampleTicks(tickValues, tickCount);
