@@ -92,7 +92,6 @@ class VictoryAxis extends React.Component {
     scale: "linear",
     standalone: true,
     theme: VictoryTheme.grayscale,
-    tickCount: 5,
     containerComponent: <VictoryContainer />,
     groupComponent: <g role="presentation"/>,
     fixLabelOverlap: false

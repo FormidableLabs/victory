@@ -106,7 +106,7 @@ export default {
     };
   },
 
-  getTicksFromData(calculatedProps, axis) {
+  getTicksFromData(calculatedProps, axis, axisComponent) {
     const currentAxis = Helpers.getCurrentAxis(axis, calculatedProps.horizontal);
     const stringMap = calculatedProps.stringMap[currentAxis];
     // if tickValues are defined for an axis component use them
@@ -115,19 +115,23 @@ export default {
       categoryArray.map((tick) => stringMap[tick]) : categoryArray;
     const ticksFromStringMap = stringMap && values(stringMap);
     // when ticks is undefined, axis will determine its own ticks
-    return ticksFromCategories && ticksFromCategories.length !== 0 ?
+    const ticks = ticksFromCategories && ticksFromCategories.length !== 0 ?
       ticksFromCategories : ticksFromStringMap;
+    const tickCount = axisComponent && axisComponent.props && axisComponent.props.tickCount;
+    return Axis.downsampleTicks(ticks, tickCount);
   },
 
-  getTicksFromAxis(calculatedProps, axis, component) {
-    const tickValues = component.props.tickValues;
-    if (!tickValues) {
+  getTicksFromAxis(calculatedProps, axis, axisComponent) {
+    const axisProps = axisComponent && axisComponent.props || {};
+    const tickArray = axisProps.tickValues || axisProps.tickFormat;
+    if (!Array.isArray(tickArray)) {
       return undefined;
     }
     const currentAxis = Helpers.getCurrentAxis(axis, calculatedProps.horizontal);
     const stringMap = calculatedProps.stringMap[currentAxis];
-    return Collection.containsOnlyStrings(tickValues) && stringMap ?
-      tickValues.map((tick) => stringMap[tick]) : tickValues;
+    const ticks = Collection.containsOnlyStrings(tickArray) && stringMap ?
+      tickArray.map((tick) => stringMap[tick]) : tickArray;
+    return Axis.downsampleTicks(ticks, axisProps.tickCount);
   },
 
   getTicks(...args) {

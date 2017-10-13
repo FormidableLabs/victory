@@ -176,5 +176,13 @@ export default {
     } else {
       return (x) => x;
     }
+  },
+
+  downsampleTicks(ticks, tickCount) {
+    if (!tickCount || !Array.isArray(ticks) || ticks.length <= tickCount) {
+      return ticks;
+    }
+    const k = Math.floor(ticks.length / tickCount);
+    return ticks.filter((d, i) => i % k === 0);
   }
 };
