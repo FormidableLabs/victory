@@ -2,7 +2,7 @@
 
 import React from "react";
 import {
-  VictoryChart, VictoryAxis, VictoryLine, VictoryScatter
+  VictoryChart, VictoryAxis, VictoryLine, VictoryScatter, VictoryBar
 } from "../../src/index";
 
 import { range } from "lodash";
@@ -79,6 +79,29 @@ class App extends React.Component {
             <VictoryLine y={(d) => 0.5 * d.x + 0.5} style={{ data: { stroke: "red" } }}/>
             <VictoryAxis
               tickCount={10}
+            />
+          </VictoryChart>
+
+          <VictoryChart style={chartStyle}>
+            <VictoryBar horizontal
+              data={[{ x: 1, y: 3 }, { x: 2, y: 2 }, { x: 3, y: 1 }]}
+            />
+            <VictoryAxis
+              tickValues={[ 0, 1, 2, 3 ]}
+              tickFormat={(t) => `y: ${t}`}
+            />
+            <VictoryAxis dependentAxis
+              tickValues={[ 0, 1, 2, 3 ]}
+              tickFormat={(t) => `x: ${t}`}
+            />
+          </VictoryChart>
+
+          <VictoryChart style={chartStyle}>
+            <VictoryBar horizontal
+              data={[{ x: 1, y: 4 }, { x: 2, y: 5 }, { x: 3, y: 6 }]}
+            />
+            <VictoryAxis dependentAxis
+              tickFormat={(t) => `x: ${t}`}
             />
           </VictoryChart>
         </div>

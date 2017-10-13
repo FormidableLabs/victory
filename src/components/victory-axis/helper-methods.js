@@ -265,7 +265,7 @@ export default {
     const x = isVertical ? globalTransform.x + (sign * labelPadding) :
       ((props.width - hPadding) / 2) + padding.left + globalTransform.x;
     const y = isVertical ?
-      ((props.height - vPadding) / 2) + padding.bottom + globalTransform.y :
+      ((props.height - vPadding) / 2) + padding.top + globalTransform.y :
       (sign * labelPadding) + globalTransform.y;
 
     return {
