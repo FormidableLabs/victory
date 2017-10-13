@@ -67,8 +67,8 @@ export default class VictoryChart extends React.Component {
         nodesDoneLoad: false,
         animating: true
       };
-      this.setAnimationState = Wrapper.setAnimationState.bind(this);
     }
+    this.setAnimationState = Wrapper.setAnimationState.bind(this);
     this.events = Wrapper.getAllEvents(props);
   }
 
