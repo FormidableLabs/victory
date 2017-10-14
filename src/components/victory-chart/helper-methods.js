@@ -2,7 +2,7 @@ import { invert, sortBy, values } from "lodash";
 import Axis from "../../helpers/axis";
 import Wrapper from "../../helpers/wrapper";
 import React from "react";
-import { Helpers, Collection, Log, Domain } from "victory-core";
+import { Helpers, Collection, Log } from "victory-core";
 
 const identity = (x) => x;
 
@@ -67,24 +67,35 @@ export default {
   getDomain(props, axis, childComponents) {
     childComponents = childComponents || React.Children.toArray(props.children);
     const domain = Wrapper.getDomain(props, axis, childComponents);
-    const orientations = Axis.getAxisOrientations(childComponents);
-    return Domain.orientDomain(domain, orientations, axis);
+    const axisComponent = Axis.getAxisComponent(childComponents, axis);
+    const invertDomain = axisComponent && axisComponent.props && axisComponent.props.invertAxis;
+    return invertDomain ? domain.concat().reverse() : domain;
   },
 
+  // eslint-disable-next-line complexity
   getAxisOffset(props, calculatedProps) {
-    const { axisComponents, scale, origin, originSign } = calculatedProps;
+    const { axisComponents, scale, origin, domain, originSign, padding } = calculatedProps;
+    const { top, bottom, left, right } = padding;
     // make the axes line up, and cross when appropriate
     const axisOrientations = {
-      x: Axis.getOrientation(axisComponents.x, "x", originSign.x),
-      y: Axis.getOrientation(axisComponents.y, "y", originSign.y)
+      x: Axis.getOrientation(axisComponents.x, "x", originSign.y),
+      y: Axis.getOrientation(axisComponents.y, "y", originSign.x)
     };
     const orientationOffset = {
+      y: axisOrientations.x === "bottom" ? bottom : top,
+      x: axisOrientations.y === "left" ? left : right
+    };
+    const originOffset = {
       x: axisOrientations.y === "left" ? 0 : props.width,
       y: axisOrientations.x === "bottom" ? props.height : 0
     };
+    const originPosition = {
+      x: origin.x === domain.x[0] || origin.x === domain.x[1] ? 0 : scale.x(origin.x),
+      y: origin.y === domain.y[0] || origin.y === domain.y[1] ? 0 : scale.y(origin.y)
+    };
     const calculatedOffset = {
-      x: Math.abs(orientationOffset.x - scale.x(origin.x)),
-      y: Math.abs(orientationOffset.y - scale.y(origin.y))
+      x: originPosition.x ? Math.abs(originOffset.x - originPosition.x) : orientationOffset.x,
+      y: originPosition.y ? Math.abs(originOffset.y - originPosition.y) : orientationOffset.y
     };
 
     return {
@@ -95,7 +106,7 @@ export default {
     };
   },
 
-  getTicksFromData(calculatedProps, axis) {
+  getTicksFromData(calculatedProps, axis, axisComponent) {
     const currentAxis = Helpers.getCurrentAxis(axis, calculatedProps.horizontal);
     const stringMap = calculatedProps.stringMap[currentAxis];
     // if tickValues are defined for an axis component use them
@@ -104,19 +115,23 @@ export default {
       categoryArray.map((tick) => stringMap[tick]) : categoryArray;
     const ticksFromStringMap = stringMap && values(stringMap);
     // when ticks is undefined, axis will determine its own ticks
-    return ticksFromCategories && ticksFromCategories.length !== 0 ?
+    const ticks = ticksFromCategories && ticksFromCategories.length !== 0 ?
       ticksFromCategories : ticksFromStringMap;
+    const tickCount = axisComponent && axisComponent.props && axisComponent.props.tickCount;
+    return Axis.downsampleTicks(ticks, tickCount);
   },
 
-  getTicksFromAxis(calculatedProps, axis, component) {
-    const tickValues = component.props.tickValues;
-    if (!tickValues) {
+  getTicksFromAxis(calculatedProps, axis, axisComponent) {
+    const axisProps = axisComponent && axisComponent.props || {};
+    const tickArray = axisProps.tickValues || axisProps.tickFormat;
+    if (!Array.isArray(tickArray)) {
       return undefined;
     }
     const currentAxis = Helpers.getCurrentAxis(axis, calculatedProps.horizontal);
     const stringMap = calculatedProps.stringMap[currentAxis];
-    return Collection.containsOnlyStrings(tickValues) && stringMap ?
-      tickValues.map((tick) => stringMap[tick]) : tickValues;
+    const ticks = Collection.containsOnlyStrings(tickArray) && stringMap ?
+      tickArray.map((tick) => stringMap[tick]) : tickArray;
+    return Axis.downsampleTicks(ticks, axisProps.tickCount);
   },
 
   getTicks(...args) {

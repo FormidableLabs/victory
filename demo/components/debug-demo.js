@@ -1,47 +1,110 @@
 /*eslint-disable no-magic-numbers */
-/*global setInterval:false */
 
 import React from "react";
 import {
-  VictoryChart, VictoryLine, VictoryZoomContainer
+  VictoryChart, VictoryAxis, VictoryLine, VictoryScatter, VictoryBar
 } from "../../src/index";
 
-import { range, last } from "lodash";
-
-const y = (x) => Math.sin(x / 10);
-const initData = () => range(70).map((x) => ({ x, y: y(x) }));
+import { range } from "lodash";
 
 class App extends React.Component {
-  constructor() {
-    super();
-    this.state = {
-      data: initData(),
-      zoomDomain: null
-    };
 
-    setInterval(() => {
-      const { data } = this.state;
-      const x = last(data).x + 1;
-
-      if (x > 1000) {
-        this.setState({ data: initData() });
-      } else {
-        data.push({ x, y: y(x) });
-        this.setState({ data });
-      }
-    }, 20);
-  }
   render() {
+    const containerStyle = {
+      display: "flex",
+      flexDirection: "row",
+      flexWrap: "wrap",
+      alignItems: "center",
+      justifyContent: "center"
+    };
+    const chartStyle = { parent: { border: "1px solid #ccc", margin: "2%", maxWidth: "40%" } };
     return (
-      <div style={{ maxWidth: 500 }}>
-        <VictoryChart containerComponent={<VictoryZoomContainer dimension="x" />}>
-          <VictoryLine
-            data={this.state.data}
-          />
-          <VictoryLine
-            data={this.state.data}
-          />
-        </VictoryChart>
+      <div className="demo">
+        <h1>VictoryChart</h1>
+        <div style={containerStyle}>
+          <VictoryChart style={chartStyle}
+            padding={{ top: 80, bottom: 10, left: 80, right: 10 }}
+          >
+            <VictoryAxis label={"A LABEL"} dependentAxis/>
+            <VictoryAxis label={"A LABEL"}/>
+            <VictoryLine y={(d) => 0.5 * d.x + 0.5} style={{ data: { stroke: "red" } }}/>
+            <VictoryScatter y={(d) => d.x * d.x} style={{ data: { stroke: "red" } }}/>
+          </VictoryChart>
+
+          <VictoryChart style={chartStyle}>
+            <VictoryAxis label={"A LABEL"} dependentAxis orientation="right" invertAxis/>
+            <VictoryAxis label={"A LABEL"} orientation="top" invertAxis/>
+            <VictoryLine y={(d) => 0.5 * d.x + 0.5} style={{ data: { stroke: "red" } }}/>
+            <VictoryScatter y={(d) => d.x * d.x} style={{ data: { stroke: "red" } }}/>
+          </VictoryChart>
+
+          <VictoryChart style={chartStyle} domain={[-10, 10]}>
+            <VictoryAxis dependentAxis orientation="right"/>
+            <VictoryAxis orientation="top"/>
+            <VictoryLine y={(d) => 0.5 * d.x + 0.5} style={{ data: { stroke: "red" } }}/>
+            <VictoryScatter y={(d) => d.x * d.x} style={{ data: { stroke: "red" } }}/>
+          </VictoryChart>
+
+          <VictoryChart style={chartStyle} domain={{ x: [-10, 10], y: [-2, 10] }}>
+            <VictoryAxis dependentAxis orientation="right"/>
+            <VictoryAxis orientation="top"/>
+            <VictoryLine y={(d) => 0.5 * d.x + 0.5} style={{ data: { stroke: "red" } }}/>
+            <VictoryScatter y={(d) => d.x * d.x} style={{ data: { stroke: "red" } }}/>
+          </VictoryChart>
+
+          <VictoryChart style={chartStyle}>
+            <VictoryScatter
+              data={[{ x: 3, y: 3 }]}
+            />
+            <VictoryAxis
+              tickValues={[3]}
+            />
+          </VictoryChart>
+
+          <VictoryChart style={chartStyle}>
+            <VictoryScatter
+              data={[{ x: 1, y: -3 }, { x: 2, y: -2 }, { x: 3, y: -1 }]}
+            />
+          </VictoryChart>
+
+          <VictoryChart style={chartStyle} domain={[0, 100]}>
+            <VictoryLine y={(d) => 0.5 * d.x + 0.5} style={{ data: { stroke: "red" } }}/>
+            <VictoryAxis
+              tickValues={range(100)}
+              tickCount={10}
+            />
+          </VictoryChart>
+
+          <VictoryChart style={chartStyle} domain={[0, 100]}>
+            <VictoryLine y={(d) => 0.5 * d.x + 0.5} style={{ data: { stroke: "red" } }}/>
+            <VictoryAxis
+              tickCount={10}
+            />
+          </VictoryChart>
+
+          <VictoryChart style={chartStyle}>
+            <VictoryBar horizontal
+              data={[{ x: 1, y: 3 }, { x: 2, y: 2 }, { x: 3, y: 1 }]}
+            />
+            <VictoryAxis
+              tickValues={[ 0, 1, 2, 3 ]}
+              tickFormat={(t) => `y: ${t}`}
+            />
+            <VictoryAxis dependentAxis
+              tickValues={[ 0, 1, 2, 3 ]}
+              tickFormat={(t) => `x: ${t}`}
+            />
+          </VictoryChart>
+
+          <VictoryChart style={chartStyle}>
+            <VictoryBar horizontal
+              data={[{ x: 1, y: 4 }, { x: 2, y: 5 }, { x: 3, y: 6 }]}
+            />
+            <VictoryAxis dependentAxis
+              tickFormat={(t) => `x: ${t}`}
+            />
+          </VictoryChart>
+        </div>
       </div>
     );
   }

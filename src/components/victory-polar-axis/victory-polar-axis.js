@@ -95,7 +95,6 @@ class VictoryPolarAxis extends React.Component {
     standalone: true,
     theme: VictoryTheme.grayscale,
     tickComponent: <Line type={"tick"}/>,
-    tickCount: 5,
     tickLabelComponent: <VictoryLabel/>
   };
 

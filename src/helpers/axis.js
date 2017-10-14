@@ -1,5 +1,5 @@
 import { Collection } from "victory-core";
-import { identity, isFunction, invert } from "lodash";
+import { identity, isFunction, invert, uniq } from "lodash";
 import React from "react";
 
 export default {
@@ -140,17 +140,6 @@ export default {
   },
 
   /**
-   * @param {Array} childComponents: an array of children
-   * @returns {Object} an object with orientations specified for x and y
-   */
-  getAxisOrientations(childComponents) {
-    return {
-      x: this.getOrientation(this.getAxisComponent(childComponents, "x"), "x"),
-      y: this.getOrientation(this.getAxisComponent(childComponents, "y"), "y")
-    };
-  },
-
-  /**
    * @param {Object} props: axis component props
    * @returns {Boolean} true when the axis is vertical
    */
@@ -187,5 +176,18 @@ export default {
     } else {
       return (x) => x;
     }
+  },
+
+  getTickArray(tickValues, tickFormat) {
+    const tickArray = tickValues ? uniq(tickValues) : tickFormat;
+    return Array.isArray(tickArray) && tickArray.length ? tickArray : undefined;
+  },
+
+  downsampleTicks(ticks, tickCount) {
+    if (!tickCount || !Array.isArray(ticks) || ticks.length <= tickCount) {
+      return ticks;
+    }
+    const k = Math.floor(ticks.length / tickCount);
+    return ticks.filter((d, i) => i % k === 0);
   }
 };

@@ -1,6 +1,7 @@
 import {
   assign, uniqBy, includes, defaults, defaultsDeep, isFunction, range as lodashRange, without
 } from "lodash";
+import Axis from "../../helpers/axis";
 import { Helpers, LabelHelpers, Scale, Domain, Collection } from "victory-core";
 
 export default {
@@ -325,15 +326,19 @@ export default {
   },
 
   getTicks(props, scale) {
-    const { tickValues, tickCount } = props;
-    if (tickValues && Array.isArray(tickValues)) {
-      if (Helpers.stringTicks(props)) {
-        return lodashRange(1, props.tickValues.length + 1);
-      }
-      return tickValues.length ? tickValues : scale.domain();
+    const { tickCount } = props;
+    const tickValues = Axis.getTickArray(props.tickValues, props.tickFormat);
+    if (tickValues) {
+      return Helpers.stringTicks(props) ?
+        Axis.downsampleTicks(lodashRange(1, tickValues.length + 1), tickCount) :
+        Axis.downsampleTicks(tickValues, tickCount);
     } else if (scale.ticks && isFunction(scale.ticks)) {
-      const scaleTicks = scale.ticks(tickCount);
-      const ticks = Array.isArray(scaleTicks) && scaleTicks.length ? scaleTicks : scale.domain();
+      // eslint-disable-next-line no-magic-numbers
+      const defaultTickCount = tickCount || 5;
+      const scaleTicks = scale.ticks(defaultTickCount);
+      const tickArray = Array.isArray(scaleTicks) && scaleTicks.length ?
+        scaleTicks : scale.domain();
+      const ticks = Axis.downsampleTicks(tickArray, tickCount);
       const filteredTicks = includes(ticks, 0) ? without(ticks, 0) : ticks;
       return filteredTicks.length ? filteredTicks : ticks;
     }
