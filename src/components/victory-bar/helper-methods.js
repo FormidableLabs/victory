@@ -1,4 +1,4 @@
-import { assign, defaults, omit } from "lodash";
+import { assign, defaults, filter, keys, omit } from "lodash";
 import { Helpers, LabelHelpers, Data, Domain, Scale } from "victory-core";
 
 export default {
@@ -15,9 +15,11 @@ export default {
   },
 
   getBarStyle(datum, baseStyle) {
-    const styleData = omit(datum, [
+    const numKeys = filter(keys(datum), (key) => !isNaN(key));
+    const omitKeys = [
       "xName", "yName", "x", "y", "label", "errorX", "errorY", "eventKey"
-    ]);
+    ];
+    const styleData = omit(datum, [...omitKeys, ...numKeys]);
     return defaults({}, styleData, baseStyle);
   },
 
