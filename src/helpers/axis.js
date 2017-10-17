@@ -1,5 +1,5 @@
 import { Collection } from "victory-core";
-import { identity, isFunction, invert, uniq } from "lodash";
+import { identity, isFunction, invert, uniq, range, sortBy, values } from "lodash";
 import React from "react";
 
 export default {
@@ -157,29 +157,109 @@ export default {
     return props.tickValues !== undefined && Collection.containsStrings(props.tickValues);
   },
 
+  getTicksFromData(props) {
+    const { stringMap, categories, tickCount } = props;
+    // if tickValues are defined for an axis component use them
+    const ticksFromCategories = categories && Collection.containsOnlyStrings(categories) ?
+      categories.map((tick) => stringMap[tick]) : categories;
+    const ticksFromStringMap = stringMap && values(stringMap);
+    // when ticks is undefined, axis will determine its own ticks
+    const ticks = ticksFromCategories && ticksFromCategories.length !== 0 ?
+      ticksFromCategories : ticksFromStringMap;
+    return this.downsampleTicks(ticks, tickCount);
+  },
+
+  getTicksFromAxis(props) {
+    const { tickValues, tickFormat, stringMap, tickCount } = props;
+    const tickArray = tickValues || tickFormat;
+    if (!Array.isArray(tickArray)) {
+      return undefined;
+    }
+
+    const ticks = Collection.containsOnlyStrings(tickArray) && stringMap ?
+      tickArray.map((tick) => stringMap[tick]) : tickArray;
+    return this.downsampleTicks(ticks, tickCount);
+  },
+
+  getTicks(...args) {
+    return this.getTicksFromAxis(...args) || this.getTicksFromData(...args);
+  },
+
+  getDefaultTickFormat(props) {
+    const { tickValues, stringMap } = props;
+    const useIdentity = tickValues && !Collection.containsDates(tickValues);
+    if (useIdentity && !stringMap) {
+      return (x) => x;
+    } else if (stringMap) {
+      const tickValueArray = sortBy(values(stringMap), (n) => n);
+      const invertedStringMap = invert(stringMap);
+      const dataNames = tickValueArray.map((tick) => invertedStringMap[tick]);
+      // string ticks should have one tick of padding at the beginning
+      const dataTicks = ["", ...dataNames, ""];
+      return (x) => dataTicks[x];
+    } else {
+      return undefined;
+    }
+  },
+
+
+  // getTickFormat(props, scale, stringMap) {
+  //   const stringTicks = this.stringTicks(props);
+  //   if (stringTicks) {
+  //     return (x, index) => props.tickValues[index];
+  //   }
+
+  //   let tickFormat;
+  //   if (props.tickFormat) {
+  //     tickFormat = Array.isArray(props.tickFormat) ?
+  //       (x, index) => props.tickFormat[index] : props.tickFormat;
+  //   } else if (scale.tickFormat && isFunction(scale.tickFormat)) {
+  //     tickFormat = scale.tickFormat();
+  //   } else {
+  //     tickFormat = (x) => x;
+  //   }
+
+  //   if (!stringMap) {
+  //     return tickFormat;
+  //   }
+  //   const applyStringTicks = (tick, index, ticks) => {
+  //     const invertedStringMap = invert(stringMap);
+  //     const stringTickArray = ticks.map((t) => invertedStringMap[t]);
+  //     return tickFormat(invertedStringMap[tick], index, stringTickArray);
+  //   };
+  //   return applyStringTicks;
+  // },
+
   getTickFormat(props, scale, stringMap) {
-    const stringTicks = this.stringTicks(props);
-    const axis = this.getAxis(props);
-    const applyStringTicks = (tick, index, ticks) => {
-      const invertedStringMap = invert(stringMap[axis]);
-      const stringTickArray = ticks.map((t) => invertedStringMap[t]);
-      return props.tickFormat(invertedStringMap[tick], index, stringTickArray);
-    };
-    if (props.tickFormat && isFunction(props.tickFormat)) {
-      return stringMap && stringMap[axis] ? applyStringTicks : props.tickFormat;
-    } else if (props.tickFormat && Array.isArray(props.tickFormat)) {
-      return (x, index) => props.tickFormat[index];
-    } else if (stringTicks) {
-      return (x, index) => props.tickValues[index];
-    } else if (scale.tickFormat && isFunction(scale.tickFormat)) {
-      return scale.tickFormat();
+    const { tickFormat } = props;
+    if (!tickFormat) {
+      const defaultTickFormat = this.getDefaultTickFormat(props);
+      const scaleTickFormat = scale.tickFormat && isFunction(scale.tickFormat) ?
+        scale.tickFormat() : (x) => x;
+      return defaultTickFormat || scaleTickFormat;
+    } else if (tickFormat && Array.isArray(tickFormat)) {
+      return (x, index) => tickFormat[index];
+    } else if (tickFormat && isFunction(tickFormat)) {
+      const applyStringTicks = (tick, index, ticks) => {
+        const invertedStringMap = invert(stringMap);
+        const stringTickArray = ticks.map((t) => invertedStringMap[t]);
+        return props.tickFormat(invertedStringMap[tick], index, stringTickArray);
+      };
+      return stringMap ? applyStringTicks : tickFormat;
     } else {
       return (x) => x;
     }
   },
 
-  getTickArray(tickValues, tickFormat) {
-    const tickArray = tickValues ? uniq(tickValues) : tickFormat;
+  getTickArray(props) {
+    const { tickValues, tickFormat, stringMap } = props;
+    let ticks = tickValues;
+    if (tickValues && Collection.containsStrings(tickValues)) {
+      ticks = stringMap ?
+        tickValues.map((tick) => stringMap[tick]) :
+        range(1, tickValues.length + 1);
+    }
+    const tickArray = ticks ? uniq(ticks) : tickFormat;
     return Array.isArray(tickArray) && tickArray.length ? tickArray : undefined;
   },
 

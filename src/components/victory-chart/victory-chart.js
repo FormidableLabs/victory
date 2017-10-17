@@ -98,28 +98,27 @@ export default class VictoryChart extends React.Component {
   }
 
   getAxisProps(child, props, calculatedProps) {
-    const { domain, scale, originSign, stringMap } = calculatedProps;
-    const axis = child.type.getAxis(child.props);
+    const { domain, scale, originSign, stringMap, categories, horizontal } = calculatedProps;
+    const childProps = child.props || {};
+    const axis = child.type.getAxis(childProps);
+    const currentAxis = Axis.getCurrentAxis(axis, horizontal);
     const otherAxis = axis === "x" ? "y" : "x";
     const axisOffset = ChartHelpers.getAxisOffset(props, calculatedProps);
-    const tickValues = ChartHelpers.getTicks(calculatedProps, axis, child);
-    const tickFormat = child.props.tickFormat ?
-      Axis.getTickFormat(child.props, scale, stringMap) :
-      ChartHelpers.getTickFormat(child, axis, calculatedProps);
+    // const tickValues = childProps.tickValues || ChartHelpers.getTicks(calculatedProps, axis, child);
     const offsetY = axis === "y" ? undefined : axisOffset.y;
     const offsetX = axis === "x" ? undefined : axisOffset.x;
-    const crossAxis = child.props.crossAxis === false ? false : true;
+    const crossAxis = childProps.crossAxis === false ? false : true;
     const orientation = Axis.getOrientation(child, axis, originSign[otherAxis]);
     return {
+      stringMap: stringMap[currentAxis],
+      categories: categories[currentAxis],
       startAngle: props.startAngle,
       endAngle: props.endAngle,
       innerRadius: props.innerRadius,
       domain,
       scale,
-      tickValues,
-      tickFormat,
-      offsetY: child.props.offsetY !== undefined ? child.props.offsetY : offsetY,
-      offsetX: child.props.offsetX !== undefined ? child.props.offsetX : offsetX,
+      offsetY: childProps.offsetY !== undefined ? childProps.offsetY : offsetY,
+      offsetX: childProps.offsetX !== undefined ? childProps.offsetX : offsetX,
       crossAxis,
       orientation
     };

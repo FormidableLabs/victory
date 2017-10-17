@@ -245,7 +245,7 @@ export default {
     const scale = this.getScale(props);
     const domain = this.getDomain(props);
     const ticks = this.getTicks(props, scale);
-    const tickFormat = Axis.getTickFormat(props, scale);
+    const tickFormat = Axis.getTickFormat(props, scale, props.stringMap);
     const anchors = this.getAnchors(orientation, isVertical);
 
     return {
@@ -281,11 +281,9 @@ export default {
 
   getTicks(props, scale) {
     const { tickCount, crossAxis } = props;
-    const tickValues = Axis.getTickArray(props.tickValues, props.tickFormat);
+    const tickValues = Axis.getTickArray(props);
     if (tickValues) {
-      return Helpers.stringTicks(props) ?
-        Axis.downsampleTicks(range(1, props.tickValues.length + 1), tickCount) :
-        Axis.downsampleTicks(tickValues, tickCount);
+      return Axis.downsampleTicks(tickValues, tickCount);
     } else if (scale.ticks && isFunction(scale.ticks)) {
       // eslint-disable-next-line no-magic-numbers
       const defaultTickCount = tickCount || 5;
