@@ -327,11 +327,9 @@ export default {
 
   getTicks(props, scale) {
     const { tickCount } = props;
-    const tickValues = Axis.getTickArray(props.tickValues, props.tickFormat);
+    const tickValues = Axis.getTickArray(props);
     if (tickValues) {
-      return Helpers.stringTicks(props) ?
-        Axis.downsampleTicks(lodashRange(1, tickValues.length + 1), tickCount) :
-        Axis.downsampleTicks(tickValues, tickCount);
+      return Axis.downsampleTicks(tickValues, tickCount);
     } else if (scale.ticks && isFunction(scale.ticks)) {
       // eslint-disable-next-line no-magic-numbers
       const defaultTickCount = tickCount || 5;

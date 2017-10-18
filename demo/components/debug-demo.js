@@ -20,8 +20,19 @@ class App extends React.Component {
     const chartStyle = { parent: { border: "1px solid #ccc", margin: "2%", maxWidth: "40%" } };
     return (
       <div className="demo">
-        <h1>VictoryChart</h1>
+        <h1>Debug</h1>
         <div style={containerStyle}>
+          <VictoryChart style={chartStyle}>
+            <VictoryAxis tickFormat={(t, i, ts) => `${t}s ${i} ${ts[0]}`}/>
+            <VictoryBar
+              style={{ data: { fill: "tomato" } }}
+              data={[
+                { x: "one", y: 1 },
+                { x: "two", y: 2 },
+                { x: "three", y: 7 }
+              ]}
+            />
+         </VictoryChart>
 
           <VictoryChart
             style={chartStyle}

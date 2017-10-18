@@ -157,81 +157,24 @@ export default {
     return props.tickValues !== undefined && Collection.containsStrings(props.tickValues);
   },
 
-  getTicksFromData(props) {
-    const { stringMap, categories, tickCount } = props;
-    // if tickValues are defined for an axis component use them
-    const ticksFromCategories = categories && Collection.containsOnlyStrings(categories) ?
-      categories.map((tick) => stringMap[tick]) : categories;
-    const ticksFromStringMap = stringMap && values(stringMap);
-    // when ticks is undefined, axis will determine its own ticks
-    const ticks = ticksFromCategories && ticksFromCategories.length !== 0 ?
-      ticksFromCategories : ticksFromStringMap;
-    return this.downsampleTicks(ticks, tickCount);
-  },
-
-  getTicksFromAxis(props) {
-    const { tickValues, tickFormat, stringMap, tickCount } = props;
-    const tickArray = tickValues || tickFormat;
-    if (!Array.isArray(tickArray)) {
-      return undefined;
-    }
-
-    const ticks = Collection.containsOnlyStrings(tickArray) && stringMap ?
-      tickArray.map((tick) => stringMap[tick]) : tickArray;
-    return this.downsampleTicks(ticks, tickCount);
-  },
-
-  getTicks(...args) {
-    return this.getTicksFromAxis(...args) || this.getTicksFromData(...args);
-  },
-
   getDefaultTickFormat(props) {
     const { tickValues, stringMap } = props;
-    const useIdentity = tickValues && !Collection.containsDates(tickValues);
-    if (useIdentity && !stringMap) {
-      return (x) => x;
-    } else if (stringMap) {
+    const fallbackFormat = tickValues && !Collection.containsDates(tickValues) ?
+      (x) => x : undefined;
+    if (!stringMap) {
+      return this.stringTicks(props) ? (x, index) => tickValues[index] : fallbackFormat;
+    } else {
+      const invertedStringMap = stringMap && invert(stringMap);
       const tickValueArray = sortBy(values(stringMap), (n) => n);
-      const invertedStringMap = invert(stringMap);
       const dataNames = tickValueArray.map((tick) => invertedStringMap[tick]);
       // string ticks should have one tick of padding at the beginning
       const dataTicks = ["", ...dataNames, ""];
       return (x) => dataTicks[x];
-    } else {
-      return undefined;
     }
   },
 
-
-  // getTickFormat(props, scale, stringMap) {
-  //   const stringTicks = this.stringTicks(props);
-  //   if (stringTicks) {
-  //     return (x, index) => props.tickValues[index];
-  //   }
-
-  //   let tickFormat;
-  //   if (props.tickFormat) {
-  //     tickFormat = Array.isArray(props.tickFormat) ?
-  //       (x, index) => props.tickFormat[index] : props.tickFormat;
-  //   } else if (scale.tickFormat && isFunction(scale.tickFormat)) {
-  //     tickFormat = scale.tickFormat();
-  //   } else {
-  //     tickFormat = (x) => x;
-  //   }
-
-  //   if (!stringMap) {
-  //     return tickFormat;
-  //   }
-  //   const applyStringTicks = (tick, index, ticks) => {
-  //     const invertedStringMap = invert(stringMap);
-  //     const stringTickArray = ticks.map((t) => invertedStringMap[t]);
-  //     return tickFormat(invertedStringMap[tick], index, stringTickArray);
-  //   };
-  //   return applyStringTicks;
-  // },
-
-  getTickFormat(props, scale, stringMap) {
-    const { tickFormat } = props;
+  getTickFormat(props, scale) {
+    const { tickFormat, stringMap } = props;
     if (!tickFormat) {
       const defaultTickFormat = this.getDefaultTickFormat(props);
       const scaleTickFormat = scale.tickFormat && isFunction(scale.tickFormat) ?
@@ -251,15 +194,35 @@ export default {
     }
   },
 
+  getStringTicks(props) {
+    const { stringMap, categories } = props;
+    const ticksFromCategories = categories && Collection.containsOnlyStrings(categories) ?
+      categories.map((tick) => stringMap[tick]) : undefined;
+    const ticksFromStringMap = stringMap && values(stringMap);
+    return ticksFromCategories && ticksFromCategories.length !== 0 ?
+      ticksFromCategories : ticksFromStringMap;
+  },
+
+
   getTickArray(props) {
     const { tickValues, tickFormat, stringMap } = props;
+    const getTicksFromFormat = () => {
+      if (!tickFormat || !Array.isArray(tickFormat)) {
+        return undefined;
+      }
+      return Collection.containsStrings(tickFormat) ? tickFormat.map((t, i) => i) : tickFormat;
+    };
+
     let ticks = tickValues;
+    if (stringMap) {
+      ticks = this.getStringTicks(props);
+    }
     if (tickValues && Collection.containsStrings(tickValues)) {
       ticks = stringMap ?
         tickValues.map((tick) => stringMap[tick]) :
         range(1, tickValues.length + 1);
     }
-    const tickArray = ticks ? uniq(ticks) : tickFormat;
+    const tickArray = ticks ? uniq(ticks) : getTicksFromFormat(props);
     return Array.isArray(tickArray) && tickArray.length ? tickArray : undefined;
   },
 

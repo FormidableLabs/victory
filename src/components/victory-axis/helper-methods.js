@@ -1,4 +1,4 @@
-import { includes, defaults, defaultsDeep, isFunction, range, without } from "lodash";
+import { includes, defaults, defaultsDeep, isFunction, without } from "lodash";
 import Axis from "../../helpers/axis";
 import { Helpers, Scale, Domain } from "victory-core";
 
@@ -188,9 +188,9 @@ export default {
     props = this.modifyProps(props, fallbackProps, role);
     const calculatedValues = this.getCalculatedValues(props);
     const {
-      style, orientation, isVertical, scale, ticks, tickFormat, stringTicks, anchors, domain
+      style, orientation, isVertical, scale, ticks, tickFormat, anchors, domain
     } = calculatedValues;
-    const { width, height, standalone, theme, tickValues, polar, padding } = props;
+    const { width, height, standalone, theme, polar, padding } = props;
     const {
       globalTransform, gridOffset, gridEdge
     } = this.getLayoutProps(props, calculatedValues);
@@ -201,25 +201,22 @@ export default {
       style: style.parent, ticks, scale, width, height, domain, standalone, theme, polar, padding
     } };
 
-    return ticks.reduce((childProps, indexedTick, index) => {
-      const tick = stringTicks ? tickValues[indexedTick - 1] : indexedTick;
-
+    return ticks.reduce((childProps, tick, index) => {
       const styles = this.getEvaluatedStyles(style, tick, index);
       const tickLayout = {
         position: this.getTickPosition(styles, orientation, isVertical),
-        transform: this.getTickTransform(scale(indexedTick), globalTransform, isVertical)
+        transform: this.getTickTransform(scale(tick), globalTransform, isVertical)
       };
 
       const gridLayout = {
         edge: gridEdge,
         transform: {
           x: isVertical ?
-            -gridOffset.x + globalTransform.x : scale(indexedTick) + globalTransform.x,
+            -gridOffset.x + globalTransform.x : scale(tick) + globalTransform.x,
           y: isVertical ?
-            scale(indexedTick) + globalTransform.y : gridOffset.y + globalTransform.y
+            scale(tick) + globalTransform.y : gridOffset.y + globalTransform.y
         }
       };
-
       childProps[index] = {
         axis: axisProps,
         axisLabel: axisLabelProps,
@@ -245,7 +242,7 @@ export default {
     const scale = this.getScale(props);
     const domain = this.getDomain(props);
     const ticks = this.getTicks(props, scale);
-    const tickFormat = Axis.getTickFormat(props, scale, props.stringMap);
+    const tickFormat = Axis.getTickFormat(props, scale);
     const anchors = this.getAnchors(orientation, isVertical);
 
     return {
