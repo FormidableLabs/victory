@@ -409,6 +409,7 @@ class App extends React.Component {
           >
             <VictoryLabel text="Parent Events" y={50} x={150}/>
             <VictoryBar name="bar"/>
+            <VictoryAxis tickFormat={["one", "two", "three", "four"]}/>
           </VictoryChart>
 
           <VictoryChart style={chartStyle} scale={"linear"}>
@@ -503,6 +504,7 @@ class App extends React.Component {
           <VictoryChart style={chartStyle} animate={{ duration: 2000 }}
             domainPadding={{ x: 100 }}
           >
+          <VictoryAxis tickFormat={["one", "two", "three"]}/>
             <VictoryStack>
               {this.state.barData.map((data, index) => {
                 return <Wrapper key={index}><VictoryBar data={data}/></Wrapper>;

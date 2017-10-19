@@ -1,4 +1,4 @@
-import { includes, defaults, defaultsDeep, isFunction, without } from "lodash";
+import { defaults, defaultsDeep, isFunction } from "lodash";
 import Axis from "../../helpers/axis";
 import { Helpers, Scale, Domain } from "victory-core";
 
@@ -241,7 +241,7 @@ export default {
     const stringTicks = Helpers.stringTicks(props);
     const scale = this.getScale(props);
     const domain = this.getDomain(props);
-    const ticks = this.getTicks(props, scale);
+    const ticks = Axis.getTicks(props, scale, props.crossAxis);
     const tickFormat = Axis.getTickFormat(props, scale);
     const anchors = this.getAnchors(orientation, isVertical);
 
@@ -274,27 +274,6 @@ export default {
       style: labelStyle,
       text: props.label
     };
-  },
-
-  getTicks(props, scale) {
-    const { tickCount, crossAxis } = props;
-    const tickValues = Axis.getTickArray(props);
-    if (tickValues) {
-      return Axis.downsampleTicks(tickValues, tickCount);
-    } else if (scale.ticks && isFunction(scale.ticks)) {
-      // eslint-disable-next-line no-magic-numbers
-      const defaultTickCount = tickCount || 5;
-      const scaleTicks = scale.ticks(defaultTickCount);
-      const tickArray = Array.isArray(scaleTicks) && scaleTicks.length ?
-        scaleTicks : scale.domain();
-      const ticks = Axis.downsampleTicks(tickArray, tickCount);
-      if (crossAxis) {
-        const filteredTicks = includes(ticks, 0) ? without(ticks, 0) : ticks;
-        return filteredTicks.length ? filteredTicks : ticks;
-      }
-      return ticks;
-    }
-    return scale.domain();
   },
 
   getAnchors(orientation, isVertical) {

@@ -104,7 +104,6 @@ export default class VictoryChart extends React.Component {
     const currentAxis = Axis.getCurrentAxis(axis, horizontal);
     const otherAxis = axis === "x" ? "y" : "x";
     const axisOffset = ChartHelpers.getAxisOffset(props, calculatedProps);
-    // const tickValues = childProps.tickValues || ChartHelpers.getTicks(calculatedProps, axis, child);
     const offsetY = axis === "y" ? undefined : axisOffset.y;
     const offsetX = axis === "x" ? undefined : axisOffset.x;
     const crossAxis = childProps.crossAxis === false ? false : true;

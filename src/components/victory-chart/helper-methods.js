@@ -1,10 +1,8 @@
-import { invert, sortBy, values } from "lodash";
 import Axis from "../../helpers/axis";
 import Wrapper from "../../helpers/wrapper";
 import React from "react";
-import { Helpers, Collection, Log } from "victory-core";
+import { Collection, Log } from "victory-core";
 
-const identity = (x) => x;
 
 export default {
   getChildComponents(props, defaultAxes) {
@@ -104,58 +102,6 @@ export default {
       y: axisComponents.y && axisComponents.y.offsetY !== undefined ?
         axisComponents.y.offsetY : calculatedOffset.y
     };
-  },
-
-  getTicksFromData(calculatedProps, axis, axisComponent) {
-    const currentAxis = Helpers.getCurrentAxis(axis, calculatedProps.horizontal);
-    const stringMap = calculatedProps.stringMap[currentAxis];
-    // if tickValues are defined for an axis component use them
-    const categoryArray = calculatedProps.categories[currentAxis];
-    const ticksFromCategories = categoryArray && Collection.containsOnlyStrings(categoryArray) ?
-      categoryArray.map((tick) => stringMap[tick]) : categoryArray;
-    const ticksFromStringMap = stringMap && values(stringMap);
-    // when ticks is undefined, axis will determine its own ticks
-    const ticks = ticksFromCategories && ticksFromCategories.length !== 0 ?
-      ticksFromCategories : ticksFromStringMap;
-    const tickCount = axisComponent && axisComponent.props && axisComponent.props.tickCount;
-    return Axis.downsampleTicks(ticks, tickCount);
-  },
-
-  getTicksFromAxis(calculatedProps, axis, axisComponent) {
-    const axisProps = axisComponent && axisComponent.props || {};
-    const tickArray = axisProps.tickValues || axisProps.tickFormat;
-    if (!Array.isArray(tickArray)) {
-      return undefined;
-    }
-    const currentAxis = Helpers.getCurrentAxis(axis, calculatedProps.horizontal);
-    const stringMap = calculatedProps.stringMap[currentAxis];
-    const ticks = Collection.containsOnlyStrings(tickArray) && stringMap ?
-      tickArray.map((tick) => stringMap[tick]) : tickArray;
-    return Axis.downsampleTicks(ticks, axisProps.tickCount);
-  },
-
-  getTicks(...args) {
-    return this.getTicksFromAxis(...args) || this.getTicksFromData(...args);
-  },
-
-  getTickFormat(component, axis, calculatedProps) {
-    const currentAxis = Helpers.getCurrentAxis(axis, calculatedProps.horizontal);
-    const stringMap = calculatedProps.stringMap[currentAxis];
-    const tickValues = component.props.tickValues;
-    const useIdentity = tickValues && !Collection.containsStrings(tickValues) &&
-      !Collection.containsDates(tickValues);
-    if (useIdentity) {
-      return identity;
-    } else if (stringMap !== null) {
-      const tickValueArray = sortBy(values(stringMap), (n) => n);
-      const invertedStringMap = invert(stringMap);
-      const dataNames = tickValueArray.map((tick) => invertedStringMap[tick]);
-      // string ticks should have one tick of padding at the beginning
-      const dataTicks = ["", ...dataNames, ""];
-      return (x) => dataTicks[x];
-    } else {
-      return undefined;
-    }
   },
 
   createStringMap(props, axis, childComponents) {

@@ -84,4 +84,42 @@ describe("helpers/axis", () => {
       expect(formatResult).to.be.a("function");
     });
   });
+
+  describe("getTicks", () => {
+    let sandbox;
+    const scale = Scale.getBaseScale({ scale: { x: "linear" } }, "x");
+    beforeEach(() => {
+      sandbox = sinon.sandbox.create();
+      sandbox.spy(scale, "ticks");
+    });
+
+    afterEach(() => {
+      sandbox.restore();
+    });
+
+    it("returns tickValues from props", () => {
+      const props = { tickValues: [1, 2, 3] };
+      const tickResult = Axis.getTicks(props);
+      expect(tickResult).to.eql(props.tickValues);
+    });
+
+    it("returns converts string tickValues to numbers", () => {
+      const props = { tickValues: ["a", "b", "c", "d"] };
+      const tickResult = Axis.getTicks(props);
+      expect(tickResult).to.eql([1, 2, 3, 4]);
+    });
+
+    it("calculates tickValues from scale.ticks()", () => {
+      const props = { tickCount: 5 };
+      Axis.getTicks(props, scale);
+      expect(scale.ticks).calledWith(5);
+    });
+
+    it("calculates tickValues from scale.ticks(), and removes zero if axes cross", () => {
+      const props = { tickCount: 5, crossAxis: true };
+      const tickResult = Axis.getTicks(props, scale);
+      expect(scale.ticks).calledWith(5);
+      expect(tickResult).to.be.an("array").and.not.have.members([0]);
+    });
+  });
 });

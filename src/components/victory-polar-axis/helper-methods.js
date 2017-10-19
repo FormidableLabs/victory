@@ -1,6 +1,4 @@
-import {
-  assign, uniqBy, includes, defaults, defaultsDeep, isFunction, range as lodashRange, without
-} from "lodash";
+import { assign, uniqBy, defaults, defaultsDeep, isFunction } from "lodash";
 import Axis from "../../helpers/axis";
 import { Helpers, LabelHelpers, Scale, Domain, Collection } from "victory-core";
 
@@ -15,9 +13,9 @@ export default {
     const domain = this.getDomain(props, axis);
     const range = this.getRange(props, axis);
     const scale = this.getScale(props);
-    const initialTicks = this.getTicks(props, scale);
+    const initialTicks = Axis.getTicks(props, scale);
     const ticks = axisType === "angular" ? this.filterTicks(initialTicks, scale) : initialTicks;
-    const tickFormat = this.getTickFormat(props, scale, ticks);
+    const tickFormat = Axis.getTickFormat(props, scale);
     const radius = this.getRadius(props);
     return {
       axis, style, padding, stringTicks, axisType, scale, ticks, tickFormat, domain, range, radius
@@ -175,7 +173,7 @@ export default {
   },
 
   getTickLabelProps(props, calculatedValues, tick, index) { //eslint-disable-line max-params
-    const { axisType, radius, tickFormat, style, scale } = calculatedValues;
+    const { axisType, radius, tickFormat, style, scale, ticks } = calculatedValues;
     const { labelStyle } = this.getEvaluatedStyles(style, tick, index);
     const { tickLabelComponent } = props;
     const labelPlacement = tickLabelComponent.props && tickLabelComponent.props.labelPlacement ?
@@ -194,7 +192,7 @@ export default {
       index, datum: tick, style: labelStyle,
       angle: textAngle,
       textAnchor,
-      text: tickFormat(tick, index),
+      text: tickFormat(tick, index, ticks),
       x: labelRadius * Math.cos(Helpers.degreesToRadians(labelAngle)),
       y: -labelRadius * Math.sin(Helpers.degreesToRadians(labelAngle))
     };
@@ -325,40 +323,8 @@ export default {
     }, initialChildProps);
   },
 
-  getTicks(props, scale) {
-    const { tickCount } = props;
-    const tickValues = Axis.getTickArray(props);
-    if (tickValues) {
-      return Axis.downsampleTicks(tickValues, tickCount);
-    } else if (scale.ticks && isFunction(scale.ticks)) {
-      // eslint-disable-next-line no-magic-numbers
-      const defaultTickCount = tickCount || 5;
-      const scaleTicks = scale.ticks(defaultTickCount);
-      const tickArray = Array.isArray(scaleTicks) && scaleTicks.length ?
-        scaleTicks : scale.domain();
-      const ticks = Axis.downsampleTicks(tickArray, tickCount);
-      const filteredTicks = includes(ticks, 0) ? without(ticks, 0) : ticks;
-      return filteredTicks.length ? filteredTicks : ticks;
-    }
-    return scale.domain();
-  },
-
   filterTicks(ticks, scale) {
     const compareTicks = (t) => scale(t) % (2 * Math.PI);
     return uniqBy(ticks, compareTicks);
-  },
-
-  getTickFormat(props, scale) {
-    if (props.tickFormat && isFunction(props.tickFormat)) {
-      return props.tickFormat;
-    } else if (props.tickFormat && Array.isArray(props.tickFormat)) {
-      return (x, index) => props.tickFormat[index];
-    } else if (Helpers.stringTicks(props)) {
-      return (x, index) => props.tickValues[index];
-    } else if (scale.tickFormat && isFunction(scale.tickFormat)) {
-      return scale.tickFormat();
-    } else {
-      return (x) => x;
-    }
   }
 };

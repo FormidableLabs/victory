@@ -1,5 +1,7 @@
 import { Collection } from "victory-core";
-import { identity, isFunction, invert, uniq, range, sortBy, values } from "lodash";
+import {
+  identity, isFunction, invert, uniq, range, sortBy, values, includes, without
+} from "lodash";
 import React from "react";
 
 export default {
@@ -232,5 +234,26 @@ export default {
     }
     const k = Math.floor(ticks.length / tickCount);
     return ticks.filter((d, i) => i % k === 0);
+  },
+
+  getTicks(props, scale, filterZero) {
+    const { tickCount } = props;
+    const tickValues = this.getTickArray(props);
+    if (tickValues) {
+      return this.downsampleTicks(tickValues, tickCount);
+    } else if (scale.ticks && isFunction(scale.ticks)) {
+      // eslint-disable-next-line no-magic-numbers
+      const defaultTickCount = tickCount || 5;
+      const scaleTicks = scale.ticks(defaultTickCount);
+      const tickArray = Array.isArray(scaleTicks) && scaleTicks.length ?
+        scaleTicks : scale.domain();
+      const ticks = this.downsampleTicks(tickArray, tickCount);
+      if (filterZero) {
+        const filteredTicks = includes(ticks, 0) ? without(ticks, 0) : ticks;
+        return filteredTicks.length ? filteredTicks : ticks;
+      }
+      return ticks;
+    }
+    return scale.domain();
   }
 };

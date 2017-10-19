@@ -2,10 +2,8 @@
 
 import React from "react";
 import {
-  VictoryChart, VictoryAxis, VictoryLine, VictoryScatter, VictoryBar
+  VictoryChart, VictoryAxis, VictoryBar
 } from "../../src/index";
-
-import { range } from "lodash";
 
 class App extends React.Component {
 
