@@ -2,10 +2,8 @@
 
 import React from "react";
 import {
-  VictoryChart, VictoryAxis, VictoryLine, VictoryScatter, VictoryBar
+  VictoryChart, VictoryAxis, VictoryBar
 } from "../../src/index";
-
-import { range } from "lodash";
 
 class App extends React.Component {
 
@@ -20,88 +18,40 @@ class App extends React.Component {
     const chartStyle = { parent: { border: "1px solid #ccc", margin: "2%", maxWidth: "40%" } };
     return (
       <div className="demo">
-        <h1>VictoryChart</h1>
+        <h1>Debug</h1>
         <div style={containerStyle}>
-          <VictoryChart style={chartStyle}
-            padding={{ top: 80, bottom: 10, left: 80, right: 10 }}
+          <VictoryChart style={chartStyle}>
+            <VictoryAxis tickFormat={(t, i, ts) => `${t}s ${i} ${ts[0]}`}/>
+            <VictoryBar
+              style={{ data: { fill: "tomato" } }}
+              data={[
+                { x: "one", y: 1 },
+                { x: "two", y: 2 },
+                { x: "three", y: 7 }
+              ]}
+            />
+         </VictoryChart>
+
+          <VictoryChart
+            style={chartStyle}
           >
-            <VictoryAxis label={"A LABEL"} dependentAxis/>
-            <VictoryAxis label={"A LABEL"}/>
-            <VictoryLine y={(d) => 0.5 * d.x + 0.5} style={{ data: { stroke: "red" } }}/>
-            <VictoryScatter y={(d) => d.x * d.x} style={{ data: { stroke: "red" } }}/>
-          </VictoryChart>
-
-          <VictoryChart style={chartStyle}>
-            <VictoryAxis label={"A LABEL"} dependentAxis orientation="right" invertAxis/>
-            <VictoryAxis label={"A LABEL"} orientation="top" invertAxis/>
-            <VictoryLine y={(d) => 0.5 * d.x + 0.5} style={{ data: { stroke: "red" } }}/>
-            <VictoryScatter y={(d) => d.x * d.x} style={{ data: { stroke: "red" } }}/>
-          </VictoryChart>
-
-          <VictoryChart style={chartStyle} domain={[-10, 10]}>
-            <VictoryAxis dependentAxis orientation="right"/>
-            <VictoryAxis orientation="top"/>
-            <VictoryLine y={(d) => 0.5 * d.x + 0.5} style={{ data: { stroke: "red" } }}/>
-            <VictoryScatter y={(d) => d.x * d.x} style={{ data: { stroke: "red" } }}/>
-          </VictoryChart>
-
-          <VictoryChart style={chartStyle} domain={{ x: [-10, 10], y: [-2, 10] }}>
-            <VictoryAxis dependentAxis orientation="right"/>
-            <VictoryAxis orientation="top"/>
-            <VictoryLine y={(d) => 0.5 * d.x + 0.5} style={{ data: { stroke: "red" } }}/>
-            <VictoryScatter y={(d) => d.x * d.x} style={{ data: { stroke: "red" } }}/>
-          </VictoryChart>
-
-          <VictoryChart style={chartStyle}>
-            <VictoryScatter
-              data={[{ x: 3, y: 3 }]}
-            />
-            <VictoryAxis
-              tickValues={[3]}
-            />
-          </VictoryChart>
-
-          <VictoryChart style={chartStyle}>
-            <VictoryScatter
-              data={[{ x: 1, y: -3 }, { x: 2, y: -2 }, { x: 3, y: -1 }]}
-            />
-          </VictoryChart>
-
-          <VictoryChart style={chartStyle} domain={[0, 100]}>
-            <VictoryLine y={(d) => 0.5 * d.x + 0.5} style={{ data: { stroke: "red" } }}/>
-            <VictoryAxis
-              tickValues={range(100)}
-              tickCount={10}
-            />
-          </VictoryChart>
-
-          <VictoryChart style={chartStyle} domain={[0, 100]}>
-            <VictoryLine y={(d) => 0.5 * d.x + 0.5} style={{ data: { stroke: "red" } }}/>
-            <VictoryAxis
-              tickCount={10}
-            />
-          </VictoryChart>
-
-          <VictoryChart style={chartStyle}>
             <VictoryBar horizontal
-              data={[{ x: 1, y: 3 }, { x: 2, y: 2 }, { x: 3, y: 1 }]}
-            />
-            <VictoryAxis
-              tickValues={[ 0, 1, 2, 3 ]}
-              tickFormat={(t) => `y: ${t}`}
-            />
-            <VictoryAxis dependentAxis
-              tickValues={[ 0, 1, 2, 3 ]}
-              tickFormat={(t) => `x: ${t}`}
+              alignment="start"
+              data={[
+                { x: 2, y: "Echo" },
+                { x: 6, y: "Foxtrot" },
+                { x: 3, y: "Golf" },
+                { x: 4, y: "Hotel" }
+              ]}
             />
           </VictoryChart>
 
           <VictoryChart style={chartStyle}>
-            <VictoryBar horizontal
-              data={[{ x: 1, y: 4 }, { x: 2, y: 5 }, { x: 3, y: 6 }]}
+            <VictoryBar
+              data={[{ x: "one", y: 4 }, { x: "two", y: 5 }, { x: "three", y: 6 }]}
             />
-            <VictoryAxis dependentAxis
-              tickFormat={(t) => `x: ${t}`}
+            <VictoryAxis
+              tickValues={["one", "three"]}
             />
           </VictoryChart>
         </div>

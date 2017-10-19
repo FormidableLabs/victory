@@ -1,5 +1,7 @@
 import { Collection } from "victory-core";
-import { identity, isFunction, invert, uniq } from "lodash";
+import {
+  identity, isFunction, invert, uniq, range, sortBy, values, includes, without
+} from "lodash";
 import React from "react";
 
 export default {
@@ -157,29 +159,72 @@ export default {
     return props.tickValues !== undefined && Collection.containsStrings(props.tickValues);
   },
 
-  getTickFormat(props, scale, stringMap) {
-    const stringTicks = this.stringTicks(props);
-    const axis = this.getAxis(props);
-    const applyStringTicks = (tick, index, ticks) => {
-      const invertedStringMap = invert(stringMap[axis]);
-      const stringTickArray = ticks.map((t) => invertedStringMap[t]);
-      return props.tickFormat(invertedStringMap[tick], index, stringTickArray);
-    };
-    if (props.tickFormat && isFunction(props.tickFormat)) {
-      return stringMap && stringMap[axis] ? applyStringTicks : props.tickFormat;
-    } else if (props.tickFormat && Array.isArray(props.tickFormat)) {
-      return (x, index) => props.tickFormat[index];
-    } else if (stringTicks) {
-      return (x, index) => props.tickValues[index];
-    } else if (scale.tickFormat && isFunction(scale.tickFormat)) {
-      return scale.tickFormat();
+  getDefaultTickFormat(props) {
+    const { tickValues, stringMap } = props;
+    const fallbackFormat = tickValues && !Collection.containsDates(tickValues) ?
+      (x) => x : undefined;
+    if (!stringMap) {
+      return this.stringTicks(props) ? (x, index) => tickValues[index] : fallbackFormat;
+    } else {
+      const invertedStringMap = stringMap && invert(stringMap);
+      const tickValueArray = sortBy(values(stringMap), (n) => n);
+      const dataNames = tickValueArray.map((tick) => invertedStringMap[tick]);
+      // string ticks should have one tick of padding at the beginning
+      const dataTicks = ["", ...dataNames, ""];
+      return (x) => dataTicks[x];
+    }
+  },
+
+  getTickFormat(props, scale) {
+    const { tickFormat, stringMap } = props;
+    if (!tickFormat) {
+      const defaultTickFormat = this.getDefaultTickFormat(props);
+      const scaleTickFormat = scale.tickFormat && isFunction(scale.tickFormat) ?
+        scale.tickFormat() : (x) => x;
+      return defaultTickFormat || scaleTickFormat;
+    } else if (tickFormat && Array.isArray(tickFormat)) {
+      return (x, index) => tickFormat[index];
+    } else if (tickFormat && isFunction(tickFormat)) {
+      const applyStringTicks = (tick, index, ticks) => {
+        const invertedStringMap = invert(stringMap);
+        const stringTickArray = ticks.map((t) => invertedStringMap[t]);
+        return props.tickFormat(invertedStringMap[tick], index, stringTickArray);
+      };
+      return stringMap ? applyStringTicks : tickFormat;
     } else {
       return (x) => x;
     }
   },
 
-  getTickArray(tickValues, tickFormat) {
-    const tickArray = tickValues ? uniq(tickValues) : tickFormat;
+  getStringTicks(props) {
+    const { stringMap, categories } = props;
+    const ticksFromCategories = categories && Collection.containsOnlyStrings(categories) ?
+      categories.map((tick) => stringMap[tick]) : undefined;
+    const ticksFromStringMap = stringMap && values(stringMap);
+    return ticksFromCategories && ticksFromCategories.length !== 0 ?
+      ticksFromCategories : ticksFromStringMap;
+  },
+
+
+  getTickArray(props) {
+    const { tickValues, tickFormat, stringMap } = props;
+    const getTicksFromFormat = () => {
+      if (!tickFormat || !Array.isArray(tickFormat)) {
+        return undefined;
+      }
+      return Collection.containsStrings(tickFormat) ? tickFormat.map((t, i) => i) : tickFormat;
+    };
+
+    let ticks = tickValues;
+    if (stringMap) {
+      ticks = this.getStringTicks(props);
+    }
+    if (tickValues && Collection.containsStrings(tickValues)) {
+      ticks = stringMap ?
+        tickValues.map((tick) => stringMap[tick]) :
+        range(1, tickValues.length + 1);
+    }
+    const tickArray = ticks ? uniq(ticks) : getTicksFromFormat(props);
     return Array.isArray(tickArray) && tickArray.length ? tickArray : undefined;
   },
 
@@ -189,5 +234,26 @@ export default {
     }
     const k = Math.floor(ticks.length / tickCount);
     return ticks.filter((d, i) => i % k === 0);
+  },
+
+  getTicks(props, scale, filterZero) {
+    const { tickCount } = props;
+    const tickValues = this.getTickArray(props);
+    if (tickValues) {
+      return this.downsampleTicks(tickValues, tickCount);
+    } else if (scale.ticks && isFunction(scale.ticks)) {
+      // eslint-disable-next-line no-magic-numbers
+      const defaultTickCount = tickCount || 5;
+      const scaleTicks = scale.ticks(defaultTickCount);
+      const tickArray = Array.isArray(scaleTicks) && scaleTicks.length ?
+        scaleTicks : scale.domain();
+      const ticks = this.downsampleTicks(tickArray, tickCount);
+      if (filterZero) {
+        const filteredTicks = includes(ticks, 0) ? without(ticks, 0) : ticks;
+        return filteredTicks.length ? filteredTicks : ticks;
+      }
+      return ticks;
+    }
+    return scale.domain();
   }
 };

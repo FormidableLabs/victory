@@ -96,45 +96,4 @@ describe("victory-axis/helper-methods", () => {
       expect(scaleResult.range()).to.eql([0, 100]);
     });
   });
-
-  describe("getTicks", () => {
-    let sandbox;
-    const scale = Scale.getBaseScale({ scale: { x: "linear" } }, "x");
-    beforeEach(() => {
-      sandbox = sinon.sandbox.create();
-      sandbox.spy(Helpers, "stringTicks");
-      sandbox.spy(scale, "ticks");
-    });
-
-    afterEach(() => {
-      sandbox.restore();
-    });
-
-    it("returns tickValues from props", () => {
-      const props = { tickValues: [1, 2, 3] };
-      const tickResult = AxisHelpers.getTicks(props);
-      expect(Helpers.stringTicks).calledWith(props).and.returned(false);
-      expect(tickResult).to.eql(props.tickValues);
-    });
-
-    it("returns converts string tickValues to numbers", () => {
-      const props = { tickValues: ["a", "b", "c", "d"] };
-      const tickResult = AxisHelpers.getTicks(props);
-      expect(Helpers.stringTicks).calledWith(props).and.returned(true);
-      expect(tickResult).to.eql([1, 2, 3, 4]);
-    });
-
-    it("calculates tickValues from scale.ticks()", () => {
-      const props = { tickCount: 5 };
-      AxisHelpers.getTicks(props, scale);
-      expect(scale.ticks).calledWith(5);
-    });
-
-    it("calculates tickValues from scale.ticks(), and removes zero if axes cross", () => {
-      const props = { tickCount: 5, crossAxis: true };
-      const tickResult = AxisHelpers.getTicks(props, scale);
-      expect(scale.ticks).calledWith(5);
-      expect(tickResult).to.be.an("array").and.not.have.members([0]);
-    });
-  });
 });

@@ -1,4 +1,4 @@
-import { includes, defaults, defaultsDeep, isFunction, range, without } from "lodash";
+import { defaults, defaultsDeep, isFunction } from "lodash";
 import Axis from "../../helpers/axis";
 import { Helpers, Scale, Domain } from "victory-core";
 
@@ -188,9 +188,9 @@ export default {
     props = this.modifyProps(props, fallbackProps, role);
     const calculatedValues = this.getCalculatedValues(props);
     const {
-      style, orientation, isVertical, scale, ticks, tickFormat, stringTicks, anchors, domain
+      style, orientation, isVertical, scale, ticks, tickFormat, anchors, domain, stringTicks
     } = calculatedValues;
-    const { width, height, standalone, theme, tickValues, polar, padding } = props;
+    const { width, height, standalone, theme, polar, padding } = props;
     const {
       globalTransform, gridOffset, gridEdge
     } = this.getLayoutProps(props, calculatedValues);
@@ -201,25 +201,23 @@ export default {
       style: style.parent, ticks, scale, width, height, domain, standalone, theme, polar, padding
     } };
 
-    return ticks.reduce((childProps, indexedTick, index) => {
-      const tick = stringTicks ? tickValues[indexedTick - 1] : indexedTick;
-
-      const styles = this.getEvaluatedStyles(style, tick, index);
+    return ticks.reduce((childProps, tick, index) => {
+      const originalTick = stringTicks ? stringTicks[index] : tick;
+      const styles = this.getEvaluatedStyles(style, originalTick, index);
       const tickLayout = {
         position: this.getTickPosition(styles, orientation, isVertical),
-        transform: this.getTickTransform(scale(indexedTick), globalTransform, isVertical)
+        transform: this.getTickTransform(scale(tick), globalTransform, isVertical)
       };
 
       const gridLayout = {
         edge: gridEdge,
         transform: {
           x: isVertical ?
-            -gridOffset.x + globalTransform.x : scale(indexedTick) + globalTransform.x,
+            -gridOffset.x + globalTransform.x : scale(tick) + globalTransform.x,
           y: isVertical ?
-            scale(indexedTick) + globalTransform.y : gridOffset.y + globalTransform.y
+            scale(tick) + globalTransform.y : gridOffset.y + globalTransform.y
         }
       };
-
       childProps[index] = {
         axis: axisProps,
         axisLabel: axisLabelProps,
@@ -241,10 +239,10 @@ export default {
     const orientation = props.orientation || (props.dependentAxis ? "left" : "bottom");
     const isVertical = Helpers.isVertical(props);
     const labelPadding = this.getLabelPadding(props, style);
-    const stringTicks = Helpers.stringTicks(props);
+    const stringTicks = Helpers.stringTicks(props) ? props.tickValues : undefined;
     const scale = this.getScale(props);
     const domain = this.getDomain(props);
-    const ticks = this.getTicks(props, scale);
+    const ticks = Axis.getTicks(props, scale, props.crossAxis);
     const tickFormat = Axis.getTickFormat(props, scale);
     const anchors = this.getAnchors(orientation, isVertical);
 
@@ -277,29 +275,6 @@ export default {
       style: labelStyle,
       text: props.label
     };
-  },
-
-  getTicks(props, scale) {
-    const { tickCount, crossAxis } = props;
-    const tickValues = Axis.getTickArray(props.tickValues, props.tickFormat);
-    if (tickValues) {
-      return Helpers.stringTicks(props) ?
-        Axis.downsampleTicks(range(1, props.tickValues.length + 1), tickCount) :
-        Axis.downsampleTicks(tickValues, tickCount);
-    } else if (scale.ticks && isFunction(scale.ticks)) {
-      // eslint-disable-next-line no-magic-numbers
-      const defaultTickCount = tickCount || 5;
-      const scaleTicks = scale.ticks(defaultTickCount);
-      const tickArray = Array.isArray(scaleTicks) && scaleTicks.length ?
-        scaleTicks : scale.domain();
-      const ticks = Axis.downsampleTicks(tickArray, tickCount);
-      if (crossAxis) {
-        const filteredTicks = includes(ticks, 0) ? without(ticks, 0) : ticks;
-        return filteredTicks.length ? filteredTicks : ticks;
-      }
-      return ticks;
-    }
-    return scale.domain();
   },
 
   getAnchors(orientation, isVertical) {
