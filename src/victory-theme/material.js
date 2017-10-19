@@ -80,12 +80,12 @@ export default {
         stroke: "transparent"
       }),
       grid: {
-        fill: "transparent",
+        fill: "none",
         stroke: blueGrey50,
         strokeDasharray,
         strokeLinecap,
         strokeLinejoin,
-        pointerEvents: "none"
+        pointerEvents: "visible"
       },
       ticks: {
         fill: "transparent",

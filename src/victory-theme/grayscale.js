@@ -70,9 +70,9 @@ export default {
         padding: 25
       }),
       grid: {
-        fill: "transparent",
-        stroke: "transparent",
-        pointerEvents: "none"
+        fill: "none",
+        stroke: "none",
+        pointerEvents: "visible"
       },
       ticks: {
         fill: "transparent",
