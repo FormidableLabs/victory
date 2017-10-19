@@ -1,6 +1,16 @@
 VictoryCore Changelog
 =====================
 
+## 20.0.0 (2017-10-19)
+
+**Breaking Change**
+- [312](https://github.com/FormidableLabs/victory-core/pull/312) Removes `orientDomain` method, as it will not be used with corresponding change for `VictoryChart`. This change will be incompatible with versions of `victory-chart` lower than `24.0.0`
+
+- [310](https://github.com/FormidableLabs/victory-core/pull/310) Add `getPath` prop for `Point` to support custom path calculation
+- [311](https://github.com/FormidableLabs/victory-core/pull/311) Fix bug in `TextSize`
+- [313](https://github.com/FormidableLabs/victory-core/pull/313) Use `tickFormat` for calculating a stringMap when appropriate
+- [314](https://github.com/FormidableLabs/victory-core/pull/314) Theme changes: Change `pointerEvents` to "visible" for grids
+
 ## 19.0.3 (2017-10-04)
 
 - [308](https://github.com/FormidableLabs/victory-core/pull/308) Fix borderWidth on error bars
