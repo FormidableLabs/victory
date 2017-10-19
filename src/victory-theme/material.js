@@ -80,7 +80,7 @@ export default {
         stroke: "transparent"
       }),
       grid: {
-        fill: "transparent",
+        fill: "none",
         stroke: blueGrey50,
         strokeDasharray,
         strokeLinecap,
