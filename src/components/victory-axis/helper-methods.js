@@ -202,8 +202,8 @@ export default {
     } };
 
     return ticks.reduce((childProps, tick, index) => {
-      const stringTick = stringTicks ? stringTicks[index] : tick;
-      const styles = this.getEvaluatedStyles(style, stringTick, index);
+      const originalTick = stringTicks ? stringTicks[index] : tick;
+      const styles = this.getEvaluatedStyles(style, originalTick, index);
       const tickLayout = {
         position: this.getTickPosition(styles, orientation, isVertical),
         transform: this.getTickTransform(scale(tick), globalTransform, isVertical)

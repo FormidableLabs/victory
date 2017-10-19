@@ -9,7 +9,7 @@ export default {
     const padding = Helpers.getPadding(props);
     const axis = this.getAxis(props);
     const axisType = this.getAxisType(props);
-    const stringTicks = Helpers.stringTicks(props);
+    const stringTicks = Helpers.stringTicks(props) ? props.tickValues : undefined;
     const domain = this.getDomain(props, axis);
     const range = this.getRange(props, axis);
     const scale = this.getScale(props);
@@ -151,8 +151,9 @@ export default {
   },
 
   getTickProps(props, calculatedValues, tick, index) { //eslint-disable-line max-params
-    const { axisType, radius, scale, style } = calculatedValues;
-    const { tickStyle } = this.getEvaluatedStyles(style, tick, index);
+    const { axisType, radius, scale, style, stringTicks } = calculatedValues;
+    const originalTick = stringTicks ? stringTicks[index] : tick;
+    const { tickStyle } = this.getEvaluatedStyles(style, originalTick, index);
     const tickPadding = tickStyle.padding || 0;
     const angularPadding = tickPadding; // TODO: do some geometry
     const axisAngle = axisType === "radial" ? this.getAxisAngle(props, scale) : undefined;
@@ -173,8 +174,9 @@ export default {
   },
 
   getTickLabelProps(props, calculatedValues, tick, index) { //eslint-disable-line max-params
-    const { axisType, radius, tickFormat, style, scale, ticks } = calculatedValues;
-    const { labelStyle } = this.getEvaluatedStyles(style, tick, index);
+    const { axisType, radius, tickFormat, style, scale, ticks, stringTicks } = calculatedValues;
+    const originalTick = stringTicks ? stringTicks[index] : tick;
+    const { labelStyle } = this.getEvaluatedStyles(style, originalTick, index);
     const { tickLabelComponent } = props;
     const labelPlacement = tickLabelComponent.props && tickLabelComponent.props.labelPlacement ?
       tickLabelComponent.props.labelPlacement : props.labelPlacement;
@@ -199,9 +201,10 @@ export default {
   },
 
   getGridProps(props, calculatedValues, tick, index) { //eslint-disable-line max-params
-    const { axisType, radius, style, scale } = calculatedValues;
+    const { axisType, radius, style, scale, stringTicks } = calculatedValues;
     const { startAngle, endAngle, innerRadius = 0 } = props;
-    const { gridStyle } = this.getEvaluatedStyles(style, tick, index);
+    const originalTick = stringTicks ? stringTicks[index] : tick;
+    const { gridStyle } = this.getEvaluatedStyles(style, originalTick, index);
     const angle = scale(tick);
     return axisType === "angular" ?
       {
