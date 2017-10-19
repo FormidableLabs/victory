@@ -188,7 +188,7 @@ export default {
     props = this.modifyProps(props, fallbackProps, role);
     const calculatedValues = this.getCalculatedValues(props);
     const {
-      style, orientation, isVertical, scale, ticks, tickFormat, anchors, domain
+      style, orientation, isVertical, scale, ticks, tickFormat, anchors, domain, stringTicks
     } = calculatedValues;
     const { width, height, standalone, theme, polar, padding } = props;
     const {
@@ -202,7 +202,8 @@ export default {
     } };
 
     return ticks.reduce((childProps, tick, index) => {
-      const styles = this.getEvaluatedStyles(style, tick, index);
+      const stringTick = stringTicks ? stringTicks[index] : tick;
+      const styles = this.getEvaluatedStyles(style, stringTick, index);
       const tickLayout = {
         position: this.getTickPosition(styles, orientation, isVertical),
         transform: this.getTickTransform(scale(tick), globalTransform, isVertical)
@@ -238,7 +239,7 @@ export default {
     const orientation = props.orientation || (props.dependentAxis ? "left" : "bottom");
     const isVertical = Helpers.isVertical(props);
     const labelPadding = this.getLabelPadding(props, style);
-    const stringTicks = Helpers.stringTicks(props);
+    const stringTicks = Helpers.stringTicks(props) ? props.tickValues : undefined;
     const scale = this.getScale(props);
     const domain = this.getDomain(props);
     const ticks = Axis.getTicks(props, scale, props.crossAxis);
