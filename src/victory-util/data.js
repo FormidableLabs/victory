@@ -213,10 +213,13 @@ export default {
    * @returns {Array} an array of strings
    */
   getStringsFromAxes(props, axis) {
-    if (!props.tickValues || (!Array.isArray(props.tickValues) && !props.tickValues[axis])) {
-      return [];
+    const { tickValues, tickFormat } = props;
+    let tickValueArray;
+    if (!tickValues || (!Array.isArray(tickValues) && !tickValues[axis])) {
+      tickValueArray = tickFormat && Array.isArray(tickFormat) ? tickFormat : [];
+    } else {
+      tickValueArray = tickValues[axis] || tickValues;
     }
-    const tickValueArray = props.tickValues[axis] || props.tickValues;
     return tickValueArray.filter((val) => typeof val === "string");
   },
 
