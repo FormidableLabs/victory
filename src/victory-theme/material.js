@@ -85,7 +85,7 @@ export default {
         strokeDasharray,
         strokeLinecap,
         strokeLinejoin,
-        pointerEvents: "none"
+        pointerEvents: "visible"
       },
       ticks: {
         fill: "transparent",
