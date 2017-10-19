@@ -28,28 +28,6 @@ describe("helpers/domain", () => {
     });
   });
 
-  describe("orientDomain", () => {
-    const domain = [0, 10];
-    const reversedDomain = [10, 0];
-    it("returns a domain for standard orientations", () => {
-      const orientations = { x: "bottom", y: "left" };
-      const domainResult = Domain.orientDomain(domain, orientations, "x");
-      expect(domainResult).to.eql(domain);
-    });
-
-    it("reverses a domain for non-standard orientations", () => {
-      const orientations = { x: "top", y: "right" };
-      const domainResult = Domain.orientDomain(domain, orientations, "x");
-      expect(domainResult).to.eql(reversedDomain);
-    });
-
-    it("reverses a domain for flipped axes", () => {
-      const orientations = { x: "right", y: "bottom" };
-      const domainResult = Domain.orientDomain(domain, orientations, "x");
-      expect(domainResult).to.eql(reversedDomain);
-    });
-  });
-
   describe("getDomain", () => {
     let sandbox;
     beforeEach(() => {
