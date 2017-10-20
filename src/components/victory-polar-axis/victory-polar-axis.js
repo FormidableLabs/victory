@@ -49,6 +49,7 @@ class VictoryPolarAxis extends React.Component {
     axisComponent: PropTypes.element,
     axisLabelComponent: PropTypes.element,
     axisValue: PropTypes.number,
+    categories: PropTypes.arrayOf(PropTypes.string),
     circularAxisComponent: PropTypes.element,
     circularGridComponent: PropTypes.element,
     containerComponent: PropTypes.element,
@@ -67,6 +68,7 @@ class VictoryPolarAxis extends React.Component {
     innerRadius: CustomPropTypes.nonNegative,
     labelPlacement: PropTypes.oneOf(["parallel", "perpendicular", "vertical"]),
     startAngle: PropTypes.number,
+    stringMap: PropTypes.object,
     style: PropTypes.shape({
       parent: PropTypes.object, axis: PropTypes.object, axisLabel: PropTypes.object,
       grid: PropTypes.object, ticks: PropTypes.object, tickLabels: PropTypes.object
