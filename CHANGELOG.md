@@ -1,5 +1,9 @@
 # VictoryPie Changelog
 
+## 13.0.1 (2017-10-19)
+
+Update to `victory-core@20.0.0`
+
 ## 13.0.0 (2017-09-30)
 
 **BREAKING CHANGES:**
