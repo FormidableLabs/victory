@@ -1,4 +1,4 @@
-import { assign, keys, omit, defaults, without } from "lodash";
+import { assign, keys, omit, defaults, without, isNaN } from "lodash";
 import { Helpers, LabelHelpers, Scale, Domain, Data } from "victory-core";
 import { voronoi as d3Voronoi } from "d3-voronoi";
 
@@ -73,7 +73,7 @@ export default {
   },
 
   getDataStyles(datum, style) {
-    const numKeys = keys(datum).filter((k) => typeof k === "number");
+    const numKeys = keys(datum).filter((k) => isNaN(k));
     const omitKeys = [
       "x", "y", "_x", "_y", "eventKey", "label"
     ];
