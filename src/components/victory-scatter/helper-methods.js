@@ -1,4 +1,4 @@
-import { assign, values, omit, defaults } from "lodash";
+import { assign, keys, values, omit, defaults } from "lodash";
 import { Helpers, LabelHelpers, Data, Domain, Scale } from "victory-core";
 
 export default {
@@ -57,9 +57,11 @@ export default {
   },
 
   getDataStyles(datum, style) {
-    const stylesFromData = omit(datum, [
-      "_x", "_y", "z", "size", "symbol", "name", "label", "eventKey"
-    ]);
+    const numKeys = keys(datum).filter((k) => typeof k === "number");
+    const omitKeys = [
+      "x", "y", "_x", "_y", "z", "size", "symbol", "eventKey", "label"
+    ];
+    const stylesFromData = omit(datum, [...omitKeys, ...numKeys]);
     return defaults({}, stylesFromData, style);
   },
 

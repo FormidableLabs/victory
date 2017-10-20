@@ -1,4 +1,4 @@
-import { assign, omit, defaults, isArray, flatten, sortBy } from "lodash";
+import { assign, keys, omit, defaults, isArray, flatten, sortBy } from "lodash";
 import { Helpers, LabelHelpers, Scale, Domain, Data } from "victory-core";
 
 export default {
@@ -216,9 +216,11 @@ export default {
   },
 
   getDataStyles(datum, style) {
-    const stylesFromData = omit(datum, [
-      "x", "y", "name", "errorX", "errorY", "eventKey"
-    ]);
+    const numKeys = keys(datum).filter((k) => typeof k === "number");
+    const omitKeys = [
+      "x", "y", "_x", "_y", "name", "errorX", "errorY", "eventKey", "label"
+    ];
+    const stylesFromData = omit(datum, [...omitKeys, ...numKeys]);
     return defaults({}, stylesFromData, style);
   }
 };
