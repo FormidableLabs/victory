@@ -1,5 +1,23 @@
 # VictoryChart Changelog
 
+## 24.0.0 (2017-10-19)
+
+**Breaking Changes**
+
+- [527](https://github.com/FormidableLabs/victory-chart/pull/527)
+  - adds an `invertAxis` prop for `VictoryAxis` that will flip the domain of a given axis when true. Changing the `orientation` prop of a given axis will no longer flip the domain on that axis _unless_ the `invertAxis` prop is also set.
+  - `tickFormat` as an array will set the number of ticks if `tickValues` are not given.
+  - `tickValues` will be forced to a unique array. `tickFormat` may still have non-unique values.
+  - `tickCount` will now always have an effect when set. Previously, this prop would do nothing when `tickValues` were provided. Now `tickCount` will downsample any array provided to either `tickValues` or `tickFormat`.
+
+Other Changes
+
+- [529](https://github.com/FormidableLabs/victory-chart/pull/529) `VictoryChart` no longer calculates `tickValues` or `tickFormat` for axis children. `stringMap` and `categories` are passed to axis components instead.
+
+- [528](https://github.com/FormidableLabs/victory-chart/pull/528) and [530](https://github.com/FormidableLabs/victory-chart/pull/530) Remove numeric keys from styles
+
+- [526](https://github.com/FormidableLabs/victory-chart/pull/526) Always set animation state
+
 ## 23.0.1 ( 2017-10-04)
 
 -[524](https://github.com/FormidableLabs/victory-chart/pull/524) Fix naming changes for `VictoryCursorContainer`
