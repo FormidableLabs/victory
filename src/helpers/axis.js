@@ -225,7 +225,13 @@ export default {
         range(1, tickValues.length + 1);
     }
     const tickArray = ticks ? uniq(ticks) : getTicksFromFormat(props);
-    return Array.isArray(tickArray) && tickArray.length ? tickArray : undefined;
+    const filterArray = (arr) => {
+      const axis = this.getAxis(props);
+      const domain = props.domain && props.domain[axis] || props.domain;
+      return Array.isArray(domain) ?
+        arr.filter((t) => t >= Math.min(...domain) && t <= Math.max(...domain)) : arr;
+    };
+    return Array.isArray(tickArray) && tickArray.length ? filterArray(tickArray) : undefined;
   },
 
   downsampleTicks(ticks, tickCount) {
