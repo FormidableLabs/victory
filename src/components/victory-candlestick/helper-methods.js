@@ -1,4 +1,4 @@
-import { assign, sortBy, omit, defaults } from "lodash";
+import { assign, sortBy, keys, omit, defaults, isNaN } from "lodash";
 import { Helpers, LabelHelpers, Scale, Domain, Data } from "victory-core";
 
 export default {
@@ -155,9 +155,11 @@ export default {
 
   getDataStyles(datum, style, props) {
     style = style || {};
-    const stylesFromData = omit(datum, [
-      "x", "y", "size", "name", "label", "open", "close", "high", "low"
-    ]);
+    const numKeys = keys(datum).filter((k) => isNaN(k));
+    const omitKeys = [
+      "x", "_x", "_y", "_y0", "size", "name", "label", "open", "close", "high", "low", "eventKey"
+    ];
+    const stylesFromData = omit(datum, [...omitKeys, ...numKeys]);
     const candleColor = datum.open > datum.close ?
       props.candleColors.negative : props.candleColors.positive;
     const fill = datum.fill || style.fill || candleColor;
