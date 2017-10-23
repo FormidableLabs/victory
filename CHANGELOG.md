@@ -1,5 +1,9 @@
 # VictoryChart Changelog
 
+## 24.1.0 (2017-10-22)
+
+- [532](https://github.com/FormidableLabs/victory-chart/pull/532)Filters tickValues so that values outside of the domain of an axis are not included
+
 ## 24.0.0 (2017-10-19)
 
 **Breaking Changes**
