@@ -147,6 +147,7 @@ const SelectionHelpers = {
 };
 
 export default {
+  ...SelectionHelpers,
   onMouseDown: SelectionHelpers.onMouseDown.bind(SelectionHelpers),
   onMouseUp: SelectionHelpers.onMouseUp.bind(SelectionHelpers),
   onMouseMove: throttle(
