@@ -42,7 +42,8 @@ const VoronoiHelpers = {
     };
 
     const iteratee = (child, childName, parent) => {
-      if (child.type && child.type.role === "axis" || child.type.role === "legend") {
+      const role = child.type && child.type.role;
+      if (role === "axis" || role === "legend" || role === "label") {
         return null;
       } else if (child.type && isFunction(child.type.getData)) {
         child = parent ? React.cloneElement(child, parent.props) : child;
