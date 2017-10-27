@@ -8,6 +8,8 @@ export const brushContainerMixin = (base) => class VictoryBrushContainer extends
   static displayName = "VictoryBrushContainer";
   static propTypes = {
     ...VictoryContainer.propTypes,
+    allowDrag: PropTypes.bool,
+    allowResize: PropTypes.bool,
     brushComponent: PropTypes.element,
     brushDimension: PropTypes.oneOf(["x", "y"]),
     brushDomain: PropTypes.shape({
@@ -22,6 +24,8 @@ export const brushContainerMixin = (base) => class VictoryBrushContainer extends
   };
   static defaultProps = {
     ...VictoryContainer.defaultProps,
+    allowDrag: true,
+    allowResize: true,
     brushComponent: <rect/>,
     brushStyle: {
       stroke: "transparent",
