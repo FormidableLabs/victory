@@ -113,20 +113,31 @@ const Helpers = {
   onMouseDown(evt, targetProps) { // eslint-disable-line max-statements
     evt.preventDefault();
     const {
-      brushDimension, handleWidth, onBrushDomainChange, cachedBrushDomain, domain
+      brushDimension, handleWidth, cachedBrushDomain, domain, allowResize, allowDrag
     } = targetProps;
-    const brushDomain = defaults({}, targetProps.brushDomain, domain);
-    const fullDomainBox = targetProps.fullDomainBox ||
-      this.getDomainBox(targetProps, domain);
-    const currentDomain = isEqual(brushDomain, cachedBrushDomain) ?
-      targetProps.currentDomain || brushDomain || domain : brushDomain || domain;
+
+    // Don't trigger events for static brushes
+    if (!allowResize && !allowDrag) {
+      return {};
+    }
+
+    const fullDomainBox = targetProps.fullDomainBox || this.getDomainBox(targetProps, domain);
     const { x, y } = Selection.getSVGEventCoordinates(evt);
+
     // Ignore events that occur outside of the maximum domain region
     if (!this.withinBounds({ x, y }, fullDomainBox, handleWidth)) {
       return {};
     }
+
+    const brushDomain = defaults({}, targetProps.brushDomain, domain);
+
+    const currentDomain = isEqual(brushDomain, cachedBrushDomain) ?
+      targetProps.currentDomain || brushDomain || domain :
+      brushDomain || domain;
+
     const domainBox = this.getDomainBox(targetProps, domain, currentDomain);
-    const activeHandles = this.getActiveHandles({ x, y }, targetProps, domainBox);
+
+    const activeHandles = allowResize && this.getActiveHandles({ x, y }, targetProps, domainBox);
     // If the event occurs in any of the handle regions, start a resize
     if (activeHandles) {
       return [{
@@ -139,16 +150,13 @@ const Helpers = {
           };
         }
       }];
-    } else if (
-        this.withinBounds({ x, y }, domainBox) &&
-        !isEqual(domain, currentDomain)
-      ) {
+    } else if (this.withinBounds({ x, y }, domainBox) && !isEqual(domain, currentDomain)) {
       // if the event occurs within a selected region start a panning event, unless the whole
       // domain is selected
       return [{
         target: "parent",
         mutation: () => ({
-          isPanning: true, startX: x, startY: y, domainBox, fullDomainBox, currentDomain,
+          isPanning: allowDrag, startX: x, startY: y, domainBox, fullDomainBox, currentDomain,
           cachedBrushDomain: brushDomain,
           ...domainBox // set x1, x2, y1, y2
         })
@@ -156,22 +164,15 @@ const Helpers = {
     } else {
       // if the event occurs outside the region, or if the whole domain is selected,
       // start a new selection
-      const minimumDomain = this.getMinimumDomain();
-
-      const mutatedProps = {
-        isSelecting: true, domainBox, fullDomainBox,
-        cachedBrushDomain: brushDomain,
-        currentDomain: this.getMinimumDomain(),
-        ...this.getSelectionMutation({ x, y }, domainBox, brushDimension)
-      };
-
-      if (isFunction(onBrushDomainChange)) {
-        onBrushDomainChange(minimumDomain, defaults({}, mutatedProps, targetProps));
-      }
-      return [{
+      return allowResize ? [{
         target: "parent",
-        mutation: () => mutatedProps
-      }];
+        mutation: () => ({
+          isSelecting: allowResize, domainBox, fullDomainBox,
+          cachedBrushDomain: brushDomain,
+          currentDomain: this.getMinimumDomain(),
+          ...this.getSelectionMutation({ x, y }, domainBox, brushDimension)
+        })
+      }] : {};
     }
   },
 
@@ -181,14 +182,15 @@ const Helpers = {
       return {};
     }
     const {
-      brushDimension, scale, isPanning, isSelecting, fullDomainBox, onBrushDomainChange
+      brushDimension, scale, isPanning, isSelecting, fullDomainBox, onBrushDomainChange,
+      allowResize, allowDrag
     } = targetProps;
     const { x, y } = Selection.getSVGEventCoordinates(evt);
       // Ignore events that occur outside of the maximum domain region
-    if (!this.withinBounds({ x, y }, fullDomainBox)) {
+    if ((!allowResize && !allowDrag) || !this.withinBounds({ x, y }, fullDomainBox)) {
       return {};
     }
-    if (isPanning) {
+    if (allowDrag && isPanning) {
       const { startX, startY } = targetProps;
       const pannedBox = this.panBox(targetProps, { x, y });
       const constrainedBox = this.constrainBox(pannedBox, fullDomainBox);
@@ -209,7 +211,7 @@ const Helpers = {
         target: "parent",
         mutation: () => mutatedProps
       }];
-    } else if (isSelecting) {
+    } else if (allowResize && isSelecting) {
       const x2 = brushDimension !== "y" ? x : targetProps.x2;
       const y2 = brushDimension !== "x" ? y : targetProps.y2;
       const currentDomain =
@@ -228,9 +230,9 @@ const Helpers = {
   },
 
   onMouseUp(evt, targetProps) {
-    const { x1, y1, x2, y2, onBrushDomainChange, domain } = targetProps;
+    const { x1, y1, x2, y2, onBrushDomainChange, domain, allowResize } = targetProps;
     // if the mouse hasn't moved since a mouseDown event, select the whole domain region
-    if (x1 === x2 || y1 === y2) {
+    if (allowResize && x1 === x2 || y1 === y2) {
       const mutatedProps = { isPanning: false, isSelecting: false, currentDomain: domain };
       if (isFunction(onBrushDomainChange)) {
         onBrushDomainChange(domain, defaults({}, mutatedProps, targetProps));

@@ -100,7 +100,7 @@ class App extends React.Component {
             height={400}
             padding={{ top: 100, bottom: 50, left: 50, right: 50 }}
             containerComponent={
-              <VictoryBrushContainer brushDimension={null}/>
+              <VictoryBrushContainer brushDomain={{ x: [2, 4], y: [-2, 2] }} allowResize={false}/>
             }
           >
             <VictoryLegend x={120} y={20}
