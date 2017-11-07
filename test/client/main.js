@@ -8,7 +8,11 @@
 /*globals window:false*/
 const chai = require("chai");
 const sinonChai = require("sinon-chai");
-const chaiEnzyme = require("chai-enzyme");
+
+const enzyme = require("enzyme");
+const Adapter = require("enzyme-adapter-react-16");
+
+enzyme.configure({ adapter: new Adapter() });
 
 // --------------------------------------------------------------------------
 // Chai / Sinon / Mocha configuration.
@@ -18,7 +22,6 @@ window.expect = chai.expect;
 
 // Plugins
 chai.use(sinonChai);
-chai.use(chaiEnzyme());
 
 // Mocha (part of static include).
 window.mocha.setup({

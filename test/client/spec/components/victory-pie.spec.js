@@ -157,7 +157,7 @@ describe("components/victory-pie", () => {
   describe("the `startAngle` prop", () => {
     it("determines the counter clockwise angle relative to a cartesian Y axis of a vector extending from the origin to the _first drawn coordinate_ of the first slice ", () => {
       [0, 90, 180, 270].map((angle) => {
-        const wrapper = shallow(
+        const wrapper = mount(
           <VictoryPie startAngle={angle}/>
         );
 
@@ -195,7 +195,7 @@ describe("components/victory-pie", () => {
 
   describe("`startAngle` in conjunction with `endAngle`", () => {
     it("renders a portion of a chart from `startAngle` to `endAngle`", () => {
-      const wrapper = shallow(
+      const wrapper = mount(
         <VictoryPie startAngle={-90} endAngle={90}/>
       );
 
@@ -217,7 +217,7 @@ describe("components/victory-pie", () => {
         <VictoryPie width={width} />
       );
       const svg = wrapper.find("svg").at(0);
-      expect(svg).to.have.prop("viewBox", `0 0 ${width} 400`);
+      expect(svg.prop("viewBox")).to.eql(`0 0 ${width} 400`);
     });
   });
 
@@ -228,7 +228,7 @@ describe("components/victory-pie", () => {
         <VictoryPie height={height} />
       );
       const svg = wrapper.find("svg").at(0);
-      expect(svg).to.have.prop("viewBox", `0 0 400 ${height}`);
+      expect(svg.prop("viewBox")).to.eql(`0 0 400 ${height}`);
     });
   });
 
@@ -244,7 +244,8 @@ describe("components/victory-pie", () => {
         const slices = wrapper.find(Slice);
         expect(slices.length).to.equal(5);
         slices.forEach((slice, i) => {
-          expect(slice).to.have.style("fill", colorScale[i % colorScale.length]);
+          const style = slice.prop("style");
+          expect(style.fill).to.equal(colorScale[i % colorScale.length]);
         });
       });
     });
@@ -264,7 +265,8 @@ describe("components/victory-pie", () => {
 
             wrapper.find(Slice).map((slice, i) => {
               const expectedColor = colorScale[i % colorScale.length];
-              expect(slice, `Slice at index ${i} rendered with color scale ${colorScale} has fill color ${expectedColor}`).to.have.style("fill", expectedColor);
+              const style = slice.prop("style");
+              expect(style.fill).to.equal(expectedColor);
             });
           });
         });
@@ -283,7 +285,8 @@ describe("components/victory-pie", () => {
 
             const slices = wrapper.find(Slice);
             slices.map((slice, i) => {
-              expect(slice).to.have.style("fill", grayscale[i]);
+              const style = slice.prop("style");
+              expect(style.fill).to.equal(grayscale[i]);
             });
           });
         });
