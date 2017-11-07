@@ -23,7 +23,7 @@ const parseSvgPathCommands = (commandStr) => {
 };
 
 const getPathCommandsFromWrapper = (wrapper) => {
-  const commandStr = wrapper.render().find("path").attr("d");
+  const commandStr = wrapper.find("path").prop("d");
   return parseSvgPathCommands(commandStr);
 };
 

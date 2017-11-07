@@ -8,7 +8,10 @@
 /*globals window:false*/
 const chai = require("chai");
 const sinonChai = require("sinon-chai");
+const enzyme = require("enzyme");
+const Adapter = require("enzyme-adapter-react-16");
 
+enzyme.configure({ adapter: new Adapter() });
 // --------------------------------------------------------------------------
 // Chai / Sinon / Mocha configuration.
 // --------------------------------------------------------------------------

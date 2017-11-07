@@ -35,7 +35,7 @@ describe("victory-primitives/point", () => {
       const stub = sandbox.stub(pathHelpers, symbol).returns(`${symbol} symbol`);
       const props = Object.assign({}, baseProps, { symbol });
       const wrapper = shallow(<Point {...props}/>);
-      const directions = wrapper.render().find("path").attr("d");
+      const directions = wrapper.find("path").prop("d");
 
       expect(stub.callCount).to.eql(1);
       expect(stub.getCall(0).args).to.eql([5, 10, 1]);

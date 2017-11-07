@@ -1,5 +1,6 @@
 /*eslint-disable react/no-multi-comp*/
-import React, { PropTypes } from "react";
+import React from "react";
+import PropTypes from "prop-types";
 import { Data } from "src/index";
 import { defaults, get, reduce, map } from "lodash";
 

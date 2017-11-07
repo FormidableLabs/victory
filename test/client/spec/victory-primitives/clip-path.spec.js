@@ -20,7 +20,7 @@ describe("victory-primitives/clip-path", () => {
 
   it("should render a rectangle", () => {
     const wrapper = shallow(<ClipPath {...baseProps}/>);
-    const rect = wrapper.render().find("defs").find("clipPath").find("rect");
+    const rect = wrapper.find("defs").find("clipPath").find("rect");
 
     const expectedAttrs = {
       x: 1, // translateX - left clipPadding
@@ -30,7 +30,7 @@ describe("victory-primitives/clip-path", () => {
     };
 
     forEach(expectedAttrs, (expectedValue, attrName) => {
-      expect(parseFloat(rect.attr(attrName), 10)).to.eql(expectedValue);
+      expect(parseFloat(rect.prop(attrName), 10)).to.eql(expectedValue);
     });
   });
 
@@ -43,8 +43,8 @@ describe("victory-primitives/clip-path", () => {
 
   it("should render a clipPath with the passed id", () => {
     const wrapper = shallow(<ClipPath {...baseProps}/>);
-    const clipPath = wrapper.render().find("defs").find("clipPath");
+    const clipPath = wrapper.find("defs").find("clipPath");
 
-    expect(parseFloat(clipPath.attr("id"), 10)).to.eql(4);
+    expect(parseFloat(clipPath.prop("id"), 10)).to.eql(4);
   });
 });

@@ -21,25 +21,25 @@ describe("victory-primitives/candle", () => {
 
   it("should render a wick line", () => {
     const wrapper = shallow(<Candle {...baseProps}/>);
-    const wick = wrapper.render().find("line");
+    const wick = wrapper.find("line");
 
-    expect(wick.attr("x1")).to.eql("5");
-    expect(wick.attr("x2")).to.eql("5");
-    expect(wick.attr("y1")).to.eql("50");
-    expect(wick.attr("y2")).to.eql("5");
+    expect(wick.prop("x1")).to.eql(5);
+    expect(wick.prop("x2")).to.eql(5);
+    expect(wick.prop("y1")).to.eql(50);
+    expect(wick.prop("y2")).to.eql(5);
   });
 
   it("should render a candle rectangle", () => {
     const wrapper = shallow(<Candle {...baseProps}/>);
-    const rect = wrapper.render().find("rect");
+    const rect = wrapper.find("rect");
 
     // width = style.width || 0.5 * (width - 2 * padding) / data.length;
 
-    expect(rect.attr("width")).to.eql("2");
-    expect(rect.attr("height")).to.eql("20");
+    expect(rect.prop("width")).to.eql(2);
+    expect(rect.prop("height")).to.eql(20);
     // x = x - width / 2
-    expect(rect.attr("x")).to.eql("4");
-    expect(rect.attr("y")).to.eql("30");
+    expect(rect.prop("x")).to.eql(4);
+    expect(rect.prop("y")).to.eql(30);
   });
 
   it("should allow style to override width", () => {
@@ -50,12 +50,12 @@ describe("victory-primitives/candle", () => {
     });
 
     const wrapper = shallow(<Candle {...props}/>);
-    const rect = wrapper.render().find("rect");
+    const rect = wrapper.find("rect");
 
-    expect(rect.attr("width")).to.eql("5");
-    expect(rect.attr("height")).to.eql("20");
+    expect(rect.prop("width")).to.eql(5);
+    expect(rect.prop("height")).to.eql(20);
     // x = x - width / 2
-    expect(rect.attr("x")).to.eql("2.5");
-    expect(rect.attr("y")).to.eql("30");
+    expect(rect.prop("x")).to.eql(2.5);
+    expect(rect.prop("y")).to.eql(30);
   });
 });

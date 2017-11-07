@@ -22,7 +22,7 @@ describe("victory-primitives/curve", () => {
     const wrapper = shallow(<Curve {...baseProps}/>);
 
     // single curves should not be grouped
-    expect(wrapper.render().find("g").find("path").length).to.eql(0);
-    expect(wrapper.render().find("path").length).to.eql(1);
+    expect(wrapper.find("g").find("path").length).to.eql(0);
+    expect(wrapper.find("path").length).to.eql(1);
   });
 });
