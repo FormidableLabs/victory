@@ -42,7 +42,7 @@ describe("components/victory-bar", () => {
     });
 
     it("renders each bar as a rectangle", () => {
-      const wrapper = shallow(
+      const wrapper = mount(
         <VictoryBar/>
       );
       const bars = wrapper.find(Bar);
@@ -91,7 +91,7 @@ describe("components/victory-bar", () => {
     });
 
     it("renders bars with appropriate relative heights", () => {
-      const wrapper = shallow(
+      const wrapper = mount(
         <VictoryBar data={[{ x: 1, y: 1 }, { x: 2, y: 2 }, { x: 3, y: 3 }]}/>
       );
       const bars = wrapper.find(Bar);
@@ -169,13 +169,12 @@ describe("components/victory-bar", () => {
   });
 
   describe("accessibility", () => {
-    it("adds an area role to each bar in the series", () => {
+    it("adds an aria role to each bar in the series", () => {
       const data = range(20).map((y, x) => ({ x, y }));
       const wrapper = mount(<VictoryBar data={data} />);
 
-      wrapper.find("path").nodes.forEach((p) => {
-        const { attributes: attr } = p;
-        const roleValue = attr.getNamedItem("role").value;
+      wrapper.find("path").forEach((p) => {
+        const roleValue = p.prop("role");
         expect(roleValue).to.be.a("string");
         expect(roleValue).to.equal("presentation");
       });

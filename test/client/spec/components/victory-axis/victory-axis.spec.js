@@ -43,7 +43,7 @@ describe("components/victory-axis", () => {
     });
 
     it("renders ticks as lines", () => {
-      const wrapper = shallow(
+      const wrapper = mount(
         <VictoryAxis/>
       );
       const ticks = wrapper.find("[type=\"axis\"]");
@@ -51,7 +51,7 @@ describe("components/victory-axis", () => {
     });
 
     it("renders a line", () => {
-      const wrapper = shallow(
+      const wrapper = mount(
         <VictoryAxis/>
       );
       const line = wrapper.find("[type=\"axis\"]");
@@ -62,7 +62,7 @@ describe("components/victory-axis", () => {
   describe("dependentAxis prop", () => {
     it("renders a horizontal axis by default", () => {
       const props = { padding: 50, width: 300 };
-      const wrapper = shallow(
+      const wrapper = mount(
         <VictoryAxis {...props}/>
       );
       const line = wrapper.find("[type=\"axis\"]");
@@ -71,7 +71,7 @@ describe("components/victory-axis", () => {
 
     it("renders a vertical axis if specified", () => {
       const props = { padding: 50, height: 300 };
-      const wrapper = shallow(
+      const wrapper = mount(
         <VictoryAxis dependentAxis {...props}/>
       );
       const line = wrapper.find("[type=\"axis\"]");

@@ -42,7 +42,7 @@ describe("components/victory-voronoi", () => {
         domain: { x: [0, 5], y: [0, 5] },
         data: [{ x: 0, y: 0 }, { x: 2, y: 3 }, { x: 4, y: 1 }]
       };
-      const wrapper = shallow(
+      const wrapper = mount(
         <VictoryVoronoi {...props}/>
       );
 
@@ -126,13 +126,11 @@ describe("components/victory-voronoi", () => {
   });
 
   describe("accessibility", () => {
-    it("adds an area role to the path area", () => {
+    it("adds an aria role to the path area", () => {
       const wrapper = mount(<VictoryVoronoi/>);
-      wrapper.find("path").nodes.forEach((p) => {
-        const { attributes: attr } = p;
-        const role = attr.getNamedItem("role");
-        if (role) {
-          const roleValue = role.value;
+      wrapper.find("path").forEach((p) => {
+        const roleValue = p.prop("role");
+        if (roleValue) {
           expect(roleValue).to.be.a("string");
           expect(roleValue).to.equal("presentation");
         }

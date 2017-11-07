@@ -86,7 +86,7 @@ describe("components/victory-line", () => {
         height: 300,
         data: [{ x: 0, y: 0 }, { x: 1, y: 1 }, { x: 2, y: 2 }]
       };
-      const wrapper = shallow(
+      const wrapper = mount(
         <VictoryLine {...props}/>
       );
       const line = wrapper.find(Curve);
@@ -219,17 +219,14 @@ describe("components/victory-line", () => {
 
   describe("accessibility", () => {
 
-    it("adds an area role to a line segment", () => {
+    it("adds an aria role to a line segment", () => {
       const wrapper = mount(<VictoryLine />);
-      const p = wrapper.find("path").node;
-
-      const { attributes: attr } = p;
-      const roleValue = attr.getNamedItem("role").value;
+      const roleValue = wrapper.find("path").prop("role");
       expect(roleValue).to.be.a("string");
       expect(roleValue).to.equal("presentation");
     });
 
-    it("adds an area role to each line segment", () => {
+    it("adds an aria role to each line segment", () => {
       const data = [
         { x: 1, y: 1 },
         { x: 2, y: 3 },
@@ -244,9 +241,8 @@ describe("components/victory-line", () => {
       ];
       const wrapper = mount(<VictoryLine data={data} />);
 
-      wrapper.find("path").nodes.forEach((p) => {
-        const { attributes: attr } = p;
-        const roleValue = attr.getNamedItem("role").value;
+      wrapper.find("path").forEach((p) => {
+        const roleValue = p.prop("role");
         expect(roleValue).to.be.a("string");
         expect(roleValue).to.equal("presentation");
       });

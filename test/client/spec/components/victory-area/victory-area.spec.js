@@ -43,10 +43,9 @@ describe("components/victory-area", () => {
         interpolation: "linear",
         data: [{ x: 0, y: 0, y0: 0 }, { x: 2, y: 3, y0: 0 }, { x: 4, y: 1, y0: 0 }]
       };
-      const wrapper = shallow(
+      const wrapper = mount(
         <VictoryArea {...props}/>
       );
-
       const area = wrapper.find(Area);
       SvgTestHelper.expectCorrectD3Path(area, props, "area");
     });
@@ -133,15 +132,13 @@ describe("components/victory-area", () => {
   });
 
   describe("accessibility", () => {
-    it("adds an area role to the path area", () => {
+    it("adds an aria role to the path area", () => {
       const wrapper = mount(<VictoryArea />);
-      wrapper.find("path").nodes.forEach((p) => {
-        const { attributes: attr } = p;
-        const role = attr.getNamedItem("role");
+      wrapper.find("path").forEach((p) => {
+        const role = p.prop("role");
         if (role) {
-          const roleValue = role.value;
-          expect(roleValue).to.be.a("string");
-          expect(roleValue).to.equal("presentation");
+          expect(role).to.be.a("string");
+          expect(role).to.equal("presentation");
         }
       });
     });
