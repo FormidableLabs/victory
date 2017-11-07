@@ -1,8 +1,13 @@
 # VictoryChart Changelog
 
+## 24.2.0 (2017-11-07)
+
+- [534](https://github.com/FormidableLabs/victory-chart/pull/534) Add `allowResize` and `allowDrag` props for `VictoryBrushContainer`
+- [537](https://github.com/FormidableLabs/victory-chart/pull/537) Update infrastructure for React 16
+
 ## 24.1.0 (2017-10-22)
 
-- [532](https://github.com/FormidableLabs/victory-chart/pull/532)Filters tickValues so that values outside of the domain of an axis are not included
+- [532](https://github.com/FormidableLabs/victory-chart/pull/532) Filters tickValues so that values outside of the domain of an axis are not included
 
 ## 24.0.0 (2017-10-19)
 
