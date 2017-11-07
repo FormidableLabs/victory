@@ -30,8 +30,8 @@
     "lank-test": "lank exec -m victory-core -uq -- builder run check --expand-archetype"
   },
   "dependencies": {
-    "builder": "^3.2.1",
-    "builder-victory-component": "^5.1.0",
+    "builder": "^3.2.3",
+    "builder-victory-component": "^5.1.2",
     "d3-ease": "^1.0.0",
     "d3-interpolate": "^1.1.1",
     "d3-scale": "^1.0.0",
@@ -40,7 +40,7 @@
     "lodash": "^4.17.4"
   },
   "devDependencies": {
-    "builder-victory-component-dev": "^5.1.0",
+    "builder-victory-component-dev": "^5.1.2",
     "chai": "^3.5.0",
     "enzyme": "^3.1.0",
     "enzyme-adapter-react-16": "^1.0.3",

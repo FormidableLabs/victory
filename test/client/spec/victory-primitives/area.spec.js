@@ -30,13 +30,13 @@ describe("victory-primitives/area", () => {
     });
 
     const wrapper = shallow(<Area {...props}/>);
-    expect(wrapper.render().find("path").length).to.eql(1);
+    expect(wrapper.find("path").length).to.eql(1);
   });
 
   it("should render an area and line when a line style is given", () => {
     const wrapper = shallow(<Area {...baseProps}/>);
 
     // multiple paths should be grouped
-    expect(wrapper.render().find("g").find("path").length).to.eql(2);
+    expect(wrapper.find("g").find("path").length).to.eql(2);
   });
 });
