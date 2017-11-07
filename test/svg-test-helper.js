@@ -1,4 +1,3 @@
-import $ from "cheerio";
 /* eslint-disable no-use-before-define, no-unused-expressions */
 
 /**
@@ -135,7 +134,7 @@ const SvgTestHelper = {
    * @return {{x: number, y: number}} SVG coordinates
    */
   getSliceArcStart: (sliceWrapper) => {
-    const pathDescriptions = $(sliceWrapper.html()).attr("d");
+    const pathDescriptions = sliceWrapper.find("path").prop("d");
     const cmds = SvgTestHelper.parseSvgPathCommands(pathDescriptions);
     expect(cmds[0].name).to.eql("M");
 
@@ -152,7 +151,7 @@ const SvgTestHelper = {
    * @return {{x: number, y: number}} SVG coordinates
    */
   getSliceArcEnd: (sliceWrapper) => {
-    const pathDescriptions = $(sliceWrapper.html()).attr("d");
+    const pathDescriptions = sliceWrapper.find("path").prop("d");
     const cmds = SvgTestHelper.parseSvgPathCommands(pathDescriptions);
     expect(cmds[1].name).to.eql("A");
 
@@ -174,7 +173,7 @@ const SvgTestHelper = {
    * @return {number} Degrees, 0 to 360
    */
   getSliceInnerDegrees: (slice) => {
-    const pathDescriptions = $(slice.html()).attr("d");
+    const pathDescriptions = slice.find("path").prop("d");
     const cmds = SvgTestHelper.parseSvgPathCommands(pathDescriptions);
     expect(cmds[0].name).to.eql("M");
     expect(cmds[1].name).to.eql("A");
