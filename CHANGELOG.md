@@ -1,6 +1,10 @@
 VictoryCore Changelog
 =====================
 
+## 20.1.0 (2017-11-7)
+
+- [315](https://github.com/FormidableLabs/victory-core/pull/315) Infrastructure updates to support React 16
+
 ## 20.0.0 (2017-10-19)
 
 **Breaking Change**
