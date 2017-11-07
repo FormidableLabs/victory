@@ -45,7 +45,7 @@ describe("components/victory-scatter", () => {
     });
 
     it("renders each point as a circle", () => {
-      const wrapper = shallow(
+      const wrapper = mount(
         <VictoryScatter/>
       );
       const points = wrapper.find(Point);
@@ -111,7 +111,7 @@ describe("components/victory-scatter", () => {
 
     it("renders points in the correct positions", () => {
       const svgDimensions = { width: 350, height: 200, padding: 75 };
-      const wrapper = shallow(
+      const wrapper = mount(
         <VictoryScatter
           data={[{ x: 0, y: 0 }, { x: 2, y: 3 }, { x: 5, y: 5 }]}
           {...svgDimensions}
@@ -203,13 +203,12 @@ describe("components/victory-scatter", () => {
 
 
   describe("accessibility", () => {
-    it("adds an area role to each point in the series", () => {
+    it("adds an aria role to each point in the series", () => {
       const data = range(20).map((y, x) => ({ x, y }));
       const wrapper = mount(<VictoryScatter data={data} />);
 
-      wrapper.find("path").nodes.forEach((p) => {
-        const { attributes: attr } = p;
-        const roleValue = attr.getNamedItem("role").value;
+      wrapper.find("path").forEach((p) => {
+        const roleValue = p.prop("role");
         expect(roleValue).to.be.a("string");
         expect(roleValue).to.equal("presentation");
       });

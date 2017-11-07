@@ -154,7 +154,7 @@ describe("components/victory-candlestick", () => {
   });
 
   describe("accessibility", () => {
-    it("adds an area role to each point in the series", () => {
+    it("adds an aria role to each point in the series", () => {
       const data = [
         { x: 0, open: 9, close: 30, high: 56, low: 7 },
         { x: 1, open: 80, close: 40, high: 120, low: 10 },
@@ -164,11 +164,9 @@ describe("components/victory-candlestick", () => {
         <VictoryCandlestick data={data} />
       );
 
-      wrapper.find("rect").nodes.forEach((r) => {
-        const { attributes: attr } = r;
-        const role = attr.getNamedItem("role");
-        if (role) {
-          const roleValue = role.value;
+      wrapper.find("rect").forEach((r) => {
+        const roleValue = r.prop("role");
+        if (roleValue) {
           expect(roleValue).to.be.a("string");
           expect(roleValue).to.equal("presentation");
         }
