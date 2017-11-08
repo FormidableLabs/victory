@@ -1,5 +1,10 @@
 # Victory Changelog
 
+## 0.24.1 (2017-11-08)
+
+- Update infrastructure for React 16
+- [victory-chart/534](https://github.com/FormidableLabs/victory-chart/pull/534) Add `allowResize` and `allowDrag` props for `VictoryBrushContainer`
+
 ## 0.24.0 (2017-10-19)
 
 **Breaking Changes**

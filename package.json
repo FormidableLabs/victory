@@ -35,20 +35,19 @@
   },
   "dependencies": {
     "builder": "^3.2.1",
-    "builder-victory-component": "^5.0.1",
-    "victory-chart": "^24.0.0",
-    "victory-core": "^20.0.0",
-    "victory-pie": "^13.0.1"
+    "builder-victory-component": "^5.1.2",
+    "victory-chart": "^24.1.0",
+    "victory-core": "^20.1.0",
+    "victory-pie": "^13.1.0"
   },
   "devDependencies": {
-    "builder-victory-component-dev": "^5.0.1",
+    "builder-victory-component-dev": "^5.1.2",
     "chai": "^3.5.0",
     "lodash": "^4.17.4",
     "mocha": "^3.0.2",
     "prop-types": "^15.5.8",
-    "react": "^15.5.4",
-    "react-addons-test-utils": "^15.5.1",
-    "react-dom": "^15.5.4",
+    "react": "^16.0.0",
+    "react-dom": "^16.0.0",
     "sinon": "^1.17.5",
     "sinon-chai": "^2.8.0"
   },
