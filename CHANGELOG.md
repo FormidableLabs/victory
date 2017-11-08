@@ -1,5 +1,9 @@
 # VictoryPie Changelog
 
+## 13.1.0 (2017-11-07)
+
+- [158](https://github.com/FormidableLabs/victory-pie/pull/158) Update infrastructure for React 16
+
 ## 13.0.1 (2017-10-19)
 
 Update to `victory-core@20.0.0`
