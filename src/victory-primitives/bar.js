@@ -64,13 +64,11 @@ export default class Bar extends React.Component {
     const alignment = props.alignment || "middle";
     const size = alignment === "middle" ? width / 2 : width;
     const sign = horizontal ? -1 : 1;
-    const x0 = alignment === "start" ? x : x - (sign * size);
-    const x1 = alignment === "end" ? x : x + (sign * size);
     return {
-      y0: Math.round(y0),
-      y1: Math.round(y),
-      x0: Math.round(x0),
-      x1: Math.round(x1)
+      x0: alignment === "start" ? x : x - (sign * size),
+      x1: alignment === "end" ? x : x + (sign * size),
+      y0,
+      y1: y
     };
   }
 
@@ -190,7 +188,7 @@ export default class Bar extends React.Component {
     const barRatio = 0.5;
     // eslint-disable-next-line no-magic-numbers
     const defaultWidth = data.length < 2 ? 8 : (barRatio * extent / bars);
-    return Math.max(1, Math.round(defaultWidth));
+    return Math.max(1, defaultWidth);
   }
 
   // Overridden in victory-core-native
