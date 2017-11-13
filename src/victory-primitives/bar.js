@@ -11,6 +11,7 @@ export default class Bar extends React.Component {
   static propTypes = {
     ...CommonProps,
     alignment: PropTypes.oneOf(["start", "middle", "end"]),
+    barRatio: PropTypes.number,
     datum: PropTypes.object,
     horizontal: PropTypes.bool,
     padding: PropTypes.oneOfType([
@@ -185,7 +186,7 @@ export default class Bar extends React.Component {
     const range = scale.x.range();
     const extent = Math.abs(range[1] - range[0]);
     const bars = data.length + 2;
-    const barRatio = 0.5;
+    const barRatio = props.barRatio || 0.5;
     // eslint-disable-next-line no-magic-numbers
     const defaultWidth = data.length < 2 ? 8 : (barRatio * extent / bars);
     return Math.max(1, defaultWidth);
