@@ -12,6 +12,7 @@ export default class Bar extends React.Component {
     ...CommonProps,
     alignment: PropTypes.oneOf(["start", "middle", "end"]),
     barRatio: PropTypes.number,
+    cornerRadius: PropTypes.number,
     datum: PropTypes.object,
     horizontal: PropTypes.bool,
     padding: PropTypes.oneOfType([
@@ -75,9 +76,15 @@ export default class Bar extends React.Component {
 
   getVerticalBarPath(props, width) {
     const { x0, x1, y0, y1 } = this.getPosition(props, width);
+    const cornerRadius = props.cornerRadius || 0;
+    const sign = y0 > y1 ? 1 : -1;
+    const direction = sign > 0 ? "0 0 1" : "0 0 0";
+    const arc = `${cornerRadius} ${cornerRadius} ${direction}`;
     return `M ${x0}, ${y0}
-      L ${x0}, ${y1}
-      L ${x1}, ${y1}
+      L ${x0}, ${y1 + sign * cornerRadius}
+      A ${arc}, ${x0 + cornerRadius}, ${y1}
+      L ${x1 - cornerRadius}, ${y1}
+      A ${arc}, ${x1}, ${y1 + sign * cornerRadius}
       L ${x1}, ${y0}
       L ${x0}, ${y0}
       z`;
@@ -85,10 +92,16 @@ export default class Bar extends React.Component {
 
   getHorizontalBarPath(props, width) {
     const { x0, x1, y0, y1 } = this.getPosition(props, width);
+    const cornerRadius = props.cornerRadius || 0;
+    const sign = y1 > y0 ? 1 : -1;
+    const direction = sign > 0 ? "0 0 1" : "0 0 0";
+    const arc = `${cornerRadius} ${cornerRadius} ${direction}`;
     return `M ${y0}, ${x0}
       L ${y0}, ${x1}
-      L ${y1}, ${x1}
-      L ${y1}, ${x0}
+      L ${y1 - sign * cornerRadius}, ${x1}
+      A ${arc}, ${y1}, ${x1 + cornerRadius}
+      L ${y1}, ${x0 - cornerRadius}
+      A ${arc}, ${y1 - sign * cornerRadius}, ${x0}
       L ${y0}, ${x0}
       z`;
   }
@@ -144,7 +157,7 @@ export default class Bar extends React.Component {
     }
   }
 
-  getVerticalPolarBarPath(props) {
+  getVerticalPolarBarPath(props) { // eslint-disable-line max-statements
     const { datum, scale, style, index, alignment } = props;
     const r1 = scale.y(datum._y0 || 0);
     const r2 = scale.y(datum._y1 !== undefined ? datum._y1 : datum._y);
@@ -160,11 +173,13 @@ export default class Bar extends React.Component {
       start = this.getStartAngle(props, index);
       end = this.getEndAngle(props, index);
     }
+    const cornerRadius = props.cornerRadius || 0;
     const path = d3Shape.arc()
       .innerRadius(r1)
       .outerRadius(r2)
       .startAngle(this.transformAngle(start))
-      .endAngle(this.transformAngle(end));
+      .endAngle(this.transformAngle(end))
+      .cornerRadius(cornerRadius);
     return path();
   }
 
