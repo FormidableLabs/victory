@@ -1,7 +1,15 @@
 VictoryCore Changelog
 =====================
 
-## 20.1.0 (2017-11-7)
+## 20.2.0 (2017-11-14)
+
+- [316] (https://github.com/FormidableLabs/victory-core/pull/316)
+  - adds `cornerRadius` prop for `Bar`
+  - adds `barRatio` prop for `Bar`
+  - removes rounding from calculated paths
+  - fixes a domain bug for negative bars and areas
+
+## 20.1.0 (2017-11-07)
 
 - [315](https://github.com/FormidableLabs/victory-core/pull/315) Infrastructure updates to support React 16
 
