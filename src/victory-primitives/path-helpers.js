@@ -3,8 +3,6 @@ import { range } from "lodash";
 
 export default {
   circle(x, y, size) {
-    x = Math.round(x);
-    y = Math.round(y);
     return `M ${x}, ${y}
       m ${-size}, 0
       a ${size}, ${size} 0 1,0 ${size * 2},0
@@ -13,12 +11,10 @@ export default {
 
 
   square(x, y, size) {
-    x = Math.round(x);
-    y = Math.round(y);
     const baseSize = 0.87 * size; // eslint-disable-line no-magic-numbers
     const x0 = x - baseSize;
     const y1 = y + baseSize;
-    const distance = Math.floor(x + baseSize - x0);
+    const distance = x + baseSize - x0;
     return `M ${x0}, ${y1}
       h${distance}
       v-${distance}
@@ -27,8 +23,6 @@ export default {
   },
 
   diamond(x, y, size) {
-    x = Math.round(x);
-    y = Math.round(y);
     const baseSize = 0.87 * size; // eslint-disable-line no-magic-numbers
     const length = Math.sqrt(2 * (baseSize * baseSize));
     return `M ${x}, ${y + length}
@@ -40,8 +34,6 @@ export default {
   },
 
   triangleDown(x, y, size) {
-    x = Math.round(x);
-    y = Math.round(y);
     const height = size / 2 * Math.sqrt(3);
     const x0 = x - size;
     const x1 = x + size;
@@ -54,8 +46,6 @@ export default {
   },
 
   triangleUp(x, y, size) {
-    x = Math.round(x);
-    y = Math.round(y);
     const height = size / 2 * Math.sqrt(3);
     const x0 = x - size;
     const x1 = x + size;
@@ -68,8 +58,6 @@ export default {
   },
 
   plus(x, y, size) {
-    x = Math.round(x);
-    y = Math.round(y);
     const baseSize = 1.1 * size; // eslint-disable-line no-magic-numbers
     const distance = baseSize / 1.5; // eslint-disable-line no-magic-numbers
     return `
@@ -89,9 +77,7 @@ export default {
   },
 
   star(x, y, size) {
-    x = Math.round(x);
-    y = Math.round(y);
-    const baseSize = Math.round(1.35 * size); // eslint-disable-line no-magic-numbers
+    const baseSize = 1.35 * size; // eslint-disable-line no-magic-numbers
     const angle = Math.PI / 5; // eslint-disable-line no-magic-numbers
     const starCoords = range(10).map((index) => { // eslint-disable-line no-magic-numbers
       const length = index % 2 === 0 ? baseSize : baseSize / 2;

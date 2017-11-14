@@ -1,7 +1,6 @@
 import { property, max, min } from "lodash";
 
 const FLYOUT_SEQUENCE = ["M", "L", "L", "L", "A", "L", "A", "L", "A", "L", "A", "z"];
-const RECTANGLE_SEQUENCE = ["M", "L", "L", "L", "L", "z"];
 
 const parseSvgPathCommands = (commandStr) => {
   const matches = commandStr.match(
@@ -53,8 +52,6 @@ const expectations = {
    */
   getBarShape(wrapper) {
     const commands = getPathCommandsFromWrapper(wrapper);
-
-    expect(exhibitsShapeSequence(wrapper, RECTANGLE_SEQUENCE, commands)).to.equal(true);
 
     const points = commands.filter((command) => { return command.name !== "z"; });
     const verticalPoints = points.map(property("args.1"));

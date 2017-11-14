@@ -11,6 +11,8 @@ export default class Bar extends React.Component {
   static propTypes = {
     ...CommonProps,
     alignment: PropTypes.oneOf(["start", "middle", "end"]),
+    barRatio: PropTypes.number,
+    cornerRadius: PropTypes.number,
     datum: PropTypes.object,
     horizontal: PropTypes.bool,
     padding: PropTypes.oneOfType([
@@ -64,21 +66,25 @@ export default class Bar extends React.Component {
     const alignment = props.alignment || "middle";
     const size = alignment === "middle" ? width / 2 : width;
     const sign = horizontal ? -1 : 1;
-    const x0 = alignment === "start" ? x : x - (sign * size);
-    const x1 = alignment === "end" ? x : x + (sign * size);
     return {
-      y0: Math.round(y0),
-      y1: Math.round(y),
-      x0: Math.round(x0),
-      x1: Math.round(x1)
+      x0: alignment === "start" ? x : x - (sign * size),
+      x1: alignment === "end" ? x : x + (sign * size),
+      y0,
+      y1: y
     };
   }
 
   getVerticalBarPath(props, width) {
     const { x0, x1, y0, y1 } = this.getPosition(props, width);
+    const cornerRadius = props.cornerRadius || 0;
+    const sign = y0 > y1 ? 1 : -1;
+    const direction = sign > 0 ? "0 0 1" : "0 0 0";
+    const arc = `${cornerRadius} ${cornerRadius} ${direction}`;
     return `M ${x0}, ${y0}
-      L ${x0}, ${y1}
-      L ${x1}, ${y1}
+      L ${x0}, ${y1 + sign * cornerRadius}
+      A ${arc}, ${x0 + cornerRadius}, ${y1}
+      L ${x1 - cornerRadius}, ${y1}
+      A ${arc}, ${x1}, ${y1 + sign * cornerRadius}
       L ${x1}, ${y0}
       L ${x0}, ${y0}
       z`;
@@ -86,10 +92,16 @@ export default class Bar extends React.Component {
 
   getHorizontalBarPath(props, width) {
     const { x0, x1, y0, y1 } = this.getPosition(props, width);
+    const cornerRadius = props.cornerRadius || 0;
+    const sign = y1 > y0 ? 1 : -1;
+    const direction = sign > 0 ? "0 0 1" : "0 0 0";
+    const arc = `${cornerRadius} ${cornerRadius} ${direction}`;
     return `M ${y0}, ${x0}
       L ${y0}, ${x1}
-      L ${y1}, ${x1}
-      L ${y1}, ${x0}
+      L ${y1 - sign * cornerRadius}, ${x1}
+      A ${arc}, ${y1}, ${x1 + cornerRadius}
+      L ${y1}, ${x0 - cornerRadius}
+      A ${arc}, ${y1 - sign * cornerRadius}, ${x0}
       L ${y0}, ${x0}
       z`;
   }
@@ -145,7 +157,13 @@ export default class Bar extends React.Component {
     }
   }
 
-  getVerticalPolarBarPath(props) {
+  getPathMoves(path) {
+    const moves = path.match(/[A-Z]/g);
+    const coords = path.split(/[A-Z]/);
+    return moves.map((m, i) => ({ command: m, coords: coords[i + 1].split(",") }));
+  }
+
+  getVerticalPolarBarPath(props) { // eslint-disable-line max-statements
     const { datum, scale, style, index, alignment } = props;
     const r1 = scale.y(datum._y0 || 0);
     const r2 = scale.y(datum._y1 !== undefined ? datum._y1 : datum._y);
@@ -161,11 +179,28 @@ export default class Bar extends React.Component {
       start = this.getStartAngle(props, index);
       end = this.getEndAngle(props, index);
     }
+    const cornerRadius = props.cornerRadius || 0;
     const path = d3Shape.arc()
       .innerRadius(r1)
       .outerRadius(r2)
       .startAngle(this.transformAngle(start))
       .endAngle(this.transformAngle(end));
+    if (cornerRadius) {
+      const withCorners = d3Shape.arc()
+        .innerRadius(r1)
+        .outerRadius(r2)
+        .startAngle(this.transformAngle(start))
+        .endAngle(this.transformAngle(end))
+        .cornerRadius(cornerRadius);
+      const moves = this.getPathMoves(path());
+      const cornerMoves = this.getPathMoves(withCorners());
+      // eslint-disable-next-line no-magic-numbers
+      const totalMoves = cornerMoves.slice(0, 4).concat(moves.slice(2));
+      return totalMoves.reduce((memo, move) => {
+        memo += `${move.command} ${move.coords.join()}`;
+        return memo;
+      }, "");
+    }
     return path();
   }
 
@@ -187,10 +222,10 @@ export default class Bar extends React.Component {
     const range = scale.x.range();
     const extent = Math.abs(range[1] - range[0]);
     const bars = data.length + 2;
-    const barRatio = 0.5;
+    const barRatio = props.barRatio || 0.5;
     // eslint-disable-next-line no-magic-numbers
     const defaultWidth = data.length < 2 ? 8 : (barRatio * extent / bars);
-    return Math.max(1, Math.round(defaultWidth));
+    return Math.max(1, defaultWidth);
   }
 
   // Overridden in victory-core-native

@@ -78,8 +78,8 @@ export default {
       const maxData = flatData.map((datum) => {
         return datum[`_${currentAxis}1`] || datum[`_${currentAxis}`] || 0;
       });
-      const min = Collection.getMinValue([...domain, ...minData]);
-      const max = Collection.getMaxValue([...domain, ...maxData]);
+      const min = Collection.getMinValue([...domain, ...minData, ...maxData]);
+      const max = Collection.getMaxValue([...domain, ...maxData, ...minData]);
       return [min, max];
     };
     const categoryDomain = this.getDomainFromCategories(props, axis);

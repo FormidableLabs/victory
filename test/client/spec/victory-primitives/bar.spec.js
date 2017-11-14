@@ -26,8 +26,7 @@ describe("victory-primitives/bar", () => {
   it("should render a vertical bar", () => {
     const wrapper = shallow(<Bar {...baseProps}/>);
     const barShape = SvgTestHelper.getBarShape(wrapper);
-
-    expect(barShape.height).to.eql(10);
+    expect(Math.round(barShape.height)).to.eql(10);
   });
 
   it("should render a horizontal bar", () => {
@@ -36,7 +35,7 @@ describe("victory-primitives/bar", () => {
     const wrapper = shallow(<Bar {...props}/>);
     const barShape = SvgTestHelper.getBarShape(wrapper);
 
-    expect(barShape.width).to.eql(10);
+    expect(Math.round(barShape.width)).to.eql(10);
   });
 
   it("should render a default bar width when one is not provided", () => {
@@ -49,15 +48,15 @@ describe("victory-primitives/bar", () => {
     const wrapper = shallow(<Bar {...props}/>);
     const barShape = SvgTestHelper.getBarShape(wrapper);
 
-    expect(barShape.width).to.eql(1);
+    expect(Math.floor(barShape.width)).to.eql(2);
   });
 
   it("should allow override of width by passing a style", () => {
-    const props = Object.assign({}, baseProps, { style: { width: 1 } });
+    const props = Object.assign({}, baseProps, { style: { width: 3 } });
 
     const wrapper = shallow(<Bar {...props}/>);
     const barShape = SvgTestHelper.getBarShape(wrapper);
 
-    expect(barShape.width).to.eql(1);
+    expect(Math.floor(barShape.width)).to.eql(3);
   });
 });
