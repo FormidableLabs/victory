@@ -1,5 +1,11 @@
 # VictoryChart Changelog
 
+## 24.3.0 (2017-11-14)
+
+- [538](https://github.com/FormidableLabs/victory-chart/pull/538) Adds `barRatio` and `cornerRadius` props to `VictoryBar`
+
+- [539](https://github.com/FormidableLabs/victory-chart/pull/539) Fixes a bug in bubble plots
+
 ## 24.2.0 (2017-11-07)
 
 - [534](https://github.com/FormidableLabs/victory-chart/pull/534) Add `allowResize` and `allowDrag` props for `VictoryBrushContainer`
