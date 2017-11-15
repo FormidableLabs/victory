@@ -50,8 +50,8 @@ export default {
     const modifiedProps = Helpers.modifyProps(props, fallbackProps, "bar");
     props = assign({}, modifiedProps, this.getCalculatedValues(modifiedProps));
     const {
-      alignment, data, domain, events, height, horizontal, origin, padding, polar,
-      scale, sharedEvents, standalone, style, theme, width
+      alignment, barRatio, cornerRadius, data, domain, events, height, horizontal, origin, padding,
+      polar, scale, sharedEvents, standalone, style, theme, width
     } = props;
     const initialChildProps = { parent: {
       domain, scale, width, height, data, standalone,
@@ -63,7 +63,7 @@ export default {
       const { x, y, y0, x0 } = this.getBarPosition(props, datum);
       const barStyle = this.getBarStyle(datum, style.data);
       const dataProps = {
-        alignment, data, datum, horizontal, index, padding, polar, origin,
+        alignment, barRatio, cornerRadius, data, datum, horizontal, index, padding, polar, origin,
         scale, style: barStyle, width, height, x, y, y0, x0
       };
 

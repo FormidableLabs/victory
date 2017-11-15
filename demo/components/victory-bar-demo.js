@@ -125,6 +125,7 @@ export default class App extends React.Component {
 
         <ChartWrap scale={{ x: "log", y: "linear" }}>
           <VictoryBar
+            cornerRadius={4}
             scale={{ x: "log", y: "linear" }}
             horizontal
             data={[
@@ -142,6 +143,7 @@ export default class App extends React.Component {
 
         <ChartWrap scale={{ x: "linear", y: "log" }}>
           <VictoryBar
+            cornerRadius={5}
             style={{ data: { width: 15, fill: "red" } }}
             scale={{ x: "linear", y: "log" }}
             data={[
