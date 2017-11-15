@@ -1,5 +1,19 @@
 # Victory Changelog
 
+## 0.24.2 (2017-11-14)
+
+VictoryCore
+- [316] (https://github.com/FormidableLabs/victory-core/pull/316)
+  - adds `cornerRadius` prop for `Bar`
+  - adds `barRatio` prop for `Bar`
+  - removes rounding from calculated paths
+  - fixes a domain bug for negative bars and areas
+
+VictoryChart
+- [538](https://github.com/FormidableLabs/victory-chart/pull/538) Adds `barRatio` and `cornerRadius` props to `VictoryBar`
+
+- [539](https://github.com/FormidableLabs/victory-chart/pull/539) Fixes a bug in bubble plots
+
 ## 0.24.1 (2017-11-08)
 
 - Update infrastructure for React 16
