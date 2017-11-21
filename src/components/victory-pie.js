@@ -38,6 +38,8 @@ const animationWhitelist = [
 class VictoryPie extends React.Component {
   static displayName = "VictoryPie";
 
+  static role = "pie";
+
   static defaultTransitions = {
     onExit: {
       duration: 500,
