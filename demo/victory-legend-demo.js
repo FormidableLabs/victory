@@ -69,7 +69,7 @@ const data = [{
 const LegendDemo = () => (
   <div className="demo" style={containerStyle}>
     <svg
-      height={500}
+      height={800}
       width={1000}
       style={{ border: "1px solid #ccc", margin: "2%" }}
     >
@@ -136,6 +136,13 @@ const LegendDemo = () => (
         gutter={30}
         data={data}
         style={legendStyle}
+      />
+      <VictoryLegend x={25} y={480}
+        standalone={false}
+        orientation="vertical"
+        gutter={{ column: 20, row: 50 }}
+        style={{ border: { stroke: "black" } }}
+        data={[{ name: "One" }, { name: "Two" }, { name: "Three" }]}
       />
     </svg>
     <VictoryLegend

@@ -75,11 +75,13 @@ const groupData = (props) => {
 };
 
 const getColumnWidths = (props, data) => {
+  const gutter = props.gutter || {};
+  const columnGutter = (typeof gutter === "object" ? gutter.column : gutter) || 0;
   const dataByColumn = groupBy(data, "column");
   const columns = keys(dataByColumn);
   return columns.reduce((memo, curr, index) => {
     const lengths = dataByColumn[curr].map((d) => {
-      return d.textSize.width + props.gutter + d.size + d.symbolSpacer;
+      return d.textSize.width + d.size + d.symbolSpacer + columnGutter;
     });
     memo[index] = Math.max(...lengths);
     return memo;
@@ -87,10 +89,15 @@ const getColumnWidths = (props, data) => {
 };
 
 const getRowHeights = (props, data) => {
+  const gutter = props.gutter || {};
+  // If `gutter` is a number, it only refers to column gutter.
+  const rowGutter = (typeof gutter === "object" ? gutter.row : 0) || 0;
   const dataByRow = groupBy(data, "row");
   return keys(dataByRow).reduce((memo, curr, index) => {
     const rows = dataByRow[curr];
-    const lengths = rows.map((d) => d.textSize.height + d.symbolSpacer);
+    const lengths = rows.map((d) => {
+      return d.textSize.height + d.symbolSpacer + rowGutter;
+    });
     memo[index] = Math.max(...lengths);
     return memo;
   }, []);
@@ -242,4 +249,3 @@ export default (props, fallbackProps) => {
     return childProps;
   }, initialProps);
 };
-
