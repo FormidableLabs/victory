@@ -1,6 +1,10 @@
 VictoryCore Changelog
 =====================
 
+## 20.3.0 (2017-12-04)
+
+- [320](https://github.com/FormidableLabs/victory-core/pull/320) Adds `rowGutter` and support for asymmetric gutters for both `gutter` and `rowGutter` in `VictoryLegend`
+
 ## 20.2.0 (2017-11-14)
 
 - [316] (https://github.com/FormidableLabs/victory-core/pull/316)
