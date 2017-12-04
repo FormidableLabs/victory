@@ -94,7 +94,7 @@ const getRowHeights = (props, data) => {
   const gutter = props.rowGutter || {};
   const gutterHeight = typeof gutter === "object" ?
     (gutter.top || 0) + (gutter.bottom || 0) :
-    0;
+    (gutter || 0);
   const dataByRow = groupBy(data, "row");
   return keys(dataByRow).reduce((memo, curr, index) => {
     const rows = dataByRow[curr];
