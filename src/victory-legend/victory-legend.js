@@ -71,7 +71,13 @@ class VictoryLegend extends React.Component {
       eventHandlers: PropTypes.object
     })),
     groupComponent: PropTypes.element,
-    gutter: PropTypes.nonNegative,
+    gutter: PropTypes.oneOfType([
+      CustomPropTypes.nonNegative,
+      PropTypes.shape({
+        left: CustomPropTypes.nonNegative,
+        right: CustomPropTypes.nonNegative
+      })
+    ]),
     height: CustomPropTypes.nonNegative,
     itemsPerRow: CustomPropTypes.nonNegative,
     labelComponent: PropTypes.element,
@@ -85,7 +91,13 @@ class VictoryLegend extends React.Component {
         right: PropTypes.number
       })
     ]),
-    rowGutter: PropTypes.nonNegative,
+    rowGutter: PropTypes.oneOfType([
+      CustomPropTypes.nonNegative,
+      PropTypes.shape({
+        top: CustomPropTypes.nonNegative,
+        bottom: CustomPropTypes.nonNegative
+      })
+    ]),
     sharedEvents: PropTypes.shape({
       events: PropTypes.array,
       getEventState: PropTypes.func

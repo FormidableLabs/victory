@@ -140,8 +140,8 @@ const LegendDemo = () => (
       <VictoryLegend x={25} y={480}
         standalone={false}
         orientation="vertical"
-        gutter={20}
-        rowGutter={50}
+        gutter={{ left: 20, right: 50 }}
+        rowGutter={{ top: 5, bottom: 8 }}
         style={{ border: { stroke: "black" } }}
         data={[{ name: "One" }, { name: "Two" }, { name: "Three" }]}
       />
