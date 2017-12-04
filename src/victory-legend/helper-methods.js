@@ -75,11 +75,15 @@ const groupData = (props) => {
 };
 
 const getColumnWidths = (props, data) => {
+  const gutter = props.gutter || {};
+  const gutterWidth = typeof gutter === "object" ?
+    (gutter.left || 0) + (gutter.right || 0) :
+    (gutter || 0);
   const dataByColumn = groupBy(data, "column");
   const columns = keys(dataByColumn);
   return columns.reduce((memo, curr, index) => {
     const lengths = dataByColumn[curr].map((d) => {
-      return d.textSize.width + d.size + d.symbolSpacer + (props.gutter || 0);
+      return d.textSize.width + d.size + d.symbolSpacer + gutterWidth;
     });
     memo[index] = Math.max(...lengths);
     return memo;
@@ -87,11 +91,15 @@ const getColumnWidths = (props, data) => {
 };
 
 const getRowHeights = (props, data) => {
+  const gutter = props.rowGutter || {};
+  const gutterHeight = typeof gutter === "object" ?
+    (gutter.top || 0) + (gutter.bottom || 0) :
+    (gutter || 0);
   const dataByRow = groupBy(data, "row");
   return keys(dataByRow).reduce((memo, curr, index) => {
     const rows = dataByRow[curr];
     const lengths = rows.map((d) => {
-      return d.textSize.height + d.symbolSpacer + (props.rowGutter || 0);
+      return d.textSize.height + d.symbolSpacer + gutterHeight;
     });
     memo[index] = Math.max(...lengths);
     return memo;
@@ -179,11 +187,12 @@ const getBorderProps = (props, contentHeight, contentWidth) => {
   return { x, y, height, width, style: style.border };
 };
 
+// eslint-disable-next-line max-statements, complexity
 export default (props, fallbackProps) => {
   const modifiedProps = Helpers.modifyProps(props, fallbackProps, "legend");
   props = assign({}, modifiedProps, getCalculatedValues(modifiedProps));
   const {
-    data, standalone, theme, padding, style, colorScale,
+    data, standalone, theme, padding, style, colorScale, gutter, rowGutter,
     borderPadding, title, titleOrientation, x = 0, y = 0
   } = props;
   const groupedData = groupData(props);
@@ -194,6 +203,10 @@ export default (props, fallbackProps) => {
   const titleOffset = {
     x: titleOrientation === "left" ? titleDimensions.width : 0,
     y: titleOrientation === "top" ? titleDimensions.height : 0
+  };
+  const gutterOffset = {
+    x: gutter && typeof gutter === "object" ? gutter.left || 0 : 0,
+    y: rowGutter && typeof rowGutter === "object" ? rowGutter.top || 0 : 0
   };
 
   const contentHeight = titleOrientation === "left" || titleOrientation === "right" ?
@@ -225,8 +238,8 @@ export default (props, fallbackProps) => {
       symbol: dataStyle.type || dataStyle.symbol || "circle",
       size: datum.size,
       style: dataStyle,
-      y: originY + offset.y + titleOffset.y,
-      x: originX + offset.x + titleOffset.x
+      y: originY + offset.y + titleOffset.y + gutterOffset.y,
+      x: originX + offset.x + titleOffset.x + gutterOffset.x
     };
 
     const labelProps = {
@@ -234,8 +247,8 @@ export default (props, fallbackProps) => {
       key: `legend-label-${i}`,
       text: datum.name,
       style: labelStyles[i],
-      y: originY + offset.y + titleOffset.y,
-      x: originX + offset.x + titleOffset.x + datum.symbolSpacer + (datum.size / 2)
+      y: dataProps.y,
+      x: dataProps.x + datum.symbolSpacer + (datum.size / 2)
     };
     childProps[eventKey] = eventKey === 0 ?
       { data: dataProps, labels: labelProps, border: borderProps, title: titleProps } :
