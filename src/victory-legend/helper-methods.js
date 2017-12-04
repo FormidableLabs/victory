@@ -79,7 +79,7 @@ const getColumnWidths = (props, data) => {
   const columns = keys(dataByColumn);
   return columns.reduce((memo, curr, index) => {
     const lengths = dataByColumn[curr].map((d) => {
-      return d.textSize.width + props.gutter + d.size + d.symbolSpacer;
+      return d.textSize.width + d.size + d.symbolSpacer + (props.gutter || 0);
     });
     memo[index] = Math.max(...lengths);
     return memo;
@@ -90,7 +90,9 @@ const getRowHeights = (props, data) => {
   const dataByRow = groupBy(data, "row");
   return keys(dataByRow).reduce((memo, curr, index) => {
     const rows = dataByRow[curr];
-    const lengths = rows.map((d) => d.textSize.height + d.symbolSpacer);
+    const lengths = rows.map((d) => {
+      return d.textSize.height + d.symbolSpacer + (props.rowGutter || 0);
+    });
     memo[index] = Math.max(...lengths);
     return memo;
   }, []);
@@ -242,4 +244,3 @@ export default (props, fallbackProps) => {
     return childProps;
   }, initialProps);
 };
-
