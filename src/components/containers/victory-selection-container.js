@@ -7,6 +7,7 @@ export const selectionContainerMixin = (base) => class VictorySelectionContainer
   static displayName = "VictorySelectionContainer";
   static propTypes = {
     ...VictoryContainer.propTypes,
+    allowSelection: PropTypes.bool,
     onSelection: PropTypes.func,
     onSelectionCleared: PropTypes.func,
     selectionComponent: PropTypes.element,
@@ -15,6 +16,7 @@ export const selectionContainerMixin = (base) => class VictorySelectionContainer
   };
   static defaultProps = {
     ...VictoryContainer.defaultProps,
+    allowSelection: true,
     selectionComponent: <rect/>,
     selectionStyle: {
       stroke: "transparent",
