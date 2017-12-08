@@ -66,7 +66,10 @@ const SelectionHelpers = {
   // eslint-disable-next-line complexity
   onMouseDown(evt, targetProps) {
     evt.preventDefault();
-    const { polar } = targetProps;
+    const { allowSelection, polar } = targetProps;
+    if (!allowSelection) {
+      return {};
+    }
     const dimension = targetProps.selectionDimension;
     const datasets = targetProps.datasets || [];
     const { x, y } = Selection.getSVGEventCoordinates(evt);
@@ -93,9 +96,9 @@ const SelectionHelpers = {
   },
 
   onMouseMove(evt, targetProps) {
-    const { select, polar } = targetProps;
+    const { allowSelection, select, polar } = targetProps;
     const dimension = targetProps.selectionDimension;
-    if (!select) {
+    if (!allowSelection || !select) {
       return {};
     } else {
       const { x, y } = Selection.getSVGEventCoordinates(evt);
@@ -111,7 +114,10 @@ const SelectionHelpers = {
   },
 
   onMouseUp(evt, targetProps) {
-    const { x2, y2 } = targetProps;
+    const { allowSelection, x2, y2 } = targetProps;
+    if (!allowSelection) {
+      return {};
+    }
     if (!x2 || !y2) {
       return [{
         target: "parent",
@@ -126,7 +132,6 @@ const SelectionHelpers = {
     const mutatedProps = { datasets, select: false, x1: null, x2: null, y1: null, y2: null };
     const callbackMutation = selectedData && isFunction(targetProps.onSelection) ?
       targetProps.onSelection(selectedData, bounds, defaults({}, mutatedProps, targetProps)) : {};
-
     const parentMutation = [{
       target: "parent",
       mutation: () => mutatedProps
