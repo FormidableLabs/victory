@@ -1,5 +1,9 @@
 # VictoryChart Changelog
 
+## 24.3.1 (2017-12-08)
+
+- [540] (https://github.com/FormidableLabs/victory-chart/pull/540) Adds `allowSelection` boolean prop for `VictorySelectionContainer` (true by default)
+
 ## 24.3.0 (2017-11-14)
 
 - [538](https://github.com/FormidableLabs/victory-chart/pull/538) Adds `barRatio` and `cornerRadius` props to `VictoryBar`
