@@ -2,8 +2,28 @@ import { assign, uniq, range, last, isFunction, property, sortBy } from "lodash"
 import Helpers from "./helpers";
 import Collection from "./collection";
 import Scale from "./scale";
+import Immutable from "./immutable";
 
 export default {
+  datumProps: [
+    // Data coordinates
+    "x", "y", "y0", "_x", "_y", "_y0",
+    // Svg style properties (https://www.w3.org/TR/SVG2/styling.html#PresentationAttributes)
+    "alignment-baseline", "baseline-shift", "clip", "clip-path", "clip-rule", "color",
+    "color-interpolation", "color-interpolation-filters", "color-rendering", "cursor", "direction",
+    "display", "dominant-baseline", "fill", "fill-opacity", "fill-rule", "filter", "flood-color",
+    "flood-opacity", "font", "font-family", "font-size", "font-size-adjust", "font-stretch",
+    "font-style", "font-variant", "font-weight", "glyph-orientation-horizontal",
+    "glyph-orientation-vertical", "image-rendering", "letter-spacing", "lighting-color", "marker",
+    "marker-end", "marker-mid", "marker-start", "mask", "opacity", "overflow", "pointer-events",
+    "shape-rendering", "solid-color", "solid-opacity", "stop-color", "stop-opacity", "stroke",
+    "stroke-dasharray", "stroke-dashoffset", "stroke-linecap", "stroke-linejoin",
+    "stroke-miterlimit", "stroke-opacity", "stroke-width", "text-anchor", "text-decoration",
+    "text-overflow", "text-rendering", "unicode-bidi", "vector-effect", "visibility", "white-space",
+    "word-spacing", "writing-mode",
+    // Special case properties
+    "angle", "label", "width", "symbol", "size", "verticalAnchor"
+  ],
   /**
    * Returns an array of formatted data
    * @param {Object} props: the props object
@@ -12,7 +32,7 @@ export default {
   getData(props) {
     let data;
     if (props.data) {
-      if (props.data.length < 1) {
+      if (Immutable.isIterable(props.data) ? props.data.size < 1 : props.data.length < 1) {
         return [];
       } else {
         data = this.formatData(props.data, props);
@@ -55,6 +75,16 @@ export default {
     return values;
   },
 
+  trimDatum(datum) {
+    return this.datumProps.reduce((finalProps, prop) => {
+      const propValue = Immutable.isImmutable(datum) ? datum.get(prop) : datum[prop];
+      if (propValue !== undefined) {
+        finalProps[prop] = propValue;
+      }
+      return finalProps;
+    }, {});
+  },
+
   /**
    * Returns formatted data. Data accessors are applied, and string values are replaced.
    * @param {Array} dataset: the original domain
@@ -63,34 +93,44 @@ export default {
    * @returns {Array} the formatted data
    */
   formatData(dataset, props, stringMap) {
-    if (!Array.isArray(dataset)) {
+    const isArrayOrIterable = Array.isArray(dataset) || Immutable.isIterable(dataset);
+    if (!isArrayOrIterable) {
       return [];
     }
+
     stringMap = stringMap || {
       x: this.createStringMap(props, "x"),
       y: this.createStringMap(props, "y")
     };
+
     const accessor = {
       x: Helpers.createAccessor(props.x !== undefined ? props.x : "x"),
       y: Helpers.createAccessor(props.y !== undefined ? props.y : "y"),
       y0: Helpers.createAccessor(props.y0 !== undefined ? props.y0 : "y0")
     };
-    const data = dataset.map((datum, index) => {
-      const evaluatedX = datum._x !== undefined ? datum._x : accessor.x(datum);
-      const evaluatedY = datum._y !== undefined ? datum._y : accessor.y(datum);
-      const y0 = datum._y0 !== undefined ? datum._y0 : accessor.y0(datum);
+
+    const data = dataset.reduce((dataArr, datum, index) => {
+      const trimmedDatum = this.trimDatum(datum);
+
+      const evaluatedX = trimmedDatum._x !== undefined ? trimmedDatum._x : accessor.x(datum);
+      const evaluatedY = trimmedDatum._y !== undefined ? trimmedDatum._y : accessor.y(datum);
+      const y0 = trimmedDatum._y0 !== undefined ? trimmedDatum._y0 : accessor.y0(datum);
+
       const x = evaluatedX !== undefined ? evaluatedX : index;
-      const y = evaluatedY !== undefined ? evaluatedY : datum;
+      const y = evaluatedY !== undefined ? evaluatedY : trimmedDatum;
       const originalValues = y0 === undefined ? { x, y } : { x, y, y0 };
       const privateValues = y0 === undefined ? { _x: x, _y: y } : { _x: x, _y: y, _y0: y0 };
-      return assign(
-          originalValues, datum, privateValues,
+
+      return dataArr.concat([
+        assign(
+          originalValues, trimmedDatum, privateValues,
           // map string data to numeric values, and add names
           typeof x === "string" ? { _x: stringMap.x[x], xName: x } : {},
           typeof y === "string" ? { _y: stringMap.y[y], yName: y } : {},
           typeof y0 === "string" ? { _y0: stringMap.y[y0], yName: y0 } : {}
-        );
-    });
+        )
+      ]);
+    }, []);
 
     const sortedData = this.sortData(data, props.sortKey);
 
