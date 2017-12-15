@@ -233,7 +233,8 @@ export default {
    * @returns {Array} an array of strings
    */
   getStringsFromData(props, axis) {
-    if (!Array.isArray(props.data)) {
+    const isArrayOrIterable = Array.isArray(props.data) || Immutable.isIterable(props.data);
+    if (!isArrayOrIterable) {
       return [];
     }
     const key = typeof props[axis] === "undefined" ? axis : props[axis];
