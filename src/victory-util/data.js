@@ -5,7 +5,7 @@ import Scale from "./scale";
 import Immutable from "./immutable";
 
 export default {
-  datumProps: [
+  datumWhitelist: [
     // Data coordinates
     "x", "y", "y0", "_x", "_y", "_y0",
     // Svg style properties (https://www.w3.org/TR/SVG2/styling.html#PresentationAttributes)
@@ -22,7 +22,7 @@ export default {
     "text-overflow", "text-rendering", "unicode-bidi", "vector-effect", "visibility", "white-space",
     "word-spacing", "writing-mode",
     // Special case properties
-    "angle", "label", "width", "symbol", "size", "verticalAnchor"
+    "angle", "label", "width", "symbol", "size", "verticalAnchor", "sortKey", "eventKey"
   ],
   /**
    * Returns an array of formatted data
@@ -75,17 +75,6 @@ export default {
     return values;
   },
 
-  trimDatum(datum) {
-    const datumIsImmutable = Immutable.isImmutable(datum);
-    return this.datumProps.reduce((finalProps, prop) => {
-      const propValue = datumIsImmutable ? datum.get(prop) : datum[prop];
-      if (propValue !== undefined) {
-        finalProps[prop] = propValue;
-      }
-      return finalProps;
-    }, {});
-  },
-
   /**
    * Returns formatted data. Data accessors are applied, and string values are replaced.
    * @param {Array} dataset: the original domain
@@ -110,10 +99,10 @@ export default {
       y0: Helpers.createAccessor(props.y0 !== undefined ? props.y0 : "y0")
     };
 
-    const data = dataset.reduce((dataArr, datum, index) => {
+    const data = dataset.reduce((dataArr, datum, index) => { // eslint-disable-line complexity
       const trimmedDatum = Array.isArray(datum) || Immutable.isList(datum)
         ? datum
-        : this.trimDatum(datum);
+        : this.trimDatum(datum, props);
 
       const evaluatedX = trimmedDatum._x !== undefined ? trimmedDatum._x : accessor.x(datum);
       const evaluatedY = trimmedDatum._y !== undefined ? trimmedDatum._y : accessor.y(datum);
@@ -139,6 +128,36 @@ export default {
     const sortedData = this.sortData(data, props.sortKey);
 
     return this.cleanData(sortedData, props);
+  },
+
+  /**
+   * Returns data point with only whitelisted props.
+   * @param {Object} datum: the original data point
+   * @param {Object} props: the props object
+   * @returns {Object} the trimmed data point
+   */
+  trimDatum(datum, props) {
+    const getter = Immutable.isImmutable(datum)
+      ? (prop) => datum.get(prop)
+      : (prop) => datum[prop];
+
+    const trimmedDatum = this.datumWhitelist.reduce((finalProps, prop) => {
+      const propValue = getter(prop);
+      if (propValue !== undefined) {
+        finalProps[prop] = propValue;
+      }
+      return finalProps;
+    }, {});
+
+    if (props.eventKey !== undefined) {
+      trimmedDatum[props.eventKey] = getter(props.eventKey);
+    }
+
+    if (props.sortKey !== undefined) {
+      trimmedDatum[props.sortKey] = getter(props.sortKey);
+    }
+
+    return trimmedDatum;
   },
 
   /**

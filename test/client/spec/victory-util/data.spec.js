@@ -168,6 +168,38 @@ describe("helpers/data", () => {
       expect(returnData).to.eql(expectedReturnWithEventKeys);
     });
 
+    it("uses the event key when it is passed in", () => {
+      const data = [
+        { x: 2, y: 2, eventKey: 13 },
+        { x: 1, y: 3, eventKey: 21 },
+        { x: 3, y: 1, eventKey: 11 }
+      ];
+
+      const returnData = Data.getData({ data });
+
+      expect(returnData).to.eql([
+        { _x: 2, x: 2, _y: 2, y: 2, eventKey: 13 },
+        { _x: 1, x: 1, _y: 3, y: 3, eventKey: 21 },
+        { _x: 3, x: 3, _y: 1, y: 1, eventKey: 11 }
+      ]);
+    });
+
+    it("uses a custom event key when it is passed in", () => {
+      const data = [
+        { x: 2, y: 2, myEventKey: 3 },
+        { x: 1, y: 3, myEventKey: 2 },
+        { x: 3, y: 1, myEventKey: 1 }
+      ];
+
+      const returnData = Data.getData({ data, eventKey: "myEventKey" });
+
+      expect(returnData).to.eql([
+        { _x: 2, x: 2, _y: 2, y: 2, eventKey: 3, myEventKey: 3 },
+        { _x: 1, x: 1, _y: 3, y: 3, eventKey: 2, myEventKey: 2 },
+        { _x: 3, x: 3, _y: 1, y: 1, eventKey: 1, myEventKey: 1 }
+      ]);
+    });
+
     it("does not sort data when sort key not passed", () => {
       const data = [{ x: 2, y: 2 }, { x: 1, y: 3 }, { x: 3, y: 1 }];
 
