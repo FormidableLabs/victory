@@ -115,13 +115,12 @@ export default {
       const evaluatedX = trimmedDatum._x !== undefined ? trimmedDatum._x : accessor.x(datum);
       const evaluatedY = trimmedDatum._y !== undefined ? trimmedDatum._y : accessor.y(datum);
       const y0 = trimmedDatum._y0 !== undefined ? trimmedDatum._y0 : accessor.y0(datum);
-
       const x = evaluatedX !== undefined ? evaluatedX : index;
       const y = evaluatedY !== undefined ? evaluatedY : trimmedDatum;
       const originalValues = y0 === undefined ? { x, y } : { x, y, y0 };
       const privateValues = y0 === undefined ? { _x: x, _y: y } : { _x: x, _y: y, _y0: y0 };
 
-      return dataArr.concat([
+      dataArr.push(
         assign(
           originalValues, trimmedDatum, privateValues,
           // map string data to numeric values, and add names
@@ -129,7 +128,9 @@ export default {
           typeof y === "string" ? { _y: stringMap.y[y], yName: y } : {},
           typeof y0 === "string" ? { _y0: stringMap.y[y0], yName: y0 } : {}
         )
-      ]);
+      );
+
+      return dataArr;
     }, []);
 
     const sortedData = this.sortData(data, props.sortKey);
