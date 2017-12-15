@@ -76,8 +76,9 @@ export default {
   },
 
   trimDatum(datum) {
+    const datumIsImmutable = Immutable.isImmutable(datum);
     return this.datumProps.reduce((finalProps, prop) => {
-      const propValue = Immutable.isImmutable(datum) ? datum.get(prop) : datum[prop];
+      const propValue = datumIsImmutable ? datum.get(prop) : datum[prop];
       if (propValue !== undefined) {
         finalProps[prop] = propValue;
       }
@@ -110,7 +111,9 @@ export default {
     };
 
     const data = dataset.reduce((dataArr, datum, index) => {
-      const trimmedDatum = this.trimDatum(datum);
+      const trimmedDatum = Array.isArray(datum) || Immutable.isList(datum)
+        ? datum
+        : this.trimDatum(datum);
 
       const evaluatedX = trimmedDatum._x !== undefined ? trimmedDatum._x : accessor.x(datum);
       const evaluatedY = trimmedDatum._y !== undefined ? trimmedDatum._y : accessor.y(datum);
