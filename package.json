@@ -44,6 +44,7 @@
     "chai": "^3.5.0",
     "enzyme": "^3.1.0",
     "enzyme-adapter-react-16": "^1.0.3",
+    "immutable": "^3.8.2",
     "mocha": "^3.0.2",
     "prop-types": "^15.5.8",
     "react": "^16.0.0",
