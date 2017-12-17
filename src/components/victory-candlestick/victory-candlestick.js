@@ -71,14 +71,15 @@ class VictoryCandlestick extends React.Component {
   };
 
   static defaultProps = {
+    containerComponent: <VictoryContainer/>,
+    data: defaultData,
+    dataComponent: <Candle/>,
+    groupComponent: <g role="presentation"/>,
+    labelComponent: <VictoryLabel/>,
     samples: 50,
     scale: "linear",
-    data: defaultData,
+    sortOrder: "ascending",
     standalone: true,
-    dataComponent: <Candle/>,
-    labelComponent: <VictoryLabel/>,
-    containerComponent: <VictoryContainer/>,
-    groupComponent: <g role="presentation"/>,
     theme: VictoryTheme.grayscale
   };
 

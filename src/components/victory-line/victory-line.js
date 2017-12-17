@@ -44,14 +44,15 @@ class VictoryLine extends React.Component {
   };
 
   static defaultProps = {
-    samples: 50,
-    scale: "linear",
-    standalone: true,
-    sortKey: "x",
+    containerComponent: <VictoryContainer/>,
     dataComponent: <Curve/>,
     labelComponent: <VictoryLabel renderInPortal/>,
-    containerComponent: <VictoryContainer/>,
     groupComponent: <VictoryClipContainer/>,
+    samples: 50,
+    scale: "linear",
+    sortKey: "x",
+    sortOrder: "ascending",
+    standalone: true,
     theme: VictoryTheme.grayscale
   };
 

@@ -19,6 +19,7 @@ export const DataProps = {
     PropTypes.string,
     PropTypes.arrayOf(PropTypes.string)
   ]),
+  sortOrder: PropTypes.oneOf(["ascending", "descending"]),
   style: PropTypes.shape({
     parent: PropTypes.object, data: PropTypes.object, labels: PropTypes.object
   }),

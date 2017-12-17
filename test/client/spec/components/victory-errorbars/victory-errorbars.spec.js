@@ -74,6 +74,15 @@ describe("components/victory-errorbar", () => {
       expect(xValues).to.eql([0, 1, 2, 3, 4]);
     });
 
+    it("reversed sorted data with the sortOrder prop", () => {
+      const data = range(5).map((i) => ({ x: i, y: i, errorX: 0.1, errorY: 0.2 })).reverse();
+      const wrapper = shallow(
+        <VictoryErrorBar data={data} sortKey="x" sortOrder="descending"/>
+      );
+      const xValues = wrapper.find(ErrorBar).map((errorBar) => errorBar.prop("datum")._x);
+      expect(xValues).to.eql([4, 3, 2, 1, 0]);
+    });
+
     it("renders errors with error bars, check total svg lines", () => {
       const svgDimensions = { width: 350, height: 200, padding: 75 };
       const wrapper = render(

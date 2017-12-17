@@ -68,6 +68,20 @@ describe("components/victory-candlestick", () => {
       expect(points.length).to.equal(10);
     });
 
+    it("renders ordered bars when sortKey is passed", () => {
+      const data = range(5).map((i) => ({ x: i, open: i, close: i, high: i, low: i })).reverse();
+      const wrapper = shallow(<VictoryCandlestick data={data} sortKey="x"/>);
+      const xValues = wrapper.find(Candle).map((bar) => bar.prop("datum")._x);
+      expect(xValues).to.eql([0, 1, 2, 3, 4]);
+    });
+
+    it("renders reverse ordered bars when sortOrder is descending", () => {
+      const data = range(5).map((i) => ({ x: i, open: i, close: i, high: i, low: i })).reverse();
+      const wrapper = shallow(<VictoryCandlestick data={data} sortKey="x" sortOrder="descending"/>);
+      const xValues = wrapper.find(Candle).map((bar) => bar.prop("datum")._x);
+      expect(xValues).to.eql([4, 3, 2, 1, 0]);
+    });
+
     it("renders points for array-shaped data", () => {
       const data = range(20).map((i) => [i, i, i, i, i]);
       const wrapper = shallow(

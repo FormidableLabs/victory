@@ -29,13 +29,14 @@ class VictoryVoronoi extends React.Component {
   };
 
   static defaultProps = {
-    samples: 50,
-    scale: "linear",
-    standalone: true,
+    containerComponent: <VictoryContainer/>,
     dataComponent: <Voronoi/>,
     labelComponent: <VictoryLabel/>,
-    containerComponent: <VictoryContainer/>,
     groupComponent: <g role="presentation"/>,
+    samples: 50,
+    scale: "linear",
+    sortOrder: "ascending",
+    standalone: true,
     theme: VictoryTheme.grayscale
   };
 
