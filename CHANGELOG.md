@@ -1,5 +1,8 @@
 # VictoryChart Changelog
 
+## 24.4.0 (2017-12-17)
+- [541](https://github.com/FormidableLabs/victory-chart/pull/541) Implements `sortOrder` prop with "ascending" and "descending" options
+
 ## 24.3.1 (2017-12-08)
 
 - [540] (https://github.com/FormidableLabs/victory-chart/pull/540) Adds `allowSelection` boolean prop for `VictorySelectionContainer` (true by default)
