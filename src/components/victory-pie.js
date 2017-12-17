@@ -104,6 +104,7 @@ class VictoryPie extends React.Component {
       PropTypes.string,
       PropTypes.arrayOf(PropTypes.string)
     ]),
+    sortOder: PropTypes.oneOf(["ascending", "descending"]),
     standalone: PropTypes.bool,
     startAngle: PropTypes.number,
     style: PropTypes.shape({
@@ -138,6 +139,7 @@ class VictoryPie extends React.Component {
     labelComponent: <VictoryLabel/>,
     containerComponent: <VictoryContainer/>,
     groupComponent: <g/>,
+    sortOrder: "ascending",
     theme: VictoryTheme.grayscale
   };
 
