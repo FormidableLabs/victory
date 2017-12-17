@@ -196,6 +196,23 @@ describe("helpers/data", () => {
       ]);
     });
 
+    it("sorts data according to sort key and sort order", () => {
+      const data = [
+        { x: 1, y: 1, order: 2 },
+        { x: 3, y: 3, order: 1 },
+        { x: 2, y: 2, order: 3 }
+      ];
+
+      const returnData = Data.getData({ data, sortKey: "order", sortOrder: "descending" });
+
+      expect(returnData).to.eql([
+        { _x: 2, x: 2, _y: 2, y: 2, order: 3, eventKey: 0 },
+        { _x: 1, x: 1, _y: 1, y: 1, order: 2, eventKey: 1 },
+        { _x: 3, x: 3, _y: 3, y: 3, order: 1, eventKey: 2 }
+
+      ]);
+    });
+
     // Ensures previous VictoryLine api for sortKey prop stays consistent
     it("sorts data according to evaluated sort key when sort key is x or y", () => {
       const data = [
