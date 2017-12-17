@@ -1,6 +1,10 @@
 VictoryCore Changelog
 =====================
 
+## 20.4.0 (2017-12-17)
+
+- [322](https://github.com/FormidableLabs/victory-core/pull/322) Adds support for a `sortOrder` prop with values "ascending" or "descending"
+
 ## 20.3.0 (2017-12-04)
 
 - [320](https://github.com/FormidableLabs/victory-core/pull/320) Adds `rowGutter` and support for asymmetric gutters for both `gutter` and `rowGutter` in `VictoryLegend`
