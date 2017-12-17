@@ -126,10 +126,10 @@ export default {
         typeof _x === "string" ? { _x: stringMap.x[_x], x: _x } : {},
         typeof _y === "string" ? { _y: stringMap.y[_y], y: _y } : {}
       );
-    }), props.sortKey);
+    }), props.sortKey, props.sortOrder);
   },
 
-  sortData(dataset, sortKey) {
+  sortData(dataset, sortKey, sortOrder = "ascending") {
     if (!sortKey) {
       return dataset;
     }
@@ -138,7 +138,13 @@ export default {
       sortKey = `_${sortKey}`;
     }
 
-    return sortBy(dataset, sortKey);
+    const sortedData = sortBy(dataset, sortKey);
+
+    if (sortOrder === "descending") {
+      return sortedData.reverse();
+    }
+
+    return sortedData;
   },
 
   getDomain(props, axis) {

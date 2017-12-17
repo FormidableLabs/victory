@@ -51,13 +51,15 @@ class VictoryErrorBar extends React.Component {
   };
 
   static defaultProps = {
+    containerComponent: <VictoryContainer/>,
     data: defaultData,
-    scale: "linear",
-    standalone: true,
     dataComponent: <ErrorBar/>,
     labelComponent: <VictoryLabel/>,
-    containerComponent: <VictoryContainer/>,
     groupComponent: <g role="presentation"/>,
+    samples: 50,
+    scale: "linear",
+    sortOrder: "ascending",
+    standalone: true,
     theme: VictoryTheme.grayscale
   };
 

@@ -39,6 +39,7 @@ export default class VictoryGroup extends React.Component {
     groupComponent: <g/>,
     samples: 50,
     scale: "linear",
+    sortOrder: "ascending",
     standalone: true,
     theme: VictoryTheme.grayscale
   };

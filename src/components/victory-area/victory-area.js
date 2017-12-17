@@ -39,13 +39,15 @@ class VictoryArea extends React.Component {
   };
 
   static defaultProps = {
-    dataComponent: <Area/>,
-    labelComponent: <VictoryLabel renderInPortal/>,
-    scale: "linear",
-    samples: 50,
-    standalone: true,
     containerComponent: <VictoryContainer />,
+    dataComponent: <Area/>,
     groupComponent: <VictoryClipContainer/>,
+    labelComponent: <VictoryLabel renderInPortal/>,
+    samples: 50,
+    scale: "linear",
+    sortKey: "x",
+    sortOrder: "ascending",
+    standalone: true,
     theme: VictoryTheme.grayscale
   };
 

@@ -68,6 +68,26 @@ describe("components/victory-area", () => {
         .map((datum) => datum._x);
       expect(xValues).to.eql([0, 1, 2, 3, 4]);
     });
+
+    it("sorts data according to sortOrder prop", () => {
+      const props = {
+        scale: "linear",
+        interpolation: "linear",
+        sortKey: "x",
+        sortOrder: "descending",
+        data: range(5).map((i) => ({ x: i, y: i, y0: 0 })).reverse()
+      };
+      const wrapper = shallow(
+        <VictoryArea {...props}/>
+      );
+
+      const xValues = wrapper
+        .find(Area)
+        .first()
+        .prop("data")
+        .map((datum) => datum._x);
+      expect(xValues).to.eql([4, 3, 2, 1, 0]);
+    });
   });
 
   describe("event handling", () => {

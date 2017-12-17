@@ -41,13 +41,14 @@ class VictoryScatter extends React.Component {
   };
 
   static defaultProps = {
-    samples: 50,
-    scale: "linear",
-    standalone: true,
+    containerComponent: <VictoryContainer/>,
     dataComponent: <Point/>,
     labelComponent: <VictoryLabel/>,
-    containerComponent: <VictoryContainer/>,
     groupComponent: <g/>,
+    samples: 50,
+    scale: "linear",
+    sortOrder: "ascending",
+    standalone: true,
     theme: VictoryTheme.grayscale
   };
 

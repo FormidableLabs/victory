@@ -155,6 +155,25 @@ describe("components/victory-line", () => {
       expect(lines.props().data[0].t).to.equal(0);
       expect(lines.props().data[1].t).to.equal(1);
     });
+
+    it("reverses data with the sortOrder prop", () => {
+      const data = [
+        { t: 0, x: 10, y: 1 },
+        { t: 1, x: 9, y: 1 }
+      ];
+      const wrapper = shallow(
+        <VictoryLine data={data}
+          sortKey={'t'}
+          x={({ t }) => 10 - t}
+          y={() => 1}
+          sortOrder="descending"
+        />
+      );
+      const lines = wrapper.find(Curve);
+
+      expect(lines.props().data[0].t).to.equal(1);
+      expect(lines.props().data[1].t).to.equal(0);
+    });
   });
 
   describe("event handling", () => {

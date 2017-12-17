@@ -54,13 +54,15 @@ class VictoryBar extends React.Component {
   };
 
   static defaultProps = {
+    containerComponent: <VictoryContainer/>,
     data: defaultData,
     dataComponent: <Bar/>,
-    labelComponent: <VictoryLabel/>,
-    scale: "linear",
-    standalone: true,
-    containerComponent: <VictoryContainer/>,
     groupComponent: <g role="presentation"/>,
+    labelComponent: <VictoryLabel/>,
+    samples: 50,
+    scale: "linear",
+    sortOrder: "ascending",
+    standalone: true,
     theme: VictoryTheme.grayscale
   };
 

@@ -61,6 +61,16 @@ describe("components/victory-voronoi", () => {
       const xValues = wrapper.find(Voronoi).map((voronoi) => voronoi.prop("datum")._x);
       expect(xValues).to.eql([0, 1, 2, 3, 4]);
     });
+
+    it("reverses sorted data with the sortOrder prop", () => {
+      const data = range(5).map((i) => ({ x: i, y: i })).reverse();
+      const wrapper = shallow(
+        <VictoryVoronoi data={data} sortKey="x" sortOrder="descending"/>
+      );
+
+      const xValues = wrapper.find(Voronoi).map((voronoi) => voronoi.prop("datum")._x);
+      expect(xValues).to.eql([4, 3, 2, 1, 0]);
+    });
   });
 
   describe("event handling", () => {
