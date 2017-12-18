@@ -157,7 +157,7 @@ describe("components/victory-pie", () => {
       const data = range(9).map((i) => ({ x: i, y: i }));
 
       const wrapper = shallow(
-        <VictoryPie data={data} sortKey={"x"} sortOder={"descending"}/>
+        <VictoryPie data={data} sortKey={"x"} sortOrder={"descending"}/>
       );
       const xValues = wrapper.find(Slice).map((slice) => {
         return slice.prop("datum")._x;
