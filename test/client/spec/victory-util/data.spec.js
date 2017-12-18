@@ -250,11 +250,11 @@ const dataTest = {
       });
 
       it("sorts data according to sort key and sort order", () => {
-        const data = [
+        const data = createDataObj([
           { x: 1, y: 1, order: 2 },
           { x: 3, y: 3, order: 1 },
           { x: 2, y: 2, order: 3 }
-        ];
+        ]);
 
         const returnData = Data.getData({ data, sortKey: "order", sortOrder: "descending" });
 
