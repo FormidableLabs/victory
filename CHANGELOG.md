@@ -1,5 +1,9 @@
 # VictoryPie Changelog
 
+## 13.2.0 (2017-12-17)
+
+- [160](https://github.com/FormidableLabs/victory-pie/pull/160) Add `sortOrder` prop
+
 ## 13.1.0 (2017-11-07)
 
 - [158](https://github.com/FormidableLabs/victory-pie/pull/158) Update infrastructure for React 16
