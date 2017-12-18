@@ -150,7 +150,7 @@ export default {
         if (Array.isArray(key)) {
           return x.getIn(key);
         } else if (typeof key === "string") {
-          return x.getIn(key.split("."));
+          return x.getIn(key.replace("[", ".").replace("]", "").split("."));
         } else {
           return x.get(key);
         }
