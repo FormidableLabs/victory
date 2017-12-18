@@ -5,25 +5,6 @@ import Scale from "./scale";
 import Immutable from "./immutable";
 
 export default {
-  datumWhitelist: [
-    // Data coordinates
-    "x", "y", "y0", "_x", "_y", "_y0",
-    // Svg style properties (https://www.w3.org/TR/SVG2/styling.html#PresentationAttributes)
-    "alignment-baseline", "baseline-shift", "clip", "clip-path", "clip-rule", "color",
-    "color-interpolation", "color-interpolation-filters", "color-rendering", "cursor", "direction",
-    "display", "dominant-baseline", "fill", "fill-opacity", "fill-rule", "filter", "flood-color",
-    "flood-opacity", "font", "font-family", "font-size", "font-size-adjust", "font-stretch",
-    "font-style", "font-variant", "font-weight", "glyph-orientation-horizontal",
-    "glyph-orientation-vertical", "image-rendering", "letter-spacing", "lighting-color", "marker",
-    "marker-end", "marker-mid", "marker-start", "mask", "opacity", "overflow", "pointer-events",
-    "shape-rendering", "solid-color", "solid-opacity", "stop-color", "stop-opacity", "stroke",
-    "stroke-dasharray", "stroke-dashoffset", "stroke-linecap", "stroke-linejoin",
-    "stroke-miterlimit", "stroke-opacity", "stroke-width", "text-anchor", "text-decoration",
-    "text-overflow", "text-rendering", "unicode-bidi", "vector-effect", "visibility", "white-space",
-    "word-spacing", "writing-mode",
-    // Special case properties
-    "angle", "label", "width", "symbol", "size", "verticalAnchor", "sortKey", "eventKey"
-  ],
   /**
    * Returns an array of formatted data
    * @param {Object} props: the props object
@@ -100,21 +81,19 @@ export default {
     };
 
     const data = dataset.reduce((dataArr, datum, index) => { // eslint-disable-line complexity
-      const trimmedDatum = Array.isArray(datum) || Immutable.isList(datum)
-        ? datum
-        : this.trimDatum(datum, props);
+      datum = Immutable.isImmutable(datum) ? Immutable.shallowToJS(datum) : datum;
 
-      const evaluatedX = trimmedDatum._x !== undefined ? trimmedDatum._x : accessor.x(datum);
-      const evaluatedY = trimmedDatum._y !== undefined ? trimmedDatum._y : accessor.y(datum);
-      const y0 = trimmedDatum._y0 !== undefined ? trimmedDatum._y0 : accessor.y0(datum);
+      const evaluatedX = datum._x !== undefined ? datum._x : accessor.x(datum);
+      const evaluatedY = datum._y !== undefined ? datum._y : accessor.y(datum);
+      const y0 = datum._y0 !== undefined ? datum._y0 : accessor.y0(datum);
       const x = evaluatedX !== undefined ? evaluatedX : index;
-      const y = evaluatedY !== undefined ? evaluatedY : trimmedDatum;
+      const y = evaluatedY !== undefined ? evaluatedY : datum;
       const originalValues = y0 === undefined ? { x, y } : { x, y, y0 };
       const privateValues = y0 === undefined ? { _x: x, _y: y } : { _x: x, _y: y, _y0: y0 };
 
       dataArr.push(
         assign(
-          originalValues, trimmedDatum, privateValues,
+          originalValues, datum, privateValues,
           // map string data to numeric values, and add names
           typeof x === "string" ? { _x: stringMap.x[x], xName: x } : {},
           typeof y === "string" ? { _y: stringMap.y[y], yName: y } : {},
@@ -128,36 +107,6 @@ export default {
     const sortedData = this.sortData(data, props.sortKey, props.sortOrder);
 
     return this.cleanData(sortedData, props);
-  },
-
-  /**
-   * Returns data point with only whitelisted props.
-   * @param {Object} datum: the original data point
-   * @param {Object} props: the props object
-   * @returns {Object} the trimmed data point
-   */
-  trimDatum(datum, props) {
-    const getter = Immutable.isImmutable(datum)
-      ? (prop) => datum.get(prop)
-      : (prop) => datum[prop];
-
-    const trimmedDatum = this.datumWhitelist.reduce((finalProps, prop) => {
-      const propValue = getter(prop);
-      if (propValue !== undefined) {
-        finalProps[prop] = propValue;
-      }
-      return finalProps;
-    }, {});
-
-    if (props.eventKey !== undefined) {
-      trimmedDatum[props.eventKey] = getter(props.eventKey);
-    }
-
-    if (props.sortKey !== undefined) {
-      trimmedDatum[props.sortKey] = getter(props.sortKey);
-    }
-
-    return trimmedDatum;
   },
 
   /**
