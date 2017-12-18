@@ -125,7 +125,7 @@ export default {
       return dataArr;
     }, []);
 
-    const sortedData = this.sortData(data, props.sortKey);
+    const sortedData = this.sortData(data, props.sortKey, props.sortOrder);
 
     return this.cleanData(sortedData, props);
   },
@@ -165,9 +165,10 @@ export default {
    * Sort key should correspond to the `iteratees` argument in lodash `sortBy` function.
    * @param {Array} dataset: the original dataset
    * @param {mixed} sortKey: the sort key. Type is whatever lodash permits for `sortBy`
+   * @param {String} sortOrder: the sort Order - `ascending` (default) or `descending`
    * @returns {Array} the sorted data
    */
-  sortData(dataset, sortKey) {
+  sortData(dataset, sortKey, sortOrder = "ascending") {
     if (!sortKey) {
       return dataset;
     }
@@ -177,7 +178,13 @@ export default {
       sortKey = `_${sortKey}`;
     }
 
-    return sortBy(dataset, sortKey);
+    const sortedData = sortBy(dataset, sortKey);
+
+    if (sortOrder === "descending") {
+      return sortedData.reverse();
+    }
+
+    return sortedData;
   },
 
   /**
