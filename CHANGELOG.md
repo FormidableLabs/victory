@@ -1,5 +1,19 @@
 # Victory Changelog
 
+## 0.24.3 (2017-12-17)
+
+VictoryCore
+- [320](https://github.com/FormidableLabs/victory-core/pull/320) Adds `rowGutter` and support for asymmetric gutters for both `gutter` and `rowGutter` in `VictoryLegend`
+- [322](https://github.com/FormidableLabs/victory-core/pull/322) Adds support for a `sortOrder` prop with values "ascending" or "descending"
+
+VictoryChart
+- [540] (https://github.com/FormidableLabs/victory-chart/pull/540) Adds `allowSelection` boolean prop for `VictorySelectionContainer` (true by default)
+- [541](https://github.com/FormidableLabs/victory-chart/pull/541) Implements `sortOrder` prop with "ascending" and "descending" options
+
+VictoryPie
+- [160](https://github.com/FormidableLabs/victory-pie/pull/160) Add `sortOrder` prop
+
+
 ## 0.24.2 (2017-11-14)
 
 VictoryCore
