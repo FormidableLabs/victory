@@ -1,4 +1,4 @@
-/* eslint no-unused-expressions: 0 */
+/* eslint no-unused-expressions: 0, max-nested-callbacks: 0 */
 /* global sinon */
 
 import { Data } from "src/index";
@@ -69,7 +69,13 @@ const dataTest = {
 
     describe("getStringsFromData", () => {
       it("returns an array of strings from a data prop", () => {
-        const props = { data: createDataObj([{ x: "one", y: 1 }, { x: "red", y: 2 }, { x: "cat", y: 3 }]) };
+        const props = {
+          data: createDataObj([
+            { x: "one", y: 1 },
+            { x: "red", y: 2 },
+            { x: "cat", y: 3 }
+          ])
+        };
         const dataStrings = Data.getStringsFromData(props, "x");
         expect(dataStrings).to.eql(["one", "red", "cat"]);
       });
@@ -285,7 +291,9 @@ const dataTest = {
       it("generates a dataset from domain and samples", () => {
         const generatedReturn = [{ x: 0, y: 0 }, { x: 5, y: 5 }, { x: 10, y: 10 }];
         const expectedReturn = [
-          { _x: 0, x: 0, _y: 0, y: 0 }, { _x: 5, x: 5, _y: 5, y: 5 }, { _x: 10, x: 10, _y: 10, y: 10 }
+          { _x: 0, x: 0, _y: 0, y: 0 },
+          { _x: 5, x: 5, _y: 5, y: 5 },
+          { _x: 10, x: 10, _y: 10, y: 10 }
         ];
         const expectedReturnWithEventKeys = [
           { _x: 0, x: 0, _y: 0, y: 0, eventKey: 0 },
