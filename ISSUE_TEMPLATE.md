@@ -10,14 +10,15 @@
 
 * [ ] I've searched open issues to make sure I'm not opening a duplicate issue
 
-
 ### The Problem
 
 Describe the issue you're seeing, and what you expect the behavior to be.
 
 ### Reproduction
 
-Please try to reproduce the issue you're seeing in a sandbox. You can [fork this sandbox](https://codesandbox.io/s/m3xo745x2x) to get started. If you can't reproduce your issue in a sandbox, please list steps to reproduce your issue, and include exact version numbers for `victory` and `react`.
+Please try to reproduce the issue you're seeing in a sandbox. You can [fork this sandbox](https://codesandbox.io/s/m3xo745x2x) to get started.
+
+If you can't reproduce your issue in a sandbox, please create a minimal git repo that demonstrates the problem you're seeing. Include instructions for installing and reproducing your error.
 
 # Feature Requests
 
@@ -30,6 +31,3 @@ Please try to reproduce the issue you're seeing in a sandbox. You can [fork this
 ### Description
 
 Please describe the feature you're requesting in detail.
-
-
-
