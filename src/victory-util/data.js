@@ -5,6 +5,12 @@ import Scale from "./scale";
 import Immutable from "./immutable";
 
 export default {
+  // Some keys in each data point need to be converted to plain js
+  immutableDatumWhitelist: {
+    errorX: true,
+    errorY: true
+  },
+
   /**
    * Returns an array of formatted data
    * @param {Object} props: the props object
@@ -13,7 +19,7 @@ export default {
   getData(props) {
     let data;
     if (props.data) {
-      if (Immutable.isIterable(props.data) ? props.data.size < 1 : props.data.length < 1) {
+      if (this.getLength(props.data) < 1) {
         return [];
       } else {
         data = this.formatData(props.data, props);
@@ -81,7 +87,9 @@ export default {
     };
 
     const data = dataset.reduce((dataArr, datum, index) => { // eslint-disable-line complexity
-      datum = Immutable.isImmutable(datum) ? Immutable.shallowToJS(datum) : datum;
+      datum = Immutable.isImmutable(datum)
+        ? Immutable.shallowToJS(datum, this.immutableDatumWhitelist)
+        : datum;
 
       const evaluatedX = datum._x !== undefined ? datum._x : accessor.x(datum);
       const evaluatedY = datum._y !== undefined ? datum._y : accessor.y(datum);
@@ -279,15 +287,20 @@ export default {
    */
   downsample(data, maxPoints, startingIndex = 0) {
     // ensures that the downampling of data while zooming looks good.
-    if (data.length > maxPoints) {
+    const dataLength = this.getLength(data);
+    if (dataLength > maxPoints) {
       // limit k to powers of 2, e.g. 64, 128, 256
       // so that the same points will be chosen reliably, reducing flicker on zoom
-      const k = Math.pow(2, Math.ceil(Math.log2(data.length / maxPoints)));
+      const k = Math.pow(2, Math.ceil(Math.log2(dataLength / maxPoints)));
       return data.filter(
         // ensure modulo is always calculated from same reference: i + startingIndex
         (d, i) => (((i + startingIndex) % k) === 0)
       );
     }
     return data;
+  },
+
+  getLength(data) {
+    return Immutable.isIterable(data) ? data.size : data.length;
   }
 };
