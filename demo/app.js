@@ -23,6 +23,7 @@ import BrushContainerDemo from "./components/victory-brush-container-demo";
 import AnimationDemo from "./components/animation-demo";
 import SelectionDemo from "./components/selection-demo";
 import PolarDemo from "./components/victory-polar-chart-demo";
+import ImmutableDemo from "./components/immutable-demo";
 import DebugDemo from "./components/debug-demo";
 
 class Home extends React.Component {
@@ -72,6 +73,7 @@ class App extends React.Component {
     case "/selection-container": Child = SelectionDemo; break;
     case "/create-container": Child = CreateContainerDemo; break;
     case "/polar": Child = PolarDemo; break;
+    case "/immutable": Child = ImmutableDemo; break;
     case "/debug": Child = DebugDemo; break;
     default: Child = Home;
     }
@@ -104,6 +106,7 @@ class App extends React.Component {
           <li><a href="#/selection-container">Victory Selection Container Demo</a></li>
           <li><a href="#/create-container">createContainer Demo</a></li>
           <li><a href="#/polar">Polar Demo</a></li>
+          <li><a href="#/immutable">immutable.js demo</a></li>
         </ul>
         <Child/>
       </div>
