@@ -2,13 +2,14 @@
 import React from "react";
 import PropTypes from "prop-types";
 import { assign, merge, random, range } from "lodash";
-import { List, Map } from "immutable";
+import { fromJS } from "immutable";
 import { VictoryClipContainer, VictoryTheme } from "victory-core";
 
 import {
   VictoryArea,
   VictoryBar,
   VictoryChart,
+  VictoryErrorBar,
   VictoryGroup,
   VictoryLine,
   VictoryScatter,
@@ -76,27 +77,30 @@ class App extends React.Component {
       "plus"
     ];
     const elementNum = random(10, 40);
-    const rangeList = List(range(elementNum));
-    return rangeList.map((index) => {
-      const scaledIndex = Math.floor(index % 7);
-      return Map({
-        x: random(10, 50),
-        y: random(2, 100),
-        size: random(8) + 3,
-        symbol: symbols[scaledIndex],
-        fill: colors[random(0, 6)],
-        opacity: 1
-      });
-    });
+    return fromJS(
+      range(elementNum).map((index) => {
+        const scaledIndex = Math.floor(index % 7);
+        return {
+          x: random(10, 50),
+          y: random(2, 100),
+          size: random(8) + 3,
+          symbol: symbols[scaledIndex],
+          fill: colors[random(0, 6)],
+          opacity: 1
+        };
+      })
+    );
   }
 
   getMultiTransitionData() {
     const bars = random(3, 5);
-    return List(range(4)).map(() => {
-      return List(range(bars)).map((bar) => {
-        return Map({ x: bar + 1, y: random(2, 10) });
-      });
-    });
+    return fromJS(
+      range(4).map(() => {
+        return range(bars).map((bar) => {
+          return { x: bar + 1, y: random(2, 10) };
+        });
+      })
+    );
   }
 
   render() {
@@ -176,39 +180,39 @@ class App extends React.Component {
           >
             <VictoryStack>
               <VictoryArea name="area-1"
-                data={List([
-                  Map({ x: "a", y: 2 }),
-                  Map({ x: "b", y: 3 }),
-                  Map({ x: "c", y: 5 }),
-                  Map({ x: "d", y: 4 }),
-                  Map({ x: "e", y: 7 })
+                data={fromJS([
+                  { x: "a", y: 2 },
+                  { x: "b", y: 3 },
+                  { x: "c", y: 5 },
+                  { x: "d", y: 4 },
+                  { x: "e", y: 7 }
                 ])}
               />
               <VictoryArea name="area-2"
-                data={List([
-                  Map({ x: "a", y: 1 }),
-                  Map({ x: "b", y: 4 }),
-                  Map({ x: "c", y: 5 }),
-                  Map({ x: "d", y: 7 }),
-                  Map({ x: "e", y: 5 })
+                data={fromJS([
+                  { x: "a", y: 1 },
+                  { x: "b", y: 4 },
+                  { x: "c", y: 5 },
+                  { x: "d", y: 7 },
+                  { x: "e", y: 5 }
                 ])}
               />
               <VictoryArea name="area-3"
-                data={List([
-                  Map({ x: "a", y: 3 }),
-                  Map({ x: "b", y: 2 }),
-                  Map({ x: "c", y: 6 }),
-                  Map({ x: "d", y: 2 }),
-                  Map({ x: "e", y: 6 })
+                data={fromJS([
+                  { x: "a", y: 3 },
+                  { x: "b", y: 2 },
+                  { x: "c", y: 6 },
+                  { x: "d", y: 2 },
+                  { x: "e", y: 6 }
                 ])}
               />
               <VictoryArea name="area-4"
-                data={List([
-                  Map({ x: "a", y: 2 }),
-                  Map({ x: "b", y: 3 }),
-                  Map({ x: "c", y: 3 }),
-                  Map({ x: "d", y: 4 }),
-                  Map({ x: "e", y: 7 })
+                data={fromJS([
+                  { x: "a", y: 2 },
+                  { x: "b", y: 3 },
+                  { x: "c", y: 3 },
+                  { x: "d", y: 4 },
+                  { x: "e", y: 7 }
                 ])}
               />
             </VictoryStack>
@@ -233,18 +237,39 @@ class App extends React.Component {
           <VictoryLine
             style={chartStyle}
             labels={(datum) => Math.round(datum.y)}
-            data={List([
-              Map({ x: new Date(1982, 1, 1), y: 125 }),
-              Map({ x: new Date(1987, 1, 1), y: 257 }),
-              Map({ x: new Date(1993, 1, 1), y: 345 }),
-              Map({ x: new Date(1997, 1, 1), y: 515 }),
-              Map({ x: new Date(2001, 1, 1), y: 132 }),
-              Map({ x: new Date(2005, 1, 1), y: 305 }),
-              Map({ x: new Date(2011, 1, 1), y: 270 }),
-              Map({ x: new Date(2015, 1, 1), y: 470 })
+            data={fromJS([
+              { x: new Date(1982, 1, 1), y: 125 },
+              { x: new Date(1987, 1, 1), y: 257 },
+              { x: new Date(1993, 1, 1), y: 345 },
+              { x: new Date(1997, 1, 1), y: 515 },
+              { x: new Date(2001, 1, 1), y: 132 },
+              { x: new Date(2005, 1, 1), y: 305 },
+              { x: new Date(2011, 1, 1), y: 270 },
+              { x: new Date(2015, 1, 1), y: 470 }
             ])}
           />
         </div>
+
+        <VictoryChart style={chartStyle}>
+          <VictoryErrorBar
+            data={fromJS([
+              { x: 1, y: 1, errorX: [1, 0.5], errorY: .1 },
+              { x: 2, y: 2, errorX: [1, 3], errorY: .1 },
+              { x: 3, y: 3, errorX: [1, 3], errorY: [.2, .3] },
+              { x: 4, y: 2, errorX: [1, 0.5], errorY: .1 },
+              { x: 5, y: 1, errorX: [1, 0.5], errorY: .2 }
+            ])}
+          />
+          <VictoryLine
+            data={fromJS([
+              { x: 1, y: 1, errorX: [1, 0.5], errorY: .1 },
+              { x: 2, y: 2, errorX: [1, 3], errorY: .1 },
+              { x: 3, y: 3, errorX: [1, 3], errorY: [.2, .3] },
+              { x: 4, y: 2, errorX: [1, 0.5], errorY: .1 },
+              { x: 5, y: 1, errorX: [1, 0.5], errorY: .2 }
+            ])}
+          />
+        </VictoryChart>
       </div>
     );
   }
