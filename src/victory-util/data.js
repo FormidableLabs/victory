@@ -87,9 +87,7 @@ export default {
     };
 
     const data = dataset.reduce((dataArr, datum, index) => { // eslint-disable-line complexity
-      datum = Immutable.isImmutable(datum)
-        ? Immutable.shallowToJS(datum, this.immutableDatumWhitelist)
-        : datum;
+      datum = this.parseDatum(datum);
 
       const evaluatedX = datum._x !== undefined ? datum._x : accessor.x(datum);
       const evaluatedY = datum._y !== undefined ? datum._y : accessor.y(datum);
@@ -302,5 +300,11 @@ export default {
 
   getLength(data) {
     return Immutable.isIterable(data) ? data.size : data.length;
+  },
+
+  parseDatum(datum) {
+    return Immutable.isImmutable(datum)
+      ? Immutable.shallowToJS(datum, this.immutableDatumWhitelist)
+      : datum;
   }
 };
