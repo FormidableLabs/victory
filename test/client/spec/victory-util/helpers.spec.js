@@ -76,39 +76,27 @@ describe("helpers", () => {
     });
   });
 
-  const immutableAccessorTest = {
-    createDataObj: (x) => fromJS(x),
-    testLabel: "createAccessor for immutable"
-  };
+  describe("createAccessor", () => {
+    it("creates a valid object accessor from a property key", () => {
+      const accessor = Helpers.createAccessor("k");
+      expect(accessor({ k: 42 })).to.eql(42);
+    });
 
-  const accessorTest = {
-    createDataObj: (x) => x,
-    testLabel: "createAccessor"
-  };
+    it("creates a valid array accessor from an index", () => {
+      const accessor = Helpers.createAccessor(2);
+      expect(accessor([3, 4, 5])).to.eql(5);
+    });
 
-  [accessorTest, immutableAccessorTest].forEach(({ createDataObj, testLabel }) => {
-    describe(`${testLabel}`, () => {
-      it("creates a valid object accessor from a property key", () => {
-        const accessor = Helpers.createAccessor("k");
-        expect(accessor(createDataObj({ k: 42 }))).to.eql(42);
-      });
+    it("creates a valid array accessor from a deeply nested path", () => {
+      const accessor = Helpers.createAccessor("x.y[0].0.z");
+      expect(accessor({ x: { y: [[{ z: 1987 }]] } })).to.eql(1987);
+    });
 
-      it("creates a valid array accessor from an index", () => {
-        const accessor = Helpers.createAccessor(2);
-        expect(accessor(createDataObj([3, 4, 5]))).to.eql(5);
-      });
-
-      it("creates a valid array accessor from a deeply nested path", () => {
-        const accessor = Helpers.createAccessor("x.y[0].0.z");
-        expect(accessor(createDataObj({ x: { y: [[{ z: 1987 }]] } }))).to.eql(1987);
-      });
-
-      it("creates a value (passthrough) accessor from null/undefined", () => {
-        const nullAccessor = Helpers.createAccessor(null);
-        const undefinedAccessor = Helpers.createAccessor(undefined);
-        expect(nullAccessor("ok")).to.eql("ok");
-        expect(undefinedAccessor(14)).to.eql(14);
-      });
+    it("creates a value (passthrough) accessor from null/undefined", () => {
+      const nullAccessor = Helpers.createAccessor(null);
+      const undefinedAccessor = Helpers.createAccessor(undefined);
+      expect(nullAccessor("ok")).to.eql("ok");
+      expect(undefinedAccessor(14)).to.eql(14);
     });
   });
 

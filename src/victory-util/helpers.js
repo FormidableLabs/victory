@@ -1,7 +1,6 @@
 import React from "react";
 import { defaults, isFunction, property, omit, reduce } from "lodash";
 import Collection from "./collection";
-import Immutable from "./immutable";
 
 export default {
   getPoint(datum) {
@@ -145,18 +144,7 @@ export default {
       return (x) => x;
     }
     // otherwise, assume it is an array index, property key or path (_.property handles all three)
-    return (x) => {
-      if (Immutable.isImmutable(x)) {
-        if (Array.isArray(key)) {
-          return x.getIn(key);
-        } else if (typeof key === "string") {
-          return x.getIn(key.replace("[", ".").replace("]", "").split("."));
-        } else {
-          return x.get(key);
-        }
-      }
-      return property(key)(x);
-    };
+    return property(key);
   },
 
   modifyProps(props, fallbackProps, role) {
