@@ -1,10 +1,11 @@
 /*global window:false */
 import React from "react";
 import PropTypes from "prop-types";
-import { assign, merge, random, range, round } from "lodash";
+import { assign, merge, keys, random, range, round } from "lodash";
 import { fromJS } from "immutable";
 import {
   VictoryClipContainer,
+  VictoryLabel,
   VictoryLegend,
   VictoryTheme,
   VictoryTooltip
@@ -21,6 +22,7 @@ import {
   VictoryErrorBar,
   VictoryGroup,
   VictoryLine,
+  VictoryPolarAxis,
   VictoryScatter,
   VictorySelectionContainer,
   VictoryStack,
@@ -51,6 +53,12 @@ class Wrapper extends React.Component {
   }
 }
 
+const multiAxisData = [
+  { strength: 1, intelligence: 250, stealth: 45 },
+  { strength: 2, intelligence: 300, stealth: 75 },
+  { strength: 5, intelligence: 225, stealth: 60 }
+];
+
 class App extends React.Component {
   constructor(props) {
     super(props);
@@ -58,6 +66,8 @@ class App extends React.Component {
       scatterData: this.getScatterData(),
       multiTransitionData: this.getMultiTransitionData(),
       multiTransitionAreaData: this.getMultiTransitionAreaData(),
+      multiAxisData: this.processMultiAxisData(multiAxisData),
+      multiAxisMaxima: this.getMaxData(multiAxisData),
       zoomDomain: {}
     };
   }
@@ -127,6 +137,29 @@ class App extends React.Component {
           return { x: area, y: random(2, 10) };
         });
       })
+    );
+  }
+
+  getMaxData(data) {
+    const groupedData = keys(data[0]).reduce((memo, key) => {
+      memo[key] = data.map((d) => d[key]);
+      return memo;
+    }, {});
+    return keys(groupedData).reduce((memo, key) => {
+      memo[key] = Math.max(...groupedData[key]);
+      return memo;
+    }, {});
+  }
+
+  processMultiAxisData(data) {
+    const maxByGroup = this.getMaxData(data);
+    const makeDataArray = (d) => {
+      return keys(d).map((key) => {
+        return { x: key, y: d[key] / maxByGroup[key] };
+      });
+    };
+    return fromJS(
+      data.map((datum) => makeDataArray(datum))
     );
   }
 
@@ -812,6 +845,38 @@ class App extends React.Component {
                 labels={(d) => d.y}
                 labelComponent={<VictoryTooltip/>}
               />
+            </VictoryGroup>
+          </VictoryChart>
+
+          <VictoryChart polar
+            theme={VictoryTheme.material}
+            domain={{ y: [ 0, 1 ] }}
+            style={chartStyle}
+          >
+            {
+              keys(this.state.multiAxisMaxima).map((key, i) => {
+                return (
+                  <VictoryPolarAxis key={i} dependentAxis
+                    style={{
+                      axisLabel: { padding: 10 }
+                    }}
+                    tickLabelComponent={<VictoryLabel labelPlacement="vertical"/>}
+                    labelPlacement="perpendicular"
+                    axisValue={i + 1} label={key}
+                    tickFormat={(t) => t * this.state.multiAxisMaxima[key]}
+                    tickValues={[0.25, 0.5, 0.75]}
+                  />
+                );
+              })
+            }
+            <VictoryPolarAxis
+              labelPlacement="parallel"
+              tickFormat={() => ""}
+            />
+            <VictoryGroup colorScale="warm">
+              {this.state.multiAxisData.map((data, i) => {
+                return <VictoryLine key={i} data={data}/>;
+              })}
             </VictoryGroup>
           </VictoryChart>
         </div>
