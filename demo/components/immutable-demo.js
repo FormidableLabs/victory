@@ -1,4 +1,5 @@
-/*global window:false */
+/* global window:false */
+/* eslint-disable no-magic-numbers, react/no-multi-comp */
 import React from "react";
 import PropTypes from "prop-types";
 import { assign, merge, keys, random, range, round } from "lodash";
@@ -707,11 +708,7 @@ class App extends React.Component {
                 { name: "Three", symbol: { fill: "gold" } }
               ]}
             />
-            <VictoryLine data={
-              fromJS(
-                range(1500).map((x) => ({ x, y: x + 10 * Math.random() }))
-              )
-            }/>
+            <VictoryLine data={fromJS(range(1500).map((x) => ({ x, y: x + 10 * Math.random() })))}/>
           </VictoryChart>
 
           <div>
