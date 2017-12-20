@@ -1,7 +1,7 @@
 /*global window:false */
 import React from "react";
 import PropTypes from "prop-types";
-import { assign, merge, random, range } from "lodash";
+import { assign, merge, random, range, round } from "lodash";
 import { fromJS } from "immutable";
 import {
   VictoryClipContainer,
@@ -14,8 +14,10 @@ import {
   VictoryArea,
   VictoryAxis,
   VictoryBar,
+  VictoryBrushContainer,
   VictoryCandlestick,
   VictoryChart,
+  VictoryCursorContainer,
   VictoryErrorBar,
   VictoryGroup,
   VictoryLine,
@@ -53,7 +55,8 @@ class App extends React.Component {
     super(props);
     this.state = {
       scatterData: this.getScatterData(),
-      multiTransitionData: this.getMultiTransitionData()
+      multiTransitionData: this.getMultiTransitionData(),
+      zoomDomain: {}
     };
   }
 
@@ -634,6 +637,102 @@ class App extends React.Component {
               })}
             />
           </VictoryChart>
+
+          <VictoryChart style={chartStyle}
+            theme={VictoryTheme.material}
+            height={400}
+            padding={{ top: 100, bottom: 40, left: 50, right: 50 }}
+            containerComponent={
+              <VictoryCursorContainer
+                cursorLabel={(d) => `${round(d.x, 2)} , ${round(d.y, 2)}`}
+              />
+            }
+          >
+            <VictoryLegend x={90} y={10}
+              title="Legend"
+              centerTitle
+              orientation="horizontal"
+              gutter={20}
+              style={{ border: { stroke: "black" }, title: { fontSize: 20 } }}
+              data={[
+                { name: "One", symbol: { fill: "tomato" } },
+                { name: "Two", symbol: { fill: "orange" } },
+                { name: "Three", symbol: { fill: "gold" } }
+              ]}
+            />
+            <VictoryLine data={
+              fromJS(
+                range(1500).map((x) => ({ x, y: x + 10 * Math.random() }))
+              )
+            }/>
+          </VictoryChart>
+
+          <div>
+            <VictoryChart width={800} height={500} scale={{ x: "time" }}
+              containerComponent={
+                <VictoryZoomContainer responsive={false}
+                  zoomDomain={this.state.zoomDomain}
+                  zoomDimension="x"
+                  onZoomDomainChange={(domain) => this.setState({ zoomDomain: domain })}
+                />
+              }
+            >
+              <VictoryLine
+                style={{
+                  data: { stroke: "tomato" }
+                }}
+                data={fromJS([
+                  { x: new Date(1982, 1, 1), y: 125 },
+                  { x: new Date(1987, 1, 1), y: 257 },
+                  { x: new Date(1993, 1, 1), y: 345 },
+                  { x: new Date(1997, 1, 1), y: 515 },
+                  { x: new Date(2001, 1, 1), y: 132 },
+                  { x: new Date(2005, 1, 1), y: 305 },
+                  { x: new Date(2011, 1, 1), y: 270 },
+                  { x: new Date(2015, 1, 1), y: 470 }
+                ])}
+              />
+            </VictoryChart>
+
+            <VictoryChart
+              padding={{ top: 0, left: 50, right: 50, bottom: 30 }}
+              width={800} height={100} scale={{ x: "time" }}
+              containerComponent={
+                <VictoryBrushContainer responsive={false}
+                  brushDomain={this.state.zoomDomain}
+                  brushDimension="x"
+                  onBrushDomainChange={(domain) => this.setState({ zoomDomain: domain })}
+                />
+              }
+            >
+              <VictoryAxis
+                tickValues={[
+                  new Date(1985, 1, 1),
+                  new Date(1990, 1, 1),
+                  new Date(1995, 1, 1),
+                  new Date(2000, 1, 1),
+                  new Date(2005, 1, 1),
+                  new Date(2010, 1, 1)
+                ]}
+                tickFormat={(x) => new Date(x).getFullYear()}
+              />
+              <VictoryLine
+                style={{
+                  data: { stroke: "tomato" }
+                }}
+                data={fromJS([
+                  { x: new Date(1982, 1, 1), y: 125 },
+                  { x: new Date(1987, 1, 1), y: 257 },
+                  { x: new Date(1993, 1, 1), y: 345 },
+                  { x: new Date(1997, 1, 1), y: 515 },
+                  { x: new Date(2001, 1, 1), y: 132 },
+                  { x: new Date(2005, 1, 1), y: 305 },
+                  { x: new Date(2011, 1, 1), y: 270 },
+                  { x: new Date(2015, 1, 1), y: 470 }
+                ])}
+              />
+            </VictoryChart>
+          </div>
         </div>
       </div>
     );
