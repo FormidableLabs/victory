@@ -5,14 +5,12 @@ import { Data } from "src/index";
 import { fromJS } from "immutable";
 
 const immutableDataTest = {
-  createDataObj: (data) => fromJS(data),
-  readDataObj: (data) => data.toJS(),
+  createData: (data) => fromJS(data),
   testLabel: "data in immutable"
 };
 
 const dataTest = {
-  createDataObj: (data) => data,
-  readDataObj: (data) => data,
+  createData: (data) => data,
   testLabel: "data in js"
 };
 
@@ -48,9 +46,9 @@ describe("helpers/data", () => {
       expect(stringMap).to.eql({ red: 1, green: 2, blue: 3 });
     });
 
-    [dataTest, immutableDataTest].forEach(({ createDataObj, testLabel }) => {
+    [dataTest, immutableDataTest].forEach(({ createData, testLabel }) => {
       describe(`returning string maps with ${testLabel}`, () => {
-        const data = createDataObj([{ x: "one", y: 1 }, { x: "red", y: 2 }, { x: "cat", y: 3 }]);
+        const data = createData([{ x: "one", y: 1 }, { x: "red", y: 2 }, { x: "cat", y: 3 }]);
 
         it("returns a string map from strings in data", () => {
           const props = { data };
@@ -71,11 +69,11 @@ describe("helpers/data", () => {
     });
   });
 
-  [dataTest, immutableDataTest].forEach(({ createDataObj, testLabel }) => {
+  [dataTest, immutableDataTest].forEach(({ createData, testLabel }) => {
     describe(`getStringsFromData with ${testLabel}`, () => {
       it("returns an array of strings from a data prop", () => {
         const props = {
-          data: createDataObj([
+          data: createData([
             { x: "one", y: 1 },
             { x: "red", y: 2 },
             { x: "cat", y: 3 }
@@ -86,18 +84,18 @@ describe("helpers/data", () => {
       });
 
       it("returns an array of strings from array-type data", () => {
-        const props = { data: createDataObj([["one", 1], ["red", 2], ["cat", 3]]), x: 0, y: 1 };
+        const props = { data: createData([["one", 1], ["red", 2], ["cat", 3]]), x: 0, y: 1 };
         const dataStrings = Data.getStringsFromData(props, "x");
         expect(dataStrings).to.eql(["one", "red", "cat"]);
       });
 
       it("only returns strings, if data is mixed", () => {
-        const props = { data: createDataObj([{ x: 1, y: 1 }, { x: "three", y: 3 }]) };
+        const props = { data: createData([{ x: 1, y: 1 }, { x: "three", y: 3 }]) };
         expect(Data.getStringsFromData(props, "x")).to.eql(["three"]);
       });
 
       it("returns an empty array when no strings are present", () => {
-        const props = { data: createDataObj([{ x: 1, y: 1 }, { x: 3, y: 3 }]) };
+        const props = { data: createData([{ x: 1, y: 1 }, { x: 3, y: 3 }]) };
         expect(Data.getStringsFromData(props, "x")).to.eql([]);
       });
 
@@ -144,7 +142,7 @@ describe("helpers/data", () => {
     });
   });
 
-  [dataTest, immutableDataTest].forEach(({ createDataObj, readDataObj, testLabel }) => {
+  [dataTest, immutableDataTest].forEach(({ createData, testLabel }) => {
     describe(`formatData with ${testLabel}`, () => {
       let sandbox;
       beforeEach(() => {
@@ -157,10 +155,10 @@ describe("helpers/data", () => {
       });
 
       it("formats a single dataset", () => {
-        const dataset = createDataObj([{ _x: 1, _y: 3, x: 1, y: 3 }, { _x: 2, _y: 5, x: 2, y: 5 }]);
-        const props = { data: dataset };
+        const dataset = [{ _x: 1, _y: 3, x: 1, y: 3 }, { _x: 2, _y: 5, x: 2, y: 5 }];
+        const props = { data: createData(dataset) };
         const formatted = Data.formatData(dataset, props);
-        expect(Data.cleanData).called.and.returned(readDataObj(dataset));
+        expect(Data.cleanData).called.and.returned(dataset);
         expect(formatted).to.be.an.array;
         expect(formatted[0]).to.have.keys(["_x", "_y", "x", "y"]);
       });
@@ -180,10 +178,10 @@ describe("helpers/data", () => {
       sandbox.restore();
     });
 
-    [dataTest, immutableDataTest].forEach(({ createDataObj, testLabel }) => {
+    [dataTest, immutableDataTest].forEach(({ createData, testLabel }) => {
       describe(`with ${testLabel}`, () => {
         it("formats and returns the data prop", () => {
-          const data = createDataObj([{ x: "kittens", y: 3 }, { x: "cats", y: 5 }]);
+          const data = createData([{ x: "kittens", y: 3 }, { x: "cats", y: 5 }]);
           const props = { data, x: "x", y: "y" };
           const expectedReturn = [
             { _x: 1, x: "kittens", xName: "kittens", _y: 3, y: 3 },
@@ -200,7 +198,7 @@ describe("helpers/data", () => {
         });
 
         it("uses the event key when it is passed in", () => {
-          const data = createDataObj([
+          const data = createData([
             { x: 2, y: 2, eventKey: 13 },
             { x: 1, y: 3, eventKey: 21 },
             { x: 3, y: 1, eventKey: 11 }
@@ -216,7 +214,7 @@ describe("helpers/data", () => {
         });
 
         it("uses a custom event key when it is passed in", () => {
-          const data = createDataObj([
+          const data = createData([
             { x: 2, y: 2, myEventKey: 3 },
             { x: 1, y: 3, myEventKey: 2 },
             { x: 3, y: 1, myEventKey: 1 }
@@ -232,7 +230,7 @@ describe("helpers/data", () => {
         });
 
         it("does not sort data when sort key not passed", () => {
-          const data = createDataObj([{ x: 2, y: 2 }, { x: 1, y: 3 }, { x: 3, y: 1 }]);
+          const data = createData([{ x: 2, y: 2 }, { x: 1, y: 3 }, { x: 3, y: 1 }]);
 
           const returnData = Data.getData({ data });
 
@@ -244,7 +242,7 @@ describe("helpers/data", () => {
         });
 
         it("sorts data according to sort key", () => {
-          const data = createDataObj([
+          const data = createData([
             { x: 1, y: 1, order: 2 },
             { x: 3, y: 3, order: 1 },
             { x: 2, y: 2, order: 3 }
@@ -260,7 +258,7 @@ describe("helpers/data", () => {
         });
 
         it("sorts data according to sort key and sort order", () => {
-          const data = createDataObj([
+          const data = createData([
             { x: 1, y: 1, order: 2 },
             { x: 3, y: 3, order: 1 },
             { x: 2, y: 2, order: 3 }
@@ -278,7 +276,7 @@ describe("helpers/data", () => {
 
         // Ensures previous VictoryLine api for sortKey prop stays consistent
         it("sorts data according to evaluated sort key when sort key is x or y", () => {
-          const data = createDataObj([
+          const data = createData([
             { _x: 2, x: 10, _y: 2, y: 10 },
             { _x: 1, x: 20, _y: 3, y: 20 },
             { _x: 3, x: 30, _y: 1, y: 30 }
