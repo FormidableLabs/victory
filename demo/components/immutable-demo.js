@@ -125,6 +125,7 @@ class App extends React.Component {
     return (
       <div className="demo">
         <h1>with immutable.js data</h1>
+
         <div style={containerStyle}>
           <VictoryChart style={chartStyle} animate={{ duration: 2000 }}>
             <VictoryScatter
@@ -250,73 +251,112 @@ class App extends React.Component {
               { x: new Date(2015, 1, 1), y: 470 }
             ])}
           />
-        </div>
 
-        <VictoryChart style={chartStyle}>
-          <VictoryErrorBar
-            data={fromJS([
-              { x: 1, y: 1, errorX: [1, 0.5], errorY: .1 },
-              { x: 2, y: 2, errorX: [1, 3], errorY: .1 },
-              { x: 3, y: 3, errorX: [1, 3], errorY: [.2, .3] },
-              { x: 4, y: 2, errorX: [1, 0.5], errorY: .1 },
-              { x: 5, y: 1, errorX: [1, 0.5], errorY: .2 }
-            ])}
-          />
-          <VictoryLine
-            data={fromJS([
-              { x: 1, y: 1, errorX: [1, 0.5], errorY: .1 },
-              { x: 2, y: 2, errorX: [1, 3], errorY: .1 },
-              { x: 3, y: 3, errorX: [1, 3], errorY: [.2, .3] },
-              { x: 4, y: 2, errorX: [1, 0.5], errorY: .1 },
-              { x: 5, y: 1, errorX: [1, 0.5], errorY: .2 }
-            ])}
-          />
-        </VictoryChart>
+          <VictoryChart style={chartStyle}>
+            <VictoryErrorBar
+              data={fromJS([
+                { x: 1, y: 1, errorX: [1, 0.5], errorY: .1 },
+                { x: 2, y: 2, errorX: [1, 3], errorY: .1 },
+                { x: 3, y: 3, errorX: [1, 3], errorY: [.2, .3] },
+                { x: 4, y: 2, errorX: [1, 0.5], errorY: .1 },
+                { x: 5, y: 1, errorX: [1, 0.5], errorY: .2 }
+              ])}
+            />
+            <VictoryLine
+              data={fromJS([
+                { x: 1, y: 1, errorX: [1, 0.5], errorY: .1 },
+                { x: 2, y: 2, errorX: [1, 3], errorY: .1 },
+                { x: 3, y: 3, errorX: [1, 3], errorY: [.2, .3] },
+                { x: 4, y: 2, errorX: [1, 0.5], errorY: .1 },
+                { x: 5, y: 1, errorX: [1, 0.5], errorY: .2 }
+              ])}
+            />
+          </VictoryChart>
 
-        <svg height={500} width={500}>
-          <VictoryCandlestick
-            style={merge(
-              {},
-              chartStyle,
-              { data: { width: 10 } }
-            )}
-            data={fromJS([
-              { x: new Date(2016, 6, 1), open: 9, close: 30, high: 56, low: 7 },
-              { x: new Date(2016, 6, 2), open: 80, close: 40, high: 120, low: 10 },
-              { x: new Date(2016, 6, 3), open: 50, close: 80, high: 90, low: 20 },
-              { x: new Date(2016, 6, 4), open: 70, close: 22, high: 70, low: 5 },
-              { x: new Date(2016, 6, 5), open: 20, close: 35, high: 50, low: 10 },
-              { x: new Date(2016, 6, 6), open: 35, close: 30, high: 40, low: 3 },
-              { x: new Date(2016, 6, 7), open: 30, close: 90, high: 95, low: 30 },
-              { x: new Date(2016, 6, 8), open: 80, close: 81, high: 83, low: 75 }
-            ])}
-            size={8}
-            standalone={false}
-            events={[{
-              target: "labels",
-              eventHandlers: {
-                onClick: () => {
-                  return [
-                    {
-                      mutation: (props) => {
-                        return {
-                          style: merge({}, props.style.labels, { fill: "orange" })
-                        };
+          <svg height={500} width={500}>
+            <VictoryCandlestick
+              style={merge(
+                {},
+                chartStyle,
+                { data: { width: 10 } }
+              )}
+              data={fromJS([
+                { x: new Date(2016, 6, 1), open: 9, close: 30, high: 56, low: 7 },
+                { x: new Date(2016, 6, 2), open: 80, close: 40, high: 120, low: 10 },
+                { x: new Date(2016, 6, 3), open: 50, close: 80, high: 90, low: 20 },
+                { x: new Date(2016, 6, 4), open: 70, close: 22, high: 70, low: 5 },
+                { x: new Date(2016, 6, 5), open: 20, close: 35, high: 50, low: 10 },
+                { x: new Date(2016, 6, 6), open: 35, close: 30, high: 40, low: 3 },
+                { x: new Date(2016, 6, 7), open: 30, close: 90, high: 95, low: 30 },
+                { x: new Date(2016, 6, 8), open: 80, close: 81, high: 83, low: 75 }
+              ])}
+              size={8}
+              standalone={false}
+              events={[{
+                target: "labels",
+                eventHandlers: {
+                  onClick: () => {
+                    return [
+                      {
+                        mutation: (props) => {
+                          return {
+                            style: merge({}, props.style.labels, { fill: "orange" })
+                          };
+                        }
                       }
-                    }
-                  ];
+                    ];
+                  }
                 }
-              }
-            },
-            {
+              },
+              {
+                target: "data",
+                eventHandlers: {
+                  onClick: () => {
+                    return [
+                      {
+                        mutation: (props) => {
+                          return {
+                            style: merge({}, props.style, { fill: "blue" })
+                          };
+                        }
+                      }
+                    ];
+                  }
+                }
+              }]}
+            />
+            <VictoryAxis
+              standalone={false}
+            />
+          </svg>
+
+          <VictoryChart style={chartStyle} domainPadding={{ x: 30, y: 30 }}
+            events={[{
+              childName: "bar",
               target: "data",
+              eventKey: [1, 2],
               eventHandlers: {
                 onClick: () => {
                   return [
                     {
+                      target: "labels",
+                      eventKey: [3, 4, 5],
+                      mutation: () => {
+                        return { text: "o shit" };
+                      }
+                    }, {
+                      childName: "line",
+                      target: "data",
+                      mutation: (props) => {
+                        return { style: merge({}, props.style, { stroke: "lime" }) };
+                      }
+                    }, {
+                      childName: "line",
+                      target: "labels",
                       mutation: (props) => {
                         return {
-                          style: merge({}, props.style, { fill: "blue" })
+                          style: merge({}, props.style, { fill: "green" }),
+                          text: "waddup"
                         };
                       }
                     }
@@ -324,11 +364,31 @@ class App extends React.Component {
                 }
               }
             }]}
-          />
-          <VictoryAxis
-            standalone={false}
-          />
-        </svg>
+          >
+            <VictoryBar name="bar"
+              style={{ data: { width: 15, fill: "green" } }}
+              data={fromJS([
+                { x: 1, y: 1 },
+                { x: 2, y: 2 },
+                { x: 3, y: 3 },
+                { x: 4, y: 2 },
+                { x: 5, y: 1 },
+                { x: 6, y: 2 },
+                { x: 7, y: 3 },
+                { x: 8, y: 2 },
+                { x: 9, y: 1 },
+                { x: 10, y: 2 },
+                { x: 11, y: 3 },
+                { x: 12, y: 2 },
+                { x: 13, y: 1 }
+              ])}
+            />
+            <VictoryLine name="line"
+              y={() => 0.5}
+              style={{ data: { stroke: "blue", strokeWidth: 5 } }}
+            />
+          </VictoryChart>
+        </div>
       </div>
     );
   }
