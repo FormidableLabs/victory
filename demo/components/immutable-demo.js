@@ -3,7 +3,12 @@ import React from "react";
 import PropTypes from "prop-types";
 import { assign, merge, random, range } from "lodash";
 import { fromJS } from "immutable";
-import { VictoryClipContainer, VictoryTheme } from "victory-core";
+import {
+  VictoryClipContainer,
+  VictoryLegend,
+  VictoryTheme,
+  VictoryTooltip
+} from "victory-core";
 
 import {
   VictoryArea,
@@ -16,7 +21,9 @@ import {
   VictoryLine,
   VictoryScatter,
   VictoryStack,
-  VictoryVoronoi
+  VictoryVoronoi,
+  VictoryVoronoiContainer,
+  VictoryZoomContainer
 } from "../../src/index";
 
 class Wrapper extends React.Component {
@@ -471,6 +478,162 @@ class App extends React.Component {
               }
             ]}
           />
+
+          <VictoryCandlestick
+            style={chartStyle}
+            labelComponent={<VictoryTooltip/>}
+            labels={(d) => `hello #${d.x}`}
+            data={fromJS([
+              { x: 1, open: 5, close: 10, high: 15, low: 0 },
+              { x: 2, open: 15, close: 10, high: 20, low: 5 },
+              { x: 3, open: 15, close: 20, high: 25, low: 10 },
+              { x: 4, open: 20, close: 25, high: 30, low: 15 },
+              { x: 5, open: 30, close: 25, high: 35, low: 20 }
+            ])}
+          />
+
+          <VictoryChart style={chartStyle}
+            height={400}
+            padding={{ top: 80, bottom: 50, left: 50, right: 50 }}
+            containerComponent={<VictoryZoomContainer/>}
+            theme={VictoryTheme.material}
+            events={[{
+              childName: "area-1",
+              target: "data",
+              eventHandlers: {
+                onClick: () => ([
+                  {
+                    childName: "area-2",
+                    target: "data",
+                    mutation: (props) => {
+                      return { style: merge({}, props.style, { fill: "gold" }) };
+                    }
+                  }, {
+                    childName: "area-3",
+                    target: "data",
+                    mutation: (props) => {
+                      return {
+                        style: merge({}, props.style, { fill: "orange" })
+                      };
+                    }
+                  }, {
+                    childName: "area-4",
+                    target: "data",
+                    mutation: (props) => {
+                      return {
+                        style: merge({}, props.style, { fill: "red" })
+                      };
+                    }
+                  }
+                ])
+              }
+            }]}
+          >
+          <VictoryLegend x={83} y={10}
+            title="Legend"
+            centerTitle
+            orientation="horizontal"
+            gutter={20}
+            style={{ border: { stroke: "black" }, title: { fontSize: 20 } }}
+            data={[
+              { name: "One", symbol: { fill: "tomato" } },
+              { name: "Two", symbol: { fill: "orange" } },
+              { name: "Three", symbol: { fill: "gold" } }
+            ]}
+          />
+            <VictoryAxis/>
+            <VictoryStack>
+              <VictoryArea name="area-1"
+                data={fromJS([
+                  { x: "a", y: 2 },
+                  { x: "b", y: 3 },
+                  { x: "c", y: 5 },
+                  { x: "d", y: 4 },
+                  { x: "e", y: 7 }
+                ])}
+              />
+              <VictoryArea name="area-2"
+                data={fromJS([
+                  { x: "a", y: 1 },
+                  { x: "b", y: 4 },
+                  { x: "c", y: 5 },
+                  { x: "d", y: 7 },
+                  { x: "e", y: 5 }
+                ])}
+              />
+              <VictoryArea name="area-3"
+                data={fromJS([
+                  { x: "a", y: 3 },
+                  { x: "b", y: 2 },
+                  { x: "c", y: 6 },
+                  { x: "d", y: 2 },
+                  { x: "e", y: 6 }
+                ])}
+              />
+              <VictoryArea name="area-4"
+                data={fromJS([
+                  { x: "a", y: 2 },
+                  { x: "b", y: 3 },
+                  { x: "c", y: 3 },
+                  { x: "d", y: 4 },
+                  { x: "e", y: 7 }
+                ])}
+              />
+            </VictoryStack>
+            <VictoryAxis dependentAxis/>
+          </VictoryChart>
+
+          <VictoryChart style={chartStyle}
+            theme={VictoryTheme.material}
+            domainPadding={{ y: 2 }}
+            containerComponent={
+              <VictoryVoronoiContainer voronoiDimension="x"
+                labels={(d) => `y:${d.y}`}
+                labelComponent={
+                  <VictoryTooltip
+                    y={150}
+                    flyoutStyle={{ fill: "white" }}
+                    style={[{ fill: "green" }, { fill: "magenta" }]}
+                  />
+                }
+              />
+            }
+          >
+            <VictoryLine
+              data={fromJS([
+                { x: 1, y: 5, l: "one" },
+                { x: 1.5, y: 5, l: "one point five" },
+                { x: 2, y: 4, l: "two" },
+                { x: 3, y: -2, l: "three" }
+              ])}
+              style={{
+                data: { stroke: "tomato", strokeWidth: (d, active) => active ? 4 : 2 },
+                labels: { fill: "tomato" }
+              }}
+            />
+            <VictoryLine
+              data={fromJS([
+                { x: 1, y: -3, l: "red" },
+                { x: 2, y: 5, l: "green" },
+                { x: 3, y: 3, l: "blue" }
+              ])}
+              style={{
+                data: { stroke: "blue", strokeWidth: (d, active) => active ? 4 : 2 },
+                labels: { fill: "blue" }
+              }}
+            />
+            <VictoryLine
+              data={fromJS([
+                { x: 1, y: 5, l: "cat" },
+                { x: 2, y: -4, l: "dog" },
+                { x: 3, y: -2, l: "bird" }
+              ])}
+              style={fromJS({
+                data: { stroke: "black", strokeWidth: (d, active) => active ? 4 : 2 },
+                labels: { fill: "black" }
+              })}
+            />
+          </VictoryChart>
         </div>
       </div>
     );
