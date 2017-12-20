@@ -15,7 +15,8 @@ import {
   VictoryGroup,
   VictoryLine,
   VictoryScatter,
-  VictoryStack
+  VictoryStack,
+  VictoryVoronoi
 } from "../../src/index";
 
 class Wrapper extends React.Component {
@@ -388,6 +389,88 @@ class App extends React.Component {
               style={{ data: { stroke: "blue", strokeWidth: 5 } }}
             />
           </VictoryChart>
+
+          <VictoryChart style={chartStyle} domainPadding={20}>
+            <VictoryStack
+              style={{
+                data: { strokeDasharray: "10, 5" }
+              }}
+              colorScale="qualitative"
+            >
+              <VictoryGroup
+                color={"purple"}
+                data={fromJS([
+                  { x: 1, y: 3 },
+                  { x: 2, y: 4 },
+                  { x: 3, y: 2 }
+                ])}
+                style={{
+                  data: { width: 40, opacity: 0.6 }
+                }}
+              >
+                <VictoryBar/>
+                <VictoryLine/>
+              </VictoryGroup>
+              <VictoryGroup
+                data={fromJS([
+                  { x: 1, y: 4 },
+                  { x: 2, y: 5 },
+                  { x: 3, y: 1 }
+                ])}
+                style={{
+                  data: { width: 20, opacity: 0.8 }
+                }}
+              >
+                <VictoryBar/>
+                <VictoryLine/>
+              </VictoryGroup>
+              <VictoryGroup
+                data={fromJS([
+                  { x: 1, y: 3 },
+                  { x: 2, y: 2 },
+                  { x: 3, y: 5 }
+                ])}
+                style={{
+                  data: { width: 10, opacity: 1 }
+                }}
+              >
+                <VictoryBar/>
+                <VictoryLine/>
+                <VictoryScatter
+                  symbol={"plus"}
+                  size={10}
+                  style={{
+                    data: { fill: "tomato" }
+                  }}
+                />
+              </VictoryGroup>
+            </VictoryStack>
+          </VictoryChart>
+
+          <VictoryVoronoi
+            style={merge({}, chartStyle, {
+              data: { fill: "gray", opacity: 0.1, stroke: "black", strokeWidth: 2 }
+            })}
+            data={fromJS([
+              { x: 1, y: 1 },
+              { x: 2, y: 2 },
+              { x: 3, y: 3 },
+              { x: 4, y: 2 },
+              { x: 5, y: 1 }
+            ])}
+            events={[
+              {
+                target: "data",
+                eventHandlers: {
+                  onClick: () => ([
+                    {
+                      mutation: () => ({ style: { fill: "orange" } })
+                    }
+                  ])
+                }
+              }
+            ]}
+          />
         </div>
       </div>
     );
