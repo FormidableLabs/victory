@@ -22,6 +22,7 @@ import {
   VictoryGroup,
   VictoryLine,
   VictoryScatter,
+  VictorySelectionContainer,
   VictoryStack,
   VictoryVoronoi,
   VictoryVoronoiContainer,
@@ -56,6 +57,7 @@ class App extends React.Component {
     this.state = {
       scatterData: this.getScatterData(),
       multiTransitionData: this.getMultiTransitionData(),
+      multiTransitionAreaData: this.getMultiTransitionAreaData(),
       zoomDomain: {}
     };
   }
@@ -65,7 +67,8 @@ class App extends React.Component {
     this.setStateInterval = window.setInterval(() => {
       this.setState({
         scatterData: this.getScatterData(),
-        multiTransitionData: this.getMultiTransitionData()
+        multiTransitionData: this.getMultiTransitionData(),
+        multiTransitionAreaData: this.getMultiTransitionAreaData()
       });
     }, 3000);
   }
@@ -111,6 +114,17 @@ class App extends React.Component {
       range(4).map(() => {
         return range(bars).map((bar) => {
           return { x: bar + 1, y: random(2, 10) };
+        });
+      })
+    );
+  }
+
+  getMultiTransitionAreaData() {
+    const areas = random(8, 10);
+    return fromJS(
+      range(8).map(() => {
+        return range(areas).map((area) => {
+          return { x: area, y: random(2, 10) };
         });
       })
     );
@@ -733,6 +747,73 @@ class App extends React.Component {
               />
             </VictoryChart>
           </div>
+
+          <VictoryChart
+            style={chartStyle}
+            animate
+            theme={VictoryTheme.material}
+          >
+            <VictoryStack
+              colorScale={"warm"}
+            >
+              {this.state.multiTransitionAreaData.map((data, index) => {
+                return (
+                  <VictoryArea
+                    key={index}
+                    data={data}
+                    interpolation={"basis"}
+                  />
+                );
+              })}
+            </VictoryStack>
+          </VictoryChart>
+
+          <VictoryChart style={chartStyle}
+            containerComponent={<VictorySelectionContainer/>}
+          >
+            <VictoryGroup
+              data={fromJS([
+                { x: 1, y: 5 },
+                { x: 2, y: 4 },
+                { x: 3, y: -2 }
+              ])}
+            >
+              <VictoryLine style={{ data: { stroke: "tomato" } }}/>
+              <VictoryScatter
+                style={{ data: { fill: (d, active) => active ? "tomato" : "gray" } }}
+                labels={(d) => d.y}
+                labelComponent={<VictoryTooltip/>}
+              />
+            </VictoryGroup>
+            <VictoryGroup
+              data={fromJS([
+                { x: 1, y: -3 },
+                { x: 2, y: 5 },
+                { x: 3, y: 3 }
+              ])}
+            >
+              <VictoryLine style={{ data: { stroke: "blue" } }}/>
+              <VictoryScatter
+                style={{ data: { fill: (d, active) => active ? "blue" : "gray" } }}
+                labels={(d) => d.y}
+                labelComponent={<VictoryTooltip/>}
+              />
+            </VictoryGroup>
+            <VictoryGroup
+              data={fromJS([
+                { x: 1, y: 5 },
+                { x: 2, y: -4 },
+                { x: 3, y: -2 }
+              ])}
+            >
+              <VictoryLine style={{ data: { stroke: "black" } }}/>
+              <VictoryScatter
+                style={{ data: { fill: (d, active) => active ? "black" : "gray" } }}
+                labels={(d) => d.y}
+                labelComponent={<VictoryTooltip/>}
+              />
+            </VictoryGroup>
+          </VictoryChart>
         </div>
       </div>
     );
