@@ -1,5 +1,4 @@
 /* eslint no-unused-expressions: 0 */
-import { fromJS } from "immutable";
 import Helpers from "src/victory-util/helpers";
 
 describe("helpers", () => {

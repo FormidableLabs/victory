@@ -218,11 +218,16 @@ export default {
     if (!isArrayOrIterable) {
       return [];
     }
+
     const key = typeof props[axis] === "undefined" ? axis : props[axis];
     const accessor = Helpers.createAccessor(key);
-    const dataStrings = (props.data)
-        .map((datum) => accessor(datum))
-        .filter((datum) => typeof datum === "string");
+
+    const dataStrings = props.data.reduce((dataArr, datum) => {
+      datum = this.parseDatum(datum);
+      dataArr.push(accessor(datum));
+      return dataArr;
+    }, []).filter((datum) => typeof datum === "string");
+
     // return a unique set of strings
     return dataStrings.reduce((prev, curr) => {
       if (typeof curr !== "undefined" && curr !== null && prev.indexOf(curr) === -1) {
