@@ -78,7 +78,7 @@ export default {
   },
 
   getData(props) {
-    if (!props.data || props.data.length < 1) {
+    if (!props.data || Data.getLength(props.data) < 1) {
       return [];
     }
     const stringMap = {
@@ -92,7 +92,10 @@ export default {
       high: Helpers.createAccessor(props.high !== undefined ? props.high : "high"),
       low: Helpers.createAccessor(props.low !== undefined ? props.low : "low")
     };
-    return this.sortData(props.data.map((datum, index) => {
+
+    const formattedData = props.data.reduce((dataArr, datum, index) => {
+      datum = Data.parseDatum(datum);
+
       const evaluatedX = accessor.x(datum);
       const _x = evaluatedX !== undefined ? evaluatedX : index;
       const _open = accessor.open(datum);
@@ -100,13 +103,20 @@ export default {
       const _high = accessor.high(datum);
       const _low = accessor.low(datum);
       const _y = [_open, _close, _high, _low];
-      return assign(
-        {},
-        datum,
-        { _x, _y, _open, _close, _high, _low },
-        typeof _x === "string" ? { _x: stringMap.x[_x], x: _x } : {}
+
+      dataArr.push(
+        assign(
+          {},
+          datum,
+          { _x, _y, _open, _close, _high, _low },
+          typeof _x === "string" ? { _x: stringMap.x[_x], x: _x } : {}
+        )
       );
-    }), props.sortKey, props.sortOrder);
+
+      return dataArr;
+    }, []);
+
+    return this.sortData(formattedData, props.sortKey, props.sortOrder);
   },
 
   sortData(dataset, sortKey, sortOrder = "ascending") {

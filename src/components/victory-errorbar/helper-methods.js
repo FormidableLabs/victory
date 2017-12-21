@@ -57,7 +57,7 @@ export default {
 
   getErrorData(props) {
     if (props.data) {
-      if (props.data.length < 1) {
+      if (Data.getLength(props.data) < 1) {
         return [];
       }
 
@@ -89,7 +89,7 @@ export default {
   },
 
   formatErrorData(dataset, props) {
-    if (!dataset) {
+    if (!dataset || Data.getLength(dataset) < 1) {
       return [];
     }
     const accessor = {
@@ -110,7 +110,9 @@ export default {
       y: Data.createStringMap(props, "y")
     };
 
-    return this.sortData(dataset.map((datum, index) => {
+    const formattedData = dataset.reduce((dataArr, datum, index) => {
+      datum = Data.parseDatum(datum);
+
       const evaluatedX = accessor.x(datum);
       const evaluatedY = accessor.y(datum);
       const _x = evaluatedX !== undefined ? evaluatedX : index;
@@ -118,15 +120,21 @@ export default {
       const errorX = replaceNegatives(accessor.errorX(datum));
       const errorY = replaceNegatives(accessor.errorY(datum));
 
-      return assign(
-        {},
-        datum,
-        { _x, _y, errorX, errorY },
-        // map string data to numeric values, and add names
-        typeof _x === "string" ? { _x: stringMap.x[_x], x: _x } : {},
-        typeof _y === "string" ? { _y: stringMap.y[_y], y: _y } : {}
+      dataArr.push(
+        assign(
+          {},
+          datum,
+          { _x, _y, errorX, errorY },
+          // map string data to numeric values, and add names
+          typeof _x === "string" ? { _x: stringMap.x[_x], x: _x } : {},
+          typeof _y === "string" ? { _y: stringMap.y[_y], y: _y } : {}
+        )
       );
-    }), props.sortKey, props.sortOrder);
+
+      return dataArr;
+    }, []);
+
+    return this.sortData(formattedData, props.sortKey, props.sortOrder);
   },
 
   sortData(dataset, sortKey, sortOrder = "ascending") {

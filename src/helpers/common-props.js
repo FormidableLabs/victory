@@ -8,7 +8,7 @@ export const DataProps = {
       x: PropTypes.arrayOf(PropTypes.string), y: PropTypes.arrayOf(PropTypes.string)
     })
   ]),
-  data: PropTypes.array,
+  data: PropTypes.oneOfType([PropTypes.array, PropTypes.object]),
   dataComponent: PropTypes.element,
   labelComponent: PropTypes.element,
   labels: PropTypes.oneOfType([ PropTypes.func, PropTypes.array ]),
