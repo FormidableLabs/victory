@@ -1,6 +1,11 @@
 VictoryCore Changelog
 =====================
 
+## 20.5.0 (2017-12-21)
+
+-[323](https://github.com/FormidableLabs/victory-core/pull/323) Add support for immutable data structures
+*note: compatible with `immutable@v3.8.x` and will be compatible with `immutable@v4.0.x` when released*
+
 ## 20.4.0 (2017-12-17)
 
 - [322](https://github.com/FormidableLabs/victory-core/pull/322) Adds support for a `sortOrder` prop with values "ascending" or "descending"
