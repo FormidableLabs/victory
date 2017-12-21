@@ -1,5 +1,9 @@
 # VictoryChart Changelog
 
+## 24.5.0 (2017-12-21)
+
+- [542](https://github.com/FormidableLabs/victory-chart/pull/542) Adds support for immutable data *note: compatible with `immutable@v3.8.x` and will be compatible with `immutable@v4.0.x` when released*
+
 ## 24.4.0 (2017-12-17)
 - [541](https://github.com/FormidableLabs/victory-chart/pull/541) Implements `sortOrder` prop with "ascending" and "descending" options
 
