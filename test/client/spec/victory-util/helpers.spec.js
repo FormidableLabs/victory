@@ -1,6 +1,6 @@
 /* eslint no-unused-expressions: 0 */
-
 import Helpers from "src/victory-util/helpers";
+
 describe("helpers", () => {
   describe("evaluateProp", () => {
     const data = { x: 3, y: 2 };

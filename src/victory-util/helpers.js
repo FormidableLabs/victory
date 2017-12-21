@@ -1,6 +1,6 @@
+import React from "react";
 import { defaults, isFunction, property, omit, reduce } from "lodash";
 import Collection from "./collection";
-import React from "react";
 
 export default {
   getPoint(datum) {

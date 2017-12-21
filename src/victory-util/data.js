@@ -2,8 +2,15 @@ import { assign, uniq, range, last, isFunction, property, sortBy } from "lodash"
 import Helpers from "./helpers";
 import Collection from "./collection";
 import Scale from "./scale";
+import Immutable from "./immutable";
 
 export default {
+  // Some keys in each data point need to be converted to plain js
+  immutableDatumWhitelist: {
+    errorX: true,
+    errorY: true
+  },
+
   /**
    * Returns an array of formatted data
    * @param {Object} props: the props object
@@ -12,7 +19,7 @@ export default {
   getData(props) {
     let data;
     if (props.data) {
-      if (props.data.length < 1) {
+      if (this.getLength(props.data) < 1) {
         return [];
       } else {
         data = this.formatData(props.data, props);
@@ -63,19 +70,25 @@ export default {
    * @returns {Array} the formatted data
    */
   formatData(dataset, props, stringMap) {
-    if (!Array.isArray(dataset)) {
+    const isArrayOrIterable = Array.isArray(dataset) || Immutable.isIterable(dataset);
+    if (!isArrayOrIterable) {
       return [];
     }
+
     stringMap = stringMap || {
       x: this.createStringMap(props, "x"),
       y: this.createStringMap(props, "y")
     };
+
     const accessor = {
       x: Helpers.createAccessor(props.x !== undefined ? props.x : "x"),
       y: Helpers.createAccessor(props.y !== undefined ? props.y : "y"),
       y0: Helpers.createAccessor(props.y0 !== undefined ? props.y0 : "y0")
     };
-    const data = dataset.map((datum, index) => {
+
+    const data = dataset.reduce((dataArr, datum, index) => { // eslint-disable-line complexity
+      datum = this.parseDatum(datum);
+
       const evaluatedX = datum._x !== undefined ? datum._x : accessor.x(datum);
       const evaluatedY = datum._y !== undefined ? datum._y : accessor.y(datum);
       const y0 = datum._y0 !== undefined ? datum._y0 : accessor.y0(datum);
@@ -83,14 +96,19 @@ export default {
       const y = evaluatedY !== undefined ? evaluatedY : datum;
       const originalValues = y0 === undefined ? { x, y } : { x, y, y0 };
       const privateValues = y0 === undefined ? { _x: x, _y: y } : { _x: x, _y: y, _y0: y0 };
-      return assign(
+
+      dataArr.push(
+        assign(
           originalValues, datum, privateValues,
           // map string data to numeric values, and add names
           typeof x === "string" ? { _x: stringMap.x[x], xName: x } : {},
           typeof y === "string" ? { _y: stringMap.y[y], yName: y } : {},
           typeof y0 === "string" ? { _y0: stringMap.y[y0], yName: y0 } : {}
-        );
-    });
+        )
+      );
+
+      return dataArr;
+    }, []);
 
     const sortedData = this.sortData(data, props.sortKey, props.sortOrder);
 
@@ -196,14 +214,20 @@ export default {
    * @returns {Array} an array of strings
    */
   getStringsFromData(props, axis) {
-    if (!Array.isArray(props.data)) {
+    const isArrayOrIterable = Array.isArray(props.data) || Immutable.isIterable(props.data);
+    if (!isArrayOrIterable) {
       return [];
     }
+
     const key = typeof props[axis] === "undefined" ? axis : props[axis];
     const accessor = Helpers.createAccessor(key);
-    const dataStrings = (props.data)
-        .map((datum) => accessor(datum))
-        .filter((datum) => typeof datum === "string");
+
+    const dataStrings = props.data.reduce((dataArr, datum) => {
+      datum = this.parseDatum(datum);
+      dataArr.push(accessor(datum));
+      return dataArr;
+    }, []).filter((datum) => typeof datum === "string");
+
     // return a unique set of strings
     return dataStrings.reduce((prev, curr) => {
       if (typeof curr !== "undefined" && curr !== null && prev.indexOf(curr) === -1) {
@@ -266,15 +290,26 @@ export default {
    */
   downsample(data, maxPoints, startingIndex = 0) {
     // ensures that the downampling of data while zooming looks good.
-    if (data.length > maxPoints) {
+    const dataLength = this.getLength(data);
+    if (dataLength > maxPoints) {
       // limit k to powers of 2, e.g. 64, 128, 256
       // so that the same points will be chosen reliably, reducing flicker on zoom
-      const k = Math.pow(2, Math.ceil(Math.log2(data.length / maxPoints)));
+      const k = Math.pow(2, Math.ceil(Math.log2(dataLength / maxPoints)));
       return data.filter(
         // ensure modulo is always calculated from same reference: i + startingIndex
         (d, i) => (((i + startingIndex) % k) === 0)
       );
     }
     return data;
+  },
+
+  getLength(data) {
+    return Immutable.isIterable(data) ? data.size : data.length;
+  },
+
+  parseDatum(datum) {
+    return Immutable.isImmutable(datum)
+      ? Immutable.shallowToJS(datum, this.immutableDatumWhitelist)
+      : datum;
   }
 };

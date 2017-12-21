@@ -4,7 +4,7 @@ import CustomPropTypes from "../victory-util/prop-types";
 export default {
   active: PropTypes.bool,
   className: PropTypes.string,
-  data: PropTypes.array,
+  data: PropTypes.oneOfType([PropTypes.array, PropTypes.object]),
   events: PropTypes.object,
   index: PropTypes.oneOfType([PropTypes.number, PropTypes.string]),
   origin: PropTypes.shape({ x: PropTypes.number, y: PropTypes.number }),
