@@ -146,7 +146,7 @@ VictoryChart
 - [510](https://github.com/FormidableLabs/victory-chart/pull/510) Render axis line under other axis elements
 
 VictoryPie
-- [153](https://github.com/FormidableLabs/victory-pie/pull/153) Bugfix for axymmetric padding
+- [153](https://github.com/FormidableLabs/victory-pie/pull/153) Bugfix for asymmetric padding
 
 
 ## 0.21.4 (2017-08-07)
@@ -246,7 +246,7 @@ VictoryChart
   - Removes default bar width from themes
   - Changes how default bar widths are calculated
   - Changes render methods for `Area`, `Bar` and `Curve` primitives (Breaking change for `victory-native` and others extending primitives)
-  - Changes function sigintures for `Selection.getDomainCoordinates` and `Selection.getDataCoordinates` (Breaking change for `victory-native`)
+  - Changes function signatures for `Selection.getDomainCoordinates` and `Selection.getDataCoordinates` (Breaking change for `victory-native`)
 
 **Overview**
  - Supports polar charts by adding the `polar` prop to charts.
@@ -309,7 +309,7 @@ VictoryChart
 
 - [victory-chart/469](https://github.com/FormidableLabs/victory-chart/pull/469) Adds `VictoryCursorContainer`
 - [victory-core/241](https://github.com/FormidableLabs/victory-core/pull/241) Adds optional `title` an `desc` props to `VictoryLabel`
-- [victory-core/243](https://github.com/FormidableLabs/victory-core/pull/243) Impovements to `VictoryContainer`
+- [victory-core/243](https://github.com/FormidableLabs/victory-core/pull/243) Improvements to `VictoryContainer`
   - Automatic `overflow: "visible"` for elements rendered in `VictoryPortal` (tooltips)
   - `VictoryContainer` no longer renders `g` tags (this was causing confusion with evented containers)
   - Default responsive styles are now `width: "100%"` `height: "100%"` (fixes a bug in safari)
@@ -508,9 +508,9 @@ Minor bug fixes
 - Removes support for `children` for VictoryLabel. Use `text` instead
 - Upgrades all d3 packages
 - Greater consistency of props for props passed to primitive components
-- Adds `VictoryPortal` which renders any child elments in a top level portal container if it exists
+- Adds `VictoryPortal` which renders any child elements in a top level portal container if it exists
 - `VictoryTooltip` uses `VictoryPortal` by default
-- Adds `VictoryClipContainer` which renders children in a group container with a `clipPath` if `clipPath` props exist. This component is used for animatiing continuous data types like `VictoryLine`. It should not be used for custom clipPaths.
+- Adds `VictoryClipContainer` which renders children in a group container with a `clipPath` if `clipPath` props exist. This component is used for animating continuous data types like `VictoryLine`. It should not be used for custom clipPaths.
 - `VictoryArea` and `VictoryLine` use `VictoryClipContainer` as their `groupComponent`
 - Removes `clipPath` properties from `VictoryLine` and `VictoryArea`
 - Extracts event logic into a new inverted inheritance higher order component `addEvents` which is used by all chart components
@@ -588,10 +588,10 @@ Minor bug fixes
 - `victory-core` includes the [material theme](https://github.com/FormidableLabs/victory-core/blob/master/src/victory-theme/material.js)
 
 *VictoryCandlestick*
-- The new `VictoryCandlestick` component may be used standalone or in conjunction with `VictoryChart`. It has an idential API and feature set as other chart compatible components with the exception of the `data` and data accessor props. `VictoryCandlestick` expects `data` in the form `[{x: value, high: NUMBER, low: NUMBER, open: NUMBER, close: NUMBER}...]`, and includes data sccessor props `x`, `high`, `low`, `open`, and `close`.
+- The new `VictoryCandlestick` component may be used standalone or in conjunction with `VictoryChart`. It has an identical API and feature set as other chart compatible components with the exception of the `data` and data accessor props. `VictoryCandlestick` expects `data` in the form `[{x: value, high: NUMBER, low: NUMBER, open: NUMBER, close: NUMBER}...]`, and includes data accessor props `x`, `high`, `low`, `open`, and `close`.
 
 *VictoryErrorBar*
-- The new `VictoryErrorBar` component may be used standalone or in conjunction with `VictoryChart`. It has an idential API and feature set as other chart compatible components with the exception of the `data` and data accessor props. `VictoryErrorBar` expects `data` in the form `[{x: value, y: value, errorX: ERR, errorY: ERR}...]`, Where `ERR` is a number or a two value array for asymmetric errors. `VictoryErrorBar` also includes data accessor props `errorX` and `errorY`.
+- The new `VictoryErrorBar` component may be used standalone or in conjunction with `VictoryChart`. It has an identical API and feature set as other chart compatible components with the exception of the `data` and data accessor props. `VictoryErrorBar` expects `data` in the form `[{x: value, y: value, errorX: ERR, errorY: ERR}...]`, Where `ERR` is a number or a two value array for asymmetric errors. `VictoryErrorBar` also includes data accessor props `errorX` and `errorY`.
 
 *VictoryNative*
 - Changes have been made across all components in order to support [victory-native](https://github.com/FormidableLabs/victory-native). `VictoryNative` has an identical API to `Victory`, and reuses most of the code. Changes made to `Victory` to support `VictoryNative` are all non-breaking, and minimal. They include the addition of a `groupComponent` prop in all components (which defaults to `<g>`), removing svg transforms whenever possible in favor of absolute positioning, and code reorganization.
@@ -724,7 +724,7 @@ Minor bug fixes
 
 - it is now possible to specify `angle` and `verticalAnchor` props for` VictoryLabel` via the style object
 
-- event return values are stored differently on state to facilitate interaction between data and labels. **This is a breaking change for events** as event handlers must now return an object with with `data` and/or `labels` keys so that these values may be applied appropriately to data and label elements respectively.
+- event return values are stored differently on state to facilitate interaction between data and labels. **This is a breaking change for events** as event handlers must now return an object with `data` and/or `labels` keys so that these values may be applied appropriately to data and label elements respectively.
 
 ## 0.6.1 (2016-04-19)
 
