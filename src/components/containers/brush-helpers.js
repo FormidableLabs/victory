@@ -1,11 +1,11 @@
 import { Selection } from "victory-core";
-import { assign, throttle, isFunction, isEqual, defaults } from "lodash";
+import { assign, throttle, isFunction, isEqual, defaults, mapValues } from "lodash";
 import { attachId } from "../../helpers/event-handlers";
 
 const Helpers = {
   withinBounds(point, bounds, padding) {
-    const { x1, x2, y1, y2 } = bounds;
-    const { x, y } = point;
+    const { x1, x2, y1, y2 } = mapValues(bounds, Number);
+    const { x, y } = mapValues(point, Number);
     padding = padding ? padding / 2 : 0;
     return x + padding >= Math.min(x1, x2) &&
       x - padding <= Math.max(x1, x2) &&
@@ -101,7 +101,7 @@ const Helpers = {
   },
 
   constrainBox(box, fullDomainBox) {
-    const { x1, y1, x2, y2 } = fullDomainBox;
+    const { x1, y1, x2, y2 } = mapValues(fullDomainBox, Number);
     return {
       x1: box.x2 > x2 ? x2 - Math.abs(box.x2 - box.x1) : Math.max(box.x1, x1),
       y1: box.y2 > y2 ? y2 - Math.abs(box.y2 - box.y1) : Math.max(box.y1, y1),
@@ -186,7 +186,7 @@ const Helpers = {
       allowResize, allowDrag
     } = targetProps;
     const { x, y } = Selection.getSVGEventCoordinates(evt);
-      // Ignore events that occur outside of the maximum domain region
+    // Ignore events that occur outside of the maximum domain region
     if ((!allowResize && !allowDrag) || !this.withinBounds({ x, y }, fullDomainBox)) {
       return {};
     }
