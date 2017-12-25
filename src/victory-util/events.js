@@ -207,7 +207,15 @@ export default {
     return state[childType] &&
       state[childType][eventKey] &&
       state[childType][eventKey][namespace];
+  },
 
+  getExternalMutation(key, type, baseState, mutation, baseProps) {
+    mutation = mutation || this.props.externalEventMutations;
+    baseProps = baseProps || this.baseProps;
+    // some of the args will be provided by context
+    // parse the mutation object and return a portion of the state object.
+    // To be merged in add-events
+    return {};
   },
 
   /* Returns an array of defaultEvents from sub-components of a given component.

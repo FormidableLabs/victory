@@ -21,6 +21,7 @@ export default (WrappedComponent, options) => {
       const getScopedEvents = Events.getScopedEvents.bind(this);
       this.getEvents = partialRight(Events.getEvents.bind(this), getScopedEvents);
       this.getEventState = Events.getEventState.bind(this);
+      this.getExternalMutation = Events.getExternalMutation.bind(this);
       const calculatedValues = this.getCalculatedValues(this.props);
       this.cacheValues(calculatedValues);
       this.stateChanges = this.getStateChanges(this.props, calculatedValues);
@@ -34,7 +35,6 @@ export default (WrappedComponent, options) => {
         this.cacheValues(calculatedValues);
         return true;
       }
-
       // check for any state changes triggered by events or shared events
       const calculatedState = this.getStateChanges(nextProps, calculatedValues);
       if (!Collection.areVictoryPropsEqual(this.calculatedState, calculatedState)) {
@@ -58,11 +58,6 @@ export default (WrappedComponent, options) => {
       const { hasEvents, getSharedEventState } = calculatedValues;
       if (!hasEvents) { return {}; }
 
-      const getState = (key, type) => {
-        const result = defaults({}, this.getEventState(key, type), getSharedEventState(key, type));
-        return isEmpty(result) ? undefined : result;
-      };
-
       options = options || {};
       const components = options.components || defaultComponents;
       return components.map((component) => {
@@ -71,8 +66,10 @@ export default (WrappedComponent, options) => {
           return undefined;
         } else {
           return typeof component.index !== "undefined" ?
-            getState(component.index, component.name) :
-            calculatedValues.dataKeys.map((key) => getState(key, component.name));
+            this.getState(component.index, component.name, getSharedEventState) :
+            calculatedValues.dataKeys.map(
+              (key) => this.getState(key, component.name, getSharedEventState)
+            );
         }
       }).filter(Boolean);
     }
@@ -118,6 +115,22 @@ export default (WrappedComponent, options) => {
       return props.events;
     }
 
+    getState(key, type, getSharedEventState) {
+      getSharedEventState = getSharedEventState || this.getSharedEventState;
+      const baseState = defaults(
+        {}, this.getEventState(key, type), getSharedEventState(key, type)
+      );
+      const externalMutation = this.props.externalEventMutation;
+      if (externalMutation) {
+        return defaults(
+          {},
+          this.getExternalMutation(key, type, baseState),
+          baseState
+        );
+      }
+      return isEmpty(baseState) ? undefined : baseState;
+    }
+
     getComponentProps(component, type, index) {
       const { role } = WrappedComponent;
       const key = this.dataKeys && this.dataKeys[index] || index;
@@ -129,8 +142,7 @@ export default (WrappedComponent, options) => {
         const baseEvents = this.getEvents(this.props, type, key);
         const componentProps = defaults(
           { index, key: `${role}-${type}-${key}` },
-          this.getEventState(key, type),
-          this.getSharedEventState(key, type),
+          this.getState(key, type),
           component.props,
           baseProps
         );
