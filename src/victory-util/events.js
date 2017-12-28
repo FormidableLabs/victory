@@ -209,13 +209,77 @@ export default {
       state[childType][eventKey][namespace];
   },
 
-  getExternalMutation(key, type, baseState, mutation, baseProps) {
-    mutation = mutation || this.props.externalEventMutations;
+  getExternalMutations(mutations, baseProps, baseState, name) {
     baseProps = baseProps || this.baseProps;
-    // some of the args will be provided by context
-    // parse the mutation object and return a portion of the state object.
-    // To be merged in add-events
-    return {};
+    baseState = baseState || this.state || {};
+    const getParentMutation = () => {
+      const parentMutations = mutations.filter((m) => m.target === "parent");
+      if (isEmpty(parentMutations)) {
+        return undefined;
+      }
+      return parentMutations.reduce((memo, curr) => {
+        const mutation = isFunction(curr.mutation) ? curr.mutation : () => null;
+        const currentProps = merge({}, baseProps.parent, baseState.parent);
+        const mutatedProps = mutation(currentProps, "parent");
+        return assign({}, memo, mutatedProps);
+      }, {});
+    }
+    const getMutation = (key, target) => {
+      const targetMutations = mutations.filter((m) => m.target === target);
+      if (isEmpty(targetMutations)) {
+        return undefined;
+      }
+      const keyMutations = target === "parent" ?
+        targetMutations :
+        targetMutations.filter((m) => m.eventKey === key || m.eventKey === "all");
+      const currentState = target === "parent" ?
+        baseState[target] : baseState[key] && baseState[key][target] || undefined;
+      const currentProps = target === "parent" ? baseProps[target] : baseProps[key][target];
+      return keyMutations.reduce((memo, curr) => {
+        const mutation = isFunction(curr.mutation) ? curr.mutation : () => null;
+        const currentState = baseState && baseState[key] && baseState[key][target] || {};
+        const currentProps = merge({}, baseProps[key][target], currentState);
+        return assign({}, memo, currentProps);
+      }, {});
+    }
+    return baseProps.keys.map((key) => {
+      if (key === "parent") {
+        return getParentMutation() || baseState.parent;
+      }
+    });
+  }
+
+  getExternalMutation(key, target, mutations, baseState, baseProps) {
+    baseProps = baseProps || this.baseProps;
+    baseState = baseState || this.state;
+    // return baseProps.map((key) => {
+    //   if (key === "parent") {
+    //     return target === "parent" ?
+    //   }
+    // });
+
+    mutations = Array.isArray(mutations) ? mutations : [mutations];
+    // find any mutation objects that match the target
+    const targetMutations = mutations.filter((m) => m.target === target);
+    if (isEmpty(targetMutations)) {
+      return {};
+    }
+    const keyMutations = targetMutations.filter((m) => m.eventKey === key || m.eventKey === "all");
+    if (isEmpty(keyMutations)) {
+      return {};
+    }
+    const getTargetProps = (type) => {
+      const base = type === "props" ? baseProps : baseState || {};
+      return key === "parent" ? base.parent : base[key] && base[key][target];
+    };
+
+    return keyMutations.reduce((memo, curr) => {
+      const currentMutation = curr.mutation(
+        assign({}, getTargetProps("props"), getTargetProps("state"), baseProps)
+      );
+      return merge({}, memo, currentMutation);
+    }, {});
+
   },
 
   /* Returns an array of defaultEvents from sub-components of a given component.

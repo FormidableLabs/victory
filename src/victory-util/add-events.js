@@ -24,7 +24,13 @@ export default (WrappedComponent, options) => {
       this.getExternalMutation = Events.getExternalMutation.bind(this);
       const calculatedValues = this.getCalculatedValues(this.props);
       this.cacheValues(calculatedValues);
-      this.stateChanges = this.getStateChanges(this.props, calculatedValues);
+      this.calculatedState = this.getStateChanges(this.props, calculatedValues);
+    }
+
+    componentWillReceiveProps(nextProps) {
+      const calculatedValues = this.getCalculatedValues(nextProps);
+      const stateChanges = this.getStateChanges(nextProps, calculatedValues);
+      console.log(stateChanges)
     }
 
     shouldComponentUpdate(nextProps) {
@@ -48,7 +54,6 @@ export default (WrappedComponent, options) => {
         this.cacheValues(calculatedValues);
         return true;
       }
-
       return false;
     }
 
@@ -120,11 +125,11 @@ export default (WrappedComponent, options) => {
       const baseState = defaults(
         {}, this.getEventState(key, type), getSharedEventState(key, type)
       );
-      const externalMutation = this.props.externalEventMutation;
-      if (externalMutation) {
+      const externalMutation = this.props.externalEventMutations;
+      if (externalMutation && !isEmpty(externalMutation)) {
         return defaults(
           {},
-          this.getExternalMutation(key, type, baseState),
+          this.getExternalMutation(key, type, externalMutation),
           baseState
         );
       }
