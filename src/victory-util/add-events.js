@@ -1,6 +1,6 @@
 import React from "react";
 import {
-  defaults, assign, keys, isFunction, partialRight, pick, without, isEmpty
+  defaults, assign, keys, isFunction, partialRight, pick, without, isEmpty, defaultsDeep, merge
 } from "lodash";
 import Events from "./events";
 import Collection from "./collection";
@@ -21,21 +21,22 @@ export default (WrappedComponent, options) => {
       const getScopedEvents = Events.getScopedEvents.bind(this);
       this.getEvents = partialRight(Events.getEvents.bind(this), getScopedEvents);
       this.getEventState = Events.getEventState.bind(this);
-      this.getExternalMutation = Events.getExternalMutation.bind(this);
       const calculatedValues = this.getCalculatedValues(this.props);
       this.cacheValues(calculatedValues);
-      this.calculatedState = this.getStateChanges(this.props, calculatedValues);
     }
 
     componentWillReceiveProps(nextProps) {
-      const calculatedValues = this.getCalculatedValues(nextProps);
-      const stateChanges = this.getStateChanges(nextProps, calculatedValues);
-      console.log(stateChanges)
+      const externalEventMutations = nextProps.externalEventMutations;
+      if (externalEventMutations) {
+        this.externalMutation = Events.getExternalMutations(
+          externalEventMutations, this.baseProps, this.state
+        );
+        this.setState(defaultsDeep({}, this.externalMutation, this.state));
+      }
     }
 
     shouldComponentUpdate(nextProps) {
       const calculatedValues = this.getCalculatedValues(nextProps);
-
       // re-render without additional checks when component is animated
       if (this.props.animate || this.props.animating) {
         this.cacheValues(calculatedValues);
@@ -125,14 +126,6 @@ export default (WrappedComponent, options) => {
       const baseState = defaults(
         {}, this.getEventState(key, type), getSharedEventState(key, type)
       );
-      const externalMutation = this.props.externalEventMutations;
-      if (externalMutation && !isEmpty(externalMutation)) {
-        return defaults(
-          {},
-          this.getExternalMutation(key, type, externalMutation),
-          baseState
-        );
-      }
       return isEmpty(baseState) ? undefined : baseState;
     }
 
@@ -147,7 +140,8 @@ export default (WrappedComponent, options) => {
         const baseEvents = this.getEvents(this.props, type, key);
         const componentProps = defaults(
           { index, key: `${role}-${type}-${key}` },
-          this.getState(key, type),
+          this.getEventState(key, type),
+          this.getSharedEventState(key, type),
           component.props,
           baseProps
         );
