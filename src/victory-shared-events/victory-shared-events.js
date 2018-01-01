@@ -44,12 +44,14 @@ export default class VictorySharedEvents extends React.Component {
       ]),
       eventKey: PropTypes.oneOfType([
         PropTypes.array,
-        PropTypes.func,
         CustomPropTypes.allOfType([CustomPropTypes.integer, CustomPropTypes.nonNegative]),
         PropTypes.string
       ]),
       mutation: PropTypes.function,
-      target: PropTypes.string
+      target: PropTypes.oneOfType([
+        PropTypes.string,
+        PropTypes.array
+      ])
     })),
     groupComponent: PropTypes.node
   };

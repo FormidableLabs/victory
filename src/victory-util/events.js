@@ -1,4 +1,6 @@
-import { assign, extend, merge, partial, isEmpty, isFunction, without, pickBy, uniq } from "lodash";
+import {
+  assign, extend, merge, partial, isEmpty, isFunction, without, pickBy, uniq, includes
+} from "lodash";
 
 export default {
   /* Returns all own and shared events that should be attached to a single target element,
@@ -248,20 +250,20 @@ export default {
     baseProps = baseProps || {};
     baseState = baseState || {};
 
-    const keys = Object.keys(baseProps);
-    return keys.reduce((memo, key) => {
-      const keyState = baseState[key] || {};
-      const keyProps = baseProps[key] || {};
-      if (key === "parent") {
-        const identifier = { key, target: "parent" };
+    const eventKeys = Object.keys(baseProps);
+    return eventKeys.reduce((memo, eventKey) => {
+      const keyState = baseState[eventKey] || {};
+      const keyProps = baseProps[eventKey] || {};
+      if (eventKey === "parent") {
+        const identifier = { eventKey, target: "parent" };
         const mutation = this.getExternalMutation(mutations, keyProps, keyState, identifier);
-        memo[key] = typeof mutation !== "undefined" ? mutation : keyState;
+        memo[eventKey] = typeof mutation !== "undefined" ? mutation : keyState;
       } else {
         // use keys from both state and props so that elements not intially included in baseProps
         // will be used. (i.e. labels)
         const targets = uniq(Object.keys(keyProps).concat(Object.keys(keyState)));
-        memo[key] = targets.reduce((m, target) => {
-          const identifier = { key, target, childName };
+        memo[eventKey] = targets.reduce((m, target) => {
+          const identifier = { eventKey, target, childName };
           const mutation = this.getExternalMutation(
             mutations, keyProps[target], keyState[target], identifier
           );
@@ -280,27 +282,38 @@ export default {
  * @param  {Array} mutations an array of mutations objects
  * @param  {Object} baseProps a props object (scoped the element specified by the identifier)
  * @param  {Object} baseState a state object (scoped the element specified by the identifier)
- * @param  {Object} identifier { key, target, childName }
+ * @param  {Object} identifier { eventKey, target, childName }
  *
  * @return {Object | undefined} a object describing mutations for a given element, or undefined
  */
   getExternalMutation(mutations, baseProps, baseState, identifier) {
-    const { key, target, childName } = identifier;
+
+    const filterMutations = (mutation, type) => {
+      if (typeof mutation[type] === "string") {
+        return mutation[type] === "all" || mutation[type] === identifier[type];
+      } else if (Array.isArray(mutation[type])) {
+        // coerce arrays to strings before matching
+        const stringArray = mutation[type].map((m) => `${m}`);
+        return includes(stringArray, identifier[type]);
+      } else {
+        return false;
+      }
+    };
+
     mutations = Array.isArray(mutations) ? mutations : [mutations];
     let scopedMutations = mutations;
-    if (childName) {
-      scopedMutations = mutations.filter((m) => m.childName === childName);
+    if (identifier.childName) {
+      scopedMutations = mutations.filter((m) => filterMutations(m, "childName"));
     }
     // find any mutation objects that match the target
-    const targetMutations = scopedMutations.filter((m) => m.target === target);
+    const targetMutations = scopedMutations.filter((m) => filterMutations(m, "target"));
     if (isEmpty(targetMutations)) {
       return undefined;
     }
-    const keyMutations = targetMutations.filter((m) => m.eventKey === key || m.eventKey === "all");
+    const keyMutations = targetMutations.filter((m) => filterMutations(m, "eventKey"));
     if (isEmpty(keyMutations)) {
       return undefined;
     }
-
     return keyMutations.reduce((memo, curr) => {
       const mutationFunction = curr && isFunction(curr.mutation) ? curr.mutation : () => undefined;
       const currentMutation = mutationFunction(assign({}, baseProps, baseState));
