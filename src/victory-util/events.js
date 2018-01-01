@@ -211,51 +211,16 @@ export default {
       state[childType][eventKey][namespace];
   },
 
-  // getExternalMutations(mutations, baseProps, baseState, name) {
-
-  //   baseProps = baseProps || this.baseProps;
-  //   baseState = baseState || this.state || {};
-  //   const getParentMutation = () => {
-  //     const parentMutations = mutations.filter((m) => m.target === "parent");
-  //     if (isEmpty(parentMutations)) {
-  //       return undefined;
-  //     }
-  //     return parentMutations.reduce((memo, curr) => {
-  //       const mutation = isFunction(curr.mutation) ? curr.mutation : () => null;
-  //       const currentProps = merge({}, baseProps.parent, baseState.parent);
-  //       const mutatedProps = mutation(currentProps, "parent");
-  //       return assign({}, memo, mutatedProps);
-  //     }, {});
-  //   };
-  //   const getMutation = (key, target) => {
-  //     const targetMutations = mutations.filter((m) => m.target === target);
-  //     if (isEmpty(targetMutations)) {
-  //       return undefined;
-  //     }
-  //     const keyMutations = key === "parent" ?
-  //       targetMutations :
-  //       targetMutations.filter((m) => m.eventKey === key || m.eventKey === "all");
-  //     const currentState = key === "parent" ?
-  //       baseState[key] || {} : baseState[key] && baseState[key][target] || {};
-  //     const currentProps = key === "parent" ?
-  //       baseProps[key] || {} : baseProps[key][target] || {};
-  //     return keyMutations.reduce((memo, curr) => {
-  //       const mutation = isFunction(curr.mutation) ? curr.mutation : () => null;
-  //       const mutatedProps = merge({}, currentProps, currentState);
-  //       return assign({}, memo, mutation(mutatedProps));
-  //     }, {});
-  //   };
-
-  //   return baseProps.keys.reduce((memo, key) => {
-  //     if (key === "parent") {
-  //       memo[key] = getMutation(key) || baseState.parent;
-  //       return memo;
-  //     } else {
-  //       memo[key] = memo[key].keys.reduce(m, target) => {}
-  //     }
-  //   }, {});
-  // },
-
+/**
+ * Returns a set of all mutations for shared events
+ *
+ * @param  {Array} mutations an array of mutations objects
+ * @param  {Object} baseProps an object that describes all props for children of VictorySharedEvents
+ * @param  {Object} baseState an object that describes state for children of VictorySharedEvents
+ * @param  {Array} childNames an array of childNames
+ *
+ * @return {Object} a object describing all mutations for VictorySharedEvents
+ */
   getExternalMutationsWithChildren(mutations, baseProps, baseState, childNames) {
     baseProps = baseProps || this.baseProps;
     baseState = baseState || this.state;
@@ -266,42 +231,62 @@ export default {
         mutations, baseProps[childName], baseState[childName], childName
       );
       memo[childName] = mutation ? mutation : childState;
-      return memo;
+      return pickBy(memo, (v) => !isEmpty(v));
     }, {});
 
   },
 
+/**
+ * Returns a set of all mutations for a component
+ *
+ * @param  {Array} mutations an array of mutations objects
+ * @param  {Object} baseProps a props object (scoped to a childName when used by shared events)
+ * @param  {Object} baseState a state object (scoped to a childName when used by shared events)
+ * @param  {String} childName an optional childName
+ *
+ * @return {Object} a object describing mutations for a given component
+ */
   getExternalMutations(mutations, baseProps, baseState, childName) {
     baseProps = baseProps || {};
     baseState = baseState || {};
 
     const propKeys = keys(baseProps);
     return propKeys.reduce((memo, key) => {
-      const keyState = baseState[key];
-      const keyProps = baseProps[key];
+      const keyState = baseState[key] || {};
+      const keyProps = baseProps[key] || {};
       if (key === "parent") {
         const identifier = { key, target: "parent" };
-        const mutation = this.getExternalMutation(identifier, mutations, keyState, keyProps);
+        const mutation = this.getExternalMutation(mutations, keyProps, keyState, identifier);
         memo[key] = typeof mutation !== "undefined" ? mutation : keyState;
       } else {
+        // use keys from both state and props so that elements not intially included in baseProps
+        // will be used. (i.e. labels)
         const targets = uniq(keys(keyProps).concat(keys(keyState)));
         memo[key] = targets.reduce((m, target) => {
           const identifier = { key, target, childName };
-          const targetState = keyState && keyState[target];
-          const targetProps = keyProps && keyProps[target];
-          const mutation = this.getExternalMutation(identifier, mutations, targetState, targetProps);
-          m[target] = typeof mutation !== "undefined" ?
-            mutation : targetState;
+          const mutation = this.getExternalMutation(
+            mutations, keyProps[target], keyState[target], identifier
+          );
+          m[target] = typeof mutation !== "undefined" ? mutation : keyState[target];
           // Allow empty objects so that props can be cleared
           return pickBy(m, (v) => typeof v !== "undefined");
         }, {});
       }
-      return memo;
-      // return pickBy(memo, (v) => typeof v !== "undefined");
+      return pickBy(memo, (v) => !isEmpty(v));
     }, {});
   },
 
-  getExternalMutation(identifier, mutations, baseState, baseProps) {
+/**
+ * Returns a set of mutations for a particular element given scoped baseProps and baseState
+ *
+ * @param  {Array} mutations an array of mutations objects
+ * @param  {Object} baseProps a props object (scoped the element specified by the identifier)
+ * @param  {Object} baseState a state object (scoped the element specified by the identifier)
+ * @param  {Object} identifier { key, target, childName }
+ *
+ * @return {Object | undefined} a object describing mutations for a given element, or undefined
+ */
+  getExternalMutation(mutations, baseProps, baseState, identifier) {
     const { key, target, childName } = identifier;
     mutations = Array.isArray(mutations) ? mutations : [mutations];
     let scopedMutations = mutations;

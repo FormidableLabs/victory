@@ -86,12 +86,11 @@ export default class VictorySharedEvents extends React.Component {
 
   componentWillReceiveProps(newProps) {
     this.setUpChildren(newProps);
-    if (newProps.externalEventMutations) {
+    const { externalEventMutations } = newProps;
+    if (externalEventMutations) {
       const mutations = Events.getExternalMutationsWithChildren(
-        newProps.externalEventMutations, this.baseProps, this.state, this.childNames
+        externalEventMutations, this.baseProps, this.state, this.childNames
       );
-      console.log(this.state, mutations, defaultsDeep({}, mutations, this.state))
-      // this.setState(defaults({}, mutations, this.state));
       this.setState(mutations);
     }
   }
