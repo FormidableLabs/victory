@@ -1,4 +1,4 @@
-import { assign, isFunction, partialRight, defaults, merge, defaultsDeep, fromPairs } from "lodash";
+import { assign, isFunction, partialRight, defaults, isEmpty, fromPairs } from "lodash";
 import React from "react";
 import PropTypes from "prop-types";
 import CustomPropTypes from "../victory-util/prop-types";
@@ -86,13 +86,6 @@ export default class VictorySharedEvents extends React.Component {
 
   componentWillReceiveProps(newProps) {
     this.setUpChildren(newProps);
-    const { externalEventMutations } = newProps;
-    if (externalEventMutations) {
-      const mutations = Events.getExternalMutationsWithChildren(
-        externalEventMutations, this.baseProps, this.state, this.childNames
-      );
-      this.setState(mutations);
-    }
   }
 
   getTimer() {
@@ -117,12 +110,26 @@ export default class VictorySharedEvents extends React.Component {
 
   setUpChildren(props) {
     this.events = this.getAllEvents(props);
-    if (this.events) {
-      this.childComponents = React.Children.toArray(props.children);
+    const { externalEventMutations, container, children } = props;
+    if (this.events || !isEmpty(externalEventMutations)) {
+      this.childComponents = React.Children.toArray(children);
       const childBaseProps = this.getBasePropsFromChildren(this.childComponents);
-      const parentBaseProps = props.container ? props.container.props : {};
-      this.childNames = Object.keys(childBaseProps);
+      const parentBaseProps = container ? container.props : {};
+      const childNames = Object.keys(childBaseProps);
       this.baseProps = assign({}, childBaseProps, { parent: parentBaseProps });
+
+      if (!isEmpty(externalEventMutations)) {
+        const externalMutations = Events.getExternalMutationsWithChildren(
+          externalEventMutations, this.baseProps, this.state, childNames
+        );
+        const callbacks = externalEventMutations.reduce((memo, mutation) => {
+          memo = isFunction(mutation.callback) ? memo.concat(mutation.callback) : memo;
+          return memo;
+        }, []);
+        const compiledCallbacks = callbacks.length ?
+          () => { callbacks.forEach((c) => c()); } : undefined;
+        this.setState(externalMutations, compiledCallbacks);
+      }
     }
   }
 
