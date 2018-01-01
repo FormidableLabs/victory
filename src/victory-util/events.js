@@ -256,15 +256,26 @@ export default {
   //   }, {});
   // },
 
-  getExternalMutations(mutations, baseProps, baseState) {
+  getExternalMutationsWithChildren(mutations, baseProps, baseState, childNames) {
+    baseProps = baseProps || this.baseProps;
+    baseState = baseState || this.state;
+
+    return childNames.reduce((memo, childName) => {
+      memo[childName] = this.getExternalMutations(
+        mutations, baseProps[childName], baseState[childName], childName
+      );
+      return pickBy(memo, (v) => !isEmpty(v));
+    }, {});
+
+  },
+
+  getExternalMutations(mutations, baseProps, baseState, childName) {
     baseProps = baseProps || this.baseProps;
     baseState = baseState || this.state;
 
     const getTargetProps = (identifier, type) => {
-      const { childName, target, key } = identifier;
-      const baseType = type === "props" ? baseProps : baseState || {};
-      const base = (childName === undefined || childName === null || !baseType[childName]) ?
-        baseType : baseType[childName];
+      const { target, key } = identifier;
+      const base = type === "props" ? baseProps : baseState || {};
       return key === "parent" ? base.parent : base[key] && base[key][target];
     };
 
@@ -274,25 +285,30 @@ export default {
         const identifier = { key, target: "parent" };
         const targetState = getTargetProps(identifier, "state");
         const targetProps = getTargetProps(identifier, "state");
-        memo[key] = this.getExternalMutation(key, "parent", mutations, targetState, targetProps);
+        memo[key] = this.getExternalMutation(identifier, mutations, targetState, targetProps);
       } else {
         const targets = keys(baseProps[key]);
         memo[key] = targets.reduce((m, target) => {
-          const identifier = { key, target };
+          const identifier = { key, target, childName };
           const targetState = getTargetProps(identifier, "state");
           const targetProps = getTargetProps(identifier, "state");
-          m[target] = this.getExternalMutation(key, target, mutations, targetState, targetProps);
-          return pickBy(m, (v) => typeof v !== "undefined");
+          m[target] = this.getExternalMutation(identifier, mutations, targetState, targetProps);
+          return pickBy(m, (v) => !isEmpty(v));
         }, {});
       }
-      return pickBy(memo, (v) => typeof v !== "undefined");
+      return pickBy(memo, (v) => !isEmpty(v));
     }, {});
   },
 
-  getExternalMutation(key, target, mutations, baseState, baseProps) {
+  getExternalMutation(identifier, mutations, baseState, baseProps) {
+    const { key, target, childName } = identifier;
     mutations = Array.isArray(mutations) ? mutations : [mutations];
+    let scopedMutations = mutations;
+    if (childName) {
+      scopedMutations = mutations.filter((m) => m.childName === childName);
+    }
     // find any mutation objects that match the target
-    const targetMutations = mutations.filter((m) => m.target === target);
+    const targetMutations = scopedMutations.filter((m) => m.target === target);
     if (isEmpty(targetMutations)) {
       return undefined;
     }
@@ -302,7 +318,7 @@ export default {
     }
 
     return keyMutations.reduce((memo, curr) => {
-      const currentMutation = curr.mutation(
+      const currentMutation = curr && curr.mutation(
         assign({}, baseProps, baseState)
       );
       return merge({}, memo, currentMutation);

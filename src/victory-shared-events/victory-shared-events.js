@@ -1,4 +1,4 @@
-import { assign, isFunction, partialRight, defaults, fromPairs } from "lodash";
+import { assign, isFunction, partialRight, defaults, defaultsDeep, fromPairs } from "lodash";
 import React from "react";
 import PropTypes from "prop-types";
 import CustomPropTypes from "../victory-util/prop-types";
@@ -37,6 +37,20 @@ export default class VictorySharedEvents extends React.Component {
       ]),
       target: PropTypes.string
     })),
+    externalEventMutations: PropTypes.arrayOf(PropTypes.shape({
+      childName: PropTypes.oneOfType([
+        PropTypes.string,
+        PropTypes.array
+      ]),
+      eventKey: PropTypes.oneOfType([
+        PropTypes.array,
+        PropTypes.func,
+        CustomPropTypes.allOfType([CustomPropTypes.integer, CustomPropTypes.nonNegative]),
+        PropTypes.string
+      ]),
+      mutation: PropTypes.function,
+      target: PropTypes.string
+    })),
     groupComponent: PropTypes.node
   };
 
@@ -72,6 +86,12 @@ export default class VictorySharedEvents extends React.Component {
 
   componentWillReceiveProps(newProps) {
     this.setUpChildren(newProps);
+    if (newProps.externalEventMutations) {
+      const mutations = Events.getExternalMutationsWithChildren(
+        newProps.externalEventMutations, this.baseProps, this.state, this.childNames
+      );
+      this.setState(defaultsDeep({}, mutations, this.state));
+    }
   }
 
   getTimer() {
@@ -100,6 +120,7 @@ export default class VictorySharedEvents extends React.Component {
       this.childComponents = React.Children.toArray(props.children);
       const childBaseProps = this.getBasePropsFromChildren(this.childComponents);
       const parentBaseProps = props.container ? props.container.props : {};
+      this.childNames = Object.keys(childBaseProps);
       this.baseProps = assign({}, childBaseProps, { parent: parentBaseProps });
     }
   }
@@ -147,7 +168,7 @@ export default class VictorySharedEvents extends React.Component {
             getEventState: partialRight(this.getEventState, name)
           };
           return memo.concat(React.cloneElement(child, assign(
-            { key: `events-${name}`, sharedEvents, eventKey },
+            { key: `events-${name}`, sharedEvents, eventKey, name },
             child.props
           )));
         } else {
