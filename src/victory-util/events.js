@@ -1,5 +1,5 @@
 import {
-  assign, extend, merge, partial, isEmpty, isFunction, without, keys, pickBy
+  assign, extend, merge, partial, isEmpty, isFunction, without, keys, pickBy, defaults, uniq
 } from "lodash";
 
 export default {
@@ -261,42 +261,43 @@ export default {
     baseState = baseState || this.state;
 
     return childNames.reduce((memo, childName) => {
-      memo[childName] = this.getExternalMutations(
+      const childState = baseState[childName];
+      const mutation = this.getExternalMutations(
         mutations, baseProps[childName], baseState[childName], childName
       );
-      return pickBy(memo, (v) => !isEmpty(v));
+      memo[childName] = mutation ? mutation : childState;
+      return memo;
     }, {});
 
   },
 
   getExternalMutations(mutations, baseProps, baseState, childName) {
-    baseProps = baseProps || this.baseProps;
-    baseState = baseState || this.state;
-
-    const getTargetProps = (identifier, type) => {
-      const { target, key } = identifier;
-      const base = type === "props" ? baseProps : baseState || {};
-      return key === "parent" ? base.parent : base[key] && base[key][target];
-    };
+    baseProps = baseProps || {};
+    baseState = baseState || {};
 
     const propKeys = keys(baseProps);
     return propKeys.reduce((memo, key) => {
+      const keyState = baseState[key];
+      const keyProps = baseProps[key];
       if (key === "parent") {
         const identifier = { key, target: "parent" };
-        const targetState = getTargetProps(identifier, "state");
-        const targetProps = getTargetProps(identifier, "state");
-        memo[key] = this.getExternalMutation(identifier, mutations, targetState, targetProps);
+        const mutation = this.getExternalMutation(identifier, mutations, keyState, keyProps);
+        memo[key] = typeof mutation !== "undefined" ? mutation : keyState;
       } else {
-        const targets = keys(baseProps[key]);
+        const targets = uniq(keys(keyProps).concat(keys(keyState)));
         memo[key] = targets.reduce((m, target) => {
           const identifier = { key, target, childName };
-          const targetState = getTargetProps(identifier, "state");
-          const targetProps = getTargetProps(identifier, "state");
-          m[target] = this.getExternalMutation(identifier, mutations, targetState, targetProps);
-          return pickBy(m, (v) => !isEmpty(v));
+          const targetState = keyState && keyState[target];
+          const targetProps = keyProps && keyProps[target];
+          const mutation = this.getExternalMutation(identifier, mutations, targetState, targetProps);
+          m[target] = typeof mutation !== "undefined" ?
+            mutation : targetState;
+          // Allow empty objects so that props can be cleared
+          return pickBy(m, (v) => typeof v !== "undefined");
         }, {});
       }
-      return pickBy(memo, (v) => !isEmpty(v));
+      return memo;
+      // return pickBy(memo, (v) => typeof v !== "undefined");
     }, {});
   },
 

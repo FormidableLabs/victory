@@ -1,4 +1,4 @@
-import { assign, isFunction, partialRight, defaults, defaultsDeep, fromPairs } from "lodash";
+import { assign, isFunction, partialRight, defaults, merge, defaultsDeep, fromPairs } from "lodash";
 import React from "react";
 import PropTypes from "prop-types";
 import CustomPropTypes from "../victory-util/prop-types";
@@ -90,7 +90,9 @@ export default class VictorySharedEvents extends React.Component {
       const mutations = Events.getExternalMutationsWithChildren(
         newProps.externalEventMutations, this.baseProps, this.state, this.childNames
       );
-      this.setState(defaultsDeep({}, mutations, this.state));
+      console.log(this.state, mutations, defaultsDeep({}, mutations, this.state))
+      // this.setState(defaults({}, mutations, this.state));
+      this.setState(mutations);
     }
   }
 
