@@ -1,6 +1,4 @@
-import {
-  assign, extend, merge, partial, isEmpty, isFunction, without, keys, pickBy, defaults, uniq
-} from "lodash";
+import { assign, extend, merge, partial, isEmpty, isFunction, without, pickBy, uniq } from "lodash";
 
 export default {
   /* Returns all own and shared events that should be attached to a single target element,
@@ -222,8 +220,8 @@ export default {
  * @return {Object} a object describing all mutations for VictorySharedEvents
  */
   getExternalMutationsWithChildren(mutations, baseProps, baseState, childNames) {
-    baseProps = baseProps || this.baseProps;
-    baseState = baseState || this.state;
+    baseProps = baseProps || {};
+    baseState = baseState || {};
 
     return childNames.reduce((memo, childName) => {
       const childState = baseState[childName];
@@ -250,8 +248,8 @@ export default {
     baseProps = baseProps || {};
     baseState = baseState || {};
 
-    const propKeys = keys(baseProps);
-    return propKeys.reduce((memo, key) => {
+    const keys = Object.keys(baseProps);
+    return keys.reduce((memo, key) => {
       const keyState = baseState[key] || {};
       const keyProps = baseProps[key] || {};
       if (key === "parent") {
@@ -261,14 +259,14 @@ export default {
       } else {
         // use keys from both state and props so that elements not intially included in baseProps
         // will be used. (i.e. labels)
-        const targets = uniq(keys(keyProps).concat(keys(keyState)));
+        const targets = uniq(Object.keys(keyProps).concat(Object.keys(keyState)));
         memo[key] = targets.reduce((m, target) => {
           const identifier = { key, target, childName };
           const mutation = this.getExternalMutation(
             mutations, keyProps[target], keyState[target], identifier
           );
           m[target] = typeof mutation !== "undefined" ? mutation : keyState[target];
-          // Allow empty objects so that props can be cleared
+          // Allow empty objects so that mutation state can be cleared
           return pickBy(m, (v) => typeof v !== "undefined");
         }, {});
       }
@@ -304,9 +302,8 @@ export default {
     }
 
     return keyMutations.reduce((memo, curr) => {
-      const currentMutation = curr && curr.mutation(
-        assign({}, baseProps, baseState)
-      );
+      const mutationFunction = curr && isFunction(curr.mutation) ? curr.mutation : () => undefined;
+      const currentMutation = mutationFunction(assign({}, baseProps, baseState));
       return merge({}, memo, currentMutation);
     }, {});
   },
