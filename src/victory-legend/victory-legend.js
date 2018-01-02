@@ -70,6 +70,22 @@ class VictoryLegend extends React.Component {
       ]),
       eventHandlers: PropTypes.object
     })),
+    externalEventMutations: PropTypes.arrayOf(PropTypes.shape({
+      childName: PropTypes.oneOfType([
+        PropTypes.string,
+        PropTypes.array
+      ]),
+      eventKey: PropTypes.oneOfType([
+        PropTypes.array,
+        CustomPropTypes.allOfType([CustomPropTypes.integer, CustomPropTypes.nonNegative]),
+        PropTypes.string
+      ]),
+      mutation: PropTypes.function,
+      target: PropTypes.oneOfType([
+        PropTypes.string,
+        PropTypes.array
+      ])
+    })),
     groupComponent: PropTypes.element,
     gutter: PropTypes.oneOfType([
       CustomPropTypes.nonNegative,
