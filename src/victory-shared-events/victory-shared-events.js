@@ -1,4 +1,4 @@
-import { assign, isFunction, partialRight, defaults, fromPairs } from "lodash";
+import { assign, isFunction, partialRight, defaults, isEmpty, fromPairs } from "lodash";
 import React from "react";
 import PropTypes from "prop-types";
 import CustomPropTypes from "../victory-util/prop-types";
@@ -36,6 +36,23 @@ export default class VictorySharedEvents extends React.Component {
         PropTypes.string
       ]),
       target: PropTypes.string
+    })),
+    externalEventMutations: PropTypes.arrayOf(PropTypes.shape({
+      callback: PropTypes.function,
+      childName: PropTypes.oneOfType([
+        PropTypes.string,
+        PropTypes.array
+      ]),
+      eventKey: PropTypes.oneOfType([
+        PropTypes.array,
+        CustomPropTypes.allOfType([CustomPropTypes.integer, CustomPropTypes.nonNegative]),
+        PropTypes.string
+      ]),
+      mutation: PropTypes.function,
+      target: PropTypes.oneOfType([
+        PropTypes.string,
+        PropTypes.array
+      ])
     })),
     groupComponent: PropTypes.node
   };
@@ -96,11 +113,26 @@ export default class VictorySharedEvents extends React.Component {
 
   setUpChildren(props) {
     this.events = this.getAllEvents(props);
-    if (this.events) {
-      this.childComponents = React.Children.toArray(props.children);
+    const { externalEventMutations, container, children } = props;
+    if (this.events || !isEmpty(externalEventMutations)) {
+      this.childComponents = React.Children.toArray(children);
       const childBaseProps = this.getBasePropsFromChildren(this.childComponents);
-      const parentBaseProps = props.container ? props.container.props : {};
+      const parentBaseProps = container ? container.props : {};
+      const childNames = Object.keys(childBaseProps);
       this.baseProps = assign({}, childBaseProps, { parent: parentBaseProps });
+
+      if (!isEmpty(externalEventMutations)) {
+        const externalMutations = Events.getExternalMutationsWithChildren(
+          externalEventMutations, this.baseProps, this.state, childNames
+        );
+        const callbacks = externalEventMutations.reduce((memo, mutation) => {
+          memo = isFunction(mutation.callback) ? memo.concat(mutation.callback) : memo;
+          return memo;
+        }, []);
+        const compiledCallbacks = callbacks.length ?
+          () => { callbacks.forEach((c) => c()); } : undefined;
+        this.setState(externalMutations, compiledCallbacks);
+      }
     }
   }
 
@@ -147,7 +179,7 @@ export default class VictorySharedEvents extends React.Component {
             getEventState: partialRight(this.getEventState, name)
           };
           return memo.concat(React.cloneElement(child, assign(
-            { key: `events-${name}`, sharedEvents, eventKey },
+            { key: `events-${name}`, sharedEvents, eventKey, name },
             child.props
           )));
         } else {

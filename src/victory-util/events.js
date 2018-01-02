@@ -1,4 +1,6 @@
-import { assign, extend, merge, partial, isEmpty, isFunction, without } from "lodash";
+import {
+  assign, extend, merge, partial, isEmpty, isFunction, without, pickBy, uniq, includes
+} from "lodash";
 
 export default {
   /* Returns all own and shared events that should be attached to a single target element,
@@ -207,7 +209,117 @@ export default {
     return state[childType] &&
       state[childType][eventKey] &&
       state[childType][eventKey][namespace];
+  },
 
+/**
+ * Returns a set of all mutations for shared events
+ *
+ * @param  {Array} mutations an array of mutations objects
+ * @param  {Object} baseProps an object that describes all props for children of VictorySharedEvents
+ * @param  {Object} baseState an object that describes state for children of VictorySharedEvents
+ * @param  {Array} childNames an array of childNames
+ *
+ * @return {Object} a object describing all mutations for VictorySharedEvents
+ */
+  getExternalMutationsWithChildren(mutations, baseProps, baseState, childNames) {
+    baseProps = baseProps || {};
+    baseState = baseState || {};
+
+    return childNames.reduce((memo, childName) => {
+      const childState = baseState[childName];
+      const mutation = this.getExternalMutations(
+        mutations, baseProps[childName], baseState[childName], childName
+      );
+      memo[childName] = mutation ? mutation : childState;
+      return pickBy(memo, (v) => !isEmpty(v));
+    }, {});
+
+  },
+
+/**
+ * Returns a set of all mutations for a component
+ *
+ * @param  {Array} mutations an array of mutations objects
+ * @param  {Object} baseProps a props object (scoped to a childName when used by shared events)
+ * @param  {Object} baseState a state object (scoped to a childName when used by shared events)
+ * @param  {String} childName an optional childName
+ *
+ * @return {Object} a object describing mutations for a given component
+ */
+  getExternalMutations(mutations, baseProps, baseState, childName) {
+    baseProps = baseProps || {};
+    baseState = baseState || {};
+
+    const eventKeys = Object.keys(baseProps);
+    return eventKeys.reduce((memo, eventKey) => {
+      const keyState = baseState[eventKey] || {};
+      const keyProps = baseProps[eventKey] || {};
+      if (eventKey === "parent") {
+        const identifier = { eventKey, target: "parent" };
+        const mutation = this.getExternalMutation(mutations, keyProps, keyState, identifier);
+        memo[eventKey] = typeof mutation !== "undefined" ?
+          assign({}, keyState, mutation) : keyState;
+      } else {
+        // use keys from both state and props so that elements not intially included in baseProps
+        // will be used. (i.e. labels)
+        const targets = uniq(Object.keys(keyProps).concat(Object.keys(keyState)));
+        memo[eventKey] = targets.reduce((m, target) => {
+          const identifier = { eventKey, target, childName };
+          const mutation = this.getExternalMutation(
+            mutations, keyProps[target], keyState[target], identifier
+          );
+          m[target] = typeof mutation !== "undefined" ?
+            assign({}, keyState[target], mutation) : keyState[target];
+          return pickBy(m, (v) => !isEmpty(v));
+        }, {});
+      }
+      return pickBy(memo, (v) => !isEmpty(v));
+    }, {});
+  },
+
+/**
+ * Returns a set of mutations for a particular element given scoped baseProps and baseState
+ *
+ * @param  {Array} mutations an array of mutations objects
+ * @param  {Object} baseProps a props object (scoped the element specified by the identifier)
+ * @param  {Object} baseState a state object (scoped the element specified by the identifier)
+ * @param  {Object} identifier { eventKey, target, childName }
+ *
+ * @return {Object | undefined} a object describing mutations for a given element, or undefined
+ */
+  getExternalMutation(mutations, baseProps, baseState, identifier) {
+
+    const filterMutations = (mutation, type) => {
+      if (typeof mutation[type] === "string") {
+        return mutation[type] === "all" || mutation[type] === identifier[type];
+      } else if (Array.isArray(mutation[type])) {
+        // coerce arrays to strings before matching
+        const stringArray = mutation[type].map((m) => `${m}`);
+        return includes(stringArray, identifier[type]);
+      } else {
+        return false;
+      }
+    };
+
+    mutations = Array.isArray(mutations) ? mutations : [mutations];
+    let scopedMutations = mutations;
+    if (identifier.childName) {
+      scopedMutations = mutations.filter((m) => filterMutations(m, "childName"));
+    }
+    // find any mutation objects that match the target
+    const targetMutations = scopedMutations.filter((m) => filterMutations(m, "target"));
+    if (isEmpty(targetMutations)) {
+      return undefined;
+    }
+    const keyMutations = targetMutations.filter((m) => filterMutations(m, "eventKey"));
+    if (isEmpty(keyMutations)) {
+      return undefined;
+    }
+    return keyMutations.reduce((memo, curr) => {
+      const mutationFunction = curr && isFunction(curr.mutation) ? curr.mutation : () => undefined;
+      const currentMutation = mutationFunction(assign({}, baseProps, baseState));
+      return merge({}, memo, currentMutation);
+    }, {});
   },
 
   /* Returns an array of defaultEvents from sub-components of a given component.
