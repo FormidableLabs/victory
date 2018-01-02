@@ -71,6 +71,7 @@ class VictoryLegend extends React.Component {
       eventHandlers: PropTypes.object
     })),
     externalEventMutations: PropTypes.arrayOf(PropTypes.shape({
+      callback: PropTypes.function,
       childName: PropTypes.oneOfType([
         PropTypes.string,
         PropTypes.array

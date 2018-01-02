@@ -38,6 +38,7 @@ export default class VictorySharedEvents extends React.Component {
       target: PropTypes.string
     })),
     externalEventMutations: PropTypes.arrayOf(PropTypes.shape({
+      callback: PropTypes.function,
       childName: PropTypes.oneOfType([
         PropTypes.string,
         PropTypes.array
