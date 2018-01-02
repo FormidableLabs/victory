@@ -79,6 +79,23 @@ class VictoryPie extends React.Component {
       ]),
       eventHandlers: PropTypes.object
     })),
+    externalEventMutations: PropTypes.arrayOf(PropTypes.shape({
+      callback: PropTypes.function,
+      childName: PropTypes.oneOfType([
+        PropTypes.string,
+        PropTypes.array
+      ]),
+      eventKey: PropTypes.oneOfType([
+        PropTypes.array,
+        CustomPropTypes.allOfType([CustomPropTypes.integer, CustomPropTypes.nonNegative]),
+        PropTypes.string
+      ]),
+      mutation: PropTypes.function,
+      target: PropTypes.oneOfType([
+        PropTypes.string,
+        PropTypes.array
+      ])
+    })),
     groupComponent: PropTypes.element,
     height: CustomPropTypes.nonNegative,
     innerRadius: CustomPropTypes.nonNegative,
