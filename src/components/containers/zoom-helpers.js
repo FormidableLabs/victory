@@ -1,7 +1,7 @@
 /*eslint no-magic-numbers: ["error", { "ignore": [-1, 0, 1, 2, 1000] }]*/
 import { Children } from "react";
 import { Selection, Collection } from "victory-core";
-import { throttle, isFunction, defaults, isEqual } from "lodash";
+import { throttle, isFunction, defaults } from "lodash";
 import { attachId } from "../../helpers/event-handlers";
 import Wrapper from "../../helpers/wrapper";
 
@@ -227,10 +227,15 @@ const Helpers = {
         y: zoomDimension === "x" ? originalDomain.y : this.pan(lastDomain.y, originalDomain.y, dy)
       };
       const resumeAnimation = this.handleAnimation(ctx);
+
+      const zoomActive = !this.checkDomainEquality(originalDomain, lastDomain);
+
       const mutatedProps = {
         parentControlledProps: ["domain"], startX: x, startY: y,
-        domain: currentDomain, currentDomain, originalDomain, cachedZoomDomain: zoomDomain
+        domain: currentDomain, currentDomain, originalDomain, cachedZoomDomain: zoomDomain,
+        zoomActive
       };
+
       if (isFunction(onZoomDomainChange)) {
         onZoomDomainChange(currentDomain, defaults({}, mutatedProps, targetProps));
       }
@@ -258,8 +263,8 @@ const Helpers = {
     const resumeAnimation = this.handleAnimation(ctx);
 
     const zoomActive = !this.zoommingOut(evt) // if zoomming in or
-      // if zoomActive is already set AND user hasn't zoommed out all the way
-      || (targetProps.zoomActive && !isEqual(originalDomain, lastDomain));
+    //   if zoomActive is already set AND user hasn't zoommed out all the way
+      || (targetProps.zoomActive && !this.checkDomainEquality(originalDomain, lastDomain));
 
     const mutatedProps = {
       domain: currentDomain, currentDomain, originalDomain, cachedZoomDomain: zoomDomain,
@@ -281,6 +286,7 @@ const Helpers = {
 export { Helpers as RawZoomHelpers }; // allow victory-native to extend these helpers
 
 export default {
+  checkDomainEquality: Helpers.checkDomainEquality.bind(Helpers),
   onMouseDown: Helpers.onMouseDown.bind(Helpers),
   onMouseUp: Helpers.onMouseUp.bind(Helpers),
   onMouseLeave: Helpers.onMouseLeave.bind(Helpers),

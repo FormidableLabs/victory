@@ -170,14 +170,8 @@ export const zoomContainerMixin = (base) => class VictoryZoomContainer extends b
       const originalDomain = defaults({}, props.originalDomain, props.domain);
       const zoomDomain = defaults({}, props.zoomDomain, props.domain);
       const cachedZoomDomain = defaults({}, props.cachedZoomDomain, props.domain);
-      const checkDomainEquality = (a, b) => {
-        return +a.x[0] === +b.x[0] &&
-          +a.x[1] === +b.x[1] &&
-          +a.y[0] === +b.y[0] &&
-          +a.y[1] === +b.y[1];
-      };
       let domain;
-      if (!checkDomainEquality(zoomDomain, cachedZoomDomain)) {
+      if (!ZoomHelpers.checkDomainEquality(zoomDomain, cachedZoomDomain)) {
         // if zoomDomain has been changed, use it
         domain = zoomDomain;
       } else if (allowZoom && !zoomActive) {
@@ -196,7 +190,7 @@ export const zoomContainerMixin = (base) => class VictoryZoomContainer extends b
           [props.zoomDimension]: newDomain[props.zoomDimension]
         };
       }
-      const newChild = React.cloneElement(
+      return React.cloneElement(
         currentChild,
         defaults({
           domain: newDomain,
@@ -204,7 +198,6 @@ export const zoomContainerMixin = (base) => class VictoryZoomContainer extends b
             undefined : this.downsampleZoomData(props, currentChild.props, newDomain)
         }, currentChild.props)
       );
-      return newChild;
     });
   }
 
