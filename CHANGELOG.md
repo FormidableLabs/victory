@@ -1,5 +1,10 @@
 # VictoryChart Changelog
 
+## 24.5.1 (2018-01-02)
+
+- [543](https://github.com/FormidableLabs/victory-chart/pull/543) Fixes a bug related to dates in `VictoryBrushContainer`
+- [545](https://github.com/FormidableLabs/victory-chart/pull/545) Fixes a bug in `VictoryZoomContainer`
+
 ## 24.5.0 (2017-12-21)
 
 - [542](https://github.com/FormidableLabs/victory-chart/pull/542) Adds support for immutable data *note: compatible with `immutable@v3.8.x` and will be compatible with `immutable@v4.0.x` when released*
