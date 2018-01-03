@@ -209,7 +209,9 @@ export default class VictoryStack extends React.Component {
     const props = this.state && this.state.nodesWillExit ?
       this.state.oldProps || this.props : this.props;
     const modifiedProps = Helpers.modifyProps(props, fallbackProps, role);
-    const { eventKey, containerComponent, standalone, groupComponent } = modifiedProps;
+    const {
+      eventKey, containerComponent, standalone, groupComponent, externalEventMutations
+    } = modifiedProps;
     const childComponents = React.Children.toArray(modifiedProps.children);
     const calculatedProps = this.getCalculatedProps(modifiedProps, childComponents);
     const newChildren = this.getNewChildren(modifiedProps, childComponents, calculatedProps);
@@ -218,7 +220,12 @@ export default class VictoryStack extends React.Component {
       this.renderContainer(containerComponent, containerProps) : groupComponent;
     if (this.events) {
       return (
-        <VictorySharedEvents events={this.events} eventKey={eventKey} container={container}>
+        <VictorySharedEvents
+          container={container}
+          eventKey={eventKey}
+          events={this.events}
+          externalEventMutations={externalEventMutations}
+        >
           {newChildren}
         </VictorySharedEvents>
       );

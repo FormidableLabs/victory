@@ -231,7 +231,9 @@ export default class VictoryChart extends React.Component {
     const props = this.state && this.state.nodesWillExit ?
       this.state.oldProps || this.props : this.props;
     const modifiedProps = Helpers.modifyProps(props, fallbackProps, "chart");
-    const { eventKey, containerComponent, groupComponent, standalone } = modifiedProps;
+    const {
+      eventKey, containerComponent, groupComponent, standalone, externalEventMutations
+    } = modifiedProps;
     const axes = props.polar ? modifiedProps.defaultPolarAxes : modifiedProps.defaultAxes;
     const childComponents = ChartHelpers.getChildComponents(modifiedProps, axes);
     const calculatedProps = this.getCalculatedProps(modifiedProps, childComponents);
@@ -241,7 +243,12 @@ export default class VictoryChart extends React.Component {
       this.renderContainer(containerComponent, containerProps) : groupComponent;
     if (this.events) {
       return (
-        <VictorySharedEvents events={this.events} eventKey={eventKey} container={container}>
+        <VictorySharedEvents
+          container={container}
+          eventKey={eventKey}
+          events={this.events}
+          externalEventMutations={externalEventMutations}
+        >
           {newChildren}
         </VictorySharedEvents>
       );
