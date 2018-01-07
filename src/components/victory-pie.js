@@ -121,7 +121,7 @@ class VictoryPie extends React.Component {
       PropTypes.string,
       PropTypes.arrayOf(PropTypes.string)
     ]),
-    sortOder: PropTypes.oneOf(["ascending", "descending"]),
+    sortOrder: PropTypes.oneOf(["ascending", "descending"]),
     standalone: PropTypes.bool,
     startAngle: PropTypes.number,
     style: PropTypes.shape({
