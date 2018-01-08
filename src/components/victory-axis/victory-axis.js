@@ -50,7 +50,12 @@ class VictoryAxis extends React.Component {
     ...BaseProps,
     axisComponent: PropTypes.element,
     axisLabelComponent: PropTypes.element,
-    categories: PropTypes.arrayOf(PropTypes.string),
+    categories: PropTypes.oneOfType([
+      PropTypes.arrayOf(PropTypes.string),
+      PropTypes.shape({
+        x: PropTypes.arrayOf(PropTypes.string), y: PropTypes.arrayOf(PropTypes.string)
+      })
+    ]),
     crossAxis: PropTypes.bool,
     dependentAxis: PropTypes.bool,
     events: PropTypes.arrayOf(PropTypes.shape({
