@@ -57,6 +57,7 @@ class App extends React.Component {
             domainPadding={{ y: 2 }}
             containerComponent={
               <VictoryVoronoiContainer voronoiDimension="x"
+                voronoiBlacklist={["first"]}
                 labels={(d) => `y:${d.y}`}
                 labelComponent={
                   <VictoryTooltip
@@ -68,7 +69,7 @@ class App extends React.Component {
               />
             }
           >
-            <VictoryLine
+            <VictoryLine name="first"
               data={[
                 { x: 1, y: 5, l: "one" },
                 { x: 1.5, y: 5, l: "one point five" },
@@ -81,7 +82,7 @@ class App extends React.Component {
               }}
             />
 
-            <VictoryLine
+            <VictoryLine name="second"
               data={[
                 { x: 1, y: -3, l: "red" },
                 { x: 2, y: 5, l: "green" },
@@ -93,7 +94,7 @@ class App extends React.Component {
               }}
             />
 
-            <VictoryLine
+            <VictoryLine name="third"
               data={[
                 { x: 1, y: 5, l: "cat" },
                 { x: 2, y: -4, l: "dog" },
@@ -142,7 +143,8 @@ class App extends React.Component {
           <VictoryChart
             height={450}
             padding={{ top: 100, bottom: 20, left: 50, right: 50 }}
-            style={chartStyle} containerComponent={<VictoryVoronoiContainer/>}
+            style={chartStyle}
+            containerComponent={<VictoryVoronoiContainer voronoiBlacklist={["red"]}/>}
           >
             <VictoryLegend x={140} y={10}
               title="Legend"
@@ -157,7 +159,7 @@ class App extends React.Component {
               ]}
             />
             <VictoryGroup style={chartStyle}>
-              <VictoryScatter
+              <VictoryScatter name="red"
                 style={{
                   data: { fill: "tomato" }
                 }}

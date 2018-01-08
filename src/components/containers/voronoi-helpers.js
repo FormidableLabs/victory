@@ -1,5 +1,5 @@
 import { Selection, Data, Helpers } from "victory-core";
-import { assign, throttle, isFunction, groupBy, keys, isEqual } from "lodash";
+import { assign, throttle, isFunction, groupBy, keys, isEqual, includes } from "lodash";
 import { voronoi as d3Voronoi } from "d3-voronoi";
 import React from "react";
 import { attachId } from "../../helpers/event-handlers";
@@ -43,15 +43,20 @@ const VoronoiHelpers = {
 
     const iteratee = (child, childName, parent) => {
       const role = child.type && child.type.role;
+      const childProps = child.props || {};
+      const blacklist = props.voronoiBlacklist || [];
       if (role === "axis" || role === "legend" || role === "label") {
+        return null;
+      } else if (includes(blacklist, childName)) {
+        // ignore any children with names that match the blacklist
         return null;
       } else if (child.type && isFunction(child.type.getData)) {
         child = parent ? React.cloneElement(child, parent.props) : child;
-        const childData = child.props
-          && child.type.getData({ ...child.props, domain: props.domain });
+        const childData = childProps
+          && child.type.getData({ ...childProps, domain: props.domain });
         return childData ? addMeta(childData, childName, child) : null;
       } else {
-        const childData = getData({ ...child.props, domain: props.domain });
+        const childData = getData({ ...childProps, domain: props.domain });
         return childData ? addMeta(childData, childName, child) : null;
       }
     };

@@ -13,6 +13,7 @@ export const voronoiContainerMixin = (base) => class VictoryVoronoiContainer ext
     onActivated: PropTypes.func,
     onDeactivated: PropTypes.func,
     radius: PropTypes.number,
+    voronoiBlacklist: PropTypes.arrayOf(PropTypes.string),
     voronoiDimension: PropTypes.oneOf(["x", "y"]),
     voronoiPadding: PropTypes.number
   };
