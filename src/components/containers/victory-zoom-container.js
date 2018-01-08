@@ -1,6 +1,6 @@
 import PropTypes from "prop-types";
 import React from "react";
-import { defaults, get } from "lodash";
+import { defaults, get, isFunction } from "lodash";
 import ZoomHelpers from "./zoom-helpers";
 import {
   VictoryContainer, VictoryClipContainer, Data, PropTypes as CustomPropTypes
@@ -135,14 +135,22 @@ export const zoomContainerMixin = (base) => class VictoryZoomContainer extends b
     };
   }
 
-  downsampleZoomData(props, childProps, domain) {
+  downsampleZoomData(props, child, domain) {
     const { downsample } = props;
-    const rawData = get(childProps, "data");
-    // return undefined if downsample is not run, then default() will replace with child.props.data
-    if (!downsample || !rawData || !domain) { return undefined; }
 
-    // if data accessors are not used, skip calling expensive Data.formatData
-    const data = (childProps.x || childProps.y) ? Data.formatData(rawData, childProps) : rawData;
+    const getData = (childProps) => {
+      const { data, x, y } = childProps;
+      const defaultGetData = child.type && isFunction(child.type.getData) ?
+        child.type.getData : () => undefined;
+      // skip costly data formatting if x and y accessors are not present
+      return Array.isArray(data) && !x && !y ? data : defaultGetData(childProps);
+    };
+
+    const data = getData(child.props);
+
+    // return undefined if downsample is not run, then default() will replace with child.props.data
+    if (!downsample || !domain || !data) { return undefined; }
+
     const maxPoints = (downsample === true) ? DEFAULT_DOWNSAMPLE : downsample;
     const dimension = props.zoomDimension || "x";
 
@@ -195,7 +203,7 @@ export const zoomContainerMixin = (base) => class VictoryZoomContainer extends b
         defaults({
           domain: newDomain,
           data: role === "legend" ?
-            undefined : this.downsampleZoomData(props, currentChild.props, newDomain)
+            undefined : this.downsampleZoomData(props, currentChild, newDomain)
         }, currentChild.props)
       );
     });
