@@ -197,7 +197,10 @@ export default {
   },
 
   getStringTicks(props) {
-    const { stringMap, categories } = props;
+    const { stringMap } = props;
+    const axis = this.getAxis(props);
+    const categories = Array.isArray(props.categories) ?
+      props.categories : props.categories && props.categories[axis];
     const ticksFromCategories = categories && Collection.containsOnlyStrings(categories) ?
       categories.map((tick) => stringMap[tick]) : undefined;
     const ticksFromStringMap = stringMap && values(stringMap);
