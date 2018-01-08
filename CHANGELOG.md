@@ -1,5 +1,9 @@
 # VictoryPie Changelog
 
+## 13.3.1 (2018-01-08)
+
+-[164](https://github.com/FormidableLabs/victory-pie/pull/164) Correct typo
+
 ## 13.3.0 (2018-01-02)
 
 - [163](https://github.com/FormidableLabs/victory-pie/pull/163)
