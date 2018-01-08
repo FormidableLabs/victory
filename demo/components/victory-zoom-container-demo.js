@@ -135,8 +135,8 @@ export default class App extends React.Component {
   getData() {
     return range(50).map((i) => {
       return {
-        x: i + 20,
-        y: Math.random()
+        a: i + 20,
+        b: Math.random()
       };
     });
   }
@@ -167,7 +167,7 @@ export default class App extends React.Component {
         <CustomChart style={{ parent: parentStyle }} data={allData} maxPoints={120}/>
 
           <VictoryGroup
-            containerComponent={<VictoryZoomContainer dimension="y"/>}
+            containerComponent={<VictoryZoomContainer zoomDimension="y"/>}
             style={{ parent: parentStyle }} data={this.state.transitionData}
           >
             <VictoryLine animate={{ duration: 1500 }} style={{ data: this.state.style }} />
@@ -210,7 +210,8 @@ export default class App extends React.Component {
             containerComponent={
               <VictoryZoomContainer
                 minimumZoom={{ x: 5 }}
-                dimension="x"
+                zoomDimension="x"
+                downsample={10}
                 clipContainerComponent={
                   <VictoryClipContainer clipPadding={{ top: 15, bottom: 15 }}/>
                 }
@@ -222,6 +223,7 @@ export default class App extends React.Component {
                 style={{ parent: parentStyle, data: { fill: "orange" } }}
                 size={15}
                 data={this.state.data}
+                x="a" y="b"
               />
             </VictoryPortal>
           </VictoryChart>
@@ -232,7 +234,8 @@ export default class App extends React.Component {
             containerComponent={
               <VictoryZoomContainer
                 minimumZoom={{ x: 5 }}
-                dimension="x"
+                zoomDimension="x"
+                downsample={10}
                 clipContainerComponent={
                   <VictoryClipContainer clipPadding={{ top: 15, bottom: 15 }}/>
                 }
@@ -243,6 +246,7 @@ export default class App extends React.Component {
               style={{ parent: parentStyle, data: { fill: "orange" } }}
               size={15}
               data={this.state.data}
+              x="a" y="b"
               labels={(d) => d.x}
               labelComponent={<VictoryTooltip/>}
             />
@@ -288,10 +292,11 @@ export default class App extends React.Component {
             <VictoryArea
               style={{ parent: parentStyle, data: { stroke: "#333", fill: "#888", opacity: 0.4 } }}
               data={this.state.data}
+              x="a" y="b"
               interpolation="stepBefore"
             />
             <VictoryAxis/>
-            <VictoryLine data={this.state.data} interpolation="stepBefore"/>
+            <VictoryLine data={this.state.data} x="a" y="b" interpolation="stepBefore"/>
             <VictoryAxis dependentAxis/>
           </VictoryChart>
 
