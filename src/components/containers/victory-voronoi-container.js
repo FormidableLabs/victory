@@ -202,7 +202,7 @@ export const voronoiContainerMixin = (base) => class VictoryVoronoiContainer ext
       this.getDefaultLabelProps(props, points),
     );
     const labelPosition = this.getLabelPosition(props, points, labelProps);
-    return { ...labelPosition, ...labelProps };
+    return defaults({}, labelPosition, labelProps);
   }
 
   getTooltip(props) {
