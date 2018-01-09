@@ -1,5 +1,13 @@
 # VictoryChart Changelog
 
+## 24.6.1 (2018-01-08)
+
+- [550](https://github.com/FormidableLabs/victory-chart/pull/550) Fixes a bug related to voronoi tooltip positioning
+- [549](https://github.com/FormidableLabs/victory-chart/pull/549) Fixes a prop type warning for `categories` supplied to `VictoryAxis`
+- [548](https://github.com/FormidableLabs/victory-chart/pull/548) Adds a `voronoiBlacklist` prop to `VictoryVoronoiContainer`
+- [547](https://github.com/FormidableLabs/victory-chart/pull/547) Fixes downsampling in `VictoryZoomContainer` with function plotting
+- [545](https://github.com/FormidableLabs/victory-chart/pull/545) Fixes a bug related to panning in `VictoryZoomContainer`
+
 ## 24.6.0 (2018-01-02)
 
 - [544](https://github.com/FormidableLabs/victory-chart/pull/544)
