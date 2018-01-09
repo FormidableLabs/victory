@@ -1,5 +1,55 @@
 # Victory Changelog
 
+## 0.24.4 (2018-01-08)
+
+VictoryCore
+- [324](https://github.com/FormidableLabs/victory-core/pull/324) Adds support for external event mutations
+  - Adds `externalEventMutations` prop to `VictorySharedEvents` and all components enhanced with the `add-events` HOC
+  - `externalEventMutations` prop format:
+  ```
+externalEventMutations: PropTypes.arrayOf(PropTypes.shape({
+  callback: PropTypes.function,
+  childName: PropTypes.oneOfType([
+    PropTypes.string,
+    PropTypes.array
+  ]),
+  eventKey: PropTypes.oneOfType([
+    PropTypes.array,
+    CustomPropTypes.allOfType([CustomPropTypes.integer, CustomPropTypes.nonNegative]),
+    PropTypes.string
+  ]),
+  mutation: PropTypes.function,
+  target: PropTypes.oneOfType([
+    PropTypes.string,
+    PropTypes.array
+  ])
+}))
+```
+*Note:* `eventKey` and `target` must be specified for externalEventMutations. When using `extenalEventMutations` with shared events (_i.e._ events on VictoryChart etc), `childName` is also required.
+
+*Note:* The `callback` supplied to `externalEventMutations` should be used for clearing mutations. This is crucial for animating charts
+
+-[323](https://github.com/FormidableLabs/victory-core/pull/323) Add support for immutable data structures
+*note: compatible with `immutable@v3.8.x` and will be compatible with `immutable@v4.0.x` when released*
+
+VictoryChart
+
+- [550](https://github.com/FormidableLabs/victory-chart/pull/550) Fixes a bug related to voronoi tooltip positioning
+- [549](https://github.com/FormidableLabs/victory-chart/pull/549) Fixes a prop type warning for `categories` supplied to `VictoryAxis`
+- [548](https://github.com/FormidableLabs/victory-chart/pull/548) Adds a `voronoiBlacklist` prop to `VictoryVoronoiContainer`
+- [547](https://github.com/FormidableLabs/victory-chart/pull/547) Fixes downsampling in `VictoryZoomContainer` with function plotting
+- [545](https://github.com/FormidableLabs/victory-chart/pull/545) Fixes a bug related to panning in `VictoryZoomContainer`
+- [544](https://github.com/FormidableLabs/victory-chart/pull/544) Adds support for external event mutations
+- [543](https://github.com/FormidableLabs/victory-chart/pull/543) Fixes a bug related to dates in `VictoryBrushContainer`
+- [545](https://github.com/FormidableLabs/victory-chart/pull/545) Fixes a bug in `VictoryZoomContainer`
+- [542](https://github.com/FormidableLabs/victory-chart/pull/542) Adds support for immutable data *note: compatible with `immutable@v3.8.x` and will be compatible with `immutable@v4.0.x` when released*
+
+VictoryPie
+
+- [164](https://github.com/FormidableLabs/victory-pie/pull/164) Correct typo
+- [163](https://github.com/FormidableLabs/victory-pie/pull/163) Adds support for external event mutations
+
+
 ## 0.24.3 (2017-12-17)
 
 VictoryCore
