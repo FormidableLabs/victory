@@ -1,4 +1,5 @@
-import { assign, defaults, flatten, isFunction, keys, partialRight, uniq, some, sortBy } from "lodash";
+import { assign, defaults, flatten, isFunction, keys, partialRight, uniq,
+  some, sortBy } from "lodash";
 import React from "react";
 import Axis from "./axis";
 import { Style, Transitions, Collection, Data, Domain, Events } from "victory-core";

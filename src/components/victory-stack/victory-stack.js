@@ -34,14 +34,14 @@ export default class VictoryStack extends React.Component {
         "grayscale", "qualitative", "heatmap", "warm", "cool", "red", "green", "blue"
       ])
     ]),
+    fillInMissingData: PropTypes.bool,
     horizontal: PropTypes.bool,
     labelComponent: PropTypes.element,
     labels: PropTypes.oneOfType([ PropTypes.func, PropTypes.array ]),
     style: PropTypes.shape({
       parent: PropTypes.object, data: PropTypes.object, labels: PropTypes.object
     }),
-    xOffset: PropTypes.number,
-    fillInMissingData: PropTypes.bool
+    xOffset: PropTypes.number
   };
 
   static defaultProps = {
@@ -118,12 +118,15 @@ export default class VictoryStack extends React.Component {
     return { datasets, categories, range, domain, horizontal, scale, style, colorScale, role };
   }
 
-  addLayoutData(props, calculatedProps, datasets, index) { // eslint-disable-line max-params
+  /* eslint-disable max-params, no-nested-ternary */
+  addLayoutData(props, calculatedProps, datasets, index) {
     const xOffset = props.xOffset || 0;
     return datasets[index].map((datum) => {
       const yOffset = Wrapper.getY0(datum, index, calculatedProps) || 0;
       return assign({}, datum, {
-        _y0: datum._y instanceof Date ? yOffset && new Date(yOffset) || datum._y : yOffset,
+        _y0: !(datum._y instanceof Date) ? yOffset : (
+          yOffset ? new Date(yOffset) : datum._y
+        ),
         _y1: datum._y === null ? null : (
           datum._y instanceof Date ? new Date(+datum._y + +yOffset) : datum._y + yOffset
         ),
@@ -133,6 +136,7 @@ export default class VictoryStack extends React.Component {
       });
     });
   }
+  /* eslint-enable max-params, no-nested-ternary */
 
   getLabels(props, datasets, index) {
     if (!props.labels) {
