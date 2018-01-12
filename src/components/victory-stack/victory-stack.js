@@ -40,7 +40,8 @@ export default class VictoryStack extends React.Component {
     style: PropTypes.shape({
       parent: PropTypes.object, data: PropTypes.object, labels: PropTypes.object
     }),
-    xOffset: PropTypes.number
+    xOffset: PropTypes.number,
+    fillInMissingData: PropTypes.bool
   };
 
   static defaultProps = {
@@ -48,7 +49,8 @@ export default class VictoryStack extends React.Component {
     groupComponent: <g/>,
     scale: "linear",
     standalone: true,
-    theme: VictoryTheme. grayscale
+    theme: VictoryTheme. grayscale,
+    fillInMissingData: true
   };
 
   static expectedComponents = [
@@ -88,7 +90,8 @@ export default class VictoryStack extends React.Component {
     const horizontal = props.horizontal || childComponents.every(
       (component) => component.props.horizontal
     );
-    const datasets = Wrapper.getDataFromChildren(props);
+    const dataFromChildren = Wrapper.getDataFromChildren(props);
+    const datasets = Wrapper.fillInMissingData(props, dataFromChildren);
     const domain = {
       x: Wrapper.getStackedDomain(props, "x", datasets),
       y: Wrapper.getStackedDomain(props, "y", datasets)
