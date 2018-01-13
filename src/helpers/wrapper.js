@@ -209,6 +209,7 @@ export default {
     return dataArr;
   },
 
+  // Assumes data in `datasets` is sorted by `Data.getData`.
   fillInMissingData(props, datasets) {
     const { fillInMissingData } = props;
     const xMap = datasets.reduce((prev, dataset) => {
