@@ -34,6 +34,7 @@ export default class VictoryStack extends React.Component {
         "grayscale", "qualitative", "heatmap", "warm", "cool", "red", "green", "blue"
       ])
     ]),
+    fillInMissingData: PropTypes.bool,
     horizontal: PropTypes.bool,
     labelComponent: PropTypes.element,
     labels: PropTypes.oneOfType([ PropTypes.func, PropTypes.array ]),
@@ -48,7 +49,8 @@ export default class VictoryStack extends React.Component {
     groupComponent: <g/>,
     scale: "linear",
     standalone: true,
-    theme: VictoryTheme. grayscale
+    theme: VictoryTheme. grayscale,
+    fillInMissingData: true
   };
 
   static expectedComponents = [
@@ -88,7 +90,8 @@ export default class VictoryStack extends React.Component {
     const horizontal = props.horizontal || childComponents.every(
       (component) => component.props.horizontal
     );
-    const datasets = Wrapper.getDataFromChildren(props);
+    const dataFromChildren = Wrapper.getDataFromChildren(props);
+    const datasets = Wrapper.fillInMissingData(props, dataFromChildren);
     const domain = {
       x: Wrapper.getStackedDomain(props, "x", datasets),
       y: Wrapper.getStackedDomain(props, "y", datasets)
@@ -115,17 +118,25 @@ export default class VictoryStack extends React.Component {
     return { datasets, categories, range, domain, horizontal, scale, style, colorScale, role };
   }
 
-  addLayoutData(props, calculatedProps, datasets, index) { // eslint-disable-line max-params
+  /* eslint-disable max-params, no-nested-ternary */
+  addLayoutData(props, calculatedProps, datasets, index) {
     const xOffset = props.xOffset || 0;
     return datasets[index].map((datum) => {
       const yOffset = Wrapper.getY0(datum, index, calculatedProps) || 0;
       return assign({}, datum, {
-        _y0: datum._y instanceof Date ? yOffset && new Date(yOffset) || datum._y : yOffset,
-        _y1: datum._y instanceof Date ? new Date(+datum._y + +yOffset) : datum._y + yOffset,
-        _x1: datum._x instanceof Date ? new Date(+datum._x + +xOffset) : datum._x + xOffset
+        _y0: !(datum._y instanceof Date) ? yOffset : (
+          yOffset ? new Date(yOffset) : datum._y
+        ),
+        _y1: datum._y === null ? null : (
+          datum._y instanceof Date ? new Date(+datum._y + +yOffset) : datum._y + yOffset
+        ),
+        _x1: datum._x === null ? null : (
+          datum._x instanceof Date ? new Date(+datum._x + +xOffset) : datum._x + xOffset
+        )
       });
     });
   }
+  /* eslint-enable max-params, no-nested-ternary */
 
   getLabels(props, datasets, index) {
     if (!props.labels) {

@@ -1,4 +1,5 @@
-import { assign, defaults, flatten, isFunction, partialRight, uniq, some } from "lodash";
+import { assign, defaults, flatten, isFunction, keys, partialRight, uniq,
+  some, sortBy } from "lodash";
 import React from "react";
 import Axis from "./axis";
 import { Style, Transitions, Collection, Data, Domain, Events } from "victory-core";
@@ -208,6 +209,39 @@ export default {
     return dataArr;
   },
 
+  // Assumes data in `datasets` is sorted by `Data.getData`.
+  fillInMissingData(props, datasets) {
+    const { fillInMissingData } = props;
+    const xMap = datasets.reduce((prev, dataset) => {
+      dataset.forEach((datum) => {
+        prev[datum._x instanceof Date ? datum._x.getTime() : datum._x] = true;
+      });
+      return prev;
+    }, {});
+    const xArr = sortBy(keys(xMap));
+
+    return datasets.map((dataset) => {
+      let indexOffset = 0;
+      const filledInData = xArr.map((x, index) => {
+        const datum = dataset[index - indexOffset];
+        const isDate = datum._x instanceof Date;
+        const x1 = isDate ? datum._x.getTime() : datum._x;
+        x = +x;
+
+        if (x1 === x) {
+          return datum;
+        } else {
+          indexOffset++;
+          const y = fillInMissingData ? 0 : null;
+          x = isDate ? new Date(x) : x;
+          return { x, y, _x: x, _y: y };
+        }
+      });
+
+      return filledInData;
+    });
+  },
+
   getStackedDomain(props, axis) {
     const propsDomain = Domain.getDomainFromProps(props, axis);
     if (propsDomain) {
@@ -358,8 +392,8 @@ export default {
     }
     const { datasets } = calculatedProps;
     const y = datum._y;
-    const previousDataSets = datasets.slice(0, index);
-    const previousPoints = previousDataSets.reduce((prev, dataset) => {
+    const previousDatasets = datasets.slice(0, index);
+    const previousPoints = previousDatasets.reduce((prev, dataset) => {
       return prev.concat(dataset
         .filter((previousDatum) => datum._x instanceof Date
           ? previousDatum._x.getTime() === datum._x.getTime()
