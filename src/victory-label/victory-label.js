@@ -46,6 +46,7 @@ export default class VictoryLabel extends React.Component {
     ]),
     events: PropTypes.object,
     index: PropTypes.oneOfType([PropTypes.number, PropTypes.string]),
+    inline: PropTypes.bool,
     labelPlacement: PropTypes.oneOf(["parallel", "perpendicular", "vertical"]),
     lineHeight: PropTypes.oneOfType([
       PropTypes.string,
@@ -265,9 +266,10 @@ export default class VictoryLabel extends React.Component {
           const lastStyle = this.style[i - 1] || this.style[0];
           const fontSize = (style.fontSize + lastStyle.fontSize) / 2;
           const textAnchor = style.textAnchor || this.textAnchor;
-          const dy = i ? (this.lineHeight * fontSize) : undefined;
+          const dy = i && !props.inline ? (this.lineHeight * fontSize) : undefined;
+          const x = !props.inline ? props.x : undefined;
           return (
-            <tspan key={i} x={props.x} dy={dy} dx={this.dx} style={style} textAnchor={textAnchor}>
+            <tspan key={i} x={x} dy={dy} dx={this.dx} style={style} textAnchor={textAnchor}>
               {line}
             </tspan>
           );
