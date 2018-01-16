@@ -27,6 +27,33 @@ $ open http://localhost:3000
 # Run tests
 $ npm test
 ```
+### Multi-repo development
+
+Victory uses [`lank`](https://github.com/FormidableLabs/lank) for multi-repo development. Use a lank workflow to test changes in victory dependencies. Here's an example of setting up lank to test changes in `victory-core` from `victory-pie`
+
+**First, make sure that all of your Victory repos are _siblings_ in the same directory**
+
+```sh
+# Install lank globally
+$ npm install -g lank
+```
+Victory repos are already configured with appropriate `.lankrc` and lank scripts. To test changes in `victory-core` from `victory-pie`:
+
+```sh
+# Run all commands from the root of `victory-pie`
+$ cd victory-pie
+
+# Run `lank link` to remove `victory-core` from node_modules
+$ lank link
+
+# Watch for changes to lanked repos. Leave this process running in its own terminal window
+$ npm run lank-watch
+
+# Run a dev server with your lanked repos. In a new terminal window...
+$ npm run lank-run
+```
+
+Refresh your browser to pick up changes.
 
 For more on the development environment, see [DEVELOPMENT](https://github.com/FormidableLabs/builder-victory-component-dev/blob/master/DEVELOPMENT.md) in the project builder archetype.
 
