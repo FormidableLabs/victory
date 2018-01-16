@@ -13,6 +13,7 @@ import Border from "../victory-primitives/border";
 
 const fallbackProps = {
   orientation: "vertical",
+  titleOrientation: "top",
   width: 450,
   height: 300,
   x: 0,
