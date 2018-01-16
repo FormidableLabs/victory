@@ -72,7 +72,7 @@ export default {
       grid: {
         fill: "none",
         stroke: "none",
-        pointerEvents: "visible"
+        pointerEvents: "painted"
       },
       ticks: {
         fill: "transparent",
