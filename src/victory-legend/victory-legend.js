@@ -1,7 +1,7 @@
 import React from "react";
 import PropTypes from "prop-types";
 import { partialRight } from "lodash";
-import { default as getBaseProps } from "./helper-methods";
+import LegendHelpers from "./helper-methods";
 import CustomPropTypes from "../victory-util/prop-types";
 import addEvents from "../victory-util/add-events";
 import Helpers from "../victory-util/helpers";
@@ -149,7 +149,10 @@ class VictoryLegend extends React.Component {
     titleComponent: <VictoryLabel/>
   };
 
-  static getBaseProps = partialRight(getBaseProps, fallbackProps);
+  static getBaseProps = partialRight(LegendHelpers.getBaseProps.bind(LegendHelpers), fallbackProps);
+  static getDimensions = partialRight(
+    LegendHelpers.getDimensions.bind(LegendHelpers), fallbackProps
+  );
   static expectedComponents = [
     "borderComponent", "containerComponent", "dataComponent",
     "groupComponent", "labelComponent", "titleComponent"
