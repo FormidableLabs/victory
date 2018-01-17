@@ -204,11 +204,6 @@ export default class VictoryLabel extends React.Component {
   getDy(props, style, content, lineHeight) { //eslint-disable-line max-params
     style = Array.isArray(style) ? style[0] : style;
     lineHeight = this.checkLineHeight(lineHeight, lineHeight[0], 1);
-    // lineHeight = Array.isArray(lineHeight)
-    //   ? isEmpty(lineHeight)
-    //     ? 1
-    //     : lineHeight[0]
-    //   : lineHeight;
     const fontSize = style.fontSize;
     const datum = props.datum || props.data;
     const dy = props.dy ? Helpers.evaluateProp(props.dy, datum) : 0;
@@ -284,12 +279,11 @@ export default class VictoryLabel extends React.Component {
           const style = this.style[i] || this.style[0];
           const lastStyle = this.style[i - 1] || this.style[0];
           const fontSize = (style.fontSize + lastStyle.fontSize) / 2;
-          // const lineHeight = Array.isArray(this.lineHeight)
-          //   ? isEmpty(this.lineHeight)
-          //     ? 1
-          //     : (this.lineHeight[i] + (this.lineHeight[i - 1] || this.lineHeight[0]) / 2)
-          // : this.lineHeight;
-          const lineHeight = this.checkLineHeight(this.lineHeight, (this.lineHeight[i] + (this.lineHeight[i - 1] || this.lineHeight[0]) / 2), 1)
+          const lineHeight = this.checkLineHeight(
+            this.lineHeight,
+            (this.lineHeight[i] + (this.lineHeight[i - 1] || this.lineHeight[0]) / 2),
+            1
+          );
           const textAnchor = style.textAnchor || this.textAnchor;
           const dy = i && !props.inline ? (lineHeight * fontSize) : undefined;
           const x = !props.inline ? props.x : undefined;
