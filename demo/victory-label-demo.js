@@ -9,7 +9,7 @@ export default class App extends React.Component {
           VictoryLabel demo! The little circles show the anchor points for
           each label.
         </p>
-        <svg width="600" height="2000" style={{ border: "1px solid #ccc", padding: 40 }}>
+        <svg width="600" height="2500" style={{ border: "1px solid #ccc", padding: 40 }}>
 
           <circle cx="0" cy="0" r="2" fill="red"/>
           <VictoryLabel
@@ -43,12 +43,12 @@ export default class App extends React.Component {
             ]}
             text={"Victory is awesome.\nThis is (end, start) anchoring.\nOK?"}
           />
+
           <circle cx="300" cy="300" r="2" fill="blue"/>
           <VictoryLabel x={300} y={300} textAnchor="middle" verticalAnchor="start"
             style={{ padding: 15 }}
             text={"Victory is awesome.\nThis is (middle, start) anchoring.\nGot it?"}
           />
-
 
           <circle cx="300" cy="450" r="2" fill="red"/>
           <VictoryLabel x={300} y={450} textAnchor="start" verticalAnchor="start"
@@ -95,14 +95,24 @@ export default class App extends React.Component {
 
           <circle cx="300" cy="1650" r="2" fill="red"/>
           <VictoryLabel x={300} y={1650} textAnchor="start" verticalAnchor="middle"
-            text={[ '% of target', '44% for 2017' ]}
+            text={[ 'We still get', 'varying label styles!' ]}
             style={[{ fill: '#000' }, { fill: '#6128ff', fontSize: 20 }]} inline dx={25}
           />
 
-          <circle cx="300" cy="1800" r="2" fill="red"/>
-          <VictoryLabel x={300} y={1800} textAnchor="start" verticalAnchor="start"
-            text={["shift", "subsequent", "labels", "by", "5"]} inline dx={"5"}
+          <circle cx="0" cy="1800" r="2" fill="red"/>
+          <VictoryLabel x={0} y={1800} textAnchor="start" verticalAnchor="start"
+            text={["Use", "dx", "attribute", "to", "shift", "labels", "relative to one another."]} inline dx={"10"}
           />
+
+          <circle cx="0" cy="2000" r="2" fill="red"/>
+          <VictoryLabel
+            x={0} y={2000}
+            text={["Victory is awesome.", "We can even specify", "a lineHeight array!", "Just like this!"]}
+            style={[{ fontSize: 50, fill: "green" }, { fontSize: 60 }, { fontSize: 30 }, { fontSize: 30 }]}
+            lineHeight={[1.22, 2, 3, 1]}
+            verticalAnchor="start"
+          />
+
         </svg>
       </div>
     );
