@@ -120,4 +120,79 @@ describe("components/victory-label", () => {
       expect(clickHandler.called).to.equal(true);
     });
   });
+
+  it("renders <tspan /> elements inline when `inline` prop is passed", () => {
+    const wrapper = shallow(
+      <VictoryLabel
+        text={["Inline", "label", "testing"]}
+        inline
+        dx={5}
+      />
+    );
+
+    const output = wrapper.find("tspan");
+    output.forEach((tspan) => {
+      // passing `inline` sets x and dy to undefined
+      expect(tspan.prop("x")).to.be.eql(undefined);
+      expect(tspan.prop("dy")).to.be.eql(undefined);
+      expect(tspan.prop("dx")).to.be.eql(5);
+    });
+  });
+
+  it("passes lineHeight as an array if provided", () => {
+    const lineHeight = [1, 2, 3];
+    const expectedDy = [undefined, 21, 35];
+    const wrapper = shallow(
+      <VictoryLabel
+        text={["lineHeight", "array", "testing"]}
+        // eslint-disable-next-line no-magic-numbers
+        lineHeight={lineHeight}
+      />
+    );
+
+    const output = wrapper.find("tspan");
+    output.forEach((tspan, index) => {
+      /*
+      to calculate dy:
+      ((this.lineHeight[i] + (this.lineHeight[i - 1] || this.lineHeight[0])) / 2)
+      */
+      expect(tspan.prop("dy")).to.be.eql(expectedDy[index]);
+    });
+  });
+
+  it("defaults lineHeight to 1 if an empty array is provided for lineHeight", () => {
+    const expectedDy = [undefined, 14, 14, 14];
+    const wrapper = shallow(
+      <VictoryLabel
+        text={["lineHeight", "empty", "array", "testing"]}
+        lineHeight={[]}
+      />
+    );
+
+    const output = wrapper.find("tspan");
+    output.forEach((tspan, index) => {
+      expect(tspan.prop("dy")).to.be.eql(expectedDy[index]);
+    });
+  });
+
+  it("defaults style to `defaultStyles` if an empty array is provided for `style`", () => {
+    const defaultStyles = {
+      fill: "#252525",
+      fontSize: 14,
+      fontFamily: "'Gill Sans', 'Gill Sans MT', 'Ser­avek', 'Trebuchet MS', sans-serif",
+      stroke: "transparent"
+    };
+
+    const wrapper = shallow(
+      <VictoryLabel
+        text={["style", "empty", "array", "testing"]}
+        style={[]}
+      />
+    );
+
+    const output = wrapper.find("tspan");
+    output.forEach((tspan) => {
+      expect(tspan.prop("style")).to.be.eql(defaultStyles);
+    });
+  });
 });

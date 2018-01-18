@@ -281,7 +281,7 @@ export default class VictoryLabel extends React.Component {
           const fontSize = (style.fontSize + lastStyle.fontSize) / 2;
           const lineHeight = this.checkLineHeight(
             this.lineHeight,
-            (this.lineHeight[i] + (this.lineHeight[i - 1] || this.lineHeight[0]) / 2),
+            ((this.lineHeight[i] + (this.lineHeight[i - 1] || this.lineHeight[0])) / 2),
             1
           );
           const textAnchor = style.textAnchor || this.textAnchor;

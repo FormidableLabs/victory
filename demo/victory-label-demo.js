@@ -17,7 +17,6 @@ export default class App extends React.Component {
             text={"Victory is awesome.\nThis is default anchoring.\nCapisce?"}
           />
 
-
           <circle cx="200" cy="50" r="2" fill="red"/>
           <VictoryLabel
             x={200} y={50}
@@ -25,7 +24,6 @@ export default class App extends React.Component {
             desc={"Victory is awesome. This is a description."}
             text={"Victory is awesome.\nThis has a title and description."}
           />
-
 
           <circle cx="0" cy="75" r="2" fill="red"/>
           <VictoryLabel
@@ -90,26 +88,45 @@ export default class App extends React.Component {
           {/* examples for inlining VictoryLabel with mutlitple labels */}
           <circle cx="300" cy="1500" r="2" fill="red"/>
           <VictoryLabel x={300} y={1500} textAnchor="end" verticalAnchor="middle"
-            text={"This is inline styling for <tspan>. Woohoo!"} inline
+            text={["Victory is awesome.", "This is inline styling for labels."]}
+            inline
           />
 
           <circle cx="300" cy="1650" r="2" fill="red"/>
           <VictoryLabel x={300} y={1650} textAnchor="start" verticalAnchor="middle"
-            text={[ 'We still get', 'varying label styles!' ]}
-            style={[{ fill: '#000' }, { fill: '#6128ff', fontSize: 20 }]} inline dx={25}
+            text={["This is varying styles", "inline."]}
+            style={[{ fill: "#000" }, { fill: "#6128ff", fontSize: 20 }]}
+            inline
+            dx={25}
           />
 
           <circle cx="0" cy="1800" r="2" fill="red"/>
           <VictoryLabel x={0} y={1800} textAnchor="start" verticalAnchor="start"
-            text={["Use", "dx", "attribute", "to", "shift", "labels", "relative to one another."]} inline dx={"10"}
+            text={["Use", "dx", "attribute", "to", "shift", "labels", "relative to one another."]}
+            inline
+            dx={"10"}
           />
 
-          {/* example for passing an array of lineHeights - can accept a number[] or string[] */}
+          {/**
+            * example for passing an array of lineHeights.
+            * lineHeight prop can accept a number[] or string[].
+          */}
           <circle cx="0" cy="2000" r="2" fill="red"/>
           <VictoryLabel
             x={0} y={2000}
-            text={["Victory is awesome.", "We can even specify", "a lineHeight array!", "Just like this!"]}
-            style={[{ fontSize: 50, fill: "green" }, { fontSize: 60 }, { fontSize: 30 }, { fontSize: 30 }]}
+            text={[
+              "Victory is awesome.",
+              "This is variable",
+              "lineHeight",
+              "as an array."
+            ]}
+            style={[
+              { fontSize: 50, fill: "green" },
+              { fontSize: 60 },
+              { fontSize: 30 },
+              { fontSize: 30 }
+            ]}
+            // eslint-disable-next-line no-magic-numbers
             lineHeight={[1.22, 2, 3, 1]}
             verticalAnchor="start"
           />
@@ -118,7 +135,12 @@ export default class App extends React.Component {
           <circle cx="300" cy="2300" r="2" fill="red"/>
           <VictoryLabel
             x={300} y={2300}
-            text={["Victory is awesome.", "Even if we leave blank arrays.", "Victory will save us with defaults."]}
+            text={[
+              "Victory is awesome.",
+              "Even if we leave blank arrays",
+              "for style or lineHeight,",
+              "Victory will save us with defaults."
+            ]}
             style={[]}
             lineHeight={[]}
             verticalAnchor="start"
