@@ -87,8 +87,9 @@ export default class Candle extends React.Component {
     const { x, y1, y2, events, className } = props;
     const shapeRendering = props.shapeRendering || "auto";
     const role = props.role || "presentation";
+    const wickStyle = assign({}, this.style, { strokeWidth: props.style.wickStrokeWidth || props.style.strokeWidth });
     return assign(
-      { x1: x, x2: x, y1, y2, style: this.style, role, shapeRendering, className },
+      { x1: x, x2: x, y1, y2, style: wickStyle, role, shapeRendering, className },
       events
     );
   }
