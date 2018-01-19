@@ -1,5 +1,5 @@
 import { Selection, Data, Helpers } from "victory-core";
-import { flatten, assign, throttle, isFunction, groupBy, keys, isEqual, includes } from "lodash";
+import { assign, flatten, groupBy, isFunction, isEqual, includes, keys, throttle, } from "lodash";
 import { voronoi as d3Voronoi } from "d3-voronoi";
 import React from "react";
 import { attachId } from "../../helpers/event-handlers";
@@ -22,7 +22,7 @@ const VoronoiHelpers = {
     const addMeta = (data, name, child) => {
       const continuous = child && child.type && child.type.continuous;
       const style = child ? child.props && child.props.style : props.style;
-      // In the case of an array of arrays, flatten it.
+      // in the case of an array of arrays, flatten it
       if (data.length > 0 && Array.isArray(data[0])) {
         data = flatten(data);
       }
