@@ -58,7 +58,15 @@ export default class VictoryStack extends React.Component {
   ];
 
   static getDomain = Wrapper.getStackedDomain.bind(Wrapper);
-  static getData = Wrapper.getData.bind(Wrapper);
+
+  static getData = (props, childComponents) => {
+    childComponents = childComponents || React.Children.toArray(props.children);
+    const dataFromChildren = Wrapper.getDataFromChildren(props, childComponents);
+    const datasets = Wrapper.fillInMissingData(props, dataFromChildren);
+    return childComponents.map((child, index) => {
+      return Wrapper.addLayoutData(props, datasets, index);
+    });
+  }
 
   constructor(props) {
     super(props);
@@ -118,26 +126,6 @@ export default class VictoryStack extends React.Component {
     return { datasets, categories, range, domain, horizontal, scale, style, colorScale, role };
   }
 
-  /* eslint-disable max-params, no-nested-ternary */
-  addLayoutData(props, calculatedProps, datasets, index) {
-    const xOffset = props.xOffset || 0;
-    return datasets[index].map((datum) => {
-      const yOffset = Wrapper.getY0(datum, index, calculatedProps) || 0;
-      return assign({}, datum, {
-        _y0: !(datum._y instanceof Date) ? yOffset : (
-          yOffset ? new Date(yOffset) : datum._y
-        ),
-        _y1: datum._y === null ? null : (
-          datum._y instanceof Date ? new Date(+datum._y + +yOffset) : datum._y + yOffset
-        ),
-        _x1: datum._x === null ? null : (
-          datum._x instanceof Date ? new Date(+datum._x + +xOffset) : datum._x + xOffset
-        )
-      });
-    });
-  }
-  /* eslint-enable max-params, no-nested-ternary */
-
   getLabels(props, datasets, index) {
     if (!props.labels) {
       return undefined;
@@ -178,7 +166,7 @@ export default class VictoryStack extends React.Component {
     const getAnimationProps = Wrapper.getAnimationProps.bind(this);
 
     return childComponents.map((child, index) => {
-      const data = this.addLayoutData(props, calculatedProps, datasets, index);
+      const data = Wrapper.addLayoutData(props, datasets, index);
       const style = Wrapper.getChildStyle(child, index, calculatedProps);
       const labels = props.labels ? this.getLabels(props, datasets, index) : child.props.labels;
 

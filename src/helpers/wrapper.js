@@ -386,11 +386,10 @@ export default {
     return categories.length > 0 ? categories : undefined;
   },
 
-  getY0(datum, index, calculatedProps) {
+  getY0(datum, index, datasets) {
     if (datum.y0) {
       return datum.y0;
     }
-    const { datasets } = calculatedProps;
     const y = datum._y;
     const previousDatasets = datasets.slice(0, index);
     const previousPoints = previousDatasets.reduce((prev, dataset) => {
@@ -406,5 +405,25 @@ export default {
       return sameSign ? +value + memo : memo;
     }, 0);
     return previousPoints.some((point) => point instanceof Date) ? new Date(y0) : y0;
+  },
+
+  /* eslint-disable max-params, no-nested-ternary */
+  addLayoutData(props, datasets, index) {
+    const xOffset = props.xOffset || 0;
+    return datasets[index].map((datum) => {
+      const yOffset = this.getY0(datum, index, datasets) || 0;
+      return assign({}, datum, {
+        _y0: !(datum._y instanceof Date) ? yOffset : (
+          yOffset ? new Date(yOffset) : datum._y
+        ),
+        _y1: datum._y === null ? null : (
+          datum._y instanceof Date ? new Date(+datum._y + +yOffset) : datum._y + yOffset
+        ),
+        _x1: datum._x === null ? null : (
+          datum._x instanceof Date ? new Date(+datum._x + +xOffset) : datum._x + xOffset
+        )
+      });
+    });
   }
+  /* eslint-enable max-params, no-nested-ternary */
 };
