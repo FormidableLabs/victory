@@ -1,5 +1,5 @@
 import { Selection, Data, Helpers } from "victory-core";
-import { assign, throttle, isFunction, groupBy, keys, isEqual, includes } from "lodash";
+import { flatten, assign, throttle, isFunction, groupBy, keys, isEqual, includes } from "lodash";
 import { voronoi as d3Voronoi } from "d3-voronoi";
 import React from "react";
 import { attachId } from "../../helpers/event-handlers";
@@ -22,6 +22,10 @@ const VoronoiHelpers = {
     const addMeta = (data, name, child) => {
       const continuous = child && child.type && child.type.continuous;
       const style = child ? child.props && child.props.style : props.style;
+      // In the case of an array of arrays, flatten it.
+      if (data.length > 0 && Array.isArray(data[0])) {
+        data = flatten(data);
+      }
       return data.map((datum, index) => {
         const { x, y } = Helpers.getPoint(datum);
         return assign({
@@ -60,7 +64,7 @@ const VoronoiHelpers = {
         return childData ? addMeta(childData, childName, child) : null;
       }
     };
-    return Helpers.reduceChildren(React.Children.toArray(props.children), iteratee);
+    return Helpers.reduceChildren(React.Children.toArray(props.children), iteratee, ["stack"]);
   },
 
   // returns an array of objects with point and data where point is an x, y coordinate, and data is
