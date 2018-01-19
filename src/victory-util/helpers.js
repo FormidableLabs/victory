@@ -1,5 +1,5 @@
 import React from "react";
-import { defaults, isFunction, property, omit, reduce } from "lodash";
+import { defaults, includes, isFunction, property, omit, reduce } from "lodash";
 import Collection from "./collection";
 
 export default {
@@ -190,17 +190,13 @@ export default {
    * @returns {Array} returns an array of results from calling the iteratee on all nested children
    */
   reduceChildren(children, iteratee, rolesToSkip = []) {
-    const skipMap = rolesToSkip.reduce((memo, role) => {
-      memo[role] = true;
-      return memo;
-    }, {});
     let childIndex = 0;
     const traverseChildren = (childArray, parent) => {
       return reduce(childArray, (memo, child) => {
         const childRole = child.type && child.type.role;
         const childName = child.props.name || childIndex;
         childIndex++;
-        if (!skipMap[childRole] && child.props && child.props.children) {
+        if (!includes(rolesToSkip, childRole) && child.props && child.props.children) {
           const nestedChildren = React.Children.toArray(child.props.children);
           const nestedResults = traverseChildren(nestedChildren, child);
           memo = memo.concat(nestedResults);
