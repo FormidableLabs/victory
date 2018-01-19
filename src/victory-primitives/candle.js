@@ -65,7 +65,6 @@ export default class Candle extends React.Component {
 
   // Overridden in victory-core-native
   renderWick(wickProps) {
-    console.log(wickProps);
     return <line {...wickProps}/>;
   }
 
@@ -89,7 +88,6 @@ export default class Candle extends React.Component {
     const shapeRendering = props.shapeRendering || "auto";
     const role = props.role || "presentation";
     const wickStyle = assign({}, this.style, { strokeWidth: props.style.wickStrokeWidth || props.style.strokeWidth });
-  
     return assign(
       { x1: x, x2: x, y1: wickType === 'low' ? lowWick : y1, y2: wickType === 'high' ? highWick : y2, style: wickStyle, role, shapeRendering, className },
       events
