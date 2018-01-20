@@ -1,5 +1,5 @@
 import { Selection, Data, Helpers } from "victory-core";
-import { assign, flatten, groupBy, isFunction, isEqual, includes, keys, throttle, } from "lodash";
+import { assign, flattenDeep, groupBy, isFunction, isEqual, includes, keys, throttle } from "lodash";
 import { voronoi as d3Voronoi } from "d3-voronoi";
 import React from "react";
 import { attachId } from "../../helpers/event-handlers";
@@ -24,14 +24,16 @@ const VoronoiHelpers = {
       const style = child ? child.props && child.props.style : props.style;
       // in the case of an array of arrays, flatten it
       if (data.length > 0 && Array.isArray(data[0])) {
-        data = flatten(data);
+        data = flattenDeep(data);
       }
       return data.map((datum, index) => {
         const { x, y } = Helpers.getPoint(datum);
         return assign({
           _voronoiX: props.voronoiDimension === "y" ? 0 : x,
           _voronoiY: props.voronoiDimension === "x" ? 0 : y,
-          childName: name, eventKey: index, continuous, style
+          eventKey: index,
+          childName: name,
+          continuous, style
         }, datum);
       });
     };

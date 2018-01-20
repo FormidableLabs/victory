@@ -60,11 +60,12 @@ export default class VictoryStack extends React.Component {
   static getDomain = Wrapper.getStackedDomain.bind(Wrapper);
 
   static getData = (props, childComponents) => {
-    childComponents = childComponents || React.Children.toArray(props.children);
-    const dataFromChildren = Wrapper.getDataFromChildren(props, childComponents);
-    const datasets = Wrapper.fillInMissingData(props, dataFromChildren);
+    const modifiedProps = Helpers.modifyProps(props, fallbackProps, VictoryStack.role);
+    childComponents = childComponents || React.Children.toArray(modifiedProps.children);
+    const dataFromChildren = Wrapper.getDataFromChildren(modifiedProps, childComponents);
+    const datasets = Wrapper.fillInMissingData(modifiedProps, dataFromChildren);
     return childComponents.map((child, index) => {
-      return Wrapper.addLayoutData(props, datasets, index);
+      return Wrapper.addLayoutData(modifiedProps, datasets, index);
     });
   }
 

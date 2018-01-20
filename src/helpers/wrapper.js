@@ -176,7 +176,9 @@ export default {
   getDataFromChildren(props, childComponents) { // eslint-disable-line max-statements
     const getData = (childProps) => {
       const data = Data.getData(childProps);
-      return Array.isArray(data) && data.length > 0 ? data : undefined;
+      return Array.isArray(data) && data.length > 0
+        ? data.map((datum) => assign({ childName: child.props.name }, datum))
+        : undefined;
     };
 
     // Reverse the child array to maintain correct order when looping over
@@ -194,7 +196,10 @@ export default {
       if (child.type && child.type.role === "axis") {
         dataArrLength = dataArrLength;
       } else if (child.type && child.type.role !== "axis" && isFunction(child.type.getData)) {
-        dataArr[dataArrLength++] = child.type.getData(child.props);
+        const data = child.type.getData(child.props);
+        dataArr[dataArrLength++] = data.map((datum, index) => {
+          return assign({ childName: child.props.name }, datum);
+        });
       } else if (child.props && child.props.children) {
         const newChildren = React.Children.toArray(child.props.children);
         const newChildrenLength = newChildren.length;
