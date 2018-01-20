@@ -177,7 +177,7 @@ export default {
     const getData = (childProps) => {
       const data = Data.getData(childProps);
       return Array.isArray(data) && data.length > 0
-        ? data.map((datum) => assign({ childName: child.props.name }, datum))
+        ? data.map((datum) => assign({ childName: childProps.name }, datum))
         : undefined;
     };
 
@@ -197,7 +197,7 @@ export default {
         dataArrLength = dataArrLength;
       } else if (child.type && child.type.role !== "axis" && isFunction(child.type.getData)) {
         const data = child.type.getData(child.props);
-        dataArr[dataArrLength++] = data.map((datum, index) => {
+        dataArr[dataArrLength++] = data.map((datum) => {
           return assign({ childName: child.props.name }, datum);
         });
       } else if (child.props && child.props.children) {

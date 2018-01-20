@@ -1,5 +1,6 @@
 import { Selection, Data, Helpers } from "victory-core";
-import { assign, flattenDeep, groupBy, isFunction, isEqual, includes, keys, throttle } from "lodash";
+import { assign, flattenDeep, groupBy, isFunction, isEqual, includes,
+  keys, throttle } from "lodash";
 import { voronoi as d3Voronoi } from "d3-voronoi";
 import React from "react";
 import { attachId } from "../../helpers/event-handlers";
