@@ -187,6 +187,8 @@ export default {
   /**
    * @param {Array} children: an array of child components
    * @param {Function} iteratee: a function with arguments "child", "childName", and "parent"
+   * @param {Array} [rolesToSkip=[]]: children of these roles will be skipped while the role,
+   *   itself, will be processed
    * @returns {Array} returns an array of results from calling the iteratee on all nested children
    */
   reduceChildren(children, iteratee, rolesToSkip = []) {
