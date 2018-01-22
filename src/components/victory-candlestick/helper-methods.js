@@ -17,13 +17,11 @@ export default {
       const x = scale.x(datum._x1 !== undefined ? datum._x1 : datum._x);
       const y1 = scale.y(datum._high);
       const y2 = scale.y(datum._low);
-      const highWick = scale.y(Math.max(datum._open, datum._close));
-      const lowWick = scale.y(Math.min(datum._open, datum._close));
       const candleHeight = Math.abs(scale.y(datum._open) - scale.y(datum._close));
       const y = scale.y(Math.max(datum._open, datum._close));
       const dataStyle = this.getDataStyles(datum, style.data, props);
       const dataProps = {
-        x, y, y1, y2, highWick, lowWick, candleHeight, scale, data, datum, groupComponent,
+        x, y, y1, y2, candleHeight, scale, data, datum, groupComponent,
         index, style: dataStyle, padding, width, polar, origin
       };
 
