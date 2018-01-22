@@ -2,7 +2,7 @@
 
 import React from "react";
 import {
-  VictoryChart, VictoryAxis, VictoryBar
+  VictoryChart, VictoryAxis, VictoryBar, VictoryBrushAxis
 } from "../../src/index";
 
 class App extends React.Component {
@@ -21,7 +21,7 @@ class App extends React.Component {
         <h1>Debug</h1>
         <div style={containerStyle}>
           <VictoryChart style={chartStyle}>
-            <VictoryAxis tickFormat={(t, i, ts) => `${t}s ${i} ${ts[0]}`}/>
+            <VictoryBrushAxis tickFormat={(t, i, ts) => `${t}s ${i} ${ts[0]}`}/>
             <VictoryBar
               style={{ data: { fill: "tomato" } }}
               data={[
@@ -44,13 +44,15 @@ class App extends React.Component {
                 { x: 4, y: "Hotel" }
               ]}
             />
+            <VictoryAxis/>
+            <VictoryBrushAxis dependentAxis/>
           </VictoryChart>
 
           <VictoryChart style={chartStyle}>
             <VictoryBar
               data={[{ x: "one", y: 4 }, { x: "two", y: 5 }, { x: "three", y: 6 }]}
             />
-            <VictoryAxis
+            <VictoryBrushAxis
               tickValues={["one", "three"]}
             />
           </VictoryChart>
