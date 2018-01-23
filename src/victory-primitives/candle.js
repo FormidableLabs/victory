@@ -89,16 +89,22 @@ export default class Candle extends React.Component {
     const role = props.role || "presentation";
     const wickStyle = assign(
       {}, this.style, { strokeWidth: props.style.wickStrokeWidth || props.style.strokeWidth });
-    return assign(
-      { x1: x, x2: x, y1: wickType === "low" ? lowWick : y1, y2: wickType === "high" ? highWick : y2, style: wickStyle, role, shapeRendering, className },
-      events
-    );
+    return assign({ 
+      x1: x, x2: x, y1: wickType === "low" ? lowWick : y1, y2: wickType === "high" ? highWick : y2, 
+      style: wickStyle, role, shapeRendering, className 
+    }, events);
   }
 
   render() {
     const candleProps = this.getCandleProps(this.props);
     const highWickProps = this.getWickProps(this.props, "high");
     const lowWickProps = this.getWickProps(this.props, "low");
-    return React.cloneElement(this.props.groupComponent, {}, this.renderWick(highWickProps), this.renderWick(lowWickProps), this.renderCandle(candleProps));
+    return React.cloneElement(
+      this.props.groupComponent, 
+      {}, 
+      this.renderWick(highWickProps), 
+      this.renderWick(lowWickProps), 
+      this.renderCandle(candleProps)
+  );
   }
 }
