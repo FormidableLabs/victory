@@ -2,8 +2,9 @@
 
 import React from "react";
 import {
-  VictoryChart, VictoryAxis, VictoryBar, VictoryBrushAxis
+  VictoryChart, VictoryAxis, VictoryBar
 } from "../../src/index";
+import { VictoryBrushLine } from "victory-core";
 
 class App extends React.Component {
 
@@ -21,7 +22,7 @@ class App extends React.Component {
         <h1>Debug</h1>
         <div style={containerStyle}>
           <VictoryChart style={chartStyle}>
-            <VictoryBrushAxis tickFormat={(t, i, ts) => `${t}s ${i} ${ts[0]}`}/>
+            <VictoryAxis tickFormat={(t, i, ts) => `${t}s ${i} ${ts[0]}`}/>
             <VictoryBar
               style={{ data: { fill: "tomato" } }}
               data={[
@@ -45,15 +46,16 @@ class App extends React.Component {
               ]}
             />
             <VictoryAxis/>
-            <VictoryBrushAxis dependentAxis/>
+            <VictoryAxis dependentAxis axisComponent={<VictoryBrushLine/>}/>
           </VictoryChart>
 
           <VictoryChart style={chartStyle}>
             <VictoryBar
               data={[{ x: "one", y: 4 }, { x: "two", y: 5 }, { x: "three", y: 6 }]}
             />
-            <VictoryBrushAxis
+            <VictoryAxis
               tickValues={["one", "three"]}
+              axisComponent={<VictoryBrushLine/>}
             />
           </VictoryChart>
         </div>

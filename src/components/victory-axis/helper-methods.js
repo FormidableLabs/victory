@@ -1,4 +1,4 @@
-import { defaults, defaultsDeep, isFunction } from "lodash";
+import { assign, defaults, defaultsDeep, isFunction } from "lodash";
 import Axis from "../../helpers/axis";
 import { Helpers, Scale, Domain } from "victory-core";
 
@@ -121,6 +121,7 @@ export default {
   getGridProps(layout, style, datum) {
     const { edge, transform } = layout;
     return {
+      type: "grid",
       x1: transform.x,
       y1: transform.y,
       x2: edge.x + transform.x,
@@ -134,6 +135,7 @@ export default {
     const { style, padding, isVertical } = calculatedValues;
     const { width, height } = modifiedProps;
     return {
+      type: "axis",
       style: style.axis,
       x1: isVertical ? globalTransform.x : padding.left + globalTransform.x,
       x2: isVertical ? globalTransform.x : width - padding.right + globalTransform.x,
@@ -194,12 +196,15 @@ export default {
     const {
       globalTransform, gridOffset, gridEdge
     } = this.getLayoutProps(props, calculatedValues);
-
+    const sharedProps = { scale, polar, isVertical };
     const axisProps = this.getAxisProps(props, calculatedValues, globalTransform);
     const axisLabelProps = this.getAxisLabelProps(props, calculatedValues, globalTransform);
-    const initialChildProps = { parent: {
-      style: style.parent, ticks, scale, width, height, domain, standalone, theme, polar, padding
-    } };
+    const initialChildProps = {
+      parent: assign(
+        { style: style.parent, ticks, standalone, theme, width, height, padding, domain },
+        sharedProps
+      )
+    };
 
     return ticks.reduce((childProps, tick, index) => {
       const originalTick = stringTicks ? stringTicks[index] : tick;
@@ -219,13 +224,13 @@ export default {
         }
       };
       childProps[index] = {
-        axis: axisProps,
-        axisLabel: axisLabelProps,
-        ticks: this.getTickProps(tickLayout, styles.tickStyle, tick),
-        tickLabels: this.getTickLabelProps(
+        axis: assign({}, sharedProps, axisProps),
+        axisLabel: assign({}, sharedProps, axisLabelProps),
+        ticks: assign({}, sharedProps, this.getTickProps(tickLayout, styles.tickStyle, tick)),
+        tickLabels: assign({}, sharedProps, this.getTickLabelProps(
           tickLayout, styles.labelStyle, anchors, tick, tickFormat(tick, index, ticks)
-        ),
-        grid: this.getGridProps(gridLayout, styles.gridStyle, tick)
+        )),
+        grid: assign({}, sharedProps, this.getGridProps(gridLayout, styles.gridStyle, tick))
       };
 
       return childProps;
