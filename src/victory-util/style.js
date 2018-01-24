@@ -1,4 +1,19 @@
 /**
+ * Acceptable CSS/SVG style attributes
+ * https://react-cn.github.io/react/docs/tags-and-attributes.html#svg-attributes
+ */
+const styleWhitelist = [
+  "angle", "clipPath", "cx", "cy", "d", "dx", "dy", "fill", "fillOpacity", "fontFamily",
+  "fontSize", "fx", "fy", "gradientTransform", "gradientUnits", "height", "markerEnd",
+  "markerMid", "markerStart", "offset", "opacity", "patternContentUnits", "patternUnits",
+  "points", "preserveAspectRatio", "r", "rx", "ry", "spreadMethod", "stopColor", "stopOpacity",
+  "stroke", "strokeDasharray", "strokeLinecap", "strokeOpacity", "strokeWidth", "textAnchor",
+  "transform", "version", "verticalAnchor", "viewBox", "width", "x1", "x2", "x", "xlinkActuate",
+  "xlinkArcrole", "xlinkHref", "xlinkRole", "xlinkShow", "xlinkTitle", "xlinkType", "xmlBase",
+  "xmlLang", "xmlSpace", "y1", "y2", "y"
+];
+
+/**
  * Given an object with CSS/SVG transform definitions, return the string value
  * for use with the `transform` CSS property or SVG attribute. Note that we
  * can't always guarantee the order will match the author's intended order, so
