@@ -45,6 +45,7 @@ const toTransformString = function (obj, ...more) {
 export default {
 
   toTransformString,
+  styleWhitelist,
 
   /**
    * Given the name of a color scale, getColorScale will return an array

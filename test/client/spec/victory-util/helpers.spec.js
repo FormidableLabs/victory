@@ -56,6 +56,13 @@ describe("helpers", () => {
     });
   });
 
+  describe("sanitizeStyleProps", () => {
+    it("drop invalid svg attributes", () => {
+      const data = { tree: "blue", stroke: "#c43a31" };
+      expect(Helpers.sanitizeStyleProps(data)).to.deep.equal({ stroke: "#c43a31" });
+    });
+  });
+
   describe("getPadding", () => {
     it("sets padding from a single number", () => {
       const props = { padding: 40 };
