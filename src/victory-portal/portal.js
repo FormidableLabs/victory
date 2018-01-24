@@ -33,6 +33,7 @@ export default class Portal extends React.Component {
 
   portalDeregister(key) {
     delete this.map[key];
+    this.forceUpdate();
   }
 
   getChildren() {

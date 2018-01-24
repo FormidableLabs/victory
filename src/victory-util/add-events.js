@@ -152,7 +152,7 @@ export default (WrappedComponent, options) => {
     getComponentProps(component, type, index) {
       const { role } = WrappedComponent;
       const key = this.dataKeys && this.dataKeys[index] || index;
-      const baseProps = this.baseProps[key][type] || this.baseProps[key];
+      const baseProps = this.baseProps[key] && this.baseProps[key][type] || this.baseProps[key];
       if (!baseProps && !this.hasEvents) {
         return undefined;
       }
