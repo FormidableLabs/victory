@@ -21,7 +21,7 @@ const styleWhitelist = [
  * @param {Object} data An object of user-input style attributes.
  * @returns {Object} An object containing only valid style data.
  */
-export const sanitizeStyleProps = function (data) {
+const sanitizeStyleProps = function (data) {
   return pick(data, styleWhitelist);
 };
 
