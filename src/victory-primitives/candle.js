@@ -12,6 +12,8 @@ export default class Candle extends React.Component {
     candleHeight: PropTypes.number,
     datum: PropTypes.object,
     groupComponent: PropTypes.element,
+    high: PropTypes.number,
+    low: PropTypes.number,
     padding: PropTypes.oneOfType([
       PropTypes.number,
       PropTypes.object
@@ -19,9 +21,7 @@ export default class Candle extends React.Component {
     wickStrokeWidth: PropTypes.number,
     width: PropTypes.number,
     x: PropTypes.number,
-    y: PropTypes.number,
-    high: PropTypes.number,
-    low: PropTypes.number
+    y: PropTypes.number
   }
 
   static defaultProps = {
@@ -79,8 +79,14 @@ export default class Candle extends React.Component {
     const shapeRendering = props.shapeRendering || "auto";
     const candleX = x - this.candleWidth / 2;
     return assign({
-      x: candleX, y, style: this.style, role, width: this.candleWidth, height: candleHeight,
-      shapeRendering, className
+      x: candleX,
+      y,
+      style: this.style,
+      role,
+      width: this.candleWidth,
+      height: candleHeight,
+      shapeRendering,
+      className
     }, events);
   }
 
@@ -91,8 +97,14 @@ export default class Candle extends React.Component {
     const wickStyle = assign(
       {}, this.style, { strokeWidth: wickStrokeWidth || props.style.strokeWidth });
     return assign({
-      x1: x, x2: x, y1: wickType === "low" ? lowWick : high, y2: wickType === "high" ? highWick : low,
-      style: wickStyle, role, shapeRendering, className
+      x1: x,
+      x2: x,
+      y1: wickType === "low" ? lowWick : high,
+      y2: wickType === "high" ? highWick : low,
+      style: wickStyle,
+      role,
+      shapeRendering,
+      className
     }, events);
   }
 
