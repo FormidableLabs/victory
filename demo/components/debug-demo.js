@@ -2,9 +2,8 @@
 
 import React from "react";
 import {
-  VictoryChart, VictoryAxis, VictoryBar
+  VictoryChart, VictoryAxis, VictoryBar, VictoryBrushLine
 } from "../../src/index";
-import { VictoryBrushLine } from "victory-core";
 
 class App extends React.Component {
 

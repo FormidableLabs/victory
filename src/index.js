@@ -42,3 +42,4 @@ export { default as CursorHelpers } from "./components/containers/cursor-helpers
 export { default as SelectionHelpers } from "./components/containers/selection-helpers";
 export { default as VoronoiHelpers } from "./components/containers/voronoi-helpers";
 export { default as ZoomHelpers, RawZoomHelpers } from "./components/containers/zoom-helpers";
+export { default as VictoryBrushLine } from "./components/addons/victory-brush-line";
