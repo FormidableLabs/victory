@@ -16,15 +16,14 @@ export default {
       const eventKey = datum.eventKey || index;
       const x = scale.x(datum._x1 !== undefined ? datum._x1 : datum._x);
       const high = scale.y(datum._high);
+      const close = scale.y(datum._close);
+      const open = scale.y(datum._open);
       const low = scale.y(datum._low);
       const candleHeight = Math.abs(scale.y(datum._open) - scale.y(datum._close));
-      const y = scale.y(Math.max(datum._open, datum._close));
-      const highWick = y;
-      const lowWick = scale.y(Math.min(datum._open, datum._close));
       const dataStyle = this.getDataStyles(datum, style.data, props);
       const dataProps = {
-        x, y, high, low, candleHeight, scale, data, datum, groupComponent, highWick, lowWick,
-        index, style: dataStyle, padding, width, polar, origin, wickStrokeWidth
+        x, high, low, candleHeight, scale, data, datum, groupComponent, index,
+        style: dataStyle, padding, width, polar, origin, wickStrokeWidth, open, close
       };
 
       childProps[eventKey] = {
