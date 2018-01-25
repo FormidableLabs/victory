@@ -10,18 +10,18 @@ export default class Candle extends React.Component {
   static propTypes = {
     ...CommonProps,
     candleHeight: PropTypes.number,
-    wickStrokeWidth: PropTypes.number,
     datum: PropTypes.object,
     groupComponent: PropTypes.element,
     padding: PropTypes.oneOfType([
       PropTypes.number,
       PropTypes.object
     ]),
+    wickStrokeWidth: PropTypes.number,
     width: PropTypes.number,
     x: PropTypes.number,
     y: PropTypes.number,
-    y1: PropTypes.number,
-    y2: PropTypes.number
+    high: PropTypes.number,
+    low: PropTypes.number
   }
 
   static defaultProps = {
@@ -35,7 +35,7 @@ export default class Candle extends React.Component {
   }
 
   shouldComponentUpdate(nextProps) {
-    const { className, candleHeight, datum, x, y, y1, y2 } = this.props;
+    const { className, candleHeight, datum, x, y, high, low } = this.props;
     const { style, candleWidth } = this.calculateAttributes(nextProps);
 
     if (!Collection.allSetsEqual([
@@ -43,8 +43,8 @@ export default class Candle extends React.Component {
       [candleHeight, nextProps.candleHeight],
       [x, nextProps.x],
       [y, nextProps.y],
-      [y1, nextProps.y1],
-      [y2, nextProps.y2],
+      [high, nextProps.high],
+      [low, nextProps.low],
       [candleWidth, this.candleWidth],
       [style, this.style],
       [datum, nextProps.datum]
@@ -85,13 +85,13 @@ export default class Candle extends React.Component {
   }
 
   getWickProps(props, wickType) {
-    const { x, y1, y2, highWick, lowWick, wickStrokeWidth, events, className } = props;
+    const { x, high, low, highWick, lowWick, wickStrokeWidth, events, className } = props;
     const shapeRendering = props.shapeRendering || "auto";
     const role = props.role || "presentation";
     const wickStyle = assign(
       {}, this.style, { strokeWidth: wickStrokeWidth || props.style.strokeWidth });
     return assign({
-      x1: x, x2: x, y1: wickType === "low" ? lowWick : y1, y2: wickType === "high" ? highWick : y2,
+      x1: x, x2: x, y1: wickType === "low" ? lowWick : high, y2: wickType === "high" ? highWick : low,
       style: wickStyle, role, shapeRendering, className
     }, events);
   }
