@@ -6,10 +6,10 @@ export default {
     props = Helpers.modifyProps(props, fallbackProps, "candlestick");
     const calculatedValues = this.getCalculatedValues(props);
     const { data, style, scale, domain, origin } = calculatedValues;
-    const { groupComponent, width, height, padding, standalone, theme, polar } = props;
+    const { groupComponent, width, height, padding, standalone, theme, polar, wickStrokeWidth } = props;
     const initialChildProps = { parent: {
       domain, scale, width, height, data, standalone, theme, polar, origin,
-      style: style.parent, padding
+      style: style.parent, padding, wickStrokeWidth
     } };
 
     return data.reduce((childProps, datum, index) => {
@@ -19,10 +19,12 @@ export default {
       const y2 = scale.y(datum._low);
       const candleHeight = Math.abs(scale.y(datum._open) - scale.y(datum._close));
       const y = scale.y(Math.max(datum._open, datum._close));
+      const highWick = y;
+      const lowWick = scale.y(Math.min(datum._open, datum._close));
       const dataStyle = this.getDataStyles(datum, style.data, props);
       const dataProps = {
-        x, y, y1, y2, candleHeight, scale, data, datum, groupComponent,
-        index, style: dataStyle, padding, width, polar, origin
+        x, y, y1, y2, candleHeight, scale, data, datum, groupComponent, highWick, lowWick,
+        index, style: dataStyle, padding, width, polar, origin, wickStrokeWidth
       };
 
       childProps[eventKey] = {
