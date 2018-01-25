@@ -1,3 +1,5 @@
+import { pick } from "lodash";
+
 /**
  * Acceptable CSS/SVG style attributes
  * https://react-cn.github.io/react/docs/tags-and-attributes.html#svg-attributes
@@ -12,6 +14,16 @@ const styleWhitelist = [
   "xlinkArcrole", "xlinkHref", "xlinkRole", "xlinkShow", "xlinkTitle", "xlinkType", "xmlBase",
   "xmlLang", "xmlSpace", "y1", "y2", "y"
 ];
+
+/**
+ * Given an object with CSS/SVG style attributes, return a new object containing
+ * only keys that are also on our SVG style whitelist.
+ * @param {Object} data An object of user-input style attributes.
+ * @returns {Object} An object containing only valid style data.
+ */
+export const sanitizeStyleProps = function (data) {
+  return pick(data, styleWhitelist);
+};
 
 /**
  * Given an object with CSS/SVG transform definitions, return the string value
@@ -44,8 +56,8 @@ const toTransformString = function (obj, ...more) {
 
 export default {
 
+  sanitizeStyleProps,
   toTransformString,
-  styleWhitelist,
 
   /**
    * Given the name of a color scale, getColorScale will return an array

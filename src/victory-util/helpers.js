@@ -1,7 +1,7 @@
 import React from "react";
-import { defaults, isFunction, property, omit, reduce, pick } from "lodash";
+import { defaults, isFunction, property, omit, reduce } from "lodash";
 import Collection from "./collection";
-import styleHelpers from "./style";
+import { sanitizeStyleProps } from "./style";
 
 export default {
   getPoint(datum) {
@@ -55,9 +55,8 @@ export default {
     if (!style) {
       return defaults({ parent: { height, width } }, defaultStyles);
     }
-
     const { data, labels, parent } = style;
-    const cleanData = this.sanitizeStyleProps(data);
+    const cleanData = sanitizeStyleProps(data);
     const defaultParent = defaultStyles && defaultStyles.parent || {};
     const defaultLabels = defaultStyles && defaultStyles.labels || {};
     const defaultData = defaultStyles && defaultStyles.data || {};
@@ -66,10 +65,6 @@ export default {
       labels: defaults({}, labels, defaultLabels),
       data: defaults({}, cleanData, defaultData)
     };
-  },
-
-  sanitizeStyleProps(data) {
-    return pick(data, styleHelpers.styleWhitelist);
   },
 
   evaluateProp(prop, data, active) {

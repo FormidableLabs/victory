@@ -1,5 +1,12 @@
 import { Style } from "src/index";
 
+describe("sanitizeStyleProps", () => {
+  it("drop invalid svg attributes", () => {
+    const data = { tree: "blue", stroke: "#c43a31" };
+    expect(Style.sanitizeStyleProps(data)).to.deep.equal({ stroke: "#c43a31" });
+  });
+});
+
 describe("toTransformString", () => {
   it("returns an empty string if no transform definitions are given", () => {
     expect(Style.toTransformString({})).to.equal("");
