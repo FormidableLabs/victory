@@ -10,6 +10,7 @@ export default class Candle extends React.Component {
   static propTypes = {
     ...CommonProps,
     candleHeight: PropTypes.number,
+    wickStrokeWidth: PropTypes.number,
     datum: PropTypes.object,
     groupComponent: PropTypes.element,
     padding: PropTypes.oneOfType([
@@ -84,11 +85,11 @@ export default class Candle extends React.Component {
   }
 
   getWickProps(props, wickType) {
-    const { x, y1, y2, highWick, lowWick, events, className } = props;
+    const { x, y1, y2, highWick, lowWick, wickStrokeWidth, events, className } = props;
     const shapeRendering = props.shapeRendering || "auto";
     const role = props.role || "presentation";
     const wickStyle = assign(
-      {}, this.style, { strokeWidth: props.style.wickStrokeWidth || props.style.strokeWidth });
+      {}, this.style, { strokeWidth: wickStrokeWidth || props.style.strokeWidth });
     return assign({
       x1: x, x2: x, y1: wickType === "low" ? lowWick : y1, y2: wickType === "high" ? highWick : y2,
       style: wickStyle, role, shapeRendering, className
