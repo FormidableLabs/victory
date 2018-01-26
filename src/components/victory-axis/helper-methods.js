@@ -190,13 +190,13 @@ export default {
     props = this.modifyProps(props, fallbackProps, role);
     const calculatedValues = this.getCalculatedValues(props);
     const {
-      style, orientation, isVertical, scale, ticks, tickFormat, anchors, domain, stringTicks
+      axis, style, orientation, isVertical, scale, ticks, tickFormat, anchors, domain, stringTicks
     } = calculatedValues;
     const { width, height, standalone, theme, polar, padding } = props;
     const {
       globalTransform, gridOffset, gridEdge
     } = this.getLayoutProps(props, calculatedValues);
-    const sharedProps = { scale, polar, isVertical };
+    const sharedProps = { scale: { [axis]: scale }, polar };
     const axisProps = this.getAxisProps(props, calculatedValues, globalTransform);
     const axisLabelProps = this.getAxisLabelProps(props, calculatedValues, globalTransform);
     const initialChildProps = {
@@ -224,13 +224,15 @@ export default {
         }
       };
       childProps[index] = {
-        axis: assign({}, sharedProps, axisProps),
+        axis: assign({ dimension: axis }, sharedProps, axisProps),
         axisLabel: assign({}, sharedProps, axisLabelProps),
         ticks: assign({}, sharedProps, this.getTickProps(tickLayout, styles.tickStyle, tick)),
         tickLabels: assign({}, sharedProps, this.getTickLabelProps(
           tickLayout, styles.labelStyle, anchors, tick, tickFormat(tick, index, ticks)
         )),
-        grid: assign({}, sharedProps, this.getGridProps(gridLayout, styles.gridStyle, tick))
+        grid: assign(
+          { dimension: axis }, sharedProps, this.getGridProps(gridLayout, styles.gridStyle, tick)
+        )
       };
 
       return childProps;
@@ -245,6 +247,7 @@ export default {
     const isVertical = Helpers.isVertical(props);
     const labelPadding = this.getLabelPadding(props, style);
     const stringTicks = Helpers.stringTicks(props) ? props.tickValues : undefined;
+    const axis = this.getAxis(props);
     const scale = this.getScale(props);
     const domain = this.getDomain(props);
     const ticks = Axis.getTicks(props, scale, props.crossAxis);
@@ -252,7 +255,7 @@ export default {
     const anchors = this.getAnchors(orientation, isVertical);
 
     return {
-      style, padding, orientation, isVertical, labelPadding, stringTicks,
+      axis, style, padding, orientation, isVertical, labelPadding, stringTicks,
       anchors, scale, ticks, tickFormat, domain
     };
   },
