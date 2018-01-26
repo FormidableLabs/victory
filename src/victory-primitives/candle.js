@@ -3,7 +3,7 @@ import React from "react";
 import PropTypes from "prop-types";
 import Helpers from "../victory-util/helpers";
 import Collection from "../victory-util/collection";
-import { assign } from "lodash";
+import { assign, defaults } from "lodash";
 import CommonProps from "./common-props";
 
 export default class Candle extends React.Component {
@@ -36,16 +36,17 @@ export default class Candle extends React.Component {
   }
 
   shouldComponentUpdate(nextProps) {
-    const { className, candleHeight, datum, x, y, high, low } = this.props;
+    const { className, candleHeight, datum, x, high, low, open, close } = this.props;
     const { style, candleWidth } = this.calculateAttributes(nextProps);
 
     if (!Collection.allSetsEqual([
       [className, nextProps.className],
       [candleHeight, nextProps.candleHeight],
       [x, nextProps.x],
-      [y, nextProps.y],
       [high, nextProps.high],
       [low, nextProps.low],
+      [open, nextProps.open],
+      [close, nextProps.close],
       [candleWidth, this.candleWidth],
       [style, this.style],
       [datum, nextProps.datum]
@@ -97,8 +98,7 @@ export default class Candle extends React.Component {
     const role = props.role || "presentation";
     const lowWick = Math.min(close, open);
     const highWick = Math.max(close, open);
-    const wickStyle = assign(
-      {}, this.style, { strokeWidth: wickStrokeWidth || this.style.strokeWidth });
+    const wickStyle = defaults({}, this.style, { strokeWidth: wickStrokeWidth });
     return assign({
       x1: x,
       x2: x,
