@@ -13,6 +13,8 @@ describe("victory-primitives/candle", () => {
     x: 5,
     high: 50,
     low: 5,
+    close: 30,
+    open: 10,
     candleHeight: 20,
     width: 10,
     padding: 1
@@ -34,6 +36,7 @@ describe("victory-primitives/candle", () => {
     expect(rect.prop("height")).to.eql(20);
     // x = x - width / 2
     expect(rect.prop("x")).to.eql(4);
+    expect(rect.prop("y")).to.eql(10);
   });
 
   it("should allow style to override width", () => {
@@ -50,5 +53,6 @@ describe("victory-primitives/candle", () => {
     expect(rect.prop("height")).to.eql(20);
     // x = x - width / 2
     expect(rect.prop("x")).to.eql(2.5);
+    expect(rect.prop("y")).to.eql(10);
   });
 });
