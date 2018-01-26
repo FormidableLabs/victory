@@ -11,9 +11,8 @@ describe("victory-primitives/candle", () => {
     ],
     datum: { x: 1, open: 10, close: 30, high: 50, low: 5, eventKey: 0 },
     x: 5,
-    y: 30,
-    y1: 50,
-    y2: 5,
+    high: 50,
+    low: 5,
     candleHeight: 20,
     width: 10,
     padding: 1
@@ -21,12 +20,8 @@ describe("victory-primitives/candle", () => {
 
   it("should render a wick line", () => {
     const wrapper = shallow(<Candle {...baseProps}/>);
-    const wick = wrapper.find("line");
 
-    expect(wick.prop("x1")).to.eql(5);
-    expect(wick.prop("x2")).to.eql(5);
-    expect(wick.prop("y1")).to.eql(50);
-    expect(wick.prop("y2")).to.eql(5);
+    expect(wrapper.find("line")).to.have.length(2);
   });
 
   it("should render a candle rectangle", () => {
@@ -39,7 +34,6 @@ describe("victory-primitives/candle", () => {
     expect(rect.prop("height")).to.eql(20);
     // x = x - width / 2
     expect(rect.prop("x")).to.eql(4);
-    expect(rect.prop("y")).to.eql(30);
   });
 
   it("should allow style to override width", () => {
@@ -56,6 +50,5 @@ describe("victory-primitives/candle", () => {
     expect(rect.prop("height")).to.eql(20);
     // x = x - width / 2
     expect(rect.prop("x")).to.eql(2.5);
-    expect(rect.prop("y")).to.eql(30);
   });
 });
