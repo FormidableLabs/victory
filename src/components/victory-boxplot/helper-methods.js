@@ -1,56 +1,59 @@
 /*eslint no-magic-numbers: ["error", { "ignore": [0, 0.25, 0.5, 0.75, 1, 2] }]*/
-import { assign, sortBy, keys, omit, defaults, isNaN, mapValues } from "lodash";
-import { Helpers, LabelHelpers, Scale, Domain, Data } from "victory-core";
+/*eslint-disable no-nested-ternary */
+import { sortBy, mapValues, has } from "lodash";
+import { Helpers, LabelHelpers, Scale, Domain } from "victory-core";
 import { min, max, quantile } from "d3-array";
+
+/* Todos left for this component
+  – Define and integrate a theme for boxplot
+  – Add support for data passed as an independent var and an array of dep vars
+  i.e. data={[{ x: 1, y: [2, 3, 5] }, { x: 2, y: [3, 7, 9]}]}
+*/
 
 export default {
   getBaseProps(props, fallbackProps) {
-    // TODO add a theme for boxplot
     props = Helpers.modifyProps(props, fallbackProps, "boxplot");
     const calculatedValues = this.getCalculatedValues(props);
     const { data, style, scale, domain, horizontal } = calculatedValues;
-    const statistics = this.getSummaryStatistics(data, horizontal);
-    const scaledStatistics = mapValues(statistics, (stat, key) => {
+    const scaledData = mapValues(data, (datum, key) => {
       if (key === "x") {
-        return scale.x(stat);
+        return scale.x(datum);
       }
       if (key === "y") {
-        return scale.y(stat);
+        return scale.y(datum);
       }
-      return horizontal ? scale.x(stat) : scale.y(stat);
+      return horizontal ? scale.x(datum) : scale.y(datum);
     });
 
     const { groupComponent, width, height, padding, standalone, theme } = props;
     const initialChildProps = {
       parent: {
-        domain, scale, width, height, data, standalone, theme,
-        style: style.parent, padding, groupComponent
+        domain, scale, width, height, scaledData, data, standalone,
+        theme, style: style.parent, padding, groupComponent
       }
     };
 
     return {
       ...initialChildProps,
-      ...mapValues(scaledStatistics, (stat, key) => {
+      ...mapValues(scaledData, (datum, key) => {
 
         const text = LabelHelpers.getText(props, { label: key }, null);
         let labels;
         if (text !== undefined && text !== null || props.events || props.sharedEvents) {
           labels = this.getLabelProps(
-            stat,
-            scaledStatistics.x,
-            scaledStatistics.y,
-            props.boxWidth,
+            { datum, labelOrientation: props.labelOrientation, data,
+              scaledData, boxWidth: props.boxWidth, horizontal, scale },
             text,
             style[`${key}Labels`]
           );
         }
 
         return {
-          ...scaledStatistics,
-          x1: horizontal ? stat : scaledStatistics.x - props.boxWidth / 2,
-          y1: horizontal ? scaledStatistics.y - props.boxWidth / 2 : stat,
-          x2: horizontal ? stat : scaledStatistics.x + props.boxWidth / 2,
-          y2: horizontal ? scaledStatistics.y + props.boxWidth / 2 : stat,
+          ...scaledData,
+          x1: horizontal ? datum : scaledData.x - props.boxWidth / 2,
+          y1: horizontal ? scaledData.y - props.boxWidth / 2 : datum,
+          x2: horizontal ? datum : scaledData.x + props.boxWidth / 2,
+          y2: horizontal ? scaledData.y + props.boxWidth / 2 : datum,
           boxWidth: props.boxWidth,
           position: key === "q1" || key === "min" ? "min" : "max",
           horizontal,
@@ -61,13 +64,64 @@ export default {
     };
   },
 
+  getData(props) {
+    if (!props.data) {
+      return [];
+    }
+
+    /* check if the data is coming in a pre-processed form,
+    i.e. { x || y, min, max, q1, q3, med }. if not, process it. */
+    let data;
+    const isProcessed = this.checkProcessedData(props);
+    if (!isProcessed) {
+      const sortedData = this.sortData(props.data, props.horizontal);
+      data = this.getSummaryStatistics(sortedData, props.horizontal);
+    } else {
+      data = props.data;
+    }
+
+    return { ...data };
+  },
+
+  checkProcessedData(props) {
+    /* check if the data is pre-processed. start by checking that it has
+    all required quartile attributes. */
+    const hasQuartiles = this.checkQuartileAttributes(props);
+
+    if (hasQuartiles) {
+      // check that the indepedent variable is distinct
+      const hasDistinctIndependentVariable = this.checkHasDistinctIndependentVariable(props);
+      if (!hasDistinctIndependentVariable) {
+        throw new Error(`
+          data prop may only take an array of objects with a unique 
+          independent variable. Make sure your x or y values are distinct.
+        `);
+      }
+      return true;
+    }
+    return false;
+  },
+
+  checkQuartileAttributes(props) {
+    return props.data.every((datum) => {
+      const hasQuartiles = has(datum, "min") && has(datum, "max")
+        && has(datum, "q1") && has(datum, "q3") && has(datum, "med");
+      return hasQuartiles;
+    });
+  },
+
+  checkHasDistinctIndependentVariable(props) {
+    const values = props.data.map(({ x, y }) => props.horizontal ? y : x);
+    return (new Set(values)).size === values.length;
+  },
+
+  checkSingleBoxPlot(dataset, horizontal) {
+    const isSingle = new Set(dataset.map(({ x, y }) => horizontal ? y : x)).size === 1;
+    return isSingle;
+  },
+
   getCalculatedValues(props) {
-    // determine the orientation of the data
-    const horizontal = this.getDataAxis(props.data);
-    const data = Data.addEventKeys(
-      props,
-      this.getData({ ...props, sortKey: horizontal ? "x" : "y" })
-    );
+    const data = this.getData(props);
     const range = {
       x: Helpers.getRange(props, "x"),
       y: Helpers.getRange(props, "y")
@@ -80,13 +134,12 @@ export default {
       x: Scale.getBaseScale(props, "x").domain(domain.x).range(range.x),
       y: Scale.getBaseScale(props, "y").domain(domain.y).range(range.y)
     };
-    return { domain, horizontal, data, scale, style: props.style };
+    return { domain, horizontal: props.horizontal, data, scale, style: props.style };
   },
 
-  /* method to detect if the x or y coordinate is the repeat
-  coordinate in the data series */
-  getDataAxis(data) {
-    return data.every(({ y }) => y === data[0].y);
+  sortData(dataset, horizontal) {
+    const sortKey = horizontal ? "x" : "y";
+    return sortBy(dataset, sortKey);
   },
 
   getSummaryStatistics(data, horizontal) {
@@ -95,7 +148,7 @@ export default {
       q1: quantile(formattedData, 0.25),
       q3: quantile(formattedData, 0.75),
       min: min(formattedData),
-      median: quantile(formattedData, 0.5),
+      med: quantile(formattedData, 0.5),
       max: max(formattedData)
     };
 
@@ -111,80 +164,32 @@ export default {
       };
     }
   },
-  //eslint-disable-next-line max-params
-  getLabelProps(stat, x, y, boxWidth, text, style) {
+
+  getLabelProps(dataProps, text, style) {
     const labelStyle = style || {};
+    const { datum, labelOrientation, boxWidth,
+      horizontal, scaledData, scale } = dataProps;
     return {
       style: labelStyle,
-      y: stat,
-      // eslint-disable-next-line no-magic-numbers
-      x: x + boxWidth / 2 + 5,
+      y: horizontal
+        ? labelOrientation === "top"
+          ? scaledData.y - boxWidth / 2 - labelStyle.padding
+          : scaledData.y + boxWidth / 2 + labelStyle.padding
+        : datum,
+      x: horizontal
+        ? datum
+        : labelOrientation === "left"
+          ? scaledData.x - boxWidth / 2 - labelStyle.padding
+          : scaledData.x + boxWidth / 2 + labelStyle.padding,
+      dx: labelStyle.dx,
+      dy: labelStyle.dy,
       text,
-      // index,
-      // scale,
-      // datum,
-      // data,
+      scale,
+      datum,
       textAnchor: labelStyle.textAnchor || "start",
       verticalAnchor: labelStyle.verticalAnchor || "end",
       angle: labelStyle.angle
     };
-  },
-
-  getData(props) {
-    if (!props.data || Data.getLength(props.data) < 1) {
-      return [];
-    }
-
-    const stringMap = {
-      x: Data.createStringMap(props, "x"),
-      y: Data.createStringMap(props, "y")
-    };
-
-    const accessor = {
-      x: Helpers.createAccessor(props.x !== undefined ? props.x : "x"),
-      y: Helpers.createAccessor(props.y !== undefined ? props.y : "y")
-    };
-
-    const formattedData = props.data.reduce((dataArr, datum, index) => {
-      datum = Data.parseDatum(datum);
-
-      const evaluatedX = accessor.x(datum);
-      const evaluatedY = accessor.y(datum);
-      const _x = evaluatedX !== undefined ? evaluatedX : index;
-      const _y = evaluatedY !== undefined ? evaluatedY : index;
-
-      dataArr.push(
-        assign(
-          {},
-          datum,
-          { _x, _y },
-          typeof _x === "string" ? { _x: stringMap.x[_x], x: _x } : {},
-          typeof _y === "string" ? { _x: stringMap.y[_y], y: _y } : {}
-        )
-      );
-
-      return dataArr;
-    }, []);
-
-    return this.sortData(formattedData, props.sortKey, props.sortOrder);
-  },
-
-  sortData(dataset, sortKey, sortOrder = "ascending") {
-    if (!sortKey) {
-      return dataset;
-    }
-
-    if (sortKey === "x" || sortKey === "y") {
-      sortKey = `_${sortKey}`;
-    }
-
-    const sortedData = sortBy(dataset, sortKey);
-
-    if (sortOrder === "descending") {
-      return sortedData.reverse();
-    }
-
-    return sortedData;
   },
 
   getDomain(props, axis) {
@@ -213,22 +218,5 @@ export default {
       domain = [minData, maxData];
     }
     return Domain.cleanDomain(Domain.padDomain(domain, props, axis), props);
-  },
-
-  isTransparent(attr) {
-    return attr === "none" || attr === "transparent";
-  },
-
-  getDataStyles(datum, style) {
-    style = style || {};
-    const numKeys = keys(datum).filter((k) => isNaN(k));
-    const omitKeys = [
-      "x", "_x", "y", "_y", "size", "name", "label", "eventKey"
-    ];
-    const stylesFromData = omit(datum, [...omitKeys, ...numKeys]);
-    const fill = datum.fill || style.fill;
-    const strokeColor = datum.stroke || style.stroke;
-    const stroke = this.isTransparent(strokeColor) ? fill : strokeColor || "black";
-    return defaults({}, stylesFromData, { stroke, fill }, style);
   }
 };
