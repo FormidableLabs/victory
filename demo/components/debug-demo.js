@@ -35,7 +35,7 @@ class App extends React.Component {
           <VictoryChart
             style={chartStyle}
           >
-            <VictoryBar horizontal
+            <VictoryBar
               alignment="start"
               data={[
                 { x: 2, y: "Echo" },
@@ -54,7 +54,7 @@ class App extends React.Component {
             />
             <VictoryAxis
               tickValues={["one", "three"]}
-              axisComponent={<VictoryBrushLine/>}
+              axisComponent={<VictoryBrushLine brushDomain={[2, 3]}/>}
             />
           </VictoryChart>
         </div>

@@ -234,7 +234,6 @@ export default {
           { dimension: axis }, sharedProps, this.getGridProps(gridLayout, styles.gridStyle, tick)
         )
       };
-
       return childProps;
     }, initialChildProps);
   },
