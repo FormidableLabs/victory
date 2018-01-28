@@ -10,6 +10,7 @@ import ChartDemo from "./components/victory-chart-demo";
 import LineDemo from "./components/victory-line-demo";
 import ScatterDemo from "./components/victory-scatter-demo";
 import ErrorBarDemo from "./components/victory-errorbar-demo";
+import BoxplotDemo from "./components/victory-boxplot-demo";
 import CandlestickDemo from "./components/victory-candlestick-demo";
 import EventsDemo from "./components/events-demo";
 import GroupDemo from "./components/group-demo";
@@ -62,6 +63,7 @@ class App extends React.Component {
     case "/scatter": Child = ScatterDemo; break;
     case "/errorbar": Child = ErrorBarDemo; break;
     case "/candlestick": Child = CandlestickDemo; break;
+    case "/boxplot": Child = BoxplotDemo; break;
     case "/events": Child = EventsDemo; break;
     case "/group": Child = GroupDemo; break;
     case "/voronoi": Child = VoronoiDemo; break;
@@ -96,6 +98,7 @@ class App extends React.Component {
           <li><a href="#/scatter">Victory Scatter Demo</a></li>
           <li><a href="#/errorbar">Victory Error Bar Demo</a></li>
           <li><a href="#/candlestick">Victory Candlestick Demo</a></li>
+          <li><a href="#/boxplot">Victory Boxplot Demo</a></li>
           <li><a href="#/events">Events Demo</a></li>
           <li><a href="#/group">Group Demo</a></li>
           <li><a href="#/voronoi">Victory Voronoi Demo</a></li>
