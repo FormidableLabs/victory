@@ -7,7 +7,7 @@ export default class Box extends React.Component {
   static propTypes = {
     ...CommonProps,
     groupComponent: PropTypes.element,
-    horizontal: PropTypes.bool,
+    height: PropTypes.number,
     width: PropTypes.number,
     x: PropTypes.number,
     y: PropTypes.number
