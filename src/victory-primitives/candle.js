@@ -98,7 +98,7 @@ export default class Candle extends React.Component {
     const role = props.role || "presentation";
     const lowWick = Math.min(close, open);
     const highWick = Math.max(close, open);
-    const wickStyle = defaults({}, this.style, { strokeWidth: wickStrokeWidth });
+    const wickStyle = defaults({ strokeWidth: wickStrokeWidth }, this.style);
     return assign({
       x1: x,
       x2: x,
