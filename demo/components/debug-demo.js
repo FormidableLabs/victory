@@ -20,33 +20,6 @@ class App extends React.Component {
       <div className="demo">
         <h1>Debug</h1>
         <div style={containerStyle}>
-          <VictoryChart style={chartStyle}>
-            <VictoryAxis tickFormat={(t, i, ts) => `${t}s ${i} ${ts[0]}`}/>
-            <VictoryBar
-              style={{ data: { fill: "tomato" } }}
-              data={[
-                { x: "one", y: 1 },
-                { x: "two", y: 2 },
-                { x: "three", y: 7 }
-              ]}
-            />
-         </VictoryChart>
-
-          <VictoryChart
-            style={chartStyle}
-          >
-            <VictoryBar
-              alignment="start"
-              data={[
-                { x: 2, y: "Echo" },
-                { x: 6, y: "Foxtrot" },
-                { x: 3, y: "Golf" },
-                { x: 4, y: "Hotel" }
-              ]}
-            />
-            <VictoryAxis/>
-            <VictoryAxis dependentAxis axisComponent={<VictoryBrushLine/>}/>
-          </VictoryChart>
 
           <VictoryChart style={chartStyle}>
             <VictoryBar
