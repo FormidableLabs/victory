@@ -1,5 +1,5 @@
 import {
-  assign, defaults, extend, merge, partial, isEmpty, isFunction, without, pickBy, uniq, includes
+  assign, extend, merge, partial, isEmpty, isFunction, without, pickBy, uniq, includes
 } from "lodash";
 
 export default {
