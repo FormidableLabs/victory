@@ -1,5 +1,5 @@
 import {
-  assign, extend, merge, partial, isEmpty, isFunction, without, pickBy, uniq, includes
+  assign, defaults, extend, merge, partial, isEmpty, isFunction, without, pickBy, uniq, includes
 } from "lodash";
 
 export default {
@@ -103,14 +103,15 @@ export default {
 
       // returns the state object with mutated props applied for a single key
       const getMutationObject = (key, childName) => {
-        const nullFunction = () => null;
+        const baseState = this.state || {};
+        if (!isFunction(eventReturn.mutation)) {
+          return baseState;
+        }
         const mutationTargetProps = getTargetProps({ childName, key, target }, "props");
         const mutationTargetState = getTargetProps({ childName, key, target }, "state");
-        const mutation = eventReturn.mutation || nullFunction;
-        const mutatedProps = mutation(
+        const mutatedProps = eventReturn.mutation(
           assign({}, mutationTargetProps, mutationTargetState), baseProps
         );
-        const baseState = this.state || {};
         const childState = baseState[childName] || {};
         const extendState = (state) => {
           return target === "parent" ?
