@@ -12,7 +12,7 @@ export default {
     } = props;
     const initialChildProps = { parent: {
       domain, scale, width, height, data, standalone, theme, polar, origin,
-      style: style.parent, padding, wickStrokeWidth
+      style: style.parent, padding
     } };
 
     return data.reduce((childProps, datum, index) => {
