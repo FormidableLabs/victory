@@ -24,9 +24,9 @@ const getFullDomain = (props) => {
 };
 
 const getHandles = (props, range) => {
+  const { handleWidth } = props;
   const min = Math.min(...range);
   const max = Math.max(...range);
-  const handleWidth = props.handleWidth / 2;
   return {
     min: [min - handleWidth, min + handleWidth], max: [max - handleWidth, max + handleWidth]
   };
@@ -65,17 +65,19 @@ const panBox = (props, position) => {
 
 export default class VictoryBrushLine extends React.Component {
   static propTypes = {
-    className: PropTypes.string,
     allowDrag: PropTypes.bool,
     allowResize: PropTypes.bool,
     brushAreaComponent: PropTypes.element,
+    brushAreaStyle: PropTypes.object,
     brushComponent: PropTypes.element,
     brushDimension: PropTypes.oneOf(["x", "y"]),
-    brushWidth: PropTypes.number,
     brushDomain: PropTypes.array,
     brushStyle: PropTypes.object,
-    brushAreaStyle: PropTypes.object,
+    brushWidth: PropTypes.number,
+    className: PropTypes.string,
     dimension: PropTypes.oneOf(["x", "y"]),
+    events: PropTypes.object,
+    groupComponent: PropTypes.element,
     handleComponent: PropTypes.element,
     handleStyle: PropTypes.object,
     handleWidth: PropTypes.number,
@@ -99,13 +101,15 @@ export default class VictoryBrushLine extends React.Component {
     brushStyle: {
       stroke: "black",
       fill: "black",
+      cursor: "move",
       opacity: 0.15
     },
     brushWidth: 10,
+    groupComponent: <g/>,
     handleComponent: <rect/>,
     handleStyle: {
-      stroke: "transparent",
-      fill: "transparent"
+      stroke: "none",
+      fill: "none"
     },
     handleWidth: 10,
     lineComponent: <Line/>
@@ -135,7 +139,6 @@ export default class VictoryBrushLine extends React.Component {
           const activeHandles = allowResize &&
             (withinBound(position, handles.min)) || (withinBound(position, handles.max));
           // If the event occurs in any of the handle regions, start a resize
-          console.log("ACTIVE HANDLES", activeHandles)
           if (activeHandles) {
             return [{
               mutation: () => {
@@ -168,7 +171,6 @@ export default class VictoryBrushLine extends React.Component {
           }
         },
         onMouseMove: (evt, targetProps) => { // eslint-disable-line max-statements, complexity
-          console.log("MOVE", targetProps.isSelecting)
           if (!targetProps.isPanning && !targetProps.isSelecting) {
             return [];
           }
@@ -270,32 +272,6 @@ export default class VictoryBrushLine extends React.Component {
   //   return Helpers.evaluateStyle(assign({ stroke: "black" }, style), datum, active);
   // }
 
-  // // Overridden in victory-core-native
-  // renderAxisLine(props, style, events) {
-  //   const { role, shapeRendering, className } = this.props;
-  //   return (
-  //     <line
-  //       {...props}
-  //       className={className}
-  //       style={style}
-  //       role={role || "presentation"}
-  //       shapeRendering={shapeRendering || "auto"}
-  //       vectorEffect="non-scaling-stroke"
-  //       {...events}
-  //     />
-  //   );
-  // }
-
-  // render() {
-  //   const { x1, x2, y1, y2, events } = this.props;
-  //   return this.renderAxisLine({ x1, x2, y1, y2 }, this.style, events);
-  // }
-
-  getFullDomain(props) {
-    const scale = props.scale[props.dimension];
-    return scale && scale.domain();
-  }
-
   getRectDimensions(props, domain) {
     const { dimension, brushWidth } = props;
     domain = domain || getCurrentDomain(props);
@@ -316,19 +292,51 @@ export default class VictoryBrushLine extends React.Component {
     return { x, y, width, height };
   }
 
+  getHandleDimensions(props) {
+    const { dimension, brushWidth, handleWidth, x1, x2, y1, y2 } = props;
+    const domain = getCurrentDomain(props);
+    const range = toRange(props, domain);
+    const defaultX = Math.min(x1, x2) - (brushWidth / 2);
+    const defaultY = Math.min(y1, y2) - (brushWidth / 2);
+    const x = {
+      min: dimension === "x" ? Math.min(...range) : defaultX,
+      max: dimension === "x" ? Math.max(...range) - handleWidth : defaultX
+    };
+    const y = {
+      min: dimension === "y" ? Math.max(...range) - handleWidth : defaultY,
+      max: dimension === "y" ? Math.min(...range) : defaultY
+    };
+    const width = dimension === "x" ? handleWidth : brushWidth;
+    const height = dimension === "x" ? brushWidth : handleWidth;
+
+    return {
+      min: { x: x.min, y: y.min, width, height },
+      max: { x: x.max, y: y.max, width, height }
+    };
+  }
+
+  renderHandles(props) {
+    const { handleComponent, handleStyle, dimension } = props;
+    const handleDimensions = this.getHandleDimensions(props);
+    const cursor = dimension === "x" ? "ew-resize" : "ns-resize";
+    const style = assign({ cursor }, handleStyle);
+    return [
+      React.cloneElement(handleComponent, assign({ key: "min", style }, handleDimensions.min)),
+      React.cloneElement(handleComponent, assign({ key: "max", style }, handleDimensions.max))
+    ];
+  }
+
   renderBrush(props) {
     const { brushComponent, brushStyle } = props;
     const rectDimensions = this.getRectDimensions(props);
-    const style = assign({}, brushStyle, { pointerEvents: "none" });
-    const brushProps = assign({ style }, rectDimensions);
+    const brushProps = assign({ style: brushStyle }, rectDimensions);
     return React.cloneElement(brushComponent, brushProps);
   }
 
   renderBrushArea(props) {
-    const { brushAreaComponent, events, brushAreaStyle } = props;
-    const rectDimensions = this.getRectDimensions(props, this.getFullDomain(props));
-    const style = brushAreaStyle;
-    const brushAreaProps = assign({ style }, rectDimensions, events);
+    const { brushAreaComponent, brushAreaStyle } = props;
+    const rectDimensions = this.getRectDimensions(props, getFullDomain(props));
+    const brushAreaProps = assign({ style: brushAreaStyle }, rectDimensions);
     return React.cloneElement(brushAreaComponent, brushAreaProps);
   }
 
@@ -338,10 +346,11 @@ export default class VictoryBrushLine extends React.Component {
 
   render() {
     return (
-      <g>
+      <g {...this.props.events}>
         {this.renderLine(this.props)}
         {this.renderBrushArea(this.props)}
         {this.renderBrush(this.props)}
+        {this.renderHandles(this.props)}
       </g>
     );
   }
