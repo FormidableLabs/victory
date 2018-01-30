@@ -23,17 +23,21 @@ const getFullDomain = (props) => {
   return scale.domain();
 };
 
-const getHandles = (props, range) => {
-  const { handleWidth } = props;
-  const min = Math.min(...range);
-  const max = Math.max(...range);
-  return {
-    min: [min - handleWidth, min + handleWidth], max: [max - handleWidth, max + handleWidth]
-  };
-};
-
 const withinBound = (value, bound) => {
   return value >= Math.min(...bound) && value <= Math.max(...bound);
+};
+
+const getActiveHandle = (props, position, range) => {
+  const width = props.handleWidth / 2;
+  const getHandle = (type) => {
+    const base = type === "min" ? Math.min(...range) : Math.max(...range);
+    return [base - width, base + width];
+  };
+  const active = ["min", "max"].reduce((memo, type) => {
+    memo[type] = withinBound(position, getHandle(type)) ? type : false;
+    return memo;
+  }, {});
+  return active.min && active.max ? "both" : active.min || active.max;
 };
 
 const getMinimumDomain = () => {
@@ -108,7 +112,7 @@ export default class VictoryBrushLine extends React.Component {
     groupComponent: <g/>,
     handleComponent: <rect/>,
     handleStyle: {
-      stroke: "none",
+      stroke: "black",
       fill: "none"
     },
     handleWidth: 10,
@@ -130,20 +134,17 @@ export default class VictoryBrushLine extends React.Component {
             return [];
           }
 
-          const fullDomain = targetProps.fullDomain || scale[dimension].domain();
+          const fullDomain = scale[dimension].domain();
           const currentDomain = getCurrentDomain(targetProps);
           const position = Selection.getSVGEventCoordinates(evt)[dimension];
           const range = toRange(targetProps, currentDomain);
-          const handles = getHandles(targetProps, range);
-
-          const activeHandles = allowResize &&
-            (withinBound(position, handles.min)) || (withinBound(position, handles.max));
+          const activeHandle = allowResize && getActiveHandle(targetProps, position, range);
           // If the event occurs in any of the handle regions, start a resize
-          if (activeHandles) {
+          if (activeHandle) {
             return [{
               mutation: () => {
                 return ({
-                  isSelecting: true, currentDomain, cachedBrushDomain: brushDomain,
+                  isSelecting: true, activeHandle, currentDomain, cachedBrushDomain: brushDomain,
                   startPosition: position
                 });
               }
@@ -198,15 +199,18 @@ export default class VictoryBrushLine extends React.Component {
             }];
           } else if (allowResize && isSelecting) {
             const range = toRange(targetProps, targetProps.currentDomain);
-            const handles = getHandles(targetProps, range);
-            const min = withinBound(position, handles.max) ?
-              Math.min(...range) : Math.min(targetProps.startPosition, position);
-            const max = withinBound(position, handles.min) ?
-              Math.max(...range) : Math.max(targetProps.startPosition, position);
-            const currentDomain = toDomain(targetProps, [min, max]);
+            const oppositeHandle = targetProps.activeHandle === "min" ? "max" : "min";
+            const handle = targetProps.activeHandle &&
+              getActiveHandle(targetProps, position, range) === "both" ?
+                oppositeHandle : targetProps.activeHandle;
+            const currentRange = handle ? [
+              handle === "max" ? Math.min(...range) : position,
+              handle === "min" ? Math.max(...range) : position
+            ] : [targetProps.startPosition, position];
+            const currentDomain = toDomain(targetProps, currentRange);
             const mutatedProps = {
               currentDomain, startPosition: targetProps.startPosition,
-              isSelecting, cachedBrushDomain
+              isSelecting, activeHandle: handle, cachedBrushDomain
             };
             if (isFunction(onBrushDomainChange)) {
               onBrushDomainChange(currentDomain, defaults({}, mutatedProps, targetProps));
@@ -221,9 +225,8 @@ export default class VictoryBrushLine extends React.Component {
           const { onBrushDomainChange, currentDomain, allowResize } = targetProps;
           // if the mouse hasn't moved since a mouseDown event, select the whole domain region
           const mutatedProps = {
-            isPanning: false, isSelecting: false, currentDomain, cachedBrushDomain: currentDomain,
-            brushDomain: currentDomain,
-            startPosition: null
+            isPanning: false, isSelecting: false, activeHandle: false, startPosition: null,
+            currentDomain, cachedBrushDomain: currentDomain, brushDomain: currentDomain
           };
           if (allowResize && isFunction(onBrushDomainChange)) {
             onBrushDomainChange(currentDomain, defaults({}, mutatedProps, targetProps));
@@ -236,8 +239,8 @@ export default class VictoryBrushLine extends React.Component {
           const { currentDomain, cachedBrushDomain } = targetProps;
           return [{
             mutation: () => ({
-              isPanning: false, isSelecting: false, currentDomain, cachedBrushDomain,
-              startPosition: null
+              isPanning: false, isSelecting: false, activeHandle: false, startPosition: null,
+              currentDomain, cachedBrushDomain
             })
           }];
         }
@@ -299,12 +302,12 @@ export default class VictoryBrushLine extends React.Component {
     const defaultX = Math.min(x1, x2) - (brushWidth / 2);
     const defaultY = Math.min(y1, y2) - (brushWidth / 2);
     const x = {
-      min: dimension === "x" ? Math.min(...range) : defaultX,
-      max: dimension === "x" ? Math.max(...range) - handleWidth : defaultX
+      min: dimension === "x" ? Math.min(...range) - handleWidth / 2 : defaultX,
+      max: dimension === "x" ? Math.max(...range) - handleWidth / 2 : defaultX
     };
     const y = {
-      min: dimension === "y" ? Math.max(...range) - handleWidth : defaultY,
-      max: dimension === "y" ? Math.min(...range) : defaultY
+      min: dimension === "y" ? Math.max(...range) - handleWidth / 2 : defaultY,
+      max: dimension === "y" ? Math.min(...range) - handleWidth / 2 : defaultY
     };
     const width = dimension === "x" ? handleWidth : brushWidth;
     const height = dimension === "x" ? brushWidth : handleWidth;
