@@ -1,25 +1,37 @@
 import React from "react";
 import PropTypes from "prop-types";
-import { Selection, Helpers, Collection, Line } from "victory-core";
-import { assign, defaults, isEqual, isFunction, values, pick } from "lodash";
+import { Selection, Helpers, Collection, Line, Scale, Domain } from "victory-core";
+import { assign, defaults, isEqual, isFunction, pick } from "lodash";
+
+const getScale = (props) => {
+  const { scale = {}, dimension = "x" } = props;
+  if (scale[dimension]) {
+    return scale[dimension];
+  }
+  const fallbackScale = Scale.getBaseScale(props, dimension);
+  const range = Helpers.getRange(props, dimension);
+  const domain = Domain.getDomainFromProps(props, dimension) || [0, 1];
+  fallbackScale.range(range).domain(domain);
+  return fallbackScale;
+};
 
 const toRange = (props, domain) => {
-  const scale = values(props.scale)[0];
+  const scale = getScale(props);
   return [scale(Math.min(...domain)), scale(Math.max(...domain))];
 };
 
 const toDomain = (props, range) => {
-  const scale = values(props.scale)[0];
+  const scale = getScale(props);
   return [scale.invert(Math.min(...range)), scale.invert(Math.max(...range))];
 };
 
 const getFullRange = (props) => {
-  const scale = values(props.scale)[0];
+  const scale = getScale(props);
   return scale.range();
 };
 
 const getFullDomain = (props) => {
-  const scale = values(props.scale)[0];
+  const scale = getScale(props);
   return scale.domain();
 };
 
@@ -388,8 +400,8 @@ export default class VictoryBrushLine extends React.Component {
   }
 
   renderLine(props) {
-    const filteredProps = pick(props, ["x1", "x2", "y1", "y2", "datum", "scale"]);
-    return <Line {...filteredProps}/>;
+    const filteredProps = pick(props, ["x1", "x2", "y1", "y2", "datum", "scale", "active"]);
+    return React.cloneElement(props.lineComponent, filteredProps);
   }
 
   render() {

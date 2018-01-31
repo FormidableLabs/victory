@@ -192,6 +192,7 @@ export default {
     const {
       axis, style, orientation, isVertical, scale, ticks, tickFormat, anchors, domain, stringTicks
     } = calculatedValues;
+    const otherAxis = axis === "x" ? "y" : "x";
     const { width, height, standalone, theme, polar, padding } = props;
     const {
       globalTransform, gridOffset, gridEdge
@@ -205,7 +206,12 @@ export default {
         sharedProps
       )
     };
-
+    const gridProps = {
+      dimension: otherAxis,
+      range: { [otherAxis]: Helpers.getRange(props, otherAxis) },
+      scale: props.scale && props.scale[otherAxis] ?
+        { [otherAxis]: props.scale[otherAxis] } : undefined
+    };
     return ticks.reduce((childProps, tick, index) => {
       const originalTick = stringTicks ? stringTicks[index] : tick;
       const styles = this.getEvaluatedStyles(style, originalTick, index);
@@ -231,7 +237,7 @@ export default {
           tickLayout, styles.labelStyle, anchors, tick, tickFormat(tick, index, ticks)
         )),
         grid: assign(
-          { dimension: axis }, sharedProps, this.getGridProps(gridLayout, styles.gridStyle, tick)
+          {}, sharedProps, gridProps, this.getGridProps(gridLayout, styles.gridStyle, tick)
         )
       };
       return childProps;
