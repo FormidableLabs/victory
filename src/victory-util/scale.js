@@ -55,6 +55,19 @@ export default {
     return undefined;
   },
 
+  getScaleFromDomain(props, axis) {
+    let domain;
+    if (props.domain && props.domain[axis]) {
+      domain = props.domain[axis];
+    } else if (props.domain && Array.isArray(props.domain)) {
+      domain = props.domain;
+    }
+    if (!domain) {
+      return undefined;
+    }
+    return Collection.containsDates(domain) ? "time" : "linear";
+  },
+
   getScaleTypeFromData(props, axis) {
     if (!props.data) {
       return "linear";
@@ -69,8 +82,9 @@ export default {
     if (scale) {
       return scale;
     }
-    const dataScale = this.getScaleTypeFromData(props, axis);
-    return d3Scale[this.toNewName(dataScale)]();
+    const defaultScale =
+      this.getScaleFromDomain(props, axis) || this.getScaleTypeFromData(props, axis);
+    return d3Scale[this.toNewName(defaultScale)]();
   },
 
   getType(scale) {
