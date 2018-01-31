@@ -113,22 +113,24 @@ export default class VictoryBrushLine extends React.Component {
     allowResize: true,
     brushAreaComponent: <rect/>,
     brushAreaStyle: {
-      stroke: (d, a) => a ? "black" : "none",
+      cursor: "crosshair",
+      stroke: "none",
       fill: "black",
-      fillOpacity: 0.1
+      opacity: (d, a) => a ? 0.2 : 0.1 // eslint-disable-line no-magic-numbers
     },
     brushComponent: <rect/>,
     brushStyle: {
+      strokeWidth: 2,
       stroke: (d, a) => a ? "black" : "none",
       fill: "black",
       cursor: "move",
-      fillOpacity: 0.15
+      opacity: (d, a) => a ? 0.4 : 0.3 // eslint-disable-line no-magic-numbers
     },
     brushWidth: 10,
     groupComponent: <g/>,
     handleComponent: <rect/>,
     handleStyle: {
-      stroke: (d, a) => a ? "black" : "none",
+      stroke: "none",
       fill: "none"
     },
     handleWidth: 10,
@@ -215,8 +217,7 @@ export default class VictoryBrushLine extends React.Component {
           const activeHandle = getActiveHandle(targetProps, position, initialRange);
           const activeBrushes = {
             brushArea: isEqual(domain, fullDomain),
-            brush: !activeHandle && withinBound(position, initialRange) &&
-              !isEqual(fullDomain, domain),
+            brush: withinBound(position, initialRange) && !isEqual(fullDomain, domain),
             minHandle: activeHandle === "min" || activeHandle === "both",
             maxHandle: activeHandle === "max" || activeHandle === "both"
           };
@@ -265,7 +266,7 @@ export default class VictoryBrushLine extends React.Component {
               currentDomain, startPosition: targetProps.startPosition,
               isSelecting, activeHandle: handle, cachedBrushDomain,
               activeBrushes: {
-                minHandle: activeHandle === "min", maxHandle: activeHandle === "max"
+                brush: true, minHandle: activeHandle === "min", maxHandle: activeHandle === "max"
               }
             };
             if (isFunction(onBrushDomainChange)) {
