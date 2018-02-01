@@ -23,7 +23,7 @@ export default class VictoryGroup extends React.Component {
     ...BaseProps,
     ...DataProps,
     children: PropTypes.oneOfType([PropTypes.arrayOf(PropTypes.node), PropTypes.node]),
-    color: PropTypes.string,
+    color: PropTypes.oneOfType([PropTypes.string, PropTypes.func]),
     colorScale: PropTypes.oneOfType([
       PropTypes.arrayOf(PropTypes.string),
       PropTypes.oneOf([
