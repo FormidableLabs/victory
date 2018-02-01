@@ -7,16 +7,19 @@ import { defined, getXAccessor, getYAccessor, getY0Accessor, getAngleAccessor } 
 import { assign } from "lodash";
 import * as d3Shape from "d3-shape";
 import CommonProps from "./common-props";
+import Path from "./path";
 
 export default class Area extends React.Component {
   static propTypes = {
     ...CommonProps,
     groupComponent: PropTypes.element,
-    interpolation: PropTypes.string
+    interpolation: PropTypes.string,
+    pathComponent: PropTypes.element
   };
 
   static defaultProps = {
-    groupComponent: <g/>
+    groupComponent: <g/>,
+    pathComponent: <Path/>
   };
 
   componentWillMount() {
@@ -115,7 +118,28 @@ export default class Area extends React.Component {
     );
   }
 
-  // Overridden in victory-core-native
+  // // Overridden in victory-core-native
+  // renderLine(path, style, events) {
+  //   if (!style.stroke || style.stroke === "none" || style.stroke === "transparent") {
+  //     return null;
+  //   }
+  //   const { role, shapeRendering, className, polar, origin } = this.props;
+  //   const transform = polar && origin ? `translate(${origin.x}, ${origin.y})` : undefined;
+  //   const lineStyle = assign({}, style, { fill: "none" });
+  //   return (
+  //     <path
+  //       key={"area-stroke"}
+  //       style={lineStyle}
+  //       shapeRendering={shapeRendering || "auto"}
+  //       role={role || "presentation"}
+  //       d={path}
+  //       transform={transform}
+  //       className={className}
+  //       {...events}
+  //     />
+  //   );
+  // }
+
   renderLine(path, style, events) {
     if (!style.stroke || style.stroke === "none" || style.stroke === "transparent") {
       return null;
@@ -123,6 +147,8 @@ export default class Area extends React.Component {
     const { role, shapeRendering, className, polar, origin } = this.props;
     const transform = polar && origin ? `translate(${origin.x}, ${origin.y})` : undefined;
     const lineStyle = assign({}, style, { fill: "none" });
+    const { shapeRendering, role, transform, }
+    return React.cloneElement()
     return (
       <path
         key={"area-stroke"}
@@ -138,9 +164,12 @@ export default class Area extends React.Component {
   }
 
   render() {
-    const { events, groupComponent } = this.props;
-    const area = this.renderArea(this.areaPath, this.style, events);
-    const line = this.renderLine(this.linePath, this.style, events);
+    const { groupComponent } = this.props;
+    const calculatedAttributes = this.calculateAttributes(this.props);
+    const area = this.renderArea(this.props, calculatedAttributes);
+    const line = this.renderLine(this.props, calculatedAttributes);
+    // const area = this.renderArea(this.areaPath, this.style, events);
+    // const line = this.renderLine(this.linePath, this.style, events);
 
     if (!line) {
       return area;

@@ -2,28 +2,28 @@ import React from "react";
 import PropTypes from "prop-types";
 import Collection from "../victory-util/collection";
 
-export default class Line extends React.Component {
+export default class Rect extends React.Component {
   static propTypes = {
     className: PropTypes.string,
     events: PropTypes.object,
+    height: PropTypes.number,
     role: PropTypes.string,
     shapeRendering: PropTypes.string,
     style: PropTypes.object,
     transform: PropTypes.string,
-    x1: PropTypes.number,
-    x2: PropTypes.number,
-    y1: PropTypes.number,
-    y2: PropTypes.number
+    width: PropTypes.number,
+    x: PropTypes.number,
+    y: PropTypes.number
   };
 
   shouldComponentUpdate(nextProps) {
-    const { className, x1, x2, y1, y2, style, transform } = this.props;
+    const { className, x, y, width, height, transform, style } = this.props;
     if (!Collection.allSetsEqual([
       [className, nextProps.className],
-      [x1, nextProps.x1],
-      [x2, nextProps.x2],
-      [y1, nextProps.y1],
-      [y2, nextProps.y2],
+      [x, nextProps.x],
+      [y, nextProps.y],
+      [width, nextProps.width],
+      [height, nextProps.height],
       [transform, nextProps.transform],
       [style, nextProps.style]
     ])) {
@@ -34,10 +34,10 @@ export default class Line extends React.Component {
 
   // Overridden in victory-core-native
   render() {
-    const { x1, x2, y1, y2, events, className, style, shapeRendering, role } = this.props;
+    const { x, y, width, height, events, className, style, role, shapeRendering } = this.props;
     return (
-      <line
-        x1={x1} x2={x2} y1={y1} y2={y2}
+      <rect
+        x={x} y={y} width={width} height={height}
         className={className}
         style={style}
         role={role || "presentation"}

@@ -9,7 +9,7 @@ import VictoryLabel from "../victory-label/victory-label";
 import VictoryContainer from "../victory-container/victory-container";
 import VictoryTheme from "../victory-theme/victory-theme";
 import Point from "../victory-primitives/point";
-import Border from "../victory-primitives/border";
+import Rect from "../victory-primitives/rect";
 
 const fallbackProps = {
   orientation: "vertical",
@@ -139,7 +139,7 @@ class VictoryLegend extends React.Component {
   };
 
   static defaultProps = {
-    borderComponent: <Border/>,
+    borderComponent: <Rect/>,
     data: defaultLegendData,
     containerComponent: <VictoryContainer/>,
     dataComponent: <Point/>,

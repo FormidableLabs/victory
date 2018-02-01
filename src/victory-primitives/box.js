@@ -5,7 +5,8 @@ import Collection from "../victory-util/collection";
 import { assign } from "lodash";
 import CommonProps from "./common-props";
 
-export default class Line extends React.Component {
+
+export default class Box extends React.Component {
   static propTypes = {
     ...CommonProps,
     height: PropTypes.number,
@@ -19,12 +20,14 @@ export default class Line extends React.Component {
   }
 
   shouldComponentUpdate(nextProps) {
-    const { className, x, y } = this.props;
+    const { className, x, y, width, height } = this.props;
     const style = this.getStyle(nextProps);
     if (!Collection.allSetsEqual([
       [className, nextProps.className],
       [x, nextProps.x],
       [y, nextProps.y],
+      [width, nextProps.width],
+      [height, nextProps.height],
       [style, this.style]
     ])) {
       this.style = style;

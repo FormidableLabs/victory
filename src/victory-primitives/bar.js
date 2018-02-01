@@ -4,6 +4,7 @@ import Helpers from "../victory-util/helpers";
 import Collection from "../victory-util/collection";
 import { assign } from "lodash";
 import CommonProps from "./common-props";
+import Path from "./path";
 import * as d3Shape from "d3-shape";
 
 export default class Bar extends React.Component {
@@ -19,37 +20,42 @@ export default class Bar extends React.Component {
       PropTypes.number,
       PropTypes.object
     ]),
+    pathComponent: PropTypes.element,
     width: PropTypes.number,
     x: PropTypes.number,
     y: PropTypes.number,
     y0: PropTypes.number
   };
 
-  componentWillMount() {
-    const { style, path } = this.calculateAttributes(this.props);
-    this.style = style;
-    this.path = path;
-  }
+  static defaultProps = {
+    pathComponent: <Path/>
+  };
 
-  shouldComponentUpdate(nextProps) {
-    const { style, path } = this.calculateAttributes(nextProps);
-    const { className, datum, horizontal, x, y, y0 } = this.props;
-    if (!Collection.allSetsEqual([
-      [className, nextProps.className],
-      [x, nextProps.x],
-      [y, nextProps.y],
-      [y0, nextProps.y0],
-      [horizontal, nextProps.horizontal],
-      [path, this.path],
-      [style, this.style],
-      [datum, nextProps.datum]
-    ])) {
-      this.style = style;
-      this.path = path;
-      return true;
-    }
-    return false;
-  }
+  // componentWillMount() {
+  //   const { style, path } = this.calculateAttributes(this.props);
+  //   this.style = style;
+  //   this.path = path;
+  // }
+
+  // shouldComponentUpdate(nextProps) {
+  //   const { style, path } = this.calculateAttributes(nextProps);
+  //   const { className, datum, horizontal, x, y, y0 } = this.props;
+  //   if (!Collection.allSetsEqual([
+  //     [className, nextProps.className],
+  //     [x, nextProps.x],
+  //     [y, nextProps.y],
+  //     [y0, nextProps.y0],
+  //     [horizontal, nextProps.horizontal],
+  //     [path, this.path],
+  //     [style, this.style],
+  //     [datum, nextProps.datum]
+  //   ])) {
+  //     this.style = style;
+  //     this.path = path;
+  //     return true;
+  //   }
+  //   return false;
+  // }
 
   calculateAttributes(props) {
     const { datum, active, polar } = props;
@@ -80,14 +86,15 @@ export default class Bar extends React.Component {
     const sign = y0 > y1 ? 1 : -1;
     const direction = sign > 0 ? "0 0 1" : "0 0 0";
     const arc = `${cornerRadius} ${cornerRadius} ${direction}`;
-    return `M ${x0}, ${y0}
-      L ${x0}, ${y1 + sign * cornerRadius}
-      A ${arc}, ${x0 + cornerRadius}, ${y1}
-      L ${x1 - cornerRadius}, ${y1}
-      A ${arc}, ${x1}, ${y1 + sign * cornerRadius}
-      L ${x1}, ${y0}
-      L ${x0}, ${y0}
-      z`;
+    return [
+      `M ${x0}, ${y0}`,
+      `L ${x0}, ${y1 + sign * cornerRadius}`,
+      `A ${arc}, ${x0 + cornerRadius}, ${y1}`,
+      `L ${x1 - cornerRadius}, ${y1}`,
+      `A ${arc}, ${x1}, ${y1 + sign * cornerRadius}`,
+      `L ${x1}, ${y0}`,
+      `L ${x0}, ${y0}z`
+    ].join(",\n");
   }
 
   getHorizontalBarPath(props, width) {
@@ -228,24 +235,12 @@ export default class Bar extends React.Component {
     return Math.max(1, defaultWidth);
   }
 
-  // Overridden in victory-core-native
-  renderBar(path, style, events) {
-    const { role, shapeRendering, className, origin, polar } = this.props;
-    const transform = polar && origin ? `translate(${origin.x}, ${origin.y})` : undefined;
-    return (
-      <path
-        d={path}
-        transform={transform}
-        className={className}
-        style={style}
-        role={role || "presentation"}
-        shapeRendering={shapeRendering || "auto"}
-        {...events}
-      />
-    );
-  }
-
   render() {
-    return this.renderBar(this.path, this.style, this.props.events);
+    const { role, shapeRendering, className, origin, polar, pathComponent, events } = this.props;
+    const { style, path } = this.calculateAttributes(this.props);
+    const transform = polar && origin ? `translate(${origin.x}, ${origin.y})` : undefined;
+    return React.cloneElement(pathComponent, {
+      d: path, transform, className, style, role, shapeRendering, events
+    });
   }
 }
