@@ -1,7 +1,6 @@
 import React from "react";
 import PropTypes from "prop-types";
 import Helpers from "../victory-util/helpers";
-import Collection from "../victory-util/collection";
 import { assign } from "lodash";
 import CommonProps from "./common-props";
 import Path from "./path";
@@ -30,16 +29,6 @@ export default class Bar extends React.Component {
   static defaultProps = {
     pathComponent: <Path/>
   };
-
-  calculateAttributes(props) {
-    const { datum, active, polar } = props;
-    const stroke = props.style && props.style.fill || "black";
-    const baseStyle = { fill: "black", stroke };
-    const style = Helpers.evaluateStyle(assign(baseStyle, props.style), datum, active);
-    const width = this.getBarWidth(props, style);
-    const path = polar ? this.getPolarBarPath(props, width) : this.getBarPath(props, width);
-    return { style, path };
-  }
 
   getPosition(props, width) {
     const { x, y, y0, horizontal } = props;
@@ -210,8 +199,15 @@ export default class Bar extends React.Component {
   }
 
   render() {
-    const { role, shapeRendering, className, origin, polar, pathComponent, events } = this.props;
-    const { style, path } = this.calculateAttributes(this.props);
+    const {
+      role, datum, active, shapeRendering, className, origin, polar, pathComponent, events
+    } = this.props;
+    const stroke = this.props.style && this.props.style.fill || "black";
+    const baseStyle = { fill: "black", stroke };
+    const style = Helpers.evaluateStyle(assign(baseStyle, this.props.style), datum, active);
+    const width = this.getBarWidth(this.props, style);
+    const path = polar ?
+      this.getPolarBarPath(this.props, width) : this.getBarPath(this.props, width);
     const transform = polar && origin ? `translate(${origin.x}, ${origin.y})` : undefined;
     return React.cloneElement(pathComponent, {
       d: path, transform, className, style, role, shapeRendering, events
