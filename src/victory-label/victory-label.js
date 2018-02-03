@@ -7,6 +7,7 @@ import Helpers from "../victory-util/helpers";
 import LabelHelpers from "../victory-util/label-helpers";
 import Style from "../victory-util/style";
 import Log from "../victory-util/log";
+import TSpan from "../victory-primitives/tspan";
 import { assign, merge, isEmpty } from "lodash";
 
 const defaultStyles = {
@@ -83,6 +84,7 @@ export default class VictoryLabel extends React.Component {
       PropTypes.object,
       PropTypes.func
     ]),
+    tspanComponent: PropTypes.element,
     verticalAnchor: PropTypes.oneOfType([
       PropTypes.oneOf([
         "start",
@@ -102,6 +104,7 @@ export default class VictoryLabel extends React.Component {
   };
 
   static defaultProps = {
+    tspanComponent: <TSpan/>,
     capHeight: 0.71, // Magic number from d3.
     lineHeight: 1
   };
@@ -282,11 +285,14 @@ export default class VictoryLabel extends React.Component {
           const textAnchor = style.textAnchor || this.textAnchor;
           const dy = i && !props.inline ? (lineHeight * fontSize) : undefined;
           const x = !props.inline ? props.x : undefined;
-          return (
+          return React.cloneElement(props.tspanComponent, {
+            key: i, x, dy, dx: this.dx, style, textAnchor, content: line
+          });
+          {/* return (
             <tspan key={i} x={x} dy={dy} dx={this.dx} style={style} textAnchor={textAnchor}>
               {line}
             </tspan>
-          );
+          ); */}
         })}
       </text>
     );
