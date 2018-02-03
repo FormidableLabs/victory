@@ -5,9 +5,12 @@ import Collection from "../victory-util/collection";
 export default class Rect extends React.Component {
   static propTypes = {
     className: PropTypes.string,
+    clipPath: PropTypes.string,
     events: PropTypes.object,
     height: PropTypes.number,
     role: PropTypes.string,
+    rx: PropTypes.number,
+    ry: PropTypes.number,
     shapeRendering: PropTypes.string,
     style: PropTypes.object,
     transform: PropTypes.string,
@@ -17,13 +20,16 @@ export default class Rect extends React.Component {
   };
 
   shouldComponentUpdate(nextProps) {
-    const { className, x, y, width, height, transform, style } = this.props;
+    const { className, clipPath, x, y, rx, ry, width, height, transform, style } = this.props;
     if (!Collection.allSetsEqual([
       [className, nextProps.className],
       [x, nextProps.x],
       [y, nextProps.y],
+      [rx, nextProps.rx],
+      [ry, nextProps.ry],
       [width, nextProps.width],
       [height, nextProps.height],
+      [clipPath, nextProps.clipPath],
       [transform, nextProps.transform],
       [style, nextProps.style]
     ])) {
@@ -32,14 +38,18 @@ export default class Rect extends React.Component {
     return false;
   }
 
-  // Overridden in victory-core-native
   render() {
-    const { x, y, width, height, events, className, style, role, shapeRendering } = this.props;
+    const {
+      x, y, rx, ry, width, height, events, className, clipPath, style, role,
+      shapeRendering, transform
+    } = this.props;
     return (
       <rect
-        x={x} y={y} width={width} height={height}
+        x={x} y={y} rx={rx} ry={ry} width={width} height={height}
         className={className}
+        clipPath={clipPath}
         style={style}
+        transform={transform}
         role={role || "presentation"}
         shapeRendering={shapeRendering || "auto"}
         vectorEffect="non-scaling-stroke"

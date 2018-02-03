@@ -224,13 +224,8 @@ export default class VictoryLabel extends React.Component {
 
   checkLineHeight(lineHeight, val, fallbackVal) {
     if (Array.isArray(lineHeight)) {
-      if (isEmpty(lineHeight)) {
-        return fallbackVal;
-      }
-
-      return val;
+      return isEmpty(lineHeight) ? fallbackVal : val;
     }
-
     return lineHeight;
   }
 

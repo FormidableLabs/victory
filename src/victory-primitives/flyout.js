@@ -87,8 +87,8 @@ export default class Flyout extends React.Component {
     const { datum, active, role, shapeRendering, className, events, pathComponent } = this.props;
     const style = Helpers.evaluateStyle(this.props.style, datum, active);
     const path = this.getFlyoutPath(this.props);
-    return React.cloneElement(pathComponent, {
-      style, className, shapeRendering, role, events, d: path
-    });
+    return React.cloneElement(
+      pathComponent, { style, className, shapeRendering, role, events, d: path }
+    );
   }
 }
