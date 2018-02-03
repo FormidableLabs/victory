@@ -17,20 +17,36 @@ export default class Line extends React.Component {
   };
 
   shouldComponentUpdate(nextProps) {
-    const { className, x1, x2, y1, y2, style, transform } = this.props;
+    const { className, x1, x2, y1, y2, style } = this.props;
     if (!Collection.allSetsEqual([
       [className, nextProps.className],
       [x1, nextProps.x1],
       [x2, nextProps.x2],
       [y1, nextProps.y1],
       [y2, nextProps.y2],
-      [transform, nextProps.transform],
       [style, nextProps.style]
     ])) {
       return true;
     }
     return false;
   }
+
+
+  // shouldComponentUpdate(nextProps) {
+  //   const { className, x1, x2, y1, y2, style, transform } = this.props;
+  //   if (!Collection.allSetsEqual([
+  //     [className, nextProps.className],
+  //     [x1, nextProps.x1],
+  //     [x2, nextProps.x2],
+  //     [y1, nextProps.y1],
+  //     [y2, nextProps.y2],
+  //     [transform, nextProps.transform],
+  //     [style, nextProps.style]
+  //   ])) {
+  //     return true;
+  //   }
+  //   return false;
+  // }
 
   // Overridden in victory-core-native
   render() {

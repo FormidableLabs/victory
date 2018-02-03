@@ -31,32 +31,6 @@ export default class Bar extends React.Component {
     pathComponent: <Path/>
   };
 
-  // componentWillMount() {
-  //   const { style, path } = this.calculateAttributes(this.props);
-  //   this.style = style;
-  //   this.path = path;
-  // }
-
-  // shouldComponentUpdate(nextProps) {
-  //   const { style, path } = this.calculateAttributes(nextProps);
-  //   const { className, datum, horizontal, x, y, y0 } = this.props;
-  //   if (!Collection.allSetsEqual([
-  //     [className, nextProps.className],
-  //     [x, nextProps.x],
-  //     [y, nextProps.y],
-  //     [y0, nextProps.y0],
-  //     [horizontal, nextProps.horizontal],
-  //     [path, this.path],
-  //     [style, this.style],
-  //     [datum, nextProps.datum]
-  //   ])) {
-  //     this.style = style;
-  //     this.path = path;
-  //     return true;
-  //   }
-  //   return false;
-  // }
-
   calculateAttributes(props) {
     const { datum, active, polar } = props;
     const stroke = props.style && props.style.fill || "black";

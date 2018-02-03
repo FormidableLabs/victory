@@ -29,7 +29,6 @@ export default class VPath extends React.Component {
   // Overridden in victory-core-native
   render() {
     const { d, role, shapeRendering, className, style, transform, events } = this.props;
-    console.log(events)
     return (
       <path
         d={d}

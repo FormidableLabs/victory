@@ -5,7 +5,6 @@ import Collection from "../victory-util/collection";
 import { assign } from "lodash";
 import CommonProps from "./common-props";
 
-
 export default class Box extends React.Component {
   static propTypes = {
     ...CommonProps,

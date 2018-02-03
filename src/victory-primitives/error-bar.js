@@ -2,9 +2,10 @@
 import React from "react";
 import PropTypes from "prop-types";
 import Helpers from "../victory-util/helpers";
-import Collection from "../victory-util/collection";
 import { assign } from "lodash";
 import CommonProps from "./common-props";
+import Line from "./line";
+
 
 export default class ErrorBar extends React.Component {
   static propTypes = {
@@ -22,41 +23,14 @@ export default class ErrorBar extends React.Component {
       PropTypes.bool
     ]),
     groupComponent: PropTypes.element,
+    lineComponent: PropTypes.element,
     x: PropTypes.number,
     y: PropTypes.number
   };
 
   static defaultProps = {
-    groupComponent: <g/>
-  }
-
-  constructor(props) {
-    super(props);
-  }
-
-  componentWillMount() {
-    this.style = this.getStyle(this.props);
-  }
-
-  shouldComponentUpdate(nextProps) {
-    const { borderWidth, className, datum, x, y, errorX, errorY } = this.props;
-    const nextStyle = this.getStyle(nextProps);
-
-    if (!Collection.allSetsEqual([
-      [borderWidth, nextProps.borderWidth],
-      [className, nextProps.className],
-      [x, nextProps.x],
-      [y, nextProps.y],
-      [errorX, nextProps.errorX],
-      [errorY, nextProps.errorY],
-      [this.style, nextStyle],
-      [datum, nextProps.datum]
-    ])) {
-      this.style = nextStyle;
-      return true;
-    }
-
-    return false;
+    groupComponent: <g/>,
+    lineComponent: <Line/>
   }
 
   getStyle(props) {
@@ -64,96 +38,66 @@ export default class ErrorBar extends React.Component {
     return Helpers.evaluateStyle(assign({ stroke: "black" }, style), datum, active);
   }
 
-  // Overridden in victory-core-native
-  renderLine(props, style, events) {
-    return <line {...props} style={style} {...events}/>;
-  }
-
   renderBorder(props, error, type) {
-    const { x, y, borderWidth, events, style, role, shapeRendering, className } = props;
-    const vertical = type === "Right" || type === "Left";
-    const errorPortion = error[`error${type}`];
+    const {
+      x, y, borderWidth, events, style, role, shapeRendering, className, lineComponent
+    } = props;
+    const vertical = type === "right" || type === "left";
     const borderProps = {
-      role, shapeRendering, className,
+      role, shapeRendering, className, events, style,
       key: `border${type}`,
-      x1: vertical ? errorPortion : x - borderWidth,
-      x2: vertical ? errorPortion : x + borderWidth,
-      y1: vertical ? y - borderWidth : errorPortion,
-      y2: vertical ? y + borderWidth : errorPortion
+      x1: vertical ? error[type] : x - borderWidth,
+      x2: vertical ? error[type] : x + borderWidth,
+      y1: vertical ? y - borderWidth : error[type],
+      y2: vertical ? y + borderWidth : error[type]
     };
-    return this.renderLine(borderProps, style, events);
+    return React.cloneElement(lineComponent, borderProps);
   }
 
   renderCross(props, error, type) {
-    const { x, y, events, style, role, shapeRendering, className } = props;
-    const vertical = type === "Top" || type === "Bottom";
-    const errorPortion = error[`error${type}`];
+    const { x, y, events, style, role, shapeRendering, className, lineComponent } = props;
+    const vertical = type === "top" || type === "bottom";
     const borderProps = {
-      role, shapeRendering, className,
+      role, shapeRendering, className, events, style,
       key: `cross${type}`,
       x1: x,
-      x2: vertical ? x : errorPortion,
+      x2: vertical ? x : error[type],
       y1: y,
-      y2: vertical ? errorPortion : y
+      y2: vertical ? error[type] : y
     };
-    return this.renderLine(borderProps, style, events);
+    return React.cloneElement(lineComponent, borderProps);
   }
 
-  renderErrorBar(error, props) {
-    const { groupComponent } = props;
-    return React.cloneElement(groupComponent, {},
-      error.errorRight ? this.renderBorder(props, error, "Right") : null,
-      error.errorLeft ? this.renderBorder(props, error, "Left") : null,
-      error.errorBottom ? this.renderBorder(props, error, "Bottom") : null,
-      error.errorTop ? this.renderBorder(props, error, "Top") : null,
-      error.errorRight ? this.renderCross(props, error, "Right") : null,
-      error.errorLeft ? this.renderCross(props, error, "Left") : null,
-      error.errorBottom ? this.renderCross(props, error, "Bottom") : null,
-      error.errorTop ? this.renderCross(props, error, "Top") : null
-    );
+  calculateError(props) {
+    const { errorX, errorY, scale } = props;
+    const rangeX = scale.x.range();
+    const rangeY = scale.y.range();
+    const positiveErrorX = errorX ? errorX[0] : undefined;
+    const negativeErrorX = errorX ? errorX[1] : undefined;
+    const positiveErrorY = errorY ? errorY[1] : undefined;
+    const negativeErrorY = errorY ? errorY[0] : undefined;
+
+    return {
+      right: positiveErrorX >= rangeX[1] ? rangeX[1] : positiveErrorX,
+      left: negativeErrorX <= rangeX[0] ? rangeX[0] : negativeErrorX,
+      top: positiveErrorY >= rangeY[0] ? rangeY[0] : positiveErrorY,
+      bottom: negativeErrorY <= rangeY[1] ? rangeY[1] : negativeErrorY
+    };
   }
 
   render() {
-    const {
-      x, y, borderWidth, groupComponent, events, errorX, errorY, scale, role,
-      shapeRendering, className
-    } = this.props;
-    let rangeX;
-    let rangeY;
-    let positiveErrorX;
-    let negativeErrorX;
-    let positiveErrorY;
-    let negativeErrorY;
-    let errorTop;
-    let errorBottom;
-    let errorRight;
-    let errorLeft;
-
-    if (errorX) {
-      rangeX = scale.x.range();
-      positiveErrorX = errorX[0];
-      negativeErrorX = errorX[1];
-      errorRight = positiveErrorX >= rangeX[1] ? rangeX[1] : positiveErrorX;
-      errorLeft = negativeErrorX <= rangeX[0] ? rangeX[0] : negativeErrorX;
-    }
-
-    if (errorY) {
-      rangeY = scale.y.range();
-      positiveErrorY = errorY[1];
-      negativeErrorY = errorY[0];
-      errorTop = positiveErrorY >= rangeY[0] ? rangeY[0] : positiveErrorY;
-      errorBottom = negativeErrorY <= rangeY[1] ? rangeY[1] : negativeErrorY;
-    }
-    const props = {
-      x, y, borderWidth, groupComponent, events, className,
-      role: role || "presentation",
-      shapeRendering: shapeRendering || "auto",
-      style: this.style
-    };
-    return React.cloneElement(
-      this.props.groupComponent,
-      {},
-      this.renderErrorBar({ errorTop, errorBottom, errorRight, errorLeft }, props)
-    );
+    const props = assign({}, this.props, { style: this.getStyle(this.props) });
+    const error = this.calculateError(props);
+    const children = [
+      error.right ? this.renderBorder(props, error, "right") : null,
+      error.left ? this.renderBorder(props, error, "left") : null,
+      error.bottom ? this.renderBorder(props, error, "bottom") : null,
+      error.top ? this.renderBorder(props, error, "top") : null,
+      error.right ? this.renderCross(props, error, "right") : null,
+      error.left ? this.renderCross(props, error, "left") : null,
+      error.bottom ? this.renderCross(props, error, "bottom") : null,
+      error.top ? this.renderCross(props, error, "top") : null
+    ].filter(Boolean);
+    return React.cloneElement(props.groupComponent, {}, children);
   }
 }

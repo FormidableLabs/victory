@@ -1,7 +1,6 @@
 /*eslint no-magic-numbers: ["error", { "ignore": [-1, 0, 1, 2] }]*/
 import React from "react";
 import PropTypes from "prop-types";
-import Collection from "../victory-util/collection";
 import Helpers from "../victory-util/helpers";
 import { defined, getXAccessor, getYAccessor, getY0Accessor, getAngleAccessor } from "./helpers";
 import { assign } from "lodash";
@@ -21,31 +20,6 @@ export default class Area extends React.Component {
     groupComponent: <g/>,
     pathComponent: <Path/>
   };
-
-  componentWillMount() {
-    const { style, areaPath, linePath } = this.calculateAttributes(this.props);
-    this.style = style;
-    this.areaPath = areaPath;
-    this.linePath = linePath;
-  }
-
-  shouldComponentUpdate(nextProps) {
-    const { style, areaPath, linePath } = this.calculateAttributes(nextProps);
-    const { className, interpolation } = this.props;
-    if (!Collection.allSetsEqual([
-      [className, nextProps.className],
-      [interpolation, nextProps.interpolation],
-      [linePath, this.linePath],
-      [areaPath, this.areaPath],
-      [style, this.style]
-    ])) {
-      this.style = style;
-      this.areaPath = areaPath;
-      this.linePath = linePath;
-      return true;
-    }
-    return false;
-  }
 
   getLineFunction(props) {
     const { polar, scale } = props;
@@ -98,69 +72,42 @@ export default class Area extends React.Component {
     return `curve${capitalize(interpolation)}`;
   }
 
-  // Overridden in victory-core-native
-  renderArea(path, style, events) {
+  renderArea(props, calculatedAttributes) {
+    const { role, shapeRendering, className, polar, origin, pathComponent, events } = props;
+    const { style, areaPath } = calculatedAttributes;
     const areaStroke = style.stroke ? "none" : style.fill;
     const areaStyle = assign({}, style, { stroke: areaStroke });
-    const { role, shapeRendering, className, polar, origin } = this.props;
     const transform = polar && origin ? `translate(${origin.x}, ${origin.y})` : undefined;
-    return (
-      <path
-        key={"area"}
-        style={areaStyle}
-        shapeRendering={shapeRendering || "auto"}
-        role={role || "presentation"}
-        d={path}
-        transform={transform}
-        className={className}
-        {...events}
-      />
-    );
+    return React.cloneElement(pathComponent, {
+      key: "area-stroke",
+      style: areaStyle,
+      shapeRendering: shapeRendering || "auto",
+      role: role || "presentation",
+      d: areaPath,
+      transform,
+      className,
+      events
+    });
   }
 
-  // // Overridden in victory-core-native
-  // renderLine(path, style, events) {
-  //   if (!style.stroke || style.stroke === "none" || style.stroke === "transparent") {
-  //     return null;
-  //   }
-  //   const { role, shapeRendering, className, polar, origin } = this.props;
-  //   const transform = polar && origin ? `translate(${origin.x}, ${origin.y})` : undefined;
-  //   const lineStyle = assign({}, style, { fill: "none" });
-  //   return (
-  //     <path
-  //       key={"area-stroke"}
-  //       style={lineStyle}
-  //       shapeRendering={shapeRendering || "auto"}
-  //       role={role || "presentation"}
-  //       d={path}
-  //       transform={transform}
-  //       className={className}
-  //       {...events}
-  //     />
-  //   );
-  // }
-
-  renderLine(path, style, events) {
+  renderLine(props, calculatedAttributes) {
+    const { role, shapeRendering, className, polar, origin, pathComponent, events } = props;
+    const { style, linePath } = calculatedAttributes;
     if (!style.stroke || style.stroke === "none" || style.stroke === "transparent") {
       return null;
     }
-    const { role, shapeRendering, className, polar, origin } = this.props;
     const transform = polar && origin ? `translate(${origin.x}, ${origin.y})` : undefined;
     const lineStyle = assign({}, style, { fill: "none" });
-    const { shapeRendering, role, transform, }
-    return React.cloneElement()
-    return (
-      <path
-        key={"area-stroke"}
-        style={lineStyle}
-        shapeRendering={shapeRendering || "auto"}
-        role={role || "presentation"}
-        d={path}
-        transform={transform}
-        className={className}
-        {...events}
-      />
-    );
+    return React.cloneElement(pathComponent, {
+      key: "area-stroke",
+      style: lineStyle,
+      shapeRendering: shapeRendering || "auto",
+      role: role || "presentation",
+      d: linePath,
+      transform,
+      className,
+      events
+    });
   }
 
   render() {
