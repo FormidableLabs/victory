@@ -21,9 +21,9 @@ export default class Slice extends React.Component {
   render() {
     const {
       datum, slice, active, role, shapeRendering, className,
-      origin, events, pathComonent, pathFunction, style
+      origin, events, pathComponent, pathFunction, style
     } = this.props;
-    return React.cloneElement(pathComonent, {
+    return React.cloneElement(pathComponent, {
       className, role, shapeRendering, events,
       transform: origin ? `translate(${origin.x}, ${origin.y})` : undefined,
       style: Helpers.evaluateStyle(style, datum, active),
