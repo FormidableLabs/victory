@@ -43,3 +43,5 @@ export { default as Rect } from "./victory-primitives/rect";
 export { default as Path } from "./victory-primitives/path";
 export { default as Line } from "./victory-primitives/line";
 export { default as Circle } from "./victory-primitives/circle";
+export { default as TSpan } from "./victory-primitives/tspan";
+export { default as Text } from "./victory-primitives/text";

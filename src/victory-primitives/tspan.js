@@ -38,7 +38,7 @@ export default class TSpan extends React.Component {
     } = this.props;
     return (
       <tspan
-        x={x} y={y} dx={dx} ry={dy} textAnchor={textAnchor}
+        x={x} y={y} dx={dx} dy={dy} textAnchor={textAnchor}
         className={className}
         style={style}
         {...events}
