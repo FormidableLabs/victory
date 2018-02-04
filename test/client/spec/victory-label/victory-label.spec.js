@@ -5,6 +5,9 @@
 import React from "react";
 import { shallow, mount } from "enzyme";
 import VictoryLabel from "src/victory-label/victory-label";
+import Text from "src/victory-primitives/text";
+import TSpan from "src/victory-primitives/tspan";
+
 
 describe("components/victory-label", () => {
 
@@ -12,7 +15,7 @@ describe("components/victory-label", () => {
     const wrapper = shallow(
       <VictoryLabel text={"such text, wow"}/>
     );
-    const output = wrapper.find("text");
+    const output = wrapper.find(Text);
     expect(output.html()).to.contain("such text, wow");
   });
 
@@ -20,7 +23,7 @@ describe("components/victory-label", () => {
     const wrapper = shallow(
       <VictoryLabel dx={30} dy={30} text={"such text, wow"}/>
     );
-    const output = wrapper.find("text");
+    const output = wrapper.find(Text);
     expect(output.prop("dx")).to.eql(30);
     // dy = props.dy + (capHeight(0.71) / 2 + (0.5 - length(1) / 2) * lineHeight(1)) * fontSize(14);
     expect(output.prop("dy")).to.eql(34.97);
@@ -30,7 +33,7 @@ describe("components/victory-label", () => {
     const wrapper = shallow(
       <VictoryLabel x={"100%"} y={30} text={"such text, wow"}/>
     );
-    const output = wrapper.find("text");
+    const output = wrapper.find(Text);
     expect(output.prop("x")).to.eql("100%");
     expect(output.prop("y")).to.eql(30);
   });
@@ -39,7 +42,7 @@ describe("components/victory-label", () => {
     const wrapper = shallow(
       <VictoryLabel angle={46} text={"such text, wow"}/>
     );
-    const output = wrapper.find("text");
+    const output = wrapper.find(Text);
     expect(output.prop("transform")).to.contain("rotate(46");
   });
 
@@ -47,7 +50,7 @@ describe("components/victory-label", () => {
     const wrapper = shallow(
       <VictoryLabel style={{ fontSize: "10px" }} text={"such text, wow"}/>
     );
-    const output = wrapper.find("tspan");
+    const output = wrapper.find(TSpan);
     expect(output.prop("style")).to.contain({ fontSize: 10 });
   });
 
@@ -55,7 +58,7 @@ describe("components/victory-label", () => {
     const wrapper = shallow(
       <VictoryLabel style={{ fontSize: "foo" }} text={"such text, wow"}/>
     );
-    const output = wrapper.find("tspan");
+    const output = wrapper.find(TSpan);
     expect(output.prop("style")).to.contain({ fontSize: 14 });
   });
 
@@ -63,7 +66,7 @@ describe("components/victory-label", () => {
     const wrapper = shallow(
       <VictoryLabel text={["one", "two", "three"]}/>
     );
-    const output = wrapper.find("tspan");
+    const output = wrapper.find(TSpan);
     expect(output.length).to.equal(3);
   });
 
@@ -71,16 +74,16 @@ describe("components/victory-label", () => {
     const wrapper = shallow(
       <VictoryLabel text={"one\ntwo\nthree"}/>
     );
-    const output = wrapper.find("tspan");
+    const output = wrapper.find(TSpan);
     expect(output.length).to.equal(3);
   });
 
   it("renders title and desc if provided ", () => {
-    const wrapper = shallow(
+    const wrapper = mount(
       <VictoryLabel text="title and desc" title="title" desc="desc" />
     );
 
-    const wrapper2 = shallow(
+    const wrapper2 = mount(
       <VictoryLabel text="title and desc"/>
     );
 
@@ -97,14 +100,14 @@ describe("components/victory-label", () => {
     expect(noDesc.length).to.equal(0);
   });
 
-  it("renders styles tspand independently when `style` is an array", () => {
+  it("renders tspan styles independently when `style` is an array", () => {
     const fill = ["red", "green", "blue"];
     const wrapper = shallow(
       <VictoryLabel text={"one\ntwo\nthree"}
         style={[{ fill: fill[0] }, { fill: fill[1] }, { fill: fill[2] }]}
       />
     );
-    const output = wrapper.find("tspan");
+    const output = wrapper.find(TSpan);
     output.forEach((tspan, index) => {
       expect(tspan.prop("style")).to.contain({ fill: fill[index] });
     });
@@ -116,12 +119,12 @@ describe("components/victory-label", () => {
       const wrapper = mount(
         <VictoryLabel events={{ onClick: clickHandler }}/>
       );
-      wrapper.find("text").simulate("click");
+      wrapper.find(Text).simulate("click");
       expect(clickHandler.called).to.equal(true);
     });
   });
 
-  it("renders <tspan /> elements inline when `inline` prop is passed", () => {
+  it("renders TSpan elements inline when `inline` prop is passed", () => {
     const wrapper = shallow(
       <VictoryLabel
         text={["Inline", "label", "testing"]}
@@ -130,7 +133,7 @@ describe("components/victory-label", () => {
       />
     );
 
-    const output = wrapper.find("tspan");
+    const output = wrapper.find(TSpan);
     output.forEach((tspan) => {
       // passing `inline` sets x and dy to undefined
       expect(tspan.prop("x")).to.be.eql(undefined);
@@ -150,7 +153,7 @@ describe("components/victory-label", () => {
       />
     );
 
-    const output = wrapper.find("tspan");
+    const output = wrapper.find(TSpan);
     output.forEach((tspan, index) => {
       /*
       to calculate dy:
@@ -169,7 +172,7 @@ describe("components/victory-label", () => {
       />
     );
 
-    const output = wrapper.find("tspan");
+    const output = wrapper.find(TSpan);
     output.forEach((tspan, index) => {
       expect(tspan.prop("dy")).to.be.eql(expectedDy[index]);
     });
@@ -190,7 +193,7 @@ describe("components/victory-label", () => {
       />
     );
 
-    const output = wrapper.find("tspan");
+    const output = wrapper.find(TSpan);
     output.forEach((tspan) => {
       expect(tspan.prop("style")).to.be.eql(defaultStyles);
     });

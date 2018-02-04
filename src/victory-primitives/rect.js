@@ -2,30 +2,34 @@ import React from "react";
 import PropTypes from "prop-types";
 import Collection from "../victory-util/collection";
 
-export default class Line extends React.Component {
+export default class Rect extends React.Component {
   static propTypes = {
     className: PropTypes.string,
     clipPath: PropTypes.string,
     events: PropTypes.object,
+    height: PropTypes.number,
     role: PropTypes.string,
+    rx: PropTypes.number,
+    ry: PropTypes.number,
     shapeRendering: PropTypes.string,
     style: PropTypes.object,
     transform: PropTypes.string,
-    x1: PropTypes.number,
-    x2: PropTypes.number,
-    y1: PropTypes.number,
-    y2: PropTypes.number
+    width: PropTypes.number,
+    x: PropTypes.number,
+    y: PropTypes.number
   };
 
   shouldComponentUpdate(nextProps) {
-    const { className, clipPath, x1, x2, y1, y2, style, transform } = this.props;
+    const { className, clipPath, x, y, rx, ry, width, height, transform, style } = this.props;
     if (!Collection.allSetsEqual([
       [className, nextProps.className],
+      [x, nextProps.x],
+      [y, nextProps.y],
+      [rx, nextProps.rx],
+      [ry, nextProps.ry],
+      [width, nextProps.width],
+      [height, nextProps.height],
       [clipPath, nextProps.clipPath],
-      [x1, nextProps.x1],
-      [x2, nextProps.x2],
-      [y1, nextProps.y1],
-      [y2, nextProps.y2],
       [transform, nextProps.transform],
       [style, nextProps.style]
     ])) {
@@ -36,15 +40,16 @@ export default class Line extends React.Component {
 
   render() {
     const {
-      x1, x2, y1, y2, events, className, clipPath, transform, style, shapeRendering, role
+      x, y, rx, ry, width, height, events, className, clipPath, style, role,
+      shapeRendering, transform
     } = this.props;
     return (
-      <line
-        x1={x1} x2={x2} y1={y1} y2={y2}
+      <rect
+        x={x} y={y} rx={rx} ry={ry} width={width} height={height}
         className={className}
         clipPath={clipPath}
-        transform={transform}
         style={style}
+        transform={transform}
         role={role || "presentation"}
         shapeRendering={shapeRendering || "auto"}
         vectorEffect="non-scaling-stroke"

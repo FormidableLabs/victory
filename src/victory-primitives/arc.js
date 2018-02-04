@@ -2,8 +2,9 @@
 import React from "react";
 import PropTypes from "prop-types";
 import Helpers from "../victory-util/helpers";
-import { assign, isEqual } from "lodash";
+import { assign } from "lodash";
 import CommonProps from "./common-props";
+import Path from "./path";
 
 export default class Arc extends React.Component {
   static propTypes = {
@@ -13,27 +14,14 @@ export default class Arc extends React.Component {
     cy: PropTypes.number,
     datum: PropTypes.any,
     endAngle: PropTypes.number,
+    pathComponent: PropTypes.element,
     r: PropTypes.number,
     startAngle: PropTypes.number
   };
 
-  componentWillMount() {
-    this.style = this.getStyle(this.props);
-  }
-
-  shouldComponentUpdate(nextProps) {
-    const { cx, cy, r } = this.props;
-    const style = this.getStyle(nextProps);
-    if (cx !== nextProps.cx || cy !== nextProps.cy || r !== nextProps.r) {
-      this.style = style;
-      return true;
-    }
-    if (!isEqual(style, this.style)) {
-      this.style = style;
-      return true;
-    }
-    return false;
-  }
+  static defaultProps = {
+    pathComponent: <Path/>
+  };
 
   getStyle(props) {
     const { style, datum, active } = props;
@@ -59,22 +47,12 @@ export default class Arc extends React.Component {
     return `${arcStart} ${arc1} ${arc2} ${arcEnd}`;
   }
 
-  // Overridden in victory-core-native
-  renderAxisLine(props, style, events) {
-    const { role, shapeRendering, className } = props;
-    const path = this.getArcPath(props);
-    return (
-      <path className={className}
-        d={path}
-        style={style}
-        role={role || "presentation"}
-        shapeRendering={shapeRendering || "auto"}
-        {...events}
-      />
-    );
-  }
-
   render() {
-    return this.renderAxisLine(this.props, this.style, this.props.events);
+    const { role, shapeRendering, className, events, pathComponent } = this.props;
+    return React.cloneElement(pathComponent, {
+      d: this.getArcPath(this.props),
+      style: this.getStyle(this.props),
+      className, role, shapeRendering, events
+    });
   }
 }

@@ -185,7 +185,7 @@ export default {
     const { x, y, borderPadding, style } = props;
     const height = contentHeight + borderPadding.top + borderPadding.bottom;
     const width = contentWidth + borderPadding.left + borderPadding.right;
-    return { x, y, height, width, style: style.border };
+    return { x, y, height, width, style: assign({ fill: "none" }, style.border) };
   },
 
   getDimensions(props, fallbackProps) {

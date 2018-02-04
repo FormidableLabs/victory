@@ -1,6 +1,7 @@
 import React from "react";
 import { shallow } from "enzyme";
 import ErrorBar from "src/victory-primitives/error-bar";
+import Line from "src/victory-primitives/line";
 import { forEach, merge, omit } from "lodash";
 
 describe("victory-primitives/error-bar", () => {
@@ -25,7 +26,7 @@ describe("victory-primitives/error-bar", () => {
 
   it("should render eight lines", () => {
     const wrapper = shallow(<ErrorBar {...baseProps}/>);
-    const lines = wrapper.find("g").find("line");
+    const lines = wrapper.find("g").find(Line);
 
     const expectedCoordinates = [
       // Right Border (positiveErrorX, positiveErrorX, y - borderWidth, y + borderWidth)
@@ -56,7 +57,7 @@ describe("victory-primitives/error-bar", () => {
     const xErrorProps = omit(baseProps, ["errorY"]);
 
     const wrapper = shallow(<ErrorBar {...xErrorProps}/>);
-    const lines = wrapper.find("g").find("line");
+    const lines = wrapper.find("g").find(Line);
 
     const expectedCoordinates = [
       // Right Border (positiveErrorX, positiveErrorX, y - borderWidth, y + borderWidth)
@@ -79,7 +80,7 @@ describe("victory-primitives/error-bar", () => {
     const yErrorProps = omit(baseProps, ["errorX"]);
 
     const wrapper = shallow(<ErrorBar {...yErrorProps}/>);
-    const lines = wrapper.find("g").find("line");
+    const lines = wrapper.find("g").find(Line);
 
     const expectedCoordinates = [
       // Bottom Border(x - borderWidth, x + borderWidth, negativeErrorY, negativeErrorY)
@@ -106,7 +107,7 @@ describe("victory-primitives/error-bar", () => {
       }
     });
     const wrapper = shallow(<ErrorBar {...props}/>);
-    const lines = wrapper.find("g").find("line");
+    const lines = wrapper.find("g").find(Line);
 
     const expectedCoordinates = [
       // Right Border (positiveErrorX, positiveErrorX, y - borderWidth, y + borderWidth)
