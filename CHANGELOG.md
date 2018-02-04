@@ -1,6 +1,21 @@
 VictoryCore Changelog
 =====================
 
+## 21.0.0 (2018-02-03)
+
+-[325](https://github.com/FormidableLabs/victory-core/pull/325) Adds a `getDimension` static method for `VictoryLegend`
+-[326](https://github.com/FormidableLabs/victory-core/pull/326) Adds a fallback prop for `VictoryLegend` `titleOrientation`
+-[327](https://github.com/FormidableLabs/victory-core/pull/327) Use `pointerEvents: "painted"` for grid styles
+-[328](https://github.com/FormidableLabs/victory-core/pull/328) Adds `inline` prop for `VictoryLabel`
+-[329](https://github.com/FormidableLabs/victory-core/pull/329) Bugfix `add-events`
+-[330](https://github.com/FormidableLabs/victory-core/pull/330) Adds `wickStyleWidth` prop for `Candle`
+  *This is a breaking change as it changes the expected props for `Candle`*
+-[331](https://github.com/FormidableLabs/victory-core/pull/331) Bugfix portal rendering
+-[333](https://github.com/FormidableLabs/victory-core/pull/333) Whitelist style attributes
+-[335](https://github.com/FormidableLabs/victory-core/pull/335) Update primitives
+  *This is a breaking change for `victory-native` and anyone extending primitive components.*
+  *This is a breaking change for for the `Line` component. Renamed `Axis` / `Grid`
+
 ## 20.6.0
 
 - [324](https://github.com/FormidableLabs/victory-core/pull/324) Adds support for external event mutations
