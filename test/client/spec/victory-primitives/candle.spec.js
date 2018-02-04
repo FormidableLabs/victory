@@ -1,6 +1,8 @@
 import React from "react";
 import { shallow } from "enzyme";
 import Candle from "src/victory-primitives/candle";
+import Line from "src/victory-primitives/line";
+import Rect from "src/victory-primitives/rect";
 import { merge } from "lodash";
 
 describe("victory-primitives/candle", () => {
@@ -22,18 +24,18 @@ describe("victory-primitives/candle", () => {
 
   it("should render a wick line", () => {
     const wrapper = shallow(<Candle {...baseProps}/>);
-    const wicks = wrapper.find("line");
+    const wicks = wrapper.find(Line);
     const values = [
       {
         x1: 5,
         x2: 5,
-        y1: 30,
-        y2: 5
+        y1: 50,
+        y2: 10
       }, {
         x1: 5,
         x2: 5,
-        y1: 10,
-        y2: 50
+        y1: 30,
+        y2: 5
       }];
 
     wicks.forEach((wick, i) => {
@@ -46,7 +48,7 @@ describe("victory-primitives/candle", () => {
 
   it("should render a candle rectangle", () => {
     const wrapper = shallow(<Candle {...baseProps}/>);
-    const rect = wrapper.find("rect");
+    const rect = wrapper.find(Rect);
 
     // width = style.width || 0.5 * (width - 2 * padding) / data.length;
 
@@ -65,7 +67,7 @@ describe("victory-primitives/candle", () => {
     });
 
     const wrapper = shallow(<Candle {...props}/>);
-    const rect = wrapper.find("rect");
+    const rect = wrapper.find(Rect);
 
     expect(rect.prop("width")).to.eql(5);
     expect(rect.prop("height")).to.eql(20);

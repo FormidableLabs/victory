@@ -22,7 +22,7 @@ export default class Axis extends React.Component {
 
   render() {
     const {
-      x1, x2, y1, y2, events, datum, active, lineComponent , className, role, shapeRendering
+      x1, x2, y1, y2, events, datum, active, lineComponent, className, role, shapeRendering
     } = this.props;
     const style = Helpers.evaluateStyle(
       assign({ stroke: "black" }, this.props.style), datum, active

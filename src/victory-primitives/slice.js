@@ -3,6 +3,7 @@ import PropTypes from "prop-types";
 import Helpers from "../victory-util/helpers";
 import CommonProps from "./common-props";
 import Path from "./path";
+import { isFunction } from "lodash";
 
 export default class Slice extends React.Component {
   static propTypes = {
@@ -20,13 +21,13 @@ export default class Slice extends React.Component {
   render() {
     const {
       datum, slice, active, role, shapeRendering, className,
-      origin, events, pathComonent, pathFunction
+      origin, events, pathComonent, pathFunction, style
     } = this.props;
     return React.cloneElement(pathComonent, {
       className, role, shapeRendering, events,
       transform: origin ? `translate(${origin.x}, ${origin.y})` : undefined,
-      style: Helpers.evaluateStyle(this.props.style, datum, active),
-      d: pathFunction(slice)
+      style: Helpers.evaluateStyle(style, datum, active),
+      d: isFunction(pathFunction) ? pathFunction(slice) : undefined
     });
   }
 }

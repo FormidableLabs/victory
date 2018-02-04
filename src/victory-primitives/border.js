@@ -1,7 +1,6 @@
 import React from "react";
 import PropTypes from "prop-types";
 import Helpers from "../victory-util/helpers";
-import Collection from "../victory-util/collection";
 import { assign } from "lodash";
 import CommonProps from "./common-props";
 import Rect from "./rect";

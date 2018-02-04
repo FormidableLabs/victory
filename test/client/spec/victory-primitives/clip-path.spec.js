@@ -1,7 +1,6 @@
 import React from "react";
-import { shallow } from "enzyme";
+import { mount } from "enzyme";
 import ClipPath from "src/victory-primitives/clip-path";
-import { forEach } from "lodash";
 
 describe("victory-primitives/clip-path", () => {
   const baseProps = {
@@ -18,31 +17,22 @@ describe("victory-primitives/clip-path", () => {
     translateY: 8
   };
 
-  it("should render a rectangle", () => {
-    const wrapper = shallow(<ClipPath {...baseProps}/>);
+  it("should render a children", () => {
+    const wrapper = mount(<ClipPath {...baseProps}><rect/></ClipPath>);
     const rect = wrapper.find("defs").find("clipPath").find("rect");
 
-    const expectedAttrs = {
-      x: 1, // translateX - left clipPadding
-      y: 6, // translateY - top clipPadding
-      width: 24, // clipWidth + left clipPadding + right clipPadding
-      height: 34 // clipHeight = top clipPadding + bottom clipPadding
-    };
-
-    forEach(expectedAttrs, (expectedValue, attrName) => {
-      expect(parseFloat(rect.prop(attrName), 10)).to.eql(expectedValue);
-    });
+    expect(rect.length).to.equal(1);
   });
 
   it("should successfully re-render", () => {
-    const wrapper = shallow(<ClipPath {...baseProps}/>);
+    const wrapper = mount(<ClipPath {...baseProps}/>);
 
     wrapper.render();
     wrapper.setProps(baseProps);
   });
 
   it("should render a clipPath with the passed id", () => {
-    const wrapper = shallow(<ClipPath {...baseProps}/>);
+    const wrapper = mount(<ClipPath {...baseProps}/>);
     const clipPath = wrapper.find("defs").find("clipPath");
 
     expect(parseFloat(clipPath.prop("id"), 10)).to.eql(4);

@@ -1,6 +1,7 @@
 import React from "react";
 import { shallow } from "enzyme";
 import Curve from "src/victory-primitives/curve";
+import Path from "src/victory-primitives/path";
 
 describe("victory-primitives/curve", () => {
   const baseProps = {
@@ -22,7 +23,7 @@ describe("victory-primitives/curve", () => {
     const wrapper = shallow(<Curve {...baseProps}/>);
 
     // single curves should not be grouped
-    expect(wrapper.find("g").find("path").length).to.eql(0);
-    expect(wrapper.find("path").length).to.eql(1);
+    expect(wrapper.find("g").find(Path).length).to.eql(0);
+    expect(wrapper.find(Path).length).to.eql(1);
   });
 });
