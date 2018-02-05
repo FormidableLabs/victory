@@ -61,37 +61,40 @@ export const zoomContainerMixin = (base) => class VictoryZoomContainer extends b
       onTouchCancel: (evt, targetProps) => {
         return ZoomHelpers.onMouseLeave(evt, targetProps);
       },
-      onMouseMove: (evt, targetProps, eventKey, ctx) => { // eslint-disable-line max-params
+      // eslint-disable-next-line max-params, object-shorthand
+      onMouseMove: function (evt, targetProps, eventKey, ctx) {
         evt.preventDefault();
         const mutations = ZoomHelpers.onMouseMove(evt, targetProps, eventKey, ctx);
 
-        if (mutations.id !== this.mouseMoveMutationId) { // eslint-disable-line
-          this.mouseMoveMutationId = mutations.id; // eslint-disable-line
+        if (mutations.id !== this.mouseMoveMutationId) {
+          this.mouseMoveMutationId = mutations.id;
           return mutations.mutations;
         }
 
         return undefined;
       },
-      onTouchMove: (evt, targetProps, eventKey, ctx) => { // eslint-disable-line max-params
+      // eslint-disable-next-line max-params, object-shorthand
+      onTouchMove: function (evt, targetProps, eventKey, ctx) {
         evt.preventDefault();
         const mutations = ZoomHelpers.onMouseMove(evt, targetProps, eventKey, ctx);
 
-        if (mutations.id !== this.mouseMoveMutationId) { // eslint-disable-line
-          this.mouseMoveMutationId = mutations.id; // eslint-disable-line
+        if (mutations.id !== this.mouseMoveMutationId) {
+          this.mouseMoveMutationId = mutations.id;
           return mutations.mutations;
         }
 
         return undefined;
       },
-      onWheel: (evt, targetProps, eventKey, ctx) => { // eslint-disable-line max-params
+      // eslint-disable-next-line max-params, object-shorthand
+      onWheel: function (evt, targetProps, eventKey, ctx) {
         if (targetProps.allowZoom) {
           evt.preventDefault();
         }
 
         const mutations = ZoomHelpers.onWheel(evt, targetProps, eventKey, ctx);
 
-        if (mutations.id !== this.wheelMutationId) { // eslint-disable-line
-          this.wheelMutationId = mutations.id; // eslint-disable-line
+        if (mutations.id !== this.wheelMutationId) {
+          this.wheelMutationId = mutations.id;
           return mutations.mutations;
         }
 

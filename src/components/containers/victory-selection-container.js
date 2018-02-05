@@ -34,21 +34,21 @@ export const selectionContainerMixin = (base) => class VictorySelectionContainer
       onTouchStart: (evt, targetProps) => {
         return SelectionHelpers.onMouseDown(evt, targetProps);
       },
-      onMouseMove: (evt, targetProps) => {
+      onMouseMove: function (evt, targetProps) { // eslint-disable-line object-shorthand
         const mutations = SelectionHelpers.onMouseMove(evt, targetProps);
 
-        if (mutations.id !== this.mouseMoveMutationId) { // eslint-disable-line
-          this.mouseMoveMutationId = mutations.id; // eslint-disable-line
+        if (mutations.id !== this.mouseMoveMutationId) {
+          this.mouseMoveMutationId = mutations.id;
           return mutations.mutations;
         }
 
         return undefined;
       },
-      onTouchMove: (evt, targetProps) => {
+      onTouchMove: function (evt, targetProps) { // eslint-disable-line object-shorthand
         const mutations = SelectionHelpers.onMouseMove(evt, targetProps);
 
-        if (mutations.id !== this.mouseMoveMutationId) { // eslint-disable-line
-          this.mouseMoveMutationId = mutations.id; // eslint-disable-line
+        if (mutations.id !== this.mouseMoveMutationId) {
+          this.mouseMoveMutationId = mutations.id;
           return mutations.mutations;
         }
 

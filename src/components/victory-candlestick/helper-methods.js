@@ -6,7 +6,10 @@ export default {
     props = Helpers.modifyProps(props, fallbackProps, "candlestick");
     const calculatedValues = this.getCalculatedValues(props);
     const { data, style, scale, domain, origin } = calculatedValues;
-    const { groupComponent, width, height, padding, standalone, theme, polar } = props;
+    const {
+      groupComponent, width, height, padding, standalone,
+      theme, polar, wickStrokeWidth
+    } = props;
     const initialChildProps = { parent: {
       domain, scale, width, height, data, standalone, theme, polar, origin,
       style: style.parent, padding
@@ -15,14 +18,15 @@ export default {
     return data.reduce((childProps, datum, index) => {
       const eventKey = datum.eventKey || index;
       const x = scale.x(datum._x1 !== undefined ? datum._x1 : datum._x);
-      const y1 = scale.y(datum._high);
-      const y2 = scale.y(datum._low);
+      const high = scale.y(datum._high);
+      const close = scale.y(datum._close);
+      const open = scale.y(datum._open);
+      const low = scale.y(datum._low);
       const candleHeight = Math.abs(scale.y(datum._open) - scale.y(datum._close));
-      const y = scale.y(Math.max(datum._open, datum._close));
       const dataStyle = this.getDataStyles(datum, style.data, props);
       const dataProps = {
-        x, y, y1, y2, candleHeight, scale, data, datum, groupComponent,
-        index, style: dataStyle, padding, width, polar, origin
+        x, high, low, candleHeight, scale, data, datum, groupComponent, index,
+        style: dataStyle, padding, width, polar, origin, wickStrokeWidth, open, close
       };
 
       childProps[eventKey] = {
@@ -38,11 +42,11 @@ export default {
   },
 
   getLabelProps(dataProps, text, style) {
-    const { x, y1, index, scale, datum, data } = dataProps;
+    const { x, high, index, scale, datum, data } = dataProps;
     const labelStyle = style.labels || {};
     return {
       style: labelStyle,
-      y: y1 - (labelStyle.padding || 0),
+      y: high - (labelStyle.padding || 0),
       x,
       text,
       index,
