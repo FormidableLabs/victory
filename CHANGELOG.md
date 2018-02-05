@@ -1,7 +1,11 @@
 VictoryCore Changelog
 =====================
 
-## 21.0.0 (2018-02-03)
+## 21.0.1 (2018-02-04)
+
+-[336](https://github.com/FormidableLabs/victory-core/pull/336) Fixes key names for `ErrorBar`
+
+## 21.0.0 (2018-02-04)
 
 -[325](https://github.com/FormidableLabs/victory-core/pull/325) Adds a `getDimension` static method for `VictoryLegend`
 -[326](https://github.com/FormidableLabs/victory-core/pull/326) Adds a fallback prop for `VictoryLegend` `titleOrientation`
