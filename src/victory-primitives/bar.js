@@ -49,15 +49,14 @@ export default class Bar extends React.Component {
     const sign = y0 > y1 ? 1 : -1;
     const direction = sign > 0 ? "0 0 1" : "0 0 0";
     const arc = `${cornerRadius} ${cornerRadius} ${direction}`;
-    return [
-      `M ${x0}, ${y0}`,
-      `L ${x0}, ${y1 + sign * cornerRadius}`,
-      `A ${arc}, ${x0 + cornerRadius}, ${y1}`,
-      `L ${x1 - cornerRadius}, ${y1}`,
-      `A ${arc}, ${x1}, ${y1 + sign * cornerRadius}`,
-      `L ${x1}, ${y0}`,
-      `L ${x0}, ${y0}z`
-    ].join(",\n");
+    return `M ${x0}, ${y0}
+      L ${x0}, ${y1 + sign * cornerRadius}
+      A ${arc}, ${x0 + cornerRadius}, ${y1}
+      L ${x1 - cornerRadius}, ${y1}
+      A ${arc}, ${x1}, ${y1 + sign * cornerRadius}
+      L ${x1}, ${y0}
+      L ${x0}, ${y0}
+      z`;
   }
 
   getHorizontalBarPath(props, width) {
