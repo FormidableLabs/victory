@@ -62,5 +62,6 @@
     "scripts": {
       "postinstall": ""
     }
-  }
+  },
+  "sideEffects": false
 }
