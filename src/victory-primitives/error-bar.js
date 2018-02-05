@@ -45,7 +45,7 @@ export default class ErrorBar extends React.Component {
     const vertical = type === "right" || type === "left";
     const borderProps = {
       role, shapeRendering, className, events, style,
-      key: `border${type}`,
+      key: `border-${type}`,
       x1: vertical ? error[type] : x - borderWidth,
       x2: vertical ? error[type] : x + borderWidth,
       y1: vertical ? y - borderWidth : error[type],
@@ -59,7 +59,7 @@ export default class ErrorBar extends React.Component {
     const vertical = type === "top" || type === "bottom";
     const borderProps = {
       role, shapeRendering, className, events, style,
-      key: `cross${type}`,
+      key: `cross-${type}`,
       x1: x,
       x2: vertical ? x : error[type],
       y1: y,
