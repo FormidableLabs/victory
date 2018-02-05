@@ -1,5 +1,20 @@
 # Victory Changelog
 
+## 0.25.1 (2018-02-05)
+
+-[918](https://github.com/FormidableLabs/victory/pull/918) Add `sideEffects: false
+
+VictoryCore
+-[337](https://github.com/FormidableLabs/victory-core/pull/337) Add `sideEffects: false`
+-[338](https://github.com/FormidableLabs/victory-core/pull/338) Fix bar path bug in Firefox
+
+VictoryChart
+-[560](https://github.com/FormidableLabs/victory-chart/pull/560) Add `sideEffects: false`
+-[561](https://github.com/FormidableLabs/victory-chart/pull/561) Bugfix for createContainer
+
+VictoryPie
+-[167](https://github.com/FormidableLabs/victory-pie/pull/167) Add `sideEffects: false`
+
 ## 0.25.0 (2018-02-04)
 
 **Major Features**
