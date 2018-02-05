@@ -1,6 +1,6 @@
 import React from "react";
 import PropTypes from "prop-types";
-import { Selection, Helpers, Collection, Line, Scale, Domain } from "victory-core";
+import { Selection, Helpers, Collection, Axis, Scale, Domain, Box } from "victory-core";
 import { assign, defaults, isEqual, isFunction, pick } from "lodash";
 
 const getScale = (props) => {
@@ -111,14 +111,14 @@ export default class VictoryBrushLine extends React.Component {
   static defaultProps = {
     allowDrag: true,
     allowResize: true,
-    brushAreaComponent: <rect/>,
+    brushAreaComponent: <Box/>,
     brushAreaStyle: {
       cursor: "crosshair",
       stroke: "none",
       fill: "black",
       opacity: (d, a) => a ? 0.2 : 0.1 // eslint-disable-line no-magic-numbers
     },
-    brushComponent: <rect/>,
+    brushComponent: <Box/>,
     brushStyle: {
       strokeWidth: 2,
       stroke: (d, a) => a ? "black" : "none",
@@ -128,13 +128,13 @@ export default class VictoryBrushLine extends React.Component {
     },
     brushWidth: 10,
     groupComponent: <g/>,
-    handleComponent: <rect/>,
+    handleComponent: <Box/>,
     handleStyle: {
       stroke: "none",
       fill: "none"
     },
     handleWidth: 10,
-    lineComponent: <Line/>
+    lineComponent: <Axis/>
   };
 
   static defaultEvents = function (props) {
@@ -401,7 +401,9 @@ export default class VictoryBrushLine extends React.Component {
   }
 
   renderLine(props) {
-    const filteredProps = pick(props, ["x1", "x2", "y1", "y2", "datum", "scale", "active"]);
+    const filteredProps = pick(props, [
+      "x1", "x2", "y1", "y2", "datum", "scale", "active", "style"
+    ]);
     return React.cloneElement(props.lineComponent, filteredProps);
   }
 

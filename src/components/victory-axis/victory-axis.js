@@ -3,7 +3,7 @@ import React from "react";
 import { assign, partialRight } from "lodash";
 import {
   PropTypes as CustomPropTypes, Helpers, VictoryLabel,
-  VictoryContainer, VictoryTheme, Line, TextSize, addEvents
+  VictoryContainer, VictoryTheme, Grid, TextSize, addEvents
 } from "victory-core";
 import AxisHelpers from "./helper-methods";
 import Axis from "../../helpers/axis";
@@ -91,11 +91,11 @@ class VictoryAxis extends React.Component {
   };
 
   static defaultProps = {
-    axisComponent: <Line type={"axis"}/>,
+    axisComponent: <Grid type={"axis"}/>,
     axisLabelComponent: <VictoryLabel/>,
     tickLabelComponent: <VictoryLabel/>,
-    tickComponent: <Line type={"tick"}/>,
-    gridComponent: <Line type={"grid"}/>,
+    tickComponent: <Grid type={"tick"}/>,
+    gridComponent: <Grid type={"grid"}/>,
     scale: "linear",
     standalone: true,
     theme: VictoryTheme.grayscale,
