@@ -26,14 +26,16 @@
     "start": "builder run dev",
     "test": "builder run check",
     "version": "builder run npm:version",
-    "storybook": "start-storybook -p 3001"
+    "storybook": "start-storybook -p 3001",
+    "lank-watch": "lank exec -u -- builder run build-watch",
+    "lank-run": "lank exec -m victory-pie -uq -- builder run dev --expand-archetype"
   },
   "dependencies": {
     "builder": "^3.2.1",
     "builder-victory-component": "^5.1.2",
     "d3-shape": "^1.0.0",
     "lodash": "^4.17.4",
-    "victory-core": "^20.6.0"
+    "victory-core": "^21.0.0"
   },
   "devDependencies": {
     "@kadira/storybook": "^1.25.0",
