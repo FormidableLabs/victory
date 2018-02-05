@@ -1,7 +1,7 @@
 import PropTypes from "prop-types";
 import React from "react";
-import { VictoryContainer, VictoryLabel, Line, Helpers } from "victory-core";
-import { defaults, isNumber, isUndefined, isObject } from "lodash";
+import { VictoryContainer, VictoryLabel, Axis, Helpers } from "victory-core";
+import { defaults, assign, isNumber, isUndefined, isObject } from "lodash";
 import CursorHelpers from "./cursor-helpers";
 
 export const cursorContainerMixin = (base) => class VictoryCursorContainer extends base {
@@ -34,7 +34,7 @@ export const cursorContainerMixin = (base) => class VictoryCursorContainer exten
       x: 5,
       y: -10
     },
-    cursorComponent: <Line/>
+    cursorComponent: <Axis/>
   };
 
   static defaultEvents = [{
@@ -108,7 +108,7 @@ export const cursorContainerMixin = (base) => class VictoryCursorContainer exten
     }
   }
 
-  getCursorElements(props) {
+  getCursorElements(props) { // eslint-disable-line max-statements
     const {
       scale, cursorDimension, cursorLabelComponent, cursorLabel, cursorComponent, width, height
     } = props;
@@ -140,13 +140,15 @@ export const cursorContainerMixin = (base) => class VictoryCursorContainer exten
       ));
     }
 
+    const cursorStyle = assign({ stroke: "black" }, cursorComponent.props.style);
     if (cursorDimension === "x" || cursorDimension === undefined) {
       newElements.push(React.cloneElement(cursorComponent, {
         key: "x-cursor",
         x1: cursorCoordinates.x,
         x2: cursorCoordinates.x,
         y1: padding.top,
-        y2: (height - padding.bottom)
+        y2: (height - padding.bottom),
+        style: cursorStyle
       }));
     }
     if (cursorDimension === "y" || cursorDimension === undefined) {
@@ -155,7 +157,8 @@ export const cursorContainerMixin = (base) => class VictoryCursorContainer exten
         x1: padding.left,
         x2: (width - padding.right),
         y1: cursorCoordinates.y,
-        y2: cursorCoordinates.y
+        y2: cursorCoordinates.y,
+        style: cursorStyle
       }));
     }
     return newElements;

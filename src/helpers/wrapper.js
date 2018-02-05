@@ -218,8 +218,8 @@ export default {
       });
       return prev;
     }, {});
-    const xArr = sortBy(keys(xMap));
-
+    const xKeys = keys(xMap).map((k) => +k);
+    const xArr = sortBy(xKeys);
     return datasets.map((dataset) => {
       let indexOffset = 0;
       const filledInData = xArr.map((x, index) => {
@@ -237,7 +237,6 @@ export default {
           return { x, y, _x: x, _y: y };
         }
       });
-
       return filledInData;
     });
   },

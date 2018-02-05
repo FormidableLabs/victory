@@ -1,4 +1,4 @@
-import { defaults, defaultsDeep, isFunction } from "lodash";
+import { assign, defaults, defaultsDeep, isFunction } from "lodash";
 import Axis from "../../helpers/axis";
 import { Helpers, Scale, Domain } from "victory-core";
 
@@ -121,6 +121,7 @@ export default {
   getGridProps(layout, style, datum) {
     const { edge, transform } = layout;
     return {
+      type: "grid",
       x1: transform.x,
       y1: transform.y,
       x2: edge.x + transform.x,
@@ -134,6 +135,7 @@ export default {
     const { style, padding, isVertical } = calculatedValues;
     const { width, height } = modifiedProps;
     return {
+      type: "axis",
       style: style.axis,
       x1: isVertical ? globalTransform.x : padding.left + globalTransform.x,
       x2: isVertical ? globalTransform.x : width - padding.right + globalTransform.x,
@@ -188,19 +190,28 @@ export default {
     props = this.modifyProps(props, fallbackProps, role);
     const calculatedValues = this.getCalculatedValues(props);
     const {
-      style, orientation, isVertical, scale, ticks, tickFormat, anchors, domain, stringTicks
+      axis, style, orientation, isVertical, scale, ticks, tickFormat, anchors, domain, stringTicks
     } = calculatedValues;
+    const otherAxis = axis === "x" ? "y" : "x";
     const { width, height, standalone, theme, polar, padding } = props;
     const {
       globalTransform, gridOffset, gridEdge
     } = this.getLayoutProps(props, calculatedValues);
-
+    const sharedProps = { scale: { [axis]: scale }, polar };
     const axisProps = this.getAxisProps(props, calculatedValues, globalTransform);
     const axisLabelProps = this.getAxisLabelProps(props, calculatedValues, globalTransform);
-    const initialChildProps = { parent: {
-      style: style.parent, ticks, scale, width, height, domain, standalone, theme, polar, padding
-    } };
-
+    const initialChildProps = {
+      parent: assign(
+        { style: style.parent, ticks, standalone, theme, width, height, padding, domain },
+        sharedProps
+      )
+    };
+    const gridProps = {
+      dimension: otherAxis,
+      range: { [otherAxis]: Helpers.getRange(props, otherAxis) },
+      scale: props.scale && props.scale[otherAxis] ?
+        { [otherAxis]: props.scale[otherAxis] } : undefined
+    };
     return ticks.reduce((childProps, tick, index) => {
       const originalTick = stringTicks ? stringTicks[index] : tick;
       const styles = this.getEvaluatedStyles(style, originalTick, index);
@@ -219,15 +230,16 @@ export default {
         }
       };
       childProps[index] = {
-        axis: axisProps,
-        axisLabel: axisLabelProps,
-        ticks: this.getTickProps(tickLayout, styles.tickStyle, tick),
-        tickLabels: this.getTickLabelProps(
+        axis: assign({ dimension: axis }, sharedProps, axisProps),
+        axisLabel: assign({}, sharedProps, axisLabelProps),
+        ticks: assign({}, sharedProps, this.getTickProps(tickLayout, styles.tickStyle, tick)),
+        tickLabels: assign({}, sharedProps, this.getTickLabelProps(
           tickLayout, styles.labelStyle, anchors, tick, tickFormat(tick, index, ticks)
-        ),
-        grid: this.getGridProps(gridLayout, styles.gridStyle, tick)
+        )),
+        grid: assign(
+          {}, sharedProps, gridProps, this.getGridProps(gridLayout, styles.gridStyle, tick)
+        )
       };
-
       return childProps;
     }, initialChildProps);
   },
@@ -240,6 +252,7 @@ export default {
     const isVertical = Helpers.isVertical(props);
     const labelPadding = this.getLabelPadding(props, style);
     const stringTicks = Helpers.stringTicks(props) ? props.tickValues : undefined;
+    const axis = this.getAxis(props);
     const scale = this.getScale(props);
     const domain = this.getDomain(props);
     const ticks = Axis.getTicks(props, scale, props.crossAxis);
@@ -247,7 +260,7 @@ export default {
     const anchors = this.getAnchors(orientation, isVertical);
 
     return {
-      style, padding, orientation, isVertical, labelPadding, stringTicks,
+      axis, style, padding, orientation, isVertical, labelPadding, stringTicks,
       anchors, scale, ticks, tickFormat, domain
     };
   },
