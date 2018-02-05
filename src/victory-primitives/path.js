@@ -2,7 +2,7 @@ import React from "react";
 import PropTypes from "prop-types";
 import Collection from "../victory-util/collection";
 
-export default class VPath extends React.Component {
+export default class Path extends React.Component {
   static propTypes = {
     className: PropTypes.string,
     clipPath: PropTypes.string,
@@ -28,7 +28,6 @@ export default class VPath extends React.Component {
     return false;
   }
 
-  // Overridden in victory-core-native
   render() {
     const { d, role, shapeRendering, className, clipPath, style, transform, events } = this.props;
     return (
