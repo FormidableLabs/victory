@@ -1,5 +1,6 @@
 import {
-  Area, Bar, Border, Candle, ClipPath, Curve, ErrorBar, Line, Point, Slice, Voronoi, Flyout,
+  Area, Axis, Bar, Border, Box, Candle, ClipPath, Curve, ErrorBar, Grid, Point, Slice, Voronoi,
+  Flyout, Circle, Rect, Line, Path, TSpan, Text,
   VictoryAnimation,
   VictoryContainer,
   VictoryLabel,
@@ -33,13 +34,15 @@ import {
   VictoryBrushContainer, BrushHelpers, brushContainerMixin,
   VictoryVoronoiContainer, VoronoiHelpers, voronoiContainerMixin,
   VictoryCursorContainer, CursorHelpers, cursorContainerMixin,
-  combineContainerMixins, createContainer
+  combineContainerMixins, createContainer,
+  VictoryBrushLine
 } from "victory-chart";
 
 import { VictoryPie } from "victory-pie";
 
 export {
-  Area, Bar, Border, Candle, ClipPath, Curve, ErrorBar, Line, Point, Slice, Voronoi, Flyout,
+  Area, Axis, Bar, Border, Box, Candle, ClipPath, Curve, ErrorBar, Grid, Point, Slice, Voronoi,
+  Flyout, Circle, Rect, Line, Path, TSpan, Text,
   VictoryAnimation,
   VictoryArea,
   VictoryAxis,
@@ -69,6 +72,7 @@ export {
   VictoryCursorContainer, CursorHelpers, cursorContainerMixin,
   VictoryVoronoiContainer, VoronoiHelpers, voronoiContainerMixin,
   combineContainerMixins, createContainer,
+  VictoryBrushLine,
   addEvents, Collection, Data, DefaultTransitions, Domain, Events, Helpers, Log,
   PropTypes, Scale, Style, TextSize, Transitions, Selection, LabelHelpers
 };
