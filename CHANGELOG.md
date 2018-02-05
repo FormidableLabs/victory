@@ -1,5 +1,25 @@
 # VictoryChart Changelog
 
+## 25.0.0 (2018-02-04)
+
+**Major Features**
+- `VictoryBrushLine` for multi-brush support
+
+**Breaking Changes**
+  - `Candle` expects a new set of props from `VictoryCandlestick`
+  - The `Line` component has been renamed to `Axis` / `Grid`
+  - Internal methods for _all_ Victory primitive components have changed. This will be a breaking change for users who are extending primitive components, including `victory-native`.
+
+-[551](https://github.com/FormidableLabs/victory-chart/pull/551) Bux fixes and improvements for VictoryStack
+-[553](https://github.com/FormidableLabs/victory-chart/pull/553) Allow renderInPortal to be false for tooltips in `VictoryVoronoiContainer`
+-[554](https://github.com/FormidableLabs/victory-chart/pull/554) Add support for `wickStrokeWidth` in `VictoryCandlestick`
+  **This is a breaking change as the expected props for `Candle` are changed**
+-[556](https://github.com/FormidableLabs/victory-chart/pull/556) Fixes undefined context variable
+-[558](https://github.com/FormidableLabs/victory-chart/pull/558) Allow `func` PropType for `color` on `VictoryGroup`
+-[559](https://github.com/FormidableLabs/victory-chart/pull/559) Implement `VictoryBrushLine` and use updated primitive components
+  **This is a breaking change for anyone using the `Line` primitive. It has been renamed to `Axis` / `Grid`.
+  **This may be a breaking change for anyone who was _extending_ Victory primitives**
+
 ## 24.6.1 (2018-01-08)
 
 - [550](https://github.com/FormidableLabs/victory-chart/pull/550) Fixes a bug related to voronoi tooltip positioning
