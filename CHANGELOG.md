@@ -1,6 +1,11 @@
 VictoryCore Changelog
 =====================
 
+## 21.0.2 (2018-02-05)
+
+-[337](https://github.com/FormidableLabs/victory-core/pull/337) Add `sideEffects: false`
+-[338](https://github.com/FormidableLabs/victory-core/pull/338) Fix bar path bug in Firefox
+
 ## 21.0.1 (2018-02-04)
 
 -[336](https://github.com/FormidableLabs/victory-core/pull/336) Fixes key names for `ErrorBar`
