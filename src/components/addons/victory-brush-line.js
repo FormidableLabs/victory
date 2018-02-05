@@ -102,6 +102,7 @@ export default class VictoryBrushLine extends React.Component {
     handleStyle: PropTypes.object,
     handleWidth: PropTypes.number,
     lineComponent: PropTypes.element,
+    name: PropTypes.string,
     onBrushDomainChange: PropTypes.func,
     scale: PropTypes.object,
     style: PropTypes.object,
