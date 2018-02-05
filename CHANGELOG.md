@@ -1,5 +1,11 @@
 # VictoryPie Changelog
 
+## 14.0.0 (2018-02-04)
+
+-[166](https://github.com/FormidableLabs/victory-pie/pull/166) Update Victory primitives
+**This is a breaking change**
+Internal methods for _all_ Victory primitive components have changed. This will be a breaking change for users who are extending primitive components, including `victory-native`.
+
 ## 13.3.1 (2018-01-08)
 
 -[164](https://github.com/FormidableLabs/victory-pie/pull/164) Correct typo
