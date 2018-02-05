@@ -1,6 +1,6 @@
 import PropTypes from "prop-types";
 import React from "react";
-import { VictoryContainer, VictoryLabel, AxisLine, Line, Helpers } from "victory-core";
+import { VictoryContainer, VictoryLabel, Axis, Helpers } from "victory-core";
 import { defaults, assign, isNumber, isUndefined, isObject } from "lodash";
 import CursorHelpers from "./cursor-helpers";
 
@@ -34,7 +34,7 @@ export const cursorContainerMixin = (base) => class VictoryCursorContainer exten
       x: 5,
       y: -10
     },
-    cursorComponent: <Line/>
+    cursorComponent: <Axis/>
   };
 
   static defaultEvents = [{
@@ -108,7 +108,7 @@ export const cursorContainerMixin = (base) => class VictoryCursorContainer exten
     }
   }
 
-  getCursorElements(props) {
+  getCursorElements(props) { // eslint-disable-line max-statements
     const {
       scale, cursorDimension, cursorLabelComponent, cursorLabel, cursorComponent, width, height
     } = props;
