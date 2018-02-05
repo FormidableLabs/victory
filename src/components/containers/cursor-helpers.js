@@ -1,6 +1,5 @@
 import { Selection } from "victory-core";
 import { throttle, isFunction } from "lodash";
-import { attachId } from "../../helpers/event-handlers";
 import BrushHelpers from "./brush-helpers";
 
 const CursorHelpers = {
@@ -44,7 +43,7 @@ const CursorHelpers = {
 
 export default {
   onMouseMove: throttle(
-    attachId(CursorHelpers.onMouseMove.bind(CursorHelpers)),
+    CursorHelpers.onMouseMove.bind(CursorHelpers),
     32, // eslint-disable-line no-magic-numbers
     { leading: true, trailing: false })
 };

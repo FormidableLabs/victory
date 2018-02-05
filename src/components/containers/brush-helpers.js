@@ -1,6 +1,5 @@
 import { Selection } from "victory-core";
 import { assign, throttle, isFunction, isEqual, defaults, mapValues } from "lodash";
-import { attachId } from "../../helpers/event-handlers";
 
 const Helpers = {
   withinBounds(point, bounds, padding) {
@@ -265,7 +264,7 @@ export default {
   onMouseUp: Helpers.onMouseUp.bind(Helpers),
   onMouseLeave: Helpers.onMouseLeave.bind(Helpers),
   onMouseMove: throttle(
-    attachId(Helpers.onMouseMove.bind(Helpers)),
+    Helpers.onMouseMove.bind(Helpers),
     16, // eslint-disable-line no-magic-numbers
     { leading: true, trailing: false }
   )

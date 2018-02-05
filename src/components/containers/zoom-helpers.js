@@ -2,7 +2,6 @@
 import { Children } from "react";
 import { Selection, Collection } from "victory-core";
 import { throttle, isFunction, defaults } from "lodash";
-import { attachId } from "../../helpers/event-handlers";
 import Wrapper from "../../helpers/wrapper";
 
 const Helpers = {
@@ -291,12 +290,12 @@ export default {
   onMouseUp: Helpers.onMouseUp.bind(Helpers),
   onMouseLeave: Helpers.onMouseLeave.bind(Helpers),
   onMouseMove: throttle(
-    attachId(Helpers.onMouseMove.bind(Helpers)),
+    Helpers.onMouseMove.bind(Helpers),
     16, // eslint-disable-line no-magic-numbers
     { leading: true, trailing: false }
   ),
   onWheel: throttle(
-    attachId(Helpers.onWheel.bind(Helpers)),
+    Helpers.onWheel.bind(Helpers),
     16, // eslint-disable-line no-magic-numbers
     { leading: true, trailing: false }
   )
