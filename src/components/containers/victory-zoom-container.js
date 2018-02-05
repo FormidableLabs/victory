@@ -61,44 +61,20 @@ export const zoomContainerMixin = (base) => class VictoryZoomContainer extends b
       onTouchCancel: (evt, targetProps) => {
         return ZoomHelpers.onMouseLeave(evt, targetProps);
       },
-      // eslint-disable-next-line max-params, object-shorthand
-      onMouseMove: function (evt, targetProps, eventKey, ctx) {
+      onMouseMove: (evt, targetProps, eventKey, ctx) => { // eslint-disable-line max-params
         evt.preventDefault();
-        const mutations = ZoomHelpers.onMouseMove(evt, targetProps, eventKey, ctx);
-
-        if (mutations.id !== this.mouseMoveMutationId) {
-          this.mouseMoveMutationId = mutations.id;
-          return mutations.mutations;
-        }
-
-        return undefined;
+        return ZoomHelpers.onMouseMove(evt, targetProps, eventKey, ctx);
       },
-      // eslint-disable-next-line max-params, object-shorthand
-      onTouchMove: function (evt, targetProps, eventKey, ctx) {
+      onTouchMove: (evt, targetProps, eventKey, ctx) => { // eslint-disable-line max-params
         evt.preventDefault();
-        const mutations = ZoomHelpers.onMouseMove(evt, targetProps, eventKey, ctx);
-
-        if (mutations.id !== this.mouseMoveMutationId) {
-          this.mouseMoveMutationId = mutations.id;
-          return mutations.mutations;
-        }
-
-        return undefined;
+        return ZoomHelpers.onMouseMove(evt, targetProps, eventKey, ctx);
       },
-      // eslint-disable-next-line max-params, object-shorthand
-      onWheel: function (evt, targetProps, eventKey, ctx) {
+      // eslint-disable-next-line max-params
+      onWheel: (evt, targetProps, eventKey, ctx) => {
         if (targetProps.allowZoom) {
           evt.preventDefault();
         }
-
-        const mutations = ZoomHelpers.onWheel(evt, targetProps, eventKey, ctx);
-
-        if (mutations.id !== this.wheelMutationId) {
-          this.wheelMutationId = mutations.id;
-          return mutations.mutations;
-        }
-
-        return undefined;
+        return ZoomHelpers.onWheel(evt, targetProps, eventKey, ctx);
       }
     }
   }];

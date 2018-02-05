@@ -49,25 +49,11 @@ export const brushContainerMixin = (base) => class VictoryBrushContainer extends
       onTouchStart: (evt, targetProps) => {
         return BrushHelpers.onMouseDown(evt, targetProps);
       },
-      onMouseMove: function (evt, targetProps) { // eslint-disable-line object-shorthand
-        const mutations = BrushHelpers.onMouseMove(evt, targetProps);
-
-        if (mutations.id !== this.mouseMoveMutationId) {
-          this.mouseMoveMutationId = mutations.id;
-          return mutations.mutations;
-        }
-
-        return undefined;
+      onMouseMove: (evt, targetProps) => {
+        return BrushHelpers.onMouseMove(evt, targetProps);
       },
-      onTouchMove: function (evt, targetProps) { // eslint-disable-line object-shorthand
-        const mutations = BrushHelpers.onMouseMove(evt, targetProps);
-
-        if (mutations.id !== this.mouseMoveMutationId) {
-          this.mouseMoveMutationId = mutations.id;
-          return mutations.mutations;
-        }
-
-        return undefined;
+      onTouchMove: (evt, targetProps) => {
+        return BrushHelpers.onMouseMove(evt, targetProps);
       },
       onMouseUp: (evt, targetProps) => {
         return BrushHelpers.onMouseUp(evt, targetProps);

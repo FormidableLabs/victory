@@ -46,15 +46,8 @@ export const cursorContainerMixin = (base) => class VictoryCursorContainer exten
       onTouchCancel: () => {
         return [];
       },
-      onMouseMove: function (evt, targetProps) { // eslint-disable-line object-shorthand
-        const mutations = CursorHelpers.onMouseMove(evt, targetProps);
-
-        if (mutations.id !== this.mouseMoveMutationId) {
-          this.mouseMoveMutationId = mutations.id;
-          return mutations.mutations;
-        }
-
-        return [];
+      onMouseMove: (evt, targetProps) => {
+        return CursorHelpers.onMouseMove(evt, targetProps);
       },
       onTouchMove: function (evt, targetProps) { // eslint-disable-line object-shorthand
         const mutations = CursorHelpers.onMouseMove(evt, targetProps);

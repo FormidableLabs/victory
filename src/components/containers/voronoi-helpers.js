@@ -2,7 +2,6 @@ import { Selection, Data, Helpers } from "victory-core";
 import { assign, throttle, isFunction, groupBy, keys, isEqual, includes } from "lodash";
 import { voronoi as d3Voronoi } from "d3-voronoi";
 import React from "react";
-import { attachId } from "../../helpers/event-handlers";
 
 const VoronoiHelpers = {
   withinBounds(props, point) {
@@ -172,7 +171,7 @@ const VoronoiHelpers = {
 export default {
   onMouseLeave: VoronoiHelpers.onMouseLeave.bind(VoronoiHelpers),
   onMouseMove: throttle(
-    attachId(VoronoiHelpers.onMouseMove.bind(VoronoiHelpers)),
+    VoronoiHelpers.onMouseMove.bind(VoronoiHelpers),
     32, // eslint-disable-line no-magic-numbers
     { leading: true, trailing: false })
 };

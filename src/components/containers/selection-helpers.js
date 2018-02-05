@@ -1,7 +1,6 @@
 import { Selection, Data, Helpers } from "victory-core";
 import { assign, defaults, throttle, isFunction } from "lodash";
 import React from "react";
-import { attachId } from "../../helpers/event-handlers";
 
 const SelectionHelpers = {
   getDatasets(props) {
@@ -156,7 +155,7 @@ export default {
   onMouseDown: SelectionHelpers.onMouseDown.bind(SelectionHelpers),
   onMouseUp: SelectionHelpers.onMouseUp.bind(SelectionHelpers),
   onMouseMove: throttle(
-    attachId(SelectionHelpers.onMouseMove.bind(SelectionHelpers)),
+    SelectionHelpers.onMouseMove.bind(SelectionHelpers),
     16, // eslint-disable-line no-magic-numbers
     { leading: true, trailing: false })
 };
