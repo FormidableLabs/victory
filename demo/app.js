@@ -25,6 +25,7 @@ import SelectionDemo from "./components/selection-demo";
 import PolarDemo from "./components/victory-polar-chart-demo";
 import ImmutableDemo from "./components/immutable-demo";
 import ExternalEventsDemo from "./components/external-events-demo";
+import VictoryBrushLine from "./components/victory-brush-line-demo";
 import DebugDemo from "./components/debug-demo";
 
 class Home extends React.Component {
@@ -76,6 +77,7 @@ class App extends React.Component {
     case "/polar": Child = PolarDemo; break;
     case "/immutable": Child = ImmutableDemo; break;
     case "/external-events": Child = ExternalEventsDemo; break;
+    case "/victory-brush-line": Child = VictoryBrushLineDemo; break;
     case "/debug": Child = DebugDemo; break;
     default: Child = Home;
     }
@@ -110,6 +112,7 @@ class App extends React.Component {
           <li><a href="#/polar">Polar Demo</a></li>
           <li><a href="#/immutable">immutable.js demo</a></li>
           <li><a href="#/external-events">External Events demo</a></li>
+          <li><a href="#/victory-brush-line">VictoryBrushLine demo</a></li>
         </ul>
         <Child/>
       </div>
