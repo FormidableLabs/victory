@@ -1,5 +1,9 @@
 # VictoryPie Changelog
 
+## 14.0.1 (2018-02-05)
+
+- [167](https://github.com/FormidableLabs/victory-pie/pull/167) Add `sideEffects: false`
+
 ## 14.0.0 (2018-02-04)
 
 -[166](https://github.com/FormidableLabs/victory-pie/pull/166) Update Victory primitives
