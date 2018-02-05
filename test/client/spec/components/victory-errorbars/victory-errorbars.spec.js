@@ -5,7 +5,7 @@
 /* global sinon */
 /* eslint no-unused-expressions: 0 */
 import React from "react";
-import { shallow, mount, render } from "enzyme";
+import { shallow, mount } from "enzyme";
 import { omit, range } from "lodash";
 import { fromJS } from "immutable";
 import * as d3Scale from "d3-scale";

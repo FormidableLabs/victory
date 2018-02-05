@@ -25,7 +25,7 @@ import SelectionDemo from "./components/selection-demo";
 import PolarDemo from "./components/victory-polar-chart-demo";
 import ImmutableDemo from "./components/immutable-demo";
 import ExternalEventsDemo from "./components/external-events-demo";
-import VictoryBrushLine from "./components/victory-brush-line-demo";
+import VictoryBrushLineDemo from "./components/victory-brush-line-demo";
 import DebugDemo from "./components/debug-demo";
 
 class Home extends React.Component {
