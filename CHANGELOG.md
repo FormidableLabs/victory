@@ -1,5 +1,10 @@
 # VictoryChart Changelog
 
+## 25.0.1 (2018-02-05)
+
+-[560](https://github.com/FormidableLabs/victory-chart/pull/560) Add `sideEffects: false`
+-[561](https://github.com/FormidableLabs/victory-chart/pull/561) Bugfix for createContainer
+
 ## 25.0.0 (2018-02-04)
 
 **Major Features**
