@@ -1,6 +1,6 @@
 {
   "name": "victory",
-  "version": "0.25.1",
+  "version": "0.25.2",
   "description": "Data viz for React",
   "keywords": [
     "data visualization",
@@ -36,7 +36,7 @@
   "dependencies": {
     "builder": "^3.2.1",
     "builder-victory-component": "^5.1.2",
-    "victory-chart": "^25.0.1",
+    "victory-chart": "^25.0.2",
     "victory-core": "^21.0.2",
     "victory-pie": "^14.0.1"
   },
