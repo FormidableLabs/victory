@@ -1,5 +1,9 @@
 # VictoryChart Changelog
 
+## 25.0.2 (2018-02-06)
+
+-[562](https://github.com/FormidableLabs/victory-chart/pull/562) Bugfix for `VictoryCursorContainer`
+
 ## 25.0.1 (2018-02-05)
 
 -[560](https://github.com/FormidableLabs/victory-chart/pull/560) Add `sideEffects: false`
