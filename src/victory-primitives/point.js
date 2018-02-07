@@ -18,7 +18,7 @@ export default class Point extends React.Component {
     ]),
     symbol: PropTypes.oneOfType([
       PropTypes.oneOf([
-        "circle", "diamond", "plus", "square", "star", "triangleDown", "triangleUp"
+        "circle", "diamond", "plus", "minus", "square", "star", "triangleDown", "triangleUp"
       ]),
       PropTypes.func
     ]),
@@ -27,7 +27,7 @@ export default class Point extends React.Component {
   };
 
   static defaultProps = {
-    pathComponent: <Path/>
+    pathComponent: <Path />
   };
 
   getPath(props) {
@@ -43,6 +43,7 @@ export default class Point extends React.Component {
       triangleDown: pathHelpers.triangleDown,
       triangleUp: pathHelpers.triangleUp,
       plus: pathHelpers.plus,
+      minus: pathHelpers.minus,
       star: pathHelpers.star
     };
     const symbol = Helpers.evaluateProp(props.symbol, datum, active);
