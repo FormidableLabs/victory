@@ -63,7 +63,6 @@ export default class VictoryClipContainer extends React.Component {
     };
   }
 
-  // Overridden in victory-core-native
   renderClippedGroup(props, clipId) {
     const { style, events, transform, children, className, groupComponent } = props;
     const clipComponent = this.renderClipComponent(props, clipId);
@@ -75,22 +74,8 @@ export default class VictoryClipContainer extends React.Component {
       assign({ className, style, transform }, events),
       [clipComponent, clippedGroup]
     );
-    // return (
-    //   <g
-    //     className={className}
-    //     style={style}
-    //     {...events}
-    //     transform={transform}
-    //   >
-    //     {clipComponent}
-    //     <g clipPath={`url(#${clipId})`}>
-    //       {children}
-    //     </g>
-    //   </g>
-    // );
   }
 
-  // Overridden in victory-core-native
   renderGroup(props) {
     const { style, events, transform, children, className, groupComponent } = props;
     return React.cloneElement(

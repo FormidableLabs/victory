@@ -205,7 +205,6 @@ export default class VictoryLabel extends React.Component {
     return defaultStyles.fontSize;
   }
 
-  // Overridden in victory-core-native
   renderElements(props) {
     const { datum, active, inline, className, title, desc, events } = props;
     const style = this.getStyles(props);
