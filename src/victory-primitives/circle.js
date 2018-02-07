@@ -32,7 +32,6 @@ export default class Circle extends React.Component {
     return false;
   }
 
-  // Overridden in victory-core-native
   render() {
     const {
       cx, cy, r, events, className, style, role, shapeRendering, transform, clipPath
