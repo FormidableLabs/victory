@@ -143,6 +143,7 @@ export default class VictoryBrushLine extends React.Component {
       target: props.type,
       eventHandlers: {
         onMouseEnter: (evt, targetProps) => {
+          evt.preventDefault();
           const { dimension, allowResize } = targetProps;
           const position = Selection.getSVGEventCoordinates(evt)[dimension];
           const fullDomain = getFullDomain(targetProps);
@@ -211,6 +212,10 @@ export default class VictoryBrushLine extends React.Component {
             isPanning, isSelecting, allowResize, allowDrag, dimension, onBrushDomainChange,
             cachedBrushDomain
           } = targetProps;
+          if (isPanning || isSelecting) {
+            evt.preventDefault();
+            evt.stopPropagation();
+          }
           const position = Selection.getSVGEventCoordinates(evt)[dimension];
           const fullDomain = getFullDomain(targetProps);
           const domain = getCurrentDomain(targetProps) || fullDomain;
