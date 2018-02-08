@@ -1,6 +1,16 @@
 # Victory Changelog
 
-## 0.25.2 (2018-02-06)
+## 0.25.4 (2018-02-07)
+
+VictoryCore
+-[341](https://github.com/FormidableLabs/victory-core/pull/341) Improve sCU logic for primitive components
+
+VictoryChart
+-[563](https://github.com/FormidableLabs/victory-chart/pull/563) `stopPropagation` when panning or selecting `VictoryBrushLine`
+
+-[565](https://github.com/FormidableLabs/victory-chart/pull/565) Adds `disable` prop to all interactive containers and addon components
+
+## 0.25.3 (2018-02-06)
 
 -[victory-chart/562](https://github.com/FormidableLabs/victory-chart/pull/562) Bugfix for `VictoryCursorContainer`
 
