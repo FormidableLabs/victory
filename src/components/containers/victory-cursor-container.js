@@ -25,6 +25,7 @@ export const cursorContainerMixin = (base) => class VictoryCursorContainer exten
         y: PropTypes.number
       })
     ]),
+    disable: PropTypes.bool,
     onCursorChange: PropTypes.func
   };
   static defaultProps = {
@@ -37,23 +38,25 @@ export const cursorContainerMixin = (base) => class VictoryCursorContainer exten
     cursorComponent: <Axis/>
   };
 
-  static defaultEvents = [{
-    target: "parent",
-    eventHandlers: {
-      onMouseLeave: () => {
-        return [];
-      },
-      onTouchCancel: () => {
-        return [];
-      },
-      onMouseMove: (evt, targetProps) => {
-        return CursorHelpers.onMouseMove(evt, targetProps);
-      },
-      onTouchMove: (evt, targetProps) => {
-        return CursorHelpers.onMouseMove(evt, targetProps);
+  static defaultEvents = (props) => {
+    return props.disable ? undefined : [{
+      target: "parent",
+      eventHandlers: {
+        onMouseLeave: () => {
+          return [];
+        },
+        onTouchCancel: () => {
+          return [];
+        },
+        onMouseMove: (evt, targetProps) => {
+          return CursorHelpers.onMouseMove(evt, targetProps);
+        },
+        onTouchMove: (evt, targetProps) => {
+          return CursorHelpers.onMouseMove(evt, targetProps);
+        }
       }
-    }
-  }];
+    }];
+  };
 
   getCursorPosition(props) {
     const { cursorValue, defaultCursorValue, cursorDimension, domain } = props;

@@ -8,6 +8,7 @@ export const selectionContainerMixin = (base) => class VictorySelectionContainer
   static propTypes = {
     ...VictoryContainer.propTypes,
     allowSelection: PropTypes.bool,
+    disable: PropTypes.bool,
     onSelection: PropTypes.func,
     onSelectionCleared: PropTypes.func,
     selectionComponent: PropTypes.element,
@@ -25,29 +26,31 @@ export const selectionContainerMixin = (base) => class VictorySelectionContainer
     }
   };
 
-  static defaultEvents = [{
-    target: "parent",
-    eventHandlers: {
-      onMouseDown: (evt, targetProps) => {
-        return SelectionHelpers.onMouseDown(evt, targetProps);
-      },
-      onTouchStart: (evt, targetProps) => {
-        return SelectionHelpers.onMouseDown(evt, targetProps);
-      },
-      onMouseMove: (evt, targetProps) => {
-        return SelectionHelpers.onMouseMove(evt, targetProps);
-      },
-      onTouchMove: (evt, targetProps) => {
-        return SelectionHelpers.onMouseMove(evt, targetProps);
-      },
-      onMouseUp: (evt, targetProps) => {
-        return SelectionHelpers.onMouseUp(evt, targetProps);
-      },
-      onTouchEnd: (evt, targetProps) => {
-        return SelectionHelpers.onMouseUp(evt, targetProps);
+  static defaultEvents = (props) => {
+    return props.disable ? undefined : [{
+      target: "parent",
+      eventHandlers: {
+        onMouseDown: (evt, targetProps) => {
+          return SelectionHelpers.onMouseDown(evt, targetProps);
+        },
+        onTouchStart: (evt, targetProps) => {
+          return SelectionHelpers.onMouseDown(evt, targetProps);
+        },
+        onMouseMove: (evt, targetProps) => {
+          return SelectionHelpers.onMouseMove(evt, targetProps);
+        },
+        onTouchMove: (evt, targetProps) => {
+          return SelectionHelpers.onMouseMove(evt, targetProps);
+        },
+        onMouseUp: (evt, targetProps) => {
+          return SelectionHelpers.onMouseUp(evt, targetProps);
+        },
+        onTouchEnd: (evt, targetProps) => {
+          return SelectionHelpers.onMouseUp(evt, targetProps);
+        }
       }
-    }
-  }];
+    }];
+  };
 
   getRect(props) {
     const { x1, x2, y1, y2, selectionStyle, selectionComponent } = props;
