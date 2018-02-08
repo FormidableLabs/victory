@@ -1,5 +1,9 @@
 # VictoryChart Changelog
 
+## 25.0.3 (2018-02-07)
+
+-[563](https://github.com/FormidableLabs/victory-chart/pull/563) `stopPropagation` in when panning or selection `VictoryBrushLine`
+
 ## 25.0.2 (2018-02-06)
 
 -[562](https://github.com/FormidableLabs/victory-chart/pull/562) Bugfix for `VictoryCursorContainer`
