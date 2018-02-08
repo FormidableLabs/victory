@@ -16,20 +16,7 @@ export default class TSpan extends React.Component {
   };
 
   shouldComponentUpdate(nextProps) {
-    const { className, x, y, dx, dy, textAnchor, style, content } = this.props;
-    if (!Collection.allSetsEqual([
-      [className, nextProps.className],
-      [content, nextProps.content],
-      [x, nextProps.x],
-      [y, nextProps.y],
-      [dx, nextProps.rx],
-      [dy, nextProps.ry],
-      [textAnchor, nextProps.textAnchor],
-      [style, nextProps.style]
-    ])) {
-      return true;
-    }
-    return false;
+    return !Collection.areVictoryPropsEqual(this.props, nextProps);
   }
 
   render() {

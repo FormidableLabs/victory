@@ -15,17 +15,7 @@ export default class Path extends React.Component {
   };
 
   shouldComponentUpdate(nextProps) {
-    const { className, clipPath, d, style, transform } = this.props;
-    if (!Collection.allSetsEqual([
-      [className, nextProps.className],
-      [clipPath, nextProps.clipPath],
-      [d, nextProps.d],
-      [transform, nextProps.transform],
-      [style, nextProps.style]
-    ])) {
-      return true;
-    }
-    return false;
+    return !Collection.areVictoryPropsEqual(this.props, nextProps);
   }
 
   render() {

@@ -17,19 +17,7 @@ export default class Circle extends React.Component {
   };
 
   shouldComponentUpdate(nextProps) {
-    const { className, clipPath, cx, cy, r, transform, style } = this.props;
-    if (!Collection.allSetsEqual([
-      [className, nextProps.className],
-      [clipPath, nextProps.clipPath],
-      [cx, nextProps.cx],
-      [cy, nextProps.cy],
-      [r, nextProps.r],
-      [transform, nextProps.transform],
-      [style, nextProps.style]
-    ])) {
-      return true;
-    }
-    return false;
+    return !Collection.areVictoryPropsEqual(this.props, nextProps);
   }
 
   render() {
