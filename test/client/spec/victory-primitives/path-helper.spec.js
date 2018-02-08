@@ -58,7 +58,7 @@ describe("path-helpers", () => {
     it("draws a path for a minus at the correct location", () => {
       const pathResult = PathHelpers.minus(0, 0, 1);
       const baseSize = 1.1 * size;
-      const lineHeight = baseSize / 0.15;
+      const lineHeight = baseSize - baseSize * 0.3;
       expect(pathResult).to.contain(
         `M ${(x - (baseSize))}, ${(y + lineHeight / 2)}`
       );
