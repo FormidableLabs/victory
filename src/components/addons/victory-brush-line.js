@@ -96,6 +96,7 @@ export default class VictoryBrushLine extends React.Component {
     brushWidth: PropTypes.number,
     className: PropTypes.string,
     dimension: PropTypes.oneOf(["x", "y"]),
+    disable: PropTypes.bool,
     events: PropTypes.object,
     groupComponent: PropTypes.element,
     handleComponent: PropTypes.element,
@@ -139,7 +140,7 @@ export default class VictoryBrushLine extends React.Component {
   };
 
   static defaultEvents = function (props) {
-    return [{
+    return props.disable ? undefined : [{
       target: props.type,
       eventHandlers: {
         onMouseEnter: (evt, targetProps) => {

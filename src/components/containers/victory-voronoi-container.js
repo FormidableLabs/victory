@@ -8,6 +8,7 @@ export const voronoiContainerMixin = (base) => class VictoryVoronoiContainer ext
   static displayName = "VictoryVoronoiContainer";
   static propTypes = {
     ...VictoryContainer.propTypes,
+    disable: PropTypes.bool,
     labelComponent: PropTypes.element,
     labels: PropTypes.func,
     onActivated: PropTypes.func,
@@ -23,30 +24,32 @@ export const voronoiContainerMixin = (base) => class VictoryVoronoiContainer ext
     voronoiPadding: 5
   };
 
-  static defaultEvents = [{
-    target: "parent",
-    eventHandlers: {
-      onMouseLeave: (evt, targetProps) => {
-        return VoronoiHelpers.onMouseLeave(evt, targetProps);
-      },
-      onTouchCancel: (evt, targetProps) => {
-        return VoronoiHelpers.onMouseLeave(evt, targetProps);
-      },
-      onMouseMove: (evt, targetProps) => {
-        return VoronoiHelpers.onMouseMove(evt, targetProps);
-      },
-      onTouchMove: (evt, targetProps) => {
-        return VoronoiHelpers.onMouseMove(evt, targetProps);
+  static defaultEvents = (props) => {
+    return props.disable ? undefined : [{
+      target: "parent",
+      eventHandlers: {
+        onMouseLeave: (evt, targetProps) => {
+          return VoronoiHelpers.onMouseLeave(evt, targetProps);
+        },
+        onTouchCancel: (evt, targetProps) => {
+          return VoronoiHelpers.onMouseLeave(evt, targetProps);
+        },
+        onMouseMove: (evt, targetProps) => {
+          return VoronoiHelpers.onMouseMove(evt, targetProps);
+        },
+        onTouchMove: (evt, targetProps) => {
+          return VoronoiHelpers.onMouseMove(evt, targetProps);
+        }
       }
-    }
-  }, {
-    target: "data",
-    eventHandlers: {
-      onMouseOver: () => null,
-      onMouseOut: () => null,
-      onMouseMove: () => null
-    }
-  }];
+    }, {
+      target: "data",
+      eventHandlers: {
+        onMouseOver: () => null,
+        onMouseOut: () => null,
+        onMouseMove: () => null
+      }
+    }];
+  };
 
   getLabelPadding(style) {
     if (!style) {
