@@ -54,12 +54,23 @@ describe("path-helpers", () => {
     });
   });
 
+  describe("minus", () => {
+    it("draws a path for a minus at the correct location", () => {
+      const pathResult = PathHelpers.minus(0, 0, 1);
+      const baseSize = 1.1 * size;
+      const lineHeight = baseSize - baseSize * 0.3;
+      expect(pathResult).to.contain(
+        `M ${(x - (baseSize))}, ${(y + lineHeight / 2)}`
+      );
+    });
+  });
+
   describe("star", () => {
     it("draws a path for a star at the correct location", () => {
       const pathResult = PathHelpers.star(0, 0, 1);
       const angle = Math.PI / 5;
       const baseSize = 1.35 * size;
-      expect(pathResult).to.contain(`M ${(baseSize) * Math.sin(angle) + x },
+      expect(pathResult).to.contain(`M ${(baseSize) * Math.sin(angle) + x},
         ${(baseSize) * Math.cos(angle) + y}`);
     });
   });

@@ -45,6 +45,12 @@ const data = [{
     type: "plus"
   }
 }, {
+  name: "Series 4: minus",
+  symbol: {
+    size: symbolSize,
+    type: "minus"
+  }
+}, {
   name: "Series 5",
   symbol: {
     size: symbolSize,
@@ -81,7 +87,7 @@ const LegendDemo = () => (
         data={data}
         symbolSpacer={symbolSpacer}
         style={legendStyle}
-        titleComponent={<VictoryLabel style={[{ fontSize: 20 }, { fontSize: 10 }]}/>}
+        titleComponent={<VictoryLabel style={[{ fontSize: 20 }, { fontSize: 10 }]} />}
         events={[{
           target: "data",
           eventHandlers: {
@@ -147,7 +153,7 @@ const LegendDemo = () => (
       />
     </svg>
     <VictoryLegend
-      borderComponent={<Border width={430} height={110}/>}
+      borderComponent={<Border width={430} height={110} />}
       centerTitle
       title={["TITLE"]}
       gutter={30}
