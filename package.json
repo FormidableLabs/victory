@@ -1,6 +1,6 @@
 {
   "name": "victory-chart",
-  "version": "25.0.4",
+  "version": "25.0.5",
   "description": "Chart Component for Victory",
   "main": "lib/index.js",
   "module": "es/index.js",
