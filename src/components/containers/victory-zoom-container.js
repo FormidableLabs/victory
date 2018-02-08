@@ -42,41 +42,46 @@ export const zoomContainerMixin = (base) => class VictoryZoomContainer extends b
   };
 
   static defaultEvents = (props) => {
-    return props.disable ? undefined : [{
+    return [{
       target: "parent",
       eventHandlers: {
         onMouseDown: (evt, targetProps) => {
-          return ZoomHelpers.onMouseDown(evt, targetProps);
+          return props.disable ? {} : ZoomHelpers.onMouseDown(evt, targetProps);
         },
         onTouchStart: (evt, targetProps) => {
-          return ZoomHelpers.onMouseDown(evt, targetProps);
+          return props.disable ? {} : ZoomHelpers.onMouseDown(evt, targetProps);
         },
         onMouseUp: (evt, targetProps) => {
-          return ZoomHelpers.onMouseUp(evt, targetProps);
+          return props.disable ? {} : ZoomHelpers.onMouseUp(evt, targetProps);
         },
         onTouchEnd: (evt, targetProps) => {
-          return ZoomHelpers.onMouseUp(evt, targetProps);
+          return props.disable ? {} : ZoomHelpers.onMouseUp(evt, targetProps);
         },
         onMouseLeave: (evt, targetProps) => {
-          return ZoomHelpers.onMouseLeave(evt, targetProps);
+          return props.disable ? {} : ZoomHelpers.onMouseLeave(evt, targetProps);
         },
         onTouchCancel: (evt, targetProps) => {
-          return ZoomHelpers.onMouseLeave(evt, targetProps);
+          return props.disable ? {} : ZoomHelpers.onMouseLeave(evt, targetProps);
         },
         onMouseMove: (evt, targetProps, eventKey, ctx) => { // eslint-disable-line max-params
-          evt.preventDefault();
+          if (props.disable) {
+            return {};
+          }
           return ZoomHelpers.onMouseMove(evt, targetProps, eventKey, ctx);
         },
         onTouchMove: (evt, targetProps, eventKey, ctx) => { // eslint-disable-line max-params
+          if (props.disable) {
+            return {};
+          }
           evt.preventDefault();
           return ZoomHelpers.onMouseMove(evt, targetProps, eventKey, ctx);
         },
         // eslint-disable-next-line max-params
         onWheel: (evt, targetProps, eventKey, ctx) => {
-          if (targetProps.allowZoom) {
+          if (targetProps.allowZoom && !props.disable) {
             evt.preventDefault();
           }
-          return ZoomHelpers.onWheel(evt, targetProps, eventKey, ctx);
+          return props.disable ? {} : ZoomHelpers.onWheel(evt, targetProps, eventKey, ctx);
         }
       }
     }];

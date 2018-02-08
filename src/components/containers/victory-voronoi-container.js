@@ -25,25 +25,25 @@ export const voronoiContainerMixin = (base) => class VictoryVoronoiContainer ext
   };
 
   static defaultEvents = (props) => {
-    return props.disable ? undefined : [{
+    return [{
       target: "parent",
       eventHandlers: {
         onMouseLeave: (evt, targetProps) => {
-          return VoronoiHelpers.onMouseLeave(evt, targetProps);
+          return props.disable ? {} : VoronoiHelpers.onMouseLeave(evt, targetProps);
         },
         onTouchCancel: (evt, targetProps) => {
-          return VoronoiHelpers.onMouseLeave(evt, targetProps);
+          return props.disable ? {} : VoronoiHelpers.onMouseLeave(evt, targetProps);
         },
         onMouseMove: (evt, targetProps) => {
-          return VoronoiHelpers.onMouseMove(evt, targetProps);
+          return props.disable ? {} : VoronoiHelpers.onMouseMove(evt, targetProps);
         },
         onTouchMove: (evt, targetProps) => {
-          return VoronoiHelpers.onMouseMove(evt, targetProps);
+          return props.disable ? {} : VoronoiHelpers.onMouseMove(evt, targetProps);
         }
       }
     }, {
       target: "data",
-      eventHandlers: {
+      eventHandlers: props.disable ? {} : {
         onMouseOver: () => null,
         onMouseOut: () => null,
         onMouseMove: () => null

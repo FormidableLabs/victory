@@ -42,32 +42,32 @@ export const brushContainerMixin = (base) => class VictoryBrushContainer extends
   };
 
   static defaultEvents = (props) => {
-    return props.disable ? undefined : [{
+    return [{
       target: "parent",
       eventHandlers: {
         onMouseDown: (evt, targetProps) => {
-          return BrushHelpers.onMouseDown(evt, targetProps);
+          return props.disable ? {} : BrushHelpers.onMouseDown(evt, targetProps);
         },
         onTouchStart: (evt, targetProps) => {
-          return BrushHelpers.onMouseDown(evt, targetProps);
+          return props.disable ? {} : BrushHelpers.onMouseDown(evt, targetProps);
         },
         onMouseMove: (evt, targetProps) => {
-          return BrushHelpers.onMouseMove(evt, targetProps);
+          return props.disable ? {} : BrushHelpers.onMouseMove(evt, targetProps);
         },
         onTouchMove: (evt, targetProps) => {
-          return BrushHelpers.onMouseMove(evt, targetProps);
+          return props.disable ? {} : BrushHelpers.onMouseMove(evt, targetProps);
         },
         onMouseUp: (evt, targetProps) => {
-          return BrushHelpers.onMouseUp(evt, targetProps);
+          return props.disable ? {} : BrushHelpers.onMouseUp(evt, targetProps);
         },
         onTouchEnd: (evt, targetProps) => {
-          return BrushHelpers.onMouseUp(evt, targetProps);
+          return props.disable ? {} : BrushHelpers.onMouseUp(evt, targetProps);
         },
         onMouseLeave: (evt, targetProps) => {
-          return BrushHelpers.onMouseLeave(evt, targetProps);
+          return props.disable ? {} : BrushHelpers.onMouseLeave(evt, targetProps);
         },
         onTouchCancel: (evt, targetProps) => {
-          return BrushHelpers.onMouseLeave(evt, targetProps);
+          return props.disable ? {} : BrushHelpers.onMouseLeave(evt, targetProps);
         }
       }
     }];

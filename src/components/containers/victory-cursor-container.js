@@ -39,7 +39,7 @@ export const cursorContainerMixin = (base) => class VictoryCursorContainer exten
   };
 
   static defaultEvents = (props) => {
-    return props.disable ? undefined : [{
+    return [{
       target: "parent",
       eventHandlers: {
         onMouseLeave: () => {
@@ -49,10 +49,10 @@ export const cursorContainerMixin = (base) => class VictoryCursorContainer exten
           return [];
         },
         onMouseMove: (evt, targetProps) => {
-          return CursorHelpers.onMouseMove(evt, targetProps);
+          return props.disable ? {} : CursorHelpers.onMouseMove(evt, targetProps);
         },
         onTouchMove: (evt, targetProps) => {
-          return CursorHelpers.onMouseMove(evt, targetProps);
+          return props.disable ? {} : CursorHelpers.onMouseMove(evt, targetProps);
         }
       }
     }];
