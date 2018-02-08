@@ -18,22 +18,7 @@ export default class Text extends React.Component {
   };
 
   shouldComponentUpdate(nextProps) {
-    const { className, x, y, dx, dy, transform, style, children, title, desc } = this.props;
-    if (!Collection.allSetsEqual([
-      [className, nextProps.className],
-      [x, nextProps.x],
-      [y, nextProps.y],
-      [dx, nextProps.rx],
-      [dy, nextProps.ry],
-      [title, nextProps.title],
-      [desc, nextProps.desc],
-      [transform, nextProps.transform],
-      [style, nextProps.style],
-      [children, nextProps.children]
-    ])) {
-      return true;
-    }
-    return false;
+    return !Collection.areVictoryPropsEqual(this.props, nextProps);
   }
 
   render() {

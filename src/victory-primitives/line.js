@@ -18,20 +18,7 @@ export default class Line extends React.Component {
   };
 
   shouldComponentUpdate(nextProps) {
-    const { className, clipPath, x1, x2, y1, y2, style, transform } = this.props;
-    if (!Collection.allSetsEqual([
-      [className, nextProps.className],
-      [clipPath, nextProps.clipPath],
-      [x1, nextProps.x1],
-      [x2, nextProps.x2],
-      [y1, nextProps.y1],
-      [y2, nextProps.y2],
-      [transform, nextProps.transform],
-      [style, nextProps.style]
-    ])) {
-      return true;
-    }
-    return false;
+    return !Collection.areVictoryPropsEqual(this.props, nextProps);
   }
 
   render() {

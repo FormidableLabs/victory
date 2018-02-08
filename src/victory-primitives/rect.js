@@ -20,22 +20,7 @@ export default class Rect extends React.Component {
   };
 
   shouldComponentUpdate(nextProps) {
-    const { className, clipPath, x, y, rx, ry, width, height, transform, style } = this.props;
-    if (!Collection.allSetsEqual([
-      [className, nextProps.className],
-      [x, nextProps.x],
-      [y, nextProps.y],
-      [rx, nextProps.rx],
-      [ry, nextProps.ry],
-      [width, nextProps.width],
-      [height, nextProps.height],
-      [clipPath, nextProps.clipPath],
-      [transform, nextProps.transform],
-      [style, nextProps.style]
-    ])) {
-      return true;
-    }
-    return false;
+    return !Collection.areVictoryPropsEqual(this.props, nextProps);
   }
 
   render() {
