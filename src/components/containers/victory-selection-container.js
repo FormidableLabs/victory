@@ -27,26 +27,26 @@ export const selectionContainerMixin = (base) => class VictorySelectionContainer
   };
 
   static defaultEvents = (props) => {
-    return props.disable ? undefined : [{
+    return [{
       target: "parent",
       eventHandlers: {
         onMouseDown: (evt, targetProps) => {
-          return SelectionHelpers.onMouseDown(evt, targetProps);
+          return props.disable ? {} : SelectionHelpers.onMouseDown(evt, targetProps);
         },
         onTouchStart: (evt, targetProps) => {
-          return SelectionHelpers.onMouseDown(evt, targetProps);
+          return props.disable ? {} : SelectionHelpers.onMouseDown(evt, targetProps);
         },
         onMouseMove: (evt, targetProps) => {
-          return SelectionHelpers.onMouseMove(evt, targetProps);
+          return props.disable ? {} : SelectionHelpers.onMouseMove(evt, targetProps);
         },
         onTouchMove: (evt, targetProps) => {
-          return SelectionHelpers.onMouseMove(evt, targetProps);
+          return props.disable ? {} : SelectionHelpers.onMouseMove(evt, targetProps);
         },
         onMouseUp: (evt, targetProps) => {
-          return SelectionHelpers.onMouseUp(evt, targetProps);
+          return props.disable ? {} : SelectionHelpers.onMouseUp(evt, targetProps);
         },
         onTouchEnd: (evt, targetProps) => {
-          return SelectionHelpers.onMouseUp(evt, targetProps);
+          return props.disable ? {} : SelectionHelpers.onMouseUp(evt, targetProps);
         }
       }
     }];
