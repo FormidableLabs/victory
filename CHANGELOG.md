@@ -1,6 +1,10 @@
 VictoryCore Changelog
 =====================
 
+## 21.0.3 (2018-02-07)
+
+-[341](https://github.com/FormidableLabs/victory-core/pull/341) Improve sCU logic for primitive components
+
 ## 21.0.2 (2018-02-05)
 
 -[337](https://github.com/FormidableLabs/victory-core/pull/337) Add `sideEffects: false`
