@@ -1,5 +1,9 @@
 # VictoryChart Changelog
 
+## 25.0.4 (2016-02-07)
+
+-[564](https://github.com/FormidableLabs/victory-chart/pull/564) Adds `disable` prop to all interactive containers and addon components
+
 ## 25.0.3 (2018-02-07)
 
 -[563](https://github.com/FormidableLabs/victory-chart/pull/563) `stopPropagation` in when panning or selection `VictoryBrushLine`
