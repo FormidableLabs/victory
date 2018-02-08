@@ -1,5 +1,9 @@
 # VictoryChart Changelog
 
+## 25.0.5 (2016-02-07)
+
+-[565](https://github.com/FormidableLabs/victory-chart/pull/565) Prevent re-renders with disable prop
+
 ## 25.0.4 (2016-02-07)
 
 -[564](https://github.com/FormidableLabs/victory-chart/pull/564) Adds `disable` prop to all interactive containers and addon components
