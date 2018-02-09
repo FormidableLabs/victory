@@ -1,5 +1,12 @@
 # VictoryChart Changelog
 
+## 25.0.6 (2016-02-09)
+
+-[570](https://github.com/FormidableLabs/victory-chart/pull/570) Add "minus" option for `VictoryScatter` `symbol` prop
+-[569](https://github.com/FormidableLabs/victory-chart/pull/569) Fixes a bug in `createContainer`
+-[568](https://github.com/FormidableLabs/victory-chart/pull/568) Adds `brushAreaWidth` prop for `VictoryBrushLine`
+-[567](https://github.com/FormidableLabs/victory-chart/pull/567) Fixes brushArea active state in `VictoryBrushLine`
+
 ## 25.0.5 (2016-02-07)
 
 -[565](https://github.com/FormidableLabs/victory-chart/pull/565) Prevent re-renders with disable prop
