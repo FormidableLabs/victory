@@ -1,6 +1,10 @@
 VictoryCore Changelog
 =====================
 
+## 21.0.4 (2018-02-07)
+
+-[339](https://github.com/FormidableLabs/victory-core/pull/339) Adds a "minus" option for `Point`
+
 ## 21.0.3 (2018-02-07)
 
 -[341](https://github.com/FormidableLabs/victory-core/pull/341) Improve sCU logic for primitive components
