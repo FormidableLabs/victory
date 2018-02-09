@@ -34,7 +34,7 @@ class VictoryScatter extends React.Component {
     size: PropTypes.oneOfType([ CustomPropTypes.nonNegative, PropTypes.func ]),
     symbol: PropTypes.oneOfType([
       PropTypes.oneOf([
-        "circle", "diamond", "plus", "square", "star", "triangleDown", "triangleUp"
+        "circle", "diamond", "plus", "minus", "square", "star", "triangleDown", "triangleUp"
       ]),
       PropTypes.func
     ])
