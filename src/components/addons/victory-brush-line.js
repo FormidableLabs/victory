@@ -148,11 +148,12 @@ export default class VictoryBrushLine extends React.Component {
           const { dimension, allowResize } = targetProps;
           const position = Selection.getSVGEventCoordinates(evt)[dimension];
           const fullDomain = getFullDomain(targetProps);
+          const minimumDomain = getMinimumDomain();
           const currentDomain = getCurrentDomain(targetProps) || fullDomain;
           const range = toRange(targetProps, currentDomain);
           const activeHandle = allowResize && getActiveHandle(targetProps, position, range);
           const activeBrushes = {
-            brushArea: isEqual(currentDomain, fullDomain),
+            brushArea: isEqual(currentDomain, fullDomain) || isEqual(currentDomain, minimumDomain),
             brush: withinBound(position, range) && !isEqual(fullDomain, currentDomain),
             minHandle: activeHandle === "min" || activeHandle === "both",
             maxHandle: activeHandle === "min" || activeHandle === "both"
@@ -223,7 +224,7 @@ export default class VictoryBrushLine extends React.Component {
           const initialRange = toRange(targetProps, domain);
           const activeHandle = getActiveHandle(targetProps, position, initialRange);
           const activeBrushes = {
-            brushArea: isEqual(domain, fullDomain),
+            brushArea: isEqual(domain, fullDomain) || isEqual(domain, getMinimumDomain()),
             brush: withinBound(position, initialRange) && !isEqual(fullDomain, domain),
             minHandle: activeHandle === "min" || activeHandle === "both",
             maxHandle: activeHandle === "max" || activeHandle === "both"
