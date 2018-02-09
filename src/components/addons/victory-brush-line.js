@@ -126,7 +126,7 @@ export default class VictoryBrushLine extends React.Component {
       fill: "black",
       opacity: (d, a) => a ? 0.4 : 0.3 // eslint-disable-line no-magic-numbers
     },
-    brushAreaWidth: 15,
+    brushAreaWidth: 10,
     brushWidth: 10,
     groupComponent: <g/>,
     handleComponent: <Box/>,
