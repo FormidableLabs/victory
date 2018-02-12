@@ -1,5 +1,14 @@
 # VictoryChart Changelog
 
+## 25.1.0 (2016-02-12)
+
+-[571](https://github.com/FormidableLabs/victory-chart/pull/571)
+  - Adds `selectionBlacklist` to `VictorySelectionContainer`
+  - Adds `activateData` and `activateLabels` to `VictoryVoronoiContainer` (true by default)
+  - Adds `activateSelectedData` to `VictorySelectionContainer` (true by default)
+-[572](https://github.com/FormidableLabs/victory-chart/pull/572) Changes behavior of `labels` in `VictoryVoronoiContainer`
+  - `labels` is now called with `point, index, points` instead of `point, active`. This will not be a breaking change for most users, as this function was only called when labels were `active`
+
 ## 25.0.6 (2016-02-09)
 
 -[570](https://github.com/FormidableLabs/victory-chart/pull/570) Add "minus" option for `VictoryScatter` `symbol` prop
