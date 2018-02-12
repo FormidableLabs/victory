@@ -1,5 +1,5 @@
 import { Selection, Data, Helpers } from "victory-core";
-import { assign, defaults, throttle, isFunction } from "lodash";
+import { assign, defaults, throttle, isFunction, includes } from "lodash";
 import React from "react";
 
 const SelectionHelpers = {
@@ -14,7 +14,11 @@ const SelectionHelpers = {
     };
 
     const iteratee = (child, childName, parent) => {
-      if (child.type && child.type.role === "axis") {
+      const role = child.type && child.type.role;
+      const blacklist = props.selectionBlacklist || [];
+      if (role === "axis" || role === "legend" || role === "label") {
+        return null;
+      } else if (includes(blacklist, childName)) {
         return null;
       } else if (child.type && isFunction(child.type.getData)) {
         child = parent ? React.cloneElement(child, parent.props) : child;
@@ -62,10 +66,10 @@ const SelectionHelpers = {
     return count > 0 ? { eventKey, data } : null;
   },
 
-  // eslint-disable-next-line complexity
+  // eslint-disable-next-line complexity, max-statements
   onMouseDown(evt, targetProps) {
     evt.preventDefault();
-    const { allowSelection, polar } = targetProps;
+    const { activateSelectedData, allowSelection, polar } = targetProps;
     if (!allowSelection) {
       return {};
     }
@@ -81,17 +85,15 @@ const SelectionHelpers = {
     if (isFunction(targetProps.onSelectionCleared)) {
       targetProps.onSelectionCleared(defaults({}, mutatedProps, targetProps));
     }
-    return [
-      {
-        target: "parent",
-        mutation: () => mutatedProps
-      }, {
-        target: "data",
-        childName: targetProps.children || datasets.length ? "all" : undefined,
-        eventKey: "all",
-        mutation: () => null
-      }
-    ];
+    const parentMutation = [{ target: "parent", mutation: () => mutatedProps }];
+    const dataMutation = activateSelectedData ? [{
+      target: "data",
+      childName: targetProps.children || datasets.length ? "all" : undefined,
+      eventKey: "all",
+      mutation: () => null
+    }] : [];
+
+    return parentMutation.concat(...dataMutation);
   },
 
   onMouseMove(evt, targetProps) {
@@ -113,7 +115,7 @@ const SelectionHelpers = {
   },
 
   onMouseUp(evt, targetProps) {
-    const { allowSelection, x2, y2 } = targetProps;
+    const { activateSelectedData, allowSelection, x2, y2 } = targetProps;
     if (!allowSelection) {
       return {};
     }
@@ -136,7 +138,7 @@ const SelectionHelpers = {
       mutation: () => mutatedProps
     }];
 
-    const dataMutation = selectedData ?
+    const dataMutation = selectedData && activateSelectedData ?
       selectedData.map((d) => {
         return {
           childName: d.childName, eventKey: d.eventKey, target: "data",
