@@ -8,6 +8,8 @@ export const voronoiContainerMixin = (base) => class VictoryVoronoiContainer ext
   static displayName = "VictoryVoronoiContainer";
   static propTypes = {
     ...VictoryContainer.propTypes,
+    activateData: PropTypes.bool,
+    activateLabels: PropTypes.bool,
     disable: PropTypes.bool,
     labelComponent: PropTypes.element,
     labels: PropTypes.func,
@@ -20,6 +22,8 @@ export const voronoiContainerMixin = (base) => class VictoryVoronoiContainer ext
   };
   static defaultProps = {
     ...VictoryContainer.defaultProps,
+    activateData: true,
+    activateLabels: true,
     labelComponent: <VictoryTooltip/>,
     voronoiPadding: 5
   };

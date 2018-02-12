@@ -1,5 +1,5 @@
 import { Selection, Data, Helpers } from "victory-core";
-import { assign, throttle, isFunction, groupBy, keys, isEqual, includes } from "lodash";
+import { assign, throttle, isFunction, isEmpty, groupBy, keys, isEqual, includes } from "lodash";
 import { voronoi as d3Voronoi } from "d3-voronoi";
 import React from "react";
 
@@ -94,7 +94,15 @@ const VoronoiHelpers = {
 
   getActiveMutations(props, point) {
     const { childName, continuous } = point;
-    const targets = props.labels ? ["data"] : ["data", "labels"];
+    const { activateData, activateLabels, labels } = props;
+    if (!activateData && !activateLabels) {
+      return [];
+    }
+    const defaultTarget = activateData ? ["data"] : [];
+    const targets = labels && !activateLabels ? defaultTarget : defaultTarget.concat("labels");
+    if (isEmpty(targets)) {
+      return [];
+    }
     return targets.map((target) => {
       const eventKey = continuous === true && target === "data" ? "all" : point.eventKey;
       return {
@@ -105,7 +113,15 @@ const VoronoiHelpers = {
 
   getInactiveMutations(props, point) {
     const { childName, continuous } = point;
-    const targets = props.labels ? ["data"] : ["data", "labels"];
+    const { activateData, activateLabels, labels } = props;
+    if (!activateData && !activateLabels) {
+      return [];
+    }
+    const defaultTarget = activateData ? ["data"] : [];
+    const targets = labels && !activateLabels ? defaultTarget : defaultTarget.concat("labels");
+    if (isEmpty(targets)) {
+      return [];
+    }
     return targets.map((target) => {
       const eventKey = continuous && target === "data" ? "all" : point.eventKey;
       return {
