@@ -2,7 +2,7 @@ import PropTypes from "prop-types";
 import React from "react";
 import { VictoryContainer, VictoryTooltip, Helpers, TextSize } from "victory-core";
 import VoronoiHelpers from "./voronoi-helpers";
-import { omit, defaults } from "lodash";
+import { omit, defaults, isFunction } from "lodash";
 
 export const voronoiContainerMixin = (base) => class VictoryVoronoiContainer extends base {
   static displayName = "VictoryVoronoiContainer";
@@ -172,8 +172,8 @@ export const voronoiContainerMixin = (base) => class VictoryVoronoiContainer ext
 
   getLabelProps(props, points) {
     const { labels, scale, labelComponent, theme } = props;
-    const text = points.reduce((memo, point) => {
-      const t = Helpers.evaluateProp(labels, point, true);
+    const text = points.reduce((memo, point, index) => {
+      const t = isFunction(labels) ? labels(point, index, points) : null;
       if (t === null || t === undefined) {
         return memo;
       }
