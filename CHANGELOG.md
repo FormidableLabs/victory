@@ -1,5 +1,23 @@
 # Victory Changelog
 
+## 0.25.5 (2018-02-12)
+
+VictoryCore
+-[339](https://github.com/FormidableLabs/victory-core/pull/339) Adds a "minus" option for `Point`
+
+VictoryChart
+-[571](https://github.com/FormidableLabs/victory-chart/pull/571)
+  - Adds `selectionBlacklist` to `VictorySelectionContainer`
+  - Adds `activateData` and `activateLabels` to `VictoryVoronoiContainer` (true by default)
+  - Adds `activateSelectedData` to `VictorySelectionContainer` (true by default)
+-[572](https://github.com/FormidableLabs/victory-chart/pull/572) Changes behavior of `labels` in `VictoryVoronoiContainer`
+  - `labels` is now called with `point, index, points` instead of `point, active`. This will not be a breaking change for most users, as this function was only called when labels were `active`
+-[570](https://github.com/FormidableLabs/victory-chart/pull/570) Add "minus" option for `VictoryScatter` `symbol` prop
+-[569](https://github.com/FormidableLabs/victory-chart/pull/569) Fixes a bug in `createContainer`
+-[568](https://github.com/FormidableLabs/victory-chart/pull/568) Adds `brushAreaWidth` prop for `VictoryBrushLine`
+-[567](https://github.com/FormidableLabs/victory-chart/pull/567) Fixes brushArea active state in `VictoryBrushLine`
+-[565](https://github.com/FormidableLabs/victory-chart/pull/565) Prevent re-renders with disable prop
+
 ## 0.25.4 (2018-02-07)
 
 VictoryCore
