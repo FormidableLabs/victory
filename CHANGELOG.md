@@ -1,5 +1,10 @@
 # Victory Changelog
 
+## 0.25.6 (2018-02-14)
+
+VictoryChart
+-[573](https://github.com/FormidableLabs/victory-chart/pull/573) Use fallback styles in VictoryBrushLine
+
 ## 0.25.5 (2018-02-12)
 
 VictoryCore
