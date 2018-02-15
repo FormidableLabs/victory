@@ -83,6 +83,24 @@ const panBox = (props, position) => {
   return [constrainedMin, constrainedMax];
 };
 
+const fallbackProps = {
+  brushAreaStyle: {
+    stroke: "none",
+    fill: "black",
+    opacity: (d, a) => a ? 0.2 : 0.1 // eslint-disable-line no-magic-numbers
+  },
+  brushStyle: {
+    pointerEvents: "none",
+    stroke: "none",
+    fill: "black",
+    opacity: (d, a) => a ? 0.4 : 0.3 // eslint-disable-line no-magic-numbers
+  }, handleStyle: {
+    pointerEvents: "none",
+    stroke: "none",
+    fill: "none"
+  }
+};
+
 export default class VictoryBrushLine extends React.Component {
   static propTypes = {
     allowDrag: PropTypes.bool,
@@ -108,34 +126,20 @@ export default class VictoryBrushLine extends React.Component {
     onBrushDomainChange: PropTypes.func,
     scale: PropTypes.object,
     style: PropTypes.object,
-    type: PropTypes.string
+    type: PropTypes.string,
+    width: PropTypes.number
   };
 
   static defaultProps = {
     allowDrag: true,
     allowResize: true,
     brushAreaComponent: <Box/>,
-    brushAreaStyle: {
-      stroke: "none",
-      fill: "black",
-      opacity: (d, a) => a ? 0.2 : 0.1 // eslint-disable-line no-magic-numbers
-    },
     brushComponent: <Box/>,
-    brushStyle: {
-      stroke: "none",
-      fill: "black",
-      opacity: (d, a) => a ? 0.4 : 0.3 // eslint-disable-line no-magic-numbers
-    },
-    brushAreaWidth: 10,
-    brushWidth: 10,
     groupComponent: <g/>,
     handleComponent: <Box/>,
-    handleStyle: {
-      stroke: "none",
-      fill: "none"
-    },
     handleWidth: 10,
-    lineComponent: <Axis/>
+    lineComponent: <Axis/>,
+    width: 10
   };
 
   static defaultEvents = function (props) {
@@ -335,7 +339,8 @@ export default class VictoryBrushLine extends React.Component {
   }
 
   getHandleDimensions(props) {
-    const { dimension, brushWidth, handleWidth, x1, x2, y1, y2 } = props;
+    const { dimension, handleWidth, x1, x2, y1, y2 } = props;
+    const brushWidth = props.brushWidth || props.width;
     const domain = getCurrentDomain(props);
     const range = toRange(props, domain);
     const defaultX = Math.min(x1, x2) - (brushWidth / 2);
@@ -357,18 +362,26 @@ export default class VictoryBrushLine extends React.Component {
     };
   }
 
+  getCursor(props) {
+    const { dimension, activeBrushes = {} } = props;
+    if (activeBrushes.minHandle || activeBrushes.maxHandle) {
+      return dimension === "x" ? "ew-resize" : "ns-resize";
+    } else if (activeBrushes.brush) {
+      return "move";
+    }
+    return "crosshair";
+  }
+
   renderHandles(props) {
     const {
-      handleComponent, handleStyle, dimension, datum = {}, activeBrushes = {},
-      brushDomain, currentDomain
+      handleComponent, handleStyle, datum = {}, activeBrushes = {}, brushDomain, currentDomain
     } = props;
     if (!brushDomain && !currentDomain) {
       return null;
     }
     const domain = getCurrentDomain(props);
     const handleDimensions = this.getHandleDimensions(props);
-    const cursor = dimension === "x" ? "ew-resize" : "ns-resize";
-    const style = assign({ cursor }, handleStyle);
+    const style = assign({}, fallbackProps.handleStyle, handleStyle);
     const minDatum = assign({ handleValue: Collection.getMinValue(domain) }, datum);
     const maxDatum = assign({ handleValue: Collection.getMaxValue(domain) }, datum);
     const minHandleProps = assign({
@@ -388,26 +401,26 @@ export default class VictoryBrushLine extends React.Component {
 
   renderBrush(props) {
     const {
-      brushComponent, brushStyle, brushWidth,
-      activeBrushes = {}, datum = {}, brushDomain, currentDomain
+      brushComponent, brushStyle, activeBrushes = {}, datum = {}, brushDomain, currentDomain
     } = props;
     if (!brushDomain && !currentDomain) {
       return null;
     }
+    const brushWidth = props.brushWidth || props.width;
     const rectDimensions = this.getRectDimensions(props, brushWidth);
-    const baseStyle = Helpers.evaluateStyle(brushStyle, datum, activeBrushes.brush);
-    const style = assign({ cursor: "move" }, baseStyle);
+    const baseStyle = assign({}, fallbackProps.brushStyle, brushStyle);
+    const style = Helpers.evaluateStyle(baseStyle, datum, activeBrushes.brush);
     const brushProps = assign({ style }, rectDimensions);
     return React.cloneElement(brushComponent, brushProps);
   }
 
   renderBrushArea(props) {
-    const {
-      brushAreaComponent, brushAreaStyle, brushAreaWidth, activeBrushes = {}, datum = {}
-    } = props;
+    const { brushAreaComponent, brushAreaStyle, activeBrushes = {}, datum = {} } = props;
+    const brushAreaWidth = props.brushAreaWidth || props.width;
+    const cursor = this.getCursor(props);
     const rectDimensions = this.getRectDimensions(props, brushAreaWidth, getFullDomain(props));
-    const baseStyle = Helpers.evaluateStyle(brushAreaStyle, datum, activeBrushes.brushArea);
-    const style = assign({ cursor: "crosshair" }, baseStyle);
+    const baseStyle = assign({ cursor }, fallbackProps.brushAreaStyle, brushAreaStyle);
+    const style = Helpers.evaluateStyle(baseStyle, datum, activeBrushes.brushArea);
     const brushAreaProps = assign({ style }, rectDimensions);
     return React.cloneElement(brushAreaComponent, brushAreaProps);
   }
