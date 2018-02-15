@@ -67,7 +67,8 @@ class VictoryCandlestick extends React.Component {
       CustomPropTypes.allOfType([CustomPropTypes.integer, CustomPropTypes.nonNegative]),
       PropTypes.string,
       PropTypes.arrayOf(PropTypes.string)
-    ])
+    ]),
+    wickStrokeWidth: PropTypes.number
   };
 
   static defaultProps = {
