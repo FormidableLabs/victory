@@ -18,14 +18,14 @@ export const checkForValidText = (text) => {
 
 export const getSliceStyle = (datum, index, calculatedValues) => {
   const { style, colors } = calculatedValues;
-  const fill = this.getColor(style, colors, index);
+  const fill = getColor(style, colors, index);
   const dataStyles = omit(datum, ["_x", "_y", "x", "y", "label"]);
   return defaults({}, dataStyles, { fill }, style.data);
 };
 
 export const getBaseProps = (props, fallbackProps) => {
   props = Helpers.modifyProps(props, fallbackProps, "pie");
-  const calculatedValues = this.getCalculatedValues(props);
+  const calculatedValues = getCalculatedValues(props);
   const { slices, style, pathFunction, data, origin } = calculatedValues;
   const childProps = {
     parent: {
@@ -40,12 +40,12 @@ export const getBaseProps = (props, fallbackProps) => {
     const eventKey = datum.eventKey || index;
     const dataProps = {
       index, slice, pathFunction, datum, data, origin,
-      style: this.getSliceStyle(datum, index, calculatedValues)
+      style: getSliceStyle(datum, index, calculatedValues)
     };
 
     childProps[eventKey] = {
       data: dataProps,
-      labels: this.getLabelProps(props, dataProps, calculatedValues)
+      labels: getLabelProps(props, dataProps, calculatedValues)
     };
   }
   return childProps;
@@ -58,17 +58,17 @@ export const getLabelProps = (props, dataProps, calculatedValues) => {
     assign({ padding: 0 }, style.labels), datum, props.active
   );
   const labelRadius = Helpers.evaluateProp(props.labelRadius, datum);
-  const labelPosition = this.getLabelPosition(radius, labelRadius, labelStyle);
+  const labelPosition = getLabelPosition(radius, labelRadius, labelStyle);
   const position = labelPosition.centroid(slice);
-  const orientation = this.getLabelOrientation(slice);
+  const orientation = getLabelOrientation(slice);
   return {
     index, datum, data, slice, orientation,
     style: labelStyle,
     x: Math.round(position[0]) + origin.x,
     y: Math.round(position[1]) + origin.y,
-    text: this.getLabelText(props, datum, index),
-    textAnchor: labelStyle.textAnchor || this.getTextAnchor(orientation),
-    verticalAnchor: labelStyle.verticalAnchor || this.getVerticalAnchor(orientation),
+    text: getLabelText(props, datum, index),
+    textAnchor: labelStyle.textAnchor || getTextAnchor(orientation),
+    verticalAnchor: labelStyle.verticalAnchor || getVerticalAnchor(orientation),
     angle: labelStyle.angle
   };
 };
@@ -79,12 +79,12 @@ export const getCalculatedValues = (props) => {
   const style = Helpers.getStyles(props.style, styleObject, "auto", "100%");
   const colors = Array.isArray(colorScale) ? colorScale : Style.getColorScale(colorScale);
   const padding = Helpers.getPadding(props);
-  const radius = this.getRadius(props, padding);
+  const radius = getRadius(props, padding);
   const offsetWidth = ((radius + padding.left) + (width - radius - padding.right)) / 2;
   const offsetHeight = ((radius + padding.top) + (height - radius - padding.bottom)) / 2;
   const origin = { x: offsetWidth, y: offsetHeight };
   const data = Data.getData(props);
-  const slices = this.getSlices(props, data);
+  const slices = getSlices(props, data);
   const pathFunction = d3Shape.arc()
     .cornerRadius(props.cornerRadius)
     .outerRadius(radius)
@@ -155,15 +155,15 @@ export const getLabelText = (props, datum, index) => {
   } else {
     text = isFunction(props.labels) ? props.labels(datum) : datum.xName || datum._x;
   }
-  return this.checkForValidText(text);
+  return checkForValidText(text);
 };
 
 export const getSlices = (props, data) => {
   const layoutFunction = d3Shape.pie()
     .sort(null)
-    .startAngle(this.degreesToRadians(props.startAngle))
-    .endAngle(this.degreesToRadians(props.endAngle))
-    .padAngle(this.degreesToRadians(props.padAngle))
+    .startAngle(degreesToRadians(props.startAngle))
+    .endAngle(degreesToRadians(props.endAngle))
+    .padAngle(degreesToRadians(props.padAngle))
     .value((datum) => { return datum._y; });
   return layoutFunction(data);
 };
