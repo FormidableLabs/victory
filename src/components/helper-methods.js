@@ -16,61 +16,28 @@ export const checkForValidText = (text) => {
   }
 };
 
-export const getSliceStyle = (datum, index, calculatedValues) => {
-  const { style, colors } = calculatedValues;
-  const fill = getColor(style, colors, index);
-  const dataStyles = omit(datum, ["_x", "_y", "x", "y", "label"]);
-  return defaults({}, dataStyles, { fill }, style.data);
-};
-
-export const getBaseProps = (props, fallbackProps) => {
-  props = Helpers.modifyProps(props, fallbackProps, "pie");
-  const calculatedValues = getCalculatedValues(props);
-  const { slices, style, pathFunction, data, origin } = calculatedValues;
-  const childProps = {
-    parent: {
-      standalone: props.standalone, slices, pathFunction,
-      width: props.width, height: props.height, style: style.parent
-    }
-  };
-
-  for (let index = 0, len = slices.length; index < len; index++) {
-    const slice = slices[index];
-    const datum = data[index];
-    const eventKey = datum.eventKey || index;
-    const dataProps = {
-      index, slice, pathFunction, datum, data, origin,
-      style: getSliceStyle(datum, index, calculatedValues)
-    };
-
-    childProps[eventKey] = {
-      data: dataProps,
-      labels: getLabelProps(props, dataProps, calculatedValues)
-    };
+export const getColor = (style, colors, index) => {
+  if (style && style.data && style.data.fill) {
+    return style.data.fill;
   }
-  return childProps;
+  return colors && colors[index % colors.length];
 };
 
-export const getLabelProps = (props, dataProps, calculatedValues) => {
-  const { index, datum, data, slice } = dataProps;
-  const { style, radius, origin } = calculatedValues;
-  const labelStyle = Helpers.evaluateStyle(
-    assign({ padding: 0 }, style.labels), datum, props.active
-  );
-  const labelRadius = Helpers.evaluateProp(props.labelRadius, datum);
-  const labelPosition = getLabelPosition(radius, labelRadius, labelStyle);
-  const position = labelPosition.centroid(slice);
-  const orientation = getLabelOrientation(slice);
-  return {
-    index, datum, data, slice, orientation,
-    style: labelStyle,
-    x: Math.round(position[0]) + origin.x,
-    y: Math.round(position[1]) + origin.y,
-    text: getLabelText(props, datum, index),
-    textAnchor: labelStyle.textAnchor || getTextAnchor(orientation),
-    verticalAnchor: labelStyle.verticalAnchor || getVerticalAnchor(orientation),
-    angle: labelStyle.angle
-  };
+export const getRadius = (props, padding) => {
+  return Math.min(
+    props.width - padding.left - padding.right,
+    props.height - padding.top - padding.bottom
+  ) / 2;
+};
+
+export const getSlices = (props, data) => {
+  const layoutFunction = d3Shape.pie()
+    .sort(null)
+    .startAngle(degreesToRadians(props.startAngle))
+    .endAngle(degreesToRadians(props.endAngle))
+    .padAngle(degreesToRadians(props.padAngle))
+    .value((datum) => { return datum._y; });
+  return layoutFunction(data);
 };
 
 export const getCalculatedValues = (props) => {
@@ -92,18 +59,23 @@ export const getCalculatedValues = (props) => {
   return { style, colors, padding, radius, data, slices, pathFunction, origin };
 };
 
-export const getColor = (style, colors, index) => {
-  if (style && style.data && style.data.fill) {
-    return style.data.fill;
-  }
-  return colors && colors[index % colors.length];
+export const getSliceStyle = (datum, index, calculatedValues) => {
+  const { style, colors } = calculatedValues;
+  const fill = getColor(style, colors, index);
+  const dataStyles = omit(datum, ["_x", "_y", "x", "y", "label"]);
+  return defaults({}, dataStyles, { fill }, style.data);
 };
 
-export const getRadius = (props, padding) => {
-  return Math.min(
-    props.width - padding.left - padding.right,
-    props.height - padding.top - padding.bottom
-  ) / 2;
+export const getLabelText = (props, datum, index) => {
+  let text;
+  if (datum.label) {
+    text = datum.label;
+  } else if (Array.isArray(props.labels)) {
+    text = props.labels[index];
+  } else {
+    text = isFunction(props.labels) ? props.labels(datum) : datum.xName || datum._x;
+  }
+  return checkForValidText(text);
 };
 
 export const getLabelPosition = (radius, labelRadius, style) => {
@@ -146,24 +118,52 @@ export const getVerticalAnchor = (orientation) => {
   return orientation === "bottom" ? "start" : "end";
 };
 
-export const getLabelText = (props, datum, index) => {
-  let text;
-  if (datum.label) {
-    text = datum.label;
-  } else if (Array.isArray(props.labels)) {
-    text = props.labels[index];
-  } else {
-    text = isFunction(props.labels) ? props.labels(datum) : datum.xName || datum._x;
-  }
-  return checkForValidText(text);
+export const getLabelProps = (props, dataProps, calculatedValues) => {
+  const { index, datum, data, slice } = dataProps;
+  const { style, radius, origin } = calculatedValues;
+  const labelStyle = Helpers.evaluateStyle(
+    assign({ padding: 0 }, style.labels), datum, props.active
+  );
+  const labelRadius = Helpers.evaluateProp(props.labelRadius, datum);
+  const labelPosition = getLabelPosition(radius, labelRadius, labelStyle);
+  const position = labelPosition.centroid(slice);
+  const orientation = getLabelOrientation(slice);
+  return {
+    index, datum, data, slice, orientation,
+    style: labelStyle,
+    x: Math.round(position[0]) + origin.x,
+    y: Math.round(position[1]) + origin.y,
+    text: getLabelText(props, datum, index),
+    textAnchor: labelStyle.textAnchor || getTextAnchor(orientation),
+    verticalAnchor: labelStyle.verticalAnchor || getVerticalAnchor(orientation),
+    angle: labelStyle.angle
+  };
 };
 
-export const getSlices = (props, data) => {
-  const layoutFunction = d3Shape.pie()
-    .sort(null)
-    .startAngle(degreesToRadians(props.startAngle))
-    .endAngle(degreesToRadians(props.endAngle))
-    .padAngle(degreesToRadians(props.padAngle))
-    .value((datum) => { return datum._y; });
-  return layoutFunction(data);
+export const getBaseProps = (props, fallbackProps) => {
+  props = Helpers.modifyProps(props, fallbackProps, "pie");
+  const calculatedValues = getCalculatedValues(props);
+  const { slices, style, pathFunction, data, origin } = calculatedValues;
+  const childProps = {
+    parent: {
+      standalone: props.standalone, slices, pathFunction,
+      width: props.width, height: props.height, style: style.parent
+    }
+  };
+
+  for (let index = 0, len = slices.length; index < len; index++) {
+    const slice = slices[index];
+    const datum = data[index];
+    const eventKey = datum.eventKey || index;
+    const dataProps = {
+      index, slice, pathFunction, datum, data, origin,
+      style: getSliceStyle(datum, index, calculatedValues)
+    };
+
+    childProps[eventKey] = {
+      data: dataProps,
+      labels: getLabelProps(props, dataProps, calculatedValues)
+    };
+  }
+  return childProps;
 };
