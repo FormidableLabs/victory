@@ -6,7 +6,7 @@ import {
   addEvents, Helpers, Data, PropTypes as CustomPropTypes, Slice,
   VictoryContainer, VictoryLabel, VictoryTheme
 } from "victory-core";
-import PieHelpers from "./helper-methods";
+import * as PieHelpers from "./helper-methods";
 
 const fallbackProps = {
   endAngle: 360,
