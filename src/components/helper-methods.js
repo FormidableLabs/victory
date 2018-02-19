@@ -4,11 +4,11 @@ import * as d3Shape from "d3-shape";
 
 import { Helpers, Data, Style } from "victory-core";
 
-export const degreesToRadians = (degrees) => {
+const degreesToRadians = (degrees) => {
   return degrees * (Math.PI / 180);
 };
 
-export const checkForValidText = (text) => {
+const checkForValidText = (text) => {
   if (text === undefined || text === null) {
     return text;
   } else {
@@ -16,21 +16,21 @@ export const checkForValidText = (text) => {
   }
 };
 
-export const getColor = (style, colors, index) => {
+const getColor = (style, colors, index) => {
   if (style && style.data && style.data.fill) {
     return style.data.fill;
   }
   return colors && colors[index % colors.length];
 };
 
-export const getRadius = (props, padding) => {
+const getRadius = (props, padding) => {
   return Math.min(
     props.width - padding.left - padding.right,
     props.height - padding.top - padding.bottom
   ) / 2;
 };
 
-export const getSlices = (props, data) => {
+const getSlices = (props, data) => {
   const layoutFunction = d3Shape.pie()
     .sort(null)
     .startAngle(degreesToRadians(props.startAngle))
@@ -40,7 +40,7 @@ export const getSlices = (props, data) => {
   return layoutFunction(data);
 };
 
-export const getCalculatedValues = (props) => {
+const getCalculatedValues = (props) => {
   const { theme, colorScale, width, height } = props;
   const styleObject = theme && theme.pie && theme.pie.style ? theme.pie.style : {};
   const style = Helpers.getStyles(props.style, styleObject, "auto", "100%");
@@ -59,14 +59,14 @@ export const getCalculatedValues = (props) => {
   return { style, colors, padding, radius, data, slices, pathFunction, origin };
 };
 
-export const getSliceStyle = (datum, index, calculatedValues) => {
+const getSliceStyle = (datum, index, calculatedValues) => {
   const { style, colors } = calculatedValues;
   const fill = getColor(style, colors, index);
   const dataStyles = omit(datum, ["_x", "_y", "x", "y", "label"]);
   return defaults({}, dataStyles, { fill }, style.data);
 };
 
-export const getLabelText = (props, datum, index) => {
+const getLabelText = (props, datum, index) => {
   let text;
   if (datum.label) {
     text = datum.label;
@@ -78,7 +78,7 @@ export const getLabelText = (props, datum, index) => {
   return checkForValidText(text);
 };
 
-export const getLabelPosition = (radius, labelRadius, style) => {
+const getLabelPosition = (radius, labelRadius, style) => {
   const padding = style && style.padding || 0;
   const arcRadius = labelRadius || radius + padding;
   return d3Shape.arc()
@@ -86,7 +86,7 @@ export const getLabelPosition = (radius, labelRadius, style) => {
     .innerRadius(arcRadius);
 };
 
-export const getLabelOrientation = (slice) => {
+const getLabelOrientation = (slice) => {
   const radiansToDegrees = (radians) => {
     return radians * (180 / Math.PI);
   };
@@ -104,21 +104,21 @@ export const getLabelOrientation = (slice) => {
   }
 };
 
-export const getTextAnchor = (orientation) => {
+const getTextAnchor = (orientation) => {
   if (orientation === "top" || orientation === "bottom") {
     return "middle";
   }
   return orientation === "right" ? "start" : "end";
 };
 
-export const getVerticalAnchor = (orientation) => {
+const getVerticalAnchor = (orientation) => {
   if (orientation === "left" || orientation === "right") {
     return "middle";
   }
   return orientation === "bottom" ? "start" : "end";
 };
 
-export const getLabelProps = (props, dataProps, calculatedValues) => {
+const getLabelProps = (props, dataProps, calculatedValues) => {
   const { index, datum, data, slice } = dataProps;
   const { style, radius, origin } = calculatedValues;
   const labelStyle = Helpers.evaluateStyle(
