@@ -5,7 +5,7 @@ import {
   PropTypes as CustomPropTypes, Helpers, VictoryLabel,
   VictoryContainer, VictoryTheme, Grid, addEvents, Arc
 } from "victory-core";
-import AxisHelpers from "./helper-methods";
+import { getDomain, getAxis, getScale, getStyles, getBaseProps } from "./helper-methods";
 import { BaseProps } from "../../helpers/common-props";
 
 const fallbackProps = {
@@ -105,11 +105,11 @@ class VictoryPolarAxis extends React.Component {
     tickLabelComponent: <VictoryLabel/>
   };
 
-  static getDomain = AxisHelpers.getDomain.bind(AxisHelpers);
-  static getAxis = AxisHelpers.getAxis.bind(AxisHelpers);
-  static getScale = AxisHelpers.getScale.bind(AxisHelpers);
-  static getStyles = partialRight(AxisHelpers.getStyles.bind(AxisHelpers), fallbackProps.style);
-  static getBaseProps = partialRight(AxisHelpers.getBaseProps.bind(AxisHelpers), fallbackProps);
+  static getDomain = getDomain.bind(getDomain);
+  static getAxis = getAxis.bind(getAxis);
+  static getScale = getScale.bind(getScale);
+  static getStyles = partialRight(getStyles.bind(getStyles), fallbackProps.style);
+  static getBaseProps = partialRight(getBaseProps.bind(getBaseProps), fallbackProps);
   static expectedComponents = [
     "axisComponent", "circularAxisComponent", "groupComponent", "containerComponent",
     "tickComponent", "tickLabelComponent", "gridComponent", "circularGridComponent"

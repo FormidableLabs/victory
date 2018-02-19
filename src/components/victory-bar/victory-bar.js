@@ -1,6 +1,6 @@
 import PropTypes from "prop-types";
 import React from "react";
-import BarHelpers from "./helper-methods";
+import { getBaseProps } from "./helper-methods";
 import { partialRight } from "lodash";
 import {
   Helpers, VictoryLabel, VictoryContainer, VictoryTheme, Bar, addEvents, Data, Domain
@@ -68,7 +68,7 @@ class VictoryBar extends React.Component {
 
   static getDomain = Domain.getDomainWithZero.bind(Domain);
   static getData = Data.getData.bind(Data);
-  static getBaseProps = partialRight(BarHelpers.getBaseProps.bind(BarHelpers), fallbackProps);
+  static getBaseProps = partialRight(getBaseProps.bind(getBaseProps), fallbackProps);
   static expectedComponents = [
     "dataComponent", "labelComponent", "groupComponent", "containerComponent"
   ];

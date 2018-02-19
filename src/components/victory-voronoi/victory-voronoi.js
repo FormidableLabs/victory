@@ -4,7 +4,7 @@ import {
   PropTypes as CustomPropTypes, Helpers, VictoryLabel, addEvents,
   VictoryContainer, VictoryTheme, DefaultTransitions, Voronoi, Data, Domain
 } from "victory-core";
-import VoronoiHelpers from "./helper-methods";
+import { getBaseProps } from "./helper-methods";
 import { BaseProps, DataProps } from "../../helpers/common-props";
 
 const fallbackProps = {
@@ -42,8 +42,7 @@ class VictoryVoronoi extends React.Component {
 
   static getDomain = Domain.getDomain.bind(Domain);
   static getData = Data.getData.bind(Data);
-  static getBaseProps = partialRight(
-    VoronoiHelpers.getBaseProps.bind(VoronoiHelpers), fallbackProps);
+  static getBaseProps = partialRight(getBaseProps.bind(getBaseProps), fallbackProps);
   static expectedComponents = [
     "dataComponent", "labelComponent", "groupComponent", "containerComponent"
   ];
