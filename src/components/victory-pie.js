@@ -6,7 +6,7 @@ import {
   addEvents, Helpers, Data, PropTypes as CustomPropTypes, Slice,
   VictoryContainer, VictoryLabel, VictoryTheme
 } from "victory-core";
-import * as PieHelpers from "./helper-methods";
+import { getBaseProps } from "./helper-methods";
 
 const fallbackProps = {
   endAngle: 360,
@@ -160,7 +160,7 @@ class VictoryPie extends React.Component {
     theme: VictoryTheme.grayscale
   };
 
-  static getBaseProps = partialRight(PieHelpers.getBaseProps.bind(PieHelpers), fallbackProps);
+  static getBaseProps = partialRight(getBaseProps, fallbackProps);
   static getData = Data.getData.bind(Data);
   static expectedComponents = [
     "dataComponent", "labelComponent", "groupComponent", "containerComponent"
