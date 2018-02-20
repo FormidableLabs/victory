@@ -3,7 +3,7 @@ import Wrapper from "../../helpers/wrapper";
 import React from "react";
 import { Collection, Log } from "victory-core";
 
-export const getDataComponents = (childComponents) => {
+const getDataComponents = (childComponents) => {
   const findDataComponents = (children) => {
     return children.reduce((memo, child) => {
       if (child.type && child.type.role === "axis") {
@@ -18,7 +18,7 @@ export const getDataComponents = (childComponents) => {
   return findDataComponents(childComponents);
 };
 
-export const getChildComponents = (props, defaultAxes) => {
+const getChildComponents = (props, defaultAxes) => {
   const childComponents = React.Children.toArray(props.children);
   if (childComponents.length === 0) {
     return [defaultAxes.independent, defaultAxes.dependent];
@@ -45,7 +45,7 @@ export const getChildComponents = (props, defaultAxes) => {
   return childComponents;
 };
 
-export const getDefaultDomainPadding = (childComponents, horizontal) => {
+const getDefaultDomainPadding = (childComponents, horizontal) => {
   const groupComponent = childComponents.filter((child) => {
     return child.type && child.type.role && child.type.role === "group-wrapper";
   });
@@ -60,7 +60,7 @@ export const getDefaultDomainPadding = (childComponents, horizontal) => {
     { x: (offset * children.length) / 2 };
 };
 
-export const getDomain = (props, axis, childComponents) => {
+const getDomain = (props, axis, childComponents) => {
   childComponents = childComponents || React.Children.toArray(props.children);
   const domain = Wrapper.getDomain(props, axis, childComponents);
   const axisComponent = Axis.getAxisComponent(childComponents, axis);
@@ -69,7 +69,7 @@ export const getDomain = (props, axis, childComponents) => {
 };
 
 // eslint-disable-next-line complexity
-export const getAxisOffset = (props, calculatedProps) => {
+const getAxisOffset = (props, calculatedProps) => {
   const { axisComponents, scale, origin, domain, originSign, padding } = calculatedProps;
   const { top, bottom, left, right } = padding;
   // make the axes line up, and cross when appropriate
@@ -102,11 +102,19 @@ export const getAxisOffset = (props, calculatedProps) => {
   };
 };
 
-export const createStringMap = (props, axis, childComponents) => {
+const createStringMap = (props, axis, childComponents) => {
   const allStrings = Wrapper.getStringsFromChildren(props, axis, childComponents);
   return allStrings.length === 0 ? null :
     allStrings.reduce((memo, string, index) => {
       memo[string] = index + 1;
       return memo;
     }, {});
+};
+
+export { getDomain,
+  getAxisOffset,
+  getDataComponents,
+  getChildComponents,
+  getDefaultDomainPadding,
+  createStringMap
 };

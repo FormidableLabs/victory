@@ -19,7 +19,7 @@ const sortData = (dataset, sortKey, sortOrder = "ascending") => {
   return sortedData;
 };
 
-export const getData = (props) => {
+const getData = (props) => {
   if (!props.data || Data.getLength(props.data) < 1) {
     return [];
   }
@@ -61,7 +61,7 @@ export const getData = (props) => {
   return sortData(formattedData, props.sortKey, props.sortOrder);
 };
 
-export const getDomain = (props, axis) => {
+const getDomain = (props, axis) => {
   let domain;
   if (props.domain && props.domain[axis]) {
     domain = props.domain[axis];
@@ -149,7 +149,7 @@ const getLabelProps = (dataProps, text, style) => {
   };
 };
 
-export const getBaseProps = (props, fallbackProps) => { // eslint-disable-line max-statements
+const getBaseProps = (props, fallbackProps) => { // eslint-disable-line max-statements
   props = Helpers.modifyProps(props, fallbackProps, "candlestick");
   const calculatedValues = getCalculatedValues(props);
   const { data, style, scale, domain, origin } = calculatedValues;
@@ -187,3 +187,5 @@ export const getBaseProps = (props, fallbackProps) => { // eslint-disable-line m
     return childProps;
   }, initialChildProps);
 };
+
+export { getBaseProps, getDomain, getData };

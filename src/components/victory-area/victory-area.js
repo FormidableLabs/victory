@@ -58,7 +58,7 @@ class VictoryArea extends React.Component {
   static defaultPolarTransitions = DefaultTransitions.continuousPolarTransitions();
   static getDomain = Domain.getDomainWithZero.bind(Domain);
   static getData = Data.getData.bind(Data);
-  static getBaseProps = partialRight(getBaseProps.bind(getBaseProps), fallbackProps);
+  static getBaseProps = partialRight(getBaseProps, fallbackProps);
   static expectedComponents = [
     "dataComponent", "labelComponent", "groupComponent", "containerComponent"
   ];

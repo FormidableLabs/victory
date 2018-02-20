@@ -84,9 +84,9 @@ class VictoryCandlestick extends React.Component {
     theme: VictoryTheme.grayscale
   };
 
-  static getDomain = getDomain.bind(getDomain);
-  static getData = getData.bind(getData);
-  static getBaseProps = partialRight(getBaseProps.bind(getBaseProps), fallbackProps);
+  static getDomain = getDomain;
+  static getData = getData;
+  static getBaseProps = partialRight(getBaseProps, fallbackProps);
   static expectedComponents = [
     "dataComponent", "labelComponent", "groupComponent", "containerComponent"
   ];

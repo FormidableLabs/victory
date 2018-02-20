@@ -134,7 +134,7 @@ const getDomainFromData = (props, axis, dataset) => {
   return [min, max];
 };
 
-export const getDomain = (props, axis) => {
+const getDomain = (props, axis) => {
   const propsDomain = Domain.getDomainFromProps(props, axis);
   if (propsDomain) {
     return Domain.padDomain(propsDomain, props, axis);
@@ -205,7 +205,7 @@ const getDataStyles = (datum, style) => {
   return defaults({}, stylesFromData, style);
 };
 
-export const getBaseProps = (props, fallbackProps) => {
+const getBaseProps = (props, fallbackProps) => {
   props = Helpers.modifyProps(props, fallbackProps, "errorbar");
   const { data, style, scale, domain, origin } = getCalculatedValues(props, fallbackProps);
   const { groupComponent, height, width, borderWidth, standalone, theme, polar, padding } = props;
@@ -237,3 +237,5 @@ export const getBaseProps = (props, fallbackProps) => {
     return childProps;
   }, initialChildProps);
 };
+
+export { getBaseProps, getDomain };

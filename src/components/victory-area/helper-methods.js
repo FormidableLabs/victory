@@ -1,7 +1,7 @@
 import { assign } from "lodash";
 import { Helpers, LabelHelpers, Data, Domain, Scale } from "victory-core";
 
-export const getDataWithBaseline = (props, scale) => {
+const getDataWithBaseline = (props, scale) => {
   let data = Data.getData(props);
 
   if (data.length < 2) {
@@ -39,7 +39,7 @@ const getCalculatedValues = (props) => {
   return { style, data, scale, domain, origin };
 };
 
-export const getBaseProps = (props, fallbackProps) => {
+const getBaseProps = (props, fallbackProps) => {
   const modifiedProps = Helpers.modifyProps(props, fallbackProps, "area");
   props = assign({}, modifiedProps, getCalculatedValues(modifiedProps));
   const {
@@ -64,3 +64,5 @@ export const getBaseProps = (props, fallbackProps) => {
     return childProps;
   }, initialChildProps);
 };
+
+export { getBaseProps, getDataWithBaseline };

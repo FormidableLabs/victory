@@ -49,7 +49,7 @@ const getCalculatedValues = (props) => {
   return { domain, data, scale, style, polygons, origin };
 };
 
-export const getBaseProps = (props, fallbackProps) => {
+const getBaseProps = (props, fallbackProps) => {
   const modifiedProps = Helpers.modifyProps(props, fallbackProps, "scatter");
   props = assign({}, modifiedProps, getCalculatedValues(modifiedProps));
   const {
@@ -80,3 +80,5 @@ export const getBaseProps = (props, fallbackProps) => {
     return childProps;
   }, initialChildProps);
 };
+
+export { getBaseProps };

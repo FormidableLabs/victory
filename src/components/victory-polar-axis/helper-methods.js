@@ -3,7 +3,7 @@ import Axis from "../../helpers/axis";
 import { Helpers, LabelHelpers, Scale, Domain, Collection } from "victory-core";
 
 // exposed for use by VictoryChart
-export const getAxis = (props, flipped) => {
+const getAxis = (props, flipped) => {
   const typicalAxis = props.dependentAxis ? "y" : "x";
   const invertedAxis = typicalAxis === "x" ? "y" : "x";
   return flipped ? invertedAxis : typicalAxis;
@@ -59,7 +59,7 @@ const getDomainFromTickValues = (props, axis) => {
 };
 
 // exposed for use by VictoryChart
-export const getDomain = (props, axis) => {
+const getDomain = (props, axis) => {
   const inherentAxis = getAxis(props);
   if (axis && axis !== inherentAxis) {
     return undefined;
@@ -114,7 +114,7 @@ const getRange = (props, axis) => {
 };
 
 // exposed for use by VictoryChart (necessary?)
-export const getScale = (props) => {
+const getScale = (props) => {
   const axis = getAxis(props);
   const scale = Scale.getBaseScale(props, axis);
   const domain = getDomain(props, axis) || scale.domain();
@@ -124,7 +124,7 @@ export const getScale = (props) => {
   return scale;
 };
 
-export const getStyles = (props, styleObject) => {
+const getStyles = (props, styleObject) => {
   const style = props.style || {};
   styleObject = styleObject || {};
   const parentStyleProps = { height: "auto", width: "100%" };
@@ -306,7 +306,7 @@ const getCalculatedValues = (props) => {
   };
 };
 
-export const getBaseProps = (props, fallbackProps) => {
+const getBaseProps = (props, fallbackProps) => {
   const role = getRole(props);
   props = modifyProps(props, fallbackProps, role);
   const calculatedValues = getCalculatedValues(props);
@@ -329,4 +329,11 @@ export const getBaseProps = (props, fallbackProps) => {
 
     return childProps;
   }, initialChildProps);
+};
+
+export { getDomain,
+  getAxis,
+  getScale,
+  getStyles,
+  getBaseProps
 };

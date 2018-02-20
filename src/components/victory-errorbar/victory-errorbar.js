@@ -63,9 +63,9 @@ class VictoryErrorBar extends React.Component {
     theme: VictoryTheme.grayscale
   };
 
-  static getDomain = getDomain.bind(getDomain);
+  static getDomain = getDomain;
   static getData = Data.getData.bind(Data);
-  static getBaseProps = partialRight(getBaseProps.bind(getBaseProps), fallbackProps);
+  static getBaseProps = partialRight(getBaseProps, fallbackProps);
   static expectedComponents = [
     "dataComponent", "labelComponent", "groupComponent", "containerComponent"
   ];

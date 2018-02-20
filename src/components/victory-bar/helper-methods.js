@@ -44,7 +44,7 @@ const getCalculatedValues = (props) => {
   return { style, data, scale, domain, origin };
 };
 
-export const getBaseProps = (props, fallbackProps) => {
+const getBaseProps = (props, fallbackProps) => {
   const modifiedProps = Helpers.modifyProps(props, fallbackProps, "bar");
   props = assign({}, modifiedProps, getCalculatedValues(modifiedProps));
   const {
@@ -76,3 +76,5 @@ export const getBaseProps = (props, fallbackProps) => {
     return childProps;
   }, initialChildProps);
 };
+
+export { getBaseProps };

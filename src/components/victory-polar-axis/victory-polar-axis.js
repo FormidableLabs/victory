@@ -105,11 +105,11 @@ class VictoryPolarAxis extends React.Component {
     tickLabelComponent: <VictoryLabel/>
   };
 
-  static getDomain = getDomain.bind(getDomain);
-  static getAxis = getAxis.bind(getAxis);
-  static getScale = getScale.bind(getScale);
-  static getStyles = partialRight(getStyles.bind(getStyles), fallbackProps.style);
-  static getBaseProps = partialRight(getBaseProps.bind(getBaseProps), fallbackProps);
+  static getDomain = getDomain;
+  static getAxis = getAxis;
+  static getScale = getScale;
+  static getStyles = partialRight(getStyles, fallbackProps.style);
+  static getBaseProps = partialRight(getBaseProps, fallbackProps);
   static expectedComponents = [
     "axisComponent", "circularAxisComponent", "groupComponent", "containerComponent",
     "tickComponent", "tickLabelComponent", "gridComponent", "circularGridComponent"
