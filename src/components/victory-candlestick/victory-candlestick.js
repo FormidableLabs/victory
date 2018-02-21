@@ -5,7 +5,7 @@ import {
   PropTypes as CustomPropTypes, Helpers, VictoryLabel, addEvents,
   VictoryContainer, VictoryTheme, DefaultTransitions, Candle
 } from "victory-core";
-import CandlestickHelpers from "./helper-methods";
+import { getDomain, getData, getBaseProps } from "./helper-methods";
 import { BaseProps, DataProps } from "../../helpers/common-props";
 
 /*eslint-disable no-magic-numbers */
@@ -84,10 +84,9 @@ class VictoryCandlestick extends React.Component {
     theme: VictoryTheme.grayscale
   };
 
-  static getDomain = CandlestickHelpers.getDomain.bind(CandlestickHelpers);
-  static getData = CandlestickHelpers.getData.bind(CandlestickHelpers);
-  static getBaseProps = partialRight(
-    CandlestickHelpers.getBaseProps.bind(CandlestickHelpers), fallbackProps);
+  static getDomain = getDomain;
+  static getData = getData;
+  static getBaseProps = partialRight(getBaseProps, fallbackProps);
   static expectedComponents = [
     "dataComponent", "labelComponent", "groupComponent", "containerComponent"
   ];

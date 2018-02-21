@@ -1,7 +1,7 @@
 import { partialRight } from "lodash";
 import PropTypes from "prop-types";
 import React from "react";
-import LineHelpers from "./helper-methods";
+import { getBaseProps } from "./helper-methods";
 import {
   PropTypes as CustomPropTypes, Helpers, VictoryLabel, addEvents, VictoryContainer, VictoryTheme,
   DefaultTransitions, Curve, VictoryClipContainer, Data, Domain
@@ -58,8 +58,7 @@ class VictoryLine extends React.Component {
 
   static getDomain = Domain.getDomain.bind(Domain);
   static getData = Data.getData.bind(Data);
-  static getBaseProps = partialRight(LineHelpers.getBaseProps.bind(LineHelpers),
-    fallbackProps);
+  static getBaseProps = partialRight(getBaseProps, fallbackProps);
   static expectedComponents = [
     "dataComponent", "labelComponent", "groupComponent", "containerComponent"
   ];
