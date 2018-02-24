@@ -220,23 +220,31 @@ export default {
     }, {});
     const xKeys = keys(xMap).map((k) => +k);
     const xArr = sortBy(xKeys);
+
     return datasets.map((dataset) => {
       let indexOffset = 0;
+      const isDate = dataset[0] && dataset[0]._x instanceof Date;
       const filledInData = xArr.map((x, index) => {
-        const datum = dataset[index - indexOffset];
-        const isDate = datum._x instanceof Date;
-        const x1 = isDate ? datum._x.getTime() : datum._x;
         x = +x;
+        const datum = dataset[index - indexOffset];
 
-        if (x1 === x) {
-          return datum;
+        if (datum) {
+          const x1 = isDate ? datum._x.getTime() : datum._x;
+          if (x1 === x) {
+            return datum;
+          } else {
+            indexOffset++;
+            const y = fillInMissingData ? 0 : null;
+            x = isDate ? new Date(x) : x;
+            return { x, y, _x: x, _y: y };
+          }
         } else {
-          indexOffset++;
           const y = fillInMissingData ? 0 : null;
           x = isDate ? new Date(x) : x;
           return { x, y, _x: x, _y: y };
         }
       });
+
       return filledInData;
     });
   },
