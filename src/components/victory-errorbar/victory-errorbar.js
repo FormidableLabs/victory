@@ -5,7 +5,7 @@ import {
   VictoryContainer, VictoryTheme, DefaultTransitions, ErrorBar, Data
 } from "victory-core";
 import { partialRight } from "lodash";
-import ErrorBarHelpers from "./helper-methods";
+import { getBaseProps, getDomain } from "./helper-methods";
 import { BaseProps, DataProps } from "../../helpers/common-props";
 
 const fallbackProps = {
@@ -63,10 +63,9 @@ class VictoryErrorBar extends React.Component {
     theme: VictoryTheme.grayscale
   };
 
-  static getDomain = ErrorBarHelpers.getDomain.bind(ErrorBarHelpers);
+  static getDomain = getDomain;
   static getData = Data.getData.bind(Data);
-  static getBaseProps = partialRight(
-    ErrorBarHelpers.getBaseProps.bind(ErrorBarHelpers), fallbackProps);
+  static getBaseProps = partialRight(getBaseProps, fallbackProps);
   static expectedComponents = [
     "dataComponent", "labelComponent", "groupComponent", "containerComponent"
   ];

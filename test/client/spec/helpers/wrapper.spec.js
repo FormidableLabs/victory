@@ -120,6 +120,22 @@ describe("helpers/wrapper", () => {
       ]);
     });
 
+    it("fills in data missing an x value with 0 when dataset domains differ", () => {
+      const props = { fillInMissingData: true };
+      const datasets = [
+        [{ x: 0, _x: 0, y: 1, _y: 1 }, { x: 1, _x: 1, y: 3, _y: 3 }, { x: 2, _x: 2, y: 2, _y: 2 },
+         { x: 3, _x: 3, y: 2, _y: 2 }],
+        [{ x: 1, _x: 1, y: 3, _y: 3 }, { x: 2, _x: 2, y: 2, _y: 2 }]
+      ];
+      const result = Wrapper.fillInMissingData(props, datasets);
+      expect(result).to.deep.eql([
+        [{ x: 0, _x: 0, y: 1, _y: 1 }, { x: 1, _x: 1, y: 3, _y: 3 }, { x: 2, _x: 2, y: 2, _y: 2 },
+         { x: 3, _x: 3, y: 2, _y: 2 }],
+        [{ x: 0, _x: 0, y: 0, _y: 0 }, { x: 1, _x: 1, y: 3, _y: 3 }, { x: 2, _x: 2, y: 2, _y: 2 },
+         { x: 3, _x: 3, y: 0, _y: 0 }]
+      ]);
+    });
+
     it("fills in data missing an x value with null when fillInMissingData prop is false", () => {
       const props = { fillInMissingData: false };
       const datasets = [
@@ -134,6 +150,23 @@ describe("helpers/wrapper", () => {
           { x: 1, _x: 1, y: 3, _y: 3 },
           { x: 2, _x: 2, y: 2, _y: 2 }
         ]
+      ]);
+    });
+
+    it("fills in data missing an x value with null when fillinMissingData prop is false " +
+       "and dataset domains differ", () => {
+      const props = { fillInMissingData: false };
+      const datasets = [
+        [{ x: 0, _x: 0, y: 1, _y: 1 }, { x: 1, _x: 1, y: 3, _y: 3 }, { x: 2, _x: 2, y: 2, _y: 2 },
+         { x: 3, _x: 3, y: 2, _y: 2 }],
+        [{ x: 1, _x: 1, y: 3, _y: 3 }, { x: 2, _x: 2, y: 2, _y: 2 }]
+      ];
+      const result = Wrapper.fillInMissingData(props, datasets);
+      expect(result).to.deep.eql([
+        [{ x: 0, _x: 0, y: 1, _y: 1 }, { x: 1, _x: 1, y: 3, _y: 3 }, { x: 2, _x: 2, y: 2, _y: 2 },
+         { x: 3, _x: 3, y: 2, _y: 2 }],
+        [{ x: 0, _x: 0, y: null, _y: null }, { x: 1, _x: 1, y: 3, _y: 3 },
+         { x: 2, _x: 2, y: 2, _y: 2 }, { x: 3, _x: 3, y: null, _y: null }]
       ]);
     });
 
@@ -161,6 +194,38 @@ describe("helpers/wrapper", () => {
           { x: new Date(2018, 1, 7), _x: new Date(2018, 1, 7), y: 1, _y: 1 },
           { x: new Date(2018, 1, 8), _x: new Date(2018, 1, 8), y: 0, _y: 0 },
           { x: new Date(2018, 1, 9), _x: new Date(2018, 1, 9), y: 3, _y: 3 }
+        ]
+      ]);
+    });
+
+    it("fills in data missing an x value with 0 when they are dates and " +
+       "dataset domains differ", () => {
+      const props = { fillInMissingData: true };
+      const datasets = [
+        [
+          { x: new Date(2018, 1, 7), _x: new Date(2018, 1, 7), y: 1, _y: 1 },
+          { x: new Date(2018, 1, 8), _x: new Date(2018, 1, 8), y: 2, _y: 2 },
+          { x: new Date(2018, 1, 9), _x: new Date(2018, 1, 9), y: 3, _y: 3 },
+          { x: new Date(2018, 1, 10), _x: new Date(2018, 1, 10), y: 4, _y: 4 }
+        ],
+        [
+          { x: new Date(2018, 1, 7), _x: new Date(2018, 1, 7), y: 1, _y: 1 },
+          { x: new Date(2018, 1, 9), _x: new Date(2018, 1, 9), y: 3, _y: 3 }
+        ]
+      ];
+      const result = Wrapper.fillInMissingData(props, datasets);
+      expect(result).to.deep.eql([
+        [
+          { x: new Date(2018, 1, 7), _x: new Date(2018, 1, 7), y: 1, _y: 1 },
+          { x: new Date(2018, 1, 8), _x: new Date(2018, 1, 8), y: 2, _y: 2 },
+          { x: new Date(2018, 1, 9), _x: new Date(2018, 1, 9), y: 3, _y: 3 },
+          { x: new Date(2018, 1, 10), _x: new Date(2018, 1, 10), y: 4, _y: 4 }
+        ],
+        [
+          { x: new Date(2018, 1, 7), _x: new Date(2018, 1, 7), y: 1, _y: 1 },
+          { x: new Date(2018, 1, 8), _x: new Date(2018, 1, 8), y: 0, _y: 0 },
+          { x: new Date(2018, 1, 9), _x: new Date(2018, 1, 9), y: 3, _y: 3 },
+          { x: new Date(2018, 1, 10), _x: new Date(2018, 1, 10), y: 0, _y: 0 }
         ]
       ]);
     });
