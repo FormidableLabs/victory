@@ -50,17 +50,29 @@ class VictoryBoxPlot extends React.Component {
     labelOrientation: PropTypes.oneOf(["top", "bottom", "left", "right"]),
     maxComponent: PropTypes.element,
     maxLabelComponent: PropTypes.element,
-    medComponent: PropTypes.element,
-    medLabelComponent: PropTypes.element,
+    medianComponent: PropTypes.element,
+    medianLabelComponent: PropTypes.element,
     minComponent: PropTypes.element,
     minLabelComponent: PropTypes.element,
     q1Component: PropTypes.element,
     q1LabelComponent: PropTypes.element,
     q3Component: PropTypes.element,
     q3LabelComponent: PropTypes.element,
-    whiskerStyle: PropTypes.shape({
-      whiskerWidth: PropTypes.number,
-      whiskerStroke: PropTypes.string
+    style: PropTypes.shape({
+      boxes: PropTypes.object,
+      labels: PropTypes.object,
+      parent: PropTypes.object,
+      max: PropTypes.object,
+      maxLabel: PropTypes.object,
+      median: PropTypes.object,
+      medianLabel: PropTypes.object,
+      min: PropTypes.object,
+      minLabel: PropTypes.object,
+      q1: PropTypes.object,
+      q1Label: PropTypes.object,
+      q3: PropTypes.object,
+      q3Label: PropTypes.object,
+      whiskers: PropTypes.object
     })
   }
 
@@ -68,9 +80,8 @@ class VictoryBoxPlot extends React.Component {
     boxWidth: 20,
     containerComponent: <VictoryContainer/>,
     data: defaultData,
-    dataComponent: <Box />,
+    dataComponent: <Box/>,
     groupComponent: <g role="presentation"/>,
-    horizontal: false,
     labelOrientation: "right",
     maxComponent: <Whisker />,
     maxLabelComponent: <VictoryLabel />,
@@ -86,11 +97,7 @@ class VictoryBoxPlot extends React.Component {
     scale: "linear",
     sortKey: "x",
     sortOrder: "ascending",
-    theme: VictoryTheme.grayscale,
-    whiskerStyle: ({
-      whiskerWidth: 2,
-      whiskerStroke: "#000"
-    })
+    theme: VictoryTheme.grayscale
   };
 
   static getDomain = BoxPlotHelpers.getDomain.bind(BoxPlotHelpers);

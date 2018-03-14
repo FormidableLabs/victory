@@ -14,6 +14,31 @@ import { min as d3Min, max as d3Max, quantile as d3Quantile } from "d3-array";
 */
 
 export default {
+
+  getDomain(props, axis) {
+    let domain;
+    if (props.domain && props.domain[axis]) {
+      domain = props.domain[axis];
+    } else if (props.domain && Array.isArray(props.domain)) {
+      domain = props.domain;
+    } else {
+      const dataset = this.getData(props);
+
+      if (props.horizontal) {
+        // find the domain of all y values, use the min and max for x
+        domain = axis === "x"
+          ? this.getDomainFromMinMax(dataset)
+          : this.reduceDataset(props, dataset, axis);
+      } else {
+        // find the domain of all x values, use the min and max for y
+        domain = axis === "x"
+          ? this.reduceDataset(props, dataset, axis)
+          : this.getDomainFromMinMax(dataset);
+      }
+    }
+    return Domain.cleanDomain(Domain.padDomain(domain, props, axis), props);
+  },
+
   getBaseProps(props, fallbackProps) {
     props = Helpers.modifyProps(props, fallbackProps, "boxplot");
     const calculatedValues = this.getCalculatedValues(props);
@@ -150,7 +175,7 @@ export default {
       const hasDistinctIndependentVariable = this.checkHasDistinctIndependentVariable(props);
       if (!hasDistinctIndependentVariable) {
         throw new Error(`
-          data prop may only take an array of objects with a unique 
+          data prop may only take an array of objects with a unique
           independent variable. Make sure your x or y values are distinct.
         `);
       }
@@ -355,30 +380,6 @@ export default {
         angle: labelStyle.angle
       };
     });
-  },
-
-  getDomain(props, axis) {
-    let domain;
-    if (props.domain && props.domain[axis]) {
-      domain = props.domain[axis];
-    } else if (props.domain && Array.isArray(props.domain)) {
-      domain = props.domain;
-    } else {
-      const dataset = this.getData(props);
-
-      if (props.horizontal) {
-        // find the domain of all y values, use the min and max for x
-        domain = axis === "x"
-          ? this.getDomainFromMinMax(dataset)
-          : this.reduceDataset(props, dataset, axis);
-      } else {
-        // find the domain of all x values, use the min and max for y
-        domain = axis === "x"
-          ? this.reduceDataset(props, dataset, axis)
-          : this.getDomainFromMinMax(dataset);
-      }
-    }
-    return Domain.cleanDomain(Domain.padDomain(domain, props, axis), props);
   },
 
   reduceDataset(props, dataset, axis) {
