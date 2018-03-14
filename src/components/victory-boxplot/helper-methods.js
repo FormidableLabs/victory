@@ -1,6 +1,6 @@
 /*eslint no-magic-numbers: ["error", { "ignore": [0, 0.25, 0.5, 0.75, 1, 2] }]*/
 /*eslint-disable no-nested-ternary */
-import { sortBy, has, mapValues, replace, assign } from "lodash";
+import { sortBy, defaults, has, mapValues, replace, assign } from "lodash";
 import { Helpers, Scale, Domain, Data } from "victory-core";
 import { min as d3Min, max as d3Max, quantile as d3Quantile } from "d3-array";
 
@@ -42,9 +42,11 @@ export default {
   getBaseProps(props, fallbackProps) {
     props = Helpers.modifyProps(props, fallbackProps, "boxplot");
     const calculatedValues = this.getCalculatedValues(props);
-    const { data, style, scale, domain, horizontal } = calculatedValues;
-    const { groupComponent, width, height, padding, standalone,
-      theme, boxWidth, whiskerStyle, labelOrientation } = props;
+    const { data, style, scale, domain } = calculatedValues;
+    const {
+      groupComponent, width, height, padding, standalone, horizontal,
+      theme, boxWidth, labelOrientation
+    } = props;
     const initialChildProps = {
       parent: {
         domain, scale, width, height, data, standalone,
@@ -60,30 +62,27 @@ export default {
       const max = horizontal ? scale.x(datum._max) : scale.y(datum._max);
       const q1 = horizontal ? scale.x(datum._q1) : scale.y(datum._q1);
       const q3 = horizontal ? scale.x(datum._q3) : scale.y(datum._q3);
-      const med = horizontal ? scale.x(datum._med) : scale.y(datum._med);
-      const dataProps = { datum, x, y, min, max, q1, q3, med, horizontal,
-        boxWidth, whiskerStyle, groupComponent, style, labelOrientation };
-      const { minProps, maxProps } = this.getWhiskerProps(dataProps);
+      const median = horizontal ? scale.x(datum._median) : scale.y(datum._median);
+      const dataProps = {
+        datum, x, y, min, max, q1, q3, median, horizontal,
+        boxWidth, groupComponent, style, labelOrientation
+      };
       const { q1Props, q3Props } = this.getBoxProps(dataProps);
-      const { medProps } = this.getMedProps(dataProps);
-      const { minLabelProps, maxLabelProps, q1LabelProps,
-        q3LabelProps, medLabelProps } = this.getLabelProps(dataProps);
+      const {
+        minLabelProps, maxLabelProps, q1LabelProps, q3LabelProps, medianLabelProps
+      } = this.getLabelProps(dataProps);
 
       acc[eventKey] = {
-        data: {
-          minProps,
-          maxProps,
-          q1Props,
-          q3Props,
-          medProps
-        },
-        labels: {
-          minLabelProps,
-          maxLabelProps,
-          q1LabelProps,
-          q3LabelProps,
-          medLabelProps
-        }
+        max: this.getWhiskerProps(dataProps, "max"),
+        maxLabel: maxLabelProps,
+        median: this.getMedianProps(dataProps),
+        medianLabel: medianLabelProps,
+        min: this.getWhiskerProps(dataProps, "min"),
+        minLabel: minLabelProps,
+        q1: q1Props,
+        q1Label: q1LabelProps,
+        q3: q3Props,
+        q3Label: q3LabelProps
       };
       return acc;
     }, initialChildProps);
@@ -105,7 +104,7 @@ export default {
       max: Helpers.createAccessor("max"),
       q1: Helpers.createAccessor("q1"),
       q3: Helpers.createAccessor("q3"),
-      med: Helpers.createAccessor("med")
+      median: Helpers.createAccessor("median")
     };
 
     const formattedData = data.reduce((dataArr, datum) => {
@@ -117,13 +116,13 @@ export default {
       const _max = accessor.max(datum);
       const _q1 = accessor.q1(datum);
       const _q3 = accessor.q3(datum);
-      const _med = accessor.med(datum);
+      const _median = accessor.median(datum);
 
       dataArr.push(
         assign(
           {},
           datum,
-          { _x, _y, _min, _max, _q1, _q3, _med }
+          { _x, _y, _min, _max, _q1, _q3, _median }
         )
       );
 
@@ -136,7 +135,7 @@ export default {
   processData(props) {
 
     /* check if the data is coming in a pre-processed form,
-    i.e. { x || y, min, max, q1, q3, med }. if not, process it. */
+    i.e. { x || y, min, max, q1, q3, median }. if not, process it. */
     let data;
     const isProcessed = this.checkProcessedData(props);
     if (!isProcessed) {
@@ -187,7 +186,7 @@ export default {
   checkQuartileAttributes(props) {
     return props.data.every((datum) => {
       const hasQuartiles = has(datum, "min") && has(datum, "max")
-        && has(datum, "q1") && has(datum, "q3") && has(datum, "med");
+        && has(datum, "q1") && has(datum, "q3") && has(datum, "median");
       return hasQuartiles;
     });
   },
@@ -203,7 +202,33 @@ export default {
     });
   },
 
+  getStyles(props, styleObject) {
+    const style = props.style || {};
+    styleObject = styleObject || {};
+    const parentStyles = { height: "100%", width: "100%" };
+    const labelStyles = defaults({}, style.labels, styleObject.labels);
+    const boxStyles = defaults({}, style.boxes, styleObject.boxes);
+    const whiskerStyles = defaults({}, style.whiskers, styleObject.whiskers);
+    return {
+      boxes: boxStyles,
+      labels: labelStyles,
+      parent: defaults(style.parent, styleObject.parent, parentStyles),
+      max: defaults({}, style.max, styleObject.max, whiskerStyles),
+      maxLabel: defaults({}, style.maxLabel, styleObject.maxlabel, labelStyles),
+      median: defaults({}, style.median, styleObject.median, whiskerStyles),
+      medianLabel: defaults({}, style.medianLabel, styleObject.medianlabel, labelStyles),
+      min: defaults({}, style.min, styleObject.min, whiskerStyles),
+      minLabel: defaults({}, style.minLabel, styleObject.minlabel, labelStyles),
+      q1: defaults({}, style.q1, styleObject.q1, boxStyles),
+      q1Label: defaults({}, style.q1Label, styleObject.q1label, labelStyles),
+      q3: defaults({}, style.q3, styleObject.q3, boxStyles),
+      q3Label: defaults({}, style.q3Label, styleObject.q3label, labelStyles),
+      whiskers: whiskerStyles
+    };
+  },
+
   getCalculatedValues(props) {
+    const { theme } = props;
     const data = Data.addEventKeys(props, this.getData(props));
     const range = {
       x: Helpers.getRange(props, "x"),
@@ -217,7 +242,9 @@ export default {
       x: Scale.getBaseScale(props, "x").domain(domain.x).range(range.x),
       y: Scale.getBaseScale(props, "y").domain(domain.y).range(range.y)
     };
-    return { domain, horizontal: props.horizontal, data, scale, style: props.style };
+    const defaultStyles = theme && theme.boxplot && theme.boxplot.style ? theme.bar.style : {};
+    const style = this.getStyles(props, defaultStyles);
+    return { domain, data, scale, style };
   },
 
   sortData(dataset, horizontal) {
@@ -231,7 +258,7 @@ export default {
       q1: d3Quantile(dependentVars, 0.25),
       q3: d3Quantile(dependentVars, 0.75),
       min: d3Min(dependentVars),
-      med: d3Quantile(dependentVars, 0.5),
+      median: d3Quantile(dependentVars, 0.5),
       max: d3Max(dependentVars)
     };
 
@@ -249,56 +276,34 @@ export default {
   },
 
   // try to find a way to simplify this rather than disable es-lint
-  getWhiskerProps(dataProps) {
-    // eslint-disable-next-line no-shadow
-    const { horizontal, x, y, min, max, q1, q3, style,
-      boxWidth, whiskerStyle: { whiskerWidth, whiskerStroke }, groupComponent } = dataProps;
+  getWhiskerProps(dataProps, type) {
+    const {
+      horizontal, x, y, min, max, q1, q3, style, boxWidth, groupComponent
+    } = dataProps;
 
-    const minProps = {
-      majorWhisker: {
-        x1: horizontal ? min : x,
-        y1: horizontal ? y : min,
-        x2: horizontal ? q1 : x,
-        y2: horizontal ? y : q1,
-        strokeWidth: whiskerWidth,
-        stroke: whiskerStroke
-      },
-      minorWhisker: {
-        x1: horizontal ? min : x - boxWidth / 2,
-        y1: horizontal ? y - boxWidth / 2 : min,
-        x2: horizontal ? min : x + boxWidth / 2,
-        y2: horizontal ? y + boxWidth / 2 : min,
-        strokeWidth: whiskerWidth,
-        stroke: whiskerStroke
-      },
-      style: style.min,
-      groupComponent,
-      statistic: "min"
+    const whiskerStyle = style[type] || style.whisker || {};
+    const boxValue = type === "min" ? q1 : q3;
+    const whiskerValue = type === "min" ? min : max;
+    const majorCoordinates = {
+      x1: horizontal ? boxValue : x,
+      y1: horizontal ? y : boxValue,
+      x2: horizontal ? whiskerValue : x,
+      y2: horizontal ? y : whiskerValue
+    };
+    const minorCoordinates = {
+      x1: horizontal ? whiskerValue : x - boxWidth / 2,
+      y1: horizontal ? y - boxWidth / 2 : whiskerValue,
+      x2: horizontal ? whiskerValue : x + boxWidth / 2,
+      y2: horizontal ? y + boxWidth / 2 : whiskerValue
     };
 
-    const maxProps = {
-      majorWhisker: {
-        x1: horizontal ? q3 : x,
-        y1: horizontal ? y : q3,
-        x2: horizontal ? max : x,
-        y2: horizontal ? y : max,
-        strokeWidth: whiskerWidth,
-        stroke: whiskerStroke
-      },
-      minorWhisker: {
-        x1: horizontal ? max : x - boxWidth / 2,
-        y1: horizontal ? y - boxWidth / 2 : max,
-        x2: horizontal ? max : x + boxWidth / 2,
-        y2: horizontal ? y + boxWidth / 2 : max,
-        strokeWidth: whiskerWidth,
-        stroke: whiskerStroke
-      },
-      style: style.max,
+    return {
+      majorWhisker: majorCoordinates,
+      minorWhisker: minorCoordinates,
+      style: whiskerStyle,
       groupComponent,
-      statistic: "max"
+      statistic: type
     };
-
-    return { minProps, maxProps };
   },
 
   getBoxProps(dataProps) {
@@ -328,8 +333,7 @@ export default {
     return { q1Props, q3Props };
   },
 
-  getMedProps(dataProps) {
-
+  getMedianProps(dataProps) {
     const { med, x, y, boxWidth, horizontal, groupComponent, style } = dataProps;
 
     const medProps = {
