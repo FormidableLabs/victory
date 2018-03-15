@@ -26,20 +26,18 @@ export default class App extends React.Component {
         <VictoryChart domain={{ x: [0, 3], y: [0, 20] }}>
           <VictoryBoxPlot
             boxWidth={20}
-            whiskerStyle={{ whiskerWidth: 2, whiskerStroke: "#2bbee0" }}
-            labelOrientation={"right"}
+            data={[{ x: 1, y: [5, 10, 9, 2] }, { x: 2, y: [1, 15, 6, 8] }]}
             style={{
-              parent: {},
-              min: {},
-              max: {},
+              min: { stroke: "#fff", strokeWidth: 2 },
+              max: { stroke: "#fff", strokeWidth: 2 },
               q1: { fill: "#FF530D", fillOpacity: "0.5" },
               q3: { fill: "#2bbee0", fillOpacity: "0.5" },
-              med: { stroke: "#fff", strokeWidth: "4" },
+              median: { stroke: "#fff", strokeWidth: "4" },
               minLabels: { fill: "green", padding: 10 },
               maxLabels: { fill: "orange", padding: 10 },
               q1Labels: { padding: 10 },
               q3Labels: { padding: 10 },
-              medLabels: { padding: 10 }
+              medianLabels: { padding: 10 }
             }}
           />
         </VictoryChart>
@@ -48,21 +46,20 @@ export default class App extends React.Component {
           <VictoryBoxPlot
             data={[{ y: 1, x: [5, 10, 9, 2] }, { y: 2, x: [1, 15, 6, 8] }]}
             boxWidth={20}
-            whiskerStyle={{ whiskerWidth: 2, whiskerStroke: "#2bbee0" }}
             horizontal
             labelOrientation={"top"}
             style={{
               parent: {},
-              min: {},
-              max: {},
-              q1: { fill: "#FF530D", fillOpacity: "0.5" },
-              q3: { fill: "#2bbee0", fillOpacity: "0.5" },
-              med: { stroke: "#fff", strokeWidth: "4" },
+              min: { stroke: "#fff", strokeWidth: 2 },
+              max: { stroke: "#fff", strokeWidth: 2 },
+              q1: { fill: "#FF530D", fillOpacity: 0.5 },
+              q3: { fill: "#2bbee0", fillOpacity: 0.5 },
+              median: { stroke: "#fff", strokeWidth: 2 },
               minLabels: { fill: "green", padding: 10 },
               maxLabels: { fill: "orange", padding: 10 },
               q1Labels: { padding: 10 },
               q3Labels: { padding: 10 },
-              medLabels: { padding: 10 }
+              medianLabels: { padding: 10 }
             }}
           />
         </VictoryChart>

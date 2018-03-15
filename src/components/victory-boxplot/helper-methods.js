@@ -300,7 +300,7 @@ export default {
     return {
       majorWhisker: majorCoordinates,
       minorWhisker: minorCoordinates,
-      style: whiskerStyle,
+      style: { stroke: "black", strokeWidth: 3 },
       groupComponent,
       statistic: type
     };
@@ -308,23 +308,23 @@ export default {
 
   getBoxProps(dataProps) {
 
-    const { horizontal, x, y, med, q1, q3, boxWidth, groupComponent, style } = dataProps;
+    const { horizontal, x, y, median, q1, q3, boxWidth, groupComponent, style } = dataProps;
 
     const q1Props = {
       x: horizontal ? q1 : x - boxWidth / 2,
-      y: horizontal ? y - boxWidth / 2 : med,
-      width: horizontal ? med - q1 : boxWidth,
-      height: horizontal ? boxWidth : q1 - med,
+      y: horizontal ? y - boxWidth / 2 : median,
+      width: horizontal ? median - q1 : boxWidth,
+      height: horizontal ? boxWidth : q1 - median,
       groupComponent,
       style: style.q1,
       statistic: "q1"
     };
 
     const q3Props = {
-      x: horizontal ? med : x - boxWidth / 2,
+      x: horizontal ? median : x - boxWidth / 2,
       y: horizontal ? y - boxWidth / 2 : q3,
-      width: horizontal ? q3 - med : boxWidth,
-      height: horizontal ? boxWidth : med - q3,
+      width: horizontal ? q3 - median : boxWidth,
+      height: horizontal ? boxWidth : median - q3,
       groupComponent,
       style: style.q3,
       statistic: "q3"
@@ -334,30 +334,28 @@ export default {
   },
 
   getMedianProps(dataProps) {
-    const { med, x, y, boxWidth, horizontal, groupComponent, style } = dataProps;
+    const { median, x, y, boxWidth, horizontal, groupComponent, style } = dataProps;
 
-    const medProps = {
-      x1: horizontal ? med : x - boxWidth / 2,
-      y1: horizontal ? y - boxWidth / 2 : med,
-      x2: horizontal ? med : x + boxWidth / 2,
-      y2: horizontal ? y + boxWidth / 2 : med,
+    return {
+      x1: horizontal ? median : x - boxWidth / 2,
+      y1: horizontal ? y - boxWidth / 2 : median,
+      x2: horizontal ? median : x + boxWidth / 2,
+      y2: horizontal ? y + boxWidth / 2 : median,
       groupComponent,
-      style: style.med,
-      statistic: "med"
+      style: style.median,
+      statistic: "median"
     };
-
-    return { medProps };
   },
 
   getLabelProps(dataProps) {
-    const { datum, x, y, min, max, q1, q3, med, boxWidth,
+    const { datum, x, y, min, max, q1, q3, median, boxWidth,
       horizontal, labelOrientation, style } = dataProps;
     const labelsObj = {
       minLabelProps: { datum: datum.min, value: min },
       maxLabelProps: { datum: datum.max, value: max },
       q1LabelProps: { datum: datum.q1, value: q1 },
       q3LabelProps: { datum: datum.q3, value: q3 },
-      medLabelProps: { datum: datum.med, value: med }
+      medianLabelProps: { datum: datum.median, value: median }
     };
 
     return mapValues(labelsObj, (labelProps, key) => {
