@@ -1,6 +1,7 @@
 import React from "react";
 import PropTypes from "prop-types";
 import CommonProps from "./common-props";
+import Line from "./line";
 import { assign } from "lodash";
 
 export default class Whisker extends React.Component {
@@ -8,36 +9,31 @@ export default class Whisker extends React.Component {
   static propTypes = {
     ...CommonProps,
     groupComponent: PropTypes.element,
+    lineComponent: PropTypes.element,
     majorWhisker: PropTypes.shape({
       x1: PropTypes.number,
       x2: PropTypes.number,
       y1: PropTypes.number,
-      y2: PropTypes.number,
-      strokeWidth: PropTypes.number,
-      stroke: PropTypes.string
+      y2: PropTypes.number
     }),
     minorWhisker: PropTypes.shape({
       x1: PropTypes.number,
       x2: PropTypes.number,
       y1: PropTypes.number,
-      y2: PropTypes.number,
-      strokeWidth: PropTypes.number,
-      stroke: PropTypes.string
+      y2: PropTypes.number
     })
   }
 
   static defaultProps = {
-    groupComponent: <g />
+    groupComponent: <g />,
+    lineComponent: <Line/>
   }
 
   getMajorWhiskerProps(props) {
-    const { majorWhisker: { x1, y1, x2, y2, strokeWidth, stroke },
-      events, className, style } = props;
-    const attribs = { x1, y1, x2, y2, strokeWidth, stroke };
-
+    const { majorWhisker, events, className, style } = props;
     return assign({
-      ...style,
-      ...attribs,
+      style,
+      ...majorWhisker,
       className
     }, events);
   }
@@ -59,15 +55,13 @@ export default class Whisker extends React.Component {
   }
 
   render() {
-    const majorWhiskerProps = this.getMajorWhiskerProps(this.props);
-    const minorWhiskerProps = this.getMinorWhiskerProps(this.props);
-    const majorWhisker = this.renderWhisker(majorWhiskerProps);
-    const minorWhisker = this.renderWhisker(minorWhiskerProps);
-    return React.cloneElement(
-      this.props.groupComponent,
-      {},
-      majorWhisker,
-      minorWhisker
-    );
+    const {
+      groupComponent, lineComponent, style, events, className, majorWhisker, minorWhisker
+    } = this.props;
+
+    return React.cloneElement(groupComponent, {}, [
+      React.cloneElement(lineComponent, assign({ style, events, className }, majorWhisker)),
+      React.cloneElement(lineComponent, assign({ style, events, className }, minorWhisker))
+    ]);
   }
 }
