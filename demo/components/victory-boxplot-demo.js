@@ -19,7 +19,6 @@ export default class App extends React.Component {
       <div className="demo" style={containerStyle}>
         <VictoryChart /* domain={{ x: [0, 3], y: [0, 12] }} */>
           <VictoryBoxPlot
-            style={{ parent: {} }}
             data={[{ x: 1, y: 10 }, { x: 1, y: 7 }, { x: 1, y: 3 }, { x: 1, y: 5 }]}
           />
         </VictoryChart>
@@ -28,8 +27,8 @@ export default class App extends React.Component {
             boxWidth={20}
             data={[{ x: 1, y: [5, 10, 9, 2] }, { x: 2, y: [1, 15, 6, 8] }]}
             style={{
-              min: { stroke: "#fff", strokeWidth: 2 },
-              max: { stroke: "#fff", strokeWidth: 2 },
+              min: { stroke: "black", strokeWidth: 2 },
+              max: { stroke: "black", strokeWidth: 2 },
               q1: { fill: "#FF530D", fillOpacity: "0.5" },
               q3: { fill: "#2bbee0", fillOpacity: "0.5" },
               median: { stroke: "#fff", strokeWidth: "4" },
@@ -50,8 +49,8 @@ export default class App extends React.Component {
             labelOrientation={"top"}
             style={{
               parent: {},
-              min: { stroke: "#fff", strokeWidth: 2 },
-              max: { stroke: "#fff", strokeWidth: 2 },
+              min: { stroke: "black", strokeWidth: 2 },
+              max: { stroke: "black", strokeWidth: 2 },
               q1: { fill: "#FF530D", fillOpacity: 0.5 },
               q3: { fill: "#2bbee0", fillOpacity: 0.5 },
               median: { stroke: "#fff", strokeWidth: 2 },

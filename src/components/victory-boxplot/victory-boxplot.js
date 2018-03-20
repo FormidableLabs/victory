@@ -1,6 +1,6 @@
 import React from "react";
 import PropTypes from "prop-types";
-import { partialRight, mapValues } from "lodash";
+import { partialRight, assign } from "lodash";
 import { BaseProps, DataProps } from "../../helpers/common-props";
 import {
     Helpers, VictoryLabel, addEvents, Line,
@@ -19,23 +19,9 @@ const fallbackProps = {
   }
 };
 
-// const defaultData = [
-//   { x: 1, y: 8 },
-//   { x: 1, y: 8 },
-//   { x: 1, y: 9 },
-//   { x: 1, y: 10 },
-//   { x: 1, y: 8 },
-//   { x: 1, y: 9 },
-//   { x: 1, y: 9 },
-//   { x: 1, y: 13 },
-//   { x: 1, y: 7 },
-//   { x: 1, y: 9 },
-//   { x: 1, y: 10 }
-// ];
-
 const defaultData = [
-  { x: 1, min: 5, q1: 7, med: 12, q3: 18, max: 20 },
-  { x: 2, min: 2, q1: 5, med: 8, q3: 12, max: 15 }
+  { x: 1, min: 5, q1: 7, median: 12, q3: 18, max: 20 },
+  { x: 2, min: 2, q1: 5, median: 8, q3: 12, max: 15 }
 ];
 
 class VictoryBoxPlot extends React.Component {
@@ -46,6 +32,7 @@ class VictoryBoxPlot extends React.Component {
     ...BaseProps,
     ...DataProps,
     boxWidth: PropTypes.number,
+    dimension: PropTypes.oneOf(["x", "y"]),
     horizontal: PropTypes.bool,
     labelOrientation: PropTypes.oneOf(["top", "bottom", "left", "right"]),
     maxComponent: PropTypes.element,
@@ -77,10 +64,10 @@ class VictoryBoxPlot extends React.Component {
   }
 
   static defaultProps = {
-    boxWidth: 20,
     containerComponent: <VictoryContainer/>,
     data: defaultData,
     dataComponent: <Box/>,
+    dimension: "x",
     groupComponent: <g role="presentation"/>,
     labelOrientation: "right",
     maxComponent: <Whisker />,
@@ -107,47 +94,26 @@ class VictoryBoxPlot extends React.Component {
       fallbackProps
   );
 
-  getBoxPlotComponent(statistic, props) {
-    return props[`${statistic}Component`];
-  }
-
-  getLabelComponent(statistic, props) {
-    return props[`${statistic}LabelComponent`];
+  getComponent(props, name, index) {
+    const baseComponent = props[`${name}Component`];
+    const componentProps = this.getComponentProps(baseComponent, name, index);
+    return React.cloneElement(baseComponent, assign({ key: `${name}-${index}` }, componentProps));
   }
 
   renderBoxPlot(props) {
-    const {
-      maxComponent, maxLabelComponent, medianComponent, medianLabelComponent,
-      minComponent, minLabelComponent, q1Component, q1LabelComponent,
-      q3Component, q3LabelComponent, groupComponent
-    } = props;
-
     return this.dataKeys.map((key, index) => {
-      const maxProps = this.getComponentProps(maxComponent, "max", index);
-      const MaxComponent = React.cloneElement(maxComponent, maxProps);
-      const maxLabelProps = this.getComponentProps(maxLabelComponent, "maxLabel", index);
-      const MaxLabelComponent = React.cloneElement(maxLabelComponent, maxLabelProps);
-      const medianProps = this.getComponentProps(medianComponent, "median", index);
-      const MedianComponent = React.cloneElement(medianComponent, medianProps);
-      const medianLabelProps = this.getComponentProps(medianLabelComponent, "medianLabel", index);
-      const MedianLabelComponent = React.cloneElement(medianLabelComponent, medianLabelProps);
-      const minProps = this.getComponentProps(minComponent, "min", index);
-      const MinComponent = React.cloneElement(minComponent, minProps);
-      const minLabelProps = this.getComponentProps(minLabelComponent, "minLabel", index);
-      const MinLabelComponent = React.cloneElement(minLabelComponent, minLabelProps);
-      const q1Props = this.getComponentProps(q1Component, "q1", index);
-      const Q1Component = React.cloneElement(q1Component, q1Props);
-      const q1LabelProps = this.getComponentProps(q1LabelComponent, "q1Label", index);
-      const Q1LabelComponent = React.cloneElement(q1LabelComponent, q1LabelProps);
-      const q3Props = this.getComponentProps(q3Component, "q3", index);
-      const Q3Component = React.cloneElement(q3Component, q3Props);
-      const q3LabelProps = this.getComponentProps(q3LabelComponent, "q3Label", index);
-      const Q3LabelComponent = React.cloneElement(q3LabelComponent, q3LabelProps);
-
       return React.cloneElement(
-        groupComponent, { key }, [
-          MaxComponent, MaxLabelComponent, MedianComponent, MedianLabelComponent, MinComponent,
-          MinLabelComponent, Q1Component, Q1LabelComponent, Q3Component, Q3LabelComponent
+        props.groupComponent, { key }, [
+          this.getComponent(props, "q1", index),
+          this.getComponent(props, "q3", index),
+          this.getComponent(props, "max", index),
+          this.getComponent(props, "median", index),
+          this.getComponent(props, "min", index),
+          this.getComponent(props, "maxLabel", index),
+          this.getComponent(props, "medianLabel", index),
+          this.getComponent(props, "minLabel", index),
+          this.getComponent(props, "q1Label", index),
+          this.getComponent(props, "q3Label", index)
         ]
       );
     });

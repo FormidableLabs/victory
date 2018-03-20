@@ -1,16 +1,14 @@
 /*eslint no-magic-numbers: ["error", { "ignore": [0, 0.25, 0.5, 0.75, 1, 2] }]*/
 /*eslint-disable no-nested-ternary */
-import { sortBy, defaults, has, mapValues, replace, assign } from "lodash";
+import { sortBy, defaults, has, mapValues, replace, assign, uniq } from "lodash";
 import { Helpers, Scale, Domain, Data } from "victory-core";
 import { min as d3Min, max as d3Max, quantile as d3Quantile } from "d3-array";
 
 /* Todos left for this component
-  – Define and integrate a theme for boxplot
   – Create a better strategy for the horizontal prop rather than having
   the ternary operator littered all over the place
   – Integrate LabelHelpers getText method properly
   – Create a string map to parse data passed as string to numeric
-  – Verify that events are being properly attached
 */
 
 export default {
@@ -24,7 +22,7 @@ export default {
     } else {
       const dataset = this.getData(props);
 
-      if (props.horizontal) {
+      if (props.dimension === "y") {
         // find the domain of all y values, use the min and max for x
         domain = axis === "x"
           ? this.getDomainFromMinMax(dataset)
@@ -58,11 +56,12 @@ export default {
       const eventKey = index;
       const x = scale.x(datum._x);
       const y = scale.y(datum._y);
-      const min = horizontal ? scale.x(datum._min) : scale.y(datum._min);
-      const max = horizontal ? scale.x(datum._max) : scale.y(datum._max);
-      const q1 = horizontal ? scale.x(datum._q1) : scale.y(datum._q1);
-      const q3 = horizontal ? scale.x(datum._q3) : scale.y(datum._q3);
-      const median = horizontal ? scale.x(datum._median) : scale.y(datum._median);
+      const boxScale = horizontal ? scale.x : scale.y;
+      const min = boxScale(datum._min);
+      const max = boxScale(datum._max);
+      const q1 = boxScale(datum._q1);
+      const q3 = boxScale(datum._q3);
+      const median = boxScale(datum._median);
       const dataProps = {
         datum, x, y, min, max, q1, q3, median, horizontal,
         boxWidth, groupComponent, style, labelOrientation
@@ -193,7 +192,7 @@ export default {
 
   checkHasDistinctIndependentVariable(props) {
     const values = props.data.map(({ x, y }) => props.horizontal ? y : x);
-    return (new Set(values)).size === values.length;
+    return uniq(values).length === values.length;
   },
 
   checkDependentVariableAsArray(props) {
@@ -242,7 +241,7 @@ export default {
       x: Scale.getBaseScale(props, "x").domain(domain.x).range(range.x),
       y: Scale.getBaseScale(props, "y").domain(domain.y).range(range.y)
     };
-    const defaultStyles = theme && theme.boxplot && theme.boxplot.style ? theme.bar.style : {};
+    const defaultStyles = theme && theme.boxplot && theme.boxplot.style ? theme.boxplot.style : {};
     const style = this.getStyles(props, defaultStyles);
     return { domain, data, scale, style };
   },
@@ -300,7 +299,7 @@ export default {
     return {
       majorWhisker: majorCoordinates,
       minorWhisker: minorCoordinates,
-      style: { stroke: "black", strokeWidth: 3 },
+      style: whiskerStyle,
       groupComponent,
       statistic: type
     };
@@ -335,7 +334,6 @@ export default {
 
   getMedianProps(dataProps) {
     const { median, x, y, boxWidth, horizontal, groupComponent, style } = dataProps;
-
     return {
       x1: horizontal ? median : x - boxWidth / 2,
       y1: horizontal ? y - boxWidth / 2 : median,
