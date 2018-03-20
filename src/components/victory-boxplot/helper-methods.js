@@ -306,7 +306,6 @@ export default {
   },
 
   getBoxProps(dataProps) {
-
     const { horizontal, x, y, median, q1, q3, boxWidth, groupComponent, style } = dataProps;
 
     const q1Props = {
@@ -359,6 +358,9 @@ export default {
     return mapValues(labelsObj, (labelProps, key) => {
       const labelStyle = style[replace(key, "Props", "s")] || {};
       const labelPadding = labelStyle.padding ? labelStyle.padding : 0;
+      const defaultVerticalAnchor = horizontal ? "end" : "middle";
+      const defaultTextAnchor = horizontal ? "middle" : "start";
+
       return {
         style: labelStyle,
         y: horizontal
@@ -371,12 +373,10 @@ export default {
           : labelOrientation === "left"
             ? x - boxWidth / 2 - labelPadding
             : x + boxWidth / 2 + labelPadding,
-        dx: labelStyle.dx,
-        dy: labelStyle.dy,
         text: labelProps.datum,
         statistic: replace(key, "LabelProps", ""),
-        textAnchor: labelStyle.textAnchor || "start",
-        verticalAnchor: labelStyle.verticalAnchor || "end",
+        textAnchor: labelStyle.textAnchor || defaultTextAnchor,
+        verticalAnchor: labelStyle.verticalAnchor || defaultVerticalAnchor,
         angle: labelStyle.angle
       };
     });
