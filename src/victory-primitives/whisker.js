@@ -29,39 +29,14 @@ export default class Whisker extends React.Component {
     lineComponent: <Line/>
   }
 
-  getMajorWhiskerProps(props) {
-    const { majorWhisker, events, className, style } = props;
-    return assign({
-      style,
-      ...majorWhisker,
-      className
-    }, events);
-  }
-
-  getMinorWhiskerProps(props) {
-    const { minorWhisker: { x1, y1, x2, y2, strokeWidth, stroke },
-    style, events, className } = props;
-    const attribs = { x1, y1, x2, y2, strokeWidth, stroke };
-
-    return assign({
-      ...style,
-      ...attribs,
-      className
-    }, events);
-  }
-
-  renderWhisker(whiskerProps) {
-    return <line {...whiskerProps} />;
-  }
-
   render() {
     const {
       groupComponent, lineComponent, style, events, className, majorWhisker, minorWhisker
     } = this.props;
-
+    const baseProps = { style, events, className };
     return React.cloneElement(groupComponent, {}, [
-      React.cloneElement(lineComponent, assign({ style, events, className }, majorWhisker)),
-      React.cloneElement(lineComponent, assign({ style, events, className }, minorWhisker))
+      React.cloneElement(lineComponent, assign({ key: "major-whisker" }, baseProps, majorWhisker)),
+      React.cloneElement(lineComponent, assign({ key: "minor-whisker" }, baseProps, minorWhisker))
     ]);
   }
 }
