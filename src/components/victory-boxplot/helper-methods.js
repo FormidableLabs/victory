@@ -41,6 +41,7 @@ export default {
     props = Helpers.modifyProps(props, fallbackProps, "boxplot");
     const calculatedValues = this.getCalculatedValues(props);
     const { data, style, scale, domain } = calculatedValues;
+    console.log(data)
     const {
       groupComponent, width, height, padding, standalone, horizontal,
       theme, boxWidth, labelOrientation
@@ -91,22 +92,27 @@ export default {
     if (!props.data || Data.getLength(props.data) < 1) {
       return [];
     }
+    const createAccessor = (name) => {
+      return Helpers.createAccessor(props[name] !== undefined ? props[name] : name);
+    };
 
-    const data = this.processData(props);
-
+    const stringMap = {
+      x: Data.createStringMap(props, "x"),
+      y: Data.createStringMap(props, "y")
+    };
     // TODO create a string map to map string data to numeric data
 
     const accessor = {
-      x: Helpers.createAccessor("x"),
-      y: Helpers.createAccessor("y"),
-      min: Helpers.createAccessor("min"),
-      max: Helpers.createAccessor("max"),
-      q1: Helpers.createAccessor("q1"),
-      q3: Helpers.createAccessor("q3"),
-      median: Helpers.createAccessor("median")
+      x: createAccessor("x"),
+      y: createAccessor("y"),
+      min: createAccessor("min"),
+      max: createAccessor("max"),
+      q1: createAccessor("q1"),
+      q3: createAccessor("q3"),
+      median: createAccessor("median")
     };
 
-    const formattedData = data.reduce((dataArr, datum) => {
+    const formattedData = props.data.reduce((dataArr, datum) => {
       datum = Data.parseDatum(datum);
 
       const _x = accessor.x(datum);
@@ -121,57 +127,61 @@ export default {
         assign(
           {},
           datum,
-          { _x, _y, _min, _max, _q1, _q3, _median }
+          { _x, _y, _min, _max, _q1, _q3, _median },
+          typeof _x === "string" ? { _x: stringMap.x[_x], x: _x } : {},
+          typeof _y === "string" ? { _y: stringMap.y[_y], y: _y } : {}
         )
       );
 
       return dataArr;
     }, []);
 
-    return formattedData;
+    return this.processData(props, formattedData);
   },
 
-  processData(props) {
+  processData(props, data) {
 
     /* check if the data is coming in a pre-processed form,
     i.e. { x || y, min, max, q1, q3, median }. if not, process it. */
-    let data;
-    const isProcessed = this.checkProcessedData(props);
+    const isProcessed = this.checkProcessedData(props, data);
     if (!isProcessed) {
 
       // check if the data is coming with x or y values as an array
-      const depedenentVarAsArray = this.checkDependentVariableAsArray(props);
+      const depedenentVarAsArray = data.every((datum) => {
+        return props.horizontal ? Array.isArray(datum._x) : Array.isArray(datum._y);
+      });
 
       if (depedenentVarAsArray) {
         /* generate summary statistics for each datum. to do this, flatten
         the depedentVarArray and process each datum separately */
-        data = props.data.map((datum) => {
+        return data.map((datum) => {
           const flattenedDatum = props.horizontal
-            ? datum.x.map((xVal) => ({ x: xVal, y: datum.y }))
-            : datum.y.map((yVal) => ({ x: datum.x, y: yVal }));
+            ? datum._x.map((xVal) => ({ _x: xVal, _y: datum._y }))
+            : datum._y.map((yVal) => ({ _x: datum._x, _y: yVal }));
           const sortedData = this.sortData(flattenedDatum, props.horizontal);
           return this.getSummaryStatistics(sortedData, props.horizontal);
         });
       } else {
-        const sortedData = this.sortData(props.data, props.horizontal);
-        data = [this.getSummaryStatistics(sortedData, props.horizontal)];
+        const sortedData = this.sortData(data, props.horizontal);
+        return [this.getSummaryStatistics(sortedData, props.horizontal)];
       }
     } else {
-      data = props.data;
+      return data;
     }
-
-    return data;
   },
 
-  checkProcessedData(props) {
+  checkProcessedData(props, data) {
     /* check if the data is pre-processed. start by checking that it has
     all required quartile attributes. */
-    const hasQuartiles = this.checkQuartileAttributes(props);
+    const quartiles = ["_max", "_min", "_median", "q1", "q3"];
+    const hasQuartileAttributes = data.every((datum) => {
+      return quartiles.every((val) => datum[val] !== undefined);
+    });
 
-    if (hasQuartiles) {
+    if (hasQuartileAttributes) {
       // check that the indepedent variable is distinct
-      const hasDistinctIndependentVariable = this.checkHasDistinctIndependentVariable(props);
-      if (!hasDistinctIndependentVariable) {
+      const values = data.map(({ _x, _y }) => props.horizontal ? _y : _x);
+      if (!uniq(values).length === values.length) {
         throw new Error(`
           data prop may only take an array of objects with a unique
           independent variable. Make sure your x or y values are distinct.
@@ -180,25 +190,6 @@ export default {
       return true;
     }
     return false;
-  },
-
-  checkQuartileAttributes(props) {
-    return props.data.every((datum) => {
-      const hasQuartiles = has(datum, "min") && has(datum, "max")
-        && has(datum, "q1") && has(datum, "q3") && has(datum, "median");
-      return hasQuartiles;
-    });
-  },
-
-  checkHasDistinctIndependentVariable(props) {
-    const values = props.data.map(({ x, y }) => props.horizontal ? y : x);
-    return uniq(values).length === values.length;
-  },
-
-  checkDependentVariableAsArray(props) {
-    return props.data.every((datum) => {
-      return props.horizontal ? Array.isArray(datum.x) : Array.isArray(datum.y);
-    });
   },
 
   getStyles(props, styleObject) {
@@ -247,29 +238,29 @@ export default {
   },
 
   sortData(dataset, horizontal) {
-    const sortKey = horizontal ? "x" : "y";
+    const sortKey = horizontal ? "_x" : "_y";
     return sortBy(dataset, sortKey);
   },
 
   getSummaryStatistics(data, horizontal) {
-    const dependentVars = data.map(({ x, y }) => horizontal ? x : y);
+    const dependentVars = data.map(({ _x, _y }) => horizontal ? _x : _y);
     const quartiles = {
-      q1: d3Quantile(dependentVars, 0.25),
-      q3: d3Quantile(dependentVars, 0.75),
-      min: d3Min(dependentVars),
-      median: d3Quantile(dependentVars, 0.5),
-      max: d3Max(dependentVars)
+      _q1: d3Quantile(dependentVars, 0.25),
+      _q3: d3Quantile(dependentVars, 0.75),
+      _min: d3Min(dependentVars),
+      _median: d3Quantile(dependentVars, 0.5),
+      _max: d3Max(dependentVars)
     };
 
     if (horizontal) {
       return {
         ...quartiles,
-        y: data[0].y
+        _y: data[0]._y
       };
     } else {
       return {
         ...quartiles,
-        x: data[0].x
+        _x: data[0]._x
       };
     }
   },

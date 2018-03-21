@@ -3,7 +3,7 @@ import PropTypes from "prop-types";
 import { partialRight, assign } from "lodash";
 import { BaseProps, DataProps } from "../../helpers/common-props";
 import {
-    Helpers, VictoryLabel, addEvents, Line,
+    Helpers, VictoryLabel, addEvents, Line, PropTypes as CustomPropTypes,
     VictoryContainer, VictoryTheme, Box, Whisker
 } from "victory-core";
 import BoxPlotHelpers from "./helper-methods";
@@ -35,18 +35,48 @@ class VictoryBoxPlot extends React.Component {
     dimension: PropTypes.oneOf(["x", "y"]),
     horizontal: PropTypes.bool,
     labelOrientation: PropTypes.oneOf(["top", "bottom", "left", "right"]),
+    max: PropTypes.oneOfType([
+      PropTypes.func,
+      CustomPropTypes.allOfType([CustomPropTypes.integer, CustomPropTypes.nonNegative]),
+      PropTypes.string,
+      PropTypes.arrayOf(PropTypes.string)
+    ]),
     maxComponent: PropTypes.element,
     maxLabelComponent: PropTypes.element,
     maxLabels: PropTypes.oneOfType([ PropTypes.func, PropTypes.array ]),
+    median: PropTypes.oneOfType([
+      PropTypes.func,
+      CustomPropTypes.allOfType([CustomPropTypes.integer, CustomPropTypes.nonNegative]),
+      PropTypes.string,
+      PropTypes.arrayOf(PropTypes.string)
+    ]),
     medianComponent: PropTypes.element,
     medianLabelComponent: PropTypes.element,
     medianLabels: PropTypes.oneOfType([ PropTypes.func, PropTypes.array ]),
+    min: PropTypes.oneOfType([
+      PropTypes.func,
+      CustomPropTypes.allOfType([CustomPropTypes.integer, CustomPropTypes.nonNegative]),
+      PropTypes.string,
+      PropTypes.arrayOf(PropTypes.string)
+    ]),
     minComponent: PropTypes.element,
     minLabelComponent: PropTypes.element,
     minLabels: PropTypes.oneOfType([ PropTypes.func, PropTypes.array ]),
+    q1: PropTypes.oneOfType([
+      PropTypes.func,
+      CustomPropTypes.allOfType([CustomPropTypes.integer, CustomPropTypes.nonNegative]),
+      PropTypes.string,
+      PropTypes.arrayOf(PropTypes.string)
+    ]),
     q1Component: PropTypes.element,
     q1LabelComponent: PropTypes.element,
     q1Labels: PropTypes.oneOfType([ PropTypes.func, PropTypes.array ]),
+    q3: PropTypes.oneOfType([
+      PropTypes.func,
+      CustomPropTypes.allOfType([CustomPropTypes.integer, CustomPropTypes.nonNegative]),
+      PropTypes.string,
+      PropTypes.arrayOf(PropTypes.string)
+    ]),
     q3Component: PropTypes.element,
     q3LabelComponent: PropTypes.element,
     q3Labels: PropTypes.oneOfType([ PropTypes.func, PropTypes.array ]),
@@ -65,7 +95,8 @@ class VictoryBoxPlot extends React.Component {
       q3: PropTypes.object,
       q3Label: PropTypes.object,
       whiskers: PropTypes.object
-    })
+    }),
+    whiskerWidth: PropTypes.number
   }
 
   static defaultProps = {
