@@ -32,7 +32,6 @@ class VictoryBoxPlot extends React.Component {
     ...BaseProps,
     ...DataProps,
     boxWidth: PropTypes.number,
-    dimension: PropTypes.oneOf(["x", "y"]),
     horizontal: PropTypes.bool,
     labelOrientation: PropTypes.oneOf(["top", "bottom", "left", "right"]),
     max: PropTypes.oneOfType([
@@ -103,7 +102,6 @@ class VictoryBoxPlot extends React.Component {
     containerComponent: <VictoryContainer/>,
     data: defaultData,
     dataComponent: <Box/>,
-    dimension: "x",
     groupComponent: <g role="presentation"/>,
     labelOrientation: "right",
     maxComponent: <Whisker />,

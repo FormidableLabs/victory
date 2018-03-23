@@ -1,6 +1,6 @@
 /*eslint no-magic-numbers: ["error", { "ignore": [0, 0.25, 0.5, 0.75, 1, 2] }]*/
 /*eslint-disable no-nested-ternary */
-import { sortBy, defaults, has, mapValues, replace, assign, uniq } from "lodash";
+import { sortBy, defaults, mapValues, replace, assign, uniq } from "lodash";
 import { Helpers, Scale, Domain, Data } from "victory-core";
 import { min as d3Min, max as d3Max, quantile as d3Quantile } from "d3-array";
 
@@ -22,7 +22,7 @@ export default {
     } else {
       const dataset = this.getData(props);
 
-      if (props.dimension === "y") {
+      if (props.horizontal) {
         // find the domain of all y values, use the min and max for x
         domain = axis === "x"
           ? this.getDomainFromMinMax(dataset)
@@ -38,13 +38,11 @@ export default {
   },
 
   getBaseProps(props, fallbackProps) {
-    props = Helpers.modifyProps(props, fallbackProps, "boxplot");
-    const calculatedValues = this.getCalculatedValues(props);
-    const { data, style, scale, domain } = calculatedValues;
-    console.log(data)
+    const modifiedProps = Helpers.modifyProps(props, fallbackProps, "boxplot");
+    props = assign({}, modifiedProps, this.getCalculatedValues(modifiedProps));
     const {
       groupComponent, width, height, padding, standalone, horizontal,
-      theme, boxWidth, labelOrientation
+      theme, boxWidth, labelOrientation, data, style, scale, domain
     } = props;
     const initialChildProps = {
       parent: {
@@ -63,11 +61,7 @@ export default {
       const q1 = boxScale(datum._q1);
       const q3 = boxScale(datum._q3);
       const median = boxScale(datum._median);
-      const dataProps = {
-        datum, x, y, min, max, q1, q3, median, horizontal,
-        boxWidth, groupComponent, style, labelOrientation
-      };
-      const { q1Props, q3Props } = this.getBoxProps(dataProps);
+      const dataProps = assign({ index, datum, x, y, min, max, q1, q3, median }, props);
       const {
         minLabelProps, maxLabelProps, q1LabelProps, q3LabelProps, medianLabelProps
       } = this.getLabelProps(dataProps);
@@ -79,9 +73,9 @@ export default {
         medianLabel: medianLabelProps,
         min: this.getWhiskerProps(dataProps, "min"),
         minLabel: minLabelProps,
-        q1: q1Props,
+        q1: this.getBoxProps(dataProps, "q1"),
         q1Label: q1LabelProps,
-        q3: q3Props,
+        q3: this.getBoxProps(dataProps, "q3"),
         q3Label: q3LabelProps
       };
       return acc;
@@ -218,7 +212,7 @@ export default {
   },
 
   getCalculatedValues(props) {
-    const { theme } = props;
+    const { theme, horizontal } = props;
     const data = Data.addEventKeys(props, this.getData(props));
     const range = {
       x: Helpers.getRange(props, "x"),
@@ -234,7 +228,8 @@ export default {
     };
     const defaultStyles = theme && theme.boxplot && theme.boxplot.style ? theme.boxplot.style : {};
     const style = this.getStyles(props, defaultStyles);
-    return { domain, data, scale, style };
+    const dimension = horizontal ? "x" : "y";
+    return { data, dimension, domain, scale, style };
   },
 
   sortData(dataset, horizontal) {
@@ -252,74 +247,52 @@ export default {
       _max: d3Max(dependentVars)
     };
 
-    if (horizontal) {
-      return {
-        ...quartiles,
-        _y: data[0]._y
-      };
-    } else {
-      return {
-        ...quartiles,
-        _x: data[0]._x
-      };
-    }
+    return horizontal ?
+      assign({}, quartiles, { _y: data[0]._y }) : assign({}, quartiles, { _x: data[0]._x });
   },
 
-  // try to find a way to simplify this rather than disable es-lint
-  getWhiskerProps(dataProps, type) {
+  // eslint-disable-next-line complexity
+  getWhiskerProps(props, type) {
     const {
-      horizontal, x, y, min, max, q1, q3, style, boxWidth, groupComponent
-    } = dataProps;
+      horizontal, x, y, min, max, q1, q3, style, boxWidth, datum, scale, index
+    } = props;
 
-    const whiskerStyle = style[type] || style.whisker || {};
     const boxValue = type === "min" ? q1 : q3;
     const whiskerValue = type === "min" ? min : max;
-    const majorCoordinates = {
-      x1: horizontal ? boxValue : x,
-      y1: horizontal ? y : boxValue,
-      x2: horizontal ? whiskerValue : x,
-      y2: horizontal ? y : whiskerValue
-    };
-    const minorCoordinates = {
-      x1: horizontal ? whiskerValue : x - boxWidth / 2,
-      y1: horizontal ? y - boxWidth / 2 : whiskerValue,
-      x2: horizontal ? whiskerValue : x + boxWidth / 2,
-      y2: horizontal ? y + boxWidth / 2 : whiskerValue
-    };
 
     return {
-      majorWhisker: majorCoordinates,
-      minorWhisker: minorCoordinates,
-      style: whiskerStyle,
-      groupComponent,
-      statistic: type
+      datum, index, scale,
+      majorWhisker: {
+        x1: horizontal ? boxValue : x,
+        y1: horizontal ? y : boxValue,
+        x2: horizontal ? whiskerValue : x,
+        y2: horizontal ? y : whiskerValue
+      },
+      minorWhisker: {
+        x1: horizontal ? whiskerValue : x - boxWidth / 2,
+        y1: horizontal ? y - boxWidth / 2 : whiskerValue,
+        x2: horizontal ? whiskerValue : x + boxWidth / 2,
+        y2: horizontal ? y + boxWidth / 2 : whiskerValue
+      },
+      style: style[type] || style.whisker
     };
   },
 
-  getBoxProps(dataProps) {
-    const { horizontal, x, y, median, q1, q3, boxWidth, groupComponent, style } = dataProps;
+  getBoxProps(props, type) {
+    const { horizontal, x, y, median, q1, q3, boxWidth, style, scale, datum, index } = props;
 
-    const q1Props = {
-      x: horizontal ? q1 : x - boxWidth / 2,
-      y: horizontal ? y - boxWidth / 2 : median,
-      width: horizontal ? median - q1 : boxWidth,
-      height: horizontal ? boxWidth : q1 - median,
-      groupComponent,
-      style: style.q1,
-      statistic: "q1"
+    const defaultX = type === "q1" ? q1 : median;
+    const defaultY = type === "q1" ? median : q3;
+    const defaultWidth = type === "q1" ? median - q1 : q3 - median;
+    const defaultHeight = type === "q1" ? q1 - median : median - q3;
+    return {
+      datum, scale, index,
+      x: horizontal ? defaultX : x - boxWidth / 2,
+      y: horizontal ? y - boxWidth / 2 : defaultY,
+      width: horizontal ? defaultWidth : boxWidth,
+      height: horizontal ? boxWidth : defaultHeight,
+      style: style[type] || style.boxes
     };
-
-    const q3Props = {
-      x: horizontal ? median : x - boxWidth / 2,
-      y: horizontal ? y - boxWidth / 2 : q3,
-      width: horizontal ? q3 - median : boxWidth,
-      height: horizontal ? boxWidth : median - q3,
-      groupComponent,
-      style: style.q3,
-      statistic: "q3"
-    };
-
-    return { q1Props, q3Props };
   },
 
   getMedianProps(dataProps) {
@@ -339,10 +312,10 @@ export default {
     const { datum, x, y, min, max, q1, q3, median, boxWidth,
       horizontal, labelOrientation, style } = dataProps;
     const labelsObj = {
-      minLabelProps: { datum: datum.min, value: min },
-      maxLabelProps: { datum: datum.max, value: max },
-      q1LabelProps: { datum: datum.q1, value: q1 },
-      q3LabelProps: { datum: datum.q3, value: q3 },
+      minLabelProps: { datum: datum._min, value: min },
+      maxLabelProps: { datum: datum._max, value: max },
+      q1LabelProps: { datum: datum._q1, value: q1 },
+      q3LabelProps: { datum: datum._q3, value: q3 },
       medianLabelProps: { datum: datum.median, value: median }
     };
 
