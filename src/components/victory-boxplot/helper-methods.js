@@ -214,11 +214,11 @@ const getCalculatedValues = (props) => {
 
 // eslint-disable-next-line complexity
 const getWhiskerProps = (props, type) => {
-  const { horizontal, style, boxWidth, datum, scale, index } = props;
+  const { horizontal, style, boxWidth, whiskerWidth, datum, scale, index } = props;
   const { min, max, q1, q3, x, y } = props.positions;
   const boxValue = type === "min" ? q1 : q3;
   const whiskerValue = type === "min" ? min : max;
-
+  const width = typeof whiskerWidth === "number" ? whiskerWidth : boxWidth;
   return {
     datum, index, scale,
     majorWhisker: {
@@ -228,10 +228,10 @@ const getWhiskerProps = (props, type) => {
       y2: horizontal ? y : whiskerValue
     },
     minorWhisker: {
-      x1: horizontal ? whiskerValue : x - boxWidth / 2,
-      y1: horizontal ? y - boxWidth / 2 : whiskerValue,
-      x2: horizontal ? whiskerValue : x + boxWidth / 2,
-      y2: horizontal ? y + boxWidth / 2 : whiskerValue
+      x1: horizontal ? whiskerValue : x - width / 2,
+      y1: horizontal ? y - width / 2 : whiskerValue,
+      x2: horizontal ? whiskerValue : x + width / 2,
+      y2: horizontal ? y + width / 2 : whiskerValue
     },
     style: style[type] || style.whisker
   };
@@ -288,10 +288,12 @@ const getLabelProps = (props, text, type) => {
   const labelPadding = labelStyle.padding ? labelStyle.padding : 0;
   const defaultVerticalAnchor = horizontal ? "end" : "middle";
   const defaultTextAnchor = horizontal ? "middle" : "start";
+  const whiskerWidth = typeof props.whiskerWidth === "number" ? props.whiskerWidth : boxWidth;
+  const width = type === "min" || type === "max" ? whiskerWidth : boxWidth;
   const defaultX = labelOrientation === "left" ?
-    x - boxWidth / 2 - labelPadding : x + boxWidth / 2 + labelPadding;
+    x - width / 2 - labelPadding : x + width / 2 + labelPadding;
   const defaultY = labelOrientation === "top" ?
-    y - boxWidth / 2 - labelPadding : y + boxWidth / 2 + labelPadding;
+    y - width / 2 - labelPadding : y + width / 2 + labelPadding;
 
   return {
     text, datum, index,
