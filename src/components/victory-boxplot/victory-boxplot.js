@@ -6,7 +6,7 @@ import {
     Helpers, VictoryLabel, addEvents, Line, PropTypes as CustomPropTypes,
     VictoryContainer, VictoryTheme, Box, Whisker
 } from "victory-core";
-import BoxPlotHelpers from "./helper-methods";
+import { getDomain, getData, getBaseProps } from "./helper-methods";
 
 const fallbackProps = {
   width: 450,
@@ -122,18 +122,9 @@ class VictoryBoxPlot extends React.Component {
     theme: VictoryTheme.grayscale
   };
 
-  static getDomain = BoxPlotHelpers.getDomain.bind(BoxPlotHelpers);
-  static getData = BoxPlotHelpers.getData.bind(BoxPlotHelpers);
-  static getBaseProps = partialRight(
-      BoxPlotHelpers.getBaseProps.bind(BoxPlotHelpers),
-      fallbackProps
-  );
-
-  getComponent(props, name, index) {
-    const baseComponent = props[`${name}Component`];
-    const componentProps = this.getComponentProps(baseComponent, name, index);
-    return React.cloneElement(baseComponent, assign({ key: `${name}-${index}` }, componentProps));
-  }
+  static getDomain = getDomain;
+  static getData = getData;
+  static getBaseProps = partialRight(getBaseProps, fallbackProps);
 
   renderBoxPlot(props) {
     const types = ["q1", "q3", "max", "min", "median"];
