@@ -2,12 +2,13 @@ import { sortBy, defaults, assign, uniq } from "lodash";
 import { Helpers, Scale, Domain, Data } from "victory-core";
 import { min as d3Min, max as d3Max, quantile as d3Quantile } from "d3-array";
 
+const TYPES = ["max", "min", "median", "q1", "q3"];
+
 const checkProcessedData = (props, data) => {
   /* check if the data is pre-processed. start by checking that it has
   all required quartile attributes. */
-  const quartiles = ["_max", "_min", "_median", "q1", "q3"];
   const hasQuartileAttributes = data.every((datum) => {
-    return quartiles.every((val) => datum[val] !== undefined);
+    return TYPES.every((val) => datum[`_${val}`] !== undefined);
   });
 
   if (hasQuartileAttributes) {
@@ -84,33 +85,27 @@ const getData = (props) => {
     x: Data.createStringMap(props, "x"),
     y: Data.createStringMap(props, "y")
   };
-
-  const accessor = {
-    x: createAccessor("x"),
-    y: createAccessor("y"),
-    min: createAccessor("min"),
-    max: createAccessor("max"),
-    q1: createAccessor("q1"),
-    q3: createAccessor("q3"),
-    median: createAccessor("median")
-  };
+  const accessorTypes = TYPES.concat("x", "y");
+  const accessor = accessorTypes.reduce((memo, type) => {
+    memo[type] = createAccessor(type);
+    return memo;
+  }, {});
 
   const formattedData = props.data.reduce((dataArr, datum) => {
     datum = Data.parseDatum(datum);
 
-    const _x = accessor.x(datum);
-    const _y = accessor.y(datum);
-    const _min = accessor.min(datum);
-    const _max = accessor.max(datum);
-    const _q1 = accessor.q1(datum);
-    const _q3 = accessor.q3(datum);
-    const _median = accessor.median(datum);
+    const processedValues = accessorTypes.reduce((memo, type) => {
+      memo[`_${type}`] = accessor[type](datum);
+      return memo;
+    }, {});
+
+    const { _x, _y } = processedValues;
 
     dataArr.push(
       assign(
         {},
         datum,
-        { _x, _y, _min, _max, _q1, _q3, _median },
+        processedValues,
         typeof _x === "string" ? { _x: stringMap.x[_x], x: _x } : {},
         typeof _y === "string" ? { _y: stringMap.y[_y], y: _y } : {}
       )
@@ -331,7 +326,6 @@ const getBaseProps = (props, fallbackProps) => {
       theme, style: style.parent || {}, padding, groupComponent
     }
   };
-  const types = ["max", "median", "min", "q1", "q3"];
   const boxScale = horizontal ? scale.x : scale.y;
 
   return data.reduce((acc, datum, index) => {
@@ -346,14 +340,14 @@ const getBaseProps = (props, fallbackProps) => {
       q3: boxScale(datum._q3)
     };
     const dataProps = assign({ index, datum, positions }, props);
-    const dataObj = types.reduce((memo, type) => {
+    const dataObj = TYPES.reduce((memo, type) => {
       memo[type] = getDataProps(dataProps, type);
       return memo;
     }, {});
 
     acc[eventKey] = dataObj;
 
-    types.forEach((type) => {
+    TYPES.forEach((type) => {
       const labelText = getText(dataProps, type);
       if (labelText !== null && typeof labelText !== undefined || !events || !sharedEvents) {
         const target = `${type}Labels`;
