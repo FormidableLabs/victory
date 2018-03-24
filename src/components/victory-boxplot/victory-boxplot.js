@@ -1,6 +1,6 @@
 import React from "react";
 import PropTypes from "prop-types";
-import { partialRight, assign } from "lodash";
+import { partialRight, assign, flatten } from "lodash";
 import { BaseProps, DataProps } from "../../helpers/common-props";
 import {
     Helpers, VictoryLabel, addEvents, Line, PropTypes as CustomPropTypes,
@@ -34,6 +34,7 @@ class VictoryBoxPlot extends React.Component {
     boxWidth: PropTypes.number,
     horizontal: PropTypes.bool,
     labelOrientation: PropTypes.oneOf(["top", "bottom", "left", "right"]),
+    labels: PropTypes.bool,
     max: PropTypes.oneOfType([
       PropTypes.func,
       CustomPropTypes.allOfType([CustomPropTypes.integer, CustomPropTypes.nonNegative]),
@@ -42,7 +43,7 @@ class VictoryBoxPlot extends React.Component {
     ]),
     maxComponent: PropTypes.element,
     maxLabelComponent: PropTypes.element,
-    maxLabels: PropTypes.oneOfType([ PropTypes.func, PropTypes.array ]),
+    maxLabels: PropTypes.oneOfType([PropTypes.func, PropTypes.array, PropTypes.bool]),
     median: PropTypes.oneOfType([
       PropTypes.func,
       CustomPropTypes.allOfType([CustomPropTypes.integer, CustomPropTypes.nonNegative]),
@@ -51,7 +52,7 @@ class VictoryBoxPlot extends React.Component {
     ]),
     medianComponent: PropTypes.element,
     medianLabelComponent: PropTypes.element,
-    medianLabels: PropTypes.oneOfType([ PropTypes.func, PropTypes.array ]),
+    medianLabels: PropTypes.oneOfType([PropTypes.func, PropTypes.array, PropTypes.bool]),
     min: PropTypes.oneOfType([
       PropTypes.func,
       CustomPropTypes.allOfType([CustomPropTypes.integer, CustomPropTypes.nonNegative]),
@@ -60,7 +61,7 @@ class VictoryBoxPlot extends React.Component {
     ]),
     minComponent: PropTypes.element,
     minLabelComponent: PropTypes.element,
-    minLabels: PropTypes.oneOfType([ PropTypes.func, PropTypes.array ]),
+    minLabels: PropTypes.oneOfType([PropTypes.func, PropTypes.array, PropTypes.bool]),
     q1: PropTypes.oneOfType([
       PropTypes.func,
       CustomPropTypes.allOfType([CustomPropTypes.integer, CustomPropTypes.nonNegative]),
@@ -69,7 +70,7 @@ class VictoryBoxPlot extends React.Component {
     ]),
     q1Component: PropTypes.element,
     q1LabelComponent: PropTypes.element,
-    q1Labels: PropTypes.oneOfType([ PropTypes.func, PropTypes.array ]),
+    q1Labels: PropTypes.oneOfType([PropTypes.func, PropTypes.array, PropTypes.bool]),
     q3: PropTypes.oneOfType([
       PropTypes.func,
       CustomPropTypes.allOfType([CustomPropTypes.integer, CustomPropTypes.nonNegative]),
@@ -78,21 +79,21 @@ class VictoryBoxPlot extends React.Component {
     ]),
     q3Component: PropTypes.element,
     q3LabelComponent: PropTypes.element,
-    q3Labels: PropTypes.oneOfType([ PropTypes.func, PropTypes.array ]),
+    q3Labels: PropTypes.oneOfType([PropTypes.func, PropTypes.array, PropTypes.bool]),
     style: PropTypes.shape({
       boxes: PropTypes.object,
       labels: PropTypes.object,
       parent: PropTypes.object,
       max: PropTypes.object,
-      maxLabel: PropTypes.object,
+      maxLabels: PropTypes.object,
       median: PropTypes.object,
-      medianLabel: PropTypes.object,
+      medianLabels: PropTypes.object,
       min: PropTypes.object,
-      minLabel: PropTypes.object,
+      minLabels: PropTypes.object,
       q1: PropTypes.object,
-      q1Label: PropTypes.object,
+      q1Labels: PropTypes.object,
       q3: PropTypes.object,
-      q3Label: PropTypes.object,
+      q3Labels: PropTypes.object,
       whiskers: PropTypes.object
     }),
     whiskerWidth: PropTypes.number
@@ -135,22 +136,29 @@ class VictoryBoxPlot extends React.Component {
   }
 
   renderBoxPlot(props) {
-    return this.dataKeys.map((key, index) => {
-      return React.cloneElement(
-        props.groupComponent, { key }, [
-          this.getComponent(props, "q1", index),
-          this.getComponent(props, "q3", index),
-          this.getComponent(props, "max", index),
-          this.getComponent(props, "median", index),
-          this.getComponent(props, "min", index),
-          this.getComponent(props, "maxLabel", index),
-          this.getComponent(props, "medianLabel", index),
-          this.getComponent(props, "minLabel", index),
-          this.getComponent(props, "q1Label", index),
-          this.getComponent(props, "q3Label", index)
-        ]
-      );
-    });
+    const types = ["q1", "q3", "max", "min", "median"];
+    const dataComponents = flatten(types.map((type) => {
+      return this.dataKeys.map((key, index) => {
+        const baseComponent = props[`${type}Component`];
+        const componentProps = this.getComponentProps(baseComponent, type, index);
+        return React.cloneElement(baseComponent, componentProps);
+      });
+    }));
+
+    const labelComponents = flatten(types.map((type) => {
+      const components = this.dataKeys.map((key, index) => {
+        const name = `${type}Labels`;
+        const baseComponent = props[`${type}LabelComponent`];
+        const labelProps = this.getComponentProps(baseComponent, name, index);
+        if (typeof labelProps.text !== "undefined" && labelProps.text !== null) {
+          return React.cloneElement(baseComponent, labelProps);
+        }
+        return undefined;
+      });
+      return components.filter(Boolean);
+    }));
+    const children = [...dataComponents, ...labelComponents];
+    return this.renderContainer(props.groupComponent, children);
   }
 
   render() {

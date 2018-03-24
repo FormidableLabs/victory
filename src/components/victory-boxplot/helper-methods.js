@@ -37,51 +37,6 @@ export default {
     return Domain.cleanDomain(Domain.padDomain(domain, props, axis), props);
   },
 
-  getBaseProps(props, fallbackProps) {
-    const modifiedProps = Helpers.modifyProps(props, fallbackProps, "boxplot");
-    props = assign({}, modifiedProps, this.getCalculatedValues(modifiedProps));
-    const {
-      groupComponent, width, height, padding, standalone, horizontal,
-      theme, boxWidth, labelOrientation, data, style, scale, domain
-    } = props;
-    const initialChildProps = {
-      parent: {
-        domain, scale, width, height, data, standalone,
-        theme, style: style.parent || {}, padding, groupComponent
-      }
-    };
-
-    return data.reduce((acc, datum, index) => {
-      const eventKey = index;
-      const x = scale.x(datum._x);
-      const y = scale.y(datum._y);
-      const boxScale = horizontal ? scale.x : scale.y;
-      const min = boxScale(datum._min);
-      const max = boxScale(datum._max);
-      const q1 = boxScale(datum._q1);
-      const q3 = boxScale(datum._q3);
-      const median = boxScale(datum._median);
-      const dataProps = assign({ index, datum, x, y, min, max, q1, q3, median }, props);
-      const {
-        minLabelProps, maxLabelProps, q1LabelProps, q3LabelProps, medianLabelProps
-      } = this.getLabelProps(dataProps);
-
-      acc[eventKey] = {
-        max: this.getWhiskerProps(dataProps, "max"),
-        maxLabel: maxLabelProps,
-        median: this.getMedianProps(dataProps),
-        medianLabel: medianLabelProps,
-        min: this.getWhiskerProps(dataProps, "min"),
-        minLabel: minLabelProps,
-        q1: this.getBoxProps(dataProps, "q1"),
-        q1Label: q1LabelProps,
-        q3: this.getBoxProps(dataProps, "q3"),
-        q3Label: q3LabelProps
-      };
-      return acc;
-    }, initialChildProps);
-  },
-
   getData(props) {
     if (!props.data || Data.getLength(props.data) < 1) {
       return [];
@@ -130,16 +85,14 @@ export default {
       return dataArr;
     }, []);
 
-    return this.processData(props, formattedData);
+    return Data.addEventKeys(props, this.processData(props, formattedData));
   },
 
   processData(props, data) {
-
     /* check if the data is coming in a pre-processed form,
     i.e. { x || y, min, max, q1, q3, median }. if not, process it. */
     const isProcessed = this.checkProcessedData(props, data);
     if (!isProcessed) {
-
       // check if the data is coming with x or y values as an array
       const depedenentVarAsArray = data.every((datum) => {
         return props.horizontal ? Array.isArray(datum._x) : Array.isArray(datum._y);
@@ -198,15 +151,15 @@ export default {
       labels: labelStyles,
       parent: defaults(style.parent, styleObject.parent, parentStyles),
       max: defaults({}, style.max, styleObject.max, whiskerStyles),
-      maxLabel: defaults({}, style.maxLabel, styleObject.maxlabel, labelStyles),
+      maxLabels: defaults({}, style.maxLabel, styleObject.maxlabel, labelStyles),
       median: defaults({}, style.median, styleObject.median, whiskerStyles),
-      medianLabel: defaults({}, style.medianLabel, styleObject.medianlabel, labelStyles),
+      medianLabels: defaults({}, style.medianLabel, styleObject.medianlabel, labelStyles),
       min: defaults({}, style.min, styleObject.min, whiskerStyles),
-      minLabel: defaults({}, style.minLabel, styleObject.minlabel, labelStyles),
+      minLabels: defaults({}, style.minLabel, styleObject.minlabel, labelStyles),
       q1: defaults({}, style.q1, styleObject.q1, boxStyles),
-      q1Label: defaults({}, style.q1Label, styleObject.q1label, labelStyles),
+      q1Labels: defaults({}, style.q1Label, styleObject.q1label, labelStyles),
       q3: defaults({}, style.q3, styleObject.q3, boxStyles),
-      q3Label: defaults({}, style.q3Label, styleObject.q3label, labelStyles),
+      q3Labels: defaults({}, style.q3Label, styleObject.q3label, labelStyles),
       whiskers: whiskerStyles
     };
   },
@@ -253,10 +206,8 @@ export default {
 
   // eslint-disable-next-line complexity
   getWhiskerProps(props, type) {
-    const {
-      horizontal, x, y, min, max, q1, q3, style, boxWidth, datum, scale, index
-    } = props;
-
+    const { horizontal, style, boxWidth, datum, scale, index } = props;
+    const { min, max, q1, q3, x, y } = props.positions;
     const boxValue = type === "min" ? q1 : q3;
     const whiskerValue = type === "min" ? min : max;
 
@@ -279,8 +230,8 @@ export default {
   },
 
   getBoxProps(props, type) {
-    const { horizontal, x, y, median, q1, q3, boxWidth, style, scale, datum, index } = props;
-
+    const { horizontal, boxWidth, style, scale, datum, index } = props;
+    const { median, q1, q3, x, y } = props.positions;
     const defaultX = type === "q1" ? q1 : median;
     const defaultY = type === "q1" ? median : q3;
     const defaultWidth = type === "q1" ? median - q1 : q3 - median;
@@ -295,74 +246,69 @@ export default {
     };
   },
 
-  getMedianProps(dataProps) {
-    const { median, x, y, boxWidth, horizontal, groupComponent, style } = dataProps;
+  getMedianProps(props) {
+    const { boxWidth, horizontal, style, datum, scale, index } = props;
+    const { median, x, y } = props.positions;
     return {
+      datum, scale, index,
       x1: horizontal ? median : x - boxWidth / 2,
       y1: horizontal ? y - boxWidth / 2 : median,
       x2: horizontal ? median : x + boxWidth / 2,
       y2: horizontal ? y + boxWidth / 2 : median,
-      groupComponent,
-      style: style.median,
-      statistic: "median"
+      style: style.median
     };
   },
 
-  getLabelProps(dataProps) {
-    const { datum, x, y, min, max, q1, q3, median, boxWidth,
-      horizontal, labelOrientation, style } = dataProps;
-    const labelsObj = {
-      minLabelProps: { datum: datum._min, value: min },
-      maxLabelProps: { datum: datum._max, value: max },
-      q1LabelProps: { datum: datum._q1, value: q1 },
-      q3LabelProps: { datum: datum._q3, value: q3 },
-      medianLabelProps: { datum: datum.median, value: median }
+  getText(props, type) {
+    const { datum, index, labels } = props;
+    const propName = `${type}Labels`;
+    const labelProp = props[propName];
+    if (!labelProp && !labels) {
+      return null;
+    } else if (labelProp === true || labels === true) {
+      const dataName = `_${type}`;
+      return `${datum[dataName]}`;
+    }
+    return Array.isArray(labelProp) ? labelProp[index] : labelProp;
+  },
+
+  getLabelProps(props, text, type) {
+    const { datum, positions, index, boxWidth, horizontal, labelOrientation, style } = props;
+    const { x, y } = positions;
+    const namespace = `${type}Labels`;
+    const labelStyle = style[namespace] || style.labels;
+    const labelPadding = labelStyle.padding ? labelStyle.padding : 0;
+    const defaultVerticalAnchor = horizontal ? "end" : "middle";
+    const defaultTextAnchor = horizontal ? "middle" : "start";
+    const defaultX = labelOrientation === "left" ?
+      x - boxWidth / 2 - labelPadding : x + boxWidth / 2 + labelPadding;
+    const defaultY = labelOrientation === "top" ?
+      y - boxWidth / 2 - labelPadding : y + boxWidth / 2 + labelPadding;
+
+    return {
+      text, datum, index,
+      style: labelStyle,
+      y: horizontal ? defaultY : positions[type],
+      x: horizontal ? positions[type] : defaultX,
+      textAnchor: labelStyle.textAnchor || defaultTextAnchor,
+      verticalAnchor: labelStyle.verticalAnchor || defaultVerticalAnchor,
+      angle: labelStyle.angle
     };
-
-    return mapValues(labelsObj, (labelProps, key) => {
-      const labelStyle = style[replace(key, "Props", "s")] || {};
-      const labelPadding = labelStyle.padding ? labelStyle.padding : 0;
-      const defaultVerticalAnchor = horizontal ? "end" : "middle";
-      const defaultTextAnchor = horizontal ? "middle" : "start";
-
-      return {
-        style: labelStyle,
-        y: horizontal
-          ? labelOrientation === "top"
-            ? y - boxWidth / 2 - labelPadding
-            : y + boxWidth / 2 + labelPadding
-          : labelProps.value,
-        x: horizontal
-          ? labelProps.value
-          : labelOrientation === "left"
-            ? x - boxWidth / 2 - labelPadding
-            : x + boxWidth / 2 + labelPadding,
-        text: labelProps.datum,
-        statistic: replace(key, "LabelProps", ""),
-        textAnchor: labelStyle.textAnchor || defaultTextAnchor,
-        verticalAnchor: labelStyle.verticalAnchor || defaultVerticalAnchor,
-        angle: labelStyle.angle
-      };
-    });
   },
 
   reduceDataset(props, dataset, axis) {
-
     const allData = dataset.reduce((memo, datum) => {
-
       return memo.concat(datum[`_${axis}`]);
     }, []);
 
     if (allData.length < 1) {
       return Scale.getBaseScale(props, axis).domain();
     }
-
     const minData = Math.min(...allData);
     const maxData = Math.max(...allData);
     if (+minData === +maxData) {
       return Domain.getSinglePointDomain(maxData);
     }
-
     return [minData, maxData];
   },
 
@@ -378,5 +324,61 @@ export default {
     }
 
     return [minData, maxData];
+  },
+
+  getDataProps(props, type) {
+    if (type === "median") {
+      return this.getMedianProps(props);
+    } else if (type === "min" || type === "max") {
+      return this.getWhiskerProps(props, type);
+    }
+    return this.getBoxProps(props, type);
+  },
+
+  getBaseProps(props, fallbackProps) {
+    const modifiedProps = Helpers.modifyProps(props, fallbackProps, "boxplot");
+    props = assign({}, modifiedProps, this.getCalculatedValues(modifiedProps));
+    const {
+      groupComponent, width, height, padding, standalone, horizontal,
+      theme, data, style, scale, domain, events, sharedEvents
+    } = props;
+    const initialChildProps = {
+      parent: {
+        domain, scale, width, height, data, standalone,
+        theme, style: style.parent || {}, padding, groupComponent
+      }
+    };
+    const types = ["max", "median", "min", "q1", "q3"];
+    const boxScale = horizontal ? scale.x : scale.y;
+
+    return data.reduce((acc, datum, index) => {
+      const eventKey = typeof datum.eventKey !== undefined ? datum.eventKey : index;
+      const positions = {
+        x: scale.x(datum._x),
+        y: scale.y(datum._y),
+        min: boxScale(datum._min),
+        max: boxScale(datum._max),
+        median: boxScale(datum._median),
+        q1: boxScale(datum._q1),
+        q3: boxScale(datum._q3)
+      };
+      const dataProps = assign({ index, datum, positions }, props);
+      const dataObj = types.reduce((memo, type) => {
+        memo[type] = this.getDataProps(dataProps, type);
+        return memo;
+      }, {});
+
+      acc[eventKey] = dataObj;
+
+      types.forEach((type) => {
+        const labelText = this.getText(dataProps, type);
+        if (labelText !== null && typeof labelText !== undefined || !events || !sharedEvents) {
+          const target = `${type}Labels`;
+          acc[eventKey][target] = this.getLabelProps(dataProps, labelText, type);
+        }
+      });
+
+      return acc;
+    }, initialChildProps);
   }
 };

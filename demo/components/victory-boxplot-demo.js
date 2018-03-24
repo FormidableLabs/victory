@@ -25,6 +25,7 @@ export default class App extends React.Component {
         <VictoryChart domain={{ x: [0, 3], y: [0, 20] }}>
           <VictoryBoxPlot
             boxWidth={20}
+            labels
             data={[{ x: 1, y: [5, 10, 9, 2] }, { x: 2, y: [1, 15, 6, 8] }]}
             style={{
               min: { stroke: "black", strokeWidth: 2 },
@@ -43,6 +44,7 @@ export default class App extends React.Component {
 
         <VictoryChart domain={{ x: [0, 20], y: [0, 3] }}>
           <VictoryBoxPlot
+            minLabels maxLabels
             data={[{ y: 1, x: [5, 10, 9, 2] }, { y: 2, x: [1, 15, 6, 8] }]}
             boxWidth={20}
             horizontal
