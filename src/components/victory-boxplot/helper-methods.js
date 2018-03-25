@@ -1,5 +1,5 @@
 import { sortBy, defaults, assign, uniq } from "lodash";
-import { Helpers, Scale, Domain, Data } from "victory-core";
+import { Helpers, Scale, Domain, Data, Collection } from "victory-core";
 import { min as d3Min, max as d3Max, quantile as d3Quantile } from "d3-array";
 
 const TYPES = ["max", "min", "median", "q1", "q3"];
@@ -25,13 +25,8 @@ const checkProcessedData = (props, data) => {
   return false;
 };
 
-const sortData = (dataset, horizontal) => {
-  const sortKey = horizontal ? "_x" : "_y";
-  return sortBy(dataset, sortKey);
-};
-
 const getSummaryStatistics = (data, horizontal) => {
-  const dependentVars = data.map(({ _x, _y }) => horizontal ? _x : _y);
+  const dependentVars = data.map((datum) => horizontal ? datum._x : datum._y);
   const quartiles = {
     _q1: d3Quantile(dependentVars, 0.25), // eslint-disable-line no-magic-numbers
     _q3: d3Quantile(dependentVars, 0.75), // eslint-disable-line no-magic-numbers
@@ -41,7 +36,14 @@ const getSummaryStatistics = (data, horizontal) => {
   };
 
   return horizontal ?
-    assign({}, quartiles, { _y: data[0]._y }) : assign({}, quartiles, { _x: data[0]._x });
+    assign({}, quartiles, { _y: data[0]._y }) :
+    assign({}, quartiles, { _x: data[0]._x });
+};
+
+const isHorizontal = (props, data) => {
+  const arrayX = data.every((datum) => Array.isArray(datum._x));
+
+  return arrayX || props.horizontal;
 };
 
 const processData = (props, data) => {
@@ -50,23 +52,27 @@ const processData = (props, data) => {
   const isProcessed = checkProcessedData(props, data);
   if (!isProcessed) {
     // check if the data is coming with x or y values as an array
-    const depedenentVarAsArray = data.every((datum) => {
-      return props.horizontal ? Array.isArray(datum._x) : Array.isArray(datum._y);
-    });
-
-    if (depedenentVarAsArray) {
+    const arrayX = data.every((datum) => Array.isArray(datum._x));
+    const arrayY = data.every((datum) => Array.isArray(datum._y));
+    const horizontal = arrayX || props.horizontal;
+    const sortKey = horizontal ? "_x" : "_y";
+    if (arrayX && arrayY) {
+      throw new Error(`
+        data may not be given with array values for both x and y
+      `);
+    } else if (arrayX || arrayY) {
       /* generate summary statistics for each datum. to do this, flatten
       the depedentVarArray and process each datum separately */
       return data.map((datum) => {
-        const flattenedDatum = props.horizontal
-          ? datum._x.map((xVal) => ({ _x: xVal, _y: datum._y }))
-          : datum._y.map((yVal) => ({ _x: datum._x, _y: yVal }));
-        const sortedData = sortData(flattenedDatum, props.horizontal);
-        return getSummaryStatistics(sortedData, props.horizontal);
+        const flattenedDatum = horizontal ?
+          datum._x.map((xVal) => ({ _x: xVal, _y: datum._y })) :
+          datum._y.map((yVal) => ({ _x: datum._x, _y: yVal }));
+        const sortedData = sortBy(flattenedDatum, sortKey);
+        return getSummaryStatistics(sortedData, horizontal);
       });
     } else {
-      const sortedData = sortData(data, props.horizontal);
-      return [getSummaryStatistics(sortedData, props.horizontal)];
+      const sortedData = sortBy(data, sortKey);
+      return [getSummaryStatistics(sortedData, horizontal)];
     }
   } else {
     return data;
@@ -125,8 +131,8 @@ const reduceDataset = (props, dataset, axis) => {
   if (allData.length < 1) {
     return Scale.getBaseScale(props, axis).domain();
   }
-  const minData = Math.min(...allData);
-  const maxData = Math.max(...allData);
+  const minData = Collection.getMinValue(allData);
+  const maxData = Collection.getMaxValue(allData);
   if (+minData === +maxData) {
     return Domain.getSinglePointDomain(maxData);
   }
@@ -176,24 +182,25 @@ const getStyles = (props, styleObject) => {
   return {
     boxes: boxStyles,
     labels: labelStyles,
-    parent: defaults(style.parent, styleObject.parent, parentStyles),
+    parent: defaults({}, style.parent, styleObject.parent, parentStyles),
     max: defaults({}, style.max, styleObject.max, whiskerStyles),
-    maxLabels: defaults({}, style.maxLabel, styleObject.maxlabel, labelStyles),
+    maxLabels: defaults({}, style.maxLabels, styleObject.maxlabels, labelStyles),
     median: defaults({}, style.median, styleObject.median, whiskerStyles),
-    medianLabels: defaults({}, style.medianLabel, styleObject.medianlabel, labelStyles),
+    medianLabels: defaults({}, style.medianLabels, styleObject.medianlabels, labelStyles),
     min: defaults({}, style.min, styleObject.min, whiskerStyles),
-    minLabels: defaults({}, style.minLabel, styleObject.minlabel, labelStyles),
+    minLabels: defaults({}, style.minLabels, styleObject.minlabels, labelStyles),
     q1: defaults({}, style.q1, styleObject.q1, boxStyles),
-    q1Labels: defaults({}, style.q1Label, styleObject.q1label, labelStyles),
+    q1Labels: defaults({}, style.q1Labels, styleObject.q1labels, labelStyles),
     q3: defaults({}, style.q3, styleObject.q3, boxStyles),
-    q3Labels: defaults({}, style.q3Label, styleObject.q3label, labelStyles),
+    q3Labels: defaults({}, style.q3Labels, styleObject.q3labels, labelStyles),
     whiskers: whiskerStyles
   };
 };
 
 const getCalculatedValues = (props) => {
-  const { theme, horizontal } = props;
+  const { theme } = props;
   const data = Data.addEventKeys(props, getData(props));
+  const horizontal = isHorizontal(props, data);
   const range = {
     x: Helpers.getRange(props, "x"),
     y: Helpers.getRange(props, "y")
@@ -208,8 +215,9 @@ const getCalculatedValues = (props) => {
   };
   const defaultStyles = theme && theme.boxplot && theme.boxplot.style ? theme.boxplot.style : {};
   const style = getStyles(props, defaultStyles);
-  const dimension = horizontal ? "x" : "y";
-  return { data, dimension, domain, scale, style };
+  const defaultLabelOrientation = horizontal ? "top" : "right";
+  const labelOrientation = props.labelOrientation || defaultLabelOrientation;
+  return { data, horizontal, domain, scale, style, labelOrientation };
 };
 
 // eslint-disable-next-line complexity
@@ -282,24 +290,25 @@ const getText = (props, type) => {
 
 const getLabelProps = (props, text, type) => {
   const { datum, positions, index, boxWidth, horizontal, labelOrientation, style } = props;
-  const { x, y } = positions;
   const namespace = `${type}Labels`;
   const labelStyle = style[namespace] || style.labels;
-  const labelPadding = labelStyle.padding ? labelStyle.padding : 0;
   const defaultVerticalAnchor = horizontal ? "end" : "middle";
   const defaultTextAnchor = horizontal ? "middle" : "start";
   const whiskerWidth = typeof props.whiskerWidth === "number" ? props.whiskerWidth : boxWidth;
   const width = type === "min" || type === "max" ? whiskerWidth : boxWidth;
-  const defaultX = labelOrientation === "left" ?
-    x - width / 2 - labelPadding : x + width / 2 + labelPadding;
-  const defaultY = labelOrientation === "top" ?
-    y - width / 2 - labelPadding : y + width / 2 + labelPadding;
+
+  const getDefaultPosition = (coord) => {
+    const sign = {
+      x: labelOrientation === "left" ? -1 : 1, y: labelOrientation === "top" ? -1 : 1
+    };
+    return positions[coord] + (sign[coord] * width / 2) + (sign[coord] * (labelStyle.padding || 0));
+  };
 
   return {
     text, datum, index,
     style: labelStyle,
-    y: horizontal ? defaultY : positions[type],
-    x: horizontal ? positions[type] : defaultX,
+    y: horizontal ? getDefaultPosition("y") : positions[type],
+    x: horizontal ? positions[type] : getDefaultPosition("x"),
     textAnchor: labelStyle.textAnchor || defaultTextAnchor,
     verticalAnchor: labelStyle.verticalAnchor || defaultVerticalAnchor,
     angle: labelStyle.angle

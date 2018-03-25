@@ -104,7 +104,6 @@ class VictoryBoxPlot extends React.Component {
     data: defaultData,
     dataComponent: <Box/>,
     groupComponent: <g role="presentation"/>,
-    labelOrientation: "right",
     maxComponent: <Whisker />,
     maxLabelComponent: <VictoryLabel />,
     medianComponent: <Line />,
