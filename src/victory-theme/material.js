@@ -113,15 +113,15 @@ export default {
   boxplot: assign({
     style: {
       max: { padding, stroke: blueGrey700, strokeWidth: 1 },
-      maxLabel: baseLabelStyles,
+      maxLabels: baseLabelStyles,
       median: { padding, stroke: blueGrey700, strokeWidth: 1 },
-      medianLabel: baseLabelStyles,
+      medianLabels: baseLabelStyles,
       min: { padding, stroke: blueGrey700, strokeWidth: 1 },
-      minLabel: baseLabelStyles,
+      minLabels: baseLabelStyles,
       q1: { padding, fill: blueGrey700 },
-      q1Label: baseLabelStyles,
+      q1Labels: baseLabelStyles,
       q3: { padding, fill: blueGrey700 },
-      q3Label: baseLabelStyles
+      q3Labels: baseLabelStyles
     }
   }, baseProps),
   candlestick: assign({
