@@ -1,6 +1,12 @@
 VictoryCore Changelog
 =====================
 
+## 21.1.0 (2018-03-27)
+
+-[343](https://github.com/FormidableLabs/victory-core/pull/343) Changes the render order of lines and areas in the `Area` primitive
+-[344](https://github.com/FormidableLabs/victory-core/pull/344) bug fix for `VictoryTransition` with fewer children
+-[334](https://github.com/FormidableLabs/victory-core/pull/334) Add `Whisker` primitive for `VictoryBoxPlot`
+
 ## 21.0.4 (2018-02-07)
 
 -[339](https://github.com/FormidableLabs/victory-core/pull/339) Adds a "minus" option for `Point`
