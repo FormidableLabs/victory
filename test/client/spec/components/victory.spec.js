@@ -10,6 +10,7 @@ describe("victory", () => {
     expect(Victory.VictoryAxis).not.to.equal(undefined);
     expect(Victory.VictoryPolarAxis).not.to.equal(undefined);
     expect(Victory.VictoryBar).not.to.equal(undefined);
+    expect(Victory.VictoryBoxPlot).not.to.equal(undefined);
     expect(Victory.VictoryCandlestick).not.to.equal(undefined);
     expect(Victory.VictoryChart).not.to.equal(undefined);
     expect(Victory.VictoryContainer).not.to.equal(undefined);
@@ -39,6 +40,7 @@ describe("victory", () => {
     expect(Victory.Slice).not.to.equal(undefined);
     expect(Victory.Voronoi).not.to.equal(undefined);
     expect(Victory.Flyout).not.to.equal(undefined);
+    expect(Victory.Whisker).not.to.equal(undefined);
     expect(Victory.Circle).not.to.equal(undefined);
     expect(Victory.Rect).not.to.equal(undefined);
     expect(Victory.Path).not.to.equal(undefined);
