@@ -169,6 +169,12 @@ export default class App extends React.Component {
             data={this.state.data}
           />
         </VictoryChart>
+        <VictoryBoxPlot
+          animate
+          style={chartStyle}
+          boxWidth={10}
+          data={this.state.data}
+        />
       </div>
     );
   }

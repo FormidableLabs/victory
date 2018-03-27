@@ -143,6 +143,7 @@ class VictoryBoxPlot extends React.Component {
     scale: "linear",
     sortKey: "x",
     sortOrder: "ascending",
+    standalone: true,
     theme: VictoryTheme.grayscale
   };
 
