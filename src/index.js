@@ -1,6 +1,6 @@
 import {
   Area, Axis, Bar, Border, Box, Candle, ClipPath, Curve, ErrorBar, Grid, Point, Slice, Voronoi,
-  Flyout, Circle, Rect, Line, Path, TSpan, Text,
+  Flyout, Whisker, Circle, Rect, Line, Path, TSpan, Text,
   VictoryAnimation,
   VictoryContainer,
   VictoryLabel,
@@ -21,6 +21,7 @@ import {
   VictoryPolarAxis,
   VictoryArea,
   VictoryBar,
+  VictoryBoxPlot,
   VictoryCandlestick,
   VictoryChart,
   VictoryErrorBar,
@@ -42,12 +43,13 @@ import { VictoryPie } from "victory-pie";
 
 export {
   Area, Axis, Bar, Border, Box, Candle, ClipPath, Curve, ErrorBar, Grid, Point, Slice, Voronoi,
-  Flyout, Circle, Rect, Line, Path, TSpan, Text,
+  Flyout, Whisker, Circle, Rect, Line, Path, TSpan, Text,
   VictoryAnimation,
   VictoryArea,
   VictoryAxis,
   VictoryPolarAxis,
   VictoryBar,
+  VictoryBoxPlot,
   VictoryCandlestick,
   VictoryChart,
   VictoryErrorBar,

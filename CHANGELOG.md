@@ -1,5 +1,20 @@
 # Victory Changelog
 
+## 0.25.7 (2018-03-27)
+
+VictoryCore
+  -[343](https://github.com/FormidableLabs/victory-core/pull/343) Changes the render order of lines and areas in the `Area` primitive
+  -[344](https://github.com/FormidableLabs/victory-core/pull/344) bug fix for `VictoryTransition` with fewer children
+  -[334](https://github.com/FormidableLabs/victory-core/pull/334) Add `Whisker` primitive for `VictoryBoxPlot`
+
+VictoryChart
+  -[557](https://github.com/FormidableLabs/victory-chart/pull/557) `VictoryBoxPlot`
+  -[575](https://github.com/FormidableLabs/victory-chart/pull/575) Stack datasets with differeing domains
+  -[574](https://github.com/FormidableLabs/victory-chart/pull/574) Refactor helper method exports
+
+VictoryPie
+  -[168](https://github.com/FormidableLabs/victory-pie/pull/168) Refactor helper method exports
+
 ## 0.25.6 (2018-02-14)
 
 VictoryChart
