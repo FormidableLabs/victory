@@ -1,10 +1,16 @@
 # VictoryChart Changelog
 
-## 25.1.1 (2016-02-14)
+## 25.2.0 (2018-03-27)
+
+-[557](https://github.com/FormidableLabs/victory-chart/pull/557) `VictoryBoxPlot`
+-[575](https://github.com/FormidableLabs/victory-chart/pull/575) Stack datasets with differeing domains
+-[574](https://github.com/FormidableLabs/victory-chart/pull/574) Refactor helper method exports
+
+## 25.1.1 (2018-02-14)
 
 -[573](https://github.com/FormidableLabs/victory-chart/pull/573) Use fallback styles in VictoryBrushLine
 
-## 25.1.0 (2016-02-12)
+## 25.1.0 (2018-02-12)
 
 -[571](https://github.com/FormidableLabs/victory-chart/pull/571)
   - Adds `selectionBlacklist` to `VictorySelectionContainer`
@@ -13,18 +19,18 @@
 -[572](https://github.com/FormidableLabs/victory-chart/pull/572) Changes behavior of `labels` in `VictoryVoronoiContainer`
   - `labels` is now called with `point, index, points` instead of `point, active`. This will not be a breaking change for most users, as this function was only called when labels were `active`
 
-## 25.0.6 (2016-02-09)
+## 25.0.6 (2018-02-09)
 
 -[570](https://github.com/FormidableLabs/victory-chart/pull/570) Add "minus" option for `VictoryScatter` `symbol` prop
 -[569](https://github.com/FormidableLabs/victory-chart/pull/569) Fixes a bug in `createContainer`
 -[568](https://github.com/FormidableLabs/victory-chart/pull/568) Adds `brushAreaWidth` prop for `VictoryBrushLine`
 -[567](https://github.com/FormidableLabs/victory-chart/pull/567) Fixes brushArea active state in `VictoryBrushLine`
 
-## 25.0.5 (2016-02-07)
+## 25.0.5 (2018-02-07)
 
 -[565](https://github.com/FormidableLabs/victory-chart/pull/565) Prevent re-renders with disable prop
 
-## 25.0.4 (2016-02-07)
+## 25.0.4 (2018-02-07)
 
 -[564](https://github.com/FormidableLabs/victory-chart/pull/564) Adds `disable` prop to all interactive containers and addon components
 
