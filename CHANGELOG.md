@@ -1,5 +1,9 @@
 # VictoryPie Changelog
 
+## 14.0.2 (2018-03-27)
+
+-[168](https://github.com/FormidableLabs/victory-pie/pull/168) Refactor helper method exports
+
 ## 14.0.1 (2018-02-05)
 
 - [167](https://github.com/FormidableLabs/victory-pie/pull/167) Add `sideEffects: false`
