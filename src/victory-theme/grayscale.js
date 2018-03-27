@@ -96,15 +96,15 @@ export default {
   boxplot: assign({
     style: {
       max: { padding: 8, stroke: charcoal, strokeWidth: 1 },
-      maxLabel: baseLabelStyles,
+      maxLabels: baseLabelStyles,
       median: { padding: 8, stroke: charcoal, strokeWidth: 1 },
-      medianLabel: baseLabelStyles,
+      medianLabels: baseLabelStyles,
       min: { padding: 8, stroke: charcoal, strokeWidth: 1 },
-      minLabel: baseLabelStyles,
+      minLabels: baseLabelStyles,
       q1: { padding: 8, fill: grey },
-      q1Label: baseLabelStyles,
+      q1Labels: baseLabelStyles,
       q3: { padding: 8, fill: grey },
-      q3Label: baseLabelStyles
+      q3Labels: baseLabelStyles
     },
     boxWidth: 20
   }, baseProps),
