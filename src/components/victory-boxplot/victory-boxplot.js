@@ -1,10 +1,10 @@
 import React from "react";
 import PropTypes from "prop-types";
-import { partialRight, assign, flatten } from "lodash";
+import { partialRight, flatten } from "lodash";
 import { BaseProps, DataProps } from "../../helpers/common-props";
 import {
     Helpers, VictoryLabel, addEvents, Line, PropTypes as CustomPropTypes,
-    VictoryContainer, VictoryTheme, Box, Whisker
+    VictoryContainer, VictoryTheme, Box, Whisker, DefaultTransitions
 } from "victory-core";
 import { getDomain, getData, getBaseProps } from "./helper-methods";
 
@@ -39,7 +39,8 @@ const animationWhitelist = [
 class VictoryBoxPlot extends React.Component {
 
   static displayName = "VictoryBoxPlot";
-  static role = "boxplot"
+  static role = "boxplot";
+  static defaultTransitions = DefaultTransitions.discreteTransitions();
   static propTypes = {
     ...BaseProps,
     ...DataProps,

@@ -150,7 +150,7 @@ export default class App extends React.Component {
             ]}
           />
         </VictoryChart>
-        <VictoryChart style={chartStyle} domainPadding={50}>
+        <VictoryChart animate style={chartStyle} domainPadding={50}>
           <VictoryBoxPlot
             boxWidth={10}
             data={this.state.data}

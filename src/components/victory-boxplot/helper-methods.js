@@ -118,6 +118,7 @@ const getData = (props) => {
 
     const formattedDatum = assign(
       {},
+      datum,
       processedValues,
       typeof _x === "string" ? { _x: stringMap.x[_x], x: _x } : {},
       typeof _y === "string" ? { _y: stringMap.y[_y], y: _y } : {}
@@ -126,7 +127,6 @@ const getData = (props) => {
   }).filter(Boolean);
   const result = formattedData.length ?
     Data.addEventKeys(props, processData(props, formattedData)) : [];
-  // console.log("formatted", formattedData, "processed", result)
   return result;
 };
 
@@ -206,7 +206,7 @@ const getStyles = (props, styleObject) => {
 
 const getCalculatedValues = (props) => {
   const { theme } = props;
-  const data = Data.addEventKeys(props, getData(props));
+  const data = getData(props);
   const horizontal = isHorizontal(props, data);
   const range = {
     x: Helpers.getRange(props, "x"),
