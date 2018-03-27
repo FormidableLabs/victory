@@ -92,7 +92,7 @@ function getInitialTransitionState(oldChildren, nextChildren) {
 
   const getTransitionsFromChildren = (old, next) => {
     return old.map((child, idx) => {
-      if (child && child.props && child.props.children) {
+      if (child && child.props && child.props.children && next[idx]) {
         return getTransitionsFromChildren(
           React.Children.toArray(old[idx].props.children),
           React.Children.toArray(next[idx].props.children)
