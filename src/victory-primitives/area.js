@@ -84,6 +84,6 @@ export default class Area extends React.Component {
       key: "area-stroke", style: assign({}, style, { fill: "none" }), d: lineFunction(data)
     }, sharedProps)) : null;
 
-    return renderLine ? React.cloneElement(groupComponent, {}, [line, area]) : area;
+    return renderLine ? React.cloneElement(groupComponent, {}, [area, line]) : area;
   }
 }
