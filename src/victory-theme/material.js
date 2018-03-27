@@ -110,6 +110,20 @@ export default {
       labels: baseLabelStyles
     }
   }, baseProps),
+  boxplot: assign({
+    style: {
+      max: { padding, stroke: blueGrey700, strokeWidth: 1 },
+      maxLabel: baseLabelStyles,
+      median: { padding, stroke: blueGrey700, strokeWidth: 1 },
+      medianLabel: baseLabelStyles,
+      min: { padding, stroke: blueGrey700, strokeWidth: 1 },
+      minLabel: baseLabelStyles,
+      q1: { padding, fill: blueGrey700 },
+      q1Label: baseLabelStyles,
+      q3: { padding, fill: blueGrey700 },
+      q3Label: baseLabelStyles
+    }
+  }, baseProps),
   candlestick: assign({
     style: {
       data: {
@@ -138,6 +152,19 @@ export default {
   group: assign({
     colorScale: colors
   }, baseProps),
+  legend: {
+    colorScale: colors,
+    gutter: 10,
+    orientation: "vertical",
+    titleOrientation: "top",
+    style: {
+      data: {
+        type: "circle"
+      },
+      labels: baseLabelStyles,
+      title: assign({}, baseLabelStyles, { padding: 5 })
+    }
+  },
   line: assign({
     style: {
       data: {
@@ -200,18 +227,5 @@ export default {
         pointerEvents: "none"
       }
     }
-  }, baseProps),
-  legend: {
-    colorScale: colors,
-    gutter: 10,
-    orientation: "vertical",
-    titleOrientation: "top",
-    style: {
-      data: {
-        type: "circle"
-      },
-      labels: baseLabelStyles,
-      title: assign({}, baseLabelStyles, { padding: 5 })
-    }
-  }
+  }, baseProps)
 };

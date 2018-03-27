@@ -22,6 +22,7 @@ export { default as Point } from "./victory-primitives/point";
 export { default as Slice } from "./victory-primitives/slice";
 export { default as Voronoi } from "./victory-primitives/voronoi";
 export { default as Flyout } from "./victory-primitives/flyout";
+export { default as Whisker } from "./victory-primitives/whisker";
 export { default as addEvents } from "./victory-util/add-events";
 export { default as Collection } from "./victory-util/collection";
 export { default as Data } from "./victory-util/data";
