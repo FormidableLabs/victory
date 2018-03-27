@@ -24,6 +24,10 @@ const defaultData = [
   { x: 2, min: 2, q1: 5, median: 8, q3: 12, max: 15 }
 ];
 
+const animationWhitelist = [
+  "data", "domain", "height", "padding", "style", "width"
+];
+
 class VictoryBoxPlot extends React.Component {
 
   static displayName = "VictoryBoxPlot";
@@ -124,6 +128,11 @@ class VictoryBoxPlot extends React.Component {
   static getDomain = getDomain;
   static getData = getData;
   static getBaseProps = partialRight(getBaseProps, fallbackProps);
+  static expectedComponents = [
+    "maxComponent", "maxLabelComponent", "medianComponent", "medianLabelComponent",
+    "minComponent", "minLabelComponent", "q1Component", "q1LabelComponent",
+    "q3Component", "q3LabelComponent", "groupComponent", "containerComponent"
+  ];
 
   renderBoxPlot(props) {
     const types = ["q1", "q3", "max", "min", "median"];
@@ -151,9 +160,17 @@ class VictoryBoxPlot extends React.Component {
     return this.renderContainer(props.groupComponent, children);
   }
 
+  // Overridden in native versions
+  shouldAnimate() {
+    return !!this.props.animate;
+  }
+
   render() {
     const { role } = this.constructor;
     const props = Helpers.modifyProps(this.props, fallbackProps, role);
+    if (this.shouldAnimate()) {
+      return this.animateComponent(props, animationWhitelist);
+    }
     const children = this.renderBoxPlot(props);
     return props.standalone ? this.renderContainer(props.containerComponent, children) : children;
   }

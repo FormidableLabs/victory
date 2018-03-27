@@ -1,12 +1,41 @@
+/*global window:false */
 /*eslint-disable no-magic-numbers */
 import React from "react";
 import VictoryChart from "../../src/components/victory-chart/victory-chart";
 import VictoryBoxPlot from "../../src/components/victory-boxplot/victory-boxplot";
+import { range, random } from "lodash";
 
 export default class App extends React.Component {
+  constructor(props) {
+    super(props);
+    this.state = {
+      data: this.getData()
+    };
+  }
+
+  componentDidMount() {
+    /* eslint-disable react/no-did-mount-set-state */
+    this.setStateInterval = window.setInterval(() => {
+      this.setState({
+        data: this.getData()
+      });
+    }, 30000);
+  }
+
+  componentWillUnmount() {
+    window.clearInterval(this.setStateInterval);
+  }
+
+  getData() {
+    return range(5).map((i) => {
+      return {
+        x: i,
+        y: range(20).map(() => random(1, 100))
+      };
+    });
+  }
 
   render() {
-
     const containerStyle = {
       display: "flex",
       flexDirection: "row",
@@ -89,6 +118,42 @@ export default class App extends React.Component {
               { x: "yellow", y: [5, 20, 8, 12] },
               { x: "white", y: [2, 11, 12, 13] }
             ]}
+          />
+        </VictoryChart>
+        <VictoryChart style={chartStyle} domainPadding={50}>
+          <VictoryBoxPlot
+            minLabels maxLabels
+            boxWidth={10}
+            data={[
+              { x: 1, y: 5 },
+              { x: 1, y: 10 },
+              { x: 1, y: 8 },
+              { x: 2, y: 1 },
+              { x: 2, y: 15 },
+              { x: 2, y: 7 },
+              { x: 3, y: 3 },
+              { x: 3, y: 8 },
+              { x: 3, y: 5 }
+            ]}
+          />
+        </VictoryChart>
+        <VictoryChart style={chartStyle} domainPadding={50}>
+          <VictoryBoxPlot
+            labels
+            boxWidth={10}
+            horizontal
+            y="type"
+            data={[
+              { type: 1, min: 1, max: 18, median: 8, q1: 5, q3: 15 },
+              { type: 2, min: 4, max: 20, median: 10, q1: 7, q3: 15 },
+              { type: 3, min: 3, max: 12, median: 6, q1: 5, q3: 10 }
+            ]}
+          />
+        </VictoryChart>
+        <VictoryChart style={chartStyle} domainPadding={50}>
+          <VictoryBoxPlot
+            boxWidth={10}
+            data={this.state.data}
           />
         </VictoryChart>
       </div>

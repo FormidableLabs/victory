@@ -1,4 +1,4 @@
-import { sortBy, defaults, assign, uniq } from "lodash";
+import { sortBy, defaults, assign, uniq, groupBy, keys, isEmpty } from "lodash";
 import { Helpers, Scale, Domain, Data, Collection } from "victory-core";
 import { min as d3Min, max as d3Max, quantile as d3Quantile } from "d3-array";
 
@@ -8,7 +8,7 @@ const checkProcessedData = (props, data) => {
   /* check if the data is pre-processed. start by checking that it has
   all required quartile attributes. */
   const hasQuartileAttributes = data.every((datum) => {
-    return TYPES.every((val) => datum[`_${val}`] !== undefined);
+    return TYPES.every((val) => typeof datum[`_${val}`] === "number");
   });
 
   if (hasQuartileAttributes) {
@@ -56,6 +56,7 @@ const processData = (props, data) => {
     const arrayY = data.every((datum) => Array.isArray(datum._y));
     const horizontal = arrayX || props.horizontal;
     const sortKey = horizontal ? "_x" : "_y";
+    const groupKey = horizontal ? "_y" : "_x";
     if (arrayX && arrayY) {
       throw new Error(`
         data may not be given with array values for both x and y
@@ -64,15 +65,18 @@ const processData = (props, data) => {
       /* generate summary statistics for each datum. to do this, flatten
       the depedentVarArray and process each datum separately */
       return data.map((datum) => {
-        const flattenedDatum = horizontal ?
-          datum._x.map((xVal) => ({ _x: xVal, _y: datum._y })) :
-          datum._y.map((yVal) => ({ _x: datum._x, _y: yVal }));
-        const sortedData = sortBy(flattenedDatum, sortKey);
+        const dataArray = datum[sortKey].map((d) => assign({}, datum, { [sortKey]: d }));
+        const sortedData = sortBy(dataArray, sortKey);
         return getSummaryStatistics(sortedData, horizontal);
       });
     } else {
-      const sortedData = sortBy(data, sortKey);
-      return [getSummaryStatistics(sortedData, horizontal)];
+      /* Group data by independent variable and generate summary statistics for each group */
+      const groupedData = groupBy(data, groupKey);
+      return keys(groupedData).map((key) => {
+        const datum = groupedData[key];
+        const sortedData = sortBy(datum, sortKey);
+        return getSummaryStatistics(sortedData, horizontal);
+      });
     }
   } else {
     return data;
@@ -81,6 +85,8 @@ const processData = (props, data) => {
 
 const getData = (props) => {
   if (!props.data || Data.getLength(props.data) < 1) {
+    return [];
+  } else if (props.data.every((d) => isEmpty(d))) {
     return [];
   }
   const createAccessor = (name) => {
@@ -97,30 +103,31 @@ const getData = (props) => {
     return memo;
   }, {});
 
-  const formattedData = props.data.reduce((dataArr, datum) => {
+  const formattedData = props.data.map((datum) => {
     datum = Data.parseDatum(datum);
 
     const processedValues = accessorTypes.reduce((memo, type) => {
-      memo[`_${type}`] = accessor[type](datum);
+      const processedValue = accessor[type](datum);
+      if (typeof processedValue !== "undefined") {
+        memo[`_${type}`] = processedValue;
+      }
       return memo;
     }, {});
 
     const { _x, _y } = processedValues;
 
-    dataArr.push(
-      assign(
-        {},
-        datum,
-        processedValues,
-        typeof _x === "string" ? { _x: stringMap.x[_x], x: _x } : {},
-        typeof _y === "string" ? { _y: stringMap.y[_y], y: _y } : {}
-      )
+    const formattedDatum = assign(
+      {},
+      processedValues,
+      typeof _x === "string" ? { _x: stringMap.x[_x], x: _x } : {},
+      typeof _y === "string" ? { _y: stringMap.y[_y], y: _y } : {}
     );
-
-    return dataArr;
-  }, []);
-
-  return Data.addEventKeys(props, processData(props, formattedData));
+    return isEmpty(formattedDatum) ? undefined : formattedDatum;
+  }).filter(Boolean);
+  const result = formattedData.length ?
+    Data.addEventKeys(props, processData(props, formattedData)) : [];
+  // console.log("formatted", formattedData, "processed", result)
+  return result;
 };
 
 const reduceDataset = (props, dataset, axis) => {
@@ -328,8 +335,8 @@ const getBaseProps = (props, fallbackProps) => {
   const modifiedProps = Helpers.modifyProps(props, fallbackProps, "boxplot");
   props = assign({}, modifiedProps, getCalculatedValues(modifiedProps));
   const {
-    groupComponent, width, height, padding, standalone, horizontal,
-    theme, data, style, scale, domain, events, sharedEvents
+    groupComponent, width, height, padding, standalone, theme, events, sharedEvents,
+    scale, horizontal, data, style, domain
   } = props;
   const initialChildProps = {
     parent: {
