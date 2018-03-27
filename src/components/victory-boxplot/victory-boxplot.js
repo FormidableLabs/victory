@@ -45,6 +45,18 @@ class VictoryBoxPlot extends React.Component {
     ...BaseProps,
     ...DataProps,
     boxWidth: PropTypes.number,
+    events: PropTypes.arrayOf(PropTypes.shape({
+      target: PropTypes.oneOf([
+        "max", "maxLabels", "median", "medianLabels", "min", "minLabels",
+        "q1", "q1Labels", "q3", "q3Labels", "parent"
+      ]),
+      eventKey: PropTypes.oneOfType([
+        PropTypes.array,
+        CustomPropTypes.allOfType([CustomPropTypes.integer, CustomPropTypes.nonNegative]),
+        PropTypes.string
+      ]),
+      eventHandlers: PropTypes.object
+    })),
     horizontal: PropTypes.bool,
     labelOrientation: PropTypes.oneOf(["top", "bottom", "left", "right"]),
     labels: PropTypes.bool,

@@ -81,6 +81,19 @@ export default class App extends React.Component {
             boxWidth={20}
             horizontal
             labelOrientation={"top"}
+            events={[{
+              target: "q1",
+              eventHandlers: {
+                onClick: () => {
+                  return [
+                    {
+                      target: "q1Labels",
+                      mutation: () => ({ text: "LABEL!" })
+                    }
+                  ];
+                }
+              }
+            }]}
             style={{
               min: { stroke: "black", strokeWidth: 2 },
               max: { stroke: "black", strokeWidth: 2 },
@@ -88,7 +101,7 @@ export default class App extends React.Component {
               q3: { fill: "#2bbee0", fillOpacity: 0.5 },
               median: { stroke: "#fff", strokeWidth: 2 },
               minLabels: { fill: "green", padding: 10 },
-              maxLabels: { fill: "orange", padding: 10 },
+              maxLabels: { fill: "orange", padding: 10 }
             }}
           />
         </VictoryChart>
