@@ -1,8 +1,6 @@
-import { configure } from "@kadira/storybook";
+import { configure } from '@storybook/react';
+import 'react-chromatic/storybook-addon';
 
-// Consider generalizing this so that this can be a part of the archetype:
-// https://github.com/kadirahq/react-storybook/blob/master/docs/
-// configure_storybook.md#loading-modules
 
 function loadStories() {
   require("../stories/victory-pie");
