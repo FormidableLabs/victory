@@ -26,9 +26,12 @@
     "start": "builder run dev",
     "test": "builder run check",
     "version": "builder run npm:version",
-    "storybook": "start-storybook -p 3001",
+    "storybook": "start-storybook -p 6006",
     "lank-watch": "lank exec -u -- builder run build-watch",
-    "lank-run": "lank exec -m victory-pie -uq -- builder run dev --expand-archetype"
+    "lank-run": "lank exec -m victory-pie -uq -- builder run dev --expand-archetype",
+    "lank-test": "lank exec -m victory-pie -uq -- builder run check --expand-archetype",
+    "chromatic": "chromatic test --storybook-addon",
+    "chromatic-ci": "chromatic test --storybook-addon --exit-zero-on-changes"
   },
   "dependencies": {
     "builder": "^3.2.1",
@@ -38,7 +41,11 @@
     "victory-core": "^21.1.0"
   },
   "devDependencies": {
-    "@kadira/storybook": "^1.25.0",
+    "@storybook/addon-actions": "^3.2.13",
+    "@storybook/react": "^3.2.13",
+    "babel-plugin-lodash": "^3.1.2",
+    "babel-preset-react": "^6.5.0",
+    "babel-preset-react-native": "^1.9.0",
     "builder-victory-component-dev": "^5.1.2",
     "chai": "^3.5.0",
     "enzyme": "^3.1.0",
@@ -46,6 +53,7 @@
     "mocha": "^3.0.2",
     "prop-types": "^15.5.8",
     "react": "^16.0.0",
+    "react-chromatic": "^0.7.11",
     "react-dom": "^16.0.0",
     "sinon": "^1.17.5",
     "sinon-chai": "^2.8.0"

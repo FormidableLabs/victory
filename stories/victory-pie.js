@@ -1,29 +1,37 @@
+/*global window:false*/
+/*eslint-disable no-magic-numbers*/
 import React from "react";
-import { storiesOf, action } from "@kadira/storybook";
+import { storiesOf } from "@storybook/react";
+import { action } from "@storybook/addon-actions";
 import _ from "lodash";
 import { VictoryPie } from "../src";
 
 storiesOf("VictoryPie", module)
+  .addDecorator((story) => (
+    <div style={{ width: 400, height: 400 }}>
+      {story()}
+    </div>
+  ))
   .add("by default", () => (
     <VictoryPie />
   ))
   .add("with basic data", () => (
     <VictoryPie
       data={[
-        {x: "Cat", y: 62},
-        {x: "Dog", y: 91},
-        {x: "Fish", y: 55},
-        {x: "Bird", y: 55}
+        { x: "Cat", y: 62 },
+        { x: "Dog", y: 91 },
+        { x: "Fish", y: 55 },
+        { x: "Bird", y: 55 }
       ]}
     />
   ))
   .add("with flexible data", () => (
     <VictoryPie
       data={[
-        {animal: "Cat", pet: 45, wild: 17},
-        {animal: "Dog", pet: 85, wild: 6},
-        {animal: "Fish", pet: 55, wild: 0},
-        {animal: "Bird", pet: 15, wild: 40}
+        { animal: "Cat", pet: 45, wild: 17 },
+        { animal: "Dog", pet: 85, wild: 6 },
+        { animal: "Fish", pet: 55, wild: 0 },
+        { animal: "Bird", pet: 15, wild: 40 }
       ]}
       x={"animal"}
       y={(data) => data.pet + data.wild}
@@ -33,8 +41,7 @@ storiesOf("VictoryPie", module)
     <VictoryPie
       style={{
         labels: {
-          fontSize: 20,
-          padding: 100
+          fontSize: 20
         },
         data: {
           stroke: "transparent",
@@ -70,15 +77,16 @@ storiesOf("VictoryPie", module)
         }
       }}
       data={[
-        {x: "<5", y: 6279},
-        {x: "5-13", y: 9182},
-        {x: "14-17", y: 5511},
-        {x: "18-24", y: 7164},
-        {x: "25-44", y: 6716},
-        {x: "45-64", y: 4263},
-        {x: "≥65", y: 7502}
+        { x: "<5", y: 6279 },
+        { x: "5-13", y: 9182 },
+        { x: "14-17", y: 5511 },
+        { x: "18-24", y: 7164 },
+        { x: "25-44", y: 6716 },
+        { x: "45-64", y: 4263 },
+        { x: "≥65", y: 7502 }
       ]}
-      innerRadius={110}
+      innerRadius={100}
+      labelRadius={110}
       colorScale={[
         "#D85F49",
         "#F66D3B",
@@ -94,46 +102,54 @@ storiesOf("VictoryPie", module)
     <VictoryPie
       style={{
         data: {
-          stroke: (data) => data.y > 75 ? "black" : "transparent",
+          stroke: (data) => data.y > 75 ? "red" : "transparent",
+          strokeWidth: 3,
           opacity: (data) => data.y > 75 ? 1 : 0.4
         }
       }}
       data={[
-        {x: "Cat", y: 62},
-        {x: "Dog", y: 91},
-        {x: "Fish", y: 55},
-        {x: "Bird", y: 55},
+        { x: "Cat", y: 62 },
+        { x: "Dog", y: 91 },
+        { x: "Fish", y: 55 },
+        { x: "Bird", y: 55 }
       ]}
     />
   ))
-  .add("with a click handler", () => (
-    <VictoryPie
-      data={[
-        {x: "Cat", y: 62},
-        {x: "Dog", y: 91},
-        {x: "Fish", y: 55},
-        {x: "Bird", y: 55},
-      ]}
-      events={{
-        data: {
-          onClick: (event, props) => {
-            action("click a slice of pie")();
-            const fill = props.style.fill;
-            return fill === "pink" ? null : {style: {fill: "pink"}};
+  .add("events: click handler", () => (
+    <div className="chromatic-ignore">
+      <VictoryPie
+        data={[
+          { x: "Cat", y: 62 },
+          { x: "Dog", y: 91 },
+          { x: "Fish", y: 55 },
+          { x: "Bird", y: 55 }
+        ]}
+        events={[{
+          target: "data",
+          eventHandlers: {
+            onClick: (event, props) => {
+              action("click a slice of pie")();
+              const fill = props.style.fill;
+              return {
+                mutation: () => {
+                  return fill === "red" ? null : { style: { fill: "red" } };
+                }
+              };
+            }
           }
-        }
-      }}
-    />
+        }]}
+      />
+    </div>
   ))
-  .add("with an animation", () => {
+  .add("animation: custom entrance transitions", () => {
     class PieContainer extends React.Component {
       constructor(props) {
         super(props);
-        this.state = {data: this.getData()};
+        this.state = { data: this.getData() };
       }
 
-      getData() {
-        const samples =  _.random(6, 10);
+      getData() { //eslint-disable-line
+        const samples = _.random(6, 10);
         return _.range(samples).map((data) => {
           return {
             x: data,
@@ -144,27 +160,31 @@ storiesOf("VictoryPie", module)
       }
 
       componentDidMount() {
-        setInterval(() => {
-          this.setState({data: this.getData()});
+        window.setInterval(() => {
+          this.setState({ data: this.getData() });
         }, 2000);
       }
 
       render() {
         return (
-          <VictoryPie
-            data={this.state.data}
-            animate={{
-              duration: 1000,
-              onEnter: {
-                duration: 500,
-                before: () => ({y: 0, label: " "}),
-                after: (datum) => ({y: datum.y, label: "NEW"})
-              }
-            }}
-          />
+          <div className="chromatic-ignore">
+            <VictoryPie
+              data={this.state.data}
+              labelRadius={120}
+              colorScale="qualitative"
+              animate={{
+                duration: 1000,
+                onEnter: {
+                  duration: 500,
+                  before: () => ({ y: 0, label: "NEW" }),
+                  after: (datum) => ({ y: datum.y, label: datum.label })
+                }
+              }}
+            />
+          </div>
         );
       }
     }
 
-    return <PieContainer />
+    return <PieContainer/>;
   });
