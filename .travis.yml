@@ -4,7 +4,8 @@ node_js:
   - "4"
   - "6"
 
-sudo: true
+# Use container-based Travis infrastructure.
+sudo: false
 
 branches:
   only:
