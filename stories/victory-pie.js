@@ -116,28 +116,30 @@ storiesOf("VictoryPie", module)
     />
   ))
   .add("events: click handler", () => (
-    <VictoryPie
-      data={[
-        { x: "Cat", y: 62 },
-        { x: "Dog", y: 91 },
-        { x: "Fish", y: 55 },
-        { x: "Bird", y: 55 }
-      ]}
-      events={[{
-        target: "data",
-        eventHandlers: {
-          onClick: (event, props) => {
-            action("click a slice of pie")();
-            const fill = props.style.fill;
-            return {
-              mutation: () => {
-                return fill === "red" ? null : { style: { fill: "red" } };
-              }
-            };
+    <div className="chromatic-ignore">
+      <VictoryPie
+        data={[
+          { x: "Cat", y: 62 },
+          { x: "Dog", y: 91 },
+          { x: "Fish", y: 55 },
+          { x: "Bird", y: 55 }
+        ]}
+        events={[{
+          target: "data",
+          eventHandlers: {
+            onClick: (event, props) => {
+              action("click a slice of pie")();
+              const fill = props.style.fill;
+              return {
+                mutation: () => {
+                  return fill === "red" ? null : { style: { fill: "red" } };
+                }
+              };
+            }
           }
-        }
-      }]}
-    />
+        }]}
+      />
+    </div>
   ))
   .add("animation: custom entrance transitions", () => {
     class PieContainer extends React.Component {
@@ -165,19 +167,21 @@ storiesOf("VictoryPie", module)
 
       render() {
         return (
-          <VictoryPie
-            data={this.state.data}
-            labelRadius={120}
-            colorScale="qualitative"
-            animate={{
-              duration: 1000,
-              onEnter: {
-                duration: 500,
-                before: () => ({ y: 0, label: "NEW" }),
-                after: (datum) => ({ y: datum.y, label: datum.label })
-              }
-            }}
-          />
+          <div className="chromatic-ignore">
+            <VictoryPie
+              data={this.state.data}
+              labelRadius={120}
+              colorScale="qualitative"
+              animate={{
+                duration: 1000,
+                onEnter: {
+                  duration: 500,
+                  before: () => ({ y: 0, label: "NEW" }),
+                  after: (datum) => ({ y: datum.y, label: datum.label })
+                }
+              }}
+            />
+          </div>
         );
       }
     }
