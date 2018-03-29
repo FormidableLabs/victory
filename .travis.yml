@@ -1,6 +1,7 @@
 language: node_js
 
 node_js:
+  - "4"
   - "6"
 
 # Use container-based Travis infrastructure.
@@ -23,7 +24,7 @@ script:
   - npm --version
   - node_modules/.bin/builder run check-ci
   # Only run chromatic suite on node 6
-  - npm run chromatic-test || true
+  - if [ "${TRAVIS_NODE_VERSION}" = "6" ]; then npm run chromatic-test; fi
   # Prune deps to just production and ensure we can still build
   - npm prune --production
   - node_modules/.bin/builder run build
