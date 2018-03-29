@@ -30,7 +30,8 @@
     "lank-watch": "lank exec -u -- builder run build-watch",
     "lank-run": "lank exec -m victory-pie -uq -- builder run dev --expand-archetype",
     "lank-test": "lank exec -m victory-pie -uq -- builder run check --expand-archetype",
-    "chromatic": "chromatic test --storybook-addon"
+    "chromatic": "chromatic test --storybook-addon",
+    "chromatic-ci": "chromatic test --storybook-addon --exit-zero-on-changes"
   },
   "dependencies": {
     "builder": "^3.2.1",
