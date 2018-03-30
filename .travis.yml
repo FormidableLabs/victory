@@ -20,7 +20,6 @@ before_install:
   - sh -e /etc/init.d/xvfb start
 
 script:
-  - "echo ${TRAVIS_EVENT_TYPE}" # TODO: REMOVE ONCE WE FIGURE THIS OUT.
   - npm --version
   - node_modules/.bin/builder run check-ci
   # Only run on push events.
