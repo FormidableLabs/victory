@@ -1,5 +1,9 @@
 # VictoryChart Changelog
 
+## 25.2.1 (2018-03-30)
+
+-[576]https://github.com/FormidableLabs/victory-chart/pull/576 Fixes a bug in `VictoryBrushLine`
+
 ## 25.2.0 (2018-03-27)
 
 -[557](https://github.com/FormidableLabs/victory-chart/pull/557) `VictoryBoxPlot`
