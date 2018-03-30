@@ -7,7 +7,7 @@ node_js:
 # Use container-based Travis infrastructure.
 sudo: false
 
-TRAVIS_EVENT_TYPE: "push"
+TRAVIS_EVENT_TYPE: push
 
 branches:
   only:
