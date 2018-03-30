@@ -27,6 +27,11 @@ $ open http://localhost:3000
 # Run tests
 $ npm test
 ```
+
+## Chromatic
+
+Victory uses Chromatic for visual testing. A summary of visual changes is compiled with each PR. Please check for visual changes before merging.
+
 ### Multi-repo development
 
 Victory uses [`lank`](https://github.com/FormidableLabs/lank) for multi-repo development. Use a lank workflow to test changes in victory dependencies. Here's an example of setting up lank to test changes in `victory-core` from `victory-pie`
