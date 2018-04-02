@@ -1,6 +1,28 @@
 import React from "react";
-import { defaults, isFunction, property, omit, reduce } from "lodash";
+import { defaults, isFunction, property, reduce } from "lodash";
 import Collection from "./collection";
+
+/**
+ * creates an object with some keys excluded
+ * replacement for lodash.omit for performance. does not mimick the entire lodash.omit api
+ * @param {Object} originalObject: created object will be based on this object
+ * @param {Array<String>} keys: an array of keys to omit from the new object
+ * @returns {Object} new object with same properties as originalObject
+ */
+export const omit = (originalObject, keys = []) => {
+  // code based on babel's _objectWithoutProperties
+  const newObject = {};
+  for (const key in originalObject) {
+    if (keys.indexOf(key) >= 0) {
+      continue;
+    }
+    if (!Object.prototype.hasOwnProperty.call(originalObject, key)) {
+      continue;
+    }
+    newObject[key] = originalObject[key];
+  }
+  return newObject;
+};
 
 export default {
   getPoint(datum) {

@@ -1,7 +1,8 @@
 import React from "react";
 import PropTypes from "prop-types";
+import { defaults } from "lodash";
 import Log from "../victory-util/log";
-import { defaults, omit } from "lodash";
+import { omit } from "../victory-util/helpers";
 
 export default class VictoryPortal extends React.Component {
   static displayName = "VictoryPortal";

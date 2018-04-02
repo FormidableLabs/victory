@@ -25,6 +25,7 @@
     "postpublish": "builder run npm:postpublish",
     "start": "builder run dev",
     "test": "builder run check",
+    "lint": "builder run lint",
     "version": "builder run npm:version",
     "lank-run": "lank exec -m victory-core -uq -- builder run dev --expand-archetype",
     "lank-test": "lank exec -m victory-core -uq -- builder run check --expand-archetype"
