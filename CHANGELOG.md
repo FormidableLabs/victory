@@ -1,6 +1,10 @@
 VictoryCore Changelog
 =====================
 
+## 21.1.3 (2018-04-04)
+
+-[348](https://github.com/FormidableLabs/victory-core/pull/348) Add missing style props to whitelist
+
 ## 21.1.2 (2018-04-04)
 
 -[347](https://github.com/FormidableLabs/victory-core/pull/347) Use sanitizeStyle on primitive components; allows style checks to be removed from `victory-chart`.
