@@ -1,6 +1,11 @@
 VictoryCore Changelog
 =====================
 
+## 21.1.2 (2018-04-04)
+
+-[347](https://github.com/FormidableLabs/victory-core/pull/347) Use sanitizeStyle on primitive components; allows style checks to be removed from `victory-chart`.
+-[346](https://github.com/FormidableLabs/victory-core/pull/346) Completely remove `lodash.omit()` for performance. See [issue 956](https://github.com/FormidableLabs/victory/issues/956).
+
 ## 21.1.1 (2018-03-27)
 
 -[345](https://github.com/FormidableLabs/victory-core/pull/345) Fix naming bug in boxplot themes
