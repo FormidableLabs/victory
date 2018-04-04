@@ -31,7 +31,7 @@
     "lank-test": "lank exec -m victory-core -uq -- builder run check --expand-archetype"
   },
   "dependencies": {
-    "builder": "^3.2.3",
+    "builder": "^4.0.0",
     "builder-victory-component": "^5.1.2",
     "d3-ease": "^1.0.0",
     "d3-interpolate": "^1.1.1",
