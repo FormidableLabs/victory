@@ -1,5 +1,11 @@
 # VictoryChart Changelog
 
+## 25.2.2 (2018-04-04)
+
+- Upgrade to `victory-core@^21.1.2`.
+- [577](https://github.com/FormidableLabs/victory-chart/pull/577). Replace lodash omit. Remove any style prop scrubbing (`victory-core` now handles this).
+
+
 ## 25.2.1 (2018-03-30)
 
 -[576]https://github.com/FormidableLabs/victory-chart/pull/576 Fixes a bug in `VictoryBrushLine`
