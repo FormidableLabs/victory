@@ -31,7 +31,7 @@
     "lank-run": "lank exec -m victory-chart -uq -- builder run dev --expand-archetype"
   },
   "dependencies": {
-    "builder": "^3.2.1",
+    "builder": "^4.0.0",
     "builder-victory-component": "^5.1.2",
     "d3-voronoi": "^1.1.2",
     "lodash": "^4.17.5",
