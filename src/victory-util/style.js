@@ -6,6 +6,7 @@ import { pick } from "lodash";
  * non-style properties have been removed from this list
  */
 const svgStyleWhitelist = [
+  "cursor",
   "fill",
   "fillOpacity",
   "fontFamily",
@@ -15,6 +16,7 @@ const svgStyleWhitelist = [
   "markerMid",
   "markerStart",
   "opacity",
+  "pointerEvents",
   "points",
   "stroke",
   "strokeDasharray",
