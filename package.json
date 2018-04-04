@@ -34,7 +34,7 @@
     "version": "builder run npm:version"
   },
   "dependencies": {
-    "builder": "^3.2.1",
+    "builder": "^4.0.0",
     "builder-victory-component": "^5.1.2",
     "victory-chart": "^25.2.0",
     "victory-core": "^21.1.1",
