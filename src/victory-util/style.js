@@ -3,26 +3,36 @@ import { pick } from "lodash";
 /**
  * Acceptable CSS/SVG style attributes
  * https://react-cn.github.io/react/docs/tags-and-attributes.html#svg-attributes
+ * non-style properties have been removed from this list
  */
-const styleWhitelist = [
-  "angle", "clipPath", "cx", "cy", "d", "dx", "dy", "fill", "fillOpacity", "fontFamily",
-  "fontSize", "fx", "fy", "gradientTransform", "gradientUnits", "height", "markerEnd",
-  "markerMid", "markerStart", "offset", "opacity", "patternContentUnits", "patternUnits",
-  "points", "preserveAspectRatio", "r", "rx", "ry", "spreadMethod", "stopColor", "stopOpacity",
-  "stroke", "strokeDasharray", "strokeLinecap", "strokeOpacity", "strokeWidth", "textAnchor",
-  "transform", "version", "verticalAnchor", "viewBox", "width", "x1", "x2", "x", "xlinkActuate",
-  "xlinkArcrole", "xlinkHref", "xlinkRole", "xlinkShow", "xlinkTitle", "xlinkType", "xmlBase",
-  "xmlLang", "xmlSpace", "y1", "y2", "y"
+const svgStyleWhitelist = [
+  "fill",
+  "fillOpacity",
+  "fontFamily",
+  "fontSize",
+  "height",
+  "markerEnd",
+  "markerMid",
+  "markerStart",
+  "opacity",
+  "points",
+  "stroke",
+  "strokeDasharray",
+  "strokeLinecap",
+  "strokeOpacity",
+  "strokeWidth",
+  "textAnchor",
+  "transform"
 ];
 
 /**
  * Given an object with CSS/SVG style attributes, return a new object containing
  * only keys that are also on our SVG style whitelist.
- * @param {Object} data An object of user-input style attributes.
+ * @param {Object} style An object of user-input style attributes.
  * @returns {Object} An object containing only valid style data.
  */
-const sanitizeStyleProps = function (data) {
-  return pick(data, styleWhitelist);
+export const sanitizeSvgStyle = function (style) {
+  return pick(style, svgStyleWhitelist);
 };
 
 /**
@@ -56,7 +66,6 @@ const toTransformString = function (obj, ...more) {
 
 export default {
 
-  sanitizeStyleProps,
   toTransformString,
 
   /**

@@ -1,9 +1,9 @@
-import { Style } from "src/index";
+import Style, { sanitizeSvgStyle } from "src/victory-util/style";
 
-describe("sanitizeStyleProps", () => {
+describe("sanitizeSvgStyle", () => {
   it("drop invalid svg attributes", () => {
     const data = { tree: "blue", stroke: "#c43a31" };
-    expect(Style.sanitizeStyleProps(data)).to.deep.equal({ stroke: "#c43a31" });
+    expect(sanitizeSvgStyle(data)).to.deep.equal({ stroke: "#c43a31" });
   });
 });
 

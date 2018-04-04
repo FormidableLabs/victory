@@ -1,6 +1,7 @@
 import React from "react";
 import PropTypes from "prop-types";
 import Collection from "../victory-util/collection";
+import { sanitizeSvgStyle } from "../victory-util/style";
 
 export default class Rect extends React.Component {
   static propTypes = {
@@ -33,7 +34,7 @@ export default class Rect extends React.Component {
         x={x} y={y} rx={rx} ry={ry} width={width} height={height}
         className={className}
         clipPath={clipPath}
-        style={style}
+        style={sanitizeSvgStyle(style)}
         transform={transform}
         role={role || "presentation"}
         shapeRendering={shapeRendering || "auto"}
