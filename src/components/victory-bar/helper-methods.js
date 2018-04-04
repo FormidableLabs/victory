@@ -1,4 +1,4 @@
-import { assign, defaults, keys, omit, isNaN } from "lodash";
+import { assign, defaults } from "lodash";
 import { Helpers, LabelHelpers, Data, Domain, Scale } from "victory-core";
 
 const getBarPosition = (props, datum) => {
@@ -13,12 +13,7 @@ const getBarPosition = (props, datum) => {
 };
 
 const getBarStyle = (datum, baseStyle) => {
-  const numKeys = keys(datum).filter((k) => isNaN(k));
-  const omitKeys = [
-    "x", "y", "y0", "_x", "_y", "_y0", "name", "label", "eventKey"
-  ];
-  const styleData = omit(datum, [...omitKeys, ...numKeys]);
-  return defaults({}, styleData, baseStyle);
+  return defaults({}, datum, baseStyle);
 };
 
 const getCalculatedValues = (props) => {

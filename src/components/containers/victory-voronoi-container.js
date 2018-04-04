@@ -1,8 +1,8 @@
 import PropTypes from "prop-types";
 import React from "react";
+import { defaults, isFunction, pick } from "lodash";
 import { VictoryContainer, VictoryTooltip, Helpers, TextSize } from "victory-core";
 import VoronoiHelpers from "./voronoi-helpers";
-import { omit, defaults, isFunction } from "lodash";
 
 export const voronoiContainerMixin = (base) => class VictoryVoronoiContainer extends base {
   static displayName = "VictoryVoronoiContainer";
@@ -107,7 +107,10 @@ export const voronoiContainerMixin = (base) => class VictoryVoronoiContainer ext
 
   getLabelPosition(props, points, labelProps) {
     const { mousePosition, voronoiDimension, scale, voronoiPadding } = props;
-    const basePosition = Helpers.scalePoint(props, omit(points[0], ["_voronoiX", "_voronoiY"]));
+    const basePosition = Helpers.scalePoint(
+      props,
+      pick(points[0], ["_x", "_x1", "_x0", "_y", "_y1", "_y0"]) // exclude _voronoiX, _voronoiY
+    );
     if (!voronoiDimension || points.length < 2) {
       return basePosition;
     }
@@ -181,15 +184,21 @@ export const voronoiContainerMixin = (base) => class VictoryVoronoiContainer ext
       return memo;
     }, []);
     const componentProps = labelComponent.props || {};
-    const style = this.getStyle(props, points, "labels");
+
+    // remove properties from first point to make datum
+    // eslint-disable-next-line no-unused-vars
+    const { childName, style, continuous, ...datum } = points[0];
 
     const labelProps = defaults(
       {
         active: true,
-        datum: omit(points[0], ["childName", "style", "continuous"]),
         flyoutStyle: this.getStyle(props, points, "flyout")[0],
         renderInPortal: false,
-        scale, style, theme, text
+        style: this.getStyle(props, points, "labels"),
+        datum,
+        scale,
+        theme,
+        text
       },
       componentProps,
       this.getDefaultLabelProps(props, points),

@@ -1,6 +1,6 @@
-import { assign, keys, omit, defaults, without, isNaN } from "lodash";
-import { Helpers, LabelHelpers, Scale, Domain, Data } from "victory-core";
+import { assign, defaults, without } from "lodash";
 import { voronoi as d3Voronoi } from "d3-voronoi";
+import { Helpers, LabelHelpers, Scale, Domain, Data } from "victory-core";
 
 const getVoronoi = (props, range, scale) => {
   const minRange = [Math.min(...range.x), Math.min(...range.y)];
@@ -17,12 +17,7 @@ const getVoronoi = (props, range, scale) => {
 };
 
 const getDataStyles = (datum, style) => {
-  const numKeys = keys(datum).filter((k) => isNaN(k));
-  const omitKeys = [
-    "x", "y", "_x", "_y", "eventKey", "label"
-  ];
-  const stylesFromData = omit(datum, [...omitKeys, ...numKeys]);
-  return defaults({}, stylesFromData, style);
+  return defaults({}, datum, style);
 };
 
 

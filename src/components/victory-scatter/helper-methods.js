@@ -1,4 +1,4 @@
-import { assign, keys, values, omit, defaults, isNaN } from "lodash";
+import { assign, values, defaults } from "lodash";
 import { Helpers, LabelHelpers, Data, Domain, Scale } from "victory-core";
 
 export default {
@@ -57,12 +57,7 @@ export default {
   },
 
   getDataStyles(datum, style) {
-    const numKeys = keys(datum).filter((k) => isNaN(k));
-    const omitKeys = [
-      "x", "y", "_x", "_y", "z", "size", "symbol", "eventKey", "label"
-    ];
-    const stylesFromData = omit(datum, [...omitKeys, ...numKeys]);
-    return defaults({}, stylesFromData, style);
+    return defaults({}, datum, style);
   },
 
   getSymbol(data, props) {

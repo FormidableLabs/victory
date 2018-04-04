@@ -1,4 +1,4 @@
-import { assign, keys, omit, defaults, isArray, flatten, sortBy, isNaN } from "lodash";
+import { assign, defaults, isArray, flatten, sortBy } from "lodash";
 import { Helpers, LabelHelpers, Scale, Domain, Data } from "victory-core";
 
 const getErrors = (datum, scale, axis) => {
@@ -197,12 +197,7 @@ const getLabelProps = (dataProps, text, style) => {
 };
 
 const getDataStyles = (datum, style) => {
-  const numKeys = keys(datum).filter((k) => isNaN(k));
-  const omitKeys = [
-    "x", "y", "_x", "_y", "name", "errorX", "errorY", "eventKey", "label"
-  ];
-  const stylesFromData = omit(datum, [...omitKeys, ...numKeys]);
-  return defaults({}, stylesFromData, style);
+  return defaults({}, datum, style);
 };
 
 const getBaseProps = (props, fallbackProps) => {
