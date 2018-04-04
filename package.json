@@ -34,7 +34,7 @@
     "chromatic-test": "chromatic test --storybook-addon --exit-zero-on-changes"
   },
   "dependencies": {
-    "builder": "^3.2.1",
+    "builder": "^4.0.0",
     "builder-victory-component": "^5.1.2",
     "d3-shape": "^1.0.0",
     "lodash": "^4.17.5",
