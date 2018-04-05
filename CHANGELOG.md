@@ -1,9 +1,14 @@
 VictoryCore Changelog
 =====================
 
+## 21.1.4 (2018-04-05)
+
+-[350](https://github.com/FormidableLabs/victory-core/pull/350) Adds support for arrays in event targets (event attachment, not mutation)
+
 ## 21.1.3 (2018-04-04)
 
--[348](https://github.com/FormidableLabs/victory-core/pull/348) Add missing style props to whitelist
+-[348](https://github.com/FormidableLabs/victory-core/pull/348) Upgrade to builder 4
+-[349](https://github.com/FormidableLabs/victory-core/pull/349) Add missing style props to whitelist
 
 ## 21.1.2 (2018-04-04)
 
