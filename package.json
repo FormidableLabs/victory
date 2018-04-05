@@ -38,6 +38,7 @@
     "d3-scale": "^1.0.0",
     "d3-shape": "^1.2.0",
     "d3-timer": "^1.0.0",
+    "fast-deep-equal": "^1.1.0",
     "lodash": "^4.17.5"
   },
   "devDependencies": {

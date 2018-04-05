@@ -184,7 +184,6 @@ describe("collections", () => {
     let sandbox;
     beforeEach(() => {
       sandbox = sinon.sandbox.create();
-      sandbox.spy(Collection, "checkEquality");
     });
     afterEach(() => {
       sandbox.restore();
@@ -194,40 +193,35 @@ describe("collections", () => {
       const a = { test: { nested: "a" } };
       const b = a;
       expect(Collection.areVictoryPropsEqual(a, b)).to.equal(true);
-      expect(Collection.checkEquality).calledOnce.and.returned(true);
     });
 
     it("returns early when nested collections are not the same length", () => {
       const a = { test: { nested: "a" }, test2: { nested: "b" } };
       const b = { test: { nested: "a" } };
       expect(Collection.areVictoryPropsEqual(a, b)).to.equal(false);
-      expect(Collection.checkEquality).calledOnce.and.returned(false);
     });
 
     it("returns early if values are not the same type", () => {
       const a = { test: { nested: "a" } };
       const b = { test: () => "a" };
       expect(Collection.areVictoryPropsEqual(a, b)).to.equal(false);
-      expect(Collection.checkEquality).calledOnce.and.returned(false);
     });
 
     it("returns early when nested elements are empty", () => {
       const a = { a: [] };
       const b = { a: [] };
       expect(Collection.areVictoryPropsEqual(a, b)).to.equal(true);
-      expect(Collection.checkEquality).calledOnce.and.returned(true);
     });
 
     it("returns false for mixed objects and arrays", () => {
       const a = { a: [] };
       const b = { a: {} };
       expect(Collection.areVictoryPropsEqual(a, b)).to.equal(false);
-      expect(Collection.checkEquality).calledOnce.and.returned(false);
     });
 
     it("returns true if values are functions", () => {
       const a = { test: () => "a" };
-      const b = { test: () => "a" };
+      const b = { test: () => "b" };
       expect(Collection.areVictoryPropsEqual(a, b)).to.equal(true);
     });
 
@@ -235,49 +229,42 @@ describe("collections", () => {
       const a = { test: { nested: "a" }, test2: { nested: "a" } };
       const b = { test: { nested: "a" }, test2: { nested: "a" } };
       expect(Collection.areVictoryPropsEqual(a, b)).to.equal(true);
-      expect(Collection.checkEquality).calledThrice;
     });
 
     it("finds differences in deeply nested objects", () => {
       const a = { a: 1, b: 2, test: { nested: { deep: "a" } } };
       const b = { a: 1, b: 2, test: { nested: { deep: "b" } } };
       expect(Collection.areVictoryPropsEqual(a, b)).to.equal(false);
-      expect(Collection.checkEquality).calledThrice;
     });
 
     it("returns early when shallow differences are found in deeply nested objects", () => {
       const a = { a: 1, b: 2, test: { nested: { deep: "a" } } };
       const b = { a: 2, b: 2, test: { nested: { deep: "b" } } };
       expect(Collection.areVictoryPropsEqual(a, b)).to.equal(false);
-      expect(Collection.checkEquality).calledOnce;
     });
 
     it("recursively checks equality for nested arrays", () => {
       const a = [ 1, [2, "3", [4]]];
       const b = [ 1, [2, "3", [4]]];
       expect(Collection.areVictoryPropsEqual(a, b)).to.equal(true);
-      expect(Collection.checkEquality).calledThrice;
     });
 
     it("finds differences in deeply nested arrays", () => {
       const a = [ 1, [2, "3", [4]]];
       const b = [ 1, [2, "3", [5]]];
       expect(Collection.areVictoryPropsEqual(a, b)).to.equal(false);
-      expect(Collection.checkEquality).calledThrice;
     });
 
     it("returns early when shallow differences are found in deeply nested arrays", () => {
       const a = [ 1, [2, "3", [4]]];
       const b = [ 2, [2, "3", [5]]];
       expect(Collection.areVictoryPropsEqual(a, b)).to.equal(false);
-      expect(Collection.checkEquality).calledOnce;
     });
 
     it("recursively checks equality for mixed collections", () => {
       const a = [ 1, [2, "3", { a: 4 }]];
       const b = [ 1, [2, "3", { a: 4 }]];
       expect(Collection.areVictoryPropsEqual(a, b)).to.equal(true);
-      expect(Collection.checkEquality).calledThrice;
     });
 
     it("compares objects regardless of key order", () => {
@@ -290,7 +277,6 @@ describe("collections", () => {
       const a = { test: new Date(2010, 2, 1), test2: new Date(2010, 1, 1) };
       const b = { test: new Date(2010, 2, 1), test2: new Date(2010, 1, 1) };
       expect(Collection.areVictoryPropsEqual(a, b)).to.equal(true);
-      expect(Collection.checkEquality).calledOnce.and.returned(true);
     });
 
     it("returns equal for equivalent date objects", () => {
@@ -341,16 +327,32 @@ describe("collections", () => {
       });
     });
 
+    it("does not hang on circular structures", () => {
+      const obj = {};
+      obj.self = obj;
+      const a = { x: obj };
+      const b = { x: obj };
+      const c = { y: obj };
+      expect(Collection.areVictoryPropsEqual(a, b)).to.equal(true);
+      expect(Collection.areVictoryPropsEqual(a, c)).to.equal(false);
+    });
+
     it("correctly distinguishes null, NaN and undefined", () => {
       const pairs = [
-        [null, null, true], [null, undefined, false], [null, {}, false], [null, "", false],
-        [null, 0, false], [undefined, undefined, true], [undefined, null, false],
-        [undefined, "", false], [NaN, NaN, true], [NaN, "a", false], [NaN, Infinity, false]
+        // a, b, shouldAEqualB
+        [null, null, true],
+        [null, undefined, false],
+        [null, {}, false],
+        [null, "", false],
+        [null, 0, false],
+        [undefined, undefined, true],
+        [undefined, null, false],
+        [undefined, "", false],
+        [NaN, "a", false],
+        [NaN, Infinity, false]
       ];
       pairs.forEach((vals) => {
-        const a = vals[0];
-        const b = vals[1];
-        const expected = vals[2];
+        const [a, b, expected] = vals;
         expect(Collection.areVictoryPropsEqual(a, b)).to.equal(expected);
       });
     });
