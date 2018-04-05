@@ -15,7 +15,9 @@ export default {
       const getSelectedEvents = () => {
         const targetEvents = events.reduce((memo, event) => {
           if (event.target !== undefined) {
-            return `${event.target}` === `${target}` ? memo.concat(event) : memo;
+            const matchesTarget = Array.isArray(event.target) ?
+              includes(event.target, target) : `${event.target}` === `${target}`;
+            return matchesTarget ? memo.concat(event) : memo;
           }
           return memo.concat(event);
         }, []);
