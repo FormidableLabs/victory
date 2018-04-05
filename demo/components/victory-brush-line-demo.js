@@ -6,6 +6,32 @@ import {
 } from "../../src/index";
 
 class App extends React.Component {
+  constructor() {
+    super();
+    this.state = {
+      externalMutation: undefined
+    };
+  }
+
+  removeMutation() {
+    this.setState({
+      externalMutation: undefined
+    });
+  }
+
+  clearMutation() {
+    const callback = this.removeMutation.bind(this);
+    this.setState({
+      externalMutation: [
+        {
+          target: "axis",
+          eventKey: "all",
+          mutation: () => ({ brushDomain: [0, 1 / Number.MAX_SAFE_INTEGER] }),
+          callback
+        }
+      ]
+    });
+  }
 
   render() {
     const containerStyle = {
@@ -20,13 +46,14 @@ class App extends React.Component {
       <div className="demo">
         <h1>Debug</h1>
         <div style={containerStyle}>
-
+          <button onClick={this.clearMutation.bind(this)}>reset domain</button>
           <VictoryChart style={chartStyle}>
             <VictoryBar
               data={[{ x: "one", y: 4 }, { x: "two", y: 5 }, { x: "three", y: 6 }]}
             />
             <VictoryAxis
               axisComponent={<VictoryBrushLine brushWidth={20}/>}
+              externalEventMutations={this.state.externalMutation}
             />
           </VictoryChart>
           <VictoryChart style={chartStyle} domainPadding={{ x: 50 }}>
