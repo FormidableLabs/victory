@@ -61,11 +61,7 @@ const getMinimumDomain = () => {
 };
 
 const getCurrentDomain = (props) => {
-  const { cachedBrushDomain, brushDomain } = props;
-  if (brushDomain && cachedBrushDomain && !isEqual(brushDomain, cachedBrushDomain)) {
-    return brushDomain;
-  }
-  return brushDomain || getFullDomain(props);
+  return props.brushDomain || getFullDomain(props);
 };
 
 const panBox = (props, position) => {
@@ -166,7 +162,7 @@ export default class VictoryBrushLine extends React.Component {
         },
         onMouseDown: (evt, targetProps) => {
           evt.preventDefault();
-          const { allowResize, allowDrag, dimension, brushDomain, activeBrushes } = targetProps;
+          const { allowResize, allowDrag, dimension, activeBrushes } = targetProps;
 
           // Don't trigger events for static brushes
           if (!allowResize && !allowDrag) {
@@ -184,7 +180,7 @@ export default class VictoryBrushLine extends React.Component {
               mutation: () => {
                 return ({
                   isSelecting: true, activeHandle,
-                  brushDomain: currentDomain, cachedBrushDomain: brushDomain,
+                  brushDomain: currentDomain,
                   startPosition: position, activeBrushes
                 });
               }
@@ -195,7 +191,7 @@ export default class VictoryBrushLine extends React.Component {
             return [{
               mutation: () => ({
                 isPanning: allowDrag, startPosition: position,
-                brushDomain: currentDomain, cachedBrushDomain: brushDomain, activeBrushes
+                brushDomain: currentDomain, activeBrushes
               })
             }];
           } else {
@@ -205,7 +201,6 @@ export default class VictoryBrushLine extends React.Component {
               mutation: () => ({
                 isSelecting: allowResize,
                 brushDomain: null,
-                cachedBrushDomain: brushDomain,
                 startPosition: position,
                 activeBrushes
               })
@@ -214,8 +209,7 @@ export default class VictoryBrushLine extends React.Component {
         },
         onMouseMove: (evt, targetProps) => { // eslint-disable-line max-statements, complexity
           const {
-            isPanning, isSelecting, allowResize, allowDrag, dimension, onBrushDomainChange,
-            cachedBrushDomain
+            isPanning, isSelecting, allowResize, allowDrag, dimension, onBrushDomainChange
           } = targetProps;
           if (isPanning || isSelecting) {
             evt.preventDefault();
@@ -235,7 +229,7 @@ export default class VictoryBrushLine extends React.Component {
           if (!targetProps.isPanning && !targetProps.isSelecting) {
             return [{
               mutation: () => ({
-                activeBrushes, brushDomain: targetProps.brushDomain, cachedBrushDomain
+                activeBrushes, brushDomain: targetProps.brushDomain
               })
             }];
           }
@@ -248,7 +242,7 @@ export default class VictoryBrushLine extends React.Component {
               targetProps.startPosition : position;
             const mutatedProps = {
               startPosition, isPanning: true,
-              brushDomain: currentDomain, cachedBrushDomain,
+              brushDomain: currentDomain,
               activeBrushes: { brush: true }
             };
 
@@ -276,7 +270,7 @@ export default class VictoryBrushLine extends React.Component {
             }
             const mutatedProps = {
               brushDomain: currentDomain, startPosition: targetProps.startPosition,
-              isSelecting, activeHandle: handle, cachedBrushDomain,
+              isSelecting, activeHandle: handle,
               activeBrushes: {
                 brush: true, minHandle: activeHandle === "min", maxHandle: activeHandle === "max"
               }
@@ -291,13 +285,11 @@ export default class VictoryBrushLine extends React.Component {
           return [];
         },
         onMouseUp(evt, targetProps) {
-          const {
-            onBrushDomainChange, brushDomain, allowResize, activeBrushes, cachedBrushDomain
-          } = targetProps;
+          const { onBrushDomainChange, brushDomain, allowResize, activeBrushes } = targetProps;
           // if the mouse hasn't moved since a mouseDown event, select the whole domain region
           const mutatedProps = {
             isPanning: false, isSelecting: false, activeHandle: null, startPosition: null,
-            brushDomain, cachedBrushDomain, activeBrushes
+            brushDomain, activeBrushes
           };
           if (allowResize && isFunction(onBrushDomainChange)) {
             onBrushDomainChange(brushDomain, defaults({}, mutatedProps, targetProps));
@@ -307,11 +299,11 @@ export default class VictoryBrushLine extends React.Component {
           }];
         },
         onMouseLeave(evt, targetProps) {
-          const { brushDomain, cachedBrushDomain } = targetProps;
+          const { brushDomain } = targetProps;
           return [{
             mutation: () => ({
               isPanning: false, isSelecting: false, activeHandle: null, startPosition: null,
-              brushDomain, cachedBrushDomain, activeBrushes: {}
+              brushDomain, activeBrushes: {}
             })
           }];
         }
