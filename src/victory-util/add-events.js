@@ -54,7 +54,7 @@ export default (WrappedComponent, options) => {
       }
 
       // check whether external mutations match
-      if (!Collection.areVictoryPropsEqual(this.externaMutations, externalMutations)) {
+      if (!Collection.areVictoryPropsEqual(this.externalMutations, externalMutations)) {
         this.cacheValues(calculatedValues);
         return true;
       }
