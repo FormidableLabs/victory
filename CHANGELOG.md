@@ -1,6 +1,10 @@
 VictoryCore Changelog
 =====================
 
+## 21.1.5 (2018-04-06)
+
+-[351](https://github.com/FormidableLabs/victory-core/pull/351) Replace `Collection.checkEquality` with [fast-deep-equal](https://github.com/epoberezkin/fast-deep-equal)
+
 ## 21.1.4 (2018-04-05)
 
 -[350](https://github.com/FormidableLabs/victory-core/pull/350) Adds support for arrays in event targets (event attachment, not mutation)
