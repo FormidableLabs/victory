@@ -1,6 +1,11 @@
 VictoryCore Changelog
 =====================
 
+## 21.1.6 (2018-04-09)
+
+-[353](https://github.com/FormidableLabs/victory-core/pull/353) When `fast-deep-equal` fails it will now warn instead of throwing an error.
+-[352](https://github.com/FormidableLabs/victory-core/pull/352) Correct typo in `victory-util/add-events`
+
 ## 21.1.5 (2018-04-06)
 
 -[351](https://github.com/FormidableLabs/victory-core/pull/351) Replace `Collection.checkEquality` with [fast-deep-equal](https://github.com/epoberezkin/fast-deep-equal)
