@@ -1,5 +1,7 @@
 import fastDeepEqual from "fast-deep-equal";
 
+import Log from "./log";
+
 export default {
   isNonEmptyArray(collection) {
     return Array.isArray(collection) && collection.length > 0;
@@ -107,7 +109,7 @@ export default {
     try {
       return fastDeepEqual(a, b);
     } catch (err) {
-      console.warn("VictoryError: fastDeepEqual. https://github.com/FormidableLabs/victory/issues/964"); //eslint-disable-line
+      Log.warn("VictoryError: fastDeepEqual. https://github.com/FormidableLabs/victory/issues/964");
       return false;
     }
   }
