@@ -104,6 +104,11 @@ export default {
     (see the tests for more specifics)
   */
   areVictoryPropsEqual(a, b) {
-    return fastDeepEqual(a, b);
+    try {
+      return fastDeepEqual(a, b);
+    } catch (err) {
+      console.warn("VictoryError: fastDeepEqual. https://github.com/FormidableLabs/victory/issues/964"); //eslint-disable-line
+      return false;
+    }
   }
 };
