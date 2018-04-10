@@ -37,8 +37,7 @@ class App extends React.Component {
   }
 
   getMaximumValues() {
-    // Find the maximum value for each axis. This will be used to normalize data and re-scale axis ticks
-    return attributes.map(attribute => {
+    return attributes.map((attribute) => {
       return data.reduce((memo, datum) => {
         return datum[attribute] > memo ? datum[attribute] : memo;
       }, -Infinity);
@@ -47,7 +46,7 @@ class App extends React.Component {
 
   normalizeData(maximumValues) {
     // construct normalized datasets by dividing the value for each attribute by the maximum value
-    return data.map(datum => ({
+    return data.map((datum) => ({
       name: datum.name,
       data: attributes.map((attribute, i) => ({
         x: attribute,
@@ -66,12 +65,12 @@ class App extends React.Component {
 
   getActiveDatasets(filters) {
     // Return the names from all datasets that have values within all filters
-    const isActive = dataset => {
+    const isActive = (dataset) => {
       return _.keys(filters).reduce((memo, name) => {
         if (!memo || !Array.isArray(filters[name])) {
           return memo;
         }
-        const point = _.find(dataset.data, d => d.x === name);
+        const point = _.find(dataset.data, (d) => d.x === name);
         return (
           point &&
           Math.max(...filters[name]) >= point.y &&
@@ -81,7 +80,7 @@ class App extends React.Component {
     };
 
     return this.state.datasets
-      .map(dataset => {
+      .map((dataset) => {
         return isActive(dataset, filters) ? dataset.name : null;
       })
       .filter(Boolean);
@@ -139,7 +138,7 @@ class App extends React.Component {
     return (
       <div>
         <button onClick={this.clearMutation.bind(this)}>reset domain</button>
-        <VictoryChart style={{ parent: { maxWidth: "50%"}}}
+        <VictoryChart style={{ parent: { maxWidth: "50%" } }}
           domain={{ y: [0, 1.1] }}
           height={height}
           width={width}
@@ -152,7 +151,7 @@ class App extends React.Component {
             }}
             tickLabelComponent={<VictoryLabel y={padding.top - 40} />}
           />
-          {this.state.datasets.map(dataset => (
+          {this.state.datasets.map((dataset) => (
             <VictoryLine
               key={dataset.name}
               name={dataset.name}
@@ -184,7 +183,7 @@ class App extends React.Component {
                 tickLabels: { fontSize: 15, padding: 15, pointerEvents: "none" }
               }}
               tickValues={[0.2, 0.4, 0.6, 0.8, 1]}
-              tickFormat={tick =>
+              tickFormat={(tick) =>
                 Math.round(tick * this.state.maximumValues[index])
               }
             />
