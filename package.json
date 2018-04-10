@@ -28,16 +28,27 @@
     "benchmark": "builder run check-perf",
     "version": "builder run npm:version",
     "lank-watch": "lank exec -u -- builder run build-watch",
-    "lank-run": "lank exec -m victory-chart -uq -- builder run dev --expand-archetype"
+    "lank-run": "lank exec -m victory-chart -uq -- builder run dev --expand-archetype",
+    "storybook": "start-storybook -p 6006",
+    "chromatic": "chromatic test --storybook-addon",
+    "chromatic-test": "chromatic test --storybook-addon --exit-zero-on-changes"
   },
   "dependencies": {
     "builder": "^4.0.0",
     "builder-victory-component": "^5.1.2",
     "d3-voronoi": "^1.1.2",
     "lodash": "^4.17.5",
-    "victory-core": "^21.1.2"
+    "victory-core": "^21.1.5"
   },
   "devDependencies": {
+    "@storybook/addon-actions": "^3.2.13",
+    "@storybook/addon-console": "^1.0.0",
+    "@storybook/addon-info": "^3.1.4",
+    "@storybook/addon-options": "^3.1.2",
+    "@storybook/react": "^3.2.13",
+    "babel-plugin-lodash": "^3.1.2",
+    "babel-preset-react": "^6.5.0",
+    "babel-preset-react-native": "^1.9.0",
     "builder-victory-component-dev": "^5.1.2",
     "chai": "^3.5.0",
     "d3-scale": "^1.0.0",
@@ -48,6 +59,7 @@
     "mocha": "^3.0.2",
     "prop-types": "^15.5.8",
     "react": "^16.0.0",
+    "react-chromatic": "^0.7.11",
     "react-dom": "^16.0.0",
     "sinon": "^1.17.5",
     "sinon-chai": "^2.8.0"
