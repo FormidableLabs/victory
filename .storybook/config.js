@@ -14,10 +14,11 @@ setOptions({
   showDownPanel: false,
   showSearchBox: true,
   downPanelInRight: true,
-  sortStoriesByKind: true
+  sortStoriesByKind: true,
+  hierarchySeparator: /\//
 });
 
-const storyWrapper = story => {
+const storyWrapper = (story) => {
   return <div style={{ maxWidth: "50%" }}>{story()}</div>;
 };
 
