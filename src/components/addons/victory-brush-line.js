@@ -136,7 +136,7 @@ export default class VictoryBrushLine extends React.Component {
 
   static defaultEvents = function (props) {
     return props.disable ? undefined : [{
-      target: props.type || ["grid", "axis"],
+      target: props.type,
       eventHandlers: {
         onMouseEnter: (evt, targetProps) => {
           evt.preventDefault();
