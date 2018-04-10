@@ -1,5 +1,9 @@
 # VictoryChart Changelog
 
+## 25.2.3 (2018-04-10)
+
+- [580](https://github.com/FormidableLabs/victory-chart/pull/580) Improvements for `VictoryBrushLine`
+
 ## 25.2.2 (2018-04-04)
 
 - Upgrade to `victory-core@^21.1.2`.
