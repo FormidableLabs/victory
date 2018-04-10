@@ -61,6 +61,7 @@
     "react": "^16.0.0",
     "react-chromatic": "^0.7.11",
     "react-dom": "^16.0.0",
+    "seedrandom": "^2.4.3",
     "sinon": "^1.17.5",
     "sinon-chai": "^2.8.0"
   },
