@@ -1,6 +1,10 @@
 VictoryCore Changelog
 =====================
 
+## 21.1.7 (2018-04-11)
+
+-[355](https://github.com/FormidableLabs/victory-core/pull/355) Fix for [issue 963](https://github.com/FormidableLabs/victory/issues/964), Maximum call stack size exceeded. Adds a custom fork of `fast-deep-equal` (with bugfix) locally.
+
 ## 21.1.6 (2018-04-09)
 
 -[353](https://github.com/FormidableLabs/victory-core/pull/353) When `fast-deep-equal` fails it will now warn instead of throwing an error.
