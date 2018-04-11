@@ -1,6 +1,4 @@
-import fastDeepEqual from "fast-deep-equal";
-
-import Log from "./log";
+import fastDeepEqual from "./fast-deep-equal";
 
 export default {
   isNonEmptyArray(collection) {
@@ -106,11 +104,6 @@ export default {
     (see the tests for more specifics)
   */
   areVictoryPropsEqual(a, b) {
-    try {
-      return fastDeepEqual(a, b);
-    } catch (err) {
-      Log.warn("VictoryError: fastDeepEqual. https://github.com/FormidableLabs/victory/issues/964");
-      return false;
-    }
+    return fastDeepEqual(a, b);
   }
 };
