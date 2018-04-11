@@ -75,7 +75,8 @@ VictoryCore Changelog
 - [324](https://github.com/FormidableLabs/victory-core/pull/324) Adds support for external event mutations
   - Adds `externalEventMutations` prop to `VictorySharedEvents` and all components enhanced with the `add-events` HOC
   - `externalEventMutations` prop format:
-  ```
+ 
+```
 externalEventMutations: PropTypes.arrayOf(PropTypes.shape({
   callback: PropTypes.function,
   childName: PropTypes.oneOfType([
@@ -94,6 +95,7 @@ externalEventMutations: PropTypes.arrayOf(PropTypes.shape({
   ])
 }))
 ```
+
 *Note:* `eventKey` and `target` must be specified for externalEventMutations. When using `extenalEventMutations` with shared events (_i.e._ events on VictoryChart etc), `childName` is also required.
 
 *Note:* The `callback` supplied to `externalEventMutations` should be used for clearing mutations. This is crucial for animating charts
