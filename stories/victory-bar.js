@@ -6,9 +6,7 @@ import { range, random } from "lodash";
 import { VictoryBar, VictoryStack, VictoryGroup } from "../src/index";
 import { VictoryTheme, VictoryTooltip } from "victory-core";
 import { getData, getMixedData, getTimeData, getTransitionData } from "./data";
-import { getChartDecorator, getAnimationDecorator } from "./decorators";
-
-const tempState = {};
+import { getChartDecorator, getAnimatingComponent } from "./decorators";
 
 storiesOf("VictoryBar/static/default", module)
   .add("VictoryBar", () => <VictoryBar/>);
@@ -207,7 +205,7 @@ storiesOf("VictoryBar/static/style", module)
         { x: "Bird", y: 55 }
       ]}
     />
-  ))
+  ));
 
 storiesOf("VictoryBar/static/stacked", module)
   .addDecorator(getChartDecorator({ domainPadding: 25 }))
@@ -441,60 +439,13 @@ storiesOf("VictoryBar/static/time scale", module)
     </VictoryGroup>
   ));
 
-  storiesOf("VictoryBar/animating", module)
-  .addDecorator(getAnimationDecorator((tempState) => ({ data: getTransitionData() })))
-  .add("animation transitions", (one, two, three) => {
-    console.log(one, two, three)
-   return ( <VictoryBar
-      data={[]}
-      animate={{ duration: 1000 }}
-    />
-   )
-  });
-
-
-
-storiesOf("VictoryBar/other", module)
+storiesOf("VictoryBar/animating", module)
   .add("animation transitions", () => {
-    class BarContainer extends React.Component {
-      constructor(props) {
-        super(props);
-        this.state = { data: this.getData() };
-      }
-
-      getData() { //eslint-disable-line
-        const samples = random(6, 10);
-        return range(samples).map((data) => {
-          return {
-            x: data,
-            y: random(3, 10),
-            label: `#${data}`
-          };
-        });
-      }
-
-      componentDidMount() {
-        window.setInterval(() => {
-          this.setState({ data: this.getData() });
-        }, 2000);
-      }
-
-      componentWillUnmount() {
-        window.clearInterval(this.setStateInterval);
-      }
-
-      render() {
-        return (
-          <div className="chromatic-ignore" style={{ height: 250 }}>
-            <VictoryBar
-              data={this.state.data}
-              animate={{ duration: 1000 }}
-            />
-          </div>
-        );
-      }
-    }
-    return <BarContainer/>;
+    const updateState = () => ({ data: getTransitionData() });
+    const childComponent = (
+      <VictoryBar animate={{ duration: 1000 }} labels={(d) => `#${d.x}`}/>
+    );
+    return getAnimatingComponent(childComponent, updateState);
   });
 
 storiesOf("VictoryBar/issues", module)

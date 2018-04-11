@@ -41,7 +41,7 @@ const getMixedData = (num, seed) => {
   return range(num).map((v) => ({ x: v + 1, y: rand() }));
 };
 
-getTransitionData = () => {
+const getTransitionData = () => {
   const samples = random(6, 10);
   return range(samples).map((data) => {
     return {
@@ -51,7 +51,7 @@ getTransitionData = () => {
   });
 };
 
-getAnimationData = (num) => {
+const getAnimationData = (num) => {
   return range(num).map((data) => {
     return {
       x: data,
