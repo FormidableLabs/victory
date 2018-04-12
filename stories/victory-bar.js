@@ -1,8 +1,6 @@
-/*global window:false*/
 /*eslint-disable no-magic-numbers*/
 import React from "react";
 import { storiesOf } from "@storybook/react";
-import { range, random } from "lodash";
 import { VictoryBar, VictoryStack, VictoryGroup } from "../src/index";
 import { VictoryTheme, VictoryTooltip } from "victory-core";
 import { getData, getMixedData, getTimeData, getTransitionData } from "./data";
@@ -87,6 +85,7 @@ storiesOf("VictoryBar/static/data", module)
     />
     );
   })
+  .add("with y0", () => <VictoryBar data={getData(8)} y0={(d) => d.y - d.x}/>)
   .add("with nested data accessors", () => {
     return (
       <VictoryBar
@@ -257,7 +256,7 @@ storiesOf("VictoryBar/static/stacked", module)
       <VictoryBar data={getMixedData(7, "seed-1")}/>
       <VictoryBar data={getMixedData(7, "seed-2")}/>
     </VictoryStack>
-  ))
+  ));
 
 storiesOf("VictoryBar/static/grouped", module)
   .addDecorator(getChartDecorator())
@@ -449,8 +448,8 @@ storiesOf("VictoryBar/animating", module)
   });
 
 storiesOf("VictoryBar/issues", module)
-  .add("VictoryBar", () => <VictoryBar/>);
+  .add("placeholder", () => <VictoryBar/>);
 storiesOf("VictoryBar/fixed", module)
-  .add("VictoryBar", () => <VictoryBar/>);
+  .add("placeholder", () => <VictoryBar/>);
 
 

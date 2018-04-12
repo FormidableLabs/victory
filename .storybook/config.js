@@ -38,7 +38,11 @@ addDecorator((storyFn, context) => {
 });
 
 function loadStories() {
+  require("../stories/victory-area");
   require("../stories/victory-bar");
+  require("../stories/victory-candlestick");
+  require("../stories/victory-line");
+  require("../stories/victory-scatter");
 }
 
 configure(loadStories, module);

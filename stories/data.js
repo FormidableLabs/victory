@@ -2,17 +2,16 @@
 import { range, random } from "lodash";
 import seedrandom from "seedrandom";
 
-
-const polarData = [
-  { x: 45, y: 2 },
-  { x: 90, y: 3 },
-  { x: 135, y: 5 },
-  { x: 180, y: 4 },
-  { x: 225, y: 7 },
-  { x: 270, y: 2 },
-  { x: 315, y: 4 },
-  { x: 360, y: 7 }
-];
+// const polarData = [
+//   { x: 45, y: 2 },
+//   { x: 90, y: 3 },
+//   { x: 135, y: 5 },
+//   { x: 180, y: 4 },
+//   { x: 225, y: 7 },
+//   { x: 270, y: 2 },
+//   { x: 315, y: 4 },
+//   { x: 360, y: 7 }
+// ];
 
 const getTimeData = (num, seed) => {
   seed = seed || "getData";
