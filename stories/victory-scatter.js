@@ -3,7 +3,7 @@ import React from "react";
 import { storiesOf } from "@storybook/react";
 import { VictoryScatter, VictoryStack } from "../src/index";
 import { VictoryTooltip } from "victory-core";
-import { getData, getMixedData, getTimeData, getTransitionData } from "./data";
+import { getData, getMixedData, getTimeData, getLogData, getTransitionData } from "./data";
 import { getChartDecorator, getAnimatingComponent } from "./decorators";
 
 const SYMBOLS = [
@@ -223,7 +223,7 @@ storiesOf("VictoryScatter/static/stacked", module)
   ));
 
 
-storiesOf("VictoryScatter/static/time scale", module)
+storiesOf("VictoryScatter/static/scale", module)
   .addDecorator(getChartDecorator({ scale: { x: "time" }, domainPadding: 25 }))
   .add("time scale", () => (
     <VictoryScatter data={getTimeData(5)}/>
@@ -238,12 +238,20 @@ storiesOf("VictoryScatter/static/time scale", module)
       <VictoryScatter data={getTimeData(5, "seed-2")}/>
     </VictoryStack>
   ));
+storiesOf("VictoryScatter/static/scale", module)
+  .addDecorator(getChartDecorator({ scale: { y: "log" }, domainPadding: 25 }))
+  .add("log scale", () => <VictoryScatter data={getLogData(7)}/>);
 
 storiesOf("VictoryScatter/animating", module)
   .add("animation transitions", () => {
     const updateState = () => ({ data: getTransitionData() });
     const childComponent = (
-      <VictoryScatter animate={{ duration: 1000 }} labels={(d) => `#${d.x}`}/>
+      <VictoryScatter
+        size={10}
+        symbol="star"
+        style={{ data: { fill: "teal" } }}
+        animate={{ duration: 1000 }}
+      />
     );
     return getAnimatingComponent(childComponent, updateState);
   });

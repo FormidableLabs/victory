@@ -33,6 +33,13 @@ const getData = (num, seed) => {
   return range(num).map((v) => ({ x: v + 1, y: rand() }));
 };
 
+const getLogData = (num, seed) => {
+  seed = seed || "getData";
+  const baseSeed = seedrandom(seed);
+  const rand = () => baseSeed.quick() * 100000;
+  return range(num).map((v) => ({ x: v + 1, y: rand() }));
+};
+
 const getMixedData = (num, seed) => {
   seed = seed || "getMixedData";
   const baseSeed = seedrandom(seed);
@@ -60,5 +67,5 @@ const getAnimationData = (num) => {
 };
 
 export {
-  getData, getMixedData, getTimeData, getTransitionData, getAnimationData
+  getData, getMixedData, getTimeData, getLogData, getTransitionData, getAnimationData
 };

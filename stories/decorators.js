@@ -15,6 +15,14 @@ const getChartDecorator = (props) => {
   };
 };
 
+const ignoredDecorator = (story) => {
+  return (
+    <div className="chromatic-ignore">
+      {story()}
+    </div>
+  );
+};
+
 const getAnimatingComponent = (child, updateState) => {
   class AnimatingContainer extends React.Component {
     constructor(props) {
@@ -43,4 +51,4 @@ const getAnimatingComponent = (child, updateState) => {
   return <AnimatingContainer/>;
 };
 
-export { getChartDecorator, getAnimatingComponent };
+export { getChartDecorator, getAnimatingComponent, ignoredDecorator };

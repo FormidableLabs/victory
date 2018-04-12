@@ -3,8 +3,8 @@ import React from "react";
 import { storiesOf } from "@storybook/react";
 import { VictoryBar, VictoryStack, VictoryGroup } from "../src/index";
 import { VictoryTheme, VictoryTooltip } from "victory-core";
-import { getData, getMixedData, getTimeData, getTransitionData } from "./data";
-import { getChartDecorator, getAnimatingComponent } from "./decorators";
+import { getData, getMixedData, getTimeData, getLogData, getTransitionData } from "./data";
+import { getChartDecorator, getAnimatingComponent, ignoredDecorator } from "./decorators";
 
 storiesOf("VictoryBar/static/default", module)
   .add("VictoryBar", () => <VictoryBar/>);
@@ -35,7 +35,7 @@ storiesOf("VictoryBar/static/barRatio", module)
   .add("barRatio = 1 (horizontal)", () => <VictoryBar horizontal data={getData(7)} barRatio={1}/>)
   .add("barRatio = 0.01 (50 bars)", () => <VictoryBar data={getData(50)} barRatio={0.01}/>)
   .add("barRatio = 0.5 (50 bars)", () => <VictoryBar data={getData(50)} barRatio={0.5}/>)
-  .add("barRatio = 1 (50 bars)", () => <VictoryBar data={getData(50)} barRatio={1}/>)
+  .add("barRatio = 1 (50 bars)", () => <VictoryBar data={getData(50)} barRatio={1}/>);
 
 storiesOf("VictoryBar/static/categories", module)
   .addDecorator(getChartDecorator({ domainPadding: 25 }))
@@ -396,7 +396,7 @@ storiesOf("VictoryBar/static/grouped", module)
     </VictoryGroup>
   ));
 
-storiesOf("VictoryBar/static/time scale", module)
+storiesOf("VictoryBar/static/scale", module)
   .addDecorator(getChartDecorator({ scale: { x: "time" }, domainPadding: 25 }))
   .add("time scale", () => (
     <VictoryBar data={getTimeData(5)}/>
@@ -418,7 +418,7 @@ storiesOf("VictoryBar/static/time scale", module)
       <VictoryBar data={getTimeData(3, "seed-2")}/>
     </VictoryGroup>
   ));
-storiesOf("VictoryBar/static/time scale", module)
+storiesOf("VictoryBar/static/scale", module)
   .addDecorator(getChartDecorator({ scale: { y: "time" }, domainPadding: 25 }))
   .add(" horizontal time scale with labels", () => (
     <VictoryBar horizontal data={getTimeData(5)} labels={(d) => d.x.getFullYear()}/>
@@ -437,6 +437,13 @@ storiesOf("VictoryBar/static/time scale", module)
       <VictoryBar data={getTimeData(3, "seed-2")}/>
     </VictoryGroup>
   ));
+storiesOf("VictoryBar/static/scale", module)
+  .addDecorator(getChartDecorator({ scale: { y: "log" }, domainPadding: 25 }))
+  .add("log scale", () => <VictoryBar data={getLogData(7)}/>);
+storiesOf("VictoryBar/static/scale", module)
+  .addDecorator(getChartDecorator({ scale: { x: "log" }, domainPadding: 25 }))
+  .add(" horizontal log scale", () => <VictoryBar horizontal data={getLogData(7)}/>);
+
 
 storiesOf("VictoryBar/animating", module)
   .add("animation transitions", () => {
@@ -448,8 +455,7 @@ storiesOf("VictoryBar/animating", module)
   });
 
 storiesOf("VictoryBar/issues", module)
+  .addDecorator(ignoredDecorator)
   .add("placeholder", () => <VictoryBar/>);
 storiesOf("VictoryBar/fixed", module)
   .add("placeholder", () => <VictoryBar/>);
-
-

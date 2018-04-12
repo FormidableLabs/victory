@@ -3,8 +3,8 @@ import React from "react";
 import { storiesOf } from "@storybook/react";
 import { VictoryLine, VictoryStack } from "../src/index";
 import { VictoryTooltip } from "victory-core";
-import { getData, getMixedData, getTimeData, getTransitionData } from "./data";
-import { getChartDecorator, getAnimatingComponent } from "./decorators";
+import { getData, getMixedData, getTimeData, getLogData, getTransitionData } from "./data";
+import { getChartDecorator, getAnimatingComponent, ignoredDecorator } from "./decorators";
 
 storiesOf("VictoryLine/static/default", module)
   .add("VictoryLine", () => <VictoryLine/>);
@@ -19,7 +19,7 @@ storiesOf("VictoryLine/static/interpolation", module)
   .add("natural", () => <VictoryLine data={getData(8)} interpolation="natural"/>)
   .add("step", () => <VictoryLine data={getData(8)} interpolation="step"/>)
   .add("stepAfter", () => <VictoryLine data={getData(8)} interpolation="stepAfter"/>)
-  .add("stepBefore", () => <VictoryLine data={getData(8)} interpolation="stepBefore"/>)
+  .add("stepBefore", () => <VictoryLine data={getData(8)} interpolation="stepBefore"/>);
 
 storiesOf("VictoryLine/static/data", module)
   .addDecorator(getChartDecorator())
@@ -149,11 +149,9 @@ storiesOf("VictoryLine/static/stacked", module)
     </VictoryStack>
   ));
 
-storiesOf("VictoryLine/static/time scale", module)
+storiesOf("VictoryLine/static/scale", module)
   .addDecorator(getChartDecorator({ scale: { x: "time" } }))
-  .add("time scale", () => (
-    <VictoryLine data={getTimeData(5)}/>
-  ))
+  .add("time scale", () => <VictoryLine data={getTimeData(5)}/>)
   .add("time scale with labels", () => (
     <VictoryLine data={getTimeData(5)} labels={(d) => d.x.getFullYear()}/>
   ))
@@ -164,6 +162,10 @@ storiesOf("VictoryLine/static/time scale", module)
       <VictoryLine data={getTimeData(5, "seed-2")}/>
     </VictoryStack>
   ));
+storiesOf("VictoryLine/static/scale", module)
+  .addDecorator(getChartDecorator({ scale: { y: "log" } }))
+  .add("log scale", () => <VictoryLine data={getLogData(10)}/>);
+
 
 storiesOf("VictoryLine/animating", module)
   .add("animation transitions", () => {
@@ -175,6 +177,7 @@ storiesOf("VictoryLine/animating", module)
   });
 
 storiesOf("VictoryLine/issues", module)
+  .addDecorator(ignoredDecorator)
   .add("placeholder", () => <VictoryLine/>);
 storiesOf("VictoryLine/fixed", module)
   .add("placeholder", () => <VictoryLine/>);

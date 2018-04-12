@@ -3,8 +3,8 @@ import React from "react";
 import { storiesOf } from "@storybook/react";
 import { VictoryArea, VictoryStack } from "../src/index";
 import { VictoryTooltip } from "victory-core";
-import { getData, getMixedData, getTimeData, getTransitionData } from "./data";
-import { getChartDecorator, getAnimatingComponent } from "./decorators";
+import { getData, getMixedData, getTimeData, getLogData, getTransitionData } from "./data";
+import { getChartDecorator, getAnimatingComponent, ignoredDecorator } from "./decorators";
 
 storiesOf("VictoryArea/static/default", module)
   .add("VictoryArea", () => <VictoryArea/>);
@@ -19,7 +19,7 @@ storiesOf("VictoryArea/static/interpolation", module)
   .add("natural", () => <VictoryArea data={getData(8)} interpolation="natural"/>)
   .add("step", () => <VictoryArea data={getData(8)} interpolation="step"/>)
   .add("stepAfter", () => <VictoryArea data={getData(8)} interpolation="stepAfter"/>)
-  .add("stepBefore", () => <VictoryArea data={getData(8)} interpolation="stepBefore"/>)
+  .add("stepBefore", () => <VictoryArea data={getData(8)} interpolation="stepBefore"/>);
 
 storiesOf("VictoryArea/static/data", module)
   .addDecorator(getChartDecorator())
@@ -151,7 +151,7 @@ storiesOf("VictoryArea/static/stacked", module)
   ));
 
 
-storiesOf("VictoryArea/static/time scale", module)
+storiesOf("VictoryArea/static/scale", module)
   .addDecorator(getChartDecorator({ scale: { x: "time" } }))
   .add("time scale", () => (
     <VictoryArea data={getTimeData(5)}/>
@@ -166,6 +166,9 @@ storiesOf("VictoryArea/static/time scale", module)
       <VictoryArea data={getTimeData(5, "seed-2")}/>
     </VictoryStack>
   ));
+storiesOf("VictoryArea/static/scale", module)
+  .addDecorator(getChartDecorator({ scale: { y: "log" } }))
+  .add("log scale", () => <VictoryArea data={getLogData(7)}/>);
 
 storiesOf("VictoryArea/animating", module)
   .add("animation transitions", () => {
@@ -177,6 +180,7 @@ storiesOf("VictoryArea/animating", module)
   });
 
 storiesOf("VictoryArea/issues", module)
+  .addDecorator(ignoredDecorator)
   .add("placeholder", () => <VictoryArea/>);
 storiesOf("VictoryArea/fixed", module)
   .add("placeholder", () => <VictoryArea/>);
