@@ -2,7 +2,7 @@
 import React from "react";
 import { storiesOf } from "@storybook/react";
 import { VictoryScatter, VictoryStack } from "../src/index";
-import { VictoryTooltip } from "victory-core";
+import { VictoryTooltip, VictoryTheme } from "victory-core";
 import { getData, getMixedData, getTimeData, getLogData, getTransitionData } from "./data";
 import { getChartDecorator, getAnimatingComponent } from "./decorators";
 
@@ -12,6 +12,31 @@ const SYMBOLS = [
 
 storiesOf("VictoryScatter/static/default", module)
   .add("VictoryScatter", () => <VictoryScatter/>);
+
+storiesOf("VictoryScatter/static/theme", module)
+  .addDecorator(getChartDecorator({ theme: VictoryTheme.material }))
+  .add("material theme", () => <VictoryScatter data={getData(8)}/>)
+  .add("material theme stacked", () => (
+    <VictoryStack labels={(d) => d.x}>
+      <VictoryScatter data={getData(8)}/>
+      <VictoryScatter data={getData(8, "seed-1")}/>
+      <VictoryScatter data={getData(8, "seed-2")}/>
+      <VictoryScatter data={getData(8, "seed-3")}/>
+      <VictoryScatter data={getData(8, "seed-4")}/>
+    </VictoryStack>
+));
+storiesOf("VictoryScatter/static/theme", module)
+  .addDecorator(getChartDecorator({ theme: VictoryTheme.grayscale }))
+  .add("grayscale (default) theme", () => <VictoryScatter data={getData(8)}/>)
+  .add("grayscale (default) stacked", () => (
+    <VictoryStack labels={(d) => d.x}>
+      <VictoryScatter data={getData(8)}/>
+      <VictoryScatter data={getData(8, "seed-1")}/>
+      <VictoryScatter data={getData(8, "seed-2")}/>
+      <VictoryScatter data={getData(8, "seed-3")}/>
+      <VictoryScatter data={getData(8, "seed-4")}/>
+    </VictoryStack>
+));
 
 storiesOf("VictoryScatter/static/symbol", module)
   .addDecorator(getChartDecorator({ domainPadding: 20 }))

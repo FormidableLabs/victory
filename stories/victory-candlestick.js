@@ -2,7 +2,7 @@
 import React from "react";
 import { storiesOf } from "@storybook/react";
 import { VictoryCandlestick } from "../src/index";
-import { VictoryTooltip } from "victory-core";
+import { VictoryTooltip, VictoryTheme } from "victory-core";
 import { range, random } from "lodash";
 import seedrandom from "seedrandom";
 import { getChartDecorator, getAnimatingComponent, ignoredDecorator } from "./decorators";
@@ -50,6 +50,13 @@ const getTransitionData = () => {
 storiesOf("VictoryCandlestick/static/default", module)
   .add("VictoryCandlestick", () => <VictoryCandlestick/>);
 
+storiesOf("VictoryCandlestick/static/theme", module)
+  .addDecorator(getChartDecorator({ theme: VictoryTheme.material }))
+  .add("material theme", () => <VictoryCandlestick data={getData(8)}/>);
+storiesOf("VictoryCandlestick/static/theme", module)
+  .addDecorator(getChartDecorator({ theme: VictoryTheme.grayscale }))
+  .add("grayscale (default) theme", () => <VictoryCandlestick data={getData(8)}/>);
+
 storiesOf("VictoryCandlestick/static/candleColors", module)
   .addDecorator(getChartDecorator({ domainPadding: 25 }))
   .add("candleColors", () => (
@@ -94,7 +101,7 @@ storiesOf("VictoryCandlestick/static/data", module)
           { series: 5, open: 20, close: 35, big: 500, low: 10 }
         ]}
         x={"series"}
-        hight={(data) => data.big / 10}
+        high={(data) => data.big / 10}
       />
     );
   });

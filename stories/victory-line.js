@@ -2,12 +2,38 @@
 import React from "react";
 import { storiesOf } from "@storybook/react";
 import { VictoryLine, VictoryStack } from "../src/index";
-import { VictoryTooltip } from "victory-core";
+import { VictoryTooltip, VictoryTheme } from "victory-core";
 import { getData, getMixedData, getTimeData, getLogData, getTransitionData } from "./data";
 import { getChartDecorator, getAnimatingComponent, ignoredDecorator } from "./decorators";
 
 storiesOf("VictoryLine/static/default", module)
   .add("VictoryLine", () => <VictoryLine/>);
+
+storiesOf("VictoryLine/static/theme", module)
+  .addDecorator(getChartDecorator({ theme: VictoryTheme.material }))
+  .add("material theme", () => <VictoryLine data={getData(8)}/>)
+  .add("material theme stacked", () => (
+    <VictoryStack labels={(d) => d.x}>
+      <VictoryLine data={getData(8)}/>
+      <VictoryLine data={getData(8, "seed-1")}/>
+      <VictoryLine data={getData(8, "seed-2")}/>
+      <VictoryLine data={getData(8, "seed-3")}/>
+      <VictoryLine data={getData(8, "seed-4")}/>
+    </VictoryStack>
+));
+storiesOf("VictoryLine/static/theme", module)
+  .addDecorator(getChartDecorator({ theme: VictoryTheme.grayscale }))
+  .add("grayscale (default) theme", () => <VictoryLine data={getData(8)}/>)
+  .add("grayscale (default) stacked", () => (
+    <VictoryStack labels={(d) => d.x}>
+      <VictoryLine data={getData(8)}/>
+      <VictoryLine data={getData(8, "seed-1")}/>
+      <VictoryLine data={getData(8, "seed-2")}/>
+      <VictoryLine data={getData(8, "seed-3")}/>
+      <VictoryLine data={getData(8, "seed-4")}/>
+    </VictoryStack>
+));
+
 storiesOf("VictoryLine/static/interpolation", module)
   .addDecorator(getChartDecorator())
   .add("basis", () => <VictoryLine data={getData(8)} interpolation="basis"/>)

@@ -9,6 +9,31 @@ import { getChartDecorator, getAnimatingComponent, ignoredDecorator } from "./de
 storiesOf("VictoryBar/static/default", module)
   .add("VictoryBar", () => <VictoryBar/>);
 
+storiesOf("VictoryBar/static/theme", module)
+  .addDecorator(getChartDecorator({ theme: VictoryTheme.material }))
+  .add("material theme", () => <VictoryBar data={getData(8)}/>)
+  .add("material theme stacked", () => (
+    <VictoryStack labels={(d) => d.x}>
+      <VictoryBar data={getData(8)}/>
+      <VictoryBar data={getData(8, "seed-1")}/>
+      <VictoryBar data={getData(8, "seed-2")}/>
+      <VictoryBar data={getData(8, "seed-3")}/>
+      <VictoryBar data={getData(8, "seed-4")}/>
+    </VictoryStack>
+));
+storiesOf("VictoryBar/static/theme", module)
+  .addDecorator(getChartDecorator({ theme: VictoryTheme.grayscale }))
+  .add("grayscale (default) theme", () => <VictoryBar data={getData(8)}/>)
+  .add("grayscale (default) stacked", () => (
+    <VictoryStack labels={(d) => d.x}>
+      <VictoryBar data={getData(8)}/>
+      <VictoryBar data={getData(8, "seed-1")}/>
+      <VictoryBar data={getData(8, "seed-2")}/>
+      <VictoryBar data={getData(8, "seed-3")}/>
+      <VictoryBar data={getData(8, "seed-4")}/>
+    </VictoryStack>
+));
+
 storiesOf("VictoryBar/static/alignment", module)
   .addDecorator(getChartDecorator({ theme: VictoryTheme.material }))
   .add("start", () => <VictoryBar data={getData(7)} alignment="start"/>)
