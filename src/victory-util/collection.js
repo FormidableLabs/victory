@@ -1,4 +1,4 @@
-import fastDeepEqual from "./fast-deep-equal";
+import isEqual from "react-fast-compare";
 
 export default {
   isNonEmptyArray(collection) {
@@ -93,7 +93,7 @@ export default {
    */
   allSetsEqual(itemSets) {
     return itemSets.every((comparisonSet) => {
-      return fastDeepEqual(comparisonSet[0], comparisonSet[1]);
+      return isEqual(comparisonSet[0], comparisonSet[1]);
     });
   },
 
@@ -104,6 +104,6 @@ export default {
     (see the tests for more specifics)
   */
   areVictoryPropsEqual(a, b) {
-    return fastDeepEqual(a, b);
+    return isEqual(a, b);
   }
 };
