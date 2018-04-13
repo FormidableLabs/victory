@@ -1,6 +1,12 @@
 VictoryCore Changelog
 =====================
 
+## 21.1.9 (2018-04-13)
+
+-[358](https://github.com/FormidableLabs/victory-core/pull/358) Add missing boxplot theme
+-[357](https://github.com/FormidableLabs/victory-core/pull/357) Use `react-fast-compare`, not a local copy
+-[356](https://github.com/FormidableLabs/victory-core/pull/356) Text primitive now accepts string percentages for `x` and `y`. Thanks @Olliebaba!
+
 ## 21.1.8 (2018-04-11)
 
 -[355](https://github.com/FormidableLabs/victory-core/pull/355) Fix for [issue 963](https://github.com/FormidableLabs/victory/issues/964), Maximum call stack size exceeded. Adds a custom fork of `fast-deep-equal` (with bugfix) locally.
