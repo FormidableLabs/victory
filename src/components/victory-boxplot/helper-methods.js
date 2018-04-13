@@ -224,7 +224,8 @@ const getCalculatedValues = (props) => {
   const style = getStyles(props, defaultStyles);
   const defaultLabelOrientation = horizontal ? "top" : "right";
   const labelOrientation = props.labelOrientation || defaultLabelOrientation;
-  return { data, horizontal, domain, scale, style, labelOrientation };
+  const boxWidth = props.boxWidth || 1;
+  return { data, horizontal, domain, scale, style, labelOrientation, boxWidth };
 };
 
 // eslint-disable-next-line complexity

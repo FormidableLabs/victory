@@ -40,7 +40,7 @@
     "builder-victory-component": "^5.1.2",
     "d3-voronoi": "^1.1.2",
     "lodash": "^4.17.5",
-    "victory-core": "^21.1.5"
+    "victory-core": "^21.1.9"
   },
   "devDependencies": {
     "@storybook/addon-actions": "^3.2.13",

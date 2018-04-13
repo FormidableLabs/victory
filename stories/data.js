@@ -47,6 +47,13 @@ const getMixedData = (num, seed) => {
   return range(num).map((v) => ({ x: v + 1, y: rand() }));
 };
 
+const getFourQuadrantData = (num, seed) => {
+  seed = seed || "getMixedData";
+  const baseSeed = seedrandom(seed);
+  const rand = () => baseSeed.quick() * 10 - 5;
+  return range(num).map((v) => ({ x: v - Math.round(num / 2), y: rand() }));
+};
+
 const getTransitionData = () => {
   const samples = random(6, 10);
   return range(samples).map((data) => {
@@ -66,6 +73,21 @@ const getAnimationData = (num) => {
   });
 };
 
+const getArrayData = (num, samples, horizontal) => {
+  const seed = "getData";
+  samples = samples || 10;
+  const baseSeed = seedrandom(seed);
+  const rand = () => baseSeed.quick() * 10;
+  return range(num).map((v) => {
+    const dataArray = range(samples).map(() => rand());
+    return {
+      x: horizontal ? dataArray : v + 1,
+      y: horizontal ? v + 1 : dataArray
+    };
+  });
+};
+
 export {
-  getData, getMixedData, getTimeData, getLogData, getTransitionData, getAnimationData
+  getData, getMixedData, getTimeData, getLogData, getTransitionData,
+  getAnimationData, getFourQuadrantData, getArrayData
 };

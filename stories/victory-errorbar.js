@@ -42,36 +42,11 @@ storiesOf("VictoryErrorBar/static/theme", module)
   .addDecorator(getChartDecorator({ theme: VictoryTheme.grayscale }))
   .add("grayscale (default) theme", () => <VictoryErrorBar data={getData(5)}/>);
 
-storiesOf("VictoryErrorBar/static/candleColors", module)
+storiesOf("VictoryErrorBar/static/borderWidth", module)
   .addDecorator(getChartDecorator({ domainPadding: 25 }))
-  .add("candleColors", () => (
-    <VictoryErrorBar
-      data={getData(5)}
-      candleColors={{ positive: "#8BC34A", negative: "#C62828" }}
-    />
-  ))
-  .add("candleColors with styles", () => (
-    <VictoryErrorBar
-      data={getData(7)}
-      style={{
-        data: { fill: "tomato" }
-      }}
-      candleColors={{ positive: "#8BC34A", negative: "#C62828" }}
-    />
-  ));
+  .add("borderWidth = 0", () => <VictoryErrorBar data={getData(5)} borderWidth={0}/>)
+  .add("borderWidth = 10", () => <VictoryErrorBar data={getData(5)} borderWidth={10}/>);
 
-storiesOf("VictoryErrorBar/static/wickStrokeWidth", module)
-  .addDecorator(getChartDecorator({ domainPadding: 25 }))
-  .add("wickStrokeWidth", () => <VictoryErrorBar data={getData(7)} wickStrokeWidth={5}/>)
-  .add("wickStrokeWidth with styles", () => (
-    <VictoryErrorBar
-      data={getData(7)}
-      style={{
-        data: { stroke: "tomato", strokeWidth: 5 }
-      }}
-      wickStrokeWidth={2}
-    />
-  ));
 
 storiesOf("VictoryErrorBar/static/data", module)
   .addDecorator(getChartDecorator({ domainPadding: 25 }))
@@ -103,11 +78,11 @@ storiesOf("VictoryErrorBar/static/labels", module)
   .add("data labels", () => (
     <VictoryErrorBar
       data={[
-        { x: 1, y: 9, errorX: 30, high: 56, low: 7, label: "first" },
-        { x: 2, y: 80, errorX: 40, high: 120, low: 10 },
-        { x: 3, y: 50, errorX: 80, high: 90, low: 20, label: "third" },
-        { x: 4, y: 70, errorX: 22, high: 70, low: 5 },
-        { x: 5, y: 20, errorX: 35, high: 50, low: 10, label: ["last", "label"] }
+        { x: 1, y: 9, errorX: 0.3, errorY: 3, label: "first" },
+        { x: 2, y: 80, errorX: 0.5, errorY: 2 },
+        { x: 3, y: 50, errorX: 1.1, errorY: 2, label: "third" },
+        { x: 4, y: 70, errorX: 0.2, errorY: 3 },
+        { x: 5, y: 20, errorX: 0.3, errorY: 2, label: ["last", "label"] }
       ]}
     />
   ));

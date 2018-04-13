@@ -36,8 +36,7 @@ storiesOf("VictoryAxis/static/theme", module)
   .add("chart axes material theme", () => <VictoryChart theme={VictoryTheme.material}/>)
   .add("four quadrant chart axes material theme", () => (
     <VictoryChart theme={VictoryTheme.material} domain={[-1, 1]}/>
-  ));
-storiesOf("VictoryAxis/static/theme", module)
+  ))
   .add("grayscale (default) theme", () => <VictoryAxis theme={VictoryTheme.grayscale}/>)
   .add("chart axes grayscale theme", () => <VictoryChart theme={VictoryTheme.grayscale}/>)
   .add("four quadrant chart axes grayscale theme", () => (

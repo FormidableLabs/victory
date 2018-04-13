@@ -41,7 +41,9 @@ function loadStories() {
   require("../stories/victory-area");
   require("../stories/victory-axis");
   require("../stories/victory-bar");
+  require("../stories/victory-boxplot");
   require("../stories/victory-candlestick");
+  require("../stories/victory-chart");
   require("../stories/victory-errorbar");
   require("../stories/victory-line");
   require("../stories/victory-scatter");

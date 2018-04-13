@@ -3,6 +3,7 @@
 import React from "react";
 import VictoryChart from "../../src/components/victory-chart/victory-chart";
 import VictoryBoxPlot from "../../src/components/victory-boxplot/victory-boxplot";
+import { VictoryTheme } from "victory-core";
 import { range, random } from "lodash";
 
 export default class App extends React.Component {
@@ -48,6 +49,18 @@ export default class App extends React.Component {
 
     return (
       <div className="demo" style={containerStyle}>
+      <VictoryChart style={chartStyle} domainPadding={50} theme={VictoryTheme.material}>
+          <VictoryBoxPlot
+            minLabels maxLabels
+            data={[
+              { x: "red", y: [5, 10, 9, 2] },
+              { x: "blue", y: [1, 15, 6, 8] },
+              { x: "green", y: [3, 5, 6, 9] },
+              { x: "yellow", y: [5, 20, 8, 12] },
+              { x: "white", y: [2, 11, 12, 13] }
+            ]}
+          />
+        </VictoryChart>
         <VictoryChart style={chartStyle}>
           <VictoryBoxPlot
             data={[{ x: 1, y: 10 }, { x: 1, y: 7 }, { x: 1, y: 3 }, { x: 1, y: 5 }]}
