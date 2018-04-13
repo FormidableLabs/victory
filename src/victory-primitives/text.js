@@ -14,8 +14,14 @@ export default class Text extends React.Component {
     style: PropTypes.object,
     title: PropTypes.string,
     transform: PropTypes.string,
-    x: PropTypes.number,
-    y: PropTypes.number
+    x: PropTypes.oneOfType([
+      PropTypes.number,
+      PropTypes.string
+    ]),
+    y: PropTypes.oneOfType([
+      PropTypes.number,
+      PropTypes.string
+    ])
   };
 
   shouldComponentUpdate(nextProps) {
