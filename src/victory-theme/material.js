@@ -122,7 +122,8 @@ export default {
       q1Labels: baseLabelStyles,
       q3: { padding, fill: blueGrey700 },
       q3Labels: baseLabelStyles
-    }
+    },
+    boxWidth: 20
   }, baseProps),
   candlestick: assign({
     style: {
