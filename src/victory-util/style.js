@@ -2,28 +2,35 @@ import { pick } from "lodash";
 
 /**
  * Acceptable CSS/SVG style attributes
- * https://react-cn.github.io/react/docs/tags-and-attributes.html#svg-attributes
+ * https://reactjs.org/docs/dom-elements.html#all-supported-html-attributes
  * non-style properties have been removed from this list
  */
+
 const svgStyleWhitelist = [
   "cursor",
   "fill",
   "fillOpacity",
+  "filter",
   "fontFamily",
   "fontSize",
+  "fontWeight",
   "height",
   "markerEnd",
   "markerMid",
   "markerStart",
+  "mask",
   "opacity",
   "pointerEvents",
   "points",
   "stroke",
   "strokeDasharray",
+  "strokeDashoffset",
   "strokeLinecap",
+  "strokeLinejoin",
   "strokeOpacity",
   "strokeWidth",
   "textAnchor",
+  "textDecoration",
   "transform"
 ];
 
