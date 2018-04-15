@@ -1,6 +1,10 @@
 VictoryCore Changelog
 =====================
 
+## 21.1.10 (2018-04-14)
+
+-[359](https://github.com/FormidableLabs/victory-core/pull/359) Add missing attributes to style whitelist
+
 ## 21.1.9 (2018-04-13)
 
 -[358](https://github.com/FormidableLabs/victory-core/pull/358) Add missing boxplot theme
@@ -81,7 +85,7 @@ VictoryCore Changelog
 - [324](https://github.com/FormidableLabs/victory-core/pull/324) Adds support for external event mutations
   - Adds `externalEventMutations` prop to `VictorySharedEvents` and all components enhanced with the `add-events` HOC
   - `externalEventMutations` prop format:
- 
+
 ```
 externalEventMutations: PropTypes.arrayOf(PropTypes.shape({
   callback: PropTypes.function,
