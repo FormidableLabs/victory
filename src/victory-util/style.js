@@ -7,6 +7,7 @@ import { pick } from "lodash";
  */
 
 const svgStyleWhitelist = [
+  "clipPath",
   "cursor",
   "fill",
   "fillOpacity",
