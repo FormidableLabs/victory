@@ -3,7 +3,6 @@ import React from "react";
 import 'react-chromatic/storybook-addon';
 import infoAddon, { setDefaults } from '@storybook/addon-info';
 import { setOptions } from '@storybook/addon-options';
-import { withConsole } from '@storybook/addon-console';
 import { withInfo } from '@storybook/addon-info';
 
 setOptions({
@@ -31,9 +30,6 @@ addDecorator((storyFn, context) => {
   })(storyFn)(context);
 });
 
-addDecorator((storyFn, context) => {
-  return withConsole()(storyFn)(context);
-});
 
 function loadStories() {
   require("../stories/victory-area");
