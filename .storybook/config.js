@@ -25,7 +25,6 @@ addDecorator(storyWrapper)
 addDecorator((storyFn, context) => {
   return withInfo({
     header: false,
-    inline: true,
     source: true,
     maxPropsIntoLine: 1,
     propTables: false
