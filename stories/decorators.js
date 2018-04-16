@@ -26,12 +26,4 @@ const getPolarChartDecorator = (props) => {
   };
 };
 
-const ignoredDecorator = (story) => {
-  return (
-    <div className="chromatic-ignore">
-      {story()}
-    </div>
-  );
-};
-
-export { getChartDecorator, getPolarChartDecorator, ignoredDecorator };
+export { getChartDecorator, getPolarChartDecorator };

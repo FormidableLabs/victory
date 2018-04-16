@@ -6,12 +6,11 @@ import {
 } from "../src/index";
 import { VictoryTheme } from "victory-core";
 import { getData, getFourQuadrantData, getArrayData } from "./data";
-import { ignoredDecorator } from "./decorators";
 
-storiesOf("VictoryChart/default", module)
-  .add("VictoryChart", () => <VictoryChart/>);
+storiesOf("VictoryChart", module)
+  .add("default rendering", () => <VictoryChart/>);
 
-storiesOf("VictoryChart/theme", module)
+storiesOf("VictoryChart.theme", module)
   .add("material theme", () => <VictoryChart theme={VictoryTheme.material}/>)
   .add("four quadrant material theme", () => (
     <VictoryChart theme={VictoryTheme.material} domain={[-1, 1]}/>
@@ -21,7 +20,7 @@ storiesOf("VictoryChart/theme", module)
     <VictoryChart theme={VictoryTheme.grayscale} domain={[-1, 1]}/>
   ));
 
-storiesOf("VictoryChart/axes", module)
+storiesOf("VictoryChart.axes", module)
   .add("with a single axis", () => (
     <VictoryChart>
       <VictoryAxis/>
@@ -33,7 +32,7 @@ storiesOf("VictoryChart/axes", module)
     </VictoryChart>
   ));
 
-storiesOf("VictoryChart/domainPadding", module)
+storiesOf("VictoryChart.domainPadding", module)
   .add("single value domainPadding", () => (
     <VictoryChart domainPadding={25}>
       <VictoryBar data={getData(5)}/>
@@ -55,7 +54,7 @@ storiesOf("VictoryChart/domainPadding", module)
     </VictoryChart>
   ));
 
-storiesOf("VictoryChart/domain", module)
+storiesOf("VictoryChart.domain", module)
   .add("array domain", () => (
     <VictoryChart domain={[0, 10]}>
       <VictoryBar data={getData(5)}/>
@@ -77,7 +76,7 @@ storiesOf("VictoryChart/domain", module)
     </VictoryChart>
   ));
 
-storiesOf("VictoryChart/calculated domain", module)
+storiesOf("VictoryChart.calculated domain", module)
   .add("from data", () => (
     <VictoryChart>
       <VictoryScatter size={5} symbol="plus" data={getData(10)}/>
@@ -125,7 +124,7 @@ storiesOf("VictoryChart/calculated domain", module)
     </VictoryChart>
   ));
 
-storiesOf("VictoryChart/style", module)
+storiesOf("VictoryChart.style", module)
   .add("with parent styles", () => (
     <VictoryChart
       style={{
@@ -133,12 +132,3 @@ storiesOf("VictoryChart/style", module)
       }}
     />
   ));
-
-
-storiesOf("VictoryChart/issues", module)
-  .addDecorator(ignoredDecorator)
-  .add("placeholder", () => <VictoryChart/>);
-storiesOf("VictoryChart/fixed", module)
-  .add("placeholder", () => <VictoryChart/>);
-
-

@@ -4,16 +4,16 @@ import { storiesOf } from "@storybook/react";
 import { VictoryScatter, VictoryStack } from "../src/index";
 import { VictoryTooltip, VictoryTheme } from "victory-core";
 import { getData, getMixedData, getTimeData, getLogData } from "./data";
-import { getChartDecorator, getPolarChartDecorator, ignoredDecorator } from "./decorators";
+import { getChartDecorator, getPolarChartDecorator } from "./decorators";
 
 const SYMBOLS = [
   "circle", "diamond", "plus", "minus", "square", "star", "triangleDown", "triangleUp"
 ];
 
-storiesOf("VictoryScatter/default", module)
-  .add("VictoryScatter", () => <VictoryScatter/>);
+storiesOf("VictoryScatter", module)
+  .add("default rendering", () => <VictoryScatter/>);
 
-storiesOf("VictoryScatter/theme", module)
+storiesOf("VictoryScatter.theme", module)
   .addDecorator(getChartDecorator({ theme: VictoryTheme.material }))
   .add("material theme", () => <VictoryScatter data={getData(8)}/>)
   .add("material theme stacked", () => (
@@ -25,7 +25,7 @@ storiesOf("VictoryScatter/theme", module)
       <VictoryScatter data={getData(8, "seed-4")}/>
     </VictoryStack>
 ));
-storiesOf("VictoryScatter/theme", module)
+storiesOf("VictoryScatter.theme", module)
   .addDecorator(getChartDecorator({ theme: VictoryTheme.grayscale }))
   .add("grayscale (default) theme", () => <VictoryScatter data={getData(8)}/>)
   .add("grayscale (default) stacked", () => (
@@ -38,7 +38,7 @@ storiesOf("VictoryScatter/theme", module)
     </VictoryStack>
 ));
 
-storiesOf("VictoryScatter/symbol", module)
+storiesOf("VictoryScatter.symbol", module)
   .addDecorator(getChartDecorator({ domainPadding: 20 }))
   .add("circle", () => <VictoryScatter data={getData(8)} symbol="circle" size={(d) => d.x + 1}/>)
   .add("diamond", () => <VictoryScatter data={getData(8)} symbol="diamond" size={(d) => d.x + 1}/>)
@@ -68,7 +68,7 @@ storiesOf("VictoryScatter/symbol", module)
     />
   ));
 
-storiesOf("VictoryScatter/bubbleProperty", module)
+storiesOf("VictoryScatter.bubbleProperty", module)
   .addDecorator(getChartDecorator({ domainPadding: 20 }))
   .add("bubbleProperty", () => (
     <VictoryScatter data={getData(10)} bubbleProperty="x"/>
@@ -89,7 +89,7 @@ storiesOf("VictoryScatter/bubbleProperty", module)
     <VictoryScatter data={getData(10)} bubbleProperty="x" symbol="plus"/>
   ));
 
-storiesOf("VictoryScatter/data", module)
+storiesOf("VictoryScatter.data", module)
   .addDecorator(getChartDecorator({ domainPadding: 25 }))
   .add("with data accessors", () => {
     return (
@@ -120,7 +120,7 @@ storiesOf("VictoryScatter/data", module)
   })
   .add("plotting functions", () => (<VictoryScatter y={(d) => Math.sin(2 * Math.PI * d.x)}/>));
 
-storiesOf("VictoryScatter/labels", module)
+storiesOf("VictoryScatter.labels", module)
   .addDecorator(getChartDecorator({ domainPadding: 25 }))
   .add("function labels", () => (
     <VictoryScatter data={getData(7)} labels={(d) => `x: ${d.x}`}/>
@@ -140,7 +140,7 @@ storiesOf("VictoryScatter/labels", module)
     />
   ));
 
-storiesOf("VictoryScatter/tooltips", module)
+storiesOf("VictoryScatter.tooltips", module)
   .addDecorator(getChartDecorator({ domainPadding: 25 }))
   .add("tooltips", () => (
     <VictoryScatter
@@ -164,7 +164,7 @@ storiesOf("VictoryScatter/tooltips", module)
     />
   ));
 
-storiesOf("VictoryScatter/style", module)
+storiesOf("VictoryScatter.style", module)
   .addDecorator(getChartDecorator({ domainPadding: 25 }))
   .add("with styles", () => (
     <VictoryScatter
@@ -216,7 +216,7 @@ storiesOf("VictoryScatter/style", module)
     />
   ));
 
-storiesOf("VictoryScatter/stacked", module)
+storiesOf("VictoryScatter.stacked", module)
   .addDecorator(getChartDecorator({ domainPadding: 25 }))
   .add("stacked points", () => (
     <VictoryStack colorScale="qualitative">
@@ -248,7 +248,7 @@ storiesOf("VictoryScatter/stacked", module)
   ));
 
 
-storiesOf("VictoryScatter/scale", module)
+storiesOf("VictoryScatter.scale", module)
   .addDecorator(getChartDecorator({ scale: { x: "time" }, domainPadding: 25 }))
   .add("time scale", () => (
     <VictoryScatter data={getTimeData(5)}/>
@@ -263,15 +263,15 @@ storiesOf("VictoryScatter/scale", module)
       <VictoryScatter data={getTimeData(5, "seed-2")}/>
     </VictoryStack>
   ));
-storiesOf("VictoryScatter/scale", module)
+storiesOf("VictoryScatter.scale", module)
   .addDecorator(getChartDecorator({ scale: { y: "log" }, domainPadding: 25 }))
   .add("log scale", () => <VictoryScatter data={getLogData(7)}/>);
 
-storiesOf("VictoryScatter/polar", module)
+storiesOf("VictoryScatter.polar", module)
   .add("Polar Scatter", () => (
     <VictoryScatter polar theme={VictoryTheme.material} data={getData(7)}/>
   ));
-storiesOf("VictoryScatter/polar", module)
+storiesOf("VictoryScatter.polar", module)
   .addDecorator(getPolarChartDecorator())
   .add("Polar Scatter with chart", () => <VictoryScatter data={getData(7)}/>)
   .add("Polar Scatter with categorical data", () => (
@@ -292,7 +292,7 @@ storiesOf("VictoryScatter/polar", module)
       <VictoryScatter data={getData(7, "seed-2")}/>
     </VictoryStack>
   ));
-storiesOf("VictoryScatter/polar", module)
+storiesOf("VictoryScatter.polar", module)
   .addDecorator(getPolarChartDecorator({ innerRadius: 50 }))
   .add("Polar Scatter with innerRadius", () => <VictoryScatter data={getData(7)}/>)
   .add("Polar stacked Scatter with innerRadius", () => (
@@ -302,11 +302,4 @@ storiesOf("VictoryScatter/polar", module)
       <VictoryScatter data={getData(7, "seed-2")}/>
     </VictoryStack>
   ));
-
-storiesOf("VictoryScatter/issues", module)
-  .addDecorator(ignoredDecorator)
-  .add("placeholder", () => <VictoryScatter/>);
-storiesOf("VictoryScatter/fixed", module)
-  .add("placeholder", () => <VictoryScatter/>);
-
 

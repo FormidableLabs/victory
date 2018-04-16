@@ -5,7 +5,6 @@ import seedrandom from "seedrandom";
 import { storiesOf } from "@storybook/react";
 import { VictoryAxis, VictoryChart } from "../src/index";
 import { VictoryTheme } from "victory-core";
-import { ignoredDecorator } from "./decorators";
 
 const getTimeValues = (num) => {
   const current = 1523389495000;
@@ -28,10 +27,10 @@ const getRandomValues = (num, seed) => {
   return result.sort((a, b) => a - b);
 };
 
-storiesOf("VictoryAxis/default", module)
-  .add("VictoryAxis", () => <VictoryAxis/>);
+storiesOf("VictoryAxis", module)
+  .add("default rendering", () => <VictoryAxis/>);
 
-storiesOf("VictoryAxis/theme", module)
+storiesOf("VictoryAxis.theme", module)
   .add("material theme", () => <VictoryAxis theme={VictoryTheme.material}/>)
   .add("chart axes material theme", () => <VictoryChart theme={VictoryTheme.material}/>)
   .add("four quadrant chart axes material theme", () => (
@@ -43,7 +42,7 @@ storiesOf("VictoryAxis/theme", module)
     <VictoryChart theme={VictoryTheme.grayscale} domain={[-1, 1]}/>
   ));
 
-storiesOf("VictoryAxis/tickValues", module)
+storiesOf("VictoryAxis.tickValues", module)
   .add("numeric tickValues", () => <VictoryAxis tickValues={getValues(5)}/>)
   .add("random numeric tickValues", () => <VictoryAxis tickValues={getRandomValues(5)}/>)
   .add("string tickValues", () => <VictoryAxis tickValues={["one", "two", "three", "four"]}/>)
@@ -57,7 +56,7 @@ storiesOf("VictoryAxis/tickValues", module)
     <VictoryAxis dependentAxis tickValues={["one", "two", "three", "four"]}/>
   ));
 
-storiesOf("VictoryAxis/tickFormat", module)
+storiesOf("VictoryAxis.tickFormat", module)
   .add("as an array of strings", () => (
     <VictoryAxis tickValues={getValues(5)} tickFormat={["one", "two", "three", "four", "five"]}/>
   ))
@@ -65,7 +64,7 @@ storiesOf("VictoryAxis/tickFormat", module)
     <VictoryAxis tickValues={getValues(5)} tickFormat={(t) => `#${t}`}/>
   ));
 
-storiesOf("VictoryAxis/domain", module)
+storiesOf("VictoryAxis.domain", module)
   .add("without tickValues", () => <VictoryAxis domain={[-10, 10]}/>)
   .add("with tickValues", () => <VictoryAxis domain={[-10, 10]} tickValues={getValues(5)}/>)
   .add("with overflowing tickValues", () => (
@@ -75,7 +74,7 @@ storiesOf("VictoryAxis/domain", module)
     <VictoryAxis domain={[-2, 2]} tickValues={["cat", "dog", "bird"]}/>
   ));
 
-storiesOf("VictoryAxis/fixLabelOverlap", module)
+storiesOf("VictoryAxis.fixLabelOverlap", module)
   .add("evenly spaced ticks", () => <VictoryAxis fixLabelOverlap tickValues={getValues(30)}/>)
   .add("randomly spaced ticks", () => (
     <VictoryAxis fixLabelOverlap tickValues={getRandomValues(30)}/>
@@ -93,21 +92,21 @@ storiesOf("VictoryAxis/fixLabelOverlap", module)
     <VictoryAxis dependentAxis fixLabelOverlap scale="time" tickValues={getTimeValues(30)}/>
   ));
 
-storiesOf("VictoryAxis/offsetX", module)
+storiesOf("VictoryAxis.offsetX", module)
   .add("independent axis", () => <VictoryAxis offsetX={250}/>)
   .add("dependent axis", () => <VictoryAxis dependentAxis offsetX={250}/>);
 
-storiesOf("VictoryAxis/offsetY", module)
+storiesOf("VictoryAxis.offsetY", module)
   .add("independent axis", () => <VictoryAxis offsetY={250}/>)
   .add("dependent axis", () => <VictoryAxis dependentAxis offsetY={250}/>);
 
-storiesOf("VictoryAxis/orientation", module)
+storiesOf("VictoryAxis.orientation", module)
   .add("top", () => <VictoryAxis tickValues={getValues(5)} orientation="top"/>)
   .add("bottom", () => <VictoryAxis tickValues={getValues(5)} orientation="bottom"/>)
   .add("left", () => <VictoryAxis tickValues={getValues(5)} orientation="left"/>)
   .add("right", () => <VictoryAxis tickValues={getValues(5)} orientation="right"/>);
 
-storiesOf("VictoryAxis/style", module)
+storiesOf("VictoryAxis.style", module)
   .add("functional styles", () => (
     <VictoryAxis
       label="Label"
@@ -121,14 +120,6 @@ storiesOf("VictoryAxis/style", module)
     />
   ));
 
-storiesOf("VictoryAxis/scale", module)
+storiesOf("VictoryAxis.scale", module)
   .add("time", () => <VictoryAxis tickValues={getTimeValues(5)} scale="time"/>)
   .add("log", () => <VictoryAxis scale="log" tickValues={[1, 3, 5, 7, 10, 50, 100, 500, 1000]}/>);
-
-storiesOf("VictoryAxis/issues", module)
-  .addDecorator(ignoredDecorator)
-  .add("placeholder", () => <VictoryAxis/>);
-storiesOf("VictoryAxis/fixed", module)
-  .add("placeholder", () => <VictoryAxis/>);
-
-

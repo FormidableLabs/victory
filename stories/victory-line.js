@@ -4,12 +4,12 @@ import { storiesOf } from "@storybook/react";
 import { VictoryLine, VictoryStack } from "../src/index";
 import { VictoryTooltip, VictoryTheme } from "victory-core";
 import { getData, getMixedData, getTimeData, getLogData } from "./data";
-import { getChartDecorator, getPolarChartDecorator, ignoredDecorator } from "./decorators";
+import { getChartDecorator, getPolarChartDecorator } from "./decorators";
 
-storiesOf("VictoryLine/default", module)
-  .add("VictoryLine", () => <VictoryLine/>);
+storiesOf("VictoryLine", module)
+  .add("default rendering", () => <VictoryLine/>);
 
-storiesOf("VictoryLine/theme", module)
+storiesOf("VictoryLine.theme", module)
   .addDecorator(getChartDecorator({ theme: VictoryTheme.material }))
   .add("material theme", () => <VictoryLine data={getData(8)}/>)
   .add("material theme stacked", () => (
@@ -21,7 +21,7 @@ storiesOf("VictoryLine/theme", module)
       <VictoryLine data={getData(8, "seed-4")}/>
     </VictoryStack>
 ));
-storiesOf("VictoryLine/theme", module)
+storiesOf("VictoryLine.theme", module)
   .addDecorator(getChartDecorator({ theme: VictoryTheme.grayscale }))
   .add("grayscale (default) theme", () => <VictoryLine data={getData(8)}/>)
   .add("grayscale (default) stacked", () => (
@@ -34,7 +34,7 @@ storiesOf("VictoryLine/theme", module)
     </VictoryStack>
 ));
 
-storiesOf("VictoryLine/interpolation", module)
+storiesOf("VictoryLine.interpolation", module)
   .addDecorator(getChartDecorator())
   .add("basis", () => <VictoryLine data={getData(8)} interpolation="basis"/>)
   .add("cardinal", () => <VictoryLine data={getData(8)} interpolation="cardinal"/>)
@@ -47,7 +47,7 @@ storiesOf("VictoryLine/interpolation", module)
   .add("stepAfter", () => <VictoryLine data={getData(8)} interpolation="stepAfter"/>)
   .add("stepBefore", () => <VictoryLine data={getData(8)} interpolation="stepBefore"/>);
 
-storiesOf("VictoryLine/data", module)
+storiesOf("VictoryLine.data", module)
   .addDecorator(getChartDecorator())
   .add("with data accessors", () => {
     return (
@@ -78,7 +78,7 @@ storiesOf("VictoryLine/data", module)
   })
   .add("plotting functions", () => (<VictoryLine y={(d) => Math.sin(2 * Math.PI * d.x)}/>));
 
-storiesOf("VictoryLine/labels", module)
+storiesOf("VictoryLine.labels", module)
   .addDecorator(getChartDecorator())
   .add("function labels", () => (
     <VictoryLine data={getData(7)} labels={(d) => `x: ${d.x}`}/>
@@ -98,7 +98,7 @@ storiesOf("VictoryLine/labels", module)
     />
   ));
 
-storiesOf("VictoryLine/tooltips", module)
+storiesOf("VictoryLine.tooltips", module)
   .addDecorator(getChartDecorator())
   .add("tooltips", () => (
     <VictoryLine
@@ -122,7 +122,7 @@ storiesOf("VictoryLine/tooltips", module)
     />
   ));
 
-storiesOf("VictoryLine/style", module)
+storiesOf("VictoryLine.style", module)
   .addDecorator(getChartDecorator())
   .add("with styles", () => (
     <VictoryLine
@@ -151,7 +151,7 @@ storiesOf("VictoryLine/style", module)
     />
   ));
 
-storiesOf("VictoryLine/stacked", module)
+storiesOf("VictoryLine.stacked", module)
   .addDecorator(getChartDecorator())
   .add("stacked lines", () => (
     <VictoryStack colorScale="qualitative">
@@ -175,7 +175,7 @@ storiesOf("VictoryLine/stacked", module)
     </VictoryStack>
   ));
 
-storiesOf("VictoryLine/scale", module)
+storiesOf("VictoryLine.scale", module)
   .addDecorator(getChartDecorator({ scale: { x: "time" } }))
   .add("time scale", () => <VictoryLine data={getTimeData(5)}/>)
   .add("time scale with labels", () => (
@@ -188,15 +188,15 @@ storiesOf("VictoryLine/scale", module)
       <VictoryLine data={getTimeData(5, "seed-2")}/>
     </VictoryStack>
   ));
-storiesOf("VictoryLine/scale", module)
+storiesOf("VictoryLine.scale", module)
   .addDecorator(getChartDecorator({ scale: { y: "log" } }))
   .add("log scale", () => <VictoryLine data={getLogData(10)}/>);
 
-storiesOf("VictoryLine/polar", module)
+storiesOf("VictoryLine.polar", module)
   .add("Polar Line", () => (
     <VictoryLine polar theme={VictoryTheme.material} data={getData(7)}/>
   ));
-storiesOf("VictoryLine/polar", module)
+storiesOf("VictoryLine.polar", module)
   .addDecorator(getPolarChartDecorator())
   .add("Polar Line with chart", () => <VictoryLine data={getData(7)}/>)
   .add("Polar Line with categorical data", () => (
@@ -217,7 +217,7 @@ storiesOf("VictoryLine/polar", module)
       <VictoryLine data={getData(7, "seed-2")}/>
     </VictoryStack>
   ));
-storiesOf("VictoryLine/polar", module)
+storiesOf("VictoryLine.polar", module)
   .addDecorator(getPolarChartDecorator({ innerRadius: 50 }))
   .add("Polar Line with innerRadius", () => <VictoryLine data={getData(7)}/>)
   .add("Polar stacked Line with innerRadius", () => (
@@ -227,11 +227,4 @@ storiesOf("VictoryLine/polar", module)
       <VictoryLine data={getData(7, "seed-2")}/>
     </VictoryStack>
   ));
-
-storiesOf("VictoryLine/issues", module)
-  .addDecorator(ignoredDecorator)
-  .add("placeholder", () => <VictoryLine/>);
-storiesOf("VictoryLine/fixed", module)
-  .add("placeholder", () => <VictoryLine/>);
-
 

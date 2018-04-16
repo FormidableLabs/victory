@@ -4,12 +4,12 @@ import { storiesOf } from "@storybook/react";
 import { VictoryBar, VictoryStack, VictoryGroup } from "../src/index";
 import { VictoryTheme, VictoryTooltip } from "victory-core";
 import { getData, getMixedData, getTimeData, getLogData } from "./data";
-import { getChartDecorator, getPolarChartDecorator, ignoredDecorator } from "./decorators";
+import { getChartDecorator, getPolarChartDecorator } from "./decorators";
 
-storiesOf("VictoryBar/default", module)
-  .add("VictoryBar", () => <VictoryBar/>);
+storiesOf("VictoryBar", module)
+  .add("default rendering", () => <VictoryBar/>);
 
-storiesOf("VictoryBar/theme", module)
+storiesOf("VictoryBar.theme", module)
   .addDecorator(getChartDecorator({ theme: VictoryTheme.material }))
   .add("material theme", () => <VictoryBar data={getData(8)}/>)
   .add("material theme stacked", () => (
@@ -21,7 +21,7 @@ storiesOf("VictoryBar/theme", module)
       <VictoryBar data={getData(8, "seed-4")}/>
     </VictoryStack>
 ));
-storiesOf("VictoryBar/theme", module)
+storiesOf("VictoryBar.theme", module)
   .addDecorator(getChartDecorator({ theme: VictoryTheme.grayscale }))
   .add("grayscale (default) theme", () => <VictoryBar data={getData(8)}/>)
   .add("grayscale (default) stacked", () => (
@@ -34,7 +34,7 @@ storiesOf("VictoryBar/theme", module)
     </VictoryStack>
 ));
 
-storiesOf("VictoryBar/alignment", module)
+storiesOf("VictoryBar.alignment", module)
   .addDecorator(getChartDecorator({ theme: VictoryTheme.material }))
   .add("start", () => <VictoryBar data={getData(7)} alignment="start"/>)
   .add("middle", () => <VictoryBar data={getData(7)} alignment="middle"/>)
@@ -44,7 +44,7 @@ storiesOf("VictoryBar/alignment", module)
   .add("start (horizontal)", () => <VictoryBar data={getData(7)} horizontal alignment="start"/>)
   .add("end (horizontal)", () => <VictoryBar data={getData(7)} horizontal alignment="end"/>);
 
-storiesOf("VictoryBar/barRatio", module)
+storiesOf("VictoryBar.barRatio", module)
   .addDecorator(getChartDecorator())
   .add("barRatio = 0.01", () => <VictoryBar data={getData(7)} barRatio={0.01}/>)
   .add("barRatio = 0.25", () => <VictoryBar data={getData(7)} barRatio={0.25}/>)
@@ -62,7 +62,7 @@ storiesOf("VictoryBar/barRatio", module)
   .add("barRatio = 0.5 (50 bars)", () => <VictoryBar data={getData(50)} barRatio={0.5}/>)
   .add("barRatio = 1 (50 bars)", () => <VictoryBar data={getData(50)} barRatio={1}/>);
 
-storiesOf("VictoryBar/categories", module)
+storiesOf("VictoryBar.categories", module)
   .addDecorator(getChartDecorator({ domainPadding: 25 }))
   .add("string categories", () => {
     return (
@@ -78,7 +78,7 @@ storiesOf("VictoryBar/categories", module)
     );
   });
 
-storiesOf("VictoryBar/cornerRadius", module)
+storiesOf("VictoryBar.cornerRadius", module)
   .addDecorator(getChartDecorator({ domainPadding: 25 }))
   .add("cornerRadius = 1", () => <VictoryBar data={getData(7)} cornerRadius={1}/>)
   .add("cornerRadius = 5", () => <VictoryBar data={getData(7)} cornerRadius={5}/>)
@@ -94,7 +94,7 @@ storiesOf("VictoryBar/cornerRadius", module)
   ))
   .add("cornerRadius = 3 (20 bars)", () => <VictoryBar data={getData(20)} cornerRadius={3}/>);
 
-storiesOf("VictoryBar/data", module)
+storiesOf("VictoryBar.data", module)
   .addDecorator(getChartDecorator({ domainPadding: 25 }))
   .add("with data accessors", () => {
     return (
@@ -125,7 +125,7 @@ storiesOf("VictoryBar/data", module)
     );
   });
 
-storiesOf("VictoryBar/labels", module)
+storiesOf("VictoryBar.labels", module)
   .addDecorator(getChartDecorator({ domainPadding: 25 }))
   .add("function labels", () => (
     <VictoryBar data={getData(7)} labels={(d) => `x: ${d.x}`}/>
@@ -145,7 +145,7 @@ storiesOf("VictoryBar/labels", module)
     />
   ));
 
-storiesOf("VictoryBar/tooltips", module)
+storiesOf("VictoryBar.tooltips", module)
   .addDecorator(getChartDecorator({ domainPadding: 25 }))
   .add("tooltips", () => (
     <VictoryBar
@@ -183,7 +183,7 @@ storiesOf("VictoryBar/tooltips", module)
     />
   ));
 
-storiesOf("VictoryBar/style", module)
+storiesOf("VictoryBar.style", module)
   .addDecorator(getChartDecorator({ domainPadding: 25 }))
   .add("with styles", () => (
     <VictoryBar
@@ -231,7 +231,7 @@ storiesOf("VictoryBar/style", module)
     />
   ));
 
-storiesOf("VictoryBar/stacked", module)
+storiesOf("VictoryBar.stacked", module)
   .addDecorator(getChartDecorator({ domainPadding: 25 }))
   .add("stacked bars", () => (
     <VictoryStack>
@@ -283,7 +283,7 @@ storiesOf("VictoryBar/stacked", module)
     </VictoryStack>
   ));
 
-storiesOf("VictoryBar/grouped", module)
+storiesOf("VictoryBar.grouped", module)
   .addDecorator(getChartDecorator())
   .add("grouped bars (offset = 20)", () => (
     <VictoryGroup offset={20}>
@@ -421,7 +421,7 @@ storiesOf("VictoryBar/grouped", module)
     </VictoryGroup>
   ));
 
-storiesOf("VictoryBar/scale", module)
+storiesOf("VictoryBar.scale", module)
   .addDecorator(getChartDecorator({ scale: { x: "time" }, domainPadding: 25 }))
   .add("time scale", () => (
     <VictoryBar data={getTimeData(5)}/>
@@ -443,7 +443,7 @@ storiesOf("VictoryBar/scale", module)
       <VictoryBar data={getTimeData(3, "seed-2")}/>
     </VictoryGroup>
   ));
-storiesOf("VictoryBar/scale", module)
+storiesOf("VictoryBar.scale", module)
   .addDecorator(getChartDecorator({ scale: { y: "time" }, domainPadding: 25 }))
   .add(" horizontal time scale with labels", () => (
     <VictoryBar horizontal data={getTimeData(5)} labels={(d) => d.x.getFullYear()}/>
@@ -462,14 +462,14 @@ storiesOf("VictoryBar/scale", module)
       <VictoryBar data={getTimeData(3, "seed-2")}/>
     </VictoryGroup>
   ));
-storiesOf("VictoryBar/scale", module)
+storiesOf("VictoryBar.scale", module)
   .addDecorator(getChartDecorator({ scale: { y: "log" }, domainPadding: 25 }))
   .add("log scale", () => <VictoryBar data={getLogData(7)}/>);
-storiesOf("VictoryBar/scale", module)
+storiesOf("VictoryBar.scale", module)
   .addDecorator(getChartDecorator({ scale: { x: "log" }, domainPadding: 25 }))
   .add(" horizontal log scale", () => <VictoryBar horizontal data={getLogData(7)}/>);
 
-storiesOf("VictoryBar/polar", module)
+storiesOf("VictoryBar.polar", module)
   .add("Polar bar", () => (
     <VictoryBar polar theme={VictoryTheme.material} data={getData(7)}/>
   ))
@@ -481,7 +481,7 @@ storiesOf("VictoryBar/polar", module)
     />
   ));
 
-storiesOf("VictoryBar/polar", module)
+storiesOf("VictoryBar.polar", module)
   .addDecorator(getPolarChartDecorator())
   .add("Polar bar chart", () => <VictoryBar data={getData(7)}/>)
   .add("Polar bar chart with alignment", () => <VictoryBar alignment="end" data={getData(7)}/>)
@@ -524,7 +524,7 @@ storiesOf("VictoryBar/polar", module)
       <VictoryBar data={getData(5, "seed-2")}/>
     </VictoryGroup>
   ));
-storiesOf("VictoryBar/polar", module)
+storiesOf("VictoryBar.polar", module)
   .addDecorator(getPolarChartDecorator({ innerRadius: 50 }))
   .add("Polar bar with innerRadius", () => <VictoryBar data={getData(7)}/>)
   .add("Polar stacked bar with innerRadius", () => (
@@ -534,9 +534,3 @@ storiesOf("VictoryBar/polar", module)
       <VictoryBar data={getData(7, "seed-2")}/>
     </VictoryStack>
   ));
-
-storiesOf("VictoryBar/issues", module)
-  .addDecorator(ignoredDecorator)
-  .add("placeholder", () => <VictoryBar/>);
-storiesOf("VictoryBar/fixed", module)
-  .add("placeholder", () => <VictoryBar/>);

@@ -6,7 +6,7 @@ import { VictoryTooltip, VictoryTheme } from "victory-core";
 import { range } from "lodash";
 import seedrandom from "seedrandom";
 import { getArrayData } from "./data";
-import { getChartDecorator, ignoredDecorator } from "./decorators";
+import { getChartDecorator } from "./decorators";
 
 const getRepeatData = (num, samples, horizontal) => {
   const seed = "getRepeatData";
@@ -35,17 +35,17 @@ const getData = (num, seed) => {
   });
 };
 
-storiesOf("VictoryBoxPlot/default", module)
-  .add("VictoryBoxPlot", () => <VictoryBoxPlot/>);
+storiesOf("VictoryBoxPlot", module)
+  .add("default rendering", () => <VictoryBoxPlot/>);
 
-storiesOf("VictoryBoxPlot/theme", module)
+storiesOf("VictoryBoxPlot.theme", module)
   .addDecorator(getChartDecorator({ theme: VictoryTheme.material }))
   .add("material theme", () => <VictoryBoxPlot data={getData(5)}/>);
-storiesOf("VictoryBoxPlot/theme", module)
+storiesOf("VictoryBoxPlot.theme", module)
   .addDecorator(getChartDecorator({ theme: VictoryTheme.grayscale }))
   .add("grayscale (default) theme", () => <VictoryBoxPlot data={getData(5)}/>);
 
-storiesOf("VictoryBoxPlot/boxWidth", module)
+storiesOf("VictoryBoxPlot.boxWidth", module)
   .addDecorator(getChartDecorator({ domainPadding: 25 }))
   .add("narrow boxWidth", () => <VictoryBoxPlot data={getData(5)} boxWidth={5}/>)
   .add("narrow boxWidth (horizontal)", () => (
@@ -59,7 +59,7 @@ storiesOf("VictoryBoxPlot/boxWidth", module)
     <VictoryBoxPlot data={getData(5)} boxWidth={35} whiskerWidth={0}/>
   ));
 
-storiesOf("VictoryBoxPlot/whiskerWidth", module)
+storiesOf("VictoryBoxPlot.whiskerWidth", module)
   .addDecorator(getChartDecorator({ domainPadding: 25 }))
   .add("zero whiskerWidth", () => <VictoryBoxPlot data={getData(5)} whiskerWidth={0}/>)
   .add("zero whiskerWidth (horizontal)", () => (
@@ -70,7 +70,7 @@ storiesOf("VictoryBoxPlot/whiskerWidth", module)
     <VictoryBoxPlot horizontal data={getData(5)} whiskerWidth={45}/>
   ));
 
-storiesOf("VictoryBoxPlot/data", module)
+storiesOf("VictoryBoxPlot.data", module)
   .addDecorator(getChartDecorator({ domainPadding: 25 }))
   .add("preprocessed data", () => <VictoryBoxPlot data={getData(5)}/>)
   .add("preprocessed data (horizontal)", () => <VictoryBoxPlot horizontal data={getData(5)}/>)
@@ -104,7 +104,7 @@ storiesOf("VictoryBoxPlot/data", module)
   ));
 
 
-storiesOf("VictoryBoxPlot/labels", module)
+storiesOf("VictoryBoxPlot.labels", module)
   .addDecorator(getChartDecorator({ domainPadding: 25 }))
   .add("global boolean labels", () => <VictoryBoxPlot data={getData(5)} labels/>)
   .add("boolean minLabels", () => <VictoryBoxPlot data={getData(5)} minLabels/>)
@@ -128,7 +128,7 @@ storiesOf("VictoryBoxPlot/labels", module)
     <VictoryBoxPlot horizontal data={getData(5)} maxLabels={(d) => `max: ${d.max}`}/>
   ));
 
-storiesOf("VictoryBoxPlot/tooltips", module)
+storiesOf("VictoryBoxPlot.tooltips", module)
   .addDecorator(getChartDecorator({ domainPadding: 25 }))
   .add("minLabels tooltips", () => (
     <VictoryBoxPlot horizontal
@@ -162,7 +162,7 @@ storiesOf("VictoryBoxPlot/tooltips", module)
   ));
 
 
-storiesOf("VictoryBoxPlot/style", module)
+storiesOf("VictoryBoxPlot.style", module)
   .addDecorator(getChartDecorator({ domainPadding: 25 }))
   .add("with styles", () => (
     <VictoryBoxPlot
@@ -194,11 +194,4 @@ storiesOf("VictoryBoxPlot/style", module)
       }}
     />
   ));
-
-storiesOf("VictoryBoxPlot/issues", module)
-  .addDecorator(ignoredDecorator)
-  .add("placeholder", () => <VictoryBoxPlot/>);
-storiesOf("VictoryBoxPlot/fixed", module)
-  .add("placeholder", () => <VictoryBoxPlot/>);
-
 

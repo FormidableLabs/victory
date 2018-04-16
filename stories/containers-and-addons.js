@@ -7,7 +7,7 @@ import { VictoryLine, VictoryChart, VictoryAxis, VictoryBrushLine,
 import { ignoredDecorator } from "./decorators";
 
 // only add visual test for containers that have visual elements without interaction
-storiesOf("Containers and Addons/VictoryBrushContainer", module)
+storiesOf("Containers and Addons.VictoryBrushContainer", module)
   .add("with VictoryBrushContainer", () => (
     <VictoryChart
       containerComponent={<VictoryBrushContainer/>}
@@ -26,7 +26,7 @@ storiesOf("Containers and Addons/VictoryBrushContainer", module)
     />
   ));
 
-storiesOf("Containers and Addons/VictoryBrushLine", module)
+storiesOf("Containers and Addons.VictoryBrushLine", module)
   .add("brush axis", () => (
     <VictoryAxis axisComponent={<VictoryBrushLine/>}/>
   ))
@@ -67,7 +67,7 @@ storiesOf("Containers and Addons/VictoryBrushLine", module)
     />
   ));
 
-storiesOf("Containers and Addons/VictoryCursorContainer", module)
+storiesOf("Containers and Addons.VictoryCursorContainer", module)
   .add("with VictoryCursorContainer with defaultCursorValue", () => (
     <VictoryChart
       containerComponent={
@@ -79,7 +79,7 @@ storiesOf("Containers and Addons/VictoryCursorContainer", module)
     />
   ));
 
-storiesOf("Containers and Addons/VictoryZoomContainer", module)
+storiesOf("Containers and Addons.VictoryZoomContainer", module)
   .add("with VictoryZoomContainer with initial zoom", () => (
     <VictoryChart scale={{ x: "time" }}
       containerComponent={
@@ -107,8 +107,8 @@ storiesOf("Containers and Addons/VictoryZoomContainer", module)
     </VictoryChart>
   ));
 
-storiesOf("Containers and Addons/issues", module)
+storiesOf("Containers and Addons.issues", module)
   .addDecorator(ignoredDecorator)
-  .add("placeholder", () => <VictoryChart/>);
-storiesOf("Containers and Addons/fixed", module)
-  .add("placeholder", () => <VictoryChart/>);
+  .add("ISSUE_NUMBER", () => <VictoryChart/>);
+storiesOf("Containers and Addons.issues", module)
+  .add("ISSUE_NUMBER (fixed)", () => <VictoryChart/>);
