@@ -4,7 +4,6 @@ import { storiesOf } from "@storybook/react";
 import { VictoryLine, VictoryChart, VictoryAxis, VictoryBrushLine,
   VictoryBrushContainer, VictoryCursorContainer, VictoryZoomContainer
 } from "../src/index";
-import { ignoredDecorator } from "./decorators";
 
 // only add visual test for containers that have visual elements without interaction
 storiesOf("Containers and Addons.VictoryBrushContainer", module)
@@ -106,9 +105,3 @@ storiesOf("Containers and Addons.VictoryZoomContainer", module)
       />
     </VictoryChart>
   ));
-
-storiesOf("Containers and Addons.issues", module)
-  .addDecorator(ignoredDecorator)
-  .add("ISSUE_NUMBER", () => <VictoryChart/>);
-storiesOf("Containers and Addons.issues", module)
-  .add("ISSUE_NUMBER (fixed)", () => <VictoryChart/>);
