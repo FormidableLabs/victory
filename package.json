@@ -33,7 +33,7 @@
     "lint": "builder concurrent lint-source lint-demo lint-test, lint-stories",
     "storybook": "start-storybook -p 6006",
     "chromatic": "chromatic test --storybook-addon",
-    "chromatic-test": "chromatic test --storybook-addon --exit-zero-on-changes"
+    "chromatic-test": "chromatic test --storybook-addon || true"
   },
   "dependencies": {
     "builder": "^4.0.0",
