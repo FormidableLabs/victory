@@ -1,6 +1,10 @@
 VictoryCore Changelog
 =====================
 
+## 21.1.11 (2018-04-16)
+
+-[360](https://github.com/FormidableLabs/victory-core/pull/360) add clipPath to style whitelist
+
 ## 21.1.10 (2018-04-14)
 
 -[359](https://github.com/FormidableLabs/victory-core/pull/359) Add missing attributes to style whitelist
