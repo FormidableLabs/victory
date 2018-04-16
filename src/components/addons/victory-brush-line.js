@@ -1,7 +1,8 @@
 import React from "react";
 import PropTypes from "prop-types";
 import { Selection, Helpers, Collection, Axis, Scale, Domain, Box } from "victory-core";
-import { assign, defaults, isEqual, isFunction, pick } from "lodash";
+import { assign, defaults, isFunction, pick } from "lodash";
+import isEqual from "react-fast-compare";
 
 const getScale = (props) => {
   const { scale = {}, dimension = "x" } = props;
@@ -136,7 +137,7 @@ export default class VictoryBrushLine extends React.Component {
 
   static defaultEvents = function (props) {
     return props.disable ? undefined : [{
-      target: props.type || ["grid", "axis"],
+      target: props.type,
       eventHandlers: {
         onMouseEnter: (evt, targetProps) => {
           evt.preventDefault();

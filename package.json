@@ -1,6 +1,6 @@
 {
   "name": "victory-chart",
-  "version": "25.2.2",
+  "version": "25.2.4",
   "description": "Chart Component for Victory",
   "main": "lib/index.js",
   "module": "es/index.js",
@@ -40,7 +40,8 @@
     "builder-victory-component": "^5.1.2",
     "d3-voronoi": "^1.1.2",
     "lodash": "^4.17.5",
-    "victory-core": "^21.1.9"
+    "react-fast-compare": "^1.0.0",
+    "victory-core": "^21.1.10"
   },
   "devDependencies": {
     "@storybook/addon-actions": "^3.2.13",

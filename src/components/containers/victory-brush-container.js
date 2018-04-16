@@ -2,7 +2,8 @@ import PropTypes from "prop-types";
 import React from "react";
 import { VictoryContainer, Selection } from "victory-core";
 import BrushHelpers from "./brush-helpers";
-import { assign, defaults, isEqual } from "lodash";
+import { assign, defaults } from "lodash";
+import isEqual from "react-fast-compare";
 
 export const brushContainerMixin = (base) => class VictoryBrushContainer extends base {
   static displayName = "VictoryBrushContainer";

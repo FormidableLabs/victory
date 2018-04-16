@@ -1,5 +1,13 @@
 # VictoryChart Changelog
 
+## 25.2.4 (2018-04-13)
+
+- [581](https://github.com/FormidableLabs/victory-chart/pull/580) Add `react-fast-compare`, use in place of `lodash.isEqual`; add demo that uses <VictoryLabel/> and calls shouldComponentUpdate.
+
+## 25.2.3 (2018-04-10)
+
+- [580](https://github.com/FormidableLabs/victory-chart/pull/580) Improvements for `VictoryBrushLine`
+
 ## 25.2.2 (2018-04-04)
 
 - Upgrade to `victory-core@^21.1.2`.

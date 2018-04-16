@@ -1,5 +1,6 @@
 import { Selection } from "victory-core";
-import { assign, throttle, isFunction, isEqual, defaults, mapValues } from "lodash";
+import { assign, throttle, isFunction, defaults, mapValues } from "lodash";
+import isEqual from "react-fast-compare";
 
 const Helpers = {
   withinBounds(point, bounds, padding) {
