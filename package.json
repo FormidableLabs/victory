@@ -30,7 +30,7 @@
     "lank-watch": "lank exec -u -- builder run build-watch",
     "lank-run": "lank exec -m victory-chart -uq -- builder run dev --expand-archetype",
     "lint-stories": "eslint --color stories",
-    "lint": "builder concurrent lint-source lint-demo lint-test, lint-stories",
+    "lint": "builder run lint && npm run lint-stories",
     "storybook": "start-storybook -p 6006",
     "chromatic": "chromatic test --storybook-addon",
     "chromatic-test": "chromatic test --storybook-addon || true"
