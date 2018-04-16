@@ -1,5 +1,5 @@
 /*eslint-disable no-magic-numbers*/
-import { range, random } from "lodash";
+import { range } from "lodash";
 import seedrandom from "seedrandom";
 
 // const polarData = [
@@ -54,25 +54,6 @@ const getFourQuadrantData = (num, seed) => {
   return range(num).map((v) => ({ x: v - Math.round(num / 2), y: rand() }));
 };
 
-const getTransitionData = () => {
-  const samples = random(6, 10);
-  return range(samples).map((data) => {
-    return {
-      x: data,
-      y: random(3, 10)
-    };
-  });
-};
-
-const getAnimationData = (num) => {
-  return range(num).map((data) => {
-    return {
-      x: data,
-      y: random(3, 10)
-    };
-  });
-};
-
 const getArrayData = (num, samples, horizontal) => {
   const seed = "getData";
   samples = samples || 10;
@@ -88,6 +69,5 @@ const getArrayData = (num, samples, horizontal) => {
 };
 
 export {
-  getData, getMixedData, getTimeData, getLogData, getTransitionData,
-  getAnimationData, getFourQuadrantData, getArrayData
+  getData, getMixedData, getTimeData, getLogData, getFourQuadrantData, getArrayData
 };

@@ -28,10 +28,10 @@ const getRandomValues = (num, seed) => {
   return result.sort((a, b) => a - b);
 };
 
-storiesOf("VictoryAxis/static/default", module)
+storiesOf("VictoryAxis/default", module)
   .add("VictoryAxis", () => <VictoryAxis/>);
 
-storiesOf("VictoryAxis/static/theme", module)
+storiesOf("VictoryAxis/theme", module)
   .add("material theme", () => <VictoryAxis theme={VictoryTheme.material}/>)
   .add("chart axes material theme", () => <VictoryChart theme={VictoryTheme.material}/>)
   .add("four quadrant chart axes material theme", () => (
@@ -43,7 +43,7 @@ storiesOf("VictoryAxis/static/theme", module)
     <VictoryChart theme={VictoryTheme.grayscale} domain={[-1, 1]}/>
   ));
 
-storiesOf("VictoryAxis/static/tickValues", module)
+storiesOf("VictoryAxis/tickValues", module)
   .add("numeric tickValues", () => <VictoryAxis tickValues={getValues(5)}/>)
   .add("random numeric tickValues", () => <VictoryAxis tickValues={getRandomValues(5)}/>)
   .add("string tickValues", () => <VictoryAxis tickValues={["one", "two", "three", "four"]}/>)
@@ -57,7 +57,7 @@ storiesOf("VictoryAxis/static/tickValues", module)
     <VictoryAxis dependentAxis tickValues={["one", "two", "three", "four"]}/>
   ));
 
-storiesOf("VictoryAxis/static/tickFormat", module)
+storiesOf("VictoryAxis/tickFormat", module)
   .add("as an array of strings", () => (
     <VictoryAxis tickValues={getValues(5)} tickFormat={["one", "two", "three", "four", "five"]}/>
   ))
@@ -65,7 +65,7 @@ storiesOf("VictoryAxis/static/tickFormat", module)
     <VictoryAxis tickValues={getValues(5)} tickFormat={(t) => `#${t}`}/>
   ));
 
-storiesOf("VictoryAxis/static/domain", module)
+storiesOf("VictoryAxis/domain", module)
   .add("without tickValues", () => <VictoryAxis domain={[-10, 10]}/>)
   .add("with tickValues", () => <VictoryAxis domain={[-10, 10]} tickValues={getValues(5)}/>)
   .add("with overflowing tickValues", () => (
@@ -75,7 +75,7 @@ storiesOf("VictoryAxis/static/domain", module)
     <VictoryAxis domain={[-2, 2]} tickValues={["cat", "dog", "bird"]}/>
   ));
 
-storiesOf("VictoryAxis/static/fixLabelOverlap", module)
+storiesOf("VictoryAxis/fixLabelOverlap", module)
   .add("evenly spaced ticks", () => <VictoryAxis fixLabelOverlap tickValues={getValues(30)}/>)
   .add("randomly spaced ticks", () => (
     <VictoryAxis fixLabelOverlap tickValues={getRandomValues(30)}/>
@@ -93,21 +93,21 @@ storiesOf("VictoryAxis/static/fixLabelOverlap", module)
     <VictoryAxis dependentAxis fixLabelOverlap scale="time" tickValues={getTimeValues(30)}/>
   ));
 
-storiesOf("VictoryAxis/static/offsetX", module)
+storiesOf("VictoryAxis/offsetX", module)
   .add("independent axis", () => <VictoryAxis offsetX={250}/>)
   .add("dependent axis", () => <VictoryAxis dependentAxis offsetX={250}/>);
 
-storiesOf("VictoryAxis/static/offsetY", module)
+storiesOf("VictoryAxis/offsetY", module)
   .add("independent axis", () => <VictoryAxis offsetY={250}/>)
   .add("dependent axis", () => <VictoryAxis dependentAxis offsetY={250}/>);
 
-storiesOf("VictoryAxis/static/orientation", module)
+storiesOf("VictoryAxis/orientation", module)
   .add("top", () => <VictoryAxis tickValues={getValues(5)} orientation="top"/>)
   .add("bottom", () => <VictoryAxis tickValues={getValues(5)} orientation="bottom"/>)
   .add("left", () => <VictoryAxis tickValues={getValues(5)} orientation="left"/>)
   .add("right", () => <VictoryAxis tickValues={getValues(5)} orientation="right"/>);
 
-storiesOf("VictoryAxis/static/style", module)
+storiesOf("VictoryAxis/style", module)
   .add("functional styles", () => (
     <VictoryAxis
       label="Label"
@@ -121,7 +121,7 @@ storiesOf("VictoryAxis/static/style", module)
     />
   ));
 
-storiesOf("VictoryAxis/static/scale", module)
+storiesOf("VictoryAxis/scale", module)
   .add("time", () => <VictoryAxis tickValues={getTimeValues(5)} scale="time"/>)
   .add("log", () => <VictoryAxis scale="log" tickValues={[1, 3, 5, 7, 10, 50, 100, 500, 1000]}/>);
 

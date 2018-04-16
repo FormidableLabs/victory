@@ -46,7 +46,9 @@ function loadStories() {
   require("../stories/victory-chart");
   require("../stories/victory-errorbar");
   require("../stories/victory-line");
+  require("../stories/victory-polar-axis");
   require("../stories/victory-scatter");
+  require("../stories/containers-and-addons");
 }
 
 configure(loadStories, module);

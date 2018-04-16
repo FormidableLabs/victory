@@ -3,9 +3,9 @@ import React from "react";
 import { storiesOf } from "@storybook/react";
 import { VictoryErrorBar } from "../src/index";
 import { VictoryTooltip, VictoryTheme } from "victory-core";
-import { range, random } from "lodash";
+import { range } from "lodash";
 import seedrandom from "seedrandom";
-import { getChartDecorator, getAnimatingComponent, ignoredDecorator } from "./decorators";
+import { getChartDecorator, ignoredDecorator } from "./decorators";
 
 const getData = (num, symmetric, seed) => {
   seed = seed || "getData";
@@ -21,34 +21,23 @@ const getData = (num, symmetric, seed) => {
   });
 };
 
-const getTransitionData = () => {
-  const samples = random(4, 7);
-  return range(samples).map((v) => {
-    return {
-      x: v + 1,
-      y: random(100, 600),
-      errorY: [random(50), random(50)]
-    };
-  });
-};
-
-storiesOf("VictoryErrorBar/static/default", module)
+storiesOf("VictoryErrorBar/default", module)
   .add("VictoryErrorBar", () => <VictoryErrorBar/>);
 
-storiesOf("VictoryErrorBar/static/theme", module)
+storiesOf("VictoryErrorBar/theme", module)
   .addDecorator(getChartDecorator({ theme: VictoryTheme.material }))
   .add("material theme", () => <VictoryErrorBar data={getData(5)}/>);
-storiesOf("VictoryErrorBar/static/theme", module)
+storiesOf("VictoryErrorBar/theme", module)
   .addDecorator(getChartDecorator({ theme: VictoryTheme.grayscale }))
   .add("grayscale (default) theme", () => <VictoryErrorBar data={getData(5)}/>);
 
-storiesOf("VictoryErrorBar/static/borderWidth", module)
+storiesOf("VictoryErrorBar/borderWidth", module)
   .addDecorator(getChartDecorator({ domainPadding: 25 }))
   .add("borderWidth = 0", () => <VictoryErrorBar data={getData(5)} borderWidth={0}/>)
   .add("borderWidth = 10", () => <VictoryErrorBar data={getData(5)} borderWidth={10}/>);
 
 
-storiesOf("VictoryErrorBar/static/data", module)
+storiesOf("VictoryErrorBar/data", module)
   .addDecorator(getChartDecorator({ domainPadding: 25 }))
   .add("with data accessors", () => {
     return (
@@ -67,7 +56,7 @@ storiesOf("VictoryErrorBar/static/data", module)
     );
   });
 
-storiesOf("VictoryErrorBar/static/labels", module)
+storiesOf("VictoryErrorBar/labels", module)
   .addDecorator(getChartDecorator({ domainPadding: 25 }))
   .add("function labels", () => (
     <VictoryErrorBar data={getData(5)} labels={(d) => `x: ${d.x}`}/>
@@ -87,7 +76,7 @@ storiesOf("VictoryErrorBar/static/labels", module)
     />
   ));
 
-storiesOf("VictoryErrorBar/static/tooltips", module)
+storiesOf("VictoryErrorBar/tooltips", module)
   .addDecorator(getChartDecorator({ domainPadding: 25 }))
   .add("tooltips", () => (
     <VictoryErrorBar
@@ -104,7 +93,7 @@ storiesOf("VictoryErrorBar/static/tooltips", module)
     />
   ));
 
-storiesOf("VictoryErrorBar/static/style", module)
+storiesOf("VictoryErrorBar/style", module)
   .addDecorator(getChartDecorator({ domainPadding: 25 }))
   .add("with styles", () => (
     <VictoryErrorBar
@@ -146,15 +135,6 @@ storiesOf("VictoryErrorBar/static/style", module)
       ]}
     />
   ));
-
-storiesOf("VictoryErrorBar/animating", module)
-  .add("animation transitions", () => {
-    const updateState = () => ({ data: getTransitionData() });
-    const childComponent = (
-      <VictoryErrorBar animate={{ duration: 1000 }}/>
-    );
-    return getAnimatingComponent(childComponent, updateState);
-  });
 
 storiesOf("VictoryErrorBar/issues", module)
   .addDecorator(ignoredDecorator)

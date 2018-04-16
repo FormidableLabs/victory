@@ -3,9 +3,9 @@ import React from "react";
 import { storiesOf } from "@storybook/react";
 import { VictoryCandlestick } from "../src/index";
 import { VictoryTooltip, VictoryTheme } from "victory-core";
-import { range, random } from "lodash";
+import { range } from "lodash";
 import seedrandom from "seedrandom";
-import { getChartDecorator, getAnimatingComponent, ignoredDecorator } from "./decorators";
+import { getChartDecorator, ignoredDecorator } from "./decorators";
 
 const getTimeData = (num, seed) => {
   seed = seed || "getTimeData";
@@ -34,30 +34,17 @@ const getData = (num, seed) => {
   });
 };
 
-const getTransitionData = () => {
-  const samples = random(6, 10);
-  return range(samples).map((v) => {
-    return {
-      x: v + 1,
-      open: random(150, 450),
-      close: random(150, 450),
-      high: random(450, 600),
-      low: random(0, 150)
-    };
-  });
-};
-
-storiesOf("VictoryCandlestick/static/default", module)
+storiesOf("VictoryCandlestick/default", module)
   .add("VictoryCandlestick", () => <VictoryCandlestick/>);
 
-storiesOf("VictoryCandlestick/static/theme", module)
+storiesOf("VictoryCandlestick/theme", module)
   .addDecorator(getChartDecorator({ theme: VictoryTheme.material }))
   .add("material theme", () => <VictoryCandlestick data={getData(8)}/>);
-storiesOf("VictoryCandlestick/static/theme", module)
+storiesOf("VictoryCandlestick/theme", module)
   .addDecorator(getChartDecorator({ theme: VictoryTheme.grayscale }))
   .add("grayscale (default) theme", () => <VictoryCandlestick data={getData(8)}/>);
 
-storiesOf("VictoryCandlestick/static/candleColors", module)
+storiesOf("VictoryCandlestick/candleColors", module)
   .addDecorator(getChartDecorator({ domainPadding: 25 }))
   .add("candleColors", () => (
     <VictoryCandlestick
@@ -75,7 +62,7 @@ storiesOf("VictoryCandlestick/static/candleColors", module)
     />
   ));
 
-storiesOf("VictoryCandlestick/static/wickStrokeWidth", module)
+storiesOf("VictoryCandlestick/wickStrokeWidth", module)
   .addDecorator(getChartDecorator({ domainPadding: 25 }))
   .add("wickStrokeWidth", () => <VictoryCandlestick data={getData(7)} wickStrokeWidth={5}/>)
   .add("wickStrokeWidth with styles", () => (
@@ -88,7 +75,7 @@ storiesOf("VictoryCandlestick/static/wickStrokeWidth", module)
     />
   ));
 
-storiesOf("VictoryCandlestick/static/data", module)
+storiesOf("VictoryCandlestick/data", module)
   .addDecorator(getChartDecorator({ domainPadding: 25 }))
   .add("with data accessors", () => {
     return (
@@ -106,7 +93,7 @@ storiesOf("VictoryCandlestick/static/data", module)
     );
   });
 
-storiesOf("VictoryCandlestick/static/labels", module)
+storiesOf("VictoryCandlestick/labels", module)
   .addDecorator(getChartDecorator({ domainPadding: 25 }))
   .add("function labels", () => (
     <VictoryCandlestick data={getData(7)} labels={(d) => `x: ${d.x}`}/>
@@ -126,7 +113,7 @@ storiesOf("VictoryCandlestick/static/labels", module)
     />
   ));
 
-storiesOf("VictoryCandlestick/static/tooltips", module)
+storiesOf("VictoryCandlestick/tooltips", module)
   .addDecorator(getChartDecorator({ domainPadding: 25 }))
   .add("tooltips", () => (
     <VictoryCandlestick
@@ -143,7 +130,7 @@ storiesOf("VictoryCandlestick/static/tooltips", module)
     />
   ));
 
-storiesOf("VictoryCandlestick/static/style", module)
+storiesOf("VictoryCandlestick/style", module)
   .addDecorator(getChartDecorator({ domainPadding: 25 }))
   .add("with styles", () => (
     <VictoryCandlestick
@@ -186,7 +173,7 @@ storiesOf("VictoryCandlestick/static/style", module)
     />
   ));
 
-storiesOf("VictoryCandlestick/static/scale", module)
+storiesOf("VictoryCandlestick/scale", module)
   .addDecorator(getChartDecorator({ scale: { x: "time" }, domainPadding: 25 }))
   .add("time scale", () => (
     <VictoryCandlestick data={getTimeData(5)}/>
@@ -194,15 +181,6 @@ storiesOf("VictoryCandlestick/static/scale", module)
   .add("time scale with labels", () => (
     <VictoryCandlestick data={getTimeData(5)} labels={(d) => d.x.getFullYear()}/>
   ));
-
-storiesOf("VictoryCandlestick/animating", module)
-  .add("animation transitions", () => {
-    const updateState = () => ({ data: getTransitionData() });
-    const childComponent = (
-      <VictoryCandlestick animate={{ duration: 1000 }}/>
-    );
-    return getAnimatingComponent(childComponent, updateState);
-  });
 
 storiesOf("VictoryCandlestick/issues", module)
   .addDecorator(ignoredDecorator)

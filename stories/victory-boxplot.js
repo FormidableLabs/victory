@@ -3,10 +3,10 @@ import React from "react";
 import { storiesOf } from "@storybook/react";
 import { VictoryBoxPlot } from "../src/index";
 import { VictoryTooltip, VictoryTheme } from "victory-core";
-import { range, random } from "lodash";
+import { range } from "lodash";
 import seedrandom from "seedrandom";
 import { getArrayData } from "./data";
-import { getChartDecorator, getAnimatingComponent, ignoredDecorator } from "./decorators";
+import { getChartDecorator, ignoredDecorator } from "./decorators";
 
 const getRepeatData = (num, samples, horizontal) => {
   const seed = "getRepeatData";
@@ -35,28 +35,17 @@ const getData = (num, seed) => {
   });
 };
 
-
-const getTransitionData = () => {
-  const samples = random(4, 7);
-  return range(samples).map((v) => {
-    return {
-      x: v + 1,
-      y: range(10).map(() => random(100, 600))
-    };
-  });
-};
-
-storiesOf("VictoryBoxPlot/static/default", module)
+storiesOf("VictoryBoxPlot/default", module)
   .add("VictoryBoxPlot", () => <VictoryBoxPlot/>);
 
-storiesOf("VictoryBoxPlot/static/theme", module)
+storiesOf("VictoryBoxPlot/theme", module)
   .addDecorator(getChartDecorator({ theme: VictoryTheme.material }))
   .add("material theme", () => <VictoryBoxPlot data={getData(5)}/>);
-storiesOf("VictoryBoxPlot/static/theme", module)
+storiesOf("VictoryBoxPlot/theme", module)
   .addDecorator(getChartDecorator({ theme: VictoryTheme.grayscale }))
   .add("grayscale (default) theme", () => <VictoryBoxPlot data={getData(5)}/>);
 
-storiesOf("VictoryBoxPlot/static/boxWidth", module)
+storiesOf("VictoryBoxPlot/boxWidth", module)
   .addDecorator(getChartDecorator({ domainPadding: 25 }))
   .add("narrow boxWidth", () => <VictoryBoxPlot data={getData(5)} boxWidth={5}/>)
   .add("narrow boxWidth (horizontal)", () => (
@@ -70,7 +59,7 @@ storiesOf("VictoryBoxPlot/static/boxWidth", module)
     <VictoryBoxPlot data={getData(5)} boxWidth={35} whiskerWidth={0}/>
   ));
 
-storiesOf("VictoryBoxPlot/static/whiskerWidth", module)
+storiesOf("VictoryBoxPlot/whiskerWidth", module)
   .addDecorator(getChartDecorator({ domainPadding: 25 }))
   .add("zero whiskerWidth", () => <VictoryBoxPlot data={getData(5)} whiskerWidth={0}/>)
   .add("zero whiskerWidth (horizontal)", () => (
@@ -81,7 +70,7 @@ storiesOf("VictoryBoxPlot/static/whiskerWidth", module)
     <VictoryBoxPlot horizontal data={getData(5)} whiskerWidth={45}/>
   ));
 
-storiesOf("VictoryBoxPlot/static/data", module)
+storiesOf("VictoryBoxPlot/data", module)
   .addDecorator(getChartDecorator({ domainPadding: 25 }))
   .add("preprocessed data", () => <VictoryBoxPlot data={getData(5)}/>)
   .add("preprocessed data (horizontal)", () => <VictoryBoxPlot horizontal data={getData(5)}/>)
@@ -115,7 +104,7 @@ storiesOf("VictoryBoxPlot/static/data", module)
   ));
 
 
-storiesOf("VictoryBoxPlot/static/labels", module)
+storiesOf("VictoryBoxPlot/labels", module)
   .addDecorator(getChartDecorator({ domainPadding: 25 }))
   .add("global boolean labels", () => <VictoryBoxPlot data={getData(5)} labels/>)
   .add("boolean minLabels", () => <VictoryBoxPlot data={getData(5)} minLabels/>)
@@ -139,7 +128,7 @@ storiesOf("VictoryBoxPlot/static/labels", module)
     <VictoryBoxPlot horizontal data={getData(5)} maxLabels={(d) => `max: ${d.max}`}/>
   ));
 
-storiesOf("VictoryBoxPlot/static/tooltips", module)
+storiesOf("VictoryBoxPlot/tooltips", module)
   .addDecorator(getChartDecorator({ domainPadding: 25 }))
   .add("minLabels tooltips", () => (
     <VictoryBoxPlot horizontal
@@ -173,7 +162,7 @@ storiesOf("VictoryBoxPlot/static/tooltips", module)
   ));
 
 
-storiesOf("VictoryBoxPlot/static/style", module)
+storiesOf("VictoryBoxPlot/style", module)
   .addDecorator(getChartDecorator({ domainPadding: 25 }))
   .add("with styles", () => (
     <VictoryBoxPlot
@@ -205,15 +194,6 @@ storiesOf("VictoryBoxPlot/static/style", module)
       }}
     />
   ));
-
-storiesOf("VictoryBoxPlot/animating", module)
-  .add("animation transitions", () => {
-    const updateState = () => ({ data: getTransitionData() });
-    const childComponent = (
-      <VictoryBoxPlot animate={{ duration: 1000 }}/>
-    );
-    return getAnimatingComponent(childComponent, updateState);
-  });
 
 storiesOf("VictoryBoxPlot/issues", module)
   .addDecorator(ignoredDecorator)
