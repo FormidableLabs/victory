@@ -88,10 +88,7 @@ const SelectionHelpers = {
     const dataMutation = selectedData && activateSelectedData ?
       selectedData.map((d) => {
         return {
-          childName: d.childName, eventKey: d.eventKey, target: "data",
-          mutation: () => {
-            return null;
-          }
+          childName: d.childName, eventKey: d.eventKey, target: "data", mutation: () => null
         };
       }) : [];
 
