@@ -10,7 +10,7 @@ before_install:
 script:
 - npm --version
 - node_modules/.bin/builder run check-ci
-- if [ "${TRAVIS_EVENT_TYPE}" = "push" and "${TRAVIS_NODE_VERSION}" = "9" ]; then npm run chromatic-test; fi
+- if [ "${TRAVIS_EVENT_TYPE}" = "push" and "${TRAVIS_NODE_VERSION}" > 8 ]; then npm run chromatic-test; fi
 - npm prune --production
 - node_modules/.bin/builder run build
 
