@@ -118,15 +118,16 @@ export default {
           assign({}, mutationTargetProps, mutationTargetState), baseProps
         );
         const childState = baseState[childName] || {};
+
         const extendState = (state) => {
           return target === "parent" ?
-            assign(state[key], mutatedProps) : assign(state[key], { [target]: mutatedProps });
+            assign(state, { [key]: assign(state[key], mutatedProps) }) :
+            assign(state, { [key]: assign(state[key], { [target]: mutatedProps }) });
         };
+
         return childName !== undefined && childName !== null ?
-          assign(baseState, {
-            [childName]: assign(childState, { [key]: extendState(childState) })
-          }) :
-          assign(baseState, { [key]: extendState(baseState) });
+          assign(baseState, { [childName]: extendState(childState) }) :
+          extendState(baseState);
       };
 
       // returns entire mutated state for a given childName
