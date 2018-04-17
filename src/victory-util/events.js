@@ -1,5 +1,5 @@
 import {
-  assign, partial, isEmpty, isFunction, without, pickBy, uniq, includes, keys, filter
+  assign, partial, isEmpty, isFunction, without, pickBy, uniq, includes, keys
 } from "lodash";
 
 export default {
@@ -168,7 +168,6 @@ export default {
     const parseEventReturn = (eventReturn, eventKey) => {
       return Array.isArray(eventReturn) ?
         eventReturn.reduce((memo, props) => {
-          // console.log("PARSED", parseEvent(props, eventKey))
           memo = assign({}, memo, parseEvent(props, eventKey));
           return memo;
         }, {}) :
