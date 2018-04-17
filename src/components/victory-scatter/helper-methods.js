@@ -7,7 +7,7 @@ export default {
     props = assign({}, modifiedProps, this.getCalculatedValues(modifiedProps));
     const {
       data, domain, events, height, origin, padding, polar, scale,
-      sharedEvents, standalone, style, theme, width
+      sharedEvents, standalone, style, theme, width, labels
     } = props;
     const initialChildProps = { parent: {
       style: style.parent, scale, domain, data, height, width, standalone, theme,
@@ -26,7 +26,7 @@ export default {
 
       childProps[eventKey] = { data: dataProps };
       const text = LabelHelpers.getText(props, datum, index);
-      if (text !== undefined && text !== null || events || sharedEvents) {
+      if (text !== undefined && text !== null || (labels && events || sharedEvents)) {
         childProps[eventKey].labels = LabelHelpers.getProps(props, index);
       }
 

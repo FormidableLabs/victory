@@ -367,7 +367,11 @@ const getBaseProps = (props, fallbackProps) => {
 
     TYPES.forEach((type) => {
       const labelText = getText(dataProps, type);
-      if (labelText !== null && typeof labelText !== undefined || !events || !sharedEvents) {
+      const labelProp = props.labels || props[`${type}Labels`];
+      if (
+        labelText !== null && typeof labelText !== undefined ||
+        labelProp && (events || sharedEvents)
+      ) {
         const target = `${type}Labels`;
         acc[eventKey][target] = getLabelProps(dataProps, labelText, type);
       }

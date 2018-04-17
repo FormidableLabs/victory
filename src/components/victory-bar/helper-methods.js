@@ -44,7 +44,7 @@ const getBaseProps = (props, fallbackProps) => {
   props = assign({}, modifiedProps, getCalculatedValues(modifiedProps));
   const {
     alignment, barRatio, cornerRadius, data, domain, events, height, horizontal, origin, padding,
-    polar, scale, sharedEvents, standalone, style, theme, width
+    polar, scale, sharedEvents, standalone, style, theme, width, labels
   } = props;
   const initialChildProps = { parent: {
     domain, scale, width, height, data, standalone,
@@ -65,7 +65,7 @@ const getBaseProps = (props, fallbackProps) => {
     };
 
     const text = LabelHelpers.getText(props, datum, index);
-    if (text !== undefined && text !== null || events || sharedEvents) {
+    if (text !== undefined && text !== null || (labels && events || sharedEvents)) {
       childProps[eventKey].labels = LabelHelpers.getProps(props, index);
     }
     return childProps;

@@ -150,7 +150,7 @@ const getBaseProps = (props, fallbackProps) => { // eslint-disable-line max-stat
   const { data, style, scale, domain, origin } = calculatedValues;
   const {
     groupComponent, width, height, padding, standalone,
-    theme, polar, wickStrokeWidth
+    theme, polar, wickStrokeWidth, labels, events, sharedEvents
   } = props;
   const initialChildProps = { parent: {
     domain, scale, width, height, data, standalone, theme, polar, origin,
@@ -175,7 +175,7 @@ const getBaseProps = (props, fallbackProps) => { // eslint-disable-line max-stat
       data: dataProps
     };
     const text = LabelHelpers.getText(props, datum, index);
-    if (text !== undefined && text !== null || props.events || props.sharedEvents) {
+    if (text !== undefined && text !== null || (labels && events || sharedEvents)) {
       childProps[eventKey].labels = getLabelProps(dataProps, text, style);
     }
 

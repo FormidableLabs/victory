@@ -49,7 +49,7 @@ const getBaseProps = (props, fallbackProps) => {
   props = assign({}, modifiedProps, getCalculatedValues(modifiedProps));
   const {
     data, domain, events, height, origin, padding, polar, polygons,
-    scale, sharedEvents, standalone, style, theme, width
+    scale, sharedEvents, standalone, style, theme, width, labels
   } = props;
   const initialChildProps = { parent: {
     style: style.parent, scale, domain, data, standalone, height, width, theme,
@@ -68,7 +68,7 @@ const getBaseProps = (props, fallbackProps) => {
 
     childProps[eventKey] = { data: dataProps };
     const text = LabelHelpers.getText(props, datum, index);
-    if (text !== undefined && text !== null || events || sharedEvents) {
+    if (text !== undefined && text !== null || (labels && events || sharedEvents)) {
       childProps[eventKey].labels = LabelHelpers.getProps(props, index);
     }
 
