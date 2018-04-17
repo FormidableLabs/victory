@@ -1,5 +1,5 @@
 import {
-  assign, merge, partial, isEmpty, isFunction, without, pickBy, uniq, includes
+  assign, partial, isEmpty, isFunction, without, pickBy, uniq, includes, keys, filter
 } from "lodash";
 
 export default {
@@ -119,15 +119,31 @@ export default {
         );
         const childState = baseState[childName] || {};
 
+        const filterState = (state) => {
+          const stateTargets = keys(state[key]);
+          if (target === "parent" || stateTargets.length === 1 && stateTargets[0] === target) {
+            delete state[key];
+            return state;
+          } else if (state[key] && state[key][target]) {
+            delete state[key][target];
+            return state;
+          }
+          return state;
+        };
+
         const extendState = (state) => {
           return target === "parent" ?
             assign(state, { [key]: assign(state[key], mutatedProps) }) :
             assign(state, { [key]: assign(state[key], { [target]: mutatedProps }) });
         };
 
+        const updateState = (state) => {
+          return mutatedProps ? extendState(state) : filterState(state);
+        };
+
         return childName !== undefined && childName !== null ?
-          assign(baseState, { [childName]: extendState(childState) }) :
-          extendState(baseState);
+          assign(baseState, { [childName]: updateState(childState) }) :
+          updateState(baseState);
       };
 
       // returns entire mutated state for a given childName
@@ -152,7 +168,8 @@ export default {
     const parseEventReturn = (eventReturn, eventKey) => {
       return Array.isArray(eventReturn) ?
         eventReturn.reduce((memo, props) => {
-          memo = merge({}, memo, parseEvent(props, eventKey));
+          // console.log("PARSED", parseEvent(props, eventKey))
+          memo = assign({}, memo, parseEvent(props, eventKey));
           return memo;
         }, {}) :
         parseEvent(eventReturn, eventKey);
@@ -325,7 +342,7 @@ export default {
     return keyMutations.reduce((memo, curr) => {
       const mutationFunction = curr && isFunction(curr.mutation) ? curr.mutation : () => undefined;
       const currentMutation = mutationFunction(assign({}, baseProps, baseState));
-      return merge({}, memo, currentMutation);
+      return assign({}, memo, currentMutation);
     }, {});
   },
 
