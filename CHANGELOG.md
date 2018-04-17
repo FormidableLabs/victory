@@ -1,7 +1,11 @@
 VictoryCore Changelog
 =====================
 
-## 21.1.12 (2018-04-17
+## 21.1.3 (2018-04-17)
+
+-[363](https://github.com/FormidableLabs/victory-core/pull/363) Bugfix events system
+
+## 21.1.12 (2018-04-17)
 
 Event system perf improvements
 -[362](https://github.com/FormidableLabs/victory-core/pull/362)
