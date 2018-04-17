@@ -347,7 +347,7 @@ const getBaseProps = (props, fallbackProps) => {
   const boxScale = horizontal ? scale.x : scale.y;
 
   return data.reduce((acc, datum, index) => {
-    const eventKey = typeof datum.eventKey !== undefined ? datum.eventKey : index;
+    const eventKey = typeof datum.eventKey !== "undefined" ? datum.eventKey : index;
     const positions = {
       x: scale.x(datum._x),
       y: scale.y(datum._y),
@@ -369,7 +369,7 @@ const getBaseProps = (props, fallbackProps) => {
       const labelText = getText(dataProps, type);
       const labelProp = props.labels || props[`${type}Labels`];
       if (
-        labelText !== null && typeof labelText !== undefined ||
+        labelText !== null && typeof labelText !== "undefined" ||
         labelProp && (events || sharedEvents)
       ) {
         const target = `${type}Labels`;
