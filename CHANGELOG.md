@@ -1,5 +1,9 @@
 # VictoryChart Changelog
 
+## 25.2.5 (2018-04-17)
+
+- [583](https://github.com/FormidableLabs/victory-chart/pull/583) Perf improvements for `VictorySelectionContainer` and general perf improvements from `victory-core@21.1.12`
+
 ## 25.2.4 (2018-04-13)
 
 - [581](https://github.com/FormidableLabs/victory-chart/pull/580) Add `react-fast-compare`, use in place of `lodash.isEqual`; add demo that uses <VictoryLabel/> and calls shouldComponentUpdate.
