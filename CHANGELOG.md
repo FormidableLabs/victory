@@ -1,6 +1,12 @@
 VictoryCore Changelog
 =====================
 
+## 21.1.12 (2018-04-17
+
+Event system perf improvements
+-[362](https://github.com/FormidableLabs/victory-core/pull/362)
+-[361](https://github.com/FormidableLabs/victory-core/pull/361)
+
 ## 21.1.11 (2018-04-16)
 
 -[360](https://github.com/FormidableLabs/victory-core/pull/360) add clipPath to style whitelist
