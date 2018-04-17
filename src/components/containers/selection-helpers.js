@@ -69,12 +69,11 @@ const SelectionHelpers = {
   // eslint-disable-next-line complexity, max-statements
   onMouseDown(evt, targetProps) {
     evt.preventDefault();
-    const { activateSelectedData, allowSelection, polar } = targetProps;
+    const { activateSelectedData, allowSelection, polar, selectedData } = targetProps;
     if (!allowSelection) {
       return {};
     }
     const dimension = targetProps.selectionDimension;
-    const datasets = targetProps.datasets || [];
     const { x, y } = Selection.getSVGEventCoordinates(evt);
     const x1 = polar || dimension !== "y" ? x : Selection.getDomainCoordinates(targetProps).x[0];
     const y1 = polar || dimension !== "x" ? y : Selection.getDomainCoordinates(targetProps).y[0];
@@ -86,12 +85,12 @@ const SelectionHelpers = {
       targetProps.onSelectionCleared(defaults({}, mutatedProps, targetProps));
     }
     const parentMutation = [{ target: "parent", mutation: () => mutatedProps }];
-    const dataMutation = activateSelectedData ? [{
-      target: "data",
-      childName: targetProps.children || datasets.length ? "all" : undefined,
-      eventKey: "all",
-      mutation: () => null
-    }] : [];
+    const dataMutation = selectedData && activateSelectedData ?
+      selectedData.map((d) => {
+        return {
+          childName: d.childName, eventKey: d.eventKey, target: "data", mutation: () => null
+        };
+      }) : [];
 
     return parentMutation.concat(...dataMutation);
   },
@@ -100,7 +99,7 @@ const SelectionHelpers = {
     const { allowSelection, select, polar } = targetProps;
     const dimension = targetProps.selectionDimension;
     if (!allowSelection || !select) {
-      return {};
+      return null;
     } else {
       const { x, y } = Selection.getSVGEventCoordinates(evt);
       const x2 = polar || dimension !== "y" ? x : Selection.getDomainCoordinates(targetProps).x[1];
@@ -117,7 +116,7 @@ const SelectionHelpers = {
   onMouseUp(evt, targetProps) {
     const { activateSelectedData, allowSelection, x2, y2 } = targetProps;
     if (!allowSelection) {
-      return {};
+      return null;
     }
     if (!x2 || !y2) {
       return [{
@@ -130,7 +129,9 @@ const SelectionHelpers = {
     const datasets = this.getDatasets(targetProps);
     const bounds = Selection.getBounds(targetProps);
     const selectedData = this.filterDatasets(targetProps, datasets, bounds);
-    const mutatedProps = { datasets, select: false, x1: null, x2: null, y1: null, y2: null };
+    const mutatedProps = {
+      selectedData, datasets, select: false, x1: null, x2: null, y1: null, y2: null
+    };
     const callbackMutation = selectedData && isFunction(targetProps.onSelection) ?
       targetProps.onSelection(selectedData, bounds, defaults({}, mutatedProps, targetProps)) : {};
     const parentMutation = [{
