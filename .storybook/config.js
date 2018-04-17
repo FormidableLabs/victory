@@ -16,7 +16,7 @@ setOptions({
 });
 
 const storyWrapper = (story) => {
-  return <div style={{ maxWidth: "50%" }}>{story()}</div>;
+  return <div style={{ maxWidth: "80%" }}>{story()}</div>;
 };
 
 addDecorator(storyWrapper)
