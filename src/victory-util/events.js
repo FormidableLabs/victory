@@ -1,5 +1,5 @@
 import {
-  assign, extend, merge, partial, isEmpty, isFunction, without, pickBy, uniq, includes
+  assign, merge, partial, isEmpty, isFunction, without, pickBy, uniq, includes
 } from "lodash";
 
 export default {
@@ -117,13 +117,13 @@ export default {
         const childState = baseState[childName] || {};
         const extendState = (state) => {
           return target === "parent" ?
-            extend(state[key], mutatedProps) : extend(state[key], { [target]: mutatedProps });
+            assign(state[key], mutatedProps) : assign(state[key], { [target]: mutatedProps });
         };
         return childName !== undefined && childName !== null ?
-          extend(baseState, {
-            [childName]: extend(childState, { [key]: extendState(childState) })
+          assign(baseState, {
+            [childName]: assign(childState, { [key]: extendState(childState) })
           }) :
-          extend(baseState, { [key]: extendState(baseState) });
+          assign(baseState, { [key]: extendState(baseState) });
       };
 
       // returns entire mutated state for a given childName
