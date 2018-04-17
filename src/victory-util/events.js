@@ -148,7 +148,7 @@ export default {
     const parseEventReturn = (eventReturn, eventKey) => {
       return Array.isArray(eventReturn) ?
         eventReturn.reduce((memo, props) => {
-          memo = merge({}, memo, parseEvent(props, eventKey));
+          memo = assign({}, memo, parseEvent(props, eventKey));
           return memo;
         }, {}) :
         parseEvent(eventReturn, eventKey);
