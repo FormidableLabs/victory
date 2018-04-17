@@ -1,9 +1,7 @@
 import { configure, addDecorator, storiesOf, setAddon } from '@storybook/react';
 import React from "react";
 import 'react-chromatic/storybook-addon';
-import infoAddon, { setDefaults } from '@storybook/addon-info';
 import { setOptions } from '@storybook/addon-options';
-import { withInfo } from '@storybook/addon-info';
 
 setOptions({
   name: "Victory",
@@ -20,16 +18,6 @@ const storyWrapper = (story) => {
 };
 
 addDecorator(storyWrapper)
-
-addDecorator((storyFn, context) => {
-  return withInfo({
-    header: false,
-    source: true,
-    maxPropsIntoLine: 1,
-    propTables: false
-  })(storyFn)(context);
-});
-
 
 function loadStories() {
   require("../stories/victory-area");
