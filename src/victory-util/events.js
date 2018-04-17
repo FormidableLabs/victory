@@ -1,5 +1,5 @@
 import {
-  assign, extend, merge, partial, isEmpty, isFunction, without, pickBy, uniq, includes
+  assign, partial, isEmpty, isFunction, without, pickBy, uniq, includes
 } from "lodash";
 
 export default {
@@ -92,6 +92,9 @@ export default {
 
       // returns all eventKeys to modify for a targeted childName
       const getKeys = (childName) => {
+        if (target === "parent") {
+          return "parent";
+        }
         if (eventReturn.eventKey === "all") {
           return baseProps[childName] ?
             without(Object.keys(baseProps[childName]), "parent") :
@@ -115,15 +118,32 @@ export default {
           assign({}, mutationTargetProps, mutationTargetState), baseProps
         );
         const childState = baseState[childName] || {};
+
+        const filterState = (state) => {
+          const stateTargets = Object.keys(state[key]);
+          if (target === "parent" || stateTargets.length === 1 && stateTargets[0] === target) {
+            delete state[key];
+            return state;
+          } else if (state[key] && state[key][target]) {
+            delete state[key][target];
+            return state;
+          }
+          return state;
+        };
+
         const extendState = (state) => {
           return target === "parent" ?
-            extend(state[key], mutatedProps) : extend(state[key], { [target]: mutatedProps });
+            assign(state, { [key]: assign(state[key], mutatedProps) }) :
+            assign(state, { [key]: assign(state[key], { [target]: mutatedProps }) });
         };
+
+        const updateState = (state) => {
+          return mutatedProps ? extendState(state) : filterState(state);
+        };
+
         return childName !== undefined && childName !== null ?
-          extend(baseState, {
-            [childName]: extend(childState, { [key]: extendState(childState) })
-          }) :
-          extend(baseState, { [key]: extendState(baseState) });
+          assign(baseState, { [childName]: updateState(childState) }) :
+          updateState(baseState);
       };
 
       // returns entire mutated state for a given childName
@@ -321,7 +341,7 @@ export default {
     return keyMutations.reduce((memo, curr) => {
       const mutationFunction = curr && isFunction(curr.mutation) ? curr.mutation : () => undefined;
       const currentMutation = mutationFunction(assign({}, baseProps, baseState));
-      return merge({}, memo, currentMutation);
+      return assign({}, memo, currentMutation);
     }, {});
   },
 
