@@ -1,7 +1,6 @@
 import React from "react";
 import PropTypes from "prop-types";
 import Collection from "../victory-util/collection";
-import { sanitizeSvgStyle } from "../victory-util/style";
 
 export default class Line extends React.Component {
   static propTypes = {
@@ -32,7 +31,7 @@ export default class Line extends React.Component {
         className={className}
         clipPath={clipPath}
         transform={transform}
-        style={sanitizeSvgStyle(style)}
+        style={style}
         role={role || "presentation"}
         shapeRendering={shapeRendering || "auto"}
         vectorEffect="non-scaling-stroke"
