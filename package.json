@@ -59,7 +59,7 @@
     "mocha": "^3.0.2",
     "prop-types": "^15.5.8",
     "react": "^16.0.0",
-    "react-chromatic": "^0.7.11",
+    "react-chromatic": "^0.8.2",
     "react-dom": "^16.0.0",
     "seedrandom": "^2.4.3",
     "sinon": "^1.17.5",
