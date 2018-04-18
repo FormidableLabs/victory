@@ -20,8 +20,8 @@ before_install:
 script:
   - npm --version
   - node_modules/.bin/builder run check-ci
-  # Only run once.
- - if [ "${TRAVIS_NODE_VERSION}" = "6" ]; then npm run chromatic-test; fi
+  # Only run chromatic once
+  - if [ "${TRAVIS_NODE_VERSION}" = "6" ]; then npm run chromatic-test; fi
   # Prune deps to just production and ensure we can still build
   - npm prune --production
   - node_modules/.bin/builder run build
