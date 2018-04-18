@@ -12,10 +12,6 @@ const getBarPosition = (props, datum) => {
   return Helpers.scalePoint(props, assign({}, datum, { _y0, _x0 }));
 };
 
-const getBarStyle = (datum, baseStyle) => {
-  return defaults({}, datum, baseStyle);
-};
-
 const getCalculatedValues = (props) => {
   const { theme, horizontal, polar } = props;
   const defaultStyles = theme && theme.bar && theme.bar.style ? theme.bar.style : {};
@@ -54,10 +50,9 @@ const getBaseProps = (props, fallbackProps) => {
   return data.reduce((childProps, datum, index) => {
     const eventKey = datum.eventKey || index;
     const { x, y, y0, x0 } = getBarPosition(props, datum);
-    const barStyle = getBarStyle(datum, style.data);
     const dataProps = {
       alignment, barRatio, cornerRadius, data, datum, horizontal, index, padding, polar, origin,
-      scale, style: barStyle, width, height, x, y, y0, x0
+      scale, style: style.data, width, height, x, y, y0, x0
     };
 
     childProps[eventKey] = {

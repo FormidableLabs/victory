@@ -16,11 +16,6 @@ const getVoronoi = (props, range, scale) => {
     .extent([minRange, maxRange]);
 };
 
-const getDataStyles = (datum, style) => {
-  return defaults({}, datum, style);
-};
-
-
 const getCalculatedValues = (props) => {
   const defaultStyles = props.theme && props.theme.voronoi && props.theme.voronoi.style ?
     props.theme.voronoi.style : {};
@@ -63,7 +58,7 @@ const getBaseProps = (props, fallbackProps) => {
     const dataProps = {
       x, y, datum, data, index, scale, polygon, origin,
       size: props.size,
-      style: getDataStyles(datum, style.data)
+      style: style.data
     };
 
     childProps[eventKey] = { data: dataProps };
