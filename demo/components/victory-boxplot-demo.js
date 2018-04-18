@@ -76,6 +76,7 @@ export default class App extends React.Component {
         <VictoryChart style={chartStyle} domain={{ x: [0, 20], y: [0, 3] }}>
           <VictoryBoxPlot
             minLabels maxLabels
+            q1Labels={() => ""}
             whiskerWidth={50}
             data={[{ y: 1, x: [5, 10, 9, 2] }, { y: 2, x: [1, 15, 6, 8] }]}
             boxWidth={20}

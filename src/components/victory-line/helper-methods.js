@@ -33,7 +33,7 @@ const getBaseProps = (props, fallbackProps) => {
   props = assign({}, modifiedProps, getCalculatedValues(modifiedProps));
   const {
     data, domain, events, groupComponent, height, interpolation, origin, padding, polar,
-    scale, sharedEvents, standalone, style, theme, width
+    scale, sharedEvents, standalone, style, theme, width, labels
   } = props;
   const initialChildProps = {
     parent: {
@@ -45,7 +45,7 @@ const getBaseProps = (props, fallbackProps) => {
   };
   return data.reduce((childProps, datum, index) => {
     const text = LabelHelpers.getText(props, datum, index);
-    if (text !== undefined && text !== null || events || sharedEvents) {
+    if (text !== undefined && text !== null || (labels && events || sharedEvents)) {
       const eventKey = datum.eventKey || index;
       childProps[eventKey] = { labels: LabelHelpers.getProps(props, index) };
     }
