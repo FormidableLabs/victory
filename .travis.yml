@@ -8,11 +8,9 @@ node_js:
 # Use container-based Travis infrastructure.
 sudo: false
 
-# TODO(957): Re-enable `pull_request` only builds.
-# https://github.com/FormidableLabs/victory/issues/957
-# branches:
-#   only:
-#     - master
+branches:
+  only:
+    - master
 
 before_install:
   # GUI for real browsers.
@@ -22,8 +20,8 @@ before_install:
 script:
   - npm --version
   - node_modules/.bin/builder run check-ci
-  # Only run on push events.
-  - if [ "${TRAVIS_EVENT_TYPE}" = "push" ]; then npm run chromatic-test; fi
+  # Only run chromatic once
+  - if [ "${TRAVIS_NODE_VERSION}" = "6" ]; then npm run chromatic-test; fi
   # Prune deps to just production and ensure we can still build
   - npm prune --production
   - node_modules/.bin/builder run build
