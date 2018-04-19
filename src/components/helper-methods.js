@@ -1,5 +1,5 @@
 /*eslint no-magic-numbers: ["error", { "ignore": [-1, 0, 1, 2, 45, 135, 180, 225, 315] }]*/
-import { assign, defaults, isFunction, omit } from "lodash";
+import { assign, isFunction } from "lodash";
 import * as d3Shape from "d3-shape";
 
 import { Helpers, Data, Style } from "victory-core";
@@ -59,11 +59,10 @@ const getCalculatedValues = (props) => {
   return { style, colors, padding, radius, data, slices, pathFunction, origin };
 };
 
-const getSliceStyle = (datum, index, calculatedValues) => {
+const getSliceStyle = (index, calculatedValues) => {
   const { style, colors } = calculatedValues;
   const fill = getColor(style, colors, index);
-  const dataStyles = omit(datum, ["_x", "_y", "x", "y", "label"]);
-  return defaults({}, dataStyles, { fill }, style.data);
+  return assign({ fill }, style.data);
 };
 
 const getLabelText = (props, datum, index) => {
@@ -144,26 +143,25 @@ export const getBaseProps = (props, fallbackProps) => {
   props = Helpers.modifyProps(props, fallbackProps, "pie");
   const calculatedValues = getCalculatedValues(props);
   const { slices, style, pathFunction, data, origin } = calculatedValues;
-  const childProps = {
-    parent: {
-      standalone: props.standalone, slices, pathFunction,
-      width: props.width, height: props.height, style: style.parent
-    }
+  const { labels, events, sharedEvents, height, width, standalone } = props;
+  const initialChildProps = {
+    parent: { standalone, height, width, slices, pathFunction, style: style.parent }
   };
 
-  for (let index = 0, len = slices.length; index < len; index++) {
-    const slice = slices[index];
+  return slices.reduce((childProps, slice, index) => {
     const datum = data[index];
     const eventKey = datum.eventKey || index;
     const dataProps = {
       index, slice, pathFunction, datum, data, origin,
-      style: getSliceStyle(datum, index, calculatedValues)
+      style: getSliceStyle(index, calculatedValues)
     };
-
     childProps[eventKey] = {
-      data: dataProps,
-      labels: getLabelProps(props, dataProps, calculatedValues)
+      data: dataProps
     };
-  }
-  return childProps;
+    const text = getLabelText(props, datum, index);
+    if (text !== undefined && text !== null || (labels && (events || sharedEvents))) {
+      childProps[eventKey].labels = getLabelProps(props, dataProps, calculatedValues);
+    }
+    return childProps;
+  }, initialChildProps);
 };
