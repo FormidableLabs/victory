@@ -14,7 +14,7 @@ const makeChainable = function (validator) {
   /* eslint-disable max-params */
   const _chainable = function (isRequired, props, propName, componentName, ...rest) {
     const value = props[propName];
-    if (typeof value === "undefined" || value === null) {
+    if (value === undefined || value === null) {
       if (isRequired) {
         return new Error(
           `Required \`${propName}\` was not specified in \`${componentName}\`.`
@@ -39,7 +39,7 @@ const undefinedConstructor = () => undefined;
  * @returns {Function} Constructor of `value`.
  */
 const getConstructor = (value) => {
-  if (typeof value === "undefined") {
+  if (value === undefined) {
     return undefinedConstructor;
   } else if (value === null) {
     return nullConstructor;
@@ -56,7 +56,7 @@ const getConstructor = (value) => {
  * @returns {String} Name of the constructor.
  */
 const getConstructorName = (value) => {
-  if (typeof value === "undefined") {
+  if (value === undefined) {
     return "undefined";
   } else if (value === null) {
     return "null";

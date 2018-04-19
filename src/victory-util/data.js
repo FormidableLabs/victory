@@ -172,7 +172,7 @@ export default {
     // given a property key, path, array index, or null for identity.
     if (isFunction(key)) {
       return key;
-    } else if (key === null || typeof key === "undefined") {
+    } else if (key === null || key === undefined) {
       return () => undefined;
     }
     // otherwise, assume it is an array index, property key or path (_.property handles all three)
@@ -219,7 +219,7 @@ export default {
       return [];
     }
 
-    const key = typeof props[axis] === "undefined" ? axis : props[axis];
+    const key = props[axis] === undefined ? axis : props[axis];
     const accessor = Helpers.createAccessor(key);
 
     const dataStrings = props.data.reduce((dataArr, datum) => {
@@ -230,7 +230,7 @@ export default {
 
     // return a unique set of strings
     return dataStrings.reduce((prev, curr) => {
-      if (typeof curr !== "undefined" && curr !== null && prev.indexOf(curr) === -1) {
+      if (curr !== undefined && curr !== null && prev.indexOf(curr) === -1) {
         prev.push(curr);
       }
       return prev;

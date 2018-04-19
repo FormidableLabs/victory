@@ -33,7 +33,7 @@ export default class Voronoi extends React.Component {
 
   constructor(props) {
     super(props);
-    this.clipId = !isObject(props) || typeof props.clipId === "undefined" ?
+    this.clipId = !isObject(props) || props.clipId === undefined ?
       uniqueId("voronoi-clip-") : props.clipId;
   }
 

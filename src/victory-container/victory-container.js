@@ -52,7 +52,7 @@ export default class VictoryContainer extends React.Component {
   constructor(props) {
     super(props);
     this.getTimer = this.getTimer.bind(this);
-    this.containerId = !isObject(props) || typeof props.containerId === "undefined" ?
+    this.containerId = !isObject(props) || props.containerId === undefined ?
       uniqueId("victory-container-") : props.containerId;
   }
 

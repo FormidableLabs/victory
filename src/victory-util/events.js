@@ -280,7 +280,7 @@ export default {
       if (eventKey === "parent") {
         const identifier = { eventKey, target: "parent" };
         const mutation = this.getExternalMutation(mutations, keyProps, keyState, identifier);
-        memo[eventKey] = typeof mutation !== "undefined" ?
+        memo[eventKey] = mutation !== undefined ?
           assign({}, keyState, mutation) : keyState;
       } else {
         // use keys from both state and props so that elements not intially included in baseProps
@@ -291,7 +291,7 @@ export default {
           const mutation = this.getExternalMutation(
             mutations, keyProps[target], keyState[target], identifier
           );
-          m[target] = typeof mutation !== "undefined" ?
+          m[target] = mutation !== undefined ?
             assign({}, keyState[target], mutation) : keyState[target];
           return pickBy(m, (v) => !isEmpty(v));
         }, {});
