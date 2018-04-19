@@ -1,4 +1,4 @@
-import { assign, defaults, without } from "lodash";
+import { assign, without } from "lodash";
 import { voronoi as d3Voronoi } from "d3-voronoi";
 import { Helpers, LabelHelpers, Scale, Domain, Data } from "victory-core";
 
@@ -15,11 +15,6 @@ const getVoronoi = (props, range, scale) => {
     .y((d) => scale.y(d._y1 !== undefined ? d._y1 : d._y))
     .extent([minRange, maxRange]);
 };
-
-const getDataStyles = (datum, style) => {
-  return defaults({}, datum, style);
-};
-
 
 const getCalculatedValues = (props) => {
   const defaultStyles = props.theme && props.theme.voronoi && props.theme.voronoi.style ?
@@ -63,12 +58,12 @@ const getBaseProps = (props, fallbackProps) => {
     const dataProps = {
       x, y, datum, data, index, scale, polygon, origin,
       size: props.size,
-      style: getDataStyles(datum, style.data)
+      style: style.data
     };
 
     childProps[eventKey] = { data: dataProps };
     const text = LabelHelpers.getText(props, datum, index);
-    if (text !== undefined && text !== null || (labels && events || sharedEvents)) {
+    if (text !== undefined && text !== null || (labels && (events || sharedEvents))) {
       childProps[eventKey].labels = LabelHelpers.getProps(props, index);
     }
 

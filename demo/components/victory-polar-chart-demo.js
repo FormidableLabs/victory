@@ -573,7 +573,7 @@ class App extends React.Component {
             />
             <VictoryBar
               alignment="start"
-              style={{ data: { fill: "tomato", opacity: 0.5 } }}
+              style={{ data: { fill: (d) => d.fill, opacity: 0.5 } }}
               data={[
                 { x: 45, y: 20, label: 1, fill: "red" },
                 { x: 90, y: 30, label: 2, fill: "orange" },
@@ -602,7 +602,7 @@ class App extends React.Component {
           >
             <VictoryBar
               alignment="start"
-              style={{ data: { fill: "tomato", opacity: 0.5 } }}
+              style={{ data: { fill: (d) => d.fill, opacity: 0.5 } }}
               data={[
                 { x: 15, y: 20, label: 1, fill: "red" },
                 { x: 25, y: 30, label: 2, fill: "orange" },
@@ -630,7 +630,7 @@ class App extends React.Component {
             style={chartStyle}
           >
             <VictoryBar
-              style={{ data: { fill: "tomato", width: 10 } }}
+              style={{ data: { fill: (d) => d.fill, width: 10 } }}
               data={[
                 { x: 1, y: 2, label: 1, fill: "red" },
                 { x: 2, y: 3, label: 2, fill: "orange" },

@@ -118,20 +118,4 @@ storiesOf("VictoryErrorBar.style", module)
       labels={(d) => d.x}
       data={getData(4, "symmetric")}
     />
-  ))
-  .add("with styles on data", () => (
-    <VictoryErrorBar
-      style={{
-        labels: { fontSize: 20, fill: "tomato", fontFamily: "monospace" },
-        data: { stroke: "tomato", strokeWidth: 2 }
-      }}
-      labels={(d) => d.x}
-      data={[
-        { x: 1, y: 9, errorX: 0.5, errorY: 2 },
-        { x: 2, y: 80, errorX: 1, errorY: 3, stroke: "teal", fill: "teal" },
-        { x: 3, y: 50, errorX: 1.5, errorY: 4 },
-        { x: 4, y: 70, errorX: 1, errorY: 3 },
-        { x: 5, y: 20, errorX: 0.5, errorY: 1 }
-      ]}
-    />
   ));

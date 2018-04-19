@@ -1,4 +1,4 @@
-import { assign, sortBy, defaults } from "lodash";
+import { assign, sortBy } from "lodash";
 import { Helpers, LabelHelpers, Scale, Domain, Data } from "victory-core";
 
 const sortData = (dataset, sortKey, sortOrder = "ascending") => {
@@ -120,10 +120,10 @@ const getDataStyles = (datum, style, props) => {
   style = style || {};
   const candleColor = datum.open > datum.close ?
     props.candleColors.negative : props.candleColors.positive;
-  const fill = datum.fill || style.fill || candleColor;
-  const strokeColor = datum.stroke || style.stroke;
+  const fill = style.fill || candleColor;
+  const strokeColor = style.stroke;
   const stroke = isTransparent(strokeColor) ? fill : strokeColor || "black";
-  return defaults({}, datum, { stroke, fill }, style);
+  return assign({}, style, { stroke, fill });
 };
 
 const getLabelProps = (dataProps, text, style) => {
@@ -175,7 +175,7 @@ const getBaseProps = (props, fallbackProps) => { // eslint-disable-line max-stat
       data: dataProps
     };
     const text = LabelHelpers.getText(props, datum, index);
-    if (text !== undefined && text !== null || (labels && events || sharedEvents)) {
+    if (text !== undefined && text !== null || (labels && (events || sharedEvents))) {
       childProps[eventKey].labels = getLabelProps(dataProps, text, style);
     }
 

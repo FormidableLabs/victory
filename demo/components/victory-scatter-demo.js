@@ -13,7 +13,7 @@ const getData = () => {
     ["violet", "cornflowerblue", "gold", "orange", "turquoise", "tomato", "greenyellow"];
   const symbols = ["circle", "star", "square", "triangleUp", "triangleDown", "diamond", "plus"];
   // symbol: symbols[scaledIndex],
-  return range(50).map((index) => {
+  return range(100).map((index) => {
     const scaledIndex = Math.floor(index % 7);
     return {
       x: random(600),
@@ -125,7 +125,13 @@ export default class App extends React.Component {
         />
 
         <VictoryScatter
-          style={style}
+          style={{
+            parent: style.parent,
+            data: {
+              fill: (d) => d.fill,
+              opacity: (d) => d.opacity
+            }
+          }}
           width={500}
           height={500}
           domain={[0, 600]}
@@ -176,6 +182,7 @@ export default class App extends React.Component {
 
         <VictoryScatter
           style={{ parent: style.parent, data: this.state.hoverStyle }}
+          labels={() => ""}
           data={[
             { x: new Date(1982, 1, 1), y: 125 },
             { x: new Date(1987, 1, 1), y: 257 },

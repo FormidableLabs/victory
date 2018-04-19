@@ -190,6 +190,7 @@ class App extends React.Component {
             <VictoryScatter
               groupComponent={<VictoryClipContainer/>}
               data={this.state.scatterData}
+              style={{ data: { fill: (d) => d.fill, opacity: (d) => d.opacity } }}
               animate={{
                 onExit: {
                   duration: 500,
