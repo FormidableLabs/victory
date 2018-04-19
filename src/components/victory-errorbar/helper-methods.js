@@ -1,4 +1,4 @@
-import { assign, defaults, isArray, flatten, sortBy } from "lodash";
+import { assign, isArray, flatten, sortBy } from "lodash";
 import { Helpers, LabelHelpers, Scale, Domain, Data } from "victory-core";
 
 const getErrors = (datum, scale, axis) => {
@@ -196,10 +196,6 @@ const getLabelProps = (dataProps, text, style) => {
   };
 };
 
-const getDataStyles = (datum, style) => {
-  return defaults({}, datum, style);
-};
-
 const getBaseProps = (props, fallbackProps) => {
   props = Helpers.modifyProps(props, fallbackProps, "errorbar");
   const { data, style, scale, domain, origin } = getCalculatedValues(props, fallbackProps);
@@ -219,7 +215,7 @@ const getBaseProps = (props, fallbackProps) => {
 
     const dataProps = {
       x, y, scale, datum, data, index, groupComponent, borderWidth,
-      style: getDataStyles(datum, style.data),
+      style: style.data,
       errorX: getErrors(datum, scale, "x"),
       errorY: getErrors(datum, scale, "y")
     };
@@ -228,7 +224,7 @@ const getBaseProps = (props, fallbackProps) => {
       data: dataProps
     };
     const text = LabelHelpers.getText(props, datum, index);
-    if (text !== undefined && text !== null || (labels && events || sharedEvents)) {
+    if (text !== undefined && text !== null || (labels && (events || sharedEvents))) {
       childProps[eventKey].labels = getLabelProps(dataProps, text, style);
     }
 

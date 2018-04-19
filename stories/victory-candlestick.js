@@ -155,22 +155,6 @@ storiesOf("VictoryCandlestick.style", module)
       labels={(d) => d.x}
       data={getData(7)}
     />
-  ))
-  .add("with styles on data", () => (
-    <VictoryCandlestick
-      style={{
-        labels: { fontSize: 20, fill: "tomato", fontFamily: "monospace" },
-        data: { stroke: "tomato", strokeWidth: 2 }
-      }}
-      labels={(d) => d.x}
-      data={[
-        { x: 1, open: 9, close: 30, high: 56, low: 7 },
-        { x: 2, open: 80, close: 40, high: 120, low: 10, stroke: "teal", fill: "teal" },
-        { x: 3, open: 50, close: 80, high: 90, low: 20 },
-        { x: 4, open: 70, close: 22, high: 70, low: 5 },
-        { x: 5, open: 20, close: 35, high: 50, low: 10 }
-      ]}
-    />
   ));
 
 storiesOf("VictoryCandlestick.scale", module)

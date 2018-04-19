@@ -1,4 +1,4 @@
-import { assign, defaults } from "lodash";
+import { assign } from "lodash";
 import { Helpers, LabelHelpers, Data, Domain, Scale } from "victory-core";
 
 const getBarPosition = (props, datum) => {
@@ -10,10 +10,6 @@ const getBarPosition = (props, datum) => {
   const _y0 = datum._y0 !== undefined ? datum._y0 : getDefaultMin("y");
   const _x0 = datum._x0 !== undefined ? datum._x0 : getDefaultMin("x");
   return Helpers.scalePoint(props, assign({}, datum, { _y0, _x0 }));
-};
-
-const getBarStyle = (datum, baseStyle) => {
-  return defaults({}, datum, baseStyle);
 };
 
 const getCalculatedValues = (props) => {
@@ -54,10 +50,9 @@ const getBaseProps = (props, fallbackProps) => {
   return data.reduce((childProps, datum, index) => {
     const eventKey = datum.eventKey || index;
     const { x, y, y0, x0 } = getBarPosition(props, datum);
-    const barStyle = getBarStyle(datum, style.data);
     const dataProps = {
       alignment, barRatio, cornerRadius, data, datum, horizontal, index, padding, polar, origin,
-      scale, style: barStyle, width, height, x, y, y0, x0
+      scale, style: style.data, width, height, x, y, y0, x0
     };
 
     childProps[eventKey] = {
@@ -65,7 +60,7 @@ const getBaseProps = (props, fallbackProps) => {
     };
 
     const text = LabelHelpers.getText(props, datum, index);
-    if (text !== undefined && text !== null || (labels && events || sharedEvents)) {
+    if (text !== undefined && text !== null || (labels && (events || sharedEvents))) {
       childProps[eventKey].labels = LabelHelpers.getProps(props, index);
     }
     return childProps;

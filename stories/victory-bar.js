@@ -214,21 +214,6 @@ storiesOf("VictoryBar.style", module)
         { x: "Bird", y: 55 }
       ]}
     />
-  ))
-  .add("with styles on data", () => (
-    <VictoryBar
-      style={{
-        labels: { fontSize: 20, fill: "tomato", fontFamily: "monospace" },
-        data: { fill: "tomato", fillOpacity: 0.7, stroke: "tomato", strokeWidth: 2 }
-      }}
-      labels={(d) => d.x}
-      data={[
-        { x: "Cat", y: 62 },
-        { x: "Dog", y: 91 },
-        { x: "Fish", y: 55, fill: "teal", stroke: "teal", width: 10 },
-        { x: "Bird", y: 55 }
-      ]}
-    />
   ));
 
 storiesOf("VictoryBar.stacked", module)

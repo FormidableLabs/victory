@@ -1,4 +1,4 @@
-import { assign, values, defaults } from "lodash";
+import { assign, values } from "lodash";
 import { Helpers, LabelHelpers, Data, Domain, Scale } from "victory-core";
 
 export default {
@@ -21,12 +21,12 @@ export default {
         x, y, datum, data, index, scale, polar, origin,
         size: this.getSize(datum, props),
         symbol: this.getSymbol(datum, props),
-        style: this.getDataStyles(datum, style.data)
+        style: style.data
       };
 
       childProps[eventKey] = { data: dataProps };
       const text = LabelHelpers.getText(props, datum, index);
-      if (text !== undefined && text !== null || (labels && events || sharedEvents)) {
+      if (text !== undefined && text !== null || (labels && (events || sharedEvents))) {
         childProps[eventKey].labels = LabelHelpers.getProps(props, index);
       }
 
@@ -54,10 +54,6 @@ export default {
     const origin = props.polar ? props.origin || Helpers.getPolarOrigin(props) : undefined;
     const z = props.bubbleProperty || "z";
     return { domain, data, scale, style, origin, z };
-  },
-
-  getDataStyles(datum, style) {
-    return defaults({}, datum, style);
   },
 
   getSymbol(data, props) {

@@ -29,6 +29,7 @@
     "version": "builder run npm:version",
     "lank-watch": "lank exec -u -- builder run build-watch",
     "lank-run": "lank exec -m victory-chart -uq -- builder run dev --expand-archetype",
+    "lank-test": "lank exec -m victory-chart -uq -- builder run check --expand-archetype",
     "lint-stories": "eslint --color stories",
     "lint": "builder run lint && npm run lint-stories",
     "storybook": "start-storybook -p 6006",

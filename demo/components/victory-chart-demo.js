@@ -408,7 +408,7 @@ class App extends React.Component {
             ]}
           >
             <VictoryLabel text="Parent Events" y={50} x={150}/>
-            <VictoryBar name="bar"/>
+            <VictoryBar name="bar" labels={() => null}/>
             <VictoryAxis tickFormat={["one", "two", "three", "four"]}/>
           </VictoryChart>
 
@@ -480,6 +480,9 @@ class App extends React.Component {
             <VictoryScatter
               groupComponent={<VictoryClipContainer/>}
               data={this.state.scatterData}
+              style={{ data: {
+                fill: (d) => d.fill, opacity: (d) => d.opacity
+              } }}
               animate={{
                 onExit: {
                   duration: 500,
@@ -548,6 +551,7 @@ class App extends React.Component {
           >
             <VictoryBar name="bar"
               style={{ data: { fill: "green" } }}
+              labels={() => null}
               data={[
                 { x: 1, y: 1 },
                 { x: 2, y: 2 },

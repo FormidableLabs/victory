@@ -371,7 +371,7 @@ const getBaseProps = (props, fallbackProps) => {
       const labelProp = props.labels || props[`${type}Labels`];
       if (
         labelText !== null && typeof labelText !== "undefined" ||
-        labelProp && (events || sharedEvents)
+        (labelProp && (events || sharedEvents))
       ) {
         const target = `${type}Labels`;
         acc[eventKey][target] = getLabelProps(dataProps, labelText, type);

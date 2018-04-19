@@ -175,7 +175,12 @@ export default class App extends React.Component {
           animate={{ duration: 2000 }}
           data={this.state.data}
           style={{
-            data: { width: 50, stroke: "transparent" },
+            data: {
+              width: 50,
+              stroke: "transparent",
+              fill: (d) => d.fill,
+              opacity: (d) => d.opacity
+            },
             parent: style.parent
           }}
         />

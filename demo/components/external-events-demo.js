@@ -118,6 +118,7 @@ class App extends React.Component {
           >
             <VictoryBar
               name="data"
+              labels={() => null}
               data={this.state.data}
               style={{ data: { fill: "cyan" } }}
             />
