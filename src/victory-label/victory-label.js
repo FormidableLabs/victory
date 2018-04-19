@@ -138,13 +138,16 @@ export default class VictoryLabel extends React.Component {
 
   getContent(props) {
     if (props.text === undefined || props.text === null) {
-      return [" "];
+      return undefined;
     }
     const datum = props.datum || props.data;
     if (Array.isArray(props.text)) {
       return props.text.map((line) => Helpers.evaluateProp(line, datum, props.active));
     }
     const child = Helpers.evaluateProp(props.text, datum, props.active);
+    if (child === undefined || child === null) {
+      return undefined;
+    }
     return `${child}`.split("\n");
   }
 
@@ -205,13 +208,12 @@ export default class VictoryLabel extends React.Component {
     return defaultStyles.fontSize;
   }
 
-  renderElements(props) {
+  renderElements(props, content) {
     const { datum, active, inline, className, title, desc, events } = props;
     const style = this.getStyles(props);
     const lineHeight = this.getHeight(props, "lineHeight");
     const textAnchor = props.textAnchor ?
       Helpers.evaluateProp(props.textAnchor, datum, active) : "start";
-    const content = this.getContent(props);
     const dx = props.dx ? Helpers.evaluateProp(props.dx, datum, active) : 0;
     const dy = this.getDy(props, style, content, lineHeight);
     const transform = this.getTransform(props, style);
@@ -245,7 +247,11 @@ export default class VictoryLabel extends React.Component {
   }
 
   render() {
-    const label = this.renderElements(this.props);
+    const content = this.getContent(this.props);
+    if (content === null || content === undefined) {
+      return null;
+    }
+    const label = this.renderElements(this.props, content);
     return this.props.renderInPortal ? <VictoryPortal>{label}</VictoryPortal> : label;
   }
 }
