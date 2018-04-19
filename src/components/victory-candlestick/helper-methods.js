@@ -1,4 +1,4 @@
-import { assign, sortBy, defaults } from "lodash";
+import { assign, sortBy } from "lodash";
 import { Helpers, LabelHelpers, Scale, Domain, Data } from "victory-core";
 
 const sortData = (dataset, sortKey, sortOrder = "ascending") => {
@@ -175,7 +175,7 @@ const getBaseProps = (props, fallbackProps) => { // eslint-disable-line max-stat
       data: dataProps
     };
     const text = LabelHelpers.getText(props, datum, index);
-    if (text !== undefined && text !== null || (labels && events || sharedEvents)) {
+    if (text !== undefined && text !== null || (labels && (events || sharedEvents))) {
       childProps[eventKey].labels = getLabelProps(dataProps, text, style);
     }
 

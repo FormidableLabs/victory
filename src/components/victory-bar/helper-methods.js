@@ -1,4 +1,4 @@
-import { assign, defaults } from "lodash";
+import { assign } from "lodash";
 import { Helpers, LabelHelpers, Data, Domain, Scale } from "victory-core";
 
 const getBarPosition = (props, datum) => {
@@ -60,7 +60,7 @@ const getBaseProps = (props, fallbackProps) => {
     };
 
     const text = LabelHelpers.getText(props, datum, index);
-    if (text !== undefined && text !== null || (labels && events || sharedEvents)) {
+    if (text !== undefined && text !== null || (labels && (events || sharedEvents))) {
       childProps[eventKey].labels = LabelHelpers.getProps(props, index);
     }
     return childProps;

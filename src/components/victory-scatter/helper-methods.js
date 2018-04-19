@@ -1,4 +1,4 @@
-import { assign, values, defaults } from "lodash";
+import { assign, values } from "lodash";
 import { Helpers, LabelHelpers, Data, Domain, Scale } from "victory-core";
 
 export default {
@@ -26,7 +26,7 @@ export default {
 
       childProps[eventKey] = { data: dataProps };
       const text = LabelHelpers.getText(props, datum, index);
-      if (text !== undefined && text !== null || (labels && events || sharedEvents)) {
+      if (text !== undefined && text !== null || (labels && (events || sharedEvents))) {
         childProps[eventKey].labels = LabelHelpers.getProps(props, index);
       }
 

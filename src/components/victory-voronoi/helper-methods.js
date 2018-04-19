@@ -1,4 +1,4 @@
-import { assign, defaults, without } from "lodash";
+import { assign, without } from "lodash";
 import { voronoi as d3Voronoi } from "d3-voronoi";
 import { Helpers, LabelHelpers, Scale, Domain, Data } from "victory-core";
 
@@ -63,7 +63,7 @@ const getBaseProps = (props, fallbackProps) => {
 
     childProps[eventKey] = { data: dataProps };
     const text = LabelHelpers.getText(props, datum, index);
-    if (text !== undefined && text !== null || (labels && events || sharedEvents)) {
+    if (text !== undefined && text !== null || (labels && (events || sharedEvents))) {
       childProps[eventKey].labels = LabelHelpers.getProps(props, index);
     }
 

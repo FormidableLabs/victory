@@ -247,6 +247,7 @@ export default class App extends React.Component {
               }
             }
           }]}
+          labels={() => null}
           data={this.state.arrayData}
           x={0}
           y={1}
