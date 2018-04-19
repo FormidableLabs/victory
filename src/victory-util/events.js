@@ -120,13 +120,11 @@ export default {
         const childState = baseState[childName] || {};
 
         const filterState = (state) => {
-          const stateTargets = state[key] ? Object.keys(state[key]) : [];
-          if (target === "parent" || stateTargets.length === 1 && stateTargets[0] === target) {
-            delete state[key];
-            return state;
-          } else if (state[key] && state[key][target]) {
+          if (state[key] && state[key][target]) {
             delete state[key][target];
-            return state;
+          }
+          if (state[key] && !Object.keys(state[key]).length) {
+            delete state[key];
           }
           return state;
         };
