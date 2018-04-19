@@ -171,7 +171,7 @@ class VictoryBoxPlot extends React.Component {
         const name = `${type}Labels`;
         const baseComponent = props[`${type}LabelComponent`];
         const labelProps = this.getComponentProps(baseComponent, name, index);
-        if (typeof labelProps.text !== "undefined" && labelProps.text !== null) {
+        if (labelProps.text !== undefined && labelProps.text !== null) {
           return React.cloneElement(baseComponent, labelProps);
         }
         return undefined;
