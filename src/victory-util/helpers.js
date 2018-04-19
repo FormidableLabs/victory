@@ -160,7 +160,7 @@ export default {
     // given a property key, path, array index, or null for identity.
     if (isFunction(key)) {
       return key;
-    } else if (key === null || typeof key === "undefined") {
+    } else if (key === null || key === undefined) {
       // null/undefined means "return the data item itself"
       return (x) => x;
     }

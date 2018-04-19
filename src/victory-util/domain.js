@@ -117,11 +117,11 @@ export default {
     const currentAxis = Helpers.getCurrentAxis(axis, props.horizontal);
     const flatData = flatten(dataset);
     const allData = flatData.map((datum) => {
-      return typeof datum[`_${currentAxis}1`] === "undefined" ?
+      return datum[`_${currentAxis}1`] === undefined ?
         datum[`_${currentAxis}`] : datum[`_${currentAxis}1`];
     });
     const allMinData = flatData.map((datum) => {
-      return typeof datum[`_${currentAxis}0`] === "undefined" ?
+      return datum[`_${currentAxis}0`] === undefined ?
         datum[`_${currentAxis}`] : datum[`_${currentAxis}0`];
     });
     if (allData.length < 1) {

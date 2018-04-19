@@ -1,3 +1,4 @@
+/*global document:false */
 import React from "react";
 import { isFunction } from "lodash";
 import Data from "./data";
@@ -17,7 +18,7 @@ export default {
   },
 
   getSVGEventCoordinates(evt) {
-    if (typeof document === "undefined") {
+    if (document === undefined) {
       // react-native override. relies on the RN.View being the _exact_ same size as its child SVG.
       // this should be fine: the svg is the only child of View and the View shirks to its children
       return {

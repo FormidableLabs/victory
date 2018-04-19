@@ -45,7 +45,7 @@ export default class VictoryClipContainer extends React.Component {
 
   constructor(props) {
     super(props);
-    this.clipId = !isObject(props) || typeof props.clipId === "undefined" ?
+    this.clipId = !isObject(props) || props.clipId === undefined ?
       uniqueId("victory-clip-") : props.clipId;
   }
 

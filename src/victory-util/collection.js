@@ -27,7 +27,7 @@ export default {
   },
 
   removeUndefined(arr) {
-    return arr.filter((el) => typeof el !== "undefined");
+    return arr.filter((el) => el !== undefined);
   },
 
   getMaxValue(arr, ...values) {

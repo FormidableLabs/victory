@@ -215,8 +215,8 @@ export default class VictoryLabel extends React.Component {
     const dx = props.dx ? Helpers.evaluateProp(props.dx, datum, active) : 0;
     const dy = this.getDy(props, style, content, lineHeight);
     const transform = this.getTransform(props, style);
-    const x = typeof props.x !== "undefined" ? props.x : this.getPosition(props, "x");
-    const y = typeof props.y !== "undefined" ? props.y : this.getPosition(props, "y");
+    const x = props.x !== undefined ? props.x : this.getPosition(props, "x");
+    const y = props.y !== undefined ? props.y : this.getPosition(props, "y");
 
     const textChildren = content.map((line, i) => {
       const currentStyle = style[i] || style[0];
