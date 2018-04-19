@@ -301,7 +301,7 @@ export default {
 
   getLabelPadding(props, style) {
     const labelStyle = style.axisLabel || {};
-    if (typeof labelStyle.padding !== "undefined" && labelStyle.padding !== null) {
+    if (labelStyle.padding !== undefined && labelStyle.padding !== null) {
       return labelStyle.padding;
     }
     const isVertical = Helpers.isVertical(props);

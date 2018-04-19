@@ -73,7 +73,7 @@ export const voronoiContainerMixin = (base) => class VictoryVoronoiContainer ext
   }
 
   getLabelCornerRadius(props, labelProps) {
-    if (typeof labelProps.cornerRadius !== "undefined") {
+    if (labelProps.cornerRadius !== undefined) {
       return labelProps.cornerRadius;
     }
     const theme = props.theme || labelProps.theme;
