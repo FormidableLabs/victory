@@ -117,7 +117,7 @@ describe("components/victory-label", () => {
     it("attaches an to the parent object", () => {
       const clickHandler = sinon.spy();
       const wrapper = mount(
-        <VictoryLabel events={{ onClick: clickHandler }}/>
+        <VictoryLabel text="hi" events={{ onClick: clickHandler }}/>
       );
       wrapper.find(Text).simulate("click");
       expect(clickHandler.called).to.equal(true);
@@ -148,7 +148,6 @@ describe("components/victory-label", () => {
     const wrapper = shallow(
       <VictoryLabel
         text={["lineHeight", "array", "testing"]}
-        // eslint-disable-next-line no-magic-numbers
         lineHeight={lineHeight}
       />
     );
