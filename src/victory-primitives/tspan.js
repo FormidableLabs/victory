@@ -1,7 +1,6 @@
 import React from "react";
 import PropTypes from "prop-types";
 import Collection from "../victory-util/collection";
-import { sanitizeSvgStyle } from "../victory-util/style";
 
 export default class TSpan extends React.Component {
   static propTypes = {
@@ -28,7 +27,7 @@ export default class TSpan extends React.Component {
       <tspan
         x={x} y={y} dx={dx} dy={dy} textAnchor={textAnchor}
         className={className}
-        style={sanitizeSvgStyle(style)}
+        style={style}
         {...events}
       >
         {content}

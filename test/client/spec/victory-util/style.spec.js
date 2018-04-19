@@ -1,11 +1,4 @@
-import Style, { sanitizeSvgStyle } from "src/victory-util/style";
-
-describe("sanitizeSvgStyle", () => {
-  it("drop invalid svg attributes", () => {
-    const data = { tree: "blue", stroke: "#c43a31" };
-    expect(sanitizeSvgStyle(data)).to.deep.equal({ stroke: "#c43a31" });
-  });
-});
+import Style from "src/victory-util/style";
 
 describe("toTransformString", () => {
   it("returns an empty string if no transform definitions are given", () => {
