@@ -1,6 +1,6 @@
 import React from "react";
 import PropTypes from "prop-types";
-import { partialRight, flatten } from "lodash";
+import { flatten } from "lodash";
 import { BaseProps, DataProps } from "../../helpers/common-props";
 import {
     Helpers, VictoryLabel, addEvents, Line, PropTypes as CustomPropTypes,
@@ -149,7 +149,7 @@ class VictoryBoxPlot extends React.Component {
 
   static getDomain = getDomain;
   static getData = getData;
-  static getBaseProps = partialRight(getBaseProps, fallbackProps);
+  static getBaseProps = (props) => getBaseProps(props, fallbackProps);
   static expectedComponents = [
     "maxComponent", "maxLabelComponent", "medianComponent", "medianLabelComponent",
     "minComponent", "minLabelComponent", "q1Component", "q1LabelComponent",

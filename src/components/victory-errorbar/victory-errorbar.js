@@ -4,7 +4,6 @@ import {
   PropTypes as CustomPropTypes, Helpers, VictoryLabel, addEvents,
   VictoryContainer, VictoryTheme, DefaultTransitions, ErrorBar, Data
 } from "victory-core";
-import { partialRight } from "lodash";
 import { getBaseProps, getDomain } from "./helper-methods";
 import { BaseProps, DataProps } from "../../helpers/common-props";
 
@@ -65,7 +64,7 @@ class VictoryErrorBar extends React.Component {
 
   static getDomain = getDomain;
   static getData = Data.getData.bind(Data);
-  static getBaseProps = partialRight(getBaseProps, fallbackProps);
+  static getBaseProps = (props) => getBaseProps(props, fallbackProps);
   static expectedComponents = [
     "dataComponent", "labelComponent", "groupComponent", "containerComponent"
   ];

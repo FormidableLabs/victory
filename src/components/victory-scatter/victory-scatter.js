@@ -1,11 +1,10 @@
 import PropTypes from "prop-types";
 import React from "react";
-import { partialRight } from "lodash";
 import {
   PropTypes as CustomPropTypes, Helpers, VictoryLabel, addEvents,
   VictoryContainer, VictoryTheme, DefaultTransitions, Point, Data, Domain
 } from "victory-core";
-import ScatterHelpers from "./helper-methods";
+import { getBaseProps } from "./helper-methods";
 import { BaseProps, DataProps } from "../../helpers/common-props";
 
 const fallbackProps = {
@@ -54,8 +53,7 @@ class VictoryScatter extends React.Component {
 
   static getDomain = Domain.getDomain.bind(Domain);
   static getData = Data.getData.bind(Data);
-  static getBaseProps = partialRight(
-    ScatterHelpers.getBaseProps.bind(ScatterHelpers), fallbackProps);
+  static getBaseProps = (props) => getBaseProps(props, fallbackProps);
   static expectedComponents = [
     "dataComponent", "labelComponent", "groupComponent", "containerComponent"
   ];

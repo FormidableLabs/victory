@@ -1,5 +1,4 @@
-import { assign, defaults, flatten, isFunction, keys, partialRight, uniq,
-  some, sortBy } from "lodash";
+import { assign, defaults, flatten, isFunction, keys, uniq, some, sortBy } from "lodash";
 import React from "react";
 import Axis from "./axis";
 import { Style, Transitions, Collection, Data, Domain, Events } from "victory-core";
@@ -122,7 +121,7 @@ export default {
         state,
         (newState) => this.setState(newState)
       );
-      getTransitions = partialRight(getTransitionProps, index);
+      getTransitions = (childComponent) => getTransitionProps(childComponent, index);
     }
     return defaults({ getTransitions, parentState }, props.animate, child.props.animate);
   },
