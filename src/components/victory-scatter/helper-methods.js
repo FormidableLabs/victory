@@ -97,4 +97,4 @@ const getBaseProps = (props, fallbackProps) => {
   }, initialChildProps);
 };
 
-export { getBaseProps };
+export { getBaseProps, getSize, getBubbleSize, getSymbol };
