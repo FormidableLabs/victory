@@ -1,4 +1,4 @@
-import { assign, isArray, flatten, sortBy } from "lodash";
+import { assign, flatten, sortBy } from "lodash";
 import { Helpers, LabelHelpers, Scale, Domain, Data } from "victory-core";
 
 const getErrors = (datum, scale, axis) => {
@@ -15,7 +15,7 @@ const getErrors = (datum, scale, axis) => {
     return false;
   }
 
-  return isArray(errors) ?
+  return Array.isArray(errors) ?
     [ errors[0] === 0 ? false : scale[axis](errors[0] + datum[`_${axis}`]),
       errors[1] === 0 ? false : scale[axis](datum[`_${axis}`] - errors[1]) ] :
     [ scale[axis](errors + datum[`_${axis}`]), scale[axis](datum[`_${axis}`] - errors) ];
@@ -53,7 +53,7 @@ const formatErrorData = (dataset, props) => {
   const replaceNegatives = (errors) => {
     // check if the value is negative, if it is set to 0
     const replaceNeg = (val) => !val || val < 0 ? 0 : val;
-    return isArray(errors) ? errors.map((err) => replaceNeg(err)) : replaceNeg(errors);
+    return Array.isArray(errors) ? errors.map((err) => replaceNeg(err)) : replaceNeg(errors);
   };
 
   const stringMap = {
@@ -113,7 +113,7 @@ const getDomainFromData = (props, axis, dataset) => {
   const errorData = flatten(flatten(dataset).map((datum) => {
     let errorMax;
     let errorMin;
-    if (isArray(datum[error])) {
+    if (Array.isArray(datum[error])) {
       errorMax = datum[error][0] + datum[`_${currentAxis}`];
       errorMin = datum[`_${currentAxis}`] - datum[error][1];
     } else {
