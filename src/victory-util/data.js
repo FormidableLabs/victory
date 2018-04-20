@@ -1,4 +1,4 @@
-import { assign, uniq, range, last, isFunction, property, sortBy } from "lodash";
+import { assign, uniq, range, last, isFunction, property, orderBy } from "lodash";
 import Helpers from "./helpers";
 import Collection from "./collection";
 import Scale from "./scale";
@@ -117,9 +117,9 @@ export default {
 
   /**
    * Returns sorted data. If no sort keys are provided, data is returned unaltered.
-   * Sort key should correspond to the `iteratees` argument in lodash `sortBy` function.
+   * Sort key should correspond to the `iteratees` argument in lodash `orderBy` function.
    * @param {Array} dataset: the original dataset
-   * @param {mixed} sortKey: the sort key. Type is whatever lodash permits for `sortBy`
+   * @param {mixed} sortKey: the sort key. Type is whatever lodash permits for `orderBy`
    * @param {String} sortOrder: the sort Order - `ascending` (default) or `descending`
    * @returns {Array} the sorted data
    */
@@ -133,13 +133,7 @@ export default {
       sortKey = `_${sortKey}`;
     }
 
-    const sortedData = sortBy(dataset, sortKey);
-
-    if (sortOrder === "descending") {
-      return sortedData.reverse();
-    }
-
-    return sortedData;
+    return orderBy(dataset, sortKey, sortOrder);
   },
 
   /**

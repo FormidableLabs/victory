@@ -1,5 +1,5 @@
 import { interpolate } from "d3-interpolate";
-import { isPlainObject, sortBy } from "lodash";
+import { isPlainObject, orderBy } from "lodash";
 
 export const isInterpolatable = function (obj) {
   // d3 turns null into 0 and undefined into NaN, which we don't want.
@@ -114,7 +114,7 @@ export const interpolateObject = function (a, b) {
   // When the value is an array, attempt to sort by "key" so that animating nodes may be identified
   // based on "key" instead of index
   const keyData = (val) => {
-    return Array.isArray(val) ? sortBy(val, "key") : val;
+    return Array.isArray(val) ? orderBy(val, "key") : val;
   };
 
   const i = {};
