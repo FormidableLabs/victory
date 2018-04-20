@@ -1,4 +1,4 @@
-import { assign, defaults, defaultsDeep, isFunction } from "lodash";
+import { assign, defaults, isFunction } from "lodash";
 import Axis from "../../helpers/axis";
 import { Helpers, Scale, Domain } from "victory-core";
 
@@ -69,12 +69,16 @@ const getStyleObject = (props) => {
   const axisType = dependentAxis ? "dependentAxis" : "independentAxis";
   const specificAxisStyle = theme && theme[axisType] && theme[axisType].style;
 
-  return generalAxisStyle && specificAxisStyle
-    ? defaultsDeep({},
-        specificAxisStyle,
-        generalAxisStyle
-      )
-    : specificAxisStyle || generalAxisStyle;
+  const mergeStyles = () => {
+    const styleNamespaces = ["axis", "axisLabel", "grid", "parent", "tickLabels", "ticks"];
+    return styleNamespaces.reduce((memo, curr) => {
+      memo[curr] = defaults({}, specificAxisStyle[curr], generalAxisStyle[curr]);
+      return memo;
+    }, {});
+  };
+
+  return generalAxisStyle && specificAxisStyle ?
+    mergeStyles() : specificAxisStyle || generalAxisStyle;
 };
 
 const getStyles = (props, styleObject) => {
