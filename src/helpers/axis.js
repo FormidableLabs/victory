@@ -1,6 +1,6 @@
 import { Collection } from "victory-core";
 import {
-  identity, isFunction, invert, uniq, range, sortBy, values, includes, without
+  identity, isFunction, invert, uniq, range, orderBy, values, includes, without
 } from "lodash";
 import React from "react";
 
@@ -167,7 +167,7 @@ export default {
       return this.stringTicks(props) ? (x, index) => tickValues[index] : fallbackFormat;
     } else {
       const invertedStringMap = stringMap && invert(stringMap);
-      const tickValueArray = sortBy(values(stringMap), (n) => n);
+      const tickValueArray = orderBy(values(stringMap), (n) => n);
       const dataNames = tickValueArray.map((tick) => invertedStringMap[tick]);
       // string ticks should have one tick of padding at the beginning
       const dataTicks = ["", ...dataNames, ""];

@@ -1,6 +1,5 @@
 import PropTypes from "prop-types";
 import React from "react";
-import { partialRight } from "lodash";
 import {
   PropTypes as CustomPropTypes, Helpers, VictoryLabel, addEvents,
   VictoryContainer, VictoryTheme, DefaultTransitions, Candle
@@ -86,7 +85,7 @@ class VictoryCandlestick extends React.Component {
 
   static getDomain = getDomain;
   static getData = getData;
-  static getBaseProps = partialRight(getBaseProps, fallbackProps);
+  static getBaseProps = (props) => getBaseProps(props, fallbackProps);
   static expectedComponents = [
     "dataComponent", "labelComponent", "groupComponent", "containerComponent"
   ];

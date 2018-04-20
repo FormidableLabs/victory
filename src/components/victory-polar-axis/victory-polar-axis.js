@@ -1,6 +1,6 @@
 import React from "react";
 import PropTypes from "prop-types";
-import { assign, partialRight } from "lodash";
+import { assign } from "lodash";
 import {
   PropTypes as CustomPropTypes, Helpers, VictoryLabel,
   VictoryContainer, VictoryTheme, Grid, addEvents, Arc
@@ -108,8 +108,8 @@ class VictoryPolarAxis extends React.Component {
   static getDomain = getDomain;
   static getAxis = getAxis;
   static getScale = getScale;
-  static getStyles = partialRight(getStyles, fallbackProps.style);
-  static getBaseProps = partialRight(getBaseProps, fallbackProps);
+  static getStyles = (props) => getStyles(props, fallbackProps.style);
+  static getBaseProps = (props) => getBaseProps(props, fallbackProps);
   static expectedComponents = [
     "axisComponent", "circularAxisComponent", "groupComponent", "containerComponent",
     "tickComponent", "tickLabelComponent", "gridComponent", "circularGridComponent"

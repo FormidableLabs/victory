@@ -1,4 +1,4 @@
-import { sortBy, defaults, assign, uniq, groupBy, keys, isEmpty } from "lodash";
+import { orderBy, defaults, assign, uniq, groupBy, keys, isEmpty } from "lodash";
 import { Helpers, Scale, Domain, Data, Collection } from "victory-core";
 import { min as d3Min, max as d3Max, quantile as d3Quantile } from "d3-array";
 
@@ -66,7 +66,7 @@ const processData = (props, data) => {
       the depedentVarArray and process each datum separately */
       return data.map((datum) => {
         const dataArray = datum[sortKey].map((d) => assign({}, datum, { [sortKey]: d }));
-        const sortedData = sortBy(dataArray, sortKey);
+        const sortedData = orderBy(dataArray, sortKey);
         return getSummaryStatistics(sortedData, horizontal);
       });
     } else {
@@ -74,7 +74,7 @@ const processData = (props, data) => {
       const groupedData = groupBy(data, groupKey);
       return keys(groupedData).map((key) => {
         const datum = groupedData[key];
-        const sortedData = sortBy(datum, sortKey);
+        const sortedData = orderBy(datum, sortKey);
         return getSummaryStatistics(sortedData, horizontal);
       });
     }
