@@ -8,7 +8,7 @@ import Style from "../victory-util/style";
 import Log from "../victory-util/log";
 import TSpan from "../victory-primitives/tspan";
 import Text from "../victory-primitives/text";
-import { assign, merge, isEmpty } from "lodash";
+import { assign, defaults, isEmpty } from "lodash";
 
 const defaultStyles = {
   fill: "#252525",
@@ -120,7 +120,7 @@ export default class VictoryLabel extends React.Component {
   }
 
   getStyle(props, style) {
-    style = style ? merge({}, defaultStyles, style) : defaultStyles;
+    style = style ? defaults({}, style, defaultStyles) : defaultStyles;
     const datum = props.datum || props.data;
     const baseStyles = Helpers.evaluateStyle(style, datum, props.active);
     return assign({}, baseStyles, { fontSize: this.getFontSize(baseStyles) });

@@ -1,5 +1,5 @@
 import {
-  assign, partial, isEmpty, isFunction, without, pickBy, uniq, includes
+  assign, isEmpty, isFunction, without, pickBy, uniq, includes
 } from "lodash";
 
 export default {
@@ -9,6 +9,7 @@ export default {
    * (i.e. VictoryBar) in the case of own events, or that of the parent component
    * (i.e. VictoryChart) in the case of shared events
    */
+  // eslint-disable-next-line max-params
   getEvents(props, target, eventKey, getScopedEvents) {
     // Returns all events that apply to a particular target element
     const getEventsByTarget = (events) => {
@@ -68,6 +69,7 @@ export default {
    * of the original event handler assigned to state property that maps to the target
    * element.
    */
+  // eslint-disable-next-line max-params
   getScopedEvents(events, namespace, childType, baseProps) {
     if (isEmpty(events)) {
       return {};
@@ -183,6 +185,7 @@ export default {
 
     // A function that calls a particular event handler, parses its return
     // into a state mutation, and calls setState
+    // eslint-disable-next-line max-params
     const onEvent = (evt, childProps, eventKey, eventName) => {
       const eventReturn = events[eventName](evt, childProps, eventKey, this);
       if (eventReturn) {
@@ -204,14 +207,8 @@ export default {
   getPartialEvents(events, eventKey, childProps) {
     return events ?
       Object.keys(events).reduce((memo, eventName) => {
-        /* eslint max-params: 0 */
-        memo[eventName] = partial(
-          events[eventName],
-          partial.placeholder, // evt will still be the first argument for event handlers
-          childProps, // event handlers will have access to data component props, including data
-          eventKey, // used in setting a unique state property
-          eventName // used in setting a unique state property
-        );
+        const appliedEvent = (evt) => events[eventName](evt, childProps, eventKey, eventName);
+        memo[eventName] = appliedEvent;
         return memo;
       }, {}) :
       {};
@@ -242,6 +239,7 @@ export default {
  *
  * @return {Object} a object describing all mutations for VictorySharedEvents
  */
+  // eslint-disable-next-line max-params
   getExternalMutationsWithChildren(mutations, baseProps, baseState, childNames) {
     baseProps = baseProps || {};
     baseState = baseState || {};
@@ -267,6 +265,7 @@ export default {
  *
  * @return {Object} a object describing mutations for a given component
  */
+  // eslint-disable-next-line max-params
   getExternalMutations(mutations, baseProps, baseState, childName) {
     baseProps = baseProps || {};
     baseState = baseState || {};
@@ -308,6 +307,7 @@ export default {
  *
  * @return {Object | undefined} a object describing mutations for a given element, or undefined
  */
+  // eslint-disable-next-line max-params
   getExternalMutation(mutations, baseProps, baseState, identifier) {
 
     const filterMutations = (mutation, type) => {

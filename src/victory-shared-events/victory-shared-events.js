@@ -1,4 +1,4 @@
-import { assign, isFunction, partialRight, defaults, isEmpty, fromPairs } from "lodash";
+import { assign, isFunction, defaults, isEmpty, fromPairs } from "lodash";
 import React from "react";
 import PropTypes from "prop-types";
 import CustomPropTypes from "../victory-util/prop-types";
@@ -175,8 +175,10 @@ export default class VictorySharedEvents extends React.Component {
             });
           const sharedEvents = {
             events: childEvents,
-            getEvents: partialRight(this.getScopedEvents, name, this.baseProps),
-            getEventState: partialRight(this.getEventState, name)
+            // partially apply child name and baseProps,
+            getEvents: (evts, target) => this.getScopedEvents(evts, target, name, this.baseProps),
+            // partially apply child name
+            getEventState: (key, target) => this.getEventState(key, target, name)
           };
           return memo.concat(React.cloneElement(child, assign(
             { key: `events-${name}`, sharedEvents, eventKey, name },
@@ -197,8 +199,9 @@ export default class VictorySharedEvents extends React.Component {
     const sharedEvents = parents.length > 0 ?
     {
       events: parents,
-      getEvents: partialRight(this.getScopedEvents, null, this.baseProps),
-      getEventState: partialRight(this.getEventState, null)
+      // partially apply childName (null) and baseProps,
+      getEvents: (evts, target) => this.getScopedEvents(evts, target, null, this.baseProps),
+      getEventState: this.getEventState
     } : null;
     const container = this.props.container || this.props.groupComponent;
     const role = container.type && container.type.role;
