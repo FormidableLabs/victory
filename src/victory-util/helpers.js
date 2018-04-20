@@ -1,5 +1,5 @@
 import React from "react";
-import { defaults, isFunction, property, reduce } from "lodash";
+import { defaults, isFunction, property } from "lodash";
 import Collection from "./collection";
 
 /**
@@ -213,7 +213,7 @@ export default {
   reduceChildren(children, iteratee) {
     let childIndex = 0;
     const traverseChildren = (childArray, parent) => {
-      return reduce(childArray, (memo, child) => {
+      return childArray.reduce((memo, child) => {
         const childName = child.props.name || childIndex;
         childIndex++;
         if (child.props && child.props.children) {

@@ -1,6 +1,6 @@
 // http://www.pearsonified.com/2012/01/characters-per-line.php
 /*eslint-disable no-magic-numbers */
-import { assign, defaults, toString } from "lodash";
+import { assign, defaults } from "lodash";
 
 const fontDictionary = {
   "American Typewriter": 2.09,
@@ -116,7 +116,7 @@ const _approximateTextWidthInternal = (text, style) => {
 const _approximateTextHeightInternal = (text, style) => {
   return _splitToLines(text).reduce((total, line, index) => {
     const lineStyle = _prepareParams(style, index);
-    const containsCaps = toString(line).match(/[(A-Z)(0-9)]/);
+    const containsCaps = line.toString().match(/[(A-Z)(0-9)]/);
     const height = containsCaps ?
       lineStyle.fontSize * coefficients.lineCapitalCoef : lineStyle.fontSize;
     const emptySpace = index === 0 ? 0 : lineStyle.fontSize * coefficients.lineSpaceHeightCoef;
