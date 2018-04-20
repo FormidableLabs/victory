@@ -1,5 +1,5 @@
 import React from "react";
-import { defaults, assign, keys, isFunction, partialRight, pick, without, isEmpty } from "lodash";
+import { defaults, assign, keys, isFunction, pick, without, isEmpty } from "lodash";
 import Events from "./events";
 import Collection from "./collection";
 import VictoryTransition from "../victory-transition/victory-transition";
@@ -17,7 +17,10 @@ export default (WrappedComponent, options) => {
         super.componentWillMount();
       }
       const getScopedEvents = Events.getScopedEvents.bind(this);
-      this.getEvents = partialRight(Events.getEvents.bind(this), getScopedEvents);
+      const boundGetEvents = Events.getEvents.bind(this);
+      this.getEvents = (props, target, eventKey) => {
+        return boundGetEvents(props, target, eventKey, getScopedEvents);
+      };
       this.getEventState = Events.getEventState.bind(this);
       const calculatedValues = this.getCalculatedValues(this.props);
       this.cacheValues(calculatedValues);
