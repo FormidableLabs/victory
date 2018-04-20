@@ -1,4 +1,4 @@
-import { assign, flatten, sortBy } from "lodash";
+import { assign, flatten, orderBy } from "lodash";
 import { Helpers, LabelHelpers, Scale, Domain, Data } from "victory-core";
 
 const getErrors = (datum, scale, axis) => {
@@ -30,7 +30,7 @@ const sortData = (dataset, sortKey, sortOrder = "ascending") => {
     sortKey = `_${sortKey}`;
   }
 
-  const sortedData = sortBy(dataset, sortKey);
+  const sortedData = orderBy(dataset, sortKey);
 
   if (sortOrder === "descending") {
     return sortedData.reverse();

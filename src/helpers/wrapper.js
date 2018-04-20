@@ -1,4 +1,4 @@
-import { assign, defaults, flatten, isFunction, keys, uniq, some, sortBy } from "lodash";
+import { assign, defaults, flatten, isFunction, keys, uniq, some, orderBy } from "lodash";
 import React from "react";
 import Axis from "./axis";
 import { Style, Transitions, Collection, Data, Domain, Events } from "victory-core";
@@ -218,7 +218,7 @@ export default {
       return prev;
     }, {});
     const xKeys = keys(xMap).map((k) => +k);
-    const xArr = sortBy(xKeys);
+    const xArr = orderBy(xKeys);
 
     return datasets.map((dataset) => {
       let indexOffset = 0;
