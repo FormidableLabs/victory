@@ -132,8 +132,8 @@ export default {
     if (sortKey === "x" || sortKey === "y") {
       sortKey = `_${sortKey}`;
     }
-
-    return orderBy(dataset, sortKey, sortOrder);
+    const order = sortOrder === "ascending" ? "asc" : "desc";
+    return orderBy(dataset, sortKey, order);
   },
 
   /**
