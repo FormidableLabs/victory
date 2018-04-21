@@ -12,14 +12,13 @@ const defaultComponents = [
 export default (WrappedComponent, options) => {
   return class addEvents extends WrappedComponent {
 
-    componentWillMount() {
-      if (isFunction(super.componentWillMount)) {
-        super.componentWillMount();
-      }
+    constructor(props) {
+      super(props);
       const getScopedEvents = Events.getScopedEvents.bind(this);
       const boundGetEvents = Events.getEvents.bind(this);
-      this.getEvents = (props, target, eventKey) => {
-        return boundGetEvents(props, target, eventKey, getScopedEvents);
+      this.state = {};
+      this.getEvents = (p, target, eventKey) => {
+        return boundGetEvents(p, target, eventKey, getScopedEvents);
       };
       this.getEventState = Events.getEventState.bind(this);
       const calculatedValues = this.getCalculatedValues(this.props);
