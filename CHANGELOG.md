@@ -1,6 +1,18 @@
 VictoryCore Changelog
 =====================
 
+## 22.0.0 (2018-04-21)
+
+**Breaking Changes**
+-[364](https://github.com/FormidableLabs/victory-core/pull/364) Perf: Remove style whitelist filter.
+
+Other Changes
+-[369](https://github.com/FormidableLabs/victory-core/pull/369) Ensure state
+-[368](https://github.com/FormidableLabs/victory-core/pull/368) Audit lodash methods
+-[367](https://github.com/FormidableLabs/victory-core/pull/367) Simplify state filtering
+-[365](https://github.com/FormidableLabs/victory-core/pull/365) Perf: Return early when label content is null or undefined
+-[362](https://github.com/FormidableLabs/victory-core/pull/362) Perf: Filter falsey mutations from state
+
 ## 21.1.3 (2018-04-17)
 
 -[363](https://github.com/FormidableLabs/victory-core/pull/363) Bugfix events system
