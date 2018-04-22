@@ -1,5 +1,48 @@
 # VictoryChart Changelog
 
+## 26.0.0 (2018-04-21)
+
+**Breaking Changes**
+
+-[587](https://github.com/FormidableLabs/victory-chart/pull/587) Disable styles on data
+
+This change deprecates Victory's ability to automatically pick up style attributes from the data object. This change will improve performance, but will be a breaking change for many users. Fortunately the upgrade path is simple:
+
+If your data object looks like
+```
+data={[
+  { x: 1, y: 1, fill: "red", opacity: 0.2 },
+  ...
+]}
+```
+Add the following functional styles:
+```
+style={{ data:  { fill: (d) => d.fill, opacity: (d) => d.opacity } }}
+```
+and everything will work as before.
+
+-[584](https://github.com/FormidableLabs/victory-chart/pull/584) Check for labels prop before computing baseProps for labels
+
+Base props for labels will no longer be pre-calculated unless a labels prop exists. This change improves performance, but it will be a breaking change for users who were using events for adding labels to elements that did not already have them using an event mutation like:
+
+```
+events={[{
+  target: "data",
+  eventHandlers: {
+    onClick: () => {
+      return [{ target: "labels", mutation: () => ({ text: "clicked" }) }];
+    }
+  }
+}]}
+```
+If you are using this pattern, you can make labels work as expected by adding a dummy labels prop like: `labels={() => null}`
+
+Note: This change _does not_ affect tooltips, which exist, but are invisible until they receive the `active` prop
+
+Other changes
+-[589](https://github.com/FormidableLabs/victory-chart/pull/589) Audit lodash methods
+-[583](https://github.com/FormidableLabs/victory-chart/pull/583) Perf improvement for `VictorySelectionContainer`
+
 ## 25.2.5 (2018-04-17)
 
 - [583](https://github.com/FormidableLabs/victory-chart/pull/583) Perf improvements for `VictorySelectionContainer` and general perf improvements from `victory-core@21.1.12`
