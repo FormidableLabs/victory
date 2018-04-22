@@ -1,5 +1,29 @@
 # VictoryPie Changelog
 
+## 15.0.0 (2018-04-21)
+
+**Breaking Changes**
+
+-[176](https://github.com/FormidableLabs/victory-pie/pull/176) Disable styles on data
+
+This change deprecates Victory's ability to automatically pick up style attributes from the data object. This change will improve performance, but will be a breaking change for many users. Fortunately the upgrade path is simple:
+
+If your data object looks like
+```
+data={[
+  { x: 1, y: 1, fill: "red", opacity: 0.2 },
+  ...
+]}
+```
+Add the following functional styles:
+```
+style={{ data:  { fill: (d) => d.fill, opacity: (d) => d.opacity } }}
+```
+and everything will work as before.
+
+Other changes:
+-[177](https://github.com/FormidableLabs/victory-pie/pull/177) Audit lodash methods
+
 ## 14.0.2 (2018-03-27)
 
 -[168](https://github.com/FormidableLabs/victory-pie/pull/168) Refactor helper method exports

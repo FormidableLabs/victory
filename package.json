@@ -38,7 +38,7 @@
     "builder-victory-component": "^5.1.2",
     "d3-shape": "^1.0.0",
     "lodash": "^4.17.5",
-    "victory-core": "^21.1.0"
+    "victory-core": "^22.0.0"
   },
   "devDependencies": {
     "@storybook/addon-actions": "^3.2.13",
