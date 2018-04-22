@@ -1,5 +1,59 @@
 # Victory Changelog
 
+**BREAKING CHANGES**
+
+*Disable arbitrary styles from data*
+This change deprecates Victory's ability to automatically pick up style attributes from the data object. This change will improve performance, but will be a breaking change for many users. Fortunately the upgrade path is simple:
+
+If your data object looks like
+```
+data={[
+  { x: 1, y: 1, fill: "red", opacity: 0.2 },
+  ...
+]}
+```
+Add the following functional styles:
+```
+style={{ data:  { fill: (d) => d.fill, opacity: (d) => d.opacity } }}
+```
+and everything will work as before.
+
+*Limit Pre-calculating label props*
+Base props for labels will no longer be pre-calculated unless a labels prop exists. This change improves performance, but it will be a breaking change for users who were using events for adding labels to elements that did not already have them using an event mutation like:
+
+```
+events={[{
+  target: "data",
+  eventHandlers: {
+    onClick: () => {
+      return [{ target: "labels", mutation: () => ({ text: "clicked" }) }];
+    }
+  }
+}]}
+```
+If you are using this pattern, you can make labels work as expected by adding a dummy labels prop like: `labels={() => null}`
+
+Note: This change _does not_ affect tooltips, which exist, but are invisible until they receive the `active` prop
+
+**All Changes**
+VictoryCore
+  -[364](https://github.com/FormidableLabs/victory-core/pull/364) Perf: Remove style whitelist filter.
+  -[369](https://github.com/FormidableLabs/victory-core/pull/369) Ensure state
+  -[368](https://github.com/FormidableLabs/victory-core/pull/368) Audit lodash methods
+  -[367](https://github.com/FormidableLabs/victory-core/pull/367) Simplify state filtering
+  -[365](https://github.com/FormidableLabs/victory-core/pull/365) Perf: Return early when label content is null or undefined
+  -[362](https://github.com/FormidableLabs/victory-core/pull/362) Perf: Filter falsey mutations from state
+
+VictoryChart
+  -[587](https://github.com/FormidableLabs/victory-chart/pull/587) Disable styles on data
+  -[584](https://github.com/FormidableLabs/victory-chart/pull/584) Check for labels prop before computing baseProps for labels
+  -[589](https://github.com/FormidableLabs/victory-chart/pull/589) Audit lodash methods
+  -[583](https://github.com/FormidableLabs/victory-chart/pull/583) Perf improvement for `VictorySelectionContainer`
+
+VictoryPie
+  -[176](https://github.com/FormidableLabs/victory-pie/pull/176) Disable styles on data
+  -[177](https://github.com/FormidableLabs/victory-pie/pull/177) Audit lodash methods
+
 ## 0.25.7 (2018-03-27)
 
 VictoryCore
