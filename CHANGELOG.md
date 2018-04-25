@@ -1,5 +1,9 @@
 # VictoryChart Changelog
 
+## 26.0.1 (2018-04-25)
+
+-[591](https://github.com/FormidableLabs/victory-chart/pull/591) Ensure that `VictoryVoronoiContainer` works correctly with `VictoryGroup` data.
+
 ## 26.0.0 (2018-04-21)
 
 **Breaking Changes**
