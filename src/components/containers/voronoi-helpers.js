@@ -43,7 +43,9 @@ const VoronoiHelpers = {
 
     const iteratee = (child, childName, parent) => {
       const role = child.type && child.type.role;
+
       const childProps = child.props || {};
+
       const blacklist = props.voronoiBlacklist || [];
       if (role === "axis" || role === "legend" || role === "label") {
         return null;
@@ -52,8 +54,8 @@ const VoronoiHelpers = {
         return null;
       } else if (child.type && isFunction(child.type.getData)) {
         child = parent ? React.cloneElement(child, parent.props) : child;
-        const childData = childProps
-          && child.type.getData({ ...childProps, domain: props.domain });
+        const childData = child.props
+          && child.type.getData({ ...child.props, domain: props.domain });
         return childData ? addMeta(childData, childName, child) : null;
       } else {
         const childData = getData({ ...childProps, domain: props.domain });
