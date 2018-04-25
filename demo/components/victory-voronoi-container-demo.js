@@ -144,6 +144,75 @@ class App extends React.Component {
             height={450}
             padding={{ top: 100, bottom: 20, left: 50, right: 50 }}
             style={chartStyle}
+            containerComponent={
+              <VictoryVoronoiContainer
+                voronoiBlacklist={["ignore"]}
+                voronoiDimension="x"
+                labels={(d) => d.y}
+                labelComponent={<VictoryTooltip/>}
+              />
+            }
+          >
+            <VictoryGroup
+              data={[
+                { x: 1, y: -5 },
+                { x: 2, y: 4 },
+                { x: 3, y: 2 },
+                { x: 4, y: 0 },
+                { x: 5, y: 1 },
+                { x: 6, y: -3 },
+                { x: 7, y: 3 }
+              ]}
+            >
+              <VictoryScatter
+                style={{
+                  data: { fill: "tomato" }
+                }}
+                size={(datum, active) => active ? 5 : 3}
+              />
+              <VictoryLine name="ignore" style={{ data: { stroke: "tomato" } }}/>
+            </VictoryGroup>
+            <VictoryGroup
+              data={[
+                { x: 1, y: -3 },
+                { x: 2, y: 5 },
+                { x: 3, y: 3 },
+                { x: 4, y: 0 },
+                { x: 5, y: -2 },
+                { x: 6, y: -2 },
+                { x: 7, y: 5 }
+              ]}
+            >
+              <VictoryScatter
+                style={{
+                  data: { fill: "blue" }
+                }}
+                size={(datum, active) => active ? 5 : 3}
+              />
+              <VictoryLine name="ignore" style={{ data: { stroke: "blue" } }}/>
+            </VictoryGroup>
+            <VictoryGroup
+              data={[
+                { x: 1, y: 5 },
+                { x: 2, y: -4 },
+                { x: 3, y: -2 },
+                { x: 4, y: -3 },
+                { x: 5, y: -1 },
+                { x: 6, y: 3 },
+                { x: 7, y: -3 }
+              ]}
+            >
+              <VictoryScatter
+                size={(datum, active) => active ? 5 : 3}
+              />
+              <VictoryLine name="ignore"/>
+            </VictoryGroup>
+          </VictoryChart>
+
+          <VictoryChart
+            height={450}
+            padding={{ top: 100, bottom: 20, left: 50, right: 50 }}
+            style={chartStyle}
             containerComponent={<VictoryVoronoiContainer voronoiBlacklist={["red"]}/>}
           >
             <VictoryLegend x={140} y={10}
