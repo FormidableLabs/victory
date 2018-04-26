@@ -69,22 +69,19 @@ export default class VictorySharedEvents extends React.Component {
     getTimer: PropTypes.func
   };
 
-  constructor() {
-    super();
+  constructor(props) {
+    super(props);
     this.state = this.state || {};
     this.getScopedEvents = Events.getScopedEvents.bind(this);
     this.getEventState = Events.getEventState.bind(this);
     this.getTimer = this.getTimer.bind(this);
+    this.setUpChildren(props);
   }
 
   getChildContext() {
     return {
       getTimer: this.getTimer
     };
-  }
-
-  componentWillMount() {
-    this.setUpChildren(this.props);
   }
 
   componentWillReceiveProps(newProps) {

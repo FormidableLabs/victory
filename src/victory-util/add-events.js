@@ -21,9 +21,9 @@ export default (WrappedComponent, options) => {
         return boundGetEvents(p, target, eventKey, getScopedEvents);
       };
       this.getEventState = Events.getEventState.bind(this);
-      const calculatedValues = this.getCalculatedValues(this.props);
+      const calculatedValues = this.getCalculatedValues(props);
       this.cacheValues(calculatedValues);
-      this.applyExternalMutations(this.props, calculatedValues);
+      this.applyExternalMutations(props, calculatedValues);
     }
 
     componentWillReceiveProps(nextProps) {
