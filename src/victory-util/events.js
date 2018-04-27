@@ -74,12 +74,12 @@ export default {
     if (isEmpty(events)) {
       return {};
     }
-
-    baseProps = baseProps || this.baseProps;
+    const state = this.state || {};
+    baseProps = baseProps || this.baseProps || state.baseProps;
     // returns the original base props or base state of a given target element
     const getTargetProps = (identifier, type) => {
       const { childName, target, key } = identifier;
-      const baseType = type === "props" ? baseProps : this.state || {};
+      const baseType = type === "props" ? baseProps : state;
       const base = (childName === undefined || childName === null || !baseType[childName]) ?
         baseType : baseType[childName];
       return key === "parent" ? base.parent : base[key] && base[key][target];

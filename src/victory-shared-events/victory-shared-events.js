@@ -6,6 +6,31 @@ import Events from "../victory-util/events";
 import Helpers from "../victory-util/helpers";
 import Timer from "../victory-util/timer";
 
+const getAllEvents = (props) => {
+  const components = ["container", "groupComponent"];
+  const componentEvents = Events.getComponentEvents(props, components);
+  if (Array.isArray(componentEvents)) {
+    return Array.isArray(props.events) ?
+      componentEvents.concat(...props.events) : componentEvents;
+  }
+  return props.events;
+};
+
+const getBasePropsFromChildren = (childComponents) => {
+  const iteratee = (child, childName, parent) => {
+    if (child.type && isFunction(child.type.getBaseProps)) {
+      child = parent ? React.cloneElement(child, parent.props) : child;
+      const baseProps = child.props && child.type.getBaseProps(child.props);
+      return baseProps ? [[childName, baseProps]] : null;
+    } else {
+      return null;
+    }
+  };
+
+  const baseProps = Helpers.reduceChildren(childComponents, iteratee);
+  return fromPairs(baseProps);
+};
+
 export default class VictorySharedEvents extends React.Component {
   static displayName = "VictorySharedEvents";
 
@@ -69,23 +94,47 @@ export default class VictorySharedEvents extends React.Component {
     getTimer: PropTypes.func
   };
 
+  static getDerivedStateFromProps(nextProps, prevState) {
+    const events = getAllEvents(nextProps);
+    const { externalEventMutations, container, children } = nextProps;
+    if (events || !isEmpty(externalEventMutations)) {
+      const childComponents = React.Children.toArray(children);
+      const childBaseProps = getBasePropsFromChildren(childComponents);
+      const parentBaseProps = container ? container.props : {};
+      const childNames = Object.keys(childBaseProps);
+      const baseProps = assign({}, childBaseProps, { parent: parentBaseProps });
+
+      if (!isEmpty(externalEventMutations)) {
+        const externalMutations = Events.getExternalMutationsWithChildren(
+          externalEventMutations, baseProps, prevState, childNames
+        );
+        const callbacks = externalEventMutations.reduce((memo, mutation) => {
+          memo = isFunction(mutation.callback) ? memo.concat(mutation.callback) : memo;
+          return memo;
+        }, []);
+        const compiledCallbacks = callbacks.length ?
+          () => { callbacks.forEach((c) => c()); } : undefined;
+        return { events, childComponents, baseProps, externalMutations, compiledCallbacks };
+      } else {
+        return { events, childComponents, baseProps };
+      }
+    } else {
+      return null;
+    }
+  }
+
   constructor(props) {
     super(props);
     this.state = this.state || {};
     this.getScopedEvents = Events.getScopedEvents.bind(this);
     this.getEventState = Events.getEventState.bind(this);
     this.getTimer = this.getTimer.bind(this);
-    this.setUpChildren(props);
   }
 
   getChildContext() {
     return {
       getTimer: this.getTimer
     };
-  }
-
-  componentWillReceiveProps(newProps) {
-    this.setUpChildren(newProps);
   }
 
   getTimer() {
@@ -98,59 +147,10 @@ export default class VictorySharedEvents extends React.Component {
     return this.timer;
   }
 
-  getAllEvents(props) {
-    const components = ["container", "groupComponent"];
-    this.componentEvents = Events.getComponentEvents(props, components);
-    if (Array.isArray(this.componentEvents)) {
-      return Array.isArray(props.events) ?
-        this.componentEvents.concat(...props.events) : this.componentEvents;
-    }
-    return props.events;
-  }
-
-  setUpChildren(props) {
-    this.events = this.getAllEvents(props);
-    const { externalEventMutations, container, children } = props;
-    if (this.events || !isEmpty(externalEventMutations)) {
-      this.childComponents = React.Children.toArray(children);
-      const childBaseProps = this.getBasePropsFromChildren(this.childComponents);
-      const parentBaseProps = container ? container.props : {};
-      const childNames = Object.keys(childBaseProps);
-      this.baseProps = assign({}, childBaseProps, { parent: parentBaseProps });
-
-      if (!isEmpty(externalEventMutations)) {
-        const externalMutations = Events.getExternalMutationsWithChildren(
-          externalEventMutations, this.baseProps, this.state, childNames
-        );
-        const callbacks = externalEventMutations.reduce((memo, mutation) => {
-          memo = isFunction(mutation.callback) ? memo.concat(mutation.callback) : memo;
-          return memo;
-        }, []);
-        const compiledCallbacks = callbacks.length ?
-          () => { callbacks.forEach((c) => c()); } : undefined;
-        this.setState(externalMutations, compiledCallbacks);
-      }
-    }
-  }
-
-  getBasePropsFromChildren(childComponents) {
-    const iteratee = (child, childName, parent) => {
-      if (child.type && isFunction(child.type.getBaseProps)) {
-        child = parent ? React.cloneElement(child, parent.props) : child;
-        const baseProps = child.props && child.type.getBaseProps(child.props);
-        return baseProps ? [[childName, baseProps]] : null;
-      } else {
-        return null;
-      }
-    };
-
-    const baseProps = Helpers.reduceChildren(childComponents, iteratee);
-    return fromPairs(baseProps);
-  }
-
   getNewChildren(props) {
     const { events, eventKey } = props;
-    const childNames = Object.keys(this.baseProps);
+    const { baseProps, childComponents } = this.state;
+    const childNames = Object.keys(baseProps);
     const alterChildren = (children) => {
       return children.reduce((memo, child, index) => {
         if (child.props.children) {
@@ -173,7 +173,7 @@ export default class VictorySharedEvents extends React.Component {
           const sharedEvents = {
             events: childEvents,
             // partially apply child name and baseProps,
-            getEvents: (evts, target) => this.getScopedEvents(evts, target, name, this.baseProps),
+            getEvents: (evts, target) => this.getScopedEvents(evts, target, name, baseProps),
             // partially apply child name
             getEventState: (key, target) => this.getEventState(key, target, name)
           };
@@ -187,12 +187,12 @@ export default class VictorySharedEvents extends React.Component {
       }, []);
     };
 
-    return alterChildren(this.childComponents);
+    return alterChildren(childComponents);
   }
 
   getContainer(props, children) {
-    const parents = Array.isArray(this.events) &&
-      this.events.filter((event) => event.target === "parent");
+    const parents = Array.isArray(this.state.events) &&
+      this.state.events.filter((event) => event.target === "parent");
     const sharedEvents = parents.length > 0 ?
     {
       events: parents,
@@ -209,7 +209,7 @@ export default class VictorySharedEvents extends React.Component {
       {},
       this.getEventState("parent", "parent"),
       containerProps,
-      this.baseProps.parent,
+      this.state.baseProps.parent,
       { children }
     );
     const events = defaults(
@@ -221,7 +221,7 @@ export default class VictorySharedEvents extends React.Component {
   }
 
   render() {
-    if (this.events) {
+    if (this.state.events) {
       const children = this.getNewChildren(this.props);
       return this.getContainer(this.props, children);
     }
