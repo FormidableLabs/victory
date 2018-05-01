@@ -23,14 +23,20 @@ export default (WrappedComponent, options) => {
       this.getEventState = Events.getEventState.bind(this);
       const calculatedValues = this.getCalculatedValues(props);
       this.cacheValues(calculatedValues);
-      this.applyExternalMutations(props, calculatedValues);
+      this.externalMutations = this.getExternalMutations(props);
+    }
+
+    componentDidUpdate() {
+      const externalMutations = this.getExternalMutations(this.props);
+      if (!Collection.areVictoryPropsEqual(this.externalMutations, externalMutations)) {
+        this.externalMutations = externalMutations;
+        this.applyExternalMutations(this.props, externalMutations);
+      }
     }
 
     // eslint-disable-next-line max-statements
     shouldComponentUpdate(nextProps) {
       const calculatedValues = this.getCalculatedValues(nextProps);
-      this.applyExternalMutations(nextProps, calculatedValues);
-      const { externalMutations } = calculatedValues;
       // re-render without additional checks when component is animated
       if (this.props.animate || this.props.animating) {
         this.cacheValues(calculatedValues);
@@ -51,17 +57,10 @@ export default (WrappedComponent, options) => {
         return true;
       }
 
-      // check whether external mutations match
-      if (!Collection.areVictoryPropsEqual(this.externalMutations, externalMutations)) {
-        this.cacheValues(calculatedValues);
-        return true;
-      }
-
       return false;
     }
 
-    applyExternalMutations(props, calculatedValues) {
-      const { externalMutations } = calculatedValues;
+    applyExternalMutations(props, externalMutations) {
       if (!isEmpty(externalMutations)) {
         const callbacks = props.externalEventMutations.reduce((memo, mutation) => {
           memo = isFunction(mutation.callback) ? memo.concat(mutation.callback) : memo;
@@ -102,7 +101,7 @@ export default (WrappedComponent, options) => {
     }
 
     getCalculatedValues(props) {
-      const { sharedEvents, externalEventMutations } = props;
+      const { sharedEvents } = props;
       const components = WrappedComponent.expectedComponents;
       const componentEvents = Events.getComponentEvents(props, components);
       const getSharedEventState = sharedEvents && isFunction(sharedEvents.getEventState) ?
@@ -111,14 +110,18 @@ export default (WrappedComponent, options) => {
       const dataKeys = keys(baseProps).filter((key) => key !== "parent");
       const hasEvents = props.events || props.sharedEvents || componentEvents;
       const events = this.getAllEvents(props);
-      const externalMutations = isEmpty(externalEventMutations) || sharedEvents ? undefined :
-        Events.getExternalMutations(
-          externalEventMutations, baseProps, this.state
-        );
       return {
         componentEvents, getSharedEventState, baseProps, dataKeys,
-        hasEvents, events, externalMutations
+        hasEvents, events
       };
+    }
+
+    getExternalMutations(props) {
+      const { sharedEvents, externalEventMutations } = props;
+      return isEmpty(externalEventMutations) || sharedEvents ? undefined :
+        Events.getExternalMutations(
+          externalEventMutations, this.baseProps, this.state
+        );
     }
 
     cacheValues(obj) {
