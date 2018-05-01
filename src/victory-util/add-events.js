@@ -34,7 +34,6 @@ export default (WrappedComponent, options) => {
       }
     }
 
-    // eslint-disable-next-line max-statements
     shouldComponentUpdate(nextProps) {
       const calculatedValues = this.getCalculatedValues(nextProps);
       // re-render without additional checks when component is animated
