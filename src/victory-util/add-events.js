@@ -26,14 +26,10 @@ export default (WrappedComponent, options) => {
       this.applyExternalMutations(props, calculatedValues);
     }
 
-    componentWillReceiveProps(nextProps) {
-      const calculatedValues = this.getCalculatedValues(nextProps);
-      this.applyExternalMutations(nextProps, calculatedValues);
-    }
-
     // eslint-disable-next-line max-statements
     shouldComponentUpdate(nextProps) {
       const calculatedValues = this.getCalculatedValues(nextProps);
+      this.applyExternalMutations(nextProps, calculatedValues);
       const { externalMutations } = calculatedValues;
       // re-render without additional checks when component is animated
       if (this.props.animate || this.props.animating) {
