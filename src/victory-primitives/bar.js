@@ -57,13 +57,14 @@ export default class Bar extends React.Component {
     const direction = sign > 0 ? "0 0 1" : "0 0 0";
     const topArc = `${cornerRadius.top} ${cornerRadius.top} ${direction}`;
     const bottomArc = `${cornerRadius.bottom} ${cornerRadius.bottom} ${direction}`;
-    return `M ${x0}, ${y0}
+    return `M ${x0 + cornerRadius.bottom}, ${y0}
+      A ${bottomArc}, ${x0}, ${y0 - sign * cornerRadius.bottom}
       L ${x0}, ${y1 + sign * cornerRadius.top}
       A ${topArc}, ${x0 + cornerRadius.top}, ${y1}
       L ${x1 - cornerRadius.top}, ${y1}
       A ${topArc}, ${x1}, ${y1 + sign * cornerRadius.top}
-      L ${x1}, ${y0}
-      L ${x0}, ${y0}
+      L ${x1}, ${y0 - sign * cornerRadius.bottom}
+      A ${bottomArc}, ${x1 - cornerRadius.bottom}, ${y0}
       z`;
   }
 
