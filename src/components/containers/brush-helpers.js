@@ -69,6 +69,16 @@ const Helpers = {
     return { x: [0, 1 / Number.MAX_SAFE_INTEGER], y: [0, 1 / Number.MAX_SAFE_INTEGER] };
   },
 
+  getDefaultBrushArea(defaultBrushArea, domain, cachedDomain) {
+    if (defaultBrushArea === "none") {
+      return this.getMinimumDomain();
+    } else if (defaultBrushArea === "disable") {
+      return cachedDomain;
+    } else {
+      return domain;
+    }
+  },
+
   getSelectionMutation(point, box, brushDimension) {
     const { x, y } = point;
     const { x1, x2, y1, y2 } = box;
@@ -169,6 +179,7 @@ const Helpers = {
         mutation: () => ({
           isSelecting: allowResize, domainBox, fullDomainBox,
           cachedBrushDomain: brushDomain,
+          cachedCurrentDomain: currentDomain,
           currentDomain: this.getMinimumDomain(),
           ...this.getSelectionMutation({ x, y }, domainBox, brushDimension)
         })
@@ -230,10 +241,14 @@ const Helpers = {
   },
 
   onMouseUp(evt, targetProps) {
-    const { x1, y1, x2, y2, onBrushDomainChange, domain, allowResize } = targetProps;
+    const {
+      x1, y1, x2, y2, onBrushDomainChange, domain, allowResize, defaultBrushArea
+    } = targetProps;
     // if the mouse hasn't moved since a mouseDown event, select the whole domain region
     if (allowResize && x1 === x2 || y1 === y2) {
-      const mutatedProps = { isPanning: false, isSelecting: false, currentDomain: domain };
+      const cachedDomain = targetProps.cachedCurrentDomain || targetProps.currentDomain;
+      const currentDomain = this.getDefaultBrushArea(defaultBrushArea, domain, cachedDomain);
+      const mutatedProps = { isPanning: false, isSelecting: false, currentDomain };
       if (isFunction(onBrushDomainChange)) {
         onBrushDomainChange(domain, defaults({}, mutatedProps, targetProps));
       }
