@@ -1,11 +1,10 @@
 import React from "react";
 import PropTypes from "prop-types";
 import Helpers from "../victory-util/helpers";
-import { assign } from "lodash";
+import { assign, isObject } from "lodash";
 import CommonProps from "./common-props";
 import Path from "./path";
 import * as d3Shape from "d3-shape";
-import { isObject } from "util";
 
 export default class Bar extends React.Component {
 
