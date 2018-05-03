@@ -166,6 +166,7 @@ class App extends React.Component {
             domain={{ x: [0, 10], y: [-5, 5] }}
             containerComponent={
               <VictoryBrushContainer
+                defaultBrushArea="none"
                 brushDomain={{ x: [0, 10] }}
               />
             }
@@ -189,7 +190,7 @@ class App extends React.Component {
               }
             }}
             containerComponent={
-              <VictoryBrushContainer/>
+              <VictoryBrushContainer defaultBrushArea="disable"/>
             }
             size={(datum, active) => active ? 5 : 3}
             y={(d) => d.x * d.x}
