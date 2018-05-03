@@ -187,9 +187,9 @@ export default class Bar extends React.Component {
       this.getVerticalBarPath(props, width, cornerRadius);
   }
 
-  getPolarBarPath(props) {
+  getPolarBarPath(props, cornerRadius) {
     // TODO Radial bars
-    return this.getVerticalPolarBarPath(props);
+    return this.getVerticalPolarBarPath(props, cornerRadius);
   }
 
   getBarWidth(props, style) {
