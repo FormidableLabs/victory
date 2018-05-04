@@ -54,6 +54,13 @@ export default class VictoryContainer extends React.Component {
     this.getTimer = this.getTimer.bind(this);
     this.containerId = !isObject(props) || props.containerId === undefined ?
       uniqueId("victory-container-") : props.containerId;
+    this.savePortalRef = (portal) => {
+      this.portalRef = portal;
+      return portal;
+    };
+    this.portalUpdate = (key, el) => this.portalRef.portalUpdate(key, el);
+    this.portalRegister = () => this.portalRef.portalRegister();
+    this.portalDeregister = (key) => this.portalRef.portalDeregister(key);
   }
 
   getChildContext() {
@@ -63,16 +70,6 @@ export default class VictoryContainer extends React.Component {
       portalDeregister: this.portalDeregister,
       getTimer: this.getTimer
     };
-  }
-
-  componentWillMount() {
-    this.savePortalRef = (portal) => {
-      this.portalRef = portal;
-      return portal;
-    };
-    this.portalUpdate = (key, el) => this.portalRef.portalUpdate(key, el);
-    this.portalRegister = () => this.portalRef.portalRegister();
-    this.portalDeregister = (key) => this.portalRef.portalDeregister(key);
   }
 
   componentWillUnmount() {
