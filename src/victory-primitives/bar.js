@@ -135,12 +135,6 @@ export default class Bar extends React.Component {
     }
   }
 
-  getPathMoves(path) {
-    const moves = path.match(/[A-Z]/g);
-    const coords = path.split(/[A-Z]/);
-    return moves.map((m, i) => ({ command: m, coords: coords[i + 1].split(",") }));
-  }
-
   getVerticalPolarBarPath(props, cornerRadius) { // eslint-disable-line max-statements
     const { datum, scale, style, index, alignment } = props;
     const r1 = scale.y(datum._y0 || 0);
@@ -157,28 +151,28 @@ export default class Bar extends React.Component {
       start = this.getStartAngle(props, index);
       end = this.getEndAngle(props, index);
     }
-    const path = d3Shape.arc()
+
+    const getPath = (edge) => {
+      const pathFunction = d3Shape.arc()
       .innerRadius(r1)
       .outerRadius(r2)
       .startAngle(this.transformAngle(start))
-      .endAngle(this.transformAngle(end));
-    if (cornerRadius) {
-      const withCorners = d3Shape.arc()
-        .innerRadius(r1)
-        .outerRadius(r2)
-        .startAngle(this.transformAngle(start))
-        .endAngle(this.transformAngle(end))
-        .cornerRadius(cornerRadius.top);
-      const moves = this.getPathMoves(path());
-      const cornerMoves = this.getPathMoves(withCorners());
-      // eslint-disable-next-line no-magic-numbers
-      const totalMoves = cornerMoves.slice(0, 4).concat(moves.slice(2));
-      return totalMoves.reduce((memo, move) => {
-        memo += `${move.command} ${move.coords.join()}`;
-        return memo;
-      }, "");
-    }
-    return path();
+      .endAngle(this.transformAngle(end))
+      .cornerRadius(cornerRadius[edge]);
+      const path = pathFunction();
+      const moves = path.match(/[A-Z]/g);
+      const middle = moves.indexOf("L");
+      const coords = path.split(/[A-Z]/).slice(1);
+      const subMoves = edge === "top" ? moves.slice(0, middle) : moves.slice(middle);
+      const subCoords = edge === "top" ? coords.slice(0, middle) : coords.slice(middle);
+      return subMoves.map((m, i) => ({ command: m, coords: subCoords[i].split(",") }));
+    };
+
+    const moves = getPath("top").concat(getPath("bottom"));
+    return moves.reduce((memo, move) => {
+      memo += `${move.command} ${move.coords.join()}`;
+      return memo;
+    }, "");
   }
 
   getBarPath(props, width, cornerRadius) {
