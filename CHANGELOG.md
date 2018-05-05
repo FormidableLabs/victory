@@ -1,6 +1,12 @@
 VictoryCore Changelog
 =====================
 
+## 22.1.0 (2018-05-04)
+
+-[372](https://github.com/FormidableLabs/victory-core/pull/372) Support top and bottom cornerRadius for bars. Support functional cornerRadius
+-[371](https://github.com/FormidableLabs/victory-core/pull/371) Evaluate Whisker styles
+-[370](https://github.com/FormidableLabs/victory-core/pull/370) Refactor to remove lifecycle methods
+
 ## 22.0.0 (2018-04-21)
 
 **Breaking Changes**
