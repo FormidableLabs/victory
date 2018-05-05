@@ -3,8 +3,7 @@ import * as d3Scale from "d3-scale";
 import { voronoi as d3Voronoi } from "d3-voronoi";
 import { without } from "lodash";
 
-const VERTICAL_RECTANGULAR_SEQUENCE = ["M", "L", "A", "L", "A", "L", "L", "z"];
-const HORIZONTAL_RECTANGULAR_SEQUENCE = ["M", "L", "L", "A", "L", "A", "L", "z"];
+const RECTANGULAR_SEQUENCE = ["M", "A", "L", "A", "L", "A", "L", "A", "z"];
 const CIRCULAR_SEQUENCE = ["M", "m", "a", "a"];
 
 const parseSvgPathCommands = (commandStr) => {
@@ -115,8 +114,7 @@ const expectations = {
    * @returns {undefined}
    */
   expectIsRectangular(wrapper) {
-    const isBar = exhibitsShapeSequence(wrapper, VERTICAL_RECTANGULAR_SEQUENCE) ||
-      exhibitsShapeSequence(wrapper, HORIZONTAL_RECTANGULAR_SEQUENCE);
+    const isBar = exhibitsShapeSequence(wrapper, RECTANGULAR_SEQUENCE);
     expect(isBar).to.equal(true);
   },
 
@@ -175,7 +173,7 @@ const helpers = {
   getBarHeight(wrapper) {
     expectations.expectIsRectangular(wrapper);
     const commands = getPathCommandsFromWrapper(wrapper);
-    return Math.abs(commands[0].args[1] - commands[1].args[1]);
+    return Math.abs(commands[0].args[1] - commands[2].args[1]);
   },
 
   /**
