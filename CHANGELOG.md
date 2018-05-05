@@ -1,5 +1,10 @@
 # VictoryChart Changelog
 
+## 26.1.0 (2018-05-04)
+
+-[594](https://github.com/FormidableLabs/victory-chart/pull/594) Support functional `cornerRadius` and objects with `cornerRadius` defined for "top" and "bottom"
+-[593](https://github.com/FormidableLabs/victory-chart/pull/593) Add `defaultBrushArea` prop with supported options "all", "none" and "disable"
+
 ## 26.0.1 (2018-04-25)
 
 -[591](https://github.com/FormidableLabs/victory-chart/pull/591) Ensure that `VictoryVoronoiContainer` works correctly with `VictoryGroup` data.
