@@ -1,5 +1,7 @@
 # Victory Changelog
 
+## 0.26.0 (2018-04-21)
+
 **BREAKING CHANGES**
 
 *Disable arbitrary styles from data*
