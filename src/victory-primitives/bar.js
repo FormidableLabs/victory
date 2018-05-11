@@ -136,7 +136,8 @@ export default class Bar extends React.Component {
   }
 
   getVerticalPolarBarPath(props, cornerRadius) { // eslint-disable-line max-statements
-    const { datum, scale, style, index, alignment } = props;
+    const { datum, scale, index, alignment } = props;
+    const style = Helpers.evaluateStyle(props.style, datum, props.active);
     const r1 = scale.y(datum._y0 || 0);
     const r2 = scale.y(datum._y1 !== undefined ? datum._y1 : datum._y);
     const currentAngle = scale.x(datum._x1 !== undefined ? datum._x1 : datum._x);
