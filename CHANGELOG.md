@@ -1,6 +1,11 @@
 VictoryCore Changelog
 =====================
 
+## 22.1.1 (2018-05-17)
+
+-[374](https://github.com/FormidableLabs/victory-core/pull/374) Consistent `PropTypes` for `clipId`
+-[373](https://github.com/FormidableLabs/victory-core/pull/373) Evaluate styles for polar bars
+
 ## 22.1.0 (2018-05-04)
 
 -[372](https://github.com/FormidableLabs/victory-core/pull/372) Support top and bottom cornerRadius for bars. Support functional cornerRadius
