@@ -1,5 +1,21 @@
 # Victory Changelog
 
+## 0.26.1 (2018-05-17)
+
+VictoryCore
+  -[374](https://github.com/FormidableLabs/victory-core/pull/374) Consistent `PropTypes` for `clipId`
+  -[373](https://github.com/FormidableLabs/victory-core/pull/373) Evaluate styles for polar bars
+  -[372](https://github.com/FormidableLabs/victory-core/pull/372) Support top and bottom cornerRadius for bars. Support functional cornerRadius
+  -[371](https://github.com/FormidableLabs/victory-core/pull/371) Evaluate Whisker styles
+  -[370](https://github.com/FormidableLabs/victory-core/pull/370) Refactor to remove lifecycle methods
+
+VictoryChart
+  -[594](https://github.com/FormidableLabs/victory-chart/pull/594) Support functional `cornerRadius` and objects with `cornerRadius` defined for "top" and "bottom"
+  -[593](https://github.com/FormidableLabs/victory-chart/pull/593) Add `defaultBrushArea` prop with supported options "all", "none" and "disable"
+  -[591](https://github.com/FormidableLabs/victory-chart/pull/591) Ensure that `VictoryVoronoiContainer` works correctly with `VictoryGroup` data.
+
+## 0.26.0 (2018-04-21)
+
 **BREAKING CHANGES**
 
 *Disable arbitrary styles from data*
