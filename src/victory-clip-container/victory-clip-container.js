@@ -18,7 +18,7 @@ export default class VictoryClipContainer extends React.Component {
     circleComponent: PropTypes.element,
     className: PropTypes.string,
     clipHeight: CustomPropTypes.nonNegative,
-    clipId: PropTypes.number,
+    clipId: PropTypes.oneOfType([PropTypes.number, PropTypes.string]),
     clipPadding: PropTypes.shape({
       top: PropTypes.number, bottom: PropTypes.number,
       left: PropTypes.number, right: PropTypes.number
