@@ -81,7 +81,7 @@ const SelectionHelpers = {
     const y2 = polar || dimension !== "x" ? y : Selection.getDomainCoordinates(targetProps).y[1];
 
     const mutatedProps = { x1, y1, select: true, x2, y2 };
-    if (isFunction(targetProps.onSelectionCleared)) {
+    if (selectedData && isFunction(targetProps.onSelectionCleared)) {
       targetProps.onSelectionCleared(defaults({}, mutatedProps, targetProps));
     }
     const parentMutation = [{ target: "parent", mutation: () => mutatedProps }];
