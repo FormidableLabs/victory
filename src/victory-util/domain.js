@@ -14,8 +14,11 @@ export default {
    */
   getDomain(props, axis) {
     const propsDomain = this.getDomainFromProps(props, axis);
-    if (propsDomain) {
-      return this.padDomain(propsDomain, props, axis);
+    const minDomain = this.getMinFromProps(props, axis);
+    const maxDomain = this.getMaxFromProps(props, axis);
+    if (propsDomain || minDomain !== undefined && maxDomain !== undefined) {
+      const domain = propsDomain || [minDomain, maxDomain];
+      return this.cleanDomain(this.padDomain(domain, props, axis), props, axis);
     }
     const categoryDomain = this.getDomainFromCategories(props, axis);
     if (categoryDomain) {
@@ -62,8 +65,11 @@ export default {
    */
   getDomainWithZero(props, axis) {
     const propsDomain = this.getDomainFromProps(props, axis);
-    if (propsDomain) {
-      return this.cleanDomain(this.padDomain(propsDomain, props, axis), props, axis);
+    const minDomain = this.getMinFromProps(props, axis);
+    const maxDomain = this.getMaxFromProps(props, axis);
+    if (propsDomain || minDomain !== undefined && maxDomain !== undefined) {
+      const domain = propsDomain || [minDomain, maxDomain];
+      return this.cleanDomain(this.padDomain(domain, props, axis), props, axis);
     }
     const { horizontal } = props;
     const ensureZero = (domain, dataset) => {
@@ -106,6 +112,24 @@ export default {
     return undefined;
   },
 
+  getMinFromProps(props, axis) {
+    if (props.minDomain && props.minDomain[axis]) {
+      return props.minDomain[axis];
+    } else if (props.minDomain) {
+      return props.minDomain;
+    }
+    return undefined;
+  },
+
+  getMaxFromProps(props, axis) {
+    if (props.maxDomain && props.maxDomain[axis]) {
+      return props.maxDomain[axis];
+    } else if (props.maxDomain) {
+      return props.maxDomain;
+    }
+    return undefined;
+  },
+
   /**
    * Returns a domain from a dataset for a given axis
    * @param {Object} props: the props object
@@ -114,13 +138,15 @@ export default {
    * @returns {Array} the domain based on data
    */
   getDomainFromData(props, axis, dataset) {
+    const minDomain = this.getMinFromProps(props, axis);
+    const maxDomain = this.getMaxFromProps(props, axis);
     const currentAxis = Helpers.getCurrentAxis(axis, props.horizontal);
     const flatData = flatten(dataset);
     const allData = flatData.map((datum) => {
       return datum[`_${currentAxis}1`] === undefined ?
         datum[`_${currentAxis}`] : datum[`_${currentAxis}1`];
     });
-    const allMinData = flatData.map((datum) => {
+    const allMinData = minDomain !== undefined ? [minDomain] : flatData.map((datum) => {
       return datum[`_${currentAxis}0`] === undefined ?
         datum[`_${currentAxis}`] : datum[`_${currentAxis}0`];
     });
@@ -128,8 +154,8 @@ export default {
       return Scale.getBaseScale(props, axis).domain();
     }
 
-    const min = Collection.getMinValue(allMinData);
-    const max = Collection.getMaxValue(allData);
+    const min = minDomain !== undefined ? minDomain : Collection.getMinValue(allMinData);
+    const max = maxDomain !== undefined ? maxDomain : Collection.getMaxValue(allData);
     let domain;
     if (+min === +max) {
       domain = this.getSinglePointDomain(max);
