@@ -115,19 +115,31 @@ export default {
   getMinFromProps(props, axis) {
     if (props.minDomain && props.minDomain[axis]) {
       return props.minDomain[axis];
-    } else if (props.minDomain) {
-      return props.minDomain;
     }
-    return undefined;
+    return typeof props.minDomain === "number" ? props.minDomain : undefined;
   },
 
   getMaxFromProps(props, axis) {
     if (props.maxDomain && props.maxDomain[axis]) {
       return props.maxDomain[axis];
-    } else if (props.maxDomain) {
-      return props.maxDomain;
     }
-    return undefined;
+    return typeof props.maxDomain === "number" ? props.maxDomain : undefined;
+  },
+
+  getFlatData(dataset, currentAxis, type) {
+    const flatData = flatten(dataset);
+    const dataType = type === "min" ? 0 : 1;
+    return flatData.map((datum) => {
+      return datum[`_${currentAxis}${dataType}`] === undefined ?
+        datum[`_${currentAxis}`] : datum[`_${currentAxis}${dataType}`];
+    });
+  },
+
+  getDomainFromMinMax(min, max) {
+    if (+min === +max) {
+      return this.getSinglePointDomain(max);
+    }
+    return [min, max];
   },
 
   /**
@@ -141,30 +153,21 @@ export default {
     const minDomain = this.getMinFromProps(props, axis);
     const maxDomain = this.getMaxFromProps(props, axis);
     const currentAxis = Helpers.getCurrentAxis(axis, props.horizontal);
-    const flatData = flatten(dataset);
-    const allData = flatData.map((datum) => {
-      return datum[`_${currentAxis}1`] === undefined ?
-        datum[`_${currentAxis}`] : datum[`_${currentAxis}1`];
-    });
-    const allMinData = minDomain !== undefined ? [minDomain] : flatData.map((datum) => {
-      return datum[`_${currentAxis}0`] === undefined ?
-        datum[`_${currentAxis}`] : datum[`_${currentAxis}0`];
-    });
-    if (allData.length < 1) {
-      return Scale.getBaseScale(props, axis).domain();
+    if (dataset.length < 1) {
+      const scaleDomain = Scale.getBaseScale(props, axis).domain();
+      const min = minDomain !== undefined ? minDomain : Collection.getMinValue(scaleDomain);
+      const max = maxDomain !== undefined ? maxDomain : Collection.getMaxValue(scaleDomain);
+      return this.getDomainFromMinMax(min, max);
     }
+    const min = minDomain !== undefined ?
+      minDomain : Collection.getMinValue(this.getFlatData(dataset, currentAxis, "min"));
+    const max = maxDomain !== undefined ?
+      maxDomain : Collection.getMaxValue(this.getFlatData(dataset, currentAxis));
+    const domain = this.getDomainFromMinMax(min, max);
 
-    const min = minDomain !== undefined ? minDomain : Collection.getMinValue(allMinData);
-    const max = maxDomain !== undefined ? maxDomain : Collection.getMaxValue(allData);
-    let domain;
-    if (+min === +max) {
-      domain = this.getSinglePointDomain(max);
-    } else {
-      domain = [min, max];
-    }
     const angularRange = Math.abs((props.startAngle || 0) - (props.endAngle || 360));
     return props.polar && axis === "x" && angularRange === 360 ?
-      this.getSymmetricDomain(domain, allData) : domain;
+      this.getSymmetricDomain(domain, this.getFlatData(dataset, currentAxis)) : domain;
   },
 
   getSinglePointDomain(val) {
@@ -190,16 +193,18 @@ export default {
    * @returns {Array} returns a domain from tickValues
    */
   getDomainFromTickValues(props, axis) {
-    let domain;
-    if (Helpers.stringTicks(props)) {
-      domain = [1, props.tickValues.length];
-    } else {
-      // coerce ticks to numbers
-      const ticks = props.tickValues.map((value) => +value);
-      const initialDomain = [Collection.getMinValue(ticks), Collection.getMaxValue(ticks)];
-      domain = props.polar && axis === "x" ?
-        this.getSymmetricDomain(initialDomain, ticks) : initialDomain;
-    }
+    const { tickValues, polar } = props;
+    const minDomain = this.getMinFromProps(props, axis);
+    const maxDomain = this.getMaxFromProps(props, axis);
+    const stringTicks = Helpers.stringTicks(props);
+    const ticks = tickValues.map((value) => +value);
+    const defaultMin = stringTicks ? 1 : Collection.getMinValue(ticks);
+    const defaultMax = stringTicks ? tickValues.length : Collection.getMaxValue(ticks);
+    const min = minDomain !== undefined ? minDomain : defaultMin;
+    const max = maxDomain !== undefined ? maxDomain : defaultMax;
+    const initialDomain = this.getDomainFromMinMax(min, max);
+    const domain = polar && axis === "x" && !stringTicks ?
+      this.getSymmetricDomain(initialDomain, ticks) : initialDomain;
     if (Helpers.isVertical(props)) {
       domain.reverse();
     }
@@ -217,6 +222,8 @@ export default {
     if (!categories) {
       return undefined;
     }
+    const minDomain = this.getMinFromProps(props, axis);
+    const maxDomain = this.getMaxFromProps(props, axis);
     const stringArray = Collection.containsStrings(categories) ?
      Data.getStringsFromCategories(props, axis) : [];
     const stringMap = stringArray.length === 0 ? null :
@@ -226,9 +233,9 @@ export default {
       }, {});
     const categoryValues = stringMap ?
       categories.map((value) => stringMap[value]) : categories;
-    return [
-      Collection.getMinValue(categoryValues), Collection.getMaxValue(categoryValues)
-    ];
+    const min = minDomain !== undefined ? minDomain : Collection.getMinValue(categoryValues);
+    const max = maxDomain !== undefined ? maxDomain : Collection.getMaxValue(categoryValues);
+    return this.getDomainFromMinMax(min, max);
   },
 
   /**
@@ -263,10 +270,7 @@ export default {
     // use greatest min / max
     const domainMin = cumulativeMin < 0 ? cumulativeMin : Collection.getMinValue(globalDomain);
     const domainMax = Collection.getMaxValue(globalDomain, ...cumulativeMaxArray);
-    if (+domainMin === +domainMax) {
-      return this.getSinglePointDomain(domainMin);
-    }
-    return [domainMin, domainMax];
+    return this.getDomainFromMinMax(domainMin, domainMax);
   },
 
   /**
