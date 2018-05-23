@@ -140,11 +140,11 @@ export default {
     });
     const horizontal = props && props.horizontal || horizontalChildren.length > 0;
     const currentAxis = Axis.getCurrentAxis(axis, horizontal);
-
     const parentData = props.data ? Data.getData(props, axis) : undefined;
-    const { polar, startAngle, endAngle } = props;
+    const { polar, startAngle, endAngle, categories } = props;
     const parentProps = parentData ?
-      { data: parentData, polar, startAngle, endAngle } : { polar, startAngle, endAngle };
+      { data: parentData, polar, startAngle, endAngle, categories } :
+      { polar, startAngle, endAngle, categories };
 
     while (childrenLength > 0) {
       const child = children[--childrenLength];
