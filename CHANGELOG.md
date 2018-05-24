@@ -1,6 +1,10 @@
 VictoryCore Changelog
 =====================
 
+## 22.1.2 (2018-05-23)
+
+-[375](https://github.com/FormidableLabs/victory-core/pull/375) Check for axis specific categories in stacked charts
+
 ## 22.1.1 (2018-05-17)
 
 -[374](https://github.com/FormidableLabs/victory-core/pull/374) Consistent `PropTypes` for `clipId`
