@@ -215,7 +215,8 @@ export default {
   getDomainFromGroupedData(props, axis, datasets) {
     const { horizontal } = props;
     const dependent = (axis === "x" && !horizontal) || (axis === "y" && horizontal);
-    if (dependent && props.categories) {
+    const categories = isPlainObject(props.categories) ? props.categories.axis : props.categories;
+    if (dependent && categories) {
       return this.getDomainFromCategories(props, axis);
     }
     const globalDomain = this.getDomainFromData(props, axis, datasets);
