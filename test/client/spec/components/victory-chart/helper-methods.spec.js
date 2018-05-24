@@ -104,7 +104,9 @@ describe("victory-chart/helpers-methods", () => {
 
     it("calculates a domain from child components", () => {
       const props = {};
-      const polarProps = { polar: undefined, startAngle: undefined, endAngle: undefined };
+      const polarProps = {
+        polar: undefined, startAngle: undefined, endAngle: undefined, categories: undefined
+      };
       const domainResultX = getDomain(props, "x", childComponents);
       expect(Wrapper.getDomain).calledWith(props, "x", childComponents);
       expect(victoryLine.type.getDomain).calledWith(assign({}, victoryLine.props, polarProps));

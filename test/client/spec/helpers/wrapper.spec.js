@@ -57,7 +57,9 @@ describe("helpers/wrapper", () => {
 
     it("calculates a domain from child components", () => {
       const props = { children: childComponents };
-      const polarProps = { polar: undefined, startAngle: undefined, endAngle: undefined };
+      const polarProps = {
+        polar: undefined, startAngle: undefined, endAngle: undefined, categories: undefined
+      };
       const domainResultX = Wrapper.getDomain(props, "x", childComponents);
       expect(Wrapper.getDomainFromChildren).calledWith(props, "x", childComponents);
       expect(victoryLine.type.getDomain).calledWith(assign({}, victoryLine.props, polarProps));

@@ -90,11 +90,15 @@ export default class VictoryStack extends React.Component {
     const horizontal = props.horizontal || childComponents.every(
       (component) => component.props.horizontal
     );
+    const categories = {
+      x: Wrapper.getCategories(props, "x"),
+      y: Wrapper.getCategories(props, "y")
+    };
     const dataFromChildren = Wrapper.getDataFromChildren(props);
     const datasets = Wrapper.fillInMissingData(props, dataFromChildren);
     const domain = {
-      x: Wrapper.getStackedDomain(props, "x", datasets),
-      y: Wrapper.getStackedDomain(props, "y", datasets)
+      x: Wrapper.getStackedDomain(assign({}, props, { categories }), "x", datasets),
+      y: Wrapper.getStackedDomain(assign({}, props, { categories }), "y", datasets)
     };
     const range = {
       x: Helpers.getRange(props, "x"),
@@ -109,10 +113,6 @@ export default class VictoryStack extends React.Component {
     const scale = {
       x: horizontal ? yScale : xScale,
       y: horizontal ? xScale : yScale
-    };
-    const categories = {
-      x: Wrapper.getCategories(props, "x"),
-      y: Wrapper.getCategories(props, "y")
     };
     const colorScale = props.colorScale;
     return { datasets, categories, range, domain, horizontal, scale, style, colorScale, role };

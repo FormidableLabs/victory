@@ -1,4 +1,4 @@
-import { defaults } from "lodash";
+import { defaults, assign } from "lodash";
 import PropTypes from "prop-types";
 import React from "react";
 import {
@@ -139,13 +139,22 @@ export default class VictoryChart extends React.Component {
     const horizontal = childComponents.some((component) => {
       return component.props && component.props.horizontal;
     });
+    // TODO: check
+    const categories = {
+      x: Wrapper.getCategories(props, "x", childComponents),
+      y: Wrapper.getCategories(props, "y", childComponents)
+    };
+    const stringMap = {
+      x: createStringMap(props, "x", childComponents),
+      y: createStringMap(props, "y", childComponents)
+    };
     const axisComponents = {
       x: Axis.getAxisComponent(childComponents, "x"),
       y: Axis.getAxisComponent(childComponents, "y")
     };
     const domain = {
-      x: getDomain(props, "x", childComponents),
-      y: getDomain(props, "y", childComponents)
+      x: getDomain(assign({}, props, { categories }), "x", childComponents),
+      y: getDomain(assign({}, props, { categories }), "y", childComponents)
     };
     const range = {
       x: props.polar ? Helpers.getPolarRange(props, "x") : Helpers.getRange(props, "x"),
@@ -169,17 +178,6 @@ export default class VictoryChart extends React.Component {
     const originSign = {
       x: Axis.getOriginSign(origin.x, domain.x),
       y: Axis.getOriginSign(origin.y, domain.y)
-    };
-
-    // TODO: check
-    const categories = {
-      x: Wrapper.getCategories(props, "x", childComponents),
-      y: Wrapper.getCategories(props, "y", childComponents)
-    };
-
-    const stringMap = {
-      x: createStringMap(props, "x", childComponents),
-      y: createStringMap(props, "y", childComponents)
     };
 
     const defaultDomainPadding = getDefaultDomainPadding(childComponents, horizontal);
