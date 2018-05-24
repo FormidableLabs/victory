@@ -114,7 +114,8 @@ export default {
    * @returns {Array} the domain based on data
    */
   getDomainFromData(props, axis, dataset) {
-    const currentAxis = Helpers.getCurrentAxis(axis, props.horizontal);
+    const { polar, horizontal, startAngle = 0, endAngle = 360 } = props;
+    const currentAxis = Helpers.getCurrentAxis(axis, horizontal);
     const flatData = flatten(dataset);
     const allData = flatData.map((datum) => {
       return datum[`_${currentAxis}1`] === undefined ?
@@ -136,8 +137,7 @@ export default {
     } else {
       domain = [min, max];
     }
-    const angularRange = Math.abs((props.startAngle || 0) - (props.endAngle || 360));
-    return props.polar && axis === "x" && angularRange === 360 ?
+    return polar && axis === "x" && Math.abs(startAngle - endAngle) === 360 ?
       this.getSymmetricDomain(domain, allData) : domain;
   },
 
@@ -164,14 +164,15 @@ export default {
    * @returns {Array} returns a domain from tickValues
    */
   getDomainFromTickValues(props, axis) {
+    const { polar, tickValues, startAngle = 0, endAngle = 360 } = props;
     let domain;
     if (Helpers.stringTicks(props)) {
-      domain = [1, props.tickValues.length];
+      domain = [1, tickValues.length];
     } else {
       // coerce ticks to numbers
-      const ticks = props.tickValues.map((value) => +value);
+      const ticks = tickValues.map((value) => +value);
       const initialDomain = [Collection.getMinValue(ticks), Collection.getMaxValue(ticks)];
-      domain = props.polar && axis === "x" ?
+      domain = polar && axis === "x" && Math.abs(startAngle - endAngle) === 360 ?
         this.getSymmetricDomain(initialDomain, ticks) : initialDomain;
     }
     if (Helpers.isVertical(props)) {
@@ -187,6 +188,7 @@ export default {
    * @returns {Array|undefined} returns a domain from categories or undefined
    */
   getDomainFromCategories(props, axis) {
+    const { polar, startAngle = 0, endAngle = 360 } = props;
     const categories = Data.getCategories(props, axis);
     if (!categories) {
       return undefined;
@@ -200,9 +202,11 @@ export default {
       }, {});
     const categoryValues = stringMap ?
       categories.map((value) => stringMap[value]) : categories;
-    return [
+    const categoryDomain = [
       Collection.getMinValue(categoryValues), Collection.getMaxValue(categoryValues)
     ];
+    return polar && axis === "x" && Math.abs(startAngle - endAngle) === 360 ?
+      this.getSymmetricDomain(categoryDomain, categoryValues) : categoryDomain;
   },
 
   /**
