@@ -1,5 +1,5 @@
-import { assign, flatten, orderBy } from "lodash";
-import { Helpers, LabelHelpers, Scale, Domain, Data } from "victory-core";
+import { assign, orderBy } from "lodash";
+import { Helpers, LabelHelpers, Scale, Domain, Data, Collection } from "victory-core";
 
 const getErrors = (datum, scale, axis) => {
   /**
@@ -102,57 +102,52 @@ const getErrorData = (props) => {
 };
 
 const getDomainFromData = (props, axis, dataset) => {
+  const minDomain = Domain.getMinFromProps(props, axis);
+  const maxDomain = Domain.getMaxFromProps(props, axis);
   const currentAxis = Helpers.getCurrentAxis(axis, props.horizontal);
-  let error;
-  if (currentAxis === "x") {
-    error = "errorX";
-  } else if (currentAxis === "y") {
-    error = "errorY";
-  }
-  const axisData = flatten(dataset).map((datum) => datum[`_${currentAxis}`]);
-  const errorData = flatten(flatten(dataset).map((datum) => {
-    let errorMax;
-    let errorMin;
-    if (Array.isArray(datum[error])) {
-      errorMax = datum[error][0] + datum[`_${currentAxis}`];
-      errorMin = datum[`_${currentAxis}`] - datum[error][1];
-    } else {
-      errorMax = datum[error] + datum[`_${currentAxis}`];
-      errorMin = datum[`_${currentAxis}`] - datum[error];
-    }
-    return [errorMax, errorMin];
-  }));
+  const error = currentAxis === "x" ? "errorX" : "errorY";
+  const reduceErrorData = (type) => {
+    const baseCondition = type === "min" ? Infinity : -Infinity;
+    const errorIndex = type === "min" ? 1 : 0;
+    const sign = type === "min" ? -1 : 1;
+    return dataset.reduce((memo, datum) => {
+      const currentError = Array.isArray(datum[error]) ? datum[error][errorIndex] : datum[error];
+      const current = datum[`_${currentAxis}`] + sign * currentError;
+      return (memo < current && type === "min") || (memo > current && type === "max") ?
+        memo : current;
+    }, baseCondition);
+  };
 
-  const allData = axisData.concat(errorData);
-  const min = Math.min(...allData);
-  const max = Math.max(...allData);
-  // TODO: is the correct behavior, or should we just error. How do we
-  // handle charts with just one data point?
-  if (+min === +max) {
-    return Domain.getSinglePointDomain(max);
-  }
-  return [min, max];
+  const min = minDomain !== undefined ? minDomain : reduceErrorData("min");
+  const max = maxDomain !== undefined ? maxDomain : reduceErrorData("max");
+  return Domain.getDomainFromMinMax(min, max);
 };
 
+// eslint-disable-next-line max-statements
 const getDomain = (props, axis) => {
+  const minDomain = Domain.getMinFromProps(props, axis);
+  const maxDomain = Domain.getMaxFromProps(props, axis);
+  const formatDomain = (domain) => {
+    return Domain.cleanDomain(Domain.padDomain(domain, props, axis), props, axis);
+  };
   const propsDomain = Domain.getDomainFromProps(props, axis);
-  if (propsDomain) {
-    return Domain.padDomain(propsDomain, props, axis);
+  if (propsDomain || minDomain !== undefined && maxDomain !== undefined) {
+    return formatDomain(propsDomain || Domain.getDomainFromMinMax(minDomain, maxDomain));
   }
   const categoryDomain = Domain.getDomainFromCategories(props, axis);
   if (categoryDomain) {
-    return Domain.padDomain(categoryDomain, props, axis);
+    return formatDomain(categoryDomain);
   }
   const dataset = getErrorData(props);
-
   if (dataset.length < 1) {
-    return Scale.getBaseScale(props, axis).domain();
+    const scaleDomain = Scale.getBaseScale(props, axis).domain();
+    const min = minDomain !== undefined ? minDomain : Collection.getMinValue(scaleDomain);
+    const max = maxDomain !== undefined ? maxDomain : Collection.getMaxValue(scaleDomain);
+    return formatDomain(Domain.getDomainFromMinMax(min, max));
   }
 
-  const domain = getDomainFromData(props, axis, dataset);
-  return Domain.cleanDomain(Domain.padDomain(domain, props, axis), props);
+  return formatDomain(getDomainFromData(props, axis, dataset));
 };
-
 
 const getCalculatedValues = (props) => {
   const defaultStyles = props.theme && props.theme.errorbar && props.theme.errorbar.style ?
