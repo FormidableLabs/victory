@@ -1,5 +1,5 @@
 import { assign, orderBy } from "lodash";
-import { Helpers, LabelHelpers, Scale, Domain, Data } from "victory-core";
+import { Helpers, LabelHelpers, Scale, Domain, Data, Collection } from "victory-core";
 
 const sortData = (dataset, sortKey, sortOrder = "ascending") => {
   if (!sortKey) {
@@ -61,30 +61,38 @@ const getData = (props) => {
   return sortData(formattedData, props.sortKey, props.sortOrder);
 };
 
+const reduceData = (dataset, axis, type) => {
+  const getCurrent = (datum) => {
+    return Array.isArray(datum[`_${axis}`]) ? Math[type](...datum[`_${axis}`]) : datum[`_${axis}`];
+  };
+  const baseCondition = type === "min" ? Infinity : -Infinity;
+  return dataset.reduce((memo, datum) => {
+    const current = getCurrent(datum);
+    return memo < current && type === "min" || memo > current && type === "max" ?
+      memo : current;
+  }, baseCondition);
+};
+
+// eslint-disable-next-line max-statements
 const getDomain = (props, axis) => {
-  let domain;
-  if (props.domain && props.domain[axis]) {
-    domain = props.domain[axis];
-  } else if (props.domain && Array.isArray(props.domain)) {
-    domain = props.domain;
+  const minDomain = Domain.getMinFromProps(props, axis);
+  const maxDomain = Domain.getMaxFromProps(props, axis);
+  let domain = Domain.getDomainFromProps(props, axis);
+  if (domain || minDomain !== undefined && maxDomain !== undefined) {
+    domain = domain || Domain.getDomainFromMinMax(minDomain, maxDomain);
   } else {
     const dataset = getData(props);
-    const allData = dataset.reduce((memo, datum) => {
-      return Array.isArray(datum[`_${axis}`]) ?
-        memo.concat(...datum[`_${axis}`]) : memo.concat(datum[`_${axis}`]);
-    },
-      []);
-
-    if (allData.length < 1) {
-      return Scale.getBaseScale(props, axis).domain();
+    let min;
+    let max;
+    if (dataset.length < 1) {
+      const scaleDomain = Scale.getBaseScale(props, axis).domain();
+      min = minDomain !== undefined ? minDomain : Collection.getMinValue(scaleDomain);
+      max = maxDomain !== undefined ? maxDomain : Collection.getMaxValue(scaleDomain);
+    } else {
+      min = minDomain !== undefined ? minDomain : reduceData(dataset, axis, "min");
+      max = maxDomain !== undefined ? maxDomain : reduceData(dataset, axis, "max");
     }
-
-    const min = Math.min(...allData);
-    const max = Math.max(...allData);
-    if (+min === +max) {
-      return Domain.getSinglePointDomain(max);
-    }
-    domain = [min, max];
+    domain = Domain.getDomainFromMinMax(min, max);
   }
   return Domain.cleanDomain(Domain.padDomain(domain, props, axis), props);
 };
