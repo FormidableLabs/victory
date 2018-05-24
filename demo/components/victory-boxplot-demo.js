@@ -49,7 +49,7 @@ export default class App extends React.Component {
 
     return (
       <div className="demo" style={containerStyle}>
-      <VictoryChart style={chartStyle} domainPadding={50} theme={VictoryTheme.material}>
+      <VictoryChart style={chartStyle} minDomain={0} theme={VictoryTheme.material}>
           <VictoryBoxPlot
             minLabels maxLabels
             data={[

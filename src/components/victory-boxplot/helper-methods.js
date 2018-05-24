@@ -131,49 +131,62 @@ const getData = (props) => {
 };
 
 const reduceDataset = (props, dataset, axis) => {
-  const allData = dataset.reduce((memo, datum) => {
-    return memo.concat(datum[`_${axis}`]);
-  }, []);
+  const minDomain = Domain.getMinFromProps(props, axis);
+  const maxDomain = Domain.getMaxFromProps(props, axis);
+  if (dataset.length < 1) {
+    const scaleDomain = Scale.getBaseScale(props, axis).domain();
+    const min = minDomain !== undefined ? minDomain : Collection.getMinValue(scaleDomain);
+    const max = maxDomain !== undefined ? maxDomain : Collection.getMaxValue(scaleDomain);
+    return Domain.getDomainFromMinMax(min, max);
+  }
+  const minData = minDomain !== undefined ?
+    minDomain : dataset.reduce((memo, datum) => {
+      return memo < datum[`_${axis}`] ? memo : datum[`_${axis}`];
+    }, Infinity);
+  const maxData = maxDomain !== undefined ?
+    maxDomain : dataset.reduce((memo, datum) => {
+      return memo > datum[`_${axis}`] ? memo : datum[`_${axis}`];
+    }, -Infinity);
+  return Domain.getDomainFromMinMax(minData, maxData);
 
-  if (allData.length < 1) {
-    return Scale.getBaseScale(props, axis).domain();
-  }
-  const minData = Collection.getMinValue(allData);
-  const maxData = Collection.getMaxValue(allData);
-  if (+minData === +maxData) {
-    return Domain.getSinglePointDomain(maxData);
-  }
-  return [minData, maxData];
+
 };
 
-const getDomainFromMinMax = (dataset) => {
-  const allMin = dataset.reduce((memo, datum) => memo.concat(datum._min), []);
-  const allMax = dataset.reduce((memo, datum) => memo.concat(datum._max), []);
-
-  const minData = Math.min(...allMin);
-  const maxData = Math.max(...allMax);
-  if (+minData === +maxData) {
-    return Domain.getSinglePointDomain(maxData);
-  }
-
-  return [minData, maxData];
+const getDomainFromMinMax = (props, dataset, axis) => {
+  const minDomain = Domain.getMinFromProps(props, axis);
+  const maxDomain = Domain.getMaxFromProps(props, axis);
+  const minData = minDomain !== undefined ?
+    minDomain : dataset.reduce((memo, datum) => {
+      return memo < datum._min ? memo : datum._min;
+    }, Infinity);
+  const maxData = maxDomain !== undefined ?
+    maxDomain : dataset.reduce((memo, datum) => {
+      return memo > datum._max ? memo : datum._max;
+    }, -Infinity);
+  return Domain.getDomainFromMinMax(minData, maxData);
 };
 
 const getDomain = (props, axis) => {
+  const minDomain = Domain.getMinFromProps(props, axis);
+  const maxDomain = Domain.getMaxFromProps(props, axis);
   let domain;
   if (props.domain && props.domain[axis]) {
     domain = props.domain[axis];
   } else if (props.domain && Array.isArray(props.domain)) {
     domain = props.domain;
+  } else if (minDomain !== undefined && maxDomain !== undefined) {
+    domain = Domain.getDomainFromMinMax(minDomain, maxDomain);
   } else {
     const dataset = getData(props);
 
     if (props.horizontal) {
       // find the domain of all y values, use the min and max for x
-      domain = axis === "x" ? getDomainFromMinMax(dataset) : reduceDataset(props, dataset, axis);
+      domain = axis === "x" ?
+        getDomainFromMinMax(props, dataset, axis) : reduceDataset(props, dataset, axis);
     } else {
       // find the domain of all x values, use the min and max for y
-      domain = axis === "x" ? reduceDataset(props, dataset, axis) : getDomainFromMinMax(dataset);
+      domain = axis === "x" ?
+        reduceDataset(props, dataset, axis) : getDomainFromMinMax(props, dataset, axis);
     }
   }
   return Domain.cleanDomain(Domain.padDomain(domain, props, axis), props);
