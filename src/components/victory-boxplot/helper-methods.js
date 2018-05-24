@@ -133,12 +133,7 @@ const getData = (props) => {
 const reduceDataset = (props, dataset, axis) => {
   const minDomain = Domain.getMinFromProps(props, axis);
   const maxDomain = Domain.getMaxFromProps(props, axis);
-  if (dataset.length < 1) {
-    const scaleDomain = Scale.getBaseScale(props, axis).domain();
-    const min = minDomain !== undefined ? minDomain : Collection.getMinValue(scaleDomain);
-    const max = maxDomain !== undefined ? maxDomain : Collection.getMaxValue(scaleDomain);
-    return Domain.getDomainFromMinMax(min, max);
-  }
+
   const minData = minDomain !== undefined ?
     minDomain : dataset.reduce((memo, datum) => {
       return memo < datum[`_${axis}`] ? memo : datum[`_${axis}`];
@@ -166,30 +161,39 @@ const getDomainFromMinMax = (props, dataset, axis) => {
   return Domain.getDomainFromMinMax(minData, maxData);
 };
 
+const getDomainFromData = (props, dataset, axis) => {
+  if (props.horizontal) {
+    // find the domain of all y values, use the min and max for x
+    return axis === "x" ?
+      getDomainFromMinMax(props, dataset, axis) : reduceDataset(props, dataset, axis);
+  }
+  return axis === "x" ?
+    reduceDataset(props, dataset, axis) : getDomainFromMinMax(props, dataset, axis);
+};
+
+// eslint-disable-next-line max-statements
 const getDomain = (props, axis) => {
   const minDomain = Domain.getMinFromProps(props, axis);
   const maxDomain = Domain.getMaxFromProps(props, axis);
-  let domain;
-  if (props.domain && props.domain[axis]) {
-    domain = props.domain[axis];
-  } else if (props.domain && Array.isArray(props.domain)) {
-    domain = props.domain;
-  } else if (minDomain !== undefined && maxDomain !== undefined) {
-    domain = Domain.getDomainFromMinMax(minDomain, maxDomain);
-  } else {
-    const dataset = getData(props);
-
-    if (props.horizontal) {
-      // find the domain of all y values, use the min and max for x
-      domain = axis === "x" ?
-        getDomainFromMinMax(props, dataset, axis) : reduceDataset(props, dataset, axis);
-    } else {
-      // find the domain of all x values, use the min and max for y
-      domain = axis === "x" ?
-        reduceDataset(props, dataset, axis) : getDomainFromMinMax(props, dataset, axis);
-    }
+  const propsDomain = Domain.getDomainFromProps(props, axis);
+  const formatDomain = (domain) => {
+    return Domain.cleanDomain(Domain.padDomain(domain, props, axis), props, axis);
+  };
+  if (propsDomain || minDomain !== undefined && maxDomain !== undefined) {
+    return formatDomain(propsDomain || Domain.getDomainFromMinMax(minDomain, maxDomain));
   }
-  return Domain.cleanDomain(Domain.padDomain(domain, props, axis), props);
+  const categoryDomain = Domain.getDomainFromCategories(props, axis);
+  if (categoryDomain) {
+    return formatDomain(categoryDomain);
+  }
+  const dataset = getData(props);
+  if (dataset.length < 1) {
+    const scaleDomain = Scale.getBaseScale(props, axis).domain();
+    const min = minDomain !== undefined ? minDomain : Collection.getMinValue(scaleDomain);
+    const max = maxDomain !== undefined ? maxDomain : Collection.getMaxValue(scaleDomain);
+    return formatDomain(Domain.getDomainFromMinMax(min, max));
+  }
+  return formatDomain(getDomainFromData(props, dataset, axis));
 };
 
 const getStyles = (props, styleObject) => {
