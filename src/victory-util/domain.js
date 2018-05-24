@@ -1,4 +1,4 @@
-import { flatten, includes, isPlainObject, sortedUniq, isObject } from "lodash";
+import { flatten, includes, isPlainObject, sortedUniq } from "lodash";
 import Data from "./data";
 import Scale from "./scale";
 import Helpers from "./helpers";
@@ -215,7 +215,7 @@ export default {
   getDomainFromGroupedData(props, axis, datasets) {
     const { horizontal } = props;
     const dependent = (axis === "x" && !horizontal) || (axis === "y" && horizontal);
-    const categories = isObject(props.categories) ? props.categories.axis : props.categories;
+    const categories = isPlainObject(props.categories) ? props.categories.axis : props.categories;
     if (dependent && categories) {
       return this.getDomainFromCategories(props, axis);
     }
