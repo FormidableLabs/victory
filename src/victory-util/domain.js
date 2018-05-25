@@ -16,19 +16,18 @@ export default {
     const propsDomain = this.getDomainFromProps(props, axis);
     const minDomain = this.getMinFromProps(props, axis);
     const maxDomain = this.getMaxFromProps(props, axis);
-    if (propsDomain || minDomain !== undefined && maxDomain !== undefined) {
-      const domain = propsDomain || this.getDomainFromMinMax(minDomain, maxDomain);
+    const formatDomain = (domain) => {
       return this.cleanDomain(this.padDomain(domain, props, axis), props, axis);
+    };
+    if (propsDomain || minDomain !== undefined && maxDomain !== undefined) {
+      return formatDomain(propsDomain || this.getDomainFromMinMax(minDomain, maxDomain));
     }
-    let domain;
     const categories = Data.getCategories(props, axis);
     if (categories) {
-      domain = this.getDomainFromCategories(props, axis, categories);
-    } else {
-      const dataset = Data.getData(props);
-      domain = this.getDomainFromData(props, axis, dataset);
+      return formatDomain(this.getDomainFromCategories(props, axis, categories));
     }
-    return this.cleanDomain(this.padDomain(domain, props, axis), props, axis);
+    const dataset = Data.getData(props);
+    return formatDomain(this.getDomainFromData(props, axis, dataset));
   },
 
   /**
