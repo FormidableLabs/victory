@@ -183,7 +183,7 @@ export default {
    * @returns {Array} the domain based on data
    */
   getDomainFromData(props, axis, dataset) {
-    const { horizontal, polar, startAngle, endAngle } = props;
+    const { horizontal, polar, startAngle = 0, endAngle = 360 } = props;
     const minDomain = this.getMinFromProps(props, axis);
     const maxDomain = this.getMaxFromProps(props, axis);
     const currentAxis = Helpers.getCurrentAxis(axis, horizontal);
@@ -197,8 +197,7 @@ export default {
     const max = maxDomain !== undefined ? maxDomain : this.getMaxFromData(dataset, currentAxis);
     const domain = this.getDomainFromMinMax(min, max);
 
-    const angularRange = Math.abs((startAngle || 0) - (endAngle || 360));
-    return polar && axis === "x" && angularRange === 360 ?
+    return polar && axis === "x" && Math.abs(startAngle - endAngle) === 360 ?
       this.getSymmetricDomain(domain, this.getFlatData(dataset, currentAxis)) : domain;
   },
 
@@ -225,7 +224,7 @@ export default {
    * @returns {Array} returns a domain from tickValues
    */
   getDomainFromTickValues(props, axis) {
-    const { tickValues, polar } = props;
+    const { tickValues, polar, startAngle = 0, endAngle = 360 } = props;
     const minDomain = this.getMinFromProps(props, axis);
     const maxDomain = this.getMaxFromProps(props, axis);
     const stringTicks = Helpers.stringTicks(props);
@@ -235,7 +234,7 @@ export default {
     const min = minDomain !== undefined ? minDomain : defaultMin;
     const max = maxDomain !== undefined ? maxDomain : defaultMax;
     const initialDomain = this.getDomainFromMinMax(min, max);
-    const domain = polar && axis === "x" && !stringTicks ?
+    const domain = polar && axis === "x" && Math.abs(startAngle - endAngle) === 360 ?
       this.getSymmetricDomain(initialDomain, ticks) : initialDomain;
     if (Helpers.isVertical(props)) {
       domain.reverse();
@@ -251,6 +250,7 @@ export default {
    */
   getDomainFromCategories(props, axis, categories) {
     categories = categories || Data.getCategories(props, axis);
+    const { polar, startAngle = 0, endAngle = 360 } = props;
     if (!categories) {
       return undefined;
     }
@@ -267,7 +267,9 @@ export default {
       categories.map((value) => stringMap[value]) : categories;
     const min = minDomain !== undefined ? minDomain : Collection.getMinValue(categoryValues);
     const max = maxDomain !== undefined ? maxDomain : Collection.getMaxValue(categoryValues);
-    return this.getDomainFromMinMax(min, max);
+    const categoryDomain = this.getDomainFromMinMax(min, max);
+    return polar && axis === "x" && Math.abs(startAngle - endAngle) === 360 ?
+      this.getSymmetricDomain(categoryDomain, categoryValues) : categoryDomain;
   },
 
   /**
@@ -280,7 +282,8 @@ export default {
   getDomainFromGroupedData(props, axis, datasets) {
     const { horizontal } = props;
     const dependent = (axis === "x" && !horizontal) || (axis === "y" && horizontal);
-    if (dependent && props.categories && props.categories[axis]) {
+    const categories = isPlainObject(props.categories) ? props.categories.axis : props.categories;
+    if (dependent && categories) {
       return this.getDomainFromCategories(props, axis);
     }
     const globalDomain = this.getDomainFromData(props, axis, datasets);

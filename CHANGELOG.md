@@ -1,6 +1,18 @@
 VictoryCore Changelog
 =====================
 
+## 22.1.4 (2018-05-23)
+
+- Republish with `npm@5.6.0`
+
+## 22.1.3 (2018-05-23)
+
+-[376](https://github.com/FormidableLabs/victory-core/pull/376) Ensure symmetric category domain for polar charts
+
+## 22.1.2 (2018-05-23)
+
+-[375](https://github.com/FormidableLabs/victory-core/pull/375) Check for axis specific categories in stacked charts
+
 ## 22.1.1 (2018-05-17)
 
 -[374](https://github.com/FormidableLabs/victory-core/pull/374) Consistent `PropTypes` for `clipId`
