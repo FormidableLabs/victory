@@ -85,12 +85,12 @@ export default {
           Collection.getMaxValue(domain, defaultMax)
         ];
       }
-      const minData = this.getFlatData(dataset, currentAxis, "min");
-      const maxData = this.getFlatData(dataset, currentAxis);
+      // const minData = this.getMinFromData(dataset, currentAxis);
+      // const maxData = this.getMaxFromData(dataset, currentAxis);
       const min = minDomain !== undefined ? minDomain :
-        Collection.getMinValue([...domain, ...minData, ...maxData], defaultMin);
+        Collection.getMinValue([...domain], defaultMin);
       const max = maxDomain !== undefined ? maxDomain :
-        Collection.getMaxValue([...domain, ...maxData, ...minData], defaultMax);
+        Collection.getMaxValue([...domain], defaultMax);
       return this.getDomainFromMinMax(min, max);
     };
     let domain;
@@ -133,13 +133,33 @@ export default {
     return typeof props.maxDomain === "number" ? props.maxDomain : undefined;
   },
 
-  getFlatData(dataset, currentAxis, type) {
-    const flatData = flatten(dataset);
-    const dataType = type === "min" ? 0 : 1;
-    return flatData.map((datum) => {
-      return datum[`_${currentAxis}${dataType}`] === undefined ?
-        datum[`_${currentAxis}`] : datum[`_${currentAxis}${dataType}`];
+  getFlatData(dataset, axis) {
+    return flatten(dataset).map((datum) => {
+      return datum[`_${axis}`] && datum[`_${axis}`][1] !== undefined ?
+        datum[`_${axis}`][1] : datum[`_${axis}`];
     });
+  },
+
+  getMinFromData(dataset, axis) {
+    let containsDate = false;
+    const minValue = flatten(dataset).reduce((memo, datum) => {
+      const current = datum[`_${axis}`] && datum[`_${axis}`][0] !== undefined ?
+        datum[`_${axis}`][0] : datum[`_${axis}`];
+      containsDate = containsDate || current instanceof Date;
+      return memo < current ? memo : current;
+    }, Infinity);
+    return containsDate ? new Date(minValue) : minValue;
+  },
+
+  getMaxFromData(dataset, axis) {
+    let containsDate = false;
+    const minValue = flatten(dataset).reduce((memo, datum) => {
+      const current = datum[`_${axis}`] && datum[`_${axis}`][1] !== undefined ?
+        datum[`_${axis}`][1] : datum[`_${axis}`];
+      containsDate = containsDate || current instanceof Date;
+      return memo > current ? memo : current;
+    }, -Infinity);
+    return containsDate ? new Date(minValue) : minValue;
   },
 
   getDomainFromMinMax(min, max) {
@@ -173,10 +193,8 @@ export default {
       const max = maxDomain !== undefined ? maxDomain : Collection.getMaxValue(scaleDomain);
       return this.getDomainFromMinMax(min, max);
     }
-    const min = minDomain !== undefined ?
-      minDomain : Collection.getMinValue(this.getFlatData(dataset, currentAxis, "min"));
-    const max = maxDomain !== undefined ?
-      maxDomain : Collection.getMaxValue(this.getFlatData(dataset, currentAxis));
+    const min = minDomain !== undefined ? minDomain : this.getMinFromData(dataset, currentAxis);
+    const max = maxDomain !== undefined ? maxDomain : this.getMaxFromData(dataset, currentAxis);
     const domain = this.getDomainFromMinMax(min, max);
 
     const angularRange = Math.abs((startAngle || 0) - (endAngle || 360));
@@ -266,25 +284,30 @@ export default {
       return this.getDomainFromCategories(props, axis);
     }
     const globalDomain = this.getDomainFromData(props, axis, datasets);
+    if (dependent) {
+      return globalDomain;
+    }
     // find the cumulative max for stacked chart types
-    const cumulativeData = !dependent ?
-      this.getCumulativeData(props, axis, datasets) : [];
-    const cumulativeMaxArray = cumulativeData.map((dataset) => {
-      return dataset.reduce((memo, val) => {
-        return val > 0 ? +val + +memo : memo;
+    const cumulativeData = this.getCumulativeData(props, axis, datasets);
+    const cumulativeMax = cumulativeData.reduce((memo, dataset) => {
+      const currentMax = dataset.reduce((m, val) => {
+        return val > 0 ? m + val : m;
       }, 0);
-    });
-    const cumulativeMinArray = cumulativeData.map((dataset) => {
-      return dataset.reduce((memo, val) => {
-        return val < 0 ? +val + +memo : memo;
-      }, 0);
-    });
+      return memo > currentMax ? memo : currentMax;
+    }, -Infinity);
 
-    const cumulativeMin = Math.min(...cumulativeMinArray);
+    const cumulativeMin = cumulativeData.reduce((memo, dataset) => {
+      const currentMin = dataset.reduce((m, val) => {
+        return val < 0 ? m + val : m;
+      }, 0);
+      return memo < currentMin ? memo : currentMin;
+    }, Infinity);
+
     // use greatest min / max
-    const domainMin = cumulativeMin < 0 ? cumulativeMin : Collection.getMinValue(globalDomain);
-    const domainMax = Collection.getMaxValue(globalDomain, ...cumulativeMaxArray);
-    return this.getDomainFromMinMax(domainMin, domainMax);
+    return this.getDomainFromMinMax(
+      Collection.getMinValue(globalDomain, cumulativeMin),
+      Collection.getMaxValue(globalDomain, cumulativeMax)
+    );
   },
 
   /**
