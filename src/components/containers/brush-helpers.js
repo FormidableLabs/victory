@@ -174,7 +174,7 @@ const Helpers = {
     } else {
       // if the event occurs outside the region, or if the whole domain is selected,
       // start a new selection
-      return allowResize && allowDraw ? [{
+      return allowDraw ? [{
         target: "parent",
         mutation: () => ({
           isSelecting: allowResize, domainBox, fullDomainBox,
