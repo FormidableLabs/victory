@@ -1,5 +1,9 @@
 # VictoryChart Changelog
 
+## 26.1.1 (2018-05-28)
+
+-[599](https://github.com/FormidableLabs/victory-chart/pull/599) Add `allowDraw` boolean prop for `VictoryBrushContainer` and `VictoryBrushLine`
+
 ## 26.1.0 (2018-05-04)
 
 -[594](https://github.com/FormidableLabs/victory-chart/pull/594) Support functional `cornerRadius` and objects with `cornerRadius` defined for "top" and "bottom"
