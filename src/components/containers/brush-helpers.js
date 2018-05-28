@@ -123,7 +123,7 @@ const Helpers = {
   onMouseDown(evt, targetProps) { // eslint-disable-line max-statements
     evt.preventDefault();
     const {
-      brushDimension, handleWidth, cachedBrushDomain, domain, allowResize, allowDrag
+      brushDimension, handleWidth, cachedBrushDomain, domain, allowResize, allowDrag, allowDraw
     } = targetProps;
 
     // Don't trigger events for static brushes
@@ -174,7 +174,7 @@ const Helpers = {
     } else {
       // if the event occurs outside the region, or if the whole domain is selected,
       // start a new selection
-      return allowResize ? [{
+      return allowDraw ? [{
         target: "parent",
         mutation: () => ({
           isSelecting: allowResize, domainBox, fullDomainBox,

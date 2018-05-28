@@ -97,6 +97,7 @@ const fallbackProps = {
 export default class VictoryBrushLine extends React.Component {
   static propTypes = {
     allowDrag: PropTypes.bool,
+    allowDraw: PropTypes.bool,
     allowResize: PropTypes.bool,
     brushAreaComponent: PropTypes.element,
     brushAreaStyle: PropTypes.object,
@@ -125,6 +126,7 @@ export default class VictoryBrushLine extends React.Component {
 
   static defaultProps = {
     allowDrag: true,
+    allowDraw: true,
     allowResize: true,
     brushAreaComponent: <Box/>,
     brushComponent: <Box/>,
@@ -159,7 +161,9 @@ export default class VictoryBrushLine extends React.Component {
         },
         onMouseDown: (evt, targetProps) => {
           evt.preventDefault();
-          const { allowResize, allowDrag, dimension, activeBrushes, brushDomain } = targetProps;
+          const {
+            allowResize, allowDrag, allowDraw, dimension, activeBrushes, brushDomain
+          } = targetProps;
 
           // Don't trigger events for static brushes
           if (!allowResize && !allowDrag) {
@@ -194,7 +198,7 @@ export default class VictoryBrushLine extends React.Component {
           } else {
             // if the event occurs outside the region, or if the whole domain is selected,
             // start a new selection
-            return allowResize ? [{
+            return allowDraw ? [{
               mutation: () => ({
                 isSelecting: allowResize,
                 brushDomain: null,
