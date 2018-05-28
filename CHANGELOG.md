@@ -3,6 +3,8 @@
 ## 26.1.1 (2018-05-28)
 
 -[599](https://github.com/FormidableLabs/victory-chart/pull/599) Add `allowDraw` boolean prop for `VictoryBrushContainer` and `VictoryBrushLine`
+-[598](https://github.com/FormidableLabs/victory-chart/pull/598) Fix category bugs
+-[596](https://github.com/FormidableLabs/victory-chart/pull/596) Only call `onSelectionCleared` when selected data exists
 
 ## 26.1.0 (2018-05-04)
 
