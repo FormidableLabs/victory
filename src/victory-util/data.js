@@ -270,8 +270,9 @@ export default {
    * @returns {Array} an array of categories
    */
   getCategories(props, axis) {
+    const currentAxis = Helpers.getCurrentAxis(axis, props.horizontal);
     return props.categories && !Array.isArray(props.categories) ?
-      props.categories[axis] : props.categories;
+      props.categories[currentAxis] : props.categories;
   },
 
   /**
