@@ -1,6 +1,10 @@
 VictoryCore Changelog
 =====================
 
+## 22.1.5 (2018-05-23)
+
+- [377](https://github.com/FormidableLabs/victory-core/pull/377) Allow negative gutters for `VictoryLegend`
+
 ## 22.1.4 (2018-05-23)
 
 - Republish with `npm@5.6.0`
