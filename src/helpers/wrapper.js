@@ -41,8 +41,8 @@ export default {
     const domainPadding = props.polar ?
       0 : this.getDefaultDomainPadding(props, axis, childComponents);
     let domain;
-    if (propsDomain || minDomain !== undefined && maxDomain !== undefined) {
-      domain = propsDomain || Domain.getDomainFromMinMax(minDomain, maxDomain);
+    if (propsDomain) {
+      domain = propsDomain;
     } else {
       const dataset = (props.data || props.y) && Data.getData(props);
       const dataDomain = dataset ? Domain.getDomainFromData(props, axis, dataset) : [];

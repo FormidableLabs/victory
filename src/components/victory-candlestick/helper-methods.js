@@ -73,31 +73,23 @@ const reduceData = (dataset, axis, type) => {
   }, baseCondition);
 };
 
-// eslint-disable-next-line max-statements
-const getDomain = (props, axis) => {
+const getDomainFromData = (props, axis) => {
   const minDomain = Domain.getMinFromProps(props, axis);
   const maxDomain = Domain.getMaxFromProps(props, axis);
-  const propsDomain = Domain.getDomainFromProps(props, axis);
-  const formatDomain = (domain) => {
-    return Domain.cleanDomain(Domain.padDomain(domain, props, axis), props, axis);
-  };
-  if (propsDomain || minDomain !== undefined && maxDomain !== undefined) {
-    return formatDomain(propsDomain || Domain.getDomainFromMinMax(minDomain, maxDomain));
-  }
-  const categoryDomain = Domain.getDomainFromCategories(props, axis);
-  if (categoryDomain) {
-    return formatDomain(categoryDomain);
-  }
   const dataset = getData(props);
   if (dataset.length < 1) {
     const scaleDomain = Scale.getBaseScale(props, axis).domain();
     const min = minDomain !== undefined ? minDomain : Collection.getMinValue(scaleDomain);
     const max = maxDomain !== undefined ? maxDomain : Collection.getMaxValue(scaleDomain);
-    return formatDomain(Domain.getDomainFromMinMax(min, max));
+    return Domain.getDomainFromMinMax(min, max);
   }
   const min = minDomain !== undefined ? minDomain : reduceData(dataset, axis, "min");
   const max = maxDomain !== undefined ? maxDomain : reduceData(dataset, axis, "max");
-  return formatDomain(Domain.getDomainFromMinMax(min, max));
+  return Domain.getDomainFromMinMax(min, max);
+};
+
+const getDomain = (props, axis) => {
+  return Domain.createDomainFunction(getDomainFromData)(props, axis);
 };
 
 const getCalculatedValues = (props) => {

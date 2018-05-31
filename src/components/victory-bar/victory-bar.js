@@ -72,7 +72,7 @@ class VictoryBar extends React.Component {
     theme: VictoryTheme.grayscale
   };
 
-  static getDomain = Domain.getDomainWithZero.bind(Domain);
+  static getDomain = Domain.getDomainWithZero;
   static getData = Data.getData.bind(Data);
   static getBaseProps = (props) => getBaseProps(props, fallbackProps);
   static expectedComponents = [

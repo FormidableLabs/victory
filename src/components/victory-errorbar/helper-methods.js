@@ -101,9 +101,16 @@ const getErrorData = (props) => {
   }
 };
 
-const getDomainFromData = (props, axis, dataset) => {
+const getDomainFromData = (props, axis) => {
   const minDomain = Domain.getMinFromProps(props, axis);
   const maxDomain = Domain.getMaxFromProps(props, axis);
+  const dataset = getErrorData(props);
+  if (dataset.length < 1) {
+    const scaleDomain = Scale.getBaseScale(props, axis).domain();
+    const min = minDomain !== undefined ? minDomain : Collection.getMinValue(scaleDomain);
+    const max = maxDomain !== undefined ? maxDomain : Collection.getMaxValue(scaleDomain);
+    return Domain.getDomainFromMinMax(min, max);
+  }
   const currentAxis = Helpers.getCurrentAxis(axis, props.horizontal);
   const error = currentAxis === "x" ? "errorX" : "errorY";
   const reduceErrorData = (type) => {
@@ -123,30 +130,8 @@ const getDomainFromData = (props, axis, dataset) => {
   return Domain.getDomainFromMinMax(min, max);
 };
 
-// eslint-disable-next-line max-statements
 const getDomain = (props, axis) => {
-  const minDomain = Domain.getMinFromProps(props, axis);
-  const maxDomain = Domain.getMaxFromProps(props, axis);
-  const formatDomain = (domain) => {
-    return Domain.cleanDomain(Domain.padDomain(domain, props, axis), props, axis);
-  };
-  const propsDomain = Domain.getDomainFromProps(props, axis);
-  if (propsDomain || minDomain !== undefined && maxDomain !== undefined) {
-    return formatDomain(propsDomain || Domain.getDomainFromMinMax(minDomain, maxDomain));
-  }
-  const categoryDomain = Domain.getDomainFromCategories(props, axis);
-  if (categoryDomain) {
-    return formatDomain(categoryDomain);
-  }
-  const dataset = getErrorData(props);
-  if (dataset.length < 1) {
-    const scaleDomain = Scale.getBaseScale(props, axis).domain();
-    const min = minDomain !== undefined ? minDomain : Collection.getMinValue(scaleDomain);
-    const max = maxDomain !== undefined ? maxDomain : Collection.getMaxValue(scaleDomain);
-    return formatDomain(Domain.getDomainFromMinMax(min, max));
-  }
-
-  return formatDomain(getDomainFromData(props, axis, dataset));
+  return Domain.createDomainFunction(getDomainFromData)(props, axis);
 };
 
 const getCalculatedValues = (props) => {
