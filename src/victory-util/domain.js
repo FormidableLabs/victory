@@ -1,10 +1,26 @@
-import { flatten, includes, isPlainObject, sortedUniq } from "lodash";
+import { flatten, includes, isPlainObject, sortedUniq, isFunction } from "lodash";
 import Data from "./data";
 import Scale from "./scale";
 import Helpers from "./helpers";
 import Collection from "./collection";
 
 export default {
+  createDomainFunction(formatDomain, getDomainFromData) {
+    getDomainFromData = isFunction(getDomainFromData) ?
+      getDomainFromData : this.getDomainFromData.bind(this);
+    formatDomain = isFunction(formatDomain) ? formatDomain : this.formatDomain.bind(this);
+    return (props, axis) => {
+      const propsDomain = this.getDomainFromProps(props, axis);
+      if (propsDomain) {
+        return formatDomain(propsDomain, props, axis);
+      }
+      const categories = Data.getCategories(props, axis);
+      const domain = categories ?
+        this.getDomainFromCategories(props, axis, categories) : getDomainFromData(props, axis);
+      return formatDomain(domain, props, axis);
+    };
+  },
+
   formatDomain(domain, props, axis) {
     return this.cleanDomain(this.padDomain(domain, props, axis), props, axis);
   },
@@ -15,14 +31,8 @@ export default {
    * @returns {Array} the domain for the given axis
    */
   getDomain(props, axis) {
-    const propsDomain = this.getDomainFromProps(props, axis);
-    if (propsDomain) {
-      return this.formatDomain(propsDomain, props, axis);
-    }
-    const categories = Data.getCategories(props, axis);
-    const domain = categories ?
-      this.getDomainFromCategories(props, axis, categories) : this.getDomainFromData(props, axis);
-    return this.formatDomain(domain, props, axis);
+    const getDomain = this.createDomainFunction();
+    return getDomain(props, axis);
   },
 
   /**
@@ -60,10 +70,6 @@ export default {
    * @returns {Array} the domain for the given axis
    */
   getDomainWithZero(props, axis) {
-    const propsDomain = this.getDomainFromProps(props, axis);
-    if (propsDomain) {
-      return this.formatDomain(propsDomain, props, axis);
-    }
     const ensureZero = (domain) => {
       const currentAxis = Helpers.getCurrentAxis(axis, props.horizontal);
       const minDomain = this.getMinFromProps(props, axis);
@@ -77,10 +83,11 @@ export default {
       const max = maxDomain !== undefined ? maxDomain : Collection.getMaxValue(domain, defaultMax);
       return this.getDomainFromMinMax(min, max);
     };
-    const categories = Data.getCategories(props, axis);
-    const domain = categories ?
-      this.getDomainFromCategories(props, axis, categories) : this.getDomainFromData(props, axis);
-    return this.formatDomain(ensureZero(domain), props, axis);
+    const formatDomain = (domain) => {
+      return this.formatDomain(ensureZero(domain), props, axis);
+    };
+    const getDomain = this.createDomainFunction(formatDomain);
+    return getDomain(props, axis);
   },
 
   /**
