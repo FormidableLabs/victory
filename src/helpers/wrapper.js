@@ -51,8 +51,7 @@ export default {
       const max = maxDomain || Collection.getMaxValue([...dataDomain, ...childDomain]);
       domain = Domain.getDomainFromMinMax(min, max);
     }
-    const paddedDomain = Domain.padDomain(domain, assign({ domainPadding }, props), axis);
-    return Domain.cleanDomain(paddedDomain, props, axis);
+    return Domain.formatDomain(domain, assign({ domainPadding }, props), axis);
   },
 
   setAnimationState(props, nextProps) {
