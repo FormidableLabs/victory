@@ -80,7 +80,7 @@ export default class Bar extends React.Component {
       L ${y1}, ${x0 - cornerRadius.top}
       A ${topArc}, ${y1 - sign * cornerRadius.top}, ${x0}
       L ${y0 + cornerRadius.bottom}, ${x0 }
-      A ${bottomArc}, ${y0}, ${x1 + sign * cornerRadius.bottom}
+      A ${bottomArc}, ${y0}, ${x0 - sign * cornerRadius.bottom}
       z`;
   }
 
