@@ -96,33 +96,33 @@ function getMinFromData(dataset, axis) {
   return containsDate ? new Date(minValue) : minValue;
 }
 
+//eslint-disable-next-line max-statements
 function padDomain(domain, props, axis) {
   if (!props.domainPadding) {
     return domain;
   }
-
+  const minDomain = getMinFromProps(props, axis);
+  const maxDomain = getMaxFromProps(props, axis);
   const padding = getDomainPadding(props, axis);
   if (!padding.left && !padding.right) {
     return domain;
   }
 
-  const domainMin = Collection.getMinValue(domain);
-  const domainMax = Collection.getMaxValue(domain);
+  const min = Collection.getMinValue(domain);
+  const max = Collection.getMaxValue(domain);
   const range = Helpers.getRange(props, axis);
-  const rangeExtent = Math.abs(Math.max(...range) - Math.min(...range));
+  const rangeExtent = Math.abs(range[0] - range[1]);
 
   // Naive initial padding calculation
   const initialPadding = {
-    left: Math.abs(domainMax - domainMin) * padding.left / rangeExtent,
-    right: Math.abs(domainMax - domainMin) * padding.right / rangeExtent
+    left: Math.abs(max - min) * padding.left / rangeExtent,
+    right: Math.abs(max - min) * padding.right / rangeExtent
   };
 
   // Adjust the domain by the initial padding
   const adjustedDomain = {
-    min: (domainMin >= 0 && (domainMin - initialPadding.left) <= 0) ?
-      0 : domainMin.valueOf() - initialPadding.left,
-    max: (domainMax <= 0 && (domainMax + initialPadding.right) >= 0) ?
-      0 : domainMax.valueOf() + initialPadding.right
+    min: +min - initialPadding.left,
+    max: +max + initialPadding.right
   };
 
   // re-calculate padding, taking the adjusted domain into account
@@ -133,14 +133,13 @@ function padDomain(domain, props, axis) {
 
   // Adjust the domain by the final padding
   const finalDomain = {
-    min: (domainMin >= 0 && (domainMin - finalPadding.left) <= 0) ?
-      0 : domainMin.valueOf() - finalPadding.left,
-    max: (domainMax >= 0 && (domainMax + finalPadding.right) <= 0) ?
-      0 : domainMax.valueOf() + finalPadding.right
+    min: minDomain !== undefined ? minDomain : min.valueOf() - finalPadding.left,
+    max: maxDomain !== undefined ? maxDomain : max.valueOf() + finalPadding.right
   };
 
-  return domainMin instanceof Date || domainMax instanceof Date ?
-    [new Date(finalDomain.min), new Date(finalDomain.max)] : [finalDomain.min, finalDomain.max];
+  return min instanceof Date || max instanceof Date ?
+    getDomainFromMinMax(new Date(finalDomain.min), new Date(finalDomain.max)) :
+    getDomainFromMinMax(finalDomain.min, finalDomain.max);
 }
 
 // Public Methods
