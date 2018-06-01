@@ -57,30 +57,6 @@ function getCumulativeData(props, axis, datasets) {
   return categories.length === 0 ? _dataByIndex() : _dataByCategory();
 }
 
-function getDomainFromCategories(props, axis, categories) {
-  categories = categories || Data.getCategories(props, axis);
-  const { polar, startAngle = 0, endAngle = 360 } = props;
-  if (!categories) {
-    return undefined;
-  }
-  const minDomain = getMinFromProps(props, axis);
-  const maxDomain = getMaxFromProps(props, axis);
-  const stringArray = Collection.containsStrings(categories) ?
-   Data.getStringsFromCategories(props, axis) : [];
-  const stringMap = stringArray.length === 0 ? null :
-    stringArray.reduce((memo, string, index) => {
-      memo[string] = index + 1;
-      return memo;
-    }, {});
-  const categoryValues = stringMap ?
-    categories.map((value) => stringMap[value]) : categories;
-  const min = minDomain !== undefined ? minDomain : Collection.getMinValue(categoryValues);
-  const max = maxDomain !== undefined ? maxDomain : Collection.getMaxValue(categoryValues);
-  const categoryDomain = getDomainFromMinMax(min, max);
-  return polar && axis === "x" && Math.abs(startAngle - endAngle) === 360 ?
-    getSymmetricDomain(categoryDomain, categoryValues) : categoryDomain;
-}
-
 function getDomainPadding(props, axis) {
   const formatPadding = (padding) => {
     return Array.isArray(padding) ?
@@ -213,6 +189,37 @@ function formatDomain(domain, props, axis) {
  */
 function getDomain(props, axis) {
   return createDomainFunction()(props, axis);
+}
+
+/**
+ * Returns a domain based on categories if they exist
+ * @param {Object} props: the props object
+ * @param {String} axis: the current axis
+ * @param {Array} categories: an array of categories corresponding to a given axis
+ * @returns {Array|undefined} returns a domain from categories or undefined
+ */
+function getDomainFromCategories(props, axis, categories) {
+  categories = categories || Data.getCategories(props, axis);
+  const { polar, startAngle = 0, endAngle = 360 } = props;
+  if (!categories) {
+    return undefined;
+  }
+  const minDomain = getMinFromProps(props, axis);
+  const maxDomain = getMaxFromProps(props, axis);
+  const stringArray = Collection.containsStrings(categories) ?
+    Data.getStringsFromCategories(props, axis) : [];
+  const stringMap = stringArray.length === 0 ? null :
+    stringArray.reduce((memo, string, index) => {
+      memo[string] = index + 1;
+      return memo;
+    }, {});
+  const categoryValues = stringMap ?
+    categories.map((value) => stringMap[value]) : categories;
+  const min = minDomain !== undefined ? minDomain : Collection.getMinValue(categoryValues);
+  const max = maxDomain !== undefined ? maxDomain : Collection.getMaxValue(categoryValues);
+  const categoryDomain = getDomainFromMinMax(min, max);
+  return polar && axis === "x" && Math.abs(startAngle - endAngle) === 360 ?
+    getSymmetricDomain(categoryDomain, categoryValues) : categoryDomain;
 }
 
 /**
@@ -391,6 +398,7 @@ export default {
   createDomainFunction,
   formatDomain,
   getDomain,
+  getDomainFromCategories,
   getDomainFromData,
   getDomainFromGroupedData,
   getDomainFromMinMax,
