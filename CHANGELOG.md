@@ -1,7 +1,11 @@
 VictoryCore Changelog
 =====================
 
-## 22.1.5 (2018-05-23)
+## 22.1.6 (2018-06-01)
+
+-[378](https://github.com/FormidableLabs/victory-core/pull/378) Fixes a cornerRadius bug in `Bar`
+
+## 22.1.5 (2018-05-31)
 
 - [377](https://github.com/FormidableLabs/victory-core/pull/377) Allow negative gutters for `VictoryLegend`
 
