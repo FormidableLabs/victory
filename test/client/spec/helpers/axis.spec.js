@@ -9,6 +9,26 @@ describe("helpers/axis", () => {
   const getVictoryAxis = (props) => React.createElement(VictoryAxis, props);
   const getVictoryBar = (props) => React.createElement(VictoryBar, props);
 
+  describe("getDomainFromTickValues", () => {
+    it("determines a domain from tickValues", () => {
+      const props = { tickValues: [1, 2, 3] };
+      const domainResult = Axis.getDomainFromTickValues(props);
+      expect(domainResult).to.eql([1, 3]);
+    });
+
+    it("determines a domain from string tick values", () => {
+      const props = { tickValues: ["a", "b", "c", "d"] };
+      const domainResult = Axis.getDomainFromTickValues(props);
+      expect(domainResult).to.eql([1, 4]);
+    });
+
+    it("reverses a domain from tickValues when the axis is vertical", () => {
+      const props = { tickValues: [1, 2, 3], dependentAxis: true };
+      const domainResult = Axis.getDomainFromTickValues(props);
+      expect(domainResult).to.eql([3, 1]);
+    });
+  });
+
   describe("getAxisComponent", () => {
     const dependentAxis = getVictoryAxis({ dependentAxis: true });
     const independentAxis = getVictoryAxis({ dependentAxis: false });
