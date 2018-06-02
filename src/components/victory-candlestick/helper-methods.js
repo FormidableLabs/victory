@@ -41,7 +41,7 @@ const getCalculatedValues = (props) => {
   const defaultStyle = theme && theme.candlestick && theme.candlestick.style ?
     theme.candlestick.style : {};
   const style = Helpers.getStyles(props.style, defaultStyle);
-  const data = Data.addEventKeys(props, getData(props));
+  const data = getData(props);
   const range = {
     x: Helpers.getRange(props, "x"),
     y: Helpers.getRange(props, "y")
