@@ -17,6 +17,12 @@ const immutableDatumWhitelist = {
   errorY: true
 };
 
+function parseDatum(datum) {
+  return Immutable.isImmutable(datum)
+    ? Immutable.shallowToJS(datum, immutableDatumWhitelist)
+    : datum;
+}
+
 /**
  * Returns generated data for a given axis based on domain and sample from props
  * @param {Object} props: the props object
@@ -79,6 +85,25 @@ function cleanData(dataset, props) {
   });
 }
 
+/**
+ * Returns an object mapping string data to numeric data
+ * @param {Object} props: the props object
+ * @param {String} axis: the current axis
+ * @returns {Object} an object mapping string data to numeric data
+ */
+function createStringMap(props, axis) {
+  const stringsFromAxes = getStringsFromAxes(props, axis);
+  const stringsFromCategories = getStringsFromCategories(props, axis);
+  const stringsFromData = getStringsFromData(props, axis);
+
+  const allStrings = uniq([...stringsFromAxes, ...stringsFromCategories, ...stringsFromData]);
+  return allStrings.length === 0 ? null :
+    allStrings.reduce((memo, string, index) => {
+      memo[string] = index + 1;
+      return memo;
+    }, {});
+}
+
 // Returns a data accessor given an eventKey prop
 function getEventKey(key) {
   // creates a data accessor function
@@ -101,25 +126,6 @@ function addEventKeys(props, data) {
     const eventKey = datum.eventKey || eventKeyAccessor(datum) || index;
     return assign({ eventKey }, datum);
   });
-}
-
- /**
- * Returns an object mapping string data to numeric data
- * @param {Object} props: the props object
- * @param {String} axis: the current axis
- * @returns {Object} an object mapping string data to numeric data
- */
-function createStringMap(props, axis) {
-  const stringsFromAxes = getStringsFromAxes(props, axis);
-  const stringsFromCategories = getStringsFromCategories(props, axis);
-  const stringsFromData = getStringsFromData(props, axis);
-
-  const allStrings = uniq([...stringsFromAxes, ...stringsFromCategories, ...stringsFromData]);
-  return allStrings.length === 0 ? null :
-    allStrings.reduce((memo, string, index) => {
-      memo[string] = index + 1;
-      return memo;
-    }, {});
 }
 
 /**
@@ -154,7 +160,7 @@ function downsample(data, maxPoints, startingIndex = 0) {
  */
 function formatData(dataset, props, expectedKeys) {
   const isArrayOrIterable = Array.isArray(dataset) || Immutable.isIterable(dataset);
-  if (!isArrayOrIterable) {
+  if (!isArrayOrIterable || getLength(dataset) < 1) {
     return [];
   }
 
@@ -162,12 +168,12 @@ function formatData(dataset, props, expectedKeys) {
     return Helpers.createAccessor(props[name] !== undefined ? props[name] : name);
   };
 
-  expectedKeys = expectedKeys || ["x", "y", "y0"];
+  expectedKeys = Array.isArray(expectedKeys) ? expectedKeys : ["x", "y", "y0"];
 
   const stringMap = {
-    x: createStringMap(props, "x"),
-    y: createStringMap(props, "y"),
-    y0: createStringMap(props, "y")
+    x: expectedKeys.includes("x") ? createStringMap(props, "x") : undefined,
+    y: expectedKeys.includes("y") ? createStringMap(props, "y") : undefined,
+    y0: expectedKeys.includes("y0") ? createStringMap(props, "y") : undefined
   };
 
   const accessor = expectedKeys.reduce((memo, type) => {
@@ -197,7 +203,8 @@ function formatData(dataset, props, expectedKeys) {
   }).filter(Boolean);
 
   const sortedData = sortData(data, props.sortKey, props.sortOrder);
-  return cleanData(sortedData, props);
+  const cleanedData = cleanData(sortedData, props);
+  return addEventKeys(props, cleanedData);
 }
 
 /**
@@ -232,17 +239,7 @@ function getCategories(props, axis) {
  * @returns {Array} an array of data
  */
 function getData(props) {
-  let data;
-  if (props.data) {
-    if (getLength(props.data) < 1) {
-      return [];
-    } else {
-      data = formatData(props.data, props);
-    }
-  } else {
-    data = formatData(generateData(props), props);
-  }
-  return addEventKeys(props, data);
+  return props.data ? formatData(props.data, props) : formatData(generateData(props), props);
 }
 
 function getLength(data) {
@@ -311,15 +308,8 @@ function getStringsFromData(props, axis) {
   }, []);
 }
 
-function parseDatum(datum) {
-  return Immutable.isImmutable(datum)
-    ? Immutable.shallowToJS(datum, immutableDatumWhitelist)
-    : datum;
-}
-
 export default {
   addEventKeys,
-  createStringMap,
   downsample,
   formatData,
   generateData,
@@ -328,6 +318,5 @@ export default {
   getLength,
   getStringsFromAxes,
   getStringsFromCategories,
-  getStringsFromData,
-  parseDatum
+  getStringsFromData
 };
