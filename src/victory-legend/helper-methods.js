@@ -35,7 +35,7 @@ const getCalculatedValues = (props) => {
   const style = getStyles(props, defaultStyles);
   const colorScale = getColorScale(props);
   const isHorizontal = orientation === "horizontal";
-  const borderPadding = Helpers.formatPadding(props.borderPadding);
+  const borderPadding = Helpers.getPadding({ padding: props.borderPadding });
   return assign({}, props, { style, isHorizontal, colorScale, borderPadding });
 };
 

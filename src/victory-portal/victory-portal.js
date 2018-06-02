@@ -2,7 +2,7 @@ import React from "react";
 import PropTypes from "prop-types";
 import { defaults } from "lodash";
 import Log from "../victory-util/log";
-import { omit } from "../victory-util/helpers";
+import Helpers from "../victory-util/helpers";
 
 export default class VictoryPortal extends React.Component {
   static displayName = "VictoryPortal";
@@ -66,7 +66,7 @@ export default class VictoryPortal extends React.Component {
     const childProps = children && children.props || {};
     const standardProps = childProps.groupComponent ? { groupComponent, standalone: false } : {};
     const newProps = defaults(
-      standardProps, childProps, omit(this.props, ["children", "groupComponent"])
+      standardProps, childProps, Helpers.omit(this.props, ["children", "groupComponent"])
     );
     const child = children && React.cloneElement(children, newProps);
     return this.renderPortal(child);
