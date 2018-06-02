@@ -1,31 +1,9 @@
-import { assign, orderBy } from "lodash";
+import { assign } from "lodash";
 import { Helpers, LabelHelpers, Scale, Domain, Data, Collection } from "victory-core";
 
-const sortData = (dataset, sortKey, sortOrder = "ascending") => {
-  if (!sortKey) {
-    return dataset;
-  }
-
-  if (sortKey === "x" || sortKey === "y") {
-    sortKey = `_${sortKey}`;
-  }
-
-  const sortedData = orderBy(dataset, sortKey);
-
-  if (sortOrder === "descending") {
-    return sortedData.reverse();
-  }
-
-  return sortedData;
-};
-
 const getData = (props) => {
-  if (!props.data || Data.getLength(props.data) < 1) {
-    return [];
-  }
   const accessorTypes = ["x", "high", "low", "close", "open"];
-  const formattedData = Data.formatData(props.data, props, accessorTypes);
-  return sortData(formattedData, props.sortKey, props.sortOrder);
+  return Data.formatData(props.data, props, accessorTypes);
 };
 
 const reduceData = (dataset, axis, type) => {

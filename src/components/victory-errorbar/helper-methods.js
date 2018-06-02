@@ -1,4 +1,3 @@
-import { assign, orderBy } from "lodash";
 import { Helpers, LabelHelpers, Scale, Domain, Data, Collection } from "victory-core";
 
 const getErrors = (datum, scale, axis) => {
@@ -21,51 +20,21 @@ const getErrors = (datum, scale, axis) => {
     [ scale[axis](errors + datum[`_${axis}`]), scale[axis](datum[`_${axis}`] - errors) ];
 };
 
-const sortData = (dataset, sortKey, sortOrder = "ascending") => {
-  if (!sortKey) {
-    return dataset;
-  }
 
-  if (sortKey === "x" || sortKey === "y") {
-    sortKey = `_${sortKey}`;
-  }
-
-  const sortedData = orderBy(dataset, sortKey);
-
-  if (sortOrder === "descending") {
-    return sortedData.reverse();
-  }
-
-  return sortedData;
-};
-
-const formatErrorData = (dataset, props) => {
-  if (!dataset || Data.getLength(dataset) < 1) {
-    return [];
-  }
+const getData = (props) => {
   const accessorTypes = ["x", "y", "errorX", "errorY"];
-  const formattedData = Data.formatData(props.data, props, accessorTypes);
-
-  return sortData(formattedData, props.sortKey, props.sortOrder);
-};
-
-const getErrorData = (props) => {
   if (props.data) {
-    if (Data.getLength(props.data) < 1) {
-      return [];
-    }
-
-    return formatErrorData(props.data, props);
+    return Data.formatData(props.data, props, accessorTypes);
   } else {
-    const generatedData = (props.errorX || props.errorY) && Data.generateData(props);
-    return formatErrorData(generatedData, props);
+    const generatedData = props.errorX || props.errorY ? Data.generateData(props) : [];
+    return Data.formatData(generatedData, props, accessorTypes);
   }
 };
 
 const getDomainFromData = (props, axis) => {
   const minDomain = Domain.getMinFromProps(props, axis);
   const maxDomain = Domain.getMaxFromProps(props, axis);
-  const dataset = getErrorData(props);
+  const dataset = getData(props);
   if (dataset.length < 1) {
     const scaleDomain = Scale.getBaseScale(props, axis).domain();
     const min = minDomain !== undefined ? minDomain : Collection.getMinValue(scaleDomain);
@@ -99,8 +68,7 @@ const getCalculatedValues = (props) => {
   const defaultStyles = props.theme && props.theme.errorbar && props.theme.errorbar.style ?
     props.theme.errorbar.style : {};
   const style = Helpers.getStyles(props.style, defaultStyles) || {};
-  const dataWithErrors = assign(Data.getData(props), getErrorData(props));
-  const data = Data.addEventKeys(props, dataWithErrors);
+  const data = getData(props);
   const range = {
     x: Helpers.getRange(props, "x"),
     y: Helpers.getRange(props, "y")
@@ -173,4 +141,4 @@ const getBaseProps = (props, fallbackProps) => {
   }, initialChildProps);
 };
 
-export { getBaseProps, getDomain };
+export { getBaseProps, getDomain, getData };

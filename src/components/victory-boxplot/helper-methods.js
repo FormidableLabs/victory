@@ -1,4 +1,4 @@
-import { orderBy, defaults, assign, uniq, groupBy, keys, isEmpty } from "lodash";
+import { orderBy, defaults, assign, uniq, groupBy, keys } from "lodash";
 import { Helpers, Scale, Domain, Data, Collection } from "victory-core";
 import { min as d3Min, max as d3Max, quantile as d3Quantile } from "d3-array";
 
@@ -84,17 +84,9 @@ const processData = (props, data) => {
 };
 
 const getData = (props) => {
-  if (!props.data || Data.getLength(props.data) < 1) {
-    return [];
-  } else if (props.data.every((d) => isEmpty(d))) {
-    return [];
-  }
-
   const accessorTypes = TYPES.concat("x", "y");
   const formattedData = Data.formatData(props.data, props, accessorTypes);
-  const result = formattedData.length ?
-    Data.addEventKeys(props, processData(props, formattedData)) : [];
-  return result;
+  return formattedData.length ? processData(props, formattedData) : [];
 };
 
 const reduceDataset = (dataset, props, axis) => {

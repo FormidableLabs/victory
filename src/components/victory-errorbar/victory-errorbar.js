@@ -2,9 +2,9 @@ import PropTypes from "prop-types";
 import React from "react";
 import {
   PropTypes as CustomPropTypes, Helpers, VictoryLabel, addEvents,
-  VictoryContainer, VictoryTheme, DefaultTransitions, ErrorBar, Data
+  VictoryContainer, VictoryTheme, DefaultTransitions, ErrorBar
 } from "victory-core";
-import { getBaseProps, getDomain } from "./helper-methods";
+import { getBaseProps, getDomain, getData } from "./helper-methods";
 import { BaseProps, DataProps } from "../../helpers/common-props";
 
 const fallbackProps = {
@@ -63,7 +63,7 @@ class VictoryErrorBar extends React.Component {
   };
 
   static getDomain = getDomain;
-  static getData = Data.getData.bind(Data);
+  static getData = getData;
   static getBaseProps = (props) => getBaseProps(props, fallbackProps);
   static expectedComponents = [
     "dataComponent", "labelComponent", "groupComponent", "containerComponent"
