@@ -52,7 +52,7 @@ class VictoryScatter extends React.Component {
   };
 
   static getDomain = Domain.getDomain;
-  static getData = Data.getData.bind(Data);
+  static getData = Data.getData;
   static getBaseProps = (props) => getBaseProps(props, fallbackProps);
   static expectedComponents = [
     "dataComponent", "labelComponent", "groupComponent", "containerComponent"

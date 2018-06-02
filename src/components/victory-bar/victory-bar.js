@@ -73,7 +73,7 @@ class VictoryBar extends React.Component {
   };
 
   static getDomain = Domain.getDomainWithZero;
-  static getData = Data.getData.bind(Data);
+  static getData = Data.getData;
   static getBaseProps = (props) => getBaseProps(props, fallbackProps);
   static expectedComponents = [
     "dataComponent", "labelComponent", "groupComponent", "containerComponent"
