@@ -229,7 +229,7 @@ function getDomainFromCategories(props, axis, categories) {
  * @returns {Array} the domain based on data
  */
 function getDomainFromData(props, axis, dataset) {
-  dataset = dataset || Data.getData(props, axis);
+  dataset = dataset || Data.getData(props);
   const { horizontal, polar, startAngle = 0, endAngle = 360 } = props;
   const minDomain = getMinFromProps(props, axis);
   const maxDomain = getMaxFromProps(props, axis);

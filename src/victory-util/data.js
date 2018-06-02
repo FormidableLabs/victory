@@ -11,24 +11,22 @@ import Immutable from "./immutable";
 
 // Private Functions
 
-// Some keys in each data point need to be converted to plain js
-const immutableDatumWhitelist = {
-  errorX: true,
-  errorY: true
-};
-
 function parseDatum(datum) {
+  const immutableDatumWhitelist = {
+    errorX: true,
+    errorY: true
+  };
+
   return Immutable.isImmutable(datum)
     ? Immutable.shallowToJS(datum, immutableDatumWhitelist)
     : datum;
 }
 
-/**
- * Returns generated data for a given axis based on domain and sample from props
- * @param {Object} props: the props object
- * @param {String} axis: the current axis
- * @returns {Array} an array of data
- */
+function getLength(data) {
+  return Immutable.isIterable(data) ? data.size : data.length;
+}
+
+// Returns generated data for a given axis based on domain and sample from props
 function generateDataArray(props, axis) {
   const propsDomain = isPlainObject(props.domain) ? props.domain[axis] : props.domain;
   const domain = propsDomain || Scale.getBaseScale(props, axis).domain();
@@ -40,14 +38,7 @@ function generateDataArray(props, axis) {
   return last(values) === domainMax ? values : values.concat(domainMax);
 }
 
-/**
- * Returns sorted data. If no sort keys are provided, data is returned unaltered.
- * Sort key should correspond to the `iteratees` argument in lodash `orderBy` function.
- * @param {Array} dataset: the original dataset
- * @param {mixed} sortKey: the sort key. Type is whatever lodash permits for `orderBy`
- * @param {String} sortOrder: the sort Order - `ascending` (default) or `descending`
- * @returns {Array} the sorted data
- */
+// Returns sorted data. If no sort keys are provided, data is returned unaltered.
 function sortData(dataset, sortKey, sortOrder = "ascending") {
   if (!sortKey) {
     return dataset;
@@ -61,14 +52,7 @@ function sortData(dataset, sortKey, sortOrder = "ascending") {
   return orderBy(dataset, sortKey, order);
 }
 
-/**
- * Returns the cleaned data. Some scale types break when certain data is supplied.
- * This method will remove data points that break certain scales. So far this method
- * only removes zeroes for log scales
- * @param {Array} dataset: the original domain
- * @param {Object} props: the props object
- * @returns {Array} the cleaned data
- */
+// This method will remove data points that break certain scales. (log scale only)
 function cleanData(dataset, props) {
   const scaleType = {
     x: Scale.getScaleType(props, "x"),
@@ -84,6 +68,30 @@ function cleanData(dataset, props) {
     return rules(datum, "x") && rules(datum, "y") && rules(datum, "y0");
   });
 }
+
+// Returns a data accessor given an eventKey prop
+function getEventKey(key) {
+  // creates a data accessor function
+  // given a property key, path, array index, or null for identity.
+  if (isFunction(key)) {
+    return key;
+  } else if (key === null || key === undefined) {
+    return () => undefined;
+  }
+  // otherwise, assume it is an array index, property key or path (_.property handles all three)
+  return property(key);
+}
+
+// Returns data with an eventKey prop added to each datum
+function addEventKeys(props, data) {
+  const eventKeyAccessor = getEventKey(props.eventKey);
+  return data.map((datum, index) => {
+    const eventKey = datum.eventKey || eventKeyAccessor(datum) || index;
+    return assign({ eventKey }, datum);
+  });
+}
+
+// Exported Functions
 
 /**
  * Returns an object mapping string data to numeric data
@@ -102,30 +110,6 @@ function createStringMap(props, axis) {
       memo[string] = index + 1;
       return memo;
     }, {});
-}
-
-// Returns a data accessor given an eventKey prop
-function getEventKey(key) {
-  // creates a data accessor function
-  // given a property key, path, array index, or null for identity.
-  if (isFunction(key)) {
-    return key;
-  } else if (key === null || key === undefined) {
-    return () => undefined;
-  }
-  // otherwise, assume it is an array index, property key or path (_.property handles all three)
-  return property(key);
-}
-
-// Exported Functions
-
-// Returns data with an eventKey prop added to each datum
-function addEventKeys(props, data) {
-  const eventKeyAccessor = getEventKey(props.eventKey);
-  return data.map((datum, index) => {
-    const eventKey = datum.eventKey || eventKeyAccessor(datum) || index;
-    return assign({ eventKey }, datum);
-  });
 }
 
 /**
@@ -155,7 +139,7 @@ function downsample(data, maxPoints, startingIndex = 0) {
  * Returns formatted data. Data accessors are applied, and string values are replaced.
  * @param {Array} dataset: the original domain
  * @param {Object} props: the props object
- * @param {Object} stringMap: a mapping of string values to numeric values
+ * @param {Array} expectedKeys: an array of expected data keys
  * @returns {Array} the formatted data
  */
 function formatData(dataset, props, expectedKeys) {
@@ -163,10 +147,6 @@ function formatData(dataset, props, expectedKeys) {
   if (!isArrayOrIterable || getLength(dataset) < 1) {
     return [];
   }
-
-  const createAccessor = (name) => {
-    return Helpers.createAccessor(props[name] !== undefined ? props[name] : name);
-  };
 
   expectedKeys = Array.isArray(expectedKeys) ? expectedKeys : ["x", "y", "y0"];
 
@@ -176,12 +156,17 @@ function formatData(dataset, props, expectedKeys) {
     y0: expectedKeys.includes("y0") ? createStringMap(props, "y") : undefined
   };
 
+  const createAccessor = (name) => {
+    return Helpers.createAccessor(props[name] !== undefined ? props[name] : name);
+  };
+
   const accessor = expectedKeys.reduce((memo, type) => {
     memo[type] = createAccessor(type);
     return memo;
   }, {});
 
-  const data = dataset.map((datum, index) => {
+
+  const data = dataset.reduce((dataArr, datum, index) => { // eslint-disable-line complexity
     datum = parseDatum(datum);
     const fallbackValues = { x: index, y: datum };
     const processedValues = expectedKeys.reduce((memo, type) => {
@@ -198,9 +183,13 @@ function formatData(dataset, props, expectedKeys) {
       return memo;
     }, {});
 
-    const formattedDatum = assign(processedValues, datum);
-    return isEmpty(formattedDatum) ? undefined : formattedDatum;
-  }).filter(Boolean);
+    const formattedDatum = assign({}, datum, processedValues);
+    if (!isEmpty(formattedDatum)) {
+      dataArr.push(formattedDatum);
+    }
+
+    return dataArr;
+  }, []);
 
   const sortedData = sortData(data, props.sortKey, props.sortOrder);
   const cleanedData = cleanData(sortedData, props);
@@ -240,10 +229,6 @@ function getCategories(props, axis) {
  */
 function getData(props) {
   return props.data ? formatData(props.data, props) : formatData(generateData(props), props);
-}
-
-function getLength(data) {
-  return Immutable.isIterable(data) ? data.size : data.length;
 }
 
 /**
@@ -309,13 +294,12 @@ function getStringsFromData(props, axis) {
 }
 
 export default {
-  addEventKeys,
+  createStringMap,
   downsample,
   formatData,
   generateData,
   getCategories,
   getData,
-  getLength,
   getStringsFromAxes,
   getStringsFromCategories,
   getStringsFromData
