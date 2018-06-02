@@ -160,7 +160,7 @@ class VictoryPie extends React.Component {
   };
 
   static getBaseProps = (props) => getBaseProps(props, fallbackProps);
-  static getData = Data.getData.bind(Data);
+  static getData = Data.getData;
   static expectedComponents = [
     "dataComponent", "labelComponent", "groupComponent", "containerComponent"
   ];
