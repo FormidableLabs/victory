@@ -1,25 +1,9 @@
 /* eslint no-unused-expressions: 0 */
 /* eslint max-statements: 0 */
-/* global sinon */
 
 import { Collection } from "src/index";
 
 describe("collections", () => {
-
-  describe("isNonEmptyArray", () => {
-
-    it("returns false for undefined argument", () => {
-      expect(Collection.isNonEmptyArray()).to.equal(false);
-    });
-
-    it("returns false for empty array", () => {
-      expect(Collection.isNonEmptyArray([])).to.equal(false);
-    });
-
-    it("returns true for non-empty array", () => {
-      expect(Collection.isNonEmptyArray(["hello"])).to.equal(true);
-    });
-  });
 
   describe("containsStrings", () => {
 
@@ -156,38 +140,7 @@ describe("collections", () => {
     });
   });
 
-  describe("allSetsEqual", () => {
-
-    it("returns true when all sets are equal", () => {
-      const comparisons = [
-        [1, 1],
-        ["wow", "wow"],
-        [{ stuff: 43 }, { stuff: 43 }]
-      ];
-
-      expect(Collection.allSetsEqual(comparisons)).to.eql(true);
-    });
-
-    it("returns false when not all sets are equal", () => {
-      const comparisons = [
-        [1, 1],
-        ["wow", "wow"],
-        [{ stuff: 1 }, { stuff: 43 }]
-      ];
-
-      expect(Collection.allSetsEqual(comparisons)).to.eql(false);
-    });
-  });
-
-
   describe("areVictoryPropsEqual", () => {
-    let sandbox;
-    beforeEach(() => {
-      sandbox = sinon.sandbox.create();
-    });
-    afterEach(() => {
-      sandbox.restore();
-    });
 
     it("returns early when nested collections are strictly equal", () => {
       const a = { test: { nested: "a" } };
