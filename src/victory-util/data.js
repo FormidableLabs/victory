@@ -151,9 +151,9 @@ function formatData(dataset, props, expectedKeys) {
   expectedKeys = Array.isArray(expectedKeys) ? expectedKeys : ["x", "y", "y0"];
 
   const stringMap = {
-    x: expectedKeys.includes("x") ? createStringMap(props, "x") : undefined,
-    y: expectedKeys.includes("y") ? createStringMap(props, "y") : undefined,
-    y0: expectedKeys.includes("y0") ? createStringMap(props, "y") : undefined
+    x: expectedKeys.indexOf("x") !== -1 ? createStringMap(props, "x") : undefined,
+    y: expectedKeys.indexOf("y") !== -1 ? createStringMap(props, "y") : undefined,
+    y0: expectedKeys.indexOf("y0") !== -1 ? createStringMap(props, "y") : undefined
   };
 
   const createAccessor = (name) => {
@@ -174,7 +174,7 @@ function formatData(dataset, props, expectedKeys) {
       const value = processedValue !== undefined ? processedValue : fallbackValues[type];
       if (value !== undefined) {
         if (typeof value === "string" && stringMap[type]) {
-          memo[`_${type}Name`] = value;
+          memo[`${type}Name`] = value;
           memo[`_${type}`] = stringMap[type][value];
         } else {
           memo[`_${type}`] = value;
@@ -183,7 +183,7 @@ function formatData(dataset, props, expectedKeys) {
       return memo;
     }, {});
 
-    const formattedDatum = assign({}, datum, processedValues);
+    const formattedDatum = assign({}, processedValues, datum);
     if (!isEmpty(formattedDatum)) {
       dataArr.push(formattedDatum);
     }
