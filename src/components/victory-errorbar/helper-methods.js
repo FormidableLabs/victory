@@ -9,7 +9,7 @@ const getErrors = (datum, scale, axis) => {
    * @return {String or Array}
    */
 
-  const errorNames = { x: "errorX", y: "errorY" };
+  const errorNames = { x: "_errorX", y: "_errorY" };
   const errors = datum[errorNames[axis]];
   if (errors === 0) {
     return false;
@@ -43,47 +43,8 @@ const formatErrorData = (dataset, props) => {
   if (!dataset || Data.getLength(dataset) < 1) {
     return [];
   }
-  const accessor = {
-    x: Helpers.createAccessor(props.x !== undefined ? props.x : "x"),
-    y: Helpers.createAccessor(props.y !== undefined ? props.y : "y"),
-    errorX: Helpers.createAccessor(props.errorX !== undefined ? props.errorX : "errorX"),
-    errorY: Helpers.createAccessor(props.errorY !== undefined ? props.errorY : "errorY")
-  };
-
-  const replaceNegatives = (errors) => {
-    // check if the value is negative, if it is set to 0
-    const replaceNeg = (val) => !val || val < 0 ? 0 : val;
-    return Array.isArray(errors) ? errors.map((err) => replaceNeg(err)) : replaceNeg(errors);
-  };
-
-  const stringMap = {
-    x: Data.createStringMap(props, "x"),
-    y: Data.createStringMap(props, "y")
-  };
-
-  const formattedData = dataset.reduce((dataArr, datum, index) => {
-    datum = Data.parseDatum(datum);
-
-    const evaluatedX = accessor.x(datum);
-    const evaluatedY = accessor.y(datum);
-    const _x = evaluatedX !== undefined ? evaluatedX : index;
-    const _y = evaluatedY !== undefined ? evaluatedY : datum;
-    const errorX = replaceNegatives(accessor.errorX(datum));
-    const errorY = replaceNegatives(accessor.errorY(datum));
-
-    dataArr.push(
-      assign(
-        {},
-        datum,
-        { _x, _y, errorX, errorY },
-        // map string data to numeric values, and add names
-        typeof _x === "string" ? { _x: stringMap.x[_x], x: _x } : {},
-        typeof _y === "string" ? { _y: stringMap.y[_y], y: _y } : {}
-      )
-    );
-
-    return dataArr;
-  }, []);
+  const accessorTypes = ["x", "y", "errorX", "errorY"];
+  const formattedData = Data.formatData(props.data, props, accessorTypes);
 
   return sortData(formattedData, props.sortKey, props.sortOrder);
 };
@@ -112,7 +73,7 @@ const getDomainFromData = (props, axis) => {
     return Domain.getDomainFromMinMax(min, max);
   }
   const currentAxis = Helpers.getCurrentAxis(axis, props.horizontal);
-  const error = currentAxis === "x" ? "errorX" : "errorY";
+  const error = currentAxis === "x" ? "_errorX" : "_errorY";
   const reduceErrorData = (type) => {
     const baseCondition = type === "min" ? Infinity : -Infinity;
     const errorIndex = type === "min" ? 1 : 0;

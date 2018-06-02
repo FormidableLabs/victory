@@ -89,42 +89,9 @@ const getData = (props) => {
   } else if (props.data.every((d) => isEmpty(d))) {
     return [];
   }
-  const createAccessor = (name) => {
-    return Helpers.createAccessor(props[name] !== undefined ? props[name] : name);
-  };
 
-  const stringMap = {
-    x: Data.createStringMap(props, "x"),
-    y: Data.createStringMap(props, "y")
-  };
   const accessorTypes = TYPES.concat("x", "y");
-  const accessor = accessorTypes.reduce((memo, type) => {
-    memo[type] = createAccessor(type);
-    return memo;
-  }, {});
-
-  const formattedData = props.data.map((datum) => {
-    datum = Data.parseDatum(datum);
-
-    const processedValues = accessorTypes.reduce((memo, type) => {
-      const processedValue = accessor[type](datum);
-      if (processedValue !== undefined) {
-        memo[`_${type}`] = processedValue;
-      }
-      return memo;
-    }, {});
-
-    const { _x, _y } = processedValues;
-
-    const formattedDatum = assign(
-      {},
-      datum,
-      processedValues,
-      typeof _x === "string" ? { _x: stringMap.x[_x], x: _x } : {},
-      typeof _y === "string" ? { _y: stringMap.y[_y], y: _y } : {}
-    );
-    return isEmpty(formattedDatum) ? undefined : formattedDatum;
-  }).filter(Boolean);
+  const formattedData = Data.formatData(props.data, props, accessorTypes);
   const result = formattedData.length ?
     Data.addEventKeys(props, processData(props, formattedData)) : [];
   return result;

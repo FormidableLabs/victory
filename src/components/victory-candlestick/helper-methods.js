@@ -23,51 +23,17 @@ const getData = (props) => {
   if (!props.data || Data.getLength(props.data) < 1) {
     return [];
   }
-  const stringMap = {
-    x: Data.createStringMap(props, "x")
-  };
-
-  const accessor = {
-    x: Helpers.createAccessor(props.x !== undefined ? props.x : "x"),
-    open: Helpers.createAccessor(props.open !== undefined ? props.open : "open"),
-    close: Helpers.createAccessor(props.close !== undefined ? props.close : "close"),
-    high: Helpers.createAccessor(props.high !== undefined ? props.high : "high"),
-    low: Helpers.createAccessor(props.low !== undefined ? props.low : "low")
-  };
-
-  const formattedData = props.data.reduce((dataArr, datum, index) => {
-    datum = Data.parseDatum(datum);
-
-    const evaluatedX = accessor.x(datum);
-    const _x = evaluatedX !== undefined ? evaluatedX : index;
-    const _open = accessor.open(datum);
-    const _close = accessor.close(datum);
-    const _high = accessor.high(datum);
-    const _low = accessor.low(datum);
-    const _y = [_open, _close, _high, _low];
-
-    dataArr.push(
-      assign(
-        {},
-        datum,
-        { _x, _y, _open, _close, _high, _low },
-        typeof _x === "string" ? { _x: stringMap.x[_x], x: _x } : {}
-      )
-    );
-
-    return dataArr;
-  }, []);
-
+  const accessorTypes = ["x", "high", "low", "close", "open"];
+  const formattedData = Data.formatData(props.data, props, accessorTypes);
   return sortData(formattedData, props.sortKey, props.sortOrder);
 };
 
 const reduceData = (dataset, axis, type) => {
-  const getCurrent = (datum) => {
-    return Array.isArray(datum[`_${axis}`]) ? Math[type](...datum[`_${axis}`]) : datum[`_${axis}`];
-  };
+  const yDataTypes = { min: "_low", max: "_high" };
+  const dataType = axis === "x" ? "_x" : yDataTypes[type];
   const baseCondition = type === "min" ? Infinity : -Infinity;
   return dataset.reduce((memo, datum) => {
-    const current = getCurrent(datum);
+    const current = datum[dataType];
     return memo < current && type === "min" || memo > current && type === "max" ?
       memo : current;
   }, baseCondition);
