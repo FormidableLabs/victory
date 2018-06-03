@@ -3,7 +3,7 @@
 import PropTypes from "prop-types";
 import { PropTypes as CustomPropTypes } from "src/index";
 
-describe("prop-types", () => {
+describe("victory-util/prop-types", () => {
 
   /* eslint-disable no-console */
   describe("deprecated", () => {

@@ -3,7 +3,7 @@
 
 import { Collection } from "src/index";
 
-describe("collections", () => {
+describe("victory-util/collection", () => {
 
   describe("containsStrings", () => {
 

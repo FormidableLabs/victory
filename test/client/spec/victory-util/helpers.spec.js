@@ -1,7 +1,7 @@
 /* eslint no-unused-expressions: 0 */
 import Helpers from "src/victory-util/helpers";
 
-describe("helpers", () => {
+describe("victory-util/helpers", () => {
   describe("omit", () => {
     const data = { x: 3, y: 2, z: 1 };
     it("removes omitted keys and preserves all others", () => {

@@ -3,7 +3,7 @@
 import { Scale } from "src/index";
 import * as d3Scale from "d3-scale";
 
-describe("helpers/scale", () => {
+describe("victory-util/scale", () => {
   describe("getBaseScale", () => {
 
     it("returns a scale from `getScaleFromProps` when string props are provided", () => {

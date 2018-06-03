@@ -12,7 +12,7 @@ const dataTest = {
   testLabel: "data in js"
 };
 
-describe("helpers/data", () => {
+describe("victory-util/data", () => {
   describe("createStringMap", () => {
     const tickValues = ["one", "two", "three"];
     const categories = ["red", "green", "blue"];

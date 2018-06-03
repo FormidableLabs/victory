@@ -18,7 +18,7 @@ import { Domain } from "src/index";
   getSymmetricDomain
 */
 
-describe("helpers/domain", () => {
+describe("victory-util/domain", () => {
   describe("createDomainFunction", () => {
     it("returns a function equivalent to getDomain when no props are given", () => {
       const props = {

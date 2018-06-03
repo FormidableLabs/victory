@@ -3,7 +3,7 @@ import { TextSize } from "src/index";
 
 const testString = "ABC";
 
-describe("helpers/textsize", () => {
+describe("victory-util/textsize", () => {
   describe("convertLengthToPixels", () => {
     it("translate pixels as number of pixels", () => {
       expect(TextSize.convertLengthToPixels("20px")).to.eql(20);

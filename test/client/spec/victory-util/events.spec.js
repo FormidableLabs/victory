@@ -3,7 +3,7 @@
 
 import { Events } from "src/index";
 
-describe("helpers/events", () => {
+describe("victory-util/events", () => {
   describe("getPartialEvents", () => {
     it("returns a set of new event functions with partially applied arguments", () => {
       const events = {
