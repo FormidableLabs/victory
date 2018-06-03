@@ -6,25 +6,6 @@ import { assign } from "lodash";
 import React from "react";
 import * as d3Scale from "d3-scale";
 
-
-// function getProps(props, index) {
-//   const { scale, data, style, horizontal, polar } = props;
-//   const datum = data[index];
-//   const degrees = getDegrees(props, datum);
-//   const textAnchor = polar ?
-//     getPolarTextAnchor(props, degrees) : getTextAnchor(props, datum);
-//   const verticalAnchor = polar ?
-//      getPolarVerticalAnchor(props, degrees) : getVerticalAnchor(props, datum);
-//   const angle = getAngle(props, datum);
-//   const text = getText(props, datum, index);
-//   const labelPlacement = getLabelPlacement(props);
-//   const { x, y } = getPosition(props, datum);
-//   return {
-//     angle, data, datum, horizontal, index, polar, scale, labelPlacement,
-//     text, textAnchor, verticalAnchor, x, y, style: style.labels
-//   };
-// }
-
 const scale = { x: d3Scale.scaleLinear(), y: d3Scale.scaleLinear() };
 const data = [{ x: 0, y: 0 }, { x: 0.5, y: 0.5 }];
 const labelComponent = <VictoryLabel/>;
