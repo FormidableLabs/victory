@@ -260,7 +260,7 @@ const getCalculatedValues = (props) => {
   const padding = Helpers.getPadding(props);
   const axis = Axis.getAxis(props);
   const axisType = getAxisType(props);
-  const stringTicks = Helpers.stringTicks(props) ? props.tickValues : undefined;
+  const stringTicks = Axis.stringTicks(props) ? props.tickValues : undefined;
   const domain = Axis.getDomain(props, axis);
   const range = getRange(props, axis);
   const scale = getScale(props);

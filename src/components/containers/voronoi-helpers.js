@@ -133,11 +133,11 @@ const VoronoiHelpers = {
     });
   },
 
-  getParentMutation(activePoints, mousePosition) {
+  getParentMutation(activePoints, mousePosition, parentSVG) {
     return [{
       target: "parent",
       eventKey: "parent",
-      mutation: () => ({ activePoints, mousePosition })
+      mutation: () => ({ activePoints, mousePosition, parentSVG })
     }];
   },
 
@@ -163,16 +163,17 @@ const VoronoiHelpers = {
 
   onMouseMove(evt, targetProps) { // eslint-disable-line max-statements
     const activePoints = targetProps.activePoints || [];
-    const mousePosition = Selection.getSVGEventCoordinates(evt);
+    const parentSVG = targetProps.parentSVG || Selection.getParentSVG(evt);
+    const mousePosition = Selection.getSVGEventCoordinates(evt, parentSVG);
     if (!this.withinBounds(targetProps, mousePosition)) {
       this.onDeactivated(targetProps, activePoints);
       const inactiveMutations = activePoints.length ?
         activePoints.map((point) => this.getInactiveMutations(targetProps, point)) : [];
-      return this.getParentMutation([], mousePosition).concat(...inactiveMutations);
+      return this.getParentMutation([], mousePosition, parentSVG).concat(...inactiveMutations);
     }
     const nearestVoronoi = this.getVoronoi(targetProps, mousePosition);
     const points = nearestVoronoi ? nearestVoronoi.data.points : [];
-    const parentMutations = this.getParentMutation(points, mousePosition);
+    const parentMutations = this.getParentMutation(points, mousePosition, parentSVG);
     if (activePoints.length && isEqual(points, activePoints)) {
       return parentMutations;
     } else {

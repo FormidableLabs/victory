@@ -9,23 +9,73 @@ describe("helpers/axis", () => {
   const getVictoryAxis = (props) => React.createElement(VictoryAxis, props);
   const getVictoryBar = (props) => React.createElement(VictoryBar, props);
 
-  describe("getDomainFromTickValues", () => {
+  describe("isVertical", () => {
+    it("returns true when the orientation is vertical", () => {
+      const props = { orientation: "left" };
+      const verticalResult = Axis.isVertical(props);
+      expect(verticalResult).to.equal(true);
+    });
+
+    it("returns false when the orientation is horizontal", () => {
+      const props = { orientation: "bottom" };
+      const verticalResult = Axis.isVertical(props);
+      expect(verticalResult).to.equal(false);
+    });
+  });
+
+  describe("getDomain", () => {
     it("determines a domain from tickValues", () => {
       const props = { tickValues: [1, 2, 3] };
-      const domainResult = Axis.getDomainFromTickValues(props);
+      const domainResult = Axis.getDomain(props);
       expect(domainResult).to.eql([1, 3]);
     });
 
     it("determines a domain from string tick values", () => {
       const props = { tickValues: ["a", "b", "c", "d"] };
-      const domainResult = Axis.getDomainFromTickValues(props);
+      const domainResult = Axis.getDomain(props);
       expect(domainResult).to.eql([1, 4]);
     });
 
     it("reverses a domain from tickValues when the axis is vertical", () => {
       const props = { tickValues: [1, 2, 3], dependentAxis: true };
-      const domainResult = Axis.getDomainFromTickValues(props);
+      const domainResult = Axis.getDomain(props);
       expect(domainResult).to.eql([3, 1]);
+    });
+
+    it("determines a domain from props", () => {
+      const props = { domain: [1, 2] };
+      const domainResult = Axis.getDomain(props);
+      expect(domainResult).to.eql([1, 2]);
+    });
+
+
+    it("calculates a domain from a single tickValue", () => {
+      const props = { tickValues: [0] };
+      const domainResult = Axis.getDomain(props);
+      const verySmallNumber = Math.pow(10, -10);
+      expect(domainResult).to.eql([-verySmallNumber, verySmallNumber]);
+    });
+
+    it("returns undefined if the given axis doesn't match this axis", () => {
+      const props = { domain: [1, 3] };
+      const domainResultX = Axis.getDomain(props, "x");
+      expect(domainResultX).to.eql([1, 3]);
+      const domainResultY = Axis.getDomain(props, "y");
+      expect(domainResultY).to.be.undefined;
+    });
+  });
+
+  describe("getAxis", () => {
+    it("determines the axis based on orientation prop", () => {
+      expect(Axis.getAxis({ orientation: "top" })).to.equal("x");
+      expect(Axis.getAxis({ orientation: "bottom" })).to.equal("x");
+      expect(Axis.getAxis({ orientation: "left" })).to.equal("y");
+      expect(Axis.getAxis({ orientation: "right" })).to.equal("y");
+    });
+
+    it("determines the axis based on type (dependent / independent)", () => {
+      expect(Axis.getAxis({ dependentAxis: true })).to.equal("y");
+      expect(Axis.getAxis({})).to.equal("x");
     });
   });
 
@@ -61,7 +111,6 @@ describe("helpers/axis", () => {
     const ticks = [1, 2, 3, 4, 5];
     beforeEach(() => {
       sandbox = sinon.sandbox.create();
-      sandbox.spy(Axis, "stringTicks");
       sandbox.stub(scale, "tickFormat");
     });
 
@@ -73,7 +122,6 @@ describe("helpers/axis", () => {
       const props = { tickFormat: (x) => x * 5 };
       const tickProps = { scale, ticks };
       const formatResult = Axis.getTickFormat(props, tickProps);
-      expect(Axis.stringTicks).notCalled;
       expect(scale.tickFormat).notCalled;
       expect(formatResult).to.eql(props.tickFormat);
     });
@@ -82,7 +130,6 @@ describe("helpers/axis", () => {
       const props = { tickFormat: [1, 2, 3, 4, 5] };
       const tickProps = { scale, ticks };
       const formatResult = Axis.getTickFormat(props, tickProps);
-      expect(Axis.stringTicks).notCalled;
       expect(scale.tickFormat).notCalled;
       expect(formatResult).to.be.a("function");
     });
@@ -91,7 +138,6 @@ describe("helpers/axis", () => {
       const props = { tickValues: ["cats", "dogs", "birds"] };
       const tickProps = { scale, ticks };
       const formatResult = Axis.getTickFormat(props, tickProps);
-      expect(Axis.stringTicks).calledWith(props).and.returned(true);
       expect(scale.tickFormat).notCalled;
       expect(formatResult).to.be.a("function");
     });
@@ -100,7 +146,6 @@ describe("helpers/axis", () => {
       const props = {};
       const tickProps = { scale, ticks };
       const formatResult = Axis.getTickFormat(props, tickProps);
-      expect(Axis.stringTicks).calledWith(props).and.returned(false);
       expect(formatResult).to.be.a("function");
     });
   });

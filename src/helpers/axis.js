@@ -305,5 +305,6 @@ function getDomain(props, axis) {
 
 export default {
   getTicks, getTickFormat, getAxis, getAxisComponent, getAxisComponentsWithParent,
-  getOrientation, getCurrentAxis, findAxisComponents, getOrigin, getOriginSign, getDomain
+  getOrientation, getCurrentAxis, findAxisComponents, getOrigin, getOriginSign, getDomain,
+  isVertical, stringTicks
 };

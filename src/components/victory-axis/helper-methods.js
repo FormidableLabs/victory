@@ -189,7 +189,7 @@ const getLabelPadding = (props, style) => {
   if (labelStyle.padding !== undefined && labelStyle.padding !== null) {
     return labelStyle.padding;
   }
-  const isVertical = Helpers.isVertical(props);
+  const isVertical = Axis.isVertical(props);
   // TODO: magic numbers
   /*eslint-disable no-magic-numbers*/
   const fontSize = labelStyle.fontSize || 14;
@@ -289,9 +289,9 @@ const getCalculatedValues = (props) => {
   const style = getStyles(props, defaultStyles);
   const padding = Helpers.getPadding(props);
   const orientation = props.orientation || (props.dependentAxis ? "left" : "bottom");
-  const isVertical = Helpers.isVertical(props);
+  const isVertical = Axis.isVertical(props);
   const labelPadding = getLabelPadding(props, style);
-  const stringTicks = Helpers.stringTicks(props) ? props.tickValues : undefined;
+  const stringTicks = Axis.stringTicks(props) ? props.tickValues : undefined;
   const axis = Axis.getAxis(props);
   const scale = getScale(props);
   const domain = Axis.getDomain(props);

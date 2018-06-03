@@ -157,8 +157,8 @@ export default class VictoryChart extends React.Component {
       y: getDomain(assign({}, props, { categories }), "y", childComponents)
     };
     const range = {
-      x: props.polar ? Helpers.getPolarRange(props, "x") : Helpers.getRange(props, "x"),
-      y: props.polar ? Helpers.getPolarRange(props, "y") : Helpers.getRange(props, "y")
+      x: Helpers.getRange(props, "x"),
+      y: Helpers.getRange(props, "y")
     };
     const baseScale = {
       x: Scale.getScaleFromProps(props, "x") ||
