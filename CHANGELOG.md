@@ -1,6 +1,10 @@
 VictoryCore Changelog
 =====================
 
+## 23.0.1 (2018-06-05)
+
+-[382](https://github.com/FormidableLabs/victory-core/pull/382) Fixes bug for charts with y0 values
+
 ## 23.0.0 (2018-06-04)
 
 -[380](https://github.com/FormidableLabs/victory-core/pull/380)
