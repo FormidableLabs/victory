@@ -1,7 +1,7 @@
 import React from "react";
 import { defaults, assign, keys, isFunction, pick, without, isEmpty } from "lodash";
 import Events from "./events";
-import Collection from "./collection";
+import isEqual from "react-fast-compare";
 import VictoryTransition from "../victory-transition/victory-transition";
 
 //  used for checking state changes. Expected components can be passed in via options
@@ -28,35 +28,14 @@ export default (WrappedComponent, options) => {
 
     componentDidUpdate() {
       const externalMutations = this.getExternalMutations(this.props);
-      if (!Collection.areVictoryPropsEqual(this.externalMutations, externalMutations)) {
+      if (!isEqual(this.externalMutations, externalMutations)) {
         this.externalMutations = externalMutations;
         this.applyExternalMutations(this.props, externalMutations);
       }
     }
 
-    shouldComponentUpdate(nextProps) {
-      const calculatedValues = this.getCalculatedValues(nextProps);
-      // re-render without additional checks when component is animated
-      if (this.props.animate || this.props.animating) {
-        this.cacheValues(calculatedValues);
-        return true;
-      }
-
-      // check for any state changes triggered by events or shared events
-      const calculatedState = this.getStateChanges(nextProps, calculatedValues);
-      if (!Collection.areVictoryPropsEqual(this.calculatedState, calculatedState)) {
-        this.cacheValues(calculatedValues);
-        this.calculatedState = calculatedState;
-        return true;
-      }
-
-      // check whether props have changed
-      if (!Collection.areVictoryPropsEqual(this.props, nextProps)) {
-        this.cacheValues(calculatedValues);
-        return true;
-      }
-
-      return false;
+    componentWillReceiveProps(nextProps) {
+      this.cacheValues(this.getCalculatedValues(nextProps));
     }
 
     applyExternalMutations(props, externalMutations) {
