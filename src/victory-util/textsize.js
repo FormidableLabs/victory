@@ -105,6 +105,9 @@ const _prepareParams = (inputStyle, index) => {
 };
 
 const _approximateTextWidthInternal = (text, style) => {
+  if (!text) {
+    return 0;
+  }
   const widths = _splitToLines(text).map((line, index) => {
     const len = line.toString().length;
     const { fontSize, characterConstant, letterSpacing } = _prepareParams(style, index);
@@ -114,6 +117,9 @@ const _approximateTextWidthInternal = (text, style) => {
 };
 
 const _approximateTextHeightInternal = (text, style) => {
+  if (!text) {
+    return 0;
+  }
   return _splitToLines(text).reduce((total, line, index) => {
     const lineStyle = _prepareParams(style, index);
     const containsCaps = line.toString().match(/[(A-Z)(0-9)]/);
