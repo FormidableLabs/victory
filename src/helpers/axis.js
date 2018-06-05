@@ -273,7 +273,8 @@ function getTicks(props, scale, filterZero) {
  */
 //eslint-disable-next-line max-statements
 function getDomainFromData(props, axis) {
-  const { tickValues, polar, startAngle = 0, endAngle = 360 } = props;
+  const { polar, startAngle = 0, endAngle = 360 } = props;
+  const tickValues = getTickArray(props);
   if (!Array.isArray(tickValues)) {
     return undefined;
   }
@@ -288,7 +289,7 @@ function getDomainFromData(props, axis) {
   const initialDomain = Domain.getDomainFromMinMax(min, max);
   const domain = polar && axis === "x" && Math.abs(startAngle - endAngle) === 360 ?
     Domain.getSymmetricDomain(initialDomain, ticks) : initialDomain;
-  if (isVertical(props)) {
+  if (isVertical(props) && !polar) {
     domain.reverse();
   }
   return domain;

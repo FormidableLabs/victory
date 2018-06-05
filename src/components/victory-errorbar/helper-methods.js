@@ -48,8 +48,9 @@ const getDomainFromData = (props, axis) => {
     const errorIndex = type === "min" ? 1 : 0;
     const sign = type === "min" ? -1 : 1;
     return dataset.reduce((memo, datum) => {
-      const currentError = Array.isArray(datum[error]) ? datum[error][errorIndex] : datum[error];
-      const current = datum[`_${currentAxis}`] + sign * currentError;
+      const currentError = Array.isArray(datum[error]) ?
+        datum[error][errorIndex] : datum[error];
+      const current = datum[`_${currentAxis}`] + sign * (currentError || 0);
       return (memo < current && type === "min") || (memo > current && type === "max") ?
         memo : current;
     }, baseCondition);
