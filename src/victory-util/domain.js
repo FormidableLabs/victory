@@ -122,6 +122,7 @@ function padDomain(domain, props, axis) {
 
   const singleQuadrantDomainPadding = isPlainObject(props.singleQuadrantDomainPadding) ?
     props.singleQuadrantDomainPadding[axis] : props.singleQuadrantDomainPadding;
+
   const adjust = (val, type) => {
     if (singleQuadrantDomainPadding === false) {
       return val;
@@ -133,8 +134,8 @@ function padDomain(domain, props, axis) {
 
   // Adjust the domain by the initial padding
   const adjustedDomain = {
-    min: adjust(min.valueOf() - initialPadding.left),
-    max: adjust(max.valueOf() + initialPadding.right)
+    min: adjust(min.valueOf() - initialPadding.left, "min"),
+    max: adjust(max.valueOf() + initialPadding.right, "max")
   };
 
   // re-calculate padding, taking the adjusted domain into account
@@ -145,8 +146,8 @@ function padDomain(domain, props, axis) {
 
   // Adjust the domain by the final padding
   const paddedDomain = {
-    min: adjust(min.valueOf() - finalPadding.left),
-    max: adjust(max.valueOf() + finalPadding.right)
+    min: adjust(min.valueOf() - finalPadding.left, "min"),
+    max: adjust(max.valueOf() + finalPadding.right, "max")
   };
 
   // default to minDomain / maxDomain if they exist
