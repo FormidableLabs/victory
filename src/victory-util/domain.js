@@ -121,8 +121,8 @@ function padDomain(domain, props, axis) {
 
   // Adjust the domain by the initial padding
   const adjustedDomain = {
-    min: +min - initialPadding.left,
-    max: +max + initialPadding.right
+    min: (min >= 0 && (min - initialPadding.left) <= 0) ? 0 : min.valueOf() - initialPadding.left,
+    max: (max <= 0 && (max + initialPadding.right) >= 0) ? 0 : max.valueOf() + initialPadding.right
   };
 
   // re-calculate padding, taking the adjusted domain into account
@@ -132,9 +132,15 @@ function padDomain(domain, props, axis) {
   };
 
   // Adjust the domain by the final padding
+  const paddedDomain = {
+    min: (min >= 0 && (min - finalPadding.left) <= 0) ? 0 : min.valueOf() - finalPadding.left,
+    max: (max >= 0 && (max + finalPadding.right) <= 0) ? 0 : max.valueOf() + finalPadding.right
+  };
+
+  // default to minDomain / maxDomain if they exist
   const finalDomain = {
-    min: minDomain !== undefined ? minDomain : min.valueOf() - finalPadding.left,
-    max: maxDomain !== undefined ? maxDomain : max.valueOf() + finalPadding.right
+    min: minDomain !== undefined ? minDomain : paddedDomain.min,
+    max: maxDomain !== undefined ? maxDomain : paddedDomain.max
   };
 
   return min instanceof Date || max instanceof Date ?
