@@ -1,6 +1,6 @@
 import React from "react";
 import PropTypes from "prop-types";
-import Collection from "../victory-util/collection";
+import isEqual from "react-fast-compare";
 
 export default class TSpan extends React.Component {
   static propTypes = {
@@ -16,7 +16,7 @@ export default class TSpan extends React.Component {
   };
 
   shouldComponentUpdate(nextProps) {
-    return !Collection.areVictoryPropsEqual(this.props, nextProps);
+    return !isEqual(this.props, nextProps);
   }
 
   render() {

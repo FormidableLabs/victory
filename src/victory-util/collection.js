@@ -1,6 +1,5 @@
 /* eslint-disable func-style */
 /* eslint-disable no-use-before-define */
-import isEqual from "react-fast-compare";
 
 function isNonEmptyArray(collection) {
   return Array.isArray(collection) && collection.length > 0;
@@ -45,18 +44,7 @@ function getMinValue(arr, ...values) {
     Math.min(...array);
 }
 
-/*
-`areVictoryPropsEqual` does the following:
-  - marks any two Functions as equal
-  - returns false when checking the equality of things like `1` vs. `Object(1)`
-  (see the tests for more specifics)
-*/
-function areVictoryPropsEqual(a, b) {
-  return isEqual(a, b);
-}
-
 export default {
-  areVictoryPropsEqual,
   containsDates,
   containsNumbers,
   containsOnlyStrings,

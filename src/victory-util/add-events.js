@@ -1,7 +1,7 @@
 import React from "react";
 import { defaults, assign, keys, isFunction, pick, without, isEmpty } from "lodash";
 import Events from "./events";
-import Collection from "./collection";
+import isEqual from "react-fast-compare";
 import VictoryTransition from "../victory-transition/victory-transition";
 
 //  used for checking state changes. Expected components can be passed in via options
@@ -28,7 +28,7 @@ export default (WrappedComponent, options) => {
 
     componentDidUpdate() {
       const externalMutations = this.getExternalMutations(this.props);
-      if (!Collection.areVictoryPropsEqual(this.externalMutations, externalMutations)) {
+      if (!isEqual(this.externalMutations, externalMutations)) {
         this.externalMutations = externalMutations;
         this.applyExternalMutations(this.props, externalMutations);
       }
