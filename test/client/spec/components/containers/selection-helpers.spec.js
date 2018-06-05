@@ -1,7 +1,7 @@
 /* eslint no-unused-expressions: 0 */
 /* eslint max-nested-callbacks: 0 */
 
-import { VictoryLabel } from "src/index";
+import { VictoryBar } from "src/index";
 import SelectionHelpers from "src/components/containers/selection-helpers";
 import React from "react";
 import * as d3Scale from "d3-scale";
@@ -23,7 +23,7 @@ describe("helpers/selection", () => {
         { eventKey: 0, x: 1, _x: 1, y: 3, _y: 3 }, { eventKey: 1, x: 2, _x: 2, y: 5, _y: 5 }
       ];
       const name = "points";
-      const children = [React.createElement(VictoryLabel, { name, data })];
+      const children = [React.createElement(VictoryBar, { name, data })];
       const props = { children };
       const dataset = SelectionHelpers.getDatasets(props);
       expect(dataset).to.eql([{ childName: name, data: expectedReturn }]);

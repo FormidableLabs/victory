@@ -255,6 +255,7 @@ const modifyProps = (props, fallbackProps, role) => {
 };
 
 const getCalculatedValues = (props) => {
+  props = assign({ polar: true }, props);
   const defaultStyles = getStyleObject(props);
   const style = getStyles(props, defaultStyles);
   const padding = Helpers.getPadding(props);
