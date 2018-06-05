@@ -1,6 +1,15 @@
 VictoryCore Changelog
 =====================
 
+## 23.0.0 (2018-06-04)
+
+-[380](https://github.com/FormidableLabs/victory-core/pull/380)
+
+**Breaking Changes**
+- `domainPadding` no longer constrains the padding to existing quadrants. Use the new `minDomain` prop to create a padded domain that stops cleanly at zero
+- Refactors utility methods. This is an internal breaking change, but should not be a breaking change for most Victory users. See pull request for details
+- Upgrades to `react-fast-compare@^2.0.0` which changes function comparison. This means that Victory components _will_ update when functions are not equal. This closes several Victory issues, but may cause a slight performance decline
+
 ## 22.1.6 (2018-06-01)
 
 -[378](https://github.com/FormidableLabs/victory-core/pull/378) Fixes a cornerRadius bug in `Bar`
