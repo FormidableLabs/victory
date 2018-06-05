@@ -34,29 +34,8 @@ export default (WrappedComponent, options) => {
       }
     }
 
-    shouldComponentUpdate(nextProps) {
-      const calculatedValues = this.getCalculatedValues(nextProps);
-      // re-render without additional checks when component is animated
-      if (this.props.animate || this.props.animating) {
-        this.cacheValues(calculatedValues);
-        return true;
-      }
-
-      // check for any state changes triggered by events or shared events
-      const calculatedState = this.getStateChanges(nextProps, calculatedValues);
-      if (!Collection.areVictoryPropsEqual(this.calculatedState, calculatedState)) {
-        this.cacheValues(calculatedValues);
-        this.calculatedState = calculatedState;
-        return true;
-      }
-
-      // check whether props have changed
-      if (!Collection.areVictoryPropsEqual(this.props, nextProps)) {
-        this.cacheValues(calculatedValues);
-        return true;
-      }
-
-      return false;
+    componentWillReceiveProps(nextProps) {
+      this.cacheValues(this.getCalculatedValues(nextProps));
     }
 
     applyExternalMutations(props, externalMutations) {
