@@ -77,8 +77,8 @@ function getFlatData(dataset, axis) {
 function getMaxFromData(dataset, axis) {
   let containsDate = false;
   const minValue = flatten(dataset).reduce((memo, datum) => {
-    const current = datum[`_${axis}`] && datum[`_${axis}`][1] !== undefined ?
-      datum[`_${axis}`][1] : datum[`_${axis}`];
+    const current = datum[`_${axis}`] && datum[`_${axis}1`] !== undefined ?
+      datum[`_${axis}1`] : datum[`_${axis}`];
     containsDate = containsDate || current instanceof Date;
     return memo > current ? memo : current;
   }, -Infinity);
@@ -88,8 +88,8 @@ function getMaxFromData(dataset, axis) {
 function getMinFromData(dataset, axis) {
   let containsDate = false;
   const minValue = flatten(dataset).reduce((memo, datum) => {
-    const current = datum[`_${axis}`] && datum[`_${axis}`][0] !== undefined ?
-      datum[`_${axis}`][0] : datum[`_${axis}`];
+    const current = datum[`_${axis}`] && datum[`_${axis}0`] !== undefined ?
+      datum[`_${axis}0`] : datum[`_${axis}`];
     containsDate = containsDate || current instanceof Date;
     return memo < current ? memo : current;
   }, Infinity);
