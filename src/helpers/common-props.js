@@ -127,6 +127,12 @@ export const BaseProps = {
     events: PropTypes.array,
     getEventState: PropTypes.func
   }),
+  singleQuadrantDomainPadding: PropTypes.oneOfType([
+    PropTypes.bool,
+    PropTypes.shape({
+      x: PropTypes.oneOfType([PropTypes.bool]), y: PropTypes.oneOfType([PropTypes.bool])
+    })
+  ]),
   standalone: PropTypes.bool,
   theme: PropTypes.object,
   width: CustomPropTypes.nonNegative
