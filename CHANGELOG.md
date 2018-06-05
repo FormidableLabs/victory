@@ -1,6 +1,10 @@
 VictoryCore Changelog
 =====================
 
+## 23.0.2 (2018-06-05)
+
+-[384](https://github.com/FormidableLabs/victory-core/pull/384) Changes to `domainPadding` behavior will only occur when new `singleQuadrantDomainPadding` prop is false.
+
 ## 23.0.1 (2018-06-05)
 
 -[382](https://github.com/FormidableLabs/victory-core/pull/382) Fixes bug for charts with y0 values
