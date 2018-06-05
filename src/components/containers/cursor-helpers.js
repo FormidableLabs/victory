@@ -5,7 +5,8 @@ import BrushHelpers from "./brush-helpers";
 const CursorHelpers = {
   onMouseMove(evt, targetProps) {
     const { onCursorChange, cursorDimension, domain } = targetProps;
-    const cursorSVGPosition = Selection.getSVGEventCoordinates(evt);
+    const parentSVG = targetProps.parentSVG || Selection.getParentSVG(evt);
+    const cursorSVGPosition = Selection.getSVGEventCoordinates(evt, parentSVG);
     let cursorValue = Selection.getDataCoordinates(
       targetProps,
       targetProps.scale,
@@ -36,7 +37,7 @@ const CursorHelpers = {
     return [{
       target: "parent",
       eventKey: "parent",
-      mutation: () => ({ cursorValue })
+      mutation: () => ({ cursorValue, parentSVG })
     }];
   }
 };

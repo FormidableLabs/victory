@@ -7,7 +7,6 @@ import React from "react";
 import { VictoryAxis, VictoryLine, VictoryBar } from "src/index";
 import { Log, Data } from "victory-core";
 import Wrapper from "src/helpers/wrapper";
-import { assign } from "lodash";
 
 describe("victory-chart/helpers-methods", () => {
   const getVictoryLine = (props) => React.createElement(VictoryLine, props);
@@ -87,7 +86,6 @@ describe("victory-chart/helpers-methods", () => {
     beforeEach(() => {
       sandbox = sinon.sandbox.create();
       sandbox.spy(Wrapper, "getDomain");
-      sandbox.spy(victoryLine.type, "getDomain");
     });
 
     afterEach(() => {
@@ -98,18 +96,13 @@ describe("victory-chart/helpers-methods", () => {
       const props = { domain: { x: [1, 2], y: [2, 3] } };
       const domainResultX = getDomain(props, "x", childComponents);
       expect(Wrapper.getDomain).calledWith(props, "x", childComponents).and.returned([1, 2]);
-      expect(victoryLine.type.getDomain).notCalled;
       expect(domainResultX).to.eql([1, 2]);
     });
 
     it("calculates a domain from child components", () => {
       const props = {};
-      const polarProps = {
-        polar: undefined, startAngle: undefined, endAngle: undefined, categories: undefined
-      };
       const domainResultX = getDomain(props, "x", childComponents);
       expect(Wrapper.getDomain).calledWith(props, "x", childComponents);
-      expect(victoryLine.type.getDomain).calledWith(assign({}, victoryLine.props, polarProps));
       expect(domainResultX).to.eql(victoryLine.props.domain);
     });
   });

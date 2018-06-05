@@ -1,13 +1,6 @@
 import { assign, uniqBy, defaults, isFunction } from "lodash";
 import Axis from "../../helpers/axis";
-import { Helpers, LabelHelpers, Scale, Domain, Collection } from "victory-core";
-
-// exposed for use by VictoryChart
-const getAxis = (props, flipped) => {
-  const typicalAxis = props.dependentAxis ? "y" : "x";
-  const invertedAxis = typicalAxis === "x" ? "y" : "x";
-  return flipped ? invertedAxis : typicalAxis;
-};
+import { Helpers, LabelHelpers, Scale } from "victory-core";
 
 const getPosition = (r, angle, axis) => {
   return axis === "x" ? r * Math.cos(angle) : -r * Math.sin(angle);
@@ -44,36 +37,6 @@ const getEvaluatedStyles = (style, tick, index) => {
     labelStyle: evaluateStyle(style.tickLabels, tick, index),
     gridStyle: evaluateStyle(style.grid, tick, index)
   };
-};
-
-const getDomainFromTickValues = (props, axis) => {
-  const { tickValues, startAngle = 0, endAngle = 360 } = props;
-  if (Helpers.stringTicks(props)) {
-    return [1, tickValues.length];
-  } else {
-    const ticks = tickValues.map((value) => +value);
-    const domain = [Collection.getMinValue(ticks), Collection.getMaxValue(ticks)];
-    return axis === "x" && Math.abs(startAngle - endAngle) === 360 ?
-      Domain.getSymmetricDomain(domain, ticks) : domain;
-  }
-};
-
-// exposed for use by VictoryChart
-const getDomain = (props, axis) => {
-  const inherentAxis = getAxis(props);
-  if (axis && axis !== inherentAxis) {
-    return undefined;
-  }
-  let domain;
-  if (Array.isArray(props.domain)) {
-    domain = props.domain;
-  } else if (props.domain && props.domain[inherentAxis]) {
-    domain = props.domain[inherentAxis];
-  } else if (Array.isArray(props.tickValues) && props.tickValues.length > 1) {
-    domain = getDomainFromTickValues(props, axis);
-  }
-  const paddedDomain = Domain.padDomain(domain, props, inherentAxis);
-  return domain ? Domain.cleanDomain(paddedDomain, props, inherentAxis) : undefined;
 };
 
 const getStyleObject = (props) => {
@@ -119,9 +82,9 @@ const getRange = (props, axis) => {
 
 // exposed for use by VictoryChart (necessary?)
 const getScale = (props) => {
-  const axis = getAxis(props);
+  const axis = Axis.getAxis(props);
   const scale = Scale.getBaseScale(props, axis);
-  const domain = getDomain(props, axis) || scale.domain();
+  const domain = Axis.getDomain(props, axis) || scale.domain();
   const range = getRange(props, axis);
   scale.range(range);
   scale.domain(domain);
@@ -144,7 +107,7 @@ const getStyles = (props, styleObject) => {
 
 const getAxisAngle = (props) => {
   const { axisAngle, startAngle, axisValue, dependentAxis, scale } = props;
-  const otherAxis = getAxis(props) === "y" ? "x" : "y";
+  const otherAxis = Axis.getAxis(props) === "y" ? "x" : "y";
   if (axisValue === undefined || !dependentAxis || scale[otherAxis] === undefined) {
     return axisAngle || startAngle;
   }
@@ -292,13 +255,14 @@ const modifyProps = (props, fallbackProps, role) => {
 };
 
 const getCalculatedValues = (props) => {
+  props = assign({ polar: true }, props);
   const defaultStyles = getStyleObject(props);
   const style = getStyles(props, defaultStyles);
   const padding = Helpers.getPadding(props);
-  const axis = getAxis(props);
+  const axis = Axis.getAxis(props);
   const axisType = getAxisType(props);
-  const stringTicks = Helpers.stringTicks(props) ? props.tickValues : undefined;
-  const domain = getDomain(props, axis);
+  const stringTicks = Axis.stringTicks(props) ? props.tickValues : undefined;
+  const domain = Axis.getDomain(props, axis);
   const range = getRange(props, axis);
   const scale = getScale(props);
   const initialTicks = Axis.getTicks(props, scale);
@@ -335,9 +299,5 @@ const getBaseProps = (props, fallbackProps) => {
   }, initialChildProps);
 };
 
-export { getDomain,
-  getAxis,
-  getScale,
-  getStyles,
-  getBaseProps
-};
+export { getScale, getStyles, getBaseProps };
+

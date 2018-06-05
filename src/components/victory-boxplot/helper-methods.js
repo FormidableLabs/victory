@@ -1,4 +1,4 @@
-import { orderBy, defaults, assign, uniq, groupBy, keys, isEmpty } from "lodash";
+import { orderBy, defaults, assign, uniq, groupBy, keys } from "lodash";
 import { Helpers, Scale, Domain, Data, Collection } from "victory-core";
 import { min as d3Min, max as d3Max, quantile as d3Quantile } from "d3-array";
 
@@ -84,99 +84,56 @@ const processData = (props, data) => {
 };
 
 const getData = (props) => {
-  if (!props.data || Data.getLength(props.data) < 1) {
-    return [];
-  } else if (props.data.every((d) => isEmpty(d))) {
-    return [];
-  }
-  const createAccessor = (name) => {
-    return Helpers.createAccessor(props[name] !== undefined ? props[name] : name);
-  };
-
-  const stringMap = {
-    x: Data.createStringMap(props, "x"),
-    y: Data.createStringMap(props, "y")
-  };
   const accessorTypes = TYPES.concat("x", "y");
-  const accessor = accessorTypes.reduce((memo, type) => {
-    memo[type] = createAccessor(type);
-    return memo;
-  }, {});
-
-  const formattedData = props.data.map((datum) => {
-    datum = Data.parseDatum(datum);
-
-    const processedValues = accessorTypes.reduce((memo, type) => {
-      const processedValue = accessor[type](datum);
-      if (processedValue !== undefined) {
-        memo[`_${type}`] = processedValue;
-      }
-      return memo;
-    }, {});
-
-    const { _x, _y } = processedValues;
-
-    const formattedDatum = assign(
-      {},
-      datum,
-      processedValues,
-      typeof _x === "string" ? { _x: stringMap.x[_x], x: _x } : {},
-      typeof _y === "string" ? { _y: stringMap.y[_y], y: _y } : {}
-    );
-    return isEmpty(formattedDatum) ? undefined : formattedDatum;
-  }).filter(Boolean);
-  const result = formattedData.length ?
-    Data.addEventKeys(props, processData(props, formattedData)) : [];
-  return result;
+  const formattedData = Data.formatData(props.data, props, accessorTypes);
+  return formattedData.length ? processData(props, formattedData) : [];
 };
 
-const reduceDataset = (props, dataset, axis) => {
-  const allData = dataset.reduce((memo, datum) => {
-    return memo.concat(datum[`_${axis}`]);
-  }, []);
+const reduceDataset = (dataset, props, axis) => {
+  const minDomain = Domain.getMinFromProps(props, axis);
+  const maxDomain = Domain.getMaxFromProps(props, axis);
 
-  if (allData.length < 1) {
-    return Scale.getBaseScale(props, axis).domain();
-  }
-  const minData = Collection.getMinValue(allData);
-  const maxData = Collection.getMaxValue(allData);
-  if (+minData === +maxData) {
-    return Domain.getSinglePointDomain(maxData);
-  }
-  return [minData, maxData];
+  const minData = minDomain !== undefined ?
+    minDomain : dataset.reduce((memo, datum) => {
+      return memo < datum[`_${axis}`] ? memo : datum[`_${axis}`];
+    }, Infinity);
+  const maxData = maxDomain !== undefined ?
+    maxDomain : dataset.reduce((memo, datum) => {
+      return memo > datum[`_${axis}`] ? memo : datum[`_${axis}`];
+    }, -Infinity);
+  return Domain.getDomainFromMinMax(minData, maxData);
 };
 
-const getDomainFromMinMax = (dataset) => {
-  const allMin = dataset.reduce((memo, datum) => memo.concat(datum._min), []);
-  const allMax = dataset.reduce((memo, datum) => memo.concat(datum._max), []);
+const getDomainFromMinMaxValues = (dataset, props, axis) => {
+  const minDomain = Domain.getMinFromProps(props, axis);
+  const maxDomain = Domain.getMaxFromProps(props, axis);
+  const minData = minDomain !== undefined ?
+    minDomain : dataset.reduce((memo, datum) => {
+      return memo < datum._min ? memo : datum._min;
+    }, Infinity);
+  const maxData = maxDomain !== undefined ?
+    maxDomain : dataset.reduce((memo, datum) => {
+      return memo > datum._max ? memo : datum._max;
+    }, -Infinity);
+  return Domain.getDomainFromMinMax(minData, maxData);
+};
 
-  const minData = Math.min(...allMin);
-  const maxData = Math.max(...allMax);
-  if (+minData === +maxData) {
-    return Domain.getSinglePointDomain(maxData);
+const getDomainFromData = (props, axis) => {
+  const minDomain = Domain.getMinFromProps(props, axis);
+  const maxDomain = Domain.getMaxFromProps(props, axis);
+  const dataset = getData(props);
+  if (dataset.length < 1) {
+    const scaleDomain = Scale.getBaseScale(props, axis).domain();
+    const min = minDomain !== undefined ? minDomain : Collection.getMinValue(scaleDomain);
+    const max = maxDomain !== undefined ? maxDomain : Collection.getMaxValue(scaleDomain);
+    return Domain.getDomainFromMinMax(min, max);
   }
-
-  return [minData, maxData];
+  return props.horizontal && axis === "x" || !props.horizontal && axis === "y" ?
+    getDomainFromMinMaxValues(dataset, props, axis) : reduceDataset(dataset, props, axis);
 };
 
 const getDomain = (props, axis) => {
-  let domain;
-  if (props.domain && props.domain[axis]) {
-    domain = props.domain[axis];
-  } else if (props.domain && Array.isArray(props.domain)) {
-    domain = props.domain;
-  } else {
-    const dataset = getData(props);
-
-    if (props.horizontal) {
-      // find the domain of all y values, use the min and max for x
-      domain = axis === "x" ? getDomainFromMinMax(dataset) : reduceDataset(props, dataset, axis);
-    } else {
-      // find the domain of all x values, use the min and max for y
-      domain = axis === "x" ? reduceDataset(props, dataset, axis) : getDomainFromMinMax(dataset);
-    }
-  }
-  return Domain.cleanDomain(Domain.padDomain(domain, props, axis), props);
+  return Domain.createDomainFunction(getDomainFromData)(props, axis);
 };
 
 const getStyles = (props, styleObject) => {

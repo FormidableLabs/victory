@@ -32,9 +32,12 @@ export default {
     return defaultDomainPadding[axis];
   },
 
+  // eslint-disable-next-line max-statements
   getDomain(props, axis, childComponents) {
     childComponents = childComponents || React.Children.toArray(props.children);
     const propsDomain = Domain.getDomainFromProps(props, axis);
+    const minDomain = Domain.getMinFromProps(props, axis);
+    const maxDomain = Domain.getMaxFromProps(props, axis);
     const domainPadding = props.polar ?
       0 : this.getDefaultDomainPadding(props, axis, childComponents);
     let domain;
@@ -44,12 +47,11 @@ export default {
       const dataset = (props.data || props.y) && Data.getData(props);
       const dataDomain = dataset ? Domain.getDomainFromData(props, axis, dataset) : [];
       const childDomain = this.getDomainFromChildren(props, axis, childComponents);
-      const min = Collection.getMinValue([...dataDomain, ...childDomain]);
-      const max = Collection.getMaxValue([...dataDomain, ...childDomain]);
-      domain = [min, max];
+      const min = minDomain || Collection.getMinValue([...dataDomain, ...childDomain]);
+      const max = maxDomain || Collection.getMaxValue([...dataDomain, ...childDomain]);
+      domain = Domain.getDomainFromMinMax(min, max);
     }
-    const paddedDomain = Domain.padDomain(domain, assign({ domainPadding }, props), axis);
-    return Domain.cleanDomain(paddedDomain, props, axis);
+    return Domain.formatDomain(domain, assign({ domainPadding }, props), axis);
   },
 
   setAnimationState(props, nextProps) {
@@ -141,10 +143,10 @@ export default {
     const horizontal = props && props.horizontal || horizontalChildren.length > 0;
     const currentAxis = Axis.getCurrentAxis(axis, horizontal);
     const parentData = props.data ? Data.getData(props, axis) : undefined;
-    const { polar, startAngle, endAngle, categories } = props;
+    const { polar, startAngle, endAngle, categories, minDomain, maxDomain } = props;
+    const baseParentProps = { polar, startAngle, endAngle, categories, minDomain, maxDomain };
     const parentProps = parentData ?
-      { data: parentData, polar, startAngle, endAngle, categories } :
-      { polar, startAngle, endAngle, categories };
+      assign(baseParentProps, { data: parentData }) : baseParentProps;
 
     while (childrenLength > 0) {
       const child = children[--childrenLength];

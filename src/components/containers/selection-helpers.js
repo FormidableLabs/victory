@@ -74,13 +74,14 @@ const SelectionHelpers = {
       return {};
     }
     const dimension = targetProps.selectionDimension;
-    const { x, y } = Selection.getSVGEventCoordinates(evt);
+    const parentSVG = targetProps.parentSVG || Selection.getParentSVG(evt);
+    const { x, y } = Selection.getSVGEventCoordinates(evt, parentSVG);
     const x1 = polar || dimension !== "y" ? x : Selection.getDomainCoordinates(targetProps).x[0];
     const y1 = polar || dimension !== "x" ? y : Selection.getDomainCoordinates(targetProps).y[0];
     const x2 = polar || dimension !== "y" ? x : Selection.getDomainCoordinates(targetProps).x[1];
     const y2 = polar || dimension !== "x" ? y : Selection.getDomainCoordinates(targetProps).y[1];
 
-    const mutatedProps = { x1, y1, select: true, x2, y2 };
+    const mutatedProps = { x1, y1, select: true, x2, y2, parentSVG };
     if (selectedData && isFunction(targetProps.onSelectionCleared)) {
       targetProps.onSelectionCleared(defaults({}, mutatedProps, targetProps));
     }
@@ -101,13 +102,14 @@ const SelectionHelpers = {
     if (!allowSelection || !select) {
       return null;
     } else {
-      const { x, y } = Selection.getSVGEventCoordinates(evt);
+      const parentSVG = targetProps.parentSVG || Selection.getParentSVG(evt);
+      const { x, y } = Selection.getSVGEventCoordinates(evt, parentSVG);
       const x2 = polar || dimension !== "y" ? x : Selection.getDomainCoordinates(targetProps).x[1];
       const y2 = polar || dimension !== "x" ? y : Selection.getDomainCoordinates(targetProps).y[1];
       return {
         target: "parent",
         mutation: () => {
-          return { x2, y2 };
+          return { x2, y2, parentSVG };
         }
       };
     }

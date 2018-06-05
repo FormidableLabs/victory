@@ -50,6 +50,20 @@ export const BaseProps = {
     CustomPropTypes.domain,
     PropTypes.shape({ x: CustomPropTypes.domain, y: CustomPropTypes.domain })
   ]),
+  maxDomain: PropTypes.oneOfType([
+    PropTypes.number, PropTypes.instanceOf(Date),
+    PropTypes.shape({
+      x: PropTypes.oneOfType([PropTypes.number, PropTypes.instanceOf(Date)]),
+      y: PropTypes.oneOfType([PropTypes.number, PropTypes.instanceOf(Date)])
+    })
+  ]),
+  minDomain: PropTypes.oneOfType([
+    PropTypes.number, PropTypes.instanceOf(Date),
+    PropTypes.shape({
+      x: PropTypes.oneOfType([PropTypes.number, PropTypes.instanceOf(Date)]),
+      y: PropTypes.oneOfType([PropTypes.number, PropTypes.instanceOf(Date)])
+    })
+  ]),
   domainPadding: PropTypes.oneOfType([
     PropTypes.shape({
       x: PropTypes.oneOfType([ PropTypes.number, PropTypes.arrayOf(PropTypes.number) ]),
@@ -113,6 +127,12 @@ export const BaseProps = {
     events: PropTypes.array,
     getEventState: PropTypes.func
   }),
+  singleQuadrantDomainPadding: PropTypes.oneOfType([
+    PropTypes.bool,
+    PropTypes.shape({
+      x: PropTypes.oneOfType([PropTypes.bool]), y: PropTypes.oneOfType([PropTypes.bool])
+    })
+  ]),
   standalone: PropTypes.bool,
   theme: PropTypes.object,
   width: CustomPropTypes.nonNegative

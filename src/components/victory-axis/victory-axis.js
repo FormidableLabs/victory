@@ -5,7 +5,7 @@ import {
   PropTypes as CustomPropTypes, Helpers, VictoryLabel,
   VictoryContainer, VictoryTheme, Grid, TextSize, addEvents
 } from "victory-core";
-import { getBaseProps, getDomain, getScale, getStyles } from "./helper-methods";
+import { getBaseProps, getScale, getStyles } from "./helper-methods";
 import Axis from "../../helpers/axis";
 import { BaseProps } from "../../helpers/common-props";
 
@@ -104,8 +104,8 @@ class VictoryAxis extends React.Component {
     fixLabelOverlap: false
   };
 
-  static getDomain = getDomain;
-  static getAxis = Axis.getAxis.bind(Axis);
+  static getDomain = Axis.getDomain;
+  static getAxis = Axis.getAxis;
   static getScale = getScale;
   static getStyles = (props) => getStyles(props, fallbackProps.style);
   static getBaseProps = (props) => getBaseProps(props, fallbackProps);
@@ -147,7 +147,7 @@ class VictoryAxis extends React.Component {
   }
 
   fixLabelOverlap(gridAndTicks, props) {
-    const isVertical = Helpers.isVertical(props);
+    const isVertical = Axis.isVertical(props);
     const size = isVertical ? props.height : props.width;
     const isVictoryLabel = (child) => child.type && child.type.role === "label";
     const labels = gridAndTicks.map((gridAndTick) => gridAndTick.props.children)

@@ -1,5 +1,4 @@
-import { assign, flatten, orderBy } from "lodash";
-import { Helpers, LabelHelpers, Scale, Domain, Data } from "victory-core";
+import { Helpers, LabelHelpers, Scale, Domain, Data, Collection } from "victory-core";
 
 const getErrors = (datum, scale, axis) => {
   /**
@@ -9,7 +8,7 @@ const getErrors = (datum, scale, axis) => {
    * @return {String or Array}
    */
 
-  const errorNames = { x: "errorX", y: "errorY" };
+  const errorNames = { x: "_errorX", y: "_errorY" };
   const errors = datum[errorNames[axis]];
   if (errors === 0) {
     return false;
@@ -21,145 +20,56 @@ const getErrors = (datum, scale, axis) => {
     [ scale[axis](errors + datum[`_${axis}`]), scale[axis](datum[`_${axis}`] - errors) ];
 };
 
-const sortData = (dataset, sortKey, sortOrder = "ascending") => {
-  if (!sortKey) {
-    return dataset;
-  }
 
-  if (sortKey === "x" || sortKey === "y") {
-    sortKey = `_${sortKey}`;
-  }
-
-  const sortedData = orderBy(dataset, sortKey);
-
-  if (sortOrder === "descending") {
-    return sortedData.reverse();
-  }
-
-  return sortedData;
-};
-
-const formatErrorData = (dataset, props) => {
-  if (!dataset || Data.getLength(dataset) < 1) {
-    return [];
-  }
-  const accessor = {
-    x: Helpers.createAccessor(props.x !== undefined ? props.x : "x"),
-    y: Helpers.createAccessor(props.y !== undefined ? props.y : "y"),
-    errorX: Helpers.createAccessor(props.errorX !== undefined ? props.errorX : "errorX"),
-    errorY: Helpers.createAccessor(props.errorY !== undefined ? props.errorY : "errorY")
-  };
-
-  const replaceNegatives = (errors) => {
-    // check if the value is negative, if it is set to 0
-    const replaceNeg = (val) => !val || val < 0 ? 0 : val;
-    return Array.isArray(errors) ? errors.map((err) => replaceNeg(err)) : replaceNeg(errors);
-  };
-
-  const stringMap = {
-    x: Data.createStringMap(props, "x"),
-    y: Data.createStringMap(props, "y")
-  };
-
-  const formattedData = dataset.reduce((dataArr, datum, index) => {
-    datum = Data.parseDatum(datum);
-
-    const evaluatedX = accessor.x(datum);
-    const evaluatedY = accessor.y(datum);
-    const _x = evaluatedX !== undefined ? evaluatedX : index;
-    const _y = evaluatedY !== undefined ? evaluatedY : datum;
-    const errorX = replaceNegatives(accessor.errorX(datum));
-    const errorY = replaceNegatives(accessor.errorY(datum));
-
-    dataArr.push(
-      assign(
-        {},
-        datum,
-        { _x, _y, errorX, errorY },
-        // map string data to numeric values, and add names
-        typeof _x === "string" ? { _x: stringMap.x[_x], x: _x } : {},
-        typeof _y === "string" ? { _y: stringMap.y[_y], y: _y } : {}
-      )
-    );
-
-    return dataArr;
-  }, []);
-
-  return sortData(formattedData, props.sortKey, props.sortOrder);
-};
-
-const getErrorData = (props) => {
+const getData = (props) => {
+  const accessorTypes = ["x", "y", "errorX", "errorY"];
   if (props.data) {
-    if (Data.getLength(props.data) < 1) {
-      return [];
-    }
-
-    return formatErrorData(props.data, props);
+    return Data.formatData(props.data, props, accessorTypes);
   } else {
-    const generatedData = (props.errorX || props.errorY) && Data.generateData(props);
-    return formatErrorData(generatedData, props);
+    const generatedData = props.errorX || props.errorY ? Data.generateData(props) : [];
+    return Data.formatData(generatedData, props, accessorTypes);
   }
 };
 
-const getDomainFromData = (props, axis, dataset) => {
+const getDomainFromData = (props, axis) => {
+  const minDomain = Domain.getMinFromProps(props, axis);
+  const maxDomain = Domain.getMaxFromProps(props, axis);
+  const dataset = getData(props);
+  if (dataset.length < 1) {
+    const scaleDomain = Scale.getBaseScale(props, axis).domain();
+    const min = minDomain !== undefined ? minDomain : Collection.getMinValue(scaleDomain);
+    const max = maxDomain !== undefined ? maxDomain : Collection.getMaxValue(scaleDomain);
+    return Domain.getDomainFromMinMax(min, max);
+  }
   const currentAxis = Helpers.getCurrentAxis(axis, props.horizontal);
-  let error;
-  if (currentAxis === "x") {
-    error = "errorX";
-  } else if (currentAxis === "y") {
-    error = "errorY";
-  }
-  const axisData = flatten(dataset).map((datum) => datum[`_${currentAxis}`]);
-  const errorData = flatten(flatten(dataset).map((datum) => {
-    let errorMax;
-    let errorMin;
-    if (Array.isArray(datum[error])) {
-      errorMax = datum[error][0] + datum[`_${currentAxis}`];
-      errorMin = datum[`_${currentAxis}`] - datum[error][1];
-    } else {
-      errorMax = datum[error] + datum[`_${currentAxis}`];
-      errorMin = datum[`_${currentAxis}`] - datum[error];
-    }
-    return [errorMax, errorMin];
-  }));
+  const error = currentAxis === "x" ? "_errorX" : "_errorY";
+  const reduceErrorData = (type) => {
+    const baseCondition = type === "min" ? Infinity : -Infinity;
+    const errorIndex = type === "min" ? 1 : 0;
+    const sign = type === "min" ? -1 : 1;
+    return dataset.reduce((memo, datum) => {
+      const currentError = Array.isArray(datum[error]) ?
+        datum[error][errorIndex] : datum[error];
+      const current = datum[`_${currentAxis}`] + sign * (currentError || 0);
+      return (memo < current && type === "min") || (memo > current && type === "max") ?
+        memo : current;
+    }, baseCondition);
+  };
 
-  const allData = axisData.concat(errorData);
-  const min = Math.min(...allData);
-  const max = Math.max(...allData);
-  // TODO: is the correct behavior, or should we just error. How do we
-  // handle charts with just one data point?
-  if (+min === +max) {
-    return Domain.getSinglePointDomain(max);
-  }
-  return [min, max];
+  const min = minDomain !== undefined ? minDomain : reduceErrorData("min");
+  const max = maxDomain !== undefined ? maxDomain : reduceErrorData("max");
+  return Domain.getDomainFromMinMax(min, max);
 };
 
 const getDomain = (props, axis) => {
-  const propsDomain = Domain.getDomainFromProps(props, axis);
-  if (propsDomain) {
-    return Domain.padDomain(propsDomain, props, axis);
-  }
-  const categoryDomain = Domain.getDomainFromCategories(props, axis);
-  if (categoryDomain) {
-    return Domain.padDomain(categoryDomain, props, axis);
-  }
-  const dataset = getErrorData(props);
-
-  if (dataset.length < 1) {
-    return Scale.getBaseScale(props, axis).domain();
-  }
-
-  const domain = getDomainFromData(props, axis, dataset);
-  return Domain.cleanDomain(Domain.padDomain(domain, props, axis), props);
+  return Domain.createDomainFunction(getDomainFromData)(props, axis);
 };
-
 
 const getCalculatedValues = (props) => {
   const defaultStyles = props.theme && props.theme.errorbar && props.theme.errorbar.style ?
     props.theme.errorbar.style : {};
   const style = Helpers.getStyles(props.style, defaultStyles) || {};
-  const dataWithErrors = assign(Data.getData(props), getErrorData(props));
-  const data = Data.addEventKeys(props, dataWithErrors);
+  const data = getData(props);
   const range = {
     x: Helpers.getRange(props, "x"),
     y: Helpers.getRange(props, "y")
@@ -232,4 +142,4 @@ const getBaseProps = (props, fallbackProps) => {
   }, initialChildProps);
 };
 
-export { getBaseProps, getDomain };
+export { getBaseProps, getDomain, getData };

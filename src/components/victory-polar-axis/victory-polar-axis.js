@@ -5,7 +5,8 @@ import {
   PropTypes as CustomPropTypes, Helpers, VictoryLabel,
   VictoryContainer, VictoryTheme, Grid, addEvents, Arc
 } from "victory-core";
-import { getDomain, getAxis, getScale, getStyles, getBaseProps } from "./helper-methods";
+import { getScale, getStyles, getBaseProps } from "./helper-methods";
+import Axis from "../../helpers/axis";
 import { BaseProps } from "../../helpers/common-props";
 
 const fallbackProps = {
@@ -105,8 +106,8 @@ class VictoryPolarAxis extends React.Component {
     tickLabelComponent: <VictoryLabel/>
   };
 
-  static getDomain = getDomain;
-  static getAxis = getAxis;
+  static getDomain = Axis.getDomain;
+  static getAxis = Axis.getAxis;
   static getScale = getScale;
   static getStyles = (props) => getStyles(props, fallbackProps.style);
   static getBaseProps = (props) => getBaseProps(props, fallbackProps);

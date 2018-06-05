@@ -1,92 +1,39 @@
-import { assign, orderBy } from "lodash";
-import { Helpers, LabelHelpers, Scale, Domain, Data } from "victory-core";
-
-const sortData = (dataset, sortKey, sortOrder = "ascending") => {
-  if (!sortKey) {
-    return dataset;
-  }
-
-  if (sortKey === "x" || sortKey === "y") {
-    sortKey = `_${sortKey}`;
-  }
-
-  const sortedData = orderBy(dataset, sortKey);
-
-  if (sortOrder === "descending") {
-    return sortedData.reverse();
-  }
-
-  return sortedData;
-};
+import { assign } from "lodash";
+import { Helpers, LabelHelpers, Scale, Domain, Data, Collection } from "victory-core";
 
 const getData = (props) => {
-  if (!props.data || Data.getLength(props.data) < 1) {
-    return [];
+  const accessorTypes = ["x", "high", "low", "close", "open"];
+  return Data.formatData(props.data, props, accessorTypes);
+};
+
+const reduceData = (dataset, axis, type) => {
+  const yDataTypes = { min: "_low", max: "_high" };
+  const dataType = axis === "x" ? "_x" : yDataTypes[type];
+  const baseCondition = type === "min" ? Infinity : -Infinity;
+  return dataset.reduce((memo, datum) => {
+    const current = datum[dataType];
+    return memo < current && type === "min" || memo > current && type === "max" ?
+      memo : current;
+  }, baseCondition);
+};
+
+const getDomainFromData = (props, axis) => {
+  const minDomain = Domain.getMinFromProps(props, axis);
+  const maxDomain = Domain.getMaxFromProps(props, axis);
+  const dataset = getData(props);
+  if (dataset.length < 1) {
+    const scaleDomain = Scale.getBaseScale(props, axis).domain();
+    const min = minDomain !== undefined ? minDomain : Collection.getMinValue(scaleDomain);
+    const max = maxDomain !== undefined ? maxDomain : Collection.getMaxValue(scaleDomain);
+    return Domain.getDomainFromMinMax(min, max);
   }
-  const stringMap = {
-    x: Data.createStringMap(props, "x")
-  };
-
-  const accessor = {
-    x: Helpers.createAccessor(props.x !== undefined ? props.x : "x"),
-    open: Helpers.createAccessor(props.open !== undefined ? props.open : "open"),
-    close: Helpers.createAccessor(props.close !== undefined ? props.close : "close"),
-    high: Helpers.createAccessor(props.high !== undefined ? props.high : "high"),
-    low: Helpers.createAccessor(props.low !== undefined ? props.low : "low")
-  };
-
-  const formattedData = props.data.reduce((dataArr, datum, index) => {
-    datum = Data.parseDatum(datum);
-
-    const evaluatedX = accessor.x(datum);
-    const _x = evaluatedX !== undefined ? evaluatedX : index;
-    const _open = accessor.open(datum);
-    const _close = accessor.close(datum);
-    const _high = accessor.high(datum);
-    const _low = accessor.low(datum);
-    const _y = [_open, _close, _high, _low];
-
-    dataArr.push(
-      assign(
-        {},
-        datum,
-        { _x, _y, _open, _close, _high, _low },
-        typeof _x === "string" ? { _x: stringMap.x[_x], x: _x } : {}
-      )
-    );
-
-    return dataArr;
-  }, []);
-
-  return sortData(formattedData, props.sortKey, props.sortOrder);
+  const min = minDomain !== undefined ? minDomain : reduceData(dataset, axis, "min");
+  const max = maxDomain !== undefined ? maxDomain : reduceData(dataset, axis, "max");
+  return Domain.getDomainFromMinMax(min, max);
 };
 
 const getDomain = (props, axis) => {
-  let domain;
-  if (props.domain && props.domain[axis]) {
-    domain = props.domain[axis];
-  } else if (props.domain && Array.isArray(props.domain)) {
-    domain = props.domain;
-  } else {
-    const dataset = getData(props);
-    const allData = dataset.reduce((memo, datum) => {
-      return Array.isArray(datum[`_${axis}`]) ?
-        memo.concat(...datum[`_${axis}`]) : memo.concat(datum[`_${axis}`]);
-    },
-      []);
-
-    if (allData.length < 1) {
-      return Scale.getBaseScale(props, axis).domain();
-    }
-
-    const min = Math.min(...allData);
-    const max = Math.max(...allData);
-    if (+min === +max) {
-      return Domain.getSinglePointDomain(max);
-    }
-    domain = [min, max];
-  }
-  return Domain.cleanDomain(Domain.padDomain(domain, props, axis), props);
+  return Domain.createDomainFunction(getDomainFromData)(props, axis);
 };
 
 const getCalculatedValues = (props) => {
@@ -94,7 +41,7 @@ const getCalculatedValues = (props) => {
   const defaultStyle = theme && theme.candlestick && theme.candlestick.style ?
     theme.candlestick.style : {};
   const style = Helpers.getStyles(props.style, defaultStyle);
-  const data = Data.addEventKeys(props, getData(props));
+  const data = getData(props);
   const range = {
     x: Helpers.getRange(props, "x"),
     y: Helpers.getRange(props, "y")

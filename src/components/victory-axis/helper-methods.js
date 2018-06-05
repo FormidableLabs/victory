@@ -1,6 +1,6 @@
 import { assign, defaults, isFunction } from "lodash";
 import Axis from "../../helpers/axis";
-import { Helpers, Scale, Domain } from "victory-core";
+import { Helpers, Scale } from "victory-core";
 
 const orientationSign = {
   top: -1,
@@ -24,40 +24,10 @@ const evaluateStyle = (style, data, index) => {
 };
 
 // exposed for use by VictoryChart
-const getAxis = (props, flipped) => {
-  if (props.orientation) {
-    const vertical = { top: "x", bottom: "x", left: "y", right: "y" };
-    return vertical[props.orientation];
-  }
-  const axisType = props.dependentAxis ? "dependent" : "independent";
-  const flippedAxis = { dependent: "x", independent: "y" };
-  const normalAxis = { independent: "x", dependent: "y" };
-  return flipped ? flippedAxis[axisType] : normalAxis[axisType];
-};
-
-// exposed for use by VictoryChart
-const getDomain = (props, axis) => {
-  const inherentAxis = getAxis(props);
-  if (axis && axis !== inherentAxis) {
-    return undefined;
-  }
-  let domain;
-  if (Array.isArray(props.domain)) {
-    domain = props.domain;
-  } else if (props.domain && props.domain[inherentAxis]) {
-    domain = props.domain[inherentAxis];
-  } else if (Array.isArray(props.tickValues) && props.tickValues.length > 1) {
-    domain = Domain.getDomainFromTickValues(props, axis);
-  }
-  const paddedDomain = Domain.padDomain(domain, props, inherentAxis);
-  return domain ? Domain.cleanDomain(paddedDomain, props, inherentAxis) : undefined;
-};
-
-// exposed for use by VictoryChart
 const getScale = (props) => {
-  const axis = getAxis(props);
+  const axis = Axis.getAxis(props);
   const scale = Scale.getBaseScale(props, axis);
-  const domain = getDomain(props) || scale.domain();
+  const domain = Axis.getDomain(props) || scale.domain();
   scale.range(Helpers.getRange(props, axis));
   scale.domain(domain);
   return scale;
@@ -219,7 +189,7 @@ const getLabelPadding = (props, style) => {
   if (labelStyle.padding !== undefined && labelStyle.padding !== null) {
     return labelStyle.padding;
   }
-  const isVertical = Helpers.isVertical(props);
+  const isVertical = Axis.isVertical(props);
   // TODO: magic numbers
   /*eslint-disable no-magic-numbers*/
   const fontSize = labelStyle.fontSize || 14;
@@ -319,12 +289,12 @@ const getCalculatedValues = (props) => {
   const style = getStyles(props, defaultStyles);
   const padding = Helpers.getPadding(props);
   const orientation = props.orientation || (props.dependentAxis ? "left" : "bottom");
-  const isVertical = Helpers.isVertical(props);
+  const isVertical = Axis.isVertical(props);
   const labelPadding = getLabelPadding(props, style);
-  const stringTicks = Helpers.stringTicks(props) ? props.tickValues : undefined;
-  const axis = getAxis(props);
+  const stringTicks = Axis.stringTicks(props) ? props.tickValues : undefined;
+  const axis = Axis.getAxis(props);
   const scale = getScale(props);
-  const domain = getDomain(props);
+  const domain = Axis.getDomain(props);
   const ticks = Axis.getTicks(props, scale, props.crossAxis);
   const tickFormat = Axis.getTickFormat(props, scale);
   const anchors = getAnchors(orientation, isVertical);
@@ -392,4 +362,4 @@ const getBaseProps = (props, fallbackProps) => {
   }, initialChildProps);
 };
 
-export { getBaseProps, getDomain, getAxis, getScale, getStyles };
+export { getBaseProps, getScale, getStyles };

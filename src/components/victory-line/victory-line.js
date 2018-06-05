@@ -55,8 +55,8 @@ class VictoryLine extends React.Component {
     theme: VictoryTheme.grayscale
   };
 
-  static getDomain = Domain.getDomain.bind(Domain);
-  static getData = Data.getData.bind(Data);
+  static getDomain = Domain.getDomain;
+  static getData = Data.getData;
   static getBaseProps = (props) => getBaseProps(props, fallbackProps);
   static expectedComponents = [
     "dataComponent", "labelComponent", "groupComponent", "containerComponent"
