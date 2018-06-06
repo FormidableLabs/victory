@@ -1,5 +1,13 @@
 # VictoryPie Changelog
 
+## 16.0.0 (2018-06-05)
+
+**Breaking Changes**
+
+-[181]https://github.com/FormidableLabs/victory-pie/pull/181
+
+- Upgrades to `react-fast-compare@^2.0.0` which changes function comparison. This means that Victory components _will_ update when functions are not equal. This closes several Victory issues, but may cause a slight performance decline
+
 ## 15.0.0 (2018-04-21)
 
 **Breaking Changes**
