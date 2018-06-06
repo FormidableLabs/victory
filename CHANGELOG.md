@@ -1,6 +1,10 @@
 VictoryCore Changelog
 =====================
 
+## 23.0.3 (2018-06-06)
+
+-[385](https://github.com/FormidableLabs/victory-core/pull/385) Revert to module export for `Selection` util for `victory-native`
+
 ## 23.0.2 (2018-06-05)
 
 -[384](https://github.com/FormidableLabs/victory-core/pull/384) Changes to `domainPadding` behavior will only occur when new `singleQuadrantDomainPadding` prop is false.
