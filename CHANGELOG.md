@@ -1,5 +1,16 @@
 # Victory Changelog
 
+## 0.27.0 (2018-06-05)
+
+**Breaking Changes**
+- Refactors utility methods. This is an internal breaking change, but should not be a breaking change for most Victory users. See [victory-core/380](https://github.com/FormidableLabs/victory-core/pull/380) for details
+- Upgrades to `react-fast-compare@^2.0.0` which changes function comparison. This means that Victory components _will_ update when functions are not equal. This closes several Victory issues, but may cause a slight performance decline
+
+**New Features**
+- Adds `domainMin` and `domainMax` props. These props may be used to set one edge of a domain while allowing the other edge to be determined by data or other props. `domainMin` and `domainMax` override `domainPadding`.
+- Adds `singleQuadrantDomainPadding` prop. This prop may be given as a boolean or an object with boolean values for x and y. When this prop is set to `false` for a given dimension, any `domainPadding` applied in that dimension will _not_ be constrained to existing quadrants.
+
+
 ## 0.26.1 (2018-05-17)
 
 VictoryCore
