@@ -1,6 +1,11 @@
 VictoryCore Changelog
 =====================
 
+
+## 23.0.4 (2018-06-06)
+
+-[386](https://github.com/FormidableLabs/victory-core/pull/386) Alter `Selection` util for `victory-native`
+
 ## 23.0.3 (2018-06-06)
 
 -[385](https://github.com/FormidableLabs/victory-core/pull/385) Revert to module export for `Selection` util for `victory-native`
