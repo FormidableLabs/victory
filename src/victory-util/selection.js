@@ -1,4 +1,3 @@
-/*global document:false */
 /* eslint-disable func-style */
 /* eslint-disable no-use-before-define */
 
@@ -19,6 +18,9 @@ function getTransformationMatrix(svg) {
 // Exported Functions
 
 function getParentSVG(evt) {
+  if (evt.nativeEvent && evt.nativeEvent.identifier !== undefined) {
+    return undefined;
+  }
   const getParent = (target) => {
     if (target.nodeName === "svg") {
       return target;
@@ -30,7 +32,7 @@ function getParentSVG(evt) {
 }
 
 function getSVGEventCoordinates(evt, svg) {
-  if (document === undefined) {
+  if (evt.nativeEvent && evt.nativeEvent.identifier !== undefined) {
     // react-native override. relies on the RN.View being the _exact_ same size as its child SVG.
     // this should be fine: the svg is the only child of View and the View shirks to its children
     return {
