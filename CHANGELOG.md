@@ -1,6 +1,9 @@
 VictoryCore Changelog
 =====================
 
+## 23.0.5 (2018-06-06)
+
+-[387](https://github.com/FormidableLabs/victory-core/pull/387) Use `evt.nativeEvent.identifier` to differentiate DOM events from react-native events
 
 ## 23.0.4 (2018-06-06)
 
