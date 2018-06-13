@@ -38,7 +38,7 @@ describe("victory-util/domain", () => {
     });
 
     it("returns a function that uses a custom formatDomain function when given", () => {
-      const props = { categories: [0, 1] };
+      const props = { domain: [0, 1] };
       const formatDomain = () => [0, 10];
       const domainGetter = Domain.createDomainFunction(null, formatDomain);
       expect(domainGetter(props, "x")).to.eql([0, 10]);
