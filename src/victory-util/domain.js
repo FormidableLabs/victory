@@ -179,7 +179,7 @@ function createDomainFunction(getDomainFromDataFunction, formatDomainFunction) {
   return (props, axis) => {
     const propsDomain = getDomainFromProps(props, axis);
     if (propsDomain) {
-      return formatDomainFunction(propsDomain, props, axis);
+      return cleanDomain(propsDomain, props, axis);
     }
     const categories = Data.getCategories(props, axis);
     const domain = categories ?
@@ -318,11 +318,11 @@ function getDomainFromMinMax(min, max) {
   const getSinglePointDomain = (val) => {
     // d3-scale does not properly resolve very small differences.
     // eslint-disable-next-line no-magic-numbers
-    const verySmallNumber = Math.pow(10, -10);
+    const verySmallNumber = val === 0 ? 2 * Math.pow(10, -10) : Math.pow(10, -10);
     const verySmallDate = 1;
     const minVal = val instanceof Date ? new Date(+val - verySmallDate) : val - verySmallNumber;
     const maxVal = val instanceof Date ? new Date(+val + verySmallDate) : val + verySmallNumber;
-    return [minVal, maxVal];
+    return val === 0 ? [0, maxVal] : [minVal, maxVal];
   };
   return +min === +max ? getSinglePointDomain(max) : [min, max];
 }
