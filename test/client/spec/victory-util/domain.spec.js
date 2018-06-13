@@ -38,7 +38,7 @@ describe("victory-util/domain", () => {
     });
 
     it("returns a function that uses a custom formatDomain function when given", () => {
-      const props = { domain: [0, 1] };
+      const props = { categories: [0, 1] };
       const formatDomain = () => [0, 10];
       const domainGetter = Domain.createDomainFunction(null, formatDomain);
       expect(domainGetter(props, "x")).to.eql([0, 10]);
@@ -169,10 +169,10 @@ describe("victory-util/domain", () => {
     });
 
     it("returns an adjusted domain if minDomain equals maxDomain", () => {
-      const props = { minDomain: 0, maxDomain: 0 };
+      const props = { minDomain: 1, maxDomain: 1 };
       const verySmallNumber = Math.pow(10, -10);
       const resultDomain = Domain.getDomainFromProps(props, "x");
-      expect(resultDomain).to.eql([-1 * verySmallNumber, verySmallNumber]);
+      expect(resultDomain).to.eql([1 - verySmallNumber, 1 + verySmallNumber]);
     });
 
     it("returns undefined if only minDomain is defined", () => {
@@ -191,11 +191,19 @@ describe("victory-util/domain", () => {
     });
 
     it("returns an adjusted domain if min equals max", () => {
+      const min = 1;
+      const max = 1;
+      const verySmallNumber = Math.pow(10, -10);
+      const resultDomain = Domain.getDomainFromMinMax(min, max);
+      expect(resultDomain).to.eql([1 - verySmallNumber, 1 + verySmallNumber]);
+    });
+
+    it("returns a positive domain if min and max are both zero", () => {
       const min = 0;
       const max = 0;
       const verySmallNumber = Math.pow(10, -10);
       const resultDomain = Domain.getDomainFromMinMax(min, max);
-      expect(resultDomain).to.eql([-1 * verySmallNumber, verySmallNumber]);
+      expect(resultDomain).to.eql([0, 2 * verySmallNumber]);
     });
 
     it("returns an adjusted date domain if min equals max", () => {
