@@ -179,7 +179,7 @@ function createDomainFunction(getDomainFromDataFunction, formatDomainFunction) {
   return (props, axis) => {
     const propsDomain = getDomainFromProps(props, axis);
     if (propsDomain) {
-      return cleanDomain(propsDomain, props, axis);
+      return formatDomainFunction(propsDomain, props, axis);
     }
     const categories = Data.getCategories(props, axis);
     const domain = categories ?
@@ -354,6 +354,10 @@ function getDomainFromProps(props, axis) {
  * @returns {Array} the domain for the given axis
  */
 function getDomainWithZero(props, axis) {
+  const propsDomain = getDomainFromProps(props, axis);
+  if (propsDomain) {
+    return propsDomain;
+  }
   const ensureZero = (domain) => {
     const currentAxis = Helpers.getCurrentAxis(axis, props.horizontal);
     const minDomain = getMinFromProps(props, axis);
