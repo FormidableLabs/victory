@@ -1,6 +1,11 @@
 VictoryCore Changelog
 =====================
 
+## 23.0.6 (2018-06-12)
+
+-[388](https://github.com/FormidableLabs/victory-core/pull/388) Improve default single point domain padding (use positive values only when the single point is zero)
+-[389](https://github.com/FormidableLabs/victory-core/pull/389) Don't enforce zero for explicit domains (VictoryArea and VictoryBar)
+
 ## 23.0.5 (2018-06-06)
 
 -[387](https://github.com/FormidableLabs/victory-core/pull/387) Use `evt.nativeEvent.identifier` to differentiate DOM events from react-native events
