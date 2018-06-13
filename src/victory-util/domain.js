@@ -179,7 +179,7 @@ function createDomainFunction(getDomainFromDataFunction, formatDomainFunction) {
   return (props, axis) => {
     const propsDomain = getDomainFromProps(props, axis);
     if (propsDomain) {
-      return formatDomainFunction(propsDomain, props, axis);
+      return cleanDomain(propsDomain, props, axis);
     }
     const categories = Data.getCategories(props, axis);
     const domain = categories ?
