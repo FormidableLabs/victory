@@ -2,8 +2,8 @@
 import React from "react";
 import PropTypes from "prop-types";
 import Helpers from "../victory-util/helpers";
-import Collection from "../victory-util/collection";
 import CommonProps from "./common-props";
+import Path from "./path";
 
 export default class Flyout extends React.Component {
 
@@ -15,6 +15,7 @@ export default class Flyout extends React.Component {
     dy: PropTypes.number,
     height: PropTypes.number,
     orientation: PropTypes.oneOf(["top", "bottom", "left", "right"]),
+    pathComponent: PropTypes.element,
     pointerLength: PropTypes.number,
     pointerWidth: PropTypes.number,
     width: PropTypes.number,
@@ -22,49 +23,9 @@ export default class Flyout extends React.Component {
     y: PropTypes.number
   };
 
-  componentWillMount() {
-    const { style, path } = this.calculateAttributes(this.props);
-    this.style = style;
-    this.path = path;
-  }
-
-  shouldComponentUpdate(nextProps) {
-    const { style, path } = this.calculateAttributes(nextProps);
-    const {
-      className, cornerRadius, datum, dx, dy, height, width,
-      orientation, pointerLength, pointerWidth, x, y
-    } = this.props;
-    if (!Collection.allSetsEqual([
-      [className, nextProps.className],
-      [cornerRadius, nextProps.cornerRadius],
-      [dx, nextProps.dx],
-      [dy, nextProps.dy],
-      [x, nextProps.x],
-      [y, nextProps.y],
-      [height, nextProps.height],
-      [width, nextProps.width],
-      [orientation, nextProps.orientation],
-      [pointerLength, nextProps.pointerLength],
-      [pointerWidth, nextProps.pointerWidth],
-      [path, this.path],
-      [style, this.style],
-      [datum, nextProps.datum]
-    ])) {
-      this.style = style;
-      this.path = path;
-      return true;
-    }
-    return false;
-  }
-
-  calculateAttributes(props) {
-    const { datum, active, style } = props;
-    return {
-      style: Helpers.evaluateStyle(style, datum, active),
-      path: this.getFlyoutPath(props)
-    };
-  }
-
+  static defaultProps = {
+    pathComponent: <Path/>
+  };
 
   getVerticalPath(props) {
     const { pointerLength, pointerWidth, cornerRadius, orientation, width, height } = props;
@@ -122,22 +83,12 @@ export default class Flyout extends React.Component {
       this.getHorizontalPath(props) : this.getVerticalPath(props);
   }
 
-  // Overridden in victory-core-native
-  renderFlyout(path, style, events) {
-    const { role, shapeRendering, className } = this.props;
-    return (
-      <path
-        className={className}
-        d={path}
-        style={style}
-        shapeRendering={shapeRendering || "auto"}
-        role={role || "presentation"}
-        {...events}
-      />
-    );
-  }
-
   render() {
-    return this.renderFlyout(this.path, this.style, this.props.events);
+    const { datum, active, role, shapeRendering, className, events, pathComponent } = this.props;
+    const style = Helpers.evaluateStyle(this.props.style, datum, active);
+    const path = this.getFlyoutPath(this.props);
+    return React.cloneElement(
+      pathComponent, { style, className, shapeRendering, role, events, d: path }
+    );
   }
 }

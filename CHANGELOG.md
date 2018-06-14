@@ -1,12 +1,183 @@
 VictoryCore Changelog
 =====================
 
+## 23.0.6 (2018-06-12)
+
+-[388](https://github.com/FormidableLabs/victory-core/pull/388) Improve default single point domain padding (use positive values only when the single point is zero)
+-[389](https://github.com/FormidableLabs/victory-core/pull/389) Don't enforce zero for explicit domains (VictoryArea and VictoryBar)
+
+## 23.0.5 (2018-06-06)
+
+-[387](https://github.com/FormidableLabs/victory-core/pull/387) Use `evt.nativeEvent.identifier` to differentiate DOM events from react-native events
+
+## 23.0.4 (2018-06-06)
+
+-[386](https://github.com/FormidableLabs/victory-core/pull/386) Alter `Selection` util for `victory-native`
+
+## 23.0.3 (2018-06-06)
+
+-[385](https://github.com/FormidableLabs/victory-core/pull/385) Revert to module export for `Selection` util for `victory-native`
+
+## 23.0.2 (2018-06-05)
+
+-[384](https://github.com/FormidableLabs/victory-core/pull/384) Changes to `domainPadding` behavior will only occur when new `singleQuadrantDomainPadding` prop is false.
+
+## 23.0.1 (2018-06-05)
+
+-[382](https://github.com/FormidableLabs/victory-core/pull/382) Fixes bug for charts with y0 values
+
+## 23.0.0 (2018-06-04)
+
+-[380](https://github.com/FormidableLabs/victory-core/pull/380)
+
+**Breaking Changes**
+- `domainPadding` no longer constrains the padding to existing quadrants. Use the new `minDomain` prop to create a padded domain that stops cleanly at zero
+- Refactors utility methods. This is an internal breaking change, but should not be a breaking change for most Victory users. See pull request for details
+- Upgrades to `react-fast-compare@^2.0.0` which changes function comparison. This means that Victory components _will_ update when functions are not equal. This closes several Victory issues, but may cause a slight performance decline
+
+## 22.1.6 (2018-06-01)
+
+-[378](https://github.com/FormidableLabs/victory-core/pull/378) Fixes a cornerRadius bug in `Bar`
+
+## 22.1.5 (2018-05-31)
+
+- [377](https://github.com/FormidableLabs/victory-core/pull/377) Allow negative gutters for `VictoryLegend`
+
+## 22.1.4 (2018-05-23)
+
+- Republish with `npm@5.6.0`
+
+## 22.1.3 (2018-05-23)
+
+-[376](https://github.com/FormidableLabs/victory-core/pull/376) Ensure symmetric category domain for polar charts
+
+## 22.1.2 (2018-05-23)
+
+-[375](https://github.com/FormidableLabs/victory-core/pull/375) Check for axis specific categories in stacked charts
+
+## 22.1.1 (2018-05-17)
+
+-[374](https://github.com/FormidableLabs/victory-core/pull/374) Consistent `PropTypes` for `clipId`
+-[373](https://github.com/FormidableLabs/victory-core/pull/373) Evaluate styles for polar bars
+
+## 22.1.0 (2018-05-04)
+
+-[372](https://github.com/FormidableLabs/victory-core/pull/372) Support top and bottom cornerRadius for bars. Support functional cornerRadius
+-[371](https://github.com/FormidableLabs/victory-core/pull/371) Evaluate Whisker styles
+-[370](https://github.com/FormidableLabs/victory-core/pull/370) Refactor to remove lifecycle methods
+
+## 22.0.0 (2018-04-21)
+
+**Breaking Changes**
+-[364](https://github.com/FormidableLabs/victory-core/pull/364) Perf: Remove style whitelist filter.
+
+Other Changes
+-[369](https://github.com/FormidableLabs/victory-core/pull/369) Ensure state
+-[368](https://github.com/FormidableLabs/victory-core/pull/368) Audit lodash methods
+-[367](https://github.com/FormidableLabs/victory-core/pull/367) Simplify state filtering
+-[365](https://github.com/FormidableLabs/victory-core/pull/365) Perf: Return early when label content is null or undefined
+-[362](https://github.com/FormidableLabs/victory-core/pull/362) Perf: Filter falsey mutations from state
+
+## 21.1.3 (2018-04-17)
+
+-[363](https://github.com/FormidableLabs/victory-core/pull/363) Bugfix events system
+
+## 21.1.12 (2018-04-17)
+
+Event system perf improvements
+-[362](https://github.com/FormidableLabs/victory-core/pull/362)
+-[361](https://github.com/FormidableLabs/victory-core/pull/361)
+
+## 21.1.11 (2018-04-16)
+
+-[360](https://github.com/FormidableLabs/victory-core/pull/360) add clipPath to style whitelist
+
+## 21.1.10 (2018-04-14)
+
+-[359](https://github.com/FormidableLabs/victory-core/pull/359) Add missing attributes to style whitelist
+
+## 21.1.9 (2018-04-13)
+
+-[358](https://github.com/FormidableLabs/victory-core/pull/358) Add missing boxplot theme
+-[357](https://github.com/FormidableLabs/victory-core/pull/357) Use `react-fast-compare`, not a local copy
+-[356](https://github.com/FormidableLabs/victory-core/pull/356) Text primitive now accepts string percentages for `x` and `y`. Thanks @Olliebaba!
+
+## 21.1.8 (2018-04-11)
+
+-[355](https://github.com/FormidableLabs/victory-core/pull/355) Fix for [issue 963](https://github.com/FormidableLabs/victory/issues/964), Maximum call stack size exceeded. Adds a custom fork of `fast-deep-equal` (with bugfix) locally.
+
+## 21.1.6 (2018-04-09)
+
+-[353](https://github.com/FormidableLabs/victory-core/pull/353) When `fast-deep-equal` fails it will now warn instead of throwing an error.
+-[352](https://github.com/FormidableLabs/victory-core/pull/352) Correct typo in `victory-util/add-events`
+
+## 21.1.5 (2018-04-06)
+
+-[351](https://github.com/FormidableLabs/victory-core/pull/351) Replace `Collection.checkEquality` with [fast-deep-equal](https://github.com/epoberezkin/fast-deep-equal)
+
+## 21.1.4 (2018-04-05)
+
+-[350](https://github.com/FormidableLabs/victory-core/pull/350) Adds support for arrays in event targets (event attachment, not mutation)
+
+## 21.1.3 (2018-04-04)
+
+-[348](https://github.com/FormidableLabs/victory-core/pull/348) Upgrade to builder 4
+-[349](https://github.com/FormidableLabs/victory-core/pull/349) Add missing style props to whitelist
+
+## 21.1.2 (2018-04-04)
+
+-[347](https://github.com/FormidableLabs/victory-core/pull/347) Use sanitizeStyle on primitive components; allows style checks to be removed from `victory-chart`.
+-[346](https://github.com/FormidableLabs/victory-core/pull/346) Completely remove `lodash.omit()` for performance. See [issue 956](https://github.com/FormidableLabs/victory/issues/956).
+
+## 21.1.1 (2018-03-27)
+
+-[345](https://github.com/FormidableLabs/victory-core/pull/345) Fix naming bug in boxplot themes
+
+## 21.1.0 (2018-03-27)
+
+-[343](https://github.com/FormidableLabs/victory-core/pull/343) Changes the render order of lines and areas in the `Area` primitive
+-[344](https://github.com/FormidableLabs/victory-core/pull/344) bug fix for `VictoryTransition` with fewer children
+-[334](https://github.com/FormidableLabs/victory-core/pull/334) Add `Whisker` primitive for `VictoryBoxPlot`
+
+## 21.0.4 (2018-02-07)
+
+-[339](https://github.com/FormidableLabs/victory-core/pull/339) Adds a "minus" option for `Point`
+
+## 21.0.3 (2018-02-07)
+
+-[341](https://github.com/FormidableLabs/victory-core/pull/341) Improve sCU logic for primitive components
+
+## 21.0.2 (2018-02-05)
+
+-[337](https://github.com/FormidableLabs/victory-core/pull/337) Add `sideEffects: false`
+-[338](https://github.com/FormidableLabs/victory-core/pull/338) Fix bar path bug in Firefox
+
+## 21.0.1 (2018-02-04)
+
+-[336](https://github.com/FormidableLabs/victory-core/pull/336) Fixes key names for `ErrorBar`
+
+## 21.0.0 (2018-02-04)
+
+-[325](https://github.com/FormidableLabs/victory-core/pull/325) Adds a `getDimension` static method for `VictoryLegend`
+-[326](https://github.com/FormidableLabs/victory-core/pull/326) Adds a fallback prop for `VictoryLegend` `titleOrientation`
+-[327](https://github.com/FormidableLabs/victory-core/pull/327) Use `pointerEvents: "painted"` for grid styles
+-[328](https://github.com/FormidableLabs/victory-core/pull/328) Adds `inline` prop for `VictoryLabel`
+-[329](https://github.com/FormidableLabs/victory-core/pull/329) Bugfix `add-events`
+-[330](https://github.com/FormidableLabs/victory-core/pull/330) Adds `wickStyleWidth` prop for `Candle`
+  *This is a breaking change as it changes the expected props for `Candle`*
+-[331](https://github.com/FormidableLabs/victory-core/pull/331) Bugfix portal rendering
+-[333](https://github.com/FormidableLabs/victory-core/pull/333) Whitelist style attributes
+-[335](https://github.com/FormidableLabs/victory-core/pull/335) Update primitives
+  *This is a breaking change for `victory-native` and anyone extending primitive components.*
+  *This is a breaking change for for the `Line` component. Renamed `Axis` / `Grid`
+
 ## 20.6.0
 
 - [324](https://github.com/FormidableLabs/victory-core/pull/324) Adds support for external event mutations
   - Adds `externalEventMutations` prop to `VictorySharedEvents` and all components enhanced with the `add-events` HOC
   - `externalEventMutations` prop format:
-  ```
+
+```
 externalEventMutations: PropTypes.arrayOf(PropTypes.shape({
   callback: PropTypes.function,
   childName: PropTypes.oneOfType([
@@ -25,6 +196,7 @@ externalEventMutations: PropTypes.arrayOf(PropTypes.shape({
   ])
 }))
 ```
+
 *Note:* `eventKey` and `target` must be specified for externalEventMutations. When using `extenalEventMutations` with shared events (_i.e._ events on VictoryChart etc), `childName` is also required.
 
 *Note:* The `callback` supplied to `externalEventMutations` should be used for clearing mutations. This is crucial for animating charts

@@ -15,5 +15,6 @@ export default {
     PropTypes.shape({ x: CustomPropTypes.scale, y: CustomPropTypes.scale })
   ]),
   shapeRendering: PropTypes.string,
-  style: PropTypes.object
+  style: PropTypes.object,
+  transform: PropTypes.string
 };

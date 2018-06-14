@@ -1,5 +1,5 @@
 import React from "react";
-import { shallow } from "enzyme";
+import { mount } from "enzyme";
 import Bar from "src/victory-primitives/bar";
 import SvgTestHelper from "../svg-test-helper";
 import * as d3Scale from "d3-scale";
@@ -24,7 +24,7 @@ describe("victory-primitives/bar", () => {
   };
 
   it("should render a vertical bar", () => {
-    const wrapper = shallow(<Bar {...baseProps}/>);
+    const wrapper = mount(<Bar {...baseProps}/>);
     const barShape = SvgTestHelper.getBarShape(wrapper);
     expect(Math.round(barShape.height)).to.eql(10);
   });
@@ -32,7 +32,7 @@ describe("victory-primitives/bar", () => {
   it("should render a horizontal bar", () => {
     const props = merge({}, baseProps, { horizontal: true });
 
-    const wrapper = shallow(<Bar {...props}/>);
+    const wrapper = mount(<Bar {...props}/>);
     const barShape = SvgTestHelper.getBarShape(wrapper);
 
     expect(Math.round(barShape.width)).to.eql(10);
@@ -45,7 +45,7 @@ describe("victory-primitives/bar", () => {
       data: Array(4)
     });
 
-    const wrapper = shallow(<Bar {...props}/>);
+    const wrapper = mount(<Bar {...props}/>);
     const barShape = SvgTestHelper.getBarShape(wrapper);
 
     expect(Math.floor(barShape.width)).to.eql(2);
@@ -54,7 +54,7 @@ describe("victory-primitives/bar", () => {
   it("should allow override of width by passing a style", () => {
     const props = Object.assign({}, baseProps, { style: { width: 3 } });
 
-    const wrapper = shallow(<Bar {...props}/>);
+    const wrapper = mount(<Bar {...props}/>);
     const barShape = SvgTestHelper.getBarShape(wrapper);
 
     expect(Math.floor(barShape.width)).to.eql(3);

@@ -1,6 +1,4 @@
 /* eslint no-unused-expressions: 0, max-nested-callbacks: 0 */
-/* global sinon */
-
 import { Data } from "src/index";
 import { fromJS } from "immutable";
 
@@ -14,35 +12,20 @@ const dataTest = {
   testLabel: "data in js"
 };
 
-describe("helpers/data", () => {
+describe("victory-util/data", () => {
   describe("createStringMap", () => {
-    let sandbox;
-    beforeEach(() => {
-      sandbox = sinon.sandbox.create();
-      sandbox.spy(Data, "getStringsFromAxes");
-      sandbox.spy(Data, "getStringsFromCategories");
-      sandbox.spy(Data, "getStringsFromData");
-    });
-    afterEach(() => {
-      sandbox.restore();
-    });
-
     const tickValues = ["one", "two", "three"];
     const categories = ["red", "green", "blue"];
 
     it("returns a string map from strings in tickValues", () => {
       const props = { tickValues };
       const stringMap = Data.createStringMap(props, "x");
-      expect(Data.getStringsFromAxes).calledWith(props, "x");
-      expect(Data.getStringsFromAxes).to.have.returned(["one", "two", "three"]);
       expect(stringMap).to.eql({ one: 1, two: 2, three: 3 });
     });
 
     it("returns a string map from strings in categories", () => {
       const props = { categories };
       const stringMap = Data.createStringMap(props, "x");
-      expect(Data.getStringsFromCategories).calledWith(props, "x");
-      expect(Data.getStringsFromCategories).to.have.returned(["red", "green", "blue"]);
       expect(stringMap).to.eql({ red: 1, green: 2, blue: 3 });
     });
 
@@ -53,16 +36,12 @@ describe("helpers/data", () => {
         it("returns a string map from strings in data", () => {
           const props = { data };
           const stringMap = Data.createStringMap(props, "x");
-          expect(Data.getStringsFromData).calledWith(props, "x");
-          expect(Data.getStringsFromData).to.have.returned(["one", "red", "cat"]);
           expect(stringMap).to.eql({ one: 1, red: 2, cat: 3 });
         });
 
         it("a unique set of values is returned from multiple sources", () => {
           const props = { tickValues, data };
           const stringMap = Data.createStringMap(props, "x");
-          expect(Data.getStringsFromAxes).to.have.returned(["one", "two", "three"]);
-          expect(Data.getStringsFromData).to.have.returned(["one", "red", "cat"]);
           expect(stringMap).to.eql({ one: 1, two: 2, three: 3, red: 4, cat: 5 });
         });
       });
@@ -144,56 +123,27 @@ describe("helpers/data", () => {
 
   [dataTest, immutableDataTest].forEach(({ createData, testLabel }) => {
     describe(`formatData with ${testLabel}`, () => {
-      let sandbox;
-      beforeEach(() => {
-        sandbox = sinon.sandbox.create();
-        sandbox.spy(Data, "cleanData");
-      });
-
-      afterEach(() => {
-        sandbox.restore();
-      });
-
       it("formats a single dataset", () => {
         const dataset = [{ _x: 1, _y: 3, x: 1, y: 3 }, { _x: 2, _y: 5, x: 2, y: 5 }];
         const props = { data: createData(dataset) };
         const formatted = Data.formatData(dataset, props);
-        expect(Data.cleanData).called.and.returned(dataset);
         expect(formatted).to.be.an.array;
-        expect(formatted[0]).to.have.keys(["_x", "_y", "x", "y"]);
+        expect(formatted[0]).to.have.keys(["_x", "_y", "x", "y", "eventKey"]);
       });
     });
   });
 
   describe("getData", () => {
-    let sandbox;
-    beforeEach(() => {
-      sandbox = sinon.sandbox.create();
-      sandbox.spy(Data, "formatData");
-      sandbox.spy(Data, "generateData");
-      sandbox.spy(Data, "addEventKeys");
-    });
-
-    afterEach(() => {
-      sandbox.restore();
-    });
-
     [dataTest, immutableDataTest].forEach(({ createData, testLabel }) => {
       describe(`with ${testLabel}`, () => {
         it("formats and returns the data prop", () => {
           const data = createData([{ x: "kittens", y: 3 }, { x: "cats", y: 5 }]);
           const props = { data, x: "x", y: "y" };
-          const expectedReturn = [
-            { _x: 1, x: "kittens", xName: "kittens", _y: 3, y: 3 },
-            { _x: 2, x: "cats", xName: "cats", _y: 5, y: 5 }
-          ];
           const expectedReturnWithEventKeys = [
              { _x: 1, x: "kittens", xName: "kittens", _y: 3, y: 3, eventKey: 0 },
              { _x: 2, x: "cats", xName: "cats", _y: 5, y: 5, eventKey: 1 }
           ];
           const returnData = Data.getData(props);
-          expect(Data.formatData).calledOnce.and.returned(expectedReturn);
-          expect(Data.addEventKeys).calledOnce.and.returned(expectedReturnWithEventKeys);
           expect(returnData).to.eql(expectedReturnWithEventKeys);
         });
 
@@ -291,7 +241,6 @@ describe("helpers/data", () => {
           ]);
 
           const returnDataY = Data.getData({ data, sortKey: "y" });
-
           expect(returnDataY).to.eql([
             { _x: 3, x: 30, _y: 1, y: 30, eventKey: 0 },
             { _x: 2, x: 10, _y: 2, y: 10, eventKey: 1 },
@@ -303,36 +252,16 @@ describe("helpers/data", () => {
 
     it("generates a dataset from domain", () => {
       const generatedReturn = [{ x: 0, y: 0 }, { x: 10, y: 10 }];
-      const expectedReturn = [{ _x: 0, x: 0, _y: 0, y: 0 }, { _x: 10, x: 10, _y: 10, y: 10 }];
-      const expectedReturnWithEventKeys = [
-        { _x: 0, x: 0, _y: 0, y: 0, eventKey: 0 }, { _x: 10, x: 10, _y: 10, y: 10, eventKey: 1 }
-      ];
       const props = { x: "x", y: "y", domain: { x: [0, 10], y: [0, 10] } };
-      const returnData = Data.getData(props);
-      expect(Data.generateData).calledOnce.and.returned(generatedReturn);
-      expect(Data.formatData).calledOnce.and.returned(expectedReturn);
-      expect(Data.addEventKeys).calledOnce.and.returned(expectedReturnWithEventKeys);
-      expect(returnData).to.eql(expectedReturnWithEventKeys);
+      const returnData = Data.generateData(props);
+      expect(returnData).to.eql(generatedReturn);
     });
 
     it("generates a dataset from domain and samples", () => {
       const generatedReturn = [{ x: 0, y: 0 }, { x: 5, y: 5 }, { x: 10, y: 10 }];
-      const expectedReturn = [
-        { _x: 0, x: 0, _y: 0, y: 0 },
-        { _x: 5, x: 5, _y: 5, y: 5 },
-        { _x: 10, x: 10, _y: 10, y: 10 }
-      ];
-      const expectedReturnWithEventKeys = [
-        { _x: 0, x: 0, _y: 0, y: 0, eventKey: 0 },
-        { _x: 5, x: 5, _y: 5, y: 5, eventKey: 1 },
-        { _x: 10, x: 10, _y: 10, y: 10, eventKey: 2 }
-      ];
       const props = { x: "x", y: "y", domain: { x: [0, 10], y: [0, 10] }, samples: 2 };
-      const returnData = Data.getData(props);
-      expect(Data.generateData).calledOnce.and.returned(generatedReturn);
-      expect(Data.formatData).calledOnce.and.returned(expectedReturn);
-      expect(Data.addEventKeys).calledOnce.and.returned(expectedReturnWithEventKeys);
-      expect(returnData).to.eql(expectedReturnWithEventKeys);
+      const returnData = Data.generateData(props);
+      expect(returnData).to.eql(generatedReturn);
     });
   });
 });

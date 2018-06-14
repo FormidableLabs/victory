@@ -2,19 +2,18 @@ import React from "react";
 import PropTypes from "prop-types";
 import isEqual from "react-fast-compare";
 
-export default class Line extends React.Component {
+export default class Circle extends React.Component {
   static propTypes = {
     className: PropTypes.string,
     clipPath: PropTypes.string,
+    cx: PropTypes.number,
+    cy: PropTypes.number,
     events: PropTypes.object,
+    r: PropTypes.number,
     role: PropTypes.string,
     shapeRendering: PropTypes.string,
     style: PropTypes.object,
-    transform: PropTypes.string,
-    x1: PropTypes.number,
-    x2: PropTypes.number,
-    y1: PropTypes.number,
-    y2: PropTypes.number
+    transform: PropTypes.string
   };
 
   shouldComponentUpdate(nextProps) {
@@ -23,11 +22,11 @@ export default class Line extends React.Component {
 
   render() {
     const {
-      x1, x2, y1, y2, events, className, clipPath, transform, style, shapeRendering, role
-    } = this.props;
+      cx, cy, r, events, className, style, role, shapeRendering, transform, clipPath
+     } = this.props;
     return (
-      <line
-        x1={x1} x2={x2} y1={y1} y2={y2}
+      <circle
+        cx={cx} cy={cy} r={r}
         className={className}
         clipPath={clipPath}
         transform={transform}

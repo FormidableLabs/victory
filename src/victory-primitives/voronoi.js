@@ -1,54 +1,40 @@
 /*eslint no-magic-numbers: ["error", { "ignore": [2] }]*/
 import React from "react";
 import PropTypes from "prop-types";
+import { isObject, uniqueId } from "lodash";
 import Helpers from "../victory-util/helpers";
-import Collection from "../victory-util/collection";
 import CommonProps from "./common-props";
+import ClipPath from "../victory-primitives/clip-path";
+import Path from "../victory-primitives/path";
+import Circle from "../victory-primitives/circle";
+
 
 export default class Voronoi extends React.Component {
   static propTypes = {
     ...CommonProps,
+    circleComponent: PropTypes.element,
+    clipId: PropTypes.oneOfType([PropTypes.number, PropTypes.string]),
+    clipPathComponent: PropTypes.element,
     datum: PropTypes.object,
+    groupComponent: PropTypes.element,
+    pathComponent: PropTypes.element,
     polygon: PropTypes.array,
     size: PropTypes.number,
     x: PropTypes.number,
     y: PropTypes.number
   };
 
-  componentWillMount() {
-    const { style, circle, voronoi } = this.calculateAttributes(this.props);
-    this.style = style;
-    this.circle = circle;
-    this.voronoi = voronoi;
+  static defaultProps = {
+    pathComponent: <Path/>,
+    circleComponent: <Circle/>,
+    clipPathComponent: <ClipPath/>,
+    groupComponent: <g/>
   }
 
-  shouldComponentUpdate(nextProps) {
-    const { style, circle, voronoi } = this.calculateAttributes(nextProps);
-    const { className, x, y, datum } = this.props;
-    if (!Collection.allSetsEqual([
-      [className, nextProps.className],
-      [x, nextProps.x],
-      [y, nextProps.y],
-      [circle, this.circle],
-      [voronoi, this.voronoi],
-      [style, this.style],
-      [datum, nextProps.datum]
-    ])) {
-      this.style = style;
-      this.circle = circle;
-      this.voronoi = voronoi;
-      return true;
-    }
-    return false;
-  }
-
-  calculateAttributes(props) {
-    const { style, datum, active } = props;
-    return {
-      style: Helpers.evaluateStyle(style, datum, active),
-      circle: this.getCirclePath(props),
-      voronoi: this.getVoronoiPath(props)
-    };
+  constructor(props) {
+    super(props);
+    this.clipId = !isObject(props) || props.clipId === undefined ?
+      uniqueId("voronoi-clip-") : props.clipId;
   }
 
   getVoronoiPath(props) {
@@ -57,52 +43,29 @@ export default class Voronoi extends React.Component {
       `M ${props.polygon.join("L")} Z` : "";
   }
 
-  getCirclePath(props) {
-    if (!props.size) {
-      return null;
-    }
-    const { x, y, datum, active } = props;
-    const size = Helpers.evaluateProp(props.size, datum, active);
-    return `M ${x}, ${y} m ${-size}, 0
-      a ${size}, ${size} 0 1,0 ${size * 2},0
-      a ${size}, ${size} 0 1,0 ${-size * 2},0`;
-  }
-
-  // Overridden in victory-core-native
-  renderPoint(paths, style, events) {
-    const clipId = paths.circle && `clipPath-${Math.random()}`;
-    const clipPath = paths.circle ? `url(#${clipId})` : undefined;
-    const { role, shapeRendering, className } = this.props;
-    const voronoiPath = (
-      <path
-        d={paths.circle || paths.voronoi}
-        className={className}
-        clipPath={clipPath}
-        style={style}
-        role={role || "presentation"}
-        shapeRendering={shapeRendering || "auto"}
-        {...events}
-      />
-    );
-    return paths.circle ?
-      (
-        <g>
-          <defs>
-            <clipPath id={clipId}>
-              <path d={paths.voronoi} className={className}/>
-            </clipPath>
-          </defs>
-          {voronoiPath}
-        </g>
-      ) :
-      voronoiPath;
-  }
-
   render() {
-    const paths = {
-      circle: this.circle,
-      voronoi: this.voronoi
-    };
-    return this.renderPoint(paths, this.style, this.props.events);
+    const {
+      datum, active, role, shapeRendering, className, events, x, y,
+      pathComponent, clipPathComponent, groupComponent, circleComponent
+    } = this.props;
+    const voronoiPath = this.getVoronoiPath(this.props);
+    const style = Helpers.evaluateStyle(this.props.style, datum, active);
+    const size = Helpers.evaluateProp(this.props.size, datum, active);
+
+    if (size) {
+      const circle = React.cloneElement(circleComponent, {
+        key: "circle", style, className, role, shapeRendering, events,
+        clipPath: `url(#${this.clipId})`, cx: x, cy: y, r: size
+      });
+      const voronoiClipPath = React.cloneElement(
+        clipPathComponent,
+        { key: "voronoi-clip", clipId: this.clipId },
+        React.cloneElement(pathComponent, { d: voronoiPath, className })
+      );
+      return React.cloneElement(groupComponent, {}, [voronoiClipPath, circle]);
+    }
+    return React.cloneElement(pathComponent, {
+      style, className, d: voronoiPath, role, shapeRendering, events
+    });
   }
 }

@@ -1,6 +1,6 @@
 {
   "name": "victory-core",
-  "version": "20.6.0",
+  "version": "23.0.6",
   "description": "Victory Core",
   "main": "lib/index.js",
   "module": "es/index.js",
@@ -25,19 +25,21 @@
     "postpublish": "builder run npm:postpublish",
     "start": "builder run dev",
     "test": "builder run check",
+    "lint": "builder run lint",
     "version": "builder run npm:version",
     "lank-run": "lank exec -m victory-core -uq -- builder run dev --expand-archetype",
     "lank-test": "lank exec -m victory-core -uq -- builder run check --expand-archetype"
   },
   "dependencies": {
-    "builder": "^3.2.3",
+    "builder": "^4.0.0",
     "builder-victory-component": "^5.1.2",
     "d3-ease": "^1.0.0",
     "d3-interpolate": "^1.1.1",
     "d3-scale": "^1.0.0",
     "d3-shape": "^1.2.0",
     "d3-timer": "^1.0.0",
-    "lodash": "^4.17.4"
+    "lodash": "^4.17.5",
+    "react-fast-compare": "^2.0.0"
   },
   "devDependencies": {
     "builder-victory-component-dev": "^5.1.2",
@@ -62,5 +64,6 @@
     "scripts": {
       "postinstall": ""
     }
-  }
+  },
+  "sideEffects": false
 }

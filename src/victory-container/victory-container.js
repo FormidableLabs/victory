@@ -1,9 +1,10 @@
 import React from "react";
 import PropTypes from "prop-types";
 import CustomPropTypes from "../victory-util/prop-types";
-import { assign, omit, defaults, uniqueId, isObject } from "lodash";
+import { assign, defaults, uniqueId, isObject } from "lodash";
 import Portal from "../victory-portal/portal";
 import Timer from "../victory-util/timer";
+import Helpers from "../victory-util/helpers";
 
 export default class VictoryContainer extends React.Component {
   static displayName = "VictoryContainer";
@@ -51,8 +52,15 @@ export default class VictoryContainer extends React.Component {
   constructor(props) {
     super(props);
     this.getTimer = this.getTimer.bind(this);
-    this.containerId = !isObject(props) || typeof props.containerId === "undefined" ?
+    this.containerId = !isObject(props) || props.containerId === undefined ?
       uniqueId("victory-container-") : props.containerId;
+    this.savePortalRef = (portal) => {
+      this.portalRef = portal;
+      return portal;
+    };
+    this.portalUpdate = (key, el) => this.portalRef.portalUpdate(key, el);
+    this.portalRegister = () => this.portalRef.portalRegister();
+    this.portalDeregister = (key) => this.portalRef.portalDeregister(key);
   }
 
   getChildContext() {
@@ -62,16 +70,6 @@ export default class VictoryContainer extends React.Component {
       portalDeregister: this.portalDeregister,
       getTimer: this.getTimer
     };
-  }
-
-  componentWillMount() {
-    this.savePortalRef = (portal) => {
-      this.portalRef = portal;
-      return portal;
-    };
-    this.portalUpdate = (key, el) => this.portalRef.portalUpdate(key, el);
-    this.portalRegister = () => this.portalRef.portalRegister();
-    this.portalDeregister = (key) => this.portalRef.portalDeregister(key);
   }
 
   componentWillUnmount() {
@@ -132,7 +130,8 @@ export default class VictoryContainer extends React.Component {
 
   render() {
     const { width, height, responsive, events } = this.props;
-    const style = responsive ? this.props.style : omit(this.props.style, ["height", "width"]);
+    const style = responsive ?
+      this.props.style : Helpers.omit(this.props.style, ["height", "width"]);
     const svgProps = assign(
       {
         width, height, role: "img",

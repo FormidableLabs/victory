@@ -1,7 +1,6 @@
 import React from "react";
 import PropTypes from "prop-types";
-import { partialRight } from "lodash";
-import LegendHelpers from "./helper-methods";
+import { getBaseProps, getDimensions } from "./helper-methods";
 import CustomPropTypes from "../victory-util/prop-types";
 import addEvents from "../victory-util/add-events";
 import Helpers from "../victory-util/helpers";
@@ -90,10 +89,10 @@ class VictoryLegend extends React.Component {
     })),
     groupComponent: PropTypes.element,
     gutter: PropTypes.oneOfType([
-      CustomPropTypes.nonNegative,
+      PropTypes.number,
       PropTypes.shape({
-        left: CustomPropTypes.nonNegative,
-        right: CustomPropTypes.nonNegative
+        left: PropTypes.number,
+        right: PropTypes.number
       })
     ]),
     height: CustomPropTypes.nonNegative,
@@ -110,10 +109,10 @@ class VictoryLegend extends React.Component {
       })
     ]),
     rowGutter: PropTypes.oneOfType([
-      CustomPropTypes.nonNegative,
+      PropTypes.number,
       PropTypes.shape({
-        top: CustomPropTypes.nonNegative,
-        bottom: CustomPropTypes.nonNegative
+        top: PropTypes.number,
+        bottom: PropTypes.number
       })
     ]),
     sharedEvents: PropTypes.shape({
@@ -150,10 +149,8 @@ class VictoryLegend extends React.Component {
     titleComponent: <VictoryLabel/>
   };
 
-  static getBaseProps = partialRight(LegendHelpers.getBaseProps.bind(LegendHelpers), fallbackProps);
-  static getDimensions = partialRight(
-    LegendHelpers.getDimensions.bind(LegendHelpers), fallbackProps
-  );
+  static getBaseProps = (props) => getBaseProps(props, fallbackProps);
+  static getDimensions = (props) => getDimensions(props, fallbackProps);
   static expectedComponents = [
     "borderComponent", "containerComponent", "dataComponent",
     "groupComponent", "labelComponent", "titleComponent"
@@ -168,7 +165,7 @@ class VictoryLegend extends React.Component {
 
     const labelComponents = this.dataKeys.map((_dataKey, index) => {
       const labelProps = this.getComponentProps(labelComponent, "labels", index);
-      if (typeof labelProps.text !== "undefined" && labelProps.text !== null) {
+      if (labelProps.text !== undefined && labelProps.text !== null) {
         return React.cloneElement(labelComponent, labelProps);
       }
       return undefined;

@@ -76,6 +76,20 @@ export default {
       z`;
   },
 
+  minus(x, y, size) {
+
+    const baseSize = 1.1 * size; // eslint-disable-line no-magic-numbers
+    const lineHeight = baseSize - baseSize * 0.3;// eslint-disable-line no-magic-numbers
+    const x0 = x - baseSize;
+    const y1 = y + lineHeight / 2;
+    const distance = x + baseSize - x0;
+    return `M ${x0}, ${y1}
+      h${distance}
+      v-${lineHeight}
+      h-${distance}
+      z`;
+  },
+
   star(x, y, size) {
     const baseSize = 1.35 * size; // eslint-disable-line no-magic-numbers
     const angle = Math.PI / 5; // eslint-disable-line no-magic-numbers

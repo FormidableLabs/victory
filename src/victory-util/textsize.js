@@ -1,6 +1,6 @@
 // http://www.pearsonified.com/2012/01/characters-per-line.php
 /*eslint-disable no-magic-numbers */
-import { merge, defaults, toString } from "lodash";
+import { assign, defaults } from "lodash";
 
 const fontDictionary = {
   "American Typewriter": 2.09,
@@ -95,7 +95,7 @@ const convertLengthToPixels = (length, fontSize) => {
 const _prepareParams = (inputStyle, index) => {
   const lineStyle = Array.isArray(inputStyle) ? inputStyle[index] : inputStyle;
   const style = defaults({}, lineStyle, defaultStyle);
-  return merge({}, style, {
+  return assign({}, style, {
     characterConstant: style.characterConstant || _getFontCharacterConstant(style.fontFamily),
     letterSpacing: convertLengthToPixels(style.letterSpacing, style.fontSize),
     fontSize: typeof (style.fontSize) === "number"
@@ -105,6 +105,9 @@ const _prepareParams = (inputStyle, index) => {
 };
 
 const _approximateTextWidthInternal = (text, style) => {
+  if (!text) {
+    return 0;
+  }
   const widths = _splitToLines(text).map((line, index) => {
     const len = line.toString().length;
     const { fontSize, characterConstant, letterSpacing } = _prepareParams(style, index);
@@ -114,9 +117,12 @@ const _approximateTextWidthInternal = (text, style) => {
 };
 
 const _approximateTextHeightInternal = (text, style) => {
+  if (!text) {
+    return 0;
+  }
   return _splitToLines(text).reduce((total, line, index) => {
     const lineStyle = _prepareParams(style, index);
-    const containsCaps = toString(line).match(/[(A-Z)(0-9)]/);
+    const containsCaps = line.toString().match(/[(A-Z)(0-9)]/);
     const height = containsCaps ?
       lineStyle.fontSize * coefficients.lineCapitalCoef : lineStyle.fontSize;
     const emptySpace = index === 0 ? 0 : lineStyle.fontSize * coefficients.lineSpaceHeightCoef;

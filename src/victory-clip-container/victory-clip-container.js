@@ -1,8 +1,11 @@
 import React from "react";
 import PropTypes from "prop-types";
 import CustomPropTypes from "../victory-util/prop-types";
+import Helpers from "../victory-util/helpers";
 import { assign, defaults, isFunction, isObject, uniqueId } from "lodash";
 import ClipPath from "../victory-primitives/clip-path";
+import Circle from "../victory-primitives/circle";
+import Rect from "../victory-primitives/rect";
 
 export default class VictoryClipContainer extends React.Component {
   static displayName = "VictoryClipContainer";
@@ -12,9 +15,10 @@ export default class VictoryClipContainer extends React.Component {
       PropTypes.arrayOf(PropTypes.node),
       PropTypes.node
     ]),
+    circleComponent: PropTypes.element,
     className: PropTypes.string,
     clipHeight: CustomPropTypes.nonNegative,
-    clipId: PropTypes.number,
+    clipId: PropTypes.oneOfType([PropTypes.number, PropTypes.string]),
     clipPadding: PropTypes.shape({
       top: PropTypes.number, bottom: PropTypes.number,
       left: PropTypes.number, right: PropTypes.number
@@ -22,6 +26,7 @@ export default class VictoryClipContainer extends React.Component {
     clipPathComponent: PropTypes.element,
     clipWidth: CustomPropTypes.nonNegative,
     events: PropTypes.object,
+    groupComponent: PropTypes.element,
     origin: PropTypes.shape({ x: CustomPropTypes.nonNegative, y: CustomPropTypes.nonNegative }),
     polar: PropTypes.bool,
     radius: CustomPropTypes.nonNegative,
@@ -32,54 +37,80 @@ export default class VictoryClipContainer extends React.Component {
   }
 
   static defaultProps = {
-    clipPathComponent: <ClipPath/>
+    circleComponent: <Circle/>,
+    rectComponent: <Rect/>,
+    clipPathComponent: <ClipPath/>,
+    groupComponent: <g/>
   }
 
   constructor(props) {
     super(props);
-    this.clipId = !isObject(props) || typeof props.clipId === "undefined" ?
+    this.clipId = !isObject(props) || props.clipId === undefined ?
       uniqueId("victory-clip-") : props.clipId;
   }
 
-  // Overridden in victory-core-native
+  calculateAttributes(props) {
+    const {
+      polar, origin, clipWidth = 0, clipHeight = 0, translateX = 0, translateY = 0
+    } = props;
+    const clipPadding = Helpers.getPadding({ padding: props.clipPadding });
+    const radius = props.radius || Helpers.getRadius(props);
+    return {
+      x: (polar ? origin.x : translateX) - clipPadding.left,
+      y: (polar ? origin.y : translateY) - clipPadding.top,
+      width: Math.max((polar ? radius : clipWidth) + clipPadding.left + clipPadding.right, 0),
+      height: Math.max((polar ? radius : clipHeight) + clipPadding.top + clipPadding.bottom, 0)
+    };
+  }
+
   renderClippedGroup(props, clipId) {
-    const { style, events, transform, children, className } = props;
+    const { style, events, transform, children, className, groupComponent } = props;
     const clipComponent = this.renderClipComponent(props, clipId);
-    return (
-      <g
-        className={className}
-        style={style}
-        {...events}
-        transform={transform}
-      >
-        {clipComponent}
-        <g clipPath={`url(#${clipId})`}>
-          {children}
-        </g>
-      </g>
+    const clippedGroup = React.cloneElement(
+      groupComponent, { key: "clipped-group", clipPath: `url(#${clipId})` }, children
     );
-  }
-
-  // Overridden in victory-core-native
-  renderGroup(props) {
-    const { style, events, transform, children, className } = props;
-    return (
-      <g
-        className={className}
-        style={style}
-        {...events}
-        transform={transform}
-      >
-        {children}
-      </g>
-    );
-  }
-
-  // Overridden in victory-core-native
-  renderClipComponent(props, clipId) {
     return React.cloneElement(
-      props.clipPathComponent,
-      assign({}, props, { clipId })
+      groupComponent,
+      assign({ className, style, transform }, events),
+      [clipComponent, clippedGroup]
+    );
+  }
+
+  renderGroup(props) {
+    const { style, events, transform, children, className, groupComponent } = props;
+    return React.cloneElement(
+      groupComponent, assign({ className, style, transform }, events), children
+    );
+  }
+
+  renderClipComponent(props, clipId) {
+    const {
+      polar, origin, clipWidth = 0, clipHeight = 0, translateX = 0, translateY = 0,
+      circleComponent, rectComponent, clipPathComponent
+    } = props;
+    const { top, bottom, left, right } = Helpers.getPadding({ padding: props.clipPadding });
+    let child;
+    if (polar) {
+      const radius = props.radius || Helpers.getRadius(props);
+      const circleProps = {
+        r: Math.max((radius + left + right), (radius + top + bottom), 0),
+        cx: origin.x - left,
+        cy: origin.y - top
+      };
+      child = React.cloneElement(circleComponent, circleProps);
+    } else {
+      const rectProps = {
+        x: translateX - left, y: translateY - top,
+        width: Math.max((clipWidth + left + right), 0),
+        height: Math.max((clipHeight + top + bottom), 0)
+      };
+      child = React.cloneElement(rectComponent, rectProps);
+    }
+
+    return React.cloneElement(
+      clipPathComponent,
+      assign({ key: "clip-path" }, props, { clipId }),
+      child
     );
   }
 

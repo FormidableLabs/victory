@@ -14,6 +14,7 @@ const colors = [
 ];
 
 const charcoal = "#252525";
+const grey = "#969696";
 // *
 // * Typography
 // *
@@ -92,6 +93,21 @@ export default {
       labels: baseLabelStyles
     }
   }, baseProps),
+  boxplot: assign({
+    style: {
+      max: { padding: 8, stroke: charcoal, strokeWidth: 1 },
+      maxLabels: baseLabelStyles,
+      median: { padding: 8, stroke: charcoal, strokeWidth: 1 },
+      medianLabels: baseLabelStyles,
+      min: { padding: 8, stroke: charcoal, strokeWidth: 1 },
+      minLabels: baseLabelStyles,
+      q1: { padding: 8, fill: grey },
+      q1Labels: baseLabelStyles,
+      q3: { padding: 8, fill: grey },
+      q3Labels: baseLabelStyles
+    },
+    boxWidth: 20
+  }, baseProps),
   candlestick: assign({
     style: {
       data: {
@@ -120,6 +136,19 @@ export default {
   group: assign({
     colorScale: colors
   }, baseProps),
+  legend: {
+    colorScale: colors,
+    gutter: 10,
+    orientation: "vertical",
+    titleOrientation: "top",
+    style: {
+      data: {
+        type: "circle"
+      },
+      labels: baseLabelStyles,
+      title: assign({}, baseLabelStyles, { padding: 5 })
+    }
+  },
   line: assign({
     style: {
       data: {
@@ -183,18 +212,5 @@ export default {
         pointerEvents: "none"
       }
     }
-  }, baseProps),
-  legend: {
-    colorScale: colors,
-    gutter: 10,
-    orientation: "vertical",
-    titleOrientation: "top",
-    style: {
-      data: {
-        type: "circle"
-      },
-      labels: baseLabelStyles,
-      title: assign({}, baseLabelStyles, { padding: 5 })
-    }
-  }
+  }, baseProps)
 };

@@ -2,19 +2,16 @@ import React from "react";
 import PropTypes from "prop-types";
 import isEqual from "react-fast-compare";
 
-export default class Line extends React.Component {
+export default class Path extends React.Component {
   static propTypes = {
     className: PropTypes.string,
     clipPath: PropTypes.string,
+    d: PropTypes.string,
     events: PropTypes.object,
     role: PropTypes.string,
     shapeRendering: PropTypes.string,
     style: PropTypes.object,
-    transform: PropTypes.string,
-    x1: PropTypes.number,
-    x2: PropTypes.number,
-    y1: PropTypes.number,
-    y2: PropTypes.number
+    transform: PropTypes.string
   };
 
   shouldComponentUpdate(nextProps) {
@@ -22,19 +19,16 @@ export default class Line extends React.Component {
   }
 
   render() {
-    const {
-      x1, x2, y1, y2, events, className, clipPath, transform, style, shapeRendering, role
-    } = this.props;
+    const { d, role, shapeRendering, className, clipPath, style, transform, events } = this.props;
     return (
-      <line
-        x1={x1} x2={x2} y1={y1} y2={y2}
+      <path
+        d={d}
+        transform={transform}
         className={className}
         clipPath={clipPath}
-        transform={transform}
         style={style}
         role={role || "presentation"}
         shapeRendering={shapeRendering || "auto"}
-        vectorEffect="non-scaling-stroke"
         {...events}
       />
     );

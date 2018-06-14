@@ -1,5 +1,5 @@
 import {
-  assign, extend, merge, partial, isEmpty, isFunction, without, pickBy, uniq, includes
+  assign, isEmpty, isFunction, without, pickBy, uniq, includes
 } from "lodash";
 
 export default {
@@ -9,13 +9,16 @@ export default {
    * (i.e. VictoryBar) in the case of own events, or that of the parent component
    * (i.e. VictoryChart) in the case of shared events
    */
+  // eslint-disable-next-line max-params
   getEvents(props, target, eventKey, getScopedEvents) {
     // Returns all events that apply to a particular target element
     const getEventsByTarget = (events) => {
       const getSelectedEvents = () => {
         const targetEvents = events.reduce((memo, event) => {
           if (event.target !== undefined) {
-            return `${event.target}` === `${target}` ? memo.concat(event) : memo;
+            const matchesTarget = Array.isArray(event.target) ?
+              includes(event.target, target) : `${event.target}` === `${target}`;
+            return matchesTarget ? memo.concat(event) : memo;
           }
           return memo.concat(event);
         }, []);
@@ -66,6 +69,7 @@ export default {
    * of the original event handler assigned to state property that maps to the target
    * element.
    */
+  // eslint-disable-next-line max-params
   getScopedEvents(events, namespace, childType, baseProps) {
     if (isEmpty(events)) {
       return {};
@@ -90,6 +94,9 @@ export default {
 
       // returns all eventKeys to modify for a targeted childName
       const getKeys = (childName) => {
+        if (target === "parent") {
+          return "parent";
+        }
         if (eventReturn.eventKey === "all") {
           return baseProps[childName] ?
             without(Object.keys(baseProps[childName]), "parent") :
@@ -103,24 +110,40 @@ export default {
 
       // returns the state object with mutated props applied for a single key
       const getMutationObject = (key, childName) => {
-        const nullFunction = () => null;
+        const baseState = this.state || {};
+        if (!isFunction(eventReturn.mutation)) {
+          return baseState;
+        }
         const mutationTargetProps = getTargetProps({ childName, key, target }, "props");
         const mutationTargetState = getTargetProps({ childName, key, target }, "state");
-        const mutation = eventReturn.mutation || nullFunction;
-        const mutatedProps = mutation(
+        const mutatedProps = eventReturn.mutation(
           assign({}, mutationTargetProps, mutationTargetState), baseProps
         );
-        const baseState = this.state || {};
         const childState = baseState[childName] || {};
+
+        const filterState = (state) => {
+          if (state[key] && state[key][target]) {
+            delete state[key][target];
+          }
+          if (state[key] && !Object.keys(state[key]).length) {
+            delete state[key];
+          }
+          return state;
+        };
+
         const extendState = (state) => {
           return target === "parent" ?
-            extend(state[key], mutatedProps) : extend(state[key], { [target]: mutatedProps });
+            assign(state, { [key]: assign(state[key], mutatedProps) }) :
+            assign(state, { [key]: assign(state[key], { [target]: mutatedProps }) });
         };
+
+        const updateState = (state) => {
+          return mutatedProps ? extendState(state) : filterState(state);
+        };
+
         return childName !== undefined && childName !== null ?
-          extend(baseState, {
-            [childName]: extend(childState, { [key]: extendState(childState) })
-          }) :
-          extend(baseState, { [key]: extendState(baseState) });
+          assign(baseState, { [childName]: updateState(childState) }) :
+          updateState(baseState);
       };
 
       // returns entire mutated state for a given childName
@@ -145,7 +168,7 @@ export default {
     const parseEventReturn = (eventReturn, eventKey) => {
       return Array.isArray(eventReturn) ?
         eventReturn.reduce((memo, props) => {
-          memo = merge({}, memo, parseEvent(props, eventKey));
+          memo = assign({}, memo, parseEvent(props, eventKey));
           return memo;
         }, {}) :
         parseEvent(eventReturn, eventKey);
@@ -162,6 +185,7 @@ export default {
 
     // A function that calls a particular event handler, parses its return
     // into a state mutation, and calls setState
+    // eslint-disable-next-line max-params
     const onEvent = (evt, childProps, eventKey, eventName) => {
       const eventReturn = events[eventName](evt, childProps, eventKey, this);
       if (eventReturn) {
@@ -183,14 +207,8 @@ export default {
   getPartialEvents(events, eventKey, childProps) {
     return events ?
       Object.keys(events).reduce((memo, eventName) => {
-        /* eslint max-params: 0 */
-        memo[eventName] = partial(
-          events[eventName],
-          partial.placeholder, // evt will still be the first argument for event handlers
-          childProps, // event handlers will have access to data component props, including data
-          eventKey, // used in setting a unique state property
-          eventName // used in setting a unique state property
-        );
+        const appliedEvent = (evt) => events[eventName](evt, childProps, eventKey, eventName);
+        memo[eventName] = appliedEvent;
         return memo;
       }, {}) :
       {};
@@ -221,6 +239,7 @@ export default {
  *
  * @return {Object} a object describing all mutations for VictorySharedEvents
  */
+  // eslint-disable-next-line max-params
   getExternalMutationsWithChildren(mutations, baseProps, baseState, childNames) {
     baseProps = baseProps || {};
     baseState = baseState || {};
@@ -246,6 +265,7 @@ export default {
  *
  * @return {Object} a object describing mutations for a given component
  */
+  // eslint-disable-next-line max-params
   getExternalMutations(mutations, baseProps, baseState, childName) {
     baseProps = baseProps || {};
     baseState = baseState || {};
@@ -257,7 +277,7 @@ export default {
       if (eventKey === "parent") {
         const identifier = { eventKey, target: "parent" };
         const mutation = this.getExternalMutation(mutations, keyProps, keyState, identifier);
-        memo[eventKey] = typeof mutation !== "undefined" ?
+        memo[eventKey] = mutation !== undefined ?
           assign({}, keyState, mutation) : keyState;
       } else {
         // use keys from both state and props so that elements not intially included in baseProps
@@ -268,7 +288,7 @@ export default {
           const mutation = this.getExternalMutation(
             mutations, keyProps[target], keyState[target], identifier
           );
-          m[target] = typeof mutation !== "undefined" ?
+          m[target] = mutation !== undefined ?
             assign({}, keyState[target], mutation) : keyState[target];
           return pickBy(m, (v) => !isEmpty(v));
         }, {});
@@ -287,6 +307,7 @@ export default {
  *
  * @return {Object | undefined} a object describing mutations for a given element, or undefined
  */
+  // eslint-disable-next-line max-params
   getExternalMutation(mutations, baseProps, baseState, identifier) {
 
     const filterMutations = (mutation, type) => {
@@ -318,7 +339,7 @@ export default {
     return keyMutations.reduce((memo, curr) => {
       const mutationFunction = curr && isFunction(curr.mutation) ? curr.mutation : () => undefined;
       const currentMutation = mutationFunction(assign({}, baseProps, baseState));
-      return merge({}, memo, currentMutation);
+      return assign({}, memo, currentMutation);
     }, {});
   },
 
