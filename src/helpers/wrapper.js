@@ -1,7 +1,9 @@
-import { assign, defaults, flatten, isFunction, keys, uniq, some, orderBy } from "lodash";
+import {
+  assign, defaults, flatten, isFunction, keys, uniq, some, orderBy, groupBy, values
+} from "lodash";
 import React from "react";
 import Axis from "./axis";
-import { Style, Transitions, Collection, Data, Domain, Events } from "victory-core";
+import { Style, Transitions, Collection, Data, Domain, Events, Helpers } from "victory-core";
 
 
 export default {
@@ -129,14 +131,8 @@ export default {
   },
 
   getDomainFromChildren(props, axis, childComponents) { // eslint-disable-line max-statements, complexity, max-len
-    const childDomains = [];
-    let childDomainsLength = 0;
-
-    const children = childComponents
-      ? childComponents.slice(0)
-      : React.Children.toArray(props.children);
-    let childrenLength = children.length;
-
+    const children = childComponents ?
+      childComponents.slice(0) : React.Children.toArray(props.children);
     const horizontalChildren = childComponents.some((component) => {
       return component.props && component.props.horizontal;
     });
@@ -148,71 +144,44 @@ export default {
     const parentProps = parentData ?
       assign(baseParentProps, { data: parentData }) : baseParentProps;
 
-    while (childrenLength > 0) {
-      const child = children[--childrenLength];
-
-      if (child.type && isFunction(child.type.getDomain)) {
-        const sharedProps = assign({}, child.props, parentProps);
-        const childDomain = child.props && child.type.getDomain(sharedProps, currentAxis);
-        if (childDomain) {
-          const childDomainLength = childDomain.length;
-          for (let index = 0; index < childDomainLength; index++) {
-            childDomains[childDomainsLength++] = childDomain[index];
-          }
-        }
-      } else if (child.props && child.props.children) {
-        const newChildren = React.Children.toArray(child.props.children);
-        const newChildrenLength = newChildren.length;
-        for (let index = 0; index < newChildrenLength; index++) {
-          children[childrenLength++] = newChildren[index];
-        }
+    const iteratee = (child) => {
+      const role = child.type && child.type.role;
+      const sharedProps = assign({}, child.props, parentProps);
+      if (role === "legend" || role === "label") {
+        return null;
+      } else if (child.type && isFunction(child.type.getDomain)) {
+        return child.props && child.type.getDomain(sharedProps, currentAxis);
+      } else {
+        return Domain.getDomain(sharedProps, currentAxis);
       }
-    }
-    const min = Collection.getMinValue(childDomains);
-    const max = Collection.getMaxValue(childDomains);
-    return childDomains.length === 0 ?
-      [0, 1] : [min, max];
+    };
+    const childDomains = Helpers.reduceChildren(children, iteratee, ["stack", "group"]);
+
+    const min = childDomains.length === 0 ? 0 : Collection.getMinValue(childDomains);
+    const max = childDomains.length === 0 ? 1 : Collection.getMaxValue(childDomains);
+    return [min, max];
   },
 
-  getDataFromChildren(props, childComponents) { // eslint-disable-line max-statements
-    const getData = (childProps) => {
-      const data = Data.getData(childProps);
-      return Array.isArray(data) && data.length > 0
-        ? data.map((datum) => assign({ childName: childProps.name }, datum))
-        : undefined;
+  getDataFromChildren(props, childComponents) {
+    const iteratee = (child, childName, parent) => {
+      const role = child.type && child.type.role;
+      const childProps = child.props || {};
+      let childData;
+      if (role === "axis" || role === "legend" || role === "label") {
+        return null;
+      } else if (child.type && isFunction(child.type.getData)) {
+        child = parent ? React.cloneElement(child, parent.props) : child;
+        childData = child.props && child.type.getData({ ...child.props, props });
+      } else {
+        childData = Data.getData({ ...childProps, props });
+      }
+      return childData.map((datum) => assign({ childName }, datum));
     };
 
-    // Reverse the child array to maintain correct order when looping over
-    // children starting from the end of the array.
-    const children = childComponents
-      ? childComponents.slice(0).reverse()
-      : React.Children.toArray(props.children).reverse();
-
-    let childrenLength = children.length;
-
-    const dataArr = [];
-    let dataArrLength = 0;
-    while (childrenLength > 0) {
-      const child = children[--childrenLength];
-      if (child.type && child.type.role === "axis") {
-        dataArrLength = dataArrLength;
-      } else if (child.type && child.type.role !== "axis" && isFunction(child.type.getData)) {
-        const data = child.type.getData(child.props);
-        dataArr[dataArrLength++] = data.map((datum) => {
-          return assign({ childName: child.props.name }, datum);
-        });
-      } else if (child.props && child.props.children) {
-        const newChildren = React.Children.toArray(child.props.children);
-        const newChildrenLength = newChildren.length;
-        for (let index = 0; index < newChildrenLength; index++) {
-          children[childrenLength++] = newChildren[index];
-        }
-      } else {
-        dataArr[dataArrLength++] = getData(child.props);
-      }
-    }
-
-    return dataArr;
+    const children = childComponents ?
+      childComponents.slice(0) : React.Children.toArray(props.children);
+    const datasets = Helpers.reduceChildren(children, iteratee, ["stack", "group"]);
+    return values(groupBy(datasets, "childName"));
   },
 
   // Assumes data in `datasets` is sorted by `Data.getData`.
@@ -420,7 +389,7 @@ export default {
     return previousPoints.some((point) => point instanceof Date) ? new Date(y0) : y0;
   },
 
-  /* eslint-disable max-params, no-nested-ternary */
+  /* eslint-disable no-nested-ternary */
   addLayoutData(props, datasets, index) {
     const xOffset = props.xOffset || 0;
     return datasets[index].map((datum) => {
@@ -438,5 +407,5 @@ export default {
       });
     });
   }
-  /* eslint-enable max-params, no-nested-ternary */
+  /* eslint-enable no-nested-ternary */
 };
