@@ -110,6 +110,7 @@ class VictoryPie extends React.Component {
         left: PropTypes.number, right: PropTypes.number
       })
     ]),
+    radius: CustomPropTypes.nonNegative,
     sharedEvents: PropTypes.shape({
       events: PropTypes.array,
       getEventState: PropTypes.func

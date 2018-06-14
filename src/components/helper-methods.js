@@ -24,6 +24,9 @@ const getColor = (style, colors, index) => {
 };
 
 const getRadius = (props, padding) => {
+  if (props.radius) {
+    return props.radius;
+  }
   return Math.min(
     props.width - padding.left - padding.right,
     props.height - padding.top - padding.bottom
