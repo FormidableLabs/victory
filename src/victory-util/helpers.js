@@ -196,7 +196,7 @@ function getCurrentAxis(axis, horizontal) {
 function reduceChildren(children, iteratee, rolesToSkip = []) {
   let childIndex = 0;
   const traverseChildren = (childArray, parent) => {
-    return reduce(childArray, (memo, child) => {
+    return childArray.reduce((memo, child) => {
       const childRole = child.type && child.type.role;
       const childName = child.props.name || childIndex;
       childIndex++;
