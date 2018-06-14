@@ -1,6 +1,6 @@
 import { Selection } from "victory-core";
-import { assign, throttle, isFunction, isEqual, defaults, mapValues } from "lodash";
-import { attachId } from "../../helpers/event-handlers";
+import { assign, throttle, isFunction, defaults, mapValues } from "lodash";
+import isEqual from "react-fast-compare";
 
 const Helpers = {
   withinBounds(point, bounds, padding) {
@@ -69,6 +69,16 @@ const Helpers = {
     return { x: [0, 1 / Number.MAX_SAFE_INTEGER], y: [0, 1 / Number.MAX_SAFE_INTEGER] };
   },
 
+  getDefaultBrushArea(defaultBrushArea, domain, cachedDomain) {
+    if (defaultBrushArea === "none") {
+      return this.getMinimumDomain();
+    } else if (defaultBrushArea === "disable") {
+      return cachedDomain;
+    } else {
+      return domain;
+    }
+  },
+
   getSelectionMutation(point, box, brushDimension) {
     const { x, y } = point;
     const { x1, x2, y1, y2 } = box;
@@ -110,10 +120,10 @@ const Helpers = {
     };
   },
 
-  onMouseDown(evt, targetProps) { // eslint-disable-line max-statements
+  onMouseDown(evt, targetProps) { // eslint-disable-line max-statements, complexity
     evt.preventDefault();
     const {
-      brushDimension, handleWidth, cachedBrushDomain, domain, allowResize, allowDrag
+      brushDimension, handleWidth, cachedBrushDomain, domain, allowResize, allowDrag, allowDraw
     } = targetProps;
 
     // Don't trigger events for static brushes
@@ -122,7 +132,8 @@ const Helpers = {
     }
 
     const fullDomainBox = targetProps.fullDomainBox || this.getDomainBox(targetProps, domain);
-    const { x, y } = Selection.getSVGEventCoordinates(evt);
+    const parentSVG = targetProps.parentSVG || Selection.getParentSVG(evt);
+    const { x, y } = Selection.getSVGEventCoordinates(evt, parentSVG);
 
     // Ignore events that occur outside of the maximum domain region
     if (!this.withinBounds({ x, y }, fullDomainBox, handleWidth)) {
@@ -145,7 +156,7 @@ const Helpers = {
         mutation: () => {
           return {
             isSelecting: true, domainBox, fullDomainBox,
-            cachedBrushDomain: brushDomain, currentDomain,
+            cachedBrushDomain: brushDomain, currentDomain, parentSVG,
             ...this.getResizeMutation(domainBox, activeHandles)
           };
         }
@@ -157,18 +168,19 @@ const Helpers = {
         target: "parent",
         mutation: () => ({
           isPanning: allowDrag, startX: x, startY: y, domainBox, fullDomainBox, currentDomain,
-          cachedBrushDomain: brushDomain,
+          cachedBrushDomain: brushDomain, parentSVG,
           ...domainBox // set x1, x2, y1, y2
         })
       }];
     } else {
       // if the event occurs outside the region, or if the whole domain is selected,
       // start a new selection
-      return allowResize ? [{
+      return allowDraw ? [{
         target: "parent",
         mutation: () => ({
-          isSelecting: allowResize, domainBox, fullDomainBox,
+          isSelecting: allowResize, domainBox, fullDomainBox, parentSVG,
           cachedBrushDomain: brushDomain,
+          cachedCurrentDomain: currentDomain,
           currentDomain: this.getMinimumDomain(),
           ...this.getSelectionMutation({ x, y }, domainBox, brushDimension)
         })
@@ -185,7 +197,8 @@ const Helpers = {
       brushDimension, scale, isPanning, isSelecting, fullDomainBox, onBrushDomainChange,
       allowResize, allowDrag
     } = targetProps;
-    const { x, y } = Selection.getSVGEventCoordinates(evt);
+    const parentSVG = targetProps.parentSVG || Selection.getParentSVG(evt);
+    const { x, y } = Selection.getSVGEventCoordinates(evt, parentSVG);
     // Ignore events that occur outside of the maximum domain region
     if ((!allowResize && !allowDrag) || !this.withinBounds({ x, y }, fullDomainBox)) {
       return {};
@@ -196,7 +209,7 @@ const Helpers = {
       const constrainedBox = this.constrainBox(pannedBox, fullDomainBox);
       const currentDomain = Selection.getBounds({ ...constrainedBox, scale });
       const mutatedProps = {
-        currentDomain,
+        currentDomain, parentSVG,
         startX: pannedBox.x2 >= fullDomainBox.x2 || pannedBox.x1 <= fullDomainBox.x1 ?
           startX : x,
         startY: pannedBox.y2 >= fullDomainBox.y2 || pannedBox.y1 <= fullDomainBox.y1 ?
@@ -217,7 +230,7 @@ const Helpers = {
       const currentDomain =
         Selection.getBounds({ x2, y2, x1: targetProps.x1, y1: targetProps.y1, scale });
 
-      const mutatedProps = { x2, y2, currentDomain };
+      const mutatedProps = { x2, y2, currentDomain, parentSVG };
       if (isFunction(onBrushDomainChange)) {
         onBrushDomainChange(currentDomain, defaults({}, mutatedProps, targetProps));
       }
@@ -230,10 +243,14 @@ const Helpers = {
   },
 
   onMouseUp(evt, targetProps) {
-    const { x1, y1, x2, y2, onBrushDomainChange, domain, allowResize } = targetProps;
+    const {
+      x1, y1, x2, y2, onBrushDomainChange, domain, allowResize, defaultBrushArea
+    } = targetProps;
     // if the mouse hasn't moved since a mouseDown event, select the whole domain region
     if (allowResize && x1 === x2 || y1 === y2) {
-      const mutatedProps = { isPanning: false, isSelecting: false, currentDomain: domain };
+      const cachedDomain = targetProps.cachedCurrentDomain || targetProps.currentDomain;
+      const currentDomain = this.getDefaultBrushArea(defaultBrushArea, domain, cachedDomain);
+      const mutatedProps = { isPanning: false, isSelecting: false, currentDomain };
       if (isFunction(onBrushDomainChange)) {
         onBrushDomainChange(domain, defaults({}, mutatedProps, targetProps));
       }
@@ -265,7 +282,7 @@ export default {
   onMouseUp: Helpers.onMouseUp.bind(Helpers),
   onMouseLeave: Helpers.onMouseLeave.bind(Helpers),
   onMouseMove: throttle(
-    attachId(Helpers.onMouseMove.bind(Helpers)),
+    Helpers.onMouseMove.bind(Helpers),
     16, // eslint-disable-line no-magic-numbers
     { leading: true, trailing: false }
   )

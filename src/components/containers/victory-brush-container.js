@@ -2,13 +2,15 @@ import PropTypes from "prop-types";
 import React from "react";
 import { VictoryContainer, Selection } from "victory-core";
 import BrushHelpers from "./brush-helpers";
-import { assign, defaults, isEqual } from "lodash";
+import { assign, defaults } from "lodash";
+import isEqual from "react-fast-compare";
 
 export const brushContainerMixin = (base) => class VictoryBrushContainer extends base {
   static displayName = "VictoryBrushContainer";
   static propTypes = {
     ...VictoryContainer.propTypes,
     allowDrag: PropTypes.bool,
+    allowDraw: PropTypes.bool,
     allowResize: PropTypes.bool,
     brushComponent: PropTypes.element,
     brushDimension: PropTypes.oneOf(["x", "y"]),
@@ -17,6 +19,8 @@ export const brushContainerMixin = (base) => class VictoryBrushContainer extends
       y: PropTypes.array
     }),
     brushStyle: PropTypes.object,
+    defaultBrushArea: PropTypes.oneOf(["all", "disable", "none"]),
+    disable: PropTypes.bool,
     handleComponent: PropTypes.element,
     handleStyle: PropTypes.object,
     handleWidth: PropTypes.number,
@@ -25,6 +29,7 @@ export const brushContainerMixin = (base) => class VictoryBrushContainer extends
   static defaultProps = {
     ...VictoryContainer.defaultProps,
     allowDrag: true,
+    allowDraw: true,
     allowResize: true,
     brushComponent: <rect/>,
     brushStyle: {
@@ -40,49 +45,37 @@ export const brushContainerMixin = (base) => class VictoryBrushContainer extends
     handleWidth: 8
   };
 
-  static defaultEvents = [{
-    target: "parent",
-    eventHandlers: {
-      onMouseDown: (evt, targetProps) => {
-        return BrushHelpers.onMouseDown(evt, targetProps);
-      },
-      onTouchStart: (evt, targetProps) => {
-        return BrushHelpers.onMouseDown(evt, targetProps);
-      },
-      onMouseMove: (evt, targetProps) => {
-        const mutations = BrushHelpers.onMouseMove(evt, targetProps);
-
-        if (mutations.id !== this.mouseMoveMutationId) { // eslint-disable-line
-          this.mouseMoveMutationId = mutations.id; // eslint-disable-line
-          return mutations.mutations;
+  static defaultEvents = (props) => {
+    return [{
+      target: "parent",
+      eventHandlers: {
+        onMouseDown: (evt, targetProps) => {
+          return props.disable ? {} : BrushHelpers.onMouseDown(evt, targetProps);
+        },
+        onTouchStart: (evt, targetProps) => {
+          return props.disable ? {} : BrushHelpers.onMouseDown(evt, targetProps);
+        },
+        onMouseMove: (evt, targetProps) => {
+          return props.disable ? {} : BrushHelpers.onMouseMove(evt, targetProps);
+        },
+        onTouchMove: (evt, targetProps) => {
+          return props.disable ? {} : BrushHelpers.onMouseMove(evt, targetProps);
+        },
+        onMouseUp: (evt, targetProps) => {
+          return props.disable ? {} : BrushHelpers.onMouseUp(evt, targetProps);
+        },
+        onTouchEnd: (evt, targetProps) => {
+          return props.disable ? {} : BrushHelpers.onMouseUp(evt, targetProps);
+        },
+        onMouseLeave: (evt, targetProps) => {
+          return props.disable ? {} : BrushHelpers.onMouseLeave(evt, targetProps);
+        },
+        onTouchCancel: (evt, targetProps) => {
+          return props.disable ? {} : BrushHelpers.onMouseLeave(evt, targetProps);
         }
-
-        return undefined;
-      },
-      onTouchMove: (evt, targetProps) => {
-        const mutations = BrushHelpers.onMouseMove(evt, targetProps);
-
-        if (mutations.id !== this.mouseMoveMutationId) { // eslint-disable-line
-          this.mouseMoveMutationId = mutations.id; // eslint-disable-line
-          return mutations.mutations;
-        }
-
-        return undefined;
-      },
-      onMouseUp: (evt, targetProps) => {
-        return BrushHelpers.onMouseUp(evt, targetProps);
-      },
-      onTouchEnd: (evt, targetProps) => {
-        return BrushHelpers.onMouseUp(evt, targetProps);
-      },
-      onMouseLeave: (evt, targetProps) => {
-        return BrushHelpers.onMouseLeave(evt, targetProps);
-      },
-      onTouchCancel: (evt, targetProps) => {
-        return BrushHelpers.onMouseLeave(evt, targetProps);
       }
-    }
-  }];
+    }];
+  };
 
   getSelectBox(props, coordinates) {
     const { x, y } = coordinates;

@@ -1,10 +1,9 @@
 import React from "react";
-import { partialRight } from "lodash";
 import {
   PropTypes as CustomPropTypes, Helpers, VictoryLabel, addEvents,
   VictoryContainer, VictoryTheme, DefaultTransitions, Voronoi, Data, Domain
 } from "victory-core";
-import VoronoiHelpers from "./helper-methods";
+import { getBaseProps } from "./helper-methods";
 import { BaseProps, DataProps } from "../../helpers/common-props";
 
 const fallbackProps = {
@@ -40,10 +39,9 @@ class VictoryVoronoi extends React.Component {
     theme: VictoryTheme.grayscale
   };
 
-  static getDomain = Domain.getDomain.bind(Domain);
-  static getData = Data.getData.bind(Data);
-  static getBaseProps = partialRight(
-    VoronoiHelpers.getBaseProps.bind(VoronoiHelpers), fallbackProps);
+  static getDomain = Domain.getDomain;
+  static getData = Data.getData;
+  static getBaseProps = (props) => getBaseProps(props, fallbackProps);
   static expectedComponents = [
     "dataComponent", "labelComponent", "groupComponent", "containerComponent"
   ];

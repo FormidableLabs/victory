@@ -3,7 +3,7 @@
 import React from "react";
 import PropTypes from "prop-types";
 import { VictoryBar, VictoryChart, VictoryGroup, VictoryStack } from "../../src/index";
-import { VictorySharedEvents, VictoryContainer, VictoryTheme } from "victory-core";
+import { VictorySharedEvents, VictoryContainer, VictoryTheme, VictoryLabel } from "victory-core";
 import { assign, random, range, merge } from "lodash";
 
 class Wrapper extends React.Component {
@@ -215,11 +215,9 @@ export default class App extends React.Component {
         </VictoryChart>
 
         <VictoryBar
-          style={{
-            parent: parentStyle,
-            labels: { angle: 45, verticalAnchor: "end", textAnchor: "end" }
-          }}
+          style={{ parent: parentStyle }}
           labels={() => "HELLO"}
+          labelComponent={<VictoryLabel angle={45} verticalAnchor="end" textAnchor="end" />}
           animate={{
             duration: 500,
             onExit: {

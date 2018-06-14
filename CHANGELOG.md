@@ -1,5 +1,164 @@
 # VictoryChart Changelog
 
+## 27.0.0 (2018-06-05)
+
+-[600](https://github.com/FormidableLabs/victory-chart/pull/600)
+
+**Breaking Changes**
+- Refactors utility methods. This is an internal breaking change, but should not be a breaking change for most Victory users. See [victory-core/380](https://github.com/FormidableLabs/victory-core/pull/380) for details
+- Upgrades to `react-fast-compare@^2.0.0` which changes function comparison. This means that Victory components _will_ update when functions are not equal. This closes several Victory issues, but may cause a slight performance decline
+
+**New Features**
+- Adds `minDomain` and `maxDomain` props. These props may be used to set one edge of a domain while allowing the other edge to be determined by data or other props. `minDomain` and `maxDomain` override `domainPadding`.
+- Adds `singleQuadrantDomainPadding` prop. This prop may be given as a boolean or an object with boolean values for x and y. When this prop is set to `false` for a given dimension, any `domainPadding` applied in that dimension will _not_ be constrained to existing quadrants.
+
+## 26.1.1 (2018-05-28)
+
+-[599](https://github.com/FormidableLabs/victory-chart/pull/599) Add `allowDraw` boolean prop for `VictoryBrushContainer` and `VictoryBrushLine`
+-[598](https://github.com/FormidableLabs/victory-chart/pull/598) Fix category bugs
+-[596](https://github.com/FormidableLabs/victory-chart/pull/596) Only call `onSelectionCleared` when selected data exists
+
+## 26.1.0 (2018-05-04)
+
+-[594](https://github.com/FormidableLabs/victory-chart/pull/594) Support functional `cornerRadius` and objects with `cornerRadius` defined for "top" and "bottom"
+-[593](https://github.com/FormidableLabs/victory-chart/pull/593) Add `defaultBrushArea` prop with supported options "all", "none" and "disable"
+
+## 26.0.1 (2018-04-25)
+
+-[591](https://github.com/FormidableLabs/victory-chart/pull/591) Ensure that `VictoryVoronoiContainer` works correctly with `VictoryGroup` data.
+
+## 26.0.0 (2018-04-21)
+
+**Breaking Changes**
+
+-[587](https://github.com/FormidableLabs/victory-chart/pull/587) Disable styles on data
+
+This change deprecates Victory's ability to automatically pick up style attributes from the data object. This change will improve performance, but will be a breaking change for many users. Fortunately the upgrade path is simple:
+
+If your data object looks like
+```
+data={[
+  { x: 1, y: 1, fill: "red", opacity: 0.2 },
+  ...
+]}
+```
+Add the following functional styles:
+```
+style={{ data:  { fill: (d) => d.fill, opacity: (d) => d.opacity } }}
+```
+and everything will work as before.
+
+-[584](https://github.com/FormidableLabs/victory-chart/pull/584) Check for labels prop before computing baseProps for labels
+
+Base props for labels will no longer be pre-calculated unless a labels prop exists. This change improves performance, but it will be a breaking change for users who were using events for adding labels to elements that did not already have them using an event mutation like:
+
+```
+events={[{
+  target: "data",
+  eventHandlers: {
+    onClick: () => {
+      return [{ target: "labels", mutation: () => ({ text: "clicked" }) }];
+    }
+  }
+}]}
+```
+If you are using this pattern, you can make labels work as expected by adding a dummy labels prop like: `labels={() => null}`
+
+Note: This change _does not_ affect tooltips, which exist, but are invisible until they receive the `active` prop
+
+Other changes
+-[589](https://github.com/FormidableLabs/victory-chart/pull/589) Audit lodash methods
+-[583](https://github.com/FormidableLabs/victory-chart/pull/583) Perf improvement for `VictorySelectionContainer`
+
+## 25.2.5 (2018-04-17)
+
+- [583](https://github.com/FormidableLabs/victory-chart/pull/583) Perf improvements for `VictorySelectionContainer` and general perf improvements from `victory-core@21.1.12`
+
+## 25.2.4 (2018-04-13)
+
+- [581](https://github.com/FormidableLabs/victory-chart/pull/580) Add `react-fast-compare`, use in place of `lodash.isEqual`; add demo that uses <VictoryLabel/> and calls shouldComponentUpdate.
+
+## 25.2.3 (2018-04-10)
+
+- [580](https://github.com/FormidableLabs/victory-chart/pull/580) Improvements for `VictoryBrushLine`
+
+## 25.2.2 (2018-04-04)
+
+- Upgrade to `victory-core@^21.1.2`.
+- [577](https://github.com/FormidableLabs/victory-chart/pull/577). Replace lodash omit. Remove any style prop scrubbing (`victory-core` now handles this).
+
+
+## 25.2.1 (2018-03-30)
+
+-[576]https://github.com/FormidableLabs/victory-chart/pull/576 Fixes a bug in `VictoryBrushLine`
+
+## 25.2.0 (2018-03-27)
+
+-[557](https://github.com/FormidableLabs/victory-chart/pull/557) `VictoryBoxPlot`
+-[575](https://github.com/FormidableLabs/victory-chart/pull/575) Stack datasets with differeing domains
+-[574](https://github.com/FormidableLabs/victory-chart/pull/574) Refactor helper method exports
+
+## 25.1.1 (2018-02-14)
+
+-[573](https://github.com/FormidableLabs/victory-chart/pull/573) Use fallback styles in VictoryBrushLine
+
+## 25.1.0 (2018-02-12)
+
+-[571](https://github.com/FormidableLabs/victory-chart/pull/571)
+  - Adds `selectionBlacklist` to `VictorySelectionContainer`
+  - Adds `activateData` and `activateLabels` to `VictoryVoronoiContainer` (true by default)
+  - Adds `activateSelectedData` to `VictorySelectionContainer` (true by default)
+-[572](https://github.com/FormidableLabs/victory-chart/pull/572) Changes behavior of `labels` in `VictoryVoronoiContainer`
+  - `labels` is now called with `point, index, points` instead of `point, active`. This will not be a breaking change for most users, as this function was only called when labels were `active`
+
+## 25.0.6 (2018-02-09)
+
+-[570](https://github.com/FormidableLabs/victory-chart/pull/570) Add "minus" option for `VictoryScatter` `symbol` prop
+-[569](https://github.com/FormidableLabs/victory-chart/pull/569) Fixes a bug in `createContainer`
+-[568](https://github.com/FormidableLabs/victory-chart/pull/568) Adds `brushAreaWidth` prop for `VictoryBrushLine`
+-[567](https://github.com/FormidableLabs/victory-chart/pull/567) Fixes brushArea active state in `VictoryBrushLine`
+
+## 25.0.5 (2018-02-07)
+
+-[565](https://github.com/FormidableLabs/victory-chart/pull/565) Prevent re-renders with disable prop
+
+## 25.0.4 (2018-02-07)
+
+-[564](https://github.com/FormidableLabs/victory-chart/pull/564) Adds `disable` prop to all interactive containers and addon components
+
+## 25.0.3 (2018-02-07)
+
+-[563](https://github.com/FormidableLabs/victory-chart/pull/563) `stopPropagation` in when panning or selection `VictoryBrushLine`
+
+## 25.0.2 (2018-02-06)
+
+-[562](https://github.com/FormidableLabs/victory-chart/pull/562) Bugfix for `VictoryCursorContainer`
+
+## 25.0.1 (2018-02-05)
+
+-[560](https://github.com/FormidableLabs/victory-chart/pull/560) Add `sideEffects: false`
+-[561](https://github.com/FormidableLabs/victory-chart/pull/561) Bugfix for createContainer
+
+## 25.0.0 (2018-02-04)
+
+**Major Features**
+- `VictoryBrushLine` for multi-brush support
+
+**Breaking Changes**
+  - `Candle` expects a new set of props from `VictoryCandlestick`
+  - The `Line` component has been renamed to `Axis` / `Grid`
+  - Internal methods for _all_ Victory primitive components have changed. This will be a breaking change for users who are extending primitive components, including `victory-native`.
+
+-[551](https://github.com/FormidableLabs/victory-chart/pull/551) Bux fixes and improvements for VictoryStack
+-[553](https://github.com/FormidableLabs/victory-chart/pull/553) Allow renderInPortal to be false for tooltips in `VictoryVoronoiContainer`
+-[554](https://github.com/FormidableLabs/victory-chart/pull/554) Add support for `wickStrokeWidth` in `VictoryCandlestick`
+  **This is a breaking change as the expected props for `Candle` are changed**
+-[556](https://github.com/FormidableLabs/victory-chart/pull/556) Fixes undefined context variable
+-[558](https://github.com/FormidableLabs/victory-chart/pull/558) Allow `func` PropType for `color` on `VictoryGroup`
+-[559](https://github.com/FormidableLabs/victory-chart/pull/559) Implement `VictoryBrushLine` and use updated primitive components
+  **This is a breaking change for anyone using the `Line` primitive. It has been renamed to `Axis` / `Grid`.
+  **This may be a breaking change for anyone who was _extending_ Victory primitives**
+
 ## 24.6.1 (2018-01-08)
 
 - [550](https://github.com/FormidableLabs/victory-chart/pull/550) Fixes a bug related to voronoi tooltip positioning

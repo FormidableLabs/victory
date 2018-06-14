@@ -1,4 +1,4 @@
-import { toPairs, groupBy, forOwn, includes, flow } from "lodash";
+import { toPairs, groupBy, forOwn, includes, flow, isEmpty, isFunction } from "lodash";
 import { VictoryContainer, Log } from "victory-core";
 
 import { voronoiContainerMixin } from "./victory-voronoi-container";
@@ -43,15 +43,17 @@ const combineDefaultEvents = (defaultEvents) => {
   // takes a defaultEvents array and returns one equal or lesser length,
   // by combining any events that have the same target
   const eventsByTarget = groupBy(defaultEvents, "target");
-  return toPairs(eventsByTarget).map(
+  const events = toPairs(eventsByTarget).map(
     ([target, eventsArray]) => {
-      return {
+      eventsArray = eventsArray.filter(Boolean);
+      return isEmpty(eventsArray) ? null : {
         target,
         eventHandlers: combineEventHandlers(eventsArray.map((event) => event.eventHandlers))
         // note: does not currently handle eventKey or childName
       };
     }
   );
+  return events.filter(Boolean);
 };
 
 export const combineContainerMixins = (mixins, Container) => {
@@ -84,12 +86,15 @@ export const combineContainerMixins = (mixins, Container) => {
         {}
       );
 
-    static defaultEvents = combineDefaultEvents(
-      Classes.reduce(
-        (defaultEvents, Class) => ([...defaultEvents, ...Class.defaultEvents]),
-        []
-      )
-    );
+    static defaultEvents = (props) => {
+      return combineDefaultEvents(
+        Classes.reduce((defaultEvents, Class) => {
+          const events = isFunction(Class.defaultEvents) ?
+            Class.defaultEvents(props) : Class.defaultEvents;
+          return ([...defaultEvents, ...events]);
+        }, [])
+      );
+    };
 
     getChildren(props) {
       return instances.reduce(

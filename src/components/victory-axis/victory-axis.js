@@ -1,11 +1,11 @@
 import PropTypes from "prop-types";
 import React from "react";
-import { assign, partialRight } from "lodash";
+import { assign } from "lodash";
 import {
   PropTypes as CustomPropTypes, Helpers, VictoryLabel,
-  VictoryContainer, VictoryTheme, Line, TextSize, addEvents
+  VictoryContainer, VictoryTheme, Grid, TextSize, addEvents
 } from "victory-core";
-import AxisHelpers from "./helper-methods";
+import { getBaseProps, getScale, getStyles } from "./helper-methods";
 import Axis from "../../helpers/axis";
 import { BaseProps } from "../../helpers/common-props";
 
@@ -91,11 +91,11 @@ class VictoryAxis extends React.Component {
   };
 
   static defaultProps = {
-    axisComponent: <Line type={"axis"}/>,
+    axisComponent: <Grid type={"axis"}/>,
     axisLabelComponent: <VictoryLabel/>,
     tickLabelComponent: <VictoryLabel/>,
-    tickComponent: <Line type={"tick"}/>,
-    gridComponent: <Line type={"grid"}/>,
+    tickComponent: <Grid type={"tick"}/>,
+    gridComponent: <Grid type={"grid"}/>,
     scale: "linear",
     standalone: true,
     theme: VictoryTheme.grayscale,
@@ -104,11 +104,11 @@ class VictoryAxis extends React.Component {
     fixLabelOverlap: false
   };
 
-  static getDomain = AxisHelpers.getDomain.bind(AxisHelpers);
-  static getAxis = Axis.getAxis.bind(Axis);
-  static getScale = AxisHelpers.getScale.bind(AxisHelpers);
-  static getStyles = partialRight(AxisHelpers.getStyles.bind(AxisHelpers), fallbackProps.style);
-  static getBaseProps = partialRight(AxisHelpers.getBaseProps.bind(AxisHelpers), fallbackProps);
+  static getDomain = Axis.getDomain;
+  static getAxis = Axis.getAxis;
+  static getScale = getScale;
+  static getStyles = (props) => getStyles(props, fallbackProps.style);
+  static getBaseProps = (props) => getBaseProps(props, fallbackProps);
   static expectedComponents = [
     "axisComponent", "axisLabelComponent", "groupComponent", "containerComponent",
     "tickComponent", "tickLabelComponent", "gridComponent"
@@ -147,7 +147,7 @@ class VictoryAxis extends React.Component {
   }
 
   fixLabelOverlap(gridAndTicks, props) {
-    const isVertical = Helpers.isVertical(props);
+    const isVertical = Axis.isVertical(props);
     const size = isVertical ? props.height : props.width;
     const isVictoryLabel = (child) => child.type && child.type.role === "label";
     const labels = gridAndTicks.map((gridAndTick) => gridAndTick.props.children)

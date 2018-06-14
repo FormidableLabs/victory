@@ -1,0 +1,4 @@
+{
+  "presets": ["react", "react-native"],
+  "plugins": ["lodash"]
+}

@@ -1,5 +1,4 @@
-import { assign, defaults, flatten, isFunction, keys, partialRight, uniq,
-  some, sortBy } from "lodash";
+import { assign, defaults, flatten, isFunction, keys, uniq, some, orderBy } from "lodash";
 import React from "react";
 import Axis from "./axis";
 import { Style, Transitions, Collection, Data, Domain, Events } from "victory-core";
@@ -33,9 +32,12 @@ export default {
     return defaultDomainPadding[axis];
   },
 
+  // eslint-disable-next-line max-statements
   getDomain(props, axis, childComponents) {
     childComponents = childComponents || React.Children.toArray(props.children);
     const propsDomain = Domain.getDomainFromProps(props, axis);
+    const minDomain = Domain.getMinFromProps(props, axis);
+    const maxDomain = Domain.getMaxFromProps(props, axis);
     const domainPadding = props.polar ?
       0 : this.getDefaultDomainPadding(props, axis, childComponents);
     let domain;
@@ -45,12 +47,11 @@ export default {
       const dataset = (props.data || props.y) && Data.getData(props);
       const dataDomain = dataset ? Domain.getDomainFromData(props, axis, dataset) : [];
       const childDomain = this.getDomainFromChildren(props, axis, childComponents);
-      const min = Collection.getMinValue([...dataDomain, ...childDomain]);
-      const max = Collection.getMaxValue([...dataDomain, ...childDomain]);
-      domain = [min, max];
+      const min = minDomain || Collection.getMinValue([...dataDomain, ...childDomain]);
+      const max = maxDomain || Collection.getMaxValue([...dataDomain, ...childDomain]);
+      domain = Domain.getDomainFromMinMax(min, max);
     }
-    const paddedDomain = Domain.padDomain(domain, assign({ domainPadding }, props), axis);
-    return Domain.cleanDomain(paddedDomain, props, axis);
+    return Domain.formatDomain(domain, assign({ domainPadding }, props), axis);
   },
 
   setAnimationState(props, nextProps) {
@@ -122,7 +123,7 @@ export default {
         state,
         (newState) => this.setState(newState)
       );
-      getTransitions = partialRight(getTransitionProps, index);
+      getTransitions = (childComponent) => getTransitionProps(childComponent, index);
     }
     return defaults({ getTransitions, parentState }, props.animate, child.props.animate);
   },
@@ -141,11 +142,11 @@ export default {
     });
     const horizontal = props && props.horizontal || horizontalChildren.length > 0;
     const currentAxis = Axis.getCurrentAxis(axis, horizontal);
-
     const parentData = props.data ? Data.getData(props, axis) : undefined;
-    const { polar, startAngle, endAngle } = props;
+    const { polar, startAngle, endAngle, categories, minDomain, maxDomain } = props;
+    const baseParentProps = { polar, startAngle, endAngle, categories, minDomain, maxDomain };
     const parentProps = parentData ?
-      { data: parentData, polar, startAngle, endAngle } : { polar, startAngle, endAngle };
+      assign(baseParentProps, { data: parentData }) : baseParentProps;
 
     while (childrenLength > 0) {
       const child = children[--childrenLength];
@@ -223,20 +224,27 @@ export default {
       });
       return prev;
     }, {});
-    const xArr = sortBy(keys(xMap));
+    const xKeys = keys(xMap).map((k) => +k);
+    const xArr = orderBy(xKeys);
 
     return datasets.map((dataset) => {
       let indexOffset = 0;
+      const isDate = dataset[0] && dataset[0]._x instanceof Date;
       const filledInData = xArr.map((x, index) => {
-        const datum = dataset[index - indexOffset];
-        const isDate = datum._x instanceof Date;
-        const x1 = isDate ? datum._x.getTime() : datum._x;
         x = +x;
+        const datum = dataset[index - indexOffset];
 
-        if (x1 === x) {
-          return datum;
+        if (datum) {
+          const x1 = isDate ? datum._x.getTime() : datum._x;
+          if (x1 === x) {
+            return datum;
+          } else {
+            indexOffset++;
+            const y = fillInMissingData ? 0 : null;
+            x = isDate ? new Date(x) : x;
+            return { x, y, _x: x, _y: y };
+          }
         } else {
-          indexOffset++;
           const y = fillInMissingData ? 0 : null;
           x = isDate ? new Date(x) : x;
           return { x, y, _x: x, _y: y };

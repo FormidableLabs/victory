@@ -1,11 +1,10 @@
 import PropTypes from "prop-types";
 import React from "react";
-import { partialRight } from "lodash";
 import {
   PropTypes as CustomPropTypes, Helpers, VictoryLabel, addEvents,
   VictoryContainer, VictoryTheme, DefaultTransitions, Candle
 } from "victory-core";
-import CandlestickHelpers from "./helper-methods";
+import { getDomain, getData, getBaseProps } from "./helper-methods";
 import { BaseProps, DataProps } from "../../helpers/common-props";
 
 /*eslint-disable no-magic-numbers */
@@ -67,7 +66,8 @@ class VictoryCandlestick extends React.Component {
       CustomPropTypes.allOfType([CustomPropTypes.integer, CustomPropTypes.nonNegative]),
       PropTypes.string,
       PropTypes.arrayOf(PropTypes.string)
-    ])
+    ]),
+    wickStrokeWidth: PropTypes.number
   };
 
   static defaultProps = {
@@ -83,10 +83,9 @@ class VictoryCandlestick extends React.Component {
     theme: VictoryTheme.grayscale
   };
 
-  static getDomain = CandlestickHelpers.getDomain.bind(CandlestickHelpers);
-  static getData = CandlestickHelpers.getData.bind(CandlestickHelpers);
-  static getBaseProps = partialRight(
-    CandlestickHelpers.getBaseProps.bind(CandlestickHelpers), fallbackProps);
+  static getDomain = getDomain;
+  static getData = getData;
+  static getBaseProps = (props) => getBaseProps(props, fallbackProps);
   static expectedComponents = [
     "dataComponent", "labelComponent", "groupComponent", "containerComponent"
   ];

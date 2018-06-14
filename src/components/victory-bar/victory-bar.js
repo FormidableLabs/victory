@@ -1,7 +1,6 @@
 import PropTypes from "prop-types";
 import React from "react";
-import BarHelpers from "./helper-methods";
-import { partialRight } from "lodash";
+import { getBaseProps } from "./helper-methods";
 import {
   Helpers, VictoryLabel, VictoryContainer, VictoryTheme, Bar, addEvents, Data, Domain
 } from "victory-core";
@@ -49,7 +48,14 @@ class VictoryBar extends React.Component {
     ...DataProps,
     alignment: PropTypes.oneOf(["start", "middle", "end"]),
     barRatio: PropTypes.number,
-    cornerRadius: PropTypes.number,
+    cornerRadius: PropTypes.oneOfType([
+      PropTypes.number,
+      PropTypes.func,
+      PropTypes.shape({
+        top: PropTypes.oneOfType([PropTypes.number, PropTypes.func]),
+        bottom: PropTypes.oneOfType([PropTypes.number, PropTypes.func])
+      })
+    ]),
     horizontal: PropTypes.bool
   };
 
@@ -66,9 +72,9 @@ class VictoryBar extends React.Component {
     theme: VictoryTheme.grayscale
   };
 
-  static getDomain = Domain.getDomainWithZero.bind(Domain);
-  static getData = Data.getData.bind(Data);
-  static getBaseProps = partialRight(BarHelpers.getBaseProps.bind(BarHelpers), fallbackProps);
+  static getDomain = Domain.getDomainWithZero;
+  static getData = Data.getData;
+  static getBaseProps = (props) => getBaseProps(props, fallbackProps);
   static expectedComponents = [
     "dataComponent", "labelComponent", "groupComponent", "containerComponent"
   ];

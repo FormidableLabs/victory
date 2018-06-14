@@ -1,9 +1,10 @@
 import { Selection, Data, Helpers } from "victory-core";
-import { assign, flattenDeep, groupBy, isFunction, isEqual, includes,
-  keys, throttle } from "lodash";
+import {
+  assign, throttle, isFunction, isEmpty, groupBy, keys, includes, flattenDeep
+} from "lodash";
+import isEqual from "react-fast-compare";
 import { voronoi as d3Voronoi } from "d3-voronoi";
 import React from "react";
-import { attachId } from "../../helpers/event-handlers";
 
 const VoronoiHelpers = {
   withinBounds(props, point) {
@@ -50,7 +51,9 @@ const VoronoiHelpers = {
 
     const iteratee = (child, childName, parent) => {
       const role = child.type && child.type.role;
+
       const childProps = child.props || {};
+
       const blacklist = props.voronoiBlacklist || [];
       if (role === "axis" || role === "legend" || role === "label") {
         return null;
@@ -59,8 +62,8 @@ const VoronoiHelpers = {
         return null;
       } else if (child.type && isFunction(child.type.getData)) {
         child = parent ? React.cloneElement(child, parent.props) : child;
-        const childData = childProps
-          && child.type.getData({ ...childProps, domain: props.domain });
+        const childData = child.props
+          && child.type.getData({ ...child.props, domain: props.domain });
         return childData ? addMeta(childData, childName, child) : null;
       } else {
         const childData = getData({ ...childProps, domain: props.domain });
@@ -102,7 +105,15 @@ const VoronoiHelpers = {
 
   getActiveMutations(props, point) {
     const { childName, continuous } = point;
-    const targets = props.labels ? ["data"] : ["data", "labels"];
+    const { activateData, activateLabels, labels } = props;
+    if (!activateData && !activateLabels) {
+      return [];
+    }
+    const defaultTarget = activateData ? ["data"] : [];
+    const targets = labels && !activateLabels ? defaultTarget : defaultTarget.concat("labels");
+    if (isEmpty(targets)) {
+      return [];
+    }
     return targets.map((target) => {
       const eventKey = continuous === true && target === "data" ? "all" : point.eventKey;
       return {
@@ -113,7 +124,15 @@ const VoronoiHelpers = {
 
   getInactiveMutations(props, point) {
     const { childName, continuous } = point;
-    const targets = props.labels ? ["data"] : ["data", "labels"];
+    const { activateData, activateLabels, labels } = props;
+    if (!activateData && !activateLabels) {
+      return [];
+    }
+    const defaultTarget = activateData ? ["data"] : [];
+    const targets = labels && !activateLabels ? defaultTarget : defaultTarget.concat("labels");
+    if (isEmpty(targets)) {
+      return [];
+    }
     return targets.map((target) => {
       const eventKey = continuous && target === "data" ? "all" : point.eventKey;
       return {
@@ -122,11 +141,11 @@ const VoronoiHelpers = {
     });
   },
 
-  getParentMutation(activePoints, mousePosition) {
+  getParentMutation(activePoints, mousePosition, parentSVG) {
     return [{
       target: "parent",
       eventKey: "parent",
-      mutation: () => ({ activePoints, mousePosition })
+      mutation: () => ({ activePoints, mousePosition, parentSVG })
     }];
   },
 
@@ -152,16 +171,17 @@ const VoronoiHelpers = {
 
   onMouseMove(evt, targetProps) { // eslint-disable-line max-statements
     const activePoints = targetProps.activePoints || [];
-    const mousePosition = Selection.getSVGEventCoordinates(evt);
+    const parentSVG = targetProps.parentSVG || Selection.getParentSVG(evt);
+    const mousePosition = Selection.getSVGEventCoordinates(evt, parentSVG);
     if (!this.withinBounds(targetProps, mousePosition)) {
       this.onDeactivated(targetProps, activePoints);
       const inactiveMutations = activePoints.length ?
         activePoints.map((point) => this.getInactiveMutations(targetProps, point)) : [];
-      return this.getParentMutation([], mousePosition).concat(...inactiveMutations);
+      return this.getParentMutation([], mousePosition, parentSVG).concat(...inactiveMutations);
     }
     const nearestVoronoi = this.getVoronoi(targetProps, mousePosition);
     const points = nearestVoronoi ? nearestVoronoi.data.points : [];
-    const parentMutations = this.getParentMutation(points, mousePosition);
+    const parentMutations = this.getParentMutation(points, mousePosition, parentSVG);
     if (activePoints.length && isEqual(points, activePoints)) {
       return parentMutations;
     } else {
@@ -179,7 +199,7 @@ const VoronoiHelpers = {
 export default {
   onMouseLeave: VoronoiHelpers.onMouseLeave.bind(VoronoiHelpers),
   onMouseMove: throttle(
-    attachId(VoronoiHelpers.onMouseMove.bind(VoronoiHelpers)),
+    VoronoiHelpers.onMouseMove.bind(VoronoiHelpers),
     32, // eslint-disable-line no-magic-numbers
     { leading: true, trailing: false })
 };

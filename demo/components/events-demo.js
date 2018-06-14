@@ -114,6 +114,7 @@ class App extends React.Component {
           }]}
         >
           <VictoryBar name="bar"
+            labels={() => null}
             style={{ data: { width: 15, fill: "green" } }}
             data={[
               { x: 1, y: 1 },
@@ -174,7 +175,7 @@ class App extends React.Component {
           ]}
         >
             <VictoryLabel text="Parent Events" y={50} x={150}/>
-            <VictoryBar name="bar"/>
+            <VictoryBar name="bar" labels={() => null}/>
           </VictoryChart>
 
           <VictoryChart style={chartStyle}

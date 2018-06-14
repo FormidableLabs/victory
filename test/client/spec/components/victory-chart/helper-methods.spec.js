@@ -1,11 +1,12 @@
 /* global sinon */
 /* eslint-disable no-unused-expressions,react/no-multi-comp */
-import Helpers from "src/components/victory-chart/helper-methods";
+import {
+  getChildComponents, getDataComponents, getDomain, createStringMap
+} from "src/components/victory-chart/helper-methods";
 import React from "react";
 import { VictoryAxis, VictoryLine, VictoryBar } from "src/index";
 import { Log, Data } from "victory-core";
 import Wrapper from "src/helpers/wrapper";
-import { assign } from "lodash";
 
 describe("victory-chart/helpers-methods", () => {
   const getVictoryLine = (props) => React.createElement(VictoryLine, props);
@@ -29,7 +30,7 @@ describe("victory-chart/helpers-methods", () => {
 
     it("returns a pair of default axes when no children are given", () => {
       const children = [];
-      const result = Helpers.getChildComponents({ children }, defaultAxes);
+      const result = getChildComponents({ children }, defaultAxes);
       expect(result).to.have.length(2);
       expect(result).to.deep.include.members([defaultAxes.independent, defaultAxes.dependent]);
     });
@@ -37,7 +38,7 @@ describe("victory-chart/helpers-methods", () => {
     it("adds default axes when none of the children are axis components", () => {
       const line = getVictoryLine({});
       const children = [line];
-      const result = Helpers.getChildComponents({ children }, defaultAxes);
+      const result = getChildComponents({ children }, defaultAxes);
       expect(result).to.have.length(3);
       expect(result).to.deep.include.members([
         defaultAxes.independent, defaultAxes.dependent
@@ -47,7 +48,7 @@ describe("victory-chart/helpers-methods", () => {
     it("does not add default axes if axis any axis components exist in children", () => {
       const axis = getVictoryAxis({});
       const children = [axis];
-      const result = Helpers.getChildComponents({ children }, defaultAxes);
+      const result = getChildComponents({ children }, defaultAxes);
       expect(result).to.have.length(1);
       expect(result[0].props).to.eql(axis.props);
     });
@@ -57,7 +58,7 @@ describe("victory-chart/helpers-methods", () => {
         getVictoryAxis({ orientation: "top" }),
         getVictoryAxis({ orientation: "right" })
       ];
-      const result = Helpers.getChildComponents({ children }, defaultAxes);
+      const result = getChildComponents({ children }, defaultAxes);
       expect(result).to.have.length(1);
       expect(result[0].props).to.eql(children[0].props);
     });
@@ -70,7 +71,7 @@ describe("victory-chart/helpers-methods", () => {
     const childComponents = [bar, line, axis];
 
     it("returns data components but not axis components", () => {
-      const componentResult = Helpers.getDataComponents(childComponents);
+      const componentResult = getDataComponents(childComponents);
       expect(componentResult).to.have.members([bar, line]);
       expect(componentResult).not.to.have.members([axis]);
     });
@@ -85,7 +86,6 @@ describe("victory-chart/helpers-methods", () => {
     beforeEach(() => {
       sandbox = sinon.sandbox.create();
       sandbox.spy(Wrapper, "getDomain");
-      sandbox.spy(victoryLine.type, "getDomain");
     });
 
     afterEach(() => {
@@ -94,18 +94,15 @@ describe("victory-chart/helpers-methods", () => {
 
     it("calculates a domain from props", () => {
       const props = { domain: { x: [1, 2], y: [2, 3] } };
-      const domainResultX = Helpers.getDomain(props, "x", childComponents);
+      const domainResultX = getDomain(props, "x", childComponents);
       expect(Wrapper.getDomain).calledWith(props, "x", childComponents).and.returned([1, 2]);
-      expect(victoryLine.type.getDomain).notCalled;
       expect(domainResultX).to.eql([1, 2]);
     });
 
     it("calculates a domain from child components", () => {
       const props = {};
-      const polarProps = { polar: undefined, startAngle: undefined, endAngle: undefined };
-      const domainResultX = Helpers.getDomain(props, "x", childComponents);
+      const domainResultX = getDomain(props, "x", childComponents);
       expect(Wrapper.getDomain).calledWith(props, "x", childComponents);
-      expect(victoryLine.type.getDomain).calledWith(assign({}, victoryLine.props, polarProps));
       expect(domainResultX).to.eql(victoryLine.props.domain);
     });
   });
@@ -128,7 +125,7 @@ describe("victory-chart/helpers-methods", () => {
       const props = {};
       const axisComponent = getVictoryAxis({ tickValues: ["a", "b", "c"] });
       const childComponents = [axisComponent];
-      const stringResult = Helpers.createStringMap(props, "x", childComponents);
+      const stringResult = createStringMap(props, "x", childComponents);
       expect(Wrapper.getStringsFromChildren).calledWith(props, "x", childComponents)
         .and.returned(["a", "b", "c"]);
       expect(Data.getStringsFromAxes).calledWith(axisComponent.props, "x")
@@ -145,7 +142,7 @@ describe("victory-chart/helpers-methods", () => {
       const axisComponent = getVictoryAxis({ tickValues: ["c", "d"] });
       const lineComponent = getVictoryLine({ data: [{ x: "a", y: 1 }, { x: "b", y: 1 }] });
       const childComponents = [axisComponent, lineComponent];
-      const stringResult = Helpers.createStringMap(props, "x", childComponents);
+      const stringResult = createStringMap(props, "x", childComponents);
       expect(Wrapper.getStringsFromChildren).calledWith(props, "x", childComponents)
         .and.returned(["a", "b", "c", "d"]);
       expect(Data.getStringsFromAxes).calledWith(axisComponent.props, "x")

@@ -2,7 +2,6 @@
 import { Children } from "react";
 import { Selection, Collection } from "victory-core";
 import { throttle, isFunction, defaults } from "lodash";
-import { attachId } from "../../helpers/event-handlers";
 import Wrapper from "../../helpers/wrapper";
 
 const Helpers = {
@@ -178,12 +177,13 @@ const Helpers = {
     if (!targetProps.allowPan) {
       return undefined;
     }
-    const { x, y } = Selection.getSVGEventCoordinates(evt);
+    const parentSVG = targetProps.parentSVG || Selection.getParentSVG(evt);
+    const { x, y } = Selection.getSVGEventCoordinates(evt, parentSVG);
     return [{
       target: "parent",
       mutation: () => {
         return {
-          startX: x, startY: y, panning: true,
+          startX: x, startY: y, panning: true, parentSVG,
           parentControlledProps: ["domain"]
         };
       }
@@ -214,10 +214,11 @@ const Helpers = {
     }];
   },
 
-  onMouseMove(evt, targetProps, eventKey, ctx) { // eslint-disable-line max-params
+  onMouseMove(evt, targetProps, eventKey, ctx) { // eslint-disable-line max-params, max-statements
     if (targetProps.panning && targetProps.allowPan) {
       const { scale, startX, startY, onZoomDomainChange, zoomDimension, zoomDomain } = targetProps;
-      const { x, y } = Selection.getSVGEventCoordinates(evt);
+      const parentSVG = targetProps.parentSVG || Selection.getParentSVG(evt);
+      const { x, y } = Selection.getSVGEventCoordinates(evt, parentSVG);
       const originalDomain = this.getDomain(targetProps);
       const lastDomain = this.getLastDomain(targetProps, originalDomain);
       const dx = (startX - x) / this.getDomainScale(lastDomain, scale, "x");
@@ -231,7 +232,7 @@ const Helpers = {
       const zoomActive = !this.checkDomainEquality(originalDomain, lastDomain);
 
       const mutatedProps = {
-        parentControlledProps: ["domain"], startX: x, startY: y,
+        parentControlledProps: ["domain"], startX: x, startY: y, parentSVG,
         domain: currentDomain, currentDomain, originalDomain, cachedZoomDomain: zoomDomain,
         zoomActive
       };
@@ -291,12 +292,12 @@ export default {
   onMouseUp: Helpers.onMouseUp.bind(Helpers),
   onMouseLeave: Helpers.onMouseLeave.bind(Helpers),
   onMouseMove: throttle(
-    attachId(Helpers.onMouseMove.bind(Helpers)),
+    Helpers.onMouseMove.bind(Helpers),
     16, // eslint-disable-line no-magic-numbers
     { leading: true, trailing: false }
   ),
   onWheel: throttle(
-    attachId(Helpers.onWheel.bind(Helpers)),
+    Helpers.onWheel.bind(Helpers),
     16, // eslint-disable-line no-magic-numbers
     { leading: true, trailing: false }
   )

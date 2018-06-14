@@ -23,7 +23,7 @@ export default class VictoryGroup extends React.Component {
     ...BaseProps,
     ...DataProps,
     children: PropTypes.oneOfType([PropTypes.arrayOf(PropTypes.node), PropTypes.node]),
-    color: PropTypes.string,
+    color: PropTypes.oneOfType([PropTypes.string, PropTypes.func]),
     colorScale: PropTypes.oneOfType([
       PropTypes.arrayOf(PropTypes.string),
       PropTypes.oneOf([
@@ -84,10 +84,14 @@ export default class VictoryGroup extends React.Component {
     const horizontal = modifiedProps.horizontal || childComponents.every(
       (component) => component.props && component.props.horizontal
     );
+    const categories = {
+      x: Wrapper.getCategories(modifiedProps, "x"),
+      y: Wrapper.getCategories(modifiedProps, "y")
+    };
     const datasets = Wrapper.getDataFromChildren(modifiedProps);
     const domain = {
-      x: Wrapper.getDomain(modifiedProps, "x", childComponents),
-      y: Wrapper.getDomain(modifiedProps, "y", childComponents)
+      x: Wrapper.getDomain(assign({}, modifiedProps, { categories }), "x", childComponents),
+      y: Wrapper.getDomain(assign({}, modifiedProps, { categories }), "y", childComponents)
     };
     const range = {
       x: Helpers.getRange(modifiedProps, "x"),
@@ -103,10 +107,7 @@ export default class VictoryGroup extends React.Component {
       x: horizontal ? yScale : xScale,
       y: horizontal ? xScale : yScale
     };
-    const categories = {
-      x: Wrapper.getCategories(modifiedProps, "x"),
-      y: Wrapper.getCategories(modifiedProps, "y")
-    };
+
     const origin = polar ? props.origin : Helpers.getPolarOrigin(modifiedProps);
     const padding = Helpers.getPadding(props);
     return {

@@ -1,7 +1,7 @@
 import PropTypes from "prop-types";
 import React from "react";
-import { VictoryContainer, VictoryLabel, Line, Helpers } from "victory-core";
-import { defaults, isNumber, isUndefined, isObject } from "lodash";
+import { VictoryContainer, VictoryLabel, Axis, Helpers } from "victory-core";
+import { defaults, assign, isObject } from "lodash";
 import CursorHelpers from "./cursor-helpers";
 
 export const cursorContainerMixin = (base) => class VictoryCursorContainer extends base {
@@ -25,6 +25,7 @@ export const cursorContainerMixin = (base) => class VictoryCursorContainer exten
         y: PropTypes.number
       })
     ]),
+    disable: PropTypes.bool,
     onCursorChange: PropTypes.func
   };
   static defaultProps = {
@@ -34,46 +35,34 @@ export const cursorContainerMixin = (base) => class VictoryCursorContainer exten
       x: 5,
       y: -10
     },
-    cursorComponent: <Line/>
+    cursorComponent: <Axis/>
   };
 
-  static defaultEvents = [{
-    target: "parent",
-    eventHandlers: {
-      onMouseLeave: () => {
-        return [];
-      },
-      onTouchCancel: () => {
-        return [];
-      },
-      onMouseMove: (evt, targetProps) => {
-        const mutations = CursorHelpers.onMouseMove(evt, targetProps);
-
-        if (mutations.id !== this.mouseMoveMutationId) { // eslint-disable-line
-          this.mouseMoveMutationId = mutations.id; // eslint-disable-line
-          return mutations.mutations;
+  static defaultEvents = (props) => {
+    return [{
+      target: "parent",
+      eventHandlers: {
+        onMouseLeave: () => {
+          return [];
+        },
+        onTouchCancel: () => {
+          return [];
+        },
+        onMouseMove: (evt, targetProps) => {
+          return props.disable ? {} : CursorHelpers.onMouseMove(evt, targetProps);
+        },
+        onTouchMove: (evt, targetProps) => {
+          return props.disable ? {} : CursorHelpers.onMouseMove(evt, targetProps);
         }
-
-        return [];
-      },
-      onTouchMove: (evt, targetProps) => {
-        const mutations = CursorHelpers.onMouseMove(evt, targetProps);
-
-        if (mutations.id !== this.mouseMoveMutationId) { // eslint-disable-line
-          this.mouseMoveMutationId = mutations.id; // eslint-disable-line
-          return mutations.mutations;
-        }
-
-        return [];
       }
-    }
-  }];
+    }];
+  };
 
   getCursorPosition(props) {
     const { cursorValue, defaultCursorValue, cursorDimension, domain } = props;
     if (cursorValue) { return cursorValue; }
 
-    if (isNumber(defaultCursorValue)) {
+    if (typeof defaultCursorValue === "number") {
       return {
         x: (domain.x[0] + domain.x[1]) / 2,
         y: (domain.y[0] + domain.y[1]) / 2,
@@ -87,7 +76,7 @@ export const cursorContainerMixin = (base) => class VictoryCursorContainer exten
   getCursorLabelOffset(props) {
     const { cursorLabelOffset } = props;
 
-    if (isNumber(cursorLabelOffset)) {
+    if (typeof cursorLabelOffset === "number") {
       return {
         x: cursorLabelOffset,
         y: cursorLabelOffset
@@ -98,9 +87,9 @@ export const cursorContainerMixin = (base) => class VictoryCursorContainer exten
   }
 
   getPadding(props) {
-    if (isUndefined(props.padding)) {
+    if (props.padding === undefined) {
       const child = props.children.find((c) => {
-        return isObject(c.props) && !isUndefined(c.props.padding);
+        return isObject(c.props) && c.props.padding !== undefined;
       });
       return Helpers.getPadding(child.props);
     } else {
@@ -108,7 +97,7 @@ export const cursorContainerMixin = (base) => class VictoryCursorContainer exten
     }
   }
 
-  getCursorElements(props) {
+  getCursorElements(props) { // eslint-disable-line max-statements
     const {
       scale, cursorDimension, cursorLabelComponent, cursorLabel, cursorComponent, width, height
     } = props;
@@ -140,13 +129,15 @@ export const cursorContainerMixin = (base) => class VictoryCursorContainer exten
       ));
     }
 
+    const cursorStyle = assign({ stroke: "black" }, cursorComponent.props.style);
     if (cursorDimension === "x" || cursorDimension === undefined) {
       newElements.push(React.cloneElement(cursorComponent, {
         key: "x-cursor",
         x1: cursorCoordinates.x,
         x2: cursorCoordinates.x,
         y1: padding.top,
-        y2: (height - padding.bottom)
+        y2: (height - padding.bottom),
+        style: cursorStyle
       }));
     }
     if (cursorDimension === "y" || cursorDimension === undefined) {
@@ -155,7 +146,8 @@ export const cursorContainerMixin = (base) => class VictoryCursorContainer exten
         x1: padding.left,
         x2: (width - padding.right),
         y1: cursorCoordinates.y,
-        y2: cursorCoordinates.y
+        y2: cursorCoordinates.y,
+        style: cursorStyle
       }));
     }
     return newElements;

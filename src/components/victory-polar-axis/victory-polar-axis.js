@@ -1,11 +1,12 @@
 import React from "react";
 import PropTypes from "prop-types";
-import { assign, partialRight } from "lodash";
+import { assign } from "lodash";
 import {
   PropTypes as CustomPropTypes, Helpers, VictoryLabel,
-  VictoryContainer, VictoryTheme, Line, addEvents, Arc
+  VictoryContainer, VictoryTheme, Grid, addEvents, Arc
 } from "victory-core";
-import AxisHelpers from "./helper-methods";
+import { getScale, getStyles, getBaseProps } from "./helper-methods";
+import Axis from "../../helpers/axis";
 import { BaseProps } from "../../helpers/common-props";
 
 const fallbackProps = {
@@ -88,28 +89,28 @@ class VictoryPolarAxis extends React.Component {
   };
 
   static defaultProps = {
-    axisComponent: <Line type={"axis"}/>,
+    axisComponent: <Grid type={"axis"}/>,
     axisLabelComponent: <VictoryLabel/>,
     circularAxisComponent: <Arc type={"axis"}/>,
     circularGridComponent: <Arc type={"grid"}/>,
     containerComponent: <VictoryContainer />,
     endAngle: 360,
-    gridComponent: <Line type={"grid"}/>,
+    gridComponent: <Grid type={"grid"}/>,
     groupComponent: <g role="presentation"/>,
     labelPlacement: "parallel",
     scale: "linear",
     startAngle: 0,
     standalone: true,
     theme: VictoryTheme.grayscale,
-    tickComponent: <Line type={"tick"}/>,
+    tickComponent: <Grid type={"tick"}/>,
     tickLabelComponent: <VictoryLabel/>
   };
 
-  static getDomain = AxisHelpers.getDomain.bind(AxisHelpers);
-  static getAxis = AxisHelpers.getAxis.bind(AxisHelpers);
-  static getScale = AxisHelpers.getScale.bind(AxisHelpers);
-  static getStyles = partialRight(AxisHelpers.getStyles.bind(AxisHelpers), fallbackProps.style);
-  static getBaseProps = partialRight(AxisHelpers.getBaseProps.bind(AxisHelpers), fallbackProps);
+  static getDomain = Axis.getDomain;
+  static getAxis = Axis.getAxis;
+  static getScale = getScale;
+  static getStyles = (props) => getStyles(props, fallbackProps.style);
+  static getBaseProps = (props) => getBaseProps(props, fallbackProps);
   static expectedComponents = [
     "axisComponent", "circularAxisComponent", "groupComponent", "containerComponent",
     "tickComponent", "tickLabelComponent", "gridComponent", "circularGridComponent"

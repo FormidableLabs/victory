@@ -1,7 +1,6 @@
 import { Selection, Data, Helpers } from "victory-core";
-import { assign, defaults, throttle, isFunction } from "lodash";
+import { assign, defaults, throttle, isFunction, includes } from "lodash";
 import React from "react";
-import { attachId } from "../../helpers/event-handlers";
 
 const SelectionHelpers = {
   getDatasets(props) {
@@ -15,7 +14,11 @@ const SelectionHelpers = {
     };
 
     const iteratee = (child, childName, parent) => {
-      if (child.type && child.type.role === "axis") {
+      const role = child.type && child.type.role;
+      const blacklist = props.selectionBlacklist || [];
+      if (role === "axis" || role === "legend" || role === "label") {
+        return null;
+      } else if (includes(blacklist, childName)) {
         return null;
       } else if (child.type && isFunction(child.type.getData)) {
         child = parent ? React.cloneElement(child, parent.props) : child;
@@ -63,60 +66,59 @@ const SelectionHelpers = {
     return count > 0 ? { eventKey, data } : null;
   },
 
-  // eslint-disable-next-line complexity
+  // eslint-disable-next-line complexity, max-statements
   onMouseDown(evt, targetProps) {
     evt.preventDefault();
-    const { allowSelection, polar } = targetProps;
+    const { activateSelectedData, allowSelection, polar, selectedData } = targetProps;
     if (!allowSelection) {
       return {};
     }
     const dimension = targetProps.selectionDimension;
-    const datasets = targetProps.datasets || [];
-    const { x, y } = Selection.getSVGEventCoordinates(evt);
+    const parentSVG = targetProps.parentSVG || Selection.getParentSVG(evt);
+    const { x, y } = Selection.getSVGEventCoordinates(evt, parentSVG);
     const x1 = polar || dimension !== "y" ? x : Selection.getDomainCoordinates(targetProps).x[0];
     const y1 = polar || dimension !== "x" ? y : Selection.getDomainCoordinates(targetProps).y[0];
     const x2 = polar || dimension !== "y" ? x : Selection.getDomainCoordinates(targetProps).x[1];
     const y2 = polar || dimension !== "x" ? y : Selection.getDomainCoordinates(targetProps).y[1];
 
-    const mutatedProps = { x1, y1, select: true, x2, y2 };
-    if (isFunction(targetProps.onSelectionCleared)) {
+    const mutatedProps = { x1, y1, select: true, x2, y2, parentSVG };
+    if (selectedData && isFunction(targetProps.onSelectionCleared)) {
       targetProps.onSelectionCleared(defaults({}, mutatedProps, targetProps));
     }
-    return [
-      {
-        target: "parent",
-        mutation: () => mutatedProps
-      }, {
-        target: "data",
-        childName: targetProps.children || datasets.length ? "all" : undefined,
-        eventKey: "all",
-        mutation: () => null
-      }
-    ];
+    const parentMutation = [{ target: "parent", mutation: () => mutatedProps }];
+    const dataMutation = selectedData && activateSelectedData ?
+      selectedData.map((d) => {
+        return {
+          childName: d.childName, eventKey: d.eventKey, target: "data", mutation: () => null
+        };
+      }) : [];
+
+    return parentMutation.concat(...dataMutation);
   },
 
   onMouseMove(evt, targetProps) {
     const { allowSelection, select, polar } = targetProps;
     const dimension = targetProps.selectionDimension;
     if (!allowSelection || !select) {
-      return {};
+      return null;
     } else {
-      const { x, y } = Selection.getSVGEventCoordinates(evt);
+      const parentSVG = targetProps.parentSVG || Selection.getParentSVG(evt);
+      const { x, y } = Selection.getSVGEventCoordinates(evt, parentSVG);
       const x2 = polar || dimension !== "y" ? x : Selection.getDomainCoordinates(targetProps).x[1];
       const y2 = polar || dimension !== "x" ? y : Selection.getDomainCoordinates(targetProps).y[1];
       return {
         target: "parent",
         mutation: () => {
-          return { x2, y2 };
+          return { x2, y2, parentSVG };
         }
       };
     }
   },
 
   onMouseUp(evt, targetProps) {
-    const { allowSelection, x2, y2 } = targetProps;
+    const { activateSelectedData, allowSelection, x2, y2 } = targetProps;
     if (!allowSelection) {
-      return {};
+      return null;
     }
     if (!x2 || !y2) {
       return [{
@@ -129,7 +131,9 @@ const SelectionHelpers = {
     const datasets = this.getDatasets(targetProps);
     const bounds = Selection.getBounds(targetProps);
     const selectedData = this.filterDatasets(targetProps, datasets, bounds);
-    const mutatedProps = { datasets, select: false, x1: null, x2: null, y1: null, y2: null };
+    const mutatedProps = {
+      selectedData, datasets, select: false, x1: null, x2: null, y1: null, y2: null
+    };
     const callbackMutation = selectedData && isFunction(targetProps.onSelection) ?
       targetProps.onSelection(selectedData, bounds, defaults({}, mutatedProps, targetProps)) : {};
     const parentMutation = [{
@@ -137,7 +141,7 @@ const SelectionHelpers = {
       mutation: () => mutatedProps
     }];
 
-    const dataMutation = selectedData ?
+    const dataMutation = selectedData && activateSelectedData ?
       selectedData.map((d) => {
         return {
           childName: d.childName, eventKey: d.eventKey, target: "data",
@@ -156,7 +160,7 @@ export default {
   onMouseDown: SelectionHelpers.onMouseDown.bind(SelectionHelpers),
   onMouseUp: SelectionHelpers.onMouseUp.bind(SelectionHelpers),
   onMouseMove: throttle(
-    attachId(SelectionHelpers.onMouseMove.bind(SelectionHelpers)),
+    SelectionHelpers.onMouseMove.bind(SelectionHelpers),
     16, // eslint-disable-line no-magic-numbers
     { leading: true, trailing: false })
 };

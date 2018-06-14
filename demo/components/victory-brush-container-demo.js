@@ -100,7 +100,7 @@ class App extends React.Component {
             height={400}
             padding={{ top: 100, bottom: 50, left: 50, right: 50 }}
             containerComponent={
-              <VictoryBrushContainer brushDomain={{ x: [2, 4], y: [-2, 2] }} allowResize={false}/>
+              <VictoryBrushContainer brushDomain={{ x: [2, 4], y: [-2, 2] }} allowDraw={false}/>
             }
           >
             <VictoryLegend x={120} y={20}
@@ -166,6 +166,7 @@ class App extends React.Component {
             domain={{ x: [0, 10], y: [-5, 5] }}
             containerComponent={
               <VictoryBrushContainer
+                defaultBrushArea="none"
                 brushDomain={{ x: [0, 10] }}
               />
             }
@@ -189,7 +190,7 @@ class App extends React.Component {
               }
             }}
             containerComponent={
-              <VictoryBrushContainer/>
+              <VictoryBrushContainer defaultBrushArea="disable"/>
             }
             size={(datum, active) => active ? 5 : 3}
             y={(d) => d.x * d.x}

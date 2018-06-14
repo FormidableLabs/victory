@@ -16,6 +16,7 @@ export const zoomContainerMixin = (base) => class VictoryZoomContainer extends b
     allowPan: PropTypes.bool,
     allowZoom: PropTypes.bool,
     clipContainerComponent: PropTypes.element.isRequired,
+    disable: PropTypes.bool,
     downsample: PropTypes.oneOfType([
       PropTypes.bool,
       PropTypes.number
@@ -40,65 +41,51 @@ export const zoomContainerMixin = (base) => class VictoryZoomContainer extends b
     zoomActive: false
   };
 
-  static defaultEvents = [{
-    target: "parent",
-    eventHandlers: {
-      onMouseDown: (evt, targetProps) => {
-        return ZoomHelpers.onMouseDown(evt, targetProps);
-      },
-      onTouchStart: (evt, targetProps) => {
-        return ZoomHelpers.onMouseDown(evt, targetProps);
-      },
-      onMouseUp: (evt, targetProps) => {
-        return ZoomHelpers.onMouseUp(evt, targetProps);
-      },
-      onTouchEnd: (evt, targetProps) => {
-        return ZoomHelpers.onMouseUp(evt, targetProps);
-      },
-      onMouseLeave: (evt, targetProps) => {
-        return ZoomHelpers.onMouseLeave(evt, targetProps);
-      },
-      onTouchCancel: (evt, targetProps) => {
-        return ZoomHelpers.onMouseLeave(evt, targetProps);
-      },
-      onMouseMove: (evt, targetProps, eventKey, ctx) => { // eslint-disable-line max-params
-        evt.preventDefault();
-        const mutations = ZoomHelpers.onMouseMove(evt, targetProps, eventKey, ctx);
-
-        if (mutations.id !== this.mouseMoveMutationId) { // eslint-disable-line
-          this.mouseMoveMutationId = mutations.id; // eslint-disable-line
-          return mutations.mutations;
-        }
-
-        return undefined;
-      },
-      onTouchMove: (evt, targetProps, eventKey, ctx) => { // eslint-disable-line max-params
-        evt.preventDefault();
-        const mutations = ZoomHelpers.onMouseMove(evt, targetProps, eventKey, ctx);
-
-        if (mutations.id !== this.mouseMoveMutationId) { // eslint-disable-line
-          this.mouseMoveMutationId = mutations.id; // eslint-disable-line
-          return mutations.mutations;
-        }
-
-        return undefined;
-      },
-      onWheel: (evt, targetProps, eventKey, ctx) => { // eslint-disable-line max-params
-        if (targetProps.allowZoom) {
+  static defaultEvents = (props) => {
+    return [{
+      target: "parent",
+      eventHandlers: {
+        onMouseDown: (evt, targetProps) => {
+          return props.disable ? {} : ZoomHelpers.onMouseDown(evt, targetProps);
+        },
+        onTouchStart: (evt, targetProps) => {
+          return props.disable ? {} : ZoomHelpers.onMouseDown(evt, targetProps);
+        },
+        onMouseUp: (evt, targetProps) => {
+          return props.disable ? {} : ZoomHelpers.onMouseUp(evt, targetProps);
+        },
+        onTouchEnd: (evt, targetProps) => {
+          return props.disable ? {} : ZoomHelpers.onMouseUp(evt, targetProps);
+        },
+        onMouseLeave: (evt, targetProps) => {
+          return props.disable ? {} : ZoomHelpers.onMouseLeave(evt, targetProps);
+        },
+        onTouchCancel: (evt, targetProps) => {
+          return props.disable ? {} : ZoomHelpers.onMouseLeave(evt, targetProps);
+        },
+        onMouseMove: (evt, targetProps, eventKey, ctx) => { // eslint-disable-line max-params
+          if (props.disable) {
+            return {};
+          }
+          return ZoomHelpers.onMouseMove(evt, targetProps, eventKey, ctx);
+        },
+        onTouchMove: (evt, targetProps, eventKey, ctx) => { // eslint-disable-line max-params
+          if (props.disable) {
+            return {};
+          }
           evt.preventDefault();
+          return ZoomHelpers.onMouseMove(evt, targetProps, eventKey, ctx);
+        },
+        // eslint-disable-next-line max-params
+        onWheel: (evt, targetProps, eventKey, ctx) => {
+          if (targetProps.allowZoom && !props.disable) {
+            evt.preventDefault();
+          }
+          return props.disable ? {} : ZoomHelpers.onWheel(evt, targetProps, eventKey, ctx);
         }
-
-        const mutations = ZoomHelpers.onWheel(evt, targetProps, eventKey, ctx);
-
-        if (mutations.id !== this.wheelMutationId) { // eslint-disable-line
-          this.wheelMutationId = mutations.id; // eslint-disable-line
-          return mutations.mutations;
-        }
-
-        return undefined;
       }
-    }
-  }];
+    }];
+  };
 
   clipDataComponents(children, props) {
     const { scale, clipContainerComponent, polar, origin } = props;

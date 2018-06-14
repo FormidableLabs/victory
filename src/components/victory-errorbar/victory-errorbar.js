@@ -2,10 +2,9 @@ import PropTypes from "prop-types";
 import React from "react";
 import {
   PropTypes as CustomPropTypes, Helpers, VictoryLabel, addEvents,
-  VictoryContainer, VictoryTheme, DefaultTransitions, ErrorBar, Data
+  VictoryContainer, VictoryTheme, DefaultTransitions, ErrorBar
 } from "victory-core";
-import { partialRight } from "lodash";
-import ErrorBarHelpers from "./helper-methods";
+import { getBaseProps, getDomain, getData } from "./helper-methods";
 import { BaseProps, DataProps } from "../../helpers/common-props";
 
 const fallbackProps = {
@@ -63,10 +62,9 @@ class VictoryErrorBar extends React.Component {
     theme: VictoryTheme.grayscale
   };
 
-  static getDomain = ErrorBarHelpers.getDomain.bind(ErrorBarHelpers);
-  static getData = Data.getData.bind(Data);
-  static getBaseProps = partialRight(
-    ErrorBarHelpers.getBaseProps.bind(ErrorBarHelpers), fallbackProps);
+  static getDomain = getDomain;
+  static getData = getData;
+  static getBaseProps = (props) => getBaseProps(props, fallbackProps);
   static expectedComponents = [
     "dataComponent", "labelComponent", "groupComponent", "containerComponent"
   ];

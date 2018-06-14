@@ -1,13 +1,16 @@
 import PropTypes from "prop-types";
 import React from "react";
+import { defaults, isFunction, pick } from "lodash";
 import { VictoryContainer, VictoryTooltip, Helpers, TextSize } from "victory-core";
 import VoronoiHelpers from "./voronoi-helpers";
-import { omit, defaults } from "lodash";
 
 export const voronoiContainerMixin = (base) => class VictoryVoronoiContainer extends base {
   static displayName = "VictoryVoronoiContainer";
   static propTypes = {
     ...VictoryContainer.propTypes,
+    activateData: PropTypes.bool,
+    activateLabels: PropTypes.bool,
+    disable: PropTypes.bool,
     labelComponent: PropTypes.element,
     labels: PropTypes.func,
     onActivated: PropTypes.func,
@@ -19,48 +22,38 @@ export const voronoiContainerMixin = (base) => class VictoryVoronoiContainer ext
   };
   static defaultProps = {
     ...VictoryContainer.defaultProps,
+    activateData: true,
+    activateLabels: true,
     labelComponent: <VictoryTooltip/>,
     voronoiPadding: 5
   };
 
-  static defaultEvents = [{
-    target: "parent",
-    eventHandlers: {
-      onMouseLeave: (evt, targetProps) => {
-        return VoronoiHelpers.onMouseLeave(evt, targetProps);
-      },
-      onTouchCancel: (evt, targetProps) => {
-        return VoronoiHelpers.onMouseLeave(evt, targetProps);
-      },
-      onMouseMove: (evt, targetProps) => {
-        const mutations = VoronoiHelpers.onMouseMove(evt, targetProps);
-
-        if (mutations.id !== this.mouseMoveMutationId) { // eslint-disable-line
-          this.mouseMoveMutationId = mutations.id; // eslint-disable-line
-          return mutations.mutations;
+  static defaultEvents = (props) => {
+    return [{
+      target: "parent",
+      eventHandlers: {
+        onMouseLeave: (evt, targetProps) => {
+          return props.disable ? {} : VoronoiHelpers.onMouseLeave(evt, targetProps);
+        },
+        onTouchCancel: (evt, targetProps) => {
+          return props.disable ? {} : VoronoiHelpers.onMouseLeave(evt, targetProps);
+        },
+        onMouseMove: (evt, targetProps) => {
+          return props.disable ? {} : VoronoiHelpers.onMouseMove(evt, targetProps);
+        },
+        onTouchMove: (evt, targetProps) => {
+          return props.disable ? {} : VoronoiHelpers.onMouseMove(evt, targetProps);
         }
-
-        return undefined;
-      },
-      onTouchMove: (evt, targetProps) => {
-        const mutations = VoronoiHelpers.onMouseMove(evt, targetProps);
-
-        if (mutations.id !== this.mouseMoveMutationId) { // eslint-disable-line
-          this.mouseMoveMutationId = mutations.id; // eslint-disable-line
-          return mutations.mutations;
-        }
-
-        return undefined;
       }
-    }
-  }, {
-    target: "data",
-    eventHandlers: {
-      onMouseOver: () => null,
-      onMouseOut: () => null,
-      onMouseMove: () => null
-    }
-  }];
+    }, {
+      target: "data",
+      eventHandlers: props.disable ? {} : {
+        onMouseOver: () => null,
+        onMouseOut: () => null,
+        onMouseMove: () => null
+      }
+    }];
+  };
 
   getLabelPadding(style) {
     if (!style) {
@@ -80,7 +73,7 @@ export const voronoiContainerMixin = (base) => class VictoryVoronoiContainer ext
   }
 
   getLabelCornerRadius(props, labelProps) {
-    if (typeof labelProps.cornerRadius !== "undefined") {
+    if (labelProps.cornerRadius !== undefined) {
       return labelProps.cornerRadius;
     }
     const theme = props.theme || labelProps.theme;
@@ -114,7 +107,10 @@ export const voronoiContainerMixin = (base) => class VictoryVoronoiContainer ext
 
   getLabelPosition(props, points, labelProps) {
     const { mousePosition, voronoiDimension, scale, voronoiPadding } = props;
-    const basePosition = Helpers.scalePoint(props, omit(points[0], ["_voronoiX", "_voronoiY"]));
+    const basePosition = Helpers.scalePoint(
+      props,
+      pick(points[0], ["_x", "_x1", "_x0", "_y", "_y1", "_y0"]) // exclude _voronoiX, _voronoiY
+    );
     if (!voronoiDimension || points.length < 2) {
       return basePosition;
     }
@@ -179,8 +175,8 @@ export const voronoiContainerMixin = (base) => class VictoryVoronoiContainer ext
 
   getLabelProps(props, points) {
     const { labels, scale, labelComponent, theme } = props;
-    const text = points.reduce((memo, point) => {
-      const t = Helpers.evaluateProp(labels, point, true);
+    const text = points.reduce((memo, point, index) => {
+      const t = isFunction(labels) ? labels(point, index, points) : null;
       if (t === null || t === undefined) {
         return memo;
       }
@@ -188,15 +184,21 @@ export const voronoiContainerMixin = (base) => class VictoryVoronoiContainer ext
       return memo;
     }, []);
     const componentProps = labelComponent.props || {};
-    const style = this.getStyle(props, points, "labels");
+
+    // remove properties from first point to make datum
+    // eslint-disable-next-line no-unused-vars
+    const { childName, style, continuous, ...datum } = points[0];
 
     const labelProps = defaults(
       {
         active: true,
-        datum: omit(points[0], ["childName", "style", "continuous"]),
         flyoutStyle: this.getStyle(props, points, "flyout")[0],
         renderInPortal: false,
-        scale, style, theme, text
+        style: this.getStyle(props, points, "labels"),
+        datum,
+        scale,
+        theme,
+        text
       },
       componentProps,
       this.getDefaultLabelProps(props, points),

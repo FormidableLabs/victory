@@ -7,15 +7,19 @@ export const selectionContainerMixin = (base) => class VictorySelectionContainer
   static displayName = "VictorySelectionContainer";
   static propTypes = {
     ...VictoryContainer.propTypes,
+    activateSelectedData: PropTypes.bool,
     allowSelection: PropTypes.bool,
+    disable: PropTypes.bool,
     onSelection: PropTypes.func,
     onSelectionCleared: PropTypes.func,
+    selectionBlacklist: PropTypes.arrayOf(PropTypes.string),
     selectionComponent: PropTypes.element,
     selectionDimension: PropTypes.oneOf(["x", "y"]),
     selectionStyle: PropTypes.object
   };
   static defaultProps = {
     ...VictoryContainer.defaultProps,
+    activateSelectedData: true,
     allowSelection: true,
     selectionComponent: <rect/>,
     selectionStyle: {
@@ -25,43 +29,31 @@ export const selectionContainerMixin = (base) => class VictorySelectionContainer
     }
   };
 
-  static defaultEvents = [{
-    target: "parent",
-    eventHandlers: {
-      onMouseDown: (evt, targetProps) => {
-        return SelectionHelpers.onMouseDown(evt, targetProps);
-      },
-      onTouchStart: (evt, targetProps) => {
-        return SelectionHelpers.onMouseDown(evt, targetProps);
-      },
-      onMouseMove: (evt, targetProps) => {
-        const mutations = SelectionHelpers.onMouseMove(evt, targetProps);
-
-        if (mutations.id !== this.mouseMoveMutationId) { // eslint-disable-line
-          this.mouseMoveMutationId = mutations.id; // eslint-disable-line
-          return mutations.mutations;
+  static defaultEvents = (props) => {
+    return [{
+      target: "parent",
+      eventHandlers: {
+        onMouseDown: (evt, targetProps) => {
+          return props.disable ? {} : SelectionHelpers.onMouseDown(evt, targetProps);
+        },
+        onTouchStart: (evt, targetProps) => {
+          return props.disable ? {} : SelectionHelpers.onMouseDown(evt, targetProps);
+        },
+        onMouseMove: (evt, targetProps) => {
+          return props.disable ? {} : SelectionHelpers.onMouseMove(evt, targetProps);
+        },
+        onTouchMove: (evt, targetProps) => {
+          return props.disable ? {} : SelectionHelpers.onMouseMove(evt, targetProps);
+        },
+        onMouseUp: (evt, targetProps) => {
+          return props.disable ? {} : SelectionHelpers.onMouseUp(evt, targetProps);
+        },
+        onTouchEnd: (evt, targetProps) => {
+          return props.disable ? {} : SelectionHelpers.onMouseUp(evt, targetProps);
         }
-
-        return undefined;
-      },
-      onTouchMove: (evt, targetProps) => {
-        const mutations = SelectionHelpers.onMouseMove(evt, targetProps);
-
-        if (mutations.id !== this.mouseMoveMutationId) { // eslint-disable-line
-          this.mouseMoveMutationId = mutations.id; // eslint-disable-line
-          return mutations.mutations;
-        }
-
-        return undefined;
-      },
-      onMouseUp: (evt, targetProps) => {
-        return SelectionHelpers.onMouseUp(evt, targetProps);
-      },
-      onTouchEnd: (evt, targetProps) => {
-        return SelectionHelpers.onMouseUp(evt, targetProps);
       }
-    }
-  }];
+    }];
+  };
 
   getRect(props) {
     const { x1, x2, y1, y2, selectionStyle, selectionComponent } = props;
