@@ -21,11 +21,11 @@ describe("helpers/wrapper", () => {
       [{ _x: 1, _y: -2 }, { _x: 2, _y: -2 }, { _x: 3, _y: -2 }]
     ];
     it("returns the sum of the previous data sets", () => {
-      const result = Wrapper.getY0({ _x: 2, _y: 2 }, 2, { datasets: data });
+      const result = Wrapper.getY0({ _x: 2, _y: 2 }, 2, data);
       expect(result).to.eql(1);
     });
     it("returns the sum of the previous data sets only when data is the same sign", () => {
-      const result = Wrapper.getY0({ _x: 2, _y: -2 }, 3, { datasets: mixedData });
+      const result = Wrapper.getY0({ _x: 2, _y: -2 }, 3, mixedData);
       expect(result).to.eql(-1);
     });
   });
