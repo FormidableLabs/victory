@@ -303,7 +303,7 @@ export default {
     return Helpers.reduceChildren(childComponents.slice(0), iteratee, ["stack", "group"]);
   },
 
-  getStringsFromData(childComponents, axis) { // eslint-disable-line max-statements
+  getStringsFromData(childComponents, axis) {
     const iteratee = (child) => {
       const role = child.type && child.type.role;
       const childProps = child.props || {};
