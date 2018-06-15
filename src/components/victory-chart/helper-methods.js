@@ -1,21 +1,14 @@
 import Axis from "../../helpers/axis";
 import Wrapper from "../../helpers/wrapper";
 import React from "react";
-import { Collection, Log } from "victory-core";
+import { Collection, Log, Helpers } from "victory-core";
+import { isFunction } from "lodash";
 
 const getDataComponents = (childComponents) => {
-  const findDataComponents = (children) => {
-    return children.reduce((memo, child) => {
-      if (child.type && child.type.role === "axis") {
-        return memo;
-      } else if (child.props && child.props.children) {
-        return memo.concat(findDataComponents(React.Children.toArray(child.props.children)));
-      }
-      return memo.concat(child);
-    }, []);
+  const iteratee = (child) => {
+    return child.type && isFunction(child.type.getData) ? child : null;
   };
-
-  return findDataComponents(childComponents);
+  return Helpers.reduceChildren(childComponents.slice(0), iteratee);
 };
 
 const getChildComponents = (props, defaultAxes) => {

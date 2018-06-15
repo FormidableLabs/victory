@@ -1,5 +1,5 @@
 import {
-  assign, defaults, flatten, isFunction, keys, uniq, some, orderBy, groupBy, values
+  assign, defaults, flatten, isFunction, keys, uniq, some, orderBy, groupBy, values, isPlainObject
 } from "lodash";
 import React from "react";
 import Axis from "./axis";
@@ -163,17 +163,19 @@ export default {
   },
 
   getDataFromChildren(props, childComponents) {
+    const { polar, startAngle, endAngle, categories, minDomain, maxDomain } = props;
+    const parentProps = { polar, startAngle, endAngle, categories, minDomain, maxDomain };
     const iteratee = (child, childName, parent) => {
       const role = child.type && child.type.role;
-      const childProps = child.props || {};
+      const childProps = assign({}, child.props, parentProps);
       let childData;
       if (role === "axis" || role === "legend" || role === "label") {
         return null;
       } else if (child.type && isFunction(child.type.getData)) {
         child = parent ? React.cloneElement(child, parent.props) : child;
-        childData = child.props && child.type.getData({ ...child.props, props });
+        childData = child.type.getData(childProps);
       } else {
-        childData = Data.getData({ ...childProps, props });
+        childData = Data.getData(childProps);
       }
       return childData.map((datum) => assign({ childName }, datum));
     };
@@ -288,83 +290,49 @@ export default {
     };
   },
 
-  getStringsFromCategories(childComponents, axis) { // eslint-disable-line max-statements
-    const strings = [];
-    let stringsLength = 0;
-
-    const children = childComponents.slice(0).reverse();
-    let childrenLength = children.length;
-
-    while (childrenLength > 0) {
-      const child = children[--childrenLength];
-
-      if (child.props && child.props.categories) {
-        const newStrings = Data.getStringsFromCategories(child.props, axis);
-        const newStringsLength = newStrings.length;
-        for (let index = 0; index < newStringsLength; index++) {
-          strings[stringsLength++] = newStrings[index];
-        }
-      } else if (child.props && child.props.children) {
-        const newChildren = React.Children.toArray(child.props.children);
-        const newChildrenLength = newChildren.length;
-        for (let index = 0; index < newChildrenLength; index++) {
-          children[childrenLength++] = newChildren[index];
-        }
+  getStringsFromCategories(childComponents, axis) {
+    const iteratee = (child) => {
+      const role = child.type && child.type.role;
+      const childProps = child.props || {};
+      if (role === "legend" || role === "label" || !childProps.categories) {
+        return null;
+      } else {
+        return Data.getStringsFromCategories(childProps, axis);
       }
-    }
-
-    return strings;
+    };
+    return Helpers.reduceChildren(childComponents.slice(0), iteratee, ["stack", "group"]);
   },
 
   getStringsFromData(childComponents, axis) { // eslint-disable-line max-statements
-    const strings = [];
-    let stringsLength = 0;
-
-    const children = childComponents.slice(0).reverse();
-    let childrenLength = children.length;
-
-    while (childrenLength > 0) {
-      const child = children[--childrenLength];
-
-      if (child.props && child.props.data) {
-        const newStrings = Data.getStringsFromData(child.props, axis);
-        const newStringsLength = newStrings.length;
-        for (let index = 0; index < newStringsLength; index++) {
-          strings[stringsLength++] = newStrings[index];
-        }
+    const iteratee = (child) => {
+      const role = child.type && child.type.role;
+      const childProps = child.props || {};
+      let data;
+      if (role === "legend" || role === "label") {
+        return null;
       } else if (child.type && isFunction(child.type.getData)) {
-        const data = flatten(child.type.getData(child.props));
-        const attr = axis === "x" ? "xName" : "yName";
-        for (let index = 0; index < data.length; index++) {
-          const datum = data[index];
-          if (datum[attr]) {
-            strings[stringsLength++] = datum[attr];
-          }
-        }
-      } else if (child.props && child.props.children) {
-        const newChildren = React.Children.toArray(child.props.children);
-        const newChildrenLength = newChildren.length;
-        for (let index = 0; index < newChildrenLength; index++) {
-          children[childrenLength++] = newChildren[index];
-        }
+        data = child.type.getData(childProps);
+      } else {
+        data = Data.getData(childProps);
       }
-    }
-
-    return strings;
+      const attr = axis === "x" ? "xName" : "yName";
+      return data.map((d) => d[attr]).filter(Boolean);
+    };
+    return Helpers.reduceChildren(childComponents.slice(0), iteratee);
   },
 
   getStringsFromChildren(props, axis, childComponents) {
     childComponents = childComponents || React.Children.toArray(props.children);
+    const categories = isPlainObject(props.categories) ? props.categories[axis] : props.categories;
     const axisComponent = Axis.getAxisComponent(childComponents, axis);
     const axisStrings = axisComponent ? Data.getStringsFromAxes(axisComponent.props, axis) : [];
-    const categoryStrings = this.getStringsFromCategories(childComponents, axis);
+    const categoryStrings = categories || this.getStringsFromCategories(childComponents, axis);
     const dataStrings = this.getStringsFromData(childComponents, axis);
     return uniq(flatten([...categoryStrings, ...dataStrings, ...axisStrings]));
   },
 
   getCategories(props, axis) {
-    const categories = Data.getCategories(props, axis) ||
-      this.getStringsFromChildren(props, axis);
+    const categories = Data.getCategories(props, axis) || this.getStringsFromChildren(props, axis);
     return categories.length > 0 ? categories : undefined;
   },
 
