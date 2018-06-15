@@ -1,5 +1,8 @@
 VictoryCore Changelog
 =====================
+## 23.0.7 (2018-06-15)
+
+-[332](https://github.com/FormidableLabs/victory-core/pull/332) Adds ability to skip roles in `reduceChildren`
 
 ## 23.0.6 (2018-06-12)
 
