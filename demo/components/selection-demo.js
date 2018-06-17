@@ -269,7 +269,7 @@ class App extends React.Component {
             />
           </VictoryGroup>
 
-          <VictoryStack style={chartStyle}
+          <VictoryChart style={chartStyle}
             containerComponent={
               <VictorySelectionContainer
                 selectionStyle={{
@@ -278,6 +278,7 @@ class App extends React.Component {
               />
             }
           >
+          <VictoryStack>
             <VictoryBar
               style={{
                 data: {
@@ -335,6 +336,7 @@ class App extends React.Component {
               ]}
             />
           </VictoryStack>
+          </VictoryChart>
         </div>
       </div>
     );
