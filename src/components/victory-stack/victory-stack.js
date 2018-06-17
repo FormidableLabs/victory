@@ -1,8 +1,9 @@
 import { assign, defaults } from "lodash";
 import PropTypes from "prop-types";
 import React from "react";
-import { Helpers, VictorySharedEvents, VictoryContainer, VictoryTheme, Scale } from "victory-core";
+import { Helpers, VictorySharedEvents, VictoryContainer, VictoryTheme } from "victory-core";
 import Wrapper from "../../helpers/wrapper";
+import { getChildren, getCalculatedProps } from "./helper-methods";
 import { BaseProps } from "../../helpers/common-props";
 
 
@@ -69,6 +70,8 @@ export default class VictoryStack extends React.Component {
     });
   }
 
+  static getChildren = getChildren;
+
   constructor(props) {
     super(props);
     if (props.animate) {
@@ -93,96 +96,13 @@ export default class VictoryStack extends React.Component {
     this.events = Wrapper.getAllEvents(nextProps);
   }
 
-  getCalculatedProps(props, childComponents) {
-    const { role } = this.constructor;
-    const style = this.getStyle(props.theme, props.style, role);
-    const horizontal = props.horizontal || childComponents.every(
-      (component) => component.props.horizontal
-    );
-    const categories = {
-      x: Wrapper.getCategories(props, "x"),
-      y: Wrapper.getCategories(props, "y")
-    };
-    const dataFromChildren = Wrapper.getDataFromChildren(props);
-    const datasets = Wrapper.fillInMissingData(props, dataFromChildren);
-    const domain = {
-      x: Wrapper.getStackedDomain(assign({}, props, { categories }), "x", datasets),
-      y: Wrapper.getStackedDomain(assign({}, props, { categories }), "y", datasets)
-    };
-    const range = {
-      x: Helpers.getRange(props, "x"),
-      y: Helpers.getRange(props, "y")
-    };
-    const baseScale = {
-      x: Scale.getScaleFromProps(props, "x") || Scale.getDefaultScale(),
-      y: Scale.getScaleFromProps(props, "y") || Scale.getDefaultScale()
-    };
-    const xScale = baseScale.x.domain(domain.x).range(range.x);
-    const yScale = baseScale.y.domain(domain.y).range(range.y);
-    const scale = {
-      x: horizontal ? yScale : xScale,
-      y: horizontal ? xScale : yScale
-    };
-    const colorScale = props.colorScale;
-    return { datasets, categories, range, domain, horizontal, scale, style, colorScale, role };
-  }
-
-  getLabels(props, datasets, index) {
-    if (!props.labels) {
-      return undefined;
-    }
-    return datasets.length === index + 1 ? props.labels : undefined;
-  }
-
-  getChildProps(props, calculatedProps) {
-    const { categories, domain, range, scale, horizontal } = calculatedProps;
-    return {
-      height: props.height,
-      width: props.width,
-      padding: Helpers.getPadding(props),
-      standalone: false,
-      theme: props.theme,
-      categories,
-      domain,
-      range,
-      scale,
-      horizontal
-    };
-  }
-
-  getColorScale(props, child) {
-    const role = child.type && child.type.role;
-    const colorScaleOptions = child.props.colorScale || props.colorScale;
-    if (role !== "group" && role !== "stack") {
-      return undefined;
-    }
-    return props.theme ? colorScaleOptions || props.theme.props.colorScale
-    : colorScaleOptions;
-  }
-
   // the old ones were bad
   getNewChildren(props, childComponents, calculatedProps) {
-    const { datasets } = calculatedProps;
-    const childProps = this.getChildProps(props, calculatedProps);
+    const children = getChildren(props, childComponents, calculatedProps);
     const getAnimationProps = Wrapper.getAnimationProps.bind(this);
-
-    return childComponents.map((child, index) => {
-      const data = Wrapper.addLayoutData(props, datasets, index);
-      const style = Wrapper.getChildStyle(child, index, calculatedProps);
-      const labels = props.labels ? this.getLabels(props, datasets, index) : child.props.labels;
-
-      return React.cloneElement(child, assign({
-        animate: getAnimationProps(props, child, index),
-        key: index,
-        labels,
-        domainPadding: child.props.domainPadding || props.domainPadding,
-        theme: props.theme,
-        labelComponent: props.labelComponent || child.props.labelComponent,
-        style,
-        colorScale: this.getColorScale(props, child),
-        data,
-        polar: props.polar
-      }, childProps));
+    return children.map((child, index) => {
+      const childProps = assign({ animate: getAnimationProps(props, child, index) }, child.props);
+      return React.cloneElement(child, childProps);
     });
   }
 
@@ -199,11 +119,6 @@ export default class VictoryStack extends React.Component {
     };
   }
 
-  getStyle(theme, style, role) {
-    const defaultStyle = theme && theme[role] && theme[role].style ? theme[role].style : {};
-    return Helpers.getStyles(style, defaultStyle);
-  }
-
   render() {
     const { role } = this.constructor;
     const props = this.state && this.state.nodesWillExit ?
@@ -213,7 +128,7 @@ export default class VictoryStack extends React.Component {
       eventKey, containerComponent, standalone, groupComponent, externalEventMutations
     } = modifiedProps;
     const childComponents = React.Children.toArray(modifiedProps.children);
-    const calculatedProps = this.getCalculatedProps(modifiedProps, childComponents);
+    const calculatedProps = getCalculatedProps(modifiedProps, childComponents);
     const newChildren = this.getNewChildren(modifiedProps, childComponents, calculatedProps);
     const containerProps = standalone ? this.getContainerProps(modifiedProps, calculatedProps) : {};
     const container = standalone ?
