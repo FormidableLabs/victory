@@ -198,13 +198,15 @@ function reduceChildren(children, iteratee, rolesToSkip = []) {
   const traverseChildren = (childArray, parent) => {
     return childArray.reduce((memo, child) => {
       const childRole = child.type && child.type.role;
-      const childName = child.props.name || childIndex;
-      childIndex++;
       if (!includes(rolesToSkip, childRole) && child.props && child.props.children) {
-        const nestedChildren = React.Children.toArray(child.props.children);
+        const nestedChildren = child.type && isFunction(child.type.getChildren) ?
+          child.type.getChildren(child.props) :
+          React.Children.toArray(child.props.children);
         const nestedResults = traverseChildren(nestedChildren, child);
         memo = memo.concat(nestedResults);
       } else {
+        const childName = child.props.name || childIndex;
+        childIndex++;
         const result = iteratee(child, childName, parent);
         memo = result ? memo.concat(result) : memo;
       }
