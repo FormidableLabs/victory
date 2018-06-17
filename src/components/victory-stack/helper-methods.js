@@ -11,15 +11,10 @@ const fallbackProps = {
   padding: 50
 };
 
-function getStyle(theme, style) {
-  const defaultStyle = theme && theme.stack && theme.stack.style ? theme.stack.style : {};
-  return Helpers.getStyles(style, defaultStyle);
-}
-
 function getCalculatedProps(props, childComponents) {
   childComponents = childComponents || React.Children.toArray(props.children);
   const role = "stack";
-  const style = getStyle(props.theme, props.style);
+  const style = Wrapper.getStyle(props.theme, props.style, role);
   const horizontal = props.horizontal || childComponents.every(
     (component) => component.props.horizontal
   );
@@ -84,11 +79,10 @@ function getColorScale(props, child) {
   : colorScaleOptions;
 }
 
-// the old ones were bad
 function getChildren(props, childComponents, calculatedProps) {
-  const modifiedProps = Helpers.modifyProps(props, fallbackProps, "stack");
-  childComponents = childComponents || React.Children.toArray(modifiedProps.children);
-  calculatedProps = calculatedProps || getCalculatedProps(modifiedProps, childComponents);
+  props = Helpers.modifyProps(props, fallbackProps, "stack");
+  childComponents = childComponents || React.Children.toArray(props.children);
+  calculatedProps = calculatedProps || getCalculatedProps(props, childComponents);
   const { datasets } = calculatedProps;
   const childProps = getChildProps(props, calculatedProps);
 
