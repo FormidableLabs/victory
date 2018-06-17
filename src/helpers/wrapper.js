@@ -267,6 +267,11 @@ export default {
     return { width: Math.round(barRatio * extent / bars) };
   },
 
+  getStyle(theme, style, role) {
+    const defaultStyle = theme && theme[role] && theme[role].style ? theme[role].style : {};
+    return Helpers.getStyles(style, defaultStyle);
+  },
+
   getChildStyle(child, index, calculatedProps) {
     const { style, role } = calculatedProps;
     const childStyle = child.props.style || {};
@@ -300,7 +305,7 @@ export default {
         return Data.getStringsFromCategories(childProps, axis);
       }
     };
-    return Helpers.reduceChildren(childComponents.slice(0), iteratee, ["stack", "group"]);
+    return Helpers.reduceChildren(childComponents.slice(0), iteratee);
   },
 
   getStringsFromData(childComponents, axis) {

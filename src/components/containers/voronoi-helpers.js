@@ -1,7 +1,5 @@
 import { Selection, Data, Helpers } from "victory-core";
-import {
-  assign, throttle, isFunction, isEmpty, groupBy, keys, includes, flattenDeep
-} from "lodash";
+import { assign, throttle, isFunction, isEmpty, groupBy, keys, includes } from "lodash";
 import isEqual from "react-fast-compare";
 import { voronoi as d3Voronoi } from "d3-voronoi";
 import React from "react";
@@ -21,13 +19,10 @@ const VoronoiHelpers = {
   },
 
   getDatasets(props) {
+    const children = React.Children.toArray(props.children);
     const addMeta = (data, name, child) => {
       const continuous = child && child.type && child.type.continuous;
       const style = child ? child.props && child.props.style : props.style;
-      // in the case of an array of arrays, flatten it
-      if (data.length > 0 && Array.isArray(data[0])) {
-        data = flattenDeep(data);
-      }
       return data.map((datum, index) => {
         const { x, y } = Helpers.getPoint(datum);
         return assign({
@@ -44,33 +39,29 @@ const VoronoiHelpers = {
       return addMeta(props.data);
     }
 
+
     const getData = (childProps) => {
       const data = Data.getData(childProps);
       return Array.isArray(data) && data.length > 0 ? data : undefined;
     };
 
     const iteratee = (child, childName, parent) => {
+      const skippedRoles = ["axis", "legend", "label"];
       const role = child.type && child.type.role;
-
       const childProps = child.props || {};
-
+      const name = childProps.name;
       const blacklist = props.voronoiBlacklist || [];
-      if (role === "axis" || role === "legend" || role === "label") {
+      if (includes(skippedRoles, role) || includes(blacklist, name)) {
         return null;
-      } else if (includes(blacklist, childName)) {
-        // ignore any children with names that match the blacklist
-        return null;
-      } else if (child.type && isFunction(child.type.getData)) {
-        child = parent ? React.cloneElement(child, parent.props) : child;
-        const childData = child.props
-          && child.type.getData({ ...child.props, domain: props.domain });
-        return childData ? addMeta(childData, childName, child) : null;
-      } else {
-        const childData = getData({ ...childProps, domain: props.domain });
-        return childData ? addMeta(childData, childName, child) : null;
       }
+      const getChildData = child.type && isFunction(child.type.getData) ?
+        child.type.getData : getData;
+      const childData = getChildData(child.props);
+      return childData ? addMeta(childData, name, child) : null;
     };
-    return Helpers.reduceChildren(React.Children.toArray(props.children), iteratee, ["stack"]);
+
+    const result = Helpers.reduceChildren(children, iteratee);
+    return result;
   },
 
   // returns an array of objects with point and data where point is an x, y coordinate, and data is
