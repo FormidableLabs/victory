@@ -50,10 +50,10 @@ describe("helpers/axis", () => {
 
 
     it("calculates a domain from a single tickValue", () => {
-      const props = { tickValues: [0] };
+      const props = { tickValues: [1] };
       const domainResult = Axis.getDomain(props);
       const verySmallNumber = Math.pow(10, -10);
-      expect(domainResult).to.eql([-verySmallNumber, verySmallNumber]);
+      expect(domainResult).to.eql([1 - verySmallNumber, 1 + verySmallNumber]);
     });
 
     it("returns undefined if the given axis doesn't match this axis", () => {
