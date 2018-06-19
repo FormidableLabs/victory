@@ -5,6 +5,7 @@ import Data from "./data";
 import Scale from "./scale";
 import Helpers from "./helpers";
 import Collection from "./collection";
+import { DEFAULT_ENCODING } from "crypto";
 
 // Private Methods
 
@@ -74,26 +75,18 @@ function getFlatData(dataset, axis) {
   });
 }
 
-function getMaxFromData(dataset, axis) {
-  let containsDate = false;
-  const minValue = flatten(dataset).reduce((memo, datum) => {
-    const current = datum[`_${axis}`] && datum[`_${axis}1`] !== undefined ?
-      datum[`_${axis}1`] : datum[`_${axis}`];
+function getExtremeFromData(dataset, axis, type = "min") {
+  const getExtreme = (arr) => type === "max" ? Math.max(...arr) : Math.min(...arr);
+  const initialValue = type === "max" ? -Infinity : Infinity;
+  let containsDate = false
+  const result = flatten(dataset).reduce((memo, datum) => {
+    const current0 = datum[`_${axis}0`] !== undefined ? datum[`_${axis}0`] : datum[`_${axis}`];
+    const current1 = datum[`_${axis}1`] !== undefined ? datum[`_${axis}1`] : datum[`_${axis}`];
+    const current = getExtreme([current0, current1]);
     containsDate = containsDate || current instanceof Date;
-    return memo > current ? memo : current;
-  }, -Infinity);
-  return containsDate ? new Date(minValue) : minValue;
-}
-
-function getMinFromData(dataset, axis) {
-  let containsDate = false;
-  const minValue = flatten(dataset).reduce((memo, datum) => {
-    const current = datum[`_${axis}`] && datum[`_${axis}0`] !== undefined ?
-      datum[`_${axis}0`] : datum[`_${axis}`];
-    containsDate = containsDate || current instanceof Date;
-    return memo < current ? memo : current;
-  }, Infinity);
-  return containsDate ? new Date(minValue) : minValue;
+    return getExtreme([memo, current]);
+  }, initialValue);
+  return containsDate ? new Date(result) : result;
 }
 
 //eslint-disable-next-line max-statements
@@ -259,8 +252,8 @@ function getDomainFromData(props, axis, dataset) {
     return getDomainFromMinMax(min, max);
   }
   const currentAxis = Helpers.getCurrentAxis(axis, horizontal);
-  const min = minDomain !== undefined ? minDomain : getMinFromData(dataset, currentAxis);
-  const max = maxDomain !== undefined ? maxDomain : getMaxFromData(dataset, currentAxis);
+  const min = minDomain !== undefined ? minDomain : getExtremeFromData(dataset, currentAxis, "min");
+  const max = maxDomain !== undefined ? maxDomain : getExtremeFromData(dataset, currentAxis, "max");
   const domain = getDomainFromMinMax(min, max);
 
   return polar && axis === "x" && Math.abs(startAngle - endAngle) === 360 ?
