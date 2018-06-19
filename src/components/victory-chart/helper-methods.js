@@ -149,11 +149,12 @@ const getChildComponents = (props, defaultAxes) => {
   if (axisComponents.dependent.length === 0 && axisComponents.independent.length === 0) {
     return childComponents.concat([defaultAxes.independent, defaultAxes.dependent]);
   }
+
   let axisCount = 0;
   return childComponents.filter((child) => {
     const role = child.type && child.type.role;
     const childProps = child.props || {};
-    if (role !== "axis" || !childProps.dependentAxis) {
+    if (role !== "axis" || childProps.dependentAxis) {
       return true;
     } else if (axisCount < 1) {
       axisCount++;
