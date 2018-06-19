@@ -154,7 +154,7 @@ export default {
         return Domain.getDomain(sharedProps, currentAxis);
       }
     };
-    const childDomains = Helpers.reduceChildren(children, iteratee);
+    const childDomains = Helpers.reduceChildren(children, iteratee, props);
 
     const min = childDomains.length === 0 ? 0 : Collection.getMinValue(childDomains);
     const max = childDomains.length === 0 ? 1 : Collection.getMaxValue(childDomains);
@@ -181,7 +181,7 @@ export default {
 
     const children = childComponents ?
       childComponents.slice(0) : React.Children.toArray(props.children);
-    const datasets = Helpers.reduceChildren(children, iteratee);
+    const datasets = Helpers.reduceChildren(children, iteratee, props);
     const stacked = children.filter((c) => c.type && c.type.role === "stack").length;
     const group = stacked ? "eventKey" : "childName";
     return values(groupBy(datasets, group));

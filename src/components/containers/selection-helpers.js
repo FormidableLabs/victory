@@ -29,7 +29,7 @@ const SelectionHelpers = {
         return childData ? { childName, data: childData } : null;
       }
     };
-    return Helpers.reduceChildren(React.Children.toArray(props.children), iteratee);
+    return Helpers.reduceChildren(React.Children.toArray(props.children), iteratee, props);
   },
 
   filterDatasets(props, datasets, bounds) {

@@ -60,7 +60,7 @@ const VoronoiHelpers = {
       return childData ? addMeta(childData, name, child) : null;
     };
 
-    const result = Helpers.reduceChildren(children, iteratee);
+    const result = Helpers.reduceChildren(children, iteratee, props);
     return result;
   },
 
