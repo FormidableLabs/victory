@@ -157,17 +157,18 @@ export default class VictorySharedEvents extends React.Component {
 
   getNewChildren(props, baseProps) {
     const { events, eventKey } = props;
-    const childNames = Object.keys(baseProps);
-    const alterChildren = (children) => {
-      return children.reduce((memo, child, index) => {
+    let nameIndex = 0;
+    const alterChildren = (children, childNames) => {
+      return children.reduce((memo, child) => {
         if (child.props.children) {
-          return memo.concat(React.cloneElement(
-            child,
-            child.props,
-            alterChildren(React.Children.toArray(child.props.children))
-          ));
+          const newChildren = React.Children.toArray(child.props.children);
+          const names = childNames.slice(nameIndex, newChildren.length);
+          const results = React.cloneElement(child, child.props, alterChildren(newChildren, names));
+          nameIndex += newChildren.length;
+          return memo.concat(results);
         } else if (child.type && isFunction(child.type.getBaseProps)) {
-          const name = child.props.name || childNames.shift() || index;
+          const name = child.props.name || childNames[nameIndex];
+          nameIndex++;
           const childEvents = Array.isArray(events) &&
             events.filter((event) => {
               if (event.target === "parent") {
@@ -193,8 +194,9 @@ export default class VictorySharedEvents extends React.Component {
         }
       }, []);
     };
+    const childNames = Object.keys(baseProps);
     const childComponents = React.Children.toArray(props.children);
-    return alterChildren(childComponents);
+    return alterChildren(childComponents, childNames);
   }
 
   getContainer(props, baseProps, events) {

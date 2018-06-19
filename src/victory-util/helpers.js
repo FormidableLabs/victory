@@ -194,26 +194,26 @@ function getCurrentAxis(axis, horizontal) {
  * @returns {Array} returns an array of results from calling the iteratee on all nested children
  */
 function reduceChildren(children, iteratee, rolesToSkip = []) {
-  let childIndex = 0;
-  const traverseChildren = (childArray, parent) => {
-    return childArray.reduce((memo, child) => {
+  const traverseChildren = (childArray, names, parent) => {
+    return childArray.reduce((memo, child, index) => {
       const childRole = child.type && child.type.role;
+      const childName = child.props.name || `${childRole}-${names[index]}`;
       if (!includes(rolesToSkip, childRole) && child.props && child.props.children) {
         const nestedChildren = child.type && isFunction(child.type.getChildren) ?
           child.type.getChildren(child.props) :
           React.Children.toArray(child.props.children);
-        const nestedResults = traverseChildren(nestedChildren, child);
+        const childNames = nestedChildren.map((c, i) => `${childName}-${i}`);
+        const nestedResults = traverseChildren(nestedChildren, childNames, child);
         memo = memo.concat(nestedResults);
       } else {
-        const childName = child.props.name || childIndex;
-        childIndex++;
         const result = iteratee(child, childName, parent);
         memo = result ? memo.concat(result) : memo;
       }
       return memo;
     }, []);
   };
-  return traverseChildren(children);
+  const childNames = children.map((c, i) => i);
+  return traverseChildren(children, childNames);
 }
 
 export default {
