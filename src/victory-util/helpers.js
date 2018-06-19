@@ -189,10 +189,11 @@ function getCurrentAxis(axis, horizontal) {
 /**
  * @param {Array} children: an array of child components
  * @param {Function} iteratee: a function with arguments "child", "childName", and "parent"
+ * @param {Object} parentProps: props from the parent that are applied to children
  * @returns {Array} returns an array of results from calling the iteratee on all nested children
  */
-function reduceChildren(children, iteratee) {
-  const parentProps = [
+function reduceChildren(children, iteratee, parentProps = {}) {
+  const sharedProps = [
     "data", "domain", "categories", "polar", "startAngle", "endAngle", "minDomain", "maxDomain"
   ];
   const traverseChildren = (childArray, names, parent) => {
@@ -200,11 +201,12 @@ function reduceChildren(children, iteratee) {
       const childRole = child.type && child.type.role;
       const childName = child.props.name || `${childRole}-${names[index]}`;
       if (child.props && child.props.children) {
+        const childProps = assign({}, child.props, pick(parentProps, sharedProps));
         const nestedChildren = child.type && isFunction(child.type.getChildren) ?
-          child.type.getChildren(child.props) :
+          child.type.getChildren(childProps) :
           React.Children.toArray(child.props.children).map((c) => {
-            const childProps = assign({}, c.props, pick(child.props, parentProps));
-            return React.cloneElement(c, childProps);
+            const nestedChildProps = assign({}, c.props, pick(childProps, sharedProps));
+            return React.cloneElement(c, nestedChildProps);
           });
         const childNames = nestedChildren.map((c, i) => `${childName}-${i}`);
         const nestedResults = traverseChildren(nestedChildren, childNames, child);
