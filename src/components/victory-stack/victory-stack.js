@@ -58,18 +58,6 @@ export default class VictoryStack extends React.Component {
     "groupComponent", "containerComponent", "labelComponent"
   ];
 
-  static getDomain = Wrapper.getStackedDomain.bind(Wrapper);
-
-  static getData = (props, childComponents) => {
-    const modifiedProps = Helpers.modifyProps(props, fallbackProps, VictoryStack.role);
-    childComponents = childComponents || React.Children.toArray(modifiedProps.children);
-    const dataFromChildren = Wrapper.getDataFromChildren(modifiedProps, childComponents);
-    const datasets = Wrapper.fillInMissingData(modifiedProps, dataFromChildren);
-    return childComponents.map((child, index) => {
-      return Wrapper.addLayoutData(modifiedProps, datasets, index);
-    });
-  }
-
   static getChildren = getChildren;
 
   constructor(props) {
@@ -85,7 +73,7 @@ export default class VictoryStack extends React.Component {
     }
   }
 
-  componentWillMount() {
+  componentDidMount() {
     this.events = Wrapper.getAllEvents(this.props);
   }
 

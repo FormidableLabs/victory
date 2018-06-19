@@ -1,17 +1,16 @@
 /* global sinon */
 /* eslint-disable no-unused-expressions,react/no-multi-comp */
 import {
-  getChildComponents, getDataComponents, getDomain, createStringMap
+  getChildComponents, getDomain, createStringMap
 } from "src/components/victory-chart/helper-methods";
 import React from "react";
-import { VictoryAxis, VictoryLine, VictoryBar } from "src/index";
+import { VictoryAxis, VictoryLine } from "src/index";
 import { Log, Data } from "victory-core";
 import Wrapper from "src/helpers/wrapper";
 
 describe("victory-chart/helpers-methods", () => {
   const getVictoryLine = (props) => React.createElement(VictoryLine, props);
   const getVictoryAxis = (props) => React.createElement(VictoryAxis, props);
-  const getVictoryBar = (props) => React.createElement(VictoryBar, props);
 
   describe("getChildComponents", () => {
     const defaultAxes = {
@@ -61,19 +60,6 @@ describe("victory-chart/helpers-methods", () => {
       const result = getChildComponents({ children }, defaultAxes);
       expect(result).to.have.length(1);
       expect(result[0].props).to.eql(children[0].props);
-    });
-  });
-
-  describe("getDataComponents", () => {
-    const bar = getVictoryBar({});
-    const line = getVictoryLine({});
-    const axis = getVictoryAxis({});
-    const childComponents = [bar, line, axis];
-
-    it("returns data components but not axis components", () => {
-      const componentResult = getDataComponents(childComponents);
-      expect(componentResult).to.have.members([bar, line]);
-      expect(componentResult).not.to.have.members([axis]);
     });
   });
 

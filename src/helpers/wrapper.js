@@ -1,5 +1,5 @@
 import {
-  assign, defaults, flatten, isFunction, keys, uniq, some, orderBy, groupBy, values, isPlainObject
+  assign, defaults, flatten, isFunction, uniq, some, groupBy, values, isPlainObject
 } from "lodash";
 import React from "react";
 import Axis from "./axis";
@@ -34,7 +34,6 @@ export default {
     return defaultDomainPadding[axis];
   },
 
-  // eslint-disable-next-line max-statements
   getDomain(props, axis, childComponents) {
     childComponents = childComponents || React.Children.toArray(props.children);
     const propsDomain = Domain.getDomainFromProps(props, axis);
@@ -155,7 +154,7 @@ export default {
         return Domain.getDomain(sharedProps, currentAxis);
       }
     };
-    const childDomains = Helpers.reduceChildren(children, iteratee, ["stack", "group"]);
+    const childDomains = Helpers.reduceChildren(children, iteratee);
 
     const min = childDomains.length === 0 ? 0 : Collection.getMinValue(childDomains);
     const max = childDomains.length === 0 ? 1 : Collection.getMaxValue(childDomains);
@@ -182,63 +181,10 @@ export default {
 
     const children = childComponents ?
       childComponents.slice(0) : React.Children.toArray(props.children);
-    const datasets = Helpers.reduceChildren(children, iteratee, ["stack", "group"]);
-    return values(groupBy(datasets, "childName"));
-  },
-
-  // Assumes data in `datasets` is sorted by `Data.getData`.
-  fillInMissingData(props, datasets) {
-    const { fillInMissingData } = props;
-    const xMap = datasets.reduce((prev, dataset) => {
-      dataset.forEach((datum) => {
-        prev[datum._x instanceof Date ? datum._x.getTime() : datum._x] = true;
-      });
-      return prev;
-    }, {});
-    const xKeys = keys(xMap).map((k) => +k);
-    const xArr = orderBy(xKeys);
-
-    return datasets.map((dataset) => {
-      let indexOffset = 0;
-      const isDate = dataset[0] && dataset[0]._x instanceof Date;
-      const filledInData = xArr.map((x, index) => {
-        x = +x;
-        const datum = dataset[index - indexOffset];
-
-        if (datum) {
-          const x1 = isDate ? datum._x.getTime() : datum._x;
-          if (x1 === x) {
-            return datum;
-          } else {
-            indexOffset++;
-            const y = fillInMissingData ? 0 : null;
-            x = isDate ? new Date(x) : x;
-            return { x, y, _x: x, _y: y };
-          }
-        } else {
-          const y = fillInMissingData ? 0 : null;
-          x = isDate ? new Date(x) : x;
-          return { x, y, _x: x, _y: y };
-        }
-      });
-
-      return filledInData;
-    });
-  },
-
-  getStackedDomain(props, axis) {
-    const propsDomain = Domain.getDomainFromProps(props, axis);
-    if (propsDomain) {
-      return propsDomain;
-    }
-    const { horizontal } = props;
-    const ensureZero = (domain) => {
-      const isDependent = (axis === "y" && !horizontal) || (axis === "x" && horizontal);
-      return isDependent ?
-        [Collection.getMinValue(domain, 0), Collection.getMaxValue(domain, 0)] : domain;
-    };
-    const datasets = this.getDataFromChildren(props);
-    return ensureZero(Domain.getDomainFromGroupedData(props, axis, datasets));
+    const datasets = Helpers.reduceChildren(children, iteratee);
+    const stacked = children.filter((c) => c.type && c.type.role === "stack").length;
+    const group = stacked ? "eventKey" : "childName";
+    return values(groupBy(datasets, group));
   },
 
   getColor(calculatedProps, child, index) {
@@ -262,7 +208,8 @@ export default {
     const { datasets, scale, horizontal } = props;
     const range = horizontal ? scale.y.range() : scale.x.range();
     const extent = Math.abs(range[1] - range[0]);
-    const bars = datasets.length * (datasets[0].length || 1) + 2;
+    const seriesLength = Array.isArray(datasets[0]) ? datasets[0].length : 1;
+    const bars = datasets.length * (seriesLength) + 2;
     const barRatio = 0.5;
     return { width: Math.round(barRatio * extent / bars) };
   },
@@ -339,46 +286,5 @@ export default {
   getCategories(props, axis) {
     const categories = Data.getCategories(props, axis) || this.getStringsFromChildren(props, axis);
     return categories.length > 0 ? categories : undefined;
-  },
-
-  getY0(datum, index, datasets) {
-    if (datum.y0) {
-      return datum.y0;
-    }
-    const y = datum._y;
-    const previousDatasets = datasets.slice(0, index);
-    const previousPoints = previousDatasets.reduce((prev, dataset) => {
-      return prev.concat(dataset
-        .filter((previousDatum) => datum._x instanceof Date
-          ? previousDatum._x.getTime() === datum._x.getTime()
-          : previousDatum._x === datum._x)
-        .map((previousDatum) => previousDatum._y || 0)
-      );
-    }, []);
-    const y0 = previousPoints.length && previousPoints.reduce((memo, value) => {
-      const sameSign = (y < 0 && value < 0) || (y >= 0 && value >= 0);
-      return sameSign ? +value + memo : memo;
-    }, 0);
-    return previousPoints.some((point) => point instanceof Date) ? new Date(y0) : y0;
-  },
-
-  /* eslint-disable no-nested-ternary */
-  addLayoutData(props, datasets, index) {
-    const xOffset = props.xOffset || 0;
-    return datasets[index].map((datum) => {
-      const yOffset = this.getY0(datum, index, datasets) || 0;
-      return assign({}, datum, {
-        _y0: !(datum._y instanceof Date) ? yOffset : (
-          yOffset ? new Date(yOffset) : datum._y
-        ),
-        _y1: datum._y === null ? null : (
-          datum._y instanceof Date ? new Date(+datum._y + +yOffset) : datum._y + yOffset
-        ),
-        _x1: datum._x === null ? null : (
-          datum._x instanceof Date ? new Date(+datum._x + +xOffset) : datum._x + xOffset
-        )
-      });
-    });
   }
-  /* eslint-enable no-nested-ternary */
 };

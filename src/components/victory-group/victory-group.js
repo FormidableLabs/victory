@@ -49,8 +49,6 @@ export default class VictoryGroup extends React.Component {
     "groupComponent", "containerComponent", "labelComponent"
   ];
 
-  static getDomain = Wrapper.getDomain.bind(Wrapper);
-  static getData = Wrapper.getData.bind(Wrapper);
   static getChildren = getChildren;
 
   constructor(props) {
@@ -66,7 +64,7 @@ export default class VictoryGroup extends React.Component {
     }
   }
 
-  componentWillMount() {
+  componentDidMount() {
     this.events = Wrapper.getAllEvents(this.props);
   }
 

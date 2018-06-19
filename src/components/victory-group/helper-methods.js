@@ -113,7 +113,7 @@ function getColorScale(props, child) {
   : colorScaleOptions;
 }
 
-function getDataWithOffset(props, defaultDataset, offset) {
+function getDataWithOffset(props, defaultDataset = [], offset) {
   const dataset = props.data || props.y ? Data.getData(props) : defaultDataset;
   const xOffset = offset || 0;
   return dataset.map((datum) => {
