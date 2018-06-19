@@ -9,7 +9,6 @@ import { Domain } from "src/index";
   getDomain,
   getDomainFromCategories,
   getDomainFromData,
-  getDomainFromGroupedData,
   getDomainFromMinMax,
   getDomainFromProps,
   getDomainWithZero,
@@ -116,26 +115,6 @@ describe("victory-util/domain", () => {
       const dataset = [{ _x: 1, _y: 3 }, { _x: 3, _y: 5 }];
       const resultDomain = Domain.getDomainFromData({}, "x", dataset);
       expect(resultDomain).to.eql([1, 3]);
-    });
-  });
-
-  describe("getDomainFromGroupedData", () => {
-    const data = [
-      [{ _x: 1, _y: 0 }, { _x: 2, _y: 0 }, { _x: 3, _y: 0 }],
-      [{ _x: 1, _y: 1 }, { _x: 2, _y: 1 }, { _x: 3, _y: 1 }],
-      [{ _x: 1, _y: 2 }, { _x: 2, _y: 2 }, { _x: 3, _y: 2 }]
-    ];
-
-    it("calculates a domain from categories for the independent axis", () => {
-      const props = { categories: [1, 2, 3], data, x: "x", y: "y" };
-      const domainResultX = Domain.getDomainFromGroupedData(props, "x", data);
-      expect(domainResultX).to.eql([1, 3]);
-    });
-
-    it("calculates a stacked domain for the dependent axis", () => {
-      const props = { categories: [1, 2, 3], data, x: "x", y: "y" };
-      const domainResultY = Domain.getDomainFromGroupedData(props, "y", data);
-      expect(domainResultY).to.eql([0, 3]);
     });
   });
 

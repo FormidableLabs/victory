@@ -1,11 +1,10 @@
 /* eslint-disable func-style */
 /* eslint-disable no-use-before-define */
-import { flatten, includes, isPlainObject, sortedUniq, isFunction } from "lodash";
+import { flatten, isPlainObject, sortedUniq, isFunction } from "lodash";
 import Data from "./data";
 import Scale from "./scale";
 import Helpers from "./helpers";
 import Collection from "./collection";
-import { DEFAULT_ENCODING } from "crypto";
 
 // Private Methods
 
@@ -25,37 +24,6 @@ function cleanDomain(domain, props, axis) {
   };
 
   return rules(domain);
-}
-
-function getCumulativeData(props, axis, datasets) {
-  const currentAxis = Helpers.getCurrentAxis(axis, props.horizontal);
-  const otherAxis = currentAxis === "x" ? "y" : "x";
-  const categories = [];
-  const axisValues = [];
-  datasets.forEach((dataset) => {
-    dataset.forEach((data) => {
-      if (data.category !== undefined && !includes(categories, data.category)) {
-        categories.push(data.category);
-      } else if (!includes(axisValues, data[`_${otherAxis}`])) {
-        axisValues.push(data[`_${otherAxis}`]);
-      }
-    });
-  });
-
-  const _dataByCategory = () => {
-    return categories.map((value) => {
-      return datasets.reduce((prev, data) => {
-        return data.category === value ? prev.concat(data[`_${axis}`]) : prev;
-      }, []);
-    });
-  };
-
-  const _dataByIndex = () => {
-    return axisValues.map((value, index) => {
-      return datasets.map((data) => data[index] && data[index][`_${currentAxis}`]);
-    });
-  };
-  return categories.length === 0 ? _dataByIndex() : _dataByCategory();
 }
 
 function getDomainPadding(props, axis) {
@@ -78,7 +46,7 @@ function getFlatData(dataset, axis) {
 function getExtremeFromData(dataset, axis, type = "min") {
   const getExtreme = (arr) => type === "max" ? Math.max(...arr) : Math.min(...arr);
   const initialValue = type === "max" ? -Infinity : Infinity;
-  let containsDate = false
+  let containsDate = false;
   const result = flatten(dataset).reduce((memo, datum) => {
     const current0 = datum[`_${axis}0`] !== undefined ? datum[`_${axis}0`] : datum[`_${axis}`];
     const current1 = datum[`_${axis}1`] !== undefined ? datum[`_${axis}1`] : datum[`_${axis}`];
@@ -261,47 +229,6 @@ function getDomainFromData(props, axis, dataset) {
 }
 
 /**
- * Returns a cumulative domain for a set of grouped datasets (i.e. stacked charts)
- * @param {Object} props: the props object
- * @param {String} axis: the current axis
- * @param {Array} datasets: an array of data arrays
- * @returns {Array} the cumulative domain
- */
-function getDomainFromGroupedData(props, axis, datasets) {
-  const { horizontal } = props;
-  const dependent = (axis === "x" && !horizontal) || (axis === "y" && horizontal);
-  const categories = isPlainObject(props.categories) ? props.categories[axis] : props.categories;
-  if (dependent && categories) {
-    return getDomainFromCategories(props, axis, categories);
-  }
-  const globalDomain = getDomainFromData(props, axis, datasets);
-  if (dependent) {
-    return globalDomain;
-  }
-  // find the cumulative max for stacked chart types
-  const cumulativeData = getCumulativeData(props, axis, datasets);
-  const cumulativeMax = cumulativeData.reduce((memo, dataset) => {
-    const currentMax = dataset.reduce((m, val) => {
-      return val > 0 ? m + val : m;
-    }, 0);
-    return memo > currentMax ? memo : currentMax;
-  }, -Infinity);
-
-  const cumulativeMin = cumulativeData.reduce((memo, dataset) => {
-    const currentMin = dataset.reduce((m, val) => {
-      return val < 0 ? m + val : m;
-    }, 0);
-    return memo < currentMin ? memo : currentMin;
-  }, Infinity);
-
-  // use greatest min / max
-  return getDomainFromMinMax(
-    Collection.getMinValue(globalDomain, cumulativeMin),
-    Collection.getMaxValue(globalDomain, cumulativeMax)
-  );
-}
-
-/**
  * Returns a domain in the form of a two element array given a min and max value.
  * @param {Number|Date} min: the props object
  * @param {Number|Date} max: the current axis
@@ -415,7 +342,6 @@ export default {
   getDomain,
   getDomainFromCategories,
   getDomainFromData,
-  getDomainFromGroupedData,
   getDomainFromMinMax,
   getDomainFromProps,
   getDomainWithZero,
