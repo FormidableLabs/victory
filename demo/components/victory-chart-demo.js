@@ -594,6 +594,7 @@ class App extends React.Component {
           </VictoryChart>
           <VictoryChart style={chartStyle}
             theme={VictoryTheme.material}
+            categories={{ x: ["e", "a", "c", "b", "d"] }}
             events={[{
               childName: "area-1",
               target: "data",

@@ -29,7 +29,7 @@ const SelectionHelpers = {
         return childData ? { childName, data: childData } : null;
       }
     };
-    return Helpers.reduceChildren(React.Children.toArray(props.children), iteratee);
+    return Helpers.reduceChildren(React.Children.toArray(props.children), iteratee, props);
   },
 
   filterDatasets(props, datasets, bounds) {
@@ -45,10 +45,20 @@ const SelectionHelpers = {
     return filtered.length ? filtered : null;
   },
 
+  getPoint(props, point) {
+    if (!props.horizontal) {
+      return point;
+    }
+    return {
+      _x: point._y, _y: point._x, _x1: point._y1, _y1: point._x1, _x0: point._y0, _y0: point._x0
+    };
+  },
+
   getSelectedData(props, dataset) {
     const { x1, y1, x2, y2 } = props;
     const withinBounds = (d) => {
-      const scaledPoint = Helpers.scalePoint(props, d);
+      const point = this.getPoint(props, d);
+      const scaledPoint = Helpers.scalePoint(props, point);
       return scaledPoint.x >= Math.min(x1, x2) && scaledPoint.x <= Math.max(x1, x2) &&
         scaledPoint.y >= Math.min(y1, y2) && scaledPoint.y <= Math.max(y1, y2);
     };
