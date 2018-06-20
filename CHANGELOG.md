@@ -1,5 +1,11 @@
 VictoryCore Changelog
 =====================
+
+## 24.0.0 (2018-06-19)
+
+-[390])https://github.com/FormidableLabs/victory-core/pull/390 *Breaking Change for other Victory packages*
+This PR changes how the exported helper `reduceChildren` operates, and removes `getDomainFromGroupedData`
+
 ## 23.0.7 (2018-06-15)
 
 -[332](https://github.com/FormidableLabs/victory-core/pull/332) Adds ability to skip roles in `reduceChildren`
