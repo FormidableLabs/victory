@@ -1,5 +1,9 @@
 # VictoryChart Changelog
 
+## 27.1.0 (2018-06-20)
+
+-[555](https://github.com/FormidableLabs/victory-chart/pull/555) Refactors how `VictoryStack` and `VictoryGroup` interact with child data. Fixes bugs related to stacked and grouped charts in `VictoryVoronoiContainer`
+
 ## 27.0.0 (2018-06-05)
 
 -[600](https://github.com/FormidableLabs/victory-chart/pull/600)
