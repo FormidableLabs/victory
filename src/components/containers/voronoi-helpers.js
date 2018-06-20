@@ -25,9 +25,11 @@ const VoronoiHelpers = {
       const style = child ? child.props && child.props.style : props.style;
       return data.map((datum, index) => {
         const { x, y } = Helpers.getPoint(datum);
+        const voronoiX = props.horizontal ? y : x;
+        const voronoiY = props.horizontal ? x : y;
         return assign({
-          _voronoiX: props.voronoiDimension === "y" ? 0 : x,
-          _voronoiY: props.voronoiDimension === "x" ? 0 : y,
+          _voronoiX: props.voronoiDimension === "y" ? 0 : voronoiX,
+          _voronoiY: props.voronoiDimension === "x" ? 0 : voronoiY,
           eventKey: index,
           childName: name,
           continuous, style
@@ -60,8 +62,7 @@ const VoronoiHelpers = {
       return childData ? addMeta(childData, name, child) : null;
     };
 
-    const result = Helpers.reduceChildren(children, iteratee, props);
-    return result;
+    return Helpers.reduceChildren(children, iteratee, props);
   },
 
   // returns an array of objects with point and data where point is an x, y coordinate, and data is

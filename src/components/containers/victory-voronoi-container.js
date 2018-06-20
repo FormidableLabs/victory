@@ -105,12 +105,20 @@ export const voronoiContainerMixin = (base) => class VictoryVoronoiContainer ext
     };
   }
 
+  getPoint(props, point) {
+    const whitelist = ["_x", "_x1", "_x0", "_y", "_y1", "_y0"];
+    if (!props.horizontal) {
+      return pick(point, whitelist);
+    }
+    return {
+      _x: point._y, _y: point._x, _x1: point._y1, _y1: point._x1, _x0: point._y0, _y0: point._x0
+    };
+  }
+
   getLabelPosition(props, points, labelProps) {
     const { mousePosition, voronoiDimension, scale, voronoiPadding } = props;
-    const basePosition = Helpers.scalePoint(
-      props,
-      pick(points[0], ["_x", "_x1", "_x0", "_y", "_y1", "_y0"]) // exclude _voronoiX, _voronoiY
-    );
+    const point = this.getPoint(props, points[0]);
+    const basePosition = Helpers.scalePoint(props, point);
     if (!voronoiDimension || points.length < 2) {
       return basePosition;
     }
@@ -151,7 +159,7 @@ export const voronoiContainerMixin = (base) => class VictoryVoronoiContainer ext
       componentProps.flyoutStyle : componentProps.style;
     return points.reduce((memo, point, index) => {
       const text = Helpers.evaluateProp(labels, point, true);
-      const textArray = text ? `${text}`.split("\n") : [];
+      const textArray = text !== undefined ? `${text}`.split("\n") : [];
       const baseStyle = point.style && point.style[type] || {};
       const componentStyle = Array.isArray(componentStyleArray) ?
         componentStyleArray[index] : componentStyleArray;
@@ -165,10 +173,15 @@ export const voronoiContainerMixin = (base) => class VictoryVoronoiContainer ext
   }
 
   getDefaultLabelProps(props, points) {
-    const { voronoiDimension } = props;
+    const { voronoiDimension, horizontal } = props;
+    const point = this.getPoint(props, points[0]);
     const multiPoint = voronoiDimension && points.length > 1;
+    const y = point._y1 !== undefined ? point._y1 : point._y;
+    const defaultHorizontalOrientation = y < 0 ? "left" : "right";
+    const defaultOrientation = y < 0 ? "bottom" : "top";
+    const orientation = horizontal ? defaultHorizontalOrientation : defaultOrientation;
     return {
-      orientation: multiPoint ? "top" : undefined,
+      orientation: multiPoint ? "top" : orientation,
       pointerLength: multiPoint ? 0 : undefined
     };
   }

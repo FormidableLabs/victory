@@ -71,7 +71,7 @@ export default class VictoryChart extends React.Component {
     this.events = Wrapper.getAllEvents(props);
   }
 
-  componentDidMount() {
+  componentWillMount() {
     this.events = Wrapper.getAllEvents(this.props);
   }
 
@@ -99,10 +99,10 @@ export default class VictoryChart extends React.Component {
 
   getContainerProps(props, calculatedProps) {
     const { width, height, standalone, theme, polar } = props;
-    const { domain, scale, style, origin, radius } = calculatedProps;
+    const { domain, scale, style, origin, radius, horizontal } = calculatedProps;
     return {
-      domain, scale, width, height, standalone, theme, style: style.parent, polar, radius,
-      origin: polar ? origin : undefined
+      domain, scale, width, height, standalone, theme, style: style.parent, horizontal,
+      polar, radius, origin: polar ? origin : undefined
     };
   }
 

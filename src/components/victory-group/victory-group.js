@@ -64,7 +64,7 @@ export default class VictoryGroup extends React.Component {
     }
   }
 
-  componentDidMount() {
+  componentWillMount() {
     this.events = Wrapper.getAllEvents(this.props);
   }
 
@@ -92,10 +92,11 @@ export default class VictoryGroup extends React.Component {
   }
 
   getContainerProps(props, calculatedProps) {
-    const { width, height, standalone, theme, polar } = props;
+    const { width, height, standalone, theme, polar, horizontal } = props;
     const { domain, scale, style, origin } = calculatedProps;
     return {
-      domain, scale, width, height, standalone, theme, style: style.parent, polar, origin
+      domain, scale, width, height, standalone, theme, style: style.parent, horizontal,
+      polar, origin
     };
   }
 
