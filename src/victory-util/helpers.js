@@ -1,7 +1,7 @@
 /* eslint-disable func-style */
 /* eslint-disable no-use-before-define */
 import React from "react";
-import { defaults, isFunction, property, includes } from "lodash";
+import { defaults, isFunction, property, pick, assign } from "lodash";
 
 // Private Functions
 
@@ -189,20 +189,27 @@ function getCurrentAxis(axis, horizontal) {
 /**
  * @param {Array} children: an array of child components
  * @param {Function} iteratee: a function with arguments "child", "childName", and "parent"
- * @param {Array} [rolesToSkip=[]]: children of these roles will be skipped while the role,
- *   itself, will be processed
+ * @param {Object} parentProps: props from the parent that are applied to children
  * @returns {Array} returns an array of results from calling the iteratee on all nested children
  */
-function reduceChildren(children, iteratee, rolesToSkip = []) {
-  let childIndex = 0;
-  const traverseChildren = (childArray, parent) => {
-    return childArray.reduce((memo, child) => {
+function reduceChildren(children, iteratee, parentProps = {}) {
+  const sharedProps = [
+    "data", "domain", "categories", "polar", "startAngle", "endAngle", "minDomain", "maxDomain"
+  ];
+  const traverseChildren = (childArray, names, parent) => {
+    return childArray.reduce((memo, child, index) => {
       const childRole = child.type && child.type.role;
-      const childName = child.props.name || childIndex;
-      childIndex++;
-      if (!includes(rolesToSkip, childRole) && child.props && child.props.children) {
-        const nestedChildren = React.Children.toArray(child.props.children);
-        const nestedResults = traverseChildren(nestedChildren, child);
+      const childName = child.props.name || `${childRole}-${names[index]}`;
+      if (child.props && child.props.children) {
+        const childProps = assign({}, child.props, pick(parentProps, sharedProps));
+        const nestedChildren = child.type && isFunction(child.type.getChildren) ?
+          child.type.getChildren(childProps) :
+          React.Children.toArray(child.props.children).map((c) => {
+            const nestedChildProps = assign({}, c.props, pick(childProps, sharedProps));
+            return React.cloneElement(c, nestedChildProps);
+          });
+        const childNames = nestedChildren.map((c, i) => `${childName}-${i}`);
+        const nestedResults = traverseChildren(nestedChildren, childNames, child);
         memo = memo.concat(nestedResults);
       } else {
         const result = iteratee(child, childName, parent);
@@ -211,7 +218,8 @@ function reduceChildren(children, iteratee, rolesToSkip = []) {
       return memo;
     }, []);
   };
-  return traverseChildren(children);
+  const childNames = children.map((c, i) => i);
+  return traverseChildren(children, childNames);
 }
 
 export default {
