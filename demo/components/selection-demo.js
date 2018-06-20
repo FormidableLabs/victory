@@ -278,7 +278,7 @@ class App extends React.Component {
               />
             }
           >
-          <VictoryStack>
+          <VictoryStack horizontal>
             <VictoryBar
               style={{
                 data: {

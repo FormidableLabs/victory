@@ -57,7 +57,6 @@ class App extends React.Component {
             domainPadding={{ y: 2 }}
             containerComponent={
               <VictoryVoronoiContainer voronoiDimension="x"
-                voronoiBlacklist={["first"]}
                 labels={(d) => `y:${d.y}`}
                 labelComponent={
                   <VictoryTooltip
