@@ -40,11 +40,11 @@ export default class ErrorBar extends React.Component {
 
   renderBorder(props, error, type) {
     const {
-      x, y, borderWidth, events, style, role, shapeRendering, className, lineComponent
+      x, y, borderWidth, events, style, role, shapeRendering, className, lineComponent, transform
     } = props;
     const vertical = type === "right" || type === "left";
     const borderProps = {
-      role, shapeRendering, className, events, style,
+      role, shapeRendering, className, events, style, transform,
       key: `border-${type}`,
       x1: vertical ? error[type] : x - borderWidth,
       x2: vertical ? error[type] : x + borderWidth,
@@ -55,10 +55,12 @@ export default class ErrorBar extends React.Component {
   }
 
   renderCross(props, error, type) {
-    const { x, y, events, style, role, shapeRendering, className, lineComponent } = props;
+    const {
+      x, y, events, style, role, shapeRendering, className, lineComponent, transform
+    } = props;
     const vertical = type === "top" || type === "bottom";
     const borderProps = {
-      role, shapeRendering, className, events, style,
+      role, shapeRendering, className, events, style, transform,
       key: `cross-${type}`,
       x1: x,
       x2: vertical ? x : error[type],

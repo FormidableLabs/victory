@@ -56,7 +56,8 @@ export default class Curve extends React.Component {
     );
     const lineFunction = this.getLineFunction(this.props);
     const path = lineFunction(data);
-    const transform = polar && origin ? `translate(${origin.x}, ${origin.y})` : undefined;
+    const defaultTransform = polar && origin ? `translate(${origin.x}, ${origin.y})` : undefined;
+    const transform = this.props.transform || defaultTransform;
     return React.cloneElement(pathComponent, {
       className, style, role, shapeRendering, transform, events, d: path
     });

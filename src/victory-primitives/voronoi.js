@@ -45,7 +45,7 @@ export default class Voronoi extends React.Component {
 
   render() {
     const {
-      datum, active, role, shapeRendering, className, events, x, y,
+      datum, active, role, shapeRendering, className, events, x, y, transform,
       pathComponent, clipPathComponent, groupComponent, circleComponent
     } = this.props;
     const voronoiPath = this.getVoronoiPath(this.props);
@@ -65,7 +65,7 @@ export default class Voronoi extends React.Component {
       return React.cloneElement(groupComponent, {}, [voronoiClipPath, circle]);
     }
     return React.cloneElement(pathComponent, {
-      style, className, d: voronoiPath, role, shapeRendering, events
+      style, className, d: voronoiPath, role, shapeRendering, events, transform
     });
   }
 }

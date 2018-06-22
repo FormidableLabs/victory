@@ -32,10 +32,11 @@ export default class Whisker extends React.Component {
 
   render() {
     const {
-      groupComponent, lineComponent, events, className, majorWhisker, minorWhisker, datum, active
+      groupComponent, lineComponent, events, className, majorWhisker, minorWhisker,
+      datum, active, transform
     } = this.props;
     const style = Helpers.evaluateStyle(this.props.style, datum, active);
-    const baseProps = { style, events, className };
+    const baseProps = { style, events, className, transform };
     return React.cloneElement(groupComponent, {}, [
       React.cloneElement(lineComponent, assign({ key: "major-whisker" }, baseProps, majorWhisker)),
       React.cloneElement(lineComponent, assign({ key: "minor-whisker" }, baseProps, minorWhisker))
