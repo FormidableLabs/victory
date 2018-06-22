@@ -1,5 +1,9 @@
 # VictoryPie Changelog
 
+## 16.0.1 (2018-06-21)
+
+-[184](https://github.com/FormidableLabs/victory-pie/pull/184) Update `victory-core`
+
 ## 16.0.0 (2018-06-05)
 
 **Breaking Changes**
