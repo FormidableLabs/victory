@@ -36,15 +36,15 @@
   "dependencies": {
     "builder": "^4.0.0",
     "builder-victory-component": "^5.1.2",
-    "victory-chart": "^27.0.0",
-    "victory-core": "^23.0.2",
-    "victory-pie": "^16.0.0"
+    "victory-chart": "^27.1.0",
+    "victory-core": "^24.0.0",
+    "victory-pie": "^16.0.1"
   },
   "devDependencies": {
     "builder-victory-component-dev": "^5.1.2",
     "chai": "^3.5.0",
     "lodash": "^4.17.5",
-    "mocha": "^3.0.2",
+    "mocha": "^5.0.0",
     "prop-types": "^15.5.8",
     "react": "^16.0.0",
     "react-dom": "^16.0.0",
