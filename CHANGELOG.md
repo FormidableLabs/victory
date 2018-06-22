@@ -1,5 +1,15 @@
 # Victory Changelog
 
+## 0.27.1 (2018-06-21)
+
+VictoryCore
+-[390](https://github.com/FormidableLabs/victory-core/pull/390) *Breaking Change for other Victory packages*
+This PR changes how the exported helper `reduceChildren` operates, and removes `getDomainFromGroupedData`
+
+VictoryChart
+-[555](https://github.com/FormidableLabs/victory-chart/pull/555) Refactors how `VictoryStack` and `VictoryGroup` interact with child data. Fixes bugs related to stacked and grouped charts in `VictoryVoronoiContainer`
+
+
 ## 0.27.0 (2018-06-05)
 
 **Breaking Changes**
