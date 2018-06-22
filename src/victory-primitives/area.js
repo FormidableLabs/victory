@@ -67,8 +67,8 @@ export default class Area extends React.Component {
       groupComponent
     } = this.props;
     const style = Helpers.evaluateStyle(assign({ fill: "black" }, this.props.style), data, active);
-    const transform = polar && origin ? `translate(${origin.x}, ${origin.y})` : undefined;
-
+    const defaultTransform = polar && origin ? `translate(${origin.x}, ${origin.y})` : undefined;
+    const transform = this.props.transform || defaultTransform;
     const renderLine = style.stroke && style.stroke !== "none" && style.stroke !== "transparent";
     const areaFunction = this.getAreaFunction(this.props);
     const lineFunction = renderLine && this.getLineFunction(this.props);

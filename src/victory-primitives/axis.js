@@ -22,13 +22,14 @@ export default class Axis extends React.Component {
 
   render() {
     const {
-      x1, x2, y1, y2, events, datum, active, lineComponent, className, role, shapeRendering
+      x1, x2, y1, y2, events, datum, active, lineComponent, className, role, shapeRendering,
+      transform
     } = this.props;
     const style = Helpers.evaluateStyle(
       assign({ stroke: "black" }, this.props.style), datum, active
     );
     return React.cloneElement(lineComponent, {
-      style, className, role, shapeRendering, events, x1, x2, y1, y2
+      style, className, role, shapeRendering, events, x1, x2, y1, y2, transform
     });
   }
 }

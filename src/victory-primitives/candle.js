@@ -38,7 +38,7 @@ export default class Candle extends React.Component {
   render() {
     const {
       x, high, low, open, close, data, datum, active, width, candleHeight, events, groupComponent,
-      rectComponent, lineComponent, role, shapeRendering, className, wickStrokeWidth
+      rectComponent, lineComponent, role, shapeRendering, className, wickStrokeWidth, transform
     } = this.props;
     const style = Helpers.evaluateStyle(
       assign({ stroke: "black" }, this.props.style), datum, active
@@ -47,7 +47,7 @@ export default class Candle extends React.Component {
     const padding = this.props.padding.left || this.props.padding;
     const candleWidth = style.width || 0.5 * (width - 2 * padding) / data.length;
     const candleX = x - candleWidth / 2;
-    const sharedProps = { role, shapeRendering, className, events };
+    const sharedProps = { role, shapeRendering, className, events, transform };
 
     const candleProps = assign({
       key: "candle",

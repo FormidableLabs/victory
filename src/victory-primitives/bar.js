@@ -230,7 +230,8 @@ export default class Bar extends React.Component {
     const path = polar ?
       this.getPolarBarPath(this.props, cornerRadius) :
       this.getBarPath(this.props, width, cornerRadius);
-    const transform = polar && origin ? `translate(${origin.x}, ${origin.y})` : undefined;
+    const defaultTransform = polar && origin ? `translate(${origin.x}, ${origin.y})` : undefined;
+    const transform = this.props.transform || defaultTransform;
     return React.cloneElement(pathComponent, {
       d: path, transform, className, style, role, shapeRendering, events
     });
