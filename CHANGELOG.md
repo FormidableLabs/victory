@@ -1,9 +1,13 @@
 VictoryCore Changelog
 =====================
 
+## 24.0.1 (2018-06-21)
+
+-[392](https://github.com/FormidableLabs/victory-core/pull/392) Make sure transforms are applied to primitive components
+
 ## 24.0.0 (2018-06-19)
 
--[390])https://github.com/FormidableLabs/victory-core/pull/390 *Breaking Change for other Victory packages*
+-[390](https://github.com/FormidableLabs/victory-core/pull/390) *Breaking Change for other Victory packages*
 This PR changes how the exported helper `reduceChildren` operates, and removes `getDomainFromGroupedData`
 
 ## 23.0.7 (2018-06-15)
