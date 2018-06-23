@@ -52,7 +52,7 @@ const getCalculatedValues = (props) => {
   const radius = getRadius(props, padding);
   const offsetWidth = ((radius + padding.left) + (width - radius - padding.right)) / 2;
   const offsetHeight = ((radius + padding.top) + (height - radius - padding.bottom)) / 2;
-  const origin = { x: offsetWidth, y: offsetHeight };
+  const origin = props.origin || { x: offsetWidth, y: offsetHeight };
   const data = Data.getData(props);
   const slices = getSlices(props, data);
   const pathFunction = d3Shape.arc()
