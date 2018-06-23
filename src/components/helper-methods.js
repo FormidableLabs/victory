@@ -50,9 +50,10 @@ const getCalculatedValues = (props) => {
   const colors = Array.isArray(colorScale) ? colorScale : Style.getColorScale(colorScale);
   const padding = Helpers.getPadding(props);
   const radius = getRadius(props, padding);
-  const offsetWidth = ((radius + padding.left) + (width - radius - padding.right)) / 2;
-  const offsetHeight = ((radius + padding.top) + (height - radius - padding.bottom)) / 2;
-  const origin = props.origin || { x: offsetWidth, y: offsetHeight };
+  const origin = props.origin || {
+    x: (padding.left - padding.right + width) / 2,
+    y: (padding.top - padding.bottom + height) / 2
+  };
   const data = Data.getData(props);
   const slices = getSlices(props, data);
   const pathFunction = d3Shape.arc()

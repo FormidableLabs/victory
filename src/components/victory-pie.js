@@ -102,16 +102,10 @@ class VictoryPie extends React.Component {
     labelRadius: PropTypes.oneOfType([ CustomPropTypes.nonNegative, PropTypes.func ]),
     labels: PropTypes.oneOfType([ PropTypes.func, PropTypes.array ]),
     name: PropTypes.string,
-    origin: PropTypes.arrayOf(PropTypes.shape({
-      x: PropTypes.oneOfType([
-        PropTypes.func,
-        CustomPropTypes.allOfType([CustomPropTypes.integer, CustomPropTypes.nonNegative])
-      ]),
-      y: PropTypes.oneOfType([
-        PropTypes.func,
-        CustomPropTypes.allOfType([CustomPropTypes.integer, CustomPropTypes.nonNegative])
-      ])
-    })),
+    origin: PropTypes.shape({
+      x: CustomPropTypes.nonNegative,
+      y: CustomPropTypes.nonNegative
+    }),
     padAngle: CustomPropTypes.nonNegative,
     padding: PropTypes.oneOfType([
       PropTypes.number,
