@@ -1,5 +1,5 @@
 /*eslint no-magic-numbers: ["error", { "ignore": [-1, 0, 1, 2, 45, 135, 180, 225, 315] }]*/
-import { assign, isFunction } from "lodash";
+import { assign, isFunction, isPlainObject } from "lodash";
 import * as d3Shape from "d3-shape";
 
 import { Helpers, Data, Style } from "victory-core";
@@ -33,6 +33,15 @@ const getRadius = (props, padding) => {
   ) / 2;
 };
 
+const getOrigin = (props, padding) => {
+  const { width, height } = props;
+  const origin = isPlainObject(props.origin) ? props.origin : {};
+  return {
+    x: origin.x !== undefined ? origin.x : (padding.left - padding.right + width) / 2,
+    y: origin.y !== undefined ? origin.y : (padding.top - padding.bottom + height) / 2
+  };
+};
+
 const getSlices = (props, data) => {
   const layoutFunction = d3Shape.pie()
     .sort(null)
@@ -44,16 +53,13 @@ const getSlices = (props, data) => {
 };
 
 const getCalculatedValues = (props) => {
-  const { theme, colorScale, width, height } = props;
+  const { theme, colorScale } = props;
   const styleObject = theme && theme.pie && theme.pie.style ? theme.pie.style : {};
   const style = Helpers.getStyles(props.style, styleObject, "auto", "100%");
   const colors = Array.isArray(colorScale) ? colorScale : Style.getColorScale(colorScale);
   const padding = Helpers.getPadding(props);
   const radius = getRadius(props, padding);
-  const origin = props.origin || {
-    x: (padding.left - padding.right + width) / 2,
-    y: (padding.top - padding.bottom + height) / 2
-  };
+  const origin = getOrigin(props, padding);
   const data = Data.getData(props);
   const slices = getSlices(props, data);
   const pathFunction = d3Shape.arc()

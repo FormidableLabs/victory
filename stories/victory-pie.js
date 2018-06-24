@@ -1,9 +1,7 @@
-/*global window:false*/
 /*eslint-disable no-magic-numbers*/
 import React from "react";
 import { storiesOf } from "@storybook/react";
 import { action } from "@storybook/addon-actions";
-import _ from "lodash";
 import { VictoryPie } from "../src";
 
 storiesOf("VictoryPie", module)
@@ -65,6 +63,17 @@ storiesOf("VictoryPie", module)
       innerRadius={140}
       padAngle={5}
       startAngle={-90}
+    />
+  ))
+  .add("with a radius prop", () => (
+    <VictoryPie
+      radius={100}
+    />
+  ))
+  .add("with an origin prop", () => (
+    <VictoryPie
+      radius={100}
+      origin={{ x: 150, y: 150 }}
     />
   ))
   .add("with custom data and colors", () => (
@@ -140,51 +149,4 @@ storiesOf("VictoryPie", module)
         }]}
       />
     </div>
-  ))
-  .add("animation: custom entrance transitions", () => {
-    class PieContainer extends React.Component {
-      constructor(props) {
-        super(props);
-        this.state = { data: this.getData() };
-      }
-
-      getData() { //eslint-disable-line
-        const samples = _.random(6, 10);
-        return _.range(samples).map((data) => {
-          return {
-            x: data,
-            y: _.random(3, 10),
-            label: `#${data}`
-          };
-        });
-      }
-
-      componentDidMount() {
-        window.setInterval(() => {
-          this.setState({ data: this.getData() });
-        }, 2000);
-      }
-
-      render() {
-        return (
-          <div className="chromatic-ignore">
-            <VictoryPie
-              data={this.state.data}
-              labelRadius={120}
-              colorScale="qualitative"
-              animate={{
-                duration: 1000,
-                onEnter: {
-                  duration: 500,
-                  before: () => ({ y: 0, label: "NEW" }),
-                  after: (datum) => ({ y: datum.y, label: datum.label })
-                }
-              }}
-            />
-          </div>
-        );
-      }
-    }
-
-    return <PieContainer/>;
-  });
+  ));
