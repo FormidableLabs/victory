@@ -1,10 +1,16 @@
 # Victory Changelog
 
+## 0.27.2
+
+VictoryPie
+-[182](https://github.com/FormidableLabs/victory-pie/pull/182) Adds optional `radius` and `origin` props to `VictoryPie`. The `radius` prop should be given as a single number. The `origin` prop should be given as an object with number values specified for "x" and "y". When these props are not given, radius and origin are determined by `width`, `height`, and `padding` as previously.
+
 ## 0.27.1 (2018-06-21)
 
 VictoryCore
 -[390](https://github.com/FormidableLabs/victory-core/pull/390) *Breaking Change for other Victory packages*
 This PR changes how the exported helper `reduceChildren` operates, and removes `getDomainFromGroupedData`
+-[392](https://github.com/FormidableLabs/victory-core/pull/392) Make sure transforms are applied to primitive components
 
 VictoryChart
 -[555](https://github.com/FormidableLabs/victory-chart/pull/555) Refactors how `VictoryStack` and `VictoryGroup` interact with child data. Fixes bugs related to stacked and grouped charts in `VictoryVoronoiContainer`
