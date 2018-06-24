@@ -1,5 +1,9 @@
 # VictoryPie Changelog
 
+## 16.1.0 (2018-06-23)
+
+-[182](https://github.com/FormidableLabs/victory-pie/pull/182) Adds optional `radius` and `origin` props to `VictoryPie`. The `radius` prop should be given as a single number. The `origin` prop should be given as an object with number values specified for "x" and "y". When these props are not given, radius and origin are determined by `width`, `height`, and `padding` as previously.
+
 ## 16.0.1 (2018-06-21)
 
 -[184](https://github.com/FormidableLabs/victory-pie/pull/184) Update `victory-core`
