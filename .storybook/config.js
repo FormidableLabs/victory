@@ -31,6 +31,7 @@ function loadStories() {
   require("../stories/victory-polar-axis");
   require("../stories/victory-scatter");
   require("../stories/containers-and-addons");
+  require("../stories/victory-pie");
 }
 
 configure(loadStories, module);

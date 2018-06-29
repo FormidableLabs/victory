@@ -1,10 +1,11 @@
 import * as d3Shape from "d3-shape";
 import * as d3Scale from "d3-scale";
 import { voronoi as d3Voronoi } from "d3-voronoi";
-import { without } from "lodash";
+import { without, min, max, property } from "lodash";
 
 const RECTANGULAR_SEQUENCE = ["M", "A", "L", "A", "L", "A", "L", "A", "z"];
 const CIRCULAR_SEQUENCE = ["M", "m", "a", "a"];
+const FLYOUT_SEQUENCE = ["M", "L", "L", "L", "A", "L", "A", "L", "A", "L", "A", "z"];
 
 const parseSvgPathCommands = (commandStr) => {
   const matches = commandStr.match(
@@ -159,6 +160,16 @@ const expectations = {
     const path = wrapper.find("path").prop("d");
     expect(path).to.not.equal(undefined);
     expect(path).to.equal(calculateD3Path(props, pathType, index));
+  },
+  /**
+   * Assert the wrapper renders a flyout shape.
+   *
+   * @param {ShallowWrapper} wrapper - An enzyme wrapper.
+   * @returns {undefined}
+   */
+  expectIsFlyout(wrapper) {
+    const commands = getPathCommandsFromWrapper(wrapper);
+    expect(exhibitsShapeSequence(wrapper, FLYOUT_SEQUENCE, commands)).to.equal(true);
   }
 };
 
@@ -176,6 +187,26 @@ const helpers = {
     return Math.abs(commands[0].args[1] - commands[2].args[1]);
   },
 
+  /**
+   * Assert the wrapper renders a 4-sided shape and return dimensions.
+   *
+   * @param {ShallowWrapper} wrapper - An enzyme wrapper.
+   * @returns {Object}                 Dimensions of the shape
+   */
+  getBarShape(wrapper) {
+    const commands = getPathCommandsFromWrapper(wrapper);
+
+    const points = commands.filter((command) => { return command.name !== "z"; });
+    const verticalPoints = points.map(property("args.1"));
+    const horizontalPoints = points.map(property("args.0"));
+    const height = max(verticalPoints) - min(verticalPoints);
+    const width = max(horizontalPoints) - min(horizontalPoints);
+
+    return {
+      height,
+      width
+    };
+  },
   /**
    * Retrieve the raw svg coordinates for the center of a point.
    *
