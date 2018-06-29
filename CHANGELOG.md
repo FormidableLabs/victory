@@ -1,5 +1,9 @@
 # VictoryChart Changelog
 
+## 27.1.1 (2018-06-29)
+
+-[604](https://github.com/FormidableLabs/victory-chart/pull/604) Average value and baseline (_i.e._ `y` and `y0`) when calculating voronoi layout
+
 ## 27.1.0 (2018-06-20)
 
 -[555](https://github.com/FormidableLabs/victory-chart/pull/555) Refactors how `VictoryStack` and `VictoryGroup` interact with child data. Fixes bugs related to stacked and grouped charts in `VictoryVoronoiContainer`
