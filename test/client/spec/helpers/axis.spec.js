@@ -1,9 +1,9 @@
 /* global sinon */
 /* eslint-disable no-unused-expressions,react/no-multi-comp */
-import Axis from "src/helpers/axis";
-import { Scale } from "victory-core";
+import Axis from "packages/victory-chart/src/helpers/axis";
+import { Scale } from "packages/victory-core/src/index";
 import React from "react";
-import { VictoryAxis, VictoryBar } from "src/index";
+import { VictoryAxis, VictoryBar } from "packages/victory-chart/src/index";
 
 describe("helpers/axis", () => {
   const getVictoryAxis = (props) => React.createElement(VictoryAxis, props);

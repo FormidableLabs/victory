@@ -1,7 +1,7 @@
 /*eslint-disable react/no-multi-comp*/
 import React from "react";
 import PropTypes from "prop-types";
-import { Data } from "src/index";
+import { Data } from "packages/victory-core/src/index";
 import { defaults, get, reduce, map } from "lodash";
 
 class MockDataComponent extends React.Component {

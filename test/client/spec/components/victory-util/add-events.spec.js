@@ -4,7 +4,7 @@ import React from "react";
 import { get } from "lodash";
 import { mount } from "enzyme";
 import { addEvents } from "packages/victory-core/src/index";
-import { MockVictoryComponent, MockLabel, MockDataComponent } from "../../../../mock-components";
+import { MockVictoryComponent, MockLabel, MockDataComponent } from "../../mock-components";
 
 describe("victory-util/add-events", () => {
   const EventedMockVictoryComponent = addEvents(MockVictoryComponent);

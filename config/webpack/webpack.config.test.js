@@ -13,8 +13,8 @@ var WDS_PORT = 3001;
 
 module.exports = {
   cache: true,
-  context: path.join(ROOT, "test/client"),
-  entry: "./main",
+  context: path.join(ROOT, "test"),
+  entry: "./client/main",
   output: {
     filename: "main.js",
     publicPath: "/assets/"

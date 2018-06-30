@@ -7,7 +7,7 @@ import React from "react";
 import { addEvents } from "packages/victory-core/src/index";
 import VictorySharedEvents from
   "packages/victory-core/src/victory-shared-events/victory-shared-events";
-import { MockVictoryComponent, MockDataComponent } from "../../../../../mock-components";
+import { MockVictoryComponent, MockDataComponent } from "../../mock-components";
 
 describe("components/victory-shared-events", () => {
   const EventedMockVictoryComponent = addEvents(MockVictoryComponent);
