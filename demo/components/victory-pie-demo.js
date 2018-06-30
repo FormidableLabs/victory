@@ -6,7 +6,7 @@ import React from "react";
 import { VictoryPie } from "../../packages/victory-pie/src/index";
 import {
   VictoryContainer, VictoryTheme, Slice, VictoryTooltip, VictoryLabel
-} from "victory-core";
+} from "../../packages/victory-core/src/index";
 
 class BorderLabelSlice extends React.Component {
   static propTypes = {

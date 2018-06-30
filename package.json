@@ -25,23 +25,9 @@
   },
   "homepage": "https://github.com/formidablelabs/open-source/victory",
   "scripts": {
-    "postinstall": "npm run build",
-    "preversion": "npm run check",
-    "version": "npm run clean && npm run build",
-    "postversion": "publishr postversion -V",
-    "postpublish": "publishr postpublish -V",
     "test": "npm run test-frontend",
     "start": "npm run dev",
-    "babel-es": "cross-env BABEL_ENV=es babel src --out-dir es --copy-files",
-    "babel-lib": "cross-env BABEL_ENV=commonjs babel src --out-dir lib --copy-files",
     "benchmark": "npm run check-perf",
-    "build-dist-dev": "webpack --bail --config ./config/webpack/webpack.config.dev.js --colors",
-    "build-dist-min": "webpack --bail --config ./config/webpack/webpack.config.js --colors",
-    "build-dist": "npm run clean-dist && concurrently --buffer 'npm run build-dist-min' 'npm run build-dist-dev'",
-    "build-es": "npm run clean-es && npm run babel-es",
-    "build-lib": "concurrently --buffer 'npm run clean-lib' 'npm run babel-lib'",
-    "build-libs": "npm run build-lib && npm run build-es",
-    "build": "concurrently --buffer 'npm run build-libs' 'npm run build-dist'",
     "check-ci": "npm run lint && npm run test-ci",
     "check-cov": "npm run lint && npm run test-cov",
     "check-dev": "npm run lint && npm run test-dev",
@@ -49,15 +35,11 @@
     "check": "npm run lint && npm run test",
     "chromatic-test": "chromatic test --storybook-addon --exit-zero-on-changes",
     "chromatic": "chromatic test --storybook-addon",
-    "clean-dist": "rimraf dist",
-    "clean-es": "rimraf es",
-    "clean-lib": "rimraf lib",
-    "clean": "concurrently 'npm run clean-lib' 'npm run clean-dist' 'npm run clean-es'",
     "dev": "concurrently 'npm run server-dev' 'npm run server-test'",
     "hot": "concurrently 'npm run server-hot' 'npm run server-test'",
     "lint-demo": "eslint --color demo",
     "lint-perf": "eslint --color perf",
-    "lint-source": "eslint --color src",
+    "lint-source": "eslint --color packages",
     "lint-stories": "eslint --color stories",
     "lint-test": "eslint --color test",
     "lint": "concurrently 'npm run lint-source' 'npm run lint-demo' 'npm run lint-test' 'npm run lint-stories'",
@@ -73,13 +55,7 @@
     "test-frontend-dev": "karma start ./config/karma/karma.conf.dev.js",
     "test-frontend-perf": "karma start ./config/karma/karma.conf.perf.js",
     "test-frontend": "karma start ./config/karma/karma.conf.js",
-    "test-perf": "npm run test-frontend-perf",
-    "version-dry-run": "publishr dry-run -V"
-  },
-  "dependencies": {
-    "victory-chart": "^27.1.0",
-    "victory-core": "^24.0.0",
-    "victory-pie": "^16.1.0"
+    "test-perf": "npm run test-frontend-perf"
   },
   "devDependencies": {
     "@storybook/addon-options": "^3.1.2",
@@ -157,9 +133,6 @@
     "webpack-stats-plugin": "^0.1.1"
   },
   "publishr": {
-    "files": {
-      ".npmignore": ".npmignore.publishr"
-    },
     "scripts": {
       "postinstall": ""
     }

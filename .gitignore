@@ -35,5 +35,6 @@ lib
 es
 node_modules
 npm-debug.log*
+lerna-debug.log*
 yarn.lock
 yarn-error.log*
