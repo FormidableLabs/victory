@@ -24,7 +24,7 @@ module.exports = {
       // enzyme webpack issue https://github.com/airbnb/enzyme/issues/47
       sinon: "node_modules/sinon/pkg/sinon.js",
       // Allow root import of `src/FOO` from ROOT/src.
-      src: path.join(ROOT, "src")
+      packages: path.join(ROOT, "packages")
     }
   }),
   // enzyme webpack issue https://github.com/airbnb/enzyme/issues/47

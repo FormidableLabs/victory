@@ -3,7 +3,7 @@
 var path = require("path");
 var LodashModuleReplacementPlugin = require("lodash-webpack-plugin");
 
-var SRC = path.resolve("src");
+var SRC = path.resolve("packages");
 var DEMO = path.resolve("demo");
 var WDS_PORT = 3000;
 

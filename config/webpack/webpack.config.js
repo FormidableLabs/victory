@@ -4,7 +4,7 @@ var path = require("path");
 var webpack = require("webpack");
 var LodashModuleReplacementPlugin = require("lodash-webpack-plugin");
 
-var SRC = path.resolve("src");
+var SRC = path.resolve("packages");
 var TEST = path.resolve("test");
 var PERF = path.resolve("perf");
 

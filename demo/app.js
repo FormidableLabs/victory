@@ -29,6 +29,9 @@ import ExternalEventsDemo from "./components/external-events-demo";
 import VictoryBrushLineDemo from "./components/victory-brush-line-demo";
 import PerformanceDemo from "./components/performance";
 import DebugDemo from "./components/debug-demo";
+import VictoryLabelDemo from "./components/victory-label-demo";
+import VictoryLegendDemo from "./components/victory-legend-demo";
+import VictoryPieDemo from "./components/victory-pie-demo";
 
 class Home extends React.Component {
   render() {
@@ -83,6 +86,9 @@ class App extends React.Component {
     case "/victory-brush-line": Child = VictoryBrushLineDemo; break;
     case "/performance": Child = PerformanceDemo; break;
     case "/debug": Child = DebugDemo; break;
+    case "/label": Child = VictoryLabelDemo; break;
+    case "/legend": Child = VictoryLegendDemo; break;
+    case "/pie": Child = VictoryPieDemo; break;
     default: Child = Home;
     }
     return Child;
@@ -119,6 +125,9 @@ class App extends React.Component {
           <li><a href="#/external-events">External Events demo</a></li>
           <li><a href="#/victory-brush-line">VictoryBrushLine demo</a></li>
           <li><a href="#/performance">Large Data Performance</a></li>
+          <li><a href="#/label">VictoryLabel Demo</a></li>
+          <li><a href="#/legend">VictoryLegend Demo</a></li>
+          <li><a href="#/pie">VictoryPie Demo</a></li>
         </ul>
         <Child/>
       </div>
