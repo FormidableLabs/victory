@@ -1,8 +1,8 @@
 /*eslint-disable no-magic-numbers*/
 import React from "react";
 import { storiesOf } from "@storybook/react";
-import { VictoryBoxPlot } from "../src/index";
-import { VictoryTooltip, VictoryTheme } from "victory-core";
+import { VictoryBoxPlot } from "../packages/victory-chart/src/index";
+import { VictoryTooltip, VictoryTheme } from "../packages/victory-core/src/index";
 import { range } from "lodash";
 import seedrandom from "seedrandom";
 import { getArrayData } from "./data";

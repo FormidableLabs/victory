@@ -1,8 +1,8 @@
 /*eslint-disable no-magic-numbers*/
 import React from "react";
 import { storiesOf } from "@storybook/react";
-import { VictoryScatter, VictoryStack } from "../src/index";
-import { VictoryTooltip, VictoryTheme } from "victory-core";
+import { VictoryScatter, VictoryStack } from "../packages/victory-chart/src/index";
+import { VictoryTooltip, VictoryTheme } from "../packages/victory-core/src/index";
 import { getData, getMixedData, getTimeData, getLogData } from "./data";
 import { getChartDecorator, getPolarChartDecorator } from "./decorators";
 

@@ -3,8 +3,8 @@ import React from "react";
 import { storiesOf } from "@storybook/react";
 import {
   VictoryBar, VictoryScatter, VictoryLine, VictoryChart, VictoryAxis, VictoryBoxPlot
-} from "../src/index";
-import { VictoryTheme } from "victory-core";
+} from "../packages/victory-chart/src/index";
+import { VictoryTheme } from "../packages/victory-core/src/index";
 import { getData, getFourQuadrantData, getArrayData } from "./data";
 
 storiesOf("VictoryChart", module)

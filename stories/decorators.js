@@ -2,8 +2,8 @@
 /*eslint-disable no-magic-numbers*/
 /*eslint-disable react/no-multi-comp*/
 import React from "react";
-import { VictoryChart, VictoryPolarAxis } from "../src/index";
-import { VictoryTheme } from "victory-core";
+import { VictoryChart, VictoryPolarAxis } from "../packages/victory-chart/src/index";
+import { VictoryTheme } from "../packages/victory-core/src/index";
 
 const getChartDecorator = (props) => {
   return (story) => {

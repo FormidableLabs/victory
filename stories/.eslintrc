@@ -1,0 +1,8 @@
+
+{
+  "extends": "formidable/configurations/es6-react",
+  "rules": {
+    "no-magic-numbers": 0,
+    "import/no-unresolved": 0
+  }
+}

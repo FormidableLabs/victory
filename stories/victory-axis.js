@@ -3,8 +3,8 @@ import React from "react";
 import { range } from "lodash";
 import seedrandom from "seedrandom";
 import { storiesOf } from "@storybook/react";
-import { VictoryAxis, VictoryChart } from "../src/index";
-import { VictoryTheme } from "victory-core";
+import { VictoryAxis, VictoryChart } from "../packages/victory-chart/src/index";
+import { VictoryTheme } from "../packages/victory-core/src/index";
 
 const getTimeValues = (num) => {
   const current = 1523389495000;
