@@ -10,7 +10,7 @@ import {
   VictoryLegend,
   VictoryTheme,
   VictoryTooltip
-} from "victory-core";
+} from "../../packages/victory-core/src/index";
 
 import {
   VictoryArea,
@@ -30,7 +30,7 @@ import {
   VictoryVoronoi,
   VictoryVoronoiContainer,
   VictoryZoomContainer
-} from "../../src/index";
+} from "../../packages/victory-chart/src/index";
 
 class Wrapper extends React.Component {
   static propTypes = {

@@ -3,8 +3,12 @@
 import React from "react";
 import PropTypes from "prop-types";
 import { merge, random, range } from "lodash";
-import { VictoryErrorBar, VictoryScatter, VictoryLine, VictoryChart } from "../../src/index";
-import { VictoryContainer, VictoryTheme, ErrorBar } from "victory-core";
+import {
+  VictoryErrorBar, VictoryScatter, VictoryLine, VictoryChart
+} from "../../packages/victory-chart/src/index";
+import {
+  VictoryContainer, VictoryTheme, ErrorBar
+} from "../../packages/victory-core/src/index";
 
 const getData = () => {
   return range(4).map(() => {

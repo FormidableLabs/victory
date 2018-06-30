@@ -5,8 +5,10 @@ import { random, range, round } from "lodash";
 import {
   VictoryChart, VictoryGroup, VictoryStack, VictoryScatter, VictoryBar, VictoryLine,
   VictoryCursorContainer
-} from "../../src/index";
-import { VictoryTooltip, VictoryTheme, VictoryLabel, VictoryLegend } from "victory-core";
+} from "../../packages/victory-chart/src/index";
+import {
+  VictoryTooltip, VictoryTheme, VictoryLabel, VictoryLegend
+} from "../../packages/victory-core/src/index";
 
 const makeData = () => range(1500).map((x) => ({ x, y: x + 10 * Math.random() }));
 

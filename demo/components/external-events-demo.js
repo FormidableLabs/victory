@@ -5,7 +5,7 @@ import React from "react";
 import {
   VictoryChart, VictoryBar, VictoryStack, VictoryVoronoiContainer,
   VictoryLine, VictoryArea, VictoryZoomContainer
-} from "../../src/index";
+} from "../../packages/victory-chart/src/index";
 import { range } from "lodash";
 
 class App extends React.Component {

@@ -3,8 +3,8 @@ import React from "react";
 import {
   VictoryChart, VictoryGroup, VictoryStack, VictoryScatter, VictoryBar, VictoryLine,
   VictoryBrushContainer, VictoryZoomContainer, VictoryAxis
-} from "../../src/index";
-import { VictoryLegend } from "victory-core";
+} from "../../packages/victory-chart/src/index";
+import { VictoryLegend } from "../../packages/victory-core/src/index";
 
 class App extends React.Component {
   constructor() {

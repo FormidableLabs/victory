@@ -4,9 +4,9 @@ import { round } from "lodash";
 import {
   VictoryChart, VictoryGroup, VictoryStack, VictoryScatter, VictoryBar, VictoryLine,
   createContainer
-} from "../../src/index";
+} from "../../packages/victory-chart/src/index";
 
-import { VictoryTooltip, VictoryLegend } from "victory-core";
+import { VictoryTooltip, VictoryLegend } from "../../packages/victory-core/src/index";
 
 const Charts = ({ behaviors }) => { // eslint-disable-line react/prop-types
   const containerStyle = {

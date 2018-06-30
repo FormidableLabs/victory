@@ -4,9 +4,9 @@ import React from "react";
 import {
   VictoryPolarAxis, VictoryScatter, VictoryLine, VictoryArea, VictoryBar, VictorySelectionContainer,
   VictoryStack, VictoryChart, VictoryGroup, VictoryVoronoiContainer, VictoryZoomContainer
-} from "../../src/index";
+} from "../../packages/victory-chart/src/index";
 import { random, range, merge, keys } from "lodash";
-import { VictoryTheme, VictoryTooltip, VictoryLabel } from "victory-core";
+import { VictoryTheme, VictoryTooltip, VictoryLabel } from "../../packages/victory-core/src/index";
 
 
 const multiAxisData = [

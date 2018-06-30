@@ -6,8 +6,10 @@ import { assign, merge, random, range, omit } from "lodash";
 import {
   VictoryChart, VictoryLine, VictoryAxis, VictoryBar, VictoryArea,
   VictoryScatter, VictoryStack, VictoryGroup
-} from "../../src/index";
-import { VictoryLabel, VictoryTheme, VictoryClipContainer } from "victory-core";
+} from "../../packages/victory-chart/src/index";
+import {
+  VictoryLabel, VictoryTheme, VictoryClipContainer
+} from "../../packages/victory-core/src/index";
 
 const UPDATE_INTERVAL = 3000;
 

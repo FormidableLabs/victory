@@ -6,10 +6,10 @@ import { range, merge, random, minBy, maxBy, last, round } from "lodash";
 import {
   VictoryChart, VictoryZoomContainer, VictoryArea, VictoryLine,
   VictoryAxis, VictoryGroup, VictoryStack, VictoryScatter
-} from "../../src/index";
+} from "../../packages/victory-chart/src/index";
 import {
   VictoryTheme, VictoryClipContainer, VictoryPortal, VictoryLegend, VictoryTooltip
-} from "victory-core";
+} from "../../packages/victory-core/src/index";
 
 const allData = range(0, 10, 0.001).map((x) => ({
   x, y: Math.sin(Math.PI * x / 2) * x / 10

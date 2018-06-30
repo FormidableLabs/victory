@@ -1,8 +1,8 @@
 /*global window:false */
 /*eslint-disable no-magic-numbers */
 import React from "react";
-import { VictoryVoronoi } from "../../src/index";
-import { VictoryTooltip } from "victory-core";
+import { VictoryVoronoi } from "../../packages/victory-chart/src/index";
+import { VictoryTooltip } from "../../packages/victory-core/src/index";
 import { range, random } from "lodash";
 
 const getData = () => {

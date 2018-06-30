@@ -3,8 +3,8 @@ import React from "react";
 import {
   VictoryChart, VictoryStack, VictoryBar, VictoryLine,
   VictoryGroup, VictoryScatter, VictoryErrorBar, VictoryVoronoi
-} from "../../src/index";
-import { VictoryTooltip } from "victory-core";
+} from "../../packages/victory-chart/src/index";
+import { VictoryTooltip } from "../../packages/victory-core/src/index";
 import { range, random } from "lodash";
 
 

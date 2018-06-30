@@ -3,8 +3,8 @@
 import React from "react";
 import {
   VictoryChart, VictoryAxis, VictoryBar, VictoryScatter, VictoryBrushLine, VictoryLine
-} from "../../src/index";
-import { VictoryLabel } from "victory-core";
+} from "../../packages/victory-chart/src/index";
+import { VictoryLabel } from "../../packages/victory-core/src/index";
 import _ from "lodash";
 
 const data = [

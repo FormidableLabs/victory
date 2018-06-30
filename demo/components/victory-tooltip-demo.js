@@ -4,8 +4,8 @@ import {
   VictoryChart, VictoryBar,
   VictoryScatter, VictoryStack, VictoryGroup, VictoryAxis,
   VictoryCandlestick, VictoryErrorBar
-} from "../../src/index";
-import { VictoryTooltip } from "victory-core";
+} from "../../packages/victory-chart/src/index";
+import { VictoryTooltip } from "../../packages/victory-core/src/index";
 
 class App extends React.Component {
   render() {

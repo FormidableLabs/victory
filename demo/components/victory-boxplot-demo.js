@@ -1,9 +1,8 @@
 /*global window:false */
 /*eslint-disable no-magic-numbers */
 import React from "react";
-import VictoryChart from "../../src/components/victory-chart/victory-chart";
-import VictoryBoxPlot from "../../src/components/victory-boxplot/victory-boxplot";
-import { VictoryTheme } from "victory-core";
+import { VictoryChart, VictoryBoxPlot } from "../../packages/victory-chart/src/index";
+import { VictoryTheme } from "../../packages/victory-core/src/index";
 import { range, random } from "lodash";
 
 export default class App extends React.Component {

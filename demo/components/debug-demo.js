@@ -3,7 +3,7 @@
 import React from "react";
 import {
   VictoryChart, VictoryStack, VictoryVoronoiContainer, VictoryBar, VictorySelectionContainer
-} from "../../src/index";
+} from "../../packages/victory-chart/src/index";
 
 class App extends React.Component {
 

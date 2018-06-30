@@ -3,8 +3,10 @@
 import React from "react";
 import PropTypes from "prop-types";
 import { random, range, merge } from "lodash";
-import { VictoryCandlestick, VictoryChart, VictoryAxis } from "../../src/index";
-import { VictoryTheme } from "victory-core";
+import {
+  VictoryCandlestick, VictoryChart, VictoryAxis
+} from "../../packages/victory-chart/src/index";
+import { VictoryTheme } from "../../packages/victory-core/src/index";
 
 const getData = () => {
   const colors =

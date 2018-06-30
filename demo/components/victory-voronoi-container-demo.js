@@ -4,10 +4,10 @@ import React from "react";
 import {
   VictoryChart, VictoryGroup, VictoryStack, VictoryScatter, VictoryBar, VictoryLine,
   VictoryVoronoiContainer
-} from "../../src/index";
+} from "../../packages/victory-chart/src/index";
 import { random, range } from "lodash";
 
-import { VictoryTooltip, VictoryTheme, VictoryLegend } from "victory-core";
+import { VictoryTooltip, VictoryTheme, VictoryLegend } from "../../packages/victory-core/src/index";
 class App extends React.Component {
 
   constructor() {

@@ -3,8 +3,10 @@
 import React from "react";
 import PropTypes from "prop-types";
 import { merge, random, range } from "lodash";
-import { VictoryScatter } from "../../src/index";
-import { VictoryLabel, VictoryContainer, VictoryTheme } from "victory-core";
+import { VictoryScatter } from "../../packages/victory-chart/src/index";
+import {
+  VictoryLabel, VictoryContainer, VictoryTheme
+} from "../../packages/victory-core/src/index";
 import bubbleData from "./bubble-data.js";
 import symbolData from "./symbol-data.js";
 

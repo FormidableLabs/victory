@@ -1,8 +1,10 @@
 /*global window:false */
 /*eslint-disable no-magic-numbers */
 import React from "react";
-import { VictoryAxis } from "../../src/index";
-import { VictoryLabel, VictoryContainer, VictoryTheme } from "victory-core";
+import { VictoryAxis } from "../../packages/victory-chart/src/index";
+import {
+  VictoryLabel, VictoryContainer, VictoryTheme
+} from "../../packages/victory-core/src/index";
 import { merge, random, range } from "lodash";
 import XYTheme from "../theme/victory-axis-differential-styling-theme";
 
