@@ -1,0 +1,8 @@
+{
+  "extends": "formidable/configurations/es6-react",
+  "rules": {
+    "no-magic-numbers": [
+      "error", { "ignore": [-1, 0, 0.5, 1, 2, 90, 180, 270, 360] }
+    ]
+  }
+}
