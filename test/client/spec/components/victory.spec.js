@@ -1,7 +1,7 @@
 /**
  * Client tests
  */
-import * as Victory from "packages/victory/src/components/victory-pie";
+import * as Victory from "packages/victory/src/index";
 
 describe("victory", () => {
   it("has expected properties", () => { // eslint-disable-line max-statements

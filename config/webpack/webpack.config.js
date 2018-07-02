@@ -4,7 +4,13 @@ var path = require("path");
 var webpack = require("webpack");
 var LodashModuleReplacementPlugin = require("lodash-webpack-plugin");
 
-var SRC = path.resolve("src");
+var PACKAGES = [
+  path.resolve("packages", "victory", "src"),
+  path.resolve("packages", "victory-chart", "src"),
+  path.resolve("packages", "victory-core", "src"),
+  path.resolve("packages", "victory-pie", "src")
+];
+var SRC = path.resolve("packages");
 var TEST = path.resolve("test");
 var PERF = path.resolve("perf");
 
@@ -59,7 +65,7 @@ module.exports = {
         test: /\.js$/,
         // Use include specifically of our sources.
         // Do _not_ use an `exclude` here.
-        include: [SRC, TEST, PERF],
+        include: PACKAGES.concat([TEST, PERF]),
         // **Note**: Cannot use shorthand `"babel-loader"` or `"babel"` when
         // we are playing around with `NODE_PATH` in builder. Manually
         // resolve path.

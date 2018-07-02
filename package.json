@@ -8,16 +8,17 @@
     "d3",
     "charting"
   ],
-  "main": "lib/index.js",
-  "module": "es/index.js",
-  "jsnext:main": "es/index.js",
   "repository": {
     "type": "git",
     "url": "https://github.com/formidablelabs/victory.git"
   },
-  "engines": {
-    "npm": ">=2.0.0"
-  },
+  "private": true,
+  "workspaces": [
+    "packages/*"
+  ],
+  "nohoist": [
+    "**/victory-core", "**/victory-core/**"
+  ],
   "author": "Formidable",
   "license": "MIT",
   "bugs": {
@@ -25,37 +26,55 @@
   },
   "homepage": "https://github.com/formidablelabs/open-source/victory",
   "scripts": {
-    "test": "npm run test-frontend",
-    "start": "npm run dev",
-    "benchmark": "npm run check-perf",
-    "check-ci": "npm run lint && npm run test-ci",
-    "check-cov": "npm run lint && npm run test-cov",
-    "check-dev": "npm run lint && npm run test-dev",
-    "check-perf": "npm run lint-perf && npm run test-perf",
-    "check": "npm run lint && npm run test",
+    "postinstall": "lerna exec --parallel yarn run build-libs",
+    "preversion": "yarn run check",
+    "version": "yarn run clean && yarn run build",
+    "postversion": "publishr postversion -V",
+    "postpublish": "publishr postpublish -V",
+    "test": "yarn run test-frontend",
+    "start": "yarn run dev",
+    "babel-es": "cross-env BABEL_ENV=es babel src --out-dir es --copy-files",
+    "babel-lib": "cross-env BABEL_ENV=commonjs babel src --out-dir lib --copy-files",
+    "benchmark": "yarn run check-perf",
+    "build-dist-dev": "webpack --bail --config ./config/webpack/webpack.config.dev.js --colors",
+    "build-dist-min": "webpack --bail --config ./config/webpack/webpack.config.js --colors",
+    "build-dist": "yarn run clean-dist && concurrently --buffer 'yarn run build-dist-min' 'yarn run build-dist-dev'",
+    "build-es": "yarn run clean-es && yarn run babel-es",
+    "build-lib": "concurrently --buffer 'yarn run clean-lib' 'yarn run babel-lib'",
+    "build-libs": "yarn run build-lib && yarn run build-es",
+    "build": "concurrently --buffer 'yarn run build-libs' 'yarn run build-dist'",
+    "check-ci": "yarn run lint && yarn run test-ci",
+    "check-cov": "yarn run lint && yarn run test-cov",
+    "check-dev": "yarn run lint && yarn run test-dev",
+    "check-perf": "yarn run lint-perf && yarn run test-perf",
+    "check": "yarn run lint && yarn run test",
     "chromatic-test": "chromatic test --storybook-addon --exit-zero-on-changes",
     "chromatic": "chromatic test --storybook-addon",
-    "dev": "concurrently 'npm run server-dev' 'npm run server-test'",
-    "hot": "concurrently 'npm run server-hot' 'npm run server-test'",
+    "clean-es": "rimraf es",
+    "clean-lib": "rimraf lib",
+    "clean": "concurrently 'yarn run clean-lib' 'yarn run clean-dist' 'yarn run clean-es'",
+    "dev": "concurrently 'yarn run server-dev' 'yarn run server-test'",
+    "hot": "concurrently 'yarn run server-hot' 'yarn run server-test'",
     "lint-demo": "eslint --color demo",
     "lint-perf": "eslint --color perf",
     "lint-source": "eslint --color packages",
     "lint-stories": "eslint --color stories",
     "lint-test": "eslint --color test",
-    "lint": "concurrently 'npm run lint-source' 'npm run lint-demo' 'npm run lint-test' 'npm run lint-stories'",
+    "lint": "concurrently 'yarn run lint-source' 'yarn run lint-demo' 'yarn run lint-test' 'yarn run lint-stories'",
     "server-dev": "webpack-dev-server --config ./config/webpack/demo/webpack.config.dev.js --colors --content-base demo",
     "server-hot": "webpack-dev-server --config ./config/webpack/demo/webpack.config.hot.js --colors --inline --hot --content-base demo",
     "server-test": "webpack-dev-server --config ./config/webpack/webpack.config.test.js --colors",
     "storybook": "start-storybook -p 6006",
-    "test-ci": "npm run test-frontend-ci",
-    "test-cov": "npm run test-frontend-cov",
-    "test-dev": "npm run test-frontend-dev",
+    "test-ci": "yarn run test-frontend-ci",
+    "test-cov": "yarn run test-frontend-cov",
+    "test-dev": "yarn run test-frontend-dev",
     "test-frontend-ci": "karma start --browsers PhantomJS,Firefox ./config/karma/karma.conf.coverage.js",
     "test-frontend-cov": "karma start ./config/karma/karma.conf.coverage.js",
     "test-frontend-dev": "karma start ./config/karma/karma.conf.dev.js",
     "test-frontend-perf": "karma start ./config/karma/karma.conf.perf.js",
     "test-frontend": "karma start ./config/karma/karma.conf.js",
-    "test-perf": "npm run test-frontend-perf"
+    "test-perf": "yarn run test-frontend-perf",
+    "version-dry-run": "publishr dry-run -V"
   },
   "devDependencies": {
     "@storybook/addon-options": "^3.1.2",
@@ -86,7 +105,7 @@
     "core-js": "^2.5.1",
     "cross-env": "^5.2.0",
     "d3-scale": "^1.0.0",
-    "d3-shape": "^1.0.0",
+    "d3-shape": "^1.2.0",
     "enzyme": "^3.1.0",
     "enzyme-adapter-react-16": "^1.0.3",
     "eslint": "^2.0.0",
@@ -133,6 +152,9 @@
     "webpack-stats-plugin": "^0.1.1"
   },
   "publishr": {
+    "files": {
+      ".npmignore": ".npmignore.publishr"
+    },
     "scripts": {
       "postinstall": ""
     }

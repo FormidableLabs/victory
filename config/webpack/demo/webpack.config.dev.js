@@ -4,6 +4,12 @@ var path = require("path");
 var LodashModuleReplacementPlugin = require("lodash-webpack-plugin");
 
 var SRC = path.resolve("packages");
+var PACKAGES = [
+  path.resolve("packages", "victory", "src"),
+  path.resolve("packages", "victory-chart", "src"),
+  path.resolve("packages", "victory-core", "src"),
+  path.resolve("packages", "victory-pie", "src")
+];
 var DEMO = path.resolve("demo");
 var WDS_PORT = 3000;
 
@@ -38,11 +44,11 @@ module.exports = {
         test: /\.js$/,
         // Use include specifically of our sources.
         // Do _not_ use an `exclude` here.
-        include: [SRC, DEMO],
+        include: PACKAGES.concat([DEMO]),
         // **Note**: Cannot use shorthand `"babel-loader"` or `"babel"` when
         // we are playing around with `NODE_PATH` in builder. Manually
         // resolve path.
-        loader: require.resolve("babel-loader")
+        loader: "babel-loader"
       }
     ]
   },

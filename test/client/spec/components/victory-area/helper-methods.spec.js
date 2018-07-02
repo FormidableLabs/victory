@@ -4,7 +4,7 @@
 import {
   getDataWithBaseline
 } from "packages/victory-chart/src/components/victory-area/helper-methods";
-import { Data } from "packages/victory-core/src/index";
+import { Data } from "packages/victory-core";
 
 describe("victory-area/helper-methods", () => {
   describe("getDataWithBaseline", () => {

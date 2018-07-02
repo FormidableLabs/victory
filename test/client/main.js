@@ -2,7 +2,7 @@
  * Test setup for client-side tests.
  *
  * Intended for:
- * - Karma tests: `npm run test-client`
+ * - Karma tests: `builder run test-frontend`
  * - Browser tests: `http://localhost:3000/test/client/test.html`
  */
 /*globals window:false*/
@@ -12,7 +12,6 @@ const enzyme = require("enzyme");
 const Adapter = require("enzyme-adapter-react-16");
 
 enzyme.configure({ adapter: new Adapter() });
-
 // --------------------------------------------------------------------------
 // Chai / Sinon / Mocha configuration.
 // --------------------------------------------------------------------------
