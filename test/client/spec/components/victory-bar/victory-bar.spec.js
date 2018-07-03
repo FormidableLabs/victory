@@ -10,7 +10,7 @@ import { shallow, mount } from "enzyme";
 import { omit, range } from "lodash";
 import SvgTestHelper from "../../svg-test-helper";
 import { VictoryBar } from "packages/victory-chart/src/index";
-import { VictoryLabel, Bar } from "packages/victory-core/src/index";
+import { VictoryLabel, Bar } from "packages/victory-core";
 
 describe("components/victory-bar", () => {
   describe("default component rendering", () => {

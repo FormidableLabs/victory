@@ -10,7 +10,7 @@ import { omit } from "lodash";
 import { shallow, mount } from "enzyme";
 import SvgTestHelper from "../../svg-test-helper";
 import { VictoryAxis } from "packages/victory-chart/src/index";
-import { TextSize } from "packages/victory-core/src/index";
+import { TextSize } from "packages/victory-core";
 
 describe("components/victory-axis", () => {
   describe("default component rendering", () => {

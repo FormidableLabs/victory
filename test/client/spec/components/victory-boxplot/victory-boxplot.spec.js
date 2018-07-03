@@ -5,7 +5,7 @@
 import React from "react";
 import { shallow, mount } from "enzyme";
 import { VictoryBoxPlot } from "packages/victory-chart/src/index";
-import { Box } from "packages/victory-core/src/index";
+import { Box } from "packages/victory-core";
 
 const dataset = [
   { x: 1, min: 1, max: 18, median: 8, q1: 5, q3: 15 },

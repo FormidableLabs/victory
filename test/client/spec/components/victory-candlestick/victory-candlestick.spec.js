@@ -7,7 +7,7 @@ import React from "react";
 import { shallow, mount } from "enzyme";
 import { range, omit } from "lodash";
 import { VictoryCandlestick } from "packages/victory-chart/src/index";
-import { VictoryLabel, Candle } from "packages/victory-core/src/index";
+import { VictoryLabel, Candle } from "packages/victory-core";
 
 class MyCandle extends React.Component {
   render() { }

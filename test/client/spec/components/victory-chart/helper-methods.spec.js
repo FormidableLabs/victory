@@ -5,7 +5,7 @@ import {
 } from "packages/victory-chart/src/components/victory-chart/helper-methods";
 import React from "react";
 import { VictoryAxis, VictoryLine } from "packages/victory-chart/src/index";
-import { Log } from "packages/victory-core/src/index";
+import { Log } from "packages/victory-core";
 
 describe("victory-chart/helpers-methods", () => {
   const getVictoryLine = (props) => React.createElement(VictoryLine, props);
