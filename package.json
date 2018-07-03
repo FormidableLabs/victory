@@ -16,9 +16,6 @@
   "workspaces": [
     "packages/*"
   ],
-  "nohoist": [
-    "**/victory-core", "**/victory-core/**"
-  ],
   "author": "Formidable",
   "license": "MIT",
   "bugs": {

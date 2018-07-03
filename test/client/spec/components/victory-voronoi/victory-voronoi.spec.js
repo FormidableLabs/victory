@@ -9,7 +9,7 @@ import { range, omit } from "lodash";
 import { shallow, mount } from "enzyme";
 import SvgTestHelper from "../../svg-test-helper";
 import { VictoryVoronoi } from "packages/victory-chart/src/index";
-import { VictoryLabel, Voronoi } from "packages/victory-core/src/index";
+import { VictoryLabel, Voronoi } from "packages/victory-core";
 
 describe("components/victory-voronoi", () => {
   describe("default component rendering", () => {
