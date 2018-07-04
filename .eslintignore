@@ -1,6 +1,2 @@
-packages/*/dist/*
-packages/*/es/*
-packages/*/lib/*
 node_modules/*
-packages/*/node_modules/*
 config/*

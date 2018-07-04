@@ -5,21 +5,6 @@
   "main": "lib/index.js",
   "author": "Lauren Eastridge",
   "license": "MIT",
-  "scripts": {
-    "babel-es": "cross-env BABEL_ENV=es babel src --out-dir es --copy-files",
-    "babel-lib": "cross-env BABEL_ENV=commonjs babel src --out-dir lib --copy-files",
-    "build-dist-dev": "webpack --bail --config ../../config/webpack/webpack.config.dev.js --colors",
-    "build-dist-min": "webpack --bail --config ../../config/webpack/webpack.config.js --colors",
-    "build-dist": "yarn run clean-dist && concurrently --buffer 'yarn run build-dist-min' 'yarn run build-dist-dev'",
-    "build-es": "yarn run clean-es && yarn run babel-es",
-    "build-lib": "concurrently --buffer 'yarn run clean-lib' 'yarn run babel-lib'",
-    "build-libs": "yarn run build-lib && yarn run build-es",
-    "build": "concurrently --buffer 'yarn run build-libs' 'yarn run build-dist'",
-    "clean-dist": "rimraf dist",
-    "clean-es": "rimraf es",
-    "clean-lib": "rimraf lib",
-    "clean": "concurrently 'yarn run clean-lib' 'yarn run clean-dist' 'yarn run clean-es'"
-  },
   "dependencies": {
     "d3-voronoi": "^1.1.2",
     "lodash": "^4.17.5",
