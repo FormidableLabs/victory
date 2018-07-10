@@ -5,7 +5,8 @@
 
 import React from "react";
 import { mount } from "enzyme";
-import { VictoryBar, VictoryGroup } from "packages/victory-chart/src/index";
+import { VictoryGroup } from "packages/victory-chart/src/index";
+import { VictoryBar } from "packages/victory-bar/src/index";
 
 describe("components/victory-group", () => {
   describe("default component rendering", () => {

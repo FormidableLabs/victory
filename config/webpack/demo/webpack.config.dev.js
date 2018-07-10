@@ -1,15 +1,13 @@
 "use strict";
 
 var path = require("path");
+var glob = require("glob");
 var LodashModuleReplacementPlugin = require("lodash-webpack-plugin");
 
+var ROOT = process.cwd();
 var SRC = path.resolve("packages");
-var PACKAGES = [
-  path.resolve("packages", "victory", "src"),
-  path.resolve("packages", "victory-chart", "src"),
-  path.resolve("packages", "victory-core", "src"),
-  path.resolve("packages", "victory-pie", "src")
-];
+var PACKAGES = glob.sync("packages/*/src", { root: ROOT });
+var FILES = PACKAGES.map(function(p) { return path.join(ROOT, p); });
 var DEMO = path.resolve("demo");
 var WDS_PORT = 3000;
 
@@ -44,7 +42,7 @@ module.exports = {
         test: /\.js$/,
         // Use include specifically of our sources.
         // Do _not_ use an `exclude` here.
-        include: PACKAGES.concat([DEMO]),
+        include: FILES.concat([DEMO]),
         // **Note**: Cannot use shorthand `"babel-loader"` or `"babel"` when
         // we are playing around with `NODE_PATH` in builder. Manually
         // resolve path.

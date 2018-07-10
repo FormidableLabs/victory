@@ -2,8 +2,9 @@
 
 import React from "react";
 import {
-  VictoryChart, VictoryAxis, VictoryBar, VictoryScatter, VictoryBrushLine, VictoryLine
+  VictoryChart, VictoryAxis, VictoryScatter, VictoryBrushLine, VictoryLine
 } from "../../packages/victory-chart/src/index";
+import { VictoryBar } from "../../packages/victory-bar/src/index"
 import { VictoryLabel } from "../../packages/victory-core/src/index";
 import _ from "lodash";
 

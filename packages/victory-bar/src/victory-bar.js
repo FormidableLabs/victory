@@ -1,10 +1,10 @@
 import PropTypes from "prop-types";
 import React from "react";
 import { getBaseProps } from "./helper-methods";
+import Bar from "./bar";
 import {
-  Helpers, VictoryLabel, VictoryContainer, VictoryTheme, Bar, addEvents, Data, Domain
+  Helpers, VictoryLabel, VictoryContainer, VictoryTheme, CommonProps, addEvents, Data, Domain
 } from "victory-core";
-import { BaseProps, DataProps } from "../../helpers/common-props";
 
 const fallbackProps = {
   width: 450,
@@ -44,8 +44,8 @@ class VictoryBar extends React.Component {
   };
 
   static propTypes = {
-    ...BaseProps,
-    ...DataProps,
+    ...CommonProps.baseProps,
+    ...CommonProps.dataProps,
     alignment: PropTypes.oneOf(["start", "middle", "end"]),
     barRatio: PropTypes.number,
     cornerRadius: PropTypes.oneOfType([

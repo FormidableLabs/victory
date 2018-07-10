@@ -2,9 +2,10 @@
 import React from "react";
 import { round } from "lodash";
 import {
-  VictoryChart, VictoryGroup, VictoryStack, VictoryScatter, VictoryBar, VictoryLine,
+  VictoryChart, VictoryGroup, VictoryStack, VictoryScatter, VictoryLine,
   createContainer
 } from "../../packages/victory-chart/src/index";
+import { VictoryBar } from "../../packages/victory-bar/src/index"
 
 import { VictoryTooltip, VictoryLegend } from "../../packages/victory-core/src/index";
 

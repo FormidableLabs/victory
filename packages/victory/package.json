@@ -12,6 +12,7 @@
   "author": "Formidable",
   "license": "MIT",
   "dependencies": {
+    "victory-bar": "^27.1.0",
     "victory-chart": "^27.1.0",
     "victory-core": "^24.0.0",
     "victory-pie": "^16.1.0"

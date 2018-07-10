@@ -1,15 +1,13 @@
 import React from "react";
 import PropTypes from "prop-types";
-import Helpers from "../victory-util/helpers";
+import { Helpers, Path, CommonProps } from "victory-core"
 import { assign, isObject } from "lodash";
-import CommonProps from "./common-props";
-import Path from "./path";
 import * as d3Shape from "d3-shape";
 
 export default class Bar extends React.Component {
 
   static propTypes = {
-    ...CommonProps,
+    ...CommonProps.primitiveProps,
     alignment: PropTypes.oneOf(["start", "middle", "end"]),
     barRatio: PropTypes.number,
     cornerRadius: PropTypes.oneOfType([

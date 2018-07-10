@@ -3,8 +3,9 @@
 import React from "react";
 import PropTypes from "prop-types";
 import {
-  VictoryBar, VictoryChart, VictoryGroup, VictoryStack
+  VictoryChart, VictoryGroup, VictoryStack
 } from "../../packages/victory-chart/src/index";
+import { VictoryBar } from "../../packages/victory-bar/src/index"
 import {
   VictorySharedEvents, VictoryContainer, VictoryTheme, VictoryLabel
 } from "../../packages/victory-core/src/index";

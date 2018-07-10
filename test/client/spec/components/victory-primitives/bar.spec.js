@@ -1,6 +1,6 @@
 import React from "react";
 import { mount } from "enzyme";
-import Bar from "packages/victory-core/src/victory-primitives/bar";
+import Bar from "packages/victory-bar/src/bar";
 import SvgTestHelper from "../../svg-test-helper";
 import * as d3Scale from "d3-scale";
 import { merge } from "lodash";

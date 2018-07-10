@@ -2,9 +2,9 @@
 
 import React from "react";
 import {
-  VictoryChart, VictoryStack, VictoryVoronoiContainer, VictoryBar, VictorySelectionContainer
+  VictoryChart, VictoryStack, VictoryVoronoiContainer, VictorySelectionContainer
 } from "../../packages/victory-chart/src/index";
-
+import { VictoryBar } from "../../packages/victory-bar/src/index"
 class App extends React.Component {
 
   render() {

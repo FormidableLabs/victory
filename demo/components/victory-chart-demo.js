@@ -4,9 +4,10 @@ import React from "react";
 import PropTypes from "prop-types";
 import { assign, merge, random, range, omit } from "lodash";
 import {
-  VictoryChart, VictoryLine, VictoryAxis, VictoryBar, VictoryArea,
+  VictoryChart, VictoryLine, VictoryAxis, VictoryArea,
   VictoryScatter, VictoryStack, VictoryGroup
 } from "../../packages/victory-chart/src/index";
+import { VictoryBar } from "../../packages/victory-bar/src/index"
 import {
   VictoryLabel, VictoryTheme, VictoryClipContainer
 } from "../../packages/victory-core/src/index";

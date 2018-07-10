@@ -2,9 +2,9 @@
 /*eslint-disable no-magic-numbers */
 import React from "react";
 import {
-  VictoryChart, VictoryGroup, VictoryStack, VictoryScatter, VictoryBar, VictoryLine,
-  VictoryVoronoiContainer
+  VictoryChart, VictoryGroup, VictoryStack, VictoryScatter, VictoryLine, VictoryVoronoiContainer
 } from "../../packages/victory-chart/src/index";
+import { VictoryBar } from "../../packages/victory-bar/src/index"
 import { random, range } from "lodash";
 
 import { VictoryTooltip, VictoryTheme, VictoryLegend } from "../../packages/victory-core/src/index";

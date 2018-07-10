@@ -3,7 +3,8 @@
 import Axis from "packages/victory-chart/src/helpers/axis";
 import { Scale } from "packages/victory-core/src/index";
 import React from "react";
-import { VictoryAxis, VictoryBar } from "packages/victory-chart/src/index";
+import { VictoryAxis } from "packages/victory-chart/src/index";
+import { VictoryBar } from "packages/victory-bar/src/index";
 
 describe("helpers/axis", () => {
   const getVictoryAxis = (props) => React.createElement(VictoryAxis, props);

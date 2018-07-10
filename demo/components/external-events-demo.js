@@ -3,9 +3,10 @@
 
 import React from "react";
 import {
-  VictoryChart, VictoryBar, VictoryStack, VictoryVoronoiContainer,
+  VictoryChart, VictoryStack, VictoryVoronoiContainer,
   VictoryLine, VictoryArea, VictoryZoomContainer
 } from "../../packages/victory-chart/src/index";
+import { VictoryBar } from "../../packages/victory-bar/src/index"
 import { range } from "lodash";
 
 class App extends React.Component {

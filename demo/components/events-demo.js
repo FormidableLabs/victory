@@ -1,8 +1,9 @@
 /*eslint-disable no-magic-numbers */
 import React from "react";
 import {
-  VictoryChart, VictoryArea, VictoryStack, VictoryBar, VictoryLine
+  VictoryChart, VictoryArea, VictoryStack, VictoryLine
 } from "../../packages/victory-chart/src/index";
+import { VictoryBar } from "../../packages/victory-bar/src/index"
 import { VictoryTheme, VictoryLabel } from "../../packages/victory-core/src/index";
 import { merge } from "lodash";
 

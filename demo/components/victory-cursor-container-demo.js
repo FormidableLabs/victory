@@ -3,9 +3,9 @@
 import React from "react";
 import { random, range, round } from "lodash";
 import {
-  VictoryChart, VictoryGroup, VictoryStack, VictoryScatter, VictoryBar, VictoryLine,
-  VictoryCursorContainer
+  VictoryChart, VictoryGroup, VictoryStack, VictoryScatter, VictoryLine, VictoryCursorContainer
 } from "../../packages/victory-chart/src/index";
+import { VictoryBar } from "../../packages/victory-bar/src/index"
 import {
   VictoryTooltip, VictoryTheme, VictoryLabel, VictoryLegend
 } from "../../packages/victory-core/src/index";
