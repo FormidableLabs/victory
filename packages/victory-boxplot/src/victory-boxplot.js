@@ -1,10 +1,9 @@
 import React from "react";
 import PropTypes from "prop-types";
 import { flatten } from "lodash";
-import { BaseProps, DataProps } from "../../helpers/common-props";
 import {
     Helpers, VictoryLabel, addEvents, Line, PropTypes as CustomPropTypes,
-    VictoryContainer, VictoryTheme, Box, Whisker, DefaultTransitions
+    VictoryContainer, VictoryTheme, Box, Whisker, DefaultTransitions, CommonProps
 } from "victory-core";
 import { getDomain, getData, getBaseProps } from "./helper-methods";
 
@@ -42,8 +41,8 @@ class VictoryBoxPlot extends React.Component {
   static role = "boxplot";
   static defaultTransitions = DefaultTransitions.discreteTransitions();
   static propTypes = {
-    ...BaseProps,
-    ...DataProps,
+    ...CommonProps.BaseProps,
+    ...CommonProps.DataProps,
     boxWidth: PropTypes.number,
     events: PropTypes.arrayOf(PropTypes.shape({
       target: PropTypes.oneOf([

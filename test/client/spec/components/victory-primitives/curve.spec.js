@@ -1,7 +1,7 @@
 import React from "react";
 import { shallow } from "enzyme";
 import Curve from "packages/victory-line/src/curve";
-import Path from "packages/victory-core/src/victory-primitives/path";
+import { Path } from "packages/victory-core";
 
 describe("victory-primitives/curve", () => {
   const baseProps = {

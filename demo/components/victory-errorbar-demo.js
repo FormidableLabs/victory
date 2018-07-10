@@ -5,11 +5,9 @@ import PropTypes from "prop-types";
 import { merge, random, range } from "lodash";
 import { VictoryChart } from "../../packages/victory-chart/src/index";
 import { VictoryLine } from "../../packages/victory-line/src/index";
-import { VictoryErrorBar } from "../../packages/victory-errorbar/src/index";
+import { VictoryErrorBar, ErrorBar } from "../../packages/victory-errorbar/src/index";
 import { VictoryScatter } from "../../packages/victory-scatter/src/index";
-import {
-  VictoryContainer, VictoryTheme, ErrorBar
-} from "../../packages/victory-core/src/index";
+import { VictoryContainer, VictoryTheme } from "../../packages/victory-core/src/index";
 
 const getData = () => {
   return range(4).map(() => {

@@ -19,7 +19,6 @@ import {
 import {
   VictoryAxis,
   VictoryPolarAxis,
-  VictoryBoxPlot,
   VictoryCandlestick,
   VictoryChart,
   VictoryGroup,
@@ -40,6 +39,7 @@ import { VictoryBar, Bar } from "victory-bar";
 import { VictoryErrorBar, ErrorBar } from "victory-errorbar";
 import { VictoryLine, Curve } from "victory-line";
 import { VictoryScatter } from "victory-scatter";
+import { VictoryBoxPlot } from "victory-boxplot";
 
 export {
   Area, Axis, Bar, Border, Box, Candle, ClipPath, Curve, ErrorBar, Grid, Point, Slice, Voronoi,
