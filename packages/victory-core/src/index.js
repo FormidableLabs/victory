@@ -11,7 +11,6 @@ export { default as VictoryPortal } from "./victory-portal/victory-portal";
 export { default as Portal } from "./victory-portal/portal";
 export { default as Arc } from "./victory-primitives/arc";
 export { default as Border, default as Box } from "./victory-primitives/border";
-export { default as Candle } from "./victory-primitives/candle";
 export { default as ClipPath } from "./victory-primitives/clip-path";
 export { default as Axis, default as Grid } from "./victory-primitives/axis";
 export { default as Point } from "./victory-primitives/point";

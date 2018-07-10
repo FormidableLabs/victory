@@ -2,7 +2,7 @@
 /* eslint max-nested-callbacks: 0 */
 import {
   getData, getDomain
-} from "packages/victory-chart/src/components/victory-candlestick/helper-methods";
+} from "packages/victory-candlestick/src/helper-methods";
 import { range } from "lodash";
 import { fromJS } from "immutable";
 

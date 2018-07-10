@@ -15,7 +15,6 @@ import {
 import {
   VictoryAxis,
   VictoryBrushContainer,
-  VictoryCandlestick,
   VictoryChart,
   VictoryCursorContainer,
   VictoryGroup,
@@ -31,7 +30,7 @@ import { VictoryBar } from "../../packages/victory-bar/src/index";
 import { VictoryLine } from "../../packages/victory-line/src/index";
 import { VictoryScatter } from "../../packages/victory-scatter/src/index";
 import { VictoryErrorBar } from "../../packages/victory-errorbar/src/index";
-
+import { VictoryCandlestick } from "../../packages/victory-candlestick/src/index";
 
 class Wrapper extends React.Component {
   static propTypes = {

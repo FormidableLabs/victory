@@ -1,8 +1,7 @@
 import React from "react";
 import { shallow } from "enzyme";
-import Candle from "packages/victory-core/src/victory-primitives/candle";
-import Line from "packages/victory-core/src/victory-primitives/line";
-import Rect from "packages/victory-core/src/victory-primitives/rect";
+import Candle from "packages/victory-candlestick/src/candle";
+import { Line, Rect } from "packages/victory-core";
 import { merge } from "lodash";
 
 describe("victory-primitives/candle", () => {

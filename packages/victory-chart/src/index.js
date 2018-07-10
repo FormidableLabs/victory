@@ -5,9 +5,6 @@ export { default as VictoryGroup } from "./components/victory-group/victory-grou
 export { default as VictoryStack } from "./components/victory-stack/victory-stack";
 export { default as VictoryVoronoi } from "./components/victory-voronoi/victory-voronoi";
 export {
-  default as VictoryCandlestick
-} from "./components/victory-candlestick/victory-candlestick";
-export {
   selectionContainerMixin,
   default as VictorySelectionContainer
 } from "./components/containers/victory-selection-container";

@@ -1,16 +1,12 @@
 /*eslint no-magic-numbers: ["error", { "ignore": [0.5, 2] }]*/
 import React from "react";
 import PropTypes from "prop-types";
-import Helpers from "../victory-util/helpers";
+import { Helpers, CommonProps, Rect, Line } from "victory-core";
 import { assign, defaults } from "lodash";
-import CommonProps from "./common-props";
-import Rect from "./rect";
-import Line from "./line";
-
 
 export default class Candle extends React.Component {
   static propTypes = {
-    ...CommonProps,
+    ...CommonProps.primitiveProps,
     candleHeight: PropTypes.number,
     close: PropTypes.number,
     datum: PropTypes.object,

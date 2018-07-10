@@ -14,6 +14,7 @@
   "dependencies": {
     "victory-bar": "^27.0.0",
     "victory-boxplot": "^27.0.0",
+    "victory-candlestick": "^27.0.0",
     "victory-chart": "^27.0.0",
     "victory-core": "^24.0.0",
     "victory-errorbar": "^27.0.0",

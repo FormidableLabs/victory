@@ -41,8 +41,8 @@ class VictoryBoxPlot extends React.Component {
   static role = "boxplot";
   static defaultTransitions = DefaultTransitions.discreteTransitions();
   static propTypes = {
-    ...CommonProps.BaseProps,
-    ...CommonProps.DataProps,
+    ...CommonProps.baseProps,
+    ...CommonProps.dataProps,
     boxWidth: PropTypes.number,
     events: PropTypes.arrayOf(PropTypes.shape({
       target: PropTypes.oneOf([

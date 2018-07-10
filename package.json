@@ -31,6 +31,7 @@
     "test": "yarn run test-frontend",
     "start": "yarn run dev",
     "benchmark": "yarn run check-perf",
+    "build-libs": "lerna exec --parallel -- nps build-libs",
     "check-ci": "yarn run lint && yarn run test-ci",
     "check-cov": "yarn run lint && yarn run test-cov",
     "check-dev": "yarn run lint && yarn run test-dev",

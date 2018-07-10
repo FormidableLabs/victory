@@ -2,10 +2,10 @@ import PropTypes from "prop-types";
 import React from "react";
 import {
   PropTypes as CustomPropTypes, Helpers, VictoryLabel, addEvents,
-  VictoryContainer, VictoryTheme, DefaultTransitions, Candle
+  VictoryContainer, VictoryTheme, DefaultTransitions, CommonProps
 } from "victory-core";
+import Candle from "./candle";
 import { getDomain, getData, getBaseProps } from "./helper-methods";
-import { BaseProps, DataProps } from "../../helpers/common-props";
 
 /*eslint-disable no-magic-numbers */
 const fallbackProps = {
@@ -40,8 +40,8 @@ class VictoryCandlestick extends React.Component {
   static defaultTransitions = DefaultTransitions.discreteTransitions();
 
   static propTypes = {
-    ...BaseProps,
-    ...DataProps,
+    ...CommonProps.baseProps,
+    ...CommonProps.dataProps,
     candleColors: PropTypes.shape({ positive: PropTypes.string, negative: PropTypes.string }),
     close: PropTypes.oneOfType([
       PropTypes.func,
