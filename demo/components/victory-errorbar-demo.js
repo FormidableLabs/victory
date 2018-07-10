@@ -3,8 +3,9 @@
 import React from "react";
 import PropTypes from "prop-types";
 import { merge, random, range } from "lodash";
-import { VictoryErrorBar, VictoryChart } from "../../packages/victory-chart/src/index";
+import { VictoryChart } from "../../packages/victory-chart/src/index";
 import { VictoryLine } from "../../packages/victory-line/src/index";
+import { VictoryErrorBar } from "../../packages/victory-errorbar/src/index";
 import { VictoryScatter } from "../../packages/victory-scatter/src/index";
 import {
   VictoryContainer, VictoryTheme, ErrorBar

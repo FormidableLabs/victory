@@ -6,7 +6,7 @@
 import React from "react";
 import { mount } from "enzyme";
 import { VictoryStack } from "packages/victory-chart/src/index";
-import { VictoryBar } from "packages/victory-bar/src/index"
+import { VictoryBar } from "packages/victory-bar/src/index";
 
 describe("components/victory-stack", () => {
   describe("default component rendering", () => {

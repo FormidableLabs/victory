@@ -2,10 +2,10 @@ import PropTypes from "prop-types";
 import React from "react";
 import {
   PropTypes as CustomPropTypes, Helpers, VictoryLabel, addEvents,
-  VictoryContainer, VictoryTheme, DefaultTransitions, ErrorBar
+  VictoryContainer, VictoryTheme, DefaultTransitions, CommonProps
 } from "victory-core";
+import ErrorBar from "./error-bar";
 import { getBaseProps, getDomain, getData } from "./helper-methods";
-import { BaseProps, DataProps } from "../../helpers/common-props";
 
 const fallbackProps = {
   width: 450,
@@ -31,8 +31,8 @@ class VictoryErrorBar extends React.Component {
   static defaultTransitions = DefaultTransitions.discreteTransitions();
 
   static propTypes = {
-    ...BaseProps,
-    ...DataProps,
+    ...CommonProps.baseProps,
+    ...CommonProps.dataProps,
     borderWidth: PropTypes.number,
     errorX: PropTypes.oneOfType([
       PropTypes.func,

@@ -4,7 +4,6 @@ export { default as VictoryPolarAxis } from "./components/victory-polar-axis/vic
 export { default as VictoryBoxPlot } from "./components/victory-boxplot/victory-boxplot";
 export { default as VictoryGroup } from "./components/victory-group/victory-group";
 export { default as VictoryStack } from "./components/victory-stack/victory-stack";
-export { default as VictoryErrorBar } from "./components/victory-errorbar/victory-errorbar";
 export { default as VictoryVoronoi } from "./components/victory-voronoi/victory-voronoi";
 export {
   default as VictoryCandlestick

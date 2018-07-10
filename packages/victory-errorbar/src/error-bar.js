@@ -1,15 +1,12 @@
 /* eslint-disable max-statements */
 import React from "react";
 import PropTypes from "prop-types";
-import Helpers from "../victory-util/helpers";
+import { Helpers, CommonProps, Line } from "victory-core";
 import { assign } from "lodash";
-import CommonProps from "./common-props";
-import Line from "./line";
-
 
 export default class ErrorBar extends React.Component {
   static propTypes = {
-    ...CommonProps,
+    ...CommonProps.primitiveProps,
     borderWidth: PropTypes.number,
     datum: PropTypes.object,
     errorX: PropTypes.oneOfType([

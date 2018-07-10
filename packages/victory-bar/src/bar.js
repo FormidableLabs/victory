@@ -1,6 +1,6 @@
 import React from "react";
 import PropTypes from "prop-types";
-import { Helpers, Path, CommonProps } from "victory-core"
+import { Helpers, Path, CommonProps } from "victory-core";
 import { assign, isObject } from "lodash";
 import * as d3Shape from "d3-shape";
 

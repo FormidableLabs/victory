@@ -13,7 +13,6 @@ export { default as Arc } from "./victory-primitives/arc";
 export { default as Border, default as Box } from "./victory-primitives/border";
 export { default as Candle } from "./victory-primitives/candle";
 export { default as ClipPath } from "./victory-primitives/clip-path";
-export { default as ErrorBar } from "./victory-primitives/error-bar";
 export { default as Axis, default as Grid } from "./victory-primitives/axis";
 export { default as Point } from "./victory-primitives/point";
 export { default as Voronoi } from "./victory-primitives/voronoi";

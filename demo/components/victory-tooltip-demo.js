@@ -1,10 +1,11 @@
 /*eslint-disable no-magic-numbers */
 import React from "react";
 import {
-  VictoryChart, VictoryStack, VictoryGroup, VictoryAxis, VictoryCandlestick, VictoryErrorBar
+  VictoryChart, VictoryStack, VictoryGroup, VictoryAxis, VictoryCandlestick
 } from "../../packages/victory-chart/src/index";
 import { VictoryBar } from "../../packages/victory-bar/src/index";
 import { VictoryScatter } from "../../packages/victory-scatter/src/index";
+import { VictoryErrorBar } from "../../packages/victory-errorbar/src/index";
 import { VictoryTooltip } from "../../packages/victory-core/src/index";
 
 class App extends React.Component {

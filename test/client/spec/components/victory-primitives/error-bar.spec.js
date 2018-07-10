@@ -1,6 +1,6 @@
 import React from "react";
 import { shallow } from "enzyme";
-import ErrorBar from "packages/victory-core/src/victory-primitives/error-bar";
+import ErrorBar from "packages/victory-errorbar/src/error-bar";
 import Line from "packages/victory-core/src/victory-primitives/line";
 import { forEach, merge, omit } from "lodash";
 
