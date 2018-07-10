@@ -1,6 +1,6 @@
 import React from "react";
 import { shallow } from "enzyme";
-import Curve from "packages/victory-core/src/victory-primitives/curve";
+import Curve from "packages/victory-line/src/curve";
 import Path from "packages/victory-core/src/victory-primitives/path";
 
 describe("victory-primitives/curve", () => {

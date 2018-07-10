@@ -2,11 +2,10 @@
 import React from "react";
 import { round } from "lodash";
 import {
-  VictoryChart, VictoryGroup, VictoryStack, VictoryScatter, VictoryLine,
-  createContainer
+  VictoryChart, VictoryGroup, VictoryStack, VictoryScatter, createContainer
 } from "../../packages/victory-chart/src/index";
 import { VictoryBar } from "../../packages/victory-bar/src/index"
-
+import { VictoryLine } from "../../packages/victory-line/src/index";
 import { VictoryTooltip, VictoryLegend } from "../../packages/victory-core/src/index";
 
 const Charts = ({ behaviors }) => { // eslint-disable-line react/prop-types

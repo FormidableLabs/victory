@@ -3,10 +3,9 @@
 import React from "react";
 import PropTypes from "prop-types";
 import { merge, random, range } from "lodash";
-import { VictoryLine, VictoryChart } from "../../packages/victory-chart/src/index";
-import {
-  VictoryContainer, VictoryTheme, Curve, Point
-} from "../../packages/victory-core/src/index";
+import { VictoryChart } from "../../packages/victory-chart/src/index";
+import { VictoryLine, Curve } from "../../packages/victory-line/src/index";
+import { VictoryContainer, VictoryTheme, Point } from "../../packages/victory-core/src/index";
 
 class PointedLine extends React.Component {
   static propTypes = {

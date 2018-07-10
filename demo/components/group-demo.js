@@ -1,10 +1,10 @@
 /*eslint-disable no-magic-numbers */
 import React from "react";
 import {
-  VictoryChart, VictoryStack, VictoryLine,
-  VictoryGroup, VictoryScatter, VictoryErrorBar, VictoryVoronoi
+  VictoryChart, VictoryStack, VictoryGroup, VictoryScatter, VictoryErrorBar, VictoryVoronoi
 } from "../../packages/victory-chart/src/index";
 import { VictoryBar } from "../../packages/victory-bar/src/index"
+import { VictoryLine } from "../../packages/victory-line/src/index";
 import { VictoryTooltip } from "../../packages/victory-core/src/index";
 import { range, random } from "lodash";
 

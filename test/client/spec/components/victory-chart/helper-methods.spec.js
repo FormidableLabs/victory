@@ -4,7 +4,8 @@ import {
   getChildComponents
 } from "packages/victory-chart/src/components/victory-chart/helper-methods";
 import React from "react";
-import { VictoryAxis, VictoryLine } from "packages/victory-chart/src/index";
+import { VictoryAxis } from "packages/victory-chart/src/index";
+import { VictoryLine } from "packages/victory-line/src/index";
 import { Log } from "packages/victory-core";
 
 describe("victory-chart/helpers-methods", () => {

@@ -1,17 +1,37 @@
 /*eslint no-magic-numbers: ["error", { "ignore": [-1, 0, 1, 2] }]*/
 import React from "react";
 import PropTypes from "prop-types";
-import Helpers from "../victory-util/helpers";
-import { defined, getXAccessor, getYAccessor, getAngleAccessor } from "./helpers";
 import { assign } from "lodash";
 import * as d3Shape from "d3-shape";
-import CommonProps from "./common-props";
-import Path from "./path";
+import { Helpers, CommonProps, Path } from "victory-core";
 
+const defined = (d) => {
+  const y = d._y1 !== undefined ? d._y1 : d._y;
+  return y !== null && y !== undefined && d._y0 !== null;
+};
+
+const getXAccessor = (scale) => {
+  return (d) => scale.x(d._x1 !== undefined ? d._x1 : d._x);
+};
+
+const getYAccessor = (scale) => {
+  return (d) => scale.y(d._y1 !== undefined ? d._y1 : d._y);
+};
+
+const getY0Accessor = (scale) => {
+  return (d) => scale.y(d._y0);
+};
+
+const getAngleAccessor = (scale) => {
+  return (d) => {
+    const x = scale.x(d._x1 !== undefined ? d._x1 : d._x);
+    return -1 * x + Math.PI / 2;
+  };
+};
 
 export default class Curve extends React.Component {
   static propTypes = {
-    ...CommonProps,
+    ...CommonProps.primitiveProps,
     interpolation: PropTypes.string,
     openCurve: PropTypes.bool,
     origin: PropTypes.object,

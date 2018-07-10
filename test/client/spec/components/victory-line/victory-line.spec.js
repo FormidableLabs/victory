@@ -9,8 +9,8 @@ import React from "react";
 import { omit } from "lodash";
 import { shallow, mount } from "enzyme";
 import SvgTestHelper from "../../svg-test-helper";
-import { VictoryLine } from "packages/victory-chart/src/index";
-import { VictoryLabel, Curve } from "packages/victory-core";
+import { VictoryLine, Curve } from "packages/victory-line/src/index";
+import { VictoryLabel } from "packages/victory-core";
 
 class MyLineSegment extends React.Component {
   render() { }

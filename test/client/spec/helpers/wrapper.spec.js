@@ -2,7 +2,8 @@
 /* eslint-disable no-unused-expressions,react/no-multi-comp */
 import Wrapper from "packages/victory-chart/src/helpers/wrapper";
 import React from "react";
-import { VictoryAxis, VictoryLine } from "packages/victory-chart/src/index";
+import { VictoryAxis } from "packages/victory-chart/src/index";
+import { VictoryLine } from "packages/victory-line/src/index";
 
 describe("helpers/wrapper", () => {
   const getVictoryLine = (props) => React.createElement(VictoryLine, props);

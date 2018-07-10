@@ -1,11 +1,11 @@
 import PropTypes from "prop-types";
 import React from "react";
 import { getBaseProps } from "./helper-methods";
+import Curve from "./curve";
 import {
   PropTypes as CustomPropTypes, Helpers, VictoryLabel, addEvents, VictoryContainer, VictoryTheme,
-  DefaultTransitions, Curve, VictoryClipContainer, Data, Domain
+  DefaultTransitions, VictoryClipContainer, Data, Domain, CommonProps
 } from "victory-core";
-import { BaseProps, DataProps } from "../../helpers/common-props";
 
 const fallbackProps = {
   width: 450,
@@ -30,8 +30,8 @@ class VictoryLine extends React.Component {
   static continuous = true;
 
   static propTypes = {
-    ...BaseProps,
-    ...DataProps,
+    ...CommonProps.baseProps,
+    ...CommonProps.dataProps,
     interpolation: PropTypes.oneOf([
       "basis", "bundle", "cardinal", "catmullRom", "linear", "monotoneX",
       "monotoneY", "natural", "step", "stepAfter", "stepBefore"
