@@ -1,7 +1,7 @@
 /*eslint-disable no-magic-numbers*/
 import React from "react";
 import { storiesOf } from "@storybook/react";
-import { VictoryErrorBar } from "../packages/victory-chart/src/index";
+import { VictoryErrorBar } from "../packages/victory-errorbar/src/index";
 import { VictoryTooltip, VictoryTheme } from "../packages/victory-core/src/index";
 import { range } from "lodash";
 import seedrandom from "seedrandom";

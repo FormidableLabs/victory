@@ -1,9 +1,11 @@
 /*eslint-disable no-magic-numbers*/
 import React from "react";
 import { storiesOf } from "@storybook/react";
-import {
-  VictoryBar, VictoryScatter, VictoryLine, VictoryChart, VictoryAxis, VictoryBoxPlot
-} from "../packages/victory-chart/src/index";
+import { VictoryChart, VictoryAxis } from "../packages/victory-chart/src/index";
+import { VictoryBar } from "../packages/victory-bar/src/index";
+import { VictoryScatter } from "../packages/victory-scatter/src/index";
+import { VictoryLine } from "../packages/victory-line/src/index";
+import { VictoryBoxPlot } from "../packages/victory-boxplot/src/index";
 import { VictoryTheme } from "../packages/victory-core/src/index";
 import { getData, getFourQuadrantData, getArrayData } from "./data";
 
