@@ -1,10 +1,9 @@
 /*eslint-disable no-magic-numbers */
 
 import React from "react";
-import {
-  VictoryChart, VictoryAxis, VictoryBrushLine
-} from "../../packages/victory-chart/src/index";
+import { VictoryChart, VictoryAxis } from "../../packages/victory-chart/src/index";
 import { VictoryBar } from "../../packages/victory-bar/src/index";
+import { VictoryBrushLine } from "../../packages/victory-brush-line/src/index";
 import { VictoryLine } from "../../packages/victory-line/src/index";
 import { VictoryScatter } from "../../packages/victory-scatter/src/index";
 import { VictoryLabel } from "../../packages/victory-core/src/index";

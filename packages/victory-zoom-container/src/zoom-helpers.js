@@ -1,10 +1,46 @@
 /*eslint no-magic-numbers: ["error", { "ignore": [-1, 0, 1, 2, 1000] }]*/
 import { Children } from "react";
-import { Selection, Collection } from "victory-core";
-import { throttle, isFunction, defaults } from "lodash";
-import Wrapper from "../../helpers/wrapper";
+import { Selection, Collection, Data, Helpers, Domain } from "victory-core";
+import { assign, throttle, isFunction, defaults } from "lodash";
 
-const Helpers = {
+function getCurrentAxis(axis, horizontal) {
+  const otherAxis = axis === "x" ? "y" : "x";
+  return horizontal ? otherAxis : axis;
+};
+
+function getDomainFromChildren(props, axis, childComponents) {
+  const children = childComponents ?
+    childComponents.slice(0) : Children.toArray(props.children);
+  const horizontalChildren = childComponents.some((component) => {
+    return component.props && component.props.horizontal;
+  });
+  const horizontal = props && props.horizontal || horizontalChildren.length > 0;
+  const currentAxis = getCurrentAxis(axis, horizontal);
+  const parentData = props.data ? Data.getData(props, axis) : undefined;
+  const { polar, startAngle, endAngle, categories, minDomain, maxDomain } = props;
+  const baseParentProps = { polar, startAngle, endAngle, categories, minDomain, maxDomain };
+  const parentProps = parentData ?
+    assign(baseParentProps, { data: parentData }) : baseParentProps;
+
+  const iteratee = (child) => {
+    const role = child.type && child.type.role;
+    const sharedProps = assign({}, child.props, parentProps);
+    if (role === "legend" || role === "label") {
+      return null;
+    } else if (child.type && isFunction(child.type.getDomain)) {
+      return child.props && child.type.getDomain(sharedProps, currentAxis);
+    } else {
+      return Domain.getDomain(sharedProps, currentAxis);
+    }
+  };
+  const childDomains = Helpers.reduceChildren(children, iteratee, props);
+
+  const min = childDomains.length === 0 ? 0 : Collection.getMinValue(childDomains);
+  const max = childDomains.length === 0 ? 1 : Collection.getMaxValue(childDomains);
+  return [min, max];
+};
+
+const RawZoomHelpers = {
   checkDomainEquality(a, b) {
     const checkDimension = (dim) => {
       const val1 = a && a[dim];
@@ -163,10 +199,10 @@ const Helpers = {
     let childrenDomain = {};
     if (childComponents.length) {
       childrenDomain = zoomDimension ?
-        { [zoomDimension]: Wrapper.getDomainFromChildren(props, zoomDimension, childComponents) }
+        { [zoomDimension]: getDomainFromChildren(props, zoomDimension, childComponents) }
         : ({
-          x: Wrapper.getDomainFromChildren(props, "x", childComponents),
-          y: Wrapper.getDomainFromChildren(props, "y", childComponents)
+          x: getDomainFromChildren(props, "x", childComponents),
+          y: getDomainFromChildren(props, "y", childComponents)
         });
     }
     return defaults({}, childrenDomain, originalDomain, domain);
@@ -284,20 +320,20 @@ const Helpers = {
   }
 };
 
-export { Helpers as RawZoomHelpers }; // allow victory-native to extend these helpers
+export { RawZoomHelpers }; // allow victory-native to extend these helpers
 
 export default {
-  checkDomainEquality: Helpers.checkDomainEquality.bind(Helpers),
-  onMouseDown: Helpers.onMouseDown.bind(Helpers),
-  onMouseUp: Helpers.onMouseUp.bind(Helpers),
-  onMouseLeave: Helpers.onMouseLeave.bind(Helpers),
+  checkDomainEquality: RawZoomHelpers.checkDomainEquality.bind(RawZoomHelpers),
+  onMouseDown: RawZoomHelpers.onMouseDown.bind(RawZoomHelpers),
+  onMouseUp: RawZoomHelpers.onMouseUp.bind(RawZoomHelpers),
+  onMouseLeave: RawZoomHelpers.onMouseLeave.bind(RawZoomHelpers),
   onMouseMove: throttle(
-    Helpers.onMouseMove.bind(Helpers),
+    RawZoomHelpers.onMouseMove.bind(RawZoomHelpers),
     16, // eslint-disable-line no-magic-numbers
     { leading: true, trailing: false }
   ),
   onWheel: throttle(
-    Helpers.onWheel.bind(Helpers),
+    RawZoomHelpers.onWheel.bind(RawZoomHelpers),
     16, // eslint-disable-line no-magic-numbers
     { leading: true, trailing: false }
   )

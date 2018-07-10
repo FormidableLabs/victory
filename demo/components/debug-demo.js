@@ -1,10 +1,10 @@
 /*eslint-disable no-magic-numbers */
 
 import React from "react";
-import {
-  VictoryChart, VictoryStack, VictoryVoronoiContainer, VictorySelectionContainer
-} from "../../packages/victory-chart/src/index";
+import { VictoryChart, VictoryStack } from "../../packages/victory-chart/src/index";
 import { VictoryBar } from "../../packages/victory-bar/src/index";
+import { VictorySelectionContainer } from "../../packages/victory-selection-container/src/index";
+import { VictoryVoronoiContainer } from "../../packages/victory-voronoi-container/src/index";
 class App extends React.Component {
 
   render() {

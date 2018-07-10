@@ -1,11 +1,12 @@
 /*eslint-disable no-magic-numbers */
 import React from "react";
 import {
-  VictoryChart, VictoryGroup, VictoryStack, VictorySelectionContainer
+  VictoryChart, VictoryGroup, VictoryStack
 } from "../../packages/victory-chart/src/index";
 import { VictoryBar } from "../../packages/victory-bar/src/index";
 import { VictoryLine } from "../../packages/victory-line/src/index";
 import { VictoryScatter } from "../../packages/victory-scatter/src/index";
+import { VictorySelectionContainer } from "../../packages/victory-selection-container/src/index";
 import { VictoryTooltip, VictoryLegend } from "../../packages/victory-core/src/index";
 
 class App extends React.Component {

@@ -1,12 +1,11 @@
 /*global window:false*/
 /*eslint-disable no-magic-numbers */
 import React from "react";
-import {
-  VictoryChart, VictoryGroup, VictoryStack, VictoryVoronoiContainer
-} from "../../packages/victory-chart/src/index";
+import { VictoryChart, VictoryGroup, VictoryStack } from "../../packages/victory-chart/src/index";
 import { VictoryBar } from "../../packages/victory-bar/src/index";
 import { VictoryLine } from "../../packages/victory-line/src/index";
 import { VictoryScatter } from "../../packages/victory-scatter/src/index";
+import { VictoryVoronoiContainer } from "../../packages/victory-voronoi-container/src/index";
 import { random, range } from "lodash";
 
 import { VictoryTooltip, VictoryTheme, VictoryLegend } from "../../packages/victory-core/src/index";

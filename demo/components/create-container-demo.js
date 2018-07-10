@@ -1,9 +1,8 @@
 /*eslint-disable no-magic-numbers,react/no-multi-comp */
 import React from "react";
 import { round } from "lodash";
-import {
-  VictoryChart, VictoryGroup, VictoryStack, createContainer
-} from "../../packages/victory-chart/src/index";
+import { VictoryChart, VictoryGroup, VictoryStack } from "../../packages/victory-chart/src/index";
+import { VictoryCreateContainer } from "../../packages/victory-create-container/src/index";
 import { VictoryBar } from "../../packages/victory-bar/src/index";
 import { VictoryLine } from "../../packages/victory-line/src/index";
 import { VictoryScatter } from "../../packages/victory-scatter/src/index";
@@ -18,12 +17,12 @@ const Charts = ({ behaviors }) => { // eslint-disable-line react/prop-types
     justifyContent: "center"
   };
   const chartStyle = { parent: { border: "1px solid #ccc", margin: "2%", maxWidth: "40%" } };
-  const CustomContainer = createContainer(...behaviors);
+  const CustomContainer = VictoryCreateContainer(...behaviors);
   const behaviorsList = behaviors.map((behavior) => `"${behavior}"`).join(", ");
 
   return (
     <div className="demo">
-      <pre>{`createContainer(${behaviorsList})`}</pre>
+      <pre>{`VictoryCreateContainer(${behaviorsList})`}</pre>
       <div style={containerStyle}>
         {/* A */}
         <VictoryChart style={chartStyle}

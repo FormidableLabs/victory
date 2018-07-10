@@ -1,7 +1,7 @@
 /* eslint no-unused-expressions: 0 */
 /* eslint max-nested-callbacks: 0 */
 
-import { SelectionHelpers } from "packages/victory-chart/src/index";
+import { SelectionHelpers } from "packages/victory-selection-container/src/index";
 import { VictoryBar } from "packages/victory-bar/src/index";
 import React from "react";
 import * as d3Scale from "d3-scale";

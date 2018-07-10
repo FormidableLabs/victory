@@ -81,7 +81,7 @@ describe("victory", () => {
     expect(Victory.selectionContainerMixin).not.to.equal(undefined);
     expect(Victory.cursorContainerMixin).not.to.equal(undefined);
     expect(Victory.combineContainerMixins).not.to.equal(undefined);
-    expect(Victory.createContainer).not.to.equal(undefined);
+    expect(Victory.VictoryCreateContainer).not.to.equal(undefined);
     expect(Victory.VictoryBrushLine).not.to.equal(undefined);
   });
 });

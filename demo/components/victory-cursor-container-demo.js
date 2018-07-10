@@ -2,12 +2,11 @@
 /*eslint-disable no-magic-numbers */
 import React from "react";
 import { random, range, round } from "lodash";
-import {
-  VictoryChart, VictoryGroup, VictoryStack, VictoryCursorContainer
-} from "../../packages/victory-chart/src/index";
+import { VictoryChart, VictoryGroup, VictoryStack } from "../../packages/victory-chart/src/index";
 import { VictoryBar } from "../../packages/victory-bar/src/index";
 import { VictoryLine } from "../../packages/victory-line/src/index";
 import { VictoryScatter } from "../../packages/victory-scatter/src/index";
+import { VictoryCursorContainer } from "../../packages/victory-cursor-container/src/index";
 import {
   VictoryTooltip, VictoryTheme, VictoryLabel, VictoryLegend
 } from "../../packages/victory-core/src/index";

@@ -17,18 +17,7 @@ import {
 } from "victory-core";
 
 import {
-  VictoryAxis,
-  VictoryPolarAxis,
-  VictoryChart,
-  VictoryGroup,
-  VictoryStack,
-  VictoryZoomContainer, ZoomHelpers, zoomContainerMixin,
-  VictorySelectionContainer, SelectionHelpers, selectionContainerMixin,
-  VictoryBrushContainer, BrushHelpers, brushContainerMixin,
-  VictoryVoronoiContainer, VoronoiHelpers, voronoiContainerMixin,
-  VictoryCursorContainer, CursorHelpers, cursorContainerMixin,
-  combineContainerMixins, createContainer,
-  VictoryBrushLine
+  VictoryAxis, VictoryPolarAxis, VictoryChart, VictoryGroup, VictoryStack
 } from "victory-chart";
 
 import { VictoryPie, Slice } from "victory-pie";
@@ -40,7 +29,21 @@ import { VictoryLine, Curve } from "victory-line";
 import { VictoryScatter } from "victory-scatter";
 import { VictoryBoxPlot } from "victory-boxplot";
 import { VictoryVoronoi, Voronoi } from "victory-voronoi";
-
+import { VictoryBrushLine } from "victory-brush-line";
+import { VictoryBrushContainer, BrushHelpers, brushContainerMixin } from "victory-brush-container";
+import {
+  VictoryCursorContainer, CursorHelpers, cursorContainerMixin
+} from "victory-cursor-container";
+import {
+  VictorySelectionContainer, SelectionHelpers, selectionContainerMixin
+} from "victory-selection-container";
+import {
+  VictoryVoronoiContainer, VoronoiHelpers, voronoiContainerMixin
+} from "victory-voronoi-container";
+import {
+  VictoryZoomContainer, ZoomHelpers, zoomContainerMixin, RawZoomHelpers
+} from "victory-zoom-container";
+import { combineContainerMixins, VictoryCreateContainer } from "victory-create-container";
 
 export {
   Area, Axis, Bar, Border, Box, Candle, ClipPath, Curve, ErrorBar, Grid, Point, Slice, Voronoi,
@@ -69,12 +72,12 @@ export {
   VictoryPortal,
   Portal,
   VictoryContainer, VictoryClipContainer,
-  VictoryZoomContainer, ZoomHelpers, zoomContainerMixin,
+  VictoryZoomContainer, ZoomHelpers, zoomContainerMixin, RawZoomHelpers,
   VictorySelectionContainer, SelectionHelpers, selectionContainerMixin,
   VictoryBrushContainer, BrushHelpers, brushContainerMixin,
   VictoryCursorContainer, CursorHelpers, cursorContainerMixin,
   VictoryVoronoiContainer, VoronoiHelpers, voronoiContainerMixin,
-  combineContainerMixins, createContainer,
+  combineContainerMixins, VictoryCreateContainer,
   VictoryBrushLine,
   addEvents, Collection, Data, DefaultTransitions, Domain, Events, Helpers, Log,
   PropTypes, Scale, Style, TextSize, Transitions, Selection, LabelHelpers

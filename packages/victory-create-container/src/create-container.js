@@ -1,11 +1,10 @@
 import { toPairs, groupBy, forOwn, includes, flow, isEmpty, isFunction } from "lodash";
 import { VictoryContainer, Log } from "victory-core";
-
-import { voronoiContainerMixin } from "./victory-voronoi-container";
-import { zoomContainerMixin } from "./victory-zoom-container";
-import { selectionContainerMixin } from "./victory-selection-container";
-import { brushContainerMixin } from "./victory-brush-container";
-import { cursorContainerMixin } from "./victory-cursor-container";
+import { voronoiContainerMixin } from "victory-voronoi-container";
+import { zoomContainerMixin } from "victory-zoom-container";
+import { selectionContainerMixin } from "victory-selection-container";
+import { brushContainerMixin } from "victory-brush-container";
+import { cursorContainerMixin } from "victory-cursor-container";
 
 const ensureArray = (thing) => {
   if (!thing) {

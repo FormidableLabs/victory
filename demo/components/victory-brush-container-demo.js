@@ -1,12 +1,14 @@
 /*eslint-disable no-magic-numbers */
 import React from "react";
 import {
-  VictoryChart, VictoryGroup, VictoryStack, VictoryBrushContainer, VictoryZoomContainer, VictoryAxis
+  VictoryChart, VictoryGroup, VictoryStack, VictoryAxis
 } from "../../packages/victory-chart/src/index";
 import { VictoryBar } from "../../packages/victory-bar/src/index";
 import { VictoryLine } from "../../packages/victory-line/src/index";
 import { VictoryScatter } from "../../packages/victory-scatter/src/index";
 import { VictoryLegend } from "../../packages/victory-core/src/index";
+import { VictoryZoomContainer } from "../../packages/victory-zoom-container/src/index";
+import { VictoryBrushContainer } from "../../packages/victory-brush-container/src/index";
 
 class App extends React.Component {
   constructor() {

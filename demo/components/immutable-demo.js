@@ -14,16 +14,10 @@ import {
 
 import {
   VictoryAxis,
-  VictoryBrushContainer,
   VictoryChart,
-  VictoryCursorContainer,
   VictoryGroup,
   VictoryPolarAxis,
-  VictorySelectionContainer,
-  VictoryStack,
-  VictoryVoronoi,
-  VictoryVoronoiContainer,
-  VictoryZoomContainer
+  VictoryStack
 } from "../../packages/victory-chart/src/index";
 import { VictoryArea } from "../../packages/victory-area/src/index";
 import { VictoryBar } from "../../packages/victory-bar/src/index";
@@ -31,6 +25,12 @@ import { VictoryLine } from "../../packages/victory-line/src/index";
 import { VictoryScatter } from "../../packages/victory-scatter/src/index";
 import { VictoryErrorBar } from "../../packages/victory-errorbar/src/index";
 import { VictoryCandlestick } from "../../packages/victory-candlestick/src/index";
+import { VictoryVoronoi } from "../../packages/victory-voronoi/src/index";
+import { VictoryZoomContainer } from "../../packages/victory-zoom-container/src/index";
+import { VictoryVoronoiContainer } from "../../packages/victory-voronoi-container/src/index";
+import { VictorySelectionContainer } from "../../packages/victory-selection-container/src/index";
+import { VictoryCursorContainer } from "../../packages/victory-cursor-container/src/index";
+import { VictoryBrushContainer } from "../../packages/victory-brush-container/src/index";
 
 class Wrapper extends React.Component {
   static propTypes = {

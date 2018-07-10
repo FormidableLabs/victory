@@ -1,7 +1,7 @@
 /*eslint-disable no-magic-numbers */
 import React from "react";
 import { range } from "lodash";
-import { VictorySelectionContainer } from "../../packages/victory-chart/src/index";
+import { VictorySelectionContainer } from "../../packages/victory-selection-container/src/index";
 import { VictoryScatter } from "../../packages/victory-scatter/src/index";
 
 

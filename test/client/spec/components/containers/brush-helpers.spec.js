@@ -1,5 +1,5 @@
 /* eslint-disable no-unused-expressions,react/no-multi-comp */
-import { BrushHelpers } from "packages/victory-chart/src/index";
+import { BrushHelpers } from "packages/victory-brush-container/src/index";
 
 describe("containers/brush-helpers", () => {
 
