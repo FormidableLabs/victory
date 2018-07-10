@@ -1,11 +1,11 @@
 import PropTypes from "prop-types";
 import React from "react";
 import { getBaseProps } from "./helper-methods";
+import Area from "./area";
 import {
-  PropTypes as CustomPropTypes, Helpers, VictoryLabel, VictoryContainer,
-  DefaultTransitions, Area, VictoryClipContainer, addEvents, VictoryTheme, Data, Domain
+  PropTypes as CustomPropTypes, Helpers, VictoryLabel, VictoryContainer, CommonProps,
+  DefaultTransitions, VictoryClipContainer, addEvents, VictoryTheme, Data, Domain
 } from "victory-core";
-import { BaseProps, DataProps } from "../../helpers/common-props";
 
 const fallbackProps = {
   width: 450,
@@ -25,8 +25,8 @@ const animationWhitelist = ["data", "domain", "height", "padding", "style", "wid
 class VictoryArea extends React.Component {
 
   static propTypes = {
-    ...BaseProps,
-    ...DataProps,
+    ...CommonProps.baseProps,
+    ...CommonProps.dataProps,
     interpolation: PropTypes.oneOf([
       "basis", "cardinal", "catmullRom", "linear", "monotoneX",
       "monotoneY", "natural", "step", "stepAfter", "stepBefore"

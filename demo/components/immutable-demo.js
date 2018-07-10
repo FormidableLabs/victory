@@ -13,7 +13,6 @@ import {
 } from "../../packages/victory-core/src/index";
 
 import {
-  VictoryArea,
   VictoryAxis,
   VictoryBrushContainer,
   VictoryCandlestick,
@@ -30,6 +29,7 @@ import {
   VictoryVoronoiContainer,
   VictoryZoomContainer
 } from "../../packages/victory-chart/src/index";
+import { VictoryArea } from "../../packages/victory-area/src/index";
 import { VictoryBar } from "../../packages/victory-bar/src/index"
 
 class Wrapper extends React.Component {

@@ -1,9 +1,7 @@
 /* eslint no-unused-expressions: 0 */
 /* eslint-disable max-nested-callbacks */
 /* global sinon */
-import {
-  getDataWithBaseline
-} from "packages/victory-chart/src/components/victory-area/helper-methods";
+import { getDataWithBaseline } from "packages/victory-area/src/helper-methods";
 import { Data } from "packages/victory-core";
 
 describe("victory-area/helper-methods", () => {

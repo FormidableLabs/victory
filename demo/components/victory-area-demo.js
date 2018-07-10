@@ -2,9 +2,8 @@
 /*eslint-disable no-magic-numbers */
 import React from "react";
 import { merge, random, range } from "lodash";
-import {
-  VictoryArea, VictoryStack, VictoryGroup, VictoryChart
-} from "../../packages/victory-chart/src/index";
+import { VictoryStack, VictoryGroup, VictoryChart } from "../../packages/victory-chart/src/index";
+import { VictoryArea } from "../../packages/victory-area/src/index";
 import { VictoryContainer, VictoryTheme } from "../../packages/victory-core/src/index";
 
 export default class App extends React.Component {

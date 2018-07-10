@@ -2,9 +2,10 @@
 import React from "react";
 import PropTypes from "prop-types";
 import {
-  addEvents, Helpers, Data, PropTypes as CustomPropTypes, Slice,
-  VictoryContainer, VictoryLabel, VictoryTheme
+  addEvents, Helpers, Data, PropTypes as CustomPropTypes, VictoryContainer, VictoryLabel,
+  VictoryTheme
 } from "victory-core";
+import Slice from "./slice";
 import { getBaseProps } from "./helper-methods";
 
 const fallbackProps = {

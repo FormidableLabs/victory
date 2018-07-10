@@ -1,7 +1,7 @@
 import React from "react";
-import { shallow } from "enzyme";
-import Area from "packages/victory-core/src/victory-primitives/area";
-import Path from "packages/victory-core/src/victory-primitives/path";
+import { mount } from "enzyme";
+import Area from "packages/victory-area/src/area";
+import { Path } from "packages/victory-core/src/index";
 import { merge } from "lodash";
 
 describe("victory-primitives/area", () => {
@@ -30,13 +30,12 @@ describe("victory-primitives/area", () => {
       }
     });
 
-    const wrapper = shallow(<Area {...props}/>);
+    const wrapper = mount(<Area {...props}/>);
     expect(wrapper.find(Path).length).to.eql(1);
   });
 
   it("should render an area and line when a line style is given", () => {
-    const wrapper = shallow(<Area {...baseProps}/>);
-
+    const wrapper = mount(<Area {...baseProps}/>);
     // multiple paths should be grouped
     expect(wrapper.find("g").find(Path).length).to.eql(2);
   });

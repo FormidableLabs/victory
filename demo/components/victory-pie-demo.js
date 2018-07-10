@@ -3,9 +3,9 @@
 import { merge, random, range } from "lodash";
 import PropTypes from "prop-types";
 import React from "react";
-import { VictoryPie } from "../../packages/victory-pie/src/index";
+import { VictoryPie, Slice } from "../../packages/victory-pie/src/index";
 import {
-  VictoryContainer, VictoryTheme, Slice, VictoryTooltip, VictoryLabel
+  VictoryContainer, VictoryTheme, VictoryTooltip, VictoryLabel
 } from "../../packages/victory-core/src/index";
 
 class BorderLabelSlice extends React.Component {

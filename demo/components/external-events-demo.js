@@ -3,9 +3,9 @@
 
 import React from "react";
 import {
-  VictoryChart, VictoryStack, VictoryVoronoiContainer,
-  VictoryLine, VictoryArea, VictoryZoomContainer
+  VictoryChart, VictoryStack, VictoryVoronoiContainer, VictoryLine, VictoryZoomContainer
 } from "../../packages/victory-chart/src/index";
+import { VictoryArea } from "../../packages/victory-area/src/index";
 import { VictoryBar } from "../../packages/victory-bar/src/index"
 import { range } from "lodash";
 

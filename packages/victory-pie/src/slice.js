@@ -1,13 +1,11 @@
 import React from "react";
 import PropTypes from "prop-types";
-import Helpers from "../victory-util/helpers";
-import CommonProps from "./common-props";
-import Path from "./path";
+import { Helpers, CommonProps, Path } from "victory-core";
 import { isFunction } from "lodash";
 
 export default class Slice extends React.Component {
   static propTypes = {
-    ...CommonProps,
+    ...CommonProps.primitiveProps,
     datum: PropTypes.object,
     pathComponent: PropTypes.element,
     pathFunction: PropTypes.func,

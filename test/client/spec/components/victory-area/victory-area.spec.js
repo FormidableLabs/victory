@@ -8,8 +8,8 @@ import React from "react";
 import { range, omit } from "lodash";
 import { shallow, mount } from "enzyme";
 import SvgTestHelper from "../../svg-test-helper";
-import { VictoryArea } from "packages/victory-chart/src/index";
-import { VictoryLabel, Area } from "packages/victory-core";
+import { VictoryArea, Area } from "packages/victory-area/src/index";
+import { VictoryLabel } from "packages/victory-core";
 
 describe("components/victory-area", () => {
   describe("default component rendering", () => {
