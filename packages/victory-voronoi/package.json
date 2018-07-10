@@ -1,13 +1,13 @@
 {
-  "name": "victory-chart",
+  "name": "victory-voronoi",
   "version": "27.1.1",
   "description": "Chart Component for Victory",
   "main": "lib/index.js",
   "author": "Lauren Eastridge",
   "license": "MIT",
   "dependencies": {
+    "d3-voronoi": "^1.1.2",
     "lodash": "^4.17.5",
-    "react-fast-compare": "^2.0.0",
     "victory-core": "^24.0.1"
   },
   "publishr": {

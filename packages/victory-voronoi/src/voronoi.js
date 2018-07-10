@@ -2,16 +2,11 @@
 import React from "react";
 import PropTypes from "prop-types";
 import { isObject, uniqueId } from "lodash";
-import Helpers from "../victory-util/helpers";
-import CommonProps from "./common-props";
-import ClipPath from "../victory-primitives/clip-path";
-import Path from "../victory-primitives/path";
-import Circle from "../victory-primitives/circle";
-
+import { Helpers , CommonProps, ClipPath, Path, Circle } from "victory-core";
 
 export default class Voronoi extends React.Component {
   static propTypes = {
-    ...CommonProps,
+    ...CommonProps.primitiveProps,
     circleComponent: PropTypes.element,
     clipId: PropTypes.oneOfType([PropTypes.number, PropTypes.string]),
     clipPathComponent: PropTypes.element,

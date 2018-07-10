@@ -14,7 +14,6 @@ export { default as Border, default as Box } from "./victory-primitives/border";
 export { default as ClipPath } from "./victory-primitives/clip-path";
 export { default as Axis, default as Grid } from "./victory-primitives/axis";
 export { default as Point } from "./victory-primitives/point";
-export { default as Voronoi } from "./victory-primitives/voronoi";
 export { default as Flyout } from "./victory-primitives/flyout";
 export { default as Whisker } from "./victory-primitives/whisker";
 export { default as addEvents } from "./victory-util/add-events";

@@ -1,10 +1,10 @@
 import React from "react";
 import {
   PropTypes as CustomPropTypes, Helpers, VictoryLabel, addEvents,
-  VictoryContainer, VictoryTheme, DefaultTransitions, Voronoi, Data, Domain
+  VictoryContainer, VictoryTheme, DefaultTransitions, Data, Domain, CommonProps
 } from "victory-core";
+import Voronoi from "./voronoi";
 import { getBaseProps } from "./helper-methods";
-import { BaseProps, DataProps } from "../../helpers/common-props";
 
 const fallbackProps = {
   width: 450,
@@ -22,8 +22,8 @@ class VictoryVoronoi extends React.Component {
   static defaultTransitions = DefaultTransitions.discreteTransitions();
 
   static propTypes = {
-    ...BaseProps,
-    ...DataProps,
+    ...CommonProps.baseProps,
+    ...CommonProps.dataProps,
     size: CustomPropTypes.nonNegative
   };
 

@@ -1,5 +1,5 @@
 import {
-  Axis, Border, Box, ClipPath, Grid, Voronoi,
+  Axis, Border, Box, ClipPath, Grid,
   Flyout, Whisker, Circle, Rect, Line, Path, TSpan, Text, Point,
   VictoryAnimation,
   VictoryContainer,
@@ -22,7 +22,6 @@ import {
   VictoryChart,
   VictoryGroup,
   VictoryStack,
-  VictoryVoronoi,
   VictoryZoomContainer, ZoomHelpers, zoomContainerMixin,
   VictorySelectionContainer, SelectionHelpers, selectionContainerMixin,
   VictoryBrushContainer, BrushHelpers, brushContainerMixin,
@@ -40,6 +39,8 @@ import { VictoryErrorBar, ErrorBar } from "victory-errorbar";
 import { VictoryLine, Curve } from "victory-line";
 import { VictoryScatter } from "victory-scatter";
 import { VictoryBoxPlot } from "victory-boxplot";
+import { VictoryVoronoi, Voronoi } from "victory-voronoi";
+
 
 export {
   Area, Axis, Bar, Border, Box, Candle, ClipPath, Curve, ErrorBar, Grid, Point, Slice, Voronoi,
