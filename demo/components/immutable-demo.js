@@ -21,7 +21,6 @@ import {
   VictoryErrorBar,
   VictoryGroup,
   VictoryPolarAxis,
-  VictoryScatter,
   VictorySelectionContainer,
   VictoryStack,
   VictoryVoronoi,
@@ -31,6 +30,7 @@ import {
 import { VictoryArea } from "../../packages/victory-area/src/index";
 import { VictoryBar } from "../../packages/victory-bar/src/index";
 import { VictoryLine } from "../../packages/victory-line/src/index";
+import { VictoryScatter } from "../../packages/victory-scatter/src/index";
 
 class Wrapper extends React.Component {
   static propTypes = {

@@ -4,11 +4,12 @@ import React from "react";
 import PropTypes from "prop-types";
 import { assign, merge, random, range, omit } from "lodash";
 import {
-  VictoryChart, VictoryAxis, VictoryScatter, VictoryStack, VictoryGroup
+  VictoryChart, VictoryAxis, VictoryStack, VictoryGroup
 } from "../../packages/victory-chart/src/index";
 import { VictoryArea } from "../../packages/victory-area/src/index";
 import { VictoryBar } from "../../packages/victory-bar/src/index";
 import { VictoryLine } from "../../packages/victory-line/src/index";
+import { VictoryScatter } from "../../packages/victory-scatter/src/index";
 import {
   VictoryLabel, VictoryTheme, VictoryClipContainer
 } from "../../packages/victory-core/src/index";

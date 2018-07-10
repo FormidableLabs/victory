@@ -3,7 +3,7 @@
 import React from "react";
 import PropTypes from "prop-types";
 import { merge, random, range } from "lodash";
-import { VictoryScatter } from "../../packages/victory-chart/src/index";
+import { VictoryScatter } from "../../packages/victory-scatter/src/index";
 import {
   VictoryLabel, VictoryContainer, VictoryTheme
 } from "../../packages/victory-core/src/index";

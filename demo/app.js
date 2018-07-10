@@ -32,6 +32,7 @@ import DebugDemo from "./components/debug-demo";
 import VictoryLabelDemo from "./components/victory-label-demo";
 import VictoryLegendDemo from "./components/victory-legend-demo";
 import VictoryPieDemo from "./components/victory-pie-demo";
+import VictoryDemo from "./components/victory-demo";
 
 class Home extends React.Component {
   render() {
@@ -89,6 +90,7 @@ class App extends React.Component {
     case "/label": Child = VictoryLabelDemo; break;
     case "/legend": Child = VictoryLegendDemo; break;
     case "/pie": Child = VictoryPieDemo; break;
+    case "/victory": Child = VictoryDemo; break;
     default: Child = Home;
     }
     return Child;
@@ -128,6 +130,7 @@ class App extends React.Component {
           <li><a href="#/label">VictoryLabel Demo</a></li>
           <li><a href="#/legend">VictoryLegend Demo</a></li>
           <li><a href="#/pie">VictoryPie Demo</a></li>
+          <li><a href="#/victory">Victory Demo</a></li>
         </ul>
         <Child/>
       </div>

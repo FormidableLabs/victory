@@ -1,11 +1,10 @@
 import PropTypes from "prop-types";
 import React from "react";
 import {
-  PropTypes as CustomPropTypes, Helpers, VictoryLabel, addEvents,
-  VictoryContainer, VictoryTheme, DefaultTransitions, Point, Data, Domain
+  PropTypes as CustomPropTypes, Helpers, VictoryLabel, addEvents, CommonProps,
+  VictoryContainer, VictoryTheme, DefaultTransitions, Data, Domain, Point
 } from "victory-core";
 import { getBaseProps } from "./helper-methods";
-import { BaseProps, DataProps } from "../../helpers/common-props";
 
 const fallbackProps = {
   width: 450,
@@ -25,8 +24,8 @@ class VictoryScatter extends React.Component {
   static defaultTransitions = DefaultTransitions.discreteTransitions();
 
   static propTypes = {
-    ...BaseProps,
-    ...DataProps,
+    ...CommonProps.baseProps,
+    ...CommonProps.dataProps,
     bubbleProperty: PropTypes.string,
     maxBubbleSize: CustomPropTypes.nonNegative,
     minBubbleSize: CustomPropTypes.nonNegative,

@@ -9,7 +9,7 @@ module.exports = {
     "clean-all": npsUtils.series.nps("clean-lib", "clean-es", "clean-dist"),
     "babel-es": "cross-env BABEL_ENV=es babel src --out-dir es --copy-files",
     "babel-lib": "cross-env BABEL_ENV=commonjs babel src --out-dir lib --copy-files",
-    "build-es":  npsUtils.series.nps("clean-es", "babel-es"),
+    "build-es": npsUtils.series.nps("clean-es", "babel-es"),
     "build-lib": npsUtils.series.nps("clean-lib", "babel-lib"),
     "build-libs": npsUtils.series.nps("build-lib", "build-es"),
     "build-dist-dev": "webpack --bail --config ../../config/webpack/webpack.config.dev.js --colors",

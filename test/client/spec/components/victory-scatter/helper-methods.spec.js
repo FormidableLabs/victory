@@ -1,8 +1,6 @@
 /* eslint no-unused-expressions: 0 */
 /* global sinon */
-import {
-  getSize, getBubbleSize, getSymbol
-} from "packages/victory-chart/src/components/victory-scatter/helper-methods";
+import { getSize, getBubbleSize, getSymbol } from "packages/victory-scatter/src/helper-methods";
 
 describe("victory-scatter/helper-methods", () => {
   describe("getSize", () => {

@@ -8,7 +8,7 @@ import React from "react";
 import { shallow, mount } from "enzyme";
 import { omit, range } from "lodash";
 import SvgTestHelper from "../../svg-test-helper";
-import { VictoryScatter } from "packages/victory-chart/src/index";
+import { VictoryScatter } from "packages/victory-scatter/src/index";
 import { VictoryLabel, Point } from "packages/victory-core";
 
 class MyPoint extends React.Component {

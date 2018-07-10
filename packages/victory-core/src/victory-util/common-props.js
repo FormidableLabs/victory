@@ -1,5 +1,5 @@
 import PropTypes from "prop-types";
-import CustomPropTypes from "./prop-types";;
+import CustomPropTypes from "./prop-types";
 
 const dataProps = {
   categories: PropTypes.oneOfType([
