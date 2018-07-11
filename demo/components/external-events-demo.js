@@ -2,7 +2,8 @@
 /*global window:false*/
 
 import React from "react";
-import { VictoryChart, VictoryStack } from "../../packages/victory-chart/src/index";
+import { VictoryChart } from "../../packages/victory-chart/src/index";
+import { VictoryStack } from "../../packages/victory-stack/src/index";
 import { VictoryArea } from "../../packages/victory-area/src/index";
 import { VictoryBar } from "../../packages/victory-bar/src/index";
 import { VictoryLine } from "../../packages/victory-line/src/index";

@@ -2,7 +2,9 @@
 /*eslint-disable no-magic-numbers,react/no-multi-comp */
 import React from "react";
 import PropTypes from "prop-types";
-import { VictoryChart, VictoryGroup, VictoryStack } from "../../packages/victory-chart/src/index";
+import { VictoryChart } from "../../packages/victory-chart/src/index";
+import { VictoryStack } from "../../packages/victory-stack/src/index";
+import { VictoryGroup } from "../../packages/victory-group/src/index";
 import { VictoryBar } from "../../packages/victory-bar/src/index"
 import { VictorySharedEvents } from "../../packages/victory-shared-events/src/index";
 

@@ -12,10 +12,9 @@ import {
   PropTypes, Scale, Style, TextSize, Transitions, Selection, LabelHelpers, Axis, Wrapper
 } from "victory-core";
 
-import {
-  VictoryChart, VictoryGroup, VictoryStack
-} from "victory-chart";
-
+import { VictoryChart } from "victory-chart";
+import { VictoryGroup } from "victory-group";
+import { VictoryStack } from "victory-stack";
 import { VictoryPie, Slice } from "victory-pie";
 import { VictoryArea, Area } from "victory-area";
 import { VictoryBar, Bar } from "victory-bar";

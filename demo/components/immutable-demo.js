@@ -8,7 +8,9 @@ import {
   VictoryClipContainer, VictoryLabel, VictoryTheme
 } from "../../packages/victory-core/src/index";
 
-import { VictoryChart, VictoryGroup, VictoryStack } from "../../packages/victory-chart/src/index";
+import { VictoryChart } from "../../packages/victory-chart/src/index";
+import { VictoryStack } from "../../packages/victory-stack/src/index";
+import { VictoryGroup } from "../../packages/victory-group/src/index";
 import { VictoryArea } from "../../packages/victory-area/src/index";
 import { VictoryAxis } from "../../packages/victory-axis/src/index";
 import { VictoryPolarAxis } from "../../packages/victory-polar-axis/src/index";
@@ -25,7 +27,6 @@ import { VictoryCursorContainer } from "../../packages/victory-cursor-container/
 import { VictoryBrushContainer } from "../../packages/victory-brush-container/src/index";
 import { VictoryTooltip } from "../../packages/victory-tooltip/src/index";
 import { VictoryLegend } from "../../packages/victory-legend/src/index";
-
 
 class Wrapper extends React.Component {
   static propTypes = {

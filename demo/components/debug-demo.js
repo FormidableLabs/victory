@@ -1,7 +1,8 @@
 /*eslint-disable no-magic-numbers */
 
 import React from "react";
-import { VictoryChart, VictoryStack } from "../../packages/victory-chart/src/index";
+import { VictoryChart } from "../../packages/victory-chart/src/index";
+import { VictoryStack } from "../../packages/victory-stack/src/index";
 import { VictoryBar } from "../../packages/victory-bar/src/index";
 import { VictorySelectionContainer } from "../../packages/victory-selection-container/src/index";
 import { VictoryVoronoiContainer } from "../../packages/victory-voronoi-container/src/index";

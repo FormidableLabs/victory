@@ -1,9 +1,9 @@
 /*global window:false*/
 /*eslint no-magic-numbers:0*/
 import React from "react";
-import {
-  VictoryStack, VictoryChart, VictoryGroup
-} from "../../packages/victory-chart/src/index";
+import { VictoryChart } from "../../packages/victory-chart/src/index";
+import { VictoryStack } from "../../packages/victory-stack/src/index";
+import { VictoryGroup } from "../../packages/victory-group/src/index";
 import { VictoryPolarAxis } from "../../packages/victory-polar-axis/src/index";
 import { VictoryArea } from "../../packages/victory-area/src/index";
 import { VictoryBar } from "../../packages/victory-bar/src/index";

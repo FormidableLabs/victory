@@ -5,7 +5,7 @@
 
 import React from "react";
 import { mount } from "enzyme";
-import { VictoryGroup } from "packages/victory-chart/src/index";
+import { VictoryGroup } from "packages/victory-group/src/index";
 import { VictoryBar } from "packages/victory-bar/src/index";
 
 describe("components/victory-group", () => {
