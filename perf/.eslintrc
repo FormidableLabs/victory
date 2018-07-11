@@ -1,5 +1,0 @@
----
-  extends: ../node_modules/builder-victory-component/config/eslint/.eslintrc-perf
-  rules:
-    no-magic-numbers: off
-    import/no-unresolved: off

@@ -30,7 +30,6 @@
     "postpublish": "lerna exec -- publishr postpublish -V",
     "test": "yarn run test-frontend",
     "start": "yarn run dev",
-    "benchmark": "yarn run check-perf",
     "check-ci": "yarn run lint && yarn run test-ci",
     "check-cov": "yarn run lint && yarn run test-cov",
     "check-dev": "yarn run lint && yarn run test-dev",
@@ -38,9 +37,6 @@
     "check": "yarn run lint && yarn run test",
     "chromatic-test": "chromatic test --storybook-addon --exit-zero-on-changes",
     "chromatic": "chromatic test --storybook-addon",
-    "clean-es": "rimraf es",
-    "clean-lib": "rimraf lib",
-    "clean": "concurrently 'yarn run clean-lib' 'yarn run clean-dist' 'yarn run clean-es'",
     "dev": "concurrently 'yarn run server-dev' 'yarn run server-test'",
     "hot": "concurrently 'yarn run server-hot' 'yarn run server-test'",
     "lint-demo": "eslint --color demo",
@@ -141,14 +137,6 @@
     "webpack": "^3.2.0",
     "webpack-dev-server": "^1.10.0",
     "webpack-stats-plugin": "^0.1.1"
-  },
-  "publishr": {
-    "files": {
-      ".npmignore": ".npmignore.publishr"
-    },
-    "scripts": {
-      "postinstall": ""
-    }
   },
   "sideEffects": false
 }
