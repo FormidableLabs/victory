@@ -27,7 +27,7 @@
     "preversion": "yarn run check",
     "version": "yarn run clean && yarn run build",
     "postversion": "lerna exec -- publishr postversion -V",
-    "postpublish": "lerna exec -- publishr postpublish dry-run -V",
+    "postpublish": "lerna exec -- publishr postpublish -V",
     "test": "yarn run test-frontend",
     "start": "yarn run dev",
     "benchmark": "yarn run check-perf",

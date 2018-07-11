@@ -1,0 +1,10 @@
+/*
+!/dist
+dist/*.map
+!/es
+!/lib
+!/src
+!LICENSE.txt
+!CHANGELOG.md
+!README.md
+!package.json
