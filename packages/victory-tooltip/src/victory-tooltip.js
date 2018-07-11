@@ -1,13 +1,10 @@
 import React from "react";
 import PropTypes from "prop-types";
-import CustomPropTypes from "../victory-util/prop-types";
-import TextSize from "../victory-util/textsize";
-import Helpers from "../victory-util/helpers";
-import LabelHelpers from "../victory-util/label-helpers";
-import VictoryLabel from "../victory-label/victory-label";
-import VictoryTheme from "../victory-theme/victory-theme";
-import Flyout from "../victory-primitives/flyout";
-import VictoryPortal from "../victory-portal/victory-portal";
+import {
+  PropTypes as CustomPropTypes, TextSize, Helpers, LabelHelpers, VictoryLabel, VictoryTheme,
+  VictoryPortal
+} from "victory-core";
+import Flyout from "./flyout";
 import { assign, defaults } from "lodash";
 
 const fallbackProps = {

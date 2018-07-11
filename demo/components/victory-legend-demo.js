@@ -1,5 +1,7 @@
 import React from "react";
-import { VictoryLegend, VictoryLabel, Border } from "../../packages/victory-core/src/index";
+import { VictoryLabel, Border } from "../../packages/victory-core/src/index";
+import { VictoryLegend } from "../../packages/victory-legend/src/index";
+
 
 const containerStyle = {
   display: "flex",

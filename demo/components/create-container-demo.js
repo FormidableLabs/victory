@@ -6,7 +6,8 @@ import { VictoryCreateContainer } from "../../packages/victory-create-container/
 import { VictoryBar } from "../../packages/victory-bar/src/index";
 import { VictoryLine } from "../../packages/victory-line/src/index";
 import { VictoryScatter } from "../../packages/victory-scatter/src/index";
-import { VictoryTooltip, VictoryLegend } from "../../packages/victory-core/src/index";
+import { VictoryTooltip } from "../../packages/victory-tooltip/src/index";
+import { VictoryLegend } from "../../packages/victory-legend/src/index";
 
 const Charts = ({ behaviors }) => { // eslint-disable-line react/prop-types
   const containerStyle = {

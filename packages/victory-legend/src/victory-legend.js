@@ -1,14 +1,10 @@
 import React from "react";
 import PropTypes from "prop-types";
 import { getBaseProps, getDimensions } from "./helper-methods";
-import CustomPropTypes from "../victory-util/prop-types";
-import addEvents from "../victory-util/add-events";
-import Helpers from "../victory-util/helpers";
-import VictoryLabel from "../victory-label/victory-label";
-import VictoryContainer from "../victory-container/victory-container";
-import VictoryTheme from "../victory-theme/victory-theme";
-import Point from "../victory-primitives/point";
-import Border from "../victory-primitives/border";
+import {
+  PropTypes as CustomPropTypes, addEvents, Helpers, VictoryLabel, VictoryContainer, VictoryTheme,
+  Point, Border
+} from "victory-core";
 
 const fallbackProps = {
   orientation: "vertical",

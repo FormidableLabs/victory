@@ -7,7 +7,9 @@ import { VictoryBar } from "../../packages/victory-bar/src/index";
 import { VictoryLine } from "../../packages/victory-line/src/index";
 import { VictoryScatter } from "../../packages/victory-scatter/src/index";
 import { VictorySelectionContainer } from "../../packages/victory-selection-container/src/index";
-import { VictoryTooltip, VictoryLegend } from "../../packages/victory-core/src/index";
+import { VictoryLegend } from "../../packages/victory-legend/src/index";
+import { VictoryTooltip } from "../../packages/victory-tooltip/src/index";
+
 
 class App extends React.Component {
 

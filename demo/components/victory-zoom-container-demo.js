@@ -10,8 +10,10 @@ import { VictoryArea } from "../../packages/victory-area/src/index";
 import { VictoryLine } from "../../packages/victory-line/src/index";
 import { VictoryScatter } from "../../packages/victory-scatter/src/index";
 import { VictoryZoomContainer } from "../../packages/victory-zoom-container/src/index";
+import { VictoryTooltip } from "../../packages/victory-tooltip/src/index";
+import { VictoryLegend } from "../../packages/victory-legend/src/index";
 import {
-  VictoryTheme, VictoryClipContainer, VictoryPortal, VictoryLegend, VictoryTooltip
+  VictoryTheme, VictoryClipContainer, VictoryPortal
 } from "../../packages/victory-core/src/index";
 
 const allData = range(0, 10, 0.001).map((x) => ({

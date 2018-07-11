@@ -7,9 +7,9 @@ import { VictoryBar } from "../../packages/victory-bar/src/index";
 import { VictoryLine } from "../../packages/victory-line/src/index";
 import { VictoryScatter } from "../../packages/victory-scatter/src/index";
 import { VictoryCursorContainer } from "../../packages/victory-cursor-container/src/index";
-import {
-  VictoryTooltip, VictoryTheme, VictoryLabel, VictoryLegend
-} from "../../packages/victory-core/src/index";
+import { VictoryTooltip } from "../../packages/victory-tooltip/src/index";
+import { VictoryLegend } from "../../packages/victory-legend/src/index";
+import { VictoryTheme, VictoryLabel } from "../../packages/victory-core/src/index";
 
 const makeData = () => range(1500).map((x) => ({ x, y: x + 10 * Math.random() }));
 

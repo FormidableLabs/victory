@@ -2,12 +2,11 @@ import PropTypes from "prop-types";
 import React from "react";
 import { assign } from "lodash";
 import {
-  PropTypes as CustomPropTypes, Helpers, VictoryLabel,
+  PropTypes as CustomPropTypes, Helpers, VictoryLabel, CommonProps,
   VictoryContainer, VictoryTheme, Grid, TextSize, addEvents
 } from "victory-core";
 import { getBaseProps, getScale, getStyles } from "./helper-methods";
 import Axis from "../../helpers/axis";
-import { BaseProps } from "../../helpers/common-props";
 
 
 const fallbackProps = {
@@ -47,7 +46,7 @@ class VictoryAxis extends React.Component {
   };
 
   static propTypes = {
-    ...BaseProps,
+    ...CommonProps.baseProps,
     axisComponent: PropTypes.element,
     axisLabelComponent: PropTypes.element,
     categories: PropTypes.oneOfType([

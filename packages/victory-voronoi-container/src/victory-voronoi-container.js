@@ -1,7 +1,8 @@
 import PropTypes from "prop-types";
 import React from "react";
 import { defaults, isFunction, pick } from "lodash";
-import { VictoryContainer, VictoryTooltip, Helpers, TextSize } from "victory-core";
+import { VictoryTooltip } from "victory-tooltip";
+import { VictoryContainer, Helpers, TextSize } from "victory-core";
 import VoronoiHelpers from "./voronoi-helpers";
 
 export const voronoiContainerMixin = (base) => class VictoryVoronoiContainer extends base {

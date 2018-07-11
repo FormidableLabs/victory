@@ -11,8 +11,9 @@ import { VictoryScatter } from "../../packages/victory-scatter/src/index";
 import { VictoryZoomContainer } from "../../packages/victory-zoom-container/src/index";
 import { VictoryVoronoiContainer } from "../../packages/victory-voronoi-container/src/index";
 import { VictorySelectionContainer } from "../../packages/victory-selection-container/src/index";
+import { VictoryTooltip } from "../../packages/victory-tooltip/src/index";
 import { random, range, merge, keys } from "lodash";
-import { VictoryTheme, VictoryTooltip, VictoryLabel } from "../../packages/victory-core/src/index";
+import { VictoryTheme, VictoryLabel } from "../../packages/victory-core/src/index";
 
 
 const multiAxisData = [

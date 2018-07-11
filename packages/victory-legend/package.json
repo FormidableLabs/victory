@@ -1,5 +1,5 @@
 {
-  "name": "victory-brush-container",
+  "name": "victory-legend",
   "version": "27.1.1",
   "description": "Chart Component for Victory",
   "main": "lib/index.js",

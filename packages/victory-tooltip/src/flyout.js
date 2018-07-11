@@ -1,14 +1,12 @@
 /*eslint no-magic-numbers: ["error", { "ignore": [-1, 0, 1, 2] }]*/
 import React from "react";
 import PropTypes from "prop-types";
-import Helpers from "../victory-util/helpers";
-import CommonProps from "./common-props";
-import Path from "./path";
+import { Helpers, CommonProps, Path } from "victory-core";
 
 export default class Flyout extends React.Component {
 
   static propTypes = {
-    ...CommonProps,
+    ...CommonProps.primitiveProps,
     cornerRadius: PropTypes.number,
     datum: PropTypes.object,
     dx: PropTypes.number,

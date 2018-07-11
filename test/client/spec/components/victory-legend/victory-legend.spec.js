@@ -3,7 +3,7 @@
  */
 import React from "react";
 import { shallow, render } from "enzyme";
-import { VictoryLegend } from "packages/victory-core/src/index";
+import { VictoryLegend } from "packages/victory-legend/src/index";
 
 const initialData = [{
   name: "Series 1",

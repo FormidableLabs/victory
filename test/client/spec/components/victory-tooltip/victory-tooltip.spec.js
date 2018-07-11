@@ -4,7 +4,8 @@
 /* global sinon */
 import React from "react";
 import { mount } from "enzyme";
-import { VictoryLabel, VictoryTooltip, Flyout } from "packages/victory-core/src/index";
+import { VictoryTooltip, Flyout } from "packages/victory-tooltip/src/index";
+import { VictoryLabel } from "packages/victory-core";
 
 describe("components/victory-tooltip", () => {
   const baseProps = { x: 0, y: 0, datum: { some: "object" }, index: 3,

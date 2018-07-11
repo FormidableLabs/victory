@@ -2,13 +2,13 @@ import { defaults, assign } from "lodash";
 import PropTypes from "prop-types";
 import React from "react";
 import {
-  Helpers, VictorySharedEvents, VictoryContainer, VictoryTheme, PropTypes as CustomPropTypes
+  Helpers, VictoryContainer, VictoryTheme, CommonProps, PropTypes as CustomPropTypes
 } from "victory-core";
+import { VictorySharedEvents } from "victory-shared-events";
 import VictoryAxis from "../victory-axis/victory-axis";
 import VictoryPolarAxis from "../victory-polar-axis/victory-polar-axis";
 import { getChildComponents, getCalculatedProps, getChildren } from "./helper-methods";
 import Wrapper from "../../helpers/wrapper";
-import { BaseProps } from "../../helpers/common-props";
 
 const fallbackProps = {
   width: 450,
@@ -20,7 +20,7 @@ export default class VictoryChart extends React.Component {
   static displayName = "VictoryChart";
 
   static propTypes = {
-    ...BaseProps,
+    ...CommonProps.baseProps,
     children: PropTypes.oneOfType([
       PropTypes.arrayOf(PropTypes.node),
       PropTypes.node

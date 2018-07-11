@@ -6,9 +6,10 @@
   "author": "Lauren Eastridge",
   "license": "MIT",
   "dependencies": {
-    "d3-shape": "^1.2.0",
+    "d3-voronoi": "^1.1.2",
     "lodash": "^4.17.5",
-    "victory-core": "^24.0.1"
+    "victory-core": "^24.0.1",
+    "victory-tooltip": "^27.0.0"
   },
   "publishr": {
     "files": {

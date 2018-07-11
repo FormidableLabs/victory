@@ -5,6 +5,7 @@ import { VictoryChart, VictoryStack } from "../../packages/victory-chart/src/ind
 import { VictoryBar } from "../../packages/victory-bar/src/index";
 import { VictorySelectionContainer } from "../../packages/victory-selection-container/src/index";
 import { VictoryVoronoiContainer } from "../../packages/victory-voronoi-container/src/index";
+
 class App extends React.Component {
 
   render() {

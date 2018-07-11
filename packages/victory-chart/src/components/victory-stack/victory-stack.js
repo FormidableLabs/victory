@@ -1,11 +1,10 @@
 import { assign, defaults } from "lodash";
 import PropTypes from "prop-types";
 import React from "react";
-import { Helpers, VictorySharedEvents, VictoryContainer, VictoryTheme } from "victory-core";
+import { Helpers, VictoryContainer, VictoryTheme, CommonProps } from "victory-core";
+import { VictorySharedEvents } from "victory-shared-events";
 import Wrapper from "../../helpers/wrapper";
 import { getChildren, getCalculatedProps } from "./helper-methods";
-import { BaseProps } from "../../helpers/common-props";
-
 
 const fallbackProps = {
   width: 450,
@@ -19,7 +18,7 @@ export default class VictoryStack extends React.Component {
   static role = "stack";
 
   static propTypes = {
-    ...BaseProps,
+    ...CommonProps.baseProps,
     categories: PropTypes.oneOfType([
       PropTypes.arrayOf(PropTypes.string),
       PropTypes.shape({

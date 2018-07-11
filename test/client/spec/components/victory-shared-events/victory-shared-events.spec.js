@@ -5,8 +5,7 @@ import { forEach } from "lodash";
 import { mount } from "enzyme";
 import React from "react";
 import { addEvents } from "packages/victory-core/src/index";
-import VictorySharedEvents from
-  "packages/victory-core/src/victory-shared-events/victory-shared-events";
+import { VictorySharedEvents } from "packages/victory-shared-events/src/index";
 import { MockVictoryComponent, MockDataComponent } from "../../mock-components";
 
 describe("components/victory-shared-events", () => {

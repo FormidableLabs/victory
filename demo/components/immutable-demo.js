@@ -5,19 +5,11 @@ import PropTypes from "prop-types";
 import { assign, merge, keys, random, range, round } from "lodash";
 import { fromJS } from "immutable";
 import {
-  VictoryClipContainer,
-  VictoryLabel,
-  VictoryLegend,
-  VictoryTheme,
-  VictoryTooltip
+  VictoryClipContainer, VictoryLabel, VictoryTheme
 } from "../../packages/victory-core/src/index";
 
 import {
-  VictoryAxis,
-  VictoryChart,
-  VictoryGroup,
-  VictoryPolarAxis,
-  VictoryStack
+  VictoryAxis, VictoryChart, VictoryGroup, VictoryPolarAxis, VictoryStack
 } from "../../packages/victory-chart/src/index";
 import { VictoryArea } from "../../packages/victory-area/src/index";
 import { VictoryBar } from "../../packages/victory-bar/src/index";
@@ -31,6 +23,9 @@ import { VictoryVoronoiContainer } from "../../packages/victory-voronoi-containe
 import { VictorySelectionContainer } from "../../packages/victory-selection-container/src/index";
 import { VictoryCursorContainer } from "../../packages/victory-cursor-container/src/index";
 import { VictoryBrushContainer } from "../../packages/victory-brush-container/src/index";
+import { VictoryTooltip } from "../../packages/victory-tooltip/src/index";
+import { VictoryLegend } from "../../packages/victory-legend/src/index";
+
 
 class Wrapper extends React.Component {
   static propTypes = {

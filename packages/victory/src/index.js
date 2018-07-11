@@ -1,14 +1,10 @@
 import {
-  Axis, Border, Box, ClipPath, Grid,
-  Flyout, Whisker, Circle, Rect, Line, Path, TSpan, Text, Point,
+  Axis, Border, Box, ClipPath, Grid, Whisker, Circle, Rect, Line, Path, TSpan, Text, Point,
   VictoryAnimation,
   VictoryContainer,
   VictoryLabel,
-  VictoryLegend,
-  VictorySharedEvents,
   VictoryTheme,
   VictoryTransition,
-  VictoryTooltip,
   VictoryPortal,
   Portal,
   VictoryClipContainer,
@@ -44,6 +40,10 @@ import {
   VictoryZoomContainer, ZoomHelpers, zoomContainerMixin, RawZoomHelpers
 } from "victory-zoom-container";
 import { combineContainerMixins, VictoryCreateContainer } from "victory-create-container";
+
+import { VictoryTooltip, Flyout } from "victory-tooltip";
+import { VictoryLegend } from "victory-legend";
+import { VictorySharedEvents } from "victory-shared-events";
 
 export {
   Area, Axis, Bar, Border, Box, Candle, ClipPath, Curve, ErrorBar, Grid, Point, Slice, Voronoi,

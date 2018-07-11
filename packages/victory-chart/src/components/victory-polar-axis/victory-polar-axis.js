@@ -2,12 +2,11 @@ import React from "react";
 import PropTypes from "prop-types";
 import { assign } from "lodash";
 import {
-  PropTypes as CustomPropTypes, Helpers, VictoryLabel,
+  PropTypes as CustomPropTypes, Helpers, VictoryLabel, CommonProps,
   VictoryContainer, VictoryTheme, Grid, addEvents, Arc
 } from "victory-core";
 import { getScale, getStyles, getBaseProps } from "./helper-methods";
 import Axis from "../../helpers/axis";
-import { BaseProps } from "../../helpers/common-props";
 
 const fallbackProps = {
   width: 450,
@@ -45,7 +44,7 @@ class VictoryPolarAxis extends React.Component {
   };
 
   static propTypes = {
-    ...BaseProps,
+    ...CommonProps.baseProps,
     axisAngle: PropTypes.number,
     axisComponent: PropTypes.element,
     axisLabelComponent: PropTypes.element,

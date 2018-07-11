@@ -2,7 +2,7 @@
 /*eslint-disable no-magic-numbers */
 import React from "react";
 import { VictoryVoronoi } from "../../packages/victory-voronoi/src/index";
-import { VictoryTooltip } from "../../packages/victory-core/src/index";
+import { VictoryTooltip } from "../../packages/victory-tooltip/src/index";
 import { range, random } from "lodash";
 
 const getData = () => {

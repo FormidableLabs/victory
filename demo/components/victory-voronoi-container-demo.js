@@ -7,8 +7,10 @@ import { VictoryLine } from "../../packages/victory-line/src/index";
 import { VictoryScatter } from "../../packages/victory-scatter/src/index";
 import { VictoryVoronoiContainer } from "../../packages/victory-voronoi-container/src/index";
 import { random, range } from "lodash";
+import { VictoryTooltip } from "../../packages/victory-tooltip/src/index";
+import { VictoryLegend } from "../../packages/victory-legend/src/index";
+import { VictoryTheme } from "../../packages/victory-core/src/index";
 
-import { VictoryTooltip, VictoryTheme, VictoryLegend } from "../../packages/victory-core/src/index";
 class App extends React.Component {
 
   constructor() {

@@ -2,11 +2,11 @@ import { assign, defaults } from "lodash";
 import PropTypes from "prop-types";
 import React from "react";
 import {
-  Helpers, VictorySharedEvents, VictoryContainer, VictoryTheme
+  Helpers, VictoryContainer, VictoryTheme, CommonProps
 } from "victory-core";
+import { VictorySharedEvents } from "victory-shared-events";
 import Wrapper from "../../helpers/wrapper";
 import { getChildren, getCalculatedProps } from "./helper-methods";
-import { BaseProps, DataProps } from "../../helpers/common-props";
 
 const fallbackProps = {
   width: 450,
@@ -21,8 +21,8 @@ export default class VictoryGroup extends React.Component {
   static role = "group";
 
   static propTypes = {
-    ...BaseProps,
-    ...DataProps,
+    ...CommonProps.baseProps,
+    ...CommonProps.dataProps,
     children: PropTypes.oneOfType([PropTypes.arrayOf(PropTypes.node), PropTypes.node]),
     color: PropTypes.oneOfType([PropTypes.string, PropTypes.func]),
     colorScale: PropTypes.oneOfType([
