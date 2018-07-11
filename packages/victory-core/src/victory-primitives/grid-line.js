@@ -5,7 +5,7 @@ import { assign } from "lodash";
 import CommonProps from "./common-props";
 import Line from "./line";
 
-export default class Axis extends React.Component {
+export default class GridLine extends React.Component {
   static propTypes = {
     ...CommonProps,
     datum: PropTypes.any,

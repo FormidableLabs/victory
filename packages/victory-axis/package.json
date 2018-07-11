@@ -1,5 +1,5 @@
 {
-  "name": "victory-chart",
+  "name": "victory-axis",
   "version": "27.1.1",
   "description": "Chart Component for Victory",
   "main": "lib/index.js",
@@ -7,11 +7,7 @@
   "license": "MIT",
   "dependencies": {
     "lodash": "^4.17.5",
-    "react-fast-compare": "^2.0.0",
-    "victory-axis": "^27.0.0",
-    "victory-core": "^24.0.1",
-    "victory-polar-axis": "^27.0.0",
-    "victory-shared-events": "^27.0.0"
+    "victory-core": "^24.0.1"
   },
   "publishr": {
     "files": {

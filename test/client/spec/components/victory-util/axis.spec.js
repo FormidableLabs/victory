@@ -1,9 +1,8 @@
 /* global sinon */
 /* eslint-disable no-unused-expressions,react/no-multi-comp */
-import Axis from "packages/victory-chart/src/helpers/axis";
-import { Scale } from "packages/victory-core/src/index";
+import { Scale, Axis } from "packages/victory-core/src/index";
 import React from "react";
-import { VictoryAxis } from "packages/victory-chart/src/index";
+import { VictoryAxis } from "packages/victory-axis/src/index";
 import { VictoryBar } from "packages/victory-bar/src/index";
 
 describe("helpers/axis", () => {

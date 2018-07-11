@@ -1,9 +1,8 @@
 import { assign, defaults } from "lodash";
 import PropTypes from "prop-types";
 import React from "react";
-import { Helpers, VictoryContainer, VictoryTheme, CommonProps } from "victory-core";
+import { Helpers, VictoryContainer, VictoryTheme, CommonProps, Wrapper } from "victory-core";
 import { VictorySharedEvents } from "victory-shared-events";
-import Wrapper from "../../helpers/wrapper";
 import { getChildren, getCalculatedProps } from "./helper-methods";
 
 const fallbackProps = {

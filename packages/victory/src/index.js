@@ -1,5 +1,5 @@
 import {
-  Axis, Border, Box, ClipPath, Grid, Whisker, Circle, Rect, Line, Path, TSpan, Text, Point,
+  Border, Box, ClipPath, GridLine, Whisker, Circle, Rect, Line, Path, TSpan, Text, Point,
   VictoryAnimation,
   VictoryContainer,
   VictoryLabel,
@@ -9,11 +9,11 @@ import {
   Portal,
   VictoryClipContainer,
   addEvents, Collection, Data, DefaultTransitions, Domain, Events, Helpers, Log,
-  PropTypes, Scale, Style, TextSize, Transitions, Selection, LabelHelpers
+  PropTypes, Scale, Style, TextSize, Transitions, Selection, LabelHelpers, Axis, Wrapper
 } from "victory-core";
 
 import {
-  VictoryAxis, VictoryPolarAxis, VictoryChart, VictoryGroup, VictoryStack
+  VictoryChart, VictoryGroup, VictoryStack
 } from "victory-chart";
 
 import { VictoryPie, Slice } from "victory-pie";
@@ -44,9 +44,11 @@ import { combineContainerMixins, VictoryCreateContainer } from "victory-create-c
 import { VictoryTooltip, Flyout } from "victory-tooltip";
 import { VictoryLegend } from "victory-legend";
 import { VictorySharedEvents } from "victory-shared-events";
+import { VictoryAxis } from "victory-axis";
+import { VictoryPolarAxis } from "victory-polar-axis";
 
 export {
-  Area, Axis, Bar, Border, Box, Candle, ClipPath, Curve, ErrorBar, Grid, Point, Slice, Voronoi,
+  Area, Bar, Border, Box, Candle, ClipPath, Curve, ErrorBar, GridLine, Point, Slice, Voronoi,
   Flyout, Whisker, Circle, Rect, Line, Path, TSpan, Text,
   VictoryAnimation,
   VictoryArea,
@@ -80,5 +82,5 @@ export {
   combineContainerMixins, VictoryCreateContainer,
   VictoryBrushLine,
   addEvents, Collection, Data, DefaultTransitions, Domain, Events, Helpers, Log,
-  PropTypes, Scale, Style, TextSize, Transitions, Selection, LabelHelpers
+  PropTypes, Scale, Style, TextSize, Transitions, Selection, LabelHelpers, Axis, Wrapper
 };

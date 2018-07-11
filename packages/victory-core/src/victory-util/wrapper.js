@@ -3,7 +3,13 @@ import {
 } from "lodash";
 import React from "react";
 import Axis from "./axis";
-import { Style, Transitions, Collection, Data, Domain, Events, Helpers } from "victory-core";
+import Style from "./style";
+import Transitions from "./transitions";
+import Data from "./data";
+import Domain from "./domain";
+import Events from "./events";
+import Collection from "./collection";
+import Helpers from "./helpers";
 
 
 export default {

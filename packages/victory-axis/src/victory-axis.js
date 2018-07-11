@@ -3,10 +3,9 @@ import React from "react";
 import { assign } from "lodash";
 import {
   PropTypes as CustomPropTypes, Helpers, VictoryLabel, CommonProps,
-  VictoryContainer, VictoryTheme, Grid, TextSize, addEvents
+  VictoryContainer, VictoryTheme, GridLine, TextSize, addEvents, Axis
 } from "victory-core";
 import { getBaseProps, getScale, getStyles } from "./helper-methods";
-import Axis from "../../helpers/axis";
 
 
 const fallbackProps = {
@@ -90,11 +89,11 @@ class VictoryAxis extends React.Component {
   };
 
   static defaultProps = {
-    axisComponent: <Grid type={"axis"}/>,
+    axisComponent: <GridLine type={"axis"}/>,
     axisLabelComponent: <VictoryLabel/>,
     tickLabelComponent: <VictoryLabel/>,
-    tickComponent: <Grid type={"tick"}/>,
-    gridComponent: <Grid type={"grid"}/>,
+    tickComponent: <GridLine type={"tick"}/>,
+    gridComponent: <GridLine type={"grid"}/>,
     scale: "linear",
     standalone: true,
     theme: VictoryTheme.grayscale,

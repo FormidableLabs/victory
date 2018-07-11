@@ -18,10 +18,6 @@ const getYAccessor = (scale) => {
   return (d) => scale.y(d._y1 !== undefined ? d._y1 : d._y);
 };
 
-const getY0Accessor = (scale) => {
-  return (d) => scale.y(d._y0);
-};
-
 const getAngleAccessor = (scale) => {
   return (d) => {
     const x = scale.x(d._x1 !== undefined ? d._x1 : d._x);

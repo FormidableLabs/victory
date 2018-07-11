@@ -1,6 +1,5 @@
 import { assign, defaults, isFunction } from "lodash";
-import Axis from "../../helpers/axis";
-import { Helpers, Scale } from "victory-core";
+import { Helpers, Scale, Axis } from "victory-core";
 
 const orientationSign = {
   top: -1,

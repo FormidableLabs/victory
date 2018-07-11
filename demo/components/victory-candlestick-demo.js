@@ -3,7 +3,8 @@
 import React from "react";
 import PropTypes from "prop-types";
 import { random, range, merge } from "lodash";
-import { VictoryChart, VictoryAxis } from "../../packages/victory-chart/src/index";
+import { VictoryChart } from "../../packages/victory-chart/src/index";
+import { VictoryAxis } from "../../packages/victory-axis/src/index";
 import { VictoryCandlestick } from "../../packages/victory-candlestick/src/index";
 import { VictoryTheme } from "../../packages/victory-core/src/index";
 

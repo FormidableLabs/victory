@@ -1,10 +1,8 @@
 /* eslint-disable func-style */
 /* eslint-disable no-use-before-define */
 
-import Axis from "../../helpers/axis";
-import Wrapper from "../../helpers/wrapper";
 import React from "react";
-import { Log, Helpers, Scale } from "victory-core";
+import { Log, Helpers, Scale, Axis, Wrapper } from "victory-core";
 import { defaults, assign } from "lodash";
 
 function getAxisProps(child, props, calculatedProps) {

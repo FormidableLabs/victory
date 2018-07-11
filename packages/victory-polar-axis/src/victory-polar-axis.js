@@ -3,10 +3,9 @@ import PropTypes from "prop-types";
 import { assign } from "lodash";
 import {
   PropTypes as CustomPropTypes, Helpers, VictoryLabel, CommonProps,
-  VictoryContainer, VictoryTheme, Grid, addEvents, Arc
+  VictoryContainer, VictoryTheme, GridLine, addEvents, Arc, Axis
 } from "victory-core";
 import { getScale, getStyles, getBaseProps } from "./helper-methods";
-import Axis from "../../helpers/axis";
 
 const fallbackProps = {
   width: 450,
@@ -88,20 +87,20 @@ class VictoryPolarAxis extends React.Component {
   };
 
   static defaultProps = {
-    axisComponent: <Grid type={"axis"}/>,
+    axisComponent: <GridLine type={"axis"}/>,
     axisLabelComponent: <VictoryLabel/>,
     circularAxisComponent: <Arc type={"axis"}/>,
     circularGridComponent: <Arc type={"grid"}/>,
     containerComponent: <VictoryContainer />,
     endAngle: 360,
-    gridComponent: <Grid type={"grid"}/>,
+    gridComponent: <GridLine type={"grid"}/>,
     groupComponent: <g role="presentation"/>,
     labelPlacement: "parallel",
     scale: "linear",
     startAngle: 0,
     standalone: true,
     theme: VictoryTheme.grayscale,
-    tickComponent: <Grid type={"tick"}/>,
+    tickComponent: <GridLine type={"tick"}/>,
     tickLabelComponent: <VictoryLabel/>
   };
 

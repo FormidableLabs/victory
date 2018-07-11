@@ -1,10 +1,10 @@
 /* eslint-disable func-style */
-import { Collection, Domain } from "victory-core";
+import React from "react";
 import {
   identity, isFunction, invert, uniq, range, orderBy, values, includes, without
 } from "lodash";
-import React from "react";
-
+import Collection from "./collection";
+import Domain from "./domain";
 /**
  * Returns the axis (x or y) of a particular axis component
  * @param {Object} props: the props object.

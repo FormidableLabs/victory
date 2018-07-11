@@ -1,5 +1,5 @@
 /* eslint no-unused-expressions: 0 */
-import { getScale } from "packages/victory-chart/src/components/victory-axis/helper-methods";
+import { getScale } from "packages/victory-axis/src/helper-methods";
 
 describe("victory-axis/helper-methods", () => {
 

@@ -1,44 +1,7 @@
 /*eslint no-magic-numbers: ["error", { "ignore": [-1, 0, 1, 2, 1000] }]*/
 import { Children } from "react";
-import { Selection, Collection, Data, Helpers, Domain } from "victory-core";
+import { Selection, Collection, Data, Helpers, Domain, Wrapper } from "victory-core";
 import { assign, throttle, isFunction, defaults } from "lodash";
-
-function getCurrentAxis(axis, horizontal) {
-  const otherAxis = axis === "x" ? "y" : "x";
-  return horizontal ? otherAxis : axis;
-};
-
-function getDomainFromChildren(props, axis, childComponents) {
-  const children = childComponents ?
-    childComponents.slice(0) : Children.toArray(props.children);
-  const horizontalChildren = childComponents.some((component) => {
-    return component.props && component.props.horizontal;
-  });
-  const horizontal = props && props.horizontal || horizontalChildren.length > 0;
-  const currentAxis = getCurrentAxis(axis, horizontal);
-  const parentData = props.data ? Data.getData(props, axis) : undefined;
-  const { polar, startAngle, endAngle, categories, minDomain, maxDomain } = props;
-  const baseParentProps = { polar, startAngle, endAngle, categories, minDomain, maxDomain };
-  const parentProps = parentData ?
-    assign(baseParentProps, { data: parentData }) : baseParentProps;
-
-  const iteratee = (child) => {
-    const role = child.type && child.type.role;
-    const sharedProps = assign({}, child.props, parentProps);
-    if (role === "legend" || role === "label") {
-      return null;
-    } else if (child.type && isFunction(child.type.getDomain)) {
-      return child.props && child.type.getDomain(sharedProps, currentAxis);
-    } else {
-      return Domain.getDomain(sharedProps, currentAxis);
-    }
-  };
-  const childDomains = Helpers.reduceChildren(children, iteratee, props);
-
-  const min = childDomains.length === 0 ? 0 : Collection.getMinValue(childDomains);
-  const max = childDomains.length === 0 ? 1 : Collection.getMaxValue(childDomains);
-  return [min, max];
-};
 
 const RawZoomHelpers = {
   checkDomainEquality(a, b) {
@@ -199,10 +162,10 @@ const RawZoomHelpers = {
     let childrenDomain = {};
     if (childComponents.length) {
       childrenDomain = zoomDimension ?
-        { [zoomDimension]: getDomainFromChildren(props, zoomDimension, childComponents) }
+        { [zoomDimension]: Wrapper.getDomainFromChildren(props, zoomDimension, childComponents) }
         : ({
-          x: getDomainFromChildren(props, "x", childComponents),
-          y: getDomainFromChildren(props, "y", childComponents)
+          x: Wrapper.getDomainFromChildren(props, "x", childComponents),
+          y: Wrapper.getDomainFromChildren(props, "y", childComponents)
         });
     }
     return defaults({}, childrenDomain, originalDomain, domain);

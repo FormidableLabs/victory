@@ -8,10 +8,10 @@ import {
   VictoryClipContainer, VictoryLabel, VictoryTheme
 } from "../../packages/victory-core/src/index";
 
-import {
-  VictoryAxis, VictoryChart, VictoryGroup, VictoryPolarAxis, VictoryStack
-} from "../../packages/victory-chart/src/index";
+import { VictoryChart, VictoryGroup, VictoryStack } from "../../packages/victory-chart/src/index";
 import { VictoryArea } from "../../packages/victory-area/src/index";
+import { VictoryAxis } from "../../packages/victory-axis/src/index";
+import { VictoryPolarAxis } from "../../packages/victory-polar-axis/src/index";
 import { VictoryBar } from "../../packages/victory-bar/src/index";
 import { VictoryLine } from "../../packages/victory-line/src/index";
 import { VictoryScatter } from "../../packages/victory-scatter/src/index";

@@ -1,7 +1,7 @@
 /*global window:false */
 /*eslint-disable no-magic-numbers */
 import React from "react";
-import { VictoryAxis } from "../../packages/victory-chart/src/index";
+import { VictoryAxis } from "../../packages/victory-axis/src/index";
 import {
   VictoryLabel, VictoryContainer, VictoryTheme
 } from "../../packages/victory-core/src/index";

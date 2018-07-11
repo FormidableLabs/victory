@@ -35,7 +35,7 @@ describe("victory", () => {
     expect(Victory.ClipPath).not.to.equal(undefined);
     expect(Victory.Curve).not.to.equal(undefined);
     expect(Victory.ErrorBar).not.to.equal(undefined);
-    expect(Victory.Grid).not.to.equal(undefined);
+    expect(Victory.GridLine).not.to.equal(undefined);
     expect(Victory.Point).not.to.equal(undefined);
     expect(Victory.Slice).not.to.equal(undefined);
     expect(Victory.Voronoi).not.to.equal(undefined);

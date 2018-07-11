@@ -2,13 +2,12 @@ import { defaults, assign } from "lodash";
 import PropTypes from "prop-types";
 import React from "react";
 import {
-  Helpers, VictoryContainer, VictoryTheme, CommonProps, PropTypes as CustomPropTypes
+  Helpers, VictoryContainer, VictoryTheme, CommonProps, PropTypes as CustomPropTypes, Wrapper
 } from "victory-core";
 import { VictorySharedEvents } from "victory-shared-events";
-import VictoryAxis from "../victory-axis/victory-axis";
-import VictoryPolarAxis from "../victory-polar-axis/victory-polar-axis";
+import { VictoryAxis } from "victory-axis";
+import { VictoryPolarAxis } from "victory-polar-axis";
 import { getChildComponents, getCalculatedProps, getChildren } from "./helper-methods";
-import Wrapper from "../../helpers/wrapper";
 
 const fallbackProps = {
   width: 450,
