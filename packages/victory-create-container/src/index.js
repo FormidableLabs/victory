@@ -1,5 +1,3 @@
 export {
-  combineContainerMixins,
-  makeCreateContainerFunction,
-  default as createContainer
+  combineContainerMixins, makeCreateContainerFunction, createContainer
 } from "./create-container";

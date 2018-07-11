@@ -10,17 +10,24 @@ import {
   VictoryScatter,
   VictoryStack,
   VictoryGroup,
-  VictorySelectionContainer
+  VictorySelectionContainer,
+  createContainer
 } from "../../packages/victory/src/index";
+import { range, random } from "lodash";
 
 export default class App extends React.Component {
   render() {
     const style = {
       parent: { border: "1px solid #ccc", margin: "2%", maxWidth: "40%" }
     };
+    console.log(createContainer)
+    // const CustomContainer = createContainer("voronoi", "zoom");
+    // const data = range(100).map((x) => ({ x, y: 100 + x + random(10) }));
+
     return (
       <div className="demo">
         <h1>Victory Demo</h1>
+
 
         <h2>Composites</h2>
 

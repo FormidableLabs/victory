@@ -55,7 +55,7 @@ const combineDefaultEvents = (defaultEvents) => {
   return events.filter(Boolean);
 };
 
-export const combineContainerMixins = (mixins, Container) => {
+const combineContainerMixins = (mixins, Container) => {
   // similar to Object.assign(A, B), this function will decide conflicts in favor mixinB.
   // this applies to propTypes and defaultProps.
   // getChildren will call A's getChildren() and pass the resulting children to B's.
@@ -112,7 +112,7 @@ const checkBehaviorName = (behavior, behaviors) => {
   }
 };
 
-export const makeCreateContainerFunction = (mixinMap, Container) => (behaviorA, behaviorB, ...invalid) => { // eslint-disable-line
+const makeCreateContainerFunction = (mixinMap, Container) => (behaviorA, behaviorB, ...invalid) => { // eslint-disable-line
   const behaviors = Object.keys(mixinMap);
 
   checkBehaviorName(behaviorA, behaviors);
@@ -132,10 +132,13 @@ export const makeCreateContainerFunction = (mixinMap, Container) => (behaviorA, 
   return combineContainerMixins([...firstMixins, ...secondMixins], Container);
 };
 
-export default makeCreateContainerFunction({
+const createContainer = makeCreateContainerFunction({
   zoom: [zoomContainerMixin],
   voronoi: [voronoiContainerMixin],
   selection: [selectionContainerMixin],
   cursor: [cursorContainerMixin],
   brush: [brushContainerMixin]
 }, VictoryContainer);
+
+export { createContainer, makeCreateContainerFunction, combineContainerMixins };
+

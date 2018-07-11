@@ -1,16 +1,16 @@
 import { Selection } from "victory-core";
 import { throttle, isFunction, mapValues } from "lodash";
 
-const withinBounds = (point, bounds) => {
-  const { x1, x2, y1, y2 } = mapValues(bounds, Number);
-  const { x, y } = mapValues(point, Number);
-  return x >= Math.min(x1, x2) &&
-    x <= Math.max(x1, x2) &&
-    y >= Math.min(y1, y2) &&
-    y <= Math.max(y1, y2);
-};
-
 const CursorHelpers = {
+  withinBounds(point, bounds) {
+    const { x1, x2, y1, y2 } = mapValues(bounds, Number);
+    const { x, y } = mapValues(point, Number);
+    return x >= Math.min(x1, x2) &&
+      x <= Math.max(x1, x2) &&
+      y >= Math.min(y1, y2) &&
+      y <= Math.max(y1, y2);
+  },
+
   onMouseMove(evt, targetProps) {
     const { onCursorChange, cursorDimension, domain } = targetProps;
     const parentSVG = targetProps.parentSVG || Selection.getParentSVG(evt);
@@ -22,7 +22,7 @@ const CursorHelpers = {
       cursorSVGPosition.y
     );
 
-    const inBounds = withinBounds(cursorValue, {
+    const inBounds = this.withinBounds(cursorValue, {
       x1: domain.x[0],
       x2: domain.x[1],
       y1: domain.y[0],
