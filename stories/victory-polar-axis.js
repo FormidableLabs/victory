@@ -3,7 +3,8 @@ import React from "react";
 import { range } from "lodash";
 import seedrandom from "seedrandom";
 import { storiesOf } from "@storybook/react";
-import { VictoryPolarAxis, VictoryChart } from "../packages/victory-chart/src/index";
+import { VictoryPolarAxis } from "../packages/victory-polar-axis/src/index";
+import { VictoryChart } from "../packages/victory-chart/src/index";
 import { VictoryTheme } from "../packages/victory-core/src/index";
 
 const getTimeValues = (num) => {

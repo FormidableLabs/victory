@@ -1,7 +1,8 @@
 /*eslint-disable no-magic-numbers*/
 import React from "react";
 import { storiesOf } from "@storybook/react";
-import { VictoryChart, VictoryAxis } from "../packages/victory-chart/src/index";
+import { VictoryChart } from "../packages/victory-chart/src/index";
+import { VictoryAxis } from "../packages/victory-axis/src/index";
 import { VictoryLine } from "../packages/victory-line/src/index";
 import { VictoryZoomContainer } from "../packages/victory-zoom-container/src/index";
 import { VictoryCursorContainer } from "../packages/victory-cursor-container/src/index";

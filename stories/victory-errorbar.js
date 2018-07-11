@@ -2,7 +2,8 @@
 import React from "react";
 import { storiesOf } from "@storybook/react";
 import { VictoryErrorBar } from "../packages/victory-errorbar/src/index";
-import { VictoryTooltip, VictoryTheme } from "../packages/victory-core/src/index";
+import { VictoryTooltip } from "../packages/victory-tooltip/src/index";
+import { VictoryTheme } from "../packages/victory-core/src/index";
 import { range } from "lodash";
 import seedrandom from "seedrandom";
 import { getChartDecorator } from "./decorators";
