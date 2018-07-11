@@ -3,7 +3,9 @@
   "version": "16.1.0",
   "description": "D3 pie & donut chart component for React",
   "main": "lib/index.js",
-  "author": "Angela Nicholas",
+  "module": "es/index.js",
+  "jsnext:main": "es/index.js",
+  "author": "Formidable",
   "license": "MIT",
   "dependencies": {
     "d3-shape": "^1.0.0",

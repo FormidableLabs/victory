@@ -3,7 +3,9 @@
   "version": "27.1.1",
   "description": "Chart Component for Victory",
   "main": "lib/index.js",
-  "author": "Lauren Eastridge",
+  "module": "es/index.js",
+  "jsnext:main": "es/index.js",
+  "author": "Formidable",
   "license": "MIT",
   "dependencies": {
     "lodash": "^4.17.5",

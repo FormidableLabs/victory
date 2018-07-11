@@ -3,6 +3,8 @@
   "version": "27.1.1",
   "description": "Chart Component for Victory",
   "main": "lib/index.js",
+  "module": "es/index.js",
+  "jsnext:main": "es/index.js",
   "author": "Lauren Eastridge",
   "license": "MIT",
   "dependencies": {

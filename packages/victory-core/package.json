@@ -3,7 +3,9 @@
   "version": "24.0.1",
   "description": "Victory Core",
   "main": "lib/index.js",
-  "author": "Brian Beck",
+  "module": "es/index.js",
+  "jsnext:main": "es/index.js",
+  "author": "Formidable",
   "license": "MIT",
   "dependencies": {
     "d3-ease": "^1.0.0",

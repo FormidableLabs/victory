@@ -9,6 +9,8 @@
     "charting"
   ],
   "main": "lib/index.js",
+  "module": "es/index.js",
+  "jsnext:main": "es/index.js",
   "author": "Formidable",
   "license": "MIT",
   "dependencies": {
