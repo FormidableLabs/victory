@@ -12,5 +12,13 @@
     "lodash": "^4.17.5",
     "victory-core": "^24.0.1"
   },
+  "publishr": {
+    "files": {
+      ".npmignore": ".npmignore.publishr"
+    },
+    "scripts": {
+      "postinstall": ""
+    }
+  },
   "sideEffects": false
 }
