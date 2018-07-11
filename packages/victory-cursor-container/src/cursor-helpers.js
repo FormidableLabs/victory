@@ -1,5 +1,5 @@
 import { Selection } from "victory-core";
-import { throttle, isFunction } from "lodash";
+import { throttle, isFunction, mapValues } from "lodash";
 
 const withinBounds = (point, bounds) => {
   const { x1, x2, y1, y2 } = mapValues(bounds, Number);

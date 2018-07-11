@@ -2,7 +2,7 @@
 import React from "react";
 import PropTypes from "prop-types";
 import { isObject, uniqueId } from "lodash";
-import { Helpers , CommonProps, ClipPath, Path, Circle } from "victory-core";
+import { Helpers, CommonProps, ClipPath, Path, Circle } from "victory-core";
 
 export default class Voronoi extends React.Component {
   static propTypes = {

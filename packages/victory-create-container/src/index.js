@@ -1,5 +1,5 @@
 export {
   combineContainerMixins,
   makeCreateContainerFunction,
-  default as VictoryCreateContainer
+  default as createContainer
 } from "./create-container";

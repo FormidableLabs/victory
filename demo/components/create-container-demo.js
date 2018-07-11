@@ -4,7 +4,7 @@ import { round } from "lodash";
 import { VictoryChart } from "../../packages/victory-chart/src/index";
 import { VictoryStack } from "../../packages/victory-stack/src/index";
 import { VictoryGroup } from "../../packages/victory-group/src/index";
-import { VictoryCreateContainer } from "../../packages/victory-create-container/src/index";
+import { createContainer } from "../../packages/victory-create-container/src/index";
 import { VictoryBar } from "../../packages/victory-bar/src/index";
 import { VictoryLine } from "../../packages/victory-line/src/index";
 import { VictoryScatter } from "../../packages/victory-scatter/src/index";
@@ -20,7 +20,7 @@ const Charts = ({ behaviors }) => { // eslint-disable-line react/prop-types
     justifyContent: "center"
   };
   const chartStyle = { parent: { border: "1px solid #ccc", margin: "2%", maxWidth: "40%" } };
-  const CustomContainer = VictoryCreateContainer(...behaviors);
+  const CustomContainer = createContainer(...behaviors);
   const behaviorsList = behaviors.map((behavior) => `"${behavior}"`).join(", ");
 
   return (

@@ -38,7 +38,7 @@ import {
 import {
   VictoryZoomContainer, ZoomHelpers, zoomContainerMixin, RawZoomHelpers
 } from "victory-zoom-container";
-import { combineContainerMixins, VictoryCreateContainer } from "victory-create-container";
+import { combineContainerMixins, createContainer } from "victory-create-container";
 
 import { VictoryTooltip, Flyout } from "victory-tooltip";
 import { VictoryLegend } from "victory-legend";
@@ -78,7 +78,7 @@ export {
   VictoryBrushContainer, BrushHelpers, brushContainerMixin,
   VictoryCursorContainer, CursorHelpers, cursorContainerMixin,
   VictoryVoronoiContainer, VoronoiHelpers, voronoiContainerMixin,
-  combineContainerMixins, VictoryCreateContainer,
+  combineContainerMixins, createContainer,
   VictoryBrushLine,
   addEvents, Collection, Data, DefaultTransitions, Domain, Events, Helpers, Log,
   PropTypes, Scale, Style, TextSize, Transitions, Selection, LabelHelpers, Axis, Wrapper
