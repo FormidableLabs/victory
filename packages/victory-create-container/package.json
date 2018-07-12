@@ -1,6 +1,6 @@
 {
   "name": "victory-create-container",
-  "version": "27.1.1",
+  "version": "29.0.2",
   "description": "Chart Component for Victory",
   "main": "lib/index.js",
   "module": "es/index.js",
@@ -9,16 +9,16 @@
   "license": "MIT",
   "dependencies": {
     "lodash": "^4.17.5",
-    "victory-brush-container": "^27.0.0",
-    "victory-core": "^24.0.1",
-    "victory-cursor-container": "^27.0.0",
-    "victory-selection-container": "^27.0.0",
-    "victory-voronoi-container": "^27.0.0",
-    "victory-zoom-container": "^27.0.0"
+    "victory-brush-container": "^29.0.2",
+    "victory-core": "^29.0.2",
+    "victory-cursor-container": "^29.0.2",
+    "victory-selection-container": "^29.0.2",
+    "victory-voronoi-container": "^29.0.2",
+    "victory-zoom-container": "^29.0.2"
   },
   "publishr": {
     "files": {
-      ".npmignore": ".npmignore.publishr"
+      ".npmignore": "../../.npmignore.publishr"
     },
     "scripts": {
       "postinstall": ""

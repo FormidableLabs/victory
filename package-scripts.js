@@ -6,6 +6,7 @@ module.exports = {
     "clean-lib": "rimraf lib",
     "clean-es": "rimraf es",
     "clean-dist": "rimraf dist",
+    "clean-all": npsUtils.series.nps("clean-es", "clean-lib", "clean-dist"),
     "babel-es": "cross-env BABEL_ENV=es babel src --out-dir es --copy-files",
     "babel-lib": "cross-env BABEL_ENV=commonjs babel src --out-dir lib --copy-files",
     "build-es": npsUtils.series.nps("clean-es", "babel-es"),

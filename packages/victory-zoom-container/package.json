@@ -13,7 +13,7 @@
   },
   "publishr": {
     "files": {
-      ".npmignore": ".npmignore.publishr"
+      ".npmignore": "../../.npmignore.publishr"
     },
     "scripts": {
       "postinstall": ""

@@ -1,5 +1,5 @@
 {
-  "name": "victory",
+  "name": "victory-monorepo",
   "version": "0.27.2",
   "description": "Data viz for React",
   "keywords": [
@@ -32,6 +32,7 @@
     "build": "lerna exec --parallel -- nps build-libs && lerna exec --parallel nps build-dists",
     "watch": "lerna exec --parallel -- nps watch-build",
     "start": "yarn run dev",
+    "clean": "lerna exec --parallel -- nps clean-all",
     "check-ci": "yarn run lint && yarn run test-ci",
     "check-cov": "yarn run lint && yarn run test-cov",
     "check-dev": "yarn run lint && yarn run test-dev",
@@ -53,7 +54,8 @@
     "test-cov": "karma start ./config/karma/karma.conf.coverage.js",
     "test-dev": "karma start ./config/karma/karma.conf.dev.js",
     "test": "karma start ./config/karma/karma.conf.js",
-    "version-dry-run": "lerna exec -- publishr dry-run -V"
+    "version-dry-run": "lerna exec -- publishr dry-run -V",
+    "lerna-dry-run": "lerna publish --skip-git --skip-npm"
   },
   "devDependencies": {
     "@storybook/addon-options": "^3.1.2",
