@@ -11,7 +11,5 @@ before_install:
 - export DISPLAY=:99.0
 - sh -e /etc/init.d/xvfb start
 script:
-- npm --version
-- node_modules/.bin/builder run check-ci
-- npm prune --production
-- node_modules/.bin/builder run build
+- yarn --version
+- yarn run check-ci

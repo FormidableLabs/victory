@@ -29,6 +29,7 @@
     "postversion": "lerna exec --parallel -- publishr postversion -V",
     "postpublish": "lerna exec --parallel -- publishr postpublish -V",
     "build-libs": "lerna exec --parallel -- nps build-libs",
+    "build": "lerna exec --parallel -- nps build-libs && lerna exec --parallel nps build-dists",
     "watch": "lerna exec --parallel -- nps watch-build",
     "start": "yarn run dev",
     "check-ci": "yarn run lint && yarn run test-ci",
