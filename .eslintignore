@@ -1,2 +1,3 @@
 node_modules/*
 config/*
+package-scripts.js
