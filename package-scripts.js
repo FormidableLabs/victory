@@ -1,8 +1,65 @@
 var npsUtils = require("nps-utils");
 var path = require("path");
 
+// Something in here is SLOW
+// build: {
+//   es: "rimraf es && cross-env BABEL_ENV=es babel src --out-dir es --copy-files",
+//   lib: "rimraf lib && cross-env BABEL_ENV=commonjs babel src --out-dir lib --copy-files",
+//   libs: npsUtils.concurrent.nps("build.es", "build.lib"),
+//   postinstall: "lerna exec --parallel -- nps build.libs",
+//   min: "webpack --bail --config ../../config/webpack/webpack.config.js --colors",
+//   dev: "webpack --bail --config ../../config/webpack/webpack.config.dev.js --colors",
+//   dists: npsUtils.concurrent.nps("build.min", "build.dist"),
+//   dist: npsUtils.series.nps("clean.dist", "build.dists"),
+//   default: npsUtils.series.nps("build.libs", "build.dist"),
+//   all: "lerna exec --parallel -- nps build"
+// },
+
+
 module.exports = {
   scripts: {
+    server: {
+      dev: "webpack-dev-server --config ./config/webpack/demo/webpack.config.dev.js --colors --content-base demo",
+      hot: "webpack-dev-server --config ./config/webpack/demo/webpack.config.hot.js --colors --inline --hot --content-base demo",
+      test: "webpack-dev-server --config ./config/webpack/webpack.config.test.js --colors",
+    },
+    test: {
+      ci: "karma start --browsers PhantomJS,Firefox ./config/karma/karma.conf.coverage.js",
+      cov: "karma start ./config/karma/karma.conf.coverage.js",
+      dev: "karma start ./config/karma/karma.conf.dev.js",
+      default: "karma start ./config/karma/karma.conf.js",
+    },
+    start: npsUtils.concurrent.nps("server.dev", "server.test"),
+    storybook: "start-storybook -p 6006",
+    chromatic: {
+      ci: "chromatic test --storybook-addon --exit-zero-on-changes",
+      default: "chromatic test --storybook-addon"
+    },
+    lint: {
+      src: "lerna exec --parallel -- eslint --color src",
+      demo: "eslint --color demo",
+      stories:  "eslint --color stories",
+      test:  "eslint --color test",
+      default: npsUtils.series.nps("lint.test", "lint.stories", "lint.demo", "lint.src")
+    },
+    check: {
+      ci: npsUtils.series.nps("lint", "test.ci"),
+      cov: npsUtils.series.nps("lint", "test.cov"),
+      dev: npsUtils.series.nps("lint", "test.dev"),
+      default: npsUtils.series.nps("lint", "test")
+    },
+    watch: {
+      es: "cross-env BABEL_ENV=es babel src --out-dir es --copy-files --watch",
+      lib: "cross-env BABEL_ENV=lib babel src --out-dir lib --copy-files --watch",
+      default: npsUtils.concurrent.nps("watch.es", "watch.lib")
+    },
+    clean: {
+      lib: "rimraf lib",
+      es: "rimraf es",
+      dist: "rimraf dist",
+      default: npsUtils.concurrent.nps("clean.es", "clean.lib", "clean.dist"),
+      all: "lerna exec --parallel -- nps clean"
+    },
     "clean-lib": "rimraf lib",
     "clean-es": "rimraf es",
     "clean-dist": "rimraf dist",
@@ -15,9 +72,6 @@ module.exports = {
     "build-dist-dev": "webpack --bail --config ../../config/webpack/webpack.config.dev.js --colors",
     "build-dist-min": "webpack --bail --config ../../config/webpack/webpack.config.js --colors",
     "build-dists": npsUtils.concurrent.nps("build-dist-min", "build-dist-dev"),
-    "build-dist": npsUtils.series.nps("clean-dist", "build-dists"),
-    "watch-babel-es": "cross-env BABEL_ENV=es babel src --out-dir es --copy-files --watch",
-    "watch-babel-lib": "cross-env BABEL_ENV=lib babel src --out-dir lib --copy-files --watch",
-    "watch-build": npsUtils.concurrent.nps("watch-babel-es", "watch-babel-lib")
+    "build-dist": npsUtils.series.nps("clean-dist", "build-dists")
   }
 };
