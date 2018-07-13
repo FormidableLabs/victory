@@ -34,9 +34,9 @@ module.exports = {
       default: npsUtils.series.nps("lint", "test")
     },
     watch: {
-      es: "cross-env BABEL_ENV=es babel src --out-dir es --copy-files --watch",
-      lib: "cross-env BABEL_ENV=lib babel src --out-dir lib --copy-files --watch",
-      default: npsUtils.concurrent.nps("watch.es", "watch.lib")
+      es: "lerna exec --parallel -- cross-env BABEL_ENV=es babel src --out-dir es --copy-files --watch",
+      lib: "lerna exec --parallel -- cross-env BABEL_ENV=lib babel src --out-dir lib --copy-files --watch",
+      default: npsUtils.concurrent.nps("watch.es", "watch.lib"),
     },
     clean: {
       lib: "rimraf lib",
@@ -48,7 +48,7 @@ module.exports = {
     // Version testing helpers
     "publishr-dry-run": "lerna exec -- publishr dry-run -V",
     "lerna-dry-run": "lerna publish --skip-git --skip-npm --loglevel silly",
-    "global-postpublish": "lerna exec --parallel -- publishr postpublish -V"
+    "global-postpublish": "lerna exec --parallel -- publishr postpublish -V",
     // TODO: organize build scripts once build perf is sorted out
     "babel-es": "cross-env BABEL_ENV=es babel src --out-dir es --copy-files",
     "babel-lib": "cross-env BABEL_ENV=commonjs babel src --out-dir lib --copy-files",

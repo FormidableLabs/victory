@@ -40,13 +40,13 @@ $ yarn start
 When making changes across multiple dependent packages, it is necessary to rebuild libs in order to pick up changes in dependent packages. You can manually rebuild libs by running:
 
 ```console
-$ yarn run build-libs
+$ nps build-libs
 ```
 
 or start a task in a new terminal window that will watch for code changes, and automatically rebuild libs
 
 ```console
-$ yarn run watch
+$ nps watch
 ```
 
 ## Checks, Tests
@@ -56,15 +56,15 @@ All checks and tests run from the root directory.
 The `check` script will lint all packages and infrastructure before starting a test server and running our suite of tests
 
 ```console
-$ yarn run check
-$ yarn run check-dev // if you already have a development server running
+$ nps check
+$ nps check.dev // if you already have a development server running
 ```
 
 To run tests without linting, use the `test` script
 
 ```console
-$ yarn run test
-$ yarn run test-dev // if you already have a development server running
+$ nps test
+$ nps test.dev // if you already have a development server running
 ```
 
 ## Visual Tests
@@ -74,13 +74,13 @@ Victory relies heavily on visual regression testing with [Storybook](https://sto
 Write visual tests for new features by adding them in the `stories` directory. Run storybooks and check out changes. Storybooks are served from localhost:6006/
 
 ```console
-$ yarn run storybook
+$ nps storybook
 ```
 
 [Chromatic](https://www.chromaticqa.com/) provides automated visual testing. All PRs will trigger a new chromatic build, which will be displayed along with CI status. You can also trigger a new build manually with:
 
 ```console
-$ yarn run storybook
+$ nps storybook
 ```
 
 **External contributors will not be able to automate their visual regression testing with Chromatic, as it requires a secret app code.**
@@ -91,23 +91,35 @@ TODO: Set up chromatic CI for this repo
 ## Release
 
 Victory uses [publishr](https://github.com/FormidableLabs/publishr) to organize compiled code for released versions.
-The following scripts are responsible for publishing new versions:
+
+Each package must contain the following version scripts and publishr config in its `package.json`:
 
 ```
-"preversion": "yarn run check",
-"version": "lerna exec --parallel -- nps build-libs && lerna exec --parallel nps build-dists",
-"postversion": "lerna exec --parallel -- publishr postversion -V",
-"postpublish": "lerna exec --parallel -- publishr postpublish -V"
+"scripts": {
+  "version": "nps build-libs && nps build-dists",
+  "postversion": "publishr postversion -V",
+  "postpublish": "publishr postpublish -V"
+},
+"publishr": {
+  "files": {
+    ".npmignore": "../../.npmignore.publishr"
+  }
+}
+```
+Pre version checks are run _once_ for all packages, and are defined in the root directory `package.json`
+
+```
+"preversion": "nps check",
 ```
 
-TODO: make sure that `lerna publish` can run these from the root `package.json`, otherwise, we will need to add `postversion` and `postpublish` scripts to each package, and manually run `preversion` / `version` scripts (once) before any publishing.
+The following commands will let you try a version without publishing or creating git commits:
 
-which would look like
+```console
+// This command bumps versions, runs checks, builds libs, and runs publishr postversion (~5 minutes)
+nps lerna-dry-run
 
-```
-$ yarn run check
-$ yarn run build
-$ lerna publish
+// Because postpublish will never run, it's necessary to manually clean up
+nps global-postpublish
 ```
 
 ## Contributor Covenant Code of Conduct

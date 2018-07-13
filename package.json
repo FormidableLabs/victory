@@ -1,6 +1,6 @@
 {
-  "name": "victory",
-  "version": "0.27.2",
+  "name": "victory-monorepo",
+  "version": "0.0.0",
   "description": "Data viz for React",
   "keywords": [
     "data visualization",
