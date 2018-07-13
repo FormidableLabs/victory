@@ -24,9 +24,6 @@
   "publishr": {
     "files": {
       ".npmignore": "../../.npmignore.publishr"
-    },
-    "scripts": {
-      "postinstall": ""
     }
   },
   "sideEffects": false

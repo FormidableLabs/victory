@@ -1,21 +1,6 @@
 var npsUtils = require("nps-utils");
 var path = require("path");
 
-// Something in here is SLOW
-// build: {
-//   es: "rimraf es && cross-env BABEL_ENV=es babel src --out-dir es --copy-files",
-//   lib: "rimraf lib && cross-env BABEL_ENV=commonjs babel src --out-dir lib --copy-files",
-//   libs: npsUtils.concurrent.nps("build.es", "build.lib"),
-//   postinstall: "lerna exec --parallel -- nps build.libs",
-//   min: "webpack --bail --config ../../config/webpack/webpack.config.js --colors",
-//   dev: "webpack --bail --config ../../config/webpack/webpack.config.dev.js --colors",
-//   dists: npsUtils.concurrent.nps("build.min", "build.dist"),
-//   dist: npsUtils.series.nps("clean.dist", "build.dists"),
-//   default: npsUtils.series.nps("build.libs", "build.dist"),
-//   all: "lerna exec --parallel -- nps build"
-// },
-
-
 module.exports = {
   scripts: {
     server: {
@@ -60,18 +45,14 @@ module.exports = {
       default: npsUtils.concurrent.nps("clean.es", "clean.lib", "clean.dist"),
       all: "lerna exec --parallel -- nps clean"
     },
-    "clean-lib": "rimraf lib",
-    "clean-es": "rimraf es",
-    "clean-dist": "rimraf dist",
-    "clean-all": npsUtils.series.nps("clean-es", "clean-lib", "clean-dist"),
     "babel-es": "cross-env BABEL_ENV=es babel src --out-dir es --copy-files",
     "babel-lib": "cross-env BABEL_ENV=commonjs babel src --out-dir lib --copy-files",
-    "build-es": npsUtils.series.nps("clean-es", "babel-es"),
-    "build-lib": npsUtils.series.nps("clean-lib", "babel-lib"),
+    "build-es": npsUtils.series.nps("clean.es", "babel-es"),
+    "build-lib": npsUtils.series.nps("clean.lib", "babel-lib"),
     "build-libs": npsUtils.series.nps("build-lib", "build-es"),
     "build-dist-dev": "webpack --bail --config ../../config/webpack/webpack.config.dev.js --colors",
     "build-dist-min": "webpack --bail --config ../../config/webpack/webpack.config.js --colors",
     "build-dists": npsUtils.concurrent.nps("build-dist-min", "build-dist-dev"),
-    "build-dist": npsUtils.series.nps("clean-dist", "build-dists")
+    "build-dist": npsUtils.series.nps("clean.dist", "build-dists")
   }
 };

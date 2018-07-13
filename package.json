@@ -25,14 +25,14 @@
   "scripts": {
     "postinstall": "lerna exec --parallel -- nps build-libs",
     "preversion": "nps check",
-    "global-postpublish": "lerna exec --parallel -- publishr postpublish -V",
     "watch": "nps watch",
     "start": "nps start",
     "lint": "nps lint",
     "check-ci": "nps check.ci",
     "chromatic-ci": "nps chromatic.ci",
     "version-dry-run": "lerna exec -- publishr dry-run -V",
-    "lerna-dry-run": "lerna publish --skip-git --skip-npm --loglevel silly"
+    "lerna-dry-run": "lerna publish --skip-git --skip-npm --loglevel silly",
+    "global-postpublish": "lerna exec --parallel -- publishr postpublish -V",
   },
   "devDependencies": {
     "@storybook/addon-options": "^3.1.2",
