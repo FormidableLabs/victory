@@ -82,5 +82,5 @@ Now the `clipId` attached to your `VictoryLine` component will always be the sam
 
 [React]: https://facebook.github.io/react/
 [prop-types]: https://github.com/reactjs/prop-types
-trav_img]: https://api.travis-ci.org/FormidableLabs/victory.svg
+[trav_img]: https://api.travis-ci.org/FormidableLabs/victory.svg
 [trav_site]: https://travis-ci.org/FormidableLabs/victory

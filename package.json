@@ -13,9 +13,9 @@
     "url": "https://github.com/formidablelabs/victory.git"
   },
   "private": true,
-  "workspaces": {
-    "packages": ["packages/*"]
-  },
+  "workspaces": [
+    "packages/*"
+  ],
   "author": "Formidable",
   "license": "MIT",
   "bugs": {
@@ -25,7 +25,8 @@
   "scripts": {
     "postinstall": "lerna exec --parallel -- nps build-libs",
     "preversion": "nps check",
-    "start": "nps start"
+    "start": "nps start",
+    "check-ci": "nps check.ci"
   },
   "devDependencies": {
     "@storybook/addon-options": "^3.1.2",
