@@ -1,5 +1,5 @@
 {
-  "name": "victory-monorepo",
+  "name": "victory",
   "version": "0.27.2",
   "description": "Data viz for React",
   "keywords": [
@@ -13,9 +13,9 @@
     "url": "https://github.com/formidablelabs/victory.git"
   },
   "private": true,
-  "workspaces": [
-    "packages/*"
-  ],
+  "workspaces": {
+    "packages": ["packages/*"]
+  },
   "author": "Formidable",
   "license": "MIT",
   "bugs": {
