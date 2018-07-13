@@ -13,6 +13,11 @@
     "victory-core": "^24.0.1",
     "victory-tooltip": "^27.0.0"
   },
+  "scripts": {
+    "version": "nps build-libs && nps build-dists",
+    "postversion": "publishr postversion -V",
+    "postpublish": "publishr postpublish -V"
+  },
   "publishr": {
     "files": {
       ".npmignore": "../../.npmignore.publishr"
