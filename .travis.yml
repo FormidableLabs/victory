@@ -12,4 +12,5 @@ before_install:
 - sh -e /etc/init.d/xvfb start
 script:
 - yarn --version
-- yarn run check-ci
+- yarn install
+- yarn nps check.ci
