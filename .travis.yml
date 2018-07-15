@@ -11,7 +11,7 @@ before_install:
 - sh -e /etc/init.d/xvfb start
 script:
 - yarn --version
-- yarn run check-ci
+- yarn nps check.ci
 - if [ "${TRAVIS_NODE_VERSION}" = "8" ]; then CI=true yarn run chromatic-ci || echo "Chromatic tests failed. Please investigate"; fi
 
 env:

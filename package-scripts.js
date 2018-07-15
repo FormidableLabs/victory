@@ -15,11 +15,6 @@ module.exports = {
       default: "karma start ./config/karma/karma.conf.js",
     },
     start: npsUtils.concurrent.nps("server.dev", "server.test"),
-    storybook: "start-storybook -p 6006",
-    chromatic: {
-      ci: "chromatic test --storybook-addon --exit-zero-on-changes",
-      default: "chromatic test --storybook-addon"
-    },
     lint: {
       src: "lerna exec --parallel -- eslint --color src",
       demo: "eslint --color demo",
