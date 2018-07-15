@@ -67,7 +67,7 @@
     "glob": "7.1.2",
     "immutable": "^3.8.2",
     "istanbul": "^0.4.5",
-    "istanbul-instrumenter-loader": "^2.0.0",
+    "istanbul-instrumenter-loader": "^3.0.0",
     "json-loader": "^0.5.4",
     "karma": "^1.2.0",
     "karma-benchmark": "^0.6.0",
