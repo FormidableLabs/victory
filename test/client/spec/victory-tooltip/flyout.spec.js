@@ -2,7 +2,7 @@
 import React from "react";
 import { mount } from "enzyme";
 import Flyout from "packages/victory-tooltip/src/flyout";
-import SvgTestHelper from "../../svg-test-helper";
+import SvgTestHelper from "../svg-test-helper";
 
 describe("victory-primitives/flyout", () => {
   const baseProps = {
