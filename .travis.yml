@@ -12,7 +12,7 @@ before_install:
 script:
 - yarn --version
 - yarn run check-ci
-- if [ "${TRAVIS_NODE_VERSION}" = "8" ]; then yarn run chromatic-ci || echo "Chromatic tests failed. Please investigate"; fi
+- if [ "${TRAVIS_NODE_VERSION}" = "8" ]; then CI=true yarn run chromatic-ci || echo "Chromatic tests failed. Please investigate"; fi
 
 env:
   global:
