@@ -26,7 +26,9 @@
     "postinstall": "lerna exec --parallel -- nps build-libs",
     "preversion": "nps check",
     "start": "nps start",
-    "check-ci": "nps check.ci"
+    "storybook": "start-storybook -p 6006",
+    "check-ci": "nps check.ci",
+    "chromatic-ci": "nps chromatic.ci"
   },
   "devDependencies": {
     "@babel/cli": "7.0.0-beta.44",
@@ -44,8 +46,9 @@
     "@babel/plugin-transform-spread": "7.0.0-beta.44",
     "@babel/plugin-transform-template-literals": "7.0.0-beta.44",
     "@babel/preset-react": "7.0.0-beta.44",
-    "@storybook/addon-options": "^3.1.2",
-    "@storybook/react": "^3.2.13",
+    "@storybook/addon-actions": "^4.0.0-alpha.14",
+    "@storybook/addon-options": "^4.0.0-alpha.14",
+    "@storybook/react": "^4.0.0-alpha.14",
     "babel-eslint": "^6.1.2",
     "babel-loader": "^8.0.0-beta.0",
     "babel-plugin-lodash": "^3.1.2",
