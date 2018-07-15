@@ -2,13 +2,12 @@ import React from "react";
 import PropTypes from "prop-types";
 import Helpers from "../victory-util/helpers";
 import pathHelpers from "./path-helpers";
-import CommonProps from "./common-props";
+import CommonProps from "../victory-util/common-props";
 import Path from "./path";
-
 
 export default class Point extends React.Component {
   static propTypes = {
-    ...CommonProps,
+    ...CommonProps.primitiveProps,
     datum: PropTypes.object,
     getPath: PropTypes.func,
     pathComponent: PropTypes.element,

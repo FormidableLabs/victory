@@ -2,12 +2,12 @@ import React from "react";
 import PropTypes from "prop-types";
 import Helpers from "../victory-util/helpers";
 import { assign } from "lodash";
-import CommonProps from "./common-props";
+import CommonProps from "../victory-util/common-props";
 import Rect from "./rect";
 
 export default class Border extends React.Component {
   static propTypes = {
-    ...CommonProps,
+    ...CommonProps.primitiveProps,
     height: PropTypes.number,
     rectComponent: PropTypes.element,
     width: PropTypes.number,

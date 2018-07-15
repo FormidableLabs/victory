@@ -1,14 +1,14 @@
 import React from "react";
 import PropTypes from "prop-types";
-import CommonProps from "./common-props";
 import Helpers from "../victory-util/helpers";
+import CommonProps from "../victory-util/common-props";
 import Line from "./line";
 import { assign } from "lodash";
 
 export default class Whisker extends React.Component {
 
   static propTypes = {
-    ...CommonProps,
+    ...CommonProps.primitiveProps,
     groupComponent: PropTypes.element,
     lineComponent: PropTypes.element,
     majorWhisker: PropTypes.shape({

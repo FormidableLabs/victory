@@ -3,12 +3,12 @@ import React from "react";
 import PropTypes from "prop-types";
 import Helpers from "../victory-util/helpers";
 import { assign } from "lodash";
-import CommonProps from "./common-props";
+import CommonProps from "../victory-util/common-props";
 import Path from "./path";
 
 export default class Arc extends React.Component {
   static propTypes = {
-    ...CommonProps,
+    ...CommonProps.primitiveProps,
     closedPath: PropTypes.bool,
     cx: PropTypes.number,
     cy: PropTypes.number,
