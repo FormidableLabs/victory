@@ -45,9 +45,7 @@ module.exports = {
       all: "lerna exec --parallel -- nps clean"
     },
     // Version testing helpers
-    "publishr-dry-run": "lerna exec -- publishr dry-run -V",
     "lerna-dry-run": "lerna publish --skip-git --skip-npm --loglevel silly",
-    "global-postpublish": "lerna exec --parallel -- publishr postpublish -V",
     // TODO: organize build scripts once build perf is sorted out
     "babel-es": "cross-env BABEL_ENV=es babel src --out-dir es --copy-files",
     "babel-lib": "cross-env BABEL_ENV=commonjs babel src --out-dir lib --copy-files",

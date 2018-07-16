@@ -19,7 +19,20 @@
   "publishr": {
     "files": {
       ".npmignore": "../../.npmignore.publishr"
-    }
+    },
+    "dependencies": [],
+    "scripts": {}
   },
-  "sideEffects": false
+  "sideEffects": false,
+  "_publishr": [
+    {
+      "created": true,
+      "path": ".npmignore"
+    },
+    {
+      "created": false,
+      "path": "package.json"
+    }
+  ],
+  "devDependencies": {}
 }

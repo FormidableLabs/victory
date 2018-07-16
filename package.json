@@ -93,7 +93,6 @@
     "nps-utils": "^1.5.0",
     "phantomjs-prebuilt": "^2.1.7",
     "prop-types": "^15.5.8",
-    "publishr": "^1.0.0",
     "react": "^16.0.0",
     "react-chromatic": "^0.8.2",
     "react-dom": "^16.0.0",

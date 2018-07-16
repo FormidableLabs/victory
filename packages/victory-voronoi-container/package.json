@@ -14,14 +14,7 @@
     "victory-tooltip": "^27.0.0"
   },
   "scripts": {
-    "version": "nps build-libs && nps build-dists",
-    "postversion": "publishr postversion -V",
-    "postpublish": "publishr postpublish -V"
-  },
-  "publishr": {
-    "files": {
-      ".npmignore": "../../.npmignore.publishr"
-    }
+    "version": "nps build-libs && nps build-dists"
   },
   "sideEffects": false
 }
