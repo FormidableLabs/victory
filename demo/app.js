@@ -93,7 +93,7 @@ class App extends React.Component {
   }
 
   getDemo() {
-    const item = MAP[this.state.route] || {}
+    const item = MAP[this.state.route] || {};
     return item.component || Home;
   }
 
@@ -106,7 +106,7 @@ class App extends React.Component {
         <ul>
           {routes.map((route, index) => {
             const item = MAP[route] || {};
-            return <li key={index}><a href={`#${route}`}>{item.name}</a></li>
+            return <li key={index}><a href={`#${route}`}>{item.name}</a></li>;
           })}
         </ul>
         <Child/>
