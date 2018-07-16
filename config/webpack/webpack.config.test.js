@@ -37,7 +37,7 @@ module.exports = {
   },
   devtool: "source-map",
   devServer: {
-    port: parseInt(process.env.npm_package_config_wds_port_test || WDS_PORT),
+    port: WDS_PORT,
     noInfo: false
   }
 };

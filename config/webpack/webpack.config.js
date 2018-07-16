@@ -58,9 +58,6 @@ module.exports = {
         // Use include specifically of our sources.
         // Do _not_ use an `exclude` here.
         include: [SRC],
-        // **Note**: Cannot use shorthand `"babel-loader"` or `"babel"` when
-        // we are playing around with `NODE_PATH` in builder. Manually
-        // resolve path.
         loader: require.resolve("babel-loader")
       }
     ]

@@ -109,17 +109,14 @@ Each package must contain the following version scripts and publishr config in i
 Pre version checks are run _once_ for all packages, and are defined in the root directory `package.json`
 
 ```
-"preversion": "nps check",
+"preversion": "nps check"
 ```
 
 The following commands will let you try a version without publishing or creating git commits:
 
 ```console
 // This command bumps versions, runs checks, builds libs, and runs publishr postversion (~5 minutes)
-nps lerna-dry-run
-
-// Because postpublish will never run, it's necessary to manually clean up
-nps global-postpublish
+$ nps lerna-dry-run
 ```
 
 ## Contributor Covenant Code of Conduct
