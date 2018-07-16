@@ -1,7 +1,11 @@
+dist: trusty
 language: node_js
+addons:
+  chrome: stable
 node_js:
+- '6'
 - '8'
-- '9'
+- '10'
 sudo: false
 branches:
   only:
@@ -9,6 +13,8 @@ branches:
 before_install:
 - export DISPLAY=:99.0
 - sh -e /etc/init.d/xvfb start
+# Headless chrome
+- google-chrome-stable --headless --disable-gpu --remote-debugging-port=9222 http://localhost &
 script:
 - yarn --version
 - yarn nps check.ci

@@ -9,7 +9,7 @@ module.exports = {
       test: "webpack-dev-server --config ./config/webpack/webpack.config.test.js --colors",
     },
     karma: {
-      ci: "karma start --browsers PhantomJS,Firefox ./config/karma/karma.conf.coverage.js",
+      ci: "karma start --browsers ChromeHeadlessCustom,Firefox ./config/karma/karma.conf.coverage.js",
       cov: "karma start ./config/karma/karma.conf.coverage.js",
       default: "karma start ./config/karma/karma.conf.js",
     },

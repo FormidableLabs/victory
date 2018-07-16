@@ -19,9 +19,16 @@ PREPROCESSORS[POLYFILL_PATH] = ["webpack"];
  */
 module.exports = function (config) {
   config.set({
-    frameworks: ["mocha", "phantomjs-shim"],
+    frameworks: ["mocha"],
     reporters: ["spec"],
-    browsers: ["PhantomJS"],
+    browsers: ["ChromeHeadlessCustom"],
+    customLaunchers: {
+      ChromeHeadlessCustom: {
+        base: 'ChromeHeadless',
+        // --no-sandbox for https://github.com/travis-ci/docs-travis-ci-com/pull/1671/files
+        flags: ['--no-sandbox']
+      }
+    },
     basePath: ".", // repository root.
     preprocessors: PREPROCESSORS,
     files: [
