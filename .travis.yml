@@ -11,15 +11,17 @@ branches:
   only:
   - master
 before_install:
+- yarn config set ignore-engines true
 - export DISPLAY=:99.0
 - sh -e /etc/init.d/xvfb start
 # Headless chrome
 - google-chrome-stable --headless --disable-gpu --remote-debugging-port=9222 http://localhost &
 script:
-- yarn install --ignore-engines
+- yarn --version
 - yarn nps check.ci
 - if [ "${TRAVIS_NODE_VERSION}" = "8" ]; then CI=true yarn run chromatic-ci || echo "Chromatic tests failed. Please investigate"; fi
-
+after_success:
+- yarn config delete ignore-engines
 env:
   global:
     # CHROMATIC_APP_CODE
