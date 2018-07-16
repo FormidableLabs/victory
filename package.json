@@ -21,7 +21,7 @@
   "bugs": {
     "url": "https://github.com/formidablelabs/victory/issues"
   },
-  "homepage": "https://github.com/formidablelabs/open-source/victory",
+  "homepage": "https://formidable.com/open-source/victory",
   "scripts": {
     "preversion": "nps check",
     "start": "nps start",
