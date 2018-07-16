@@ -14,7 +14,11 @@ module.exports = {
       dev: "karma start ./config/karma/karma.conf.dev.js",
       default: "karma start ./config/karma/karma.conf.js",
     },
-    start: npsUtils.concurrent.nps("server.dev", "server.test"),
+    storybook: {
+      server: "start-storybook -p 6006",
+      default: npsUtils.concurrent.nps("watch.lib", "storybook.server")
+    },
+    start: npsUtils.concurrent.nps("watch.lib", "server.dev", "server.test"),
     lint: {
       src: "lerna exec --parallel -- eslint --color src",
       demo: "eslint --color demo",
