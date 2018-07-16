@@ -8,11 +8,16 @@ module.exports = {
       hot: "webpack-dev-server --config ./config/webpack/demo/webpack.config.hot.js --colors --inline --hot --content-base demo",
       test: "webpack-dev-server --config ./config/webpack/webpack.config.test.js --colors",
     },
-    test: {
+    karma: {
       ci: "karma start --browsers PhantomJS,Firefox ./config/karma/karma.conf.coverage.js",
       cov: "karma start ./config/karma/karma.conf.coverage.js",
-      dev: "karma start ./config/karma/karma.conf.dev.js",
       default: "karma start ./config/karma/karma.conf.js",
+    },
+    test: {
+      ci: npsUtils.series.nps("build-package-lib", "karma.ci"),
+      cov: npsUtils.series.nps("build-package-lib", "karma.cov"),
+      dev: "karma start ./config/karma/karma.conf.dev.js",
+      default: npsUtils.series.nps("build-package-lib", "karma"),
     },
     storybook: {
       server: "start-storybook -p 6006",
@@ -52,6 +57,7 @@ module.exports = {
     "build-es": npsUtils.series.nps("clean.es", "babel-es"),
     "build-lib": npsUtils.series.nps("clean.lib", "babel-lib"),
     "build-libs": npsUtils.series.nps("build-lib", "build-es"),
+    "build-package-lib": "lerna exec --parallel -- nps build-lib",
     "build-dist-dev": "webpack --bail --config ../../config/webpack/webpack.config.dev.js --colors",
     "build-dist-min": "webpack --bail --config ../../config/webpack/webpack.config.js --colors",
     "build-dists": npsUtils.concurrent.nps("build-dist-min", "build-dist-dev"),
