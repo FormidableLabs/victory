@@ -5,9 +5,8 @@ var glob = require("glob");
 var LodashModuleReplacementPlugin = require("lodash-webpack-plugin");
 
 var ROOT = process.cwd();
-var SRC = path.resolve("packages");
 var PACKAGES = glob.sync("packages/*/src", { root: ROOT });
-var FILES = PACKAGES.map(function(p) { return path.join(ROOT, p); });
+var FILES = PACKAGES.map(function (p) { return path.join(ROOT, p); });
 var DEMO = path.resolve("demo");
 var WDS_PORT = 3000;
 

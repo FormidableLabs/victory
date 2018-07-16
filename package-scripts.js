@@ -28,8 +28,11 @@ module.exports = {
       src: "lerna exec --parallel -- eslint --color src",
       demo: "eslint --color demo",
       stories:  "eslint --color stories",
+      storybook: "eslint --color --no-ignore .storybook/config.js",
       test:  "eslint --color test",
-      default: npsUtils.series.nps("lint.test", "lint.stories", "lint.demo", "lint.src")
+      default: npsUtils.series.nps(
+        "lint.test", "lint.stories", "lint.storybook", "lint.demo", "lint.src"
+      )
     },
     check: {
       ci: npsUtils.series.nps("lint", "test.ci"),

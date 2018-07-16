@@ -1,7 +1,7 @@
-import { configure, addDecorator, storiesOf, setAddon } from '@storybook/react';
+import { configure, addDecorator } from "@storybook/react";
 import React from "react";
-import 'react-chromatic/storybook-addon';
-import { setOptions } from '@storybook/addon-options';
+import "react-chromatic/storybook-addon";
+import { setOptions } from "@storybook/addon-options";
 
 setOptions({
   name: "Victory",
@@ -17,9 +17,9 @@ const storyWrapper = (story) => {
   return <div style={{ maxWidth: "80%" }}>{story()}</div>;
 };
 
-addDecorator(storyWrapper)
+addDecorator(storyWrapper);
 
-function loadStories() {
+const loadStories = () => {
   require("../stories/victory-area");
   require("../stories/victory-axis");
   require("../stories/victory-bar");
@@ -32,6 +32,6 @@ function loadStories() {
   require("../stories/victory-scatter");
   require("../stories/containers-and-addons");
   require("../stories/victory-pie");
-}
+};
 
 configure(loadStories, module);
