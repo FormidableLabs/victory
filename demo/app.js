@@ -2,6 +2,7 @@
 /*eslint-disable react/no-multi-comp */
 import React from "react";
 import ReactDOM from "react-dom";
+import { keys } from "lodash";
 
 import AreaDemo from "./components/victory-area-demo";
 import AxisDemo from "./components/victory-axis-demo";
@@ -34,6 +35,39 @@ import VictoryLegendDemo from "./components/victory-legend-demo";
 import VictoryPieDemo from "./components/victory-pie-demo";
 import VictoryDemo from "./components/victory-demo";
 
+const MAP = {
+  "/axis": { component: AxisDemo, name: "AxisDemo" },
+  "/area": { component: AreaDemo, name: "AreaDemo" },
+  "/bar": { component: BarDemo, name: "BarDemo" },
+  "/chart": { component: ChartDemo, name: "ChartDemo" },
+  "/line": { component: LineDemo, name: "LineDemo" },
+  "/scatter": { component: ScatterDemo, name: "ScatterDemo" },
+  "/errorbar": { component: ErrorBarDemo, name: "ErrorBarDemo" },
+  "/candlestick": { component: CandlestickDemo, name: "CandlestickDemo" },
+  "/boxplot": { component: BoxplotDemo, name: "BoxplotDemo" },
+  "/events": { component: EventsDemo, name: "EventsDemo" },
+  "/group": { component: GroupDemo, name: "GroupDemo" },
+  "/voronoi": { component: VoronoiDemo, name: "VoronoiDemo" },
+  "/tooltip": { component: TooltipDemo, name: "TooltipDemo" },
+  "/zoom-container": { component: ZoomContainerDemo, name: "ZoomContainerDemo" },
+  "/voronoi-container": { component: VoronoiContainerDemo, name: "VoronoiContainerDemo" },
+  "/cursor-container": { component: CursorContainerDemo, name: "CursorContainerDemo" },
+  "/brush-container": { component: BrushContainerDemo, name: "BrushContainerDemo" },
+  "/animation": { component: AnimationDemo, name: "AnimationDemo" },
+  "/selection-container": { component: SelectionDemo, name: "SelectionDemo" },
+  "/create-container": { component: CreateContainerDemo, name: "CreateContainerDemo" },
+  "/polar": { component: PolarDemo, name: "PolarDemo" },
+  "/immutable": { component: ImmutableDemo, name: "ImmutableDemo" },
+  "/external-events": { component: ExternalEventsDemo, name: "ExternalEventsDemo" },
+  "/victory-brush-line": { component: VictoryBrushLineDemo, name: "BrushLineDemo" },
+  "/performance": { component: PerformanceDemo, name: "PerformanceDemo" },
+  "/debug": { component: DebugDemo, name: "DebugDemo" },
+  "/label": { component: VictoryLabelDemo, name: "LabelDemo" },
+  "/legend": { component: VictoryLegendDemo, name: "LegendDemo" },
+  "/pie": { component: VictoryPieDemo, name: "PieDemo" },
+  "/victory": { component: VictoryDemo, name: "VictoryDemo" }
+};
+
 class Home extends React.Component {
   render() {
     return (
@@ -58,79 +92,22 @@ class App extends React.Component {
     });
   }
 
-  getDemo() { // eslint-disable-line complexity
-    let Child;
-    switch (this.state.route) {
-    case "/axis": Child = AxisDemo; break;
-    case "/area": Child = AreaDemo; break;
-    case "/bar": Child = BarDemo; break;
-    case "/chart": Child = ChartDemo; break;
-    case "/line": Child = LineDemo; break;
-    case "/scatter": Child = ScatterDemo; break;
-    case "/errorbar": Child = ErrorBarDemo; break;
-    case "/candlestick": Child = CandlestickDemo; break;
-    case "/boxplot": Child = BoxplotDemo; break;
-    case "/events": Child = EventsDemo; break;
-    case "/group": Child = GroupDemo; break;
-    case "/voronoi": Child = VoronoiDemo; break;
-    case "/tooltip": Child = TooltipDemo; break;
-    case "/zoom-container": Child = ZoomContainerDemo; break;
-    case "/voronoi-container": Child = VoronoiContainerDemo; break;
-    case "/cursor-container": Child = CursorContainerDemo; break;
-    case "/brush-container": Child = BrushContainerDemo; break;
-    case "/animation": Child = AnimationDemo; break;
-    case "/selection-container": Child = SelectionDemo; break;
-    case "/create-container": Child = CreateContainerDemo; break;
-    case "/polar": Child = PolarDemo; break;
-    case "/immutable": Child = ImmutableDemo; break;
-    case "/external-events": Child = ExternalEventsDemo; break;
-    case "/victory-brush-line": Child = VictoryBrushLineDemo; break;
-    case "/performance": Child = PerformanceDemo; break;
-    case "/debug": Child = DebugDemo; break;
-    case "/label": Child = VictoryLabelDemo; break;
-    case "/legend": Child = VictoryLegendDemo; break;
-    case "/pie": Child = VictoryPieDemo; break;
-    case "/victory": Child = VictoryDemo; break;
-    default: Child = Home;
-    }
-    return Child;
+  getDemo() {
+    const item = MAP[this.state.route] || {}
+    return item.component || Home;
   }
 
   render() {
     const Child = this.getDemo();
+    const routes = keys(MAP);
     return (
       <div>
         <h1>Demos</h1>
         <ul>
-          <li><a href="#/chart">Victory Chart Demo</a></li>
-          <li><a href="#/axis">Victory Axis Demo</a></li>
-          <li><a href="#/area">Victory Area Demo</a></li>
-          <li><a href="#/bar">Victory Bar Demo</a></li>
-          <li><a href="#/line">Victory Line Demo</a></li>
-          <li><a href="#/scatter">Victory Scatter Demo</a></li>
-          <li><a href="#/errorbar">Victory Error Bar Demo</a></li>
-          <li><a href="#/candlestick">Victory Candlestick Demo</a></li>
-          <li><a href="#/boxplot">Victory Boxplot Demo</a></li>
-          <li><a href="#/events">Events Demo</a></li>
-          <li><a href="#/group">Group Demo</a></li>
-          <li><a href="#/voronoi">Victory Voronoi Demo</a></li>
-          <li><a href="#/tooltip">Victory Tooltip Demo</a></li>
-          <li><a href="#/zoom-container">Victory Zoom Container Demo</a></li>
-          <li><a href="#/voronoi-container">Victory Voronoi Container Demo</a></li>
-          <li><a href="#/cursor-container">Victory Cursor Container Demo</a></li>
-          <li><a href="#/brush-container">Victory Brush Container Demo</a></li>
-          <li><a href="#/animation">Animation Demo</a></li>
-          <li><a href="#/selection-container">Victory Selection Container Demo</a></li>
-          <li><a href="#/create-container">createContainer Demo</a></li>
-          <li><a href="#/polar">Polar Demo</a></li>
-          <li><a href="#/immutable">immutable.js demo</a></li>
-          <li><a href="#/external-events">External Events demo</a></li>
-          <li><a href="#/victory-brush-line">VictoryBrushLine demo</a></li>
-          <li><a href="#/performance">Large Data Performance</a></li>
-          <li><a href="#/label">VictoryLabel Demo</a></li>
-          <li><a href="#/legend">VictoryLegend Demo</a></li>
-          <li><a href="#/pie">VictoryPie Demo</a></li>
-          <li><a href="#/victory">Victory Demo</a></li>
+          {routes.map((route, index) => {
+            const item = MAP[route] || {};
+            return <li key={index}><a href={`#${route}`}>{item.name}</a></li>
+          })}
         </ul>
         <Child/>
       </div>
