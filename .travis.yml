@@ -16,7 +16,7 @@ before_install:
 # Headless chrome
 - google-chrome-stable --headless --disable-gpu --remote-debugging-port=9222 http://localhost &
 script:
-- yarn --version
+- yarn install --ignore-engines
 - yarn nps check.ci
 - if [ "${TRAVIS_NODE_VERSION}" = "8" ]; then CI=true yarn run chromatic-ci || echo "Chromatic tests failed. Please investigate"; fi
 
