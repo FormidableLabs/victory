@@ -1,6 +1,6 @@
 {
   "name": "victory-voronoi-container",
-  "version": "27.1.1",
+  "version": "30.0.0-alpha",
   "description": "Chart Component for Victory",
   "main": "lib/index.js",
   "module": "es/index.js",
@@ -10,8 +10,8 @@
   "dependencies": {
     "d3-voronoi": "^1.1.2",
     "lodash": "^4.17.5",
-    "victory-core": "^24.0.1",
-    "victory-tooltip": "^27.0.0"
+    "victory-core": "^30.0.0-alpha",
+    "victory-tooltip": "^30.0.0-alpha"
   },
   "scripts": {
     "version": "nps build-libs && nps build-dists"
