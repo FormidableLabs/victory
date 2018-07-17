@@ -1,0 +1,19 @@
+{
+  "name": "victory-voronoi",
+  "version": "27.1.1",
+  "description": "Chart Component for Victory",
+  "main": "lib/index.js",
+  "module": "es/index.js",
+  "jsnext:main": "es/index.js",
+  "author": "Formidable",
+  "license": "MIT",
+  "dependencies": {
+    "d3-voronoi": "^1.1.2",
+    "lodash": "^4.17.5",
+    "victory-core": "^24.0.1"
+  },
+  "scripts": {
+    "version": "nps build-libs && nps build-dists"
+  },
+  "sideEffects": false
+}

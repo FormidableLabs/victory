@@ -2,13 +2,16 @@
  * Test setup for client-side tests.
  *
  * Intended for:
- * - Karma tests: `npm run test-client`
+ * - Karma tests: `builder run test-frontend`
  * - Browser tests: `http://localhost:3000/test/client/test.html`
  */
 /*globals window:false*/
 const chai = require("chai");
 const sinonChai = require("sinon-chai");
+const enzyme = require("enzyme");
+const Adapter = require("enzyme-adapter-react-16");
 
+enzyme.configure({ adapter: new Adapter() });
 // --------------------------------------------------------------------------
 // Chai / Sinon / Mocha configuration.
 // --------------------------------------------------------------------------
@@ -29,7 +32,7 @@ window.mocha.setup({
 // --------------------------------------------------------------------------
 // Use webpack to include all app code _except_ the entry point so we can get
 // code coverage in the bundle, whether tested or not.
-const srcReq = require.context("src", true, /\.jsx?$/);
+const srcReq = require.context("packages", true, /\.jsx?$/);
 srcReq.keys().map(srcReq);
 
 // Use webpack to infer and `require` tests automatically.

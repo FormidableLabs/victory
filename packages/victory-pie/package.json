@@ -1,0 +1,19 @@
+{
+  "name": "victory-pie",
+  "version": "16.1.0",
+  "description": "D3 pie & donut chart component for React",
+  "main": "lib/index.js",
+  "module": "es/index.js",
+  "jsnext:main": "es/index.js",
+  "author": "Formidable",
+  "license": "MIT",
+  "dependencies": {
+    "d3-shape": "^1.0.0",
+    "lodash": "^4.17.5",
+    "victory-core": "^24.0.0"
+  },
+  "scripts": {
+    "version": "nps build-libs && nps build-dists"
+  },
+  "sideEffects": false
+}

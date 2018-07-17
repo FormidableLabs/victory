@@ -1,17 +1,28 @@
+dist: trusty
 language: node_js
+addons:
+  chrome: stable
 node_js:
 - '6'
 - '8'
-- '9'
+- '10'
 sudo: false
 branches:
   only:
-    - master
+  - master
 before_install:
+- yarn config set ignore-engines true
 - export DISPLAY=:99.0
 - sh -e /etc/init.d/xvfb start
+# Headless chrome
+- google-chrome-stable --headless --disable-gpu --remote-debugging-port=9222 http://localhost &
 script:
-- npm --version
-- node_modules/.bin/builder run check-ci
-- npm prune --production
-- node_modules/.bin/builder run build
+- yarn --version
+- yarn nps check.ci
+- if [ "${TRAVIS_NODE_VERSION}" = "8" ]; then CI=true yarn run chromatic-ci || echo "Chromatic tests failed. Please investigate"; fi
+after_success:
+- yarn config delete ignore-engines
+env:
+  global:
+    # CHROMATIC_APP_CODE
+    secure: NFO3H6SGsTYyuFqIwNrFhpmYrwFCB7nrmZu7C7rP98vtaVm5WWXbvgXGy01Ply3pIn5DEpqckvzz7wgG60A7uldlADPP50x06WqawC9uOCTfj6u1ZnLwLUWykcT7v/iliCWI0XTu25zfTOe52w0Pts8YhnNA8VWMQ2/jijMRRKOMQFbdhqmH6uu5Tb8lhayPoqLCfjpPiZu0QzLtwoXYoCAKAtNjG1877QdtVi4gzFHvNtW165Gc9HDwED4WmiCHsrBtxgu3RCAeIRYyb5jCSnS9iOqozXNXtSK8VJh43tHaun/cuODCf3NTNhNLflTfcAmQ7E5vSsrKuu8szctZxRTLhaJjDkFovhFwFqhps8pIHI0yxRbw8uHXoTO5xZvHcFsMZYJU8xrWOEl6IT8FKZ2YYoomsOIKcPozPE+ue37R+Wzu9RH7yDCHPazprVBqqY+71Q9+OqXDHajp7n3umR0rrE8geOFsZp4R8QZFyHaWtQmBusUUVs1rqD9d8k3Bt1Ze0TrvWcThq1oGmlfCG72LdDT+6VE+3UTlQ8xxCywotejV8l4gqOgp8C7SQUXF3+Q+HfZ3cpCOiIFg8vFJVCMeKdYiYx+fBt5I1NSI+jQ2VF+PEDY4gb6x7KNVatg/krC/pWN0eL77T4aZPm4B07nF9QRk/WIsXp0R8opEiN4=

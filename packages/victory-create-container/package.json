@@ -1,0 +1,23 @@
+{
+  "name": "victory-create-container",
+  "version": "27.0.1",
+  "description": "Chart Component for Victory",
+  "main": "lib/index.js",
+  "module": "es/index.js",
+  "jsnext:main": "es/index.js",
+  "author": "Formidable",
+  "license": "MIT",
+  "dependencies": {
+    "lodash": "^4.17.5",
+    "victory-brush-container": "^27.0.1",
+    "victory-core": "^24.0.1",
+    "victory-cursor-container": "^27.0.1",
+    "victory-selection-container": "^27.0.1",
+    "victory-voronoi-container": "^27.0.1",
+    "victory-zoom-container": "^27.0.1"
+  },
+  "scripts": {
+    "version": "nps build-libs && nps build-dists"
+  },
+  "sideEffects": false
+}
