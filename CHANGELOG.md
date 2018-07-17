@@ -1,5 +1,57 @@
 # Victory Changelog
 
+## 30.0.0 (2018-07-17)
+
+Victory is becoming a monorepo!
+
+This will not be a breaking change for the majority of users, especially those importing all components from the main `victory` npm package
+
+**Breaking Changes**
+
+- The `Axis` / `Grid` primitive component has been renamed `LineSegment`
+- Victory no longer supports git installs
+- `victory-chart` and `victory-core` packages export different sets of packages than they used to. See the complete list below
+
+**New Package Organization**
+
+- **`victory` exports everything exported from the packages below**
+- `victory-axis@30.0.0` exports `VictoryAxis`
+- `victory-area@30.0.0` exports `VictoryArea` and `Area`
+- `victory-bar@30.0.0` exports `VictoryBar` and `Bar`
+- `victory-box-plot@30.0.0` exports `VictoryBoxPlot`
+- `victory-brush-container@30.0.0` exports `VictoryBrushContainer`, `BrushHelpers` and `brushContainerMixin`
+- `victory-brush-line@30.0.0` exports `VictoryBrushLine`
+- `victory-candlestick@30.0.0` exports `VictoryCandlestick` and `Candle`
+- `victory-chart@30.0.0` exports `VictoryChart`
+- `victory-core@30.0.0` still exports several packages that are used by several Victory components:
+  - `VictoryAnimation`
+  - `VictoryClipContainer`
+  - `VictoryContainer`
+  - `VictoryLabel`
+  - `VictoryPortal` and `Portal`
+  - `VictoryTheme`
+  - `VictoryTransition`
+  - Several primitive components:
+    `Arc`, `Border` / `Box`, `Circle`, `ClipPath`, `LineSegment` (formerly `Axis` / `Grid`), `Line`, `Path`, `Point`, `Rect`, `Text`, `TSpan`, `Whisker`
+  - Several utilities:
+    - `addEvents`, `Axis`, `Collection`, `CommonProps`, `Data`, `DefaultTransitions`, `Domain`, `Events`, `Helpers`, `Immutable`, `LabelHelpers`, `Log`, `PropTypes`, `Scale`, `Selection`, `Style`, `TextSize`, `Timer`, `Transitions`, `Wrapper`
+- `victory-create-container@30.0.0` exports `createContainer`, `combineContainerMixins` and `makeCreateContainerFunction`
+- `victory-cursor-container@30.0.0` exports `VictoryCursorContainer`, `CursorHelpers` and `cursorContainerMixin`
+- `victory-errorbar@30.0.0` exports `VictoryErrorBar` and `ErrorBar`
+- `victory-group@30.0.0` exports `VictoryGroup`
+- `victory-legend@30.0.0` exports `VictoryLegend`
+- `victory-line@30.0.0` exports `VictoryLine` and `Curve`
+- `victory-pie@30.0.0` exports `VictoryPie` and `Slice`
+- `victory-scatter@30.0.0` exports `VictoryScatter`
+- `victory-selection-container@30.0.0` exports `VictorySelectionContainer`, `SelectionHelpers` and `selectionContainerMixin`
+- `victory-shared-events@30.0.0` exports `VictorySharedEvents`
+- `victory-stack@30.0.0` exports `VictoryStack`
+- `victory-tooltip@30.0.0` exports `VictoryTooltip` and `Flyout`
+- `victory-voronoi@30.0.0` exports `VictoryVoronoi` and `Voronoi`
+- `victory-voronoi-container@30.0.0` exports `VictoryVoronoiContainer`, `VoronoiHelpers` and `voronoiContainerMixin`
+- `victory-zoom-container@30.0.0` exports `VictoryZoomContainer`, `RawZoomHelpers`, `ZoomHelpers` and `zoomContainerMixin`
+
+
 ## 0.27.2
 
 VictoryPie
