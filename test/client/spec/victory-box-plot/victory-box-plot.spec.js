@@ -4,7 +4,7 @@
 /*eslint-disable max-nested-callbacks,no-unused-expressions */
 import React from "react";
 import { shallow, mount } from "enzyme";
-import { VictoryBoxPlot } from "packages/victory-boxplot/src/index";
+import { VictoryBoxPlot } from "packages/victory-box-plot/src/index";
 import { Box } from "packages/victory-core";
 
 const dataset = [
@@ -13,7 +13,7 @@ const dataset = [
   { x: 3, min: 3, max: 12, median: 6, q1: 5, q3: 10 }
 ];
 
-describe("components/victory-boxplot", () => {
+describe("components/victory-box-plot", () => {
   describe("default component rendering", () => {
     it("renders an svg with the correct width and height", () => {
       const wrapper = mount(
