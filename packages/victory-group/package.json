@@ -12,27 +12,7 @@
     "victory-core": "^24.0.1"
   },
   "scripts": {
-    "version": "nps build-libs && nps build-dists",
-    "postversion": "publishr postversion -V",
-    "postpublish": "publishr postpublish -V"
+    "version": "nps build-libs && nps build-dists"
   },
-  "publishr": {
-    "files": {
-      ".npmignore": "../../.npmignore.publishr"
-    },
-    "dependencies": [],
-    "scripts": {}
-  },
-  "sideEffects": false,
-  "_publishr": [
-    {
-      "created": true,
-      "path": ".npmignore"
-    },
-    {
-      "created": false,
-      "path": "package.json"
-    }
-  ],
-  "devDependencies": {}
+  "sideEffects": false
 }
