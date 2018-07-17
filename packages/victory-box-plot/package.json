@@ -1,5 +1,5 @@
 {
-  "name": "victory-boxplot",
+  "name": "victory-box-plot",
   "version": "27.1.1",
   "description": "Chart Component for Victory",
   "main": "lib/index.js",

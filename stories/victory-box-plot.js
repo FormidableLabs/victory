@@ -1,7 +1,7 @@
 /*eslint-disable no-magic-numbers*/
 import React from "react";
 import { storiesOf } from "@storybook/react";
-import { VictoryBoxPlot } from "../packages/victory-boxplot/src/index";
+import { VictoryBoxPlot } from "../packages/victory-box-plot/src/index";
 import { VictoryTooltip } from "../packages/victory-tooltip/src/index";
 import { VictoryTheme } from "../packages/victory-core/src/index";
 import { range } from "lodash";

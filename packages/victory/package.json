@@ -17,7 +17,7 @@
     "victory-area": "^27.0.1",
     "victory-axis": "^27.0.1",
     "victory-bar": "^27.0.1",
-    "victory-boxplot": "^27.0.1",
+    "victory-box-plot": "^27.0.1",
     "victory-brush-container": "^27.0.1",
     "victory-brush-line": "^27.0.1",
     "victory-candlestick": "^27.0.1",

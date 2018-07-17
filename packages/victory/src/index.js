@@ -22,7 +22,7 @@ import { VictoryCandlestick, Candle } from "victory-candlestick";
 import { VictoryErrorBar, ErrorBar } from "victory-errorbar";
 import { VictoryLine, Curve } from "victory-line";
 import { VictoryScatter } from "victory-scatter";
-import { VictoryBoxPlot } from "victory-boxplot";
+import { VictoryBoxPlot } from "victory-box-plot";
 import { VictoryVoronoi, Voronoi } from "victory-voronoi";
 import { VictoryBrushLine } from "victory-brush-line";
 import { VictoryBrushContainer, BrushHelpers, brushContainerMixin } from "victory-brush-container";

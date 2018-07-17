@@ -11,7 +11,7 @@ import ChartDemo from "./components/victory-chart-demo";
 import LineDemo from "./components/victory-line-demo";
 import ScatterDemo from "./components/victory-scatter-demo";
 import ErrorBarDemo from "./components/victory-errorbar-demo";
-import BoxplotDemo from "./components/victory-boxplot-demo";
+import BoxplotDemo from "./components/victory-box-plot-demo";
 import CandlestickDemo from "./components/victory-candlestick-demo";
 import EventsDemo from "./components/events-demo";
 import GroupDemo from "./components/group-demo";

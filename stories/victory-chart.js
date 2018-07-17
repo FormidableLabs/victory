@@ -6,7 +6,7 @@ import { VictoryAxis } from "../packages/victory-axis/src/index";
 import { VictoryBar } from "../packages/victory-bar/src/index";
 import { VictoryScatter } from "../packages/victory-scatter/src/index";
 import { VictoryLine } from "../packages/victory-line/src/index";
-import { VictoryBoxPlot } from "../packages/victory-boxplot/src/index";
+import { VictoryBoxPlot } from "../packages/victory-box-plot/src/index";
 import { VictoryTheme } from "../packages/victory-core/src/index";
 import { getData, getFourQuadrantData, getArrayData } from "./data";
 
