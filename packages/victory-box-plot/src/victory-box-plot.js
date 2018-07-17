@@ -2,7 +2,7 @@ import React from "react";
 import PropTypes from "prop-types";
 import { flatten } from "lodash";
 import {
-    Helpers, VictoryLabel, addEvents, Line, PropTypes as CustomPropTypes,
+    Helpers, VictoryLabel, addEvents, LineSegment, PropTypes as CustomPropTypes,
     VictoryContainer, VictoryTheme, Box, Whisker, DefaultTransitions, CommonProps
 } from "victory-core";
 import { getDomain, getData, getBaseProps } from "./helper-methods";
@@ -130,7 +130,7 @@ class VictoryBoxPlot extends React.Component {
     groupComponent: <g role="presentation"/>,
     maxComponent: <Whisker />,
     maxLabelComponent: <VictoryLabel />,
-    medianComponent: <Line />,
+    medianComponent: <LineSegment />,
     medianLabelComponent: <VictoryLabel />,
     minComponent: <Whisker />,
     minLabelComponent: <VictoryLabel />,

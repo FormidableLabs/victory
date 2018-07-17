@@ -3,7 +3,7 @@ import PropTypes from "prop-types";
 import { assign } from "lodash";
 import {
   PropTypes as CustomPropTypes, Helpers, VictoryLabel, CommonProps,
-  VictoryContainer, VictoryTheme, GridLine, addEvents, Arc, Axis
+  VictoryContainer, VictoryTheme, LineSegment, addEvents, Arc, Axis
 } from "victory-core";
 import { getScale, getStyles, getBaseProps } from "./helper-methods";
 
@@ -87,20 +87,20 @@ class VictoryPolarAxis extends React.Component {
   };
 
   static defaultProps = {
-    axisComponent: <GridLine type={"axis"}/>,
+    axisComponent: <LineSegment type={"axis"}/>,
     axisLabelComponent: <VictoryLabel/>,
     circularAxisComponent: <Arc type={"axis"}/>,
     circularGridComponent: <Arc type={"grid"}/>,
     containerComponent: <VictoryContainer />,
     endAngle: 360,
-    gridComponent: <GridLine type={"grid"}/>,
+    gridComponent: <LineSegment type={"grid"}/>,
     groupComponent: <g role="presentation"/>,
     labelPlacement: "parallel",
     scale: "linear",
     startAngle: 0,
     standalone: true,
     theme: VictoryTheme.grayscale,
-    tickComponent: <GridLine type={"tick"}/>,
+    tickComponent: <LineSegment type={"tick"}/>,
     tickLabelComponent: <VictoryLabel/>
   };
 

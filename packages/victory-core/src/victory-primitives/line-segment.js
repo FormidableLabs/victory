@@ -5,7 +5,7 @@ import { assign } from "lodash";
 import CommonProps from "../victory-util/common-props";
 import Line from "./line";
 
-export default class GridLine extends React.Component {
+export default class LineSegment extends React.Component {
   static propTypes = {
     ...CommonProps.primitiveProps,
     datum: PropTypes.any,

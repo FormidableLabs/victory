@@ -9,7 +9,7 @@ export { default as Portal } from "./victory-portal/portal";
 export { default as Arc } from "./victory-primitives/arc";
 export { default as Border, default as Box } from "./victory-primitives/border";
 export { default as ClipPath } from "./victory-primitives/clip-path";
-export { default as GridLine } from "./victory-primitives/grid-line";
+export { default as LineSegment } from "./victory-primitives/line-segment";
 export { default as Point } from "./victory-primitives/point";
 export { default as Whisker } from "./victory-primitives/whisker";
 export { default as addEvents } from "./victory-util/add-events";
