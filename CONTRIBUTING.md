@@ -7,6 +7,10 @@ Thanks for helping out!
 
 Victory is a monorepo built with [Lerna](https://lernajs.io/) and [Yarn](https://yarnpkg.com/) workspaces. All `victory-*` packages live in the `packages` directory, and each has its own `package.json`. Installing this repo with `yarn` will automatically link all interdependent `victory-*` packages. **You must use `yarn` rather than `npm` when installing and running `package.json` scripts in this project.**
 
+## `package-scripts.js`
+
+Victory uses [`nps`](https://github.com/kentcdodds/nps) to organize package scripts. Check `package-scripts.js` for the full list of commands.
+
 ### Requirements
 
 - [Node.js](https://nodejs.org/) 8.10.0 or higher.
@@ -27,33 +31,17 @@ Use [Yarn](https://yarnpkg.com/) to install dependencies:
 $ yarn install
 ```
 
-A `postinstall` script will build `lib/` and `es/` for all `victory-*` packages.
-
-Now you're ready to run a development server and check out the demos. Demos will be served at localhost:3000/
+Run a development server and check out the demos. Demos will be served at localhost:3000/. This command will also build and watch `lib/` and `es/` directories in all packages, so your demos will always be in sync with code changes.
 
 ```console
 $ yarn start
-```
-
-## Developing multiple packages
-
-When making changes across multiple dependent packages, it is necessary to rebuild libs in order to pick up changes in dependent packages. You can manually rebuild libs by running:
-
-```console
-$ nps build-libs
-```
-
-or start a task in a new terminal window that will watch for code changes, and automatically rebuild libs
-
-```console
-$ nps watch
 ```
 
 ## Checks, Tests
 
 All checks and tests run from the root directory.
 
-The `check` script will lint all packages and infrastructure before starting a test server and running our suite of tests
+The `check` script will lint all packages and infrastructure before building packages and starting a test server and running our suite of tests
 
 ```console
 $ nps check
@@ -74,36 +62,26 @@ Victory relies heavily on visual regression testing with [Storybook](https://sto
 Write visual tests for new features by adding them in the `stories` directory. Run storybooks and check out changes. Storybooks are served from localhost:6006/
 
 ```console
-$ nps storybook
+$ yarn storybook
 ```
 
 [Chromatic](https://www.chromaticqa.com/) provides automated visual testing. All PRs will trigger a new chromatic build, which will be displayed along with CI status. You can also trigger a new build manually with:
 
 ```console
-$ nps storybook
+$ yarn chromatic
 ```
 
-**External contributors will not be able to automate their visual regression testing with Chromatic, as it requires a secret app code.**
-
-TODO: Set up chromatic CI for this repo
-
+**External contributors will not be able to use Chromatic to automate their visual regression testing, as it requires a secret app code.**
 
 ## Release
 
-Victory uses [publishr](https://github.com/FormidableLabs/publishr) to organize compiled code for released versions.
+Victory uses [Lerna](https://lernajs.io/) to automate versioning and publishing packages.
 
-Each package must contain the following version scripts and publishr config in its `package.json`:
+Each package must contain the following `version` script `package.json`:
 
 ```
 "scripts": {
   "version": "nps build-libs && nps build-dists",
-  "postversion": "publishr postversion -V",
-  "postpublish": "publishr postpublish -V"
-},
-"publishr": {
-  "files": {
-    ".npmignore": "../../.npmignore.publishr"
-  }
 }
 ```
 Pre version checks are run _once_ for all packages, and are defined in the root directory `package.json`
@@ -115,9 +93,16 @@ Pre version checks are run _once_ for all packages, and are defined in the root 
 The following commands will let you try a version without publishing or creating git commits:
 
 ```console
-// This command bumps versions, runs checks, builds libs, and runs publishr postversion (~5 minutes)
+// This command bumps versions, runs checks, builds libs. No git commits will be made, and nothing will be published. `package.json` files in all packages will be altered, so be careful to clean up afterwards.
 $ nps lerna-dry-run
 ```
+
+To publish a package _for real_
+
+```console
+$ lerna publish
+```
+You will be prompted to select an appropriate version before continuing. Lerna will run preversion checks, bump versions in all packages, create git commits, build libs, and publish packages. The whole process takes about 5 minutes. Be patient!
 
 ## Contributor Covenant Code of Conduct
 
