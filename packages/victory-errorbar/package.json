@@ -1,6 +1,6 @@
 {
   "name": "victory-errorbar",
-  "version": "27.1.1",
+  "version": "30.0.0-alpha.3",
   "description": "Chart Component for Victory",
   "main": "lib/index.js",
   "module": "es/index.js",
@@ -9,7 +9,7 @@
   "license": "MIT",
   "dependencies": {
     "lodash": "^4.17.5",
-    "victory-core": "^24.0.1"
+    "victory-core": "^30.0.0-alpha.3"
   },
   "scripts": {
     "version": "nps build-libs && nps build-dists"
