@@ -124,8 +124,8 @@ describe("victory", () => { // eslint-disable-line max-statements
     it("exports Flyout", () => {
       expect(Victory.Flyout).not.to.equal(undefined);
     });
-    it("exports GridLine", () => {
-      expect(Victory.GridLine).not.to.equal(undefined);
+    it("exports LineSegment", () => {
+      expect(Victory.LineSegment).not.to.equal(undefined);
     });
     it("exports Line", () => {
       expect(Victory.Line).not.to.equal(undefined);

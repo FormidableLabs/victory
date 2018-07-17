@@ -1,6 +1,6 @@
 import React from "react";
 import PropTypes from "prop-types";
-import { Selection, Helpers, Collection, GridLine, Scale, Domain, Box } from "victory-core";
+import { Selection, Helpers, Collection, LineSegment, Scale, Domain, Box } from "victory-core";
 import { assign, defaults, isFunction, pick } from "lodash";
 import isEqual from "react-fast-compare";
 
@@ -133,7 +133,7 @@ export default class VictoryBrushLine extends React.Component {
     groupComponent: <g/>,
     handleComponent: <Box/>,
     handleWidth: 10,
-    lineComponent: <GridLine/>,
+    lineComponent: <LineSegment/>,
     width: 10
   };
 

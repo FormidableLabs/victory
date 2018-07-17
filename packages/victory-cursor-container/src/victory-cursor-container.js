@@ -1,6 +1,6 @@
 import PropTypes from "prop-types";
 import React from "react";
-import { VictoryContainer, VictoryLabel, GridLine, Helpers } from "victory-core";
+import { VictoryContainer, VictoryLabel, LineSegment, Helpers } from "victory-core";
 import { defaults, assign, isObject } from "lodash";
 import CursorHelpers from "./cursor-helpers";
 
@@ -35,7 +35,7 @@ export const cursorContainerMixin = (base) => class VictoryCursorContainer exten
       x: 5,
       y: -10
     },
-    cursorComponent: <GridLine/>
+    cursorComponent: <LineSegment/>
   };
 
   static defaultEvents = (props) => {

@@ -14,16 +14,16 @@ module.exports = {
       default: "karma start ./config/karma/karma.conf.js",
     },
     test: {
-      ci: npsUtils.series.nps("build-package-lib", "karma.ci"),
-      cov: npsUtils.series.nps("build-package-lib", "karma.cov"),
+      ci: npsUtils.series.nps("build-package-libs", "karma.ci"),
+      cov: npsUtils.series.nps("build-package-libs", "karma.cov"),
       dev: "karma start ./config/karma/karma.conf.dev.js",
-      default: npsUtils.series.nps("build-package-lib", "karma"),
+      default: npsUtils.series.nps("build-package-libs", "karma"),
     },
     storybook: {
       server: "start-storybook -p 6006",
-      default: npsUtils.concurrent.nps("watch.lib", "storybook.server")
+      default: npsUtils.concurrent.nps("watch", "storybook.server")
     },
-    start: npsUtils.concurrent.nps("watch.lib", "server.dev", "server.test"),
+    start: npsUtils.concurrent.nps("watch", "server.dev", "server.test"),
     lint: {
       src: "lerna exec --parallel -- eslint --color src",
       demo: "eslint --color demo",
@@ -60,7 +60,7 @@ module.exports = {
     "build-es": npsUtils.series.nps("clean.es", "babel-es"),
     "build-lib": npsUtils.series.nps("clean.lib", "babel-lib"),
     "build-libs": npsUtils.series.nps("build-lib", "build-es"),
-    "build-package-lib": "lerna exec --parallel -- nps build-lib",
+    "build-package-libs": "lerna exec --parallel -- nps build-libs",
     "build-dist-dev": "webpack --bail --config ../../config/webpack/webpack.config.dev.js --colors",
     "build-dist-min": "webpack --bail --config ../../config/webpack/webpack.config.js --colors",
     "build-dists": npsUtils.concurrent.nps("build-dist-min", "build-dist-dev"),

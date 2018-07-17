@@ -1,5 +1,5 @@
 import {
-  Border, Box, ClipPath, GridLine, Whisker, Circle, Rect, Line, Path, TSpan, Text, Point,
+  Border, Box, ClipPath, LineSegment, Whisker, Circle, Rect, Line, Path, TSpan, Text, Point,
   VictoryAnimation,
   VictoryContainer,
   VictoryLabel,
@@ -49,7 +49,7 @@ import { VictoryAxis } from "victory-axis";
 import { VictoryPolarAxis } from "victory-polar-axis";
 
 export {
-  Area, Bar, Border, Box, Candle, ClipPath, Curve, ErrorBar, GridLine, Point, Slice, Voronoi,
+  Area, Bar, Border, Box, Candle, ClipPath, Curve, ErrorBar, LineSegment, Point, Slice, Voronoi,
   Flyout, Whisker, Circle, Rect, Line, Path, TSpan, Text,
   VictoryAnimation,
   VictoryArea,
