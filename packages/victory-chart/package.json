@@ -1,6 +1,6 @@
 {
   "name": "victory-chart",
-  "version": "30.0.0-alpha.3",
+  "version": "30.0.0",
   "description": "Chart Component for Victory",
   "main": "lib/index.js",
   "module": "es/index.js",
@@ -10,10 +10,10 @@
   "dependencies": {
     "lodash": "^4.17.5",
     "react-fast-compare": "^2.0.0",
-    "victory-axis": "^30.0.0-alpha.3",
-    "victory-core": "^30.0.0-alpha.3",
-    "victory-polar-axis": "^30.0.0-alpha.3",
-    "victory-shared-events": "^30.0.0-alpha.3"
+    "victory-axis": "^30.0.0",
+    "victory-core": "^30.0.0",
+    "victory-polar-axis": "^30.0.0",
+    "victory-shared-events": "^30.0.0"
   },
   "scripts": {
     "version": "nps build-libs && nps build-dists"

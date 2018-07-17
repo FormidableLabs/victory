@@ -1,6 +1,6 @@
 {
   "name": "victory-area",
-  "version": "30.0.0-alpha.3",
+  "version": "30.0.0",
   "description": "Chart Component for Victory",
   "main": "lib/index.js",
   "module": "es/index.js",
@@ -10,7 +10,7 @@
   "dependencies": {
     "d3-shape": "^1.2.0",
     "lodash": "^4.17.5",
-    "victory-core": "^30.0.0-alpha.3"
+    "victory-core": "^30.0.0"
   },
   "scripts": {
     "version": "nps build-libs && nps build-dists"
