@@ -40,6 +40,10 @@
     "victory-voronoi-container": "^30.0.0",
     "victory-zoom-container": "^30.0.0"
   },
+  "peerDependencies": {
+    "react": ">=15.0.0",
+    "prop-types": ">=15.0.0"
+  },
   "scripts": {
     "version": "nps build-libs && nps build-dists"
   },
