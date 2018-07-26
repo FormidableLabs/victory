@@ -32,7 +32,8 @@ export default class Bar extends React.Component {
   };
 
   static defaultProps = {
-    pathComponent: <Path/>
+    pathComponent: <Path/>,
+    defaultBarWidth: 8
   };
 
   getPosition(props, width) {
@@ -189,13 +190,12 @@ export default class Bar extends React.Component {
     if (style.width) {
       return style.width;
     }
-    const { scale, data } = props;
+    const { scale, data, defaultBarWidth } = props;
     const range = scale.x.range();
     const extent = Math.abs(range[1] - range[0]);
     const bars = data.length + 2;
     const barRatio = props.barRatio || 0.5;
-    // eslint-disable-next-line no-magic-numbers
-    const defaultWidth = data.length < 2 ? 8 : (barRatio * extent / bars);
+    const defaultWidth = barRatio * (data.length < 2 ? defaultBarWidth : extent / bars);
     return Math.max(1, defaultWidth);
   }
 
