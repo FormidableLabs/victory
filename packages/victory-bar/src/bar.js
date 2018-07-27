@@ -218,7 +218,7 @@ export default class Bar extends React.Component {
 
   render() {
     const {
-      role, datum, active, shapeRendering, className, origin, polar, pathComponent, events
+      role, datum, active, shapeRendering, className, origin, polar, pathComponent, events, clipPath
     } = this.props;
     const stroke = this.props.style && this.props.style.fill || "black";
     const baseStyle = { fill: "black", stroke };
@@ -231,7 +231,7 @@ export default class Bar extends React.Component {
     const defaultTransform = polar && origin ? `translate(${origin.x}, ${origin.y})` : undefined;
     const transform = this.props.transform || defaultTransform;
     return React.cloneElement(pathComponent, {
-      d: path, transform, className, style, role, shapeRendering, events
+      d: path, transform, className, style, role, shapeRendering, events, clipPath
     });
   }
 }

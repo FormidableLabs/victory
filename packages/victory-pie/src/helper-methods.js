@@ -153,9 +153,9 @@ export const getBaseProps = (props, fallbackProps) => {
   props = Helpers.modifyProps(props, fallbackProps, "pie");
   const calculatedValues = getCalculatedValues(props);
   const { slices, style, pathFunction, data, origin } = calculatedValues;
-  const { labels, events, sharedEvents, height, width, standalone } = props;
+  const { labels, events, sharedEvents, height, width, standalone, name } = props;
   const initialChildProps = {
-    parent: { standalone, height, width, slices, pathFunction, style: style.parent }
+    parent: { standalone, height, width, slices, pathFunction, name, style: style.parent }
   };
 
   return slices.reduce((childProps, slice, index) => {

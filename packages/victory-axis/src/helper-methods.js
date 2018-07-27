@@ -309,7 +309,8 @@ const getBaseProps = (props, fallbackProps) => {
   props = modifyProps(props, fallbackProps, role);
   const calculatedValues = getCalculatedValues(props);
   const {
-    axis, style, orientation, isVertical, scale, ticks, tickFormat, anchors, domain, stringTicks
+    axis, style, orientation, isVertical, scale, ticks,
+    tickFormat, anchors, domain, stringTicks, name
   } = calculatedValues;
   const otherAxis = axis === "x" ? "y" : "x";
   const { width, height, standalone, theme, polar, padding } = props;
@@ -319,7 +320,7 @@ const getBaseProps = (props, fallbackProps) => {
   const axisLabelProps = getAxisLabelProps(props, calculatedValues, globalTransform);
   const initialChildProps = {
     parent: assign(
-      { style: style.parent, ticks, standalone, theme, width, height, padding, domain },
+      { style: style.parent, ticks, standalone, theme, width, height, padding, domain, name },
       sharedProps
     )
   };

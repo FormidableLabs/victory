@@ -131,7 +131,7 @@ function getChildren(props, childComponents, calculatedProps) {
   const { datasets } = calculatedProps;
   const { labelComponent, polar } = props;
   const childProps = getChildProps(props, calculatedProps);
-
+  const parentName = props.name || "group";
   return childComponents.map((child, index) => {
     const role = child.type && child.type.role;
     const xOffset = polar ?
@@ -139,8 +139,9 @@ function getChildren(props, childComponents, calculatedProps) {
     const style = role === "voronoi" || role === "tooltip" || role === "label" ?
       child.props.style : Wrapper.getChildStyle(child, index, calculatedProps);
     const labels = props.labels ? getLabels(props, datasets, index) : child.props.labels;
+    const name = child.props.name || `${parentName}-${role}-${index}`;
     return React.cloneElement(child, assign({
-      labels, style, key: index,
+      labels, style, key: `${name}-key-${index}`, name,
       data: getDataWithOffset(props, datasets[index], xOffset),
       colorScale: getColorScale(props, child),
       labelComponent: labelComponent || child.props.labelComponent,

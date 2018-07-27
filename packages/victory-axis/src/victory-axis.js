@@ -128,8 +128,7 @@ class VictoryAxis extends React.Component {
   }
 
   renderGridAndTicks(props) {
-    const { tickComponent, tickLabelComponent, gridComponent } = props;
-
+    const { tickComponent, tickLabelComponent, gridComponent, name } = props;
     return this.dataKeys.map((key, index) => {
       const tickProps = this.getComponentProps(tickComponent, "ticks", index);
       const TickComponent = React.cloneElement(tickComponent, tickProps);
@@ -137,9 +136,10 @@ class VictoryAxis extends React.Component {
       const GridComponent = React.cloneElement(gridComponent, gridProps);
       const tickLabelProps = this.getComponentProps(tickLabelComponent, "tickLabels", index);
       const TickLabel = React.cloneElement(tickLabelComponent, tickLabelProps);
-
       return React.cloneElement(
-        props.groupComponent, { key: `tick-group-${key}` }, GridComponent, TickComponent, TickLabel
+        props.groupComponent,
+        { key: `${name}-tick-group-${key}` },
+        GridComponent, TickComponent, TickLabel
       );
     });
   }

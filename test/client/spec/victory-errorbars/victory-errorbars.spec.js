@@ -129,6 +129,7 @@ describe("components/victory-errorbar", () => {
           <VictoryErrorBar
             data={createData(data)}
             borderWidth={borderWidth}
+            name="error"
             {...svgDimensions}
           />
         );
@@ -148,7 +149,9 @@ describe("components/victory-errorbar", () => {
           const positiveErrorX = errorX >= xScaleMax
             ? xScaleMax : errorX;
           // right border
-          const rightBorder = node.find(Line).findWhere((n) => n.key() === "border-right");
+          const rightBorder = node.find(Line).findWhere(
+            (n) => n.key() && n.key().indexOf("border-right") !== -1
+          );
           expect(rightBorder.props().x1).to.equal(positiveErrorX);
           expect(rightBorder.props().x2).to.equal(positiveErrorX);
           expect(rightBorder.props().y1).to.equal(yScale(data[i].y) - borderWidth);
@@ -188,7 +191,9 @@ describe("components/victory-errorbar", () => {
             ? xScaleMin : errorX;
 
           // left border
-          const leftBorder = node.find(Line).findWhere((n) => n.key() === "border-left");
+          const leftBorder = node.find(Line).findWhere(
+            (n) => n.key() && n.key().indexOf("border-left") !== -1
+          );
           expect(leftBorder.props().x1).to.equal(negativeErrorX);
           expect(leftBorder.props().x2).to.equal(negativeErrorX);
           expect(leftBorder.props().y1).to.equal(yScale(data[i].y) - borderWidth);
@@ -228,7 +233,9 @@ describe("components/victory-errorbar", () => {
             ? yScaleMin : errorY;
 
           // bottom border
-          const bottomBorder = node.find(Line).findWhere((n) => n.key() === "border-bottom");
+          const bottomBorder = node.find(Line).findWhere(
+            (n) => n.key() && n.key().indexOf("border-bottom") !== -1
+          );
           expect(bottomBorder.props().x1).to.equal(xScale(data[i].x) - borderWidth);
           expect(bottomBorder.props().x2).to.equal(xScale(data[i].x) + borderWidth);
           expect(bottomBorder.props().y1).to.equal(negativeErrorY);
@@ -268,7 +275,9 @@ describe("components/victory-errorbar", () => {
             ? yScaleMax : errorY;
 
           // top border
-          const topBorder = node.find(Line).findWhere((n) => n.key() === "border-top");
+          const topBorder = node.find(Line).findWhere(
+            (n) => n.key() && n.key().indexOf("border-top") !== -1
+          );
           expect(topBorder.props().x1).to.equal(xScale(data[i].x) - borderWidth);
           expect(topBorder.props().x2).to.equal(xScale(data[i].x) + borderWidth);
           expect(topBorder.props().y1).to.equal(positiveErrorY);
@@ -305,7 +314,9 @@ describe("components/victory-errorbar", () => {
           const positiveErrorY = errorY >= yScaleMax
             ? yScaleMax : errorY;
 
-          const topCross = node.find(Line).findWhere((n) => n.key() === "cross-top");
+          const topCross = node.find(Line).findWhere(
+            (n) => n.key() && n.key().indexOf("cross-top") !== -1
+          );
           expect(topCross.props().x1).to.equal(xScale(data[i].x));
           expect(topCross.props().x2).to.equal(xScale(data[i].x));
           expect(topCross.props().y1).to.equal(yScale(data[i].y));
@@ -342,7 +353,9 @@ describe("components/victory-errorbar", () => {
           const negativeErrorY = errorY <= yScaleMin
             ? yScaleMin : errorY;
 
-          const bottomCross = node.find(Line).findWhere((n) => n.key() === "cross-bottom");
+          const bottomCross = node.find(Line).findWhere(
+            (n) => n.key() && n.key().indexOf("cross-bottom") !== -1
+          );
           expect(bottomCross.props().x1).to.equal(xScale(data[i].x));
           expect(bottomCross.props().x2).to.equal(xScale(data[i].x));
           expect(bottomCross.props().y1).to.equal(yScale(data[i].y));
@@ -379,7 +392,9 @@ describe("components/victory-errorbar", () => {
           const negativeErrorX = errorX <= xScaleMin
             ? xScaleMin : errorX;
 
-          const leftCross = node.find(Line).findWhere((n) => n.key() === "cross-left");
+          const leftCross = node.find(Line).findWhere(
+            (n) => n.key() && n.key().indexOf("cross-left") !== -1
+          );
           expect(leftCross.props().x1).to.equal(xScale(data[i].x));
           expect(leftCross.props().x2).to.equal(negativeErrorX);
           expect(leftCross.props().y1).to.equal(yScale(data[i].y));
@@ -416,7 +431,9 @@ describe("components/victory-errorbar", () => {
           const positiveErrorX = errorX >= xScaleMax
             ? xScaleMax : errorX;
 
-          const rightCross = node.find(Line).findWhere((n) => n.key() === "cross-right");
+          const rightCross = node.find(Line).findWhere(
+            (n) => n.key() && n.key().indexOf("cross-right") !== -1
+          );
           expect(rightCross.props().x1).to.equal(xScale(data[i].x));
           expect(rightCross.props().x2).to.equal(positiveErrorX);
           expect(rightCross.props().y1).to.equal(yScale(data[i].y));
@@ -496,7 +513,9 @@ describe("components/victory-errorbar", () => {
             ? xScaleMax : errorX;
 
           // right border
-          const rightBorder = node.find(Line).findWhere((n) => n.key() === "border-right");
+          const rightBorder = node.find(Line).findWhere(
+            (n) => n.key() && n.key().indexOf("border-right") !== -1
+          );
           expect(rightBorder.props().x1).to.equal(positiveErrorX);
           expect(rightBorder.props().x2).to.equal(positiveErrorX);
           expect(rightBorder.props().y1).to.equal(yScale(data[i].y) - borderWidth);
@@ -536,7 +555,9 @@ describe("components/victory-errorbar", () => {
             ? xScaleMin : errorX;
 
           // left border
-          const leftBorder = node.find(Line).findWhere((n) => n.key() === "border-left");
+          const leftBorder = node.find(Line).findWhere(
+            (n) => n.key() && n.key().indexOf("border-left") !== -1
+          );
           expect(leftBorder.props().x1).to.equal(negativeErrorX);
           expect(leftBorder.props().x2).to.equal(negativeErrorX);
           expect(leftBorder.props().y1).to.equal(yScale(data[i].y) - borderWidth);
@@ -576,7 +597,9 @@ describe("components/victory-errorbar", () => {
             ? yScaleMin : errorY;
 
           // bottom border
-          const bottomBorder = node.find(Line).findWhere((n) => n.key() === "border-bottom");
+          const bottomBorder = node.find(Line).findWhere(
+            (n) => n.key() && n.key().indexOf("border-bottom") !== -1
+          );
           expect(bottomBorder.props().x1).to.equal(xScale(data[i].x) - borderWidth);
           expect(bottomBorder.props().x2).to.equal(xScale(data[i].x) + borderWidth);
           expect(bottomBorder.props().y1).to.equal(negativeErrorY);
@@ -615,7 +638,9 @@ describe("components/victory-errorbar", () => {
           const positiveErrorY = errorY >= yScaleMax
             ? yScaleMax : errorY;
 
-          const topBorder = node.find(Line).findWhere((n) => n.key() === "border-top");
+          const topBorder = node.find(Line).findWhere(
+            (n) => n.key() && n.key().indexOf("border-top") !== -1
+          );
           expect(topBorder.props().x1).to.equal(xScale(data[i].x) - borderWidth);
           expect(topBorder.props().x2).to.equal(xScale(data[i].x) + borderWidth);
           expect(topBorder.props().y1).to.equal(positiveErrorY);
@@ -652,7 +677,9 @@ describe("components/victory-errorbar", () => {
           const positiveErrorY = errorY >= yScaleMax
             ? yScaleMax : errorY;
 
-          const topCross = node.find(Line).findWhere((n) => n.key() === "cross-top");
+          const topCross = node.find(Line).findWhere(
+            (n) => n.key() && n.key().indexOf("cross-top") !== -1
+          );
           expect(topCross.props().x1).to.equal(xScale(data[i].x));
           expect(topCross.props().x2).to.equal(xScale(data[i].x));
           expect(topCross.props().y1).to.equal(yScale(data[i].y));
@@ -689,7 +716,9 @@ describe("components/victory-errorbar", () => {
           const negativeErrorY = errorY <= yScaleMin
             ? yScaleMin : errorY;
 
-          const bottomCross = node.find(Line).findWhere((n) => n.key() === "cross-bottom");
+          const bottomCross = node.find(Line).findWhere(
+            (n) => n.key() && n.key().indexOf("cross-bottom") !== -1
+          );
           expect(bottomCross.props().x1).to.equal(xScale(data[i].x));
           expect(bottomCross.props().x2).to.equal(xScale(data[i].x));
           expect(bottomCross.props().y1).to.equal(yScale(data[i].y));
@@ -726,7 +755,9 @@ describe("components/victory-errorbar", () => {
           const negativeErrorX = errorX <= xScaleMin
             ? xScaleMin : errorX;
 
-          const leftCross = node.find(Line).findWhere((n) => n.key() === "cross-left");
+          const leftCross = node.find(Line).findWhere(
+            (n) => n.key() && n.key().indexOf("cross-left") !== -1
+          );
           expect(leftCross.props().x1).to.equal(xScale(data[i].x));
           expect(leftCross.props().x2).to.equal(negativeErrorX);
           expect(leftCross.props().y1).to.equal(yScale(data[i].y));
@@ -763,7 +794,9 @@ describe("components/victory-errorbar", () => {
           const positiveErrorX = errorX >= xScaleMax
             ? xScaleMax : errorX;
 
-          const rightCross = node.find(Line).findWhere((n) => n.key() === "cross-right");
+          const rightCross = node.find(Line).findWhere(
+            (n) => n.key() && n.key().indexOf("cross-right") !== -1
+          );
           expect(rightCross.props().x1).to.equal(xScale(data[i].x));
           expect(rightCross.props().x2).to.equal(positiveErrorX);
           expect(rightCross.props().y1).to.equal(yScale(data[i].y));

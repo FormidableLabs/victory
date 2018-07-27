@@ -66,13 +66,13 @@ export default class VictoryClipContainer extends React.Component {
   renderClippedGroup(props, clipId) {
     const { style, events, transform, children, className, groupComponent } = props;
     const clipComponent = this.renderClipComponent(props, clipId);
-    const clippedGroup = React.cloneElement(
-      groupComponent, { key: "clipped-group", clipPath: `url(#${clipId})` }, children
-    );
+    const groupProps = assign({
+      className, style, transform, key: `clipped-group-${clipId}`, clipPath: `url(#${clipId})`
+    }, events);
     return React.cloneElement(
       groupComponent,
-      assign({ className, style, transform }, events),
-      [clipComponent, clippedGroup]
+      groupProps,
+      [clipComponent, ...React.Children.toArray(children)]
     );
   }
 
@@ -109,7 +109,7 @@ export default class VictoryClipContainer extends React.Component {
 
     return React.cloneElement(
       clipPathComponent,
-      assign({ key: "clip-path" }, props, { clipId }),
+      assign({ key: `clip-path-${clipId}` }, props, { clipId }),
       child
     );
   }

@@ -201,10 +201,12 @@ export const voronoiContainerMixin = (base) => class VictoryVoronoiContainer ext
 
     // remove properties from first point to make datum
     // eslint-disable-next-line no-unused-vars
-    const { childName, style, continuous, ...datum } = points[0];
-
+    const { childName, eventKey, style, continuous, ...datum } = points[0];
+    const name = props.name === childName ? childName : `${props.name}-${childName}`;
     const labelProps = defaults(
       {
+        key: `${name}-${eventKey}-voronoi-tooltip`,
+        id: `${name}-${eventKey}-voronoi-tooltip`,
         active: true,
         flyoutStyle: this.getStyle(props, points, "flyout")[0],
         renderInPortal: false,
@@ -235,10 +237,7 @@ export const voronoiContainerMixin = (base) => class VictoryVoronoiContainer ext
 
   // Overrides method in VictoryContainer
   getChildren(props) {
-    const children = React.Children.toArray(props.children);
-    return [...children, this.getTooltip(props)].map((component, i) => {
-      return component ? React.cloneElement(component, { key: i }) : null;
-    });
+    return [...React.Children.toArray(props.children), this.getTooltip(props)];
   }
 };
 

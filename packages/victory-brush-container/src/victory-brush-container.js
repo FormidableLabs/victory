@@ -79,10 +79,11 @@ export const brushContainerMixin = (base) => class VictoryBrushContainer extends
 
   getSelectBox(props, coordinates) {
     const { x, y } = coordinates;
-    const { brushStyle, brushComponent } = props;
+    const { brushStyle, brushComponent, name } = props;
     const brushComponentStyle = brushComponent.props && brushComponent.props.style;
     return x[0] !== x[1] && y[0] !== y[1] ?
       React.cloneElement(brushComponent, {
+        key: `${name}-brush`,
         width: Math.abs(x[1] - x[0]) || 1,
         height: Math.abs(y[1] - y[0]) || 1,
         x: Math.min(x[0], x[1]),
@@ -93,7 +94,7 @@ export const brushContainerMixin = (base) => class VictoryBrushContainer extends
   }
 
   getHandles(props, coordinates) {
-    const { brushDimension, handleWidth, handleStyle, handleComponent } = props;
+    const { brushDimension, handleWidth, handleStyle, handleComponent, name } = props;
     const { x, y } = coordinates;
     const width = Math.abs(x[1] - x[0]) || 1;
     const height = Math.abs(y[1] - y[0]) || 1;
@@ -111,7 +112,7 @@ export const brushContainerMixin = (base) => class VictoryBrushContainer extends
       memo = handleProps[curr] ?
         memo.concat(React.cloneElement(
           handleComponent,
-          assign({ key: `handle-${curr}` }, handleProps[curr]
+          assign({ key: `${name}-handle-${curr}` }, handleProps[curr]
         ))) : memo;
       return memo;
     }, []);
@@ -125,21 +126,12 @@ export const brushContainerMixin = (base) => class VictoryBrushContainer extends
       defaults({}, currentDomain, brushDomain) : brushDomain;
     const coordinates = Selection.getDomainCoordinates(props, domain);
     const selectBox = this.getSelectBox(props, coordinates);
-    return selectBox ?
-      (
-        <g>
-          {selectBox}
-          {this.getHandles(props, coordinates)}
-        </g>
-      ) : null;
+    return selectBox ? [ selectBox, this.getHandles(props, coordinates)] : [];
   }
 
   // Overrides method in VictoryContainer
   getChildren(props) {
-    const children = React.Children.toArray(props.children);
-    return [...children, this.getRect(props)].map((component, i) => {
-      return component ? React.cloneElement(component, { key: i }) : null;
-    });
+    return [...React.Children.toArray(props.children), ...this.getRect(props)];
   }
 };
 

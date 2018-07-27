@@ -85,7 +85,7 @@ export default class Area extends React.Component {
   render() {
     const {
       role, shapeRendering, className, polar, origin, data, active, pathComponent, events,
-      groupComponent
+      groupComponent, clipPath, id
     } = this.props;
     const style = Helpers.evaluateStyle(assign({ fill: "black" }, this.props.style), data, active);
     const defaultTransform = polar && origin ? `translate(${origin.x}, ${origin.y})` : undefined;
@@ -96,13 +96,13 @@ export default class Area extends React.Component {
 
     const areaStroke = style.stroke ? "none" : style.fill;
 
-    const sharedProps = { className, role, shapeRendering, transform, events };
+    const sharedProps = { className, role, shapeRendering, transform, events, clipPath };
     const area = React.cloneElement(pathComponent, assign({
-      key: "area", style: assign({}, style, { stroke: areaStroke }), d: areaFunction(data)
+      key: `${id}-area`, style: assign({}, style, { stroke: areaStroke }), d: areaFunction(data)
     }, sharedProps));
 
     const line = renderLine ? React.cloneElement(pathComponent, assign({
-      key: "area-stroke", style: assign({}, style, { fill: "none" }), d: lineFunction(data)
+      key: `${id}-area-stroke`, style: assign({}, style, { fill: "none" }), d: lineFunction(data)
     }, sharedProps)) : null;
 
     return renderLine ? React.cloneElement(groupComponent, {}, [area, line]) : area;

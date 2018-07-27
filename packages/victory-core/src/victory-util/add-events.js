@@ -129,8 +129,9 @@ export default (WrappedComponent, options) => {
     }
 
     getComponentProps(component, type, index) {
-      const { role } = WrappedComponent;
+      const name = this.props.name || WrappedComponent.role;
       const key = this.dataKeys && this.dataKeys[index] || index;
+      const id = `${name}-${type}-${key}`;
       const baseProps = this.baseProps[key] && this.baseProps[key][type] || this.baseProps[key];
       if (!baseProps && !this.hasEvents) {
         return undefined;
@@ -138,11 +139,12 @@ export default (WrappedComponent, options) => {
       if (this.hasEvents) {
         const baseEvents = this.getEvents(this.props, type, key);
         const componentProps = defaults(
-          { index, key: `${role}-${type}-${key}` },
+          { index, key: id },
           this.getEventState(key, type),
           this.getSharedEventState(key, type),
           component.props,
-          baseProps
+          baseProps,
+          { id }
         );
         const events = defaults(
           {}, Events.getPartialEvents(baseEvents, key, componentProps), componentProps.events
@@ -152,9 +154,10 @@ export default (WrappedComponent, options) => {
         );
       }
       return defaults(
-        { index, key: `${role}-${type}-${key}` },
+        { index, key: id },
         component.props,
-        baseProps
+        baseProps,
+        { id }
       );
     }
 

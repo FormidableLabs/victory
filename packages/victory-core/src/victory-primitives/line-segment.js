@@ -23,13 +23,13 @@ export default class LineSegment extends React.Component {
   render() {
     const {
       x1, x2, y1, y2, events, datum, active, lineComponent, className, role, shapeRendering,
-      transform
+      transform, clipPath
     } = this.props;
     const style = Helpers.evaluateStyle(
       assign({ stroke: "black" }, this.props.style), datum, active
     );
     return React.cloneElement(lineComponent, {
-      style, className, role, shapeRendering, events, x1, x2, y1, y2, transform
+      style, className, role, shapeRendering, events, x1, x2, y1, y2, transform, clipPath
     });
   }
 }

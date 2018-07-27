@@ -173,15 +173,17 @@ function getChildren(props, childComponents, calculatedProps) {
   calculatedProps = calculatedProps || getCalculatedProps(props, childComponents);
   const { datasets } = calculatedProps;
   const childProps = getChildProps(props, calculatedProps);
-
+  const parentName = props.name || "stack";
   return childComponents.map((child, index) => {
+    const role = child.type && child.type.role;
     const data = datasets[index];
     const style = Wrapper.getChildStyle(child, index, calculatedProps);
     const labels = props.labels ? getLabels(props, datasets, index) : child.props.labels;
-
+    const name = child.props.name || `${parentName}-${role}-${index}`;
     return React.cloneElement(child, assign({
-      key: index,
+      key: `${name}-key-${index}`,
       labels,
+      name,
       domainPadding: child.props.domainPadding || props.domainPadding,
       theme: props.theme,
       labelComponent: props.labelComponent || child.props.labelComponent,

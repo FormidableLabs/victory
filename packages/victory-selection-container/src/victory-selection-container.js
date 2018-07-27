@@ -56,21 +56,21 @@ export const selectionContainerMixin = (base) => class VictorySelectionContainer
   };
 
   getRect(props) {
-    const { x1, x2, y1, y2, selectionStyle, selectionComponent } = props;
+    const { x1, x2, y1, y2, selectionStyle, selectionComponent, name } = props;
     const width = Math.abs(x2 - x1) || 1;
     const height = Math.abs(y2 - y1) || 1;
     const x = Math.min(x1, x2);
     const y = Math.min(y1, y2);
     return y2 && x2 && x1 && y1 ?
-      React.cloneElement(selectionComponent, { x, y, width, height, style: selectionStyle }) : null;
+      React.cloneElement(
+        selectionComponent,
+        { key: `${name}-selection`, x, y, width, height, style: selectionStyle }
+      ) : null;
   }
 
   // Overrides method in VictoryContainer
   getChildren(props) {
-    const children = React.Children.toArray(props.children);
-    return [...children, this.getRect(props)].map((component, i) => {
-      return component ? React.cloneElement(component, { key: i }) : null;
-    });
+    return [...React.Children.toArray(props.children), this.getRect(props)];
   }
 };
 

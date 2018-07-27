@@ -40,10 +40,10 @@ const getBaseProps = (props, fallbackProps) => {
   props = assign({}, modifiedProps, getCalculatedValues(modifiedProps));
   const {
     alignment, barRatio, cornerRadius, data, domain, events, height, horizontal, origin, padding,
-    polar, scale, sharedEvents, standalone, style, theme, width, labels
+    polar, scale, sharedEvents, standalone, style, theme, width, labels, name
   } = props;
   const initialChildProps = { parent: {
-    domain, scale, width, height, data, standalone,
+    domain, scale, width, height, data, standalone, name,
     theme, polar, origin, padding, style: style.parent
   } };
 

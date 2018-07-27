@@ -69,12 +69,12 @@ const getBaseProps = (props, fallbackProps) => {
   const modifiedProps = Helpers.modifyProps(props, fallbackProps, "scatter");
   props = assign({}, modifiedProps, getCalculatedValues(modifiedProps));
   const {
-    data, domain, events, height, origin, padding, polar, scale,
+    data, domain, events, height, origin, padding, polar, scale, name,
     sharedEvents, standalone, style, theme, width, labels
   } = props;
   const initialChildProps = { parent: {
     style: style.parent, scale, domain, data, height, width, standalone, theme,
-    origin, polar, padding
+    origin, polar, padding, name
   } };
 
   return data.reduce((childProps, datum, index) => {

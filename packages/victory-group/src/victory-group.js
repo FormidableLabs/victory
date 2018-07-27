@@ -91,11 +91,11 @@ export default class VictoryGroup extends React.Component {
   }
 
   getContainerProps(props, calculatedProps) {
-    const { width, height, standalone, theme, polar, horizontal } = props;
+    const { width, height, standalone, theme, polar, horizontal, name } = props;
     const { domain, scale, style, origin } = calculatedProps;
     return {
       domain, scale, width, height, standalone, theme, style: style.parent, horizontal,
-      polar, origin
+      polar, origin, name
     };
   }
 
