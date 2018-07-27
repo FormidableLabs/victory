@@ -17,7 +17,6 @@ export default class VictoryClipContainer extends React.Component {
     ]),
     circleComponent: PropTypes.element,
     className: PropTypes.string,
-    clipChildren: PropTypes.bool,
     clipHeight: CustomPropTypes.nonNegative,
     clipId: PropTypes.oneOfType([PropTypes.number, PropTypes.string]),
     clipPadding: PropTypes.shape({
@@ -65,23 +64,15 @@ export default class VictoryClipContainer extends React.Component {
   }
 
   renderClippedGroup(props, clipId) {
-    const { style, events, transform, children, className, groupComponent, clipChildren } = props;
+    const { style, events, transform, children, className, groupComponent } = props;
     const clipComponent = this.renderClipComponent(props, clipId);
-    const clippedChildren = clipChildren ?
-      React.Children.toArray(children).map((child, i) => {
-        return React.cloneElement(child, {
-          key: `clipped-child-${clipId}-${i}`,
-          clipPath: `url(#${clipId})`
-        });
-      }) :
-      children;
     const groupProps = assign({
       className, style, transform, key: `clipped-group-${clipId}`, clipPath: `url(#${clipId})`
     }, events);
     return React.cloneElement(
       groupComponent,
       groupProps,
-      [clipComponent, ...clippedChildren]
+      [clipComponent, ...React.Children.toArray(children)]
     );
   }
 
