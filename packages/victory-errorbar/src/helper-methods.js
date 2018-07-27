@@ -111,10 +111,10 @@ const getBaseProps = (props, fallbackProps) => {
   const { data, style, scale, domain, origin } = getCalculatedValues(props, fallbackProps);
   const {
     groupComponent, height, width, borderWidth, standalone, theme, polar, padding,
-    labels, events, sharedEvents
+    labels, events, sharedEvents, name
   } = props;
   const initialChildProps = { parent: {
-    domain, scale, data, height, width, standalone, theme, polar, origin,
+    domain, scale, data, height, width, standalone, theme, polar, origin, name,
     padding, style: style.parent
   } };
 

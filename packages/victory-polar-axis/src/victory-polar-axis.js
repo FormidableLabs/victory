@@ -131,26 +131,27 @@ class VictoryPolarAxis extends React.Component {
   }
 
   renderAxis(props) {
-    const { tickComponent, tickLabelComponent } = props;
+    const { tickComponent, tickLabelComponent, name } = props;
     const axisType = props.dependentAxis ? "radial" : "angular";
     const gridComponent = axisType === "radial" ? props.circularGridComponent : props.gridComponent;
     const tickComponents = this.dataKeys.map((key, index) => {
       const tickProps = assign(
-        { key: `tick-${key}` }, this.getComponentProps(tickComponent, "ticks", index)
+        { key: `${name}-tick-${key}` }, this.getComponentProps(tickComponent, "ticks", index)
       );
       return React.cloneElement(tickComponent, tickProps);
     });
 
     const gridComponents = this.dataKeys.map((key, index) => {
       const gridProps = assign(
-        { key: `grid-${key}` }, this.getComponentProps(gridComponent, "grid", index)
+        { key: `${name}-grid-${key}` }, this.getComponentProps(gridComponent, "grid", index)
       );
       return React.cloneElement(gridComponent, gridProps);
     });
 
     const tickLabelComponents = this.dataKeys.map((key, index) => {
       const tickLabelProps = assign(
-        { key: `tick-${key}` }, this.getComponentProps(tickLabelComponent, "tickLabels", index)
+        { key: `${name}-tick-${key}` },
+        this.getComponentProps(tickLabelComponent, "tickLabels", index)
       );
       return React.cloneElement(tickLabelComponent, tickLabelProps);
     });

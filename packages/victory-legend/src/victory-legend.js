@@ -94,6 +94,7 @@ class VictoryLegend extends React.Component {
     height: CustomPropTypes.nonNegative,
     itemsPerRow: CustomPropTypes.nonNegative,
     labelComponent: PropTypes.element,
+    name: PropTypes.string,
     orientation: PropTypes.oneOf(["horizontal", "vertical"]),
     padding: PropTypes.oneOfType([
       PropTypes.number,

@@ -115,6 +115,7 @@ export default class VictoryBrushLine extends React.Component {
     handleComponent: PropTypes.element,
     handleStyle: PropTypes.object,
     handleWidth: PropTypes.number,
+    id: PropTypes.oneOfType([PropTypes.number, PropTypes.string]),
     lineComponent: PropTypes.element,
     name: PropTypes.string,
     onBrushDomainChange: PropTypes.func,
@@ -372,7 +373,7 @@ export default class VictoryBrushLine extends React.Component {
 
   renderHandles(props) {
     const {
-      handleComponent, handleStyle, datum = {}, activeBrushes = {}, brushDomain
+      handleComponent, handleStyle, id, brushDomain, datum = {}, activeBrushes = {}
     } = props;
     if (!brushDomain) {
       return null;
@@ -382,12 +383,12 @@ export default class VictoryBrushLine extends React.Component {
     const minDatum = assign({ handleValue: Collection.getMinValue(brushDomain) }, datum);
     const maxDatum = assign({ handleValue: Collection.getMaxValue(brushDomain) }, datum);
     const minHandleProps = assign({
-      key: "min",
+      key: `${id}-min`,
       style: Helpers.evaluateStyle(style, minDatum, activeBrushes.minHandle)
     }, handleDimensions.min);
     const maxHandleProps = assign(
       {
-        key: "max",
+        key: `${id}-max`,
         style: Helpers.evaluateStyle(style, maxDatum, activeBrushes.maxHandle)
       }, handleDimensions.max);
     return [

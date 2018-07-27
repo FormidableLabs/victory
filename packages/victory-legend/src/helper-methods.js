@@ -209,7 +209,7 @@ const getBaseProps = (props, fallbackProps) => {
   props = assign({}, modifiedProps, getCalculatedValues(modifiedProps));
   const {
     data, standalone, theme, padding, style, colorScale, gutter, rowGutter,
-    borderPadding, title, titleOrientation, x = 0, y = 0
+    borderPadding, title, titleOrientation, name, x = 0, y = 0
   } = props;
   const groupedData = groupData(props);
   const columnWidths = getColumnWidths(props, groupedData);
@@ -227,7 +227,7 @@ const getBaseProps = (props, fallbackProps) => {
   const { height, width } = getDimensions(props, fallbackProps);
   const initialProps = {
     parent: {
-      data, standalone, theme, padding,
+      data, standalone, theme, padding, name,
       height: props.height,
       width: props.width,
       style: style.parent
@@ -245,7 +245,6 @@ const getBaseProps = (props, fallbackProps) => {
     const dataProps = {
       index: i,
       data, datum,
-      key: `legend-symbol-${i}`,
       symbol: dataStyle.type || dataStyle.symbol || "circle",
       size: datum.size,
       style: dataStyle,
@@ -255,7 +254,6 @@ const getBaseProps = (props, fallbackProps) => {
 
     const labelProps = {
       datum, data,
-      key: `legend-label-${i}`,
       text: datum.name,
       style: labelStyles[i],
       y: dataProps.y,

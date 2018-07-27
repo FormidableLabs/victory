@@ -35,7 +35,7 @@ export default class Candle extends React.Component {
     const {
       x, high, low, open, close, data, datum, active, width, candleHeight, events, groupComponent,
       rectComponent, lineComponent, role, shapeRendering, className, wickStrokeWidth, transform,
-      clipPath
+      clipPath, id
     } = this.props;
     const style = Helpers.evaluateStyle(
       assign({ stroke: "black" }, this.props.style), datum, active
@@ -47,7 +47,7 @@ export default class Candle extends React.Component {
     const sharedProps = { role, shapeRendering, className, events, transform, clipPath };
 
     const candleProps = assign({
-      key: "candle",
+      key: `${id}-candle`,
       style,
       x: candleX,
       y: Math.min(open, close),
@@ -56,7 +56,7 @@ export default class Candle extends React.Component {
     }, sharedProps);
 
     const highWickProps = assign({
-      key: "highWick",
+      key: `${id}-highWick`,
       style: wickStyle,
       x1: x,
       x2: x,
@@ -65,7 +65,7 @@ export default class Candle extends React.Component {
     }, sharedProps);
 
     const lowWickProps = assign({
-      key: "lowWick",
+      key: `${id}-lowWick`,
       style: wickStyle,
       x1: x,
       x2: x,

@@ -294,11 +294,11 @@ const getBaseProps = (props, fallbackProps) => {
   props = assign({}, modifiedProps, getCalculatedValues(modifiedProps));
   const {
     groupComponent, width, height, padding, standalone, theme, events, sharedEvents,
-    scale, horizontal, data, style, domain
+    scale, horizontal, data, style, domain, name
   } = props;
   const initialChildProps = {
     parent: {
-      domain, scale, width, height, data, standalone,
+      domain, scale, width, height, data, standalone, name,
       theme, style: style.parent || {}, padding, groupComponent
     }
   };

@@ -118,7 +118,7 @@ export default class VictoryClipContainer extends React.Component {
 
     return React.cloneElement(
       clipPathComponent,
-      assign({ key: "clip-path" }, props, { clipId }),
+      assign({ key: `clip-path-${clipId}` }, props, { clipId }),
       child
     );
   }

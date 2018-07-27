@@ -278,11 +278,11 @@ const getBaseProps = (props, fallbackProps) => {
   props = modifyProps(props, fallbackProps, role);
   const calculatedValues = getCalculatedValues(props);
   const { style, scale, ticks, domain } = calculatedValues;
-  const { width, height, standalone, theme } = props;
+  const { width, height, standalone, theme, name } = props;
   const axisProps = getAxisProps(props, calculatedValues);
   const axisLabelProps = getAxisLabelProps(props, calculatedValues);
   const initialChildProps = { parent:
-    { style: style.parent, ticks, scale, width, height, domain, standalone, theme }
+    { style: style.parent, ticks, scale, width, height, domain, standalone, theme, name }
   };
 
   return ticks.reduce((childProps, tick, index) => {

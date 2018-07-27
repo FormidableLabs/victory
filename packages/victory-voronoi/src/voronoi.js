@@ -41,7 +41,7 @@ export default class Voronoi extends React.Component {
   render() {
     const {
       datum, active, role, shapeRendering, className, events, x, y, transform,
-      pathComponent, clipPathComponent, groupComponent, circleComponent
+      pathComponent, clipPathComponent, groupComponent, circleComponent, id
     } = this.props;
     const voronoiPath = this.getVoronoiPath(this.props);
     const style = Helpers.evaluateStyle(this.props.style, datum, active);
@@ -49,12 +49,12 @@ export default class Voronoi extends React.Component {
 
     if (size) {
       const circle = React.cloneElement(circleComponent, {
-        key: "circle", style, className, role, shapeRendering, events,
+        key: `${id}-circle-clip`, style, className, role, shapeRendering, events,
         clipPath: `url(#${this.clipId})`, cx: x, cy: y, r: size
       });
       const voronoiClipPath = React.cloneElement(
         clipPathComponent,
-        { key: "voronoi-clip", clipId: this.clipId },
+        { key: `${id}-voronoi-clip`, clipId: this.clipId },
         React.cloneElement(pathComponent, { d: voronoiPath, className })
       );
       return React.cloneElement(groupComponent, {}, [voronoiClipPath, circle]);

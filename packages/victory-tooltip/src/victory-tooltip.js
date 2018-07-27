@@ -5,7 +5,7 @@ import {
   VictoryPortal
 } from "victory-core";
 import Flyout from "./flyout";
-import { assign, defaults } from "lodash";
+import { assign, defaults, uniqueId } from "lodash";
 
 const fallbackProps = {
   cornerRadius: 5,
@@ -46,6 +46,7 @@ export default class VictoryTooltip extends React.Component {
       PropTypes.func
     ]),
     horizontal: PropTypes.bool,
+    id: PropTypes.oneOfType([PropTypes.number, PropTypes.string]),
     index: PropTypes.oneOfType([PropTypes.number, PropTypes.string]),
     labelComponent: PropTypes.element,
     orientation: PropTypes.oneOfType([
@@ -128,6 +129,12 @@ export default class VictoryTooltip extends React.Component {
       }
     }];
   };
+
+  constructor(props) {
+    super(props);
+    this.id = props.id === undefined ?
+      uniqueId("tooltip-") : props.id;
+  }
 
   getDefaultOrientation(props) {
     const { datum, horizontal, polar } = props;
@@ -305,7 +312,7 @@ export default class VictoryTooltip extends React.Component {
       {},
       labelComponent.props,
       {
-        key: `label-${index}`,
+        key: `${this.id}-label-${index}`,
         text, datum, textAnchor, dy, dx,
         style: labelStyle,
         x: !textAnchor || textAnchor === "middle" ?
@@ -328,7 +335,7 @@ export default class VictoryTooltip extends React.Component {
       flyoutComponent.props,
       {
         x, y, dx, dy, datum, index, orientation, pointerLength, pointerWidth, cornerRadius, events,
-        key: `flyout-${index}`,
+        key: `${this.id}-tooltip-${index}`,
         width: flyoutDimensions.width,
         height: flyoutDimensions.height,
         style: flyoutStyle

@@ -8,7 +8,7 @@ import Style from "../victory-util/style";
 import Log from "../victory-util/log";
 import TSpan from "../victory-primitives/tspan";
 import Text from "../victory-primitives/text";
-import { assign, defaults, isEmpty } from "lodash";
+import { assign, defaults, isEmpty, uniqueId } from "lodash";
 
 const defaultStyles = {
   fill: "#252525",
@@ -46,6 +46,7 @@ export default class VictoryLabel extends React.Component {
       PropTypes.func
     ]),
     events: PropTypes.object,
+    id: PropTypes.oneOfType([PropTypes.number, PropTypes.string]),
     index: PropTypes.oneOfType([PropTypes.number, PropTypes.string]),
     inline: PropTypes.bool,
     labelPlacement: PropTypes.oneOf(["parallel", "perpendicular", "vertical"]),
@@ -110,6 +111,12 @@ export default class VictoryLabel extends React.Component {
     capHeight: 0.71, // Magic number from d3.
     lineHeight: 1
   };
+
+  constructor(props) {
+    super(props);
+    this.id = props.id === undefined ?
+      uniqueId("label-") : props.id;
+  }
 
   getPosition(props, dimension) {
     if (!props.datum) {
@@ -227,9 +234,8 @@ export default class VictoryLabel extends React.Component {
       const currentLineHeight = this.checkLineHeight(
         lineHeight, ((lineHeight[i] + (lineHeight[i - 1] || lineHeight[0])) / 2), 1
       );
-
       const tspanProps = {
-        key: i,
+        key: `${this.id}-key-${i}`,
         x: !inline ? props.x : undefined,
         dx,
         dy: i && !inline ? (currentLineHeight * fontSize) : undefined,
@@ -241,7 +247,7 @@ export default class VictoryLabel extends React.Component {
     });
     return React.cloneElement(
       props.textComponent,
-      { dx, dy, x, y, events, transform, className, title, desc },
+      { dx, dy, x, y, events, transform, className, title, desc, id: this.id },
       textChildren
     );
   }

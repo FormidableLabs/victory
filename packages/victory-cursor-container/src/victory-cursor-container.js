@@ -99,7 +99,8 @@ export const cursorContainerMixin = (base) => class VictoryCursorContainer exten
 
   getCursorElements(props) { // eslint-disable-line max-statements
     const {
-      scale, cursorDimension, cursorLabelComponent, cursorLabel, cursorComponent, width, height
+      scale, cursorDimension, cursorLabelComponent, cursorLabel,
+      cursorComponent, width, height, name
     } = props;
     const cursorValue = this.getCursorPosition(props);
     const cursorLabelOffset = this.getCursorLabelOffset(props);
@@ -123,7 +124,7 @@ export const cursorContainerMixin = (base) => class VictoryCursorContainer exten
             y: cursorCoordinates.y + cursorLabelOffset.y,
             text: Helpers.evaluateProp(cursorLabel, cursorValue, true),
             active: true,
-            key: "cursor-label"
+            key: `${name}-cursor-label`
           }
         )
       ));
@@ -132,7 +133,7 @@ export const cursorContainerMixin = (base) => class VictoryCursorContainer exten
     const cursorStyle = assign({ stroke: "black" }, cursorComponent.props.style);
     if (cursorDimension === "x" || cursorDimension === undefined) {
       newElements.push(React.cloneElement(cursorComponent, {
-        key: "x-cursor",
+        key: `${name}-x-cursor`,
         x1: cursorCoordinates.x,
         x2: cursorCoordinates.x,
         y1: padding.top,
@@ -142,7 +143,7 @@ export const cursorContainerMixin = (base) => class VictoryCursorContainer exten
     }
     if (cursorDimension === "y" || cursorDimension === undefined) {
       newElements.push(React.cloneElement(cursorComponent, {
-        key: "y-cursor",
+        key: `${name}-y-cursor`,
         x1: padding.left,
         x2: (width - padding.right),
         y1: cursorCoordinates.y,
@@ -155,10 +156,7 @@ export const cursorContainerMixin = (base) => class VictoryCursorContainer exten
 
   // Overrides method in VictoryContainer
   getChildren(props) {
-    return [
-      ...React.Children.toArray(props.children),
-      ...this.getCursorElements(props)
-    ];
+    return [...React.Children.toArray(props.children), ...this.getCursorElements(props)];
   }
 };
 
