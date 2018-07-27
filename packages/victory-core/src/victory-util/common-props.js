@@ -141,6 +141,7 @@ const baseProps = {
 const primitiveProps = {
   active: PropTypes.bool,
   className: PropTypes.string,
+  clipPath: PropTypes.string,
   data: PropTypes.oneOfType([PropTypes.array, PropTypes.object]),
   events: PropTypes.object,
   index: PropTypes.oneOfType([PropTypes.number, PropTypes.string]),

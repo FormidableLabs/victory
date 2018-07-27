@@ -48,11 +48,13 @@ export default class Arc extends React.Component {
   }
 
   render() {
-    const { role, shapeRendering, className, events, pathComponent, transform } = this.props;
+    const {
+      role, shapeRendering, className, events, pathComponent, transform, clipPath
+    } = this.props;
     return React.cloneElement(pathComponent, {
       d: this.getArcPath(this.props),
       style: this.getStyle(this.props),
-      className, role, shapeRendering, events, transform
+      className, role, shapeRendering, events, transform, clipPath
     });
   }
 }

@@ -32,6 +32,7 @@ const getAngleAccessor = (scale) => {
 export default class Area extends React.Component {
   static propTypes = {
     ...CommonProps.primitiveProps,
+    clipPath: PropTypes.string,
     groupComponent: PropTypes.element,
     interpolation: PropTypes.string,
     pathComponent: PropTypes.element
@@ -85,7 +86,7 @@ export default class Area extends React.Component {
   render() {
     const {
       role, shapeRendering, className, polar, origin, data, active, pathComponent, events,
-      groupComponent
+      groupComponent, clipPath
     } = this.props;
     const style = Helpers.evaluateStyle(assign({ fill: "black" }, this.props.style), data, active);
     const defaultTransform = polar && origin ? `translate(${origin.x}, ${origin.y})` : undefined;
@@ -96,7 +97,7 @@ export default class Area extends React.Component {
 
     const areaStroke = style.stroke ? "none" : style.fill;
 
-    const sharedProps = { className, role, shapeRendering, transform, events };
+    const sharedProps = { className, role, shapeRendering, transform, events, clipPath };
     const area = React.cloneElement(pathComponent, assign({
       key: "area", style: assign({}, style, { stroke: areaStroke }), d: areaFunction(data)
     }, sharedProps));

@@ -53,12 +53,12 @@ export default class Point extends React.Component {
 
   render() {
     const {
-      active, datum, role, shapeRendering, className, events, pathComponent, transform
+      active, datum, role, shapeRendering, className, events, pathComponent, transform, clipPath
     } = this.props;
     const style = Helpers.evaluateStyle(this.props.style, datum, active);
     const d = this.getPath(this.props);
     return React.cloneElement(
-      pathComponent, { style, role, shapeRendering, className, events, d, transform }
+      pathComponent, { style, role, shapeRendering, className, events, d, transform, clipPath }
     );
   }
 }

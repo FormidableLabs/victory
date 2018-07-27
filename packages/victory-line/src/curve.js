@@ -65,7 +65,7 @@ export default class Curve extends React.Component {
 
   render() {
     const {
-      data, active, events, role, shapeRendering, className, polar, origin, pathComponent
+      data, active, events, role, shapeRendering, className, polar, origin, pathComponent, clipPath
     } = this.props;
     const style = Helpers.evaluateStyle(
       assign({ fill: "none", stroke: "black" }, this.props.style), data, active
@@ -75,7 +75,7 @@ export default class Curve extends React.Component {
     const defaultTransform = polar && origin ? `translate(${origin.x}, ${origin.y})` : undefined;
     const transform = this.props.transform || defaultTransform;
     return React.cloneElement(pathComponent, {
-      className, style, role, shapeRendering, transform, events, d: path
+      className, style, role, shapeRendering, transform, events, d: path, clipPath
     });
   }
 }
