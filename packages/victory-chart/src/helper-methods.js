@@ -118,7 +118,7 @@ function getChildren(props, childComponents, calculatedProps) {
   const { origin } = calculatedProps;
   const parentName = props.name || "chart";
   return childComponents.map((child, index) => {
-    const role = child.type && child.type.role || "";
+    const role = child.type && child.type.role;
     const style = Array.isArray(child.props.style) ?
       child.props.style :
       defaults({}, child.props.style, { parent: baseStyle });

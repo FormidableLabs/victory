@@ -202,10 +202,11 @@ export const voronoiContainerMixin = (base) => class VictoryVoronoiContainer ext
     // remove properties from first point to make datum
     // eslint-disable-next-line no-unused-vars
     const { childName, eventKey, style, continuous, ...datum } = points[0];
+    const name = props.name === childName ? childName : `${props.name}-${childName}`;
     const labelProps = defaults(
       {
-        key: `${childName}-${eventKey}-voronoi-tooltip`,
-        id: `${childName}-${eventKey}-voronoi-tooltip`,
+        key: `${name}-${eventKey}-voronoi-tooltip`,
+        id: `${name}-${eventKey}-voronoi-tooltip`,
         active: true,
         flyoutStyle: this.getStyle(props, points, "flyout")[0],
         renderInPortal: false,

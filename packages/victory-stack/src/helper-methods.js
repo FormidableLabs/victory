@@ -182,7 +182,8 @@ function getChildren(props, childComponents, calculatedProps) {
     const name = child.props.name || `${parentName}-${role}-${index}`;
     return React.cloneElement(child, assign({
       key: `${name}-key-${index}`,
-      labels, name,
+      labels,
+      name,
       domainPadding: child.props.domainPadding || props.domainPadding,
       theme: props.theme,
       labelComponent: props.labelComponent || child.props.labelComponent,

@@ -32,7 +32,6 @@ const getAngleAccessor = (scale) => {
 export default class Area extends React.Component {
   static propTypes = {
     ...CommonProps.primitiveProps,
-    clipPath: PropTypes.string,
     groupComponent: PropTypes.element,
     interpolation: PropTypes.string,
     pathComponent: PropTypes.element
