@@ -1,6 +1,6 @@
 {
   "name": "victory-legend",
-  "version": "30.0.0",
+  "version": "30.1.0",
   "description": "Legend Component for Victory",
   "keywords": [
     "data visualization",
@@ -21,7 +21,7 @@
   "dependencies": {
     "lodash": "^4.17.5",
     "prop-types": "^15.5.8",
-    "victory-core": "^30.0.0"
+    "victory-core": "^30.1.0"
   },
   "scripts": {
     "version": "nps build-libs && nps build-dists"
