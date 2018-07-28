@@ -34,14 +34,6 @@ module.exports = {
         commonjs: "react",
         amd: "react"
       }
-    },
-    {
-      "prop-types": {
-        root: "PropTypes",
-        commonjs2: "prop-types",
-        commonjs: "prop-types",
-        amd: "prop-types"
-      }
     }
   ],
   output: {
