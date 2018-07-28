@@ -1,7 +1,18 @@
 {
   "name": "victory-voronoi-container",
   "version": "30.0.0",
-  "description": "Chart Component for Victory",
+  "description": "Interactive Voronoi Mouseover Component for Victory",
+  "keywords": [
+    "data visualization",
+    "React",
+    "d3",
+    "charting"
+  ],
+  "repository": {
+    "type": "git",
+    "url": "https://github.com/formidablelabs/victory.git"
+  },
+  "homepage": "https://formidable.com/open-source/victory",
   "main": "lib/index.js",
   "module": "es/index.js",
   "jsnext:main": "es/index.js",
@@ -10,6 +21,7 @@
   "dependencies": {
     "d3-voronoi": "^1.1.2",
     "lodash": "^4.17.5",
+    "prop-types": "^15.5.8",
     "victory-core": "^30.0.0",
     "victory-tooltip": "^30.0.0"
   },

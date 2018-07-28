@@ -1,7 +1,18 @@
 {
   "name": "victory-create-container",
   "version": "30.0.0",
-  "description": "Chart Component for Victory",
+  "description": "Container Helper for Victory",
+  "keywords": [
+    "data visualization",
+    "React",
+    "d3",
+    "charting"
+  ],
+  "repository": {
+    "type": "git",
+    "url": "https://github.com/formidablelabs/victory.git"
+  },
+  "homepage": "https://formidable.com/open-source/victory",
   "main": "lib/index.js",
   "module": "es/index.js",
   "jsnext:main": "es/index.js",

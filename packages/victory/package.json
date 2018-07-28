@@ -8,6 +8,11 @@
     "d3",
     "charting"
   ],
+  "repository": {
+    "type": "git",
+    "url": "https://github.com/formidablelabs/victory.git"
+  },
+  "homepage": "https://formidable.com/open-source/victory",
   "main": "lib/index.js",
   "module": "es/index.js",
   "jsnext:main": "es/index.js",
