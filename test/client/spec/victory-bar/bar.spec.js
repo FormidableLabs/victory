@@ -59,4 +59,20 @@ describe("victory-primitives/bar", () => {
 
     expect(Math.floor(barShape.width)).to.eql(3);
   });
+
+  it("should allow modification of width by passing barRatio", () => {
+    const props = Object.assign({}, baseProps,
+      {
+        data: [
+          { _x: 2, x: 2, _y: 4, y: 4, eventKey: 0 }
+        ],
+        barRatio: 3
+      }
+    );
+
+    const wrapper = mount(<Bar {...props}/>);
+    const barShape = SvgTestHelper.getBarShape(wrapper);
+
+    expect(Math.floor(barShape.width)).to.eql(24);
+  });
 });

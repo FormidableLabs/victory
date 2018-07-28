@@ -54,6 +54,7 @@ storiesOf("VictoryBar.barRatio", module)
   .add("barRatio = 0.5", () => <VictoryBar data={getData(7)} barRatio={0.5}/>)
   .add("barRatio = 0.75", () => <VictoryBar data={getData(7)} barRatio={0.75}/>)
   .add("barRatio = 1", () => <VictoryBar data={getData(7)} barRatio={1}/>)
+  .add("barRatio = 0.5 (single bar)", () => <VictoryBar data={getData(1)} barRatio={0.5}/>)
   .add("barRatio = 0.01 (horizontal)", () => (
     <VictoryBar horizontal data={getData(7)} barRatio={0.01}/>
   ))
@@ -61,6 +62,8 @@ storiesOf("VictoryBar.barRatio", module)
     <VictoryBar horizontal data={getData(7)} barRatio={0.5}/>
   ))
   .add("barRatio = 1 (horizontal)", () => <VictoryBar horizontal data={getData(7)} barRatio={1}/>)
+  .add("barRatio = 0.5 (horizontal, single bar)",
+    () => <VictoryBar horizontal data={getData(1)} barRatio={0.5}/>)
   .add("barRatio = 0.01 (50 bars)", () => <VictoryBar data={getData(50)} barRatio={0.01}/>)
   .add("barRatio = 0.5 (50 bars)", () => <VictoryBar data={getData(50)} barRatio={0.5}/>)
   .add("barRatio = 1 (50 bars)", () => <VictoryBar data={getData(50)} barRatio={1}/>);
