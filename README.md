@@ -54,7 +54,7 @@
 </p>
 
 ## Requirements
-Projects using Victory should also depend on [React][] and [prop-types][].
+Projects using Victory should also depend on [React][]
 
 ## Victory Native
 Want to use `Victory` with React Native? Check out [victory-native](https://github.com/FormidableLabs/victory-native)
@@ -81,6 +81,5 @@ For example, when creating a `VictoryLine` component, you can pass a `groupCompo
 Now the `clipId` attached to your `VictoryLine` component will always be the same, and your snapshot will not change with each test run.
 
 [React]: https://facebook.github.io/react/
-[prop-types]: https://github.com/reactjs/prop-types
 [trav_img]: https://api.travis-ci.org/FormidableLabs/victory.svg
 [trav_site]: https://travis-ci.org/FormidableLabs/victory

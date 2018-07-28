@@ -1,5 +1,13 @@
 # Victory Changelog
 
+## 30.1.0 (2018-07-27)
+
+-[1061](https://github.com/FormidableLabs/victory/pull/1061) Fixes default bar width for chart with only one bar. Thanks @40x
+-[1062](https://github.com/FormidableLabs/victory/pull/1062) Improvements for `victory-native` stability
+  - Supports `clipPath` prop on all primitive components
+  - generates keys based on `name` or `id` prop.
+-[1063](https://github.com/FormidableLabs/victory/pull/1063) Makes `prop-types` a real dependency
+
 ## 30.0.0 (2018-07-17)
 
 Victory is becoming a monorepo!
