@@ -23,6 +23,15 @@ storiesOf("VictoryChart.theme", module)
     <VictoryChart theme={VictoryTheme.grayscale} domain={[-1, 1]}/>
   ));
 
+storiesOf("VictoryChart.colorScale", module)
+  .add("chart with colorScale", () => (
+    <VictoryChart colorScale="qualitative">
+      <VictoryBar data={getData(5)}/>
+      <VictoryLine data={getData(5)}/>
+      <VictoryAxis/>
+    </VictoryChart>
+  ));
+
 storiesOf("VictoryChart.axes", module)
   .add("with a single axis", () => (
     <VictoryChart>

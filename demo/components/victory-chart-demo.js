@@ -184,6 +184,26 @@ class App extends React.Component {
       <div className="demo">
         <h1>VictoryChart</h1>
         <div style={containerStyle}>
+
+        <VictoryChart
+          style={chartStyle}
+          colorScale="qualitative"
+        >
+            <VictoryAxis />
+            <VictoryGroup
+              data={[
+                { x: 1, y: 3 },
+                { x: 2, y: 4 },
+                { x: 3, y: 2 }
+              ]}
+              style={{
+                data: { width: 40, opacity: 0.6 }
+              }}
+            >
+                <VictoryBar/>
+                <VictoryLine />
+            </VictoryGroup>
+         </VictoryChart>
           <VictoryChart style={chartStyle}>
             <VictoryScatter
               data={[{ x: -3, y: -3 }]}
@@ -211,7 +231,7 @@ class App extends React.Component {
             />
           </VictoryChart>
 
-          <VictoryChart style={chartStyle}>
+         <VictoryChart style={chartStyle}>
             <VictoryAxis tickFormat={(t, i, ts) => `${t}s ${i} ${ts[0]}`}/>
             <VictoryBar
               groupComponent={<VictoryClipContainer/>}
