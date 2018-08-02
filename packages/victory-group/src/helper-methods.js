@@ -141,7 +141,7 @@ function getChildren(props, childComponents, calculatedProps) {
     const labels = props.labels ? getLabels(props, datasets, index) : child.props.labels;
     const name = child.props.name || `${parentName}-${role}-${index}`;
     return React.cloneElement(child, assign({
-      labels, style, key: `${name}-key-${index}`, name,
+      labels, style, key: `${name}-key-${index}`,
       data: getDataWithOffset(props, datasets[index], xOffset),
       colorScale: getColorScale(props, child),
       labelComponent: labelComponent || child.props.labelComponent,
