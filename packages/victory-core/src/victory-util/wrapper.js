@@ -170,6 +170,8 @@ export default {
   getDataFromChildren(props, childComponents) {
     const { polar, startAngle, endAngle, categories, minDomain, maxDomain } = props;
     const parentProps = { polar, startAngle, endAngle, categories, minDomain, maxDomain };
+
+    let stack = 0;
     const iteratee = (child, childName, parent) => {
       const role = child.type && child.type.role;
       const childProps = assign({}, child.props, parentProps);
@@ -182,14 +184,14 @@ export default {
       } else {
         childData = Data.getData(childProps);
       }
-      return childData.map((datum) => assign({ childName }, datum));
+      stack += 1;
+      return childData.map((datum) => assign({ stack }, datum));
     };
-
     const children = childComponents ?
-      childComponents.slice(0) : React.Children.toArray(props.children);
-    const datasets = Helpers.reduceChildren(children, iteratee, props);
+    childComponents.slice(0) : React.Children.toArray(props.children);
     const stacked = children.filter((c) => c.type && c.type.role === "stack").length;
-    const group = stacked ? "eventKey" : "childName";
+    const datasets = Helpers.reduceChildren(children, iteratee, props);
+    const group = stacked ? "eventKey" : "stack";
     return values(groupBy(datasets, group));
   },
 
