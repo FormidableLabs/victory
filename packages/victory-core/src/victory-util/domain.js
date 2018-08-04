@@ -1,6 +1,6 @@
 /* eslint-disable func-style */
 /* eslint-disable no-use-before-define */
-import { flatten, isPlainObject, sortedUniq, isFunction } from "lodash";
+import { flatten, isPlainObject, sortedUniq, isFunction, includes } from "lodash";
 import Data from "./data";
 import Scale from "./scale";
 import Helpers from "./helpers";
@@ -336,6 +336,30 @@ function getSymmetricDomain(domain, values) {
   return [domain[0], domain[1] + step];
 }
 
+/**
+ * Checks whether a given component can be used to calculate domain
+ * @param {Component} component: a React component instance
+ * @returns {Boolean} Returns true if the given component has a role included in the whitelist
+ */
+function isDomainComponent(component) {
+  const role = component.type && component.type.role || "";
+  const whitelist = [
+    "area",
+    "axis",
+    "bar",
+    "boxplot",
+    "candlestick",
+    "errorbar",
+    "group",
+    "line",
+    "pie",
+    "scatter",
+    "stack",
+    "voronoi"
+  ];
+  return includes(whitelist, role);
+}
+
 export default {
   createDomainFunction,
   formatDomain,
@@ -347,5 +371,6 @@ export default {
   getDomainWithZero,
   getMaxFromProps,
   getMinFromProps,
-  getSymmetricDomain
+  getSymmetricDomain,
+  isDomainComponent
 };
