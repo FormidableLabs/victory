@@ -25,8 +25,8 @@ const VoronoiHelpers = {
       const style = child ? child.props && child.props.style : props.style;
       return data.map((datum, index) => {
         const { x, y, y0, x0 } = Helpers.getPoint(datum);
-        const voronoiX = props.horizontal ? (y + y0) / 2 : (x + x0) / 2;
-        const voronoiY = props.horizontal ? (x + x0) / 2 : (y + y0) / 2;
+        const voronoiX = props.horizontal ? (+y + +y0) / 2 : (+x + +x0) / 2;
+        const voronoiY = props.horizontal ? (+x + +x0) / 2 : (+y + +y0) / 2;
         return assign({
           _voronoiX: props.voronoiDimension === "y" ? 0 : voronoiX,
           _voronoiY: props.voronoiDimension === "x" ? 0 : voronoiY,
