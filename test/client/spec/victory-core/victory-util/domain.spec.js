@@ -274,7 +274,9 @@ describe("victory-util/domain", () => {
     });
 
     it("returns true when a domain component is wrapped in VictoryPortal", () => {
-      expect(Domain.isDomainComponent(<VictoryPortal><TestDomainComponent/></VictoryPortal>)).to.be.true;
+      expect(Domain.isDomainComponent(
+        <VictoryPortal><TestDomainComponent/></VictoryPortal>
+      )).to.be.true;
     });
   });
 });
