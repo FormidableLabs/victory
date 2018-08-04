@@ -1,5 +1,5 @@
 import {
-  assign, defaults, flatten, isFunction, uniq, some, groupBy, values, isPlainObject
+  assign, defaults, flatten, isFunction, uniq, some, groupBy, values, isPlainObject, includes
 } from "lodash";
 import React from "react";
 import Axis from "./axis";
@@ -11,6 +11,21 @@ import Events from "./events";
 import Collection from "./collection";
 import Helpers from "./helpers";
 
+const DATA_WHITELIST = [
+  "area",
+  "bar",
+  "boxplot",
+  "candlestick",
+  "errorbar",
+  "group",
+  "line",
+  "pie",
+  "scatter",
+  "stack",
+  "voronoi"
+];
+
+const DOMAIN_WHITELIST = DATA_WHITELIST.concat("axis");
 
 export default {
   getData(props, childComponents) {
@@ -152,7 +167,7 @@ export default {
     const iteratee = (child) => {
       const role = child.type && child.type.role;
       const sharedProps = assign({}, child.props, parentProps);
-      if (role === "legend" || role === "label") {
+      if (!includes(DOMAIN_WHITELIST, role)) {
         return null;
       } else if (child.type && isFunction(child.type.getDomain)) {
         return child.props && child.type.getDomain(sharedProps, currentAxis);
@@ -176,7 +191,7 @@ export default {
       const role = child.type && child.type.role;
       const childProps = assign({}, child.props, parentProps);
       let childData;
-      if (role === "axis" || role === "legend" || role === "label") {
+      if (!includes(DATA_WHITELIST, role)) {
         return null;
       } else if (child.type && isFunction(child.type.getData)) {
         child = parent ? React.cloneElement(child, parent.props) : child;
@@ -254,7 +269,7 @@ export default {
     const iteratee = (child) => {
       const role = child.type && child.type.role;
       const childProps = child.props || {};
-      if (role === "legend" || role === "label" || !childProps.categories) {
+      if (!includes(DOMAIN_WHITELIST, role) || !childProps.categories) {
         return null;
       } else {
         return Data.getStringsFromCategories(childProps, axis);
@@ -268,7 +283,7 @@ export default {
       const role = child.type && child.type.role;
       const childProps = child.props || {};
       let data;
-      if (role === "legend" || role === "label") {
+      if (!includes(DATA_WHITELIST, role)) {
         return null;
       } else if (child.type && isFunction(child.type.getData)) {
         data = child.type.getData(childProps);
