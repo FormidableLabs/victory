@@ -1,5 +1,6 @@
 /* eslint-disable func-style */
 /* eslint-disable no-use-before-define */
+import React from "react";
 import {
   assign, uniq, range, last, isFunction, isPlainObject, property, orderBy, isEmpty, includes
 } from "lodash";
@@ -299,7 +300,14 @@ function getStringsFromData(props, axis) {
  * @returns {Boolean} Returns true if the given component has a role included in the whitelist
  */
 function isDataComponent(component) {
-  const role = component.type && component.type.role || "";
+  const getRole = (child) => {
+    return child && child.type ? child.type.role : "";
+  };
+  let role = getRole(component);
+  if (role === "portal") {
+    const children = React.Children.toArray(component.props.children);
+    role = children.length ? getRole(children[0]) : "";
+  }
   const whitelist = [
     "area",
     "bar",

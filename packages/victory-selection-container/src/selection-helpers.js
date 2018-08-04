@@ -14,11 +14,8 @@ const SelectionHelpers = {
     };
 
     const iteratee = (child, childName, parent) => {
-      const role = child.type && child.type.role;
       const blacklist = props.selectionBlacklist || [];
-      if (role === "axis" || role === "legend" || role === "label") {
-        return null;
-      } else if (includes(blacklist, childName)) {
+      if (!Data.isDataComponent(child) || includes(blacklist, childName)) {
         return null;
       } else if (child.type && isFunction(child.type.getData)) {
         child = parent ? React.cloneElement(child, parent.props) : child;

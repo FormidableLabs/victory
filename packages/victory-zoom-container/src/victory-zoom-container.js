@@ -105,8 +105,7 @@ export const zoomContainerMixin = (base) => class VictoryZoomContainer extends b
       ...clipContainerComponent.props
     });
     return React.Children.toArray(children).map((child) => {
-      const role = child && child.type && child.type.role;
-      if (role === "axis" || role === "legend" || role === "label") {
+      if (!Data.isDataComponent(child)) {
         return child;
       } else {
         return React.cloneElement(child, { groupComponent });
@@ -156,11 +155,8 @@ export const zoomContainerMixin = (base) => class VictoryZoomContainer extends b
 
   modifyChildren(props) {
     const childComponents = React.Children.toArray(props.children);
-
-    //eslint-disable-next-line max-statements
     return childComponents.map((child) => {
-      const role = child && child.type && child.type.role;
-      const currentChild = child;
+      const isDataComponent = Data.isDataComponent(child);
       const { currentDomain, zoomActive, allowZoom } = props;
       const originalDomain = defaults({}, props.originalDomain, props.domain);
       const zoomDomain = defaults({}, props.zoomDomain, props.domain);
@@ -171,7 +167,7 @@ export const zoomContainerMixin = (base) => class VictoryZoomContainer extends b
         domain = zoomDomain;
       } else if (allowZoom && !zoomActive) {
         // if user has zoomed all the way out, use the child domain
-        domain = currentChild.props.domain;
+        domain = child.props.domain;
       } else {
         // default: use currentDomain, set by the event handlers
         domain = defaults({}, currentDomain, originalDomain);
@@ -186,12 +182,12 @@ export const zoomContainerMixin = (base) => class VictoryZoomContainer extends b
         };
       }
       return React.cloneElement(
-        currentChild,
+        child,
         defaults({
           domain: newDomain,
-          data: role === "legend" ?
-            undefined : this.downsampleZoomData(props, currentChild, newDomain)
-        }, currentChild.props)
+          data: isDataComponent ?
+            undefined : this.downsampleZoomData(props, child, newDomain)
+        }, child.props)
       );
     });
   }

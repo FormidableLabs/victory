@@ -48,12 +48,10 @@ const VoronoiHelpers = {
     };
 
     const iteratee = (child, childName) => {
-      const skippedRoles = ["axis", "legend", "label"];
-      const role = child.type && child.type.role;
       const childProps = child.props || {};
       const name = childProps.name || childName;
       const blacklist = props.voronoiBlacklist || [];
-      if (includes(skippedRoles, role) || includes(blacklist, name)) {
+      if (!Data.isDataComponent(child) || includes(blacklist, name)) {
         return null;
       }
       const getChildData = child.type && isFunction(child.type.getData) ?

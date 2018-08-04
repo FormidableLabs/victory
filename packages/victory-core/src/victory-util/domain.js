@@ -1,5 +1,6 @@
 /* eslint-disable func-style */
 /* eslint-disable no-use-before-define */
+import React from "react";
 import { flatten, isPlainObject, sortedUniq, isFunction, includes } from "lodash";
 import Data from "./data";
 import Scale from "./scale";
@@ -342,7 +343,14 @@ function getSymmetricDomain(domain, values) {
  * @returns {Boolean} Returns true if the given component has a role included in the whitelist
  */
 function isDomainComponent(component) {
-  const role = component.type && component.type.role || "";
+  const getRole = (child) => {
+    return child && child.type ? child.type.role : "";
+  };
+  let role = getRole(component);
+  if (role === "portal") {
+    const children = React.Children.toArray(component.props.children);
+    role = children.length ? getRole(children[0]) : "";
+  }
   const whitelist = [
     "area",
     "axis",
