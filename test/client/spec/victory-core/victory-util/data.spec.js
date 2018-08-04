@@ -1,5 +1,6 @@
 /* eslint no-unused-expressions: 0, max-nested-callbacks: 0 */
-import { Data } from "packages/victory-core/src/index";
+import React from "react";
+import { Data, VictoryPortal } from "packages/victory-core/src/index";
 import { fromJS } from "immutable";
 
 const immutableDataTest = {
@@ -262,6 +263,27 @@ describe("victory-util/data", () => {
       const props = { x: "x", y: "y", domain: { x: [0, 10], y: [0, 10] }, samples: 2 };
       const returnData = Data.generateData(props);
       expect(returnData).to.eql(generatedReturn);
+    });
+  });
+
+  describe("isDataComponent", () => {
+    class TestDataComponent extends React.Component {
+      static role = "area";
+    }
+    it("returns true when a component has a static role matching a whitelist", () => {
+      expect(Data.isDataComponent(<TestDataComponent/>)).to.be.true;
+    });
+
+    it("returns false when a component has a role that does not match the whitelist", () => {
+      // eslint-disable-next-line react/no-multi-comp
+      class TestFooComponent extends React.Component {
+        static role = "foo";
+      }
+      expect(Data.isDataComponent(<TestFooComponent/>)).to.be.false;
+    });
+
+    it("returns true when a data component is wrapped in VictoryPortal", () => {
+      expect(Data.isDataComponent(<VictoryPortal><TestDataComponent/></VictoryPortal>)).to.be.true;
     });
   });
 });

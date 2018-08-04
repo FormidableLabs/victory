@@ -1,7 +1,7 @@
 /* eslint no-unused-expressions: 0 */
 /* eslint max-nested-callbacks: 0 */
-
-import { Domain } from "packages/victory-core/src/index";
+import React from "react";
+import { Domain, VictoryPortal } from "packages/victory-core/src/index";
 
 /*
   createDomainFunction,
@@ -254,6 +254,27 @@ describe("victory-util/domain", () => {
       const data = [2, 4, 6, 8];
       const resultDomain = Domain.getSymmetricDomain(domain, data);
       expect(resultDomain).to.eql([0, 12]);
+    });
+  });
+
+  describe("isDomainComponent", () => {
+    class TestDomainComponent extends React.Component {
+      static role = "area";
+    }
+    it("returns true when a component has a static role matching a whitelist", () => {
+      expect(Domain.isDomainComponent(<TestDomainComponent/>)).to.be.true;
+    });
+
+    it("returns false when a component has a role that does not match the whitelist", () => {
+      // eslint-disable-next-line react/no-multi-comp
+      class TestFooComponent extends React.Component {
+        static role = "foo";
+      }
+      expect(Domain.isDomainComponent(<TestFooComponent/>)).to.be.false;
+    });
+
+    it("returns true when a domain component is wrapped in VictoryPortal", () => {
+      expect(Domain.isDomainComponent(<VictoryPortal><TestDomainComponent/></VictoryPortal>)).to.be.true;
     });
   });
 });
