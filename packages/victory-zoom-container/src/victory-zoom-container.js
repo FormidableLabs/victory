@@ -155,7 +155,9 @@ export const zoomContainerMixin = (base) => class VictoryZoomContainer extends b
 
   modifyChildren(props) {
     const childComponents = React.Children.toArray(props.children);
+    // eslint-disable-next-line max-statements
     return childComponents.map((child) => {
+      const role = child.type && child.type.role;
       const isDataComponent = Data.isDataComponent(child);
       const { currentDomain, zoomActive, allowZoom } = props;
       const originalDomain = defaults({}, props.originalDomain, props.domain);
@@ -181,14 +183,11 @@ export const zoomContainerMixin = (base) => class VictoryZoomContainer extends b
           [props.zoomDimension]: newDomain[props.zoomDimension]
         };
       }
-      return React.cloneElement(
-        child,
-        defaults({
-          domain: newDomain,
-          data: isDataComponent ?
-            undefined : this.downsampleZoomData(props, child, newDomain)
-        }, child.props)
-      );
+      // don't downsample stacked data
+      const newProps = isDataComponent && role !== "stack" ?
+        { domain: newDomain, data: this.downsampleZoomData(props, child, newDomain) } :
+        { domain: newDomain };
+      return React.cloneElement(child, defaults(newProps, child.props));
     });
   }
 
