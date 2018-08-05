@@ -27,7 +27,7 @@ const animationWhitelist = [
 
 class VictoryErrorBar extends React.Component {
   static displayName = "VictoryErrorBar";
-  static role = "errorBar";
+  static role = "errorbar";
   static defaultTransitions = DefaultTransitions.discreteTransitions();
 
   static propTypes = {
