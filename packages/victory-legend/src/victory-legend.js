@@ -156,9 +156,12 @@ class VictoryLegend extends React.Component {
   renderChildren(props) {
     const { dataComponent, labelComponent, title } = props;
     const dataComponents = this.dataKeys.map((_dataKey, index) => {
+      if (_dataKey === "all") {
+        return undefined;
+      }
       const dataProps = this.getComponentProps(dataComponent, "data", index);
       return React.cloneElement(dataComponent, dataProps);
-    });
+    }).filter(Boolean);
 
     const labelComponents = this.dataKeys.map((_dataKey, index) => {
       const labelProps = this.getComponentProps(labelComponent, "labels", index);
@@ -168,10 +171,10 @@ class VictoryLegend extends React.Component {
       return undefined;
     }).filter(Boolean);
 
-    const borderProps = this.getComponentProps(props.borderComponent, "border", 0);
+    const borderProps = this.getComponentProps(props.borderComponent, "border", "all");
     const borderComponent = React.cloneElement(props.borderComponent, borderProps);
     if (title) {
-      const titleProps = this.getComponentProps(props.title, "title", 0);
+      const titleProps = this.getComponentProps(props.title, "title", "all");
       const titleComponent = React.cloneElement(props.titleComponent, titleProps);
       return [borderComponent, ...dataComponents, titleComponent, ...labelComponents];
     }
