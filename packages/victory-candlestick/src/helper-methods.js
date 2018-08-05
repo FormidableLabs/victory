@@ -41,7 +41,6 @@ const getCalculatedValues = (props) => {
   const defaultStyle = theme && theme.candlestick && theme.candlestick.style ?
     theme.candlestick.style : {};
   const style = Helpers.getStyles(props.style, defaultStyle);
-  const padding = Helpers.getPadding(props);
   const data = getData(props);
   const range = {
     x: Helpers.getRange(props, "x"),
@@ -56,7 +55,7 @@ const getCalculatedValues = (props) => {
     y: Scale.getBaseScale(props, "y").domain(domain.y).range(range.y)
   };
   const origin = polar ? props.origin || Helpers.getPolarOrigin(props) : undefined;
-  return { domain, data, scale, style, origin, padding };
+  return { domain, data, scale, style, origin };
 };
 
 const isTransparent = (attr) => {
@@ -96,7 +95,7 @@ const getBaseProps = (props, fallbackProps) => { // eslint-disable-line max-stat
   const calculatedValues = getCalculatedValues(props);
   const { data, style, scale, domain, origin } = calculatedValues;
   const {
-    groupComponent, width, height, padding, standalone, name, candleWidth,
+    groupComponent, width, height, padding, standalone, name, candleWidth, candleRatio,
     theme, polar, wickStrokeWidth, labels, events, sharedEvents
   } = props;
   const initialChildProps = { parent: {
@@ -113,7 +112,7 @@ const getBaseProps = (props, fallbackProps) => { // eslint-disable-line max-stat
     const low = scale.y(datum._low);
     const dataStyle = getDataStyles(datum, style.data, props);
     const dataProps = {
-      x, high, low, candleWidth, scale, data, datum, groupComponent, index,
+      x, high, low, candleWidth, candleRatio, scale, data, datum, groupComponent, index,
       style: dataStyle, width, polar, origin, wickStrokeWidth, open, close
     };
 

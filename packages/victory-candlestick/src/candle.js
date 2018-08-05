@@ -1,4 +1,4 @@
-/*eslint no-magic-numbers: ["error", { "ignore": [0, 1, 0.5, 2] }]*/
+/*eslint no-magic-numbers: ["error", { "ignore": [0, 0.5, 1, 2] }]*/
 import React from "react";
 import PropTypes from "prop-types";
 import { Helpers, CommonProps, Rect, Line } from "victory-core";
@@ -27,13 +27,14 @@ export default class Candle extends React.Component {
   }
 
   static defaultProps = {
+    defaultCandleWidth: 8,
     groupComponent: <g/>,
     lineComponent: <Line/>,
     rectComponent: <Rect/>
   };
 
   getCandleWidth(props, style) {
-    const { active, datum, data, candleWidth, scale } = props;
+    const { active, datum, data, candleWidth, scale, defaultCandleWidth } = props;
     if (candleWidth) {
       return isFunction(candleWidth) ?
         Helpers.evaluateProp(candleWidth, datum, active) : candleWidth;
@@ -44,7 +45,6 @@ export default class Candle extends React.Component {
     const extent = Math.abs(range[1] - range[0]);
     const candles = data.length + 2;
     const candleRatio = props.candleRatio || 0.5;
-    const defaultCandleWidth = 8;
     const defaultWidth = candleRatio * (data.length < 2 ? defaultCandleWidth : extent / candles);
     return Math.max(1, defaultWidth);
   }
