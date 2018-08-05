@@ -1,24 +1,25 @@
-/*eslint no-magic-numbers: ["error", { "ignore": [0.5, 2] }]*/
+/*eslint no-magic-numbers: ["error", { "ignore": [0, 1, 0.5, 2] }]*/
 import React from "react";
 import PropTypes from "prop-types";
 import { Helpers, CommonProps, Rect, Line } from "victory-core";
-import { assign, defaults } from "lodash";
+import { assign, defaults, isFunction } from "lodash";
 
 export default class Candle extends React.Component {
   static propTypes = {
     ...CommonProps.primitiveProps,
-    candleHeight: PropTypes.number,
+    candleRatio: PropTypes.number,
+    candleWidth: PropTypes.oneOfType([
+      PropTypes.number,
+      PropTypes.func
+    ]),
     close: PropTypes.number,
     datum: PropTypes.object,
+    defaultCandleWidth: PropTypes.number,
     groupComponent: PropTypes.element,
     high: PropTypes.number,
     lineComponent: PropTypes.element,
     low: PropTypes.number,
     open: PropTypes.number,
-    padding: PropTypes.oneOfType([
-      PropTypes.number,
-      PropTypes.object
-    ]),
     rectComponent: PropTypes.element,
     wickStrokeWidth: PropTypes.number,
     width: PropTypes.number,
@@ -31,18 +32,34 @@ export default class Candle extends React.Component {
     rectComponent: <Rect/>
   };
 
+  getCandleWidth(props, style) {
+    const { active, datum, data, candleWidth, scale } = props;
+    if (candleWidth) {
+      return isFunction(candleWidth) ?
+        Helpers.evaluateProp(candleWidth, datum, active) : candleWidth;
+    } else if (style.width) {
+      return style.width;
+    }
+    const range = scale.x.range();
+    const extent = Math.abs(range[1] - range[0]);
+    const candles = data.length + 2;
+    const candleRatio = props.candleRatio || 0.5;
+    const defaultCandleWidth = 8;
+    const defaultWidth = candleRatio * (data.length < 2 ? defaultCandleWidth : extent / candles);
+    return Math.max(1, defaultWidth);
+  }
+
   render() {
     const {
-      x, high, low, open, close, data, datum, active, width, candleHeight, events, groupComponent,
-      rectComponent, lineComponent, role, shapeRendering, className, wickStrokeWidth, transform,
-      clipPath, id
+      x, high, low, open, close, datum, active, events, groupComponent, clipPath, id,
+      rectComponent, lineComponent, role, shapeRendering, className, wickStrokeWidth, transform
     } = this.props;
     const style = Helpers.evaluateStyle(
       assign({ stroke: "black" }, this.props.style), datum, active
     );
     const wickStyle = defaults({ strokeWidth: wickStrokeWidth }, style);
-    const padding = this.props.padding.left || this.props.padding;
-    const candleWidth = style.width || 0.5 * (width - 2 * padding) / data.length;
+    const candleWidth = this.getCandleWidth(this.props, style);
+    const candleHeight = Math.abs(close - open);
     const candleX = x - candleWidth / 2;
     const sharedProps = { role, shapeRendering, className, events, transform, clipPath };
 

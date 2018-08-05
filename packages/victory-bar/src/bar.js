@@ -1,7 +1,7 @@
 import React from "react";
 import PropTypes from "prop-types";
 import { Helpers, Path, CommonProps } from "victory-core";
-import { assign, isObject } from "lodash";
+import { assign, isObject, isFunction } from "lodash";
 import * as d3Shape from "d3-shape";
 
 export default class Bar extends React.Component {
@@ -10,6 +10,10 @@ export default class Bar extends React.Component {
     ...CommonProps.primitiveProps,
     alignment: PropTypes.oneOf(["start", "middle", "end"]),
     barRatio: PropTypes.number,
+    barWidth: PropTypes.oneOfType([
+      PropTypes.number,
+      PropTypes.func
+    ]),
     cornerRadius: PropTypes.oneOfType([
       PropTypes.number,
       PropTypes.func,
@@ -20,10 +24,6 @@ export default class Bar extends React.Component {
     ]),
     datum: PropTypes.object,
     horizontal: PropTypes.bool,
-    padding: PropTypes.oneOfType([
-      PropTypes.number,
-      PropTypes.object
-    ]),
     pathComponent: PropTypes.element,
     width: PropTypes.number,
     x: PropTypes.number,
@@ -187,10 +187,12 @@ export default class Bar extends React.Component {
   }
 
   getBarWidth(props, style) {
-    if (style.width) {
+    const { active, scale, data, barWidth, defaultBarWidth } = props;
+    if (barWidth) {
+      return isFunction(barWidth) ? Helpers.evaluateProp(barWidth, active) : barWidth;
+    } else if (style.width) {
       return style.width;
     }
-    const { scale, data, defaultBarWidth } = props;
     const range = scale.x.range();
     const extent = Math.abs(range[1] - range[0]);
     const bars = data.length + 2;
