@@ -2,7 +2,8 @@ import React from "react";
 import { shallow } from "enzyme";
 import Candle from "packages/victory-candlestick/src/candle";
 import { Line, Rect } from "packages/victory-core";
-import { merge } from "lodash";
+import * as d3Scale from "d3-scale";
+import { assign } from "lodash";
 
 describe("victory-primitives/candle", () => {
   const baseProps = {
@@ -11,14 +12,16 @@ describe("victory-primitives/candle", () => {
       { x: 2, open: 40, close: 80, high: 100, low: 10, eventKey: 1 }
     ],
     datum: { x: 1, open: 10, close: 30, high: 50, low: 5, eventKey: 0 },
+    scale: {
+      x: d3Scale.scaleLinear(),
+      y: d3Scale.scaleLinear()
+    },
+    candleWidth: 2,
     x: 5,
     high: 50,
     low: 5,
     close: 30,
-    open: 10,
-    candleHeight: 20,
-    width: 10,
-    padding: 1
+    open: 10
   };
 
   it("should render a wick line", () => {
@@ -58,8 +61,9 @@ describe("victory-primitives/candle", () => {
     expect(rect.prop("y")).to.eql(10);
   });
 
-  it("should allow style to override width", () => {
-    const props = merge({}, baseProps, {
+  it("should use width from style when no candleWidth is given", () => {
+    const props = assign({}, baseProps, {
+      candleWidth: undefined,
       style: {
         width: 5
       }

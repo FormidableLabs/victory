@@ -43,6 +43,11 @@ class VictoryCandlestick extends React.Component {
     ...CommonProps.baseProps,
     ...CommonProps.dataProps,
     candleColors: PropTypes.shape({ positive: PropTypes.string, negative: PropTypes.string }),
+    candleRatio: PropTypes.number,
+    candleWidth: PropTypes.oneOfType([
+      PropTypes.func,
+      PropTypes.number
+    ]),
     close: PropTypes.oneOfType([
       PropTypes.func,
       CustomPropTypes.allOfType([CustomPropTypes.integer, CustomPropTypes.nonNegative]),

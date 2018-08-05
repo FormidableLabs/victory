@@ -40,7 +40,7 @@ const getBaseProps = (props, fallbackProps) => {
   props = assign({}, modifiedProps, getCalculatedValues(modifiedProps));
   const {
     alignment, barRatio, cornerRadius, data, domain, events, height, horizontal, origin, padding,
-    polar, scale, sharedEvents, standalone, style, theme, width, labels, name
+    polar, scale, sharedEvents, standalone, style, theme, width, labels, name, barWidth
   } = props;
   const initialChildProps = { parent: {
     domain, scale, width, height, data, standalone, name,
@@ -51,8 +51,8 @@ const getBaseProps = (props, fallbackProps) => {
     const eventKey = datum.eventKey || index;
     const { x, y, y0, x0 } = getBarPosition(props, datum);
     const dataProps = {
-      alignment, barRatio, cornerRadius, data, datum, horizontal, index, padding, polar, origin,
-      scale, style: style.data, width, height, x, y, y0, x0
+      alignment, barRatio, cornerRadius, data, datum, horizontal, index, polar, origin,
+      scale, style: style.data, width, height, x, y, y0, x0, barWidth
     };
 
     childProps[eventKey] = {

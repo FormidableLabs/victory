@@ -58,7 +58,6 @@ const getCalculatedValues = (props) => {
   return { domain, data, scale, style, origin };
 };
 
-
 const isTransparent = (attr) => {
   return attr === "none" || attr === "transparent";
 };
@@ -96,7 +95,7 @@ const getBaseProps = (props, fallbackProps) => { // eslint-disable-line max-stat
   const calculatedValues = getCalculatedValues(props);
   const { data, style, scale, domain, origin } = calculatedValues;
   const {
-    groupComponent, width, height, padding, standalone, name,
+    groupComponent, width, height, padding, standalone, name, candleWidth, candleRatio,
     theme, polar, wickStrokeWidth, labels, events, sharedEvents
   } = props;
   const initialChildProps = { parent: {
@@ -111,11 +110,10 @@ const getBaseProps = (props, fallbackProps) => { // eslint-disable-line max-stat
     const close = scale.y(datum._close);
     const open = scale.y(datum._open);
     const low = scale.y(datum._low);
-    const candleHeight = Math.abs(scale.y(datum._open) - scale.y(datum._close));
     const dataStyle = getDataStyles(datum, style.data, props);
     const dataProps = {
-      x, high, low, candleHeight, scale, data, datum, groupComponent, index,
-      style: dataStyle, padding, width, polar, origin, wickStrokeWidth, open, close
+      x, high, low, candleWidth, candleRatio, scale, data, datum, groupComponent, index,
+      style: dataStyle, width, polar, origin, wickStrokeWidth, open, close
     };
 
     childProps[eventKey] = {
