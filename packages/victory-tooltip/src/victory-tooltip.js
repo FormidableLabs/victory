@@ -113,18 +113,18 @@ export default class VictoryTooltip extends React.Component {
         onMouseOut: () => {
           return props.activateData ?
             [
-              { target: "labels", mutation: () => ({ active: false }) },
-              { target: "data", mutation: () => ({ active: false }) }
+              { target: "labels", mutation: () => ({ active: undefined }) },
+              { target: "data", mutation: () => ({ active: undefined }) }
             ] :
-            [{ target: "labels", mutation: () => ({ active: false }) }];
+            [{ target: "labels", mutation: () => ({ active: undefined }) }];
         },
         onTouchEnd: () => {
           return props.activateData ?
             [
-              { target: "labels", mutation: () => ({ active: false }) },
-              { target: "data", mutation: () => ({ active: false }) }
+              { target: "labels", mutation: () => ({ active: undefined }) },
+              { target: "data", mutation: () => ({ active: undefined }) }
             ] :
-            [{ target: "labels", mutation: () => ({ active: false }) }];
+            [{ target: "labels", mutation: () => ({ active: undefined }) }];
         }
       }
     }];
