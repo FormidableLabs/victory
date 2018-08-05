@@ -32,7 +32,7 @@ const getCalculatedValues = (props) => {
     y: horizontal ? xScale : yScale
   };
   const origin = polar ? props.origin || Helpers.getPolarOrigin(props) : undefined;
-  return { style, data, scale, domain, origin, padding };
+  return { style, data, scale, domain, origin };
 };
 
 const getBaseProps = (props, fallbackProps) => {
