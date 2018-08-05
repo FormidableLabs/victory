@@ -244,7 +244,7 @@ const Helpers = {
 
   onMouseUp(evt, targetProps) {
     const {
-      x1, y1, x2, y2, onBrushDomainChange, domain, allowResize, defaultBrushArea
+      x1, y1, x2, y2, onBrushDomainChange, onBrushCleared, domain, allowResize, defaultBrushArea
     } = targetProps;
     // if the mouse hasn't moved since a mouseDown event, select the whole domain region
     if (allowResize && x1 === x2 || y1 === y2) {
@@ -252,7 +252,10 @@ const Helpers = {
       const currentDomain = this.getDefaultBrushArea(defaultBrushArea, domain, cachedDomain);
       const mutatedProps = { isPanning: false, isSelecting: false, currentDomain };
       if (isFunction(onBrushDomainChange)) {
-        onBrushDomainChange(domain, defaults({}, mutatedProps, targetProps));
+        onBrushDomainChange(currentDomain, defaults({}, mutatedProps, targetProps));
+      }
+      if (isFunction(onBrushCleared)) {
+        onBrushCleared(currentDomain, defaults({}, mutatedProps, targetProps));
       }
       return [{
         target: "parent",

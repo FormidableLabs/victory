@@ -24,6 +24,7 @@ export const brushContainerMixin = (base) => class VictoryBrushContainer extends
     handleComponent: PropTypes.element,
     handleStyle: PropTypes.object,
     handleWidth: PropTypes.number,
+    onBrushCleared: PropTypes.func,
     onBrushDomainChange: PropTypes.func
   };
   static defaultProps = {
