@@ -15,8 +15,6 @@ describe("victory-primitives/bar", () => {
     x: 2,
     y: 10,
     y0: 0,
-    width: 5,
-    padding: 2,
     scale: {
       x: d3Scale.scaleLinear(),
       y: d3Scale.scaleLinear()
