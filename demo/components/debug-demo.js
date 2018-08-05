@@ -10,6 +10,7 @@ import { VictoryScatter } from "../../packages/victory-scatter/src/index";
 import { VictoryPortal } from "../../packages/victory-core/src/index";
 import { VictorySelectionContainer } from "../../packages/victory-selection-container/src/index";
 import { VictoryVoronoiContainer } from "../../packages/victory-voronoi-container/src/index";
+import { VictoryZoomContainer } from "../../packages/victory-zoom-container/src/index";
 
 class App extends React.Component {
 
@@ -24,7 +25,9 @@ class App extends React.Component {
     const chartStyle = { parent: { border: "1px solid #ccc", margin: "2%", maxWidth: "40%" } };
     return (
       <div style={containerStyle}>
-        <VictoryChart style={chartStyle} >
+        <VictoryChart style={chartStyle}
+          containerComponent={<VictoryZoomContainer/>}
+        >
           <VictoryStack colorScale="warm">
             <VictoryGroup
               data={[
