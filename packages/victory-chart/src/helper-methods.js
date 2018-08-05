@@ -172,7 +172,7 @@ const getChildComponents = (props, defaultAxes) => {
 
 const getDefaultDomainPadding = (childComponents, horizontal) => {
   const groupComponent = childComponents.filter((child) => {
-    return child.type && child.type.role && child.type.role === "group-wrapper";
+    return child.type && child.type.role && child.type.role === "group";
   });
 
   if (groupComponent.length < 1) {

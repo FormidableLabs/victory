@@ -11,7 +11,6 @@ import Events from "./events";
 import Collection from "./collection";
 import Helpers from "./helpers";
 
-
 export default {
   getData(props, childComponents) {
     if (props.data) {
@@ -150,9 +149,8 @@ export default {
       assign(baseParentProps, { data: parentData }) : baseParentProps;
 
     const iteratee = (child) => {
-      const role = child.type && child.type.role;
       const sharedProps = assign({}, child.props, parentProps);
-      if (role === "legend" || role === "label") {
+      if (!Domain.isDomainComponent(child)) {
         return null;
       } else if (child.type && isFunction(child.type.getDomain)) {
         return child.props && child.type.getDomain(sharedProps, currentAxis);
@@ -173,10 +171,9 @@ export default {
 
     let stack = 0;
     const iteratee = (child, childName, parent) => {
-      const role = child.type && child.type.role;
       const childProps = assign({}, child.props, parentProps);
       let childData;
-      if (role === "axis" || role === "legend" || role === "label") {
+      if (!Data.isDataComponent(child)) {
         return null;
       } else if (child.type && isFunction(child.type.getData)) {
         child = parent ? React.cloneElement(child, parent.props) : child;
@@ -252,9 +249,8 @@ export default {
 
   getStringsFromCategories(childComponents, axis) {
     const iteratee = (child) => {
-      const role = child.type && child.type.role;
       const childProps = child.props || {};
-      if (role === "legend" || role === "label" || !childProps.categories) {
+      if (!Domain.isDomainComponent(child) || !childProps.categories) {
         return null;
       } else {
         return Data.getStringsFromCategories(childProps, axis);
@@ -265,10 +261,9 @@ export default {
 
   getStringsFromData(childComponents, axis) {
     const iteratee = (child) => {
-      const role = child.type && child.type.role;
       const childProps = child.props || {};
       let data;
-      if (role === "legend" || role === "label") {
+      if (!Data.isDataComponent(child)) {
         return null;
       } else if (child.type && isFunction(child.type.getData)) {
         data = child.type.getData(childProps);
