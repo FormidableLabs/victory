@@ -26,17 +26,19 @@ const RawZoomHelpers = {
    * @return {[Number, Number]}                The scale domain
    */
   scale(currentDomain, evt, props, axis) { // eslint-disable-line max-params
+    const otherAxis = axis === "x" ? "y" : "x";
+    const currentAxis = props.horizontal ? otherAxis : axis;
     const [from, to] = currentDomain;
     const range = Math.abs(to - from);
-    const minimumZoom = props.minimumZoom && props.minimumZoom[axis];
+    const minimumZoom = props.minimumZoom && props.minimumZoom[currentAxis];
     const factor = this.getScaleFactor(evt);
     if (minimumZoom && range <= minimumZoom && factor < 1) {
       return currentDomain;
     }
-    const [fromBound, toBound] = this.getDomain(props)[axis];
-    const percent = this.getScalePercent(evt, props, axis);
+    const [fromBound, toBound] = this.getDomain(props)[currentAxis];
+    const percent = this.getScalePercent(evt, props, currentAxis);
     const point = (factor * from) + percent * (factor * range);
-    const minDomain = this.getMinimumDomain(point, props, axis);
+    const minDomain = this.getMinimumDomain(point, props, currentAxis);
     const [newMin, newMax] = this.getScaledDomain(currentDomain, factor, percent);
     const newDomain = [
       newMin > fromBound && newMin < toBound ? newMin : fromBound,
