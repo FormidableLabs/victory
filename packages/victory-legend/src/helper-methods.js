@@ -180,8 +180,8 @@ const getTitleProps = (props, borderProps) => {
 
 const getBorderProps = (props, contentHeight, contentWidth) => {
   const { x, y, borderPadding, style } = props;
-  const height = contentHeight + borderPadding.top + borderPadding.bottom;
-  const width = contentWidth + borderPadding.left + borderPadding.right;
+  const height = (contentHeight || 0) + borderPadding.top + borderPadding.bottom;
+  const width = (contentWidth || 0) + borderPadding.left + borderPadding.right;
   return { x, y, height, width, style: assign({ fill: "none" }, style.border) };
 };
 
@@ -225,16 +225,17 @@ const getBaseProps = (props, fallbackProps) => {
     y: rowGutter && typeof rowGutter === "object" ? rowGutter.top || 0 : 0
   };
   const { height, width } = getDimensions(props, fallbackProps);
+  const borderProps = getBorderProps(props, height, width);
+  const titleProps = getTitleProps(props, borderProps);
   const initialProps = {
     parent: {
       data, standalone, theme, padding, name,
       height: props.height,
       width: props.width,
       style: style.parent
-    }
+    },
+    all: { border: borderProps, title: titleProps }
   };
-  const borderProps = getBorderProps(props, height, width);
-  const titleProps = getTitleProps(props, borderProps);
   return groupedData.reduce((childProps, datum, i) => {
     const color = colorScale[i % colorScale.length];
     const dataStyle = defaults({}, datum.symbol, style.data, { fill: color });
@@ -259,9 +260,7 @@ const getBaseProps = (props, fallbackProps) => {
       y: dataProps.y,
       x: dataProps.x + datum.symbolSpacer + (datum.size / 2)
     };
-    childProps[eventKey] = eventKey === 0 ?
-      { data: dataProps, labels: labelProps, border: borderProps, title: titleProps } :
-      { data: dataProps, labels: labelProps };
+    childProps[eventKey] = { data: dataProps, labels: labelProps };
 
     return childProps;
   }, initialProps);
