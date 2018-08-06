@@ -1,5 +1,16 @@
 # Victory Changelog
 
+## 30.2.0 (2018-08-06)
+
+- [#1072](https://github.com/FormidableLabs/victory/pull/1072)  Fixes a bug related to correctly stacking grouped components
+- [#1074](https://github.com/FormidableLabs/victory/pull/1074)  Fixes a bug that was causing time scale data to be ignored by `VictoryVoronoiContainer` when calculating voronoi layouts
+- [#1076](https://github.com/FormidableLabs/victory/pull/1076)  Implements a whitelist based on `static role` when calculating data and domain from child components.
+- [#1077](https://github.com/FormidableLabs/victory/pull/1077) Prevents `VictoryZoonContainer` from downsampling stacked data
+- [#1078](https://github.com/FormidableLabs/victory/pull/1078) Adds `barWidth` and `candleWidth` props to `VictoryBar` and `VictoryCandlestick`. Adds `candleRatio` prop to `VictoryCandlestick`
+- [#1079](https://github.com/FormidableLabs/victory/pull/1079) Adds `onBrushCleared` callback prop for `VictoryBrushContainer`
+- [#1080](https￼://github.com/FormidableLabs/victory/pull/1080)  Changes how tooltips are deactivated so that multiple sources may reactivate tooltips (_i.e._ multiple triggers in `VictorySharedEvents` or direct triggers and voronoi triggers)
+[#1081](https://github.com/FormidableLabs/victory/pull/1081) Legends now render title and border when data is an empty array (previously nothing was rendered)
+
 ## 30.1.0 (2018-07-27)
 
 -[1061](https://github.com/FormidableLabs/victory/pull/1061) Fixes default bar width for chart with only one bar. Thanks @40x
