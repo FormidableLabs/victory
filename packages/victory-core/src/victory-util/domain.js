@@ -76,12 +76,12 @@ function padDomain(domain, props, axis) {
   const range = Helpers.getRange(props, axis);
   const rangeExtent = Math.abs(range[0] - range[1]);
   const paddedRangeExtent = Math.max(rangeExtent - padding.left - padding.right, 1);
-  const newDomainExtent = (Math.abs(max - min) / paddedRangeExtent) * rangeExtent;
+  const domainExtent = (Math.abs(max - min) / paddedRangeExtent) * rangeExtent;
 
   // Naive initial padding calculation
   const initialPadding = {
-    left: newDomainExtent * padding.left / rangeExtent,
-    right: newDomainExtent * padding.right / rangeExtent
+    left: domainExtent * padding.left / rangeExtent,
+    right: domainExtent * padding.right / rangeExtent
   };
 
   const singleQuadrantDomainPadding = isPlainObject(props.singleQuadrantDomainPadding) ?
