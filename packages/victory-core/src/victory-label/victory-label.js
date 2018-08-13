@@ -189,7 +189,8 @@ export default class VictoryLabel extends React.Component {
   getTransform(props, style) {
     const { active, datum, x, y, polar } = props;
     const defaultAngle = polar ? LabelHelpers.getPolarAngle(props) : 0;
-    const angle = style.angle || props.angle || defaultAngle;
+    const baseAngle = style.angle === undefined ? props.angle : style.angle;
+    const angle = baseAngle === undefined ? defaultAngle : baseAngle;
     const transform = props.transform || style.transform;
     const transformPart = transform && Helpers.evaluateProp(transform, datum, active);
     const rotatePart = angle && { rotate: [angle, x, y] };
