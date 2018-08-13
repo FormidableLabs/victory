@@ -168,7 +168,7 @@ const getAxisLabelProps = (props, calculatedValues, globalTransform) => {
     y,
     verticalAnchor: labelStyle.verticalAnchor || verticalAnchor,
     textAnchor: labelStyle.textAnchor || "middle",
-    angle: labelStyle.angle || angle,
+    angle: labelStyle.angle === undefined ? angle : labelStyle.angle,
     style: labelStyle,
     text: props.label
   };

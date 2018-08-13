@@ -108,7 +108,7 @@ const getAxisAngle = (props) => {
   const { axisAngle, startAngle, axisValue, dependentAxis, scale } = props;
   const otherAxis = Axis.getAxis(props) === "y" ? "x" : "y";
   if (axisValue === undefined || !dependentAxis || scale[otherAxis] === undefined) {
-    return axisAngle || startAngle;
+    return axisAngle === undefined ? startAngle : axisAngle;
   }
   return Helpers.radiansToDegrees(scale.x(axisValue));
 };
@@ -149,8 +149,9 @@ const getTickLabelProps = (props, calculatedValues, tick, index) => {
   const axisAngle = axisType === "radial" ? getAxisAngle(props, scale) : undefined;
   const labelAngle = axisType === "angular" ?
     Helpers.radiansToDegrees(scale(tick)) : axisAngle + angularPadding;
-  const textAngle = labelStyle.angle ||
-    LabelHelpers.getPolarAngle(assign({}, props, { labelPlacement }), labelAngle);
+  const textAngle = labelStyle.angle === undefined ?
+    LabelHelpers.getPolarAngle(assign({}, props, { labelPlacement }), labelAngle) :
+    labelStyle.angle;
   const labelRadius = axisType === "angular" ? radius + tickPadding : scale(tick);
   const textAnchor = labelStyle.textAnchor ||
     LabelHelpers.getPolarTextAnchor(assign({}, props, { labelPlacement }), labelAngle);
@@ -193,8 +194,8 @@ const getAxisLabelProps = (props, calculatedValues) => {
     axisLabelComponent.props.labelPlacement : props.labelPlacement;
   const labelStyle = style && style.axisLabel || {};
   const axisAngle = axisType === "radial" ? getAxisAngle(props, scale) : undefined;
-  const textAngle = labelStyle.angle ||
-    LabelHelpers.getPolarAngle(assign({}, props, { labelPlacement }), axisAngle);
+  const textAngle = labelStyle.angle === undefined ?
+    LabelHelpers.getPolarAngle(assign({}, props, { labelPlacement }), axisAngle) : labelStyle.angle;
   const labelRadius = radius + (labelStyle.padding || 0);
   const textAnchor = labelStyle.textAnchor ||
     LabelHelpers.getTextPolarAnchor(assign({}, props, { labelPlacement }), axisAngle);
