@@ -24,6 +24,12 @@ export default class VictoryChart extends React.Component {
       PropTypes.arrayOf(PropTypes.node),
       PropTypes.node
     ]),
+    colorScale: PropTypes.oneOfType([
+      PropTypes.arrayOf(PropTypes.string),
+      PropTypes.oneOf([
+        "grayscale", "qualitative", "heatmap", "warm", "cool", "red", "green", "blue"
+      ])
+    ]),
     defaultAxes: PropTypes.shape({
       independent: PropTypes.element,
       dependent: PropTypes.element

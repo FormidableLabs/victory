@@ -1,6 +1,6 @@
 /* global sinon */
 /* eslint-disable no-unused-expressions,react/no-multi-comp */
-import { getChildComponents } from "packages/victory-chart/src/helper-methods";
+import { getChildComponents, getChildren } from "packages/victory-chart/src/helper-methods";
 import React from "react";
 import { VictoryAxis } from "packages/victory-axis/src/index";
 import { VictoryLine } from "packages/victory-line/src/index";
@@ -58,6 +58,25 @@ describe("victory-chart/helpers-methods", () => {
       const result = getChildComponents({ children }, defaultAxes);
       expect(result).to.have.length(1);
       expect(result[0].props).to.eql(children[0].props);
+    });
+  });
+
+  describe("getChildren", () => {
+    describe("for non axis elements", () => {
+      it("sets the colorScale", () => {
+        const line = getVictoryLine({});
+        const children = [line];
+        const result = getChildren({ colorScale: "warm" }, children);
+        expect(result[0].props.colorScale).to.equal("warm");
+      });
+    });
+    describe("for axis elements", () => {
+      it("does not set colorScale", () => {
+        const axis = getVictoryAxis({});
+        const children = [axis];
+        const result = getChildren({ colorScale: "warm" }, children);
+        expect(result[0].props.colorScale).to.be.undefined;
+      });
     });
   });
 });

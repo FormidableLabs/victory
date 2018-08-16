@@ -104,37 +104,60 @@ function getCalculatedProps(props, childComponents) {
 
   const padding = Helpers.getPadding(props);
 
+  const { colorScale, datasets } = getColorScaleAndDataSets(props);
   return {
-    axisComponents, categories, domain, range, horizontal, scale, stringMap,
+    axisComponents, categories, colorScale, datasets, domain, range, horizontal, scale, stringMap,
     style, origin, originSign, defaultDomainPadding, padding
+  };
+}
+
+function getColorScaleAndDataSets(props) {
+  return {
+    colorScale: props.colorScale,
+    datasets: Wrapper.getDataFromChildren(props)
   };
 }
 
 function getChildren(props, childComponents, calculatedProps) {
   childComponents = childComponents || getChildComponents(props);
   calculatedProps = calculatedProps || getCalculatedProps(props, childComponents);
+  const { datasets } = calculatedProps;
   const baseStyle = calculatedProps.style.parent;
   const { height, polar, theme, width } = props;
   const { origin } = calculatedProps;
   const parentName = props.name || "chart";
   return childComponents.map((child, index) => {
     const role = child.type && child.type.role;
+    const data = datasets[index];
     const style = Array.isArray(child.props.style) ?
       child.props.style :
       defaults({}, child.props.style, { parent: baseStyle });
     const childProps = getChildProps(child, props, calculatedProps);
     const name = child.props.name || `${parentName}-${role}-${index}`;
     const newProps = defaults({
-      height, polar, theme, width, style, name,
+      height, polar, theme, width, style, name, data,
       origin: polar ? origin : undefined,
       padding: calculatedProps.padding,
       key: `${name}-key-${index}`,
+      colorScale: getColorScale(props, child),
       standalone: false
     }, childProps);
 
     return React.cloneElement(child, newProps);
   });
 }
+
+const getColorScale = (props, child) => {
+  const role = child.type && child.type.role;
+  const colorScaleOptions = child.props.colorScale || props.colorScale;
+
+  if (role === "axis") {
+    return undefined;
+  }
+
+  return props.theme && props.theme.chart ? colorScaleOptions || props.theme.chart.colorScale
+  : colorScaleOptions;
+};
 
 const getChildComponents = (props, defaultAxes) => {
   const childComponents = React.Children.toArray(props.children);
