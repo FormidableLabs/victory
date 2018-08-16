@@ -35,6 +35,7 @@ export default class VictoryLabel extends React.Component {
     data: PropTypes.array,
     datum: PropTypes.any,
     desc: PropTypes.string,
+    direction: PropTypes.oneOf(["rtl", "ltr", "inherit"]),
     dx: PropTypes.oneOfType([
       PropTypes.number,
       PropTypes.string,
@@ -106,6 +107,7 @@ export default class VictoryLabel extends React.Component {
   };
 
   static defaultProps = {
+    direction: "inherit",
     textComponent: <Text/>,
     tspanComponent: <TSpan/>,
     capHeight: 0.71, // Magic number from d3.
@@ -217,7 +219,7 @@ export default class VictoryLabel extends React.Component {
   }
 
   renderElements(props, content) {
-    const { datum, active, inline, className, title, desc, events } = props;
+    const { datum, active, inline, className, title, desc, events, direction } = props;
     const style = this.getStyles(props);
     const lineHeight = this.getHeight(props, "lineHeight");
     const textAnchor = props.textAnchor ?
@@ -248,7 +250,7 @@ export default class VictoryLabel extends React.Component {
     });
     return React.cloneElement(
       props.textComponent,
-      { dx, dy, x, y, events, transform, className, title, desc, id: this.id },
+      { direction, dx, dy, x, y, events, transform, className, title, desc, id: this.id },
       textChildren
     );
   }
