@@ -13,7 +13,7 @@ export default class App extends React.Component {
 
           <circle cx="0" cy="0" r="2" fill="red"/>
           <VictoryLabel
-            style={{ direction: "ltr" }}
+            transform="translate(50)"
             x={0} y={0}
             text={"Victory is awesome.\nThis is default anchoring.\nسلام?"}
           />
@@ -101,7 +101,7 @@ export default class App extends React.Component {
           <VictoryLabel x={0} y={1800} textAnchor="start" verticalAnchor="start"
             text={["Use", "dx", "attribute", "to", "shift", "labels", "relative to one another."]}
             inline
-            dx={"10"}
+            dx={10}
           />
 
           {/**
