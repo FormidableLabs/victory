@@ -1,4 +1,3 @@
-import { isPlainObject } from "lodash";
 /**
  * Given an object with CSS/SVG transform definitions, return the string value
  * for use with the `transform` CSS property or SVG attribute. Note that we
