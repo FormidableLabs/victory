@@ -12,9 +12,9 @@ const toTransformString = function (obj, ...more) {
   if (more.length > 0) {
     return more.reduce((memo, currentObj) => {
       return [memo, toTransformString(currentObj)].join(" ");
-    }, toTransformString(obj));
+    }, toTransformString(obj)).trim();
   } else {
-    if (obj === undefined || typeof obj === "string") {
+    if (obj === undefined || obj === null || typeof obj === "string") {
       return obj;
     }
     const transforms = [];
@@ -24,7 +24,7 @@ const toTransformString = function (obj, ...more) {
         transforms.push(`${key}(${value})`);
       }
     }
-    return transforms.join(" ");
+    return transforms.join(" ").trim();
   }
 };
 
