@@ -13,8 +13,9 @@ export default class App extends React.Component {
 
           <circle cx="0" cy="0" r="2" fill="red"/>
           <VictoryLabel
+            transform="translate(50)"
             x={0} y={0}
-            text={"Victory is awesome.\nThis is default anchoring.\nCapisce?"}
+            text={"Victory is awesome.\nThis is default anchoring.\nسلام?"}
           />
 
           <circle cx="200" cy="50" r="2" fill="red"/>
@@ -33,13 +34,9 @@ export default class App extends React.Component {
           />
 
           <circle cx="300" cy="150" r="2" fill="green"/>
-          <VictoryLabel x={300} y={150} textAnchor="end" verticalAnchor="start"
-            style={[
-              { fill: "tomato", fontSize: 20 },
-              { fill: "blue", fontSize: 15, angle: 45 },
-              { fill: "black", fontSize: 10, padding: 10, textAnchor: "middle" }
-            ]}
-            text={"Victory is awesome.\nThis is (end, start) anchoring.\nOK?"}
+          <VictoryLabel direction="rtl" verticalAnchor="start"
+            style={[{ fill: "red", fontSize: 20 }]}
+            text={"سلام world"}
           />
 
           <circle cx="300" cy="300" r="2" fill="blue"/>
@@ -104,7 +101,7 @@ export default class App extends React.Component {
           <VictoryLabel x={0} y={1800} textAnchor="start" verticalAnchor="start"
             text={["Use", "dx", "attribute", "to", "shift", "labels", "relative to one another."]}
             inline
-            dx={"10"}
+            dx={10}
           />
 
           {/**

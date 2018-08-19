@@ -7,6 +7,7 @@ export default class Text extends React.Component {
     children: PropTypes.node,
     className: PropTypes.string,
     desc: PropTypes.string,
+    direction: PropTypes.oneOf(["ltr", "rtl", "inherit"]),
     dx: PropTypes.number,
     dy: PropTypes.number,
     events: PropTypes.object,
@@ -29,10 +30,11 @@ export default class Text extends React.Component {
 
   render() {
     const {
-      x, y, dx, dy, events, className, children, style, title, desc, transform
+      x, y, dx, dy, events, className, children, style, title, desc, transform, direction
     } = this.props;
     return (
       <text
+        direction={direction}
         className={className} x={x} dx={dx} y={y} dy={dy}
         transform={transform} style={style}
         {...events}

@@ -1,4 +1,3 @@
-
 /**
  * Given an object with CSS/SVG transform definitions, return the string value
  * for use with the `transform` CSS property or SVG attribute. Note that we
@@ -12,9 +11,9 @@ const toTransformString = function (obj, ...more) {
   if (more.length > 0) {
     return more.reduce((memo, currentObj) => {
       return [memo, toTransformString(currentObj)].join(" ");
-    }, toTransformString(obj));
+    }, toTransformString(obj)).trim();
   } else {
-    if (!obj || typeof obj === "string") {
+    if (obj === undefined || obj === null || typeof obj === "string") {
       return obj;
     }
     const transforms = [];
@@ -24,7 +23,7 @@ const toTransformString = function (obj, ...more) {
         transforms.push(`${key}(${value})`);
       }
     }
-    return transforms.join(" ");
+    return transforms.join(" ").trim();
   }
 };
 

@@ -1,5 +1,6 @@
 dist: trusty
 language: node_js
+cache: yarn
 addons:
   chrome: stable
 node_js:

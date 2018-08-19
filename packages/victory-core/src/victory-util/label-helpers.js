@@ -34,7 +34,7 @@ function getTextAnchor(props, datum) {
 function getAngle(props, datum) {
   datum = datum || {};
   const labelStyle = props.style && props.style.labels || {};
-  return datum.angle || labelStyle.angle;
+  return datum.angle === undefined ? labelStyle.angle : datum.angle;
 }
 
 function getPadding(props, datum) {
