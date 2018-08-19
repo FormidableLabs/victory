@@ -19,7 +19,7 @@ describe("toTransformString", () => {
 
   it("returns at least the subsequent transforms if the first is undefined", () => {
     expect(Style.toTransformString(
-      null, { skewY: [65] }
-    )).to.contain("skewY(65)");
+      undefined, { skewY: [65] }
+    )).to.equal("skewY(65)");
   });
 });
