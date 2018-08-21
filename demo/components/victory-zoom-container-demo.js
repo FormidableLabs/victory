@@ -8,6 +8,7 @@ import { VictoryStack } from "../../packages/victory-stack/src/index";
 import { VictoryGroup } from "../../packages/victory-group/src/index";
 import { VictoryAxis } from "../../packages/victory-axis/src/index";
 import { VictoryArea } from "../../packages/victory-area/src/index";
+import { VictoryBar } from "../../packages/victory-bar/src/index";
 import { VictoryLine } from "../../packages/victory-line/src/index";
 import { VictoryScatter } from "../../packages/victory-scatter/src/index";
 import { VictoryZoomContainer } from "../../packages/victory-zoom-container/src/index";
@@ -417,7 +418,18 @@ export default class App extends React.Component {
             </VictoryStack>
             <VictoryAxis dependentAxis/>
           </VictoryChart>
-
+          <VictoryChart
+            style={{ parent: parentStyle }}
+            containerComponent={<VictoryZoomContainer/>}
+          >
+            <VictoryBar horizontal
+              style={{ data: { stroke: "#333", fill: "#888", opacity: 0.4 } }}
+              data={this.state.data}
+              x="a" y="b"
+            />
+            <VictoryAxis/>
+            <VictoryAxis dependentAxis/>
+          </VictoryChart>
 
       </div>
     );
