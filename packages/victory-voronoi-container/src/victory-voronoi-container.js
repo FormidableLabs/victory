@@ -159,7 +159,7 @@ export const voronoiContainerMixin = (base) => class VictoryVoronoiContainer ext
     const componentStyleArray = type === "flyout" ?
       componentProps.flyoutStyle : componentProps.style;
     return points.reduce((memo, point, index) => {
-      const text = Helpers.evaluateProp(labels, point, true);
+      const text = isFunction(labels) ? labels(point, index, points) : undefined;
       const textArray = text !== undefined ? `${text}`.split("\n") : [];
       const baseStyle = point.style && point.style[type] || {};
       const componentStyle = Array.isArray(componentStyleArray) ?
