@@ -1,6 +1,6 @@
 {
   "name": "victory-brush-container",
-  "version": "30.2.0",
+  "version": "30.3.0",
   "description": "Interactive Brush Component for Victory",
   "keywords": [
     "data visualization",
@@ -21,7 +21,7 @@
   "dependencies": {
     "lodash": "^4.17.5",
     "prop-types": "^15.5.8",
-    "victory-core": "^30.2.0"
+    "victory-core": "^30.3.0"
   },
   "scripts": {
     "version": "nps build-libs && nps build-dists"
