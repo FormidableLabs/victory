@@ -222,6 +222,28 @@ function reduceChildren(children, iteratee, parentProps = {}) {
   return traverseChildren(children, childNames);
 }
 
+/**
+ * @param {Object} props: the props object
+ * @returns {Boolean} returns true if the props object contains `horizontal: true` of if any
+ * children or nested children are hoizontal
+ */
+function isHorizontal(props) {
+  if (props.horizontal !== undefined || !props.children) {
+    return props.horizontal;
+  }
+  const traverseChildren = (childArray) => {
+    return childArray.reduce((memo, child) => {
+      const childProps = child.props || {};
+      if (memo || childProps.horizontal || !childProps.children) {
+        memo = memo || childProps.horizontal;
+        return memo;
+      }
+      return traverseChildren(React.Children.toArray(childProps.children));
+    }, false);
+  };
+  return traverseChildren(React.Children.toArray(props.children));
+}
+
 export default {
   omit,
   getPoint,
@@ -238,5 +260,6 @@ export default {
   createAccessor,
   modifyProps,
   getCurrentAxis,
-  reduceChildren
+  reduceChildren,
+  isHorizontal
 };

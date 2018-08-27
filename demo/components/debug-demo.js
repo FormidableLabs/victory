@@ -11,8 +11,39 @@ import { VictoryPortal } from "../../packages/victory-core/src/index";
 import { VictorySelectionContainer } from "../../packages/victory-selection-container/src/index";
 import { VictoryVoronoiContainer } from "../../packages/victory-voronoi-container/src/index";
 import { VictoryZoomContainer } from "../../packages/victory-zoom-container/src/index";
+import { range, random } from "lodash";
+
+const lowToHigh = [
+  { x: "low", y: "first", sort: 1 },
+  { x: "med", y: "second", sort: 2 },
+  { x: "high", y: "third", sort: 3 }
+];
+
+const highToLow = [
+  { x: "low", y: "first", sort: 3 },
+  { x: "med", y: "second", sort: 2 },
+  { x: "high", y: "third", sort: 1 }
+];
 
 class App extends React.Component {
+  getBarData() {
+    return range(5).map(() => {
+      return [
+        {
+          x: "apples",
+          y: 3
+        },
+        {
+          x: "bananas",
+          y: 5
+        },
+        {
+          x: "oranges",
+          y: 7
+        }
+      ];
+    });
+  }
 
   render() {
     const containerStyle = {
@@ -25,162 +56,159 @@ class App extends React.Component {
     const chartStyle = { parent: { border: "1px solid #ccc", margin: "2%", maxWidth: "40%" } };
     return (
       <div style={containerStyle}>
-        <VictoryChart style={chartStyle}
-          containerComponent={<VictoryZoomContainer/>}
-        >
-          <VictoryStack colorScale="warm">
-            <VictoryGroup
-              data={[
-                { x: 1, y: 2 },
-                { x: 2, y: 3 },
-                { x: 3, y: 5 },
-                { x: 4, y: 4 }
-              ]}
-            >
-              <VictoryArea/>
-              <VictoryPortal>
-                <VictoryScatter
-                  style={{ data: { fill: "black" } }}
-                />
-              </VictoryPortal>
-            </VictoryGroup>
-            <VictoryGroup
-              data={[
-                { x: 1, y: 4 },
-                { x: 2, y: 3 },
-                { x: 3, y: 2 },
-                { x: 4, y: 5 }
-              ]}
-            >
-              <VictoryArea/>
-              <VictoryPortal>
-                <VictoryScatter
-                  style={{ data: { fill: "green" } }}
-                />
-              </VictoryPortal>
-            </VictoryGroup>
-            <VictoryGroup
-              data={[
-                { x: 1, y: 3 },
-                { x: 2, y: 1 },
-                { x: 3, y: 4 },
-                { x: 4, y: 2 }
-              ]}
-            >
-              <VictoryArea/>
-              <VictoryPortal>
-                <VictoryScatter
-                  style={{ data: { fill: "blue" } }}
-                />
-              </VictoryPortal>
-            </VictoryGroup>
-            <VictoryGroup
-              data={[
-                { x: 1, y: 3 },
-                { x: 2, y: 1 },
-                { x: 3, y: 4 },
-                { x: 4, y: 2 }
-              ]}
-            >
-              <VictoryArea/>
-              <VictoryPortal>
-                <VictoryScatter
-                  style={{ data: { fill: "cyan" } }}
-                />
-              </VictoryPortal>
-            </VictoryGroup>
-          </VictoryStack>
-        </VictoryChart>
-
-        <VictoryChart style={chartStyle}
-          containerComponent={
-            <VictoryVoronoiContainer
-              labels={() => "HELLO"}
-            />
-          }
+        <VictoryChart
+          style={chartStyle}
         >
           <VictoryBar
             horizontal
-            style={{ data: { fill: (d, a) => a ? "red" : "black" } }}
+            alignment="start"
             data={[
-              { x: 0, y: 3.5, y0: 2.5 },
-              { x: 0, y: 11, y0: 5 },
-              { x: 1, y: 2, y0: 1 },
-              { x: 1, y: 7, y0: 4 },
-              { x: 2, y: 4, y0: 3 },
-              { x: 2, y: 12, y0: 7 }
+              { x: 2, y: "Echo" },
+              { x: 6, y: "Foxtrot" },
+              { x: 3, y: "Golf" },
+              { x: 4, y: "Hotel" }
             ]}
           />
         </VictoryChart>
-
-        <VictoryChart style={chartStyle}
-          containerComponent={
-            <VictorySelectionContainer
-              selectionStyle={{
-                stroke: "tomato", strokeWidth: 2, fill: "tomato", fillOpacity: 0.1
-              }}
-            />
-          }
-        >
-          <VictoryStack horizontal>
-            <VictoryBar
-              style={{
-                data: {
-                  fill: "tomato",
-                  stroke: (d, active) => active ? "black" : "none",
-                  strokeWidth: 2
-                }
-              }}
-              size={(datum, active) => active ? 5 : 3}
-              data={[
-                { x: 1, y: -5 },
-                { x: 2, y: 4 },
-                { x: 3, y: 2 },
-                { x: 4, y: 3 },
-                { x: 5, y: 1 },
-                { x: 6, y: -3 },
-                { x: 7, y: 3 }
-              ]}
-            />
-            <VictoryBar
-              style={{
-                data: {
-                  fill: "orange",
-                  stroke: (d, active) => active ? "black" : "none",
-                  strokeWidth: 2
-                }
-              }}
-              size={(datum, active) => active ? 5 : 3}
-              data={[
-                { x: 1, y: -3 },
-                { x: 2, y: 5 },
-                { x: 3, y: 3 },
-                { x: 4, y: 0 },
-                { x: 5, y: -2 },
-                { x: 6, y: -2 },
-                { x: 7, y: 5 }
-              ]}
-            />
-            <VictoryBar
-              style={{
-                data: {
-                  fill: "gold",
-                  stroke: (d, active) => active ? "black" : "none",
-                  strokeWidth: 2
-                }
-              }}
-              data={[
-                { x: 1, y: 5 },
-                { x: 2, y: -4 },
-                { x: 3, y: -2 },
-                { x: 4, y: -3 },
-                { x: 5, y: -1 },
-                { x: 6, y: 3 },
-                { x: 7, y: -3 }
-              ]}
-            />
-          </VictoryStack>
+        <VictoryChart style={chartStyle}>
+          <VictoryBar horizontal
+            data={lowToHigh}
+            sortKey={`sort`}
+          />
         </VictoryChart>
+        <VictoryChart style={chartStyle}>
+          <VictoryBar horizontal
+            data={highToLow}
+            sortKey={`sort`}
+          />
+        </VictoryChart>
+
+        <VictoryChart style={chartStyle} domainPadding={{ x: 50 }}>
+            <VictoryGroup offset={20} style={{ data: { width: 15 } }}>
+              <VictoryStack colorScale={"red"}>
+                {this.getBarData().map((data, index) => {
+                  return <VictoryBar horizontal key={index} data={data}/>;
+                })}
+              </VictoryStack>
+              <VictoryStack colorScale={"green"}>
+                {this.getBarData().map((data, index) => {
+                  return <VictoryBar horizontal key={index} data={data}/>;
+                })}
+              </VictoryStack>
+              <VictoryStack colorScale={"blue"}>
+                {this.getBarData().map((data, index) => {
+                  return <VictoryBar horizontal key={index} data={data}/>;
+                })}
+              </VictoryStack>
+            </VictoryGroup>
+          </VictoryChart>
+
+          <VictoryChart style={chartStyle}
+            categories={{ x: ["e", "a", "c", "b", "d"] }}
+          >
+            <VictoryStack>
+              <VictoryArea
+                data={[
+                  { x: "a", y: 2 },
+                  { x: "b", y: 3 },
+                  { x: "c", y: 5 },
+                  { x: "d", y: 4 },
+                  { x: "e", y: 7 }
+                ]}
+              />
+              <VictoryArea
+                data={[
+                  { x: "a", y: 1 },
+                  { x: "b", y: 4 },
+                  { x: "c", y: 5 },
+                  { x: "d", y: 7 },
+                  { x: "e", y: 5 }
+                ]}
+              />
+              <VictoryArea
+                data={[
+                  { x: "a", y: 3 },
+                  { x: "b", y: 2 },
+                  { x: "c", y: 6 },
+                  { x: "d", y: 2 },
+                  { x: "e", y: 6 }
+                ]}
+              />
+              <VictoryArea
+                data={[
+                  { x: "a", y: 2 },
+                  { x: "b", y: 3 },
+                  { x: "c", y: 3 },
+                  { x: "d", y: 4 },
+                  { x: "e", y: 7 }
+                ]}
+              />
+            </VictoryStack>
+          </VictoryChart>
+
+          <VictoryChart style={chartStyle}>
+            <VictoryGroup>
+            <VictoryStack
+              labels={["a", "b", "c"]}
+              horizontal
+              offset={20}
+              colorScale={"qualitative"}
+            >
+              <VictoryBar
+                data={[
+                  { x: "a", y: 1 },
+                  { x: "b", y: 2 },
+                  { x: "c", y: 5 }
+                ]}
+              />
+              <VictoryBar
+                data={[
+                  { x: "a", y: 2 },
+                  { x: "b", y: 1 },
+                  { x: "c", y: 7 }
+                ]}
+              />
+              <VictoryBar
+                data={[
+                  { x: "a", y: 3 },
+                  { x: "b", y: 4 },
+                  { x: "c", y: 9 }
+                ]}
+              />
+            </VictoryStack>
+            </VictoryGroup>
+         </VictoryChart>
+         <VictoryChart style={chartStyle}>
+            <VictoryGroup
+              labels={["a", "b", "c"]}
+              horizontal
+              offset={20}
+              colorScale={"qualitative"}
+            >
+              <VictoryBar
+                data={[
+                  { x: 1, y: 1 },
+                  { x: 2, y: 2 },
+                  { x: 3, y: 5 }
+                ]}
+              />
+              <VictoryBar
+                data={[
+                  { x: 1, y: 2 },
+                  { x: 2, y: 1 },
+                  { x: 3, y: 7 }
+                ]}
+              />
+              <VictoryBar
+                data={[
+                  { x: 1, y: 3 },
+                  { x: 2, y: 4 },
+                  { x: 3, y: 9 }
+                ]}
+              />
+            </VictoryGroup>
+         </VictoryChart>
+
       </div>
     );
   }

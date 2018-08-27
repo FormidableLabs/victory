@@ -56,9 +56,7 @@ function getStyles(props) {
 
 function getCalculatedProps(props, childComponents) {
   const style = getStyles(props);
-  const horizontal = childComponents.some((component) => {
-    return component.props && component.props.horizontal;
-  });
+  const horizontal = Helpers.isHorizontal(props);
   // TODO: check
   const categories = {
     x: Wrapper.getCategories(props, "x", childComponents),
@@ -115,7 +113,7 @@ function getChildren(props, childComponents, calculatedProps) {
   calculatedProps = calculatedProps || getCalculatedProps(props, childComponents);
   const baseStyle = calculatedProps.style.parent;
   const { height, polar, theme, width } = props;
-  const { origin } = calculatedProps;
+  const { origin, horizontal } = calculatedProps;
   const parentName = props.name || "chart";
   return childComponents.map((child, index) => {
     const role = child.type && child.type.role;
@@ -125,6 +123,7 @@ function getChildren(props, childComponents, calculatedProps) {
     const childProps = getChildProps(child, props, calculatedProps);
     const name = child.props.name || `${parentName}-${role}-${index}`;
     const newProps = defaults({
+      horizontal,
       height, polar, theme, width, style, name,
       origin: polar ? origin : undefined,
       padding: calculatedProps.padding,
