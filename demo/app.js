@@ -66,7 +66,7 @@ const MAP = {
   "/label": { component: VictoryLabelDemo, name: "LabelDemo" },
   "/legend": { component: VictoryLegendDemo, name: "LegendDemo" },
   "/pie": { component: VictoryPieDemo, name: "PieDemo" },
-  "/victory": { component: VictoryDemo, name: "VictoryDemo" }
+  "/victory": { component: VictoryDemo, name: "VictoryDemo" },
   "/horizontal": { component: HorizontalDemo, name: "HorizontalDemo" }
 };
 
