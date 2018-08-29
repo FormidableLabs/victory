@@ -5,36 +5,15 @@ import { VictoryChart } from "../../packages/victory-chart/src/index";
 import { VictoryStack } from "../../packages/victory-stack/src/index";
 import { VictoryGroup } from "../../packages/victory-group/src/index";
 import { VictoryBar } from "../../packages/victory-bar/src/index";
-import { range } from "lodash";
-
-const lowToHigh = [
-  { x: "low", y: 1, sort: 1 },
-  { x: "med", y: 2, sort: 2 },
-  { x: "high", y: 3, sort: 3 }
-];
-
-const highToLow = [
-  { x: "low", y: 1, sort: 3 },
-  { x: "med", y: 2, sort: 2 },
-  { x: "high", y: 3, sort: 1 }
-];
+import { range, random } from "lodash";
 
 class App extends React.Component {
   getBarData() {
     return range(5).map(() => {
       return [
-        {
-          x: "apples",
-          y: 3
-        },
-        {
-          x: "bananas",
-          y: 5
-        },
-        {
-          x: "oranges",
-          y: 7
-        }
+        { x: "cat", y: random(10) },
+        { x: "dog", y: random(10) },
+        { x: "bird", y: random(10) }
       ];
     });
   }
@@ -53,13 +32,21 @@ class App extends React.Component {
 
         <VictoryChart style={chartStyle}>
           <VictoryBar horizontal
-            data={lowToHigh}
+            data={[
+              { x: "low", y: 1, sort: 1 },
+              { x: "med", y: 2, sort: 2 },
+              { x: "high", y: 3, sort: 3 }
+            ]}
             sortKey={"sort"}
           />
         </VictoryChart>
         <VictoryChart style={chartStyle}>
           <VictoryBar horizontal
-            data={highToLow}
+            data={[
+              { x: "low", y: 1, sort: 3 },
+              { x: "med", y: 2, sort: 2 },
+              { x: "high", y: 3, sort: 1 }
+            ]}
             sortKey={"sort"}
           />
         </VictoryChart>
@@ -79,7 +66,7 @@ class App extends React.Component {
           />
         </VictoryChart>
 
-        <VictoryChart style={chartStyle} domainPadding={{ x: 50 }}>
+        <VictoryChart style={chartStyle} domainPadding={{ y: 30 }}>
             <VictoryGroup offset={20} style={{ data: { width: 15 } }}>
               <VictoryStack colorScale={"red"}>
                 {this.getBarData().map((data, index) => {
