@@ -6,8 +6,9 @@ import { VictoryStack } from "../packages/victory-stack/src/index";
 import { VictoryBar } from "../packages/victory-bar/src/index";
 import { VictoryTooltip } from "../packages/victory-tooltip/src/index";
 import { VictoryTheme } from "../packages/victory-core/src/index";
-import { getData, getMixedData, getTimeData, getLogData } from "./data";
+import { getData, getStackedData, getMixedData, getTimeData, getLogData } from "./data";
 import { getChartDecorator, getPolarChartDecorator } from "./decorators";
+
 
 storiesOf("VictoryBar", module)
   .add("default rendering", () => <VictoryBar/>);
@@ -524,4 +525,45 @@ storiesOf("VictoryBar.polar", module)
       <VictoryBar data={getData(7, "seed-1")}/>
       <VictoryBar data={getData(7, "seed-2")}/>
     </VictoryStack>
+  ));
+storiesOf("VictoryBar.regressions", module)
+  .addDecorator(getChartDecorator({ domainPadding: 25 }))
+  .add("sorting horizontal bars (ascending)", () => (
+    <VictoryBar horizontal
+      data={[
+        { x: "low", y: 1, sort: 1 },
+        { x: "med", y: 2, sort: 2 },
+        { x: "high", y: 3, sort: 3 }
+      ]}
+      sortKey={"sort"}
+    />
+  ))
+  .add("sorting horizontal bars (descending)", () => (
+    <VictoryBar horizontal
+      data={[
+        { x: "low", y: 1, sort: 3 },
+        { x: "med", y: 2, sort: 2 },
+        { x: "high", y: 3, sort: 1 }
+      ]}
+      sortKey={"sort"}
+    />
+  ))
+  .add("horizontal stacked grouped bars with categorical data", () => (
+     <VictoryGroup offset={20} style={{ data: { width: 10 } }}>
+      <VictoryStack colorScale={"red"}>
+        {getStackedData(5, 3, "useStrings").map((data, index) => {
+          return <VictoryBar horizontal key={index} data={data}/>;
+        })}
+      </VictoryStack>
+      <VictoryStack colorScale={"green"}>
+        {getStackedData(5, 3, "useStrings").map((data, index) => {
+          return <VictoryBar horizontal key={index} data={data}/>;
+        })}
+      </VictoryStack>
+      <VictoryStack colorScale={"blue"}>
+        {getStackedData(5, 3, "useStrings").map((data, index) => {
+          return <VictoryBar horizontal key={index} data={data}/>;
+        })}
+      </VictoryStack>
+    </VictoryGroup>
   ));

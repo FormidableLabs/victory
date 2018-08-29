@@ -101,8 +101,9 @@ function addEventKeys(props, data) {
  * @returns {Object} an object mapping string data to numeric data
  */
 function createStringMap(props, axis) {
-  const stringsFromAxes = getStringsFromAxes(props, axis);
-  const stringsFromCategories = getStringsFromCategories(props, axis);
+  const currentAxis = Helpers.getCurrentAxis(axis, props.horizontal);
+  const stringsFromAxes = getStringsFromAxes(props, currentAxis);
+  const stringsFromCategories = getStringsFromCategories(props, currentAxis);
   const stringsFromData = getStringsFromData(props, axis);
 
   const allStrings = uniq([...stringsFromAxes, ...stringsFromCategories, ...stringsFromData]);
@@ -279,7 +280,8 @@ function getStringsFromData(props, axis) {
   const key = props[axis] === undefined ? axis : props[axis];
   const accessor = Helpers.createAccessor(key);
 
-  const dataStrings = props.data.reduce((dataArr, datum) => {
+  const sortedData = sortData(props.data, props.sortKey, props.sortOrder);
+  const dataStrings = sortedData.reduce((dataArr, datum) => {
     datum = parseDatum(datum);
     dataArr.push(accessor(datum));
     return dataArr;

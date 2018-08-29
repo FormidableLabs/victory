@@ -34,6 +34,7 @@ import VictoryLabelDemo from "./components/victory-label-demo";
 import VictoryLegendDemo from "./components/victory-legend-demo";
 import VictoryPieDemo from "./components/victory-pie-demo";
 import VictoryDemo from "./components/victory-demo";
+import HorizontalDemo from "./components/horizontal-demo";
 
 const MAP = {
   "/axis": { component: AxisDemo, name: "AxisDemo" },
@@ -65,7 +66,8 @@ const MAP = {
   "/label": { component: VictoryLabelDemo, name: "LabelDemo" },
   "/legend": { component: VictoryLegendDemo, name: "LegendDemo" },
   "/pie": { component: VictoryPieDemo, name: "PieDemo" },
-  "/victory": { component: VictoryDemo, name: "VictoryDemo" }
+  "/victory": { component: VictoryDemo, name: "VictoryDemo" },
+  "/horizontal": { component: HorizontalDemo, name: "HorizontalDemo" }
 };
 
 class Home extends React.Component {
