@@ -1,5 +1,9 @@
 # Victory Changelog
 
+## 30.3.1 (2018-08-30)
+
+- [#1104](https://github.com/FormidableLabs/victory/pull/1104) - Bugfix: correct sorting and stacking horizontal bars with categorical data
+
 ## 30.3.0 (2018-08-24)
 
 - [#1088](https://github.com/FormidableLabs/victory/pull/1088) - Bugfix: don’t ignore angle: 0 for text styles
