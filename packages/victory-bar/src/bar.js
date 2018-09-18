@@ -56,15 +56,26 @@ export default class Bar extends React.Component {
     const direction = sign > 0 ? "0 0 1" : "0 0 0";
     const topArc = `${cornerRadius.top} ${cornerRadius.top} ${direction}`;
     const bottomArc = `${cornerRadius.bottom} ${cornerRadius.bottom} ${direction}`;
-    return `M ${x0 + cornerRadius.bottom}, ${y0}
-      A ${bottomArc}, ${x0}, ${y0 - sign * cornerRadius.bottom}
-      L ${x0}, ${y1 + sign * cornerRadius.top}
-      A ${topArc}, ${x0 + cornerRadius.top}, ${y1}
-      L ${x1 - cornerRadius.top}, ${y1}
-      A ${topArc}, ${x1}, ${y1 + sign * cornerRadius.top}
-      L ${x1}, ${y0 - sign * cornerRadius.bottom}
-      A ${bottomArc}, ${x1 - cornerRadius.bottom}, ${y0}
-      z`;
+
+    const start = `M ${x0 + cornerRadius.bottom}, ${y0}`;
+    const bottomLeftArc = `A ${bottomArc}, ${x0}, ${y0 - sign * cornerRadius.bottom}`;
+    const leftLine = `L ${x0}, ${y1 + sign * cornerRadius.top}`;
+    const topLeftArc = `A ${topArc}, ${x0 + cornerRadius.top}, ${y1}`;
+    const topLine = `L ${x1 - cornerRadius.top}, ${y1}`;
+    const topRightArc = `A ${topArc}, ${x1}, ${y1 + sign * cornerRadius.top}`;
+    const rightLine = `L ${x1}, ${y0 - sign * cornerRadius.bottom}`;
+    const bottomRightArc = `A ${bottomArc}, ${x1 - cornerRadius.bottom}, ${y0}`;
+    const end = "z";
+
+    return [ start,
+      bottomLeftArc,
+      leftLine,
+      topLeftArc,
+      topLine,
+      topRightArc,
+      rightLine,
+      bottomRightArc,
+      end ].join("\n");
   }
 
   getHorizontalBarPath(props, width, cornerRadius) {
@@ -73,15 +84,26 @@ export default class Bar extends React.Component {
     const direction = sign > 0 ? "0 0 1" : "0 0 0";
     const topArc = `${cornerRadius.top} ${cornerRadius.top} ${direction}`;
     const bottomArc = `${cornerRadius.bottom} ${cornerRadius.bottom} ${direction}`;
-    return `M ${y0}, ${x1 + sign * cornerRadius.bottom}
-      A ${bottomArc}, ${y0 + cornerRadius.bottom}, ${x1}
-      L ${y1 - sign * cornerRadius.top}, ${x1}
-      A ${topArc}, ${y1}, ${x1 + cornerRadius.top}
-      L ${y1}, ${x0 - cornerRadius.top}
-      A ${topArc}, ${y1 - sign * cornerRadius.top}, ${x0}
-      L ${y0 + cornerRadius.bottom}, ${x0 }
-      A ${bottomArc}, ${y0}, ${x0 - sign * cornerRadius.bottom}
-      z`;
+
+    const start = `M ${y0}, ${x1 + sign * cornerRadius.bottom}`;
+    const topLeftArc = `A ${bottomArc}, ${y0 + cornerRadius.bottom}, ${x1}`;
+    const topLine = `L ${y1 - sign * cornerRadius.top}, ${x1}`;
+    const topRightArc = `A ${topArc}, ${y1}, ${x1 + cornerRadius.top}`;
+    const rightLine = `L ${y1}, ${x0 - cornerRadius.top}`;
+    const bottomRightArc = `A ${topArc}, ${y1 - sign * cornerRadius.top}, ${x0}`;
+    const bottomLine = `L ${y0 + cornerRadius.bottom}, ${x0 }`;
+    const bottomLeftArc = `A ${bottomArc}, ${y0}, ${x0 - sign * cornerRadius.bottom}`;
+    const end = "z";
+
+    return [ start,
+      topLeftArc,
+      topLine,
+      topRightArc,
+      rightLine,
+      bottomRightArc,
+      bottomLine,
+      bottomLeftArc,
+      end ].join("\n");
   }
 
   getCustomBarPath(props, width) {
