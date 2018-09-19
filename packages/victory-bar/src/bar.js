@@ -4,6 +4,8 @@ import { Helpers, Path, CommonProps } from "victory-core";
 import { assign, isPlainObject, isFunction } from "lodash";
 import * as d3Shape from "d3-shape";
 
+import { Circle, Point } from "./geometry-helper-methods";
+
 export default class Bar extends React.Component {
 
   static propTypes = {
@@ -50,22 +52,83 @@ export default class Bar extends React.Component {
     };
   }
 
-  getVerticalBarPath(props, width, cornerRadius) {
+  getVerticalBarPath(props, width, cornerRadius) { // eslint-disable-line max-statements
     const { x0, x1, y0, y1 } = this.getPosition(props, width);
     const sign = y0 > y1 ? 1 : -1;
     const direction = sign > 0 ? "0 0 1" : "0 0 0";
+
+    const isSelfIntersecting = sign === 1 ?
+      (y0 - cornerRadius.bottom) < (y1 + cornerRadius.top) :
+      (y1 - cornerRadius.bottom) < (y0 + cornerRadius.top);
+
     const topArc = `${cornerRadius.top} ${cornerRadius.top} ${direction}`;
     const bottomArc = `${cornerRadius.bottom} ${cornerRadius.bottom} ${direction}`;
 
-    const start = `M ${x0 + cornerRadius.bottom}, ${y0}`;
-    const bottomLeftArc = `A ${bottomArc}, ${x0}, ${y0 - sign * cornerRadius.bottom}`;
-    const leftLine = `L ${x0}, ${y1 + sign * cornerRadius.top}`;
-    const topLeftArc = `A ${topArc}, ${x0 + cornerRadius.top}, ${y1}`;
-    const topLine = `L ${x1 - cornerRadius.top}, ${y1}`;
-    const topRightArc = `A ${topArc}, ${x1}, ${y1 + sign * cornerRadius.top}`;
-    const rightLine = `L ${x1}, ${y0 - sign * cornerRadius.bottom}`;
-    const bottomRightArc = `A ${bottomArc}, ${x1 - cornerRadius.bottom}, ${y0}`;
+    let start = `M ${x0 + cornerRadius.bottom}, ${y0}`;
+    let bottomLeftArc = `A ${bottomArc}, ${x0}, ${y0 - sign * cornerRadius.bottom}`;
+    let leftLine = `L ${x0}, ${y1 + sign * cornerRadius.top}`;
+    let topLeftArc = `A ${topArc}, ${x0 + cornerRadius.top}, ${y1}`;
+    let topLine = `L ${x1 - cornerRadius.top}, ${y1}`;
+    let topRightArc = `A ${topArc}, ${x1}, ${y1 + sign * cornerRadius.top}`;
+    let rightLine = `L ${x1}, ${y0 - sign * cornerRadius.bottom}`;
+    let bottomRightArc = `A ${bottomArc}, ${x1 - cornerRadius.bottom}, ${y0}`;
     const end = "z";
+
+    if (isSelfIntersecting) {
+
+      const topLeftCenter = new Point(x0 + cornerRadius.top, y1 + sign * cornerRadius.top);
+      const topLeftCircle = new Circle(topLeftCenter, cornerRadius.top);
+      const bottomLeftCenter = new Point(x0 + cornerRadius.bottom, y0 - sign * cornerRadius.bottom);
+      const bottomLeftCircle = new Circle(bottomLeftCenter, cornerRadius.bottom);
+      const topRightCenter = new Point(x1 - cornerRadius.top, y1 + sign * cornerRadius.top);
+      const topRightCircle = new Circle(topRightCenter, cornerRadius.top);
+      // eslint-disable-next-line max-len
+      const bottomRightCenter = new Point(x1 - cornerRadius.bottom, y0 - sign * cornerRadius.bottom);
+      const bottomRightCircle = new Circle(bottomRightCenter, cornerRadius.bottom);
+
+      leftLine = null;
+      rightLine = null;
+
+      if (cornerRadius.top !== 0 && cornerRadius.bottom !== 0) {
+
+        // find intersection of top left and bottom left arc
+        // circles intersect at two points, get the left-most point
+        const intrxnLeft = topLeftCircle.intersection(bottomLeftCircle)[0];
+
+        // find intersection of top right and bottom right arc
+        // circles intersect at two points, get the right-most point
+        const intrxnRight = topRightCircle.intersection(bottomRightCircle)[1];
+
+        bottomLeftArc = `A ${bottomArc}, ${intrxnLeft.x}, ${intrxnLeft.y}`;
+        topRightArc = `A ${topArc}, ${intrxnRight.x}, ${intrxnRight.y}`;
+      }
+
+      if (cornerRadius.top !== 0 && cornerRadius.bottom === 0) {
+
+        // find intersection of y0 and the top left/right arc
+        const intrxnLeftX = topLeftCircle.solveX(y0)[0];
+        const intrxnRightX = topRightCircle.solveX(y0)[1];
+
+        start = `M ${intrxnLeftX}, ${y0}`;
+        bottomLeftArc = null;
+        topRightArc = `A ${topArc}, ${intrxnRightX}, ${y0}`;
+        bottomRightArc = null;
+
+      }
+
+      if (cornerRadius.top === 0 && cornerRadius.bottom !== 0) {
+
+        // find intersection of y1 and the bottom left/right arc
+        const intrxnLeftX = bottomLeftCircle.solveX(y1)[0];
+        const intrxnRightX = bottomRightCircle.solveX(y1)[1];
+
+        bottomLeftArc = `A ${bottomArc}, ${intrxnLeftX}, ${y1}`;
+        topLeftArc = null;
+        topLine = `L ${intrxnRightX}, ${y1}`;
+        topRightArc = null;
+
+      }
+    }
 
     return [ start,
       bottomLeftArc,
@@ -75,7 +138,8 @@ export default class Bar extends React.Component {
       topRightArc,
       rightLine,
       bottomRightArc,
-      end ].join("\n");
+      end ].filter((l) => l !== null).join("\n");
+
   }
 
   getHorizontalBarPath(props, width, cornerRadius) {
@@ -104,6 +168,7 @@ export default class Bar extends React.Component {
       bottomLine,
       bottomLeftArc,
       end ].join("\n");
+
   }
 
   getCustomBarPath(props, width) {
