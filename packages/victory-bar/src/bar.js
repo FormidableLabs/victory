@@ -53,16 +53,51 @@ export default class Bar extends React.Component {
     const { x0, x1, y0, y1 } = this.getPosition(props, width);
     const sign = y0 > y1 ? 1 : -1;
     const direction = sign > 0 ? "0 0 1" : "0 0 0";
+
+    const hasArtifact = (y1 + cornerRadius.top) > y0  // true only if cornerRadius.bottom = 0
     const topArc = `${cornerRadius.top} ${cornerRadius.top} ${direction}`;
     const bottomArc = `${cornerRadius.bottom} ${cornerRadius.bottom} ${direction}`;
 
-    const start = `M ${x0 + cornerRadius.bottom}, ${y0}`;
-    const bottomLeftArc = `A ${bottomArc}, ${x0}, ${y0 - sign * cornerRadius.bottom}`;
-    const leftLine = `L ${x0}, ${y1 + sign * cornerRadius.top}`;
-    const topLeftArc = `A ${topArc}, ${x0 + cornerRadius.top}, ${y1}`;
-    const topLine = `L ${x1 - cornerRadius.top}, ${y1}`;
-    const topRightArc = `A ${topArc}, ${x1}, ${y1 + sign * cornerRadius.top}`;
-    const rightLine = `L ${x1}, ${y0 - sign * cornerRadius.bottom}`;
+    if (!hasArtifact) {
+
+      const start = `M ${x0 + cornerRadius.bottom}, ${y0}`;
+      const bottomLeftArc = `A ${bottomArc}, ${x0}, ${y0 - sign * cornerRadius.bottom}`;
+      const leftLine = `L ${x0}, ${y1 + sign * cornerRadius.top}`;
+      const topLeftArc = `A ${topArc}, ${x0 + cornerRadius.top}, ${y1}`;
+      const topLine = `L ${x1 - cornerRadius.top}, ${y1}`;
+      const topRightArc = `A ${topArc}, ${x1}, ${y1 + sign * cornerRadius.top}`;
+      const rightLine = `L ${x1}, ${y0 - sign * cornerRadius.bottom}`;
+      const bottomRightArc = `A ${bottomArc}, ${x1 - cornerRadius.bottom}, ${y0}`;
+      const end = "z";
+
+      return [ start,
+        bottomLeftArc,
+        leftLine,
+        topLeftArc,
+        topLine,
+        topRightArc,
+        rightLine,
+        bottomRightArc,
+        end ].join("\n");
+    }
+
+    const cxLeft = x0 + cornerRadius.top
+    const cyLeft = y1 + cornerRadius.top
+    const xPrimeLeft = -Math.sqrt( cornerRadius.top**2 - (y0 - cyLeft)**2 ) + cxLeft 
+    
+    const cxRight = x1 - cornerRadius.top
+    const cyRight = y1 + cornerRadius.top
+    const xPrimeRight = Math.sqrt( cornerRadius.top**2 - (y0 - cyRight)**2 ) + cxRight 
+    const intxnLeft = { x: xPrimeLeft, y: y0 }
+    const intxnRight = { x: xPrimeRight, y: y0 }
+
+    const start = `M ${x0 + cornerRadius.bottom}, ${y0}`; // fine 
+    const bottomLeftArc = `A ${bottomArc}, ${intxnLeft.x}, ${intxnLeft.y}`; // maybe change y
+    const leftLine = `L ${intxnLeft.x}, ${intxnLeft.y}`; // maybe change y
+    const topLeftArc = `A ${topArc}, ${x0 + cornerRadius.top}, ${y1}`; // fine
+    const topLine = `L ${x1 - cornerRadius.top}, ${y1}`; // fine
+    const topRightArc = `A ${topArc}, ${intxnRight.x}, ${intxnRight.y}`; // maybe change y
+    const rightLine = `L ${intxnRight.x}, ${intxnRight.y}`; // maybe change y
     const bottomRightArc = `A ${bottomArc}, ${x1 - cornerRadius.bottom}, ${y0}`;
     const end = "z";
 
@@ -74,7 +109,8 @@ export default class Bar extends React.Component {
       topRightArc,
       rightLine,
       bottomRightArc,
-      end ].join("\n");
+      end ].join("\n");    
+
   }
 
   getHorizontalBarPath(props, width, cornerRadius) {
