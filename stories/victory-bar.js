@@ -89,7 +89,7 @@ storiesOf("VictoryBar.cornerRadius", module)
   .addDecorator(getChartDecorator({ domainPadding: 25 }))
   .add("cornerRadius = 1", () => <VictoryBar data={getData(7)} cornerRadius={1}/>)
   .add("cornerRadius = 5", () => <VictoryBar data={getData(7)} cornerRadius={5}/>)
-  .add("cornerRadius = 7", () => <VictoryBar data={getData(7).concat([{ x: 8, y: .3}])} cornerRadius={7}/>)
+  .add("cornerRadius = 7", () => <VictoryBar data={getData(7)} cornerRadius={7}/>)
   .add("cornerRadius = 5 (horizontal)", () => (
     <VictoryBar horizontal data={getData(7)} cornerRadius={5}/>
   ))
