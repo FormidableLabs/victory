@@ -149,9 +149,17 @@ with cursors appropriate to their orientation.
 
 `type: function`
 
-The optional `onBrushDomainChange` prop accepts an function to be called on each update to the highlighted domain. The function accepts the parameters of `domain` (the updated domain), and `props` (the props used by `VictoryBrushContainer`).
+The optional `onBrushDomainChange` prop accepts a function to be called on each update to the highlighted domain. The function accepts the parameters of `domain` (the updated domain), and `props` (the props used by `VictoryBrushContainer`).
 
 *example:* `onBrushDomainChange={(domain, props) => handleDomainChange(domain, props)}`
+
+## onBrushDomainChangeEnd
+
+`type: function`
+
+The optional `onBrushDomainChangeEnd` prop accepts a function to be called on the last update to the highlighted domain. The function accepts the parameters of `domain` (the updated domain), and `props` (the props used by `VictoryBrushContainer`).
+
+*example:* `onBrushDomainChangeEnd={(domain, props) => handleDomainChangeEnd(domain, props)}`
 
 
 [brush and zoom guide]: https://formidable.com/open-source/victory/guides/brush-and-zoom

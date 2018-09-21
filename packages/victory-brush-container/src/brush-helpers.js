@@ -244,7 +244,8 @@ const Helpers = {
 
   onMouseUp(evt, targetProps) {
     const {
-      x1, y1, x2, y2, onBrushDomainChangeEnd, onBrushCleared, domain, allowResize, defaultBrushArea
+      x1, y1, x2, y2, onBrushDomainChange, onBrushDomainChangeEnd, onBrushCleared, domain,
+      allowResize, defaultBrushArea
     } = targetProps;
     // if the mouse hasn't moved since a mouseDown event, select the default brush area
     const defaultBrushHasArea = defaultBrushArea !== undefined && defaultBrushArea !== "none";
@@ -252,6 +253,9 @@ const Helpers = {
       const cachedDomain = targetProps.cachedCurrentDomain || targetProps.currentDomain;
       const currentDomain = this.getDefaultBrushArea(defaultBrushArea, domain, cachedDomain);
       const mutatedProps = { isPanning: false, isSelecting: false, currentDomain };
+      if (isFunction(onBrushDomainChange)) {
+        onBrushDomainChange(currentDomain, defaults({}, mutatedProps, targetProps));
+      }
       if (isFunction(onBrushDomainChangeEnd)) {
         onBrushDomainChangeEnd(currentDomain, defaults({}, mutatedProps, targetProps));
       }
