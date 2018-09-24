@@ -1,5 +1,9 @@
 # Victory Changelog
 
+## 30.4.0 (2018-09-24)
+
+- [#1121](https://github.com/FormidableLabs/victory/pull/1121) - Adds a separate `onBrushDomainChangeEnd` event handler for `VictoryBrushContainer` that is only called on mouse up events. Thanks @jeloagnasin!
+
 ## 30.3.1 (2018-08-30)
 
 - [#1104](https://github.com/FormidableLabs/victory/pull/1104) - Bugfix: correct sorting and stacking horizontal bars with categorical data
