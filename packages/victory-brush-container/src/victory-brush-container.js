@@ -96,6 +96,21 @@ export const brushContainerMixin = (base) => class VictoryBrushContainer extends
       }) : null;
   }
 
+  getCursorPointers(props) {
+    const pointers = {
+      "yProps": "ns-resize",
+      "xProps": "ew-resize"
+    };
+    if (!props.allowResize && props.allowDrag) {
+      pointers.xProps = "move";
+      pointers.yProps = "auto";
+    } else if (!props.allowResize && !props.allowDrag) {
+      pointers.xProps = "auto";
+      pointers.yProps = "auto";
+    }
+    return pointers;
+  }
+
   getHandles(props, coordinates) {
     const { brushDimension, handleWidth, handleStyle, handleComponent, name } = props;
     const { x, y } = coordinates;
@@ -104,16 +119,10 @@ export const brushContainerMixin = (base) => class VictoryBrushContainer extends
     const handleComponentStyle = handleComponent.props && handleComponent.props.style || {};
     const style = defaults({}, handleComponentStyle, handleStyle);
 
-    let yProps = { style, width, height: handleWidth, cursor: "ns-resize" };
-    let xProps = { style, width: handleWidth, height, cursor: "ew-resize" };
+    const pointers = this.getCursorPointers(props);
+    const yProps = { style, width, height: handleWidth, cursor: pointers.yProps };
+    const xProps = { style, width: handleWidth, height, cursor: pointers.xProps };
 
-    if (!props.allowResize && props.allowDrag) {
-      xProps = assign(xProps, { cursor: "move" });
-      yProps = assign(yProps, { cursor: "auto" });
-    } else if (!props.allowResize && !props.allowDrag) {
-      xProps = assign(xProps, { cursor: "auto" });
-      yProps = assign(yProps, { cursor: "auto" });
-    }
     const handleProps = {
       top: brushDimension !== "x" && assign({ x: x[0], y: y[1] - (handleWidth / 2) }, yProps),
       bottom: brushDimension !== "x" && assign({ x: x[0], y: y[0] - (handleWidth / 2) }, yProps),
