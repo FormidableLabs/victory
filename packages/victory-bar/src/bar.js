@@ -3,7 +3,8 @@ import PropTypes from "prop-types";
 import { Helpers, Path, CommonProps } from "victory-core";
 import { assign, isObject, isFunction } from "lodash";
 import * as d3Shape from "d3-shape";
-import Circle from "circle2";
+
+import { Circle, Point } from "./geometry-helper-methods";
 
 export default class Bar extends React.Component {
 
@@ -55,8 +56,8 @@ export default class Bar extends React.Component {
     const sign = y0 > y1 ? 1 : -1;
     const direction = sign > 0 ? "0 0 1" : "0 0 0";
 
-    const hasSelfIntersectingPath = (sign === 1 && (y0 - cornerRadius.bottom) < (y1 + cornerRadius.top)) || 
-      (sign === -1 && ((y1 - cornerRadius.bottom) < (y0 + cornerRadius.top)))
+    const hasSelfIntersectingPath = (sign === 1 && (y0 - cornerRadius.bottom) < (y1 + cornerRadius.top)) ||
+      (sign === -1 && ((y1 - cornerRadius.bottom) < (y0 + cornerRadius.top)));
 
     const topArc = `${cornerRadius.top} ${cornerRadius.top} ${direction}`;
     const bottomArc = `${cornerRadius.bottom} ${cornerRadius.bottom} ${direction}`;
@@ -85,7 +86,7 @@ export default class Bar extends React.Component {
         end ].join("\n");
     }
 
-    // There are four ways the verticalBarPath can self-intersect
+    // There are three ways the verticalBarPath can self-intersect
     // 1.) The top and bottom cornerRadius are both > 0 (the topArc and bottomArc intersect)
     // 2.) The top cornerRadius > 0 but the bottom cornerRadius === 0 (the topArc and bottomLine intersect)
     // 3.) The top cornerRadius === 0 but the bottom cornerRadius > 0 (the bottomArc and topLine intersect)
@@ -94,38 +95,30 @@ export default class Bar extends React.Component {
     if (cornerRadius.top !== 0 && cornerRadius.bottom !== 0) {
 
       // find intersection of top left and bottom left arc
-      const TopLeftCircle = new Circle({
-        x: x0 + cornerRadius.top, 
-        y: y1 + sign*cornerRadius.top 
-      }, cornerRadius.top)
+      const topLeftCenter = new Point(x0 + cornerRadius.top, y1 + sign * cornerRadius.top);
+      const topLeftCircle = new Circle(topLeftCenter, cornerRadius.top);
 
-      const BottomLeftCircle = new Circle({
-        x: x0 + cornerRadius.bottom,
-        y: y0 - sign*cornerRadius.bottom
-      }, cornerRadius.bottom)
+      const bottomLeftCenter = new Point(x0 + cornerRadius.bottom, y0 - sign * cornerRadius.bottom);
+      const bottomLeftCircle = new Circle(bottomLeftCenter, cornerRadius.bottom);
 
       // circles intersect at two points, find the correct one
-      const intrxnsLeft = TopLeftCircle.intersectCircle(BottomLeftCircle)
+      const intrxnsLeft = topLeftCircle.intersection(bottomLeftCircle);
       const intrxnLeft = intrxnsLeft.length === 1 ? intrxnsLeft[0] :
         intrxnsLeft[0].x <= intrxnsLeft[1].x ? intrxnsLeft[0] :
-        intrxnsLeft[1]
+        intrxnsLeft[1];
 
       // find intersection of top right and bottom right arc
-      const TopRightCircle = new Circle({
-        x: x1 - cornerRadius.top,
-        y: y1 + sign*cornerRadius.top
-      }, cornerRadius.top)
+      const topRightCenter = new Point(x1 - cornerRadius.top, y1 + sign * cornerRadius.top);
+      const topRightCircle = new Circle(topRightCenter, cornerRadius.top);
 
-      const BottomRightCircle = new Circle({
-        x: x1 - cornerRadius.bottom,
-        y: y0 - sign*cornerRadius.bottom
-      }, cornerRadius.bottom)
+      const bottomRightCenter = new Point(x1 - cornerRadius.bottom, y0 - sign * cornerRadius.bottom);
+      const bottomRightCircle = new Circle(bottomRightCenter, cornerRadius.bottom);
 
       // circles intersect at two points, find the correct one
-      const intrxnsRight = TopRightCircle.intersectCircle(BottomRightCircle)
+      const intrxnsRight = topRightCircle.intersection(bottomRightCircle);
       const intrxnRight = intrxnsRight.length === 1 ? intrxnsRight[0] :
         intrxnsRight[0].x >= intrxnsRight[1].x ? intrxnsRight[0] :
-        intrxnsRight[1]
+        intrxnsRight[1];
 
       const start = `M ${x0 + cornerRadius.bottom}, ${y0}`;
       const bottomLeftArc = `A ${bottomArc}, ${intrxnLeft.x}, ${intrxnLeft.y}`;
@@ -142,7 +135,7 @@ export default class Bar extends React.Component {
         topRightArc,
         bottomRightArc,
         end
-      ].join("\n")
+      ].join("\n");
 
     }
 
@@ -150,53 +143,52 @@ export default class Bar extends React.Component {
     if (cornerRadius.bottom === 0) {
 
       // find intersection of y0 and the top left arc
-      const cxLeft = x0 + cornerRadius.top
-      const cyLeft = y1 + sign*cornerRadius.top
-      const intrxnLeftX = -Math.sqrt( cornerRadius.top**2 - (y0 - cyLeft)**2 ) + cxLeft 
-      
-      // find intersection of y0 and the top right arc
-      const cxRight = x1 - cornerRadius.top
-      const cyRight = y1 + sign*cornerRadius.top
-      const intrxnRightX = Math.sqrt( cornerRadius.top**2 - (y0 - cyRight)**2 ) + cxRight 
+      const cxLeft = x0 + cornerRadius.top;
+      const cyLeft = y1 + sign * cornerRadius.top;
+      const intrxnLeftX = -Math.sqrt(cornerRadius.top ** 2 - (y0 - cyLeft) ** 2) + cxLeft;
 
-      const start = `M ${intrxnLeftX}, ${y0}`; 
+      // find intersection of y0 and the top right arc
+      const cxRight = x1 - cornerRadius.top;
+      const cyRight = y1 + sign * cornerRadius.top;
+      const intrxnRightX = Math.sqrt(cornerRadius.top ** 2 - (y0 - cyRight) ** 2) + cxRight;
+
+      const start = `M ${intrxnLeftX}, ${y0}`;
       const topLeftArc = `A ${topArc}, ${x0 + cornerRadius.top}, ${y1}`;
       const topLine = `L ${x1 - cornerRadius.top}, ${y1}`;
-      const topRightArc = `A ${topArc}, ${intrxnRightX}, ${y0}`; 
+      const topRightArc = `A ${topArc}, ${intrxnRightX}, ${y0}`;
       const end = "z";
 
       return [ start,
         topLeftArc,
         topLine,
         topRightArc,
-        end ].join("\n");  
-      
+        end ].join("\n");
+
     }
 
-    // case 3
-    // cornerRadius.top === 0
+    // case 3 (cornerRadius.top === 0)
 
       // find intersection of y1 and the bottom left arc
-      const cxLeft = x0 + cornerRadius.bottom
-      const cyLeft = y0 - sign*cornerRadius.bottom
-      const intrxnLeftX = -Math.sqrt( cornerRadius.bottom**2 - (y1 - cyLeft)**2 ) + cxLeft
-      
+    const cxLeft = x0 + cornerRadius.bottom;
+    const cyLeft = y0 - sign * cornerRadius.bottom;
+    const intrxnLeftX = -Math.sqrt(cornerRadius.bottom ** 2 - (y1 - cyLeft) ** 2) + cxLeft;
+
       // find intersection of y1 and the top right arc
-      const cxRight = x1 - cornerRadius.bottom
-      const cyRight = y0 - sign*cornerRadius.bottom
-      const intrxnRightX = Math.sqrt( cornerRadius.bottom**2 - (y1 - cyRight)**2 ) + cxRight
+    const cxRight = x1 - cornerRadius.bottom;
+    const cyRight = y0 - sign * cornerRadius.bottom;
+    const intrxnRightX = Math.sqrt(cornerRadius.bottom ** 2 - (y1 - cyRight) ** 2) + cxRight;
 
-      const start = `M ${x0 + cornerRadius.bottom}, ${y0}`; 
-      const bottomLeftArc = `A ${bottomArc}, ${intrxnLeftX}, ${y1}`;
-      const topLine = `L ${intrxnRightX}, ${y1}`;
-      const bottomRightArc = `A ${bottomArc}, ${x1 - cornerRadius.bottom}, ${y0}`;
-      const end = "z";
+    const start = `M ${x0 + cornerRadius.bottom}, ${y0}`;
+    const bottomLeftArc = `A ${bottomArc}, ${intrxnLeftX}, ${y1}`;
+    const topLine = `L ${intrxnRightX}, ${y1}`;
+    const bottomRightArc = `A ${bottomArc}, ${x1 - cornerRadius.bottom}, ${y0}`;
+    const end = "z";
 
-      return [ start,
+    return [ start,
         bottomLeftArc,
         topLine,
         bottomRightArc,
-        end ].join("\n");  
+        end ].join("\n");
 
   }
 
