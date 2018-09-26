@@ -103,7 +103,7 @@ export const brushContainerMixin = (base) => class VictoryBrushContainer extends
     };
     if (!props.allowResize && props.allowDrag) {
       cursors.xProps = "move";
-      cursors.yProps = "auto";
+      cursors.yProps = "move";
     } else if (!props.allowResize && !props.allowDrag) {
       cursors.xProps = "auto";
       cursors.yProps = "auto";
