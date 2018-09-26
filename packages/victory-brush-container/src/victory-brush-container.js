@@ -83,6 +83,7 @@ export const brushContainerMixin = (base) => class VictoryBrushContainer extends
     const { x, y } = coordinates;
     const { brushStyle, brushComponent, name } = props;
     const brushComponentStyle = brushComponent.props && brushComponent.props.style;
+    const cursor = !props.allowDrag && !props.allowResize ? "auto" : "move";
     return x[0] !== x[1] && y[0] !== y[1] ?
       React.cloneElement(brushComponent, {
         key: `${name}-brush`,
@@ -90,9 +91,24 @@ export const brushContainerMixin = (base) => class VictoryBrushContainer extends
         height: Math.abs(y[1] - y[0]) || 1,
         x: Math.min(x[0], x[1]),
         y: Math.min(y[0], y[1]),
-        cursor: "move",
+        cursor,
         style: defaults({}, brushComponentStyle, brushStyle)
       }) : null;
+  }
+
+  getCursorPointers(props) {
+    const cursors = {
+      "yProps": "ns-resize",
+      "xProps": "ew-resize"
+    };
+    if (!props.allowResize && props.allowDrag) {
+      cursors.xProps = "move";
+      cursors.yProps = "move";
+    } else if (!props.allowResize && !props.allowDrag) {
+      cursors.xProps = "auto";
+      cursors.yProps = "auto";
+    }
+    return cursors;
   }
 
   getHandles(props, coordinates) {
@@ -102,8 +118,11 @@ export const brushContainerMixin = (base) => class VictoryBrushContainer extends
     const height = Math.abs(y[1] - y[0]) || 1;
     const handleComponentStyle = handleComponent.props && handleComponent.props.style || {};
     const style = defaults({}, handleComponentStyle, handleStyle);
-    const yProps = { style, width, height: handleWidth, cursor: "ns-resize" };
-    const xProps = { style, width: handleWidth, height, cursor: "ew-resize" };
+
+    const cursors = this.getCursorPointers(props);
+    const yProps = { style, width, height: handleWidth, cursor: cursors.yProps };
+    const xProps = { style, width: handleWidth, height, cursor: cursors.xProps };
+
     const handleProps = {
       top: brushDimension !== "x" && assign({ x: x[0], y: y[1] - (handleWidth / 2) }, yProps),
       bottom: brushDimension !== "x" && assign({ x: x[0], y: y[0] - (handleWidth / 2) }, yProps),
