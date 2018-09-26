@@ -1,6 +1,6 @@
 {
   "name": "victory-create-container",
-  "version": "30.4.0",
+  "version": "30.4.1",
   "description": "Container Helper for Victory",
   "keywords": [
     "data visualization",
@@ -20,7 +20,7 @@
   "license": "MIT",
   "dependencies": {
     "lodash": "^4.17.5",
-    "victory-brush-container": "^30.4.0",
+    "victory-brush-container": "^30.4.1",
     "victory-core": "^30.3.1",
     "victory-cursor-container": "^30.3.1",
     "victory-selection-container": "^30.3.1",
