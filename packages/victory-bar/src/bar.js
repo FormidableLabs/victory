@@ -1,7 +1,7 @@
 import React from "react";
 import PropTypes from "prop-types";
 import { Helpers, Path, CommonProps } from "victory-core";
-import { assign, isObject, isFunction } from "lodash";
+import { assign, isPlainObject, isFunction } from "lodash";
 import * as d3Shape from "d3-shape";
 
 export default class Bar extends React.Component {
@@ -203,19 +203,12 @@ export default class Bar extends React.Component {
 
   getCornerRadius(props) {
     const { cornerRadius, datum, active } = props;
-    if (!cornerRadius) {
-      return { top: 0, bottom: 0 };
-    } else if (isObject(cornerRadius)) {
-      return {
-        top: Helpers.evaluateProp(cornerRadius.top, datum, active),
-        bottom: Helpers.evaluateProp(cornerRadius.bottom, datum, active)
-      };
-    } else {
-      return {
-        top: Helpers.evaluateProp(cornerRadius, datum, active),
-        bottom: 0
-      };
-    }
+    const top = isPlainObject(cornerRadius) ? cornerRadius.top : cornerRadius || 0;
+    const bottom = isPlainObject(cornerRadius) ? cornerRadius.bottom : 0;
+    return {
+      top: Helpers.evaluateProp(top, datum, active),
+      bottom: Helpers.evaluateProp(bottom, datum, active)
+    };
   }
 
   render() {
