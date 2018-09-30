@@ -62,133 +62,89 @@ export default class Bar extends React.Component {
     const topArc = `${cornerRadius.top} ${cornerRadius.top} ${direction}`;
     const bottomArc = `${cornerRadius.bottom} ${cornerRadius.bottom} ${direction}`;
 
-    if (!hasSelfIntersectingPath) {
+    // the usual result
+    let start = `M ${x0 + cornerRadius.bottom}, ${y0}`;
+    let bottomLeftArc = `A ${bottomArc}, ${x0}, ${y0 - sign * cornerRadius.bottom}`;
+    let leftLine = `L ${x0}, ${y1 + sign * cornerRadius.top}`;
+    let topLeftArc = `A ${topArc}, ${x0 + cornerRadius.top}, ${y1}`;
+    let topLine = `L ${x1 - cornerRadius.top}, ${y1}`;
+    let topRightArc = `A ${topArc}, ${x1}, ${y1 + sign * cornerRadius.top}`;
+    let rightLine = `L ${x1}, ${y0 - sign * cornerRadius.bottom}`;
+    let bottomRightArc = `A ${bottomArc}, ${x1 - cornerRadius.bottom}, ${y0}`;
+    let end = "z";
 
-      // no problems, return the usual result
-      const start = `M ${x0 + cornerRadius.bottom}, ${y0}`;
-      const bottomLeftArc = `A ${bottomArc}, ${x0}, ${y0 - sign * cornerRadius.bottom}`;
-      const leftLine = `L ${x0}, ${y1 + sign * cornerRadius.top}`;
-      const topLeftArc = `A ${topArc}, ${x0 + cornerRadius.top}, ${y1}`;
-      const topLine = `L ${x1 - cornerRadius.top}, ${y1}`;
-      const topRightArc = `A ${topArc}, ${x1}, ${y1 + sign * cornerRadius.top}`;
-      const rightLine = `L ${x1}, ${y0 - sign * cornerRadius.bottom}`;
-      const bottomRightArc = `A ${bottomArc}, ${x1 - cornerRadius.bottom}, ${y0}`;
-      const end = "z";
+    if (hasSelfIntersectingPath) {
 
-      return [ start,
-        bottomLeftArc,
-        leftLine,
-        topLeftArc,
-        topLine,
-        topRightArc,
-        rightLine,
-        bottomRightArc,
-        end ].join("\n");
-    }
+      // There are three ways the verticalBarPath can self-intersect
+      // 1.) The top and bottom cornerRadius are both > 0 (the topArc and bottomArc intersect)
+      // 2.) The top cornerRadius > 0 but the bottom cornerRadius === 0 (the topArc and bottomLine intersect)
+      // 3.) The top cornerRadius === 0 but the bottom cornerRadius > 0 (the bottomArc and topLine intersect)
 
-    // There are three ways the verticalBarPath can self-intersect
-    // 1.) The top and bottom cornerRadius are both > 0 (the topArc and bottomArc intersect)
-    // 2.) The top cornerRadius > 0 but the bottom cornerRadius === 0 (the topArc and bottomLine intersect)
-    // 3.) The top cornerRadius === 0 but the bottom cornerRadius > 0 (the bottomArc and topLine intersect)
-
-    // case 1
-    if (cornerRadius.top !== 0 && cornerRadius.bottom !== 0) {
-
-      // find intersection of top left and bottom left arc
       const topLeftCenter = new Point(x0 + cornerRadius.top, y1 + sign * cornerRadius.top);
       const topLeftCircle = new Circle(topLeftCenter, cornerRadius.top);
-
       const bottomLeftCenter = new Point(x0 + cornerRadius.bottom, y0 - sign * cornerRadius.bottom);
       const bottomLeftCircle = new Circle(bottomLeftCenter, cornerRadius.bottom);
-
-      // circles intersect at two points, find the correct one
-      const intrxnsLeft = topLeftCircle.intersection(bottomLeftCircle);
-      const intrxnLeft = intrxnsLeft.length === 1 ? intrxnsLeft[0] :
-        intrxnsLeft[0].x <= intrxnsLeft[1].x ? intrxnsLeft[0] :
-        intrxnsLeft[1];
-
-      // find intersection of top right and bottom right arc
       const topRightCenter = new Point(x1 - cornerRadius.top, y1 + sign * cornerRadius.top);
       const topRightCircle = new Circle(topRightCenter, cornerRadius.top);
-
       const bottomRightCenter = new Point(x1 - cornerRadius.bottom, y0 - sign * cornerRadius.bottom);
       const bottomRightCircle = new Circle(bottomRightCenter, cornerRadius.bottom);
 
-      // circles intersect at two points, find the correct one
-      const intrxnsRight = topRightCircle.intersection(bottomRightCircle);
-      const intrxnRight = intrxnsRight.length === 1 ? intrxnsRight[0] :
-        intrxnsRight[0].x >= intrxnsRight[1].x ? intrxnsRight[0] :
-        intrxnsRight[1];
+      leftLine = null;
+      rightLine = null;
+      
+      // case 1
+      if (cornerRadius.top !== 0 && cornerRadius.bottom !== 0) {
 
-      const start = `M ${x0 + cornerRadius.bottom}, ${y0}`;
-      const bottomLeftArc = `A ${bottomArc}, ${intrxnLeft.x}, ${intrxnLeft.y}`;
-      const topLeftArc = `A ${topArc}, ${x0 + cornerRadius.top}, ${y1}`;
-      const topLine = `L ${x1 - cornerRadius.top}, ${y1}`;
-      const topRightArc = `A ${topArc}, ${intrxnRight.x}, ${intrxnRight.y}`;
-      const bottomRightArc = `A ${bottomArc}, ${x1 - cornerRadius.bottom}, ${y0}`;
-      const end = "z";
+        // find intersection of top left and bottom left arc
+        // circles intersect at two points, get the left-most point
+        const intrxnsLeft = topLeftCircle.intersection(bottomLeftCircle)[0];
 
-      return [ start,
-        bottomLeftArc,
-        topLeftArc,
-        topLine,
-        topRightArc,
-        bottomRightArc,
-        end
-      ].join("\n");
+        // find intersection of top right and bottom right arc
+        // circles intersect at two points, get the right-most point
+        const intrxnRight = topRightCircle.intersection(bottomRightCircle)[1];
 
+        bottomLeftArc = `A ${bottomArc}, ${intrxnLeft.x}, ${intrxnLeft.y}`;
+        topRightArc = `A ${topArc}, ${intrxnRight.x}, ${intrxnRight.y}`;
+      }
+
+      // case 2
+      if (cornerRadius.top !== 0 && cornerRadius.bottom === 0) {
+
+        // find intersection of y0 and the top left/right arc
+        const intrxnLeftX = topLeftCircle.solveX(y0)[0];
+        const intrxnRightX = topRightCircle.solveX(y0)[1];
+
+        start = `M ${intrxnLeftX}, ${y0}`;
+        bottomLeftArc = null;
+        topRightArc = `A ${topArc}, ${intrxnRightX}, ${y0}`;
+        bottomRightArc = null;
+
+      }
+
+      // case 3
+      if (cornerRadius.top === 0 && cornerRadius.bottom !== 0) {
+
+        // find intersection of y1 and the bottom left/right arc
+        const intrxnLeftX = bottomLeftCircle.solveX(y1)[0];
+        const intrxnRightX = bottomRightCircle.solveX(y1)[1];
+
+        bottomLeftArc = `A ${bottomArc}, ${intrxnLeftX}, ${y1}`;
+        topLeftArc = null;
+        topLine = `L ${intrxnRightX}, ${y1}`;
+        topRightArc = null;
+
+      }
     }
-
-    // case 2
-    if (cornerRadius.bottom === 0) {
-
-      // find intersection of y0 and the top left arc
-      const cxLeft = x0 + cornerRadius.top;
-      const cyLeft = y1 + sign * cornerRadius.top;
-      const intrxnLeftX = -Math.sqrt(cornerRadius.top ** 2 - (y0 - cyLeft) ** 2) + cxLeft;
-
-      // find intersection of y0 and the top right arc
-      const cxRight = x1 - cornerRadius.top;
-      const cyRight = y1 + sign * cornerRadius.top;
-      const intrxnRightX = Math.sqrt(cornerRadius.top ** 2 - (y0 - cyRight) ** 2) + cxRight;
-
-      const start = `M ${intrxnLeftX}, ${y0}`;
-      const topLeftArc = `A ${topArc}, ${x0 + cornerRadius.top}, ${y1}`;
-      const topLine = `L ${x1 - cornerRadius.top}, ${y1}`;
-      const topRightArc = `A ${topArc}, ${intrxnRightX}, ${y0}`;
-      const end = "z";
-
-      return [ start,
-        topLeftArc,
-        topLine,
-        topRightArc,
-        end ].join("\n");
-
-    }
-
-    // case 3 (cornerRadius.top === 0)
-
-      // find intersection of y1 and the bottom left arc
-    const cxLeft = x0 + cornerRadius.bottom;
-    const cyLeft = y0 - sign * cornerRadius.bottom;
-    const intrxnLeftX = -Math.sqrt(cornerRadius.bottom ** 2 - (y1 - cyLeft) ** 2) + cxLeft;
-
-      // find intersection of y1 and the top right arc
-    const cxRight = x1 - cornerRadius.bottom;
-    const cyRight = y0 - sign * cornerRadius.bottom;
-    const intrxnRightX = Math.sqrt(cornerRadius.bottom ** 2 - (y1 - cyRight) ** 2) + cxRight;
-
-    const start = `M ${x0 + cornerRadius.bottom}, ${y0}`;
-    const bottomLeftArc = `A ${bottomArc}, ${intrxnLeftX}, ${y1}`;
-    const topLine = `L ${intrxnRightX}, ${y1}`;
-    const bottomRightArc = `A ${bottomArc}, ${x1 - cornerRadius.bottom}, ${y0}`;
-    const end = "z";
 
     return [ start,
-        bottomLeftArc,
-        topLine,
-        bottomRightArc,
-        end ].join("\n");
+      bottomLeftArc,
+      leftLine,
+      topLeftArc,
+      topLine,
+      topRightArc,
+      rightLine,
+      bottomRightArc,
+      end ].filter(l => l != null).join("\n");
 
   }
 
