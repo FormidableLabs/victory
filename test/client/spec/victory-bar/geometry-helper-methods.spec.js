@@ -92,7 +92,7 @@ describe("Circle", () => {
     it("handles circles meeting at exactly one point", () => {
       const c0 = new Circle(new Point(0, 0), 1);
       const c1 = new Circle(new Point(0, 2), 1);
-      expect(c0.intersection(c1)).to.eql([new Point(0, 1)]);
+      expect(c0.intersection(c1)).to.eql([new Point(0, 1), new Point(0, 1)]);
     });
     it("handles circles meeting at two points", () => {
       const c0 = new Circle(new Point(2, 3), 3);
@@ -102,6 +102,12 @@ describe("Circle", () => {
       expect(y0).to.be.within(2.49 - epsilon, 2.49 + epsilon);
       expect(x1).to.be.within(4.37 - epsilon, 4.37 + epsilon);
       expect(y1).to.be.within(1.16 - epsilon, 1.16 + epsilon);
+    });
+    it("the left-most point is the 0th element, the right-most is the 1st", () => {
+      const c0 = new Circle(new Point(2, 3), 3);
+      const c1 = new Circle(new Point(1, -1), 4);
+      const [ { x: x0 }, { x: x1 } ] = c0.intersection(c1);
+      expect(x0 <= x1).to.equal(true);
     });
   });
 });
