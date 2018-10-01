@@ -146,7 +146,16 @@ export default class App extends React.Component {
             padding={{ bottom: 50, left: 50, right: 10 }}
             width={400} height={200}
           />
-
+          <VictoryPie
+            style={{ parent: parentStyle }}
+            labelPosition="endAngle"
+            width={200} height={400}
+          />
+          <VictoryPie
+            style={{ parent: parentStyle }}
+            labelPosition="startAngle"
+            width={200} height={400}
+          />
           <VictoryPie
             style={{ parent: parentStyle }}
             width={200} height={400}

@@ -27,7 +27,8 @@ const fallbackProps = {
     "#525252",
     "#252525",
     "#000000"
-  ]
+  ],
+  labelPosition: "centroid"
 };
 
 const animationWhitelist = [
@@ -100,6 +101,7 @@ class VictoryPie extends React.Component {
     height: CustomPropTypes.nonNegative,
     innerRadius: CustomPropTypes.nonNegative,
     labelComponent: PropTypes.element,
+    labelPosition: PropTypes.oneOf(["startAngle", "centroid", "endAngle"]),
     labelRadius: PropTypes.oneOfType([ CustomPropTypes.nonNegative, PropTypes.func ]),
     labels: PropTypes.oneOfType([ PropTypes.func, PropTypes.array ]),
     name: PropTypes.string,
