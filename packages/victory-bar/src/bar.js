@@ -23,6 +23,7 @@ export default class Bar extends React.Component {
       })
     ]),
     datum: PropTypes.object,
+    getPath: PropTypes.func,
     horizontal: PropTypes.bool,
     pathComponent: PropTypes.element,
     width: PropTypes.number,
@@ -83,6 +84,11 @@ export default class Bar extends React.Component {
       z`;
   }
 
+  getCustomBarPath(props, width) {
+    const { getPath } = props;
+    return getPath(this.getPosition(props, width));
+  }
+
   transformAngle(angle) {
     return -1 * angle + (Math.PI / 2);
   }
@@ -134,6 +140,10 @@ export default class Bar extends React.Component {
     }
   }
 
+  getCustomVerticalPolarBarPath(getPath, options) {
+    return getPath(options);
+  }
+
   getVerticalPolarBarPath(props, cornerRadius) { // eslint-disable-line max-statements
     const { datum, scale, index, alignment } = props;
     const style = Helpers.evaluateStyle(props.style, datum, props.active);
@@ -152,12 +162,19 @@ export default class Bar extends React.Component {
       end = this.getEndAngle(props, index);
     }
 
+    start = this.transformAngle(start);
+    end = this.transformAngle(end);
+    if (props.getPath) {
+      const options = { datum, start, end, r1, r2, cornerRadius };
+      return this.getCustomVerticalPolarBarPath(props.getPath, options);
+    }
+
     const getPath = (edge) => {
       const pathFunction = d3Shape.arc()
       .innerRadius(r1)
       .outerRadius(r2)
-      .startAngle(this.transformAngle(start))
-      .endAngle(this.transformAngle(end))
+      .startAngle(start)
+      .endAngle(end)
       .cornerRadius(cornerRadius[edge]);
       const path = pathFunction();
       const moves = path.match(/[A-Z]/g);
@@ -176,7 +193,10 @@ export default class Bar extends React.Component {
   }
 
   getBarPath(props, width, cornerRadius) {
-    return this.props.horizontal ?
+    if (props.getPath) {
+      return this.getCustomBarPath(props, width);
+    }
+    return props.horizontal ?
       this.getHorizontalBarPath(props, width, cornerRadius) :
       this.getVerticalBarPath(props, width, cornerRadius);
   }
