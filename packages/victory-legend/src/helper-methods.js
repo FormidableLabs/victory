@@ -1,5 +1,10 @@
-import { defaults, assign, groupBy, keys, sum, range } from "lodash";
 import { Helpers, Style, TextSize } from "victory-core";
+import assign from "lodash/assign";
+import defaults from "lodash/defaults";
+import groupBy from "lodash/groupBy";
+import keys from "lodash/keys";
+import range from "lodash/range";
+import sum from "lodash/sum";
 
 const getColorScale = (props) => {
   const { colorScale } = props;

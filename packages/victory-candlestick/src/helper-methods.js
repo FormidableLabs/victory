@@ -1,4 +1,4 @@
-import { assign } from "lodash";
+import assign from "lodash/assign";
 import { Helpers, LabelHelpers, Scale, Domain, Data, Collection } from "victory-core";
 
 const getData = (props) => {

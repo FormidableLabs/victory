@@ -1,9 +1,16 @@
 /* eslint-disable func-style */
 /* eslint-disable no-use-before-define */
 import React from "react";
-import {
-  assign, uniq, range, last, isFunction, isPlainObject, property, orderBy, isEmpty, includes
-} from "lodash";
+import assign from "lodash/assign";
+import uniq from "lodash/uniq";
+import range from "lodash/range";
+import last from "lodash/last";
+import isFunction from "lodash/isFunction";
+import isPlainObject from "lodash/isPlainObject";
+import property from "lodash/property";
+import orderBy from "lodash/orderBy";
+import isEmpty from "lodash/isEmpty";
+import includes from "lodash/includes";
 import Helpers from "./helpers";
 import Collection from "./collection";
 import Scale from "./scale";

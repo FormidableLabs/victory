@@ -1,4 +1,5 @@
-import { assign, defaults } from "lodash";
+import assign from "lodash/assign";
+import defaults from "lodash/defaults";
 import PropTypes from "prop-types";
 import React from "react";
 import { Helpers, VictoryContainer, VictoryTheme, CommonProps, Wrapper } from "victory-core";

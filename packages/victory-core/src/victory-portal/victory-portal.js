@@ -1,6 +1,6 @@
 import React from "react";
 import PropTypes from "prop-types";
-import { defaults } from "lodash";
+import defaults from "lodash/defaults";
 import Log from "../victory-util/log";
 import Helpers from "../victory-util/helpers";
 

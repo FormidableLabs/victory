@@ -3,7 +3,8 @@
 import React from "react";
 import { VictoryVoronoi } from "../../packages/victory-voronoi/src/index";
 import { VictoryTooltip } from "../../packages/victory-tooltip/src/index";
-import { range, random } from "lodash";
+import range from "lodash/range";
+import random from "lodash/random";
 
 const getData = () => {
   return range(20).map((index) => {

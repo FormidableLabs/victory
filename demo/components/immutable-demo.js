@@ -2,7 +2,12 @@
 /* eslint-disable no-magic-numbers, react/no-multi-comp */
 import React from "react";
 import PropTypes from "prop-types";
-import { assign, merge, keys, random, range, round } from "lodash";
+import assign from "lodash/assign";
+import merge from "lodash/merge";
+import keys from "lodash/keys";
+import random from "lodash/random";
+import range from "lodash/range";
+import round from "lodash/round";
 import { fromJS } from "immutable";
 import {
   VictoryClipContainer, VictoryLabel, VictoryTheme

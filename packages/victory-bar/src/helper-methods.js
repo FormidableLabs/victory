@@ -1,4 +1,4 @@
-import { assign } from "lodash";
+import assign from "lodash/assign";
 import { Helpers, LabelHelpers, Data, Domain, Scale } from "victory-core";
 
 const getBarPosition = (props, datum) => {

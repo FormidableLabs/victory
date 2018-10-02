@@ -2,7 +2,10 @@
 import React from "react";
 import PropTypes from "prop-types";
 import { Data } from "packages/victory-core/src/index";
-import { defaults, get, reduce, map } from "lodash";
+import defaults from "lodash/defaults";
+import get from "lodash/get";
+import reduce from "lodash/reduce";
+import map from "lodash/map";
 
 class MockDataComponent extends React.Component {
   static displayName = "MockDataComponent";

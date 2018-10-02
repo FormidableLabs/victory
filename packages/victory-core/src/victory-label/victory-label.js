@@ -8,7 +8,10 @@ import Style from "../victory-util/style";
 import Log from "../victory-util/log";
 import TSpan from "../victory-primitives/tspan";
 import Text from "../victory-primitives/text";
-import { assign, defaults, isEmpty, uniqueId } from "lodash";
+import assign from "lodash/assign";
+import defaults from "lodash/defaults";
+import isEmpty from "lodash/isEmpty";
+import uniqueId from "lodash/uniqueId";
 
 const defaultStyles = {
   fill: "#252525",

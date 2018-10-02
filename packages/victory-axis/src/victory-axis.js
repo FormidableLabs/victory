@@ -1,6 +1,6 @@
 import PropTypes from "prop-types";
 import React from "react";
-import { assign } from "lodash";
+import assign from "lodash/assign";
 import {
   PropTypes as CustomPropTypes, Helpers, VictoryLabel, CommonProps,
   VictoryContainer, VictoryTheme, LineSegment, TextSize, addEvents, Axis

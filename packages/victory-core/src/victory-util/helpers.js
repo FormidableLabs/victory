@@ -1,7 +1,11 @@
 /* eslint-disable func-style */
 /* eslint-disable no-use-before-define */
 import React from "react";
-import { defaults, isFunction, property, pick, assign } from "lodash";
+import defaults from "lodash/defaults";
+import isFunction from "lodash/isFunction";
+import property from "lodash/property";
+import pick from "lodash/pick";
+import assign from "lodash/assign";
 
 // Private Functions
 

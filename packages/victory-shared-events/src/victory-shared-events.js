@@ -1,4 +1,8 @@
-import { assign, isFunction, defaults, isEmpty, fromPairs } from "lodash";
+import assign from "lodash/assign";
+import isFunction from "lodash/isFunction";
+import defaults from "lodash/defaults";
+import isEmpty from "lodash/isEmpty";
+import fromPairs from "lodash/fromPairs";
 import React from "react";
 import PropTypes from "prop-types";
 import { PropTypes as CustomPropTypes, Events, Helpers, Timer } from "victory-core";

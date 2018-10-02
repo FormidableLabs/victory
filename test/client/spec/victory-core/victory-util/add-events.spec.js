@@ -1,7 +1,7 @@
 /* eslint max-params: 0 */
 
 import React from "react";
-import { get } from "lodash";
+import get from "lodash/get";
 import { mount } from "enzyme";
 import { addEvents } from "packages/victory-core/src/index";
 import { MockVictoryComponent, MockLabel, MockDataComponent } from "../../mock-components";

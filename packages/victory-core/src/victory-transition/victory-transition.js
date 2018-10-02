@@ -5,7 +5,10 @@ import Collection from "../victory-util/collection";
 import Helpers from "../victory-util/helpers";
 import Timer from "../victory-util/timer";
 import Transitions from "../victory-util/transitions";
-import { defaults, isFunction, pick, isObject } from "lodash";
+import defaults from "lodash/defaults";
+import isFunction from "lodash/isFunction";
+import pick from "lodash/pick";
+import isObject from "lodash/isObject";
 
 export default class VictoryTransition extends React.Component {
   static displayName = "VictoryTransition";

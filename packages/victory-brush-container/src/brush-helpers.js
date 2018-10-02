@@ -1,5 +1,9 @@
 import { Selection } from "victory-core";
-import { assign, throttle, isFunction, defaults, mapValues } from "lodash";
+import assign from "lodash/assign";
+import throttle from "lodash/throttle";
+import isFunction from "lodash/isFunction";
+import defaults from "lodash/defaults";
+import mapValues from "lodash/mapValues";
 import isEqual from "react-fast-compare";
 
 const Helpers = {

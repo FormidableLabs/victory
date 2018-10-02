@@ -1,7 +1,8 @@
 /*global window:false */
 /*eslint-disable no-magic-numbers */
 import React from "react";
-import { random, range } from "lodash";
+import random from "lodash/random";
+import range from "lodash/range";
 import { VictoryChart } from "../../packages/victory-chart/src/index";
 import { VictoryStack } from "../../packages/victory-stack/src/index";
 import { VictoryArea } from "../../packages/victory-area/src/index";

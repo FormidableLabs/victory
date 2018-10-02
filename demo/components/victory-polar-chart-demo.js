@@ -13,7 +13,10 @@ import { VictoryZoomContainer } from "../../packages/victory-zoom-container/src/
 import { VictoryVoronoiContainer } from "../../packages/victory-voronoi-container/src/index";
 import { VictorySelectionContainer } from "../../packages/victory-selection-container/src/index";
 import { VictoryTooltip } from "../../packages/victory-tooltip/src/index";
-import { random, range, merge, keys } from "lodash";
+import random from "lodash/random";
+import range from "lodash/range";
+import merge from "lodash/merge";
+import keys from "lodash/keys";
 import { VictoryTheme, VictoryLabel } from "../../packages/victory-core/src/index";
 
 

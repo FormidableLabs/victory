@@ -1,6 +1,8 @@
 import PropTypes from "prop-types";
 import React from "react";
-import { defaults, isFunction, pick } from "lodash";
+import defaults from "lodash/defaults";
+import isFunction from "lodash/isFunction";
+import pick from "lodash/pick";
 import { VictoryTooltip } from "victory-tooltip";
 import { VictoryContainer, Helpers, TextSize } from "victory-core";
 import VoronoiHelpers from "./voronoi-helpers";

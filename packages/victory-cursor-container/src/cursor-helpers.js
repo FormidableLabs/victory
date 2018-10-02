@@ -1,5 +1,7 @@
 import { Selection } from "victory-core";
-import { throttle, isFunction, mapValues } from "lodash";
+import isFunction from "lodash/isFunction";
+import mapValues from "lodash/mapValues";
+import throttle from "lodash/throttle";
 
 const CursorHelpers = {
   withinBounds(point, bounds) {

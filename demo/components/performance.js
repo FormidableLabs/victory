@@ -1,6 +1,6 @@
 /*eslint-disable no-magic-numbers */
 import React from "react";
-import { range } from "lodash";
+import range from "lodash/range";
 import { VictorySelectionContainer } from "../../packages/victory-selection-container/src/index";
 import { VictoryScatter } from "../../packages/victory-scatter/src/index";
 

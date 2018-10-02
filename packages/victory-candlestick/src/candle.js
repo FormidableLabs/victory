@@ -2,7 +2,9 @@
 import React from "react";
 import PropTypes from "prop-types";
 import { Helpers, CommonProps, Rect, Line } from "victory-core";
-import { assign, defaults, isFunction } from "lodash";
+import assign from "lodash/assign";
+import defaults from "lodash/defaults";
+import isFunction from "lodash/isFunction";
 
 export default class Candle extends React.Component {
   static propTypes = {

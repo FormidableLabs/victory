@@ -1,7 +1,10 @@
 import React from "react";
 import PropTypes from "prop-types";
 import { Selection, Helpers, Collection, LineSegment, Scale, Domain, Box } from "victory-core";
-import { assign, defaults, isFunction, pick } from "lodash";
+import assign from "lodash/assign";
+import defaults from "lodash/defaults";
+import isFunction from "lodash/isFunction";
+import pick from "lodash/pick";
 import isEqual from "react-fast-compare";
 
 const getScale = (props) => {

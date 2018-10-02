@@ -2,7 +2,9 @@
 /*eslint-disable no-magic-numbers */
 import React from "react";
 import PropTypes from "prop-types";
-import { merge, random, range } from "lodash";
+import merge from "lodash/merge";
+import random from "lodash/random";
+import range from "lodash/range";
 import { VictoryChart } from "../../packages/victory-chart/src/index";
 import { VictoryLine } from "../../packages/victory-line/src/index";
 import { VictoryErrorBar, ErrorBar } from "../../packages/victory-errorbar/src/index";

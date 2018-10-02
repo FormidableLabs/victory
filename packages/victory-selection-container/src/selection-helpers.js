@@ -1,5 +1,9 @@
 import { Selection, Data, Helpers } from "victory-core";
-import { assign, defaults, throttle, isFunction, includes } from "lodash";
+import assign from "lodash/assign";
+import defaults from "lodash/defaults";
+import throttle from "lodash/throttle";
+import isFunction from "lodash/isFunction";
+import includes from "lodash/includes";
 import React from "react";
 
 const SelectionHelpers = {

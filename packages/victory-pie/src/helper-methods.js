@@ -1,5 +1,7 @@
 /*eslint no-magic-numbers: ["error", { "ignore": [-1, 0, 1, 2, 45, 135, 180, 225, 315] }]*/
-import { assign, isFunction, isPlainObject } from "lodash";
+import assign from "lodash/assign";
+import isFunction from "lodash/isFunction";
+import isPlainObject from "lodash/isPlainObject";
 import * as d3Shape from "d3-shape";
 
 import { Helpers, Data, Style } from "victory-core";

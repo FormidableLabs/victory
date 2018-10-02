@@ -2,7 +2,9 @@ import React from "react";
 import { shallow } from "enzyme";
 import ErrorBar from "packages/victory-errorbar/src/error-bar";
 import { Line } from "packages/victory-core";
-import { forEach, merge, omit } from "lodash";
+import forEach from "lodash/forEach";
+import merge from "lodash/merge";
+import omit from "lodash/omit";
 
 describe("victory-primitives/error-bar", () => {
   const baseProps = {

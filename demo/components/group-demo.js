@@ -9,7 +9,8 @@ import { VictoryScatter } from "../../packages/victory-scatter/src/index";
 import { VictoryErrorBar } from "../../packages/victory-errorbar/src/index";
 import { VictoryTooltip } from "../../packages/victory-tooltip/src/index";
 import { VictoryVoronoi } from "../../packages/victory-voronoi/src/index";
-import { range, random } from "lodash";
+import range from "lodash/range";
+import random from "lodash/random";
 
 
 class App extends React.Component {

@@ -1,4 +1,10 @@
-import { toPairs, groupBy, forOwn, includes, flow, isEmpty, isFunction } from "lodash";
+import toPairs from "lodash/toPairs";
+import groupBy from "lodash/groupBy";
+import forOwn from "lodash/forOwn";
+import includes from "lodash/includes";
+import flow from "lodash/flow";
+import isEmpty from "lodash/isEmpty";
+import isFunction from "lodash/isFunction";
 import { VictoryContainer, Log } from "victory-core";
 import { voronoiContainerMixin } from "victory-voronoi-container";
 import { zoomContainerMixin } from "victory-zoom-container";

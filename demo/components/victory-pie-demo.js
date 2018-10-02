@@ -1,6 +1,8 @@
 /*global window:false*/
 /*eslint-disable no-magic-numbers,react/no-multi-comp*/
-import { merge, random, range } from "lodash";
+import merge from "lodash/merge";
+import random from "lodash/random";
+import range from "lodash/range";
 import PropTypes from "prop-types";
 import React from "react";
 import { VictoryPie, Slice } from "../../packages/victory-pie/src/index";

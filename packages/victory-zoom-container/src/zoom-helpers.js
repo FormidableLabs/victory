@@ -1,7 +1,9 @@
 /*eslint no-magic-numbers: ["error", { "ignore": [-1, 0, 1, 2, 1000] }]*/
 import { Children } from "react";
 import { Selection, Collection, Wrapper } from "victory-core";
-import { throttle, isFunction, defaults } from "lodash";
+import throttle from "lodash/throttle";
+import isFunction from "lodash/isFunction";
+import defaults from "lodash/defaults";
 
 const RawZoomHelpers = {
   checkDomainEquality(a, b) {

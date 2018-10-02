@@ -3,7 +3,8 @@
 
 import React from "react";
 import { Log, Helpers, Scale, Axis, Wrapper } from "victory-core";
-import { defaults, assign } from "lodash";
+import defaults from "lodash/defaults";
+import assign from "lodash/assign";
 
 function getAxisProps(child, props, calculatedProps) {
   const { domain, scale, originSign, stringMap, categories, horizontal } = calculatedProps;

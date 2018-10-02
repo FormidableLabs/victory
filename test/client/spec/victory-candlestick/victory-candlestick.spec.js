@@ -5,7 +5,8 @@
 /*eslint-disable max-nested-callbacks,no-unused-expressions */
 import React from "react";
 import { shallow, mount } from "enzyme";
-import { range, omit } from "lodash";
+import range from "lodash/range";
+import omit from "lodash/omit";
 import { VictoryCandlestick, Candle } from "packages/victory-candlestick/src/index";
 import { VictoryLabel } from "packages/victory-core";
 

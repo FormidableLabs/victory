@@ -1,5 +1,11 @@
 import { Selection, Data, Helpers } from "victory-core";
-import { assign, throttle, isFunction, isEmpty, groupBy, keys, includes } from "lodash";
+import assign from "lodash/assign";
+import throttle from "lodash/throttle";
+import isFunction from "lodash/isFunction";
+import isEmpty from "lodash/isEmpty";
+import groupBy from "lodash/groupBy";
+import keys from "lodash/keys";
+import includes from "lodash/includes";
 import isEqual from "react-fast-compare";
 import { voronoi as d3Voronoi } from "d3-voronoi";
 import React from "react";

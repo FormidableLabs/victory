@@ -5,7 +5,8 @@
 /*eslint-disable max-nested-callbacks */
 /* eslint no-unused-expressions: 0 */
 import React from "react";
-import { range, omit } from "lodash";
+import range from "lodash/range";
+import omit from "lodash/omit";
 import { shallow, mount } from "enzyme";
 import SvgTestHelper from "../svg-test-helper";
 import { VictoryArea, Area } from "packages/victory-area/src/index";

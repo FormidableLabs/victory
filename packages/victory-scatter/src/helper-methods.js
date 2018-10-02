@@ -1,4 +1,5 @@
-import { assign, values } from "lodash";
+import assign from "lodash/assign";
+import values from "lodash/values";
 import { Helpers, LabelHelpers, Data, Domain, Scale } from "victory-core";
 
 const getSymbol = (data, props) => {

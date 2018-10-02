@@ -2,7 +2,13 @@
 /*eslint-disable no-magic-numbers,react/no-multi-comp */
 import React from "react";
 import PropTypes from "prop-types";
-import { range, merge, random, minBy, maxBy, last, round } from "lodash";
+import range from "lodash/range";
+import merge from "lodash/merge";
+import random from "lodash/random";
+import minBy from "lodash/minBy";
+import maxBy from "lodash/maxBy";
+import last from "lodash/last";
+import round from "lodash/round";
 import { VictoryChart } from "../../packages/victory-chart/src/index";
 import { VictoryStack } from "../../packages/victory-stack/src/index";
 import { VictoryGroup } from "../../packages/victory-group/src/index";

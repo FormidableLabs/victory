@@ -1,5 +1,6 @@
 /*eslint no-magic-numbers: ["error", { "ignore": [-1, 0, 1, 2] }]*/
-import { isFunction, find } from "lodash";
+import isFunction from "lodash/isFunction";
+import find from "lodash/find";
 import Log from "./log";
 import PropTypes from "prop-types";
 

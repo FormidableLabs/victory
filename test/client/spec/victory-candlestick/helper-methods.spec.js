@@ -3,7 +3,7 @@
 import {
   getData, getDomain
 } from "packages/victory-candlestick/src/helper-methods";
-import { range } from "lodash";
+import range from "lodash/range";
 import { fromJS } from "immutable";
 
 const immutableGetDataTest = {
