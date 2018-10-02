@@ -5,7 +5,9 @@ import {
   VictoryPortal
 } from "victory-core";
 import Flyout from "./flyout";
-import { assign, defaults, uniqueId } from "lodash";
+import assign from "lodash/assign";
+import defaults from "lodash/defaults";
+import uniqueId from "lodash/uniqueId";
 
 const fallbackProps = {
   cornerRadius: 5,

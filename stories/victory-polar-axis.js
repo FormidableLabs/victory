@@ -1,6 +1,6 @@
 /*eslint-disable no-magic-numbers*/
 import React from "react";
-import { range } from "lodash";
+import range from "lodash/range";
 import seedrandom from "seedrandom";
 import { storiesOf } from "@storybook/react";
 import { VictoryPolarAxis } from "../packages/victory-polar-axis/src/index";

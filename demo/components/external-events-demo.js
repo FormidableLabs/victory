@@ -9,7 +9,7 @@ import { VictoryBar } from "../../packages/victory-bar/src/index";
 import { VictoryLine } from "../../packages/victory-line/src/index";
 import { VictoryZoomContainer } from "../../packages/victory-zoom-container/src/index";
 import { VictoryVoronoiContainer } from "../../packages/victory-voronoi-container/src/index";
-import { range } from "lodash";
+import range from "lodash/range";
 
 class App extends React.Component {
   constructor() {

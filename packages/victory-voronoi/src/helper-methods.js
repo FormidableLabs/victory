@@ -1,4 +1,5 @@
-import { assign, without } from "lodash";
+import assign from "lodash/assign";
+import without from "lodash/without";
 import { voronoi as d3Voronoi } from "d3-voronoi";
 import { Helpers, LabelHelpers, Scale, Domain, Data } from "victory-core";
 

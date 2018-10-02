@@ -1,7 +1,10 @@
 import React from "react";
 import PropTypes from "prop-types";
 import CustomPropTypes from "../victory-util/prop-types";
-import { assign, defaults, uniqueId, isObject } from "lodash";
+import assign from "lodash/assign";
+import defaults from "lodash/defaults";
+import uniqueId from "lodash/uniqueId";
+import isObject from "lodash/isObject";
 import Portal from "../victory-portal/portal";
 import Timer from "../victory-util/timer";
 import Helpers from "../victory-util/helpers";

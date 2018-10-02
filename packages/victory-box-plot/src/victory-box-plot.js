@@ -1,6 +1,6 @@
 import React from "react";
 import PropTypes from "prop-types";
-import { flatten } from "lodash";
+import flatten from "lodash/flatten";
 import {
     Helpers, VictoryLabel, addEvents, LineSegment, PropTypes as CustomPropTypes,
     VictoryContainer, VictoryTheme, Box, Whisker, DefaultTransitions, CommonProps

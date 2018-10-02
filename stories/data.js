@@ -1,5 +1,5 @@
 /*eslint-disable no-magic-numbers*/
-import { range } from "lodash";
+import range from "lodash/range";
 import seedrandom from "seedrandom";
 
 // const polarData = [

@@ -3,7 +3,7 @@ import { shallow } from "enzyme";
 import Candle from "packages/victory-candlestick/src/candle";
 import { Line, Rect } from "packages/victory-core";
 import * as d3Scale from "d3-scale";
-import { assign } from "lodash";
+import assign from "lodash/assign";
 
 describe("victory-primitives/candle", () => {
   const baseProps = {

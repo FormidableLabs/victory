@@ -11,7 +11,10 @@ import { VictorySharedEvents } from "../../packages/victory-shared-events/src/in
 import {
   VictoryContainer, VictoryTheme, VictoryLabel
 } from "../../packages/victory-core/src/index";
-import { assign, random, range, merge } from "lodash";
+import assign from "lodash/assign";
+import random from "lodash/random";
+import range from "lodash/range";
+import merge from "lodash/merge";
 
 class Wrapper extends React.Component {
   static propTypes = {

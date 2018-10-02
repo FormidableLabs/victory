@@ -5,7 +5,9 @@ import { VictoryAxis } from "../../packages/victory-axis/src/index";
 import {
   VictoryLabel, VictoryContainer, VictoryTheme
 } from "../../packages/victory-core/src/index";
-import { merge, random, range } from "lodash";
+import merge from "lodash/merge";
+import random from "lodash/random";
+import range from "lodash/range";
 import XYTheme from "../theme/victory-axis-differential-styling-theme";
 
 export default class App extends React.Component {

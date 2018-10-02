@@ -6,7 +6,7 @@
 /* eslint no-unused-expressions: 0 */
 
 import React from "react";
-import { omit } from "lodash";
+import omit from "lodash/omit";
 import { shallow, mount } from "enzyme";
 import SvgTestHelper from "../svg-test-helper";
 import { VictoryLine, Curve } from "packages/victory-line/src/index";

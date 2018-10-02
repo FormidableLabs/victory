@@ -2,7 +2,7 @@
 /*eslint-disable react/no-multi-comp */
 import React from "react";
 import ReactDOM from "react-dom";
-import { keys } from "lodash";
+import keys from "lodash/keys";
 
 import AreaDemo from "./components/victory-area-demo";
 import AxisDemo from "./components/victory-axis-demo";

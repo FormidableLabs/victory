@@ -1,6 +1,11 @@
-import { orderBy, defaults, assign, uniq, groupBy, keys } from "lodash";
 import { Helpers, Scale, Domain, Data, Collection } from "victory-core";
 import { min as d3Min, max as d3Max, quantile as d3Quantile } from "d3-array";
+import assign from "lodash/assign";
+import defaults from "lodash/defaults";
+import groupBy from "lodash/groupBy";
+import keys from "lodash/keys";
+import orderBy from "lodash/orderBy";
+import uniq from "lodash/uniq";
 
 const TYPES = ["max", "min", "median", "q1", "q3"];
 

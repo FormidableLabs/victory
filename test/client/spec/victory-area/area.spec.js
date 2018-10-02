@@ -2,7 +2,7 @@ import React from "react";
 import { mount } from "enzyme";
 import Area from "packages/victory-area/src/area";
 import { Path } from "packages/victory-core";
-import { merge } from "lodash";
+import merge from "lodash/merge";
 
 describe("victory-primitives/area", () => {
   const baseProps = {

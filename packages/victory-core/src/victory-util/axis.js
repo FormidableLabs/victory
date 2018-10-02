@@ -1,8 +1,14 @@
 /* eslint-disable func-style */
 import React from "react";
-import {
-  identity, isFunction, invert, uniq, range, orderBy, values, includes, without
-} from "lodash";
+import identity from "lodash/identity";
+import isFunction from "lodash/isFunction";
+import invert from "lodash/invert";
+import uniq from "lodash/uniq";
+import range from "lodash/range";
+import orderBy from "lodash/orderBy";
+import values from "lodash/values";
+import includes from "lodash/includes";
+import without from "lodash/without";
 import Collection from "./collection";
 import Domain from "./domain";
 /**

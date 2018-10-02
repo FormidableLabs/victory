@@ -7,7 +7,8 @@
 
 import React from "react";
 import { shallow, mount } from "enzyme";
-import { omit, range } from "lodash";
+import omit from "lodash/omit";
+import range from "lodash/range";
 import SvgTestHelper from "../svg-test-helper";
 import { VictoryBar, Bar } from "packages/victory-bar/src/index";
 import { VictoryLabel } from "packages/victory-core";

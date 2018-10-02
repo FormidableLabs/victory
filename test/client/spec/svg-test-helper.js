@@ -1,7 +1,10 @@
 import * as d3Shape from "d3-shape";
 import * as d3Scale from "d3-scale";
 import { voronoi as d3Voronoi } from "d3-voronoi";
-import { without, min, max, property } from "lodash";
+import without from "lodash/without";
+import min from "lodash/min";
+import max from "lodash/max";
+import property from "lodash/property";
 
 const RECTANGULAR_SEQUENCE = ["M", "A", "L", "A", "L", "A", "L", "A", "z"];
 const CIRCULAR_SEQUENCE = ["M", "m", "a", "a"];

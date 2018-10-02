@@ -4,7 +4,7 @@ import { storiesOf } from "@storybook/react";
 import { VictoryBoxPlot } from "../packages/victory-box-plot/src/index";
 import { VictoryTooltip } from "../packages/victory-tooltip/src/index";
 import { VictoryTheme } from "../packages/victory-core/src/index";
-import { range } from "lodash";
+import range from "lodash/range";
 import seedrandom from "seedrandom";
 import { getArrayData } from "./data";
 import { getChartDecorator } from "./decorators";

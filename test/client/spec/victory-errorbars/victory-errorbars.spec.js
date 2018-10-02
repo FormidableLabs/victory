@@ -6,7 +6,8 @@
 /* eslint no-unused-expressions: 0 */
 import React from "react";
 import { shallow, mount } from "enzyme";
-import { omit, range } from "lodash";
+import omit from "lodash/omit";
+import range from "lodash/range";
 import { fromJS } from "immutable";
 import * as d3Scale from "d3-scale";
 import { VictoryErrorBar, ErrorBar } from "packages/victory-errorbar/src/index";

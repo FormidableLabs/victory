@@ -3,7 +3,7 @@ import PropTypes from "prop-types";
 import Helpers from "../victory-util/helpers";
 import CommonProps from "../victory-util/common-props";
 import Line from "./line";
-import { assign } from "lodash";
+import assign from "lodash/assign";
 
 export default class Whisker extends React.Component {
 

@@ -1,6 +1,12 @@
-import {
-  assign, defaults, flatten, isFunction, uniq, some, groupBy, values, isPlainObject
-} from "lodash";
+import assign from "lodash/assign";
+import defaults from "lodash/defaults";
+import flatten from "lodash/flatten";
+import isFunction from "lodash/isFunction";
+import uniq from "lodash/uniq";
+import some from "lodash/some";
+import groupBy from "lodash/groupBy";
+import values from "lodash/values";
+import isPlainObject from "lodash/isPlainObject";
 import React from "react";
 import Axis from "./axis";
 import Style from "./style";

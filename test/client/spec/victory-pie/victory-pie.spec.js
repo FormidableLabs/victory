@@ -3,7 +3,8 @@
  */
 /*eslint-disable max-nested-callbacks,no-unused-expressions,max-len */
 /* global sinon */
-import { range, omit } from "lodash";
+import range from "lodash/range";
+import omit from "lodash/omit";
 import React from "react";
 import { shallow, mount } from "enzyme";
 import { Style, VictoryLabel } from "packages/victory-core";

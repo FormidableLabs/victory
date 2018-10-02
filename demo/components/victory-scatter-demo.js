@@ -2,7 +2,9 @@
 /*eslint-disable no-magic-numbers,react/no-multi-comp */
 import React from "react";
 import PropTypes from "prop-types";
-import { merge, random, range } from "lodash";
+import merge from "lodash/merge";
+import random from "lodash/random";
+import range from "lodash/range";
 import { VictoryScatter } from "../../packages/victory-scatter/src/index";
 import {
   VictoryLabel, VictoryContainer, VictoryTheme

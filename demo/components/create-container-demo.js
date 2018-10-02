@@ -1,6 +1,6 @@
 /*eslint-disable no-magic-numbers,react/no-multi-comp */
 import React from "react";
-import { round } from "lodash";
+import round from "lodash/round";
 import { VictoryChart } from "../../packages/victory-chart/src/index";
 import { VictoryStack } from "../../packages/victory-stack/src/index";
 import { VictoryGroup } from "../../packages/victory-group/src/index";

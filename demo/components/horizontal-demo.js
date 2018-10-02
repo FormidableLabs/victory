@@ -5,7 +5,8 @@ import { VictoryChart } from "../../packages/victory-chart/src/index";
 import { VictoryStack } from "../../packages/victory-stack/src/index";
 import { VictoryGroup } from "../../packages/victory-group/src/index";
 import { VictoryBar } from "../../packages/victory-bar/src/index";
-import { range, random } from "lodash";
+import range from "lodash/range";
+import random from "lodash/random";
 
 class App extends React.Component {
   getBarData() {

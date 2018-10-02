@@ -1,6 +1,10 @@
-import {
-  assign, isEmpty, isFunction, without, pickBy, uniq, includes
-} from "lodash";
+import assign from "lodash/assign";
+import isEmpty from "lodash/isEmpty";
+import isFunction from "lodash/isFunction";
+import without from "lodash/without";
+import pickBy from "lodash/pickBy";
+import uniq from "lodash/uniq";
+import includes from "lodash/includes";
 
 export default {
   /* Returns all own and shared events that should be attached to a single target element,

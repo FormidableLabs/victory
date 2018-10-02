@@ -1,7 +1,11 @@
 /* eslint-disable func-style */
 /* eslint-disable no-use-before-define */
 import React from "react";
-import { flatten, isPlainObject, sortedUniq, isFunction, includes } from "lodash";
+import flatten from "lodash/flatten";
+import isPlainObject from "lodash/isPlainObject";
+import sortedUniq from "lodash/sortedUniq";
+import isFunction from "lodash/isFunction";
+import includes from "lodash/includes";
 import Data from "./data";
 import Scale from "./scale";
 import Helpers from "./helpers";

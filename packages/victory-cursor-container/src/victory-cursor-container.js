@@ -1,7 +1,9 @@
 import PropTypes from "prop-types";
 import React from "react";
 import { VictoryContainer, VictoryLabel, LineSegment, Helpers } from "victory-core";
-import { defaults, assign, isObject } from "lodash";
+import assign from "lodash/assign";
+import defaults from "lodash/defauts";
+import isObject from "lodash/isObject";
 import CursorHelpers from "./cursor-helpers";
 
 export const cursorContainerMixin = (base) => class VictoryCursorContainer extends base {

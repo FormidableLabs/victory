@@ -1,7 +1,7 @@
 /**
  * Client tests
  */
-import { forEach } from "lodash";
+import forEach from "lodash/forEach";
 import { mount } from "enzyme";
 import React from "react";
 import { addEvents } from "packages/victory-core/src/index";

@@ -1,5 +1,5 @@
 /*eslint no-magic-numbers: ["error", { "ignore": [0, 1, 2, 2.5, 3] }]*/
-import { range } from "lodash";
+import range from "lodash/range";
 
 export default {
   circle(x, y, size) {

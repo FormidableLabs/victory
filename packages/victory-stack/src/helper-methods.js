@@ -1,6 +1,8 @@
 /* eslint-disable func-style */
 /* eslint-disable no-use-before-define */
-import { assign, keys, orderBy } from "lodash";
+import assign from "lodash/assign";
+import keys from "lodash/keys";
+import orderBy from "lodash/orderBy";
 import React from "react";
 import { Helpers, Scale, Wrapper } from "victory-core";
 

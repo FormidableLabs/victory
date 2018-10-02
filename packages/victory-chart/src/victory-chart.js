@@ -1,4 +1,5 @@
-import { defaults, assign } from "lodash";
+import defaults from "lodash/defaults";
+import assign from "lodash/assign";
 import PropTypes from "prop-types";
 import React from "react";
 import {

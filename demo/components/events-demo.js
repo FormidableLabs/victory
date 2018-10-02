@@ -6,8 +6,7 @@ import { VictoryArea } from "../../packages/victory-area/src/index";
 import { VictoryBar } from "../../packages/victory-bar/src/index";
 import { VictoryLine } from "../../packages/victory-line/src/index";
 import { VictoryTheme, VictoryLabel } from "../../packages/victory-core/src/index";
-import { merge } from "lodash";
-
+import merge from "lodash/merge";
 
 class App extends React.Component {
 

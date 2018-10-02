@@ -1,5 +1,11 @@
 import React from "react";
-import { defaults, assign, keys, isFunction, pick, without, isEmpty } from "lodash";
+import defaults from "lodash/defaults";
+import assign from "lodash/assign";
+import keys from "lodash/keys";
+import isFunction from "lodash/isFunction";
+import pick from "lodash/pick";
+import without from "lodash/without";
+import isEmpty from "lodash/isEmpty";
 import Events from "./events";
 import isEqual from "react-fast-compare";
 import VictoryTransition from "../victory-transition/victory-transition";

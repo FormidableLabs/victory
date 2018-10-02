@@ -2,7 +2,7 @@
 import React from "react";
 import PropTypes from "prop-types";
 import { Helpers, CommonProps, Line } from "victory-core";
-import { assign } from "lodash";
+import assign from "lodash/assign";
 
 export default class ErrorBar extends React.Component {
   static propTypes = {

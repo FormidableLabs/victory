@@ -8,7 +8,11 @@ import { VictoryBrushLine } from "../../packages/victory-brush-line/src/index";
 import { VictoryLine } from "../../packages/victory-line/src/index";
 import { VictoryScatter } from "../../packages/victory-scatter/src/index";
 import { VictoryLabel } from "../../packages/victory-core/src/index";
-import _ from "lodash";
+import find from "lodash/find";
+import keys from "lodash/keys";
+import includes from "lodash/includes";
+import isEmpty from "lodash/isEmpty";
+import values from "lodash/values";
 
 const data = [
   { name: "Adrien", strength: 5, intelligence: 30, speed: 500, luck: 3 },
@@ -70,11 +74,11 @@ class App extends React.Component {
   getActiveDatasets(filters) {
     // Return the names from all datasets that have values within all filters
     const isActive = (dataset) => {
-      return _.keys(filters).reduce((memo, name) => {
+      return keys(filters).reduce((memo, name) => {
         if (!memo || !Array.isArray(filters[name])) {
           return memo;
         }
-        const point = _.find(dataset.data, (d) => d.x === name);
+        const point = find(dataset.data, (d) => d.x === name);
         return (
           point &&
           Math.max(...filters[name]) >= point.y &&
@@ -92,7 +96,7 @@ class App extends React.Component {
 
   onDomainChange(domain, props) {
     const filters = this.addNewFilters(domain, props);
-    const isFiltered = !_.isEmpty(_.values(filters).filter(Boolean));
+    const isFiltered = !isEmpty(values(filters).filter(Boolean));
     const activeDatasets = isFiltered
       ? this.getActiveDatasets(filters)
       : this.state.datasets;
@@ -103,7 +107,7 @@ class App extends React.Component {
     // Determine whether a given dataset is active
     return !this.state.isFiltered
       ? true
-      : _.includes(this.state.activeDatasets, dataset.name);
+      : includes(this.state.activeDatasets, dataset.name);
   }
 
   getAxisOffset(index) {

@@ -2,7 +2,11 @@
 /*eslint-disable no-magic-numbers,react/no-multi-comp */
 import React from "react";
 import PropTypes from "prop-types";
-import { assign, merge, random, range, omit } from "lodash";
+import assign from "lodash/assign";
+import merge from "lodash/merge";
+import random from "lodash/random";
+import range from "lodash/range";
+import omit from "lodash/omit";
 import { VictoryChart } from "../../packages/victory-chart/src/index";
 import { VictoryStack } from "../../packages/victory-stack/src/index";
 import { VictoryGroup } from "../../packages/victory-group/src/index";

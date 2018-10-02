@@ -1,6 +1,7 @@
 // http://www.pearsonified.com/2012/01/characters-per-line.php
 /*eslint-disable no-magic-numbers */
-import { assign, defaults } from "lodash";
+import assign from "lodash/assign";
+import defaults from "lodash/defaults";
 
 const fontDictionary = {
   "American Typewriter": 2.09,

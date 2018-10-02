@@ -1,6 +1,7 @@
 import PropTypes from "prop-types";
 import React from "react";
-import { defaults, isFunction } from "lodash";
+import defaults from "lodash/defaults";
+import isFunction from "lodash/isFunction";
 import ZoomHelpers from "./zoom-helpers";
 import {
   VictoryContainer, VictoryClipContainer, Data, PropTypes as CustomPropTypes

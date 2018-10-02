@@ -4,7 +4,8 @@ import React from "react";
 import { VictoryChart } from "../../packages/victory-chart/src/index";
 import { VictoryBoxPlot } from "../../packages/victory-box-plot/src/index";
 import { VictoryTheme } from "../../packages/victory-core/src/index";
-import { range, random } from "lodash";
+import range from "lodash/range";
+import random from "lodash/random";
 
 export default class App extends React.Component {
   constructor(props) {
