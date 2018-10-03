@@ -250,6 +250,22 @@ The `innerRadius` prop determines the number of pixels between the center of the
 />
 ```
 
+### labelPosition
+
+`type: "centroid" || "startAngle" || "endAngle"`
+
+The `labelPosition` prop defines the position inside the arc that will be used for positioning each slice label. If this props is not set, the label position will default to the centroid of the arc itself.
+
+*default:* `"centroid"`
+
+```playground
+<VictoryPie
+  data={sampleData}
+  labelPosition="endAngle"
+  style={{ labels: { fill: "white", fontSize: 20, fontWeight: "bold" } }}
+/>
+```
+
 ### labelRadius
 
 `type: number`

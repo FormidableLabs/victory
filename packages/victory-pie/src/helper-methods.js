@@ -87,12 +87,21 @@ const getLabelText = (props, datum, index) => {
   return checkForValidText(text);
 };
 
-const getLabelPosition = (radius, labelRadius, style) => {
+const getLabelArc = (radius, labelRadius, style) => {
   const padding = style && style.padding || 0;
   const arcRadius = labelRadius || radius + padding;
   return d3Shape.arc()
     .outerRadius(arcRadius)
     .innerRadius(arcRadius);
+};
+
+const getLabelPosition = (arc, slice, position) => {
+  const construct = {
+    startAngle: position === "startAngle" ? slice.endAngle : slice.startAngle,
+    endAngle: position === "endAngle" ? slice.startAngle : slice.endAngle
+  };
+  const clonedArc = Object.assign({}, slice, construct);
+  return arc.centroid(clonedArc);
 };
 
 const getLabelOrientation = (slice) => {
@@ -134,8 +143,8 @@ const getLabelProps = (props, dataProps, calculatedValues) => {
     assign({ padding: 0 }, style.labels), datum, props.active
   );
   const labelRadius = Helpers.evaluateProp(props.labelRadius, datum);
-  const labelPosition = getLabelPosition(radius, labelRadius, labelStyle);
-  const position = labelPosition.centroid(slice);
+  const labelArc = getLabelArc(radius, labelRadius, labelStyle);
+  const position = getLabelPosition(labelArc, slice, props.labelPosition);
   const orientation = getLabelOrientation(slice);
   return {
     index, datum, data, slice, orientation,
