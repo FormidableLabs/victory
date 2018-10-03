@@ -40,8 +40,10 @@ export default class Curve extends React.Component {
   };
 
   getLineFunction(props) {
-    const { polar, scale, openCurve } = props;
-    const interpolation = polar && !openCurve ?
+    const { polar, scale } = props;
+    const defaultOpenCurve = polar ? false : true;
+    const openCurve = props.openCurve === undefined ? defaultOpenCurve : props.openCurve;
+    const interpolation = !openCurve ?
       `${this.toNewName(props.interpolation)}Closed` : this.toNewName(props.interpolation);
     return polar ?
       d3Shape.lineRadial()
