@@ -1,5 +1,12 @@
 # Victory Changelog
 
+## 30.5.0 (2018-10-03)
+
+- [#1135](https://github.com/FormidableLabs/victory/pull/1135) - Allow closed paths for cartesian and polar `VictoryLine`
+- [#1130](https://github.com/FormidableLabs/victory/pull/1130) - Adds a `labelPosition` prop to `VictoryPie` with options `startAngle`, `endAngle` and `centroid` (default). Thanks @sikolio!
+- [#1126](https://github.com/FormidableLabs/victory/pull/1126) - Ensures that `onBrushDomainChangeEnd` is called for dragging and panning actions. Thanks @jeloagnasin!
+
+
 ## 30.4.1 (2018-09-26)
 
 - [#1127](https://github.com/FormidableLabs/victory/pull/1127) - Fixes a bug with cornerRadius when defined as a function
