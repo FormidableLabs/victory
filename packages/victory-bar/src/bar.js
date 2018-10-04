@@ -86,7 +86,8 @@ export default class Bar extends React.Component {
 
   getCustomBarPath(props, width) {
     const { getPath } = props;
-    return getPath(this.getPosition(props, width));
+    const propsWithCalculatedValues = { ...props, ...this.getPosition(props, width) };
+    return getPath(propsWithCalculatedValues);
   }
 
   transformAngle(angle) {
@@ -140,8 +141,8 @@ export default class Bar extends React.Component {
     }
   }
 
-  getCustomVerticalPolarBarPath(getPath, options) {
-    return getPath(options);
+  getCustomVerticalPolarBarPath(getPath, props) {
+    return getPath(props);
   }
 
   getVerticalPolarBarPath(props, cornerRadius) { // eslint-disable-line max-statements
@@ -165,8 +166,9 @@ export default class Bar extends React.Component {
     start = this.transformAngle(start);
     end = this.transformAngle(end);
     if (props.getPath) {
-      const options = { datum, start, end, r1, r2, cornerRadius };
-      return this.getCustomVerticalPolarBarPath(props.getPath, options);
+      const options = { startAngle: start, endAngle: end, r1, r2, cornerRadius };
+      const propsWithCalculatedValues = { ...props, ...options };
+      return this.getCustomVerticalPolarBarPath(props.getPath, propsWithCalculatedValues);
     }
 
     const getPath = (edge) => {

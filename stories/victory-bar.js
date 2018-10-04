@@ -104,8 +104,8 @@ storiesOf("VictoryBar.cornerRadius", module)
 storiesOf("VictoryBar.getPath", module)
   .addDecorator(getChartDecorator({ domainPadding: 25 }))
   .add("custom bar path (vertical)", () => {
-    const getPathFn = (options) => {
-      const { x0, x1, y0, y1 } = options;
+    const getPathFn = (props) => {
+      const { x0, x1, y0, y1 } = props;
       return `M ${x0}, ${y0}
         L ${(x1 + x0) / 2}, ${y1}
         L ${x1}, ${y0}
@@ -116,8 +116,8 @@ storiesOf("VictoryBar.getPath", module)
     );
   })
   .add("custom bar path (horizontal)", () => {
-    const getPathFn = (options) => {
-      const { x0, x1, y0, y1 } = options;
+    const getPathFn = (props) => {
+      const { x0, x1, y0, y1 } = props;
       return `M ${y0}, ${x0}
         L ${y1}, ${(x0 + x1) / 2}
         L ${y0}, ${x1}
@@ -131,13 +131,13 @@ storiesOf("VictoryBar.getPath", module)
 storiesOf("VictoryBar.getPath", module)
   .addDecorator(getPolarChartDecorator())
   .add("custom bar path (polar)", () => {
-    const getPathFn = (options) => {
-      const { datum, start, end, r1, r2 } = options;
+    const getPathFn = (props) => {
+      const { datum, startAngle, endAngle, r1, r2 } = props;
       const pathFunction = d3Shape.arc()
       .innerRadius(r1)
       .outerRadius(r2)
-      .startAngle(end)
-      .endAngle(start)
+      .startAngle(endAngle)
+      .endAngle(startAngle)
       .cornerRadius(0);
       const path = pathFunction();
       const coords = path.split(/[A-Z]/).slice(1);
