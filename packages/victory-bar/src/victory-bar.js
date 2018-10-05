@@ -60,6 +60,7 @@ class VictoryBar extends React.Component {
         bottom: PropTypes.oneOfType([PropTypes.number, PropTypes.func])
       })
     ]),
+    getPath: PropTypes.func,
     horizontal: PropTypes.bool
   };
 

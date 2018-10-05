@@ -8,7 +8,7 @@ import { VictoryTooltip } from "../packages/victory-tooltip/src/index";
 import { VictoryTheme } from "../packages/victory-core/src/index";
 import { getData, getStackedData, getMixedData, getTimeData, getLogData } from "./data";
 import { getChartDecorator, getPolarChartDecorator } from "./decorators";
-
+import * as d3Shape from "d3-shape";
 
 storiesOf("VictoryBar", module)
   .add("default rendering", () => <VictoryBar/>);
@@ -100,6 +100,75 @@ storiesOf("VictoryBar.cornerRadius", module)
     <VictoryBar horizontal data={getMixedData(5)} cornerRadius={5}/>
   ))
   .add("cornerRadius = 3 (20 bars)", () => <VictoryBar data={getData(20)} cornerRadius={3}/>);
+
+storiesOf("VictoryBar.getPath", module)
+  .addDecorator(getChartDecorator({ domainPadding: 25 }))
+  .add("custom bar path (vertical)", () => {
+    const getPathFn = (props) => {
+      const { x0, x1, y0, y1 } = props;
+      return `M ${x0}, ${y0}
+        L ${(x1 + x0) / 2}, ${y1}
+        L ${x1}, ${y0}
+        z`;
+    };
+    return (
+      <VictoryBar data={getData(7)} getPath={getPathFn}/>
+    );
+  })
+  .add("custom bar path (horizontal)", () => {
+    const getPathFn = (props) => {
+      const { x0, x1, y0, y1 } = props;
+      return `M ${y0}, ${x0}
+        L ${y1}, ${(x0 + x1) / 2}
+        L ${y0}, ${x1}
+        z`;
+    };
+    return (
+      <VictoryBar data={getData(4)} horizontal getPath={getPathFn}/>
+    );
+  });
+
+storiesOf("VictoryBar.getPath", module)
+  .addDecorator(getPolarChartDecorator())
+  .add("custom bar path (polar)", () => {
+    const getPathFn = (props) => {
+      const { datum, startAngle, endAngle, r1, r2 } = props;
+      const pathFunction = d3Shape.arc()
+      .innerRadius(r1)
+      .outerRadius(r2)
+      .startAngle(endAngle)
+      .endAngle(startAngle)
+      .cornerRadius(0);
+      const path = pathFunction();
+      const coords = path.split(/[A-Z]/).slice(1);
+      // add a star symbol to the end of each bar
+      const star = d3Shape.symbol().size(datum.y * 20).type(d3Shape.symbolStar)();
+      const movesStar = star.match(/[A-Z]/g);
+      const coordsStar = star.split(/[A-Z]/).slice(1);
+      const [x0, y0] = coords[0].split(",").map(Number);
+      const [x1, y1] = coords[1].split(",").slice(coords[1].split(",").length - 2).map(Number);
+      const [xOrigin, yOrigin] = [(x0 + x1) / 2, (y0 + y1) / 2];
+      const adjustedCoordsStar = coordsStar.map((coord) => {
+        if (coord.length === 0) {
+          return "";
+        }
+        const [x, y] = coord.split(",").map(Number);
+        return [x + xOrigin, y + yOrigin].join(",");
+      });
+      const adjustedStar = movesStar.map((m, i) => m + adjustedCoordsStar[i]).join();
+      return adjustedStar + pathFunction();
+    };
+    return (
+      <VictoryBar
+        alignment={"middle"}
+        polar
+        width={0}
+        data={getData(7)}
+        style={{ data: { width: 10 } }}
+        getPath={getPathFn}
+      />
+    );
+  });
 
 storiesOf("VictoryBar.data", module)
   .addDecorator(getChartDecorator({ domainPadding: 25 }))
