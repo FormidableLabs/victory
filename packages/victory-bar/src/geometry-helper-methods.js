@@ -106,4 +106,9 @@ Circle.prototype.solveX = function (y) {
   return [ this.center.x - sqrt, this.center.x + sqrt ];
 };
 
+Circle.prototype.solveY = function (x) {
+  const sqrt = Math.sqrt(this.radius ** 2 - (x - this.center.x) ** 2);
+  return [ this.center.y - sqrt, this.center.y + sqrt ];
+};
+
 export { Circle, Point };

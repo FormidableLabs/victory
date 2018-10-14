@@ -165,32 +165,108 @@ export const getVerticalBarPath = (props, width, cornerRadius) => {
 
 };
 
+// eslint-disable-next-line max-statements, max-len
 export const getHorizontalBarPath = (props, width, cornerRadius) => {
+  // "bottom" means y0 (not "bottom of screen / viewbox")
+  // "top" means y1, "left" means x1, "right" means x0
+
   const { x0, x1, y0, y1 } = getPosition(props, width);
   const sign = y1 > y0 ? 1 : -1;
   const direction = sign > 0 ? "0 0 1" : "0 0 0";
+
+  const isSelfIntersecting = sign > 0 ?
+    (y1 - cornerRadius.top) < (y0 + cornerRadius.bottom) :
+    (y0 - cornerRadius.bottom) < (y1 + cornerRadius.top);
+
   const topArc = `${cornerRadius.top} ${cornerRadius.top} ${direction}`;
   const bottomArc = `${cornerRadius.bottom} ${cornerRadius.bottom} ${direction}`;
 
-  const start = `M ${y0}, ${x1 + sign * cornerRadius.bottom}`;
-  const topLeftArc = `A ${bottomArc}, ${y0 + cornerRadius.bottom}, ${x1}`;
-  const topLine = `L ${y1 - sign * cornerRadius.top}, ${x1}`;
-  const topRightArc = `A ${topArc}, ${y1}, ${x1 + cornerRadius.top}`;
-  const rightLine = `L ${y1}, ${x0 - cornerRadius.top}`;
-  const bottomRightArc = `A ${topArc}, ${y1 - sign * cornerRadius.top}, ${x0}`;
-  const bottomLine = `L ${y0 + cornerRadius.bottom}, ${x0 }`;
-  const bottomLeftArc = `A ${bottomArc}, ${y0}, ${x0 - sign * cornerRadius.bottom}`;
+  let start = `M ${y0}, ${x1 + cornerRadius.bottom}`;
+  let bottomLeftArc = `A ${bottomArc}, ${y0 + sign * cornerRadius.bottom}, ${x1}`;
+  let leftLine = `L ${y1 - sign * cornerRadius.top}, ${x1}`;
+  let topLeftArc = `A ${topArc}, ${y1}, ${x1 + cornerRadius.top}`;
+  let topLine = `L ${y1}, ${x0 - cornerRadius.top}`;
+  let topRightArc = `A ${topArc}, ${y1 - sign * cornerRadius.top}, ${x0}`;
+  let rightLine = `L ${y0 + sign * cornerRadius.bottom}, ${x0}`;
+  let bottomRightArc = `A ${bottomArc}, ${y0}, ${x0 - cornerRadius.bottom}`;
   const end = "z";
 
+  if (isSelfIntersecting) {
+
+    const bottomLeftCenter = new Point(y0 + sign * cornerRadius.bottom, x1 + cornerRadius.bottom);
+    const bottomLeftCircle = new Circle(bottomLeftCenter, cornerRadius.bottom);
+    const bottomRightCenter = new Point(y0 + sign * cornerRadius.bottom, x0 - cornerRadius.bottom);
+    const bottomRightCircle = new Circle(bottomRightCenter, cornerRadius.bottom);
+    const topLeftCenter = new Point(y1 - sign * cornerRadius.top, x1 + cornerRadius.top);
+    const topLeftCircle = new Circle(topLeftCenter, cornerRadius.top);
+    // eslint-disable-next-line max-len
+    const topRightCenter = new Point(y1 - sign * cornerRadius.top, x0 - cornerRadius.top);
+    const topRightCircle = new Circle(topRightCenter, cornerRadius.top);
+
+    leftLine = null;
+    rightLine = null;
+
+    if (cornerRadius.top !== 0 && cornerRadius.bottom !== 0) {
+
+      // find intersection of top left and bottom left arc
+      const intrxnLeft = bottomLeftCircle
+                          .intersection(topLeftCircle)
+                          .sort((a, b) => a.y - b.y)[0];
+
+      // find intersection of top right and bottom right arc
+      const intrxnRight = bottomRightCircle
+                          .intersection(topRightCircle)
+                          .sort((a, b) => a.y - b.y)[1];
+
+      bottomLeftArc = `A ${bottomArc}, ${intrxnLeft.x}, ${intrxnLeft.y}`;
+      topRightArc = `A ${topArc}, ${intrxnRight.x}, ${intrxnRight.y}`;
+
+    }
+
+    if (cornerRadius.top !== 0 && cornerRadius.bottom === 0) {
+
+      // find intersection of y0 and the top left/right arc
+      const intrxnTopLeft = topLeftCircle
+                              .solveY(y0)
+                              .sort((a, b) => a - b)[0];
+      const intrxnTopRight = topRightCircle
+                              .solveY(y0)
+                              .sort((a, b) => a - b)[1];
+
+      start = `M ${y0}, ${intrxnTopLeft}`;
+      bottomLeftArc = null;
+      topRightArc = `A ${topArc}, ${y0}, ${intrxnTopRight}`;
+      bottomRightArc = null;
+
+    }
+
+    if (cornerRadius.top === 0 && cornerRadius.bottom !== 0) {
+
+      // find intersection of y1 and the bottom left/right arc
+      const intrxnBottomLeft = bottomLeftCircle
+                                  .solveY(y1)
+                                  .sort((a, b) => a - b)[0];
+      const intrxnBottomRight = bottomRightCircle
+                                  .solveY(y1)
+                                  .sort((a, b) => a - b)[1];
+
+      bottomLeftArc = `A ${bottomArc}, ${y1}, ${intrxnBottomLeft}`;
+      topLeftArc = null;
+      topLine = `L ${y1} ${intrxnBottomRight}`;
+      topRightArc = null;
+
+    }
+  }
+
   return [ start,
+    bottomLeftArc,
+    leftLine,
     topLeftArc,
     topLine,
     topRightArc,
     rightLine,
     bottomRightArc,
-    bottomLine,
-    bottomLeftArc,
-    end ].join("\n");
+    end ].filter(Boolean).join("\n");
 
 };
 
