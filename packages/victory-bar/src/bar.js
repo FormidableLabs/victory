@@ -1,7 +1,7 @@
 import React from "react";
 import PropTypes from "prop-types";
 import { Helpers, Path, CommonProps } from "victory-core";
-import { assign, isPlainObject, isFunction } from "lodash";
+import { assign, isPlainObject, isFunction, isNil } from "lodash";
 
 import {
   getVerticalBarPath,
@@ -76,14 +76,35 @@ export default class Bar extends React.Component {
     return Math.max(1, defaultWidth);
   }
 
+  getCornerRadiusFromObject(props) {
+    const { cornerRadius, datum, active } = props;
+    const realCornerRadius = { topLeft: 0, topRight: 0, bottomLeft: 0, bottomRight: 0 };
+    const updateCornerRadius = (corner, fallback) => {
+      if (!isNil(cornerRadius[corner])) {
+        realCornerRadius[corner] = Helpers.evaluateProp(cornerRadius[corner], datum, active);
+      } else if (!isNil(cornerRadius[fallback])) {
+        realCornerRadius[corner] = Helpers.evaluateProp(cornerRadius[fallback], datum, active);
+      }
+    };
+    updateCornerRadius("topLeft", "top");
+    updateCornerRadius("topRight", "top");
+    updateCornerRadius("bottomLeft", "bottom");
+    updateCornerRadius("bottomRight", "right");
+    return realCornerRadius;
+  }
+
   getCornerRadius(props) {
     const { cornerRadius, datum, active } = props;
-    const top = isPlainObject(cornerRadius) ? cornerRadius.top : cornerRadius || 0;
-    const bottom = isPlainObject(cornerRadius) ? cornerRadius.bottom : 0;
-    return {
-      top: Helpers.evaluateProp(top, datum, active),
-      bottom: Helpers.evaluateProp(bottom, datum, active)
-    };
+    const realCornerRadius = { topLeft: 0, topRight: 0, bottomLeft: 0, bottomRight: 0 };
+    if (!cornerRadius) {
+      return realCornerRadius;
+    }
+    if (isPlainObject(cornerRadius)) {
+      return this.getCornerRadiusFromObject(props);
+    }
+    realCornerRadius.topLeft = Helpers.evaluateProp(cornerRadius, datum, active);
+    realCornerRadius.topRight = Helpers.evaluateProp(cornerRadius, datum, active);
+    return realCornerRadius;
   }
 
   render() {
