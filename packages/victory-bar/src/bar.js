@@ -74,16 +74,36 @@ export default class Bar extends React.Component {
   getCornerRadius(props) {
     const { cornerRadius, datum, active } = props;
     if (!cornerRadius) {
-      return { top: 0, bottom: 0 };
+      return { topLeft: 0, topRight: 0, bottomLeft: 0, bottomRight: 0 };
     } else if (isObject(cornerRadius)) {
-      return {
-        top: Helpers.evaluateProp(cornerRadius.top, datum, active),
-        bottom: Helpers.evaluateProp(cornerRadius.bottom, datum, active)
-      };
+      const result = { topLeft: 0, topRight: 0, bottomLeft: 0, bottomRight: 0 };
+      if (cornerRadius.top) {
+        result.topLeft = Helpers.evaluateProp(cornerRadius.top, datum, active);
+        result.topRight = Helpers.evaluateProp(cornerRadius.top, datum, active);
+      }
+      if (cornerRadius.topLeft) {
+        result.topLeft = Helpers.evaluateProp(cornerRadius.topLeft, datum, active);
+      }
+      if (cornerRadius.topRight) {
+        result.topRight = Helpers.evaluateProp(cornerRadius.topRight, datum, active);
+      }
+      if (cornerRadius.bottom) {
+        result.bottomLeft = Helpers.evaluateProp(cornerRadius.bottom, datum, active);
+        result.bottomRight = Helpers.evaluateProp(cornerRadius.bottom, datum, active);
+      }
+      if (cornerRadius.bottomLeft) {
+        result.bottomLeft = Helpers.evaluateProp(cornerRadius.bottomLeft, datum, active);
+      }
+      if (cornerRadius.bottomRight) {
+        result.bottomRight = Helpers.evaluateProp(cornerRadius.bottomRight, datum, active);
+      }
+      return result;
     } else {
       return {
-        top: Helpers.evaluateProp(cornerRadius, datum, active),
-        bottom: 0
+        topLeft: Helpers.evaluateProp(cornerRadius, datum, active),
+        topRight: Helpers.evaluateProp(cornerRadius, datum, active),
+        bottomLeft: 0,
+        bottomRight: 0
       };
     }
   }

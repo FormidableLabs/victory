@@ -67,85 +67,83 @@ const getEndAngle = (props, index) => {
   }
 };
 
+const getVerticalBarPoints = (position, sign, cr) => {
+
+  const { x0, x1, y0, y1 } = position;
+
+  // eslint-disable-next-line max-statements, max-len
+  const getHalfPoints = (side) => {
+    const isLeft = side === "Left";
+    const signLeft = isLeft ? 1 : -1;
+    const x = isLeft ? x0 : x1;
+    const points = [
+      { x: x + signLeft * cr[`bottom${side}`], y: y0 },
+      { x, y: y0 - sign * cr[`bottom${side}`] },
+      { x, y: y1 + sign * cr[`top${side}`] },
+      { x: x + signLeft * cr[`top${side}`], y: y1 }
+    ];
+    const hasIntersection = sign === 1 ?
+      y0 - cr[`bottom${side}`] < y1 + cr[`top${side}`] :
+      y0 + cr[`bottom${side}`] > y1 - cr[`top${side}`];
+
+    if (hasIntersection) {
+      const topCenter = new Point(
+        x + signLeft * cr[`top${side}`],
+        y1 + sign * cr[`top${side}`]
+      );
+      const topCircle = new Circle(topCenter, cr[`top${side}`]);
+      const bottomCenter = new Point(
+        x + signLeft * cr[`bottom${side}`],
+        y0 - sign * cr[`bottom${side}`]
+      );
+      const bottomCircle = new Circle(bottomCenter, cr[`bottom${side}`]);
+      const circleIntersection = topCircle.intersection(bottomCircle);
+      const hasArcIntersection = circleIntersection.length > 0;
+      if (hasArcIntersection) {
+        const arcIntersection = circleIntersection[isLeft ? 0 : 1];
+        points[1] = { x: arcIntersection.x, y: arcIntersection.y };
+        points[2] = { x: arcIntersection.x, y: arcIntersection.y };
+      } else {
+        const hasBottomLineTopArcIntersection = cr[`top${side}`] > cr[`bottom${side}`];
+        if (hasBottomLineTopArcIntersection) {
+          const newX = topCircle.solveX(y0)[isLeft ? 0 : 1];
+          ([0, 1, 2]).forEach((i) => { points[i] = { x: newX, y: y0 }; });
+        } else {
+          const newX = bottomCircle.solveX(y1)[isLeft ? 0 : 1];
+          ([1, 2, 3]).forEach((i) => { points[i] = { x: newX, y: y1 }; });
+        }
+      }
+    }
+    return isLeft ? points : points.reverse();
+  };
+
+  return getHalfPoints("Left").concat(getHalfPoints("Right"));
+};
+
 // eslint-disable-next-line max-statements, max-len
 export const getVerticalBarPath = (props, width, cornerRadius) => {
 
-  const { x0, x1, y0, y1 } = getPosition(props, width);
-  const sign = y0 > y1 ? 1 : -1;
+  const position = getPosition(props, width);
+  const sign = position.y0 > position.y1 ? 1 : -1;
   const direction = sign > 0 ? "0 0 1" : "0 0 0";
+  const points = getVerticalBarPoints(position, sign, cornerRadius);
 
-  const isSelfIntersecting = sign === 1 ?
-    (y0 - cornerRadius.bottom) < (y1 + cornerRadius.top) :
-    (y1 - cornerRadius.bottom) < (y0 + cornerRadius.top);
+  const topLeftPath = `${cornerRadius.topLeft} ${cornerRadius.topLeft} ${direction}`;
+  const topRightPath = `${cornerRadius.topRight} ${cornerRadius.topRight} ${direction}`;
+  const bottomLeftPath = `${cornerRadius.bottomLeft} ${cornerRadius.bottomLeft} ${direction}`;
+  const bottomRightPath = `${cornerRadius.bottomRight} ${cornerRadius.bottomRight} ${direction}`;
 
-  const topArc = `${cornerRadius.top} ${cornerRadius.top} ${direction}`;
-  const bottomArc = `${cornerRadius.bottom} ${cornerRadius.bottom} ${direction}`;
-
-  let start = `M ${x0 + cornerRadius.bottom}, ${y0}`;
-  let bottomLeftArc = `A ${bottomArc}, ${x0}, ${y0 - sign * cornerRadius.bottom}`;
-  let leftLine = `L ${x0}, ${y1 + sign * cornerRadius.top}`;
-  let topLeftArc = `A ${topArc}, ${x0 + cornerRadius.top}, ${y1}`;
-  let topLine = `L ${x1 - cornerRadius.top}, ${y1}`;
-  let topRightArc = `A ${topArc}, ${x1}, ${y1 + sign * cornerRadius.top}`;
-  let rightLine = `L ${x1}, ${y0 - sign * cornerRadius.bottom}`;
-  let bottomRightArc = `A ${bottomArc}, ${x1 - cornerRadius.bottom}, ${y0}`;
+  /* eslint-disable no-magic-numbers */
+  const start = `M ${points[0].x}, ${points[0].y}`;
+  const bottomLeftArc = `A ${bottomLeftPath}, ${points[1].x}, ${points[1].y}`;
+  const leftLine = `L ${points[2].x}, ${points[2].y}`;
+  const topLeftArc = `A ${topLeftPath}, ${points[3].x}, ${points[3].y}`;
+  const topLine = `L ${points[4].x}, ${points[4].y}`;
+  const topRightArc = `A ${topRightPath}, ${points[5].x}, ${points[5].y}`;
+  const rightLine = `L ${points[6].x}, ${points[6].y}`;
+  const bottomRightArc = `A ${bottomRightPath}, ${points[7].x}, ${points[7].y}`;
   const end = "z";
-
-  if (isSelfIntersecting) {
-
-    const topLeftCenter = new Point(x0 + cornerRadius.top, y1 + sign * cornerRadius.top);
-    const topLeftCircle = new Circle(topLeftCenter, cornerRadius.top);
-    const bottomLeftCenter = new Point(x0 + cornerRadius.bottom, y0 - sign * cornerRadius.bottom);
-    const bottomLeftCircle = new Circle(bottomLeftCenter, cornerRadius.bottom);
-    const topRightCenter = new Point(x1 - cornerRadius.top, y1 + sign * cornerRadius.top);
-    const topRightCircle = new Circle(topRightCenter, cornerRadius.top);
-    // eslint-disable-next-line max-len
-    const bottomRightCenter = new Point(x1 - cornerRadius.bottom, y0 - sign * cornerRadius.bottom);
-    const bottomRightCircle = new Circle(bottomRightCenter, cornerRadius.bottom);
-
-    leftLine = null;
-    rightLine = null;
-
-    if (cornerRadius.top !== 0 && cornerRadius.bottom !== 0) {
-
-      // find intersection of top left and bottom left arc
-      // circles intersect at two points, get the left-most point
-      const intrxnLeft = topLeftCircle.intersection(bottomLeftCircle)[0];
-
-      // find intersection of top right and bottom right arc
-      // circles intersect at two points, get the right-most point
-      const intrxnRight = topRightCircle.intersection(bottomRightCircle)[1];
-
-      bottomLeftArc = `A ${bottomArc}, ${intrxnLeft.x}, ${intrxnLeft.y}`;
-      topRightArc = `A ${topArc}, ${intrxnRight.x}, ${intrxnRight.y}`;
-    }
-
-    if (cornerRadius.top !== 0 && cornerRadius.bottom === 0) {
-
-      // find intersection of y0 and the top left/right arc
-      const intrxnLeftX = topLeftCircle.solveX(y0)[0];
-      const intrxnRightX = topRightCircle.solveX(y0)[1];
-
-      start = `M ${intrxnLeftX}, ${y0}`;
-      bottomLeftArc = null;
-      topRightArc = `A ${topArc}, ${intrxnRightX}, ${y0}`;
-      bottomRightArc = null;
-
-    }
-
-    if (cornerRadius.top === 0 && cornerRadius.bottom !== 0) {
-
-      // find intersection of y1 and the bottom left/right arc
-      const intrxnLeftX = bottomLeftCircle.solveX(y1)[0];
-      const intrxnRightX = bottomRightCircle.solveX(y1)[1];
-
-      bottomLeftArc = `A ${bottomArc}, ${intrxnLeftX}, ${y1}`;
-      topLeftArc = null;
-      topLine = `L ${intrxnRightX}, ${y1}`;
-      topRightArc = null;
-
-    }
-  }
+  /* eslint-enable no-magic-numbers */
 
   return [ start,
     bottomLeftArc,
@@ -155,7 +153,7 @@ export const getVerticalBarPath = (props, width, cornerRadius) => {
     topRightArc,
     rightLine,
     bottomRightArc,
-    end ].filter((l) => l !== null).join("\n");
+    end ].join("\n");
 
 };
 
@@ -163,6 +161,12 @@ export const getVerticalBarPath = (props, width, cornerRadius) => {
 export const getHorizontalBarPath = (props, width, cornerRadius) => {
   // "bottom" means y0 (not "bottom of screen / viewbox")
   // "top" means y1, "left" means x1, "right" means x0
+
+  // TODO: Incorporate corner radius left/right
+  cornerRadius = {
+    top: Math.max(cornerRadius.topLeft, cornerRadius.topRight),
+    bottom: Math.max(cornerRadius.bottomLeft, cornerRadius.bottomRight)
+  };
 
   const { x0, x1, y0, y1 } = getPosition(props, width);
   const sign = y1 > y0 ? 1 : -1;
@@ -266,6 +270,12 @@ export const getHorizontalBarPath = (props, width, cornerRadius) => {
 
 // eslint-disable-next-line max-statements, max-len
 export const getVerticalPolarBarPath = (props, cornerRadius) => {
+
+  // TODO: Incorporate corner radius left/right
+  cornerRadius = {
+    top: Math.max(cornerRadius.topLeft, cornerRadius.topRight),
+    bottom: Math.max(cornerRadius.bottomLeft, cornerRadius.bottomRight)
+  };
   const { datum, scale, index, alignment } = props;
   const style = Helpers.evaluateStyle(props.style, datum, props.active);
   const r1 = scale.y(datum._y0 || 0);
