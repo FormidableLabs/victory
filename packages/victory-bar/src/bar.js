@@ -1,7 +1,7 @@
 import React from "react";
 import PropTypes from "prop-types";
 import { Helpers, Path, CommonProps } from "victory-core";
-import { assign, isObject, isFunction } from "lodash";
+import { assign, isObject, isFunction, isNil } from "lodash";
 
 import {
   getVerticalBarPath,
@@ -71,41 +71,44 @@ export default class Bar extends React.Component {
     return Math.max(1, defaultWidth);
   }
 
+  getCornerRadiusFromObject(props) {
+    const { cornerRadius, datum, active } = props;
+    const result = { topLeft: 0, topRight: 0, bottomLeft: 0, bottomRight: 0 };
+    if (!isNil(cornerRadius.topLeft)) {
+      result.topLeft = Helpers.evaluateProp(cornerRadius.topLeft, datum, active);
+    } else if (!isNil(cornerRadius.top)) {
+      result.topLeft = Helpers.evaluateProp(cornerRadius.top, datum, active);
+    }
+    if (!isNil(cornerRadius.topRight)) {
+      result.topRight = Helpers.evaluateProp(cornerRadius.topRight, datum, active);
+    } else if (!isNil(cornerRadius.top)) {
+      result.topRight = Helpers.evaluateProp(cornerRadius.top, datum, active);
+    }
+    if (!isNil(cornerRadius.bottomLeft)) {
+      result.bottomLeft = Helpers.evaluateProp(cornerRadius.bottomLeft, datum, active);
+    } else if (!isNil(cornerRadius.bottom)) {
+      result.bottomLeft = Helpers.evaluateProp(cornerRadius.bottom, datum, active);
+    }
+    if (!isNil(cornerRadius.bottomRight)) {
+      result.bottomRight = Helpers.evaluateProp(cornerRadius.bottomRight, datum, active);
+    } else if (!isNil(cornerRadius.bottom)) {
+      result.bottomRight = Helpers.evaluateProp(cornerRadius.bottom, datum, active);
+    }
+    return result;
+  }
+
   getCornerRadius(props) {
     const { cornerRadius, datum, active } = props;
+    const result = { topLeft: 0, topRight: 0, bottomLeft: 0, bottomRight: 0 };
     if (!cornerRadius) {
-      return { topLeft: 0, topRight: 0, bottomLeft: 0, bottomRight: 0 };
-    } else if (isObject(cornerRadius)) {
-      const result = { topLeft: 0, topRight: 0, bottomLeft: 0, bottomRight: 0 };
-      if (cornerRadius.top) {
-        result.topLeft = Helpers.evaluateProp(cornerRadius.top, datum, active);
-        result.topRight = Helpers.evaluateProp(cornerRadius.top, datum, active);
-      }
-      if (cornerRadius.topLeft) {
-        result.topLeft = Helpers.evaluateProp(cornerRadius.topLeft, datum, active);
-      }
-      if (cornerRadius.topRight) {
-        result.topRight = Helpers.evaluateProp(cornerRadius.topRight, datum, active);
-      }
-      if (cornerRadius.bottom) {
-        result.bottomLeft = Helpers.evaluateProp(cornerRadius.bottom, datum, active);
-        result.bottomRight = Helpers.evaluateProp(cornerRadius.bottom, datum, active);
-      }
-      if (cornerRadius.bottomLeft) {
-        result.bottomLeft = Helpers.evaluateProp(cornerRadius.bottomLeft, datum, active);
-      }
-      if (cornerRadius.bottomRight) {
-        result.bottomRight = Helpers.evaluateProp(cornerRadius.bottomRight, datum, active);
-      }
       return result;
-    } else {
-      return {
-        topLeft: Helpers.evaluateProp(cornerRadius, datum, active),
-        topRight: Helpers.evaluateProp(cornerRadius, datum, active),
-        bottomLeft: 0,
-        bottomRight: 0
-      };
     }
+    if (isObject(cornerRadius)) {
+      return this.getCornerRadiusFromObject(props);
+    }
+    result.topLeft = Helpers.evaluateProp(cornerRadius, datum, active);
+    result.topRight = Helpers.evaluateProp(cornerRadius, datum, active);
+    return result;
   }
 
   render() {
