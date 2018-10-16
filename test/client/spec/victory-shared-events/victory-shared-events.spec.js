@@ -1,7 +1,7 @@
 /**
  * Client tests
  */
-import { forEach } from "lodash";
+import { assign, forEach } from "lodash";
 import { mount } from "enzyme";
 import React from "react";
 import { addEvents } from "packages/victory-core/src/index";
@@ -54,7 +54,7 @@ describe("components/victory-shared-events", () => {
                   childName: ["one", "three"],
                   mutation: (props) => {
                     return {
-                      style: Object.assign({}, props.style, { fill: "tomato" })
+                      style: assign({}, props.style, { fill: "tomato" })
                     };
                   }
                 }];

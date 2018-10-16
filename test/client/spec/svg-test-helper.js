@@ -1,7 +1,7 @@
 import * as d3Shape from "d3-shape";
 import * as d3Scale from "d3-scale";
 import { voronoi as d3Voronoi } from "d3-voronoi";
-import { without, min, max, property } from "lodash";
+import { assign, without, min, max, property } from "lodash";
 
 const RECTANGULAR_SEQUENCE = ["M", "A", "L", "A", "L", "A", "L", "A", "z"];
 const CIRCULAR_SEQUENCE = ["M", "m", "a", "a"];
@@ -292,4 +292,4 @@ const helpers = {
   }
 };
 
-export default Object.assign({}, expectations, helpers);
+export default assign({}, expectations, helpers);
