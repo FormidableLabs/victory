@@ -81,7 +81,7 @@ const mapPointsToPath = (coords, cornerRadius, direction) => {
     acc += `${command} ${coords[i].x}, ${coords[i].y} \n`;
     return acc;
   }, "");
-  return `${path} Z`;
+  return `${path} z`;
 };
 
 const getVerticalBarPoints = (position, sign, cr) => {
@@ -264,5 +264,5 @@ export const getVerticalPolarBarPath = (props, cornerRadius) => {
     memo += `${move.command} ${move.coords.join()}`;
     return memo;
   }, "");
-  return `${path} Z`;
+  return `${path} z`;
 };
