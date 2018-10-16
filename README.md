@@ -13,7 +13,6 @@
 - [API Documentation](http://formidable.com/open-source/victory/docs)
 - [Guides](http://formidable.com/open-source/victory/guides)
 - [Contributing](#contributing)
-- [_IMPORTANT_](#important)
 
 * See the **docs and examples** on the website: http://formidable.com/open-source/victory.
 * **Experiment** with all Victory components in this [JSBin](http://jsbin.com/qekike/edit) or this [JSFiddle](https://jsfiddle.net/5g20p8vd/6/).
