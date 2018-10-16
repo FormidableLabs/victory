@@ -3,7 +3,7 @@ import { mount } from "enzyme";
 import Bar from "packages/victory-bar/src/bar";
 import SvgTestHelper from "../svg-test-helper";
 import * as d3Scale from "d3-scale";
-import { merge } from "lodash";
+import { assign, merge } from "lodash";
 
 describe("victory-primitives/bar", () => {
   const baseProps = {
@@ -50,7 +50,7 @@ describe("victory-primitives/bar", () => {
   });
 
   it("should allow override of width by passing a style", () => {
-    const props = Object.assign({}, baseProps, { style: { width: 3 } });
+    const props = assign({}, baseProps, { style: { width: 3 } });
 
     const wrapper = mount(<Bar {...props}/>);
     const barShape = SvgTestHelper.getBarShape(wrapper);
@@ -59,7 +59,7 @@ describe("victory-primitives/bar", () => {
   });
 
   it("should allow modification of width by passing barRatio", () => {
-    const props = Object.assign({}, baseProps,
+    const props = assign({}, baseProps,
       {
         data: [
           { _x: 2, x: 2, _y: 4, y: 4, eventKey: 0 }

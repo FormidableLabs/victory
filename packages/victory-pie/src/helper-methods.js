@@ -100,7 +100,7 @@ const getLabelPosition = (arc, slice, position) => {
     startAngle: position === "startAngle" ? slice.endAngle : slice.startAngle,
     endAngle: position === "endAngle" ? slice.startAngle : slice.endAngle
   };
-  const clonedArc = Object.assign({}, slice, construct);
+  const clonedArc = assign({}, slice, construct);
   return arc.centroid(clonedArc);
 };
 
