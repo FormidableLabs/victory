@@ -37,6 +37,19 @@ If you would like to instead highlight only the data points, consider using [Vic
 
 The `cursorComponent` prop takes a component instance which will be used to render a cursor element. The new element created will be supplied with `x1`, `y1`, `x2` and `y2` positioning props. If a `cursorComponent` is not supplied, a new [Line][] component will be rendered.
 
+In order to customize, add styling to a LineSegment supplied to the cursorComponent prop.
+
+```playground
+<VictoryScatter
+  containerComponent={
+    <VictoryCursorContainer
+      cursorComponent={<LineSegment style={{ strokeDasharray: '2,4' }} />}
+      cursorLabel={(d) => `${round(d.x, 2)}, ${round(d.y, 2)}`}
+    />
+  }
+/>
+```
+
 *default:* `cursorComponent={<Line/>}`
 
 ### cursorDimension
