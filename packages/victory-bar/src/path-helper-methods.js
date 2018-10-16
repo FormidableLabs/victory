@@ -81,7 +81,7 @@ const mapPointsToPath = (coords, cornerRadius, direction) => {
     acc += `${command} ${coords[i].x}, ${coords[i].y} \n`;
     return acc;
   }, "");
-  return `${path} "z"`;
+  return `${path} Z`;
 };
 
 const getVerticalBarPoints = (position, sign, cr) => {
@@ -212,11 +212,6 @@ export const getHorizontalBarPath = (props, width, cornerRadius) => {
 // eslint-disable-next-line max-statements, max-len
 export const getVerticalPolarBarPath = (props, cornerRadius) => {
 
-  // TODO: Incorporate corner radius left/right
-  cornerRadius = {
-    top: Math.max(cornerRadius.topLeft, cornerRadius.topRight),
-    bottom: Math.max(cornerRadius.bottomLeft, cornerRadius.bottomRight)
-  };
   const { datum, scale, index, alignment } = props;
   const style = Helpers.evaluateStyle(props.style, datum, props.active);
   const r1 = scale.y(datum._y0 || 0);
@@ -243,16 +238,31 @@ export const getVerticalPolarBarPath = (props, cornerRadius) => {
     .cornerRadius(cornerRadius[edge]);
     const path = pathFunction();
     const moves = path.match(/[A-Z]/g);
-    const middle = moves.indexOf("L");
     const coords = path.split(/[A-Z]/).slice(1);
-    const subMoves = edge === "top" ? moves.slice(0, middle) : moves.slice(middle);
-    const subCoords = edge === "top" ? coords.slice(0, middle) : coords.slice(middle);
+    let moveStart;
+    if (edge === "topRight") {
+      moveStart = 0;
+    } else if (edge === "topLeft") {
+      moveStart = 2;
+    } else if (edge === "bottomLeft") {
+      moveStart = 4;
+    } else {
+      moveStart = 6;
+    }
+    const moveEnd = moveStart + 2;
+    const subMoves = moves.slice(moveStart, moveEnd);
+    const subCoords = coords.slice(moveStart, moveEnd);
     return subMoves.map((m, i) => ({ command: m, coords: subCoords[i].split(",") }));
   };
 
-  const moves = getPath("top").concat(getPath("bottom"));
-  return moves.reduce((memo, move) => {
+  const topLeft = getPath("topLeft");
+  const topRight = getPath("topRight");
+  const bottomLeft = getPath("bottomLeft");
+  const bottomRight = getPath("bottomRight");
+  const moves = [ ...topRight, ...topLeft, ...bottomLeft, ...bottomRight ];
+  const path = moves.reduce((memo, move) => {
     memo += `${move.command} ${move.coords.join()}`;
     return memo;
   }, "");
+  return `${path} Z`;
 };
