@@ -1,7 +1,7 @@
 import { Helpers } from "victory-core";
 import * as d3Shape from "d3-shape";
 
-import { Circle, Point } from "./geometry-helper-methods";
+import { circle, point } from "./geometry-helper-methods";
 
 const getPosition = (props, width) => {
   const { x, y, y0, horizontal } = props;
@@ -108,11 +108,10 @@ const getVerticalBarPoints = (position, sign, cr) => {
       y0 + cr[`bottom${side}`] > y1 - cr[`top${side}`];
 
     if (hasIntersection) {
-      const topCenter = new Point(x + signL * cr[`top${side}`], y1 + sign * cr[`top${side}`]);
-      const topCircle = new Circle(topCenter, cr[`top${side}`]);
-      const bottomCenter = new Point(x + signL * cr[`bottom${side}`],
-                                     y0 - sign * cr[`bottom${side}`]);
-      const bottomCircle = new Circle(bottomCenter, cr[`bottom${side}`]);
+      const topCenter = point(x + signL * cr[`top${side}`], y1 + sign * cr[`top${side}`]);
+      const topCircle = circle(topCenter, cr[`top${side}`]);
+      const bottomCenter = point(x + signL * cr[`bottom${side}`], y0 - sign * cr[`bottom${side}`]);
+      const bottomCircle = circle(bottomCenter, cr[`bottom${side}`]);
       const circleIntersection = topCircle.intersection(bottomCircle);
       const hasArcIntersection = circleIntersection.length > 0;
       if (hasArcIntersection) {
@@ -170,11 +169,10 @@ const getHorizontalBarPoints = (position, sign, cr) => {
       y0 + cr[`bottom${side}`] > y1 - cr[`top${side}`] :
       y0 - cr[`bottom${side}`] < y1 + cr[`top${side}`];
     if (hasIntersection) {
-      const topCenter = new Point(y1 - sign * cr[`top${side}`], x + signL * cr[`top${side}`]);
-      const topCircle = new Circle(topCenter, cr[`top${side}`]);
-      const bottomCenter = new Point(y0 + sign * cr[`bottom${side}`],
-                                     x + signL * cr[`bottom${side}`]);
-      const bottomCircle = new Circle(bottomCenter, cr[`bottom${side}`]);
+      const topCenter = point(y1 - sign * cr[`top${side}`], x + signL * cr[`top${side}`]);
+      const topCircle = circle(topCenter, cr[`top${side}`]);
+      const bottomCenter = point(y0 + sign * cr[`bottom${side}`], x + signL * cr[`bottom${side}`]);
+      const bottomCircle = circle(bottomCenter, cr[`bottom${side}`]);
       const circleIntersection = topCircle.intersection(bottomCircle);
       const hasArcIntersection = circleIntersection.length > 0;
       if (hasArcIntersection) {
