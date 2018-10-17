@@ -6,8 +6,15 @@ import { VictoryStack } from "../packages/victory-stack/src/index";
 import { VictoryBar } from "../packages/victory-bar/src/index";
 import { VictoryTooltip } from "../packages/victory-tooltip/src/index";
 import { VictoryTheme } from "../packages/victory-core/src/index";
-import { getData, getStackedData, getMixedData, getTimeData, getLogData } from "./data";
 import { getChartDecorator, getPolarChartDecorator } from "./decorators";
+import {
+  getData,
+  getStackedData,
+  getMixedData,
+  getTimeData,
+  getLogData,
+  getDescendingSmallData
+} from "./data";
 import * as d3Shape from "d3-shape";
 
 storiesOf("VictoryBar", module)
@@ -99,7 +106,20 @@ storiesOf("VictoryBar.cornerRadius", module)
   .add("cornerRadius = 5 (horizontal negative values)", () => (
     <VictoryBar horizontal data={getMixedData(5)} cornerRadius={5}/>
   ))
-  .add("cornerRadius = 3 (20 bars)", () => <VictoryBar data={getData(20)} cornerRadius={3}/>);
+  .add("cornerRadius = 3 (20 bars)", () => <VictoryBar data={getData(20)} cornerRadius={3}/>)
+  .add("cornerRadius = mixed", () => (
+    <VictoryBar
+      data={getDescendingSmallData()}
+      cornerRadius={{ topLeft: 5, topRight: 2, bottomLeft: 7, bottomRight: 3 }}
+    />
+  ))
+  .add("cornerRadius = mixed (horizontal)", () => (
+    <VictoryBar
+      horizontal
+      data={getDescendingSmallData()}
+      cornerRadius={{ topLeft: 5, topRight: 2, bottomLeft: 7, bottomRight: 3 }}
+    />
+  ));
 
 storiesOf("VictoryBar.getPath", module)
   .addDecorator(getChartDecorator({ domainPadding: 25 }))
