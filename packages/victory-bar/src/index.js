@@ -4,4 +4,4 @@ export {
   getVerticalBarPath,
   getHorizontalBarPath,
   getVerticalPolarBarPath
-} from "./geometry-helper-methods"
+} from "./geometry-helper-methods";

@@ -217,8 +217,8 @@ const getCustomVerticalPolarBarPath = (getPath, props) => {
   return getPath(props);
 };
 
-// eslint-disable-next-line max-statements, max-len
 // TODO: Fix this to support cornerRadius with topLeft, topRight, etc
+// eslint-disable-next-line max-statements, max-len
 export const getVerticalPolarBarPath = (props, cornerRadius) => {
 
   const { datum, scale, index, alignment } = props;
