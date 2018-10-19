@@ -1,5 +1,9 @@
 # Victory Changelog
 
+## 30.5.1 (2018-10-18)
+
+- [#1149](https://github.com/FormidableLabs/victory/pull/1149) Adds `onTouchEnd` helper for `VictoryCursorContainer`
+
 ## 30.5.0 (2018-10-03)
 
 - [#1135](https://github.com/FormidableLabs/victory/pull/1135) - Allow closed paths for cartesian and polar `VictoryLine`
