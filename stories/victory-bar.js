@@ -69,6 +69,15 @@ storiesOf("VictoryBar.barRatio", module)
   .add("barRatio = 0.5 (50 bars)", () => <VictoryBar data={getData(50)} barRatio={0.5}/>)
   .add("barRatio = 1 (50 bars)", () => <VictoryBar data={getData(50)} barRatio={1}/>);
 
+storiesOf("VictoryBar.barWidth", module)
+  .addDecorator(getChartDecorator())
+  .add("numeric bar width = 5", () => <VictoryBar data={getData(7)} barWidth={5}/>)
+  .add("numeric bar width = 10", () => <VictoryBar data={getData(7)} barWidth={10}/>)
+  .add("numeric bar width = 20", () => <VictoryBar data={getData(7)} barWidth={20}/>)
+  .add("functional bar width (2 * datum.x)", () => (
+    <VictoryBar data={getData(7)} barWidth={(datum) => {return datum.x * 2;}}/>
+  ));
+
 storiesOf("VictoryBar.categories", module)
   .addDecorator(getChartDecorator({ domainPadding: 25 }))
   .add("string categories", () => {

@@ -209,9 +209,9 @@ export default class Bar extends React.Component {
   }
 
   getBarWidth(props, style) {
-    const { active, scale, data, barWidth, defaultBarWidth } = props;
+    const { active, scale, data, datum, barWidth, defaultBarWidth } = props;
     if (barWidth) {
-      return isFunction(barWidth) ? Helpers.evaluateProp(barWidth, active) : barWidth;
+      return isFunction(barWidth) ? Helpers.evaluateProp(barWidth, datum, active) : barWidth;
     } else if (style.width) {
       return style.width;
     }
