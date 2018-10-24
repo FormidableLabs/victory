@@ -369,7 +369,7 @@ class App extends React.Component {
                 ]}
               />
               <VictoryBar name="bar-3"
-                cornerRadius={5}
+                cornerRadius={{ topLeft: 5 }}
                 style={{ data: { fill: "gold", width: 20 } }}
                 data={[
                   { x: 45, y: 20 },

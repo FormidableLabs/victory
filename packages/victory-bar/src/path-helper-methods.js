@@ -213,10 +213,6 @@ export const getHorizontalBarPath = (props, width, cornerRadius) => {
 
 };
 
-const getCustomVerticalPolarBarPath = (getPath, props) => {
-  return getPath(props);
-};
-
 // eslint-disable-next-line max-statements, max-len
 export const getVerticalPolarBarPath = (props, cornerRadius) => {
   const { datum, scale, index, alignment } = props;
@@ -261,28 +257,31 @@ export const getVerticalPolarBarPath = (props, cornerRadius) => {
    // eslint-disable-next-line max-statements
   const getTopPath = () => {
     const { topRight, topLeft } = cornerRadius;
-    const outerArcLength = r2 * Math.abs(end - start);
+    const arcLength = r2 * Math.abs(end - start);
     const {
       rightMoves, rightCoords, rightMiddle, leftMoves, leftCoords, leftMiddle
     } = getPathData("top");
     let moves;
     let coords;
-    if (topRight === topLeft || outerArcLength < topRight + topLeft) {
+    if (topRight === topLeft || arcLength < 2 * topRight + 2 * topLeft) {
       moves = topRight > topLeft ? rightMoves : leftMoves;
       coords = topRight > topLeft ? rightCoords : leftCoords;
-    } else if (topRight > topLeft) {
-      // either "MAL" or "MAAAL" path segment for rightPath
+    } else {
       // eslint-disable-next-line no-magic-numbers
-      const offset = rightMiddle < 3 ? leftMiddle : leftMiddle - 2;
-      moves = [...rightMoves.slice(0, 2), ...leftMoves.slice(offset)];
-      coords = [...rightCoords.slice(0, 2), ...leftCoords.slice(offset)];
-     } else {
-      // either "MAL" or "MAAAL" path segment for leftPath
-      // eslint-disable-next-line no-magic-numbers
-      const offset = leftMiddle < 3 ? rightMiddle : rightMiddle - 2;
-      moves = [...leftMoves.slice(0, 2), ...rightMoves.slice(offset)];
-      coords = [...leftCoords.slice(0, 2), ...rightCoords.slice(offset)];
+      const isShort = (middle) => middle < 3;
+      const rightOffset = topLeft > topRight && isShort(rightMiddle) ? 1 : 2;
+      let leftOffset;
+      if (topRight > topLeft) {
+        const defaultOffset = isShort(rightMiddle) ? leftMiddle : leftMiddle - 2;
+        leftOffset = isShort(leftMiddle) ? leftMiddle - 1 : defaultOffset;
+      } else {
+        const defaultOffset = isShort(leftMiddle) ? 1 : 2;
+        leftOffset = isShort(rightMiddle) ? defaultOffset : leftMiddle - 2;
+      }
+      moves = [...rightMoves.slice(0, rightOffset), ...leftMoves.slice(leftOffset)];
+      coords = [...rightCoords.slice(0, rightOffset), ...leftCoords.slice(leftOffset)];
     }
+
     const middle = moves.indexOf("L");
     const subMoves = moves.slice(0, middle);
     const subCoords = coords.slice(0, middle);
@@ -292,35 +291,23 @@ export const getVerticalPolarBarPath = (props, cornerRadius) => {
   // eslint-disable-next-line max-statements
   const getBottomPath = () => {
     const { bottomRight, bottomLeft } = cornerRadius;
-    const innerArcLength = r1 * Math.abs(end - start);
+    const arcLength = r1 * Math.abs(end - start);
     const {
       rightMoves, rightCoords, rightMiddle, leftMoves, leftCoords, leftMiddle
     } = getPathData("bottom");
     let moves;
     let coords;
-    if (bottomRight === bottomLeft || innerArcLength < bottomRight + bottomLeft) {
+    if (bottomRight === bottomLeft || arcLength < 2 * bottomRight + 2 * bottomLeft) {
       moves = bottomRight > bottomLeft ? rightMoves : leftMoves;
       coords = bottomRight > bottomLeft ? rightCoords : leftCoords;
-    } else if (bottomRight > bottomLeft) {
-      let leftOffset;
-      // eslint-disable-next-line no-magic-numbers
-      if (rightMoves.length - rightMiddle < 4) { // either "LAZ" or "LAAAZ" path segment
-        leftOffset = -1;
-      } else {
-        // eslint-disable-next-line no-magic-numbers
-        leftOffset = leftMoves.length - leftMiddle > 3 ? -3 : -2;
-      }
-      moves = [...rightMoves.slice(0, rightMiddle + 2), ...leftMoves.slice(leftOffset)];
-      coords = [...rightCoords.slice(0, rightMiddle + 2), ...leftCoords.slice(leftOffset)];
     } else {
-      let rightOffset;
       // eslint-disable-next-line no-magic-numbers
-      if (leftMoves.length - leftMiddle < 4) { // either "LAZ" or "LAAAZ" path segment
-        rightOffset = -1;
-      } else {
-        // eslint-disable-next-line no-magic-numbers
-        rightOffset = rightMoves.length - rightMiddle > 3 ? -3 : -2;
-      }
+      const isShort = (m, middle) => m.length - middle < 4;
+      const shortPath = bottomRight > bottomLeft ?
+        isShort(rightMoves, rightMiddle) : isShort(leftMoves, leftMiddle);
+      // eslint-disable-next-line no-magic-numbers
+      const rightOffset = shortPath ? -1 : -3;
+
       moves = [...leftMoves.slice(0, leftMiddle + 2), ...rightMoves.slice(rightOffset)];
       coords = [...leftCoords.slice(0, leftMiddle + 2), ...rightCoords.slice(rightOffset)];
     }
@@ -329,6 +316,7 @@ export const getVerticalPolarBarPath = (props, cornerRadius) => {
     const subCoords = coords.slice(middle, -1);
     return subMoves.map((m, i) => ({ command: m, coords: subCoords[i].split(",") }));
   };
+
   const topPath = getTopPath();
   const bottomPath = getBottomPath();
   const moves = [ ...topPath, ...bottomPath];
