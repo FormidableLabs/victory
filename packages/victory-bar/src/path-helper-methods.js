@@ -236,30 +236,89 @@ export const getVerticalPolarBarPath = (props, cornerRadius) => {
     .startAngle(transformAngle(start))
     .endAngle(transformAngle(end))
     .cornerRadius(cornerRadius[edge]);
-    const path = pathFunction();
-    const moves = path.match(/[A-Z]/g);
-    const coords = path.split(/[A-Z]/).slice(1);
-    let moveStart;
-    if (edge === "topRight") {
-      moveStart = 0;
-    } else if (edge === "topLeft") {
-      moveStart = 2;
-    } else if (edge === "bottomLeft") {
-      moveStart = 4;
+    return pathFunction();
+  };
+
+  const getTopPath = () => {
+    const { topRight, topLeft } = cornerRadius;
+    const outerArcLength = r2 * Math.abs(end - start);
+    const rightPath = getPath("topRight");
+    const rightMoves = rightPath.match(/[A-Z]/g);
+    const rightCoords = rightPath.split(/[A-Z]/).slice(1);
+    const rightMiddle = rightMoves.indexOf("L");
+    const leftPath = getPath("topLeft");
+    const leftMoves = leftPath.match(/[A-Z]/g);
+    const leftCoords = leftPath.split(/[A-Z]/).slice(1);
+    const leftMiddle = leftMoves.indexOf("L");
+
+    let moves;
+    let coords;
+    if (topRight === topLeft || outerArcLength < topRight + topLeft) {
+      moves = topRight > topLeft ? rightMoves : leftMoves;
+      coords = topRight > topLeft ? rightCoords : leftCoords;
+    } else if (topRight > topLeft) {
+      // either "MAL" or "MAAAL" path segment for rightPath
+      const offset = rightMiddle < 3 ? leftMiddle : leftMiddle - 2;
+      moves = [...rightMoves.slice(0, 2), ...leftMoves.slice(offset)];
+      coords = [...rightCoords.slice(0, 2), ...leftCoords.slice(offset)];
+
     } else {
-      moveStart = 6;
+      // either "MAL" or "MAAAL" path segment for leftPath
+      const offset = leftMiddle < 3 ? rightMiddle : rightMiddle - 2;
+      moves = [...leftMoves.slice(0, 2), ...rightMoves.slice(offset)];
+      coords = [...leftCoords.slice(0, 2), ...rightCoords.slice(offset)];
     }
-    const moveEnd = moveStart + 2;
-    const subMoves = moves.slice(moveStart, moveEnd);
-    const subCoords = coords.slice(moveStart, moveEnd);
+    const middle = moves.indexOf("L");
+    const subMoves = moves.slice(0, middle);
+    const subCoords = coords.slice(0, middle);
     return subMoves.map((m, i) => ({ command: m, coords: subCoords[i].split(",") }));
   };
 
-  const topLeft = getPath("topLeft");
-  const topRight = getPath("topRight");
-  const bottomLeft = getPath("bottomLeft");
-  const bottomRight = getPath("bottomRight");
-  const moves = [ ...topRight, ...topLeft, ...bottomLeft, ...bottomRight ];
+  const getBottomPath = () => {
+    const { bottomRight, bottomLeft } = cornerRadius;
+    const innerArcLength = r1 * Math.abs(end - start);
+    const rightPath = getPath("bottomRight");
+    const rightMoves = rightPath.match(/[A-Z]/g);
+    const rightCoords = rightPath.split(/[A-Z]/).slice(1);
+    const rightMiddle = rightMoves.indexOf("L");
+    const leftPath = getPath("bottomLeft");
+    const leftMoves = leftPath.match(/[A-Z]/g);
+    const leftCoords = leftPath.split(/[A-Z]/).slice(1);
+    const leftMiddle = leftMoves.indexOf("L");
+
+    let moves;
+    let coords;
+    if (bottomRight === bottomLeft || innerArcLength < bottomRight + bottomLeft) {
+      moves = bottomRight > bottomLeft ? rightMoves : leftMoves;
+      coords = bottomRight > bottomLeft ? rightCoords : leftCoords;
+    } else if (bottomRight > bottomLeft) {
+      let leftOffset;
+      if (rightMoves.length - rightMiddle < 4) { // either "LAZ" or "LAAAZ" path segment
+        leftOffset = -1;
+      } else {
+        leftOffset = leftMoves.length - leftMiddle > 3 ? -3 : -2;
+      }
+      moves = [...rightMoves.slice(0, rightMiddle + 2), ...leftMoves.slice(leftOffset)];
+      coords = [...rightCoords.slice(0, rightMiddle + 2), ...leftCoords.slice(leftOffset)];
+    } else {
+      let rightOffset;
+      if (leftMoves.length - leftMiddle < 4) { // either "LAZ" or "LAAAZ" path segment
+        rightOffset = -1;
+      } else {
+        rightOffset = rightMoves.length - rightMiddle > 3 ? -3 : -2;
+      }
+      moves = [...leftMoves.slice(0, leftMiddle + 2), ...rightMoves.slice(rightOffset)];
+      coords = [...leftCoords.slice(0, leftMiddle + 2), ...rightCoords.slice(rightOffset)];
+    }
+    const middle = moves.indexOf("L");
+    const subMoves = moves.slice(middle, -1);
+    const subCoords = coords.slice(middle, -1);
+    return subMoves.map((m, i) => ({ command: m, coords: subCoords[i].split(",") }));
+  };
+
+  const topPath = getTopPath();
+  const bottomPath = getBottomPath();
+  const moves = [ ...topPath, ...bottomPath];
   const path = moves.reduce((memo, move) => {
     memo += `${move.command} ${move.coords.join()}`;
     return memo;
