@@ -76,6 +76,11 @@ storiesOf("VictoryPie", module)
       origin={{ x: 150, y: 150 }}
     />
   ))
+  .add("with a label position different than centroid", () => (
+    <VictoryPie
+      labelPosition={"startAngle"}
+    />
+  ))
   .add("with custom data and colors", () => (
     <VictoryPie
       style={{

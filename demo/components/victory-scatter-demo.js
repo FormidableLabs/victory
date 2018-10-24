@@ -2,7 +2,7 @@
 /*eslint-disable no-magic-numbers,react/no-multi-comp */
 import React from "react";
 import PropTypes from "prop-types";
-import { merge, random, range } from "lodash";
+import { assign, merge, random, range } from "lodash";
 import { VictoryScatter } from "../../packages/victory-scatter/src/index";
 import {
   VictoryLabel, VictoryContainer, VictoryTheme
@@ -121,7 +121,7 @@ export default class App extends React.Component {
             <VictoryContainer
               title="Scatter Chart"
               desc="This is a scatter chart with cat data points!"
-              style={Object.assign({}, style.parent, { border: "1px solid red" })}
+              style={assign({}, style.parent, { border: "1px solid red" })}
             />
           }
         />

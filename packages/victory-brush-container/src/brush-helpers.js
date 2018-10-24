@@ -242,30 +242,38 @@ const Helpers = {
     return {};
   },
 
-  onMouseUp(evt, targetProps) {
+  onMouseUp(evt, targetProps) { // eslint-disable-line max-statements, complexity
     const {
-      x1, y1, x2, y2, onBrushDomainChange, onBrushCleared, domain, allowResize, defaultBrushArea
+      x1, y1, x2, y2, isPanning, isSelecting, onBrushDomainChange, onBrushDomainChangeEnd,
+      onBrushCleared, domain, allowResize, allowDrag, defaultBrushArea
     } = targetProps;
-    // if the mouse hasn't moved since a mouseDown event, select the default brush area
+
     const defaultBrushHasArea = defaultBrushArea !== undefined && defaultBrushArea !== "none";
+    const cachedDomain = targetProps.cachedCurrentDomain || targetProps.currentDomain;
+    const currentDomain = this.getDefaultBrushArea(defaultBrushArea, domain, cachedDomain);
+    const mutatedProps = { isPanning: false, isSelecting: false };
+
+    // if the mouse hasn't moved since a mouseDown event, select the default brush area
     if ((allowResize || defaultBrushHasArea) && (x1 === x2 || y1 === y2)) {
-      const cachedDomain = targetProps.cachedCurrentDomain || targetProps.currentDomain;
-      const currentDomain = this.getDefaultBrushArea(defaultBrushArea, domain, cachedDomain);
-      const mutatedProps = { isPanning: false, isSelecting: false, currentDomain };
+      mutatedProps.currentDomain = currentDomain;
       if (isFunction(onBrushDomainChange)) {
         onBrushDomainChange(currentDomain, defaults({}, mutatedProps, targetProps));
+      }
+      if (isFunction(onBrushDomainChangeEnd)) {
+        onBrushDomainChangeEnd(currentDomain, defaults({}, mutatedProps, targetProps));
       }
       if (isFunction(onBrushCleared)) {
         onBrushCleared(currentDomain, defaults({}, mutatedProps, targetProps));
       }
-      return [{
-        target: "parent",
-        mutation: () => mutatedProps
-      }];
+    } else if ((allowDrag && isPanning) || (allowResize && isSelecting)) {
+      if (isFunction(onBrushDomainChangeEnd)) {
+        onBrushDomainChangeEnd(currentDomain, defaults({}, mutatedProps, targetProps));
+      }
     }
+
     return [{
       target: "parent",
-      mutation: () => ({ isPanning: false, isSelecting: false })
+      mutation: () => mutatedProps
     }];
   },
 

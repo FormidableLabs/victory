@@ -5,6 +5,7 @@ import { SelectionHelpers } from "packages/victory-selection-container/src/index
 import { VictoryBar } from "packages/victory-bar/src/index";
 import React from "react";
 import * as d3Scale from "d3-scale";
+import { assign } from "lodash";
 
 const scale = { x: d3Scale.scaleLinear(), y: d3Scale.scaleLinear() };
 
@@ -49,7 +50,7 @@ describe("helpers/selection", () => {
       const props = { scale, x1: 0, y1: 0, x2: 0.5, y2: 0.5 };
       const filteredData = SelectionHelpers.filterDatasets(props, datasets, bounds);
       const expected = { eventKey: [0], data: [data[0]] };
-      expect(filteredData).to.eql([Object.assign({ childName }, expected)]);
+      expect(filteredData).to.eql([assign({ childName }, expected)]);
     });
   });
 });

@@ -2,7 +2,7 @@
 /*eslint-disable no-magic-numbers */
 import React from "react";
 import PropTypes from "prop-types";
-import { merge, random, range } from "lodash";
+import { assign, merge, random, range } from "lodash";
 import { VictoryChart } from "../../packages/victory-chart/src/index";
 import { VictoryLine } from "../../packages/victory-line/src/index";
 import { VictoryErrorBar, ErrorBar } from "../../packages/victory-errorbar/src/index";
@@ -91,7 +91,7 @@ export default class App extends React.Component {
             <VictoryContainer
               title="ErrorBar Chart"
               desc="This is a errorbar chart with data points!"
-              style={Object.assign({}, style.parent, { border: "1px solid red" })}
+              style={assign({}, style.parent, { border: "1px solid red" })}
             />
           }
         />

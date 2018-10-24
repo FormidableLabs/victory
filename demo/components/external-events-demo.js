@@ -9,7 +9,7 @@ import { VictoryBar } from "../../packages/victory-bar/src/index";
 import { VictoryLine } from "../../packages/victory-line/src/index";
 import { VictoryZoomContainer } from "../../packages/victory-zoom-container/src/index";
 import { VictoryVoronoiContainer } from "../../packages/victory-voronoi-container/src/index";
-import { range } from "lodash";
+import { range, assign } from "lodash";
 
 class App extends React.Component {
   constructor() {
@@ -52,8 +52,8 @@ class App extends React.Component {
         mutation: (props) => {
           const fill = props.style && props.style.fill;
           return fill === "blue" ?
-            { style: Object.assign({}, props.style, { fill: "red" }) } :
-            { style: Object.assign({}, props.style, { fill: "blue" }) };
+            { style: assign({}, props.style, { fill: "red" }) } :
+            { style: assign({}, props.style, { fill: "blue" }) };
         },
         callback
       }]

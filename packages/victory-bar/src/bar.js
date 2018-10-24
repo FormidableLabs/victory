@@ -1,7 +1,7 @@
 import React from "react";
 import PropTypes from "prop-types";
 import { Helpers, Path, CommonProps } from "victory-core";
-import { assign, isObject, isFunction, isNil } from "lodash";
+import { assign, isPlainObject, isFunction, isNil } from "lodash";
 
 import {
   getVerticalBarPath,
@@ -32,6 +32,7 @@ export default class Bar extends React.Component {
       })
     ]),
     datum: PropTypes.object,
+    getPath: PropTypes.func,
     horizontal: PropTypes.bool,
     pathComponent: PropTypes.element,
     width: PropTypes.number,
@@ -103,7 +104,7 @@ export default class Bar extends React.Component {
     if (!cornerRadius) {
       return result;
     }
-    if (isObject(cornerRadius)) {
+    if (isPlainObject(cornerRadius)) {
       return this.getCornerRadiusFromObject(props);
     }
     result.topLeft = Helpers.evaluateProp(cornerRadius, datum, active);

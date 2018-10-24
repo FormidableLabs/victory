@@ -47,6 +47,20 @@ const CursorHelpers = {
       eventKey: "parent",
       mutation: () => ({ cursorValue, parentSVG })
     }];
+  },
+
+  onTouchEnd(evt, targetProps) {
+    const { onCursorChange } = targetProps;
+
+    if (isFunction(targetProps.onCursorChange)) {
+      onCursorChange(null, targetProps);
+    }
+
+    return [{
+      target: "parent",
+      eventKey: "parent",
+      mutation: () => ({ cursorValue: null })
+    }];
   }
 };
 
@@ -54,5 +68,6 @@ export default {
   onMouseMove: throttle(
     CursorHelpers.onMouseMove.bind(CursorHelpers),
     32, // eslint-disable-line no-magic-numbers
-    { leading: true, trailing: false })
+    { leading: true, trailing: false }),
+  onTouchEnd: CursorHelpers.onTouchEnd.bind(CursorHelpers)
 };
