@@ -57,7 +57,11 @@ class VictoryBar extends React.Component {
       PropTypes.func,
       PropTypes.shape({
         top: PropTypes.oneOfType([PropTypes.number, PropTypes.func]),
-        bottom: PropTypes.oneOfType([PropTypes.number, PropTypes.func])
+        topLeft: PropTypes.oneOfType([PropTypes.number, PropTypes.func]),
+        topRight: PropTypes.oneOfType([PropTypes.number, PropTypes.func]),
+        bottom: PropTypes.oneOfType([PropTypes.number, PropTypes.func]),
+        bottomLeft: PropTypes.oneOfType([PropTypes.number, PropTypes.func]),
+        bottomRight: PropTypes.oneOfType([PropTypes.number, PropTypes.func])
       })
     ]),
     getPath: PropTypes.func,

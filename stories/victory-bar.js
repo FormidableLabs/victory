@@ -6,8 +6,17 @@ import { VictoryStack } from "../packages/victory-stack/src/index";
 import { VictoryBar } from "../packages/victory-bar/src/index";
 import { VictoryTooltip } from "../packages/victory-tooltip/src/index";
 import { VictoryTheme } from "../packages/victory-core/src/index";
-import { getData, getStackedData, getMixedData, getTimeData, getLogData } from "./data";
+import { VictoryPolarAxis } from "../packages/victory-polar-axis/src/index";
+import { VictoryChart } from "../packages/victory-chart/src/index";
 import { getChartDecorator, getPolarChartDecorator } from "./decorators";
+import {
+  getData,
+  getStackedData,
+  getMixedData,
+  getTimeData,
+  getLogData,
+  getDescendingSmallData
+} from "./data";
 import * as d3Shape from "d3-shape";
 
 storiesOf("VictoryBar", module)
@@ -108,7 +117,46 @@ storiesOf("VictoryBar.cornerRadius", module)
   .add("cornerRadius = 5 (horizontal negative values)", () => (
     <VictoryBar horizontal data={getMixedData(5)} cornerRadius={5}/>
   ))
-  .add("cornerRadius = 3 (20 bars)", () => <VictoryBar data={getData(20)} cornerRadius={3}/>);
+  .add("cornerRadius = 3 (20 bars)", () => <VictoryBar data={getData(20)} cornerRadius={3}/>)
+  .add("cornerRadius = mixed", () => (
+    <VictoryBar
+      data={getDescendingSmallData()}
+      cornerRadius={{ topLeft: 5, topRight: 2, bottomLeft: 7, bottomRight: 3 }}
+    />
+  ))
+  .add("cornerRadius = mixed (horizontal)", () => (
+    <VictoryBar
+      horizontal
+      data={getDescendingSmallData()}
+      cornerRadius={{ topLeft: 5, topRight: 2, bottomLeft: 7, bottomRight: 3 }}
+    />
+  ));
+
+storiesOf("VictoryBar.cornerRadius", module)
+  .add("cornerRadius = mixed (polar)", () => (
+    <VictoryChart polar
+      theme={VictoryTheme.material}
+      domain={{ x: [0, 360] }}
+      innerRadius={60}
+    >
+      <VictoryPolarAxis
+        labelPlacement="parallel"
+        tickValues={[0, 45, 90, 135, 180, 225, 270, 315]}
+      />
+      <VictoryBar
+        cornerRadius={{ topRight: 1, topLeft: 10, bottomRight: 5, bottomLeft: 0 }}
+        style={{ data: { fill: "tomato", width: 20 } }}
+        data={[
+          { x: 45, y: 20 },
+          { x: 90, y: 30 },
+          { x: 135, y: 65 },
+          { x: 180, y: 50 },
+          { x: 270, y: 40 },
+          { x: 315, y: 30 }
+        ]}
+      />
+    </VictoryChart>
+  ));
 
 storiesOf("VictoryBar.getPath", module)
   .addDecorator(getChartDecorator({ domainPadding: 25 }))
