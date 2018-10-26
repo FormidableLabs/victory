@@ -1,5 +1,12 @@
 # Victory Changelog
 
+## 30.6.0 (2018-10-26)
+
+- [#1152](https://github.com/FormidableLabs/victory/pull/1152) Bugfix: `barWidth` functions were not being correctly evaluated
+- [#1158](https://github.com/FormidableLabs/victory/pull/1158) `cornerRadius` improvements for `VictoryBar`
+  - Artifacts caused by `cornerRadius` values larger than the height of the bar have been corrected
+  - `cornerRadius` now supports `topLeft`, `topRight`, `bottomLeft` and `bottomRight` values in addition to existing values. This is not a breaking change. These values may be used alongside existing values for `top` and `bottom`, but more specific values will override less specific values.
+
 ## 30.5.1 (2018-10-18)
 
 - [#1149](https://github.com/FormidableLabs/victory/pull/1149) Adds `onTouchEnd` helper for `VictoryCursorContainer`
