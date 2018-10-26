@@ -102,6 +102,5 @@
     "webpack-dev-server": "^1.10.0",
     "webpack-stats-plugin": "^0.1.1"
   },
-  "sideEffects": false,
-  "dependencies": {}
+  "sideEffects": false
 }
