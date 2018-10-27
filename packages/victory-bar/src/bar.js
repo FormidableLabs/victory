@@ -2,13 +2,7 @@ import React from "react";
 import PropTypes from "prop-types";
 import { Helpers, Path, CommonProps } from "victory-core";
 import { assign, isPlainObject, isFunction, isNil } from "lodash";
-
-import {
-  getVerticalBarPath,
-  getHorizontalBarPath,
-  getVerticalPolarBarPath,
-  getCustomBarPath
-} from "./path-helper-methods";
+import PathHelpers from "./path-helper-methods";
 
 export default class Bar extends React.Component {
 
@@ -49,16 +43,16 @@ export default class Bar extends React.Component {
 
   getBarPath(props, width, cornerRadius) {
     if (props.getPath) {
-      return getCustomBarPath(props, width);
+      return PathHelpers.getCustomBarPath(props, width);
     }
     return props.horizontal ?
-      getHorizontalBarPath(props, width, cornerRadius) :
-      getVerticalBarPath(props, width, cornerRadius);
+      PathHelpers.getHorizontalBarPath(props, width, cornerRadius) :
+      PathHelpers.getVerticalBarPath(props, width, cornerRadius);
   }
 
   getPolarBarPath(props, cornerRadius) {
     // TODO Radial bars
-    return getVerticalPolarBarPath(props, cornerRadius);
+    return PathHelpers.getVerticalPolarBarPath(props, cornerRadius);
   }
 
   getBarWidth(props, style) {

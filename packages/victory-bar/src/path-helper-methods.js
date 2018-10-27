@@ -1,7 +1,75 @@
 import { Helpers } from "victory-core";
 import * as d3Shape from "d3-shape";
 
-import { circle, point } from "./geometry-helper-methods";
+const distance = (p0, p1) => {
+  return Math.sqrt((p0.x - p1.x) ** 2 + (p0.y - p1.y) ** 2);
+};
+
+const hasIntersection = (circle0, circle1) => {
+  const P0 = circle0.center;
+  const P1 = circle1.center;
+  const r0 = circle0.radius;
+  const r1 = circle1.radius;
+  const d = distance(P0, P1);
+
+  if (d > r0 + r1) {
+    return false; // separate circles
+  }
+  if (d < Math.abs(r0 - r1)) {
+    return false; // one circle contains another
+  }
+  return true;
+};
+
+const equalCircles = (circle0, circle1) => {
+  const P0 = circle0.center;
+  const P1 = circle1.center;
+  const r0 = circle0.radius;
+  const r1 = circle1.radius;
+  return r0 === r1 && P0.x === P1.x && P0.y === P1.y;
+};
+
+// Source: http://paulbourke.net/geometry/circlesphere/
+// "Intersection of two circles" by Paul Bourke
+// Left-most point is returned as 0th element of array
+// Right-most point is returned as 1st element of array
+const intersection = (circle0, circle1) => { // eslint-disable-line max-statements
+  const P0 = circle0.center;
+  const P1 = circle1.center;
+  const r0 = circle0.radius;
+  const r1 = circle1.radius;
+  const d = distance(P0, P1);
+  if (!hasIntersection(circle0, circle1) || equalCircles(circle0, circle1)) {
+    return [];
+  }
+  const a = (r0 ** 2 - r1 ** 2 + d ** 2) / (2 * d);
+  const h = Math.sqrt(r0 ** 2 - a ** 2);
+  const scalar = a / d || 1;
+  const P2 = {
+    x: P0.x + (P1.x - P0.x) * scalar,
+    y: P0.y + (P1.y - P0.y) * scalar
+  };
+  const { x: x0, y: y0 } = P0;
+  const { x: x1, y: y1 } = P1;
+  const { x: x2, y: y2 } = P2;
+  const P3s = [
+    { x: x2 - h * (y1 - y0) / d, y: y2 + h * (x1 - x0) / d },
+    { x: x2 + h * (y1 - y0) / d, y: y2 - h * (x1 - x0) / d }
+  ];
+  P3s.sort((Point1, Point2) => Point1.x - Point2.x);
+  return P3s;
+};
+
+const solveX = (circle, y) => {
+  const sqrt = Math.sqrt(circle.radius ** 2 - (y - circle.center.y) ** 2);
+  return [ circle.center.x - sqrt, circle.center.x + sqrt ];
+};
+
+const solveY = (circle, x) => {
+  const sqrt = Math.sqrt(circle.radius ** 2 - (x - circle.center.x) ** 2);
+  return [ circle.center.y - sqrt, circle.center.y + sqrt ];
+};
+
 
 const getPosition = (props, width) => {
   const { x, y, y0, horizontal } = props;
@@ -34,7 +102,7 @@ const transformAngle = (angle) => {
   return -1 * angle + (Math.PI / 2);
 };
 
-export const getCustomBarPath = (props, width) => {
+const getCustomBarPath = (props, width) => {
   const { getPath } = props;
   const propsWithCalculatedValues = { ...props, ...getPosition(props, width) };
   return getPath(propsWithCalculatedValues);
@@ -103,16 +171,19 @@ const getVerticalBarPoints = (position, sign, cr) => {
     let bottomMiddlePoint = { x, y: y0 - sign * cr[`bottom${side}`] };
     let topMiddlePoint = { x, y: y1 + sign * cr[`top${side}`] };
     let topPoint = { x: x + signL * cr[`top${side}`], y: y1 };
-    const hasIntersection = sign === 1 ?
+    const intersects = sign === 1 ?
       y0 - cr[`bottom${side}`] < y1 + cr[`top${side}`] :
       y0 + cr[`bottom${side}`] > y1 - cr[`top${side}`];
 
-    if (hasIntersection) {
-      const topCenter = point(x + signL * cr[`top${side}`], y1 + sign * cr[`top${side}`]);
-      const topCircle = circle(topCenter, cr[`top${side}`]);
-      const bottomCenter = point(x + signL * cr[`bottom${side}`], y0 - sign * cr[`bottom${side}`]);
-      const bottomCircle = circle(bottomCenter, cr[`bottom${side}`]);
-      const circleIntersection = topCircle.intersection(bottomCircle);
+    if (intersects) {
+      const topCenter = { x: x + signL * cr[`top${side}`], y: y1 + sign * cr[`top${side}`] };
+      const topCircle = { center: topCenter, radius: cr[`top${side}`] };
+      const bottomCenter = {
+        x: x + signL * cr[`bottom${side}`],
+        y: y0 - sign * cr[`bottom${side}`]
+      };
+      const bottomCircle = { center: bottomCenter, radius: cr[`bottom${side}`] };
+      const circleIntersection = intersection(topCircle, bottomCircle);
       const hasArcIntersection = circleIntersection.length > 0;
       if (hasArcIntersection) {
         const arcIntersection = circleIntersection[isLeft ? 0 : 1];
@@ -121,12 +192,12 @@ const getVerticalBarPoints = (position, sign, cr) => {
       } else {
         const hasBottomLineTopArcIntersection = cr[`top${side}`] > cr[`bottom${side}`];
         if (hasBottomLineTopArcIntersection) {
-          const newX = topCircle.solveX(y0)[isLeft ? 0 : 1];
+          const newX = solveX(topCircle, y0)[isLeft ? 0 : 1];
           bottomPoint = { x: newX, y: y0 };
           bottomMiddlePoint = { x: newX, y: y0 };
           topMiddlePoint = { x: newX, y: y0 };
         } else {
-          const newX = bottomCircle.solveX(y1)[isLeft ? 0 : 1];
+          const newX = solveX(bottomCircle, y1)[isLeft ? 0 : 1];
           bottomMiddlePoint = { x: newX, y: y1 };
           topMiddlePoint = { x: newX, y: y1 };
           topPoint = { x: newX, y: y1 };
@@ -141,7 +212,7 @@ const getVerticalBarPoints = (position, sign, cr) => {
 };
 
 // eslint-disable-next-line max-statements, max-len
-export const getVerticalBarPath = (props, width, cornerRadius) => {
+const getVerticalBarPath = (props, width, cornerRadius) => {
 
   const position = getPosition(props, width);
   const sign = position.y0 > position.y1 ? 1 : -1;
@@ -165,15 +236,18 @@ const getHorizontalBarPoints = (position, sign, cr) => {
     let bottomMiddlePoint = { y: x, x: y0 + sign * cr[`bottom${side}`] };
     let topMiddlePoint = { y: x, x: y1 - sign * cr[`top${side}`] };
     let topPoint = { y: x + signL * cr[`top${side}`], x: y1 };
-    const hasIntersection = sign === 1 ?
+    const intersects = sign === 1 ?
       y0 + cr[`bottom${side}`] > y1 - cr[`top${side}`] :
       y0 - cr[`bottom${side}`] < y1 + cr[`top${side}`];
-    if (hasIntersection) {
-      const topCenter = point(y1 - sign * cr[`top${side}`], x + signL * cr[`top${side}`]);
-      const topCircle = circle(topCenter, cr[`top${side}`]);
-      const bottomCenter = point(y0 + sign * cr[`bottom${side}`], x + signL * cr[`bottom${side}`]);
-      const bottomCircle = circle(bottomCenter, cr[`bottom${side}`]);
-      const circleIntersection = topCircle.intersection(bottomCircle);
+    if (intersects) {
+      const topCenter = { x: y1 - sign * cr[`top${side}`], y: x + signL * cr[`top${side}`] };
+      const topCircle = { center: topCenter, radius: cr[`top${side}`] };
+      const bottomCenter = {
+        x: y0 + sign * cr[`bottom${side}`],
+        y: x + signL * cr[`bottom${side}`]
+      };
+      const bottomCircle = { center: bottomCenter, radius: cr[`bottom${side}`] };
+      const circleIntersection = intersection(topCircle, bottomCircle);
       const hasArcIntersection = circleIntersection.length > 0;
       if (hasArcIntersection) {
         const arcIntersection = circleIntersection.sort((a, b) => a.y - b.y)[isLeft ? 0 : 1];
@@ -182,12 +256,12 @@ const getHorizontalBarPoints = (position, sign, cr) => {
       } else {
         const hasBottomLineTopArcIntersection = cr[`top${side}`] > cr[`bottom${side}`];
         if (hasBottomLineTopArcIntersection) {
-          const newX = topCircle.solveY(y0)[isLeft ? 1 : 0];
+          const newX = solveY(topCircle, y0)[isLeft ? 1 : 0];
           bottomPoint = { y: newX, x: y0 };
           bottomMiddlePoint = { y: newX, x: y0 };
           topMiddlePoint = { y: newX, x: y0 };
         } else {
-          const newX = bottomCircle.solveY(y1)[isLeft ? 1 : 0];
+          const newX = solveY(bottomCircle, y1)[isLeft ? 1 : 0];
           bottomMiddlePoint = { y: newX, x: y1 };
           topMiddlePoint = { y: newX, x: y1 };
           topPoint = { y: newX, x: y1 };
@@ -202,7 +276,7 @@ const getHorizontalBarPoints = (position, sign, cr) => {
 };
 
 // eslint-disable-next-line max-statements, max-len
-export const getHorizontalBarPath = (props, width, cornerRadius) => {
+const getHorizontalBarPath = (props, width, cornerRadius) => {
 
   const position = getPosition(props, width);
   const sign = position.y1 > position.y0 ? 1 : -1;
@@ -214,7 +288,7 @@ export const getHorizontalBarPath = (props, width, cornerRadius) => {
 };
 
 // eslint-disable-next-line max-statements, max-len
-export const getVerticalPolarBarPath = (props, cornerRadius) => {
+const getVerticalPolarBarPath = (props, cornerRadius) => {
   const { datum, scale, index, alignment } = props;
   const style = Helpers.evaluateStyle(props.style, datum, props.active);
   const r1 = scale.y(datum._y0 || 0);
@@ -325,4 +399,11 @@ export const getVerticalPolarBarPath = (props, cornerRadius) => {
     return memo;
   }, "");
   return `${path} z`;
+};
+
+export default {
+  getVerticalBarPath,
+  getHorizontalBarPath,
+  getVerticalPolarBarPath,
+  getCustomBarPath
 };
