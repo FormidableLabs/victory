@@ -9,7 +9,7 @@ const point = function (x, y) {
     x,
     y,
     distance(p1) {
-      return Math.sqrt((this.x - p1.x) ** 2 + (this.y - p1.y) ** 2);
+      return Math.sqrt(Math.pow(this.x - p1.x, 2) + Math.pow(this.y - p1.y, 2));
     },
     // vector addition in 2d plane
     add(p1) {
@@ -81,8 +81,8 @@ const circle = function (center, radius) {
       if (!this.hasIntersection(circle1) || this.equals(circle1)) {
         return [];
       }
-      const a = (r0 ** 2 - r1 ** 2 + d ** 2) / (2 * d);
-      const h = Math.sqrt(r0 ** 2 - a ** 2);
+      const a = (Math.pow(r0, 2) - Math.pow(r1, 2) + Math.pow(d, 2)) / (2 * d);
+      const h = Math.sqrt(Math.pow(r0, 2) - Math.pow(a, 2));
       const P2 = P0.add(P1.subtract(P0).scalarMult(a).scalarDivide(d));
       const { x: x0, y: y0 } = P0;
       const { x: x1, y: y1 } = P1;
@@ -95,11 +95,11 @@ const circle = function (center, radius) {
       return P3s;
     },
     solveX(y) {
-      const sqrt = Math.sqrt(this.radius ** 2 - (y - this.center.y) ** 2);
+      const sqrt = Math.sqrt(Math.pow(this.radius, 2) - Math.pow(y - this.center.y, 2));
       return [ this.center.x - sqrt, this.center.x + sqrt ];
     },
     solveY(x) {
-      const sqrt = Math.sqrt(this.radius ** 2 - (x - this.center.x) ** 2);
+      const sqrt = Math.sqrt(Math.pow(this.radius, 2) - Math.pow(x - this.center.x, 2));
       return [ this.center.y - sqrt, this.center.y + sqrt ];
     }
   };
