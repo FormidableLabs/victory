@@ -2,7 +2,7 @@ import { Helpers } from "victory-core";
 import * as d3Shape from "d3-shape";
 
 const distance = (p0, p1) => {
-  return Math.sqrt((p0.x - p1.x) ** 2 + (p0.y - p1.y) ** 2);
+  return Math.sqrt(Math.pow(p0.x - p1.x, 2) + Math.pow(p0.y - p1.y, 2));
 };
 
 const hasIntersection = (circle0, circle1) => {
@@ -42,8 +42,8 @@ const intersection = (circle0, circle1) => { // eslint-disable-line max-statemen
   if (!hasIntersection(circle0, circle1) || equalCircles(circle0, circle1)) {
     return [];
   }
-  const a = (r0 ** 2 - r1 ** 2 + d ** 2) / (2 * d);
-  const h = Math.sqrt(r0 ** 2 - a ** 2);
+  const a = (Math.pow(r0, 2) - Math.pow(r1, 2) + Math.pow(d, 2)) / (2 * d);
+  const h = Math.sqrt(Math.pow(r0, 2) - Math.pow(a, 2));
   const scalar = a / d || 1;
   const P2 = {
     x: P0.x + (P1.x - P0.x) * scalar,
@@ -61,12 +61,12 @@ const intersection = (circle0, circle1) => { // eslint-disable-line max-statemen
 };
 
 const solveX = (circle, y) => {
-  const sqrt = Math.sqrt(circle.radius ** 2 - (y - circle.center.y) ** 2);
+  const sqrt = Math.sqrt(Math.pow(circle.radius, 2) - Math.pow(y - circle.center.y, 2));
   return [ circle.center.x - sqrt, circle.center.x + sqrt ];
 };
 
 const solveY = (circle, x) => {
-  const sqrt = Math.sqrt(circle.radius ** 2 - (x - circle.center.x) ** 2);
+  const sqrt = Math.sqrt(Math.pow(circle.radius, 2) - Math.pow(x - circle.center.x, 2));
   return [ circle.center.y - sqrt, circle.center.y + sqrt ];
 };
 
