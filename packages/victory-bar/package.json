@@ -1,6 +1,6 @@
 {
   "name": "victory-bar",
-  "version": "30.5.1",
+  "version": "30.6.0",
   "description": "Bar Component for Victory",
   "keywords": [
     "data visualization",
@@ -25,7 +25,7 @@
     "victory-core": "^30.3.1"
   },
   "scripts": {
-    "version": "nps build-libs && nps build-dists"
+    "temp-version": "webpack --bail --config ../../config/webpack/webpack.config.js --colors"
   },
   "sideEffects": false
 }
