@@ -137,9 +137,8 @@ export default class VictorySharedEvents extends React.Component {
   }
 
   getBasePropsFromChildren(childComponents) {
-    const iteratee = (child, childName, parent) => {
+    const iteratee = (child, childName) => {
       if (child.type && isFunction(child.type.getBaseProps)) {
-        child = parent ? React.cloneElement(child, parent.props) : child;
         const baseProps = child.props && child.type.getBaseProps(child.props);
         return baseProps ? [[childName, baseProps]] : null;
       } else {
