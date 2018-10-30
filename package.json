@@ -25,7 +25,7 @@
   "scripts": {
     "preversion": "nps check",
     "start": "nps start",
-    "storybook": "nps storybook",
+    "storybook": "nps storybook.server",
     "chromatic": "chromatic test --storybook-addon --port=6006",
     "chromatic-ci": "chromatic test --storybook-addon --port=6006 --exit-zero-on-changes"
   },
