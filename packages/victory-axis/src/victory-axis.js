@@ -149,7 +149,7 @@ class VictoryAxis extends React.Component {
     const size = isVertical ? props.height : props.width;
     const isVictoryLabel = (child) => child.type && child.type.role === "label";
     const labels = gridAndTicks.map((gridAndTick) => gridAndTick.props.children)
-     .reduce((accumulator, childArr) => accumulator.concat(childArr))
+     .reduce((accumulator, childArr) => accumulator.concat(childArr), [])
      .filter(isVictoryLabel)
      .map((child) => child.props);
     const paddingToObject = (padding) =>
