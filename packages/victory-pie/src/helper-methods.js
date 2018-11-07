@@ -162,7 +162,10 @@ export const getBaseProps = (props, fallbackProps) => {
   props = Helpers.modifyProps(props, fallbackProps, "pie");
   const calculatedValues = getCalculatedValues(props);
   const { slices, style, pathFunction, data, origin } = calculatedValues;
-  const { labels, events, sharedEvents, height, width, standalone, name } = props;
+  const {
+    labels, events, sharedEvents, height, width, standalone, name,
+    innerRadius, outerRadius, cornerRadius
+  } = props;
   const initialChildProps = {
     parent: { standalone, height, width, slices, pathFunction, name, style: style.parent }
   };
@@ -171,7 +174,7 @@ export const getBaseProps = (props, fallbackProps) => {
     const datum = data[index];
     const eventKey = datum.eventKey || index;
     const dataProps = {
-      index, slice, pathFunction, datum, data, origin,
+      index, slice, datum, data, origin, innerRadius, outerRadius, cornerRadius,
       style: getSliceStyle(index, calculatedValues)
     };
     childProps[eventKey] = {
