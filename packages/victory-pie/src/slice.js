@@ -21,32 +21,33 @@ export default class Slice extends React.Component {
     pathComponent: <Path/>
   };
 
-  getPathFunction(props) {
+  getPath(props) {
+    const { datum, active, slice } = this.props;
+
     if (isFunction(props.pathFunction)) {
-      return props.pathFunction;
+      return props.pathFunction(slice);
     }
-    const { datum, active } = this.props;
     const cornerRadius = Helpers.evaluateProp(props.cornerRadius, datum, active);
     const innerRadius = Helpers.evaluateProp(props.innerRadius, datum, active);
     const radius = Helpers.evaluateProp(props.radius, datum, active);
-    return d3Shape.arc()
+    const pathFunction = d3Shape.arc()
       .cornerRadius(cornerRadius)
       .outerRadius(radius)
       .innerRadius(innerRadius);
+    return pathFunction(slice);
   }
 
   render() {
     const {
-      datum, slice, active, role, shapeRendering, className,
+      datum, active, role, shapeRendering, className,
       origin, events, pathComponent, style, clipPath
     } = this.props;
     const defaultTransform = origin ? `translate(${origin.x}, ${origin.y})` : undefined;
     const transform = this.props.transform || defaultTransform;
-    const pathFunction = this.getPathFunction(this.props);
     return React.cloneElement(pathComponent, {
       className, role, shapeRendering, events, transform, clipPath,
       style: Helpers.evaluateStyle(style, datum, active),
-      d: pathFunction(slice)
+      d: this.getPath(this.props)
     });
   }
 }

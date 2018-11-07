@@ -24,7 +24,7 @@ const getColor = (style, colors, index) => {
 };
 
 const getRadius = (props, padding) => {
-  if (props.radius) {
+  if (typeof props.radius === "number") {
     return props.radius;
   }
   return Math.min(
@@ -58,15 +58,11 @@ const getCalculatedValues = (props) => {
   const style = Helpers.getStyles(props.style, styleObject, "auto", "100%");
   const colors = Array.isArray(colorScale) ? colorScale : Style.getColorScale(colorScale);
   const padding = Helpers.getPadding(props);
-  const radius = getRadius(props, padding);
+  const defaultRadius = getRadius(props, padding);
   const origin = getOrigin(props, padding);
   const data = Data.getData(props);
   const slices = getSlices(props, data);
-  const pathFunction = d3Shape.arc()
-    .cornerRadius(props.cornerRadius)
-    .outerRadius(radius)
-    .innerRadius(props.innerRadius);
-  return { style, colors, padding, radius, data, slices, pathFunction, origin };
+  return { style, colors, padding, defaultRadius, data, slices, origin };
 };
 
 const getSliceStyle = (index, calculatedValues) => {
@@ -138,12 +134,12 @@ const getVerticalAnchor = (orientation) => {
 
 const getLabelProps = (props, dataProps, calculatedValues) => {
   const { index, datum, data, slice } = dataProps;
-  const { style, radius, origin } = calculatedValues;
+  const { style, defaultRadius, origin } = calculatedValues;
   const labelStyle = Helpers.evaluateStyle(
     assign({ padding: 0 }, style.labels), datum, props.active
   );
   const labelRadius = Helpers.evaluateProp(props.labelRadius, datum);
-  const labelArc = getLabelArc(radius, labelRadius, labelStyle);
+  const labelArc = getLabelArc(defaultRadius, labelRadius, labelStyle);
   const position = getLabelPosition(labelArc, slice, props.labelPosition);
   const orientation = getLabelOrientation(slice);
   return {
@@ -161,20 +157,20 @@ const getLabelProps = (props, dataProps, calculatedValues) => {
 export const getBaseProps = (props, fallbackProps) => {
   props = Helpers.modifyProps(props, fallbackProps, "pie");
   const calculatedValues = getCalculatedValues(props);
-  const { slices, style, pathFunction, data, origin } = calculatedValues;
+  const { slices, style, data, origin, defaultRadius } = calculatedValues;
   const {
-    labels, events, sharedEvents, height, width, standalone, name,
-    innerRadius, outerRadius, cornerRadius
+    labels, events, sharedEvents, height, width, standalone, name, innerRadius, cornerRadius
   } = props;
+  const radius = props.radius || defaultRadius;
   const initialChildProps = {
-    parent: { standalone, height, width, slices, pathFunction, name, style: style.parent }
+    parent: { standalone, height, width, slices, name, style: style.parent }
   };
 
   return slices.reduce((childProps, slice, index) => {
     const datum = data[index];
     const eventKey = datum.eventKey || index;
     const dataProps = {
-      index, slice, datum, data, origin, innerRadius, outerRadius, cornerRadius,
+      index, slice, datum, data, origin, innerRadius, radius, cornerRadius,
       style: getSliceStyle(index, calculatedValues)
     };
     childProps[eventKey] = {
