@@ -169,9 +169,11 @@ export default class App extends React.Component {
                     {
                       mutation: (props) => {
                         const radius = props.radius === 150 ? undefined : 150;
+                        const startAngle = props.startAngle === undefined ? 0 : undefined;
+                        const endAngle = props.endAngle === undefined ? 1.5 : undefined;
                         return {
                           style: merge({}, props.style, { fill: "#F50057" }),
-                          radius
+                          radius, startAngle, endAngle
                         };
                       }
                     }, {

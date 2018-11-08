@@ -1,5 +1,5 @@
 /*eslint no-magic-numbers: ["error", { "ignore": [-1, 0, 1, 2, 45, 135, 180, 225, 315] }]*/
-import { assign, isFunction, isPlainObject } from "lodash";
+import { assign, defaults, isFunction, isPlainObject } from "lodash";
 import * as d3Shape from "d3-shape";
 
 import { Helpers, Data, Style } from "victory-core";
@@ -159,7 +159,8 @@ export const getBaseProps = (props, fallbackProps) => {
   const calculatedValues = getCalculatedValues(props);
   const { slices, style, data, origin, defaultRadius } = calculatedValues;
   const {
-    labels, events, sharedEvents, height, width, standalone, name, innerRadius, cornerRadius
+    labels, events, sharedEvents, height, width, standalone, name,
+    innerRadius, cornerRadius
   } = props;
   const radius = props.radius || defaultRadius;
   const initialChildProps = {
@@ -167,13 +168,17 @@ export const getBaseProps = (props, fallbackProps) => {
   };
 
   return slices.reduce((childProps, slice, index) => {
-    const datum = data[index];
+    const datum = defaults(
+      {}, data[index], { startAngle: slice.startAngle, endAngle: slice.endAngle }
+    );
+    console.log(datum.startAngle)
     const eventKey = datum.eventKey || index;
     const dataProps = {
       index, slice, datum, data, origin, innerRadius, radius, cornerRadius,
       style: getSliceStyle(index, calculatedValues)
     };
     childProps[eventKey] = {
+      data: dataProps
     };
     const text = getLabelText(props, datum, index);
     if (text !== undefined && text !== null || (labels && (events || sharedEvents))) {
