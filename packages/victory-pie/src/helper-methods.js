@@ -174,7 +174,6 @@ export const getBaseProps = (props, fallbackProps) => {
       style: getSliceStyle(index, calculatedValues)
     };
     childProps[eventKey] = {
-      data: dataProps
     };
     const text = getLabelText(props, datum, index);
     if (text !== undefined && text !== null || (labels && (events || sharedEvents))) {

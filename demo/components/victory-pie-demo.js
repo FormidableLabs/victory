@@ -1,51 +1,12 @@
 /*global window:false*/
 /*eslint-disable no-magic-numbers,react/no-multi-comp*/
 import { merge, random, range } from "lodash";
-import PropTypes from "prop-types";
 import React from "react";
-import { VictoryPie, Slice } from "../../packages/victory-pie/src/index";
+import { VictoryPie } from "../../packages/victory-pie/src/index";
 import { VictoryTooltip } from "../../packages/victory-tooltip/src/index";
 import {
   VictoryContainer, VictoryTheme, VictoryLabel
 } from "../../packages/victory-core/src/index";
-
-class BorderLabelSlice extends React.Component {
-  static propTypes = {
-    ...Slice.propTypes,
-    index: PropTypes.number
-  };
-
-  renderSlice(props) {
-    return <Slice {...props} />;
-  }
-
-  renderLabel(props) {
-    const { pathFunction, datum, slice, index, origin } = props;
-    const path = pathFunction({ ...slice, endAngle: slice.startAngle });
-    const pathId = `textPath-path-${index}`;
-    return (
-      <g transform={`translate(${origin.x}, ${origin.y})`}>
-        <path id={pathId} d={path} />
-        <text>
-          <textPath xlinkHref={`#${pathId}`}>
-            {datum.label || datum.xName || datum.x}
-          </textPath>
-        </text>
-      </g>
-    );
-  }
-
-  render() {
-    const { index } = this.props;
-
-    return (
-      <g key={`slice-and-label-${index}`}>
-        {this.renderSlice(this.props)}
-        {this.renderLabel(this.props)}
-      </g>
-    );
-  }
-}
 
 export default class App extends React.Component {
   constructor(props) {
@@ -145,6 +106,14 @@ export default class App extends React.Component {
             labelRadius={60}
             padding={{ bottom: 50, left: 50, right: 10 }}
             width={400} height={200}
+            radius={(d) => d.radius}
+            data={[
+              { x: 1, y: 1, radius: 40 },
+              { x: 2, y: 3, radius: 50 },
+              { x: 3, y: 5, radius: 70 },
+              { x: 4, y: 2, radius: 80 },
+              { x: 5, y: 3, radius: 60 }
+            ]}
           />
           <VictoryPie
             style={{ parent: parentStyle }}
@@ -199,8 +168,10 @@ export default class App extends React.Component {
                   return [
                     {
                       mutation: (props) => {
+                        const radius = props.radius === 150 ? undefined : 150;
                         return {
-                          style: merge({}, props.style, { fill: "#F50057" })
+                          style: merge({}, props.style, { fill: "#F50057" }),
+                          radius
                         };
                       }
                     }, {
@@ -266,7 +237,6 @@ export default class App extends React.Component {
             innerRadius={100}
             animate={{ duration: 2000 }}
             colorScale={this.state.colorScale}
-            dataComponent={<BorderLabelSlice />}
           />
 
           <VictoryPie
