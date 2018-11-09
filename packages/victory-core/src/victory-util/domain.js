@@ -52,7 +52,7 @@ function getExtremeFromData(dataset, axis, type = "min") {
     const current0 = datum[`_${axis}0`] !== undefined ? datum[`_${axis}0`] : datum[`_${axis}`];
     const current1 = datum[`_${axis}1`] !== undefined ? datum[`_${axis}1`] : datum[`_${axis}`];
     const current = getExtreme([current0, current1]);
-    containsDate = containsDate || current instanceof Date;
+    containsDate = containsDate || current0 instanceof Date || current1 instanceof Date;
     return getExtreme([memo, current]);
   }, initialValue);
   return containsDate ? new Date(result) : result;
@@ -220,6 +220,7 @@ function getDomainFromData(props, axis, dataset) {
     const max = maxDomain !== undefined ? maxDomain : Collection.getMaxValue(scaleDomain);
     return getDomainFromMinMax(min, max);
   }
+
   const currentAxis = Helpers.getCurrentAxis(axis, horizontal);
   const min = minDomain !== undefined ? minDomain : getExtremeFromData(dataset, currentAxis, "min");
   const max = maxDomain !== undefined ? maxDomain : getExtremeFromData(dataset, currentAxis, "max");
@@ -241,8 +242,8 @@ function getDomainFromMinMax(min, max) {
     // eslint-disable-next-line no-magic-numbers
     const verySmallNumber = val === 0 ? 2 * Math.pow(10, -10) : Math.pow(10, -10);
     const verySmallDate = 1;
-    const minVal = val instanceof Date ? new Date(+val - verySmallDate) : val - verySmallNumber;
-    const maxVal = val instanceof Date ? new Date(+val + verySmallDate) : val + verySmallNumber;
+    const minVal = val instanceof Date ? new Date(+val - verySmallDate) : +val - verySmallNumber;
+    const maxVal = val instanceof Date ? new Date(+val + verySmallDate) : +val + verySmallNumber;
     return val === 0 ? [0, maxVal] : [minVal, maxVal];
   };
   return +min === +max ? getSinglePointDomain(max) : [min, max];
