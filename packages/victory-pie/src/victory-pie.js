@@ -42,13 +42,6 @@ class VictoryPie extends React.Component {
   static role = "pie";
 
   static defaultTransitions = {
-    onLoad: {
-      duration: 2000,
-      before: () => {
-        return { _y: 0, startAngle: 0, label: " " };
-      },
-      after: (datum) => ({ _y: datum._y, startAngle: undefined, label: datum.label })
-    },
     onExit: {
       duration: 500,
       before: () => ({ _y: 0, label: " " })
