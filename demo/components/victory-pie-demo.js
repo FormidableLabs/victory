@@ -1,12 +1,10 @@
 /*global window:false*/
 /*eslint-disable no-magic-numbers,react/no-multi-comp*/
-import { merge, random, range } from "lodash";
+import { random, range } from "lodash";
 import React from "react";
 import { VictoryPie } from "../../packages/victory-pie/src/index";
 import { VictoryTooltip } from "../../packages/victory-tooltip/src/index";
-import {
-  VictoryContainer, VictoryTheme, VictoryLabel
-} from "../../packages/victory-core/src/index";
+import { VictoryTheme } from "../../packages/victory-core/src/index";
 
 export default class App extends React.Component {
   constructor(props) {
@@ -147,44 +145,24 @@ export default class App extends React.Component {
               }
             }}
             data={this.state.transitionData}
-            containerComponent={
-              <VictoryContainer
-                title="Animated Pie Chart"
-                desc="This pie chart shows some data, which is described here."
-              />}
           />
 
           <VictoryPie
-            style={{
-              parent: { ...parentStyle, padding: "1% 3%" }
-            }}
+            style={{ parent: parentStyle }}
             theme={VictoryTheme.material}
-            labelComponent={<VictoryLabel renderInPortal />}
-            labels={() => "click me!"}
             events={[{
               target: "data",
               eventHandlers: {
-                onClick: () => {
-                  return [
-                    {
-                      mutation: (props) => {
-                        const radius = props.radius === 150 ? undefined : 150;
-                        const startAngle = props.startAngle === undefined ? 0 : undefined;
-                        const endAngle = props.endAngle === undefined ? 1.5 : undefined;
-                        return {
-                          style: merge({}, props.style, { fill: "#F50057" }),
-                          radius, startAngle, endAngle
-                        };
-                      }
-                    }, {
-                      target: "labels",
-                      eventKey: [0, 2, 4],
-                      mutation: () => {
-                        return { text: "Nice." };
-                      }
-                    }
-                  ];
-                }
+                onMouseOver: () => ({
+                  mutation: (props) => ({
+                    radius: 135,
+                    sliceStartAngle: props.slice.startAngle + 0.05,
+                    sliceEndAngle: props.slice.endAngle - 0.05
+                  })
+                }),
+                onMouseOut: () => ({
+                  mutation: () => null
+                })
               }
             }]}
           />
