@@ -25,13 +25,15 @@ export default class Slice extends React.Component {
   };
 
   getPath(props) {
-    const { datum, active, slice, sliceStartAngle, sliceEndAngle } = props;
+    const { datum, active, slice } = props;
     if (isFunction(props.pathFunction)) {
       return props.pathFunction(slice);
     }
     const cornerRadius = Helpers.evaluateProp(props.cornerRadius, datum, active);
     const innerRadius = Helpers.evaluateProp(props.innerRadius, datum, active);
     const radius = Helpers.evaluateProp(props.radius, datum, active);
+    const sliceStartAngle = Helpers.evaluateProp(props.sliceStartAngle, datum, active);
+    const sliceEndAngle = Helpers.evaluateProp(props.sliceEndAngle, datum, active);
     const startAngle = sliceStartAngle !== undefined ? sliceStartAngle : slice.startAngle;
     const endAngle = sliceEndAngle !== undefined ? sliceEndAngle : slice.endAngle;
     const pathFunction = d3Shape.arc()
