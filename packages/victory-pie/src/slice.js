@@ -10,13 +10,13 @@ export default class Slice extends React.Component {
     ...CommonProps.primitiveProps,
     cornerRadius: PropTypes.oneOfType([PropTypes.number, PropTypes.func]),
     datum: PropTypes.object,
-    endAngle: PropTypes.oneOfType([PropTypes.number, PropTypes.func]),
     innerRadius: PropTypes.oneOfType([PropTypes.number, PropTypes.func]),
     pathComponent: PropTypes.element,
     pathFunction: PropTypes.func,
     radius: PropTypes.oneOfType([PropTypes.number, PropTypes.func]),
     slice: PropTypes.object,
-    startAngle: PropTypes.oneOfType([PropTypes.number, PropTypes.func])
+    sliceEndAngle: PropTypes.oneOfType([PropTypes.number, PropTypes.func]),
+    sliceStartAngle: PropTypes.oneOfType([PropTypes.number, PropTypes.func])
 
   };
 
@@ -25,15 +25,15 @@ export default class Slice extends React.Component {
   };
 
   getPath(props) {
-    const { datum, active, slice } = props;
+    const { datum, active, slice, sliceStartAngle, sliceEndAngle } = props;
     if (isFunction(props.pathFunction)) {
       return props.pathFunction(slice);
     }
     const cornerRadius = Helpers.evaluateProp(props.cornerRadius, datum, active);
     const innerRadius = Helpers.evaluateProp(props.innerRadius, datum, active);
     const radius = Helpers.evaluateProp(props.radius, datum, active);
-    const startAngle = props.startAngle !== undefined ? props.startAngle : slice.startAngle;
-    const endAngle = props.endAngle !== undefined ? props.endAngle : slice.endAngle;
+    const startAngle = sliceStartAngle !== undefined ? sliceStartAngle : slice.startAngle;
+    const endAngle = sliceEndAngle !== undefined ? sliceEndAngle : slice.endAngle;
     const pathFunction = d3Shape.arc()
       .cornerRadius(cornerRadius)
       .outerRadius(radius)
