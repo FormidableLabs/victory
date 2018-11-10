@@ -1,6 +1,6 @@
 {
   "name": "victory-create-container",
-  "version": "30.5.1",
+  "version": "30.6.1",
   "description": "Container Helper for Victory",
   "keywords": [
     "data visualization",
@@ -20,12 +20,12 @@
   "license": "MIT",
   "dependencies": {
     "lodash": "^4.17.5",
-    "victory-brush-container": "^30.5.0",
-    "victory-core": "^30.3.1",
-    "victory-cursor-container": "^30.5.1",
-    "victory-selection-container": "^30.3.1",
-    "victory-voronoi-container": "^30.3.1",
-    "victory-zoom-container": "^30.3.1"
+    "victory-brush-container": "^30.6.1",
+    "victory-core": "^30.6.1",
+    "victory-cursor-container": "^30.6.1",
+    "victory-selection-container": "^30.6.1",
+    "victory-voronoi-container": "^30.6.1",
+    "victory-zoom-container": "^30.6.1"
   },
   "scripts": {
     "version": "nps build-libs && nps build-dists"
