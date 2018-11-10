@@ -4,7 +4,6 @@ cache: yarn
 addons:
   chrome: stable
 node_js:
-- '6'
 - '8'
 - '10'
 sudo: false
