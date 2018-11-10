@@ -1,5 +1,10 @@
 # Victory Changelog
 
+## 30.6.1 (2018-11-9)
+
+- [#1178](https://github.com/FormidableLabs/victory/pull/1178) Bugfix: single point charts with time scale data are appropriately centered
+- [#1171](https://github.com/FormidableLabs/victory/pull/1171) Bugfix: `fixLabelOverlap` no longer causes errors with string `tickValues`
+
 ## 30.6.0 (2018-10-26)
 
 - [#1152](https://github.com/FormidableLabs/victory/pull/1152) Bugfix: `barWidth` functions were not being correctly evaluated
