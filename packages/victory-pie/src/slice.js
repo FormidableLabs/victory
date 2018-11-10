@@ -1,7 +1,7 @@
 import React from "react";
 import PropTypes from "prop-types";
 import { Helpers, CommonProps, Path } from "victory-core";
-import { isFunction } from "lodash";
+import { defaults, isFunction } from "lodash";
 import * as d3Shape from "d3-shape";
 
 
@@ -11,6 +11,7 @@ export default class Slice extends React.Component {
     cornerRadius: PropTypes.oneOfType([PropTypes.number, PropTypes.func]),
     datum: PropTypes.object,
     innerRadius: PropTypes.oneOfType([PropTypes.number, PropTypes.func]),
+    padAngle: PropTypes.oneOfType([PropTypes.number, PropTypes.func]),
     pathComponent: PropTypes.element,
     pathFunction: PropTypes.func,
     radius: PropTypes.oneOfType([PropTypes.number, PropTypes.func]),
@@ -32,15 +33,20 @@ export default class Slice extends React.Component {
     const cornerRadius = Helpers.evaluateProp(props.cornerRadius, datum, active);
     const innerRadius = Helpers.evaluateProp(props.innerRadius, datum, active);
     const radius = Helpers.evaluateProp(props.radius, datum, active);
-    const sliceStartAngle = Helpers.evaluateProp(props.sliceStartAngle, datum, active);
-    const sliceEndAngle = Helpers.evaluateProp(props.sliceEndAngle, datum, active);
-    const startAngle = sliceStartAngle !== undefined ? sliceStartAngle : slice.startAngle;
-    const endAngle = sliceEndAngle !== undefined ? sliceEndAngle : slice.endAngle;
+    const padAngle = Helpers.degreesToRadians(
+      Helpers.evaluateProp(props.padAngle, datum, active)
+    );
+    const startAngle = Helpers.degreesToRadians(
+      Helpers.evaluateProp(props.sliceStartAngle, datum, active)
+    );
+    const endAngle = Helpers.degreesToRadians(
+      Helpers.evaluateProp(props.sliceEndAngle, datum, active)
+    );
     const pathFunction = d3Shape.arc()
       .cornerRadius(cornerRadius)
       .outerRadius(radius)
       .innerRadius(innerRadius);
-    return pathFunction({ startAngle, endAngle });
+    return pathFunction(defaults({ startAngle, endAngle, padAngle }, slice));
   }
 
   render() {

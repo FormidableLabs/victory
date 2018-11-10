@@ -64,7 +64,7 @@ class VictoryPie extends React.Component {
       ])
     ]),
     containerComponent: PropTypes.element,
-    cornerRadius: CustomPropTypes.nonNegative,
+    cornerRadius: PropTypes.oneOfType([ CustomPropTypes.nonNegative, PropTypes.func ]),
     data: PropTypes.array,
     dataComponent: PropTypes.element,
     endAngle: PropTypes.number,
@@ -111,7 +111,7 @@ class VictoryPie extends React.Component {
       x: CustomPropTypes.nonNegative,
       y: CustomPropTypes.nonNegative
     }),
-    padAngle: CustomPropTypes.nonNegative,
+    padAngle: PropTypes.oneOfType([ CustomPropTypes.nonNegative, PropTypes.func ]),
     padding: PropTypes.oneOfType([
       PropTypes.number,
       PropTypes.shape({

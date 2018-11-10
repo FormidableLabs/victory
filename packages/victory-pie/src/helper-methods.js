@@ -4,10 +4,6 @@ import * as d3Shape from "d3-shape";
 
 import { Helpers, Data, Style } from "victory-core";
 
-const degreesToRadians = (degrees) => {
-  return degrees * (Math.PI / 180);
-};
-
 const checkForValidText = (text) => {
   if (text === undefined || text === null) {
     return text;
@@ -45,9 +41,9 @@ const getOrigin = (props, padding) => {
 const getSlices = (props, data) => {
   const layoutFunction = d3Shape.pie()
     .sort(null)
-    .startAngle(degreesToRadians(props.startAngle))
-    .endAngle(degreesToRadians(props.endAngle))
-    .padAngle(degreesToRadians(props.padAngle))
+    .startAngle(Helpers.degreesToRadians(props.startAngle))
+    .endAngle(Helpers.degreesToRadians(props.endAngle))
+    .padAngle(Helpers.degreesToRadians(props.padAngle))
     .value((datum) => { return datum._y; });
   return layoutFunction(data);
 };
@@ -160,7 +156,7 @@ export const getBaseProps = (props, fallbackProps) => {
   const { slices, style, data, origin, defaultRadius } = calculatedValues;
   const {
     labels, events, sharedEvents, height, width, standalone, name,
-    innerRadius, cornerRadius
+    innerRadius, cornerRadius, padAngle
   } = props;
   const radius = props.radius || defaultRadius;
   const initialChildProps = {
@@ -169,11 +165,15 @@ export const getBaseProps = (props, fallbackProps) => {
 
   return slices.reduce((childProps, slice, index) => {
     const datum = defaults(
-      {}, data[index], { startAngle: slice.startAngle, endAngle: slice.endAngle }
+      {}, data[index], {
+        startAngle: Helpers.radiansToDegrees(slice.startAngle),
+        endAngle: Helpers.radiansToDegrees(slice.endAngle),
+        padAngle: Helpers.radiansToDegrees(slice.padAngle)
+      }
     );
     const eventKey = datum.eventKey || index;
     const dataProps = {
-      index, slice, datum, data, origin, innerRadius, radius, cornerRadius,
+      index, slice, datum, data, origin, innerRadius, radius, cornerRadius, padAngle,
       style: getSliceStyle(index, calculatedValues)
     };
     childProps[eventKey] = {
