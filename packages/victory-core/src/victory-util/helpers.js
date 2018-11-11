@@ -122,11 +122,11 @@ function evaluateStyle(style, data, active) {
 }
 
 function degreesToRadians(degrees) {
-  return degrees * (Math.PI / 180);
+  return typeof degrees === "number" ? degrees * (Math.PI / 180) : degrees;
 }
 
 function radiansToDegrees(radians) {
-  return radians / (Math.PI / 180);
+  return typeof radians === "number" ? radians / (Math.PI / 180) : radians;
 }
 
 function getRadius(props) {

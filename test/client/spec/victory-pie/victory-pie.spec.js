@@ -324,7 +324,7 @@ describe("components/victory-pie", () => {
       expect(clickHandler).called;
       // the first argument is the standard evt object
       expect(clickHandler.args[0][1])
-        .to.include.keys("slices", "pathFunction", "width", "height", "style");
+        .to.include.keys("slices", "width", "height", "style");
     });
 
     it("attaches an event to data", () => {

@@ -2,7 +2,7 @@
 import React from "react";
 import { storiesOf } from "@storybook/react";
 import { action } from "@storybook/addon-actions";
-import { VictoryPie } from "../packages/victory-pie/src/index";
+import { VictoryPie, Slice } from "../packages/victory-pie/src/index";
 
 storiesOf("VictoryPie", module)
   .addDecorator((story) => (
@@ -126,6 +126,63 @@ storiesOf("VictoryPie", module)
         { x: "Dog", y: 91 },
         { x: "Fish", y: 55 },
         { x: "Bird", y: 55 }
+      ]}
+    />
+  ))
+  .add("with functional radius", () => (
+    <VictoryPie
+      radius={(d) => d.y + 100}
+      labelRadius={(d) => d.y + 50}
+      style={{
+        labels: { fill: "white" }
+      }}
+      data={[
+        { x: "Cat", y: 62 },
+        { x: "Dog", y: 91 },
+        { x: "Fish", y: 55 },
+        { x: "Bird", y: 55 }
+      ]}
+    />
+  ))
+  .add("with functional innerRadius", () => (
+    <VictoryPie
+      innerRadius={(d) => d.y}
+      data={[
+        { x: "Cat", y: 62 },
+        { x: "Dog", y: 91 },
+        { x: "Fish", y: 55 },
+        { x: "Bird", y: 55 }
+      ]}
+    />
+  ))
+  .add("with functional cornerRadius", () => (
+    <VictoryPie
+      cornerRadius={(d) => d.y > 70 ? 10 : 0 }
+      innerRadius={100}
+      data={[
+        { x: "Cat", y: 62 },
+        { x: "Dog", y: 91 },
+        { x: "Fish", y: 55 },
+        { x: "Bird", y: 55 }
+      ]}
+    />
+  ))
+  .add("with sliceStartAngle and sliceEndAngle", () => (
+    <VictoryPie
+      dataComponent={
+        <Slice
+          sliceStartAngle={0}
+          sliceEndAngle={(d) => d.endAngle}
+        />
+      }
+      labels={() => " "}
+      radius={(d) => d.radius}
+      innerRadius={(d) => d.innerRadius}
+      data={[
+        { x: "Cat", y: 62, innerRadius: 0, radius: 30 },
+        { x: "Dog", y: 91, innerRadius: 35, radius: 65 },
+        { x: "Fish", y: 55, innerRadius: 70, radius: 100 },
+        { x: "Bird", y: 55, innerRadius: 105, radius: 135, endAngle: 360 }
       ]}
     />
   ))

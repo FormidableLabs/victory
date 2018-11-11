@@ -49,7 +49,9 @@ class VictoryPie extends React.Component {
     onEnter: {
       duration: 500,
       before: () => ({ _y: 0, label: " " }),
-      after: (datum) => ({ y_: datum._y, label: datum.label })
+      after: (datum) => ({
+        y_: datum._y, label: datum.label
+      })
     }
   };
 
@@ -62,7 +64,7 @@ class VictoryPie extends React.Component {
       ])
     ]),
     containerComponent: PropTypes.element,
-    cornerRadius: CustomPropTypes.nonNegative,
+    cornerRadius: PropTypes.oneOfType([ CustomPropTypes.nonNegative, PropTypes.func ]),
     data: PropTypes.array,
     dataComponent: PropTypes.element,
     endAngle: PropTypes.number,
@@ -99,7 +101,7 @@ class VictoryPie extends React.Component {
     })),
     groupComponent: PropTypes.element,
     height: CustomPropTypes.nonNegative,
-    innerRadius: CustomPropTypes.nonNegative,
+    innerRadius: PropTypes.oneOfType([ CustomPropTypes.nonNegative, PropTypes.func ]),
     labelComponent: PropTypes.element,
     labelPosition: PropTypes.oneOf(["startAngle", "centroid", "endAngle"]),
     labelRadius: PropTypes.oneOfType([ CustomPropTypes.nonNegative, PropTypes.func ]),
@@ -109,7 +111,7 @@ class VictoryPie extends React.Component {
       x: CustomPropTypes.nonNegative,
       y: CustomPropTypes.nonNegative
     }),
-    padAngle: CustomPropTypes.nonNegative,
+    padAngle: PropTypes.oneOfType([ CustomPropTypes.nonNegative, PropTypes.func ]),
     padding: PropTypes.oneOfType([
       PropTypes.number,
       PropTypes.shape({
@@ -117,7 +119,7 @@ class VictoryPie extends React.Component {
         left: PropTypes.number, right: PropTypes.number
       })
     ]),
-    radius: CustomPropTypes.nonNegative,
+    radius: PropTypes.oneOfType([ CustomPropTypes.nonNegative, PropTypes.func ]),
     sharedEvents: PropTypes.shape({
       events: PropTypes.array,
       getEventState: PropTypes.func
