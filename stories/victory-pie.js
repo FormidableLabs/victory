@@ -172,7 +172,7 @@ storiesOf("VictoryPie", module)
       dataComponent={
         <Slice
           sliceStartAngle={0}
-          sliceEndAngle={(d) => d.endAngle - 0.5}
+          sliceEndAngle={(d) => d.endAngle}
         />
       }
       labels={() => " "}
@@ -182,7 +182,7 @@ storiesOf("VictoryPie", module)
         { x: "Cat", y: 62, innerRadius: 0, radius: 30 },
         { x: "Dog", y: 91, innerRadius: 35, radius: 65 },
         { x: "Fish", y: 55, innerRadius: 70, radius: 100 },
-        { x: "Bird", y: 55, innerRadius: 105, radius: 135, endAngle: 5.5 }
+        { x: "Bird", y: 55, innerRadius: 105, radius: 135, endAngle: 360 }
       ]}
     />
   ))
