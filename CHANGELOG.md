@@ -1,6 +1,16 @@
 # Victory Changelog
 
-## 30.6.1 (2018-11-9)
+## 31.0.0 (2018-11-10)
+
+- [#1177](https://github.com/FormidableLabs/victory/pull/1177) Adds support for controlling `radius`, `innerRadius`, `cornerRadius`, `padAngle`, `sliceStartAngle` and `sliceEndAngle` for each individual slice of a pie:
+
+Details:
+The `Slice` primitive used by `VictoryPie` now takes `radius`, `cornerRadius`, `innerRadius`, `padAngle`, `sliceStartAngle` and `sliceEndAngle` props. Each of these props may be given as number or a function of `datum` and `active`.  `padAngle`, `radius`, `cornerRadius` and `innerRadius` will be passed down from props on `VictoryBar`, but `sliceStartAngle` and `sliceEndAngle` must be defined directly on the `Slice` instance, These values should be given in degrees.  To make these values easier to use as functional props, `startAngle`, `endAngle`, and `padAngle` (in degrees) are added to each `datum` passed into `Slice`. (If your data already has these properties they will _not_ be overridden)
+
+*Breaking Changes*
+The `Slice` primitive will still take a `pathFunction` prop, but this prop will no longer be provided by `VictoryPie`. This will not be a breaking change for most users. This will only affect users who were  wrapping the `Slice` component and making use of the `pathFunction` prop provided by `VictoryPie` Users who were providing their own `pathFunction` prop to `Slice` should not be effected.
+
+## 30.6.1 (2018-11-09)
 
 - [#1178](https://github.com/FormidableLabs/victory/pull/1178) Bugfix: single point charts with time scale data are appropriately centered
 - [#1171](https://github.com/FormidableLabs/victory/pull/1171) Bugfix: `fixLabelOverlap` no longer causes errors with string `tickValues`
