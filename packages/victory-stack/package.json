@@ -1,6 +1,6 @@
 {
   "name": "victory-stack",
-  "version": "30.6.1",
+  "version": "31.0.0",
   "description": "Stack Layout Component for Victory",
   "keywords": [
     "data visualization",
@@ -21,7 +21,7 @@
   "dependencies": {
     "lodash": "^4.17.5",
     "prop-types": "^15.5.8",
-    "victory-core": "^30.6.1"
+    "victory-core": "^31.0.0"
   },
   "scripts": {
     "version": "nps build-libs && nps build-dists"
