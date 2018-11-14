@@ -89,7 +89,7 @@ export default class Bar extends React.Component {
     updateCornerRadius("topLeft", "top");
     updateCornerRadius("topRight", "top");
     updateCornerRadius("bottomLeft", "bottom");
-    updateCornerRadius("bottomRight", "right");
+    updateCornerRadius("bottomRight", "bottom");
     return realCornerRadius;
   }
 
