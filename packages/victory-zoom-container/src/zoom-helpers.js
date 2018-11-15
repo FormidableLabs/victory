@@ -164,7 +164,7 @@ const RawZoomHelpers = {
     let childrenDomain = {};
     if (childComponents.length) {
       childrenDomain = zoomDimension ?
-        { [zoomDimension]: Wrapper.getDomainFromChildren(props, zoomDimension, childComponents) }
+        { [zoomDimension]: Wrapper.getDomainFromChildren(props, {x:x, y:y}[zoomDimension], childComponents) }
         : ({
           x: Wrapper.getDomainFromChildren(props, x, childComponents),
           y: Wrapper.getDomainFromChildren(props, y, childComponents)
