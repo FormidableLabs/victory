@@ -1,5 +1,10 @@
 # Victory Changelog
 
+## 31.0.1 (2018-11-17)
+
+- [1182](https://github.com/FormidableLabs/victory/pull/1182) Bugfix: fixes incorrect cornerRadius
+- [1185](https://github.com/FormidableLabs/victory/pull/1185) Bugfix: corrects bug in zooming for horizontal charts
+
 ## 31.0.0 (2018-11-10)
 
 - [#1177](https://github.com/FormidableLabs/victory/pull/1177) Adds support for controlling `radius`, `innerRadius`, `cornerRadius`, `padAngle`, `sliceStartAngle` and `sliceEndAngle` for each individual slice of a pie:
