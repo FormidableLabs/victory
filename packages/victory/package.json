@@ -1,6 +1,6 @@
 {
   "name": "victory",
-  "version": "31.0.0",
+  "version": "31.0.1",
   "description": "Data viz for React",
   "keywords": [
     "data visualization",
@@ -21,14 +21,14 @@
   "dependencies": {
     "victory-area": "^31.0.0",
     "victory-axis": "^31.0.0",
-    "victory-bar": "^31.0.0",
+    "victory-bar": "^31.0.1",
     "victory-box-plot": "^31.0.0",
     "victory-brush-container": "^31.0.0",
     "victory-brush-line": "^31.0.0",
     "victory-candlestick": "^31.0.0",
     "victory-chart": "^31.0.0",
     "victory-core": "^31.0.0",
-    "victory-create-container": "^31.0.0",
+    "victory-create-container": "^31.0.1",
     "victory-cursor-container": "^31.0.0",
     "victory-errorbar": "^31.0.0",
     "victory-group": "^31.0.0",
@@ -43,7 +43,7 @@
     "victory-tooltip": "^31.0.0",
     "victory-voronoi": "^31.0.0",
     "victory-voronoi-container": "^31.0.0",
-    "victory-zoom-container": "^31.0.0"
+    "victory-zoom-container": "^31.0.1"
   },
   "scripts": {
     "version": "nps build-libs && nps build-dists"
