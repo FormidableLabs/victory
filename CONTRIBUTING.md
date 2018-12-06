@@ -43,16 +43,18 @@ All checks and tests run from the root directory.
 
 The `check` script will lint all packages and infrastructure before building packages and starting a test server and running our suite of tests
 
+If your terminal is under a proxy, you should turn off the proxy, or ChromeHeadless will not start properly.
+
 ```console
-$ nps check
-$ nps check.dev // if you already have a development server running
+$ yarn nps check
+$ yarn nps check.dev // if you already have a development server running
 ```
 
 To run tests without linting, use the `test` script
 
 ```console
-$ nps test
-$ nps test.dev // if you already have a development server running
+$ yarn nps test
+$ yarn nps test.dev // if you already have a development server running
 ```
 
 ## Visual Tests
