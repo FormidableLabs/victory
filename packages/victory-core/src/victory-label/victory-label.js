@@ -20,6 +20,7 @@ const defaultStyles = {
 export default class VictoryLabel extends React.Component {
   static displayName = "VictoryLabel";
   static role = "label";
+  static defaultStyles = defaultStyles;
   static propTypes = {
     active: PropTypes.bool,
     angle: PropTypes.oneOfType([
