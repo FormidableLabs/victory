@@ -1,6 +1,6 @@
 {
   "name": "victory-pie",
-  "version": "31.0.0",
+  "version": "31.0.2",
   "description": "Pie Component for Victory",
   "keywords": [
     "data visualization",
@@ -22,7 +22,7 @@
     "d3-shape": "^1.0.0",
     "lodash": "^4.17.5",
     "prop-types": "^15.5.8",
-    "victory-core": "^31.0.0"
+    "victory-core": "^31.0.2"
   },
   "scripts": {
     "version": "nps build-libs && nps build-dists"
