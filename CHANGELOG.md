@@ -1,5 +1,8 @@
 # Victory Changelog
 
+## 31.0.2 (32018-12-12)
+- [1200](https://github.com/FormidableLabs/victory/pull/1200) Export `defaultStyles` from `VictoryLabel`. Thanks @rudasoftware!
+
 ## 31.0.1 (2018-11-17)
 
 - [1182](https://github.com/FormidableLabs/victory/pull/1182) Bugfix: fixes incorrect cornerRadius
