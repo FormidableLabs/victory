@@ -22,9 +22,8 @@ const initialData = [{
 }];
 
 describe("components/victory-legend", () => {
-  let wrapper = shallow(<VictoryLegend data={initialData} />);
-
   it("has expected content with shallow render", () => {
+    const wrapper = shallow(<VictoryLegend data={initialData} />);
     const output = wrapper.find("VictoryLabel");
     expect(output.length).to.equal(2);
   });
@@ -90,7 +89,7 @@ describe("components/victory-legend", () => {
       }
     }];
 
-    wrapper = shallow(<VictoryLegend data={legendData} />);
+    const wrapper = shallow(<VictoryLegend data={legendData} />);
     const output = wrapper.find("Point");
 
     it("has expected symbols length", () => {
@@ -125,7 +124,7 @@ describe("components/victory-legend", () => {
       }
     };
 
-    wrapper = shallow(<VictoryLegend data={legendData} style={styleObject} />);
+    const wrapper = shallow(<VictoryLegend data={legendData} style={styleObject} />);
     const outputPoints = wrapper.find("Point");
     const outputLabels = wrapper.find("VictoryLabel");
 
@@ -161,7 +160,7 @@ describe("components/victory-legend", () => {
     }];
 
     it("displays items in columns", () => {
-      wrapper = shallow(<VictoryLegend data={legendData} itemsPerRow={3} />);
+      const wrapper = shallow(<VictoryLegend data={legendData} itemsPerRow={3} />);
       const outputLabels = wrapper.find("VictoryLabel");
       const outputPoints = wrapper.find("Point");
 
@@ -180,7 +179,7 @@ describe("components/victory-legend", () => {
     });
 
     it("displays items in rows", () => {
-      wrapper = shallow(
+      const wrapper = shallow(
         <VictoryLegend
           data={legendData}
           itemsPerRow={3}
@@ -202,6 +201,135 @@ describe("components/victory-legend", () => {
       expect(outputPoints.get(0).props.y - outputPoints.get(3).props.y)
         .to.equal(outputPoints.get(1).props.y - outputPoints.get(4).props.y).and
         .to.equal(outputPoints.get(2).props.y - outputPoints.get(5).props.y);
+    });
+  });
+
+  describe("legendWidth", () => {
+    const legendData = [{
+      name: "Thing 1"
+    }, {
+      name: "Thing 2"
+    }, {
+      name: "Thing 3"
+    }, {
+      name: "Thing 4"
+    }, {
+      name: "Thing 5"
+    }, {
+      name: "Thing 6"
+    }];
+
+    it("constrains height when vertical", () => {
+      const legendWidth = 150;
+
+      const wrapperOriginal = shallow(<VictoryLegend data={legendData}/>);
+      const original = wrapperOriginal.find("Border").get(0);
+
+      expect(original.props.height).to.be.greaterThan(legendWidth);
+
+      // Adding `legendWidth` causes observable change in height
+      const wrapper = shallow(
+        <VictoryLegend
+          data={legendData}
+          legendWidth={legendWidth}
+        />
+      );
+      const output = wrapper.find("Border").get(0);
+
+      expect(output.props.height).to.be.at.most(legendWidth);
+    });
+
+    it("constrains width when horizontal", () => {
+      const legendWidth = 150;
+
+      const wrapperOriginal = shallow(
+        <VictoryLegend
+          data={legendData}
+          orientation={'horizontal'}
+        />
+      );
+      const original = wrapperOriginal.find("Border").get(0);
+
+      expect(original.props.width).to.be.greaterThan(legendWidth);
+
+      // Adding `legendWidth` causes observable change in height
+      const wrapper = shallow(
+        <VictoryLegend
+          data={legendData}
+          orientation={'horizontal'}
+          legendWidth={legendWidth}
+        />
+      );
+      const output = wrapper.find("Border").get(0);
+
+      expect(output.props.width).to.be.at.most(legendWidth);
+    });
+
+    it("has no effect when all items can fit inline", () => {
+      const legendWidth = 1000;
+      const wrapper = shallow(
+        <VictoryLegend
+          data={legendData}
+          legendWidth={legendWidth}
+        />
+      );
+      const outputBorder = wrapper.find("Border").get(0);
+      const outputLabels = wrapper.find("VictoryLabel");
+
+      // Constraint is met
+      expect(outputBorder.props.height).to.be.at.most(legendWidth);
+
+      // All items are in same row (column)
+      const firstLabel = outputLabels.first();
+      outputLabels.map(
+        //eslint-disable-next-line max-nested-callbacks
+        (label) => expect(label.props.x).to.equal(firstLabel.props.x)
+      );
+    });
+
+    it("gets as close as possible if constraint cannot be met", () => {
+      const legendWidth = 10;
+      const wrapper = shallow(
+        <VictoryLegend
+          data={legendData}
+          legendWidth={legendWidth}
+        />
+      );
+      const outputBorder = wrapper.find("Border").get(0);
+      const outputLabels = wrapper.find("VictoryLabel");
+
+      // Constraint is NOT met
+      expect(outputBorder.props.height).to.be.greaterThan(legendWidth);
+
+      // ... but all items are in DIFFERENT rows (columns), so nothing can be done.
+      const uniqueLabelYPositions = outputLabels.reduce(
+        //eslint-disable-next-line max-nested-callbacks
+        (memo, label) => memo.add(label.props().y),
+        new Set()
+      );
+      // TODO: `lengthOf` doesn't work on `Set` objects until `chai@4.2.0
+      expect(uniqueLabelYPositions.size).to.equal(1);
+    });
+
+    it("is overridden by `itemsPerRow` prop", () => {
+      const legendWidth = 150;
+      const wrapper = shallow(
+        <VictoryLegend
+          data={legendData}
+          legendWidth={legendWidth}
+        />
+      );
+      const outputOriginal = wrapper.find("Border").get(0);
+      const wrapperWithItemsPerRow = shallow(
+        <VictoryLegend
+          data={legendData}
+          legendWidth={legendWidth}
+          itemsPerRow={3}
+        />
+      );
+      const output = wrapperWithItemsPerRow.find("VictoryLabel").get(0);
+
+      expect(output.props.height).to.not.equal(outputOriginal.props.height);
     });
   });
 });
