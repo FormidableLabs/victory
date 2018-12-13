@@ -42,12 +42,10 @@ const getBaseProps = (props, fallbackProps) => {
     alignment, barRatio, cornerRadius, data, domain, events, height, horizontal, origin, padding,
     polar, scale, sharedEvents, standalone, style, theme, width, labels, name, barWidth, getPath
   } = props;
-  const initialChildProps = {
-    parent: {
+  const initialChildProps = { parent: {
       domain, scale, width, height, data, standalone, name,
       theme, polar, origin, padding, style: style.parent
-    }
-  };
+  } };
 
   return data.reduce((childProps, datum, index) => {
     const eventKey = !isNil(datum.eventKey) ? datum.eventKey : index;
