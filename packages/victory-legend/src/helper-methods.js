@@ -193,13 +193,13 @@ const _getDimensionsInternal = (props) => {
 };
 
 const _getDimensionsWithBorderPadding = (props) => {
-  const { height: contentHeight, width: contentWidth } = _getDimensionsInternal(props)
+  const { height: contentHeight, width: contentWidth } = _getDimensionsInternal(props);
   return pick(getBorderProps(props, contentHeight, contentWidth), ["height", "width"]);
 };
 
 const getItemsPerRow = (props) => {
   const { data, isHorizontal, legendWidth } = props;
-  const useLegendWidth = legendWidth && !props.itemsPerRow && data && data.length
+  const useLegendWidth = legendWidth && !props.itemsPerRow && data && data.length;
 
   const tryItemsPerRow = (itemsPerRow) => {
     const dimensions = _getDimensionsWithBorderPadding(assign({}, props, { itemsPerRow }));
