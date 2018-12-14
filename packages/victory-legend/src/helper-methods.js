@@ -27,16 +27,6 @@ const getStyles = (props, styleObject) => {
   };
 };
 
-const getCalculatedValues = (props) => {
-  const { orientation, theme } = props;
-  const defaultStyles = theme && theme.legend && theme.legend.style ? theme.legend.style : {};
-  const style = getStyles(props, defaultStyles);
-  const colorScale = getColorScale(props);
-  const isHorizontal = orientation === "horizontal";
-  const borderPadding = Helpers.getPadding({ padding: props.borderPadding });
-  return assign({}, props, { style, isHorizontal, colorScale, borderPadding });
-};
-
 const getColumn = (props, index) => {
   const { itemsPerRow, isHorizontal } = props;
   if (!itemsPerRow) {
@@ -185,9 +175,7 @@ const getBorderProps = (props, contentHeight, contentWidth) => {
   return { x, y, height, width, style: assign({ fill: "none" }, style.border) };
 };
 
-const getDimensions = (props, fallbackProps) => {
-  const modifiedProps = Helpers.modifyProps(props, fallbackProps, "legend");
-  props = assign({}, modifiedProps, getCalculatedValues(modifiedProps));
+const _getDimensionsInternal = (props) => {
   const { title, titleOrientation } = props;
   const groupedData = groupData(props);
   const columnWidths = getColumnWidths(props, groupedData);
@@ -205,12 +193,11 @@ const getDimensions = (props, fallbackProps) => {
 };
 
 const _getDimensionsWithBorderPadding = (props) => {
-  const { height: contentHeight, width: contentWidth } = getDimensions(props)
+  const { height: contentHeight, width: contentWidth } = _getDimensionsInternal(props)
   return pick(getBorderProps(props, contentHeight, contentWidth), ["height", "width"]);
 };
 
 const getItemsPerRow = (props) => {
-  props = getCalculatedValues(props);
   const { data, isHorizontal, legendWidth } = props;
   const useLegendWidth = legendWidth && !props.itemsPerRow && data && data.length
 
@@ -229,17 +216,30 @@ const getItemsPerRow = (props) => {
     );
   };
 
-  return assign({}, props, { itemsPerRow: useLegendWidth ? tryItemsPerRow(1) : props.itemsPerRow });
+  return useLegendWidth ? tryItemsPerRow(1) : props.itemsPerRow;
+};
+
+const getCalculatedValues = (props) => {
+  const { orientation, theme } = props;
+  const defaultStyles = theme && theme.legend && theme.legend.style ? theme.legend.style : {};
+  const style = getStyles(props, defaultStyles);
+  const colorScale = getColorScale(props);
+  const isHorizontal = orientation === "horizontal";
+  const borderPadding = Helpers.getPadding({ padding: props.borderPadding });
+  const intermediateProps = assign({}, props, { style, isHorizontal, colorScale, borderPadding });
+  const itemsPerRow = getItemsPerRow(intermediateProps);
+  return assign({}, intermediateProps, { itemsPerRow });
+};
+
+const getDimensions = (props, fallbackProps) => {
+  const modifiedProps = Helpers.modifyProps(props, fallbackProps, "legend");
+  props = assign({}, modifiedProps, getCalculatedValues(modifiedProps));
+  return _getDimensionsInternal(props);
 };
 
 const getBaseProps = (props, fallbackProps) => {
   const modifiedProps = Helpers.modifyProps(props, fallbackProps, "legend");
-  props = assign(
-    {},
-    modifiedProps,
-    getCalculatedValues(modifiedProps),
-    getItemsPerRow(modifiedProps)
-  );
+  props = assign({}, modifiedProps, getCalculatedValues(modifiedProps));
   const {
     data, standalone, theme, padding, style, colorScale, gutter, rowGutter,
     borderPadding, title, titleOrientation, name, x = 0, y = 0
