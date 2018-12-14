@@ -204,9 +204,37 @@ const getDimensions = (props, fallbackProps) => {
   };
 };
 
+const getItemsPerRow = (props) => {
+  props = getCalculatedValues(props);
+  const { data, isHorizontal, legendWidth } = props;
+  const useLegendWidth = legendWidth && !props.itemsPerRow && data && data.length
+
+  const tryItemsPerRow = (itemsPerRow) => {
+    const dimensions = getDimensions(assign({}, props, { itemsPerRow }));
+    const currentWidth = isHorizontal ? dimensions.width : dimensions.height;
+    return (
+      // NOTE: Technically, this ternary is *chained*, not *nested*
+      /*eslint-disable no-nested-ternary*/
+      itemsPerRow >= data.length
+        ? undefined
+      : currentWidth > legendWidth
+        ? Math.max(itemsPerRow - 1, 1)
+      : tryItemsPerRow(itemsPerRow + 1)
+      /*eslint-enable no-nested-ternary*/
+    );
+  };
+
+  return assign({}, props, { itemsPerRow: useLegendWidth ? tryItemsPerRow(1) : props.itemsPerRow });
+};
+
 const getBaseProps = (props, fallbackProps) => {
   const modifiedProps = Helpers.modifyProps(props, fallbackProps, "legend");
-  props = assign({}, modifiedProps, getCalculatedValues(modifiedProps));
+  props = assign(
+    {},
+    modifiedProps,
+    getCalculatedValues(modifiedProps),
+    getItemsPerRow(modifiedProps)
+  );
   const {
     data, standalone, theme, padding, style, colorScale, gutter, rowGutter,
     borderPadding, title, titleOrientation, name, x = 0, y = 0
