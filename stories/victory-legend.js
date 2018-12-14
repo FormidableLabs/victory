@@ -10,7 +10,7 @@ import LineSegment from "../packages/victory-core/src/victory-primitives/line-se
 const getBlankChartDecorator = (props) => {
   const blankAxisStyle = {
     axis: { stroke: "none" },
-    tickLabels: { fill: "none" },
+    tickLabels: { fill: "none" }
   };
 
   return (story) => {
