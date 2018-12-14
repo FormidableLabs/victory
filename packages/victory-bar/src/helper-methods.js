@@ -1,4 +1,4 @@
-import { assign } from "lodash";
+import { assign, isNil } from "lodash";
 import { Helpers, LabelHelpers, Data, Domain, Scale } from "victory-core";
 
 const getBarPosition = (props, datum) => {
@@ -48,7 +48,7 @@ const getBaseProps = (props, fallbackProps) => {
   } };
 
   return data.reduce((childProps, datum, index) => {
-    const eventKey = datum.eventKey || index;
+    const eventKey = !isNil(datum.eventKey) ? datum.eventKey : index;
     const { x, y, y0, x0 } = getBarPosition(props, datum);
     const dataProps = {
       alignment, barRatio, cornerRadius, data, datum, horizontal, index, polar, origin,
