@@ -111,4 +111,11 @@ storiesOf("VictoryLegend.legendWidth", module)
       titleOrientation={'left'}
       data={getLoremLegendData(18)}
     />
+  ))
+  .add("with borderPadding", () => (
+    <LegendWidthTester
+      legendWidth={200}
+      borderPadding={30}
+      data={getLoremLegendData(18)}
+    />
   ));

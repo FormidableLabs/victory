@@ -1,4 +1,4 @@
-import { defaults, assign, groupBy, keys, sum, range } from "lodash";
+import { defaults, assign, groupBy, keys, pick, sum, range } from "lodash";
 import { Helpers, Style, TextSize } from "victory-core";
 
 const getColorScale = (props) => {
@@ -204,13 +204,18 @@ const getDimensions = (props, fallbackProps) => {
   };
 };
 
+const _getDimensionsWithBorderPadding = (props) => {
+  const { height: contentHeight, width: contentWidth } = getDimensions(props)
+  return pick(getBorderProps(props, contentHeight, contentWidth), ["height", "width"]);
+};
+
 const getItemsPerRow = (props) => {
   props = getCalculatedValues(props);
   const { data, isHorizontal, legendWidth } = props;
   const useLegendWidth = legendWidth && !props.itemsPerRow && data && data.length
 
   const tryItemsPerRow = (itemsPerRow) => {
-    const dimensions = getDimensions(assign({}, props, { itemsPerRow }));
+    const dimensions = _getDimensionsWithBorderPadding(assign({}, props, { itemsPerRow }));
     const currentWidth = isHorizontal ? dimensions.width : dimensions.height;
     return (
       // NOTE: Technically, this ternary is *chained*, not *nested*
