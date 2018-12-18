@@ -30,11 +30,18 @@ const defaultData = [
 ];
 /*eslint-enable no-magic-numbers */
 
-const animationWhitelist = [
-  "data", "domain", "height", "padding", "samples", "size", "style", "width"
-];
-
 class VictoryCandlestick extends React.Component {
+  static animationWhitelist = [
+    "data",
+    "domain",
+    "height",
+    "padding",
+    "samples",
+    "size",
+    "style",
+    "width"
+  ];
+
   static displayName = "VictoryCandlestick";
   static role = "candlestick";
   static defaultTransitions = DefaultTransitions.discreteTransitions();
@@ -101,11 +108,13 @@ class VictoryCandlestick extends React.Component {
   }
 
   render() {
-    const { role } = this.constructor;
+    const { animationWhitelist, role } = VictoryCandlestick;
     const props = Helpers.modifyProps(this.props, fallbackProps, role);
+
     if (this.shouldAnimate()) {
       return this.animateComponent(props, animationWhitelist);
     }
+
     const children = this.renderData(props);
     return props.standalone ? this.renderContainer(props.containerComponent, children) : children;
   }

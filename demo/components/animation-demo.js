@@ -2,6 +2,7 @@
 /*eslint-disable no-magic-numbers */
 import React from "react";
 import { random, range } from "lodash";
+import { VictoryBar } from "../../packages/victory-bar/src/index";
 import { VictoryChart } from "../../packages/victory-chart/src/index";
 import { VictoryStack } from "../../packages/victory-stack/src/index";
 import { VictoryArea } from "../../packages/victory-area/src/index";
@@ -48,7 +49,7 @@ export default class App extends React.Component {
   }
 
   getData() {
-    return range(100).map((i) => {
+    return range(20).map((i) => {
       return {
         x: i,
         y: Math.random()
@@ -161,6 +162,30 @@ export default class App extends React.Component {
               );
             })}
           </VictoryStack>
+        </VictoryChart>
+
+        <VictoryChart style={style}>
+          <VictoryBar
+            animate={{
+              animationWhitelist: ["style"]
+            }}
+            data={this.state.data}
+            style={{
+              data: this.state.style
+            }}
+          />
+        </VictoryChart>
+
+        <VictoryChart style={style}>
+          <VictoryBar
+            animate={{
+              animationWhitelist: ["data"]
+            }}
+            data={this.state.data}
+            style={{
+              data: this.state.style
+            }}
+          />
         </VictoryChart>
       </div>
     );

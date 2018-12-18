@@ -42,6 +42,7 @@ class MockLabel extends React.Component {
 }
 
 class MockVictoryComponent extends React.Component {
+  static animationWhitelist = ["data", "style"]
   static displayName = "MockVictoryComponent";
   static role = "chart";
 
@@ -75,8 +76,13 @@ class MockVictoryComponent extends React.Component {
   };
 
   render() {
+    const { animationWhitelist } = MockVictoryComponent;
     const props = defaults({}, this.props, this.defaultProps);
-    const { dataComponent, labelComponent, groupComponent } = props;
+    const { animate, dataComponent, labelComponent, groupComponent } = props;
+
+    if (animate) {
+      return this.animateComponent(props, animationWhitelist);
+    }
 
     const dataComponents = map(this.dataKeys, (_key, index) => {
       const dataProps = this.getComponentProps(dataComponent, "data", index);

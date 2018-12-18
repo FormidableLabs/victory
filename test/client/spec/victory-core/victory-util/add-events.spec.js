@@ -87,4 +87,36 @@ describe("victory-util/add-events", () => {
     getDataComponents(wrapper).at(1).simulate("click");
     expectEventsTriggered(getLabelComponents, labelComponentIsAltered, [true, true], wrapper);
   });
+
+  describe("when adding animations to the component", () => {
+    describe("and props.animate.animationWhitelist is not present", () => {
+      it("passes the default animation whitelist to the <VictoryTransition /> component", () => {
+        const wrapper = mount(
+          <EventedMockVictoryComponent animate />
+        );
+
+        const victoryTransitionWrapper = wrapper.find("VictoryTransition");
+
+        expect(victoryTransitionWrapper.prop("animationWhitelist"))
+          .to.equal(MockVictoryComponent.animationWhitelist);
+      });
+    });
+
+    describe("and props.animate.animationWhitelist is passed in", () => {
+      it("passes props.animate.animationWhitelist to the <VictoryTransition /> component", () => {
+        const wrapper = mount(
+          <EventedMockVictoryComponent
+            animate={{
+              animationWhitelist: ["allTheThings"]
+            }}
+          />
+        );
+
+        const victoryTransitionWrapper = wrapper.find("VictoryTransition");
+
+        expect(victoryTransitionWrapper.prop("animationWhitelist"))
+          .to.deep.equal(["allTheThings"]);
+      });
+    });
+  });
 });
