@@ -78,7 +78,7 @@ const getBaseProps = (props, fallbackProps) => {
   } };
 
   return data.reduce((childProps, datum, index) => {
-    const eventKey = datum.eventKey;
+    const eventKey = datum.eventKey || index;
     const { x, y } = Helpers.scalePoint(props, datum);
     const dataProps = {
       x, y, datum, data, index, scale, polar, origin,

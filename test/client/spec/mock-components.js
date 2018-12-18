@@ -60,6 +60,7 @@ class MockVictoryComponent extends React.Component {
             index,
             datum,
             data,
+            eventKey: index,
             style: {}
           }
         }

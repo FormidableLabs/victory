@@ -129,7 +129,7 @@ describe("victory-util/data", () => {
         const props = { data: createData(dataset) };
         const formatted = Data.formatData(dataset, props);
         expect(formatted).to.be.an.array;
-        expect(formatted[0]).to.have.keys(["_x", "_y", "x", "y", "eventKey"]);
+        expect(formatted[0]).to.have.keys(["_x", "_y", "x", "y"]);
       });
     });
   });
@@ -141,8 +141,8 @@ describe("victory-util/data", () => {
           const data = createData([{ x: "kittens", y: 3 }, { x: "cats", y: 5 }]);
           const props = { data, x: "x", y: "y" };
           const expectedReturnWithEventKeys = [
-             { _x: 1, x: "kittens", xName: "kittens", _y: 3, y: 3, eventKey: 0 },
-             { _x: 2, x: "cats", xName: "cats", _y: 5, y: 5, eventKey: 1 }
+             { _x: 1, x: "kittens", xName: "kittens", _y: 3, y: 3 },
+             { _x: 2, x: "cats", xName: "cats", _y: 5, y: 5 }
           ];
           const returnData = Data.getData(props);
           expect(returnData).to.eql(expectedReturnWithEventKeys);
@@ -186,9 +186,9 @@ describe("victory-util/data", () => {
           const returnData = Data.getData({ data });
 
           expect(returnData).to.eql([
-            { _x: 2, x: 2, _y: 2, y: 2, eventKey: 0 },
-            { _x: 1, x: 1, _y: 3, y: 3, eventKey: 1 },
-            { _x: 3, x: 3, _y: 1, y: 1, eventKey: 2 }
+            { _x: 2, x: 2, _y: 2, y: 2 },
+            { _x: 1, x: 1, _y: 3, y: 3 },
+            { _x: 3, x: 3, _y: 1, y: 1 }
           ]);
         });
 
@@ -202,9 +202,9 @@ describe("victory-util/data", () => {
           const returnData = Data.getData({ data, sortKey: "order" });
 
           expect(returnData).to.eql([
-            { _x: 3, x: 3, _y: 3, y: 3, order: 1, eventKey: 0 },
-            { _x: 1, x: 1, _y: 1, y: 1, order: 2, eventKey: 1 },
-            { _x: 2, x: 2, _y: 2, y: 2, order: 3, eventKey: 2 }
+            { _x: 3, x: 3, _y: 3, y: 3, order: 1 },
+            { _x: 1, x: 1, _y: 1, y: 1, order: 2 },
+            { _x: 2, x: 2, _y: 2, y: 2, order: 3 }
           ]);
         });
 
@@ -218,9 +218,9 @@ describe("victory-util/data", () => {
           const returnData = Data.getData({ data, sortKey: "order", sortOrder: "descending" });
 
           expect(returnData).to.eql([
-            { _x: 2, x: 2, _y: 2, y: 2, order: 3, eventKey: 0 },
-            { _x: 1, x: 1, _y: 1, y: 1, order: 2, eventKey: 1 },
-            { _x: 3, x: 3, _y: 3, y: 3, order: 1, eventKey: 2 }
+            { _x: 2, x: 2, _y: 2, y: 2, order: 3 },
+            { _x: 1, x: 1, _y: 1, y: 1, order: 2 },
+            { _x: 3, x: 3, _y: 3, y: 3, order: 1 }
 
           ]);
         });
@@ -236,16 +236,16 @@ describe("victory-util/data", () => {
           const returnDataX = Data.getData({ data, sortKey: "x" });
 
           expect(returnDataX).to.eql([
-            { _x: 1, x: 20, _y: 3, y: 20, eventKey: 0 },
-            { _x: 2, x: 10, _y: 2, y: 10, eventKey: 1 },
-            { _x: 3, x: 30, _y: 1, y: 30, eventKey: 2 }
+            { _x: 1, x: 20, _y: 3, y: 20 },
+            { _x: 2, x: 10, _y: 2, y: 10 },
+            { _x: 3, x: 30, _y: 1, y: 30 }
           ]);
 
           const returnDataY = Data.getData({ data, sortKey: "y" });
           expect(returnDataY).to.eql([
-            { _x: 3, x: 30, _y: 1, y: 30, eventKey: 0 },
-            { _x: 2, x: 10, _y: 2, y: 10, eventKey: 1 },
-            { _x: 1, x: 20, _y: 3, y: 20, eventKey: 2 }
+            { _x: 3, x: 30, _y: 1, y: 30 },
+            { _x: 2, x: 10, _y: 2, y: 10 },
+            { _x: 1, x: 20, _y: 3, y: 20 }
           ]);
         });
       });
