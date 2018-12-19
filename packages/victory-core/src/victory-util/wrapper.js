@@ -272,10 +272,8 @@ export default {
       if (!Domain.isDomainComponent(child) || !childProps.categories) {
         return null;
       } else {
-        const categories =
-          childProps.categories && !Array.isArray(childProps.categories)
-            ? childProps.categories[axis]
-            : childProps.rops.categories;
+        const categories = childProps.categories && !Array.isArray(childProps.categories) ?
+          childProps.categories[axis] : childProps.props.categories;
         const categoryStrings = categories && categories.filter((val) => typeof val === "string");
         return categoryStrings ? Collection.removeUndefined(categoryStrings) : [];
       }
@@ -283,7 +281,7 @@ export default {
     return Helpers.reduceChildren(childComponents.slice(0), iteratee);
   },
 
-  getStringsFromData(childComponents, axis) {
+  getStringsFromData(childComponents) {
     const iteratee = (child) => {
       const childProps = child.props || {};
       let data;
@@ -294,29 +292,63 @@ export default {
       } else {
         data = Data.getData(childProps);
       }
-      const attr = axis === "x" ? "xName" : "yName";
-      return data.map((d) => d[attr]).filter(Boolean);
+      return data.map((d) => ({ x: d.xName, y: d.yName }));
     };
-    return Helpers.reduceChildren(childComponents.slice(0), iteratee);
+
+    const initialMemo = { x: [], y: [] };
+    const combine = (memo, datum) => ({
+      x: datum.x ? memo.x.concat(datum.x) : memo.x,
+      y: datum.y ? memo.y.concat(datum.y) : memo.y
+    });
+
+    return Helpers.reduceChildren(
+      childComponents.slice(0),
+      iteratee,
+      {},
+      initialMemo,
+      combine);
   },
 
-  getStringsFromChildren(props, axis, childComponents) {
+  getCategoryAndAxisStringsFromChildren(props, axis, childComponents) {
     const currentAxis = Helpers.getCurrentAxis(axis, props.horizontal);
-    childComponents = childComponents || React.Children.toArray(props.children);
     const categories = isPlainObject(props.categories) ? props.categories[axis] : props.categories;
     const axisComponent = Axis.getAxisComponent(childComponents, currentAxis);
     const axisStrings = axisComponent ? Data.getStringsFromAxes(axisComponent.props, axis) : [];
     const categoryStrings = categories || this.getStringsFromCategories(childComponents, axis);
-    const dataStrings = this.getStringsFromData(childComponents, axis);
-    return uniq(flatten([...categoryStrings, ...dataStrings, ...axisStrings]));
+    return uniq(flatten([...categoryStrings, ...axisStrings]));
   },
 
-  getCategories(props, axis) {
-    const propCategories =
-      props.categories && !Array.isArray(props.categories)
-        ? props.categories[axis]
-        : props.categories;
-    const categories = propCategories || this.getStringsFromChildren(props, axis);
-    return categories.length > 0 ? categories : undefined;
+  getStringsFromChildren(props, childComponents) {
+    childComponents = childComponents || React.Children.toArray(props.children);
+
+    const xStrings = this.getCategoryAndAxisStringsFromChildren(props, "x", childComponents);
+    const yStrings = this.getCategoryAndAxisStringsFromChildren(props, "y", childComponents);
+
+    const dataStrings = this.getStringsFromData(childComponents);
+
+    return {
+      x: uniq(flatten([...xStrings, ...dataStrings.x])),
+      y: uniq(flatten([...yStrings, ...dataStrings.y]))
+    };
+  },
+
+  getCategories(props) {
+    const xPropCategories = props.categories && !Array.isArray(props.categories) ?
+      props.categories.x : props.categories;
+
+    const yPropCategories = props.categories && !Array.isArray(props.categories) ?
+      props.categories.y : props.categories;
+
+    const fallbackRequired = !xPropCategories || !yPropCategories;
+
+    const fallbackProps = fallbackRequired ? this.getStringsFromChildren(props) : {};
+
+    const xCategories = xPropCategories || fallbackProps.x;
+    const yCategories = yPropCategories || fallbackProps.y;
+
+    return {
+      x: xCategories.length > 0 ? xCategories : undefined,
+      y: yCategories.length > 0 ? yCategories : undefined
+    };
   }
 };

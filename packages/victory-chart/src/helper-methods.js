@@ -55,14 +55,10 @@ function getCalculatedProps(props, childComponents) {
   const style = getStyles(props);
   const horizontal = Helpers.isHorizontal(props);
   // TODO: check
-  const categories = {
-    x: Wrapper.getCategories(props, "x", childComponents),
-    y: Wrapper.getCategories(props, "y", childComponents)
-  };
-  const stringMap = {
-    x: createStringMap(props, "x", childComponents),
-    y: createStringMap(props, "y", childComponents)
-  };
+  const categories = Wrapper.getCategories(props, childComponents);
+
+  const stringMap = createStringMap(props, childComponents);
+
   const axisComponents = {
     x: Axis.getAxisComponent(childComponents, "x"),
     y: Axis.getAxisComponent(childComponents, "y")
@@ -246,14 +242,22 @@ const getAxisOffset = (props, calculatedProps) => {
   };
 };
 
-const createStringMap = (props, axis, childComponents) => {
-  const allStrings = Wrapper.getStringsFromChildren(props, axis, childComponents);
-  return allStrings.length === 0
-    ? null
-    : allStrings.reduce((memo, string, index) => {
-        memo[string] = index + 1;
-        return memo;
-      }, {});
+const createStringMap = (props, childComponents) => {
+  const allStrings = Wrapper.getStringsFromChildren(props, childComponents);
+
+  const x = !allStrings.x || allStrings.x.length === 0 ? null :
+    allStrings.x.reduce((memo, string, index) => {
+      memo[string] = index + 1;
+      return memo;
+    }, {});
+
+  const y = !allStrings.y || allStrings.y.length === 0 ? null :
+    allStrings.y.reduce((memo, string, index) => {
+      memo[string] = index + 1;
+      return memo;
+    }, {});
+
+  return { x, y };
 };
 
 export { getChildren, getCalculatedProps, getChildComponents };
