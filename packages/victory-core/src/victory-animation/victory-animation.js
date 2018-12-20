@@ -98,21 +98,24 @@ export default class VictoryAnimation extends React.Component {
     }
   }
 
-  /* lifecycle */
-  componentWillReceiveProps(nextProps) {
+  componentDidUpdate(_props, _state, snapshot) {
+    if (snapshot.shouldRestartTraversal === false) {
+      return;
+    }
+
     /* cancel existing loop if it exists */
     this.getTimer().unsubscribe(this.loopID);
 
     /* If an object was supplied */
-    if (!Array.isArray(nextProps.data)) {
+    if (!Array.isArray(this.props.data)) {
       // Replace the tween queue. Could set `this.queue = [nextProps.data]`,
       // but let's reuse the same array.
       this.queue.length = 0;
-      this.queue.push(nextProps.data);
+      this.queue.push(this.props.data);
       /* If an array was supplied */
     } else {
       /* Extend the tween queue */
-      this.queue.push(...nextProps.data);
+      this.queue.push(...this.props.data);
     }
     /* Start traversing the tween queue */
     this.traverseQueue();
@@ -124,6 +127,16 @@ export default class VictoryAnimation extends React.Component {
     } else {
       this.getTimer().stop();
     }
+  }
+
+  getSnapshotBeforeUpdate(prevProps) {
+    const snapshot = { shouldRestartTraversal: false };
+
+    if (prevProps.data !== this.props.data) {
+      snapshot.shouldRestartTraversal = true;
+    }
+
+    return snapshot;
   }
 
   getTimer() {

@@ -70,7 +70,7 @@ export default class VictoryChart extends React.Component {
     this.events = Wrapper.getAllEvents(props);
   }
 
-  componentWillMount() {
+  componentDidMount() {
     this.events = Wrapper.getAllEvents(this.props);
   }
 

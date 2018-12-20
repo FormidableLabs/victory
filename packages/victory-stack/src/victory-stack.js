@@ -77,7 +77,7 @@ export default class VictoryStack extends React.Component {
     }
   }
 
-  componentWillMount() {
+  componentDidMount() {
     this.events = Wrapper.getAllEvents(this.props);
   }
 
