@@ -19,6 +19,10 @@ module.exports = {
       dev: "karma start ./config/karma/karma.conf.dev.js",
       default: npsUtils.series.nps("build-package-libs", "karma"),
     },
+    format: {
+      default: "prettier --write \"./**/*.{js,jsx,ts,tsx,json,md}\"",
+      ci: "prettier --list-different \"./**/*.{js,jsx,ts,tsx,json,md}\"",
+    },
     storybook: {
       server: "start-storybook -p 6006",
       default: npsUtils.concurrent.nps("watch", "storybook.server")
@@ -35,7 +39,7 @@ module.exports = {
       )
     },
     check: {
-      ci: npsUtils.series.nps("lint", "test.ci"),
+      ci: npsUtils.series.nps("format.ci", "lint", "test.ci"),
       cov: npsUtils.series.nps("lint", "test.cov"),
       dev: npsUtils.series.nps("lint", "test.dev"),
       default: npsUtils.series.nps("lint", "test")
