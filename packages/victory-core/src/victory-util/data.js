@@ -85,10 +85,17 @@ function getEventKey(key) {
 
 // Returns data with an eventKey prop added to each datum
 function addEventKeys(props, data) {
+  const hasEventKeyAccessor = !!props.eventKey;
   const eventKeyAccessor = getEventKey(props.eventKey);
-  return data.map((datum, index) => {
-    const eventKey = datum.eventKey || eventKeyAccessor(datum) || index;
-    return assign({ eventKey }, datum);
+  return data.map((datum) => {
+    if (datum.eventKey) {
+      return datum;
+    } else if (hasEventKeyAccessor) {
+      const eventKey = eventKeyAccessor(datum);
+      return eventKey ? assign({ eventKey }, datum) : datum;
+    } else {
+      return datum;
+    }
   });
 }
 
