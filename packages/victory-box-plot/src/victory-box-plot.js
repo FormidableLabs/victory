@@ -31,11 +31,16 @@ const defaultData = [
   { x: 2, min: 2, q1: 5, median: 8, q3: 12, max: 15 }
 ];
 
-const animationWhitelist = [
-  "data", "domain", "height", "padding", "style", "width"
-];
 
 class VictoryBoxPlot extends React.Component {
+  static animationWhitelist = [
+    "data",
+    "domain",
+    "height",
+    "padding",
+    "style",
+    "width"
+  ];
 
   static displayName = "VictoryBoxPlot";
   static role = "boxplot";
@@ -187,11 +192,13 @@ class VictoryBoxPlot extends React.Component {
   }
 
   render() {
-    const { role } = this.constructor;
+    const { animationWhitelist, role } = VictoryBoxPlot;
     const props = Helpers.modifyProps(this.props, fallbackProps, role);
+
     if (this.shouldAnimate()) {
       return this.animateComponent(props, animationWhitelist);
     }
+
     const children = this.renderBoxPlot(props);
     return props.standalone ? this.renderContainer(props.containerComponent, children) : children;
   }

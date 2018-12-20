@@ -20,9 +20,17 @@ const options = {
   ]
 };
 
-const animationWhitelist = ["data", "domain", "height", "padding", "samples", "style", "width"];
-
 class VictoryLine extends React.Component {
+  static animationWhitelist = [
+    "data",
+    "domain",
+    "height",
+    "padding",
+    "samples",
+    "style",
+    "width"
+  ];
+
   static displayName = "VictoryLine";
   static role = "line";
   static defaultTransitions = DefaultTransitions.continuousTransitions();
@@ -68,11 +76,13 @@ class VictoryLine extends React.Component {
   }
 
   render() {
-    const { role } = this.constructor;
+    const { animationWhitelist, role } = VictoryLine;
     const props = Helpers.modifyProps(this.props, fallbackProps, role);
+
     if (this.shouldAnimate()) {
       return this.animateComponent(props, animationWhitelist);
     }
+
     const children = this.renderContinuousData(props);
     return props.standalone ? this.renderContainer(props.containerComponent, children) : children;
   }

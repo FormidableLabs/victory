@@ -13,10 +13,6 @@ const fallbackProps = {
   padding: 50
 };
 
-const animationWhitelist = [
-  "style", "domain", "range", "tickCount", "tickValues", "padding", "width", "height"
-];
-
 const options = {
   components: [
     { name: "axis", index: 0 },
@@ -29,6 +25,17 @@ const options = {
 };
 
 class VictoryPolarAxis extends React.Component {
+  static animationWhitelist = [
+    "style",
+    "domain",
+    "range",
+    "tickCount",
+    "tickValues",
+    "padding",
+    "width",
+    "height"
+  ];
+
   static displayName = "VictoryAxis";
 
   static role = "axis";
@@ -177,7 +184,9 @@ class VictoryPolarAxis extends React.Component {
   }
 
   render() {
-    const props = Helpers.modifyProps(this.props, fallbackProps, "axis");
+    const { animationWhitelist, role } = VictoryPolarAxis;
+    const props = Helpers.modifyProps(this.props, fallbackProps, role);
+
     if (this.shouldAnimate()) {
       return this.animateComponent(props, animationWhitelist);
     }

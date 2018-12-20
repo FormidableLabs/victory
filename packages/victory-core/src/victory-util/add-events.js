@@ -167,7 +167,12 @@ export default (WrappedComponent, options) => {
       return React.cloneElement(component, parentProps, children);
     }
 
-    animateComponent(props, animationWhitelist) {
+    animateComponent(props, defaultAnimationWhitelist) {
+      const animationWhitelist =
+        props.animate && props.animate.animationWhitelist
+          ? props.animate.animationWhitelist
+          : defaultAnimationWhitelist;
+
       return (
         <VictoryTransition animate={props.animate} animationWhitelist={animationWhitelist}>
           {React.createElement(this.constructor, props)}

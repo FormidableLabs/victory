@@ -20,9 +20,15 @@ const options = {
   ]
 };
 
-const animationWhitelist = ["data", "domain", "height", "padding", "style", "width"];
-
 class VictoryArea extends React.Component {
+  static animationWhitelist = [
+    "data",
+    "domain",
+    "height",
+    "padding",
+    "style",
+    "width"
+  ];
 
   static propTypes = {
     ...CommonProps.baseProps,
@@ -68,12 +74,13 @@ class VictoryArea extends React.Component {
   }
 
   render() {
-    const { role } = this.constructor;
+    const { animationWhitelist, role } = VictoryArea;
     const props = Helpers.modifyProps(this.props, fallbackProps, role);
 
     if (this.shouldAnimate()) {
       return this.animateComponent(props, animationWhitelist);
     }
+
     const children = this.renderContinuousData(props);
     return props.standalone ? this.renderContainer(props.containerComponent, children) : children;
   }

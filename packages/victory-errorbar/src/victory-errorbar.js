@@ -20,12 +20,20 @@ const defaultData = [
   { x: 4, y: 4, errorX: 0.4, errorY: 0.4 }
 ];
 
-const animationWhitelist = [
-  "data", "domain", "height", "padding", "samples",
-  "style", "width", "errorX", "errorY", "borderWidth"
-];
-
 class VictoryErrorBar extends React.Component {
+  static animationWhitelist = [
+    "data",
+    "domain",
+    "height",
+    "padding",
+    "samples",
+    "style",
+    "width",
+    "errorX",
+    "errorY",
+    "borderWidth"
+  ];
+
   static displayName = "VictoryErrorBar";
   static role = "errorbar";
   static defaultTransitions = DefaultTransitions.discreteTransitions();
@@ -75,11 +83,13 @@ class VictoryErrorBar extends React.Component {
   }
 
   render() {
-    const { role } = this.constructor;
+    const { animationWhitelist, role } = VictoryErrorBar;
     const props = Helpers.modifyProps(this.props, fallbackProps, role);
+
     if (this.shouldAnimate()) {
       return this.animateComponent(props, animationWhitelist);
     }
+
     const children = this.renderData(props);
     return props.standalone ? this.renderContainer(props.containerComponent, children) : children;
   }

@@ -14,11 +14,19 @@ const fallbackProps = {
   symbol: "circle"
 };
 
-const animationWhitelist = [
-  "data", "domain", "height", "maxBubbleSize", "padding", "samples", "size", "style", "width"
-];
-
 class VictoryScatter extends React.Component {
+  static animationWhitelist = [
+    "data",
+    "domain",
+    "height",
+    "maxBubbleSize",
+    "padding",
+    "samples",
+    "size",
+    "style",
+    "width"
+  ];
+
   static displayName = "VictoryScatter";
   static role = "scatter";
   static defaultTransitions = DefaultTransitions.discreteTransitions();
@@ -63,11 +71,13 @@ class VictoryScatter extends React.Component {
   }
 
   render() {
-    const { role } = this.constructor;
+    const { animationWhitelist, role } = this.constructor;
     const props = Helpers.modifyProps(this.props, fallbackProps, role);
+
     if (this.shouldAnimate()) {
       return this.animateComponent(props, animationWhitelist);
     }
+
     const children = this.renderData(props);
     return props.standalone ? this.renderContainer(props.containerComponent, children) : children;
   }

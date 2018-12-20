@@ -7,17 +7,11 @@ import {
 } from "victory-core";
 import { getBaseProps, getScale, getStyles } from "./helper-methods";
 
-
 const fallbackProps = {
   width: 450,
   height: 300,
   padding: 50
 };
-
-const animationWhitelist = [
-  "style", "domain", "range", "tickCount", "tickValues",
-  "offsetX", "offsetY", "padding", "width", "height"
-];
 
 const options = {
   components: [
@@ -31,6 +25,19 @@ const options = {
 };
 
 class VictoryAxis extends React.Component {
+  static animationWhitelist = [
+    "style",
+    "domain",
+    "range",
+    "tickCount",
+    "tickValues",
+    "offsetX",
+    "offsetY",
+    "padding",
+    "width",
+    "height"
+  ];
+
   static displayName = "VictoryAxis";
 
   static role = "axis";
@@ -186,7 +193,9 @@ class VictoryAxis extends React.Component {
   }
 
   render() {
-    const props = Helpers.modifyProps(this.props, fallbackProps, "axis");
+    const { animationWhitelist, role } = VictoryAxis;
+    const props = Helpers.modifyProps(this.props, fallbackProps, role);
+
     if (this.shouldAnimate()) {
       return this.animateComponent(props, animationWhitelist);
     }

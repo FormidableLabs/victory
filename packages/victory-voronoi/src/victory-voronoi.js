@@ -12,11 +12,18 @@ const fallbackProps = {
   padding: 50
 };
 
-const animationWhitelist = [
-  "data", "domain", "height", "padding", "samples", "size", "style", "width"
-];
-
 class VictoryVoronoi extends React.Component {
+  static animationWhitelist = [
+    "data",
+    "domain",
+    "height",
+    "padding",
+    "samples",
+    "size",
+    "style",
+    "width"
+  ];
+
   static displayName = "VictoryVoronoi";
   static role = "voronoi";
   static defaultTransitions = DefaultTransitions.discreteTransitions();
@@ -52,11 +59,13 @@ class VictoryVoronoi extends React.Component {
   }
 
   render() {
-    const { role } = this.constructor;
+    const { animationWhitelist, role } = VictoryVoronoi;
     const props = Helpers.modifyProps(this.props, fallbackProps, role);
+
     if (this.shouldAnimate()) {
       return this.animateComponent(props, animationWhitelist);
     }
+
     const children = this.renderData(props);
     return props.standalone ? this.renderContainer(props.containerComponent, children) : children;
   }

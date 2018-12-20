@@ -19,9 +19,16 @@ const defaultData = [
   { x: 4, y: 4 }
 ];
 
-const animationWhitelist = ["data", "domain", "height", "padding", "style", "width"];
-
 class VictoryBar extends React.Component {
+  static animationWhitelist = [
+    "data",
+    "domain",
+    "height",
+    "padding",
+    "style",
+    "width"
+  ];
+
   static displayName = "VictoryBar";
 
   static role = "bar";
@@ -94,11 +101,13 @@ class VictoryBar extends React.Component {
   }
 
   render() {
-    const { role } = this.constructor;
+    const { animationWhitelist, role } = VictoryBar;
     const props = Helpers.modifyProps((this.props), fallbackProps, role);
+
     if (this.shouldAnimate()) {
       return this.animateComponent(props, animationWhitelist);
     }
+
     const children = this.renderData(props);
     return props.standalone ? this.renderContainer(props.containerComponent, children) : children;
   }

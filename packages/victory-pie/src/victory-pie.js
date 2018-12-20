@@ -31,12 +31,21 @@ const fallbackProps = {
   labelPosition: "centroid"
 };
 
-const animationWhitelist = [
-  "data", "endAngle", "height", "innerRadius", "cornerRadius", "padAngle", "padding",
-  "colorScale", "startAngle", "style", "width"
-];
-
 class VictoryPie extends React.Component {
+  static animationWhitelist = [
+    "data",
+    "endAngle",
+    "height",
+    "innerRadius",
+    "cornerRadius",
+    "padAngle",
+    "padding",
+    "colorScale",
+    "startAngle",
+    "style",
+    "width"
+  ];
+
   static displayName = "VictoryPie";
 
   static role = "pie";
@@ -181,8 +190,9 @@ class VictoryPie extends React.Component {
   }
 
   render() {
-    const { role } = this.constructor;
+    const { animationWhitelist, role } = VictoryPie;
     const props = Helpers.modifyProps(this.props, fallbackProps, role);
+
     if (this.shouldAnimate()) {
       return this.animateComponent(props, animationWhitelist);
     }
