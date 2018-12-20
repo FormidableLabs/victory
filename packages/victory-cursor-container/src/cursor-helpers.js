@@ -5,10 +5,12 @@ const CursorHelpers = {
   withinBounds(point, bounds) {
     const { x1, x2, y1, y2 } = mapValues(bounds, Number);
     const { x, y } = mapValues(point, Number);
-    return x >= Math.min(x1, x2) &&
+    return (
+      x >= Math.min(x1, x2) &&
       x <= Math.max(x1, x2) &&
       y >= Math.min(y1, y2) &&
-      y <= Math.max(y1, y2);
+      y <= Math.max(y1, y2)
+    );
   },
 
   onMouseMove(evt, targetProps) {
@@ -42,11 +44,13 @@ const CursorHelpers = {
       }
     }
 
-    return [{
-      target: "parent",
-      eventKey: "parent",
-      mutation: () => ({ cursorValue, parentSVG })
-    }];
+    return [
+      {
+        target: "parent",
+        eventKey: "parent",
+        mutation: () => ({ cursorValue, parentSVG })
+      }
+    ];
   },
 
   onTouchEnd(evt, targetProps) {
@@ -56,11 +60,13 @@ const CursorHelpers = {
       onCursorChange(null, targetProps);
     }
 
-    return [{
-      target: "parent",
-      eventKey: "parent",
-      mutation: () => ({ cursorValue: null })
-    }];
+    return [
+      {
+        target: "parent",
+        eventKey: "parent",
+        mutation: () => ({ cursorValue: null })
+      }
+    ];
   }
 };
 
@@ -68,6 +74,7 @@ export default {
   onMouseMove: throttle(
     CursorHelpers.onMouseMove.bind(CursorHelpers),
     32, // eslint-disable-line no-magic-numbers
-    { leading: true, trailing: false }),
+    { leading: true, trailing: false }
+  ),
   onTouchEnd: CursorHelpers.onTouchEnd.bind(CursorHelpers)
 };

@@ -17,7 +17,7 @@ function toNewName(scale) {
 
 function validScale(scale) {
   if (typeof scale === "function") {
-    return (isFunction(scale.copy) && isFunction(scale.domain) && isFunction(scale.range));
+    return isFunction(scale.copy) && isFunction(scale.domain) && isFunction(scale.range);
   } else if (typeof scale === "string") {
     return includes(supportedScaleStrings, scale);
   }
@@ -70,8 +70,7 @@ function getBaseScale(props, axis) {
   if (scale) {
     return scale;
   }
-  const defaultScale =
-    getScaleFromDomain(props, axis) || getScaleTypeFromData(props, axis);
+  const defaultScale = getScaleFromDomain(props, axis) || getScaleTypeFromData(props, axis);
   return d3Scale[toNewName(defaultScale)]();
 }
 

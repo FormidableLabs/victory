@@ -14,14 +14,10 @@ describe("victory-primitives/slice", () => {
         return EXPECTED_D_ATTR;
       };
 
-      const wrapper = shallow(
-        <Slice
-          pathFunction={pathFunction}
-          slice={slice}
-        />
-      );
+      const wrapper = shallow(<Slice pathFunction={pathFunction} slice={slice} />);
 
-      expect(wrapper.html()).to.eql(`<path d="${EXPECTED_D_ATTR}" role="presentation" shape-rendering="auto"></path>` // eslint-disable-line max-len
+      expect(wrapper.html()).to.eql(
+        `<path d="${EXPECTED_D_ATTR}" role="presentation" shape-rendering="auto"></path>` // eslint-disable-line max-len
       );
     });
   });

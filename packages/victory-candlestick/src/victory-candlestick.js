@@ -1,8 +1,14 @@
 import PropTypes from "prop-types";
 import React from "react";
 import {
-  PropTypes as CustomPropTypes, Helpers, VictoryLabel, addEvents,
-  VictoryContainer, VictoryTheme, DefaultTransitions, CommonProps
+  PropTypes as CustomPropTypes,
+  Helpers,
+  VictoryLabel,
+  addEvents,
+  VictoryContainer,
+  VictoryTheme,
+  DefaultTransitions,
+  CommonProps
 } from "victory-core";
 import Candle from "./candle";
 import { getDomain, getData, getBaseProps } from "./helper-methods";
@@ -51,10 +57,7 @@ class VictoryCandlestick extends React.Component {
     ...CommonProps.dataProps,
     candleColors: PropTypes.shape({ positive: PropTypes.string, negative: PropTypes.string }),
     candleRatio: PropTypes.number,
-    candleWidth: PropTypes.oneOfType([
-      PropTypes.func,
-      PropTypes.number
-    ]),
+    candleWidth: PropTypes.oneOfType([PropTypes.func, PropTypes.number]),
     close: PropTypes.oneOfType([
       PropTypes.func,
       CustomPropTypes.allOfType([CustomPropTypes.integer, CustomPropTypes.nonNegative]),
@@ -83,11 +86,11 @@ class VictoryCandlestick extends React.Component {
   };
 
   static defaultProps = {
-    containerComponent: <VictoryContainer/>,
+    containerComponent: <VictoryContainer />,
     data: defaultData,
-    dataComponent: <Candle/>,
-    groupComponent: <g role="presentation"/>,
-    labelComponent: <VictoryLabel/>,
+    dataComponent: <Candle />,
+    groupComponent: <g role="presentation" />,
+    labelComponent: <VictoryLabel />,
     samples: 50,
     scale: "linear",
     sortOrder: "ascending",
@@ -99,7 +102,10 @@ class VictoryCandlestick extends React.Component {
   static getData = getData;
   static getBaseProps = (props) => getBaseProps(props, fallbackProps);
   static expectedComponents = [
-    "dataComponent", "labelComponent", "groupComponent", "containerComponent"
+    "dataComponent",
+    "labelComponent",
+    "groupComponent",
+    "containerComponent"
   ];
 
   // Overridden in native versions

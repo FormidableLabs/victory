@@ -5,14 +5,23 @@ import PropTypes from "prop-types";
 import { assign, merge, random, range } from "lodash";
 import { VictoryScatter } from "../../packages/victory-scatter/src/index";
 import {
-  VictoryLabel, VictoryContainer, VictoryTheme
+  VictoryLabel,
+  VictoryContainer,
+  VictoryTheme
 } from "../../packages/victory-core/src/index";
 import bubbleData from "./bubble-data.js";
 import symbolData from "./symbol-data.js";
 
 const getData = () => {
-  const colors =
-    ["violet", "cornflowerblue", "gold", "orange", "turquoise", "tomato", "greenyellow"];
+  const colors = [
+    "violet",
+    "cornflowerblue",
+    "gold",
+    "orange",
+    "turquoise",
+    "tomato",
+    "greenyellow"
+  ];
   const symbols = ["circle", "star", "square", "triangleUp", "triangleDown", "diamond", "plus"];
   // symbol: symbols[scaledIndex],
   return range(100).map((index) => {
@@ -60,13 +69,13 @@ class CatPoint extends React.Component {
   };
 
   static symbolMap = {
-    "circle": 0x1F431,
-    "diamond": 0x1F638,
-    "plus": 0x1F639,
-    "square": 0x1F63A,
-    "star": 0x1F63B,
-    "triangleDown": 0x1F63C,
-    "triangleUp": 0x1F63D
+    circle: 0x1f431,
+    diamond: 0x1f638,
+    plus: 0x1f639,
+    square: 0x1f63a,
+    star: 0x1f63b,
+    triangleDown: 0x1f63c,
+    triangleUp: 0x1f63d
   };
 
   renderSymbol(symbol) {
@@ -144,11 +153,11 @@ export default class App extends React.Component {
         <VictoryScatter
           style={{
             parent: style.parent,
-            data: { fill: (data) => data.y > 0 ? "red" : "blue" }
+            data: { fill: (data) => (data.y > 0 ? "red" : "blue") }
           }}
           width={500}
           height={500}
-          symbol={(d) => d.y > 0 ? "triangleUp" : "triangleDown"}
+          symbol={(d) => (d.y > 0 ? "triangleUp" : "triangleDown")}
           y={(d) => Math.sin(2 * Math.PI * d.x)}
           sample={25}
         />
@@ -158,7 +167,7 @@ export default class App extends React.Component {
           width={500}
           height={500}
           padding={50}
-          labelComponent={<VictoryLabel style={{ fill: "red" }}/>}
+          labelComponent={<VictoryLabel style={{ fill: "red" }} />}
           data={symbolData}
         />
 
@@ -176,10 +185,7 @@ export default class App extends React.Component {
         />
 
         <svg style={style} width={500} height={300}>
-          <VictoryScatter
-            style={style}
-            standalone={false}
-          />
+          <VictoryScatter style={style} standalone={false} />
         </svg>
 
         <VictoryScatter
@@ -195,31 +201,33 @@ export default class App extends React.Component {
             { x: new Date(2011, 1, 1), y: 270 },
             { x: new Date(2015, 1, 1), y: 470 }
           ]}
-          events={[{
-            target: "data",
-            eventHandlers: {
-              onClick: () => {
-                return [
-                  {
-                    mutation: (props) => {
-                      return {
-                        style: merge({}, props.style, { fill: "orange" }),
-                        symbol: "circle"
-                      };
+          events={[
+            {
+              target: "data",
+              eventHandlers: {
+                onClick: () => {
+                  return [
+                    {
+                      mutation: (props) => {
+                        return {
+                          style: merge({}, props.style, { fill: "orange" }),
+                          symbol: "circle"
+                        };
+                      }
+                    },
+                    {
+                      target: "labels",
+                      mutation: () => {
+                        return { text: "hey" };
+                      }
                     }
-                  }, {
-                    target: "labels",
-                    mutation: () => {
-                      return { text: "hey" };
-                    }
-                  }
-                ];
+                  ];
+                }
               }
             }
-          }]}
+          ]}
           symbol={"star"}
           size={8}
-
         />
 
         <VictoryScatter
@@ -231,7 +239,6 @@ export default class App extends React.Component {
           x="a.x"
           y="a.b[0]y"
         />
-
       </div>
     );
   }

@@ -1,5 +1,13 @@
 import {
-  assign, defaults, flatten, isFunction, uniq, some, groupBy, values, isPlainObject
+  assign,
+  defaults,
+  flatten,
+  isFunction,
+  uniq,
+  some,
+  groupBy,
+  values,
+  isPlainObject
 } from "lodash";
 import React from "react";
 import Axis from "./axis";
@@ -24,7 +32,7 @@ export default {
     const horizontalChildren = childComponents.some((component) => {
       return component.props && component.props.horizontal;
     });
-    const horizontal = props && props.horizontal || horizontalChildren;
+    const horizontal = (props && props.horizontal) || horizontalChildren;
     const groupComponent = childComponents.filter((child) => {
       return child.type && child.type.role && child.type.role === "group";
     });
@@ -33,9 +41,9 @@ export default {
       return undefined;
     }
     const { offset, children } = groupComponent[0].props;
-    const defaultDomainPadding = horizontal ?
-      { y: (offset * children.length) / 2 } :
-      { x: (offset * children.length) / 2 };
+    const defaultDomainPadding = horizontal
+      ? { y: (offset * children.length) / 2 }
+      : { x: (offset * children.length) / 2 };
     return defaultDomainPadding[axis];
   },
 
@@ -44,8 +52,9 @@ export default {
     const propsDomain = Domain.getDomainFromProps(props, axis);
     const minDomain = Domain.getMinFromProps(props, axis);
     const maxDomain = Domain.getMaxFromProps(props, axis);
-    const domainPadding = props.polar ?
-      0 : this.getDefaultDomainPadding(props, axis, childComponents);
+    const domainPadding = props.polar
+      ? 0
+      : this.getDefaultDomainPadding(props, axis, childComponents);
     let domain;
     if (propsDomain) {
       domain = propsDomain;
@@ -76,9 +85,13 @@ export default {
         return Array.isArray(child) ? some(child, check) : check(child);
       };
 
-      const continuous = !props.polar && some(oldChildren, (child) => {
-        return isContinuous(child) || child.props.children && isContinuous(child.props.children);
-      });
+      const continuous =
+        !props.polar &&
+        some(oldChildren, (child) => {
+          return (
+            isContinuous(child) || (child.props.children && isContinuous(child.props.children))
+          );
+        });
       const {
         nodesWillExit,
         nodesWillEnter,
@@ -90,8 +103,9 @@ export default {
         nodesWillExit,
         nodesWillEnter,
         nodesShouldEnter,
-        childrenTransitions: Collection.isArrayOfArrays(childrenTransitions) ?
-          childrenTransitions[0] : childrenTransitions,
+        childrenTransitions: Collection.isArrayOfArrays(childrenTransitions)
+          ? childrenTransitions[0]
+          : childrenTransitions,
         oldProps: nodesWillExit ? props : null,
         nextProps,
         continuous
@@ -103,8 +117,9 @@ export default {
     const components = ["groupComponent", "containerComponent", "labelComponent"];
     this.componentEvents = Events.getComponentEvents(props, components);
     if (Array.isArray(this.componentEvents)) {
-      return Array.isArray(props.events) ?
-        this.componentEvents.concat(...props.events) : this.componentEvents;
+      return Array.isArray(props.events)
+        ? this.componentEvents.concat(...props.events)
+        : this.componentEvents;
     }
     return props.events;
   },
@@ -115,38 +130,40 @@ export default {
     }
     const getFilteredState = () => {
       let childrenTransitions = this.state && this.state.childrenTransitions;
-      childrenTransitions = Collection.isArrayOfArrays(childrenTransitions) ?
-        childrenTransitions[index] : childrenTransitions;
+      childrenTransitions = Collection.isArrayOfArrays(childrenTransitions)
+        ? childrenTransitions[index]
+        : childrenTransitions;
       return defaults({ childrenTransitions }, this.state);
     };
 
     let getTransitions = props.animate && props.animate.getTransitions;
     const state = getFilteredState();
-    const parentState = props.animate && props.animate.parentState || state;
+    const parentState = (props.animate && props.animate.parentState) || state;
     if (!getTransitions) {
-      const getTransitionProps = Transitions.getTransitionPropsFactory(
-        props,
-        state,
-        (newState) => this.setState(newState)
+      const getTransitionProps = Transitions.getTransitionPropsFactory(props, state, (newState) =>
+        this.setState(newState)
       );
       getTransitions = (childComponent) => getTransitionProps(childComponent, index);
     }
     return defaults({ getTransitions, parentState }, props.animate, child.props.animate);
   },
 
-  getDomainFromChildren(props, axis, childComponents) { // eslint-disable-line max-statements, complexity, max-len
-    const children = childComponents ?
-      childComponents.slice(0) : React.Children.toArray(props.children);
+  getDomainFromChildren(props, axis, childComponents) {
+    // eslint-disable-line max-statements, complexity, max-len
+    const children = childComponents
+      ? childComponents.slice(0)
+      : React.Children.toArray(props.children);
     const horizontalChildren = childComponents.some((component) => {
       return component.props && component.props.horizontal;
     });
-    const horizontal = props && props.horizontal || horizontalChildren.length > 0;
+    const horizontal = (props && props.horizontal) || horizontalChildren.length > 0;
     const currentAxis = Axis.getCurrentAxis(axis, horizontal);
     const parentData = props.data ? Data.getData(props, axis) : undefined;
     const { polar, startAngle, endAngle, categories, minDomain, maxDomain } = props;
     const baseParentProps = { polar, startAngle, endAngle, categories, minDomain, maxDomain };
-    const parentProps = parentData ?
-      assign(baseParentProps, { data: parentData }) : baseParentProps;
+    const parentProps = parentData
+      ? assign(baseParentProps, { data: parentData })
+      : baseParentProps;
 
     const iteratee = (child) => {
       const sharedProps = assign({}, child.props, parentProps);
@@ -184,8 +201,9 @@ export default {
       stack += 1;
       return childData.map((datum) => assign({ stack }, datum));
     };
-    const children = childComponents ?
-    childComponents.slice(0) : React.Children.toArray(props.children);
+    const children = childComponents
+      ? childComponents.slice(0)
+      : React.Children.toArray(props.children);
     const stacked = children.filter((c) => c.type && c.type.role === "stack").length;
     const datasets = Helpers.reduceChildren(children, iteratee, props);
     const group = stacked ? "eventKey" : "stack";
@@ -204,8 +222,7 @@ export default {
     if (!colorScale && !color) {
       return undefined;
     }
-    const colors = Array.isArray(colorScale) ?
-      colorScale : Style.getColorScale(colorScale);
+    const colors = Array.isArray(colorScale) ? colorScale : Style.getColorScale(colorScale);
     return color || colors[index % colors.length];
   },
 
@@ -214,9 +231,9 @@ export default {
     const range = horizontal ? scale.y.range() : scale.x.range();
     const extent = Math.abs(range[1] - range[0]);
     const seriesLength = Array.isArray(datasets[0]) ? datasets[0].length : 1;
-    const bars = datasets.length * (seriesLength) + 2;
+    const bars = datasets.length * seriesLength + 2;
     const barRatio = 0.5;
-    return { width: Math.round(barRatio * extent / bars) };
+    return { width: Math.round((barRatio * extent) / bars) };
   },
 
   getStyle(theme, style, role) {
@@ -231,13 +248,15 @@ export default {
       return childStyle;
     }
     const childRole = child.type && child.type.role;
-    const defaultFill = childRole === "stack" ?
-      undefined : this.getColor(calculatedProps, child, index);
-    const defaultColor = childRole === "line" ?
-      { fill: "none", stroke: defaultFill } : { fill: defaultFill };
+    const defaultFill =
+      childRole === "stack" ? undefined : this.getColor(calculatedProps, child, index);
+    const defaultColor =
+      childRole === "line" ? { fill: "none", stroke: defaultFill } : { fill: defaultFill };
     const dataWidth = role === "stack" ? {} : this.getWidth(calculatedProps);
     const dataStyle = defaults(
-      {}, childStyle.data, assign({}, dataWidth, style.data, defaultColor)
+      {},
+      childStyle.data,
+      assign({}, dataWidth, style.data, defaultColor)
     );
     const labelsStyle = defaults({}, childStyle.labels, style.labels);
     return {
@@ -253,8 +272,10 @@ export default {
       if (!Domain.isDomainComponent(child) || !childProps.categories) {
         return null;
       } else {
-        const categories = childProps.categories && !Array.isArray(childProps.categories) ?
-          childProps.categories[axis] : childProps.rops.categories;
+        const categories =
+          childProps.categories && !Array.isArray(childProps.categories)
+            ? childProps.categories[axis]
+            : childProps.rops.categories;
         const categoryStrings = categories && categories.filter((val) => typeof val === "string");
         return categoryStrings ? Collection.removeUndefined(categoryStrings) : [];
       }
@@ -291,8 +312,10 @@ export default {
   },
 
   getCategories(props, axis) {
-    const propCategories = props.categories && !Array.isArray(props.categories) ?
-    props.categories[axis] : props.categories;
+    const propCategories =
+      props.categories && !Array.isArray(props.categories)
+        ? props.categories[axis]
+        : props.categories;
     const categories = propCategories || this.getStringsFromChildren(props, axis);
     return categories.length > 0 ? categories : undefined;
   }

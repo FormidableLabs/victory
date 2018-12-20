@@ -16,28 +16,21 @@ const dataset = [
 describe("components/victory-box-plot", () => {
   describe("default component rendering", () => {
     it("renders an svg with the correct width and height", () => {
-      const wrapper = mount(
-        <VictoryBoxPlot data={dataset}/>
-      );
+      const wrapper = mount(<VictoryBoxPlot data={dataset} />);
       const svg = wrapper.find("svg").at(0);
       expect(svg.prop("style").width).to.equal("100%");
       expect(svg.prop("style").height).to.equal("100%");
     });
 
     it("renders an svg with the correct viewBox", () => {
-      const wrapper = mount(
-        <VictoryBoxPlot data={dataset}/>
-      );
+      const wrapper = mount(<VictoryBoxPlot data={dataset} />);
       const svg = wrapper.find("svg").at(0);
-      const viewBoxValue =
-        `0 0 ${450} ${300}`;
+      const viewBoxValue = `0 0 ${450} ${300}`;
       expect(svg.prop("viewBox")).to.equal(viewBoxValue);
     });
 
     it("renders 3 points", () => {
-      const wrapper = shallow(
-        <VictoryBoxPlot data={dataset}/>
-      );
+      const wrapper = shallow(<VictoryBoxPlot data={dataset} />);
       const points = wrapper.find(Box);
       // two boxes per point
       expect(points.length).to.equal(6);
@@ -46,9 +39,7 @@ describe("components/victory-box-plot", () => {
 
   describe("accessibility", () => {
     it("adds an aria role to each point in the series", () => {
-      const wrapper = mount(
-        <VictoryBoxPlot data={dataset} />
-      );
+      const wrapper = mount(<VictoryBoxPlot data={dataset} />);
 
       wrapper.find("rect").forEach((r) => {
         const roleValue = r.prop("role");

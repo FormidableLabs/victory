@@ -2,7 +2,12 @@ import { defaults, assign } from "lodash";
 import PropTypes from "prop-types";
 import React from "react";
 import {
-  Helpers, VictoryContainer, VictoryTheme, CommonProps, PropTypes as CustomPropTypes, Wrapper
+  Helpers,
+  VictoryContainer,
+  VictoryTheme,
+  CommonProps,
+  PropTypes as CustomPropTypes,
+  Wrapper
 } from "victory-core";
 import { VictorySharedEvents } from "victory-shared-events";
 import { VictoryAxis } from "victory-axis";
@@ -20,10 +25,7 @@ export default class VictoryChart extends React.Component {
 
   static propTypes = {
     ...CommonProps.baseProps,
-    children: PropTypes.oneOfType([
-      PropTypes.arrayOf(PropTypes.node),
-      PropTypes.node
-    ]),
+    children: PropTypes.oneOfType([PropTypes.arrayOf(PropTypes.node), PropTypes.node]),
     defaultAxes: PropTypes.shape({
       independent: PropTypes.element,
       dependent: PropTypes.element
@@ -38,23 +40,21 @@ export default class VictoryChart extends React.Component {
   };
 
   static defaultProps = {
-    containerComponent: <VictoryContainer/>,
+    containerComponent: <VictoryContainer />,
     defaultAxes: {
-      independent: <VictoryAxis/>,
-      dependent: <VictoryAxis dependentAxis/>
+      independent: <VictoryAxis />,
+      dependent: <VictoryAxis dependentAxis />
     },
     defaultPolarAxes: {
-      independent: <VictoryPolarAxis/>,
-      dependent: <VictoryPolarAxis dependentAxis/>
+      independent: <VictoryPolarAxis />,
+      dependent: <VictoryPolarAxis dependentAxis />
     },
-    groupComponent: <g/>,
+    groupComponent: <g />,
     standalone: true,
     theme: VictoryTheme.grayscale
   };
 
-  static expectedComponents = [
-    "groupComponent", "containerComponent"
-  ];
+  static expectedComponents = ["groupComponent", "containerComponent"];
 
   constructor(props) {
     super(props);
@@ -100,25 +100,40 @@ export default class VictoryChart extends React.Component {
     const { width, height, standalone, theme, polar, name } = props;
     const { domain, scale, style, origin, radius, horizontal } = calculatedProps;
     return {
-      domain, scale, width, height, standalone, theme, style: style.parent, horizontal,
-      name, polar, radius, origin: polar ? origin : undefined
+      domain,
+      scale,
+      width,
+      height,
+      standalone,
+      theme,
+      style: style.parent,
+      horizontal,
+      name,
+      polar,
+      radius,
+      origin: polar ? origin : undefined
     };
   }
 
   render() {
-    const props = this.state && this.state.nodesWillExit ?
-      this.state.oldProps || this.props : this.props;
+    const props =
+      this.state && this.state.nodesWillExit ? this.state.oldProps || this.props : this.props;
     const modifiedProps = Helpers.modifyProps(props, fallbackProps, "chart");
     const {
-      eventKey, containerComponent, groupComponent, standalone, externalEventMutations
+      eventKey,
+      containerComponent,
+      groupComponent,
+      standalone,
+      externalEventMutations
     } = modifiedProps;
     const axes = props.polar ? modifiedProps.defaultPolarAxes : modifiedProps.defaultAxes;
     const childComponents = getChildComponents(modifiedProps, axes);
     const calculatedProps = getCalculatedProps(modifiedProps, childComponents);
     const newChildren = this.getNewChildren(modifiedProps, childComponents, calculatedProps);
     const containerProps = standalone ? this.getContainerProps(modifiedProps, calculatedProps) : {};
-    const container = standalone ?
-      this.renderContainer(containerComponent, containerProps) : groupComponent;
+    const container = standalone
+      ? this.renderContainer(containerComponent, containerProps)
+      : groupComponent;
     if (this.events) {
       return (
         <VictorySharedEvents

@@ -22,61 +22,66 @@ export default class App extends React.Component {
       <div className="demo">
         <h1>Victory Demo</h1>
 
-
         <h2>Composites</h2>
 
         <h3>VictoryPie</h3>
         <p>Default props</p>
-        <VictoryPie style={style}/>
+        <VictoryPie style={style} />
 
         <h3>VictoryChart</h3>
-        <p>Line chart of function <code>y = x^2</code></p>
+        <p>
+          Line chart of function <code>y = x^2</code>
+        </p>
 
         <VictoryChart style={style}>
-          <VictoryLine y={(data) => data.x * data.x}/>
+          <VictoryLine y={(data) => data.x * data.x} />
         </VictoryChart>
 
-        <VictoryChart style={style}
+        <VictoryChart
+          style={style}
           domainPadding={{ x: 30, y: 30 }}
           height={600}
           width={600}
-          events={[{
-            childName: "bar",
-            target: "data",
-            eventHandlers: {
-              onClick: () => {
-                return [
-                  {
-                    target: "labels",
-                    mutation: () => {
-                      return { text: "o shit" };
+          events={[
+            {
+              childName: "bar",
+              target: "data",
+              eventHandlers: {
+                onClick: () => {
+                  return [
+                    {
+                      target: "labels",
+                      mutation: () => {
+                        return { text: "o shit" };
+                      }
+                    },
+                    {
+                      childName: "line",
+                      eventKey: "all",
+                      target: "data",
+                      mutation: () => {
+                        return { style: { stroke: "lime" } };
+                      }
+                    },
+                    {
+                      childName: "line",
+                      eventKey: 0,
+                      target: "labels",
+                      mutation: () => {
+                        return {
+                          style: { fill: "green" },
+                          text: "waddup"
+                        };
+                      }
                     }
-                  },
-                  {
-                    childName: "line",
-                    eventKey: "all",
-                    target: "data",
-                    mutation: () => {
-                      return { style: { stroke: "lime" } };
-                    }
-                  },
-                  {
-                    childName: "line",
-                    eventKey: 0,
-                    target: "labels",
-                    mutation: () => {
-                      return {
-                        style: { fill: "green" },
-                        text: "waddup"
-                      };
-                    }
-                  }
-                ];
+                  ];
+                }
               }
             }
-          }]}
+          ]}
         >
-          <VictoryBar name="bar"
+          <VictoryBar
+            name="bar"
             style={{ data: { width: 15, fill: "green" } }}
             data={[
               { x: 1, y: 1 },
@@ -94,7 +99,8 @@ export default class App extends React.Component {
               { x: 13, y: 1 }
             ]}
           />
-          <VictoryLine name="line"
+          <VictoryLine
+            name="line"
             y={() => 0.5}
             style={{ data: { stroke: "blue", strokeWidth: 5 } }}
             labels={["LINE"]}
@@ -113,7 +119,9 @@ export default class App extends React.Component {
               tickLabels: { fill: "black" }
             }}
           />
-          <VictoryAxis label="y axis" dependentAxis
+          <VictoryAxis
+            label="y axis"
+            dependentAxis
             tickValues={[0, 1.5, 3, 4.5]}
             style={{
               grid: { strokeWidth: 1 },
@@ -121,7 +129,8 @@ export default class App extends React.Component {
               ticks: { stroke: "transparent", padding: 15 }
             }}
           />
-          <VictoryBar style={{ data: { width: 15, fill: "orange" } }}
+          <VictoryBar
+            style={{ data: { width: 15, fill: "orange" } }}
             data={[
               { x: 1, y: 1 },
               { x: 2, y: 2 },
@@ -138,7 +147,8 @@ export default class App extends React.Component {
               { x: 13, y: 1 }
             ]}
           />
-          <VictoryLine y={() => 0.5}
+          <VictoryLine
+            y={() => 0.5}
             style={{ data: { stroke: "gold", strokeWidth: 3 } }}
             labels={["LINE"]}
           />
@@ -148,145 +158,153 @@ export default class App extends React.Component {
 
         <h3>VictoryAxis</h3>
         <p>Default props</p>
-        <VictoryAxis style={style}/>
+        <VictoryAxis style={style} />
 
         <h3>VictoryBar</h3>
         <p>Default props</p>
-        <VictoryBar style={style}/>
+        <VictoryBar style={style} />
 
         <h3>VictoryLine</h3>
         <p>Default props</p>
-        <VictoryLine style={style}/>
+        <VictoryLine style={style} />
 
         <h3>VictoryScatter</h3>
         <p>Default props</p>
-        <VictoryScatter style={style}/>
+        <VictoryScatter style={style} />
 
-          <h3>VictoryArea</h3>
-          <p>Default props</p>
-          <VictoryArea style={style}/>
+        <h3>VictoryArea</h3>
+        <p>Default props</p>
+        <VictoryArea style={style} />
 
-          <h3>VictorySelectionContainer</h3>
+        <h3>VictorySelectionContainer</h3>
 
-          <VictoryGroup style={style}
-            containerComponent={
-              <VictorySelectionContainer
-                selectionStyle={{
-                  stroke: "tomato", strokeWidth: 2, fill: "tomato", fillOpacity: 0.1
-                }}
-              />
-            }
-          >
-            <VictoryScatter
-              style={{
-                data: { fill: "tomato" }
+        <VictoryGroup
+          style={style}
+          containerComponent={
+            <VictorySelectionContainer
+              selectionStyle={{
+                stroke: "tomato",
+                strokeWidth: 2,
+                fill: "tomato",
+                fillOpacity: 0.1
               }}
-              size={(datum, active) => active ? 5 : 3}
-              data={[
-                { x: 1, y: -5 },
-                { x: 2, y: 4 },
-                { x: 3, y: 2 },
-                { x: 4, y: 3 },
-                { x: 5, y: 1 },
-                { x: 6, y: -3 },
-                { x: 7, y: 3 }
-              ]}
             />
-            <VictoryScatter
-              style={{
-                data: { fill: "blue" }
-              }}
-              size={(datum, active) => active ? 5 : 3}
-              data={[
-                { x: 1, y: -3 },
-                { x: 2, y: 5 },
-                { x: 3, y: 3 },
-                { x: 4, y: 0 },
-                { x: 5, y: -2 },
-                { x: 6, y: -2 },
-                { x: 7, y: 5 }
-              ]}
-            />
-            <VictoryScatter
-              data={[
-                { x: 1, y: 5 },
-                { x: 2, y: -4 },
-                { x: 3, y: -2 },
-                { x: 4, y: -3 },
-                { x: 5, y: -1 },
-                { x: 6, y: 3 },
-                { x: 7, y: -3 }
-              ]}
-              size={(datum, active) => active ? 5 : 3}
-            />
-          </VictoryGroup>
+          }
+        >
+          <VictoryScatter
+            style={{
+              data: { fill: "tomato" }
+            }}
+            size={(datum, active) => (active ? 5 : 3)}
+            data={[
+              { x: 1, y: -5 },
+              { x: 2, y: 4 },
+              { x: 3, y: 2 },
+              { x: 4, y: 3 },
+              { x: 5, y: 1 },
+              { x: 6, y: -3 },
+              { x: 7, y: 3 }
+            ]}
+          />
+          <VictoryScatter
+            style={{
+              data: { fill: "blue" }
+            }}
+            size={(datum, active) => (active ? 5 : 3)}
+            data={[
+              { x: 1, y: -3 },
+              { x: 2, y: 5 },
+              { x: 3, y: 3 },
+              { x: 4, y: 0 },
+              { x: 5, y: -2 },
+              { x: 6, y: -2 },
+              { x: 7, y: 5 }
+            ]}
+          />
+          <VictoryScatter
+            data={[
+              { x: 1, y: 5 },
+              { x: 2, y: -4 },
+              { x: 3, y: -2 },
+              { x: 4, y: -3 },
+              { x: 5, y: -1 },
+              { x: 6, y: 3 },
+              { x: 7, y: -3 }
+            ]}
+            size={(datum, active) => (active ? 5 : 3)}
+          />
+        </VictoryGroup>
 
-          <VictoryStack style={style}
-            containerComponent={
-              <VictorySelectionContainer
-                selectionStyle={{
-                  stroke: "tomato", strokeWidth: 2, fill: "tomato", fillOpacity: 0.1
-                }}
-              />
-            }
-          >
-            <VictoryBar
-              style={{
-                data: {
-                  fill: "tomato",
-                  stroke: (d, active) => active ? "black" : "none",
-                  strokeWidth: 2
-                }
+        <VictoryStack
+          style={style}
+          containerComponent={
+            <VictorySelectionContainer
+              selectionStyle={{
+                stroke: "tomato",
+                strokeWidth: 2,
+                fill: "tomato",
+                fillOpacity: 0.1
               }}
-              size={(datum, active) => active ? 5 : 3}
-              data={[
-                { x: 1, y: -5 },
-                { x: 2, y: 4 },
-                { x: 3, y: 2 },
-                { x: 4, y: 3 },
-                { x: 5, y: 1 },
-                { x: 6, y: -3 },
-                { x: 7, y: 3 }
-              ]}
             />
-            <VictoryBar
-              style={{
-                data: {
-                  fill: "orange",
-                  stroke: (d, active) => active ? "black" : "none",
-                  strokeWidth: 2
-                }
-              }}
-              size={(datum, active) => active ? 5 : 3}
-              data={[
-                { x: 1, y: -3 },
-                { x: 2, y: 5 },
-                { x: 3, y: 3 },
-                { x: 4, y: 0 },
-                { x: 5, y: -2 },
-                { x: 6, y: -2 },
-                { x: 7, y: 5 }
-              ]}
-            />
-            <VictoryBar
-              style={{
-                data: {
-                  fill: "gold",
-                  stroke: (d, active) => active ? "black" : "none",
-                  strokeWidth: 2
-                }
-              }}
-              data={[
-                { x: 1, y: 5 },
-                { x: 2, y: -4 },
-                { x: 3, y: -2 },
-                { x: 4, y: -3 },
-                { x: 5, y: -1 },
-                { x: 6, y: 3 },
-                { x: 7, y: -3 }
-              ]}
-            />
-          </VictoryStack>
+          }
+        >
+          <VictoryBar
+            style={{
+              data: {
+                fill: "tomato",
+                stroke: (d, active) => (active ? "black" : "none"),
+                strokeWidth: 2
+              }
+            }}
+            size={(datum, active) => (active ? 5 : 3)}
+            data={[
+              { x: 1, y: -5 },
+              { x: 2, y: 4 },
+              { x: 3, y: 2 },
+              { x: 4, y: 3 },
+              { x: 5, y: 1 },
+              { x: 6, y: -3 },
+              { x: 7, y: 3 }
+            ]}
+          />
+          <VictoryBar
+            style={{
+              data: {
+                fill: "orange",
+                stroke: (d, active) => (active ? "black" : "none"),
+                strokeWidth: 2
+              }
+            }}
+            size={(datum, active) => (active ? 5 : 3)}
+            data={[
+              { x: 1, y: -3 },
+              { x: 2, y: 5 },
+              { x: 3, y: 3 },
+              { x: 4, y: 0 },
+              { x: 5, y: -2 },
+              { x: 6, y: -2 },
+              { x: 7, y: 5 }
+            ]}
+          />
+          <VictoryBar
+            style={{
+              data: {
+                fill: "gold",
+                stroke: (d, active) => (active ? "black" : "none"),
+                strokeWidth: 2
+              }
+            }}
+            data={[
+              { x: 1, y: 5 },
+              { x: 2, y: -4 },
+              { x: 3, y: -2 },
+              { x: 4, y: -3 },
+              { x: 5, y: -1 },
+              { x: 6, y: 3 },
+              { x: 7, y: -3 }
+            ]}
+          />
+        </VictoryStack>
       </div>
     );
   }

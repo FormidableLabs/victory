@@ -1,4 +1,3 @@
-
 # VictoryPolarAxis
 
 `victory-polar-axis@^30.0.0` exports `VictoryPolarAxis`
@@ -41,13 +40,14 @@ animate={{
   easing: "bounce"
 }}
 ```
+
 ### axisAngle
 
 `type: number`
 
 The `axisAngle` prop is used to position the dependent axis. This prop should be given in degrees. Degrees are defined as starting at the 3 o'clock position, and proceeding counterclockwise. This prop only affects the dependent axis.
 
-*default:* `axisAngle={0}`
+_default:_ `axisAngle={0}`
 
 ```playground
 <VictoryPolarAxis dependentAxis
@@ -62,7 +62,7 @@ The `axisAngle` prop is used to position the dependent axis. This prop should be
 
 The `axisComponent` prop takes a component instance which will be responsible for rendering an axis line for the dependent axis. The independent axis renders a `circularAxisComponent`. The new element created from the passed `axisComponent` will be provided with the following props calculated by `VictoryPolarAxis`: `x1`, `y1`, `x2`, `y2`, `style` and `events`. Any of these props may be overridden by passing in props to the supplied component, or modified or ignored within the custom component itself. If an `axisComponent` is not provided, `VictoryPolarAxis` will use its default [Line component][].
 
-*default:* `axisComponent={<Line type={"axis"}/>}`
+_default:_ `axisComponent={<Line type={"axis"}/>}`
 
 ```jsx
 axisComponent={<Line events={{ onClick: handleClick }}/>}
@@ -76,7 +76,7 @@ The `axisLabelComponent` prop takes a component instance which will be used to r
 
 **Note:** Axis labels are only rendered with the dependent axis in polar charts.
 
-*default:* `axisLabelComponent={<VictoryLabel/>}`
+_default:_ `axisLabelComponent={<VictoryLabel/>}`
 
 ```jsx
 axisLabelComponent={<VictoryLabel dy={20}/>}
@@ -87,7 +87,6 @@ axisLabelComponent={<VictoryLabel dy={20}/>}
 `type: number`
 
 The `axisValue` prop may be used instead of `axisAngle` to position the dependent axis. This prop is useful when dependent axes should line up with values on the independent axis.
-
 
 ```playground
  <VictoryChart polar
@@ -126,7 +125,7 @@ The `axisValue` prop may be used instead of `axisAngle` to position the dependen
 The `circularAxisComponent` prop takes a component instance which will be responsible for rendering an axis arc for the independent axis. The dependent axis renders an `axisComponent`. The new element created from the passed `circularAxisComponent` will be provided with the following props calculated by `VictoryPolarAxis`: `style`, `events`,
 `cx`, `cy`, `r`, `startAngle`, and `endAngle`. Any of these props may be overridden by passing in props to the supplied component, or modified or ignored within the custom component itself. If a `circularAxisComponent` is not provided, `VictoryPolarAxis` will use its default [Arc component][].
 
-*default:* `circularAxisComponent={<Arc type={"axis"}/>}`
+_default:_ `circularAxisComponent={<Arc type={"axis"}/>}`
 
 ```jsx
 circularAxisComponent={<Arc r={300}/>}
@@ -138,7 +137,7 @@ circularAxisComponent={<Arc r={300}/>}
 
 The `circularGridComponent` prop takes a component instance which will be responsible for rendering a grid element. The new element created from the passed `circularGridComponent` will be provided with the following props calculated by `VictoryPolarAxis`: `x1`, `y1`, `x2`, `y2`, `tick`, `style` and `events`. Any of these props may be overridden by passing in props to the supplied component, or modified or ignored within the custom component itself. If a `circularGridComponent` is not provided, `VictoryPolarAxis` will use its default [Arc component][].
 
-*default:* `circularGridComponent={<Arc type={"grid"}/>}`
+_default:_ `circularGridComponent={<Arc type={"grid"}/>}`
 
 ```jsx
 circularGridComponent={<Arc r={300}/>}
@@ -163,7 +162,7 @@ containerComponent={<VictoryVoronoiContainer/>}
 
 The `dependentAxis` boolean prop specifies whether the axis corresponds to the dependent variable (usually y, or the radial dimension on a polar chart). This prop is useful when composing `VictoryPolarAxis` with other components to form a chart.
 
-*default:* `dependentAxis={false}`
+_default:_ `dependentAxis={false}`
 
 ```playground
 <div style={{ display: "flex" }}>
@@ -198,8 +197,7 @@ domainPadding={{x: [10, -10], y: 5}}
 
 The `endAngle` props defines the overall end angle of the axis in degrees. This prop is used in conjunction with `startAngle` to create an axis that spans only a segment of a circle, or to change overall rotation of the axis. This prop should be given as a number of degrees. Degrees are defined as starting at the 3 o'clock position, and proceeding counterclockwise.
 
-*default:* `endAngle={360}`
-
+_default:_ `endAngle={360}`
 
 ```playground
 <div style={{ display: "flex" }}>
@@ -223,7 +221,7 @@ The `endAngle` props defines the overall end angle of the axis in degrees. This 
 
 `VictoryPolarAxis` uses the standard `events` prop. [Read about it here](https://formidable.com/open-source/victory/docs/common-props#events)
 
-See the [Events Guide] []for more information on defining events.
+See the [Events Guide][]for more information on defining events.
 
 **note:** valid event targets for `VictoryPolarAxis` are "axis", "axisLabel", "grid", "ticks", and "tickLabels".
 Targets that correspond to only one element {"axis" and "axisLabel") should use the special eventKey "all".
@@ -240,7 +238,7 @@ Targets that correspond to only one element {"axis" and "axisLabel") should use 
 
 The `gridComponent` prop takes a component instance which will be responsible for rendering a grid element. The new element created from the passed `gridComponent` will be provided with the following props calculated by `VictoryPolarAxis`: `x1`, `y1`, `x2`, `y2`, `tick`, `style` and `events`. Any of these props may be overridden by passing in props to the supplied component, or modified or ignored within the custom component itself. If a `gridComponent` is not provided, `VictoryPolarAxis` will use its default [Line component][].
 
-*default:* `gridComponent={<Line type={"grid"}/>}`
+_default:_ `gridComponent={<Line type={"grid"}/>}`
 
 ```jsx
 gridComponent={<Line events={{ onClick: handleClick }}/>}
@@ -252,7 +250,7 @@ gridComponent={<Line events={{ onClick: handleClick }}/>}
 
 `VictoryPolarAxis` uses the standard `groupComponent` prop. [Read about it here](https://formidable.com/open-source/victory/docs/common-props#groupcomponent)
 
-*default:* `<g/>`
+_default:_ `<g/>`
 
 ```jsx
 groupComponent={<g transform="translate(10, 10)" />}
@@ -264,7 +262,7 @@ groupComponent={<g transform="translate(10, 10)" />}
 
 `VictoryPolarAxis` uses the standard `height` prop. [Read about it here](https://formidable.com/open-source/victory/docs/common-props#height)
 
-*default (provided by default theme):* `height={300}`
+_default (provided by default theme):_ `height={300}`
 
 ```jsx
 height={400}
@@ -279,13 +277,14 @@ When the `innerRadius` prop is set, polar axes will be hollow rather than circul
 ```playground
 <VictoryPolarAxis theme={VictoryTheme.material} innerRadius={50}/>
 ```
+
 ### invertAxis
 
 `type: boolean`
 
 The `invertAxis` boolean prop specifies whether the domain for a given axis should be inverted. By default, axes will be displayed with lower values on the bottom / left, and higher values on the top / right regardless of orientation.
 
-*default:* `invertAxis={false}`
+_default:_ `invertAxis={false}`
 
 ### label
 
@@ -307,7 +306,7 @@ The `label` prop defines the label that will appear with a dependent axis. Label
 
 The `labelPlacement` prop specifies how tick labels should be placed relative to the angular tick values. Options for this prop are "vertical", "parallel", and "perpendicular".
 
-*default:* `labelPlacement="parallel"`
+_default:_ `labelPlacement="parallel"`
 
 ```playground
 <VictoryPolarAxis
@@ -322,7 +321,6 @@ The `labelPlacement` prop specifies how tick labels should be placed relative to
 
 `VictoryPolarAxis` uses the standard `maxDomain` prop. [Read about it in detail](https://formidable.com/open-source/victory/docs/common-props#maxDomain)
 
-
 ```playground
 <VictoryPolarAxis
   dependentAxis
@@ -336,7 +334,6 @@ The `labelPlacement` prop specifies how tick labels should be placed relative to
 `type: number || { x: number, y: number }`
 
 `VictoryPolarAxis` uses the standard `minDomain` prop. [Read about it in detail](https://formidable.com/open-source/victory/docs/common-props#minDomain)
-
 
 ```playground
 <VictoryPolarAxis
@@ -353,7 +350,7 @@ The `labelPlacement` prop specifies how tick labels should be placed relative to
 `VictoryPolarAxis` uses the standard `name` prop. [Read about it here](https://formidable.com/open-source/victory/docs/common-props#name)
 
 ```jsx
-name="series-1"
+name = "series-1";
 ```
 
 ### origin
@@ -370,7 +367,7 @@ name="series-1"
 
 `VictoryPolarAxis` uses the standard `padding` prop. [Read about it here](https://formidable.com/open-source/victory/docs/common-props#padding)
 
-*default (provided by default theme):* `padding={50}`
+_default (provided by default theme):_ `padding={50}`
 
 ```jsx
 padding={{ top: 20, bottom: 60 }}
@@ -393,7 +390,7 @@ Options for scale include "linear", "time", "log", "sqrt" and the `d3-scale` fun
 
 **note:** Though `VictoryPolarAxis` can take a `scale` prop with scales defined for both `x` and `y`, only the scale that corresponds the given axis will be used.
 
-*default:* `scale="linear"`
+_default:_ `scale="linear"`
 
 ```jsx
 scale={{x: "linear", y: "log"}}
@@ -417,7 +414,7 @@ scale={{x: "linear", y: "log"}}
 
 **note:** When `VictoryPolarAxis` is nested within a component like `VictoryChart`, this prop will be set to `false`
 
-*default:* `standalone={true}`
+_default:_ `standalone={true}`
 
 ```playground
 <svg width={350} height={350}>
@@ -440,8 +437,7 @@ scale={{x: "linear", y: "log"}}
 
 The `startAngle` props defines the overall end angle of the axis in degrees. This prop is used in conjunction with `endAngle` to create an axis that spans only a segment of a circle, or to change overall rotation of the axis. This prop should be given as a number of degrees. Degrees are defined as starting at the 3 o'clock position, and proceeding counterclockwise.
 
-*default:* `startAngle={0}`
-
+_default:_ `startAngle={0}`
 
 ```playground
 <div style={{ display: "flex" }}>
@@ -469,7 +465,7 @@ The `style` prop defines the style of the component. The style prop should be gi
 
 **note:** custom `angle` and `verticalAnchor` properties may be included in `labels` styles.
 
-*default (provided by default theme):* See [grayscale theme][] for more detail
+_default (provided by default theme):_ See [grayscale theme][] for more detail
 
 ```playground
 <VictoryPolarAxis
@@ -489,9 +485,9 @@ The `style` prop defines the style of the component. The style prop should be gi
 
 See the [Themes Guide][] for information about creating custom themes.
 
-*default:* `theme={VictoryTheme.grayscale}`
+_default:_ `theme={VictoryTheme.grayscale}`
 
-*Note:* Use the `dependentAxis` and `independentAxis` namespaces to theme axes by type. These namespaces will be merged with any props and styles supplied in the `axis` namespace.
+_Note:_ Use the `dependentAxis` and `independentAxis` namespaces to theme axes by type. These namespaces will be merged with any props and styles supplied in the `axis` namespace.
 
 ```jsx
 theme={VictoryTheme.material}
@@ -503,7 +499,7 @@ theme={VictoryTheme.material}
 
 The `tickComponent` prop takes a component instance which will be responsible for rendering a tick element. The new element created from the passed `tickComponent` will be provided with the following props calculated by `VictoryPolarAxis`: `x1`, `y1`, `x2`, `y2`, `tick`, `style` and `events`. Any of these props may be overridden by passing in props to the supplied component, or modified or ignored within the custom component itself. If a `tickComponent` is not provided, `VictoryPolarAxis` will use its default [Line component][].
 
-*default:* `tickComponent={<Line type={"tick"}/>}`
+_default:_ `tickComponent={<Line type={"tick"}/>}`
 
 ```jsx
 tickComponent={<Line events={{ onClick: handleClick }}/>}
@@ -535,7 +531,7 @@ The `tickFormat` prop specifies how tick values should be labeled. The `tickForm
 
 The `tickLabelComponent` prop takes a component instance which will be used to render the axis label. The new element created from the passed `tickLabelComponent` will be supplied with the following props: `x`, `y`, `tick`, `verticalAnchor`, `textAnchor`, `angle`, `transform`, `style` and `events`. Any of these props may be overridden by passing in props to the supplied component, or modified or ignored within the custom component itself. If `tickLabelComponent` is omitted, a new [`VictoryLabel`][] will be created with props described above.
 
-*default:* `tickLabelComponent={<VictoryLabel/>}`
+_default:_ `tickLabelComponent={<VictoryLabel/>}`
 
 ```jsx
 tickLabelComponent={<VictoryLabel dy={20}/>}
@@ -545,7 +541,7 @@ tickLabelComponent={<VictoryLabel dy={20}/>}
 
 `type: array`
 
-The `tickValues` prop explicitly specifies a set of tick values to draw on the axis. This prop should be given as an array of unique values of the same type (_i.e.,_ all numbers). The `tickValues` prop is used to specify the _values_ of each tick, so numeric values are typically appropriate. An array of strings or dates may be supplied for categorical and time series data respectively. Use the [tickFormat][] prop to specify how ticks should be labeled. *Note:* `tickValues` should be given as a unique array.
+The `tickValues` prop explicitly specifies a set of tick values to draw on the axis. This prop should be given as an array of unique values of the same type (_i.e.,_ all numbers). The `tickValues` prop is used to specify the _values_ of each tick, so numeric values are typically appropriate. An array of strings or dates may be supplied for categorical and time series data respectively. Use the [tickFormat][] prop to specify how ticks should be labeled. _Note:_ `tickValues` should be given as a unique array.
 
 ```playground
 <VictoryPolarAxis
@@ -560,19 +556,19 @@ The `tickValues` prop explicitly specifies a set of tick values to draw on the a
 
 `VictoryPolarAxis` uses the standard `width` prop. [Read about it here](https://formidable.com/open-source/victory/docs/common-props#width)
 
-*default (provided by default theme):* `width={450}`
+_default (provided by default theme):_ `width={450}`
 
 ```jsx
 width={400}
 ```
 
-[Animations Guide]: https://formidable.com/open-source/victory/guides/animations
-[Events Guide]: https://formidable.com/open-source/victory/guides/events
-[Themes Guide]: https://formidable.com/open-source/victory/guides/themes
-[`VictoryChart`]: https://formidable.com/open-source/victory/docs/victory-chart
-[tickFormat]: https://formidable.com/open-source/victory/docs/victory-axis#tickformat
-[d3Scale]: https://github.com/d3/d3-scale
+[animations guide]: https://formidable.com/open-source/victory/guides/animations
+[events guide]: https://formidable.com/open-source/victory/guides/events
+[themes guide]: https://formidable.com/open-source/victory/guides/themes
+[`victorychart`]: https://formidable.com/open-source/victory/docs/victory-chart
+[tickformat]: https://formidable.com/open-source/victory/docs/victory-axis#tickformat
+[d3scale]: https://github.com/d3/d3-scale
 [grayscale theme]: https://github.com/FormidableLabs/victory-core/blob/master/src/victory-theme/grayscale.js
-[Line component]: https://formidable.com/open-source/victory/docs/victory-primitives#line
-[Arc component]: https://formidable.com/open-source/victory/docs/victory-primitives#arc
-[`VictoryLabel`]: https://formidable.com/open-source/victory/docs/victory-label
+[line component]: https://formidable.com/open-source/victory/docs/victory-primitives#line
+[arc component]: https://formidable.com/open-source/victory/docs/victory-primitives#arc
+[`victorylabel`]: https://formidable.com/open-source/victory/docs/victory-label

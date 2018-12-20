@@ -4,7 +4,7 @@
  * @param {number} y - y coordinate
  * @returns {object} - point object
  */
-const point = function (x, y) {
+const point = function(x, y) {
   return {
     x,
     y,
@@ -42,7 +42,7 @@ const point = function (x, y) {
  * @param {number} radius - radius of circle
  * @returns {object} - point object
  */
-const circle = function (center, radius) {
+const circle = function(center, radius) {
   return {
     center,
     radius,
@@ -72,7 +72,8 @@ const circle = function (center, radius) {
     // "Intersection of two circles" by Paul Bourke
     // Left-most point is returned as 0th element of array
     // Right-most point is returned as 1st elemennt of array
-    intersection(circle1) { // eslint-disable-line max-statements
+    intersection(circle1) {
+      // eslint-disable-line max-statements
       const P0 = this.center;
       const P1 = circle1.center;
       const r0 = this.radius;
@@ -83,24 +84,28 @@ const circle = function (center, radius) {
       }
       const a = (Math.pow(r0, 2) - Math.pow(r1, 2) + Math.pow(d, 2)) / (2 * d);
       const h = Math.sqrt(Math.pow(r0, 2) - Math.pow(a, 2));
-      const P2 = P0.add(P1.subtract(P0).scalarMult(a).scalarDivide(d));
+      const P2 = P0.add(
+        P1.subtract(P0)
+          .scalarMult(a)
+          .scalarDivide(d)
+      );
       const { x: x0, y: y0 } = P0;
       const { x: x1, y: y1 } = P1;
       const { x: x2, y: y2 } = P2;
       const P3s = [
-        point(x2 - h * (y1 - y0) / d, y2 + h * (x1 - x0) / d),
-        point(x2 + h * (y1 - y0) / d, y2 - h * (x1 - x0) / d)
+        point(x2 - (h * (y1 - y0)) / d, y2 + (h * (x1 - x0)) / d),
+        point(x2 + (h * (y1 - y0)) / d, y2 - (h * (x1 - x0)) / d)
       ];
       P3s.sort((Point1, Point2) => Point1.x - Point2.x);
       return P3s;
     },
     solveX(y) {
       const sqrt = Math.sqrt(Math.pow(this.radius, 2) - Math.pow(y - this.center.y, 2));
-      return [ this.center.x - sqrt, this.center.x + sqrt ];
+      return [this.center.x - sqrt, this.center.x + sqrt];
     },
     solveY(x) {
       const sqrt = Math.sqrt(Math.pow(this.radius, 2) - Math.pow(x - this.center.x, 2));
-      return [ this.center.y - sqrt, this.center.y + sqrt ];
+      return [this.center.y - sqrt, this.center.y + sqrt];
     }
   };
 };

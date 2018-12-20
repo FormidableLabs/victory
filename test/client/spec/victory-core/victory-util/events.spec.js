@@ -28,22 +28,26 @@ describe("victory-util/events", () => {
       sandbox = sinon.sandbox.create();
       fake = {
         props: {
-          events: [{
-            target: "data",
-            eventHandlers: {
-              onClick: () => {
-                return {
-                  mutation: () => {
-                    return { foo: "foo" };
-                  }
-                };
+          events: [
+            {
+              target: "data",
+              eventHandlers: {
+                onClick: () => {
+                  return {
+                    mutation: () => {
+                      return { foo: "foo" };
+                    }
+                  };
+                }
               }
             }
-          }]
+          ]
         },
-        baseProps: { 0: {
-          data: { foo: "bar" }
-        } },
+        baseProps: {
+          0: {
+            data: { foo: "bar" }
+          }
+        },
         setState: (x) => x,
         state: {}
       };

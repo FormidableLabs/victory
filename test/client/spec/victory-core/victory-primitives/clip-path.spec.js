@@ -18,21 +18,28 @@ describe("victory-primitives/clip-path", () => {
   };
 
   it("should render a children", () => {
-    const wrapper = mount(<ClipPath {...baseProps}><rect/></ClipPath>);
-    const rect = wrapper.find("defs").find("clipPath").find("rect");
+    const wrapper = mount(
+      <ClipPath {...baseProps}>
+        <rect />
+      </ClipPath>
+    );
+    const rect = wrapper
+      .find("defs")
+      .find("clipPath")
+      .find("rect");
 
     expect(rect.length).to.equal(1);
   });
 
   it("should successfully re-render", () => {
-    const wrapper = mount(<ClipPath {...baseProps}/>);
+    const wrapper = mount(<ClipPath {...baseProps} />);
 
     wrapper.render();
     wrapper.setProps(baseProps);
   });
 
   it("should render a clipPath with the passed id", () => {
-    const wrapper = mount(<ClipPath {...baseProps}/>);
+    const wrapper = mount(<ClipPath {...baseProps} />);
     const clipPath = wrapper.find("defs").find("clipPath");
 
     expect(parseFloat(clipPath.prop("id"), 10)).to.eql(4);

@@ -2,9 +2,7 @@
 var path = require("path");
 
 var MAIN_PATH = path.join(process.cwd(), "test/client/main.js");
-var POLYFILL_PATH = path.join(
-  path.dirname(require.resolve("core-js/package.json")), "es6/**/*.js"
-);
+var POLYFILL_PATH = path.join(path.dirname(require.resolve("core-js/package.json")), "es6/**/*.js");
 var PREPROCESSORS = {};
 PREPROCESSORS[MAIN_PATH] = ["webpack"];
 PREPROCESSORS[POLYFILL_PATH] = ["webpack"];
@@ -17,16 +15,16 @@ PREPROCESSORS[POLYFILL_PATH] = ["webpack"];
  * then the alternate `karma.conf.js` file will _also_ run the webpack dev
  * server during the test run.
  */
-module.exports = function (config) {
+module.exports = function(config) {
   config.set({
     frameworks: ["mocha"],
     reporters: ["spec"],
     browsers: ["ChromeHeadlessCustom"],
     customLaunchers: {
       ChromeHeadlessCustom: {
-        base: 'ChromeHeadless',
+        base: "ChromeHeadless",
         // --no-sandbox for https://github.com/travis-ci/docs-travis-ci-com/pull/1671/files
-        flags: ['--no-sandbox']
+        flags: ["--no-sandbox"]
       }
     },
     basePath: ".", // repository root.

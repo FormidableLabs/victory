@@ -13,7 +13,6 @@ import { VictoryVoronoiContainer } from "../../packages/victory-voronoi-containe
 import { VictoryZoomContainer } from "../../packages/victory-zoom-container/src/index";
 
 class App extends React.Component {
-
   render() {
     const containerStyle = {
       display: "flex",
@@ -25,83 +24,42 @@ class App extends React.Component {
     const chartStyle = { parent: { border: "1px solid #ccc", margin: "2%", maxWidth: "40%" } };
     return (
       <div style={containerStyle}>
-        <VictoryChart style={chartStyle}
-          containerComponent={<VictoryZoomContainer/>}
-        >
+        <VictoryChart style={chartStyle} containerComponent={<VictoryZoomContainer />}>
           <VictoryStack colorScale="warm">
-            <VictoryGroup
-              data={[
-                { x: 1, y: 2 },
-                { x: 2, y: 3 },
-                { x: 3, y: 5 },
-                { x: 4, y: 4 }
-              ]}
-            >
-              <VictoryArea/>
+            <VictoryGroup data={[{ x: 1, y: 2 }, { x: 2, y: 3 }, { x: 3, y: 5 }, { x: 4, y: 4 }]}>
+              <VictoryArea />
               <VictoryPortal>
-                <VictoryScatter
-                  style={{ data: { fill: "black" } }}
-                />
+                <VictoryScatter style={{ data: { fill: "black" } }} />
               </VictoryPortal>
             </VictoryGroup>
-            <VictoryGroup
-              data={[
-                { x: 1, y: 4 },
-                { x: 2, y: 3 },
-                { x: 3, y: 2 },
-                { x: 4, y: 5 }
-              ]}
-            >
-              <VictoryArea/>
+            <VictoryGroup data={[{ x: 1, y: 4 }, { x: 2, y: 3 }, { x: 3, y: 2 }, { x: 4, y: 5 }]}>
+              <VictoryArea />
               <VictoryPortal>
-                <VictoryScatter
-                  style={{ data: { fill: "green" } }}
-                />
+                <VictoryScatter style={{ data: { fill: "green" } }} />
               </VictoryPortal>
             </VictoryGroup>
-            <VictoryGroup
-              data={[
-                { x: 1, y: 3 },
-                { x: 2, y: 1 },
-                { x: 3, y: 4 },
-                { x: 4, y: 2 }
-              ]}
-            >
-              <VictoryArea/>
+            <VictoryGroup data={[{ x: 1, y: 3 }, { x: 2, y: 1 }, { x: 3, y: 4 }, { x: 4, y: 2 }]}>
+              <VictoryArea />
               <VictoryPortal>
-                <VictoryScatter
-                  style={{ data: { fill: "blue" } }}
-                />
+                <VictoryScatter style={{ data: { fill: "blue" } }} />
               </VictoryPortal>
             </VictoryGroup>
-            <VictoryGroup
-              data={[
-                { x: 1, y: 3 },
-                { x: 2, y: 1 },
-                { x: 3, y: 4 },
-                { x: 4, y: 2 }
-              ]}
-            >
-              <VictoryArea/>
+            <VictoryGroup data={[{ x: 1, y: 3 }, { x: 2, y: 1 }, { x: 3, y: 4 }, { x: 4, y: 2 }]}>
+              <VictoryArea />
               <VictoryPortal>
-                <VictoryScatter
-                  style={{ data: { fill: "cyan" } }}
-                />
+                <VictoryScatter style={{ data: { fill: "cyan" } }} />
               </VictoryPortal>
             </VictoryGroup>
           </VictoryStack>
         </VictoryChart>
 
-        <VictoryChart style={chartStyle}
-          containerComponent={
-            <VictoryVoronoiContainer
-              labels={() => "HELLO"}
-            />
-          }
+        <VictoryChart
+          style={chartStyle}
+          containerComponent={<VictoryVoronoiContainer labels={() => "HELLO"} />}
         >
           <VictoryBar
             horizontal
-            style={{ data: { fill: (d, a) => a ? "red" : "black" } }}
+            style={{ data: { fill: (d, a) => (a ? "red" : "black") } }}
             data={[
               { x: 0, y: 3.5, y0: 2.5 },
               { x: 0, y: 11, y0: 5 },
@@ -113,11 +71,15 @@ class App extends React.Component {
           />
         </VictoryChart>
 
-        <VictoryChart style={chartStyle}
+        <VictoryChart
+          style={chartStyle}
           containerComponent={
             <VictorySelectionContainer
               selectionStyle={{
-                stroke: "tomato", strokeWidth: 2, fill: "tomato", fillOpacity: 0.1
+                stroke: "tomato",
+                strokeWidth: 2,
+                fill: "tomato",
+                fillOpacity: 0.1
               }}
             />
           }
@@ -127,11 +89,11 @@ class App extends React.Component {
               style={{
                 data: {
                   fill: "tomato",
-                  stroke: (d, active) => active ? "black" : "none",
+                  stroke: (d, active) => (active ? "black" : "none"),
                   strokeWidth: 2
                 }
               }}
-              size={(datum, active) => active ? 5 : 3}
+              size={(datum, active) => (active ? 5 : 3)}
               data={[
                 { x: 1, y: -5 },
                 { x: 2, y: 4 },
@@ -146,11 +108,11 @@ class App extends React.Component {
               style={{
                 data: {
                   fill: "orange",
-                  stroke: (d, active) => active ? "black" : "none",
+                  stroke: (d, active) => (active ? "black" : "none"),
                   strokeWidth: 2
                 }
               }}
-              size={(datum, active) => active ? 5 : 3}
+              size={(datum, active) => (active ? 5 : 3)}
               data={[
                 { x: 1, y: -3 },
                 { x: 2, y: 5 },
@@ -165,7 +127,7 @@ class App extends React.Component {
               style={{
                 data: {
                   fill: "gold",
-                  stroke: (d, active) => active ? "black" : "none",
+                  stroke: (d, active) => (active ? "black" : "none"),
                   strokeWidth: 2
                 }
               }}

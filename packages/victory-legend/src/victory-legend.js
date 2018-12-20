@@ -2,8 +2,14 @@ import React from "react";
 import PropTypes from "prop-types";
 import { getBaseProps, getDimensions } from "./helper-methods";
 import {
-  PropTypes as CustomPropTypes, addEvents, Helpers, VictoryLabel, VictoryContainer, VictoryTheme,
-  Point, Border
+  PropTypes as CustomPropTypes,
+  addEvents,
+  Helpers,
+  VictoryLabel,
+  VictoryContainer,
+  VictoryTheme,
+  Point,
+  Border
 } from "victory-core";
 
 const fallbackProps = {
@@ -15,10 +21,7 @@ const fallbackProps = {
   y: 0
 };
 
-const defaultLegendData = [
-  { name: "Series 1" },
-  { name: "Series 2" }
-];
+const defaultLegendData = [{ name: "Series 1" }, { name: "Series 2" }];
 
 class VictoryLegend extends React.Component {
   static displayName = "VictoryLegend";
@@ -40,7 +43,14 @@ class VictoryLegend extends React.Component {
     colorScale: PropTypes.oneOfType([
       PropTypes.arrayOf(PropTypes.string),
       PropTypes.oneOf([
-        "grayscale", "qualitative", "heatmap", "warm", "cool", "red", "green", "blue"
+        "grayscale",
+        "qualitative",
+        "heatmap",
+        "warm",
+        "cool",
+        "red",
+        "green",
+        "blue"
       ])
     ]),
     containerComponent: PropTypes.element,
@@ -57,32 +67,30 @@ class VictoryLegend extends React.Component {
       CustomPropTypes.allOfType([CustomPropTypes.integer, CustomPropTypes.nonNegative]),
       PropTypes.string
     ]),
-    events: PropTypes.arrayOf(PropTypes.shape({
-      target: PropTypes.oneOf(["data", "labels", "parent"]),
-      eventKey: PropTypes.oneOfType([
-        PropTypes.array,
-        CustomPropTypes.allOfType([CustomPropTypes.integer, CustomPropTypes.nonNegative]),
-        PropTypes.string
-      ]),
-      eventHandlers: PropTypes.object
-    })),
-    externalEventMutations: PropTypes.arrayOf(PropTypes.shape({
-      callback: PropTypes.function,
-      childName: PropTypes.oneOfType([
-        PropTypes.string,
-        PropTypes.array
-      ]),
-      eventKey: PropTypes.oneOfType([
-        PropTypes.array,
-        CustomPropTypes.allOfType([CustomPropTypes.integer, CustomPropTypes.nonNegative]),
-        PropTypes.string
-      ]),
-      mutation: PropTypes.function,
-      target: PropTypes.oneOfType([
-        PropTypes.string,
-        PropTypes.array
-      ])
-    })),
+    events: PropTypes.arrayOf(
+      PropTypes.shape({
+        target: PropTypes.oneOf(["data", "labels", "parent"]),
+        eventKey: PropTypes.oneOfType([
+          PropTypes.array,
+          CustomPropTypes.allOfType([CustomPropTypes.integer, CustomPropTypes.nonNegative]),
+          PropTypes.string
+        ]),
+        eventHandlers: PropTypes.object
+      })
+    ),
+    externalEventMutations: PropTypes.arrayOf(
+      PropTypes.shape({
+        callback: PropTypes.function,
+        childName: PropTypes.oneOfType([PropTypes.string, PropTypes.array]),
+        eventKey: PropTypes.oneOfType([
+          PropTypes.array,
+          CustomPropTypes.allOfType([CustomPropTypes.integer, CustomPropTypes.nonNegative]),
+          PropTypes.string
+        ]),
+        mutation: PropTypes.function,
+        target: PropTypes.oneOfType([PropTypes.string, PropTypes.array])
+      })
+    ),
     groupComponent: PropTypes.element,
     gutter: PropTypes.oneOfType([
       PropTypes.number,
@@ -135,41 +143,49 @@ class VictoryLegend extends React.Component {
   };
 
   static defaultProps = {
-    borderComponent: <Border/>,
+    borderComponent: <Border />,
     data: defaultLegendData,
-    containerComponent: <VictoryContainer/>,
-    dataComponent: <Point/>,
-    groupComponent: <g/>,
-    labelComponent: <VictoryLabel/>,
+    containerComponent: <VictoryContainer />,
+    dataComponent: <Point />,
+    groupComponent: <g />,
+    labelComponent: <VictoryLabel />,
     standalone: true,
     theme: VictoryTheme.grayscale,
-    titleComponent: <VictoryLabel/>
+    titleComponent: <VictoryLabel />
   };
 
   static getBaseProps = (props) => getBaseProps(props, fallbackProps);
   static getDimensions = (props) => getDimensions(props, fallbackProps);
   static expectedComponents = [
-    "borderComponent", "containerComponent", "dataComponent",
-    "groupComponent", "labelComponent", "titleComponent"
+    "borderComponent",
+    "containerComponent",
+    "dataComponent",
+    "groupComponent",
+    "labelComponent",
+    "titleComponent"
   ];
 
   renderChildren(props) {
     const { dataComponent, labelComponent, title } = props;
-    const dataComponents = this.dataKeys.map((_dataKey, index) => {
-      if (_dataKey === "all") {
-        return undefined;
-      }
-      const dataProps = this.getComponentProps(dataComponent, "data", index);
-      return React.cloneElement(dataComponent, dataProps);
-    }).filter(Boolean);
+    const dataComponents = this.dataKeys
+      .map((_dataKey, index) => {
+        if (_dataKey === "all") {
+          return undefined;
+        }
+        const dataProps = this.getComponentProps(dataComponent, "data", index);
+        return React.cloneElement(dataComponent, dataProps);
+      })
+      .filter(Boolean);
 
-    const labelComponents = this.dataKeys.map((_dataKey, index) => {
-      const labelProps = this.getComponentProps(labelComponent, "labels", index);
-      if (labelProps.text !== undefined && labelProps.text !== null) {
-        return React.cloneElement(labelComponent, labelProps);
-      }
-      return undefined;
-    }).filter(Boolean);
+    const labelComponents = this.dataKeys
+      .map((_dataKey, index) => {
+        const labelProps = this.getComponentProps(labelComponent, "labels", index);
+        if (labelProps.text !== undefined && labelProps.text !== null) {
+          return React.cloneElement(labelComponent, labelProps);
+        }
+        return undefined;
+      })
+      .filter(Boolean);
 
     const borderProps = this.getComponentProps(props.borderComponent, "border", "all");
     const borderComponent = React.cloneElement(props.borderComponent, borderProps);
@@ -183,11 +199,11 @@ class VictoryLegend extends React.Component {
 
   render() {
     const { role } = this.constructor;
-    const props = Helpers.modifyProps((this.props), fallbackProps, role);
+    const props = Helpers.modifyProps(this.props, fallbackProps, role);
     const children = [this.renderChildren(props)];
-    return props.standalone ?
-      this.renderContainer(props.containerComponent, children) :
-      React.cloneElement(props.groupComponent, {}, children);
+    return props.standalone
+      ? this.renderContainer(props.containerComponent, children)
+      : React.cloneElement(props.groupComponent, {}, children);
   }
 }
 

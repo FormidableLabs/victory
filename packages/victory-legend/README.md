@@ -39,7 +39,7 @@ View these docs at https://formidable.com/open-source/victory/docs/victory-legen
 
 The `borderComponent` prop takes a component instance which will be responsible for rendering a border around the legend. The new element created from the passed `borderComponent` will be provided with the following properties calculated by `VictoryLegend`: `x`, `y`, `width`, `height`, and `style`. Any of these props may be overridden by passing in props to the supplied component, or modified or ignored within the custom component itself. If a `borderComponent` is not provided, `VictoryLegend` will use its default [Border component][]. Please note that the default width and height calculated for the border component is based on _approximated_ text measurements, and may need to be adjusted.
 
-*default:* `<Border/>`
+_default:_ `<Border/>`
 
 ```jsx
 borderComponent={<Border width={300}/>}
@@ -100,7 +100,7 @@ The `colorScale` prop defines a color scale to be applied to each data symbol in
 
 **Note:** `VictoryLegend` only works with the `VictoryContainer` component
 
-*default:* `containerComponent={<VictoryContainer/>}`
+_default:_ `containerComponent={<VictoryContainer/>}`
 
 ```jsx
 containerComponent={<VictoryContainer responsive={false}/>}
@@ -112,7 +112,7 @@ containerComponent={<VictoryContainer responsive={false}/>}
 
 Specify data via the `data` prop. `VictoryLegend` expects data as an array of objects with `name` (required), `symbol`, and `labels` properties. The `data` prop must be given as an array.
 
-*default:* `data={[{ name: "Series 1" }, { name: "Series 2" }]}`
+_default:_ `data={[{ name: "Series 1" }, { name: "Series 2" }]}`
 
 ```playground
 <VictoryLegend x={125} y={50}
@@ -137,7 +137,7 @@ Specify data via the `data` prop. `VictoryLegend` expects data as an array of ob
 
 See the [Custom Components Guide][] for more detail on creating your own `dataComponents`
 
-*default:* `<Point/>`
+_default:_ `<Point/>`
 
 ```jsx
 dataComponent={<Point events={{ onClick: handleClick }}/>}
@@ -150,7 +150,7 @@ dataComponent={<Point events={{ onClick: handleClick }}/>}
 `VictoryLegend` uses the standard `eventKey` prop to specify how event targets are addressed. **This prop is not commonly used.** [Read about the `eventKey` prop in more detail here](https://formidable.com/open-source/victory/docs/common-props#eventkey)
 
 ```jsx
-eventKey="x"
+eventKey = "x";
 ```
 
 ### events
@@ -205,7 +205,7 @@ See the [Events Guide][] for more information on defining events.
 
 `VictoryLegend` uses the standard `groupComponent` prop. [Read about it here](https://formidable.com/open-source/victory/docs/common-props#groupcomponent)
 
-*default:* `<g/>`
+_default:_ `<g/>`
 
 ```jsx
 groupComponent={<g transform="rotate(90)" />}
@@ -217,7 +217,7 @@ groupComponent={<g transform="rotate(90)" />}
 
 The `gutter` prop defines the number of pixels between legend columns. This prop may be given as a number, or as an object with values specified for "left" and "right" gutters. To set spacing between rows, use the `rowGutter` prop.
 
-*default:* `gutter={10}`
+_default:_ `gutter={10}`
 
 ```playground
 <VictoryLegend x={125} y={50}
@@ -236,7 +236,7 @@ The `gutter` prop defines the number of pixels between legend columns. This prop
 
 `VictoryLegend` uses the standard `height` prop. [Read about it here](https://formidable.com/open-source/victory/docs/common-props#height)
 
-*default (provided by default theme):* `height={400}`
+_default (provided by default theme):_ `height={400}`
 
 ```jsx
 height={400}
@@ -266,7 +266,7 @@ The `itemsPerRow` prop determines how many items to render in each row of a hori
 
 `VictoryLegend` uses the standard `labelComponent` prop. [Read about it here](https://formidable.com/open-source/victory/docs/common-props#labelcomponent)
 
-*default:* `<VictoryLabel/>`
+_default:_ `<VictoryLabel/>`
 
 ```playground
 <VictoryLegend
@@ -283,7 +283,7 @@ The `itemsPerRow` prop determines how many items to render in each row of a hori
 
 The `orientation` prop takes a string that defines whether legend data are displayed in a row or column. When `orientation` is `"horizontal"`, legend items will be displayed in rows. When `orientation` is `"vertical"`, legend items will be displayed in columns.
 
-*default:* `orientation="vertical"`
+_default:_ `orientation="vertical"`
 
 ### padding
 
@@ -291,7 +291,7 @@ The `orientation` prop takes a string that defines whether legend data are displ
 
 `VictoryLegend` uses the standard `padding` prop. [Read about it here](https://formidable.com/open-source/victory/docs/common-props#padding)
 
-*default (provided by default theme):* `padding={50}`
+_default (provided by default theme):_ `padding={50}`
 
 ```jsx
 padding={{ top: 20, bottom: 60 }}
@@ -326,7 +326,7 @@ The `rowGutter` prop defines the number of pixels between legend rows. This prop
 
 The `standalone` props specifies whether the component should be rendered in an independent `<svg>` element or in a `<g>` tag. This prop defaults to true, and renders an `svg`.
 
-*default:* `standalone={true}`
+_default:_ `standalone={true}`
 
 ### style
 
@@ -338,7 +338,7 @@ The `style` prop defines the style of the component. The style prop should be gi
 
 **note:** custom `angle` and `verticalAnchor` properties may be included in `labels` and `title` styles.
 
-*default (provided by default theme):* See [grayscale theme][] for more detail
+_default (provided by default theme):_ See [grayscale theme][] for more detail
 
 ```playground
 <VictoryLegend x={125} y={50}
@@ -383,7 +383,7 @@ The `symbolSpacer` prop defines the number of pixels between data components and
 
 The `theme` prop specifies a theme to use for determining styles and layout properties for a component. Any styles or props defined in `theme` may be overridden by props specified on the component instance. By default, components use a [grayscale theme][]. [Read more about themes here][].
 
-*default:* `theme={VictoryTheme.grayscale}`
+_default:_ `theme={VictoryTheme.grayscale}`
 
 ### title
 
@@ -409,8 +409,7 @@ The `title` prop specifies a title to render with the legend. This prop should b
 
 The `titleComponent` prop takes a component instance which will be used to render a title for the component. The new element created from the passed `labelComponent` will be supplied with the following properties: `x`, `y`, `index`, `data`, `datum`, `verticalAnchor`, `textAnchor`, `style`, `text`, and `events`. Any of these props may be overridden by passing in props to the supplied component, or modified or ignored within the custom component itself. If `labelComponent` is omitted, a new [VictoryLabel][] will be created with the props described above.
 
-*default:* `<VictoryLabel/>`
-
+_default:_ `<VictoryLabel/>`
 
 ```playground
 <VictoryLegend x={125} y={50}
@@ -431,7 +430,7 @@ The `titleComponent` prop takes a component instance which will be used to rende
 
 The `titleOrientation` prop specifies where the a title should be rendered in relation to the rest of the legend. Possible values for this prop are "top", "bottom", "left", and "right".
 
-*default (provided by default theme):* `titleOrientation="top"`
+_default (provided by default theme):_ `titleOrientation="top"`
 
 ```playground
 <VictoryLegend x={50} y={50}
@@ -452,7 +451,7 @@ The `titleOrientation` prop specifies where the a title should be rendered in re
 
 `VictoryLegend` uses the standard `width` prop. [Read about it here](https://formidable.com/open-source/victory/docs/common-props#width)
 
-*default (provided by default theme):* `width={400}`
+_default (provided by default theme):_ `width={400}`
 
 ```jsx
 width={400}
@@ -470,10 +469,10 @@ The `x` prop defines the x coordinate corresponding to the upper left corner of 
 
 The `y` prop defines the y coordinate corresponding to the upper left corner of the legend.
 
-[VictoryLabel]: https://formidable.com/open-source/victory/docs/victory-label
-[Point component]: https://formidable.com/open-source/victory/docs/victory-primitives#point
-[Border component]: https://formidable.com/open-source/victory/docs/victory-primitives#border
+[victorylabel]: https://formidable.com/open-source/victory/docs/victory-label
+[point component]: https://formidable.com/open-source/victory/docs/victory-primitives#point
+[border component]: https://formidable.com/open-source/victory/docs/victory-primitives#border
 [grayscale theme]: https://github.com/FormidableLabs/victory-core/blob/master/src/victory-theme/grayscale.js
-[Read more about themes here]: https://formidable.com/open-source/victory/guides/themes
-[Custom Components Guide]: https://formidable.com/open-source/victory/guides/custom-components
-[Events Guide]: https://formidable.com/open-source/victory/guides/events
+[read more about themes here]: https://formidable.com/open-source/victory/guides/themes
+[custom components guide]: https://formidable.com/open-source/victory/guides/custom-components
+[events guide]: https://formidable.com/open-source/victory/guides/events

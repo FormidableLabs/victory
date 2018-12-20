@@ -13,8 +13,8 @@ describe("components/victory-group", () => {
     it("renders an svg with the correct width and height", () => {
       const wrapper = mount(
         <VictoryGroup>
-          <VictoryBar/>
-          <VictoryBar/>
+          <VictoryBar />
+          <VictoryBar />
         </VictoryGroup>
       );
       const svg = wrapper.find("svg").at(0);
@@ -25,13 +25,12 @@ describe("components/victory-group", () => {
     it("renders an svg with the correct viewBox", () => {
       const wrapper = mount(
         <VictoryGroup>
-          <VictoryBar/>
-          <VictoryBar/>
+          <VictoryBar />
+          <VictoryBar />
         </VictoryGroup>
       );
       const svg = wrapper.find("svg").at(0);
-      const viewBoxValue =
-        `0 0 ${450} ${300}`;
+      const viewBoxValue = `0 0 ${450} ${300}`;
       expect(svg.prop("viewBox")).to.equal(viewBoxValue);
     });
   });

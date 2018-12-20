@@ -9,16 +9,15 @@ import { VictoryBar } from "../../packages/victory-bar/src/index";
 import { VictorySharedEvents } from "../../packages/victory-shared-events/src/index";
 
 import {
-  VictoryContainer, VictoryTheme, VictoryLabel
+  VictoryContainer,
+  VictoryTheme,
+  VictoryLabel
 } from "../../packages/victory-core/src/index";
 import { assign, random, range, merge } from "lodash";
 
 class Wrapper extends React.Component {
   static propTypes = {
-    children: PropTypes.oneOfType([
-      PropTypes.arrayOf(PropTypes.node),
-      PropTypes.node
-    ])
+    children: PropTypes.oneOfType([PropTypes.arrayOf(PropTypes.node), PropTypes.node])
   };
 
   renderChildren(props) {
@@ -29,9 +28,7 @@ class Wrapper extends React.Component {
   }
 
   render() {
-    return (
-      <g>{this.renderChildren(this.props)}</g>
-    );
+    return <g>{this.renderChildren(this.props)}</g>;
   }
 }
 
@@ -129,7 +126,6 @@ export default class App extends React.Component {
 
     return (
       <div className="demo" style={containerStyle}>
-
         <ChartWrap scale={{ x: "log", y: "linear" }}>
           <VictoryBar
             cornerRadius={4}
@@ -179,22 +175,21 @@ export default class App extends React.Component {
         </ChartWrap>
 
         <ChartWrap>
-          <VictoryBar horizontal
+          <VictoryBar
+            horizontal
             labels={(d) => d.y}
-            data={[ { x: 1, y: 20 }, { x: 7, y: -40 }, { x: 3, y: -60 }, { x: 4, y: 80 } ]}
+            data={[{ x: 1, y: 20 }, { x: 7, y: -40 }, { x: 3, y: -60 }, { x: 4, y: 80 }]}
           />
         </ChartWrap>
 
         <ChartWrap>
           <VictoryBar
             labels={(d) => d.y}
-            data={[ { x: 1, y: 20 }, { x: 7, y: -40 }, { x: 3, y: -60 }, { x: 4, y: 80 } ]}
+            data={[{ x: 1, y: 20 }, { x: 7, y: -40 }, { x: 3, y: -60 }, { x: 4, y: 80 }]}
           />
         </ChartWrap>
 
-        <VictoryChart
-          domainPadding={{ y: 20 }}
-        >
+        <VictoryChart domainPadding={{ y: 20 }}>
           <VictoryBar
             data={[
               { x: 1, y: "Alpha" },
@@ -205,10 +200,7 @@ export default class App extends React.Component {
           />
         </VictoryChart>
 
-        <VictoryChart
-          style={{ parent: parentStyle }}
-          theme={VictoryTheme.material}
-        >
+        <VictoryChart style={{ parent: parentStyle }} theme={VictoryTheme.material}>
           <VictoryBar
             horizontal
             alignment="start"
@@ -235,72 +227,84 @@ export default class App extends React.Component {
             }
           }}
           containerComponent={
-              <VictoryContainer
-                title="Bar Chart"
-                desc="This is an animated bar chart that displays data with labels."
-              />
-            }
-          events={[{
-            target: "data",
-            eventHandlers: {
-              onClick: () => {
-                return [
-                  {
-                    mutation: (props) => {
-                      return { style: merge({}, props.style, { fill: "orange" }) };
+            <VictoryContainer
+              title="Bar Chart"
+              desc="This is an animated bar chart that displays data with labels."
+            />
+          }
+          events={[
+            {
+              target: "data",
+              eventHandlers: {
+                onClick: () => {
+                  return [
+                    {
+                      mutation: (props) => {
+                        return { style: merge({}, props.style, { fill: "orange" }) };
+                      }
+                    },
+                    {
+                      target: "labels",
+                      mutation: () => {
+                        return { text: "hey" };
+                      }
                     }
-                  }, {
-                    target: "labels",
-                    mutation: () => {
-                      return { text: "hey" };
-                    }
-                  }
-                ];
+                  ];
+                }
               }
             }
-          }]}
+          ]}
           data={this.state.barTransitionData}
           x="a"
           y="b"
         />
-        <VictoryStack
-          style={{ parent: parentStyle }}
-          animate={{ duration: 1000 }}
-        >
+        <VictoryStack style={{ parent: parentStyle }} animate={{ duration: 1000 }}>
           {this.state.multiTransitionData.map((data, index) => {
-            return <Wrapper key={index}><VictoryBar data={data} colorScale={"warm"}/></Wrapper>;
+            return (
+              <Wrapper key={index}>
+                <VictoryBar data={data} colorScale={"warm"} />
+              </Wrapper>
+            );
           })}
         </VictoryStack>
 
-        <VictoryChart style={{ parent: parentStyle }} domainPadding={{ x: 30 }}
+        <VictoryChart
+          style={{ parent: parentStyle }}
+          domainPadding={{ x: 30 }}
           theme={VictoryTheme.material}
         >
-          <VictoryGroup
-            offset={12}
-            animate={{ duration: 1000 }}
-            colorScale={"warm"}
-          >
+          <VictoryGroup offset={12} animate={{ duration: 1000 }} colorScale={"warm"}>
             {this.state.multiTransitionData.map((data, index) => {
-              return <Wrapper key={index}><VictoryBar key={index} data={data}/></Wrapper>;
+              return (
+                <Wrapper key={index}>
+                  <VictoryBar key={index} data={data} />
+                </Wrapper>
+              );
             })}
           </VictoryGroup>
         </VictoryChart>
 
         <VictoryGroup
-          style={{ parent: parentStyle }} offset={18}
+          style={{ parent: parentStyle }}
+          offset={18}
           colorScale={"qualitative"}
           animate={{ duration: 2000 }}
         >
           {this.getBarData().map((data, index) => {
-            return <VictoryBar key={index} data={data} labels={["a", "b", "c"]}/>;
+            return <VictoryBar key={index} data={data} labels={["a", "b", "c"]} />;
           })}
         </VictoryGroup>
 
-        <VictoryGroup horizontal style={{ parent: parentStyle }} offset={15}
-          colorScale={"cool"} animate={{ duration: 2000 }} labels={["a", "b", "c"]}
+        <VictoryGroup
+          horizontal
+          style={{ parent: parentStyle }}
+          offset={15}
+          colorScale={"cool"}
+          animate={{ duration: 2000 }}
+          labels={["a", "b", "c"]}
         >
           {this.getBarData().map((data, index) => {
-            return <VictoryBar key={index} data={data}/>;
+            return <VictoryBar key={index} data={data} />;
           })}
         </VictoryGroup>
 
@@ -311,17 +315,17 @@ export default class App extends React.Component {
         >
           <VictoryStack colorScale={"red"}>
             {this.getBarData().map((data, index) => {
-              return <VictoryBar key={index} data={data}/>;
+              return <VictoryBar key={index} data={data} />;
             })}
           </VictoryStack>
           <VictoryStack colorScale={"green"}>
             {this.getBarData().map((data, index) => {
-              return <VictoryBar key={index} data={data}/>;
+              return <VictoryBar key={index} data={data} />;
             })}
           </VictoryStack>
           <VictoryStack colorScale={"blue"}>
             {this.getBarData().map((data, index) => {
-              return <VictoryBar key={index} data={data}/>;
+              return <VictoryBar key={index} data={data} />;
             })}
           </VictoryStack>
         </VictoryGroup>
@@ -333,7 +337,7 @@ export default class App extends React.Component {
           labels={["one", "two", "three"]}
         >
           {this.getBarData().map((data, index) => {
-            return <VictoryBar key={index} data={data}/>;
+            return <VictoryBar key={index} data={data} />;
           })}
         </VictoryStack>
 
@@ -346,30 +350,10 @@ export default class App extends React.Component {
           />
         </ChartWrap>
 
-          <VictoryStack colorScale="warm" style={{ parent: parentStyle }}>
-            <Wrapper>
-              <VictoryBar
-                data={[{ x: "a", y: 2 }, { x: "b", y: 3 }, { x: "c", y: 4 }]}
-                events={[
-                  {
-                    target: "data",
-                    eventHandlers: {
-                      onClick: () => {
-                        return [
-                          {
-                            mutation: (props) => {
-                              return { style: merge({}, props.style, { fill: "orange" }) };
-                            }
-                          }
-                        ];
-                      }
-                    }
-                  }
-                ]}
-              />
-            </Wrapper>
+        <VictoryStack colorScale="warm" style={{ parent: parentStyle }}>
+          <Wrapper>
             <VictoryBar
-              data={[{ x: "c", y: 2 }, { x: "d", y: 3 }, { x: "e", y: 4 }]}
+              data={[{ x: "a", y: 2 }, { x: "b", y: 3 }, { x: "c", y: 4 }]}
               events={[
                 {
                   target: "data",
@@ -378,7 +362,7 @@ export default class App extends React.Component {
                       return [
                         {
                           mutation: (props) => {
-                            return { style: merge({}, props.style, { fill: "blue" }) };
+                            return { style: merge({}, props.style, { fill: "orange" }) };
                           }
                         }
                       ];
@@ -387,67 +371,89 @@ export default class App extends React.Component {
                 }
               ]}
             />
-          </VictoryStack>
-          <svg width={500} height={300} style={{ parent: parentStyle }}>
-            <VictorySharedEvents
-              events={[
-                {
-                  childName: "firstBar",
-                  target: "data",
-                  eventKey: 1,
-                  eventHandlers: {
-                    onClick: () => {
-                      return {
-                        childName: "secondBar",
+          </Wrapper>
+          <VictoryBar
+            data={[{ x: "c", y: 2 }, { x: "d", y: 3 }, { x: "e", y: 4 }]}
+            events={[
+              {
+                target: "data",
+                eventHandlers: {
+                  onClick: () => {
+                    return [
+                      {
                         mutation: (props) => {
                           return { style: merge({}, props.style, { fill: "blue" }) };
                         }
-                      };
-                    }
-                  }
-                }, {
-                  childName: "secondBar",
-                  target: "data",
-                  eventKey: 0,
-                  eventHandlers: {
-                    onClick: () => {
-                      return [
-                        {
-                          childName: "firstBar",
-                          mutation: (props) => {
-                            return props.style.fill === "cyan" ? null :
-                              { style: merge({}, props.style, { fill: "cyan" }) };
-                          }
-                        },
-                        {
-                          mutation: (props) => {
-                            return { style: merge({}, props.style, { fill: "orange" }) };
-                          }
-                        },
-                        {
-                          target: "labels",
-                          eventKey: 1,
-                          mutation: () => {
-                            return { text: "CLICKED" };
-                          }
-                        }
-                      ];
-                    }
+                      }
+                    ];
                   }
                 }
-              ]}
-            >
-              <VictoryBar
-                name="firstBar"
-                style={{
-                  data: { width: 25, fill: "gold" }
-                }}
-                data={[{ x: "a", y: 2 }, { x: "b", y: 3 }, { x: "c", y: 4 }]}
-              />
-              <VictoryBar
-                name={"secondBar"}
-                data={[{ x: "a", y: 2 }, { x: "b", y: 3 }, { x: "c", y: 4 }]}
-              />
+              }
+            ]}
+          />
+        </VictoryStack>
+        <svg width={500} height={300} style={{ parent: parentStyle }}>
+          <VictorySharedEvents
+            events={[
+              {
+                childName: "firstBar",
+                target: "data",
+                eventKey: 1,
+                eventHandlers: {
+                  onClick: () => {
+                    return {
+                      childName: "secondBar",
+                      mutation: (props) => {
+                        return { style: merge({}, props.style, { fill: "blue" }) };
+                      }
+                    };
+                  }
+                }
+              },
+              {
+                childName: "secondBar",
+                target: "data",
+                eventKey: 0,
+                eventHandlers: {
+                  onClick: () => {
+                    return [
+                      {
+                        childName: "firstBar",
+                        mutation: (props) => {
+                          return props.style.fill === "cyan"
+                            ? null
+                            : { style: merge({}, props.style, { fill: "cyan" }) };
+                        }
+                      },
+                      {
+                        mutation: (props) => {
+                          return { style: merge({}, props.style, { fill: "orange" }) };
+                        }
+                      },
+                      {
+                        target: "labels",
+                        eventKey: 1,
+                        mutation: () => {
+                          return { text: "CLICKED" };
+                        }
+                      }
+                    ];
+                  }
+                }
+              }
+            ]}
+          >
+            <VictoryBar
+              name="firstBar"
+              style={{
+                data: { width: 25, fill: "gold" }
+              }}
+              data={[{ x: "a", y: 2 }, { x: "b", y: 3 }, { x: "c", y: 4 }]}
+            />
+            <VictoryBar
+              name={"secondBar"}
+              data={[{ x: "a", y: 2 }, { x: "b", y: 3 }, { x: "c", y: 4 }]}
+            />
           </VictorySharedEvents>
         </svg>
         <VictoryBar
@@ -456,9 +462,7 @@ export default class App extends React.Component {
             parent: parentStyle,
             data: { fill: "blue" }
           }}
-          labels={[
-            "a", "b", "c", "d", "e"
-          ]}
+          labels={["a", "b", "c", "d", "e"]}
           data={[
             { x: 1, y: 1 },
             { x: 2, y: 2 },
@@ -482,7 +486,8 @@ export default class App extends React.Component {
                   ];
                 }
               }
-            }, {
+            },
+            {
               target: "parent",
               eventHandlers: {
                 onClick: () => {
@@ -501,7 +506,8 @@ export default class App extends React.Component {
         />
 
         <VictoryChart>
-          <VictoryBar horizontal
+          <VictoryBar
+            horizontal
             data={[
               { x: 21, y: "Label 1" },
               { x: 28, y: "Label 2" },
@@ -514,18 +520,8 @@ export default class App extends React.Component {
         </VictoryChart>
 
         <VictoryChart>
-          <VictoryBar
-            data={[
-              [5, 10],
-              [10, 15],
-              [15, 20],
-              [20, 25]
-            ]}
-            x={0}
-            y={1}
-          />
+          <VictoryBar data={[[5, 10], [10, 15], [15, 20], [20, 25]]} x={0} y={1} />
         </VictoryChart>
-
       </div>
     );
   }
@@ -549,9 +545,7 @@ class ChartWrap extends React.Component {
     return (
       <div style={{ parent: parentStyle }}>
         {React.cloneElement(this.props.children)}
-        <VictoryChart {...this.props}>
-          {this.props.children}
-        </VictoryChart>
+        <VictoryChart {...this.props}>{this.props.children}</VictoryChart>
       </div>
     );
   }

@@ -23,10 +23,12 @@ const getRadius = (props, padding) => {
   if (typeof props.radius === "number") {
     return props.radius;
   }
-  return Math.min(
-    props.width - padding.left - padding.right,
-    props.height - padding.top - padding.bottom
-  ) / 2;
+  return (
+    Math.min(
+      props.width - padding.left - padding.right,
+      props.height - padding.top - padding.bottom
+    ) / 2
+  );
 };
 
 const getOrigin = (props, padding) => {
@@ -39,12 +41,15 @@ const getOrigin = (props, padding) => {
 };
 
 const getSlices = (props, data) => {
-  const layoutFunction = d3Shape.pie()
+  const layoutFunction = d3Shape
+    .pie()
     .sort(null)
     .startAngle(Helpers.degreesToRadians(props.startAngle))
     .endAngle(Helpers.degreesToRadians(props.endAngle))
     .padAngle(Helpers.degreesToRadians(props.padAngle))
-    .value((datum) => { return datum._y; });
+    .value((datum) => {
+      return datum._y;
+    });
   return layoutFunction(data);
 };
 
@@ -80,9 +85,10 @@ const getLabelText = (props, datum, index) => {
 };
 
 const getLabelArc = (radius, labelRadius, style) => {
-  const padding = style && style.padding || 0;
+  const padding = (style && style.padding) || 0;
   const arcRadius = labelRadius || radius + padding;
-  return d3Shape.arc()
+  return d3Shape
+    .arc()
     .outerRadius(arcRadius)
     .innerRadius(arcRadius);
 };
@@ -132,14 +138,20 @@ const getLabelProps = (props, dataProps, calculatedValues) => {
   const { index, datum, data, slice } = dataProps;
   const { style, defaultRadius, origin } = calculatedValues;
   const labelStyle = Helpers.evaluateStyle(
-    assign({ padding: 0 }, style.labels), datum, props.active
+    assign({ padding: 0 }, style.labels),
+    datum,
+    props.active
   );
   const labelRadius = Helpers.evaluateProp(props.labelRadius, datum);
   const labelArc = getLabelArc(defaultRadius, labelRadius, labelStyle);
   const position = getLabelPosition(labelArc, slice, props.labelPosition);
   const orientation = getLabelOrientation(slice);
   return {
-    index, datum, data, slice, orientation,
+    index,
+    datum,
+    data,
+    slice,
+    orientation,
     style: labelStyle,
     x: Math.round(position[0]) + origin.x,
     y: Math.round(position[1]) + origin.y,
@@ -155,8 +167,16 @@ export const getBaseProps = (props, fallbackProps) => {
   const calculatedValues = getCalculatedValues(props);
   const { slices, style, data, origin, defaultRadius } = calculatedValues;
   const {
-    labels, events, sharedEvents, height, width, standalone, name,
-    innerRadius, cornerRadius, padAngle
+    labels,
+    events,
+    sharedEvents,
+    height,
+    width,
+    standalone,
+    name,
+    innerRadius,
+    cornerRadius,
+    padAngle
   } = props;
   const radius = props.radius || defaultRadius;
   const initialChildProps = {
@@ -164,23 +184,29 @@ export const getBaseProps = (props, fallbackProps) => {
   };
 
   return slices.reduce((childProps, slice, index) => {
-    const datum = defaults(
-      {}, data[index], {
-        startAngle: Helpers.radiansToDegrees(slice.startAngle),
-        endAngle: Helpers.radiansToDegrees(slice.endAngle),
-        padAngle: Helpers.radiansToDegrees(slice.padAngle)
-      }
-    );
+    const datum = defaults({}, data[index], {
+      startAngle: Helpers.radiansToDegrees(slice.startAngle),
+      endAngle: Helpers.radiansToDegrees(slice.endAngle),
+      padAngle: Helpers.radiansToDegrees(slice.padAngle)
+    });
     const eventKey = datum.eventKey || index;
     const dataProps = {
-      index, slice, datum, data, origin, innerRadius, radius, cornerRadius, padAngle,
+      index,
+      slice,
+      datum,
+      data,
+      origin,
+      innerRadius,
+      radius,
+      cornerRadius,
+      padAngle,
       style: getSliceStyle(index, calculatedValues)
     };
     childProps[eventKey] = {
       data: dataProps
     };
     const text = getLabelText(props, datum, index);
-    if (text !== undefined && text !== null || (labels && (events || sharedEvents))) {
+    if ((text !== undefined && text !== null) || (labels && (events || sharedEvents))) {
       childProps[eventKey].labels = getLabelProps(props, dataProps, calculatedValues);
     }
     return childProps;

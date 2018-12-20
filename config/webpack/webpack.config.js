@@ -13,11 +13,13 @@ var SRC = path.resolve("src");
 // - PascalCased version of that name is exported class name.
 var PKG = require(path.resolve("package.json"));
 var libPath = (PKG.name || "").toLowerCase();
-if (!libPath) { throw new Error("Need package.json:name field"); }
+if (!libPath) {
+  throw new Error("Need package.json:name field");
+}
 // PascalCase (with first character capitalized).
 var libName = libPath
   .replace(/^\s+|\s+$/g, "")
-  .replace(/(^|[-_ ])+(.)/g, function (match, first, second) {
+  .replace(/(^|[-_ ])+(.)/g, function(match, first, second) {
     // Second match group is the character we want to change. Throw away first.
     return second.toUpperCase();
   });
@@ -28,7 +30,7 @@ module.exports = {
   entry: "./index",
   externals: [
     {
-      "react": {
+      react: {
         root: "React",
         commonjs2: "react",
         commonjs: "react",
@@ -56,11 +58,11 @@ module.exports = {
   },
   plugins: [
     new LodashModuleReplacementPlugin({
-      "currying": true,
-      "flattening": true,
-      "paths": true,
-      "placeholders": true,
-      "shorthands": true
+      currying: true,
+      flattening: true,
+      paths: true,
+      placeholders: true,
+      shorthands: true
     }),
     new webpack.optimize.UglifyJsPlugin({
       sourceMap: true,

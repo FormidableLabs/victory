@@ -38,7 +38,7 @@ However, the component that uses it must be standalone
 
 When the `activateSelectedData` prop is set to true, the `active` prop will be set to true on all selected data points. When this prop is set to false, the `onSelection` and `onSelectionCleared` callbacks will still fire, but no mutations will occur via Victory's event system.
 
-*default:* `activateSelectedData={true}`
+_default:_ `activateSelectedData={true}`
 
 ### disable
 
@@ -54,7 +54,7 @@ The `onSelection` prop accepts a function to be called whenever new data points 
 function is called with the parameters `points` (an array of objects with `childName`, `eventKey`,
 and `data`), `bounds` (an object with min / max arrays specified for `x` and `y`), and `props` (the props used by `VictorySelectionContainer`)
 
-*example:* `onSelection={(points, bounds, props) => handleSelection(points, bounds, props)}`
+_example:_ `onSelection={(points, bounds, props) => handleSelection(points, bounds, props)}`
 
 ### onSelectionCleared
 
@@ -62,7 +62,7 @@ and `data`), `bounds` (an object with min / max arrays specified for `x` and `y`
 
 The `onSelectionCleared` prop accepts a function to be called whenever the selection is cleared. The function is called with the props used by `VictorySelectionContainer`
 
-*example:* `onSelectionCleared={(props) => handleSelectionCleared(props)}`
+_example:_ `onSelectionCleared={(props) => handleSelectionCleared(props)}`
 
 ### selectionBlacklist
 
@@ -70,8 +70,7 @@ The `onSelectionCleared` prop accepts a function to be called whenever the selec
 
 The `selectionBlacklist` prop is used to exclude data from potential selections. This prop should be given as an array of strings that match the `name` prop of Victory component that should be excluded from selection.
 
-*example:* `selectionBlackList={["first-line", "second-line"]}`
-
+_example:_ `selectionBlackList={["first-line", "second-line"]}`
 
 ### selectionComponent
 
@@ -81,7 +80,7 @@ The `selectionComponent` prop specifies the element to be rendered for the selec
 this prop is not specified, a `<rect/>` will be rendered. This component will be supplied with the
 following props: `x`, `y`, `width`, `height`, and `style`.
 
-*default:* `selectionComponent={<rect/>}`
+_default:_ `selectionComponent={<rect/>}`
 
 ### selectionDimension
 
@@ -91,7 +90,7 @@ When the `selectionDimension` prop is set, the selection will only take the give
 For example, when `dimension` is set to "x", the selected area will cover the entire y domain
 regardless of mouse position.
 
-*example:* `selectionDimension="x"`
+_example:_ `selectionDimension="x"`
 
 ```playground
 <VictoryChart
@@ -112,7 +111,7 @@ regardless of mouse position.
 The `selectionStyle` prop should be given as an object of style attributes to be applied to the
 `selectionComponent`
 
-*default:* `selectionStyle={{stroke: "transparent", fill: "black", fillOpacity: 0.1}}`
+_default:_ `selectionStyle={{stroke: "transparent", fill: "black", fillOpacity: 0.1}}`
 
 ```playground
 <VictoryChart
@@ -130,4 +129,5 @@ The `selectionStyle` prop should be given as an object of style attributes to be
   />
 </VictoryChart>
 ```
-[VictoryContainer]: https://formidable.com/open-source/victory/docs/victory-container
+
+[victorycontainer]: https://formidable.com/open-source/victory/docs/victory-container

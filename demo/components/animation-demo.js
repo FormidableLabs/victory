@@ -85,7 +85,7 @@ export default class App extends React.Component {
   }
 
   getArrayData() {
-    return range(40).map((i) => [i, i + (Math.random() * 3)]);
+    return range(40).map((i) => [i, i + Math.random() * 3]);
   }
 
   getStyles() {
@@ -110,56 +110,28 @@ export default class App extends React.Component {
 
     return (
       <div className="demo" style={containerStyle}>
-
         <VictoryArea
-          style={style} animate
+          style={style}
+          animate
           data={this.state.areaTransitionData}
           x={(d) => d.x}
           theme={VictoryTheme.material}
         />
 
-        <VictoryChart
-          style={style} animate
-          theme={VictoryTheme.material}
-        >
-          <VictoryArea
-            data={this.state.areaTransitionData}
-          />
+        <VictoryChart style={style} animate theme={VictoryTheme.material}>
+          <VictoryArea data={this.state.areaTransitionData} />
         </VictoryChart>
 
-        <VictoryStack
-          style={style}
-          animate
-          theme={VictoryTheme.material}
-          colorScale={"warm"}
-        >
+        <VictoryStack style={style} animate theme={VictoryTheme.material} colorScale={"warm"}>
           {this.state.multiTransitionData.map((data, index) => {
-            return (
-              <VictoryArea
-                key={index}
-                data={data}
-                interpolation={"basis"}
-              />
-            );
+            return <VictoryArea key={index} data={data} interpolation={"basis"} />;
           })}
         </VictoryStack>
 
-        <VictoryChart
-          style={style}
-          animate
-          theme={VictoryTheme.material}
-        >
-          <VictoryStack
-            colorScale={"warm"}
-          >
+        <VictoryChart style={style} animate theme={VictoryTheme.material}>
+          <VictoryStack colorScale={"warm"}>
             {this.state.multiTransitionData.map((data, index) => {
-              return (
-                <VictoryArea
-                  key={index}
-                  data={data}
-                  interpolation={"basis"}
-                />
-              );
+              return <VictoryArea key={index} data={data} interpolation={"basis"} />;
             })}
           </VictoryStack>
         </VictoryChart>

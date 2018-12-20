@@ -1,4 +1,3 @@
-
 # VictoryAxis
 
 `victory-axis@^30.0.0` exports `VictoryAxis` component
@@ -51,7 +50,7 @@ animate={{
 
 The `axisComponent` prop takes a component instance which will be responsible for rendering an axis line. The new element created from the passed `axisComponent` will be provided with the following props calculated by `VictoryAxis`: `x1`, `y1`, `x2`, `y2`, `style` and `events`. Any of these props may be overridden by passing in props to the supplied component, or modified or ignored within the custom component itself. If an `axisComponent` is not provided, `VictoryAxis` will use its default [Line component][].
 
-*default:* `axisComponent={<Line type={"axis"}/>}`
+_default:_ `axisComponent={<Line type={"axis"}/>}`
 
 ```jsx
 axisComponent={<Line events={{ onClick: handleClick }}/>}
@@ -63,7 +62,7 @@ axisComponent={<Line events={{ onClick: handleClick }}/>}
 
 The `axisLabelComponent` prop takes a component instance which will be used to render the axis label. The new element created from the passed `axisLabelComponent` will be supplied with the following props: `x`, `y`, `verticalAnchor`, `textAnchor`, `angle`, `transform`, `style` and `events`. Any of these props may be overridden by passing in props to the supplied component, or modified or ignored within the custom component itself. If `axisLabelComponent` is omitted, a new [`VictoryLabel`][] will be created with props described above.
 
-*default:* `axisLabelComponent={<VictoryLabel/>}`
+_default:_ `axisLabelComponent={<VictoryLabel/>}`
 
 ```jsx
 axisLabelComponent={<VictoryLabel dy={20}/>}
@@ -85,7 +84,7 @@ containerComponent={<VictoryZoomContainer zoomDimension="x"/>}
 
 The `crossAxis` boolean prop specifies whether a given axis is intended to cross another axis. When this prop is true, zeroes will be removed from the array of ticks so that they do not clutter the origin of the chart. When `VictoryAxis` is nested within `VictoryChart`, `VictoryChart` will determine a value for the `crossAxis` prop based on domain, but this prop may be overridden by supplying a `crossAxis` prop directly to the `VictoryAxis` child component.
 
-*default:* `crossAxis={false}`
+_default:_ `crossAxis={false}`
 
 ### dependentAxis
 
@@ -93,7 +92,7 @@ The `crossAxis` boolean prop specifies whether a given axis is intended to cross
 
 The `dependentAxis` boolean prop specifies whether the axis corresponds to the dependent variable (usually y). This prop is useful when composing `VictoryAxis` with other components to form a chart.
 
-*default:* `dependentAxis={false}`
+_default:_ `dependentAxis={false}`
 
 ```playground
 <VictoryAxis dependentAxis />
@@ -144,7 +143,7 @@ When true, this prop reduces the number of tick labels to fit the length of the 
 removed at approximately even intervals from the original array of labels. This feature only works
 well for labels that are approximately evenly spaced.
 
-*default:* `fixLabelOverlap={false}`
+_default:_ `fixLabelOverlap={false}`
 
 ### gridComponent
 
@@ -152,7 +151,7 @@ well for labels that are approximately evenly spaced.
 
 The `gridComponent` prop takes a component instance which will be responsible for rendering a grid element. The new element created from the passed `gridComponent` will be provided with the following props calculated by `VictoryAxis`: `x1`, `y1`, `x2`, `y2`, `tick`, `style` and `events`. Any of these props may be overridden by passing in props to the supplied component, or modified or ignored within the custom component itself. If a `gridComponent` is not provided, `VictoryAxis` will use its default [Line component][].
 
-*default:* `gridComponent={<Line type={"grid"}/>}`
+_default:_ `gridComponent={<Line type={"grid"}/>}`
 
 ```jsx
 gridComponent={<Line events={{ onClick: handleClick }}/>}
@@ -164,7 +163,7 @@ gridComponent={<Line events={{ onClick: handleClick }}/>}
 
 `VictoryAxis` uses the standard `groupComponent` prop. [Read about it here](https://formidable.com/open-source/victory/docs/common-props#groupcomponent)
 
-*default:* `<g/>`
+_default:_ `<g/>`
 
 ```jsx
 groupComponent={<g transform="translate(10, 10)" />}
@@ -176,7 +175,7 @@ groupComponent={<g transform="translate(10, 10)" />}
 
 `VictoryAxis` uses the standard `height` prop. [Read about it here](https://formidable.com/open-source/victory/docs/common-props#height)
 
-*default (provided by default theme):* `height={300}`
+_default (provided by default theme):_ `height={300}`
 
 ```jsx
 height={400}
@@ -188,7 +187,7 @@ height={400}
 
 The `invertAxis` boolean prop specifies whether the domain for a given axis should be inverted. By default, axes will be displayed with lower values on the bottom / left, and higher values on the top / right regardless of orientation.
 
-*default:* `invertAxis={false}`
+_default:_ `invertAxis={false}`
 
 ### label
 
@@ -208,7 +207,6 @@ The `label` prop defines the label that will appear with the axis. This prop sho
 
 `VictoryAxis` uses the standard `maxDomain` prop. [Read about it in detail](https://formidable.com/open-source/victory/docs/common-props#maxDomain)
 
-
 ```playground
 <VictoryAxis
   tickValues={[2, 3, 4, 5]}
@@ -221,7 +219,6 @@ The `label` prop defines the label that will appear with the axis. This prop sho
 `type: number || { x: number, y: number }`
 
 `VictoryAxis` uses the standard `minDomain` prop. [Read about it in detail](https://formidable.com/open-source/victory/docs/common-props#minDomain)
-
 
 ```playground
 <VictoryAxis
@@ -237,7 +234,7 @@ The `label` prop defines the label that will appear with the axis. This prop sho
 `VictoryAxis` uses the standard `name` prop. [Read about it here](https://formidable.com/open-source/victory/docs/common-props#name)
 
 ```jsx
-name="series-1"
+name = "series-1";
 ```
 
 ### offsetX
@@ -286,7 +283,7 @@ The `orientation` prop specifies the position and orientation of your axis. Opti
 
 `VictoryAxis` uses the standard `padding` prop. [Read about it here](https://formidable.com/open-source/victory/docs/common-props#padding)
 
-*default (provided by default theme):* `padding={50}`
+_default (provided by default theme):_ `padding={50}`
 
 ```jsx
 padding={{ top: 20, bottom: 60 }}
@@ -309,7 +306,7 @@ Options for scale include "linear", "time", "log", "sqrt" and the `d3-scale` fun
 
 **note:** Though `VictoryAxis` can take a `scale` prop with scales defined for both `x` and `y`, only the scale that corresponds the given axis will be used.
 
-*default:* `scale="linear"`
+_default:_ `scale="linear"`
 
 ```jsx
 scale={{ x: "time" }}
@@ -333,7 +330,7 @@ scale={{ x: "time" }}
 
 **note:** When `VictoryAxis` is nested within a component like `VictoryChart`, this prop will be set to `false`
 
-*default:* `standalone={true}`
+_default:_ `standalone={true}`
 
 ```playground
 <svg width={400} height={400}>
@@ -366,7 +363,7 @@ The `style` prop defines the style of the component. The style prop should be gi
 
 **note:** custom `angle` and `verticalAnchor` properties may be included in `labels` styles.
 
-*default (provided by default theme):* See [grayscale theme][] for more detail
+_default (provided by default theme):_ See [grayscale theme][] for more detail
 
 ```playground
 <VictoryAxis
@@ -389,9 +386,9 @@ The `style` prop defines the style of the component. The style prop should be gi
 
 See the [Themes Guide][] for information about creating custom themes.
 
-*default:* `theme={VictoryTheme.grayscale}`
+_default:_ `theme={VictoryTheme.grayscale}`
 
-*Note:* Use the `dependentAxis` and `independentAxis` namespaces to theme axes by type. These namespaces will be merged with any props and styles supplied in the `axis` namespace.
+_Note:_ Use the `dependentAxis` and `independentAxis` namespaces to theme axes by type. These namespaces will be merged with any props and styles supplied in the `axis` namespace.
 
 ```jsx
 theme={VictoryTheme.material}
@@ -403,7 +400,7 @@ theme={VictoryTheme.material}
 
 The `tickComponent` prop takes a component instance which will be responsible for rendering a tick element. The new element created from the passed `tickComponent` will be provided with the following props calculated by `VictoryAxis`: `x1`, `y1`, `x2`, `y2`, `tick`, `style` and `events`. Any of these props may be overridden by passing in props to the supplied component, or modified or ignored within the custom component itself. If a `tickComponent` is not provided, `VictoryAxis` will use its default [Line component][].
 
-*default:* `tickComponent={<Line type={"tick"}/>}`
+_default:_ `tickComponent={<Line type={"tick"}/>}`
 
 ```jsx
 tickComponent={<Line events={{ onClick: handleClick }}/>}
@@ -434,7 +431,7 @@ The `tickFormat` prop specifies how tick values should be labeled. The `tickForm
 
 The `tickLabelComponent` prop takes a component instance which will be used to render the axis label. The new element created from the passed `tickLabelComponent` will be supplied with the following props: `x`, `y`, `text`, `verticalAnchor`, `textAnchor`, `angle`, `transform`, `style` and `events`. Any of these props may be overridden by passing in props to the supplied component, or modified or ignored within the custom component itself. If `tickLabelComponent` is omitted, a new [`VictoryLabel`][] will be created with props described above.
 
-*default:* `tickLabelComponent={<VictoryLabel/>}`
+_default:_ `tickLabelComponent={<VictoryLabel/>}`
 
 ```jsx
 tickLabelComponent={<VictoryLabel dy={20}/>}
@@ -444,7 +441,7 @@ tickLabelComponent={<VictoryLabel dy={20}/>}
 
 `type: array`
 
-The `tickValues` prop explicitly specifies a set of tick values to draw on the axis. This prop should be given as an array of unique values of the same type (_i.e.,_ all numbers). The `tickValues` prop is used to specify the _values_ of each tick, so numeric values are typically appropriate. An array of strings or dates may be supplied for categorical and time series data respectively. Use the [tickFormat][] prop to specify how ticks should be labeled. *Note:* `tickValues` should be given as a unique array.
+The `tickValues` prop explicitly specifies a set of tick values to draw on the axis. This prop should be given as an array of unique values of the same type (_i.e.,_ all numbers). The `tickValues` prop is used to specify the _values_ of each tick, so numeric values are typically appropriate. An array of strings or dates may be supplied for categorical and time series data respectively. Use the [tickFormat][] prop to specify how ticks should be labeled. _Note:_ `tickValues` should be given as a unique array.
 
 ```playground
   <VictoryAxis tickValues={[2, 4, 6, 8]}/>
@@ -456,18 +453,18 @@ The `tickValues` prop explicitly specifies a set of tick values to draw on the a
 
 `VictoryAxis` uses the standard `width` prop. [Read about it here](https://formidable.com/open-source/victory/docs/common-props#width)
 
-*default (provided by default theme):* `width={450}`
+_default (provided by default theme):_ `width={450}`
 
 ```jsx
 width={400}
 ```
 
-[Animations Guide]: https://formidable.com/open-source/victory/guides/animations
-[Events Guide]: https://formidable.com/open-source/victory/guides/events
-[Themes Guide]: https://formidable.com/open-source/victory/guides/themes
-[`VictoryChart`]: https://formidable.com/open-source/victory/docs/victory-chart
-[tickFormat]: https://formidable.com/open-source/victory/docs/victory-axis#tickformat
-[d3Scale]: https://github.com/d3/d3-scale
+[animations guide]: https://formidable.com/open-source/victory/guides/animations
+[events guide]: https://formidable.com/open-source/victory/guides/events
+[themes guide]: https://formidable.com/open-source/victory/guides/themes
+[`victorychart`]: https://formidable.com/open-source/victory/docs/victory-chart
+[tickformat]: https://formidable.com/open-source/victory/docs/victory-axis#tickformat
+[d3scale]: https://github.com/d3/d3-scale
 [grayscale theme]: https://github.com/FormidableLabs/victory-core/blob/master/src/victory-theme/grayscale.js
-[Line component]: https://formidable.com/open-source/victory/docs/victory-primitives#line
-[`VictoryLabel`]: https://formidable.com/open-source/victory/docs/victory-label
+[line component]: https://formidable.com/open-source/victory/docs/victory-primitives#line
+[`victorylabel`]: https://formidable.com/open-source/victory/docs/victory-label

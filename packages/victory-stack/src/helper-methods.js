@@ -57,17 +57,22 @@ function getY0(datum, index, datasets) {
   const y = datum._y;
   const previousDatasets = datasets.slice(0, index);
   const previousPoints = previousDatasets.reduce((prev, dataset) => {
-    return prev.concat(dataset
-      .filter((previousDatum) => datum._x instanceof Date
-        ? previousDatum._x.getTime() === datum._x.getTime()
-        : previousDatum._x === datum._x)
-      .map((previousDatum) => previousDatum._y || 0)
+    return prev.concat(
+      dataset
+        .filter((previousDatum) =>
+          datum._x instanceof Date
+            ? previousDatum._x.getTime() === datum._x.getTime()
+            : previousDatum._x === datum._x
+        )
+        .map((previousDatum) => previousDatum._y || 0)
     );
   }, []);
-  const y0 = previousPoints.length && previousPoints.reduce((memo, value) => {
-    const sameSign = (y < 0 && value < 0) || (y >= 0 && value >= 0);
-    return sameSign ? +value + memo : memo;
-  }, 0);
+  const y0 =
+    previousPoints.length &&
+    previousPoints.reduce((memo, value) => {
+      const sameSign = (y < 0 && value < 0) || (y >= 0 && value >= 0);
+      return sameSign ? +value + memo : memo;
+    }, 0);
   return previousPoints.some((point) => point instanceof Date) ? new Date(y0) : y0;
 }
 
@@ -77,15 +82,19 @@ function addLayoutData(props, datasets, index) {
   return datasets[index].map((datum) => {
     const yOffset = getY0(datum, index, datasets) || 0;
     return assign({}, datum, {
-      _y0: !(datum._y instanceof Date) ? yOffset : (
-        yOffset ? new Date(yOffset) : datum._y
-      ),
-      _y1: datum._y === null ? null : (
-        datum._y instanceof Date ? new Date(+datum._y + +yOffset) : datum._y + yOffset
-      ),
-      _x1: datum._x === null ? null : (
-        datum._x instanceof Date ? new Date(+datum._x + +xOffset) : datum._x + xOffset
-      )
+      _y0: !(datum._y instanceof Date) ? yOffset : yOffset ? new Date(yOffset) : datum._y,
+      _y1:
+        datum._y === null
+          ? null
+          : datum._y instanceof Date
+          ? new Date(+datum._y + +yOffset)
+          : datum._y + yOffset,
+      _x1:
+        datum._x === null
+          ? null
+          : datum._x instanceof Date
+          ? new Date(+datum._x + +xOffset)
+          : datum._x + xOffset
     });
   });
 }
@@ -101,9 +110,8 @@ function getCalculatedProps(props, childComponents) {
   childComponents = childComponents || React.Children.toArray(props.children);
   const role = "stack";
   const style = Wrapper.getStyle(props.theme, props.style, role);
-  const horizontal = props.horizontal || childComponents.every(
-    (component) => component.props.horizontal
-  );
+  const horizontal =
+    props.horizontal || childComponents.every((component) => component.props.horizontal);
   const categories = {
     x: Wrapper.getCategories(props, "x"),
     y: Wrapper.getCategories(props, "y")
@@ -163,8 +171,7 @@ function getColorScale(props, child) {
   if (role !== "group" && role !== "stack") {
     return undefined;
   }
-  return props.theme ? colorScaleOptions || props.theme.props.colorScale
-  : colorScaleOptions;
+  return props.theme ? colorScaleOptions || props.theme.props.colorScale : colorScaleOptions;
 }
 
 function getChildren(props, childComponents, calculatedProps) {
@@ -180,20 +187,25 @@ function getChildren(props, childComponents, calculatedProps) {
     const style = Wrapper.getChildStyle(child, index, calculatedProps);
     const labels = props.labels ? getLabels(props, datasets, index) : child.props.labels;
     const name = child.props.name || `${parentName}-${role}-${index}`;
-    return React.cloneElement(child, assign({
-      key: `${name}-key-${index}`,
-      labels,
-      name,
-      domainPadding: child.props.domainPadding || props.domainPadding,
-      theme: props.theme,
-      labelComponent: props.labelComponent || child.props.labelComponent,
-      style,
-      colorScale: getColorScale(props, child),
-      data,
-      polar: props.polar
-    }, childProps));
+    return React.cloneElement(
+      child,
+      assign(
+        {
+          key: `${name}-key-${index}`,
+          labels,
+          name,
+          domainPadding: child.props.domainPadding || props.domainPadding,
+          theme: props.theme,
+          labelComponent: props.labelComponent || child.props.labelComponent,
+          style,
+          colorScale: getColorScale(props, child),
+          data,
+          polar: props.polar
+        },
+        childProps
+      )
+    );
   });
 }
-
 
 export { getChildren, getCalculatedProps };

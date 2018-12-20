@@ -8,11 +8,7 @@ import VictoryTransition from "packages/victory-core/src/victory-transition/vict
 
 class TestComponent extends React.Component {
   render() {
-    return (
-      <text className="foo">
-        {this.props.message[0]}
-      </text>
-    );
+    return <text className="foo">{this.props.message[0]}</text>;
   }
 }
 

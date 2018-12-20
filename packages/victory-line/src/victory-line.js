@@ -3,8 +3,17 @@ import React from "react";
 import { getBaseProps } from "./helper-methods";
 import Curve from "./curve";
 import {
-  PropTypes as CustomPropTypes, Helpers, VictoryLabel, addEvents, VictoryContainer, VictoryTheme,
-  DefaultTransitions, VictoryClipContainer, Data, Domain, CommonProps
+  PropTypes as CustomPropTypes,
+  Helpers,
+  VictoryLabel,
+  addEvents,
+  VictoryContainer,
+  VictoryTheme,
+  DefaultTransitions,
+  VictoryClipContainer,
+  Data,
+  Domain,
+  CommonProps
 } from "victory-core";
 
 const fallbackProps = {
@@ -16,20 +25,14 @@ const fallbackProps = {
 
 const options = {
   components: [
-    { name: "parent", index: "parent" }, { name: "data", index: "all" }, { name: "labels" }
+    { name: "parent", index: "parent" },
+    { name: "data", index: "all" },
+    { name: "labels" }
   ]
 };
 
 class VictoryLine extends React.Component {
-  static animationWhitelist = [
-    "data",
-    "domain",
-    "height",
-    "padding",
-    "samples",
-    "style",
-    "width"
-  ];
+  static animationWhitelist = ["data", "domain", "height", "padding", "samples", "style", "width"];
 
   static displayName = "VictoryLine";
   static role = "line";
@@ -41,8 +44,17 @@ class VictoryLine extends React.Component {
     ...CommonProps.baseProps,
     ...CommonProps.dataProps,
     interpolation: PropTypes.oneOf([
-      "basis", "bundle", "cardinal", "catmullRom", "linear", "monotoneX",
-      "monotoneY", "natural", "step", "stepAfter", "stepBefore"
+      "basis",
+      "bundle",
+      "cardinal",
+      "catmullRom",
+      "linear",
+      "monotoneX",
+      "monotoneY",
+      "natural",
+      "step",
+      "stepAfter",
+      "stepBefore"
     ]),
     label: CustomPropTypes.deprecated(
       PropTypes.string,
@@ -51,10 +63,10 @@ class VictoryLine extends React.Component {
   };
 
   static defaultProps = {
-    containerComponent: <VictoryContainer/>,
-    dataComponent: <Curve/>,
-    labelComponent: <VictoryLabel renderInPortal/>,
-    groupComponent: <VictoryClipContainer/>,
+    containerComponent: <VictoryContainer />,
+    dataComponent: <Curve />,
+    labelComponent: <VictoryLabel renderInPortal />,
+    groupComponent: <VictoryClipContainer />,
     samples: 50,
     scale: "linear",
     sortKey: "x",
@@ -67,7 +79,10 @@ class VictoryLine extends React.Component {
   static getData = Data.getData;
   static getBaseProps = (props) => getBaseProps(props, fallbackProps);
   static expectedComponents = [
-    "dataComponent", "labelComponent", "groupComponent", "containerComponent"
+    "dataComponent",
+    "labelComponent",
+    "groupComponent",
+    "containerComponent"
   ];
 
   // Overridden in native versions

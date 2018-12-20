@@ -20,7 +20,7 @@ export default class Arc extends React.Component {
   };
 
   static defaultProps = {
-    pathComponent: <Path/>
+    pathComponent: <Path />
   };
 
   getStyle(props) {
@@ -31,7 +31,7 @@ export default class Arc extends React.Component {
   getArcPath(props) {
     const { cx, cy, r, startAngle, endAngle, closedPath } = props;
     // Always draw the path as two arcs so that complete circles may be rendered.
-    const halfAngle = (Math.abs(endAngle - startAngle) / 2) + startAngle;
+    const halfAngle = Math.abs(endAngle - startAngle) / 2 + startAngle;
     const x1 = cx + r * Math.cos(Helpers.degreesToRadians(startAngle));
     const y1 = cy - r * Math.sin(Helpers.degreesToRadians(startAngle));
     const x2 = cx + r * Math.cos(Helpers.degreesToRadians(halfAngle));
@@ -49,12 +49,23 @@ export default class Arc extends React.Component {
 
   render() {
     const {
-      role, shapeRendering, className, events, pathComponent, transform, clipPath
+      role,
+      shapeRendering,
+      className,
+      events,
+      pathComponent,
+      transform,
+      clipPath
     } = this.props;
     return React.cloneElement(pathComponent, {
       d: this.getArcPath(this.props),
       style: this.getStyle(this.props),
-      className, role, shapeRendering, events, transform, clipPath
+      className,
+      role,
+      shapeRendering,
+      events,
+      transform,
+      clipPath
     });
   }
 }

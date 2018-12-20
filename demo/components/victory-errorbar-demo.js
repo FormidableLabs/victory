@@ -21,11 +21,11 @@ const getData = () => {
 };
 
 const basicData = [
-  { x: 1, y: 1, errorX: [1, 0.5], errorY: .1 },
-  { x: 2, y: 2, errorX: [1, 3], errorY: .1 },
-  { x: 3, y: 3, errorX: [1, 3], errorY: [.2, .3] },
-  { x: 4, y: 2, errorX: [1, 0.5], errorY: .1 },
-  { x: 5, y: 1, errorX: [1, 0.5], errorY: .2 }
+  { x: 1, y: 1, errorX: [1, 0.5], errorY: 0.1 },
+  { x: 2, y: 2, errorX: [1, 3], errorY: 0.1 },
+  { x: 3, y: 3, errorX: [1, 3], errorY: [0.2, 0.3] },
+  { x: 4, y: 2, errorX: [1, 0.5], errorY: 0.1 },
+  { x: 5, y: 1, errorX: [1, 0.5], errorY: 0.2 }
 ];
 
 const style = {
@@ -66,17 +66,13 @@ export default class App extends React.Component {
     return (
       <div className="demo" style={containerStyle}>
         <VictoryChart style={style}>
-          <VictoryErrorBar
-            data={basicData}
-          />
-          <VictoryScatter data={basicData}/>
+          <VictoryErrorBar data={basicData} />
+          <VictoryScatter data={basicData} />
         </VictoryChart>
 
         <VictoryChart style={style}>
-          <VictoryErrorBar data={basicData}/>
-          <VictoryLine
-            data={basicData}
-          />
+          <VictoryErrorBar data={basicData} />
+          <VictoryLine data={basicData} />
         </VictoryChart>
 
         <VictoryErrorBar
@@ -109,7 +105,7 @@ export default class App extends React.Component {
         <VictoryErrorBar
           style={{
             parent: style.parent,
-            data: { fill: (data) => data.y > 0 ? "red" : "blue" }
+            data: { fill: (data) => (data.y > 0 ? "red" : "blue") }
           }}
           width={500}
           height={500}
@@ -126,49 +122,38 @@ export default class App extends React.Component {
         />
 
         <svg style={style} width={500} height={300}>
-          <VictoryErrorBar
-            style={style}
-            standalone={false}
-          />
+          <VictoryErrorBar style={style} standalone={false} />
         </svg>
 
         <VictoryErrorBar
           style={{ parent: style.parent, data: this.state.hoverStyle }}
           data={this.state.data}
-          events={[{
-            target: "data",
-            eventHandlers: {
-              onClick: () => {
-                return [
-                  {
-                    mutation: (props) => {
-                      return {
-                        style: merge({}, props.style, { stroke: "orange" })
-                      };
+          events={[
+            {
+              target: "data",
+              eventHandlers: {
+                onClick: () => {
+                  return [
+                    {
+                      mutation: (props) => {
+                        return {
+                          style: merge({}, props.style, { stroke: "orange" })
+                        };
+                      }
                     }
-                  }
-                ];
+                  ];
+                }
               }
             }
-          }]}
+          ]}
         />
 
-        <VictoryChart style={style}
-          theme={VictoryTheme.material}
-        >
-          <VictoryErrorBar
-            style={style}
-            data={this.state.data}
-          />
+        <VictoryChart style={style} theme={VictoryTheme.material}>
+          <VictoryErrorBar style={style} data={this.state.data} />
         </VictoryChart>
 
-        <VictoryChart style={style}
-          theme={VictoryTheme.material}
-        >
-          <VictoryErrorBar
-            style={style}
-            data={[]}
-          />
+        <VictoryChart style={style} theme={VictoryTheme.material}>
+          <VictoryErrorBar style={style} data={[]} />
         </VictoryChart>
       </div>
     );

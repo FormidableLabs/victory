@@ -15,7 +15,7 @@ export default class VictoryPortal extends React.Component {
   };
 
   static defaultProps = {
-    groupComponent: <g/>
+    groupComponent: <g />
   };
 
   static contextTypes = {
@@ -27,7 +27,8 @@ export default class VictoryPortal extends React.Component {
   componentDidMount() {
     if (!this.checkedContext) {
       if (typeof this.context.portalUpdate !== "function") {
-        const msg = "`renderInPortal` is not supported outside of `VictoryContainer`. " +
+        const msg =
+          "`renderInPortal` is not supported outside of `VictoryContainer`. " +
           "Component will be rendered in place";
         Log.warn(msg);
         this.renderInPlace = true;
@@ -60,16 +61,18 @@ export default class VictoryPortal extends React.Component {
   }
 
   render() {
-    const children = Array.isArray(this.props.children) ?
-      this.props.children[0] : this.props.children;
+    const children = Array.isArray(this.props.children)
+      ? this.props.children[0]
+      : this.props.children;
     const { groupComponent } = this.props;
-    const childProps = children && children.props || {};
+    const childProps = (children && children.props) || {};
     const standardProps = childProps.groupComponent ? { groupComponent, standalone: false } : {};
     const newProps = defaults(
-      standardProps, childProps, Helpers.omit(this.props, ["children", "groupComponent"])
+      standardProps,
+      childProps,
+      Helpers.omit(this.props, ["children", "groupComponent"])
     );
     const child = children && React.cloneElement(children, newProps);
     return this.renderPortal(child);
   }
 }
-

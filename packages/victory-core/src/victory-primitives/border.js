@@ -16,17 +16,38 @@ export default class Border extends React.Component {
   };
 
   static defaultProps = {
-    rectComponent: <Rect/>
+    rectComponent: <Rect />
   };
 
   render() {
     const {
-       x, y, width, height, events, datum, active, role, clipPath,
-       className, shapeRendering, rectComponent, transform
-      } = this.props;
+      x,
+      y,
+      width,
+      height,
+      events,
+      datum,
+      active,
+      role,
+      clipPath,
+      className,
+      shapeRendering,
+      rectComponent,
+      transform
+    } = this.props;
     const style = Helpers.evaluateStyle(assign({ fill: "none" }, this.props.style), datum, active);
     return React.cloneElement(rectComponent, {
-      style, className, x, y, width, height, events, role, shapeRendering, transform, clipPath
+      style,
+      className,
+      x,
+      y,
+      width,
+      height,
+      events,
+      role,
+      shapeRendering,
+      transform,
+      clipPath
     });
   }
 }

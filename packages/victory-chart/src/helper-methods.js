@@ -43,15 +43,12 @@ function getChildProps(child, props, calculatedProps) {
 function getStyles(props) {
   const styleProps = props.style && props.style.parent;
   return {
-    parent: defaults(
-      {},
-      styleProps,
-      {
-        height: "100%",
-        width: "100%",
-        userSelect: "none"
-      }
-  ) };
+    parent: defaults({}, styleProps, {
+      height: "100%",
+      width: "100%",
+      userSelect: "none"
+    })
+  };
 }
 
 function getCalculatedProps(props, childComponents) {
@@ -79,11 +76,13 @@ function getCalculatedProps(props, childComponents) {
     y: Helpers.getRange(props, "y")
   };
   const baseScale = {
-    x: Scale.getScaleFromProps(props, "x") ||
-      axisComponents.x && axisComponents.x.type.getScale(axisComponents.x.props) ||
+    x:
+      Scale.getScaleFromProps(props, "x") ||
+      (axisComponents.x && axisComponents.x.type.getScale(axisComponents.x.props)) ||
       Scale.getDefaultScale(),
-    y: Scale.getScaleFromProps(props, "y") ||
-      axisComponents.y && axisComponents.y.type.getScale(axisComponents.y.props) ||
+    y:
+      Scale.getScaleFromProps(props, "y") ||
+      (axisComponents.y && axisComponents.y.type.getScale(axisComponents.y.props)) ||
       Scale.getDefaultScale()
   };
   const scale = {
@@ -103,8 +102,18 @@ function getCalculatedProps(props, childComponents) {
   const padding = Helpers.getPadding(props);
 
   return {
-    axisComponents, categories, domain, range, horizontal, scale, stringMap,
-    style, origin, originSign, defaultDomainPadding, padding
+    axisComponents,
+    categories,
+    domain,
+    range,
+    horizontal,
+    scale,
+    stringMap,
+    style,
+    origin,
+    originSign,
+    defaultDomainPadding,
+    padding
   };
 }
 
@@ -117,19 +126,27 @@ function getChildren(props, childComponents, calculatedProps) {
   const parentName = props.name || "chart";
   return childComponents.map((child, index) => {
     const role = child.type && child.type.role;
-    const style = Array.isArray(child.props.style) ?
-      child.props.style :
-      defaults({}, child.props.style, { parent: baseStyle });
+    const style = Array.isArray(child.props.style)
+      ? child.props.style
+      : defaults({}, child.props.style, { parent: baseStyle });
     const childProps = getChildProps(child, props, calculatedProps);
     const name = child.props.name || `${parentName}-${role}-${index}`;
-    const newProps = defaults({
-      horizontal,
-      height, polar, theme, width, style, name,
-      origin: polar ? origin : undefined,
-      padding: calculatedProps.padding,
-      key: `${name}-key-${index}`,
-      standalone: false
-    }, childProps);
+    const newProps = defaults(
+      {
+        horizontal,
+        height,
+        polar,
+        theme,
+        width,
+        style,
+        name,
+        origin: polar ? origin : undefined,
+        padding: calculatedProps.padding,
+        key: `${name}-key-${index}`,
+        standalone: false
+      },
+      childProps
+    );
 
     return React.cloneElement(child, newProps);
   });
@@ -160,7 +177,8 @@ const getChildComponents = (props, defaultAxes) => {
       axisCount++;
       return true;
     } else {
-      const msg = "Only one independent VictoryAxis component is allowed when " +
+      const msg =
+        "Only one independent VictoryAxis component is allowed when " +
         "using the VictoryChart wrapper. Only the first axis will be used. Please compose " +
         "multi-axis charts manually";
       Log.warn(msg);
@@ -179,9 +197,7 @@ const getDefaultDomainPadding = (childComponents, horizontal) => {
   }
 
   const { offset, children } = groupComponent[0].props;
-  return horizontal ?
-    { y: (offset * children.length) / 2 } :
-    { x: (offset * children.length) / 2 };
+  return horizontal ? { y: (offset * children.length) / 2 } : { x: (offset * children.length) / 2 };
 };
 
 const getDomain = (props, axis, childComponents) => {
@@ -219,24 +235,25 @@ const getAxisOffset = (props, calculatedProps) => {
   };
 
   return {
-    x: axisComponents.x && axisComponents.x.offsetX !== undefined ?
-      axisComponents.x.offsetX : calculatedOffset.x,
-    y: axisComponents.y && axisComponents.y.offsetY !== undefined ?
-      axisComponents.y.offsetY : calculatedOffset.y
+    x:
+      axisComponents.x && axisComponents.x.offsetX !== undefined
+        ? axisComponents.x.offsetX
+        : calculatedOffset.x,
+    y:
+      axisComponents.y && axisComponents.y.offsetY !== undefined
+        ? axisComponents.y.offsetY
+        : calculatedOffset.y
   };
 };
 
 const createStringMap = (props, axis, childComponents) => {
   const allStrings = Wrapper.getStringsFromChildren(props, axis, childComponents);
-  return allStrings.length === 0 ? null :
-    allStrings.reduce((memo, string, index) => {
-      memo[string] = index + 1;
-      return memo;
-    }, {});
+  return allStrings.length === 0
+    ? null
+    : allStrings.reduce((memo, string, index) => {
+        memo[string] = index + 1;
+        return memo;
+      }, {});
 };
 
-export {
-  getChildren,
-  getCalculatedProps,
-  getChildComponents
-};
+export { getChildren, getCalculatedProps, getChildComponents };

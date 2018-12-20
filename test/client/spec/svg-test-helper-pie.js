@@ -21,8 +21,10 @@ const SvgTestHelper = {
    * @return {boolean} Whether or not it's a circular section
    */
   expectIsCircularSection: (wrapper) => {
-    expect(exhibitsCircularSectionDirectionSequence(wrapper),
-      "Wrapper has a circular section command sequence").to.be.true;
+    expect(
+      exhibitsCircularSectionDirectionSequence(wrapper),
+      "Wrapper has a circular section command sequence"
+    ).to.be.true;
   },
 
   /**
@@ -35,7 +37,8 @@ const SvgTestHelper = {
    * @param  {ShallowWrapper} wrapper Enzyme wrapper
    * @return {boolean} Whether or not it's a circular section
    */
-  expectIsAnnularSection: (wrapper) => { // eslint-disable-line max-statements
+  expectIsAnnularSection: (wrapper) => {
+    // eslint-disable-line max-statements
     const commands = getPathCommandsFromSliceWrapper(wrapper);
 
     expect(commands).to.have.lengthOf(5);
@@ -47,8 +50,9 @@ const SvgTestHelper = {
 
     const firstSweepFlag = commands[1].args[4];
     const secondSweepFlag = commands[3].args[4];
-    expect(firstSweepFlag,
-      "The 2 arcs are drawn in opposite directions").to.not.eql(secondSweepFlag);
+    expect(firstSweepFlag, "The 2 arcs are drawn in opposite directions").to.not.eql(
+      secondSweepFlag
+    );
 
     const startOfOuterArc = {
       x: commands[0].args[0],
@@ -59,9 +63,10 @@ const SvgTestHelper = {
       y: commands[1].args[6]
     };
 
-    expect(SvgTestHelper.getDistanceFromOrigin(startOfOuterArc),
-      "The outer arc begins and ends the same distance from the origin")
-      .to.be.closeTo(SvgTestHelper.getDistanceFromOrigin(endOfOuterArc), 0.001);
+    expect(
+      SvgTestHelper.getDistanceFromOrigin(startOfOuterArc),
+      "The outer arc begins and ends the same distance from the origin"
+    ).to.be.closeTo(SvgTestHelper.getDistanceFromOrigin(endOfOuterArc), 0.001);
 
     const startOfInnerArc = {
       x: commands[2].args[0],
@@ -71,9 +76,10 @@ const SvgTestHelper = {
       x: commands[3].args[5],
       y: commands[3].args[6]
     };
-    expect(SvgTestHelper.getDistanceFromOrigin(startOfInnerArc),
-      "The inner arc begins and ends the same distance from the origin")
-      .to.be.closeTo(SvgTestHelper.getDistanceFromOrigin(endOfInnerArc), 0.001);
+    expect(
+      SvgTestHelper.getDistanceFromOrigin(startOfInnerArc),
+      "The inner arc begins and ends the same distance from the origin"
+    ).to.be.closeTo(SvgTestHelper.getDistanceFromOrigin(endOfInnerArc), 0.001);
   },
 
   getInnerRadiusOfCircularOrAnnularSlice: (wrapper) => {
@@ -120,7 +126,8 @@ const SvgTestHelper = {
       return {
         raw: match,
         name: match.charAt(0),
-        args: match.substring(1)
+        args: match
+          .substring(1)
           .split(",")
           .map((arg) => parseFloat(arg, 10))
       };

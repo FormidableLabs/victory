@@ -32,11 +32,13 @@ const SelectionHelpers = {
   filterDatasets(props, datasets, bounds) {
     const filtered = datasets.reduce((memo, dataset) => {
       const selectedData = this.getSelectedData(props, dataset.data, bounds);
-      memo = selectedData ?
-        memo.concat({
-          childName: dataset.childName, eventKey: selectedData.eventKey, data: selectedData.data
-        }) :
-        memo;
+      memo = selectedData
+        ? memo.concat({
+            childName: dataset.childName,
+            eventKey: selectedData.eventKey,
+            data: selectedData.data
+          })
+        : memo;
       return memo;
     }, []);
     return filtered.length ? filtered : null;
@@ -47,7 +49,12 @@ const SelectionHelpers = {
       return point;
     }
     return {
-      _x: point._y, _y: point._x, _x1: point._y1, _y1: point._x1, _x0: point._y0, _y0: point._x0
+      _x: point._y,
+      _y: point._x,
+      _x1: point._y1,
+      _y1: point._x1,
+      _x0: point._y0,
+      _y0: point._x0
     };
   },
 
@@ -56,8 +63,12 @@ const SelectionHelpers = {
     const withinBounds = (d) => {
       const point = this.getPoint(props, d);
       const scaledPoint = Helpers.scalePoint(props, point);
-      return scaledPoint.x >= Math.min(x1, x2) && scaledPoint.x <= Math.max(x1, x2) &&
-        scaledPoint.y >= Math.min(y1, y2) && scaledPoint.y <= Math.max(y1, y2);
+      return (
+        scaledPoint.x >= Math.min(x1, x2) &&
+        scaledPoint.x <= Math.max(x1, x2) &&
+        scaledPoint.y >= Math.min(y1, y2) &&
+        scaledPoint.y <= Math.max(y1, y2)
+      );
     };
     const eventKey = [];
     const data = [];
@@ -93,12 +104,17 @@ const SelectionHelpers = {
       targetProps.onSelectionCleared(defaults({}, mutatedProps, targetProps));
     }
     const parentMutation = [{ target: "parent", mutation: () => mutatedProps }];
-    const dataMutation = selectedData && activateSelectedData ?
-      selectedData.map((d) => {
-        return {
-          childName: d.childName, eventKey: d.eventKey, target: "data", mutation: () => null
-        };
-      }) : [];
+    const dataMutation =
+      selectedData && activateSelectedData
+        ? selectedData.map((d) => {
+            return {
+              childName: d.childName,
+              eventKey: d.eventKey,
+              target: "data",
+              mutation: () => null
+            };
+          })
+        : [];
 
     return parentMutation.concat(...dataMutation);
   },
@@ -128,35 +144,51 @@ const SelectionHelpers = {
       return null;
     }
     if (!x2 || !y2) {
-      return [{
-        target: "parent",
-        mutation: () => {
-          return { select: false, x1: null, x2: null, y1: null, y2: null };
+      return [
+        {
+          target: "parent",
+          mutation: () => {
+            return { select: false, x1: null, x2: null, y1: null, y2: null };
+          }
         }
-      }];
+      ];
     }
     const datasets = this.getDatasets(targetProps);
     const bounds = Selection.getBounds(targetProps);
     const selectedData = this.filterDatasets(targetProps, datasets, bounds);
     const mutatedProps = {
-      selectedData, datasets, select: false, x1: null, x2: null, y1: null, y2: null
+      selectedData,
+      datasets,
+      select: false,
+      x1: null,
+      x2: null,
+      y1: null,
+      y2: null
     };
-    const callbackMutation = selectedData && isFunction(targetProps.onSelection) ?
-      targetProps.onSelection(selectedData, bounds, defaults({}, mutatedProps, targetProps)) : {};
-    const parentMutation = [{
-      target: "parent",
-      mutation: () => mutatedProps
-    }];
+    const callbackMutation =
+      selectedData && isFunction(targetProps.onSelection)
+        ? targetProps.onSelection(selectedData, bounds, defaults({}, mutatedProps, targetProps))
+        : {};
+    const parentMutation = [
+      {
+        target: "parent",
+        mutation: () => mutatedProps
+      }
+    ];
 
-    const dataMutation = selectedData && activateSelectedData ?
-      selectedData.map((d) => {
-        return {
-          childName: d.childName, eventKey: d.eventKey, target: "data",
-          mutation: () => {
-            return assign({ active: true }, callbackMutation);
-          }
-        };
-      }) : [];
+    const dataMutation =
+      selectedData && activateSelectedData
+        ? selectedData.map((d) => {
+            return {
+              childName: d.childName,
+              eventKey: d.eventKey,
+              target: "data",
+              mutation: () => {
+                return assign({ active: true }, callbackMutation);
+              }
+            };
+          })
+        : [];
 
     return parentMutation.concat(dataMutation);
   }
@@ -169,5 +201,6 @@ export default {
   onMouseMove: throttle(
     SelectionHelpers.onMouseMove.bind(SelectionHelpers),
     16, // eslint-disable-line no-magic-numbers
-    { leading: true, trailing: false })
+    { leading: true, trailing: false }
+  )
 };

@@ -1,4 +1,3 @@
-
 # VictoryBrushLine
 
 `victory-brush-line@^30.0.0` exports `VictoryBrushLine`
@@ -31,7 +30,7 @@ View these docs at https://formidable.com/open-source/victory/docs/victory-brush
 
 The optional `allowDrag` prop accepts a boolean that enables dragging behavior for the highlighted brush area. Resizing will still be enabled when the `allowDrag` prop is set to false.
 
-*default:* `allowDrag={true}`
+_default:_ `allowDrag={true}`
 
 ### allowResize
 
@@ -39,8 +38,7 @@ The optional `allowDrag` prop accepts a boolean that enables dragging behavior f
 
 The optional `allowResize` prop accepts a boolean that enables resizing the highlighted brush area. Dragging will still be enabled when the `allowResize` prop is set to false, but the dimensions of the brush area will be fixed.
 
-*default:* `allowResize={true}`
-
+_default:_ `allowResize={true}`
 
 ### brushAreaComponent
 
@@ -50,8 +48,7 @@ The `brushAreaComponent` prop specifies the component to be rendered for the int
 This component will be supplied with the following props: x, y, width, height, and style.
 When this prop is not specified, a [`Box`][] component will be rendered.
 
-*default:* `brushAreaComponent={<Box/>}`
-
+_default:_ `brushAreaComponent={<Box/>}`
 
 ### brushAreaStyle
 
@@ -70,13 +67,11 @@ an object of SVG style attributes. Styles supplied to `brushAreaStyle` are assig
 
 **Note:** `cursor` styles should not be applied via this prop, as they are dynamically assigned
 
-
 ### brushAreaWidth
 
 `type: number`
 
 The `brushAreaWidth` prop is used to specify the width of the interactive brush region. If this prop is not supplied, the `width` prop will be used.
-
 
 ### brushComponent
 
@@ -86,15 +81,15 @@ The `brushComponent` prop specifies the component to be rendered for active brus
 This component will be supplied with the following props: x, y, width, height, and style.
 When this prop is not specified, a [`Box`][] component will be rendered.
 
-*default:* `brushComponent={<Box/>}`
+_default:_ `brushComponent={<Box/>}`
 
 ### brushDomain
 
-`type:  array[low, high]`
+`type: array[low, high]`
 
 The optional `brushDomain` prop describes the highlighted state. This prop should be given as an array of the minimum and maximum values of the highlighted region.
 
-*example:* `brushDomain={[50, 100]}`
+_example:_ `brushDomain={[50, 100]}`
 
 ### brushStyle
 
@@ -124,13 +119,11 @@ The `brushWidth` prop is used to specify the width of the active brush. If this 
 
 This prop specifies the class name that will be applied to the rendered element
 
-
 ### dimension
 
 `type: "x" || "y"`
 
 The `dimension` prop specified whether the brush will be vertical ("y"), or horizontal ("x")
-
 
 ### disable
 
@@ -144,25 +137,23 @@ When the `disable` prop is set to `true`, `VictoryBrushLine` events will not fir
 
 The `events` prop specifies a set of events that will be attached to the brush component group. This prop should not be set manually.
 
-
 ### groupComponent
 
 `type: element`
 
 This prop specifies the element used to group rendered elements
 
-*default:* `<g/>`
-
+_default:_ `<g/>`
 
 ### handleComponent
 
-`type: element `
+`type: element`
 
 The `handleComponent` prop specifies the component to be rendered for each handle.
 This component will be supplied with the following props: x, y, width, height, and style.
 When this prop is not specified, a [`Box`][] component will be rendered.
 
-*default:* `handleComponent={<Box/>}`
+_default:_ `handleComponent={<Box/>}`
 
 ### handleStyle
 
@@ -185,8 +176,7 @@ an object of SVG style attributes. Styles supplied to `handleStyle` are assigned
 
 The `handleWidth` prop is used to specify the width of each handle component.
 
-*default:* `handleWidth={10}`
-
+_default:_ `handleWidth={10}`
 
 ### lineComponent
 
@@ -196,17 +186,16 @@ The `lineComponent` prop specifies the component to render for the underlying ax
 This component will be supplied with the following props: x1, y1, x2, y2 and style.
 When this prop is not specified, an [`Axis`][] component will be rendered.
 
-*default:* `lineComponent={<Axis/>}`
-
+_default:_ `lineComponent={<Axis/>}`
 
 ### onBrushDomainChange
 
 `type: function`
 
 The `onBrushDomainChange` prop specifies a callback function which will be called whenever the brush domain changes. The callback provided will be called with the following arguments:
-  - `currentDomain`: The current brush domain
-  - `props`: the current set of props for `VictoryBrushLine`
 
+- `currentDomain`: The current brush domain
+- `props`: the current set of props for `VictoryBrushLine`
 
 ### scale
 
@@ -233,10 +222,8 @@ The `type` is used to specify which event target a particular `VictoryBrushLine`
 
 The `width` prop specified the width of both the `brush` and `brushArea`. When `brushWidth` or `brushAreaWidth` are specified, this prop will not be used
 
-*default:* `width={10}`
+_default:_ `width={10}`
 
-
-
-[`VictoryBrushContainer`]: https://formidable.com/open-source/victory/docs/victory-brush-container
-[`Box`]: https://formidable.com/open-source/victory/docs/victory-primitives#box
-[`Axis`]: https://formidable.com/open-source/victory/docs/victory-primitives#axis
+[`victorybrushcontainer`]: https://formidable.com/open-source/victory/docs/victory-brush-container
+[`box`]: https://formidable.com/open-source/victory/docs/victory-primitives#box
+[`axis`]: https://formidable.com/open-source/victory/docs/victory-primitives#axis

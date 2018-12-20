@@ -4,39 +4,39 @@ import { assign, defaults } from "lodash";
 
 const fontDictionary = {
   "American Typewriter": 2.09,
-  "Baskerville": 2.51,
-  "Georgia": 2.27,
+  Baskerville: 2.51,
+  Georgia: 2.27,
   "Hoefler Text": 2.39,
-  "Palatino": 2.26,
+  Palatino: 2.26,
   "Times New Roman": 2.48,
-  "Arial": 2.26,
+  Arial: 2.26,
   "Gill Sans": 2.47,
   "Gill Sans 300": 2.58,
   "Helvetica Neue": 2.24,
   "Lucida Grande": 2.05,
-  "Tahoma": 2.25,
+  Tahoma: 2.25,
   "Trebuchet MS": 2.2,
-  "Verdana": 1.96,
+  Verdana: 1.96,
   "Courier New": 1.67,
-  "cursive": 1.84,
-  "fantasy": 2.09,
-  "monospace": 1.81,
-  "serif": 2.04,
+  cursive: 1.84,
+  fantasy: 2.09,
+  monospace: 1.81,
+  serif: 2.04,
   "sans-serif": 1.89
 };
 //https://developer.mozilla.org/en/docs/Web/CSS/length
 // Absolute sizes in pixels for obsolete measurement units.
 const absoluteMeasurementUnitsToPixels = {
-  "mm": 3.8,
-  "sm": 38,
-  "pt": 1.33,
-  "pc": 16,
-  "in": 96,
-  "px": 1
+  mm: 3.8,
+  sm: 38,
+  pt: 1.33,
+  pc: 16,
+  in: 96,
+  px: 1
 };
 const relativeMeasurementUnitsCoef = {
-  "em": 1,
-  "ex": 0.5
+  em: 1,
+  ex: 0.5
 };
 
 const coefficients = {
@@ -54,7 +54,7 @@ const defaultStyle = {
   fontFamily: ""
 };
 
-const _degreeToRadian = (angle) => angle * Math.PI / 180;
+const _degreeToRadian = (angle) => (angle * Math.PI) / 180;
 
 const _getFontCharacterConstant = (fontFamily) => {
   const firstFont = fontFamily.split(",")[0].replace(/'|"/g, "");
@@ -67,8 +67,9 @@ const _splitToLines = (text) => {
 
 const _getSizeWithRotate = (axisSize, dependentSize, angle) => {
   const angleInRadian = _degreeToRadian(angle);
-  return Math.abs(Math.cos(angleInRadian) * axisSize)
-    + Math.abs(Math.sin(angleInRadian) * dependentSize);
+  return (
+    Math.abs(Math.cos(angleInRadian) * axisSize) + Math.abs(Math.sin(angleInRadian) * dependentSize)
+  );
 };
 
 /**
@@ -76,7 +77,7 @@ const _getSizeWithRotate = (axisSize, dependentSize, angle) => {
  * @param  {string} length Css length string value.
  * @param  {number} fontSize Current text font-size.
  * @returns {number} Approximate Css length in pixels.
-*/
+ */
 const convertLengthToPixels = (length, fontSize) => {
   const attribute = length.match(/[a-zA-Z%]+/)[0];
   const value = length.match(/[0-9.,]+/);
@@ -84,8 +85,9 @@ const convertLengthToPixels = (length, fontSize) => {
   if (absoluteMeasurementUnitsToPixels.hasOwnProperty(attribute)) {
     result = value * absoluteMeasurementUnitsToPixels[attribute];
   } else if (relativeMeasurementUnitsCoef.hasOwnProperty(attribute)) {
-    result = (fontSize ? value * fontSize : value * defaultStyle.fontSize)
-      * relativeMeasurementUnitsCoef[attribute];
+    result =
+      (fontSize ? value * fontSize : value * defaultStyle.fontSize) *
+      relativeMeasurementUnitsCoef[attribute];
   } else {
     result = value;
   }
@@ -98,9 +100,10 @@ const _prepareParams = (inputStyle, index) => {
   return assign({}, style, {
     characterConstant: style.characterConstant || _getFontCharacterConstant(style.fontFamily),
     letterSpacing: convertLengthToPixels(style.letterSpacing, style.fontSize),
-    fontSize: typeof (style.fontSize) === "number"
-      ? style.fontSize
-      : convertLengthToPixels(String(style.fontSize))
+    fontSize:
+      typeof style.fontSize === "number"
+        ? style.fontSize
+        : convertLengthToPixels(String(style.fontSize))
   });
 };
 
@@ -111,7 +114,7 @@ const _approximateTextWidthInternal = (text, style) => {
   const widths = _splitToLines(text).map((line, index) => {
     const len = line.toString().length;
     const { fontSize, characterConstant, letterSpacing } = _prepareParams(style, index);
-    return (len * fontSize / characterConstant) + letterSpacing * (Math.max(len - 1, 0));
+    return (len * fontSize) / characterConstant + letterSpacing * Math.max(len - 1, 0);
   });
   return Math.max(...widths);
 };
@@ -123,8 +126,9 @@ const _approximateTextHeightInternal = (text, style) => {
   return _splitToLines(text).reduce((total, line, index) => {
     const lineStyle = _prepareParams(style, index);
     const containsCaps = line.toString().match(/[(A-Z)(0-9)]/);
-    const height = containsCaps ?
-      lineStyle.fontSize * coefficients.lineCapitalCoef : lineStyle.fontSize;
+    const height = containsCaps
+      ? lineStyle.fontSize * coefficients.lineCapitalCoef
+      : lineStyle.fontSize;
     const emptySpace = index === 0 ? 0 : lineStyle.fontSize * coefficients.lineSpaceHeightCoef;
     return total + lineStyle.lineHeight * (height + emptySpace);
   }, 0);
@@ -141,7 +145,7 @@ const _approximateTextHeightInternal = (text, style) => {
  * @param {number} style.characterConstant Average pixels per glyph.
  * @param {number} style.lineHeight Line height coefficient.
  * @returns {number} Approximate text label height.
-*/
+ */
 const approximateTextSize = (text, style) => {
   const angle = Array.isArray(style) ? style[0] && style[0].angle : style && style.angle;
   const height = _approximateTextHeightInternal(text, style);

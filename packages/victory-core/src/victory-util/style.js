@@ -7,11 +7,13 @@
  * @param {Object} obj An object of transform definitions.
  * @returns {String} The generated transform string.
  */
-const toTransformString = function (obj, ...more) {
+const toTransformString = function(obj, ...more) {
   if (more.length > 0) {
-    return more.reduce((memo, currentObj) => {
-      return [memo, toTransformString(currentObj)].join(" ");
-    }, toTransformString(obj)).trim();
+    return more
+      .reduce((memo, currentObj) => {
+        return [memo, toTransformString(currentObj)].join(" ");
+      }, toTransformString(obj))
+      .trim();
   } else {
     if (obj === undefined || obj === null || typeof obj === "string") {
       return obj;
@@ -28,7 +30,6 @@ const toTransformString = function (obj, ...more) {
 };
 
 export default {
-
   toTransformString,
 
   /**
@@ -40,12 +41,18 @@ export default {
    */
   getColorScale(name) {
     const scales = {
-      grayscale: [
-        "#cccccc", "#969696", "#636363", "#252525"
-      ],
+      grayscale: ["#cccccc", "#969696", "#636363", "#252525"],
       qualitative: [
-        "#334D5C", "#45B29D", "#EFC94C", "#E27A3F", "#DF5A49",
-        "#4F7DA1", "#55DBC1", "#EFDA97", "#E2A37F", "#DF948A"
+        "#334D5C",
+        "#45B29D",
+        "#EFC94C",
+        "#E27A3F",
+        "#DF5A49",
+        "#4F7DA1",
+        "#55DBC1",
+        "#EFDA97",
+        "#E2A37F",
+        "#DF948A"
       ],
       heatmap: ["#428517", "#77D200", "#D6D305", "#EC8E19", "#C92B05"],
       warm: ["#940031", "#C43343", "#DC5429", "#FF821D", "#FFAF55"],

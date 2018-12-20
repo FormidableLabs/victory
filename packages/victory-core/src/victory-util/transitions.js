@@ -53,7 +53,7 @@ function getChildData(child) {
   if (child.type && child.type.getData) {
     return child.type.getData(child.props);
   }
-  return child.props && child.props.data || false;
+  return (child.props && child.props.data) || false;
 }
 
 /**
@@ -127,7 +127,8 @@ function getInitialChildProps(animate, data) {
   };
 }
 
-function getChildBeforeLoad(animate, child, data, cb) { // eslint-disable-line max-params
+// eslint-disable-next-line max-params
+function getChildBeforeLoad(animate, child, data, cb) {
   animate = assign({}, animate, { onEnd: cb });
   if (animate && animate.onLoad && !animate.onLoad.duration) {
     return { animate, data };
@@ -141,7 +142,8 @@ function getChildBeforeLoad(animate, child, data, cb) { // eslint-disable-line m
   return { animate, data, clipWidth: 0 };
 }
 
-function getChildOnLoad(animate, data, cb) { // eslint-disable-line max-params
+// eslint-disable-next-line max-params
+function getChildOnLoad(animate, data, cb) {
   animate = assign({}, animate, { onEnd: cb });
   if (animate && animate.onLoad && !animate.onLoad.duration) {
     return { animate, data };
@@ -155,7 +157,8 @@ function getChildOnLoad(animate, data, cb) { // eslint-disable-line max-params
   return { animate, data };
 }
 
-function getChildPropsOnExit(animate, child, data, exitingNodes, cb) { // eslint-disable-line max-params, max-len
+// eslint-disable-next-line max-params, max-len
+function getChildPropsOnExit(animate, child, data, exitingNodes, cb) {
   // Whether or not _this_ child has exiting nodes, we want the exit-
   // transition for all children to have the same duration, delay, etc.
   const onExit = animate && animate.onExit;
@@ -176,7 +179,8 @@ function getChildPropsOnExit(animate, child, data, exitingNodes, cb) { // eslint
   return { animate, data };
 }
 
-function getChildPropsBeforeEnter(animate, child, data, enteringNodes, cb) { // eslint-disable-line max-params,max-len
+// eslint-disable-next-line max-params,max-len
+function getChildPropsBeforeEnter(animate, child, data, enteringNodes, cb) {
   if (enteringNodes) {
     // Perform a normal animation here, except - when it finishes - trigger
     // the transition for entering nodes.
@@ -194,7 +198,8 @@ function getChildPropsBeforeEnter(animate, child, data, enteringNodes, cb) { // 
   return { animate, data };
 }
 
-function getChildPropsOnEnter(animate, data, enteringNodes, cb) { // eslint-disable-line max-params, max-len
+// eslint-disable-next-line max-params, max-len
+function getChildPropsOnEnter(animate, data, enteringNodes, cb) {
   // Whether or not _this_ child has entering nodes, we want the entering-
   // transition for all children to have the same duration, delay, etc.
   const onEnter = animate && animate.onEnter;
@@ -238,7 +243,7 @@ function getTransitionPropsFactory(props, state, setState) {
   const nodesShouldEnter = state && state.nodesShouldEnter;
   const nodesShouldLoad = state && state.nodesShouldLoad;
   const nodesDoneLoad = state && state.nodesDoneLoad;
-  const childrenTransitions = state && state.childrenTransitions || [];
+  const childrenTransitions = (state && state.childrenTransitions) || [];
   const transitionDurations = {
     enter: props.animate && props.animate.onEnter && props.animate.onEnter.duration,
     exit: props.animate && props.animate.onExit && props.animate.onExit.duration,
@@ -258,13 +263,15 @@ function getTransitionPropsFactory(props, state, setState) {
     });
   };
 
-  const onExit = (nodes, child, data, animate) => { // eslint-disable-line max-params
+  // eslint-disable-next-line max-params
+  const onExit = (nodes, child, data, animate) => {
     return getChildPropsOnExit(animate, child, data, nodes, () => {
       setState({ nodesWillExit: false });
     });
   };
 
-  const onEnter = (nodes, child, data, animate) => { // eslint-disable-line max-params
+  // eslint-disable-next-line max-params
+  const onEnter = (nodes, child, data, animate) => {
     if (nodesShouldEnter) {
       return getChildPropsOnEnter(animate, data, nodes, () => {
         setState({ nodesWillEnter: false });
@@ -276,61 +283,72 @@ function getTransitionPropsFactory(props, state, setState) {
     });
   };
 
-  const getChildTransitionDuration = function (child, type) {
+  const getChildTransitionDuration = function(child, type) {
     const animate = child.props.animate;
     if (!child.type) {
       return {};
     }
-    const defaultTransitions = child.props && child.props.polar ?
-      child.type.defaultPolarTransitions || child.type.defaultTransitions :
-      child.type.defaultTransitions;
+    const defaultTransitions =
+      child.props && child.props.polar
+        ? child.type.defaultPolarTransitions || child.type.defaultTransitions
+        : child.type.defaultTransitions;
     if (defaultTransitions) {
       const animationDuration = animate[type] && animate[type].duration;
-      return animationDuration !== undefined ?
-        animationDuration : defaultTransitions[type] && defaultTransitions[type].duration;
+      return animationDuration !== undefined
+        ? animationDuration
+        : defaultTransitions[type] && defaultTransitions[type].duration;
     } else {
       return {};
     }
   };
 
-  return function getTransitionProps(child, index) { // eslint-disable-line max-statements, complexity, max-len
+  // eslint-disable-next-line max-statements, complexity, max-len
+  return function getTransitionProps(child, index) {
     const data = getChildData(child) || [];
     const animate = defaults({}, props.animate, child.props.animate);
-    const defaultTransitions = child.props.polar ?
-      child.type.defaultPolarTransitions || child.type.defaultTransitions :
-      child.type.defaultTransitions;
+    const defaultTransitions = child.props.polar
+      ? child.type.defaultPolarTransitions || child.type.defaultTransitions
+      : child.type.defaultTransitions;
 
-    animate.onExit = defaults(
-      {}, animate.onExit, defaultTransitions && defaultTransitions.onExit
-    );
+    animate.onExit = defaults({}, animate.onExit, defaultTransitions && defaultTransitions.onExit);
     animate.onEnter = defaults(
-      {}, animate.onEnter, defaultTransitions && defaultTransitions.onEnter
+      {},
+      animate.onEnter,
+      defaultTransitions && defaultTransitions.onEnter
     );
-    animate.onLoad = defaults(
-      {}, animate.onLoad, defaultTransitions && defaultTransitions.onLoad
-    );
+    animate.onLoad = defaults({}, animate.onLoad, defaultTransitions && defaultTransitions.onLoad);
 
     const childTransitions = childrenTransitions[index] || childrenTransitions[0];
     if (!nodesDoneLoad) {
       // should do onLoad animation
-      const load = transitionDurations.load !== undefined ?
-        transitionDurations.load : getChildTransitionDuration(child, "onLoad");
+      const load =
+        transitionDurations.load !== undefined
+          ? transitionDurations.load
+          : getChildTransitionDuration(child, "onLoad");
       const animation = { duration: load };
       return onLoad(child, data, assign({}, animate, animation));
     } else if (nodesWillExit) {
       const exitingNodes = childTransitions && childTransitions.exiting;
-      const exit = transitionDurations.exit !== undefined ?
-        transitionDurations.exit : getChildTransitionDuration(child, "onExit");
+      const exit =
+        transitionDurations.exit !== undefined
+          ? transitionDurations.exit
+          : getChildTransitionDuration(child, "onExit");
       // if nodesWillExit, but this child has no exiting nodes, set a delay instead of a duration
       const animation = exitingNodes ? { duration: exit } : { delay: exit };
       return onExit(exitingNodes, child, data, assign({}, animate, animation));
     } else if (nodesWillEnter) {
       const enteringNodes = childTransitions && childTransitions.entering;
-      const enter = transitionDurations.enter !== undefined ?
-        transitionDurations.enter : getChildTransitionDuration(child, "onEnter");
-      const move = transitionDurations.move !== undefined ?
-        transitionDurations.move : child.props.animate && child.props.animate.duration;
-      const animation = { duration: nodesShouldEnter && enteringNodes ? enter : move };
+      const enter =
+        transitionDurations.enter !== undefined
+          ? transitionDurations.enter
+          : getChildTransitionDuration(child, "onEnter");
+      const move =
+        transitionDurations.move !== undefined
+          ? transitionDurations.move
+          : child.props.animate && child.props.animate.duration;
+      const animation = {
+        duration: nodesShouldEnter && enteringNodes ? enter : move
+      };
       return onEnter(enteringNodes, child, data, assign({}, animate, animation));
     } else if (!state && animate && animate.onExit) {
       // This is the initial render, and nodes may enter when props change. Because

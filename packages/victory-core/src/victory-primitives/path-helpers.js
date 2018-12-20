@@ -9,7 +9,6 @@ export default {
       a ${size}, ${size} 0 1,0 ${-size * 2},0`;
   },
 
-
   square(x, y, size) {
     const baseSize = 0.87 * size; // eslint-disable-line no-magic-numbers
     const x0 = x - baseSize;
@@ -34,7 +33,7 @@ export default {
   },
 
   triangleDown(x, y, size) {
-    const height = size / 2 * Math.sqrt(3);
+    const height = (size / 2) * Math.sqrt(3);
     const x0 = x - size;
     const x1 = x + size;
     const y0 = y - size;
@@ -46,7 +45,7 @@ export default {
   },
 
   triangleUp(x, y, size) {
-    const height = size / 2 * Math.sqrt(3);
+    const height = (size / 2) * Math.sqrt(3);
     const x0 = x - size;
     const x1 = x + size;
     const y0 = y - height;
@@ -61,7 +60,7 @@ export default {
     const baseSize = 1.1 * size; // eslint-disable-line no-magic-numbers
     const distance = baseSize / 1.5; // eslint-disable-line no-magic-numbers
     return `
-      M ${x - (distance / 2)}, ${y + baseSize}
+      M ${x - distance / 2}, ${y + baseSize}
       v-${distance}
       h-${distance}
       v-${distance}
@@ -77,9 +76,8 @@ export default {
   },
 
   minus(x, y, size) {
-
     const baseSize = 1.1 * size; // eslint-disable-line no-magic-numbers
-    const lineHeight = baseSize - baseSize * 0.3;// eslint-disable-line no-magic-numbers
+    const lineHeight = baseSize - baseSize * 0.3; // eslint-disable-line no-magic-numbers
     const x0 = x - baseSize;
     const y1 = y + lineHeight / 2;
     const distance = x + baseSize - x0;
@@ -93,7 +91,8 @@ export default {
   star(x, y, size) {
     const baseSize = 1.35 * size; // eslint-disable-line no-magic-numbers
     const angle = Math.PI / 5; // eslint-disable-line no-magic-numbers
-    const starCoords = range(10).map((index) => { // eslint-disable-line no-magic-numbers
+    // eslint-disable-next-line no-magic-numbers
+    const starCoords = range(10).map((index) => {
       const length = index % 2 === 0 ? baseSize : baseSize / 2;
       return `${length * Math.sin(angle * (index + 1)) + x},
         ${length * Math.cos(angle * (index + 1)) + y}`;

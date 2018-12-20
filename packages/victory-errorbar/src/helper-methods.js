@@ -14,12 +14,13 @@ const getErrors = (datum, scale, axis) => {
     return false;
   }
 
-  return Array.isArray(errors) ?
-    [ errors[0] === 0 ? false : scale[axis](errors[0] + datum[`_${axis}`]),
-      errors[1] === 0 ? false : scale[axis](datum[`_${axis}`] - errors[1]) ] :
-    [ scale[axis](errors + datum[`_${axis}`]), scale[axis](datum[`_${axis}`] - errors) ];
+  return Array.isArray(errors)
+    ? [
+        errors[0] === 0 ? false : scale[axis](errors[0] + datum[`_${axis}`]),
+        errors[1] === 0 ? false : scale[axis](datum[`_${axis}`] - errors[1])
+      ]
+    : [scale[axis](errors + datum[`_${axis}`]), scale[axis](datum[`_${axis}`] - errors)];
 };
-
 
 const getData = (props) => {
   const accessorTypes = ["x", "y", "errorX", "errorY"];
@@ -48,11 +49,11 @@ const getDomainFromData = (props, axis) => {
     const errorIndex = type === "min" ? 1 : 0;
     const sign = type === "min" ? -1 : 1;
     return dataset.reduce((memo, datum) => {
-      const currentError = Array.isArray(datum[error]) ?
-        datum[error][errorIndex] : datum[error];
+      const currentError = Array.isArray(datum[error]) ? datum[error][errorIndex] : datum[error];
       const current = datum[`_${currentAxis}`] + sign * (currentError || 0);
-      return (memo < current && type === "min") || (memo > current && type === "max") ?
-        memo : current;
+      return (memo < current && type === "min") || (memo > current && type === "max")
+        ? memo
+        : current;
     }, baseCondition);
   };
 
@@ -66,8 +67,10 @@ const getDomain = (props, axis) => {
 };
 
 const getCalculatedValues = (props) => {
-  const defaultStyles = props.theme && props.theme.errorbar && props.theme.errorbar.style ?
-    props.theme.errorbar.style : {};
+  const defaultStyles =
+    props.theme && props.theme.errorbar && props.theme.errorbar.style
+      ? props.theme.errorbar.style
+      : {};
   const style = Helpers.getStyles(props.style, defaultStyles) || {};
   const data = getData(props);
   const range = {
@@ -79,8 +82,12 @@ const getCalculatedValues = (props) => {
     y: getDomain(props, "y")
   };
   const scale = {
-    x: Scale.getBaseScale(props, "x").domain(domain.x).range(range.x),
-    y: Scale.getBaseScale(props, "y").domain(domain.y).range(range.y)
+    x: Scale.getBaseScale(props, "x")
+      .domain(domain.x)
+      .range(range.x),
+    y: Scale.getBaseScale(props, "y")
+      .domain(domain.y)
+      .range(range.y)
   };
   const origin = props.polar ? props.origin || Helpers.getPolarOrigin(props) : undefined;
   return { domain, data, scale, style, origin };
@@ -110,13 +117,35 @@ const getBaseProps = (props, fallbackProps) => {
   props = Helpers.modifyProps(props, fallbackProps, "errorbar");
   const { data, style, scale, domain, origin } = getCalculatedValues(props, fallbackProps);
   const {
-    groupComponent, height, width, borderWidth, standalone, theme, polar, padding,
-    labels, events, sharedEvents, name
+    groupComponent,
+    height,
+    width,
+    borderWidth,
+    standalone,
+    theme,
+    polar,
+    padding,
+    labels,
+    events,
+    sharedEvents,
+    name
   } = props;
-  const initialChildProps = { parent: {
-    domain, scale, data, height, width, standalone, theme, polar, origin, name,
-    padding, style: style.parent
-  } };
+  const initialChildProps = {
+    parent: {
+      domain,
+      scale,
+      data,
+      height,
+      width,
+      standalone,
+      theme,
+      polar,
+      origin,
+      name,
+      padding,
+      style: style.parent
+    }
+  };
 
   return data.reduce((childProps, datum, index) => {
     const eventKey = datum.eventKey || index;
@@ -124,7 +153,14 @@ const getBaseProps = (props, fallbackProps) => {
     const y = scale.y(datum._y1 !== undefined ? datum._y1 : datum._y);
 
     const dataProps = {
-      x, y, scale, datum, data, index, groupComponent, borderWidth,
+      x,
+      y,
+      scale,
+      datum,
+      data,
+      index,
+      groupComponent,
+      borderWidth,
       style: style.data,
       errorX: getErrors(datum, scale, "x"),
       errorY: getErrors(datum, scale, "y")
@@ -134,7 +170,7 @@ const getBaseProps = (props, fallbackProps) => {
       data: dataProps
     };
     const text = LabelHelpers.getText(props, datum, index);
-    if (text !== undefined && text !== null || (labels && (events || sharedEvents))) {
+    if ((text !== undefined && text !== null) || (labels && (events || sharedEvents))) {
       childProps[eventKey].labels = getLabelProps(dataProps, text, style);
     }
 

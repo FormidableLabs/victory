@@ -1,5 +1,16 @@
 import {
-  Border, Box, ClipPath, LineSegment, Whisker, Circle, Rect, Line, Path, TSpan, Text, Point,
+  Border,
+  Box,
+  ClipPath,
+  LineSegment,
+  Whisker,
+  Circle,
+  Rect,
+  Line,
+  Path,
+  TSpan,
+  Text,
+  Point,
   VictoryAnimation,
   VictoryContainer,
   VictoryLabel,
@@ -8,8 +19,23 @@ import {
   VictoryPortal,
   Portal,
   VictoryClipContainer,
-  addEvents, Collection, Data, DefaultTransitions, Domain, Events, Helpers, Log,
-  PropTypes, Scale, Style, TextSize, Transitions, Selection, LabelHelpers, Axis, Wrapper
+  addEvents,
+  Collection,
+  Data,
+  DefaultTransitions,
+  Domain,
+  Events,
+  Helpers,
+  Log,
+  PropTypes,
+  Scale,
+  Style,
+  TextSize,
+  Transitions,
+  Selection,
+  LabelHelpers,
+  Axis,
+  Wrapper
 } from "victory-core";
 
 import { VictoryChart } from "victory-chart";
@@ -27,19 +53,30 @@ import { VictoryVoronoi, Voronoi } from "victory-voronoi";
 import { VictoryBrushLine } from "victory-brush-line";
 import { VictoryBrushContainer, BrushHelpers, brushContainerMixin } from "victory-brush-container";
 import {
-  VictoryCursorContainer, CursorHelpers, cursorContainerMixin
+  VictoryCursorContainer,
+  CursorHelpers,
+  cursorContainerMixin
 } from "victory-cursor-container";
 import {
-  VictorySelectionContainer, SelectionHelpers, selectionContainerMixin
+  VictorySelectionContainer,
+  SelectionHelpers,
+  selectionContainerMixin
 } from "victory-selection-container";
 import {
-  VictoryVoronoiContainer, VoronoiHelpers, voronoiContainerMixin
+  VictoryVoronoiContainer,
+  VoronoiHelpers,
+  voronoiContainerMixin
 } from "victory-voronoi-container";
 import {
-  VictoryZoomContainer, ZoomHelpers, zoomContainerMixin, RawZoomHelpers
+  VictoryZoomContainer,
+  ZoomHelpers,
+  zoomContainerMixin,
+  RawZoomHelpers
 } from "victory-zoom-container";
 import {
-  combineContainerMixins, makeCreateContainerFunction, createContainer
+  combineContainerMixins,
+  makeCreateContainerFunction,
+  createContainer
 } from "victory-create-container";
 
 import { VictoryTooltip, Flyout } from "victory-tooltip";
@@ -49,8 +86,26 @@ import { VictoryAxis } from "victory-axis";
 import { VictoryPolarAxis } from "victory-polar-axis";
 
 export {
-  Area, Bar, Border, Box, Candle, ClipPath, Curve, ErrorBar, LineSegment, Point, Slice, Voronoi,
-  Flyout, Whisker, Circle, Rect, Line, Path, TSpan, Text,
+  Area,
+  Bar,
+  Border,
+  Box,
+  Candle,
+  ClipPath,
+  Curve,
+  ErrorBar,
+  LineSegment,
+  Point,
+  Slice,
+  Voronoi,
+  Flyout,
+  Whisker,
+  Circle,
+  Rect,
+  Line,
+  Path,
+  TSpan,
+  Text,
   VictoryAnimation,
   VictoryArea,
   VictoryAxis,
@@ -74,14 +129,43 @@ export {
   VictoryVoronoi,
   VictoryPortal,
   Portal,
-  VictoryContainer, VictoryClipContainer,
-  VictoryZoomContainer, ZoomHelpers, zoomContainerMixin, RawZoomHelpers,
-  VictorySelectionContainer, SelectionHelpers, selectionContainerMixin,
-  VictoryBrushContainer, BrushHelpers, brushContainerMixin,
-  VictoryCursorContainer, CursorHelpers, cursorContainerMixin,
-  VictoryVoronoiContainer, VoronoiHelpers, voronoiContainerMixin,
-  combineContainerMixins, makeCreateContainerFunction, createContainer,
+  VictoryContainer,
+  VictoryClipContainer,
+  VictoryZoomContainer,
+  ZoomHelpers,
+  zoomContainerMixin,
+  RawZoomHelpers,
+  VictorySelectionContainer,
+  SelectionHelpers,
+  selectionContainerMixin,
+  VictoryBrushContainer,
+  BrushHelpers,
+  brushContainerMixin,
+  VictoryCursorContainer,
+  CursorHelpers,
+  cursorContainerMixin,
+  VictoryVoronoiContainer,
+  VoronoiHelpers,
+  voronoiContainerMixin,
+  combineContainerMixins,
+  makeCreateContainerFunction,
+  createContainer,
   VictoryBrushLine,
-  addEvents, Collection, Data, DefaultTransitions, Domain, Events, Helpers, Log,
-  PropTypes, Scale, Style, TextSize, Transitions, Selection, LabelHelpers, Axis, Wrapper
+  addEvents,
+  Collection,
+  Data,
+  DefaultTransitions,
+  Domain,
+  Events,
+  Helpers,
+  Log,
+  PropTypes,
+  Scale,
+  Style,
+  TextSize,
+  Transitions,
+  Selection,
+  LabelHelpers,
+  Axis,
+  Wrapper
 };

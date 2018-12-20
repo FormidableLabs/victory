@@ -85,7 +85,7 @@ export default class App extends React.Component {
   }
 
   getArrayData() {
-    return range(40).map((i) => [i, i + (Math.random() * 3)]);
+    return range(40).map((i) => [i, i + Math.random() * 3]);
   }
 
   getStyles() {
@@ -115,7 +115,11 @@ export default class App extends React.Component {
             style={{ data: { fill: "cyan", stroke: "cyan" } }}
             labels={(d) => Math.round(d.y)}
             data={[
-              { x: 1, y: 0.2 }, { x: 2, y: 3 }, { x: 3, y: 50 }, { x: 4, y: 400 }, { x: 5, y: 70 }
+              { x: 1, y: 0.2 },
+              { x: 2, y: 3 },
+              { x: 3, y: 50 },
+              { x: 4, y: 400 },
+              { x: 5, y: 70 }
             ]}
           />
         </VictoryChart>
@@ -124,7 +128,11 @@ export default class App extends React.Component {
           <VictoryArea
             style={{ data: { fill: "cyan", stroke: "cyan" } }}
             data={[
-              { x: 1, y: 0.2 }, { x: 2, y: 3 }, { x: 3, y: 50 }, { x: 4, y: 400 }, { x: 5, y: 70 }
+              { x: 1, y: 0.2 },
+              { x: 2, y: 3 },
+              { x: 3, y: 50 },
+              { x: 4, y: 400 },
+              { x: 5, y: 70 }
             ]}
           />
         </VictoryChart>
@@ -152,19 +160,11 @@ export default class App extends React.Component {
           }}
           colorScale={"warm"}
           containerComponent={
-            <VictoryContainer
-              desc="This is an animated area chart that displays data in a range of colors."
-            />
+            <VictoryContainer desc="This is an animated area chart that displays data in a range of colors." />
           }
         >
           {this.state.multiTransitionData.map((data, index) => {
-            return (
-              <VictoryArea
-                key={index}
-                data={data}
-                interpolation={"basis"}
-              />
-            );
+            return <VictoryArea key={index} data={data} interpolation={"basis"} />;
           })}
         </VictoryStack>
 
@@ -176,7 +176,7 @@ export default class App extends React.Component {
           animate={{ duration: 2000 }}
         />
 
-      <VictoryStack style={{ parent: style.parent }}>
+        <VictoryStack style={{ parent: style.parent }}>
           <VictoryArea
             data={[{ x: 1, y: 2 }, { x: 2, y: 3 }, { x: 3, y: 5 }, { x: 4, y: 4 }, { x: 5, y: 7 }]}
           />
@@ -212,9 +212,10 @@ export default class App extends React.Component {
           colorScale={"green"}
           animate={{ duration: 2000 }}
         >
-          {this.state.groupedData.map((data, index) => <VictoryArea data={data} key={index}/>)}
+          {this.state.groupedData.map((data, index) => (
+            <VictoryArea data={data} key={index} />
+          ))}
         </VictoryStack>
-
 
         <VictoryArea
           style={{ parent: style.parent, data: { fill: "red" } }}
@@ -229,32 +230,34 @@ export default class App extends React.Component {
             parent: style.parent,
             data: { fill: "gold" }
           }}
-          events={[{
-            target: "parent",
-            eventHandlers: {
-              onClick: () => {
-                return [
-                  {
-                    target: "data",
-                    mutation: (props) => {
-                      return { style: merge({}, props.style, { fill: "orange" }) };
+          events={[
+            {
+              target: "parent",
+              eventHandlers: {
+                onClick: () => {
+                  return [
+                    {
+                      target: "data",
+                      mutation: (props) => {
+                        return { style: merge({}, props.style, { fill: "orange" }) };
+                      }
+                    },
+                    {
+                      target: "labels",
+                      eventKey: 0,
+                      mutation: () => {
+                        return { text: "hey" };
+                      }
                     }
-                  }, {
-                    target: "labels",
-                    eventKey: 0,
-                    mutation: () => {
-                      return { text: "hey" };
-                    }
-                  }
-                ];
+                  ];
+                }
               }
             }
-          }]}
+          ]}
           labels={() => null}
           data={this.state.arrayData}
           x={0}
           y={1}
-
         />
 
         <VictoryArea
@@ -287,11 +290,7 @@ export default class App extends React.Component {
           ]}
         />
 
-        <svg
-          width={450}
-          height={300}
-          style={style.parent}
-        >
+        <svg width={450} height={300} style={style.parent}>
           <VictoryArea
             y={(data) => Math.sin(data.x)}
             standalone={false}
@@ -304,12 +303,10 @@ export default class App extends React.Component {
           />
         </svg>
 
-        <VictoryChart
-          style={style}
-          theme={VictoryTheme.material}
-        >
+        <VictoryChart style={style} theme={VictoryTheme.material}>
           <VictoryArea
-            style={style} animate={{ duration: 1000 }}
+            style={style}
+            animate={{ duration: 1000 }}
             data={this.state.areaTransitionData}
             containerComponent={
               <VictoryContainer
@@ -325,19 +322,11 @@ export default class App extends React.Component {
           animate={{ duration: 1000 }}
           theme={VictoryTheme.material}
           containerComponent={
-            <VictoryContainer
-              desc="This is an animated area chart that displays data in a range of colors."
-            />
+            <VictoryContainer desc="This is an animated area chart that displays data in a range of colors." />
           }
         >
           {this.state.multiTransitionData.map((data, index) => {
-            return (
-              <VictoryArea
-                key={index}
-                data={data}
-                interpolation={"basis"}
-              />
-            );
+            return <VictoryArea key={index} data={data} interpolation={"basis"} />;
           })}
         </VictoryStack>
 
@@ -356,16 +345,9 @@ export default class App extends React.Component {
           />
         </VictoryStack>
 
-        <VictoryChart
-          style={style}
-          theme={VictoryTheme.material}
-        >
-          <VictoryArea
-            style={style}
-            data={[]}
-          />
+        <VictoryChart style={style} theme={VictoryTheme.material}>
+          <VictoryArea style={style} data={[]} />
         </VictoryChart>
-
       </div>
     );
   }

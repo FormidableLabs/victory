@@ -1,4 +1,3 @@
-
 # VictoryScatter
 
 `victory-scatter@^30.0.0` exports `VictoryScatter`
@@ -49,7 +48,7 @@ animate={{
 
 The `bubbleProperty` prop indicates which property of the data object should be used to scale data points in a bubble chart. If a `bubbleProperty` is given, `size` and `symbol` props will be ignored. Bubble charts always render circular points.
 
-*default:* `bubbleProperty="z"`
+_default:_ `bubbleProperty="z"`
 
 ```playground
 <VictoryScatter
@@ -119,7 +118,7 @@ In addition to svg style properties and `label`, `VictoryScatter` will also pref
 
 See the [Custom Components Guide][] for more detail on creating your own `dataComponents`
 
-*default:* `<Point/>`
+_default:_ `<Point/>`
 
 ```playground_norender
 class CatPoint extends React.Component {
@@ -177,7 +176,7 @@ domainPadding={{x: [10, -10], y: 5}}
 `VictoryScatter` uses the standard `eventKey` prop to specify how event targets are addressed. **This prop is not commonly used.** [Read about the `eventKey` prop in more detail here](https://formidable.com/open-source/victory/docs/common-props#eventkey)
 
 ```jsx
-eventKey="x"
+eventKey = "x";
 ```
 
 ### events
@@ -234,7 +233,7 @@ See the [Events Guide][] for more information on defining events.
 
 `VictoryScatter` uses the standard `groupComponent` prop. [Read about it in detail here](https://formidable.com/open-source/victory/docs/common-props#groupcomponent)
 
-*default:* `<g/>`
+_default:_ `<g/>`
 
 ```playground
 <VictoryChart>
@@ -252,7 +251,7 @@ See the [Events Guide][] for more information on defining events.
 
 `VictoryScatter` uses the standard `height` prop. [Read about it in detail here](https://formidable.com/open-source/victory/docs/common-props#height)
 
-*default (provided by default theme):* `height={300}`
+_default (provided by default theme):_ `height={300}`
 
 ```jsx
 height={400}
@@ -264,7 +263,7 @@ height={400}
 
 `VictoryScatter` uses the standard `labelComponent` prop. [Read about it in detail here](https://formidable.com/open-source/victory/docs/common-props#labelcomponent)
 
-*default:* `<VictoryLabel/>`
+_default:_ `<VictoryLabel/>`
 
 ```playground
 <VictoryScatter
@@ -300,12 +299,12 @@ For more information on bubble charts, see [`bubbleProperty`][]
 ```jsx
 maxBubbleSize={25}
 ```
+
 ### maxDomain
 
 `type: number || { x: number, y: number }`
 
 `VictoryScatter` uses the standard `maxDomain` prop. [Read about it in detail](https://formidable.com/open-source/victory/docs/common-props#maxDomain)
-
 
 ```playground
 <VictoryChart maxDomain={8}>
@@ -331,7 +330,6 @@ minBubbleSize={5}
 
 `VictoryScatter` uses the standard `minDomain` prop. [Read about it in detail](https://formidable.com/open-source/victory/docs/common-props#minDomain)
 
-
 ```playground
 <VictoryChart minDomain={0}>
   <VictoryScatter data={sampleData}/>
@@ -345,7 +343,7 @@ minBubbleSize={5}
 The `name` prop is used to reference a component instance when defining shared events.
 
 ```jsx
-name="series-1"
+name = "series-1";
 ```
 
 ### origin
@@ -362,7 +360,7 @@ name="series-1"
 
 `VictoryScatter` uses the standard `padding` prop. [Read about it in detail here](https://formidable.com/open-source/victory/docs/common-props#padding)
 
-*default (provided by default theme):* `padding={50}`
+_default (provided by default theme):_ `padding={50}`
 
 ```jsx
 padding={{ top: 20, bottom: 60 }}
@@ -408,7 +406,7 @@ padding={{ top: 20, bottom: 60 }}
 
 `VictoryScatter` uses the standard `samples` prop to generate data when plotting functions. [Read about it in more detail here](https://formidable.com/open-source/victory/docs/common-props#samples)
 
-*default:* `samples={50}`
+_default:_ `samples={50}`
 
 ```jsx
 samples={100}
@@ -421,7 +419,7 @@ samples={100}
 `VictoryScatter` uses the standard `scale` prop. [Read about it here](https://formidable.com/open-source/victory/docs/common-props#scale)
 Options for scale include "linear", "time", "log", "sqrt" and the `d3-scale` functions that correspond to these options.
 
-*default:* `scale="linear"`
+_default:_ `scale="linear"`
 
 ```jsx
 scale={{x: "linear", y: "log"}}
@@ -457,7 +455,7 @@ The `size` prop determines how to scale each data point. This prop may also be g
 `VictoryScatter` uses the standard `sortKey` prop to determine how data should be ordered. [Read about it in more detail here](https://formidable.com/open-source/victory/docs/common-props#sortkey)
 
 ```jsx
-sortKey="x"
+sortKey = "x";
 ```
 
 ### sortOrder
@@ -466,7 +464,7 @@ sortKey="x"
 
 The `sortOrder` prop specifies whether sorted data should be returned in ascending or descending order.
 
-*default:* `sortOrder="ascending"`
+_default:_ `sortOrder="ascending"`
 
 ### standalone
 
@@ -476,7 +474,7 @@ The `sortOrder` prop specifies whether sorted data should be returned in ascendi
 
 **note:** When `VictoryScatter` is nested within a component like `VictoryChart`, this prop will be set to `false`
 
-*default:* `standalone={true}`
+_default:_ `standalone={true}`
 
 ```playground
 <svg width={300} height={300}>
@@ -490,14 +488,13 @@ The `sortOrder` prop specifies whether sorted data should be returned in ascendi
 </svg>
 ```
 
-
 ### style
 
 `type: { parent: object, data: object, labels: object }`
 
 `VictoryScatter` uses the standard `style` prop. [Read about it in detail here](https://formidable.com/open-source/victory/docs/common-props#style)
 
-*default (provided by default theme):* See [grayscale theme][] for more detail
+_default (provided by default theme):_ See [grayscale theme][] for more detail
 
 ```playground
 <VictoryScatter
@@ -525,7 +522,7 @@ The `sortOrder` prop specifies whether sorted data should be returned in ascendi
 
 The `symbol` prop determines which symbol should be drawn to represent data points. Options are: "circle", "diamond", "plus", "square", "star", "triangleDown", "triangleUp". This prop may also be given as a function of data. If no `symbol` prop is specified, a circle will be rendered. `symbol` may also be set directly on each data object.
 
-*default:* `symbol="circle"`
+_default:_ `symbol="circle"`
 
 ```playground
 <VictoryScatter
@@ -543,7 +540,7 @@ The `symbol` prop determines which symbol should be drawn to represent data poin
 
 See the [Themes Guide][] for information about creating custom themes.
 
-*default:* `theme={VictoryTheme.grayscale}`
+_default:_ `theme={VictoryTheme.grayscale}`
 
 ```jsx
 theme={VictoryTheme.material}
@@ -555,7 +552,7 @@ theme={VictoryTheme.material}
 
 `VictoryScatter` uses the standard `width` prop. [Read about it in detail here](https://formidable.com/open-source/victory/docs/common-props#width)
 
-*default (provided by default theme):* `width={450}`
+_default (provided by default theme):_ `width={450}`
 
 ```jsx
 width={400}
@@ -570,13 +567,12 @@ width={400}
 See the [Data Accessors Guide][] for more detail on formatting and processing data.
 
 ```jsx
-x="employee.name"
+x = "employee.name";
 ```
 
 ### y
 
 `type: string || integer || array[string] || function`
-
 
 `VictoryScatter` uses the standard `y` data accessor prop. [Read about it in detail here](https://formidable.com/open-source/victory/docs/common-props#y)
 
@@ -592,11 +588,11 @@ y={(d) => d.value + d.error}
 
 **It is not common to set a `y0` prop with `VictoryScatter`, as baselines for `VictoryScatter` are only relevant for stacked charts.** [Read more about the `y0` prop here](https://formidable.com/open-source/victory/docs/common-props#y0)
 
-[Animations Guide]: https://formidable.com/open-source/victory/guides/animations
-[`bubbleProperty`]: https://formidable.com/open-source/victory/docs/victory-scatter#bubbleproperty
-[Data Accessors Guide]: https://formidable.com/open-source/victory/guides/data-accessors
-[Custom Components Guide]: https://formidable.com/open-source/victory/guides/custom-components
-[Events Guide]: https://formidable.com/open-source/victory/guides/events
-[Themes Guide]: https://formidable.com/open-source/victory/guides/themes
-[`VictoryChart`]: https://formidable.com/open-source/victory/docs/victory-chart
+[animations guide]: https://formidable.com/open-source/victory/guides/animations
+[`bubbleproperty`]: https://formidable.com/open-source/victory/docs/victory-scatter#bubbleproperty
+[data accessors guide]: https://formidable.com/open-source/victory/guides/data-accessors
+[custom components guide]: https://formidable.com/open-source/victory/guides/custom-components
+[events guide]: https://formidable.com/open-source/victory/guides/events
+[themes guide]: https://formidable.com/open-source/victory/guides/themes
+[`victorychart`]: https://formidable.com/open-source/victory/docs/victory-chart
 [grayscale theme]: https://github.com/FormidableLabs/victory-core/blob/master/src/victory-theme/grayscale.js

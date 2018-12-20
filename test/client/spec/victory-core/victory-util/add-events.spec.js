@@ -30,12 +30,14 @@ describe("victory-util/add-events", () => {
             target: "data",
             eventHandlers: {
               onClick: () => {
-                return [{
-                  target: "data",
-                  mutation: () => {
-                    return { style: { fill: "tomato" } };
+                return [
+                  {
+                    target: "data",
+                    mutation: () => {
+                      return { style: { fill: "tomato" } };
+                    }
                   }
-                }];
+                ];
               }
             }
           }
@@ -48,9 +50,13 @@ describe("victory-util/add-events", () => {
     };
 
     expectEventsTriggered(getDataComponents, dataComponentIsAltered, [false, false], wrapper);
-    getDataComponents(wrapper).at(0).simulate("click");
+    getDataComponents(wrapper)
+      .at(0)
+      .simulate("click");
     expectEventsTriggered(getDataComponents, dataComponentIsAltered, [true, false], wrapper);
-    getDataComponents(wrapper).at(1).simulate("click");
+    getDataComponents(wrapper)
+      .at(1)
+      .simulate("click");
     expectEventsTriggered(getDataComponents, dataComponentIsAltered, [true, true], wrapper);
   });
 
@@ -64,12 +70,14 @@ describe("victory-util/add-events", () => {
             eventKey: "1",
             eventHandlers: {
               onClick: () => {
-                return [{
-                  target: "data",
-                  mutation: () => {
-                    return { style: { fill: "tomato" } };
+                return [
+                  {
+                    target: "data",
+                    mutation: () => {
+                      return { style: { fill: "tomato" } };
+                    }
                   }
-                }];
+                ];
               }
             }
           }
@@ -82,9 +90,13 @@ describe("victory-util/add-events", () => {
     };
 
     expectEventsTriggered(getDataComponents, dataComponentIsAltered, [false, false], wrapper);
-    getDataComponents(wrapper).at(0).simulate("click");
+    getDataComponents(wrapper)
+      .at(0)
+      .simulate("click");
     expectEventsTriggered(getDataComponents, dataComponentIsAltered, [false, false], wrapper);
-    getDataComponents(wrapper).at(1).simulate("click");
+    getDataComponents(wrapper)
+      .at(1)
+      .simulate("click");
     expectEventsTriggered(getDataComponents, dataComponentIsAltered, [false, true], wrapper);
   });
 
@@ -92,18 +104,20 @@ describe("victory-util/add-events", () => {
     const wrapper = mount(
       <EventedMockVictoryComponent
         data={[{ x: 1, y: 2 }, { x: 3, y: 4 }]}
-        labelComponent={<MockLabel text="unaffected"/>}
+        labelComponent={<MockLabel text="unaffected" />}
         events={[
           {
             target: "data",
             eventHandlers: {
               onClick: () => {
-                return [{
-                  target: "labels",
-                  mutation: () => {
-                    return { text: "altered" };
+                return [
+                  {
+                    target: "labels",
+                    mutation: () => {
+                      return { text: "altered" };
+                    }
                   }
-                }];
+                ];
               }
             }
           }
@@ -116,23 +130,26 @@ describe("victory-util/add-events", () => {
     };
 
     expectEventsTriggered(getLabelComponents, labelComponentIsAltered, [false, false], wrapper);
-    getDataComponents(wrapper).at(0).simulate("click");
+    getDataComponents(wrapper)
+      .at(0)
+      .simulate("click");
     expectEventsTriggered(getLabelComponents, labelComponentIsAltered, [true, false], wrapper);
-    getDataComponents(wrapper).at(1).simulate("click");
+    getDataComponents(wrapper)
+      .at(1)
+      .simulate("click");
     expectEventsTriggered(getLabelComponents, labelComponentIsAltered, [true, true], wrapper);
   });
 
   describe("when adding animations to the component", () => {
     describe("and props.animate.animationWhitelist is not present", () => {
       it("passes the default animation whitelist to the <VictoryTransition /> component", () => {
-        const wrapper = mount(
-          <EventedMockVictoryComponent animate />
-        );
+        const wrapper = mount(<EventedMockVictoryComponent animate />);
 
         const victoryTransitionWrapper = wrapper.find("VictoryTransition");
 
-        expect(victoryTransitionWrapper.prop("animationWhitelist"))
-          .to.equal(MockVictoryComponent.animationWhitelist);
+        expect(victoryTransitionWrapper.prop("animationWhitelist")).to.equal(
+          MockVictoryComponent.animationWhitelist
+        );
       });
     });
 
@@ -148,8 +165,7 @@ describe("victory-util/add-events", () => {
 
         const victoryTransitionWrapper = wrapper.find("VictoryTransition");
 
-        expect(victoryTransitionWrapper.prop("animationWhitelist"))
-          .to.deep.equal(["allTheThings"]);
+        expect(victoryTransitionWrapper.prop("animationWhitelist")).to.deep.equal(["allTheThings"]);
       });
     });
   });

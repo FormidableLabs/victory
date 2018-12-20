@@ -2,7 +2,12 @@
 import React from "react";
 import PropTypes from "prop-types";
 import {
-  addEvents, Helpers, Data, PropTypes as CustomPropTypes, VictoryContainer, VictoryLabel,
+  addEvents,
+  Helpers,
+  Data,
+  PropTypes as CustomPropTypes,
+  VictoryContainer,
+  VictoryLabel,
   VictoryTheme
 } from "victory-core";
 import Slice from "./slice";
@@ -59,7 +64,8 @@ class VictoryPie extends React.Component {
       duration: 500,
       before: () => ({ _y: 0, label: " " }),
       after: (datum) => ({
-        y_: datum._y, label: datum.label
+        y_: datum._y,
+        label: datum.label
       })
     }
   };
@@ -69,11 +75,18 @@ class VictoryPie extends React.Component {
     colorScale: PropTypes.oneOfType([
       PropTypes.arrayOf(PropTypes.string),
       PropTypes.oneOf([
-        "grayscale", "qualitative", "heatmap", "warm", "cool", "red", "green", "blue"
+        "grayscale",
+        "qualitative",
+        "heatmap",
+        "warm",
+        "cool",
+        "red",
+        "green",
+        "blue"
       ])
     ]),
     containerComponent: PropTypes.element,
-    cornerRadius: PropTypes.oneOfType([ CustomPropTypes.nonNegative, PropTypes.func ]),
+    cornerRadius: PropTypes.oneOfType([CustomPropTypes.nonNegative, PropTypes.func]),
     data: PropTypes.array,
     dataComponent: PropTypes.element,
     endAngle: PropTypes.number,
@@ -82,53 +95,53 @@ class VictoryPie extends React.Component {
       CustomPropTypes.allOfType([CustomPropTypes.integer, CustomPropTypes.nonNegative]),
       PropTypes.string
     ]),
-    events: PropTypes.arrayOf(PropTypes.shape({
-      target: PropTypes.oneOf(["data", "labels", "parent"]),
-      eventKey: PropTypes.oneOfType([
-        PropTypes.func,
-        CustomPropTypes.allOfType([CustomPropTypes.integer, CustomPropTypes.nonNegative]),
-        PropTypes.string
-      ]),
-      eventHandlers: PropTypes.object
-    })),
-    externalEventMutations: PropTypes.arrayOf(PropTypes.shape({
-      callback: PropTypes.function,
-      childName: PropTypes.oneOfType([
-        PropTypes.string,
-        PropTypes.array
-      ]),
-      eventKey: PropTypes.oneOfType([
-        PropTypes.array,
-        CustomPropTypes.allOfType([CustomPropTypes.integer, CustomPropTypes.nonNegative]),
-        PropTypes.string
-      ]),
-      mutation: PropTypes.function,
-      target: PropTypes.oneOfType([
-        PropTypes.string,
-        PropTypes.array
-      ])
-    })),
+    events: PropTypes.arrayOf(
+      PropTypes.shape({
+        target: PropTypes.oneOf(["data", "labels", "parent"]),
+        eventKey: PropTypes.oneOfType([
+          PropTypes.func,
+          CustomPropTypes.allOfType([CustomPropTypes.integer, CustomPropTypes.nonNegative]),
+          PropTypes.string
+        ]),
+        eventHandlers: PropTypes.object
+      })
+    ),
+    externalEventMutations: PropTypes.arrayOf(
+      PropTypes.shape({
+        callback: PropTypes.function,
+        childName: PropTypes.oneOfType([PropTypes.string, PropTypes.array]),
+        eventKey: PropTypes.oneOfType([
+          PropTypes.array,
+          CustomPropTypes.allOfType([CustomPropTypes.integer, CustomPropTypes.nonNegative]),
+          PropTypes.string
+        ]),
+        mutation: PropTypes.function,
+        target: PropTypes.oneOfType([PropTypes.string, PropTypes.array])
+      })
+    ),
     groupComponent: PropTypes.element,
     height: CustomPropTypes.nonNegative,
-    innerRadius: PropTypes.oneOfType([ CustomPropTypes.nonNegative, PropTypes.func ]),
+    innerRadius: PropTypes.oneOfType([CustomPropTypes.nonNegative, PropTypes.func]),
     labelComponent: PropTypes.element,
     labelPosition: PropTypes.oneOf(["startAngle", "centroid", "endAngle"]),
-    labelRadius: PropTypes.oneOfType([ CustomPropTypes.nonNegative, PropTypes.func ]),
-    labels: PropTypes.oneOfType([ PropTypes.func, PropTypes.array ]),
+    labelRadius: PropTypes.oneOfType([CustomPropTypes.nonNegative, PropTypes.func]),
+    labels: PropTypes.oneOfType([PropTypes.func, PropTypes.array]),
     name: PropTypes.string,
     origin: PropTypes.shape({
       x: CustomPropTypes.nonNegative,
       y: CustomPropTypes.nonNegative
     }),
-    padAngle: PropTypes.oneOfType([ CustomPropTypes.nonNegative, PropTypes.func ]),
+    padAngle: PropTypes.oneOfType([CustomPropTypes.nonNegative, PropTypes.func]),
     padding: PropTypes.oneOfType([
       PropTypes.number,
       PropTypes.shape({
-        top: PropTypes.number, bottom: PropTypes.number,
-        left: PropTypes.number, right: PropTypes.number
+        top: PropTypes.number,
+        bottom: PropTypes.number,
+        left: PropTypes.number,
+        right: PropTypes.number
       })
     ]),
-    radius: PropTypes.oneOfType([ CustomPropTypes.nonNegative, PropTypes.func ]),
+    radius: PropTypes.oneOfType([CustomPropTypes.nonNegative, PropTypes.func]),
     sharedEvents: PropTypes.shape({
       events: PropTypes.array,
       getEventState: PropTypes.func
@@ -143,7 +156,9 @@ class VictoryPie extends React.Component {
     standalone: PropTypes.bool,
     startAngle: PropTypes.number,
     style: PropTypes.shape({
-      parent: PropTypes.object, data: PropTypes.object, labels: PropTypes.object
+      parent: PropTypes.object,
+      data: PropTypes.object,
+      labels: PropTypes.object
     }),
     theme: PropTypes.object,
     width: CustomPropTypes.nonNegative,
@@ -170,10 +185,10 @@ class VictoryPie extends React.Component {
       { x: "E", y: 2 }
     ],
     standalone: true,
-    dataComponent: <Slice/>,
-    labelComponent: <VictoryLabel/>,
-    containerComponent: <VictoryContainer/>,
-    groupComponent: <g/>,
+    dataComponent: <Slice />,
+    labelComponent: <VictoryLabel />,
+    containerComponent: <VictoryContainer />,
+    groupComponent: <g />,
     sortOrder: "ascending",
     theme: VictoryTheme.grayscale
   };
@@ -181,7 +196,10 @@ class VictoryPie extends React.Component {
   static getBaseProps = (props) => getBaseProps(props, fallbackProps);
   static getData = Data.getData;
   static expectedComponents = [
-    "dataComponent", "labelComponent", "groupComponent", "containerComponent"
+    "dataComponent",
+    "labelComponent",
+    "groupComponent",
+    "containerComponent"
   ];
 
   // Overridden in victory-native

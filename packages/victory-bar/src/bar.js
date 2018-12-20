@@ -11,15 +11,11 @@ import {
 } from "./path-helper-methods";
 
 export default class Bar extends React.Component {
-
   static propTypes = {
     ...CommonProps.primitiveProps,
     alignment: PropTypes.oneOf(["start", "middle", "end"]),
     barRatio: PropTypes.number,
-    barWidth: PropTypes.oneOfType([
-      PropTypes.number,
-      PropTypes.func
-    ]),
+    barWidth: PropTypes.oneOfType([PropTypes.number, PropTypes.func]),
     cornerRadius: PropTypes.oneOfType([
       PropTypes.number,
       PropTypes.func,
@@ -43,7 +39,7 @@ export default class Bar extends React.Component {
   };
 
   static defaultProps = {
-    pathComponent: <Path/>,
+    pathComponent: <Path />,
     defaultBarWidth: 8
   };
 
@@ -51,9 +47,9 @@ export default class Bar extends React.Component {
     if (props.getPath) {
       return getCustomBarPath(props, width);
     }
-    return props.horizontal ?
-      getHorizontalBarPath(props, width, cornerRadius) :
-      getVerticalBarPath(props, width, cornerRadius);
+    return props.horizontal
+      ? getHorizontalBarPath(props, width, cornerRadius)
+      : getVerticalBarPath(props, width, cornerRadius);
   }
 
   getPolarBarPath(props, cornerRadius) {
@@ -109,20 +105,36 @@ export default class Bar extends React.Component {
 
   render() {
     const {
-      role, datum, active, shapeRendering, className, origin, polar, pathComponent, events, clipPath
+      role,
+      datum,
+      active,
+      shapeRendering,
+      className,
+      origin,
+      polar,
+      pathComponent,
+      events,
+      clipPath
     } = this.props;
-    const stroke = this.props.style && this.props.style.fill || "black";
+    const stroke = (this.props.style && this.props.style.fill) || "black";
     const baseStyle = { fill: "black", stroke };
     const style = Helpers.evaluateStyle(assign(baseStyle, this.props.style), datum, active);
     const width = this.getBarWidth(this.props, style);
     const cornerRadius = this.getCornerRadius(this.props);
-    const path = polar ?
-      this.getPolarBarPath(this.props, cornerRadius) :
-      this.getBarPath(this.props, width, cornerRadius);
+    const path = polar
+      ? this.getPolarBarPath(this.props, cornerRadius)
+      : this.getBarPath(this.props, width, cornerRadius);
     const defaultTransform = polar && origin ? `translate(${origin.x}, ${origin.y})` : undefined;
     const transform = this.props.transform || defaultTransform;
     return React.cloneElement(pathComponent, {
-      d: path, transform, className, style, role, shapeRendering, events, clipPath
+      d: path,
+      transform,
+      className,
+      style,
+      role,
+      shapeRendering,
+      events,
+      clipPath
     });
   }
 }

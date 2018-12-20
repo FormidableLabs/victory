@@ -80,14 +80,15 @@ const fallbackProps = {
   brushAreaStyle: {
     stroke: "none",
     fill: "black",
-    opacity: (d, a) => a ? 0.2 : 0.1 // eslint-disable-line no-magic-numbers
+    opacity: (d, a) => (a ? 0.2 : 0.1) // eslint-disable-line no-magic-numbers
   },
   brushStyle: {
     pointerEvents: "none",
     stroke: "none",
     fill: "black",
-    opacity: (d, a) => a ? 0.4 : 0.3 // eslint-disable-line no-magic-numbers
-  }, handleStyle: {
+    opacity: (d, a) => (a ? 0.4 : 0.3) // eslint-disable-line no-magic-numbers
+  },
+  handleStyle: {
     pointerEvents: "none",
     stroke: "none",
     fill: "none"
@@ -129,201 +130,284 @@ export default class VictoryBrushLine extends React.Component {
     allowDrag: true,
     allowDraw: true,
     allowResize: true,
-    brushAreaComponent: <Box/>,
-    brushComponent: <Box/>,
-    groupComponent: <g/>,
-    handleComponent: <Box/>,
+    brushAreaComponent: <Box />,
+    brushComponent: <Box />,
+    groupComponent: <g />,
+    handleComponent: <Box />,
     handleWidth: 10,
-    lineComponent: <LineSegment/>,
+    lineComponent: <LineSegment />,
     width: 10
   };
 
-  static defaultEvents = function (props) {
-    return props.disable ? undefined : [{
-      target: props.type,
-      eventHandlers: {
-        onMouseEnter: (evt, targetProps) => {
-          evt.preventDefault();
-          const { dimension, allowResize, brushDomain } = targetProps;
-          const parentSVG = targetProps.parentSVG || Selection.getParentSVG(evt);
-          const position = Selection.getSVGEventCoordinates(evt, parentSVG)[dimension];
-          const fullDomain = getFullDomain(targetProps);
-          const currentDomain = brushDomain || fullDomain;
-          const range = toRange(targetProps, currentDomain);
-          const activeHandle = allowResize && getActiveHandle(targetProps, position, range);
-          const activeBrushes = {
-            brushArea: !targetProps.brushDomain,
-            brush: withinBound(position, range) && !isEqual(fullDomain, currentDomain),
-            minHandle: activeHandle === "min" || activeHandle === "both",
-            maxHandle: activeHandle === "min" || activeHandle === "both"
-          };
-          return [{
-            mutation: () => ({ activeBrushes, brushDomain: targetProps.brushDomain, parentSVG })
-          }];
-        },
-        onMouseDown: (evt, targetProps) => {
-          evt.preventDefault();
-          const {
-            allowResize, allowDrag, allowDraw, dimension, activeBrushes, brushDomain
-          } = targetProps;
+  static defaultEvents = function(props) {
+    return props.disable
+      ? undefined
+      : [
+          {
+            target: props.type,
+            eventHandlers: {
+              onMouseEnter: (evt, targetProps) => {
+                evt.preventDefault();
+                const { dimension, allowResize, brushDomain } = targetProps;
+                const parentSVG = targetProps.parentSVG || Selection.getParentSVG(evt);
+                const position = Selection.getSVGEventCoordinates(evt, parentSVG)[dimension];
+                const fullDomain = getFullDomain(targetProps);
+                const currentDomain = brushDomain || fullDomain;
+                const range = toRange(targetProps, currentDomain);
+                const activeHandle = allowResize && getActiveHandle(targetProps, position, range);
+                const activeBrushes = {
+                  brushArea: !targetProps.brushDomain,
+                  brush: withinBound(position, range) && !isEqual(fullDomain, currentDomain),
+                  minHandle: activeHandle === "min" || activeHandle === "both",
+                  maxHandle: activeHandle === "min" || activeHandle === "both"
+                };
+                return [
+                  {
+                    mutation: () => ({
+                      activeBrushes,
+                      brushDomain: targetProps.brushDomain,
+                      parentSVG
+                    })
+                  }
+                ];
+              },
+              onMouseDown: (evt, targetProps) => {
+                evt.preventDefault();
+                const {
+                  allowResize,
+                  allowDrag,
+                  allowDraw,
+                  dimension,
+                  activeBrushes,
+                  brushDomain
+                } = targetProps;
 
-          // Don't trigger events for static brushes
-          if (!allowResize && !allowDrag) {
-            return [];
-          }
+                // Don't trigger events for static brushes
+                if (!allowResize && !allowDrag) {
+                  return [];
+                }
 
-          const fullDomain = getFullDomain(targetProps);
-          const currentDomain = brushDomain || fullDomain;
-          const parentSVG = targetProps.parentSVG || Selection.getParentSVG(evt);
-          const position = Selection.getSVGEventCoordinates(evt, parentSVG)[dimension];
-          const range = toRange(targetProps, currentDomain);
-          const activeHandle = allowResize && getActiveHandle(targetProps, position, range);
-          // If the event occurs in any of the handle regions, start a resize
-          if (activeHandle) {
-            return [{
-              mutation: () => {
-                return ({
-                  parentSVG,
-                  isSelecting: true, activeHandle,
-                  brushDomain: currentDomain,
-                  startPosition: position, activeBrushes
-                });
+                const fullDomain = getFullDomain(targetProps);
+                const currentDomain = brushDomain || fullDomain;
+                const parentSVG = targetProps.parentSVG || Selection.getParentSVG(evt);
+                const position = Selection.getSVGEventCoordinates(evt, parentSVG)[dimension];
+                const range = toRange(targetProps, currentDomain);
+                const activeHandle = allowResize && getActiveHandle(targetProps, position, range);
+                // If the event occurs in any of the handle regions, start a resize
+                if (activeHandle) {
+                  return [
+                    {
+                      mutation: () => {
+                        return {
+                          parentSVG,
+                          isSelecting: true,
+                          activeHandle,
+                          brushDomain: currentDomain,
+                          startPosition: position,
+                          activeBrushes
+                        };
+                      }
+                    }
+                  ];
+                } else if (withinBound(position, range) && !isEqual(fullDomain, currentDomain)) {
+                  // if the event occurs within a selected region start a panning event, unless the whole
+                  // domain is selected
+                  return [
+                    {
+                      mutation: () => ({
+                        isPanning: allowDrag,
+                        startPosition: position,
+                        brushDomain: currentDomain,
+                        activeBrushes,
+                        parentSVG
+                      })
+                    }
+                  ];
+                } else {
+                  // if the event occurs outside the region, or if the whole domain is selected,
+                  // start a new selection
+                  return allowDraw
+                    ? [
+                        {
+                          mutation: () => ({
+                            isSelecting: allowResize,
+                            brushDomain: null,
+                            startPosition: position,
+                            activeBrushes,
+                            parentSVG
+                          })
+                        }
+                      ]
+                    : [];
+                }
+              },
+              // eslint-disable-next-line max-statements, complexity
+              onMouseMove: (evt, targetProps) => {
+                const {
+                  isPanning,
+                  isSelecting,
+                  allowResize,
+                  allowDrag,
+                  dimension,
+                  onBrushDomainChange,
+                  brushDomain
+                } = targetProps;
+                if (isPanning || isSelecting) {
+                  evt.preventDefault();
+                  evt.stopPropagation();
+                }
+                const parentSVG = targetProps.parentSVG || Selection.getParentSVG(evt);
+                const position = Selection.getSVGEventCoordinates(evt, parentSVG)[dimension];
+                const fullDomain = getFullDomain(targetProps);
+                const domain = brushDomain || fullDomain;
+                const initialRange = toRange(targetProps, domain);
+                const activeHandle = getActiveHandle(targetProps, position, initialRange);
+                const activeBrushes = {
+                  brushArea: !targetProps.brushDomain,
+                  brush: withinBound(position, initialRange) && !isEqual(fullDomain, domain),
+                  minHandle: activeHandle === "min" || activeHandle === "both",
+                  maxHandle: activeHandle === "max" || activeHandle === "both"
+                };
+                if (!targetProps.isPanning && !targetProps.isSelecting) {
+                  return [
+                    {
+                      mutation: () => ({
+                        activeBrushes,
+                        brushDomain: targetProps.brushDomain,
+                        parentSVG
+                      })
+                    }
+                  ];
+                }
+                if (allowDrag && isPanning) {
+                  const fullRange = getFullRange(targetProps);
+                  const range = panBox(targetProps, position);
+                  const currentDomain = toDomain(targetProps, range);
+                  const startPosition =
+                    Math.max(...range) >= Math.max(...fullRange) ||
+                    Math.min(...range) <= Math.min(...fullRange)
+                      ? targetProps.startPosition
+                      : position;
+                  const mutatedProps = {
+                    startPosition,
+                    isPanning: true,
+                    brushDomain: currentDomain,
+                    activeBrushes: { brush: true },
+                    parentSVG
+                  };
+
+                  if (isFunction(onBrushDomainChange)) {
+                    onBrushDomainChange(currentDomain, defaults({}, mutatedProps, targetProps));
+                  }
+                  return [
+                    {
+                      mutation: () => mutatedProps
+                    }
+                  ];
+                } else if (allowResize && isSelecting) {
+                  let currentDomain = brushDomain || getMinimumDomain();
+                  const range = toRange(targetProps, currentDomain);
+                  const oppositeHandle = targetProps.activeHandle === "min" ? "max" : "min";
+                  const handle =
+                    targetProps.activeHandle &&
+                    getActiveHandle(targetProps, position, range) === "both"
+                      ? oppositeHandle
+                      : targetProps.activeHandle;
+                  if (!handle) {
+                    currentDomain = toDomain(targetProps, [targetProps.startPosition, position]);
+                  } else {
+                    const rangeMax = dimension === "x" ? Math.max(...range) : Math.min(...range);
+                    const rangeMin = dimension === "x" ? Math.min(...range) : Math.max(...range);
+                    const min = handle === "max" ? rangeMin : position;
+                    const max = handle === "min" ? rangeMax : position;
+                    currentDomain = toDomain(targetProps, [min, max]);
+                  }
+                  const mutatedProps = {
+                    brushDomain: currentDomain,
+                    startPosition: targetProps.startPosition,
+                    isSelecting,
+                    activeHandle: handle,
+                    parentSVG,
+                    activeBrushes: {
+                      brush: true,
+                      minHandle: activeHandle === "min",
+                      maxHandle: activeHandle === "max"
+                    }
+                  };
+                  if (isFunction(onBrushDomainChange)) {
+                    onBrushDomainChange(currentDomain, defaults({}, mutatedProps, targetProps));
+                  }
+                  return [
+                    {
+                      mutation: () => mutatedProps
+                    }
+                  ];
+                }
+                return [];
+              },
+              onMouseUp(evt, targetProps) {
+                const {
+                  onBrushDomainChange,
+                  brushDomain,
+                  allowResize,
+                  activeBrushes
+                } = targetProps;
+                // if the mouse hasn't moved since a mouseDown event, select the whole domain region
+                const mutatedProps = {
+                  isPanning: false,
+                  isSelecting: false,
+                  activeHandle: null,
+                  startPosition: null,
+                  brushDomain,
+                  activeBrushes
+                };
+                if (allowResize && isFunction(onBrushDomainChange)) {
+                  onBrushDomainChange(brushDomain, defaults({}, mutatedProps, targetProps));
+                }
+                return [
+                  {
+                    mutation: () => mutatedProps
+                  }
+                ];
+              },
+              onMouseLeave(evt, targetProps) {
+                const { brushDomain } = targetProps;
+                return [
+                  {
+                    mutation: () => ({
+                      isPanning: false,
+                      isSelecting: false,
+                      activeHandle: null,
+                      startPosition: null,
+                      brushDomain,
+                      activeBrushes: {}
+                    })
+                  }
+                ];
               }
-            }];
-          } else if (withinBound(position, range) && !isEqual(fullDomain, currentDomain)) {
-            // if the event occurs within a selected region start a panning event, unless the whole
-            // domain is selected
-            return [{
-              mutation: () => ({
-                isPanning: allowDrag, startPosition: position,
-                brushDomain: currentDomain, activeBrushes, parentSVG
-              })
-            }];
-          } else {
-            // if the event occurs outside the region, or if the whole domain is selected,
-            // start a new selection
-            return allowDraw ? [{
-              mutation: () => ({
-                isSelecting: allowResize,
-                brushDomain: null,
-                startPosition: position,
-                activeBrushes, parentSVG
-              })
-            }] : [];
-          }
-        },
-        onMouseMove: (evt, targetProps) => { // eslint-disable-line max-statements, complexity
-          const {
-            isPanning, isSelecting, allowResize, allowDrag,
-            dimension, onBrushDomainChange, brushDomain
-          } = targetProps;
-          if (isPanning || isSelecting) {
-            evt.preventDefault();
-            evt.stopPropagation();
-          }
-          const parentSVG = targetProps.parentSVG || Selection.getParentSVG(evt);
-          const position = Selection.getSVGEventCoordinates(evt, parentSVG)[dimension];
-          const fullDomain = getFullDomain(targetProps);
-          const domain = brushDomain || fullDomain;
-          const initialRange = toRange(targetProps, domain);
-          const activeHandle = getActiveHandle(targetProps, position, initialRange);
-          const activeBrushes = {
-            brushArea: !targetProps.brushDomain,
-            brush: withinBound(position, initialRange) && !isEqual(fullDomain, domain),
-            minHandle: activeHandle === "min" || activeHandle === "both",
-            maxHandle: activeHandle === "max" || activeHandle === "both"
-          };
-          if (!targetProps.isPanning && !targetProps.isSelecting) {
-            return [{
-              mutation: () => ({
-                activeBrushes, brushDomain: targetProps.brushDomain, parentSVG
-              })
-            }];
-          }
-          if (allowDrag && isPanning) {
-            const fullRange = getFullRange(targetProps);
-            const range = panBox(targetProps, position);
-            const currentDomain = toDomain(targetProps, range);
-            const startPosition = Math.max(...range) >= Math.max(...fullRange) ||
-              Math.min(...range) <= Math.min(...fullRange) ?
-              targetProps.startPosition : position;
-            const mutatedProps = {
-              startPosition, isPanning: true, brushDomain: currentDomain,
-              activeBrushes: { brush: true }, parentSVG
-            };
-
-            if (isFunction(onBrushDomainChange)) {
-              onBrushDomainChange(currentDomain, defaults({}, mutatedProps, targetProps));
             }
-            return [{
-              mutation: () => mutatedProps
-            }];
-          } else if (allowResize && isSelecting) {
-            let currentDomain = brushDomain || getMinimumDomain();
-            const range = toRange(targetProps, currentDomain);
-            const oppositeHandle = targetProps.activeHandle === "min" ? "max" : "min";
-            const handle = targetProps.activeHandle &&
-              getActiveHandle(targetProps, position, range) === "both" ?
-                oppositeHandle : targetProps.activeHandle;
-            if (!handle) {
-              currentDomain = toDomain(targetProps, [targetProps.startPosition, position]);
-            } else {
-              const rangeMax = dimension === "x" ? Math.max(...range) : Math.min(...range);
-              const rangeMin = dimension === "x" ? Math.min(...range) : Math.max(...range);
-              const min = handle === "max" ? rangeMin : position;
-              const max = handle === "min" ? rangeMax : position;
-              currentDomain = toDomain(targetProps, [min, max]);
-            }
-            const mutatedProps = {
-              brushDomain: currentDomain, startPosition: targetProps.startPosition,
-              isSelecting, activeHandle: handle, parentSVG,
-              activeBrushes: {
-                brush: true, minHandle: activeHandle === "min", maxHandle: activeHandle === "max"
-              }
-            };
-            if (isFunction(onBrushDomainChange)) {
-              onBrushDomainChange(currentDomain, defaults({}, mutatedProps, targetProps));
-            }
-            return [{
-              mutation: () => (mutatedProps)
-            }];
           }
-          return [];
-        },
-        onMouseUp(evt, targetProps) {
-          const { onBrushDomainChange, brushDomain, allowResize, activeBrushes } = targetProps;
-          // if the mouse hasn't moved since a mouseDown event, select the whole domain region
-          const mutatedProps = {
-            isPanning: false, isSelecting: false, activeHandle: null, startPosition: null,
-            brushDomain, activeBrushes
-          };
-          if (allowResize && isFunction(onBrushDomainChange)) {
-            onBrushDomainChange(brushDomain, defaults({}, mutatedProps, targetProps));
-          }
-          return [{
-            mutation: () => mutatedProps
-          }];
-        },
-        onMouseLeave(evt, targetProps) {
-          const { brushDomain } = targetProps;
-          return [{
-            mutation: () => ({
-              isPanning: false, isSelecting: false, activeHandle: null, startPosition: null,
-              brushDomain, activeBrushes: {}
-            })
-          }];
-        }
-      }
-    }];
+        ];
   };
 
   getRectDimensions(props, brushWidth, domain) {
     const { dimension, brushDomain } = props;
     domain = domain || brushDomain || getFullDomain(props);
     const range = toRange(props, domain);
-    const coordinates = dimension === "x" ?
-      { y1: props.y1, y2: props.y2, x1: Math.min(...range), x2: Math.max(...range) } :
-      { x1: props.x1, x2: props.x2, y1: Math.min(...range), y2: Math.max(...range) };
+    const coordinates =
+      dimension === "x"
+        ? {
+            y1: props.y1,
+            y2: props.y2,
+            x1: Math.min(...range),
+            x2: Math.max(...range)
+          }
+        : {
+            x1: props.x1,
+            x2: props.x2,
+            y1: Math.min(...range),
+            y2: Math.max(...range)
+          };
     const { x1, x2, y1, y2 } = coordinates;
     const offset = {
       x: dimension === "x" ? 0 : brushWidth / 2,
@@ -342,8 +426,8 @@ export default class VictoryBrushLine extends React.Component {
     const brushWidth = props.brushWidth || props.width;
     const domain = brushDomain || getFullDomain(props);
     const range = toRange(props, domain);
-    const defaultX = Math.min(x1, x2) - (brushWidth / 2);
-    const defaultY = Math.min(y1, y2) - (brushWidth / 2);
+    const defaultX = Math.min(x1, x2) - brushWidth / 2;
+    const defaultY = Math.min(y1, y2) - brushWidth / 2;
     const x = {
       min: dimension === "x" ? Math.min(...range) - handleWidth / 2 : defaultX,
       max: dimension === "x" ? Math.max(...range) - handleWidth / 2 : defaultX
@@ -372,9 +456,7 @@ export default class VictoryBrushLine extends React.Component {
   }
 
   renderHandles(props) {
-    const {
-      handleComponent, handleStyle, id, brushDomain, datum = {}, activeBrushes = {}
-    } = props;
+    const { handleComponent, handleStyle, id, brushDomain, datum = {}, activeBrushes = {} } = props;
     if (!brushDomain) {
       return null;
     }
@@ -382,15 +464,20 @@ export default class VictoryBrushLine extends React.Component {
     const style = assign({}, fallbackProps.handleStyle, handleStyle);
     const minDatum = assign({ handleValue: Collection.getMinValue(brushDomain) }, datum);
     const maxDatum = assign({ handleValue: Collection.getMaxValue(brushDomain) }, datum);
-    const minHandleProps = assign({
-      key: `${id}-min`,
-      style: Helpers.evaluateStyle(style, minDatum, activeBrushes.minHandle)
-    }, handleDimensions.min);
+    const minHandleProps = assign(
+      {
+        key: `${id}-min`,
+        style: Helpers.evaluateStyle(style, minDatum, activeBrushes.minHandle)
+      },
+      handleDimensions.min
+    );
     const maxHandleProps = assign(
       {
         key: `${id}-max`,
         style: Helpers.evaluateStyle(style, maxDatum, activeBrushes.maxHandle)
-      }, handleDimensions.max);
+      },
+      handleDimensions.max
+    );
     return [
       React.cloneElement(handleComponent, minHandleProps),
       React.cloneElement(handleComponent, maxHandleProps)
@@ -398,9 +485,7 @@ export default class VictoryBrushLine extends React.Component {
   }
 
   renderBrush(props) {
-    const {
-      brushComponent, brushStyle, activeBrushes = {}, datum = {}, brushDomain
-    } = props;
+    const { brushComponent, brushStyle, activeBrushes = {}, datum = {}, brushDomain } = props;
     if (!brushDomain) {
       return null;
     }
@@ -425,7 +510,14 @@ export default class VictoryBrushLine extends React.Component {
 
   renderLine(props) {
     const filteredProps = pick(props, [
-      "x1", "x2", "y1", "y2", "datum", "scale", "active", "style"
+      "x1",
+      "x2",
+      "y1",
+      "y2",
+      "datum",
+      "scale",
+      "active",
+      "style"
     ]);
     return React.cloneElement(props.lineComponent, filteredProps);
   }

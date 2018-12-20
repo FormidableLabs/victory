@@ -11,17 +11,16 @@ export default class VictoryClipContainer extends React.Component {
   static displayName = "VictoryClipContainer";
   static role = "container";
   static propTypes = {
-    children: PropTypes.oneOfType([
-      PropTypes.arrayOf(PropTypes.node),
-      PropTypes.node
-    ]),
+    children: PropTypes.oneOfType([PropTypes.arrayOf(PropTypes.node), PropTypes.node]),
     circleComponent: PropTypes.element,
     className: PropTypes.string,
     clipHeight: CustomPropTypes.nonNegative,
     clipId: PropTypes.oneOfType([PropTypes.number, PropTypes.string]),
     clipPadding: PropTypes.shape({
-      top: PropTypes.number, bottom: PropTypes.number,
-      left: PropTypes.number, right: PropTypes.number
+      top: PropTypes.number,
+      bottom: PropTypes.number,
+      left: PropTypes.number,
+      right: PropTypes.number
     }),
     clipPathComponent: PropTypes.element,
     clipWidth: CustomPropTypes.nonNegative,
@@ -34,25 +33,23 @@ export default class VictoryClipContainer extends React.Component {
     transform: PropTypes.string,
     translateX: PropTypes.number,
     translateY: PropTypes.number
-  }
+  };
 
   static defaultProps = {
-    circleComponent: <Circle/>,
-    rectComponent: <Rect/>,
-    clipPathComponent: <ClipPath/>,
-    groupComponent: <g/>
-  }
+    circleComponent: <Circle />,
+    rectComponent: <Rect />,
+    clipPathComponent: <ClipPath />,
+    groupComponent: <g />
+  };
 
   constructor(props) {
     super(props);
-    this.clipId = !isObject(props) || props.clipId === undefined ?
-      uniqueId("victory-clip-") : props.clipId;
+    this.clipId =
+      !isObject(props) || props.clipId === undefined ? uniqueId("victory-clip-") : props.clipId;
   }
 
   calculateAttributes(props) {
-    const {
-      polar, origin, clipWidth = 0, clipHeight = 0, translateX = 0, translateY = 0
-    } = props;
+    const { polar, origin, clipWidth = 0, clipHeight = 0, translateX = 0, translateY = 0 } = props;
     const clipPadding = Helpers.getPadding({ padding: props.clipPadding });
     const radius = props.radius || Helpers.getRadius(props);
     return {
@@ -66,43 +63,59 @@ export default class VictoryClipContainer extends React.Component {
   renderClippedGroup(props, clipId) {
     const { style, events, transform, children, className, groupComponent } = props;
     const clipComponent = this.renderClipComponent(props, clipId);
-    const groupProps = assign({
-      className, style, transform, key: `clipped-group-${clipId}`, clipPath: `url(#${clipId})`
-    }, events);
-    return React.cloneElement(
-      groupComponent,
-      groupProps,
-      [clipComponent, ...React.Children.toArray(children)]
+    const groupProps = assign(
+      {
+        className,
+        style,
+        transform,
+        key: `clipped-group-${clipId}`,
+        clipPath: `url(#${clipId})`
+      },
+      events
     );
+    return React.cloneElement(groupComponent, groupProps, [
+      clipComponent,
+      ...React.Children.toArray(children)
+    ]);
   }
 
   renderGroup(props) {
     const { style, events, transform, children, className, groupComponent } = props;
     return React.cloneElement(
-      groupComponent, assign({ className, style, transform }, events), children
+      groupComponent,
+      assign({ className, style, transform }, events),
+      children
     );
   }
 
   renderClipComponent(props, clipId) {
     const {
-      polar, origin, clipWidth = 0, clipHeight = 0, translateX = 0, translateY = 0,
-      circleComponent, rectComponent, clipPathComponent
+      polar,
+      origin,
+      clipWidth = 0,
+      clipHeight = 0,
+      translateX = 0,
+      translateY = 0,
+      circleComponent,
+      rectComponent,
+      clipPathComponent
     } = props;
     const { top, bottom, left, right } = Helpers.getPadding({ padding: props.clipPadding });
     let child;
     if (polar) {
       const radius = props.radius || Helpers.getRadius(props);
       const circleProps = {
-        r: Math.max((radius + left + right), (radius + top + bottom), 0),
+        r: Math.max(radius + left + right, radius + top + bottom, 0),
         cx: origin.x - left,
         cy: origin.y - top
       };
       child = React.cloneElement(circleComponent, circleProps);
     } else {
       const rectProps = {
-        x: translateX - left, y: translateY - top,
-        width: Math.max((clipWidth + left + right), 0),
-        height: Math.max((clipHeight + top + bottom), 0)
+        x: translateX - left,
+        y: translateY - top,
+        width: Math.max(clipWidth + left + right, 0),
+        height: Math.max(clipHeight + top + bottom, 0)
       };
       child = React.cloneElement(rectComponent, rectProps);
     }

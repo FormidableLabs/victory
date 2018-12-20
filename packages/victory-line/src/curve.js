@@ -36,28 +36,30 @@ export default class Curve extends React.Component {
   };
 
   static defaultProps = {
-    pathComponent: <Path/>
+    pathComponent: <Path />
   };
 
   getLineFunction(props) {
     const { polar, scale } = props;
     const defaultOpenCurve = polar ? false : true;
     const openCurve = props.openCurve === undefined ? defaultOpenCurve : props.openCurve;
-    const interpolation = !openCurve ?
-      `${this.toNewName(props.interpolation)}Closed` : this.toNewName(props.interpolation);
-    return polar ?
-      d3Shape.lineRadial()
-        .defined(defined)
-        .curve(d3Shape[interpolation])
-        .angle(getAngleAccessor(scale))
-        .radius(getYAccessor(scale)) :
-      d3Shape.line()
-        .defined(defined)
-        .curve(d3Shape[interpolation])
-        .x(getXAccessor(scale))
-        .y(getYAccessor(scale));
+    const interpolation = !openCurve
+      ? `${this.toNewName(props.interpolation)}Closed`
+      : this.toNewName(props.interpolation);
+    return polar
+      ? d3Shape
+          .lineRadial()
+          .defined(defined)
+          .curve(d3Shape[interpolation])
+          .angle(getAngleAccessor(scale))
+          .radius(getYAccessor(scale))
+      : d3Shape
+          .line()
+          .defined(defined)
+          .curve(d3Shape[interpolation])
+          .x(getXAccessor(scale))
+          .y(getYAccessor(scale));
   }
-
 
   toNewName(interpolation) {
     // d3 shape changed the naming scheme for interpolators from "basis" -> "curveBasis" etc.
@@ -67,17 +69,35 @@ export default class Curve extends React.Component {
 
   render() {
     const {
-      data, active, events, role, shapeRendering, className, polar, origin, pathComponent, clipPath
+      data,
+      active,
+      events,
+      role,
+      shapeRendering,
+      className,
+      polar,
+      origin,
+      pathComponent,
+      clipPath
     } = this.props;
     const style = Helpers.evaluateStyle(
-      assign({ fill: "none", stroke: "black" }, this.props.style), data, active
+      assign({ fill: "none", stroke: "black" }, this.props.style),
+      data,
+      active
     );
     const lineFunction = this.getLineFunction(this.props);
     const path = lineFunction(data);
     const defaultTransform = polar && origin ? `translate(${origin.x}, ${origin.y})` : undefined;
     const transform = this.props.transform || defaultTransform;
     return React.cloneElement(pathComponent, {
-      className, style, role, shapeRendering, transform, events, d: path, clipPath
+      className,
+      style,
+      role,
+      shapeRendering,
+      transform,
+      events,
+      d: path,
+      clipPath
     });
   }
 }

@@ -8,15 +8,16 @@ const CIRCULAR_SEQUENCE = ["M", "m", "a", "a"];
 const FLYOUT_SEQUENCE = ["M", "L", "L", "L", "A", "L", "A", "L", "A", "L", "A", "z"];
 
 const parseSvgPathCommands = (commandStr) => {
-  const matches = commandStr.match(
-    /[MmLlHhVvCcSsQqTtAaZz]+[^MmLlHhVvCcSsQqTtAaZz]*/g
-  );
+  const matches = commandStr.match(/[MmLlHhVvCcSsQqTtAaZz]+[^MmLlHhVvCcSsQqTtAaZz]*/g);
 
   return matches.map((match) => {
     const name = match.charAt(0);
-    const args = match.substring(1).split(",").map((arg) => {
-      return parseFloat(arg, 10);
-    });
+    const args = match
+      .substring(1)
+      .split(",")
+      .map((arg) => {
+        return parseFloat(arg, 10);
+      });
 
     return {
       raw: match,
@@ -38,28 +39,31 @@ const exhibitsShapeSequence = (wrapper, shapeSequence) => {
   });
 };
 
-const calculateD3Path = (props, pathType, index) => { // eslint-disable-line max-statements
+const calculateD3Path = (props, pathType, index) => {
+  // eslint-disable-line max-statements
   const { width, height, padding, scale, interpolation, data, domain } = props;
-  const scaleType = scale ?
-    `scale${scale[0].toUpperCase() + scale.slice(1)}` : "scaleLinear";
-  const curveType = interpolation &&
-    `curve${interpolation[0].toUpperCase() + interpolation.slice(1)}`;
+  const scaleType = scale ? `scale${scale[0].toUpperCase() + scale.slice(1)}` : "scaleLinear";
+  const curveType =
+    interpolation && `curve${interpolation[0].toUpperCase() + interpolation.slice(1)}`;
 
-  const dataDomain = data.reduce((prev, datum) => {
-    if (datum.x < prev.x[0]) {
-      prev.x[0] = datum.x;
-    } else if (datum.x > prev.x[1]) {
-      prev.x[1] = datum.x;
-    }
+  const dataDomain = data.reduce(
+    (prev, datum) => {
+      if (datum.x < prev.x[0]) {
+        prev.x[0] = datum.x;
+      } else if (datum.x > prev.x[1]) {
+        prev.x[1] = datum.x;
+      }
 
-    if (datum.y < prev.y[0]) {
-      prev.y[0] = datum.y;
-    } else if (datum.y > prev.y[1]) {
-      prev.y[1] = datum.y;
-    }
+      if (datum.y < prev.y[0]) {
+        prev.y[0] = datum.y;
+      } else if (datum.y > prev.y[1]) {
+        prev.y[1] = datum.y;
+      }
 
-    return prev;
-  }, { x: [0, 0], y: [0, 0] });
+      return prev;
+    },
+    { x: [0, 0], y: [0, 0] }
+  );
 
   const range = {
     x: [padding, width - padding],
@@ -67,40 +71,42 @@ const calculateD3Path = (props, pathType, index) => { // eslint-disable-line max
   };
 
   const scaleX = d3Scale[scaleType]()
-    .domain(domain && domain.x || dataDomain.x)
+    .domain((domain && domain.x) || dataDomain.x)
     .range(range.x);
   const scaleY = d3Scale[scaleType]()
-    .domain(domain && domain.y || dataDomain.y)
+    .domain((domain && domain.y) || dataDomain.y)
     .range(range.y);
 
   switch (pathType) {
-  case "line": {
-    return d3Shape.line()
-      .curve(d3Shape[curveType])
-      .x((d) => scaleX(d.x))
-      .y((d) => scaleY(d.y))(data);
-  }
-  case "area": {
-    const modifiedData = props.data.map((datum) => {
-      return { x: datum.x, y: datum.y, y1: datum.y, y0: datum.y0 };
-    });
-    return d3Shape.area()
-      .curve(d3Shape[curveType])
-      .x((d) => scaleX(d.x))
-      .y1((d) => scaleY(d.y1))
-      .y0((d) => scaleY(d.y0))(modifiedData);
-  }
-  case "voronoi": {
-    const minRange = [Math.min(...range.x), Math.min(...range.y)];
-    const maxRange = [Math.max(...range.x), Math.max(...range.y)];
-    const voronoi = d3Voronoi()
-      .x((d) => scaleX(d.x))
-      .y((d) => scaleY(d.y))
-      .extent([minRange, maxRange]);
-    const polygons = voronoi.polygons(data);
-    const polygon = without(polygons[index], "data");
-    return `M ${polygon.join("L")} Z`;
-  }
+    case "line": {
+      return d3Shape
+        .line()
+        .curve(d3Shape[curveType])
+        .x((d) => scaleX(d.x))
+        .y((d) => scaleY(d.y))(data);
+    }
+    case "area": {
+      const modifiedData = props.data.map((datum) => {
+        return { x: datum.x, y: datum.y, y1: datum.y, y0: datum.y0 };
+      });
+      return d3Shape
+        .area()
+        .curve(d3Shape[curveType])
+        .x((d) => scaleX(d.x))
+        .y1((d) => scaleY(d.y1))
+        .y0((d) => scaleY(d.y0))(modifiedData);
+    }
+    case "voronoi": {
+      const minRange = [Math.min(...range.x), Math.min(...range.y)];
+      const maxRange = [Math.max(...range.x), Math.max(...range.y)];
+      const voronoi = d3Voronoi()
+        .x((d) => scaleX(d.x))
+        .y((d) => scaleY(d.y))
+        .extent([minRange, maxRange]);
+      const polygons = voronoi.polygons(data);
+      const polygon = without(polygons[index], "data");
+      return `M ${polygon.join("L")} Z`;
+    }
   }
 
   return undefined;
@@ -156,7 +162,8 @@ const expectations = {
    * @param {Numner} index - Optional: the index of the data element in the data array
    * @returns {undefined}
    */
-  expectCorrectD3Path(wrapper, props, pathType, index) { // eslint-disable-line max-params
+  // eslint-disable-next-line max-params
+  expectCorrectD3Path(wrapper, props, pathType, index) {
     const path = wrapper.find("path").prop("d");
     expect(path).to.not.equal(undefined);
     expect(path).to.equal(calculateD3Path(props, pathType, index));
@@ -196,7 +203,9 @@ const helpers = {
   getBarShape(wrapper) {
     const commands = getPathCommandsFromWrapper(wrapper);
 
-    const points = commands.filter((command) => { return command.name !== "z"; });
+    const points = commands.filter((command) => {
+      return command.name !== "z";
+    });
     const verticalPoints = points.map(property("args.1"));
     const horizontalPoints = points.map(property("args.0"));
     const height = max(verticalPoints) - min(verticalPoints);
@@ -242,8 +251,8 @@ const helpers = {
     const chartWidth = width - padding * 2;
     const chartHeight = height - padding * 2;
 
-    const scaledX = cartesianX / chartWidth * (domain.x[1] - domain.x[0]);
-    const scaledY = cartesianY / chartHeight * (domain.y[1] - domain.y[0]);
+    const scaledX = (cartesianX / chartWidth) * (domain.x[1] - domain.x[0]);
+    const scaledY = (cartesianY / chartHeight) * (domain.y[1] - domain.y[0]);
 
     const shiftedX = scaledX + domain.x[0];
     const shiftedY = scaledY + domain.y[0];
@@ -260,13 +269,13 @@ const helpers = {
    * @param {Number} svgDimensions.width - The width of the line.
    * @param {Number} svgDimenions.padding - The padding around the line.
    * @returns {Boolean} Whether the wrapper renders an independent axis.
-  */
+   */
   isHorizontalAxis(wrapper, svgDimensions) {
     const { width, padding } = svgDimensions;
     const { x1, x2, y1, y2 } = wrapper.find("line").props();
 
-    const isHorizontalLine = (x1 !== x2) && (y1 === y2);
-    const isCorrectWidth = (width - padding * 2) === (x2 - x1);
+    const isHorizontalLine = x1 !== x2 && y1 === y2;
+    const isCorrectWidth = width - padding * 2 === x2 - x1;
 
     return isHorizontalLine && isCorrectWidth;
   },
@@ -280,13 +289,13 @@ const helpers = {
    * @param {Number} svgDimensions.height - The height of the line.
    * @param {Number} svgDimenions.padding - The padding around the line.
    * @returns {Boolean} Whether the wrapper renders a dependent axis.
-  */
+   */
   isVerticalAxis(wrapper, svgDimensions) {
     const { height, padding } = svgDimensions;
     const { x1, x2, y1, y2 } = wrapper.find("line").props();
 
-    const isVerticalLine = (x1 === x2) && (y1 !== y2);
-    const isCorrectHeight = (height - padding * 2) === (y2 - y1);
+    const isVerticalLine = x1 === x2 && y1 !== y2;
+    const isCorrectHeight = height - padding * 2 === y2 - y1;
 
     return isVerticalLine && isCorrectHeight;
   }

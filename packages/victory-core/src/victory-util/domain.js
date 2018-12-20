@@ -17,8 +17,8 @@ function cleanDomain(domain, props, axis) {
   }
 
   const rules = (dom) => {
-    const almostZero = dom[0] < 0 || dom[1] < 0 ? -1 / Number.MAX_SAFE_INTEGER
-    : 1 / Number.MAX_SAFE_INTEGER;
+    const almostZero =
+      dom[0] < 0 || dom[1] < 0 ? -1 / Number.MAX_SAFE_INTEGER : 1 / Number.MAX_SAFE_INTEGER;
     const domainOne = dom[0] === 0 ? almostZero : dom[0];
     const domainTwo = dom[1] === 0 ? almostZero : dom[1];
     return [domainOne, domainTwo];
@@ -29,23 +29,26 @@ function cleanDomain(domain, props, axis) {
 
 function getDomainPadding(props, axis) {
   const formatPadding = (padding) => {
-    return Array.isArray(padding) ?
-      { left: padding[0], right: padding[1] } : { left: padding, right: padding };
+    return Array.isArray(padding)
+      ? { left: padding[0], right: padding[1] }
+      : { left: padding, right: padding };
   };
 
-  return isPlainObject(props.domainPadding) ?
-    formatPadding(props.domainPadding[axis]) : formatPadding(props.domainPadding);
+  return isPlainObject(props.domainPadding)
+    ? formatPadding(props.domainPadding[axis])
+    : formatPadding(props.domainPadding);
 }
 
 function getFlatData(dataset, axis) {
   return flatten(dataset).map((datum) => {
-    return datum[`_${axis}`] && datum[`_${axis}`][1] !== undefined ?
-      datum[`_${axis}`][1] : datum[`_${axis}`];
+    return datum[`_${axis}`] && datum[`_${axis}`][1] !== undefined
+      ? datum[`_${axis}`][1]
+      : datum[`_${axis}`];
   });
 }
 
 function getExtremeFromData(dataset, axis, type = "min") {
-  const getExtreme = (arr) => type === "max" ? Math.max(...arr) : Math.min(...arr);
+  const getExtreme = (arr) => (type === "max" ? Math.max(...arr) : Math.min(...arr));
   const initialValue = type === "max" ? -Infinity : Infinity;
   let containsDate = false;
   const result = flatten(dataset).reduce((memo, datum) => {
@@ -78,19 +81,20 @@ function padDomain(domain, props, axis) {
 
   // Naive initial padding calculation
   const initialPadding = {
-    left: Math.abs(max - min) * padding.left / rangeExtent,
-    right: Math.abs(max - min) * padding.right / rangeExtent
+    left: (Math.abs(max - min) * padding.left) / rangeExtent,
+    right: (Math.abs(max - min) * padding.right) / rangeExtent
   };
 
-  const singleQuadrantDomainPadding = isPlainObject(props.singleQuadrantDomainPadding) ?
-    props.singleQuadrantDomainPadding[axis] : props.singleQuadrantDomainPadding;
+  const singleQuadrantDomainPadding = isPlainObject(props.singleQuadrantDomainPadding)
+    ? props.singleQuadrantDomainPadding[axis]
+    : props.singleQuadrantDomainPadding;
 
   const adjust = (val, type) => {
     if (singleQuadrantDomainPadding === false) {
       return val;
     }
-    const coerce = (type === "min" && min >= 0 && val <= 0) ||
-      (type === "max" && max <= 0 && val >= 0);
+    const coerce =
+      (type === "min" && min >= 0 && val <= 0) || (type === "max" && max <= 0 && val >= 0);
     return coerce ? 0 : val;
   };
 
@@ -102,8 +106,8 @@ function padDomain(domain, props, axis) {
 
   // re-calculate padding, taking the adjusted domain into account
   const finalPadding = {
-    left: Math.abs(adjustedDomain.max - adjustedDomain.min) * padding.left / rangeExtent,
-    right: Math.abs(adjustedDomain.max - adjustedDomain.min) * padding.right / rangeExtent
+    left: (Math.abs(adjustedDomain.max - adjustedDomain.min) * padding.left) / rangeExtent,
+    right: (Math.abs(adjustedDomain.max - adjustedDomain.min) * padding.right) / rangeExtent
   };
 
   // Adjust the domain by the final padding
@@ -118,9 +122,9 @@ function padDomain(domain, props, axis) {
     max: maxDomain !== undefined ? maxDomain : paddedDomain.max
   };
 
-  return min instanceof Date || max instanceof Date ?
-    getDomainFromMinMax(new Date(finalDomain.min), new Date(finalDomain.max)) :
-    getDomainFromMinMax(finalDomain.min, finalDomain.max);
+  return min instanceof Date || max instanceof Date
+    ? getDomainFromMinMax(new Date(finalDomain.min), new Date(finalDomain.max))
+    : getDomainFromMinMax(finalDomain.min, finalDomain.max);
 }
 
 // Public Methods
@@ -134,18 +138,19 @@ function padDomain(domain, props, axis) {
  * @returns {Function} a function that takes props and axis and returns a formatted domain
  */
 function createDomainFunction(getDomainFromDataFunction, formatDomainFunction) {
-  getDomainFromDataFunction = isFunction(getDomainFromDataFunction) ?
-    getDomainFromDataFunction : getDomainFromData;
-  formatDomainFunction = isFunction(formatDomainFunction) ?
-    formatDomainFunction : formatDomain;
+  getDomainFromDataFunction = isFunction(getDomainFromDataFunction)
+    ? getDomainFromDataFunction
+    : getDomainFromData;
+  formatDomainFunction = isFunction(formatDomainFunction) ? formatDomainFunction : formatDomain;
   return (props, axis) => {
     const propsDomain = getDomainFromProps(props, axis);
     if (propsDomain) {
       return formatDomainFunction(propsDomain, props, axis);
     }
     const categories = Data.getCategories(props, axis);
-    const domain = categories ?
-      getDomainFromCategories(props, axis, categories) : getDomainFromDataFunction(props, axis);
+    const domain = categories
+      ? getDomainFromCategories(props, axis, categories)
+      : getDomainFromDataFunction(props, axis);
     return formatDomainFunction(domain, props, axis);
   };
 }
@@ -186,20 +191,23 @@ function getDomainFromCategories(props, axis, categories) {
   }
   const minDomain = getMinFromProps(props, axis);
   const maxDomain = getMaxFromProps(props, axis);
-  const stringArray = Collection.containsStrings(categories) ?
-    Data.getStringsFromCategories(props, axis) : [];
-  const stringMap = stringArray.length === 0 ? null :
-    stringArray.reduce((memo, string, index) => {
-      memo[string] = index + 1;
-      return memo;
-    }, {});
-  const categoryValues = stringMap ?
-    categories.map((value) => stringMap[value]) : categories;
+  const stringArray = Collection.containsStrings(categories)
+    ? Data.getStringsFromCategories(props, axis)
+    : [];
+  const stringMap =
+    stringArray.length === 0
+      ? null
+      : stringArray.reduce((memo, string, index) => {
+          memo[string] = index + 1;
+          return memo;
+        }, {});
+  const categoryValues = stringMap ? categories.map((value) => stringMap[value]) : categories;
   const min = minDomain !== undefined ? minDomain : Collection.getMinValue(categoryValues);
   const max = maxDomain !== undefined ? maxDomain : Collection.getMaxValue(categoryValues);
   const categoryDomain = getDomainFromMinMax(min, max);
-  return polar && axis === "x" && Math.abs(startAngle - endAngle) === 360 ?
-    getSymmetricDomain(categoryDomain, categoryValues) : categoryDomain;
+  return polar && axis === "x" && Math.abs(startAngle - endAngle) === 360
+    ? getSymmetricDomain(categoryDomain, categoryValues)
+    : categoryDomain;
 }
 
 /**
@@ -226,8 +234,9 @@ function getDomainFromData(props, axis, dataset) {
   const max = maxDomain !== undefined ? maxDomain : getExtremeFromData(dataset, currentAxis, "max");
   const domain = getDomainFromMinMax(min, max);
 
-  return polar && axis === "x" && Math.abs(startAngle - endAngle) === 360 ?
-    getSymmetricDomain(domain, getFlatData(dataset, currentAxis)) : domain;
+  return polar && axis === "x" && Math.abs(startAngle - endAngle) === 360
+    ? getSymmetricDomain(domain, getFlatData(dataset, currentAxis))
+    : domain;
 }
 
 /**

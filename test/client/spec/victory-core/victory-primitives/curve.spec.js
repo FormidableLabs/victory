@@ -20,7 +20,7 @@ describe("victory-primitives/curve", () => {
   };
 
   it("should render a single curve for consecutive data", () => {
-    const wrapper = shallow(<Curve {...baseProps}/>);
+    const wrapper = shallow(<Curve {...baseProps} />);
 
     // single curves should not be grouped
     expect(wrapper.find("g").find(Path).length).to.eql(0);

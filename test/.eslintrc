@@ -5,6 +5,7 @@
   "rules": {
     "mocha/no-exclusive-tests": 2,
     "no-magic-numbers": 0,
+    "max-statements": 0,
     "import/no-unresolved": 0
   },
   "globals": { "expect": false }

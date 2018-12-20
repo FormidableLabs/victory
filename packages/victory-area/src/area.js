@@ -38,42 +38,46 @@ export default class Area extends React.Component {
   };
 
   static defaultProps = {
-    groupComponent: <g/>,
-    pathComponent: <Path/>
+    groupComponent: <g />,
+    pathComponent: <Path />
   };
 
   getLineFunction(props) {
     const { polar, scale } = props;
     const interpolation = this.toNewName(props.interpolation);
-    return polar ?
-      d3Shape.lineRadial()
-        .defined(defined)
-        .curve(d3Shape[`${interpolation}Closed`])
-        .angle(getAngleAccessor(scale))
-        .radius(getY0Accessor(scale)) :
-      d3Shape.line()
-        .defined(defined)
-        .curve(d3Shape[interpolation])
-        .x(getXAccessor(scale))
-        .y(getYAccessor(scale));
+    return polar
+      ? d3Shape
+          .lineRadial()
+          .defined(defined)
+          .curve(d3Shape[`${interpolation}Closed`])
+          .angle(getAngleAccessor(scale))
+          .radius(getY0Accessor(scale))
+      : d3Shape
+          .line()
+          .defined(defined)
+          .curve(d3Shape[interpolation])
+          .x(getXAccessor(scale))
+          .y(getYAccessor(scale));
   }
 
   getAreaFunction(props) {
     const { polar, scale } = props;
     const interpolation = this.toNewName(props.interpolation);
-    return polar ?
-      d3Shape.radialArea()
-        .defined(defined)
-        .curve(d3Shape[`${interpolation}Closed`])
-        .angle(getAngleAccessor(scale))
-        .outerRadius(getYAccessor(scale))
-        .innerRadius(getY0Accessor(scale)) :
-      d3Shape.area()
-        .defined(defined)
-        .curve(d3Shape[interpolation])
-        .x(getXAccessor(scale))
-        .y1(getYAccessor(scale))
-        .y0(getY0Accessor(scale));
+    return polar
+      ? d3Shape
+          .radialArea()
+          .defined(defined)
+          .curve(d3Shape[`${interpolation}Closed`])
+          .angle(getAngleAccessor(scale))
+          .outerRadius(getYAccessor(scale))
+          .innerRadius(getY0Accessor(scale))
+      : d3Shape
+          .area()
+          .defined(defined)
+          .curve(d3Shape[interpolation])
+          .x(getXAccessor(scale))
+          .y1(getYAccessor(scale))
+          .y0(getY0Accessor(scale));
   }
 
   toNewName(interpolation) {
@@ -84,8 +88,18 @@ export default class Area extends React.Component {
 
   render() {
     const {
-      role, shapeRendering, className, polar, origin, data, active, pathComponent, events,
-      groupComponent, clipPath, id
+      role,
+      shapeRendering,
+      className,
+      polar,
+      origin,
+      data,
+      active,
+      pathComponent,
+      events,
+      groupComponent,
+      clipPath,
+      id
     } = this.props;
     const style = Helpers.evaluateStyle(assign({ fill: "black" }, this.props.style), data, active);
     const defaultTransform = polar && origin ? `translate(${origin.x}, ${origin.y})` : undefined;
@@ -97,13 +111,31 @@ export default class Area extends React.Component {
     const areaStroke = style.stroke ? "none" : style.fill;
 
     const sharedProps = { className, role, shapeRendering, transform, events, clipPath };
-    const area = React.cloneElement(pathComponent, assign({
-      key: `${id}-area`, style: assign({}, style, { stroke: areaStroke }), d: areaFunction(data)
-    }, sharedProps));
+    const area = React.cloneElement(
+      pathComponent,
+      assign(
+        {
+          key: `${id}-area`,
+          style: assign({}, style, { stroke: areaStroke }),
+          d: areaFunction(data)
+        },
+        sharedProps
+      )
+    );
 
-    const line = renderLine ? React.cloneElement(pathComponent, assign({
-      key: `${id}-area-stroke`, style: assign({}, style, { fill: "none" }), d: lineFunction(data)
-    }, sharedProps)) : null;
+    const line = renderLine
+      ? React.cloneElement(
+          pathComponent,
+          assign(
+            {
+              key: `${id}-area-stroke`,
+              style: assign({}, style, { fill: "none" }),
+              d: lineFunction(data)
+            },
+            sharedProps
+          )
+        )
+      : null;
 
     return renderLine ? React.cloneElement(groupComponent, {}, [area, line]) : area;
   }
