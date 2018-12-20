@@ -20,7 +20,7 @@ The `active` prop specifies whether the tooltip component should be displayed.
 
 When true, tooltip events will set the `active` prop on both data and label elements.
 
-*default:* `activateData={false}`
+_default:_ `activateData={false}`
 
 ### angle
 
@@ -65,7 +65,7 @@ The `dy` prop defines a vertical shift from the `y` coordinate.
 
 The `events` prop attaches arbitrary event handlers to the label component. This prop should be given as an object of event names and corresponding event handlers. When events are provided via Victory's event system, event handlers will be called with the event, the props of the component is attached to, and an eventKey.
 
-*examples:* `events={{onClick: (evt) => alert("x: " + evt.clientX)}}`
+_examples:_ `events={{onClick: (evt) => alert("x: " + evt.clientX)}}`
 
 ### flyoutStyle
 
@@ -79,10 +79,9 @@ The `style` prop applies SVG style properties to the rendered flyout container. 
 
 The `flyoutComponent` prop takes a component instance which will be used to create the flyout path for each tooltip. The new element created from the passed `flyoutComponent` will be supplied with the following properties: x, y, dx, dy, index, datum, cornerRadius, pointerLength, pointerWidth, width, height, orientation, style, and events. Any of these props may be overridden by passing in props to the supplied component, or modified or ignored within the custom component itself. If `flyoutComponent` is omitted, a default [Flyout][] component will be created with props described above.
 
-*examples:* `flyoutComponent={<Flyout x={50} y={50}/>}`, `flyoutComponent={<MyCustomFlyout/>}`
+_examples:_ `flyoutComponent={<Flyout x={50} y={50}/>}`, `flyoutComponent={<MyCustomFlyout/>}`
 
-
-*default:* `<Flyout/>`
+_default:_ `<Flyout/>`
 
 ### groupComponent
 
@@ -90,7 +89,7 @@ The `flyoutComponent` prop takes a component instance which will be used to crea
 
 The `groupComponent` prop takes a component instance which will be used to create group elements for use within container elements. This prop defaults to a `<g>` tag.
 
-*default:* `groupComponent={<g/>}`
+_default:_ `groupComponent={<g/>}`
 
 ### height
 
@@ -116,9 +115,9 @@ The `index` prop represents the index of the datum in the data array.
 
 The `labelComponent` prop takes a component instance which will be used to render each tooltip label. The new element created from the passed `labelComponent` will be supplied with the following properties: x, y, index, datum, verticalAnchor, textAnchor, style, text, and events. Any of these props may be overridden by passing in props to the supplied component, or modified or ignored within the custom component itself. If `labelComponent` is omitted, a new [VictoryLabel][] will be created with the props described above.
 
-*examples:* `labelComponent={<VictoryLabel dy={20}/>}`, `labelComponent={<MyCustomLabel/>}`
+_examples:_ `labelComponent={<VictoryLabel dy={20}/>}`, `labelComponent={<MyCustomLabel/>}`
 
-*default:* `<VictoryLabel/>`
+_default:_ `<VictoryLabel/>`
 
 ### orientation
 
@@ -174,9 +173,9 @@ The `x` prop defines the x coordinate to use as a basis for positioning the tool
 
 The `y` prop defines the y coordinate to use as a basis for positioning the tooltip element.
 
-[Flyout]: https://formidable.com/open-source/victory/docs/victory-primitives#flyout
-[VictoryLabel]: https://formidable.com/open-source/victory/docs/victory-label
-[VictoryPortal]: https://formidable.com/open-source/victory/docs/victory-portal
-[VictoryContainer]: https://formidable.com/open-source/victory/docs/victory-container
-[Portal]: https://github.com/FormidableLabs/victory-core/blob/master/src/victory-portal/portal.js
+[flyout]: https://formidable.com/open-source/victory/docs/victory-primitives#flyout
+[victorylabel]: https://formidable.com/open-source/victory/docs/victory-label
+[victoryportal]: https://formidable.com/open-source/victory/docs/victory-portal
+[victorycontainer]: https://formidable.com/open-source/victory/docs/victory-container
+[portal]: https://github.com/FormidableLabs/victory-core/blob/master/src/victory-portal/portal.js
 [approximate text size]: https://github.com/FormidableLabs/victory-core/blob/master/src/victory-util/textsize.js

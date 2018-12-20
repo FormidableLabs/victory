@@ -1,7 +1,15 @@
 /* eslint-disable func-style */
 import React from "react";
 import {
-  identity, isFunction, invert, uniq, range, orderBy, values, includes, without
+  identity,
+  isFunction,
+  invert,
+  uniq,
+  range,
+  orderBy,
+  values,
+  includes,
+  without
 } from "lodash";
 import Collection from "./collection";
 import Domain from "./domain";
@@ -100,10 +108,12 @@ function getOrigin(domain) {
   };
 
   return {
-    x: Collection.containsDates(domain.x) ?
-      new Date(Math.min(...domain.x)) : getSingleOrigin(domain.x),
-    y: Collection.containsDates(domain.y) ?
-      new Date(Math.min(...domain.y)) : getSingleOrigin(domain.y)
+    x: Collection.containsDates(domain.x)
+      ? new Date(Math.min(...domain.x))
+      : getSingleOrigin(domain.x),
+    y: Collection.containsDates(domain.y)
+      ? new Date(Math.min(...domain.y))
+      : getSingleOrigin(domain.y)
   };
 }
 
@@ -137,8 +147,9 @@ function getOrientation(component, axis, originSign) {
     return typicalOrientations[sign][axis];
   }
   const dependent = component.props.dependentAxis;
-  return (!dependent && axis === "y") || (dependent && axis === "x") ?
-    flippedOrientations[sign][axis] : typicalOrientations[sign][axis];
+  return (!dependent && axis === "y") || (dependent && axis === "x")
+    ? flippedOrientations[sign][axis]
+    : typicalOrientations[sign][axis];
 }
 
 /**
@@ -161,8 +172,7 @@ function stringTicks(props) {
 
 function getDefaultTickFormat(props) {
   const { tickValues, stringMap } = props;
-  const fallbackFormat = tickValues && !Collection.containsDates(tickValues) ?
-    (x) => x : undefined;
+  const fallbackFormat = tickValues && !Collection.containsDates(tickValues) ? (x) => x : undefined;
   if (!stringMap) {
     return stringTicks(props) ? (x, index) => tickValues[index] : fallbackFormat;
   } else {
@@ -179,8 +189,8 @@ function getTickFormat(props, scale) {
   const { tickFormat, stringMap } = props;
   if (!tickFormat) {
     const defaultTickFormat = getDefaultTickFormat(props);
-    const scaleTickFormat = scale.tickFormat && isFunction(scale.tickFormat) ?
-      scale.tickFormat() : (x) => x;
+    const scaleTickFormat =
+      scale.tickFormat && isFunction(scale.tickFormat) ? scale.tickFormat() : (x) => x;
     return defaultTickFormat || scaleTickFormat;
   } else if (tickFormat && Array.isArray(tickFormat)) {
     return (x, index) => tickFormat[index];
@@ -199,13 +209,17 @@ function getTickFormat(props, scale) {
 function getStringTicks(props) {
   const { stringMap } = props;
   const axis = getAxis(props);
-  const categories = Array.isArray(props.categories) ?
-    props.categories : props.categories && props.categories[axis];
-  const ticksFromCategories = categories && Collection.containsOnlyStrings(categories) ?
-    categories.map((tick) => stringMap[tick]) : undefined;
+  const categories = Array.isArray(props.categories)
+    ? props.categories
+    : props.categories && props.categories[axis];
+  const ticksFromCategories =
+    categories && Collection.containsOnlyStrings(categories)
+      ? categories.map((tick) => stringMap[tick])
+      : undefined;
   const ticksFromStringMap = stringMap && values(stringMap);
-  return ticksFromCategories && ticksFromCategories.length !== 0 ?
-    ticksFromCategories : ticksFromStringMap;
+  return ticksFromCategories && ticksFromCategories.length !== 0
+    ? ticksFromCategories
+    : ticksFromStringMap;
 }
 
 function getTickArray(props) {
@@ -222,16 +236,15 @@ function getTickArray(props) {
     ticks = getStringTicks(props);
   }
   if (tickValues && Collection.containsStrings(tickValues)) {
-    ticks = stringMap ?
-      tickValues.map((tick) => stringMap[tick]) :
-      range(1, tickValues.length + 1);
+    ticks = stringMap ? tickValues.map((tick) => stringMap[tick]) : range(1, tickValues.length + 1);
   }
   const tickArray = ticks ? uniq(ticks) : getTicksFromFormat(props);
   const filterArray = (arr) => {
     const axis = getAxis(props);
-    const domain = props.domain && props.domain[axis] || props.domain;
-    return Array.isArray(domain) ?
-      arr.filter((t) => t >= Math.min(...domain) && t <= Math.max(...domain)) : arr;
+    const domain = (props.domain && props.domain[axis]) || props.domain;
+    return Array.isArray(domain)
+      ? arr.filter((t) => t >= Math.min(...domain) && t <= Math.max(...domain))
+      : arr;
   };
   return Array.isArray(tickArray) && tickArray.length ? filterArray(tickArray) : undefined;
 }
@@ -253,8 +266,7 @@ function getTicks(props, scale, filterZero) {
     // eslint-disable-next-line no-magic-numbers
     const defaultTickCount = tickCount || 5;
     const scaleTicks = scale.ticks(defaultTickCount);
-    const tickArray = Array.isArray(scaleTicks) && scaleTicks.length ?
-      scaleTicks : scale.domain();
+    const tickArray = Array.isArray(scaleTicks) && scaleTicks.length ? scaleTicks : scale.domain();
     const ticks = downsampleTicks(tickArray, tickCount);
     if (filterZero) {
       const filteredTicks = includes(ticks, 0) ? without(ticks, 0) : ticks;
@@ -287,8 +299,10 @@ function getDomainFromData(props, axis) {
   const min = minDomain !== undefined ? minDomain : defaultMin;
   const max = maxDomain !== undefined ? maxDomain : defaultMax;
   const initialDomain = Domain.getDomainFromMinMax(min, max);
-  const domain = polar && axis === "x" && Math.abs(startAngle - endAngle) === 360 ?
-    Domain.getSymmetricDomain(initialDomain, ticks) : initialDomain;
+  const domain =
+    polar && axis === "x" && Math.abs(startAngle - endAngle) === 360
+      ? Domain.getSymmetricDomain(initialDomain, ticks)
+      : initialDomain;
   if (isVertical(props) && !polar) {
     domain.reverse();
   }
@@ -305,7 +319,17 @@ function getDomain(props, axis) {
 }
 
 export default {
-  getTicks, getTickFormat, getAxis, getAxisComponent, getAxisComponentsWithParent,
-  getOrientation, getCurrentAxis, findAxisComponents, getOrigin, getOriginSign, getDomain,
-  isVertical, stringTicks
+  getTicks,
+  getTickFormat,
+  getAxis,
+  getAxisComponent,
+  getAxisComponentsWithParent,
+  getOrientation,
+  getCurrentAxis,
+  findAxisComponents,
+  getOrigin,
+  getOriginSign,
+  getDomain,
+  isVertical,
+  stringTicks
 };

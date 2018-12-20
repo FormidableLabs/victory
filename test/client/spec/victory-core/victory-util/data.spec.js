@@ -53,11 +53,7 @@ describe("victory-util/data", () => {
     describe(`getStringsFromData with ${testLabel}`, () => {
       it("returns an array of strings from a data prop", () => {
         const props = {
-          data: createData([
-            { x: "one", y: 1 },
-            { x: "red", y: 2 },
-            { x: "cat", y: 3 }
-          ])
+          data: createData([{ x: "one", y: 1 }, { x: "red", y: 2 }, { x: "cat", y: 3 }])
         };
         const dataStrings = Data.getStringsFromData(props, "x");
         expect(dataStrings).to.eql(["one", "red", "cat"]);
@@ -141,8 +137,8 @@ describe("victory-util/data", () => {
           const data = createData([{ x: "kittens", y: 3 }, { x: "cats", y: 5 }]);
           const props = { data, x: "x", y: "y" };
           const expectedReturnWithEventKeys = [
-             { _x: 1, x: "kittens", xName: "kittens", _y: 3, y: 3, eventKey: 0 },
-             { _x: 2, x: "cats", xName: "cats", _y: 5, y: 5, eventKey: 1 }
+            { _x: 1, x: "kittens", xName: "kittens", _y: 3, y: 3, eventKey: 0 },
+            { _x: 2, x: "cats", xName: "cats", _y: 5, y: 5, eventKey: 1 }
           ];
           const returnData = Data.getData(props);
           expect(returnData).to.eql(expectedReturnWithEventKeys);
@@ -221,7 +217,6 @@ describe("victory-util/data", () => {
             { _x: 2, x: 2, _y: 2, y: 2, order: 3, eventKey: 0 },
             { _x: 1, x: 1, _y: 1, y: 1, order: 2, eventKey: 1 },
             { _x: 3, x: 3, _y: 3, y: 3, order: 1, eventKey: 2 }
-
           ]);
         });
 
@@ -271,7 +266,7 @@ describe("victory-util/data", () => {
       static role = "area";
     }
     it("returns true when a component has a static role matching a whitelist", () => {
-      expect(Data.isDataComponent(<TestDataComponent/>)).to.be.true;
+      expect(Data.isDataComponent(<TestDataComponent />)).to.be.true;
     });
 
     it("returns false when a component has a role that does not match the whitelist", () => {
@@ -279,11 +274,17 @@ describe("victory-util/data", () => {
       class TestFooComponent extends React.Component {
         static role = "foo";
       }
-      expect(Data.isDataComponent(<TestFooComponent/>)).to.be.false;
+      expect(Data.isDataComponent(<TestFooComponent />)).to.be.false;
     });
 
     it("returns true when a data component is wrapped in VictoryPortal", () => {
-      expect(Data.isDataComponent(<VictoryPortal><TestDataComponent/></VictoryPortal>)).to.be.true;
+      expect(
+        Data.isDataComponent(
+          <VictoryPortal>
+            <TestDataComponent />
+          </VictoryPortal>
+        )
+      ).to.be.true;
     });
   });
 });

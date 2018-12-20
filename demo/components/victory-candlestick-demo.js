@@ -9,8 +9,15 @@ import { VictoryCandlestick } from "../../packages/victory-candlestick/src/index
 import { VictoryTheme } from "../../packages/victory-core/src/index";
 
 const getData = () => {
-  const colors =
-    ["violet", "cornflowerblue", "gold", "orange", "turquoise", "tomato", "greenyellow"];
+  const colors = [
+    "violet",
+    "cornflowerblue",
+    "gold",
+    "orange",
+    "turquoise",
+    "tomato",
+    "greenyellow"
+  ];
   return range(50).map(() => {
     return {
       x: random(600),
@@ -43,7 +50,6 @@ const data = [
   { x: new Date(2016, 6, 7), open: 30, close: 90, high: 95, low: 30 },
   { x: new Date(2016, 6, 8), open: 80, close: 81, high: 83, low: 75 }
 ];
-
 
 export default class App extends React.Component {
   constructor(props) {
@@ -78,47 +84,47 @@ export default class App extends React.Component {
     return (
       <div className="demo" style={containerStyle}>
         <svg height={500} width={500}>
-        <VictoryCandlestick
-          style={{ data: { width: 10 }, parent: style.parent }}
-          data={data}
-          size={8}
-          standalone={false}
-          events={[{
-            target: "labels",
-            eventHandlers: {
-              onClick: () => {
-                return [
-                  {
-                    mutation: (props) => {
-                      return {
-                        style: merge({}, props.style.labels, { fill: "orange" })
-                      };
-                    }
+          <VictoryCandlestick
+            style={{ data: { width: 10 }, parent: style.parent }}
+            data={data}
+            size={8}
+            standalone={false}
+            events={[
+              {
+                target: "labels",
+                eventHandlers: {
+                  onClick: () => {
+                    return [
+                      {
+                        mutation: (props) => {
+                          return {
+                            style: merge({}, props.style.labels, { fill: "orange" })
+                          };
+                        }
+                      }
+                    ];
                   }
-                ];
-              }
-            }
-          },
-          {
-            target: "data",
-            eventHandlers: {
-              onClick: () => {
-                return [
-                  {
-                    mutation: (props) => {
-                      return {
-                        style: merge({}, props.style, { fill: "blue" })
-                      };
-                    }
+                }
+              },
+              {
+                target: "data",
+                eventHandlers: {
+                  onClick: () => {
+                    return [
+                      {
+                        mutation: (props) => {
+                          return {
+                            style: merge({}, props.style, { fill: "blue" })
+                          };
+                        }
+                      }
+                    ];
                   }
-                ];
+                }
               }
-            }
-          }]}
-        />
-        <VictoryAxis
-          standalone={false}
-        />
+            ]}
+          />
+          <VictoryAxis standalone={false} />
         </svg>
 
         <VictoryCandlestick
@@ -126,45 +132,43 @@ export default class App extends React.Component {
           data={data}
           theme={VictoryTheme.material}
           size={8}
-          events={[{
-            target: "labels",
-            eventHandlers: {
-              onClick: () => {
-                return [
-                  {
-                    mutation: (props) => {
-                      return {
-                        style: merge({}, props.style.labels, { fill: "orange" })
-                      };
+          events={[
+            {
+              target: "labels",
+              eventHandlers: {
+                onClick: () => {
+                  return [
+                    {
+                      mutation: (props) => {
+                        return {
+                          style: merge({}, props.style.labels, { fill: "orange" })
+                        };
+                      }
                     }
-                  }
-                ];
+                  ];
+                }
+              }
+            },
+            {
+              target: "data",
+              eventHandlers: {
+                onClick: () => {
+                  return [
+                    {
+                      mutation: (props) => {
+                        return {
+                          style: merge({}, props.style, { fill: "blue" })
+                        };
+                      }
+                    }
+                  ];
+                }
               }
             }
-          },
-          {
-            target: "data",
-            eventHandlers: {
-              onClick: () => {
-                return [
-                  {
-                    mutation: (props) => {
-                      return {
-                        style: merge({}, props.style, { fill: "blue" })
-                      };
-                    }
-                  }
-                ];
-              }
-            }
-          }]}
+          ]}
         />
 
-        <VictoryChart
-          scale={{ x: "time" }}
-          style={style}
-          domainPadding={{ x: [20, 50] }}
-        >
+        <VictoryChart scale={{ x: "time" }} style={style} domainPadding={{ x: [20, 50] }}>
           <VictoryCandlestick
             candleColors={{ positive: "#8BC34A", negative: "#C62828" }}
             data={data}
@@ -187,16 +191,11 @@ export default class App extends React.Component {
           }}
         />
 
-        <VictoryCandlestick style={style}
-          size={1}
-        />
+        <VictoryCandlestick style={style} size={1} />
 
         <VictoryChart style={style}>
-          <VictoryCandlestick
-            data={[]}
-          />
+          <VictoryCandlestick data={[]} />
         </VictoryChart>
-
       </div>
     );
   }

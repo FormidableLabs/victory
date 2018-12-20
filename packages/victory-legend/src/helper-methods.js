@@ -55,7 +55,7 @@ const getRow = (props, index) => {
 
 const groupData = (props) => {
   const { data } = props;
-  const style = props.style && props.style.data || {};
+  const style = (props.style && props.style.data) || {};
   const labelStyles = getLabelStyles(props);
   return data.map((datum, index) => {
     const symbol = datum.symbol || {};
@@ -64,7 +64,10 @@ const groupData = (props) => {
     const size = symbol.size || style.size || fontSize / 2.5;
     const symbolSpacer = props.symbolSpacer || Math.max(size, fontSize);
     return {
-      ...datum, size, symbolSpacer, fontSize,
+      ...datum,
+      size,
+      symbolSpacer,
+      fontSize,
       textSize: TextSize.approximateTextSize(datum.name, labelStyles[index]),
       column: getColumn(props, index),
       row: getRow(props, index)
@@ -74,9 +77,8 @@ const groupData = (props) => {
 
 const getColumnWidths = (props, data) => {
   const gutter = props.gutter || {};
-  const gutterWidth = typeof gutter === "object" ?
-    (gutter.left || 0) + (gutter.right || 0) :
-    (gutter || 0);
+  const gutterWidth =
+    typeof gutter === "object" ? (gutter.left || 0) + (gutter.right || 0) : gutter || 0;
   const dataByColumn = groupBy(data, "column");
   const columns = keys(dataByColumn);
   return columns.reduce((memo, curr, index) => {
@@ -90,9 +92,8 @@ const getColumnWidths = (props, data) => {
 
 const getRowHeights = (props, data) => {
   const gutter = props.rowGutter || {};
-  const gutterHeight = typeof gutter === "object" ?
-    (gutter.top || 0) + (gutter.bottom || 0) :
-    (gutter || 0);
+  const gutterHeight =
+    typeof gutter === "object" ? (gutter.top || 0) + (gutter.bottom || 0) : gutter || 0;
   const dataByRow = groupBy(data, "row");
   return keys(dataByRow).reduce((memo, curr, index) => {
     const rows = dataByRow[curr];
@@ -105,7 +106,7 @@ const getRowHeights = (props, data) => {
 };
 
 const getTitleDimensions = (props) => {
-  const style = props.style && props.style.title || {};
+  const style = (props.style && props.style.title) || {};
   const textSize = TextSize.approximateTextSize(props.title, style);
   const padding = style.padding || 0;
   return { height: textSize.height + 2 * padding || 0, width: textSize.width + 2 * padding || 0 };
@@ -143,12 +144,12 @@ const getAnchors = (titleOrientation, centerTitle) => {
 
 const getTitleStyle = (props) => {
   const { titleOrientation, centerTitle, titleComponent } = props;
-  const baseStyle = props.style && props.style.title || {};
-  const componentStyle = titleComponent.props && titleComponent.props.style || {};
+  const baseStyle = (props.style && props.style.title) || {};
+  const componentStyle = (titleComponent.props && titleComponent.props.style) || {};
   const anchors = getAnchors(titleOrientation, centerTitle);
-  return Array.isArray(componentStyle) ?
-    componentStyle.map((obj) => defaults({}, obj, baseStyle, anchors)) :
-    defaults({}, componentStyle, baseStyle, anchors);
+  return Array.isArray(componentStyle)
+    ? componentStyle.map((obj) => defaults({}, obj, baseStyle, anchors))
+    : defaults({}, componentStyle, baseStyle, anchors);
 };
 
 // eslint-disable-next-line complexity
@@ -195,12 +196,14 @@ const getDimensions = (props, fallbackProps) => {
   const titleDimensions = title ? getTitleDimensions(props) : { height: 0, width: 0 };
 
   return {
-    height: titleOrientation === "left" || titleOrientation === "right" ?
-      Math.max(sum(rowHeights), titleDimensions.height) :
-      sum(rowHeights) + titleDimensions.height,
-    width: titleOrientation === "left" || titleOrientation === "right" ?
-      sum(columnWidths) + titleDimensions.width :
-      Math.max(sum(columnWidths), titleDimensions.width)
+    height:
+      titleOrientation === "left" || titleOrientation === "right"
+        ? Math.max(sum(rowHeights), titleDimensions.height)
+        : sum(rowHeights) + titleDimensions.height,
+    width:
+      titleOrientation === "left" || titleOrientation === "right"
+        ? sum(columnWidths) + titleDimensions.width
+        : Math.max(sum(columnWidths), titleDimensions.width)
   };
 };
 
@@ -208,8 +211,20 @@ const getBaseProps = (props, fallbackProps) => {
   const modifiedProps = Helpers.modifyProps(props, fallbackProps, "legend");
   props = assign({}, modifiedProps, getCalculatedValues(modifiedProps));
   const {
-    data, standalone, theme, padding, style, colorScale, gutter, rowGutter,
-    borderPadding, title, titleOrientation, name, x = 0, y = 0
+    data,
+    standalone,
+    theme,
+    padding,
+    style,
+    colorScale,
+    gutter,
+    rowGutter,
+    borderPadding,
+    title,
+    titleOrientation,
+    name,
+    x = 0,
+    y = 0
   } = props;
   const groupedData = groupData(props);
   const columnWidths = getColumnWidths(props, groupedData);
@@ -229,7 +244,11 @@ const getBaseProps = (props, fallbackProps) => {
   const titleProps = getTitleProps(props, borderProps);
   const initialProps = {
     parent: {
-      data, standalone, theme, padding, name,
+      data,
+      standalone,
+      theme,
+      padding,
+      name,
       height: props.height,
       width: props.width,
       style: style.parent
@@ -245,7 +264,8 @@ const getBaseProps = (props, fallbackProps) => {
     const originX = x + borderPadding.left + datum.symbolSpacer;
     const dataProps = {
       index: i,
-      data, datum,
+      data,
+      datum,
       symbol: dataStyle.type || dataStyle.symbol || "circle",
       size: datum.size,
       style: dataStyle,
@@ -254,11 +274,12 @@ const getBaseProps = (props, fallbackProps) => {
     };
 
     const labelProps = {
-      datum, data,
+      datum,
+      data,
       text: datum.name,
       style: labelStyles[i],
       y: dataProps.y,
-      x: dataProps.x + datum.symbolSpacer + (datum.size / 2)
+      x: dataProps.x + datum.symbolSpacer + datum.size / 2
     };
     childProps[eventKey] = { data: dataProps, labels: labelProps };
 

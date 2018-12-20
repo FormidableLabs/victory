@@ -4,7 +4,6 @@
 import { Selection } from "packages/victory-core/src/index";
 import * as d3Scale from "d3-scale";
 
-
 describe("helpers/selection", () => {
   describe("getBounds", () => {
     it("returns min / max bounds", () => {
@@ -22,7 +21,8 @@ describe("helpers/selection", () => {
   describe("getDomainCoordinates", () => {
     it("returns coordinates corresponding to domain min max", () => {
       const scale = {
-        x: d3Scale.scaleLinear(), y: d3Scale.scaleLinear()
+        x: d3Scale.scaleLinear(),
+        y: d3Scale.scaleLinear()
       };
       const coords = Selection.getDomainCoordinates({ scale });
       expect(coords).to.eql({ x: [0, 1], y: [0, 1] });
@@ -32,14 +32,16 @@ describe("helpers/selection", () => {
   describe("getDataCoordinates", () => {
     it("returns coordinates corresponding to point x, y", () => {
       const scale = {
-        x: d3Scale.scaleLinear(), y: d3Scale.scaleLinear()
+        x: d3Scale.scaleLinear(),
+        y: d3Scale.scaleLinear()
       };
       const coords = Selection.getDataCoordinates({}, scale, 1, 1);
       expect(coords).to.eql({ x: 1, y: 1 });
     });
     it("returns polar coordinates corresponding to point x, y", () => {
       const scale = {
-        x: d3Scale.scaleLinear().range([0, Math.PI * 2]), y: d3Scale.scaleLinear()
+        x: d3Scale.scaleLinear().range([0, Math.PI * 2]),
+        y: d3Scale.scaleLinear()
       };
       const x = Math.PI;
       const y = 0;

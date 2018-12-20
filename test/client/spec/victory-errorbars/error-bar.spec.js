@@ -25,7 +25,7 @@ describe("victory-primitives/error-bar", () => {
   };
 
   it("should render eight lines", () => {
-    const wrapper = shallow(<ErrorBar {...baseProps}/>);
+    const wrapper = shallow(<ErrorBar {...baseProps} />);
     const lines = wrapper.find("g").find(Line);
 
     const expectedCoordinates = [
@@ -56,7 +56,7 @@ describe("victory-primitives/error-bar", () => {
   it("should render four lines when only x error type is supplied", () => {
     const xErrorProps = omit(baseProps, ["errorY"]);
 
-    const wrapper = shallow(<ErrorBar {...xErrorProps}/>);
+    const wrapper = shallow(<ErrorBar {...xErrorProps} />);
     const lines = wrapper.find("g").find(Line);
 
     const expectedCoordinates = [
@@ -79,7 +79,7 @@ describe("victory-primitives/error-bar", () => {
   it("should render four lines when only y error type is supplied", () => {
     const yErrorProps = omit(baseProps, ["errorX"]);
 
-    const wrapper = shallow(<ErrorBar {...yErrorProps}/>);
+    const wrapper = shallow(<ErrorBar {...yErrorProps} />);
     const lines = wrapper.find("g").find(Line);
 
     const expectedCoordinates = [
@@ -106,7 +106,7 @@ describe("victory-primitives/error-bar", () => {
         y: { range: () => [-100, 100] }
       }
     });
-    const wrapper = shallow(<ErrorBar {...props}/>);
+    const wrapper = shallow(<ErrorBar {...props} />);
     const lines = wrapper.find("g").find(Line);
 
     const expectedCoordinates = [

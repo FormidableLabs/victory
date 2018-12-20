@@ -1,8 +1,14 @@
 import PropTypes from "prop-types";
 import React from "react";
 import {
-  PropTypes as CustomPropTypes, Helpers, VictoryLabel, addEvents,
-  VictoryContainer, VictoryTheme, DefaultTransitions, CommonProps
+  PropTypes as CustomPropTypes,
+  Helpers,
+  VictoryLabel,
+  addEvents,
+  VictoryContainer,
+  VictoryTheme,
+  DefaultTransitions,
+  CommonProps
 } from "victory-core";
 import ErrorBar from "./error-bar";
 import { getBaseProps, getDomain, getData } from "./helper-methods";
@@ -18,6 +24,19 @@ const defaultData = [
   { x: 2, y: 2, errorX: 0.2, errorY: 0.2 },
   { x: 3, y: 3, errorX: 0.3, errorY: 0.3 },
   { x: 4, y: 4, errorX: 0.4, errorY: 0.4 }
+];
+
+const animationWhitelist = [
+  "data",
+  "domain",
+  "height",
+  "padding",
+  "samples",
+  "style",
+  "width",
+  "errorX",
+  "errorY",
+  "borderWidth"
 ];
 
 class VictoryErrorBar extends React.Component {
@@ -58,11 +77,11 @@ class VictoryErrorBar extends React.Component {
   };
 
   static defaultProps = {
-    containerComponent: <VictoryContainer/>,
+    containerComponent: <VictoryContainer />,
     data: defaultData,
-    dataComponent: <ErrorBar/>,
-    labelComponent: <VictoryLabel/>,
-    groupComponent: <g role="presentation"/>,
+    dataComponent: <ErrorBar />,
+    labelComponent: <VictoryLabel />,
+    groupComponent: <g role="presentation" />,
     samples: 50,
     scale: "linear",
     sortOrder: "ascending",
@@ -74,7 +93,10 @@ class VictoryErrorBar extends React.Component {
   static getData = getData;
   static getBaseProps = (props) => getBaseProps(props, fallbackProps);
   static expectedComponents = [
-    "dataComponent", "labelComponent", "groupComponent", "containerComponent"
+    "dataComponent",
+    "labelComponent",
+    "groupComponent",
+    "containerComponent"
   ];
 
   // Overridden in native versions

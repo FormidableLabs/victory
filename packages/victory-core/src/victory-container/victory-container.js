@@ -10,10 +10,7 @@ export default class VictoryContainer extends React.Component {
   static displayName = "VictoryContainer";
   static role = "container";
   static propTypes = {
-    children: PropTypes.oneOfType([
-      PropTypes.arrayOf(PropTypes.node),
-      PropTypes.node
-    ]),
+    children: PropTypes.oneOfType([PropTypes.arrayOf(PropTypes.node), PropTypes.node]),
     className: PropTypes.string,
     containerId: PropTypes.oneOfType([PropTypes.number, PropTypes.string]),
     containerRef: PropTypes.func,
@@ -30,31 +27,33 @@ export default class VictoryContainer extends React.Component {
     theme: PropTypes.object,
     title: PropTypes.string,
     width: CustomPropTypes.nonNegative
-  }
+  };
 
   static defaultProps = {
     className: "VictoryContainer",
-    portalComponent: <Portal/>,
+    portalComponent: <Portal />,
     portalZIndex: 99,
     responsive: true
-  }
+  };
 
   static contextTypes = {
     getTimer: PropTypes.func
-  }
+  };
 
   static childContextTypes = {
     portalUpdate: PropTypes.func,
     portalRegister: PropTypes.func,
     portalDeregister: PropTypes.func,
     getTimer: PropTypes.func
-  }
+  };
 
   constructor(props) {
     super(props);
     this.getTimer = this.getTimer.bind(this);
-    this.containerId = !isObject(props) || props.containerId === undefined ?
-      uniqueId("victory-container-") : props.containerId;
+    this.containerId =
+      !isObject(props) || props.containerId === undefined
+        ? uniqueId("victory-container-")
+        : props.containerId;
     this.savePortalRef = (portal) => {
       this.portalRef = portal;
       return portal;
@@ -100,20 +99,32 @@ export default class VictoryContainer extends React.Component {
 
   renderContainer(props, svgProps, style) {
     const {
-      title, desc, portalComponent, className, width, height, portalZIndex, responsive
+      title,
+      desc,
+      portalComponent,
+      className,
+      width,
+      height,
+      portalZIndex,
+      responsive
     } = props;
     const children = this.getChildren(props);
     const dimensions = responsive ? { width: "100%", height: "100%" } : { width, height };
     const divStyle = assign(
-      { pointerEvents: "none", touchAction: "none", position: "relative" }, dimensions
+      { pointerEvents: "none", touchAction: "none", position: "relative" },
+      dimensions
     );
     const portalDivStyle = assign(
-      { zIndex: portalZIndex, position: "absolute", top: 0, left: 0 }, dimensions
+      { zIndex: portalZIndex, position: "absolute", top: 0, left: 0 },
+      dimensions
     );
     const svgStyle = assign({ pointerEvents: "all" }, dimensions);
     const portalSvgStyle = assign({ overflow: "visible" }, dimensions);
     const portalProps = {
-      width, height, viewBox: svgProps.viewBox, style: portalSvgStyle
+      width,
+      height,
+      viewBox: svgProps.viewBox,
+      style: portalSvgStyle
     };
     return (
       <div style={defaults({}, style, divStyle)} className={className} ref={props.containerRef}>
@@ -122,20 +133,23 @@ export default class VictoryContainer extends React.Component {
           {desc ? <desc id={this.getIdForElement("desc")}>{desc}</desc> : null}
           {children}
         </svg>
-          <div style={portalDivStyle}>
-            {React.cloneElement(portalComponent, { ...portalProps, ref: this.savePortalRef })}
-          </div>
+        <div style={portalDivStyle}>
+          {React.cloneElement(portalComponent, { ...portalProps, ref: this.savePortalRef })}
         </div>
+      </div>
     );
   }
 
   render() {
     const { width, height, responsive, events } = this.props;
-    const style = responsive ?
-      this.props.style : Helpers.omit(this.props.style, ["height", "width"]);
+    const style = responsive
+      ? this.props.style
+      : Helpers.omit(this.props.style, ["height", "width"]);
     const svgProps = assign(
       {
-        width, height, role: "img",
+        width,
+        height,
+        role: "img",
         "aria-labelledby": `${this.getIdForElement("title")} ${this.getIdForElement("desc")}`,
         viewBox: responsive ? `0 0 ${width} ${height}` : undefined
       },

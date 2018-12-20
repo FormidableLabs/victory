@@ -1,5 +1,4 @@
-Contributing
-============
+# Contributing
 
 Thanks for helping out!
 
@@ -86,6 +85,7 @@ Each package must contain the following `version` script `package.json`:
   "version": "nps build-libs && nps build-dists",
 }
 ```
+
 Pre version checks are run _once_ for all packages, and are defined in the root directory `package.json`
 
 ```
@@ -104,6 +104,7 @@ To publish a package _for real_
 ```console
 $ lerna publish
 ```
+
 You will be prompted to select an appropriate version before continuing. Lerna will run preversion checks, bump versions in all packages, create git commits, build libs, and publish packages. The whole process takes about 5 minutes. Be patient!
 
 ## Contributor Covenant Code of Conduct
@@ -122,21 +123,21 @@ and orientation.
 Examples of behavior that contributes to creating a positive environment
 include:
 
-* Using welcoming and inclusive language
-* Being respectful of differing viewpoints and experiences
-* Gracefully accepting constructive criticism
-* Focusing on what is best for the community
-* Showing empathy towards other community members
+- Using welcoming and inclusive language
+- Being respectful of differing viewpoints and experiences
+- Gracefully accepting constructive criticism
+- Focusing on what is best for the community
+- Showing empathy towards other community members
 
 Examples of unacceptable behavior by participants include:
 
-* The use of sexualized language or imagery and unwelcome sexual attention or
-advances
-* Trolling, insulting/derogatory comments, and personal or political attacks
-* Public or private harassment
-* Publishing others' private information, such as a physical or electronic
+- The use of sexualized language or imagery and unwelcome sexual attention or
+  advances
+- Trolling, insulting/derogatory comments, and personal or political attacks
+- Public or private harassment
+- Publishing others' private information, such as a physical or electronic
   address, without explicit permission
-* Other conduct which could reasonably be considered inappropriate in a
+- Other conduct which could reasonably be considered inappropriate in a
   professional setting
 
 ### Our Responsibilities

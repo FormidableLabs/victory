@@ -12,8 +12,9 @@ const reduceData = (dataset, axis, type) => {
   const baseCondition = type === "min" ? Infinity : -Infinity;
   return dataset.reduce((memo, datum) => {
     const current = datum[dataType];
-    return memo < current && type === "min" || memo > current && type === "max" ?
-      memo : current;
+    return (memo < current && type === "min") || (memo > current && type === "max")
+      ? memo
+      : current;
   }, baseCondition);
 };
 
@@ -38,8 +39,8 @@ const getDomain = (props, axis) => {
 
 const getCalculatedValues = (props) => {
   const { theme, polar } = props;
-  const defaultStyle = theme && theme.candlestick && theme.candlestick.style ?
-    theme.candlestick.style : {};
+  const defaultStyle =
+    theme && theme.candlestick && theme.candlestick.style ? theme.candlestick.style : {};
   const style = Helpers.getStyles(props.style, defaultStyle);
   const data = getData(props);
   const range = {
@@ -51,8 +52,12 @@ const getCalculatedValues = (props) => {
     y: getDomain(props, "y")
   };
   const scale = {
-    x: Scale.getBaseScale(props, "x").domain(domain.x).range(range.x),
-    y: Scale.getBaseScale(props, "y").domain(domain.y).range(range.y)
+    x: Scale.getBaseScale(props, "x")
+      .domain(domain.x)
+      .range(range.x),
+    y: Scale.getBaseScale(props, "y")
+      .domain(domain.y)
+      .range(range.y)
   };
   const origin = polar ? props.origin || Helpers.getPolarOrigin(props) : undefined;
   return { domain, data, scale, style, origin };
@@ -64,8 +69,8 @@ const isTransparent = (attr) => {
 
 const getDataStyles = (datum, style, props) => {
   style = style || {};
-  const candleColor = datum.open > datum.close ?
-    props.candleColors.negative : props.candleColors.positive;
+  const candleColor =
+    datum.open > datum.close ? props.candleColors.negative : props.candleColors.positive;
   const fill = style.fill || candleColor;
   const strokeColor = style.stroke;
   const stroke = isTransparent(strokeColor) ? fill : strokeColor || "black";
@@ -90,18 +95,43 @@ const getLabelProps = (dataProps, text, style) => {
   };
 };
 
-const getBaseProps = (props, fallbackProps) => { // eslint-disable-line max-statements
+const getBaseProps = (props, fallbackProps) => {
+  // eslint-disable-line max-statements
   props = Helpers.modifyProps(props, fallbackProps, "candlestick");
   const calculatedValues = getCalculatedValues(props);
   const { data, style, scale, domain, origin } = calculatedValues;
   const {
-    groupComponent, width, height, padding, standalone, name, candleWidth, candleRatio,
-    theme, polar, wickStrokeWidth, labels, events, sharedEvents
+    groupComponent,
+    width,
+    height,
+    padding,
+    standalone,
+    name,
+    candleWidth,
+    candleRatio,
+    theme,
+    polar,
+    wickStrokeWidth,
+    labels,
+    events,
+    sharedEvents
   } = props;
-  const initialChildProps = { parent: {
-    domain, scale, width, height, data, standalone, theme, polar, origin, name,
-    style: style.parent, padding
-  } };
+  const initialChildProps = {
+    parent: {
+      domain,
+      scale,
+      width,
+      height,
+      data,
+      standalone,
+      theme,
+      polar,
+      origin,
+      name,
+      style: style.parent,
+      padding
+    }
+  };
 
   return data.reduce((childProps, datum, index) => {
     const eventKey = datum.eventKey || index;
@@ -112,15 +142,30 @@ const getBaseProps = (props, fallbackProps) => { // eslint-disable-line max-stat
     const low = scale.y(datum._low);
     const dataStyle = getDataStyles(datum, style.data, props);
     const dataProps = {
-      x, high, low, candleWidth, candleRatio, scale, data, datum, groupComponent, index,
-      style: dataStyle, width, polar, origin, wickStrokeWidth, open, close
+      x,
+      high,
+      low,
+      candleWidth,
+      candleRatio,
+      scale,
+      data,
+      datum,
+      groupComponent,
+      index,
+      style: dataStyle,
+      width,
+      polar,
+      origin,
+      wickStrokeWidth,
+      open,
+      close
     };
 
     childProps[eventKey] = {
       data: dataProps
     };
     const text = LabelHelpers.getText(props, datum, index);
-    if (text !== undefined && text !== null || (labels && (events || sharedEvents))) {
+    if ((text !== undefined && text !== null) || (labels && (events || sharedEvents))) {
       childProps[eventKey].labels = getLabelProps(dataProps, text, style);
     }
 

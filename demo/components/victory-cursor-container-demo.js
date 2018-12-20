@@ -16,7 +16,6 @@ import { VictoryTheme, VictoryLabel } from "../../packages/victory-core/src/inde
 const makeData = () => range(1500).map((x) => ({ x, y: x + 10 * Math.random() }));
 
 class App extends React.Component {
-
   constructor() {
     super();
     this.defaultCursorValue = { x: 2.25, y: 1.75 };
@@ -40,7 +39,6 @@ class App extends React.Component {
     window.clearInterval(this.setStateInterval);
   }
 
-
   getData() {
     const bars = random(6, 10);
     return range(bars).map((bar) => {
@@ -59,25 +57,21 @@ class App extends React.Component {
 
     const chartStyle = { parent: { border: "1px solid #ccc", margin: "2%", maxWidth: "40%" } };
 
-    const cursorLabel = (d) => (
-      `${round(d.x, 2)} , ${round(d.y, 2)}`
-    );
+    const cursorLabel = (d) => `${round(d.x, 2)} , ${round(d.y, 2)}`;
 
     return (
       <div className="demo">
         <div style={containerStyle}>
-
-          <VictoryChart style={chartStyle}
+          <VictoryChart
+            style={chartStyle}
             theme={VictoryTheme.material}
             height={400}
             padding={{ top: 100, bottom: 40, left: 50, right: 50 }}
-            containerComponent={
-              <VictoryCursorContainer
-                cursorLabel={cursorLabel}
-              />
-            }
+            containerComponent={<VictoryCursorContainer cursorLabel={cursorLabel} />}
           >
-            <VictoryLegend x={90} y={10}
+            <VictoryLegend
+              x={90}
+              y={10}
               title="Legend"
               centerTitle
               orientation="horizontal"
@@ -89,10 +83,11 @@ class App extends React.Component {
                 { name: "Three", symbol: { fill: "gold" } }
               ]}
             />
-            <VictoryLine data={this.state.bigData}/>
+            <VictoryLine data={this.state.bigData} />
           </VictoryChart>
 
-          <VictoryChart style={chartStyle}
+          <VictoryChart
+            style={chartStyle}
             theme={VictoryTheme.material}
             domainPadding={{ y: 2 }}
             containerComponent={
@@ -104,10 +99,12 @@ class App extends React.Component {
             }
           >
             <VictoryLabel
-              x={50} y={310}
-              text={
-                `x: ${round(this.state.cursorValue.x, 2)} y: ${round(this.state.cursorValue.y, 2)}`
-              }
+              x={50}
+              y={310}
+              text={`x: ${round(this.state.cursorValue.x, 2)} y: ${round(
+                this.state.cursorValue.y,
+                2
+              )}`}
             />
             <VictoryLine
               data={[
@@ -117,7 +114,7 @@ class App extends React.Component {
                 { x: 3, y: -2, l: "three" }
               ]}
               style={{
-                data: { stroke: "tomato", strokeWidth: (d, active) => active ? 4 : 2 },
+                data: { stroke: "tomato", strokeWidth: (d, active) => (active ? 4 : 2) },
                 labels: { fill: "tomato" }
               }}
             />
@@ -129,7 +126,7 @@ class App extends React.Component {
                 { x: 3, y: 3, l: "blue" }
               ]}
               style={{
-                data: { stroke: "blue", strokeWidth: (d, active) => active ? 4 : 2 },
+                data: { stroke: "blue", strokeWidth: (d, active) => (active ? 4 : 2) },
                 labels: { fill: "blue" }
               }}
             />
@@ -141,7 +138,7 @@ class App extends React.Component {
                 { x: 3, y: -2, l: "bird" }
               ]}
               style={{
-                data: { stroke: "black", strokeWidth: (d, active) => active ? 4 : 2 },
+                data: { stroke: "black", strokeWidth: (d, active) => (active ? 4 : 2) },
                 labels: { fill: "black" }
               }}
             />
@@ -152,7 +149,7 @@ class App extends React.Component {
             style={{
               parent: chartStyle.parent,
               data: {
-                fill: (datum, active) => active ? "tomato" : "black"
+                fill: (datum, active) => (active ? "tomato" : "black")
               }
             }}
             containerComponent={
@@ -162,7 +159,7 @@ class App extends React.Component {
                 defaultCursorValue={1}
               />
             }
-            size={(datum, active) => active ? 5 : 3}
+            size={(datum, active) => (active ? 5 : 3)}
             data={this.state.data}
             x="a"
             y="b"
@@ -172,17 +169,20 @@ class App extends React.Component {
             style={{
               parent: chartStyle.parent,
               data: {
-                fill: (datum, active) => active ? "tomato" : "black"
+                fill: (datum, active) => (active ? "tomato" : "black")
               }
             }}
             containerComponent={
               <VictoryCursorContainer
                 selectionStyle={{
-                  stroke: "tomato", strokeWidth: 2, fill: "tomato", fillOpacity: 0.1
+                  stroke: "tomato",
+                  strokeWidth: 2,
+                  fill: "tomato",
+                  fillOpacity: 0.1
                 }}
               />
             }
-            size={(datum, active) => active ? 5 : 3}
+            size={(datum, active) => (active ? 5 : 3)}
             y={(d) => d.x * d.x}
           />
 
@@ -202,9 +202,9 @@ class App extends React.Component {
                 style={{
                   data: { fill: "tomato" }
                 }}
-                size={(datum, active) => active ? 5 : 3}
+                size={(datum, active) => (active ? 5 : 3)}
                 labels={(d) => d.y}
-                labelComponent={<VictoryTooltip/>}
+                labelComponent={<VictoryTooltip />}
                 data={[
                   { x: 1, y: -5 },
                   { x: 2, y: 4 },
@@ -219,9 +219,9 @@ class App extends React.Component {
                 style={{
                   data: { fill: "blue" }
                 }}
-                size={(datum, active) => active ? 5 : 3}
+                size={(datum, active) => (active ? 5 : 3)}
                 labels={(d) => d.y}
-                labelComponent={<VictoryTooltip/>}
+                labelComponent={<VictoryTooltip />}
                 data={[
                   { x: 1, y: -3 },
                   { x: 2, y: 5 },
@@ -243,22 +243,22 @@ class App extends React.Component {
                   { x: 7, y: -3 }
                 ]}
                 labels={(d) => d.y}
-                labelComponent={<VictoryTooltip/>}
-                size={(datum, active) => active ? 5 : 3}
+                labelComponent={<VictoryTooltip />}
+                size={(datum, active) => (active ? 5 : 3)}
               />
             </VictoryGroup>
           </VictoryChart>
 
-          <VictoryStack style={chartStyle} containerComponent={<VictoryCursorContainer/>}>
+          <VictoryStack style={chartStyle} containerComponent={<VictoryCursorContainer />}>
             <VictoryBar
               style={{
                 data: {
                   fill: "tomato",
-                  stroke: (d, active) => active ? "black" : "none",
+                  stroke: (d, active) => (active ? "black" : "none"),
                   strokeWidth: 2
                 }
               }}
-              size={(datum, active) => active ? 5 : 3}
+              size={(datum, active) => (active ? 5 : 3)}
               data={[
                 { x: 1, y: -5 },
                 { x: 2, y: 4 },
@@ -273,11 +273,11 @@ class App extends React.Component {
               style={{
                 data: {
                   fill: "orange",
-                  stroke: (d, active) => active ? "black" : "none",
+                  stroke: (d, active) => (active ? "black" : "none"),
                   strokeWidth: 2
                 }
               }}
-              size={(datum, active) => active ? 5 : 3}
+              size={(datum, active) => (active ? 5 : 3)}
               data={[
                 { x: 1, y: -3 },
                 { x: 2, y: 5 },
@@ -292,7 +292,7 @@ class App extends React.Component {
               style={{
                 data: {
                   fill: "gold",
-                  stroke: (d, active) => active ? "black" : "none",
+                  stroke: (d, active) => (active ? "black" : "none"),
                   strokeWidth: 2
                 }
               }}

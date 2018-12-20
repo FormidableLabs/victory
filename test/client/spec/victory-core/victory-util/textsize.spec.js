@@ -31,21 +31,21 @@ describe("victory-util/textsize", () => {
       ).to.be.eql("24.22");
     });
     it("return appropriate width with defined fontSize", () => {
-      expect(
-        TextSize.approximateTextSize(testString, { fontSize: 12 }).width.toFixed(2)
-      ).to.be.eql("20.76");
+      expect(TextSize.approximateTextSize(testString, { fontSize: 12 }).width.toFixed(2)).to.be.eql(
+        "20.76"
+      );
     });
     it("consider font", () => {
-      expect(
-        TextSize.approximateTextSize(testString, { fontSize: 16 }).width.toFixed(2)
-      ).to.be.eql("27.68");
+      expect(TextSize.approximateTextSize(testString, { fontSize: 16 }).width.toFixed(2)).to.be.eql(
+        "27.68"
+      );
     });
     it("consider letterSpacing", () => {
       expect(
-        TextSize.approximateTextSize(
-          testString,
-          { fontSize: 12, letterSpacing: "1px" }
-        ).width.toFixed(2)
+        TextSize.approximateTextSize(testString, {
+          fontSize: 12,
+          letterSpacing: "1px"
+        }).width.toFixed(2)
       ).to.be.eql("23.26");
     });
     it("consider angle", () => {
@@ -60,8 +60,11 @@ describe("victory-util/textsize", () => {
     });
     it("consider lineHeight with angle", () => {
       expect(
-        TextSize.approximateTextSize(testString, { fontSize: 12, lineHeight: 2, angle: 30 }
-		).width.toFixed(2)
+        TextSize.approximateTextSize(testString, {
+          fontSize: 12,
+          lineHeight: 2,
+          angle: 30
+        }).width.toFixed(2)
       ).to.eql("35.23");
     });
     it("return width of widest string in text", () => {
@@ -77,8 +80,7 @@ describe("victory-util/textsize", () => {
     });
     it("return correct height with signed angle", () => {
       expect(
-        TextSize.approximateTextSize(testString,
-          { angle: -45, fontSize: 14 }).height.toFixed(2)
+        TextSize.approximateTextSize(testString, { angle: -45, fontSize: 14 }).height.toFixed(2)
       ).to.be.eql("26.34");
     });
     it("return correct height with pixel fontsize", () => {
@@ -103,14 +105,19 @@ describe("victory-util/textsize", () => {
     });
     it("not consider letterSpacing without angle", () => {
       expect(
-        TextSize.approximateTextSize(testString, { fontSize: 12, letterSpacing: "1px" })
-          .height.toFixed(2)
+        TextSize.approximateTextSize(testString, {
+          fontSize: 12,
+          letterSpacing: "1px"
+        }).height.toFixed(2)
       ).to.eql("14.49");
     });
     it("consider letterSpacing with angle", () => {
       expect(
-        TextSize.approximateTextSize(testString, { fontSize: 12, angle: 30, letterSpacing: "1px" })
-          .height.toFixed(2)
+        TextSize.approximateTextSize(testString, {
+          fontSize: 12,
+          angle: 30,
+          letterSpacing: "1px"
+        }).height.toFixed(2)
       ).to.be.eql("22.32");
     });
     it("consider lineHeight", () => {

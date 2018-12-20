@@ -11,7 +11,7 @@ var webpackCovCfg = require("../webpack/webpack.config.coverage");
 // Replace with `__dirname` if using in project root.
 var ROOT = process.cwd();
 
-module.exports = function (config) {
+module.exports = function(config) {
   /* eslint-disable global-require */
   require("./karma.conf")(config);
   config.set({

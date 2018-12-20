@@ -6,7 +6,6 @@ import Line from "./line";
 import { assign } from "lodash";
 
 export default class Whisker extends React.Component {
-
   static propTypes = {
     ...CommonProps.primitiveProps,
     groupComponent: PropTypes.element,
@@ -23,17 +22,25 @@ export default class Whisker extends React.Component {
       y1: PropTypes.number,
       y2: PropTypes.number
     })
-  }
+  };
 
   static defaultProps = {
     groupComponent: <g />,
-    lineComponent: <Line/>
-  }
+    lineComponent: <Line />
+  };
 
   render() {
     const {
-      groupComponent, lineComponent, events, className, majorWhisker, minorWhisker,
-      datum, active, transform, clipPath
+      groupComponent,
+      lineComponent,
+      events,
+      className,
+      majorWhisker,
+      minorWhisker,
+      datum,
+      active,
+      transform,
+      clipPath
     } = this.props;
     const style = Helpers.evaluateStyle(this.props.style, datum, active);
     const baseProps = { style, events, className, transform, clipPath };

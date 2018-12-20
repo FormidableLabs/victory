@@ -25,7 +25,7 @@ describe("victory-primitives/candle", () => {
   };
 
   it("should render a wick line", () => {
-    const wrapper = shallow(<Candle {...baseProps}/>);
+    const wrapper = shallow(<Candle {...baseProps} />);
     const wicks = wrapper.find(Line);
     const values = [
       {
@@ -33,12 +33,14 @@ describe("victory-primitives/candle", () => {
         x2: 5,
         y1: 50,
         y2: 10
-      }, {
+      },
+      {
         x1: 5,
         x2: 5,
         y1: 30,
         y2: 5
-      }];
+      }
+    ];
 
     wicks.forEach((wick, i) => {
       expect(wick.prop("x1")).to.eql(values[i].x1);
@@ -49,7 +51,7 @@ describe("victory-primitives/candle", () => {
   });
 
   it("should render a candle rectangle", () => {
-    const wrapper = shallow(<Candle {...baseProps}/>);
+    const wrapper = shallow(<Candle {...baseProps} />);
     const rect = wrapper.find(Rect);
 
     // width = style.width || 0.5 * (width - 2 * padding) / data.length;
@@ -69,7 +71,7 @@ describe("victory-primitives/candle", () => {
       }
     });
 
-    const wrapper = shallow(<Candle {...props}/>);
+    const wrapper = shallow(<Candle {...props} />);
     const rect = wrapper.find(Rect);
 
     expect(rect.prop("width")).to.eql(5);

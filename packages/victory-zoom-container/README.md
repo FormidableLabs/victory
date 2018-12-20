@@ -34,7 +34,7 @@ system, and should be added as the `containerComponent` of the top-level compone
 
 The optional `allowPan` prop accepts a boolean that enables the panning functionality. Zooming will still be enabled when the `allowPan` prop is set to false.
 
-*default:* `allowPan={true}`
+_default:_ `allowPan={true}`
 
 ### allowZoom
 
@@ -42,7 +42,7 @@ The optional `allowPan` prop accepts a boolean that enables the panning function
 
 The optional `allowZoom` prop accepts a boolean that enables the zoom functionality. Panning will still be enabled when the `allowZoom` prop is set to false.
 
-*default:* `allowZoom={true}`
+_default:_ `allowZoom={true}`
 
 ### clipContainerComponent
 
@@ -50,7 +50,7 @@ The optional `allowZoom` prop accepts a boolean that enables the zoom functional
 
 `VictoryZoomContainer` works by clipping data outside of a given domain. `VictoryZoomContainer` uses `VictoryClipContainer` by default. This prop should not be replaced with a custom component, but you may want to set props on `VictoryClipContainer`, such as `clipPadding`
 
-*example:* `clipContainerComponent={<VictoryClipContainer clipPadding={{top: 10, right: 10}}}/>}`
+_example:_ `clipContainerComponent={<VictoryClipContainer clipPadding={{top: 10, right: 10}}}/>}`
 
 ### disable
 
@@ -75,7 +75,7 @@ panning will still be enabled. When this prop is not specified, the default mini
 cover 1 / 1000th of the original domain. This prop should be given as an object with numeric values
 for x and y.
 
-*example:* `minimumZoom={{x: 1, y: 0.01}}`
+_example:_ `minimumZoom={{x: 1, y: 0.01}}`
 
 ### onZoomDomainChange
 
@@ -83,7 +83,7 @@ for x and y.
 
 The optional `onZoomDomainChange` prop accepts an function to be called on each update to the visible domain. The function accepts the parameters `domain` (the updated domain) and `props` (the props used by `VictoryZoomContainer`).
 
-*example:* `onZoomDomainChange={(domain, props) => handleDomainChange(domain, props)}`
+_example:_ `onZoomDomainChange={(domain, props) => handleDomainChange(domain, props)}`
 
 ### zoomDomain
 
@@ -95,17 +95,17 @@ values to render. If this prop is not provided initially, the chart will render 
 zoom, displaying the entire dataset. Updates to `zoomDomain` will trigger a re-render of the chart
 with the new domain.
 
-*example:* `zoomDomain={{x: [0, 100]}}`
+_example:_ `zoomDomain={{x: [0, 100]}}`
 
 ### zoomDimension
 
-`type: "x" || "y" `
+`type: "x" || "y"`
 
 When the `zoomDimension` prop is set, panning and zooming will be restricted to the given dimension
 (either x or y), and the domain of the other dimension will remain static. When this prop is not
 specified, both x and y dimensions will pan and zoom.
 
-*example:* `zoomDimension="x"`
+_example:_ `zoomDimension="x"`
 
-[VictoryContainer]: https://formidable.com/open-source/victory/docs/victory-container
-[See an example of a zoomable chart]: https://formidable.com/open-source/victory/guides/brush-and-zoom
+[victorycontainer]: https://formidable.com/open-source/victory/docs/victory-container
+[see an example of a zoomable chart]: https://formidable.com/open-source/victory/guides/brush-and-zoom

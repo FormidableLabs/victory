@@ -4,9 +4,7 @@
 import { Collection } from "packages/victory-core/src/index";
 
 describe("victory-util/collection", () => {
-
   describe("containsStrings", () => {
-
     it("handles empty argument", () => {
       expect(Collection.containsStrings()).to.equal(false);
     });
@@ -29,7 +27,6 @@ describe("victory-util/collection", () => {
   });
 
   describe("containsOnlyStrings", () => {
-
     it("handles empty argument", () => {
       expect(Collection.containsOnlyStrings()).to.equal(false);
     });
@@ -57,7 +54,6 @@ describe("victory-util/collection", () => {
   });
 
   describe("isArrayOfArrays", () => {
-
     it("handles empty argument", () => {
       expect(Collection.isArrayOfArrays()).to.equal(false);
     });
@@ -79,15 +75,14 @@ describe("victory-util/collection", () => {
     });
 
     it("returns true for collections of arrays", () => {
-      expect(Collection.isArrayOfArrays([ [] ])).to.equal(true);
-      expect(Collection.isArrayOfArrays([ [{}] ])).to.equal(true);
-      expect(Collection.isArrayOfArrays([ [ [] ] ])).to.equal(true);
-      expect(Collection.isArrayOfArrays([ [], [] ])).to.equal(true);
+      expect(Collection.isArrayOfArrays([[]])).to.equal(true);
+      expect(Collection.isArrayOfArrays([[{}]])).to.equal(true);
+      expect(Collection.isArrayOfArrays([[[]]])).to.equal(true);
+      expect(Collection.isArrayOfArrays([[], []])).to.equal(true);
     });
   });
 
   describe("removeUndefined", () => {
-
     it("handles empty array", () => {
       expect(Collection.removeUndefined([])).to.eql([]);
     });
@@ -105,7 +100,6 @@ describe("victory-util/collection", () => {
   });
 
   describe("getMaxValue", () => {
-
     it("returns a date if array contains dates", () => {
       const array = [new Date(2016, 3, 6), new Date(2017, 5, 3), 10];
       expect(Collection.getMaxValue(array)).to.eql(new Date(2017, 5, 3));
@@ -123,7 +117,6 @@ describe("victory-util/collection", () => {
   });
 
   describe("getMinValue", () => {
-
     it("returns a date if array contains dates", () => {
       const array = [new Date(2016, 3, 6), new Date(2017, 5, 3), new Date(2015, 11, 4)];
       expect(Collection.getMinValue(array)).to.eql(new Date(2015, 11, 4));

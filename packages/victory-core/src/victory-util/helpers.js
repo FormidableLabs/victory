@@ -97,9 +97,9 @@ function getStyles(style, defaultStyles) {
     return defaults({ parent: { height, width } }, defaultStyles);
   }
   const { data, labels, parent } = style;
-  const defaultParent = defaultStyles && defaultStyles.parent || {};
-  const defaultLabels = defaultStyles && defaultStyles.labels || {};
-  const defaultData = defaultStyles && defaultStyles.data || {};
+  const defaultParent = (defaultStyles && defaultStyles.parent) || {};
+  const defaultLabels = (defaultStyles && defaultStyles.labels) || {};
+  const defaultData = (defaultStyles && defaultStyles.data) || {};
   return {
     parent: defaults({}, parent, defaultParent, { width, height }),
     labels: defaults({}, labels, defaultLabels),
@@ -194,7 +194,14 @@ function getCurrentAxis(axis, horizontal) {
  */
 function reduceChildren(children, iteratee, parentProps = {}) {
   const sharedProps = [
-    "data", "domain", "categories", "polar", "startAngle", "endAngle", "minDomain", "maxDomain"
+    "data",
+    "domain",
+    "categories",
+    "polar",
+    "startAngle",
+    "endAngle",
+    "minDomain",
+    "maxDomain"
   ];
   const traverseChildren = (childArray, names, parent) => {
     return childArray.reduce((memo, child, index) => {
@@ -202,12 +209,13 @@ function reduceChildren(children, iteratee, parentProps = {}) {
       const childName = child.props.name || `${childRole}-${names[index]}`;
       if (child.props && child.props.children) {
         const childProps = assign({}, child.props, pick(parentProps, sharedProps));
-        const nestedChildren = child.type && isFunction(child.type.getChildren) ?
-          child.type.getChildren(childProps) :
-          React.Children.toArray(child.props.children).map((c) => {
-            const nestedChildProps = assign({}, c.props, pick(childProps, sharedProps));
-            return React.cloneElement(c, nestedChildProps);
-          });
+        const nestedChildren =
+          child.type && isFunction(child.type.getChildren)
+            ? child.type.getChildren(childProps)
+            : React.Children.toArray(child.props.children).map((c) => {
+                const nestedChildProps = assign({}, c.props, pick(childProps, sharedProps));
+                return React.cloneElement(c, nestedChildProps);
+              });
         const childNames = nestedChildren.map((c, i) => `${childName}-${i}`);
         const nestedResults = traverseChildren(nestedChildren, childNames, child);
         memo = memo.concat(nestedResults);

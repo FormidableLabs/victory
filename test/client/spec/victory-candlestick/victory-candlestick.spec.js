@@ -10,7 +10,7 @@ import { VictoryCandlestick, Candle } from "packages/victory-candlestick/src/ind
 import { VictoryLabel } from "packages/victory-core";
 
 class MyCandle extends React.Component {
-  render() { }
+  render() {}
 }
 
 const dataSet = [
@@ -21,28 +21,21 @@ const dataSet = [
 describe("components/victory-candlestick", () => {
   describe("default component rendering", () => {
     it("renders an svg with the correct width and height", () => {
-      const wrapper = mount(
-        <VictoryCandlestick data={dataSet}/>
-      );
+      const wrapper = mount(<VictoryCandlestick data={dataSet} />);
       const svg = wrapper.find("svg").at(0);
       expect(svg.prop("style").width).to.equal("100%");
       expect(svg.prop("style").height).to.equal("100%");
     });
 
     it("renders an svg with the correct viewBox", () => {
-      const wrapper = mount(
-        <VictoryCandlestick data={dataSet}/>
-      );
+      const wrapper = mount(<VictoryCandlestick data={dataSet} />);
       const svg = wrapper.find("svg").at(0);
-      const viewBoxValue =
-        `0 0 ${450} ${300}`;
+      const viewBoxValue = `0 0 ${450} ${300}`;
       expect(svg.prop("viewBox")).to.equal(viewBoxValue);
     });
 
     it("renders 8 points", () => {
-      const wrapper = shallow(
-        <VictoryCandlestick/>
-      );
+      const wrapper = shallow(<VictoryCandlestick />);
       const points = wrapper.find(Candle);
       expect(points.length).to.equal(8);
     });
@@ -51,9 +44,7 @@ describe("components/victory-candlestick", () => {
   describe("rendering data", () => {
     it("renders injected points for {x, y} shaped data (default)", () => {
       const data = range(10).map((i) => ({ x: i, open: i, close: i, high: i, low: i }));
-      const wrapper = shallow(
-        <VictoryCandlestick data={data} dataComponent={<MyCandle />} />
-      );
+      const wrapper = shallow(<VictoryCandlestick data={data} dataComponent={<MyCandle />} />);
 
       const points = wrapper.find(MyCandle);
       expect(points.length).to.equal(10);
@@ -61,23 +52,27 @@ describe("components/victory-candlestick", () => {
 
     it("renders points for {x, y} shaped data (default)", () => {
       const data = range(10).map((i) => ({ x: i, open: i, close: i, high: i, low: i }));
-      const wrapper = shallow(
-        <VictoryCandlestick data={data}/>
-      );
+      const wrapper = shallow(<VictoryCandlestick data={data} />);
       const points = wrapper.find(Candle);
       expect(points.length).to.equal(10);
     });
 
     it("renders ordered bars when sortKey is passed", () => {
-      const data = range(5).map((i) => ({ x: i, open: i, close: i, high: i, low: i })).reverse();
-      const wrapper = shallow(<VictoryCandlestick data={data} sortKey="x"/>);
+      const data = range(5)
+        .map((i) => ({ x: i, open: i, close: i, high: i, low: i }))
+        .reverse();
+      const wrapper = shallow(<VictoryCandlestick data={data} sortKey="x" />);
       const xValues = wrapper.find(Candle).map((bar) => bar.prop("datum")._x);
       expect(xValues).to.eql([0, 1, 2, 3, 4]);
     });
 
     it("renders reverse ordered bars when sortOrder is descending", () => {
-      const data = range(5).map((i) => ({ x: i, open: i, close: i, high: i, low: i })).reverse();
-      const wrapper = shallow(<VictoryCandlestick data={data} sortKey="x" sortOrder="descending"/>);
+      const data = range(5)
+        .map((i) => ({ x: i, open: i, close: i, high: i, low: i }))
+        .reverse();
+      const wrapper = shallow(
+        <VictoryCandlestick data={data} sortKey="x" sortOrder="descending" />
+      );
       const xValues = wrapper.find(Candle).map((bar) => bar.prop("datum")._x);
       expect(xValues).to.eql([4, 3, 2, 1, 0]);
     });
@@ -85,7 +80,7 @@ describe("components/victory-candlestick", () => {
     it("renders points for array-shaped data", () => {
       const data = range(20).map((i) => [i, i, i, i, i]);
       const wrapper = shallow(
-        <VictoryCandlestick data={data} x={0} open={1} close={2} high={3} low={4}/>
+        <VictoryCandlestick data={data} x={0} open={1} close={2} high={3} low={4} />
       );
       const points = wrapper.find(Candle);
       expect(points.length).to.equal(20);
@@ -96,7 +91,9 @@ describe("components/victory-candlestick", () => {
         a: { b: [{ x: i, open: i, close: i, high: i, low: i }] }
       }));
       const wrapper = shallow(
-        <VictoryCandlestick data={data} x="a.b[0].x"
+        <VictoryCandlestick
+          data={data}
+          x="a.b[0].x"
           open="a.b[0].open"
           close="a.b[0].close"
           high="a.b[0].high"
@@ -110,7 +107,7 @@ describe("components/victory-candlestick", () => {
     it("renders data values with null accessor", () => {
       const data = range(30);
       const wrapper = shallow(
-        <VictoryCandlestick data={data} x={null} open={null} close={null} high={null} low={null}/>
+        <VictoryCandlestick data={data} x={null} open={null} close={null} high={null} low={null} />
       );
       const points = wrapper.find(Candle);
       expect(points.length).to.equal(30);
@@ -123,10 +120,12 @@ describe("components/victory-candlestick", () => {
       const wrapper = mount(
         <VictoryCandlestick
           data={dataSet}
-          events={[{
-            target: "data",
-            eventHandlers: { onClick: clickHandler }
-          }]}
+          events={[
+            {
+              target: "data",
+              eventHandlers: { onClick: clickHandler }
+            }
+          ]}
         />
       );
       const Data = wrapper.find(Candle);
@@ -135,8 +134,9 @@ describe("components/victory-candlestick", () => {
         node.find("rect").simulate("click");
         expect(clickHandler.called).to.equal(true);
         // the first argument is the standard evt object
-        expect(omit(clickHandler.args[index][1], ["events", "key"]))
-          .to.eql(omit(initialProps, ["events", "key"]));
+        expect(omit(clickHandler.args[index][1], ["events", "key"])).to.eql(
+          omit(initialProps, ["events", "key"])
+        );
         expect(`${clickHandler.args[index][2]}`).to.eql(`${index}`);
       });
     });
@@ -150,10 +150,12 @@ describe("components/victory-candlestick", () => {
       const wrapper = mount(
         <VictoryCandlestick
           data={data}
-          events={[{
-            target: "labels",
-            eventHandlers: { onClick: clickHandler }
-          }]}
+          events={[
+            {
+              target: "labels",
+              eventHandlers: { onClick: clickHandler }
+            }
+          ]}
         />
       );
       const Labels = wrapper.find(VictoryLabel);
@@ -174,9 +176,7 @@ describe("components/victory-candlestick", () => {
         { x: 1, open: 80, close: 40, high: 120, low: 10 },
         { x: 2, open: 50, close: 80, high: 90, low: 20 }
       ];
-      const wrapper = mount(
-        <VictoryCandlestick data={data} />
-      );
+      const wrapper = mount(<VictoryCandlestick data={data} />);
 
       wrapper.find("rect").forEach((r) => {
         const roleValue = r.prop("role");

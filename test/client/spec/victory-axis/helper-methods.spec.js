@@ -2,7 +2,6 @@
 import { getScale } from "packages/victory-axis/src/helper-methods";
 
 describe("victory-axis/helper-methods", () => {
-
   describe("getScale", () => {
     it("returns a scale", () => {
       const props = { domain: [0, 10], range: [0, 100] };

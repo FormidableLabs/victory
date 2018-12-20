@@ -14,21 +14,16 @@ import { VictoryLabel } from "packages/victory-core";
 describe("components/victory-area", () => {
   describe("default component rendering", () => {
     it("renders an svg with the correct width and height", () => {
-      const wrapper = mount(
-        <VictoryArea/>
-      );
+      const wrapper = mount(<VictoryArea />);
       const svg = wrapper.find("svg").at(0);
       expect(svg.prop("style").width).to.equal("100%");
       expect(svg.prop("style").height).to.equal("100%");
     });
 
     it("renders an svg with the correct viewbox", () => {
-      const wrapper = mount(
-        <VictoryArea/>
-      );
+      const wrapper = mount(<VictoryArea />);
       const svg = wrapper.find("svg").at(0);
-      const viewBoxValue =
-        `0 0 ${450} ${300}`;
+      const viewBoxValue = `0 0 ${450} ${300}`;
       expect(svg.prop("viewBox")).to.equal(viewBoxValue);
     });
   });
@@ -43,9 +38,7 @@ describe("components/victory-area", () => {
         interpolation: "linear",
         data: [{ x: 0, y: 0, y0: 0 }, { x: 2, y: 3, y0: 0 }, { x: 4, y: 1, y0: 0 }]
       };
-      const wrapper = mount(
-        <VictoryArea {...props}/>
-      );
+      const wrapper = mount(<VictoryArea {...props} />);
       const area = wrapper.find(Area);
       SvgTestHelper.expectCorrectD3Path(area, props, "area");
     });
@@ -55,11 +48,11 @@ describe("components/victory-area", () => {
         scale: "linear",
         interpolation: "linear",
         sortKey: "x",
-        data: range(5).map((i) => ({ x: i, y: i, y0: 0 })).reverse()
+        data: range(5)
+          .map((i) => ({ x: i, y: i, y0: 0 }))
+          .reverse()
       };
-      const wrapper = shallow(
-        <VictoryArea {...props}/>
-      );
+      const wrapper = shallow(<VictoryArea {...props} />);
 
       const xValues = wrapper
         .find(Area)
@@ -75,11 +68,11 @@ describe("components/victory-area", () => {
         interpolation: "linear",
         sortKey: "x",
         sortOrder: "descending",
-        data: range(5).map((i) => ({ x: i, y: i, y0: 0 })).reverse()
+        data: range(5)
+          .map((i) => ({ x: i, y: i, y0: 0 }))
+          .reverse()
       };
-      const wrapper = shallow(
-        <VictoryArea {...props}/>
-      );
+      const wrapper = shallow(<VictoryArea {...props} />);
 
       const xValues = wrapper
         .find(Area)
@@ -95,28 +88,31 @@ describe("components/victory-area", () => {
       const clickHandler = sinon.spy();
       const wrapper = mount(
         <VictoryArea
-          events={[{
-            target: "parent",
-            eventHandlers: { onClick: clickHandler }
-          }]}
+          events={[
+            {
+              target: "parent",
+              eventHandlers: { onClick: clickHandler }
+            }
+          ]}
         />
       );
       const svg = wrapper.find("svg").at(0);
       svg.simulate("click");
       expect(clickHandler).called;
       // the first argument is the standard evt object
-      expect(clickHandler.args[0][1])
-        .to.include.keys("data", "scale", "width", "height", "style");
+      expect(clickHandler.args[0][1]).to.include.keys("data", "scale", "width", "height", "style");
     });
 
     it("attaches an event to data", () => {
       const clickHandler = sinon.spy();
       const wrapper = mount(
         <VictoryArea
-          events={[{
-            target: "data",
-            eventHandlers: { onClick: clickHandler }
-          }]}
+          events={[
+            {
+              target: "data",
+              eventHandlers: { onClick: clickHandler }
+            }
+          ]}
         />
       );
       const DataComponent = wrapper.find(Area);
@@ -125,8 +121,9 @@ describe("components/victory-area", () => {
         node.simulate("click");
         expect(clickHandler).called;
         // the first argument is the standard evt object
-        expect(omit(clickHandler.args[index][1], ["events", "key"]))
-          .to.eql(omit(initialProps, ["events", "key"]));
+        expect(omit(clickHandler.args[index][1], ["events", "key"])).to.eql(
+          omit(initialProps, ["events", "key"])
+        );
       });
     });
 
@@ -135,10 +132,12 @@ describe("components/victory-area", () => {
       const wrapper = mount(
         <VictoryArea
           label="okay"
-          events={[{
-            target: "labels",
-            eventHandlers: { onClick: clickHandler }
-          }]}
+          events={[
+            {
+              target: "labels",
+              eventHandlers: { onClick: clickHandler }
+            }
+          ]}
         />
       );
       const Labels = wrapper.find(VictoryLabel);

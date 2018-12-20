@@ -20,12 +20,14 @@ export default class TSpan extends React.Component {
   }
 
   render() {
-    const {
-      x, y, dx, dy, events, className, style, textAnchor, content
-    } = this.props;
+    const { x, y, dx, dy, events, className, style, textAnchor, content } = this.props;
     return (
       <tspan
-        x={x} y={y} dx={dx} dy={dy} textAnchor={textAnchor}
+        x={x}
+        y={y}
+        dx={dx}
+        dy={dy}
+        textAnchor={textAnchor}
         className={className}
         style={style}
         {...events}

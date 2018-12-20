@@ -72,9 +72,7 @@ const MAP = {
 
 class Home extends React.Component {
   render() {
-    return (
-      <h1>Pick A Demo</h1>
-    );
+    return <h1>Pick A Demo</h1>;
   }
 }
 
@@ -108,15 +106,17 @@ class App extends React.Component {
         <ul>
           {routes.map((route, index) => {
             const item = MAP[route] || {};
-            return <li key={index}><a href={`#${route}`}>{item.name}</a></li>;
+            return (
+              <li key={index}>
+                <a href={`#${route}`}>{item.name}</a>
+              </li>
+            );
           })}
         </ul>
-        <Child/>
+        <Child />
       </div>
     );
   }
 }
 
-ReactDOM.render(<App/>, document.getElementById("content"));
-
-
+ReactDOM.render(<App />, document.getElementById("content"));

@@ -21,40 +21,46 @@ export default class VictoryStack extends React.Component {
     categories: PropTypes.oneOfType([
       PropTypes.arrayOf(PropTypes.string),
       PropTypes.shape({
-        x: PropTypes.arrayOf(PropTypes.string), y: PropTypes.arrayOf(PropTypes.string)
+        x: PropTypes.arrayOf(PropTypes.string),
+        y: PropTypes.arrayOf(PropTypes.string)
       })
     ]),
-    children: PropTypes.oneOfType([
-      PropTypes.arrayOf(PropTypes.node), PropTypes.node
-    ]),
+    children: PropTypes.oneOfType([PropTypes.arrayOf(PropTypes.node), PropTypes.node]),
     colorScale: PropTypes.oneOfType([
       PropTypes.arrayOf(PropTypes.string),
       PropTypes.oneOf([
-        "grayscale", "qualitative", "heatmap", "warm", "cool", "red", "green", "blue"
+        "grayscale",
+        "qualitative",
+        "heatmap",
+        "warm",
+        "cool",
+        "red",
+        "green",
+        "blue"
       ])
     ]),
     fillInMissingData: PropTypes.bool,
     horizontal: PropTypes.bool,
     labelComponent: PropTypes.element,
-    labels: PropTypes.oneOfType([ PropTypes.func, PropTypes.array ]),
+    labels: PropTypes.oneOfType([PropTypes.func, PropTypes.array]),
     style: PropTypes.shape({
-      parent: PropTypes.object, data: PropTypes.object, labels: PropTypes.object
+      parent: PropTypes.object,
+      data: PropTypes.object,
+      labels: PropTypes.object
     }),
     xOffset: PropTypes.number
   };
 
   static defaultProps = {
-    containerComponent: <VictoryContainer/>,
-    groupComponent: <g/>,
+    containerComponent: <VictoryContainer />,
+    groupComponent: <g />,
     scale: "linear",
     standalone: true,
-    theme: VictoryTheme. grayscale,
+    theme: VictoryTheme.grayscale,
     fillInMissingData: true
   };
 
-  static expectedComponents = [
-    "groupComponent", "containerComponent", "labelComponent"
-  ];
+  static expectedComponents = ["groupComponent", "containerComponent", "labelComponent"];
 
   static getChildren = getChildren;
 
@@ -101,25 +107,39 @@ export default class VictoryStack extends React.Component {
     const { width, height, standalone, theme, polar, horizontal, name } = props;
     const { domain, scale, style, origin } = calculatedProps;
     return {
-      domain, scale, width, height, standalone, theme, style: style.parent, horizontal,
-      polar, origin, name
+      domain,
+      scale,
+      width,
+      height,
+      standalone,
+      theme,
+      style: style.parent,
+      horizontal,
+      polar,
+      origin,
+      name
     };
   }
 
   render() {
     const { role } = this.constructor;
-    const props = this.state && this.state.nodesWillExit ?
-      this.state.oldProps || this.props : this.props;
+    const props =
+      this.state && this.state.nodesWillExit ? this.state.oldProps || this.props : this.props;
     const modifiedProps = Helpers.modifyProps(props, fallbackProps, role);
     const {
-      eventKey, containerComponent, standalone, groupComponent, externalEventMutations
+      eventKey,
+      containerComponent,
+      standalone,
+      groupComponent,
+      externalEventMutations
     } = modifiedProps;
     const childComponents = React.Children.toArray(modifiedProps.children);
     const calculatedProps = getCalculatedProps(modifiedProps, childComponents);
     const newChildren = this.getNewChildren(modifiedProps, childComponents, calculatedProps);
     const containerProps = standalone ? this.getContainerProps(modifiedProps, calculatedProps) : {};
-    const container = standalone ?
-      this.renderContainer(containerComponent, containerProps) : groupComponent;
+    const container = standalone
+      ? this.renderContainer(containerComponent, containerProps)
+      : groupComponent;
     if (this.events) {
       return (
         <VictorySharedEvents

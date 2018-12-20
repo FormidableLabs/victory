@@ -101,7 +101,7 @@ describe("circle", () => {
     it("handles circles meeting at two points", () => {
       const c0 = circle(point(2, 3), 3);
       const c1 = circle(point(1, -1), 4);
-      const [ { x: x0, y: y0 }, { x: x1, y: y1 } ] = c0.intersection(c1);
+      const [{ x: x0, y: y0 }, { x: x1, y: y1 }] = c0.intersection(c1);
       expect(x0).to.be.within(-0.96 - epsilon, -0.96 + epsilon);
       expect(y0).to.be.within(2.49 - epsilon, 2.49 + epsilon);
       expect(x1).to.be.within(4.37 - epsilon, 4.37 + epsilon);
@@ -110,10 +110,8 @@ describe("circle", () => {
     it("the left-most point is the 0th element, the right-most is the 1st", () => {
       const c0 = circle(point(2, 3), 3);
       const c1 = circle(point(1, -1), 4);
-      const [ { x: x0 }, { x: x1 } ] = c0.intersection(c1);
+      const [{ x: x0 }, { x: x1 }] = c0.intersection(c1);
       expect(x0 <= x1).to.equal(true);
     });
   });
 });
-
-

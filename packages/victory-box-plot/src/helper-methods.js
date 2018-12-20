@@ -13,7 +13,7 @@ const checkProcessedData = (props, data) => {
 
   if (hasQuartileAttributes) {
     // check that the indepedent variable is distinct
-    const values = data.map(({ _x, _y }) => props.horizontal ? _y : _x);
+    const values = data.map(({ _x, _y }) => (props.horizontal ? _y : _x));
     if (!uniq(values).length === values.length) {
       throw new Error(`
         data prop may only take an array of objects with a unique
@@ -26,7 +26,7 @@ const checkProcessedData = (props, data) => {
 };
 
 const getSummaryStatistics = (data, horizontal) => {
-  const dependentVars = data.map((datum) => horizontal ? datum._x : datum._y);
+  const dependentVars = data.map((datum) => (horizontal ? datum._x : datum._y));
   const quartiles = {
     _q1: d3Quantile(dependentVars, 0.25), // eslint-disable-line no-magic-numbers
     _q3: d3Quantile(dependentVars, 0.75), // eslint-disable-line no-magic-numbers
@@ -35,9 +35,9 @@ const getSummaryStatistics = (data, horizontal) => {
     _max: d3Max(dependentVars)
   };
 
-  return horizontal ?
-    assign({}, quartiles, { _y: data[0]._y }) :
-    assign({}, quartiles, { _x: data[0]._x });
+  return horizontal
+    ? assign({}, quartiles, { _y: data[0]._y })
+    : assign({}, quartiles, { _x: data[0]._x });
 };
 
 const isHorizontal = (props, data) => {
@@ -93,28 +93,36 @@ const reduceDataset = (dataset, props, axis) => {
   const minDomain = Domain.getMinFromProps(props, axis);
   const maxDomain = Domain.getMaxFromProps(props, axis);
 
-  const minData = minDomain !== undefined ?
-    minDomain : dataset.reduce((memo, datum) => {
-      return memo < datum[`_${axis}`] ? memo : datum[`_${axis}`];
-    }, Infinity);
-  const maxData = maxDomain !== undefined ?
-    maxDomain : dataset.reduce((memo, datum) => {
-      return memo > datum[`_${axis}`] ? memo : datum[`_${axis}`];
-    }, -Infinity);
+  const minData =
+    minDomain !== undefined
+      ? minDomain
+      : dataset.reduce((memo, datum) => {
+          return memo < datum[`_${axis}`] ? memo : datum[`_${axis}`];
+        }, Infinity);
+  const maxData =
+    maxDomain !== undefined
+      ? maxDomain
+      : dataset.reduce((memo, datum) => {
+          return memo > datum[`_${axis}`] ? memo : datum[`_${axis}`];
+        }, -Infinity);
   return Domain.getDomainFromMinMax(minData, maxData);
 };
 
 const getDomainFromMinMaxValues = (dataset, props, axis) => {
   const minDomain = Domain.getMinFromProps(props, axis);
   const maxDomain = Domain.getMaxFromProps(props, axis);
-  const minData = minDomain !== undefined ?
-    minDomain : dataset.reduce((memo, datum) => {
-      return memo < datum._min ? memo : datum._min;
-    }, Infinity);
-  const maxData = maxDomain !== undefined ?
-    maxDomain : dataset.reduce((memo, datum) => {
-      return memo > datum._max ? memo : datum._max;
-    }, -Infinity);
+  const minData =
+    minDomain !== undefined
+      ? minDomain
+      : dataset.reduce((memo, datum) => {
+          return memo < datum._min ? memo : datum._min;
+        }, Infinity);
+  const maxData =
+    maxDomain !== undefined
+      ? maxDomain
+      : dataset.reduce((memo, datum) => {
+          return memo > datum._max ? memo : datum._max;
+        }, -Infinity);
   return Domain.getDomainFromMinMax(minData, maxData);
 };
 
@@ -128,8 +136,9 @@ const getDomainFromData = (props, axis) => {
     const max = maxDomain !== undefined ? maxDomain : Collection.getMaxValue(scaleDomain);
     return Domain.getDomainFromMinMax(min, max);
   }
-  return props.horizontal && axis === "x" || !props.horizontal && axis === "y" ?
-    getDomainFromMinMaxValues(dataset, props, axis) : reduceDataset(dataset, props, axis);
+  return (props.horizontal && axis === "x") || (!props.horizontal && axis === "y")
+    ? getDomainFromMinMaxValues(dataset, props, axis)
+    : reduceDataset(dataset, props, axis);
 };
 
 const getDomain = (props, axis) => {
@@ -174,8 +183,12 @@ const getCalculatedValues = (props) => {
     y: getDomain(props, "y")
   };
   const scale = {
-    x: Scale.getBaseScale(props, "x").domain(domain.x).range(range.x),
-    y: Scale.getBaseScale(props, "y").domain(domain.y).range(range.y)
+    x: Scale.getBaseScale(props, "x")
+      .domain(domain.x)
+      .range(range.x),
+    y: Scale.getBaseScale(props, "y")
+      .domain(domain.y)
+      .range(range.y)
   };
   const defaultStyles = theme && theme.boxplot && theme.boxplot.style ? theme.boxplot.style : {};
   const style = getStyles(props, defaultStyles);
@@ -193,7 +206,9 @@ const getWhiskerProps = (props, type) => {
   const whiskerValue = type === "min" ? min : max;
   const width = typeof whiskerWidth === "number" ? whiskerWidth : boxWidth;
   return {
-    datum, index, scale,
+    datum,
+    index,
+    scale,
     majorWhisker: {
       x1: horizontal ? boxValue : x,
       y1: horizontal ? y : boxValue,
@@ -218,7 +233,9 @@ const getBoxProps = (props, type) => {
   const defaultWidth = type === "q1" ? median - q1 : q3 - median;
   const defaultHeight = type === "q1" ? q1 - median : median - q3;
   return {
-    datum, scale, index,
+    datum,
+    scale,
+    index,
     x: horizontal ? defaultX : x - boxWidth / 2,
     y: horizontal ? y - boxWidth / 2 : defaultY,
     width: horizontal ? defaultWidth : boxWidth,
@@ -231,7 +248,9 @@ const getMedianProps = (props) => {
   const { boxWidth, horizontal, style, datum, scale, index } = props;
   const { median, x, y } = props.positions;
   return {
-    datum, scale, index,
+    datum,
+    scale,
+    index,
     x1: horizontal ? median : x - boxWidth / 2,
     y1: horizontal ? y - boxWidth / 2 : median,
     x2: horizontal ? median : x + boxWidth / 2,
@@ -264,13 +283,16 @@ const getLabelProps = (props, text, type) => {
 
   const getDefaultPosition = (coord) => {
     const sign = {
-      x: labelOrientation === "left" ? -1 : 1, y: labelOrientation === "top" ? -1 : 1
+      x: labelOrientation === "left" ? -1 : 1,
+      y: labelOrientation === "top" ? -1 : 1
     };
-    return positions[coord] + (sign[coord] * width / 2) + (sign[coord] * (labelStyle.padding || 0));
+    return positions[coord] + (sign[coord] * width) / 2 + sign[coord] * (labelStyle.padding || 0);
   };
 
   return {
-    text, datum, index,
+    text,
+    datum,
+    index,
     style: labelStyle,
     y: horizontal ? getDefaultPosition("y") : positions[type],
     x: horizontal ? positions[type] : getDefaultPosition("x"),
@@ -293,13 +315,34 @@ const getBaseProps = (props, fallbackProps) => {
   const modifiedProps = Helpers.modifyProps(props, fallbackProps, "boxplot");
   props = assign({}, modifiedProps, getCalculatedValues(modifiedProps));
   const {
-    groupComponent, width, height, padding, standalone, theme, events, sharedEvents,
-    scale, horizontal, data, style, domain, name
+    groupComponent,
+    width,
+    height,
+    padding,
+    standalone,
+    theme,
+    events,
+    sharedEvents,
+    scale,
+    horizontal,
+    data,
+    style,
+    domain,
+    name
   } = props;
   const initialChildProps = {
     parent: {
-      domain, scale, width, height, data, standalone, name,
-      theme, style: style.parent || {}, padding, groupComponent
+      domain,
+      scale,
+      width,
+      height,
+      data,
+      standalone,
+      name,
+      theme,
+      style: style.parent || {},
+      padding,
+      groupComponent
     }
   };
   const boxScale = horizontal ? scale.x : scale.y;
@@ -327,7 +370,8 @@ const getBaseProps = (props, fallbackProps) => {
       const labelText = getText(dataProps, type);
       const labelProp = props.labels || props[`${type}Labels`];
       if (
-        labelText !== null && labelText !== undefined || (labelProp && (events || sharedEvents))
+        (labelText !== null && labelText !== undefined) ||
+        (labelProp && (events || sharedEvents))
       ) {
         const target = `${type}Labels`;
         acc[eventKey][target] = getLabelProps(dataProps, labelText, type);

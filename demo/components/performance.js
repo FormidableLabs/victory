@@ -4,11 +4,9 @@ import { range } from "lodash";
 import { VictorySelectionContainer } from "../../packages/victory-selection-container/src/index";
 import { VictoryScatter } from "../../packages/victory-scatter/src/index";
 
-
 const scatterData = range(4000).map(() => ({ x: Math.random(), y: Math.random() }));
 
 class App extends React.Component {
-
   constructor() {
     super();
     this.state = {
@@ -36,9 +34,7 @@ class App extends React.Component {
     return (
       <div>
         <p>Points</p>
-        <ul>
-          {points}
-        </ul>
+        <ul>{points}</ul>
       </div>
     );
   }
@@ -61,17 +57,20 @@ class App extends React.Component {
             style={{
               parent: chartStyle.parent,
               data: {
-                fill: (datum, active) => active ? "tomato" : "black"
+                fill: (datum, active) => (active ? "tomato" : "black")
               }
             }}
             containerComponent={
               <VictorySelectionContainer
                 selectionStyle={{
-                  stroke: "tomato", strokeWidth: 2, fill: "tomato", fillOpacity: 0.1
+                  stroke: "tomato",
+                  strokeWidth: 2,
+                  fill: "tomato",
+                  fillOpacity: 0.1
                 }}
               />
             }
-            size={(datum, active) => active ? 5 : 3}
+            size={(datum, active) => (active ? 5 : 3)}
             data={scatterData}
           />
         </div>

@@ -18,8 +18,7 @@ function containsNumbers(collection) {
 }
 
 function containsOnlyStrings(collection) {
-  return isNonEmptyArray(collection) &&
-    collection.every((value) => typeof value === "string");
+  return isNonEmptyArray(collection) && collection.every((value) => typeof value === "string");
 }
 
 function isArrayOfArrays(collection) {
@@ -32,16 +31,12 @@ function removeUndefined(arr) {
 
 function getMaxValue(arr, ...values) {
   const array = arr.concat(values);
-  return containsDates(array) ?
-    new Date(Math.max(...array)) :
-    Math.max(...array);
+  return containsDates(array) ? new Date(Math.max(...array)) : Math.max(...array);
 }
 
 function getMinValue(arr, ...values) {
   const array = arr.concat(values);
-  return containsDates(array) ?
-    new Date(Math.min(...array)) :
-    Math.min(...array);
+  return containsDates(array) ? new Date(Math.min(...array)) : Math.min(...array);
 }
 
 export default {

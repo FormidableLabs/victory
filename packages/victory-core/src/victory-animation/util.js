@@ -1,40 +1,40 @@
 import { interpolate } from "d3-interpolate";
 import { isPlainObject, orderBy } from "lodash";
 
-export const isInterpolatable = function (obj) {
+export const isInterpolatable = function(obj) {
   // d3 turns null into 0 and undefined into NaN, which we don't want.
   if (obj !== null) {
     switch (typeof obj) {
-    case "undefined":
-      return false;
-    case "number":
-      // The standard `isNaN` is fine in this case since we already know the
-      // type is number.
-      return !isNaN(obj) && obj !== Number.POSITIVE_INFINITY && obj !== Number.NEGATIVE_INFINITY;
-    case "string":
-      // d3 might not *actually* be able to interpolate the string, but it
-      // won't cause any issues to let it try.
-      return true;
-    case "boolean":
-      // d3 turns Booleans into integers, which we don't want. Sure, we could
-      // interpolate from 0 -> 1, but we'd be sending a non-Boolean to
-      // something expecting a Boolean.
-      return false;
-    case "object":
-      // Don't try to interpolate class instances (except Date or Array).
-      return obj instanceof Date || Array.isArray(obj) || isPlainObject(obj);
-    case "function":
-      // Careful! There may be extra properties on function objects that the
-      // component expects to access - for instance, it may be a `d3.scale()`
-      // function, which has its own methods attached. We don't know if the
-      // component is only going to call the function (in which case it's
-      // safely interpolatable) or if it's going to access special properties
-      // (in which case our function generated from `interpolateFunction` will
-      // most likely cause an error. We could check for enumerable properties
-      // on the function object here to see if it's a "plain" function, but
-      // let's just require that components prevent such function props from
-      // being animated in the first place.
-      return true;
+      case "undefined":
+        return false;
+      case "number":
+        // The standard `isNaN` is fine in this case since we already know the
+        // type is number.
+        return !isNaN(obj) && obj !== Number.POSITIVE_INFINITY && obj !== Number.NEGATIVE_INFINITY;
+      case "string":
+        // d3 might not *actually* be able to interpolate the string, but it
+        // won't cause any issues to let it try.
+        return true;
+      case "boolean":
+        // d3 turns Booleans into integers, which we don't want. Sure, we could
+        // interpolate from 0 -> 1, but we'd be sending a non-Boolean to
+        // something expecting a Boolean.
+        return false;
+      case "object":
+        // Don't try to interpolate class instances (except Date or Array).
+        return obj instanceof Date || Array.isArray(obj) || isPlainObject(obj);
+      case "function":
+        // Careful! There may be extra properties on function objects that the
+        // component expects to access - for instance, it may be a `d3.scale()`
+        // function, which has its own methods attached. We don't know if the
+        // component is only going to call the function (in which case it's
+        // safely interpolatable) or if it's going to access special properties
+        // (in which case our function generated from `interpolateFunction` will
+        // most likely cause an error. We could check for enumerable properties
+        // on the function object here to see if it's a "plain" function, but
+        // let's just require that components prevent such function props from
+        // being animated in the first place.
+        return true;
     }
   }
   return false;
@@ -55,9 +55,9 @@ export const isInterpolatable = function (obj) {
  * @param {Number} when - Step value (0 to 1) at which to jump to `b`.
  * @returns {Function} An interpolation function.
  */
-export const interpolateImmediate = function (a, b, when = 0) {
-  return function (t) {
-    return (t < when) ? a : b;
+export const interpolateImmediate = function(a, b, when = 0) {
+  return function(t) {
+    return t < when ? a : b;
   };
 };
 
@@ -73,15 +73,15 @@ export const interpolateImmediate = function (a, b, when = 0) {
  * @param {any} b - End value.
  * @returns {Function} An interpolation function.
  */
-export const interpolateFunction = function (a, b) {
-  return function (t) {
+export const interpolateFunction = function(a, b) {
+  return function(t) {
     if (t >= 1) {
       return b;
     }
-    return function () {
+    return function() {
       /* eslint-disable no-invalid-this */
-      const aval = (typeof a === "function") ? a.apply(this, arguments) : a;
-      const bval = (typeof b === "function") ? b.apply(this, arguments) : b;
+      const aval = typeof a === "function" ? a.apply(this, arguments) : a;
+      const bval = typeof b === "function" ? b.apply(this, arguments) : b;
       return interpolate(aval, bval)(t);
     };
   };
@@ -97,7 +97,7 @@ export const interpolateFunction = function (a, b) {
  * @param {any} b - End value.
  * @returns {Function} An interpolation function.
  */
-export const interpolateObject = function (a, b) {
+export const interpolateObject = function(a, b) {
   const interpolateTypes = (x, y) => {
     if (x === y || !isInterpolatable(x) || !isInterpolatable(y)) {
       return interpolateImmediate(x, y);
@@ -105,7 +105,10 @@ export const interpolateObject = function (a, b) {
     if (typeof x === "function" || typeof y === "function") {
       return interpolateFunction(x, y);
     }
-    if (typeof x === "object" && isPlainObject(x) || typeof y === "object" && isPlainObject(y)) {
+    if (
+      (typeof x === "object" && isPlainObject(x)) ||
+      (typeof y === "object" && isPlainObject(y))
+    ) {
       return interpolateObject(x, y);
     }
     return interpolate(x, y);
@@ -136,7 +139,7 @@ export const interpolateObject = function (a, b) {
     }
   }
 
-  return function (t) {
+  return function(t) {
     for (k in i) {
       c[k] = i[k](t);
     }
@@ -144,7 +147,7 @@ export const interpolateObject = function (a, b) {
   };
 };
 
-export const interpolateString = function (a, b) {
+export const interpolateString = function(a, b) {
   const format = (val) => {
     return typeof val === "string" ? val.replace(/,/g, "") : val;
   };
@@ -175,7 +178,7 @@ export const interpolateString = function (a, b) {
  * @param {any} b - End value.
  * @returns {Function|undefined} An interpolation function, if necessary.
  */
-export const victoryInterpolator = function (a, b) {
+export const victoryInterpolator = function(a, b) {
   // If the values are strictly equal, or either value is not interpolatable,
   // just use either the start value `a` or end value `b` at every step, as
   // there is no reasonable in-between value.
@@ -193,4 +196,3 @@ export const victoryInterpolator = function (a, b) {
   }
   return interpolate(a, b);
 };
-

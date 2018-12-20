@@ -28,39 +28,23 @@ class App extends React.Component {
           <VictoryBar
             style={{ parent: parentStyle }}
             labelComponent={
-              <VictoryTooltip
-                flyoutStyle={{ stroke: "red" }}
-                cornerRadius={0}
-                pointerLength={20}
-              />
+              <VictoryTooltip flyoutStyle={{ stroke: "red" }} cornerRadius={0} pointerLength={20} />
             }
             labels={(d) => `hello #${d.x}`}
-            data={[
-              { x: 1, y: 1 },
-              { x: 2, y: 2 },
-              { x: 3, y: 3 },
-              { x: 4, y: 2 },
-              { x: 5, y: 1 }
-            ]}
+            data={[{ x: 1, y: 1 }, { x: 2, y: 2 }, { x: 3, y: 3 }, { x: 4, y: 2 }, { x: 5, y: 1 }]}
           />
 
           <VictoryScatter
             style={{ parent: parentStyle }}
-            labelComponent={<VictoryTooltip/>}
+            labelComponent={<VictoryTooltip />}
             labels={(d) => `hello #${d.x}`}
-            size={(d, active) => active ? 5 : 3}
-            data={[
-              { x: 1, y: 5 },
-              { x: 2, y: 2 },
-              { x: 3, y: 3 },
-              { x: 4, y: 2 },
-              { x: 5, y: 1 }
-            ]}
+            size={(d, active) => (active ? 5 : 3)}
+            data={[{ x: 1, y: 5 }, { x: 2, y: 2 }, { x: 3, y: 3 }, { x: 4, y: 2 }, { x: 5, y: 1 }]}
           />
 
           <VictoryCandlestick
             style={{ parent: parentStyle }}
-            labelComponent={<VictoryTooltip/>}
+            labelComponent={<VictoryTooltip />}
             labels={(d) => `hello #${d.x}`}
             data={[
               { x: 1, open: 5, close: 10, high: 15, low: 0 },
@@ -73,81 +57,45 @@ class App extends React.Component {
 
           <VictoryErrorBar
             style={{ parent: parentStyle }}
-            labelComponent={<VictoryTooltip/>}
+            labelComponent={<VictoryTooltip />}
             labels={(d) => `hello #${d.x}`}
             data={[
-              { x: 1, y: 1, errorX: [1, 0.5], errorY: .1 },
-              { x: 2, y: 2, errorX: [1, 3], errorY: .1 },
-              { x: 3, y: 3, errorX: [1, 3], errorY: [.2, .3] },
-              { x: 4, y: 2, errorX: [1, 0.5], errorY: .1 },
-              { x: 5, y: 1, errorX: [1, 0.5], errorY: .2 }
+              { x: 1, y: 1, errorX: [1, 0.5], errorY: 0.1 },
+              { x: 2, y: 2, errorX: [1, 3], errorY: 0.1 },
+              { x: 3, y: 3, errorX: [1, 3], errorY: [0.2, 0.3] },
+              { x: 4, y: 2, errorX: [1, 0.5], errorY: 0.1 },
+              { x: 5, y: 1, errorX: [1, 0.5], errorY: 0.2 }
             ]}
           />
 
           <VictoryChart style={{ parent: parentStyle }}>
             <VictoryGroup
               labels={["a", "b", "c"]}
-              labelComponent={<VictoryTooltip/>}
+              labelComponent={<VictoryTooltip />}
               horizontal
               offset={16}
               colorScale={"qualitative"}
               style={{ data: { width: 15 } }}
             >
-              <VictoryBar
-                data={[
-                  { x: 1, y: 1 },
-                  { x: 2, y: 2 },
-                  { x: 3, y: 5 }
-                ]}
-              />
-              <VictoryBar
-                data={[
-                  { x: 1, y: 2 },
-                  { x: 2, y: 1 },
-                  { x: 3, y: 7 }
-                ]}
-              />
-              <VictoryBar
-                data={[
-                  { x: 1, y: 3 },
-                  { x: 2, y: 4 },
-                  { x: 3, y: 9 }
-                ]}
-              />
+              <VictoryBar data={[{ x: 1, y: 1 }, { x: 2, y: 2 }, { x: 3, y: 5 }]} />
+              <VictoryBar data={[{ x: 1, y: 2 }, { x: 2, y: 1 }, { x: 3, y: 7 }]} />
+              <VictoryBar data={[{ x: 1, y: 3 }, { x: 2, y: 4 }, { x: 3, y: 9 }]} />
             </VictoryGroup>
-         </VictoryChart>
+          </VictoryChart>
 
-         <VictoryChart style={{ parent: parentStyle }}>
-            <VictoryAxis/>
+          <VictoryChart style={{ parent: parentStyle }}>
+            <VictoryAxis />
             <VictoryStack
               colorScale={"qualitative"}
               labels={["a", "b", "c"]}
-              labelComponent={<VictoryTooltip/>}
+              labelComponent={<VictoryTooltip />}
               style={{ data: { width: 30 } }}
             >
-              <VictoryBar
-                data={[
-                  { x: 1, y: 1 },
-                  { x: 2, y: 2 },
-                  { x: 3, y: 5 }
-                ]}
-              />
-              <VictoryBar
-                data={[
-                  { x: 1, y: 2 },
-                  { x: 2, y: 1 },
-                  { x: 3, y: 7 }
-                ]}
-              />
-              <VictoryBar
-                data={[
-                  { x: 1, y: 3 },
-                  { x: 2, y: 4 },
-                  { x: 3, y: 9 }
-                ]}
-              />
+              <VictoryBar data={[{ x: 1, y: 1 }, { x: 2, y: 2 }, { x: 3, y: 5 }]} />
+              <VictoryBar data={[{ x: 1, y: 2 }, { x: 2, y: 1 }, { x: 3, y: 7 }]} />
+              <VictoryBar data={[{ x: 1, y: 3 }, { x: 2, y: 4 }, { x: 3, y: 9 }]} />
             </VictoryStack>
-         </VictoryChart>
+          </VictoryChart>
         </div>
       </div>
     );

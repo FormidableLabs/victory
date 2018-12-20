@@ -22,11 +22,22 @@ export default class Circle extends React.Component {
 
   render() {
     const {
-      cx, cy, r, events, className, style, role, shapeRendering, transform, clipPath
-     } = this.props;
+      cx,
+      cy,
+      r,
+      events,
+      className,
+      style,
+      role,
+      shapeRendering,
+      transform,
+      clipPath
+    } = this.props;
     return (
       <circle
-        cx={cx} cy={cy} r={r}
+        cx={cx}
+        cy={cy}
+        r={r}
         className={className}
         clipPath={clipPath}
         transform={transform}

@@ -30,12 +30,12 @@ describe("victory-primitives/area", () => {
       }
     });
 
-    const wrapper = mount(<Area {...props}/>);
+    const wrapper = mount(<Area {...props} />);
     expect(wrapper.find(Path).length).to.eql(1);
   });
 
   it("should render an area and line when a line style is given", () => {
-    const wrapper = mount(<Area {...baseProps}/>);
+    const wrapper = mount(<Area {...baseProps} />);
     // multiple paths should be grouped
     expect(wrapper.find("g").find(Path).length).to.eql(2);
   });

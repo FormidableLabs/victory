@@ -1,7 +1,15 @@
 import React from "react";
 import {
-  PropTypes as CustomPropTypes, Helpers, VictoryLabel, addEvents,
-  VictoryContainer, VictoryTheme, DefaultTransitions, Data, Domain, CommonProps
+  PropTypes as CustomPropTypes,
+  Helpers,
+  VictoryLabel,
+  addEvents,
+  VictoryContainer,
+  VictoryTheme,
+  DefaultTransitions,
+  Data,
+  Domain,
+  CommonProps
 } from "victory-core";
 import Voronoi from "./voronoi";
 import { getBaseProps } from "./helper-methods";
@@ -11,6 +19,17 @@ const fallbackProps = {
   height: 300,
   padding: 50
 };
+
+const animationWhitelist = [
+  "data",
+  "domain",
+  "height",
+  "padding",
+  "samples",
+  "size",
+  "style",
+  "width"
+];
 
 class VictoryVoronoi extends React.Component {
   static animationWhitelist = [
@@ -35,10 +54,10 @@ class VictoryVoronoi extends React.Component {
   };
 
   static defaultProps = {
-    containerComponent: <VictoryContainer/>,
-    dataComponent: <Voronoi/>,
-    labelComponent: <VictoryLabel/>,
-    groupComponent: <g role="presentation"/>,
+    containerComponent: <VictoryContainer />,
+    dataComponent: <Voronoi />,
+    labelComponent: <VictoryLabel />,
+    groupComponent: <g role="presentation" />,
     samples: 50,
     scale: "linear",
     sortOrder: "ascending",
@@ -50,7 +69,10 @@ class VictoryVoronoi extends React.Component {
   static getData = Data.getData;
   static getBaseProps = (props) => getBaseProps(props, fallbackProps);
   static expectedComponents = [
-    "dataComponent", "labelComponent", "groupComponent", "containerComponent"
+    "dataComponent",
+    "labelComponent",
+    "groupComponent",
+    "containerComponent"
   ];
 
   // Overridden in native versions

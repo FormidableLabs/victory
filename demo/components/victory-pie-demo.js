@@ -12,15 +12,7 @@ export default class App extends React.Component {
     this.state = {
       data: this.getData(),
       transitionData: this.getTransitionData(),
-      colorScale: [
-        "#D85F49",
-        "#F66D3B",
-        "#D92E1D",
-        "#D73C4C",
-        "#FFAF59",
-        "#E28300",
-        "#F6A57F"
-      ],
+      colorScale: ["#D85F49", "#F66D3B", "#D92E1D", "#D73C4C", "#FFAF59", "#E28300", "#F6A57F"],
       sliceWidth: 60,
       style: {
         parent: {
@@ -93,17 +85,20 @@ export default class App extends React.Component {
 
         <div style={containerStyle}>
           <VictoryPie
-            startAngle={90} endAngle={-90}
+            startAngle={90}
+            endAngle={-90}
             style={{ parent: parentStyle, labels: { fill: "white", fontSize: 10 } }}
             labelRadius={60}
             padding={{ bottom: 50, left: 50, right: 10 }}
-            width={400} height={200}
+            width={400}
+            height={200}
           />
           <VictoryPie
             style={{ parent: parentStyle, labels: { fill: "white", fontSize: 10 } }}
             labelRadius={60}
             padding={{ bottom: 50, left: 50, right: 10 }}
-            width={400} height={200}
+            width={400}
+            height={200}
             radius={(d) => d.radius}
             data={[
               { x: 1, y: 1, radius: 40 },
@@ -116,23 +111,21 @@ export default class App extends React.Component {
           <VictoryPie
             style={{ parent: parentStyle }}
             labelPosition="endAngle"
-            width={200} height={400}
+            width={200}
+            height={400}
           />
           <VictoryPie
             style={{ parent: parentStyle }}
             labelPosition="startAngle"
-            width={200} height={400}
+            width={200}
+            height={400}
           />
-          <VictoryPie
-            style={{ parent: parentStyle }}
-            width={200} height={400}
-          />
+          <VictoryPie style={{ parent: parentStyle }} width={200} height={400} />
+
+          <VictoryPie style={{ parent: parentStyle }} />
 
           <VictoryPie
-            style={{ parent: parentStyle }}
-          />
-
-          <VictoryPie animate={{ duration: 1000 }}
+            animate={{ duration: 1000 }}
             style={{
               parent: parentStyle,
               labels: {
@@ -150,41 +143,45 @@ export default class App extends React.Component {
           <VictoryPie
             style={{ parent: parentStyle }}
             theme={VictoryTheme.material}
-            events={[{
-              target: "data",
-              eventHandlers: {
-                onMouseOver: () => ({
-                  mutation: (props) => ({
-                    radius: 135,
-                    sliceStartAngle: props.slice.startAngle + 0.05,
-                    sliceEndAngle: props.slice.endAngle - 0.05
+            events={[
+              {
+                target: "data",
+                eventHandlers: {
+                  onMouseOver: () => ({
+                    mutation: (props) => ({
+                      radius: 135,
+                      sliceStartAngle: props.slice.startAngle + 0.05,
+                      sliceEndAngle: props.slice.endAngle - 0.05
+                    })
+                  }),
+                  onMouseOut: () => ({
+                    mutation: () => null
                   })
-                }),
-                onMouseOut: () => ({
-                  mutation: () => null
-                })
+                }
               }
-            }]}
+            ]}
           />
 
           <VictoryPie
             style={{ parent: parentStyle }}
             theme={VictoryTheme.material}
-            events={[{
-              target: "parent",
-              eventHandlers: {
-                onClick: () => {
-                  return [
-                    {
-                      target: "labels",
-                      mutation: () => {
-                        return { text: "parent click" };
+            events={[
+              {
+                target: "parent",
+                eventHandlers: {
+                  onClick: () => {
+                    return [
+                      {
+                        target: "labels",
+                        mutation: () => {
+                          return { text: "parent click" };
+                        }
                       }
-                    }
-                  ];
+                    ];
+                  }
                 }
               }
-            }]}
+            ]}
           />
 
           <VictoryPie
@@ -192,15 +189,11 @@ export default class App extends React.Component {
               parent: parentStyle,
               labels: { fontSize: 10, padding: 10 }
             }}
-            labelComponent={<VictoryTooltip/>}
+            labelComponent={<VictoryTooltip />}
             colorScale="grayscale"
           />
 
-          <VictoryPie
-            style={{ ...this.state.style }}
-            labelRadius={120}
-            innerRadius={140}
-          />
+          <VictoryPie style={{ ...this.state.style }} labelRadius={120} innerRadius={140} />
 
           <VictoryPie
             style={{
@@ -254,7 +247,8 @@ export default class App extends React.Component {
             animate={{ duration: 2000 }}
           />
 
-          <VictoryPie style={this.state.style}
+          <VictoryPie
+            style={this.state.style}
             data={range(0, 2).map((i) => [i, Math.random()])}
             x={0}
             y={1}
@@ -265,7 +259,6 @@ export default class App extends React.Component {
             animate={{ duration: 2000 }}
             innerRadius={140}
           />
-
         </div>
       </div>
     );

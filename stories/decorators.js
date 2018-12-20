@@ -1,4 +1,3 @@
-
 /*eslint-disable no-magic-numbers*/
 /*eslint-disable react/no-multi-comp*/
 import React from "react";
@@ -8,11 +7,7 @@ import { VictoryTheme } from "../packages/victory-core/src/index";
 
 const getChartDecorator = (props) => {
   return (story) => {
-    return (
-      <VictoryChart {...props}>
-        {story()}
-      </VictoryChart>
-    );
+    return <VictoryChart {...props}>{story()}</VictoryChart>;
   };
 };
 
@@ -21,7 +16,7 @@ const getPolarChartDecorator = (props) => {
     return (
       <VictoryChart polar theme={VictoryTheme.material} {...props}>
         {story()}
-        <VictoryPolarAxis/>
+        <VictoryPolarAxis />
       </VictoryChart>
     );
   };

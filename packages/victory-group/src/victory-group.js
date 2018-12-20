@@ -1,9 +1,7 @@
 import { assign, defaults } from "lodash";
 import PropTypes from "prop-types";
 import React from "react";
-import {
-  Helpers, VictoryContainer, VictoryTheme, CommonProps, Wrapper
-} from "victory-core";
+import { Helpers, VictoryContainer, VictoryTheme, CommonProps, Wrapper } from "victory-core";
 import { VictorySharedEvents } from "victory-shared-events";
 import { getChildren, getCalculatedProps } from "./helper-methods";
 
@@ -27,7 +25,14 @@ export default class VictoryGroup extends React.Component {
     colorScale: PropTypes.oneOfType([
       PropTypes.arrayOf(PropTypes.string),
       PropTypes.oneOf([
-        "grayscale", "qualitative", "heatmap", "warm", "cool", "red", "green", "blue"
+        "grayscale",
+        "qualitative",
+        "heatmap",
+        "warm",
+        "cool",
+        "red",
+        "green",
+        "blue"
       ])
     ]),
     horizontal: PropTypes.bool,
@@ -35,8 +40,8 @@ export default class VictoryGroup extends React.Component {
   };
 
   static defaultProps = {
-    containerComponent: <VictoryContainer/>,
-    groupComponent: <g/>,
+    containerComponent: <VictoryContainer />,
+    groupComponent: <g />,
     samples: 50,
     scale: "linear",
     sortOrder: "ascending",
@@ -44,9 +49,7 @@ export default class VictoryGroup extends React.Component {
     theme: VictoryTheme.grayscale
   };
 
-  static expectedComponents = [
-    "groupComponent", "containerComponent", "labelComponent"
-  ];
+  static expectedComponents = ["groupComponent", "containerComponent", "labelComponent"];
 
   static getChildren = getChildren;
 
@@ -74,7 +77,6 @@ export default class VictoryGroup extends React.Component {
     this.events = Wrapper.getAllEvents(nextProps);
   }
 
-
   // the old ones were bad
   getNewChildren(props, childComponents, calculatedProps) {
     const children = getChildren(props, childComponents, calculatedProps);
@@ -94,25 +96,39 @@ export default class VictoryGroup extends React.Component {
     const { width, height, standalone, theme, polar, horizontal, name } = props;
     const { domain, scale, style, origin } = calculatedProps;
     return {
-      domain, scale, width, height, standalone, theme, style: style.parent, horizontal,
-      polar, origin, name
+      domain,
+      scale,
+      width,
+      height,
+      standalone,
+      theme,
+      style: style.parent,
+      horizontal,
+      polar,
+      origin,
+      name
     };
   }
 
   render() {
     const { role } = this.constructor;
-    const props = this.state && this.state.nodesWillExit ?
-      this.state.oldProps || this.props : this.props;
+    const props =
+      this.state && this.state.nodesWillExit ? this.state.oldProps || this.props : this.props;
     const modifiedProps = Helpers.modifyProps(props, fallbackProps, role);
     const {
-      eventKey, containerComponent, standalone, groupComponent, externalEventMutations
+      eventKey,
+      containerComponent,
+      standalone,
+      groupComponent,
+      externalEventMutations
     } = modifiedProps;
     const childComponents = React.Children.toArray(modifiedProps.children);
     const calculatedProps = getCalculatedProps(modifiedProps, childComponents);
     const newChildren = this.getNewChildren(modifiedProps, childComponents, calculatedProps);
     const containerProps = standalone ? this.getContainerProps(modifiedProps, calculatedProps) : {};
-    const container = standalone ?
-      this.renderContainer(containerComponent, containerProps) : groupComponent;
+    const container = standalone
+      ? this.renderContainer(containerComponent, containerProps)
+      : groupComponent;
     if (this.events) {
       return (
         <VictorySharedEvents

@@ -17,7 +17,7 @@ const VictoryZoomVoronoiContainer = createContainer("zoom", "voronoi");
 The function takes two `behavior` arguments as strings:
 
 ```js
-createContainer(behaviorA, behaviorB)
+createContainer(behaviorA, behaviorB);
 ```
 
 ### Behavior

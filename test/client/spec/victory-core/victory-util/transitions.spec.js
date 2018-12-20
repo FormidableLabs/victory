@@ -108,5 +108,4 @@ describe("getTransitionPropsFactory", () => {
     expect(toZero).calledWith({ x: 2, y: 3 });
     expect(calledResult.data).to.eql([{ x: 1, y: 1 }, { x: 2, y: 0 }]);
   });
-
 });

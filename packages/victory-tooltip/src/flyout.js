@@ -4,7 +4,6 @@ import PropTypes from "prop-types";
 import { Helpers, CommonProps, Path } from "victory-core";
 
 export default class Flyout extends React.Component {
-
   static propTypes = {
     ...CommonProps.primitiveProps,
     cornerRadius: PropTypes.number,
@@ -22,7 +21,7 @@ export default class Flyout extends React.Component {
   };
 
   static defaultProps = {
-    pathComponent: <Path/>
+    pathComponent: <Path />
   };
 
   getVerticalPath(props) {
@@ -30,10 +29,10 @@ export default class Flyout extends React.Component {
     const sign = orientation === "top" ? 1 : -1;
     const x = props.x + (props.dx || 0);
     const y = props.y - sign * (props.dy || 0);
-    const pointerEdge = y - (sign * pointerLength);
-    const oppositeEdge = y - (sign * pointerLength) - (sign * height);
-    const rightEdge = x + (width / 2);
-    const leftEdge = x - (width / 2);
+    const pointerEdge = y - sign * pointerLength;
+    const oppositeEdge = y - sign * pointerLength - sign * height;
+    const rightEdge = x + width / 2;
+    const leftEdge = x - width / 2;
     const direction = orientation === "top" ? "0 0 0" : "0 0 1";
     const arc = `${cornerRadius} ${cornerRadius} ${direction}`;
     return `M ${x - pointerWidth / 2}, ${pointerEdge}
@@ -56,7 +55,7 @@ export default class Flyout extends React.Component {
     const x = props.x + sign * (props.dx || 0);
     const y = props.y - (props.dy || 0);
     const pointerEdge = x + sign * pointerLength;
-    const oppositeEdge = x + (sign * pointerLength) + (sign * width);
+    const oppositeEdge = x + sign * pointerLength + sign * width;
     const bottomEdge = y + height / 2;
     const topEdge = y - height / 2;
     const direction = orientation === "right" ? "0 0 0" : "0 0 1";
@@ -77,19 +76,34 @@ export default class Flyout extends React.Component {
 
   getFlyoutPath(props) {
     const orientation = props.orientation || "top";
-    return orientation === "left" || orientation === "right" ?
-      this.getHorizontalPath(props) : this.getVerticalPath(props);
+    return orientation === "left" || orientation === "right"
+      ? this.getHorizontalPath(props)
+      : this.getVerticalPath(props);
   }
 
   render() {
     const {
-      datum, active, role, shapeRendering, className, events, pathComponent, transform, clipPath
+      datum,
+      active,
+      role,
+      shapeRendering,
+      className,
+      events,
+      pathComponent,
+      transform,
+      clipPath
     } = this.props;
     const style = Helpers.evaluateStyle(this.props.style, datum, active);
     const path = this.getFlyoutPath(this.props);
-    return React.cloneElement(
-      pathComponent,
-      { style, className, shapeRendering, role, events, transform, d: path, clipPath }
-    );
+    return React.cloneElement(pathComponent, {
+      style,
+      className,
+      shapeRendering,
+      role,
+      events,
+      transform,
+      d: path,
+      clipPath
+    });
   }
 }

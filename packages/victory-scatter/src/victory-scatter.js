@@ -1,8 +1,17 @@
 import PropTypes from "prop-types";
 import React from "react";
 import {
-  PropTypes as CustomPropTypes, Helpers, VictoryLabel, addEvents, CommonProps,
-  VictoryContainer, VictoryTheme, DefaultTransitions, Data, Domain, Point
+  PropTypes as CustomPropTypes,
+  Helpers,
+  VictoryLabel,
+  addEvents,
+  CommonProps,
+  VictoryContainer,
+  VictoryTheme,
+  DefaultTransitions,
+  Data,
+  Domain,
+  Point
 } from "victory-core";
 import { getBaseProps } from "./helper-methods";
 
@@ -13,6 +22,18 @@ const fallbackProps = {
   size: 3,
   symbol: "circle"
 };
+
+const animationWhitelist = [
+  "data",
+  "domain",
+  "height",
+  "maxBubbleSize",
+  "padding",
+  "samples",
+  "size",
+  "style",
+  "width"
+];
 
 class VictoryScatter extends React.Component {
   static animationWhitelist = [
@@ -37,20 +58,27 @@ class VictoryScatter extends React.Component {
     bubbleProperty: PropTypes.string,
     maxBubbleSize: CustomPropTypes.nonNegative,
     minBubbleSize: CustomPropTypes.nonNegative,
-    size: PropTypes.oneOfType([ CustomPropTypes.nonNegative, PropTypes.func ]),
+    size: PropTypes.oneOfType([CustomPropTypes.nonNegative, PropTypes.func]),
     symbol: PropTypes.oneOfType([
       PropTypes.oneOf([
-        "circle", "diamond", "plus", "minus", "square", "star", "triangleDown", "triangleUp"
+        "circle",
+        "diamond",
+        "plus",
+        "minus",
+        "square",
+        "star",
+        "triangleDown",
+        "triangleUp"
       ]),
       PropTypes.func
     ])
   };
 
   static defaultProps = {
-    containerComponent: <VictoryContainer/>,
-    dataComponent: <Point/>,
-    labelComponent: <VictoryLabel/>,
-    groupComponent: <g/>,
+    containerComponent: <VictoryContainer />,
+    dataComponent: <Point />,
+    labelComponent: <VictoryLabel />,
+    groupComponent: <g />,
     samples: 50,
     scale: "linear",
     sortOrder: "ascending",
@@ -62,7 +90,10 @@ class VictoryScatter extends React.Component {
   static getData = Data.getData;
   static getBaseProps = (props) => getBaseProps(props, fallbackProps);
   static expectedComponents = [
-    "dataComponent", "labelComponent", "groupComponent", "containerComponent"
+    "dataComponent",
+    "labelComponent",
+    "groupComponent",
+    "containerComponent"
   ];
 
   // Overridden in native versions

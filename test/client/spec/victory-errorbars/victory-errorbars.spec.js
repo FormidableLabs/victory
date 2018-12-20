@@ -13,34 +13,27 @@ import { VictoryErrorBar, ErrorBar } from "packages/victory-errorbar/src/index";
 import { Line } from "packages/victory-core";
 
 class MyErrorBar extends React.Component {
-  render() { }
+  render() {}
 }
 
 describe("components/victory-errorbar", () => {
   describe("default component rendering", () => {
     it("renders an svg with the correct width and height", () => {
-      const wrapper = mount(
-        <VictoryErrorBar/>
-      );
+      const wrapper = mount(<VictoryErrorBar />);
       const svg = wrapper.find("svg").at(0);
       expect(svg.prop("style").width).to.equal("100%");
       expect(svg.prop("style").height).to.equal("100%");
     });
 
     it("renders an svg with the correct viewBox", () => {
-      const wrapper = mount(
-        <VictoryErrorBar/>
-      );
+      const wrapper = mount(<VictoryErrorBar />);
       const svg = wrapper.find("svg").at(0);
-      const viewBoxValue =
-        `0 0 ${450} ${300}`;
+      const viewBoxValue = `0 0 ${450} ${300}`;
       expect(svg.prop("viewBox")).to.equal(viewBoxValue);
     });
 
     it("renders 4 errors", () => {
-      const wrapper = shallow(
-        <VictoryErrorBar/>
-      );
+      const wrapper = shallow(<VictoryErrorBar />);
       const errorbars = wrapper.find(ErrorBar);
       expect(errorbars.length).to.equal(4);
     });
@@ -58,46 +51,38 @@ describe("components/victory-errorbar", () => {
   [renderDataTest, immutableRenderDataTest].forEach(({ createData, testLabel }) => {
     describe(`symmetric error, rendering data ${testLabel}`, () => {
       it("renders injected errors for {x, y}", () => {
-        const data = createData(
-          range(10).map((i) => ({ x: i, y: i, errorX: 0.1, errorY: 0.2 }))
-        );
-        const wrapper = shallow(
-          <VictoryErrorBar data={data} dataComponent={<MyErrorBar />} />
-        );
+        const data = createData(range(10).map((i) => ({ x: i, y: i, errorX: 0.1, errorY: 0.2 })));
+        const wrapper = shallow(<VictoryErrorBar data={data} dataComponent={<MyErrorBar />} />);
 
         const errors = wrapper.find(MyErrorBar);
         expect(errors.length).to.equal(10);
       });
 
       it("renders errors for {x, y}", () => {
-        const data = createData(
-          range(10).map((i) => ({ x: i, y: i, errorX: 0.1, errorY: 0.2 }))
-        );
-        const wrapper = shallow(
-          <VictoryErrorBar data={data}/>
-        );
+        const data = createData(range(10).map((i) => ({ x: i, y: i, errorX: 0.1, errorY: 0.2 })));
+        const wrapper = shallow(<VictoryErrorBar data={data} />);
         const errors = wrapper.find(ErrorBar);
         expect(errors.length).to.equal(10);
       });
 
       it("sorts data by sortKey prop", () => {
         const data = createData(
-          range(5).map((i) => ({ x: i, y: i, errorX: 0.1, errorY: 0.2 })).reverse()
+          range(5)
+            .map((i) => ({ x: i, y: i, errorX: 0.1, errorY: 0.2 }))
+            .reverse()
         );
-        const wrapper = shallow(
-          <VictoryErrorBar data={data} sortKey="x"/>
-        );
+        const wrapper = shallow(<VictoryErrorBar data={data} sortKey="x" />);
         const xValues = wrapper.find(ErrorBar).map((errorBar) => errorBar.prop("datum")._x);
         expect(xValues).to.eql([0, 1, 2, 3, 4]);
       });
 
       it("reversed sorted data with the sortOrder prop", () => {
         const data = createData(
-          range(5).map((i) => ({ x: i, y: i, errorX: 0.1, errorY: 0.2 })).reverse()
+          range(5)
+            .map((i) => ({ x: i, y: i, errorX: 0.1, errorY: 0.2 }))
+            .reverse()
         );
-        const wrapper = shallow(
-          <VictoryErrorBar data={data} sortKey="x" sortOrder="descending"/>
-        );
+        const wrapper = shallow(<VictoryErrorBar data={data} sortKey="x" sortOrder="descending" />);
         const xValues = wrapper.find(ErrorBar).map((errorBar) => errorBar.prop("datum")._x);
         expect(xValues).to.eql([4, 3, 2, 1, 0]);
       });
@@ -134,11 +119,13 @@ describe("components/victory-errorbar", () => {
           />
         );
 
-        const xScale = d3Scale.scaleLinear()
+        const xScale = d3Scale
+          .scaleLinear()
           .domain([-0.1, 5.1])
           .range([svgDimensions.padding, svgDimensions.width - svgDimensions.padding]);
 
-        const yScale = d3Scale.scaleLinear()
+        const yScale = d3Scale
+          .scaleLinear()
           .domain([-0.2, 5.2])
           .range([svgDimensions.height - svgDimensions.padding, svgDimensions.padding]);
 
@@ -146,12 +133,11 @@ describe("components/victory-errorbar", () => {
         Data.forEach((node, i) => {
           const errorX = xScale(data[i].x + data[i].errorX);
           const xScaleMax = xScale.range()[1];
-          const positiveErrorX = errorX >= xScaleMax
-            ? xScaleMax : errorX;
+          const positiveErrorX = errorX >= xScaleMax ? xScaleMax : errorX;
           // right border
-          const rightBorder = node.find(Line).findWhere(
-            (n) => n.key() && n.key().indexOf("border-right") !== -1
-          );
+          const rightBorder = node
+            .find(Line)
+            .findWhere((n) => n.key() && n.key().indexOf("border-right") !== -1);
           expect(rightBorder.props().x1).to.equal(positiveErrorX);
           expect(rightBorder.props().x2).to.equal(positiveErrorX);
           expect(rightBorder.props().y1).to.equal(yScale(data[i].y) - borderWidth);
@@ -168,18 +154,16 @@ describe("components/victory-errorbar", () => {
           { x: 5, y: 5, errorX: 0.1, errorY: 0.2 }
         ];
         const wrapper = mount(
-          <VictoryErrorBar
-            data={createData(data)}
-            borderWidth={borderWidth}
-            {...svgDimensions}
-          />
+          <VictoryErrorBar data={createData(data)} borderWidth={borderWidth} {...svgDimensions} />
         );
 
-        const xScale = d3Scale.scaleLinear()
+        const xScale = d3Scale
+          .scaleLinear()
           .domain([-0.1, 5.1])
           .range([svgDimensions.padding, svgDimensions.width - svgDimensions.padding]);
 
-        const yScale = d3Scale.scaleLinear()
+        const yScale = d3Scale
+          .scaleLinear()
           .domain([-0.2, 5.2])
           .range([svgDimensions.height - svgDimensions.padding, svgDimensions.padding]);
 
@@ -187,13 +171,12 @@ describe("components/victory-errorbar", () => {
         Data.forEach((node, i) => {
           const errorX = xScale(data[i].x - data[i].errorX);
           const xScaleMin = xScale.range()[0];
-          const negativeErrorX = errorX <= xScaleMin
-            ? xScaleMin : errorX;
+          const negativeErrorX = errorX <= xScaleMin ? xScaleMin : errorX;
 
           // left border
-          const leftBorder = node.find(Line).findWhere(
-            (n) => n.key() && n.key().indexOf("border-left") !== -1
-          );
+          const leftBorder = node
+            .find(Line)
+            .findWhere((n) => n.key() && n.key().indexOf("border-left") !== -1);
           expect(leftBorder.props().x1).to.equal(negativeErrorX);
           expect(leftBorder.props().x2).to.equal(negativeErrorX);
           expect(leftBorder.props().y1).to.equal(yScale(data[i].y) - borderWidth);
@@ -210,18 +193,16 @@ describe("components/victory-errorbar", () => {
           { x: 5, y: 5, errorX: 0.1, errorY: 0.2 }
         ];
         const wrapper = mount(
-          <VictoryErrorBar
-            data={createData(data)}
-            borderWidth={borderWidth}
-            {...svgDimensions}
-          />
+          <VictoryErrorBar data={createData(data)} borderWidth={borderWidth} {...svgDimensions} />
         );
 
-        const xScale = d3Scale.scaleLinear()
+        const xScale = d3Scale
+          .scaleLinear()
           .domain([-0.1, 5.1])
           .range([svgDimensions.padding, svgDimensions.width - svgDimensions.padding]);
 
-        const yScale = d3Scale.scaleLinear()
+        const yScale = d3Scale
+          .scaleLinear()
           .domain([-0.2, 5.2])
           .range([svgDimensions.height - svgDimensions.padding, svgDimensions.padding]);
 
@@ -229,13 +210,12 @@ describe("components/victory-errorbar", () => {
         Data.forEach((node, i) => {
           const errorY = yScale(data[i].y + data[i].errorY);
           const yScaleMin = yScale.range()[1];
-          const negativeErrorY = errorY <= yScaleMin
-            ? yScaleMin : errorY;
+          const negativeErrorY = errorY <= yScaleMin ? yScaleMin : errorY;
 
           // bottom border
-          const bottomBorder = node.find(Line).findWhere(
-            (n) => n.key() && n.key().indexOf("border-bottom") !== -1
-          );
+          const bottomBorder = node
+            .find(Line)
+            .findWhere((n) => n.key() && n.key().indexOf("border-bottom") !== -1);
           expect(bottomBorder.props().x1).to.equal(xScale(data[i].x) - borderWidth);
           expect(bottomBorder.props().x2).to.equal(xScale(data[i].x) + borderWidth);
           expect(bottomBorder.props().y1).to.equal(negativeErrorY);
@@ -252,18 +232,16 @@ describe("components/victory-errorbar", () => {
           { x: 5, y: 5, errorX: 0.1, errorY: 0.2 }
         ];
         const wrapper = mount(
-          <VictoryErrorBar
-            data={createData(data)}
-            borderWidth={borderWidth}
-            {...svgDimensions}
-          />
+          <VictoryErrorBar data={createData(data)} borderWidth={borderWidth} {...svgDimensions} />
         );
 
-        const xScale = d3Scale.scaleLinear()
+        const xScale = d3Scale
+          .scaleLinear()
           .domain([-0.1, 5.1])
           .range([svgDimensions.padding, svgDimensions.width - svgDimensions.padding]);
 
-        const yScale = d3Scale.scaleLinear()
+        const yScale = d3Scale
+          .scaleLinear()
           .domain([-0.2, 5.2])
           .range([svgDimensions.height - svgDimensions.padding, svgDimensions.padding]);
 
@@ -271,13 +249,12 @@ describe("components/victory-errorbar", () => {
         Data.forEach((node, i) => {
           const errorY = yScale(data[i].y - data[i].errorY);
           const yScaleMax = yScale.range()[0];
-          const positiveErrorY = errorY >= yScaleMax
-            ? yScaleMax : errorY;
+          const positiveErrorY = errorY >= yScaleMax ? yScaleMax : errorY;
 
           // top border
-          const topBorder = node.find(Line).findWhere(
-            (n) => n.key() && n.key().indexOf("border-top") !== -1
-          );
+          const topBorder = node
+            .find(Line)
+            .findWhere((n) => n.key() && n.key().indexOf("border-top") !== -1);
           expect(topBorder.props().x1).to.equal(xScale(data[i].x) - borderWidth);
           expect(topBorder.props().x2).to.equal(xScale(data[i].x) + borderWidth);
           expect(topBorder.props().y1).to.equal(positiveErrorY);
@@ -292,18 +269,15 @@ describe("components/victory-errorbar", () => {
           { x: 2, y: 3, errorX: 0.1, errorY: 0.2 },
           { x: 5, y: 5, errorX: 0.1, errorY: 0.2 }
         ];
-        const wrapper = mount(
-          <VictoryErrorBar
-            data={createData(data)}
-            {...svgDimensions}
-          />
-        );
+        const wrapper = mount(<VictoryErrorBar data={createData(data)} {...svgDimensions} />);
 
-        const xScale = d3Scale.scaleLinear()
+        const xScale = d3Scale
+          .scaleLinear()
           .domain([-0.1, 5.1])
           .range([svgDimensions.padding, svgDimensions.width - svgDimensions.padding]);
 
-        const yScale = d3Scale.scaleLinear()
+        const yScale = d3Scale
+          .scaleLinear()
           .domain([-0.2, 5.2])
           .range([svgDimensions.height - svgDimensions.padding, svgDimensions.padding]);
 
@@ -311,12 +285,11 @@ describe("components/victory-errorbar", () => {
         Data.forEach((node, i) => {
           const errorY = yScale(data[i].y - data[i].errorY);
           const yScaleMax = yScale.range()[0];
-          const positiveErrorY = errorY >= yScaleMax
-            ? yScaleMax : errorY;
+          const positiveErrorY = errorY >= yScaleMax ? yScaleMax : errorY;
 
-          const topCross = node.find(Line).findWhere(
-            (n) => n.key() && n.key().indexOf("cross-top") !== -1
-          );
+          const topCross = node
+            .find(Line)
+            .findWhere((n) => n.key() && n.key().indexOf("cross-top") !== -1);
           expect(topCross.props().x1).to.equal(xScale(data[i].x));
           expect(topCross.props().x2).to.equal(xScale(data[i].x));
           expect(topCross.props().y1).to.equal(yScale(data[i].y));
@@ -331,18 +304,15 @@ describe("components/victory-errorbar", () => {
           { x: 2, y: 3, errorX: 0.1, errorY: 0.2 },
           { x: 5, y: 5, errorX: 0.1, errorY: 0.2 }
         ];
-        const wrapper = mount(
-          <VictoryErrorBar
-            data={createData(data)}
-            {...svgDimensions}
-          />
-        );
+        const wrapper = mount(<VictoryErrorBar data={createData(data)} {...svgDimensions} />);
 
-        const xScale = d3Scale.scaleLinear()
+        const xScale = d3Scale
+          .scaleLinear()
           .domain([-0.1, 5.1])
           .range([svgDimensions.padding, svgDimensions.width - svgDimensions.padding]);
 
-        const yScale = d3Scale.scaleLinear()
+        const yScale = d3Scale
+          .scaleLinear()
           .domain([-0.2, 5.2])
           .range([svgDimensions.height - svgDimensions.padding, svgDimensions.padding]);
 
@@ -350,12 +320,11 @@ describe("components/victory-errorbar", () => {
         Data.forEach((node, i) => {
           const errorY = yScale(data[i].y + data[i].errorY);
           const yScaleMin = yScale.range()[1];
-          const negativeErrorY = errorY <= yScaleMin
-            ? yScaleMin : errorY;
+          const negativeErrorY = errorY <= yScaleMin ? yScaleMin : errorY;
 
-          const bottomCross = node.find(Line).findWhere(
-            (n) => n.key() && n.key().indexOf("cross-bottom") !== -1
-          );
+          const bottomCross = node
+            .find(Line)
+            .findWhere((n) => n.key() && n.key().indexOf("cross-bottom") !== -1);
           expect(bottomCross.props().x1).to.equal(xScale(data[i].x));
           expect(bottomCross.props().x2).to.equal(xScale(data[i].x));
           expect(bottomCross.props().y1).to.equal(yScale(data[i].y));
@@ -370,18 +339,15 @@ describe("components/victory-errorbar", () => {
           { x: 2, y: 3, errorX: 0.1, errorY: 0.2 },
           { x: 5, y: 5, errorX: 0.1, errorY: 0.2 }
         ];
-        const wrapper = mount(
-          <VictoryErrorBar
-            data={createData(data)}
-            {...svgDimensions}
-          />
-        );
+        const wrapper = mount(<VictoryErrorBar data={createData(data)} {...svgDimensions} />);
 
-        const xScale = d3Scale.scaleLinear()
+        const xScale = d3Scale
+          .scaleLinear()
           .domain([-0.1, 5.1])
           .range([svgDimensions.padding, svgDimensions.width - svgDimensions.padding]);
 
-        const yScale = d3Scale.scaleLinear()
+        const yScale = d3Scale
+          .scaleLinear()
           .domain([-0.2, 5.2])
           .range([svgDimensions.height - svgDimensions.padding, svgDimensions.padding]);
 
@@ -389,12 +355,11 @@ describe("components/victory-errorbar", () => {
         Data.forEach((node, i) => {
           const errorX = xScale(data[i].x - data[i].errorX);
           const xScaleMin = xScale.range()[0];
-          const negativeErrorX = errorX <= xScaleMin
-            ? xScaleMin : errorX;
+          const negativeErrorX = errorX <= xScaleMin ? xScaleMin : errorX;
 
-          const leftCross = node.find(Line).findWhere(
-            (n) => n.key() && n.key().indexOf("cross-left") !== -1
-          );
+          const leftCross = node
+            .find(Line)
+            .findWhere((n) => n.key() && n.key().indexOf("cross-left") !== -1);
           expect(leftCross.props().x1).to.equal(xScale(data[i].x));
           expect(leftCross.props().x2).to.equal(negativeErrorX);
           expect(leftCross.props().y1).to.equal(yScale(data[i].y));
@@ -409,18 +374,15 @@ describe("components/victory-errorbar", () => {
           { x: 2, y: 3, errorX: 0.1, errorY: 0.2 },
           { x: 5, y: 5, errorX: 0.1, errorY: 0.2 }
         ];
-        const wrapper = mount(
-          <VictoryErrorBar
-            data={createData(data)}
-            {...svgDimensions}
-          />
-        );
+        const wrapper = mount(<VictoryErrorBar data={createData(data)} {...svgDimensions} />);
 
-        const xScale = d3Scale.scaleLinear()
+        const xScale = d3Scale
+          .scaleLinear()
           .domain([-0.1, 5.1])
           .range([svgDimensions.padding, svgDimensions.width - svgDimensions.padding]);
 
-        const yScale = d3Scale.scaleLinear()
+        const yScale = d3Scale
+          .scaleLinear()
           .domain([-0.2, 5.2])
           .range([svgDimensions.height - svgDimensions.padding, svgDimensions.padding]);
 
@@ -428,12 +390,11 @@ describe("components/victory-errorbar", () => {
         Data.forEach((node, i) => {
           const errorX = xScale(data[i].errorX + data[i].x);
           const xScaleMax = xScale.range()[1];
-          const positiveErrorX = errorX >= xScaleMax
-            ? xScaleMax : errorX;
+          const positiveErrorX = errorX >= xScaleMax ? xScaleMax : errorX;
 
-          const rightCross = node.find(Line).findWhere(
-            (n) => n.key() && n.key().indexOf("cross-right") !== -1
-          );
+          const rightCross = node
+            .find(Line)
+            .findWhere((n) => n.key() && n.key().indexOf("cross-right") !== -1);
           expect(rightCross.props().x1).to.equal(xScale(data[i].x));
           expect(rightCross.props().x2).to.equal(positiveErrorX);
           expect(rightCross.props().y1).to.equal(yScale(data[i].y));
@@ -447,9 +408,7 @@ describe("components/victory-errorbar", () => {
         const data = createData(
           range(10).map((i) => ({ x: i, y: i, errorX: [0.1, 0.2], errorY: [0.2, 0.5] }))
         );
-        const wrapper = shallow(
-          <VictoryErrorBar data={data} dataComponent={<MyErrorBar />} />
-        );
+        const wrapper = shallow(<VictoryErrorBar data={data} dataComponent={<MyErrorBar />} />);
 
         const errors = wrapper.find(MyErrorBar);
         expect(errors.length).to.equal(10);
@@ -459,9 +418,7 @@ describe("components/victory-errorbar", () => {
         const data = createData(
           range(10).map((i) => ({ x: i, y: i, errorX: [0.1, 0.2], errorY: [0.2, 1] }))
         );
-        const wrapper = shallow(
-          <VictoryErrorBar data={data}/>
-        );
+        const wrapper = shallow(<VictoryErrorBar data={data} />);
         const errors = wrapper.find(ErrorBar);
         expect(errors.length).to.equal(10);
       });
@@ -490,18 +447,16 @@ describe("components/victory-errorbar", () => {
           { x: 5, y: 5, errorX: [0.1, 0.6], errorY: [0.2, 0.1] }
         ];
         const wrapper = mount(
-          <VictoryErrorBar
-            data={createData(data)}
-            borderWidth={borderWidth}
-            {...svgDimensions}
-          />
+          <VictoryErrorBar data={createData(data)} borderWidth={borderWidth} {...svgDimensions} />
         );
 
-        const xScale = d3Scale.scaleLinear()
+        const xScale = d3Scale
+          .scaleLinear()
           .domain([-0.3, 5.1])
           .range([svgDimensions.padding, svgDimensions.width - svgDimensions.padding]);
 
-        const yScale = d3Scale.scaleLinear()
+        const yScale = d3Scale
+          .scaleLinear()
           .domain([-0.5, 5.2])
           .range([svgDimensions.height - svgDimensions.padding, svgDimensions.padding]);
 
@@ -509,13 +464,12 @@ describe("components/victory-errorbar", () => {
         Data.forEach((node, i) => {
           const errorX = xScale(data[i].x + data[i].errorX[0]);
           const xScaleMax = xScale.range()[1];
-          const positiveErrorX = errorX >= xScaleMax
-            ? xScaleMax : errorX;
+          const positiveErrorX = errorX >= xScaleMax ? xScaleMax : errorX;
 
           // right border
-          const rightBorder = node.find(Line).findWhere(
-            (n) => n.key() && n.key().indexOf("border-right") !== -1
-          );
+          const rightBorder = node
+            .find(Line)
+            .findWhere((n) => n.key() && n.key().indexOf("border-right") !== -1);
           expect(rightBorder.props().x1).to.equal(positiveErrorX);
           expect(rightBorder.props().x2).to.equal(positiveErrorX);
           expect(rightBorder.props().y1).to.equal(yScale(data[i].y) - borderWidth);
@@ -532,18 +486,16 @@ describe("components/victory-errorbar", () => {
           { x: 5, y: 5, errorX: [0.1, 0.6], errorY: [0.2, 0.1] }
         ];
         const wrapper = mount(
-          <VictoryErrorBar
-            data={createData(data)}
-            borderWidth={borderWidth}
-            {...svgDimensions}
-          />
+          <VictoryErrorBar data={createData(data)} borderWidth={borderWidth} {...svgDimensions} />
         );
 
-        const xScale = d3Scale.scaleLinear()
+        const xScale = d3Scale
+          .scaleLinear()
           .domain([-0.3, 5.1])
           .range([svgDimensions.padding, svgDimensions.width - svgDimensions.padding]);
 
-        const yScale = d3Scale.scaleLinear()
+        const yScale = d3Scale
+          .scaleLinear()
           .domain([-0.5, 5.2])
           .range([svgDimensions.height - svgDimensions.padding, svgDimensions.padding]);
 
@@ -551,13 +503,12 @@ describe("components/victory-errorbar", () => {
         Data.forEach((node, i) => {
           const errorX = xScale(data[i].x - data[i].errorX[1]);
           const xScaleMin = xScale.range()[0];
-          const negativeErrorX = errorX <= xScaleMin
-            ? xScaleMin : errorX;
+          const negativeErrorX = errorX <= xScaleMin ? xScaleMin : errorX;
 
           // left border
-          const leftBorder = node.find(Line).findWhere(
-            (n) => n.key() && n.key().indexOf("border-left") !== -1
-          );
+          const leftBorder = node
+            .find(Line)
+            .findWhere((n) => n.key() && n.key().indexOf("border-left") !== -1);
           expect(leftBorder.props().x1).to.equal(negativeErrorX);
           expect(leftBorder.props().x2).to.equal(negativeErrorX);
           expect(leftBorder.props().y1).to.equal(yScale(data[i].y) - borderWidth);
@@ -574,18 +525,16 @@ describe("components/victory-errorbar", () => {
           { x: 5, y: 5, errorX: [0.1, 0.6], errorY: [0.2, 0.1] }
         ];
         const wrapper = mount(
-          <VictoryErrorBar
-            data={createData(data)}
-            borderWidth={borderWidth}
-            {...svgDimensions}
-          />
+          <VictoryErrorBar data={createData(data)} borderWidth={borderWidth} {...svgDimensions} />
         );
 
-        const xScale = d3Scale.scaleLinear()
+        const xScale = d3Scale
+          .scaleLinear()
           .domain([-0.3, 5.1])
           .range([svgDimensions.padding, svgDimensions.width - svgDimensions.padding]);
 
-        const yScale = d3Scale.scaleLinear()
+        const yScale = d3Scale
+          .scaleLinear()
           .domain([-0.5, 5.2])
           .range([svgDimensions.height - svgDimensions.padding, svgDimensions.padding]);
 
@@ -593,13 +542,12 @@ describe("components/victory-errorbar", () => {
         Data.forEach((node, i) => {
           const errorY = yScale(data[i].y + data[i].errorY[0]);
           const yScaleMin = yScale.range()[1];
-          const negativeErrorY = errorY <= yScaleMin
-            ? yScaleMin : errorY;
+          const negativeErrorY = errorY <= yScaleMin ? yScaleMin : errorY;
 
           // bottom border
-          const bottomBorder = node.find(Line).findWhere(
-            (n) => n.key() && n.key().indexOf("border-bottom") !== -1
-          );
+          const bottomBorder = node
+            .find(Line)
+            .findWhere((n) => n.key() && n.key().indexOf("border-bottom") !== -1);
           expect(bottomBorder.props().x1).to.equal(xScale(data[i].x) - borderWidth);
           expect(bottomBorder.props().x2).to.equal(xScale(data[i].x) + borderWidth);
           expect(bottomBorder.props().y1).to.equal(negativeErrorY);
@@ -616,18 +564,16 @@ describe("components/victory-errorbar", () => {
           { x: 5, y: 5, errorX: [0.1, 0.6], errorY: [0.2, 0.1] }
         ];
         const wrapper = mount(
-          <VictoryErrorBar
-            data={createData(data)}
-            borderWidth={borderWidth}
-            {...svgDimensions}
-          />
+          <VictoryErrorBar data={createData(data)} borderWidth={borderWidth} {...svgDimensions} />
         );
 
-        const xScale = d3Scale.scaleLinear()
+        const xScale = d3Scale
+          .scaleLinear()
           .domain([-0.3, 5.1])
           .range([svgDimensions.padding, svgDimensions.width - svgDimensions.padding]);
 
-        const yScale = d3Scale.scaleLinear()
+        const yScale = d3Scale
+          .scaleLinear()
           .domain([-0.5, 5.2])
           .range([svgDimensions.height - svgDimensions.padding, svgDimensions.padding]);
 
@@ -635,12 +581,11 @@ describe("components/victory-errorbar", () => {
         Data.forEach((node, i) => {
           const errorY = yScale(data[i].y - data[i].errorY[1]);
           const yScaleMax = yScale.range()[0];
-          const positiveErrorY = errorY >= yScaleMax
-            ? yScaleMax : errorY;
+          const positiveErrorY = errorY >= yScaleMax ? yScaleMax : errorY;
 
-          const topBorder = node.find(Line).findWhere(
-            (n) => n.key() && n.key().indexOf("border-top") !== -1
-          );
+          const topBorder = node
+            .find(Line)
+            .findWhere((n) => n.key() && n.key().indexOf("border-top") !== -1);
           expect(topBorder.props().x1).to.equal(xScale(data[i].x) - borderWidth);
           expect(topBorder.props().x2).to.equal(xScale(data[i].x) + borderWidth);
           expect(topBorder.props().y1).to.equal(positiveErrorY);
@@ -655,18 +600,15 @@ describe("components/victory-errorbar", () => {
           { x: 2, y: 3, errorX: [0.1, 0.2], errorY: [0.2, 0.3] },
           { x: 5, y: 5, errorX: [0.1, 0.6], errorY: [0.2, 0.1] }
         ];
-        const wrapper = mount(
-          <VictoryErrorBar
-            data={createData(data)}
-            {...svgDimensions}
-          />
-        );
+        const wrapper = mount(<VictoryErrorBar data={createData(data)} {...svgDimensions} />);
 
-        const xScale = d3Scale.scaleLinear()
+        const xScale = d3Scale
+          .scaleLinear()
           .domain([-0.3, 5.1])
           .range([svgDimensions.padding, svgDimensions.width - svgDimensions.padding]);
 
-        const yScale = d3Scale.scaleLinear()
+        const yScale = d3Scale
+          .scaleLinear()
           .domain([-0.5, 5.2])
           .range([svgDimensions.height - svgDimensions.padding, svgDimensions.padding]);
 
@@ -674,12 +616,11 @@ describe("components/victory-errorbar", () => {
         Data.forEach((node, i) => {
           const errorY = yScale(data[i].y - data[i].errorY[1]);
           const yScaleMax = yScale.range()[0];
-          const positiveErrorY = errorY >= yScaleMax
-            ? yScaleMax : errorY;
+          const positiveErrorY = errorY >= yScaleMax ? yScaleMax : errorY;
 
-          const topCross = node.find(Line).findWhere(
-            (n) => n.key() && n.key().indexOf("cross-top") !== -1
-          );
+          const topCross = node
+            .find(Line)
+            .findWhere((n) => n.key() && n.key().indexOf("cross-top") !== -1);
           expect(topCross.props().x1).to.equal(xScale(data[i].x));
           expect(topCross.props().x2).to.equal(xScale(data[i].x));
           expect(topCross.props().y1).to.equal(yScale(data[i].y));
@@ -694,18 +635,15 @@ describe("components/victory-errorbar", () => {
           { x: 2, y: 3, errorX: [0.1, 0.2], errorY: [0.2, 0.3] },
           { x: 5, y: 5, errorX: [0.1, 0.6], errorY: [0.2, 0.1] }
         ];
-        const wrapper = mount(
-          <VictoryErrorBar
-            data={createData(data)}
-            {...svgDimensions}
-          />
-        );
+        const wrapper = mount(<VictoryErrorBar data={createData(data)} {...svgDimensions} />);
 
-        const xScale = d3Scale.scaleLinear()
+        const xScale = d3Scale
+          .scaleLinear()
           .domain([-0.3, 5.1])
           .range([svgDimensions.padding, svgDimensions.width - svgDimensions.padding]);
 
-        const yScale = d3Scale.scaleLinear()
+        const yScale = d3Scale
+          .scaleLinear()
           .domain([-0.5, 5.2])
           .range([svgDimensions.height - svgDimensions.padding, svgDimensions.padding]);
 
@@ -713,12 +651,11 @@ describe("components/victory-errorbar", () => {
         Data.forEach((node, i) => {
           const errorY = yScale(data[i].y + data[i].errorY[0]);
           const yScaleMin = yScale.range()[1];
-          const negativeErrorY = errorY <= yScaleMin
-            ? yScaleMin : errorY;
+          const negativeErrorY = errorY <= yScaleMin ? yScaleMin : errorY;
 
-          const bottomCross = node.find(Line).findWhere(
-            (n) => n.key() && n.key().indexOf("cross-bottom") !== -1
-          );
+          const bottomCross = node
+            .find(Line)
+            .findWhere((n) => n.key() && n.key().indexOf("cross-bottom") !== -1);
           expect(bottomCross.props().x1).to.equal(xScale(data[i].x));
           expect(bottomCross.props().x2).to.equal(xScale(data[i].x));
           expect(bottomCross.props().y1).to.equal(yScale(data[i].y));
@@ -733,18 +670,15 @@ describe("components/victory-errorbar", () => {
           { x: 2, y: 3, errorX: [0.1, 0.2], errorY: [0.2, 0.3] },
           { x: 5, y: 5, errorX: [0.1, 0.6], errorY: [0.2, 0.1] }
         ];
-        const wrapper = mount(
-          <VictoryErrorBar
-            data={createData(data)}
-            {...svgDimensions}
-          />
-        );
+        const wrapper = mount(<VictoryErrorBar data={createData(data)} {...svgDimensions} />);
 
-        const xScale = d3Scale.scaleLinear()
+        const xScale = d3Scale
+          .scaleLinear()
           .domain([-0.3, 5.1])
           .range([svgDimensions.padding, svgDimensions.width - svgDimensions.padding]);
 
-        const yScale = d3Scale.scaleLinear()
+        const yScale = d3Scale
+          .scaleLinear()
           .domain([-0.5, 5.2])
           .range([svgDimensions.height - svgDimensions.padding, svgDimensions.padding]);
 
@@ -752,12 +686,11 @@ describe("components/victory-errorbar", () => {
         Data.forEach((node, i) => {
           const errorX = xScale(data[i].x - data[i].errorX[1]);
           const xScaleMin = xScale.range()[0];
-          const negativeErrorX = errorX <= xScaleMin
-            ? xScaleMin : errorX;
+          const negativeErrorX = errorX <= xScaleMin ? xScaleMin : errorX;
 
-          const leftCross = node.find(Line).findWhere(
-            (n) => n.key() && n.key().indexOf("cross-left") !== -1
-          );
+          const leftCross = node
+            .find(Line)
+            .findWhere((n) => n.key() && n.key().indexOf("cross-left") !== -1);
           expect(leftCross.props().x1).to.equal(xScale(data[i].x));
           expect(leftCross.props().x2).to.equal(negativeErrorX);
           expect(leftCross.props().y1).to.equal(yScale(data[i].y));
@@ -772,18 +705,15 @@ describe("components/victory-errorbar", () => {
           { x: 2, y: 3, errorX: [0.1, 0.2], errorY: [0.2, 0.3] },
           { x: 5, y: 5, errorX: [0.1, 0.6], errorY: [0.2, 0.1] }
         ];
-        const wrapper = mount(
-          <VictoryErrorBar
-            data={createData(data)}
-            {...svgDimensions}
-          />
-        );
+        const wrapper = mount(<VictoryErrorBar data={createData(data)} {...svgDimensions} />);
 
-        const xScale = d3Scale.scaleLinear()
+        const xScale = d3Scale
+          .scaleLinear()
           .domain([-0.3, 5.1])
           .range([svgDimensions.padding, svgDimensions.width - svgDimensions.padding]);
 
-        const yScale = d3Scale.scaleLinear()
+        const yScale = d3Scale
+          .scaleLinear()
           .domain([-0.5, 5.2])
           .range([svgDimensions.height - svgDimensions.padding, svgDimensions.padding]);
 
@@ -791,12 +721,11 @@ describe("components/victory-errorbar", () => {
         Data.forEach((node, i) => {
           const errorX = xScale(data[i].x + data[i].errorX[0]);
           const xScaleMax = xScale.range()[1];
-          const positiveErrorX = errorX >= xScaleMax
-            ? xScaleMax : errorX;
+          const positiveErrorX = errorX >= xScaleMax ? xScaleMax : errorX;
 
-          const rightCross = node.find(Line).findWhere(
-            (n) => n.key() && n.key().indexOf("cross-right") !== -1
-          );
+          const rightCross = node
+            .find(Line)
+            .findWhere((n) => n.key() && n.key().indexOf("cross-right") !== -1);
           expect(rightCross.props().x1).to.equal(xScale(data[i].x));
           expect(rightCross.props().x2).to.equal(positiveErrorX);
           expect(rightCross.props().y1).to.equal(yScale(data[i].y));
@@ -811,39 +740,46 @@ describe("components/victory-errorbar", () => {
       const clickHandler = sinon.spy();
       const wrapper = mount(
         <VictoryErrorBar
-          events={[{
-            target: "parent",
-            eventHandlers: { onClick: clickHandler }
-          }]}
+          events={[
+            {
+              target: "parent",
+              eventHandlers: { onClick: clickHandler }
+            }
+          ]}
         />
       );
       const svg = wrapper.find("svg").at(0);
       svg.simulate("click");
       expect(clickHandler).called;
       // the first argument is the standard evt object
-      expect(clickHandler.args[0][1])
-        .to.include.keys("data", "scale", "width", "height", "style");
+      expect(clickHandler.args[0][1]).to.include.keys("data", "scale", "width", "height", "style");
     });
 
     it("attaches an event to data, click border lines", () => {
       const clickHandler = sinon.spy();
       const wrapper = mount(
         <VictoryErrorBar
-          events={[{
-            target: "data",
-            eventHandlers: { onClick: clickHandler }
-          }]}
+          events={[
+            {
+              target: "data",
+              eventHandlers: { onClick: clickHandler }
+            }
+          ]}
         />
       );
       const Data = wrapper.find(ErrorBar);
       Data.forEach((node, index) => {
         const initialProps = Data.at(index).props();
         // click the border line
-        node.find("line").at(3).simulate("click");
+        node
+          .find("line")
+          .at(3)
+          .simulate("click");
         expect(clickHandler.called).to.equal(true);
         // the first argument is the standard evt object
-        expect(omit(clickHandler.args[index][1], ["events", "key"]))
-          .to.eql(omit(initialProps, ["events", "key"]));
+        expect(omit(clickHandler.args[index][1], ["events", "key"])).to.eql(
+          omit(initialProps, ["events", "key"])
+        );
         expect(`${clickHandler.args[index][2]}`).to.eql(`${index}`);
       });
     });
@@ -852,21 +788,27 @@ describe("components/victory-errorbar", () => {
       const clickHandler = sinon.spy();
       const wrapper = mount(
         <VictoryErrorBar
-          events={[{
-            target: "data",
-            eventHandlers: { onClick: clickHandler }
-          }]}
+          events={[
+            {
+              target: "data",
+              eventHandlers: { onClick: clickHandler }
+            }
+          ]}
         />
       );
       const Data = wrapper.find(ErrorBar);
       Data.forEach((node, index) => {
         const initialProps = Data.at(index).props();
         // click the cross line
-        node.find("line").at(7).simulate("click");
+        node
+          .find("line")
+          .at(7)
+          .simulate("click");
         expect(clickHandler.called).to.equal(true);
         // the first argument is the standard evt object
-        expect(omit(clickHandler.args[index][1], ["events", "key"]))
-          .to.eql(omit(initialProps, ["events", "key"]));
+        expect(omit(clickHandler.args[index][1], ["events", "key"])).to.eql(
+          omit(initialProps, ["events", "key"])
+        );
         expect(`${clickHandler.args[index][2]}`).to.eql(`${index}`);
       });
     });

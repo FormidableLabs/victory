@@ -25,12 +25,17 @@ export default {
   },
 
   shallowToJS(x, whitelist) {
-    return this.isIterable(x) ? x.reduce((prev, curr, key) => {
-      if (whitelist && whitelist[key]) {
-        curr = this.shallowToJS(curr);
-      }
-      prev[key] = curr;
-      return prev;
-    }, this.isList(x) ? [] : {}) : x;
+    return this.isIterable(x)
+      ? x.reduce(
+          (prev, curr, key) => {
+            if (whitelist && whitelist[key]) {
+              curr = this.shallowToJS(curr);
+            }
+            prev[key] = curr;
+            return prev;
+          },
+          this.isList(x) ? [] : {}
+        )
+      : x;
   }
 };

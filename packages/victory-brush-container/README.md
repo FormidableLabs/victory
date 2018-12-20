@@ -1,4 +1,3 @@
-
 # VictoryBrushContainer
 
 `victory-brush-container@^30.0.0` exports `VictoryBrushContainer`, `brushContainerMixin` and `BrushHelpers`
@@ -46,7 +45,7 @@ However, the component that uses it must be standalone
 
 The optional `allowDrag` prop accepts a boolean that enables dragging behavior for the highlighted brush area. Resizing will still be enabled when the `allowDrag` prop is set to false.
 
-*default:* `allowDrag={true}`
+_default:_ `allowDrag={true}`
 
 ### allowResize
 
@@ -54,7 +53,7 @@ The optional `allowDrag` prop accepts a boolean that enables dragging behavior f
 
 The optional `allowResize` prop accepts a boolean that enables resizing the highlighted brush area. Dragging will still be enabled when the `allowResize` prop is set to false, but the dimensions of the brush area will be fixed.
 
-*default:* `allowResize={true}`
+_default:_ `allowResize={true}`
 
 ### brushComponent
 
@@ -64,7 +63,7 @@ The `brushComponent` prop specifies the component to be rendered for the highlig
 This component will be supplied with the following props: x, y, width, height, and style.
 When this prop is not specified, a `<rect/>` will be rendered.
 
-*default:* `brushComponent={<rect/>}`
+_default:_ `brushComponent={<rect/>}`
 
 ### brushDimension
 
@@ -74,7 +73,7 @@ When the `brushDimension` prop is set, brushing will only be specific to the to 
 (either "x" or "y"), and the entire domain of the other dimension will be highlighted. When this prop
 is not specified, highlighting will occur along both dimensions.
 
-*example:* `brushDimension="x"`
+_example:_ `brushDimension="x"`
 
 ### brushDomain
 
@@ -85,7 +84,7 @@ specifies separate arrays for `x` and `y`. Each array is a tuple that describes 
 values to render. If this prop is not provided initially, the chart will render with the entire
 domain highlighted. When this prop changes, the chart will render with a new highlighted domain.
 
-*example:* `brushDomain={{x: [50, 100], y: [0, 100]}`
+_example:_ `brushDomain={{x: [50, 100], y: [0, 100]}`
 
 ### brushStyle
 
@@ -94,7 +93,7 @@ domain highlighted. When this prop changes, the chart will render with a new hig
 The `brushStyle` adds custom styles to the `brushComponent`. This prop should be given as
 an object of SVG style attributes.
 
-*default:* `brushStyle={{stroke: "transparent", fill: "black", fillOpacity: 0.1}}
+_default:_ `brushStyle={{stroke: "transparent", fill: "black", fillOpacity: 0.1}}
 
 ### defaultBrushArea
 
@@ -126,10 +125,10 @@ When the `disable` prop is set to `true`, `VictoryBrushContainer` events will no
 `type: element`
 
 The `handleComponent` prop specifies the component to be rendered for each handle for the highlighted
-area.  This component will be supplied with the following props: `x`, `y`, `width`, `height`, `cursor`, and `style`.
+area. This component will be supplied with the following props: `x`, `y`, `width`, `height`, `cursor`, and `style`.
 When this prop is not specified, a `<rect/>` will be rendered.
 
-*default:* `handleComponent={<rect/>}`
+_default:_ `handleComponent={<rect/>}`
 
 ### handleStyle
 
@@ -143,7 +142,7 @@ expanded. Only handles relevant to the given `dimension` will be rendered. For e
 `brushDimension="x"` only "left" and "right" handles will be rendered. Handles are automatically styled
 with cursors appropriate to their orientation.
 
-*default:* `handleStyle={{stroke: "transparent", fill: "transparent"}}
+_default:_ `handleStyle={{stroke: "transparent", fill: "transparent"}}
 
 ### onBrushDomainChange
 
@@ -151,7 +150,7 @@ with cursors appropriate to their orientation.
 
 The optional `onBrushDomainChange` prop accepts a function to be called on each update to the highlighted domain. The function accepts the parameters of `domain` (the updated domain), and `props` (the props used by `VictoryBrushContainer`).
 
-*example:* `onBrushDomainChange={(domain, props) => handleDomainChange(domain, props)}`
+_example:_ `onBrushDomainChange={(domain, props) => handleDomainChange(domain, props)}`
 
 ## onBrushDomainChangeEnd
 
@@ -159,8 +158,7 @@ The optional `onBrushDomainChange` prop accepts a function to be called on each 
 
 The optional `onBrushDomainChangeEnd` prop accepts a function to be called on the last update to the highlighted domain. The function accepts the parameters of `domain` (the updated domain), and `props` (the props used by `VictoryBrushContainer`).
 
-*example:* `onBrushDomainChangeEnd={(domain, props) => handleDomainChangeEnd(domain, props)}`
-
+_example:_ `onBrushDomainChangeEnd={(domain, props) => handleDomainChangeEnd(domain, props)}`
 
 [brush and zoom guide]: https://formidable.com/open-source/victory/guides/brush-and-zoom
-[VictoryContainer]: https://formidable.com/open-source/victory/docs/victory-container
+[victorycontainer]: https://formidable.com/open-source/victory/docs/victory-container
