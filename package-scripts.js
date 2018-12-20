@@ -35,7 +35,7 @@ module.exports = {
       )
     },
     check: {
-      ci: npsUtils.series.nps("lint", "test.ci"),
+      ci: npsUtils.series.nps("format.ci", "lint", "test.ci"),
       cov: npsUtils.series.nps("lint", "test.cov"),
       dev: npsUtils.series.nps("lint", "test.dev"),
       default: npsUtils.series.nps("lint", "test")

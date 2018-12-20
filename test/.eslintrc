@@ -1,10 +1,7 @@
-
 {
-  "extends": "formidable/configurations/es6-react",
+  "extends": ["formidable/configurations/es6-react", "prettier"],
   "env": { "mocha": true },
-  "plugins": [
-    "mocha"
-  ],
+  "plugins": ["mocha"],
   "rules": {
     "mocha/no-exclusive-tests": 2,
     "no-magic-numbers": 0,
