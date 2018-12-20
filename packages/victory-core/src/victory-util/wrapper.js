@@ -182,13 +182,13 @@ export default {
         childData = Data.getData(childProps);
       }
       stack += 1;
-      return childData.map((datum) => assign({ stack }, datum));
+      return childData.map((datum, index) => assign({ stack, group: index }, datum));
     };
     const children = childComponents ?
     childComponents.slice(0) : React.Children.toArray(props.children);
     const stacked = children.filter((c) => c.type && c.type.role === "stack").length;
     const datasets = Helpers.reduceChildren(children, iteratee, props);
-    const group = stacked ? "eventKey" : "stack";
+    const group = stacked ? "group" : "stack";
     return values(groupBy(datasets, group));
   },
 
