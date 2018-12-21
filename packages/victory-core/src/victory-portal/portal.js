@@ -11,7 +11,7 @@ export default class Portal extends React.Component {
     style: PropTypes.object,
     viewBox: PropTypes.string,
     width: CustomPropTypes.nonNegative
-  }
+  };
 
   constructor(props) {
     super(props);

@@ -24,7 +24,8 @@ const combineEventHandlers = (eventHandlersArray) => {
       const existingHandler = finalHandlers[eventName];
       if (existingHandler) {
         // create new handler for event that concats the existing handler's mutations with new ones
-        finalHandlers[eventName] = function combinedHandler(...params) { // named for debug clarity
+        finalHandlers[eventName] = function combinedHandler(...params) {
+          // named for debug clarity
           // sometimes handlers return undefined; use empty array instead, for concat()
           const existingMutations = ensureArray(existingHandler(...params));
           const localMutations = ensureArray(localHandler(...params));
@@ -42,16 +43,16 @@ const combineDefaultEvents = (defaultEvents) => {
   // takes a defaultEvents array and returns one equal or lesser length,
   // by combining any events that have the same target
   const eventsByTarget = groupBy(defaultEvents, "target");
-  const events = toPairs(eventsByTarget).map(
-    ([target, eventsArray]) => {
-      eventsArray = eventsArray.filter(Boolean);
-      return isEmpty(eventsArray) ? null : {
-        target,
-        eventHandlers: combineEventHandlers(eventsArray.map((event) => event.eventHandlers))
-        // note: does not currently handle eventKey or childName
-      };
-    }
-  );
+  const events = toPairs(eventsByTarget).map(([target, eventsArray]) => {
+    eventsArray = eventsArray.filter(Boolean);
+    return isEmpty(eventsArray)
+      ? null
+      : {
+          target,
+          eventHandlers: combineEventHandlers(eventsArray.map((event) => event.eventHandlers))
+          // note: does not currently handle eventKey or childName
+        };
+  });
   return events.filter(Boolean);
 };
 
@@ -73,24 +74,23 @@ const combineContainerMixins = (mixins, Container) => {
   return class VictoryCombinedContainer extends NaiveCombinedContainer {
     static displayName = `Victory${displayType}Container`;
 
-    static propTypes =
-      Classes.reduce(
-        (propTypes, Class) => ({ ...propTypes, ...Class.propTypes }),
-        {}
-      );
+    static propTypes = Classes.reduce(
+      (propTypes, Class) => ({ ...propTypes, ...Class.propTypes }),
+      {}
+    );
 
-    static defaultProps =
-      Classes.reduce(
-        (defaultProps, Class) => ({ ...defaultProps, ...Class.defaultProps }),
-        {}
-      );
+    static defaultProps = Classes.reduce(
+      (defaultProps, Class) => ({ ...defaultProps, ...Class.defaultProps }),
+      {}
+    );
 
     static defaultEvents = (props) => {
       return combineDefaultEvents(
         Classes.reduce((defaultEvents, Class) => {
-          const events = isFunction(Class.defaultEvents) ?
-            Class.defaultEvents(props) : Class.defaultEvents;
-          return ([...defaultEvents, ...events]);
+          const events = isFunction(Class.defaultEvents)
+            ? Class.defaultEvents(props)
+            : Class.defaultEvents;
+          return [...defaultEvents, ...events];
         }, [])
       );
     };
@@ -106,13 +106,12 @@ const combineContainerMixins = (mixins, Container) => {
 
 const checkBehaviorName = (behavior, behaviors) => {
   if (behavior && !includes(behaviors, behavior)) {
-    Log.warn(
-      `"${behavior}" is not a valid behavior. Choose from [${behaviors.join(", ")}].`
-    );
+    Log.warn(`"${behavior}" is not a valid behavior. Choose from [${behaviors.join(", ")}].`);
   }
 };
 
-const makeCreateContainerFunction = (mixinMap, Container) => (behaviorA, behaviorB, ...invalid) => { // eslint-disable-line
+const makeCreateContainerFunction = (mixinMap, Container) => (behaviorA, behaviorB, ...invalid) => {
+  // eslint-disable-line
   const behaviors = Object.keys(mixinMap);
 
   checkBehaviorName(behaviorA, behaviors);
@@ -132,13 +131,15 @@ const makeCreateContainerFunction = (mixinMap, Container) => (behaviorA, behavio
   return combineContainerMixins([...firstMixins, ...secondMixins], Container);
 };
 
-const createContainer = makeCreateContainerFunction({
-  zoom: [zoomContainerMixin],
-  voronoi: [voronoiContainerMixin],
-  selection: [selectionContainerMixin],
-  cursor: [cursorContainerMixin],
-  brush: [brushContainerMixin]
-}, VictoryContainer);
+const createContainer = makeCreateContainerFunction(
+  {
+    zoom: [zoomContainerMixin],
+    voronoi: [voronoiContainerMixin],
+    selection: [selectionContainerMixin],
+    cursor: [cursorContainerMixin],
+    brush: [brushContainerMixin]
+  },
+  VictoryContainer
+);
 
 export { createContainer, makeCreateContainerFunction, combineContainerMixins };
-

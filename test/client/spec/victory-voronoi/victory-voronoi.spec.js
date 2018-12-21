@@ -14,21 +14,16 @@ import { VictoryLabel } from "packages/victory-core";
 describe("components/victory-voronoi", () => {
   describe("default component rendering", () => {
     it("renders an svg with the correct width and height", () => {
-      const wrapper = mount(
-        <VictoryVoronoi/>
-      );
+      const wrapper = mount(<VictoryVoronoi />);
       const svg = wrapper.find("svg").at(0);
       expect(svg.prop("style").width).to.equal("100%");
       expect(svg.prop("style").height).to.equal("100%");
     });
 
     it("renders an svg with the correct viewbox", () => {
-      const wrapper = mount(
-        <VictoryVoronoi/>
-      );
+      const wrapper = mount(<VictoryVoronoi />);
       const svg = wrapper.find("svg").at(0);
-      const viewBoxValue =
-        `0 0 ${450} ${300}`;
+      const viewBoxValue = `0 0 ${450} ${300}`;
       expect(svg.prop("viewBox")).to.equal(viewBoxValue);
     });
   });
@@ -42,9 +37,7 @@ describe("components/victory-voronoi", () => {
         domain: { x: [0, 5], y: [0, 5] },
         data: [{ x: 0, y: 0 }, { x: 2, y: 3 }, { x: 4, y: 1 }]
       };
-      const wrapper = mount(
-        <VictoryVoronoi {...props}/>
-      );
+      const wrapper = mount(<VictoryVoronoi {...props} />);
 
       const voronoi = wrapper.find(Voronoi);
       voronoi.forEach((node, index) => {
@@ -53,20 +46,20 @@ describe("components/victory-voronoi", () => {
     });
 
     it("sorts data by sortKey prop", () => {
-      const data = range(5).map((i) => ({ x: i, y: i })).reverse();
-      const wrapper = shallow(
-        <VictoryVoronoi data={data} sortKey="x"/>
-      );
+      const data = range(5)
+        .map((i) => ({ x: i, y: i }))
+        .reverse();
+      const wrapper = shallow(<VictoryVoronoi data={data} sortKey="x" />);
 
       const xValues = wrapper.find(Voronoi).map((voronoi) => voronoi.prop("datum")._x);
       expect(xValues).to.eql([0, 1, 2, 3, 4]);
     });
 
     it("reverses sorted data with the sortOrder prop", () => {
-      const data = range(5).map((i) => ({ x: i, y: i })).reverse();
-      const wrapper = shallow(
-        <VictoryVoronoi data={data} sortKey="x" sortOrder="descending"/>
-      );
+      const data = range(5)
+        .map((i) => ({ x: i, y: i }))
+        .reverse();
+      const wrapper = shallow(<VictoryVoronoi data={data} sortKey="x" sortOrder="descending" />);
 
       const xValues = wrapper.find(Voronoi).map((voronoi) => voronoi.prop("datum")._x);
       expect(xValues).to.eql([4, 3, 2, 1, 0]);
@@ -78,28 +71,31 @@ describe("components/victory-voronoi", () => {
       const clickHandler = sinon.spy();
       const wrapper = mount(
         <VictoryVoronoi
-          events={[{
-            target: "parent",
-            eventHandlers: { onClick: clickHandler }
-          }]}
+          events={[
+            {
+              target: "parent",
+              eventHandlers: { onClick: clickHandler }
+            }
+          ]}
         />
       );
       const svg = wrapper.find("svg").at(0);
       svg.simulate("click");
       expect(clickHandler).called;
       // the first argument is the standard evt object
-      expect(clickHandler.args[0][1])
-        .to.include.keys("data", "scale", "width", "height", "style");
+      expect(clickHandler.args[0][1]).to.include.keys("data", "scale", "width", "height", "style");
     });
 
     it("attaches an event to data", () => {
       const clickHandler = sinon.spy();
       const wrapper = mount(
         <VictoryVoronoi
-          events={[{
-            target: "data",
-            eventHandlers: { onClick: clickHandler }
-          }]}
+          events={[
+            {
+              target: "data",
+              eventHandlers: { onClick: clickHandler }
+            }
+          ]}
         />
       );
       const Data = wrapper.find(Voronoi);
@@ -108,8 +104,9 @@ describe("components/victory-voronoi", () => {
         node.simulate("click");
         expect(clickHandler.called).to.equal(true);
         // the first argument is the standard evt object
-        expect(omit(clickHandler.args[index][1], ["events", "key"]))
-          .to.eql(omit(initialProps, ["events", "key"]));
+        expect(omit(clickHandler.args[index][1], ["events", "key"])).to.eql(
+          omit(initialProps, ["events", "key"])
+        );
         expect(`${clickHandler.args[index][2]}`).to.eql(`${index}`);
       });
     });
@@ -119,10 +116,12 @@ describe("components/victory-voronoi", () => {
       const wrapper = mount(
         <VictoryVoronoi
           label="okay"
-          events={[{
-            target: "labels",
-            eventHandlers: { onClick: clickHandler }
-          }]}
+          events={[
+            {
+              target: "labels",
+              eventHandlers: { onClick: clickHandler }
+            }
+          ]}
         />
       );
       const Labels = wrapper.find(VictoryLabel);
@@ -137,7 +136,7 @@ describe("components/victory-voronoi", () => {
 
   describe("accessibility", () => {
     it("adds an aria role to the path area", () => {
-      const wrapper = mount(<VictoryVoronoi/>);
+      const wrapper = mount(<VictoryVoronoi />);
       wrapper.find("path").forEach((p) => {
         const roleValue = p.prop("role");
         if (roleValue) {

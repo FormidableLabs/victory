@@ -10,23 +10,50 @@ export default class VictoryAnimation extends React.Component {
 
   static propTypes = {
     children: PropTypes.func,
-    data: PropTypes.oneOfType([
-      PropTypes.object,
-      PropTypes.array
-    ]),
+    data: PropTypes.oneOfType([PropTypes.object, PropTypes.array]),
     delay: PropTypes.number,
     duration: PropTypes.number,
     easing: PropTypes.oneOf([
-      "back", "backIn", "backOut", "backInOut",
-      "bounce", "bounceIn", "bounceOut", "bounceInOut",
-      "circle", "circleIn", "circleOut", "circleInOut",
-      "linear", "linearIn", "linearOut", "linearInOut",
-      "cubic", "cubicIn", "cubicOut", "cubicInOut",
-      "elastic", "elasticIn", "elasticOut", "elasticInOut",
-      "exp", "expIn", "expOut", "expInOut",
-      "poly", "polyIn", "polyOut", "polyInOut",
-      "quad", "quadIn", "quadOut", "quadInOut",
-      "sin", "sinIn", "sinOut", "sinInOut"
+      "back",
+      "backIn",
+      "backOut",
+      "backInOut",
+      "bounce",
+      "bounceIn",
+      "bounceOut",
+      "bounceInOut",
+      "circle",
+      "circleIn",
+      "circleOut",
+      "circleInOut",
+      "linear",
+      "linearIn",
+      "linearOut",
+      "linearInOut",
+      "cubic",
+      "cubicIn",
+      "cubicOut",
+      "cubicInOut",
+      "elastic",
+      "elasticIn",
+      "elasticOut",
+      "elasticInOut",
+      "exp",
+      "expIn",
+      "expOut",
+      "expInOut",
+      "poly",
+      "polyIn",
+      "polyOut",
+      "polyInOut",
+      "quad",
+      "quadIn",
+      "quadOut",
+      "quadInOut",
+      "sin",
+      "sinIn",
+      "sinOut",
+      "sinInOut"
     ]),
     onEnd: PropTypes.func
   };
@@ -46,16 +73,14 @@ export default class VictoryAnimation extends React.Component {
     super(props);
     /* defaults */
     this.state = {
-      data: Array.isArray(this.props.data) ?
-        this.props.data[0] : this.props.data,
+      data: Array.isArray(this.props.data) ? this.props.data[0] : this.props.data,
       animationInfo: {
         progress: 0,
         animating: false
       }
     };
     this.interpolator = null;
-    this.queue = Array.isArray(this.props.data) ?
-      this.props.data.slice(1) : [];
+    this.queue = Array.isArray(this.props.data) ? this.props.data.slice(1) : [];
     /* build easing function */
     this.ease = d3Ease[this.toNewName(this.props.easing)];
     /*
@@ -84,7 +109,7 @@ export default class VictoryAnimation extends React.Component {
       // but let's reuse the same array.
       this.queue.length = 0;
       this.queue.push(nextProps.data);
-    /* If an array was supplied */
+      /* If an array was supplied */
     } else {
       /* Extend the tween queue */
       this.queue.push(...nextProps.data);
@@ -128,13 +153,12 @@ export default class VictoryAnimation extends React.Component {
       if (this.props.delay) {
         setTimeout(() => {
           this.loopID = this.getTimer().subscribe(
-            this.functionToBeRunEachFrame, this.props.duration
+            this.functionToBeRunEachFrame,
+            this.props.duration
           );
         }, this.props.delay);
       } else {
-        this.loopID = this.getTimer().subscribe(
-          this.functionToBeRunEachFrame, this.props.duration
-        );
+        this.loopID = this.getTimer().subscribe(this.functionToBeRunEachFrame, this.props.duration);
       }
     } else if (this.props.onEnd) {
       this.props.onEnd();

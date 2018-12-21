@@ -14,14 +14,8 @@ export default class Text extends React.Component {
     style: PropTypes.object,
     title: PropTypes.string,
     transform: PropTypes.string,
-    x: PropTypes.oneOfType([
-      PropTypes.number,
-      PropTypes.string
-    ]),
-    y: PropTypes.oneOfType([
-      PropTypes.number,
-      PropTypes.string
-    ])
+    x: PropTypes.oneOfType([PropTypes.number, PropTypes.string]),
+    y: PropTypes.oneOfType([PropTypes.number, PropTypes.string])
   };
 
   shouldComponentUpdate(nextProps) {
@@ -30,13 +24,29 @@ export default class Text extends React.Component {
 
   render() {
     const {
-      x, y, dx, dy, events, className, children, style, title, desc, transform, direction
+      x,
+      y,
+      dx,
+      dy,
+      events,
+      className,
+      children,
+      style,
+      title,
+      desc,
+      transform,
+      direction
     } = this.props;
     return (
       <text
         direction={direction}
-        className={className} x={x} dx={dx} y={y} dy={dy}
-        transform={transform} style={style}
+        className={className}
+        x={x}
+        dx={dx}
+        y={y}
+        dy={dy}
+        transform={transform}
+        style={style}
         {...events}
       >
         {title && <title>{title}</title>}

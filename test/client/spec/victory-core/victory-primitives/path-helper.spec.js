@@ -48,9 +48,7 @@ describe("path-helpers", () => {
       const pathResult = PathHelpers.plus(0, 0, 1);
       const baseSize = 1.1 * size;
       const distance = baseSize / 1.5;
-      expect(pathResult).to.contain(
-        `M ${(x - (distance / 2))}, ${(y + baseSize)}`
-      );
+      expect(pathResult).to.contain(`M ${x - distance / 2}, ${y + baseSize}`);
     });
   });
 
@@ -59,9 +57,7 @@ describe("path-helpers", () => {
       const pathResult = PathHelpers.minus(0, 0, 1);
       const baseSize = 1.1 * size;
       const lineHeight = baseSize - baseSize * 0.3;
-      expect(pathResult).to.contain(
-        `M ${(x - (baseSize))}, ${(y + lineHeight / 2)}`
-      );
+      expect(pathResult).to.contain(`M ${x - baseSize}, ${y + lineHeight / 2}`);
     });
   });
 
@@ -70,8 +66,8 @@ describe("path-helpers", () => {
       const pathResult = PathHelpers.star(0, 0, 1);
       const angle = Math.PI / 5;
       const baseSize = 1.35 * size;
-      expect(pathResult).to.contain(`M ${(baseSize) * Math.sin(angle) + x},
-        ${(baseSize) * Math.cos(angle) + y}`);
+      expect(pathResult).to.contain(`M ${baseSize * Math.sin(angle) + x},
+        ${baseSize * Math.cos(angle) + y}`);
     });
   });
 });

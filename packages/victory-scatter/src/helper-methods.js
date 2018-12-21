@@ -44,8 +44,10 @@ const getSize = (datum, props) => {
 };
 
 const getCalculatedValues = (props) => {
-  const defaultStyles = props.theme && props.theme.scatter && props.theme.scatter.style ?
-    props.theme.scatter.style : {};
+  const defaultStyles =
+    props.theme && props.theme.scatter && props.theme.scatter.style
+      ? props.theme.scatter.style
+      : {};
   const style = Helpers.getStyles(props.style, defaultStyles);
   const data = Data.getData(props);
   const range = {
@@ -57,8 +59,12 @@ const getCalculatedValues = (props) => {
     y: Domain.getDomain(props, "y")
   };
   const scale = {
-    x: Scale.getBaseScale(props, "x").domain(domain.x).range(range.x),
-    y: Scale.getBaseScale(props, "y").domain(domain.y).range(range.y)
+    x: Scale.getBaseScale(props, "x")
+      .domain(domain.x)
+      .range(range.x),
+    y: Scale.getBaseScale(props, "y")
+      .domain(domain.y)
+      .range(range.y)
   };
   const origin = props.polar ? props.origin || Helpers.getPolarOrigin(props) : undefined;
   const z = props.bubbleProperty || "z";
@@ -69,19 +75,51 @@ const getBaseProps = (props, fallbackProps) => {
   const modifiedProps = Helpers.modifyProps(props, fallbackProps, "scatter");
   props = assign({}, modifiedProps, getCalculatedValues(modifiedProps));
   const {
-    data, domain, events, height, origin, padding, polar, scale, name,
-    sharedEvents, standalone, style, theme, width, labels
+    data,
+    domain,
+    events,
+    height,
+    origin,
+    padding,
+    polar,
+    scale,
+    name,
+    sharedEvents,
+    standalone,
+    style,
+    theme,
+    width,
+    labels
   } = props;
-  const initialChildProps = { parent: {
-    style: style.parent, scale, domain, data, height, width, standalone, theme,
-    origin, polar, padding, name
-  } };
+  const initialChildProps = {
+    parent: {
+      style: style.parent,
+      scale,
+      domain,
+      data,
+      height,
+      width,
+      standalone,
+      theme,
+      origin,
+      polar,
+      padding,
+      name
+    }
+  };
 
   return data.reduce((childProps, datum, index) => {
     const eventKey = datum.eventKey || index;
     const { x, y } = Helpers.scalePoint(props, datum);
     const dataProps = {
-      x, y, datum, data, index, scale, polar, origin,
+      x,
+      y,
+      datum,
+      data,
+      index,
+      scale,
+      polar,
+      origin,
       size: getSize(datum, props),
       symbol: getSymbol(datum, props),
       style: style.data
@@ -89,7 +127,7 @@ const getBaseProps = (props, fallbackProps) => {
 
     childProps[eventKey] = { data: dataProps };
     const text = LabelHelpers.getText(props, datum, index);
-    if (text !== undefined && text !== null || (labels && (events || sharedEvents))) {
+    if ((text !== undefined && text !== null) || (labels && (events || sharedEvents))) {
       childProps[eventKey].labels = LabelHelpers.getProps(props, index);
     }
 

@@ -49,9 +49,10 @@ export default class App extends React.Component {
 
     return (
       <div className="demo" style={containerStyle}>
-      <VictoryChart style={chartStyle} minDomain={0} theme={VictoryTheme.material}>
+        <VictoryChart style={chartStyle} minDomain={0} theme={VictoryTheme.material}>
           <VictoryBoxPlot
-            minLabels maxLabels
+            minLabels
+            maxLabels
             data={[
               { x: "red", y: [5, 10, 9, 2] },
               { x: "blue", y: [1, 15, 6, 8] },
@@ -88,26 +89,29 @@ export default class App extends React.Component {
 
         <VictoryChart style={chartStyle} domain={{ x: [0, 20], y: [0, 3] }}>
           <VictoryBoxPlot
-            minLabels maxLabels
+            minLabels
+            maxLabels
             q1Labels={() => ""}
             whiskerWidth={50}
             data={[{ y: 1, x: [5, 10, 9, 2] }, { y: 2, x: [1, 15, 6, 8] }]}
             boxWidth={20}
             horizontal
             labelOrientation={"top"}
-            events={[{
-              target: "q1",
-              eventHandlers: {
-                onClick: () => {
-                  return [
-                    {
-                      target: "q1Labels",
-                      mutation: () => ({ text: "LABEL!" })
-                    }
-                  ];
+            events={[
+              {
+                target: "q1",
+                eventHandlers: {
+                  onClick: () => {
+                    return [
+                      {
+                        target: "q1Labels",
+                        mutation: () => ({ text: "LABEL!" })
+                      }
+                    ];
+                  }
                 }
               }
-            }]}
+            ]}
             style={{
               min: { stroke: "black", strokeWidth: 2 },
               max: { stroke: "black", strokeWidth: 2 },
@@ -122,7 +126,8 @@ export default class App extends React.Component {
 
         <VictoryChart style={chartStyle} scale={{ y: "time" }} domainPadding={50}>
           <VictoryBoxPlot
-            minLabels maxLabels
+            minLabels
+            maxLabels
             boxWidth={10}
             data={[
               { y: new Date(1980, 1, 1), x: [5, 10, 9, 2] },
@@ -136,7 +141,8 @@ export default class App extends React.Component {
         </VictoryChart>
         <VictoryChart style={chartStyle} domainPadding={50}>
           <VictoryBoxPlot
-            minLabels maxLabels
+            minLabels
+            maxLabels
             boxWidth={10}
             data={[
               { x: "red", y: [5, 10, 9, 2] },
@@ -149,7 +155,8 @@ export default class App extends React.Component {
         </VictoryChart>
         <VictoryChart style={chartStyle} domainPadding={50}>
           <VictoryBoxPlot
-            minLabels maxLabels
+            minLabels
+            maxLabels
             boxWidth={10}
             data={[
               { x: 1, y: 5 },
@@ -178,17 +185,9 @@ export default class App extends React.Component {
           />
         </VictoryChart>
         <VictoryChart animate style={chartStyle} domainPadding={50}>
-          <VictoryBoxPlot
-            boxWidth={10}
-            data={this.state.data}
-          />
+          <VictoryBoxPlot boxWidth={10} data={this.state.data} />
         </VictoryChart>
-        <VictoryBoxPlot
-          animate
-          style={chartStyle}
-          boxWidth={10}
-          data={this.state.data}
-        />
+        <VictoryBoxPlot animate style={chartStyle} boxWidth={10} data={this.state.data} />
       </div>
     );
   }

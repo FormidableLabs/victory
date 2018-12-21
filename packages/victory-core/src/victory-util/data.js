@@ -2,13 +2,21 @@
 /* eslint-disable no-use-before-define */
 import React from "react";
 import {
-  assign, uniq, range, last, isFunction, isPlainObject, property, orderBy, isEmpty, includes
+  assign,
+  uniq,
+  range,
+  last,
+  isFunction,
+  isPlainObject,
+  property,
+  orderBy,
+  isEmpty,
+  includes
 } from "lodash";
 import Helpers from "./helpers";
 import Collection from "./collection";
 import Scale from "./scale";
 import Immutable from "./immutable";
-
 
 // Private Functions
 
@@ -114,11 +122,12 @@ function createStringMap(props, axis) {
   const stringsFromData = getStringsFromData(props, axis);
 
   const allStrings = uniq([...stringsFromAxes, ...stringsFromCategories, ...stringsFromData]);
-  return allStrings.length === 0 ? null :
-    allStrings.reduce((memo, string, index) => {
-      memo[string] = index + 1;
-      return memo;
-    }, {});
+  return allStrings.length === 0
+    ? null
+    : allStrings.reduce((memo, string, index) => {
+        memo[string] = index + 1;
+        return memo;
+      }, {});
 }
 
 /**
@@ -138,7 +147,7 @@ function downsample(data, maxPoints, startingIndex = 0) {
     const k = Math.pow(2, Math.ceil(Math.log2(dataLength / maxPoints)));
     return data.filter(
       // ensure modulo is always calculated from same reference: i + startingIndex
-      (d, i) => (((i + startingIndex) % k) === 0)
+      (d, i) => (i + startingIndex) % k === 0
     );
   }
   return data;
@@ -174,8 +183,8 @@ function formatData(dataset, props, expectedKeys) {
     return memo;
   }, {});
 
-
-  const data = dataset.reduce((dataArr, datum, index) => { // eslint-disable-line complexity
+  const data = dataset.reduce((dataArr, datum, index) => {
+    // eslint-disable-line complexity
     datum = parseDatum(datum);
     const fallbackValues = { x: index, y: datum };
     const processedValues = expectedKeys.reduce((memo, type) => {
@@ -227,8 +236,9 @@ function generateData(props) {
  */
 function getCategories(props, axis) {
   const currentAxis = Helpers.getCurrentAxis(axis, props.horizontal);
-  return props.categories && !Array.isArray(props.categories) ?
-    props.categories[currentAxis] : props.categories;
+  return props.categories && !Array.isArray(props.categories)
+    ? props.categories[currentAxis]
+    : props.categories;
 }
 
 /**
@@ -288,11 +298,13 @@ function getStringsFromData(props, axis) {
   const accessor = Helpers.createAccessor(key);
 
   const sortedData = sortData(props.data, props.sortKey, props.sortOrder);
-  const dataStrings = sortedData.reduce((dataArr, datum) => {
-    datum = parseDatum(datum);
-    dataArr.push(accessor(datum));
-    return dataArr;
-  }, []).filter((datum) => typeof datum === "string");
+  const dataStrings = sortedData
+    .reduce((dataArr, datum) => {
+      datum = parseDatum(datum);
+      dataArr.push(accessor(datum));
+      return dataArr;
+    }, [])
+    .filter((datum) => typeof datum === "string");
 
   // return a unique set of strings
   return dataStrings.reduce((prev, curr) => {

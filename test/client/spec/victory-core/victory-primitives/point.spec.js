@@ -25,24 +25,17 @@ describe("victory-primitives/point", () => {
   });
 
   it("should render the appropriate symbol", () => {
-    [
-      "circle",
-      "square",
-      "diamond",
-      "triangleDown",
-      "triangleUp",
-      "plus",
-      "minus",
-      "star"
-    ].forEach((symbol) => {
-      const stub = sandbox.stub(pathHelpers, symbol).returns(`${symbol} symbol`);
-      const props = assign({}, baseProps, { symbol });
-      const wrapper = shallow(<Point {...props} />);
-      const directions = wrapper.find(Path).prop("d");
+    ["circle", "square", "diamond", "triangleDown", "triangleUp", "plus", "minus", "star"].forEach(
+      (symbol) => {
+        const stub = sandbox.stub(pathHelpers, symbol).returns(`${symbol} symbol`);
+        const props = assign({}, baseProps, { symbol });
+        const wrapper = shallow(<Point {...props} />);
+        const directions = wrapper.find(Path).prop("d");
 
-      expect(stub.callCount).to.eql(1);
-      expect(stub.getCall(0).args).to.eql([5, 10, 1]);
-      expect(directions).to.eql(`${symbol} symbol`);
-    });
+        expect(stub.callCount).to.eql(1);
+        expect(stub.getCall(0).args).to.eql([5, 10, 1]);
+        expect(directions).to.eql(`${symbol} symbol`);
+      }
+    );
   });
 });

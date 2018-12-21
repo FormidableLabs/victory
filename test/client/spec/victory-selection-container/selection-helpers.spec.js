@@ -21,7 +21,8 @@ describe("helpers/selection", () => {
     it("returns data from children", () => {
       const data = [{ eventKey: 0, x: 1, y: 3 }, { eventKey: 1, x: 2, y: 5 }];
       const expectedReturn = [
-        { eventKey: 0, x: 1, _x: 1, y: 3, _y: 3 }, { eventKey: 1, x: 2, _x: 2, y: 5, _y: 5 }
+        { eventKey: 0, x: 1, _x: 1, y: 3, _y: 3 },
+        { eventKey: 1, x: 2, _x: 2, y: 5, _y: 5 }
       ];
       const name = "points";
       const children = [React.createElement(VictoryBar, { name, data })];

@@ -7,7 +7,7 @@ import Helpers from "./helpers";
 function getVerticalAnchor(props, datum) {
   datum = datum || {};
   const sign = datum._y >= 0 ? 1 : -1;
-  const labelStyle = props.style && props.style.labels || {};
+  const labelStyle = (props.style && props.style.labels) || {};
   if (datum.verticalAnchor || labelStyle.verticalAnchor) {
     return datum.verticalAnchor || labelStyle.verticalAnchor;
   } else if (!props.horizontal) {
@@ -21,7 +21,7 @@ function getTextAnchor(props, datum) {
   datum = datum || {};
   const { style, horizontal } = props;
   const sign = datum._y >= 0 ? 1 : -1;
-  const labelStyle = style && style.labels || {};
+  const labelStyle = (style && style.labels) || {};
   if (datum.verticalAnchor || labelStyle.verticalAnchor) {
     return datum.verticalAnchor || labelStyle.verticalAnchor;
   } else if (!horizontal) {
@@ -33,7 +33,7 @@ function getTextAnchor(props, datum) {
 
 function getAngle(props, datum) {
   datum = datum || {};
-  const labelStyle = props.style && props.style.labels || {};
+  const labelStyle = (props.style && props.style.labels) || {};
   return datum.angle === undefined ? labelStyle.angle : datum.angle;
 }
 
@@ -74,24 +74,28 @@ function getPolarPadding(props, datum) {
   const padding = Helpers.evaluateProp(labelStyle.padding, datum, active) || 0;
   const angle = Helpers.degreesToRadians(degrees);
   return {
-    x: padding * Math.cos(angle), y: -padding * Math.sin(angle)
+    x: padding * Math.cos(angle),
+    y: -padding * Math.sin(angle)
   };
 }
 
 function getLabelPlacement(props) {
   const { labelComponent, labelPlacement, polar } = props;
   const defaultLabelPlacement = polar ? "perpendicular" : "vertical";
-  return labelPlacement ?
-    labelPlacement :
-    labelComponent.props && labelComponent.props.labelPlacement || defaultLabelPlacement;
+  return labelPlacement
+    ? labelPlacement
+    : (labelComponent.props && labelComponent.props.labelPlacement) || defaultLabelPlacement;
 }
 
 function getPolarOrientation(degrees) {
-  if (degrees < 45 || degrees > 315) { // eslint-disable-line no-magic-numbers
+  // eslint-disable-next-line no-magic-numbers
+  if (degrees < 45 || degrees > 315) {
     return "right";
-  } else if (degrees >= 45 && degrees <= 135) { // eslint-disable-line no-magic-numbers
+    // eslint-disable-next-line no-magic-numbers
+  } else if (degrees >= 45 && degrees <= 135) {
     return "top";
-  } else if (degrees > 135 && degrees < 225) { // eslint-disable-line no-magic-numbers
+    // eslint-disable-next-line no-magic-numbers
+  } else if (degrees > 135 && degrees < 225) {
     return "left";
   } else {
     return "bottom";
@@ -112,7 +116,7 @@ function getPolarTextAnchor(props, degrees) {
   const labelPlacement = getLabelPlacement(props);
   if (
     labelPlacement === "perpendicular" ||
-    labelPlacement === "vertical" && (degrees === 90 || degrees === 270)
+    (labelPlacement === "vertical" && (degrees === 90 || degrees === 270))
   ) {
     return "middle";
   }
@@ -134,7 +138,7 @@ function getPolarAngle(props, baseAngle) {
     return 0;
   }
   const degrees = baseAngle !== undefined ? baseAngle : getDegrees(props, datum);
-  const sign = (degrees > 90 && degrees < 180 || degrees > 270) ? 1 : -1;
+  const sign = (degrees > 90 && degrees < 180) || degrees > 270 ? 1 : -1;
   let angle;
   if (degrees === 0 || degrees === 180) {
     angle = 90;
@@ -156,17 +160,29 @@ function getProps(props, index) {
   const { scale, data, style, horizontal, polar } = props;
   const datum = data[index];
   const degrees = getDegrees(props, datum);
-  const textAnchor = polar ?
-    getPolarTextAnchor(props, degrees) : getTextAnchor(props, datum);
-  const verticalAnchor = polar ?
-     getPolarVerticalAnchor(props, degrees) : getVerticalAnchor(props, datum);
+  const textAnchor = polar ? getPolarTextAnchor(props, degrees) : getTextAnchor(props, datum);
+  const verticalAnchor = polar
+    ? getPolarVerticalAnchor(props, degrees)
+    : getVerticalAnchor(props, datum);
   const angle = getAngle(props, datum);
   const text = getText(props, datum, index);
   const labelPlacement = getLabelPlacement(props);
   const { x, y } = getPosition(props, datum);
   return {
-    angle, data, datum, horizontal, index, polar, scale, labelPlacement,
-    text, textAnchor, verticalAnchor, x, y, style: style.labels
+    angle,
+    data,
+    datum,
+    horizontal,
+    index,
+    polar,
+    scale,
+    labelPlacement,
+    text,
+    textAnchor,
+    verticalAnchor,
+    x,
+    y,
+    style: style.labels
   };
 }
 

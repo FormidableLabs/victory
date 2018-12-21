@@ -9,39 +9,32 @@ import { VictoryCursorContainer } from "../packages/victory-cursor-container/src
 import { VictoryBrushContainer } from "../packages/victory-brush-container/src/index";
 import { VictoryBrushLine } from "../packages/victory-brush-line/src/index";
 
-
 // only add visual test for containers that have visual elements without interaction
 storiesOf("Containers and Addons.VictoryBrushContainer", module)
   .add("with VictoryBrushContainer", () => (
-    <VictoryChart
-      containerComponent={<VictoryBrushContainer/>}
-    />
+    <VictoryChart containerComponent={<VictoryBrushContainer />} />
   ))
   .add("with VictoryBrushContainer with domain", () => (
     <VictoryChart
-      containerComponent={<VictoryBrushContainer brushDomain={{ x: [0, 0.5], y: [0.5, 1] }}/>}
+      containerComponent={<VictoryBrushContainer brushDomain={{ x: [0, 0.5], y: [0.5, 1] }} />}
     />
   ))
   .add("with VictoryBrushContainer with brushStyle", () => (
     <VictoryChart
       containerComponent={
-        <VictoryBrushContainer brushStyle={{ fill: "teal", stroke: "teal", fillOpacity: 0.2 }}/>
+        <VictoryBrushContainer brushStyle={{ fill: "teal", stroke: "teal", fillOpacity: 0.2 }} />
       }
     />
   ));
 
 storiesOf("Containers and Addons.VictoryBrushLine", module)
-  .add("brush axis", () => (
-    <VictoryAxis axisComponent={<VictoryBrushLine/>}/>
-  ))
+  .add("brush axis", () => <VictoryAxis axisComponent={<VictoryBrushLine />} />)
   .add("brush axis with initial brush", () => (
-    <VictoryAxis axisComponent={<VictoryBrushLine brushDomain={[0.25, 0.5]}/>}/>
+    <VictoryAxis axisComponent={<VictoryBrushLine brushDomain={[0.25, 0.5]} />} />
   ))
-  .add("brush gridline", () => (
-    <VictoryAxis gridComponent={<VictoryBrushLine/>}/>
-  ))
+  .add("brush gridline", () => <VictoryAxis gridComponent={<VictoryBrushLine />} />)
   .add("brush gridline with initial brushes", () => (
-    <VictoryAxis gridComponent={<VictoryBrushLine brushDomain={[0.25, 0.5]}/>}/>
+    <VictoryAxis gridComponent={<VictoryBrushLine brushDomain={[0.25, 0.5]} />} />
   ))
   .add("brush gridline with styles", () => (
     <VictoryAxis
@@ -50,7 +43,7 @@ storiesOf("Containers and Addons.VictoryBrushLine", module)
           brushDomain={[0.25, 0.5]}
           brushAreaStyle={{ fill: "orange", stroke: "tomato", strokeWidth: 2 }}
           brushStyle={{ fill: "teal", stroke: "navy", strokeWidth: 2 }}
-          handleStyle= {{ strokeWidth: 1, stroke: "grey" }}
+          handleStyle={{ strokeWidth: 1, stroke: "grey" }}
         />
       }
     />
@@ -65,14 +58,15 @@ storiesOf("Containers and Addons.VictoryBrushLine", module)
           handleWidth={4}
           brushAreaStyle={{ fill: "orange", stroke: "tomato", strokeWidth: 2 }}
           brushStyle={{ fill: "teal", stroke: "navy", strokeWidth: 2 }}
-          handleStyle= {{ strokeWidth: 1, stroke: "grey" }}
+          handleStyle={{ strokeWidth: 1, stroke: "grey" }}
         />
       }
     />
   ));
 
-storiesOf("Containers and Addons.VictoryCursorContainer", module)
-  .add("with VictoryCursorContainer with defaultCursorValue", () => (
+storiesOf("Containers and Addons.VictoryCursorContainer", module).add(
+  "with VictoryCursorContainer with defaultCursorValue",
+  () => (
     <VictoryChart
       containerComponent={
         <VictoryCursorContainer
@@ -81,11 +75,14 @@ storiesOf("Containers and Addons.VictoryCursorContainer", module)
         />
       }
     />
-  ));
+  )
+);
 
-storiesOf("Containers and Addons.VictoryZoomContainer", module)
-  .add("with VictoryZoomContainer with initial zoom", () => (
-    <VictoryChart scale={{ x: "time" }}
+storiesOf("Containers and Addons.VictoryZoomContainer", module).add(
+  "with VictoryZoomContainer with initial zoom",
+  () => (
+    <VictoryChart
+      scale={{ x: "time" }}
       containerComponent={
         <VictoryZoomContainer
           zoomDomain={{ x: [new Date(1993, 1, 1), new Date(2005, 1, 1)] }}
@@ -109,4 +106,5 @@ storiesOf("Containers and Addons.VictoryZoomContainer", module)
         ]}
       />
     </VictoryChart>
-  ));
+  )
+);

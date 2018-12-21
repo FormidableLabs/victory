@@ -11,13 +11,17 @@ export default class Point extends React.Component {
     datum: PropTypes.object,
     getPath: PropTypes.func,
     pathComponent: PropTypes.element,
-    size: PropTypes.oneOfType([
-      PropTypes.number,
-      PropTypes.func
-    ]),
+    size: PropTypes.oneOfType([PropTypes.number, PropTypes.func]),
     symbol: PropTypes.oneOfType([
       PropTypes.oneOf([
-        "circle", "diamond", "plus", "minus", "square", "star", "triangleDown", "triangleUp"
+        "circle",
+        "diamond",
+        "plus",
+        "minus",
+        "square",
+        "star",
+        "triangleDown",
+        "triangleUp"
       ]),
       PropTypes.func
     ]),
@@ -46,19 +50,34 @@ export default class Point extends React.Component {
       star: pathHelpers.star
     };
     const symbol = Helpers.evaluateProp(props.symbol, datum, active);
-    const symbolFunction = typeof pathFunctions[symbol] === "function" ?
-      pathFunctions[symbol] : pathFunctions.circle;
+    const symbolFunction =
+      typeof pathFunctions[symbol] === "function" ? pathFunctions[symbol] : pathFunctions.circle;
     return symbolFunction(x, y, size);
   }
 
   render() {
     const {
-      active, datum, role, shapeRendering, className, events, pathComponent, transform, clipPath
+      active,
+      datum,
+      role,
+      shapeRendering,
+      className,
+      events,
+      pathComponent,
+      transform,
+      clipPath
     } = this.props;
     const style = Helpers.evaluateStyle(this.props.style, datum, active);
     const d = this.getPath(this.props);
-    return React.cloneElement(
-      pathComponent, { style, role, shapeRendering, className, events, d, transform, clipPath }
-    );
+    return React.cloneElement(pathComponent, {
+      style,
+      role,
+      shapeRendering,
+      className,
+      events,
+      d,
+      transform,
+      clipPath
+    });
   }
 }

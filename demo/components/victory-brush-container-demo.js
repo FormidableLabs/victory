@@ -35,9 +35,13 @@ class App extends React.Component {
     return (
       <div className="demo">
         <div style={containerStyle}>
-          <VictoryChart width={800} height={500} scale={{ x: "time" }}
+          <VictoryChart
+            width={800}
+            height={500}
+            scale={{ x: "time" }}
             containerComponent={
-              <VictoryZoomContainer responsive={false}
+              <VictoryZoomContainer
+                responsive={false}
                 zoomDomain={this.state.zoomDomain}
                 zoomDimension="x"
                 onZoomDomainChange={this.handleZoom.bind(this)}
@@ -59,13 +63,15 @@ class App extends React.Component {
                 { x: new Date(2015, 1, 1), y: 470 }
               ]}
             />
-
           </VictoryChart>
           <VictoryChart
             padding={{ top: 0, left: 50, right: 50, bottom: 30 }}
-            width={800} height={100} scale={{ x: "time" }}
+            width={800}
+            height={100}
+            scale={{ x: "time" }}
             containerComponent={
-              <VictoryBrushContainer responsive={false}
+              <VictoryBrushContainer
+                responsive={false}
                 brushDomain={this.state.zoomDomain}
                 brushDimension="x"
                 onBrushDomainChange={this.handleZoom.bind(this)}
@@ -98,17 +104,19 @@ class App extends React.Component {
                 { x: new Date(2015, 1, 1), y: 470 }
               ]}
             />
-
           </VictoryChart>
 
-          <VictoryChart style={chartStyle}
+          <VictoryChart
+            style={chartStyle}
             height={400}
             padding={{ top: 100, bottom: 50, left: 50, right: 50 }}
             containerComponent={
-              <VictoryBrushContainer brushDomain={{ x: [2, 4], y: [-2, 2] }} allowDraw={false}/>
+              <VictoryBrushContainer brushDomain={{ x: [2, 4], y: [-2, 2] }} allowDraw={false} />
             }
           >
-            <VictoryLegend x={120} y={20}
+            <VictoryLegend
+              x={120}
+              y={20}
               title="Legend"
               centerTitle
               orientation="horizontal"
@@ -165,17 +173,14 @@ class App extends React.Component {
             style={{
               parent: chartStyle.parent,
               data: {
-                fill: (datum, active) => active ? "tomato" : "black"
+                fill: (datum, active) => (active ? "tomato" : "black")
               }
             }}
             domain={{ x: [0, 10], y: [-5, 5] }}
             containerComponent={
-              <VictoryBrushContainer
-                defaultBrushArea="none"
-                brushDomain={{ x: [0, 10] }}
-              />
+              <VictoryBrushContainer defaultBrushArea="none" brushDomain={{ x: [0, 10] }} />
             }
-            size={(datum, active) => active ? 5 : 3}
+            size={(datum, active) => (active ? 5 : 3)}
             data={[
               { x: 1, y: -5 },
               { x: 2, y: 4 },
@@ -191,26 +196,20 @@ class App extends React.Component {
             style={{
               parent: chartStyle.parent,
               data: {
-                fill: (datum, active) => active ? "tomato" : "black"
+                fill: (datum, active) => (active ? "tomato" : "black")
               }
             }}
-            containerComponent={
-              <VictoryBrushContainer defaultBrushArea="disable"/>
-            }
-            size={(datum, active) => active ? 5 : 3}
+            containerComponent={<VictoryBrushContainer defaultBrushArea="disable" />}
+            size={(datum, active) => (active ? 5 : 3)}
             y={(d) => d.x * d.x}
           />
 
-          <VictoryGroup style={chartStyle}
-            containerComponent={
-              <VictoryBrushContainer/>
-            }
-          >
+          <VictoryGroup style={chartStyle} containerComponent={<VictoryBrushContainer />}>
             <VictoryScatter
               style={{
                 data: { fill: "tomato" }
               }}
-              size={(datum, active) => active ? 5 : 3}
+              size={(datum, active) => (active ? 5 : 3)}
               data={[
                 { x: 1, y: -5 },
                 { x: 2, y: 4 },
@@ -225,7 +224,7 @@ class App extends React.Component {
               style={{
                 data: { fill: "blue" }
               }}
-              size={(datum, active) => active ? 5 : 3}
+              size={(datum, active) => (active ? 5 : 3)}
               data={[
                 { x: 1, y: -3 },
                 { x: 2, y: 5 },
@@ -246,24 +245,20 @@ class App extends React.Component {
                 { x: 6, y: 3 },
                 { x: 7, y: -3 }
               ]}
-              size={(datum, active) => active ? 5 : 3}
+              size={(datum, active) => (active ? 5 : 3)}
             />
           </VictoryGroup>
 
-          <VictoryStack style={chartStyle}
-            containerComponent={
-              <VictoryBrushContainer/>
-            }
-          >
+          <VictoryStack style={chartStyle} containerComponent={<VictoryBrushContainer />}>
             <VictoryBar
               style={{
                 data: {
                   fill: "tomato",
-                  stroke: (d, active) => active ? "black" : "none",
+                  stroke: (d, active) => (active ? "black" : "none"),
                   strokeWidth: 2
                 }
               }}
-              size={(datum, active) => active ? 5 : 3}
+              size={(datum, active) => (active ? 5 : 3)}
               data={[
                 { x: 1, y: -5 },
                 { x: 2, y: 4 },
@@ -278,11 +273,11 @@ class App extends React.Component {
               style={{
                 data: {
                   fill: "orange",
-                  stroke: (d, active) => active ? "black" : "none",
+                  stroke: (d, active) => (active ? "black" : "none"),
                   strokeWidth: 2
                 }
               }}
-              size={(datum, active) => active ? 5 : 3}
+              size={(datum, active) => (active ? 5 : 3)}
               data={[
                 { x: 1, y: -3 },
                 { x: 2, y: 5 },
@@ -297,7 +292,7 @@ class App extends React.Component {
               style={{
                 data: {
                   fill: "gold",
-                  stroke: (d, active) => active ? "black" : "none",
+                  stroke: (d, active) => (active ? "black" : "none"),
                   strokeWidth: 2
                 }
               }}
@@ -313,11 +308,12 @@ class App extends React.Component {
             />
           </VictoryStack>
 
-          <VictoryLine style={chartStyle}
+          <VictoryLine
+            style={chartStyle}
             containerComponent={
               <VictoryBrushContainer
                 brushDomain={{ y: [-3, 3] }}
-                brushComponent={<rect style={{ fill: "teal" }}/>}
+                brushComponent={<rect style={{ fill: "teal" }} />}
               />
             }
             style={{

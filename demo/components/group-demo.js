@@ -11,9 +11,7 @@ import { VictoryTooltip } from "../../packages/victory-tooltip/src/index";
 import { VictoryVoronoi } from "../../packages/victory-voronoi/src/index";
 import { range, random } from "lodash";
 
-
 class App extends React.Component {
-
   getGroupData() {
     return range(5).map(() => {
       return [
@@ -65,43 +63,31 @@ class App extends React.Component {
             >
               <VictoryGroup
                 color={"purple"}
-                data={[
-                  { x: 1, y: 3 },
-                  { x: 2, y: 4 },
-                  { x: 3, y: 2 }
-                ]}
+                data={[{ x: 1, y: 3 }, { x: 2, y: 4 }, { x: 3, y: 2 }]}
                 style={{
                   data: { width: 40, opacity: 0.6 }
                 }}
               >
-                <VictoryBar/>
-                <VictoryLine/>
+                <VictoryBar />
+                <VictoryLine />
               </VictoryGroup>
               <VictoryGroup
-                data={[
-                  { x: 1, y: 4 },
-                  { x: 2, y: 5 },
-                  { x: 3, y: 1 }
-                ]}
+                data={[{ x: 1, y: 4 }, { x: 2, y: 5 }, { x: 3, y: 1 }]}
                 style={{
                   data: { width: 20, opacity: 0.8 }
                 }}
               >
-                <VictoryBar/>
-                <VictoryLine/>
+                <VictoryBar />
+                <VictoryLine />
               </VictoryGroup>
               <VictoryGroup
-                data={[
-                  { x: 1, y: 3 },
-                  { x: 2, y: 2 },
-                  { x: 3, y: 5 }
-                ]}
+                data={[{ x: 1, y: 3 }, { x: 2, y: 2 }, { x: 3, y: 5 }]}
                 style={{
                   data: { width: 10, opacity: 1 }
                 }}
               >
-                <VictoryBar/>
-                <VictoryLine/>
+                <VictoryBar />
+                <VictoryLine />
                 <VictoryScatter
                   symbol={"plus"}
                   size={10}
@@ -123,8 +109,8 @@ class App extends React.Component {
                 { x: 4, y: 5, errorX: 0.3, errorY: 0.5 }
               ]}
             >
-              <VictoryLine/>
-              <VictoryBar/>
+              <VictoryLine />
+              <VictoryBar />
               <VictoryErrorBar
                 style={{
                   data: { stroke: "tomato" }
@@ -146,22 +132,15 @@ class App extends React.Component {
                 { x: 7, y: 3 }
               ]}
             >
-              <VictoryLine/>
-              <VictoryVoronoi
-                labelComponent={<VictoryTooltip/>}
-              />
+              <VictoryLine />
+              <VictoryVoronoi labelComponent={<VictoryTooltip />} />
             </VictoryGroup>
           </VictoryChart>
 
           <VictoryChart style={chartStyle}>
-            <VictoryGroup
-              y={(data) => Math.sin(2 * Math.PI * data.x)}
-            >
-              <VictoryLine/>
-              <VictoryVoronoi
-                labelComponent={<VictoryTooltip/>}
-                labels={(d) => d.y}
-              />
+            <VictoryGroup y={(data) => Math.sin(2 * Math.PI * data.x)}>
+              <VictoryLine />
+              <VictoryVoronoi labelComponent={<VictoryTooltip />} labels={(d) => d.y} />
             </VictoryGroup>
           </VictoryChart>
         </div>

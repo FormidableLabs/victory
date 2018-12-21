@@ -7,8 +7,7 @@ import Collection from "./collection";
 
 function transformTarget(target, matrix, dimension) {
   const { a, d, e, f } = matrix;
-  return dimension === "y" ?
-    d * target + f : a * target + e;
+  return dimension === "y" ? d * target + f : a * target + e;
 }
 
 function getTransformationMatrix(svg) {
@@ -70,8 +69,8 @@ function getDataCoordinates(props, scale, x, y) {
     const origin = props.origin || { x: 0, y: 0 };
     const baseX = x - origin.x;
     const baseY = y - origin.y;
-    const radius = Math.abs(baseX * Math.sqrt(1 + Math.pow((-baseY / baseX), 2)));
-    const angle = (-Math.atan2(baseY, baseX) + (Math.PI * 2)) % (Math.PI * 2);
+    const radius = Math.abs(baseX * Math.sqrt(1 + Math.pow(-baseY / baseX, 2)));
+    const angle = (-Math.atan2(baseY, baseX) + Math.PI * 2) % (Math.PI * 2);
     return {
       x: scale.x.invert(angle),
       y: scale.y.invert(radius)
@@ -84,7 +83,7 @@ function getBounds(props) {
   const point1 = getDataCoordinates(props, scale, x1, y1);
   const point2 = getDataCoordinates(props, scale, x2, y2);
   const makeBound = (a, b) => {
-    return [ Collection.getMinValue([a, b]), Collection.getMaxValue([a, b]) ];
+    return [Collection.getMinValue([a, b]), Collection.getMaxValue([a, b])];
   };
 
   return {

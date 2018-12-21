@@ -15,11 +15,14 @@ import { VictoryZoomContainer } from "../../packages/victory-zoom-container/src/
 import { VictoryTooltip } from "../../packages/victory-tooltip/src/index";
 import { VictoryLegend } from "../../packages/victory-legend/src/index";
 import {
-  VictoryTheme, VictoryClipContainer, VictoryPortal
+  VictoryTheme,
+  VictoryClipContainer,
+  VictoryPortal
 } from "../../packages/victory-core/src/index";
 
 const allData = range(0, 10, 0.001).map((x) => ({
-  x, y: Math.sin(Math.PI * x / 2) * x / 10
+  x,
+  y: (Math.sin((Math.PI * x) / 2) * x) / 10
 }));
 
 class CustomChart extends React.Component {
@@ -46,15 +49,11 @@ class CustomChart extends React.Component {
   getData() {
     const { zoomedXDomain } = this.state;
     const { data, maxPoints } = this.props;
-    const filtered = data.filter(
-      (d) => (d.x >= zoomedXDomain[0] && d.x <= zoomedXDomain[1])
-    );
+    const filtered = data.filter((d) => d.x >= zoomedXDomain[0] && d.x <= zoomedXDomain[1]);
 
     if (filtered.length > maxPoints) {
       const k = Math.ceil(filtered.length / maxPoints);
-      return filtered.filter(
-        (d, i) => ((i % k) === 0)
-      );
+      return filtered.filter((d, i) => i % k === 0);
     }
     return filtered;
   }
@@ -63,7 +62,7 @@ class CustomChart extends React.Component {
     const { data } = props;
     return {
       y: [minBy(data, (d) => d.y).y, maxBy(data, (d) => d.y).y],
-      x: [ data[0].x, last(data).x ]
+      x: [data[0].x, last(data).x]
     };
   }
   getZoomFactor() {
@@ -148,7 +147,7 @@ export default class App extends React.Component {
     });
   }
   getArrayData() {
-    return range(40).map((i) => [i, i + (Math.random() * 3)]);
+    return range(40).map((i) => [i, i + Math.random() * 3]);
   }
 
   getStyles() {
@@ -170,105 +169,106 @@ export default class App extends React.Component {
 
     return (
       <div className="demo" style={containerStyle}>
+        <CustomChart style={{ parent: parentStyle }} data={allData} maxPoints={120} />
 
-        <CustomChart style={{ parent: parentStyle }} data={allData} maxPoints={120}/>
+        <VictoryGroup
+          containerComponent={<VictoryZoomContainer zoomDimension="y" />}
+          style={{ parent: parentStyle }}
+          data={this.state.transitionData}
+        >
+          <VictoryLine animate={{ duration: 1500 }} style={{ data: this.state.style }} />
+        </VictoryGroup>
 
-          <VictoryGroup
-            containerComponent={<VictoryZoomContainer zoomDimension="y"/>}
-            style={{ parent: parentStyle }} data={this.state.transitionData}
-          >
-            <VictoryLine animate={{ duration: 1500 }} style={{ data: this.state.style }} />
-          </VictoryGroup>
-
-          <VictoryChart style={{ parent: parentStyle }}
-            containerComponent={
-              <VictoryZoomContainer
-                zoomDomain={{ x: [new Date(1993, 1, 1), new Date(2005, 1, 1)] }}
-                dimension="x"
-              />
-            }
-            scale={{
-              x: "time"
+        <VictoryChart
+          style={{ parent: parentStyle }}
+          containerComponent={
+            <VictoryZoomContainer
+              zoomDomain={{ x: [new Date(1993, 1, 1), new Date(2005, 1, 1)] }}
+              dimension="x"
+            />
+          }
+          scale={{
+            x: "time"
+          }}
+        >
+          <VictoryAxis tickFormat={(x) => new Date(x).getFullYear()} />
+          <VictoryLine
+            style={{
+              data: { stroke: "red", strokeWidth: 5 }
             }}
-          >
-            <VictoryAxis
-              tickFormat={(x) => new Date(x).getFullYear()}
-            />
-            <VictoryLine
-              style={{
-                data: { stroke: "red", strokeWidth: 5 }
-              }}
-              data={[
-                { x: new Date(1982, 1, 1), y: 125 },
-                { x: new Date(1987, 1, 1), y: 257 },
-                { x: new Date(1993, 1, 1), y: 345 },
-                { x: new Date(1997, 1, 1), y: 515 },
-                { x: new Date(2001, 1, 1), y: 132 },
-                { x: new Date(2005, 1, 1), y: 305 },
-                { x: new Date(2011, 1, 1), y: 270 },
-                { x: new Date(2015, 1, 1), y: 470 }
-              ]}
-            />
-          </VictoryChart>
+            data={[
+              { x: new Date(1982, 1, 1), y: 125 },
+              { x: new Date(1987, 1, 1), y: 257 },
+              { x: new Date(1993, 1, 1), y: 345 },
+              { x: new Date(1997, 1, 1), y: 515 },
+              { x: new Date(2001, 1, 1), y: 132 },
+              { x: new Date(2005, 1, 1), y: 305 },
+              { x: new Date(2011, 1, 1), y: 270 },
+              { x: new Date(2015, 1, 1), y: 470 }
+            ]}
+          />
+        </VictoryChart>
 
-          <VictoryChart style={{ parent: parentStyle }}
-            animate={{ duration: 1500 }}
-            domainPadding={{ x: 20, y: 0 }}
-            containerComponent={
-              <VictoryZoomContainer
-                minimumZoom={{ x: 5 }}
-                zoomDimension="x"
-                downsample={10}
-                clipContainerComponent={
-                  <VictoryClipContainer clipPadding={{ top: 15, bottom: 15 }}/>
-                }
-              />
-            }
-          >
-            <VictoryPortal>
-              <VictoryScatter
-                style={{ parent: parentStyle, data: { fill: "orange" } }}
-                size={15}
-                data={this.state.data}
-                x="a" y="b"
-              />
-            </VictoryPortal>
-          </VictoryChart>
-
-          <VictoryChart style={{ parent: parentStyle }}
-            animate={{ duration: 1500 }}
-            domainPadding={{ x: 20, y: 0 }}
-            containerComponent={
-              <VictoryZoomContainer
-                minimumZoom={{ x: 5 }}
-                zoomDimension="x"
-                downsample={10}
-                clipContainerComponent={
-                  <VictoryClipContainer clipPadding={{ top: 15, bottom: 15 }}/>
-                }
-              />
-            }
-          >
+        <VictoryChart
+          style={{ parent: parentStyle }}
+          animate={{ duration: 1500 }}
+          domainPadding={{ x: 20, y: 0 }}
+          containerComponent={
+            <VictoryZoomContainer
+              minimumZoom={{ x: 5 }}
+              zoomDimension="x"
+              downsample={10}
+              clipContainerComponent={
+                <VictoryClipContainer clipPadding={{ top: 15, bottom: 15 }} />
+              }
+            />
+          }
+        >
+          <VictoryPortal>
             <VictoryScatter
               style={{ parent: parentStyle, data: { fill: "orange" } }}
               size={15}
               data={this.state.data}
-              x="a" y="b"
-              labels={(d) => d.x}
-              labelComponent={<VictoryTooltip/>}
+              x="a"
+              y="b"
             />
-          </VictoryChart>
+          </VictoryPortal>
+        </VictoryChart>
 
-          <VictoryChart
-            style={{ parent: parentStyle }}
-            containerComponent={<VictoryZoomContainer/>}
-          >
-            <VictoryLine
-              style={{
-                parent: parentStyle,
-                data: { stroke: "red", strokeWidth: 6 }
-              }}
-              events={[{
+        <VictoryChart
+          style={{ parent: parentStyle }}
+          animate={{ duration: 1500 }}
+          domainPadding={{ x: 20, y: 0 }}
+          containerComponent={
+            <VictoryZoomContainer
+              minimumZoom={{ x: 5 }}
+              zoomDimension="x"
+              downsample={10}
+              clipContainerComponent={
+                <VictoryClipContainer clipPadding={{ top: 15, bottom: 15 }} />
+              }
+            />
+          }
+        >
+          <VictoryScatter
+            style={{ parent: parentStyle, data: { fill: "orange" } }}
+            size={15}
+            data={this.state.data}
+            x="a"
+            y="b"
+            labels={(d) => d.x}
+            labelComponent={<VictoryTooltip />}
+          />
+        </VictoryChart>
+
+        <VictoryChart style={{ parent: parentStyle }} containerComponent={<VictoryZoomContainer />}>
+          <VictoryLine
+            style={{
+              parent: parentStyle,
+              data: { stroke: "red", strokeWidth: 6 }
+            }}
+            events={[
+              {
                 target: "data",
                 eventHandlers: {
                   onClick: () => {
@@ -277,7 +277,8 @@ export default class App extends React.Component {
                         mutation: (props) => {
                           return { style: merge({}, props.style, { stroke: "orange" }) };
                         }
-                      }, {
+                      },
+                      {
                         target: "labels",
                         mutation: () => {
                           return { text: "hey" };
@@ -286,52 +287,53 @@ export default class App extends React.Component {
                     ];
                   }
                 }
-              }]}
-              data={range(0, 100)}
-              y={(d) => d * d}
-            />
-          </VictoryChart>
+              }
+            ]}
+            data={range(0, 100)}
+            y={(d) => d * d}
+          />
+        </VictoryChart>
 
-          <VictoryChart
-            style={{ parent: parentStyle }}
-            containerComponent={<VictoryZoomContainer/>}
-          >
-            <VictoryArea
-              style={{ parent: parentStyle, data: { stroke: "#333", fill: "#888", opacity: 0.4 } }}
-              data={this.state.data}
-              x="a" y="b"
-              interpolation="stepBefore"
-            />
-            <VictoryAxis/>
-            <VictoryLine data={this.state.data} x="a" y="b" interpolation="stepBefore"/>
-            <VictoryAxis dependentAxis/>
-          </VictoryChart>
+        <VictoryChart style={{ parent: parentStyle }} containerComponent={<VictoryZoomContainer />}>
+          <VictoryArea
+            style={{ parent: parentStyle, data: { stroke: "#333", fill: "#888", opacity: 0.4 } }}
+            data={this.state.data}
+            x="a"
+            y="b"
+            interpolation="stepBefore"
+          />
+          <VictoryAxis />
+          <VictoryLine data={this.state.data} x="a" y="b" interpolation="stepBefore" />
+          <VictoryAxis dependentAxis />
+        </VictoryChart>
 
-          <button onClick={() => this.setState({ zoomDomain: this.getZoomDomain() })}>
-            random y domain
-          </button>
+        <button onClick={() => this.setState({ zoomDomain: this.getZoomDomain() })}>
+          random y domain
+        </button>
 
-          <VictoryChart
-            containerComponent={
-              <VictoryZoomContainer zoomDimension="x" zoomDomain={this.state.zoomDomain} />
-            }
-            animate={{ duration: 500 }}
-            style={{ parent: parentStyle }}
-          >
-            <VictoryLine
-              name="line"
-              style={{ parent: parentStyle, data: { stroke: "blue" } }}
-              y={(d) => Math.sin(2 * Math.PI * d.x)}
-              sample={25}
-            />
-          </VictoryChart>
+        <VictoryChart
+          containerComponent={
+            <VictoryZoomContainer zoomDimension="x" zoomDomain={this.state.zoomDomain} />
+          }
+          animate={{ duration: 500 }}
+          style={{ parent: parentStyle }}
+        >
+          <VictoryLine
+            name="line"
+            style={{ parent: parentStyle, data: { stroke: "blue" } }}
+            y={(d) => Math.sin(2 * Math.PI * d.x)}
+            sample={25}
+          />
+        </VictoryChart>
 
-          <VictoryChart style={{ parent: parentStyle }}
-            height={400}
-            padding={{ top: 80, bottom: 50, left: 50, right: 50 }}
-            containerComponent={<VictoryZoomContainer/>}
-            theme={VictoryTheme.material}
-            events={[{
+        <VictoryChart
+          style={{ parent: parentStyle }}
+          height={400}
+          padding={{ top: 80, bottom: 50, left: 50, right: 50 }}
+          containerComponent={<VictoryZoomContainer />}
+          theme={VictoryTheme.material}
+          events={[
+            {
               childName: "area-1",
               target: "data",
               eventHandlers: {
@@ -343,7 +345,8 @@ export default class App extends React.Component {
                       mutation: (props) => {
                         return { style: merge({}, props.style, { fill: "gold" }) };
                       }
-                    }, {
+                    },
+                    {
                       childName: "area-3",
                       target: "data",
                       mutation: (props) => {
@@ -351,7 +354,8 @@ export default class App extends React.Component {
                           style: merge({}, props.style, { fill: "orange" })
                         };
                       }
-                    }, {
+                    },
+                    {
                       childName: "area-4",
                       target: "data",
                       mutation: (props) => {
@@ -363,9 +367,12 @@ export default class App extends React.Component {
                   ];
                 }
               }
-            }]}
-          >
-          <VictoryLegend x={83} y={10}
+            }
+          ]}
+        >
+          <VictoryLegend
+            x={83}
+            y={10}
             title="Legend"
             centerTitle
             orientation="horizontal"
@@ -377,60 +384,62 @@ export default class App extends React.Component {
               { name: "Three", symbol: { fill: "gold" } }
             ]}
           />
-            <VictoryAxis/>
-            <VictoryStack>
-              <VictoryArea name="area-1"
-                data={[
-                  { x: "a", y: 2 },
-                  { x: "b", y: 3 },
-                  { x: "c", y: 5 },
-                  { x: "d", y: 4 },
-                  { x: "e", y: 7 }
-                ]}
-              />
-              <VictoryArea name="area-2"
-                data={[
-                  { x: "a", y: 1 },
-                  { x: "b", y: 4 },
-                  { x: "c", y: 5 },
-                  { x: "d", y: 7 },
-                  { x: "e", y: 5 }
-                ]}
-              />
-              <VictoryArea name="area-3"
-                data={[
-                  { x: "a", y: 3 },
-                  { x: "b", y: 2 },
-                  { x: "c", y: 6 },
-                  { x: "d", y: 2 },
-                  { x: "e", y: 6 }
-                ]}
-              />
-              <VictoryArea name="area-4"
-                data={[
-                  { x: "a", y: 2 },
-                  { x: "b", y: 3 },
-                  { x: "c", y: 3 },
-                  { x: "d", y: 4 },
-                  { x: "e", y: 7 }
-                ]}
-              />
-            </VictoryStack>
-            <VictoryAxis dependentAxis/>
-          </VictoryChart>
-          <VictoryChart
-            style={{ parent: parentStyle }}
-            containerComponent={<VictoryZoomContainer/>}
-          >
-            <VictoryBar horizontal
-              style={{ data: { stroke: "#333", fill: "#888", opacity: 0.4 } }}
-              data={this.state.data}
-              x="a" y="b"
+          <VictoryAxis />
+          <VictoryStack>
+            <VictoryArea
+              name="area-1"
+              data={[
+                { x: "a", y: 2 },
+                { x: "b", y: 3 },
+                { x: "c", y: 5 },
+                { x: "d", y: 4 },
+                { x: "e", y: 7 }
+              ]}
             />
-            <VictoryAxis/>
-            <VictoryAxis dependentAxis/>
-          </VictoryChart>
-
+            <VictoryArea
+              name="area-2"
+              data={[
+                { x: "a", y: 1 },
+                { x: "b", y: 4 },
+                { x: "c", y: 5 },
+                { x: "d", y: 7 },
+                { x: "e", y: 5 }
+              ]}
+            />
+            <VictoryArea
+              name="area-3"
+              data={[
+                { x: "a", y: 3 },
+                { x: "b", y: 2 },
+                { x: "c", y: 6 },
+                { x: "d", y: 2 },
+                { x: "e", y: 6 }
+              ]}
+            />
+            <VictoryArea
+              name="area-4"
+              data={[
+                { x: "a", y: 2 },
+                { x: "b", y: 3 },
+                { x: "c", y: 3 },
+                { x: "d", y: 4 },
+                { x: "e", y: 7 }
+              ]}
+            />
+          </VictoryStack>
+          <VictoryAxis dependentAxis />
+        </VictoryChart>
+        <VictoryChart style={{ parent: parentStyle }} containerComponent={<VictoryZoomContainer />}>
+          <VictoryBar
+            horizontal
+            style={{ data: { stroke: "#333", fill: "#888", opacity: 0.4 } }}
+            data={this.state.data}
+            x="a"
+            y="b"
+          />
+          <VictoryAxis />
+          <VictoryAxis dependentAxis />
+        </VictoryChart>
       </div>
     );
   }

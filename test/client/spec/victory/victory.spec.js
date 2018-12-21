@@ -3,8 +3,10 @@
  */
 import * as Victory from "packages/victory/src/index";
 
-describe("victory", () => { // eslint-disable-line max-statements
-  describe("exports victory components", () => { // eslint-disable-line max-statements
+describe("victory", () => {
+  // eslint-disable-line max-statements
+  describe("exports victory components", () => {
+    // eslint-disable-line max-statements
     it("exports VictoryAnimation", () => {
       expect(Victory.VictoryAnimation).not.to.equal(undefined);
     });
@@ -96,7 +98,8 @@ describe("victory", () => { // eslint-disable-line max-statements
       expect(Victory.VictoryZoomContainer).not.to.equal(undefined);
     });
   });
-  describe("exports primitive components", () => { // eslint-disable-line max-statements
+  describe("exports primitive components", () => {
+    // eslint-disable-line max-statements
     it("exports Area", () => {
       expect(Victory.Area).not.to.equal(undefined);
     });
@@ -155,7 +158,8 @@ describe("victory", () => { // eslint-disable-line max-statements
       expect(Victory.Whisker).not.to.equal(undefined);
     });
   });
-  describe("exports helper components", () => { // eslint-disable-line max-statements
+  describe("exports helper components", () => {
+    // eslint-disable-line max-statements
     it("exports addEvents", () => {
       expect(Victory.addEvents).not.to.equal(undefined);
     });

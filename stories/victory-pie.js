@@ -5,22 +5,11 @@ import { action } from "@storybook/addon-actions";
 import { VictoryPie, Slice } from "../packages/victory-pie/src/index";
 
 storiesOf("VictoryPie", module)
-  .addDecorator((story) => (
-    <div style={{ width: 400, height: 400 }}>
-      {story()}
-    </div>
-  ))
-  .add("by default", () => (
-    <VictoryPie />
-  ))
+  .addDecorator((story) => <div style={{ width: 400, height: 400 }}>{story()}</div>)
+  .add("by default", () => <VictoryPie />)
   .add("with basic data", () => (
     <VictoryPie
-      data={[
-        { x: "Cat", y: 62 },
-        { x: "Dog", y: 91 },
-        { x: "Fish", y: 55 },
-        { x: "Bird", y: 55 }
-      ]}
+      data={[{ x: "Cat", y: 62 }, { x: "Dog", y: 91 }, { x: "Fish", y: 55 }, { x: "Bird", y: 55 }]}
     />
   ))
   .add("with flexible data", () => (
@@ -48,38 +37,15 @@ storiesOf("VictoryPie", module)
       }}
     />
   ))
-  .add("as a donut", () => (
-    <VictoryPie innerRadius={140} />
-  ))
-  .add("as only a portion of a pie", () => (
-    <VictoryPie
-      endAngle={90}
-      startAngle={-90}
-    />
-  ))
+  .add("as a donut", () => <VictoryPie innerRadius={140} />)
+  .add("as only a portion of a pie", () => <VictoryPie endAngle={90} startAngle={-90} />)
   .add("with space between slices", () => (
-    <VictoryPie
-      endAngle={90}
-      innerRadius={140}
-      padAngle={5}
-      startAngle={-90}
-    />
+    <VictoryPie endAngle={90} innerRadius={140} padAngle={5} startAngle={-90} />
   ))
-  .add("with a radius prop", () => (
-    <VictoryPie
-      radius={100}
-    />
-  ))
-  .add("with an origin prop", () => (
-    <VictoryPie
-      radius={100}
-      origin={{ x: 150, y: 150 }}
-    />
-  ))
+  .add("with a radius prop", () => <VictoryPie radius={100} />)
+  .add("with an origin prop", () => <VictoryPie radius={100} origin={{ x: 150, y: 150 }} />)
   .add("with a label position different than centroid", () => (
-    <VictoryPie
-      labelPosition={"startAngle"}
-    />
+    <VictoryPie labelPosition={"startAngle"} />
   ))
   .add("with custom data and colors", () => (
     <VictoryPie
@@ -101,32 +67,19 @@ storiesOf("VictoryPie", module)
       ]}
       innerRadius={100}
       labelRadius={110}
-      colorScale={[
-        "#D85F49",
-        "#F66D3B",
-        "#D92E1D",
-        "#D73C4C",
-        "#FFAF59",
-        "#E28300",
-        "#F6A57F"
-      ]}
+      colorScale={["#D85F49", "#F66D3B", "#D92E1D", "#D73C4C", "#FFAF59", "#E28300", "#F6A57F"]}
     />
   ))
   .add("with functional styles", () => (
     <VictoryPie
       style={{
         data: {
-          stroke: (data) => data.y > 75 ? "red" : "transparent",
+          stroke: (data) => (data.y > 75 ? "red" : "transparent"),
           strokeWidth: 3,
-          opacity: (data) => data.y > 75 ? 1 : 0.4
+          opacity: (data) => (data.y > 75 ? 1 : 0.4)
         }
       }}
-      data={[
-        { x: "Cat", y: 62 },
-        { x: "Dog", y: 91 },
-        { x: "Fish", y: 55 },
-        { x: "Bird", y: 55 }
-      ]}
+      data={[{ x: "Cat", y: 62 }, { x: "Dog", y: 91 }, { x: "Fish", y: 55 }, { x: "Bird", y: 55 }]}
     />
   ))
   .add("with functional radius", () => (
@@ -136,45 +89,25 @@ storiesOf("VictoryPie", module)
       style={{
         labels: { fill: "white" }
       }}
-      data={[
-        { x: "Cat", y: 62 },
-        { x: "Dog", y: 91 },
-        { x: "Fish", y: 55 },
-        { x: "Bird", y: 55 }
-      ]}
+      data={[{ x: "Cat", y: 62 }, { x: "Dog", y: 91 }, { x: "Fish", y: 55 }, { x: "Bird", y: 55 }]}
     />
   ))
   .add("with functional innerRadius", () => (
     <VictoryPie
       innerRadius={(d) => d.y}
-      data={[
-        { x: "Cat", y: 62 },
-        { x: "Dog", y: 91 },
-        { x: "Fish", y: 55 },
-        { x: "Bird", y: 55 }
-      ]}
+      data={[{ x: "Cat", y: 62 }, { x: "Dog", y: 91 }, { x: "Fish", y: 55 }, { x: "Bird", y: 55 }]}
     />
   ))
   .add("with functional cornerRadius", () => (
     <VictoryPie
-      cornerRadius={(d) => d.y > 70 ? 10 : 0 }
+      cornerRadius={(d) => (d.y > 70 ? 10 : 0)}
       innerRadius={100}
-      data={[
-        { x: "Cat", y: 62 },
-        { x: "Dog", y: 91 },
-        { x: "Fish", y: 55 },
-        { x: "Bird", y: 55 }
-      ]}
+      data={[{ x: "Cat", y: 62 }, { x: "Dog", y: 91 }, { x: "Fish", y: 55 }, { x: "Bird", y: 55 }]}
     />
   ))
   .add("with sliceStartAngle and sliceEndAngle", () => (
     <VictoryPie
-      dataComponent={
-        <Slice
-          sliceStartAngle={0}
-          sliceEndAngle={(d) => d.endAngle}
-        />
-      }
+      dataComponent={<Slice sliceStartAngle={0} sliceEndAngle={(d) => d.endAngle} />}
       labels={() => " "}
       radius={(d) => d.radius}
       innerRadius={(d) => d.innerRadius}
@@ -195,20 +128,22 @@ storiesOf("VictoryPie", module)
           { x: "Fish", y: 55 },
           { x: "Bird", y: 55 }
         ]}
-        events={[{
-          target: "data",
-          eventHandlers: {
-            onClick: (event, props) => {
-              action("click a slice of pie")();
-              const fill = props.style.fill;
-              return {
-                mutation: () => {
-                  return fill === "red" ? null : { style: { fill: "red" } };
-                }
-              };
+        events={[
+          {
+            target: "data",
+            eventHandlers: {
+              onClick: (event, props) => {
+                action("click a slice of pie")();
+                const fill = props.style.fill;
+                return {
+                  mutation: () => {
+                    return fill === "red" ? null : { style: { fill: "red" } };
+                  }
+                };
+              }
             }
           }
-        }]}
+        ]}
       />
     </div>
   ));

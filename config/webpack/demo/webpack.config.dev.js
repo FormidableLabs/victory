@@ -6,12 +6,13 @@ var LodashModuleReplacementPlugin = require("lodash-webpack-plugin");
 
 var ROOT = process.cwd();
 var PACKAGES = glob.sync("packages/*/src", { root: ROOT });
-var FILES = PACKAGES.map(function (p) { return path.join(ROOT, p); });
+var FILES = PACKAGES.map(function(p) {
+  return path.join(ROOT, p);
+});
 var DEMO = path.resolve("demo");
 var WDS_PORT = 3000;
 
 module.exports = {
-
   devServer: {
     port: WDS_PORT,
     contentBase: "./demo",
@@ -48,11 +49,11 @@ module.exports = {
   },
   plugins: [
     new LodashModuleReplacementPlugin({
-      "shorthands": true,
-      "currying": true,
-      "flattening": true,
-      "paths": true,
-      "placeholders": true
+      shorthands: true,
+      currying: true,
+      flattening: true,
+      paths: true,
+      placeholders: true
     })
   ]
 };

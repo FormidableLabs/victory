@@ -25,12 +25,28 @@ export default class Rect extends React.Component {
 
   render() {
     const {
-      x, y, rx, ry, width, height, events, className, clipPath, style, role,
-      shapeRendering, transform
+      x,
+      y,
+      rx,
+      ry,
+      width,
+      height,
+      events,
+      className,
+      clipPath,
+      style,
+      role,
+      shapeRendering,
+      transform
     } = this.props;
     return (
       <rect
-        x={x} y={y} rx={rx} ry={ry} width={width} height={height}
+        x={x}
+        y={y}
+        rx={rx}
+        ry={ry}
+        width={width}
+        height={height}
         className={className}
         clipPath={clipPath}
         style={style}

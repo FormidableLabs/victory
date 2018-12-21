@@ -6,12 +6,13 @@ import VictoryTransition from "../victory-transition/victory-transition";
 
 //  used for checking state changes. Expected components can be passed in via options
 const defaultComponents = [
-  { name: "parent", index: "parent" }, { name: "data" }, { name: "labels" }
+  { name: "parent", index: "parent" },
+  { name: "data" },
+  { name: "labels" }
 ];
 
 export default (WrappedComponent, options) => {
   return class addEvents extends WrappedComponent {
-
     constructor(props) {
       super(props);
       const getScopedEvents = Events.getScopedEvents.bind(this);
@@ -44,8 +45,11 @@ export default (WrappedComponent, options) => {
           memo = isFunction(mutation.callback) ? memo.concat(mutation.callback) : memo;
           return memo;
         }, []);
-        const compiledCallbacks = callbacks.length ?
-          () => { callbacks.forEach((c) => c()); } : undefined;
+        const compiledCallbacks = callbacks.length
+          ? () => {
+              callbacks.forEach((c) => c());
+            }
+          : undefined;
         this.setState(externalMutations, compiledCallbacks);
       }
     }
@@ -54,52 +58,63 @@ export default (WrappedComponent, options) => {
     // state change should trigger a re-render
     getStateChanges(props, calculatedValues) {
       const { hasEvents, getSharedEventState } = calculatedValues;
-      if (!hasEvents) { return {}; }
+      if (!hasEvents) {
+        return {};
+      }
 
       options = options || {};
       const components = options.components || defaultComponents;
 
       const getState = (key, type) => {
         const baseState = defaults(
-          {}, this.getEventState(key, type), getSharedEventState(key, type)
+          {},
+          this.getEventState(key, type),
+          getSharedEventState(key, type)
         );
         return isEmpty(baseState) ? undefined : baseState;
       };
 
-      return components.map((component) => {
-        if (!props.standalone && component.name === "parent") {
-           // don't check for changes on parent props for non-standalone components
-          return undefined;
-        } else {
-          return component.index !== undefined ?
-            getState(component.index, component.name) :
-            calculatedValues.dataKeys.map((key) => getState(key, component.name));
-        }
-      }).filter(Boolean);
+      return components
+        .map((component) => {
+          if (!props.standalone && component.name === "parent") {
+            // don't check for changes on parent props for non-standalone components
+            return undefined;
+          } else {
+            return component.index !== undefined
+              ? getState(component.index, component.name)
+              : calculatedValues.dataKeys.map((key) => getState(key, component.name));
+          }
+        })
+        .filter(Boolean);
     }
 
     getCalculatedValues(props) {
       const { sharedEvents } = props;
       const components = WrappedComponent.expectedComponents;
       const componentEvents = Events.getComponentEvents(props, components);
-      const getSharedEventState = sharedEvents && isFunction(sharedEvents.getEventState) ?
-        sharedEvents.getEventState : () => undefined;
+      const getSharedEventState =
+        sharedEvents && isFunction(sharedEvents.getEventState)
+          ? sharedEvents.getEventState
+          : () => undefined;
       const baseProps = this.getBaseProps(props, getSharedEventState);
       const dataKeys = keys(baseProps).filter((key) => key !== "parent");
       const hasEvents = props.events || props.sharedEvents || componentEvents;
       const events = this.getAllEvents(props);
       return {
-        componentEvents, getSharedEventState, baseProps, dataKeys,
-        hasEvents, events
+        componentEvents,
+        getSharedEventState,
+        baseProps,
+        dataKeys,
+        hasEvents,
+        events
       };
     }
 
     getExternalMutations(props) {
       const { sharedEvents, externalEventMutations } = props;
-      return isEmpty(externalEventMutations) || sharedEvents ? undefined :
-        Events.getExternalMutations(
-          externalEventMutations, this.baseProps, this.state
-        );
+      return isEmpty(externalEventMutations) || sharedEvents
+        ? undefined
+        : Events.getExternalMutations(externalEventMutations, this.baseProps, this.state);
     }
 
     cacheValues(obj) {
@@ -116,23 +131,25 @@ export default (WrappedComponent, options) => {
       const parentPropsList = baseParentProps.parentControlledProps;
       const parentProps = parentPropsList ? pick(baseParentProps, parentPropsList) : {};
       const modifiedProps = defaults({}, parentProps, props);
-      return isFunction(WrappedComponent.getBaseProps) ?
-        WrappedComponent.getBaseProps(modifiedProps) : {};
+      return isFunction(WrappedComponent.getBaseProps)
+        ? WrappedComponent.getBaseProps(modifiedProps)
+        : {};
     }
 
     getAllEvents(props) {
       if (Array.isArray(this.componentEvents)) {
-        return Array.isArray(props.events) ?
-          this.componentEvents.concat(...props.events) : this.componentEvents;
+        return Array.isArray(props.events)
+          ? this.componentEvents.concat(...props.events)
+          : this.componentEvents;
       }
       return props.events;
     }
 
     getComponentProps(component, type, index) {
       const name = this.props.name || WrappedComponent.role;
-      const key = this.dataKeys && this.dataKeys[index] || index;
+      const key = (this.dataKeys && this.dataKeys[index]) || index;
       const id = `${name}-${type}-${key}`;
-      const baseProps = this.baseProps[key] && this.baseProps[key][type] || this.baseProps[key];
+      const baseProps = (this.baseProps[key] && this.baseProps[key][type]) || this.baseProps[key];
       if (!baseProps && !this.hasEvents) {
         return undefined;
       }
@@ -147,18 +164,13 @@ export default (WrappedComponent, options) => {
           { id }
         );
         const events = defaults(
-          {}, Events.getPartialEvents(baseEvents, key, componentProps), componentProps.events
+          {},
+          Events.getPartialEvents(baseEvents, key, componentProps),
+          componentProps.events
         );
-        return assign(
-          {}, componentProps, { events }
-        );
+        return assign({}, componentProps, { events });
       }
-      return defaults(
-        { index, key: id },
-        component.props,
-        baseProps,
-        { id }
-      );
+      return defaults({ index, key: id }, component.props, baseProps, { id });
     }
 
     renderContainer(component, children) {
@@ -203,13 +215,15 @@ export default (WrappedComponent, options) => {
         return React.cloneElement(dataComponent, dataProps);
       });
 
-      const labelComponents = this.dataKeys.map((_dataKey, index) => {
-        const labelProps = this.getComponentProps(labelComponent, "labels", index);
-        if (labelProps.text !== undefined && labelProps.text !== null) {
-          return React.cloneElement(labelComponent, labelProps);
-        }
-        return undefined;
-      }).filter(Boolean);
+      const labelComponents = this.dataKeys
+        .map((_dataKey, index) => {
+          const labelProps = this.getComponentProps(labelComponent, "labels", index);
+          if (labelProps.text !== undefined && labelProps.text !== null) {
+            return React.cloneElement(labelComponent, labelProps);
+          }
+          return undefined;
+        })
+        .filter(Boolean);
 
       const children = [...dataComponents, ...labelComponents];
       return this.renderContainer(groupComponent, children);

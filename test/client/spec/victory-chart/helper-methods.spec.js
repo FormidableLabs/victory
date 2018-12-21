@@ -37,9 +37,7 @@ describe("victory-chart/helpers-methods", () => {
       const children = [line];
       const result = getChildComponents({ children }, defaultAxes);
       expect(result).to.have.length(3);
-      expect(result).to.deep.include.members([
-        defaultAxes.independent, defaultAxes.dependent
-      ]);
+      expect(result).to.deep.include.members([defaultAxes.independent, defaultAxes.dependent]);
     });
 
     it("does not add default axes if axis any axis components exist in children", () => {

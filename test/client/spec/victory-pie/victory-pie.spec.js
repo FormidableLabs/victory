@@ -17,65 +17,47 @@ class PizzaSlice extends React.Component {
 describe("components/victory-pie", () => {
   describe("default component rendering", () => {
     it("renders an svg with the correct width and height", () => {
-      const wrapper = mount(
-        <VictoryPie/>
-      );
+      const wrapper = mount(<VictoryPie />);
       const svg = wrapper.find("svg").at(0);
       expect(svg.prop("style").width).to.equal("100%");
       expect(svg.prop("style").height).to.equal("100%");
     });
 
     it("renders an svg with the correct viewBox", () => {
-      const wrapper = mount(
-        <VictoryPie/>
-      );
+      const wrapper = mount(<VictoryPie />);
       const svg = wrapper.find("svg").at(0);
       expect(svg.prop("viewBox")).to.equal("0 0 400 400");
     });
 
     it("renders 5 slices", () => {
-      const wrapper = shallow(
-        <VictoryPie/>
-      );
+      const wrapper = shallow(<VictoryPie />);
 
       const slices = wrapper.find(Slice);
       expect(slices).to.have.lengthOf(5);
     });
 
     it("renders each slice as a circular sector", () => {
-      const wrapper = shallow(
-        <VictoryPie/>
-      );
+      const wrapper = shallow(<VictoryPie />);
       const slices = wrapper.find(Slice);
       slices.forEach(SvgTestHelper.expectIsCircularSection);
     });
 
     it("renders 5 slice labels", () => {
-      const wrapper = shallow(
-        <VictoryPie/>
-      );
+      const wrapper = shallow(<VictoryPie />);
 
       const labels = wrapper.find(VictoryLabel);
       expect(labels).to.have.lengthOf(5);
     });
 
     it("renders 0 slice labels for empty label array", () => {
-      const wrapper = shallow(
-        <VictoryPie
-          labels={[]}
-        />
-      );
+      const wrapper = shallow(<VictoryPie labels={[]} />);
 
       const labels = wrapper.find(VictoryLabel);
       expect(labels).to.have.lengthOf(0);
     });
 
     it("renders 0 slice labels for label function returning undefined", () => {
-      const wrapper = shallow(
-        <VictoryPie
-          labels={() => {}}
-        />
-      );
+      const wrapper = shallow(<VictoryPie labels={() => {}} />);
 
       const labels = wrapper.find(VictoryLabel);
       expect(labels).to.have.lengthOf(0);
@@ -85,44 +67,35 @@ describe("components/victory-pie", () => {
   describe("rendering data", () => {
     it("renders dataComponents for {x, y} shaped data (default)", () => {
       const data = range(5).map((i) => ({ x: i, y: i }));
-      const wrapper = shallow(
-        <VictoryPie
-          data={data}
-          dataComponent={<PizzaSlice />}
-        />
-      );
+      const wrapper = shallow(<VictoryPie data={data} dataComponent={<PizzaSlice />} />);
       const slices = wrapper.find(PizzaSlice);
       expect(slices.length).to.equal(5);
     });
 
     it("renders points for {x, y} shaped data (default)", () => {
       const data = range(5).map((i) => ({ x: i, y: i }));
-      const wrapper = shallow(<VictoryPie data={data}/>);
+      const wrapper = shallow(<VictoryPie data={data} />);
       const slices = wrapper.find(Slice);
       expect(slices.length).to.equal(5);
     });
 
     it("renders points for array-shaped data", () => {
       const data = range(6).map((i) => [i, i]);
-      const wrapper = shallow(<VictoryPie data={data} x={0} y={1}/>);
+      const wrapper = shallow(<VictoryPie data={data} x={0} y={1} />);
       const slices = wrapper.find(Slice);
       expect(slices.length).to.equal(6);
     });
 
     it("renders points for deeply-nested data", () => {
       const data = range(7).map((i) => ({ a: { b: [{ x: i, y: i }] } }));
-      const wrapper = shallow(
-        <VictoryPie data={data} x="a.b[0].x" y="a.b[0].y"/>
-      );
+      const wrapper = shallow(<VictoryPie data={data} x="a.b[0].x" y="a.b[0].y" />);
       const slices = wrapper.find(Slice);
       expect(slices.length).to.equal(7);
     });
 
     it("renders data values with null accessor", () => {
       const data = range(8);
-      const wrapper = shallow(
-        <VictoryPie data={data} x={null} y={null}/>
-      );
+      const wrapper = shallow(<VictoryPie data={data} x={null} y={null} />);
       const slices = wrapper.find(Slice);
       expect(slices.length).to.equal(8);
     });
@@ -130,9 +103,7 @@ describe("components/victory-pie", () => {
     it("renders data values in their given order", () => {
       const data = range(9).map((i) => ({ x: i, y: i }));
 
-      const wrapper = shallow(
-        <VictoryPie data={data}/>
-      );
+      const wrapper = shallow(<VictoryPie data={data} />);
       const xValues = wrapper.find(Slice).map((slice) => {
         return slice.prop("datum")._x;
       });
@@ -141,11 +112,11 @@ describe("components/victory-pie", () => {
     });
 
     it("renders data values sorted by sortKey prop", () => {
-      const data = range(9).map((i) => ({ x: i, y: i })).reverse();
+      const data = range(9)
+        .map((i) => ({ x: i, y: i }))
+        .reverse();
 
-      const wrapper = shallow(
-        <VictoryPie data={data} sortKey={"x"}/>
-      );
+      const wrapper = shallow(<VictoryPie data={data} sortKey={"x"} />);
       const xValues = wrapper.find(Slice).map((slice) => {
         return slice.prop("datum")._x;
       });
@@ -156,24 +127,19 @@ describe("components/victory-pie", () => {
     it("renders data values sorted by sortKey prop and sortOrder", () => {
       const data = range(9).map((i) => ({ x: i, y: i }));
 
-      const wrapper = shallow(
-        <VictoryPie data={data} sortKey={"x"} sortOrder={"descending"}/>
-      );
+      const wrapper = shallow(<VictoryPie data={data} sortKey={"x"} sortOrder={"descending"} />);
       const xValues = wrapper.find(Slice).map((slice) => {
         return slice.prop("datum")._x;
       });
 
       expect(xValues).to.eql([8, 7, 6, 5, 4, 3, 2, 1, 0]);
     });
-
   });
 
   describe("the `startAngle` prop", () => {
     it("determines the counter clockwise angle relative to a cartesian Y axis of a vector extending from the origin to the _first drawn coordinate_ of the first slice ", () => {
       [0, 90, 180, 270].map((angle) => {
-        const wrapper = mount(
-          <VictoryPie startAngle={angle}/>
-        );
+        const wrapper = mount(<VictoryPie startAngle={angle} />);
 
         const firstSlice = wrapper.find(Slice).first();
         const coordinates = SvgTestHelper.getSliceArcStart(firstSlice);
@@ -187,18 +153,14 @@ describe("components/victory-pie", () => {
 
   describe("the `innerRadius` prop", () => {
     it("renders the slices as annular sections", () => {
-      const wrapper = shallow(
-        <VictoryPie innerRadius={70}/>
-      );
+      const wrapper = shallow(<VictoryPie innerRadius={70} />);
 
       const slices = wrapper.find(Slice);
       slices.forEach(SvgTestHelper.expectIsAnnularSection);
     });
 
     it("determines the distance in pixels between the origin & the inner edge of the sections", () => {
-      const wrapper = shallow(
-        <VictoryPie innerRadius={70}/>
-      );
+      const wrapper = shallow(<VictoryPie innerRadius={70} />);
 
       const slices = wrapper.find(Slice);
       slices.forEach((slice) => {
@@ -209,9 +171,7 @@ describe("components/victory-pie", () => {
 
   describe("`startAngle` in conjunction with `endAngle`", () => {
     it("renders a portion of a chart from `startAngle` to `endAngle`", () => {
-      const wrapper = mount(
-        <VictoryPie startAngle={-90} endAngle={90}/>
-      );
+      const wrapper = mount(<VictoryPie startAngle={-90} endAngle={90} />);
 
       const slices = wrapper.find(Slice);
       const firstSlice = slices.first();
@@ -227,9 +187,7 @@ describe("components/victory-pie", () => {
   describe("the `width` prop", () => {
     it("determines the width of the containing viewBox", () => {
       const width = 200;
-      const wrapper = mount(
-        <VictoryPie width={width} />
-      );
+      const wrapper = mount(<VictoryPie width={width} />);
       const svg = wrapper.find("svg").at(0);
       expect(svg.prop("viewBox")).to.eql(`0 0 ${width} 400`);
     });
@@ -238,9 +196,7 @@ describe("components/victory-pie", () => {
   describe("the `height` prop", () => {
     it("determines the height of the containing viewBox", () => {
       const height = 200;
-      const wrapper = mount(
-        <VictoryPie height={height} />
-      );
+      const wrapper = mount(<VictoryPie height={height} />);
       const svg = wrapper.find("svg").at(0);
       expect(svg.prop("viewBox")).to.eql(`0 0 400 ${height}`);
     });
@@ -251,9 +207,7 @@ describe("components/victory-pie", () => {
       it("renders each slice with the next color in the array, reiterating through colors as necessary", () => {
         const data = range(5);
         const colorScale = ["#fffff", "#eeeee", "#ddddd"];
-        const wrapper = shallow(
-          <VictoryPie data={data} colorScale={colorScale}/>
-        );
+        const wrapper = shallow(<VictoryPie data={data} colorScale={colorScale} />);
 
         const slices = wrapper.find(Slice);
         expect(slices.length).to.equal(5);
@@ -267,15 +221,21 @@ describe("components/victory-pie", () => {
     describe("if provided a string", () => {
       describe("and the string is a valid victory color scale", () => {
         it("renders the chart using the given color scale", () => {
-          const VALID_VICTORY_COLOR_SCALE_NAMES = ["grayscale", "qualitative",
-            "heatmap", "warm", "cool", "red", "green", "blue"];
+          const VALID_VICTORY_COLOR_SCALE_NAMES = [
+            "grayscale",
+            "qualitative",
+            "heatmap",
+            "warm",
+            "cool",
+            "red",
+            "green",
+            "blue"
+          ];
 
           VALID_VICTORY_COLOR_SCALE_NAMES.map((colorScaleName) => {
             const colorScale = Style.getColorScale(colorScaleName);
             const data = range(colorScale.length + 1);
-            const wrapper = shallow(
-              <VictoryPie colorScale={colorScale} data={data}/>
-            );
+            const wrapper = shallow(<VictoryPie colorScale={colorScale} data={data} />);
 
             wrapper.find(Slice).map((slice, i) => {
               const expectedColor = colorScale[i % colorScale.length];
@@ -293,9 +253,7 @@ describe("components/victory-pie", () => {
             const grayscale = Style.getColorScale("grayscale");
             const data = range(grayscale.length);
 
-            const wrapper = shallow(
-              <VictoryPie colorScale={invalidColorScale} data={data}/>
-            );
+            const wrapper = shallow(<VictoryPie colorScale={invalidColorScale} data={data} />);
 
             const slices = wrapper.find(Slice);
             slices.map((slice, i) => {
@@ -313,28 +271,31 @@ describe("components/victory-pie", () => {
       const clickHandler = sinon.spy();
       const wrapper = mount(
         <VictoryPie
-          events={[{
-            target: "parent",
-            eventHandlers: { onClick: clickHandler }
-          }]}
+          events={[
+            {
+              target: "parent",
+              eventHandlers: { onClick: clickHandler }
+            }
+          ]}
         />
       );
       const svg = wrapper.find("svg").at(0);
       svg.simulate("click");
       expect(clickHandler).called;
       // the first argument is the standard evt object
-      expect(clickHandler.args[0][1])
-        .to.include.keys("slices", "width", "height", "style");
+      expect(clickHandler.args[0][1]).to.include.keys("slices", "width", "height", "style");
     });
 
     it("attaches an event to data", () => {
       const clickHandler = sinon.spy();
       const wrapper = mount(
         <VictoryPie
-          events={[{
-            target: "data",
-            eventHandlers: { onClick: clickHandler }
-          }]}
+          events={[
+            {
+              target: "data",
+              eventHandlers: { onClick: clickHandler }
+            }
+          ]}
         />
       );
       const Slices = wrapper.find(Slice);
@@ -343,8 +304,9 @@ describe("components/victory-pie", () => {
         node.simulate("click");
         expect(clickHandler.called).to.equal(true);
         // the first argument is the standard evt object
-        expect(omit(clickHandler.args[index][1], ["events", "key"]))
-          .to.eql(omit(initialProps, ["events", "key"]));
+        expect(omit(clickHandler.args[index][1], ["events", "key"])).to.eql(
+          omit(initialProps, ["events", "key"])
+        );
         expect(`${clickHandler.args[index][2]}`).to.eql(`${index}`);
       });
     });
@@ -352,10 +314,12 @@ describe("components/victory-pie", () => {
       const clickHandler = sinon.spy();
       const wrapper = mount(
         <VictoryPie
-          events={[{
-            target: "labels",
-            eventHandlers: { onClick: clickHandler }
-          }]}
+          events={[
+            {
+              target: "labels",
+              eventHandlers: { onClick: clickHandler }
+            }
+          ]}
         />
       );
       const SliceLabels = wrapper.find(VictoryLabel);

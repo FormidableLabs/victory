@@ -2,8 +2,17 @@ import React from "react";
 import PropTypes from "prop-types";
 import { flatten } from "lodash";
 import {
-    Helpers, VictoryLabel, addEvents, LineSegment, PropTypes as CustomPropTypes,
-    VictoryContainer, VictoryTheme, Box, Whisker, DefaultTransitions, CommonProps
+  Helpers,
+  VictoryLabel,
+  addEvents,
+  LineSegment,
+  PropTypes as CustomPropTypes,
+  VictoryContainer,
+  VictoryTheme,
+  Box,
+  Whisker,
+  DefaultTransitions,
+  CommonProps
 } from "victory-core";
 import { getDomain, getData, getBaseProps } from "./helper-methods";
 
@@ -20,9 +29,17 @@ const fallbackProps = {
 
 const options = {
   components: [
-    { name: "min" }, { name: "minLabels" }, { name: "max" }, { name: "maxLabels" },
-    { name: "median" }, { name: "medianLabels" }, { name: "q1" }, { name: "q1Labels" },
-    { name: "q3" }, { name: "q3Labels" }, { name: "parent", index: "parent" }
+    { name: "min" },
+    { name: "minLabels" },
+    { name: "max" },
+    { name: "maxLabels" },
+    { name: "median" },
+    { name: "medianLabels" },
+    { name: "q1" },
+    { name: "q1Labels" },
+    { name: "q3" },
+    { name: "q3Labels" },
+    { name: "parent", index: "parent" }
   ]
 };
 
@@ -31,16 +48,8 @@ const defaultData = [
   { x: 2, min: 2, q1: 5, median: 8, q3: 12, max: 15 }
 ];
 
-
 class VictoryBoxPlot extends React.Component {
-  static animationWhitelist = [
-    "data",
-    "domain",
-    "height",
-    "padding",
-    "style",
-    "width"
-  ];
+  static animationWhitelist = ["data", "domain", "height", "padding", "style", "width"];
 
   static displayName = "VictoryBoxPlot";
   static role = "boxplot";
@@ -49,18 +58,29 @@ class VictoryBoxPlot extends React.Component {
     ...CommonProps.baseProps,
     ...CommonProps.dataProps,
     boxWidth: PropTypes.number,
-    events: PropTypes.arrayOf(PropTypes.shape({
-      target: PropTypes.oneOf([
-        "max", "maxLabels", "median", "medianLabels", "min", "minLabels",
-        "q1", "q1Labels", "q3", "q3Labels", "parent"
-      ]),
-      eventKey: PropTypes.oneOfType([
-        PropTypes.array,
-        CustomPropTypes.allOfType([CustomPropTypes.integer, CustomPropTypes.nonNegative]),
-        PropTypes.string
-      ]),
-      eventHandlers: PropTypes.object
-    })),
+    events: PropTypes.arrayOf(
+      PropTypes.shape({
+        target: PropTypes.oneOf([
+          "max",
+          "maxLabels",
+          "median",
+          "medianLabels",
+          "min",
+          "minLabels",
+          "q1",
+          "q1Labels",
+          "q3",
+          "q3Labels",
+          "parent"
+        ]),
+        eventKey: PropTypes.oneOfType([
+          PropTypes.array,
+          CustomPropTypes.allOfType([CustomPropTypes.integer, CustomPropTypes.nonNegative]),
+          PropTypes.string
+        ]),
+        eventHandlers: PropTypes.object
+      })
+    ),
     horizontal: PropTypes.bool,
     labelOrientation: PropTypes.oneOf(["top", "bottom", "left", "right"]),
     labels: PropTypes.bool,
@@ -126,13 +146,13 @@ class VictoryBoxPlot extends React.Component {
       whiskers: PropTypes.object
     }),
     whiskerWidth: PropTypes.number
-  }
+  };
 
   static defaultProps = {
-    containerComponent: <VictoryContainer/>,
+    containerComponent: <VictoryContainer />,
     data: defaultData,
-    dataComponent: <Box/>,
-    groupComponent: <g role="presentation"/>,
+    dataComponent: <Box />,
+    groupComponent: <g role="presentation" />,
     maxComponent: <Whisker />,
     maxLabelComponent: <VictoryLabel />,
     medianComponent: <LineSegment />,
@@ -155,33 +175,46 @@ class VictoryBoxPlot extends React.Component {
   static getData = getData;
   static getBaseProps = (props) => getBaseProps(props, fallbackProps);
   static expectedComponents = [
-    "maxComponent", "maxLabelComponent", "medianComponent", "medianLabelComponent",
-    "minComponent", "minLabelComponent", "q1Component", "q1LabelComponent",
-    "q3Component", "q3LabelComponent", "groupComponent", "containerComponent"
+    "maxComponent",
+    "maxLabelComponent",
+    "medianComponent",
+    "medianLabelComponent",
+    "minComponent",
+    "minLabelComponent",
+    "q1Component",
+    "q1LabelComponent",
+    "q3Component",
+    "q3LabelComponent",
+    "groupComponent",
+    "containerComponent"
   ];
 
   renderBoxPlot(props) {
     const types = ["q1", "q3", "max", "min", "median"];
-    const dataComponents = flatten(types.map((type) => {
-      return this.dataKeys.map((key, index) => {
-        const baseComponent = props[`${type}Component`];
-        const componentProps = this.getComponentProps(baseComponent, type, index);
-        return React.cloneElement(baseComponent, componentProps);
-      });
-    }));
+    const dataComponents = flatten(
+      types.map((type) => {
+        return this.dataKeys.map((key, index) => {
+          const baseComponent = props[`${type}Component`];
+          const componentProps = this.getComponentProps(baseComponent, type, index);
+          return React.cloneElement(baseComponent, componentProps);
+        });
+      })
+    );
 
-    const labelComponents = flatten(types.map((type) => {
-      const components = this.dataKeys.map((key, index) => {
-        const name = `${type}Labels`;
-        const baseComponent = props[`${type}LabelComponent`];
-        const labelProps = this.getComponentProps(baseComponent, name, index);
-        if (labelProps.text !== undefined && labelProps.text !== null) {
-          return React.cloneElement(baseComponent, labelProps);
-        }
-        return undefined;
-      });
-      return components.filter(Boolean);
-    }));
+    const labelComponents = flatten(
+      types.map((type) => {
+        const components = this.dataKeys.map((key, index) => {
+          const name = `${type}Labels`;
+          const baseComponent = props[`${type}LabelComponent`];
+          const labelProps = this.getComponentProps(baseComponent, name, index);
+          if (labelProps.text !== undefined && labelProps.text !== null) {
+            return React.cloneElement(baseComponent, labelProps);
+          }
+          return undefined;
+        });
+        return components.filter(Boolean);
+      })
+    );
     const children = [...dataComponents, ...labelComponents];
     return this.renderContainer(props.groupComponent, children);
   }

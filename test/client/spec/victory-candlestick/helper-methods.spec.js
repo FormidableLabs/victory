@@ -1,8 +1,6 @@
 /* eslint no-unused-expressions: 0 */
 /* eslint max-nested-callbacks: 0 */
-import {
-  getData, getDomain
-} from "packages/victory-candlestick/src/helper-methods";
+import { getData, getDomain } from "packages/victory-candlestick/src/helper-methods";
 import { range } from "lodash";
 import { fromJS } from "immutable";
 
@@ -20,11 +18,20 @@ const getDataTest = {
     describe("getData", () => {
       it("sorts data by sortKey", () => {
         const data = createData(
-          range(5).map((i) => ({ x: i, open: i, close: i, high: i, low: i })).reverse()
+          range(5)
+            .map((i) => ({ x: i, open: i, close: i, high: i, low: i }))
+            .reverse()
         );
 
-        const dataResult = getData({ data, x: "x", open: "open",
-        close: "close", high: "high", low: "low", sortKey: "x" });
+        const dataResult = getData({
+          data,
+          x: "x",
+          open: "open",
+          close: "close",
+          high: "high",
+          low: "low",
+          sortKey: "x"
+        });
 
         expect(dataResult.map((datum) => datum.x)).to.eql([0, 1, 2, 3, 4]);
       });
@@ -37,14 +44,18 @@ const getDataTest = {
       ]);
 
       it("returns a domain array for the x axis", () => {
-        const domainXResult = getDomain({ data: dataSet, x: "x", open: "open",
-        close: "close", high: "high", low: "low" }, "x");
+        const domainXResult = getDomain(
+          { data: dataSet, x: "x", open: "open", close: "close", high: "high", low: "low" },
+          "x"
+        );
         expect(domainXResult).to.eql([5, 10]);
       });
 
       it("returns a domain array for the y axis", () => {
-        const domainYResult = getDomain({ data: dataSet, open: "open",
-        close: "close", high: "high", low: "low" }, "y");
+        const domainYResult = getDomain(
+          { data: dataSet, open: "open", close: "close", high: "high", low: "low" },
+          "y"
+        );
         expect(domainYResult).to.eql([5, 30]);
       });
     });

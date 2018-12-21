@@ -6,12 +6,19 @@ import SvgTestHelper from "../svg-test-helper";
 
 describe("victory-primitives/flyout", () => {
   const baseProps = {
-    x: 100, y: 100, dx: 0, dy: 0, width: 50, height: 50, cornerRadius: 5,
-    pointerLength: 10, pointerWidth: 10
+    x: 100,
+    y: 100,
+    dx: 0,
+    dy: 0,
+    width: 50,
+    height: 50,
+    cornerRadius: 5,
+    pointerLength: 10,
+    pointerWidth: 10
   };
   describe("rendering", () => {
     it("renders a flyout path", () => {
-      const wrapper = mount(<Flyout {...baseProps}/>);
+      const wrapper = mount(<Flyout {...baseProps} />);
       SvgTestHelper.expectIsFlyout(wrapper);
     });
   });

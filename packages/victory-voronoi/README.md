@@ -92,7 +92,7 @@ See the [Data Accessors Guide][] for more detail on formatting and processing da
 
 See the [Custom Components Guide][] for more detail on creating your own `dataComponents`
 
-*default:* `<Voronoi/>`
+_default:_ `<Voronoi/>`
 
 ```jsx
 dataComponent={<Voronoi events={{ onClick: handleClick }}/>}
@@ -125,7 +125,7 @@ domainPadding={{x: [10, -10], y: 5}}
 `VictoryVoronoi` uses the standard `eventKey` prop to specify how event targets are addressed. **This prop is not commonly used.** [Read about the `eventKey` prop in more detail here](https://formidable.com/open-source/victory/docs/common-props#eventkey)
 
 ```jsx
-eventKey="x"
+eventKey = "x";
 ```
 
 ### events
@@ -172,7 +172,7 @@ See the [Events Guide][] for more information on defining events.
 
 `VictoryVoronoi` uses the standard `groupComponent` prop. [Read about it in detail here](https://formidable.com/open-source/victory/docs/common-props#groupcomponent)
 
-*default:* `<g/>`
+_default:_ `<g/>`
 
 ```jsx
 groupComponent={<g transform="translate(10, 10)" />}
@@ -184,7 +184,7 @@ groupComponent={<g transform="translate(10, 10)" />}
 
 `VictoryVoronoi` uses the standard `height` prop. [Read about it in detail here](https://formidable.com/open-source/victory/docs/common-props#height)
 
-*default (provided by default theme):* `height={300}`
+_default (provided by default theme):_ `height={300}`
 
 ```jsx
 height={400}
@@ -196,7 +196,7 @@ height={400}
 
 `VictoryVoronoi` uses the standard `labelComponent` prop. [Read about it in detail here](https://formidable.com/open-source/victory/docs/common-props#labelcomponent)
 
-*default:* `<VictoryLabel/>`
+_default:_ `<VictoryLabel/>`
 
 ```playground
 <VictoryVoronoi
@@ -233,7 +233,6 @@ height={400}
 
 `VictoryVoronoi` uses the standard `maxDomain` prop. [Read about it in detail](https://formidable.com/open-source/victory/docs/common-props#maxDomain)
 
-
 ### minDomain
 
 `type: number || { x: number, y: number }`
@@ -247,7 +246,7 @@ height={400}
 The `name` prop is used to reference a component instance when defining shared events.
 
 ```jsx
-name="series-1"
+name = "series-1";
 ```
 
 ### origin
@@ -264,7 +263,7 @@ name="series-1"
 
 `VictoryVoronoi` uses the standard `padding` prop. [Read about it in detail here](https://formidable.com/open-source/victory/docs/common-props#padding)
 
-*default (provided by default theme):* `padding={50}`
+_default (provided by default theme):_ `padding={50}`
 
 ```jsx
 padding={{ top: 20, bottom: 60 }}
@@ -292,7 +291,7 @@ padding={{ top: 20, bottom: 60 }}
 
 `VictoryVoronoi` uses the standard `samples` prop to generate data when plotting functions. [Read about it in more detail here](https://formidable.com/open-source/victory/docs/common-props#samples)
 
-*default:* `samples={50}`
+_default:_ `samples={50}`
 
 ```jsx
 samples={100}
@@ -305,7 +304,7 @@ samples={100}
 `VictoryVoronoi` uses the standard `scale` prop. [Read about it here](https://formidable.com/open-source/victory/docs/common-props#scale)
 Options for scale include "linear", "time", "log", "sqrt" and the `d3-scale` functions that correspond to these options.
 
-*default:* `scale="linear"`
+_default:_ `scale="linear"`
 
 ```jsx
 scale={{x: "linear", y: "log"}}
@@ -344,7 +343,7 @@ The size prop determines the maximum size of each voronoi area. When this prop i
 `VictoryVoronoi` uses the standard `sortKey` prop to determine how data should be ordered. [Read about it in more detail here](https://formidable.com/open-source/victory/docs/common-props#sortkey)
 
 ```jsx
-sortKey="x"
+sortKey = "x";
 ```
 
 ### sortOrder
@@ -353,7 +352,7 @@ sortKey="x"
 
 The `sortOrder` prop specifies whether sorted data should be returned in ascending or descending order.
 
-*default:* `sortOrder="ascending"`
+_default:_ `sortOrder="ascending"`
 
 ### standalone
 
@@ -363,7 +362,7 @@ The `sortOrder` prop specifies whether sorted data should be returned in ascendi
 
 **note:** When `VictoryVoronoi` is nested within a component like `VictoryChart`, this prop will be set to `false`
 
-*default:* `standalone={true}`
+_default:_ `standalone={true}`
 
 ```playground
 <svg width={300} height={300}>
@@ -377,14 +376,13 @@ The `sortOrder` prop specifies whether sorted data should be returned in ascendi
 </svg>
 ```
 
-
 ### style
 
 `type: { parent: object, data: object, labels: object }`
 
 `VictoryVoronoi` uses the standard `style` prop. [Read about it in detail here](https://formidable.com/open-source/victory/docs/common-props#style)
 
-*default (provided by default theme):* See [grayscale theme][] for more detail
+_default (provided by default theme):_ See [grayscale theme][] for more detail
 
 ```playground
 <VictoryVoronoi
@@ -410,7 +408,7 @@ The `sortOrder` prop specifies whether sorted data should be returned in ascendi
 
 See the [Themes Guide][] for information about creating custom themes.
 
-*default:* `theme={VictoryTheme.grayscale}`
+_default:_ `theme={VictoryTheme.grayscale}`
 
 ```jsx
 theme={VictoryTheme.material}
@@ -422,7 +420,7 @@ theme={VictoryTheme.material}
 
 `VictoryVoronoi` uses the standard `width` prop. [Read about it in detail here](https://formidable.com/open-source/victory/docs/common-props#width)
 
-*default (provided by default theme):* `width={450}`
+_default (provided by default theme):_ `width={450}`
 
 ```jsx
 width={400}
@@ -437,7 +435,7 @@ width={400}
 See the [Data Accessors Guide][] for more detail on formatting and processing data.
 
 ```jsx
-x="employee.name"
+x = "employee.name";
 ```
 
 ### y
@@ -458,10 +456,10 @@ y={(d) => d.value + d.error}
 
 **It is not common to set a `y0` prop with `VictoryVoronoi`, as baselines for `VictoryVoronoi` are only relevant for stacked charts.** [Read more about the `y0` prop here](https://formidable.com/open-source/victory/docs/common-props#y0)
 
-[Animations Guide]: https://formidable.com/open-source/victory/guides/animations
-[Data Accessors Guide]: https://formidable.com/open-source/victory/guides/data-accessors
-[Custom Components Guide]: https://formidable.com/open-source/victory/guides/custom-components
-[Events Guide]: https://formidable.com/open-source/victory/guides/events
-[Themes Guide]: https://formidable.com/open-source/victory/guides/themes
-[`VictoryChart`]: https://formidable.com/open-source/victory/docs/victory-chart
+[animations guide]: https://formidable.com/open-source/victory/guides/animations
+[data accessors guide]: https://formidable.com/open-source/victory/guides/data-accessors
+[custom components guide]: https://formidable.com/open-source/victory/guides/custom-components
+[events guide]: https://formidable.com/open-source/victory/guides/events
+[themes guide]: https://formidable.com/open-source/victory/guides/themes
+[`victorychart`]: https://formidable.com/open-source/victory/docs/victory-chart
 [grayscale theme]: https://github.com/FormidableLabs/victory-core/blob/master/src/victory-theme/grayscale.js

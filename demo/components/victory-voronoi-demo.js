@@ -17,7 +17,6 @@ const getData = () => {
 };
 
 class App extends React.Component {
-
   constructor(props) {
     super(props);
     this.state = {
@@ -53,19 +52,11 @@ class App extends React.Component {
     return (
       <div className="demo">
         <div style={containerStyle}>
-          <VictoryVoronoi
-            style={{ parent: parentStyle, data: visible }}
-          />
+          <VictoryVoronoi style={{ parent: parentStyle, data: visible }} />
 
           <VictoryVoronoi
             style={{ parent: parentStyle, data: visible }}
-            data={[
-              { x: 1, y: 1 },
-              { x: 2, y: 2 },
-              { x: 3, y: 3 },
-              { x: 4, y: 2 },
-              { x: 5, y: 1 }
-            ]}
+            data={[{ x: 1, y: 1 }, { x: 2, y: 2 }, { x: 3, y: 3 }, { x: 4, y: 2 }, { x: 5, y: 1 }]}
             events={[
               {
                 target: "data",
@@ -87,17 +78,11 @@ class App extends React.Component {
           <VictoryVoronoi
             style={{ parent: parentStyle, data: visible }}
             size={40}
-            data={[
-              { x: 1, y: 1 },
-              { x: 2, y: 2 },
-              { x: 3, y: 3 },
-              { x: 4, y: 2 },
-              { x: 5, y: 1 }
-            ]}
+            data={[{ x: 1, y: 1 }, { x: 2, y: 2 }, { x: 3, y: 3 }, { x: 4, y: 2 }, { x: 5, y: 1 }]}
           />
 
           <VictoryVoronoi
-            labelComponent={<VictoryTooltip/>}
+            labelComponent={<VictoryTooltip />}
             animate={{ duration: 2000 }}
             style={{ parent: parentStyle, data: visible }}
             size={20}
@@ -105,7 +90,7 @@ class App extends React.Component {
           />
 
           <VictoryVoronoi
-            labelComponent={<VictoryTooltip/>}
+            labelComponent={<VictoryTooltip />}
             animate={{ duration: 2000 }}
             style={{ parent: parentStyle, data: visible }}
             data={this.state.data}

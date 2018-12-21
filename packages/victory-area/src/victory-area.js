@@ -3,8 +3,17 @@ import React from "react";
 import { getBaseProps } from "./helper-methods";
 import Area from "./area";
 import {
-  PropTypes as CustomPropTypes, Helpers, VictoryLabel, VictoryContainer, CommonProps,
-  DefaultTransitions, VictoryClipContainer, addEvents, VictoryTheme, Data, Domain
+  PropTypes as CustomPropTypes,
+  Helpers,
+  VictoryLabel,
+  VictoryContainer,
+  CommonProps,
+  DefaultTransitions,
+  VictoryClipContainer,
+  addEvents,
+  VictoryTheme,
+  Data,
+  Domain
 } from "victory-core";
 
 const fallbackProps = {
@@ -16,26 +25,29 @@ const fallbackProps = {
 
 const options = {
   components: [
-    { name: "parent", index: "parent" }, { name: "data", index: "all" }, { name: "labels" }
+    { name: "parent", index: "parent" },
+    { name: "data", index: "all" },
+    { name: "labels" }
   ]
 };
 
 class VictoryArea extends React.Component {
-  static animationWhitelist = [
-    "data",
-    "domain",
-    "height",
-    "padding",
-    "style",
-    "width"
-  ];
+  static animationWhitelist = ["data", "domain", "height", "padding", "style", "width"];
 
   static propTypes = {
     ...CommonProps.baseProps,
     ...CommonProps.dataProps,
     interpolation: PropTypes.oneOf([
-      "basis", "cardinal", "catmullRom", "linear", "monotoneX",
-      "monotoneY", "natural", "step", "stepAfter", "stepBefore"
+      "basis",
+      "cardinal",
+      "catmullRom",
+      "linear",
+      "monotoneX",
+      "monotoneY",
+      "natural",
+      "step",
+      "stepAfter",
+      "stepBefore"
     ]),
     label: CustomPropTypes.deprecated(
       PropTypes.string,
@@ -45,9 +57,9 @@ class VictoryArea extends React.Component {
 
   static defaultProps = {
     containerComponent: <VictoryContainer />,
-    dataComponent: <Area/>,
-    groupComponent: <VictoryClipContainer/>,
-    labelComponent: <VictoryLabel renderInPortal/>,
+    dataComponent: <Area />,
+    groupComponent: <VictoryClipContainer />,
+    labelComponent: <VictoryLabel renderInPortal />,
     samples: 50,
     scale: "linear",
     sortKey: "x",
@@ -65,7 +77,10 @@ class VictoryArea extends React.Component {
   static getData = Data.getData;
   static getBaseProps = (props) => getBaseProps(props, fallbackProps);
   static expectedComponents = [
-    "dataComponent", "labelComponent", "groupComponent", "containerComponent"
+    "dataComponent",
+    "labelComponent",
+    "groupComponent",
+    "containerComponent"
   ];
 
   // Overridden in native versions

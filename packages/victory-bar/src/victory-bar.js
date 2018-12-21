@@ -3,7 +3,14 @@ import React from "react";
 import { getBaseProps } from "./helper-methods";
 import Bar from "./bar";
 import {
-  Helpers, VictoryLabel, VictoryContainer, VictoryTheme, CommonProps, addEvents, Data, Domain
+  Helpers,
+  VictoryLabel,
+  VictoryContainer,
+  VictoryTheme,
+  CommonProps,
+  addEvents,
+  Data,
+  Domain
 } from "victory-core";
 
 const fallbackProps = {
@@ -12,22 +19,10 @@ const fallbackProps = {
   padding: 50
 };
 
-const defaultData = [
-  { x: 1, y: 1 },
-  { x: 2, y: 2 },
-  { x: 3, y: 3 },
-  { x: 4, y: 4 }
-];
+const defaultData = [{ x: 1, y: 1 }, { x: 2, y: 2 }, { x: 3, y: 3 }, { x: 4, y: 4 }];
 
 class VictoryBar extends React.Component {
-  static animationWhitelist = [
-    "data",
-    "domain",
-    "height",
-    "padding",
-    "style",
-    "width"
-  ];
+  static animationWhitelist = ["data", "domain", "height", "padding", "style", "width"];
 
   static displayName = "VictoryBar";
 
@@ -55,10 +50,7 @@ class VictoryBar extends React.Component {
     ...CommonProps.dataProps,
     alignment: PropTypes.oneOf(["start", "middle", "end"]),
     barRatio: PropTypes.number,
-    barWidth: PropTypes.oneOfType([
-      PropTypes.number,
-      PropTypes.func
-    ]),
+    barWidth: PropTypes.oneOfType([PropTypes.number, PropTypes.func]),
     cornerRadius: PropTypes.oneOfType([
       PropTypes.number,
       PropTypes.func,
@@ -76,11 +68,11 @@ class VictoryBar extends React.Component {
   };
 
   static defaultProps = {
-    containerComponent: <VictoryContainer/>,
+    containerComponent: <VictoryContainer />,
     data: defaultData,
-    dataComponent: <Bar/>,
-    groupComponent: <g role="presentation"/>,
-    labelComponent: <VictoryLabel/>,
+    dataComponent: <Bar />,
+    groupComponent: <g role="presentation" />,
+    labelComponent: <VictoryLabel />,
     samples: 50,
     scale: "linear",
     sortOrder: "ascending",
@@ -92,7 +84,10 @@ class VictoryBar extends React.Component {
   static getData = Data.getData;
   static getBaseProps = (props) => getBaseProps(props, fallbackProps);
   static expectedComponents = [
-    "dataComponent", "labelComponent", "groupComponent", "containerComponent"
+    "dataComponent",
+    "labelComponent",
+    "groupComponent",
+    "containerComponent"
   ];
 
   // Overridden in native versions
@@ -102,7 +97,7 @@ class VictoryBar extends React.Component {
 
   render() {
     const { animationWhitelist, role } = VictoryBar;
-    const props = Helpers.modifyProps((this.props), fallbackProps, role);
+    const props = Helpers.modifyProps(this.props, fallbackProps, role);
 
     if (this.shouldAnimate()) {
       return this.animateComponent(props, animationWhitelist);

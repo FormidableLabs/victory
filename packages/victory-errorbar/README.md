@@ -1,4 +1,3 @@
-
 # VictoryErrorBar
 
 `victory-errorbar@^30.0.0` exports `VictoryErrorBar` and `ErrorBar` components
@@ -101,7 +100,7 @@ Specify data via the `data` prop. By default, `VictoryErrorBar` expects data as 
 
 See the [Custom Components Guide][] for more detail on creating your own `dataComponents`
 
-*default:* `<ErrorBar/>`
+_default:_ `<ErrorBar/>`
 
 ```jsx
 dataComponent={<ErrorBar events={{ onClick: handleClick }}/>}
@@ -126,6 +125,7 @@ domain={{x: [0, 100], y: [0, 1]}}
 ```jsx
 domainPadding={{x: [10, -10], y: 5}}
 ```
+
 ### errorX
 
 `type: string || integer || array[string] || function`
@@ -134,20 +134,19 @@ Use `errorX` data accessor prop to define the x error bar.
 
 **string:** specify which property in an array of data objects should be used as the errorX value
 
-*examples:* `errorX="uncertainty"`
+_examples:_ `errorX="uncertainty"`
 
 **function:** use a function to translate each element in a data array into a errorX value
 
-*examples:* `errorX={() => 10}`
+_examples:_ `errorX={() => 10}`
 
 **array index:** specify which index of an array should be used as a errorX value when data is given as an array of arrays
 
-*examples:* `errorX={1}`
+_examples:_ `errorX={1}`
 
 **path string or path array:** specify which property in an array of nested data objects should be used as a errorX value
 
-*examples:* `errorX="measurement.uncertainty"`, `errorX={["measurement", "uncertainty"]}`
-
+_examples:_ `errorX="measurement.uncertainty"`, `errorX={["measurement", "uncertainty"]}`
 
 ### errorY
 
@@ -157,19 +156,19 @@ Use `errorY` data accessor prop to define the y error bar.
 
 **string:** specify which property in an array of data objects should be used as the errorY value
 
-*examples:* `errorY="uncertainty"`
+_examples:_ `errorY="uncertainty"`
 
 **function:** use a function to translate each element in a data array into a errorY value
 
-*examples:* `errorY={() => 10}`
+_examples:_ `errorY={() => 10}`
 
 **array index:** specify which index of an array should be used as a errorY value when data is given as an array of arrays
 
-*examples:* `errorY={1}`
+_examples:_ `errorY={1}`
 
 **path string or path array:** specify which property in an array of nested data objects should be used as a errorY value
 
-*examples:* `errorY="measurement.uncertainty"`, `errorY={["measurement", "uncertainty"]}`
+_examples:_ `errorY="measurement.uncertainty"`, `errorY={["measurement", "uncertainty"]}`
 
 ### eventKey
 
@@ -178,7 +177,7 @@ Use `errorY` data accessor prop to define the y error bar.
 `VictoryErrorBar` uses the standard `eventKey` prop to specify how event targets are addressed. **This prop is not commonly used.** [Read about the `eventKey` prop in more detail here](https://formidable.com/open-source/victory/docs/common-props#eventkey)
 
 ```jsx
-eventKey="x"
+eventKey = "x";
 ```
 
 ### events
@@ -229,7 +228,7 @@ See the [Events Guide][] for more information on defining events.
 
 `VictoryErrorBar` uses the standard `groupComponent` prop. [Read about it here](https://formidable.com/open-source/victory/docs/common-props#groupcomponent)
 
-*default:* `<g/>`
+_default:_ `<g/>`
 
 ```jsx
 groupComponent={<g transform="translate(10, 10)" />}
@@ -241,7 +240,7 @@ groupComponent={<g transform="translate(10, 10)" />}
 
 `VictoryErrorBar` uses the standard `height` prop. [Read about it here](https://formidable.com/open-source/victory/docs/common-props#height)
 
-*default (provided by default theme):* `height={300}`
+_default (provided by default theme):_ `height={300}`
 
 ```jsx
 height={400}
@@ -253,7 +252,7 @@ height={400}
 
 `VictoryErrorBar` uses the standard `labelComponent` prop. [Read about it here](https://formidable.com/open-source/victory/docs/common-props#labelcomponent)
 
-*default:* `<VictoryLabel/>`
+_default:_ `<VictoryLabel/>`
 
 ```playground
 <VictoryErrorBar
@@ -282,7 +281,6 @@ height={400}
 
 `VictoryErrorBar` uses the standard `maxDomain` prop. [Read about it in detail](https://formidable.com/open-source/victory/docs/common-props#maxDomain)
 
-
 ```playground
 <VictoryChart maxDomain={8}>
   <VictoryErrorBar data={sampleErrorData}/>
@@ -294,7 +292,6 @@ height={400}
 `type: number || { x: number, y: number }`
 
 `VictoryErrorBar` uses the standard `minDomain` prop. [Read about it in detail](https://formidable.com/open-source/victory/docs/common-props#minDomain)
-
 
 ```playground
 <VictoryChart minDomain={0}>
@@ -309,7 +306,7 @@ height={400}
 The `name` prop is used to reference a component instance when defining shared events.
 
 ```jsx
-name="series-1"
+name = "series-1";
 ```
 
 ### origin
@@ -320,14 +317,13 @@ name="series-1"
 
 [Read about the `origin` prop in detailhttps://formidable.com/open-source/victory](/docs/common-props#origin)
 
-
 ### padding
 
 `type: number || { top: number, bottom: number, left: number, right: number }`
 
 `VictoryErrorBar` uses the standard `padding` prop. [Read about it here](https://formidable.com/open-source/victory/docs/common-props#padding)
 
-*default (provided by default theme):* `padding={50}`
+_default (provided by default theme):_ `padding={50}`
 
 ```jsx
 padding={{ top: 20, bottom: 60 }}
@@ -355,7 +351,7 @@ padding={{ top: 20, bottom: 60 }}
 
 `VictoryErrorBar` uses the standard `samples` prop. [Read about it here](https://formidable.com/open-source/victory/docs/common-props#samples)
 
-*default:* `samples={50}`
+_default:_ `samples={50}`
 
 ```jsx
 samples={100}
@@ -368,7 +364,7 @@ samples={100}
 `VictoryErrorBar` uses the standard `scale` prop. [Read about it here](https://formidable.com/open-source/victory/docs/common-props#scale)
 Options for scale include "linear", "time", "log", "sqrt" and the `d3-scale` functions that correspond to these options.
 
-*default:* `scale="linear"`
+_default:_ `scale="linear"`
 
 ```jsx
 scale={{x: "linear", y: "log"}}
@@ -393,7 +389,7 @@ scale={{x: "linear", y: "log"}}
 See the [Data Accessors Guide][] for more detail on formatting and processing data.
 
 ```jsx
-sortKey="x"
+sortKey = "x";
 ```
 
 ### sortOrder
@@ -402,7 +398,7 @@ sortKey="x"
 
 The `sortOrder` prop specifies whether sorted data should be returned in ascending or descending order.
 
-*default:* `sortOrder="ascending"`
+_default:_ `sortOrder="ascending"`
 
 ### standalone
 
@@ -412,7 +408,7 @@ The `sortOrder` prop specifies whether sorted data should be returned in ascendi
 
 **note:** When `VictoryErrorBar` is nested within a component like `VictoryChart`, this prop will be set to `false`
 
-*default:* `standalone={true}`
+_default:_ `standalone={true}`
 
 ```playground
 <svg width={300} height={300}>
@@ -431,7 +427,7 @@ The `sortOrder` prop specifies whether sorted data should be returned in ascendi
 
 `VictoryErrorBar` uses the standard `style` prop. [Read about it here](https://formidable.com/open-source/victory/docs/common-props#style)
 
-*default (provided by default theme):* See [grayscale theme][] for more detail
+_default (provided by default theme):_ See [grayscale theme][] for more detail
 
 ```playground
   <VictoryErrorBar
@@ -456,7 +452,7 @@ The `sortOrder` prop specifies whether sorted data should be returned in ascendi
 
 See the [Themes Guide][] for information about creating custom themes.
 
-*default:* `theme={VictoryTheme.grayscale}`
+_default:_ `theme={VictoryTheme.grayscale}`
 
 ```jsx
 theme={VictoryTheme.material}
@@ -468,7 +464,7 @@ theme={VictoryTheme.material}
 
 `VictoryErrorBar` uses the standard `width` prop. [Read about it here](https://formidable.com/open-source/victory/docs/common-props#width)
 
-*default (provided by default theme):* `width={450}`
+_default (provided by default theme):_ `width={450}`
 
 ```jsx
 width={400}
@@ -498,13 +494,13 @@ See the [Data Accessors Guide][] for more detail on formatting and processing da
 y={(d) => d.value + d.error}
 ```
 
-[Animations Guide]: https://formidable.com/open-source/victory/guides/animations
-[Data Accessors Guide]: https://formidable.com/open-source/victory/guides/data-accessors
-[Custom Components Guide]: https://formidable.com/open-source/victory/guides/custom-components
-[Events Guide]: https://formidable.com/open-source/victory/guides/events
-[Themes Guide]: https://formidable.com/open-source/victory/guides/themes
+[animations guide]: https://formidable.com/open-source/victory/guides/animations
+[data accessors guide]: https://formidable.com/open-source/victory/guides/data-accessors
+[custom components guide]: https://formidable.com/open-source/victory/guides/custom-components
+[events guide]: https://formidable.com/open-source/victory/guides/events
+[themes guide]: https://formidable.com/open-source/victory/guides/themes
 [`x`]: https://formidable.com/open-source/victory/docs/victory-candlestick#x
 [`y`]: https://formidable.com/open-source/victory/docs/victory-candlestick#y
-[`errorX`]: https://formidable.com/open-source/victory/docs/victory-candlestick#errorX
-[`errorY`]: https://formidable.com/open-source/victory/docs/victory-candlestick#errorY
+[`errorx`]: https://formidable.com/open-source/victory/docs/victory-candlestick#errorX
+[`errory`]: https://formidable.com/open-source/victory/docs/victory-candlestick#errorY
 [grayscale theme]: https://github.com/FormidableLabs/victory-core/blob/master/src/victory-theme/grayscale.js

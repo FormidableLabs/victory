@@ -2,8 +2,16 @@ import React from "react";
 import PropTypes from "prop-types";
 import { assign } from "lodash";
 import {
-  PropTypes as CustomPropTypes, Helpers, VictoryLabel, CommonProps,
-  VictoryContainer, VictoryTheme, LineSegment, addEvents, Arc, Axis
+  PropTypes as CustomPropTypes,
+  Helpers,
+  VictoryLabel,
+  CommonProps,
+  VictoryContainer,
+  VictoryTheme,
+  LineSegment,
+  addEvents,
+  Arc,
+  Axis
 } from "victory-core";
 import { getScale, getStyles, getBaseProps } from "./helper-methods";
 
@@ -58,7 +66,8 @@ class VictoryPolarAxis extends React.Component {
     categories: PropTypes.oneOfType([
       PropTypes.arrayOf(PropTypes.string),
       PropTypes.shape({
-        x: PropTypes.arrayOf(PropTypes.string), y: PropTypes.arrayOf(PropTypes.string)
+        x: PropTypes.arrayOf(PropTypes.string),
+        y: PropTypes.arrayOf(PropTypes.string)
       })
     ]),
     circularAxisComponent: PropTypes.element,
@@ -66,49 +75,56 @@ class VictoryPolarAxis extends React.Component {
     containerComponent: PropTypes.element,
     dependentAxis: PropTypes.bool,
     endAngle: PropTypes.number,
-    events: PropTypes.arrayOf(PropTypes.shape({
-      target: PropTypes.oneOf(["axis", "axisLabel", "grid", "ticks", "tickLabels"]),
-      eventKey: PropTypes.oneOfType([
-        PropTypes.array,
-        CustomPropTypes.allOfType([CustomPropTypes.integer, CustomPropTypes.nonNegative]),
-        PropTypes.string
-      ]),
-      eventHandlers: PropTypes.object
-    })),
+    events: PropTypes.arrayOf(
+      PropTypes.shape({
+        target: PropTypes.oneOf(["axis", "axisLabel", "grid", "ticks", "tickLabels"]),
+        eventKey: PropTypes.oneOfType([
+          PropTypes.array,
+          CustomPropTypes.allOfType([CustomPropTypes.integer, CustomPropTypes.nonNegative]),
+          PropTypes.string
+        ]),
+        eventHandlers: PropTypes.object
+      })
+    ),
     gridComponent: PropTypes.element,
     innerRadius: CustomPropTypes.nonNegative,
     labelPlacement: PropTypes.oneOf(["parallel", "perpendicular", "vertical"]),
     startAngle: PropTypes.number,
     stringMap: PropTypes.object,
     style: PropTypes.shape({
-      parent: PropTypes.object, axis: PropTypes.object, axisLabel: PropTypes.object,
-      grid: PropTypes.object, ticks: PropTypes.object, tickLabels: PropTypes.object
+      parent: PropTypes.object,
+      axis: PropTypes.object,
+      axisLabel: PropTypes.object,
+      grid: PropTypes.object,
+      ticks: PropTypes.object,
+      tickLabels: PropTypes.object
     }),
     tickComponent: PropTypes.element,
     tickCount: CustomPropTypes.allOfType([
-      CustomPropTypes.integer, CustomPropTypes.greaterThanZero
+      CustomPropTypes.integer,
+      CustomPropTypes.greaterThanZero
     ]),
-    tickFormat: PropTypes.oneOfType([ PropTypes.func, CustomPropTypes.homogeneousArray ]),
+    tickFormat: PropTypes.oneOfType([PropTypes.func, CustomPropTypes.homogeneousArray]),
     tickLabelComponent: PropTypes.element,
     tickValues: CustomPropTypes.homogeneousArray
   };
 
   static defaultProps = {
-    axisComponent: <LineSegment type={"axis"}/>,
-    axisLabelComponent: <VictoryLabel/>,
-    circularAxisComponent: <Arc type={"axis"}/>,
-    circularGridComponent: <Arc type={"grid"}/>,
+    axisComponent: <LineSegment type={"axis"} />,
+    axisLabelComponent: <VictoryLabel />,
+    circularAxisComponent: <Arc type={"axis"} />,
+    circularGridComponent: <Arc type={"grid"} />,
     containerComponent: <VictoryContainer />,
     endAngle: 360,
-    gridComponent: <LineSegment type={"grid"}/>,
-    groupComponent: <g role="presentation"/>,
+    gridComponent: <LineSegment type={"grid"} />,
+    groupComponent: <g role="presentation" />,
     labelPlacement: "parallel",
     scale: "linear",
     startAngle: 0,
     standalone: true,
     theme: VictoryTheme.grayscale,
-    tickComponent: <LineSegment type={"tick"}/>,
-    tickLabelComponent: <VictoryLabel/>
+    tickComponent: <LineSegment type={"tick"} />,
+    tickLabelComponent: <VictoryLabel />
   };
 
   static getDomain = Axis.getDomain;
@@ -117,8 +133,14 @@ class VictoryPolarAxis extends React.Component {
   static getStyles = (props) => getStyles(props, fallbackProps.style);
   static getBaseProps = (props) => getBaseProps(props, fallbackProps);
   static expectedComponents = [
-    "axisComponent", "circularAxisComponent", "groupComponent", "containerComponent",
-    "tickComponent", "tickLabelComponent", "gridComponent", "circularGridComponent"
+    "axisComponent",
+    "circularAxisComponent",
+    "groupComponent",
+    "containerComponent",
+    "tickComponent",
+    "tickLabelComponent",
+    "gridComponent",
+    "circularGridComponent"
   ];
 
   renderAxisLine(props) {
@@ -143,14 +165,16 @@ class VictoryPolarAxis extends React.Component {
     const gridComponent = axisType === "radial" ? props.circularGridComponent : props.gridComponent;
     const tickComponents = this.dataKeys.map((key, index) => {
       const tickProps = assign(
-        { key: `${name}-tick-${key}` }, this.getComponentProps(tickComponent, "ticks", index)
+        { key: `${name}-tick-${key}` },
+        this.getComponentProps(tickComponent, "ticks", index)
       );
       return React.cloneElement(tickComponent, tickProps);
     });
 
     const gridComponents = this.dataKeys.map((key, index) => {
       const gridProps = assign(
-        { key: `${name}-grid-${key}` }, this.getComponentProps(gridComponent, "grid", index)
+        { key: `${name}-grid-${key}` },
+        this.getComponentProps(gridComponent, "grid", index)
       );
       return React.cloneElement(gridComponent, gridProps);
     });
@@ -165,7 +189,11 @@ class VictoryPolarAxis extends React.Component {
     const axis = this.renderAxisLine(props);
     const axisLabel = this.renderLabel(props);
     const children = [
-      axis, axisLabel, ...tickComponents, ...gridComponents, ...tickLabelComponents
+      axis,
+      axisLabel,
+      ...tickComponents,
+      ...gridComponents,
+      ...tickLabelComponents
     ];
     return this.renderGroup(props, children);
   }

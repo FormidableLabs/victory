@@ -60,7 +60,7 @@ describe("victory-util/helpers", () => {
   describe("evaluateProp", () => {
     const data = { x: 3, y: 2 };
     it("evaluates functional props", () => {
-      const testProp = (datum) => datum.y > 0 ? "red" : "blue";
+      const testProp = (datum) => (datum.y > 0 ? "red" : "blue");
       expect(Helpers.evaluateProp(testProp, data)).to.equal("red");
     });
     it("doesn't alter non-functional props", () => {
@@ -73,7 +73,7 @@ describe("victory-util/helpers", () => {
     const data = { x: 3, y: 2 };
     it("evaluates functional styles, without altering others", () => {
       const style = {
-        color: (datum) => datum.y > 0 ? "red" : "blue",
+        color: (datum) => (datum.y > 0 ? "red" : "blue"),
         size: 5
       };
       expect(Helpers.evaluateStyle(style, data)).to.deep.equal({ color: "red", size: 5 });
@@ -87,10 +87,12 @@ describe("victory-util/helpers", () => {
       padding: 0
     };
     it("returns a range based on props and axis", () => {
-      expect(Helpers.getRange(props, "x")).to.be.an("array")
+      expect(Helpers.getRange(props, "x"))
+        .to.be.an("array")
         .and.to.have.length(2)
         .and.to.include.members([0, 100]);
-      expect(Helpers.getRange(props, "y")).to.be.an("array")
+      expect(Helpers.getRange(props, "y"))
+        .to.be.an("array")
         .and.to.have.length(2)
         .and.to.include.members([0, 200]);
     });

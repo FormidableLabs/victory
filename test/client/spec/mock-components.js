@@ -15,7 +15,11 @@ class MockDataComponent extends React.Component {
   };
 
   render() {
-    const { datum: { x, y }, events, style } = this.props;
+    const {
+      datum: { x, y },
+      events,
+      style
+    } = this.props;
     return (
       <p style={style} {...events}>
         `${x}: ${y}`
@@ -35,38 +39,39 @@ class MockLabel extends React.Component {
   render() {
     const { text } = this.props;
 
-    return (
-      <p>`${text}`</p>
-    );
+    return <p>`${text}`</p>;
   }
 }
 
 class MockVictoryComponent extends React.Component {
-  static animationWhitelist = ["data", "style"]
+  static animationWhitelist = ["data", "style"];
   static displayName = "MockVictoryComponent";
   static role = "chart";
 
   static defaultProps = {
-    dataComponent: <MockDataComponent/>,
-    labelComponent: <MockLabel/>,
-    groupComponent: <div/>
+    dataComponent: <MockDataComponent />,
+    labelComponent: <MockLabel />,
+    groupComponent: <div />
   };
 
   static getBaseProps = (props) => {
     const data = Data.getData(props);
-    const childProps = reduce(data, (accum, datum, index) => {
-      return defaults({}, accum, {
-        [index]: {
-          data: {
-            index,
-            datum,
-            data,
-            eventKey: index,
-            style: {}
+    const childProps = reduce(
+      data,
+      (accum, datum, index) => {
+        return defaults({}, accum, {
+          [index]: {
+            data: {
+              index,
+              datum,
+              data,
+              style: {}
+            }
           }
-        }
-      });
-    }, {});
+        });
+      },
+      {}
+    );
 
     return {
       parent: {

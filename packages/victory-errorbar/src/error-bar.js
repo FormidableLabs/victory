@@ -9,16 +9,8 @@ export default class ErrorBar extends React.Component {
     ...CommonProps.primitiveProps,
     borderWidth: PropTypes.number,
     datum: PropTypes.object,
-    errorX: PropTypes.oneOfType([
-      PropTypes.number,
-      PropTypes.array,
-      PropTypes.bool
-    ]),
-    errorY: PropTypes.oneOfType([
-      PropTypes.number,
-      PropTypes.array,
-      PropTypes.bool
-    ]),
+    errorX: PropTypes.oneOfType([PropTypes.number, PropTypes.array, PropTypes.bool]),
+    errorY: PropTypes.oneOfType([PropTypes.number, PropTypes.array, PropTypes.bool]),
     groupComponent: PropTypes.element,
     lineComponent: PropTypes.element,
     x: PropTypes.number,
@@ -26,9 +18,9 @@ export default class ErrorBar extends React.Component {
   };
 
   static defaultProps = {
-    groupComponent: <g/>,
-    lineComponent: <Line/>
-  }
+    groupComponent: <g />,
+    lineComponent: <Line />
+  };
 
   getStyle(props) {
     const { style, datum, active } = props;
@@ -37,12 +29,26 @@ export default class ErrorBar extends React.Component {
 
   renderBorder(props, error, type) {
     const {
-      x, y, borderWidth, events, style, role, shapeRendering,
-      className, lineComponent, transform, id
+      x,
+      y,
+      borderWidth,
+      events,
+      style,
+      role,
+      shapeRendering,
+      className,
+      lineComponent,
+      transform,
+      id
     } = props;
     const vertical = type === "right" || type === "left";
     const borderProps = {
-      role, shapeRendering, className, events, style, transform,
+      role,
+      shapeRendering,
+      className,
+      events,
+      style,
+      transform,
       key: `${id}-border-${type}`,
       x1: vertical ? error[type] : x - borderWidth,
       x2: vertical ? error[type] : x + borderWidth,
@@ -54,11 +60,25 @@ export default class ErrorBar extends React.Component {
 
   renderCross(props, error, type) {
     const {
-      x, y, events, style, role, shapeRendering, className, lineComponent, transform, id
+      x,
+      y,
+      events,
+      style,
+      role,
+      shapeRendering,
+      className,
+      lineComponent,
+      transform,
+      id
     } = props;
     const vertical = type === "top" || type === "bottom";
     const borderProps = {
-      role, shapeRendering, className, events, style, transform,
+      role,
+      shapeRendering,
+      className,
+      events,
+      style,
+      transform,
       key: `${id}-cross-${type}`,
       x1: x,
       x2: vertical ? x : error[type],

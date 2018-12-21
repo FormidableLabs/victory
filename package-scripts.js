@@ -4,20 +4,23 @@ var path = require("path");
 module.exports = {
   scripts: {
     server: {
-      dev: "webpack-dev-server --config ./config/webpack/demo/webpack.config.dev.js --colors --content-base demo",
-      hot: "webpack-dev-server --config ./config/webpack/demo/webpack.config.hot.js --colors --inline --hot --content-base demo",
-      test: "webpack-dev-server --config ./config/webpack/webpack.config.test.js --colors",
+      dev:
+        "webpack-dev-server --config ./config/webpack/demo/webpack.config.dev.js --colors --content-base demo",
+      hot:
+        "webpack-dev-server --config ./config/webpack/demo/webpack.config.hot.js --colors --inline --hot --content-base demo",
+      test: "webpack-dev-server --config ./config/webpack/webpack.config.test.js --colors"
     },
     karma: {
-      ci: "karma start --browsers ChromeHeadlessCustom,Firefox ./config/karma/karma.conf.coverage.js",
+      ci:
+        "karma start --browsers ChromeHeadlessCustom,Firefox ./config/karma/karma.conf.coverage.js",
       cov: "karma start ./config/karma/karma.conf.coverage.js",
-      default: "karma start ./config/karma/karma.conf.js",
+      default: "karma start ./config/karma/karma.conf.js"
     },
     test: {
       ci: npsUtils.series.nps("build-package-libs", "karma.ci"),
       cov: npsUtils.series.nps("build-package-libs", "karma.cov"),
       dev: "karma start ./config/karma/karma.conf.dev.js",
-      default: npsUtils.series.nps("build-package-libs", "karma"),
+      default: npsUtils.series.nps("build-package-libs", "karma")
     },
     storybook: {
       server: "start-storybook -p 6006",
@@ -27,23 +30,33 @@ module.exports = {
     lint: {
       src: "lerna exec --parallel -- eslint --color src",
       demo: "eslint --color demo",
-      stories:  "eslint --color stories",
+      stories: "eslint --color stories",
       storybook: "eslint --color --no-ignore .storybook/config.js",
-      test:  "eslint --color test",
+      test: "eslint --color test",
       default: npsUtils.series.nps(
-        "lint.test", "lint.stories", "lint.storybook", "lint.demo", "lint.src"
+        "lint.test",
+        "lint.stories",
+        "lint.storybook",
+        "lint.demo",
+        "lint.src"
       )
     },
+    format: {
+      default: 'prettier --write "./**/*.{js,jsx,ts,tsx,json,md}"',
+      ci: 'prettier --list-different "./**/*.{js,jsx,ts,tsx,json,md}"'
+    },
     check: {
-      ci: npsUtils.series.nps("lint", "test.ci"),
+      ci: npsUtils.series.nps("format.ci", "lint", "test.ci"),
       cov: npsUtils.series.nps("lint", "test.cov"),
       dev: npsUtils.series.nps("lint", "test.dev"),
       default: npsUtils.series.nps("lint", "test")
     },
     watch: {
-      es: "lerna exec --parallel -- cross-env BABEL_ENV=es babel src --out-dir es --copy-files --watch",
-      lib: "lerna exec --parallel -- cross-env BABEL_ENV=lib babel src --out-dir lib --copy-files --watch",
-      default: npsUtils.concurrent.nps("watch.es", "watch.lib"),
+      es:
+        "lerna exec --parallel -- cross-env BABEL_ENV=es babel src --out-dir es --copy-files --watch",
+      lib:
+        "lerna exec --parallel -- cross-env BABEL_ENV=lib babel src --out-dir lib --copy-files --watch",
+      default: npsUtils.concurrent.nps("watch.es", "watch.lib")
     },
     clean: {
       lib: "rimraf lib",

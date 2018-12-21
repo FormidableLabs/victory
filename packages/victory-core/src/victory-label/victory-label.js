@@ -23,30 +23,15 @@ export default class VictoryLabel extends React.Component {
   static defaultStyles = defaultStyles;
   static propTypes = {
     active: PropTypes.bool,
-    angle: PropTypes.oneOfType([
-      PropTypes.string,
-      PropTypes.number
-    ]),
-    capHeight: PropTypes.oneOfType([
-      PropTypes.string,
-      CustomPropTypes.nonNegative,
-      PropTypes.func
-    ]),
+    angle: PropTypes.oneOfType([PropTypes.string, PropTypes.number]),
+    capHeight: PropTypes.oneOfType([PropTypes.string, CustomPropTypes.nonNegative, PropTypes.func]),
     className: PropTypes.string,
     data: PropTypes.array,
     datum: PropTypes.any,
     desc: PropTypes.string,
     direction: PropTypes.oneOf(["rtl", "ltr", "inherit"]),
-    dx: PropTypes.oneOfType([
-      PropTypes.number,
-      PropTypes.string,
-      PropTypes.func
-    ]),
-    dy: PropTypes.oneOfType([
-      PropTypes.number,
-      PropTypes.string,
-      PropTypes.func
-    ]),
+    dx: PropTypes.oneOfType([PropTypes.number, PropTypes.string, PropTypes.func]),
+    dy: PropTypes.oneOfType([PropTypes.number, PropTypes.string, PropTypes.func]),
     events: PropTypes.object,
     id: PropTypes.oneOfType([PropTypes.number, PropTypes.string]),
     index: PropTypes.oneOfType([PropTypes.number, PropTypes.string]),
@@ -58,14 +43,17 @@ export default class VictoryLabel extends React.Component {
       PropTypes.func,
       PropTypes.array
     ]),
-    origin: PropTypes.shape({ x: CustomPropTypes.nonNegative, y: CustomPropTypes.nonNegative }),
+    origin: PropTypes.shape({
+      x: CustomPropTypes.nonNegative,
+      y: CustomPropTypes.nonNegative
+    }),
     polar: PropTypes.bool,
     renderInPortal: PropTypes.bool,
-    scale: PropTypes.shape({ x: CustomPropTypes.scale, y: CustomPropTypes.scale }),
-    style: PropTypes.oneOfType([
-      PropTypes.object,
-      PropTypes.array
-    ]),
+    scale: PropTypes.shape({
+      x: CustomPropTypes.scale,
+      y: CustomPropTypes.scale
+    }),
+    style: PropTypes.oneOfType([PropTypes.object, PropTypes.array]),
     text: PropTypes.oneOfType([
       PropTypes.string,
       PropTypes.number,
@@ -73,52 +61,32 @@ export default class VictoryLabel extends React.Component {
       PropTypes.array
     ]),
     textAnchor: PropTypes.oneOfType([
-      PropTypes.oneOf([
-        "start",
-        "middle",
-        "end",
-        "inherit"
-      ]),
+      PropTypes.oneOf(["start", "middle", "end", "inherit"]),
       PropTypes.func
     ]),
     textComponent: PropTypes.element,
     title: PropTypes.string,
-    transform: PropTypes.oneOfType([
-      PropTypes.string,
-      PropTypes.object,
-      PropTypes.func
-    ]),
+    transform: PropTypes.oneOfType([PropTypes.string, PropTypes.object, PropTypes.func]),
     tspanComponent: PropTypes.element,
     verticalAnchor: PropTypes.oneOfType([
-      PropTypes.oneOf([
-        "start",
-        "middle",
-        "end"
-      ]),
+      PropTypes.oneOf(["start", "middle", "end"]),
       PropTypes.func
     ]),
-    x: PropTypes.oneOfType([
-      PropTypes.number,
-      PropTypes.string
-    ]),
-    y: PropTypes.oneOfType([
-      PropTypes.number,
-      PropTypes.string
-    ])
+    x: PropTypes.oneOfType([PropTypes.number, PropTypes.string]),
+    y: PropTypes.oneOfType([PropTypes.number, PropTypes.string])
   };
 
   static defaultProps = {
     direction: "inherit",
-    textComponent: <Text/>,
-    tspanComponent: <TSpan/>,
+    textComponent: <Text />,
+    tspanComponent: <TSpan />,
     capHeight: 0.71, // Magic number from d3.
     lineHeight: 1
   };
 
   constructor(props) {
     super(props);
-    this.id = props.id === undefined ?
-      uniqueId("label-") : props.id;
+    this.id = props.id === undefined ? uniqueId("label-") : props.id;
   }
 
   getPosition(props, dimension) {
@@ -137,8 +105,9 @@ export default class VictoryLabel extends React.Component {
   }
 
   getStyles(props) {
-    return Array.isArray(props.style) && !isEmpty(props.style) ?
-      props.style.map((style) => this.getStyle(props, style)) : [this.getStyle(props, props.style)];
+    return Array.isArray(props.style) && !isEmpty(props.style)
+      ? props.style.map((style) => this.getStyle(props, style))
+      : [this.getStyle(props, props.style)];
   }
 
   getHeight(props, type) {
@@ -161,7 +130,8 @@ export default class VictoryLabel extends React.Component {
     return `${child}`.split("\n");
   }
 
-  getDy(props, style, content, lineHeight) { //eslint-disable-line max-params
+  //eslint-disable-next-line max-params
+  getDy(props, style, content, lineHeight) {
     style = Array.isArray(style) ? style[0] : style;
     lineHeight = this.checkLineHeight(lineHeight, lineHeight[0], 1);
     const fontSize = style.fontSize;
@@ -170,15 +140,14 @@ export default class VictoryLabel extends React.Component {
     const length = content.length;
     const capHeight = this.getHeight(props, "capHeight");
     const verticalAnchor = style.verticalAnchor || props.verticalAnchor;
-    const anchor = verticalAnchor ?
-      Helpers.evaluateProp(verticalAnchor, datum) : "middle";
+    const anchor = verticalAnchor ? Helpers.evaluateProp(verticalAnchor, datum) : "middle";
     switch (anchor) {
-    case "end":
-      return dy + (capHeight / 2 + (0.5 - length) * lineHeight) * fontSize;
-    case "middle":
-      return dy + (capHeight / 2 + (0.5 - length / 2) * lineHeight) * fontSize;
-    default:
-      return dy + (capHeight / 2 + lineHeight / 2) * fontSize;
+      case "end":
+        return dy + (capHeight / 2 + (0.5 - length) * lineHeight) * fontSize;
+      case "middle":
+        return dy + (capHeight / 2 + (0.5 - length / 2) * lineHeight) * fontSize;
+      default:
+        return dy + (capHeight / 2 + lineHeight / 2) * fontSize;
     }
   }
 
@@ -197,8 +166,7 @@ export default class VictoryLabel extends React.Component {
     const transform = props.transform || style.transform;
     const transformPart = transform && Helpers.evaluateProp(transform, datum, active);
     const rotatePart = angle && { rotate: [angle, x, y] };
-    return transformPart || angle ?
-      Style.toTransformString(transformPart, rotatePart) : undefined;
+    return transformPart || angle ? Style.toTransformString(transformPart, rotatePart) : undefined;
   }
 
   getFontSize(style) {
@@ -223,8 +191,9 @@ export default class VictoryLabel extends React.Component {
     const { datum, active, inline, className, title, desc, events, direction } = props;
     const style = this.getStyles(props);
     const lineHeight = this.getHeight(props, "lineHeight");
-    const textAnchor = props.textAnchor ?
-      Helpers.evaluateProp(props.textAnchor, datum, active) : "start";
+    const textAnchor = props.textAnchor
+      ? Helpers.evaluateProp(props.textAnchor, datum, active)
+      : "start";
     const dx = props.dx ? Helpers.evaluateProp(props.dx, datum, active) : 0;
     const dy = this.getDy(props, style, content, lineHeight);
     const transform = this.getTransform(props, style);
@@ -236,13 +205,15 @@ export default class VictoryLabel extends React.Component {
       const lastStyle = style[i - 1] || style[0];
       const fontSize = (currentStyle.fontSize + lastStyle.fontSize) / 2;
       const currentLineHeight = this.checkLineHeight(
-        lineHeight, ((lineHeight[i] + (lineHeight[i - 1] || lineHeight[0])) / 2), 1
+        lineHeight,
+        (lineHeight[i] + (lineHeight[i - 1] || lineHeight[0])) / 2,
+        1
       );
       const tspanProps = {
         key: `${this.id}-key-${i}`,
         x: !inline ? props.x : undefined,
         dx,
-        dy: i && !inline ? (currentLineHeight * fontSize) : undefined,
+        dy: i && !inline ? currentLineHeight * fontSize : undefined,
         textAnchor: currentStyle.textAnchor || textAnchor,
         style: currentStyle,
         content: line
@@ -251,7 +222,19 @@ export default class VictoryLabel extends React.Component {
     });
     return React.cloneElement(
       props.textComponent,
-      { direction, dx, dy, x, y, events, transform, className, title, desc, id: this.id },
+      {
+        direction,
+        dx,
+        dy,
+        x,
+        y,
+        events,
+        transform,
+        className,
+        title,
+        desc,
+        id: this.id
+      },
       textChildren
     );
   }

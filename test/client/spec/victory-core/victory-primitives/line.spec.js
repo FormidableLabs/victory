@@ -11,7 +11,7 @@ describe("victory-primitives/line", () => {
   };
 
   it("should render a line element with the correct coordinates", () => {
-    const wrapper = shallow(<Line {...baseProps}/>);
+    const wrapper = shallow(<Line {...baseProps} />);
     const line = wrapper.find("line");
 
     ["x1", "y1", "x2", "y2"].forEach((coordinate) => {

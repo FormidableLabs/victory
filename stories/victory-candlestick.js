@@ -18,7 +18,11 @@ const getTimeData = (num, seed) => {
     const close = low + baseSeed.quick() * 5;
     const high = Math.max(open, close) + baseSeed.quick() * 5;
     return {
-      x: new Date((current / (num)) * (v + 1)), high, low, open, close
+      x: new Date((current / num) * (v + 1)),
+      high,
+      low,
+      open,
+      close
     };
   });
 };
@@ -35,15 +39,14 @@ const getData = (num, seed) => {
   });
 };
 
-storiesOf("VictoryCandlestick", module)
-  .add("default rendering", () => <VictoryCandlestick/>);
+storiesOf("VictoryCandlestick", module).add("default rendering", () => <VictoryCandlestick />);
 
 storiesOf("VictoryCandlestick.theme", module)
   .addDecorator(getChartDecorator({ theme: VictoryTheme.material }))
-  .add("material theme", () => <VictoryCandlestick data={getData(8)}/>);
+  .add("material theme", () => <VictoryCandlestick data={getData(8)} />);
 storiesOf("VictoryCandlestick.theme", module)
   .addDecorator(getChartDecorator({ theme: VictoryTheme.grayscale }))
-  .add("grayscale (default) theme", () => <VictoryCandlestick data={getData(8)}/>);
+  .add("grayscale (default) theme", () => <VictoryCandlestick data={getData(8)} />);
 
 storiesOf("VictoryCandlestick.candleColors", module)
   .addDecorator(getChartDecorator({ domainPadding: 25 }))
@@ -65,7 +68,7 @@ storiesOf("VictoryCandlestick.candleColors", module)
 
 storiesOf("VictoryCandlestick.wickStrokeWidth", module)
   .addDecorator(getChartDecorator({ domainPadding: 25 }))
-  .add("wickStrokeWidth", () => <VictoryCandlestick data={getData(7)} wickStrokeWidth={5}/>)
+  .add("wickStrokeWidth", () => <VictoryCandlestick data={getData(7)} wickStrokeWidth={5} />)
   .add("wickStrokeWidth with styles", () => (
     <VictoryCandlestick
       data={getData(7)}
@@ -97,10 +100,10 @@ storiesOf("VictoryCandlestick.data", module)
 storiesOf("VictoryCandlestick.labels", module)
   .addDecorator(getChartDecorator({ domainPadding: 25 }))
   .add("function labels", () => (
-    <VictoryCandlestick data={getData(7)} labels={(d) => `x: ${d.x}`}/>
+    <VictoryCandlestick data={getData(7)} labels={(d) => `x: ${d.x}`} />
   ))
   .add("array labels", () => (
-    <VictoryCandlestick data={getData(7)} labels={["", "", "three", "four", 5, "six"]}/>
+    <VictoryCandlestick data={getData(7)} labels={["", "", "three", "four", 5, "six"]} />
   ))
   .add("data labels", () => (
     <VictoryCandlestick
@@ -120,14 +123,14 @@ storiesOf("VictoryCandlestick.tooltips", module)
     <VictoryCandlestick
       data={getData(5)}
       labels={(d) => `x: ${d.x}`}
-      labelComponent={<VictoryTooltip active/>}
+      labelComponent={<VictoryTooltip active />}
     />
   ))
   .add("tooltips with long and short strings", () => (
     <VictoryCandlestick
       data={getData(5)}
       labels={["one", "two", 3, "wow, four tooltips", "five"]}
-      labelComponent={<VictoryTooltip active/>}
+      labelComponent={<VictoryTooltip active />}
     />
   ));
 
@@ -147,10 +150,10 @@ storiesOf("VictoryCandlestick.style", module)
     <VictoryCandlestick
       style={{
         labels: {
-          fill: (d) => d.x === 3 ? "red" : "black"
+          fill: (d) => (d.x === 3 ? "red" : "black")
         },
         data: {
-          stroke: (d) => d.open > d.close ? "red" : "black"
+          stroke: (d) => (d.open > d.close ? "red" : "black")
         }
       }}
       labels={(d) => d.x}
@@ -160,9 +163,7 @@ storiesOf("VictoryCandlestick.style", module)
 
 storiesOf("VictoryCandlestick.scale", module)
   .addDecorator(getChartDecorator({ scale: { x: "time" }, domainPadding: 25 }))
-  .add("time scale", () => (
-    <VictoryCandlestick data={getTimeData(5)}/>
-  ))
+  .add("time scale", () => <VictoryCandlestick data={getTimeData(5)} />)
   .add("time scale with labels", () => (
-    <VictoryCandlestick data={getTimeData(5)} labels={(d) => d.x.getFullYear()}/>
+    <VictoryCandlestick data={getTimeData(5)} labels={(d) => d.x.getFullYear()} />
   ));

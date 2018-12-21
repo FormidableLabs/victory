@@ -1,5 +1,6 @@
 /*eslint-disable no-magic-numbers,react/no-multi-comp */
 import React from "react";
+import PropTypes from "prop-types";
 import { round } from "lodash";
 import { VictoryChart } from "../../packages/victory-chart/src/index";
 import { VictoryStack } from "../../packages/victory-stack/src/index";
@@ -11,7 +12,8 @@ import { VictoryScatter } from "../../packages/victory-scatter/src/index";
 import { VictoryTooltip } from "../../packages/victory-tooltip/src/index";
 import { VictoryLegend } from "../../packages/victory-legend/src/index";
 
-const Charts = ({ behaviors }) => { // eslint-disable-line react/prop-types
+const Charts = ({ behaviors }) => {
+  // eslint-disable-line react/prop-types
   const containerStyle = {
     display: "flex",
     flexDirection: "row",
@@ -19,7 +21,9 @@ const Charts = ({ behaviors }) => { // eslint-disable-line react/prop-types
     alignItems: "center",
     justifyContent: "center"
   };
-  const chartStyle = { parent: { border: "1px solid #ccc", margin: "2%", maxWidth: "40%" } };
+  const chartStyle = {
+    parent: { border: "1px solid #ccc", margin: "2%", maxWidth: "40%" }
+  };
   const CustomContainer = createContainer(...behaviors);
   const behaviorsList = behaviors.map((behavior) => `"${behavior}"`).join(", ");
 
@@ -28,30 +32,34 @@ const Charts = ({ behaviors }) => { // eslint-disable-line react/prop-types
       <pre>{`VictoryCreateContainer(${behaviorsList})`}</pre>
       <div style={containerStyle}>
         {/* A */}
-        <VictoryChart style={chartStyle}
+        <VictoryChart
+          style={chartStyle}
           height={400}
           padding={{ top: 100, bottom: 50, left: 50, right: 50 }}
           domainPadding={{ y: 2 }}
           containerComponent={
-            <CustomContainer voronoiDimension="x"
+            <CustomContainer
+              voronoiDimension="x"
               labels={(d) => `y: ${d.y}`}
-              labelComponent={<VictoryTooltip cornerRadius={0} flyoutStyle={{ fill: "white" }}/>}
+              labelComponent={<VictoryTooltip cornerRadius={0} flyoutStyle={{ fill: "white" }} />}
               selectedDomain={{ x: [1.5, 2] }}
             />
           }
         >
-            <VictoryLegend x={120} y={20}
-              title="Legend"
-              centerTitle
-              orientation="horizontal"
-              gutter={20}
-              style={{ border: { stroke: "black" }, title: { fontSize: 20 } }}
-              data={[
-                { name: "One", symbol: { fill: "tomato" } },
-                { name: "Two", symbol: { fill: "orange" } },
-                { name: "Three", symbol: { fill: "gold" } }
-              ]}
-            />
+          <VictoryLegend
+            x={120}
+            y={20}
+            title="Legend"
+            centerTitle
+            orientation="horizontal"
+            gutter={20}
+            style={{ border: { stroke: "black" }, title: { fontSize: 20 } }}
+            data={[
+              { name: "One", symbol: { fill: "tomato" } },
+              { name: "Two", symbol: { fill: "orange" } },
+              { name: "Three", symbol: { fill: "gold" } }
+            ]}
+          />
           <VictoryLine
             data={[
               { x: 1, y: 5, l: "one" },
@@ -60,7 +68,10 @@ const Charts = ({ behaviors }) => { // eslint-disable-line react/prop-types
               { x: 3, y: -2, l: "three" }
             ]}
             style={{
-              data: { stroke: "tomato", strokeWidth: (d, active) => active ? 4 : 2 },
+              data: {
+                stroke: "tomato",
+                strokeWidth: (d, active) => (active ? 4 : 2)
+              },
               labels: { fill: "tomato" }
             }}
           />
@@ -72,19 +83,21 @@ const Charts = ({ behaviors }) => { // eslint-disable-line react/prop-types
               { x: 3, y: 3, l: "blue" }
             ]}
             style={{
-              data: { stroke: "blue", strokeWidth: (d, active) => active ? 4 : 2 },
+              data: {
+                stroke: "blue",
+                strokeWidth: (d, active) => (active ? 4 : 2)
+              },
               labels: { fill: "blue" }
             }}
           />
 
           <VictoryLine
-            data={[
-              { x: 1, y: 5, l: "cat" },
-              { x: 2, y: -4, l: "dog" },
-              { x: 3, y: -2, l: "bird" }
-            ]}
+            data={[{ x: 1, y: 5, l: "cat" }, { x: 2, y: -4, l: "dog" }, { x: 3, y: -2, l: "bird" }]}
             style={{
-              data: { stroke: "black", strokeWidth: (d, active) => active ? 4 : 2 },
+              data: {
+                stroke: "black",
+                strokeWidth: (d, active) => (active ? 4 : 2)
+              },
               labels: { fill: "black" }
             }}
           />
@@ -98,7 +111,10 @@ const Charts = ({ behaviors }) => { // eslint-disable-line react/prop-types
               labels={(d) => round(d.x, 2)}
               cursorLabel={(d) => round(d.x, 2)}
               selectionStyle={{
-                stroke: "tomato", strokeWidth: 2, fill: "tomato", fillOpacity: 0.1
+                stroke: "tomato",
+                strokeWidth: 2,
+                fill: "tomato",
+                fillOpacity: 0.1
               }}
               selectedDomain={{ x: [0.4, 0.95], y: [0.5, 0.8] }}
               defaultCursorValue={0.99}
@@ -108,10 +124,10 @@ const Charts = ({ behaviors }) => { // eslint-disable-line react/prop-types
           <VictoryScatter
             style={{
               data: {
-                fill: (datum, active) => active ? "tomato" : "black"
+                fill: (datum, active) => (active ? "tomato" : "black")
               }
             }}
-            size={(datum, active) => active ? 5 : 3}
+            size={(datum, active) => (active ? 5 : 3)}
             y={(d) => d.x * d.x}
           />
         </VictoryChart>
@@ -119,20 +135,16 @@ const Charts = ({ behaviors }) => { // eslint-disable-line react/prop-types
         {/* C */}
         <VictoryChart
           style={chartStyle}
-          containerComponent={
-            <CustomContainer
-              selectedDomain={{ x: [0, 0] }}
-            />
-          }
+          containerComponent={<CustomContainer selectedDomain={{ x: [0, 0] }} />}
         >
           <VictoryGroup style={chartStyle}>
             <VictoryScatter
               style={{
                 data: { fill: "tomato" }
               }}
-              size={(datum, active) => active ? 5 : 3}
+              size={(datum, active) => (active ? 5 : 3)}
               labels={(d) => d.y}
-              labelComponent={<VictoryTooltip/>}
+              labelComponent={<VictoryTooltip />}
               data={[
                 { x: 1, y: -5 },
                 { x: 2, y: 4 },
@@ -147,9 +159,9 @@ const Charts = ({ behaviors }) => { // eslint-disable-line react/prop-types
               style={{
                 data: { fill: "blue" }
               }}
-              size={(datum, active) => active ? 5 : 3}
+              size={(datum, active) => (active ? 5 : 3)}
               labels={(d) => d.y}
-              labelComponent={<VictoryTooltip/>}
+              labelComponent={<VictoryTooltip />}
               data={[
                 { x: 1, y: -3 },
                 { x: 2, y: 5 },
@@ -171,8 +183,8 @@ const Charts = ({ behaviors }) => { // eslint-disable-line react/prop-types
                 { x: 7, y: -3 }
               ]}
               labels={(d) => d.y}
-              labelComponent={<VictoryTooltip/>}
-              size={(datum, active) => active ? 5 : 3}
+              labelComponent={<VictoryTooltip />}
+              size={(datum, active) => (active ? 5 : 3)}
             />
           </VictoryGroup>
         </VictoryChart>
@@ -180,21 +192,17 @@ const Charts = ({ behaviors }) => { // eslint-disable-line react/prop-types
         {/* D */}
         <VictoryStack
           style={chartStyle}
-          containerComponent={
-            <CustomContainer
-              selectedDomain={{ x: [1.5, 2.5], y: [-3, 4] }}
-            />
-          }
+          containerComponent={<CustomContainer selectedDomain={{ x: [1.5, 2.5], y: [-3, 4] }} />}
         >
           <VictoryBar
             style={{
               data: {
                 fill: "tomato",
-                stroke: (d, active) => active ? "black" : "none",
+                stroke: (d, active) => (active ? "black" : "none"),
                 strokeWidth: 2
               }
             }}
-            size={(datum, active) => active ? 5 : 3}
+            size={(datum, active) => (active ? 5 : 3)}
             data={[
               { x: 1, y: -5 },
               { x: 2, y: 4 },
@@ -209,11 +217,11 @@ const Charts = ({ behaviors }) => { // eslint-disable-line react/prop-types
             style={{
               data: {
                 fill: "orange",
-                stroke: (d, active) => active ? "black" : "none",
+                stroke: (d, active) => (active ? "black" : "none"),
                 strokeWidth: 2
               }
             }}
-            size={(datum, active) => active ? 5 : 3}
+            size={(datum, active) => (active ? 5 : 3)}
             data={[
               { x: 1, y: -3 },
               { x: 2, y: 5 },
@@ -228,7 +236,7 @@ const Charts = ({ behaviors }) => { // eslint-disable-line react/prop-types
             style={{
               data: {
                 fill: "gold",
-                stroke: (d, active) => active ? "black" : "none",
+                stroke: (d, active) => (active ? "black" : "none"),
                 strokeWidth: 2
               }
             }}
@@ -246,6 +254,10 @@ const Charts = ({ behaviors }) => { // eslint-disable-line react/prop-types
       </div>
     </div>
   );
+};
+
+Charts.propTypes = {
+  behaviors: PropTypes.arrayOf(PropTypes.string).isRequired
 };
 
 class App extends React.Component {

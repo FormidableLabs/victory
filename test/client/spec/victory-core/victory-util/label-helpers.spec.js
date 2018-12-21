@@ -8,7 +8,7 @@ import * as d3Scale from "d3-scale";
 
 const scale = { x: d3Scale.scaleLinear(), y: d3Scale.scaleLinear() };
 const data = [{ x: 0, y: 0 }, { x: 0.5, y: 0.5 }];
-const labelComponent = <VictoryLabel/>;
+const labelComponent = <VictoryLabel />;
 const style = { labels: { fontSize: 8 } };
 
 const basicProps = { scale, data, labelComponent, style };
@@ -40,7 +40,8 @@ describe("victory-util/label-helpers", () => {
     });
     it("returns the correct positions for polar labels", () => {
       const polarScale = {
-        x: d3Scale.scaleLinear().range([0, Math.PI * 2]), y: d3Scale.scaleLinear()
+        x: d3Scale.scaleLinear().range([0, Math.PI * 2]),
+        y: d3Scale.scaleLinear()
       };
       data.forEach((datum, index) => {
         const props = assign({}, basicProps, { scale: polarScale, polar: true });

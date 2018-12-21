@@ -3,8 +3,7 @@ import { Helpers, LabelHelpers, Data, Domain, Scale } from "victory-core";
 
 const getBarPosition = (props, datum) => {
   const getDefaultMin = (axis) => {
-    const defaultMin = Scale.getType(props.scale[axis]) === "log" ?
-      1 / Number.MAX_SAFE_INTEGER : 0;
+    const defaultMin = Scale.getType(props.scale[axis]) === "log" ? 1 / Number.MAX_SAFE_INTEGER : 0;
     return datum[`_${axis}`] instanceof Date ? new Date(defaultMin) : defaultMin;
   };
   const _y0 = datum._y0 !== undefined ? datum._y0 : getDefaultMin("y");
@@ -25,8 +24,12 @@ const getCalculatedValues = (props) => {
     x: Domain.getDomainWithZero(props, "x"),
     y: Domain.getDomainWithZero(props, "y")
   };
-  const xScale = Scale.getBaseScale(props, "x").domain(domain.x).range(range.x);
-  const yScale = Scale.getBaseScale(props, "y").domain(domain.y).range(range.y);
+  const xScale = Scale.getBaseScale(props, "x")
+    .domain(domain.x)
+    .range(range.x);
+  const yScale = Scale.getBaseScale(props, "y")
+    .domain(domain.y)
+    .range(range.y);
   const scale = {
     x: horizontal ? yScale : xScale,
     y: horizontal ? xScale : yScale
@@ -39,20 +42,68 @@ const getBaseProps = (props, fallbackProps) => {
   const modifiedProps = Helpers.modifyProps(props, fallbackProps, "bar");
   props = assign({}, modifiedProps, getCalculatedValues(modifiedProps));
   const {
-    alignment, barRatio, cornerRadius, data, domain, events, height, horizontal, origin, padding,
-    polar, scale, sharedEvents, standalone, style, theme, width, labels, name, barWidth, getPath
+    alignment,
+    barRatio,
+    cornerRadius,
+    data,
+    domain,
+    events,
+    height,
+    horizontal,
+    origin,
+    padding,
+    polar,
+    scale,
+    sharedEvents,
+    standalone,
+    style,
+    theme,
+    width,
+    labels,
+    name,
+    barWidth,
+    getPath
   } = props;
-  const initialChildProps = { parent: {
-    domain, scale, width, height, data, standalone, name,
-    theme, polar, origin, padding, style: style.parent
-  } };
+  const initialChildProps = {
+    parent: {
+      domain,
+      scale,
+      width,
+      height,
+      data,
+      standalone,
+      name,
+      theme,
+      polar,
+      origin,
+      padding,
+      style: style.parent
+    }
+  };
 
   return data.reduce((childProps, datum, index) => {
     const eventKey = !isNil(datum.eventKey) ? datum.eventKey : index;
     const { x, y, y0, x0 } = getBarPosition(props, datum);
     const dataProps = {
-      alignment, barRatio, cornerRadius, data, datum, horizontal, index, polar, origin,
-      scale, style: style.data, width, height, x, y, y0, x0, barWidth, getPath
+      alignment,
+      barRatio,
+      cornerRadius,
+      data,
+      datum,
+      horizontal,
+      index,
+      polar,
+      origin,
+      scale,
+      style: style.data,
+      width,
+      height,
+      x,
+      y,
+      y0,
+      x0,
+      barWidth,
+      getPath
     };
 
     childProps[eventKey] = {
@@ -60,7 +111,7 @@ const getBaseProps = (props, fallbackProps) => {
     };
 
     const text = LabelHelpers.getText(props, datum, index);
-    if (text !== undefined && text !== null || (labels && (events || sharedEvents))) {
+    if ((text !== undefined && text !== null) || (labels && (events || sharedEvents))) {
       childProps[eventKey].labels = LabelHelpers.getProps(props, index);
     }
     return childProps;

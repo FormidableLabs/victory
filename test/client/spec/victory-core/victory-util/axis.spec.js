@@ -48,7 +48,6 @@ describe("helpers/axis", () => {
       expect(domainResult).to.eql([1, 2]);
     });
 
-
     it("calculates a domain from a single tickValue", () => {
       const props = { tickValues: [1] };
       const domainResult = Axis.getDomain(props);
@@ -97,9 +96,11 @@ describe("helpers/axis", () => {
     it("returns the independent axis when called with 'x'", () => {
       const childComponents = [dependentAxis, independentAxis, bar];
       const componentResult = Axis.getAxisComponent(childComponents, "x");
-      expect(dependentAxis.type.getAxis).calledWith(dependentAxis.props)
+      expect(dependentAxis.type.getAxis)
+        .calledWith(dependentAxis.props)
         .and.returned("y");
-      expect(independentAxis.type.getAxis).calledWith(independentAxis.props)
+      expect(independentAxis.type.getAxis)
+        .calledWith(independentAxis.props)
         .and.returned("x");
       expect(componentResult).to.eql(independentAxis);
     });
@@ -184,7 +185,9 @@ describe("helpers/axis", () => {
       const props = { tickCount: 5, crossAxis: true };
       const tickResult = Axis.getTicks(props, scale);
       expect(scale.ticks).calledWith(5);
-      expect(tickResult).to.be.an("array").and.not.have.members([0]);
+      expect(tickResult)
+        .to.be.an("array")
+        .and.not.have.members([0]);
     });
   });
 });

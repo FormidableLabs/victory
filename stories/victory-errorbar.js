@@ -22,21 +22,19 @@ const getData = (num, symmetric, seed) => {
   });
 };
 
-storiesOf("VictoryErrorBar", module)
-  .add("default rendering", () => <VictoryErrorBar/>);
+storiesOf("VictoryErrorBar", module).add("default rendering", () => <VictoryErrorBar />);
 
 storiesOf("VictoryErrorBar.theme", module)
   .addDecorator(getChartDecorator({ theme: VictoryTheme.material }))
-  .add("material theme", () => <VictoryErrorBar data={getData(5)}/>);
+  .add("material theme", () => <VictoryErrorBar data={getData(5)} />);
 storiesOf("VictoryErrorBar.theme", module)
   .addDecorator(getChartDecorator({ theme: VictoryTheme.grayscale }))
-  .add("grayscale (default) theme", () => <VictoryErrorBar data={getData(5)}/>);
+  .add("grayscale (default) theme", () => <VictoryErrorBar data={getData(5)} />);
 
 storiesOf("VictoryErrorBar.borderWidth", module)
   .addDecorator(getChartDecorator({ domainPadding: 25 }))
-  .add("borderWidth = 0", () => <VictoryErrorBar data={getData(5)} borderWidth={0}/>)
-  .add("borderWidth = 10", () => <VictoryErrorBar data={getData(5)} borderWidth={10}/>);
-
+  .add("borderWidth = 0", () => <VictoryErrorBar data={getData(5)} borderWidth={0} />)
+  .add("borderWidth = 10", () => <VictoryErrorBar data={getData(5)} borderWidth={10} />);
 
 storiesOf("VictoryErrorBar.data", module)
   .addDecorator(getChartDecorator({ domainPadding: 25 }))
@@ -52,19 +50,15 @@ storiesOf("VictoryErrorBar.data", module)
         ]}
         x="series"
         y="value"
-        errorY={(d) => ([d.error, d.error + 2])}
+        errorY={(d) => [d.error, d.error + 2]}
       />
     );
   });
 
 storiesOf("VictoryErrorBar.labels", module)
   .addDecorator(getChartDecorator({ domainPadding: 25 }))
-  .add("function labels", () => (
-    <VictoryErrorBar data={getData(5)} labels={(d) => `x: ${d.x}`}/>
-  ))
-  .add("array labels", () => (
-    <VictoryErrorBar data={getData(5)} labels={["", "", "three", "4"]}/>
-  ))
+  .add("function labels", () => <VictoryErrorBar data={getData(5)} labels={(d) => `x: ${d.x}`} />)
+  .add("array labels", () => <VictoryErrorBar data={getData(5)} labels={["", "", "three", "4"]} />)
   .add("data labels", () => (
     <VictoryErrorBar
       data={[
@@ -83,14 +77,14 @@ storiesOf("VictoryErrorBar.tooltips", module)
     <VictoryErrorBar
       data={getData(5)}
       labels={(d) => `x: ${d.x}`}
-      labelComponent={<VictoryTooltip active/>}
+      labelComponent={<VictoryTooltip active />}
     />
   ))
   .add("tooltips with long and short strings", () => (
     <VictoryErrorBar
       data={getData(5)}
       labels={["one", "two", 3, "wow, four tooltips", "five"]}
-      labelComponent={<VictoryTooltip active/>}
+      labelComponent={<VictoryTooltip active />}
     />
   ));
 
@@ -110,10 +104,10 @@ storiesOf("VictoryErrorBar.style", module)
     <VictoryErrorBar
       style={{
         labels: {
-          fill: (d) => d.errorX > d.errorY ? "red" : "black"
+          fill: (d) => (d.errorX > d.errorY ? "red" : "black")
         },
         data: {
-          stroke: (d) => d.errorX > d.errorY ? "red" : "black"
+          stroke: (d) => (d.errorX > d.errorY ? "red" : "black")
         }
       }}
       labels={(d) => d.x}

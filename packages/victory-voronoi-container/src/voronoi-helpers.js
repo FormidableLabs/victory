@@ -27,20 +27,23 @@ const VoronoiHelpers = {
         const { x, y, y0, x0 } = Helpers.getPoint(datum);
         const voronoiX = props.horizontal ? (+y + +y0) / 2 : (+x + +x0) / 2;
         const voronoiY = props.horizontal ? (+x + +x0) / 2 : (+y + +y0) / 2;
-        return assign({
-          _voronoiX: props.voronoiDimension === "y" ? 0 : voronoiX,
-          _voronoiY: props.voronoiDimension === "x" ? 0 : voronoiY,
-          eventKey: index,
-          childName: name,
-          continuous, style
-        }, datum);
+        return assign(
+          {
+            _voronoiX: props.voronoiDimension === "y" ? 0 : voronoiX,
+            _voronoiY: props.voronoiDimension === "x" ? 0 : voronoiY,
+            eventKey: index,
+            childName: name,
+            continuous,
+            style
+          },
+          datum
+        );
       });
     };
 
     if (props.data) {
       return addMeta(props.data);
     }
-
 
     const getData = (childProps) => {
       const data = Data.getData(childProps);
@@ -54,8 +57,8 @@ const VoronoiHelpers = {
       if (!Data.isDataComponent(child) || includes(blacklist, name)) {
         return null;
       }
-      const getChildData = child.type && isFunction(child.type.getData) ?
-        child.type.getData : getData;
+      const getChildData =
+        child.type && isFunction(child.type.getData) ? child.type.getData : getData;
       const childData = getChildData(child.props);
       return childData ? addMeta(childData, name, child) : null;
     };
@@ -107,7 +110,10 @@ const VoronoiHelpers = {
     return targets.map((target) => {
       const eventKey = continuous === true && target === "data" ? "all" : point.eventKey;
       return {
-        childName, eventKey, target, mutation: () => ({ active: true })
+        childName,
+        eventKey,
+        target,
+        mutation: () => ({ active: true })
       };
     });
   },
@@ -126,17 +132,22 @@ const VoronoiHelpers = {
     return targets.map((target) => {
       const eventKey = continuous && target === "data" ? "all" : point.eventKey;
       return {
-        childName, eventKey, target, mutation: () => null
+        childName,
+        eventKey,
+        target,
+        mutation: () => null
       };
     });
   },
 
   getParentMutation(activePoints, mousePosition, parentSVG) {
-    return [{
-      target: "parent",
-      eventKey: "parent",
-      mutation: () => ({ activePoints, mousePosition, parentSVG })
-    }];
+    return [
+      {
+        target: "parent",
+        eventKey: "parent",
+        mutation: () => ({ activePoints, mousePosition, parentSVG })
+      }
+    ];
   },
 
   onActivated(props, points) {
@@ -154,19 +165,22 @@ const VoronoiHelpers = {
   onMouseLeave(evt, targetProps) {
     const activePoints = targetProps.activePoints || [];
     this.onDeactivated(targetProps, activePoints);
-    const inactiveMutations = activePoints.length ?
-      activePoints.map((point) => this.getInactiveMutations(targetProps, point)) : [];
+    const inactiveMutations = activePoints.length
+      ? activePoints.map((point) => this.getInactiveMutations(targetProps, point))
+      : [];
     return this.getParentMutation([]).concat(...inactiveMutations);
   },
 
-  onMouseMove(evt, targetProps) { // eslint-disable-line max-statements
+  onMouseMove(evt, targetProps) {
+    // eslint-disable-line max-statements
     const activePoints = targetProps.activePoints || [];
     const parentSVG = targetProps.parentSVG || Selection.getParentSVG(evt);
     const mousePosition = Selection.getSVGEventCoordinates(evt, parentSVG);
     if (!this.withinBounds(targetProps, mousePosition)) {
       this.onDeactivated(targetProps, activePoints);
-      const inactiveMutations = activePoints.length ?
-        activePoints.map((point) => this.getInactiveMutations(targetProps, point)) : [];
+      const inactiveMutations = activePoints.length
+        ? activePoints.map((point) => this.getInactiveMutations(targetProps, point))
+        : [];
       return this.getParentMutation([], mousePosition, parentSVG).concat(...inactiveMutations);
     }
     const nearestVoronoi = this.getVoronoi(targetProps, mousePosition);
@@ -177,10 +191,12 @@ const VoronoiHelpers = {
     } else {
       this.onActivated(targetProps, points);
       this.onDeactivated(targetProps, activePoints);
-      const activeMutations = points.length ?
-        points.map((point) => this.getActiveMutations(targetProps, point)) : [];
-      const inactiveMutations = activePoints.length ?
-        activePoints.map((point) => this.getInactiveMutations(targetProps, point)) : [];
+      const activeMutations = points.length
+        ? points.map((point) => this.getActiveMutations(targetProps, point))
+        : [];
+      const inactiveMutations = activePoints.length
+        ? activePoints.map((point) => this.getInactiveMutations(targetProps, point))
+        : [];
       return parentMutations.concat(...inactiveMutations, ...activeMutations);
     }
   }
@@ -191,5 +207,6 @@ export default {
   onMouseMove: throttle(
     VoronoiHelpers.onMouseMove.bind(VoronoiHelpers),
     32, // eslint-disable-line no-magic-numbers
-    { leading: true, trailing: false })
+    { leading: true, trailing: false }
+  )
 };

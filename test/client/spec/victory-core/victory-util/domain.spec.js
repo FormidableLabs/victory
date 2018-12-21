@@ -21,7 +21,10 @@ describe("victory-util/domain", () => {
   describe("createDomainFunction", () => {
     it("returns a function equivalent to getDomain when no props are given", () => {
       const props = {
-        x: "x", y: "y", domain: { y: [1, 2] }, data: [{ x: 1, y: 3 }, { x: 3, y: 5 }]
+        x: "x",
+        y: "y",
+        domain: { y: [1, 2] },
+        data: [{ x: 1, y: 3 }, { x: 3, y: 5 }]
       };
       const domainGetter = Domain.createDomainFunction();
       expect(domainGetter(props, "x")).to.eql(Domain.getDomain(props, "x"));
@@ -29,7 +32,9 @@ describe("victory-util/domain", () => {
 
     it("returns a function that uses a custom getDomainFromData function when given", () => {
       const props = {
-        x: "x", y: "y", data: [{ x: 1, y: 3 }, { x: 3, y: 5 }]
+        x: "x",
+        y: "y",
+        data: [{ x: 1, y: 3 }, { x: 3, y: 5 }]
       };
       const getDomainFromData = () => [0, 10];
       const domainGetter = Domain.createDomainFunction(getDomainFromData);
@@ -83,7 +88,10 @@ describe("victory-util/domain", () => {
 
     it("gets the domain from data if props don't exist for a particular axis", () => {
       const props = {
-        x: "x", y: "y", domain: { y: [1, 2] }, data: [{ x: 1, y: 3 }, { x: 3, y: 5 }]
+        x: "x",
+        y: "y",
+        domain: { y: [1, 2] },
+        data: [{ x: 1, y: 3 }, { x: 3, y: 5 }]
       };
       const resultDomain = Domain.getDomain(props, "x");
       expect(resultDomain).to.eql([1, 3]);
@@ -98,7 +106,7 @@ describe("victory-util/domain", () => {
     });
 
     it("calculates a domain from categories for the dependent axis", () => {
-      const props = { categories: { y: [ 1, 2, 3] } };
+      const props = { categories: { y: [1, 2, 3] } };
       const domainResult = Domain.getDomainFromCategories(props, "y");
       expect(domainResult).to.eql([1, 3]);
     });
@@ -189,23 +197,25 @@ describe("victory-util/domain", () => {
       const min = new Date(1980, 1, 1);
       const max = new Date(1980, 1, 1);
       const resultDomain = Domain.getDomainFromMinMax(min, max);
-      expect(resultDomain).to.eql([
-        new Date(+min - 1), new Date(+max + 1)
-      ]);
+      expect(resultDomain).to.eql([new Date(+min - 1), new Date(+max + 1)]);
     });
   });
 
   describe("getDomainWithZero", () => {
     it("ensures that the domain includes zero for the dependent axis", () => {
       const props = {
-        x: "x", y: "y", data: [{ x: 1, y: 3 }, { x: 3, y: 5 }]
+        x: "x",
+        y: "y",
+        data: [{ x: 1, y: 3 }, { x: 3, y: 5 }]
       };
       const resultDomain = Domain.getDomainWithZero(props, "y");
       expect(resultDomain).to.eql([0, 5]);
     });
     it("does not force the independent domain to include zero", () => {
       const props = {
-        x: "x", y: "y", data: [{ x: 1, y: 3 }, { x: 3, y: 5 }]
+        x: "x",
+        y: "y",
+        data: [{ x: 1, y: 3 }, { x: 3, y: 5 }]
       };
       const resultDomain = Domain.getDomainWithZero(props, "x");
       expect(resultDomain).to.eql([1, 3]);
@@ -262,7 +272,7 @@ describe("victory-util/domain", () => {
       static role = "area";
     }
     it("returns true when a component has a static role matching a whitelist", () => {
-      expect(Domain.isDomainComponent(<TestDomainComponent/>)).to.be.true;
+      expect(Domain.isDomainComponent(<TestDomainComponent />)).to.be.true;
     });
 
     it("returns false when a component has a role that does not match the whitelist", () => {
@@ -270,13 +280,17 @@ describe("victory-util/domain", () => {
       class TestFooComponent extends React.Component {
         static role = "foo";
       }
-      expect(Domain.isDomainComponent(<TestFooComponent/>)).to.be.false;
+      expect(Domain.isDomainComponent(<TestFooComponent />)).to.be.false;
     });
 
     it("returns true when a domain component is wrapped in VictoryPortal", () => {
-      expect(Domain.isDomainComponent(
-        <VictoryPortal><TestDomainComponent/></VictoryPortal>
-      )).to.be.true;
+      expect(
+        Domain.isDomainComponent(
+          <VictoryPortal>
+            <TestDomainComponent />
+          </VictoryPortal>
+        )
+      ).to.be.true;
     });
   });
 });

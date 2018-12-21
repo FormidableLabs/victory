@@ -13,8 +13,8 @@ describe("components/victory-stack", () => {
     it("renders an svg with the correct width and height", () => {
       const wrapper = mount(
         <VictoryStack>
-          <VictoryBar/>
-          <VictoryBar/>
+          <VictoryBar />
+          <VictoryBar />
         </VictoryStack>
       );
       const svg = wrapper.find("svg").at(0);
@@ -25,13 +25,12 @@ describe("components/victory-stack", () => {
     it("renders an svg with the correct viewBox", () => {
       const wrapper = mount(
         <VictoryStack>
-          <VictoryBar/>
-          <VictoryBar/>
+          <VictoryBar />
+          <VictoryBar />
         </VictoryStack>
       );
       const svg = wrapper.find("svg").at(0);
-      const viewBoxValue =
-        `0 0 ${450} ${300}`;
+      const viewBoxValue = `0 0 ${450} ${300}`;
       expect(svg.prop("viewBox")).to.equal(viewBoxValue);
     });
   });

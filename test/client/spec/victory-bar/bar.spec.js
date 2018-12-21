@@ -7,10 +7,7 @@ import { assign, merge } from "lodash";
 
 describe("victory-primitives/bar", () => {
   const baseProps = {
-    data: [
-      { _x: 2, x: 2, _y: 4, y: 4, eventKey: 0 },
-      { _x: 3, x: 3, _y: 5, y: 5, eventKey: 1 }
-    ],
+    data: [{ _x: 2, x: 2, _y: 4, y: 4, eventKey: 0 }, { _x: 3, x: 3, _y: 5, y: 5, eventKey: 1 }],
     datum: { _x: 2, x: 2, _y: 4, y: 4, eventKey: 0 },
     x: 2,
     y: 10,
@@ -22,7 +19,7 @@ describe("victory-primitives/bar", () => {
   };
 
   it("should render a vertical bar", () => {
-    const wrapper = mount(<Bar {...baseProps}/>);
+    const wrapper = mount(<Bar {...baseProps} />);
     const barShape = SvgTestHelper.getBarShape(wrapper);
     expect(Math.round(barShape.height)).to.eql(10);
   });
@@ -30,7 +27,7 @@ describe("victory-primitives/bar", () => {
   it("should render a horizontal bar", () => {
     const props = merge({}, baseProps, { horizontal: true });
 
-    const wrapper = mount(<Bar {...props}/>);
+    const wrapper = mount(<Bar {...props} />);
     const barShape = SvgTestHelper.getBarShape(wrapper);
 
     expect(Math.round(barShape.width)).to.eql(10);
@@ -43,7 +40,7 @@ describe("victory-primitives/bar", () => {
       data: Array(4)
     });
 
-    const wrapper = mount(<Bar {...props}/>);
+    const wrapper = mount(<Bar {...props} />);
     const barShape = SvgTestHelper.getBarShape(wrapper);
 
     expect(Math.floor(barShape.width)).to.eql(2);
@@ -52,23 +49,19 @@ describe("victory-primitives/bar", () => {
   it("should allow override of width by passing a style", () => {
     const props = assign({}, baseProps, { style: { width: 3 } });
 
-    const wrapper = mount(<Bar {...props}/>);
+    const wrapper = mount(<Bar {...props} />);
     const barShape = SvgTestHelper.getBarShape(wrapper);
 
     expect(Math.floor(barShape.width)).to.eql(3);
   });
 
   it("should allow modification of width by passing barRatio", () => {
-    const props = assign({}, baseProps,
-      {
-        data: [
-          { _x: 2, x: 2, _y: 4, y: 4, eventKey: 0 }
-        ],
-        barRatio: 3
-      }
-    );
+    const props = assign({}, baseProps, {
+      data: [{ _x: 2, x: 2, _y: 4, y: 4, eventKey: 0 }],
+      barRatio: 3
+    });
 
-    const wrapper = mount(<Bar {...props}/>);
+    const wrapper = mount(<Bar {...props} />);
     const barShape = SvgTestHelper.getBarShape(wrapper);
 
     expect(Math.floor(barShape.width)).to.eql(24);

@@ -43,7 +43,13 @@ describe("victory-util/data", () => {
         it("a unique set of values is returned from multiple sources", () => {
           const props = { tickValues, data };
           const stringMap = Data.createStringMap(props, "x");
-          expect(stringMap).to.eql({ one: 1, two: 2, three: 3, red: 4, cat: 5 });
+          expect(stringMap).to.eql({
+            one: 1,
+            two: 2,
+            three: 3,
+            red: 4,
+            cat: 5
+          });
         });
       });
     });
@@ -53,24 +59,26 @@ describe("victory-util/data", () => {
     describe(`getStringsFromData with ${testLabel}`, () => {
       it("returns an array of strings from a data prop", () => {
         const props = {
-          data: createData([
-            { x: "one", y: 1 },
-            { x: "red", y: 2 },
-            { x: "cat", y: 3 }
-          ])
+          data: createData([{ x: "one", y: 1 }, { x: "red", y: 2 }, { x: "cat", y: 3 }])
         };
         const dataStrings = Data.getStringsFromData(props, "x");
         expect(dataStrings).to.eql(["one", "red", "cat"]);
       });
 
       it("returns an array of strings from array-type data", () => {
-        const props = { data: createData([["one", 1], ["red", 2], ["cat", 3]]), x: 0, y: 1 };
+        const props = {
+          data: createData([["one", 1], ["red", 2], ["cat", 3]]),
+          x: 0,
+          y: 1
+        };
         const dataStrings = Data.getStringsFromData(props, "x");
         expect(dataStrings).to.eql(["one", "red", "cat"]);
       });
 
       it("only returns strings, if data is mixed", () => {
-        const props = { data: createData([{ x: 1, y: 1 }, { x: "three", y: 3 }]) };
+        const props = {
+          data: createData([{ x: 1, y: 1 }, { x: "three", y: 3 }])
+        };
         expect(Data.getStringsFromData(props, "x")).to.eql(["three"]);
       });
 
@@ -141,8 +149,8 @@ describe("victory-util/data", () => {
           const data = createData([{ x: "kittens", y: 3 }, { x: "cats", y: 5 }]);
           const props = { data, x: "x", y: "y" };
           const expectedReturnWithEventKeys = [
-             { _x: 1, x: "kittens", xName: "kittens", _y: 3, y: 3 },
-             { _x: 2, x: "cats", xName: "cats", _y: 5, y: 5 }
+            { _x: 1, x: "kittens", xName: "kittens", _y: 3, y: 3 },
+            { _x: 2, x: "cats", xName: "cats", _y: 5, y: 5 }
           ];
           const returnData = Data.getData(props);
           expect(returnData).to.eql(expectedReturnWithEventKeys);
@@ -215,13 +223,16 @@ describe("victory-util/data", () => {
             { x: 2, y: 2, order: 3 }
           ]);
 
-          const returnData = Data.getData({ data, sortKey: "order", sortOrder: "descending" });
+          const returnData = Data.getData({
+            data,
+            sortKey: "order",
+            sortOrder: "descending"
+          });
 
           expect(returnData).to.eql([
             { _x: 2, x: 2, _y: 2, y: 2, order: 3 },
             { _x: 1, x: 1, _y: 1, y: 1, order: 2 },
             { _x: 3, x: 3, _y: 3, y: 3, order: 1 }
-
           ]);
         });
 
@@ -260,7 +271,12 @@ describe("victory-util/data", () => {
 
     it("generates a dataset from domain and samples", () => {
       const generatedReturn = [{ x: 0, y: 0 }, { x: 5, y: 5 }, { x: 10, y: 10 }];
-      const props = { x: "x", y: "y", domain: { x: [0, 10], y: [0, 10] }, samples: 2 };
+      const props = {
+        x: "x",
+        y: "y",
+        domain: { x: [0, 10], y: [0, 10] },
+        samples: 2
+      };
       const returnData = Data.generateData(props);
       expect(returnData).to.eql(generatedReturn);
     });
@@ -271,7 +287,7 @@ describe("victory-util/data", () => {
       static role = "area";
     }
     it("returns true when a component has a static role matching a whitelist", () => {
-      expect(Data.isDataComponent(<TestDataComponent/>)).to.be.true;
+      expect(Data.isDataComponent(<TestDataComponent />)).to.be.true;
     });
 
     it("returns false when a component has a role that does not match the whitelist", () => {
@@ -279,11 +295,17 @@ describe("victory-util/data", () => {
       class TestFooComponent extends React.Component {
         static role = "foo";
       }
-      expect(Data.isDataComponent(<TestFooComponent/>)).to.be.false;
+      expect(Data.isDataComponent(<TestFooComponent />)).to.be.false;
     });
 
     it("returns true when a data component is wrapped in VictoryPortal", () => {
-      expect(Data.isDataComponent(<VictoryPortal><TestDataComponent/></VictoryPortal>)).to.be.true;
+      expect(
+        Data.isDataComponent(
+          <VictoryPortal>
+            <TestDataComponent />
+          </VictoryPortal>
+        )
+      ).to.be.true;
     });
   });
 });

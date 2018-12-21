@@ -5,21 +5,24 @@ import React from "react";
 import { shallow, render } from "enzyme";
 import { VictoryLegend } from "packages/victory-legend/src/index";
 
-const initialData = [{
-  name: "Series 1",
-  symbol: {
-    type: "circle"
-  }
-}, {
-  name: "Series 2",
-  labels: {
-    fill: "red"
+const initialData = [
+  {
+    name: "Series 1",
+    symbol: {
+      type: "circle"
+    }
   },
-  symbol: {
-    type: "triangleUp",
-    fill: "blue"
+  {
+    name: "Series 2",
+    labels: {
+      fill: "red"
+    },
+    symbol: {
+      type: "triangleUp",
+      fill: "blue"
+    }
   }
-}];
+];
 
 describe("components/victory-legend", () => {
   let wrapper = shallow(<VictoryLegend data={initialData} />);
@@ -70,25 +73,28 @@ describe("components/victory-legend", () => {
   });
 
   describe("symbols", () => {
-    const legendData = [{
-      name: "Series 1",
-      labels: {
-        fontSize: 10
+    const legendData = [
+      {
+        name: "Series 1",
+        labels: {
+          fontSize: 10
+        },
+        symbol: {
+          type: "circle",
+          fill: "red"
+        }
       },
-      symbol: {
-        type: "circle",
-        fill: "red"
+      {
+        name: "Long Series Name",
+        labels: {
+          fontSize: 12
+        },
+        symbol: {
+          type: "triangleUp",
+          fill: "blue"
+        }
       }
-    }, {
-      name: "Long Series Name",
-      labels: {
-        fontSize: 12
-      },
-      symbol: {
-        type: "triangleUp",
-        fill: "blue"
-      }
-    }];
+    ];
 
     wrapper = shallow(<VictoryLegend data={legendData} />);
     const output = wrapper.find("Point");
@@ -109,11 +115,14 @@ describe("components/victory-legend", () => {
   });
 
   describe("legend style prop", () => {
-    const legendData = [{
-      name: "Thing 1"
-    }, {
-      name: "Thing 2"
-    }];
+    const legendData = [
+      {
+        name: "Thing 1"
+      },
+      {
+        name: "Thing 2"
+      }
+    ];
 
     const styleObject = {
       data: {
@@ -146,19 +155,26 @@ describe("components/victory-legend", () => {
   });
 
   describe("itemsPerRow", () => {
-    const legendData = [{
-      name: "Thing 1"
-    }, {
-      name: "Thing 2"
-    }, {
-      name: "Thing 3"
-    }, {
-      name: "Thing 4"
-    }, {
-      name: "Thing 5"
-    }, {
-      name: "Thing 6"
-    }];
+    const legendData = [
+      {
+        name: "Thing 1"
+      },
+      {
+        name: "Thing 2"
+      },
+      {
+        name: "Thing 3"
+      },
+      {
+        name: "Thing 4"
+      },
+      {
+        name: "Thing 5"
+      },
+      {
+        name: "Thing 6"
+      }
+    ];
 
     it("displays items in columns", () => {
       wrapper = shallow(<VictoryLegend data={legendData} itemsPerRow={3} />);
@@ -175,17 +191,13 @@ describe("components/victory-legend", () => {
 
       // columns are the same distance apart
       expect(outputPoints.get(0).props.x - outputPoints.get(3).props.x)
-        .to.equal(outputPoints.get(1).props.x - outputPoints.get(4).props.x).and
-        .to.equal(outputPoints.get(2).props.x - outputPoints.get(5).props.x);
+        .to.equal(outputPoints.get(1).props.x - outputPoints.get(4).props.x)
+        .and.to.equal(outputPoints.get(2).props.x - outputPoints.get(5).props.x);
     });
 
     it("displays items in rows", () => {
       wrapper = shallow(
-        <VictoryLegend
-          data={legendData}
-          itemsPerRow={3}
-          orientation="horizontal"
-        />
+        <VictoryLegend data={legendData} itemsPerRow={3} orientation="horizontal" />
       );
       const outputLabels = wrapper.find("VictoryLabel");
       const outputPoints = wrapper.find("Point");
@@ -200,8 +212,8 @@ describe("components/victory-legend", () => {
 
       // rows are the same distance apart
       expect(outputPoints.get(0).props.y - outputPoints.get(3).props.y)
-        .to.equal(outputPoints.get(1).props.y - outputPoints.get(4).props.y).and
-        .to.equal(outputPoints.get(2).props.y - outputPoints.get(5).props.y);
+        .to.equal(outputPoints.get(1).props.y - outputPoints.get(4).props.y)
+        .and.to.equal(outputPoints.get(2).props.y - outputPoints.get(5).props.y);
     });
   });
 });
