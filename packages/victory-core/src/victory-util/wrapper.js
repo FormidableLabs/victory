@@ -297,8 +297,8 @@ export default {
 
     const initialMemo = { x: [], y: [] };
     const combine = (memo, datum) => ({
-      x: datum.x ? memo.x.concat(datum.x) : memo.x,
-      y: datum.y ? memo.y.concat(datum.y) : memo.y
+      x: datum.x !== undefined ? memo.x.concat(datum.x) : memo.x,
+      y: datum.y !== undefined ? memo.y.concat(datum.y) : memo.y
     });
 
     return Helpers.reduceChildren(
