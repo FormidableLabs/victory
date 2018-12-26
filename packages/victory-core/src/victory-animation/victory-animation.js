@@ -1,5 +1,6 @@
 /*global setTimeout:false */
 import React from "react";
+import isEqual from "react-fast-compare";
 import PropTypes from "prop-types";
 import * as d3Ease from "d3-ease";
 import { victoryInterpolator } from "./util";
@@ -98,8 +99,8 @@ export default class VictoryAnimation extends React.Component {
     }
   }
 
-  componentDidUpdate(_props, _state, snapshot) {
-    if (snapshot.shouldRestartTraversal === false) {
+  componentDidUpdate(prevProps) {
+    if (isEqual(this.props, prevProps)) {
       return;
     }
 
@@ -127,16 +128,6 @@ export default class VictoryAnimation extends React.Component {
     } else {
       this.getTimer().stop();
     }
-  }
-
-  getSnapshotBeforeUpdate(prevProps) {
-    const snapshot = { shouldRestartTraversal: false };
-
-    if (prevProps.data !== this.props.data) {
-      snapshot.shouldRestartTraversal = true;
-    }
-
-    return snapshot;
   }
 
   getTimer() {

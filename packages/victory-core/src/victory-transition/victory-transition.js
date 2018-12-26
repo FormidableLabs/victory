@@ -5,7 +5,8 @@ import Collection from "../victory-util/collection";
 import Helpers from "../victory-util/helpers";
 import Timer from "../victory-util/timer";
 import Transitions from "../victory-util/transitions";
-import { defaults, isFunction, pick, isObject } from "lodash";
+import { defaults, isFunction, isObject, pick } from "lodash";
+import isEqual from "react-fast-compare";
 
 export default class VictoryTransition extends React.Component {
   static displayName = "VictoryTransition";
@@ -33,11 +34,14 @@ export default class VictoryTransition extends React.Component {
     this.setState({ nodesShouldLoad: true }); //eslint-disable-line react/no-did-mount-set-state
   }
 
-  componentWillReceiveProps(nextProps) {
-    this.getTimer().bypassAnimation();
-    this.setState(this.getTransitionState(this.props, nextProps), () =>
-      this.getTimer().resumeAnimation()
-    );
+  componentDidUpdate(prevProps) {
+    if (!isEqual(this.props, prevProps)) {
+      this.getTimer().bypassAnimation();
+      // eslint-disable-next-line react/no-did-update-set-state
+      this.setState(this.getTransitionState(prevProps, this.props), () =>
+        this.getTimer().resumeAnimation()
+      );
+    }
   }
 
   componentWillUnmount() {

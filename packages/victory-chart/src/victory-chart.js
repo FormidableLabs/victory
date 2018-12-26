@@ -1,4 +1,5 @@
-import { defaults, assign } from "lodash";
+import { assign, defaults } from "lodash";
+import isEqual from "react-fast-compare";
 import PropTypes from "prop-types";
 import React from "react";
 import {
@@ -74,11 +75,11 @@ export default class VictoryChart extends React.Component {
     this.events = Wrapper.getAllEvents(this.props);
   }
 
-  componentWillReceiveProps(nextProps) {
-    if (this.props.animate) {
-      this.setAnimationState(this.props, nextProps);
+  componentDidUpdate(prevProps) {
+    if (!isEqual(this.props, prevProps)) {
+      this.setAnimationState(prevProps, this.props);
     }
-    this.events = Wrapper.getAllEvents(nextProps);
+    this.events = Wrapper.getAllEvents(this.props);
   }
 
   // the old ones were bad

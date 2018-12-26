@@ -1,4 +1,5 @@
 import { assign, defaults } from "lodash";
+import isEqual from "react-fast-compare";
 import PropTypes from "prop-types";
 import React from "react";
 import { Helpers, VictoryContainer, VictoryTheme, CommonProps, Wrapper } from "victory-core";
@@ -70,11 +71,13 @@ export default class VictoryGroup extends React.Component {
     this.events = Wrapper.getAllEvents(this.props);
   }
 
-  componentWillReceiveProps(nextProps) {
-    if (this.props.animate) {
-      this.setAnimationState(this.props, nextProps);
+  componentDidUpdate(prevProps) {
+    if (!isEqual(this.props, prevProps)) {
+      if (this.props.animate) {
+        this.setAnimationState(prevProps, this.props);
+      }
+      this.events = Wrapper.getAllEvents(this.props);
     }
-    this.events = Wrapper.getAllEvents(nextProps);
   }
 
   // the old ones were bad

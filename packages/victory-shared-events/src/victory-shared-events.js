@@ -1,4 +1,5 @@
 import { assign, isFunction, defaults, isEmpty, fromPairs } from "lodash";
+import isEqual from "react-fast-compare";
 import React from "react";
 import PropTypes from "prop-types";
 import { PropTypes as CustomPropTypes, Events, Helpers, Timer } from "victory-core";
@@ -73,10 +74,12 @@ export default class VictorySharedEvents extends React.Component {
     };
   }
 
-  componentWillReceiveProps(newProps) {
-    this.baseProps = this.getBaseProps(newProps);
-    const externalMutations = this.getExternalMutations(newProps, this.baseProps);
-    this.applyExternalMutations(newProps, externalMutations);
+  componentDidUpdate(prevProps) {
+    if (!isEqual(this.props, prevProps)) {
+      this.baseProps = this.getBaseProps(this.props);
+      const externalMutations = this.getExternalMutations(this.props, this.baseProps);
+      this.applyExternalMutations(this.props, externalMutations);
+    }
   }
 
   getTimer() {
@@ -231,6 +234,8 @@ export default class VictorySharedEvents extends React.Component {
     if (events) {
       return this.getContainer(this.props, this.baseProps, events);
     }
-    return React.cloneElement(this.props.container, { children: this.props.children });
+    return React.cloneElement(this.props.container, {
+      children: this.props.children
+    });
   }
 }

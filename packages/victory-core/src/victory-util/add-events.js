@@ -22,21 +22,17 @@ export default (WrappedComponent, options) => {
         return boundGetEvents(p, target, eventKey, getScopedEvents);
       };
       this.getEventState = Events.getEventState.bind(this);
-      const calculatedValues = this.getCalculatedValues(props);
-      this.cacheValues(calculatedValues);
+      this.cacheCalculatedValues(props);
       this.externalMutations = this.getExternalMutations(props);
     }
 
     componentDidUpdate() {
       const externalMutations = this.getExternalMutations(this.props);
+      this.cacheCalculatedValues(this.props);
       if (!isEqual(this.externalMutations, externalMutations)) {
         this.externalMutations = externalMutations;
         this.applyExternalMutations(this.props, externalMutations);
       }
-    }
-
-    componentWillReceiveProps(nextProps) {
-      this.cacheValues(this.getCalculatedValues(nextProps));
     }
 
     applyExternalMutations(props, externalMutations) {
@@ -88,7 +84,7 @@ export default (WrappedComponent, options) => {
         .filter(Boolean);
     }
 
-    getCalculatedValues(props) {
+    cacheCalculatedValues(props) {
       const { sharedEvents } = props;
       const components = WrappedComponent.expectedComponents;
       const componentEvents = Events.getComponentEvents(props, components);
@@ -100,14 +96,13 @@ export default (WrappedComponent, options) => {
       const dataKeys = keys(baseProps).filter((key) => key !== "parent");
       const hasEvents = props.events || props.sharedEvents || componentEvents;
       const events = this.getAllEvents(props);
-      return {
-        componentEvents,
-        getSharedEventState,
-        baseProps,
-        dataKeys,
-        hasEvents,
-        events
-      };
+
+      this.componentEvents = componentEvents;
+      this.getSharedEventState = getSharedEventState;
+      this.baseProps = baseProps;
+      this.dataKeys = dataKeys;
+      this.hasEvents = hasEvents;
+      this.events = events;
     }
 
     getExternalMutations(props) {
@@ -115,12 +110,6 @@ export default (WrappedComponent, options) => {
       return isEmpty(externalEventMutations) || sharedEvents
         ? undefined
         : Events.getExternalMutations(externalEventMutations, this.baseProps, this.state);
-    }
-
-    cacheValues(obj) {
-      keys(obj).forEach((key) => {
-        this[key] = obj[key];
-      });
     }
 
     getBaseProps(props, getSharedEventState) {
