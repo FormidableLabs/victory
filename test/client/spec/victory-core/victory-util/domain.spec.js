@@ -204,17 +204,47 @@ describe("victory-util/domain", () => {
   describe("getDomainWithZero", () => {
     it("ensures that the domain includes zero for the dependent axis", () => {
       const props = {
-        x: "x",
-        y: "y",
         data: [{ x: 1, y: 3 }, { x: 3, y: 5 }]
       };
       const resultDomain = Domain.getDomainWithZero(props, "y");
       expect(resultDomain).to.eql([0, 5]);
     });
+
+    it("allows minimum domain values less than zero", () => {
+      const props = {
+        data: [{ x: 1, y: -3 }, { x: 3, y: 5 }]
+      };
+      const resultDomain = Domain.getDomainWithZero(props, "y");
+      expect(resultDomain).to.eql([-3, 5]);
+    });
+
+    it("allows explicit y0 values in props.data to set the minimum domain", () => {
+      const props = {
+        data: [{ x: 1, y: 3, y0: 2 }, { x: 3, y: 5, y0: 3 }]
+      };
+      const resultDomain = Domain.getDomainWithZero(props, "y");
+      expect(resultDomain).to.eql([2, 5]);
+    });
+
+    it("handles negative y0 values", () => {
+      const props = {
+        data: [{ x: 1, y: -3, y0: -7 }, { x: 3, y: -5, y0: -7 }]
+      };
+      const resultDomain = Domain.getDomainWithZero(props, "y");
+      expect(resultDomain).to.eql([-7, -3]);
+    });
+
+    it("respects props.minDomain when present", () => {
+      const props = {
+        data: [{ x: 1, y: 3, y0: 2 }, { x: 3, y: 5, y0: 2 }],
+        minDomain: { y: 4 }
+      };
+      const resultDomain = Domain.getDomainWithZero(props, "y");
+      expect(resultDomain).to.eql([4, 5]);
+    });
+
     it("does not force the independent domain to include zero", () => {
       const props = {
-        x: "x",
-        y: "y",
         data: [{ x: 1, y: 3 }, { x: 3, y: 5 }]
       };
       const resultDomain = Domain.getDomainWithZero(props, "x");
@@ -228,11 +258,13 @@ describe("victory-util/domain", () => {
       const maxDomain = Domain.getMaxFromProps(props, "x");
       expect(maxDomain).to.eql(props.maxDomain.x);
     });
+
     it("returns maxDomain from props as a number", () => {
       const props = { maxDomain: 3 };
       const maxDomain = Domain.getMaxFromProps(props, "x");
       expect(maxDomain).to.eql(props.maxDomain);
     });
+
     it("returns undefined when maxDomain is not defined for a given axis", () => {
       const props = { maxDomain: { y: 3 } };
       const maxDomain = Domain.getMaxFromProps(props, "x");
@@ -246,11 +278,13 @@ describe("victory-util/domain", () => {
       const minDomain = Domain.getMinFromProps(props, "x");
       expect(minDomain).to.eql(props.minDomain.x);
     });
+
     it("returns minDomain from props as a number", () => {
       const props = { minDomain: 3 };
       const minDomain = Domain.getMinFromProps(props, "x");
       expect(minDomain).to.eql(props.minDomain);
     });
+
     it("returns undefined when minDomain is not defined for a given axis", () => {
       const props = { minDomain: { y: 3 } };
       const minDomain = Domain.getMinFromProps(props, "x");

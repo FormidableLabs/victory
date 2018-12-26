@@ -44,7 +44,8 @@ export default class App extends React.Component {
   getAreaTransitionData() {
     const areas = random(6, 10);
     return range(areas).map((area) => {
-      return { x: area, y: random(2, 10) };
+      const y = random(2, 10);
+      return { x: area, y, y0: random(0, y) };
     });
   }
 
