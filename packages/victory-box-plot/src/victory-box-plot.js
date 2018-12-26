@@ -27,22 +27,6 @@ const fallbackProps = {
   }
 };
 
-const options = {
-  components: [
-    { name: "min" },
-    { name: "minLabels" },
-    { name: "max" },
-    { name: "maxLabels" },
-    { name: "median" },
-    { name: "medianLabels" },
-    { name: "q1" },
-    { name: "q1Labels" },
-    { name: "q3" },
-    { name: "q3Labels" },
-    { name: "parent", index: "parent" }
-  ]
-};
-
 const defaultData = [
   { x: 1, min: 5, q1: 7, median: 12, q3: 18, max: 20 },
   { x: 2, min: 2, q1: 5, median: 8, q3: 12, max: 15 }
@@ -237,4 +221,4 @@ class VictoryBoxPlot extends React.Component {
   }
 }
 
-export default addEvents(VictoryBoxPlot, options);
+export default addEvents(VictoryBoxPlot);
