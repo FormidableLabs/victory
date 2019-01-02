@@ -23,14 +23,6 @@ const fallbackProps = {
   interpolation: "linear"
 };
 
-const options = {
-  components: [
-    { name: "parent", index: "parent" },
-    { name: "data", index: "all" },
-    { name: "labels" }
-  ]
-};
-
 class VictoryArea extends React.Component {
   static animationWhitelist = ["data", "domain", "height", "padding", "style", "width"];
 
@@ -101,4 +93,4 @@ class VictoryArea extends React.Component {
   }
 }
 
-export default addEvents(VictoryArea, options);
+export default addEvents(VictoryArea);

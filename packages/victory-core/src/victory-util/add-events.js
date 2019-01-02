@@ -4,14 +4,7 @@ import Events from "./events";
 import isEqual from "react-fast-compare";
 import VictoryTransition from "../victory-transition/victory-transition";
 
-//  used for checking state changes. Expected components can be passed in via options
-const defaultComponents = [
-  { name: "parent", index: "parent" },
-  { name: "data" },
-  { name: "labels" }
-];
-
-export default (WrappedComponent, options) => {
+export default (WrappedComponent) => {
   return class addEvents extends WrappedComponent {
     constructor(props) {
       super(props);
@@ -52,40 +45,6 @@ export default (WrappedComponent, options) => {
           : undefined;
         this.setState(externalMutations, compiledCallbacks);
       }
-    }
-
-    // compile all state changes from own and parent state. Order doesn't matter, as any state
-    // state change should trigger a re-render
-    getStateChanges(props, calculatedValues) {
-      const { hasEvents, getSharedEventState } = calculatedValues;
-      if (!hasEvents) {
-        return {};
-      }
-
-      options = options || {};
-      const components = options.components || defaultComponents;
-
-      const getState = (key, type) => {
-        const baseState = defaults(
-          {},
-          this.getEventState(key, type),
-          getSharedEventState(key, type)
-        );
-        return isEmpty(baseState) ? undefined : baseState;
-      };
-
-      return components
-        .map((component) => {
-          if (!props.standalone && component.name === "parent") {
-            // don't check for changes on parent props for non-standalone components
-            return undefined;
-          } else {
-            return component.index !== undefined
-              ? getState(component.index, component.name)
-              : calculatedValues.dataKeys.map((key) => getState(key, component.name));
-          }
-        })
-        .filter(Boolean);
     }
 
     getCalculatedValues(props) {
