@@ -10,6 +10,7 @@ import {
   DefaultTransitions,
   CommonProps
 } from "victory-core";
+import { isNil } from "lodash";
 import Candle from "./candle";
 import { getDomain, getData, getBaseProps } from "./helper-methods";
 
@@ -114,7 +115,13 @@ class VictoryCandlestick extends React.Component {
   }
 
   shouldRenderDatum(datum) {
-    return datum._x !== null && datum._x !== undefined;
+    return (
+      !isNil(datum._x) &&
+      !isNil(datum._high) &&
+      !isNil(datum._low) &&
+      !isNil(datum._close) &&
+      !isNil(datum._open)
+    );
   }
 
   render() {

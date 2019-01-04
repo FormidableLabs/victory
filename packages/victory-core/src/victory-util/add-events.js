@@ -24,14 +24,16 @@ export default (WrappedComponent) => {
       this.externalMutations = this.getExternalMutations(props);
     }
 
-    componentDidUpdate(prevProps) {
-      this.cacheValues(this.getCalculatedValues(prevProps));
-
+    componentDidUpdate() {
       const externalMutations = this.getExternalMutations(this.props);
       if (!isEqual(this.externalMutations, externalMutations)) {
         this.externalMutations = externalMutations;
         this.applyExternalMutations(this.props, externalMutations);
       }
+    }
+
+    componentWillReceiveProps(nextProps) {
+      this.cacheValues(this.getCalculatedValues(nextProps));
     }
 
     applyExternalMutations(props, externalMutations) {
