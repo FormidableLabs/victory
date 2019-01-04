@@ -112,6 +112,15 @@ describe("components/victory-candlestick", () => {
       const points = wrapper.find(Candle);
       expect(points.length).to.equal(30);
     });
+
+    it("does not render data with null x values", () => {
+      const data = [
+        { x: 1, open: 10, close: 17, high: 19, low: 8 },
+        { x: null, open: 17, close: 17, high: 17, low: 17 }
+      ];
+      const wrapper = mount(<VictoryCandlestick data={data} />);
+      expect(wrapper.find(Candle).length).to.equal(1);
+    });
   });
 
   describe("event handling", () => {

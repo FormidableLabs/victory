@@ -64,6 +64,12 @@ describe("components/victory-voronoi", () => {
       const xValues = wrapper.find(Voronoi).map((voronoi) => voronoi.prop("datum")._x);
       expect(xValues).to.eql([4, 3, 2, 1, 0]);
     });
+
+    it("does not render data with null x or y values", () => {
+      const data = [{ x: 1, y: 2 }, { x: null, y: 4 }, { x: 5, y: null }];
+      const wrapper = mount(<VictoryVoronoi data={data} />);
+      expect(wrapper.find(Voronoi).length).to.equal(1);
+    });
   });
 
   describe("event handling", () => {

@@ -113,6 +113,10 @@ class VictoryCandlestick extends React.Component {
     return !!this.props.animate;
   }
 
+  shouldRenderDatum(datum) {
+    return datum._x !== null && datum._x !== undefined;
+  }
+
   render() {
     const { animationWhitelist, role } = VictoryCandlestick;
     const props = Helpers.modifyProps(this.props, fallbackProps, role);
@@ -121,7 +125,7 @@ class VictoryCandlestick extends React.Component {
       return this.animateComponent(props, animationWhitelist);
     }
 
-    const children = this.renderData(props);
+    const children = this.renderData(props, this.shouldRenderDatum);
     return props.standalone ? this.renderContainer(props.containerComponent, children) : children;
   }
 }

@@ -90,7 +90,7 @@ class VictoryScatter extends React.Component {
   }
 
   render() {
-    const { animationWhitelist, role } = this.constructor;
+    const { animationWhitelist, role } = VictoryScatter;
     const props = Helpers.modifyProps(this.props, fallbackProps, role);
 
     if (this.shouldAnimate()) {
