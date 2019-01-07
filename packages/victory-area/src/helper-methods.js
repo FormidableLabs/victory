@@ -12,6 +12,10 @@ const getDataWithBaseline = (props, scale) => {
   const minY = Math.min(...domainY) > 0 ? Math.min(...domainY) : defaultMin;
 
   return data.map((datum) => {
+    if ((datum._y1 !== undefined || datum._y !== undefined) && datum._y0 !== undefined) {
+      return datum;
+    }
+
     const _y1 = datum._y1 !== undefined ? datum._y1 : datum._y;
     const _y0 = datum._y0 !== undefined ? datum._y0 : minY;
     return assign({}, datum, { _y0, _y1 });
