@@ -165,34 +165,31 @@ class VictoryAxis extends React.Component {
 
   fixLabelOverlap(gridAndTicks, props) {
     const isVertical = Axis.isVertical(props);
-    const size = isVertical ? props.height : props.width;
     const isVictoryLabel = (child) => child.type && child.type.role === "label";
-    const labels = gridAndTicks
-      .map((gridAndTick) => gridAndTick.props.children)
-      .reduce((accumulator, childArr) => accumulator.concat(childArr), [])
-      .filter(isVictoryLabel)
-      .map((child) => child.props);
     const paddingToObject = (padding) =>
       typeof padding === "object"
         ? assign({}, { top: 0, right: 0, bottom: 0, left: 0 }, padding)
         : { top: padding, right: padding, bottom: padding, left: padding };
-    const labelsSumSize = labels.reduce((sum, label) => {
-      const padding = paddingToObject(label.style.padding);
-      const labelSize = TextSize.approximateTextSize(label.text, {
-        angle: label.angle,
-        fontSize: label.style.fontSize,
-        letterSpacing: label.style.letterSpacing,
-        fontFamily: label.style.fontFamily
+
+    let labelPosition = 0;
+    const doesNotOverlap = function(label) {
+      const padding = paddingToObject(label.props.style.padding);
+      const labelSize = TextSize.approximateTextSize(label.props.text, {
+        angle: label.props.angle,
+        fontSize: label.props.style.fontSize,
+        letterSpacing: label.props.style.letterSpacing,
+        fontFamily: label.props.style.fontFamily,
       });
-      return (
-        sum +
-        (isVertical
-          ? labelSize.height + padding.top + padding.bottom
-          : labelSize.width + padding.right + padding.left)
-      );
-    }, 0);
-    const availiableLabelCount = Math.floor((size * gridAndTicks.length) / labelsSumSize);
-    const divider = Math.ceil(gridAndTicks.length / availiableLabelCount) || 1;
+      const sumLabelSize = isVertical
+        ? labelSize.height + padding.top + padding.bottom
+        : labelSize.width + padding.right + padding.left;
+
+      if (label.props.x > labelPosition) {
+        labelPosition = sumLabelSize + label.props.x;
+        return true;
+      }
+      return false;
+    };
     const getLabelCoord = (gridAndTick) =>
       gridAndTick.props.children
         .filter(isVictoryLabel)
@@ -203,7 +200,7 @@ class VictoryAxis extends React.Component {
           ? getLabelCoord(b) - getLabelCoord(a) //ordinat axis has top-bottom orientation
           : getLabelCoord(a) - getLabelCoord(b) //ordinat axis has left-right orientation
     );
-    return sorted.filter((gridAndTick, index) => index % divider === 0);
+    return sorted.filter((gridAndTick) => gridAndTick.props.children.filter(isVictoryLabel).some(doesNotOverlap));
   }
 
   // Overridden in native versions
