@@ -20,10 +20,7 @@ function getCalculatedProps(props, childComponents) {
   const horizontal =
     modifiedProps.horizontal ||
     childComponents.every((component) => component.props && component.props.horizontal);
-  const categories = {
-    x: Wrapper.getCategories(modifiedProps, "x"),
-    y: Wrapper.getCategories(modifiedProps, "y")
-  };
+  const categories = Wrapper.getCategories(modifiedProps, childComponents);
   const datasets = Wrapper.getDataFromChildren(modifiedProps);
   const domain = {
     x: Wrapper.getDomain(assign({}, modifiedProps, { categories }), "x", childComponents),

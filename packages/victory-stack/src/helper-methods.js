@@ -112,10 +112,7 @@ function getCalculatedProps(props, childComponents) {
   const style = Wrapper.getStyle(props.theme, props.style, role);
   const horizontal =
     props.horizontal || childComponents.every((component) => component.props.horizontal);
-  const categories = {
-    x: Wrapper.getCategories(props, "x"),
-    y: Wrapper.getCategories(props, "y")
-  };
+  const categories = Wrapper.getCategories(props, childComponents);
   const datasets = stackData(props);
   const children = childComponents.map((c, i) => {
     return React.cloneElement(c, { data: datasets[i] });

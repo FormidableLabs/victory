@@ -190,9 +190,19 @@ function getCurrentAxis(axis, horizontal) {
  * @param {Array} children: an array of child components
  * @param {Function} iteratee: a function with arguments "child", "childName", and "parent"
  * @param {Object} parentProps: props from the parent that are applied to children
+ * @param {any}  initialMemo: The object in which the iteration results are combined.
+ * @param {Function} combine: Combines the result of the iteratee with the current memo
+ *   to the memo for the next iteration step
  * @returns {Array} returns an array of results from calling the iteratee on all nested children
  */
-function reduceChildren(children, iteratee, parentProps = {}) {
+/* eslint-disable max-params */
+function reduceChildren(
+  children,
+  iteratee,
+  parentProps = {},
+  initialMemo = [],
+  combine = (memo, item) => memo.concat(item)
+) {
   const sharedProps = [
     "data",
     "domain",
@@ -218,13 +228,17 @@ function reduceChildren(children, iteratee, parentProps = {}) {
               });
         const childNames = nestedChildren.map((c, i) => `${childName}-${i}`);
         const nestedResults = traverseChildren(nestedChildren, childNames, child);
-        memo = memo.concat(nestedResults);
+        memo = combine(memo, nestedResults);
       } else {
         const result = iteratee(child, childName, parent);
-        memo = result ? memo.concat(result) : memo;
+        if (Array.isArray(result)) {
+          memo = result.reduce(combine, memo);
+        } else if (result) {
+          memo = combine(memo, result);
+        }
       }
       return memo;
-    }, []);
+    }, initialMemo);
   };
   const childNames = children.map((c, i) => i);
   return traverseChildren(children, childNames);
