@@ -2,7 +2,16 @@
 /* eslint-disable no-use-before-define */
 import React from "react";
 import {
-  assign, uniq, range, last, isFunction, isPlainObject, property, orderBy, isEmpty, isEqual,
+  assign,
+  uniq,
+  range,
+  last,
+  isFunction,
+  isPlainObject,
+  property,
+  orderBy,
+  isEmpty,
+  isEqual,
   includes
 } from "lodash";
 import Helpers from "./helpers";
@@ -176,36 +185,39 @@ function formatData(dataset, props, expectedKeys) {
     return memo;
   }, {});
 
-  const preformattedData = isEqual(expectedKeys, defaultKeys)
-    && props.x === "_x"
-    && props.y === "_y"
-    && props.y0 === "_y0";
+  const preformattedData =
+    isEqual(expectedKeys, defaultKeys) &&
+    props.x === "_x" &&
+    props.y === "_y" &&
+    props.y0 === "_y0";
 
-  const data = preformattedData ? dataset
-    : dataset.reduce((dataArr, datum, index) => { // eslint-disable-line complexity
-      datum = parseDatum(datum);
-      const fallbackValues = { x: index, y: datum };
-      const processedValues = expectedKeys.reduce((memo, type) => {
-        const processedValue = accessor[type](datum);
-        const value = processedValue !== undefined ? processedValue : fallbackValues[type];
-        if (value !== undefined) {
-          if (typeof value === "string" && stringMap[type]) {
-            memo[`${type}Name`] = value;
-            memo[`_${type}`] = stringMap[type][value];
-          } else {
-            memo[`_${type}`] = value;
+  const data = preformattedData
+    ? dataset
+    : dataset.reduce((dataArr, datum, index) => {
+        // eslint-disable-line complexity
+        datum = parseDatum(datum);
+        const fallbackValues = { x: index, y: datum };
+        const processedValues = expectedKeys.reduce((memo, type) => {
+          const processedValue = accessor[type](datum);
+          const value = processedValue !== undefined ? processedValue : fallbackValues[type];
+          if (value !== undefined) {
+            if (typeof value === "string" && stringMap[type]) {
+              memo[`${type}Name`] = value;
+              memo[`_${type}`] = stringMap[type][value];
+            } else {
+              memo[`_${type}`] = value;
+            }
           }
+          return memo;
+        }, {});
+
+        const formattedDatum = assign({}, processedValues, datum);
+        if (!isEmpty(formattedDatum)) {
+          dataArr.push(formattedDatum);
         }
-        return memo;
-      }, {});
 
-      const formattedDatum = assign({}, processedValues, datum);
-      if (!isEmpty(formattedDatum)) {
-        dataArr.push(formattedDatum);
-      }
-
-      return dataArr;
-    }, []);
+        return dataArr;
+      }, []);
 
   const sortedData = sortData(data, props.sortKey, props.sortOrder);
   const cleanedData = cleanData(sortedData, props);
