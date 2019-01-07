@@ -1,6 +1,6 @@
 import React from "react";
 import PropTypes from "prop-types";
-import { flatten } from "lodash";
+import { flatten, isNil } from "lodash";
 import {
   Helpers,
   VictoryLabel,
@@ -177,11 +177,14 @@ class VictoryBoxPlot extends React.Component {
     const types = ["q1", "q3", "max", "min", "median"];
     const dataComponents = flatten(
       types.map((type) => {
-        return this.dataKeys.map((key, index) => {
+        return this.dataKeys.reduce((validDataComponents, _key, index) => {
           const baseComponent = props[`${type}Component`];
           const componentProps = this.getComponentProps(baseComponent, type, index);
-          return React.cloneElement(baseComponent, componentProps);
-        });
+          if (this.shouldRenderDatum(componentProps.datum)) {
+            validDataComponents.push(React.cloneElement(baseComponent, componentProps));
+          }
+          return validDataComponents;
+        }, []);
       })
     );
 
@@ -206,6 +209,19 @@ class VictoryBoxPlot extends React.Component {
   // Overridden in native versions
   shouldAnimate() {
     return !!this.props.animate;
+  }
+
+  shouldRenderDatum(datum) {
+    const hasX = !isNil(datum._x);
+    const hasY = !isNil(datum._y);
+    const hasSummaryStatistics =
+      !isNil(datum._min) &&
+      !isNil(datum._max) &&
+      !isNil(datum._median) &&
+      !isNil(datum._q1) &&
+      !isNil(datum._q3);
+
+    return hasSummaryStatistics && (this.props.horizontal ? hasY : hasX);
   }
 
   render() {

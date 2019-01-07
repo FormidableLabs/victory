@@ -1,4 +1,4 @@
-import { orderBy, defaults, assign, uniq, groupBy, keys } from "lodash";
+import { orderBy, defaults, assign, uniq, groupBy, keys, isNaN } from "lodash";
 import { Helpers, Scale, Domain, Data, Collection } from "victory-core";
 import { min as d3Min, max as d3Max, quantile as d3Quantile } from "d3-array";
 
@@ -8,7 +8,7 @@ const checkProcessedData = (props, data) => {
   /* check if the data is pre-processed. start by checking that it has
   all required quartile attributes. */
   const hasQuartileAttributes = data.every((datum) => {
-    return TYPES.every((val) => typeof datum[`_${val}`] === "number");
+    return TYPES.every((val) => typeof datum[`_${val}`] !== "undefined");
   });
 
   if (hasQuartileAttributes) {
@@ -25,14 +25,16 @@ const checkProcessedData = (props, data) => {
   return false;
 };
 
+const nanToNull = (val) => (isNaN(val) ? null : val);
+
 const getSummaryStatistics = (data, horizontal) => {
   const dependentVars = data.map((datum) => (horizontal ? datum._x : datum._y));
   const quartiles = {
-    _q1: d3Quantile(dependentVars, 0.25), // eslint-disable-line no-magic-numbers
-    _q3: d3Quantile(dependentVars, 0.75), // eslint-disable-line no-magic-numbers
-    _min: d3Min(dependentVars),
-    _median: d3Quantile(dependentVars, 0.5),
-    _max: d3Max(dependentVars)
+    _q1: nanToNull(d3Quantile(dependentVars, 0.25)), // eslint-disable-line no-magic-numbers
+    _q3: nanToNull(d3Quantile(dependentVars, 0.75)), // eslint-disable-line no-magic-numbers
+    _min: nanToNull(d3Min(dependentVars)),
+    _median: nanToNull(d3Quantile(dependentVars, 0.5)),
+    _max: nanToNull(d3Max(dependentVars))
   };
 
   return horizontal
