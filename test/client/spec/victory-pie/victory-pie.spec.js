@@ -134,6 +134,12 @@ describe("components/victory-pie", () => {
 
       expect(xValues).to.eql([8, 7, 6, 5, 4, 3, 2, 1, 0]);
     });
+
+    it("does not render data with null x or y values", () => {
+      const data = [{ x: 1, y: 2 }, { x: null, y: 4 }, { x: 5, y: null }];
+      const wrapper = mount(<VictoryPie data={data} />);
+      expect(wrapper.find(Slice).length).to.equal(1);
+    });
   });
 
   describe("the `startAngle` prop", () => {

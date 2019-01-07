@@ -96,6 +96,12 @@ describe("components/victory-bar", () => {
       expect(heights[1] / 2).to.be.closeTo(heights[0], 0.5);
       expect((heights[2] / 3) * 2).to.be.closeTo(heights[1], 0.5);
     });
+
+    it("does not render data with null x or y values", () => {
+      const data = [{ x: 1, y: 2 }, { x: null, y: 4 }, { x: 5, y: null }];
+      const wrapper = mount(<VictoryBar data={data} />);
+      expect(wrapper.find(Bar).length).to.equal(1);
+    });
   });
 
   describe("event handling", () => {

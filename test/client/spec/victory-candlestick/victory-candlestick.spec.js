@@ -112,6 +112,19 @@ describe("components/victory-candlestick", () => {
       const points = wrapper.find(Candle);
       expect(points.length).to.equal(30);
     });
+
+    it("does not render data with null x, open, close, high, or low values", () => {
+      const data = [
+        { x: 1, open: 10, close: 17, high: 19, low: 8 },
+        { x: null, open: 17, close: 17, high: 17, low: 17 },
+        { x: 2, open: null, close: 17, high: 17, low: 17 },
+        { x: 3, open: 17, close: null, high: 17, low: 17 },
+        { x: 4, open: 17, close: 17, high: null, low: 17 },
+        { x: 5, open: 17, close: 17, high: 17, low: null }
+      ];
+      const wrapper = mount(<VictoryCandlestick data={data} />);
+      expect(wrapper.find(Candle).length).to.equal(1);
+    });
   });
 
   describe("event handling", () => {

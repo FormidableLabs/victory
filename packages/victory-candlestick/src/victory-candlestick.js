@@ -10,6 +10,7 @@ import {
   DefaultTransitions,
   CommonProps
 } from "victory-core";
+import { isNil } from "lodash";
 import Candle from "./candle";
 import { getDomain, getData, getBaseProps } from "./helper-methods";
 
@@ -113,6 +114,16 @@ class VictoryCandlestick extends React.Component {
     return !!this.props.animate;
   }
 
+  shouldRenderDatum(datum) {
+    return (
+      !isNil(datum._x) &&
+      !isNil(datum._high) &&
+      !isNil(datum._low) &&
+      !isNil(datum._close) &&
+      !isNil(datum._open)
+    );
+  }
+
   render() {
     const { animationWhitelist, role } = VictoryCandlestick;
     const props = Helpers.modifyProps(this.props, fallbackProps, role);
@@ -121,7 +132,7 @@ class VictoryCandlestick extends React.Component {
       return this.animateComponent(props, animationWhitelist);
     }
 
-    const children = this.renderData(props);
+    const children = this.renderData(props, this.shouldRenderDatum);
     return props.standalone ? this.renderContainer(props.containerComponent, children) : children;
   }
 }

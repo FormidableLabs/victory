@@ -1,8 +1,12 @@
 import React from "react";
-import { defaults, assign, keys, isFunction, pick, without, isEmpty } from "lodash";
+import { defaults, assign, keys, isFunction, pick, without, isEmpty, isNil } from "lodash";
 import Events from "./events";
 import isEqual from "react-fast-compare";
 import VictoryTransition from "../victory-transition/victory-transition";
+
+const datumHasXandY = (datum) => {
+  return !isNil(datum._x) && !isNil(datum._y);
+};
 
 export default (WrappedComponent) => {
   return class addEvents extends WrappedComponent {
@@ -167,12 +171,16 @@ export default (WrappedComponent) => {
       return this.renderContainer(groupComponent, children);
     }
 
-    renderData(props) {
+    renderData(props, shouldRenderDatum = datumHasXandY) {
       const { dataComponent, labelComponent, groupComponent } = props;
-      const dataComponents = this.dataKeys.map((_dataKey, index) => {
+
+      const dataComponents = this.dataKeys.reduce((validDataComponents, _dataKey, index) => {
         const dataProps = this.getComponentProps(dataComponent, "data", index);
-        return React.cloneElement(dataComponent, dataProps);
-      });
+        if (shouldRenderDatum(dataProps.datum)) {
+          validDataComponents.push(React.cloneElement(dataComponent, dataProps));
+        }
+        return validDataComponents;
+      }, []);
 
       const labelComponents = this.dataKeys
         .map((_dataKey, index) => {

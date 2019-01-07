@@ -117,6 +117,12 @@ describe("components/victory-scatter", () => {
 
       expect(coordinates).to.eql([[0, 0], [2, 3], [5, 5]]);
     });
+
+    it("does not render data with null x or y values", () => {
+      const data = [{ x: 1, y: 2 }, { x: null, y: 4 }, { x: 5, y: null }];
+      const wrapper = mount(<VictoryScatter data={data} />);
+      expect(wrapper.find(Point).length).to.equal(1);
+    });
   });
 
   describe("event handling", () => {

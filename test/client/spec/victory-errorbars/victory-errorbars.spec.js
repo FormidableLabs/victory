@@ -39,6 +39,16 @@ describe("components/victory-errorbar", () => {
     });
   });
 
+  it("does not render data with null x or y values", () => {
+    const data = [
+      { x: 15, y: 35, errorX: 1, errorY: 3 },
+      { x: null, y: 42, errorX: 3, errorY: 2 },
+      { x: 25, y: null, errorX: 5, errorY: 5 }
+    ];
+    const wrapper = mount(<VictoryErrorBar data={data} />);
+    expect(wrapper.find(ErrorBar).length).to.equal(1);
+  });
+
   const immutableRenderDataTest = {
     createData: (x) => fromJS(x),
     testLabel: "with immutable data"
