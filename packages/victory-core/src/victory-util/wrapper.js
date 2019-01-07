@@ -272,8 +272,10 @@ export default {
       if (!Domain.isDomainComponent(child) || !childProps.categories) {
         return null;
       } else {
-        const categories = childProps.categories && !Array.isArray(childProps.categories) ?
-          childProps.categories[axis] : childProps.props.categories;
+        const categories =
+          childProps.categories && !Array.isArray(childProps.categories)
+            ? childProps.categories[axis]
+            : childProps.props.categories;
         const categoryStrings = categories && categories.filter((val) => typeof val === "string");
         return categoryStrings ? Collection.removeUndefined(categoryStrings) : [];
       }
@@ -301,12 +303,7 @@ export default {
       y: datum.y !== undefined ? memo.y.concat(datum.y) : memo.y
     });
 
-    return Helpers.reduceChildren(
-      childComponents.slice(0),
-      iteratee,
-      {},
-      initialMemo,
-      combine);
+    return Helpers.reduceChildren(childComponents.slice(0), iteratee, {}, initialMemo, combine);
   },
 
   getCategoryAndAxisStringsFromChildren(props, axis, childComponents) {
@@ -333,11 +330,11 @@ export default {
   },
 
   getCategories(props) {
-    const xPropCategories = props.categories && !Array.isArray(props.categories) ?
-      props.categories.x : props.categories;
+    const xPropCategories =
+      props.categories && !Array.isArray(props.categories) ? props.categories.x : props.categories;
 
-    const yPropCategories = props.categories && !Array.isArray(props.categories) ?
-      props.categories.y : props.categories;
+    const yPropCategories =
+      props.categories && !Array.isArray(props.categories) ? props.categories.y : props.categories;
 
     const fallbackRequired = !xPropCategories || !yPropCategories;
 

@@ -17,9 +17,9 @@ function getCalculatedProps(props, childComponents) {
   const style = Wrapper.getStyle(props.theme, props.style, role);
   const modifiedProps = Helpers.modifyProps(props, fallbackProps);
   const { offset, colorScale, color, polar } = modifiedProps;
-  const horizontal = modifiedProps.horizontal || childComponents.every(
-    (component) => component.props && component.props.horizontal
-  );
+  const horizontal =
+    modifiedProps.horizontal ||
+    childComponents.every((component) => component.props && component.props.horizontal);
   const categories = Wrapper.getCategories(modifiedProps, childComponents);
   const datasets = Wrapper.getDataFromChildren(modifiedProps);
   const domain = {

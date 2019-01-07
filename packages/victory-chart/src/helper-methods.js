@@ -245,17 +245,21 @@ const getAxisOffset = (props, calculatedProps) => {
 const createStringMap = (props, childComponents) => {
   const allStrings = Wrapper.getStringsFromChildren(props, childComponents);
 
-  const x = !allStrings.x || allStrings.x.length === 0 ? null :
-    allStrings.x.reduce((memo, string, index) => {
-      memo[string] = index + 1;
-      return memo;
-    }, {});
+  const x =
+    !allStrings.x || allStrings.x.length === 0
+      ? null
+      : allStrings.x.reduce((memo, string, index) => {
+          memo[string] = index + 1;
+          return memo;
+        }, {});
 
-  const y = !allStrings.y || allStrings.y.length === 0 ? null :
-    allStrings.y.reduce((memo, string, index) => {
-      memo[string] = index + 1;
-      return memo;
-    }, {});
+  const y =
+    !allStrings.y || allStrings.y.length === 0
+      ? null
+      : allStrings.y.reduce((memo, string, index) => {
+          memo[string] = index + 1;
+          return memo;
+        }, {});
 
   return { x, y };
 };

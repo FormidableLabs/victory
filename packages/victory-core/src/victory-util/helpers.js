@@ -202,7 +202,7 @@ function reduceChildren(
   parentProps = {},
   initialMemo = [],
   combine = (memo, item) => memo.concat(item)
-  ) {
+) {
   const sharedProps = [
     "data",
     "domain",
