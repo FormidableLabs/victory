@@ -1,6 +1,41 @@
 # Victory Changelog
 
-## 31.0.2 (32018-12-12)
+## 31.1.0 (2019-01-08)
+
+- [1222](https://github.com/FormidableLabs/victory/pull/1222) Bugfix: Avoid rendering null values on discrete data
+- [1218](https://github.com/FormidableLabs/victory/pull/1218) Bugfix: Ensure that calculated domains respect custom baselines for VictoryBar and VictoryArea
+- [1202](https://github.com/FormidableLabs/victory/pull/1202) Bugfix: Correct missing bar values
+- [1208](https://github.com/FormidableLabs/victory/pull/1208) Performance: Improve performance in `addEventKeys`
+- [1211](https://github.com/FormidableLabs/victory/pull/1211) Performance: Optimize stringMap calculations
+- [1212](https://github.com/FormidableLabs/victory/pull/1212) Performance: Optimize for preformatted data:
+  When data objects already contain `_x`, `_y` (and `_y0` where appropriate) and have data accessor props like `x="_x", data will no longer be formatted by Victory, but will be used as is.
+  Example:
+  ```
+  <VictoryArea
+    data={[ { _x: 0, _y0: 1, _y: 2 } ...]}
+    x="_x"
+    y="_y"
+    y0="_y0"
+  />
+  ```
+- [1209](https://github.com/FormidableLabs/victory/pull/1209) Feature: Adds an `animationWhitelist` property to the `animate` prop. This property should be given as an array of strings. When this prop is given, only the prop names matching the array will be animated, and all other props will be instantaneously updates.
+
+  Example:
+  ```
+  <VictoryBar
+    animate={{
+      animationWhitelist: ["data"]
+    }}
+    data={this.state.data}
+    style={{
+      data: this.state.style
+    }}
+  />
+  ```
+
+  When this property is not set, the `static animationWhitelist` of any given component will be used.
+
+## 31.0.2 (2018-12-12)
 
 - [1200](https://github.com/FormidableLabs/victory/pull/1200) Export `defaultStyles` from `VictoryLabel`. Thanks @rudasoftware!
 
