@@ -8,7 +8,7 @@
 - [1208](https://github.com/FormidableLabs/victory/pull/1208) Performance: Improve performance in `addEventKeys`
 - [1211](https://github.com/FormidableLabs/victory/pull/1211) Performance: Optimize stringMap calculations
 - [1212](https://github.com/FormidableLabs/victory/pull/1212) Performance: Optimize for preformatted data:
-  When data objects already contain `_x`, `_y` (and `_y0` where appropriate) and have data accessor props like `x="_x", data will no longer be formatted by Victory, but will be used as is.
+  When data objects already contain `_x`, `_y` (and `_y0` where appropriate) and have data accessor props like `x="_x"`, data will no longer be formatted by Victory, but will be used as is.
   Example:
   ```
   <VictoryArea
@@ -21,6 +21,7 @@
 - [1209](https://github.com/FormidableLabs/victory/pull/1209) Feature: Adds an `animationWhitelist` property to the `animate` prop. This property should be given as an array of strings. When this prop is given, only the prop names matching the array will be animated, and all other props will be instantaneously updates.
 
   Example:
+
   ```
   <VictoryBar
     animate={{
