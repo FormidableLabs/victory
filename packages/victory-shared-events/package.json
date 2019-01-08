@@ -1,6 +1,6 @@
 {
   "name": "victory-shared-events",
-  "version": "31.0.2",
+  "version": "31.1.0",
   "description": "Shared Event Helper for Victory",
   "keywords": [
     "data visualization",
@@ -21,7 +21,7 @@
   "dependencies": {
     "lodash": "^4.17.5",
     "prop-types": "^15.5.8",
-    "victory-core": "^31.0.2"
+    "victory-core": "^31.1.0"
   },
   "scripts": {
     "version": "nps build-libs && nps build-dists"
