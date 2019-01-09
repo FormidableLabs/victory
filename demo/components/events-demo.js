@@ -202,7 +202,7 @@ class App extends React.Component {
                         childName: ["area-3", "area-4"],
                         target: "data",
                         mutation: (props) => {
-                          const fill = props.style.fill;
+                          const fill = props.style && props.style.fill;
                           return fill === "gold" ? null : { style: { fill: "gold" } };
                         }
                       }

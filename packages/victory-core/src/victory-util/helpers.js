@@ -231,9 +231,7 @@ function reduceChildren(
         memo = combine(memo, nestedResults);
       } else {
         const result = iteratee(child, childName, parent);
-        if (Array.isArray(result)) {
-          memo = result.reduce(combine, memo);
-        } else if (result) {
+        if (result) {
           memo = combine(memo, result);
         }
       }

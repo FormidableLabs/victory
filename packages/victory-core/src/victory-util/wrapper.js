@@ -298,11 +298,14 @@ export default {
     };
 
     const initialMemo = { x: [], y: [] };
-    const combine = (memo, datum) => ({
-      x: datum.x !== undefined ? memo.x.concat(datum.x) : memo.x,
-      y: datum.y !== undefined ? memo.y.concat(datum.y) : memo.y
-    });
-
+    const combine = (memo, datum) => {
+      const x = Array.isArray(datum) ? datum.map((d) => d.x).filter(Boolean) : datum.x;
+      const y = Array.isArray(datum) ? datum.map((d) => d.y).filter(Boolean) : datum.y;
+      return {
+        x: x !== undefined ? memo.x.concat(x) : memo.x,
+        y: y !== undefined ? memo.y.concat(y) : memo.y
+      };
+    }
     return Helpers.reduceChildren(childComponents.slice(0), iteratee, {}, initialMemo, combine);
   },
 
