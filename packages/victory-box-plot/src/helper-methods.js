@@ -1,4 +1,4 @@
-import { orderBy, defaults, assign, uniq, groupBy, keys, isNaN } from "lodash";
+import { orderBy, defaults, assign, uniq, groupBy, keys, isNaN, isNil } from "lodash";
 import { Helpers, Scale, Domain, Data, Collection } from "victory-core";
 import { min as d3Min, max as d3Max, quantile as d3Quantile } from "d3-array";
 
@@ -350,7 +350,7 @@ const getBaseProps = (props, fallbackProps) => {
   const boxScale = horizontal ? scale.x : scale.y;
 
   return data.reduce((acc, datum, index) => {
-    const eventKey = datum.eventKey !== undefined ? datum.eventKey : index;
+    const eventKey = !isNil(datum.eventKey) ? datum.eventKey : index;
     const positions = {
       x: scale.x(datum._x),
       y: scale.y(datum._y),

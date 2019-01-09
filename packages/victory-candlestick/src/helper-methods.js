@@ -1,4 +1,4 @@
-import { assign } from "lodash";
+import { assign, isNil } from "lodash";
 import { Helpers, LabelHelpers, Scale, Domain, Data, Collection } from "victory-core";
 
 const getData = (props) => {
@@ -134,7 +134,7 @@ const getBaseProps = (props, fallbackProps) => {
   };
 
   return data.reduce((childProps, datum, index) => {
-    const eventKey = datum.eventKey || index;
+    const eventKey = !isNil(datum.eventKey) ? datum.eventKey : index;
     const x = scale.x(datum._x1 !== undefined ? datum._x1 : datum._x);
     const high = scale.y(datum._high);
     const close = scale.y(datum._close);
