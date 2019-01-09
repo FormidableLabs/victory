@@ -1,4 +1,4 @@
-import { assign, without } from "lodash";
+import { assign, without, isNil } from "lodash";
 import { voronoi as d3Voronoi } from "d3-voronoi";
 import { Helpers, LabelHelpers, Scale, Domain, Data } from "victory-core";
 
@@ -85,7 +85,7 @@ const getBaseProps = (props, fallbackProps) => {
 
   return data.reduce((childProps, datum, index) => {
     const polygon = without(polygons[index], "data");
-    const eventKey = datum.eventKey || index;
+    const eventKey = !isNil(datum.eventKey) ? datum.eventKey : index;
     const { x, y } = Helpers.scalePoint(props, datum);
     const dataProps = {
       x,

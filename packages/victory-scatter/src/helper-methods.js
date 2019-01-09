@@ -1,4 +1,4 @@
-import { assign, values } from "lodash";
+import { assign, values, isNil } from "lodash";
 import { Helpers, LabelHelpers, Data, Domain, Scale } from "victory-core";
 
 const getSymbol = (data, props) => {
@@ -109,7 +109,7 @@ const getBaseProps = (props, fallbackProps) => {
   };
 
   return data.reduce((childProps, datum, index) => {
-    const eventKey = datum.eventKey || index;
+    const eventKey = !isNil(datum.eventKey) ? datum.eventKey : index;
     const { x, y } = Helpers.scalePoint(props, datum);
     const dataProps = {
       x,

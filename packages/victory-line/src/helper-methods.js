@@ -1,4 +1,4 @@
-import { assign } from "lodash";
+import { assign, isNil } from "lodash";
 import { Helpers, LabelHelpers, Data, Domain, Scale } from "victory-core";
 
 const getCalculatedValues = (props) => {
@@ -75,7 +75,7 @@ const getBaseProps = (props, fallbackProps) => {
   return data.reduce((childProps, datum, index) => {
     const text = LabelHelpers.getText(props, datum, index);
     if ((text !== undefined && text !== null) || (labels && (events || sharedEvents))) {
-      const eventKey = datum.eventKey || index;
+      const eventKey = !isNil(datum.eventKey) ? datum.eventKey : index;
       childProps[eventKey] = { labels: LabelHelpers.getProps(props, index) };
     }
     return childProps;

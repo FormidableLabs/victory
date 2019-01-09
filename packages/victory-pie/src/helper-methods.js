@@ -1,5 +1,5 @@
 /*eslint no-magic-numbers: ["error", { "ignore": [-1, 0, 1, 2, 45, 135, 180, 225, 315] }]*/
-import { assign, defaults, isFunction, isPlainObject } from "lodash";
+import { assign, defaults, isFunction, isPlainObject, isNil } from "lodash";
 import * as d3Shape from "d3-shape";
 
 import { Helpers, Data, Style } from "victory-core";
@@ -189,7 +189,7 @@ export const getBaseProps = (props, fallbackProps) => {
       endAngle: Helpers.radiansToDegrees(slice.endAngle),
       padAngle: Helpers.radiansToDegrees(slice.padAngle)
     });
-    const eventKey = datum.eventKey || index;
+    const eventKey = !isNil(datum.eventKey) ? datum.eventKey : index;
     const dataProps = {
       index,
       slice,
