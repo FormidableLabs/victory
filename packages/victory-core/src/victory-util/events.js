@@ -118,7 +118,6 @@ export default {
 
       // returns the state object with mutated props applied for a single key
       const getMutationObject = (key, childName) => {
-        console.log("GET MUTATION OBJECT", key, childName)
         const baseState = this.state || {};
         if (!isFunction(eventReturn.mutation)) {
           return baseState;
