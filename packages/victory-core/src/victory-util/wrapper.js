@@ -305,7 +305,7 @@ export default {
         x: x !== undefined ? memo.x.concat(x) : memo.x,
         y: y !== undefined ? memo.y.concat(y) : memo.y
       };
-    }
+    };
     return Helpers.reduceChildren(childComponents.slice(0), iteratee, {}, initialMemo, combine);
   },
 
