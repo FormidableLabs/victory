@@ -1,4 +1,4 @@
-import { assign, defaults } from "lodash";
+import { assign, defaults, isEmpty } from "lodash";
 import PropTypes from "prop-types";
 import React from "react";
 import { Helpers, VictoryContainer, VictoryTheme, CommonProps, Wrapper } from "victory-core";
@@ -62,12 +62,7 @@ export default class VictoryGroup extends React.Component {
         animating: true
       };
       this.setAnimationState = Wrapper.setAnimationState.bind(this);
-      this.events = Wrapper.getAllEvents(props);
     }
-  }
-
-  componentWillMount() {
-    this.events = Wrapper.getAllEvents(this.props);
   }
 
   componentWillReceiveProps(nextProps) {
@@ -129,7 +124,8 @@ export default class VictoryGroup extends React.Component {
     const container = standalone
       ? this.renderContainer(containerComponent, containerProps)
       : groupComponent;
-    if (this.events) {
+    this.events = this.events || Wrapper.getAllEvents(props);
+    if (!isEmpty(this.events)) {
       return (
         <VictorySharedEvents
           container={container}

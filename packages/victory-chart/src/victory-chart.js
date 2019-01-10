@@ -1,4 +1,4 @@
-import { defaults, assign } from "lodash";
+import { defaults, assign, isEmpty } from "lodash";
 import PropTypes from "prop-types";
 import React from "react";
 import {
@@ -67,11 +67,6 @@ export default class VictoryChart extends React.Component {
       };
     }
     this.setAnimationState = Wrapper.setAnimationState.bind(this);
-    this.events = Wrapper.getAllEvents(props);
-  }
-
-  componentWillMount() {
-    this.events = Wrapper.getAllEvents(this.props);
   }
 
   componentWillReceiveProps(nextProps) {
@@ -134,7 +129,8 @@ export default class VictoryChart extends React.Component {
     const container = standalone
       ? this.renderContainer(containerComponent, containerProps)
       : groupComponent;
-    if (this.events) {
+    this.events = this.events || Wrapper.getAllEvents(props);
+    if (!isEmpty(this.events)) {
       return (
         <VictorySharedEvents
           container={container}

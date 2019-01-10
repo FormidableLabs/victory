@@ -116,12 +116,13 @@ export default {
   getAllEvents(props) {
     const components = ["groupComponent", "containerComponent", "labelComponent"];
     this.componentEvents = Events.getComponentEvents(props, components);
+    let events = props.events;
     if (Array.isArray(this.componentEvents)) {
-      return Array.isArray(props.events)
+      events = Array.isArray(props.events)
         ? this.componentEvents.concat(...props.events)
         : this.componentEvents;
     }
-    return props.events;
+    return events || [];
   },
 
   getAnimationProps(props, child, index) {
