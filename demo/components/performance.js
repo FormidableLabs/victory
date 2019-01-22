@@ -3,6 +3,7 @@ import React from "react";
 import { range } from "lodash";
 import { VictorySelectionContainer } from "../../packages/victory-selection-container/src/index";
 import { VictoryScatter } from "../../packages/victory-scatter/src/index";
+import { VictoryChart } from "../../packages/victory-chart/src/index";
 
 const scatterData = range(4000).map(() => ({ x: Math.random(), y: Math.random() }));
 
@@ -53,13 +54,7 @@ class App extends React.Component {
     return (
       <div className="demo">
         <div style={containerStyle}>
-          <VictoryScatter
-            style={{
-              parent: chartStyle.parent,
-              data: {
-                fill: (datum, active) => (active ? "tomato" : "black")
-              }
-            }}
+          <VictoryChart
             containerComponent={
               <VictorySelectionContainer
                 selectionStyle={{
@@ -70,9 +65,17 @@ class App extends React.Component {
                 }}
               />
             }
-            size={(datum, active) => (active ? 5 : 3)}
+            style={{ parent: chartStyle.parent }}
+          >
+          <VictoryScatter
+            style={{
+              data: {
+                fill: (datum, active) => (active ? "tomato" : "black")
+              }
+            }}
             data={scatterData}
           />
+          </VictoryChart>
         </div>
       </div>
     );

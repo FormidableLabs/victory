@@ -21,6 +21,17 @@ const fallbackProps = {
   padding: 50
 };
 
+const options = {
+  components: [
+    { name: "axis", index: 0 },
+    { name: "axisLabel", index: 0 },
+    { name: "grid" },
+    { name: "parent", index: "parent" },
+    { name: "ticks" },
+    { name: "tickLabels" }
+  ]
+};
+
 class VictoryPolarAxis extends React.Component {
   static animationWhitelist = [
     "style",
@@ -212,4 +223,4 @@ class VictoryPolarAxis extends React.Component {
   }
 }
 
-export default addEvents(VictoryPolarAxis);
+export default addEvents(VictoryPolarAxis, options);

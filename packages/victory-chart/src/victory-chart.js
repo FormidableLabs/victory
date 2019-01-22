@@ -9,6 +9,7 @@ import {
   PropTypes as CustomPropTypes,
   Wrapper
 } from "victory-core";
+import isEqual from "react-fast-compare";
 import { VictorySharedEvents } from "victory-shared-events";
 import { VictoryAxis } from "victory-axis";
 import { VictoryPolarAxis } from "victory-polar-axis";
@@ -69,14 +70,15 @@ export default class VictoryChart extends React.Component {
     this.setAnimationState = Wrapper.setAnimationState.bind(this);
   }
 
-  componentWillReceiveProps(nextProps) {
-    if (this.props.animate) {
+  shouldComponentUpdate(nextProps, nextState) {
+    const equalProps = isEqual(this.props, nextProps);
+    if (this.props.animate && !equalProps) {
       this.setAnimationState(this.props, nextProps);
     }
     this.events = Wrapper.getAllEvents(nextProps);
+    return this.props.animate || !equalProps || !isEqual(this.state, nextState);
   }
 
-  // the old ones were bad
   getNewChildren(props, childComponents, calculatedProps) {
     const children = getChildren(props, childComponents, calculatedProps);
     const getAnimationProps = Wrapper.getAnimationProps.bind(this);
