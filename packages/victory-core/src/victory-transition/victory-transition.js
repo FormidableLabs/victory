@@ -44,13 +44,6 @@ export default class VictoryTransition extends React.Component {
     return true;
   }
 
-  // componentWillReceiveProps(nextProps) {
-  //   this.getTimer().bypassAnimation();
-  //   this.setState(this.getTransitionState(this.props, nextProps), () =>
-  //     this.getTimer().resumeAnimation()
-  //   );
-  // }
-
   componentWillUnmount() {
     this.getTimer().stop();
   }
