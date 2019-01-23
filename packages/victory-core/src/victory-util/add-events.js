@@ -1,5 +1,5 @@
 import React from "react";
-import { defaults, assign, keys, isFunction, pick, without, isEmpty, isNil, omit } from "lodash";
+import { defaults, assign, keys, isFunction, pick, without, isEmpty, isNil } from "lodash";
 import Events from "./events";
 import isEqual from "react-fast-compare";
 import VictoryTransition from "../victory-transition/victory-transition";
@@ -47,10 +47,7 @@ export default (WrappedComponent, options) => {
         this.cacheValues(calculatedValues);
         return true;
       }
-      if (!isEqual(
-          omit(this.props, ["getEventState", "sharedEvents"]),
-          omit(nextProps, ["getEventState", "sharedEvents"])
-        )) {
+      if (!isEqual(this.props, nextProps)) {
         this.cacheValues(calculatedValues);
         return true;
       }
