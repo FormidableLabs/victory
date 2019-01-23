@@ -32,13 +32,13 @@ export default (WrappedComponent, options) => {
 
     shouldComponentUpdate(nextProps) {
       const calculatedValues = this.getCalculatedValues(nextProps);
-      const externalMutations = this.getExternalMutations(this.props);
+      const externalMutations = this.getExternalMutations(nextProps);
       const animating = this.props.animating || this.props.animate;
       const newMutation = !isEqual(externalMutations, this.externalMutations);
       if (animating || newMutation) {
         this.cacheValues(calculatedValues);
         this.externalMutations = externalMutations;
-        this.applyExternalMutations(this.props, externalMutations);
+        this.applyExternalMutations(nextProps, externalMutations);
         return true;
       }
       const calculatedState = this.getStateChanges(nextProps, calculatedValues);

@@ -74,20 +74,14 @@ export default class VictorySharedEvents extends React.Component {
     };
   }
 
-  shouldComponentUpdate(newProps) {
-    if (!isEqual(this.props, newProps)) {
-      this.baseProps = this.getBaseProps(newProps);
-      const externalMutations = this.getExternalMutations(newProps, this.baseProps);
-      this.applyExternalMutations(newProps, externalMutations);
+  shouldComponentUpdate(nextProps) {
+    if (!isEqual(this.props, nextProps)) {
+      this.baseProps = this.getBaseProps(nextProps);
+      const externalMutations = this.getExternalMutations(nextProps, this.baseProps);
+      this.applyExternalMutations(nextProps, externalMutations);
     }
     return true;
   }
-
-  // componentWillReceiveProps(newProps) {
-  //   this.baseProps = this.getBaseProps(newProps);
-  //   const externalMutations = this.getExternalMutations(newProps, this.baseProps);
-  //   this.applyExternalMutations(newProps, externalMutations);
-  // }
 
   getTimer() {
     if (this.context.getTimer) {
