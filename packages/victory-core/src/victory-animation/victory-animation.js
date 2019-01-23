@@ -100,7 +100,7 @@ export default class VictoryAnimation extends React.Component {
   }
 
   shouldComponentUpdate(nextProps, nextState) {
-    const equalProps = isEqual(this.props, nextProps)
+    const equalProps = isEqual(this.props, nextProps);
     if (!equalProps) {
       /* cancel existing loop if it exists */
       this.getTimer().unsubscribe(this.loopID);

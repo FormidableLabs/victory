@@ -10,7 +10,9 @@ const datumHasXandY = (datum) => {
 
 //  used for checking state changes. Expected components can be passed in via options
 const defaultComponents = [
-  { name: "parent", index: "parent" }, { name: "data" }, { name: "labels" }
+  { name: "parent", index: "parent" },
+  { name: "data" },
+  { name: "labels" }
 ];
 
 export default (WrappedComponent, options) => {
@@ -27,7 +29,7 @@ export default (WrappedComponent, options) => {
       const calculatedValues = this.getCalculatedValues(props);
       this.cacheValues(calculatedValues);
       this.externalMutations = this.getExternalMutations(props);
-      this.calculatedState = this.getStateChanges(props, calculatedValues)
+      this.calculatedState = this.getStateChanges(props, calculatedValues);
     }
 
     shouldComponentUpdate(nextProps) {
@@ -58,7 +60,9 @@ export default (WrappedComponent, options) => {
     // state change should trigger a re-render
     getStateChanges(props, calculatedValues) {
       const { hasEvents, getSharedEventState } = calculatedValues;
-      if (!hasEvents) { return {}; }
+      if (!hasEvents) {
+        return {};
+      }
 
       const getState = (key, type) => {
         const result = defaults({}, this.getEventState(key, type), getSharedEventState(key, type));
@@ -67,19 +71,22 @@ export default (WrappedComponent, options) => {
 
       options = options || {};
       const components = options.components || defaultComponents;
-      const stateChanges = components.map((component) => {
-        if (!props.standalone && component.name === "parent") {
-           // don't check for changes on parent props for non-standalone components
-          return undefined;
-        } else {
-          return component.index !== undefined ?
-          getState(component.index, component.name) :
-          calculatedValues.dataKeys.map((key) => getState(key, component.name)).filter(Boolean);
-        }
-      }).filter(Boolean);
-      return stateChanges
+      const stateChanges = components
+        .map((component) => {
+          if (!props.standalone && component.name === "parent") {
+            // don't check for changes on parent props for non-standalone components
+            return undefined;
+          } else {
+            return component.index !== undefined
+              ? getState(component.index, component.name)
+              : calculatedValues.dataKeys
+                  .map((key) => getState(key, component.name))
+                  .filter(Boolean);
+          }
+        })
+        .filter(Boolean);
+      return stateChanges;
     }
-
 
     applyExternalMutations(props, externalMutations) {
       if (!isEmpty(externalMutations)) {

@@ -67,14 +67,14 @@ class App extends React.Component {
             }
             style={{ parent: chartStyle.parent }}
           >
-          <VictoryScatter
-            style={{
-              data: {
-                fill: (datum, active) => (active ? "tomato" : "black")
-              }
-            }}
-            data={scatterData}
-          />
+            <VictoryScatter
+              style={{
+                data: {
+                  fill: (datum, active) => (active ? "tomato" : "black")
+                }
+              }}
+              data={scatterData}
+            />
           </VictoryChart>
         </div>
       </div>
