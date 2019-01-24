@@ -71,7 +71,6 @@ export default class VictoryChart extends React.Component {
     }
   }
 
-
   shouldComponentUpdate(nextProps, nextState) {
     if (this.props.animate) {
       this.cachedProps = nextState.nodesWillExit ? this.cachedProps : this.props;
@@ -83,7 +82,6 @@ export default class VictoryChart extends React.Component {
     return true;
   }
 
-  // the old ones were bad
   getNewChildren(props, childComponents, calculatedProps) {
     const children = getChildren(props, childComponents, calculatedProps);
     const getAnimationProps = Wrapper.getAnimationProps.bind(this);
@@ -118,8 +116,8 @@ export default class VictoryChart extends React.Component {
   }
 
   render() {
-    const props = this.state && this.state.nodesWillExit ?
-      this.cachedProps || this.props : this.props;
+    const props =
+      this.state && this.state.nodesWillExit ? this.cachedProps || this.props : this.props;
     const modifiedProps = Helpers.modifyProps(props, fallbackProps, "chart");
     const {
       eventKey,

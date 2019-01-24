@@ -112,8 +112,8 @@ export default class VictoryGroup extends React.Component {
 
   render() {
     const { role } = this.constructor;
-    const props = this.state && this.state.nodesWillExit ?
-      this.cachedProps || this.props : this.props;
+    const props =
+      this.state && this.state.nodesWillExit ? this.cachedProps || this.props : this.props;
     const modifiedProps = Helpers.modifyProps(props, fallbackProps, role);
     const {
       eventKey,
