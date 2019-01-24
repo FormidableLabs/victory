@@ -69,7 +69,6 @@ export default class VictoryGroup extends React.Component {
     if (this.props.animate) {
       this.setAnimationState(this.props, nextProps);
     }
-    this.events = Wrapper.getAllEvents(nextProps);
   }
 
   // the old ones were bad
@@ -124,13 +123,13 @@ export default class VictoryGroup extends React.Component {
     const container = standalone
       ? this.renderContainer(containerComponent, containerProps)
       : groupComponent;
-    this.events = this.events || Wrapper.getAllEvents(props);
-    if (!isEmpty(this.events)) {
+    const events = Wrapper.getAllEvents(props);
+    if (!isEmpty(events)) {
       return (
         <VictorySharedEvents
           container={container}
           eventKey={eventKey}
-          events={this.events}
+          events={events}
           externalEventMutations={externalEventMutations}
         >
           {newChildren}
