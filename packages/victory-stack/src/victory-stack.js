@@ -1,5 +1,4 @@
 import { assign, defaults, isEmpty } from "lodash";
-import isEqual from "react-fast-compare";
 import PropTypes from "prop-types";
 import React from "react";
 import { Helpers, VictoryContainer, VictoryTheme, CommonProps, Wrapper } from "victory-core";
@@ -77,15 +76,14 @@ export default class VictoryStack extends React.Component {
     }
   }
 
-  shouldComponentUpdate(nextProps, nextState) {
-    const equalProps = isEqual(this.props, nextProps);
-    if (this.props.animate && !equalProps) {
+  componentWillReceiveProps(nextProps) {
+    if (this.props.animate) {
       this.setAnimationState(this.props, nextProps);
     }
     this.events = Wrapper.getAllEvents(nextProps);
-    return this.props.animate || !equalProps || !isEqual(this.state, nextState);
   }
 
+  // the old ones were bad
   getNewChildren(props, childComponents, calculatedProps) {
     const children = getChildren(props, childComponents, calculatedProps);
     const getAnimationProps = Wrapper.getAnimationProps.bind(this);
