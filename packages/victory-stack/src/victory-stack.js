@@ -75,12 +75,10 @@ export default class VictoryStack extends React.Component {
       };
       this.setAnimationState = Wrapper.setAnimationState.bind(this);
     }
-    this.cachedProps = props;
   }
 
-  shouldComponentUpdate(nextProps, nextState) {
+  shouldComponentUpdate(nextProps) {
     if (this.props.animate) {
-      this.cachedProps = nextState.nodesWillExit ? this.cachedProps : this.props;
       if (!isEqual(this.props, nextProps)) {
         this.setAnimationState(this.props, nextProps);
         return false;
@@ -124,7 +122,7 @@ export default class VictoryStack extends React.Component {
   render() {
     const { role } = this.constructor;
     const props =
-      this.state && this.state.nodesWillExit ? this.cachedProps || this.props : this.props;
+      this.state && this.state.nodesWillExit ? this.state.oldProps || this.props : this.props;
     const modifiedProps = Helpers.modifyProps(props, fallbackProps, role);
     const {
       eventKey,

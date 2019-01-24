@@ -74,7 +74,9 @@ export default {
       return;
     }
     if (props.animate.parentState) {
-      this.setState(props.animate.parentState);
+      const nodesWillExit = props.animate.parentState.nodesWillExit;
+      const oldProps = nodesWillExit ? props : null;
+      this.setState(defaults({ oldProps, nextProps }, props.animate.parentState));
     } else {
       const oldChildren = React.Children.toArray(props.children);
       const nextChildren = React.Children.toArray(nextProps.children);
@@ -104,6 +106,8 @@ export default {
         childrenTransitions: Collection.isArrayOfArrays(childrenTransitions)
           ? childrenTransitions[0]
           : childrenTransitions,
+        oldProps: nodesWillExit ? props : null,
+        nextProps,
         continuous
       });
     }
