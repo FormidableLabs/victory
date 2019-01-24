@@ -4,6 +4,7 @@ import React from "react";
 import { Helpers, VictoryContainer, VictoryTheme, CommonProps, Wrapper } from "victory-core";
 import { VictorySharedEvents } from "victory-shared-events";
 import { getChildren, getCalculatedProps } from "./helper-methods";
+import isEqual from "react-fast-compare";
 
 const fallbackProps = {
   width: 450,
@@ -74,12 +75,18 @@ export default class VictoryStack extends React.Component {
       };
       this.setAnimationState = Wrapper.setAnimationState.bind(this);
     }
+    this.cachedProps = props;
   }
 
-  componentWillReceiveProps(nextProps) {
+  shouldComponentUpdate(nextProps, nextState) {
     if (this.props.animate) {
-      this.setAnimationState(this.props, nextProps);
+      this.cachedProps = nextState.nodesWillExit ? this.cachedProps : this.props;
+      if (!isEqual(this.props, nextProps)) {
+        this.setAnimationState(this.props, nextProps);
+        return false;
+      }
     }
+    return true;
   }
 
   // the old ones were bad
@@ -117,8 +124,8 @@ export default class VictoryStack extends React.Component {
 
   render() {
     const { role } = this.constructor;
-    const props =
-      this.state && this.state.nodesWillExit ? this.state.oldProps || this.props : this.props;
+    const props = this.state && this.state.nodesWillExit ?
+      this.cachedProps || this.props : this.props;
     const modifiedProps = Helpers.modifyProps(props, fallbackProps, role);
     const {
       eventKey,
