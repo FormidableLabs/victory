@@ -47,15 +47,5 @@ describe("victory-chart/helpers-methods", () => {
       expect(result).to.have.length(1);
       expect(result[0].props).to.eql(axis.props);
     });
-
-    it("only ever returns one independent axis", () => {
-      const children = [
-        getVictoryAxis({ orientation: "top" }),
-        getVictoryAxis({ orientation: "right" })
-      ];
-      const result = getChildComponents({ children }, defaultAxes);
-      expect(result).to.have.length(1);
-      expect(result[0].props).to.eql(children[0].props);
-    });
   });
 });
