@@ -2,7 +2,7 @@
 /* eslint-disable no-use-before-define */
 
 import React from "react";
-import { Log, Helpers, Scale, Axis, Wrapper } from "victory-core";
+import { Helpers, Scale, Axis, Wrapper } from "victory-core";
 import { defaults, assign } from "lodash";
 
 function getAxisProps(child, props, calculatedProps) {
@@ -162,25 +162,7 @@ const getChildComponents = (props, defaultAxes) => {
   if (axisComponents.dependent.length === 0 && axisComponents.independent.length === 0) {
     return childComponents.concat([defaultAxes.independent, defaultAxes.dependent]);
   }
-
-  let axisCount = 0;
-  return childComponents.filter((child) => {
-    const role = child.type && child.type.role;
-    const childProps = child.props || {};
-    if (role !== "axis" || childProps.dependentAxis) {
-      return true;
-    } else if (axisCount < 1) {
-      axisCount++;
-      return true;
-    } else {
-      const msg =
-        "Only one independent VictoryAxis component is allowed when " +
-        "using the VictoryChart wrapper. Only the first axis will be used. Please compose " +
-        "multi-axis charts manually";
-      Log.warn(msg);
-      return false;
-    }
-  });
+  return childComponents;
 };
 
 const getDefaultDomainPadding = (childComponents, horizontal) => {
