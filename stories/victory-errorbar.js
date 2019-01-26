@@ -7,6 +7,7 @@ import { VictoryTheme } from "../packages/victory-core/src/index";
 import { range } from "lodash";
 import seedrandom from "seedrandom";
 import { getChartDecorator } from "./decorators";
+import { fromJS } from "immutable";
 
 const getData = (num, symmetric, seed) => {
   seed = seed || "getData";
@@ -50,6 +51,20 @@ storiesOf("VictoryErrorBar.data", module)
         ]}
         x="series"
         y="value"
+        errorY={(d) => [d.error, d.error + 2]}
+      />
+    );
+  })
+  .add("with immutable data", () => {
+    return (
+      <VictoryErrorBar
+        data={fromJS([
+          { x: 1, y: 9, error: 3 },
+          { x: 2, y: 80, error: 4 },
+          { x: 3, y: 50, error: 8 },
+          { x: 4, y: 70, error: 2 },
+          { x: 5, y: 20, error: 3 }
+        ])}
         errorY={(d) => [d.error, d.error + 2]}
       />
     );

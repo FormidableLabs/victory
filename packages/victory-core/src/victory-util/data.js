@@ -307,7 +307,13 @@ function getStringsFromData(props, axis) {
   const key = props[axis] === undefined ? axis : props[axis];
   const accessor = Helpers.createAccessor(key);
 
-  const sortedData = sortData(props.data, props.sortKey, props.sortOrder);
+  // support immutable data
+  const data = props.data.reduce((memo, d) => {
+    memo.push(parseDatum(d));
+    return memo;
+  }, []);
+
+  const sortedData = sortData(data, props.sortKey, props.sortOrder);
   const dataStrings = sortedData
     .reduce((dataArr, datum) => {
       datum = parseDatum(datum);

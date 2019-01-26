@@ -7,6 +7,7 @@ import { VictoryTooltip } from "../packages/victory-tooltip/src/index";
 import { VictoryTheme } from "../packages/victory-core/src/index";
 import { getData, getMixedData, getTimeData, getLogData } from "./data";
 import { getChartDecorator, getPolarChartDecorator } from "./decorators";
+import { fromJS } from "immutable";
 
 storiesOf("VictoryLine", module).add("default rendering", () => <VictoryLine />);
 
@@ -77,7 +78,17 @@ storiesOf("VictoryLine.data", module)
       />
     );
   })
-  .add("plotting functions", () => <VictoryLine y={(d) => Math.sin(2 * Math.PI * d.x)} />);
+  .add("plotting functions", () => <VictoryLine y={(d) => Math.sin(2 * Math.PI * d.x)} />)
+  .add("with immutable data", () => (
+    <VictoryLine
+      data={fromJS([
+        { x: "Cat", y: 62 },
+        { x: "Dog", y: 91 },
+        { x: "Fish", y: 55 },
+        { x: "Bird", y: 55 }
+      ])}
+    />
+  ));
 
 storiesOf("VictoryLine.labels", module)
   .addDecorator(getChartDecorator())
