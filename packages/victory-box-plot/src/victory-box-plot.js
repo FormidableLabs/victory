@@ -32,6 +32,22 @@ const defaultData = [
   { x: 2, min: 2, q1: 5, median: 8, q3: 12, max: 15 }
 ];
 
+const options = {
+  components: [
+    { name: "min" },
+    { name: "minLabels" },
+    { name: "max" },
+    { name: "maxLabels" },
+    { name: "median" },
+    { name: "medianLabels" },
+    { name: "q1" },
+    { name: "q1Labels" },
+    { name: "q3" },
+    { name: "q3Labels" },
+    { name: "parent", index: "parent" }
+  ]
+};
+
 class VictoryBoxPlot extends React.Component {
   static animationWhitelist = ["data", "domain", "height", "padding", "style", "width"];
 
@@ -237,4 +253,4 @@ class VictoryBoxPlot extends React.Component {
   }
 }
 
-export default addEvents(VictoryBoxPlot);
+export default addEvents(VictoryBoxPlot, options);

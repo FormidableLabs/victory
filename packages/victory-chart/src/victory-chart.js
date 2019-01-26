@@ -13,6 +13,7 @@ import { VictorySharedEvents } from "victory-shared-events";
 import { VictoryAxis } from "victory-axis";
 import { VictoryPolarAxis } from "victory-polar-axis";
 import { getChildComponents, getCalculatedProps, getChildren } from "./helper-methods";
+import isEqual from "react-fast-compare";
 
 const fallbackProps = {
   width: 450,
@@ -65,18 +66,20 @@ export default class VictoryChart extends React.Component {
         nodesDoneLoad: false,
         animating: true
       };
+      this.setAnimationState = Wrapper.setAnimationState.bind(this);
     }
-    this.setAnimationState = Wrapper.setAnimationState.bind(this);
   }
 
-  componentWillReceiveProps(nextProps) {
+  shouldComponentUpdate(nextProps) {
     if (this.props.animate) {
-      this.setAnimationState(this.props, nextProps);
+      if (!isEqual(this.props, nextProps)) {
+        this.setAnimationState(this.props, nextProps);
+        return false;
+      }
     }
-    this.events = Wrapper.getAllEvents(nextProps);
+    return true;
   }
 
-  // the old ones were bad
   getNewChildren(props, childComponents, calculatedProps) {
     const children = getChildren(props, childComponents, calculatedProps);
     const getAnimationProps = Wrapper.getAnimationProps.bind(this);
@@ -129,13 +132,13 @@ export default class VictoryChart extends React.Component {
     const container = standalone
       ? this.renderContainer(containerComponent, containerProps)
       : groupComponent;
-    this.events = this.events || Wrapper.getAllEvents(props);
-    if (!isEmpty(this.events)) {
+    const events = Wrapper.getAllEvents(props);
+    if (!isEmpty(events)) {
       return (
         <VictorySharedEvents
           container={container}
           eventKey={eventKey}
-          events={this.events}
+          events={events}
           externalEventMutations={externalEventMutations}
         >
           {newChildren}

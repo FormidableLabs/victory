@@ -4,6 +4,7 @@ import PropTypes from "prop-types";
 import * as d3Ease from "d3-ease";
 import { victoryInterpolator } from "./util";
 import Timer from "../victory-util/timer";
+import isEqual from "react-fast-compare";
 
 export default class VictoryAnimation extends React.Component {
   static displayName = "VictoryAnimation";
@@ -98,24 +99,27 @@ export default class VictoryAnimation extends React.Component {
     }
   }
 
-  /* lifecycle */
-  componentWillReceiveProps(nextProps) {
-    /* cancel existing loop if it exists */
-    this.getTimer().unsubscribe(this.loopID);
+  shouldComponentUpdate(nextProps, nextState) {
+    const equalProps = isEqual(this.props, nextProps);
+    if (!equalProps) {
+      /* cancel existing loop if it exists */
+      this.getTimer().unsubscribe(this.loopID);
 
-    /* If an object was supplied */
-    if (!Array.isArray(nextProps.data)) {
-      // Replace the tween queue. Could set `this.queue = [nextProps.data]`,
-      // but let's reuse the same array.
-      this.queue.length = 0;
-      this.queue.push(nextProps.data);
-      /* If an array was supplied */
-    } else {
-      /* Extend the tween queue */
-      this.queue.push(...nextProps.data);
+      /* If an object was supplied */
+      if (!Array.isArray(nextProps.data)) {
+        // Replace the tween queue. Could set `this.queue = [nextProps.data]`,
+        // but let's reuse the same array.
+        this.queue.length = 0;
+        this.queue.push(nextProps.data);
+        /* If an array was supplied */
+      } else {
+        /* Extend the tween queue */
+        this.queue.push(...nextProps.data);
+      }
+      /* Start traversing the tween queue */
+      this.traverseQueue();
     }
-    /* Start traversing the tween queue */
-    this.traverseQueue();
+    return nextState.animationInfo.animating || !equalProps;
   }
 
   componentWillUnmount() {

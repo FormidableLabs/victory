@@ -8,7 +8,14 @@ const datumHasXandY = (datum) => {
   return !isNil(datum._x) && !isNil(datum._y);
 };
 
-export default (WrappedComponent) => {
+//  used for checking state changes. Expected components can be passed in via options
+const defaultComponents = [
+  { name: "parent", index: "parent" },
+  { name: "data" },
+  { name: "labels" }
+];
+
+export default (WrappedComponent, options) => {
   return class addEvents extends WrappedComponent {
     constructor(props) {
       super(props);
@@ -22,18 +29,63 @@ export default (WrappedComponent) => {
       const calculatedValues = this.getCalculatedValues(props);
       this.cacheValues(calculatedValues);
       this.externalMutations = this.getExternalMutations(props);
+      this.calculatedState = this.getStateChanges(props, calculatedValues);
     }
 
-    componentDidUpdate() {
-      const externalMutations = this.getExternalMutations(this.props);
-      if (!isEqual(this.externalMutations, externalMutations)) {
+    shouldComponentUpdate(nextProps) {
+      const calculatedValues = this.getCalculatedValues(nextProps);
+      const externalMutations = this.getExternalMutations(nextProps);
+      const animating = this.props.animating || this.props.animate;
+      const newMutation = !isEqual(externalMutations, this.externalMutations);
+      if (animating || newMutation) {
+        this.cacheValues(calculatedValues);
         this.externalMutations = externalMutations;
-        this.applyExternalMutations(this.props, externalMutations);
+        this.applyExternalMutations(nextProps, externalMutations);
+        return true;
       }
+      const calculatedState = this.getStateChanges(nextProps, calculatedValues);
+      if (!isEqual(this.calculatedState, calculatedState)) {
+        this.calculatedState = calculatedState;
+        this.cacheValues(calculatedValues);
+        return true;
+      }
+      if (!isEqual(this.props, nextProps)) {
+        this.cacheValues(calculatedValues);
+        return true;
+      }
+      return false;
     }
 
-    componentWillReceiveProps(nextProps) {
-      this.cacheValues(this.getCalculatedValues(nextProps));
+    // compile all state changes from own and parent state. Order doesn't matter, as any state
+    // state change should trigger a re-render
+    getStateChanges(props, calculatedValues) {
+      const { hasEvents, getSharedEventState } = calculatedValues;
+      if (!hasEvents) {
+        return {};
+      }
+
+      const getState = (key, type) => {
+        const result = defaults({}, this.getEventState(key, type), getSharedEventState(key, type));
+        return isEmpty(result) ? undefined : result;
+      };
+
+      options = options || {};
+      const components = options.components || defaultComponents;
+      const stateChanges = components
+        .map((component) => {
+          if (!props.standalone && component.name === "parent") {
+            // don't check for changes on parent props for non-standalone components
+            return undefined;
+          } else {
+            return component.index !== undefined
+              ? getState(component.index, component.name)
+              : calculatedValues.dataKeys
+                  .map((key) => getState(key, component.name))
+                  .filter(Boolean);
+          }
+        })
+        .filter(Boolean);
+      return stateChanges;
     }
 
     applyExternalMutations(props, externalMutations) {

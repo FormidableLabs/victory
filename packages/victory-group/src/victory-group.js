@@ -4,6 +4,7 @@ import React from "react";
 import { Helpers, VictoryContainer, VictoryTheme, CommonProps, Wrapper } from "victory-core";
 import { VictorySharedEvents } from "victory-shared-events";
 import { getChildren, getCalculatedProps } from "./helper-methods";
+import isEqual from "react-fast-compare";
 
 const fallbackProps = {
   width: 450,
@@ -65,14 +66,16 @@ export default class VictoryGroup extends React.Component {
     }
   }
 
-  componentWillReceiveProps(nextProps) {
+  shouldComponentUpdate(nextProps) {
     if (this.props.animate) {
-      this.setAnimationState(this.props, nextProps);
+      if (!isEqual(this.props, nextProps)) {
+        this.setAnimationState(this.props, nextProps);
+        return false;
+      }
     }
-    this.events = Wrapper.getAllEvents(nextProps);
+    return true;
   }
 
-  // the old ones were bad
   getNewChildren(props, childComponents, calculatedProps) {
     const children = getChildren(props, childComponents, calculatedProps);
     const getAnimationProps = Wrapper.getAnimationProps.bind(this);
@@ -124,13 +127,13 @@ export default class VictoryGroup extends React.Component {
     const container = standalone
       ? this.renderContainer(containerComponent, containerProps)
       : groupComponent;
-    this.events = this.events || Wrapper.getAllEvents(props);
-    if (!isEmpty(this.events)) {
+    const events = Wrapper.getAllEvents(props);
+    if (!isEmpty(events)) {
       return (
         <VictorySharedEvents
           container={container}
           eventKey={eventKey}
-          events={this.events}
+          events={events}
           externalEventMutations={externalEventMutations}
         >
           {newChildren}
