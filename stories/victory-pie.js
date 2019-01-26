@@ -5,7 +5,6 @@ import { action } from "@storybook/addon-actions";
 import { VictoryPie, Slice } from "../packages/victory-pie/src/index";
 import { fromJS } from "immutable";
 
-
 storiesOf("VictoryPie", module)
   .addDecorator((story) => <div style={{ width: 400, height: 400 }}>{story()}</div>)
   .add("by default", () => <VictoryPie />)

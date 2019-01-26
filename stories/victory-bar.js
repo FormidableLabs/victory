@@ -20,7 +20,6 @@ import {
 import * as d3Shape from "d3-shape";
 import { fromJS } from "immutable";
 
-
 storiesOf("VictoryBar", module).add("default rendering", () => <VictoryBar />);
 
 storiesOf("VictoryBar.theme", module)

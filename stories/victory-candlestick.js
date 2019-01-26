@@ -9,7 +9,6 @@ import seedrandom from "seedrandom";
 import { getChartDecorator } from "./decorators";
 import { fromJS } from "immutable";
 
-
 const getTimeData = (num, seed) => {
   seed = seed || "getTimeData";
   const baseSeed = seedrandom(seed);

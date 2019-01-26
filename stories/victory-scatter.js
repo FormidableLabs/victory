@@ -9,7 +9,6 @@ import { getData, getMixedData, getTimeData, getLogData } from "./data";
 import { getChartDecorator, getPolarChartDecorator } from "./decorators";
 import { fromJS } from "immutable";
 
-
 const SYMBOLS = [
   "circle",
   "diamond",

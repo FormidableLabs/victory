@@ -9,7 +9,6 @@ import { getData, getMixedData, getTimeData, getLogData } from "./data";
 import { getChartDecorator, getPolarChartDecorator } from "./decorators";
 import { fromJS } from "immutable";
 
-
 storiesOf("VictoryLine", module).add("default rendering", () => <VictoryLine />);
 
 storiesOf("VictoryLine.theme", module)
