@@ -7,6 +7,8 @@ import { VictoryTheme } from "../packages/victory-core/src/index";
 import { range } from "lodash";
 import seedrandom from "seedrandom";
 import { getChartDecorator } from "./decorators";
+import { fromJS } from "immutable";
+
 
 const getTimeData = (num, seed) => {
   seed = seed || "getTimeData";
@@ -93,6 +95,19 @@ storiesOf("VictoryCandlestick.data", module)
         ]}
         x={"series"}
         high={(data) => data.big / 10}
+      />
+    );
+  })
+  .add("with immutable data", () => {
+    return (
+      <VictoryCandlestick
+        data={fromJS([
+          { x: 1, open: 9, close: 30, high: 56, low: 7 },
+          { x: 2, open: 80, close: 40, high: 120, low: 10 },
+          { x: 3, open: 50, close: 80, high: 90, low: 20 },
+          { x: 4, open: 70, close: 22, high: 70, low: 5 },
+          { x: 5, open: 20, close: 35, high: 50, low: 10 }
+        ])}
       />
     );
   });

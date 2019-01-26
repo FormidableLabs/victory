@@ -18,6 +18,8 @@ import {
   getDescendingSmallData
 } from "./data";
 import * as d3Shape from "d3-shape";
+import { fromJS } from "immutable";
+
 
 storiesOf("VictoryBar", module).add("default rendering", () => <VictoryBar />);
 
@@ -256,7 +258,18 @@ storiesOf("VictoryBar.data", module)
         y={"a.b.d"}
       />
     );
-  });
+  })
+  .add("with immutable data", () => (
+    <VictoryBar
+      data={fromJS([
+        { x: 1, y: 2, label: "cat" },
+        { x: 2, y: 5, label: "dog" },
+        { x: 3, y: 3, label: "dog" },
+        { x: 4, y: -2, label: "bird" },
+        { x: 5, y: -5, label: "cat" }
+      ])}
+    />
+  ));
 
 storiesOf("VictoryBar.labels", module)
   .addDecorator(getChartDecorator({ domainPadding: 25 }))

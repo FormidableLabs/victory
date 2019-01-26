@@ -7,6 +7,8 @@ import { VictoryTooltip } from "../packages/victory-tooltip/src/index";
 import { VictoryTheme } from "../packages/victory-core/src/index";
 import { getData, getMixedData, getTimeData, getLogData } from "./data";
 import { getChartDecorator, getPolarChartDecorator } from "./decorators";
+import { fromJS } from "immutable";
+
 
 const SYMBOLS = [
   "circle",
@@ -124,7 +126,18 @@ storiesOf("VictoryScatter.data", module)
       />
     );
   })
-  .add("plotting functions", () => <VictoryScatter y={(d) => Math.sin(2 * Math.PI * d.x)} />);
+  .add("plotting functions", () => <VictoryScatter y={(d) => Math.sin(2 * Math.PI * d.x)} />)
+  .add("with immutable data", () => (
+    <VictoryScatter
+      data={fromJS([
+        { x: 1, y: 2, label: "cat" },
+        { x: 2, y: 5, label: "dog" },
+        { x: 3, y: 3, label: "dog" },
+        { x: 4, y: -2, label: "bird" },
+        { x: 5, y: -5, label: "cat" }
+      ])}
+    />
+  ));
 
 storiesOf("VictoryScatter.labels", module)
   .addDecorator(getChartDecorator({ domainPadding: 25 }))

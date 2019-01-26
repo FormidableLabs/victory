@@ -7,6 +7,8 @@ import { VictoryTooltip } from "../packages/victory-tooltip/src/index";
 import { VictoryTheme } from "../packages/victory-core/src/index";
 import { getData, getMixedData, getTimeData, getLogData } from "./data";
 import { getChartDecorator, getPolarChartDecorator } from "./decorators";
+import { fromJS } from "immutable";
+
 
 storiesOf("VictoryArea", module).add("default rendering", () => <VictoryArea />);
 
@@ -78,7 +80,19 @@ storiesOf("VictoryArea.data", module)
       />
     );
   })
-  .add("plotting functions", () => <VictoryArea y={(d) => Math.sin(2 * Math.PI * d.x)} />);
+  .add("plotting functions", () => <VictoryArea y={(d) => Math.sin(2 * Math.PI * d.x)} />)
+  .add("with immutable data", () => {
+    return (
+      <VictoryArea
+        data={fromJS([
+          { x: "Cat", y: 45, y0: 17 },
+          { x: "Dog", y: 85, y0: 6 },
+          { x: "Fish", y: 55, y0: 9 },
+          { x: "Bird", y: 15, y0: 4 }
+        ])}
+      />
+    );
+  });
 
 storiesOf("VictoryArea.labels", module)
   .addDecorator(getChartDecorator())

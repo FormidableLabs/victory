@@ -3,6 +3,8 @@ import React from "react";
 import { storiesOf } from "@storybook/react";
 import { action } from "@storybook/addon-actions";
 import { VictoryPie, Slice } from "../packages/victory-pie/src/index";
+import { fromJS } from "immutable";
+
 
 storiesOf("VictoryPie", module)
   .addDecorator((story) => <div style={{ width: 400, height: 400 }}>{story()}</div>)
@@ -146,4 +148,14 @@ storiesOf("VictoryPie", module)
         ]}
       />
     </div>
+  ))
+  .add("with immutable data", () => (
+    <VictoryPie
+      data={fromJS([
+        { x: "Cat", y: 62 },
+        { x: "Dog", y: 91 },
+        { x: "Fish", y: 55 },
+        { x: "Bird", y: 55 }
+      ])}
+    />
   ));
