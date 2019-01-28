@@ -1,5 +1,21 @@
 # Victory Changelog
 
+## 31.2.0 (2019-01-27)
+
+*Axis improvements*
+- [1244](https://github.com/FormidableLabs/victory/pull/1244) Supports the `axisValue` prop for both cartesian and polar charts. This prop allows users to position an axis relative to a value on the opposite axis. Values may be given as numbers, dates, or strings. This prop only works for axis components when they are nested within `VictoryChart`. Standalone axes can still be positioned using `offsetX` and offsetY` props.
+- [1240](https://github.com/FormidableLabs/victory/pull/1240) Allows multiple independent axes in a single chart
+
+
+*Removes all deprecated lifecycle methods*
+- [1239](https://github.com/FormidableLabs/victory/pull/1239) Removes all `componentWillReceiveProps` lifecycle methods and adds `shouldComponentUpdate` logic for higher level components. Previously only the lowest level components performed `sCU` checks.
+- [1228](https://github.com/FormidableLabs/victory/pull/1228) Replaces `componentWillMount` with `componentDidMount`
+
+*bug fixes*
+- [1243](https://github.com/FormidableLabs/victory/pull/1243) Prevents `VictoryBrushLine` active brushes from overflowing the brush area when a chart is zoomed
+- [1241](https://github.com/FormidableLabs/victory/pull/1241) Fixes a regression effecting immutable data rendering
+- [1227](https://github.com/FormidableLabs/victory/pull/1227) Fixes a minor regression effecting parent event keys introduced by [1211](https://github.com/FormidableLabs/victory/pull/1211)
+
 ## 31.1.0 (2019-01-08)
 
 - [1222](https://github.com/FormidableLabs/victory/pull/1222) Bugfix: Avoid rendering null values on discrete data
