@@ -225,12 +225,26 @@ const getOffset = (props, calculatedValues) => {
 };
 
 const getTransform = (props, calculatedValues, offset) => {
-  const { orientation } = calculatedValues;
+  //
+  const { orientation, axis } = calculatedValues;
+  const axisValue = Axis.getAxisValue(props, axis);
   return {
-    top: { x: 0, y: offset.y },
-    bottom: { x: 0, y: props.height - offset.y },
-    left: { x: offset.x, y: 0 },
-    right: { x: props.width - offset.x, y: 0 }
+    top: {
+      x: 0,
+      y: axisValue !== undefined ? axisValue : offset.y
+    },
+    bottom: {
+      x: 0,
+      y: axisValue !== undefined ? axisValue : props.height - offset.y
+    },
+    left: {
+      x: axisValue !== undefined ? axisValue : offset.x,
+      y: 0
+    },
+    right: {
+      x: axisValue !== undefined ? axisValue : props.width - offset.x,
+      y: 0
+    }
   }[orientation];
 };
 

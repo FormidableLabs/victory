@@ -5,6 +5,7 @@ import seedrandom from "seedrandom";
 import { storiesOf } from "@storybook/react";
 import { VictoryAxis } from "../packages/victory-axis/src/index";
 import { VictoryChart } from "../packages/victory-chart/src/index";
+import { VictoryBar } from "../packages/victory-bar/src/index";
 import { VictoryTheme } from "../packages/victory-core/src/index";
 
 const getTimeValues = (num) => {
@@ -29,6 +30,41 @@ const getRandomValues = (num, seed) => {
 };
 
 storiesOf("VictoryAxis", module).add("default rendering", () => <VictoryAxis />);
+
+storiesOf("VictoryAxis.axisValue", module)
+  .add("works with numeric axisValue", () => (
+    <VictoryChart>
+      <VictoryAxis tickValues={[1, 2, 3, 4, 5]} />
+      <VictoryAxis dependentAxis axisValue={3} />
+    </VictoryChart>
+  ))
+  .add("works with string axisValue", () => (
+    <VictoryChart>
+      <VictoryAxis axisValue={"zero"} />
+      <VictoryAxis dependentAxis tickValues={["-", "zero", "+"]} />
+    </VictoryChart>
+  ))
+  .add("works with date axisValue", () => (
+    <VictoryChart scale={{ x: "time " }}>
+      <VictoryAxis
+        tickValues={[
+          new Date(1985, 1, 1),
+          new Date(1995, 1, 1),
+          new Date(2005, 1, 1),
+          new Date(2015, 1, 1)
+        ]}
+        tickFormat={(t) => t.getFullYear()}
+      />
+      <VictoryAxis dependentAxis axisValue={new Date(2000, 1, 1)} />
+    </VictoryChart>
+  ))
+  .add("works with horizontal charts", () => (
+    <VictoryChart>
+      <VictoryBar horizontal data={[{ x: "a", y: 1 }, { x: "b", y: 2 }, { x: "c", y: 5 }]} />
+      <VictoryAxis axisValue="b" />
+      <VictoryAxis dependentAxis />
+    </VictoryChart>
+  ));
 
 storiesOf("VictoryAxis.theme", module)
   .add("material theme", () => <VictoryAxis theme={VictoryTheme.material} />)

@@ -106,12 +106,13 @@ const getStyles = (props, styleObject) => {
 };
 
 const getAxisAngle = (props) => {
-  const { axisAngle, startAngle, axisValue, dependentAxis, scale } = props;
-  const otherAxis = Axis.getAxis(props) === "y" ? "x" : "y";
-  if (axisValue === undefined || !dependentAxis || scale[otherAxis] === undefined) {
+  const { axisAngle, startAngle, dependentAxis } = props;
+  const axis = Axis.getAxis(props);
+  const axisValue = Axis.getAxisValue(props, axis);
+  if (axisValue === undefined || !dependentAxis) {
     return axisAngle === undefined ? startAngle : axisAngle;
   }
-  return Helpers.radiansToDegrees(scale.x(axisValue));
+  return Helpers.radiansToDegrees(axisValue);
 };
 
 //eslint-disable-next-line max-params
