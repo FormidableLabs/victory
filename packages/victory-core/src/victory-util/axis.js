@@ -174,7 +174,8 @@ function stringTicks(props) {
 function getDefaultTickFormat(props) {
   const { tickValues } = props;
   const axis = getAxis(props);
-  const stringMap = props.stringMap && props.stringMap[axis];
+  const currentAxis = getCurrentAxis(axis, props.horizontal);
+  const stringMap = props.stringMap && props.stringMap[currentAxis];
   const fallbackFormat = tickValues && !Collection.containsDates(tickValues) ? (x) => x : undefined;
   if (!stringMap) {
     return stringTicks(props) ? (x, index) => tickValues[index] : fallbackFormat;
@@ -191,7 +192,8 @@ function getDefaultTickFormat(props) {
 function getTickFormat(props, scale) {
   const { tickFormat } = props;
   const axis = getAxis(props);
-  const stringMap = props.stringMap && props.stringMap[axis];
+  const currentAxis = getCurrentAxis(axis, props.horizontal);
+  const stringMap = props.stringMap && props.stringMap[currentAxis];
   if (!tickFormat) {
     const defaultTickFormat = getDefaultTickFormat(props);
     const scaleTickFormat =
@@ -213,7 +215,8 @@ function getTickFormat(props, scale) {
 
 function getStringTicks(props) {
   const axis = getAxis(props);
-  const stringMap = props.stringMap && props.stringMap[axis];
+  const currentAxis = getCurrentAxis(axis, props.horizontal);
+  const stringMap = props.stringMap && props.stringMap[currentAxis];
   const categories = Array.isArray(props.categories)
     ? props.categories
     : props.categories && props.categories[axis];
@@ -230,7 +233,8 @@ function getStringTicks(props) {
 function getTickArray(props) {
   const { tickValues, tickFormat } = props;
   const axis = getAxis(props);
-  const stringMap = props.stringMap && props.stringMap[axis];
+  const currentAxis = getCurrentAxis(axis, props.horizontal);
+  const stringMap = props.stringMap && props.stringMap[currentAxis];
   const getTicksFromFormat = () => {
     if (!tickFormat || !Array.isArray(tickFormat)) {
       return undefined;
@@ -328,16 +332,19 @@ function getAxisValue(props, axis) {
   if (!props.axisValue) {
     return undefined;
   }
-  const otherAxis = axis === "x" ? "y" : "x";
-  if (!isObject(props.scale) || !isFunction(props.scale[otherAxis])) {
+  const scaleAxis = axis === "x" ? "y" : "x";
+  const scale =
+    isObject(props.scale) && isFunction(props.scale[scaleAxis])
+      ? props.scale[scaleAxis]
+      : undefined;
+  if (!scale) {
     return undefined;
   }
-  const { stringMap } = props;
+  const stringMapAxis = getCurrentAxis(axis, props.horizontal) === "x" ? "y" : "x";
+  const stringMap = isObject(props.stringMap) && props.stringMap[stringMapAxis];
   const axisValue =
-    isObject(stringMap) && stringMap[otherAxis] && typeof props.axisValue === "string"
-      ? stringMap[otherAxis][props.axisValue]
-      : props.axisValue;
-  return props.scale[otherAxis](axisValue);
+    stringMap && typeof props.axisValue === "string" ? stringMap[props.axisValue] : props.axisValue;
+  return scale(axisValue);
 }
 
 export default {

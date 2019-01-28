@@ -5,6 +5,7 @@ import seedrandom from "seedrandom";
 import { storiesOf } from "@storybook/react";
 import { VictoryAxis } from "../packages/victory-axis/src/index";
 import { VictoryChart } from "../packages/victory-chart/src/index";
+import { VictoryBar } from "../packages/victory-bar/src/index";
 import { VictoryTheme } from "../packages/victory-core/src/index";
 
 const getTimeValues = (num) => {
@@ -55,6 +56,13 @@ storiesOf("VictoryAxis.axisValue", module)
         tickFormat={(t) => t.getFullYear()}
       />
       <VictoryAxis dependentAxis axisValue={new Date(2000, 1, 1)} />
+    </VictoryChart>
+  ))
+  .add("works with horizontal charts", () => (
+    <VictoryChart>
+      <VictoryBar horizontal data={[{ x: "a", y: 1 }, { x: "b", y: 2 }, { x: "c", y: 5 }]} />
+      <VictoryAxis axisValue="b" />
+      <VictoryAxis dependentAxis />
     </VictoryChart>
   ));
 

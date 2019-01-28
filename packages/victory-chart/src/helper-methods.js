@@ -18,6 +18,7 @@ function getAxisProps(child, props, calculatedProps) {
   const orientation = Axis.getOrientation(child, axis, originSign[otherAxis]);
   return {
     stringMap,
+    horizontal,
     categories: categories[currentAxis],
     startAngle: props.startAngle,
     endAngle: props.endAngle,
