@@ -42,8 +42,8 @@ module.exports = {
       )
     },
     format: {
-      default: 'prettier --write "./**/*.{js,jsx,json,md}"',
-      ci: 'prettier --list-different "./**/*.{js,jsx,json,md}"'
+      default: 'prettier --write "./**/*.{js,jsx,json}"',
+      ci: 'prettier --list-different "./**/*.{js,jsx,json}"'
     },
     check: {
       ci: npsUtils.series.nps("format.ci", "lint", "test.ci"),
