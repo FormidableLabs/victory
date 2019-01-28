@@ -54,7 +54,7 @@ const getBrushDomain = (brushDomain, fullDomain) => {
     return [min, max];
   }
   return fullDomain;
-}
+};
 
 const getActiveHandle = (props, position, range) => {
   const width = props.handleWidth / 2;
@@ -275,7 +275,7 @@ export default class VictoryBrushLine extends React.Component {
                 const parentSVG = targetProps.parentSVG || Selection.getParentSVG(evt);
                 const position = Selection.getSVGEventCoordinates(evt, parentSVG)[dimension];
                 const fullDomain = getFullDomain(targetProps);
-                const domain = getBrushDomain(brushDomain, fullDomain);;
+                const domain = getBrushDomain(brushDomain, fullDomain);
                 const initialRange = toRange(targetProps, domain);
                 const activeHandle = getActiveHandle(targetProps, position, initialRange);
                 const activeBrushes = {
