@@ -1,4 +1,4 @@
-import { assign, defaults, isFunction, isObject } from "lodash";
+import { assign, defaults, isFunction } from "lodash";
 import { Helpers, Scale, Axis } from "victory-core";
 
 const orientationSign = {

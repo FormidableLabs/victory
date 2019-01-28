@@ -1,4 +1,4 @@
-import { assign, uniqBy, defaults, isFunction, isObject } from "lodash";
+import { assign, uniqBy, defaults, isFunction } from "lodash";
 import { Helpers, LabelHelpers, Scale, Axis } from "victory-core";
 
 const getPosition = (r, angle, axis) => {
