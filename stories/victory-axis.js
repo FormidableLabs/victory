@@ -33,23 +33,18 @@ storiesOf("VictoryAxis", module).add("default rendering", () => <VictoryAxis />)
 storiesOf("VictoryAxis.axisValue", module)
   .add("works with numeric axisValue", () => (
     <VictoryChart>
-      <VictoryAxis
-        tickValues={[1, 2, 3, 4, 5]}
-      />
-      <VictoryAxis dependentAxis axisValue={3}/>
+      <VictoryAxis tickValues={[1, 2, 3, 4, 5]} />
+      <VictoryAxis dependentAxis axisValue={3} />
     </VictoryChart>
   ))
   .add("works with string axisValue", () => (
     <VictoryChart>
-      <VictoryAxis axisValue={"zero"}/>
-      <VictoryAxis dependentAxis
-        tickValues={["-", "zero", "+"]}
-      />
-
+      <VictoryAxis axisValue={"zero"} />
+      <VictoryAxis dependentAxis tickValues={["-", "zero", "+"]} />
     </VictoryChart>
   ))
   .add("works with date axisValue", () => (
-    <VictoryChart scale={{ x: "time "}}>
+    <VictoryChart scale={{ x: "time " }}>
       <VictoryAxis
         tickValues={[
           new Date(1985, 1, 1),
@@ -59,7 +54,7 @@ storiesOf("VictoryAxis.axisValue", module)
         ]}
         tickFormat={(t) => t.getFullYear()}
       />
-      <VictoryAxis dependentAxis axisValue={new Date(2000, 1, 1)}/>
+      <VictoryAxis dependentAxis axisValue={new Date(2000, 1, 1)} />
     </VictoryChart>
   ));
 
