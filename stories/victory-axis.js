@@ -30,6 +30,39 @@ const getRandomValues = (num, seed) => {
 
 storiesOf("VictoryAxis", module).add("default rendering", () => <VictoryAxis />);
 
+storiesOf("VictoryAxis.axisValue", module)
+  .add("works with numeric axisValue", () => (
+    <VictoryChart>
+      <VictoryAxis
+        tickValues={[1, 2, 3, 4, 5]}
+      />
+      <VictoryAxis dependentAxis axisValue={3}/>
+    </VictoryChart>
+  ))
+  .add("works with string axisValue", () => (
+    <VictoryChart>
+      <VictoryAxis axisValue={"zero"}/>
+      <VictoryAxis dependentAxis
+        tickValues={["-", "zero", "+"]}
+      />
+
+    </VictoryChart>
+  ))
+  .add("works with date axisValue", () => (
+    <VictoryChart scale={{ x: "time "}}>
+      <VictoryAxis
+        tickValues={[
+          new Date(1985, 1, 1),
+          new Date(1995, 1, 1),
+          new Date(2005, 1, 1),
+          new Date(2015, 1, 1)
+        ]}
+        tickFormat={(t) => t.getFullYear()}
+      />
+      <VictoryAxis dependentAxis axisValue={new Date(2000, 1, 1)}/>
+    </VictoryChart>
+  ));
+
 storiesOf("VictoryAxis.theme", module)
   .add("material theme", () => <VictoryAxis theme={VictoryTheme.material} />)
   .add("chart axes material theme", () => <VictoryChart theme={VictoryTheme.material} />)
