@@ -4,6 +4,7 @@ import { Selection, Helpers, Collection, LineSegment, Scale, Domain, Box } from 
 import { assign, defaults, isFunction, pick } from "lodash";
 import isEqual from "react-fast-compare";
 
+const SMALL_NUMBER = 1 / Number.MAX_SAFE_INTEGER;
 const getScale = (props) => {
   const { scale = {}, dimension = "x" } = props;
   if (scale[dimension]) {
@@ -37,8 +38,23 @@ const getFullDomain = (props) => {
 };
 
 const withinBound = (value, bound) => {
-  return value >= Math.min(...bound) && value <= Math.max(...bound);
+  return value >= Collection.getMinValue(bound) && value <= Collection.getMaxValue(bound);
 };
+
+const getBrushDomain = (brushDomain, fullDomain) => {
+  if (brushDomain) {
+    const brushMin = Collection.getMinValue(brushDomain);
+    const brushMax = Collection.getMaxValue(brushDomain);
+    const domainMin = Collection.getMinValue(fullDomain);
+    const domainMax = Collection.getMaxValue(fullDomain);
+    const defaultMin = brushMin < domainMin ? domainMin : domainMax - SMALL_NUMBER;
+    const defaultMax = brushMax > domainMax ? domainMax : domainMin + SMALL_NUMBER;
+    const min = withinBound(brushMin, fullDomain) ? brushMin : defaultMin;
+    const max = withinBound(brushMax, fullDomain) ? brushMax : defaultMax;
+    return [min, max];
+  }
+  return fullDomain;
+}
 
 const getActiveHandle = (props, position, range) => {
   const width = props.handleWidth / 2;
@@ -58,7 +74,7 @@ const getActiveHandle = (props, position, range) => {
 };
 
 const getMinimumDomain = () => {
-  return [0, 1 / Number.MAX_SAFE_INTEGER];
+  return [0, SMALL_NUMBER];
 };
 
 const panBox = (props, position) => {
@@ -152,7 +168,7 @@ export default class VictoryBrushLine extends React.Component {
                 const parentSVG = targetProps.parentSVG || Selection.getParentSVG(evt);
                 const position = Selection.getSVGEventCoordinates(evt, parentSVG)[dimension];
                 const fullDomain = getFullDomain(targetProps);
-                const currentDomain = brushDomain || fullDomain;
+                const currentDomain = getBrushDomain(brushDomain, fullDomain);
                 const range = toRange(targetProps, currentDomain);
                 const activeHandle = allowResize && getActiveHandle(targetProps, position, range);
                 const activeBrushes = {
@@ -188,7 +204,7 @@ export default class VictoryBrushLine extends React.Component {
                 }
 
                 const fullDomain = getFullDomain(targetProps);
-                const currentDomain = brushDomain || fullDomain;
+                const currentDomain = getBrushDomain(brushDomain, fullDomain);
                 const parentSVG = targetProps.parentSVG || Selection.getParentSVG(evt);
                 const position = Selection.getSVGEventCoordinates(evt, parentSVG)[dimension];
                 const range = toRange(targetProps, currentDomain);
@@ -259,7 +275,7 @@ export default class VictoryBrushLine extends React.Component {
                 const parentSVG = targetProps.parentSVG || Selection.getParentSVG(evt);
                 const position = Selection.getSVGEventCoordinates(evt, parentSVG)[dimension];
                 const fullDomain = getFullDomain(targetProps);
-                const domain = brushDomain || fullDomain;
+                const domain = getBrushDomain(brushDomain, fullDomain);;
                 const initialRange = toRange(targetProps, domain);
                 const activeHandle = getActiveHandle(targetProps, position, initialRange);
                 const activeBrushes = {
@@ -392,7 +408,7 @@ export default class VictoryBrushLine extends React.Component {
 
   getRectDimensions(props, brushWidth, domain) {
     const { dimension, brushDomain } = props;
-    domain = domain || brushDomain || getFullDomain(props);
+    domain = domain || getBrushDomain(brushDomain, getFullDomain(props));
     const range = toRange(props, domain);
     const coordinates =
       dimension === "x"
@@ -424,7 +440,7 @@ export default class VictoryBrushLine extends React.Component {
   getHandleDimensions(props) {
     const { dimension, handleWidth, x1, x2, y1, y2, brushDomain } = props;
     const brushWidth = props.brushWidth || props.width;
-    const domain = brushDomain || getFullDomain(props);
+    const domain = getBrushDomain(brushDomain, getFullDomain(props));
     const range = toRange(props, domain);
     const defaultX = Math.min(x1, x2) - brushWidth / 2;
     const defaultY = Math.min(y1, y2) - brushWidth / 2;
