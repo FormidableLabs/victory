@@ -225,12 +225,38 @@ const getOffset = (props, calculatedValues) => {
 };
 
 const getTransform = (props, calculatedValues, offset) => {
-  const { orientation } = calculatedValues;
+  const { stringMap } = props;
+  const { orientation, axis } = calculatedValues;
+  const otherAxis = axis === "x" ? "y" : "x";
+  const scale = props.scale && isFunction(props.scale[otherAxis]) ? props.scale[otherAxis] : false;
+  const useAxisScale = props.axisValue && scale;
+  let axisValue = props.axisValue;
+  if (stringMap && stringMap[otherAxis] && typeof props.axisValue === "string") {
+    axisValue = stringMap[otherAxis][props.axisValue];
+  }
+  const fallback = {
+    top: offset.y,
+    bottom: props.height - offset.y,
+    left: offset.x,
+    right: props.width - offset.x
+  };
   return {
-    top: { x: 0, y: offset.y },
-    bottom: { x: 0, y: props.height - offset.y },
-    left: { x: offset.x, y: 0 },
-    right: { x: props.width - offset.x, y: 0 }
+    top: {
+      x: 0,
+      y: useAxisScale ? scale(axisValue) || fallback.top : fallback.top
+    },
+    bottom: {
+      x: 0,
+      y: useAxisScale ? scale(axisValue) || fallback.bottom : fallback.bottom
+    },
+    left: {
+      x: useAxisScale ? scale(axisValue) || fallback.left : fallback.left,
+      y: 0
+    },
+    right: {
+      x: useAxisScale ? scale(axisValue) || fallback.right : fallback.right,
+      y: 0
+    }
   }[orientation];
 };
 

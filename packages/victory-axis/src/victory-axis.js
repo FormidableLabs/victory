@@ -63,6 +63,7 @@ class VictoryAxis extends React.Component {
     ...CommonProps.baseProps,
     axisComponent: PropTypes.element,
     axisLabelComponent: PropTypes.element,
+    axisValue: PropTypes.oneOfType([PropTypes.number, PropTypes.string, PropTypes.object]),
     categories: PropTypes.oneOfType([
       PropTypes.arrayOf(PropTypes.string),
       PropTypes.shape({
@@ -211,8 +212,8 @@ class VictoryAxis extends React.Component {
     const sorted = gridAndTicks.sort(
       (a, b) =>
         isVertical
-          ? getLabelCoord(b) - getLabelCoord(a) //ordinat axis has top-bottom orientation
-          : getLabelCoord(a) - getLabelCoord(b) //ordinat axis has left-right orientation
+          ? getLabelCoord(b) - getLabelCoord(a) //ordinary axis has top-bottom orientation
+          : getLabelCoord(a) - getLabelCoord(b) //ordinary axis has left-right orientation
     );
     return sorted.filter((gridAndTick, index) => index % divider === 0);
   }

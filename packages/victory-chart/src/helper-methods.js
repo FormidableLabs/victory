@@ -17,7 +17,7 @@ function getAxisProps(child, props, calculatedProps) {
   const crossAxis = childProps.crossAxis === false ? false : true;
   const orientation = Axis.getOrientation(child, axis, originSign[otherAxis]);
   return {
-    stringMap: stringMap[currentAxis],
+    stringMap,
     categories: categories[currentAxis],
     startAngle: props.startAngle,
     endAngle: props.endAngle,

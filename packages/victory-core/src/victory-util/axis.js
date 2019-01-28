@@ -171,7 +171,9 @@ function stringTicks(props) {
 }
 
 function getDefaultTickFormat(props) {
-  const { tickValues, stringMap } = props;
+  const { tickValues } = props;
+  const axis = getAxis(props);
+  const stringMap = props.stringMap && props.stringMap[axis];
   const fallbackFormat = tickValues && !Collection.containsDates(tickValues) ? (x) => x : undefined;
   if (!stringMap) {
     return stringTicks(props) ? (x, index) => tickValues[index] : fallbackFormat;
@@ -186,7 +188,9 @@ function getDefaultTickFormat(props) {
 }
 
 function getTickFormat(props, scale) {
-  const { tickFormat, stringMap } = props;
+  const { tickFormat } = props;
+  const axis = getAxis(props);
+  const stringMap = props.stringMap && props.stringMap[axis];
   if (!tickFormat) {
     const defaultTickFormat = getDefaultTickFormat(props);
     const scaleTickFormat =
@@ -207,8 +211,8 @@ function getTickFormat(props, scale) {
 }
 
 function getStringTicks(props) {
-  const { stringMap } = props;
   const axis = getAxis(props);
+  const stringMap = props.stringMap && props.stringMap[axis];
   const categories = Array.isArray(props.categories)
     ? props.categories
     : props.categories && props.categories[axis];
@@ -223,7 +227,9 @@ function getStringTicks(props) {
 }
 
 function getTickArray(props) {
-  const { tickValues, tickFormat, stringMap } = props;
+  const { tickValues, tickFormat } = props;
+  const axis = getAxis(props);
+  const stringMap = props.stringMap && props.stringMap[axis];
   const getTicksFromFormat = () => {
     if (!tickFormat || !Array.isArray(tickFormat)) {
       return undefined;
@@ -240,7 +246,6 @@ function getTickArray(props) {
   }
   const tickArray = ticks ? uniq(ticks) : getTicksFromFormat(props);
   const filterArray = (arr) => {
-    const axis = getAxis(props);
     const domain = (props.domain && props.domain[axis]) || props.domain;
     return Array.isArray(domain)
       ? arr.filter((t) => t >= Math.min(...domain) && t <= Math.max(...domain))
