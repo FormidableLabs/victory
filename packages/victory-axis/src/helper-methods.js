@@ -1,4 +1,4 @@
-import { assign, defaults, isFunction } from "lodash";
+import { assign, defaults, isFunction, isObject } from "lodash";
 import { Helpers, Scale, Axis } from "victory-core";
 
 const orientationSign = {
@@ -225,36 +225,24 @@ const getOffset = (props, calculatedValues) => {
 };
 
 const getTransform = (props, calculatedValues, offset) => {
-  const { stringMap } = props;
+  //
   const { orientation, axis } = calculatedValues;
-  const otherAxis = axis === "x" ? "y" : "x";
-  const scale = props.scale && isFunction(props.scale[otherAxis]) ? props.scale[otherAxis] : false;
-  const useAxisScale = props.axisValue && scale;
-  let axisValue = props.axisValue;
-  if (stringMap && stringMap[otherAxis] && typeof props.axisValue === "string") {
-    axisValue = stringMap[otherAxis][props.axisValue];
-  }
-  const fallback = {
-    top: offset.y,
-    bottom: props.height - offset.y,
-    left: offset.x,
-    right: props.width - offset.x
-  };
+  const axisValue = Axis.getAxisValue(props, axis);
   return {
     top: {
       x: 0,
-      y: useAxisScale ? scale(axisValue) || fallback.top : fallback.top
+      y: axisValue !== undefined ? axisValue : offset.y
     },
     bottom: {
       x: 0,
-      y: useAxisScale ? scale(axisValue) || fallback.bottom : fallback.bottom
+      y: axisValue !== undefined ? axisValue : props.height - offset.y
     },
     left: {
-      x: useAxisScale ? scale(axisValue) || fallback.left : fallback.left,
+      x: axisValue !== undefined ? axisValue : offset.x,
       y: 0
     },
     right: {
-      x: useAxisScale ? scale(axisValue) || fallback.right : fallback.right,
+      x: axisValue !== undefined ? axisValue : props.width - offset.x,
       y: 0
     }
   }[orientation];

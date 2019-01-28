@@ -1,4 +1,4 @@
-import { assign, uniqBy, defaults, isFunction } from "lodash";
+import { assign, uniqBy, defaults, isFunction, isObject } from "lodash";
 import { Helpers, LabelHelpers, Scale, Axis } from "victory-core";
 
 const getPosition = (r, angle, axis) => {
@@ -106,16 +106,13 @@ const getStyles = (props, styleObject) => {
 };
 
 const getAxisAngle = (props) => {
-  const { axisAngle, startAngle, dependentAxis, scale, stringMap } = props;
-  const otherAxis = Axis.getAxis(props) === "y" ? "x" : "y";
-  let axisValue = props.axisValue;
-  if (stringMap && stringMap[otherAxis] && typeof props.axisValue === "string") {
-    axisValue = stringMap[otherAxis][props.axisValue];
-  }
-  if (axisValue === undefined || !dependentAxis || scale[otherAxis] === undefined) {
+  const { axisAngle, startAngle, dependentAxis } = props;
+  const axis = Axis.getAxis(props);
+  const axisValue = Axis.getAxisValue(props, axis);
+  if (axisValue === undefined || !dependentAxis) {
     return axisAngle === undefined ? startAngle : axisAngle;
   }
-  return Helpers.radiansToDegrees(scale[otherAxis](axisValue));
+  return Helpers.radiansToDegrees(axisValue);
 };
 
 //eslint-disable-next-line max-params

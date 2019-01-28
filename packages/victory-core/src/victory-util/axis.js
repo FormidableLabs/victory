@@ -3,6 +3,7 @@ import React from "react";
 import {
   identity,
   isFunction,
+  isObject,
   invert,
   uniq,
   range,
@@ -323,6 +324,22 @@ function getDomain(props, axis) {
   return Domain.createDomainFunction(getDomainFromData)(props, inherentAxis);
 }
 
+function getAxisValue(props, axis) {
+  if (!props.axisValue) {
+    return undefined;
+  }
+  const otherAxis = axis === "x" ? "y" : "x";
+  if (!isObject(props.scale) || !isFunction(props.scale[otherAxis])) {
+    return undefined;
+  }
+  const { stringMap } = props;
+  const axisValue =
+    isObject(stringMap) && stringMap[otherAxis] && typeof props.axisValue === "string"
+      ? stringMap[otherAxis][props.axisValue]
+      : props.axisValue;
+  return props.scale[otherAxis](axisValue);
+}
+
 export default {
   getTicks,
   getTickFormat,
@@ -336,5 +353,6 @@ export default {
   getOriginSign,
   getDomain,
   isVertical,
-  stringTicks
+  stringTicks,
+  getAxisValue
 };
