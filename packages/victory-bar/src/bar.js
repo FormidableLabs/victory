@@ -87,7 +87,7 @@ export default class Bar extends React.Component {
   }
 
   getCornerRadius(props) {
-    const { cornerRadius, datum, active } = props;
+    const { cornerRadius, datum, active, horizontal } = props;
     const realCornerRadius = { topLeft: 0, topRight: 0, bottomLeft: 0, bottomRight: 0 };
     if (!cornerRadius) {
       return realCornerRadius;
@@ -97,7 +97,15 @@ export default class Bar extends React.Component {
     }
     realCornerRadius.topLeft = Helpers.evaluateProp(cornerRadius, datum, active);
     realCornerRadius.topRight = Helpers.evaluateProp(cornerRadius, datum, active);
-    return realCornerRadius;
+    if (!horizontal) {
+      return realCornerRadius;
+    }
+    return {
+      topRight: realCornerRadius.topLeft,
+      bottomRight: realCornerRadius.topRight,
+      bottomLeft: realCornerRadius.bottomRight,
+      topLeft: realCornerRadius.bottomLeft
+    };
   }
 
   render() {
