@@ -3,7 +3,11 @@ import { Helpers, LabelHelpers, Data, Domain, Scale } from "victory-core";
 
 const getBarPosition = (props, datum) => {
   const getDefaultMin = (axis) => {
-    const defaultMin = Scale.getType(props.scale[axis]) === "log" ? 1 / Number.MAX_SAFE_INTEGER : 0;
+    const otherAxis = axis === "x" ? "y" : "x";
+    const currentAxis = props.horizontal ? otherAxis : axis;
+    const defaultMin = Scale.getType(props.scale[currentAxis]) === "log"
+      ? 1 / Number.MAX_SAFE_INTEGER
+      : 0;
     return datum[`_${axis}`] instanceof Date ? new Date(defaultMin) : defaultMin;
   };
   const _y0 = datum._y0 !== undefined ? datum._y0 : getDefaultMin("y");
@@ -12,7 +16,7 @@ const getBarPosition = (props, datum) => {
 };
 
 const getCalculatedValues = (props) => {
-  const { theme, horizontal, polar } = props;
+  const { theme, polar } = props;
   const defaultStyles = theme && theme.bar && theme.bar.style ? theme.bar.style : {};
   const style = Helpers.getStyles(props.style, defaultStyles);
   const data = Data.getData(props);
