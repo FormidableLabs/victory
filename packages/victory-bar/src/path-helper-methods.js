@@ -4,10 +4,18 @@ import * as d3Shape from "d3-shape";
 import { circle, point } from "./geometry-helper-methods";
 
 const getPosition = (props, width) => {
-  const { x, y, y0, horizontal } = props;
+  const { x, x0, y, y0, horizontal } = props;
   const alignment = props.alignment || "middle";
   const size = alignment === "middle" ? width / 2 : width;
   const sign = horizontal ? -1 : 1;
+  if (horizontal) {
+    return {
+      x0,
+      x1: x,
+      y0: alignment === "start" ? y : y - sign * size,
+      y1: alignment === "end" ? y : y + sign * size
+    };
+  }
   return {
     x0: alignment === "start" ? x : x - sign * size,
     x1: alignment === "end" ? x : x + sign * size,
@@ -145,7 +153,6 @@ const getVerticalBarPoints = (position, sign, cr) => {
   return getHalfPoints("Left").concat(getHalfPoints("Right"));
 };
 
-// eslint-disable-next-line max-statements, max-len
 export const getVerticalBarPath = (props, width, cornerRadius) => {
   const position = getPosition(props, width);
   const sign = position.y0 > position.y1 ? 1 : -1;
@@ -155,66 +162,6 @@ export const getVerticalBarPath = (props, width, cornerRadius) => {
   return mapPointsToPath(points, cornerRadius, direction);
 };
 
-const getHorizontalBarPoints = (position, sign, cr) => {
-  const { x0, x1, y0, y1 } = position;
-
-  // eslint-disable-next-line max-statements, max-len
-  const getHalfPoints = (side) => {
-    const isLeft = side === "Left";
-    const signL = isLeft ? 1 : -1;
-    const x = isLeft ? x1 : x0;
-    let bottomPoint = { y: x + signL * cr[`bottom${side}`], x: y0 };
-    let bottomMiddlePoint = { y: x, x: y0 + sign * cr[`bottom${side}`] };
-    let topMiddlePoint = { y: x, x: y1 - sign * cr[`top${side}`] };
-    let topPoint = { y: x + signL * cr[`top${side}`], x: y1 };
-    const hasIntersection =
-      sign === 1
-        ? y0 + cr[`bottom${side}`] > y1 - cr[`top${side}`]
-        : y0 - cr[`bottom${side}`] < y1 + cr[`top${side}`];
-    if (hasIntersection) {
-      const topCenter = point(y1 - sign * cr[`top${side}`], x + signL * cr[`top${side}`]);
-      const topCircle = circle(topCenter, cr[`top${side}`]);
-      const bottomCenter = point(y0 + sign * cr[`bottom${side}`], x + signL * cr[`bottom${side}`]);
-      const bottomCircle = circle(bottomCenter, cr[`bottom${side}`]);
-      const circleIntersection = topCircle.intersection(bottomCircle);
-      const hasArcIntersection = circleIntersection.length > 0;
-      if (hasArcIntersection) {
-        const arcIntersection = circleIntersection.sort((a, b) => a.y - b.y)[isLeft ? 0 : 1];
-        bottomMiddlePoint = { x: arcIntersection.x, y: arcIntersection.y };
-        topMiddlePoint = { x: arcIntersection.x, y: arcIntersection.y };
-      } else {
-        const hasBottomLineTopArcIntersection = cr[`top${side}`] > cr[`bottom${side}`];
-        if (hasBottomLineTopArcIntersection) {
-          const newX = topCircle.solveY(y0)[isLeft ? 1 : 0];
-          bottomPoint = { y: newX, x: y0 };
-          bottomMiddlePoint = { y: newX, x: y0 };
-          topMiddlePoint = { y: newX, x: y0 };
-        } else {
-          const newX = bottomCircle.solveY(y1)[isLeft ? 1 : 0];
-          bottomMiddlePoint = { y: newX, x: y1 };
-          topMiddlePoint = { y: newX, x: y1 };
-          topPoint = { y: newX, x: y1 };
-        }
-      }
-    }
-    const points = [bottomPoint, bottomMiddlePoint, topMiddlePoint, topPoint];
-    return isLeft ? points : points.reverse();
-  };
-
-  return getHalfPoints("Left").concat(getHalfPoints("Right"));
-};
-
-// eslint-disable-next-line max-statements, max-len
-export const getHorizontalBarPath = (props, width, cornerRadius) => {
-  const position = getPosition(props, width);
-  const sign = position.y1 > position.y0 ? 1 : -1;
-  const direction = sign > 0 ? "0 0 1" : "0 0 0";
-  const points = getHorizontalBarPoints(position, sign, cornerRadius);
-
-  return mapPointsToPath(points, cornerRadius, direction);
-};
-
-// eslint-disable-next-line max-statements, max-len
 export const getVerticalPolarBarPath = (props, cornerRadius) => {
   const { datum, scale, index, alignment } = props;
   const style = Helpers.evaluateStyle(props.style, datum, props.active);

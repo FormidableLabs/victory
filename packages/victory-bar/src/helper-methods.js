@@ -31,8 +31,8 @@ const getCalculatedValues = (props) => {
     .domain(domain.y)
     .range(range.y);
   const scale = {
-    x: horizontal ? yScale : xScale,
-    y: horizontal ? xScale : yScale
+    x: xScale,
+    y: yScale
   };
   const origin = polar ? props.origin || Helpers.getPolarOrigin(props) : undefined;
   return { style, data, scale, domain, origin };

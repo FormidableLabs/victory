@@ -37,8 +37,8 @@ function getChildProps(child, props, calculatedProps) {
   if (axisChild.length > 0) {
     return getAxisProps(axisChild[0], props, calculatedProps);
   }
-  const { categories, domain, range, scale } = calculatedProps;
-  return { categories, domain, range, scale };
+  const { categories, domain, range, scale, stringMap, horizontal } = calculatedProps;
+  return { categories, domain, range, scale, stringMap, horizontal };
 }
 
 function getStyles(props) {
@@ -59,7 +59,6 @@ function getCalculatedProps(props, childComponents) {
   const categories = Wrapper.getCategories(props, childComponents);
 
   const stringMap = createStringMap(props, childComponents);
-
   const axisComponents = {
     x: Axis.getAxisComponent(childComponents, "x"),
     y: Axis.getAxisComponent(childComponents, "y")

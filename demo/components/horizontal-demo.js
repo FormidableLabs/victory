@@ -5,6 +5,8 @@ import { VictoryChart } from "../../packages/victory-chart/src/index";
 import { VictoryStack } from "../../packages/victory-stack/src/index";
 import { VictoryGroup } from "../../packages/victory-group/src/index";
 import { VictoryBar } from "../../packages/victory-bar/src/index";
+import { VictoryScatter} from "../../packages/victory-scatter/src/index";
+import { VictoryLine } from "../../packages/victory-line/src/index";
 import { range, random } from "lodash";
 
 class App extends React.Component {
@@ -29,13 +31,31 @@ class App extends React.Component {
     const chartStyle = { parent: { border: "1px solid #ccc", margin: "2%", maxWidth: "40%" } };
     return (
       <div style={containerStyle}>
-        <VictoryChart style={chartStyle}>
+        <VictoryChart horizontal style={chartStyle} >
           <VictoryBar
-            horizontal
             data={[
               { x: "low", y: 1, sort: 1 },
               { x: "med", y: 2, sort: 2 },
               { x: "high", y: 3, sort: 3 }
+            ]}
+            sortKey={"sort"}
+            labels={() => "hi"}
+          />
+          <VictoryScatter
+            style={{ data: { fill: "tomato" }}}
+            data={[
+              { x: "low", y: 1, sort: 1 },
+              { x: "med", y: 2, sort: 2 },
+              { x: "high", y: 4, sort: 3 }
+            ]}
+            sortKey={"sort"}
+          />
+          <VictoryLine
+            style={{ data: { stroke: "tomato" }}}
+            data={[
+              { x: "low", y: 1, sort: 1 },
+              { x: "med", y: 2, sort: 2 },
+              { x: "high", y: 4, sort: 3 }
             ]}
             sortKey={"sort"}
           />

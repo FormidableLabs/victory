@@ -41,6 +41,7 @@ const getBaseProps = (props, fallbackProps) => {
     events,
     groupComponent,
     height,
+    horizontal,
     interpolation,
     origin,
     padding,
@@ -69,7 +70,9 @@ const getBaseProps = (props, fallbackProps) => {
       padding
     },
     all: {
-      data: { polar, origin, scale, data, interpolation, groupComponent, theme, style: style.data }
+      data: {
+        horizontal, polar, origin, scale, data, interpolation, groupComponent, theme, style: style.data
+      }
     }
   };
   return data.reduce((childProps, datum, index) => {

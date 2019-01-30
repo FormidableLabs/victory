@@ -5,7 +5,6 @@ import { assign, isPlainObject, isFunction, isNil } from "lodash";
 
 import {
   getVerticalBarPath,
-  getHorizontalBarPath,
   getVerticalPolarBarPath,
   getCustomBarPath
 } from "./path-helper-methods";
@@ -47,9 +46,7 @@ export default class Bar extends React.Component {
     if (props.getPath) {
       return getCustomBarPath(props, width);
     }
-    return props.horizontal
-      ? getHorizontalBarPath(props, width, cornerRadius)
-      : getVerticalBarPath(props, width, cornerRadius);
+    return getVerticalBarPath(props, width, cornerRadius);
   }
 
   getPolarBarPath(props, cornerRadius) {
@@ -58,13 +55,13 @@ export default class Bar extends React.Component {
   }
 
   getBarWidth(props, style) {
-    const { active, scale, data, datum, barWidth, defaultBarWidth } = props;
+    const { active, scale, data, datum, barWidth, defaultBarWidth, horizontal } = props;
     if (barWidth) {
       return isFunction(barWidth) ? Helpers.evaluateProp(barWidth, datum, active) : barWidth;
     } else if (style.width) {
       return style.width;
     }
-    const range = scale.x.range();
+    const range = horizontal ? scale.y.range() : scale.x.range();
     const extent = Math.abs(range[1] - range[0]);
     const bars = data.length + 2;
     const barRatio = props.barRatio || 0.5;
