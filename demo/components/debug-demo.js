@@ -54,11 +54,11 @@ class App extends React.Component {
         </VictoryChart>
 
         <VictoryChart
+          horizontal
           style={chartStyle}
           containerComponent={<VictoryVoronoiContainer labels={() => "HELLO"} />}
         >
           <VictoryBar
-            horizontal
             style={{ data: { fill: (d, a) => (a ? "red" : "black") } }}
             data={[
               { x: 0, y: 3.5, y0: 2.5 },
@@ -67,6 +67,17 @@ class App extends React.Component {
               { x: 1, y: 7, y0: 4 },
               { x: 2, y: 4, y0: 3 },
               { x: 2, y: 12, y0: 7 }
+            ]}
+          />
+          <VictoryScatter
+            style={{ data: { fill: (d, a) => (a ? "black" : "red") } }}
+            data={[
+              { x: 0, y: 3.5 },
+              { x: 0, y: 11 },
+              { x: 1, y: 2 },
+              { x: 1, y: 7 },
+              { x: 2, y: 4 },
+              { x: 2, y: 12 }
             ]}
           />
         </VictoryChart>

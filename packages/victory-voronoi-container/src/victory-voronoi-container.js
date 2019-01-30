@@ -111,24 +111,14 @@ export const voronoiContainerMixin = (base) =>
       };
     }
 
-    getPoint(props, point) {
+    getPoint(point) {
       const whitelist = ["_x", "_x1", "_x0", "_y", "_y1", "_y0"];
-      if (!props.horizontal) {
-        return pick(point, whitelist);
-      }
-      return {
-        _x: point._y,
-        _y: point._x,
-        _x1: point._y1,
-        _y1: point._x1,
-        _x0: point._y0,
-        _y0: point._x0
-      };
+      return pick(point, whitelist);
     }
 
     getLabelPosition(props, points, labelProps) {
       const { mousePosition, voronoiDimension, scale, voronoiPadding } = props;
-      const point = this.getPoint(props, points[0]);
+      const point = this.getPoint(points[0]);
       const basePosition = Helpers.scalePoint(props, point);
       if (!voronoiDimension || points.length < 2) {
         return basePosition;
@@ -188,7 +178,7 @@ export const voronoiContainerMixin = (base) =>
 
     getDefaultLabelProps(props, points) {
       const { voronoiDimension, horizontal } = props;
-      const point = this.getPoint(props, points[0]);
+      const point = this.getPoint(points[0]);
       const multiPoint = voronoiDimension && points.length > 1;
       const y = point._y1 !== undefined ? point._y1 : point._y;
       const defaultHorizontalOrientation = y < 0 ? "left" : "right";
