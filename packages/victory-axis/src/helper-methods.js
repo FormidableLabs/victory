@@ -297,15 +297,26 @@ const getLayoutProps = (modifiedProps, calculatedValues) => {
   };
 };
 
+const getOrientation = (props) => {
+  if (props.orientation) {
+    return props.orientation;
+  }
+  const defaultOrientations = {
+    dependent: props.horizontal ? "bottom" : "left",
+    independent: props.horizontal ? "left" : "bottom"
+  };
+  return props.dependentAxis ? defaultOrientations.dependent : defaultOrientations.independent;
+};
+
 const getCalculatedValues = (props) => {
   const defaultStyles = getStyleObject(props);
   const style = getStyles(props, defaultStyles);
   const padding = Helpers.getPadding(props);
-  const orientation = props.orientation || (props.dependentAxis ? "left" : "bottom");
   const isVertical = Axis.isVertical(props);
   const labelPadding = getLabelPadding(props, style);
   const stringTicks = Axis.stringTicks(props) ? props.tickValues : undefined;
   const axis = Axis.getAxis(props);
+  const orientation = getOrientation(props);
   const scale = getScale(props);
   const domain = Axis.getDomain(props);
   const ticks = Axis.getTicks(props, scale, props.crossAxis);

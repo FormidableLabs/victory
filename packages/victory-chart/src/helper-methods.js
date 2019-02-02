@@ -8,8 +8,7 @@ import { defaults, assign } from "lodash";
 function getAxisProps(child, props, calculatedProps) {
   const { domain, scale, originSign, stringMap, categories, horizontal } = calculatedProps;
   const childProps = child.props || {};
-  const axis = child.type.getAxis(childProps);
-  const currentAxis = Axis.getCurrentAxis(axis, horizontal);
+  const axis = child.type.getAxis(assign({ horizontal }, childProps));
   const otherAxis = axis === "x" ? "y" : "x";
   const axisOffset = getAxisOffset(props, calculatedProps);
   const offsetY = axis === "y" ? undefined : axisOffset.y;
@@ -19,7 +18,7 @@ function getAxisProps(child, props, calculatedProps) {
   return {
     stringMap,
     horizontal,
-    categories: categories[currentAxis],
+    categories,
     startAngle: props.startAngle,
     endAngle: props.endAngle,
     innerRadius: props.innerRadius,
@@ -55,13 +54,11 @@ function getStyles(props) {
 function getCalculatedProps(props, childComponents) {
   const style = getStyles(props);
   const horizontal = Helpers.isHorizontal(props);
-  // TODO: check
   const categories = Wrapper.getCategories(props, childComponents);
-
   const stringMap = createStringMap(props, childComponents);
   const axisComponents = {
-    x: Axis.getAxisComponent(childComponents, "x"),
-    y: Axis.getAxisComponent(childComponents, "y")
+    x: Axis.getAxisComponent(childComponents, "x", horizontal),
+    y: Axis.getAxisComponent(childComponents, "y", horizontal)
   };
   const domain = {
     x: getDomain(assign({}, props, { categories }), "x", childComponents),
@@ -143,7 +140,6 @@ function getChildren(props, childComponents, calculatedProps) {
       },
       childProps
     );
-
     return React.cloneElement(child, newProps);
   });
 }

@@ -17,14 +17,21 @@ import Domain from "./domain";
 /**
  * Returns the axis (x or y) of a particular axis component
  * @param {Object} props: the props object.
+ * @param {Boolean} horizontal: true for horizontal charts
  * @returns {String} the dimension appropriate for the axis given its props
  */
-function getAxis(props) {
-  if (props.orientation) {
+function getAxis(props, horizontal) {
+  const { orientation, dependentAxis } = props;
+  horizontal = horizontal || props.horizontal;
+  if (orientation) {
     const vertical = { top: "x", bottom: "x", left: "y", right: "y" };
-    return vertical[props.orientation];
+    return vertical[orientation];
   }
-  return props.dependentAxis ? "y" : "x";
+  if (horizontal) {
+    return dependentAxis ? "x" : "y";
+  }
+  return dependentAxis ? "y" : "x";
+
 }
 
 /**
@@ -64,11 +71,12 @@ function findAxisComponents(childComponents, predicate) {
  * Returns a single axis component of the desired axis type (x or y)
  * @param {Array} childComponents: an array of children
  * @param {String} axis: desired axis either "x" or "y".
+ * @param {Boolean} horizontal: true for horizontal charts
  * @returns {ReactComponent} an axis component of the desired axis or undefined
  */
-function getAxisComponent(childComponents, axis) {
+function getAxisComponent(childComponents, axis, horizontal) {
   const matchesAxis = (component) => {
-    const type = component.type.getAxis(component.props);
+    const type = component.type.getAxis(component.props, horizontal);
     return type === axis;
   };
   return findAxisComponents(childComponents, matchesAxis)[0];
@@ -136,21 +144,12 @@ function getOrientation(component, axis, originSign) {
     return component.props.orientation;
   }
   const sign = originSign || "positive";
-  const typicalOrientations = {
+  const orientations = {
     positive: { x: "bottom", y: "left" },
     negative: { x: "top", y: "right" }
   };
-  const flippedOrientations = {
-    positive: { x: "left", y: "bottom" },
-    negative: { x: "right", y: "top" }
-  };
-  if (!component) {
-    return typicalOrientations[sign][axis];
-  }
-  const dependent = component.props.dependentAxis;
-  return (!dependent && axis === "y") || (dependent && axis === "x")
-    ? flippedOrientations[sign][axis]
-    : typicalOrientations[sign][axis];
+
+  return orientations[sign][axis];
 }
 
 /**
