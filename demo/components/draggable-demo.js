@@ -31,14 +31,7 @@ class DraggablePoint extends React.Component {
       eventHandlers: {
         onMouseOver: (evt, targetProps) => {
           return [{
-            mutation: (props) => {
-              const style = Object.assign({}, props.style, { strokeWidth: 40 });
-              return Object.assign(
-                {},
-                targetProps,
-                { active: true, style }
-              );
-            }
+            mutation: () => Object.assign({}, targetProps, { active: true })
           }]
         },
         onMouseDown: (evt, targetProps) => {
@@ -61,19 +54,12 @@ class DraggablePoint extends React.Component {
         },
         onMouseUp: (evt, targetProps) => {
           return [{
-            mutation: () => Object.assign({}, targetProps, { dragging: false })
+            mutation: () => Object.assign({}, targetProps, { dragging: false, active: false })
           }]
         },
         onMouseLeave: (evt, targetProps) => {
           return [{
-            mutation: (props) => {
-              const style = Object.assign({}, props.style, { strokeWidth: 0 });
-              return Object.assign(
-                {},
-                targetProps,
-                { dragging: false, active: false, style }
-              );
-            }
+            mutation: () => Object.assign({}, targetProps, { dragging: false, active: false })
           }]
         }
       }
@@ -127,10 +113,10 @@ class App extends React.Component {
 
     return (
       <div style={containerStyle}>
-        <VictoryChart
+        <VictoryChart horizontal
           {...sharedProps}
           height={400}
-          padding={{ top: 50, left: 50, right: 0, bottom: 10 }}
+          padding={{ top: 50, left: 50, right: 30, bottom: 0 }}
           containerComponent={
             <VictoryZoomContainer
               responsive={false}
@@ -144,17 +130,14 @@ class App extends React.Component {
             />
           }
         >
-          <VictoryAxis orientation="left"
+          <VictoryAxis
             style={{
               axis: { stroke: "none" }
             }}
-            tickValues={bars.map((b) => b.name)}
           />
 
           {bars.map((bar, index) => (
-            <VictoryAxis
-              dependentAxis
-              orientation="bottom"
+            <VictoryAxis dependentAxis
               key={index}
               axisComponent={
                 <VictoryBrushLine
@@ -177,6 +160,7 @@ class App extends React.Component {
             />
           ))}
           <VictoryScatter
+            horizontal
             data={points}
             dataComponent={
               <DraggablePoint
@@ -190,15 +174,15 @@ class App extends React.Component {
                 cursor: "move"
               }
             }}
-            x="date"
-            y="name"
+            x="name"
+            y="date"
             size={10}
           />
         </VictoryChart>
         <VictoryChart
           horizontal
           {...sharedProps}
-          padding={{ top: 0, left: 50, right: 0, bottom: 30 }}
+          padding={{ top: 30, left: 50, right: 30, bottom: 0 }}
           scale={{ x: "time" }}
           height={120}
           containerComponent={
@@ -210,16 +194,18 @@ class App extends React.Component {
             />
           }
         >
-          <VictoryAxis orientation="left"
-            tickValues={this.state.bars.map((b) => b.name)}
+          <VictoryAxis
+            style={{
+              axis: { stroke: "none" }
+            }}
           />
-          <VictoryAxis dependentAxis orientation="bottom"
-            tickValues={[
-              new Date(2012, 6, 1),
-              new Date(2014, 6, 1),
-              new Date(2016, 6, 1),
-              new Date(2018, 6, 1)
-            ]}
+          <VictoryAxis dependentAxis
+            orientation="top"
+            style={{
+              axis: { stroke: "none" },
+              tickLabels: { fontSize: 20 }
+            }}
+            tickCount={3}
             tickFormat={(t) => t.getFullYear()}
           />
           <VictoryScatter
