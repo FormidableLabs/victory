@@ -182,6 +182,13 @@ export default class App extends React.Component {
               { type: 2, min: 4, max: 20, median: 10, q1: 7, q3: 15 },
               { type: 3, min: 3, max: 12, median: 6, q1: 5, q3: 10 }
             ]}
+            labelOrientation={{
+              q1: "top",
+              q3: "top",
+              min: "bottom",
+              max: "bottom",
+              median: "bottom"
+            }}
           />
         </VictoryChart>
         <VictoryChart animate style={chartStyle} domainPadding={50}>
