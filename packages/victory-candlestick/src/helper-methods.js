@@ -28,8 +28,9 @@ const getDomainFromData = (props, axis) => {
     const max = maxDomain !== undefined ? maxDomain : Collection.getMaxValue(scaleDomain);
     return Domain.getDomainFromMinMax(min, max);
   }
-  const min = minDomain !== undefined ? minDomain : reduceData(dataset, axis, "min");
-  const max = maxDomain !== undefined ? maxDomain : reduceData(dataset, axis, "max");
+  const currentAxis = Helpers.getCurrentAxis(axis, props.horizontal);
+  const min = minDomain !== undefined ? minDomain : reduceData(dataset, currentAxis, "min");
+  const max = maxDomain !== undefined ? maxDomain : reduceData(dataset, currentAxis, "max");
   return Domain.getDomainFromMinMax(min, max);
 };
 
@@ -78,19 +79,23 @@ const getDataStyles = (datum, style, props) => {
 };
 
 const getLabelProps = (dataProps, text, style) => {
-  const { x, high, index, scale, datum, data } = dataProps;
+  const { x, high, index, scale, datum, data, horizontal } = dataProps;
   const labelStyle = style.labels || {};
+  const defaultAnchors = {
+    vertical: horizontal ? "middle" : "end",
+    text: horizontal ? "start" : "middle"
+  }
   return {
     style: labelStyle,
-    y: high - (labelStyle.padding || 0),
-    x,
+    y: horizontal ? x : high - (labelStyle.padding || 0),
+    x: horizontal ? high + (labelStyle.padding || 0) : x,
     text,
     index,
     scale,
     datum,
     data,
-    textAnchor: labelStyle.textAnchor,
-    verticalAnchor: labelStyle.verticalAnchor || "end",
+    textAnchor: labelStyle.textAnchor || defaultAnchors.text,
+    verticalAnchor: labelStyle.verticalAnchor || defaultAnchors.vertical,
     angle: labelStyle.angle
   };
 };
@@ -114,7 +119,8 @@ const getBaseProps = (props, fallbackProps) => {
     wickStrokeWidth,
     labels,
     events,
-    sharedEvents
+    sharedEvents,
+    horizontal
   } = props;
   const initialChildProps = {
     parent: {
@@ -129,17 +135,20 @@ const getBaseProps = (props, fallbackProps) => {
       origin,
       name,
       style: style.parent,
-      padding
+      padding,
+      horizontal
     }
   };
 
   return data.reduce((childProps, datum, index) => {
     const eventKey = !isNil(datum.eventKey) ? datum.eventKey : index;
-    const x = scale.x(datum._x1 !== undefined ? datum._x1 : datum._x);
-    const high = scale.y(datum._high);
-    const close = scale.y(datum._close);
-    const open = scale.y(datum._open);
-    const low = scale.y(datum._low);
+    const xScale = horizontal ? scale.y : scale.x;
+    const yScale = horizontal ? scale.x : scale.y;
+    const x = xScale(datum._x1 !== undefined ? datum._x1 : datum._x)
+    const high = yScale(datum._high);
+    const close = yScale(datum._close);
+    const open = yScale(datum._open);
+    const low = yScale(datum._low);
     const dataStyle = getDataStyles(datum, style.data, props);
     const dataProps = {
       x,
@@ -158,7 +167,8 @@ const getBaseProps = (props, fallbackProps) => {
       origin,
       wickStrokeWidth,
       open,
-      close
+      close,
+      horizontal
     };
 
     childProps[eventKey] = {

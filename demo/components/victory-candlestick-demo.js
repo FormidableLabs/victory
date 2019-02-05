@@ -86,6 +86,7 @@ export default class App extends React.Component {
         <svg height={500} width={500}>
           <VictoryCandlestick
             style={{ data: { width: 10 }, parent: style.parent }}
+            labels={() => "yo"}
             data={data}
             size={8}
             standalone={false}
@@ -127,8 +128,9 @@ export default class App extends React.Component {
           <VictoryAxis standalone={false} />
         </svg>
 
-        <VictoryCandlestick
+        <VictoryCandlestick horizontal
           style={{ parent: style.parent }}
+          labels={() => "yo"}
           data={data}
           theme={VictoryTheme.material}
           size={8}

@@ -28,15 +28,13 @@ const getCalculatedValues = (props) => {
     x: Domain.getDomainWithZero(props, "x"),
     y: Domain.getDomainWithZero(props, "y")
   };
-  const xScale = Scale.getBaseScale(props, "x")
-    .domain(domain.x)
-    .range(range.x);
-  const yScale = Scale.getBaseScale(props, "y")
-    .domain(domain.y)
-    .range(range.y);
   const scale = {
-    x: xScale,
-    y: yScale
+    x: Scale.getBaseScale(props, "x")
+      .domain(domain.x)
+      .range(range.x),
+    y: Scale.getBaseScale(props, "y")
+      .domain(domain.y)
+      .range(range.y)
   };
   const origin = polar ? props.origin || Helpers.getPolarOrigin(props) : undefined;
   return { style, data, scale, domain, origin };
