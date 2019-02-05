@@ -1,24 +1,30 @@
 import { assign, isNil } from "lodash";
-import { Helpers, LabelHelpers, Data, Domain, Scale } from "victory-core";
+import { Helpers, LabelHelpers, Data, Domain, Scale, Collection } from "victory-core";
 
 const getDataWithBaseline = (props, scale) => {
   let data = Data.getData(props);
-
+  const { horizontal } = props;
   if (data.length < 2) {
     data = [];
   }
-  const defaultMin = Scale.getType(scale.y) === "log" ? 1 / Number.MAX_SAFE_INTEGER : 0;
-  const domainY = scale.y.domain();
-  const minY = Math.min(...domainY) > 0 ? Math.min(...domainY) : defaultMin;
+  const getDefaultMin = (axis) => {
+    const otherAxis = axis === "x" ? "y" : "x";
+    const currentAxis = horizontal ? otherAxis : axis;
+    const defaultMin = Scale.getType(scale[currentAxis]) === "log"
+      ? 1 / Number.MAX_SAFE_INTEGER
+      : 0;
+    const domain = scale[currentAxis].domain();
+    return Collection.getMinValue(domain) > 0
+      ? Collection.getMinValue(domain)
+      : defaultMin;
+  }
 
   return data.map((datum) => {
-    if ((datum._y1 !== undefined || datum._y !== undefined) && datum._y0 !== undefined) {
-      return datum;
-    }
-
     const _y1 = datum._y1 !== undefined ? datum._y1 : datum._y;
-    const _y0 = datum._y0 !== undefined ? datum._y0 : minY;
-    return assign({}, datum, { _y0, _y1 });
+    const _y0 = datum._y0 !== undefined ? datum._y0 : getDefaultMin("y");
+    const _x1 = datum._x1 !== undefined ? datum._x1 : datum._x;
+    const _x0 = datum._x0 !== undefined ? datum._x0 : getDefaultMin("x");
+    return assign({}, datum, { _y0, _y1, _x0, _x1 });
   });
 };
 
@@ -56,6 +62,7 @@ const getBaseProps = (props, fallbackProps) => {
     events,
     groupComponent,
     height,
+    horizontal,
     interpolation,
     origin,
     padding,
@@ -82,10 +89,13 @@ const getBaseProps = (props, fallbackProps) => {
       polar,
       origin,
       padding,
-      name
+      name,
+      horizontal
     },
     all: {
-      data: { polar, origin, scale, data, interpolation, groupComponent, style: style.data }
+      data: {
+        horizontal, polar, origin, scale, data, interpolation, groupComponent, style: style.data
+      }
     }
   };
   return data.reduce((childProps, datum, index) => {

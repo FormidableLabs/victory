@@ -10,16 +10,28 @@ const defined = (d) => {
   return y !== null && y !== undefined && d._y0 !== null;
 };
 
-const getXAccessor = (scale) => {
-  return (d) => scale.x(d._x1 !== undefined ? d._x1 : d._x);
+const getXAccessor = (scale, horizontal) => {
+  return horizontal
+    ? (d) => scale.x(d._y1 !== undefined ? d._y1 : d._y)
+    : (d) => scale.x(d._x1 !== undefined ? d._x1 : d._x);
 };
 
-const getYAccessor = (scale) => {
-  return (d) => scale.y(d._y1 !== undefined ? d._y1 : d._y);
+const getYAccessor = (scale, horizontal) => {
+  return horizontal
+    ? (d) => scale.y(d._x1 !== undefined ? d._x1 : d._x)
+    : (d) => scale.y(d._y1 !== undefined ? d._y1 : d._y);
 };
 
-const getY0Accessor = (scale) => {
-  return (d) => scale.y(d._y0);
+const getX0Accessor = (scale, horizontal) => {
+  return horizontal
+    ? (d) => scale.x(d._y0)
+    : null;
+};
+
+const getY0Accessor = (scale, horizontal) => {
+  return horizontal
+    ? null
+    : (d) => scale.y(d._y0);
 };
 
 const getAngleAccessor = (scale) => {
@@ -43,7 +55,7 @@ export default class Area extends React.Component {
   };
 
   getLineFunction(props) {
-    const { polar, scale } = props;
+    const { polar, scale, horizontal } = props;
     const interpolation = this.toNewName(props.interpolation);
     return polar
       ? d3Shape
@@ -56,8 +68,27 @@ export default class Area extends React.Component {
           .line()
           .defined(defined)
           .curve(d3Shape[interpolation])
-          .x(getXAccessor(scale))
-          .y(getYAccessor(scale));
+          .x(getXAccessor(scale, horizontal))
+          .y(getYAccessor(scale, horizontal));
+  }
+
+  getCartesianArea(props, interpolation) {
+    const { horizontal, scale } = props;
+    return horizontal
+      ? d3Shape
+        .area()
+        .defined(defined)
+        .curve(d3Shape[interpolation])
+        .x0(getX0Accessor(scale, horizontal))
+        .x1(getXAccessor(scale, horizontal))
+        .y(getYAccessor(scale, horizontal))
+      : d3Shape
+        .area()
+        .defined(defined)
+        .curve(d3Shape[interpolation])
+        .x(getXAccessor(scale, horizontal))
+        .y1(getYAccessor(scale, horizontal))
+        .y0(getY0Accessor(scale, horizontal));
   }
 
   getAreaFunction(props) {
@@ -71,13 +102,7 @@ export default class Area extends React.Component {
           .angle(getAngleAccessor(scale))
           .outerRadius(getYAccessor(scale))
           .innerRadius(getY0Accessor(scale))
-      : d3Shape
-          .area()
-          .defined(defined)
-          .curve(d3Shape[interpolation])
-          .x(getXAccessor(scale))
-          .y1(getYAccessor(scale))
-          .y0(getY0Accessor(scale));
+      : this.getCartesianArea(props, interpolation);
   }
 
   toNewName(interpolation) {

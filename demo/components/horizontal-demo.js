@@ -7,6 +7,7 @@ import { VictoryGroup } from "../../packages/victory-group/src/index";
 import { VictoryBar } from "../../packages/victory-bar/src/index";
 import { VictoryScatter} from "../../packages/victory-scatter/src/index";
 import { VictoryLine } from "../../packages/victory-line/src/index";
+import { VictoryArea } from "../../packages/victory-area/src/index";
 import { range, random } from "lodash";
 
 class App extends React.Component {
@@ -126,6 +127,70 @@ class App extends React.Component {
             <VictoryBar data={[{ x: 1, y: 3 }, { x: 2, y: 4 }, { x: 3, y: 9 }]} />
           </VictoryGroup>
         </VictoryChart>
+
+        <VictoryArea horizontal
+          style={{
+            parent: chartStyle.parent,
+            data: { stroke: "red", strokeWidth: 2 }
+          }}
+          data={[
+            { x: new Date(1982, 1, 1), y: 125 },
+            { x: new Date(1987, 1, 1), y: 257 },
+            { x: new Date(1993, 1, 1), y: 345 },
+            { x: new Date(1997, 1, 1), y: 515 },
+            { x: new Date(2001, 1, 1), y: null },
+            { x: new Date(2005, 1, 1), y: 305 },
+            { x: new Date(2011, 1, 1), y: 270 },
+            { x: new Date(2015, 1, 1), y: 470 }
+          ]}
+        />
+
+        <VictoryLine horizontal
+          style={{
+            parent: chartStyle.parent,
+            data: { stroke: "red", strokeWidth: 2 }
+          }}
+          data={[
+            { x: new Date(1982, 1, 1), y: 125 },
+            { x: new Date(1987, 1, 1), y: 257 },
+            { x: new Date(1993, 1, 1), y: 345 },
+            { x: new Date(1997, 1, 1), y: 515 },
+            { x: new Date(2001, 1, 1), y: null },
+            { x: new Date(2005, 1, 1), y: 305 },
+            { x: new Date(2011, 1, 1), y: 270 },
+            { x: new Date(2015, 1, 1), y: 470 }
+          ]}
+        />
+        <VictoryBar horizontal
+          style={chartStyle}
+          data={[
+            { x: new Date(1982, 1, 1), y: 125 },
+            { x: new Date(1987, 1, 1), y: 257 },
+            { x: new Date(1993, 1, 1), y: 345 },
+            { x: new Date(1997, 1, 1), y: 515 },
+            { x: new Date(2001, 1, 1), y: 132 },
+            { x: new Date(2005, 1, 1), y: 305 },
+            { x: new Date(2011, 1, 1), y: 270 },
+            { x: new Date(2015, 1, 1), y: 470 }
+          ]}
+        />
+        <VictoryChart horizontal style={chartStyle}>
+          <VictoryStack>
+            <VictoryArea
+              data={[{ x: 1, y: 2 }, { x: 2, y: 3 }, { x: 3, y: 5 }, { x: 4, y: 4 }, { x: 5, y: 7 }]}
+            />
+            <VictoryArea
+              data={[{ x: 1, y: 1 }, { x: 2, y: 4 }, { x: 3, y: 5 }, { x: 4, y: 7 }, { x: 5, y: 5 }]}
+            />
+            <VictoryArea
+              data={[{ x: 1, y: 3 }, { x: 2, y: 2 }, { x: 3, y: 6 }, { x: 4, y: 2 }, { x: 5, y: 6 }]}
+            />
+            <VictoryArea
+              data={[{ x: 1, y: 2 }, { x: 2, y: 3 }, { x: 3, y: 3 }, { x: 4, y: 4 }, { x: 5, y: 7 }]}
+            />
+          </VictoryStack>
+        </VictoryChart>
+
       </div>
     );
   }
