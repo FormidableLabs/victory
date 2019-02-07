@@ -1,7 +1,7 @@
 import { isNil } from "lodash";
 import { Helpers, LabelHelpers, Scale, Domain, Data, Collection } from "victory-core";
 
-const getErrors = (datum, scale, axis) => {
+const getErrors = (datum, scale, axis, horizontal) => {
   /**
    * check if it is asymmetric error or symmetric error, asymmetric error should be an array
    * and the first value is the positive error, the second is the negative error
@@ -15,12 +15,14 @@ const getErrors = (datum, scale, axis) => {
     return false;
   }
 
+  const otherAxis = axis === "x" ? "y" : "x";
+  const currentAxis = horizontal ? otherAxis : axis;
   return Array.isArray(errors)
     ? [
-        errors[0] === 0 ? false : scale[axis](errors[0] + datum[`_${axis}`]),
-        errors[1] === 0 ? false : scale[axis](datum[`_${axis}`] - errors[1])
+        errors[0] === 0 ? false : scale[currentAxis](errors[0] + datum[`_${axis}`]),
+        errors[1] === 0 ? false : scale[currentAxis](datum[`_${axis}`] - errors[1])
       ]
-    : [scale[axis](errors + datum[`_${axis}`]), scale[axis](datum[`_${axis}`] - errors)];
+    : [scale[currentAxis](errors + datum[`_${axis}`]), scale[currentAxis](datum[`_${axis}`] - errors)];
 };
 
 const getData = (props) => {
@@ -129,7 +131,8 @@ const getBaseProps = (props, fallbackProps) => {
     labels,
     events,
     sharedEvents,
-    name
+    name,
+    horizontal
   } = props;
   const initialChildProps = {
     parent: {
@@ -144,15 +147,16 @@ const getBaseProps = (props, fallbackProps) => {
       origin,
       name,
       padding,
-      style: style.parent
+      style: style.parent,
+      horizontal
     }
   };
 
   return data.reduce((childProps, datum, index) => {
     const eventKey = !isNil(datum.eventKey) ? datum.eventKey : index;
-    const x = scale.x(datum._x1 !== undefined ? datum._x1 : datum._x);
-    const y = scale.y(datum._y1 !== undefined ? datum._y1 : datum._y);
-
+    const { x, y } = Helpers.scalePoint(props, datum);
+    const errorX = getErrors(datum, scale, "x", horizontal);
+    const errorY = getErrors(datum, scale, "y", horizontal);
     const dataProps = {
       x,
       y,
@@ -163,8 +167,9 @@ const getBaseProps = (props, fallbackProps) => {
       groupComponent,
       borderWidth,
       style: style.data,
-      errorX: getErrors(datum, scale, "x"),
-      errorY: getErrors(datum, scale, "y")
+      horizontal,
+      errorX: horizontal ? errorY : errorX,
+      errorY: horizontal ? errorX : errorY
     };
 
     childProps[eventKey] = {

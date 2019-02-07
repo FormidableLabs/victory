@@ -89,20 +89,35 @@ export default class ErrorBar extends React.Component {
   }
 
   calculateError(props) {
-    const { errorX, errorY, scale } = props;
-    const rangeX = scale.x.range();
-    const rangeY = scale.y.range();
-    const positiveErrorX = errorX ? errorX[0] : undefined;
-    const negativeErrorX = errorX ? errorX[1] : undefined;
-    const positiveErrorY = errorY ? errorY[1] : undefined;
-    const negativeErrorY = errorY ? errorY[0] : undefined;
+    const { errorX, errorY, scale, horizontal } = props;
+    const rangeX = horizontal ? scale.y.range() : scale.x.range();
+    const rangeY = horizontal ? scale.x.range() : scale.y.range();
+    const getError = (error, index) => error ? error[index] : undefined;
+    // const positiveErrorX = horizontal ? getError(errorY, 1) : getError(errorX, 0);
+    // const negativeErrorX = horizontal ? getError(errorY, 0) : getError(errorX, 1);
+    // const positiveErrorY = horizontal ? getError(errorX, 1) : getError(errorY, 1);
+    // const negativeErrorY = horizontal ? getError(errorX, 0) : getError(errorY, 0);
 
-    return {
-      right: positiveErrorX >= rangeX[1] ? rangeX[1] : positiveErrorX,
-      left: negativeErrorX <= rangeX[0] ? rangeX[0] : negativeErrorX,
-      top: positiveErrorY >= rangeY[0] ? rangeY[0] : positiveErrorY,
-      bottom: negativeErrorY <= rangeY[1] ? rangeY[1] : negativeErrorY
+    const positiveErrorX = getError(errorX, 0);
+    const negativeErrorX = getError(errorX, 1);
+    const positiveErrorY = getError(errorY, 1);
+    const negativeErrorY = getError(errorY, 0);
+
+
+    // const result = {
+    //   right: positiveErrorX >= rangeX[1] ? rangeX[1] : positiveErrorX,
+    //   left: negativeErrorX <= rangeX[0] ? rangeX[0] : negativeErrorX,
+    //   top: positiveErrorY >= rangeY[0] ? rangeY[0] : positiveErrorY,
+    //   bottom: negativeErrorY <= rangeY[1] ? rangeY[1] : negativeErrorY
+    // };
+    const result = {
+      right: positiveErrorX,
+      left: negativeErrorX,
+      top: positiveErrorY,
+      bottom: negativeErrorY
     };
+    console.log(result, props)
+    return result
   }
 
   render() {
