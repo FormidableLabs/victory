@@ -116,11 +116,10 @@ class App extends React.Component {
           </VictoryGroup>
         </VictoryChart>
 
-        <VictoryChart style={chartStyle}>
+        <VictoryChart horizontal style={chartStyle}>
           <VictoryGroup>
             <VictoryStack
               labels={["a", "b", "c"]}
-              horizontal
               offset={20}
               colorScale={"qualitative"}
             >
@@ -130,13 +129,25 @@ class App extends React.Component {
             </VictoryStack>
           </VictoryGroup>
         </VictoryChart>
-        <VictoryChart style={chartStyle}>
-          <VictoryGroup labels={["a", "b", "c"]} horizontal offset={20} colorScale={"qualitative"}>
+
+        <VictoryChart horizontal style={chartStyle}>
+          <VictoryGroup labels={["a", "b", "c"]} offset={20} colorScale={"qualitative"}>
             <VictoryBar data={[{ x: 1, y: 1 }, { x: 2, y: 2 }, { x: 3, y: 5 }]} />
             <VictoryBar data={[{ x: 1, y: 2 }, { x: 2, y: 1 }, { x: 3, y: 7 }]} />
             <VictoryBar data={[{ x: 1, y: 3 }, { x: 2, y: 4 }, { x: 3, y: 9 }]} />
           </VictoryGroup>
         </VictoryChart>
+
+        <VictoryGroup horizontal
+          style={chartStyle}
+          labels={["a", "b", "c"]}
+          offset={20}
+          colorScale={"qualitative"}
+        >
+            <VictoryBar data={[{ x: 1, y: 1 }, { x: 2, y: 2 }, { x: 3, y: 5 }]} />
+            <VictoryBar data={[{ x: 1, y: 2 }, { x: 2, y: 1 }, { x: 3, y: 7 }]} />
+            <VictoryBar data={[{ x: 1, y: 3 }, { x: 2, y: 4 }, { x: 3, y: 9 }]} />
+          </VictoryGroup>
 
         <VictoryArea horizontal
           style={{
@@ -204,6 +215,21 @@ class App extends React.Component {
           </VictoryStack>
         </VictoryChart>
 
+        <VictoryStack horizontal style={chartStyle}>
+            <VictoryArea
+              data={[{ x: 1, y: 2 }, { x: 2, y: 3 }, { x: 3, y: 5 }, { x: 4, y: 4 }, { x: 5, y: 7 }]}
+            />
+            <VictoryArea
+              data={[{ x: 1, y: 1 }, { x: 2, y: 4 }, { x: 3, y: 5 }, { x: 4, y: 7 }, { x: 5, y: 5 }]}
+            />
+            <VictoryArea
+              data={[{ x: 1, y: 3 }, { x: 2, y: 2 }, { x: 3, y: 6 }, { x: 4, y: 2 }, { x: 5, y: 6 }]}
+            />
+            <VictoryArea
+              data={[{ x: 1, y: 2 }, { x: 2, y: 3 }, { x: 3, y: 3 }, { x: 4, y: 4 }, { x: 5, y: 7 }]}
+            />
+          </VictoryStack>
+
         <VictoryCandlestick horizontal
           style={chartStyle}
           labels={() => "yo"}
@@ -224,6 +250,13 @@ class App extends React.Component {
           <VictoryScatter data={errorData} />
         </VictoryChart>
 
+        <VictoryChart horizontal style={chartStyle}>
+          <VictoryLine
+            style={{ data: { stroke: "blue" } }}
+            y={(d) => Math.sin(2 * Math.PI * d.x)}
+            sample={25}
+          />
+        </VictoryChart>
       </div>
     );
   }
