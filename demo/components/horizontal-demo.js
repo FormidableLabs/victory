@@ -8,7 +8,17 @@ import { VictoryBar } from "../../packages/victory-bar/src/index";
 import { VictoryScatter} from "../../packages/victory-scatter/src/index";
 import { VictoryLine } from "../../packages/victory-line/src/index";
 import { VictoryArea } from "../../packages/victory-area/src/index";
+import { VictoryCandlestick } from "../../packages/victory-candlestick/src/index";
+import { VictoryErrorBar } from "../../packages/victory-errorbar/src/index";
 import { range, random } from "lodash";
+
+const errorData = [
+  { x: 1, y: 10, errorX: [1, 0.5], errorY: 1 },
+  { x: 2, y: 20, errorX: [0.5, 3], errorY: 1 },
+  { x: 3, y: 30, errorX: [1, 3], errorY: [2, 3] },
+  { x: 4, y: 20, errorX: [1, 0], errorY: 2 },
+  { x: 5, y: 10, errorX: [1, 0.5], errorY: 2 }
+];
 
 class App extends React.Component {
   getBarData() {
@@ -133,6 +143,7 @@ class App extends React.Component {
             parent: chartStyle.parent,
             data: { stroke: "red", strokeWidth: 2 }
           }}
+          labels={() => "yo"}
           data={[
             { x: new Date(1982, 1, 1), y: 125 },
             { x: new Date(1987, 1, 1), y: 257 },
@@ -150,6 +161,7 @@ class App extends React.Component {
             parent: chartStyle.parent,
             data: { stroke: "red", strokeWidth: 2 }
           }}
+          labels={() => "yo"}
           data={[
             { x: new Date(1982, 1, 1), y: 125 },
             { x: new Date(1987, 1, 1), y: 257 },
@@ -163,6 +175,7 @@ class App extends React.Component {
         />
         <VictoryBar horizontal
           style={chartStyle}
+          labels={() => "yo"}
           data={[
             { x: new Date(1982, 1, 1), y: 125 },
             { x: new Date(1987, 1, 1), y: 257 },
@@ -189,6 +202,26 @@ class App extends React.Component {
               data={[{ x: 1, y: 2 }, { x: 2, y: 3 }, { x: 3, y: 3 }, { x: 4, y: 4 }, { x: 5, y: 7 }]}
             />
           </VictoryStack>
+        </VictoryChart>
+
+        <VictoryCandlestick horizontal
+          style={chartStyle}
+          labels={() => "yo"}
+          data={[
+            { x: new Date(2016, 6, 1), open: 9, close: 30, high: 56, low: 7 },
+            { x: new Date(2016, 6, 2), open: 80, close: 40, high: 120, low: 10 },
+            { x: new Date(2016, 6, 3), open: 50, close: 80, high: 90, low: 20 },
+            { x: new Date(2016, 6, 4), open: 70, close: 22, high: 70, low: 5 },
+            { x: new Date(2016, 6, 5), open: 20, close: 35, high: 50, low: 10 },
+            { x: new Date(2016, 6, 6), open: 35, close: 30, high: 40, low: 3 },
+            { x: new Date(2016, 6, 7), open: 30, close: 90, high: 95, low: 30 },
+            { x: new Date(2016, 6, 8), open: 80, close: 81, high: 83, low: 75 }
+          ]}
+        />
+
+        <VictoryChart horizontal style={chartStyle}>
+          <VictoryErrorBar data={errorData} labels={() => "yo"}/>
+          <VictoryScatter data={errorData} />
         </VictoryChart>
 
       </div>

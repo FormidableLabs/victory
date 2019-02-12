@@ -1,6 +1,7 @@
-import { isNil } from "lodash";
+import { assign, isNil } from "lodash";
 import { Helpers, LabelHelpers, Scale, Domain, Data, Collection } from "victory-core";
 
+// eslint-disable-next-line max-params
 const getErrors = (datum, scale, axis, horizontal) => {
   /**
    * check if it is asymmetric error or symmetric error, asymmetric error should be an array
@@ -154,7 +155,7 @@ const getBaseProps = (props, fallbackProps) => {
 
   return data.reduce((childProps, datum, index) => {
     const eventKey = !isNil(datum.eventKey) ? datum.eventKey : index;
-    const { x, y } = Helpers.scalePoint(props, datum);
+    const { x, y } = Helpers.scalePoint(assign({}, props, { scale }), datum);
     const errorX = getErrors(datum, scale, "x", horizontal);
     const errorY = getErrors(datum, scale, "y", horizontal);
     const dataProps = {

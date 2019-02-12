@@ -89,34 +89,23 @@ export default class ErrorBar extends React.Component {
   }
 
   calculateError(props) {
-    const { errorX, errorY, scale, horizontal } = props;
-    const rangeX = horizontal ? scale.y.range() : scale.x.range();
-    const rangeY = horizontal ? scale.x.range() : scale.y.range();
-    const getError = (error, index) => error ? error[index] : undefined;
-    // const positiveErrorX = horizontal ? getError(errorY, 1) : getError(errorX, 0);
-    // const negativeErrorX = horizontal ? getError(errorY, 0) : getError(errorX, 1);
-    // const positiveErrorY = horizontal ? getError(errorX, 1) : getError(errorY, 1);
-    // const negativeErrorY = horizontal ? getError(errorX, 0) : getError(errorY, 0);
-
-    const positiveErrorX = getError(errorX, 0);
-    const negativeErrorX = getError(errorX, 1);
-    const positiveErrorY = getError(errorY, 1);
-    const negativeErrorY = getError(errorY, 0);
-
-
-    // const result = {
-    //   right: positiveErrorX >= rangeX[1] ? rangeX[1] : positiveErrorX,
-    //   left: negativeErrorX <= rangeX[0] ? rangeX[0] : negativeErrorX,
-    //   top: positiveErrorY >= rangeY[0] ? rangeY[0] : positiveErrorY,
-    //   bottom: negativeErrorY <= rangeY[1] ? rangeY[1] : negativeErrorY
-    // };
-    const result = {
-      right: positiveErrorX,
-      left: negativeErrorX,
-      top: positiveErrorY,
-      bottom: negativeErrorY
+    const { errorX, errorY } = props;
+    const settings = {
+      right: { error: errorX, errorIndex: 0 },
+      left: { error: errorX, errorIndex: 1 },
+      top: { error: errorY, errorIndex: 1 },
+      bottom: { error: errorY, errorIndex: 0 }
     };
-    console.log(result, props)
+
+    const getError = (direction) => {
+      const { error, errorIndex } = settings[direction];
+      return error ? error[errorIndex] : undefined;
+    };
+
+    const result = ["right", "left", "top", "bottom"].reduce((memo, dir) => {
+      memo[dir] = getError(dir);
+      return memo;
+    }, {});
     return result
   }
 

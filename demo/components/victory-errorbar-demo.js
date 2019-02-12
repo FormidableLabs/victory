@@ -4,7 +4,6 @@ import React from "react";
 import PropTypes from "prop-types";
 import { assign, merge, random, range } from "lodash";
 import { VictoryChart } from "../../packages/victory-chart/src/index";
-import { VictoryLine } from "../../packages/victory-line/src/index";
 import { VictoryErrorBar, ErrorBar } from "../../packages/victory-errorbar/src/index";
 import { VictoryScatter } from "../../packages/victory-scatter/src/index";
 import { VictoryContainer, VictoryTheme } from "../../packages/victory-core/src/index";
@@ -70,16 +69,15 @@ export default class App extends React.Component {
           <VictoryScatter data={basicData} />
         </VictoryChart>
 
-        <VictoryChart style={style}>
+        <VictoryChart horizontal style={style}>
           <VictoryErrorBar data={basicData} />
-          <VictoryLine data={basicData} />
+          <VictoryScatter data={basicData} />
         </VictoryChart>
 
         <VictoryErrorBar
           style={style}
           width={500}
           height={500}
-          domain={[0, 6]}
           animate={{ duration: 2000 }}
           data={this.state.data}
           dataComponent={<ErrorBar />}
@@ -93,10 +91,10 @@ export default class App extends React.Component {
         />
 
         <VictoryErrorBar
+          horizontal
           style={style}
           width={500}
           height={500}
-          domain={[0, 6]}
           animate={{ duration: 2000 }}
           borderWidth={30}
           data={this.state.data}
