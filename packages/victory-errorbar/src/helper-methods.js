@@ -1,8 +1,7 @@
 import { assign, isNil } from "lodash";
 import { Helpers, LabelHelpers, Scale, Domain, Data, Collection } from "victory-core";
 
-// eslint-disable-next-line max-params
-const getErrors = (datum, scale, axis, horizontal) => {
+const getErrors = (props, datum, axis) => {
   /**
    * check if it is asymmetric error or symmetric error, asymmetric error should be an array
    * and the first value is the positive error, the second is the negative error
@@ -17,13 +16,14 @@ const getErrors = (datum, scale, axis, horizontal) => {
   }
 
   const otherAxis = axis === "x" ? "y" : "x";
-  const currentAxis = horizontal ? otherAxis : axis;
+  const currentAxis = props.horizontal ? otherAxis : axis;
+  const scale = props.scale[currentAxis];
   return Array.isArray(errors)
     ? [
-        errors[0] === 0 ? false : scale[currentAxis](errors[0] + datum[`_${axis}`]),
-        errors[1] === 0 ? false : scale[currentAxis](datum[`_${axis}`] - errors[1])
+        errors[0] === 0 ? false : scale(errors[0] + datum[`_${axis}`]),
+        errors[1] === 0 ? false : scale(datum[`_${axis}`] - errors[1])
       ]
-    : [scale[currentAxis](errors + datum[`_${axis}`]), scale[currentAxis](datum[`_${axis}`] - errors)];
+    : [scale(errors + datum[`_${axis}`]), scale(datum[`_${axis}`] - errors)];
 };
 
 const getData = (props) => {
@@ -118,59 +118,64 @@ const getLabelProps = (dataProps, text, style) => {
 };
 
 const getBaseProps = (props, fallbackProps) => {
-  props = Helpers.modifyProps(props, fallbackProps, "errorbar");
-  const { data, style, scale, domain, origin } = getCalculatedValues(props, fallbackProps);
+  const modifiedProps = Helpers.modifyProps(props, fallbackProps, "errorbar");
+  props = assign({}, modifiedProps, getCalculatedValues(modifiedProps));
   const {
+    borderWidth,
+    data,
+    domain,
+    events,
     groupComponent,
     height,
-    width,
-    borderWidth,
-    standalone,
-    theme,
-    polar,
-    padding,
+    horizontal,
     labels,
-    events,
-    sharedEvents,
     name,
-    horizontal
+    origin,
+    padding,
+    polar,
+    scale,
+    sharedEvents,
+    standalone,
+    style,
+    theme,
+    width
   } = props;
   const initialChildProps = {
     parent: {
-      domain,
-      scale,
       data,
+      domain,
       height,
-      width,
-      standalone,
-      theme,
-      polar,
-      origin,
+      horizontal,
       name,
+      origin,
       padding,
+      polar,
+      scale,
+      standalone,
       style: style.parent,
-      horizontal
+      theme,
+      width
     }
   };
 
   return data.reduce((childProps, datum, index) => {
     const eventKey = !isNil(datum.eventKey) ? datum.eventKey : index;
     const { x, y } = Helpers.scalePoint(assign({}, props, { scale }), datum);
-    const errorX = getErrors(datum, scale, "x", horizontal);
-    const errorY = getErrors(datum, scale, "y", horizontal);
+    const errorX = getErrors(props, datum, "x");
+    const errorY = getErrors(props, datum, "y");
     const dataProps = {
-      x,
-      y,
-      scale,
-      datum,
-      data,
-      index,
-      groupComponent,
       borderWidth,
-      style: style.data,
-      horizontal,
+      data,
+      datum,
       errorX: horizontal ? errorY : errorX,
-      errorY: horizontal ? errorX : errorY
+      errorY: horizontal ? errorX : errorY,
+      groupComponent,
+      horizontal,
+      index,
+      scale,
+      style: style.data,
+      x,
+      y
     };
 
     childProps[eventKey] = {
