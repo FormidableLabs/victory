@@ -2,7 +2,7 @@ import React from "react";
 import { shallow } from "enzyme";
 import ErrorBar from "packages/victory-errorbar/src/error-bar";
 import { Line } from "packages/victory-core";
-import { forEach, merge, omit } from "lodash";
+import { forEach, omit } from "lodash";
 
 describe("victory-primitives/error-bar", () => {
   const baseProps = {
@@ -94,41 +94,6 @@ describe("victory-primitives/error-bar", () => {
     ];
 
     expect(lines.length).to.eql(4);
-    lines.forEach((line, i) => {
-      compareLineCoordinates(line, expectedCoordinates[i]);
-    });
-  });
-
-  it("should constrain errors within range", () => {
-    const props = merge({}, baseProps, {
-      scale: {
-        x: { range: () => [100, -100] },
-        y: { range: () => [-100, 100] }
-      }
-    });
-    const wrapper = shallow(<ErrorBar {...props} />);
-    const lines = wrapper.find("g").find(Line);
-
-    const expectedCoordinates = [
-      // Right Border (positiveErrorX, positiveErrorX, y - borderWidth, y + borderWidth)
-      { x1: -100, x2: -100, y1: -15, y2: 25 },
-      // Left Border(negativeErrorX, negativeErrorX, y - borderWidth, y + borderWidth)
-      { x1: 100, x2: 100, y1: -15, y2: 25 },
-      // Bottom Border(x - borderWidth, x + borderWidth, negativeErrorY, negativeErrorY)
-      { x1: -16, x2: 24, y1: 100, y2: 100 },
-      // Top Border(x - borderWidth, x + borderWidth, positiveErrorY, positiveErrorY)
-      { x1: -16, x2: 24, y1: -100, y2: -100 },
-      // Right Cross(x, positiveErrorX, y, y)
-      { x1: 4, x2: -100, y1: 5, y2: 5 },
-      // Left Cross(x, negativeErrorX, y, y)
-      { x1: 4, x2: 100, y1: 5, y2: 5 },
-      // Bottom Cross(x, x, y, negativeErrorY)
-      { x1: 4, x2: 4, y1: 5, y2: 100 },
-      // Bottom Cross(x, x, y, positiveErrorY)
-      { x1: 4, x2: 4, y1: 5, y2: -100 }
-    ];
-
-    expect(lines.length).to.eql(8);
     lines.forEach((line, i) => {
       compareLineCoordinates(line, expectedCoordinates[i]);
     });

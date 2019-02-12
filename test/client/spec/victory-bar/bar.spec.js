@@ -10,6 +10,7 @@ describe("victory-primitives/bar", () => {
     data: [{ _x: 2, x: 2, _y: 4, y: 4, eventKey: 0 }, { _x: 3, x: 3, _y: 5, y: 5, eventKey: 1 }],
     datum: { _x: 2, x: 2, _y: 4, y: 4, eventKey: 0 },
     x: 2,
+    x0: 0,
     y: 10,
     y0: 0,
     scale: {
@@ -30,7 +31,7 @@ describe("victory-primitives/bar", () => {
     const wrapper = mount(<Bar {...props} />);
     const barShape = SvgTestHelper.getBarShape(wrapper);
 
-    expect(Math.round(barShape.width)).to.eql(10);
+    expect(Math.round(barShape.width)).to.eql(2);
   });
 
   it("should render a default bar width when one is not provided", () => {
