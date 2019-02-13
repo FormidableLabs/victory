@@ -82,21 +82,33 @@ storiesOf("VictoryCandlestick.wickStrokeWidth", module)
 
 storiesOf("VictoryCandlestick.data", module)
   .addDecorator(getChartDecorator({ domainPadding: 25 }))
-  .add("with data accessors", () => {
-    return (
-      <VictoryCandlestick
-        data={[
-          { series: 1, open: 9, close: 30, big: 560, low: 7 },
-          { series: 2, open: 80, close: 40, big: 1200, low: 10 },
-          { series: 3, open: 50, close: 80, big: 900, low: 20 },
-          { series: 4, open: 70, close: 22, big: 700, low: 5 },
-          { series: 5, open: 20, close: 35, big: 500, low: 10 }
-        ]}
-        x={"series"}
-        high={(data) => data.big / 10}
-      />
-    );
-  })
+  .add("with data accessors", () => (
+    <VictoryCandlestick
+      data={[
+        { series: 1, open: 9, close: 30, big: 560, low: 7 },
+        { series: 2, open: 80, close: 40, big: 1200, low: 10 },
+        { series: 3, open: 50, close: 80, big: 900, low: 20 },
+        { series: 4, open: 70, close: 22, big: 700, low: 5 },
+        { series: 5, open: 20, close: 35, big: 500, low: 10 }
+      ]}
+      x={"series"}
+      high={(data) => data.big / 10}
+    />
+  ))
+  .add("with data accessors (horizontal)", () => (
+    <VictoryCandlestick
+      horizontal
+      data={[
+        { series: 1, open: 9, close: 30, big: 560, low: 7 },
+        { series: 2, open: 80, close: 40, big: 1200, low: 10 },
+        { series: 3, open: 50, close: 80, big: 900, low: 20 },
+        { series: 4, open: 70, close: 22, big: 700, low: 5 },
+        { series: 5, open: 20, close: 35, big: 500, low: 10 }
+      ]}
+      x={"series"}
+      high={(data) => data.big / 10}
+    />
+  ))
   .add("with immutable data", () => {
     return (
       <VictoryCandlestick
@@ -129,12 +141,32 @@ storiesOf("VictoryCandlestick.labels", module)
         { x: 5, open: 20, close: 35, high: 50, low: 10, label: ["last", "label"] }
       ]}
     />
+  ))
+  .add("data labels (horizontal)", () => (
+    <VictoryCandlestick
+      horizontal
+      data={[
+        { x: 1, open: 9, close: 30, high: 56, low: 7, label: "first" },
+        { x: 2, open: 80, close: 40, high: 120, low: 10 },
+        { x: 3, open: 50, close: 80, high: 90, low: 20, label: "third" },
+        { x: 4, open: 70, close: 22, high: 70, low: 5 },
+        { x: 5, open: 20, close: 35, high: 50, low: 10, label: ["last", "label"] }
+      ]}
+    />
   ));
 
 storiesOf("VictoryCandlestick.tooltips", module)
   .addDecorator(getChartDecorator({ domainPadding: 25 }))
   .add("tooltips", () => (
     <VictoryCandlestick
+      data={getData(5)}
+      labels={(d) => `x: ${d.x}`}
+      labelComponent={<VictoryTooltip active />}
+    />
+  ))
+  .add("tooltips (horizontal)", () => (
+    <VictoryCandlestick
+      horizontal
       data={getData(5)}
       labels={(d) => `x: ${d.x}`}
       labelComponent={<VictoryTooltip active />}
@@ -179,5 +211,15 @@ storiesOf("VictoryCandlestick.scale", module)
   .addDecorator(getChartDecorator({ scale: { x: "time" }, domainPadding: 25 }))
   .add("time scale", () => <VictoryCandlestick data={getTimeData(5)} />)
   .add("time scale with labels", () => (
-    <VictoryCandlestick data={getTimeData(5)} labels={(d) => d.x.getFullYear()} />
+    <VictoryCandlestick
+      data={getTimeData(5)}
+      labels={(d) => d.x.getFullYear()}
+    />
+  ))
+  .add("time scale with labels (horizontal)", () => (
+    <VictoryCandlestick
+      horizontal
+      data={getTimeData(5)}
+      labels={(d) => d.x.getFullYear()}
+    />
   ));

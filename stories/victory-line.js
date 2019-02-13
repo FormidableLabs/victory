@@ -51,20 +51,31 @@ storiesOf("VictoryLine.interpolation", module)
 
 storiesOf("VictoryLine.data", module)
   .addDecorator(getChartDecorator())
-  .add("with data accessors", () => {
-    return (
-      <VictoryLine
-        data={[
-          { animal: "Cat", pet: 45, wild: 17 },
-          { animal: "Dog", pet: 85, wild: 6 },
-          { animal: "Fish", pet: 55, wild: 0 },
-          { animal: "Bird", pet: 15, wild: 40 }
-        ]}
-        x={"animal"}
-        y={(data) => data.pet + data.wild}
-      />
-    );
-  })
+  .add("with data accessors", () => (
+    <VictoryLine
+      data={[
+        { animal: "Cat", pet: 45, wild: 17 },
+        { animal: "Dog", pet: 85, wild: 6 },
+        { animal: "Fish", pet: 55, wild: 0 },
+        { animal: "Bird", pet: 15, wild: 40 }
+      ]}
+      x={"animal"}
+      y={(data) => data.pet + data.wild}
+    />
+  ))
+  .add("with data accessors (horizontal)", () => (
+    <VictoryLine
+      horizontal
+      data={[
+        { animal: "Cat", pet: 45, wild: 17 },
+        { animal: "Dog", pet: 85, wild: 6 },
+        { animal: "Fish", pet: 55, wild: 0 },
+        { animal: "Bird", pet: 15, wild: 40 }
+      ]}
+      x={"animal"}
+      y={(data) => data.pet + data.wild}
+    />
+  ))
   .add("with nested data accessors", () => {
     return (
       <VictoryLine
@@ -78,7 +89,15 @@ storiesOf("VictoryLine.data", module)
       />
     );
   })
-  .add("plotting functions", () => <VictoryLine y={(d) => Math.sin(2 * Math.PI * d.x)} />)
+  .add("plotting functions", () => (
+    <VictoryLine y={(d) => Math.sin(2 * Math.PI * d.x)} />
+  ))
+  .add("plotting functions (horizontal)", () => (
+    <VictoryLine
+      horizontal
+      y={(d) => Math.sin(2 * Math.PI * d.x)}
+    />
+  ))
   .add("with immutable data", () => (
     <VictoryLine
       data={fromJS([
@@ -106,12 +125,32 @@ storiesOf("VictoryLine.labels", module)
         { x: 5, y: -5, label: "cat" }
       ]}
     />
+  ))
+  .add("data labels (horizontal)", () => (
+    <VictoryLine
+      horizontal
+      data={[
+        { x: 1, y: 2, label: "cat" },
+        { x: 2, y: 5, label: "dog" },
+        { x: 3, y: 3, label: "dog" },
+        { x: 4, y: -2, label: "bird" },
+        { x: 5, y: -5, label: "cat" }
+      ]}
+    />
   ));
 
 storiesOf("VictoryLine.tooltips", module)
   .addDecorator(getChartDecorator())
   .add("tooltips", () => (
     <VictoryLine
+      data={getData(5)}
+      labels={(d) => `x: ${d.x}`}
+      labelComponent={<VictoryTooltip active />}
+    />
+  ))
+  .add("tooltips (horizontal)", () => (
+    <VictoryLine
+      horizontal
       data={getData(5)}
       labels={(d) => `x: ${d.x}`}
       labelComponent={<VictoryTooltip active />}
@@ -160,6 +199,13 @@ storiesOf("VictoryLine.stacked", module)
   .addDecorator(getChartDecorator())
   .add("stacked lines", () => (
     <VictoryStack colorScale="qualitative">
+      <VictoryLine data={getData(7)} />
+      <VictoryLine data={getData(7, "seed-1")} />
+      <VictoryLine data={getData(7, "seed-2")} />
+    </VictoryStack>
+  ))
+  .add("stacked lines (horizontal(", () => (
+    <VictoryStack horizontal colorScale="qualitative">
       <VictoryLine data={getData(7)} />
       <VictoryLine data={getData(7, "seed-1")} />
       <VictoryLine data={getData(7, "seed-2")} />
