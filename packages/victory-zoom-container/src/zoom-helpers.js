@@ -161,27 +161,17 @@ const RawZoomHelpers = {
   },
 
   getDomain(props) {
-    const { originalDomain, domain, children, zoomDimension, horizontal } = props;
-    let xAxis = "x";
-    let yAxis = "y";
-    let zoomAxis = zoomDimension;
-    if (horizontal) {
-      xAxis = "y";
-      yAxis = "x";
-      if (zoomDimension) {
-        zoomAxis = { x: xAxis, y: yAxis }[zoomDimension];
-      }
-    }
+    const { originalDomain, domain, children, zoomDimension } = props;
     const childComponents = Children.toArray(children);
     let childrenDomain = {};
     if (childComponents.length) {
       childrenDomain = zoomDimension
         ? {
-            [zoomDimension]: Wrapper.getDomainFromChildren(props, zoomAxis, childComponents)
+            [zoomDimension]: Wrapper.getDomainFromChildren(props, zoomDimension, childComponents)
           }
         : {
-            x: Wrapper.getDomainFromChildren(props, xAxis, childComponents),
-            y: Wrapper.getDomainFromChildren(props, yAxis, childComponents)
+            x: Wrapper.getDomainFromChildren(props, "x", childComponents),
+            y: Wrapper.getDomainFromChildren(props, "y", childComponents)
           };
     }
     return defaults({}, childrenDomain, originalDomain, domain);
