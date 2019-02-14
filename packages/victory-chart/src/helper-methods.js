@@ -5,6 +5,12 @@ import React from "react";
 import { Helpers, Scale, Axis, Wrapper } from "victory-core";
 import { defaults, assign } from "lodash";
 
+const fallbackProps = {
+  width: 450,
+  height: 300,
+  padding: 50
+};
+
 function getAxisProps(child, props, calculatedProps) {
   const { domain, scale, originSign, stringMap, categories, horizontal } = calculatedProps;
   const childProps = child.props || {};
@@ -53,7 +59,8 @@ function getStyles(props) {
 
 function getCalculatedProps(props, childComponents) {
   const style = getStyles(props);
-  const horizontal = Helpers.isHorizontal(props);
+  props = Helpers.modifyProps(props, fallbackProps, "chart");
+  const { horizontal, polar } = props;
   const categories = Wrapper.getCategories(props, childComponents);
   const stringMap = createStringMap(props, childComponents);
   const axisComponents = {
@@ -83,7 +90,7 @@ function getCalculatedProps(props, childComponents) {
     y: baseScale.y.domain(domain.y).range(range.y)
   };
 
-  const origin = props.polar ? Helpers.getPolarOrigin(props) : Axis.getOrigin(domain);
+  const origin = polar ? Helpers.getPolarOrigin(props) : Axis.getOrigin(domain);
 
   const originSign = {
     x: Axis.getOriginSign(origin.x, domain.x),

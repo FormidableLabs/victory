@@ -109,9 +109,8 @@ function stackData(props) {
 function getCalculatedProps(props, childComponents) {
   childComponents = childComponents || React.Children.toArray(props.children);
   const role = "stack";
+  props = Helpers.modifyProps(props, fallbackProps, role);
   const style = Wrapper.getStyle(props.theme, props.style, role);
-  const horizontal =
-    props.horizontal || childComponents.every((component) => component.props.horizontal);
   const categories = Wrapper.getCategories(props, childComponents);
   const datasets = stackData(props);
   const children = childComponents.map((c, i) => {
@@ -129,13 +128,11 @@ function getCalculatedProps(props, childComponents) {
     x: Scale.getScaleFromProps(props, "x") || Scale.getDefaultScale(),
     y: Scale.getScaleFromProps(props, "y") || Scale.getDefaultScale()
   };
-  const xScale = baseScale.x.domain(domain.x).range(range.x);
-  const yScale = baseScale.y.domain(domain.y).range(range.y);
   const scale = {
-    x: horizontal ? yScale : xScale,
-    y: horizontal ? xScale : yScale
+    x: baseScale.x.domain(domain.x).range(range.x),
+    y: baseScale.y.domain(domain.y).range(range.y)
   };
-  const colorScale = props.colorScale;
+  const { colorScale, horizontal } = props;
   return { datasets, categories, range, domain, horizontal, scale, style, colorScale, role };
 }
 

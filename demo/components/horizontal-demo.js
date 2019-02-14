@@ -117,17 +117,14 @@ class App extends React.Component {
         </VictoryChart>
 
         <VictoryChart horizontal style={chartStyle}>
-          <VictoryGroup>
-            <VictoryStack
-              labels={["a", "b", "c"]}
-              offset={20}
-              colorScale={"qualitative"}
-            >
-              <VictoryBar data={[{ x: "a", y: 1 }, { x: "b", y: 2 }, { x: "c", y: 5 }]} />
-              <VictoryBar data={[{ x: "a", y: 2 }, { x: "b", y: 1 }, { x: "c", y: 7 }]} />
-              <VictoryBar data={[{ x: "a", y: 3 }, { x: "b", y: 4 }, { x: "c", y: 9 }]} />
-            </VictoryStack>
-          </VictoryGroup>
+          <VictoryStack
+            labels={["a", "b", "c"]}
+            colorScale={"qualitative"}
+          >
+            <VictoryBar data={[{ x: "a", y: 1 }, { x: "b", y: 2 }, { x: "c", y: 5 }]} />
+            <VictoryBar data={[{ x: "a", y: 2 }, { x: "b", y: 1 }, { x: "c", y: 7 }]} />
+            <VictoryBar data={[{ x: "a", y: 3 }, { x: "b", y: 4 }, { x: "c", y: 9 }]} />
+          </VictoryStack>
         </VictoryChart>
 
         <VictoryChart horizontal style={chartStyle}>

@@ -172,7 +172,8 @@ function createAccessor(key) {
 function modifyProps(props, fallbackProps, role) {
   const theme = props.theme && props.theme[role] ? props.theme[role] : {};
   const themeProps = omit(theme, ["style"]);
-  return defaults({}, props, themeProps, fallbackProps);
+  const horizontal = isHorizontal(props);
+  return defaults({ horizontal }, props, themeProps, fallbackProps);
 }
 
 /**
@@ -211,7 +212,8 @@ function reduceChildren(
     "startAngle",
     "endAngle",
     "minDomain",
-    "maxDomain"
+    "maxDomain",
+    "horizontal"
   ];
   const traverseChildren = (childArray, names, parent) => {
     return childArray.reduce((memo, child, index) => {

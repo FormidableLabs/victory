@@ -14,34 +14,30 @@ const fallbackProps = {
 // eslint-disable-next-line max-statements
 function getCalculatedProps(props, childComponents) {
   const role = "group";
+  props = Helpers.modifyProps(props, fallbackProps, role);
   const style = Wrapper.getStyle(props.theme, props.style, role);
-  const modifiedProps = Helpers.modifyProps(props, fallbackProps);
-  const { offset, colorScale, color, polar } = modifiedProps;
-  const horizontal =
-    modifiedProps.horizontal ||
-    childComponents.every((component) => component.props && component.props.horizontal);
-  const categories = Wrapper.getCategories(modifiedProps, childComponents);
-  const datasets = Wrapper.getDataFromChildren(modifiedProps);
+  const { offset, colorScale, color, polar, horizontal } = props;
+  const categories = Wrapper.getCategories(props, childComponents);
+  const datasets = Wrapper.getDataFromChildren(props);
   const domain = {
-    x: Wrapper.getDomain(assign({}, modifiedProps, { categories }), "x", childComponents),
-    y: Wrapper.getDomain(assign({}, modifiedProps, { categories }), "y", childComponents)
+    x: Wrapper.getDomain(assign({}, props, { categories }), "x", childComponents),
+    y: Wrapper.getDomain(assign({}, props, { categories }), "y", childComponents)
   };
   const range = {
-    x: Helpers.getRange(modifiedProps, "x"),
-    y: Helpers.getRange(modifiedProps, "y")
+    x: Helpers.getRange(props, "x"),
+    y: Helpers.getRange(props, "y")
   };
   const baseScale = {
-    x: Scale.getScaleFromProps(modifiedProps, "x") || Scale.getDefaultScale(),
-    y: Scale.getScaleFromProps(modifiedProps, "y") || Scale.getDefaultScale()
-  };
-  const xScale = baseScale.x.domain(domain.x).range(range.x);
-  const yScale = baseScale.y.domain(domain.y).range(range.y);
-  const scale = {
-    x: horizontal ? yScale : xScale,
-    y: horizontal ? xScale : yScale
+    x: Scale.getScaleFromProps(props, "x") || Scale.getDefaultScale(),
+    y: Scale.getScaleFromProps(props, "y") || Scale.getDefaultScale()
   };
 
-  const origin = polar ? props.origin : Helpers.getPolarOrigin(modifiedProps);
+  const scale = {
+    x: baseScale.x.domain(domain.x).range(range.x),
+    y: baseScale.y.domain(domain.y).range(range.y)
+  };
+
+  const origin = polar ? props.origin : Helpers.getPolarOrigin(props);
   const padding = Helpers.getPadding(props);
   return {
     datasets,
@@ -63,9 +59,7 @@ function pixelsToValue(props, axis, calculatedProps) {
   if (!props.offset) {
     return 0;
   }
-  const childComponents = React.Children.toArray(props.children);
-  const horizontalChildren = childComponents.some((child) => child.props.horizontal);
-  const horizontal = (props && props.horizontal) || horizontalChildren.length > 0;
+  const horizontal = calculatedProps.horizontal;
   const currentAxis = Helpers.getCurrentAxis(axis, horizontal);
   const domain = calculatedProps.domain[currentAxis];
   const range = calculatedProps.range[currentAxis];
