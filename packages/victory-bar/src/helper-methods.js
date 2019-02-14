@@ -3,8 +3,7 @@ import { Helpers, LabelHelpers, Data, Domain, Scale } from "victory-core";
 
 const getBarPosition = (props, datum) => {
   const getDefaultMin = (axis) => {
-    const otherAxis = axis === "x" ? "y" : "x";
-    const currentAxis = props.horizontal ? otherAxis : axis;
+    const currentAxis = Helpers.getCurrentAxis(axis, props.horizontal);
     const defaultMin = Scale.getType(props.scale[currentAxis]) === "log"
       ? 1 / Number.MAX_SAFE_INTEGER
       : 0;

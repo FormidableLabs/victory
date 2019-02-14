@@ -14,6 +14,7 @@ import {
 } from "lodash";
 import Collection from "./collection";
 import Domain from "./domain";
+import Helpers from "./helpers";
 /**
  * Returns the axis (x or y) of a particular axis component
  * @param {Object} props: the props object.
@@ -34,16 +35,6 @@ function getAxis(props, horizontal) {
 
 }
 
-/**
- * Returns the given axis or the opposite axis when horizontal
- * @param {string} axis: the given axis, either "x" pr "y"
- * @param {Boolean} horizontal: true when the chart is flipped to the horizontal orientation
- * @returns {String} the dimension appropriate for the axis given its props "x" or "y"
- */
-function getCurrentAxis(axis, horizontal) {
-  const otherAxis = axis === "x" ? "y" : "x";
-  return horizontal ? otherAxis : axis;
-}
 
 /**
  * Returns all axis components that pass a given predicate
@@ -173,7 +164,7 @@ function stringTicks(props) {
 function getDefaultTickFormat(props) {
   const { tickValues } = props;
   const axis = getAxis(props);
-  const currentAxis = getCurrentAxis(axis, props.horizontal);
+  const currentAxis = Helpers.getCurrentAxis(axis, props.horizontal);
   const stringMap = props.stringMap && props.stringMap[currentAxis];
   const fallbackFormat = tickValues && !Collection.containsDates(tickValues) ? (x) => x : undefined;
   if (!stringMap) {
@@ -191,7 +182,7 @@ function getDefaultTickFormat(props) {
 function getTickFormat(props, scale) {
   const { tickFormat } = props;
   const axis = getAxis(props);
-  const currentAxis = getCurrentAxis(axis, props.horizontal);
+  const currentAxis = Helpers.getCurrentAxis(axis, props.horizontal);
   const stringMap = props.stringMap && props.stringMap[currentAxis];
   if (!tickFormat) {
     const defaultTickFormat = getDefaultTickFormat(props);
@@ -214,7 +205,7 @@ function getTickFormat(props, scale) {
 
 function getStringTicks(props) {
   const axis = getAxis(props);
-  const currentAxis = getCurrentAxis(axis, props.horizontal);
+  const currentAxis = Helpers.getCurrentAxis(axis, props.horizontal);
   const stringMap = props.stringMap && props.stringMap[currentAxis];
   const categories = Array.isArray(props.categories)
     ? props.categories
@@ -232,7 +223,7 @@ function getStringTicks(props) {
 function getTickArray(props) {
   const { tickValues, tickFormat } = props;
   const axis = getAxis(props);
-  const currentAxis = getCurrentAxis(axis, props.horizontal);
+  const currentAxis = Helpers.getCurrentAxis(axis, props.horizontal);
   const stringMap = props.stringMap && props.stringMap[currentAxis];
   const getTicksFromFormat = () => {
     if (!tickFormat || !Array.isArray(tickFormat)) {
@@ -339,7 +330,7 @@ function getAxisValue(props, axis) {
   if (!scale) {
     return undefined;
   }
-  const stringMapAxis = getCurrentAxis(axis, props.horizontal) === "x" ? "y" : "x";
+  const stringMapAxis = Helpers.getCurrentAxis(axis, props.horizontal) === "x" ? "y" : "x";
   const stringMap = isObject(props.stringMap) && props.stringMap[stringMapAxis];
   const axisValue =
     stringMap && typeof props.axisValue === "string" ? stringMap[props.axisValue] : props.axisValue;
@@ -353,7 +344,6 @@ export default {
   getAxisComponent,
   getAxisComponentsWithParent,
   getOrientation,
-  getCurrentAxis,
   findAxisComponents,
   getOrigin,
   getOriginSign,

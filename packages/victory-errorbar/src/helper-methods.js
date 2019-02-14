@@ -15,8 +15,7 @@ const getErrors = (props, datum, axis) => {
     return false;
   }
 
-  const otherAxis = axis === "x" ? "y" : "x";
-  const currentAxis = props.horizontal ? otherAxis : axis;
+  const currentAxis = Helpers.getCurrentAxis(axis, props.horizontal);
   const scale = props.scale[currentAxis];
   return Array.isArray(errors)
     ? [

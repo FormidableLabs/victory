@@ -3,13 +3,11 @@ import { Helpers, LabelHelpers, Data, Domain, Scale, Collection } from "victory-
 
 const getDataWithBaseline = (props, scale) => {
   let data = Data.getData(props);
-  const { horizontal } = props;
   if (data.length < 2) {
     data = [];
   }
   const getDefaultMin = (axis) => {
-    const otherAxis = axis === "x" ? "y" : "x";
-    const currentAxis = horizontal ? otherAxis : axis;
+    const currentAxis = Helpers.getCurrentAxis(axis, props.horizontal);
     const defaultMin = Scale.getType(scale[currentAxis]) === "log"
       ? 1 / Number.MAX_SAFE_INTEGER
       : 0;
