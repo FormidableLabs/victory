@@ -100,9 +100,12 @@ function addLayoutData(props, datasets, index) {
 }
 /* eslint-enable no-nested-ternary */
 
-function stackData(props) {
+function stackData(props, childComponents) {
   const dataFromChildren = Wrapper.getDataFromChildren(props);
-  const datasets = fillData(props, dataFromChildren);
+  const childMod = dataFromChildren.length / childComponents.length;
+  // account for stacked groups
+  const filteredDatasets = dataFromChildren.filter((data, index) => index % childMod === 0);
+  const datasets = fillData(props, filteredDatasets);
   return datasets.map((d, i) => addLayoutData(props, datasets, i));
 }
 
@@ -112,7 +115,7 @@ function getCalculatedProps(props, childComponents) {
   props = Helpers.modifyProps(props, fallbackProps, role);
   const style = Wrapper.getStyle(props.theme, props.style, role);
   const categories = Wrapper.getCategories(props, childComponents);
-  const datasets = stackData(props);
+  const datasets = stackData(props, childComponents);
   const children = childComponents.map((c, i) => {
     return React.cloneElement(c, { data: datasets[i] });
   });
