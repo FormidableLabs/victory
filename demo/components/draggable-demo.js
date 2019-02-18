@@ -108,7 +108,6 @@ class App extends React.Component {
     const sharedProps = {
       width: 800,
       domain: { x: [new Date(2012, 1, 1), new Date(2019, 1, 1)], y: [0.5, 4.5] },
-      scale: { x: "time" }
     };
 
     return (

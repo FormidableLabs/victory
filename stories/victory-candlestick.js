@@ -208,7 +208,7 @@ storiesOf("VictoryCandlestick.style", module)
   ));
 
 storiesOf("VictoryCandlestick.scale", module)
-  .addDecorator(getChartDecorator({ scale: { x: "time" }, domainPadding: 25 }))
+  .addDecorator(getChartDecorator({ domainPadding: 25 }))
   .add("time scale", () => <VictoryCandlestick data={getTimeData(5)} />)
   .add("time scale with labels", () => (
     <VictoryCandlestick

@@ -227,13 +227,24 @@ storiesOf("VictoryLine.stacked", module)
   ));
 
 storiesOf("VictoryLine.scale", module)
-  .addDecorator(getChartDecorator({ scale: { x: "time" } }))
+  .addDecorator(getChartDecorator())
   .add("time scale", () => <VictoryLine data={getTimeData(5)} />)
   .add("time scale with labels", () => (
     <VictoryLine data={getTimeData(5)} labels={(d) => d.x.getFullYear()} />
   ))
   .add("stacked time scale with labels", () => (
     <VictoryStack labels={(d) => d.x.getFullYear()}>
+      <VictoryLine data={getTimeData(5)} />
+      <VictoryLine data={getTimeData(5, "seed-1")} />
+      <VictoryLine data={getTimeData(5, "seed-2")} />
+    </VictoryStack>
+  ))
+  .add("time scale (horizontal)", () => <VictoryLine horizontal data={getTimeData(5)} />)
+  .add("time scale with labels (horizontal)", () => (
+    <VictoryLine horizontal data={getTimeData(5)} labels={(d) => d.x.getFullYear()} />
+  ))
+  .add("stacked time scale with labels (horizontal)", () => (
+    <VictoryStack horizontal labels={(d) => d.x.getFullYear()}>
       <VictoryLine data={getTimeData(5)} />
       <VictoryLine data={getTimeData(5, "seed-1")} />
       <VictoryLine data={getTimeData(5, "seed-2")} />

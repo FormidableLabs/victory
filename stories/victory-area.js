@@ -224,7 +224,7 @@ storiesOf("VictoryArea.stacked", module)
   ));
 
 storiesOf("VictoryArea.scale", module)
-  .addDecorator(getChartDecorator({ scale: { x: "time" } }))
+  .addDecorator(getChartDecorator())
   .add("time scale", () => <VictoryArea data={getTimeData(5)} />)
   .add("time scale with labels", () => (
     <VictoryArea data={getTimeData(5)} labels={(d) => d.x.getFullYear()} />
