@@ -18,6 +18,7 @@ import Domain from "./domain";
 import Events from "./events";
 import Collection from "./collection";
 import Helpers from "./helpers";
+import Scale from "./scale";
 
 export default {
   getData(props, childComponents) {
@@ -64,6 +65,22 @@ export default {
       domain = Domain.getDomainFromMinMax(min, max);
     }
     return Domain.formatDomain(domain, assign({ domainPadding }, props), axis);
+  },
+
+  getScale(props, axis, childComponents) {
+    if (props.data) {
+      return Scale.getBaseScale(props, axis);
+    }
+    const children = childComponents
+      ? childComponents.slice(0)
+      : React.Children.toArray(props.children);
+    const iteratee = (child) => {
+      const sharedProps = assign({}, child.props, { horizontal: props.horizontal });
+      return Scale.getScaleType(sharedProps, axis)
+    };
+    const childScale = Helpers.reduceChildren(children, iteratee, props);
+    // TODO: decide how to reconcile scales
+    return Scale.getScaleFromName(childScale[0]);
   },
 
   setAnimationState(props, nextProps) {

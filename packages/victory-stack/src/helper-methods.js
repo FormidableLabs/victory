@@ -128,8 +128,8 @@ function getCalculatedProps(props, childComponents) {
     y: Helpers.getRange(props, "y")
   };
   const baseScale = {
-    x: Scale.getScaleFromProps(props, "x") || Scale.getDefaultScale(),
-    y: Scale.getScaleFromProps(props, "y") || Scale.getDefaultScale()
+    x: Scale.getScaleFromProps(props, "x") || Wrapper.getScale(props, "x"),
+    y: Scale.getScaleFromProps(props, "y") || Wrapper.getScale(props, "y")
   };
   const scale = {
     x: baseScale.x.domain(domain.x).range(range.x),

@@ -58,17 +58,24 @@ function getScaleTypeFromData(props, axis) {
   if (!props.data) {
     return "linear";
   }
-  const accessor = Helpers.createAccessor(props[axis]);
-  const axisData = props.data.map(accessor);
+  const currentAxis = Helpers.getCurrentAxis(axis, props.horizontal);
+  const accessor = Helpers.createAccessor(props[currentAxis]);
+  const axisData = props.data.map((datum) => {
+    return accessor(datum) ? accessor(datum)[currentAxis] : datum[currentAxis];
+  });
   return Collection.containsDates(axisData) ? "time" : "linear";
 }
 
 // Exported Functions
 
+function getScaleFromName(name) {
+  return validScale(name) ? d3Scale[toNewName(name)]() : d3Scale.scaleLinear();
+}
+
 function getBaseScale(props, axis) {
   const scale = getScaleFromProps(props, axis);
   if (scale) {
-    return scale;
+    return typeof scale === "string" ? getScaleFromName(scale) : scale;
   }
   const defaultScale = getScaleFromDomain(props, axis) || getScaleTypeFromData(props, axis);
   return d3Scale[toNewName(defaultScale)]();
@@ -114,5 +121,6 @@ export default {
   getDefaultScale,
   getScaleFromProps,
   getScaleType,
-  getType
+  getType,
+  getScaleFromName
 };
