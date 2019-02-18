@@ -164,7 +164,6 @@ class VictoryBoxPlot extends React.Component {
     q3Component: <Box />,
     q3LabelComponent: <VictoryLabel />,
     samples: 50,
-    scale: "linear",
     sortKey: "x",
     sortOrder: "ascending",
     standalone: true,

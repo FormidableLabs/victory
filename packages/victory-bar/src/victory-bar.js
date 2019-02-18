@@ -74,7 +74,6 @@ class VictoryBar extends React.Component {
     groupComponent: <g role="presentation" />,
     labelComponent: <VictoryLabel />,
     samples: 50,
-    scale: "linear",
     sortOrder: "ascending",
     standalone: true,
     theme: VictoryTheme.grayscale

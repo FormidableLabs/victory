@@ -68,7 +68,6 @@ class VictoryScatter extends React.Component {
     labelComponent: <VictoryLabel />,
     groupComponent: <g />,
     samples: 50,
-    scale: "linear",
     sortOrder: "ascending",
     standalone: true,
     theme: VictoryTheme.grayscale

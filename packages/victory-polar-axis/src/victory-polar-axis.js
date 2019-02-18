@@ -119,7 +119,6 @@ class VictoryPolarAxis extends React.Component {
     gridComponent: <LineSegment type={"grid"} />,
     groupComponent: <g role="presentation" />,
     labelPlacement: "parallel",
-    scale: "linear",
     startAngle: 0,
     standalone: true,
     theme: VictoryTheme.grayscale,

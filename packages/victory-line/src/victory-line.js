@@ -68,7 +68,6 @@ class VictoryLine extends React.Component {
     labelComponent: <VictoryLabel renderInPortal />,
     groupComponent: <VictoryClipContainer />,
     samples: 50,
-    scale: "linear",
     sortKey: "x",
     sortOrder: "ascending",
     standalone: true,

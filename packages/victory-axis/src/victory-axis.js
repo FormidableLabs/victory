@@ -118,7 +118,6 @@ class VictoryAxis extends React.Component {
     tickLabelComponent: <VictoryLabel />,
     tickComponent: <LineSegment type={"tick"} />,
     gridComponent: <LineSegment type={"grid"} />,
-    scale: "linear",
     standalone: true,
     theme: VictoryTheme.grayscale,
     containerComponent: <VictoryContainer />,
