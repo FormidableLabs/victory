@@ -15,8 +15,7 @@ const getErrors = (props, datum, axis) => {
     return false;
   }
 
-  const currentAxis = Helpers.getCurrentAxis(axis, props.horizontal);
-  const scale = props.scale[currentAxis];
+  const scale = props.scale[axis];
   return Array.isArray(errors)
     ? [
         errors[0] === 0 ? false : scale(errors[0] + datum[`_${axis}`]),
@@ -45,15 +44,14 @@ const getDomainFromData = (props, axis) => {
     const max = maxDomain !== undefined ? maxDomain : Collection.getMaxValue(scaleDomain);
     return Domain.getDomainFromMinMax(min, max);
   }
-  const currentAxis = Helpers.getCurrentAxis(axis, props.horizontal);
-  const error = currentAxis === "x" ? "_errorX" : "_errorY";
+  const error = axis === "x" ? "_errorX" : "_errorY";
   const reduceErrorData = (type) => {
     const baseCondition = type === "min" ? Infinity : -Infinity;
     const errorIndex = type === "min" ? 1 : 0;
     const sign = type === "min" ? -1 : 1;
     return dataset.reduce((memo, datum) => {
       const currentError = Array.isArray(datum[error]) ? datum[error][errorIndex] : datum[error];
-      const current = datum[`_${currentAxis}`] + sign * (currentError || 0);
+      const current = datum[`_${axis}`] + sign * (currentError || 0);
       return (memo < current && type === "min") || (memo > current && type === "max")
         ? memo
         : current;
@@ -87,10 +85,10 @@ const getCalculatedValues = (props) => {
   const scale = {
     x: Scale.getBaseScale(props, "x")
       .domain(domain.x)
-      .range(range.x),
+      .range(props.horizontal ? range.y : range.x),
     y: Scale.getBaseScale(props, "y")
       .domain(domain.y)
-      .range(range.y)
+      .range(props.horizontal ? range.x: range.y)
   };
   const origin = props.polar ? props.origin || Helpers.getPolarOrigin(props) : undefined;
   return { domain, data, scale, style, origin };

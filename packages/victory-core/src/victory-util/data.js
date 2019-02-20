@@ -72,7 +72,8 @@ function cleanData(dataset, props) {
     return dataset;
   }
   const rules = (datum, axis) => {
-    const currentAxis = Helpers.getCurrentAxis(axis, props.horizontal);
+    // const currentAxis = Helpers.getCurrentAxis(axis, props.horizontal);
+    const currentAxis = axis;
     return scaleType[currentAxis] === "log" ? datum[`_${axis}`] !== 0 : true;
   };
   return dataset.filter((datum) => {
@@ -192,12 +193,15 @@ function formatData(dataset, props, expectedKeys) {
     props.y === "_y" &&
     props.y0 === "_y0";
 
+  const defaultY0 = props.domain && props.domain.y
+    ? Collection.getMinValue(props.domain.y)
+    : undefined;
   const data = preformattedData
     ? dataset
     : dataset.reduce((dataArr, datum, index) => {
         // eslint-disable-line complexity
         datum = parseDatum(datum);
-        const fallbackValues = { x: index, y: datum };
+        const fallbackValues = { x: index, y: datum, y0: defaultY0 };
         const processedValues = expectedKeys.reduce((memo, type) => {
           const processedValue = accessor[type](datum);
           const value = processedValue !== undefined ? processedValue : fallbackValues[type];

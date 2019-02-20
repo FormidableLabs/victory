@@ -171,7 +171,7 @@ export default {
     const parentData = props.data ? Data.getData(props, axis) : undefined;
     const { polar, startAngle, endAngle, categories, minDomain, maxDomain, horizontal } = props;
     const baseParentProps = {
-      horizontal, polar, startAngle, endAngle, categories, minDomain, maxDomain
+      horizontal, polar, startAngle, endAngle, minDomain, maxDomain
     };
     const parentProps = parentData
       ? assign(baseParentProps, { data: parentData })
@@ -182,13 +182,13 @@ export default {
       if (!Domain.isDomainComponent(child)) {
         return null;
       } else if (child.type && isFunction(child.type.getDomain)) {
-        return child.props && child.type.getDomain(sharedProps, axis);
+        const result = child.props && child.type.getDomain(sharedProps, axis);
+        return result
       } else {
         return Domain.getDomain(sharedProps, axis);
       }
     };
     const childDomains = Helpers.reduceChildren(children, iteratee, props);
-
     const min = childDomains.length === 0 ? 0 : Collection.getMinValue(childDomains);
     const max = childDomains.length === 0 ? 1 : Collection.getMaxValue(childDomains);
     return [min, max];
@@ -323,6 +323,7 @@ export default {
 
   getCategoryAndAxisStringsFromChildren(props, axis, childComponents) {
     const currentAxis = Helpers.getCurrentAxis(axis, props.horizontal);
+    // const currentAxis = axis;
     const categories = isPlainObject(props.categories) ? props.categories[axis] : props.categories;
     const axisComponent = Axis.getAxisComponent(childComponents, currentAxis);
     const axisStrings = axisComponent ? Data.getStringsFromAxes(axisComponent.props, axis) : [];

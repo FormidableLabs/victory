@@ -32,8 +32,12 @@ function getCalculatedProps(props, childComponents) {
     y: Scale.getScaleFromProps(props, "y") || Wrapper.getScale(props, "y")
   };
   const scale = {
-    x: baseScale.x.domain(domain.x).range(range.x),
-    y: baseScale.y.domain(domain.y).range(range.y)
+    x: baseScale.x
+      .domain(domain.x)
+      .range(props.horizontal ? range.y : range.x),
+    y: baseScale.y
+      .domain(domain.y)
+      .range(props.horizontal ? range.x: range.y)
   };
 
   const origin = polar ? props.origin : Helpers.getPolarOrigin(props);
@@ -58,9 +62,8 @@ function pixelsToValue(props, axis, calculatedProps) {
   if (!props.offset) {
     return 0;
   }
-  const horizontal = calculatedProps.horizontal;
-  const currentAxis = Helpers.getCurrentAxis(axis, horizontal);
-  const domain = calculatedProps.domain[currentAxis];
+  const currentAxis = Helpers.getCurrentAxis(axis, props.horizontal);
+  const domain = calculatedProps.domain[axis];
   const range = calculatedProps.range[currentAxis];
   const domainExtent = Math.max(...domain) - Math.min(...domain);
   const rangeExtent = Math.max(...range) - Math.min(...range);

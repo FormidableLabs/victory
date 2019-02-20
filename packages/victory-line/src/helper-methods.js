@@ -19,10 +19,10 @@ const getCalculatedValues = (props) => {
   const scale = {
     x: Scale.getBaseScale(props, "x")
       .domain(domain.x)
-      .range(range.x),
+      .range(props.horizontal ? range.y : range.x),
     y: Scale.getBaseScale(props, "y")
       .domain(domain.y)
-      .range(range.y)
+      .range(props.horizontal ? range.x: range.y)
   };
   const origin = props.polar ? props.origin || Helpers.getPolarOrigin(props) : undefined;
   const defaultStyles =
@@ -67,7 +67,8 @@ const getBaseProps = (props, fallbackProps) => {
       standalone,
       polar,
       origin,
-      padding
+      padding,
+      horizontal
     },
     all: {
       data: {

@@ -12,13 +12,13 @@ const defined = (d) => {
 
 const getXAccessor = (scale, horizontal) => {
   return horizontal
-    ? (d) => scale.x(d._y1 !== undefined ? d._y1 : d._y)
+    ? (d) => scale.y(d._y1 !== undefined ? d._y1 : d._y)
     : (d) => scale.x(d._x1 !== undefined ? d._x1 : d._x);
 };
 
 const getYAccessor = (scale, horizontal) => {
   return horizontal
-    ? (d) => scale.y(d._x1 !== undefined ? d._x1 : d._x)
+    ? (d) => scale.x(d._x1 !== undefined ? d._x1 : d._x)
     : (d) => scale.y(d._y1 !== undefined ? d._y1 : d._y);
 };
 

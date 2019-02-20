@@ -58,10 +58,9 @@ function getScaleTypeFromData(props, axis) {
   if (!props.data) {
     return "linear";
   }
-  const currentAxis = Helpers.getCurrentAxis(axis, props.horizontal);
-  const accessor = Helpers.createAccessor(props[currentAxis]);
+  const accessor = Helpers.createAccessor(props[axis]);
   const axisData = props.data.map((datum) => {
-    return accessor(datum) ? accessor(datum)[currentAxis] : datum[currentAxis];
+    return accessor(datum) ? accessor(datum)[axis] : datum[axis];
   });
   return Collection.containsDates(axisData) ? "time" : "linear";
 }
@@ -90,7 +89,6 @@ function getScaleFromProps(props, axis) {
     return undefined;
   }
   const scale = props.scale[axis] || props.scale;
-
   if (validScale(scale)) {
     return isFunction(scale) ? scale : d3Scale[toNewName(scale)]();
   }
@@ -103,6 +101,9 @@ function getScaleType(props, axis) {
 }
 
 function getType(scale) {
+  if (typeof scale === "string") {
+    return scale;
+  }
   const duckTypes = [
     { name: "log", method: "base" },
     { name: "ordinal", method: "unknown" },

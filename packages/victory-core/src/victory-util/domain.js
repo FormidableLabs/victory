@@ -229,11 +229,11 @@ function getDomainFromData(props, axis, dataset) {
     return getDomainFromMinMax(min, max);
   }
 
-  const currentAxis = Helpers.getCurrentAxis(axis, horizontal);
+  // const currentAxis = Helpers.getCurrentAxis(axis, horizontal);
+  const currentAxis = axis;
   const min = minDomain !== undefined ? minDomain : getExtremeFromData(dataset, currentAxis, "min");
   const max = maxDomain !== undefined ? maxDomain : getExtremeFromData(dataset, currentAxis, "max");
   const domain = getDomainFromMinMax(min, max);
-
   return polar && axis === "x" && Math.abs(startAngle - endAngle) === 360
     ? getSymmetricDomain(domain, getFlatData(dataset, currentAxis))
     : domain;
@@ -294,8 +294,8 @@ function getDomainWithZero(props, axis) {
   const y0Min = dataset.reduce((min, datum) => (datum._y0 < min ? datum._y0 : min), Infinity);
 
   const ensureZero = (domain) => {
-    const currentAxis = Helpers.getCurrentAxis(axis, props.horizontal);
-    if (currentAxis === "x") {
+
+    if (axis === "x") {
       return domain;
     }
 

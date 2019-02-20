@@ -146,11 +146,12 @@ export default class VictoryClipContainer extends React.Component {
   }
 
   getRange(props, axis) {
+    const currentAxis = Helpers.getCurrentAxis(axis, props.horizontal);
     const scale = props.scale || {};
-    if (!scale[axis]) {
+    if (!scale[currentAxis]) {
       return undefined;
     }
-    return isFunction(scale[axis].range) ? scale[axis].range() : undefined;
+    return isFunction(scale[currentAxis].range) ? scale[currentAxis].range() : undefined;
   }
 
   render() {

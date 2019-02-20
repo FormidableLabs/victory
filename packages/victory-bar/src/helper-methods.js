@@ -3,7 +3,8 @@ import { Helpers, LabelHelpers, Data, Domain, Scale } from "victory-core";
 
 const getBarPosition = (props, datum) => {
   const getDefaultMin = (axis) => {
-    const currentAxis = Helpers.getCurrentAxis(axis, props.horizontal);
+    // const currentAxis = Helpers.getCurrentAxis(axis, props.horizontal);
+    const currentAxis = axis;
     const defaultMin = Scale.getType(props.scale[currentAxis]) === "log"
       ? 1 / Number.MAX_SAFE_INTEGER
       : 0;
@@ -30,10 +31,10 @@ const getCalculatedValues = (props) => {
   const scale = {
     x: Scale.getBaseScale(props, "x")
       .domain(domain.x)
-      .range(range.x),
+      .range(props.horizontal ? range.y : range.x),
     y: Scale.getBaseScale(props, "y")
       .domain(domain.y)
-      .range(range.y)
+      .range(props.horizontal ? range.x: range.y)
   };
   const origin = polar ? props.origin || Helpers.getPolarOrigin(props) : undefined;
   return { style, data, scale, domain, origin };
@@ -67,6 +68,7 @@ const getBaseProps = (props, fallbackProps) => {
   } = props;
   const initialChildProps = {
     parent: {
+      horizontal,
       domain,
       scale,
       width,

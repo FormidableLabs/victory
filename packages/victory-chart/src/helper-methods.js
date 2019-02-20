@@ -80,8 +80,12 @@ function getCalculatedProps(props, childComponents) {
     y: Scale.getScaleFromProps(props, "y") || Wrapper.getScale(props, "y")
   };
   const scale = {
-    x: baseScale.x.domain(domain.x).range(range.x),
-    y: baseScale.y.domain(domain.y).range(range.y)
+    x: baseScale.x
+      .domain(domain.x)
+      .range(horizontal ? range.y : range.x),
+    y: baseScale.y
+      .domain(domain.y)
+      .range(horizontal ? range.x : range.y)
   };
   const origin = polar ? Helpers.getPolarOrigin(props) : Axis.getOrigin(domain);
 
@@ -184,7 +188,15 @@ const getDomain = (props, axis, childComponents) => {
 
 // eslint-disable-next-line complexity
 const getAxisOffset = (props, calculatedProps) => {
-  const { axisComponents, scale, origin, domain, originSign, padding } = calculatedProps;
+  const {
+    axisComponents,
+    scale,
+    origin,
+    domain,
+    originSign,
+    padding,
+    horizontal
+  } = calculatedProps;
   const { top, bottom, left, right } = padding;
   // make the axes line up, and cross when appropriate
   const axisOrientations = {
@@ -199,24 +211,34 @@ const getAxisOffset = (props, calculatedProps) => {
     x: axisOrientations.y === "left" ? 0 : props.width,
     y: axisOrientations.x === "bottom" ? props.height : 0
   };
+
   const originPosition = {
     x: origin.x === domain.x[0] || origin.x === domain.x[1] ? 0 : scale.x(origin.x),
     y: origin.y === domain.y[0] || origin.y === domain.y[1] ? 0 : scale.y(origin.y)
   };
+
   const calculatedOffset = {
     x: originPosition.x ? Math.abs(originOffset.x - originPosition.x) : orientationOffset.x,
     y: originPosition.y ? Math.abs(originOffset.y - originPosition.y) : orientationOffset.y
   };
+  const horizontalOffset = {
+    x: originPosition.y ? Math.abs(originOffset.x - originPosition.y) : orientationOffset.x,
+    y: originPosition.x ? Math.abs(originOffset.y - originPosition.x) : orientationOffset.y
+  }
+  const offset = {
+    x: horizontal ? horizontalOffset.x : calculatedOffset.x,
+    y: horizontal ? horizontalOffset.y : calculatedOffset.y,
+  }
 
   return {
     x:
       axisComponents.x && axisComponents.x.offsetX !== undefined
         ? axisComponents.x.offsetX
-        : calculatedOffset.x,
+        : offset.x,
     y:
       axisComponents.y && axisComponents.y.offsetY !== undefined
         ? axisComponents.y.offsetY
-        : calculatedOffset.y
+        : offset.y
   };
 };
 

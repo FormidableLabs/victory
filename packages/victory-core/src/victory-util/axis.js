@@ -205,8 +205,7 @@ function getTickFormat(props, scale) {
 
 function getStringTicks(props) {
   const axis = getAxis(props);
-  const currentAxis = Helpers.getCurrentAxis(axis, props.horizontal);
-  const stringMap = props.stringMap && props.stringMap[currentAxis];
+  const stringMap = props.stringMap && props.stringMap[axis];
   const categories = Array.isArray(props.categories)
     ? props.categories
     : props.categories && props.categories[axis];
@@ -224,6 +223,7 @@ function getTickArray(props) {
   const { tickValues, tickFormat } = props;
   const axis = getAxis(props);
   const currentAxis = Helpers.getCurrentAxis(axis, props.horizontal);
+
   const stringMap = props.stringMap && props.stringMap[currentAxis];
   const getTicksFromFormat = () => {
     if (!tickFormat || !Array.isArray(tickFormat)) {

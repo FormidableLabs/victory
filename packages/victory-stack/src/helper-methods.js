@@ -132,8 +132,12 @@ function getCalculatedProps(props, childComponents) {
     y: Scale.getScaleFromProps(props, "y") || Wrapper.getScale(props, "y")
   };
   const scale = {
-    x: baseScale.x.domain(domain.x).range(range.x),
-    y: baseScale.y.domain(domain.y).range(range.y)
+    x: baseScale.x
+      .domain(domain.x)
+      .range(props.horizontal ? range.y : range.x),
+    y: baseScale.y
+      .domain(domain.y)
+      .range(props.horizontal ? range.x: range.y)
   };
   const { colorScale, horizontal } = props;
   return { datasets, categories, range, domain, horizontal, scale, style, colorScale, role };

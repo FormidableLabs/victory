@@ -7,11 +7,10 @@ const getDataWithBaseline = (props, scale) => {
     data = [];
   }
   const getDefaultMin = (axis) => {
-    const currentAxis = Helpers.getCurrentAxis(axis, props.horizontal);
-    const defaultMin = Scale.getType(scale[currentAxis]) === "log"
+    const defaultMin = Scale.getType(scale[axis]) === "log"
       ? 1 / Number.MAX_SAFE_INTEGER
       : 0;
-    const domain = scale[currentAxis].domain();
+    const domain = scale[axis].domain();
     return Collection.getMinValue(domain) > 0
       ? Collection.getMinValue(domain)
       : defaultMin;
@@ -41,10 +40,10 @@ const getCalculatedValues = (props) => {
   const scale = {
     x: Scale.getBaseScale(props, "x")
       .domain(domain.x)
-      .range(range.x),
+      .range(props.horizontal ? range.y : range.x),
     y: Scale.getBaseScale(props, "y")
       .domain(domain.y)
-      .range(range.y)
+      .range(props.horizontal ? range.x: range.y)
   };
   const origin = polar ? props.origin || Helpers.getPolarOrigin(props) : undefined;
   const data = getDataWithBaseline(props, scale);

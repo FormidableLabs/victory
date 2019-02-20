@@ -25,8 +25,11 @@ const evaluateStyle = (style, data, index) => {
 // exposed for use by VictoryChart
 const getScale = (props) => {
   const axis = Axis.getAxis(props);
-  const scale = Scale.getBaseScale(props, axis);
-  const domain = Axis.getDomain(props) || scale.domain();
+  const currentAxis = Helpers.getCurrentAxis(axis, props.horizontal);
+  // const currentAxis = axis;
+  const scale = Scale.getBaseScale(props, currentAxis);
+  const propsDomain = props.domain && props.domain[currentAxis];
+  const domain = propsDomain || Axis.getDomain(props) || scale.domain();
   scale.range(Helpers.getRange(props, axis));
   scale.domain(domain);
   return scale;
@@ -357,9 +360,9 @@ const getBaseProps = (props, fallbackProps) => {
     name
   } = calculatedValues;
   const otherAxis = axis === "x" ? "y" : "x";
-  const { width, height, standalone, theme, polar, padding } = props;
+  const { width, height, standalone, theme, polar, padding, horizontal } = props;
   const { globalTransform, gridOffset, gridEdge } = getLayoutProps(props, calculatedValues);
-  const sharedProps = { scale: { [axis]: scale }, polar };
+  const sharedProps = { scale: { [axis]: scale }, polar, horizontal };
   const axisProps = getAxisProps(props, calculatedValues, globalTransform);
   const axisLabelProps = getAxisLabelProps(props, calculatedValues, globalTransform);
   const initialChildProps = {
@@ -410,4 +413,4 @@ const getBaseProps = (props, fallbackProps) => {
   }, initialChildProps);
 };
 
-export { getBaseProps, getScale, getStyles };
+export { getBaseProps, getStyles };

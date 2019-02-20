@@ -61,10 +61,10 @@ const getCalculatedValues = (props) => {
   const scale = {
     x: Scale.getBaseScale(props, "x")
       .domain(domain.x)
-      .range(range.x),
+      .range(props.horizontal ? range.y : range.x),
     y: Scale.getBaseScale(props, "y")
       .domain(domain.y)
-      .range(range.y)
+      .range(props.horizontal ? range.x: range.y)
   };
   const origin = props.polar ? props.origin || Helpers.getPolarOrigin(props) : undefined;
   const z = props.bubbleProperty || "z";
@@ -89,7 +89,8 @@ const getBaseProps = (props, fallbackProps) => {
     style,
     theme,
     width,
-    labels
+    labels,
+    horizontal
   } = props;
   const initialChildProps = {
     parent: {
@@ -104,7 +105,8 @@ const getBaseProps = (props, fallbackProps) => {
       origin,
       polar,
       padding,
-      name
+      name,
+      horizontal
     }
   };
 
@@ -120,6 +122,7 @@ const getBaseProps = (props, fallbackProps) => {
       scale,
       polar,
       origin,
+      horizontal,
       size: getSize(datum, props),
       symbol: getSymbol(datum, props),
       style: style.data
