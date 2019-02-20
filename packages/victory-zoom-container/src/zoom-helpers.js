@@ -132,11 +132,12 @@ const RawZoomHelpers = {
       ? newDomain.map((val) => new Date(val))
       : newDomain;
   },
-
-  getDomainScale(domain, scale, axis) {
+  // eslint-disable-next-line max-params
+  getDomainScale(domain, scale, axis, horizontal) {
     const axisDomain = Array.isArray(domain) ? domain : domain[axis];
     const [from, to] = axisDomain;
-    const range = scale[axis].range();
+    const otherAxis = axis === "x" ? "y" : "x";
+    const range = horizontal ? scale[otherAxis].range() : scale[axis].range();
     const plottableWidth = Math.abs(range[0] - range[1]);
     return plottableWidth / (to - from);
   },
@@ -231,13 +232,13 @@ const RawZoomHelpers = {
   // eslint-disable-next-line max-params, max-statements
   onMouseMove(evt, targetProps, eventKey, ctx) {
     if (targetProps.panning && targetProps.allowPan) {
-      const { scale, startX, startY, onZoomDomainChange, zoomDimension, zoomDomain } = targetProps;
+      const { scale, startX, startY, onZoomDomainChange, zoomDimension, zoomDomain, horizontal } = targetProps;
       const parentSVG = targetProps.parentSVG || Selection.getParentSVG(evt);
       const { x, y } = Selection.getSVGEventCoordinates(evt, parentSVG);
       const originalDomain = this.getDomain(targetProps);
       const lastDomain = this.getLastDomain(targetProps, originalDomain);
-      const dx = (startX - x) / this.getDomainScale(lastDomain, scale, "x");
-      const dy = (y - startY) / this.getDomainScale(lastDomain, scale, "y");
+      const dx = (startX - x) / this.getDomainScale(lastDomain, scale, "x", horizontal);
+      const dy = (y - startY) / this.getDomainScale(lastDomain, scale, "y", horizontal);
       const currentDomain = {
         x: zoomDimension === "y" ? originalDomain.x : this.pan(lastDomain.x, originalDomain.x, dx),
         y: zoomDimension === "x" ? originalDomain.y : this.pan(lastDomain.y, originalDomain.y, dy)
