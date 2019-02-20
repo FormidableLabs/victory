@@ -31,7 +31,7 @@ export default class Candle extends React.Component {
   };
 
   getCandleWidth(props, style) {
-    const { active, datum, data, candleWidth, scale, defaultCandleWidth, horizontal } = props;
+    const { active, datum, data, candleWidth, scale, defaultCandleWidth } = props;
     if (candleWidth) {
       return isFunction(candleWidth)
         ? Helpers.evaluateProp(candleWidth, datum, active)
@@ -39,7 +39,7 @@ export default class Candle extends React.Component {
     } else if (style.width) {
       return style.width;
     }
-    const range = horizontal ? scale.y.range() : scale.x.range();
+    const range = scale.x.range();
     const extent = Math.abs(range[1] - range[0]);
     const candles = data.length + 2;
     const candleRatio = props.candleRatio || 0.5;

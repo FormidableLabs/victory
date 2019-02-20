@@ -28,7 +28,8 @@ const getDomainFromData = (props, axis) => {
     const max = maxDomain !== undefined ? maxDomain : Collection.getMaxValue(scaleDomain);
     return Domain.getDomainFromMinMax(min, max);
   }
-  const currentAxis = Helpers.getCurrentAxis(axis, props.horizontal);
+  // const currentAxis = Helpers.getCurrentAxis(axis, props.horizontal);
+  const currentAxis = axis;
   const min = minDomain !== undefined ? minDomain : reduceData(dataset, currentAxis, "min");
   const max = maxDomain !== undefined ? maxDomain : reduceData(dataset, currentAxis, "max");
   return Domain.getDomainFromMinMax(min, max);
@@ -55,10 +56,10 @@ const getCalculatedValues = (props) => {
   const scale = {
     x: Scale.getBaseScale(props, "x")
       .domain(domain.x)
-      .range(range.x),
+      .range(props.horizontal ? range.y : range.x),
     y: Scale.getBaseScale(props, "y")
       .domain(domain.y)
-      .range(range.y)
+      .range(props.horizontal ? range.x: range.y)
   };
   const origin = polar ? props.origin || Helpers.getPolarOrigin(props) : undefined;
   return { domain, data, scale, style, origin };
@@ -142,8 +143,8 @@ const getBaseProps = (props, fallbackProps) => {
 
   return data.reduce((childProps, datum, index) => {
     const eventKey = !isNil(datum.eventKey) ? datum.eventKey : index;
-    const xScale = horizontal ? scale.y : scale.x;
-    const yScale = horizontal ? scale.x : scale.y;
+    const xScale = scale.x;
+    const yScale = scale.y;
     const x = xScale(datum._x1 !== undefined ? datum._x1 : datum._x)
     const high = yScale(datum._high);
     const close = yScale(datum._close);
