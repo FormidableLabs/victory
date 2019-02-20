@@ -27,8 +27,8 @@ const checkProcessedData = (props, data) => {
 
 const nanToNull = (val) => (isNaN(val) ? null : val);
 
-const getSummaryStatistics = (data, horizontal) => {
-  const dependentVars = data.map((datum) => (horizontal ? datum._x : datum._y));
+const getSummaryStatistics = (data) => {
+  const dependentVars = data.map((datum) => datum._y);
   const quartiles = {
     _q1: nanToNull(d3Quantile(dependentVars, 0.25)), // eslint-disable-line no-magic-numbers
     _q3: nanToNull(d3Quantile(dependentVars, 0.75)), // eslint-disable-line no-magic-numbers
@@ -37,9 +37,7 @@ const getSummaryStatistics = (data, horizontal) => {
     _max: nanToNull(d3Max(dependentVars))
   };
 
-  return horizontal
-    ? assign({}, quartiles, { _y: data[0]._y })
-    : assign({}, quartiles, { _x: data[0]._x });
+  return assign({}, data[0], quartiles, { _y: data[0]._y });
 };
 
 const isHorizontal = (props, data) => {
@@ -57,7 +55,7 @@ const processData = (props, data) => {
     const arrayX = data.every((datum) => Array.isArray(datum._x));
     const arrayY = data.every((datum) => Array.isArray(datum._y));
     const horizontal = arrayX || props.horizontal;
-    const sortKey = horizontal ? "_x" : "_y";
+    const sortKey = "_y";
     const groupKey = horizontal ? "_y" : "_x";
     if (arrayX && arrayY) {
       throw new Error(`
@@ -138,7 +136,7 @@ const getDomainFromData = (props, axis) => {
     const max = maxDomain !== undefined ? maxDomain : Collection.getMaxValue(scaleDomain);
     return Domain.getDomainFromMinMax(min, max);
   }
-  return (props.horizontal && axis === "x") || (!props.horizontal && axis === "y")
+  return axis === "y"
     ? getDomainFromMinMaxValues(dataset, props, axis)
     : reduceDataset(dataset, props, axis);
 };
@@ -187,10 +185,10 @@ const getCalculatedValues = (props) => {
   const scale = {
     x: Scale.getBaseScale(props, "x")
       .domain(domain.x)
-      .range(range.x),
+      .range(props.horizontal ? range.y : range.x),
     y: Scale.getBaseScale(props, "y")
       .domain(domain.y)
-      .range(range.y)
+      .range(props.horizontal ? range.x: range.y)
   };
   const defaultStyles = theme && theme.boxplot && theme.boxplot.style ? theme.boxplot.style : {};
   const style = getStyles(props, defaultStyles);
@@ -344,16 +342,16 @@ const getBaseProps = (props, fallbackProps) => {
       theme,
       style: style.parent || {},
       padding,
-      groupComponent
+      groupComponent,
+      horizontal
     }
   };
-  const boxScale = horizontal ? scale.x : scale.y;
-
+  const boxScale = scale.y;
   return data.reduce((acc, datum, index) => {
     const eventKey = !isNil(datum.eventKey) ? datum.eventKey : index;
     const positions = {
-      x: scale.x(datum._x),
-      y: scale.y(datum._y),
+      x: horizontal ? scale.y(datum._y) : scale.x(datum._x),
+      y: horizontal ? scale.x(datum._x) : scale.y(datum._y),
       min: boxScale(datum._min),
       max: boxScale(datum._max),
       median: boxScale(datum._median),
