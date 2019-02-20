@@ -28,10 +28,8 @@ const getDomainFromData = (props, axis) => {
     const max = maxDomain !== undefined ? maxDomain : Collection.getMaxValue(scaleDomain);
     return Domain.getDomainFromMinMax(min, max);
   }
-  // const currentAxis = Helpers.getCurrentAxis(axis, props.horizontal);
-  const currentAxis = axis;
-  const min = minDomain !== undefined ? minDomain : reduceData(dataset, currentAxis, "min");
-  const max = maxDomain !== undefined ? maxDomain : reduceData(dataset, currentAxis, "max");
+  const min = minDomain !== undefined ? minDomain : reduceData(dataset, axis, "min");
+  const max = maxDomain !== undefined ? maxDomain : reduceData(dataset, axis, "max");
   return Domain.getDomainFromMinMax(min, max);
 };
 
@@ -143,13 +141,11 @@ const getBaseProps = (props, fallbackProps) => {
 
   return data.reduce((childProps, datum, index) => {
     const eventKey = !isNil(datum.eventKey) ? datum.eventKey : index;
-    const xScale = scale.x;
-    const yScale = scale.y;
-    const x = xScale(datum._x1 !== undefined ? datum._x1 : datum._x)
-    const high = yScale(datum._high);
-    const close = yScale(datum._close);
-    const open = yScale(datum._open);
-    const low = yScale(datum._low);
+    const x = scale.x(datum._x1 !== undefined ? datum._x1 : datum._x)
+    const high = scale.y(datum._high);
+    const close = scale.y(datum._close);
+    const open = scale.y(datum._open);
+    const low = scale.y(datum._low);
     const dataStyle = getDataStyles(datum, style.data, props);
     const dataProps = {
       x,

@@ -10,16 +10,12 @@ const defined = (d) => {
   return y !== null && y !== undefined && d._y0 !== null;
 };
 
-const getXAccessor = (scale, horizontal) => {
-  return horizontal
-    ? (d) => scale.y(d._y1 !== undefined ? d._y1 : d._y)
-    : (d) => scale.x(d._x1 !== undefined ? d._x1 : d._x);
+const getXAccessor = (scale) => {
+  return (d) => scale.x(d._x1 !== undefined ? d._x1 : d._x);
 };
 
-const getYAccessor = (scale, horizontal) => {
-  return horizontal
-    ? (d) => scale.x(d._x1 !== undefined ? d._x1 : d._x)
-    : (d) => scale.y(d._y1 !== undefined ? d._y1 : d._y);
+const getYAccessor = (scale) => {
+  return (d) => scale.y(d._y1 !== undefined ? d._y1 : d._y);
 };
 
 const getAngleAccessor = (scale) => {
@@ -61,8 +57,8 @@ export default class Curve extends React.Component {
           .line()
           .defined(defined)
           .curve(d3Shape[interpolation])
-          .x(getXAccessor(scale, horizontal))
-          .y(getYAccessor(scale, horizontal));
+          .x(horizontal ? getYAccessor(scale) : getXAccessor(scale))
+          .y(horizontal ? getXAccessor(scale) : getYAccessor(scale));
   }
 
   toNewName(interpolation) {

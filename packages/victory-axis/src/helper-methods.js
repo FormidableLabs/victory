@@ -26,7 +26,6 @@ const evaluateStyle = (style, data, index) => {
 const getScale = (props) => {
   const axis = Axis.getAxis(props);
   const currentAxis = Helpers.getCurrentAxis(axis, props.horizontal);
-  // const currentAxis = axis;
   const scale = Scale.getBaseScale(props, currentAxis);
   const propsDomain = props.domain && props.domain[currentAxis];
   const domain = propsDomain || Axis.getDomain(props) || scale.domain();

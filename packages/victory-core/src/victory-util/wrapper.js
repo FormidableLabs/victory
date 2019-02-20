@@ -323,7 +323,6 @@ export default {
 
   getCategoryAndAxisStringsFromChildren(props, axis, childComponents) {
     const currentAxis = Helpers.getCurrentAxis(axis, props.horizontal);
-    // const currentAxis = axis;
     const categories = isPlainObject(props.categories) ? props.categories[axis] : props.categories;
     const axisComponent = Axis.getAxisComponent(childComponents, currentAxis);
     const axisStrings = axisComponent ? Data.getStringsFromAxes(axisComponent.props, axis) : [];

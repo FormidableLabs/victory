@@ -72,9 +72,7 @@ function cleanData(dataset, props) {
     return dataset;
   }
   const rules = (datum, axis) => {
-    // const currentAxis = Helpers.getCurrentAxis(axis, props.horizontal);
-    const currentAxis = axis;
-    return scaleType[currentAxis] === "log" ? datum[`_${axis}`] !== 0 : true;
+    return scaleType[axis] === "log" ? datum[`_${axis}`] !== 0 : true;
   };
   return dataset.filter((datum) => {
     return rules(datum, "x") && rules(datum, "y") && rules(datum, "y0");

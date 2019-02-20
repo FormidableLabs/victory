@@ -132,7 +132,7 @@ export default class VictoryClipContainer extends React.Component {
     if (clipValues[axis] !== undefined) {
       return clipValues[axis];
     }
-    const range = this.getRange(props, axis);
+    const range = Helpers.getRange(props, axis);
     return range ? Math.abs(range[0] - range[1]) || undefined : undefined;
   }
 
@@ -141,19 +141,9 @@ export default class VictoryClipContainer extends React.Component {
     if (translateValues[axis] !== undefined) {
       return translateValues[axis];
     }
-    const range = this.getRange(props, axis);
+    const range = Helpers.getRange(props, axis);
     return range ? Math.min(...range) : undefined;
   }
-
-  getRange(props, axis) {
-    const currentAxis = Helpers.getCurrentAxis(axis, props.horizontal);
-    const scale = props.scale || {};
-    if (!scale[currentAxis]) {
-      return undefined;
-    }
-    return isFunction(scale[currentAxis].range) ? scale[currentAxis].range() : undefined;
-  }
-
   render() {
     const clipHeight = this.getClipValue(this.props, "y");
     const clipWidth = this.getClipValue(this.props, "x");

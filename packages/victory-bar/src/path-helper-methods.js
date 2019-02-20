@@ -153,7 +153,7 @@ const getVerticalBarPoints = (position, sign, cr) => {
   return getHalfPoints("Left").concat(getHalfPoints("Right"));
 };
 
-export const getVerticalBarPath = (props, width, cornerRadius) => {
+export const getCartesianBarPath = (props, width, cornerRadius) => {
   const position = getPosition(props, width);
   const sign = position.y0 > position.y1 ? 1 : -1;
   const direction = sign > 0 ? "0 0 1" : "0 0 0";

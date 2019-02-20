@@ -4,7 +4,7 @@ import { Helpers, Path, CommonProps } from "victory-core";
 import { assign, isPlainObject, isFunction, isNil } from "lodash";
 
 import {
-  getVerticalBarPath,
+  getCartesianBarPath,
   getVerticalPolarBarPath,
   getCustomBarPath
 } from "./path-helper-methods";
@@ -46,7 +46,7 @@ export default class Bar extends React.Component {
     if (props.getPath) {
       return getCustomBarPath(props, width);
     }
-    return getVerticalBarPath(props, width, cornerRadius);
+    return getCartesianBarPath(props, width, cornerRadius);
   }
 
   getPolarBarPath(props, cornerRadius) {
@@ -55,7 +55,7 @@ export default class Bar extends React.Component {
   }
 
   getBarWidth(props, style) {
-    const { active, scale, data, datum, barWidth, defaultBarWidth, horizontal } = props;
+    const { active, scale, data, datum, barWidth, defaultBarWidth } = props;
     if (barWidth) {
       return isFunction(barWidth) ? Helpers.evaluateProp(barWidth, datum, active) : barWidth;
     } else if (style.width) {

@@ -10,28 +10,16 @@ const defined = (d) => {
   return y !== null && y !== undefined && d._y0 !== null;
 };
 
-const getXAccessor = (scale, horizontal) => {
-  return horizontal
-    ? (d) => scale.y(d._y1 !== undefined ? d._y1 : d._y)
-    : (d) => scale.x(d._x1 !== undefined ? d._x1 : d._x);
+const getXAccessor = (scale) => {
+  return (d) => scale.x(d._x1 !== undefined ? d._x1 : d._x);
 };
 
-const getYAccessor = (scale, horizontal) => {
-  return horizontal
-    ? (d) => scale.x(d._x1 !== undefined ? d._x1 : d._x)
-    : (d) => scale.y(d._y1 !== undefined ? d._y1 : d._y);
+const getYAccessor = (scale) => {
+  return (d) => scale.y(d._y1 !== undefined ? d._y1 : d._y);
 };
 
-const getX0Accessor = (scale, horizontal) => {
-  return horizontal
-    ? (d) => scale.y(d._y0)
-    : null;
-};
-
-const getY0Accessor = (scale, horizontal) => {
-  return horizontal
-    ? null
-    : (d) => scale.y(d._y0);
+const getY0Accessor = (scale) => {
+  return (d) => scale.y(d._y0);
 };
 
 const getAngleAccessor = (scale) => {
@@ -68,8 +56,8 @@ export default class Area extends React.Component {
           .line()
           .defined(defined)
           .curve(d3Shape[interpolation])
-          .x(getXAccessor(scale, horizontal))
-          .y(getYAccessor(scale, horizontal));
+          .x(horizontal ? getYAccessor(scale) : getXAccessor(scale))
+          .y(horizontal ? getXAccessor(scale) : getYAccessor(scale));
   }
 
   getCartesianArea(props, interpolation) {
@@ -79,16 +67,16 @@ export default class Area extends React.Component {
         .area()
         .defined(defined)
         .curve(d3Shape[interpolation])
-        .x0(getX0Accessor(scale, horizontal))
-        .x1(getXAccessor(scale, horizontal))
-        .y(getYAccessor(scale, horizontal))
+        .x0(getY0Accessor(scale))
+        .x1(getYAccessor(scale))
+        .y(getXAccessor(scale))
       : d3Shape
         .area()
         .defined(defined)
         .curve(d3Shape[interpolation])
-        .x(getXAccessor(scale, horizontal))
-        .y1(getYAccessor(scale, horizontal))
-        .y0(getY0Accessor(scale, horizontal));
+        .x(getXAccessor(scale))
+        .y1(getYAccessor(scale))
+        .y0(getY0Accessor(scale));
   }
 
   getAreaFunction(props) {
