@@ -145,7 +145,6 @@ const Helpers = {
     const fullDomainBox = targetProps.fullDomainBox || this.getDomainBox(targetProps, domain);
     const parentSVG = targetProps.parentSVG || Selection.getParentSVG(evt);
     const { x, y } = Selection.getSVGEventCoordinates(evt, parentSVG);
-
     // Ignore events that occur outside of the maximum domain region
     if (!this.withinBounds({ x, y }, fullDomainBox, handleWidth)) {
       return {};
@@ -234,7 +233,8 @@ const Helpers = {
       fullDomainBox,
       onBrushDomainChange,
       allowResize,
-      allowDrag
+      allowDrag,
+      horizontal
     } = targetProps;
     const parentSVG = targetProps.parentSVG || Selection.getParentSVG(evt);
     const { x, y } = Selection.getSVGEventCoordinates(evt, parentSVG);
@@ -246,7 +246,7 @@ const Helpers = {
       const { startX, startY } = targetProps;
       const pannedBox = this.panBox(targetProps, { x, y });
       const constrainedBox = this.constrainBox(pannedBox, fullDomainBox);
-      const currentDomain = Selection.getBounds({ ...constrainedBox, scale });
+      const currentDomain = Selection.getBounds({ ...constrainedBox, scale, horizontal });
       const mutatedProps = {
         currentDomain,
         parentSVG,
@@ -272,7 +272,8 @@ const Helpers = {
         y2,
         x1: targetProps.x1,
         y1: targetProps.y1,
-        scale
+        scale,
+        horizontal
       });
 
       const mutatedProps = { x2, y2, currentDomain, parentSVG };

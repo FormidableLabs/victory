@@ -49,22 +49,34 @@ function getSVGEventCoordinates(evt, svg) {
 }
 
 function getDomainCoordinates(props, domain) {
-  const { scale } = props;
+  const { scale, horizontal } = props;
   domain = domain || { x: scale.x.domain(), y: scale.y.domain() };
   return {
-    x: [scale.x(domain.x[0]), scale.x(domain.x[1])],
-    y: [scale.y(domain.y[0]), scale.y(domain.y[1])]
+    x: horizontal
+      ? [scale.y(domain.y[0]), scale.y(domain.y[1])]
+      : [scale.x(domain.x[0]), scale.x(domain.x[1])],
+    y: horizontal
+      ? [scale.x(domain.x[0]), scale.x(domain.x[1])]
+      : [scale.y(domain.y[0]), scale.y(domain.y[1])]
   };
+  // return {
+  //   x: [scale.x(domain.x[0]), scale.x(domain.x[1])],
+  //   y: [scale.y(domain.y[0]), scale.y(domain.y[1])]
+  // };
 }
 
 // eslint-disable-next-line max-params
 function getDataCoordinates(props, scale, x, y) {
-  const { polar } = props;
+  const { polar, horizontal } = props;
   if (!polar) {
     return {
-      x: scale.x.invert(x),
-      y: scale.y.invert(y)
+      x: horizontal ? scale.x.invert(y) : scale.x.invert(x),
+      y: horizontal ? scale.y.invert(x) : scale.y.invert(y)
     };
+    // return {
+    //   x: scale.x.invert(x),
+    //   y: scale.y.invert(y)
+    // };
   } else {
     const origin = props.origin || { x: 0, y: 0 };
     const baseX = x - origin.x;
@@ -79,17 +91,22 @@ function getDataCoordinates(props, scale, x, y) {
 }
 
 function getBounds(props) {
-  const { x1, x2, y1, y2, scale } = props;
+  const { x1, x2, y1, y2, scale, horizontal } = props;
   const point1 = getDataCoordinates(props, scale, x1, y1);
   const point2 = getDataCoordinates(props, scale, x2, y2);
   const makeBound = (a, b) => {
     return [Collection.getMinValue([a, b]), Collection.getMaxValue([a, b])];
   };
 
+  // return {
+  //   x: horizontal ? makeBound(point1.y, point2.y) : makeBound(point1.x, point2.x),
+  //   y: horizontal ? makeBound(point1.x, point2.y) : makeBound(point1.y, point2.y)
+  // };
   return {
     x: makeBound(point1.x, point2.x),
     y: makeBound(point1.y, point2.y)
   };
+
 }
 
 export default {
