@@ -117,9 +117,8 @@ function addEventKeys(props, data) {
  * @returns {Object} an object mapping string data to numeric data
  */
 function createStringMap(props, axis) {
-  const currentAxis = Helpers.getCurrentAxis(axis, props.horizontal);
-  const stringsFromAxes = getStringsFromAxes(props, currentAxis);
-  const stringsFromCategories = getStringsFromCategories(props, currentAxis);
+  const stringsFromAxes = getStringsFromAxes(props, axis);
+  const stringsFromCategories = getStringsFromCategories(props, axis);
   const stringsFromData = getStringsFromData(props, axis);
 
   const allStrings = uniq([...stringsFromAxes, ...stringsFromCategories, ...stringsFromData]);
@@ -248,9 +247,8 @@ function generateData(props) {
  * @returns {Array} an array of categories
  */
 function getCategories(props, axis) {
-  const currentAxis = Helpers.getCurrentAxis(axis, props.horizontal);
   return props.categories && !Array.isArray(props.categories)
-    ? props.categories[currentAxis]
+    ? props.categories[axis]
     : props.categories;
 }
 

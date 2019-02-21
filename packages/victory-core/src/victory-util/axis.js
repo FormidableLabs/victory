@@ -21,20 +21,10 @@ import Helpers from "./helpers";
  * @param {Boolean} horizontal: true for horizontal charts
  * @returns {String} the dimension appropriate for the axis given its props
  */
-function getAxis(props, horizontal) {
-  const { orientation, dependentAxis } = props;
-  horizontal = horizontal || props.horizontal;
-  if (orientation) {
-    const vertical = { top: "x", bottom: "x", left: "y", right: "y" };
-    return vertical[orientation];
-  }
-  if (horizontal) {
-    return dependentAxis ? "x" : "y";
-  }
+function getAxis(props) {
+  const { dependentAxis } = props;
   return dependentAxis ? "y" : "x";
-
 }
-
 
 /**
  * Returns all axis components that pass a given predicate
@@ -62,12 +52,11 @@ function findAxisComponents(childComponents, predicate) {
  * Returns a single axis component of the desired axis type (x or y)
  * @param {Array} childComponents: an array of children
  * @param {String} axis: desired axis either "x" or "y".
- * @param {Boolean} horizontal: true for horizontal charts
  * @returns {ReactComponent} an axis component of the desired axis or undefined
  */
-function getAxisComponent(childComponents, axis, horizontal) {
+function getAxisComponent(childComponents, axis) {
   const matchesAxis = (component) => {
-    const type = component.type.getAxis(component.props, horizontal);
+    const type = component.type.getAxis(component.props);
     return type === axis;
   };
   return findAxisComponents(childComponents, matchesAxis)[0];
@@ -125,25 +114,6 @@ function getOriginSign(origin, domain) {
 }
 
 /**
- * @param {ReactComponent} component: a victory axis component.
- * @param {String} axis: desired axis either "x" or "y".
- * @param {String} originSign: "positive" or "negative"
- * @returns {String} the orientation of the axis ("top", "bottom", "left", or "right")
- */
-function getOrientation(component, axis, originSign) {
-  if (component && component.props && component.props.orientation) {
-    return component.props.orientation;
-  }
-  const sign = originSign || "positive";
-  const orientations = {
-    positive: { x: "bottom", y: "left" },
-    negative: { x: "top", y: "right" }
-  };
-
-  return orientations[sign][axis];
-}
-
-/**
  * @param {Object} props: axis component props
  * @returns {Boolean} true when the axis is vertical
  */
@@ -164,8 +134,7 @@ function stringTicks(props) {
 function getDefaultTickFormat(props) {
   const { tickValues } = props;
   const axis = getAxis(props);
-  const currentAxis = Helpers.getCurrentAxis(axis, props.horizontal);
-  const stringMap = props.stringMap && props.stringMap[currentAxis];
+  const stringMap = props.stringMap && props.stringMap[axis];
   const fallbackFormat = tickValues && !Collection.containsDates(tickValues) ? (x) => x : undefined;
   if (!stringMap) {
     return stringTicks(props) ? (x, index) => tickValues[index] : fallbackFormat;
@@ -182,8 +151,7 @@ function getDefaultTickFormat(props) {
 function getTickFormat(props, scale) {
   const { tickFormat } = props;
   const axis = getAxis(props);
-  const currentAxis = Helpers.getCurrentAxis(axis, props.horizontal);
-  const stringMap = props.stringMap && props.stringMap[currentAxis];
+  const stringMap = props.stringMap && props.stringMap[axis];
   if (!tickFormat) {
     const defaultTickFormat = getDefaultTickFormat(props);
     const scaleTickFormat =
@@ -222,9 +190,7 @@ function getStringTicks(props) {
 function getTickArray(props) {
   const { tickValues, tickFormat } = props;
   const axis = getAxis(props);
-  const currentAxis = Helpers.getCurrentAxis(axis, props.horizontal);
-
-  const stringMap = props.stringMap && props.stringMap[currentAxis];
+  const stringMap = props.stringMap && props.stringMap[axis];
   const getTicksFromFormat = () => {
     if (!tickFormat || !Array.isArray(tickFormat)) {
       return undefined;
@@ -330,7 +296,7 @@ function getAxisValue(props, axis) {
   if (!scale) {
     return undefined;
   }
-  const stringMapAxis = Helpers.getCurrentAxis(axis, props.horizontal) === "x" ? "y" : "x";
+  const stringMapAxis = axis === "x" ? "y" : "x";
   const stringMap = isObject(props.stringMap) && props.stringMap[stringMapAxis];
   const axisValue =
     stringMap && typeof props.axisValue === "string" ? stringMap[props.axisValue] : props.axisValue;
@@ -343,7 +309,6 @@ export default {
   getAxis,
   getAxisComponent,
   getAxisComponentsWithParent,
-  getOrientation,
   findAxisComponents,
   getOrigin,
   getOriginSign,

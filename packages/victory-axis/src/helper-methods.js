@@ -22,14 +22,13 @@ const evaluateStyle = (style, data, index) => {
   }, {});
 };
 
-// exposed for use by VictoryChart
 const getScale = (props) => {
   const axis = Axis.getAxis(props);
   const currentAxis = Helpers.getCurrentAxis(axis, props.horizontal);
-  const scale = Scale.getBaseScale(props, currentAxis);
-  const propsDomain = props.domain && props.domain[currentAxis];
+  const scale = Scale.getBaseScale(props, axis);
+  const propsDomain = props.domain && props.domain[axis];
   const domain = propsDomain || Axis.getDomain(props) || scale.domain();
-  scale.range(Helpers.getRange(props, axis));
+  scale.range(Helpers.getRange(props, currentAxis));
   scale.domain(domain);
   return scale;
 };

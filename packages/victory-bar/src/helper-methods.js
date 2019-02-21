@@ -3,9 +3,7 @@ import { Helpers, LabelHelpers, Data, Domain, Scale } from "victory-core";
 
 const getBarPosition = (props, datum) => {
   const getDefaultMin = (axis) => {
-    // const currentAxis = Helpers.getCurrentAxis(axis, props.horizontal);
-    const currentAxis = axis;
-    const defaultMin = Scale.getType(props.scale[currentAxis]) === "log"
+    const defaultMin = Scale.getType(props.scale[axis]) === "log"
       ? 1 / Number.MAX_SAFE_INTEGER
       : 0;
     return datum[`_${axis}`] instanceof Date ? new Date(defaultMin) : defaultMin;
