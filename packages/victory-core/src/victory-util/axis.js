@@ -14,7 +14,7 @@ import {
 } from "lodash";
 import Collection from "./collection";
 import Domain from "./domain";
-import Helpers from "./helpers";
+
 /**
  * Returns the axis (x or y) of a particular axis component
  * @param {Object} props: the props object.

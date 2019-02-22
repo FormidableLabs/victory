@@ -116,7 +116,8 @@ export const brushContainerMixin = (base) =>
     }
 
     getHandles(props, coordinates) {
-      const { brushDimension, handleWidth, handleStyle, handleComponent, name } = props;
+      const { handleWidth, handleStyle, handleComponent, name } = props;
+      const brushDimension = BrushHelpers.getDimension(props);
       const { x, y } = coordinates;
       const width = Math.abs(x[1] - x[0]) || 1;
       const height = Math.abs(y[1] - y[0]) || 1;
