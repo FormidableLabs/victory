@@ -7,13 +7,19 @@ const getDataWithBaseline = (props, scale) => {
     data = [];
   }
   const getDefaultMin = (axis) => {
-    const defaultMin = Scale.getType(scale[axis]) === "log"
+    const defaultZero = Scale.getType(scale[axis]) === "log"
       ? 1 / Number.MAX_SAFE_INTEGER
       : 0;
     const domain = scale[axis].domain();
-    return Collection.getMinValue(domain) > 0
-      ? Collection.getMinValue(domain)
-      : defaultMin;
+    const minY = Collection.getMinValue(domain);
+    const maxY = Collection.getMaxValue(domain);
+    let defaultMin = defaultZero;
+    if (minY < 0 && maxY <= 0) {
+      defaultMin = maxY;
+    } else if (minY >= 0 && maxY > 0) {
+      defaultMin = minY;
+    }
+    return Collection.containsDates(domain) ? new Date(defaultMin) : defaultMin;
   }
 
   return data.map((datum) => {

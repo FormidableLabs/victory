@@ -190,15 +190,12 @@ function formatData(dataset, props, expectedKeys) {
     props.y === "_y" &&
     props.y0 === "_y0";
 
-  const defaultY0 = props.domain && props.domain.y
-    ? Collection.getMinValue(props.domain.y)
-    : undefined;
   const data = preformattedData
     ? dataset
     : dataset.reduce((dataArr, datum, index) => {
         // eslint-disable-line complexity
         datum = parseDatum(datum);
-        const fallbackValues = { x: index, y: datum, y0: defaultY0 };
+        const fallbackValues = { x: index, y: datum };
         const processedValues = expectedKeys.reduce((memo, type) => {
           const processedValue = accessor[type](datum);
           const value = processedValue !== undefined ? processedValue : fallbackValues[type];

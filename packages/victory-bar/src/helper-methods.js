@@ -1,11 +1,19 @@
 import { assign, isNil } from "lodash";
-import { Helpers, LabelHelpers, Data, Domain, Scale } from "victory-core";
+import { Helpers, LabelHelpers, Data, Domain, Scale, Collection } from "victory-core";
 
 const getBarPosition = (props, datum) => {
   const getDefaultMin = (axis) => {
-    const defaultMin = Scale.getType(props.scale[axis]) === "log"
+    const defaultZero = Scale.getType(props.scale[axis]) === "log"
       ? 1 / Number.MAX_SAFE_INTEGER
       : 0;
+    let defaultMin = defaultZero;
+    const minY = Collection.getMinValue(props.domain[axis]);
+    const maxY = Collection.getMaxValue(props.domain[axis]);
+    if (minY < 0 && maxY <= 0) {
+      defaultMin = maxY;
+    } else if (minY >= 0 && maxY > 0) {
+      defaultMin = minY;
+    }
     return datum[`_${axis}`] instanceof Date ? new Date(defaultMin) : defaultMin;
   };
   const _y0 = datum._y0 !== undefined ? datum._y0 : getDefaultMin("y");
