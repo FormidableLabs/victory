@@ -62,7 +62,7 @@ export const cursorContainerMixin = (base) =>
     };
 
     getCursorPosition(props) {
-      const { cursorValue, defaultCursorValue, cursorDimension, domain } = props;
+      const { cursorValue, defaultCursorValue, domain, cursorDimension } = props;
       if (cursorValue) {
         return cursorValue;
       }
@@ -106,14 +106,15 @@ export const cursorContainerMixin = (base) =>
       // eslint-disable-line max-statements
       const {
         scale,
-        cursorDimension,
         cursorLabelComponent,
         cursorLabel,
         cursorComponent,
         width,
         height,
-        name
+        name,
+        horizontal
       } = props;
+      const cursorDimension = CursorHelpers.getDimension(props);
       const cursorValue = this.getCursorPosition(props);
       const cursorLabelOffset = this.getCursorLabelOffset(props);
 
@@ -124,8 +125,8 @@ export const cursorContainerMixin = (base) =>
       const newElements = [];
       const padding = this.getPadding(props);
       const cursorCoordinates = {
-        x: scale.x(cursorValue.x),
-        y: scale.y(cursorValue.y)
+        x: horizontal ? scale.y(cursorValue.y) : scale.x(cursorValue.x),
+        y: horizontal ? scale.x(cursorValue.x) : scale.y(cursorValue.y)
       };
       if (cursorLabel) {
         newElements.push(
