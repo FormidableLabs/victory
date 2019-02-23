@@ -3,6 +3,14 @@ import { assign, defaults, throttle, isFunction, includes } from "lodash";
 import React from "react";
 
 const SelectionHelpers = {
+  getDimension(props) {
+    const { horizontal, selectionDimension } = props;
+    if (!horizontal || !selectionDimension) {
+      return selectionDimension;
+    }
+    return selectionDimension === "x" ? "y" : "x";
+  },
+
   getDatasets(props) {
     if (props.data) {
       return [{ data: props.data }];
@@ -76,7 +84,7 @@ const SelectionHelpers = {
     if (!allowSelection) {
       return {};
     }
-    const dimension = targetProps.selectionDimension;
+    const dimension = this.getDimension(targetProps);
     const parentSVG = targetProps.parentSVG || Selection.getParentSVG(evt);
     const { x, y } = Selection.getSVGEventCoordinates(evt, parentSVG);
     const x1 = polar || dimension !== "y" ? x : Selection.getDomainCoordinates(targetProps).x[0];
@@ -106,7 +114,7 @@ const SelectionHelpers = {
 
   onMouseMove(evt, targetProps) {
     const { allowSelection, select, polar } = targetProps;
-    const dimension = targetProps.selectionDimension;
+    const dimension = this.getDimension(targetProps);
     if (!allowSelection || !select) {
       return null;
     } else {
