@@ -22,9 +22,19 @@ const evaluateStyle = (style, data, index) => {
   }, {});
 };
 
+const getCurrentAxis = (props, axis) => {
+  const { orientation, horizontal } = props;
+  if (orientation) {
+    const dimensions = { top: "x", bottom: "x", left: "y", right: "y" };
+    return dimensions[orientation];
+  }
+  const otherAxis = axis === "x" ? "y" : "x";
+  return horizontal ? otherAxis : axis;
+}
+
 const getScale = (props) => {
   const axis = Axis.getAxis(props);
-  const currentAxis = Helpers.getCurrentAxis(axis, props.horizontal);
+  const currentAxis = getCurrentAxis(props, axis);
   const scale = Scale.getBaseScale(props, axis);
   const propsDomain = props.domain && props.domain[axis];
   const domain = propsDomain || Axis.getDomain(props) || scale.domain();
