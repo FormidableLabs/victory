@@ -85,11 +85,11 @@ class VictoryBoxPlot extends React.Component {
     labelOrientation: PropTypes.oneOfType([
       PropTypes.oneOf(["top", "bottom", "left", "right"]),
       PropTypes.exact({
-        q1: PropTypes.oneOf(["top", "bottom", "left", "right"]).isRequired,
-        q3: PropTypes.oneOf(["top", "bottom", "left", "right"]).isRequired,
-        min: PropTypes.oneOf(["top", "bottom", "left", "right"]).isRequired,
-        max: PropTypes.oneOf(["top", "bottom", "left", "right"]).isRequired,
-        median: PropTypes.oneOf(["top", "bottom", "left", "right"]).isRequired
+        q1: PropTypes.oneOf(["top", "bottom", "left", "right"]),
+        q3: PropTypes.oneOf(["top", "bottom", "left", "right"]),
+        min: PropTypes.oneOf(["top", "bottom", "left", "right"]),
+        max: PropTypes.oneOf(["top", "bottom", "left", "right"]),
+        median: PropTypes.oneOf(["top", "bottom", "left", "right"])
       })
     ]),
     labels: PropTypes.bool,
