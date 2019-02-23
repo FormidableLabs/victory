@@ -64,6 +64,7 @@ class App extends React.Component {
             padding={{ top: 100, bottom: 50, left: 50, right: 50 }}
             containerComponent={
               <VictorySelectionContainer
+                selectionDimension="x"
                 selectionStyle={{
                   stroke: "tomato",
                   strokeWidth: 2,
@@ -266,10 +267,11 @@ class App extends React.Component {
             />
           </VictoryGroup>
 
-          <VictoryChart
+          <VictoryChart horizontal
             style={chartStyle}
             containerComponent={
               <VictorySelectionContainer
+                selectionDimension="x"
                 selectionStyle={{
                   stroke: "tomato",
                   strokeWidth: 2,
@@ -279,7 +281,7 @@ class App extends React.Component {
               />
             }
           >
-            <VictoryStack horizontal>
+            <VictoryStack>
               <VictoryBar
                 style={{
                   data: {

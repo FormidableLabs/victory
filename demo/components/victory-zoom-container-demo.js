@@ -429,9 +429,16 @@ export default class App extends React.Component {
           </VictoryStack>
           <VictoryAxis dependentAxis />
         </VictoryChart>
-        <VictoryChart style={{ parent: parentStyle }} containerComponent={<VictoryZoomContainer />}>
+        <VictoryChart
+          horizontal
+          style={{ parent: parentStyle }}
+          containerComponent={
+            <VictoryZoomContainer
+              zoomDimension="x"
+            />
+          }
+        >
           <VictoryBar
-            horizontal
             style={{ data: { stroke: "#333", fill: "#888", opacity: 0.4 } }}
             data={this.state.data}
             x="a"

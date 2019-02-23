@@ -43,7 +43,7 @@ class DraggablePoint extends React.Component {
           const { scale, onPointChange, datum } = targetProps;
           if (targetProps.dragging) {
             const { x } = Selection.getSVGEventCoordinates(evt);
-            const point = scale.x.invert(x);
+            const point = scale.y.invert(x);
             const name = datum.name;
             onPointChange({ name, date: point })
             return [{
@@ -107,7 +107,7 @@ class App extends React.Component {
 
     const sharedProps = {
       width: 800,
-      domain: { x: [new Date(2012, 1, 1), new Date(2019, 1, 1)], y: [0.5, 4.5] },
+      domain: { y: [new Date(2012, 1, 1), new Date(2019, 1, 1)], x: [0.5, 4.5] },
     };
 
     return (
@@ -121,7 +121,7 @@ class App extends React.Component {
               responsive={false}
               allowPan={false}
               zoomDomain={this.state.zoomDomain}
-              zoomDimension="x"
+              zoomDimension="y"
               onZoomDomainChange={this.handleZoom.bind(this)}
               clipContainerComponent={
                 <VictoryClipContainer clipPadding={{ top: 15, bottom: 15 }} />
@@ -159,7 +159,6 @@ class App extends React.Component {
             />
           ))}
           <VictoryScatter
-            horizontal
             data={points}
             dataComponent={
               <DraggablePoint
@@ -182,13 +181,13 @@ class App extends React.Component {
           horizontal
           {...sharedProps}
           padding={{ top: 30, left: 50, right: 30, bottom: 0 }}
-          scale={{ x: "time" }}
+          scale={{ y: "time" }}
           height={120}
           containerComponent={
             <VictoryBrushContainer
               responsive={false}
               brushDomain={this.state.zoomDomain}
-              brushDimension="x"
+              brushDimension="y"
               onBrushDomainChange={this.handleZoom.bind(this)}
             />
           }

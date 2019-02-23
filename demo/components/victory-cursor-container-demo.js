@@ -11,7 +11,7 @@ import { VictoryScatter } from "../../packages/victory-scatter/src/index";
 import { VictoryCursorContainer } from "../../packages/victory-cursor-container/src/index";
 import { VictoryTooltip } from "../../packages/victory-tooltip/src/index";
 import { VictoryLegend } from "../../packages/victory-legend/src/index";
-import { VictoryTheme, VictoryLabel } from "../../packages/victory-core/src/index";
+import { VictoryTheme } from "../../packages/victory-core/src/index";
 
 const makeData = () => range(1500).map((x) => ({ x, y: x + 10 * Math.random() }));
 
@@ -86,62 +86,52 @@ class App extends React.Component {
             <VictoryLine data={this.state.bigData} />
           </VictoryChart>
 
-          <VictoryChart
+          <VictoryChart horizontal
             style={chartStyle}
             theme={VictoryTheme.material}
-            domainPadding={{ y: 2 }}
+            domainPadding={{ x: 15 }}
             containerComponent={
               <VictoryCursorContainer
                 cursorLabel={cursorLabel}
-                defaultCursorValue={this.defaultCursorValue}
-                onChange={(cursorValue) => this.setState({ cursorValue })}
+                cursorDimension="y"
+                defaultCursorValue={3}
               />
             }
           >
-            <VictoryLabel
-              x={50}
-              y={310}
-              text={`x: ${round(this.state.cursorValue.x, 2)} y: ${round(
-                this.state.cursorValue.y,
-                2
-              )}`}
-            />
-            <VictoryLine
-              data={[
-                { x: 1, y: 5, l: "one" },
-                { x: 1.5, y: 5, l: "one point five" },
-                { x: 2, y: 4, l: "two" },
-                { x: 3, y: -2, l: "three" }
-              ]}
-              style={{
-                data: { stroke: "tomato", strokeWidth: (d, active) => (active ? 4 : 2) },
-                labels: { fill: "tomato" }
-              }}
-            />
+            <VictoryGroup offset={10}>
+              <VictoryBar
+                data={[
+                  { x: 1, y: 5, l: "one" },
+                  { x: 2, y: 4, l: "two" },
+                  { x: 3, y: -2, l: "three" }
+                ]}
+                style={{
+                  labels: { fill: "tomato" }
+                }}
+              />
 
-            <VictoryLine
-              data={[
-                { x: 1, y: -3, l: "red" },
-                { x: 2, y: 5, l: "green" },
-                { x: 3, y: 3, l: "blue" }
-              ]}
-              style={{
-                data: { stroke: "blue", strokeWidth: (d, active) => (active ? 4 : 2) },
-                labels: { fill: "blue" }
-              }}
-            />
+              <VictoryBar
+                data={[
+                  { x: 1, y: -3, l: "red" },
+                  { x: 2, y: 5, l: "green" },
+                  { x: 3, y: 3, l: "blue" }
+                ]}
+                style={{
+                  labels: { fill: "blue" }
+                }}
+              />
 
-            <VictoryLine
-              data={[
-                { x: 1, y: 5, l: "cat" },
-                { x: 2, y: -4, l: "dog" },
-                { x: 3, y: -2, l: "bird" }
-              ]}
-              style={{
-                data: { stroke: "black", strokeWidth: (d, active) => (active ? 4 : 2) },
-                labels: { fill: "black" }
-              }}
-            />
+              <VictoryBar
+                data={[
+                  { x: 1, y: 5, l: "cat" },
+                  { x: 2, y: -4, l: "dog" },
+                  { x: 3, y: -2, l: "bird" }
+                ]}
+                style={{
+                  labels: { fill: "black" }
+                }}
+              />
+            </VictoryGroup>
           </VictoryChart>
 
           <VictoryScatter

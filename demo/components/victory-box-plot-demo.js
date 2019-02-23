@@ -87,15 +87,14 @@ export default class App extends React.Component {
           />
         </VictoryChart>
 
-        <VictoryChart style={chartStyle} domain={{ x: [0, 20], y: [0, 3] }}>
+        <VictoryChart horizontal style={chartStyle} domain={{ y: [0, 20], x: [0, 3] }}>
           <VictoryBoxPlot
             minLabels
             maxLabels
             q1Labels={() => ""}
             whiskerWidth={50}
-            data={[{ y: 1, x: [5, 10, 9, 2] }, { y: 2, x: [1, 15, 6, 8] }]}
+            data={[{ x: 1, y: [5, 10, 9, 2] }, { x: 2, y: [1, 15, 6, 8] }]}
             boxWidth={20}
-            horizontal
             labelOrientation={"top"}
             events={[
               {
@@ -124,19 +123,18 @@ export default class App extends React.Component {
           />
         </VictoryChart>
 
-        <VictoryChart style={chartStyle} scale={{ y: "time" }} domainPadding={50}>
+        <VictoryChart style={chartStyle} horizontal domainPadding={50}>
           <VictoryBoxPlot
             minLabels
             maxLabels
             boxWidth={10}
             data={[
-              { y: new Date(1980, 1, 1), x: [5, 10, 9, 2] },
-              { y: new Date(1990, 1, 1), x: [1, 15, 6, 8] },
-              { y: new Date(2000, 1, 1), x: [3, 5, 6, 9] },
-              { y: new Date(2010, 1, 1), x: [5, 20, 8, 12] },
-              { y: new Date(2020, 1, 1), x: [2, 11, 12, 13] }
+              { x: new Date(1980, 1, 1), y: [5, 10, 9, 2] },
+              { x: new Date(1990, 1, 1), y: [1, 15, 6, 8] },
+              { x: new Date(2000, 1, 1), y: [3, 5, 6, 9] },
+              { x: new Date(2010, 1, 1), y: [5, 20, 8, 12] },
+              { x: new Date(2020, 1, 1), y: [2, 11, 12, 13] }
             ]}
-            horizontal
           />
         </VictoryChart>
         <VictoryChart style={chartStyle} domainPadding={50}>
@@ -176,7 +174,7 @@ export default class App extends React.Component {
             labels
             boxWidth={10}
             horizontal
-            y="type"
+            x="type"
             data={[
               { type: 1, min: 1, max: 18, median: 8, q1: 5, q3: 15 },
               { type: 2, min: 4, max: 20, median: 10, q1: 7, q3: 15 },
@@ -184,7 +182,7 @@ export default class App extends React.Component {
             ]}
           />
         </VictoryChart>
-        <VictoryChart animate style={chartStyle} domainPadding={50}>
+        <VictoryChart horizontal animate style={chartStyle} domainPadding={50}>
           <VictoryBoxPlot boxWidth={10} data={this.state.data} />
         </VictoryChart>
         <VictoryBoxPlot animate style={chartStyle} boxWidth={10} data={this.state.data} />

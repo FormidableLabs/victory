@@ -381,6 +381,26 @@ class App extends React.Component {
             ]}
           />
         </VictoryChart>
+
+        <VictoryChart
+          style={chartStyle}
+          horizontal
+        >
+          <VictoryAxis
+            tickValues={[
+              new Date(1985, 1, 1),
+              new Date(1990, 1, 1),
+              new Date(1995, 1, 1),
+              new Date(2000, 1, 1),
+              new Date(2005, 1, 1),
+              new Date(2010, 1, 1)
+            ]}
+            tickFormat={(x) => new Date(x).getFullYear()}
+          />
+          <VictoryScatter
+            data={[]}
+          />
+        </VictoryChart>
       </div>
     );
   }
