@@ -1,5 +1,5 @@
 import { assign, isNil } from "lodash";
-import { Helpers, LabelHelpers, Scale, Domain, Data, Collection } from "victory-core";
+import { Helpers, LabelHelpers, Scale, Domain, Data } from "victory-core";
 
 const getData = (props) => {
   const accessorTypes = ["x", "high", "low", "close", "open"];
@@ -23,10 +23,9 @@ const getDomainFromData = (props, axis) => {
   const maxDomain = Domain.getMaxFromProps(props, axis);
   const dataset = getData(props);
   if (dataset.length < 1) {
-    const scaleDomain = Scale.getBaseScale(props, axis).domain();
-    const min = minDomain !== undefined ? minDomain : Collection.getMinValue(scaleDomain);
-    const max = maxDomain !== undefined ? maxDomain : Collection.getMaxValue(scaleDomain);
-    return Domain.getDomainFromMinMax(min, max);
+    return minDomain !== undefined && maxDomain !== undefined
+      ? Domain.getDomainFromMinMax(minDomain, maxDomain)
+      : undefined;
   }
   const min = minDomain !== undefined ? minDomain : reduceData(dataset, axis, "min");
   const max = maxDomain !== undefined ? maxDomain : reduceData(dataset, axis, "max");

@@ -1,5 +1,5 @@
 import { assign, isNil } from "lodash";
-import { Helpers, LabelHelpers, Scale, Domain, Data, Collection } from "victory-core";
+import { Helpers, LabelHelpers, Scale, Domain, Data } from "victory-core";
 
 const getErrors = (props, datum, axis) => {
   /**
@@ -39,10 +39,9 @@ const getDomainFromData = (props, axis) => {
   const maxDomain = Domain.getMaxFromProps(props, axis);
   const dataset = getData(props);
   if (dataset.length < 1) {
-    const scaleDomain = Scale.getBaseScale(props, axis).domain();
-    const min = minDomain !== undefined ? minDomain : Collection.getMinValue(scaleDomain);
-    const max = maxDomain !== undefined ? maxDomain : Collection.getMaxValue(scaleDomain);
-    return Domain.getDomainFromMinMax(min, max);
+    return minDomain !== undefined && maxDomain !== undefined
+      ? Domain.getDomainFromMinMax(minDomain, maxDomain)
+      : undefined;
   }
   const error = axis === "x" ? "_errorX" : "_errorY";
   const reduceErrorData = (type) => {

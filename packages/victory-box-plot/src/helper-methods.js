@@ -1,5 +1,5 @@
 import { orderBy, defaults, assign, uniq, groupBy, keys, isNaN, isNil } from "lodash";
-import { Helpers, Scale, Domain, Data, Collection } from "victory-core";
+import { Helpers, Scale, Domain, Data } from "victory-core";
 import { min as d3Min, max as d3Max, quantile as d3Quantile } from "d3-array";
 
 const TYPES = ["max", "min", "median", "q1", "q3"];
@@ -131,10 +131,9 @@ const getDomainFromData = (props, axis) => {
   const maxDomain = Domain.getMaxFromProps(props, axis);
   const dataset = getData(props);
   if (dataset.length < 1) {
-    const scaleDomain = Scale.getBaseScale(props, axis).domain();
-    const min = minDomain !== undefined ? minDomain : Collection.getMinValue(scaleDomain);
-    const max = maxDomain !== undefined ? maxDomain : Collection.getMaxValue(scaleDomain);
-    return Domain.getDomainFromMinMax(min, max);
+    return minDomain !== undefined && maxDomain !== undefined
+      ? Domain.getDomainFromMinMax(minDomain, maxDomain)
+      : undefined;
   }
   return axis === "y"
     ? getDomainFromMinMaxValues(dataset, props, axis)

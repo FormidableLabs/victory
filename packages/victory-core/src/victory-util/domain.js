@@ -151,7 +151,7 @@ function createDomainFunction(getDomainFromDataFunction, formatDomainFunction) {
     const domain = categories
       ? getDomainFromCategories(props, axis, categories)
       : getDomainFromDataFunction(props, axis);
-    return formatDomainFunction(domain, props, axis);
+    return domain ? formatDomainFunction(domain, props, axis) : undefined;
   };
 }
 
@@ -223,10 +223,9 @@ function getDomainFromData(props, axis, dataset) {
   const minDomain = getMinFromProps(props, axis);
   const maxDomain = getMaxFromProps(props, axis);
   if (dataset.length < 1) {
-    const scaleDomain = Scale.getBaseScale(props, axis).domain();
-    const min = minDomain !== undefined ? minDomain : Collection.getMinValue(scaleDomain);
-    const max = maxDomain !== undefined ? maxDomain : Collection.getMaxValue(scaleDomain);
-    return getDomainFromMinMax(min, max);
+    return minDomain !== undefined && maxDomain !== undefined
+      ? getDomainFromMinMax(minDomain, maxDomain)
+      : undefined;
   }
   const min = minDomain !== undefined ? minDomain : getExtremeFromData(dataset, axis, "min");
   const max = maxDomain !== undefined ? maxDomain : getExtremeFromData(dataset, axis, "max");
