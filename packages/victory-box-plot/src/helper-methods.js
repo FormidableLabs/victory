@@ -275,8 +275,7 @@ const getText = (props, type) => {
 };
 
 const getOrientation = (labelOrientation, type) =>
-  typeof labelOrientation === "object" &&
-    labelOrientation[type] || labelOrientation;
+  (typeof labelOrientation === "object" && labelOrientation[type]) || labelOrientation;
 
 const getLabelProps = (props, text, type) => {
   const { datum, positions, index, boxWidth, horizontal, labelOrientation, style } = props;

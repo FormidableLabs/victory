@@ -89,7 +89,7 @@ class VictoryBoxPlot extends React.Component {
         q3: PropTypes.oneOf(["top", "bottom", "left", "right"]).isRequired,
         min: PropTypes.oneOf(["top", "bottom", "left", "right"]).isRequired,
         max: PropTypes.oneOf(["top", "bottom", "left", "right"]).isRequired,
-        median: PropTypes.oneOf(["top", "bottom", "left", "right"]).isRequired,
+        median: PropTypes.oneOf(["top", "bottom", "left", "right"]).isRequired
       })
     ]),
     labels: PropTypes.bool,
