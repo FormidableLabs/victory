@@ -1,5 +1,9 @@
 # Victory Changelog
 
+## 31.3.0 (2019-02-23)
+
+- [1247](https://github.com/FormidableLabs/victory/pull/1247) Adds support for `labelOrientation` as an object for `VictoryBoxPlot`. Thanks @mAAdhaTTah
+
 ## 31.2.0 (2019-01-27)
 
 **Axis improvements**
