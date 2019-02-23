@@ -9,10 +9,19 @@ const getVoronoi = (props, range, scale) => {
     const x = scale.x(d._x1 !== undefined ? d._x1 : d._x);
     return -1 * x + Math.PI / 2;
   };
-  const xAccessor = (d) => scale.x(d._x1 !== undefined ? d._x1 : d._x);
+  const xAccessor = (d) => {
+    return props.horizontal
+      ? scale.y(d._y1 !== undefined ? d._y1 : d._y)
+      : scale.x(d._x1 !== undefined ? d._x1 : d._x)
+  };
+  const yAccessor = (d) => {
+    return props.horizontal
+      ? scale.x(d._x1 !== undefined ? d._x1 : d._x)
+      : scale.y(d._y1 !== undefined ? d._y1 : d._y)
+  };
   return d3Voronoi()
     .x((d) => (props.polar ? angleAccessor(d) : xAccessor(d)))
-    .y((d) => scale.y(d._y1 !== undefined ? d._y1 : d._y))
+    .y((d) => yAccessor(d))
     .extent([minRange, maxRange]);
 };
 
@@ -34,10 +43,10 @@ const getCalculatedValues = (props) => {
   const scale = {
     x: Scale.getBaseScale(props, "x")
       .domain(domain.x)
-      .range(range.x),
+      .range(props.horizontal ? range.y : range.x),
     y: Scale.getBaseScale(props, "y")
       .domain(domain.y)
-      .range(range.y)
+      .range(props.horizontal ? range.x: range.y)
   };
   const voronoi = getVoronoi(props, range, scale);
   const polygons = voronoi.polygons(data);
