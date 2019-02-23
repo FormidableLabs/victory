@@ -171,7 +171,7 @@ export default {
     const parentData = props.data ? Data.getData(props, axis) : undefined;
     const { polar, startAngle, endAngle, categories, minDomain, maxDomain, horizontal } = props;
     const baseParentProps = {
-      horizontal, polar, startAngle, endAngle, minDomain, maxDomain
+      horizontal, polar, startAngle, endAngle, minDomain, maxDomain, categories
     };
     const parentProps = parentData
       ? assign(baseParentProps, { data: parentData })
