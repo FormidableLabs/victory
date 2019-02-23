@@ -274,8 +274,12 @@ const getText = (props, type) => {
   return Array.isArray(labelProp) ? labelProp[index] : labelProp;
 };
 
+const getOrientation = (labelOrientation, type) =>
+  (typeof labelOrientation === "object" && labelOrientation[type]) || labelOrientation;
+
 const getLabelProps = (props, text, type) => {
   const { datum, positions, index, boxWidth, horizontal, labelOrientation, style } = props;
+  const orientation = getOrientation(labelOrientation, type);
   const namespace = `${type}Labels`;
   const labelStyle = style[namespace] || style.labels;
   const defaultVerticalAnchor = horizontal ? "end" : "middle";
@@ -285,8 +289,8 @@ const getLabelProps = (props, text, type) => {
 
   const getDefaultPosition = (coord) => {
     const sign = {
-      x: labelOrientation === "left" ? -1 : 1,
-      y: labelOrientation === "top" ? -1 : 1
+      x: orientation === "left" ? -1 : 1,
+      y: orientation === "top" ? -1 : 1
     };
     return positions[coord] + (sign[coord] * width) / 2 + sign[coord] * (labelStyle.padding || 0);
   };
