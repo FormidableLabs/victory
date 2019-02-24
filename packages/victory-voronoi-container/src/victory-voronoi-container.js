@@ -62,6 +62,14 @@ export const voronoiContainerMixin = (base) =>
       ];
     };
 
+    getDimension(props) {
+      const { horizontal, voronoiDimension } = props;
+      if (!horizontal || !voronoiDimension) {
+        return voronoiDimension;
+      }
+      return voronoiDimension === "x" ? "y" : "x";
+    }
+
     getLabelPadding(style) {
       if (!style) {
         return 0;
@@ -117,7 +125,8 @@ export const voronoiContainerMixin = (base) =>
     }
 
     getLabelPosition(props, points, labelProps) {
-      const { mousePosition, voronoiDimension, scale, voronoiPadding } = props;
+      const { mousePosition, scale, voronoiPadding } = props;
+      const voronoiDimension = this.getDimension(props);
       const point = this.getPoint(points[0]);
       const basePosition = Helpers.scalePoint(props, point);
       if (!voronoiDimension || points.length < 2) {
