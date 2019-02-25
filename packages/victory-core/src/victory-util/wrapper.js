@@ -20,7 +20,6 @@ import Events from "./events";
 import Collection from "./collection";
 import Helpers from "./helpers";
 import Scale from "./scale";
-import { isWednesday } from "date-fns";
 
 export default {
   getData(props, childComponents) {
