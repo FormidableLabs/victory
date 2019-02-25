@@ -64,6 +64,7 @@ function sortData(dataset, sortKey, sortOrder = "ascending") {
 
 // This method will remove data points that break certain scales. (log scale only)
 function cleanData(dataset, props) {
+  const smallNumber = 1 / Number.MAX_SAFE_INTEGER;
   const scaleType = {
     x: Scale.getScaleType(props, "x"),
     y: Scale.getScaleType(props, "y")
@@ -74,8 +75,19 @@ function cleanData(dataset, props) {
   const rules = (datum, axis) => {
     return scaleType[axis] === "log" ? datum[`_${axis}`] !== 0 : true;
   };
-  return dataset.filter((datum) => {
-    return rules(datum, "x") && rules(datum, "y") && rules(datum, "y0");
+
+  const sanitize = (datum) => {
+    const _x = rules(datum, "x") ? datum._x : smallNumber;
+    const _y = rules(datum, "y") ? datum._y : smallNumber;
+    const _y0 = rules(datum, "y0") ? datum._y0 : smallNumber;
+    return assign({}, datum, { _x, _y, _y0 });
+  };
+
+  return dataset.map((datum) => {
+    if (rules(datum, "x") && rules(datum, "y") && rules(datum, "y0")) {
+      return datum;
+    }
+    return sanitize(datum);
   });
 }
 
