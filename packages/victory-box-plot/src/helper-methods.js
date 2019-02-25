@@ -297,7 +297,8 @@ const getLabelProps = (props, text, type) => {
     x: horizontal ? positions[type] : getDefaultPosition("x"),
     textAnchor: labelStyle.textAnchor || defaultTextAnchor,
     verticalAnchor: labelStyle.verticalAnchor || defaultVerticalAnchor,
-    angle: labelStyle.angle
+    angle: labelStyle.angle,
+    horizontal
   };
 };
 

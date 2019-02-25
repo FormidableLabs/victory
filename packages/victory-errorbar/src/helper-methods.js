@@ -94,22 +94,29 @@ const getCalculatedValues = (props) => {
 };
 
 const getLabelProps = (dataProps, text, style) => {
-  const { x, index, scale, errorY } = dataProps;
-  const error = errorY && Array.isArray(errorY) ? errorY[0] : errorY;
-  const y = error || dataProps.y;
+  const { x, y, index, scale, errorY, errorX, horizontal } = dataProps;
+  const getError = (type = "x") => {
+    const baseError = type === "y" ? errorY : errorX;
+    const error = baseError && Array.isArray(baseError) ? baseError[0] : baseError;
+    return error || dataProps[type];
+  }
   const labelStyle = style.labels || {};
+  const padding = labelStyle.padding || 0;
+  const textAnchor = horizontal ? "start" : "middle";
+  const verticalAnchor = horizontal ? "middle" : "end"
   return {
     style: labelStyle,
-    y: y - (labelStyle.padding || 0),
-    x,
+    y: horizontal ? y : getError("y") - padding,
+    x: horizontal ? getError("x") + padding : x,
     text,
     index,
     scale,
     datum: dataProps.datum,
     data: dataProps.data,
-    textAnchor: labelStyle.textAnchor,
-    verticalAnchor: labelStyle.verticalAnchor || "end",
-    angle: labelStyle.angle
+    textAnchor: labelStyle.textAnchor || textAnchor,
+    verticalAnchor: labelStyle.verticalAnchor || verticalAnchor,
+    angle: labelStyle.angle,
+    horizontal
   };
 };
 

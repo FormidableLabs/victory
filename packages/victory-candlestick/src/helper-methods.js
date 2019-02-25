@@ -94,7 +94,8 @@ const getLabelProps = (dataProps, text, style) => {
     data,
     textAnchor: labelStyle.textAnchor || defaultAnchors.text,
     verticalAnchor: labelStyle.verticalAnchor || defaultAnchors.vertical,
-    angle: labelStyle.angle
+    angle: labelStyle.angle,
+    horizontal
   };
 };
 
