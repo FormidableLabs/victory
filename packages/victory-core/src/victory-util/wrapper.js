@@ -6,6 +6,7 @@ import {
   uniq,
   some,
   groupBy,
+  uniqBy,
   values,
   isPlainObject
 } from "lodash";
@@ -19,6 +20,7 @@ import Events from "./events";
 import Collection from "./collection";
 import Helpers from "./helpers";
 import Scale from "./scale";
+import { isWednesday } from "date-fns";
 
 export default {
   getData(props, childComponents) {
@@ -197,7 +199,6 @@ export default {
   getDataFromChildren(props, childComponents) {
     const { polar, startAngle, endAngle, categories, minDomain, maxDomain } = props;
     const parentProps = { polar, startAngle, endAngle, categories, minDomain, maxDomain };
-
     let stack = 0;
     const iteratee = (child, childName, parent) => {
       const childProps = assign({}, child.props, parentProps);
@@ -217,7 +218,8 @@ export default {
       ? childComponents.slice(0)
       : React.Children.toArray(props.children);
     const stacked = children.filter((c) => c.type && c.type.role === "stack").length;
-    const datasets = Helpers.reduceChildren(children, iteratee, props);
+    const combine = (memo, val) => memo.concat(uniqBy(val, "group"));
+    const datasets = Helpers.reduceChildren(children, iteratee, props, [], combine);
     const group = stacked ? "group" : "stack";
     return values(groupBy(datasets, group));
   },

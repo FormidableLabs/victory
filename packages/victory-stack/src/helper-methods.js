@@ -101,11 +101,8 @@ function addLayoutData(props, datasets, index) {
 /* eslint-enable no-nested-ternary */
 
 function stackData(props, childComponents) {
-  const dataFromChildren = Wrapper.getDataFromChildren(props);
-  const childMod = dataFromChildren.length / childComponents.length;
-  // account for stacked groups
-  const filteredDatasets = dataFromChildren.filter((data, index) => index % childMod === 0);
-  const datasets = fillData(props, filteredDatasets);
+  const dataFromChildren = Wrapper.getDataFromChildren(props, childComponents);
+  const datasets = fillData(props, dataFromChildren);
   return datasets.map((d, i) => addLayoutData(props, datasets, i));
 }
 
