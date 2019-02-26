@@ -51,7 +51,7 @@ storiesOf("VictoryChart.domainPadding", module)
     </VictoryChart>
   ))
   .add("object domainPadding (horizontal)", () => (
-    <VictoryChart domainPadding={{ x: 25, y: [25, 0] }}>
+    <VictoryChart domainPadding={{ x: [25, 0], y: 25 }}>
       <VictoryBar horizontal data={getData(5)} />
     </VictoryChart>
   ));
