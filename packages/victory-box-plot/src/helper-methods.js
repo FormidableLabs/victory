@@ -4,7 +4,7 @@ import { min as d3Min, max as d3Max, quantile as d3Quantile } from "d3-array";
 
 const TYPES = ["max", "min", "median", "q1", "q3"];
 
-const checkProcessedData = (props, data) => {
+const checkProcessedData = (data) => {
   /* check if the data is pre-processed. start by checking that it has
   all required quartile attributes. */
   const hasQuartileAttributes = data.every((datum) => {
@@ -12,12 +12,12 @@ const checkProcessedData = (props, data) => {
   });
 
   if (hasQuartileAttributes) {
-    // check that the indepedent variable is distinct
-    const values = data.map(({ _x, _y }) => (props.horizontal ? _y : _x));
+    // check that the independent variable is distinct
+    const values = data.map((d) => d._x);
     if (!uniq(values).length === values.length) {
       throw new Error(`
         data prop may only take an array of objects with a unique
-        independent variable. Make sure your x or y values are distinct.
+        independent variable. Make sure your x values are distinct.
       `);
     }
     return true;
@@ -40,34 +40,27 @@ const getSummaryStatistics = (data) => {
   return assign({}, data[0], quartiles, { _y: data[0]._y });
 };
 
-const isHorizontal = (props, data) => {
-  const arrayX = data.every((datum) => Array.isArray(datum._x));
-
-  return arrayX || props.horizontal;
-};
-
-const processData = (props, data) => {
+const processData = (data) => {
   /* check if the data is coming in a pre-processed form,
   i.e. { x || y, min, max, q1, q3, median }. if not, process it. */
-  const isProcessed = checkProcessedData(props, data);
+  const isProcessed = checkProcessedData(data);
   if (!isProcessed) {
     // check if the data is coming with x or y values as an array
     const arrayX = data.every((datum) => Array.isArray(datum._x));
     const arrayY = data.every((datum) => Array.isArray(datum._y));
-    const horizontal = arrayX || props.horizontal;
     const sortKey = "_y";
-    const groupKey = horizontal ? "_y" : "_x";
-    if (arrayX && arrayY) {
+    const groupKey = "_x";
+    if (arrayX) {
       throw new Error(`
-        data may not be given with array values for both x and y
+        data should not be given as in array for x
       `);
-    } else if (arrayX || arrayY) {
+    } else if (arrayY) {
       /* generate summary statistics for each datum. to do this, flatten
       the depedentVarArray and process each datum separately */
       return data.map((datum) => {
         const dataArray = datum[sortKey].map((d) => assign({}, datum, { [sortKey]: d }));
         const sortedData = orderBy(dataArray, sortKey);
-        return getSummaryStatistics(sortedData, horizontal);
+        return getSummaryStatistics(sortedData);
       });
     } else {
       /* Group data by independent variable and generate summary statistics for each group */
@@ -75,7 +68,7 @@ const processData = (props, data) => {
       return keys(groupedData).map((key) => {
         const datum = groupedData[key];
         const sortedData = orderBy(datum, sortKey);
-        return getSummaryStatistics(sortedData, horizontal);
+        return getSummaryStatistics(sortedData);
       });
     }
   } else {
@@ -86,7 +79,7 @@ const processData = (props, data) => {
 const getData = (props) => {
   const accessorTypes = TYPES.concat("x", "y");
   const formattedData = Data.formatData(props.data, props, accessorTypes);
-  return formattedData.length ? processData(props, formattedData) : [];
+  return formattedData.length ? processData(formattedData) : [];
 };
 
 const reduceDataset = (dataset, props, axis) => {
@@ -170,9 +163,8 @@ const getStyles = (props, styleObject) => {
 };
 
 const getCalculatedValues = (props) => {
-  const { theme } = props;
+  const { theme, horizontal } = props;
   const data = getData(props);
-  const horizontal = isHorizontal(props, data);
   const range = {
     x: Helpers.getRange(props, "x"),
     y: Helpers.getRange(props, "y")
