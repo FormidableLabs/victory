@@ -160,12 +160,12 @@ const getHorizontalBarPoints = (position, cr) => {
   // eslint-disable-next-line max-statements, max-len
   const getHalfPoints = (side) => {
     const isTop = side === "top";
-    const signL = isTop ? -1 : 1
+    const signL = isTop ? -1 : 1;
     const y = isTop ? y1 : y0;
     let leftPoint = { x: x0, y: y - signL * cr[`${side}Left`] };
     let leftMiddlePoint = { x: x0 + cr[`${side}Left`], y };
     let rightMiddlePoint = { x: x1 - cr[`${side}Right`], y };
-    let rightPoint = { x: x1, y: y - signL * cr[`${side}Right` ]};
+    let rightPoint = { x: x1, y: y - signL * cr[`${side}Right`] };
     const hasIntersection = leftMiddlePoint.x > rightMiddlePoint.x;
     if (hasIntersection) {
       const leftCenter = point(x0 + cr[`${side}Left`], y - signL * cr[`${side}Left`]);
@@ -194,13 +194,12 @@ const getHorizontalBarPoints = (position, cr) => {
       }
     }
     return [leftPoint, leftMiddlePoint, rightMiddlePoint, rightPoint];
-  }
+  };
   const topPoints = getHalfPoints("top");
   const bottomPoints = getHalfPoints("bottom");
   // eslint-disable-next-line no-magic-numbers
   return [bottomPoints[1], bottomPoints[0], ...topPoints, bottomPoints[3], bottomPoints[2]];
 };
-
 
 export const getVerticalBarPath = (props, width, cornerRadius) => {
   const position = getPosition(props, width);
@@ -213,7 +212,7 @@ export const getVerticalBarPath = (props, width, cornerRadius) => {
 export const getHorizontalBarPath = (props, width, cornerRadius) => {
   const position = getPosition(props, width);
   const sign = position.x0 < position.x1 ? 1 : -1;
-  const direction = "0 0 1"
+  const direction = "0 0 1";
   const cr = {
     topRight: sign > 0 ? cornerRadius.topLeft : cornerRadius.bottomLeft,
     bottomRight: sign > 0 ? cornerRadius.topRight : cornerRadius.bottomRight,

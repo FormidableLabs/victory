@@ -32,12 +32,8 @@ function getCalculatedProps(props, childComponents) {
     y: Scale.getScaleFromProps(props, "y") || Wrapper.getScale(props, "y")
   };
   const scale = {
-    x: baseScale.x
-      .domain(domain.x)
-      .range(props.horizontal ? range.y : range.x),
-    y: baseScale.y
-      .domain(domain.y)
-      .range(props.horizontal ? range.x: range.y)
+    x: baseScale.x.domain(domain.x).range(props.horizontal ? range.y : range.x),
+    y: baseScale.y.domain(domain.y).range(props.horizontal ? range.x : range.y)
   };
 
   const origin = polar ? props.origin : Helpers.getPolarOrigin(props);

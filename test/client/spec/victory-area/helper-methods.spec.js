@@ -5,7 +5,6 @@ import { getDataWithBaseline } from "packages/victory-area/src/helper-methods";
 import { Data } from "packages/victory-core";
 import * as d3Scale from "d3-scale";
 
-
 describe("victory-area/helper-methods", () => {
   describe("getDataWithBaseline", () => {
     let sandbox;

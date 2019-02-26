@@ -101,7 +101,6 @@ export default class Bar extends React.Component {
       realCornerRadius.topLeft = Helpers.evaluateProp(cornerRadius, datum, active);
       realCornerRadius.topRight = Helpers.evaluateProp(cornerRadius, datum, active);
       return realCornerRadius;
-
     }
   }
 

@@ -89,14 +89,9 @@ storiesOf("VictoryLine.data", module)
       />
     );
   })
-  .add("plotting functions", () => (
-    <VictoryLine y={(d) => Math.sin(2 * Math.PI * d.x)} />
-  ))
+  .add("plotting functions", () => <VictoryLine y={(d) => Math.sin(2 * Math.PI * d.x)} />)
   .add("plotting functions (horizontal)", () => (
-    <VictoryLine
-      horizontal
-      y={(d) => Math.sin(2 * Math.PI * d.x)}
-    />
+    <VictoryLine horizontal y={(d) => Math.sin(2 * Math.PI * d.x)} />
   ))
   .add("with immutable data", () => (
     <VictoryLine

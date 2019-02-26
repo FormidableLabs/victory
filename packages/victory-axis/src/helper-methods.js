@@ -30,7 +30,7 @@ const getCurrentAxis = (props, axis) => {
   }
   const otherAxis = axis === "x" ? "y" : "x";
   return horizontal ? otherAxis : axis;
-}
+};
 
 const getScale = (props) => {
   const axis = Axis.getAxis(props);

@@ -20,7 +20,8 @@ storiesOf("Containers and Addons.VictoryBrushContainer", module)
     />
   ))
   .add("with VictoryBrushContainer with domain (horizontal)", () => (
-    <VictoryChart horizontal
+    <VictoryChart
+      horizontal
       containerComponent={<VictoryBrushContainer brushDomain={{ x: [0, 0.5], y: [0.5, 1] }} />}
     />
   ))
@@ -81,7 +82,8 @@ storiesOf("Containers and Addons.VictoryCursorContainer", module)
     />
   ))
   .add("with VictoryCursorContainer with defaultCursorValue (horizontal)", () => (
-    <VictoryChart horizontal
+    <VictoryChart
+      horizontal
       containerComponent={
         <VictoryCursorContainer
           cursorLabel={(d) => d.x}

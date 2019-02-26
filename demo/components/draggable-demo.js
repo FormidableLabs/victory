@@ -30,14 +30,18 @@ class DraggablePoint extends React.Component {
       target: "data",
       eventHandlers: {
         onMouseOver: (evt, targetProps) => {
-          return [{
-            mutation: () => Object.assign({}, targetProps, { active: true })
-          }]
+          return [
+            {
+              mutation: () => Object.assign({}, targetProps, { active: true })
+            }
+          ];
         },
         onMouseDown: (evt, targetProps) => {
-          return [{
-            mutation: () => Object.assign({}, targetProps, { dragging: true })
-          }]
+          return [
+            {
+              mutation: () => Object.assign({}, targetProps, { dragging: true })
+            }
+          ];
         },
         onMouseMove: (evt, targetProps) => {
           const { scale, onPointChange, datum } = targetProps;
@@ -45,31 +49,35 @@ class DraggablePoint extends React.Component {
             const { x } = Selection.getSVGEventCoordinates(evt);
             const point = scale.y.invert(x);
             const name = datum.name;
-            onPointChange({ name, date: point })
-            return [{
-              mutation: () => Object.assign({}, targetProps, { x })
-            }]
+            onPointChange({ name, date: point });
+            return [
+              {
+                mutation: () => Object.assign({}, targetProps, { x })
+              }
+            ];
           }
           return null;
         },
         onMouseUp: (evt, targetProps) => {
-          return [{
-            mutation: () => Object.assign({}, targetProps, { dragging: false, active: false })
-          }]
+          return [
+            {
+              mutation: () => Object.assign({}, targetProps, { dragging: false, active: false })
+            }
+          ];
         },
         onMouseLeave: (evt, targetProps) => {
-          return [{
-            mutation: () => Object.assign({}, targetProps, { dragging: false, active: false })
-          }]
+          return [
+            {
+              mutation: () => Object.assign({}, targetProps, { dragging: false, active: false })
+            }
+          ];
         }
       }
     }
   ];
 
   render() {
-    return (
-      <Point {...this.props}/>
-    );
+    return <Point {...this.props} />;
   }
 }
 
@@ -85,14 +93,14 @@ class App extends React.Component {
 
   onDomainChange(domain, props) {
     const { name } = props;
-    const newBars = this.state.bars.map((bar) => bar.name === name ? { name, range: domain } : bar);
+    const newBars = this.state.bars.map((bar) =>
+      bar.name === name ? { name, range: domain } : bar
+    );
     this.setState({ bars: newBars });
   }
 
   onPointChange(point) {
-    const newPoints = this.state.points.map((p) => (
-      p.name === point.name ? point : p
-    ));
+    const newPoints = this.state.points.map((p) => (p.name === point.name ? point : p));
     this.setState({ points: newPoints });
   }
 
@@ -107,12 +115,13 @@ class App extends React.Component {
 
     const sharedProps = {
       width: 800,
-      domain: { y: [new Date(2012, 1, 1), new Date(2019, 1, 1)], x: [0.5, 4.5] },
+      domain: { y: [new Date(2012, 1, 1), new Date(2019, 1, 1)], x: [0.5, 4.5] }
     };
 
     return (
       <div style={containerStyle}>
-        <VictoryChart horizontal
+        <VictoryChart
+          horizontal
           {...sharedProps}
           height={400}
           padding={{ top: 50, left: 50, right: 30, bottom: 0 }}
@@ -136,7 +145,8 @@ class App extends React.Component {
           />
 
           {bars.map((bar, index) => (
-            <VictoryAxis dependentAxis
+            <VictoryAxis
+              dependentAxis
               key={index}
               axisComponent={
                 <VictoryBrushLine
@@ -147,7 +157,7 @@ class App extends React.Component {
                   onBrushDomainChange={this.onDomainChange.bind(this)}
                   brushStyle={{
                     fill: "skyBlue",
-                    opacity: (d, a) => (a ? 1 : 0.5),
+                    opacity: (d, a) => (a ? 1 : 0.5)
                   }}
                 />
               }
@@ -160,11 +170,7 @@ class App extends React.Component {
           ))}
           <VictoryScatter
             data={points}
-            dataComponent={
-              <DraggablePoint
-                onPointChange={this.onPointChange.bind(this)}
-              />
-            }
+            dataComponent={<DraggablePoint onPointChange={this.onPointChange.bind(this)} />}
             style={{
               data: {
                 fill: "skyBlue",
@@ -197,7 +203,8 @@ class App extends React.Component {
               axis: { stroke: "none" }
             }}
           />
-          <VictoryAxis dependentAxis
+          <VictoryAxis
+            dependentAxis
             orientation="top"
             style={{
               axis: { stroke: "none" },
@@ -217,8 +224,8 @@ class App extends React.Component {
           />
           <VictoryBar
             style={{
-                data: { fill: "skyBlue" }
-              }}
+              data: { fill: "skyBlue" }
+            }}
             data={this.state.bars}
             x="name"
             y={(d) => d.range[0]}

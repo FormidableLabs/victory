@@ -56,7 +56,7 @@ const getCalculatedValues = (props) => {
       .range(props.horizontal ? range.y : range.x),
     y: Scale.getBaseScale(props, "y")
       .domain(domain.y)
-      .range(props.horizontal ? range.x: range.y)
+      .range(props.horizontal ? range.x : range.y)
   };
   const origin = polar ? props.origin || Helpers.getPolarOrigin(props) : undefined;
   return { domain, data, scale, style, origin };
@@ -82,7 +82,7 @@ const getLabelProps = (dataProps, text, style) => {
   const defaultAnchors = {
     vertical: horizontal ? "middle" : "end",
     text: horizontal ? "start" : "middle"
-  }
+  };
   return {
     style: labelStyle,
     y: horizontal ? x : high - (labelStyle.padding || 0),
@@ -141,7 +141,7 @@ const getBaseProps = (props, fallbackProps) => {
 
   return data.reduce((childProps, datum, index) => {
     const eventKey = !isNil(datum.eventKey) ? datum.eventKey : index;
-    const x = scale.x(datum._x1 !== undefined ? datum._x1 : datum._x)
+    const x = scale.x(datum._x1 !== undefined ? datum._x1 : datum._x);
     const high = scale.y(datum._high);
     const close = scale.y(datum._close);
     const open = scale.y(datum._open);

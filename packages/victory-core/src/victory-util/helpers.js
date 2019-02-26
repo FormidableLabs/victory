@@ -68,8 +68,8 @@ function scalePoint(props, datum) {
   const origin = props.origin || { x: 0, y: 0 };
   const x = horizontal ? scale.y(d.y) : scale.x(d.x);
   const x0 = horizontal ? scale.y(d.y0) : scale.x(d.x0);
-  const y = horizontal ? scale.x(d.x): scale.y(d.y);
-  const y0 = horizontal ? scale.x(d.x0): scale.y(d.y0);
+  const y = horizontal ? scale.x(d.x) : scale.y(d.y);
+  const y0 = horizontal ? scale.x(d.x0) : scale.y(d.y0);
   return {
     x: polar ? y * Math.cos(x) + origin.x : x,
     x0: polar ? y0 * Math.cos(x0) + origin.x : x0,

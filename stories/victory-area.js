@@ -76,14 +76,9 @@ storiesOf("VictoryArea.data", module)
       y={(data) => data.pet + data.wild}
     />
   ))
-  .add("with y0", () => (
-    <VictoryArea data={getData(8)} y0={(d) => d.y - 1} />
-  ))
+  .add("with y0", () => <VictoryArea data={getData(8)} y0={(d) => d.y - 1} />)
   .add("with y0 (horizontal)", () => (
-    <VictoryArea
-      horizontal
-      data={getData(8)} y0={(d) => d.y - 1}
-    />
+    <VictoryArea horizontal data={getData(8)} y0={(d) => d.y - 1} />
   ))
   .add("with nested data accessors", () => {
     return (
@@ -98,14 +93,9 @@ storiesOf("VictoryArea.data", module)
       />
     );
   })
-  .add("plotting functions", () => (
-    <VictoryArea y={(d) => Math.sin(2 * Math.PI * d.x)} />
-  ))
+  .add("plotting functions", () => <VictoryArea y={(d) => Math.sin(2 * Math.PI * d.x)} />)
   .add("plotting functions (horizontal)", () => (
-    <VictoryArea
-      horizontal
-      y={(d) => Math.sin(2 * Math.PI * d.x)}
-    />
+    <VictoryArea horizontal y={(d) => Math.sin(2 * Math.PI * d.x)} />
   ))
   .add("with immutable data", () => (
     <VictoryArea
@@ -216,7 +206,7 @@ storiesOf("VictoryArea.stacked", module)
     </VictoryStack>
   ))
   .add("stacked area with labels (horizontal)", () => (
-    <VictoryStack  horizontal colorScale="qualitative" labels={(d) => d.x}>
+    <VictoryStack horizontal colorScale="qualitative" labels={(d) => d.x}>
       <VictoryArea data={getData(7)} />
       <VictoryArea data={getData(7, "seed-1")} />
       <VictoryArea data={getData(7, "seed-2")} />
@@ -230,11 +220,7 @@ storiesOf("VictoryArea.scale", module)
     <VictoryArea data={getTimeData(5)} labels={(d) => d.x.getFullYear()} />
   ))
   .add("time scale with labels (horizontal)", () => (
-    <VictoryArea
-      horizontal
-      data={getTimeData(5)}
-      labels={(d) => d.x.getFullYear()}
-    />
+    <VictoryArea horizontal data={getTimeData(5)} labels={(d) => d.x.getFullYear()} />
   ))
   .add("stacked time scale with labels", () => (
     <VictoryStack labels={(d) => d.x.getFullYear()}>
@@ -254,9 +240,7 @@ storiesOf("VictoryArea.scale", module)
 storiesOf("VictoryArea.scale", module)
   .addDecorator(getChartDecorator({ scale: { y: "log" } }))
   .add("log scale", () => <VictoryArea data={getLogData(7)} />)
-  .add("log scale (horizontal)", () => (
-    <VictoryArea horizontal data={getLogData(7)} />
-  ));
+  .add("log scale (horizontal)", () => <VictoryArea horizontal data={getLogData(7)} />);
 
 storiesOf("VictoryArea.polar", module).add("Polar Area", () => (
   <VictoryArea polar theme={VictoryTheme.material} data={getData(7)} />

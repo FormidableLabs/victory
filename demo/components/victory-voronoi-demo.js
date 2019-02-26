@@ -100,11 +100,8 @@ class App extends React.Component {
               data={this.state.data}
               flyoutProps={{ cornerRadius: 0 }}
             />
-            <VictoryScatter
-              data={this.state.data}
-            />
+            <VictoryScatter data={this.state.data} />
           </VictoryChart>
-
 
           <VictoryChart horizontal style={{ parent: parentStyle }}>
             <VictoryVoronoi
@@ -113,9 +110,7 @@ class App extends React.Component {
               style={{ parent: parentStyle, data: visible }}
               data={this.state.data}
             />
-            <VictoryScatter
-              data={this.state.data}
-            />
+            <VictoryScatter data={this.state.data} />
           </VictoryChart>
         </div>
       </div>

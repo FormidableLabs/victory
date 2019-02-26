@@ -77,7 +77,7 @@ export default {
       : React.Children.toArray(props.children);
     const iteratee = (child) => {
       const sharedProps = assign({}, child.props, { horizontal: props.horizontal });
-      return Scale.getScaleType(sharedProps, axis)
+      return Scale.getScaleType(sharedProps, axis);
     };
     const childScale = uniq(Helpers.reduceChildren(children, iteratee, props));
     // default to linear scale if more than one uniq scale type is given by children
@@ -172,7 +172,13 @@ export default {
     const parentData = props.data ? Data.getData(props, axis) : undefined;
     const { polar, startAngle, endAngle, categories, minDomain, maxDomain, horizontal } = props;
     const baseParentProps = {
-      horizontal, polar, startAngle, endAngle, minDomain, maxDomain, categories
+      horizontal,
+      polar,
+      startAngle,
+      endAngle,
+      minDomain,
+      maxDomain,
+      categories
     };
     const parentProps = parentData
       ? assign(baseParentProps, { data: parentData })
@@ -183,8 +189,7 @@ export default {
       if (!Domain.isDomainComponent(child)) {
         return null;
       } else if (child.type && isFunction(child.type.getDomain)) {
-        const result = child.props && child.type.getDomain(sharedProps, axis);
-        return result
+        return child.props && child.type.getDomain(sharedProps, axis);
       } else {
         return Domain.getDomain(sharedProps, axis);
       }

@@ -128,7 +128,8 @@ export default class App extends React.Component {
           <VictoryAxis standalone={false} />
         </svg>
 
-        <VictoryCandlestick horizontal
+        <VictoryCandlestick
+          horizontal
           style={{ parent: style.parent }}
           labels={() => "yo"}
           data={data}

@@ -107,13 +107,9 @@ storiesOf("VictoryBoxPlot.data", module)
     />
   ))
   .add("array data", () => <VictoryBoxPlot data={getArrayData(5, 10)} />)
-  .add("array data (horizontal)", () => (
-    <VictoryBoxPlot horizontal data={getArrayData(5, 10)} />
-  ))
+  .add("array data (horizontal)", () => <VictoryBoxPlot horizontal data={getArrayData(5, 10)} />)
   .add("repeat data", () => <VictoryBoxPlot data={getRepeatData(5, 10)} />)
-  .add("repeat data (horizontal)", () => (
-    <VictoryBoxPlot horizontal data={getRepeatData(5, 10)} />
-  ));
+  .add("repeat data (horizontal)", () => <VictoryBoxPlot horizontal data={getRepeatData(5, 10)} />);
 
 storiesOf("VictoryBoxPlot.labels", module)
   .addDecorator(getChartDecorator({ domainPadding: 25 }))

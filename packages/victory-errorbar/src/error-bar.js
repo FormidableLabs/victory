@@ -106,7 +106,7 @@ export default class ErrorBar extends React.Component {
       memo[dir] = getError(dir);
       return memo;
     }, {});
-    return result
+    return result;
   }
 
   render() {

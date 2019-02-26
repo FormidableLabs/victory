@@ -211,15 +211,8 @@ storiesOf("VictoryCandlestick.scale", module)
   .addDecorator(getChartDecorator({ domainPadding: 25 }))
   .add("time scale", () => <VictoryCandlestick data={getTimeData(5)} />)
   .add("time scale with labels", () => (
-    <VictoryCandlestick
-      data={getTimeData(5)}
-      labels={(d) => d.x.getFullYear()}
-    />
+    <VictoryCandlestick data={getTimeData(5)} labels={(d) => d.x.getFullYear()} />
   ))
   .add("time scale with labels (horizontal)", () => (
-    <VictoryCandlestick
-      horizontal
-      data={getTimeData(5)}
-      labels={(d) => d.x.getFullYear()}
-    />
+    <VictoryCandlestick horizontal data={getTimeData(5)} labels={(d) => d.x.getFullYear()} />
   ));

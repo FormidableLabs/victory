@@ -291,7 +291,6 @@ function getDomainWithZero(props, axis) {
   const y0Min = dataset.reduce((min, datum) => (datum._y0 < min ? datum._y0 : min), Infinity);
 
   const ensureZero = (domain) => {
-
     if (axis === "x") {
       return domain;
     }

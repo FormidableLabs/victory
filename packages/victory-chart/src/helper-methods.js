@@ -65,7 +65,7 @@ function getOrientation(axis, originSign, horizontal) {
   const horizontalOrientations = {
     positive: { x: "left", y: "bottom" },
     negative: { x: "right", y: "top" }
- };
+  };
   return horizontal ? horizontalOrientations[sign][axis] : orientations[sign][axis];
 }
 
@@ -88,12 +88,8 @@ function getCalculatedProps(props, childComponents) {
     y: Scale.getScaleFromProps(props, "y") || Wrapper.getScale(props, "y")
   };
   const scale = {
-    x: baseScale.x
-      .domain(domain.x)
-      .range(horizontal ? range.y : range.x),
-    y: baseScale.y
-      .domain(domain.y)
-      .range(horizontal ? range.x : range.y)
+    x: baseScale.x.domain(domain.x).range(horizontal ? range.y : range.x),
+    y: baseScale.y.domain(domain.y).range(horizontal ? range.x : range.y)
   };
   const origin = polar ? Helpers.getPolarOrigin(props) : Axis.getOrigin(domain);
 

@@ -7,9 +7,7 @@ const getDataWithBaseline = (props, scale) => {
     data = [];
   }
   const getDefaultMin = (axis) => {
-    const defaultZero = Scale.getType(scale[axis]) === "log"
-      ? 1 / Number.MAX_SAFE_INTEGER
-      : 0;
+    const defaultZero = Scale.getType(scale[axis]) === "log" ? 1 / Number.MAX_SAFE_INTEGER : 0;
     const domain = scale[axis].domain();
     const minY = Collection.getMinValue(domain);
     const maxY = Collection.getMaxValue(domain);
@@ -20,7 +18,7 @@ const getDataWithBaseline = (props, scale) => {
       defaultMin = minY;
     }
     return Collection.containsDates(domain) ? new Date(defaultMin) : defaultMin;
-  }
+  };
 
   return data.map((datum) => {
     const _y1 = datum._y1 !== undefined ? datum._y1 : datum._y;
@@ -49,7 +47,7 @@ const getCalculatedValues = (props) => {
       .range(props.horizontal ? range.y : range.x),
     y: Scale.getBaseScale(props, "y")
       .domain(domain.y)
-      .range(props.horizontal ? range.x: range.y)
+      .range(props.horizontal ? range.x : range.y)
   };
   const origin = polar ? props.origin || Helpers.getPolarOrigin(props) : undefined;
   const data = getDataWithBaseline(props, scale);
@@ -97,7 +95,14 @@ const getBaseProps = (props, fallbackProps) => {
     },
     all: {
       data: {
-        horizontal, polar, origin, scale, data, interpolation, groupComponent, style: style.data
+        horizontal,
+        polar,
+        origin,
+        scale,
+        data,
+        interpolation,
+        groupComponent,
+        style: style.data
       }
     }
   };

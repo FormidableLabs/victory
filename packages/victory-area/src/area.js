@@ -64,19 +64,19 @@ export default class Area extends React.Component {
     const { horizontal, scale } = props;
     return horizontal
       ? d3Shape
-        .area()
-        .defined(defined)
-        .curve(d3Shape[interpolation])
-        .x0(getY0Accessor(scale))
-        .x1(getYAccessor(scale))
-        .y(getXAccessor(scale))
+          .area()
+          .defined(defined)
+          .curve(d3Shape[interpolation])
+          .x0(getY0Accessor(scale))
+          .x1(getYAccessor(scale))
+          .y(getXAccessor(scale))
       : d3Shape
-        .area()
-        .defined(defined)
-        .curve(d3Shape[interpolation])
-        .x(getXAccessor(scale))
-        .y1(getYAccessor(scale))
-        .y0(getY0Accessor(scale));
+          .area()
+          .defined(defined)
+          .curve(d3Shape[interpolation])
+          .x(getXAccessor(scale))
+          .y1(getYAccessor(scale))
+          .y0(getY0Accessor(scale));
   }
 
   getAreaFunction(props) {

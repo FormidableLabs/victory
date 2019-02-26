@@ -24,7 +24,7 @@ const getDimension = (props) => {
     return dimension;
   }
   return dimension === "x" ? "y" : "x";
-}
+};
 
 const toRange = (props, domain) => {
   const scale = getScale(props);

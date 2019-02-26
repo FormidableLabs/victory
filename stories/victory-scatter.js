@@ -81,8 +81,8 @@ storiesOf("VictoryScatter.bubbleProperty", module)
   .addDecorator(getChartDecorator({ domainPadding: 20 }))
   .add("bubbleProperty", () => <VictoryScatter data={getData(10)} bubbleProperty="x" />)
   .add("bubbleProperty (horizontal)", () => (
-    <VictoryScatter  horizontal data={getData(10)} bubbleProperty="x" />
-    ))
+    <VictoryScatter horizontal data={getData(10)} bubbleProperty="x" />
+  ))
   .add("with maxBubbleSize", () => (
     <VictoryScatter data={getData(10)} bubbleProperty="x" maxBubbleSize={25} />
   ))

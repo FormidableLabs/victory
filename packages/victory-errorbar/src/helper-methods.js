@@ -87,7 +87,7 @@ const getCalculatedValues = (props) => {
       .range(props.horizontal ? range.y : range.x),
     y: Scale.getBaseScale(props, "y")
       .domain(domain.y)
-      .range(props.horizontal ? range.x: range.y)
+      .range(props.horizontal ? range.x : range.y)
   };
   const origin = props.polar ? props.origin || Helpers.getPolarOrigin(props) : undefined;
   return { domain, data, scale, style, origin };
@@ -99,11 +99,11 @@ const getLabelProps = (dataProps, text, style) => {
     const baseError = type === "y" ? errorY : errorX;
     const error = baseError && Array.isArray(baseError) ? baseError[0] : baseError;
     return error || dataProps[type];
-  }
+  };
   const labelStyle = style.labels || {};
   const padding = labelStyle.padding || 0;
   const textAnchor = horizontal ? "start" : "middle";
-  const verticalAnchor = horizontal ? "middle" : "end"
+  const verticalAnchor = horizontal ? "middle" : "end";
   return {
     style: labelStyle,
     y: horizontal ? y : getError("y") - padding,

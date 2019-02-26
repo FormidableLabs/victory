@@ -267,7 +267,8 @@ class App extends React.Component {
             />
           </VictoryGroup>
 
-          <VictoryChart horizontal
+          <VictoryChart
+            horizontal
             style={chartStyle}
             containerComponent={
               <VictorySelectionContainer

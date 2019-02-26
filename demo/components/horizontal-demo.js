@@ -5,7 +5,7 @@ import { VictoryChart } from "../../packages/victory-chart/src/index";
 import { VictoryStack } from "../../packages/victory-stack/src/index";
 import { VictoryGroup } from "../../packages/victory-group/src/index";
 import { VictoryBar } from "../../packages/victory-bar/src/index";
-import { VictoryScatter} from "../../packages/victory-scatter/src/index";
+import { VictoryScatter } from "../../packages/victory-scatter/src/index";
 import { VictoryLine } from "../../packages/victory-line/src/index";
 import { VictoryArea } from "../../packages/victory-area/src/index";
 import { VictoryCandlestick } from "../../packages/victory-candlestick/src/index";
@@ -14,8 +14,6 @@ import { VictoryBoxPlot } from "../../packages/victory-box-plot/src/index";
 import { VictoryAxis } from "../../packages/victory-axis/src/index";
 import { VictoryBrushContainer } from "../../packages/victory-brush-container/src/index";
 import { range, random } from "lodash";
-
-
 
 const errorData = [
   { x: 1, y: 10, errorX: [1, 0.5], errorY: 1 },
@@ -76,7 +74,7 @@ class App extends React.Component {
             ]}
           />
         </VictoryChart>
-        <VictoryChart horizontal style={chartStyle} >
+        <VictoryChart horizontal style={chartStyle}>
           <VictoryBar
             cornerRadius={{ topRight: 5 }}
             data={[
@@ -88,7 +86,7 @@ class App extends React.Component {
             labels={() => "hi"}
           />
           <VictoryScatter
-            style={{ data: { fill: "tomato" }}}
+            style={{ data: { fill: "tomato" } }}
             data={[
               { x: "low", y: 1, sort: 1 },
               { x: "med", y: 2, sort: 2 },
@@ -97,7 +95,7 @@ class App extends React.Component {
             sortKey={"sort"}
           />
           <VictoryLine
-            style={{ data: { stroke: "tomato" }}}
+            style={{ data: { stroke: "tomato" } }}
             data={[
               { x: "low", y: 1, sort: 1 },
               { x: "med", y: 2, sort: 2 },
@@ -152,10 +150,7 @@ class App extends React.Component {
         </VictoryChart>
 
         <VictoryChart horizontal style={chartStyle}>
-          <VictoryStack
-            labels={["a", "b", "c"]}
-            colorScale={"qualitative"}
-          >
+          <VictoryStack labels={["a", "b", "c"]} colorScale={"qualitative"}>
             <VictoryBar data={[{ x: "a", y: 1 }, { x: "b", y: 2 }, { x: "c", y: 5 }]} />
             <VictoryBar data={[{ x: "a", y: 2 }, { x: "b", y: 1 }, { x: "c", y: 7 }]} />
             <VictoryBar data={[{ x: "a", y: 3 }, { x: "b", y: 4 }, { x: "c", y: 9 }]} />
@@ -170,18 +165,20 @@ class App extends React.Component {
           </VictoryGroup>
         </VictoryChart>
 
-        <VictoryGroup horizontal
+        <VictoryGroup
+          horizontal
           style={chartStyle}
           labels={["a", "b", "c"]}
           offset={20}
           colorScale={"qualitative"}
         >
-            <VictoryBar data={[{ x: 1, y: 1 }, { x: 2, y: 2 }, { x: 3, y: 5 }]} />
-            <VictoryBar data={[{ x: 1, y: 2 }, { x: 2, y: 1 }, { x: 3, y: 7 }]} />
-            <VictoryBar data={[{ x: 1, y: 3 }, { x: 2, y: 4 }, { x: 3, y: 9 }]} />
-          </VictoryGroup>
+          <VictoryBar data={[{ x: 1, y: 1 }, { x: 2, y: 2 }, { x: 3, y: 5 }]} />
+          <VictoryBar data={[{ x: 1, y: 2 }, { x: 2, y: 1 }, { x: 3, y: 7 }]} />
+          <VictoryBar data={[{ x: 1, y: 3 }, { x: 2, y: 4 }, { x: 3, y: 9 }]} />
+        </VictoryGroup>
 
-        <VictoryArea horizontal
+        <VictoryArea
+          horizontal
           style={{
             parent: chartStyle.parent,
             data: { stroke: "red", strokeWidth: 2 }
@@ -216,7 +213,8 @@ class App extends React.Component {
             ]}
           />
         </VictoryChart>
-        <VictoryBar horizontal
+        <VictoryBar
+          horizontal
           style={chartStyle}
           labels={() => "yo"}
           data={[
@@ -233,34 +231,58 @@ class App extends React.Component {
         <VictoryChart horizontal style={chartStyle}>
           <VictoryStack>
             <VictoryArea
-              data={[{ x: 1, y: 2 }, { x: 2, y: 3 }, { x: 3, y: 5 }, { x: 4, y: 4 }, { x: 5, y: 7 }]}
+              data={[
+                { x: 1, y: 2 },
+                { x: 2, y: 3 },
+                { x: 3, y: 5 },
+                { x: 4, y: 4 },
+                { x: 5, y: 7 }
+              ]}
             />
             <VictoryArea
-              data={[{ x: 1, y: 1 }, { x: 2, y: 4 }, { x: 3, y: 5 }, { x: 4, y: 7 }, { x: 5, y: 5 }]}
+              data={[
+                { x: 1, y: 1 },
+                { x: 2, y: 4 },
+                { x: 3, y: 5 },
+                { x: 4, y: 7 },
+                { x: 5, y: 5 }
+              ]}
             />
             <VictoryArea
-              data={[{ x: 1, y: 3 }, { x: 2, y: 2 }, { x: 3, y: 6 }, { x: 4, y: 2 }, { x: 5, y: 6 }]}
+              data={[
+                { x: 1, y: 3 },
+                { x: 2, y: 2 },
+                { x: 3, y: 6 },
+                { x: 4, y: 2 },
+                { x: 5, y: 6 }
+              ]}
             />
             <VictoryArea
-              data={[{ x: 1, y: 2 }, { x: 2, y: 3 }, { x: 3, y: 3 }, { x: 4, y: 4 }, { x: 5, y: 7 }]}
+              data={[
+                { x: 1, y: 2 },
+                { x: 2, y: 3 },
+                { x: 3, y: 3 },
+                { x: 4, y: 4 },
+                { x: 5, y: 7 }
+              ]}
             />
           </VictoryStack>
         </VictoryChart>
 
         <VictoryStack horizontal style={chartStyle}>
-            <VictoryArea
-              data={[{ x: 1, y: 2 }, { x: 2, y: 3 }, { x: 3, y: 5 }, { x: 4, y: 4 }, { x: 5, y: 7 }]}
-            />
-            <VictoryArea
-              data={[{ x: 1, y: 1 }, { x: 2, y: 4 }, { x: 3, y: 5 }, { x: 4, y: 7 }, { x: 5, y: 5 }]}
-            />
-            <VictoryArea
-              data={[{ x: 1, y: 3 }, { x: 2, y: 2 }, { x: 3, y: 6 }, { x: 4, y: 2 }, { x: 5, y: 6 }]}
-            />
-            <VictoryArea
-              data={[{ x: 1, y: 2 }, { x: 2, y: 3 }, { x: 3, y: 3 }, { x: 4, y: 4 }, { x: 5, y: 7 }]}
-            />
-          </VictoryStack>
+          <VictoryArea
+            data={[{ x: 1, y: 2 }, { x: 2, y: 3 }, { x: 3, y: 5 }, { x: 4, y: 4 }, { x: 5, y: 7 }]}
+          />
+          <VictoryArea
+            data={[{ x: 1, y: 1 }, { x: 2, y: 4 }, { x: 3, y: 5 }, { x: 4, y: 7 }, { x: 5, y: 5 }]}
+          />
+          <VictoryArea
+            data={[{ x: 1, y: 3 }, { x: 2, y: 2 }, { x: 3, y: 6 }, { x: 4, y: 2 }, { x: 5, y: 6 }]}
+          />
+          <VictoryArea
+            data={[{ x: 1, y: 2 }, { x: 2, y: 3 }, { x: 3, y: 3 }, { x: 4, y: 4 }, { x: 5, y: 7 }]}
+          />
+        </VictoryStack>
 
         <VictoryChart style={chartStyle} horizontal>
           <VictoryCandlestick
@@ -279,10 +301,10 @@ class App extends React.Component {
         </VictoryChart>
 
         <VictoryChart horizontal style={chartStyle}>
-          <VictoryErrorBar data={errorData} labels={() => "yo"}/>
+          <VictoryErrorBar data={errorData} labels={() => "yo"} />
           <VictoryScatter data={errorData} />
-          <VictoryAxis dependentAxis/>
-          <VictoryAxis crossAxis={false}/>
+          <VictoryAxis dependentAxis />
+          <VictoryAxis crossAxis={false} />
         </VictoryChart>
 
         <VictoryChart horizontal style={chartStyle}>
@@ -310,15 +332,10 @@ class App extends React.Component {
             ]}
           />
         </VictoryChart>
-        <VictoryChart style={chartStyle} horizontal categories={{ y: [ "E", "F", "G", "H"]}}>
+        <VictoryChart style={chartStyle} horizontal categories={{ y: ["E", "F", "G", "H"] }}>
           <VictoryLine
             alignment="start"
-            data={[
-              { x: 6, y: "E" },
-              { x: 2, y: "F" },
-              { x: 7, y: "G" },
-              { x: 3, y: "H" }
-            ]}
+            data={[{ x: 6, y: "E" }, { x: 2, y: "F" }, { x: 7, y: "G" }, { x: 3, y: "H" }]}
           />
         </VictoryChart>
         <VictoryChart horizontal style={chartStyle} domainPadding={20}>
@@ -335,11 +352,10 @@ class App extends React.Component {
             ]}
           />
         </VictoryChart>
-        <VictoryChart horizontal
+        <VictoryChart
+          horizontal
           style={chartStyle}
-          containerComponent={
-            <VictoryBrushContainer brushDomain={{ x: [2, 4], y: [-2, 2] }} />
-          }
+          containerComponent={<VictoryBrushContainer brushDomain={{ x: [2, 4], y: [-2, 2] }} />}
         >
           <VictoryLine
             style={{
@@ -382,10 +398,7 @@ class App extends React.Component {
           />
         </VictoryChart>
 
-        <VictoryChart
-          style={chartStyle}
-          horizontal
-        >
+        <VictoryChart style={chartStyle} horizontal>
           <VictoryAxis
             tickValues={[
               new Date(1985, 1, 1),
@@ -397,9 +410,7 @@ class App extends React.Component {
             ]}
             tickFormat={(x) => new Date(x).getFullYear()}
           />
-          <VictoryScatter
-            data={[]}
-          />
+          <VictoryScatter data={[]} />
         </VictoryChart>
       </div>
     );

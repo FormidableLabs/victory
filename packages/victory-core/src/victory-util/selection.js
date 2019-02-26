@@ -93,7 +93,6 @@ function getBounds(props) {
     x: makeBound(point1.x, point2.x),
     y: makeBound(point1.y, point2.y)
   };
-
 }
 
 export default {

@@ -86,7 +86,8 @@ class App extends React.Component {
             <VictoryLine data={this.state.bigData} />
           </VictoryChart>
 
-          <VictoryChart horizontal
+          <VictoryChart
+            horizontal
             style={chartStyle}
             theme={VictoryTheme.material}
             domainPadding={{ x: 15 }}

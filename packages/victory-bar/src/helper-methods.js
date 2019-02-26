@@ -3,9 +3,8 @@ import { Helpers, LabelHelpers, Data, Domain, Scale, Collection } from "victory-
 
 const getBarPosition = (props, datum) => {
   const getDefaultMin = (axis) => {
-    const defaultZero = Scale.getType(props.scale[axis]) === "log"
-      ? 1 / Number.MAX_SAFE_INTEGER
-      : 0;
+    const defaultZero =
+      Scale.getType(props.scale[axis]) === "log" ? 1 / Number.MAX_SAFE_INTEGER : 0;
     let defaultMin = defaultZero;
     const minY = Collection.getMinValue(props.domain[axis]);
     const maxY = Collection.getMaxValue(props.domain[axis]);
@@ -40,7 +39,7 @@ const getCalculatedValues = (props) => {
       .range(props.horizontal ? range.y : range.x),
     y: Scale.getBaseScale(props, "y")
       .domain(domain.y)
-      .range(props.horizontal ? range.x: range.y)
+      .range(props.horizontal ? range.x : range.y)
   };
   const origin = polar ? props.origin || Helpers.getPolarOrigin(props) : undefined;
   return { style, data, scale, domain, origin };

@@ -98,7 +98,7 @@ export default class Candle extends React.Component {
       shapeRendering,
       className,
       wickStrokeWidth,
-      transform,
+      transform
     } = this.props;
     const style = Helpers.evaluateStyle(
       assign({ stroke: "black" }, this.props.style),
