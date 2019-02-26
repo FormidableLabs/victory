@@ -4,7 +4,8 @@ import { Helpers, Path, CommonProps } from "victory-core";
 import { assign, isPlainObject, isFunction, isNil } from "lodash";
 
 import {
-  getCartesianBarPath,
+  getVerticalBarPath,
+  getHorizontalBarPath,
   getVerticalPolarBarPath,
   getCustomBarPath
 } from "./path-helper-methods";
@@ -46,7 +47,9 @@ export default class Bar extends React.Component {
     if (props.getPath) {
       return getCustomBarPath(props, width);
     }
-    return getCartesianBarPath(props, width, cornerRadius);
+    return props.horizontal
+      ? getHorizontalBarPath(props, width, cornerRadius)
+      : getVerticalBarPath(props, width, cornerRadius);
   }
 
   getPolarBarPath(props, cornerRadius) {
@@ -87,25 +90,19 @@ export default class Bar extends React.Component {
   }
 
   getCornerRadius(props) {
-    const { cornerRadius, datum, active, horizontal } = props;
+    const { cornerRadius, datum, active } = props;
     const realCornerRadius = { topLeft: 0, topRight: 0, bottomLeft: 0, bottomRight: 0 };
     if (!cornerRadius) {
       return realCornerRadius;
     }
     if (isPlainObject(cornerRadius)) {
       return this.getCornerRadiusFromObject(props);
-    }
-    realCornerRadius.topLeft = Helpers.evaluateProp(cornerRadius, datum, active);
-    realCornerRadius.topRight = Helpers.evaluateProp(cornerRadius, datum, active);
-    if (!horizontal) {
+    } else {
+      realCornerRadius.topLeft = Helpers.evaluateProp(cornerRadius, datum, active);
+      realCornerRadius.topRight = Helpers.evaluateProp(cornerRadius, datum, active);
       return realCornerRadius;
+
     }
-    return {
-      topRight: realCornerRadius.topLeft,
-      bottomRight: realCornerRadius.topRight,
-      bottomLeft: realCornerRadius.bottomRight,
-      topLeft: realCornerRadius.bottomLeft
-    };
   }
 
   render() {
