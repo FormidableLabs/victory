@@ -98,7 +98,7 @@ storiesOf("VictoryBoxPlot.data", module)
         { type: 2, Min: 4, Max: 20, Median: 10, Q1: 7, Q3: 15 },
         { type: 3, Min: 3, Max: 12, Median: 6, Q1: 5, Q3: 10 }
       ]}
-      y="type"
+      x="type"
       min="Min"
       max="Max"
       median="Median"
