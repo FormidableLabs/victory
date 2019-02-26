@@ -1,6 +1,6 @@
 /* eslint-disable func-style */
 /* eslint-disable no-use-before-define */
-import { includes, isFunction } from "lodash";
+import { includes, isFunction, isPlainObject } from "lodash";
 import Helpers from "./helpers";
 import Collection from "./collection";
 import * as d3Scale from "d3-scale";
@@ -60,7 +60,8 @@ function getScaleTypeFromData(props, axis) {
   }
   const accessor = Helpers.createAccessor(props[axis]);
   const axisData = props.data.map((datum) => {
-    return accessor(datum) ? accessor(datum)[axis] : datum[axis];
+    const processedData = isPlainObject(accessor(datum)) ? accessor(datum)[axis] : accessor(datum);
+    return processedData !== undefined ? processedData : datum[axis];
   });
   return Collection.containsDates(axisData) ? "time" : "linear";
 }

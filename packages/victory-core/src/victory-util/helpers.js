@@ -173,7 +173,8 @@ function modifyProps(props, fallbackProps, role) {
   const theme = props.theme && props.theme[role] ? props.theme[role] : {};
   const themeProps = omit(theme, ["style"]);
   const horizontal = isHorizontal(props);
-  return defaults({ horizontal }, props, themeProps, fallbackProps);
+  const defaultObject = horizontal === undefined ? {} : { horizontal };
+  return defaults(defaultObject, props, themeProps, fallbackProps);
 }
 
 /**

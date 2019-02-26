@@ -65,13 +65,6 @@ describe("helpers/axis", () => {
   });
 
   describe("getAxis", () => {
-    it("determines the axis based on orientation prop", () => {
-      expect(Axis.getAxis({ orientation: "top" })).to.equal("x");
-      expect(Axis.getAxis({ orientation: "bottom" })).to.equal("x");
-      expect(Axis.getAxis({ orientation: "left" })).to.equal("y");
-      expect(Axis.getAxis({ orientation: "right" })).to.equal("y");
-    });
-
     it("determines the axis based on type (dependent / independent)", () => {
       expect(Axis.getAxis({ dependentAxis: true })).to.equal("y");
       expect(Axis.getAxis({})).to.equal("x");
