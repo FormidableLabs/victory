@@ -183,8 +183,8 @@ const getCalculatedValues = (props) => {
   };
   const defaultStyles = theme && theme.boxplot && theme.boxplot.style ? theme.boxplot.style : {};
   const style = getStyles(props, defaultStyles);
-  const defaultLabelOrientation = horizontal ? "top" : "right";
-  const labelOrientation = props.labelOrientation || defaultLabelOrientation;
+  const defaultOrientation = props.horizontal ? "top" : "right";
+  const labelOrientation = props.labelOrientation || defaultOrientation;
   const boxWidth = props.boxWidth || 1;
   return { data, horizontal, domain, scale, style, labelOrientation, boxWidth };
 };
@@ -267,8 +267,8 @@ const getLabelProps = (props, text, type) => {
   const { datum, positions, index, boxWidth, horizontal, labelOrientation, style } = props;
   const namespace = `${type}Labels`;
   const labelStyle = style[namespace] || style.labels;
-  const defaultVerticalAnchor = horizontal ? "end" : "middle";
-  const defaultTextAnchor = horizontal ? "middle" : "start";
+  const defaultVerticalAnchors = { top: "end", bottom: "start", left: "middle", right: "middle" };
+  const defaultTextAnchors = { left: "end", right: "start", top: "middle", bottom: "middle" };
   const whiskerWidth = typeof props.whiskerWidth === "number" ? props.whiskerWidth : boxWidth;
   const width = type === "min" || type === "max" ? whiskerWidth : boxWidth;
 
@@ -284,11 +284,12 @@ const getLabelProps = (props, text, type) => {
     text,
     datum,
     index,
+    orientation: labelOrientation,
     style: labelStyle,
     y: horizontal ? getDefaultPosition("y") : positions[type],
     x: horizontal ? positions[type] : getDefaultPosition("x"),
-    textAnchor: labelStyle.textAnchor || defaultTextAnchor,
-    verticalAnchor: labelStyle.verticalAnchor || defaultVerticalAnchor,
+    textAnchor: labelStyle.textAnchor || defaultTextAnchors[labelOrientation],
+    verticalAnchor: labelStyle.verticalAnchor || defaultVerticalAnchors[labelOrientation],
     angle: labelStyle.angle,
     horizontal
   };
