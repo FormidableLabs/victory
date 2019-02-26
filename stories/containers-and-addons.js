@@ -19,6 +19,11 @@ storiesOf("Containers and Addons.VictoryBrushContainer", module)
       containerComponent={<VictoryBrushContainer brushDomain={{ x: [0, 0.5], y: [0.5, 1] }} />}
     />
   ))
+  .add("with VictoryBrushContainer with domain (horizontal)", () => (
+    <VictoryChart horizontal
+      containerComponent={<VictoryBrushContainer brushDomain={{ x: [0, 0.5], y: [0.5, 1] }} />}
+    />
+  ))
   .add("with VictoryBrushContainer with brushStyle", () => (
     <VictoryChart
       containerComponent={
@@ -64,9 +69,8 @@ storiesOf("Containers and Addons.VictoryBrushLine", module)
     />
   ));
 
-storiesOf("Containers and Addons.VictoryCursorContainer", module).add(
-  "with VictoryCursorContainer with defaultCursorValue",
-  () => (
+storiesOf("Containers and Addons.VictoryCursorContainer", module)
+  .add("with VictoryCursorContainer with defaultCursorValue", () => (
     <VictoryChart
       containerComponent={
         <VictoryCursorContainer
@@ -75,8 +79,17 @@ storiesOf("Containers and Addons.VictoryCursorContainer", module).add(
         />
       }
     />
-  )
-);
+  ))
+  .add("with VictoryCursorContainer with defaultCursorValue (horizontal)", () => (
+    <VictoryChart horizontal
+      containerComponent={
+        <VictoryCursorContainer
+          cursorLabel={(d) => d.x}
+          defaultCursorValue={{ x: 0.25, y: 0.75 }}
+        />
+      }
+    />
+  ));
 
 storiesOf("Containers and Addons.VictoryZoomContainer", module).add(
   "with VictoryZoomContainer with initial zoom",

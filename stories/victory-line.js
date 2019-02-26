@@ -252,7 +252,8 @@ storiesOf("VictoryLine.scale", module)
   ));
 storiesOf("VictoryLine.scale", module)
   .addDecorator(getChartDecorator({ scale: { y: "log" } }))
-  .add("log scale", () => <VictoryLine data={getLogData(10)} />);
+  .add("log scale", () => <VictoryLine data={getLogData(10)} />)
+  .add("log scale (horizontal)", () => <VictoryLine horizontal data={getLogData(10)} />);
 
 storiesOf("VictoryLine.polar", module).add("Polar Line", () => (
   <VictoryLine polar theme={VictoryTheme.material} data={getData(7)} />

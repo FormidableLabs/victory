@@ -80,6 +80,9 @@ storiesOf("VictoryScatter.symbol", module)
 storiesOf("VictoryScatter.bubbleProperty", module)
   .addDecorator(getChartDecorator({ domainPadding: 20 }))
   .add("bubbleProperty", () => <VictoryScatter data={getData(10)} bubbleProperty="x" />)
+  .add("bubbleProperty (horizontal)", () => (
+    <VictoryScatter  horizontal data={getData(10)} bubbleProperty="x" />
+    ))
   .add("with maxBubbleSize", () => (
     <VictoryScatter data={getData(10)} bubbleProperty="x" maxBubbleSize={25} />
   ))
@@ -190,6 +193,14 @@ storiesOf("VictoryScatter.tooltips", module)
   ))
   .add("tooltips (negative)", () => (
     <VictoryScatter
+      data={getMixedData(5)}
+      labels={(d) => `x: ${d.x}`}
+      labelComponent={<VictoryTooltip active />}
+    />
+  ))
+  .add("tooltips (horizontal)", () => (
+    <VictoryScatter
+      horizontal
       data={getMixedData(5)}
       labels={(d) => `x: ${d.x}`}
       labelComponent={<VictoryTooltip active />}

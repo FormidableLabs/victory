@@ -588,9 +588,7 @@ storiesOf("VictoryBar.scale", module)
 
 storiesOf("VictoryBar.scale", module)
   .addDecorator(getChartDecorator({ scale: { y: "log" }, domainPadding: 25 }))
-  .add("log scale", () => <VictoryBar data={getLogData(7)} />);
-storiesOf("VictoryBar.scale", module)
-  .addDecorator(getChartDecorator({ scale: { x: "log" }, domainPadding: 25 }))
+  .add("log scale", () => <VictoryBar data={getLogData(7)} />)
   .add(" horizontal log scale", () => <VictoryBar horizontal data={getLogData(7)} />);
 
 storiesOf("VictoryBar.polar", module)

@@ -9,15 +9,15 @@ import seedrandom from "seedrandom";
 import { getArrayData } from "./data";
 import { getChartDecorator } from "./decorators";
 
-const getRepeatData = (num, samples, horizontal) => {
+const getRepeatData = (num, samples) => {
   const seed = "getRepeatData";
   samples = samples || 10;
   const baseSeed = seedrandom(seed);
   const rand = () => baseSeed.quick() * 10;
   return range(num).reduce((memo, curr) => {
     const sampleData = range(samples).map(() => ({
-      x: horizontal ? rand() : curr + 1,
-      y: horizontal ? curr + 1 : rand()
+      x: curr + 1,
+      y: rand()
     }));
     return memo.concat(sampleData);
   }, []);
@@ -108,11 +108,11 @@ storiesOf("VictoryBoxPlot.data", module)
   ))
   .add("array data", () => <VictoryBoxPlot data={getArrayData(5, 10)} />)
   .add("array data (horizontal)", () => (
-    <VictoryBoxPlot horizontal data={getArrayData(5, 10, "horizontal")} />
+    <VictoryBoxPlot horizontal data={getArrayData(5, 10)} />
   ))
   .add("repeat data", () => <VictoryBoxPlot data={getRepeatData(5, 10)} />)
   .add("repeat data (horizontal)", () => (
-    <VictoryBoxPlot horizontal data={getRepeatData(5, 10, "horizontal")} />
+    <VictoryBoxPlot horizontal data={getRepeatData(5, 10)} />
   ));
 
 storiesOf("VictoryBoxPlot.labels", module)

@@ -73,7 +73,7 @@ storiesOf("VictoryChart.domain", module)
     </VictoryChart>
   ))
   .add("object domain (horizontal)", () => (
-    <VictoryChart domain={{ x: [0, 10], y: [0, 6] }}>
+    <VictoryChart domain={{ x: [0, 6], y: [0, 10] }}>
       <VictoryBar horizontal data={getData(5)} />
     </VictoryChart>
   ));
@@ -88,6 +88,14 @@ storiesOf("VictoryChart.calculated domain", module)
   ))
   .add("from data and axes", () => (
     <VictoryChart>
+      <VictoryAxis tickValues={[-10, -5, 5, 10]} />
+      <VictoryAxis dependentAxis tickValues={[-5, 5]} />
+      <VictoryScatter data={getData(10)} />
+      <VictoryLine samples={150} y={(d) => Math.sin(Math.PI * d.x)} />
+    </VictoryChart>
+  ))
+  .add("from data and axes (horizontal)", () => (
+    <VictoryChart horizontal>
       <VictoryAxis tickValues={[-10, -5, 5, 10]} />
       <VictoryAxis dependentAxis tickValues={[-5, 5]} />
       <VictoryScatter data={getData(10)} />
@@ -114,8 +122,34 @@ storiesOf("VictoryChart.calculated domain", module)
       />
     </VictoryChart>
   ))
+  .add("from categorical data sources (horizontal)", () => (
+    <VictoryChart horizontal domainPadding={25}>
+      <VictoryScatter
+        size={6}
+        symbol="star"
+        data={[{ x: "cat", y: 2 }, { x: "dog", y: 3 }, { x: "bird", y: 1 }, { x: "frog", y: 4 }]}
+      />
+      <VictoryScatter
+        size={6}
+        symbol="square"
+        data={[
+          { x: "cat", y: 3 },
+          { x: "mouse", y: 3 },
+          { x: "bird", y: 5 },
+          { x: "frog", y: 7 },
+          { x: "dog", y: 1 }
+        ]}
+      />
+    </VictoryChart>
+  ))
   .add("from atypical data sources", () => (
     <VictoryChart>
+      <VictoryBoxPlot data={getArrayData(5)} />
+      <VictoryLine samples={100} y={(d) => 5 + 3 * Math.sin(Math.PI * d.x)} />
+    </VictoryChart>
+  ))
+  .add("from atypical data sources (horizontal)", () => (
+    <VictoryChart horizontal>
       <VictoryBoxPlot data={getArrayData(5)} />
       <VictoryLine samples={100} y={(d) => 5 + 3 * Math.sin(Math.PI * d.x)} />
     </VictoryChart>
