@@ -76,7 +76,8 @@ function padDomain(domain, props, axis) {
 
   const min = Collection.getMinValue(domain);
   const max = Collection.getMaxValue(domain);
-  const range = Helpers.getRange(props, axis);
+  const currentAxis = Helpers.getCurrentAxis(axis, props.horizontal);
+  const range = Helpers.getRange(props, currentAxis);
   const rangeExtent = Math.abs(range[0] - range[1]);
 
   // Naive initial padding calculation
