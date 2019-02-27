@@ -1,5 +1,61 @@
 # Victory Changelog
 
+## 32.0.0 (2019-02-27)
+
+**Horizontal Chart Improvements!**
+
+[#1258](https://github.com/FormidableLabs/victory/pull/1258)
+
+The goal of this change is to make it possible to turn any existing chart into a horizontal chart by adding the `horizontal` prop to the chart without needing to alter any other props.
+
+- supports horizontal versions of all chart types without needing to alter data
+- supports all event containers for horizontal charts
+- enforces consistency across props that take x and y values so that the `x` value always refers to the _independent_ dimension, and the `y` value always refers to the _dependent_ dimension.
+- the orientation of `VictoryAxis` components is no longer tied to whether or not they are the `dependentAxis`
+
+**Breaking Changes**
+
+**Most Horizontal Charts**
+The change in how props with x and y values are treated (i.e. `scale`, `domain`, etc) will be a breaking change for most horizontal charts. In most cases, reversing the `x` and `y` values of props you are providing to your horizontal chart will be sufficient to correct the change. For example:
+
+```
+<VictoryChart horizontal scale={{ x: "log" }} domain={{ y: [4, 9] }}>
+  <VictoryBar
+    data={[
+      { x: 5, y: 0.1 },
+      { x: 6, y: 1 },
+      { x: 7, y: 10 },
+      { x: 8, y: 100 }
+    ]}
+  />
+</VictoryChart>
+```
+Should be changed to:
+```
+<VictoryChart horizontal scale={{ y: "log" }} domain={{ x: [4, 9] }}>
+  <VictoryBar
+    data={[
+      { x: 5, y: 0.1 },
+      { x: 6, y: 1 },
+      { x: 7, y: 10 },
+      { x: 8, y: 100 }
+    ]}
+  />
+</VictoryChart>
+```
+Props affected by this change are: `scale`, `domain`, `maxDomain`, `minDomain`, `domainPadding`, and `categories`
+
+**Horizontal Charts with Event Containers**
+Dimension props such as `brushDimension` have changed so that they always refer to the dimension of the target variable (x for the independent variable, and y for the dependent variable). For example, a `VictoryBrushContainer` component with `brushDimension="x"` will move and expand only in the _independent_ dimension regardless of whether the chart is horizontal.
+
+Props affected by this change are: `brushDimension`, `cursorDimension`, `selectionDimension`, `voronoiDimension`, and `zoomDimension`
+
+**Horizontal Charts with Custom dataComponents**
+The position values (i.e. `x`, `y`, `x0`, `y0`) supplied to custom `dataComponents` from components like `VictoryChart` will be scaled for the layout of the horizontal chart. Users who rely on these values may need to flip them or adjust them depending on their use case
+
+**Horizontal VictoryBoxPlot**
+Previously `VictoryBoxPlot` required data to be flipped (x values flipped with y values) in order to plot horizontal charts. This is no longer required, and providing data in this format will no longer work correctly. To correct for this change, it should be sufficient to flip the data used in horizontal charts
+
 ## 31.3.0 (2019-02-23)
 
 - [1247](https://github.com/FormidableLabs/victory/pull/1247) Adds support for `labelOrientation` as an object for `VictoryBoxPlot`. Thanks @mAAdhaTTah
