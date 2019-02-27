@@ -39,22 +39,35 @@ storiesOf("VictoryErrorBar.borderWidth", module)
 
 storiesOf("VictoryErrorBar.data", module)
   .addDecorator(getChartDecorator({ domainPadding: 25 }))
-  .add("with data accessors", () => {
-    return (
-      <VictoryErrorBar
-        data={[
-          { series: 1, value: 9, error: 3 },
-          { series: 2, value: 80, error: 4 },
-          { series: 3, value: 50, error: 8 },
-          { series: 4, value: 70, error: 2 },
-          { series: 5, value: 20, error: 3 }
-        ]}
-        x="series"
-        y="value"
-        errorY={(d) => [d.error, d.error + 2]}
-      />
-    );
-  })
+  .add("with data accessors", () => (
+    <VictoryErrorBar
+      data={[
+        { series: 1, value: 9, error: 3 },
+        { series: 2, value: 80, error: 4 },
+        { series: 3, value: 50, error: 8 },
+        { series: 4, value: 70, error: 2 },
+        { series: 5, value: 20, error: 3 }
+      ]}
+      x="series"
+      y="value"
+      errorY={(d) => [d.error, d.error + 2]}
+    />
+  ))
+  .add("with data accessors (horizontal)", () => (
+    <VictoryErrorBar
+      horizontal
+      data={[
+        { series: 1, value: 9, error: 3 },
+        { series: 2, value: 80, error: 4 },
+        { series: 3, value: 50, error: 8 },
+        { series: 4, value: 70, error: 2 },
+        { series: 5, value: 20, error: 3 }
+      ]}
+      x="series"
+      y="value"
+      errorY={(d) => [d.error, d.error + 2]}
+    />
+  ))
   .add("with immutable data", () => {
     return (
       <VictoryErrorBar
@@ -84,12 +97,32 @@ storiesOf("VictoryErrorBar.labels", module)
         { x: 5, y: 20, errorX: 0.3, errorY: 2, label: ["last", "label"] }
       ]}
     />
+  ))
+  .add("data labels (horizontal)", () => (
+    <VictoryErrorBar
+      horizontal
+      data={[
+        { x: 1, y: 9, errorX: 0.3, errorY: 3, label: "first" },
+        { x: 2, y: 80, errorX: 0.5, errorY: 2 },
+        { x: 3, y: 50, errorX: 1.1, errorY: 2, label: "third" },
+        { x: 4, y: 70, errorX: 0.2, errorY: 3 },
+        { x: 5, y: 20, errorX: 0.3, errorY: 2, label: ["last", "label"] }
+      ]}
+    />
   ));
 
 storiesOf("VictoryErrorBar.tooltips", module)
   .addDecorator(getChartDecorator({ domainPadding: 25 }))
   .add("tooltips", () => (
     <VictoryErrorBar
+      data={getData(5)}
+      labels={(d) => `x: ${d.x}`}
+      labelComponent={<VictoryTooltip active />}
+    />
+  ))
+  .add("tooltips (horizontal)", () => (
+    <VictoryErrorBar
+      horizontal
       data={getData(5)}
       labels={(d) => `x: ${d.x}`}
       labelComponent={<VictoryTooltip active />}

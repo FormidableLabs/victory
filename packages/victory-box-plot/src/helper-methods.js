@@ -1,10 +1,10 @@
 import { orderBy, defaults, assign, uniq, groupBy, keys, isNaN, isNil } from "lodash";
-import { Helpers, Scale, Domain, Data, Collection } from "victory-core";
+import { Helpers, Scale, Domain, Data } from "victory-core";
 import { min as d3Min, max as d3Max, quantile as d3Quantile } from "d3-array";
 
 const TYPES = ["max", "min", "median", "q1", "q3"];
 
-const checkProcessedData = (props, data) => {
+const checkProcessedData = (data) => {
   /* check if the data is pre-processed. start by checking that it has
   all required quartile attributes. */
   const hasQuartileAttributes = data.every((datum) => {
@@ -12,12 +12,12 @@ const checkProcessedData = (props, data) => {
   });
 
   if (hasQuartileAttributes) {
-    // check that the indepedent variable is distinct
-    const values = data.map(({ _x, _y }) => (props.horizontal ? _y : _x));
+    // check that the independent variable is distinct
+    const values = data.map((d) => d._x);
     if (!uniq(values).length === values.length) {
       throw new Error(`
         data prop may only take an array of objects with a unique
-        independent variable. Make sure your x or y values are distinct.
+        independent variable. Make sure your x values are distinct.
       `);
     }
     return true;
@@ -27,8 +27,8 @@ const checkProcessedData = (props, data) => {
 
 const nanToNull = (val) => (isNaN(val) ? null : val);
 
-const getSummaryStatistics = (data, horizontal) => {
-  const dependentVars = data.map((datum) => (horizontal ? datum._x : datum._y));
+const getSummaryStatistics = (data) => {
+  const dependentVars = data.map((datum) => datum._y);
   const quartiles = {
     _q1: nanToNull(d3Quantile(dependentVars, 0.25)), // eslint-disable-line no-magic-numbers
     _q3: nanToNull(d3Quantile(dependentVars, 0.75)), // eslint-disable-line no-magic-numbers
@@ -37,39 +37,30 @@ const getSummaryStatistics = (data, horizontal) => {
     _max: nanToNull(d3Max(dependentVars))
   };
 
-  return horizontal
-    ? assign({}, quartiles, { _y: data[0]._y })
-    : assign({}, quartiles, { _x: data[0]._x });
+  return assign({}, data[0], quartiles, { _y: data[0]._y });
 };
 
-const isHorizontal = (props, data) => {
-  const arrayX = data.every((datum) => Array.isArray(datum._x));
-
-  return arrayX || props.horizontal;
-};
-
-const processData = (props, data) => {
+const processData = (data) => {
   /* check if the data is coming in a pre-processed form,
   i.e. { x || y, min, max, q1, q3, median }. if not, process it. */
-  const isProcessed = checkProcessedData(props, data);
+  const isProcessed = checkProcessedData(data);
   if (!isProcessed) {
     // check if the data is coming with x or y values as an array
     const arrayX = data.every((datum) => Array.isArray(datum._x));
     const arrayY = data.every((datum) => Array.isArray(datum._y));
-    const horizontal = arrayX || props.horizontal;
-    const sortKey = horizontal ? "_x" : "_y";
-    const groupKey = horizontal ? "_y" : "_x";
-    if (arrayX && arrayY) {
+    const sortKey = "_y";
+    const groupKey = "_x";
+    if (arrayX) {
       throw new Error(`
-        data may not be given with array values for both x and y
+        data should not be given as in array for x
       `);
-    } else if (arrayX || arrayY) {
+    } else if (arrayY) {
       /* generate summary statistics for each datum. to do this, flatten
       the depedentVarArray and process each datum separately */
       return data.map((datum) => {
         const dataArray = datum[sortKey].map((d) => assign({}, datum, { [sortKey]: d }));
         const sortedData = orderBy(dataArray, sortKey);
-        return getSummaryStatistics(sortedData, horizontal);
+        return getSummaryStatistics(sortedData);
       });
     } else {
       /* Group data by independent variable and generate summary statistics for each group */
@@ -77,7 +68,7 @@ const processData = (props, data) => {
       return keys(groupedData).map((key) => {
         const datum = groupedData[key];
         const sortedData = orderBy(datum, sortKey);
-        return getSummaryStatistics(sortedData, horizontal);
+        return getSummaryStatistics(sortedData);
       });
     }
   } else {
@@ -88,7 +79,7 @@ const processData = (props, data) => {
 const getData = (props) => {
   const accessorTypes = TYPES.concat("x", "y");
   const formattedData = Data.formatData(props.data, props, accessorTypes);
-  return formattedData.length ? processData(props, formattedData) : [];
+  return formattedData.length ? processData(formattedData) : [];
 };
 
 const reduceDataset = (dataset, props, axis) => {
@@ -133,12 +124,11 @@ const getDomainFromData = (props, axis) => {
   const maxDomain = Domain.getMaxFromProps(props, axis);
   const dataset = getData(props);
   if (dataset.length < 1) {
-    const scaleDomain = Scale.getBaseScale(props, axis).domain();
-    const min = minDomain !== undefined ? minDomain : Collection.getMinValue(scaleDomain);
-    const max = maxDomain !== undefined ? maxDomain : Collection.getMaxValue(scaleDomain);
-    return Domain.getDomainFromMinMax(min, max);
+    return minDomain !== undefined && maxDomain !== undefined
+      ? Domain.getDomainFromMinMax(minDomain, maxDomain)
+      : undefined;
   }
-  return (props.horizontal && axis === "x") || (!props.horizontal && axis === "y")
+  return axis === "y"
     ? getDomainFromMinMaxValues(dataset, props, axis)
     : reduceDataset(dataset, props, axis);
 };
@@ -173,9 +163,8 @@ const getStyles = (props, styleObject) => {
 };
 
 const getCalculatedValues = (props) => {
-  const { theme } = props;
+  const { theme, horizontal } = props;
   const data = getData(props);
-  const horizontal = isHorizontal(props, data);
   const range = {
     x: Helpers.getRange(props, "x"),
     y: Helpers.getRange(props, "y")
@@ -187,15 +176,15 @@ const getCalculatedValues = (props) => {
   const scale = {
     x: Scale.getBaseScale(props, "x")
       .domain(domain.x)
-      .range(range.x),
+      .range(props.horizontal ? range.y : range.x),
     y: Scale.getBaseScale(props, "y")
       .domain(domain.y)
-      .range(range.y)
+      .range(props.horizontal ? range.x : range.y)
   };
   const defaultStyles = theme && theme.boxplot && theme.boxplot.style ? theme.boxplot.style : {};
   const style = getStyles(props, defaultStyles);
-  const defaultLabelOrientation = horizontal ? "top" : "right";
-  const labelOrientation = props.labelOrientation || defaultLabelOrientation;
+  const defaultOrientation = props.horizontal ? "top" : "right";
+  const labelOrientation = props.labelOrientation || defaultOrientation;
   const boxWidth = props.boxWidth || 1;
   return { data, horizontal, domain, scale, style, labelOrientation, boxWidth };
 };
@@ -282,8 +271,8 @@ const getLabelProps = (props, text, type) => {
   const orientation = getOrientation(labelOrientation, type);
   const namespace = `${type}Labels`;
   const labelStyle = style[namespace] || style.labels;
-  const defaultVerticalAnchor = horizontal ? "end" : "middle";
-  const defaultTextAnchor = horizontal ? "middle" : "start";
+  const defaultVerticalAnchors = { top: "end", bottom: "start", left: "middle", right: "middle" };
+  const defaultTextAnchors = { left: "end", right: "start", top: "middle", bottom: "middle" };
   const whiskerWidth = typeof props.whiskerWidth === "number" ? props.whiskerWidth : boxWidth;
   const width = type === "min" || type === "max" ? whiskerWidth : boxWidth;
 
@@ -299,12 +288,14 @@ const getLabelProps = (props, text, type) => {
     text,
     datum,
     index,
+    orientation: labelOrientation,
     style: labelStyle,
     y: horizontal ? getDefaultPosition("y") : positions[type],
     x: horizontal ? positions[type] : getDefaultPosition("x"),
-    textAnchor: labelStyle.textAnchor || defaultTextAnchor,
-    verticalAnchor: labelStyle.verticalAnchor || defaultVerticalAnchor,
-    angle: labelStyle.angle
+    textAnchor: labelStyle.textAnchor || defaultTextAnchors[labelOrientation],
+    verticalAnchor: labelStyle.verticalAnchor || defaultVerticalAnchors[labelOrientation],
+    angle: labelStyle.angle,
+    horizontal
   };
 };
 
@@ -348,16 +339,16 @@ const getBaseProps = (props, fallbackProps) => {
       theme,
       style: style.parent || {},
       padding,
-      groupComponent
+      groupComponent,
+      horizontal
     }
   };
-  const boxScale = horizontal ? scale.x : scale.y;
-
+  const boxScale = scale.y;
   return data.reduce((acc, datum, index) => {
     const eventKey = !isNil(datum.eventKey) ? datum.eventKey : index;
     const positions = {
-      x: scale.x(datum._x),
-      y: scale.y(datum._y),
+      x: horizontal ? scale.y(datum._y) : scale.x(datum._x),
+      y: horizontal ? scale.x(datum._x) : scale.y(datum._y),
       min: boxScale(datum._min),
       max: boxScale(datum._max),
       median: boxScale(datum._median),

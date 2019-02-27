@@ -7,6 +7,7 @@ import isEqual from "react-fast-compare";
 const SMALL_NUMBER = 1 / Number.MAX_SAFE_INTEGER;
 const getScale = (props) => {
   const { scale = {}, dimension = "x" } = props;
+
   if (scale[dimension]) {
     return scale[dimension];
   }
@@ -15,6 +16,14 @@ const getScale = (props) => {
   const domain = Domain.getDomainFromProps(props, dimension) || [0, 1];
   fallbackScale.range(range).domain(domain);
   return fallbackScale;
+};
+
+const getDimension = (props) => {
+  const { horizontal, dimension = "x" } = props;
+  if (!horizontal) {
+    return dimension;
+  }
+  return dimension === "x" ? "y" : "x";
 };
 
 const toRange = (props, domain) => {
@@ -58,7 +67,7 @@ const getBrushDomain = (brushDomain, fullDomain) => {
 
 const getActiveHandle = (props, position, range) => {
   const width = props.handleWidth / 2;
-  const { dimension } = props;
+  const dimension = getDimension(props);
   const getHandle = (type) => {
     const base = {
       min: dimension === "x" ? Math.min(...range) : Math.max(...range),
@@ -164,7 +173,8 @@ export default class VictoryBrushLine extends React.Component {
             eventHandlers: {
               onMouseEnter: (evt, targetProps) => {
                 evt.preventDefault();
-                const { dimension, allowResize, brushDomain } = targetProps;
+                const { allowResize, brushDomain } = targetProps;
+                const dimension = getDimension(targetProps);
                 const parentSVG = targetProps.parentSVG || Selection.getParentSVG(evt);
                 const position = Selection.getSVGEventCoordinates(evt, parentSVG)[dimension];
                 const fullDomain = getFullDomain(targetProps);
@@ -193,10 +203,10 @@ export default class VictoryBrushLine extends React.Component {
                   allowResize,
                   allowDrag,
                   allowDraw,
-                  dimension,
                   activeBrushes,
                   brushDomain
                 } = targetProps;
+                const dimension = getDimension(targetProps);
 
                 // Don't trigger events for static brushes
                 if (!allowResize && !allowDrag) {
@@ -264,10 +274,11 @@ export default class VictoryBrushLine extends React.Component {
                   isSelecting,
                   allowResize,
                   allowDrag,
-                  dimension,
                   onBrushDomainChange,
                   brushDomain
                 } = targetProps;
+                const dimension = getDimension(targetProps);
+
                 if (isPanning || isSelecting) {
                   evt.preventDefault();
                   evt.stopPropagation();
@@ -407,7 +418,8 @@ export default class VictoryBrushLine extends React.Component {
   };
 
   getRectDimensions(props, brushWidth, domain) {
-    const { dimension, brushDomain } = props;
+    const { brushDomain } = props;
+    const dimension = getDimension(props);
     domain = domain || getBrushDomain(brushDomain, getFullDomain(props));
     const range = toRange(props, domain);
     const coordinates =
@@ -438,7 +450,8 @@ export default class VictoryBrushLine extends React.Component {
   }
 
   getHandleDimensions(props) {
-    const { dimension, handleWidth, x1, x2, y1, y2, brushDomain } = props;
+    const { handleWidth, x1, x2, y1, y2, brushDomain } = props;
+    const dimension = getDimension(props);
     const brushWidth = props.brushWidth || props.width;
     const domain = getBrushDomain(brushDomain, getFullDomain(props));
     const range = toRange(props, domain);
@@ -462,7 +475,8 @@ export default class VictoryBrushLine extends React.Component {
   }
 
   getCursor(props) {
-    const { dimension, activeBrushes = {} } = props;
+    const { activeBrushes = {} } = props;
+    const dimension = getDimension(props);
     if (activeBrushes.minHandle || activeBrushes.maxHandle) {
       return dimension === "x" ? "ew-resize" : "ns-resize";
     } else if (activeBrushes.brush) {

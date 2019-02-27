@@ -93,9 +93,9 @@ export const zoomContainerMixin = (base) =>
     };
 
     clipDataComponents(children, props) {
-      const { scale, clipContainerComponent, polar, origin } = props;
-      const rangeX = scale.x.range();
-      const rangeY = scale.y.range();
+      const { scale, clipContainerComponent, polar, origin, horizontal } = props;
+      const rangeX = horizontal ? scale.y.range() : scale.x.range();
+      const rangeY = horizontal ? scale.x.range() : scale.y.range();
       const plottableWidth = Math.abs(rangeX[0] - rangeX[1]);
       const plottableHeight = Math.abs(rangeY[0] - rangeY[1]);
       const radius = Math.max(...rangeY);

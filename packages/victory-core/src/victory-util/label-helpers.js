@@ -50,13 +50,13 @@ function getPadding(props, datum) {
 }
 
 function getPosition(props, datum) {
-  const { horizontal, polar } = props;
+  const { polar } = props;
   const { x, y } = Helpers.scalePoint(props, datum);
   const padding = getPadding(props, datum);
   if (!polar) {
     return {
-      x: horizontal ? y + padding.x : x + padding.x,
-      y: horizontal ? x + padding.y : y - padding.y
+      x: x + padding.x,
+      y: y - padding.y
     };
   } else {
     const polarPadding = getPolarPadding(props, datum);

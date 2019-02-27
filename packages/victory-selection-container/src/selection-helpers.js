@@ -3,6 +3,14 @@ import { assign, defaults, throttle, isFunction, includes } from "lodash";
 import React from "react";
 
 const SelectionHelpers = {
+  getDimension(props) {
+    const { horizontal, selectionDimension } = props;
+    if (!horizontal || !selectionDimension) {
+      return selectionDimension;
+    }
+    return selectionDimension === "x" ? "y" : "x";
+  },
+
   getDatasets(props) {
     if (props.data) {
       return [{ data: props.data }];
@@ -44,25 +52,10 @@ const SelectionHelpers = {
     return filtered.length ? filtered : null;
   },
 
-  getPoint(props, point) {
-    if (!props.horizontal) {
-      return point;
-    }
-    return {
-      _x: point._y,
-      _y: point._x,
-      _x1: point._y1,
-      _y1: point._x1,
-      _x0: point._y0,
-      _y0: point._x0
-    };
-  },
-
   getSelectedData(props, dataset) {
     const { x1, y1, x2, y2 } = props;
     const withinBounds = (d) => {
-      const point = this.getPoint(props, d);
-      const scaledPoint = Helpers.scalePoint(props, point);
+      const scaledPoint = Helpers.scalePoint(props, d);
       return (
         scaledPoint.x >= Math.min(x1, x2) &&
         scaledPoint.x <= Math.max(x1, x2) &&
@@ -91,7 +84,7 @@ const SelectionHelpers = {
     if (!allowSelection) {
       return {};
     }
-    const dimension = targetProps.selectionDimension;
+    const dimension = this.getDimension(targetProps);
     const parentSVG = targetProps.parentSVG || Selection.getParentSVG(evt);
     const { x, y } = Selection.getSVGEventCoordinates(evt, parentSVG);
     const x1 = polar || dimension !== "y" ? x : Selection.getDomainCoordinates(targetProps).x[0];
@@ -121,7 +114,7 @@ const SelectionHelpers = {
 
   onMouseMove(evt, targetProps) {
     const { allowSelection, select, polar } = targetProps;
-    const dimension = targetProps.selectionDimension;
+    const dimension = this.getDimension(targetProps);
     if (!allowSelection || !select) {
       return null;
     } else {

@@ -3,6 +3,14 @@ import { assign, throttle, isFunction, defaults, mapValues } from "lodash";
 import isEqual from "react-fast-compare";
 
 const Helpers = {
+  getDimension(props) {
+    const { horizontal, brushDimension } = props;
+    if (!horizontal || !brushDimension) {
+      return brushDimension;
+    }
+    return brushDimension === "x" ? "y" : "x";
+  },
+
   withinBounds(point, bounds, padding) {
     const { x1, x2, y1, y2 } = mapValues(bounds, Number);
     const { x, y } = mapValues(point, Number);
@@ -16,7 +24,7 @@ const Helpers = {
   },
 
   getDomainBox(props, fullDomain, selectedDomain) {
-    const { brushDimension } = props;
+    const brushDimension = this.getDimension(props);
     fullDomain = defaults({}, fullDomain, props.domain);
     selectedDomain = defaults({}, selectedDomain, fullDomain);
     const fullCoords = Selection.getDomainCoordinates(props, fullDomain);
@@ -96,7 +104,8 @@ const Helpers = {
   },
 
   panBox(props, point) {
-    const { brushDimension, domain, startX, startY } = props;
+    const { domain, startX, startY } = props;
+    const brushDimension = this.getDimension(props);
     const brushDomain = defaults({}, props.brushDomain, domain);
     const fullDomain = defaults({}, props.fullDomain, domain);
     const { x1, x2, y1, y2 } = props.x1 ? props : this.getDomainBox(props, fullDomain, brushDomain);
@@ -128,7 +137,6 @@ const Helpers = {
   onMouseDown(evt, targetProps) {
     evt.preventDefault();
     const {
-      brushDimension,
       handleWidth,
       cachedBrushDomain,
       domain,
@@ -136,6 +144,7 @@ const Helpers = {
       allowDrag,
       allowDraw
     } = targetProps;
+    const brushDimension = this.getDimension(targetProps);
 
     // Don't trigger events for static brushes
     if (!allowResize && !allowDrag) {
@@ -145,7 +154,6 @@ const Helpers = {
     const fullDomainBox = targetProps.fullDomainBox || this.getDomainBox(targetProps, domain);
     const parentSVG = targetProps.parentSVG || Selection.getParentSVG(evt);
     const { x, y } = Selection.getSVGEventCoordinates(evt, parentSVG);
-
     // Ignore events that occur outside of the maximum domain region
     if (!this.withinBounds({ x, y }, fullDomainBox, handleWidth)) {
       return {};
@@ -227,15 +235,16 @@ const Helpers = {
       return {};
     }
     const {
-      brushDimension,
       scale,
       isPanning,
       isSelecting,
       fullDomainBox,
       onBrushDomainChange,
       allowResize,
-      allowDrag
+      allowDrag,
+      horizontal
     } = targetProps;
+    const brushDimension = this.getDimension(targetProps);
     const parentSVG = targetProps.parentSVG || Selection.getParentSVG(evt);
     const { x, y } = Selection.getSVGEventCoordinates(evt, parentSVG);
     // Ignore events that occur outside of the maximum domain region
@@ -246,7 +255,7 @@ const Helpers = {
       const { startX, startY } = targetProps;
       const pannedBox = this.panBox(targetProps, { x, y });
       const constrainedBox = this.constrainBox(pannedBox, fullDomainBox);
-      const currentDomain = Selection.getBounds({ ...constrainedBox, scale });
+      const currentDomain = Selection.getBounds({ ...constrainedBox, scale, horizontal });
       const mutatedProps = {
         currentDomain,
         parentSVG,
@@ -272,7 +281,8 @@ const Helpers = {
         y2,
         x1: targetProps.x1,
         y1: targetProps.y1,
-        scale
+        scale,
+        horizontal
       });
 
       const mutatedProps = { x2, y2, currentDomain, parentSVG };

@@ -2,7 +2,7 @@ import React from "react";
 import PropTypes from "prop-types";
 import CustomPropTypes from "../victory-util/prop-types";
 import Helpers from "../victory-util/helpers";
-import { assign, defaults, isFunction, isObject, uniqueId } from "lodash";
+import { assign, defaults, isObject, uniqueId } from "lodash";
 import ClipPath from "../victory-primitives/clip-path";
 import Circle from "../victory-primitives/circle";
 import Rect from "../victory-primitives/rect";
@@ -132,7 +132,7 @@ export default class VictoryClipContainer extends React.Component {
     if (clipValues[axis] !== undefined) {
       return clipValues[axis];
     }
-    const range = this.getRange(props, axis);
+    const range = Helpers.getRange(props, axis);
     return range ? Math.abs(range[0] - range[1]) || undefined : undefined;
   }
 
@@ -141,18 +141,9 @@ export default class VictoryClipContainer extends React.Component {
     if (translateValues[axis] !== undefined) {
       return translateValues[axis];
     }
-    const range = this.getRange(props, axis);
+    const range = Helpers.getRange(props, axis);
     return range ? Math.min(...range) : undefined;
   }
-
-  getRange(props, axis) {
-    const scale = props.scale || {};
-    if (!scale[axis]) {
-      return undefined;
-    }
-    return isFunction(scale[axis].range) ? scale[axis].range() : undefined;
-  }
-
   render() {
     const clipHeight = this.getClipValue(this.props, "y");
     const clipWidth = this.getClipValue(this.props, "x");

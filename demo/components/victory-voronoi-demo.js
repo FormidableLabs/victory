@@ -3,15 +3,16 @@
 import React from "react";
 import { VictoryVoronoi } from "../../packages/victory-voronoi/src/index";
 import { VictoryTooltip } from "../../packages/victory-tooltip/src/index";
+import { VictoryChart } from "../../packages/victory-chart/src/index";
+import { VictoryScatter } from "../../packages/victory-scatter/src/index";
 import { range, random } from "lodash";
 
 const getData = () => {
-  return range(20).map((index) => {
+  return range(20).map((i) => {
     return {
       x: random(600),
       y: random(600),
-      label: `label-${index}`,
-      opacity: 0.1
+      i
     };
   });
 };
@@ -82,6 +83,7 @@ class App extends React.Component {
           />
 
           <VictoryVoronoi
+            labels={(d) => `#${d.i}`}
             labelComponent={<VictoryTooltip />}
             animate={{ duration: 2000 }}
             style={{ parent: parentStyle, data: visible }}
@@ -89,13 +91,27 @@ class App extends React.Component {
             data={this.state.data}
           />
 
-          <VictoryVoronoi
-            labelComponent={<VictoryTooltip />}
-            animate={{ duration: 2000 }}
-            style={{ parent: parentStyle, data: visible }}
-            data={this.state.data}
-            flyoutProps={{ cornerRadius: 0 }}
-          />
+          <VictoryChart horizontal style={{ parent: parentStyle }}>
+            <VictoryVoronoi
+              labels={(d) => `#${d.i}`}
+              labelComponent={<VictoryTooltip />}
+              size={20}
+              style={{ parent: parentStyle, data: visible }}
+              data={this.state.data}
+              flyoutProps={{ cornerRadius: 0 }}
+            />
+            <VictoryScatter data={this.state.data} />
+          </VictoryChart>
+
+          <VictoryChart horizontal style={{ parent: parentStyle }}>
+            <VictoryVoronoi
+              labels={(d) => `#${d.i}`}
+              labelComponent={<VictoryTooltip />}
+              style={{ parent: parentStyle, data: visible }}
+              data={this.state.data}
+            />
+            <VictoryScatter data={this.state.data} />
+          </VictoryChart>
         </div>
       </div>
     );

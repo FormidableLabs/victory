@@ -171,9 +171,9 @@ storiesOf("VictoryBar.getPath", module)
   .add("custom bar path (horizontal)", () => {
     const getPathFn = (props) => {
       const { x0, x1, y0, y1 } = props;
-      return `M ${y0}, ${x0}
-        L ${y1}, ${(x0 + x1) / 2}
-        L ${y0}, ${x1}
+      return `M ${x0}, ${y1}
+        L ${x1}, ${(y0 + y1) / 2}
+        L ${x0}, ${y0}
         z`;
     };
     return <VictoryBar data={getData(4)} horizontal getPath={getPathFn} />;
@@ -549,7 +549,7 @@ storiesOf("VictoryBar.grouped", module)
   ));
 
 storiesOf("VictoryBar.scale", module)
-  .addDecorator(getChartDecorator({ scale: { x: "time" }, domainPadding: 25 }))
+  .addDecorator(getChartDecorator({ domainPadding: 25 }))
   .add("time scale", () => <VictoryBar data={getTimeData(5)} />)
   .add("time scale with labels", () => (
     <VictoryBar data={getTimeData(5)} labels={(d) => d.x.getFullYear()} />
@@ -567,9 +567,7 @@ storiesOf("VictoryBar.scale", module)
       <VictoryBar data={getTimeData(3, "seed-1")} />
       <VictoryBar data={getTimeData(3, "seed-2")} />
     </VictoryGroup>
-  ));
-storiesOf("VictoryBar.scale", module)
-  .addDecorator(getChartDecorator({ scale: { y: "time" }, domainPadding: 25 }))
+  ))
   .add(" horizontal time scale with labels", () => (
     <VictoryBar horizontal data={getTimeData(5)} labels={(d) => d.x.getFullYear()} />
   ))
@@ -587,11 +585,10 @@ storiesOf("VictoryBar.scale", module)
       <VictoryBar data={getTimeData(3, "seed-2")} />
     </VictoryGroup>
   ));
+
 storiesOf("VictoryBar.scale", module)
   .addDecorator(getChartDecorator({ scale: { y: "log" }, domainPadding: 25 }))
-  .add("log scale", () => <VictoryBar data={getLogData(7)} />);
-storiesOf("VictoryBar.scale", module)
-  .addDecorator(getChartDecorator({ scale: { x: "log" }, domainPadding: 25 }))
+  .add("log scale", () => <VictoryBar data={getLogData(7)} />)
   .add(" horizontal log scale", () => <VictoryBar horizontal data={getLogData(7)} />);
 
 storiesOf("VictoryBar.polar", module)

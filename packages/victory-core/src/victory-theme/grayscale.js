@@ -48,7 +48,7 @@ export default {
         data: {
           fill: charcoal
         },
-        labels: centeredLabelStyles
+        labels: baseLabelStyles
       }
     },
     baseProps
@@ -119,7 +119,7 @@ export default {
           stroke: charcoal,
           strokeWidth: 1
         },
-        labels: centeredLabelStyles
+        labels: baseLabelStyles
       },
       candleColors: {
         positive: "#ffffff",
@@ -138,7 +138,7 @@ export default {
           stroke: charcoal,
           strokeWidth: 2
         },
-        labels: centeredLabelStyles
+        labels: baseLabelStyles
       }
     },
     baseProps
@@ -170,7 +170,7 @@ export default {
           stroke: charcoal,
           strokeWidth: 2
         },
-        labels: centeredLabelStyles
+        labels: baseLabelStyles
       }
     },
     baseProps
@@ -197,7 +197,7 @@ export default {
           stroke: "transparent",
           strokeWidth: 0
         },
-        labels: centeredLabelStyles
+        labels: baseLabelStyles
       }
     },
     baseProps
@@ -209,7 +209,7 @@ export default {
     baseProps
   ),
   tooltip: {
-    style: assign({}, centeredLabelStyles, { padding: 5, pointerEvents: "none" }),
+    style: assign({}, baseLabelStyles, { padding: 5, pointerEvents: "none" }),
     flyoutStyle: {
       stroke: charcoal,
       strokeWidth: 1,
@@ -227,7 +227,7 @@ export default {
           stroke: "transparent",
           strokeWidth: 0
         },
-        labels: assign({}, centeredLabelStyles, { padding: 5, pointerEvents: "none" }),
+        labels: assign({}, baseLabelStyles, { padding: 5, pointerEvents: "none" }),
         flyout: {
           stroke: charcoal,
           strokeWidth: 1,

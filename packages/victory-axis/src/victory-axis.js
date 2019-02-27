@@ -13,7 +13,7 @@ import {
   addEvents,
   Axis
 } from "victory-core";
-import { getBaseProps, getScale, getStyles } from "./helper-methods";
+import { getBaseProps, getStyles } from "./helper-methods";
 
 const fallbackProps = {
   width: 450,
@@ -118,7 +118,6 @@ class VictoryAxis extends React.Component {
     tickLabelComponent: <VictoryLabel />,
     tickComponent: <LineSegment type={"tick"} />,
     gridComponent: <LineSegment type={"grid"} />,
-    scale: "linear",
     standalone: true,
     theme: VictoryTheme.grayscale,
     containerComponent: <VictoryContainer />,
@@ -128,7 +127,6 @@ class VictoryAxis extends React.Component {
 
   static getDomain = Axis.getDomain;
   static getAxis = Axis.getAxis;
-  static getScale = getScale;
   static getStyles = (props) => getStyles(props, fallbackProps.style);
   static getBaseProps = (props) => getBaseProps(props, fallbackProps);
   static expectedComponents = [

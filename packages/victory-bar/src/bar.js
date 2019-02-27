@@ -97,10 +97,11 @@ export default class Bar extends React.Component {
     }
     if (isPlainObject(cornerRadius)) {
       return this.getCornerRadiusFromObject(props);
+    } else {
+      realCornerRadius.topLeft = Helpers.evaluateProp(cornerRadius, datum, active);
+      realCornerRadius.topRight = Helpers.evaluateProp(cornerRadius, datum, active);
+      return realCornerRadius;
     }
-    realCornerRadius.topLeft = Helpers.evaluateProp(cornerRadius, datum, active);
-    realCornerRadius.topRight = Helpers.evaluateProp(cornerRadius, datum, active);
-    return realCornerRadius;
   }
 
   render() {

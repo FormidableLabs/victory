@@ -59,10 +59,10 @@ storiesOf("VictoryAxis.axisValue", module)
     </VictoryChart>
   ))
   .add("works with horizontal charts", () => (
-    <VictoryChart>
-      <VictoryBar horizontal data={[{ x: "a", y: 1 }, { x: "b", y: 2 }, { x: "c", y: 5 }]} />
-      <VictoryAxis axisValue="b" />
-      <VictoryAxis dependentAxis />
+    <VictoryChart horizontal>
+      <VictoryBar data={[{ x: "a", y: 1 }, { x: "b", y: 2 }, { x: "c", y: 5 }]} />
+      <VictoryAxis dependentAxis axisValue="b" />
+      <VictoryAxis />
     </VictoryChart>
   ));
 

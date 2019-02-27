@@ -2,6 +2,14 @@ import { Selection } from "victory-core";
 import { throttle, isFunction, mapValues } from "lodash";
 
 const CursorHelpers = {
+  getDimension(props) {
+    const { horizontal, cursorDimension } = props;
+    if (!horizontal || !cursorDimension) {
+      return cursorDimension;
+    }
+    return cursorDimension === "x" ? "y" : "x";
+  },
+
   withinBounds(point, bounds) {
     const { x1, x2, y1, y2 } = mapValues(bounds, Number);
     const { x, y } = mapValues(point, Number);
@@ -14,7 +22,8 @@ const CursorHelpers = {
   },
 
   onMouseMove(evt, targetProps) {
-    const { onCursorChange, cursorDimension, domain } = targetProps;
+    const { onCursorChange, domain } = targetProps;
+    const cursorDimension = this.getDimension(targetProps);
     const parentSVG = targetProps.parentSVG || Selection.getParentSVG(evt);
     const cursorSVGPosition = Selection.getSVGEventCoordinates(evt, parentSVG);
     let cursorValue = Selection.getDataCoordinates(
@@ -71,6 +80,7 @@ const CursorHelpers = {
 };
 
 export default {
+  ...CursorHelpers,
   onMouseMove: throttle(
     CursorHelpers.onMouseMove.bind(CursorHelpers),
     32, // eslint-disable-line no-magic-numbers

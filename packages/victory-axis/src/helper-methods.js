@@ -22,12 +22,23 @@ const evaluateStyle = (style, data, index) => {
   }, {});
 };
 
-// exposed for use by VictoryChart
+const getCurrentAxis = (props, axis) => {
+  const { orientation, horizontal } = props;
+  if (orientation) {
+    const dimensions = { top: "x", bottom: "x", left: "y", right: "y" };
+    return dimensions[orientation];
+  }
+  const otherAxis = axis === "x" ? "y" : "x";
+  return horizontal ? otherAxis : axis;
+};
+
 const getScale = (props) => {
   const axis = Axis.getAxis(props);
+  const currentAxis = getCurrentAxis(props, axis);
   const scale = Scale.getBaseScale(props, axis);
-  const domain = Axis.getDomain(props) || scale.domain();
-  scale.range(Helpers.getRange(props, axis));
+  const propsDomain = props.domain && props.domain[axis];
+  const domain = propsDomain || Axis.getDomain(props) || scale.domain();
+  scale.range(Helpers.getRange(props, currentAxis));
   scale.domain(domain);
   return scale;
 };
@@ -297,15 +308,26 @@ const getLayoutProps = (modifiedProps, calculatedValues) => {
   };
 };
 
+const getOrientation = (props) => {
+  if (props.orientation) {
+    return props.orientation;
+  }
+  const defaultOrientations = {
+    dependent: props.horizontal ? "bottom" : "left",
+    independent: props.horizontal ? "left" : "bottom"
+  };
+  return props.dependentAxis ? defaultOrientations.dependent : defaultOrientations.independent;
+};
+
 const getCalculatedValues = (props) => {
   const defaultStyles = getStyleObject(props);
   const style = getStyles(props, defaultStyles);
   const padding = Helpers.getPadding(props);
-  const orientation = props.orientation || (props.dependentAxis ? "left" : "bottom");
   const isVertical = Axis.isVertical(props);
   const labelPadding = getLabelPadding(props, style);
   const stringTicks = Axis.stringTicks(props) ? props.tickValues : undefined;
   const axis = Axis.getAxis(props);
+  const orientation = getOrientation(props);
   const scale = getScale(props);
   const domain = Axis.getDomain(props);
   const ticks = Axis.getTicks(props, scale, props.crossAxis);
@@ -346,9 +368,9 @@ const getBaseProps = (props, fallbackProps) => {
     name
   } = calculatedValues;
   const otherAxis = axis === "x" ? "y" : "x";
-  const { width, height, standalone, theme, polar, padding } = props;
+  const { width, height, standalone, theme, polar, padding, horizontal } = props;
   const { globalTransform, gridOffset, gridEdge } = getLayoutProps(props, calculatedValues);
-  const sharedProps = { scale: { [axis]: scale }, polar };
+  const sharedProps = { scale: { [axis]: scale }, polar, horizontal };
   const axisProps = getAxisProps(props, calculatedValues, globalTransform);
   const axisLabelProps = getAxisLabelProps(props, calculatedValues, globalTransform);
   const initialChildProps = {
@@ -399,4 +421,4 @@ const getBaseProps = (props, fallbackProps) => {
   }, initialChildProps);
 };
 
-export { getBaseProps, getScale, getStyles };
+export { getBaseProps, getStyles };

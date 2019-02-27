@@ -9,15 +9,15 @@ import seedrandom from "seedrandom";
 import { getArrayData } from "./data";
 import { getChartDecorator } from "./decorators";
 
-const getRepeatData = (num, samples, horizontal) => {
+const getRepeatData = (num, samples) => {
   const seed = "getRepeatData";
   samples = samples || 10;
   const baseSeed = seedrandom(seed);
   const rand = () => baseSeed.quick() * 10;
   return range(num).reduce((memo, curr) => {
     const sampleData = range(samples).map(() => ({
-      x: horizontal ? rand() : curr + 1,
-      y: horizontal ? curr + 1 : rand()
+      x: curr + 1,
+      y: rand()
     }));
     return memo.concat(sampleData);
   }, []);
@@ -98,7 +98,7 @@ storiesOf("VictoryBoxPlot.data", module)
         { type: 2, Min: 4, Max: 20, Median: 10, Q1: 7, Q3: 15 },
         { type: 3, Min: 3, Max: 12, Median: 6, Q1: 5, Q3: 10 }
       ]}
-      y="type"
+      x="type"
       min="Min"
       max="Max"
       median="Median"
@@ -107,13 +107,9 @@ storiesOf("VictoryBoxPlot.data", module)
     />
   ))
   .add("array data", () => <VictoryBoxPlot data={getArrayData(5, 10)} />)
-  .add("array data (horizontal)", () => (
-    <VictoryBoxPlot horizontal data={getArrayData(5, 10, "horizontal")} />
-  ))
+  .add("array data (horizontal)", () => <VictoryBoxPlot horizontal data={getArrayData(5, 10)} />)
   .add("repeat data", () => <VictoryBoxPlot data={getRepeatData(5, 10)} />)
-  .add("repeat data (horizontal)", () => (
-    <VictoryBoxPlot horizontal data={getRepeatData(5, 10, "horizontal")} />
-  ));
+  .add("repeat data (horizontal)", () => <VictoryBoxPlot horizontal data={getRepeatData(5, 10)} />);
 
 storiesOf("VictoryBoxPlot.labels", module)
   .addDecorator(getChartDecorator({ domainPadding: 25 }))

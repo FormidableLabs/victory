@@ -1,5 +1,5 @@
 import { assign, isNil } from "lodash";
-import { Helpers, LabelHelpers, Scale, Domain, Data, Collection } from "victory-core";
+import { Helpers, LabelHelpers, Scale, Domain, Data } from "victory-core";
 
 const getData = (props) => {
   const accessorTypes = ["x", "high", "low", "close", "open"];
@@ -23,10 +23,9 @@ const getDomainFromData = (props, axis) => {
   const maxDomain = Domain.getMaxFromProps(props, axis);
   const dataset = getData(props);
   if (dataset.length < 1) {
-    const scaleDomain = Scale.getBaseScale(props, axis).domain();
-    const min = minDomain !== undefined ? minDomain : Collection.getMinValue(scaleDomain);
-    const max = maxDomain !== undefined ? maxDomain : Collection.getMaxValue(scaleDomain);
-    return Domain.getDomainFromMinMax(min, max);
+    return minDomain !== undefined && maxDomain !== undefined
+      ? Domain.getDomainFromMinMax(minDomain, maxDomain)
+      : undefined;
   }
   const min = minDomain !== undefined ? minDomain : reduceData(dataset, axis, "min");
   const max = maxDomain !== undefined ? maxDomain : reduceData(dataset, axis, "max");
@@ -54,10 +53,10 @@ const getCalculatedValues = (props) => {
   const scale = {
     x: Scale.getBaseScale(props, "x")
       .domain(domain.x)
-      .range(range.x),
+      .range(props.horizontal ? range.y : range.x),
     y: Scale.getBaseScale(props, "y")
       .domain(domain.y)
-      .range(range.y)
+      .range(props.horizontal ? range.x : range.y)
   };
   const origin = polar ? props.origin || Helpers.getPolarOrigin(props) : undefined;
   return { domain, data, scale, style, origin };
@@ -78,20 +77,25 @@ const getDataStyles = (datum, style, props) => {
 };
 
 const getLabelProps = (dataProps, text, style) => {
-  const { x, high, index, scale, datum, data } = dataProps;
+  const { x, high, index, scale, datum, data, horizontal } = dataProps;
   const labelStyle = style.labels || {};
+  const defaultAnchors = {
+    vertical: horizontal ? "middle" : "end",
+    text: horizontal ? "start" : "middle"
+  };
   return {
     style: labelStyle,
-    y: high - (labelStyle.padding || 0),
-    x,
+    y: horizontal ? x : high - (labelStyle.padding || 0),
+    x: horizontal ? high + (labelStyle.padding || 0) : x,
     text,
     index,
     scale,
     datum,
     data,
-    textAnchor: labelStyle.textAnchor,
-    verticalAnchor: labelStyle.verticalAnchor || "end",
-    angle: labelStyle.angle
+    textAnchor: labelStyle.textAnchor || defaultAnchors.text,
+    verticalAnchor: labelStyle.verticalAnchor || defaultAnchors.vertical,
+    angle: labelStyle.angle,
+    horizontal
   };
 };
 
@@ -114,7 +118,8 @@ const getBaseProps = (props, fallbackProps) => {
     wickStrokeWidth,
     labels,
     events,
-    sharedEvents
+    sharedEvents,
+    horizontal
   } = props;
   const initialChildProps = {
     parent: {
@@ -129,7 +134,8 @@ const getBaseProps = (props, fallbackProps) => {
       origin,
       name,
       style: style.parent,
-      padding
+      padding,
+      horizontal
     }
   };
 
@@ -158,7 +164,8 @@ const getBaseProps = (props, fallbackProps) => {
       origin,
       wickStrokeWidth,
       open,
-      close
+      close,
+      horizontal
     };
 
     childProps[eventKey] = {

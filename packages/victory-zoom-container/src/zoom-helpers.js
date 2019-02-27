@@ -132,11 +132,12 @@ const RawZoomHelpers = {
       ? newDomain.map((val) => new Date(val))
       : newDomain;
   },
-
-  getDomainScale(domain, scale, axis) {
+  // eslint-disable-next-line max-params
+  getDomainScale(domain, scale, axis, horizontal) {
     const axisDomain = Array.isArray(domain) ? domain : domain[axis];
     const [from, to] = axisDomain;
-    const range = scale[axis].range();
+    const otherAxis = axis === "x" ? "y" : "x";
+    const range = horizontal ? scale[otherAxis].range() : scale[axis].range();
     const plottableWidth = Math.abs(range[0] - range[1]);
     return plottableWidth / (to - from);
   },
@@ -161,27 +162,17 @@ const RawZoomHelpers = {
   },
 
   getDomain(props) {
-    const { originalDomain, domain, children, zoomDimension, horizontal } = props;
-    let xAxis = "x";
-    let yAxis = "y";
-    let zoomAxis = zoomDimension;
-    if (horizontal) {
-      xAxis = "y";
-      yAxis = "x";
-      if (zoomDimension) {
-        zoomAxis = { x: xAxis, y: yAxis }[zoomDimension];
-      }
-    }
+    const { originalDomain, domain, children, zoomDimension } = props;
     const childComponents = Children.toArray(children);
     let childrenDomain = {};
     if (childComponents.length) {
       childrenDomain = zoomDimension
         ? {
-            [zoomDimension]: Wrapper.getDomainFromChildren(props, zoomAxis, childComponents)
+            [zoomDimension]: Wrapper.getDomainFromChildren(props, zoomDimension, childComponents)
           }
         : {
-            x: Wrapper.getDomainFromChildren(props, xAxis, childComponents),
-            y: Wrapper.getDomainFromChildren(props, yAxis, childComponents)
+            x: Wrapper.getDomainFromChildren(props, "x", childComponents),
+            y: Wrapper.getDomainFromChildren(props, "y", childComponents)
           };
     }
     return defaults({}, childrenDomain, originalDomain, domain);
@@ -241,13 +232,23 @@ const RawZoomHelpers = {
   // eslint-disable-next-line max-params, max-statements
   onMouseMove(evt, targetProps, eventKey, ctx) {
     if (targetProps.panning && targetProps.allowPan) {
-      const { scale, startX, startY, onZoomDomainChange, zoomDimension, zoomDomain } = targetProps;
+      const {
+        scale,
+        startX,
+        startY,
+        onZoomDomainChange,
+        zoomDomain,
+        zoomDimension,
+        horizontal
+      } = targetProps;
       const parentSVG = targetProps.parentSVG || Selection.getParentSVG(evt);
       const { x, y } = Selection.getSVGEventCoordinates(evt, parentSVG);
       const originalDomain = this.getDomain(targetProps);
       const lastDomain = this.getLastDomain(targetProps, originalDomain);
-      const dx = (startX - x) / this.getDomainScale(lastDomain, scale, "x");
-      const dy = (y - startY) / this.getDomainScale(lastDomain, scale, "y");
+      const deltaX = horizontal ? y - startY : startX - x;
+      const deltaY = horizontal ? startX - x : y - startY;
+      const dx = deltaX / this.getDomainScale(lastDomain, scale, "x", horizontal);
+      const dy = deltaY / this.getDomainScale(lastDomain, scale, "y", horizontal);
       const currentDomain = {
         x: zoomDimension === "y" ? originalDomain.x : this.pan(lastDomain.x, originalDomain.x, dx),
         y: zoomDimension === "x" ? originalDomain.y : this.pan(lastDomain.y, originalDomain.y, dy)

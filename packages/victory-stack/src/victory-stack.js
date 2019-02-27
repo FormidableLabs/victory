@@ -55,7 +55,6 @@ export default class VictoryStack extends React.Component {
   static defaultProps = {
     containerComponent: <VictoryContainer />,
     groupComponent: <g />,
-    scale: "linear",
     standalone: true,
     theme: VictoryTheme.grayscale,
     fillInMissingData: true

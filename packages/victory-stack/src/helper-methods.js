@@ -100,8 +100,8 @@ function addLayoutData(props, datasets, index) {
 }
 /* eslint-enable no-nested-ternary */
 
-function stackData(props) {
-  const dataFromChildren = Wrapper.getDataFromChildren(props);
+function stackData(props, childComponents) {
+  const dataFromChildren = Wrapper.getDataFromChildren(props, childComponents);
   const datasets = fillData(props, dataFromChildren);
   return datasets.map((d, i) => addLayoutData(props, datasets, i));
 }
@@ -109,11 +109,10 @@ function stackData(props) {
 function getCalculatedProps(props, childComponents) {
   childComponents = childComponents || React.Children.toArray(props.children);
   const role = "stack";
+  props = Helpers.modifyProps(props, fallbackProps, role);
   const style = Wrapper.getStyle(props.theme, props.style, role);
-  const horizontal =
-    props.horizontal || childComponents.every((component) => component.props.horizontal);
   const categories = Wrapper.getCategories(props, childComponents);
-  const datasets = stackData(props);
+  const datasets = stackData(props, childComponents);
   const children = childComponents.map((c, i) => {
     return React.cloneElement(c, { data: datasets[i] });
   });
@@ -126,16 +125,14 @@ function getCalculatedProps(props, childComponents) {
     y: Helpers.getRange(props, "y")
   };
   const baseScale = {
-    x: Scale.getScaleFromProps(props, "x") || Scale.getDefaultScale(),
-    y: Scale.getScaleFromProps(props, "y") || Scale.getDefaultScale()
+    x: Scale.getScaleFromProps(props, "x") || Wrapper.getScale(props, "x"),
+    y: Scale.getScaleFromProps(props, "y") || Wrapper.getScale(props, "y")
   };
-  const xScale = baseScale.x.domain(domain.x).range(range.x);
-  const yScale = baseScale.y.domain(domain.y).range(range.y);
   const scale = {
-    x: horizontal ? yScale : xScale,
-    y: horizontal ? xScale : yScale
+    x: baseScale.x.domain(domain.x).range(props.horizontal ? range.y : range.x),
+    y: baseScale.y.domain(domain.y).range(props.horizontal ? range.x : range.y)
   };
-  const colorScale = props.colorScale;
+  const { colorScale, horizontal } = props;
   return { datasets, categories, range, domain, horizontal, scale, style, colorScale, role };
 }
 

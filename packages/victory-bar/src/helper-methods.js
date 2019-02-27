@@ -1,9 +1,18 @@
 import { assign, isNil } from "lodash";
-import { Helpers, LabelHelpers, Data, Domain, Scale } from "victory-core";
+import { Helpers, LabelHelpers, Data, Domain, Scale, Collection } from "victory-core";
 
 const getBarPosition = (props, datum) => {
   const getDefaultMin = (axis) => {
-    const defaultMin = Scale.getType(props.scale[axis]) === "log" ? 1 / Number.MAX_SAFE_INTEGER : 0;
+    const defaultZero =
+      Scale.getType(props.scale[axis]) === "log" ? 1 / Number.MAX_SAFE_INTEGER : 0;
+    let defaultMin = defaultZero;
+    const minY = Collection.getMinValue(props.domain[axis]);
+    const maxY = Collection.getMaxValue(props.domain[axis]);
+    if (minY < 0 && maxY <= 0) {
+      defaultMin = maxY;
+    } else if (minY >= 0 && maxY > 0) {
+      defaultMin = minY;
+    }
     return datum[`_${axis}`] instanceof Date ? new Date(defaultMin) : defaultMin;
   };
   const _y0 = datum._y0 !== undefined ? datum._y0 : getDefaultMin("y");
@@ -12,7 +21,7 @@ const getBarPosition = (props, datum) => {
 };
 
 const getCalculatedValues = (props) => {
-  const { theme, horizontal, polar } = props;
+  const { theme, polar } = props;
   const defaultStyles = theme && theme.bar && theme.bar.style ? theme.bar.style : {};
   const style = Helpers.getStyles(props.style, defaultStyles);
   const data = Data.getData(props);
@@ -24,15 +33,13 @@ const getCalculatedValues = (props) => {
     x: Domain.getDomainWithZero(props, "x"),
     y: Domain.getDomainWithZero(props, "y")
   };
-  const xScale = Scale.getBaseScale(props, "x")
-    .domain(domain.x)
-    .range(range.x);
-  const yScale = Scale.getBaseScale(props, "y")
-    .domain(domain.y)
-    .range(range.y);
   const scale = {
-    x: horizontal ? yScale : xScale,
-    y: horizontal ? xScale : yScale
+    x: Scale.getBaseScale(props, "x")
+      .domain(domain.x)
+      .range(props.horizontal ? range.y : range.x),
+    y: Scale.getBaseScale(props, "y")
+      .domain(domain.y)
+      .range(props.horizontal ? range.x : range.y)
   };
   const origin = polar ? props.origin || Helpers.getPolarOrigin(props) : undefined;
   return { style, data, scale, domain, origin };
@@ -66,6 +73,7 @@ const getBaseProps = (props, fallbackProps) => {
   } = props;
   const initialChildProps = {
     parent: {
+      horizontal,
       domain,
       scale,
       width,

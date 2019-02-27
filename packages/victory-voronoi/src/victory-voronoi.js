@@ -48,7 +48,6 @@ class VictoryVoronoi extends React.Component {
     labelComponent: <VictoryLabel />,
     groupComponent: <g role="presentation" />,
     samples: 50,
-    scale: "linear",
     sortOrder: "ascending",
     standalone: true,
     theme: VictoryTheme.grayscale

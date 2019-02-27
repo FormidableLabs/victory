@@ -4,10 +4,18 @@ import * as d3Shape from "d3-shape";
 import { circle, point } from "./geometry-helper-methods";
 
 const getPosition = (props, width) => {
-  const { x, y, y0, horizontal } = props;
+  const { x, x0, y, y0, horizontal } = props;
   const alignment = props.alignment || "middle";
   const size = alignment === "middle" ? width / 2 : width;
   const sign = horizontal ? -1 : 1;
+  if (horizontal) {
+    return {
+      x0,
+      x1: x,
+      y0: alignment === "start" ? y : y - sign * size,
+      y1: alignment === "end" ? y : y + sign * size
+    };
+  }
   return {
     x0: alignment === "start" ? x : x - sign * size,
     x1: alignment === "end" ? x : x + sign * size,
@@ -111,7 +119,6 @@ const getVerticalBarPoints = (position, sign, cr) => {
       sign === 1
         ? y0 - cr[`bottom${side}`] < y1 + cr[`top${side}`]
         : y0 + cr[`bottom${side}`] > y1 - cr[`top${side}`];
-
     if (hasIntersection) {
       const topCenter = point(x + signL * cr[`top${side}`], y1 + sign * cr[`top${side}`]);
       const topCircle = circle(topCenter, cr[`top${side}`]);
@@ -145,76 +152,77 @@ const getVerticalBarPoints = (position, sign, cr) => {
   return getHalfPoints("Left").concat(getHalfPoints("Right"));
 };
 
-// eslint-disable-next-line max-statements, max-len
+const getHorizontalBarPoints = (position, sign, cr) => {
+  const { y0, y1 } = position;
+  const x0 = position.x0 < position.x1 ? position.x0 : position.x1;
+  const x1 = position.x0 < position.x1 ? position.x1 : position.x0;
+
+  // eslint-disable-next-line max-statements, max-len
+  const getHalfPoints = (side) => {
+    const isTop = side === "top";
+    const signL = isTop ? -1 : 1;
+    const y = isTop ? y1 : y0;
+    let leftPoint = { x: x0, y: y - signL * cr[`${side}Left`] };
+    let leftMiddlePoint = { x: x0 + cr[`${side}Left`], y };
+    let rightMiddlePoint = { x: x1 - cr[`${side}Right`], y };
+    let rightPoint = { x: x1, y: y - signL * cr[`${side}Right`] };
+    const hasIntersection = leftMiddlePoint.x > rightMiddlePoint.x;
+    if (hasIntersection) {
+      const leftCenter = point(x0 + cr[`${side}Left`], y - signL * cr[`${side}Left`]);
+      const leftCircle = circle(leftCenter, cr[`${side}Left`]);
+      const rightCenter = point(x1 - cr[`${side}Right`], y - signL * cr[`${side}Right`]);
+      const rightCircle = circle(rightCenter, cr[`${side}Right`]);
+      const circleIntersection = leftCircle.intersection(rightCircle);
+      const hasArcIntersection = circleIntersection.length > 0;
+      if (hasArcIntersection) {
+        const arcIntersection = circleIntersection[sign > 0 ? 1 : 0];
+        leftMiddlePoint = { x: arcIntersection.x, y: arcIntersection.y };
+        rightMiddlePoint = { x: arcIntersection.x, y: arcIntersection.y };
+      } else {
+        const hasLeftLineRightArcIntersection = cr[`${side}Right`] > cr[`${side}Left`];
+        if (hasLeftLineRightArcIntersection) {
+          const newY = rightCircle.solveY(x0)[isTop ? 0 : 1];
+          leftPoint = { x: x0, y: newY };
+          leftMiddlePoint = { x: x0, y: newY };
+          rightMiddlePoint = { x: x0, y: newY };
+        } else {
+          const newY = leftCircle.solveY(x1)[isTop ? 0 : 1];
+          rightPoint = { x: x1, y: newY };
+          rightMiddlePoint = { x: x1, y: newY };
+          leftMiddlePoint = { x: x1, y: newY };
+        }
+      }
+    }
+    return [leftPoint, leftMiddlePoint, rightMiddlePoint, rightPoint];
+  };
+  const topPoints = getHalfPoints("top");
+  const bottomPoints = getHalfPoints("bottom");
+  // eslint-disable-next-line no-magic-numbers
+  return [bottomPoints[1], bottomPoints[0], ...topPoints, bottomPoints[3], bottomPoints[2]];
+};
+
 export const getVerticalBarPath = (props, width, cornerRadius) => {
   const position = getPosition(props, width);
   const sign = position.y0 > position.y1 ? 1 : -1;
   const direction = sign > 0 ? "0 0 1" : "0 0 0";
   const points = getVerticalBarPoints(position, sign, cornerRadius);
-
   return mapPointsToPath(points, cornerRadius, direction);
 };
 
-const getHorizontalBarPoints = (position, sign, cr) => {
-  const { x0, x1, y0, y1 } = position;
-
-  // eslint-disable-next-line max-statements, max-len
-  const getHalfPoints = (side) => {
-    const isLeft = side === "Left";
-    const signL = isLeft ? 1 : -1;
-    const x = isLeft ? x1 : x0;
-    let bottomPoint = { y: x + signL * cr[`bottom${side}`], x: y0 };
-    let bottomMiddlePoint = { y: x, x: y0 + sign * cr[`bottom${side}`] };
-    let topMiddlePoint = { y: x, x: y1 - sign * cr[`top${side}`] };
-    let topPoint = { y: x + signL * cr[`top${side}`], x: y1 };
-    const hasIntersection =
-      sign === 1
-        ? y0 + cr[`bottom${side}`] > y1 - cr[`top${side}`]
-        : y0 - cr[`bottom${side}`] < y1 + cr[`top${side}`];
-    if (hasIntersection) {
-      const topCenter = point(y1 - sign * cr[`top${side}`], x + signL * cr[`top${side}`]);
-      const topCircle = circle(topCenter, cr[`top${side}`]);
-      const bottomCenter = point(y0 + sign * cr[`bottom${side}`], x + signL * cr[`bottom${side}`]);
-      const bottomCircle = circle(bottomCenter, cr[`bottom${side}`]);
-      const circleIntersection = topCircle.intersection(bottomCircle);
-      const hasArcIntersection = circleIntersection.length > 0;
-      if (hasArcIntersection) {
-        const arcIntersection = circleIntersection.sort((a, b) => a.y - b.y)[isLeft ? 0 : 1];
-        bottomMiddlePoint = { x: arcIntersection.x, y: arcIntersection.y };
-        topMiddlePoint = { x: arcIntersection.x, y: arcIntersection.y };
-      } else {
-        const hasBottomLineTopArcIntersection = cr[`top${side}`] > cr[`bottom${side}`];
-        if (hasBottomLineTopArcIntersection) {
-          const newX = topCircle.solveY(y0)[isLeft ? 1 : 0];
-          bottomPoint = { y: newX, x: y0 };
-          bottomMiddlePoint = { y: newX, x: y0 };
-          topMiddlePoint = { y: newX, x: y0 };
-        } else {
-          const newX = bottomCircle.solveY(y1)[isLeft ? 1 : 0];
-          bottomMiddlePoint = { y: newX, x: y1 };
-          topMiddlePoint = { y: newX, x: y1 };
-          topPoint = { y: newX, x: y1 };
-        }
-      }
-    }
-    const points = [bottomPoint, bottomMiddlePoint, topMiddlePoint, topPoint];
-    return isLeft ? points : points.reverse();
-  };
-
-  return getHalfPoints("Left").concat(getHalfPoints("Right"));
-};
-
-// eslint-disable-next-line max-statements, max-len
 export const getHorizontalBarPath = (props, width, cornerRadius) => {
   const position = getPosition(props, width);
-  const sign = position.y1 > position.y0 ? 1 : -1;
-  const direction = sign > 0 ? "0 0 1" : "0 0 0";
-  const points = getHorizontalBarPoints(position, sign, cornerRadius);
-
-  return mapPointsToPath(points, cornerRadius, direction);
+  const sign = position.x0 < position.x1 ? 1 : -1;
+  const direction = "0 0 1";
+  const cr = {
+    topRight: sign > 0 ? cornerRadius.topLeft : cornerRadius.bottomLeft,
+    bottomRight: sign > 0 ? cornerRadius.topRight : cornerRadius.bottomRight,
+    bottomLeft: sign > 0 ? cornerRadius.bottomRight : cornerRadius.topRight,
+    topLeft: sign > 0 ? cornerRadius.bottomLeft : cornerRadius.topLeft
+  };
+  const points = getHorizontalBarPoints(position, sign, cr);
+  return mapPointsToPath(points, cr, direction);
 };
 
-// eslint-disable-next-line max-statements, max-len
 export const getVerticalPolarBarPath = (props, cornerRadius) => {
   const { datum, scale, index, alignment } = props;
   const style = Helpers.evaluateStyle(props.style, datum, props.active);

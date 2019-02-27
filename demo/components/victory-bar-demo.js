@@ -126,16 +126,16 @@ export default class App extends React.Component {
 
     return (
       <div className="demo" style={containerStyle}>
-        <ChartWrap scale={{ x: "log", y: "linear" }}>
+        <ChartWrap scale={{ y: "log", x: "linear" }}>
           <VictoryBar
             cornerRadius={4}
-            scale={{ x: "log", y: "linear" }}
+            scale={{ y: "log", x: "linear" }}
             horizontal
             data={[
               { x: 1, y: 0.1 },
               { x: 2, y: 1 },
               { x: 3, y: 10 },
-              { x: 4, y: 100 },
+              { x: 4, y: 0 },
               { x: 5, y: 0.1 },
               { x: 6, y: 1 },
               { x: 7, y: 10 },

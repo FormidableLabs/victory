@@ -1,6 +1,6 @@
 /* eslint-disable func-style */
 /* eslint-disable no-use-before-define */
-import { includes, isFunction } from "lodash";
+import { includes, isFunction, isPlainObject } from "lodash";
 import Helpers from "./helpers";
 import Collection from "./collection";
 import * as d3Scale from "d3-scale";
@@ -59,16 +59,23 @@ function getScaleTypeFromData(props, axis) {
     return "linear";
   }
   const accessor = Helpers.createAccessor(props[axis]);
-  const axisData = props.data.map(accessor);
+  const axisData = props.data.map((datum) => {
+    const processedData = isPlainObject(accessor(datum)) ? accessor(datum)[axis] : accessor(datum);
+    return processedData !== undefined ? processedData : datum[axis];
+  });
   return Collection.containsDates(axisData) ? "time" : "linear";
 }
 
 // Exported Functions
 
+function getScaleFromName(name) {
+  return validScale(name) ? d3Scale[toNewName(name)]() : d3Scale.scaleLinear();
+}
+
 function getBaseScale(props, axis) {
   const scale = getScaleFromProps(props, axis);
   if (scale) {
-    return scale;
+    return typeof scale === "string" ? getScaleFromName(scale) : scale;
   }
   const defaultScale = getScaleFromDomain(props, axis) || getScaleTypeFromData(props, axis);
   return d3Scale[toNewName(defaultScale)]();
@@ -83,7 +90,6 @@ function getScaleFromProps(props, axis) {
     return undefined;
   }
   const scale = props.scale[axis] || props.scale;
-
   if (validScale(scale)) {
     return isFunction(scale) ? scale : d3Scale[toNewName(scale)]();
   }
@@ -96,6 +102,9 @@ function getScaleType(props, axis) {
 }
 
 function getType(scale) {
+  if (typeof scale === "string") {
+    return scale;
+  }
   const duckTypes = [
     { name: "log", method: "base" },
     { name: "ordinal", method: "unknown" },
@@ -114,5 +123,6 @@ export default {
   getDefaultScale,
   getScaleFromProps,
   getScaleType,
-  getType
+  getType,
+  getScaleFromName
 };

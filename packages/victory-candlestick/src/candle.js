@@ -47,19 +47,51 @@ export default class Candle extends React.Component {
     return Math.max(1, defaultWidth);
   }
 
+  getCandleProps(props, style) {
+    const { id, x, close, open, horizontal } = props;
+    const candleWidth = this.getCandleWidth(props, style);
+    const candleLength = Math.abs(close - open);
+    return {
+      key: `${id}-candle`,
+      style: Helpers.omit(style, ["width"]),
+      x: horizontal ? Math.min(open, close) : x - candleWidth / 2,
+      y: horizontal ? x - candleWidth / 2 : Math.min(open, close),
+      width: horizontal ? candleLength : candleWidth,
+      height: horizontal ? candleWidth : candleLength
+    };
+  }
+
+  getHighWickProps(props, style) {
+    const { horizontal, high, open, close, x, id } = props;
+    return {
+      key: `${id}-highWick`,
+      style: Helpers.omit(style, ["width"]),
+      x1: horizontal ? high : x,
+      x2: horizontal ? Math.max(open, close) : x,
+      y1: horizontal ? x : high,
+      y2: horizontal ? x : Math.min(open, close)
+    };
+  }
+
+  getLowWickProps(props, style) {
+    const { horizontal, low, open, close, x, id } = props;
+    return {
+      key: `${id}-lowWick`,
+      style: Helpers.omit(style, ["width"]),
+      x1: horizontal ? Math.min(open, close) : x,
+      x2: horizontal ? low : x,
+      y1: horizontal ? x : Math.max(open, close),
+      y2: horizontal ? x : low
+    };
+  }
+
   render() {
     const {
-      x,
-      high,
-      low,
-      open,
-      close,
       datum,
       active,
       events,
       groupComponent,
       clipPath,
-      id,
       rectComponent,
       lineComponent,
       role,
@@ -74,46 +106,10 @@ export default class Candle extends React.Component {
       active
     );
     const wickStyle = defaults({ strokeWidth: wickStrokeWidth }, style);
-    const candleWidth = this.getCandleWidth(this.props, style);
-    const candleHeight = Math.abs(close - open);
-    const candleX = x - candleWidth / 2;
     const sharedProps = { role, shapeRendering, className, events, transform, clipPath };
-
-    const candleProps = assign(
-      {
-        key: `${id}-candle`,
-        style,
-        x: candleX,
-        y: Math.min(open, close),
-        width: candleWidth,
-        height: candleHeight
-      },
-      sharedProps
-    );
-
-    const highWickProps = assign(
-      {
-        key: `${id}-highWick`,
-        style: wickStyle,
-        x1: x,
-        x2: x,
-        y1: high,
-        y2: Math.min(open, close)
-      },
-      sharedProps
-    );
-
-    const lowWickProps = assign(
-      {
-        key: `${id}-lowWick`,
-        style: wickStyle,
-        x1: x,
-        x2: x,
-        y1: Math.max(open, close),
-        y2: low
-      },
-      sharedProps
-    );
+    const candleProps = assign(this.getCandleProps(this.props, style), sharedProps);
+    const highWickProps = assign(this.getHighWickProps(this.props, wickStyle), sharedProps);
+    const lowWickProps = assign(this.getLowWickProps(this.props, wickStyle), sharedProps);
 
     return React.cloneElement(groupComponent, {}, [
       React.cloneElement(rectComponent, candleProps),

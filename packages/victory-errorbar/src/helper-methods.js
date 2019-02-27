@@ -1,7 +1,7 @@
-import { isNil } from "lodash";
-import { Helpers, LabelHelpers, Scale, Domain, Data, Collection } from "victory-core";
+import { assign, isNil } from "lodash";
+import { Helpers, LabelHelpers, Scale, Domain, Data } from "victory-core";
 
-const getErrors = (datum, scale, axis) => {
+const getErrors = (props, datum, axis) => {
   /**
    * check if it is asymmetric error or symmetric error, asymmetric error should be an array
    * and the first value is the positive error, the second is the negative error
@@ -15,12 +15,13 @@ const getErrors = (datum, scale, axis) => {
     return false;
   }
 
+  const scale = props.scale[axis];
   return Array.isArray(errors)
     ? [
-        errors[0] === 0 ? false : scale[axis](errors[0] + datum[`_${axis}`]),
-        errors[1] === 0 ? false : scale[axis](datum[`_${axis}`] - errors[1])
+        errors[0] === 0 ? false : scale(errors[0] + datum[`_${axis}`]),
+        errors[1] === 0 ? false : scale(datum[`_${axis}`] - errors[1])
       ]
-    : [scale[axis](errors + datum[`_${axis}`]), scale[axis](datum[`_${axis}`] - errors)];
+    : [scale(errors + datum[`_${axis}`]), scale(datum[`_${axis}`] - errors)];
 };
 
 const getData = (props) => {
@@ -38,20 +39,18 @@ const getDomainFromData = (props, axis) => {
   const maxDomain = Domain.getMaxFromProps(props, axis);
   const dataset = getData(props);
   if (dataset.length < 1) {
-    const scaleDomain = Scale.getBaseScale(props, axis).domain();
-    const min = minDomain !== undefined ? minDomain : Collection.getMinValue(scaleDomain);
-    const max = maxDomain !== undefined ? maxDomain : Collection.getMaxValue(scaleDomain);
-    return Domain.getDomainFromMinMax(min, max);
+    return minDomain !== undefined && maxDomain !== undefined
+      ? Domain.getDomainFromMinMax(minDomain, maxDomain)
+      : undefined;
   }
-  const currentAxis = Helpers.getCurrentAxis(axis, props.horizontal);
-  const error = currentAxis === "x" ? "_errorX" : "_errorY";
+  const error = axis === "x" ? "_errorX" : "_errorY";
   const reduceErrorData = (type) => {
     const baseCondition = type === "min" ? Infinity : -Infinity;
     const errorIndex = type === "min" ? 1 : 0;
     const sign = type === "min" ? -1 : 1;
     return dataset.reduce((memo, datum) => {
       const currentError = Array.isArray(datum[error]) ? datum[error][errorIndex] : datum[error];
-      const current = datum[`_${currentAxis}`] + sign * (currentError || 0);
+      const current = datum[`_${axis}`] + sign * (currentError || 0);
       return (memo < current && type === "min") || (memo > current && type === "max")
         ? memo
         : current;
@@ -85,86 +84,101 @@ const getCalculatedValues = (props) => {
   const scale = {
     x: Scale.getBaseScale(props, "x")
       .domain(domain.x)
-      .range(range.x),
+      .range(props.horizontal ? range.y : range.x),
     y: Scale.getBaseScale(props, "y")
       .domain(domain.y)
-      .range(range.y)
+      .range(props.horizontal ? range.x : range.y)
   };
   const origin = props.polar ? props.origin || Helpers.getPolarOrigin(props) : undefined;
   return { domain, data, scale, style, origin };
 };
 
 const getLabelProps = (dataProps, text, style) => {
-  const { x, index, scale, errorY } = dataProps;
-  const error = errorY && Array.isArray(errorY) ? errorY[0] : errorY;
-  const y = error || dataProps.y;
+  const { x, y, index, scale, errorY, errorX, horizontal } = dataProps;
+  const getError = (type = "x") => {
+    const baseError = type === "y" ? errorY : errorX;
+    const error = baseError && Array.isArray(baseError) ? baseError[0] : baseError;
+    return error || dataProps[type];
+  };
   const labelStyle = style.labels || {};
+  const padding = labelStyle.padding || 0;
+  const textAnchor = horizontal ? "start" : "middle";
+  const verticalAnchor = horizontal ? "middle" : "end";
   return {
     style: labelStyle,
-    y: y - (labelStyle.padding || 0),
-    x,
+    y: horizontal ? y : getError("y") - padding,
+    x: horizontal ? getError("x") + padding : x,
     text,
     index,
     scale,
     datum: dataProps.datum,
     data: dataProps.data,
-    textAnchor: labelStyle.textAnchor,
-    verticalAnchor: labelStyle.verticalAnchor || "end",
-    angle: labelStyle.angle
+    textAnchor: labelStyle.textAnchor || textAnchor,
+    verticalAnchor: labelStyle.verticalAnchor || verticalAnchor,
+    angle: labelStyle.angle,
+    horizontal
   };
 };
 
 const getBaseProps = (props, fallbackProps) => {
-  props = Helpers.modifyProps(props, fallbackProps, "errorbar");
-  const { data, style, scale, domain, origin } = getCalculatedValues(props, fallbackProps);
+  const modifiedProps = Helpers.modifyProps(props, fallbackProps, "errorbar");
+  props = assign({}, modifiedProps, getCalculatedValues(modifiedProps));
   const {
+    borderWidth,
+    data,
+    domain,
+    events,
     groupComponent,
     height,
-    width,
-    borderWidth,
-    standalone,
-    theme,
-    polar,
-    padding,
+    horizontal,
     labels,
-    events,
+    name,
+    origin,
+    padding,
+    polar,
+    scale,
     sharedEvents,
-    name
+    standalone,
+    style,
+    theme,
+    width
   } = props;
   const initialChildProps = {
     parent: {
-      domain,
-      scale,
       data,
+      domain,
       height,
-      width,
-      standalone,
-      theme,
-      polar,
-      origin,
+      horizontal,
       name,
+      origin,
       padding,
-      style: style.parent
+      polar,
+      scale,
+      standalone,
+      style: style.parent,
+      theme,
+      width
     }
   };
 
   return data.reduce((childProps, datum, index) => {
     const eventKey = !isNil(datum.eventKey) ? datum.eventKey : index;
-    const x = scale.x(datum._x1 !== undefined ? datum._x1 : datum._x);
-    const y = scale.y(datum._y1 !== undefined ? datum._y1 : datum._y);
-
+    const { x, y } = Helpers.scalePoint(assign({}, props, { scale }), datum);
+    const errorX = getErrors(props, datum, "x");
+    const errorY = getErrors(props, datum, "y");
     const dataProps = {
-      x,
-      y,
-      scale,
-      datum,
-      data,
-      index,
-      groupComponent,
       borderWidth,
+      data,
+      datum,
+      errorX: horizontal ? errorY : errorX,
+      errorY: horizontal ? errorX : errorY,
+      groupComponent,
+      horizontal,
+      index,
+      scale,
       style: style.data,
-      errorX: getErrors(datum, scale, "x"),
-      errorY: getErrors(datum, scale, "y")
+      x,
+      y
     };
 
     childProps[eventKey] = {

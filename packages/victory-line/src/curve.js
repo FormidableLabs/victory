@@ -40,7 +40,7 @@ export default class Curve extends React.Component {
   };
 
   getLineFunction(props) {
-    const { polar, scale } = props;
+    const { polar, scale, horizontal } = props;
     const defaultOpenCurve = polar ? false : true;
     const openCurve = props.openCurve === undefined ? defaultOpenCurve : props.openCurve;
     const interpolation = !openCurve
@@ -57,8 +57,8 @@ export default class Curve extends React.Component {
           .line()
           .defined(defined)
           .curve(d3Shape[interpolation])
-          .x(getXAccessor(scale))
-          .y(getYAccessor(scale));
+          .x(horizontal ? getYAccessor(scale) : getXAccessor(scale))
+          .y(horizontal ? getXAccessor(scale) : getYAccessor(scale));
   }
 
   toNewName(interpolation) {

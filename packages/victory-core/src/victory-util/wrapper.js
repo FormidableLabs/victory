@@ -6,6 +6,7 @@ import {
   uniq,
   some,
   groupBy,
+  uniqBy,
   values,
   isPlainObject
 } from "lodash";
@@ -18,6 +19,7 @@ import Domain from "./domain";
 import Events from "./events";
 import Collection from "./collection";
 import Helpers from "./helpers";
+import Scale from "./scale";
 
 export default {
   getData(props, childComponents) {
@@ -29,10 +31,9 @@ export default {
   },
 
   getDefaultDomainPadding(props, axis, childComponents) {
-    const horizontalChildren = childComponents.some((component) => {
-      return component.props && component.props.horizontal;
-    });
-    const horizontal = (props && props.horizontal) || horizontalChildren;
+    if (props.polar || axis !== "x") {
+      return undefined;
+    }
     const groupComponent = childComponents.filter((child) => {
       return child.type && child.type.role && child.type.role === "group";
     });
@@ -41,10 +42,7 @@ export default {
       return undefined;
     }
     const { offset, children } = groupComponent[0].props;
-    const defaultDomainPadding = horizontal
-      ? { y: (offset * children.length) / 2 }
-      : { x: (offset * children.length) / 2 };
-    return defaultDomainPadding[axis];
+    return { x: (offset * children.length) / 2 };
   },
 
   getDomain(props, axis, childComponents) {
@@ -52,9 +50,7 @@ export default {
     const propsDomain = Domain.getDomainFromProps(props, axis);
     const minDomain = Domain.getMinFromProps(props, axis);
     const maxDomain = Domain.getMaxFromProps(props, axis);
-    const domainPadding = props.polar
-      ? 0
-      : this.getDefaultDomainPadding(props, axis, childComponents);
+    const domainPadding = this.getDefaultDomainPadding(props, axis, childComponents);
     let domain;
     if (propsDomain) {
       domain = propsDomain;
@@ -67,6 +63,24 @@ export default {
       domain = Domain.getDomainFromMinMax(min, max);
     }
     return Domain.formatDomain(domain, assign({ domainPadding }, props), axis);
+  },
+
+  getScale(props, axis, childComponents) {
+    if (props.data) {
+      return Scale.getBaseScale(props, axis);
+    }
+    const children = childComponents
+      ? childComponents.slice(0)
+      : React.Children.toArray(props.children);
+    const iteratee = (child) => {
+      const sharedProps = assign({}, child.props, { horizontal: props.horizontal });
+      return Scale.getScaleType(sharedProps, axis);
+    };
+    const childScale = uniq(Helpers.reduceChildren(children, iteratee, props));
+    // default to linear scale if more than one uniq scale type is given by children
+    return childScale.length > 1
+      ? Scale.getScaleFromName("linear")
+      : Scale.getScaleFromName(childScale[0]);
   },
 
   setAnimationState(props, nextProps) {
@@ -154,14 +168,17 @@ export default {
     const children = childComponents
       ? childComponents.slice(0)
       : React.Children.toArray(props.children);
-    const horizontalChildren = childComponents.some((component) => {
-      return component.props && component.props.horizontal;
-    });
-    const horizontal = (props && props.horizontal) || horizontalChildren.length > 0;
-    const currentAxis = Axis.getCurrentAxis(axis, horizontal);
     const parentData = props.data ? Data.getData(props, axis) : undefined;
-    const { polar, startAngle, endAngle, categories, minDomain, maxDomain } = props;
-    const baseParentProps = { polar, startAngle, endAngle, categories, minDomain, maxDomain };
+    const { polar, startAngle, endAngle, categories, minDomain, maxDomain, horizontal } = props;
+    const baseParentProps = {
+      horizontal,
+      polar,
+      startAngle,
+      endAngle,
+      minDomain,
+      maxDomain,
+      categories
+    };
     const parentProps = parentData
       ? assign(baseParentProps, { data: parentData })
       : baseParentProps;
@@ -171,13 +188,12 @@ export default {
       if (!Domain.isDomainComponent(child)) {
         return null;
       } else if (child.type && isFunction(child.type.getDomain)) {
-        return child.props && child.type.getDomain(sharedProps, currentAxis);
+        return child.props && child.type.getDomain(sharedProps, axis);
       } else {
-        return Domain.getDomain(sharedProps, currentAxis);
+        return Domain.getDomain(sharedProps, axis);
       }
     };
     const childDomains = Helpers.reduceChildren(children, iteratee, props);
-
     const min = childDomains.length === 0 ? 0 : Collection.getMinValue(childDomains);
     const max = childDomains.length === 0 ? 1 : Collection.getMaxValue(childDomains);
     return [min, max];
@@ -186,7 +202,6 @@ export default {
   getDataFromChildren(props, childComponents) {
     const { polar, startAngle, endAngle, categories, minDomain, maxDomain } = props;
     const parentProps = { polar, startAngle, endAngle, categories, minDomain, maxDomain };
-
     let stack = 0;
     const iteratee = (child, childName, parent) => {
       const childProps = assign({}, child.props, parentProps);
@@ -206,7 +221,8 @@ export default {
       ? childComponents.slice(0)
       : React.Children.toArray(props.children);
     const stacked = children.filter((c) => c.type && c.type.role === "stack").length;
-    const datasets = Helpers.reduceChildren(children, iteratee, props);
+    const combine = (memo, val) => memo.concat(uniqBy(val, "group"));
+    const datasets = Helpers.reduceChildren(children, iteratee, props, [], combine);
     const group = stacked ? "group" : "stack";
     return values(groupBy(datasets, group));
   },
@@ -311,9 +327,8 @@ export default {
   },
 
   getCategoryAndAxisStringsFromChildren(props, axis, childComponents) {
-    const currentAxis = Helpers.getCurrentAxis(axis, props.horizontal);
     const categories = isPlainObject(props.categories) ? props.categories[axis] : props.categories;
-    const axisComponent = Axis.getAxisComponent(childComponents, currentAxis);
+    const axisComponent = Axis.getAxisComponent(childComponents, axis);
     const axisStrings = axisComponent ? Data.getStringsFromAxes(axisComponent.props, axis) : [];
     const categoryStrings = categories || this.getStringsFromCategories(childComponents, axis);
     return uniq(flatten([...categoryStrings, ...axisStrings]));

@@ -43,7 +43,7 @@ export default class Area extends React.Component {
   };
 
   getLineFunction(props) {
-    const { polar, scale } = props;
+    const { polar, scale, horizontal } = props;
     const interpolation = this.toNewName(props.interpolation);
     return polar
       ? d3Shape
@@ -56,8 +56,27 @@ export default class Area extends React.Component {
           .line()
           .defined(defined)
           .curve(d3Shape[interpolation])
+          .x(horizontal ? getYAccessor(scale) : getXAccessor(scale))
+          .y(horizontal ? getXAccessor(scale) : getYAccessor(scale));
+  }
+
+  getCartesianArea(props, interpolation) {
+    const { horizontal, scale } = props;
+    return horizontal
+      ? d3Shape
+          .area()
+          .defined(defined)
+          .curve(d3Shape[interpolation])
+          .x0(getY0Accessor(scale))
+          .x1(getYAccessor(scale))
+          .y(getXAccessor(scale))
+      : d3Shape
+          .area()
+          .defined(defined)
+          .curve(d3Shape[interpolation])
           .x(getXAccessor(scale))
-          .y(getYAccessor(scale));
+          .y1(getYAccessor(scale))
+          .y0(getY0Accessor(scale));
   }
 
   getAreaFunction(props) {
@@ -71,13 +90,7 @@ export default class Area extends React.Component {
           .angle(getAngleAccessor(scale))
           .outerRadius(getYAccessor(scale))
           .innerRadius(getY0Accessor(scale))
-      : d3Shape
-          .area()
-          .defined(defined)
-          .curve(d3Shape[interpolation])
-          .x(getXAccessor(scale))
-          .y1(getYAccessor(scale))
-          .y0(getY0Accessor(scale));
+      : this.getCartesianArea(props, interpolation);
   }
 
   toNewName(interpolation) {

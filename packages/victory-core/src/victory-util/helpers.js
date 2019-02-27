@@ -63,13 +63,13 @@ function getPoint(datum) {
 }
 
 function scalePoint(props, datum) {
-  const { scale, polar } = props;
+  const { scale, polar, horizontal } = props;
   const d = getPoint(datum);
   const origin = props.origin || { x: 0, y: 0 };
-  const x = scale.x(d.x);
-  const x0 = scale.x(d.x0);
-  const y = scale.y(d.y);
-  const y0 = scale.y(d.y0);
+  const x = horizontal ? scale.y(d.y) : scale.x(d.x);
+  const x0 = horizontal ? scale.y(d.y0) : scale.x(d.x0);
+  const y = horizontal ? scale.x(d.x) : scale.y(d.y);
+  const y0 = horizontal ? scale.x(d.x0) : scale.y(d.y0);
   return {
     x: polar ? y * Math.cos(x) + origin.x : x,
     x0: polar ? y0 * Math.cos(x0) + origin.x : x0,
@@ -172,7 +172,9 @@ function createAccessor(key) {
 function modifyProps(props, fallbackProps, role) {
   const theme = props.theme && props.theme[role] ? props.theme[role] : {};
   const themeProps = omit(theme, ["style"]);
-  return defaults({}, props, themeProps, fallbackProps);
+  const horizontal = isHorizontal(props);
+  const defaultObject = horizontal === undefined ? {} : { horizontal };
+  return defaults(defaultObject, props, themeProps, fallbackProps);
 }
 
 /**
@@ -211,7 +213,8 @@ function reduceChildren(
     "startAngle",
     "endAngle",
     "minDomain",
-    "maxDomain"
+    "maxDomain",
+    "horizontal"
   ];
   const traverseChildren = (childArray, names, parent) => {
     return childArray.reduce((memo, child, index) => {

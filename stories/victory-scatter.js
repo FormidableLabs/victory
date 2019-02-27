@@ -80,6 +80,9 @@ storiesOf("VictoryScatter.symbol", module)
 storiesOf("VictoryScatter.bubbleProperty", module)
   .addDecorator(getChartDecorator({ domainPadding: 20 }))
   .add("bubbleProperty", () => <VictoryScatter data={getData(10)} bubbleProperty="x" />)
+  .add("bubbleProperty (horizontal)", () => (
+    <VictoryScatter horizontal data={getData(10)} bubbleProperty="x" />
+  ))
   .add("with maxBubbleSize", () => (
     <VictoryScatter data={getData(10)} bubbleProperty="x" maxBubbleSize={25} />
   ))
@@ -98,20 +101,31 @@ storiesOf("VictoryScatter.bubbleProperty", module)
 
 storiesOf("VictoryScatter.data", module)
   .addDecorator(getChartDecorator({ domainPadding: 25 }))
-  .add("with data accessors", () => {
-    return (
-      <VictoryScatter
-        data={[
-          { animal: "Cat", pet: 45, wild: 17 },
-          { animal: "Dog", pet: 85, wild: 6 },
-          { animal: "Fish", pet: 55, wild: 0 },
-          { animal: "Bird", pet: 15, wild: 40 }
-        ]}
-        x={"animal"}
-        y={(data) => data.pet + data.wild}
-      />
-    );
-  })
+  .add("with data accessors", () => (
+    <VictoryScatter
+      data={[
+        { animal: "Cat", pet: 45, wild: 17 },
+        { animal: "Dog", pet: 85, wild: 6 },
+        { animal: "Fish", pet: 55, wild: 0 },
+        { animal: "Bird", pet: 15, wild: 40 }
+      ]}
+      x={"animal"}
+      y={(data) => data.pet + data.wild}
+    />
+  ))
+  .add("with data accessors (horizontal)", () => (
+    <VictoryScatter
+      horizontal
+      data={[
+        { animal: "Cat", pet: 45, wild: 17 },
+        { animal: "Dog", pet: 85, wild: 6 },
+        { animal: "Fish", pet: 55, wild: 0 },
+        { animal: "Bird", pet: 15, wild: 40 }
+      ]}
+      x={"animal"}
+      y={(data) => data.pet + data.wild}
+    />
+  ))
   .add("with nested data accessors", () => {
     return (
       <VictoryScatter
@@ -154,6 +168,18 @@ storiesOf("VictoryScatter.labels", module)
         { x: 5, y: -5, label: "cat" }
       ]}
     />
+  ))
+  .add("data labels (horizontal)", () => (
+    <VictoryScatter
+      horizontal
+      data={[
+        { x: 1, y: 2, label: "cat" },
+        { x: 2, y: 5, label: "dog" },
+        { x: 3, y: 3, label: "dog" },
+        { x: 4, y: -2, label: "bird" },
+        { x: 5, y: -5, label: "cat" }
+      ]}
+    />
   ));
 
 storiesOf("VictoryScatter.tooltips", module)
@@ -167,6 +193,14 @@ storiesOf("VictoryScatter.tooltips", module)
   ))
   .add("tooltips (negative)", () => (
     <VictoryScatter
+      data={getMixedData(5)}
+      labels={(d) => `x: ${d.x}`}
+      labelComponent={<VictoryTooltip active />}
+    />
+  ))
+  .add("tooltips (horizontal)", () => (
+    <VictoryScatter
+      horizontal
       data={getMixedData(5)}
       labels={(d) => `x: ${d.x}`}
       labelComponent={<VictoryTooltip active />}
@@ -215,6 +249,13 @@ storiesOf("VictoryScatter.stacked", module)
   .addDecorator(getChartDecorator({ domainPadding: 25 }))
   .add("stacked points", () => (
     <VictoryStack colorScale="qualitative">
+      <VictoryScatter data={getData(7)} size={5} />
+      <VictoryScatter data={getData(7, "seed-1")} size={5} />
+      <VictoryScatter data={getData(7, "seed-2")} size={5} />
+    </VictoryStack>
+  ))
+  .add("stacked points (horizontal)", () => (
+    <VictoryStack horizontal colorScale="qualitative">
       <VictoryScatter data={getData(7)} size={5} />
       <VictoryScatter data={getData(7, "seed-1")} size={5} />
       <VictoryScatter data={getData(7, "seed-2")} size={5} />

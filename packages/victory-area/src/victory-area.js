@@ -61,7 +61,6 @@ class VictoryArea extends React.Component {
     groupComponent: <VictoryClipContainer />,
     labelComponent: <VictoryLabel renderInPortal />,
     samples: 50,
-    scale: "linear",
     sortKey: "x",
     sortOrder: "ascending",
     standalone: true,
