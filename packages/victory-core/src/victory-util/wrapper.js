@@ -78,7 +78,9 @@ export default {
     };
     const childScale = uniq(Helpers.reduceChildren(children, iteratee, props));
     // default to linear scale if more than one uniq scale type is given by children
-    return childScale.length > 1 ? "linear" : Scale.getScaleFromName(childScale[0]);
+    return childScale.length > 1
+      ? Scale.getScaleFromName("linear")
+      : Scale.getScaleFromName(childScale[0]);
   },
 
   setAnimationState(props, nextProps) {
