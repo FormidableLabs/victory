@@ -30,11 +30,27 @@ export default {
     return this.getDataFromChildren(childComponents);
   },
 
+  getDefaultDomainPadding(props, axis, childComponents) {
+    if (props.polar || axis !== "x") {
+      return undefined;
+    }
+    const groupComponent = childComponents.filter((child) => {
+      return child.type && child.type.role && child.type.role === "group";
+    });
+
+    if (groupComponent.length < 1) {
+      return undefined;
+    }
+    const { offset, children } = groupComponent[0].props;
+    return { x: (offset * children.length) / 2 };
+  },
+
   getDomain(props, axis, childComponents) {
     childComponents = childComponents || React.Children.toArray(props.children);
     const propsDomain = Domain.getDomainFromProps(props, axis);
     const minDomain = Domain.getMinFromProps(props, axis);
     const maxDomain = Domain.getMaxFromProps(props, axis);
+    const domainPadding = this.getDefaultDomainPadding(props, axis, childComponents);
     let domain;
     if (propsDomain) {
       domain = propsDomain;
@@ -46,7 +62,7 @@ export default {
       const max = maxDomain || Collection.getMaxValue([...dataDomain, ...childDomain]);
       domain = Domain.getDomainFromMinMax(min, max);
     }
-    return Domain.formatDomain(domain, props, axis);
+    return Domain.formatDomain(domain, assign({ domainPadding }, props), axis);
   },
 
   getScale(props, axis, childComponents) {
