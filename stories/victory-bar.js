@@ -171,9 +171,9 @@ storiesOf("VictoryBar.getPath", module)
   .add("custom bar path (horizontal)", () => {
     const getPathFn = (props) => {
       const { x0, x1, y0, y1 } = props;
-      return `M ${y0}, ${x0}
-        L ${y1}, ${(x0 + x1) / 2}
-        L ${y0}, ${x1}
+      return `M ${x0}, ${y1}
+        L ${x1}, ${(y0 + y1) / 2}
+        L ${x0}, ${y0}
         z`;
     };
     return <VictoryBar data={getData(4)} horizontal getPath={getPathFn} />;
