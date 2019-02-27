@@ -152,7 +152,7 @@ const getVerticalBarPoints = (position, sign, cr) => {
   return getHalfPoints("Left").concat(getHalfPoints("Right"));
 };
 
-const getHorizontalBarPoints = (position, cr) => {
+const getHorizontalBarPoints = (position, sign, cr) => {
   const { y0, y1 } = position;
   const x0 = position.x0 < position.x1 ? position.x0 : position.x1;
   const x1 = position.x0 < position.x1 ? position.x1 : position.x0;
@@ -175,7 +175,7 @@ const getHorizontalBarPoints = (position, cr) => {
       const circleIntersection = leftCircle.intersection(rightCircle);
       const hasArcIntersection = circleIntersection.length > 0;
       if (hasArcIntersection) {
-        const arcIntersection = circleIntersection[isTop ? 0 : 1];
+        const arcIntersection = circleIntersection[sign > 0 ? 1 : 0];
         leftMiddlePoint = { x: arcIntersection.x, y: arcIntersection.y };
         rightMiddlePoint = { x: arcIntersection.x, y: arcIntersection.y };
       } else {
@@ -219,7 +219,7 @@ export const getHorizontalBarPath = (props, width, cornerRadius) => {
     bottomLeft: sign > 0 ? cornerRadius.bottomRight : cornerRadius.topRight,
     topLeft: sign > 0 ? cornerRadius.bottomLeft : cornerRadius.topLeft
   };
-  const points = getHorizontalBarPoints(position, cr);
+  const points = getHorizontalBarPoints(position, sign, cr);
   return mapPointsToPath(points, cr, direction);
 };
 
