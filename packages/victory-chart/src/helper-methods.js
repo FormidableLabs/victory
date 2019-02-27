@@ -103,7 +103,7 @@ function getCalculatedProps(props, childComponents) {
     y: getOrientation("y", originSign.x, horizontal)
   };
 
-  const defaultDomainPadding = getDefaultDomainPadding(childComponents, horizontal);
+  const domainPadding = defaults({}, props.domainPadding, getDomainPadding(childComponents));
 
   const padding = Helpers.getPadding(props);
 
@@ -116,7 +116,7 @@ function getCalculatedProps(props, childComponents) {
     stringMap,
     style,
     origin,
-    defaultDomainPadding,
+    domainPadding,
     padding,
     orientations
   };
@@ -127,7 +127,7 @@ function getChildren(props, childComponents, calculatedProps) {
   calculatedProps = calculatedProps || getCalculatedProps(props, childComponents);
   const baseStyle = calculatedProps.style.parent;
   const { height, polar, theme, width } = props;
-  const { origin, horizontal } = calculatedProps;
+  const { origin, horizontal, domainPadding } = calculatedProps;
   const parentName = props.name || "chart";
   return childComponents.map((child, index) => {
     const role = child.type && child.type.role;
@@ -138,6 +138,7 @@ function getChildren(props, childComponents, calculatedProps) {
     const name = child.props.name || `${parentName}-${role}-${index}`;
     const newProps = defaults(
       {
+        domainPadding,
         horizontal,
         height,
         polar,
@@ -173,7 +174,7 @@ const getChildComponents = (props, defaultAxes) => {
   return childComponents;
 };
 
-const getDefaultDomainPadding = (childComponents, horizontal) => {
+const getDomainPadding = (childComponents) => {
   const groupComponent = childComponents.filter((child) => {
     return child.type && child.type.role && child.type.role === "group";
   });
@@ -183,7 +184,7 @@ const getDefaultDomainPadding = (childComponents, horizontal) => {
   }
 
   const { offset, children } = groupComponent[0].props;
-  return horizontal ? { y: (offset * children.length) / 2 } : { x: (offset * children.length) / 2 };
+  return { x: (offset * children.length) / 2 };
 };
 
 const getDomain = (props, axis, childComponents) => {
