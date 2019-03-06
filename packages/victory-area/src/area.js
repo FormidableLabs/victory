@@ -51,7 +51,7 @@ export default class Area extends React.Component {
           .defined(defined)
           .curve(d3Shape[`${interpolation}Closed`])
           .angle(getAngleAccessor(scale))
-          .radius(getY0Accessor(scale))
+          .radius(getYAccessor(scale))
       : d3Shape
           .line()
           .defined(defined)
