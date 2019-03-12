@@ -1,5 +1,9 @@
 # Victory Changelog
 
+## 32.0.1 (2019-03-11)
+
+[#1266](https://github.com/FormidableLabs/victory/pull/1266) Fixes area stroke on polar charts
+
 ## 32.0.0 (2019-02-27)
 
 **Horizontal Chart Improvements!**
