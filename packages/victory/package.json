@@ -1,6 +1,6 @@
 {
   "name": "victory",
-  "version": "32.0.1",
+  "version": "32.0.2",
   "description": "Data viz for React",
   "keywords": [
     "data visualization",
@@ -22,7 +22,7 @@
     "victory-area": "^32.0.1",
     "victory-axis": "^32.0.0",
     "victory-bar": "^32.0.0",
-    "victory-box-plot": "^32.0.0",
+    "victory-box-plot": "^32.0.2",
     "victory-brush-container": "^32.0.0",
     "victory-brush-line": "^32.0.0",
     "victory-candlestick": "^32.0.0",
