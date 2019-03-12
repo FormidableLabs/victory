@@ -1,5 +1,9 @@
 # Victory Changelog
 
+## 32.0.2 (2019-03-12)
+
+[#1271](https://github.com/FormidableLabs/victory/pull/1271) Replace `PropTypes.exact` with `PropTypes.shape`
+
 ## 32.0.1 (2019-03-11)
 
 [#1266](https://github.com/FormidableLabs/victory/pull/1266) Fixes area stroke on polar charts
