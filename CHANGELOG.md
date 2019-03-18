@@ -1,5 +1,9 @@
 # Victory Changelog
 
+## 32.1.0 (2019-03-18)
+
+[#1278](https://github.com/FormidableLabs/victory/pull/1278) Adds regex support for the `voronoiBlacklist` prop. This prop may now be given as an array of strings or an array of regex patterns. Thanks @narinluangrath!
+
 ## 32.0.2 (2019-03-12)
 
 [#1271](https://github.com/FormidableLabs/victory/pull/1271) Replace `PropTypes.exact` with `PropTypes.shape`
