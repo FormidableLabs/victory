@@ -216,7 +216,7 @@ export default {
    */
   regExp: makeChainable((props, propName, componentName) => {
     if (props[propName] && !isRegExp(props[propName])) {
-      return new Error(`\`${propName}\` in \`${componentName}\` must be a regular expression.`);      
+      return new Error(`\`${propName}\` in \`${componentName}\` must be a regular expression.`);
     }
     return undefined;
   })

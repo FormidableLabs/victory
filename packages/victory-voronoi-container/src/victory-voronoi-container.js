@@ -18,7 +18,9 @@ export const voronoiContainerMixin = (base) =>
       onActivated: PropTypes.func,
       onDeactivated: PropTypes.func,
       radius: PropTypes.number,
-      voronoiBlacklist: PropTypes.arrayOf(PropTypes.oneOfType([PropTypes.string, CustomPropTypes.regExp])),
+      voronoiBlacklist: PropTypes.arrayOf(
+        PropTypes.oneOfType([PropTypes.string, CustomPropTypes.regExp])
+      ),
       voronoiDimension: PropTypes.oneOf(["x", "y"]),
       voronoiPadding: PropTypes.number
     };

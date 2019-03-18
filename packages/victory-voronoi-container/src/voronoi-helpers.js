@@ -1,5 +1,15 @@
 import { Selection, Data, Helpers } from "victory-core";
-import { assign, throttle, isFunction, isEmpty, groupBy, keys, includes, isString, isRegExp } from "lodash";
+import {
+  assign,
+  throttle,
+  isFunction,
+  isEmpty,
+  groupBy,
+  keys,
+  includes,
+  isString,
+  isRegExp
+} from "lodash";
 import isEqual from "react-fast-compare";
 import { voronoi as d3Voronoi } from "d3-voronoi";
 import React from "react";
@@ -56,7 +66,7 @@ const VoronoiHelpers = {
       const blacklist = props.voronoiBlacklist || [];
       const blacklistStr = blacklist.filter(isString);
       const blacklistRegExp = blacklist.filter(isRegExp);
-      const isRegExpMatch = blacklistRegExp.some(regExp => regExp.test(name));
+      const isRegExpMatch = blacklistRegExp.some((regExp) => regExp.test(name));
       if (!Data.isDataComponent(child) || includes(blacklistStr, name) || isRegExpMatch) {
         return null;
       }
