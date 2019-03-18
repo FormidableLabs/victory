@@ -1,5 +1,5 @@
 /*eslint no-magic-numbers: ["error", { "ignore": [-1, 0, 1, 2] }]*/
-import { isFunction, find } from "lodash";
+import { isFunction, find, isRegExp } from "lodash";
 import Log from "./log";
 import PropTypes from "prop-types";
 
@@ -207,6 +207,16 @@ export default {
       props[propName].length !== props.data.length
     ) {
       return new Error(`Length of data and ${propName} arrays must match.`);
+    }
+    return undefined;
+  }),
+
+  /**
+   * Check that the value is a regular expression
+   */
+  regExp: makeChainable((props, propName, componentName) => {
+    if (props[propName] && !isRegExp(props[propName])) {
+      return new Error(`\`${propName}\` in \`${componentName}\` must be a regular expression.`);      
     }
     return undefined;
   })
