@@ -105,7 +105,7 @@ _example:_ `radius={25}`
 
 ### voronoiBlacklist
 
-`type: array[string]`
+`type: array[string || regex]`
 
 The `voronoiBlacklist` prop is used to specify a list of components to ignore when calculating a shared voronoi diagram. Components with a `name` prop matching an element in the `voronoiBlacklist` array will be ignored by `VictoryVoronoiContainer`. Ignored components will never be flagged as active, and will not contribute date to shared tooltips or labels.
 

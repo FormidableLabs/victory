@@ -2,7 +2,7 @@ import PropTypes from "prop-types";
 import React from "react";
 import { defaults, isFunction, pick } from "lodash";
 import { VictoryTooltip } from "victory-tooltip";
-import { VictoryContainer, Helpers, TextSize } from "victory-core";
+import { VictoryContainer, Helpers, TextSize, PropTypes as CustomPropTypes } from "victory-core";
 import VoronoiHelpers from "./voronoi-helpers";
 
 export const voronoiContainerMixin = (base) =>
@@ -18,7 +18,9 @@ export const voronoiContainerMixin = (base) =>
       onActivated: PropTypes.func,
       onDeactivated: PropTypes.func,
       radius: PropTypes.number,
-      voronoiBlacklist: PropTypes.arrayOf(PropTypes.string),
+      voronoiBlacklist: PropTypes.arrayOf(
+        PropTypes.oneOfType([PropTypes.string, CustomPropTypes.regExp])
+      ),
       voronoiDimension: PropTypes.oneOf(["x", "y"]),
       voronoiPadding: PropTypes.number
     };
