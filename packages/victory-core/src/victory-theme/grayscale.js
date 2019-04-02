@@ -77,7 +77,7 @@ export default {
       },
       tickLabels: baseLabelStyles
     },
-    ...baseProps,
+    ...baseProps
   },
   bar: {
     style: {
@@ -88,7 +88,7 @@ export default {
       },
       labels: baseLabelStyles
     },
-    ...baseProps,
+    ...baseProps
   },
   boxplot: {
     style: {
@@ -104,7 +104,7 @@ export default {
       q3Labels: baseLabelStyles
     },
     boxWidth: 20,
-    ...baseProps,
+    ...baseProps
   },
   candlestick: {
     style: {
@@ -118,7 +118,7 @@ export default {
       positive: "#ffffff",
       negative: charcoal
     },
-    ...baseProps,
+    ...baseProps
   },
   chart: baseProps,
   errorbar: {
@@ -131,11 +131,11 @@ export default {
       },
       labels: baseLabelStyles
     },
-    ...baseProps,
+    ...baseProps
   },
   group: {
     colorScale: colors,
-    ...baseProps,
+    ...baseProps
   },
   legend: {
     colorScale: colors,
@@ -149,8 +149,8 @@ export default {
       labels: baseLabelStyles,
       title: {
         ...baseLabelStyles,
-        padding: 5,
-      },
+        padding: 5
+      }
     }
   },
   line: {
@@ -174,7 +174,7 @@ export default {
       labels: {
         ...baseLabelStyles,
         padding: 20
-      },
+      }
     },
     colorScale: colors,
     width: 400,
@@ -221,7 +221,7 @@ export default {
       labels: {
         ...baseLabelStyles,
         padding: 5,
-        pointerEvents: "none",
+        pointerEvents: "none"
       },
       flyout: {
         stroke: charcoal,
@@ -230,6 +230,6 @@ export default {
         pointerEvents: "none"
       }
     },
-    ...baseProps,
-  },
+    ...baseProps
+  }
 };

@@ -56,7 +56,7 @@ export default {
       },
       labels: baseLabelStyles
     },
-    ...baseProps,
+    ...baseProps
   },
   axis: {
     style: {
@@ -106,25 +106,22 @@ export default {
     },
     ...baseProps
   },
-  boxplot: assign(
-    {
-      style: {
-        max: { padding, stroke: blueGrey700, strokeWidth: 1 },
-        maxLabels: baseLabelStyles,
-        median: { padding, stroke: blueGrey700, strokeWidth: 1 },
-        medianLabels: baseLabelStyles,
-        min: { padding, stroke: blueGrey700, strokeWidth: 1 },
-        minLabels: baseLabelStyles,
-        q1: { padding, fill: blueGrey700 },
-        q1Labels: baseLabelStyles,
-        q3: { padding, fill: blueGrey700 },
-        q3Labels: baseLabelStyles
-      },
-      boxWidth: 20,
-      ...baseProps
+  boxplot: assign({
+    style: {
+      max: { padding, stroke: blueGrey700, strokeWidth: 1 },
+      maxLabels: baseLabelStyles,
+      median: { padding, stroke: blueGrey700, strokeWidth: 1 },
+      medianLabels: baseLabelStyles,
+      min: { padding, stroke: blueGrey700, strokeWidth: 1 },
+      minLabels: baseLabelStyles,
+      q1: { padding, fill: blueGrey700 },
+      q1Labels: baseLabelStyles,
+      q3: { padding, fill: blueGrey700 },
+      q3Labels: baseLabelStyles
     },
-
-  ),
+    boxWidth: 20,
+    ...baseProps
+  }),
   candlestick: {
     style: {
       data: {
@@ -136,7 +133,7 @@ export default {
       positive: "#ffffff",
       negative: blueGrey700
     },
-    ...baseProps,
+    ...baseProps
   },
   chart: baseProps,
   errorbar: {
@@ -184,7 +181,7 @@ export default {
       },
       labels: baseLabelStyles
     },
-    ...baseProps,
+    ...baseProps
   },
   pie: {
     colorScale: colors,
@@ -199,7 +196,7 @@ export default {
         padding: 20
       }
     },
-    ...baseProps,
+    ...baseProps
   },
   scatter: {
     style: {
@@ -215,13 +212,13 @@ export default {
   },
   stack: {
     colorScale: colors,
-    baseProps,
+    baseProps
   },
   tooltip: {
     style: {
       baseLabelStyles,
       padding: 5,
-      pointerEvents: "none",
+      pointerEvents: "none"
     },
     flyoutStyle: {
       stroke: grey900,
@@ -247,6 +244,6 @@ export default {
         pointerEvents: "none"
       }
     },
-    ...baseProps,
-  },
+    ...baseProps
+  }
 };
