@@ -30,30 +30,31 @@ Use [Yarn](https://yarnpkg.com/) to install dependencies:
 $ yarn install
 ```
 
-Run a development server and check out the demos. Demos will be served at localhost:3000/. This command will also build and watch `lib/` and `es/` directories in all packages, so your demos will always be in sync with code changes.
+Run a development server and check out the demos. This command will also build and watch `lib/` and `es/` directories in all packages, so your demos will always be in sync with code changes.
 
 ```console
 $ yarn start
 ```
 
+running this command will serve demo pages at http://localhost:3000/ and tests at http://localhost:3001/test/client/test.html
+
 ## Checks, Tests
 
-All checks and tests run from the root directory.
+When running a development server, tests will be served automatically at http://localhost:3001/test/client/test.html
 
-The `check` script will lint all packages and infrastructure before building packages and starting a test server and running our suite of tests
+Tests my also be run in the terminal with:
+
+``console
+$ yarn nps test
+```
 
 If your terminal is under a proxy, you should turn off the proxy, or ChromeHeadless will not start properly.
 
-```console
-$ yarn nps check
-$ yarn nps check.dev // if you already have a development server running
-```
-
-To run tests without linting, use the `test` script
+Victory uses eslint and prettier to maintain code style consistency. Before creating a pull request, please lint and format your changes with the following commands:
 
 ```console
-$ yarn nps test
-$ yarn nps test.dev // if you already have a development server running
+$ yarn nps lint
+$ yarn nps format
 ```
 
 ## Visual Tests
@@ -66,15 +67,15 @@ Write visual tests for new features by adding them in the `stories` directory. R
 $ yarn storybook
 ```
 
-[Chromatic](https://www.chromaticqa.com/) provides automated visual testing. All PRs will trigger a new chromatic build, which will be displayed along with CI status. You can also trigger a new build manually with:
+[Chromatic](https://www.chromaticqa.com/) provides automated visual testing. All internal PRs will trigger a new Chromatic build, which will be displayed along with CI status. Chromatic builds for Victory may be viewed in more detail here: https://www.chromaticqa.com/builds?appId=5b4acf7c54c0490024d5980b. Chromatic requires a secret app code to run, so PRs from external contributors will not automatically trigger a Chromatic build. For this reason, changes from external contributors will be checked out and opened as separate PRs so Chromatic may be used to verify any changes. Developers with access to the secret app code may also trigger a chromatic build manually with:
 
 ```console
 $ yarn chromatic
 ```
 
-**External contributors will not be able to use Chromatic to automate their visual regression testing, as it requires a secret app code.**
-
 ## Release
+
+Before publishing any new version, please update `CHANGELOG.md` with a summary of changes and links to any PRs involved in the release.
 
 Victory uses [Lerna](https://lernajs.io/) to automate versioning and publishing packages.
 

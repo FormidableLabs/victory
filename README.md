@@ -1,5 +1,4 @@
 [![Travis Status][trav_img]][trav_site]
-[![Join the chat at https://gitter.im/FormidableLabs/victory](https://badges.gitter.im/FormidableLabs/victory.svg)](https://gitter.im/FormidableLabs/victory?utm_source=badge&utm_medium=badge&utm_campaign=pr-badge&utm_content=badge)
 
 <h1 align="center">Victory</h1>
 
@@ -14,8 +13,8 @@
 - [Contributing](#contributing)
 
 * See the **docs and examples** on the website: http://formidable.com/open-source/victory.
-* **Experiment** with all Victory components in this [JSBin](http://jsbin.com/qekike/edit) or this [JSFiddle](https://jsfiddle.net/5g20p8vd/6/).
-* For support, join the **Gitter chat room** at https://gitter.im/FormidableLabs/victory.
+* **Experiment** with all Victory components in this [code sandbox](https://codesandbox.io/s/m3xo745x2x)
+* For support, join the **Spectrum chat room** at https://spectrum.chat/victory.
 
 ## Getting started
 
@@ -58,22 +57,6 @@ Victory Native shares most of its code with Victory, and has a nearly identical 
 
 ## [Contributing](CONTRIBUTING.md)
 
-## Issues
-
-### Jest Snapshots
-
-If you want to use [Jest snapshot testing](https://github.com/storybooks/storybook/tree/master/addons/storyshots)
-with Victory, you may encounter a problem where the Jest snapshot changes every time, due to a randomly generated `clipId`
-being used for a `VictoryClipContainer` group component.
-The solution to this is to set a static `clipId` on your `VictoryClipContainer`.
-
-For example, when creating a `VictoryLine` component, you can pass a `groupComponent` prop:
-
-```js
-<VictoryLine groupComponent={<VictoryClipContainer clipId={1} />} />
-```
-
-Now the `clipId` attached to your `VictoryLine` component will always be the same, and your snapshot will not change with each test run.
 
 [react]: https://facebook.github.io/react/
 [trav_img]: https://api.travis-ci.org/FormidableLabs/victory.svg
