@@ -1,5 +1,11 @@
 # Victory Changelog
 
+## 32.2.0 (2019-04-10)
+
+[#1292](https://github.com/FormidableLabs/victory/pull/1292) Reverses the render order for children of `VictoryStack`. This may cause minor visual changes for stacked charts, but should be an improvement for most users, as stokes and labels will no longer be cut off by higher stacks being rendered after lower stacks
+
+[#1293](https://github.com/FormidableLabs/victory/pull/1293) Fixes a bug related to custom `labelComponent` rendering in `VictoryLegend`
+
 ## 32.1.0 (2019-03-18)
 
 [#1278](https://github.com/FormidableLabs/victory/pull/1278) Adds regex support for the `voronoiBlacklist` prop. This prop may now be given as an array of strings or an array of regex patterns. Thanks @narinluangrath!
