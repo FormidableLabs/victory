@@ -89,10 +89,16 @@ export default class VictoryStack extends React.Component {
   getNewChildren(props, childComponents, calculatedProps) {
     const children = getChildren(props, childComponents, calculatedProps);
     const getAnimationProps = Wrapper.getAnimationProps.bind(this);
-    return children.map((child, index) => {
+    const newChildren = children.map((child, index) => {
       const childProps = assign({ animate: getAnimationProps(props, child, index) }, child.props);
       return React.cloneElement(child, childProps);
     });
+    /*
+      reverse render order for children of `VictoryStack` so that higher children in the stack
+      are rendered behind lower children. This looks nicer for stacked bars with cornerRadius, and
+      areas with strokes
+    */
+    return newChildren.reverse()
   }
 
   renderContainer(containerComponent, props) {
@@ -146,7 +152,7 @@ export default class VictoryStack extends React.Component {
           events={events}
           externalEventMutations={externalEventMutations}
         >
-          {newChildren.reverse()}
+          {newChildren}
         </VictorySharedEvents>
       );
     }
