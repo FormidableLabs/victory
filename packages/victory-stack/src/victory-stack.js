@@ -98,7 +98,7 @@ export default class VictoryStack extends React.Component {
       are rendered behind lower children. This looks nicer for stacked bars with cornerRadius, and
       areas with strokes
     */
-    return newChildren.reverse()
+    return newChildren.reverse();
   }
 
   renderContainer(containerComponent, props) {
