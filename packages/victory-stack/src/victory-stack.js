@@ -146,7 +146,7 @@ export default class VictoryStack extends React.Component {
           events={events}
           externalEventMutations={externalEventMutations}
         >
-          {newChildren}
+          {newChildren.reverse()}
         </VictorySharedEvents>
       );
     }
