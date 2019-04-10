@@ -179,6 +179,9 @@ class VictoryLegend extends React.Component {
 
     const labelComponents = this.dataKeys
       .map((_dataKey, index) => {
+        if (_dataKey === "all") {
+          return undefined;
+        }
         const labelProps = this.getComponentProps(labelComponent, "labels", index);
         if (labelProps.text !== undefined && labelProps.text !== null) {
           return React.cloneElement(labelComponent, labelProps);
@@ -186,7 +189,6 @@ class VictoryLegend extends React.Component {
         return undefined;
       })
       .filter(Boolean);
-
     const borderProps = this.getComponentProps(props.borderComponent, "border", "all");
     const borderComponent = React.cloneElement(props.borderComponent, borderProps);
     if (title) {
