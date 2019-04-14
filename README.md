@@ -1,5 +1,4 @@
 [![Travis Status][trav_img]][trav_site]
-
 [![Maintenance Status][maintenance-image]](#maintenance-status)
 
 # Victory
