@@ -8,6 +8,8 @@
 
 Formidable is actively working on this project, and we expect to continue for work for the foreseeable future. Bug reports, feature requests and pull requests are welcome. 
 
+## Contents
+
 - [Getting Started](#getting-started)
 - [Victory Native](#victory-native)
 - [API Documentation](http://formidable.com/open-source/victory/docs)
