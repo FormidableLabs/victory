@@ -1,12 +1,10 @@
 [![Travis Status][trav_img]][trav_site]
 
+[![Maintenance Status][maintenance-image]](#maintenance-status)
+
 # Victory
 
 #### an ecosystem of composable React components for building interactive data visualizations.
-
-## Maintenance Status: Active
-
-Formidable is actively working on this project, and we expect to continue for work for the foreseeable future. Bug reports, feature requests and pull requests are welcome. 
 
 ## Contents
 
@@ -61,7 +59,12 @@ Victory Native shares most of its code with Victory, and has a nearly identical 
 
 ## [Contributing](CONTRIBUTING.md)
 
+## Maintenance Status
+
+**Active:** Formidable is actively working on this project, and we expect to continue for work for the foreseeable future. Bug reports, feature requests and pull requests are welcome.
+
 
 [react]: https://facebook.github.io/react/
 [trav_img]: https://api.travis-ci.org/FormidableLabs/victory.svg
 [trav_site]: https://travis-ci.org/FormidableLabs/victory
+[maintenance-image]: https://img.shields.io/badge/maintenance-active-green.svg
