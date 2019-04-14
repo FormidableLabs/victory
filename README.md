@@ -1,10 +1,12 @@
 [![Travis Status][trav_img]][trav_site]
 
-<h1 align="center">Victory</h1>
+# Victory
 
-<h4 align="center">
-  an ecosystem of composable React components for building interactive data visualizations.
-</h4>
+#### an ecosystem of composable React components for building interactive data visualizations.
+
+## Maintenance Status: Active
+
+Formidable is actively working on this project, and we expect to continue for work for the foreseeable future. Bug reports, feature requests and pull requests are welcome. 
 
 - [Getting Started](#getting-started)
 - [Victory Native](#victory-native)
