@@ -2,7 +2,7 @@
 import React from "react";
 import PropTypes from "prop-types";
 import { Helpers, CommonProps, Rect, Line } from "victory-core";
-import { assign, defaults, isFunction } from "lodash";
+import { assign, defaults } from "lodash";
 
 export default class Candle extends React.Component {
   static propTypes = {
@@ -11,7 +11,6 @@ export default class Candle extends React.Component {
     candleWidth: PropTypes.oneOfType([PropTypes.number, PropTypes.func]),
     close: PropTypes.number,
     datum: PropTypes.object,
-    defaultCandleWidth: PropTypes.number,
     groupComponent: PropTypes.element,
     high: PropTypes.number,
     lineComponent: PropTypes.element,
@@ -24,32 +23,13 @@ export default class Candle extends React.Component {
   };
 
   static defaultProps = {
-    defaultCandleWidth: 8,
     groupComponent: <g />,
     lineComponent: <Line />,
     rectComponent: <Rect />
   };
 
-  getCandleWidth(props, style) {
-    const { active, datum, data, candleWidth, scale, defaultCandleWidth } = props;
-    if (candleWidth) {
-      return isFunction(candleWidth)
-        ? Helpers.evaluateProp(candleWidth, datum, active)
-        : candleWidth;
-    } else if (style.width) {
-      return style.width;
-    }
-    const range = scale.x.range();
-    const extent = Math.abs(range[1] - range[0]);
-    const candles = data.length + 2;
-    const candleRatio = props.candleRatio || 0.5;
-    const defaultWidth = candleRatio * (data.length < 2 ? defaultCandleWidth : extent / candles);
-    return Math.max(1, defaultWidth);
-  }
-
   getCandleProps(props, style) {
-    const { id, x, close, open, horizontal } = props;
-    const candleWidth = this.getCandleWidth(props, style);
+    const { id, x, close, open, horizontal, candleWidth } = props;
     const candleLength = Math.abs(close - open);
     return {
       key: `${id}-candle`,

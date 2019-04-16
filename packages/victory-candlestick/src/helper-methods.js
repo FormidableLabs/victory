@@ -1,5 +1,7 @@
-import { assign, isNil } from "lodash";
-import { Helpers, LabelHelpers, Scale, Domain, Data } from "victory-core";
+import { assign, defaults, isNil, isFunction } from "lodash";
+import { Helpers, Scale, Domain, Data, LabelHelpers } from "victory-core";
+
+const TYPES = ["close", "open", "high", "low"];
 
 const getData = (props) => {
   const accessorTypes = ["x", "high", "low", "close", "open"];
@@ -36,11 +38,44 @@ const getDomain = (props, axis) => {
   return Domain.createDomainFunction(getDomainFromData)(props, axis);
 };
 
+const getStyles = (style, defaultStyles) => {
+  const width = "100%";
+  const height = "100%";
+
+  if (!style) {
+    return defaults(
+      {
+        parent: {
+          height,
+          width
+        }
+      },
+      defaultStyles
+    );
+  }
+
+  const defaultParent = (defaultStyles && defaultStyles.parent) || {};
+  const defaultLabels = (defaultStyles && defaultStyles.labels) || {};
+  const defaultData = (defaultStyles && defaultStyles.data) || {};
+  return {
+    parent: defaults({}, style.parent, defaultParent, {
+      width,
+      height
+    }),
+    labels: defaults({}, style.labels, defaultLabels),
+    data: defaults({}, style.data, defaultData),
+    openLabels: defaults({}, style.openLabels, style.labels, defaultLabels),
+    closeLabels: defaults({}, style.closeLabels, style.labels, defaultLabels),
+    lowLabels: defaults({}, style.lowLabels, style.labels, defaultLabels),
+    highLabels: defaults({}, style.highLabels, style.labels, defaultLabels)
+  };
+};
+
 const getCalculatedValues = (props) => {
   const { theme, polar } = props;
   const defaultStyle =
     theme && theme.candlestick && theme.candlestick.style ? theme.candlestick.style : {};
-  const style = Helpers.getStyles(props.style, defaultStyle);
+  const style = getStyles(props.style, defaultStyle);
   const data = getData(props);
   const range = {
     x: Helpers.getRange(props, "x"),
@@ -59,7 +94,9 @@ const getCalculatedValues = (props) => {
       .range(props.horizontal ? range.x : range.y)
   };
   const origin = polar ? props.origin || Helpers.getPolarOrigin(props) : undefined;
-  return { domain, data, scale, style, origin };
+  const defaultOrientation = props.horizontal ? "top" : "right";
+  const labelOrientation = props.labelOrientation || defaultOrientation;
+  return { domain, data, scale, style, origin, labelOrientation };
 };
 
 const isTransparent = (attr) => {
@@ -76,34 +113,131 @@ const getDataStyles = (datum, style, props) => {
   return assign({}, style, { stroke, fill });
 };
 
-const getLabelProps = (dataProps, text, style) => {
-  const { x, high, index, scale, datum, data, horizontal } = dataProps;
-  const labelStyle = style.labels || {};
-  const defaultAnchors = {
-    vertical: horizontal ? "middle" : "end",
-    text: horizontal ? "start" : "middle"
+const getText = (props, type) => {
+  const { datum, index, labels } = props;
+  const propName = `${type}Labels`;
+  const labelProp = props[propName];
+  if (!labelProp && !labels) {
+    return null;
+  } else if (labelProp === true || labels === true) {
+    const dataName = `_${type}`;
+    return `${datum[dataName]}`;
+  }
+  return Array.isArray(labelProp) ? labelProp[index] : labelProp;
+};
+
+const getCandleWidth = (props, style) => {
+  const { active, datum, data, candleWidth, scale, defaultCandleWidth } = props;
+  if (candleWidth) {
+    return isFunction(candleWidth) ? Helpers.evaluateProp(candleWidth, datum, active) : candleWidth;
+  } else if (style && style.width) {
+    return style.width;
+  }
+  const range = scale.x.range();
+  const extent = Math.abs(range[1] - range[0]);
+  const candles = data.length + 2;
+  const candleRatio = props.candleRatio || 0.5;
+  const defaultWidth = candleRatio * (data.length < 2 ? defaultCandleWidth : extent / candles);
+  return Math.max(1, defaultWidth);
+};
+
+const getOrientation = (labelOrientation, type) =>
+  (typeof labelOrientation === "object" && labelOrientation[type]) || labelOrientation;
+
+/* eslint-disable complexity*/
+const calculateAxisValues = (props) => {
+  const { positions, labelStyle, x, horizontal, computedType, candleWidth, orientation } = props;
+  positions.labels = (positions.open + positions.close) / 2;
+
+  const signX = orientation === "left" ? -1 : 1;
+  const signY = orientation === "top" ? -1 : 1;
+
+  if (horizontal) {
+    const yValue =
+      orientation === "top" || orientation === "bottom"
+        ? x + signY * (candleWidth / 2) + signY * (labelStyle.padding || 0)
+        : x;
+    const xValue =
+      orientation === "left" || orientation === "right"
+        ? positions[computedType] + signX * (labelStyle.padding || 1)
+        : positions[computedType];
+
+    return { yValue, xValue };
+  } else {
+    const xValue =
+      orientation === "top" || orientation === "bottom"
+        ? x
+        : x + signX * (candleWidth / 2) + signX * (labelStyle.padding || 0);
+
+    const yValue =
+      orientation === "left" || orientation === "right"
+        ? positions[computedType]
+        : positions[computedType] + signY * (labelStyle.padding || 1);
+
+    return { yValue, xValue };
+  }
+};
+/* eslint-enable complexity*/
+
+/* eslint-disable max-params*/
+const getLabelProps = (dataProps, text, style, type) => {
+  const {
+    x,
+    high,
+    low,
+    open,
+    close,
+    index,
+    scale,
+    datum,
+    data,
+    horizontal,
+    candleWidth,
+    labelOrientation
+  } = dataProps;
+
+  const orientation = getOrientation(labelOrientation, type);
+  const positions = { high, low, open, close };
+  const namespace = type ? `${type}Labels` : "labels";
+  const labelStyle = style[namespace] || style.labels;
+  const defaultVerticalAnchors = { top: "end", bottom: "start", left: "middle", right: "middle" };
+  const defaultTextAnchors = { left: "end", right: "start", top: "middle", bottom: "middle" };
+  const computedType = type ? type : "labels";
+
+  const axisProps = {
+    positions,
+    labelStyle,
+    x,
+    horizontal,
+    computedType,
+    candleWidth,
+    orientation
   };
+  const { yValue, xValue } = calculateAxisValues(axisProps);
+
   return {
     style: labelStyle,
-    y: horizontal ? x : high - (labelStyle.padding || 0),
-    x: horizontal ? high + (labelStyle.padding || 0) : x,
+    y: yValue,
+    x: xValue,
     text,
     index,
     scale,
     datum,
     data,
-    textAnchor: labelStyle.textAnchor || defaultAnchors.text,
-    verticalAnchor: labelStyle.verticalAnchor || defaultAnchors.vertical,
+    orientation: labelOrientation,
+    textAnchor: labelStyle.textAnchor || defaultTextAnchors[orientation],
+    verticalAnchor: labelStyle.verticalAnchor || defaultVerticalAnchors[orientation],
     angle: labelStyle.angle,
     horizontal
   };
 };
+/* eslint-enable max-params*/
 
 const getBaseProps = (props, fallbackProps) => {
   // eslint-disable-line max-statements
   props = Helpers.modifyProps(props, fallbackProps, "candlestick");
   const calculatedValues = getCalculatedValues(props);
-  const { data, style, scale, domain, origin } = calculatedValues;
+  const { data, style, scale, domain, origin, labelOrientation } = calculatedValues;
   const {
     groupComponent,
     width,
@@ -147,34 +281,54 @@ const getBaseProps = (props, fallbackProps) => {
     const open = scale.y(datum._open);
     const low = scale.y(datum._low);
     const dataStyle = getDataStyles(datum, style.data, props);
-    const dataProps = {
-      x,
-      high,
-      low,
-      candleWidth,
-      candleRatio,
-      scale,
-      data,
-      datum,
-      groupComponent,
-      index,
-      style: dataStyle,
-      width,
-      polar,
-      origin,
-      wickStrokeWidth,
-      open,
-      close,
-      horizontal
-    };
+    const dataProps = defaults(
+      {
+        x,
+        high,
+        low,
+        candleWidth,
+        candleRatio,
+        scale,
+        data,
+        datum,
+        groupComponent,
+        index,
+        style: dataStyle,
+        width,
+        polar,
+        origin,
+        wickStrokeWidth,
+        open,
+        close,
+        horizontal,
+        labelOrientation
+      },
+      props
+    );
+    dataProps.candleWidth = getCandleWidth(dataProps);
 
     childProps[eventKey] = {
       data: dataProps
     };
-    const text = LabelHelpers.getText(props, datum, index);
-    if ((text !== undefined && text !== null) || (labels && (events || sharedEvents))) {
-      childProps[eventKey].labels = getLabelProps(dataProps, text, style);
+
+    if (labels) {
+      const text = LabelHelpers.getText(props, datum, index);
+      if ((text !== undefined && text !== null) || (labels && (events || sharedEvents))) {
+        childProps[eventKey].labels = getLabelProps(dataProps, text, style);
+      }
     }
+
+    TYPES.forEach((type) => {
+      const labelText = getText(dataProps, type);
+      const labelProp = props.labels || props[`${type}Labels`];
+      if (
+        (labelText !== null && labelText !== undefined) ||
+        (labelProp && (events || sharedEvents))
+      ) {
+        const target = `${type}Labels`;
+        childProps[eventKey][target] = getLabelProps(dataProps, labelText, style, type);
+      }
+    });
 
     return childProps;
   }, initialChildProps);
