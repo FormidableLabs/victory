@@ -127,9 +127,9 @@ const getText = (props, type) => {
 };
 
 const getCandleWidth = (props, style) => {
-  const { active, datum, data, candleWidth, scale, defaultCandleWidth } = props;
+  const { datum, data, candleWidth, scale, defaultCandleWidth } = props;
   if (candleWidth) {
-    return isFunction(candleWidth) ? Helpers.evaluateProp(candleWidth, datum, active) : candleWidth;
+    return isFunction(candleWidth) ? Helpers.evaluateProp(candleWidth, datum) : candleWidth;
   } else if (style && style.width) {
     return style.width;
   }
@@ -145,7 +145,7 @@ const getOrientation = (labelOrientation, type) =>
   (typeof labelOrientation === "object" && labelOrientation[type]) || labelOrientation;
 
 /* eslint-disable complexity*/
-const calculateAxisValues = (props) => {
+const calculatePlotValues = (props) => {
   const { positions, labelStyle, x, horizontal, computedType, candleWidth, orientation } = props;
   positions.labels = (positions.open + positions.close) / 2;
 
@@ -204,7 +204,7 @@ const getLabelProps = (dataProps, text, style, type) => {
   const defaultTextAnchors = { left: "end", right: "start", top: "middle", bottom: "middle" };
   const computedType = type ? type : "labels";
 
-  const axisProps = {
+  const plotProps = {
     positions,
     labelStyle,
     x,
@@ -213,7 +213,7 @@ const getLabelProps = (dataProps, text, style, type) => {
     candleWidth,
     orientation
   };
-  const { yValue, xValue } = calculateAxisValues(axisProps);
+  const { yValue, xValue } = calculatePlotValues(plotProps);
 
   return {
     style: labelStyle,
