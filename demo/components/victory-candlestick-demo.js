@@ -183,9 +183,9 @@ export default class App extends React.Component {
         <VictoryCandlestick
           animate={{ duration: 2000 }}
           data={this.state.data}
+          candleWidth={50}
           style={{
             data: {
-              width: 50,
               stroke: "transparent",
               fill: (d) => d.fill,
               opacity: (d) => d.opacity
@@ -193,6 +193,20 @@ export default class App extends React.Component {
             parent: style.parent
           }}
         />
+
+        <VictoryChart scale={{ x: "time" }} style={style} domainPadding={{ x: [20, 50] }}>
+          <VictoryCandlestick
+            candleColors={{ positive: "#8BC34A", negative: "#C62828" }}
+            data={data}
+            style={{ data: { stroke: "none" }, closeLabels: { fill: "blue" } }}
+            size={8}
+            openLabels={(d) => d.open}
+            closeLabels={(d) => d.close}
+            lowLabels={(d) => d.low}
+            highLabels={(d) => d.high}
+            labelOrientation={{ open: "top", high: "top" }}
+          />
+        </VictoryChart>
 
         <VictoryCandlestick style={style} size={1} />
 

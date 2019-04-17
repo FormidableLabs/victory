@@ -131,15 +131,17 @@ storiesOf("VictoryCandlestick.labels", module)
   .add("array labels", () => (
     <VictoryCandlestick data={getData(7)} labels={["", "", "three", "four", 5, "six"]} />
   ))
-  .add("data labels", () => (
+  .add("function labels with orientation", () => (
     <VictoryCandlestick
       data={[
-        { x: 1, open: 9, close: 30, high: 56, low: 7, label: "first" },
+        { x: 1, open: 9, close: 30, high: 56, low: 7 },
         { x: 2, open: 80, close: 40, high: 120, low: 10 },
-        { x: 3, open: 50, close: 80, high: 90, low: 20, label: "third" },
+        { x: 3, open: 50, close: 80, high: 90, low: 20 },
         { x: 4, open: 70, close: 22, high: 70, low: 5 },
-        { x: 5, open: 20, close: 35, high: 50, low: 10, label: ["last", "label"] }
+        { x: 5, open: 20, close: 35, high: 50, low: 10 }
       ]}
+      openLabels={(d) => d.open}
+      labelOrientation={{ open: "top" }}
     />
   ))
   .add("data labels (horizontal)", () => (
