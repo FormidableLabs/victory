@@ -128,10 +128,36 @@ storiesOf("VictoryCandlestick.labels", module)
   .add("function labels", () => (
     <VictoryCandlestick data={getData(7)} labels={(d) => `x: ${d.x}`} />
   ))
+  .add("openLabels and closeLabels", () => (
+    <VictoryCandlestick
+      data={[
+        { x: 1, open: 9, close: 30, high: 56, low: 7 },
+        { x: 2, open: 80, close: 40, high: 120, low: 10 },
+        { x: 3, open: 50, close: 80, high: 90, low: 20 },
+        { x: 4, open: 70, close: 22, high: 70, low: 5 },
+        { x: 5, open: 20, close: 35, high: 50, low: 10 }
+      ]}
+      openLabels={(d) => d.open}
+      closeLabels={(d) => d.close}
+    />
+  ))
+  .add("highLabels and lowLabels", () => (
+    <VictoryCandlestick
+      data={[
+        { x: 1, open: 9, close: 30, high: 56, low: 7 },
+        { x: 2, open: 80, close: 40, high: 120, low: 10 },
+        { x: 3, open: 50, close: 80, high: 90, low: 20 },
+        { x: 4, open: 70, close: 22, high: 70, low: 5 },
+        { x: 5, open: 20, close: 35, high: 50, low: 10 }
+      ]}
+      highLabels={(d) => d.high}
+      lowLabels={(d) => d.low}
+    />
+  ))
   .add("array labels", () => (
     <VictoryCandlestick data={getData(7)} labels={["", "", "three", "four", 5, "six"]} />
   ))
-  .add("function labels with orientation", () => (
+  .add("labels with orientation", () => (
     <VictoryCandlestick
       data={[
         { x: 1, open: 9, close: 30, high: 56, low: 7 },
@@ -154,6 +180,7 @@ storiesOf("VictoryCandlestick.labels", module)
         { x: 4, open: 70, close: 22, high: 70, low: 5 },
         { x: 5, open: 20, close: 35, high: 50, low: 10, label: ["last", "label"] }
       ]}
+      labels={(d) => d.label}
     />
   ));
 
@@ -172,6 +199,24 @@ storiesOf("VictoryCandlestick.tooltips", module)
       data={getData(5)}
       labels={(d) => `x: ${d.x}`}
       labelComponent={<VictoryTooltip active />}
+    />
+  ))
+
+  .add("tooltips different labels", () => (
+    <VictoryCandlestick
+      horizontal
+      data={[
+        { x: 1, open: 9, close: 30, high: 56, low: 7 },
+        { x: 2, open: 80, close: 40, high: 120, low: 10 },
+        { x: 3, open: 50, close: 80, high: 90, low: 20 },
+        { x: 4, open: 70, close: 22, high: 70, low: 5 },
+        { x: 5, open: 20, close: 35, high: 50, low: 10 }
+      ]}
+      openLabels={(d) => `o: ${d.open}`}
+      openLabelComponent={<VictoryTooltip active />}
+      closeLabels={(d) => `c: ${d.close}`}
+      closeLabelComponent={<VictoryTooltip active />}
+      labelOrientation="top"
     />
   ))
   .add("tooltips with long and short strings", () => (
