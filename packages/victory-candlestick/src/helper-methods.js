@@ -224,7 +224,7 @@ const getLabelProps = (dataProps, text, style, type) => {
     scale,
     datum,
     data,
-    orientation: labelOrientation,
+    orientation,
     textAnchor: labelStyle.textAnchor || defaultTextAnchors[orientation],
     verticalAnchor: labelStyle.verticalAnchor || defaultVerticalAnchors[orientation],
     angle: labelStyle.angle,
