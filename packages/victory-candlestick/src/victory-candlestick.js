@@ -138,7 +138,7 @@ class VictoryCandlestick extends React.Component {
     openLabelComponent: PropTypes.element,
     openLabels: PropTypes.oneOfType([PropTypes.func, PropTypes.array, PropTypes.bool]),
     style: PropTypes.shape({
-      data: PropTypes.obeject,
+      data: PropTypes.object,
       labels: PropTypes.object,
       close: PropTypes.object,
       closeLabels: PropTypes.object,
