@@ -90,10 +90,31 @@ storiesOf("VictoryCandlestick.wickStrokeWidth", module)
 storiesOf("VictoryCandlestick.data", module)
   .addDecorator(getChartDecorator({ domainPadding: 25 }))
   .add("with data accessors", () => (
-    <VictoryCandlestick data={sampleData} x={"series"} high={(data) => data.big / 10} />
+    <VictoryCandlestick
+      data={[
+        { series: 1, open: 9, close: 30, big: 560, low: 7 },
+        { series: 2, open: 80, close: 40, big: 1200, low: 10 },
+        { series: 3, open: 50, close: 80, big: 900, low: 20 },
+        { series: 4, open: 70, close: 22, big: 700, low: 5 },
+        { series: 5, open: 20, close: 35, big: 500, low: 10 }
+      ]}
+      x={"series"}
+      high={(data) => data.big / 10}
+    />
   ))
   .add("with data accessors (horizontal)", () => (
-    <VictoryCandlestick horizontal data={sampleData} x={"series"} high={(data) => data.big / 10} />
+    <VictoryCandlestick
+      horizontal
+      data={[
+        { series: 1, open: 9, close: 30, big: 560, low: 7 },
+        { series: 2, open: 80, close: 40, big: 1200, low: 10 },
+        { series: 3, open: 50, close: 80, big: 900, low: 20 },
+        { series: 4, open: 70, close: 22, big: 700, low: 5 },
+        { series: 5, open: 20, close: 35, big: 500, low: 10 }
+      ]}
+      x={"series"}
+      high={(data) => data.big / 10}
+    />
   ))
   .add("with immutable data", () => {
     return (
@@ -166,6 +187,7 @@ storiesOf("VictoryCandlestick.tooltips", module)
       data={sampleData}
       openLabels={(d) => d.open}
       openLabelComponent={<VictoryTooltip active />}
+      labelOrientation="top"
     />
   ))
   .add("closeLabels tooltips", () => (
@@ -173,6 +195,7 @@ storiesOf("VictoryCandlestick.tooltips", module)
       data={sampleData}
       closeLabels={(d) => d.close}
       closeLabelComponent={<VictoryTooltip active />}
+      labelOrientation={{ close: "left" }}
     />
   ))
   .add("lowLabels tooltips", () => (
