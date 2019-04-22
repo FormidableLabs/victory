@@ -2,7 +2,7 @@
 import React from "react";
 import PropTypes from "prop-types";
 import { Helpers, CommonProps, Rect, Line } from "victory-core";
-import { assign, defaults } from "lodash";
+import { assign, defaults, isFunction } from "lodash";
 
 export default class Candle extends React.Component {
   static propTypes = {
@@ -28,8 +28,21 @@ export default class Candle extends React.Component {
     rectComponent: <Rect />
   };
 
+  getCandleWidth(props, style) {
+    const { active, datum, candleWidth } = props;
+    if (candleWidth) {
+      return isFunction(candleWidth)
+        ? Helpers.evaluateProp(candleWidth, datum, active)
+        : candleWidth;
+    } else if (style.width) {
+      return style.width;
+    }
+    return candleWidth;
+  }
+
   getCandleProps(props, style) {
-    const { id, x, close, open, horizontal, candleWidth } = props;
+    const { id, x, close, open, horizontal } = props;
+    const candleWidth = this.getCandleWidth(props, style);
     const candleLength = Math.abs(close - open);
     return {
       key: `${id}-candle`,

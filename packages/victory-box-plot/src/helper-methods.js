@@ -288,7 +288,7 @@ const getLabelProps = (props, text, type) => {
     text,
     datum,
     index,
-    orientation: labelOrientation,
+    orientation,
     style: labelStyle,
     y: horizontal ? getDefaultPosition("y") : positions[type],
     x: horizontal ? positions[type] : getDefaultPosition("x"),

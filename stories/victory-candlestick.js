@@ -9,6 +9,13 @@ import seedrandom from "seedrandom";
 import { getChartDecorator } from "./decorators";
 import { fromJS } from "immutable";
 
+const sampleData = [
+  { x: 1, open: 9, close: 30, high: 56, low: 7 },
+  { x: 2, open: 80, close: 40, high: 120, low: 10 },
+  { x: 3, open: 50, close: 80, high: 90, low: 20 },
+  { x: 4, open: 70, close: 22, high: 70, low: 5 },
+  { x: 5, open: 20, close: 35, high: 50, low: 10 }
+];
 const getTimeData = (num, seed) => {
   seed = seed || "getTimeData";
   const baseSeed = seedrandom(seed);
@@ -128,18 +135,18 @@ storiesOf("VictoryCandlestick.labels", module)
   .add("function labels", () => (
     <VictoryCandlestick data={getData(7)} labels={(d) => `x: ${d.x}`} />
   ))
+  .add("openLabels and closeLabels", () => (
+    <VictoryCandlestick data={sampleData} openLabels={(d) => d.open} closeLabels={(d) => d.close} />
+  ))
+  .add("highLabels and lowLabels", () => (
+    <VictoryCandlestick data={sampleData} highLabels={(d) => d.high} lowLabels={(d) => d.low} />
+  ))
   .add("array labels", () => (
     <VictoryCandlestick data={getData(7)} labels={["", "", "three", "four", 5, "six"]} />
   ))
-  .add("function labels with orientation", () => (
+  .add("labels with orientation", () => (
     <VictoryCandlestick
-      data={[
-        { x: 1, open: 9, close: 30, high: 56, low: 7 },
-        { x: 2, open: 80, close: 40, high: 120, low: 10 },
-        { x: 3, open: 50, close: 80, high: 90, low: 20 },
-        { x: 4, open: 70, close: 22, high: 70, low: 5 },
-        { x: 5, open: 20, close: 35, high: 50, low: 10 }
-      ]}
+      data={sampleData}
       openLabels={(d) => d.open}
       labelOrientation={{ open: "top" }}
     />
@@ -154,6 +161,7 @@ storiesOf("VictoryCandlestick.labels", module)
         { x: 4, open: 70, close: 22, high: 70, low: 5 },
         { x: 5, open: 20, close: 35, high: 50, low: 10, label: ["last", "label"] }
       ]}
+      labels={(d) => d.label}
     />
   ));
 
@@ -172,6 +180,36 @@ storiesOf("VictoryCandlestick.tooltips", module)
       data={getData(5)}
       labels={(d) => `x: ${d.x}`}
       labelComponent={<VictoryTooltip active />}
+    />
+  ))
+  .add("openLabels tooltips", () => (
+    <VictoryCandlestick
+      data={sampleData}
+      openLabels={(d) => d.open}
+      openLabelComponent={<VictoryTooltip active />}
+      labelOrientation="top"
+    />
+  ))
+  .add("closeLabels tooltips", () => (
+    <VictoryCandlestick
+      data={sampleData}
+      closeLabels={(d) => d.close}
+      closeLabelComponent={<VictoryTooltip active />}
+      labelOrientation={{ close: "left" }}
+    />
+  ))
+  .add("lowLabels tooltips", () => (
+    <VictoryCandlestick
+      data={sampleData}
+      lowLabels={(d) => d.low}
+      lowLabelComponent={<VictoryTooltip active />}
+    />
+  ))
+  .add("highLabels tooltips", () => (
+    <VictoryCandlestick
+      data={sampleData}
+      highLabels={(d) => d.high}
+      highLabelComponent={<VictoryTooltip active />}
     />
   ))
   .add("tooltips with long and short strings", () => (
