@@ -49,7 +49,7 @@ render(<PieChart />, document.getElementById("app"));
 
 ## Requirements
 
-Projects using Victory should also depend on [React][]
+Projects using Victory should also depend on [React][]. Victory works with React version 15 and above.
 
 ## Victory Native
 
