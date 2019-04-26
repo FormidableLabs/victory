@@ -45,6 +45,9 @@
     "victory-voronoi-container": "^32.2.0",
     "victory-zoom-container": "^32.2.0"
   },
+  "peerDependencies": {
+    "react": "^16.6.0"
+  },
   "scripts": {
     "version": "nps build-libs && nps build-dists"
   },
