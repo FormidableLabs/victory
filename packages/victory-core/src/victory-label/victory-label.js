@@ -127,7 +127,7 @@ export default class VictoryLabel extends React.Component {
     if (child === undefined || child === null) {
       return undefined;
     }
-    return `${child}`.split("\n");
+    return Array.isArray(child) ? child : `${child}`.split("\n");
   }
 
   //eslint-disable-next-line max-params
