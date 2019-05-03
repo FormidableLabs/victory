@@ -1,5 +1,11 @@
 # Victory Changelog
 
+## 32.2.1 (2019-05-02)
+
+[#1302](https://github.com/FormidableLabs/victory/pull/1302) - Fixes slight vertical offset for elements rendered in `VictoryPortal`
+
+[#1299](https://github.com/FormidableLabs/victory/pull/1299) - Support rendering array labels on separate lines. Previously `labels={() => {"one", "two"}}` would stringify the array rather than rendering it on two lines
+
 ## 32.2.0 (2019-04-10)
 
 [#1292](https://github.com/FormidableLabs/victory/pull/1292) Reverses the render order for children of `VictoryStack`. This may cause minor visual changes for stacked charts, but should be an improvement for most users, as stokes and labels will no longer be cut off by higher stacks being rendered after lower stacks
