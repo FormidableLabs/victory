@@ -1,5 +1,9 @@
 # Victory Changelog
 
+## 32.2.2 (2019-05-03)
+
+[#1304](https://github.com/FormidableLabs/victory/pull/1304) - renames private variables to reduce potential for conflict
+
 ## 32.2.1 (2019-05-02)
 
 [#1302](https://github.com/FormidableLabs/victory/pull/1302) - Fixes slight vertical offset for elements rendered in `VictoryPortal`
