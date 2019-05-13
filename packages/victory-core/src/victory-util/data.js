@@ -108,11 +108,11 @@ function getEventKey(key) {
 function addEventKeys(props, data) {
   const hasEventKeyAccessor = !!props.eventKey;
   const eventKeyAccessor = getEventKey(props.eventKey);
-  return data.map((datum) => {
+  return data.map((datum, index) => {
     if (datum.eventKey !== undefined) {
       return datum;
     } else if (hasEventKeyAccessor) {
-      const eventKey = eventKeyAccessor(datum);
+      const eventKey = eventKeyAccessor(datum, index);
       return eventKey !== undefined ? assign({ eventKey }, datum) : datum;
     } else {
       return datum;
