@@ -189,11 +189,7 @@ describe("victory-util/data", () => {
         });
 
         it("uses a eventKey functions", () => {
-          const data = createData([
-            { x: 2, y: 2 },
-            { x: 1, y: 3 },
-            { x: 3, y: 1 }
-          ]);
+          const data = createData([{ x: 2, y: 2 }, { x: 1, y: 3 }, { x: 3, y: 1 }]);
 
           const returnData = Data.getData({ data, eventKey: (d) => d.x });
 
@@ -205,11 +201,7 @@ describe("victory-util/data", () => {
         });
 
         it("uses a eventKey functions with index", () => {
-          const data = createData([
-            { x: 2, y: 2 },
-            { x: 1, y: 3 },
-            { x: 3, y: 1 }
-          ]);
+          const data = createData([{ x: 2, y: 2 }, { x: 1, y: 3 }, { x: 3, y: 1 }]);
 
           const returnData = Data.getData({ data, eventKey: (d, i) => i });
 
