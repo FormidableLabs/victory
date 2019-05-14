@@ -1,5 +1,9 @@
 # Victory Changelog
 
+## 32.2.3 (2019-05-13)
+
+[#1306](https://github.com/FormidableLabs/victory/pull/1306) - Calls `eventKey` functions with both `datum` and `index`
+
 ## 32.2.2 (2019-05-03)
 
 [#1304](https://github.com/FormidableLabs/victory/pull/1304) - renames private variables to reduce potential for conflict
