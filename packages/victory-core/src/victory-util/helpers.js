@@ -56,7 +56,7 @@ function getPoint(datum) {
     x0: exists(_x0) ? _x0 : _x,
     y: exists(_y1) ? _y1 : _y,
     y0: exists(_y0) ? _y0 : _y
-  }
+  };
   return defaults({}, point, datum);
 }
 

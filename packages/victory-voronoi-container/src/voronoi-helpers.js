@@ -1,13 +1,5 @@
 import { Selection, Data, Helpers } from "victory-core";
-import {
-  assign,
-  throttle,
-  isFunction,
-  isEmpty,
-  includes,
-  isString,
-  isRegExp
-} from "lodash";
+import { assign, throttle, isFunction, isEmpty, includes, isString, isRegExp } from "lodash";
 import isEqual from "react-fast-compare";
 import { Delaunay } from "d3-delaunay";
 import React from "react";
@@ -80,7 +72,7 @@ const VoronoiHelpers = {
   findPoints(datasets, point) {
     const x = point._voronoiX;
     const y = point._voronoiY;
-    if ( x !== undefined && y !== undefined) {
+    if (x !== undefined && y !== undefined) {
       return [point];
     }
     return datasets.filter((d) => {
@@ -104,7 +96,7 @@ const VoronoiHelpers = {
     const scaledData = datasets.map((d) => {
       const { x, y } = Helpers.scalePoint(props, d);
       return [x, y];
-    })
+    });
     const delaunay = Delaunay.from(scaledData);
     const index = delaunay.find(mousePosition.x, mousePosition.y, props.vIndex);
     const withinRadius = this.withinRadius(scaledData[index], mousePosition, props.radius);
@@ -200,7 +192,7 @@ const VoronoiHelpers = {
         : [];
       return this.getParentMutation([], mousePosition, parentSVG).concat(...inactiveMutations);
     }
-    const { points = [], index } = this.getVoronoiPoints(targetProps, mousePosition)
+    const { points = [], index } = this.getVoronoiPoints(targetProps, mousePosition);
     const parentMutations = this.getParentMutation(points, mousePosition, parentSVG, index);
     if (activePoints.length && isEqual(points, activePoints)) {
       return parentMutations;
