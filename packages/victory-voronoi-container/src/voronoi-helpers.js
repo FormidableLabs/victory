@@ -4,14 +4,12 @@ import {
   throttle,
   isFunction,
   isEmpty,
-  groupBy,
-  keys,
   includes,
   isString,
   isRegExp
 } from "lodash";
 import isEqual from "react-fast-compare";
-import { voronoi as d3Voronoi } from "d3-voronoi";
+import { Delaunay } from "d3-delaunay";
 import React from "react";
 
 const VoronoiHelpers = {
@@ -39,8 +37,8 @@ const VoronoiHelpers = {
         const voronoiY = (+y + +y0) / 2;
         return assign(
           {
-            _voronoiX: props.voronoiDimension === "y" ? 0 : voronoiX,
-            _voronoiY: props.voronoiDimension === "x" ? 0 : voronoiY,
+            _voronoiX: props.voronoiDimension === "y" ? undefined : voronoiX,
+            _voronoiY: props.voronoiDimension === "x" ? undefined : voronoiY,
             eventKey: index,
             childName: name,
             continuous,
@@ -79,34 +77,39 @@ const VoronoiHelpers = {
     return Helpers.reduceChildren(children, iteratee, props);
   },
 
-  // returns an array of objects with point and data where point is an x, y coordinate, and data is
-  // an array of points belonging to that coordinate
-  mergeDatasets(props, datasets) {
-    const points = groupBy(datasets, (datum) => {
-      const { x, y } = Helpers.scalePoint(props, datum);
-      return `${x},${y}`;
-    });
-    return keys(points).map((key) => {
-      const point = key.split(",");
-      return {
-        x: +point[0],
-        y: +point[1],
-        points: points[key]
-      };
+  findPoints(datasets, point) {
+    const x = point._voronoiX;
+    const y = point._voronoiY;
+    if ( x !== undefined && y !== undefined) {
+      return [point];
+    }
+    return datasets.filter((d) => {
+      const matchesX = x === undefined || x === d._voronoiX;
+      const matchesY = y === undefined || y === d._voronoiY;
+      return matchesX && matchesY;
     });
   },
 
-  getVoronoi(props, mousePosition) {
-    const { width, height, voronoiPadding } = props;
-    const padding = voronoiPadding || 0;
-    const voronoiFunction = d3Voronoi()
-      .x((d) => d.x)
-      .y((d) => d.y)
-      .extent([[padding, padding], [width - padding, height - padding]]);
+  withinRadius(point, mousePosition, radius) {
+    if (!radius) {
+      return true;
+    }
+    const { x, y } = mousePosition;
+    const distanceSquared = Math.pow(x - point[0], 2) + Math.pow(y - point[1], 2);
+    return distanceSquared < Math.pow(radius, 2);
+  },
+
+  getVoronoiPoints(props, mousePosition) {
     const datasets = this.getDatasets(props);
-    const voronoi = voronoiFunction(this.mergeDatasets(props, datasets));
-    const size = props.voronoiDimension ? undefined : props.radius;
-    return voronoi.find(mousePosition.x, mousePosition.y, size);
+    const scaledData = datasets.map((d) => {
+      const { x, y } = Helpers.scalePoint(props, d);
+      return [x, y];
+    })
+    const delaunay = Delaunay.from(scaledData);
+    const index = delaunay.find(mousePosition.x, mousePosition.y, props.vIndex);
+    const withinRadius = this.withinRadius(scaledData[index], mousePosition, props.radius);
+    const points = withinRadius ? this.findPoints(datasets, datasets[index]) : [];
+    return { points, index };
   },
 
   getActiveMutations(props, point) {
@@ -153,12 +156,13 @@ const VoronoiHelpers = {
     });
   },
 
-  getParentMutation(activePoints, mousePosition, parentSVG) {
+  // eslint-disable-next-line max-params
+  getParentMutation(activePoints, mousePosition, parentSVG, vIndex) {
     return [
       {
         target: "parent",
         eventKey: "parent",
-        mutation: () => ({ activePoints, mousePosition, parentSVG })
+        mutation: () => ({ activePoints, mousePosition, parentSVG, vIndex })
       }
     ];
   },
@@ -196,9 +200,8 @@ const VoronoiHelpers = {
         : [];
       return this.getParentMutation([], mousePosition, parentSVG).concat(...inactiveMutations);
     }
-    const nearestVoronoi = this.getVoronoi(targetProps, mousePosition);
-    const points = nearestVoronoi ? nearestVoronoi.data.points : [];
-    const parentMutations = this.getParentMutation(points, mousePosition, parentSVG);
+    const { points = [], index } = this.getVoronoiPoints(targetProps, mousePosition)
+    const parentMutations = this.getParentMutation(points, mousePosition, parentSVG, index);
     if (activePoints.length && isEqual(points, activePoints)) {
       return parentMutations;
     } else {

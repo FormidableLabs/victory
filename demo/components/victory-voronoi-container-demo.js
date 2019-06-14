@@ -129,7 +129,22 @@ class App extends React.Component {
             y="b"
           />
 
-          <VictoryChart style={chartStyle} containerComponent={<VictoryVoronoiContainer />}>
+          <VictoryChart style={chartStyle}
+            containerComponent={
+              <VictoryVoronoiContainer radius={20} voronoiBlacklist={["ignore"]}/>
+            }
+          >
+            <VictoryScatter
+              name="ignore"
+              style={{
+                data: {
+                  fill: "gray",
+                  opacity: 0.2
+                }
+              }}
+              size={20}
+              y={(d) => d.x * d.x}
+            />
             <VictoryScatter
               style={{
                 data: {
