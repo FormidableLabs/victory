@@ -19,7 +19,7 @@
   "author": "Formidable",
   "license": "MIT",
   "dependencies": {
-    "d3-voronoi": "^1.1.2",
+    "d3-delaunay": "^4.1.5",
     "lodash": "^4.17.5",
     "prop-types": "^15.5.8",
     "victory-core": "^32.2.3",
