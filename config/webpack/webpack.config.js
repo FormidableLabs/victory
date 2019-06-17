@@ -6,6 +6,10 @@ var LodashModuleReplacementPlugin = require("lodash-webpack-plugin");
 
 var SRC = path.resolve("src");
 
+// d3-delaunay and its dependent delaunator need to be transpiled
+var d3Delaunay = path.resolve("../../node_modules/d3-delaunay");
+var delaunator = path.resolve("../../node_modules/delaunator");
+
 // **Little Hacky**: Infer the filename and library name from the package name.
 //
 // Assumptions:
@@ -51,7 +55,7 @@ module.exports = {
         test: /\.js$/,
         // Use include specifically of our sources.
         // Do _not_ use an `exclude` here.
-        include: [SRC],
+        include: [SRC, d3Delaunay, delaunator],
         loader: require.resolve("babel-loader")
       }
     ]
