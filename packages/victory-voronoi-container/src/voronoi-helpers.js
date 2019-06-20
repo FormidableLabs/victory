@@ -1,7 +1,7 @@
 import { Selection, Data, Helpers } from "victory-core";
 import { assign, throttle, isFunction, isEmpty, includes, isString, isRegExp } from "lodash";
 import isEqual from "react-fast-compare";
-import { Delaunay } from "d3-delaunay";
+import Delaunay from "delaunay-find/lib/index.js";
 import React from "react";
 
 const VoronoiHelpers = {
