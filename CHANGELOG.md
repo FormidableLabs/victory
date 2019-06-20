@@ -4,6 +4,8 @@
 
 [#1322](https://github.com/FormidableLabs/victory/pull/1322) - Replaces `d3-voronoi` with `d3-delaunay` in `VictoryVoronoiContainer`
 
+[#1333](https://github.com/FormidableLabs/victory/pull/1333) - replace `d3-delaunay` with `delaunay-find`
+
 ## 32.2.3 (2019-05-13)
 
 [#1306](https://github.com/FormidableLabs/victory/pull/1306) - Calls `eventKey` functions with both `datum` and `index`
