@@ -1,5 +1,10 @@
 # Victory Changelog
 
+## 32.3.1 (2019-06-28)
+
+[#1344](https://github.com/FormidableLabs/victory/pull/1344) - update `lodash`
+[#1343](https://github.com/FormidableLabs/victory/pull/1343) - revert to `d3-voronoi`
+
 ## 32.3.0 (2019-06-14)
 
 [#1322](https://github.com/FormidableLabs/victory/pull/1322) - Replaces `d3-voronoi` with `d3-delaunay` in `VictoryVoronoiContainer`
