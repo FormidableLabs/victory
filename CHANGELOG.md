@@ -1,5 +1,9 @@
 # Victory Changelog
 
+## 32.3.2 (2019-07-02)
+
+[#1345](https://github.com/FormidableLabs/victory/pull/1345) - Uses updated `delaunay-find` instead of `d3-voronoi` in `VictoryVoronoiContainer`
+
 ## 32.3.1 (2019-06-28)
 
 [#1344](https://github.com/FormidableLabs/victory/pull/1344) - update `lodash`
