@@ -59,13 +59,8 @@ class App extends React.Component {
             height={450}
             domain={{ y: [0, 1] }}
             style={chartStyle}
-            containerComponent={
-              <VictoryVoronoiContainer
-                labels={(d) => d.y}
-              />
-            }
+            containerComponent={<VictoryVoronoiContainer labels={(d) => d.y} />}
           >
-
             <VictoryScatter
               data={[
                 { x: 1, y: 0 },
@@ -102,13 +97,8 @@ class App extends React.Component {
             height={450}
             domain={{ y: [0, 1] }}
             style={chartStyle}
-            containerComponent={
-              <VictoryVoronoiContainer
-                labels={(d) => d.y}
-              />
-            }
+            containerComponent={<VictoryVoronoiContainer labels={(d) => d.y} />}
           >
-
             <VictoryScatter
               data={[
                 { x: 1, y: 0 },
