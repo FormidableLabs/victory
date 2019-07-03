@@ -72,9 +72,7 @@ const VoronoiHelpers = {
   findPoints(datasets, point) {
     const x = point._voronoiX;
     const y = point._voronoiY;
-    if (x !== undefined && y !== undefined) {
-      return [point];
-    }
+
     return datasets.filter((d) => {
       const matchesX = x === undefined || x === d._voronoiX;
       const matchesY = y === undefined || y === d._voronoiY;
