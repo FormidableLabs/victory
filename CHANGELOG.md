@@ -1,5 +1,9 @@
 # Victory Changelog
 
+## 32.3.3 (2019-07-02)
+
+[#1346](https://github.com/FormidableLabs/victory/pull/1346) - Fixes a bug which was preventing `VictoryVoronoiContainer` from activating all coincident points when no `voronoiDimension` was set
+
 ## 32.3.2 (2019-07-02)
 
 [#1345](https://github.com/FormidableLabs/victory/pull/1345) - Uses updated `delaunay-find` instead of `d3-voronoi` in `VictoryVoronoiContainer`
