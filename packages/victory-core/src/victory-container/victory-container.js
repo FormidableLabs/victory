@@ -109,7 +109,7 @@ export default class VictoryContainer extends React.Component {
       responsive
     } = props;
     const children = this.getChildren(props);
-    const dimensions = responsive ? { width: "100%", height: "100%" } : { width, height };
+    const dimensions = responsive ? { width: "100%", height: "auto" } : { width, height };
     const divStyle = assign(
       { pointerEvents: "none", touchAction: "none", position: "relative" },
       dimensions

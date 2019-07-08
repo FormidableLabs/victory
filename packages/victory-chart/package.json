@@ -1,6 +1,6 @@
 {
   "name": "victory-chart",
-  "version": "32.2.0",
+  "version": "32.3.2",
   "description": "Chart Component for Victory",
   "keywords": [
     "data visualization",
@@ -19,13 +19,13 @@
   "author": "Formidable",
   "license": "MIT",
   "dependencies": {
-    "lodash": "^4.17.5",
+    "lodash": "^4.17.11",
     "prop-types": "^15.5.8",
     "react-fast-compare": "^2.0.0",
-    "victory-axis": "^32.2.0",
-    "victory-core": "^32.2.0",
-    "victory-polar-axis": "^32.2.0",
-    "victory-shared-events": "^32.2.0"
+    "victory-axis": "^32.3.2",
+    "victory-core": "^32.3.2",
+    "victory-polar-axis": "^32.3.2",
+    "victory-shared-events": "^32.3.2"
   },
   "scripts": {
     "version": "nps build-libs && nps build-dists"

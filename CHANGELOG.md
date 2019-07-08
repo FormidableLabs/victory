@@ -1,5 +1,38 @@
 # Victory Changelog
 
+## 32.3.3 (2019-07-02)
+
+[#1346](https://github.com/FormidableLabs/victory/pull/1346) - Fixes a bug which was preventing `VictoryVoronoiContainer` from activating all coincident points when no `voronoiDimension` was set
+
+## 32.3.2 (2019-07-02)
+
+[#1345](https://github.com/FormidableLabs/victory/pull/1345) - Uses updated `delaunay-find` instead of `d3-voronoi` in `VictoryVoronoiContainer`
+
+## 32.3.1 (2019-06-28)
+
+[#1344](https://github.com/FormidableLabs/victory/pull/1344) - update `lodash`
+[#1343](https://github.com/FormidableLabs/victory/pull/1343) - revert to `d3-voronoi`
+
+## 32.3.0 (2019-06-14)
+
+[#1322](https://github.com/FormidableLabs/victory/pull/1322) - Replaces `d3-voronoi` with `d3-delaunay` in `VictoryVoronoiContainer`
+
+[#1333](https://github.com/FormidableLabs/victory/pull/1333) - replace `d3-delaunay` with `delaunay-find`
+
+## 32.2.3 (2019-05-13)
+
+[#1306](https://github.com/FormidableLabs/victory/pull/1306) - Calls `eventKey` functions with both `datum` and `index`
+
+## 32.2.2 (2019-05-03)
+
+[#1304](https://github.com/FormidableLabs/victory/pull/1304) - renames private variables to reduce potential for conflict
+
+## 32.2.1 (2019-05-02)
+
+[#1302](https://github.com/FormidableLabs/victory/pull/1302) - Fixes slight vertical offset for elements rendered in `VictoryPortal`
+
+[#1299](https://github.com/FormidableLabs/victory/pull/1299) - Support rendering array labels on separate lines. Previously `labels={() => {"one", "two"}}` would stringify the array rather than rendering it on two lines
+
 ## 32.2.0 (2019-04-10)
 
 [#1292](https://github.com/FormidableLabs/victory/pull/1292) Reverses the render order for children of `VictoryStack`. This may cause minor visual changes for stacked charts, but should be an improvement for most users, as stokes and labels will no longer be cut off by higher stacks being rendered after lower stacks

@@ -1,6 +1,6 @@
 {
   "name": "victory-legend",
-  "version": "32.2.0",
+  "version": "32.3.2",
   "description": "Legend Component for Victory",
   "keywords": [
     "data visualization",
@@ -19,9 +19,9 @@
   "author": "Formidable",
   "license": "MIT",
   "dependencies": {
-    "lodash": "^4.17.5",
+    "lodash": "^4.17.11",
     "prop-types": "^15.5.8",
-    "victory-core": "^32.2.0"
+    "victory-core": "^32.3.2"
   },
   "scripts": {
     "version": "nps build-libs && nps build-dists"

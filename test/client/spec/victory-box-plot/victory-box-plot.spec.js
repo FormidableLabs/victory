@@ -23,7 +23,7 @@ describe("components/victory-box-plot", () => {
       const wrapper = mount(<VictoryBoxPlot data={dataset} />);
       const svg = wrapper.find("svg").at(0);
       expect(svg.prop("style").width).to.equal("100%");
-      expect(svg.prop("style").height).to.equal("100%");
+      expect(svg.prop("style").height).to.equal("auto");
     });
 
     it("renders an svg with the correct viewBox", () => {

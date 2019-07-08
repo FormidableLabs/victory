@@ -56,6 +56,67 @@ class App extends React.Component {
       <div className="demo">
         <div style={containerStyle}>
           <VictoryChart
+            height={450}
+            domain={{ y: [0, 1] }}
+            style={chartStyle}
+            containerComponent={<VictoryVoronoiContainer labels={(d) => d.y} />}
+          >
+            <VictoryScatter
+              data={[
+                { x: 1, y: 0 },
+                { x: 2, y: 0 },
+                { x: 3, y: 0 },
+                { x: 4, y: 0 },
+                { x: 5, y: 0 },
+                { x: 6, y: 0 },
+                { x: 7, y: 0 }
+              ]}
+              style={{
+                data: { fill: "blue" }
+              }}
+              size={(datum, active) => (active ? 8 : 3)}
+            />
+            <VictoryScatter
+              data={[
+                { x: 1, y: 0 },
+                { x: 2, y: 0 },
+                { x: 3, y: 1 },
+                { x: 4, y: 0 },
+                { x: 5, y: 0 },
+                { x: 6, y: 0 },
+                { x: 7, y: 0 }
+              ]}
+              style={{
+                data: { fill: "red" }
+              }}
+              size={(datum, active) => (active ? 5 : 3)}
+            />
+          </VictoryChart>
+
+          <VictoryChart
+            height={450}
+            domain={{ y: [0, 1] }}
+            style={chartStyle}
+            containerComponent={<VictoryVoronoiContainer labels={(d) => d.y} />}
+          >
+            <VictoryScatter
+              data={[
+                { x: 1, y: 0 },
+                { x: 2, y: 0 },
+                { x: 3, y: 0 },
+                { x: 4, y: 0 },
+                { x: 5, y: 0 },
+                { x: 6, y: 0 },
+                { x: 7, y: 0 }
+              ]}
+              style={{
+                data: { fill: "blue" }
+              }}
+              size={(datum, active) => (active ? 5 : 3)}
+            />
+          </VictoryChart>
+
+          <VictoryChart
             style={chartStyle}
             theme={VictoryTheme.material}
             domainPadding={{ y: 2 }}
@@ -129,7 +190,23 @@ class App extends React.Component {
             y="b"
           />
 
-          <VictoryChart style={chartStyle} containerComponent={<VictoryVoronoiContainer />}>
+          <VictoryChart
+            style={chartStyle}
+            containerComponent={
+              <VictoryVoronoiContainer radius={20} voronoiBlacklist={["ignore"]} />
+            }
+          >
+            <VictoryScatter
+              name="ignore"
+              style={{
+                data: {
+                  fill: "gray",
+                  opacity: 0.2
+                }
+              }}
+              size={20}
+              y={(d) => d.x * d.x}
+            />
             <VictoryScatter
               style={{
                 data: {
@@ -169,7 +246,7 @@ class App extends React.Component {
                 style={{
                   data: { fill: "tomato" }
                 }}
-                size={(datum, active) => (active ? 5 : 3)}
+                size={(datum, active) => (active ? 8 : 3)}
               />
               <VictoryLine name="ignore" style={{ data: { stroke: "tomato" } }} />
             </VictoryGroup>
@@ -197,7 +274,7 @@ class App extends React.Component {
                 { x: 1, y: 5 },
                 { x: 2, y: -4 },
                 { x: 3, y: -2 },
-                { x: 4, y: -3 },
+                { x: 4, y: 0 },
                 { x: 5, y: -1 },
                 { x: 6, y: 3 },
                 { x: 7, y: -3 }
@@ -269,7 +346,7 @@ class App extends React.Component {
                   { x: 1, y: 5 },
                   { x: 2, y: -4 },
                   { x: 3, y: -2 },
-                  { x: 4, y: -3 },
+                  { x: 4, y: 0 },
                   { x: 5, y: -1 },
                   { x: 6, y: 3 },
                   { x: 7, y: -3 }

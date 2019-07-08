@@ -215,15 +215,15 @@ export default {
         childData = Data.getData(childProps);
       }
       stack += 1;
-      return childData.map((datum, index) => assign({ stack, group: index }, datum));
+      return childData.map((datum, index) => assign({ _stack: stack, _group: index }, datum));
     };
     const children = childComponents
       ? childComponents.slice(0)
       : React.Children.toArray(props.children);
     const stacked = children.filter((c) => c.type && c.type.role === "stack").length;
-    const combine = (memo, val) => memo.concat(uniqBy(val, "group"));
+    const combine = (memo, val) => memo.concat(uniqBy(val, "_group"));
     const datasets = Helpers.reduceChildren(children, iteratee, props, [], combine);
-    const group = stacked ? "group" : "stack";
+    const group = stacked ? "_group" : "_stack";
     return values(groupBy(datasets, group));
   },
 
