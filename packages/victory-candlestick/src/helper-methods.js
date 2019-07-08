@@ -127,9 +127,9 @@ const getText = (props, type) => {
 };
 
 const getCandleWidth = (props, style) => {
-  const { active, datum, data, candleWidth, scale, defaultCandleWidth } = props;
+  const { datum, data, candleWidth, scale, defaultCandleWidth } = props;
   if (candleWidth) {
-    return isFunction(candleWidth) ? Helpers.evaluateProp(candleWidth, datum, active) : candleWidth;
+    return isFunction(candleWidth) ? Helpers.evaluateProp(candleWidth, datum) : candleWidth;
   } else if (style && style.width) {
     return style.width;
   }
@@ -145,7 +145,7 @@ const getOrientation = (labelOrientation, type) =>
   (typeof labelOrientation === "object" && labelOrientation[type]) || labelOrientation;
 
 /* eslint-disable complexity*/
-const calculateAxisValues = (props) => {
+const calculatePlotValues = (props) => {
   const { positions, labelStyle, x, horizontal, computedType, candleWidth, orientation } = props;
   positions.labels = (positions.open + positions.close) / 2;
 
@@ -180,7 +180,7 @@ const calculateAxisValues = (props) => {
 /* eslint-enable complexity*/
 
 /* eslint-disable max-params*/
-const getLabelProps = (dataProps, text, style, type) => {
+const getLabelProps = (props, text, style, type) => {
   const {
     x,
     high,
@@ -194,7 +194,7 @@ const getLabelProps = (dataProps, text, style, type) => {
     horizontal,
     candleWidth,
     labelOrientation
-  } = dataProps;
+  } = props;
 
   const orientation = getOrientation(labelOrientation, type);
   const positions = { high, low, open, close };
@@ -204,7 +204,7 @@ const getLabelProps = (dataProps, text, style, type) => {
   const defaultTextAnchors = { left: "end", right: "start", top: "middle", bottom: "middle" };
   const computedType = type ? type : "labels";
 
-  const axisProps = {
+  const plotProps = {
     positions,
     labelStyle,
     x,
@@ -213,7 +213,7 @@ const getLabelProps = (dataProps, text, style, type) => {
     candleWidth,
     orientation
   };
-  const { yValue, xValue } = calculateAxisValues(axisProps);
+  const { yValue, xValue } = calculatePlotValues(plotProps);
 
   return {
     style: labelStyle,
@@ -224,7 +224,7 @@ const getLabelProps = (dataProps, text, style, type) => {
     scale,
     datum,
     data,
-    orientation: labelOrientation,
+    orientation,
     textAnchor: labelStyle.textAnchor || defaultTextAnchors[orientation],
     verticalAnchor: labelStyle.verticalAnchor || defaultVerticalAnchors[orientation],
     angle: labelStyle.angle,
@@ -281,31 +281,29 @@ const getBaseProps = (props, fallbackProps) => {
     const open = scale.y(datum._open);
     const low = scale.y(datum._low);
     const dataStyle = getDataStyles(datum, style.data, props);
-    const dataProps = defaults(
-      {
-        x,
-        high,
-        low,
-        candleWidth,
-        candleRatio,
-        scale,
-        data,
-        datum,
-        groupComponent,
-        index,
-        style: dataStyle,
-        width,
-        polar,
-        origin,
-        wickStrokeWidth,
-        open,
-        close,
-        horizontal,
-        labelOrientation
-      },
-      props
-    );
+    const dataProps = {
+      x,
+      high,
+      low,
+      candleWidth,
+      candleRatio,
+      scale,
+      data,
+      datum,
+      groupComponent,
+      index,
+      style: dataStyle,
+      width,
+      polar,
+      origin,
+      wickStrokeWidth,
+      open,
+      close,
+      horizontal,
+      labelOrientation
+    };
     dataProps.candleWidth = getCandleWidth(dataProps);
+    const extendedProps = defaults(Object.assign({}, dataProps), props);
 
     childProps[eventKey] = {
       data: dataProps
@@ -314,19 +312,19 @@ const getBaseProps = (props, fallbackProps) => {
     if (labels) {
       const text = LabelHelpers.getText(props, datum, index);
       if ((text !== undefined && text !== null) || (labels && (events || sharedEvents))) {
-        childProps[eventKey].labels = getLabelProps(dataProps, text, style);
+        childProps[eventKey].labels = getLabelProps(extendedProps, text, style);
       }
     }
 
     TYPES.forEach((type) => {
-      const labelText = getText(dataProps, type);
+      const labelText = getText(extendedProps, type);
       const labelProp = props.labels || props[`${type}Labels`];
       if (
         (labelText !== null && labelText !== undefined) ||
         (labelProp && (events || sharedEvents))
       ) {
         const target = `${type}Labels`;
-        childProps[eventKey][target] = getLabelProps(dataProps, labelText, style, type);
+        childProps[eventKey][target] = getLabelProps(extendedProps, labelText, style, type);
       }
     });
 
