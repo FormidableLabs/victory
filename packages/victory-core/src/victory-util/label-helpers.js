@@ -45,26 +45,17 @@ function getPadding(props, datum) {
   const sign = datum._y < 0 ? -1 : 1;
   return {
     x: horizontal ? sign * defaultPadding : 0,
-    y: horizontal ? 0 : sign * defaultPadding
+    y: horizontal ? 0 : -1 * sign * defaultPadding
   };
 }
 
-function getPosition(props, datum) {
+function getOffset(props, datum) {
   const { polar } = props;
-  const { x, y } = Helpers.scalePoint(props, datum);
-  const padding = getPadding(props, datum);
-  if (!polar) {
-    return {
-      x: x + padding.x,
-      y: y - padding.y
-    };
-  } else {
-    const polarPadding = getPolarPadding(props, datum);
-    return {
-      x: x + polarPadding.x,
-      y: y + polarPadding.y
-    };
-  }
+  const padding = polar ? getPolarPadding(props, datum) : getPadding(props, datum);
+  return {
+    dx: padding.x,
+    dy: padding.y
+  };
 }
 
 function getPolarPadding(props, datum) {
@@ -167,7 +158,8 @@ function getProps(props, index) {
   const angle = getAngle(props, datum);
   const text = getText(props, datum, index);
   const labelPlacement = getLabelPlacement(props);
-  const { x, y } = getPosition(props, datum);
+  const { x, y } = Helpers.scalePoint(props, datum);
+  const { dx, dy } = getOffset(props, datum);
   return {
     angle,
     data,
@@ -182,6 +174,8 @@ function getProps(props, index) {
     verticalAnchor,
     x,
     y,
+    dx,
+    dy,
     style: style.labels
   };
 }

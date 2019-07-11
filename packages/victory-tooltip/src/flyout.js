@@ -2,10 +2,12 @@
 import React from "react";
 import PropTypes from "prop-types";
 import { Helpers, CommonProps, Path } from "victory-core";
+import { isPlainObject } from "lodash";
 
 export default class Flyout extends React.Component {
   static propTypes = {
     ...CommonProps.primitiveProps,
+    center: PropTypes.shape({ x: PropTypes.number, y: PropTypes.number }),
     cornerRadius: PropTypes.number,
     datum: PropTypes.object,
     dx: PropTypes.number,
@@ -25,19 +27,21 @@ export default class Flyout extends React.Component {
   };
 
   getVerticalPath(props) {
-    const { pointerLength, pointerWidth, cornerRadius, orientation, width, height } = props;
+    const { pointerWidth, cornerRadius, orientation, width, height, center } = props;
     const sign = orientation === "top" ? 1 : -1;
     const x = props.x + (props.dx || 0);
     const y = props.y - sign * (props.dy || 0);
-    const pointerEdge = y - sign * pointerLength;
-    const oppositeEdge = y - sign * pointerLength - sign * height;
-    const rightEdge = x + width / 2;
-    const leftEdge = x - width / 2;
+    const centerX = isPlainObject(center) && center.x;
+    const centerY = isPlainObject(center) && center.y;
+    const pointerEdge = centerY + sign * (height / 2);
+    const oppositeEdge = centerY - sign * (height / 2);
+    const rightEdge = centerX + width / 2;
+    const leftEdge = centerX - width / 2;
     const direction = orientation === "top" ? "0 0 0" : "0 0 1";
     const arc = `${cornerRadius} ${cornerRadius} ${direction}`;
-    return `M ${x - pointerWidth / 2}, ${pointerEdge}
+    return `M ${centerX - pointerWidth / 2}, ${pointerEdge}
       L ${x}, ${y}
-      L ${x + pointerWidth / 2}, ${pointerEdge}
+      L ${centerX + pointerWidth / 2}, ${pointerEdge}
       L ${rightEdge - cornerRadius}, ${pointerEdge}
       A ${arc} ${rightEdge}, ${pointerEdge - sign * cornerRadius}
       L ${rightEdge}, ${oppositeEdge + sign * cornerRadius}
@@ -50,19 +54,21 @@ export default class Flyout extends React.Component {
   }
 
   getHorizontalPath(props) {
-    const { pointerLength, pointerWidth, cornerRadius, orientation, width, height } = props;
+    const { pointerLength, pointerWidth, cornerRadius, orientation, width, height, center } = props;
     const sign = orientation === "right" ? 1 : -1;
     const x = props.x + sign * (props.dx || 0);
     const y = props.y - (props.dy || 0);
-    const pointerEdge = x + sign * pointerLength;
-    const oppositeEdge = x + sign * pointerLength + sign * width;
-    const bottomEdge = y + height / 2;
-    const topEdge = y - height / 2;
+    const centerX = isPlainObject(center) && center.x;
+    const centerY = isPlainObject(center) && center.y;
+    const pointerEdge = centerX - sign * (width / 2);
+    const oppositeEdge = centerX + sign * (width / 2);
+    const bottomEdge = centerY + height / 2;
+    const topEdge = centerY - height / 2;
     const direction = orientation === "right" ? "0 0 0" : "0 0 1";
     const arc = `${cornerRadius} ${cornerRadius} ${direction}`;
-    return `M ${pointerEdge}, ${y - pointerWidth / 2}
+    return `M ${pointerEdge}, ${centerY - pointerWidth / 2}
       L ${x}, ${y}
-      L ${pointerEdge}, ${y + pointerWidth / 2}
+      L ${pointerEdge}, ${centerY + pointerWidth / 2}
       L ${pointerEdge}, ${bottomEdge - cornerRadius}
       A ${arc} ${pointerEdge + sign * cornerRadius}, ${bottomEdge}
       L ${oppositeEdge - sign * cornerRadius}, ${bottomEdge}

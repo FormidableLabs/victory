@@ -25,6 +25,7 @@ export default class VictoryTooltip extends React.Component {
     activateData: PropTypes.bool,
     active: PropTypes.oneOfType([PropTypes.bool, PropTypes.func]),
     angle: PropTypes.number,
+    constrainToChartArea: PropTypes.bool,
     cornerRadius: PropTypes.oneOfType([CustomPropTypes.nonNegative, PropTypes.func]),
     data: PropTypes.array,
     datum: PropTypes.object,
@@ -47,6 +48,10 @@ export default class VictoryTooltip extends React.Component {
     pointerWidth: PropTypes.oneOfType([CustomPropTypes.nonNegative, PropTypes.func]),
     polar: PropTypes.bool,
     renderInPortal: PropTypes.bool,
+    scale: PropTypes.shape({
+      x: CustomPropTypes.scale,
+      y: CustomPropTypes.scale
+    }),
     style: PropTypes.oneOfType([PropTypes.object, PropTypes.array]),
     text: PropTypes.oneOfType([
       PropTypes.string,
@@ -250,12 +255,41 @@ export default class VictoryTooltip extends React.Component {
     return angle + sign * labelRotation;
   }
 
+  constrainTooltip(center, props, dimensions ) {
+    const { scale } = props;
+    const { x, y } = center;
+    const { width, height } = dimensions;
+    const range = { x: scale.x.range(), y: scale.y.range() };
+    const extent = {
+      x: [Math.min(...range.x), Math.max(...range.x)],
+      y: [Math.min(...range.y), Math.max(...range.y)]
+    };
+    const flyoutExtent = {
+      x: [x - (width / 2), x + (width / 2)],
+      y: [y - (height / 2), y + (height / 2)]
+    }
+    const adjustments = {
+      x: [
+        flyoutExtent.x[0] < extent.x[0] ? extent.x[0] - flyoutExtent.x[0] : 0,
+        flyoutExtent.x[1] > extent.x[1] ? flyoutExtent.x[1] - extent.x[1] : 0
+      ],
+      y: [
+        flyoutExtent.y[0] < extent.y[0] ? extent.y[0] - flyoutExtent.y[0] : 0,
+        flyoutExtent.y[1] > extent.y[1] ? flyoutExtent.y[1] - extent.y[1] : 0
+      ]
+    };
+    return {
+      x: Math.round(x + adjustments.x[0] - adjustments.x[1]),
+      y: Math.round(y + adjustments.y[0] - adjustments.y[1])
+    };
+  }
+
   getFlyoutCenter(props, dimensions) {
-    const { x, y, dx, dy, pointerLength, orientation } = props;
+    const { x, y, dx, dy, pointerLength, orientation, constrainToChartArea } = props;
     const { height, width } = dimensions;
     const xSign = orientation === "left" ? -1 : 1;
     const ySign = orientation === "bottom" ? -1 : 1;
-    return {
+    const center = {
       x:
         orientation === "left" || orientation === "right"
           ? x + xSign * (pointerLength + width / 2 + dx)
@@ -265,6 +299,7 @@ export default class VictoryTooltip extends React.Component {
           ? y - ySign * (pointerLength + height / 2 + dy)
           : y - dy
     };
+    return constrainToChartArea ? this.constrainTooltip(center, props, dimensions) : center;
   }
 
   getLabelPadding(style) {
@@ -326,8 +361,19 @@ export default class VictoryTooltip extends React.Component {
     });
   }
 
+  getOrientation(point, center) {
+    const diff = {
+      x: Math.abs(point.x - center.x), y: Math.abs(point.y - center.y)
+    };
+    if (diff.y > diff.x) {
+      return point.y < center.y ? "bottom" : "top";
+    } else {
+      return point.x < center.x ? "right" : "left";
+    }
+  }
+
   getFlyoutProps(props, calculatedValues) {
-    const { flyoutDimensions, flyoutStyle } = calculatedValues;
+    const { flyoutDimensions, flyoutStyle, flyoutCenter } = calculatedValues;
     const {
       x,
       y,
@@ -335,13 +381,16 @@ export default class VictoryTooltip extends React.Component {
       dy,
       datum,
       index,
-      orientation,
       pointerLength,
       pointerWidth,
       cornerRadius,
       events,
-      flyoutComponent
+      flyoutComponent,
+      constrainToChartArea
     } = props;
+    const orientation = constrainToChartArea
+      ? this.getOrientation({ x, y }, flyoutCenter)
+      : props.orientation;
     return defaults({}, flyoutComponent.props, {
       x,
       y,
@@ -357,7 +406,8 @@ export default class VictoryTooltip extends React.Component {
       key: `${this.id}-tooltip-${index}`,
       width: flyoutDimensions.width,
       height: flyoutDimensions.height,
-      style: flyoutStyle
+      style: flyoutStyle,
+      center: flyoutCenter
     });
   }
 
