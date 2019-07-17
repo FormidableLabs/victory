@@ -27,7 +27,7 @@ export default class Flyout extends React.Component {
   };
 
   getVerticalPath(props) {
-    const { pointerWidth, cornerRadius, orientation, width, height, center } = props;
+    const { pointerWidth, pointerLength, cornerRadius, orientation, width, height, center } = props;
     const sign = orientation === "top" ? 1 : -1;
     const x = props.x + (props.dx || 0);
     const y = props.y - sign * (props.dy || 0);
@@ -40,7 +40,7 @@ export default class Flyout extends React.Component {
     const direction = orientation === "top" ? "0 0 0" : "0 0 1";
     const arc = `${cornerRadius} ${cornerRadius} ${direction}`;
     return `M ${centerX - pointerWidth / 2}, ${pointerEdge}
-      L ${x}, ${y}
+      L ${pointerLength ? x : centerX + pointerWidth / 2}, ${pointerLength ? y : pointerEdge}
       L ${centerX + pointerWidth / 2}, ${pointerEdge}
       L ${rightEdge - cornerRadius}, ${pointerEdge}
       A ${arc} ${rightEdge}, ${pointerEdge - sign * cornerRadius}
@@ -67,7 +67,7 @@ export default class Flyout extends React.Component {
     const direction = orientation === "right" ? "0 0 0" : "0 0 1";
     const arc = `${cornerRadius} ${cornerRadius} ${direction}`;
     return `M ${pointerEdge}, ${centerY - pointerWidth / 2}
-      L ${x}, ${y}
+      L ${pointerLength ? x : pointerEdge}, ${pointerLength ? y : centerY + pointerWidth / 2}
       L ${pointerEdge}, ${centerY + pointerWidth / 2}
       L ${pointerEdge}, ${bottomEdge - cornerRadius}
       A ${arc} ${pointerEdge + sign * cornerRadius}, ${bottomEdge}

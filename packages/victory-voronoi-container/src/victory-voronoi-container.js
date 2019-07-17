@@ -132,7 +132,7 @@ export const voronoiContainerMixin = (base) =>
       const point = this.getPoint(points[0]);
       const basePosition = Helpers.scalePoint(props, point);
       if (!voronoiDimension || points.length < 2) {
-        return basePosition;
+        return { ...basePosition, center: mousePosition };
       }
 
       const x = voronoiDimension === "y" ? mousePosition.x : basePosition.x;
@@ -159,7 +159,8 @@ export const voronoiContainerMixin = (base) =>
       };
       return {
         x: Math.round(x + adjustments.x[0] - adjustments.x[1]),
-        y: Math.round(y + adjustments.y[0] - adjustments.y[1])
+        y: Math.round(y + adjustments.y[0] - adjustments.y[1]),
+        center: mousePosition
       };
     }
 

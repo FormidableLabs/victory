@@ -8,7 +8,7 @@ import { VictoryBar } from "../../packages/victory-bar/src/index";
 import { VictoryScatter } from "../../packages/victory-scatter/src/index";
 import { VictoryErrorBar } from "../../packages/victory-errorbar/src/index";
 import { VictoryCandlestick } from "../../packages/victory-candlestick/src/index";
-import { VictoryTooltip } from "../../packages/victory-tooltip/src/index";
+import { VictoryTooltip, Flyout } from "../../packages/victory-tooltip/src/index";
 
 class App extends React.Component {
   render() {
@@ -28,7 +28,19 @@ class App extends React.Component {
           <VictoryBar
             style={{ parent: parentStyle }}
             labelComponent={
-              <VictoryTooltip flyoutStyle={{ stroke: "red" }} cornerRadius={0} pointerLength={20} />
+              <VictoryTooltip
+
+                flyoutComponent={
+                  <Flyout
+                    center={{
+                      x: 50, y: 50
+                    }}
+                  />
+                }
+                flyoutStyle={{ stroke: "red" }}
+                cornerRadius={0}
+                pointerLength={20}
+              />
             }
             labels={(d) => `hello #${d.x}`}
             data={[{ x: 1, y: 1 }, { x: 2, y: 2 }, { x: 3, y: 3 }, { x: 4, y: 2 }, { x: 5, y: 1 }]}
@@ -36,7 +48,7 @@ class App extends React.Component {
 
           <VictoryScatter
             style={{ parent: parentStyle }}
-            labelComponent={<VictoryTooltip />}
+            labelComponent={<VictoryTooltip constrainToChartArea dy={0}/>}
             labels={(d) => `hello #${d.x}`}
             size={(d, active) => (active ? 5 : 3)}
             data={[{ x: 1, y: 5 }, { x: 2, y: 2 }, { x: 3, y: 3 }, { x: 4, y: 2 }, { x: 5, y: 1 }]}

@@ -59,7 +59,12 @@ class App extends React.Component {
             height={450}
             domain={{ y: [0, 1] }}
             style={chartStyle}
-            containerComponent={<VictoryVoronoiContainer labels={(d) => d.y} />}
+            containerComponent={
+              <VictoryVoronoiContainer
+                labels={(d) => d.y}
+                labelComponent={<VictoryTooltip width={50} />}
+              />
+            }
           >
             <VictoryScatter
               data={[
@@ -183,7 +188,9 @@ class App extends React.Component {
                 fill: (datum, active) => (active ? "tomato" : "black")
               }
             }}
-            containerComponent={<VictoryVoronoiContainer voronoiDimension="x" />}
+            containerComponent={
+              <VictoryVoronoiContainer labels={(d) => d._x} />
+            }
             size={(datum, active) => (active ? 5 : 3)}
             data={this.state.data}
             x="a"

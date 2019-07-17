@@ -106,8 +106,10 @@ const getLabelProps = (dataProps, text, style) => {
   const verticalAnchor = horizontal ? "middle" : "end";
   return {
     style: labelStyle,
-    y: horizontal ? y : getError("y") - padding,
-    x: horizontal ? getError("x") + padding : x,
+    y: horizontal ? y : getError("y"),
+    x: horizontal ? getError("x") : x,
+    dy: horizontal ? 0 : -1 * padding,
+    dx: horizontal ? padding : 0,
     text,
     index,
     scale,

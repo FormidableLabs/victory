@@ -10,7 +10,7 @@ import {
   VictoryPortal
 } from "victory-core";
 import Flyout from "./flyout";
-import { assign, defaults, uniqueId } from "lodash";
+import { assign, defaults, uniqueId, isPlainObject } from "lodash";
 
 const fallbackProps = {
   cornerRadius: 5,
@@ -25,6 +25,9 @@ export default class VictoryTooltip extends React.Component {
     activateData: PropTypes.bool,
     active: PropTypes.oneOfType([PropTypes.bool, PropTypes.func]),
     angle: PropTypes.number,
+    center: PropTypes.shape({
+      x: PropTypes.number, y: PropTypes.number
+    }),
     constrainToChartArea: PropTypes.bool,
     cornerRadius: PropTypes.oneOfType([CustomPropTypes.nonNegative, PropTypes.func]),
     data: PropTypes.array,
@@ -289,7 +292,7 @@ export default class VictoryTooltip extends React.Component {
     const { height, width } = dimensions;
     const xSign = orientation === "left" ? -1 : 1;
     const ySign = orientation === "bottom" ? -1 : 1;
-    const center = {
+    const flyoutCenter = {
       x:
         orientation === "left" || orientation === "right"
           ? x + xSign * (pointerLength + width / 2 + dx)
@@ -299,7 +302,13 @@ export default class VictoryTooltip extends React.Component {
           ? y - ySign * (pointerLength + height / 2 + dy)
           : y - dy
     };
-    return constrainToChartArea ? this.constrainTooltip(center, props, dimensions) : center;
+    const center = {
+      x: isPlainObject(props.center) && props.center.x ? props.center.x : flyoutCenter.x,
+      y: isPlainObject(props.center) && props.center.y ? props.center.y : flyoutCenter.y
+    }
+    return constrainToChartArea ?
+      this.constrainTooltip(center, props, dimensions)
+      : center;
   }
 
   getLabelPadding(style) {
@@ -361,11 +370,8 @@ export default class VictoryTooltip extends React.Component {
     });
   }
 
-  getOrientation(point, center) {
-    const diff = {
-      x: Math.abs(point.x - center.x), y: Math.abs(point.y - center.y)
-    };
-    if (diff.y > diff.x) {
+  getOrientation(point, center, orientation) {
+    if (orientation === "top" || orientation === "bottom" ) {
       return point.y < center.y ? "bottom" : "top";
     } else {
       return point.x < center.x ? "right" : "left";
@@ -389,7 +395,7 @@ export default class VictoryTooltip extends React.Component {
       constrainToChartArea
     } = props;
     const orientation = constrainToChartArea
-      ? this.getOrientation({ x, y }, flyoutCenter)
+      ? this.getOrientation({ x, y }, flyoutCenter, props.orientation)
       : props.orientation;
     return defaults({}, flyoutComponent.props, {
       x,
