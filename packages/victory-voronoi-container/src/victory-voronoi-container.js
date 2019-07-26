@@ -15,6 +15,7 @@ export const voronoiContainerMixin = (base) =>
       disable: PropTypes.bool,
       labelComponent: PropTypes.element,
       labels: PropTypes.func,
+      mouseFollowLabels: PropTypes.bool,
       onActivated: PropTypes.func,
       onDeactivated: PropTypes.func,
       radius: PropTypes.number,
@@ -127,12 +128,13 @@ export const voronoiContainerMixin = (base) =>
     }
 
     getLabelPosition(props, points, labelProps) {
-      const { mousePosition, scale, voronoiPadding } = props;
+      const { mousePosition, scale, voronoiPadding, mouseFollowLabels } = props;
       const voronoiDimension = this.getDimension(props);
       const point = this.getPoint(points[0]);
       const basePosition = Helpers.scalePoint(props, point);
       if (!voronoiDimension || points.length < 2) {
-        return { ...basePosition, center: mousePosition };
+        const center = mouseFollowLabels ? mousePosition : undefined;
+        return { ...basePosition, center };
       }
 
       const x = voronoiDimension === "y" ? mousePosition.x : basePosition.x;
@@ -189,15 +191,16 @@ export const voronoiContainerMixin = (base) =>
     }
 
     getDefaultLabelProps(props, points) {
-      const { voronoiDimension, horizontal } = props;
+      const { voronoiDimension, horizontal, mouseFollowLabels } = props;
       const point = this.getPoint(points[0]);
       const multiPoint = voronoiDimension && points.length > 1;
       const y = point._y1 !== undefined ? point._y1 : point._y;
       const defaultHorizontalOrientation = y < 0 ? "left" : "right";
       const defaultOrientation = y < 0 ? "bottom" : "top";
-      const orientation = horizontal ? defaultHorizontalOrientation : defaultOrientation;
+      const labelOrientation = horizontal ? defaultHorizontalOrientation : defaultOrientation;
+      const orientation = mouseFollowLabels ? undefined : labelOrientation;
       return {
-        orientation: multiPoint ? "top" : orientation,
+        orientation,
         pointerLength: multiPoint ? 0 : undefined
       };
     }

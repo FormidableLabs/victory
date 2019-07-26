@@ -62,6 +62,7 @@ class App extends React.Component {
             containerComponent={
               <VictoryVoronoiContainer
                 labels={(d) => d.y}
+                mouseFollowLabels
                 labelComponent={<VictoryTooltip width={50} />}
               />
             }
@@ -189,7 +190,10 @@ class App extends React.Component {
               }
             }}
             containerComponent={
-              <VictoryVoronoiContainer labels={(d) => d._x} />
+              <VictoryVoronoiContainer
+                labels={(d) => d._x}
+                labelComponent={<VictoryTooltip width={50} />}
+              />
             }
             size={(datum, active) => (active ? 5 : 3)}
             data={this.state.data}
