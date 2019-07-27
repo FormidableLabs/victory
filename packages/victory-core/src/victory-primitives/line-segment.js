@@ -27,8 +27,6 @@ export default class LineSegment extends React.Component {
       y1,
       y2,
       events,
-      datum,
-      active,
       lineComponent,
       className,
       role,
@@ -36,11 +34,7 @@ export default class LineSegment extends React.Component {
       transform,
       clipPath
     } = this.props;
-    const style = Helpers.evaluateStyle(
-      assign({ stroke: "black" }, this.props.style),
-      datum,
-      active
-    );
+    const style = Helpers.evaluateStyle(assign({ stroke: "black" }, this.props.style), this.props);
     return React.cloneElement(lineComponent, {
       style,
       className,

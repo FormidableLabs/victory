@@ -99,8 +99,7 @@ export default class VictoryLabel extends React.Component {
 
   getStyle(props, style) {
     style = style ? defaults({}, style, defaultStyles) : defaultStyles;
-    const datum = props.datum || props.data;
-    const baseStyles = Helpers.evaluateStyle(style, datum, props.active);
+    const baseStyles = Helpers.evaluateStyle(style, props);
     return assign({}, baseStyles, { fontSize: this.getFontSize(baseStyles) });
   }
 
@@ -111,19 +110,17 @@ export default class VictoryLabel extends React.Component {
   }
 
   getHeight(props, type) {
-    const datum = props.datum || props.data;
-    return Helpers.evaluateProp(props[type], datum, props.active);
+    return Helpers.evaluateProp(props[type], props);
   }
 
   getContent(props) {
     if (props.text === undefined || props.text === null) {
       return undefined;
     }
-    const datum = props.datum || props.data;
     if (Array.isArray(props.text)) {
-      return props.text.map((line) => Helpers.evaluateProp(line, datum, props.active));
+      return props.text.map((line) => Helpers.evaluateProp(line, props));
     }
-    const child = Helpers.evaluateProp(props.text, datum, props.active);
+    const child = Helpers.evaluateProp(props.text, props);
     if (child === undefined || child === null) {
       return undefined;
     }
@@ -135,12 +132,11 @@ export default class VictoryLabel extends React.Component {
     style = Array.isArray(style) ? style[0] : style;
     lineHeight = this.checkLineHeight(lineHeight, lineHeight[0], 1);
     const fontSize = style.fontSize;
-    const datum = props.datum || props.data;
-    const dy = props.dy ? Helpers.evaluateProp(props.dy, datum, props.active) : 0;
+    const dy = props.dy ? Helpers.evaluateProp(props.dy, props) : 0;
     const length = content.length;
     const capHeight = this.getHeight(props, "capHeight");
     const verticalAnchor = style.verticalAnchor || props.verticalAnchor;
-    const anchor = verticalAnchor ? Helpers.evaluateProp(verticalAnchor, datum) : "middle";
+    const anchor = verticalAnchor ? Helpers.evaluateProp(verticalAnchor, props) : "middle";
     switch (anchor) {
       case "end":
         return dy + (capHeight / 2 + (0.5 - length) * lineHeight) * fontSize;
@@ -159,12 +155,12 @@ export default class VictoryLabel extends React.Component {
   }
 
   getTransform(props, style) {
-    const { active, datum, x, y, polar } = props;
+    const { x, y, polar } = props;
     const defaultAngle = polar ? LabelHelpers.getPolarAngle(props) : 0;
     const baseAngle = style.angle === undefined ? props.angle : style.angle;
     const angle = baseAngle === undefined ? defaultAngle : baseAngle;
     const transform = props.transform || style.transform;
-    const transformPart = transform && Helpers.evaluateProp(transform, datum, active);
+    const transformPart = transform && Helpers.evaluateProp(transform, props);
     const rotatePart = angle && { rotate: [angle, x, y] };
     return transformPart || angle ? Style.toTransformString(transformPart, rotatePart) : undefined;
   }
@@ -188,13 +184,13 @@ export default class VictoryLabel extends React.Component {
   }
 
   renderElements(props, content) {
-    const { datum, active, inline, className, title, desc, events, direction } = props;
+    const { inline, className, title, desc, events, direction } = props;
     const style = this.getStyles(props);
     const lineHeight = this.getHeight(props, "lineHeight");
     const textAnchor = props.textAnchor
-      ? Helpers.evaluateProp(props.textAnchor, datum, active)
+      ? Helpers.evaluateProp(props.textAnchor, props)
       : "start";
-    const dx = props.dx ? Helpers.evaluateProp(props.dx, datum, active) : 0;
+    const dx = props.dx ? Helpers.evaluateProp(props.dx, props) : 0;
     const dy = this.getDy(props, style, content, lineHeight);
     const transform = this.getTransform(props, style);
     const x = props.x !== undefined ? props.x : this.getPosition(props, "x");

@@ -16,6 +16,7 @@ const filterTicks = (ticks, scale) => {
   return uniqBy(ticks, compareTicks);
 };
 
+// TODO: reconcile
 const evaluateProp = (prop, data, index) => {
   return isFunction(prop) ? prop(data, index) : prop;
 };

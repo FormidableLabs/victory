@@ -494,6 +494,7 @@ export default class VictoryBrushLine extends React.Component {
     const style = assign({}, fallbackProps.handleStyle, handleStyle);
     const minDatum = assign({ handleValue: Collection.getMinValue(brushDomain) }, datum);
     const maxDatum = assign({ handleValue: Collection.getMaxValue(brushDomain) }, datum);
+    // TODO: reconcile
     const minHandleProps = assign(
       {
         key: `${id}-min`,

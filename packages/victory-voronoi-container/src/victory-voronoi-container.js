@@ -176,6 +176,7 @@ export const voronoiContainerMixin = (base) =>
         const componentStyle = Array.isArray(componentStyleArray)
           ? componentStyleArray[index]
           : componentStyleArray;
+        // TODO: Reconcile
         const style = Helpers.evaluateStyle(
           defaults({}, componentStyle, baseStyle, themeStyles[type]),
           point,

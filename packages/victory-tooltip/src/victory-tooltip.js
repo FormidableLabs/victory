@@ -169,27 +169,27 @@ export default class VictoryTooltip extends React.Component {
     } = props;
 
     const style = Array.isArray(props.style)
-      ? props.style.map((s) => Helpers.evaluateStyle(s, datum, active))
-      : Helpers.evaluateStyle(props.style, datum, active);
-    const flyoutStyle = Helpers.evaluateStyle(props.flyoutStyle, datum, active);
+      ? props.style.map((s) => Helpers.evaluateStyle(s, props))
+      : Helpers.evaluateStyle(props.style, props);
+    const flyoutStyle = Helpers.evaluateStyle(props.flyoutStyle, props);
     const padding = (flyoutStyle && flyoutStyle.padding) || 0;
     const defaultDx = horizontal ? padding : 0;
     const defaultDy = horizontal ? 0 : padding;
     const orientation =
-      Helpers.evaluateProp(props.orientation, datum, active) || this.getDefaultOrientation(props);
+      Helpers.evaluateProp(props.orientation, props) || this.getDefaultOrientation(props);
     return assign({}, props, {
       style,
       flyoutStyle,
       orientation,
-      dx: dx !== undefined ? Helpers.evaluateProp(dx, datum, active) : defaultDx,
-      dy: dy !== undefined ? Helpers.evaluateProp(dy, datum, active) : defaultDy,
-      cornerRadius: Helpers.evaluateProp(cornerRadius, datum, active),
-      pointerLength: Helpers.evaluateProp(pointerLength, datum, active),
-      pointerWidth: Helpers.evaluateProp(pointerWidth, datum, active),
-      width: Helpers.evaluateProp(width, datum, active),
-      height: Helpers.evaluateProp(height, datum, active),
-      active: Helpers.evaluateProp(active, datum, active),
-      text: Helpers.evaluateProp(text, datum, active)
+      dx: dx !== undefined ? Helpers.evaluateProp(dx, props) : defaultDx,
+      dy: dy !== undefined ? Helpers.evaluateProp(dy, props) : defaultDy,
+      cornerRadius: Helpers.evaluateProp(cornerRadius, props),
+      pointerLength: Helpers.evaluateProp(pointerLength, props),
+      pointerWidth: Helpers.evaluateProp(pointerWidth, props),
+      width: Helpers.evaluateProp(width, props),
+      height: Helpers.evaluateProp(height, props),
+      active: Helpers.evaluateProp(active, props),
+      text: Helpers.evaluateProp(text, props)
     });
   }
 
@@ -207,8 +207,8 @@ export default class VictoryTooltip extends React.Component {
       ? defaults({}, props.flyoutStyle, defaultFlyoutStyles)
       : defaultFlyoutStyles;
     const labelStyle = Array.isArray(baseLabelStyle)
-      ? baseLabelStyle.map((s) => Helpers.evaluateStyle(s, datum, active))
-      : Helpers.evaluateStyle(baseLabelStyle, datum, active);
+      ? baseLabelStyle.map((s) => Helpers.evaluateStyle(s, props))
+      : Helpers.evaluateStyle(baseLabelStyle, props);
     const labelSize = TextSize.approximateTextSize(text, labelStyle);
     const flyoutDimensions = this.getDimensions(props, labelSize, labelStyle);
     const flyoutCenter = this.getFlyoutCenter(props, flyoutDimensions);

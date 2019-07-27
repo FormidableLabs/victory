@@ -34,8 +34,8 @@ export default class Point extends React.Component {
   };
 
   getPath(props) {
-    const { datum, active, x, y } = props;
-    const size = Helpers.evaluateProp(props.size, datum, active);
+    const { x, y } = props;
+    const size = Helpers.evaluateProp(props.size, props);
     if (props.getPath) {
       return props.getPath(x, y, size);
     }
@@ -49,7 +49,7 @@ export default class Point extends React.Component {
       minus: pathHelpers.minus,
       star: pathHelpers.star
     };
-    const symbol = Helpers.evaluateProp(props.symbol, datum, active);
+    const symbol = Helpers.evaluateProp(props.symbol, props);
     const symbolFunction =
       typeof pathFunctions[symbol] === "function" ? pathFunctions[symbol] : pathFunctions.circle;
     return symbolFunction(x, y, size);
@@ -57,8 +57,6 @@ export default class Point extends React.Component {
 
   render() {
     const {
-      active,
-      datum,
       role,
       shapeRendering,
       className,
@@ -67,7 +65,7 @@ export default class Point extends React.Component {
       transform,
       clipPath
     } = this.props;
-    const style = Helpers.evaluateStyle(this.props.style, datum, active);
+    const style = Helpers.evaluateStyle(this.props.style, this.props);
     const d = this.getPath(this.props);
     return React.cloneElement(pathComponent, {
       style,

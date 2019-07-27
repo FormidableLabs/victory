@@ -137,12 +137,13 @@ const getVerticalAnchor = (orientation) => {
 const getLabelProps = (props, dataProps, calculatedValues) => {
   const { index, datum, data, slice } = dataProps;
   const { style, defaultRadius, origin } = calculatedValues;
+  // TODO: should this be evaluated at a different level?
   const labelStyle = Helpers.evaluateStyle(
     assign({ padding: 0 }, style.labels),
-    datum,
-    props.active
+    props
   );
-  const labelRadius = Helpers.evaluateProp(props.labelRadius, datum);
+  // TODO: should this be evaluated at a different level?
+  const labelRadius = Helpers.evaluateProp(props.labelRadius, dataProps);
   const labelArc = getLabelArc(defaultRadius, labelRadius, labelStyle);
   const position = getLabelPosition(labelArc, slice, props.labelPosition);
   const orientation = getLabelOrientation(slice);

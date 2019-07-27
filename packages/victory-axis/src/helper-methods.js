@@ -8,6 +8,7 @@ const orientationSign = {
   bottom: 1
 };
 
+// TODO: reconcile how axis props are evaluated
 const evaluateProp = (prop, data, index) => {
   return isFunction(prop) ? prop(data, index) : prop;
 };

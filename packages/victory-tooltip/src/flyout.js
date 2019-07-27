@@ -83,8 +83,6 @@ export default class Flyout extends React.Component {
 
   render() {
     const {
-      datum,
-      active,
       role,
       shapeRendering,
       className,
@@ -93,7 +91,7 @@ export default class Flyout extends React.Component {
       transform,
       clipPath
     } = this.props;
-    const style = Helpers.evaluateStyle(this.props.style, datum, active);
+    const style = Helpers.evaluateStyle(this.props.style, this.props);
     const path = this.getFlyoutPath(this.props);
     return React.cloneElement(pathComponent, {
       style,

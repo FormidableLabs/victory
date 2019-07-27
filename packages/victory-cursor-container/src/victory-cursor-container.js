@@ -135,7 +135,7 @@ export const cursorContainerMixin = (base) =>
             defaults({ active: true }, cursorLabelComponent.props, {
               x: cursorCoordinates.x + cursorLabelOffset.x,
               y: cursorCoordinates.y + cursorLabelOffset.y,
-              text: Helpers.evaluateProp(cursorLabel, cursorValue, true),
+              text: Helpers.evaluateProp(cursorLabel, cursorValue, true), // TODO: reconcile
               active: true,
               key: `${name}-cursor-label`
             })

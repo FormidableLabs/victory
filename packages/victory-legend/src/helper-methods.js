@@ -10,6 +10,7 @@ const getLabelStyles = (props) => {
   const { data, style } = props;
   return data.map((datum) => {
     const baseLabelStyles = defaults({}, datum.labels, style.labels);
+    // TODO: reconcile
     return Helpers.evaluateStyle(baseLabelStyles, datum);
   });
 };
