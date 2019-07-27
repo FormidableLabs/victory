@@ -176,11 +176,10 @@ export const voronoiContainerMixin = (base) =>
         const componentStyle = Array.isArray(componentStyleArray)
           ? componentStyleArray[index]
           : componentStyleArray;
-        // TODO: Reconcile
+        // TODO: pass props object to Helpers.evaluateStyle
         const style = Helpers.evaluateStyle(
           defaults({}, componentStyle, baseStyle, themeStyles[type]),
-          point,
-          true
+          { datum: point, active: true }
         );
         const styleArray = textArray.length ? textArray.map(() => style) : [style];
         memo = memo.concat(styleArray);

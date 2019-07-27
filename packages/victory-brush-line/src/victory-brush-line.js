@@ -494,18 +494,18 @@ export default class VictoryBrushLine extends React.Component {
     const style = assign({}, fallbackProps.handleStyle, handleStyle);
     const minDatum = assign({ handleValue: Collection.getMinValue(brushDomain) }, datum);
     const maxDatum = assign({ handleValue: Collection.getMaxValue(brushDomain) }, datum);
-    // TODO: reconcile
+    // TODO: pass props object to Helpers.evaluateStyle
     const minHandleProps = assign(
       {
         key: `${id}-min`,
-        style: Helpers.evaluateStyle(style, minDatum, activeBrushes.minHandle)
+        style: Helpers.evaluateStyle(style, { datum: minDatum,  active: activeBrushes.minHandle })
       },
       handleDimensions.min
     );
     const maxHandleProps = assign(
       {
         key: `${id}-max`,
-        style: Helpers.evaluateStyle(style, maxDatum, activeBrushes.maxHandle)
+        style: Helpers.evaluateStyle(style, { datum: maxDatum, active: activeBrushes.maxHandle })
       },
       handleDimensions.max
     );
@@ -523,7 +523,7 @@ export default class VictoryBrushLine extends React.Component {
     const brushWidth = props.brushWidth || props.width;
     const rectDimensions = this.getRectDimensions(props, brushWidth);
     const baseStyle = assign({}, fallbackProps.brushStyle, brushStyle);
-    const style = Helpers.evaluateStyle(baseStyle, datum, activeBrushes.brush);
+    const style = Helpers.evaluateStyle(baseStyle, { datum, active: activeBrushes.brush });
     const brushProps = assign({ style }, rectDimensions);
     return React.cloneElement(brushComponent, brushProps);
   }
@@ -534,7 +534,7 @@ export default class VictoryBrushLine extends React.Component {
     const cursor = this.getCursor(props);
     const rectDimensions = this.getRectDimensions(props, brushAreaWidth, getFullDomain(props));
     const baseStyle = assign({ cursor }, fallbackProps.brushAreaStyle, brushAreaStyle);
-    const style = Helpers.evaluateStyle(baseStyle, datum, activeBrushes.brushArea);
+    const style = Helpers.evaluateStyle(baseStyle, { datum, active: activeBrushes.brushArea });
     const brushAreaProps = assign({ style }, rectDimensions);
     return React.cloneElement(brushAreaComponent, brushAreaProps);
   }
