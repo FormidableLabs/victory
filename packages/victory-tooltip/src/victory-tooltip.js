@@ -156,7 +156,6 @@ export default class VictoryTooltip extends React.Component {
   getEvaluatedProps(props) {
     const {
       horizontal,
-      datum,
       pointerLength,
       pointerWidth,
       cornerRadius,
@@ -194,7 +193,7 @@ export default class VictoryTooltip extends React.Component {
   }
 
   getCalculatedValues(props) {
-    const { style, text, datum, active } = props;
+    const { style, text } = props;
     const theme = props.theme || VictoryTheme.grayscale;
     const defaultLabelStyles =
       theme && theme.tooltip && theme.tooltip.style ? theme.tooltip.style : {};
