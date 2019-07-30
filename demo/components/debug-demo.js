@@ -59,7 +59,7 @@ class App extends React.Component {
           containerComponent={<VictoryVoronoiContainer labels={() => "HELLO"} />}
         >
           <VictoryBar
-            style={{ data: { fill: (d, a) => (a ? "red" : "black") } }}
+            style={{ data: { fill: ({ active }) => (active ? "red" : "black") } }}
             data={[
               { x: 0, y: 3.5, y0: 2.5 },
               { x: 0, y: 11, y0: 5 },
@@ -70,7 +70,7 @@ class App extends React.Component {
             ]}
           />
           <VictoryScatter
-            style={{ data: { fill: (d, a) => (a ? "black" : "red") } }}
+            style={{ data: { fill: ({ active }) => (active ? "black" : "red") } }}
             data={[
               { x: 0, y: 3.5 },
               { x: 0, y: 11 },
@@ -100,11 +100,11 @@ class App extends React.Component {
               style={{
                 data: {
                   fill: "tomato",
-                  stroke: (d, active) => (active ? "black" : "none"),
+                  stroke: ({ active }) => (active ? "black" : "none"),
                   strokeWidth: 2
                 }
               }}
-              size={(datum, active) => (active ? 5 : 3)}
+              size={({ active }) => (active ? 5 : 3)}
               data={[
                 { x: 1, y: -5 },
                 { x: 2, y: 4 },
@@ -119,11 +119,11 @@ class App extends React.Component {
               style={{
                 data: {
                   fill: "orange",
-                  stroke: (d, active) => (active ? "black" : "none"),
+                  stroke: ({ active }) => (active ? "black" : "none"),
                   strokeWidth: 2
                 }
               }}
-              size={(datum, active) => (active ? 5 : 3)}
+              size={({ active }) => (active ? 5 : 3)}
               data={[
                 { x: 1, y: -3 },
                 { x: 2, y: 5 },
@@ -138,7 +138,7 @@ class App extends React.Component {
               style={{
                 data: {
                   fill: "gold",
-                  stroke: (d, active) => (active ? "black" : "none"),
+                  stroke: ({ active }) => (active ? "black" : "none"),
                   strokeWidth: 2
                 }
               }}

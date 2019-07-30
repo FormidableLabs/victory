@@ -86,7 +86,7 @@ export default class App extends React.Component {
         <svg height={500} width={500}>
           <VictoryCandlestick
             style={{ data: { width: 10 }, parent: style.parent }}
-            labels={() => "yo"}
+            labels={({ datum }) => `x: ${datum.x}`}
             data={data}
             size={8}
             standalone={false}
@@ -131,7 +131,7 @@ export default class App extends React.Component {
         <VictoryCandlestick
           horizontal
           style={{ parent: style.parent }}
-          labels={() => "yo"}
+          labels={({ datum }) => `x: ${datum.x}`}
           data={data}
           theme={VictoryTheme.material}
           size={8}
@@ -187,8 +187,8 @@ export default class App extends React.Component {
           style={{
             data: {
               stroke: "transparent",
-              fill: (d) => d.fill,
-              opacity: (d) => d.opacity
+              fill: ({ datum }) => datum.fill,
+              opacity: ({ datum }) => datum.opacity
             },
             parent: style.parent
           }}
@@ -200,10 +200,10 @@ export default class App extends React.Component {
             data={data}
             style={{ data: { stroke: "none" }, closeLabels: { fill: "blue" } }}
             size={8}
-            openLabels={(d) => d.open}
-            closeLabels={(d) => d.close}
-            lowLabels={(d) => d.low}
-            highLabels={(d) => d.high}
+            openLabels={({ datum }) => datum.open}
+            closeLabels={({ datum }) => datum.close}
+            lowLabels={({ datum }) => datum.low}
+            highLabels={({ datum }) => datum.high}
             labelOrientation={{ open: "top", high: "top" }}
           />
         </VictoryChart>
