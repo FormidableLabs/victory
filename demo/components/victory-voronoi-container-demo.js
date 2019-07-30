@@ -316,7 +316,7 @@ class App extends React.Component {
                   data: { fill: "tomato" }
                 }}
                 size={({ active }) => active ? 5 : 3}
-                labels={(d) => d.y}
+                labels={({ datum }) => datum.y}
                 labelComponent={<VictoryTooltip />}
                 data={[
                   { x: 1, y: -5 },
@@ -333,7 +333,7 @@ class App extends React.Component {
                   data: { fill: "blue" }
                 }}
                 size={({ active }) => active ? 5 : 3}
-                labels={(d) => d.y}
+                labels={({ datum }) => datum.y}
                 labelComponent={<VictoryTooltip />}
                 data={[
                   { x: 1, y: -3 },
@@ -355,7 +355,7 @@ class App extends React.Component {
                   { x: 6, y: 3 },
                   { x: 7, y: -3 }
                 ]}
-                labels={(d) => d.y}
+                labels={({ datum }) => datum.y}
                 labelComponent={<VictoryTooltip />}
                 size={({ active }) => active ? 5 : 3}
               />
