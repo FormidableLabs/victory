@@ -164,7 +164,7 @@ export default class App extends React.Component {
         <ChartWrap>
           <VictoryBar
             horizontal
-            labels={(d) => d.y}
+            labels={({ datum }) => datum.y}
             data={[
               { x: 1, y: "Label 1" },
               { x: 7, y: "Label 2" },
@@ -177,14 +177,14 @@ export default class App extends React.Component {
         <ChartWrap>
           <VictoryBar
             horizontal
-            labels={(d) => d.y}
+            labels={({ datum }) => datum.y}
             data={[{ x: 1, y: 20 }, { x: 7, y: -40 }, { x: 3, y: -60 }, { x: 4, y: 80 }]}
           />
         </ChartWrap>
 
         <ChartWrap>
           <VictoryBar
-            labels={(d) => d.y}
+            labels={({ datum }) => datum.y}
             data={[{ x: 1, y: 20 }, { x: 7, y: -40 }, { x: 3, y: -60 }, { x: 4, y: 80 }]}
           />
         </ChartWrap>

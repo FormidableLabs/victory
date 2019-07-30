@@ -40,7 +40,7 @@ const Charts = ({ behaviors }) => {
           containerComponent={
             <CustomContainer
               voronoiDimension="x"
-              labels={(d) => `y: ${d.y}`}
+              labels={({ datum }) => `y: ${datum.y}`}
               labelComponent={<VictoryTooltip cornerRadius={0} flyoutStyle={{ fill: "white" }} />}
               selectedDomain={{ x: [1.5, 2] }}
             />
@@ -70,7 +70,7 @@ const Charts = ({ behaviors }) => {
             style={{
               data: {
                 stroke: "tomato",
-                strokeWidth: (d, active) => (active ? 4 : 2)
+                strokeWidth: ({ active }) => (active ? 4 : 2)
               },
               labels: { fill: "tomato" }
             }}
@@ -85,7 +85,7 @@ const Charts = ({ behaviors }) => {
             style={{
               data: {
                 stroke: "blue",
-                strokeWidth: (d, active) => (active ? 4 : 2)
+                strokeWidth: ({ active }) => (active ? 4 : 2)
               },
               labels: { fill: "blue" }
             }}
@@ -96,7 +96,7 @@ const Charts = ({ behaviors }) => {
             style={{
               data: {
                 stroke: "black",
-                strokeWidth: (d, active) => (active ? 4 : 2)
+                strokeWidth: ({ active }) => (active ? 4 : 2)
               },
               labels: { fill: "black" }
             }}
@@ -108,8 +108,8 @@ const Charts = ({ behaviors }) => {
           style={{ parent: chartStyle.parent }}
           containerComponent={
             <CustomContainer
-              labels={(d) => round(d.x, 2)}
-              cursorLabel={(d) => round(d.x, 2)}
+              labels={({ datum }) => round(datum.x, 2)}
+              cursorLabel={({ datum }) => round(datum.x, 2)}
               selectionStyle={{
                 stroke: "tomato",
                 strokeWidth: 2,
@@ -124,10 +124,10 @@ const Charts = ({ behaviors }) => {
           <VictoryScatter
             style={{
               data: {
-                fill: (datum, active) => (active ? "tomato" : "black")
+                fill: ({ active }) => (active ? "tomato" : "black")
               }
             }}
-            size={(datum, active) => (active ? 5 : 3)}
+            size={({ active }) => (active ? 5 : 3)}
             y={(d) => d.x * d.x}
           />
         </VictoryChart>
@@ -142,8 +142,8 @@ const Charts = ({ behaviors }) => {
               style={{
                 data: { fill: "tomato" }
               }}
-              size={(datum, active) => (active ? 5 : 3)}
-              labels={(d) => d.y}
+              size={({ active }) => (active ? 5 : 3)}
+              labels={({ datum }) => datum.y}
               labelComponent={<VictoryTooltip />}
               data={[
                 { x: 1, y: -5 },
@@ -159,8 +159,8 @@ const Charts = ({ behaviors }) => {
               style={{
                 data: { fill: "blue" }
               }}
-              size={(datum, active) => (active ? 5 : 3)}
-              labels={(d) => d.y}
+              size={({ active }) => (active ? 5 : 3)}
+              labels={({ datum }) => datum.y}
               labelComponent={<VictoryTooltip />}
               data={[
                 { x: 1, y: -3 },
@@ -182,9 +182,9 @@ const Charts = ({ behaviors }) => {
                 { x: 6, y: 3 },
                 { x: 7, y: -3 }
               ]}
-              labels={(d) => d.y}
+              labels={({ datum }) => datum.y}
               labelComponent={<VictoryTooltip />}
-              size={(datum, active) => (active ? 5 : 3)}
+              size={({ active }) => (active ? 5 : 3)}
             />
           </VictoryGroup>
         </VictoryChart>
@@ -198,11 +198,11 @@ const Charts = ({ behaviors }) => {
             style={{
               data: {
                 fill: "tomato",
-                stroke: (d, active) => (active ? "black" : "none"),
+                stroke: ({ active }) => (active ? "black" : "none"),
                 strokeWidth: 2
               }
             }}
-            size={(datum, active) => (active ? 5 : 3)}
+            size={({ active }) => (active ? 5 : 3)}
             data={[
               { x: 1, y: -5 },
               { x: 2, y: 4 },
@@ -217,11 +217,11 @@ const Charts = ({ behaviors }) => {
             style={{
               data: {
                 fill: "orange",
-                stroke: (d, active) => (active ? "black" : "none"),
+                stroke: ({ active }) => (active ? "black" : "none"),
                 strokeWidth: 2
               }
             }}
-            size={(datum, active) => (active ? 5 : 3)}
+            size={({ active }) => (active ? 5 : 3)}
             data={[
               { x: 1, y: -3 },
               { x: 2, y: 5 },
@@ -236,7 +236,7 @@ const Charts = ({ behaviors }) => {
             style={{
               data: {
                 fill: "gold",
-                stroke: (d, active) => (active ? "black" : "none"),
+                stroke: ({ active }) => (active ? "black" : "none"),
                 strokeWidth: 2
               }
             }}

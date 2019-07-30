@@ -103,7 +103,7 @@ export default class App extends React.Component {
         <VictoryErrorBar
           style={{
             parent: style.parent,
-            data: { fill: (data) => (data.y > 0 ? "red" : "blue") }
+            data: { fill: ({ datum }) => (datum.y > 0 ? "red" : "blue") }
           }}
           width={500}
           height={500}

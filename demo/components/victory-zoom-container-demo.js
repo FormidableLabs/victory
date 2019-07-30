@@ -256,7 +256,7 @@ export default class App extends React.Component {
             data={this.state.data}
             x="a"
             y="b"
-            labels={(d) => d.x}
+            labels={({ datum }) => datum.x}
             labelComponent={<VictoryTooltip />}
           />
         </VictoryChart>

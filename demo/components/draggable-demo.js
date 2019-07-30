@@ -157,7 +157,7 @@ class App extends React.Component {
                   onBrushDomainChange={this.onDomainChange.bind(this)}
                   brushStyle={{
                     fill: "skyBlue",
-                    opacity: (d, a) => (a ? 1 : 0.5)
+                    opacity: ({ active }) => (active ? 1 : 0.5)
                   }}
                 />
               }
@@ -174,7 +174,7 @@ class App extends React.Component {
             style={{
               data: {
                 fill: "skyBlue",
-                opacity: (d, a) => (a ? 1 : 0.5),
+                opacity: ({ active }) => (active ? 1 : 0.5),
                 cursor: "move"
               }
             }}

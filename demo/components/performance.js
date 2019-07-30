@@ -70,7 +70,7 @@ class App extends React.Component {
             <VictoryScatter
               style={{
                 data: {
-                  fill: (datum, active) => (active ? "tomato" : "black")
+                  fill: ({ active }) => (active ? "tomato" : "black")
                 }
               }}
               data={scatterData}

@@ -135,8 +135,8 @@ class App extends React.Component {
             <VictoryGroup data={[{ x: 1, y: 5 }, { x: 2, y: 4 }, { x: 3, y: -2 }]}>
               <VictoryLine style={{ data: { stroke: "tomato" } }} />
               <VictoryScatter
-                style={{ data: { fill: (d, active) => (active ? "tomato" : "gray") } }}
-                labels={(d) => d.y}
+                style={{ data: { fill: ({ active }) => (active ? "tomato" : "gray") } }}
+                labels={({ datum }) => datum.y}
                 labelComponent={<VictoryTooltip />}
               />
             </VictoryGroup>
@@ -144,8 +144,8 @@ class App extends React.Component {
             <VictoryGroup data={[{ x: 1, y: -3 }, { x: 2, y: 5 }, { x: 3, y: 3 }]}>
               <VictoryLine style={{ data: { stroke: "blue" } }} />
               <VictoryScatter
-                style={{ data: { fill: (d, active) => (active ? "blue" : "gray") } }}
-                labels={(d) => d.y}
+                style={{ data: { fill: ({ active }) => (active ? "blue" : "gray") } }}
+                labels={({ datum }) => datum.y}
                 labelComponent={<VictoryTooltip />}
               />
             </VictoryGroup>
@@ -153,8 +153,8 @@ class App extends React.Component {
             <VictoryGroup data={[{ x: 1, y: 5 }, { x: 2, y: -4 }, { x: 3, y: -2 }]}>
               <VictoryLine style={{ data: { stroke: "black" } }} />
               <VictoryScatter
-                style={{ data: { fill: (d, active) => (active ? "black" : "gray") } }}
-                labels={(d) => d.y}
+                style={{ data: { fill: ({ active }) => (active ? "black" : "gray") } }}
+                labels={({ datum }) => datum.y}
                 labelComponent={<VictoryTooltip />}
               />
             </VictoryGroup>
@@ -164,7 +164,7 @@ class App extends React.Component {
             style={{
               parent: chartStyle.parent,
               data: {
-                fill: (datum, active) => (active ? "tomato" : "black")
+                fill: ({ active }) => (active ? "tomato" : "black")
               }
             }}
             containerComponent={
@@ -177,7 +177,7 @@ class App extends React.Component {
                 }}
               />
             }
-            size={(datum, active) => (active ? 5 : 3)}
+            size={({ active }) => (active ? 5 : 3)}
             data={[
               { x: 1, y: -5 },
               { x: 2, y: 4 },
@@ -193,7 +193,7 @@ class App extends React.Component {
             style={{
               parent: chartStyle.parent,
               data: {
-                fill: (datum, active) => (active ? "tomato" : "black")
+                fill: ({ active }) => (active ? "tomato" : "black")
               }
             }}
             containerComponent={
@@ -206,7 +206,7 @@ class App extends React.Component {
                 }}
               />
             }
-            size={(datum, active) => (active ? 5 : 3)}
+            size={({ active }) => (active ? 5 : 3)}
             y={(d) => d.x * d.x}
           />
 
@@ -227,7 +227,7 @@ class App extends React.Component {
               style={{
                 data: { fill: "tomato" }
               }}
-              size={(datum, active) => (active ? 5 : 3)}
+              size={({ active }) => (active ? 5 : 3)}
               data={[
                 { x: 1, y: -5 },
                 { x: 2, y: 4 },
@@ -242,7 +242,7 @@ class App extends React.Component {
               style={{
                 data: { fill: "blue" }
               }}
-              size={(datum, active) => (active ? 5 : 3)}
+              size={({ active }) => (active ? 5 : 3)}
               data={[
                 { x: 1, y: -3 },
                 { x: 2, y: 5 },
@@ -263,7 +263,7 @@ class App extends React.Component {
                 { x: 6, y: 3 },
                 { x: 7, y: -3 }
               ]}
-              size={(datum, active) => (active ? 5 : 3)}
+              size={({ active }) => (active ? 5 : 3)}
             />
           </VictoryGroup>
 
@@ -287,11 +287,11 @@ class App extends React.Component {
                 style={{
                   data: {
                     fill: "tomato",
-                    stroke: (d, active) => (active ? "black" : "none"),
+                    stroke: ({ active }) => (active ? "black" : "none"),
                     strokeWidth: 2
                   }
                 }}
-                size={(datum, active) => (active ? 5 : 3)}
+                size={({ active }) => (active ? 5 : 3)}
                 data={[
                   { x: 1, y: -5 },
                   { x: 2, y: 4 },
@@ -306,11 +306,11 @@ class App extends React.Component {
                 style={{
                   data: {
                     fill: "orange",
-                    stroke: (d, active) => (active ? "black" : "none"),
+                    stroke: ({ active }) => (active ? "black" : "none"),
                     strokeWidth: 2
                   }
                 }}
-                size={(datum, active) => (active ? 5 : 3)}
+                size={({ active }) => (active ? 5 : 3)}
                 data={[
                   { x: 1, y: -3 },
                   { x: 2, y: 5 },
@@ -325,7 +325,7 @@ class App extends React.Component {
                 style={{
                   data: {
                     fill: "gold",
-                    stroke: (d, active) => (active ? "black" : "none"),
+                    stroke: ({ active }) => (active ? "black" : "none"),
                     strokeWidth: 2
                   }
                 }}
