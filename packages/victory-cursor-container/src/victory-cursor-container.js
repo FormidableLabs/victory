@@ -129,17 +129,17 @@ export const cursorContainerMixin = (base) =>
         y: horizontal ? scale.x(cursorValue.x) : scale.y(cursorValue.y)
       };
       if (cursorLabel) {
+        const labelProps = defaults({ active: true }, cursorLabelComponent.props, {
+          x: cursorCoordinates.x + cursorLabelOffset.x,
+          y: cursorCoordinates.y + cursorLabelOffset.y,
+          datum: cursorValue,
+          active: true,
+          key: `${name}-cursor-label`
+        });
         newElements.push(
           React.cloneElement(
             cursorLabelComponent,
-            defaults({ active: true }, cursorLabelComponent.props, {
-              x: cursorCoordinates.x + cursorLabelOffset.x,
-              y: cursorCoordinates.y + cursorLabelOffset.y,
-              // TODO: pass props object to Helpers.evaluateProp
-              text: Helpers.evaluateProp(cursorLabel, { datum: cursorValue, active: true }),
-              active: true,
-              key: `${name}-cursor-label`
-            })
+            defaults({}, labelProps, { text: Helpers.evaluateProp(cursorLabel, labelProps) })
           )
         );
       }

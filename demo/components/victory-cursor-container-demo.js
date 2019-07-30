@@ -57,7 +57,7 @@ class App extends React.Component {
 
     const chartStyle = { parent: { border: "1px solid #ccc", margin: "2%", maxWidth: "40%" } };
 
-    const cursorLabel = (d) => `${round(d.x, 2)} , ${round(d.y, 2)}`;
+    const cursorLabel = ({ datum }) => `${round(datum.x, 2)} , ${round(datum.y, 2)}`;
 
     return (
       <div className="demo">

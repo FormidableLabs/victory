@@ -1,6 +1,6 @@
 import PropTypes from "prop-types";
 import React from "react";
-import { assign, defaults, isFunction, pick } from "lodash";
+import { defaults, isFunction, pick } from "lodash";
 import { VictoryTooltip } from "victory-tooltip";
 import { VictoryContainer, Helpers, TextSize, PropTypes as CustomPropTypes } from "victory-core";
 import VoronoiHelpers from "./voronoi-helpers";
@@ -170,7 +170,7 @@ export const voronoiContainerMixin = (base) =>
       const componentStyleArray =
         type === "flyout" ? componentProps.flyoutStyle : componentProps.style;
       return points.reduce((memo, datum, index) => {
-        const labelProps = assign({}, componentProps, { datum, index, active: true });
+        const labelProps = defaults({}, componentProps, { datum, active: true });
         const text = isFunction(labels) ? labels(labelProps) : undefined;
         const textArray = text !== undefined ? `${text}`.split("\n") : [];
         const baseStyle = (datum.style && datum.style[type]) || {};
@@ -203,8 +203,8 @@ export const voronoiContainerMixin = (base) =>
     getLabelProps(props, points) {
       const { labels, scale, labelComponent, theme } = props;
       const componentProps = labelComponent.props || {};
-      const text = points.reduce((memo, datum, index) => {
-        const labelProps = assign({}, componentProps, { datum, index, active: true });
+      const text = points.reduce((memo, datum) => {
+        const labelProps = defaults({}, componentProps, { datum, active: true });
         const t = isFunction(labels) ? labels(labelProps) : null;
         if (t === null || t === undefined) {
           return memo;
