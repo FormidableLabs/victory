@@ -75,9 +75,9 @@ storiesOf("VictoryPie", module)
     <VictoryPie
       style={{
         data: {
-          stroke: (data) => (data.y > 75 ? "red" : "transparent"),
+          stroke: ({ datum }) => (datum.y > 75 ? "red" : "transparent"),
           strokeWidth: 3,
-          opacity: (data) => (data.y > 75 ? 1 : 0.4)
+          opacity: ({ datum }) => (datum.y > 75 ? 1 : 0.4)
         }
       }}
       data={[{ x: "Cat", y: 62 }, { x: "Dog", y: 91 }, { x: "Fish", y: 55 }, { x: "Bird", y: 55 }]}
@@ -85,8 +85,8 @@ storiesOf("VictoryPie", module)
   ))
   .add("with functional radius", () => (
     <VictoryPie
-      radius={(d) => d.y + 100}
-      labelRadius={(d) => d.y + 50}
+      radius={({ datum }) => datum.y + 100}
+      labelRadius={({ datum }) => datum.y + 50}
       style={{
         labels: { fill: "white" }
       }}
@@ -95,23 +95,23 @@ storiesOf("VictoryPie", module)
   ))
   .add("with functional innerRadius", () => (
     <VictoryPie
-      innerRadius={(d) => d.y}
+      innerRadius={({ datum }) => datum.y}
       data={[{ x: "Cat", y: 62 }, { x: "Dog", y: 91 }, { x: "Fish", y: 55 }, { x: "Bird", y: 55 }]}
     />
   ))
   .add("with functional cornerRadius", () => (
     <VictoryPie
-      cornerRadius={(d) => (d.y > 70 ? 10 : 0)}
+      cornerRadius={({ datum }) => (datum.y > 70 ? 10 : 0)}
       innerRadius={100}
       data={[{ x: "Cat", y: 62 }, { x: "Dog", y: 91 }, { x: "Fish", y: 55 }, { x: "Bird", y: 55 }]}
     />
   ))
   .add("with sliceStartAngle and sliceEndAngle", () => (
     <VictoryPie
-      dataComponent={<Slice sliceStartAngle={0} sliceEndAngle={(d) => d.endAngle} />}
+      dataComponent={<Slice sliceStartAngle={0} sliceEndAngle={({ datum }) => datum.endAngle} />}
       labels={() => " "}
-      radius={(d) => d.radius}
-      innerRadius={(d) => d.innerRadius}
+      radius={({ datum }) => datum.radius}
+      innerRadius={({ datum }) => datum.innerRadius}
       data={[
         { x: "Cat", y: 62, innerRadius: 0, radius: 30 },
         { x: "Dog", y: 91, innerRadius: 35, radius: 65 },

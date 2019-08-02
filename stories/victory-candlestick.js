@@ -136,10 +136,18 @@ storiesOf("VictoryCandlestick.labels", module)
     <VictoryCandlestick data={getData(7)} labels={(d) => `x: ${d.x}`} />
   ))
   .add("openLabels and closeLabels", () => (
-    <VictoryCandlestick data={sampleData} openLabels={(d) => d.open} closeLabels={(d) => d.close} />
+    <VictoryCandlestick
+      data={sampleData}
+      openLabels={({ datum }) => datum.open}
+      closeLabels={({ datum }) => datum.close}
+    />
   ))
   .add("highLabels and lowLabels", () => (
-    <VictoryCandlestick data={sampleData} highLabels={(d) => d.high} lowLabels={(d) => d.low} />
+    <VictoryCandlestick
+      data={sampleData}
+      highLabels={({ datum }) => datum.high}
+      lowLabels={({ datum }) => datum.low}
+    />
   ))
   .add("array labels", () => (
     <VictoryCandlestick data={getData(7)} labels={["", "", "three", "four", 5, "six"]} />
@@ -147,7 +155,7 @@ storiesOf("VictoryCandlestick.labels", module)
   .add("labels with orientation", () => (
     <VictoryCandlestick
       data={sampleData}
-      openLabels={(d) => d.open}
+      openLabels={({ datum }) => datum.open}
       labelOrientation={{ open: "top" }}
     />
   ))
@@ -161,7 +169,7 @@ storiesOf("VictoryCandlestick.labels", module)
         { x: 4, open: 70, close: 22, high: 70, low: 5 },
         { x: 5, open: 20, close: 35, high: 50, low: 10, label: ["last", "label"] }
       ]}
-      labels={(d) => d.label}
+      labels={({ datum }) => datum.label}
     />
   ));
 
@@ -170,7 +178,7 @@ storiesOf("VictoryCandlestick.tooltips", module)
   .add("tooltips", () => (
     <VictoryCandlestick
       data={getData(5)}
-      labels={(d) => `x: ${d.x}`}
+      labels={({ datum }) => `x: ${datum.x}`}
       labelComponent={<VictoryTooltip active />}
     />
   ))
@@ -178,14 +186,14 @@ storiesOf("VictoryCandlestick.tooltips", module)
     <VictoryCandlestick
       horizontal
       data={getData(5)}
-      labels={(d) => `x: ${d.x}`}
+      labels={({ datum }) => `x: ${datum.x}`}
       labelComponent={<VictoryTooltip active />}
     />
   ))
   .add("openLabels tooltips", () => (
     <VictoryCandlestick
       data={sampleData}
-      openLabels={(d) => d.open}
+      openLabels={({ datum }) => datum.open}
       openLabelComponent={<VictoryTooltip active />}
       labelOrientation="top"
     />
@@ -193,7 +201,7 @@ storiesOf("VictoryCandlestick.tooltips", module)
   .add("closeLabels tooltips", () => (
     <VictoryCandlestick
       data={sampleData}
-      closeLabels={(d) => d.close}
+      closeLabels={({ datum }) => datum.close}
       closeLabelComponent={<VictoryTooltip active />}
       labelOrientation={{ close: "left" }}
     />
@@ -201,14 +209,14 @@ storiesOf("VictoryCandlestick.tooltips", module)
   .add("lowLabels tooltips", () => (
     <VictoryCandlestick
       data={sampleData}
-      lowLabels={(d) => d.low}
+      lowLabels={({ datum }) => datum.low}
       lowLabelComponent={<VictoryTooltip active />}
     />
   ))
   .add("highLabels tooltips", () => (
     <VictoryCandlestick
       data={sampleData}
-      highLabels={(d) => d.high}
+      highLabels={({ datum }) => datum.high}
       highLabelComponent={<VictoryTooltip active />}
     />
   ))
@@ -225,7 +233,7 @@ storiesOf("VictoryCandlestick.style", module)
   .add("with styles", () => (
     <VictoryCandlestick
       data={getData(7)}
-      labels={(d) => d.x}
+      labels={({ datum }) => datum.x}
       style={{
         labels: { fontSize: 20, fill: "tomato", fontFamily: "monospace" },
         data: { fill: "tomato", fillOpacity: 0.7, stroke: "tomato", strokeWidth: 2 }
@@ -236,13 +244,13 @@ storiesOf("VictoryCandlestick.style", module)
     <VictoryCandlestick
       style={{
         labels: {
-          fill: (d) => (d.x === 3 ? "red" : "black")
+          fill: ({ datum }) => (datum.x === 3 ? "red" : "black")
         },
         data: {
-          stroke: (d) => (d.open > d.close ? "red" : "black")
+          stroke: ({ datum }) => (datum.open > datum.close ? "red" : "black")
         }
       }}
-      labels={(d) => d.x}
+      labels={({ datum }) => datum.x}
       data={getData(7)}
     />
   ));
@@ -251,8 +259,12 @@ storiesOf("VictoryCandlestick.scale", module)
   .addDecorator(getChartDecorator({ domainPadding: 25 }))
   .add("time scale", () => <VictoryCandlestick data={getTimeData(5)} />)
   .add("time scale with labels", () => (
-    <VictoryCandlestick data={getTimeData(5)} labels={(d) => d.x.getFullYear()} />
+    <VictoryCandlestick data={getTimeData(5)} labels={({ datum }) => datum.x.getFullYear()} />
   ))
   .add("time scale with labels (horizontal)", () => (
-    <VictoryCandlestick horizontal data={getTimeData(5)} labels={(d) => d.x.getFullYear()} />
+    <VictoryCandlestick
+      horizontal
+      data={getTimeData(5)}
+      labels={({ datum }) => datum.x.getFullYear()}
+    />
   ));

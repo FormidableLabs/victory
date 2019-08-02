@@ -99,7 +99,7 @@ export default class App extends React.Component {
             padding={{ bottom: 50, left: 50, right: 10 }}
             width={400}
             height={200}
-            radius={(d) => d.radius}
+            radius={({ datum }) => datum.radius}
             data={[
               { x: 1, y: 1, radius: 40 },
               { x: 2, y: 3, radius: 50 },
