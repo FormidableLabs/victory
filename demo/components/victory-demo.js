@@ -271,7 +271,7 @@ export default class App extends React.Component {
             style={{
               data: {
                 fill: "orange",
-                stroke: ({ active }) => {active ? "black" : "none"},
+                stroke: ({ active }) => active ? "black" : "none",
                 strokeWidth: 2
               }
             }}
