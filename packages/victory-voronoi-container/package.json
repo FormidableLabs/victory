@@ -20,7 +20,7 @@
   "license": "MIT",
   "dependencies": {
     "delaunay-find": "0.0.3",
-    "lodash": "^4.17.11",
+    "lodash": "^4.17.15",
     "prop-types": "^15.5.8",
     "victory-core": "^32.3.2",
     "victory-tooltip": "^32.3.2"
