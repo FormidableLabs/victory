@@ -1,4 +1,4 @@
-import { assign, defaults, isFunction } from "lodash";
+import { assign, defaults } from "lodash";
 import { Helpers, Scale, Axis } from "victory-core";
 
 const orientationSign = {
@@ -6,21 +6,6 @@ const orientationSign = {
   left: -1,
   right: 1,
   bottom: 1
-};
-
-// TODO: reconcile how axis props are evaluated
-const evaluateProp = (prop, data, index) => {
-  return isFunction(prop) ? prop(data, index) : prop;
-};
-
-const evaluateStyle = (style, data, index) => {
-  if (!style || !Object.keys(style).some((value) => isFunction(style[value]))) {
-    return style;
-  }
-  return Object.keys(style).reduce((prev, curr) => {
-    prev[curr] = evaluateProp(style[curr], data, index);
-    return prev;
-  }, {});
 };
 
 const getCurrentAxis = (props, axis) => {
@@ -130,11 +115,11 @@ const getAxisProps = (modifiedProps, calculatedValues, globalTransform) => {
   };
 };
 
-const getEvaluatedStyles = (style, tick, index) => {
+const getEvaluatedStyles = (style, props) => {
   return {
-    tickStyle: evaluateStyle(style.ticks, tick, index),
-    labelStyle: evaluateStyle(style.tickLabels, tick, index),
-    gridStyle: evaluateStyle(style.grid, tick, index)
+    tickStyle: Helpers.evaluateStyle(style.ticks, props),
+    labelStyle: Helpers.evaluateStyle(style.tickLabels, props),
+    gridStyle: Helpers.evaluateStyle(style.grid, props)
   };
 };
 
@@ -214,16 +199,20 @@ const getOffset = (props, calculatedValues) => {
     orientation,
     labelPadding,
     stringTicks,
-    ticks
+    ticks,
+    scale,
+    axis,
   } = calculatedValues;
+  const { polar, horizontal } = props;
+  const sharedProps = { scale: { [axis]: scale }, polar, horizontal, ticks, stringTicks };
   const xPadding = orientation === "right" ? padding.right : padding.left;
   const yPadding = orientation === "top" ? padding.top : padding.bottom;
   const fontSize = style.axisLabel.fontSize || 14; // eslint-disable-line no-magic-numbers
   const offsetX = props.offsetX !== null && props.offsetX !== undefined ? props.offsetX : xPadding;
   const offsetY = props.offsetY !== null && props.offsetY !== undefined ? props.offsetY : yPadding;
-  const tickSizes = ticks.map((data) => {
+  const tickSizes = ticks.map((data, index) => {
     const tick = stringTicks ? props.tickValues[data - 1] : data;
-    const tickStyle = evaluateStyle(style.ticks, tick);
+    const tickStyle = Helpers.evaluateStyle(style.ticks, assign({}, sharedProps, { tick, index }));
     return tickStyle.size || 0;
   });
   const totalPadding = fontSize + 2 * Math.max(...tickSizes) + labelPadding;
@@ -371,7 +360,7 @@ const getBaseProps = (props, fallbackProps) => {
   const otherAxis = axis === "x" ? "y" : "x";
   const { width, height, standalone, theme, polar, padding, horizontal } = props;
   const { globalTransform, gridOffset, gridEdge } = getLayoutProps(props, calculatedValues);
-  const sharedProps = { scale: { [axis]: scale }, polar, horizontal };
+  const sharedProps = { scale: { [axis]: scale }, polar, horizontal, ticks, stringTicks };
   const axisProps = getAxisProps(props, calculatedValues, globalTransform);
   const axisLabelProps = getAxisLabelProps(props, calculatedValues, globalTransform);
   const initialChildProps = {
@@ -388,7 +377,11 @@ const getBaseProps = (props, fallbackProps) => {
   };
   return ticks.reduce((childProps, tick, index) => {
     const originalTick = stringTicks ? stringTicks[index] : tick;
-    const styles = getEvaluatedStyles(style, originalTick, index);
+    const text = tickFormat(tick, index, ticks)
+    const styles = getEvaluatedStyles(
+      style,
+      assign({}, sharedProps, { tick: originalTick, index, text })
+    );
     const tickLayout = {
       position: getTickPosition(styles, orientation, isVertical),
       transform: getTickTransform(scale(tick), globalTransform, isVertical)
@@ -413,7 +406,7 @@ const getBaseProps = (props, fallbackProps) => {
           styles.labelStyle,
           anchors,
           tick,
-          tickFormat(tick, index, ticks)
+          text
         )
       ),
       grid: assign({}, sharedProps, gridProps, getGridProps(gridLayout, styles.gridStyle, tick))
