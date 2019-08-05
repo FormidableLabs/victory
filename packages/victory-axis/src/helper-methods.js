@@ -375,29 +375,29 @@ const getBaseProps = (props, fallbackProps) => {
     scale:
       props.scale && props.scale[otherAxis] ? { [otherAxis]: props.scale[otherAxis] } : undefined
   };
-  return ticks.reduce((childProps, tick, index) => {
-    const originalTick = stringTicks ? stringTicks[index] : tick;
-    const text = tickFormat(tick, index, ticks)
+  return ticks.reduce((childProps, tickValue, index) => {
+    const tick = stringTicks ? stringTicks[index] : tickValue;
+    const text = tickFormat(tickValue, index, ticks)
     const styles = getEvaluatedStyles(
       style,
-      assign({}, sharedProps, { tick: originalTick, index, text })
+      assign({}, sharedProps, { tick, tickValue, index, text })
     );
     const tickLayout = {
       position: getTickPosition(styles, orientation, isVertical),
-      transform: getTickTransform(scale(tick), globalTransform, isVertical)
+      transform: getTickTransform(scale(tickValue), globalTransform, isVertical)
     };
 
     const gridLayout = {
       edge: gridEdge,
       transform: {
-        x: isVertical ? -gridOffset.x + globalTransform.x : scale(tick) + globalTransform.x,
-        y: isVertical ? scale(tick) + globalTransform.y : gridOffset.y + globalTransform.y
+        x: isVertical ? -gridOffset.x + globalTransform.x : scale(tickValue) + globalTransform.x,
+        y: isVertical ? scale(tickValue) + globalTransform.y : gridOffset.y + globalTransform.y
       }
     };
     childProps[index] = {
       axis: assign({ dimension: axis }, sharedProps, axisProps),
       axisLabel: assign({}, sharedProps, axisLabelProps),
-      ticks: assign({}, sharedProps, getTickProps(tickLayout, styles.tickStyle, tick)),
+      ticks: assign({}, sharedProps, getTickProps(tickLayout, styles.tickStyle, tickValue)),
       tickLabels: assign(
         {},
         sharedProps,
@@ -405,11 +405,16 @@ const getBaseProps = (props, fallbackProps) => {
           tickLayout,
           styles.labelStyle,
           anchors,
-          tick,
+          tickValue,
           text
         )
       ),
-      grid: assign({}, sharedProps, gridProps, getGridProps(gridLayout, styles.gridStyle, tick))
+      grid: assign(
+        {},
+        sharedProps,
+        gridProps,
+        getGridProps(gridLayout, styles.gridStyle, tickValue)
+      )
     };
     return childProps;
   }, initialChildProps);
