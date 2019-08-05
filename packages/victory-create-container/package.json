@@ -19,7 +19,7 @@
   "author": "Formidable",
   "license": "MIT",
   "dependencies": {
-    "lodash": "^4.17.11",
+    "lodash": "^4.17.15",
     "victory-brush-container": "^32.3.2",
     "victory-core": "^32.3.2",
     "victory-cursor-container": "^32.3.2",
