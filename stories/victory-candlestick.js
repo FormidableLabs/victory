@@ -133,7 +133,7 @@ storiesOf("VictoryCandlestick.data", module)
 storiesOf("VictoryCandlestick.labels", module)
   .addDecorator(getChartDecorator({ domainPadding: 25 }))
   .add("function labels", () => (
-    <VictoryCandlestick data={getData(7)} labels={(d) => `x: ${d.x}`} />
+    <VictoryCandlestick data={getData(7)} labels={({ datum }) => `x: ${datum.x}`} />
   ))
   .add("openLabels and closeLabels", () => (
     <VictoryCandlestick

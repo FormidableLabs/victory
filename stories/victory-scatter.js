@@ -53,19 +53,19 @@ storiesOf("VictoryScatter.symbol", module)
     <VictoryScatter data={getData(8)} symbol="circle" size={({ datum }) => datum.x + 1} />
   ))
   .add("diamond", () => (
-    <VictoryScatter data={getData(8)} symbol="circle" size={({ datum }) => datum.x + 1} />
+    <VictoryScatter data={getData(8)} symbol="diamond" size={({ datum }) => datum.x + 1} />
   ))
   .add("plus", () => (
-    <VictoryScatter data={getData(8)} symbol="circle" size={({ datum }) => datum.x + 1} />
+    <VictoryScatter data={getData(8)} symbol="plus" size={({ datum }) => datum.x + 1} />
   ))
   .add("minus", () => (
-    <VictoryScatter data={getData(8)} symbol="circle" size={({ datum }) => datum.x + 1} />
+    <VictoryScatter data={getData(8)} symbol="minus" size={({ datum }) => datum.x + 1} />
   ))
   .add("square", () => (
-    <VictoryScatter data={getData(8)} symbol="circle" size={({ datum }) => datum.x + 1} />
+    <VictoryScatter data={getData(8)} symbol="square" size={({ datum }) => datum.x + 1} />
   ))
   .add("star", () => (
-    <VictoryScatter data={getData(8)} symbol="circle" size={({ datum }) => datum.x + 1} />
+    <VictoryScatter data={getData(8)} symbol="star" size={({ datum }) => datum.x + 1} />
   ))
   .add("triangleDown", () => (
     <VictoryScatter data={getData(8)} symbol="triangleDown" size={({ datum }) => datum.x + 1} />
