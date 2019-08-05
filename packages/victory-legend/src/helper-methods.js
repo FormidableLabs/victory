@@ -8,10 +8,9 @@ const getColorScale = (props) => {
 
 const getLabelStyles = (props) => {
   const { data, style } = props;
-  return data.map((datum) => {
+  return data.map((datum, index) => {
     const baseLabelStyles = defaults({}, datum.labels, style.labels);
-    // TODO: pass props object to Helpers.evaluateStyle
-    return Helpers.evaluateStyle(baseLabelStyles, { datum });
+    return Helpers.evaluateStyle(baseLabelStyles, { datum, index, data });
   });
 };
 

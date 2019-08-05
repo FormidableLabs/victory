@@ -105,13 +105,13 @@ const fallbackProps = {
   brushAreaStyle: {
     stroke: "none",
     fill: "black",
-    opacity: (d, a) => (a ? 0.2 : 0.1) // eslint-disable-line no-magic-numbers
+    opacity: ({ active }) => active ? 0.2 : 0.1 // eslint-disable-line no-magic-numbers
   },
   brushStyle: {
     pointerEvents: "none",
     stroke: "none",
     fill: "black",
-    opacity: (d, a) => (a ? 0.4 : 0.3) // eslint-disable-line no-magic-numbers
+    opacity: ({ active }) => active ? 0.4 : 0.3 // eslint-disable-line no-magic-numbers
   },
   handleStyle: {
     pointerEvents: "none",
@@ -494,7 +494,6 @@ export default class VictoryBrushLine extends React.Component {
     const style = assign({}, fallbackProps.handleStyle, handleStyle);
     const minDatum = assign({ handleValue: Collection.getMinValue(brushDomain) }, datum);
     const maxDatum = assign({ handleValue: Collection.getMaxValue(brushDomain) }, datum);
-    // TODO: pass props object to Helpers.evaluateStyle
     const minHandleProps = assign(
       {
         key: `${id}-min`,
