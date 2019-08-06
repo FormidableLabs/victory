@@ -61,6 +61,12 @@ export default class VictoryContainer extends React.Component {
     this.portalUpdate = (key, el) => this.portalRef.portalUpdate(key, el);
     this.portalRegister = () => this.portalRef.portalRegister();
     this.portalDeregister = (key) => this.portalRef.portalDeregister(key);
+
+    this.containerRef = props.containerRef || React.createRef();
+    this.shouldHandleWheel = props.events && props.events.onWheel;
+    if (this.shouldHandleWheel) {
+      this.handleWheel = e => e.preventDefault();
+    }
   }
 
   getChildContext() {
@@ -72,9 +78,18 @@ export default class VictoryContainer extends React.Component {
     };
   }
 
+  componentDidMount() {
+    if (this.shouldHandleWheel && this.containerRef.current) {
+      this.containerRef.current.addEventListener("wheel", this.handleWheel);
+    }
+  }
+
   componentWillUnmount() {
     if (!this.context.getTimer) {
       this.getTimer().stop();
+    }
+    if (this.shouldHandleWheel && this.containerRef.current) {
+      this.containerRef.current.removeEventListener("wheel", this.handleWheel);
     }
   }
 
@@ -127,7 +142,7 @@ export default class VictoryContainer extends React.Component {
       style: portalSvgStyle
     };
     return (
-      <div style={defaults({}, style, divStyle)} className={className} ref={props.containerRef}>
+      <div style={defaults({}, style, divStyle)} className={className} ref={this.containerRef}>
         <svg {...svgProps} style={svgStyle}>
           {title ? <title id={this.getIdForElement("title")}>{title}</title> : null}
           {desc ? <desc id={this.getIdForElement("desc")}>{desc}</desc> : null}
