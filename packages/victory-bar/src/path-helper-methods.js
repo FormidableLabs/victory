@@ -225,7 +225,7 @@ export const getHorizontalBarPath = (props, width, cornerRadius) => {
 
 export const getVerticalPolarBarPath = (props, cornerRadius) => {
   const { datum, scale, index, alignment } = props;
-  const style = Helpers.evaluateStyle(props.style, datum, props.active);
+  const style = Helpers.evaluateStyle(props.style, props);
   const r1 = scale.y(datum._y0 || 0);
   const r2 = scale.y(datum._y1 !== undefined ? datum._y1 : datum._y);
   const currentAngle = scale.x(datum._x1 !== undefined ? datum._x1 : datum._x);

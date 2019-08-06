@@ -395,8 +395,8 @@ class App extends React.Component {
               data={this.state.scatterData}
               style={{
                 data: {
-                  fill: (d) => d.fill,
-                  opacity: (d) => d.opacity
+                  fill: ({ datum }) => datum.fill,
+                  opacity: ({ datum }) => datum.opacity
                 }
               }}
               animate={{

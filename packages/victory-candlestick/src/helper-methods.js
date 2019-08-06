@@ -127,9 +127,9 @@ const getText = (props, type) => {
 };
 
 const getCandleWidth = (props, style) => {
-  const { datum, data, candleWidth, scale, defaultCandleWidth } = props;
+  const { data, candleWidth, scale, defaultCandleWidth } = props;
   if (candleWidth) {
-    return isFunction(candleWidth) ? Helpers.evaluateProp(candleWidth, datum) : candleWidth;
+    return isFunction(candleWidth) ? Helpers.evaluateProp(candleWidth, props) : candleWidth;
   } else if (style && style.width) {
     return style.width;
   }

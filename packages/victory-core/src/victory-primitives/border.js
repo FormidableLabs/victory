@@ -26,8 +26,6 @@ export default class Border extends React.Component {
       width,
       height,
       events,
-      datum,
-      active,
       role,
       clipPath,
       className,
@@ -35,7 +33,7 @@ export default class Border extends React.Component {
       rectComponent,
       transform
     } = this.props;
-    const style = Helpers.evaluateStyle(assign({ fill: "none" }, this.props.style), datum, active);
+    const style = Helpers.evaluateStyle(assign({ fill: "none" }, this.props.style), this.props);
     return React.cloneElement(rectComponent, {
       style,
       className,

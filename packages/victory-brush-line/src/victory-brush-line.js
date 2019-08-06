@@ -105,13 +105,13 @@ const fallbackProps = {
   brushAreaStyle: {
     stroke: "none",
     fill: "black",
-    opacity: (d, a) => (a ? 0.2 : 0.1) // eslint-disable-line no-magic-numbers
+    opacity: ({ active }) => active ? 0.2 : 0.1 // eslint-disable-line no-magic-numbers
   },
   brushStyle: {
     pointerEvents: "none",
     stroke: "none",
     fill: "black",
-    opacity: (d, a) => (a ? 0.4 : 0.3) // eslint-disable-line no-magic-numbers
+    opacity: ({ active }) => active ? 0.4 : 0.3 // eslint-disable-line no-magic-numbers
   },
   handleStyle: {
     pointerEvents: "none",
@@ -497,14 +497,14 @@ export default class VictoryBrushLine extends React.Component {
     const minHandleProps = assign(
       {
         key: `${id}-min`,
-        style: Helpers.evaluateStyle(style, minDatum, activeBrushes.minHandle)
+        style: Helpers.evaluateStyle(style, { datum: minDatum,  active: activeBrushes.minHandle })
       },
       handleDimensions.min
     );
     const maxHandleProps = assign(
       {
         key: `${id}-max`,
-        style: Helpers.evaluateStyle(style, maxDatum, activeBrushes.maxHandle)
+        style: Helpers.evaluateStyle(style, { datum: maxDatum, active: activeBrushes.maxHandle })
       },
       handleDimensions.max
     );
@@ -522,7 +522,7 @@ export default class VictoryBrushLine extends React.Component {
     const brushWidth = props.brushWidth || props.width;
     const rectDimensions = this.getRectDimensions(props, brushWidth);
     const baseStyle = assign({}, fallbackProps.brushStyle, brushStyle);
-    const style = Helpers.evaluateStyle(baseStyle, datum, activeBrushes.brush);
+    const style = Helpers.evaluateStyle(baseStyle, { datum, active: activeBrushes.brush });
     const brushProps = assign({ style }, rectDimensions);
     return React.cloneElement(brushComponent, brushProps);
   }
@@ -533,7 +533,7 @@ export default class VictoryBrushLine extends React.Component {
     const cursor = this.getCursor(props);
     const rectDimensions = this.getRectDimensions(props, brushAreaWidth, getFullDomain(props));
     const baseStyle = assign({ cursor }, fallbackProps.brushAreaStyle, brushAreaStyle);
-    const style = Helpers.evaluateStyle(baseStyle, datum, activeBrushes.brushArea);
+    const style = Helpers.evaluateStyle(baseStyle, { datum, active: activeBrushes.brushArea });
     const brushAreaProps = assign({ style }, rectDimensions);
     return React.cloneElement(brushAreaComponent, brushAreaProps);
   }

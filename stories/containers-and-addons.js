@@ -75,7 +75,7 @@ storiesOf("Containers and Addons.VictoryCursorContainer", module)
     <VictoryChart
       containerComponent={
         <VictoryCursorContainer
-          cursorLabel={(d) => d.x}
+          cursorLabel={({ datum }) => datum.x}
           defaultCursorValue={{ x: 0.25, y: 0.75 }}
         />
       }
@@ -86,7 +86,7 @@ storiesOf("Containers and Addons.VictoryCursorContainer", module)
       horizontal
       containerComponent={
         <VictoryCursorContainer
-          cursorLabel={(d) => d.x}
+          cursorLabel={({ datum }) => datum.x}
           defaultCursorValue={{ x: 0.25, y: 0.75 }}
         />
       }

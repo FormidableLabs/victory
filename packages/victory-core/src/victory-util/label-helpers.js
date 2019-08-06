@@ -39,9 +39,9 @@ function getAngle(props, datum) {
 
 function getPadding(props, datum) {
   datum = datum || {};
-  const { horizontal, style, active } = props;
+  const { horizontal, style } = props;
   const labelStyle = style.labels || {};
-  const defaultPadding = Helpers.evaluateProp(labelStyle.padding, datum, active) || 0;
+  const defaultPadding = Helpers.evaluateProp(labelStyle.padding, props) || 0;
   const sign = datum._y < 0 ? -1 : 1;
   return {
     x: horizontal ? sign * defaultPadding : 0,
@@ -68,10 +68,10 @@ function getPosition(props, datum) {
 }
 
 function getPolarPadding(props, datum) {
-  const { active, style } = props;
+  const { style } = props;
   const degrees = getDegrees(props, datum);
   const labelStyle = style.labels || {};
-  const padding = Helpers.evaluateProp(labelStyle.padding, datum, active) || 0;
+  const padding = Helpers.evaluateProp(labelStyle.padding, props) || 0;
   const angle = Helpers.degreesToRadians(degrees);
   return {
     x: padding * Math.cos(angle),

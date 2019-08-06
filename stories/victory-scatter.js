@@ -26,7 +26,7 @@ storiesOf("VictoryScatter.theme", module)
   .addDecorator(getChartDecorator({ theme: VictoryTheme.material }))
   .add("material theme", () => <VictoryScatter data={getData(8)} />)
   .add("material theme stacked", () => (
-    <VictoryStack labels={(d) => d.x}>
+    <VictoryStack labels={({ datum }) => datum.x}>
       <VictoryScatter data={getData(8)} />
       <VictoryScatter data={getData(8, "seed-1")} />
       <VictoryScatter data={getData(8, "seed-2")} />
@@ -38,7 +38,7 @@ storiesOf("VictoryScatter.theme", module)
   .addDecorator(getChartDecorator({ theme: VictoryTheme.grayscale }))
   .add("grayscale (default) theme", () => <VictoryScatter data={getData(8)} />)
   .add("grayscale (default) stacked", () => (
-    <VictoryStack labels={(d) => d.x}>
+    <VictoryStack labels={({ datum }) => datum.x}>
       <VictoryScatter data={getData(8)} />
       <VictoryScatter data={getData(8, "seed-1")} />
       <VictoryScatter data={getData(8, "seed-2")} />
@@ -49,20 +49,32 @@ storiesOf("VictoryScatter.theme", module)
 
 storiesOf("VictoryScatter.symbol", module)
   .addDecorator(getChartDecorator({ domainPadding: 20 }))
-  .add("circle", () => <VictoryScatter data={getData(8)} symbol="circle" size={(d) => d.x + 1} />)
-  .add("diamond", () => <VictoryScatter data={getData(8)} symbol="diamond" size={(d) => d.x + 1} />)
-  .add("plus", () => <VictoryScatter data={getData(8)} symbol="plus" size={(d) => d.x + 1} />)
-  .add("minus", () => <VictoryScatter data={getData(8)} symbol="minus" size={(d) => d.x + 1} />)
-  .add("square", () => <VictoryScatter data={getData(8)} symbol="square" size={(d) => d.x + 1} />)
-  .add("star", () => <VictoryScatter data={getData(8)} symbol="star" size={(d) => d.x + 1} />)
+  .add("circle", () => (
+    <VictoryScatter data={getData(8)} symbol="circle" size={({ datum }) => datum.x + 1} />
+  ))
+  .add("diamond", () => (
+    <VictoryScatter data={getData(8)} symbol="diamond" size={({ datum }) => datum.x + 1} />
+  ))
+  .add("plus", () => (
+    <VictoryScatter data={getData(8)} symbol="plus" size={({ datum }) => datum.x + 1} />
+  ))
+  .add("minus", () => (
+    <VictoryScatter data={getData(8)} symbol="minus" size={({ datum }) => datum.x + 1} />
+  ))
+  .add("square", () => (
+    <VictoryScatter data={getData(8)} symbol="square" size={({ datum }) => datum.x + 1} />
+  ))
+  .add("star", () => (
+    <VictoryScatter data={getData(8)} symbol="star" size={({ datum }) => datum.x + 1} />
+  ))
   .add("triangleDown", () => (
-    <VictoryScatter data={getData(8)} symbol="triangleDown" size={(d) => d.x + 1} />
+    <VictoryScatter data={getData(8)} symbol="triangleDown" size={({ datum }) => datum.x + 1} />
   ))
   .add("triangleUp", () => (
-    <VictoryScatter data={getData(8)} symbol="triangleUp" size={(d) => d.x + 1} />
+    <VictoryScatter data={getData(8)} symbol="triangleUp" size={({ datum }) => datum.x + 1} />
   ))
   .add("as a function", () => (
-    <VictoryScatter data={getData(8)} symbol={(d) => SYMBOLS[d.x - 1]} size={5} />
+    <VictoryScatter data={getData(8)} symbol={({ datum }) => SYMBOLS[datum.x - 1]} size={5} />
   ))
   .add("on data", () => (
     <VictoryScatter
@@ -154,7 +166,9 @@ storiesOf("VictoryScatter.data", module)
 
 storiesOf("VictoryScatter.labels", module)
   .addDecorator(getChartDecorator({ domainPadding: 25 }))
-  .add("function labels", () => <VictoryScatter data={getData(7)} labels={(d) => `x: ${d.x}`} />)
+  .add("function labels", () => (
+    <VictoryScatter data={getData(7)} labels={({ datum }) => `x: ${datum.x}`} />
+  ))
   .add("array labels", () => (
     <VictoryScatter data={getData(7)} labels={["", "", "three", "four", 5, "six"]} />
   ))
@@ -187,14 +201,14 @@ storiesOf("VictoryScatter.tooltips", module)
   .add("tooltips", () => (
     <VictoryScatter
       data={getData(5)}
-      labels={(d) => `x: ${d.x}`}
+      labels={({ datum }) => `x: ${datum.x}`}
       labelComponent={<VictoryTooltip active />}
     />
   ))
   .add("tooltips (negative)", () => (
     <VictoryScatter
       data={getMixedData(5)}
-      labels={(d) => `x: ${d.x}`}
+      labels={({ datum }) => `x: ${datum.x}`}
       labelComponent={<VictoryTooltip active />}
     />
   ))
@@ -202,7 +216,7 @@ storiesOf("VictoryScatter.tooltips", module)
     <VictoryScatter
       horizontal
       data={getMixedData(5)}
-      labels={(d) => `x: ${d.x}`}
+      labels={({ datum }) => `x: ${datum.x}`}
       labelComponent={<VictoryTooltip active />}
     />
   ))
@@ -220,7 +234,7 @@ storiesOf("VictoryScatter.style", module)
     <VictoryScatter
       data={getData(7)}
       size={5}
-      labels={(d) => d.x}
+      labels={({ datum }) => datum.x}
       style={{
         labels: { fontSize: 20, fill: "tomato", fontFamily: "monospace" },
         data: { fill: "tomato", fillOpacity: 0.7, stroke: "tomato", strokeWidth: 2 }
@@ -232,15 +246,15 @@ storiesOf("VictoryScatter.style", module)
       size={5}
       style={{
         labels: {
-          fill: (d) => (d.x === "Dog" ? "red" : "black")
+          fill: ({ datum }) => (datum.x === "Dog" ? "red" : "black")
         },
         data: {
-          stroke: (d) => (d.y > 75 ? "red" : "transparent"),
+          stroke: ({ datum }) => (datum.y > 75 ? "red" : "transparent"),
           strokeWidth: 3,
-          opacity: (d) => (d.y > 75 ? 1 : 0.4)
+          opacity: ({ datum }) => (datum.y > 75 ? 1 : 0.4)
         }
       }}
-      labels={(d) => d.x}
+      labels={({ datum }) => datum.x}
       data={[{ x: "Cat", y: 62 }, { x: "Dog", y: 91 }, { x: "Fish", y: 55 }, { x: "Bird", y: 55 }]}
     />
   ));
@@ -269,14 +283,14 @@ storiesOf("VictoryScatter.stacked", module)
     </VictoryStack>
   ))
   .add("stacked points with labels", () => (
-    <VictoryStack colorScale="qualitative" labels={(d) => d.x}>
+    <VictoryStack colorScale="qualitative" labels={({ datum }) => datum.x}>
       <VictoryScatter data={getData(7)} size={5} />
       <VictoryScatter data={getData(7, "seed-1")} size={5} />
       <VictoryScatter data={getData(7, "seed-2")} size={5} />
     </VictoryStack>
   ))
   .add("stacked negative points", () => (
-    <VictoryStack colorScale="qualitative" labels={(d) => d.x}>
+    <VictoryStack colorScale="qualitative" labels={({ datum }) => datum.x}>
       <VictoryScatter data={getMixedData(7)} size={5} />
       <VictoryScatter data={getMixedData(7, "seed-1")} size={5} />
       <VictoryScatter data={getMixedData(7, "seed-2")} size={5} />
@@ -287,10 +301,10 @@ storiesOf("VictoryScatter.scale", module)
   .addDecorator(getChartDecorator({ scale: { x: "time" }, domainPadding: 25 }))
   .add("time scale", () => <VictoryScatter data={getTimeData(5)} />)
   .add("time scale with labels", () => (
-    <VictoryScatter data={getTimeData(5)} labels={(d) => d.x.getFullYear()} />
+    <VictoryScatter data={getTimeData(5)} labels={({ datum }) => datum.x.getFullYear()} />
   ))
   .add("stacked time scale with labels", () => (
-    <VictoryStack labels={(d) => d.x.getFullYear()}>
+    <VictoryStack labels={({ datum }) => datum.x.getFullYear()}>
       <VictoryScatter data={getTimeData(5)} />
       <VictoryScatter data={getTimeData(5, "seed-1")} />
       <VictoryScatter data={getTimeData(5, "seed-2")} />

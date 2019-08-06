@@ -24,19 +24,19 @@ export default class Slice extends React.Component {
   };
 
   getPath(props) {
-    const { datum, active, slice } = props;
+    const { slice } = props;
     if (isFunction(props.pathFunction)) {
       return props.pathFunction(slice);
     }
-    const cornerRadius = Helpers.evaluateProp(props.cornerRadius, datum, active);
-    const innerRadius = Helpers.evaluateProp(props.innerRadius, datum, active);
-    const radius = Helpers.evaluateProp(props.radius, datum, active);
-    const padAngle = Helpers.degreesToRadians(Helpers.evaluateProp(props.padAngle, datum, active));
+    const cornerRadius = Helpers.evaluateProp(props.cornerRadius, props);
+    const innerRadius = Helpers.evaluateProp(props.innerRadius, props);
+    const radius = Helpers.evaluateProp(props.radius, props);
+    const padAngle = Helpers.degreesToRadians(Helpers.evaluateProp(props.padAngle, props));
     const startAngle = Helpers.degreesToRadians(
-      Helpers.evaluateProp(props.sliceStartAngle, datum, active)
+      Helpers.evaluateProp(props.sliceStartAngle, props)
     );
     const endAngle = Helpers.degreesToRadians(
-      Helpers.evaluateProp(props.sliceEndAngle, datum, active)
+      Helpers.evaluateProp(props.sliceEndAngle, props)
     );
     const pathFunction = d3Shape
       .arc()
@@ -48,8 +48,6 @@ export default class Slice extends React.Component {
 
   render() {
     const {
-      datum,
-      active,
       role,
       shapeRendering,
       className,
@@ -68,7 +66,7 @@ export default class Slice extends React.Component {
       events,
       transform,
       clipPath,
-      style: Helpers.evaluateStyle(style, datum, active),
+      style: Helpers.evaluateStyle(style, this.props),
       d: this.getPath(this.props)
     });
   }

@@ -107,14 +107,13 @@ export default class Area extends React.Component {
       polar,
       origin,
       data,
-      active,
       pathComponent,
       events,
       groupComponent,
       clipPath,
       id
     } = this.props;
-    const style = Helpers.evaluateStyle(assign({ fill: "black" }, this.props.style), data, active);
+    const style = Helpers.evaluateStyle(assign({ fill: "black" }, this.props.style), this.props);
     const defaultTransform = polar && origin ? `translate(${origin.x}, ${origin.y})` : undefined;
     const transform = this.props.transform || defaultTransform;
     const renderLine = style.stroke && style.stroke !== "none" && style.stroke !== "transparent";

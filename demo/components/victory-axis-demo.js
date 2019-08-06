@@ -61,13 +61,13 @@ export default class App extends React.Component {
       },
       grid: {
         strokeWidth: 2,
-        stroke: (tick) => (tick === "Mariners\nSEA" ? "red" : "grey")
+        stroke: ({ tick }) => (tick === "Mariners\nSEA" ? "red" : "grey")
       },
       ticks: {
-        stroke: (tick) => (tick === "Mariners\nSEA" ? "red" : "grey")
+        stroke: ({ tick }) => (tick === "Mariners\nSEA" ? "red" : "grey")
       },
       tickLabels: {
-        fontWeight: (tick) => (tick === "Mariners\nSEA" ? "bold" : "normal")
+        fontWeight: ({ tick }) => (tick === "Mariners\nSEA" ? "bold" : "normal")
       }
     };
 

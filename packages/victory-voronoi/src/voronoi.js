@@ -39,8 +39,6 @@ export default class Voronoi extends React.Component {
 
   render() {
     const {
-      datum,
-      active,
       role,
       shapeRendering,
       className,
@@ -55,8 +53,8 @@ export default class Voronoi extends React.Component {
       id
     } = this.props;
     const voronoiPath = this.getVoronoiPath(this.props);
-    const style = Helpers.evaluateStyle(this.props.style, datum, active);
-    const size = Helpers.evaluateProp(this.props.size, datum, active);
+    const style = Helpers.evaluateStyle(this.props.style, this.props);
+    const size = Helpers.evaluateProp(this.props.size, this.props);
 
     if (size) {
       const circle = React.cloneElement(circleComponent, {

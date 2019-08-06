@@ -63,7 +63,7 @@ const getCalculatedValues = (props) => {
   const origin = getOrigin(props, padding);
   const data = Data.getData(props);
   const slices = getSlices(props, data);
-  return { style, colors, padding, defaultRadius, data, slices, origin };
+  return assign({}, props, { style, colors, padding, defaultRadius, data, slices, origin });
 };
 
 const getSliceStyle = (index, calculatedValues) => {
@@ -134,17 +134,17 @@ const getVerticalAnchor = (orientation) => {
   return orientation === "bottom" ? "start" : "end";
 };
 
-const getLabelProps = (props, dataProps, calculatedValues) => {
-  const { index, datum, data, slice } = dataProps;
+const getLabelProps = (text, dataProps, calculatedValues) => {
+  const { index, datum, data, slice, labelPosition, labelRadius } = dataProps;
   const { style, defaultRadius, origin } = calculatedValues;
-  const labelStyle = Helpers.evaluateStyle(
-    assign({ padding: 0 }, style.labels),
-    datum,
-    props.active
+  const evaluatedRadius = Helpers.evaluateProp(labelRadius, assign({ text }, dataProps));
+  const labelStyle = assign({ padding: 0 }, style.labels);
+  const evaluatedStyle = Helpers.evaluateStyle(
+    labelStyle,
+    assign({ evaluatedRadius, text }, dataProps)
   );
-  const labelRadius = Helpers.evaluateProp(props.labelRadius, datum);
-  const labelArc = getLabelArc(defaultRadius, labelRadius, labelStyle);
-  const position = getLabelPosition(labelArc, slice, props.labelPosition);
+  const labelArc = getLabelArc(defaultRadius, evaluatedRadius, evaluatedStyle);
+  const position = getLabelPosition(labelArc, slice, labelPosition);
   const orientation = getLabelOrientation(slice);
   return {
     index,
@@ -152,10 +152,10 @@ const getLabelProps = (props, dataProps, calculatedValues) => {
     data,
     slice,
     orientation,
+    text,
     style: labelStyle,
     x: Math.round(position[0]) + origin.x,
     y: Math.round(position[1]) + origin.y,
-    text: getLabelText(props, datum, index),
     textAnchor: labelStyle.textAnchor || getTextAnchor(orientation),
     verticalAnchor: labelStyle.verticalAnchor || getVerticalAnchor(orientation),
     angle: labelStyle.angle
@@ -165,8 +165,12 @@ const getLabelProps = (props, dataProps, calculatedValues) => {
 export const getBaseProps = (props, fallbackProps) => {
   props = Helpers.modifyProps(props, fallbackProps, "pie");
   const calculatedValues = getCalculatedValues(props);
-  const { slices, style, data, origin, defaultRadius } = calculatedValues;
   const {
+    slices,
+    style,
+    data,
+    origin,
+    defaultRadius,
     labels,
     events,
     sharedEvents,
@@ -177,7 +181,7 @@ export const getBaseProps = (props, fallbackProps) => {
     innerRadius,
     cornerRadius,
     padAngle
-  } = props;
+  } = calculatedValues;
   const radius = props.radius || defaultRadius;
   const initialChildProps = {
     parent: { standalone, height, width, slices, name, style: style.parent }
@@ -207,7 +211,7 @@ export const getBaseProps = (props, fallbackProps) => {
     };
     const text = getLabelText(props, datum, index);
     if ((text !== undefined && text !== null) || (labels && (events || sharedEvents))) {
-      childProps[eventKey].labels = getLabelProps(props, dataProps, calculatedValues);
+      childProps[eventKey].labels = getLabelProps(text, dataProps, calculatedValues);
     }
     return childProps;
   }, initialChildProps);

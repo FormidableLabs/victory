@@ -70,7 +70,6 @@ export default class Curve extends React.Component {
   render() {
     const {
       data,
-      active,
       events,
       role,
       shapeRendering,
@@ -82,8 +81,7 @@ export default class Curve extends React.Component {
     } = this.props;
     const style = Helpers.evaluateStyle(
       assign({ fill: "none", stroke: "black" }, this.props.style),
-      data,
-      active
+      this.props
     );
     const lineFunction = this.getLineFunction(this.props);
     const path = lineFunction(data);

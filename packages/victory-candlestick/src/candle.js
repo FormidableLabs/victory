@@ -29,10 +29,10 @@ export default class Candle extends React.Component {
   };
 
   getCandleWidth(props, style) {
-    const { active, datum, candleWidth } = props;
+    const { candleWidth } = props;
     if (candleWidth) {
       return isFunction(candleWidth)
-        ? Helpers.evaluateProp(candleWidth, datum, active)
+        ? Helpers.evaluateProp(candleWidth, props)
         : candleWidth;
     } else if (style.width) {
       return style.width;
@@ -80,8 +80,6 @@ export default class Candle extends React.Component {
 
   render() {
     const {
-      datum,
-      active,
       events,
       groupComponent,
       clipPath,
@@ -93,11 +91,7 @@ export default class Candle extends React.Component {
       wickStrokeWidth,
       transform
     } = this.props;
-    const style = Helpers.evaluateStyle(
-      assign({ stroke: "black" }, this.props.style),
-      datum,
-      active
-    );
+    const style = Helpers.evaluateStyle(assign({ stroke: "black" }, this.props.style), this.props);
     const wickStyle = defaults({ strokeWidth: wickStrokeWidth }, style);
     const sharedProps = { role, shapeRendering, className, events, transform, clipPath };
     const candleProps = assign(this.getCandleProps(this.props, style), sharedProps);

@@ -22,11 +22,6 @@ export default class ErrorBar extends React.Component {
     lineComponent: <Line />
   };
 
-  getStyle(props) {
-    const { style, datum, active } = props;
-    return Helpers.evaluateStyle(assign({ stroke: "black" }, style), datum, active);
-  }
-
   renderBorder(props, error, type) {
     const {
       x,
@@ -110,7 +105,8 @@ export default class ErrorBar extends React.Component {
   }
 
   render() {
-    const props = assign({}, this.props, { style: this.getStyle(this.props) });
+    const style = Helpers.evaluateStyle(assign({ stroke: "black" }, this.props.style), this.props);
+    const props = assign({}, this.props, { style });
     const error = this.calculateError(props);
     const children = [
       error.right ? this.renderBorder(props, error, "right") : null,

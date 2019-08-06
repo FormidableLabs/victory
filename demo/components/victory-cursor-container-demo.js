@@ -57,7 +57,7 @@ class App extends React.Component {
 
     const chartStyle = { parent: { border: "1px solid #ccc", margin: "2%", maxWidth: "40%" } };
 
-    const cursorLabel = (d) => `${round(d.x, 2)} , ${round(d.y, 2)}`;
+    const cursorLabel = ({ datum }) => `${round(datum.x, 2)} , ${round(datum.y, 2)}`;
 
     return (
       <div className="demo">
@@ -140,17 +140,17 @@ class App extends React.Component {
             style={{
               parent: chartStyle.parent,
               data: {
-                fill: (datum, active) => (active ? "tomato" : "black")
+                fill: ({ active }) => active ? "tomato" : "black"
               }
             }}
             containerComponent={
               <VictoryCursorContainer
-                cursorLabel={(d) => `${round(d.x, 2)}`}
+                cursorLabel={({ datum }) => `${round(datum.x, 2)}`}
                 dimension="x"
                 defaultCursorValue={1}
               />
             }
-            size={(datum, active) => (active ? 5 : 3)}
+            size={({ active }) => active ? 5 : 3}
             data={this.state.data}
             x="a"
             y="b"
@@ -160,7 +160,7 @@ class App extends React.Component {
             style={{
               parent: chartStyle.parent,
               data: {
-                fill: (datum, active) => (active ? "tomato" : "black")
+                fill: ({ active }) => active ? "tomato" : "black"
               }
             }}
             containerComponent={
@@ -173,7 +173,7 @@ class App extends React.Component {
                 }}
               />
             }
-            size={(datum, active) => (active ? 5 : 3)}
+            size={({ active }) => active ? 5 : 3}
             y={(d) => d.x * d.x}
           />
 
@@ -183,7 +183,7 @@ class App extends React.Component {
               <VictoryCursorContainer
                 defaultCursorValue={2}
                 dimension="x"
-                cursorLabel={(datum) => round(datum.x, 2)}
+                cursorLabel={({ datum }) => round(datum.x, 2)}
                 cursorLabelOffset={15}
               />
             }
@@ -193,8 +193,8 @@ class App extends React.Component {
                 style={{
                   data: { fill: "tomato" }
                 }}
-                size={(datum, active) => (active ? 5 : 3)}
-                labels={(d) => d.y}
+                size={({ active }) => active ? 5 : 3}
+                labels={({ datum }) => datum.y}
                 labelComponent={<VictoryTooltip />}
                 data={[
                   { x: 1, y: -5 },
@@ -210,8 +210,8 @@ class App extends React.Component {
                 style={{
                   data: { fill: "blue" }
                 }}
-                size={(datum, active) => (active ? 5 : 3)}
-                labels={(d) => d.y}
+                size={({ active }) => active ? 5 : 3}
+                labels={({ datum }) => datum.y}
                 labelComponent={<VictoryTooltip />}
                 data={[
                   { x: 1, y: -3 },
@@ -235,7 +235,7 @@ class App extends React.Component {
                 ]}
                 labels={(d) => d.y}
                 labelComponent={<VictoryTooltip />}
-                size={(datum, active) => (active ? 5 : 3)}
+                size={({ active }) => active ? 5 : 3}
               />
             </VictoryGroup>
           </VictoryChart>
@@ -245,11 +245,11 @@ class App extends React.Component {
               style={{
                 data: {
                   fill: "tomato",
-                  stroke: (d, active) => (active ? "black" : "none"),
+                  stroke: ({ active }) => active ? "black" : "none",
                   strokeWidth: 2
                 }
               }}
-              size={(datum, active) => (active ? 5 : 3)}
+              size={({ active }) => active ? 5 : 3}
               data={[
                 { x: 1, y: -5 },
                 { x: 2, y: 4 },
@@ -264,11 +264,11 @@ class App extends React.Component {
               style={{
                 data: {
                   fill: "orange",
-                  stroke: (d, active) => (active ? "black" : "none"),
+                  stroke: ({ active }) => active ? "black" : "none",
                   strokeWidth: 2
                 }
               }}
-              size={(datum, active) => (active ? 5 : 3)}
+              size={({ active }) => active ? 5 : 3}
               data={[
                 { x: 1, y: -3 },
                 { x: 2, y: 5 },
@@ -283,7 +283,7 @@ class App extends React.Component {
               style={{
                 data: {
                   fill: "gold",
-                  stroke: (d, active) => (active ? "black" : "none"),
+                  stroke: ({ active }) => active ? "black" : "none",
                   strokeWidth: 2
                 }
               }}

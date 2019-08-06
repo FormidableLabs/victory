@@ -85,7 +85,9 @@ storiesOf("VictoryErrorBar.data", module)
 
 storiesOf("VictoryErrorBar.labels", module)
   .addDecorator(getChartDecorator({ domainPadding: 25 }))
-  .add("function labels", () => <VictoryErrorBar data={getData(5)} labels={(d) => `x: ${d.x}`} />)
+  .add("function labels", () => (
+    <VictoryErrorBar data={getData(5)} labels={({ datum }) => `x: ${datum.x}`} />
+  ))
   .add("array labels", () => <VictoryErrorBar data={getData(5)} labels={["", "", "three", "4"]} />)
   .add("data labels", () => (
     <VictoryErrorBar
@@ -116,7 +118,7 @@ storiesOf("VictoryErrorBar.tooltips", module)
   .add("tooltips", () => (
     <VictoryErrorBar
       data={getData(5)}
-      labels={(d) => `x: ${d.x}`}
+      labels={({ datum }) => `x: ${datum.x}`}
       labelComponent={<VictoryTooltip active />}
     />
   ))
@@ -124,7 +126,7 @@ storiesOf("VictoryErrorBar.tooltips", module)
     <VictoryErrorBar
       horizontal
       data={getData(5)}
-      labels={(d) => `x: ${d.x}`}
+      labels={({ datum }) => `x: ${datum.x}`}
       labelComponent={<VictoryTooltip active />}
     />
   ))
@@ -141,7 +143,7 @@ storiesOf("VictoryErrorBar.style", module)
   .add("with styles", () => (
     <VictoryErrorBar
       data={getData(4)}
-      labels={(d) => d.x}
+      labels={({ datum }) => datum.x}
       style={{
         labels: { fontSize: 20, fill: "tomato", fontFamily: "monospace" },
         data: { fill: "tomato", fillOpacity: 0.7, stroke: "tomato", strokeWidth: 2 }
@@ -152,13 +154,13 @@ storiesOf("VictoryErrorBar.style", module)
     <VictoryErrorBar
       style={{
         labels: {
-          fill: (d) => (d.errorX > d.errorY ? "red" : "black")
+          fill: ({ datum }) => (datum.errorX > datum.errorY ? "red" : "black")
         },
         data: {
-          stroke: (d) => (d.errorX > d.errorY ? "red" : "black")
+          stroke: ({ datum }) => (datum.errorX > datum.errorY ? "red" : "black")
         }
       }}
-      labels={(d) => d.x}
+      labels={({ datum }) => datum.x}
       data={getData(4, "symmetric")}
     />
   ));

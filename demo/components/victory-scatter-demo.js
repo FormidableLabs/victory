@@ -139,8 +139,8 @@ export default class App extends React.Component {
           style={{
             parent: style.parent,
             data: {
-              fill: (d) => d.fill,
-              opacity: (d) => d.opacity
+              fill: ({ datum }) => datum.fill,
+              opacity: ({ datum }) => datum.opacity
             }
           }}
           width={500}
@@ -153,11 +153,11 @@ export default class App extends React.Component {
         <VictoryScatter
           style={{
             parent: style.parent,
-            data: { fill: (data) => (data.y > 0 ? "red" : "blue") }
+            data: { fill: ({ datum }) => (datum.y > 0 ? "red" : "blue") }
           }}
           width={500}
           height={500}
-          symbol={(d) => (d.y > 0 ? "triangleUp" : "triangleDown")}
+          symbol={({ datum }) => (datum.y > 0 ? "triangleUp" : "triangleDown")}
           y={(d) => Math.sin(2 * Math.PI * d.x)}
           sample={25}
         />
