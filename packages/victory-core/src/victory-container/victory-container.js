@@ -68,7 +68,7 @@ export default class VictoryContainer extends React.Component {
     };
     this.shouldHandleWheel = props.events && props.events.onWheel;
     if (this.shouldHandleWheel) {
-      this.handleWheel = e => e.preventDefault();
+      this.handleWheel = (e) => e.preventDefault();
     }
   }
 
