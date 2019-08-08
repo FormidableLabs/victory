@@ -1,5 +1,9 @@
 # Victory Changelog
 
+## 32.3.6 (2019-08-08)
+
+[#1363](https://github.com/FormidableLabs/victory/pull/1363) Fix regression affecting `createContainer`. Thanks @stefanscript
+
 ## 32.3.5 (2019-08-07)
 
 [#1362](https://github.com/FormidableLabs/victory/pull/1362) Fix scroll wheel interaction in newer versions of Chrome.
