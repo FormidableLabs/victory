@@ -1,6 +1,6 @@
 {
   "name": "victory-stack",
-  "version": "32.3.5",
+  "version": "32.3.6",
   "description": "Stack Layout Component for Victory",
   "keywords": [
     "data visualization",
@@ -22,7 +22,7 @@
     "lodash": "^4.17.15",
     "prop-types": "^15.5.8",
     "react-fast-compare": "^2.0.0",
-    "victory-core": "^32.3.5"
+    "victory-core": "^32.3.6"
   },
   "scripts": {
     "version": "nps build-libs && nps build-dists"
