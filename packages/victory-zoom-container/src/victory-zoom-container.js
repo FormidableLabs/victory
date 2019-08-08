@@ -82,9 +82,6 @@ export const zoomContainerMixin = (base) =>
             },
             // eslint-disable-next-line max-params
             onWheel: (evt, targetProps, eventKey, ctx) => {
-              if (targetProps.allowZoom && !props.disable) {
-                evt.preventDefault();
-              }
               return props.disable ? {} : ZoomHelpers.onWheel(evt, targetProps, eventKey, ctx);
             }
           }
