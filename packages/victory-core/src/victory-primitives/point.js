@@ -5,77 +5,68 @@ import pathHelpers from "./path-helpers";
 import CommonProps from "../victory-util/common-props";
 import Path from "./path";
 
-export default class Point extends React.Component {
-  static propTypes = {
-    ...CommonProps.primitiveProps,
-    datum: PropTypes.object,
-    getPath: PropTypes.func,
-    pathComponent: PropTypes.element,
-    size: PropTypes.oneOfType([PropTypes.number, PropTypes.func]),
-    symbol: PropTypes.oneOfType([
-      PropTypes.oneOf([
-        "circle",
-        "diamond",
-        "plus",
-        "minus",
-        "square",
-        "star",
-        "triangleDown",
-        "triangleUp"
-      ]),
-      PropTypes.func
-    ]),
-    x: PropTypes.number,
-    y: PropTypes.number
-  };
-
-  static defaultProps = {
-    pathComponent: <Path />
-  };
-
-  getPath(props) {
-    const { x, y } = props;
-    const size = Helpers.evaluateProp(props.size, props);
-    if (props.getPath) {
-      return props.getPath(x, y, size);
-    }
-    const pathFunctions = {
-      circle: pathHelpers.circle,
-      square: pathHelpers.square,
-      diamond: pathHelpers.diamond,
-      triangleDown: pathHelpers.triangleDown,
-      triangleUp: pathHelpers.triangleUp,
-      plus: pathHelpers.plus,
-      minus: pathHelpers.minus,
-      star: pathHelpers.star
-    };
-    const symbol = Helpers.evaluateProp(props.symbol, props);
-    const symbolFunction =
-      typeof pathFunctions[symbol] === "function" ? pathFunctions[symbol] : pathFunctions.circle;
-    return symbolFunction(x, y, size);
+const getPath = (props) => {
+  const { x, y } = props;
+  const size = Helpers.evaluateProp(props.size, props);
+  if (props.getPath) {
+    return props.getPath(x, y, size);
   }
-
-  render() {
-    const {
-      role,
-      shapeRendering,
-      className,
-      events,
-      pathComponent,
-      transform,
-      clipPath
-    } = this.props;
-    const style = Helpers.evaluateStyle(this.props.style, this.props);
-    const d = this.getPath(this.props);
-    return React.cloneElement(pathComponent, {
-      style,
-      role,
-      shapeRendering,
-      className,
-      events,
-      d,
-      transform,
-      clipPath
-    });
-  }
+  const pathFunctions = {
+    circle: pathHelpers.circle,
+    square: pathHelpers.square,
+    diamond: pathHelpers.diamond,
+    triangleDown: pathHelpers.triangleDown,
+    triangleUp: pathHelpers.triangleUp,
+    plus: pathHelpers.plus,
+    minus: pathHelpers.minus,
+    star: pathHelpers.star
+  };
+  const symbol = Helpers.evaluateProp(props.symbol, props);
+  const symbolFunction =
+    typeof pathFunctions[symbol] === "function" ? pathFunctions[symbol] : pathFunctions.circle;
+  return symbolFunction(x, y, size);
 }
+
+const Point = (props) => (
+  React.cloneElement(props.pathComponent, {
+    ...props.events,
+    d: getPath(props),
+    style: Helpers.evaluateStyle(props.style, props),
+    role: props.role,
+    shapeRendering: props.shapeRendering,
+    className: props.className,
+    transform: props.transform,
+    clipPath: props.clipPath
+  })
+);
+
+Point.propTypes = {
+  ...CommonProps.primitiveProps,
+  datum: PropTypes.object,
+  getPath: PropTypes.func,
+  pathComponent: PropTypes.element,
+  size: PropTypes.oneOfType([PropTypes.number, PropTypes.func]),
+  symbol: PropTypes.oneOfType([
+    PropTypes.oneOf([
+      "circle",
+      "diamond",
+      "plus",
+      "minus",
+      "square",
+      "star",
+      "triangleDown",
+      "triangleUp"
+    ]),
+    PropTypes.func
+  ]),
+  x: PropTypes.number,
+  y: PropTypes.number
+};
+
+Point.defaultProps = {
+  pathComponent: <Path />,
+  role: "presentation",
+  shapeRendering: "auto"
+};
+
+export default Point;

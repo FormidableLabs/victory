@@ -1,6 +1,6 @@
 import React from "react";
 import PropTypes from "prop-types";
-import { Helpers, CommonProps } from "victory-core";
+import { Helpers, CommonProps, Path } from "victory-core";
 import { assign, isPlainObject, isFunction, isNil } from "lodash";
 
 import {
@@ -73,16 +73,7 @@ const getCornerRadius = (props) => {
 
 
 const Bar = (props) => {
-  const {
-    role,
-    shapeRendering,
-    className,
-    origin,
-    polar,
-    pathComponent,
-    events,
-    clipPath
-  } = props;
+  const { origin, polar } = props;
   const stroke = (props.style && props.style.fill) || "black";
   const baseStyle = { fill: "black", stroke };
   const style = Helpers.evaluateStyle(assign(baseStyle, props.style), props);
@@ -92,16 +83,16 @@ const Bar = (props) => {
     ? getPolarBarPath(props, cornerRadius)
     : getBarPath(props, width, cornerRadius);
   const defaultTransform = polar && origin ? `translate(${origin.x}, ${origin.y})` : undefined;
-  const transform = props.transform || defaultTransform;
-  return React.cloneElement(pathComponent, {
-    d: path,
-    transform,
-    className,
+
+  return React.cloneElement(props.pathComponent, {
+    ...props.events,
     style,
-    role,
-    shapeRendering,
-    ...events,
-    clipPath
+    d: path,
+    transform: props.transform || defaultTransform,
+    className: props.className,
+    role: props.role,
+    shapeRendering: props.shapeRendering,
+    clipPath: props.clipPath
   });
 };
 
@@ -133,8 +124,10 @@ Bar.propTypes = {
 };
 
 Bar.defaultProps = {
-  pathComponent: <path />,
-  defaultBarWidth: 8
+  defaultBarWidth: 8,
+  pathComponent: <Path />,
+  role: "presentation",
+  shapeRendering: "auto"
 };
 
 export default Bar;

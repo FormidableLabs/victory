@@ -2,38 +2,21 @@ import React from "react";
 import PropTypes from "prop-types";
 import isEqual from "react-fast-compare";
 
-export default class TSpan extends React.Component {
-  static propTypes = {
-    className: PropTypes.string,
-    content: PropTypes.oneOfType([PropTypes.string, PropTypes.number]),
-    dx: PropTypes.number,
-    dy: PropTypes.number,
-    events: PropTypes.object,
-    style: PropTypes.object,
-    textAnchor: PropTypes.oneOf(["start", "middle", "end", "inherit"]),
-    x: PropTypes.number,
-    y: PropTypes.number
-  };
+const TSpan = (props) => {
+  const { children, ...rest } = props;
+  return <tspan {...rest}>{children}</tspan>
+};
 
-  shouldComponentUpdate(nextProps) {
-    return !isEqual(this.props, nextProps);
-  }
+TSpan.propTypes = {
+  children: PropTypes.oneOfType([PropTypes.string, PropTypes.number]),
+  className: PropTypes.string,
+  dx: PropTypes.number,
+  dy: PropTypes.number,
+  events: PropTypes.object,
+  style: PropTypes.object,
+  textAnchor: PropTypes.oneOf(["start", "middle", "end", "inherit"]),
+  x: PropTypes.number,
+  y: PropTypes.number
+};
 
-  render() {
-    const { x, y, dx, dy, events, className, style, textAnchor, content } = this.props;
-    return (
-      <tspan
-        x={x}
-        y={y}
-        dx={dx}
-        dy={dy}
-        textAnchor={textAnchor}
-        className={className}
-        style={style}
-        {...events}
-      >
-        {content}
-      </tspan>
-    );
-  }
-}
+export default React.memo(TSpan, isEqual)

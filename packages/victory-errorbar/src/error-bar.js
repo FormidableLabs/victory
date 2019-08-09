@@ -4,120 +4,95 @@ import PropTypes from "prop-types";
 import { Helpers, CommonProps, Line } from "victory-core";
 import { assign } from "lodash";
 
-export default class ErrorBar extends React.Component {
-  static propTypes = {
-    ...CommonProps.primitiveProps,
-    borderWidth: PropTypes.number,
-    datum: PropTypes.object,
-    errorX: PropTypes.oneOfType([PropTypes.number, PropTypes.array, PropTypes.bool]),
-    errorY: PropTypes.oneOfType([PropTypes.number, PropTypes.array, PropTypes.bool]),
-    groupComponent: PropTypes.element,
-    lineComponent: PropTypes.element,
-    x: PropTypes.number,
-    y: PropTypes.number
-  };
+const renderBorder = (props, error, type) => {
+  const vertical = type === "right" || type === "left";
+  return React.cloneElement(props.lineComponent, {
+    ...props.events,
+    role: props.role,
+    shapeRendering: props.shapeRendering,
+    className: props.className,
+    style: props.style,
+    transform: props.transform,
+    key: `${props.id}-border-${type}`,
+    x1: vertical ? error[type] : props.x - props.borderWidth,
+    x2: vertical ? error[type] : props.x + props.borderWidth,
+    y1: vertical ? props.y - props.borderWidth : error[type],
+    y2: vertical ? props.y + props.borderWidth : error[type]
+  });
+};
 
-  static defaultProps = {
-    groupComponent: <g />,
-    lineComponent: <Line />
-  };
-
-  renderBorder(props, error, type) {
-    const {
-      x,
-      y,
-      borderWidth,
-      events,
-      style,
-      role,
-      shapeRendering,
-      className,
-      lineComponent,
-      transform,
-      id
-    } = props;
-    const vertical = type === "right" || type === "left";
-    const borderProps = {
-      role,
-      shapeRendering,
-      className,
-      events,
-      style,
-      transform,
-      key: `${id}-border-${type}`,
-      x1: vertical ? error[type] : x - borderWidth,
-      x2: vertical ? error[type] : x + borderWidth,
-      y1: vertical ? y - borderWidth : error[type],
-      y2: vertical ? y + borderWidth : error[type]
-    };
-    return React.cloneElement(lineComponent, borderProps);
-  }
-
-  renderCross(props, error, type) {
-    const {
-      x,
-      y,
-      events,
-      style,
-      role,
-      shapeRendering,
-      className,
-      lineComponent,
-      transform,
-      id
-    } = props;
-    const vertical = type === "top" || type === "bottom";
-    const borderProps = {
-      role,
-      shapeRendering,
-      className,
-      events,
-      style,
-      transform,
-      key: `${id}-cross-${type}`,
-      x1: x,
-      x2: vertical ? x : error[type],
-      y1: y,
-      y2: vertical ? error[type] : y
-    };
-    return React.cloneElement(lineComponent, borderProps);
-  }
-
-  calculateError(props) {
-    const { errorX, errorY } = props;
-    const settings = {
-      right: { error: errorX, errorIndex: 0 },
-      left: { error: errorX, errorIndex: 1 },
-      top: { error: errorY, errorIndex: 1 },
-      bottom: { error: errorY, errorIndex: 0 }
-    };
-
-    const getError = (direction) => {
-      const { error, errorIndex } = settings[direction];
-      return error ? error[errorIndex] : undefined;
-    };
-
-    const result = ["right", "left", "top", "bottom"].reduce((memo, dir) => {
-      memo[dir] = getError(dir);
-      return memo;
-    }, {});
-    return result;
-  }
-
-  render() {
-    const style = Helpers.evaluateStyle(assign({ stroke: "black" }, this.props.style), this.props);
-    const props = assign({}, this.props, { style });
-    const error = this.calculateError(props);
-    const children = [
-      error.right ? this.renderBorder(props, error, "right") : null,
-      error.left ? this.renderBorder(props, error, "left") : null,
-      error.bottom ? this.renderBorder(props, error, "bottom") : null,
-      error.top ? this.renderBorder(props, error, "top") : null,
-      error.right ? this.renderCross(props, error, "right") : null,
-      error.left ? this.renderCross(props, error, "left") : null,
-      error.bottom ? this.renderCross(props, error, "bottom") : null,
-      error.top ? this.renderCross(props, error, "top") : null
-    ].filter(Boolean);
-    return React.cloneElement(props.groupComponent, {}, children);
-  }
+const renderCross = (props, error, type) => {
+  const vertical = type === "top" || type === "bottom";
+  return React.cloneElement(props.lineComponent, {
+    ...props.events,
+    role: props.role,
+    shapeRendering: props.shapeRendering,
+    className: props.className,
+    style: props.style,
+    transform: props.transform,
+    key: `${props.id}-cross-${type}`,
+    x1: props.x,
+    x2: vertical ? props.x : error[type],
+    y1: props.y,
+    y2: vertical ? error[type] : props.y
+  });
 }
+
+const calculateError = (props) => {
+  const { errorX, errorY } = props;
+  const settings = {
+    right: { error: errorX, errorIndex: 0 },
+    left: { error: errorX, errorIndex: 1 },
+    top: { error: errorY, errorIndex: 1 },
+    bottom: { error: errorY, errorIndex: 0 }
+  };
+
+  const getError = (direction) => {
+    const { error, errorIndex } = settings[direction];
+    return error ? error[errorIndex] : undefined;
+  };
+
+  const result = ["right", "left", "top", "bottom"].reduce((memo, dir) => {
+    memo[dir] = getError(dir);
+    return memo;
+  }, {});
+  return result;
+}
+
+const ErrorBar = (props) => {
+  const style = Helpers.evaluateStyle(assign({ stroke: "black" }, props.style), props);
+  props = assign({}, props, { style });
+  const error = calculateError(props);
+  const children = [
+    error.right ? renderBorder(props, error, "right") : null,
+    error.left ? renderBorder(props, error, "left") : null,
+    error.bottom ? renderBorder(props, error, "bottom") : null,
+    error.top ? renderBorder(props, error, "top") : null,
+    error.right ? renderCross(props, error, "right") : null,
+    error.left ? renderCross(props, error, "left") : null,
+    error.bottom ? renderCross(props, error, "bottom") : null,
+    error.top ? renderCross(props, error, "top") : null
+  ].filter(Boolean);
+  return React.cloneElement(props.groupComponent, {}, children);
+};
+
+ErrorBar.propTypes = {
+  ...CommonProps.primitiveProps,
+  borderWidth: PropTypes.number,
+  datum: PropTypes.object,
+  errorX: PropTypes.oneOfType([PropTypes.number, PropTypes.array, PropTypes.bool]),
+  errorY: PropTypes.oneOfType([PropTypes.number, PropTypes.array, PropTypes.bool]),
+  groupComponent: PropTypes.element,
+  lineComponent: PropTypes.element,
+  x: PropTypes.number,
+  y: PropTypes.number
+};
+
+ErrorBar.defaultProps = {
+  groupComponent: <g />,
+  lineComponent: <Line />,
+  role: "presentation",
+  shapeRendering: "auto"
+};
+
+export default ErrorBar;

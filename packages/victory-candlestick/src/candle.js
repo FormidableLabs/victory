@@ -1,7 +1,7 @@
 /*eslint no-magic-numbers: ["error", { "ignore": [0, 0.5, 1, 2] }]*/
 import React from "react";
 import PropTypes from "prop-types";
-import { Helpers, CommonProps } from "victory-core";
+import { Helpers, CommonProps, Line, Rect } from "victory-core";
 import { assign, defaults, isFunction } from "lodash";
 
 const getCandleWidth = (props, style) => {
@@ -69,7 +69,7 @@ const Candle = (props) => {
   } = props;
   const style = Helpers.evaluateStyle(assign({ stroke: "black" }, props.style), props);
   const wickStyle = defaults({ strokeWidth: wickStrokeWidth }, style);
-  const sharedProps = { role, shapeRendering, className, ...events, transform, clipPath };
+  const sharedProps = { role, shapeRendering, className, transform, clipPath, ...events };
   const candleProps = assign(getCandleProps(props, style), sharedProps);
   const highWickProps = assign(getHighWickProps(props, wickStyle), sharedProps);
   const lowWickProps = assign(getLowWickProps(props, wickStyle), sharedProps);
@@ -100,8 +100,10 @@ Candle.propTypes = {
 
 Candle.defaultProps = {
   groupComponent: <g />,
-  lineComponent: <line />,
-  rectComponent: <rect />
+  lineComponent: <Line />,
+  rectComponent: <Rect />,
+  role: "presentation",
+  shapeRendering: "auto"
 };
 
 export default Candle;

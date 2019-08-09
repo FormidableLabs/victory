@@ -3,7 +3,7 @@ import React from "react";
 import PropTypes from "prop-types";
 import { assign } from "lodash";
 import * as d3Shape from "d3-shape";
-import { Helpers, CommonProps } from "victory-core";
+import { Helpers, CommonProps, Path } from "victory-core";
 
 const defined = (d) => {
   const y = d._y1 !== undefined ? d._y1 : d._y;
@@ -148,7 +148,9 @@ Area.propTypes = {
 
 Area.defaultProps = {
   groupComponent: <g />,
-  pathComponent: <path />
+  pathComponent: <Path />,
+  role: "presentation",
+  shapeRendering: "auto"
 };
 
 export default Area;
