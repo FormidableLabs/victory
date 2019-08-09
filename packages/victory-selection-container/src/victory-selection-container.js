@@ -1,6 +1,6 @@
 import PropTypes from "prop-types";
 import React from "react";
-import { VictoryContainer } from "victory-core";
+import { VictoryContainer, Rect } from "victory-core";
 import SelectionHelpers from "./selection-helpers";
 
 export const selectionContainerMixin = (base) =>
@@ -22,7 +22,7 @@ export const selectionContainerMixin = (base) =>
       ...VictoryContainer.defaultProps,
       activateSelectedData: true,
       allowSelection: true,
-      selectionComponent: <rect />,
+      selectionComponent: <Rect />,
       selectionStyle: {
         stroke: "transparent",
         fill: "black",

@@ -1,6 +1,6 @@
 import PropTypes from "prop-types";
 import React from "react";
-import { VictoryContainer, Selection } from "victory-core";
+import { VictoryContainer, Selection, Rect } from "victory-core";
 import BrushHelpers from "./brush-helpers";
 import { assign, defaults } from "lodash";
 import isEqual from "react-fast-compare";
@@ -34,13 +34,13 @@ export const brushContainerMixin = (base) =>
       allowDrag: true,
       allowDraw: true,
       allowResize: true,
-      brushComponent: <rect />,
+      brushComponent: <Rect />,
       brushStyle: {
         stroke: "transparent",
         fill: "black",
         fillOpacity: 0.1
       },
-      handleComponent: <rect />,
+      handleComponent: <Rect />,
       handleStyle: {
         stroke: "transparent",
         fill: "transparent"
