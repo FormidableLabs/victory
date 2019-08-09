@@ -1,6 +1,6 @@
 {
   "name": "victory-voronoi",
-  "version": "32.3.2",
+  "version": "32.3.6",
   "description": "Voronoi Component for Victory",
   "keywords": [
     "data visualization",
@@ -20,9 +20,9 @@
   "license": "MIT",
   "dependencies": {
     "d3-voronoi": "^1.1.2",
-    "lodash": "^4.17.11",
+    "lodash": "^4.17.15",
     "prop-types": "^15.5.8",
-    "victory-core": "^32.3.2"
+    "victory-core": "^32.3.6"
   },
   "scripts": {
     "version": "nps build-libs && nps build-dists"
