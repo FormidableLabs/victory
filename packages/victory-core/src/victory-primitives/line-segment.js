@@ -5,7 +5,7 @@ import { assign } from "lodash";
 import CommonProps from "../victory-util/common-props";
 import Line from "./line";
 
-const LineSegment = (props) => (
+const LineSegment = (props) =>
   React.cloneElement(props.lineComponent, {
     ...props.events,
     style: Helpers.evaluateStyle(assign({ stroke: "black" }, props.style), props),
@@ -18,8 +18,7 @@ const LineSegment = (props) => (
     y2: props.y2,
     transform: props.transform,
     clipPath: props.clipPath
-  })
-);
+  });
 
 LineSegment.propTypes = {
   ...CommonProps.primitiveProps,

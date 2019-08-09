@@ -5,7 +5,7 @@ import { assign } from "lodash";
 import CommonProps from "../victory-util/common-props";
 import Rect from "./rect";
 
-const Border = (props) => (
+const Border = (props) =>
   React.cloneElement(props.rectComponent, {
     ...props.events,
     style: Helpers.evaluateStyle(assign({ fill: "none" }, props.style), props),
@@ -18,8 +18,7 @@ const Border = (props) => (
     width: props.width,
     height: props.height,
     clipPath: props.clipPath
-  })
-);
+  });
 
 Border.propTypes = {
   ...CommonProps.primitiveProps,

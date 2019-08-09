@@ -4,7 +4,7 @@ import isEqual from "react-fast-compare";
 
 const TSpan = (props) => {
   const { children, ...rest } = props;
-  return <tspan {...rest}>{children}</tspan>
+  return <tspan {...rest}>{children}</tspan>;
 };
 
 TSpan.propTypes = {
@@ -19,4 +19,4 @@ TSpan.propTypes = {
   y: PropTypes.number
 };
 
-export default React.memo(TSpan, isEqual)
+export default React.memo(TSpan, isEqual);

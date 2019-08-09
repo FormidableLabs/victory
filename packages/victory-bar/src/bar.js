@@ -17,12 +17,12 @@ const getBarPath = (props, width, cornerRadius) => {
   return props.horizontal
     ? getHorizontalBarPath(props, width, cornerRadius)
     : getVerticalBarPath(props, width, cornerRadius);
-}
+};
 
 const getPolarBarPath = (props, cornerRadius) => {
   // TODO Radial bars
   return getVerticalPolarBarPath(props, cornerRadius);
-}
+};
 
 const getBarWidth = (props, style) => {
   const { scale, data, barWidth, defaultBarWidth } = props;
@@ -37,7 +37,7 @@ const getBarWidth = (props, style) => {
   const barRatio = props.barRatio || 0.5;
   const defaultWidth = barRatio * (data.length < 2 ? defaultBarWidth : extent / bars);
   return Math.max(1, defaultWidth);
-}
+};
 
 const getCornerRadiusFromObject = (props) => {
   const { cornerRadius } = props;
@@ -54,7 +54,7 @@ const getCornerRadiusFromObject = (props) => {
   updateCornerRadius("bottomLeft", "bottom");
   updateCornerRadius("bottomRight", "bottom");
   return realCornerRadius;
-}
+};
 
 const getCornerRadius = (props) => {
   const { cornerRadius } = props;
@@ -69,8 +69,7 @@ const getCornerRadius = (props) => {
     realCornerRadius.topRight = Helpers.evaluateProp(cornerRadius, props);
     return realCornerRadius;
   }
-}
-
+};
 
 const Bar = (props) => {
   const { origin, polar } = props;

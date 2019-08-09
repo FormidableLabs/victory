@@ -111,15 +111,11 @@ const getTransform = (props, style) => {
   return transformPart || angle ? Style.toTransformString(transformPart, rotatePart) : undefined;
 };
 
-
-
 const renderElements = (props, content) => {
   const { inline, className, title, desc, events, direction } = props;
   const style = getStyles(props);
   const lineHeight = getHeight(props, "lineHeight");
-  const textAnchor = props.textAnchor
-    ? Helpers.evaluateProp(props.textAnchor, props)
-    : "start";
+  const textAnchor = props.textAnchor ? Helpers.evaluateProp(props.textAnchor, props) : "start";
   const dx = props.dx ? Helpers.evaluateProp(props.dx, props) : 0;
   const dy = getDy(props, style, content, lineHeight);
   const transform = getTransform(props, style);
@@ -163,15 +159,15 @@ const renderElements = (props, content) => {
     },
     textChildren
   );
-}
+};
 
 const VictoryLabel = (props) => {
   const content = getContent(props);
-    if (content === null || content === undefined) {
-      return null;
-    }
-    const label = renderElements(props, content);
-    return props.renderInPortal ? <VictoryPortal>{label}</VictoryPortal> : label;
+  if (content === null || content === undefined) {
+    return null;
+  }
+  const label = renderElements(props, content);
+  return props.renderInPortal ? <VictoryPortal>{label}</VictoryPortal> : label;
 };
 
 VictoryLabel.displayName = "VictoryLabel";
@@ -210,12 +206,7 @@ VictoryLabel.propTypes = {
     y: CustomPropTypes.scale
   }),
   style: PropTypes.oneOfType([PropTypes.object, PropTypes.array]),
-  text: PropTypes.oneOfType([
-    PropTypes.string,
-    PropTypes.number,
-    PropTypes.func,
-    PropTypes.array
-  ]),
+  text: PropTypes.oneOfType([PropTypes.string, PropTypes.number, PropTypes.func, PropTypes.array]),
   textAnchor: PropTypes.oneOfType([
     PropTypes.oneOf(["start", "middle", "end", "inherit"]),
     PropTypes.func

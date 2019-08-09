@@ -7,14 +7,12 @@ import { assign, defaults, isFunction } from "lodash";
 const getCandleWidth = (props, style) => {
   const { candleWidth } = props;
   if (candleWidth) {
-    return isFunction(candleWidth)
-      ? Helpers.evaluateProp(candleWidth, props)
-      : candleWidth;
+    return isFunction(candleWidth) ? Helpers.evaluateProp(candleWidth, props) : candleWidth;
   } else if (style.width) {
     return style.width;
   }
   return candleWidth;
-}
+};
 
 const getCandleProps = (props, style) => {
   const { id, x, close, open, horizontal } = props;
@@ -28,7 +26,7 @@ const getCandleProps = (props, style) => {
     width: horizontal ? candleLength : candleWidth,
     height: horizontal ? candleWidth : candleLength
   };
-}
+};
 
 const getHighWickProps = (props, style) => {
   const { horizontal, high, open, close, x, id } = props;
@@ -40,7 +38,7 @@ const getHighWickProps = (props, style) => {
     y1: horizontal ? x : high,
     y2: horizontal ? x : Math.min(open, close)
   };
-}
+};
 
 const getLowWickProps = (props, style) => {
   const { horizontal, low, open, close, x, id } = props;
@@ -52,7 +50,7 @@ const getLowWickProps = (props, style) => {
     y1: horizontal ? x : Math.max(open, close),
     y2: horizontal ? x : low
   };
-}
+};
 
 const Candle = (props) => {
   const {

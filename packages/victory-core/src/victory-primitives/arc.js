@@ -23,9 +23,9 @@ const getArcPath = (props) => {
   const arc2 = `A ${r}, ${r}, 0, ${largerArcFlag2}, 0, ${x3}, ${y3}`;
   const arcEnd = closedPath ? "Z" : "";
   return `${arcStart} ${arc1} ${arc2} ${arcEnd}`;
-}
+};
 
-const Arc = (props) => (
+const Arc = (props) =>
   React.cloneElement(props.pathComponent, {
     ...props.events,
     d: getArcPath(props),
@@ -35,8 +35,7 @@ const Arc = (props) => (
     shapeRendering: props.shapeRendering,
     transform: props.transform,
     clipPath: props.clipPath
-  })
-);
+  });
 
 Arc.propTypes = {
   ...CommonProps.primitiveProps,

@@ -36,7 +36,7 @@ const renderCross = (props, error, type) => {
     y1: props.y,
     y2: vertical ? error[type] : props.y
   });
-}
+};
 
 const calculateError = (props) => {
   const { errorX, errorY } = props;
@@ -57,7 +57,7 @@ const calculateError = (props) => {
     return memo;
   }, {});
   return result;
-}
+};
 
 const ErrorBar = (props) => {
   const style = Helpers.evaluateStyle(assign({ stroke: "black" }, props.style), props);

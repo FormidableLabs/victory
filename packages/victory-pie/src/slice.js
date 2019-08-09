@@ -13,12 +13,8 @@ const getPath = (props) => {
   const innerRadius = Helpers.evaluateProp(props.innerRadius, props);
   const radius = Helpers.evaluateProp(props.radius, props);
   const padAngle = Helpers.degreesToRadians(Helpers.evaluateProp(props.padAngle, props));
-  const startAngle = Helpers.degreesToRadians(
-    Helpers.evaluateProp(props.sliceStartAngle, props)
-  );
-  const endAngle = Helpers.degreesToRadians(
-    Helpers.evaluateProp(props.sliceEndAngle, props)
-  );
+  const startAngle = Helpers.degreesToRadians(Helpers.evaluateProp(props.sliceStartAngle, props));
+  const endAngle = Helpers.degreesToRadians(Helpers.evaluateProp(props.sliceEndAngle, props));
   const pathFunction = d3Shape
     .arc()
     .cornerRadius(cornerRadius)

@@ -25,9 +25,9 @@ const getPath = (props) => {
   const symbolFunction =
     typeof pathFunctions[symbol] === "function" ? pathFunctions[symbol] : pathFunctions.circle;
   return symbolFunction(x, y, size);
-}
+};
 
-const Point = (props) => (
+const Point = (props) =>
   React.cloneElement(props.pathComponent, {
     ...props.events,
     d: getPath(props),
@@ -37,8 +37,7 @@ const Point = (props) => (
     className: props.className,
     transform: props.transform,
     clipPath: props.clipPath
-  })
-);
+  });
 
 Point.propTypes = {
   ...CommonProps.primitiveProps,

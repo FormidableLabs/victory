@@ -60,7 +60,7 @@ const getFlyoutPath = (props) => {
     : getVerticalPath(props);
 };
 
-const Flyout = (props) => (
+const Flyout = (props) =>
   React.cloneElement(props.pathComponent, {
     ...props.events,
     style: Helpers.evaluateStyle(props.style, props),
@@ -70,8 +70,7 @@ const Flyout = (props) => (
     role: props.role,
     transform: props.transform,
     clipPath: props.clipPath
-  })
-);
+  });
 
 Flyout.propTypes = {
   ...CommonProps.primitiveProps,
