@@ -106,10 +106,17 @@ const getTickProps = (props, calculatedValues, tickValue, index) => {
   const { axisType, radius, scale, style, stringTicks, ticks, tickFormat } = calculatedValues;
   const text = tickFormat(tickValue, index, ticks);
   const tick = stringTicks ? stringTicks[index] : tickValue;
-  const { tickStyle } = getEvaluatedStyles(
-    style,
-    { tick, tickValue, index, ticks, stringTicks, radius, scale, axisType, text }
-  );
+  const { tickStyle } = getEvaluatedStyles(style, {
+    tick,
+    tickValue,
+    index,
+    ticks,
+    stringTicks,
+    radius,
+    scale,
+    axisType,
+    text
+  });
   const tickPadding = tickStyle.padding || 0;
   const angularPadding = tickPadding; // TODO: do some geometry
   const axisAngle = axisType === "radial" ? getAxisAngle(props, scale) : undefined;
@@ -139,10 +146,17 @@ const getTickLabelProps = (props, calculatedValues, tickValue, index) => {
   const { axisType, radius, tickFormat, style, scale, ticks, stringTicks } = calculatedValues;
   const text = tickFormat(tickValue, index, ticks);
   const tick = stringTicks ? stringTicks[index] : tickValue;
-  const { labelStyle } = getEvaluatedStyles(
-    style,
-    { text, tick, tickValue, index, ticks, stringTicks, radius, scale, axisType }
-  );
+  const { labelStyle } = getEvaluatedStyles(style, {
+    text,
+    tick,
+    tickValue,
+    index,
+    ticks,
+    stringTicks,
+    radius,
+    scale,
+    axisType
+  });
   const { tickLabelComponent } = props;
   const labelPlacement =
     tickLabelComponent.props && tickLabelComponent.props.labelPlacement
@@ -151,7 +165,8 @@ const getTickLabelProps = (props, calculatedValues, tickValue, index) => {
   const tickPadding = labelStyle.padding || 0;
   const angularPadding = 0; // TODO: do some geometry
   const axisAngle = axisType === "radial" ? getAxisAngle(props, scale) : undefined;
-  const labelAngle = axisType === "angular"
+  const labelAngle =
+    axisType === "angular"
       ? Helpers.radiansToDegrees(scale(tickValue))
       : axisAngle + angularPadding;
   const textAngle =
@@ -180,10 +195,17 @@ const getGridProps = (props, calculatedValues, tickValue, index) => {
   const text = tickFormat(tickValue, index, ticks);
   const { startAngle, endAngle, innerRadius = 0 } = props;
   const tick = stringTicks ? stringTicks[index] : tickValue;
-  const { gridStyle } = getEvaluatedStyles(
-    style,
-    { tick, tickValue, index, ticks, stringTicks, radius, scale, axisType, text }
-  );
+  const { gridStyle } = getEvaluatedStyles(style, {
+    tick,
+    tickValue,
+    index,
+    ticks,
+    stringTicks,
+    radius,
+    scale,
+    axisType,
+    text
+  });
   const angle = scale(tickValue);
   return axisType === "angular"
     ? {

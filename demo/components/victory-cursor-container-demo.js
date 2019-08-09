@@ -140,7 +140,7 @@ class App extends React.Component {
             style={{
               parent: chartStyle.parent,
               data: {
-                fill: ({ active }) => active ? "tomato" : "black"
+                fill: ({ active }) => (active ? "tomato" : "black")
               }
             }}
             containerComponent={
@@ -150,7 +150,7 @@ class App extends React.Component {
                 defaultCursorValue={1}
               />
             }
-            size={({ active }) => active ? 5 : 3}
+            size={({ active }) => (active ? 5 : 3)}
             data={this.state.data}
             x="a"
             y="b"
@@ -160,7 +160,7 @@ class App extends React.Component {
             style={{
               parent: chartStyle.parent,
               data: {
-                fill: ({ active }) => active ? "tomato" : "black"
+                fill: ({ active }) => (active ? "tomato" : "black")
               }
             }}
             containerComponent={
@@ -173,7 +173,7 @@ class App extends React.Component {
                 }}
               />
             }
-            size={({ active }) => active ? 5 : 3}
+            size={({ active }) => (active ? 5 : 3)}
             y={(d) => d.x * d.x}
           />
 
@@ -193,7 +193,7 @@ class App extends React.Component {
                 style={{
                   data: { fill: "tomato" }
                 }}
-                size={({ active }) => active ? 5 : 3}
+                size={({ active }) => (active ? 5 : 3)}
                 labels={({ datum }) => datum.y}
                 labelComponent={<VictoryTooltip />}
                 data={[
@@ -210,7 +210,7 @@ class App extends React.Component {
                 style={{
                   data: { fill: "blue" }
                 }}
-                size={({ active }) => active ? 5 : 3}
+                size={({ active }) => (active ? 5 : 3)}
                 labels={({ datum }) => datum.y}
                 labelComponent={<VictoryTooltip />}
                 data={[
@@ -235,7 +235,7 @@ class App extends React.Component {
                 ]}
                 labels={(d) => d.y}
                 labelComponent={<VictoryTooltip />}
-                size={({ active }) => active ? 5 : 3}
+                size={({ active }) => (active ? 5 : 3)}
               />
             </VictoryGroup>
           </VictoryChart>
@@ -245,11 +245,11 @@ class App extends React.Component {
               style={{
                 data: {
                   fill: "tomato",
-                  stroke: ({ active }) => active ? "black" : "none",
+                  stroke: ({ active }) => (active ? "black" : "none"),
                   strokeWidth: 2
                 }
               }}
-              size={({ active }) => active ? 5 : 3}
+              size={({ active }) => (active ? 5 : 3)}
               data={[
                 { x: 1, y: -5 },
                 { x: 2, y: 4 },
@@ -264,11 +264,11 @@ class App extends React.Component {
               style={{
                 data: {
                   fill: "orange",
-                  stroke: ({ active }) => active ? "black" : "none",
+                  stroke: ({ active }) => (active ? "black" : "none"),
                   strokeWidth: 2
                 }
               }}
-              size={({ active }) => active ? 5 : 3}
+              size={({ active }) => (active ? 5 : 3)}
               data={[
                 { x: 1, y: -3 },
                 { x: 2, y: 5 },
@@ -283,7 +283,7 @@ class App extends React.Component {
               style={{
                 data: {
                   fill: "gold",
-                  stroke: ({ active }) => active ? "black" : "none",
+                  stroke: ({ active }) => (active ? "black" : "none"),
                   strokeWidth: 2
                 }
               }}

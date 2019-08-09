@@ -178,7 +178,8 @@ export const voronoiContainerMixin = (base) =>
           ? componentStyleArray[index]
           : componentStyleArray;
         const style = Helpers.evaluateStyle(
-          defaults({}, componentStyle, baseStyle, themeStyles[type]), labelProps
+          defaults({}, componentStyle, baseStyle, themeStyles[type]),
+          labelProps
         );
         const styleArray = textArray.length ? textArray.map(() => style) : [style];
         memo = memo.concat(styleArray);

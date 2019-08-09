@@ -173,10 +173,12 @@ class App extends React.Component {
             <VictoryScatter
               groupComponent={<VictoryClipContainer />}
               data={this.state.scatterData}
-              style={{ data: {
-                fill: ({ datum }) => datum.fill,
-                opacity: ({ datum }) => datum.opacity
-              } }}
+              style={{
+                data: {
+                  fill: ({ datum }) => datum.fill,
+                  opacity: ({ datum }) => datum.opacity
+                }
+              }}
               animate={{
                 onExit: {
                   duration: 500,

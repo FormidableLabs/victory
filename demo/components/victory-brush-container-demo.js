@@ -173,14 +173,14 @@ class App extends React.Component {
             style={{
               parent: chartStyle.parent,
               data: {
-                fill: ({ active }) => active ? "tomato" : "black"
+                fill: ({ active }) => (active ? "tomato" : "black")
               }
             }}
             domain={{ x: [0, 10], y: [-5, 5] }}
             containerComponent={
               <VictoryBrushContainer defaultBrushArea="none" brushDomain={{ x: [0, 10] }} />
             }
-            size={({ active }) => active ? 5 : 3}
+            size={({ active }) => (active ? 5 : 3)}
             data={[
               { x: 1, y: -5 },
               { x: 2, y: 4 },
@@ -196,11 +196,11 @@ class App extends React.Component {
             style={{
               parent: chartStyle.parent,
               data: {
-                fill: ({ active }) => active ? "tomato" : "black"
+                fill: ({ active }) => (active ? "tomato" : "black")
               }
             }}
             containerComponent={<VictoryBrushContainer defaultBrushArea="disable" />}
-            size={({ active }) => active ? 5 : 3}
+            size={({ active }) => (active ? 5 : 3)}
             y={(d) => d.x * d.x}
           />
 
@@ -209,7 +209,7 @@ class App extends React.Component {
               style={{
                 data: { fill: "tomato" }
               }}
-              size={({ active }) => active ? 5 : 3}
+              size={({ active }) => (active ? 5 : 3)}
               data={[
                 { x: 1, y: -5 },
                 { x: 2, y: 4 },
@@ -224,7 +224,7 @@ class App extends React.Component {
               style={{
                 data: { fill: "blue" }
               }}
-              size={({ active }) => active ? 5 : 3}
+              size={({ active }) => (active ? 5 : 3)}
               data={[
                 { x: 1, y: -3 },
                 { x: 2, y: 5 },
@@ -245,7 +245,7 @@ class App extends React.Component {
                 { x: 6, y: 3 },
                 { x: 7, y: -3 }
               ]}
-              size={({ active }) => active ? 5 : 3}
+              size={({ active }) => (active ? 5 : 3)}
             />
           </VictoryGroup>
 
@@ -254,11 +254,11 @@ class App extends React.Component {
               style={{
                 data: {
                   fill: "tomato",
-                  stroke: ({ active }) => active ? "black" : "none",
+                  stroke: ({ active }) => (active ? "black" : "none"),
                   strokeWidth: 2
                 }
               }}
-              size={({ active }) => active ? 5 : 3}
+              size={({ active }) => (active ? 5 : 3)}
               data={[
                 { x: 1, y: -5 },
                 { x: 2, y: 4 },
@@ -273,11 +273,11 @@ class App extends React.Component {
               style={{
                 data: {
                   fill: "orange",
-                  stroke: ({ active }) => active ? "black" : "none",
+                  stroke: ({ active }) => (active ? "black" : "none"),
                   strokeWidth: 2
                 }
               }}
-              size={({ active }) => active ? 5 : 3}
+              size={({ active }) => (active ? 5 : 3)}
               data={[
                 { x: 1, y: -3 },
                 { x: 2, y: 5 },
@@ -292,7 +292,7 @@ class App extends React.Component {
               style={{
                 data: {
                   fill: "gold",
-                  stroke: ({ active }) => active ? "black" : "none",
+                  stroke: ({ active }) => (active ? "black" : "none"),
                   strokeWidth: 2
                 }
               }}

@@ -59,9 +59,7 @@ class App extends React.Component {
             height={450}
             domain={{ y: [0, 1] }}
             style={chartStyle}
-            containerComponent={
-              <VictoryVoronoiContainer labels={({ datum }) => datum.y} />
-            }
+            containerComponent={<VictoryVoronoiContainer labels={({ datum }) => datum.y} />}
           >
             <VictoryScatter
               data={[
@@ -76,7 +74,7 @@ class App extends React.Component {
               style={{
                 data: { fill: "blue" }
               }}
-              size={({ active }) => active ? 8 : 3}
+              size={({ active }) => (active ? 8 : 3)}
             />
             <VictoryScatter
               data={[
@@ -91,7 +89,7 @@ class App extends React.Component {
               style={{
                 data: { fill: "red" }
               }}
-              size={({ active }) => active ? 5 : 3}
+              size={({ active }) => (active ? 5 : 3)}
             />
           </VictoryChart>
 
@@ -99,9 +97,7 @@ class App extends React.Component {
             height={450}
             domain={{ y: [0, 1] }}
             style={chartStyle}
-            containerComponent={
-              <VictoryVoronoiContainer labels={({ datum }) => datum.y} />
-            }
+            containerComponent={<VictoryVoronoiContainer labels={({ datum }) => datum.y} />}
           >
             <VictoryScatter
               data={[
@@ -116,7 +112,7 @@ class App extends React.Component {
               style={{
                 data: { fill: "blue" }
               }}
-              size={({ active }) => active ? 5 : 3}
+              size={({ active }) => (active ? 5 : 3)}
             />
           </VictoryChart>
 
@@ -147,7 +143,7 @@ class App extends React.Component {
                 { x: 3, y: -2, l: "three" }
               ]}
               style={{
-                data: { stroke: "tomato", strokeWidth: ({ active }) => active ? 4 : 2 },
+                data: { stroke: "tomato", strokeWidth: ({ active }) => (active ? 4 : 2) },
                 labels: { fill: "tomato" }
               }}
             />
@@ -160,7 +156,7 @@ class App extends React.Component {
                 { x: 3, y: 3, l: "blue" }
               ]}
               style={{
-                data: { stroke: "blue", strokeWidth: ({ active }) => active ? 4 : 2 },
+                data: { stroke: "blue", strokeWidth: ({ active }) => (active ? 4 : 2) },
                 labels: { fill: "blue" }
               }}
             />
@@ -173,7 +169,7 @@ class App extends React.Component {
                 { x: 3, y: -2, l: "bird" }
               ]}
               style={{
-                data: { stroke: "black", strokeWidth: ({ active }) => active ? 4 : 2 },
+                data: { stroke: "black", strokeWidth: ({ active }) => (active ? 4 : 2) },
                 labels: { fill: "black" }
               }}
             />
@@ -184,11 +180,11 @@ class App extends React.Component {
             style={{
               parent: chartStyle.parent,
               data: {
-                fill: ({ active }) => active ? "tomato" : "black"
+                fill: ({ active }) => (active ? "tomato" : "black")
               }
             }}
             containerComponent={<VictoryVoronoiContainer voronoiDimension="x" />}
-            size={({ active }) => active ? 5 : 3}
+            size={({ active }) => (active ? 5 : 3)}
             data={this.state.data}
             x="a"
             y="b"
@@ -214,10 +210,10 @@ class App extends React.Component {
             <VictoryScatter
               style={{
                 data: {
-                  fill: ({ active }) => active ? "tomato" : "black"
+                  fill: ({ active }) => (active ? "tomato" : "black")
                 }
               }}
-              size={({ active }) => active ? 5 : 3}
+              size={({ active }) => (active ? 5 : 3)}
               y={(d) => d.x * d.x}
             />
           </VictoryChart>
@@ -250,7 +246,7 @@ class App extends React.Component {
                 style={{
                   data: { fill: "tomato" }
                 }}
-                size={({ active }) => active ? 8 : 3}
+                size={({ active }) => (active ? 8 : 3)}
               />
               <VictoryLine name="ignore" style={{ data: { stroke: "tomato" } }} />
             </VictoryGroup>
@@ -269,7 +265,7 @@ class App extends React.Component {
                 style={{
                   data: { fill: "blue" }
                 }}
-                size={({ active }) => active ? 5 : 3}
+                size={({ active }) => (active ? 5 : 3)}
               />
               <VictoryLine name="ignore" style={{ data: { stroke: "blue" } }} />
             </VictoryGroup>
@@ -284,7 +280,7 @@ class App extends React.Component {
                 { x: 7, y: -3 }
               ]}
             >
-              <VictoryScatter size={({ active }) => active ? 5 : 3} />
+              <VictoryScatter size={({ active }) => (active ? 5 : 3)} />
               <VictoryLine name="ignore" />
             </VictoryGroup>
           </VictoryChart>
@@ -315,7 +311,7 @@ class App extends React.Component {
                 style={{
                   data: { fill: "tomato" }
                 }}
-                size={({ active }) => active ? 5 : 3}
+                size={({ active }) => (active ? 5 : 3)}
                 labels={({ datum }) => datum.y}
                 labelComponent={<VictoryTooltip />}
                 data={[
@@ -332,7 +328,7 @@ class App extends React.Component {
                 style={{
                   data: { fill: "blue" }
                 }}
-                size={({ active }) => active ? 5 : 3}
+                size={({ active }) => (active ? 5 : 3)}
                 labels={({ datum }) => datum.y}
                 labelComponent={<VictoryTooltip />}
                 data={[
@@ -357,7 +353,7 @@ class App extends React.Component {
                 ]}
                 labels={({ datum }) => datum.y}
                 labelComponent={<VictoryTooltip />}
-                size={({ active }) => active ? 5 : 3}
+                size={({ active }) => (active ? 5 : 3)}
               />
             </VictoryGroup>
           </VictoryChart>
@@ -372,11 +368,11 @@ class App extends React.Component {
                 style={{
                   data: {
                     fill: "tomato",
-                    stroke: ({ active }) => active ? "black" : "none",
+                    stroke: ({ active }) => (active ? "black" : "none"),
                     strokeWidth: 2
                   }
                 }}
-                size={({ active }) => active ? 5 : 3}
+                size={({ active }) => (active ? 5 : 3)}
                 data={[
                   { x: 1, y: -5 },
                   { x: 2, y: 4 },
@@ -391,11 +387,11 @@ class App extends React.Component {
                 style={{
                   data: {
                     fill: "orange",
-                    stroke: ({ active }) => active ? "black" : "none",
+                    stroke: ({ active }) => (active ? "black" : "none"),
                     strokeWidth: 2
                   }
                 }}
-                size={({ active }) => active ? 5 : 3}
+                size={({ active }) => (active ? 5 : 3)}
                 data={[
                   { x: 1, y: -3 },
                   { x: 2, y: 5 },
@@ -410,7 +406,7 @@ class App extends React.Component {
                 style={{
                   data: {
                     fill: "gold",
-                    stroke: ({ active }) => active ? "black" : "none",
+                    stroke: ({ active }) => (active ? "black" : "none"),
                     strokeWidth: 2
                   }
                 }}
@@ -432,11 +428,11 @@ class App extends React.Component {
               style={{
                 data: {
                   fill: "tomato",
-                  stroke: ({ active }) => active ? "black" : "none",
+                  stroke: ({ active }) => (active ? "black" : "none"),
                   strokeWidth: 2
                 }
               }}
-              size={({ active }) => active ? 5 : 3}
+              size={({ active }) => (active ? 5 : 3)}
               data={[
                 { x: 1, y: -5 },
                 { x: 2, y: 4 },
@@ -451,11 +447,11 @@ class App extends React.Component {
               style={{
                 data: {
                   fill: "orange",
-                  stroke: ({ active }) => active ? "black" : "none",
+                  stroke: ({ active }) => (active ? "black" : "none"),
                   strokeWidth: 2
                 }
               }}
-              size={({ active }) => active ? 5 : 3}
+              size={({ active }) => (active ? 5 : 3)}
               data={[
                 { x: 1, y: -3 },
                 { x: 2, y: 5 },
@@ -470,7 +466,7 @@ class App extends React.Component {
               style={{
                 data: {
                   fill: "gold",
-                  stroke: ({ active }) => active ? "black" : "none",
+                  stroke: ({ active }) => (active ? "black" : "none"),
                   strokeWidth: 2
                 }
               }}

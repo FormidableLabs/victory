@@ -201,7 +201,7 @@ const getOffset = (props, calculatedValues) => {
     stringTicks,
     ticks,
     scale,
-    axis,
+    axis
   } = calculatedValues;
   const { polar, horizontal } = props;
   const sharedProps = { scale: { [axis]: scale }, polar, horizontal, ticks, stringTicks };
@@ -377,7 +377,7 @@ const getBaseProps = (props, fallbackProps) => {
   };
   return ticks.reduce((childProps, tickValue, index) => {
     const tick = stringTicks ? stringTicks[index] : tickValue;
-    const text = tickFormat(tickValue, index, ticks)
+    const text = tickFormat(tickValue, index, ticks);
     const styles = getEvaluatedStyles(
       style,
       assign({}, sharedProps, { tick, tickValue, index, text })
@@ -401,13 +401,7 @@ const getBaseProps = (props, fallbackProps) => {
       tickLabels: assign(
         {},
         sharedProps,
-        getTickLabelProps(
-          tickLayout,
-          styles.labelStyle,
-          anchors,
-          tickValue,
-          text
-        )
+        getTickLabelProps(tickLayout, styles.labelStyle, anchors, tickValue, text)
       ),
       grid: assign(
         {},

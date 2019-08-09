@@ -195,7 +195,7 @@ export default class App extends React.Component {
             style={{
               data: { fill: "tomato" }
             }}
-            size={({ active }) => active ? 5 : 3}
+            size={({ active }) => (active ? 5 : 3)}
             data={[
               { x: 1, y: -5 },
               { x: 2, y: 4 },
@@ -210,7 +210,7 @@ export default class App extends React.Component {
             style={{
               data: { fill: "blue" }
             }}
-            size={({ active }) => active ? 5 : 3}
+            size={({ active }) => (active ? 5 : 3)}
             data={[
               { x: 1, y: -3 },
               { x: 2, y: 5 },
@@ -231,7 +231,7 @@ export default class App extends React.Component {
               { x: 6, y: 3 },
               { x: 7, y: -3 }
             ]}
-            size={({ active }) => active ? 5 : 3}
+            size={({ active }) => (active ? 5 : 3)}
           />
         </VictoryGroup>
 
@@ -252,11 +252,11 @@ export default class App extends React.Component {
             style={{
               data: {
                 fill: "tomato",
-                stroke: ({ active }) => active ? "black" : "none",
+                stroke: ({ active }) => (active ? "black" : "none"),
                 strokeWidth: 2
               }
             }}
-            size={({ active }) => active ? 5 : 3}
+            size={({ active }) => (active ? 5 : 3)}
             data={[
               { x: 1, y: -5 },
               { x: 2, y: 4 },
@@ -271,11 +271,11 @@ export default class App extends React.Component {
             style={{
               data: {
                 fill: "orange",
-                stroke: ({ active }) => active ? "black" : "none",
+                stroke: ({ active }) => (active ? "black" : "none"),
                 strokeWidth: 2
               }
             }}
-            size={({ active }) => active ? 5 : 3}
+            size={({ active }) => (active ? 5 : 3)}
             data={[
               { x: 1, y: -3 },
               { x: 2, y: 5 },
@@ -290,7 +290,7 @@ export default class App extends React.Component {
             style={{
               data: {
                 fill: "gold",
-                stroke: ({ active }) => active ? "black" : "none",
+                stroke: ({ active }) => (active ? "black" : "none"),
                 strokeWidth: 2
               }
             }}

@@ -151,7 +151,7 @@ storiesOf("VictoryPolarAxis.style", module).add("functional styles", () => (
     style={{
       axis: { stroke: "#756f6a" },
       axisLabel: { fontSize: 20, padding: 30 },
-      grid: { stroke: ({ tick }) => tick > 0.5 ? "red" : "grey" },
+      grid: { stroke: ({ tick }) => (tick > 0.5 ? "red" : "grey") },
       ticks: { stroke: "grey", size: 5 },
       tickLabels: { fontSize: 15, padding: 5 }
     }}

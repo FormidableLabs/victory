@@ -140,10 +140,7 @@ class App extends React.Component {
           <VictoryChart style={chartStyle}>
             <VictoryGroup y={(data) => Math.sin(2 * Math.PI * data.x)}>
               <VictoryLine />
-              <VictoryVoronoi
-                labelComponent={<VictoryTooltip />}
-                labels={({ datum }) => datum.y}
-              />
+              <VictoryVoronoi labelComponent={<VictoryTooltip />} labels={({ datum }) => datum.y} />
             </VictoryGroup>
           </VictoryChart>
         </div>

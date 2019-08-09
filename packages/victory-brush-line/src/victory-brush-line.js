@@ -105,13 +105,13 @@ const fallbackProps = {
   brushAreaStyle: {
     stroke: "none",
     fill: "black",
-    opacity: ({ active }) => active ? 0.2 : 0.1 // eslint-disable-line no-magic-numbers
+    opacity: ({ active }) => (active ? 0.2 : 0.1) // eslint-disable-line no-magic-numbers
   },
   brushStyle: {
     pointerEvents: "none",
     stroke: "none",
     fill: "black",
-    opacity: ({ active }) => active ? 0.4 : 0.3 // eslint-disable-line no-magic-numbers
+    opacity: ({ active }) => (active ? 0.4 : 0.3) // eslint-disable-line no-magic-numbers
   },
   handleStyle: {
     pointerEvents: "none",
@@ -497,7 +497,7 @@ export default class VictoryBrushLine extends React.Component {
     const minHandleProps = assign(
       {
         key: `${id}-min`,
-        style: Helpers.evaluateStyle(style, { datum: minDatum,  active: activeBrushes.minHandle })
+        style: Helpers.evaluateStyle(style, { datum: minDatum, active: activeBrushes.minHandle })
       },
       handleDimensions.min
     );

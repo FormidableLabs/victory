@@ -148,7 +148,7 @@ class App extends React.Component {
             >
               <VictoryLine style={{ data: { stroke: "tomato" } }} />
               <VictoryScatter
-                style={{ data: { fill: ({ active }) => active ? "tomato" : "gray" } }}
+                style={{ data: { fill: ({ active }) => (active ? "tomato" : "gray") } }}
                 labels={({ datum }) => datum.y}
                 labelComponent={<VictoryTooltip />}
               />
@@ -166,7 +166,7 @@ class App extends React.Component {
             >
               <VictoryLine style={{ data: { stroke: "blue" } }} />
               <VictoryScatter
-                style={{ data: { fill: ({ active }) => active ? "blue" : "gray" } }}
+                style={{ data: { fill: ({ active }) => (active ? "blue" : "gray") } }}
                 labels={({ datum }) => `y: ${datum.y}`}
                 labelComponent={<VictoryTooltip />}
               />
@@ -183,7 +183,7 @@ class App extends React.Component {
             >
               <VictoryLine style={{ data: { stroke: "black" } }} />
               <VictoryScatter
-                style={{ data: { fill: ({ active }) => active ? "black" : "gray" } }}
+                style={{ data: { fill: ({ active }) => (active ? "black" : "gray") } }}
                 labels={({ datum }) => datum.y}
                 labelComponent={<VictoryTooltip />}
               />
@@ -222,9 +222,9 @@ class App extends React.Component {
             <VictoryBar
               style={{
                 data: {
-                  fill: ({ active }) => active ? "blue" : "tomato",
+                  fill: ({ active }) => (active ? "blue" : "tomato"),
                   fillOpacity: 0.6,
-                  stroke: ({ active }) => active ? "blue" : "tomato",
+                  stroke: ({ active }) => (active ? "blue" : "tomato"),
                   strokeWidth: 2
                 }
               }}
