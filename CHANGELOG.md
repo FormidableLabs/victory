@@ -1,5 +1,17 @@
 # Victory Changelog
 
+## 32.3.6 (2019-08-08)
+
+[#1363](https://github.com/FormidableLabs/victory/pull/1363) Fix regression affecting `createContainer`. Thanks @stefanscript
+
+## 32.3.5 (2019-08-07)
+
+[#1362](https://github.com/FormidableLabs/victory/pull/1362) Fix scroll wheel interaction in newer versions of Chrome.
+
+## 32.3.4 (2019-08-05)
+
+[#1361](https://github.com/FormidableLabs/victory/pull/1361) Updates to `lodash^4.17.15`. Thanks @tomciopp
+
 ## 32.3.3 (2019-07-02)
 
 [#1346](https://github.com/FormidableLabs/victory/pull/1346) - Fixes a bug which was preventing `VictoryVoronoiContainer` from activating all coincident points when no `voronoiDimension` was set

@@ -15,7 +15,7 @@ storiesOf("VictoryLine.theme", module)
   .addDecorator(getChartDecorator({ theme: VictoryTheme.material }))
   .add("material theme", () => <VictoryLine data={getData(8)} />)
   .add("material theme stacked", () => (
-    <VictoryStack labels={(d) => d.x}>
+    <VictoryStack labels={({ datum }) => datum.x}>
       <VictoryLine data={getData(8)} />
       <VictoryLine data={getData(8, "seed-1")} />
       <VictoryLine data={getData(8, "seed-2")} />
@@ -27,7 +27,7 @@ storiesOf("VictoryLine.theme", module)
   .addDecorator(getChartDecorator({ theme: VictoryTheme.grayscale }))
   .add("grayscale (default) theme", () => <VictoryLine data={getData(8)} />)
   .add("grayscale (default) stacked", () => (
-    <VictoryStack labels={(d) => d.x}>
+    <VictoryStack labels={({ datum }) => datum.x}>
       <VictoryLine data={getData(8)} />
       <VictoryLine data={getData(8, "seed-1")} />
       <VictoryLine data={getData(8, "seed-2")} />
@@ -106,7 +106,9 @@ storiesOf("VictoryLine.data", module)
 
 storiesOf("VictoryLine.labels", module)
   .addDecorator(getChartDecorator())
-  .add("function labels", () => <VictoryLine data={getData(7)} labels={(d) => `x: ${d.x}`} />)
+  .add("function labels", () => (
+    <VictoryLine data={getData(7)} labels={({ datum }) => `x: ${datum.x}`} />
+  ))
   .add("array labels", () => (
     <VictoryLine data={getData(7)} labels={["", "", "three", "four", 5, "six"]} />
   ))
@@ -139,7 +141,7 @@ storiesOf("VictoryLine.tooltips", module)
   .add("tooltips", () => (
     <VictoryLine
       data={getData(5)}
-      labels={(d) => `x: ${d.x}`}
+      labels={({ datum }) => `x: ${datum.x}`}
       labelComponent={<VictoryTooltip active />}
     />
   ))
@@ -147,14 +149,14 @@ storiesOf("VictoryLine.tooltips", module)
     <VictoryLine
       horizontal
       data={getData(5)}
-      labels={(d) => `x: ${d.x}`}
+      labels={({ datum }) => `x: ${datum.x}`}
       labelComponent={<VictoryTooltip active />}
     />
   ))
   .add("tooltips (negative)", () => (
     <VictoryLine
       data={getMixedData(5)}
-      labels={(d) => `x: ${d.x}`}
+      labels={({ datum }) => `x: ${datum.x}`}
       labelComponent={<VictoryTooltip active />}
     />
   ))
@@ -171,7 +173,7 @@ storiesOf("VictoryLine.style", module)
   .add("with styles", () => (
     <VictoryLine
       data={getData(7)}
-      labels={(d) => d.x}
+      labels={({ datum }) => datum.x}
       style={{
         labels: { fontSize: 20, fill: "tomato", fontFamily: "monospace" },
         data: { stroke: "tomato", strokeWidth: 2 }
@@ -182,10 +184,10 @@ storiesOf("VictoryLine.style", module)
     <VictoryLine
       style={{
         labels: {
-          fill: (d) => (d.x === "Dog" ? "red" : "black")
+          fill: ({ datum }) => (datum.x === "Dog" ? "red" : "black")
         }
       }}
-      labels={(d) => d.x}
+      labels={({ datum }) => datum.x}
       data={[{ x: "Cat", y: 62 }, { x: "Dog", y: 91 }, { x: "Fish", y: 55 }, { x: "Bird", y: 55 }]}
     />
   ));
@@ -214,7 +216,7 @@ storiesOf("VictoryLine.stacked", module)
     </VictoryStack>
   ))
   .add("stacked lines with labels", () => (
-    <VictoryStack colorScale="qualitative" labels={(d) => d.x}>
+    <VictoryStack colorScale="qualitative" labels={({ datum }) => datum.x}>
       <VictoryLine data={getData(7)} />
       <VictoryLine data={getData(7, "seed-1")} />
       <VictoryLine data={getData(7, "seed-2")} />
@@ -225,10 +227,10 @@ storiesOf("VictoryLine.scale", module)
   .addDecorator(getChartDecorator())
   .add("time scale", () => <VictoryLine data={getTimeData(5)} />)
   .add("time scale with labels", () => (
-    <VictoryLine data={getTimeData(5)} labels={(d) => d.x.getFullYear()} />
+    <VictoryLine data={getTimeData(5)} labels={({ datum }) => datum.x.getFullYear()} />
   ))
   .add("stacked time scale with labels", () => (
-    <VictoryStack labels={(d) => d.x.getFullYear()}>
+    <VictoryStack labels={({ datum }) => datum.x.getFullYear()}>
       <VictoryLine data={getTimeData(5)} />
       <VictoryLine data={getTimeData(5, "seed-1")} />
       <VictoryLine data={getTimeData(5, "seed-2")} />
@@ -236,10 +238,10 @@ storiesOf("VictoryLine.scale", module)
   ))
   .add("time scale (horizontal)", () => <VictoryLine horizontal data={getTimeData(5)} />)
   .add("time scale with labels (horizontal)", () => (
-    <VictoryLine horizontal data={getTimeData(5)} labels={(d) => d.x.getFullYear()} />
+    <VictoryLine horizontal data={getTimeData(5)} labels={({ datum }) => datum.x.getFullYear()} />
   ))
   .add("stacked time scale with labels (horizontal)", () => (
-    <VictoryStack horizontal labels={(d) => d.x.getFullYear()}>
+    <VictoryStack horizontal labels={({ datum }) => datum.x.getFullYear()}>
       <VictoryLine data={getTimeData(5)} />
       <VictoryLine data={getTimeData(5, "seed-1")} />
       <VictoryLine data={getTimeData(5, "seed-2")} />

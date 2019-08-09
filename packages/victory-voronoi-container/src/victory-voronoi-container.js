@@ -172,17 +172,17 @@ export const voronoiContainerMixin = (base) =>
       const themeStyles = theme && theme.voronoi && theme.voronoi.style ? theme.voronoi.style : {};
       const componentStyleArray =
         type === "flyout" ? componentProps.flyoutStyle : componentProps.style;
-      return points.reduce((memo, point, index) => {
-        const text = isFunction(labels) ? labels(point, index, points) : undefined;
+      return points.reduce((memo, datum, index) => {
+        const labelProps = defaults({}, componentProps, { datum, active: true });
+        const text = isFunction(labels) ? labels(labelProps) : undefined;
         const textArray = text !== undefined ? `${text}`.split("\n") : [];
-        const baseStyle = (point.style && point.style[type]) || {};
+        const baseStyle = (datum.style && datum.style[type]) || {};
         const componentStyle = Array.isArray(componentStyleArray)
           ? componentStyleArray[index]
           : componentStyleArray;
         const style = Helpers.evaluateStyle(
           defaults({}, componentStyle, baseStyle, themeStyles[type]),
-          point,
-          true
+          labelProps
         );
         const styleArray = textArray.length ? textArray.map(() => style) : [style];
         memo = memo.concat(styleArray);
@@ -207,15 +207,16 @@ export const voronoiContainerMixin = (base) =>
 
     getLabelProps(props, points) {
       const { labels, scale, labelComponent, theme } = props;
-      const text = points.reduce((memo, point, index) => {
-        const t = isFunction(labels) ? labels(point, index, points) : null;
+      const componentProps = labelComponent.props || {};
+      const text = points.reduce((memo, datum) => {
+        const labelProps = defaults({}, componentProps, { datum, active: true });
+        const t = isFunction(labels) ? labels(labelProps) : null;
         if (t === null || t === undefined) {
           return memo;
         }
         memo = memo.concat(`${t}`.split("\n"));
         return memo;
       }, []);
-      const componentProps = labelComponent.props || {};
 
       // remove properties from first point to make datum
       // eslint-disable-next-line no-unused-vars

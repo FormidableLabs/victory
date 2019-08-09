@@ -26,7 +26,7 @@ storiesOf("VictoryBar.theme", module)
   .addDecorator(getChartDecorator({ theme: VictoryTheme.material }))
   .add("material theme", () => <VictoryBar data={getData(8)} />)
   .add("material theme stacked", () => (
-    <VictoryStack labels={(d) => d.x}>
+    <VictoryStack labels={({ datum }) => datum.x}>
       <VictoryBar data={getData(8)} />
       <VictoryBar data={getData(8, "seed-1")} />
       <VictoryBar data={getData(8, "seed-2")} />
@@ -38,7 +38,7 @@ storiesOf("VictoryBar.theme", module)
   .addDecorator(getChartDecorator({ theme: VictoryTheme.grayscale }))
   .add("grayscale (default) theme", () => <VictoryBar data={getData(8)} />)
   .add("grayscale (default) stacked", () => (
-    <VictoryStack labels={(d) => d.x}>
+    <VictoryStack labels={({ datum }) => datum.x}>
       <VictoryBar data={getData(8)} />
       <VictoryBar data={getData(8, "seed-1")} />
       <VictoryBar data={getData(8, "seed-2")} />
@@ -87,7 +87,7 @@ storiesOf("VictoryBar.barWidth", module)
   .add("functional bar width (2 * datum.x)", () => (
     <VictoryBar
       data={getData(7)}
-      barWidth={(datum) => {
+      barWidth={({ datum }) => {
         return datum.x * 2;
       }}
     />
@@ -272,7 +272,9 @@ storiesOf("VictoryBar.data", module)
 
 storiesOf("VictoryBar.labels", module)
   .addDecorator(getChartDecorator({ domainPadding: 25 }))
-  .add("function labels", () => <VictoryBar data={getData(7)} labels={(d) => `x: ${d.x}`} />)
+  .add("function labels", () => (
+    <VictoryBar data={getData(7)} labels={({ datum }) => `x: ${datum.x}`} />
+  ))
   .add("array labels", () => (
     <VictoryBar data={getData(7)} labels={["", "", "three", "four", 5, "six"]} />
   ))
@@ -293,14 +295,14 @@ storiesOf("VictoryBar.tooltips", module)
   .add("tooltips", () => (
     <VictoryBar
       data={getData(5)}
-      labels={(d) => `x: ${d.x}`}
+      labels={({ datum }) => `x: ${datum.x}`}
       labelComponent={<VictoryTooltip active />}
     />
   ))
   .add("tooltips (negative)", () => (
     <VictoryBar
       data={getMixedData(5)}
-      labels={(d) => `x: ${d.x}`}
+      labels={({ datum }) => `x: ${datum.x}`}
       labelComponent={<VictoryTooltip active />}
     />
   ))
@@ -308,7 +310,7 @@ storiesOf("VictoryBar.tooltips", module)
     <VictoryBar
       horizontal
       data={getData(5)}
-      labels={(d) => `x: ${d.x}`}
+      labels={({ datum }) => `x: ${datum.x}`}
       labelComponent={<VictoryTooltip active />}
     />
   ))
@@ -316,7 +318,7 @@ storiesOf("VictoryBar.tooltips", module)
     <VictoryBar
       horizontal
       data={getMixedData(5)}
-      labels={(d) => `x: ${d.x}`}
+      labels={({ datum }) => `x: ${datum.x}`}
       labelComponent={<VictoryTooltip active />}
     />
   ))
@@ -332,7 +334,7 @@ storiesOf("VictoryBar.style", module)
   .addDecorator(getChartDecorator({ domainPadding: 25 }))
   .add("with styles", () => (
     <VictoryBar
-      labels={(d) => d.y}
+      labels={({ datum }) => datum.y}
       style={{
         labels: { fontSize: 20, fill: "tomato", fontFamily: "monospace" },
         data: { fill: "tomato", fillOpacity: 0.7, stroke: "tomato", strokeWidth: 2 }
@@ -343,15 +345,15 @@ storiesOf("VictoryBar.style", module)
     <VictoryBar
       style={{
         labels: {
-          fill: (d) => (d.x === "Dog" ? "red" : "black")
+          fill: ({ datum }) => (datum.x === "Dog" ? "red" : "black")
         },
         data: {
-          stroke: (d) => (d.y > 75 ? "red" : "transparent"),
+          stroke: ({ datum }) => (datum.y > 75 ? "red" : "transparent"),
           strokeWidth: 3,
-          opacity: (d) => (d.y > 75 ? 1 : 0.4)
+          opacity: ({ datum }) => (datum.y > 75 ? 1 : 0.4)
         }
       }}
-      labels={(d) => d.x}
+      labels={({ datum }) => datum.x}
       data={[{ x: "Cat", y: 62 }, { x: "Dog", y: 91 }, { x: "Fish", y: 55 }, { x: "Bird", y: 55 }]}
     />
   ));
@@ -373,21 +375,21 @@ storiesOf("VictoryBar.stacked", module)
     </VictoryStack>
   ))
   .add("stacked bars with labels", () => (
-    <VictoryStack labels={(d) => d.x}>
+    <VictoryStack labels={({ datum }) => datum.x}>
       <VictoryBar data={getData(7)} />
       <VictoryBar data={getData(7, "seed-1")} />
       <VictoryBar data={getData(7, "seed-2")} />
     </VictoryStack>
   ))
   .add("stacked negative bars", () => (
-    <VictoryStack labels={(d) => d.x}>
+    <VictoryStack labels={({ datum }) => datum.x}>
       <VictoryBar data={getMixedData(7)} />
       <VictoryBar data={getMixedData(7, "seed-1")} />
       <VictoryBar data={getMixedData(7, "seed-2")} />
     </VictoryStack>
   ))
   .add("horizontal stacked bars", () => (
-    <VictoryStack horizontal labels={(d) => d.x}>
+    <VictoryStack horizontal labels={({ datum }) => datum.x}>
       <VictoryBar data={getData(7)} />
       <VictoryBar data={getData(7, "seed-1")} />
       <VictoryBar data={getData(7, "seed-2")} />
@@ -401,7 +403,7 @@ storiesOf("VictoryBar.stacked", module)
     </VictoryStack>
   ))
   .add("horizontal stacked negative bars", () => (
-    <VictoryStack horizontal labels={(d) => d.x}>
+    <VictoryStack horizontal labels={({ datum }) => datum.x}>
       <VictoryBar data={getMixedData(7)} />
       <VictoryBar data={getMixedData(7, "seed-1")} />
       <VictoryBar data={getMixedData(7, "seed-2")} />
@@ -425,28 +427,36 @@ storiesOf("VictoryBar.grouped", module)
     </VictoryGroup>
   ))
   .add("grouped bars with labels", () => (
-    <VictoryGroup offset={20} labels={(d) => d.x}>
+    <VictoryGroup offset={20} labels={({ datum }) => datum.x}>
       <VictoryBar data={getData(3)} />
       <VictoryBar data={getData(3, "seed-1")} />
       <VictoryBar data={getData(3, "seed-2")} />
     </VictoryGroup>
   ))
   .add("grouped bars with tooltips", () => (
-    <VictoryGroup offset={20} labels={(d) => d.x} labelComponent={<VictoryTooltip active />}>
+    <VictoryGroup
+      offset={20}
+      labels={({ datum }) => datum.x}
+      labelComponent={<VictoryTooltip active />}
+    >
       <VictoryBar data={getData(3)} />
       <VictoryBar data={getData(3, "seed-1")} />
       <VictoryBar data={getData(3, "seed-2")} />
     </VictoryGroup>
   ))
   .add("grouped negative bars with tooltips", () => (
-    <VictoryGroup offset={20} labels={(d) => d.x} labelComponent={<VictoryTooltip active />}>
+    <VictoryGroup
+      offset={20}
+      labels={({ datum }) => datum.x}
+      labelComponent={<VictoryTooltip active />}
+    >
       <VictoryBar data={getMixedData(3)} />
       <VictoryBar data={getMixedData(3, "seed-1")} />
       <VictoryBar data={getMixedData(3, "seed-2")} />
     </VictoryGroup>
   ))
   .add("grouped stacks", () => (
-    <VictoryGroup offset={20} style={{ data: { width: 15 } }} labels={(d) => d.x}>
+    <VictoryGroup offset={20} style={{ data: { width: 15 } }} labels={({ datum }) => datum.x}>
       <VictoryStack colorScale="red">
         <VictoryBar data={getData(3)} />
         <VictoryBar data={getData(3, "seed-1")} />
@@ -465,7 +475,7 @@ storiesOf("VictoryBar.grouped", module)
     </VictoryGroup>
   ))
   .add("grouped negative stacks", () => (
-    <VictoryGroup offset={20} style={{ data: { width: 15 } }} labels={(d) => d.x}>
+    <VictoryGroup offset={20} style={{ data: { width: 15 } }} labels={({ datum }) => datum.x}>
       <VictoryStack colorScale="red">
         <VictoryBar data={getMixedData(3)} />
         <VictoryBar data={getMixedData(3, "seed-1")} />
@@ -498,7 +508,7 @@ storiesOf("VictoryBar.grouped", module)
     </VictoryGroup>
   ))
   .add("horizontal grouped bars with labels", () => (
-    <VictoryGroup offset={20} horizontal labels={(d) => d.x}>
+    <VictoryGroup offset={20} horizontal labels={({ datum }) => datum.x}>
       <VictoryBar data={getData(3)} />
       <VictoryBar data={getData(3, "seed-1")} />
       <VictoryBar data={getData(3, "seed-2")} />
@@ -508,7 +518,7 @@ storiesOf("VictoryBar.grouped", module)
     <VictoryGroup
       horizontal
       offset={20}
-      labels={(d) => d.x}
+      labels={({ datum }) => datum.x}
       labelComponent={<VictoryTooltip active />}
     >
       <VictoryBar data={getMixedData(3)} />
@@ -520,7 +530,7 @@ storiesOf("VictoryBar.grouped", module)
     <VictoryGroup
       horizontal
       offset={20}
-      labels={(d) => d.x}
+      labels={({ datum }) => datum.x}
       labelComponent={<VictoryTooltip active />}
     >
       <VictoryBar data={getData(3)} />
@@ -529,7 +539,12 @@ storiesOf("VictoryBar.grouped", module)
     </VictoryGroup>
   ))
   .add("horizontal grouped stacks", () => (
-    <VictoryGroup horizontal offset={20} style={{ data: { width: 15 } }} labels={(d) => d.x}>
+    <VictoryGroup
+      horizontal
+      offset={20}
+      style={{ data: { width: 15 } }}
+      labels={({ datum }) => datum.x}
+    >
       <VictoryStack colorScale="red">
         <VictoryBar data={getData(3)} />
         <VictoryBar data={getData(3, "seed-1")} />
@@ -552,34 +567,34 @@ storiesOf("VictoryBar.scale", module)
   .addDecorator(getChartDecorator({ domainPadding: 25 }))
   .add("time scale", () => <VictoryBar data={getTimeData(5)} />)
   .add("time scale with labels", () => (
-    <VictoryBar data={getTimeData(5)} labels={(d) => d.x.getFullYear()} />
+    <VictoryBar data={getTimeData(5)} labels={({ datum }) => datum.x.getFullYear()} />
   ))
   .add("stacked time scale with labels", () => (
-    <VictoryStack labels={(d) => d.x.getFullYear()}>
+    <VictoryStack labels={({ datum }) => datum.x.getFullYear()}>
       <VictoryBar data={getTimeData(5)} />
       <VictoryBar data={getTimeData(5, "seed-1")} />
       <VictoryBar data={getTimeData(5, "seed-2")} />
     </VictoryStack>
   ))
   .add("grouped time scale with labels", () => (
-    <VictoryGroup offset={20} labels={(d) => d.x.getFullYear()}>
+    <VictoryGroup offset={20} labels={({ datum }) => datum.x.getFullYear()}>
       <VictoryBar data={getTimeData(3)} />
       <VictoryBar data={getTimeData(3, "seed-1")} />
       <VictoryBar data={getTimeData(3, "seed-2")} />
     </VictoryGroup>
   ))
   .add(" horizontal time scale with labels", () => (
-    <VictoryBar horizontal data={getTimeData(5)} labels={(d) => d.x.getFullYear()} />
+    <VictoryBar horizontal data={getTimeData(5)} labels={({ datum }) => datum.x.getFullYear()} />
   ))
   .add("horizontal stacked time scale with labels", () => (
-    <VictoryStack horizontal labels={(d) => d.x.getFullYear()}>
+    <VictoryStack horizontal labels={({ datum }) => datum.x.getFullYear()}>
       <VictoryBar data={getTimeData(5)} />
       <VictoryBar data={getTimeData(5, "seed-1")} />
       <VictoryBar data={getTimeData(5, "seed-2")} />
     </VictoryStack>
   ))
   .add("horizontal grouped time scale with labels", () => (
-    <VictoryGroup horizontal offset={20} labels={(d) => d.x.getFullYear()}>
+    <VictoryGroup horizontal offset={20} labels={({ datum }) => datum.x.getFullYear()}>
       <VictoryBar data={getTimeData(3)} />
       <VictoryBar data={getTimeData(3, "seed-1")} />
       <VictoryBar data={getTimeData(3, "seed-2")} />

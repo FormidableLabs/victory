@@ -105,16 +105,16 @@ function getStyles(style, defaultStyles) {
   };
 }
 
-function evaluateProp(prop, data, active) {
-  return isFunction(prop) ? prop(data, active) : prop;
+function evaluateProp(prop, props) {
+  return isFunction(prop) ? prop(props) : prop;
 }
 
-function evaluateStyle(style, data, active) {
+function evaluateStyle(style, props) {
   if (!style || !Object.keys(style).some((value) => isFunction(style[value]))) {
     return style;
   }
   return Object.keys(style).reduce((prev, curr) => {
-    prev[curr] = evaluateProp(style[curr], data, active);
+    prev[curr] = evaluateProp(style[curr], props);
     return prev;
   }, {});
 }

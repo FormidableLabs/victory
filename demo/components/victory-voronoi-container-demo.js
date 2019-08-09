@@ -61,7 +61,7 @@ class App extends React.Component {
             style={chartStyle}
             containerComponent={
               <VictoryVoronoiContainer
-                labels={(d) => d.y}
+                labels={({ datum }) => datum.y}
                 mouseFollowLabels
                 labelComponent={<VictoryTooltip width={50} />}
               />
@@ -80,7 +80,7 @@ class App extends React.Component {
               style={{
                 data: { fill: "blue" }
               }}
-              size={(datum, active) => (active ? 8 : 3)}
+              size={({ active }) => (active ? 8 : 3)}
             />
             <VictoryScatter
               data={[
@@ -95,7 +95,7 @@ class App extends React.Component {
               style={{
                 data: { fill: "red" }
               }}
-              size={(datum, active) => (active ? 5 : 3)}
+              size={({ active }) => (active ? 5 : 3)}
             />
           </VictoryChart>
 
@@ -103,7 +103,7 @@ class App extends React.Component {
             height={450}
             domain={{ y: [0, 1] }}
             style={chartStyle}
-            containerComponent={<VictoryVoronoiContainer labels={(d) => d.y} />}
+            containerComponent={<VictoryVoronoiContainer labels={({ datum }) => datum.y} />}
           >
             <VictoryScatter
               data={[
@@ -118,7 +118,7 @@ class App extends React.Component {
               style={{
                 data: { fill: "blue" }
               }}
-              size={(datum, active) => (active ? 5 : 3)}
+              size={({ active }) => (active ? 5 : 3)}
             />
           </VictoryChart>
 
@@ -129,7 +129,7 @@ class App extends React.Component {
             containerComponent={
               <VictoryVoronoiContainer
                 voronoiDimension="x"
-                labels={(d) => `y:${d.y}`}
+                labels={({ datum }) => `y:${datum.y}`}
                 labelComponent={
                   <VictoryTooltip
                     y={150}
@@ -149,7 +149,7 @@ class App extends React.Component {
                 { x: 3, y: -2, l: "three" }
               ]}
               style={{
-                data: { stroke: "tomato", strokeWidth: (d, active) => (active ? 4 : 2) },
+                data: { stroke: "tomato", strokeWidth: ({ active }) => (active ? 4 : 2) },
                 labels: { fill: "tomato" }
               }}
             />
@@ -162,7 +162,7 @@ class App extends React.Component {
                 { x: 3, y: 3, l: "blue" }
               ]}
               style={{
-                data: { stroke: "blue", strokeWidth: (d, active) => (active ? 4 : 2) },
+                data: { stroke: "blue", strokeWidth: ({ active }) => (active ? 4 : 2) },
                 labels: { fill: "blue" }
               }}
             />
@@ -175,7 +175,7 @@ class App extends React.Component {
                 { x: 3, y: -2, l: "bird" }
               ]}
               style={{
-                data: { stroke: "black", strokeWidth: (d, active) => (active ? 4 : 2) },
+                data: { stroke: "black", strokeWidth: ({ active }) => (active ? 4 : 2) },
                 labels: { fill: "black" }
               }}
             />
@@ -186,16 +186,16 @@ class App extends React.Component {
             style={{
               parent: chartStyle.parent,
               data: {
-                fill: (datum, active) => (active ? "tomato" : "black")
+                fill: ({ active }) => (active ? "tomato" : "black")
               }
             }}
             containerComponent={
               <VictoryVoronoiContainer
-                labels={(d) => d._x}
+                labels={({ datum }) => datum._x}
                 labelComponent={<VictoryTooltip width={50} />}
               />
             }
-            size={(datum, active) => (active ? 5 : 3)}
+            size={({ active }) => active ? 5 : 3}
             data={this.state.data}
             x="a"
             y="b"
@@ -221,10 +221,10 @@ class App extends React.Component {
             <VictoryScatter
               style={{
                 data: {
-                  fill: (datum, active) => (active ? "tomato" : "black")
+                  fill: ({ active }) => (active ? "tomato" : "black")
                 }
               }}
-              size={(datum, active) => (active ? 5 : 3)}
+              size={({ active }) => (active ? 5 : 3)}
               y={(d) => d.x * d.x}
             />
           </VictoryChart>
@@ -237,7 +237,7 @@ class App extends React.Component {
               <VictoryVoronoiContainer
                 voronoiBlacklist={["ignore"]}
                 voronoiDimension="x"
-                labels={(d) => d.y}
+                labels={({ datum }) => datum.y}
                 labelComponent={<VictoryTooltip />}
               />
             }
@@ -257,7 +257,7 @@ class App extends React.Component {
                 style={{
                   data: { fill: "tomato" }
                 }}
-                size={(datum, active) => (active ? 8 : 3)}
+                size={({ active }) => (active ? 8 : 3)}
               />
               <VictoryLine name="ignore" style={{ data: { stroke: "tomato" } }} />
             </VictoryGroup>
@@ -276,7 +276,7 @@ class App extends React.Component {
                 style={{
                   data: { fill: "blue" }
                 }}
-                size={(datum, active) => (active ? 5 : 3)}
+                size={({ active }) => (active ? 5 : 3)}
               />
               <VictoryLine name="ignore" style={{ data: { stroke: "blue" } }} />
             </VictoryGroup>
@@ -291,7 +291,7 @@ class App extends React.Component {
                 { x: 7, y: -3 }
               ]}
             >
-              <VictoryScatter size={(datum, active) => (active ? 5 : 3)} />
+              <VictoryScatter size={({ active }) => (active ? 5 : 3)} />
               <VictoryLine name="ignore" />
             </VictoryGroup>
           </VictoryChart>
@@ -322,8 +322,8 @@ class App extends React.Component {
                 style={{
                   data: { fill: "tomato" }
                 }}
-                size={(datum, active) => (active ? 5 : 3)}
-                labels={(d) => d.y}
+                size={({ active }) => (active ? 5 : 3)}
+                labels={({ datum }) => datum.y}
                 labelComponent={<VictoryTooltip />}
                 data={[
                   { x: 1, y: -5 },
@@ -339,8 +339,8 @@ class App extends React.Component {
                 style={{
                   data: { fill: "blue" }
                 }}
-                size={(datum, active) => (active ? 5 : 3)}
-                labels={(d) => d.y}
+                size={({ active }) => (active ? 5 : 3)}
+                labels={({ datum }) => datum.y}
                 labelComponent={<VictoryTooltip />}
                 data={[
                   { x: 1, y: -3 },
@@ -362,9 +362,9 @@ class App extends React.Component {
                   { x: 6, y: 3 },
                   { x: 7, y: -3 }
                 ]}
-                labels={(d) => d.y}
+                labels={({ datum }) => datum.y}
                 labelComponent={<VictoryTooltip />}
-                size={(datum, active) => (active ? 5 : 3)}
+                size={({ active }) => (active ? 5 : 3)}
               />
             </VictoryGroup>
           </VictoryChart>
@@ -379,11 +379,11 @@ class App extends React.Component {
                 style={{
                   data: {
                     fill: "tomato",
-                    stroke: (d, active) => (active ? "black" : "none"),
+                    stroke: ({ active }) => (active ? "black" : "none"),
                     strokeWidth: 2
                   }
                 }}
-                size={(datum, active) => (active ? 5 : 3)}
+                size={({ active }) => (active ? 5 : 3)}
                 data={[
                   { x: 1, y: -5 },
                   { x: 2, y: 4 },
@@ -398,11 +398,11 @@ class App extends React.Component {
                 style={{
                   data: {
                     fill: "orange",
-                    stroke: (d, active) => (active ? "black" : "none"),
+                    stroke: ({ active }) => (active ? "black" : "none"),
                     strokeWidth: 2
                   }
                 }}
-                size={(datum, active) => (active ? 5 : 3)}
+                size={({ active }) => (active ? 5 : 3)}
                 data={[
                   { x: 1, y: -3 },
                   { x: 2, y: 5 },
@@ -417,7 +417,7 @@ class App extends React.Component {
                 style={{
                   data: {
                     fill: "gold",
-                    stroke: (d, active) => (active ? "black" : "none"),
+                    stroke: ({ active }) => (active ? "black" : "none"),
                     strokeWidth: 2
                   }
                 }}
@@ -439,11 +439,11 @@ class App extends React.Component {
               style={{
                 data: {
                   fill: "tomato",
-                  stroke: (d, active) => (active ? "black" : "none"),
+                  stroke: ({ active }) => (active ? "black" : "none"),
                   strokeWidth: 2
                 }
               }}
-              size={(datum, active) => (active ? 5 : 3)}
+              size={({ active }) => (active ? 5 : 3)}
               data={[
                 { x: 1, y: -5 },
                 { x: 2, y: 4 },
@@ -458,11 +458,11 @@ class App extends React.Component {
               style={{
                 data: {
                   fill: "orange",
-                  stroke: (d, active) => (active ? "black" : "none"),
+                  stroke: ({ active }) => (active ? "black" : "none"),
                   strokeWidth: 2
                 }
               }}
-              size={(datum, active) => (active ? 5 : 3)}
+              size={({ active }) => (active ? 5 : 3)}
               data={[
                 { x: 1, y: -3 },
                 { x: 2, y: 5 },
@@ -477,7 +477,7 @@ class App extends React.Component {
               style={{
                 data: {
                   fill: "gold",
-                  stroke: (d, active) => (active ? "black" : "none"),
+                  stroke: ({ active }) => (active ? "black" : "none"),
                   strokeWidth: 2
                 }
               }}

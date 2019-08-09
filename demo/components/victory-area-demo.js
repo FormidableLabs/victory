@@ -114,7 +114,7 @@ export default class App extends React.Component {
         <VictoryChart style={style} scale={{ y: "log" }}>
           <VictoryArea
             style={{ data: { fill: "cyan", stroke: "cyan" } }}
-            labels={(d) => Math.round(d.y)}
+            labels={({ datum }) => Math.round(datum.y)}
             data={[
               { x: 1, y: 0.2 },
               { x: 2, y: 3 },

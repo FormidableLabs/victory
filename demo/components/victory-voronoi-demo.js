@@ -83,7 +83,7 @@ class App extends React.Component {
           />
 
           <VictoryVoronoi
-            labels={(d) => `#${d.i}`}
+            labels={({ datum }) => `#${datum.i}`}
             labelComponent={<VictoryTooltip />}
             animate={{ duration: 2000 }}
             style={{ parent: parentStyle, data: visible }}
@@ -93,7 +93,7 @@ class App extends React.Component {
 
           <VictoryChart horizontal style={{ parent: parentStyle }}>
             <VictoryVoronoi
-              labels={(d) => `#${d.i}`}
+              labels={({ datum }) => `#${datum.i}`}
               labelComponent={<VictoryTooltip />}
               size={20}
               style={{ parent: parentStyle, data: visible }}
@@ -105,7 +105,7 @@ class App extends React.Component {
 
           <VictoryChart horizontal style={{ parent: parentStyle }}>
             <VictoryVoronoi
-              labels={(d) => `#${d.i}`}
+              labels={({ datum }) => `#${datum.i}`}
               labelComponent={<VictoryTooltip />}
               style={{ parent: parentStyle, data: visible }}
               data={this.state.data}

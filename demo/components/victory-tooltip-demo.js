@@ -42,22 +42,22 @@ class App extends React.Component {
                 pointerLength={20}
               />
             }
-            labels={(d) => `hello #${d.x}`}
+            labels={({ datum }) => `hello #${datum.x}`}
             data={[{ x: 1, y: 1 }, { x: 2, y: 2 }, { x: 3, y: 3 }, { x: 4, y: 2 }, { x: 5, y: 1 }]}
           />
 
           <VictoryScatter
             style={{ parent: parentStyle }}
             labelComponent={<VictoryTooltip constrainToChartArea dy={0}/>}
-            labels={(d) => `hello #${d.x}`}
-            size={(d, active) => (active ? 5 : 3)}
+            labels={({ datum }) => `hello #${datum.x}`}
+            size={({ active }) => active ? 5 : 3}
             data={[{ x: 1, y: 5 }, { x: 2, y: 2 }, { x: 3, y: 3 }, { x: 4, y: 2 }, { x: 5, y: 1 }]}
           />
 
           <VictoryCandlestick
             style={{ parent: parentStyle }}
             labelComponent={<VictoryTooltip />}
-            labels={(d) => `hello #${d.x}`}
+            labels={({ datum }) => `hello #${datum.x}`}
             data={[
               { x: 1, open: 5, close: 10, high: 15, low: 0 },
               { x: 2, open: 15, close: 10, high: 20, low: 5 },
@@ -70,7 +70,7 @@ class App extends React.Component {
           <VictoryErrorBar
             style={{ parent: parentStyle }}
             labelComponent={<VictoryTooltip />}
-            labels={(d) => `hello #${d.x}`}
+            labels={({ datum }) => `hello #${datum.x}`}
             data={[
               { x: 1, y: 1, errorX: [1, 0.5], errorY: 0.1 },
               { x: 2, y: 2, errorX: [1, 3], errorY: 0.1 },
