@@ -29,27 +29,20 @@ class App extends React.Component {
             style={{ parent: parentStyle }}
             labelComponent={
               <VictoryTooltip
-
-                flyoutComponent={
-                  <Flyout
-                    center={{
-                      x: 50, y: 50
-                    }}
-                  />
-                }
+                constrainToChartArea
                 flyoutStyle={{ stroke: "red" }}
                 cornerRadius={0}
                 pointerLength={20}
               />
             }
-            labels={({ datum }) => `hello #${datum.x}`}
+            labels={({ datum }) => `hello0000000000 #${datum.x}`}
             data={[{ x: 1, y: 1 }, { x: 2, y: 2 }, { x: 3, y: 3 }, { x: 4, y: 2 }, { x: 5, y: 1 }]}
           />
 
           <VictoryScatter
             style={{ parent: parentStyle }}
             labelComponent={<VictoryTooltip constrainToChartArea dy={0}/>}
-            labels={({ datum }) => `hello #${datum.x}`}
+            labels={({ datum }) => `hello000000 #${datum.x}`}
             size={({ active }) => active ? 5 : 3}
             data={[{ x: 1, y: 5 }, { x: 2, y: 2 }, { x: 3, y: 3 }, { x: 4, y: 2 }, { x: 5, y: 1 }]}
           />

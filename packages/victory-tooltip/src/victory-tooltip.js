@@ -36,9 +36,11 @@ export default class VictoryTooltip extends React.Component {
     dy: PropTypes.oneOfType([PropTypes.number, PropTypes.func]),
     events: PropTypes.object,
     flyoutComponent: PropTypes.element,
+    flyoutHeight: PropTypes.oneOfType([CustomPropTypes.nonNegative, PropTypes.func]),
     flyoutStyle: PropTypes.object,
+    flyoutWidth: PropTypes.oneOfType([CustomPropTypes.nonNegative, PropTypes.func]),
     groupComponent: PropTypes.element,
-    height: PropTypes.oneOfType([CustomPropTypes.nonNegative, PropTypes.func]),
+    height: PropTypes.number,
     horizontal: PropTypes.bool,
     id: PropTypes.oneOfType([PropTypes.number, PropTypes.string]),
     index: PropTypes.oneOfType([PropTypes.number, PropTypes.string]),
@@ -63,7 +65,7 @@ export default class VictoryTooltip extends React.Component {
       PropTypes.array
     ]),
     theme: PropTypes.object,
-    width: PropTypes.oneOfType([CustomPropTypes.nonNegative, PropTypes.func]),
+    width: PropTypes.number,
     x: PropTypes.number,
     y: PropTypes.number
   };
@@ -167,8 +169,8 @@ export default class VictoryTooltip extends React.Component {
       pointerLength,
       pointerWidth,
       cornerRadius,
-      width,
-      height,
+      flyoutWidth,
+      flyoutHeight,
       dx,
       dy,
       text,
@@ -193,8 +195,8 @@ export default class VictoryTooltip extends React.Component {
       cornerRadius: Helpers.evaluateProp(cornerRadius, props),
       pointerLength: Helpers.evaluateProp(pointerLength, props),
       pointerWidth: Helpers.evaluateProp(pointerWidth, props),
-      width: Helpers.evaluateProp(width, props),
-      height: Helpers.evaluateProp(height, props),
+      flyoutWidth: Helpers.evaluateProp(flyoutWidth, props),
+      flyoutHeight: Helpers.evaluateProp(flyoutHeight, props),
       active: Helpers.evaluateProp(active, props),
       text: Helpers.evaluateProp(text, props)
     });
@@ -258,13 +260,11 @@ export default class VictoryTooltip extends React.Component {
   }
 
   constrainTooltip(center, props, dimensions ) {
-    const { scale } = props;
     const { x, y } = center;
     const { width, height } = dimensions;
-    const range = { x: scale.x.range(), y: scale.y.range() };
     const extent = {
-      x: [Math.min(...range.x), Math.max(...range.x)],
-      y: [Math.min(...range.y), Math.max(...range.y)]
+      x: [0, props.width],
+      y: [0, props.height]
     };
     const flyoutExtent = {
       x: [x - (width / 2), x + (width / 2)],
@@ -338,8 +338,8 @@ export default class VictoryTooltip extends React.Component {
       return Math.max(minWidth, calculatedWidth);
     };
     return {
-      height: props.height || getHeight(props, labelSize, orientation) + padding / 2,
-      width: props.width || getWidth(props, labelSize, orientation) + padding
+      height: props.flyoutHeight || getHeight(props, labelSize, orientation) + padding / 2,
+      width: props.flyoutWidth || getWidth(props, labelSize, orientation) + padding
     };
   }
 
