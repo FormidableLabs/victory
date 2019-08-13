@@ -153,28 +153,32 @@ const calculatePlotValues = (props) => {
   const signY = orientation === "top" ? -1 : 1;
 
   if (horizontal) {
-    const yValue =
-      orientation === "top" || orientation === "bottom"
-        ? x + signY * (candleWidth / 2) + signY * (labelStyle.padding || 0)
-        : x;
-    const xValue =
-      orientation === "left" || orientation === "right"
-        ? positions[computedType] + signX * (labelStyle.padding || 1)
-        : positions[computedType];
+    const yValue = x;
+    const xValue = positions[computedType];
 
-    return { yValue, xValue };
+    const dy = orientation === "top" || orientation === "bottom"
+      ? -signY * (candleWidth / 2) - signY * (labelStyle.padding || 0)
+      : 0;
+
+    const dx = orientation === "top" || orientation === "bottom"
+      ? 0
+      : signX * (labelStyle.padding || 1);
+
+    return { yValue, xValue, dx, dy };
   } else {
-    const xValue =
-      orientation === "top" || orientation === "bottom"
-        ? x
-        : x + signX * (candleWidth / 2) + signX * (labelStyle.padding || 0);
+    const xValue = x;
+    const yValue = positions[computedType];
 
-    const yValue =
-      orientation === "left" || orientation === "right"
-        ? positions[computedType]
-        : positions[computedType] + signY * (labelStyle.padding || 1);
+    const dy = orientation === "top" || orientation === "bottom"
+      ? signY * (labelStyle.padding || 1)
+      : 0;
 
-    return { yValue, xValue };
+    const dx = orientation === "top" || orientation === "bottom"
+      ? 0
+      : signX * (candleWidth / 2) + signX * (labelStyle.padding || 0);
+
+
+    return { yValue, xValue, dx, dy };
   }
 };
 /* eslint-enable complexity*/
@@ -213,12 +217,14 @@ const getLabelProps = (props, text, style, type) => {
     candleWidth,
     orientation
   };
-  const { yValue, xValue } = calculatePlotValues(plotProps);
+  const { yValue, xValue, dx, dy } = calculatePlotValues(plotProps);
 
   return {
     style: labelStyle,
     y: yValue,
     x: xValue,
+    dx,
+    dy,
     text,
     index,
     scale,

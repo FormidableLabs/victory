@@ -108,7 +108,7 @@ const getLabelProps = (dataProps, text, style) => {
     style: labelStyle,
     y: horizontal ? y : getError("y"),
     x: horizontal ? getError("x") : x,
-    dy: horizontal ? 0 : -1 * padding,
+    dy: horizontal ? 0 : padding,
     dx: horizontal ? padding : 0,
     text,
     index,
