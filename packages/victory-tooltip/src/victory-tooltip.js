@@ -25,8 +25,10 @@ export default class VictoryTooltip extends React.Component {
     activateData: PropTypes.bool,
     active: PropTypes.oneOfType([PropTypes.bool, PropTypes.func]),
     angle: PropTypes.number,
-    center: PropTypes.shape({
-      x: PropTypes.number, y: PropTypes.number
+    center: PropTypes.shape({ x: CustomPropTypes.nonNegative, y: CustomPropTypes.nonNegative}),
+    centerOffset: PropTypes.shape({
+      x: PropTypes.oneOfType([PropTypes.number, PropTypes.func]),
+      y: PropTypes.oneOfType([PropTypes.number, PropTypes.func])
     }),
     constrainToChartArea: PropTypes.bool,
     cornerRadius: PropTypes.oneOfType([CustomPropTypes.nonNegative, PropTypes.func]),
@@ -286,8 +288,9 @@ export default class VictoryTooltip extends React.Component {
     };
   }
 
+  // eslint-disable-next-line complexity
   getFlyoutCenter(props, dimensions) {
-    const { x, y, dx, dy, pointerLength, orientation, constrainToChartArea } = props;
+    const { x, y, dx, dy, pointerLength, orientation, constrainToChartArea, centerOffset } = props;
     const { height, width } = dimensions;
     const xSign = orientation === "left" ? -1 : 1;
     const ySign = orientation === "bottom" ? -1 : 1;
@@ -298,16 +301,30 @@ export default class VictoryTooltip extends React.Component {
           : x + dx,
       y:
         orientation === "top" || orientation === "bottom"
-          ? y - ySign * (pointerLength + height / 2 + dy)
+          ? y - ySign * (pointerLength + (height / 2) - dy)
           : y - dy
     };
+
     const center = {
       x: isPlainObject(props.center) && props.center.x ? props.center.x : flyoutCenter.x,
       y: isPlainObject(props.center) && props.center.y ? props.center.y : flyoutCenter.y
     }
+
+    const offsetX = isPlainObject(centerOffset) && centerOffset.x
+      ? Helpers.evaluateProp(centerOffset.x, props)
+      : 0;
+
+    const offsetY = isPlainObject(centerOffset) && centerOffset.y
+      ? Helpers.evaluateProp(centerOffset.y, props)
+      : 0;
+
+    const centerWithOffset = {
+      x: center.x + offsetX, y: center.y + offsetY
+    };
+
     return constrainToChartArea ?
-      this.constrainTooltip(center, props, dimensions)
-      : center;
+      this.constrainTooltip(centerWithOffset, props, dimensions)
+      : centerWithOffset;
   }
 
   getLabelPadding(style) {

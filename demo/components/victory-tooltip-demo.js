@@ -8,7 +8,7 @@ import { VictoryBar } from "../../packages/victory-bar/src/index";
 import { VictoryScatter } from "../../packages/victory-scatter/src/index";
 import { VictoryErrorBar } from "../../packages/victory-errorbar/src/index";
 import { VictoryCandlestick } from "../../packages/victory-candlestick/src/index";
-import { VictoryTooltip, Flyout } from "../../packages/victory-tooltip/src/index";
+import { VictoryTooltip } from "../../packages/victory-tooltip/src/index";
 
 class App extends React.Component {
   render() {
@@ -41,7 +41,9 @@ class App extends React.Component {
 
           <VictoryScatter
             style={{ parent: parentStyle }}
-            labelComponent={<VictoryTooltip constrainToChartArea dy={0}/>}
+            labelComponent={
+              <VictoryTooltip constrainToChartArea dy={0} centerOffset={{ x: 20 }}/>
+            }
             labels={({ datum }) => `hello000000 #${datum.x}`}
             size={({ active }) => active ? 5 : 3}
             data={[{ x: 1, y: 5 }, { x: 2, y: 2 }, { x: 3, y: 3 }, { x: 4, y: 2 }, { x: 5, y: 1 }]}

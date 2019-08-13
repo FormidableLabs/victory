@@ -157,7 +157,7 @@ const calculatePlotValues = (props) => {
     const xValue = positions[computedType];
 
     const dy = orientation === "top" || orientation === "bottom"
-      ? -signY * (candleWidth / 2) - signY * (labelStyle.padding || 0)
+      ? signY * (candleWidth / 2) + signY * (labelStyle.padding || 0)
       : 0;
 
     const dx = orientation === "top" || orientation === "bottom"

@@ -54,7 +54,7 @@ function getOffset(props, datum) {
   const padding = polar ? getPolarPadding(props, datum) : getPadding(props, datum);
   return {
     dx: padding.x,
-    dy: -padding.y
+    dy: padding.y
   };
 }
 
