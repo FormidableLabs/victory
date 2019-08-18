@@ -127,8 +127,8 @@ export const voronoiContainerMixin = (base) =>
       return pick(point, whitelist);
     }
 
-    getLabelPosition(props, points, labelProps) {
-      const { mousePosition, scale, voronoiPadding, mouseFollowLabels } = props;
+    getLabelPosition(props, points) {
+      const { mousePosition, mouseFollowLabels } = props;
       const voronoiDimension = this.getDimension(props);
       const point = this.getPoint(points[0]);
       const basePosition = Helpers.scalePoint(props, point);
@@ -139,31 +139,8 @@ export const voronoiContainerMixin = (base) =>
 
       const x = voronoiDimension === "y" ? mousePosition.x : basePosition.x;
       const y = voronoiDimension === "x" ? mousePosition.y : basePosition.y;
-      if (props.polar) {
-        // TODO: Should multi-point tooltips be constrained within a circular chart?
-        return { x, y };
-      }
-      const range = { x: scale.x.range(), y: scale.y.range() };
-      const extent = {
-        x: [Math.min(...range.x) + voronoiPadding, Math.max(...range.x) - voronoiPadding],
-        y: [Math.min(...range.y) + voronoiPadding, Math.max(...range.y) - voronoiPadding]
-      };
-      const flyoutExtent = this.getFlyoutExtent({ x, y }, props, labelProps);
-      const adjustments = {
-        x: [
-          flyoutExtent.x[0] < extent.x[0] ? extent.x[0] - flyoutExtent.x[0] : 0,
-          flyoutExtent.x[1] > extent.x[1] ? flyoutExtent.x[1] - extent.x[1] : 0
-        ],
-        y: [
-          flyoutExtent.y[0] < extent.y[0] ? extent.y[0] - flyoutExtent.y[0] : 0,
-          flyoutExtent.y[1] > extent.y[1] ? flyoutExtent.y[1] - extent.y[1] : 0
-        ]
-      };
-      return {
-        x: Math.round(x + adjustments.x[0] - adjustments.x[1]),
-        y: Math.round(y + adjustments.y[0] - adjustments.y[1]),
-        center: mousePosition
-      };
+
+      return { x, y, center: mousePosition };
     }
 
     getStyle(props, points, type) {
@@ -191,7 +168,7 @@ export const voronoiContainerMixin = (base) =>
     }
 
     getDefaultLabelProps(props, points) {
-      const { voronoiDimension, horizontal, mouseFollowLabels } = props;
+      const { voronoiDimension, horizontal, mouseFollowLabels, width, height } = props;
       const point = this.getPoint(points[0]);
       const multiPoint = voronoiDimension && points.length > 1;
       const y = point._y1 !== undefined ? point._y1 : point._y;
@@ -201,7 +178,10 @@ export const voronoiContainerMixin = (base) =>
       const orientation = mouseFollowLabels ? undefined : labelOrientation;
       return {
         orientation,
-        pointerLength: multiPoint ? 0 : undefined
+        pointerLength: multiPoint ? 0 : undefined,
+        constrainToVisibleArea: multiPoint ? true : undefined,
+        width,
+        height
       };
     }
 
@@ -238,7 +218,7 @@ export const voronoiContainerMixin = (base) =>
         componentProps,
         this.getDefaultLabelProps(props, points)
       );
-      const labelPosition = this.getLabelPosition(props, points, labelProps);
+      const labelPosition = this.getLabelPosition(props, points);
       return defaults({}, labelPosition, labelProps);
     }
 

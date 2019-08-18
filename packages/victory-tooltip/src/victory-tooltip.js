@@ -30,7 +30,7 @@ export default class VictoryTooltip extends React.Component {
       x: PropTypes.oneOfType([PropTypes.number, PropTypes.func]),
       y: PropTypes.oneOfType([PropTypes.number, PropTypes.func])
     }),
-    constrainToChartArea: PropTypes.bool,
+    constrainToVisibleArea: PropTypes.bool,
     cornerRadius: PropTypes.oneOfType([CustomPropTypes.nonNegative, PropTypes.func]),
     data: PropTypes.array,
     datum: PropTypes.object,
@@ -290,7 +290,7 @@ export default class VictoryTooltip extends React.Component {
 
   // eslint-disable-next-line complexity
   getFlyoutCenter(props, dimensions) {
-    const { x, y, dx, dy, pointerLength, orientation, constrainToChartArea, centerOffset } = props;
+    const { x, y, dx, dy, pointerLength, orientation, constrainToVisibleArea, centerOffset } = props;
     const { height, width } = dimensions;
     const xSign = orientation === "left" ? -1 : 1;
     const ySign = orientation === "bottom" ? -1 : 1;
@@ -322,7 +322,7 @@ export default class VictoryTooltip extends React.Component {
       x: center.x + offsetX, y: center.y + offsetY
     };
 
-    return constrainToChartArea ?
+    return constrainToVisibleArea ?
       this.constrainTooltip(centerWithOffset, props, dimensions)
       : centerWithOffset;
   }
