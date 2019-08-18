@@ -8,7 +8,7 @@ const getVerticalPath = (props) => {
   const { pointerWidth, cornerRadius, orientation, width, height, center } = props;
   const sign = orientation === "top" ? 1 : -1;
   const x = props.x + (props.dx || 0);
-  const y = props.y + sign * (props.dy || 0);
+  const y = props.y + (props.dy || 0);
   const centerX = isPlainObject(center) && center.x;
   const centerY = isPlainObject(center) && center.y;
   const pointerEdge = centerY + sign * (height / 2);
@@ -35,8 +35,8 @@ const getVerticalPath = (props) => {
 const getHorizontalPath = (props) => {
   const { pointerWidth, cornerRadius, orientation, width, height, center } = props;
   const sign = orientation === "right" ? 1 : -1;
-  const x = props.x + sign * (props.dx || 0);
-  const y = props.y - (props.dy || 0);
+  const x = props.x + (props.dx || 0);
+  const y = props.y + (props.dy || 0);
   const centerX = isPlainObject(center) && center.x;
   const centerY = isPlainObject(center) && center.y;
   const pointerEdge = centerX - sign * (width / 2);

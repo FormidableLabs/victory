@@ -1,4 +1,4 @@
-import { assign, defaults, isNil, isFunction } from "lodash";
+import { assign, defaults, isNil, isFunction, isPlainObject } from "lodash";
 import { Helpers, Scale, Domain, Data, LabelHelpers } from "victory-core";
 
 const TYPES = ["close", "open", "high", "low"];
@@ -141,8 +141,9 @@ const getCandleWidth = (props, style) => {
   return Math.max(1, defaultWidth);
 };
 
-const getOrientation = (labelOrientation, type) =>
-  (typeof labelOrientation === "object" && labelOrientation[type]) || labelOrientation;
+const getOrientation = (labelOrientation, type) => {
+  return isPlainObject(labelOrientation) ? labelOrientation[type] : labelOrientation;
+}
 
 /* eslint-disable complexity*/
 const calculatePlotValues = (props) => {
@@ -200,7 +201,10 @@ const getLabelProps = (props, text, style, type) => {
     labelOrientation
   } = props;
 
-  const orientation = getOrientation(labelOrientation, type);
+  const component = props[`${type}LabelComponent`] || props.labelComponent;
+  const orientation = component.props
+    && component.props.orientation
+    || getOrientation(labelOrientation, type);
   const positions = { high, low, open, close };
   const namespace = type ? `${type}Labels` : "labels";
   const labelStyle = style[namespace] || style.labels;

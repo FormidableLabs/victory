@@ -297,12 +297,12 @@ export default class VictoryTooltip extends React.Component {
     const flyoutCenter = {
       x:
         orientation === "left" || orientation === "right"
-          ? x + xSign * (pointerLength + width / 2 + dx)
+          ? x + xSign * (pointerLength + width / 2 + (xSign * dx))
           : x + dx,
       y:
         orientation === "top" || orientation === "bottom"
-          ? y - ySign * (pointerLength + (height / 2) - dy)
-          : y - dy
+          ? y - ySign * (pointerLength + (height / 2) - (ySign * dy))
+          : y + dy
     };
 
     const center = {
@@ -386,7 +386,7 @@ export default class VictoryTooltip extends React.Component {
     });
   }
 
-  getOrientation(point, center, orientation) {
+  getOrientation(point, center) {
     if (Math.abs(point.x - center.x) < Math.abs(point.y - center.y) ) {
       return point.y < center.y ? "bottom" : "top";
     } else {
@@ -408,12 +408,8 @@ export default class VictoryTooltip extends React.Component {
       cornerRadius,
       events,
       flyoutComponent,
-      constrainToChartArea
     } = props;
-    // const orientation = constrainToChartArea
-    //   ? this.getOrientation({ x, y }, flyoutCenter, props.orientation)
-    //   : props.orientation;
-    const orientation = this.getOrientation({ x, y }, flyoutCenter, props.orientation)
+    const orientation = this.getOrientation({ x, y }, flyoutCenter)
     return defaults({}, flyoutComponent.props, {
       x,
       y,
