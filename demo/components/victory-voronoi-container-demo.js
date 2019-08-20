@@ -61,9 +61,9 @@ class App extends React.Component {
             style={chartStyle}
             containerComponent={
               <VictoryVoronoiContainer
-                labels={({ datum }) => datum.y}
+                labels={({ datum }) => `I'm kind of a long label ${datum.y}`}
                 mouseFollowLabels
-                labelComponent={<VictoryTooltip width={50} />}
+                labelComponent={<VictoryTooltip constrainToVisibleArea tooltipWidth={80} />}
               />
             }
           >

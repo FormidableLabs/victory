@@ -386,11 +386,21 @@ export default class VictoryTooltip extends React.Component {
     });
   }
 
-  getOrientation(point, center) {
-    if (Math.abs(point.x - center.x) < Math.abs(point.y - center.y) ) {
-      return point.y < center.y ? "bottom" : "top";
+  getOrientation(point, center, flyoutDimensions) {
+    const edges = {
+      bottom: center.y + flyoutDimensions.height / 2,
+      top: center.y - flyoutDimensions.height / 2,
+      left: center.x - flyoutDimensions.width / 2,
+      right: center.x + flyoutDimensions.width / 2
+    };
+    if (edges.top > point.y) {
+      return "bottom"
+    } else if (edges.right < point.x) {
+      return "left";
+    } else if (edges.left > point.x) {
+      return "right";
     } else {
-      return point.x < center.x ? "right" : "left";
+      return "top";
     }
   }
 
@@ -409,7 +419,7 @@ export default class VictoryTooltip extends React.Component {
       events,
       flyoutComponent,
     } = props;
-    const orientation = this.getOrientation({ x, y }, flyoutCenter)
+    const orientation = this.getOrientation({ x, y }, flyoutCenter, flyoutDimensions);
     return defaults({}, flyoutComponent.props, {
       x,
       y,

@@ -2,7 +2,7 @@ import PropTypes from "prop-types";
 import React from "react";
 import { defaults, isFunction, pick } from "lodash";
 import { VictoryTooltip } from "victory-tooltip";
-import { VictoryContainer, Helpers, TextSize, PropTypes as CustomPropTypes } from "victory-core";
+import { VictoryContainer, Helpers, PropTypes as CustomPropTypes } from "victory-core";
 import VoronoiHelpers from "./voronoi-helpers";
 
 export const voronoiContainerMixin = (base) =>
@@ -73,55 +73,6 @@ export const voronoiContainerMixin = (base) =>
       return voronoiDimension === "x" ? "y" : "x";
     }
 
-    getLabelPadding(style) {
-      if (!style) {
-        return 0;
-      }
-      const paddings = Array.isArray(style) ? style.map((s) => s.padding) : [style.padding];
-      return Math.max(...paddings, 0);
-    }
-
-    getFlyoutSize(labelComponent, text, style) {
-      const padding = this.getLabelPadding(style);
-      const textSize = TextSize.approximateTextSize(text, style);
-      return {
-        x: labelComponent.width || textSize.width + padding,
-        y: labelComponent.height || textSize.height + padding
-      };
-    }
-
-    getLabelCornerRadius(props, labelProps) {
-      if (labelProps.cornerRadius !== undefined) {
-        return labelProps.cornerRadius;
-      }
-      const theme = props.theme || labelProps.theme;
-      return (theme.tooltip && theme.tooltip.cornerRadius) || 0;
-    }
-
-    getFlyoutExtent(position, props, labelProps) {
-      const { text, style } = labelProps;
-      const { orientation, dx = 0, dy = 0 } = labelProps;
-      const flyoutSize = this.getFlyoutSize(props.labelComponent, text, style);
-      const cornerRadius = this.getLabelCornerRadius(props, labelProps);
-      const x = position.x + dx + 2 * cornerRadius;
-      const y = position.y + dy + 2 * cornerRadius;
-      const width =
-        orientation === "top" || orientation === "bottom" ? flyoutSize.x / 2 : flyoutSize.x;
-      const horizontalSign = orientation === "left" ? -1 : 1;
-      const verticalSign = orientation === "bottom" ? 1 : -1;
-      const extent = {};
-      if (orientation === "top" || orientation === "bottom") {
-        extent.x = [x - width, x + width];
-      } else {
-        extent.x = [x, x + horizontalSign * width];
-      }
-      extent.y = [y, y + verticalSign * flyoutSize.y];
-      return {
-        x: [Math.min(...extent.x), Math.max(...extent.x)],
-        y: [Math.min(...extent.y), Math.max(...extent.y)]
-      };
-    }
-
     getPoint(point) {
       const whitelist = ["_x", "_x1", "_x0", "_y", "_y1", "_y0"];
       return pick(point, whitelist);
@@ -179,14 +130,14 @@ export const voronoiContainerMixin = (base) =>
       return {
         orientation,
         pointerLength: multiPoint ? 0 : undefined,
-        constrainToVisibleArea: multiPoint ? true : undefined,
+        constrainToVisibleArea: multiPoint || mouseFollowLabels ? true : undefined,
         width,
         height
       };
     }
 
     getLabelProps(props, points) {
-      const { labels, scale, labelComponent, theme } = props;
+      const { labels, scale, labelComponent, theme, width, height } = props;
       const componentProps = labelComponent.props || {};
       const text = points.reduce((memo, datum) => {
         const labelProps = defaults({}, componentProps, { datum, active: true });
@@ -213,7 +164,9 @@ export const voronoiContainerMixin = (base) =>
           datum,
           scale,
           theme,
-          text
+          text,
+          width,
+          height
         },
         componentProps,
         this.getDefaultLabelProps(props, points)

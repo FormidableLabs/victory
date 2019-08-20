@@ -29,7 +29,7 @@ class App extends React.Component {
             style={{ parent: parentStyle }}
             labelComponent={
               <VictoryTooltip
-                constrainToChartArea
+                constrainToVisibleArea
                 flyoutStyle={{ stroke: "red" }}
                 cornerRadius={0}
                 pointerLength={20}
@@ -42,7 +42,7 @@ class App extends React.Component {
           <VictoryScatter
             style={{ parent: parentStyle }}
             labelComponent={
-              <VictoryTooltip constrainToChartArea dy={0} centerOffset={{ x: 20 }}/>
+              <VictoryTooltip constrainToVisibleArea dy={0} centerOffset={{ x: 20 }}/>
             }
             labels={({ datum }) => `hello000000 #${datum.x}`}
             size={({ active }) => active ? 5 : 3}
