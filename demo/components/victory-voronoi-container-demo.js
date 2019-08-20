@@ -56,6 +56,28 @@ class App extends React.Component {
       <div className="demo">
         <div style={containerStyle}>
           <VictoryChart
+            style={chartStyle}
+            domain={{ y: [0, 6] }}
+            containerComponent={
+              <VictoryVoronoiContainer
+                voronoiDimension="x"
+                labels={({ datum }) => `y: ${datum.y}`}
+              />
+            }
+          >
+            <VictoryScatter
+              style={{ data: { fill: "red" }, labels: { fill: "red" } }}
+              data={[
+              { x: 0, y: 2 }, { x: 2, y: 3 }, { x: 4, y: 4 }, { x: 6, y: 5 }
+              ]}
+            />
+            <VictoryScatter
+              data={[
+              { x: 2, y: 2 }, { x: 4, y: 3 }, { x: 6, y: 4 }, { x: 8, y: 5 }
+              ]}
+            />
+          </VictoryChart>
+          <VictoryChart
             height={450}
             domain={{ y: [0, 1] }}
             style={chartStyle}
