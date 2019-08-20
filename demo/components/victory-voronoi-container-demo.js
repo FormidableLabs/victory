@@ -215,7 +215,7 @@ class App extends React.Component {
                 labelComponent={<VictoryTooltip width={50} />}
               />
             }
-            size={({ active }) => active ? 5 : 3}
+            size={({ active }) => (active ? 5 : 3)}
             data={this.state.data}
             x="a"
             y="b"

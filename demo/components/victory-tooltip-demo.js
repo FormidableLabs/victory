@@ -36,22 +36,29 @@ class App extends React.Component {
               />
             }
             labels={({ datum }) => `hello0000000000 #${datum.x}`}
-            data={[{ x: 1, y: 1 }, { x: 2, y: -2 }, { x: 3, y: 3 }, { x: 4, y: -3 }, { x: 5, y: 2 }]}
+            data={[
+              { x: 1, y: 1 },
+              { x: 2, y: -2 },
+              { x: 3, y: 3 },
+              { x: 4, y: -3 },
+              { x: 5, y: 2 }
+            ]}
           />
 
           <VictoryScatter
             style={{ parent: parentStyle }}
             labelComponent={
-              <VictoryTooltip constrainToVisibleArea dy={0} centerOffset={{ x: 20 }}/>
+              <VictoryTooltip constrainToVisibleArea dy={0} centerOffset={{ x: 20 }} />
             }
             labels={({ datum }) => `hello000000 #${datum.x}`}
-            size={({ active }) => active ? 5 : 3}
+            size={({ active }) => (active ? 5 : 3)}
             data={[{ x: 1, y: 5 }, { x: 2, y: 2 }, { x: 3, y: 3 }, { x: 4, y: 2 }, { x: 5, y: 1 }]}
           />
 
-          <VictoryCandlestick horizontal
+          <VictoryCandlestick
+            horizontal
             style={{ parent: parentStyle }}
-            highLabelComponent={<VictoryTooltip active dy={-3}/>}
+            highLabelComponent={<VictoryTooltip active dy={-3} />}
             highLabels={({ datum }) => `hello #${datum.x}`}
             data={[
               { x: 1, open: 5, close: 10, high: 15, low: 0 },

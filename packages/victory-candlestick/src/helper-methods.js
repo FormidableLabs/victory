@@ -143,7 +143,7 @@ const getCandleWidth = (props, style) => {
 
 const getOrientation = (labelOrientation, type) => {
   return isPlainObject(labelOrientation) ? labelOrientation[type] : labelOrientation;
-}
+};
 
 /* eslint-disable complexity*/
 const calculatePlotValues = (props) => {
@@ -157,27 +157,26 @@ const calculatePlotValues = (props) => {
     const yValue = x;
     const xValue = positions[computedType];
 
-    const dy = orientation === "top" || orientation === "bottom"
-      ? signY * (candleWidth / 2) + signY * (labelStyle.padding || 0)
-      : 0;
+    const dy =
+      orientation === "top" || orientation === "bottom"
+        ? signY * (candleWidth / 2) + signY * (labelStyle.padding || 0)
+        : 0;
 
-    const dx = orientation === "top" || orientation === "bottom"
-      ? 0
-      : signX * (labelStyle.padding || 1);
+    const dx =
+      orientation === "top" || orientation === "bottom" ? 0 : signX * (labelStyle.padding || 1);
 
     return { yValue, xValue, dx, dy };
   } else {
     const xValue = x;
     const yValue = positions[computedType];
 
-    const dy = orientation === "top" || orientation === "bottom"
-      ? signY * (labelStyle.padding || 1)
-      : 0;
+    const dy =
+      orientation === "top" || orientation === "bottom" ? signY * (labelStyle.padding || 1) : 0;
 
-    const dx = orientation === "top" || orientation === "bottom"
-      ? 0
-      : signX * (candleWidth / 2) + signX * (labelStyle.padding || 0);
-
+    const dx =
+      orientation === "top" || orientation === "bottom"
+        ? 0
+        : signX * (candleWidth / 2) + signX * (labelStyle.padding || 0);
 
     return { yValue, xValue, dx, dy };
   }
@@ -202,9 +201,8 @@ const getLabelProps = (props, text, style, type) => {
   } = props;
 
   const component = props[`${type}LabelComponent`] || props.labelComponent;
-  const orientation = component.props
-    && component.props.orientation
-    || getOrientation(labelOrientation, type);
+  const orientation =
+    (component.props && component.props.orientation) || getOrientation(labelOrientation, type);
   const positions = { high, low, open, close };
   const namespace = type ? `${type}Labels` : "labels";
   const labelStyle = style[namespace] || style.labels;

@@ -120,7 +120,7 @@ export const voronoiContainerMixin = (base) =>
     }
 
     getDefaultLabelProps(props, points) {
-      const { voronoiDimension, horizontal, mouseFollowLabels, width, height } = props;
+      const { voronoiDimension, horizontal, mouseFollowLabels } = props;
       const point = this.getPoint(points[0]);
       const multiPoint = voronoiDimension && points.length > 1;
       const y = point._y1 !== undefined ? point._y1 : point._y;
@@ -131,9 +131,7 @@ export const voronoiContainerMixin = (base) =>
       return {
         orientation,
         pointerLength: multiPoint ? 0 : undefined,
-        constrainToVisibleArea: multiPoint || mouseFollowLabels ? true : undefined,
-        width,
-        height
+        constrainToVisibleArea: multiPoint || mouseFollowLabels ? true : undefined
       };
     }
 
@@ -182,7 +180,7 @@ export const voronoiContainerMixin = (base) =>
         return null;
       }
       if (Array.isArray(activePoints) && activePoints.length) {
-        const labelProps = this.getLabelProps(props, activePoints)
+        const labelProps = this.getLabelProps(props, activePoints);
         return React.cloneElement(labelComponent, labelProps);
       } else {
         return null;

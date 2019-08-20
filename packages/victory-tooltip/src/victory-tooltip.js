@@ -25,7 +25,7 @@ export default class VictoryTooltip extends React.Component {
     activateData: PropTypes.bool,
     active: PropTypes.oneOfType([PropTypes.bool, PropTypes.func]),
     angle: PropTypes.number,
-    center: PropTypes.shape({ x: CustomPropTypes.nonNegative, y: CustomPropTypes.nonNegative}),
+    center: PropTypes.shape({ x: CustomPropTypes.nonNegative, y: CustomPropTypes.nonNegative }),
     centerOffset: PropTypes.shape({
       x: PropTypes.oneOfType([PropTypes.number, PropTypes.func]),
       y: PropTypes.oneOfType([PropTypes.number, PropTypes.func])
@@ -261,7 +261,7 @@ export default class VictoryTooltip extends React.Component {
     return angle + sign * labelRotation;
   }
 
-  constrainTooltip(center, props, dimensions ) {
+  constrainTooltip(center, props, dimensions) {
     const { x, y } = center;
     const { width, height } = dimensions;
     const extent = {
@@ -269,9 +269,9 @@ export default class VictoryTooltip extends React.Component {
       y: [0, props.height]
     };
     const flyoutExtent = {
-      x: [x - (width / 2), x + (width / 2)],
-      y: [y - (height / 2), y + (height / 2)]
-    }
+      x: [x - width / 2, x + width / 2],
+      y: [y - height / 2, y + height / 2]
+    };
     const adjustments = {
       x: [
         flyoutExtent.x[0] < extent.x[0] ? extent.x[0] - flyoutExtent.x[0] : 0,
@@ -290,44 +290,58 @@ export default class VictoryTooltip extends React.Component {
 
   // eslint-disable-next-line complexity
   getFlyoutCenter(props, dimensions) {
-    const { x, y, dx, dy, pointerLength, orientation, constrainToVisibleArea, centerOffset } = props;
+    const {
+      x,
+      y,
+      dx,
+      dy,
+      pointerLength,
+      orientation,
+      constrainToVisibleArea,
+      centerOffset
+    } = props;
     const { height, width } = dimensions;
     const xSign = orientation === "left" ? -1 : 1;
     const ySign = orientation === "bottom" ? -1 : 1;
     const flyoutCenter = {
       x:
         orientation === "left" || orientation === "right"
-          ? x + xSign * (pointerLength + width / 2 + (xSign * dx))
+          ? x + xSign * (pointerLength + width / 2 + xSign * dx)
           : x + dx,
       y:
         orientation === "top" || orientation === "bottom"
-          ? y - ySign * (pointerLength + (height / 2) - (ySign * dy))
+          ? y - ySign * (pointerLength + height / 2 - ySign * dy)
           : y + dy
     };
 
     const center = {
-      x: isPlainObject(props.center) && props.center.x !== undefined
-        ? props.center.x
-        : flyoutCenter.x,
-      y: isPlainObject(props.center) && props.center.y !== undefined
-        ? props.center.y
-        : flyoutCenter.y
-    }
-
-    const offsetX = isPlainObject(centerOffset) && centerOffset.x !== undefined
-      ? Helpers.evaluateProp(centerOffset.x, props)
-      : 0;
-
-    const offsetY = isPlainObject(centerOffset) && centerOffset.y !== undefined
-      ? Helpers.evaluateProp(centerOffset.y, props)
-      : 0;
-
-    const centerWithOffset = {
-      x: center.x + offsetX, y: center.y + offsetY
+      x:
+        isPlainObject(props.center) && props.center.x !== undefined
+          ? props.center.x
+          : flyoutCenter.x,
+      y:
+        isPlainObject(props.center) && props.center.y !== undefined
+          ? props.center.y
+          : flyoutCenter.y
     };
 
-    return constrainToVisibleArea ?
-      this.constrainTooltip(centerWithOffset, props, dimensions)
+    const offsetX =
+      isPlainObject(centerOffset) && centerOffset.x !== undefined
+        ? Helpers.evaluateProp(centerOffset.x, props)
+        : 0;
+
+    const offsetY =
+      isPlainObject(centerOffset) && centerOffset.y !== undefined
+        ? Helpers.evaluateProp(centerOffset.y, props)
+        : 0;
+
+    const centerWithOffset = {
+      x: center.x + offsetX,
+      y: center.y + offsetY
+    };
+
+    return constrainToVisibleArea
+      ? this.constrainTooltip(centerWithOffset, props, dimensions)
       : centerWithOffset;
   }
 
@@ -421,7 +435,7 @@ export default class VictoryTooltip extends React.Component {
       pointerWidth,
       cornerRadius,
       events,
-      flyoutComponent,
+      flyoutComponent
     } = props;
     const orientation = this.getOrientation({ x, y }, flyoutCenter, flyoutDimensions);
     return defaults({}, flyoutComponent.props, {
