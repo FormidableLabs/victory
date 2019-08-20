@@ -119,7 +119,7 @@ export default class VictoryAnimation extends React.Component {
       /* Start traversing the tween queue */
       this.traverseQueue();
     }
-    return nextState.animationInfo.animating || !equalProps;
+    return nextState.animationInfo.animating || nextState.animationInfo.terminating || !equalProps;
   }
 
   componentWillUnmount() {
@@ -181,7 +181,8 @@ export default class VictoryAnimation extends React.Component {
         data: this.interpolator(1),
         animationInfo: {
           progress: 1,
-          animating: false
+          animating: false,
+          terminating: true
         }
       });
       if (this.loopID) {
