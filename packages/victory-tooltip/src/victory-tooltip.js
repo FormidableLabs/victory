@@ -10,7 +10,7 @@ import {
   VictoryPortal
 } from "victory-core";
 import Flyout from "./flyout";
-import { assign, defaults, uniqueId, isPlainObject } from "lodash";
+import { assign, defaults, uniqueId, isPlainObject, orderBy } from "lodash";
 
 const fallbackProps = {
   cornerRadius: 5,
@@ -306,15 +306,19 @@ export default class VictoryTooltip extends React.Component {
     };
 
     const center = {
-      x: isPlainObject(props.center) && props.center.x ? props.center.x : flyoutCenter.x,
-      y: isPlainObject(props.center) && props.center.y ? props.center.y : flyoutCenter.y
+      x: isPlainObject(props.center) && props.center.x !== undefined
+        ? props.center.x
+        : flyoutCenter.x,
+      y: isPlainObject(props.center) && props.center.y !== undefined
+        ? props.center.y
+        : flyoutCenter.y
     }
 
-    const offsetX = isPlainObject(centerOffset) && centerOffset.x
+    const offsetX = isPlainObject(centerOffset) && centerOffset.x !== undefined
       ? Helpers.evaluateProp(centerOffset.x, props)
       : 0;
 
-    const offsetY = isPlainObject(centerOffset) && centerOffset.y
+    const offsetY = isPlainObject(centerOffset) && centerOffset.y !== undefined
       ? Helpers.evaluateProp(centerOffset.y, props)
       : 0;
 
@@ -393,15 +397,15 @@ export default class VictoryTooltip extends React.Component {
       left: center.x - flyoutDimensions.width / 2,
       right: center.x + flyoutDimensions.width / 2
     };
-    if (edges.top > point.y) {
-      return "bottom"
-    } else if (edges.right < point.x) {
-      return "left";
-    } else if (edges.left > point.x) {
-      return "right";
-    } else {
-      return "top";
-    }
+
+    const gaps = [
+      { side: "bottom", val: edges.top > point.y ? edges.top - point.y : -1 },
+      { side: "top", val: edges.bottom < point.y ? point.y - edges.bottom : -1 },
+      { side: "left", val: edges.right < point.x ? point.x - edges.right : -1 },
+      { side: "right", val: edges.left > point.x ? edges.left - point.x : -1 }
+    ];
+
+    return orderBy(gaps, "val", "desc")[0].side;
   }
 
   getFlyoutProps(props, calculatedValues) {

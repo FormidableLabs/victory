@@ -78,20 +78,21 @@ export const voronoiContainerMixin = (base) =>
       return pick(point, whitelist);
     }
 
-    getLabelPosition(props, points) {
+    getLabelPosition(props, labelProps, points) {
       const { mousePosition, mouseFollowLabels } = props;
       const voronoiDimension = this.getDimension(props);
       const point = this.getPoint(points[0]);
       const basePosition = Helpers.scalePoint(props, point);
+
+      let center = mouseFollowLabels ? mousePosition : undefined;
       if (!voronoiDimension || points.length < 2) {
-        const center = mouseFollowLabels ? mousePosition : undefined;
-        return { ...basePosition, center };
+        return { ...basePosition, center: defaults({}, labelProps.center, center) };
       }
 
       const x = voronoiDimension === "y" ? mousePosition.x : basePosition.x;
       const y = voronoiDimension === "x" ? mousePosition.y : basePosition.y;
-
-      return { x, y, center: mousePosition };
+      center = mouseFollowLabels ? mousePosition : { x, y };
+      return { x, y, center: defaults({}, labelProps.center, center) };
     }
 
     getStyle(props, points, type) {
@@ -171,7 +172,7 @@ export const voronoiContainerMixin = (base) =>
         componentProps,
         this.getDefaultLabelProps(props, points)
       );
-      const labelPosition = this.getLabelPosition(props, points);
+      const labelPosition = this.getLabelPosition(props, labelProps, points);
       return defaults({}, labelPosition, labelProps);
     }
 
@@ -181,7 +182,8 @@ export const voronoiContainerMixin = (base) =>
         return null;
       }
       if (Array.isArray(activePoints) && activePoints.length) {
-        return React.cloneElement(labelComponent, this.getLabelProps(props, activePoints));
+        const labelProps = this.getLabelProps(props, activePoints)
+        return React.cloneElement(labelComponent, labelProps);
       } else {
         return null;
       }
