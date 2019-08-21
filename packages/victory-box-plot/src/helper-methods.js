@@ -149,15 +149,15 @@ const getStyles = (props, styleObject) => {
     labels: labelStyles,
     parent: defaults({}, style.parent, styleObject.parent, parentStyles),
     max: defaults({}, style.max, styleObject.max, whiskerStyles),
-    maxLabels: defaults({}, style.maxLabels, styleObject.maxlabels, labelStyles),
+    maxLabels: defaults({}, style.maxLabels, styleObject.maxLabels, labelStyles),
     median: defaults({}, style.median, styleObject.median, whiskerStyles),
-    medianLabels: defaults({}, style.medianLabels, styleObject.medianlabels, labelStyles),
+    medianLabels: defaults({}, style.medianLabels, styleObject.medianLabels, labelStyles),
     min: defaults({}, style.min, styleObject.min, whiskerStyles),
-    minLabels: defaults({}, style.minLabels, styleObject.minlabels, labelStyles),
+    minLabels: defaults({}, style.minLabels, styleObject.minLabels, labelStyles),
     q1: defaults({}, style.q1, styleObject.q1, boxStyles),
-    q1Labels: defaults({}, style.q1Labels, styleObject.q1labels, labelStyles),
+    q1Labels: defaults({}, style.q1Labels, styleObject.q1Labels, labelStyles),
     q3: defaults({}, style.q3, styleObject.q3, boxStyles),
-    q3Labels: defaults({}, style.q3Labels, styleObject.q3labels, labelStyles),
+    q3Labels: defaults({}, style.q3Labels, styleObject.q3Labels, labelStyles),
     whiskers: whiskerStyles
   };
 };
