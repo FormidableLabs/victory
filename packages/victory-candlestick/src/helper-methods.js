@@ -38,7 +38,7 @@ const getDomain = (props, axis) => {
   return Domain.createDomainFunction(getDomainFromData)(props, axis);
 };
 
-const getStyles = (style, defaultStyles) => {
+const getStyles = (style, defaultStyles = {}) => {
   const width = "100%";
   const height = "100%";
 
@@ -54,20 +54,21 @@ const getStyles = (style, defaultStyles) => {
     );
   }
 
-  const defaultParent = (defaultStyles && defaultStyles.parent) || {};
-  const defaultLabels = (defaultStyles && defaultStyles.labels) || {};
-  const defaultData = (defaultStyles && defaultStyles.data) || {};
+  const defaultParent = defaultStyles.parent || {};
+  const defaultLabels = defaultStyles.labels || {};
+  const defaultData = defaultStyles.data || {};
+  const labelStyle = defaults({}, style.labels, defaultLabels);
   return {
     parent: defaults({}, style.parent, defaultParent, {
       width,
       height
     }),
-    labels: defaults({}, style.labels, defaultLabels),
+    labels: labelStyle,
     data: defaults({}, style.data, defaultData),
-    openLabels: defaults({}, style.openLabels, style.labels, defaultLabels),
-    closeLabels: defaults({}, style.closeLabels, style.labels, defaultLabels),
-    lowLabels: defaults({}, style.lowLabels, style.labels, defaultLabels),
-    highLabels: defaults({}, style.highLabels, style.labels, defaultLabels)
+    openLabels: defaults({}, style.openLabels, defaultStyles.openLabels, labelStyle),
+    closeLabels: defaults({}, style.closeLabels, defaultStyles.closeLabels, labelStyle),
+    lowLabels: defaults({}, style.lowLabels, defaultStyles.lowLabels, labelStyle),
+    highLabels: defaults({}, style.highLabels, defaultStyles.highLabels, labelStyle)
   };
 };
 
@@ -141,7 +142,7 @@ const getCandleWidth = (props, style) => {
   return Math.max(1, defaultWidth);
 };
 
-const getOrientation = (labelOrientation, type) => {
+const getOrientation = (labelOrientation, type = "labels") => {
   return isPlainObject(labelOrientation) ? labelOrientation[type] : labelOrientation;
 };
 
@@ -201,8 +202,11 @@ const getLabelProps = (props, text, style, type) => {
   } = props;
 
   const component = props[`${type}LabelComponent`] || props.labelComponent;
+  const defaultOrientation = horizontal ? "top" : "right";
   const orientation =
-    (component.props && component.props.orientation) || getOrientation(labelOrientation, type);
+    (component.props && component.props.orientation)
+    || getOrientation(labelOrientation, type)
+    || defaultOrientation;
   const positions = { high, low, open, close };
   const namespace = type ? `${type}Labels` : "labels";
   const labelStyle = style[namespace] || style.labels;
