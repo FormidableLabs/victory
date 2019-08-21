@@ -292,7 +292,7 @@ const getLabelProps = (props, text, type) => {
     style: labelStyle,
     y: horizontal ? positions.y : positions[type],
     x: horizontal ? positions[type] : positions.x,
-    dy: horizontal ?  getOffset("y") : 0,
+    dy: horizontal ? getOffset("y") : 0,
     dx: horizontal ? 0 : getOffset("x"),
     textAnchor: labelStyle.textAnchor || defaultTextAnchors[labelOrientation],
     verticalAnchor: labelStyle.verticalAnchor || defaultVerticalAnchors[labelOrientation],

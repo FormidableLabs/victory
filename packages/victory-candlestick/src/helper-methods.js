@@ -204,9 +204,9 @@ const getLabelProps = (props, text, style, type) => {
   const component = props[`${type}LabelComponent`] || props.labelComponent;
   const defaultOrientation = horizontal ? "top" : "right";
   const orientation =
-    (component.props && component.props.orientation)
-    || getOrientation(labelOrientation, type)
-    || defaultOrientation;
+    (component.props && component.props.orientation) ||
+    getOrientation(labelOrientation, type) ||
+    defaultOrientation;
   const positions = { high, low, open, close };
   const namespace = type ? `${type}Labels` : "labels";
   const labelStyle = style[namespace] || style.labels;
