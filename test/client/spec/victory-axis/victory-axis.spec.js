@@ -30,7 +30,41 @@ describe("components/victory-axis", () => {
 
     it("renders the appropriate number of ticks", () => {
       const tickValues = [1, 2, 3];
-      const wrapper = shallow(<VictoryAxis tickValues={tickValues} />);
+      const style = { ticks: { stroke: "black" }}
+      const wrapper = shallow(
+        <VictoryAxis tickValues={tickValues} style={style} />
+      );
+      const ticks = wrapper.find('[type="tick"]');
+      expect(ticks.length).to.equal(tickValues.length);
+    });
+
+    it("does not render invisible ticks", () => {
+      const tickValues = [1, 2, 3];
+      const style = { ticks: { stroke: "none" }}
+      const wrapper = shallow(
+        <VictoryAxis tickValues={tickValues} style={style} />
+      );
+      const ticks = wrapper.find('[type="tick"]');
+      expect(ticks.length).to.equal(0);
+    });
+
+    it("renders invisible ticks that have events", () => {
+      const tickValues = [1, 2, 3];
+      const style = { ticks: { stroke: "none" }}
+      const wrapper = shallow(
+        <VictoryAxis
+          events={[
+            {
+              target: "ticks",
+              eventHandlers: {
+                onClick: () => {}
+              }
+            }
+          ]}
+          tickValues={tickValues}
+          style={style}
+        />
+      );
       const ticks = wrapper.find('[type="tick"]');
       expect(ticks.length).to.equal(tickValues.length);
     });
@@ -124,7 +158,10 @@ describe("components/victory-axis", () => {
             tickValues={["", "", ""]}
             width={10}
             fixLabelOverlap
-            style={{ tickLabels: { padding: 0 } }}
+            style={{
+              ticks: { stroke: "black" },
+              tickLabels: { padding: 0 }
+            }}
           />
         );
         expect(wrapper.find('[type="tick"]').length).to.equal(3);
@@ -140,7 +177,10 @@ describe("components/victory-axis", () => {
       });
 
       it("renders the appropriate number of ticks with default options", () => {
-        const wrapper = shallow(<VictoryAxis tickValues={["1", "2", "3"]} width={10} />);
+        const style = { ticks: { stroke: "black" }}
+        const wrapper = shallow(
+          <VictoryAxis tickValues={["1", "2", "3"]} style={style} width={10} />
+        );
         expect(wrapper.find('[type="tick"]').length).to.equal(3);
       });
       it("renders the appropriate number of ticks with fixLabelOverlap options", () => {
@@ -149,7 +189,10 @@ describe("components/victory-axis", () => {
             tickValues={["1", "2", "3"]}
             width={60}
             fixLabelOverlap
-            style={{ tickLabels: { padding: 0 } }}
+            style={{
+              ticks: { stroke: "black" },
+              tickLabels: { padding: 0 }
+            }}
           />
         );
         expect(wrapper.find('[type="tick"]').length).to.equal(2);
@@ -162,7 +205,10 @@ describe("components/victory-axis", () => {
             height={90}
             fixLabelOverlap
             dependentAxis
-            style={{ tickLabels: { padding: 0 } }}
+            style={{
+              ticks: { stroke: "black" },
+              tickLabels: { padding: 0 }
+            }}
           />
         );
         const labelTexts = wrapper.find("VictoryLabel").map((tick) => tick.props("text").text);
@@ -178,7 +224,10 @@ describe("components/victory-axis", () => {
             fixLabelOverlap
             tickValues={["1", "2", "3"]}
             height={60}
-            style={{ tickLabels: { padding: 0 } }}
+            style={{
+              ticks: { stroke: "black" },
+              tickLabels: { padding: 0 }
+            }}
           />
         );
         const labelTexts = wrapper.find("VictoryLabel").map((tick) => tick.props("text").text);
@@ -192,7 +241,10 @@ describe("components/victory-axis", () => {
             tickValues={["1", "2", "3"]}
             width={100}
             fixLabelOverlap
-            style={{ tickLabels: { padding: 10 } }}
+            style={{
+              ticks: { stroke: "black" },
+              tickLabels: { padding: 10 }
+            }}
           />
         );
         expect(wrapper.find('[type="tick"]').length).to.equal(2);
@@ -204,7 +256,10 @@ describe("components/victory-axis", () => {
             tickValues={["1", "2", "3"]}
             height={80}
             fixLabelOverlap
-            style={{ tickLabels: { padding: { top: 10 } } }}
+            style={{
+              ticks: { stroke: "black" },
+              tickLabels: { padding: { top: 10 } }
+            }}
           />
         );
         expect(wrapper.find('[type="tick"]').length).to.equal(2);

@@ -175,12 +175,11 @@ class VictoryAxis extends React.Component {
       const GridComponent = shouldRender(BaseGridComponent.props) ? BaseGridComponent : undefined;
       const tickLabelProps = this.getComponentProps(tickLabelComponent, "tickLabels", index);
       const TickLabel = React.cloneElement(tickLabelComponent, tickLabelProps);
+      const children = [GridComponent, TickComponent, TickLabel].filter(Boolean)
       return React.cloneElement(
         props.groupComponent,
         { key: `${name}-tick-group-${key}` },
-        GridComponent,
-        TickComponent,
-        TickLabel
+        children
       );
     });
   }
