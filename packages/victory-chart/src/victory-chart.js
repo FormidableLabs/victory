@@ -37,6 +37,7 @@ export default class VictoryChart extends React.Component {
     }),
     endAngle: PropTypes.number,
     innerRadius: CustomPropTypes.nonNegative,
+    prependDefaultAxes: PropTypes.bool,
     startAngle: PropTypes.number
   };
 
