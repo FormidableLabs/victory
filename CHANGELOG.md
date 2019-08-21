@@ -1,5 +1,9 @@
 # Victory Changelog
 
+## 32.3.7 (2018-08-19)
+
+[#1368](https://github.com/FormidableLabs/victory/pull/1368) Ensures that animations finish for unmounting components. Thanks @fbarbat!
+
 ## 32.3.6 (2019-08-08)
 
 [#1363](https://github.com/FormidableLabs/victory/pull/1363) Fix regression affecting `createContainer`. Thanks @stefanscript
