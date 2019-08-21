@@ -1,6 +1,5 @@
 import React from "react";
 import PropTypes from "prop-types";
-import isEqual from "react-fast-compare";
 
 const Text = (props) => {
   const { children, title, desc, ...rest } = props;
@@ -19,4 +18,4 @@ Text.propTypes = {
   title: PropTypes.string
 };
 
-export default React.memo(Text, isEqual);
+export default Text;
