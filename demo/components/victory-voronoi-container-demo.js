@@ -56,10 +56,35 @@ class App extends React.Component {
       <div className="demo">
         <div style={containerStyle}>
           <VictoryChart
+            style={chartStyle}
+            domain={{ y: [0, 6] }}
+            containerComponent={
+              <VictoryVoronoiContainer
+                voronoiDimension="x"
+                labels={({ datum }) => `y: ${datum.y}`}
+                labelComponent={<VictoryTooltip />}
+              />
+            }
+          >
+            <VictoryScatter
+              style={{ data: { fill: "red" }, labels: { fill: "red" } }}
+              data={[{ x: 0, y: 2 }, { x: 2, y: 3 }, { x: 4, y: 4 }, { x: 6, y: 5 }]}
+            />
+            <VictoryScatter
+              data={[{ x: 2, y: 2 }, { x: 4, y: 3 }, { x: 6, y: 4 }, { x: 8, y: 5 }]}
+            />
+          </VictoryChart>
+          <VictoryChart
             height={450}
             domain={{ y: [0, 1] }}
             style={chartStyle}
-            containerComponent={<VictoryVoronoiContainer labels={({ datum }) => datum.y} />}
+            containerComponent={
+              <VictoryVoronoiContainer
+                labels={({ datum }) => `I'm kind of a long label ${datum.y}`}
+                mouseFollowTooltips
+                labelComponent={<VictoryTooltip constrainToVisibleArea tooltipWidth={80} />}
+              />
+            }
           >
             <VictoryScatter
               data={[
@@ -183,7 +208,12 @@ class App extends React.Component {
                 fill: ({ active }) => (active ? "tomato" : "black")
               }
             }}
-            containerComponent={<VictoryVoronoiContainer voronoiDimension="x" />}
+            containerComponent={
+              <VictoryVoronoiContainer
+                labels={({ datum }) => datum._x}
+                labelComponent={<VictoryTooltip width={50} />}
+              />
+            }
             size={({ active }) => (active ? 5 : 3)}
             data={this.state.data}
             x="a"

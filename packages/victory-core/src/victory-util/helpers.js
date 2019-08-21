@@ -50,11 +50,13 @@ function omit(originalObject, keys = []) {
 
 function getPoint(datum) {
   const exists = (val) => val !== undefined;
-  const { _x, _x1, _x0, _y, _y1, _y0 } = datum;
+  const { _x, _x1, _x0, _voronoiX, _y, _y1, _y0, _voronoiY } = datum;
+  const defaultX = exists(_x1) ? _x1 : _x;
+  const defaultY = exists(_y1) ? _y1 : _y;
   const point = {
-    x: exists(_x1) ? _x1 : _x,
+    x: exists(_voronoiX) ? _voronoiX : defaultX,
     x0: exists(_x0) ? _x0 : _x,
-    y: exists(_y1) ? _y1 : _y,
+    y: exists(_voronoiY) ? _voronoiY : defaultY,
     y0: exists(_y0) ? _y0 : _y
   };
   return defaults({}, point, datum);

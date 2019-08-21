@@ -1,4 +1,4 @@
-import { assign, defaults, isNil, isFunction } from "lodash";
+import { assign, defaults, isNil, isFunction, isPlainObject } from "lodash";
 import { Helpers, Scale, Domain, Data, LabelHelpers } from "victory-core";
 
 const TYPES = ["close", "open", "high", "low"];
@@ -38,7 +38,7 @@ const getDomain = (props, axis) => {
   return Domain.createDomainFunction(getDomainFromData)(props, axis);
 };
 
-const getStyles = (style, defaultStyles) => {
+const getStyles = (style, defaultStyles = {}) => {
   const width = "100%";
   const height = "100%";
 
@@ -54,20 +54,21 @@ const getStyles = (style, defaultStyles) => {
     );
   }
 
-  const defaultParent = (defaultStyles && defaultStyles.parent) || {};
-  const defaultLabels = (defaultStyles && defaultStyles.labels) || {};
-  const defaultData = (defaultStyles && defaultStyles.data) || {};
+  const defaultParent = defaultStyles.parent || {};
+  const defaultLabels = defaultStyles.labels || {};
+  const defaultData = defaultStyles.data || {};
+  const labelStyle = defaults({}, style.labels, defaultLabels);
   return {
     parent: defaults({}, style.parent, defaultParent, {
       width,
       height
     }),
-    labels: defaults({}, style.labels, defaultLabels),
+    labels: labelStyle,
     data: defaults({}, style.data, defaultData),
-    openLabels: defaults({}, style.openLabels, style.labels, defaultLabels),
-    closeLabels: defaults({}, style.closeLabels, style.labels, defaultLabels),
-    lowLabels: defaults({}, style.lowLabels, style.labels, defaultLabels),
-    highLabels: defaults({}, style.highLabels, style.labels, defaultLabels)
+    openLabels: defaults({}, style.openLabels, defaultStyles.openLabels, labelStyle),
+    closeLabels: defaults({}, style.closeLabels, defaultStyles.closeLabels, labelStyle),
+    lowLabels: defaults({}, style.lowLabels, defaultStyles.lowLabels, labelStyle),
+    highLabels: defaults({}, style.highLabels, defaultStyles.highLabels, labelStyle)
   };
 };
 
@@ -141,8 +142,9 @@ const getCandleWidth = (props, style) => {
   return Math.max(1, defaultWidth);
 };
 
-const getOrientation = (labelOrientation, type) =>
-  (typeof labelOrientation === "object" && labelOrientation[type]) || labelOrientation;
+const getOrientation = (labelOrientation, type = "labels") => {
+  return isPlainObject(labelOrientation) ? labelOrientation[type] : labelOrientation;
+};
 
 /* eslint-disable complexity*/
 const calculatePlotValues = (props) => {
@@ -153,28 +155,31 @@ const calculatePlotValues = (props) => {
   const signY = orientation === "top" ? -1 : 1;
 
   if (horizontal) {
-    const yValue =
-      orientation === "top" || orientation === "bottom"
-        ? x + signY * (candleWidth / 2) + signY * (labelStyle.padding || 0)
-        : x;
-    const xValue =
-      orientation === "left" || orientation === "right"
-        ? positions[computedType] + signX * (labelStyle.padding || 1)
-        : positions[computedType];
+    const yValue = x;
+    const xValue = positions[computedType];
 
-    return { yValue, xValue };
+    const dy =
+      orientation === "top" || orientation === "bottom"
+        ? signY * (candleWidth / 2) + signY * (labelStyle.padding || 0)
+        : 0;
+
+    const dx =
+      orientation === "top" || orientation === "bottom" ? 0 : signX * (labelStyle.padding || 1);
+
+    return { yValue, xValue, dx, dy };
   } else {
-    const xValue =
+    const xValue = x;
+    const yValue = positions[computedType];
+
+    const dy =
+      orientation === "top" || orientation === "bottom" ? signY * (labelStyle.padding || 1) : 0;
+
+    const dx =
       orientation === "top" || orientation === "bottom"
-        ? x
-        : x + signX * (candleWidth / 2) + signX * (labelStyle.padding || 0);
+        ? 0
+        : signX * (candleWidth / 2) + signX * (labelStyle.padding || 0);
 
-    const yValue =
-      orientation === "left" || orientation === "right"
-        ? positions[computedType]
-        : positions[computedType] + signY * (labelStyle.padding || 1);
-
-    return { yValue, xValue };
+    return { yValue, xValue, dx, dy };
   }
 };
 /* eslint-enable complexity*/
@@ -196,7 +201,12 @@ const getLabelProps = (props, text, style, type) => {
     labelOrientation
   } = props;
 
-  const orientation = getOrientation(labelOrientation, type);
+  const component = props[`${type}LabelComponent`] || props.labelComponent;
+  const defaultOrientation = horizontal ? "top" : "right";
+  const orientation =
+    (component.props && component.props.orientation) ||
+    getOrientation(labelOrientation, type) ||
+    defaultOrientation;
   const positions = { high, low, open, close };
   const namespace = type ? `${type}Labels` : "labels";
   const labelStyle = style[namespace] || style.labels;
@@ -213,12 +223,14 @@ const getLabelProps = (props, text, style, type) => {
     candleWidth,
     orientation
   };
-  const { yValue, xValue } = calculatePlotValues(plotProps);
+  const { yValue, xValue, dx, dy } = calculatePlotValues(plotProps);
 
   return {
     style: labelStyle,
     y: yValue,
     x: xValue,
+    dx,
+    dy,
     text,
     index,
     scale,
