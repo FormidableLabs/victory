@@ -1,6 +1,6 @@
 import PropTypes from "prop-types";
 import React from "react";
-import { assign } from "lodash";
+import { assign, isEmpty } from "lodash";
 import {
   PropTypes as CustomPropTypes,
   Helpers,
@@ -154,13 +154,25 @@ class VictoryAxis extends React.Component {
     return React.cloneElement(axisLabelComponent, axisLabelProps);
   }
 
+
+
   renderGridAndTicks(props) {
     const { tickComponent, tickLabelComponent, gridComponent, name } = props;
+    const shouldRender = (componentProps) => {
+      const { style = {}, events = {} } = componentProps;
+      const visible = style.stroke !== "transparent"
+        && style.stroke !== "none"
+        && style.strokeWidth !== 0;
+      return visible || !isEmpty(events);
+    };
+
     return this.dataKeys.map((key, index) => {
       const tickProps = this.getComponentProps(tickComponent, "ticks", index);
-      const TickComponent = React.cloneElement(tickComponent, tickProps);
+      const BaseTickComponent = React.cloneElement(tickComponent, tickProps);
+      const TickComponent = shouldRender(BaseTickComponent.props) ? BaseTickComponent : undefined;
       const gridProps = this.getComponentProps(gridComponent, "grid", index);
-      const GridComponent = React.cloneElement(gridComponent, gridProps);
+      const BaseGridComponent = React.cloneElement(gridComponent, gridProps);
+      const GridComponent = shouldRender(BaseGridComponent.props) ? BaseGridComponent : undefined;
       const tickLabelProps = this.getComponentProps(tickLabelComponent, "tickLabels", index);
       const TickLabel = React.cloneElement(tickLabelComponent, tickLabelProps);
       return React.cloneElement(
