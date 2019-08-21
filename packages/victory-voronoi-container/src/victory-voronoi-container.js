@@ -15,7 +15,7 @@ export const voronoiContainerMixin = (base) =>
       disable: PropTypes.bool,
       labelComponent: PropTypes.element,
       labels: PropTypes.func,
-      mouseFollowLabels: PropTypes.bool,
+      mouseFollowTooltips: PropTypes.bool,
       onActivated: PropTypes.func,
       onDeactivated: PropTypes.func,
       radius: PropTypes.number,
@@ -79,19 +79,19 @@ export const voronoiContainerMixin = (base) =>
     }
 
     getLabelPosition(props, labelProps, points) {
-      const { mousePosition, mouseFollowLabels } = props;
+      const { mousePosition, mouseFollowTooltips } = props;
       const voronoiDimension = this.getDimension(props);
       const point = this.getPoint(points[0]);
       const basePosition = Helpers.scalePoint(props, point);
 
-      let center = mouseFollowLabels ? mousePosition : undefined;
+      let center = mouseFollowTooltips ? mousePosition : undefined;
       if (!voronoiDimension || points.length < 2) {
         return { ...basePosition, center: defaults({}, labelProps.center, center) };
       }
 
       const x = voronoiDimension === "y" ? mousePosition.x : basePosition.x;
       const y = voronoiDimension === "x" ? mousePosition.y : basePosition.y;
-      center = mouseFollowLabels ? mousePosition : { x, y };
+      center = mouseFollowTooltips ? mousePosition : { x, y };
       return { x, y, center: defaults({}, labelProps.center, center) };
     }
 
@@ -120,18 +120,18 @@ export const voronoiContainerMixin = (base) =>
     }
 
     getDefaultLabelProps(props, points) {
-      const { voronoiDimension, horizontal, mouseFollowLabels } = props;
+      const { voronoiDimension, horizontal, mouseFollowTooltips } = props;
       const point = this.getPoint(points[0]);
       const multiPoint = voronoiDimension && points.length > 1;
       const y = point._y1 !== undefined ? point._y1 : point._y;
       const defaultHorizontalOrientation = y < 0 ? "left" : "right";
       const defaultOrientation = y < 0 ? "bottom" : "top";
       const labelOrientation = horizontal ? defaultHorizontalOrientation : defaultOrientation;
-      const orientation = mouseFollowLabels ? undefined : labelOrientation;
+      const orientation = mouseFollowTooltips ? undefined : labelOrientation;
       return {
         orientation,
         pointerLength: multiPoint ? 0 : undefined,
-        constrainToVisibleArea: multiPoint || mouseFollowLabels ? true : undefined
+        constrainToVisibleArea: multiPoint || mouseFollowTooltips ? true : undefined
       };
     }
 

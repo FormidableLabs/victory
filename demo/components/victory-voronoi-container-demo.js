@@ -60,10 +60,9 @@ class App extends React.Component {
             domain={{ y: [0, 6] }}
             containerComponent={
               <VictoryVoronoiContainer
-                mouseFollowLabels
                 voronoiDimension="x"
                 labels={({ datum }) => `y: ${datum.y}`}
-                labelComponent={<VictoryTooltip pointerLength={0} center={{ y: 0 }} />}
+                labelComponent={<VictoryTooltip />}
               />
             }
           >
@@ -82,7 +81,7 @@ class App extends React.Component {
             containerComponent={
               <VictoryVoronoiContainer
                 labels={({ datum }) => `I'm kind of a long label ${datum.y}`}
-                mouseFollowLabels
+                mouseFollowTooltips
                 labelComponent={<VictoryTooltip constrainToVisibleArea tooltipWidth={80} />}
               />
             }
