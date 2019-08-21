@@ -1,6 +1,5 @@
 import React from "react";
-import isEqual from "react-fast-compare";
 
-const Path = (props) => <path {...props} />;
+const Path = (props) => <path vectorEffect="non-scaling-stroke" {...props} />;
 
-export default React.memo(Path, isEqual);
+export default Path;
