@@ -276,12 +276,12 @@ const getLabelProps = (props, text, type) => {
   const whiskerWidth = typeof props.whiskerWidth === "number" ? props.whiskerWidth : boxWidth;
   const width = type === "min" || type === "max" ? whiskerWidth : boxWidth;
 
-  const getDefaultPosition = (coord) => {
+  const getOffset = (coord) => {
     const sign = {
       x: orientation === "left" ? -1 : 1,
       y: orientation === "top" ? -1 : 1
     };
-    return positions[coord] + (sign[coord] * width) / 2 + sign[coord] * (labelStyle.padding || 0);
+    return (sign[coord] * width) / 2 + sign[coord] * (labelStyle.padding || 0);
   };
 
   return {
@@ -290,8 +290,10 @@ const getLabelProps = (props, text, type) => {
     index,
     orientation,
     style: labelStyle,
-    y: horizontal ? getDefaultPosition("y") : positions[type],
-    x: horizontal ? positions[type] : getDefaultPosition("x"),
+    y: horizontal ? positions.y : positions[type],
+    x: horizontal ? positions[type] : positions.x,
+    dy: horizontal ?  getOffset("y") : 0,
+    dx: horizontal ? 0 : getOffset("x"),
     textAnchor: labelStyle.textAnchor || defaultTextAnchors[labelOrientation],
     verticalAnchor: labelStyle.verticalAnchor || defaultVerticalAnchors[labelOrientation],
     angle: labelStyle.angle,
