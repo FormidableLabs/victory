@@ -2,11 +2,11 @@
 
 ## 33.0.0 (2018-08-21)
 
-**Breaking Changes**
+###Breaking Changes**
 
-*Changes for functional props and styles:*
+**Changes for functional props and styles:**
 
-[#1360](https://github.com/FormidableLabs/victory/pull/1360)
+Related PR: [#1360](https://github.com/FormidableLabs/victory/pull/1360)
 
 Functional props like `labels` and functional styles will now be called with a single argument instead of `datum` and `active`. The argument passed to functional props and styles will be an object containing all the props that control the rendering of the the target the prop applies to. Including things like `datum`, `active`, `index`, `data`, `scale`, etc. We hope this will give users a lot more flexibility and control. In most cases, this change should be very straightforward to apply
 
@@ -26,7 +26,7 @@ Gotchas:
 
 **Changes for `VictoryCandlestick` labels**
 
-[#1295](https://github.com/FormidableLabs/victory/pull/1295)
+Related PR: [#1295](https://github.com/FormidableLabs/victory/pull/1295)
 
 `VictoryCandlestick` now has granular support for labels corresponding to each portion of the candle. The current `labels` and `labelComponent` props will be joined by new props corresponding to each part of the candle.
 *New props*
@@ -61,7 +61,7 @@ The `style` prop for `VictoryCandlestick` now also has namespaces for the new la
 
 **Changes for `VictoryVoronoiContainer`**
 
-[#1371](https://github.com/FormidableLabs/victory/pull/1371)
+Related PR: [#1371](https://github.com/FormidableLabs/victory/pull/1371)
 
 Before this version `VictoryVoronoiContainer` had limited functionality for mouse-following tooltips, and for constraining a tooltip to the chart area, but it was only usable for multi-point tooltips (with `voronoiDimension`), and was not user configurable. This version aims to correct these limitations:
 
@@ -84,10 +84,9 @@ containerComponent={
 }
 ```
 
-
 **Changes for `VictoryTooltip` and `VictoryLabel`**
 
-[#1371](https://github.com/FormidableLabs/victory/pull/1371)
+Related PR:[#1371](https://github.com/FormidableLabs/victory/pull/1371)
 
 The changes we wanted to make to support new behaviors in `VictoryVoronoiContainer` required some changes to `VictoryTooltip` and `VictoryLabel`
 
@@ -115,10 +114,14 @@ This will be a breaking change for anyone who is wrapping label components and r
 
 **Other Changes**
 We have been concurrently working on improving performance and the stability of events in `victory-native`. The following changes have been added to support these efforts:
-[#1373](https://github.com/FormidableLabs/victory/pull/1373)
+
+Related PR: [#1373](https://github.com/FormidableLabs/victory/pull/1373)
+
 - A `prependDefaultAxes` boolean prop has been added to `VictoryChart`. This prop will be set true by default in `victory-native` to reduce the possibility of axis elements to interfere with events.
 - Invisible ticks and grids will no longer be rendered unless they have events attached to them. This is again to reduce interference with events.
-[#1365](https://github.com/FormidableLabs/victory/pull/1365)
+
+Related PR: [#1365](https://github.com/FormidableLabs/victory/pull/1365)
+
 - Swapped out React component primitives (`Bar`, `Path` etc) with for function primitives to match performance-improving changes in `victory-native`. (This is a breaking change for anyone extending from `victory` components)
 
 
