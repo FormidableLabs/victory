@@ -2,7 +2,7 @@
 
 ## 33.0.0 (2018-08-21)
 
-###Breaking Changes**
+### Breaking Changes
 
 **Changes for functional props and styles:**
 
