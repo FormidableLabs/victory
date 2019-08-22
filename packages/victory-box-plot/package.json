@@ -1,6 +1,6 @@
 {
   "name": "victory-box-plot",
-  "version": "32.3.7",
+  "version": "33.0.0",
   "description": "Box Plot Component for Victory",
   "keywords": [
     "data visualization",
@@ -22,7 +22,7 @@
     "d3-array": "^1.2.0",
     "lodash": "^4.17.15",
     "prop-types": "^15.5.8",
-    "victory-core": "^32.3.7"
+    "victory-core": "^33.0.0"
   },
   "scripts": {
     "version": "nps build-libs && nps build-dists"
