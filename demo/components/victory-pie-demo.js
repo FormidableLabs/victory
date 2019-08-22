@@ -95,7 +95,7 @@ export default class App extends React.Component {
           />
           <VictoryPie
             style={{ parent: parentStyle, labels: { fill: "white", fontSize: 10 } }}
-            labelRadius={60}
+            labelRadius={({ datum }) => datum.radius - 12}
             padding={{ bottom: 50, left: 50, right: 10 }}
             width={400}
             height={200}

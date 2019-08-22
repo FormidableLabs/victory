@@ -135,8 +135,8 @@ const getVerticalAnchor = (orientation) => {
 };
 
 const getLabelProps = (text, dataProps, calculatedValues) => {
-  const { index, datum, data, slice, labelPosition, labelRadius } = dataProps;
-  const { style, defaultRadius, origin } = calculatedValues;
+  const { index, datum, data, slice, labelPosition } = dataProps;
+  const { style, defaultRadius, origin, width, height, labelRadius } = calculatedValues;
   const evaluatedRadius = Helpers.evaluateProp(labelRadius, assign({ text }, dataProps));
   const labelStyle = assign({ padding: 0 }, style.labels);
   const evaluatedStyle = Helpers.evaluateStyle(
@@ -147,6 +147,8 @@ const getLabelProps = (text, dataProps, calculatedValues) => {
   const position = getLabelPosition(labelArc, slice, labelPosition);
   const orientation = getLabelOrientation(slice);
   return {
+    width,
+    height,
     index,
     datum,
     data,
