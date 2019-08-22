@@ -30,27 +30,23 @@ describe("components/victory-axis", () => {
 
     it("renders the appropriate number of ticks", () => {
       const tickValues = [1, 2, 3];
-      const style = { ticks: { stroke: "black" }}
-      const wrapper = shallow(
-        <VictoryAxis tickValues={tickValues} style={style} />
-      );
+      const style = { ticks: { stroke: "black" } };
+      const wrapper = shallow(<VictoryAxis tickValues={tickValues} style={style} />);
       const ticks = wrapper.find('[type="tick"]');
       expect(ticks.length).to.equal(tickValues.length);
     });
 
     it("does not render invisible ticks", () => {
       const tickValues = [1, 2, 3];
-      const style = { ticks: { stroke: "none" }}
-      const wrapper = shallow(
-        <VictoryAxis tickValues={tickValues} style={style} />
-      );
+      const style = { ticks: { stroke: "none" } };
+      const wrapper = shallow(<VictoryAxis tickValues={tickValues} style={style} />);
       const ticks = wrapper.find('[type="tick"]');
       expect(ticks.length).to.equal(0);
     });
 
     it("renders invisible ticks that have events", () => {
       const tickValues = [1, 2, 3];
-      const style = { ticks: { stroke: "none" }}
+      const style = { ticks: { stroke: "none" } };
       const wrapper = shallow(
         <VictoryAxis
           events={[
@@ -177,7 +173,7 @@ describe("components/victory-axis", () => {
       });
 
       it("renders the appropriate number of ticks with default options", () => {
-        const style = { ticks: { stroke: "black" }}
+        const style = { ticks: { stroke: "black" } };
         const wrapper = shallow(
           <VictoryAxis tickValues={["1", "2", "3"]} style={style} width={10} />
         );

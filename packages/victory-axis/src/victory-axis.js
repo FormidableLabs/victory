@@ -154,15 +154,12 @@ class VictoryAxis extends React.Component {
     return React.cloneElement(axisLabelComponent, axisLabelProps);
   }
 
-
-
   renderGridAndTicks(props) {
     const { tickComponent, tickLabelComponent, gridComponent, name } = props;
     const shouldRender = (componentProps) => {
       const { style = {}, events = {} } = componentProps;
-      const visible = style.stroke !== "transparent"
-        && style.stroke !== "none"
-        && style.strokeWidth !== 0;
+      const visible =
+        style.stroke !== "transparent" && style.stroke !== "none" && style.strokeWidth !== 0;
       return visible || !isEmpty(events);
     };
 
@@ -175,7 +172,7 @@ class VictoryAxis extends React.Component {
       const GridComponent = shouldRender(BaseGridComponent.props) ? BaseGridComponent : undefined;
       const tickLabelProps = this.getComponentProps(tickLabelComponent, "tickLabels", index);
       const TickLabel = React.cloneElement(tickLabelComponent, tickLabelProps);
-      const children = [GridComponent, TickComponent, TickLabel].filter(Boolean)
+      const children = [GridComponent, TickComponent, TickLabel].filter(Boolean);
       return React.cloneElement(
         props.groupComponent,
         { key: `${name}-tick-group-${key}` },
