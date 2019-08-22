@@ -1,5 +1,128 @@
 # Victory Changelog
 
+## 33.0.0 (2018-08-21)
+
+**Tooltips and Functional Props Improvements**
+
+This new version includes the following PRs
+[#1295](https://github.com/FormidableLabs/victory/pull/1295) - More granular labels for `VictoryCandlestick`. This PR includes breaking changes for default label positioning in `VictoryCandlestick`
+
+[#1371](https://github.com/FormidableLabs/victory/pull/1371) - A whole bunch of improvements for `VictoryTooltip` and targeting integration in `VictoryVoronoiContainer`, and some minor additional tweaks to `VictoryLabel`. Includes some minor breaking changes in label props and positioning.
+
+[#1360](https://github.com/FormidableLabs/victory/pull/1360) - A breaking change for functional props and styles. Instead of `datum` and `active` as arguments, functional props will now receive a full set of the props that define the element they correspond to  (i.e. `index`, `datum`, `data`, `scale`, etc)
+
+[#1365](https://github.com/FormidableLabs/victory/pull/1365) - Swapped out React component primitives (`Bar`, `Path` etc) with `shouldComponentUpdate` logic for function primitives. (This is a breaking change for anyone extending from `victory` components, _i.e._ `victory-native`)
+
+[#1373](https://github.com/FormidableLabs/victory/pull/1373) - Some additional improvements specifically targeting `victory-native`. The only noticeable change here is that invisible and non-event-having gridlines and ticks in `VictoryAxis` and `VictoryPolarAxis` are now filtered out rather than rendered.
+
+**Breaking Changes**
+
+*Changes for functional props and styles:*
+
+Functional props like `labels` and functional styles will now be called with a single argument instead of `datum` and `active`. The argument passed to functional props and styles will be an object containing all the props that control the rendering of the the target the prop applies to. Including things like `datum`, `active`, `index`, `data`, `scale`, etc. We hope this will give users a lot more flexibility and control. In most cases, this change should be very straightforward to apply
+
+old:
+```
+labels={(d) => `x: ${d.x}`}
+```
+new
+```
+labels={({ datum }) => `x: ${d.x}`}
+```
+
+Gotchas:
+- Some of the props passed into functional props and styles may themselves be functions. These will _not_ be evaluated, because we have no way to determine evaluation order. So, if you create a `cornerRadius` function that depends on `barWidth`, do not also make `barWidth` a function of some other prop.
+- A few props that take functions do not follow this pattern. These include data accessor functions like `y` and `x`, and `tickFormat`. The arguments for these props have not changed.
+
+**Changes for `VictoryCandlestick` labels**
+
+`VictoryCandlestick` now has granular support for labels corresponding to each portion of the candle. The current `labels` and `labelComponent` props will be joined by new props corresponding to each part of the candle.
+*New props*
+  `lowLabels`
+  `lowLabelComponent`
+  `highLabels`
+  `highLabelComponent`
+  `openLabels`
+  `openLabelComponent`
+  `closeLabels`
+  `closeLabelComponent`
+
+This will be a breaking change affecting the positioning of the default `label`. In earlier versions, the default label was positioned above the candle, it will now be positioned next to the center of the candle.
+To use older label positioning, use `highLabels` / `highLabelComponent` rather than `label` / `labelComponent`. If you are using tooltips with `VictoryCandlestick`, you will need to register a custom event to trigger your `highLabels` tooltip:
+
+example:
+```
+<VictoryCandlestick
+  highLabels={({ datum }) => datum.high}
+  highLabelComponent={<VictoryTooltip />}
+  events={[{
+    target: "data",
+    eventHandlers: {
+      onMouseOver: () => ({ target: "highLabels", mutation: () => ({ active: true }) }),
+      onMouseOut: () => ({ target: "highLabels", mutation: () => ({ active: false }) })
+    }
+  }]}
+/>
+```
+
+The `style` prop for `VictoryCandlestick` now also has namespaces for the new labels in addition to the current `labels` namespace. When both `labels` and specific label styles (_e.g._ `highLabels`) are provided, the styles will be merged
+
+**Changes for `VictoryVoronoiContainer`**
+
+Before this version `VictoryVoronoiContainer` had limited functionality for mouse-following tooltips, and for constraining a tooltip to the chart area, but it was only usable for multi-point tooltips (with `voronoiDimension`), and was not user configurable. This version aims to correct these limitations:
+
+- `mouseFollowTooltips`: This new boolean prop on `VictoryVoronoiContainer` determines whether the labels should follow the mouse position or snap into place. (Note that in charts using `voronoiDimension`, the tooltip still follows the mouse in the non-`voronoiDimension`, as demonstrated in the charts below (both with `voronoiDimension="x"`)
+
+`mouseFollowLabels={true}`
+![mouseFollowLabels](https://user-images.githubusercontent.com/3719995/63392113-236ff400-c36a-11e9-91d0-64e674f481d5.gif)
+
+
+`mouseFollowTooltips={false}`
+![non-mouseFollowTooltips](https://user-images.githubusercontent.com/3719995/63392116-2834a800-c36a-11e9-8a73-a951b131ae2f.gif)
+
+- constrained tooltips: multi-point tooltips rendered by `VictoryVoronoiContainer` will no longer be constrained to the chart area by default. Instead, add the `constrainToVisibleArea` prop to `VictoryTooltip` to enable this behavior for both multi-point and single point tooltips:
+example:
+```
+containerComponent={
+  <VictoryVoronoiContainer
+    labelComponent={<VictoryTooltip constrainToVisibleArea />}
+  />
+}
+
+
+**Changes for `VictoryTooltip` and `VictoryLabel`**
+
+The changes we wanted to make to support new behaviors in `VictoryVoronoiContainer` required some changes to `VictoryTooltip` and `VictoryLabel`
+
+New props for `VictoryTooltip`:
+
+- `constrainToVisibleArea` is a boolean prop that, when true, will alter the position of the tooltip so that it exactly fits within the svg Victory renders. The tooltip's center will be moved, but the pointer will remain pointing at the associated `x`, `y` value of the tooltip. When this prop is set to true, `pointerLength` may not be respected
+
+- `center` is a prop that may be given as an object with values or functions for "x" and "y". When this prop is set, it will position the center of the tooltip (centered around the main body of the tooltip, minus the pointer). When this prop is not set, it will be calculated from other props such as `x`, `y`, `pointerLength`, etc. This prop was added to enable mouse-following tooltips in `VictoryVoronoiContainer`.
+
+- `centerOffset` is a prop that may be given as an object with values or functions for "x" and "y". When this prop is set, the center of the tooltip will be offset by some amount from the x, y value it points to, resulting in a slanted pointer. When this prop is set, `pointerLength` will not be respected (because the pointer will be slanted)
+
+- `flyoutHeight` (formerly `height`): This optional prop determines the height of the tooltip flyout (minus pointer). The name of this prop was changed so that it would not conflict with the `height` prop now passed to `VictoryTooltip` by its parents
+
+- `flyoutWidth` (formerly `width`): This optional prop determines the width of the tooltip flyout (minus pointer). The name of this prop was changed so that it would not conflict with the `width` prop now passed to `VictoryTooltip` by its parents
+
+- `width`: the overall width of the parent svg. This prop will be passed down from any victory component that uses `VictoryTooltip` as a label
+
+- `height`: the overall height of the parent svg. This prop will be passed down from any victory component that uses `VictoryTooltip` as a label
+
+**Changes Affecting `VictoryLabel` and `VictoryTooltip`**
+
+- The `x` and `y` values passed to labels by their parent components have all been adjusted so that their values match the position of the data point they correspond to. All padding is now accounted for in the `dx` and `dy` props instead of being added directly to `x` and `y`.
+This will be a breaking change for anyone who is wrapping label components and relying on the `x` and `y` props they receive, or providing their own `dx` / `dy` props. These breaking changes may take a bit of manual adjustment to correct, but we hope this change will make label positioning easier to reason about in the long run.
+
+
+**Other Changes**
+We have been concurrently working on improving the stability of events in `victory-native`. The following changes have been added to support these efforts:
+- A `prependDefaultAxes` boolean prop has been added to `VictoryChart`. This prop will be set true by default in `victory-native` to reduce the possibility of axis elements to interfere with events.
+- Invisible ticks and grids will no longer be rendered unless they have events attached to them. This is again to reduce interference with events.
+
+
+
 ## 32.3.7 (2018-08-19)
 
 [#1368](https://github.com/FormidableLabs/victory/pull/1368) Ensures that animations finish for unmounting components. Thanks @fbarbat!
