@@ -5,49 +5,34 @@ import { assign } from "lodash";
 import CommonProps from "../victory-util/common-props";
 import Rect from "./rect";
 
-export default class Border extends React.Component {
-  static propTypes = {
-    ...CommonProps.primitiveProps,
-    height: PropTypes.number,
-    rectComponent: PropTypes.element,
-    width: PropTypes.number,
-    x: PropTypes.number,
-    y: PropTypes.number
-  };
+const Border = (props) =>
+  React.cloneElement(props.rectComponent, {
+    ...props.events,
+    style: Helpers.evaluateStyle(assign({ fill: "none" }, props.style), props),
+    transform: props.transform,
+    className: props.className,
+    role: props.role,
+    shapeRendering: props.shapeRendering,
+    x: props.x,
+    y: props.y,
+    width: props.width,
+    height: props.height,
+    clipPath: props.clipPath
+  });
 
-  static defaultProps = {
-    rectComponent: <Rect />
-  };
+Border.propTypes = {
+  ...CommonProps.primitiveProps,
+  height: PropTypes.number,
+  rectComponent: PropTypes.element,
+  width: PropTypes.number,
+  x: PropTypes.number,
+  y: PropTypes.number
+};
 
-  render() {
-    const {
-      x,
-      y,
-      width,
-      height,
-      events,
-      datum,
-      active,
-      role,
-      clipPath,
-      className,
-      shapeRendering,
-      rectComponent,
-      transform
-    } = this.props;
-    const style = Helpers.evaluateStyle(assign({ fill: "none" }, this.props.style), datum, active);
-    return React.cloneElement(rectComponent, {
-      style,
-      className,
-      x,
-      y,
-      width,
-      height,
-      events,
-      role,
-      shapeRendering,
-      transform,
-      clipPath
-    });
-  }
-}
+Border.defaultProps = {
+  rectComponent: <Rect />,
+  role: "presentation",
+  shapeRendering: "auto"
+};
+
+export default Border;

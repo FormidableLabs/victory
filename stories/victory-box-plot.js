@@ -120,19 +120,23 @@ storiesOf("VictoryBoxPlot.labels", module)
   .add("boolean q3Labels", () => <VictoryBoxPlot data={getData(5)} q3Labels />)
   .add("boolean maxLabels", () => <VictoryBoxPlot data={getData(5)} maxLabels />)
   .add("function minLabels", () => (
-    <VictoryBoxPlot horizontal data={getData(5)} minLabels={(d) => `min: ${d.min}`} />
+    <VictoryBoxPlot horizontal data={getData(5)} minLabels={({ datum }) => `min: ${datum.min}`} />
   ))
   .add("function q1Labels", () => (
-    <VictoryBoxPlot horizontal data={getData(5)} q1Labels={(d) => `q1: ${d.q1}`} />
+    <VictoryBoxPlot horizontal data={getData(5)} q1Labels={({ datum }) => `q1: ${datum.q1}`} />
   ))
   .add("function medianLabels", () => (
-    <VictoryBoxPlot horizontal data={getData(5)} medianLabels={(d) => `median: ${d.median}`} />
+    <VictoryBoxPlot
+      horizontal
+      data={getData(5)}
+      medianLabels={({ datum }) => `median: ${datum.median}`}
+    />
   ))
   .add("function q3Labels", () => (
-    <VictoryBoxPlot horizontal data={getData(5)} q3Labels={(d) => `q3: ${d.q3}`} />
+    <VictoryBoxPlot horizontal data={getData(5)} q3Labels={({ datum }) => `q3: ${datum.q3}`} />
   ))
   .add("function maxLabels", () => (
-    <VictoryBoxPlot horizontal data={getData(5)} maxLabels={(d) => `max: ${d.max}`} />
+    <VictoryBoxPlot horizontal data={getData(5)} maxLabels={({ datum }) => `max: ${datum.max}`} />
   ));
 
 storiesOf("VictoryBoxPlot.tooltips", module)
@@ -202,8 +206,8 @@ storiesOf("VictoryBoxPlot.style", module)
       style={{
         min: { stroke: "#FF530D", strokeWidth: 2 },
         max: { stroke: "#2bbee0", strokeWidth: 2 },
-        q1: { fill: "#FF530D", fillOpacity: (d) => (d.q1 < 10 ? 1 : 0.5) },
-        q3: { fill: "#2bbee0", fillOpacity: (d) => (d.q3 > 15 ? 1 : 0.5) },
+        q1: { fill: "#FF530D", fillOpacity: ({ datum }) => (datum.q1 < 10 ? 1 : 0.5) },
+        q3: { fill: "#2bbee0", fillOpacity: ({ datum }) => (datum.q3 > 15 ? 1 : 0.5) },
         median: { stroke: "#fff", strokeWidth: 2 },
         minLabels: { fill: "#FF530D", padding: 10 },
         maxLabels: { fill: "#2bbee0", padding: 10 }

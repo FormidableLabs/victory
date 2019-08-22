@@ -165,7 +165,9 @@ const getChildComponents = (props, defaultAxes) => {
   };
 
   if (axisComponents.dependent.length === 0 && axisComponents.independent.length === 0) {
-    return childComponents.concat([defaultAxes.independent, defaultAxes.dependent]);
+    return props.prependDefaultAxes
+      ? [defaultAxes.independent, defaultAxes.dependent].concat(childComponents)
+      : childComponents.concat([defaultAxes.independent, defaultAxes.dependent]);
   }
   return childComponents;
 };

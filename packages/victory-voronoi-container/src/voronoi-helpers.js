@@ -29,8 +29,8 @@ const VoronoiHelpers = {
         const voronoiY = (+y + +y0) / 2;
         return assign(
           {
-            _voronoiX: props.voronoiDimension === "y" ? undefined : voronoiX,
-            _voronoiY: props.voronoiDimension === "x" ? undefined : voronoiY,
+            _voronoiX: props.voronoiDimension === "y" ? 0 : voronoiX,
+            _voronoiY: props.voronoiDimension === "x" ? 0 : voronoiY,
             eventKey: index,
             childName: name,
             continuous,
@@ -70,13 +70,8 @@ const VoronoiHelpers = {
   },
 
   findPoints(datasets, point) {
-    const x = point._voronoiX;
-    const y = point._voronoiY;
-
     return datasets.filter((d) => {
-      const matchesX = x === undefined || x === d._voronoiX;
-      const matchesY = y === undefined || y === d._voronoiY;
-      return matchesX && matchesY;
+      return point._voronoiX === d._voronoiX && point._voronoiY === d._voronoiY;
     });
   },
 

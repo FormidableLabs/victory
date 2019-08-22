@@ -4,7 +4,6 @@ import React from "react";
 import PropTypes from "prop-types";
 import { random, range, merge } from "lodash";
 import { VictoryChart } from "../../packages/victory-chart/src/index";
-import { VictoryAxis } from "../../packages/victory-axis/src/index";
 import { VictoryCandlestick } from "../../packages/victory-candlestick/src/index";
 import { VictoryTheme } from "../../packages/victory-core/src/index";
 
@@ -44,11 +43,7 @@ const data = [
   { x: new Date(2016, 6, 1), open: 9, close: 30, high: 56, low: 7 },
   { x: new Date(2016, 6, 2), open: 80, close: 40, high: 120, low: 10 },
   { x: new Date(2016, 6, 3), open: 50, close: 80, high: 90, low: 20 },
-  { x: new Date(2016, 6, 4), open: 70, close: 22, high: 70, low: 5 },
-  { x: new Date(2016, 6, 5), open: 20, close: 35, high: 50, low: 10 },
-  { x: new Date(2016, 6, 6), open: 35, close: 30, high: 40, low: 3 },
-  { x: new Date(2016, 6, 7), open: 30, close: 90, high: 95, low: 30 },
-  { x: new Date(2016, 6, 8), open: 80, close: 81, high: 83, low: 75 }
+  { x: new Date(2016, 6, 4), open: 70, close: 22, high: 70, low: 5 }
 ];
 
 export default class App extends React.Component {
@@ -86,13 +81,18 @@ export default class App extends React.Component {
         <svg height={500} width={500}>
           <VictoryCandlestick
             style={{ data: { width: 10 }, parent: style.parent }}
-            labels={() => "yo"}
+            labels={({ datum }) => `x: ${datum.x.getDate()}`}
+            labelOrientation={{ low: "bottom", high: "top" }}
+            openLabels={({ datum }) => datum.open}
+            closeLabels={({ datum }) => datum.close}
+            lowLabels={({ datum }) => datum.low}
+            highLabels={({ datum }) => datum.high}
             data={data}
             size={8}
             standalone={false}
             events={[
               {
-                target: "labels",
+                target: "highLabels",
                 eventHandlers: {
                   onClick: () => {
                     return [
@@ -125,13 +125,17 @@ export default class App extends React.Component {
               }
             ]}
           />
-          <VictoryAxis standalone={false} />
         </svg>
 
         <VictoryCandlestick
           horizontal
           style={{ parent: style.parent }}
-          labels={() => "yo"}
+          labels={({ datum }) => `x: ${datum.x.getDate()}`}
+          labelOrientation={{ low: "left", high: "right", labels: "bottom" }}
+          openLabels={({ datum }) => datum.open}
+          closeLabels={({ datum }) => datum.close}
+          lowLabels={({ datum }) => datum.low}
+          highLabels={({ datum }) => datum.high}
           data={data}
           theme={VictoryTheme.material}
           size={8}
@@ -183,16 +187,30 @@ export default class App extends React.Component {
         <VictoryCandlestick
           animate={{ duration: 2000 }}
           data={this.state.data}
+          candleWidth={50}
           style={{
             data: {
-              width: 50,
               stroke: "transparent",
-              fill: (d) => d.fill,
-              opacity: (d) => d.opacity
+              fill: ({ datum }) => datum.fill,
+              opacity: ({ datum }) => datum.opacity
             },
             parent: style.parent
           }}
         />
+
+        <VictoryChart scale={{ x: "time" }} style={style} domainPadding={{ x: [20, 50] }}>
+          <VictoryCandlestick
+            candleColors={{ positive: "#8BC34A", negative: "#C62828" }}
+            data={data}
+            style={{ data: { stroke: "none" }, closeLabels: { fill: "blue" } }}
+            size={8}
+            openLabels={({ datum }) => datum.open}
+            closeLabels={({ datum }) => datum.close}
+            lowLabels={({ datum }) => datum.low}
+            highLabels={({ datum }) => datum.high}
+            labelOrientation={{ open: "top", high: "top" }}
+          />
+        </VictoryChart>
 
         <VictoryCandlestick style={style} size={1} />
 

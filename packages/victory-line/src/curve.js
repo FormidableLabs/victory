@@ -25,79 +25,63 @@ const getAngleAccessor = (scale) => {
   };
 };
 
-export default class Curve extends React.Component {
-  static propTypes = {
-    ...CommonProps.primitiveProps,
-    interpolation: PropTypes.string,
-    openCurve: PropTypes.bool,
-    origin: PropTypes.object,
-    pathComponent: PropTypes.element,
-    polar: PropTypes.bool
-  };
+const toNewName = (interpolation) => {
+  // d3 shape changed the naming scheme for interpolators from "basis" -> "curveBasis" etc.
+  const capitalize = (s) => s && s[0].toUpperCase() + s.slice(1);
+  return `curve${capitalize(interpolation)}`;
+};
 
-  static defaultProps = {
-    pathComponent: <Path />
-  };
+const getLineFunction = (props) => {
+  const { polar, scale, horizontal } = props;
+  const defaultOpenCurve = polar ? false : true;
+  const openCurve = props.openCurve === undefined ? defaultOpenCurve : props.openCurve;
+  const interpolation = !openCurve
+    ? `${toNewName(props.interpolation)}Closed`
+    : toNewName(props.interpolation);
+  return polar
+    ? d3Shape
+        .lineRadial()
+        .defined(defined)
+        .curve(d3Shape[interpolation])
+        .angle(getAngleAccessor(scale))
+        .radius(getYAccessor(scale))
+    : d3Shape
+        .line()
+        .defined(defined)
+        .curve(d3Shape[interpolation])
+        .x(horizontal ? getYAccessor(scale) : getXAccessor(scale))
+        .y(horizontal ? getXAccessor(scale) : getYAccessor(scale));
+};
 
-  getLineFunction(props) {
-    const { polar, scale, horizontal } = props;
-    const defaultOpenCurve = polar ? false : true;
-    const openCurve = props.openCurve === undefined ? defaultOpenCurve : props.openCurve;
-    const interpolation = !openCurve
-      ? `${this.toNewName(props.interpolation)}Closed`
-      : this.toNewName(props.interpolation);
-    return polar
-      ? d3Shape
-          .lineRadial()
-          .defined(defined)
-          .curve(d3Shape[interpolation])
-          .angle(getAngleAccessor(scale))
-          .radius(getYAccessor(scale))
-      : d3Shape
-          .line()
-          .defined(defined)
-          .curve(d3Shape[interpolation])
-          .x(horizontal ? getYAccessor(scale) : getXAccessor(scale))
-          .y(horizontal ? getXAccessor(scale) : getYAccessor(scale));
-  }
+const Curve = (props) => {
+  const { polar, origin } = props;
+  const lineFunction = getLineFunction(props);
+  const defaultTransform = polar && origin ? `translate(${origin.x}, ${origin.y})` : undefined;
+  return React.cloneElement(props.pathComponent, {
+    ...props.events,
+    d: lineFunction(props.data),
+    style: Helpers.evaluateStyle(assign({ fill: "none", stroke: "black" }, props.style), props),
+    transform: props.transform || defaultTransform,
+    className: props.className,
+    role: props.role,
+    shapeRendering: props.shapeRendering,
+    clipPath: props.clipPath
+  });
+};
 
-  toNewName(interpolation) {
-    // d3 shape changed the naming scheme for interpolators from "basis" -> "curveBasis" etc.
-    const capitalize = (s) => s && s[0].toUpperCase() + s.slice(1);
-    return `curve${capitalize(interpolation)}`;
-  }
+Curve.propTypes = {
+  ...CommonProps.primitiveProps,
+  interpolation: PropTypes.string,
+  openCurve: PropTypes.bool,
+  origin: PropTypes.object,
+  pathComponent: PropTypes.element,
+  polar: PropTypes.bool
+};
 
-  render() {
-    const {
-      data,
-      active,
-      events,
-      role,
-      shapeRendering,
-      className,
-      polar,
-      origin,
-      pathComponent,
-      clipPath
-    } = this.props;
-    const style = Helpers.evaluateStyle(
-      assign({ fill: "none", stroke: "black" }, this.props.style),
-      data,
-      active
-    );
-    const lineFunction = this.getLineFunction(this.props);
-    const path = lineFunction(data);
-    const defaultTransform = polar && origin ? `translate(${origin.x}, ${origin.y})` : undefined;
-    const transform = this.props.transform || defaultTransform;
-    return React.cloneElement(pathComponent, {
-      className,
-      style,
-      role,
-      shapeRendering,
-      transform,
-      events,
-      d: path,
-      clipPath
-    });
-  }
-}
+Curve.defaultProps = {
+  pathComponent: <Path />,
+  role: "presentation",
+  shapeRendering: "auto"
+};
+
+export default Curve;

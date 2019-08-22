@@ -15,7 +15,7 @@ storiesOf("VictoryArea.theme", module)
   .addDecorator(getChartDecorator({ theme: VictoryTheme.material }))
   .add("material theme", () => <VictoryArea data={getData(8)} />)
   .add("material theme stacked", () => (
-    <VictoryStack labels={(d) => d.x}>
+    <VictoryStack labels={({ datum }) => datum.x}>
       <VictoryArea data={getData(8)} />
       <VictoryArea data={getData(8, "seed-1")} />
       <VictoryArea data={getData(8, "seed-2")} />
@@ -27,7 +27,7 @@ storiesOf("VictoryArea.theme", module)
   .addDecorator(getChartDecorator({ theme: VictoryTheme.grayscale }))
   .add("grayscale (default) theme", () => <VictoryArea data={getData(8)} />)
   .add("grayscale (default) stacked", () => (
-    <VictoryStack labels={(d) => d.x}>
+    <VictoryStack labels={({ datum }) => datum.x}>
       <VictoryArea data={getData(8)} />
       <VictoryArea data={getData(8, "seed-1")} />
       <VictoryArea data={getData(8, "seed-2")} />
@@ -110,7 +110,9 @@ storiesOf("VictoryArea.data", module)
 
 storiesOf("VictoryArea.labels", module)
   .addDecorator(getChartDecorator())
-  .add("function labels", () => <VictoryArea data={getData(7)} labels={(d) => `x: ${d.x}`} />)
+  .add("function labels", () => (
+    <VictoryArea data={getData(7)} labels={({ datum }) => `x: ${datum.x}`} />
+  ))
   .add("array labels", () => (
     <VictoryArea data={getData(7)} labels={["", "", "three", "four", 5, "six"]} />
   ))
@@ -131,7 +133,7 @@ storiesOf("VictoryArea.tooltips", module)
   .add("tooltips", () => (
     <VictoryArea
       data={getData(5)}
-      labels={(d) => `x: ${d.x}`}
+      labels={({ datum }) => `x: ${datum.x}`}
       labelComponent={<VictoryTooltip active />}
     />
   ))
@@ -139,14 +141,14 @@ storiesOf("VictoryArea.tooltips", module)
     <VictoryArea
       horizontal
       data={getData(5)}
-      labels={(d) => `x: ${d.x}`}
+      labels={({ datum }) => `x: ${datum.x}`}
       labelComponent={<VictoryTooltip active />}
     />
   ))
   .add("tooltips (negative)", () => (
     <VictoryArea
       data={getMixedData(5)}
-      labels={(d) => `x: ${d.x}`}
+      labels={({ datum }) => `x: ${datum.x}`}
       labelComponent={<VictoryTooltip active />}
     />
   ))
@@ -163,7 +165,7 @@ storiesOf("VictoryArea.style", module)
   .add("with styles", () => (
     <VictoryArea
       data={getData(7)}
-      labels={(d) => d.x}
+      labels={({ datum }) => datum.x}
       style={{
         labels: { fontSize: 20, fill: "tomato", fontFamily: "monospace" },
         data: { fill: "tomato", fillOpacity: 0.7, stroke: "tomato", strokeWidth: 2 }
@@ -174,10 +176,10 @@ storiesOf("VictoryArea.style", module)
     <VictoryArea
       style={{
         labels: {
-          fill: (d) => (d.x === "Dog" ? "red" : "black")
+          fill: ({ datum }) => (datum.x === "Dog" ? "red" : "black")
         }
       }}
-      labels={(d) => d.x}
+      labels={({ datum }) => datum.x}
       data={[{ x: "Cat", y: 62 }, { x: "Dog", y: 91 }, { x: "Fish", y: 55 }, { x: "Bird", y: 55 }]}
     />
   ));
@@ -199,14 +201,14 @@ storiesOf("VictoryArea.stacked", module)
     </VictoryStack>
   ))
   .add("stacked area with labels", () => (
-    <VictoryStack colorScale="qualitative" labels={(d) => d.x}>
+    <VictoryStack colorScale="qualitative" labels={({ datum }) => datum.x}>
       <VictoryArea data={getData(7)} />
       <VictoryArea data={getData(7, "seed-1")} />
       <VictoryArea data={getData(7, "seed-2")} />
     </VictoryStack>
   ))
   .add("stacked area with labels (horizontal)", () => (
-    <VictoryStack horizontal colorScale="qualitative" labels={(d) => d.x}>
+    <VictoryStack horizontal colorScale="qualitative" labels={({ datum }) => datum.x}>
       <VictoryArea data={getData(7)} />
       <VictoryArea data={getData(7, "seed-1")} />
       <VictoryArea data={getData(7, "seed-2")} />
@@ -217,20 +219,20 @@ storiesOf("VictoryArea.scale", module)
   .addDecorator(getChartDecorator())
   .add("time scale", () => <VictoryArea data={getTimeData(5)} />)
   .add("time scale with labels", () => (
-    <VictoryArea data={getTimeData(5)} labels={(d) => d.x.getFullYear()} />
+    <VictoryArea data={getTimeData(5)} labels={({ datum }) => datum.x.getFullYear()} />
   ))
   .add("time scale with labels (horizontal)", () => (
-    <VictoryArea horizontal data={getTimeData(5)} labels={(d) => d.x.getFullYear()} />
+    <VictoryArea horizontal data={getTimeData(5)} labels={({ datum }) => datum.x.getFullYear()} />
   ))
   .add("stacked time scale with labels", () => (
-    <VictoryStack labels={(d) => d.x.getFullYear()}>
+    <VictoryStack labels={({ datum }) => datum.x.getFullYear()}>
       <VictoryArea data={getTimeData(5)} />
       <VictoryArea data={getTimeData(5, "seed-1")} />
       <VictoryArea data={getTimeData(5, "seed-2")} />
     </VictoryStack>
   ))
   .add("stacked time scale with labels (horizontal)", () => (
-    <VictoryStack horizontal labels={(d) => d.x.getFullYear()}>
+    <VictoryStack horizontal labels={({ datum }) => datum.x.getFullYear()}>
       <VictoryArea data={getTimeData(5)} />
       <VictoryArea data={getTimeData(5, "seed-1")} />
       <VictoryArea data={getTimeData(5, "seed-2")} />

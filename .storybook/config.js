@@ -32,6 +32,7 @@ const loadStories = () => {
   require("../stories/victory-scatter");
   require("../stories/containers-and-addons");
   require("../stories/victory-pie");
+  require("../stories/victory-tooltip");
 };
 
 configure(loadStories, module);

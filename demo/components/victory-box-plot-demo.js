@@ -91,7 +91,7 @@ export default class App extends React.Component {
           <VictoryBoxPlot
             minLabels
             maxLabels
-            q1Labels={() => ""}
+            q1Labels={({ datum }) => `x: ${datum.x}`}
             whiskerWidth={50}
             data={[{ x: 1, y: [5, 10, 9, 2] }, { x: 2, y: [1, 15, 6, 8] }]}
             boxWidth={20}

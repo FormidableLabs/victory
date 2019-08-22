@@ -39,25 +39,32 @@ function getAngle(props, datum) {
 
 function getPadding(props, datum) {
   datum = datum || {};
-  const { horizontal, style, active } = props;
+  const { horizontal, style } = props;
   const labelStyle = style.labels || {};
-  const defaultPadding = Helpers.evaluateProp(labelStyle.padding, datum, active) || 0;
+  const defaultPadding = Helpers.evaluateProp(labelStyle.padding, props) || 0;
   const sign = datum._y < 0 ? -1 : 1;
   return {
     x: horizontal ? sign * defaultPadding : 0,
-    y: horizontal ? 0 : sign * defaultPadding
+    y: horizontal ? 0 : -1 * sign * defaultPadding
+  };
+}
+
+function getOffset(props, datum) {
+  if (props.polar) {
+    return {};
+  }
+  const padding = getPadding(props, datum);
+  return {
+    dx: padding.x,
+    dy: padding.y
   };
 }
 
 function getPosition(props, datum) {
   const { polar } = props;
   const { x, y } = Helpers.scalePoint(props, datum);
-  const padding = getPadding(props, datum);
   if (!polar) {
-    return {
-      x: x + padding.x,
-      y: y - padding.y
-    };
+    return { x, y };
   } else {
     const polarPadding = getPolarPadding(props, datum);
     return {
@@ -68,10 +75,10 @@ function getPosition(props, datum) {
 }
 
 function getPolarPadding(props, datum) {
-  const { active, style } = props;
+  const { style } = props;
   const degrees = getDegrees(props, datum);
   const labelStyle = style.labels || {};
-  const padding = Helpers.evaluateProp(labelStyle.padding, datum, active) || 0;
+  const padding = Helpers.evaluateProp(labelStyle.padding, props) || 0;
   const angle = Helpers.degreesToRadians(degrees);
   return {
     x: padding * Math.cos(angle),
@@ -157,7 +164,7 @@ function getDegrees(props, datum) {
 }
 
 function getProps(props, index) {
-  const { scale, data, style, horizontal, polar } = props;
+  const { scale, data, style, horizontal, polar, width, height } = props;
   const datum = data[index];
   const degrees = getDegrees(props, datum);
   const textAnchor = polar ? getPolarTextAnchor(props, degrees) : getTextAnchor(props, datum);
@@ -168,6 +175,7 @@ function getProps(props, index) {
   const text = getText(props, datum, index);
   const labelPlacement = getLabelPlacement(props);
   const { x, y } = getPosition(props, datum);
+  const { dx, dy } = getOffset(props, datum);
   return {
     angle,
     data,
@@ -182,6 +190,10 @@ function getProps(props, index) {
     verticalAnchor,
     x,
     y,
+    dx,
+    dy,
+    width,
+    height,
     style: style.labels
   };
 }
