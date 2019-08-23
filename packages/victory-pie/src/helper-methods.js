@@ -136,22 +136,17 @@ const getVerticalAnchor = (orientation) => {
 
 const getLabelProps = (text, dataProps, calculatedValues) => {
   const { index, datum, data, slice } = dataProps;
-  const {
-    style,
-    defaultRadius,
-    origin,
-    width,
-    height,
-    labelRadius,
-    labelPosition
-  } = calculatedValues;
-  const evaluatedRadius = Helpers.evaluateProp(labelRadius, assign({ text }, dataProps));
+  const { style, defaultRadius, origin, width, height, labelPosition } = calculatedValues;
+  const labelRadius = Helpers.evaluateProp(
+    calculatedValues.labelRadius,
+    assign({ text }, dataProps)
+  );
   const labelStyle = assign({ padding: 0 }, style.labels);
   const evaluatedStyle = Helpers.evaluateStyle(
     labelStyle,
-    assign({ evaluatedRadius, text }, dataProps)
+    assign({ labelRadius, text }, dataProps)
   );
-  const labelArc = getLabelArc(defaultRadius, evaluatedRadius, evaluatedStyle);
+  const labelArc = getLabelArc(defaultRadius, labelRadius, evaluatedStyle);
   const position = getLabelPosition(labelArc, slice, labelPosition);
   const orientation = getLabelOrientation(slice);
   return {
@@ -221,7 +216,8 @@ export const getBaseProps = (props, fallbackProps) => {
     };
     const text = getLabelText(props, datum, index);
     if ((text !== undefined && text !== null) || (labels && (events || sharedEvents))) {
-      childProps[eventKey].labels = getLabelProps(text, dataProps, calculatedValues);
+      const evaluatedText = Helpers.evaluateProp(text, dataProps);
+      childProps[eventKey].labels = getLabelProps(evaluatedText, dataProps, calculatedValues);
     }
     return childProps;
   }, initialChildProps);
