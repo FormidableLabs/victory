@@ -43,30 +43,30 @@ const getFontSize = (style) => {
   return defaultStyles.fontSize;
 };
 
-const getStyle = (props, style) => {
-  style = style ? defaults({}, style, defaultStyles) : defaultStyles;
-  const baseStyles = Helpers.evaluateStyle(style, props);
-  return assign({}, baseStyles, { fontSize: getFontSize(baseStyles) });
-};
+const getStyles = (style, props) => {
+  const getSingleStyle = (s) => {
+    s = s ? defaults({}, s, defaultStyles) : defaultStyles;
+    const baseStyles = Helpers.evaluateStyle(s, props);
+    return assign({}, baseStyles, { fontSize: getFontSize(baseStyles) });
+  };
 
-const getStyles = (props) => {
-  return Array.isArray(props.style) && !isEmpty(props.style)
-    ? props.style.map((style) => getStyle(props, style))
-    : [getStyle(props, props.style)];
+  return Array.isArray(style) && !isEmpty(style)
+    ? style.map((s) => getSingleStyle(s))
+    : [getSingleStyle(style)];
 };
 
 const getHeight = (props, type) => {
   return Helpers.evaluateProp(props[type], props);
 };
 
-const getContent = (props) => {
-  if (props.text === undefined || props.text === null) {
+const getContent = (text, props) => {
+  if (text === undefined || text === null) {
     return undefined;
   }
-  if (Array.isArray(props.text)) {
-    return props.text.map((line) => Helpers.evaluateProp(line, props));
+  if (Array.isArray(text)) {
+    return text.map((line) => Helpers.evaluateProp(line, props));
   }
-  const child = Helpers.evaluateProp(props.text, props);
+  const child = Helpers.evaluateProp(text, props);
   if (child === undefined || child === null) {
     return undefined;
   }
@@ -80,13 +80,12 @@ const checkLineHeight = (lineHeight, val, fallbackVal) => {
   return lineHeight;
 };
 
-//eslint-disable-next-line max-params
-const getDy = (props, style, content, lineHeight) => {
-  style = Array.isArray(style) ? style[0] : style;
+const getDy = (props, lineHeight) => {
+  const style = Array.isArray(props.style) ? props.style[0] : props.style;
   lineHeight = checkLineHeight(lineHeight, lineHeight[0], 1);
   const fontSize = style.fontSize;
   const dy = props.dy ? Helpers.evaluateProp(props.dy, props) : 0;
-  const length = content.length;
+  const length = props.text.length;
   const capHeight = getHeight(props, "capHeight");
   const verticalAnchor = style.verticalAnchor || props.verticalAnchor;
   const anchor = verticalAnchor ? Helpers.evaluateProp(verticalAnchor, props) : "middle";
@@ -100,8 +99,8 @@ const getDy = (props, style, content, lineHeight) => {
   }
 };
 
-const getTransform = (props, style) => {
-  const { x, y, polar } = props;
+const getTransform = (props) => {
+  const { x, y, polar, style } = props;
   const defaultAngle = polar ? LabelHelpers.getPolarAngle(props) : 0;
   const baseAngle = style.angle === undefined ? props.angle : style.angle;
   const angle = baseAngle === undefined ? defaultAngle : baseAngle;
@@ -111,18 +110,17 @@ const getTransform = (props, style) => {
   return transformPart || angle ? Style.toTransformString(transformPart, rotatePart) : undefined;
 };
 
-const renderElements = (props, content) => {
-  const { inline, className, title, desc, events, direction } = props;
-  const style = getStyles(props);
+const renderElements = (props) => {
+  const { inline, className, title, desc, events, direction, text, style } = props;
   const lineHeight = getHeight(props, "lineHeight");
   const textAnchor = props.textAnchor ? Helpers.evaluateProp(props.textAnchor, props) : "start";
   const dx = props.dx ? Helpers.evaluateProp(props.dx, props) : 0;
-  const dy = getDy(props, style, content, lineHeight);
-  const transform = getTransform(props, style);
+  const dy = getDy(props, lineHeight);
+  const transform = getTransform(props);
   const x = props.x !== undefined ? props.x : getPosition(props, "x");
   const y = props.y !== undefined ? props.y : getPosition(props, "y");
 
-  const textChildren = content.map((line, i) => {
+  const textChildren = text.map((line, i) => {
     const currentStyle = style[i] || style[0];
     const lastStyle = style[i - 1] || style[0];
     const fontSize = (currentStyle.fontSize + lastStyle.fontSize) / 2;
@@ -161,12 +159,23 @@ const renderElements = (props, content) => {
   );
 };
 
+const evaluateProps = (props) => {
+  /* Potential evaluated props are
+    1) text
+    2) style
+    3) everything else
+  */
+  const text = getContent(props.text, props);
+  const style = getStyles(props.style, assign({}, props, { text }));
+  return assign({}, props, { style, text });
+};
+
 const VictoryLabel = (props) => {
-  const content = getContent(props);
-  if (content === null || content === undefined) {
+  props = evaluateProps(props);
+  if (props.text === null || props.text === undefined) {
     return null;
   }
-  const label = renderElements(props, content);
+  const label = renderElements(props);
   return props.renderInPortal ? <VictoryPortal>{label}</VictoryPortal> : label;
 };
 

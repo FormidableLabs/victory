@@ -4,8 +4,8 @@ import PropTypes from "prop-types";
 import { Helpers, CommonProps, Line, Rect } from "victory-core";
 import { assign, defaults, isFunction } from "lodash";
 
-const getCandleWidth = (props, style) => {
-  const { candleWidth } = props;
+const getCandleWidth = (candleWidth, props) => {
+  const { style } = props;
   if (candleWidth) {
     return isFunction(candleWidth) ? Helpers.evaluateProp(candleWidth, props) : candleWidth;
   } else if (style.width) {
@@ -15,8 +15,7 @@ const getCandleWidth = (props, style) => {
 };
 
 const getCandleProps = (props, style) => {
-  const { id, x, close, open, horizontal } = props;
-  const candleWidth = getCandleWidth(props, style);
+  const { id, x, close, open, horizontal, candleWidth } = props;
   const candleLength = Math.abs(close - open);
   return {
     key: `${id}-candle`,
@@ -52,7 +51,15 @@ const getLowWickProps = (props, style) => {
   };
 };
 
+const evaluateProps = (props) => {
+  // Potential evaluated props are 1) `style`, 2) `candleWidth`
+  const style = Helpers.evaluateStyle(assign({ stroke: "black" }, props.style), props);
+  const candleWidth = getCandleWidth(props.candleWidth, assign({}, props, { style }));
+  return assign({}, props, { style, candleWidth });
+};
+
 const Candle = (props) => {
+  props = evaluateProps(props);
   const {
     events,
     groupComponent,
@@ -63,9 +70,9 @@ const Candle = (props) => {
     shapeRendering,
     className,
     wickStrokeWidth,
-    transform
+    transform,
+    style
   } = props;
-  const style = Helpers.evaluateStyle(assign({ stroke: "black" }, props.style), props);
   const wickStyle = defaults({ strokeWidth: wickStrokeWidth }, style);
   const sharedProps = { role, shapeRendering, className, transform, clipPath, ...events };
   const candleProps = assign(getCandleProps(props, style), sharedProps);
