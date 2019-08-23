@@ -1,5 +1,9 @@
 # Victory Changelog
 
+## 33.0.1 (20198-08-22)
+
+- [#1375](https://github.com/FormidableLabs/victory/pull/1375) - Evaluates / calculates some props early so they are available when functional props are being evaluated. Most notably, `text` is evaluated before any other functional props for `VictoryLabel` so it may be used to determine things like style, etc.
+
 ## 33.0.0 (2018-08-21)
 
 ### Breaking Changes
