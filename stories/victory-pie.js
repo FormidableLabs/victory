@@ -106,6 +106,13 @@ storiesOf("VictoryPie", module)
       data={[{ x: "Cat", y: 62 }, { x: "Dog", y: 91 }, { x: "Fish", y: 55 }, { x: "Bird", y: 55 }]}
     />
   ))
+  .add("with functional padAngle", () => (
+    <VictoryPie
+      padAngle={({ datum }) => (datum.y > 70 ? 5 : 0)}
+      innerRadius={100}
+      data={[{ x: "Cat", y: 62 }, { x: "Dog", y: 91 }, { x: "Fish", y: 55 }, { x: "Bird", y: 55 }]}
+    />
+  ))
   .add("with sliceStartAngle and sliceEndAngle", () => (
     <VictoryPie
       dataComponent={<Slice sliceStartAngle={0} sliceEndAngle={({ datum }) => datum.endAngle} />}
