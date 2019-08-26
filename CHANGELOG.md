@@ -1,5 +1,9 @@
 # Victory Changelog
 
+## 33.0.3 (2019-08-25)
+
+-[#1379](https://github.com/FormidableLabs/victory/pull/1379) - Fixes a bug affecting functional `padAngle` prop in `VictoryPie`
+
 ## 33.0.2 (2019-08-25)
 
 -[#1378](https://github.com/FormidableLabs/victory/pull/1378) - Fixes a bug affecting function labels in `VictoryPie`
