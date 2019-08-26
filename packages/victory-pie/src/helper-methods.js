@@ -41,11 +41,13 @@ const getOrigin = (props, padding) => {
 };
 
 const getSlices = (props, data) => {
+  const padAngle = isFunction(props.padAngle) ? 0 : props.padAngle;
   const layoutFunction = d3Shape
     .pie()
     .sort(null)
     .startAngle(Helpers.degreesToRadians(props.startAngle))
     .endAngle(Helpers.degreesToRadians(props.endAngle))
+    .padAngle(Helpers.degreesToRadians(padAngle))
     .value((datum) => {
       return datum._y;
     });
