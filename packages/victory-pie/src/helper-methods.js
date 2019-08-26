@@ -5,7 +5,7 @@ import * as d3Shape from "d3-shape";
 import { Helpers, Data, Style } from "victory-core";
 
 const checkForValidText = (text) => {
-  if (text === undefined || text === null) {
+  if (text === undefined || text === null || isFunction(text)) {
     return text;
   } else {
     return `${text}`;
@@ -79,7 +79,7 @@ const getLabelText = (props, datum, index) => {
   } else if (Array.isArray(props.labels)) {
     text = props.labels[index];
   } else {
-    text = isFunction(props.labels) ? props.labels(datum) : datum.xName || datum._x;
+    text = isFunction(props.labels) ? props.labels : datum.xName || datum._x;
   }
   return checkForValidText(text);
 };
