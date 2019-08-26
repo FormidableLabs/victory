@@ -46,7 +46,6 @@ const getSlices = (props, data) => {
     .sort(null)
     .startAngle(Helpers.degreesToRadians(props.startAngle))
     .endAngle(Helpers.degreesToRadians(props.endAngle))
-    .padAngle(Helpers.degreesToRadians(props.padAngle))
     .value((datum) => {
       return datum._y;
     });
