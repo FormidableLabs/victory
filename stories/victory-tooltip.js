@@ -153,3 +153,88 @@ storiesOf("VictoryTooltip.flyoutWidth", module)
       }
     />
   ));
+
+storiesOf("VictoryTooltip.cornerRadius", module)
+  .addDecorator(
+    getChartDecorator({
+      domainPadding: 25,
+      style: { parent: { border: "1px solid #ccc" } }
+    })
+  )
+  .add("= 0", () => (
+    <VictoryBar
+      data={getMixedData(5)}
+      labels={({ datum }) => `x: ${datum.x}`}
+      labelComponent={<VictoryTooltip active dy={0} cornerRadius={0} />}
+    />
+  ))
+  .add("= 10", () => (
+    <VictoryBar
+      horizontal
+      data={getMixedData(5)}
+      labels={({ datum }) => `x: ${datum.x}`}
+      labelComponent={<VictoryTooltip active dx={0} cornerRadius={10} />}
+    />
+  ))
+  .add("as a function", () => (
+    <VictoryBar
+      data={getMixedData(5)}
+      labels={({ datum }) => `x: ${datum.x}`}
+      labelComponent={<VictoryTooltip active dy={0} cornerRadius={({ datum }) => datum.x * 2} />}
+    />
+  ));
+
+storiesOf("VictoryTooltip.pointerOrientation", module)
+  .addDecorator(
+    getChartDecorator({
+      domainPadding: 25,
+      style: { parent: { border: "1px solid #ccc" } }
+    })
+  )
+  .add("left", () => (
+    <VictoryBar
+      data={getMixedData(5)}
+      labels={({ datum }) => `x: ${datum.x}`}
+      labelComponent={<VictoryTooltip active centerOffset={{ x: 40 }} pointerOrientation="left" />}
+    />
+  ))
+  .add("right", () => (
+    <VictoryBar
+      data={getMixedData(5)}
+      labels={({ datum }) => `x: ${datum.x}`}
+      labelComponent={
+        <VictoryTooltip active centerOffset={{ x: -40 }} pointerOrientation="right" />
+      }
+    />
+  ))
+  .add("top", () => (
+    <VictoryBar
+      horizontal
+      data={getMixedData(5)}
+      labels={({ datum }) => `x: ${datum.x}`}
+      labelComponent={<VictoryTooltip active centerOffset={{ y: 40 }} pointerOrientation="top" />}
+    />
+  ))
+  .add("bottom", () => (
+    <VictoryBar
+      horizontal
+      data={getMixedData(5)}
+      labels={({ datum }) => `x: ${datum.x}`}
+      labelComponent={
+        <VictoryTooltip active centerOffset={{ y: -40 }} pointerOrientation="bottom" />
+      }
+    />
+  ))
+  .add("as a function", () => (
+    <VictoryBar
+      data={getMixedData(5)}
+      labels={({ datum }) => `x: ${datum.x}`}
+      labelComponent={
+        <VictoryTooltip
+          active
+          centerOffset={{ x: 40 }}
+          pointerOrientation={({ datum }) => (datum.y < 0 ? "top" : "left")}
+        />
+      }
+    />
+  ));

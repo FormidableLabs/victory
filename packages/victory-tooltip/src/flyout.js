@@ -6,7 +6,7 @@ import { isPlainObject } from "lodash";
 
 const getVerticalPath = (props) => {
   const { pointerWidth, cornerRadius, orientation, width, height, center } = props;
-  const sign = orientation === "top" ? 1 : -1;
+  const sign = orientation === "bottom" ? 1 : -1;
   const x = props.x + (props.dx || 0);
   const y = props.y + (props.dy || 0);
   const centerX = isPlainObject(center) && center.x;
@@ -16,7 +16,7 @@ const getVerticalPath = (props) => {
   const rightEdge = centerX + width / 2;
   const leftEdge = centerX - width / 2;
   const pointerLength = sign * (y - pointerEdge) < 0 ? 0 : props.pointerLength;
-  const direction = orientation === "top" ? "0 0 0" : "0 0 1";
+  const direction = orientation === "bottom" ? "0 0 0" : "0 0 1";
   const arc = `${cornerRadius} ${cornerRadius} ${direction}`;
   return `M ${centerX - pointerWidth / 2}, ${pointerEdge}
     L ${pointerLength ? x : centerX + pointerWidth / 2}, ${pointerLength ? y : pointerEdge}
@@ -34,7 +34,7 @@ const getVerticalPath = (props) => {
 
 const getHorizontalPath = (props) => {
   const { pointerWidth, cornerRadius, orientation, width, height, center } = props;
-  const sign = orientation === "right" ? 1 : -1;
+  const sign = orientation === "left" ? 1 : -1;
   const x = props.x + (props.dx || 0);
   const y = props.y + (props.dy || 0);
   const centerX = isPlainObject(center) && center.x;
@@ -44,7 +44,7 @@ const getHorizontalPath = (props) => {
   const bottomEdge = centerY + height / 2;
   const topEdge = centerY - height / 2;
   const pointerLength = sign * (x - pointerEdge) > 0 ? 0 : props.pointerLength;
-  const direction = orientation === "right" ? "0 0 0" : "0 0 1";
+  const direction = orientation === "left" ? "0 0 0" : "0 0 1";
   const arc = `${cornerRadius} ${cornerRadius} ${direction}`;
   return `M ${pointerEdge}, ${centerY - pointerWidth / 2}
     L ${pointerLength ? x : pointerEdge}, ${pointerLength ? y : centerY + pointerWidth / 2}
