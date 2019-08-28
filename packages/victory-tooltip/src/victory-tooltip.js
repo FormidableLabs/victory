@@ -373,16 +373,9 @@ export default class VictoryTooltip extends React.Component {
   }
 
   getDimensions(props, labelSize) {
-    const {
-      orientation,
-      cornerRadius,
-      pointerLength,
-      pointerWidth,
-      style,
-      flyoutHeight,
-      flyoutWidth
-    } = props;
+    const { orientation, pointerLength, pointerWidth, style, flyoutHeight, flyoutWidth } = props;
     const padding = this.getLabelPadding(style);
+    const cornerRadius = Helpers.evaluateProp(props.cornerRadius, props);
     const getHeight = () => {
       const calculatedHeight = labelSize.height + padding;
       const minHeight =
