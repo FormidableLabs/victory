@@ -52,6 +52,10 @@ export default class VictoryTooltip extends React.Component {
       PropTypes.func
     ]),
     pointerLength: PropTypes.oneOfType([CustomPropTypes.nonNegative, PropTypes.func]),
+    pointerOrientation: PropTypes.oneOfType([
+      PropTypes.oneOf(["top", "bottom", "left", "right"]),
+      PropTypes.func
+    ]),
     pointerWidth: PropTypes.oneOfType([CustomPropTypes.nonNegative, PropTypes.func]),
     polar: PropTypes.bool,
     renderInPortal: PropTypes.bool,
@@ -422,7 +426,7 @@ export default class VictoryTooltip extends React.Component {
     });
   }
 
-  getOrientation(point, center, flyoutDimensions) {
+  getPointerOrientation(point, center, flyoutDimensions) {
     const edges = {
       bottom: center.y + flyoutDimensions.height / 2,
       top: center.y - flyoutDimensions.height / 2,
@@ -431,10 +435,10 @@ export default class VictoryTooltip extends React.Component {
     };
 
     const gaps = [
-      { side: "bottom", val: edges.top > point.y ? edges.top - point.y : -1 },
-      { side: "top", val: edges.bottom < point.y ? point.y - edges.bottom : -1 },
-      { side: "left", val: edges.right < point.x ? point.x - edges.right : -1 },
-      { side: "right", val: edges.left > point.x ? edges.left - point.x : -1 }
+      { side: "top", val: edges.top > point.y ? edges.top - point.y : -1 },
+      { side: "bottom", val: edges.bottom < point.y ? point.y - edges.bottom : -1 },
+      { side: "right", val: edges.right < point.x ? point.x - edges.right : -1 },
+      { side: "left", val: edges.left > point.x ? edges.left - point.x : -1 }
     ];
 
     return orderBy(gaps, "val", "desc")[0].side;
@@ -455,7 +459,7 @@ export default class VictoryTooltip extends React.Component {
       events,
       flyoutComponent
     } = props;
-    const orientation = this.getOrientation({ x, y }, flyoutCenter, flyoutDimensions);
+    const pointerOrientation = Helpers.evaluateProp(props.pointerOrientation, props);
     return defaults({}, flyoutComponent.props, {
       x,
       y,
@@ -463,11 +467,12 @@ export default class VictoryTooltip extends React.Component {
       dy,
       datum,
       index,
-      orientation,
       pointerLength,
       pointerWidth,
       cornerRadius,
       events,
+      orientation:
+        pointerOrientation || this.getPointerOrientation({ x, y }, flyoutCenter, flyoutDimensions),
       key: `${this.id}-tooltip-${index}`,
       width: flyoutDimensions.width,
       height: flyoutDimensions.height,
