@@ -1,5 +1,11 @@
 # Victory Changelog
 
+## 33.0.4 (2019-08-27)
+
+- [1384](https://github.com/FormidableLabs/victory/pull/1384) - Fixes a bug affecting functional `cornerRadius` on `VictoryTooltip`
+
+- [1385](https://github.com/FormidableLabs/victory/pull/1385) - Adds `pointerOrientation` prop on `VictoryTooltip` to make it possible to control which side of the tooltip the pointer extends from independent of which side of the data point the entire flyout is oriented towards. This prop only became sensible with the addition of `center` and `centerOffset` props added in `victory@33.0.0`
+
 ## 33.0.3 (2019-08-25)
 
 -[#1379](https://github.com/FormidableLabs/victory/pull/1379) - Fixes a bug affecting functional `padAngle` prop in `VictoryPie`
