@@ -37,17 +37,20 @@ class VictoryArea extends React.Component {
   static propTypes = {
     ...CommonProps.baseProps,
     ...CommonProps.dataProps,
-    interpolation: PropTypes.oneOf([
-      "basis",
-      "cardinal",
-      "catmullRom",
-      "linear",
-      "monotoneX",
-      "monotoneY",
-      "natural",
-      "step",
-      "stepAfter",
-      "stepBefore"
+    interpolation: PropTypes.oneOfType([
+      PropTypes.oneOf([
+        "basis",
+        "cardinal",
+        "catmullRom",
+        "linear",
+        "monotoneX",
+        "monotoneY",
+        "natural",
+        "step",
+        "stepAfter",
+        "stepBefore"
+      ]),
+      PropTypes.func
     ]),
     label: CustomPropTypes.deprecated(
       PropTypes.string,

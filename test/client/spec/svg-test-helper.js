@@ -43,8 +43,10 @@ const calculateD3Path = (props, pathType, index) => {
   // eslint-disable-line max-statements
   const { width, height, padding, scale, interpolation, data, domain } = props;
   const scaleType = scale ? `scale${scale[0].toUpperCase() + scale.slice(1)}` : "scaleLinear";
-  const curveType =
-    interpolation && `curve${interpolation[0].toUpperCase() + interpolation.slice(1)}`;
+  const curveType = typeof interpolation === "string"
+    ? `curve${interpolation[0].toUpperCase() + interpolation.slice(1)}`
+    : undefined;
+  const curveFunction = typeof interpolation === "function" ? interpolation : d3Shape[curveType];
 
   const dataDomain = data.reduce(
     (prev, datum) => {
@@ -81,7 +83,7 @@ const calculateD3Path = (props, pathType, index) => {
     case "line": {
       return d3Shape
         .line()
-        .curve(d3Shape[curveType])
+        .curve(curveFunction)
         .x((d) => scaleX(d.x))
         .y((d) => scaleY(d.y))(data);
     }
@@ -91,7 +93,7 @@ const calculateD3Path = (props, pathType, index) => {
       });
       return d3Shape
         .area()
-        .curve(d3Shape[curveType])
+        .curve(curveFunction)
         .x((d) => scaleX(d.x))
         .y1((d) => scaleY(d.y1))
         .y0((d) => scaleY(d.y0))(modifiedData);
