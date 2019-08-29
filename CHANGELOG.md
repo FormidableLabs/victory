@@ -1,5 +1,9 @@
 # Victory Changelog
 
+## 33.0.5 (2019-08-29)
+
+- [#1387](https://github.com/FormidableLabs/victory/pull/1387) - Add support for custom functions for the `interpolation` prop. Thanks @sanniassin!
+
 ## 33.0.4 (2019-08-27)
 
 - [1384](https://github.com/FormidableLabs/victory/pull/1384) - Fixes a bug affecting functional `cornerRadius` on `VictoryTooltip`
