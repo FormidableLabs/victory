@@ -36,11 +36,9 @@ const getLineFunction = (props) => {
   const defaultOpenCurve = polar ? false : true;
   const openCurve = props.openCurve === undefined ? defaultOpenCurve : props.openCurve;
   const interpolationFunction = typeof props.interpolation === "function" && props.interpolation;
-  const interpolationName = typeof props.interpolation === "string" && (
-    !openCurve
-      ? `${toNewName(props.interpolation)}Closed`
-      : toNewName(props.interpolation)
-  );
+  const interpolationName =
+    typeof props.interpolation === "string" &&
+    (!openCurve ? `${toNewName(props.interpolation)}Closed` : toNewName(props.interpolation));
   return polar
     ? d3Shape
         .lineRadial()
@@ -74,10 +72,7 @@ const Curve = (props) => {
 
 Curve.propTypes = {
   ...CommonProps.primitiveProps,
-  interpolation: PropTypes.oneOfType([
-    PropTypes.string,
-    PropTypes.func
-  ]),
+  interpolation: PropTypes.oneOfType([PropTypes.string, PropTypes.func]),
   openCurve: PropTypes.bool,
   origin: PropTypes.object,
   pathComponent: PropTypes.element,

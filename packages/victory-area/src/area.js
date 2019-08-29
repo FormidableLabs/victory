@@ -38,7 +38,8 @@ const toNewName = (interpolation) => {
 const getLineFunction = (props) => {
   const { polar, scale, horizontal } = props;
   const interpolationFunction = typeof props.interpolation === "function" && props.interpolation;
-  const interpolationName = typeof props.interpolation === "string" && toNewName(props.interpolation);
+  const interpolationName =
+    typeof props.interpolation === "string" && toNewName(props.interpolation);
   return polar
     ? d3Shape
         .lineRadial()
@@ -78,7 +79,8 @@ const getCartesianArea = (props, interpolation) => {
 const getAreaFunction = (props) => {
   const { polar, scale } = props;
   const interpolationFunction = typeof props.interpolation === "function" && props.interpolation;
-  const interpolationName = typeof props.interpolation === "string" && toNewName(props.interpolation);
+  const interpolationName =
+    typeof props.interpolation === "string" && toNewName(props.interpolation);
   const interpolation = interpolationFunction || interpolationName;
   return polar
     ? d3Shape
@@ -147,10 +149,7 @@ const Area = (props) => {
 Area.propTypes = {
   ...CommonProps.primitiveProps,
   groupComponent: PropTypes.element,
-  interpolation: PropTypes.oneOfType([
-    PropTypes.string,
-    PropTypes.func
-  ]),
+  interpolation: PropTypes.oneOfType([PropTypes.string, PropTypes.func]),
   pathComponent: PropTypes.element
 };
 

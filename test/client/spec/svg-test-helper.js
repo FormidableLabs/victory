@@ -43,9 +43,10 @@ const calculateD3Path = (props, pathType, index) => {
   // eslint-disable-line max-statements
   const { width, height, padding, scale, interpolation, data, domain } = props;
   const scaleType = scale ? `scale${scale[0].toUpperCase() + scale.slice(1)}` : "scaleLinear";
-  const curveType = typeof interpolation === "string"
-    ? `curve${interpolation[0].toUpperCase() + interpolation.slice(1)}`
-    : undefined;
+  const curveType =
+    typeof interpolation === "string"
+      ? `curve${interpolation[0].toUpperCase() + interpolation.slice(1)}`
+      : undefined;
   const curveFunction = typeof interpolation === "function" ? interpolation : d3Shape[curveType];
 
   const dataDomain = data.reduce(

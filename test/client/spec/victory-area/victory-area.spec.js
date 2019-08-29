@@ -55,12 +55,20 @@ describe("components/victory-area", () => {
       const stringWrapper = mount(<VictoryArea {...props} interpolation="catmullRom" />);
       const stringArea = stringWrapper.find(Area);
       const stringPath = stringArea.find("path").prop("d");
-      SvgTestHelper.expectCorrectD3Path(stringArea, { ...props, interpolation: "catmullRom" }, "area");
+      SvgTestHelper.expectCorrectD3Path(
+        stringArea,
+        { ...props, interpolation: "catmullRom" },
+        "area"
+      );
 
       const functionWrapper = mount(<VictoryArea {...props} interpolation={curveCatmullRom} />);
       const functionArea = functionWrapper.find(Area);
       const functionPath = functionArea.find("path").prop("d");
-      SvgTestHelper.expectCorrectD3Path(functionArea, { ...props, interpolation: curveCatmullRom }, "area");
+      SvgTestHelper.expectCorrectD3Path(
+        functionArea,
+        { ...props, interpolation: curveCatmullRom },
+        "area"
+      );
 
       expect(functionPath).to.equal(stringPath);
     });

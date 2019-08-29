@@ -91,12 +91,20 @@ describe("components/victory-line", () => {
       const stringWrapper = mount(<VictoryLine {...props} interpolation="catmullRom" />);
       const stringLine = stringWrapper.find(Curve);
       const stringPath = stringLine.find("path").prop("d");
-      SvgTestHelper.expectCorrectD3Path(stringLine, { ...props, interpolation: "catmullRom" }, "line");
+      SvgTestHelper.expectCorrectD3Path(
+        stringLine,
+        { ...props, interpolation: "catmullRom" },
+        "line"
+      );
 
       const functionWrapper = mount(<VictoryLine {...props} interpolation={curveCatmullRom} />);
       const functionLine = functionWrapper.find(Curve);
       const functionPath = functionLine.find("path").prop("d");
-      SvgTestHelper.expectCorrectD3Path(functionLine, { ...props, interpolation: curveCatmullRom }, "line");
+      SvgTestHelper.expectCorrectD3Path(
+        functionLine,
+        { ...props, interpolation: curveCatmullRom },
+        "line"
+      );
 
       expect(functionPath).to.equal(stringPath);
     });
