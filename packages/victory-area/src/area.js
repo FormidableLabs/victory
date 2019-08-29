@@ -37,36 +37,40 @@ const toNewName = (interpolation) => {
 
 const getLineFunction = (props) => {
   const { polar, scale, horizontal } = props;
-  const interpolation = toNewName(props.interpolation);
+  const interpolationFunction = typeof props.interpolation === "function" && props.interpolation;
+  const interpolationName =
+    typeof props.interpolation === "string" && toNewName(props.interpolation);
   return polar
     ? d3Shape
         .lineRadial()
         .defined(defined)
-        .curve(d3Shape[`${interpolation}Closed`])
+        .curve(interpolationFunction || d3Shape[`${interpolationName}Closed`])
         .angle(getAngleAccessor(scale))
         .radius(getYAccessor(scale))
     : d3Shape
         .line()
         .defined(defined)
-        .curve(d3Shape[interpolation])
+        .curve(interpolationFunction || d3Shape[interpolationName])
         .x(horizontal ? getYAccessor(scale) : getXAccessor(scale))
         .y(horizontal ? getXAccessor(scale) : getYAccessor(scale));
 };
 
 const getCartesianArea = (props, interpolation) => {
   const { horizontal, scale } = props;
+  const interpolationFunction = typeof interpolation === "function" && interpolation;
+  const interpolationName = typeof interpolation === "string" && interpolation;
   return horizontal
     ? d3Shape
         .area()
         .defined(defined)
-        .curve(d3Shape[interpolation])
+        .curve(interpolationFunction || d3Shape[interpolationName])
         .x0(getY0Accessor(scale))
         .x1(getYAccessor(scale))
         .y(getXAccessor(scale))
     : d3Shape
         .area()
         .defined(defined)
-        .curve(d3Shape[interpolation])
+        .curve(interpolationFunction || d3Shape[interpolationName])
         .x(getXAccessor(scale))
         .y1(getYAccessor(scale))
         .y0(getY0Accessor(scale));
@@ -74,12 +78,15 @@ const getCartesianArea = (props, interpolation) => {
 
 const getAreaFunction = (props) => {
   const { polar, scale } = props;
-  const interpolation = toNewName(props.interpolation);
+  const interpolationFunction = typeof props.interpolation === "function" && props.interpolation;
+  const interpolationName =
+    typeof props.interpolation === "string" && toNewName(props.interpolation);
+  const interpolation = interpolationFunction || interpolationName;
   return polar
     ? d3Shape
         .radialArea()
         .defined(defined)
-        .curve(d3Shape[`${interpolation}Closed`])
+        .curve(interpolationFunction || d3Shape[`${interpolationName}Closed`])
         .angle(getAngleAccessor(scale))
         .outerRadius(getYAccessor(scale))
         .innerRadius(getY0Accessor(scale))
@@ -142,7 +149,7 @@ const Area = (props) => {
 Area.propTypes = {
   ...CommonProps.primitiveProps,
   groupComponent: PropTypes.element,
-  interpolation: PropTypes.string,
+  interpolation: PropTypes.oneOfType([PropTypes.string, PropTypes.func]),
   pathComponent: PropTypes.element
 };
 

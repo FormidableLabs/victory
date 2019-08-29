@@ -7,6 +7,7 @@
 import React from "react";
 import { range, omit } from "lodash";
 import { shallow, mount } from "enzyme";
+import { curveCatmullRom } from "d3-shape";
 import SvgTestHelper from "../svg-test-helper";
 import { VictoryArea, Area } from "packages/victory-area/src/index";
 import { VictoryLabel } from "packages/victory-core";
@@ -41,6 +42,35 @@ describe("components/victory-area", () => {
       const wrapper = mount(<VictoryArea {...props} />);
       const area = wrapper.find(Area);
       SvgTestHelper.expectCorrectD3Path(area, props, "area");
+    });
+
+    it("renders the correct d3 path with custom interpolation", () => {
+      const props = {
+        width: 400,
+        height: 300,
+        padding: 50,
+        scale: "linear",
+        data: [{ x: 0, y: 0, y0: 0 }, { x: 2, y: 3, y0: 0 }, { x: 4, y: 1, y0: 0 }]
+      };
+      const stringWrapper = mount(<VictoryArea {...props} interpolation="catmullRom" />);
+      const stringArea = stringWrapper.find(Area);
+      const stringPath = stringArea.find("path").prop("d");
+      SvgTestHelper.expectCorrectD3Path(
+        stringArea,
+        { ...props, interpolation: "catmullRom" },
+        "area"
+      );
+
+      const functionWrapper = mount(<VictoryArea {...props} interpolation={curveCatmullRom} />);
+      const functionArea = functionWrapper.find(Area);
+      const functionPath = functionArea.find("path").prop("d");
+      SvgTestHelper.expectCorrectD3Path(
+        functionArea,
+        { ...props, interpolation: curveCatmullRom },
+        "area"
+      );
+
+      expect(functionPath).to.equal(stringPath);
     });
 
     it("sorts data according to sortKey prop", () => {

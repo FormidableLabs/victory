@@ -35,20 +35,21 @@ const getLineFunction = (props) => {
   const { polar, scale, horizontal } = props;
   const defaultOpenCurve = polar ? false : true;
   const openCurve = props.openCurve === undefined ? defaultOpenCurve : props.openCurve;
-  const interpolation = !openCurve
-    ? `${toNewName(props.interpolation)}Closed`
-    : toNewName(props.interpolation);
+  const interpolationFunction = typeof props.interpolation === "function" && props.interpolation;
+  const interpolationName =
+    typeof props.interpolation === "string" &&
+    (!openCurve ? `${toNewName(props.interpolation)}Closed` : toNewName(props.interpolation));
   return polar
     ? d3Shape
         .lineRadial()
         .defined(defined)
-        .curve(d3Shape[interpolation])
+        .curve(interpolationFunction || d3Shape[interpolationName])
         .angle(getAngleAccessor(scale))
         .radius(getYAccessor(scale))
     : d3Shape
         .line()
         .defined(defined)
-        .curve(d3Shape[interpolation])
+        .curve(interpolationFunction || d3Shape[interpolationName])
         .x(horizontal ? getYAccessor(scale) : getXAccessor(scale))
         .y(horizontal ? getXAccessor(scale) : getYAccessor(scale));
 };
@@ -71,7 +72,7 @@ const Curve = (props) => {
 
 Curve.propTypes = {
   ...CommonProps.primitiveProps,
-  interpolation: PropTypes.string,
+  interpolation: PropTypes.oneOfType([PropTypes.string, PropTypes.func]),
   openCurve: PropTypes.bool,
   origin: PropTypes.object,
   pathComponent: PropTypes.element,

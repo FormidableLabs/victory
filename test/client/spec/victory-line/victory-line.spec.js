@@ -8,6 +8,7 @@
 import React from "react";
 import { omit } from "lodash";
 import { shallow, mount } from "enzyme";
+import { curveCatmullRom } from "d3-shape";
 import SvgTestHelper from "../svg-test-helper";
 import { VictoryLine, Curve } from "packages/victory-line/src/index";
 import { VictoryLabel } from "packages/victory-core";
@@ -77,6 +78,35 @@ describe("components/victory-line", () => {
       const wrapper = mount(<VictoryLine {...props} />);
       const line = wrapper.find(Curve);
       SvgTestHelper.expectCorrectD3Path(line, props, "line");
+    });
+
+    it("renders the correct d3Shape path with custom interpolation", () => {
+      const props = {
+        scale: "linear",
+        padding: 50,
+        width: 400,
+        height: 300,
+        data: [{ x: 0, y: 0 }, { x: 1, y: 1 }, { x: 2, y: 2 }]
+      };
+      const stringWrapper = mount(<VictoryLine {...props} interpolation="catmullRom" />);
+      const stringLine = stringWrapper.find(Curve);
+      const stringPath = stringLine.find("path").prop("d");
+      SvgTestHelper.expectCorrectD3Path(
+        stringLine,
+        { ...props, interpolation: "catmullRom" },
+        "line"
+      );
+
+      const functionWrapper = mount(<VictoryLine {...props} interpolation={curveCatmullRom} />);
+      const functionLine = functionWrapper.find(Curve);
+      const functionPath = functionLine.find("path").prop("d");
+      SvgTestHelper.expectCorrectD3Path(
+        functionLine,
+        { ...props, interpolation: curveCatmullRom },
+        "line"
+      );
+
+      expect(functionPath).to.equal(stringPath);
     });
   });
 
