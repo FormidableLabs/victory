@@ -1,6 +1,6 @@
 {
   "name": "victory",
-  "version": "33.0.4",
+  "version": "33.0.5",
   "description": "Data viz for React",
   "keywords": [
     "data visualization",
@@ -19,7 +19,7 @@
   "author": "Formidable",
   "license": "MIT",
   "dependencies": {
-    "victory-area": "^33.0.1",
+    "victory-area": "^33.0.5",
     "victory-axis": "^33.0.1",
     "victory-bar": "^33.0.1",
     "victory-box-plot": "^33.0.1",
@@ -33,7 +33,7 @@
     "victory-errorbar": "^33.0.1",
     "victory-group": "^33.0.1",
     "victory-legend": "^33.0.1",
-    "victory-line": "^33.0.1",
+    "victory-line": "^33.0.5",
     "victory-pie": "^33.0.3",
     "victory-polar-axis": "^33.0.1",
     "victory-scatter": "^33.0.1",
