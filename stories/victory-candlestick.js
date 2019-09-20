@@ -92,13 +92,14 @@ storiesOf("VictoryCandlestick.data", module)
   .add("with data accessors", () => (
     <VictoryCandlestick
       data={[
-        { series: 1, open: 9, close: 30, big: 560, low: 7 },
-        { series: 2, open: 80, close: 40, big: 1200, low: 10 },
-        { series: 3, open: 50, close: 80, big: 900, low: 20 },
-        { series: 4, open: 70, close: 22, big: 700, low: 5 },
-        { series: 5, open: 20, close: 35, big: 500, low: 10 }
+        { series: 1, start: 9, close: 30, big: 560, low: 7 },
+        { series: 2, start: 80, close: 40, big: 1200, low: 10 },
+        { series: 3, start: 50, close: 80, big: 900, low: 20 },
+        { series: 4, start: 70, close: 22, big: 700, low: 5 },
+        { series: 5, start: 20, close: 35, big: 500, low: 10 }
       ]}
-      x={"series"}
+      x="series"
+      open="start"
       high={(data) => data.big / 10}
     />
   ))
@@ -106,13 +107,14 @@ storiesOf("VictoryCandlestick.data", module)
     <VictoryCandlestick
       horizontal
       data={[
-        { series: 1, open: 9, close: 30, big: 560, low: 7 },
-        { series: 2, open: 80, close: 40, big: 1200, low: 10 },
-        { series: 3, open: 50, close: 80, big: 900, low: 20 },
-        { series: 4, open: 70, close: 22, big: 700, low: 5 },
-        { series: 5, open: 20, close: 35, big: 500, low: 10 }
+        { series: 1, start: 9, close: 30, big: 560, low: 7 },
+        { series: 2, start: 80, close: 40, big: 1200, low: 10 },
+        { series: 3, start: 50, close: 80, big: 900, low: 20 },
+        { series: 4, start: 70, close: 22, big: 700, low: 5 },
+        { series: 5, start: 20, close: 35, big: 500, low: 10 }
       ]}
-      x={"series"}
+      x="series"
+      open="start"
       high={(data) => data.big / 10}
     />
   ))
