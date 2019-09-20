@@ -107,7 +107,7 @@ const isTransparent = (attr) => {
 const getDataStyles = (datum, style, props) => {
   style = style || {};
   const candleColor =
-    datum.open > datum.close ? props.candleColors.negative : props.candleColors.positive;
+    datum._open > datum._close ? props.candleColors.negative : props.candleColors.positive;
   const fill = style.fill || candleColor;
   const strokeColor = style.stroke;
   const stroke = isTransparent(strokeColor) ? fill : strokeColor || "black";
