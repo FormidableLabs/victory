@@ -1,7 +1,7 @@
 import React from "react";
 import PropTypes from "prop-types";
 import CustomPropTypes from "../victory-util/prop-types";
-import { assign, defaults, uniqueId, isObject } from "lodash";
+import { assign, defaults, uniqueId, isObject, isFunction } from "lodash";
 import Portal from "../victory-portal/portal";
 import Timer from "../victory-util/timer";
 import Helpers from "../victory-util/helpers";
@@ -62,10 +62,14 @@ export default class VictoryContainer extends React.Component {
     this.portalRegister = () => this.portalRef.portalRegister();
     this.portalDeregister = (key) => this.portalRef.portalDeregister(key);
 
-    this.saveContainerRef = (container) => {
-      this.containerRef = props.containerRef || container;
-      return container;
-    };
+    this.saveContainerRef =
+      props && isFunction(props.containerRef)
+        ? props.containerRef
+        : (container) => {
+            this.containerRef = container;
+            return container;
+          };
+
     this.shouldHandleWheel = props && props.events && props.events.onWheel;
     if (this.shouldHandleWheel) {
       this.handleWheel = (e) => e.preventDefault();
