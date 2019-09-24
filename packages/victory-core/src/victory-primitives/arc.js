@@ -30,6 +30,8 @@ const Arc = (props) =>
     ...props.events,
     d: getArcPath(props),
     style: Helpers.evaluateStyle(assign({ stroke: "black", fill: "none" }, props.style), props),
+    desc: Helpers.evaluateProp(props.desc, props),
+    tabIndex: Helpers.evaluateProp(props.tabIndex, props),
     className: props.className,
     role: props.role,
     shapeRendering: props.shapeRendering,
@@ -52,7 +54,8 @@ Arc.propTypes = {
 Arc.defaultProps = {
   pathComponent: <Path />,
   role: "presentation",
-  shapeRendering: "auto"
+  shapeRendering: "auto",
+  tabIndex: 0
 };
 
 export default Arc;

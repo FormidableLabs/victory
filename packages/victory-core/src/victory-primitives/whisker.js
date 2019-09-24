@@ -18,8 +18,17 @@ const Whisker = (props) => {
     role,
     shapeRendering
   } = props;
-  const style = Helpers.evaluateStyle(props.style, props);
-  const baseProps = { ...events, style, className, transform, clipPath, role, shapeRendering };
+  const baseProps = {
+    ...events,
+    style: Helpers.evaluateStyle(props.style, props),
+    desc: Helpers.evaluateProp(props.desc, props),
+    tabIndex: Helpers.evaluateProp(props.tabIndex, props),
+    className,
+    transform,
+    clipPath,
+    role,
+    shapeRendering
+  };
   return React.cloneElement(groupComponent, {}, [
     React.cloneElement(lineComponent, assign({ key: "major-whisker" }, baseProps, majorWhisker)),
     React.cloneElement(lineComponent, assign({ key: "minor-whisker" }, baseProps, minorWhisker))
@@ -48,7 +57,8 @@ Whisker.defaultProps = {
   groupComponent: <g />,
   lineComponent: <Line />,
   role: "presentation",
-  shapeRendering: "auto"
+  shapeRendering: "auto",
+  tabIndex: 0
 };
 
 export default Whisker;

@@ -123,7 +123,9 @@ const Area = (props) => {
       {
         key: `${id}-area`,
         style: assign({}, style, { stroke: areaStroke }),
-        d: areaFunction(data)
+        d: areaFunction(data),
+        desc: Helpers.evaluateProp(props.desc, props),
+        tabIndex: Helpers.evaluateProp(props.tabIndex, props)
       },
       sharedProps
     )
@@ -157,7 +159,8 @@ Area.defaultProps = {
   groupComponent: <g />,
   pathComponent: <Path />,
   role: "presentation",
-  shapeRendering: "auto"
+  shapeRendering: "auto",
+  tabIndex: 0
 };
 
 export default Area;
