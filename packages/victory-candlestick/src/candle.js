@@ -74,7 +74,16 @@ const Candle = (props) => {
     style
   } = props;
   const wickStyle = defaults({ strokeWidth: wickStrokeWidth }, style);
-  const sharedProps = { role, shapeRendering, className, transform, clipPath, ...events };
+  const sharedProps = {
+    ...events,
+    role,
+    shapeRendering,
+    className,
+    transform,
+    clipPath,
+    desc: Helpers.evaluateProp(props.desc, props),
+    tabIndex: Helpers.evaluateProp(props.tabIndex, props)
+  };
   const candleProps = assign(getCandleProps(props, style), sharedProps);
   const highWickProps = assign(getHighWickProps(props, wickStyle), sharedProps);
   const lowWickProps = assign(getLowWickProps(props, wickStyle), sharedProps);
@@ -108,7 +117,8 @@ Candle.defaultProps = {
   lineComponent: <Line />,
   rectComponent: <Rect />,
   role: "presentation",
-  shapeRendering: "auto"
+  shapeRendering: "auto",
+  tabIndex: 0
 };
 
 export default Candle;
