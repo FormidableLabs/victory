@@ -162,17 +162,24 @@ export default class VictoryContainer extends React.Component {
     );
   }
 
+  getAriaLabel(props) {
+    const title = props.title ? this.getIdForElement("title") : "";
+    const desc = props.desc ? this.getIdForElement("desc") : "";
+    return !title && !desc ? undefined : `${title} ${desc}`.trim();
+  }
+
   render() {
     const { width, height, responsive, events } = this.props;
     const style = responsive
       ? this.props.style
       : Helpers.omit(this.props.style, ["height", "width"]);
+    const ariaLabel = this.getAriaLabel(this.props);
     const svgProps = assign(
       {
         width,
         height,
         role: "img",
-        "aria-labelledby": `${this.getIdForElement("title")} ${this.getIdForElement("desc")}`,
+        "aria-labelledby": ariaLabel,
         viewBox: responsive ? `0 0 ${width} ${height}` : undefined
       },
       events
