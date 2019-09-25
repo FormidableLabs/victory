@@ -4,11 +4,11 @@ const Path = (props) => {
   // eslint-disable-next-line react/prop-types
   const { desc, ...rest } = props;
   return desc ? (
-    <path vectorEffect="non-scaling-stroke" {...rest}>
+    <path {...rest}>
       <desc>{desc}</desc>
     </path>
   ) : (
-    <path vectorEffect="non-scaling-stroke" {...rest} />
+    <path {...rest} />
   );
 };
 
