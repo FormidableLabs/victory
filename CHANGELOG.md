@@ -1,5 +1,12 @@
 # Victory Changelog
 
+## 33.1.0 (2019-09-25)
+
+- [#1404](https://github.com/FormidableLabs/victory/pull/1404) Adds a11y improvements
+  - corrects behavior of VictoryContainer so that it only adds aria-labelledby and aria-describedby attributes when there are actually title and / or desc elements that are rendered (controlled by the title and desc props on VictoryContainer
+  - adds a tabIndex prop to all primitive components that Victory renders (i.e. VictoryLabel, Bar etc). This prop may be given as a number or a function of other props
+  - adds a desc prop to all primitive components. This prop may be given as a number or a function of other props
+
 ## 33.0.6 (2019-09-20)
 
 - [#1401](https://github.com/FormidableLabs/victory/pull/1401) - Fixes a bug affecting automatic candle coloring
