@@ -9,6 +9,8 @@ const LineSegment = (props) =>
   React.cloneElement(props.lineComponent, {
     ...props.events,
     style: Helpers.evaluateStyle(assign({ stroke: "black" }, props.style), props),
+    desc: Helpers.evaluateProp(props.desc, props),
+    tabIndex: Helpers.evaluateProp(props.tabIndex, props),
     className: props.className,
     role: props.role,
     shapeRendering: props.shapeRendering,

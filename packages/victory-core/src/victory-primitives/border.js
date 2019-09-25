@@ -9,6 +9,8 @@ const Border = (props) =>
   React.cloneElement(props.rectComponent, {
     ...props.events,
     style: Helpers.evaluateStyle(assign({ fill: "none" }, props.style), props),
+    desc: Helpers.evaluateProp(props.desc, props),
+    tabIndex: Helpers.evaluateProp(props.tabIndex, props),
     transform: props.transform,
     className: props.className,
     role: props.role,

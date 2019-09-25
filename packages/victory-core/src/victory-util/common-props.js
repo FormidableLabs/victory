@@ -149,6 +149,7 @@ const primitiveProps = {
   className: PropTypes.string,
   clipPath: PropTypes.string,
   data: PropTypes.oneOfType([PropTypes.array, PropTypes.object]),
+  desc: PropTypes.oneOfType([PropTypes.string, PropTypes.func]),
   events: PropTypes.object,
   id: PropTypes.oneOfType([PropTypes.number, PropTypes.string]),
   index: PropTypes.oneOfType([PropTypes.number, PropTypes.string]),
@@ -161,6 +162,7 @@ const primitiveProps = {
   ]),
   shapeRendering: PropTypes.string,
   style: PropTypes.object,
+  tabIndex: PropTypes.oneOfType([PropTypes.number, PropTypes.func]),
   transform: PropTypes.string
 };
 

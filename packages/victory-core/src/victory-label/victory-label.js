@@ -111,7 +111,7 @@ const getTransform = (props) => {
 };
 
 const renderElements = (props) => {
-  const { inline, className, title, desc, events, direction, text, style } = props;
+  const { inline, className, title, events, direction, text, style } = props;
   const lineHeight = getHeight(props, "lineHeight");
   const textAnchor = props.textAnchor ? Helpers.evaluateProp(props.textAnchor, props) : "start";
   const dx = props.dx ? Helpers.evaluateProp(props.dx, props) : 0;
@@ -152,7 +152,8 @@ const renderElements = (props) => {
       transform,
       className,
       title,
-      desc,
+      desc: Helpers.evaluateProp(props.desc, props),
+      tabIndex: Helpers.evaluateProp(props.tabIndex, props),
       id: props.id
     },
     textChildren
@@ -189,7 +190,7 @@ VictoryLabel.propTypes = {
   className: PropTypes.string,
   data: PropTypes.array,
   datum: PropTypes.any,
-  desc: PropTypes.string,
+  desc: PropTypes.oneOfType([PropTypes.string, PropTypes.func]),
   direction: PropTypes.oneOf(["rtl", "ltr", "inherit"]),
   dx: PropTypes.oneOfType([PropTypes.number, PropTypes.string, PropTypes.func]),
   dy: PropTypes.oneOfType([PropTypes.number, PropTypes.string, PropTypes.func]),
@@ -215,6 +216,7 @@ VictoryLabel.propTypes = {
     y: CustomPropTypes.scale
   }),
   style: PropTypes.oneOfType([PropTypes.object, PropTypes.array]),
+  tabIndex: PropTypes.oneOfType([PropTypes.number, PropTypes.func]),
   text: PropTypes.oneOfType([PropTypes.string, PropTypes.number, PropTypes.func, PropTypes.array]),
   textAnchor: PropTypes.oneOfType([
     PropTypes.oneOf(["start", "middle", "end", "inherit"]),

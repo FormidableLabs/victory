@@ -99,7 +99,9 @@ const Bar = (props) => {
     className: props.className,
     role: props.role,
     shapeRendering: props.shapeRendering,
-    clipPath: props.clipPath
+    clipPath: props.clipPath,
+    desc: Helpers.evaluateProp(props.desc, props),
+    tabIndex: Helpers.evaluateProp(props.tabIndex, props)
   });
 };
 

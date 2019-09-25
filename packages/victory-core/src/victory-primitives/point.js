@@ -32,6 +32,8 @@ const Point = (props) =>
     ...props.events,
     d: getPath(props),
     style: Helpers.evaluateStyle(props.style, props),
+    desc: Helpers.evaluateProp(props.desc, props),
+    tabIndex: Helpers.evaluateProp(props.tabIndex, props),
     role: props.role,
     shapeRendering: props.shapeRendering,
     className: props.className,
