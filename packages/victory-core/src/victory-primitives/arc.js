@@ -54,8 +54,7 @@ Arc.propTypes = {
 Arc.defaultProps = {
   pathComponent: <Path />,
   role: "presentation",
-  shapeRendering: "auto",
-  tabIndex: 0
+  shapeRendering: "auto"
 };
 
 export default Arc;

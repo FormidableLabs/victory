@@ -136,8 +136,7 @@ Bar.defaultProps = {
   defaultBarWidth: 8,
   pathComponent: <Path />,
   role: "presentation",
-  shapeRendering: "auto",
-  tabIndex: 0
+  shapeRendering: "auto"
 };
 
 export default Bar;

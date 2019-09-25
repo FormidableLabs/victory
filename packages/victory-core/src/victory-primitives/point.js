@@ -67,8 +67,7 @@ Point.propTypes = {
 Point.defaultProps = {
   pathComponent: <Path />,
   role: "presentation",
-  shapeRendering: "auto",
-  tabIndex: 0
+  shapeRendering: "auto"
 };
 
 export default Point;

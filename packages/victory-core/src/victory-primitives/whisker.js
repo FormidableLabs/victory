@@ -57,8 +57,7 @@ Whisker.defaultProps = {
   groupComponent: <g />,
   lineComponent: <Line />,
   role: "presentation",
-  shapeRendering: "auto",
-  tabIndex: 0
+  shapeRendering: "auto"
 };
 
 export default Whisker;

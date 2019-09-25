@@ -117,8 +117,7 @@ Candle.defaultProps = {
   lineComponent: <Line />,
   rectComponent: <Rect />,
   role: "presentation",
-  shapeRendering: "auto",
-  tabIndex: 0
+  shapeRendering: "auto"
 };
 
 export default Candle;
