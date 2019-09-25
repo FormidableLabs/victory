@@ -1,6 +1,6 @@
 {
   "name": "victory-polar-axis",
-  "version": "33.0.6",
+  "version": "33.1.0",
   "description": "Polar Axis Component for Victory",
   "keywords": [
     "data visualization",
@@ -21,7 +21,7 @@
   "dependencies": {
     "lodash": "^4.17.15",
     "prop-types": "^15.5.8",
-    "victory-core": "^33.0.6"
+    "victory-core": "^33.1.0"
   },
   "scripts": {
     "version": "nps build-libs && nps build-dists"
