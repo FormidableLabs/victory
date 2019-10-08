@@ -1,6 +1,6 @@
 {
   "name": "victory",
-  "version": "33.1.0",
+  "version": "33.1.1",
   "description": "Data viz for React",
   "keywords": [
     "data visualization",
@@ -28,7 +28,7 @@
     "victory-candlestick": "^33.1.0",
     "victory-chart": "^33.1.0",
     "victory-core": "^33.1.0",
-    "victory-create-container": "^33.1.0",
+    "victory-create-container": "^33.1.1",
     "victory-cursor-container": "^33.1.0",
     "victory-errorbar": "^33.1.0",
     "victory-group": "^33.1.0",
@@ -42,7 +42,7 @@
     "victory-stack": "^33.1.0",
     "victory-tooltip": "^33.1.0",
     "victory-voronoi": "^33.1.0",
-    "victory-voronoi-container": "^33.1.0",
+    "victory-voronoi-container": "^33.1.1",
     "victory-zoom-container": "^33.1.0"
   },
   "scripts": {

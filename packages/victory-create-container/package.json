@@ -1,6 +1,6 @@
 {
   "name": "victory-create-container",
-  "version": "33.1.0",
+  "version": "33.1.1",
   "description": "Container Helper for Victory",
   "keywords": [
     "data visualization",
@@ -24,7 +24,7 @@
     "victory-core": "^33.1.0",
     "victory-cursor-container": "^33.1.0",
     "victory-selection-container": "^33.1.0",
-    "victory-voronoi-container": "^33.1.0",
+    "victory-voronoi-container": "^33.1.1",
     "victory-zoom-container": "^33.1.0"
   },
   "scripts": {
