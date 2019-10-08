@@ -1,5 +1,9 @@
 # Victory Changelog
 
+## 33.1.1 (2019-10-08)
+
+-[#1409](https://github.com/FormidableLabs/victory/pull/1409) Updates `delaunay-find` to `0.0.4` to correct incorrect nearest values for sets of points with collinear values. Corrects bugs in `VictoryVoronoiContainer`
+
 ## 33.1.0 (2019-09-25)
 
 - [#1404](https://github.com/FormidableLabs/victory/pull/1404) Adds a11y improvements
