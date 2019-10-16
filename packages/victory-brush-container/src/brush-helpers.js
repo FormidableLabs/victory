@@ -311,7 +311,6 @@ const Helpers = {
       onBrushDomainChange,
       onBrushDomainChangeEnd,
       onBrushCleared,
-      domain,
       allowResize,
       allowDrag,
       defaultBrushArea
@@ -319,7 +318,7 @@ const Helpers = {
 
     const defaultBrushHasArea = defaultBrushArea !== undefined && defaultBrushArea !== "none";
     const cachedDomain = targetProps.cachedCurrentDomain || targetProps.currentDomain;
-    const currentDomain = this.getDefaultBrushArea(defaultBrushArea, domain, cachedDomain);
+    const currentDomain = this.getDefaultBrushArea(defaultBrushArea, targetProps.currentDomain, cachedDomain);
     const mutatedProps = { isPanning: false, isSelecting: false };
 
     // if the mouse hasn't moved since a mouseDown event, select the default brush area
