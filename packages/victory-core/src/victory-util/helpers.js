@@ -248,7 +248,7 @@ function reduceChildren(
 /**
  * @param {Object} props: the props object
  * @returns {Boolean} returns true if the props object contains `horizontal: true` of if any
- * children or nested children are hoizontal
+ * children or nested children are horizontal
  */
 function isHorizontal(props) {
   if (props.horizontal !== undefined || !props.children) {

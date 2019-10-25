@@ -299,6 +299,14 @@ const getLayoutProps = (modifiedProps, calculatedValues) => {
 };
 
 const getOrientation = (props) => {
+  if (props.theme) {
+    if (props.dependentAxis && props.theme.dependentAxis && props.theme.dependentAxis.orientation) {
+      return props.theme.dependentAxis.orientation;
+    }
+    if (props.theme.independentAxis && props.theme.independentAxis.orientation) {
+      return props.theme.independentAxis.orientation;
+    }
+  }
   if (props.orientation) {
     return props.orientation;
   }
