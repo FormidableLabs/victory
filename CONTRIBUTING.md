@@ -44,7 +44,7 @@ When running a development server, tests will be served automatically at http://
 
 Tests my also be run in the terminal with:
 
-``console
+```console
 $ yarn nps test
 ```
 
