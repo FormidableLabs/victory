@@ -80,10 +80,7 @@ export const zoomContainerMixin = (base) =>
               evt.preventDefault();
               return ZoomHelpers.onMouseMove(evt, targetProps, eventKey, ctx);
             },
-            // eslint-disable-next-line max-params
-            onWheel: (evt, targetProps, eventKey, ctx) => {
-              return props.disable ? {} : ZoomHelpers.onWheel(evt, targetProps, eventKey, ctx);
-            }
+            ...(props.disable || !props.allowZoom ? {} : { onWheel: ZoomHelpers.onWheel })
           }
         }
       ];
