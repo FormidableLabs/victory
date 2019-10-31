@@ -42,6 +42,11 @@ class Wrapper extends React.Component {
   }
 }
 
+const dependentAxisTheme = {
+  ...VictoryTheme.material,
+  ...{ dependentAxis: { orientation: "right" } }
+};
+
 class App extends React.Component {
   constructor(props) {
     super(props);
@@ -192,6 +197,10 @@ class App extends React.Component {
         <div style={containerStyle}>
           <VictoryChart style={chartStyle}>
             <VictoryScatter data={[{ x: -3, y: -3 }]} />
+          </VictoryChart>
+
+          <VictoryChart style={chartStyle} theme={dependentAxisTheme}>
+            <VictoryScatter />
           </VictoryChart>
 
           <VictoryChart style={chartStyle} domainPadding={{ x: [0, 20] }}>

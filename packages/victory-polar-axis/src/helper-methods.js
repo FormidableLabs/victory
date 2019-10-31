@@ -288,26 +288,6 @@ const getAxisProps = (modifiedProps, calculatedValues) => {
       };
 };
 
-const getRole = (props) => {
-  if (props.dependentAxis) {
-    return props.theme && props.theme.dependentAxis ? "dependentAxis" : "axis";
-  }
-
-  return props.theme && props.theme.independentAxis ? "independentAxis" : "axis";
-};
-
-const getShallowMergedThemeProps = (props, role) => {
-  const axisTheme = props.theme.axis || {};
-  return defaults({}, props.theme[role], axisTheme);
-};
-
-const modifyProps = (props, fallbackProps, role) => {
-  if (role !== "axis") {
-    props.theme[role] = getShallowMergedThemeProps(props, role);
-  }
-  return Helpers.modifyProps(props, fallbackProps, role);
-};
-
 const getCalculatedValues = (props) => {
   props = assign({ polar: true }, props);
   const defaultStyles = getStyleObject(props);
@@ -339,8 +319,7 @@ const getCalculatedValues = (props) => {
 };
 
 const getBaseProps = (props, fallbackProps) => {
-  const role = getRole(props);
-  props = modifyProps(props, fallbackProps, role);
+  props = Axis.modifyProps(props, fallbackProps);
   const calculatedValues = getCalculatedValues(props);
   const { style, scale, ticks, domain } = calculatedValues;
   const { width, height, standalone, theme, name } = props;

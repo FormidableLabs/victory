@@ -13,8 +13,8 @@ const fallbackProps = {
 
 function getAxisProps(child, props, calculatedProps) {
   const { domain, scale, stringMap, categories, horizontal, orientations } = calculatedProps;
-  const childProps = child.props || {};
-  const axis = child.type.getAxis(assign({ horizontal }, childProps));
+  const childProps = Axis.modifyProps(defaults({ horizontal, theme: props.theme }, child.props));
+  const axis = child.type.getAxis(childProps);
   const axisOffset = horizontal
     ? getHorizontalAxisOffset(props, calculatedProps)
     : getAxisOffset(props, calculatedProps);

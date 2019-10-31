@@ -10,6 +10,11 @@ import { VictoryBoxPlot } from "../packages/victory-box-plot/src/index";
 import { VictoryTheme } from "../packages/victory-core/src/index";
 import { getData, getFourQuadrantData, getArrayData } from "./data";
 
+const dependentAxisTheme = {
+  ...VictoryTheme.material,
+  ...{ dependentAxis: { orientation: "right" } }
+};
+
 storiesOf("VictoryChart", module).add("default rendering", () => <VictoryChart />);
 
 storiesOf("VictoryChart.theme", module)
@@ -30,6 +35,11 @@ storiesOf("VictoryChart.axes", module)
   ))
   .add("with a single dependent axis", () => (
     <VictoryChart>
+      <VictoryAxis dependentAxis />
+    </VictoryChart>
+  ))
+  .add("with orientation set by a theme", () => (
+    <VictoryChart theme={dependentAxisTheme}>
       <VictoryAxis dependentAxis />
     </VictoryChart>
   ));

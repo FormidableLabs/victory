@@ -3,7 +3,6 @@ import React from "react";
 import { assign, isEmpty } from "lodash";
 import {
   PropTypes as CustomPropTypes,
-  Helpers,
   VictoryLabel,
   CommonProps,
   VictoryContainer,
@@ -230,8 +229,8 @@ class VictoryAxis extends React.Component {
   }
 
   render() {
-    const { animationWhitelist, role } = VictoryAxis;
-    const props = Helpers.modifyProps(this.props, fallbackProps, role);
+    const { animationWhitelist } = VictoryAxis;
+    const props = Axis.modifyProps(this.props, fallbackProps);
 
     if (this.shouldAnimate()) {
       return this.animateComponent(props, animationWhitelist);
