@@ -108,7 +108,7 @@ const _prepareParams = (inputStyle, index) => {
 };
 
 const _approximateTextWidthInternal = (text, style) => {
-  if (!text) {
+  if (text === undefined || text === "") {
     return 0;
   }
   const widths = _splitToLines(text).map((line, index) => {
@@ -120,7 +120,7 @@ const _approximateTextWidthInternal = (text, style) => {
 };
 
 const _approximateTextHeightInternal = (text, style) => {
-  if (!text) {
+  if (text === undefined || text === "") {
     return 0;
   }
   return _splitToLines(text).reduce((total, line, index) => {
