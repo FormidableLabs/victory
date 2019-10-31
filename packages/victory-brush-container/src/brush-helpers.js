@@ -312,27 +312,28 @@ const Helpers = {
       onBrushDomainChangeEnd,
       onBrushCleared,
       domain,
+      currentDomain,
       allowResize,
       allowDrag,
       defaultBrushArea
     } = targetProps;
 
     const defaultBrushHasArea = defaultBrushArea !== undefined && defaultBrushArea !== "none";
-    const cachedDomain = targetProps.cachedCurrentDomain || targetProps.currentDomain;
-    const currentDomain = this.getDefaultBrushArea(defaultBrushArea, domain, cachedDomain);
     const mutatedProps = { isPanning: false, isSelecting: false };
 
     // if the mouse hasn't moved since a mouseDown event, select the default brush area
     if ((allowResize || defaultBrushHasArea) && (x1 === x2 || y1 === y2)) {
-      mutatedProps.currentDomain = currentDomain;
+      const cachedDomain = targetProps.cachedCurrentDomain || currentDomain;
+      const defaultDomain = this.getDefaultBrushArea(defaultBrushArea, domain, cachedDomain);
+      mutatedProps.currentDomain = defaultDomain;
       if (isFunction(onBrushDomainChange)) {
-        onBrushDomainChange(currentDomain, defaults({}, mutatedProps, targetProps));
+        onBrushDomainChange(defaultDomain, defaults({}, mutatedProps, targetProps));
       }
       if (isFunction(onBrushDomainChangeEnd)) {
-        onBrushDomainChangeEnd(currentDomain, defaults({}, mutatedProps, targetProps));
+        onBrushDomainChangeEnd(defaultDomain, defaults({}, mutatedProps, targetProps));
       }
       if (isFunction(onBrushCleared)) {
-        onBrushCleared(currentDomain, defaults({}, mutatedProps, targetProps));
+        onBrushCleared(defaultDomain, defaults({}, mutatedProps, targetProps));
       }
     } else if ((allowDrag && isPanning) || (allowResize && isSelecting)) {
       if (isFunction(onBrushDomainChangeEnd)) {
