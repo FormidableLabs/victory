@@ -322,7 +322,7 @@ function modifyProps(props, fallbackProps) {
   const axisTheme = defaults({}, props.theme[role], props.theme.axis);
   const theme = assign({}, props.theme, { axis: axisTheme });
   return Helpers.modifyProps(assign({}, props, { theme }), fallbackProps, "axis");
-};
+}
 
 export default {
   getTicks,
