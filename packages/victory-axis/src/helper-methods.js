@@ -123,26 +123,6 @@ const getEvaluatedStyles = (style, props) => {
   };
 };
 
-const getRole = (props) => {
-  if (props.dependentAxis) {
-    return props.theme && props.theme.dependentAxis ? "dependentAxis" : "axis";
-  }
-
-  return props.theme && props.theme.independentAxis ? "independentAxis" : "axis";
-};
-
-const getShallowMergedThemeProps = (props, role) => {
-  const axisTheme = props.theme.axis || {};
-  return defaults({}, props.theme[role], axisTheme);
-};
-
-const modifyProps = (props, fallbackProps, role) => {
-  if (role !== "axis") {
-    props.theme[role] = getShallowMergedThemeProps(props, role);
-  }
-  return Helpers.modifyProps(props, fallbackProps, role);
-};
-
 const getAxisLabelProps = (props, calculatedValues, globalTransform) => {
   const { style, orientation, padding, labelPadding, isVertical } = calculatedValues;
   const sign = orientationSign[orientation];
@@ -341,8 +321,7 @@ const getCalculatedValues = (props) => {
 };
 
 const getBaseProps = (props, fallbackProps) => {
-  const role = getRole(props);
-  props = modifyProps(props, fallbackProps, role);
+  props = Axis.modifyProps(props, fallbackProps);
   const calculatedValues = getCalculatedValues(props);
   const {
     axis,

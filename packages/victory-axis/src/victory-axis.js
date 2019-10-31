@@ -230,8 +230,8 @@ class VictoryAxis extends React.Component {
   }
 
   render() {
-    const { animationWhitelist, role } = VictoryAxis;
-    const props = Helpers.modifyProps(this.props, fallbackProps, role);
+    const { animationWhitelist } = VictoryAxis;
+    const props = Axis.modifyProps(this.props, fallbackProps);
 
     if (this.shouldAnimate()) {
       return this.animateComponent(props, animationWhitelist);

@@ -1,6 +1,8 @@
 /* eslint-disable func-style */
 import React from "react";
 import {
+  assign,
+  defaults,
   identity,
   isFunction,
   isObject,
@@ -14,6 +16,7 @@ import {
 } from "lodash";
 import Collection from "./collection";
 import Domain from "./domain";
+import Helpers from "./helpers";
 
 /**
  * Returns the axis (x or y) of a particular axis component
@@ -303,17 +306,36 @@ function getAxisValue(props, axis) {
   return scale(axisValue);
 }
 
+function modifyProps(props, fallbackProps) {
+  if (!isObject(props.theme)) {
+    return Helpers.modifyProps(props, fallbackProps, "axis");
+  }
+  let role = "axis";
+  if (props.dependentAxis && props.theme.dependentAxis) {
+    role = "dependentAxis";
+  } else if (!props.dependentAxis && props.theme.independentAxis) {
+    role = "independentAxis";
+  }
+  if (role === "axis") {
+    return Helpers.modifyProps(props, fallbackProps, "axis");
+  }
+  const axisTheme = defaults({}, props.theme[role], props.theme.axis);
+  const theme = assign({}, props.theme, { axis: axisTheme });
+  return Helpers.modifyProps(assign({}, props, { theme }), fallbackProps, "axis");
+};
+
 export default {
   getTicks,
   getTickFormat,
   getAxis,
   getAxisComponent,
   getAxisComponentsWithParent,
+  getAxisValue,
   findAxisComponents,
   getOrigin,
   getOriginSign,
   getDomain,
   isVertical,
-  stringTicks,
-  getAxisValue
+  modifyProps,
+  stringTicks
 };
