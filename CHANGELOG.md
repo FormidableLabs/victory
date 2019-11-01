@@ -1,5 +1,13 @@
 # Victory Changelog
 
+## 33.1.2 (2019-10-31)
+
+-[#1425](https://github.com/FormidableLabs/victory/pull/1425) Corrects padding on zero value tooltips.
+-[#1423](https://github.com/FormidableLabs/victory/pull/1423) Make sure `VictoryChart` does not override axis orientations defined in themes.
+-[#1422](https://github.com/FormidableLabs/victory/pull/1422) Use the correct domain in the `onBrushEnd` domain callback.
+-[#1420](https://github.com/FormidableLabs/victory/pull/1420) Fixes behavior with `allowZoom` prop. Thanks @Hypnosphi!
+-
+
 ## 33.1.1 (2019-10-08)
 
 -[#1409](https://github.com/FormidableLabs/victory/pull/1409) Updates `delaunay-find` to `0.0.4` to correct incorrect nearest values for sets of points with collinear values. Corrects bugs in `VictoryVoronoiContainer`
