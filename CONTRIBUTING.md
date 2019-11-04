@@ -42,7 +42,7 @@ running this command will serve demo pages at http://localhost:3000/ and tests a
 
 When running a development server, tests will be served automatically at http://localhost:3001/test/client/test.html
 
-Tests my also be run in the terminal with:
+Tests may also be run in the terminal with:
 
 ```console
 $ yarn nps test
@@ -61,7 +61,7 @@ $ yarn nps format
 
 Victory relies heavily on visual regression testing with [Storybook](https://storybook.js.org/) and [Chromatic](https://www.chromaticqa.com/).
 
-Write visual tests for new features by adding them in the `stories` directory. Run storybooks and check out changes. Storybooks are served from localhost:6006/
+Write visual tests for new features by adding them in the `stories` directory. Run storybooks and check out changes. Storybooks are served from http://localhost:6006/
 
 ```console
 $ yarn storybook
