@@ -115,28 +115,25 @@ export const brushContainerMixin = (base) =>
       return cursors;
     }
 
-    getHandles(props, coordinates) {
+    getHandles(props, domain) {
       const { handleWidth, handleStyle, handleComponent, name } = props;
-      const brushDimension = BrushHelpers.getDimension(props);
-      const { x, y } = coordinates;
-      const width = Math.abs(x[1] - x[0]) || 1;
-      const height = Math.abs(y[1] - y[0]) || 1;
+      const domainBox = BrushHelpers.getDomainBox(props, domain);
+      const { x1, x2, y1, y2 } = domainBox;
+      const { top, bottom, left, right } = BrushHelpers.getHandles(props, domainBox);
+      const width = Math.abs(x2 - x1) || 1;
+      const height = Math.abs(y2 - y1) || 1;
       const handleComponentStyle = (handleComponent.props && handleComponent.props.style) || {};
       const style = defaults({}, handleComponentStyle, handleStyle);
 
       const cursors = this.getCursorPointers(props);
       const yProps = { style, width, height: handleWidth, cursor: cursors.yProps };
       const xProps = { style, width: handleWidth, height, cursor: cursors.xProps };
-      const minX = Math.min(x[0], x[1]);
-      const maxX = Math.max(x[0], x[1]);
-      const minY = Math.min(y[0], y[1]);
-      const maxY = Math.max(y[0], y[1]);
 
       const handleProps = {
-        top: brushDimension !== "x" && assign({ x: minX, y: minY - handleWidth / 2 }, yProps),
-        bottom: brushDimension !== "x" && assign({ x: minX, y: maxY - handleWidth / 2 }, yProps),
-        left: brushDimension !== "y" && assign({ y: minY, x: minX - handleWidth / 2 }, xProps),
-        right: brushDimension !== "y" && assign({ y: minY, x: maxX - handleWidth / 2 }, xProps)
+        top: top && assign({ x: top.x1, y: top.y1 }, yProps),
+        bottom: bottom && assign({ x: bottom.x1, y: bottom.y1 }, yProps),
+        left: left && assign({ y: left.y1, x: left.x1 }, xProps),
+        right: right && assign({ y: right.y1, x: right.x1 }, xProps)
       };
       const handles = ["top", "bottom", "left", "right"].reduce((memo, curr) => {
         memo = handleProps[curr]
@@ -160,7 +157,7 @@ export const brushContainerMixin = (base) =>
         : brushDomain;
       const coordinates = Selection.getDomainCoordinates(props, domain);
       const selectBox = this.getSelectBox(props, coordinates);
-      return selectBox ? [selectBox, this.getHandles(props, coordinates)] : [];
+      return selectBox ? [selectBox, this.getHandles(props, domain)] : [];
     }
 
     // Overrides method in VictoryContainer

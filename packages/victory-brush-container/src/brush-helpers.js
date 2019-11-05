@@ -39,6 +39,7 @@ const Helpers = {
   },
 
   getHandles(props, domainBox) {
+    const brushDimension = this.getDimension(props);
     const { x1, x2, y1, y2 } = domainBox;
     const minX = Math.min(x1, x2);
     const maxX = Math.max(x1, x2);
@@ -46,17 +47,17 @@ const Helpers = {
     const maxY = Math.max(y1, y2);
     const handleWidth = props.handleWidth / 2;
     return {
-      left: { x1: minX - handleWidth, x2: minX + handleWidth, y1, y2 },
-      right: { x1: maxX - handleWidth, x2: maxX + handleWidth, y1, y2 },
-      top: { x1, x2, y1: minY + handleWidth, y2: minY - handleWidth },
-      bottom: { x1, x2, y1: maxY + handleWidth, y2: maxY - handleWidth }
+      left: brushDimension !== "y" && { x1: minX - handleWidth, x2: minX + handleWidth, y1, y2 },
+      right: brushDimension !== "y" && { x1: maxX - handleWidth, x2: maxX + handleWidth, y1, y2 },
+      top: brushDimension !== "x" && { x1, x2, y1: minY + handleWidth, y2: minY - handleWidth },
+      bottom: brushDimension !== "x" && { x1, x2, y1: maxY + handleWidth, y2: maxY - handleWidth }
     };
   },
 
   getActiveHandles(point, props, domainBox) {
     const handles = this.getHandles(props, domainBox);
     const activeHandles = ["top", "bottom", "left", "right"].reduce((memo, opt) => {
-      memo = this.withinBounds(point, handles[opt]) ? memo.concat(opt) : memo;
+      memo = handles[opt] && this.withinBounds(point, handles[opt]) ? memo.concat(opt) : memo;
       return memo;
     }, []);
     return activeHandles.length && activeHandles;
