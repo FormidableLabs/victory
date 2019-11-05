@@ -127,12 +127,16 @@ export const brushContainerMixin = (base) =>
       const cursors = this.getCursorPointers(props);
       const yProps = { style, width, height: handleWidth, cursor: cursors.yProps };
       const xProps = { style, width: handleWidth, height, cursor: cursors.xProps };
+      const minX = Math.min(x[0], x[1]);
+      const maxX = Math.max(x[0], x[1]);
+      const minY = Math.min(y[0], y[1]);
+      const maxY = Math.max(y[0], y[1]);
 
       const handleProps = {
-        top: brushDimension !== "x" && assign({ x: x[0], y: y[1] - handleWidth / 2 }, yProps),
-        bottom: brushDimension !== "x" && assign({ x: x[0], y: y[0] - handleWidth / 2 }, yProps),
-        left: brushDimension !== "y" && assign({ y: y[1], x: x[0] - handleWidth / 2 }, xProps),
-        right: brushDimension !== "y" && assign({ y: y[1], x: x[1] - handleWidth / 2 }, xProps)
+        top: brushDimension !== "x" && assign({ x: minX, y: minY - handleWidth / 2 }, yProps),
+        bottom: brushDimension !== "x" && assign({ x: minX, y: maxY - handleWidth / 2 }, yProps),
+        left: brushDimension !== "y" && assign({ y: minY, x: minX - handleWidth / 2 }, xProps),
+        right: brushDimension !== "y" && assign({ y: minY, x: maxX - handleWidth / 2 }, xProps)
       };
       const handles = ["top", "bottom", "left", "right"].reduce((memo, curr) => {
         memo = handleProps[curr]
