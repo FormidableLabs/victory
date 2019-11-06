@@ -82,11 +82,29 @@ const Helpers = {
     };
   },
 
-  getDefaultBrushArea(defaultBrushArea, domain, cachedDomain) {
+  getDefaultBrushArea(targetProps, cachedDomain, evt) {
+    const { defaultBrushArea, domain, fullDomain, scale, horizontal } = targetProps;
     if (defaultBrushArea === "none") {
       return this.getMinimumDomain();
     } else if (defaultBrushArea === "disable") {
       return cachedDomain;
+    } else if (defaultBrushArea === "move") {
+      // eslint-disable-next-line no-unused-vars
+      const { x1, x2, y1, y2, ...restProps } = targetProps;
+      const brushBox = this.getDomainBox(restProps, fullDomain, cachedDomain);
+      const parentSVG = restProps.parentSVG || Selection.getParentSVG(evt);
+      const pannedBox = this.panBox(
+        {
+          ...restProps,
+          brushDomain: cachedDomain,
+          startX: (brushBox.x1 + brushBox.x2) / 2,
+          startY: (brushBox.y1 + brushBox.y2) / 2
+        },
+        Selection.getSVGEventCoordinates(evt, parentSVG)
+      );
+      const fullDomainBox = restProps.fullDomainBox || this.getDomainBox(restProps, fullDomain);
+      const constrainedBox = this.constrainBox(pannedBox, fullDomainBox);
+      return Selection.getBounds({ ...constrainedBox, scale, horizontal });
     } else {
       return domain;
     }
@@ -311,7 +329,6 @@ const Helpers = {
       onBrushDomainChange,
       onBrushDomainChangeEnd,
       onBrushCleared,
-      domain,
       currentDomain,
       allowResize,
       allowDrag,
@@ -324,7 +341,7 @@ const Helpers = {
     // if the mouse hasn't moved since a mouseDown event, select the default brush area
     if ((allowResize || defaultBrushHasArea) && (x1 === x2 || y1 === y2)) {
       const cachedDomain = targetProps.cachedCurrentDomain || currentDomain;
-      const defaultDomain = this.getDefaultBrushArea(defaultBrushArea, domain, cachedDomain);
+      const defaultDomain = this.getDefaultBrushArea(targetProps, cachedDomain, evt);
       mutatedProps.currentDomain = defaultDomain;
       if (isFunction(onBrushDomainChange)) {
         onBrushDomainChange(defaultDomain, defaults({}, mutatedProps, targetProps));
