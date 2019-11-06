@@ -204,7 +204,10 @@ class App extends React.Component {
             y={(d) => d.x * d.x}
           />
 
-          <VictoryGroup style={chartStyle} containerComponent={<VictoryBrushContainer defaultBrushArea="move" />}>
+          <VictoryGroup
+            style={chartStyle}
+            containerComponent={<VictoryBrushContainer defaultBrushArea="move" />}
+          >
             <VictoryScatter
               style={{
                 data: { fill: "tomato" }
