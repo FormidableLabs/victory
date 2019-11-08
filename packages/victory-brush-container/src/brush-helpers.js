@@ -49,8 +49,8 @@ const Helpers = {
     return {
       left: brushDimension !== "y" && { x1: minX - handleWidth, x2: minX + handleWidth, y1, y2 },
       right: brushDimension !== "y" && { x1: maxX - handleWidth, x2: maxX + handleWidth, y1, y2 },
-      top: brushDimension !== "x" && { x1, x2, y1: minY + handleWidth, y2: minY - handleWidth },
-      bottom: brushDimension !== "x" && { x1, x2, y1: maxY + handleWidth, y2: maxY - handleWidth }
+      top: brushDimension !== "x" && { x1, x2, y1: minY - handleWidth, y2: minY + handleWidth },
+      bottom: brushDimension !== "x" && { x1, x2, y1: maxY - handleWidth, y2: maxY + handleWidth }
     };
   },
 
