@@ -1,5 +1,10 @@
 # Victory Changelog
 
+## 33.1.3 (2019-11-08)
+
+-[#1434](https://github.com/FormidableLabs/victory/pull/1434) Ensure the correct handles are used in `VictoryBrushArea` when axes are inverted. Thanks @Hypnosphi!
+-[#1435](https://github.com/FormidableLabs/victory/pull/1435) Adds a "move" option for the `defaultBrushArea` prop in `VictoryBrushContainer`. When this option is selected, clicking outside of the brush area will pan the brush to a the area the user clicked without resizing the brush. Thanks @Hypnosphi!
+
 ## 33.1.2 (2019-10-31)
 
 -[#1425](https://github.com/FormidableLabs/victory/pull/1425) Corrects padding on zero value tooltips.
