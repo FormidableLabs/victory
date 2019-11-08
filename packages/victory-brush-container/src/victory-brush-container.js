@@ -20,7 +20,7 @@ export const brushContainerMixin = (base) =>
         y: PropTypes.array
       }),
       brushStyle: PropTypes.object,
-      defaultBrushArea: PropTypes.oneOf(["all", "disable", "none"]),
+      defaultBrushArea: PropTypes.oneOf(["all", "disable", "none", "move"]),
       disable: PropTypes.bool,
       handleComponent: PropTypes.element,
       handleStyle: PropTypes.object,
