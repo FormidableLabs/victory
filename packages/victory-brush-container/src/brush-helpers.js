@@ -89,20 +89,19 @@ const Helpers = {
     } else if (defaultBrushArea === "disable") {
       return cachedDomain;
     } else if (defaultBrushArea === "move") {
-      // eslint-disable-next-line no-unused-vars
-      const { x1, x2, y1, y2, ...restProps } = targetProps;
-      const brushBox = this.getDomainBox(restProps, fullDomain, cachedDomain);
-      const parentSVG = restProps.parentSVG || Selection.getParentSVG(evt);
+      const brushBox = this.getDomainBox(targetProps, fullDomain, cachedDomain);
+      const parentSVG = targetProps.parentSVG || Selection.getParentSVG(evt);
       const pannedBox = this.panBox(
         {
-          ...restProps,
+          ...targetProps,
+          ...brushBox,
           brushDomain: cachedDomain,
           startX: (brushBox.x1 + brushBox.x2) / 2,
           startY: (brushBox.y1 + brushBox.y2) / 2
         },
         Selection.getSVGEventCoordinates(evt, parentSVG)
       );
-      const fullDomainBox = restProps.fullDomainBox || this.getDomainBox(restProps, fullDomain);
+      const fullDomainBox = targetProps.fullDomainBox || this.getDomainBox(targetProps, fullDomain);
       const constrainedBox = this.constrainBox(pannedBox, fullDomainBox);
       return Selection.getBounds({ ...constrainedBox, scale, horizontal });
     } else {
