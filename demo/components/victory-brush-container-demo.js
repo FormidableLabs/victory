@@ -114,6 +114,7 @@ class App extends React.Component {
               <VictoryBrushContainer brushDomain={{ x: [2, 4], y: [-2, 2] }} allowDraw={false} />
             }
           >
+            <VictoryAxis dependentAxis invertAxis />
             <VictoryLegend
               x={120}
               y={20}
