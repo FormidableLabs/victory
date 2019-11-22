@@ -45,7 +45,8 @@ export const brushContainerMixin = (base) =>
         stroke: "transparent",
         fill: "transparent"
       },
-      handleWidth: 8
+      handleWidth: 8,
+      mouseMoveThreshold: 2
     };
 
     static defaultEvents = (props) => {
