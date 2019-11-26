@@ -275,7 +275,8 @@ const Helpers = {
       onBrushDomainChange,
       allowResize,
       allowDrag,
-      horizontal
+      horizontal,
+      mouseMoveThreshold
     } = targetProps;
     const brushDimension = this.getDimension(targetProps);
     const parentSVG = targetProps.parentSVG || Selection.getParentSVG(evt);
@@ -284,7 +285,7 @@ const Helpers = {
     if (
       (!allowResize && !allowDrag) ||
       !this.withinBounds({ x, y }, fullDomainBox) ||
-      !this.hasMoved({ ...targetProps, x2: x, y2: y })
+      (mouseMoveThreshold > 0 && !this.hasMoved({ ...targetProps, x2: x, y2: y }))
     ) {
       return {};
     }
