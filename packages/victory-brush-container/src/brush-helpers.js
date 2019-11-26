@@ -151,6 +151,21 @@ const Helpers = {
     };
   },
 
+  hasMoved(props) {
+    const { x1, x2, y1, y2, mouseMoveThreshold } = props;
+    const brushDimension = this.getDimension(props);
+    const xMoved = Math.abs(x1 - x2) >= mouseMoveThreshold;
+    const yMoved = Math.abs(y1 - y2) >= mouseMoveThreshold;
+    switch (brushDimension) {
+      case "x":
+        return xMoved;
+      case "y":
+        return yMoved;
+      default:
+        return xMoved || yMoved;
+    }
+  },
+
   // eslint-disable-next-line max-statements, complexity
   onMouseDown(evt, targetProps) {
     evt.preventDefault();
@@ -260,13 +275,18 @@ const Helpers = {
       onBrushDomainChange,
       allowResize,
       allowDrag,
-      horizontal
+      horizontal,
+      mouseMoveThreshold
     } = targetProps;
     const brushDimension = this.getDimension(targetProps);
     const parentSVG = targetProps.parentSVG || Selection.getParentSVG(evt);
     const { x, y } = Selection.getSVGEventCoordinates(evt, parentSVG);
     // Ignore events that occur outside of the maximum domain region
-    if ((!allowResize && !allowDrag) || !this.withinBounds({ x, y }, fullDomainBox)) {
+    if (
+      (!allowResize && !allowDrag) ||
+      !this.withinBounds({ x, y }, fullDomainBox) ||
+      (mouseMoveThreshold > 0 && !this.hasMoved({ ...targetProps, x2: x, y2: y }))
+    ) {
       return {};
     }
     if (allowDrag && isPanning) {
