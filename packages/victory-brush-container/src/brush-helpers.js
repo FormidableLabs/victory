@@ -386,16 +386,13 @@ const Helpers = {
     ];
   },
 
-  onMouseLeave(evt) {
-    if (evt.target.nodeName === "svg") {
-      return [
-        {
-          target: "parent",
-          mutation: () => ({ isPanning: false, isSelecting: false })
-        }
-      ];
-    }
-    return [];
+  onMouseLeave() {
+    return [
+      {
+        target: "parent",
+        mutation: () => ({ isPanning: false, isSelecting: false })
+      }
+    ];
   }
 };
 
