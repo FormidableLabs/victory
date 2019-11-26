@@ -1,5 +1,9 @@
 # Victory Changelog
 
+## 33.1.4 (2019-11-25)
+
+-[#1447](https://github.com/FormidableLabs/victory/pull/1447) - Adds support for function values for the `labelPosition` prop on `VictoryPie`
+
 ## 33.1.3 (2019-11-08)
 
 -[#1434](https://github.com/FormidableLabs/victory/pull/1434) Ensure the correct handles are used in `VictoryBrushArea` when axes are inverted. Thanks @Hypnosphi!
