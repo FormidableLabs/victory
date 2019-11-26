@@ -54,7 +54,7 @@ storiesOf("VictoryPie", module)
       endAngle={90}
       innerRadius={90}
       data={[{ x: "Cat", y: 62 }, { x: "Bird", y: 25 }]}
-      labelPosition={({ index }) => index === 0 ? "endAngle" : "startAngle"}
+      labelPosition={({ index }) => (index === 0 ? "endAngle" : "startAngle")}
     />
   ))
   .add("with custom data and colors", () => (
