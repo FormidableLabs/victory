@@ -137,9 +137,13 @@ const getVerticalAnchor = (orientation) => {
 
 const getLabelProps = (text, dataProps, calculatedValues) => {
   const { index, datum, data, slice } = dataProps;
-  const { style, defaultRadius, origin, width, height, labelPosition } = calculatedValues;
+  const { style, defaultRadius, origin, width, height } = calculatedValues;
   const labelRadius = Helpers.evaluateProp(
     calculatedValues.labelRadius,
+    assign({ text }, dataProps)
+  );
+  const labelPosition = Helpers.evaluateProp(
+    calculatedValues.labelPosition,
     assign({ text }, dataProps)
   );
   const labelStyle = assign({ padding: 0 }, style.labels);
