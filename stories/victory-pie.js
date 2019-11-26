@@ -45,8 +45,17 @@ storiesOf("VictoryPie", module)
   ))
   .add("with a radius prop", () => <VictoryPie radius={100} />)
   .add("with an origin prop", () => <VictoryPie radius={100} origin={{ x: 150, y: 150 }} />)
-  .add("with a label position different than centroid", () => (
+  .add("with a labelPosition different than centroid", () => (
     <VictoryPie labelPosition={"startAngle"} />
+  ))
+  .add("with a labelPosition as a function", () => (
+    <VictoryPie
+      startAngle={-90}
+      endAngle={90}
+      innerRadius={90}
+      data={[{ x: "Cat", y: 62 }, { x: "Bird", y: 25 }]}
+      labelPosition={({ index }) => index === 0 ? "endAngle" : "startAngle"}
+    />
   ))
   .add("with custom data and colors", () => (
     <VictoryPie
