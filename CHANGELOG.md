@@ -1,5 +1,10 @@
 # Victory Changelog
 
+## 33.1.5 (2019-11-26)
+
+-[#1443](https://github.com/FormidableLabs/victory/pull/1443) - Adds a `mouseMoveThreshold` prop for `VictoryBrushContainer` to prevent accidental redraws. Thanks @Hypnosphi!
+-[#1448](https://github.com/FormidableLabs/victory/pull/1448) - Removes an unnecessary check for svg target in `VictoryBrushContainer` `onMouseLeave`
+
 ## 33.1.4 (2019-11-25)
 
 -[#1447](https://github.com/FormidableLabs/victory/pull/1447) - Adds support for function values for the `labelPosition` prop on `VictoryPie`
