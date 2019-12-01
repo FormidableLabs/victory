@@ -181,12 +181,6 @@ function formatData(dataset, props, expectedKeys) {
   const defaultKeys = ["x", "y", "y0"];
   expectedKeys = Array.isArray(expectedKeys) ? expectedKeys : defaultKeys;
 
-  const stringMap = {
-    x: expectedKeys.indexOf("x") !== -1 ? createStringMap(props, "x") : undefined,
-    y: expectedKeys.indexOf("y") !== -1 ? createStringMap(props, "y") : undefined,
-    y0: expectedKeys.indexOf("y0") !== -1 ? createStringMap(props, "y") : undefined
-  };
-
   const createAccessor = (name) => {
     return Helpers.createAccessor(props[name] !== undefined ? props[name] : name);
   };
@@ -201,6 +195,16 @@ function formatData(dataset, props, expectedKeys) {
     props.x === "_x" &&
     props.y === "_y" &&
     props.y0 === "_y0";
+
+  let stringMap;
+  if (preformattedData === false) {
+    // stringMap is not required if the data is preformatted
+    stringMap = {
+      x: expectedKeys.indexOf("x") !== -1 ? createStringMap(props, "x") : undefined,
+      y: expectedKeys.indexOf("y") !== -1 ? createStringMap(props, "y") : undefined,
+      y0: expectedKeys.indexOf("y0") !== -1 ? createStringMap(props, "y") : undefined
+    };
+  }
 
   const data = preformattedData
     ? dataset
