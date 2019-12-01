@@ -1,5 +1,9 @@
 # Victory Changelog
 
+## 33.1.6 (2019-12-01)
+
+-[#1450](https://github.com/FormidableLabs/victory/pull/1450) - Skips `stringMap` computation when data is preformatted (_i.e._ data uses has `_x` and `_y` values and accessors). Thanks @na9da!
+
 ## 33.1.5 (2019-11-26)
 
 -[#1443](https://github.com/FormidableLabs/victory/pull/1443) - Adds a `mouseMoveThreshold` prop for `VictoryBrushContainer` to prevent accidental redraws. Thanks @Hypnosphi!
