@@ -82,7 +82,7 @@ labels={(d) => `x: ${d.x}`}
 ```
 new
 ```
-labels={({ datum }) => `x: ${d.x}`}
+labels={({ datum }) => `x: ${datum.x}`}
 ```
 
 Gotchas:
