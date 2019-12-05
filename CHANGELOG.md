@@ -2,33 +2,32 @@
 
 ## 33.1.6 (2019-12-01)
 
--[#1450](https://github.com/FormidableLabs/victory/pull/1450) - Skips `stringMap` computation when data is preformatted (_i.e._ data uses has `_x` and `_y` values and accessors). Thanks @na9da!
+- [#1450](https://github.com/FormidableLabs/victory/pull/1450) - Skips `stringMap` computation when data is preformatted (_i.e._ data uses has `_x` and `_y` values and accessors). Thanks @na9da!
 
 ## 33.1.5 (2019-11-26)
 
--[#1443](https://github.com/FormidableLabs/victory/pull/1443) - Adds a `mouseMoveThreshold` prop for `VictoryBrushContainer` to prevent accidental redraws. Thanks @Hypnosphi!
--[#1448](https://github.com/FormidableLabs/victory/pull/1448) - Removes an unnecessary check for svg target in `VictoryBrushContainer` `onMouseLeave`
+- [#1443](https://github.com/FormidableLabs/victory/pull/1443) - Adds a `mouseMoveThreshold` prop for `VictoryBrushContainer` to prevent accidental redraws. Thanks @Hypnosphi!
+- [#1448](https://github.com/FormidableLabs/victory/pull/1448) - Removes an unnecessary check for svg target in `VictoryBrushContainer` `onMouseLeave`
 
 ## 33.1.4 (2019-11-25)
 
--[#1447](https://github.com/FormidableLabs/victory/pull/1447) - Adds support for function values for the `labelPosition` prop on `VictoryPie`
+- [#1447](https://github.com/FormidableLabs/victory/pull/1447) - Adds support for function values for the `labelPosition` prop on `VictoryPie`
 
 ## 33.1.3 (2019-11-08)
 
--[#1434](https://github.com/FormidableLabs/victory/pull/1434) Ensure the correct handles are used in `VictoryBrushArea` when axes are inverted. Thanks @Hypnosphi!
--[#1435](https://github.com/FormidableLabs/victory/pull/1435) Adds a "move" option for the `defaultBrushArea` prop in `VictoryBrushContainer`. When this option is selected, clicking outside of the brush area will pan the brush to a the area the user clicked without resizing the brush. Thanks @Hypnosphi!
+- [#1434](https://github.com/FormidableLabs/victory/pull/1434) Ensure the correct handles are used in `VictoryBrushArea` when axes are inverted. Thanks @Hypnosphi!
+- [#1435](https://github.com/FormidableLabs/victory/pull/1435) Adds a "move" option for the `defaultBrushArea` prop in `VictoryBrushContainer`. When this option is selected, clicking outside of the brush area will pan the brush to a the area the user clicked without resizing the brush. Thanks @Hypnosphi!
 
 ## 33.1.2 (2019-10-31)
 
--[#1425](https://github.com/FormidableLabs/victory/pull/1425) Corrects padding on zero value tooltips.
--[#1423](https://github.com/FormidableLabs/victory/pull/1423) Make sure `VictoryChart` does not override axis orientations defined in themes.
--[#1422](https://github.com/FormidableLabs/victory/pull/1422) Use the correct domain in the `onBrushEnd` domain callback.
--[#1420](https://github.com/FormidableLabs/victory/pull/1420) Fixes behavior with `allowZoom` prop. Thanks @Hypnosphi!
--
+- [#1425](https://github.com/FormidableLabs/victory/pull/1425) Corrects padding on zero value tooltips.
+- [#1423](https://github.com/FormidableLabs/victory/pull/1423) Make sure `VictoryChart` does not override axis orientations defined in themes.
+- [#1422](https://github.com/FormidableLabs/victory/pull/1422) Use the correct domain in the `onBrushEnd` domain callback.
+- [#1420](https://github.com/FormidableLabs/victory/pull/1420) Fixes behavior with `allowZoom` prop. Thanks @Hypnosphi!
 
 ## 33.1.1 (2019-10-08)
 
--[#1409](https://github.com/FormidableLabs/victory/pull/1409) Updates `delaunay-find` to `0.0.4` to correct incorrect nearest values for sets of points with collinear values. Corrects bugs in `VictoryVoronoiContainer`
+- [#1409](https://github.com/FormidableLabs/victory/pull/1409) Updates `delaunay-find` to `0.0.4` to correct incorrect nearest values for sets of points with collinear values. Corrects bugs in `VictoryVoronoiContainer`
 
 ## 33.1.0 (2019-09-25)
 
@@ -56,11 +55,11 @@
 
 ## 33.0.3 (2019-08-25)
 
--[#1379](https://github.com/FormidableLabs/victory/pull/1379) - Fixes a bug affecting functional `padAngle` prop in `VictoryPie`
+- [#1379](https://github.com/FormidableLabs/victory/pull/1379) - Fixes a bug affecting functional `padAngle` prop in `VictoryPie`
 
 ## 33.0.2 (2019-08-25)
 
--[#1378](https://github.com/FormidableLabs/victory/pull/1378) - Fixes a bug affecting function labels in `VictoryPie`
+- [#1378](https://github.com/FormidableLabs/victory/pull/1378) - Fixes a bug affecting function labels in `VictoryPie`
 
 ## 33.0.1 (2019-08-22)
 
