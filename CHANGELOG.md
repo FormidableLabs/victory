@@ -1,5 +1,9 @@
 # Victory Changelog
 
+## 33.1.7 (2019-12-05)
+
+- [1453](https://github.com/FormidableLabs/victory/pull/1453) - Correctly handle null values in tooltips with custom flyoutComponents. Thanks @alecf!
+
 ## 33.1.6 (2019-12-01)
 
 - [#1450](https://github.com/FormidableLabs/victory/pull/1450) - Skips `stringMap` computation when data is preformatted (_i.e._ data uses has `_x` and `_y` values and accessors). Thanks @na9da!
