@@ -4,6 +4,7 @@ import PropTypes from "prop-types";
 import * as d3Ease from "d3-ease";
 import { victoryInterpolator } from "./util";
 import Timer from "../victory-util/timer";
+import TimerContext from "../victory-util/timer-context";
 import isEqual from "react-fast-compare";
 
 export default class VictoryAnimation extends React.Component {
@@ -66,9 +67,7 @@ export default class VictoryAnimation extends React.Component {
     easing: "quadInOut"
   };
 
-  static contextTypes = {
-    globalTimer: PropTypes.object
-  };
+  static contextType = TimerContext;
 
   constructor(props) {
     super(props);

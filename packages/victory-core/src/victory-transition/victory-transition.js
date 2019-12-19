@@ -4,6 +4,7 @@ import VictoryAnimation from "../victory-animation/victory-animation";
 import Collection from "../victory-util/collection";
 import Helpers from "../victory-util/helpers";
 import Timer from "../victory-util/timer";
+import TimerContext from "../victory-util/timer-context";
 import Transitions from "../victory-util/transitions";
 import { defaults, isFunction, pick, isObject } from "lodash";
 import isEqual from "react-fast-compare";
@@ -17,9 +18,7 @@ export default class VictoryTransition extends React.Component {
     children: PropTypes.node
   };
 
-  static contextTypes = {
-    globalTimer: PropTypes.object
-  };
+  static contextType = TimerContext;
 
   constructor(props) {
     super(props);
