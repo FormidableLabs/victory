@@ -38,19 +38,19 @@ export default class VictoryContainer extends React.Component {
   };
 
   static contextTypes = {
-    getTimer: PropTypes.func
+    globalTimer: PropTypes.object
   };
 
   static childContextTypes = {
     portalUpdate: PropTypes.func,
     portalRegister: PropTypes.func,
     portalDeregister: PropTypes.func,
-    getTimer: PropTypes.func
+    globalTimer: PropTypes.object
   };
 
   constructor(props) {
     super(props);
-    this.getTimer = this.getTimer.bind(this);
+    this.timer = this.getTimer();
     this.containerId =
       !isObject(props) || props.containerId === undefined
         ? uniqueId("victory-container-")
@@ -82,7 +82,7 @@ export default class VictoryContainer extends React.Component {
       portalUpdate: this.portalUpdate,
       portalRegister: this.portalRegister,
       portalDeregister: this.portalDeregister,
-      getTimer: this.getTimer
+      globalTimer: this.getTimer()
     };
   }
 
@@ -94,7 +94,7 @@ export default class VictoryContainer extends React.Component {
 
   componentWillUnmount() {
     if (!this.context.getTimer) {
-      this.getTimer().stop();
+      this.timer.stop();
     }
     if (this.shouldHandleWheel && this.containerRef) {
       this.containerRef.removeEventListener("wheel", this.handleWheel);
@@ -102,8 +102,8 @@ export default class VictoryContainer extends React.Component {
   }
 
   getTimer() {
-    if (this.context.getTimer) {
-      return this.context.getTimer();
+    if (this.context && this.context.globalTimer) {
+      return this.context.globalTimer;
     }
     if (!this.timer) {
       this.timer = new Timer();

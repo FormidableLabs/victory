@@ -67,7 +67,7 @@ export default class VictoryAnimation extends React.Component {
   };
 
   static contextTypes = {
-    getTimer: PropTypes.func
+    globalTimer: PropTypes.object
   };
 
   constructor(props) {
@@ -89,7 +89,7 @@ export default class VictoryAnimation extends React.Component {
       so we bind functionToBeRunEachFrame to current instance of victory animation class
     */
     this.functionToBeRunEachFrame = this.functionToBeRunEachFrame.bind(this);
-    this.getTimer = this.getTimer.bind(this);
+    this.timer = this.getTimer();
   }
 
   componentDidMount() {
@@ -103,7 +103,7 @@ export default class VictoryAnimation extends React.Component {
     const equalProps = isEqual(this.props, nextProps);
     if (!equalProps) {
       /* cancel existing loop if it exists */
-      this.getTimer().unsubscribe(this.loopID);
+      this.timer.unsubscribe(this.loopID);
 
       /* If an object was supplied */
       if (!Array.isArray(nextProps.data)) {
@@ -124,15 +124,15 @@ export default class VictoryAnimation extends React.Component {
 
   componentWillUnmount() {
     if (this.loopID) {
-      this.getTimer().unsubscribe(this.loopID);
+      this.timer.unsubscribe(this.loopID);
     } else {
-      this.getTimer().stop();
+      this.timer.stop();
     }
   }
 
   getTimer() {
-    if (this.context.getTimer) {
-      return this.context.getTimer();
+    if (this.context && this.context.globalTimer) {
+      return this.context.globalTimer;
     }
     if (!this.timer) {
       this.timer = new Timer();
@@ -156,13 +156,13 @@ export default class VictoryAnimation extends React.Component {
       /* reset step to zero */
       if (this.props.delay) {
         setTimeout(() => {
-          this.loopID = this.getTimer().subscribe(
+          this.loopID = this.timer.subscribe(
             this.functionToBeRunEachFrame,
             this.props.duration
           );
         }, this.props.delay);
       } else {
-        this.loopID = this.getTimer().subscribe(this.functionToBeRunEachFrame, this.props.duration);
+        this.loopID = this.timer.subscribe(this.functionToBeRunEachFrame, this.props.duration);
       }
     } else if (this.props.onEnd) {
       this.props.onEnd();
@@ -186,7 +186,7 @@ export default class VictoryAnimation extends React.Component {
         }
       });
       if (this.loopID) {
-        this.getTimer().unsubscribe(this.loopID);
+        this.timer.unsubscribe(this.loopID);
       }
       this.queue.shift();
       this.traverseQueue();
