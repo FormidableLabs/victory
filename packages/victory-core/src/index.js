@@ -38,3 +38,5 @@ export { default as Text } from "./victory-primitives/text";
 export { default as CommonProps } from "./victory-util/common-props";
 export { default as Wrapper } from "./victory-util/wrapper";
 export { default as Axis } from "./victory-util/axis";
+export { default as TimerContext } from "./victory-util/timer-context";
+export { default as PortalContext } from "./victory-portal/portal-context";

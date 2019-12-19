@@ -143,12 +143,10 @@ const RawZoomHelpers = {
   },
 
   handleAnimation(ctx) {
-    const getTimer = isFunction(ctx.getTimer) && ctx.getTimer.bind(ctx);
-    if (getTimer && isFunction(getTimer().bypassAnimation)) {
-      getTimer().bypassAnimation();
-      return isFunction(getTimer().resumeAnimation)
-        ? () => getTimer().resumeAnimation()
-        : undefined;
+    const timer = ctx.context.globalTimer;
+    if (timer) {
+      timer.bypassAnimation();
+      return () => timer.resumeAnimation()
     }
     return undefined;
   },

@@ -1,7 +1,7 @@
 import { assign, isFunction, defaults, isEmpty, fromPairs } from "lodash";
 import React from "react";
 import PropTypes from "prop-types";
-import { PropTypes as CustomPropTypes, Events, Helpers } from "victory-core";
+import { PropTypes as CustomPropTypes, Events, Helpers, TimerContext } from "victory-core";
 import isEqual from "react-fast-compare";
 
 export default class VictorySharedEvents extends React.Component {
@@ -50,6 +50,8 @@ export default class VictorySharedEvents extends React.Component {
   static defaultProps = {
     groupComponent: <g />
   };
+
+  static contextType = TimerContext;
 
   constructor(props) {
     super(props);
