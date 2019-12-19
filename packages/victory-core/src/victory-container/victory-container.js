@@ -77,7 +77,7 @@ export default class VictoryContainer extends React.Component {
   }
 
   componentWillUnmount() {
-    if (!this.context.getTimer) {
+    if (this.timer) {
       this.timer.stop();
     }
     if (this.shouldHandleWheel && this.containerRef) {
