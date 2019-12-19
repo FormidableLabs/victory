@@ -3,6 +3,7 @@ import PropTypes from "prop-types";
 import CustomPropTypes from "../victory-util/prop-types";
 import { assign, defaults, uniqueId, isObject, isFunction } from "lodash";
 import Portal from "../victory-portal/portal";
+import PortalContext from "../victory-portal/portal-context";
 import TimerContext from "../victory-util/timer-context";
 import Helpers from "../victory-util/helpers";
 
@@ -39,12 +40,6 @@ export default class VictoryContainer extends React.Component {
 
   static contextType = TimerContext;
 
-  static childContextTypes = {
-    portalUpdate: PropTypes.func,
-    portalRegister: PropTypes.func,
-    portalDeregister: PropTypes.func,
-  };
-
   constructor(props, context) {
     super(props, context);
     this.timer = this.context;
@@ -72,14 +67,6 @@ export default class VictoryContainer extends React.Component {
     if (this.shouldHandleWheel) {
       this.handleWheel = (e) => e.preventDefault();
     }
-  }
-
-  getChildContext() {
-    return {
-      portalUpdate: this.portalUpdate,
-      portalRegister: this.portalRegister,
-      portalDeregister: this.portalDeregister,
-    };
   }
 
   componentDidMount() {
@@ -134,16 +121,28 @@ export default class VictoryContainer extends React.Component {
       style: portalSvgStyle
     };
     return (
-      <div style={defaults({}, style, divStyle)} className={className} ref={this.saveContainerRef}>
-        <svg {...svgProps} style={svgStyle}>
-          {title ? <title id={this.getIdForElement("title")}>{title}</title> : null}
-          {desc ? <desc id={this.getIdForElement("desc")}>{desc}</desc> : null}
-          {children}
-        </svg>
-        <div style={portalDivStyle}>
-          {React.cloneElement(portalComponent, { ...portalProps, ref: this.savePortalRef })}
+      <PortalContext.Provider
+        value={{
+          portalUpdate: this.portalUpdate,
+          portalRegister: this.portalRegister,
+          portalDeregister: this.portalDeregister
+        }}
+      >
+        <div
+          style={defaults({}, style, divStyle)}
+          className={className}
+          ref={this.saveContainerRef}
+        >
+          <svg {...svgProps} style={svgStyle}>
+            {title ? <title id={this.getIdForElement("title")}>{title}</title> : null}
+            {desc ? <desc id={this.getIdForElement("desc")}>{desc}</desc> : null}
+            {children}
+          </svg>
+          <div style={portalDivStyle}>
+            {React.cloneElement(portalComponent, { ...portalProps, ref: this.savePortalRef })}
+          </div>
         </div>
-      </div>
+      </PortalContext.Provider>
     );
   }
 
