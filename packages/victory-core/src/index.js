@@ -28,6 +28,7 @@ export { default as Selection } from "./victory-util/selection";
 export { default as Style } from "./victory-util/style";
 export { default as TextSize } from "./victory-util/textsize";
 export { default as Timer } from "./victory-util/timer";
+export { default as TimerContext } from "./victory-util/timer-context";
 export { default as Transitions } from "./victory-util/transitions";
 export { default as Rect } from "./victory-primitives/rect";
 export { default as Path } from "./victory-primitives/path";

@@ -3,7 +3,7 @@ import PropTypes from "prop-types";
 import CustomPropTypes from "../victory-util/prop-types";
 import { assign, defaults, uniqueId, isObject, isFunction } from "lodash";
 import Portal from "../victory-portal/portal";
-import Timer from "../victory-util/timer";
+import TimerContext from "../victory-util/timer-context";
 import Helpers from "../victory-util/helpers";
 
 export default class VictoryContainer extends React.Component {
@@ -37,20 +37,17 @@ export default class VictoryContainer extends React.Component {
     responsive: true
   };
 
-  static contextTypes = {
-    getTimer: PropTypes.func
-  };
+  static contextType = TimerContext;
 
   static childContextTypes = {
     portalUpdate: PropTypes.func,
     portalRegister: PropTypes.func,
     portalDeregister: PropTypes.func,
-    getTimer: PropTypes.func
   };
 
-  constructor(props) {
-    super(props);
-    this.getTimer = this.getTimer.bind(this);
+  constructor(props, context) {
+    super(props, context);
+    this.timer = this.context;
     this.containerId =
       !isObject(props) || props.containerId === undefined
         ? uniqueId("victory-container-")
@@ -82,7 +79,6 @@ export default class VictoryContainer extends React.Component {
       portalUpdate: this.portalUpdate,
       portalRegister: this.portalRegister,
       portalDeregister: this.portalDeregister,
-      getTimer: this.getTimer
     };
   }
 
@@ -93,22 +89,10 @@ export default class VictoryContainer extends React.Component {
   }
 
   componentWillUnmount() {
-    if (!this.context.getTimer) {
-      this.getTimer().stop();
-    }
+    this.timer.stop();
     if (this.shouldHandleWheel && this.containerRef) {
       this.containerRef.removeEventListener("wheel", this.handleWheel);
     }
-  }
-
-  getTimer() {
-    if (this.context.getTimer) {
-      return this.context.getTimer();
-    }
-    if (!this.timer) {
-      this.timer = new Timer();
-    }
-    return this.timer;
   }
 
   getIdForElement(elementName) {

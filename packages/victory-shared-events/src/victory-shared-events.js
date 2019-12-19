@@ -1,7 +1,7 @@
 import { assign, isFunction, defaults, isEmpty, fromPairs } from "lodash";
 import React from "react";
 import PropTypes from "prop-types";
-import { PropTypes as CustomPropTypes, Events, Helpers, Timer } from "victory-core";
+import { PropTypes as CustomPropTypes, Events, Helpers } from "victory-core";
 import isEqual from "react-fast-compare";
 
 export default class VictorySharedEvents extends React.Component {
@@ -51,27 +51,12 @@ export default class VictorySharedEvents extends React.Component {
     groupComponent: <g />
   };
 
-  static contextTypes = {
-    getTimer: PropTypes.func
-  };
-
-  static childContextTypes = {
-    getTimer: PropTypes.func
-  };
-
   constructor(props) {
     super(props);
     this.state = this.state || {};
     this.getScopedEvents = Events.getScopedEvents.bind(this);
     this.getEventState = Events.getEventState.bind(this);
-    this.getTimer = this.getTimer.bind(this);
     this.baseProps = this.getBaseProps(props);
-  }
-
-  getChildContext() {
-    return {
-      getTimer: this.getTimer
-    };
   }
 
   shouldComponentUpdate(nextProps) {
@@ -81,16 +66,6 @@ export default class VictorySharedEvents extends React.Component {
       this.applyExternalMutations(nextProps, externalMutations);
     }
     return true;
-  }
-
-  getTimer() {
-    if (this.context.getTimer) {
-      return this.context.getTimer();
-    }
-    if (!this.timer) {
-      this.timer = new Timer();
-    }
-    return this.timer;
   }
 
   getAllEvents(props) {
