@@ -5,7 +5,6 @@ import Log from "../victory-util/log";
 import Helpers from "../victory-util/helpers";
 import PortalContext from "./portal-context";
 
-
 export default class VictoryPortal extends React.Component {
   static displayName = "VictoryPortal";
 

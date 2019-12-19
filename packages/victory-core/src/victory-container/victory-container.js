@@ -141,7 +141,11 @@ export default class VictoryContainer extends React.Component {
           portalDeregister: this.portalDeregister
         }}
       >
-        <div style={defaults({}, style, divStyle)} className={className} ref={this.saveContainerRef}>
+        <div
+          style={defaults({}, style, divStyle)}
+          className={className}
+          ref={this.saveContainerRef}
+        >
           <svg {...svgProps} style={svgStyle}>
             {title ? <title id={this.getIdForElement("title")}>{title}</title> : null}
             {desc ? <desc id={this.getIdForElement("desc")}>{desc}</desc> : null}
