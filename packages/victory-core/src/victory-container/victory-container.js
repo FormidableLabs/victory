@@ -3,7 +3,8 @@ import PropTypes from "prop-types";
 import CustomPropTypes from "../victory-util/prop-types";
 import { assign, defaults, uniqueId, isObject, isFunction } from "lodash";
 import Portal from "../victory-portal/portal";
-import Timer from "../victory-util/timer";
+import PortalContext from "../victory-portal/portal-context";
+import TimerContext from "../victory-util/timer-context";
 import Helpers from "../victory-util/helpers";
 
 export default class VictoryContainer extends React.Component {
@@ -37,20 +38,10 @@ export default class VictoryContainer extends React.Component {
     responsive: true
   };
 
-  static contextTypes = {
-    getTimer: PropTypes.func
-  };
-
-  static childContextTypes = {
-    portalUpdate: PropTypes.func,
-    portalRegister: PropTypes.func,
-    portalDeregister: PropTypes.func,
-    getTimer: PropTypes.func
-  };
+  static contextType = TimerContext;
 
   constructor(props) {
     super(props);
-    this.getTimer = this.getTimer.bind(this);
     this.containerId =
       !isObject(props) || props.containerId === undefined
         ? uniqueId("victory-container-")
@@ -77,15 +68,6 @@ export default class VictoryContainer extends React.Component {
     }
   }
 
-  getChildContext() {
-    return {
-      portalUpdate: this.portalUpdate,
-      portalRegister: this.portalRegister,
-      portalDeregister: this.portalDeregister,
-      getTimer: this.getTimer
-    };
-  }
-
   componentDidMount() {
     if (this.shouldHandleWheel && this.containerRef) {
       this.containerRef.addEventListener("wheel", this.handleWheel);
@@ -93,22 +75,9 @@ export default class VictoryContainer extends React.Component {
   }
 
   componentWillUnmount() {
-    if (!this.context.getTimer) {
-      this.getTimer().stop();
-    }
     if (this.shouldHandleWheel && this.containerRef) {
       this.containerRef.removeEventListener("wheel", this.handleWheel);
     }
-  }
-
-  getTimer() {
-    if (this.context.getTimer) {
-      return this.context.getTimer();
-    }
-    if (!this.timer) {
-      this.timer = new Timer();
-    }
-    return this.timer;
   }
 
   getIdForElement(elementName) {
@@ -150,16 +119,28 @@ export default class VictoryContainer extends React.Component {
       style: portalSvgStyle
     };
     return (
-      <div style={defaults({}, style, divStyle)} className={className} ref={this.saveContainerRef}>
-        <svg {...svgProps} style={svgStyle}>
-          {title ? <title id={this.getIdForElement("title")}>{title}</title> : null}
-          {desc ? <desc id={this.getIdForElement("desc")}>{desc}</desc> : null}
-          {children}
-        </svg>
-        <div style={portalDivStyle}>
-          {React.cloneElement(portalComponent, { ...portalProps, ref: this.savePortalRef })}
+      <PortalContext.Provider
+        value={{
+          portalUpdate: this.portalUpdate,
+          portalRegister: this.portalRegister,
+          portalDeregister: this.portalDeregister
+        }}
+      >
+        <div
+          style={defaults({}, style, divStyle)}
+          className={className}
+          ref={this.saveContainerRef}
+        >
+          <svg {...svgProps} style={svgStyle}>
+            {title ? <title id={this.getIdForElement("title")}>{title}</title> : null}
+            {desc ? <desc id={this.getIdForElement("desc")}>{desc}</desc> : null}
+            {children}
+          </svg>
+          <div style={portalDivStyle}>
+            {React.cloneElement(portalComponent, { ...portalProps, ref: this.savePortalRef })}
+          </div>
         </div>
-      </div>
+      </PortalContext.Provider>
     );
   }
 
