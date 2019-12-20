@@ -3,7 +3,6 @@ import PropTypes from "prop-types";
 import VictoryAnimation from "../victory-animation/victory-animation";
 import Collection from "../victory-util/collection";
 import Helpers from "../victory-util/helpers";
-import Timer from "../victory-util/timer";
 import TimerContext from "../victory-util/timer-context";
 import Transitions from "../victory-util/transitions";
 import { defaults, isFunction, pick, isObject } from "lodash";
@@ -20,8 +19,8 @@ export default class VictoryTransition extends React.Component {
 
   static contextType = TimerContext;
 
-  constructor(props) {
-    super(props);
+  constructor(props, context) {
+    super(props, context);
     this.state = {
       nodesShouldLoad: false,
       nodesDoneLoad: false
@@ -30,7 +29,7 @@ export default class VictoryTransition extends React.Component {
     const polar = child.props.polar;
     this.continuous = !polar && child.type && child.type.continuous === true;
     this.getTransitionState = this.getTransitionState.bind(this);
-    this.timer = this.getTimer();
+    this.timer = this.context.transitionTimer;
   }
 
   componentDidMount() {
@@ -49,16 +48,6 @@ export default class VictoryTransition extends React.Component {
 
   componentWillUnmount() {
     this.timer.stop();
-  }
-
-  getTimer() {
-    if (this.context && this.context.globalTimer) {
-      return this.context.globalTimer;
-    }
-    if (!this.timer) {
-      this.timer = new Timer();
-    }
-    return this.timer;
   }
 
   getTransitionState(props, nextProps) {

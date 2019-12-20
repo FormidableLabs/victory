@@ -3,7 +3,6 @@ import React from "react";
 import PropTypes from "prop-types";
 import * as d3Ease from "d3-ease";
 import { victoryInterpolator } from "./util";
-import Timer from "../victory-util/timer";
 import TimerContext from "../victory-util/timer-context";
 import isEqual from "react-fast-compare";
 
@@ -69,8 +68,8 @@ export default class VictoryAnimation extends React.Component {
 
   static contextType = TimerContext;
 
-  constructor(props) {
-    super(props);
+  constructor(props, context) {
+    super(props, context);
     /* defaults */
     this.state = {
       data: Array.isArray(this.props.data) ? this.props.data[0] : this.props.data,
@@ -88,7 +87,7 @@ export default class VictoryAnimation extends React.Component {
       so we bind functionToBeRunEachFrame to current instance of victory animation class
     */
     this.functionToBeRunEachFrame = this.functionToBeRunEachFrame.bind(this);
-    this.timer = this.getTimer();
+    this.timer = this.context.animationTimer
   }
 
   componentDidMount() {
@@ -127,16 +126,6 @@ export default class VictoryAnimation extends React.Component {
     } else {
       this.timer.stop();
     }
-  }
-
-  getTimer() {
-    if (this.context && this.context.globalTimer) {
-      return this.context.globalTimer;
-    }
-    if (!this.timer) {
-      this.timer = new Timer();
-    }
-    return this.timer;
   }
 
   toNewName(ease) {

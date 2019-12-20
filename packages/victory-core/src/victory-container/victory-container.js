@@ -4,7 +4,6 @@ import CustomPropTypes from "../victory-util/prop-types";
 import { assign, defaults, uniqueId, isObject, isFunction } from "lodash";
 import Portal from "../victory-portal/portal";
 import PortalContext from "../victory-portal/portal-context";
-import Timer from "../victory-util/timer";
 import TimerContext from "../victory-util/timer-context";
 import Helpers from "../victory-util/helpers";
 
@@ -43,7 +42,6 @@ export default class VictoryContainer extends React.Component {
 
   constructor(props) {
     super(props);
-    this.timer = this.getTimer();
     this.containerId =
       !isObject(props) || props.containerId === undefined
         ? uniqueId("victory-container-")
@@ -77,22 +75,9 @@ export default class VictoryContainer extends React.Component {
   }
 
   componentWillUnmount() {
-    if (this.timer) {
-      this.timer.stop();
-    }
     if (this.shouldHandleWheel && this.containerRef) {
       this.containerRef.removeEventListener("wheel", this.handleWheel);
     }
-  }
-
-  getTimer() {
-    if (this.context && this.context.globalTimer) {
-      return this.context.globalTimer;
-    }
-    if (!this.timer) {
-      this.timer = new Timer();
-    }
-    return this.timer;
   }
 
   getIdForElement(elementName) {

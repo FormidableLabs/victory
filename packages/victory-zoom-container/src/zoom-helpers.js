@@ -1,7 +1,7 @@
 /*eslint no-magic-numbers: ["error", { "ignore": [-1, 0, 1, 2, 1000] }]*/
 import { Children } from "react";
 import { Selection, Collection, Wrapper } from "victory-core";
-import { throttle, isFunction, defaults } from "lodash";
+import { throttle, isFunction, defaults, delay } from "lodash";
 
 const RawZoomHelpers = {
   checkDomainEquality(a, b) {
@@ -143,12 +143,17 @@ const RawZoomHelpers = {
   },
 
   handleAnimation(ctx) {
-    const timer = ctx.context.globalTimer;
-    if (timer) {
-      timer.bypassAnimation();
-      return () => timer.resumeAnimation()
+    const animationTimer = ctx.context.animationTimer;
+    const transitionTimer = ctx.context.transitionTimer;
+    transitionTimer.bypassAnimation();
+    animationTimer.bypassAnimation();
+
+    const resumeAnimation = () => {
+      animationTimer.resumeAnimation();
+      transitionTimer.resumeAnimation();
     }
-    return undefined;
+    // delay the callback that resumes animation by ~1 frame so that animation does not interfere with wheel events
+    return delay(resumeAnimation, 16); // eslint-disable-line no-magic-numbers
   },
 
   getLastDomain(targetProps, originalDomain) {
