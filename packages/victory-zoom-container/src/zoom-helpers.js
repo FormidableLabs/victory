@@ -151,7 +151,7 @@ const RawZoomHelpers = {
     const resumeAnimation = () => {
       animationTimer.resumeAnimation();
       transitionTimer.resumeAnimation();
-    }
+    };
     // delay the callback that resumes animation by ~1 frame so that animation does not interfere with wheel events
     return delay(resumeAnimation, 16); // eslint-disable-line no-magic-numbers
   },

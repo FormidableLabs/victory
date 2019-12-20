@@ -87,7 +87,7 @@ export default class VictoryAnimation extends React.Component {
       so we bind functionToBeRunEachFrame to current instance of victory animation class
     */
     this.functionToBeRunEachFrame = this.functionToBeRunEachFrame.bind(this);
-    this.timer = this.context.animationTimer
+    this.timer = this.context.animationTimer;
   }
 
   componentDidMount() {
