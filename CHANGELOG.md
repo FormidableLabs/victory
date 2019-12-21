@@ -1,5 +1,12 @@
 # Victory Changelog
 
+## 34.0.0 (2019-12-20)
+
+### Breaking Changes
+This version uses the context API introduced in `react@16.3.0`
+
+- [#1462](https://github.com/FormidableLabs/victory/pull/1462) - Updates to the new context API. Thanks @fabianishere!
+
 ## 33.1.7 (2019-12-05)
 
 - [1453](https://github.com/FormidableLabs/victory/pull/1453) - Correctly handle null values in tooltips with custom flyoutComponents. Thanks @alecf!
