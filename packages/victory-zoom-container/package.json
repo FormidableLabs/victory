@@ -1,6 +1,6 @@
 {
   "name": "victory-zoom-container",
-  "version": "33.1.7",
+  "version": "34.0.0",
   "description": "Interactive Zoom Component for Victory",
   "keywords": [
     "data visualization",
@@ -21,7 +21,7 @@
   "dependencies": {
     "lodash": "^4.17.15",
     "prop-types": "^15.5.8",
-    "victory-core": "^33.1.7"
+    "victory-core": "^34.0.0"
   },
   "scripts": {
     "version": "nps build-libs && nps build-dists"
