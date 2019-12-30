@@ -64,6 +64,6 @@ Victory Native shares most of its code with Victory, and has a nearly identical 
 
 
 [react]: https://facebook.github.io/react/
-[trav_img]: https://api.travis-ci.org/FormidableLabs/victory.svg
-[trav_site]: https://travis-ci.org/FormidableLabs/victory
+[trav_img]: https://api.travis-ci.com/FormidableLabs/victory.svg
+[trav_site]: https://travis-ci.com/FormidableLabs/victory
 [maintenance-image]: https://img.shields.io/badge/maintenance-active-green.svg
