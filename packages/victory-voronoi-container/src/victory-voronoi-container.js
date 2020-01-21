@@ -160,6 +160,7 @@ export const voronoiContainerMixin = (base) =>
           flyoutStyle: this.getStyle(props, points, "flyout")[0],
           renderInPortal: false,
           style: this.getStyle(props, points, "labels"),
+          activePoints: points,
           datum,
           scale,
           theme,
