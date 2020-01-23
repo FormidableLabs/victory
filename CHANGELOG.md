@@ -1,5 +1,9 @@
 # Victory Changelog
 
+## 34.0.1 (2020-01-22)
+
+- [#1474](https://github.com/FormidableLabs/victory/pull/1474) - Adds an `activePoints` prop to `VictoryTooltip` which `VictoryVoronoiContainer` supplies to its `labelComponent`. Thanks @jotak!
+
 ## 34.0.0 (2019-12-20)
 
 ### Breaking Changes
