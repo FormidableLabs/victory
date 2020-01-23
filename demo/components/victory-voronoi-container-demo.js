@@ -9,9 +9,9 @@ import { VictoryLine } from "../../packages/victory-line/src/index";
 import { VictoryScatter } from "../../packages/victory-scatter/src/index";
 import { VictoryVoronoiContainer } from "../../packages/victory-voronoi-container/src/index";
 import { random, range } from "lodash";
-import { VictoryTooltip } from "../../packages/victory-tooltip/src/index";
+import { Flyout, VictoryTooltip } from "../../packages/victory-tooltip/src/index";
 import { VictoryLegend } from "../../packages/victory-legend/src/index";
-import { VictoryTheme } from "../../packages/victory-core/src/index";
+import { VictoryLabel, VictoryTheme } from "../../packages/victory-core/src/index";
 
 class App extends React.Component {
   constructor() {
@@ -51,6 +51,33 @@ class App extends React.Component {
     };
 
     const chartStyle = { parent: { border: "1px solid #ccc", margin: "2%", maxWidth: "40%" } };
+
+    const dy = 13;
+    const CustomLabel = (props) => {
+      const x = props.x - 2 - 4 * Math.max(...props.text.map((t) => t.length));
+      const startY = 2 + props.y - (props.text.length * dy) / 2;
+      return (
+        <g>
+          {props.activePoints.map((pt, idx) => {
+            return (
+              <rect
+                key={`square_${idx}`}
+                width={10}
+                height={10}
+                x={x}
+                y={startY + dy * idx}
+                style={{ fill: pt.c }}
+              />
+            );
+          })}
+          <VictoryLabel {...props} />
+        </g>
+      );
+    };
+
+    const CustomFlyout = (props) => {
+      return <Flyout {...props} width={props.width + 15} />;
+    };
 
     return (
       <div className="demo">
@@ -511,6 +538,48 @@ class App extends React.Component {
               ]}
             />
           </VictoryStack>
+
+          <VictoryChart
+            style={chartStyle}
+            theme={VictoryTheme.material}
+            domainPadding={{ y: 2 }}
+            containerComponent={
+              <VictoryVoronoiContainer
+                labels={({ datum }) => `${datum.l}: ${datum.y}`}
+                labelComponent={
+                  <VictoryTooltip
+                    y={150}
+                    flyoutComponent={<CustomFlyout />}
+                    labelComponent={<CustomLabel />}
+                  />
+                }
+              />
+            }
+          >
+            <VictoryLine
+              name="first"
+              data={[
+                { x: 1, y: 5, c: "red", l: "error" },
+                { x: 2, y: 4, c: "red", l: "error" },
+                { x: 3, y: 0, c: "red", l: "error" }
+              ]}
+              style={{
+                data: { stroke: "red", strokeWidth: ({ active }) => (active ? 4 : 2) }
+              }}
+            />
+
+            <VictoryLine
+              name="second"
+              data={[
+                { x: 1, y: 0, c: "green", l: "success" },
+                { x: 2, y: 4, c: "green", l: "success" },
+                { x: 3, y: 3, c: "green", l: "success" }
+              ]}
+              style={{
+                data: { stroke: "green", strokeWidth: ({ active }) => (active ? 4 : 2) }
+              }}
+            />
+          </VictoryChart>
         </div>
       </div>
     );

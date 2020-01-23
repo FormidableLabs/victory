@@ -24,6 +24,7 @@ export default class VictoryTooltip extends React.Component {
   static propTypes = {
     activateData: PropTypes.bool,
     active: PropTypes.oneOfType([PropTypes.bool, PropTypes.func]),
+    activePoints: PropTypes.array,
     angle: PropTypes.number,
     center: PropTypes.shape({ x: CustomPropTypes.nonNegative, y: CustomPropTypes.nonNegative }),
     centerOffset: PropTypes.shape({
@@ -404,7 +405,7 @@ export default class VictoryTooltip extends React.Component {
 
   getLabelProps(props, calculatedValues) {
     const { flyoutCenter, style, labelSize, dy, dx } = calculatedValues;
-    const { text, datum, labelComponent, index } = props;
+    const { text, datum, activePoints, labelComponent, index } = props;
     const textAnchor =
       (Array.isArray(style) && style.length ? style[0].textAnchor : style.textAnchor) || "middle";
     const getLabelX = () => {
@@ -415,6 +416,7 @@ export default class VictoryTooltip extends React.Component {
       key: `${this.id}-label-${index}`,
       text,
       datum,
+      activePoints,
       textAnchor,
       dy,
       dx,
@@ -452,6 +454,7 @@ export default class VictoryTooltip extends React.Component {
       dx,
       dy,
       datum,
+      activePoints,
       index,
       pointerLength,
       pointerWidth,
@@ -466,6 +469,7 @@ export default class VictoryTooltip extends React.Component {
       dx,
       dy,
       datum,
+      activePoints,
       index,
       pointerLength,
       pointerWidth,
