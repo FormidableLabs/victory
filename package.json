@@ -25,6 +25,7 @@
   "scripts": {
     "preversion": "nps check",
     "start": "nps start",
+    "start-ts": "nps start.ts",
     "storybook": "nps storybook.server",
     "chromatic": "chromatic test --storybook-addon --port=6006",
     "chromatic-ci": "chromatic test --storybook-addon --port=6006 --exit-zero-on-changes"
@@ -48,6 +49,9 @@
     "@storybook/addon-actions": "^4.0.0",
     "@storybook/addon-options": "^4.0.0",
     "@storybook/react": "^4.0.0",
+    "@types/lodash": "^4.14.149",
+    "@types/react": "^16.9.19",
+    "@types/react-dom": "^16.9.5",
     "babel-eslint": "^6.1.2",
     "babel-loader": "^8.0.0-beta.0",
     "babel-plugin-lodash": "^3.1.2",
@@ -100,8 +104,11 @@
     "seedrandom": "^2.4.3",
     "sinon": "^1.17.5",
     "sinon-chai": "^2.8.0",
-    "webpack": "^3.2.0",
-    "webpack-dev-server": "^1.10.0",
+    "ts-loader": "^6.2.1",
+    "typescript": "^3.7.5",
+    "webpack": "^4.0.0",
+    "webpack-cli": "^3.3.10",
+    "webpack-dev-server": "^3.0.0",
     "webpack-stats-plugin": "^0.1.1"
   },
   "sideEffects": false

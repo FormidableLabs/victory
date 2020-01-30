@@ -4,10 +4,13 @@ var path = require("path");
 module.exports = {
   scripts: {
     server: {
-      dev:
-        "webpack-dev-server --config ./config/webpack/demo/webpack.config.dev.js --colors --content-base demo",
+      dev: {
+        ts: "webpack-dev-server --config ./config/webpack/demo/webpack.config.dev-ts.js --colors",
+        default:
+          "webpack-dev-server --config ./config/webpack/demo/webpack.config.dev.js --colors --content-base demo/js"
+      },
       hot:
-        "webpack-dev-server --config ./config/webpack/demo/webpack.config.hot.js --colors --inline --hot --content-base demo",
+        "webpack-dev-server --config ./config/webpack/demo/webpack.config.hot.js --colors --inline --hot --content-base demo/js",
       test: "webpack-dev-server --config ./config/webpack/webpack.config.test.js --colors"
     },
     karma: {
@@ -26,7 +29,10 @@ module.exports = {
       server: "start-storybook -p 6006",
       default: npsUtils.concurrent.nps("watch", "storybook.server")
     },
-    start: npsUtils.concurrent.nps("watch", "server.dev", "server.test"),
+    start: {
+      ts: npsUtils.concurrent.nps("watch", "server.dev.ts"),
+      default: npsUtils.concurrent.nps("watch", "server.dev", "server.test")
+    },
     lint: {
       src: "lerna exec --parallel -- eslint --color src",
       demo: "eslint --color demo",
