@@ -16,40 +16,35 @@ module.exports = {
   mode: "development",
   resolve: {
     alias: {
-      Packages: path.resolve("packages")
-    }
+      "@packages": path.resolve("packages")
+    },
+    extensions: [".ts", ".tsx", ".js", ".json"]
   },
-
+  entry: "./demo/ts/app.tsx",
   devServer: {
     port: WDS_PORT,
-    contentBase: "./demo/js",
+    contentBase: "./demo/ts",
     noInfo: false
   },
-
   output: {
-    path: DEMO,
+    path: path.resolve("demo"),
     pathinfo: true,
     filename: "main.js",
     publicPath: "/assets/"
   },
-
-  cache: true,
-  devtool: "source-map",
-  entry: {
-    app: ["./demo/js/app"]
-  },
-  stats: {
-    colors: true,
-    reasons: true
-  },
   module: {
     rules: [
+      {
+        test: /\.(ts|tsx)$/,
+        include: [`${DEMO}/ts`],
+        loader: "ts-loader"
+      },
       {
         // Transform source
         test: /\.js$/,
         // Use include specifically of our sources.
         // Do _not_ use an `exclude` here.
-        include: FILES.concat([`${DEMO}/js`]),
+        include: FILES,
         loader: "babel-loader"
       }
     ]

@@ -20,7 +20,7 @@ import {
 } from "victory-core";
 
 export interface VictoryAreaProps extends VictoryCommonProps, VictoryDatableProps, VictorySingleLabableProps {
-  events?: EventPropTypeInterface<"data" | "labels" | "parent", "all">[];
+  events?: EventPropTypeInterface<"data" | "labels" | "parent", string | number>[];
   interpolation?: InterpolationPropType;
   labels?: string[] | number[] | Function;
   samples?: number;
