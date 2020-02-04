@@ -56,9 +56,7 @@ module.exports = {
       }
     ]
   },
-  optimization: {
-    minimize: true
-  },
+  mode: "production",
   plugins: [
     new LodashModuleReplacementPlugin({
       currying: true,
