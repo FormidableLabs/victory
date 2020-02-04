@@ -8,6 +8,7 @@ var LodashModuleReplacementPlugin = require("lodash-webpack-plugin");
 // We do this because lodash isn't available in `production` mode.
 config.output.filename = config.output.filename.replace(/\.min\.js$/, ".js");
 config.output.pathinfo = true;
+config.optimization.minimize = false;
 config.plugins = [
   new LodashModuleReplacementPlugin({
     currying: true,
