@@ -3,6 +3,7 @@
   "env": { "mocha": true },
   "plugins": ["mocha"],
   "rules": {
+    "react/sort-comp": "off",
     "mocha/no-exclusive-tests": 2,
     "no-magic-numbers": 0,
     "max-statements": 0,

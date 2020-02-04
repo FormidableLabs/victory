@@ -12,7 +12,9 @@ var PACKAGES = glob.sync("packages/*/src", { root: ROOT });
 var FILES = PACKAGES.map(function(p) {
   return path.join(ROOT, p);
 });
+
 module.exports = {
+  mode: "development",
   cache: true,
   context: path.join(ROOT, "test/client"),
   entry: "./main",

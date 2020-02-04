@@ -9,3 +9,4 @@ lerna-debug.log*
 yarn-error.log*
 .cache
 lerna.json
+tsconfig.json
