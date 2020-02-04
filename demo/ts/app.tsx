@@ -1,42 +1,25 @@
-import * as React from 'react';
-import * as ReactDOM from 'react-dom';
+import * as React from "react";
+import * as ReactDOM from "react-dom";
 import { keys } from "lodash";
 
 import AreaDemo from "./components/victory-area-demo";
+import AxisDemo from "./components/victory-axis-demo";
+import BarDemo from "./components/victory-bar-demo";
+import ChartDemo from "./components/victory-chart-demo";
+import LegendDemo from "./components/victory-legend-demo";
+import LineDemo from "./components/victory-line-demo";
+import PieDemo from "./components/victory-pie-demo";
+import TooltipDemo from "./components/victory-tooltip-demo";
 
 const MAP = {
-  // "/axis": { component: AxisDemo, name: "AxisDemo" },
+  "/axis": { component: AxisDemo, name: "AxisDemo" },
   "/area": { component: AreaDemo, name: "AreaDemo" },
-  // "/bar": { component: BarDemo, name: "BarDemo" },
-  // "/chart": { component: ChartDemo, name: "ChartDemo" },
-  // "/line": { component: LineDemo, name: "LineDemo" },
-  // "/scatter": { component: ScatterDemo, name: "ScatterDemo" },
-  // "/errorbar": { component: ErrorBarDemo, name: "ErrorBarDemo" },
-  // "/candlestick": { component: CandlestickDemo, name: "CandlestickDemo" },
-  // "/boxplot": { component: BoxplotDemo, name: "BoxplotDemo" },
-  // "/events": { component: EventsDemo, name: "EventsDemo" },
-  // "/group": { component: GroupDemo, name: "GroupDemo" },
-  // "/voronoi": { component: VoronoiDemo, name: "VoronoiDemo" },
-  // "/tooltip": { component: TooltipDemo, name: "TooltipDemo" },
-  // "/zoom-container": { component: ZoomContainerDemo, name: "ZoomContainerDemo" },
-  // "/voronoi-container": { component: VoronoiContainerDemo, name: "VoronoiContainerDemo" },
-  // "/cursor-container": { component: CursorContainerDemo, name: "CursorContainerDemo" },
-  // "/brush-container": { component: BrushContainerDemo, name: "BrushContainerDemo" },
-  // "/animation": { component: AnimationDemo, name: "AnimationDemo" },
-  // "/selection-container": { component: SelectionDemo, name: "SelectionDemo" },
-  // "/create-container": { component: CreateContainerDemo, name: "CreateContainerDemo" },
-  // "/polar": { component: PolarDemo, name: "PolarDemo" },
-  // "/immutable": { component: ImmutableDemo, name: "ImmutableDemo" },
-  // "/external-events": { component: ExternalEventsDemo, name: "ExternalEventsDemo" },
-  // "/victory-brush-line": { component: VictoryBrushLineDemo, name: "BrushLineDemo" },
-  // "/performance": { component: PerformanceDemo, name: "PerformanceDemo" },
-  // "/debug": { component: DebugDemo, name: "DebugDemo" },
-  // "/label": { component: VictoryLabelDemo, name: "LabelDemo" },
-  // "/legend": { component: VictoryLegendDemo, name: "LegendDemo" },
-  // "/pie": { component: VictoryPieDemo, name: "PieDemo" },
-  // "/victory": { component: VictoryDemo, name: "VictoryDemo" },
-  // "/horizontal": { component: HorizontalDemo, name: "HorizontalDemo" },
-  // "/draggable": { component: DraggableDemo, name: "DraggableDemo" }
+  "/bar": { component: BarDemo, name: "BarDemo" },
+  "/chart": { component: ChartDemo, name: "ChartDemo" },
+  "/line": { component: LineDemo, name: "LineDemo" },
+  "/tooltip": { component: TooltipDemo, name: "TooltipDemo" },
+  "/legend": { component: LegendDemo, name: "LegendDemo" },
+  "/pie": { component: PieDemo, name: "PieDemo" }
 };
 
 class Home extends React.Component {
@@ -93,7 +76,4 @@ class App extends React.Component<any, AppState> {
   }
 }
 
-ReactDOM.render(
-  <App />,
-  document.getElementById('content')
-);
+ReactDOM.render(<App />, document.getElementById("content"));

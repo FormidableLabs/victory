@@ -23,7 +23,10 @@ import {
   VictoryStyleInterface
 } from "victory-core";
 
-export interface VictoryGroupProps extends VictoryCommonProps, VictoryDatableProps, VictoryMultiLabeableProps {
+export interface VictoryGroupProps
+  extends VictoryCommonProps,
+    VictoryDatableProps,
+    VictoryMultiLabeableProps {
   categories?: CategoryPropType;
   color?: string;
   colorScale?: ColorScalePropType;

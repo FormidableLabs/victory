@@ -15,13 +15,15 @@
     "noImplicitAny": true,
     "noUnusedLocals": true,
     "strictNullChecks": true,
+    "strict": true,
     "suppressImplicitAnyIndexErrors": true,
     "paths": {
       "@packages/*": ["packages/*"]
     }
   },
   "include": [
-    "demo/ts/*"
+    "**/*.ts",
+    "**/*.tsx"
   ],
   "exclude": [
       "node_modules",

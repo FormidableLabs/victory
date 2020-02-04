@@ -20,7 +20,10 @@ import {
   VictoryStyleInterface
 } from "victory-core";
 
-export interface VictoryScatterProps extends VictoryCommonProps, VictoryDatableProps, VictoryMultiLabeableProps {
+export interface VictoryScatterProps
+  extends VictoryCommonProps,
+    VictoryDatableProps,
+    VictoryMultiLabeableProps {
   bubbleProperty?: string;
   events?: EventPropTypeInterface<"data" | "labels" | "parent", StringOrNumberOrCallback>[];
   eventKey?: StringOrNumberOrCallback;

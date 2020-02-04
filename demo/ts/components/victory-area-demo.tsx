@@ -1,31 +1,31 @@
 import React from "react";
 import { merge, random, range } from "lodash";
-import { VictoryChart } from "@packages/victory-chart/src/index";
-import { VictoryStack } from "@packages/victory-stack/src/index";
-import { VictoryGroup } from "@packages/victory-group/src/index";
-import { VictoryArea } from "@packages/victory-area/src/index";
-import { VictoryContainer, VictoryTheme } from "@packages/victory-core/src/index";
+import { VictoryChart } from "@packages/victory-chart";
+import { VictoryStack } from "@packages/victory-stack";
+import { VictoryGroup } from "@packages/victory-group";
+import { VictoryArea } from "@packages/victory-area";
+import { VictoryContainer, VictoryTheme } from "@packages/victory-core";
 
 interface VictoryAreaDemoState {
   data: {
     x: number;
     y: number;
-  }[],
+  }[];
   arrayData: number[][];
   groupedData: {
     x: string;
     y: number;
-  }[][],
+  }[][];
   multiTransitionData: {
     x: number;
     y: number;
-  }[][],
+  }[][];
   areaTransitionData: {
     x: number;
     y: number;
     y0: number;
-  }[],
-  style?: React.CSSProperties
+  }[];
+  style?: React.CSSProperties;
 }
 
 export default class VictoryAreaDemo extends React.Component<any, VictoryAreaDemoState> {

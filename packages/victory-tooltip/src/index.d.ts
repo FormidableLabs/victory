@@ -24,6 +24,11 @@ export interface VictoryTooltipProps {
   active?: boolean;
   activateData?: boolean;
   angle?: string | number;
+  centerOffset?: {
+    x?: number | Function;
+    y?: number | Function;
+  };
+  constrainToVisibleArea?: boolean;
   cornerRadius?: NumberOrCallback;
   datum?: {};
   data?: any[];

@@ -64,7 +64,14 @@ export type AnimationEasing =
   | "sinOut"
   | "sinInOut";
 
-export type ScatterSymbolType = "circle" | "diamond" | "plus" | "square" | "star" | "triangleDown" | "triangleUp";
+export type ScatterSymbolType =
+  | "circle"
+  | "diamond"
+  | "plus"
+  | "square"
+  | "star"
+  | "triangleDown"
+  | "triangleUp";
 
 /**
  * @see https://www.typescriptlang.org/docs/handbook/release-notes/typescript-2-8.html
@@ -72,10 +79,10 @@ export type ScatterSymbolType = "circle" | "diamond" | "plus" | "square" | "star
 export type Omit<T, K> = Pick<T, Exclude<keyof T, K>>;
 
 export type BlockProps = {
-    top?: number;
-    bottom?: number;
-    left?: number;
-    right?: number;
+  top?: number;
+  bottom?: number;
+  left?: number;
+  right?: number;
 };
 
 export type PaddingProps = number | BlockProps;
@@ -122,6 +129,7 @@ export interface VictoryStyleInterface {
   parent?: VictoryStyleObject;
   data?: VictoryStyleObject;
   labels?: VictoryStyleObject;
+  border?: VictoryStyleObject;
 }
 
 // #region Victory Animation
@@ -219,11 +227,15 @@ export class VictoryClipContainer extends React.Component<VictoryClipContainerPr
 // #region Victory Theme
 
 export type ThemeBaseProps = {
-  width: number;
-  height: number;
-  colorScale: string[];
+  width?: number;
+  height?: number;
+  colorScale?: string[];
   padding?: number;
+  offsetX?: number;
+  offsetY?: number;
 };
+
+export type TickProps = React.CSSProperties & { size?: number };
 
 // Note: Many SVG attributes are missed in CSSProperties interface
 export interface VictoryThemeDefinition {
@@ -238,7 +250,7 @@ export interface VictoryThemeDefinition {
       axis?: React.CSSProperties;
       axisLabel?: React.CSSProperties;
       grid?: React.CSSProperties;
-      ticks?: React.CSSProperties;
+      ticks?: TickProps;
       tickLabels?: React.CSSProperties;
     };
   } & ThemeBaseProps;
@@ -274,6 +286,16 @@ export interface VictoryThemeDefinition {
     };
   } & ThemeBaseProps;
   chart?: ThemeBaseProps;
+  dependentAxis?: {
+    style?: {
+      axis?: React.CSSProperties;
+      axisLabel?: React.CSSProperties;
+      grid?: React.CSSProperties;
+      ticks?: TickProps;
+      tickLabels?: React.CSSProperties;
+    };
+    orientation?: OrientationTypes;
+  } & ThemeBaseProps;
   errorbar?: {
     borderWidth?: number;
     style?: {
@@ -282,6 +304,16 @@ export interface VictoryThemeDefinition {
     };
   } & ThemeBaseProps;
   group?: ThemeBaseProps;
+  independentAxis?: {
+    style?: {
+      axis?: React.CSSProperties;
+      axisLabel?: React.CSSProperties;
+      grid?: React.CSSProperties;
+      ticks?: TickProps;
+      tickLabels?: React.CSSProperties;
+    };
+    orientation?: OrientationTypes;
+  } & ThemeBaseProps;
   legend?: {
     gutter?: number;
     orientation?: "vertical" | "horizontal";
@@ -340,7 +372,7 @@ export const VictoryTheme: VictoryThemeInterface;
 // #region Victory Util
 
 export interface AnimatePropTypeInterface {
-  duration: number;
+  duration?: number;
   onEnd?: () => void;
   onExit?: {
     duration?: number;
@@ -382,7 +414,10 @@ export interface EventPropTypeInterface<TTarget, TEventKey> {
 }
 
 export type DomainTuple = [number, number] | [Date, Date];
-export type DomainPropType = DomainTuple | { x?: DomainTuple; y: DomainTuple } | { x: DomainTuple; y?: DomainTuple };
+export type DomainPropType =
+  | DomainTuple
+  | { x?: DomainTuple; y: DomainTuple }
+  | { x: DomainTuple; y?: DomainTuple };
 
 export type DomainPaddingPropType =
   | number
@@ -412,7 +447,11 @@ export type CategoryPropType =
       y: string[];
     };
 
-export type DataGetterPropType = number | string | string[] | { (data: any): number | string | string[] };
+export type DataGetterPropType =
+  | number
+  | string
+  | string[]
+  | { (data: any): number | string | string[] };
 
 export type InterpolationPropType =
   | "basis"
@@ -436,7 +475,7 @@ export type InterpolationPropType =
   | "stepBefore";
 
 export type ColorScalePropType =
-  | "greyscale"
+  | "grayscale"
   | "qualitative"
   | "heatmap"
   | "warm"
@@ -448,6 +487,7 @@ export type ColorScalePropType =
 
 export interface VictoryCommonProps {
   animate?: boolean | AnimatePropTypeInterface;
+  categories?: string | { x?: string[]; y?: string[] };
   name?: string;
   height?: number;
   horizontal?: boolean;
@@ -469,6 +509,28 @@ export interface VictoryCommonProps {
   groupComponent?: React.ReactElement;
 }
 
+export interface VictoryCommonPrimitiveProps {
+  active?: boolean;
+  className?: string;
+  clipPath?: string;
+  data?: any;
+  desc?: string | Function;
+  events?: object;
+  id?: number | string;
+  index?: number | string;
+  origin?: {
+    x: number;
+    y: number;
+  };
+  polar?: boolean;
+  role?: string;
+  scale?: any;
+  shapeRendering?: string;
+  style?: any;
+  tabIndex?: number | Function;
+  transform?: string;
+}
+
 export interface VictoryDatableProps {
   categories?: CategoryPropType;
   data?: any[];
@@ -484,7 +546,7 @@ export interface VictoryLabableProps {
 }
 
 export interface VictoryMultiLabeableProps extends VictoryLabableProps {
-  labels?: string[] | { (data: any): string };
+  labels?: string[] | { (data: any): string | null };
 }
 
 export interface VictorySingleLabableProps extends VictoryLabableProps {
@@ -501,5 +563,40 @@ export interface VictoryPortalProps {
 }
 
 export class VictoryPortal extends React.Component<VictoryPortalProps, any> {}
+
+// #endregion
+
+// #region Victory Primitives
+
+export interface VictoryPointProps extends VictoryCommonPrimitiveProps {
+  datum?: any;
+  getPath?: Function;
+  pathComponent?: React.ReactElement;
+  size?: number | Function;
+  symbol?:
+    | "circle"
+    | "diamond"
+    | "plus"
+    | "minus"
+    | "square"
+    | "star"
+    | "triangleDown"
+    | "triangleUp"
+    | Function;
+  x?: number;
+  y?: number;
+}
+
+export class Point extends React.Component<VictoryPointProps> {}
+
+export interface VictoryBorderProps extends VictoryCommonPrimitiveProps {
+  width?: number;
+  height?: number;
+  rectComponent?: React.ReactElement;
+  x?: number;
+  y?: number;
+}
+
+export class Border extends React.Component<VictoryBorderProps> {}
 
 // #endregion

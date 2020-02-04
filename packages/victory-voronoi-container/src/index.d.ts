@@ -10,7 +10,7 @@
 //                 Alec Flett <https://github.com/alecf>
 
 import * as React from "react";
-import { VictoryContainerProps, CursorData } from "victory-core";
+import { VictoryContainerProps } from "victory-core";
 
 export interface VictoryVoronoiContainerProps extends VictoryContainerProps {
   activateData?: boolean;
