@@ -23,11 +23,15 @@ import {
 
 export interface VictorySliceProps extends VictoryCommonProps {
   cornerRadius?: SliceNumberOrCallback<VictorySliceProps, "cornerRadius">;
-  datum?: object;
-  innerRadius?: number | ((props: {
-    active?: boolean,
-    datum?: object,
-  }) => number);
+  datum?: any;
+  innerRadius?:
+    | number
+    | ((
+        props: {
+          active?: boolean;
+          datum?: any;
+        }
+      ) => number);
   padAngle?: SliceNumberOrCallback<VictorySliceProps, "padAngle">;
   pathComponent?: React.ReactElement;
   pathFunction?: (props: VictorySliceProps) => string;
@@ -46,11 +50,15 @@ export interface VictoryPieProps extends VictoryCommonProps, VictoryMultiLabeabl
   colorScale?: ColorScalePropType;
   data?: any[];
   dataComponent?: React.ReactElement;
-  labelRadius?: number;
+  labelPosition?: "startAngle" | "centroid" | "endAngle" | ((props: VictorySliceProps) => string);
+  labelRadius?: number | ((props: VictorySliceProps) => number);
   endAngle?: number;
-  events?: EventPropTypeInterface<"data" | "labels" | "parent", StringOrNumberOrCallback | string[] | number[]>[];
+  events?: EventPropTypeInterface<
+    "data" | "labels" | "parent",
+    StringOrNumberOrCallback | string[] | number[]
+  >[];
   eventKey?: StringOrNumberOrCallback;
-  radius?: number;
+  radius?: number | ((props: VictorySliceProps) => number);
   innerRadius?: number | ((props: VictorySliceProps) => number);
   cornerRadius?: number;
   padAngle?: number;

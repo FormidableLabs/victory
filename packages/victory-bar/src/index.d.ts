@@ -20,7 +20,10 @@ import {
   VictoryStyleInterface
 } from "victory-core";
 
-export interface VictoryBarProps extends VictoryCommonProps, VictoryDatableProps, VictoryMultiLabeableProps {
+export interface VictoryBarProps
+  extends VictoryCommonProps,
+    VictoryDatableProps,
+    VictoryMultiLabeableProps {
   alignment?: "start" | "middle" | "end";
   barRatio?: number;
   barWidth?: NumberOrCallback;

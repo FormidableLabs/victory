@@ -23,7 +23,10 @@ import {
   VictoryStyleInterface
 } from "victory-core";
 
-export interface VictoryLegendProps extends VictoryCommonProps, VictoryDatableProps, VictorySingleLabableProps {
+export interface VictoryLegendProps
+  extends VictoryCommonProps,
+    VictoryDatableProps,
+    VictorySingleLabableProps {
   borderComponent?: React.ReactElement;
   borderPadding?: PaddingProps;
   centerTitle?: boolean;

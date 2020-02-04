@@ -22,7 +22,7 @@ declare module "victory" {
     // VictoryTransition,
     VictoryPortal,
     // Portal,
-    VictoryClipContainer,
+    VictoryClipContainer
     // addEvents,
     // Collection,
     // Data,
@@ -46,15 +46,15 @@ declare module "victory" {
   import { VictoryGroup } from "victory-group";
   import { VictoryStack } from "victory-stack";
   import {
-    VictoryPie,
+    VictoryPie
     // Slice
-  } from "victory-pie"
+  } from "victory-pie";
   import {
-    VictoryArea,
+    VictoryArea
     // Area
   } from "victory-area";
   import {
-    VictoryBar,
+    VictoryBar
     // Bar
   } from "victory-bar";
 
@@ -62,7 +62,7 @@ declare module "victory" {
   // import { VictoryErrorBar, ErrorBar } from "victory-errorbar";
 
   import {
-    VictoryLine,
+    VictoryLine
     // Curve
   } from "victory-line";
   import { VictoryScatter } from "victory-scatter";
@@ -72,12 +72,12 @@ declare module "victory" {
   // import { VictoryBrushLine } from "victory-brush-line";
 
   import {
-    VictoryBrushContainer,
+    VictoryBrushContainer
     // BrushHelpers,
     // brushContainerMixin
   } from "victory-brush-container";
   import {
-    VictoryCursorContainer,
+    VictoryCursorContainer
     // CursorHelpers,
     // cursorContainerMixin
   } from "victory-cursor-container";
@@ -89,12 +89,12 @@ declare module "victory" {
   // } from "victory-selection-container";
 
   import {
-    VictoryVoronoiContainer,
+    VictoryVoronoiContainer
     // VoronoiHelpers,
     // voronoiContainerMixin
   } from "victory-voronoi-container";
   import {
-    VictoryZoomContainer,
+    VictoryZoomContainer
     // ZoomHelpers,
     // zoomContainerMixin,
     // RawZoomHelpers
@@ -178,7 +178,7 @@ declare module "victory" {
     // voronoiContainerMixin,
     // combineContainerMixins,
     // makeCreateContainerFunction,
-    createContainer,
+    createContainer
     // VictoryBrushLine,
     // addEvents,
     // Collection,

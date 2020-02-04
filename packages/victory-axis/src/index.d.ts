@@ -12,6 +12,11 @@
 import * as React from "react";
 import { DomainPropType, EventPropTypeInterface, VictoryCommonProps } from "victory-core";
 
+export type TickLabelProps = React.CSSProperties & {
+  angle?: number;
+  verticalAnchor?: "start" | "middle" | "end";
+};
+
 export interface VictoryAxisProps extends VictoryCommonProps {
   axisComponent?: React.ReactElement;
   axisLabelComponent?: React.ReactElement;
@@ -35,13 +40,13 @@ export interface VictoryAxisProps extends VictoryCommonProps {
     axis?: React.CSSProperties;
     axisLabel?: React.CSSProperties;
     grid?: {
-      [K in keyof React.CSSProperties]: string | number | ((tick?: any) => string | number);
+      [K in keyof React.CSSProperties]: string | number | ((tick?: any) => string | number)
     };
     ticks?: {
-      [K in keyof React.CSSProperties]: string | number | ((tick?: any) => string | number);
+      [K in keyof React.CSSProperties]: string | number | ((tick?: any) => string | number)
     };
     tickLabels?: {
-      [K in keyof React.CSSProperties]: string | number | ((tick?: any) => string | number);
+      [K in keyof TickLabelProps]: string | number | ((tick?: any) => string | number)
     };
   };
   tickComponent?: React.ReactElement;
