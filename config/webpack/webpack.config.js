@@ -56,6 +56,9 @@ module.exports = {
       }
     ]
   },
+  optimization: {
+    minimize: true
+  },
   plugins: [
     new LodashModuleReplacementPlugin({
       currying: true,
@@ -63,12 +66,6 @@ module.exports = {
       paths: true,
       placeholders: true,
       shorthands: true
-    }),
-    new webpack.optimize.UglifyJsPlugin({
-      sourceMap: true,
-      compress: {
-        warnings: false
-      }
     }),
     new webpack.DefinePlugin({
       // Signal production, so that webpack removes non-production code that
