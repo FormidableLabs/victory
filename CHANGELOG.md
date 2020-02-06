@@ -1,5 +1,9 @@
 # Victory Changelog
 
+## 34.1.1 (2020-02-06)
+
+- [#1485](https://github.com/FormidableLabs/victory/pull/1485) - Better typescript linting and minor bug fix for `VictoryChart` types
+
 ## 34.1.0 (2020-02-04)
 
 - [#1481](https://github.com/FormidableLabs/victory/pull/1481) - Add typescript types from the `definitely-typed` project so that we can maintain them more easily going forward
