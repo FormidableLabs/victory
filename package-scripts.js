@@ -20,7 +20,6 @@ module.exports = {
       default: "karma start ./config/karma/karma.conf.js"
     },
     test: {
-      ci: npsUtils.series.nps("build-package-libs", "karma.ci"),
       cov: npsUtils.series.nps("build-package-libs", "karma.cov"),
       dev: "karma start ./config/karma/karma.conf.dev.js",
       default: npsUtils.series.nps("build-package-libs", "karma")
@@ -39,12 +38,14 @@ module.exports = {
       stories: "eslint --color stories",
       storybook: "eslint --color --no-ignore .storybook/config.js",
       test: "eslint --color test",
+      ts: npsUtils.series.nps("build-package-libs", "compile-ts"),
       default: npsUtils.series.nps(
         "lint.test",
         "lint.stories",
         "lint.storybook",
         "lint.demo",
-        "lint.src"
+        "lint.src",
+        "lint.ts"
       )
     },
     format: {
@@ -52,7 +53,7 @@ module.exports = {
       ci: 'prettier --list-different "./**/*.{js,jsx,json,ts,tsx}"'
     },
     check: {
-      ci: npsUtils.series.nps("format.ci", "lint", "test.ci"),
+      ci: npsUtils.series.nps("format.ci", "lint", "karma.ci"),
       cov: npsUtils.series.nps("lint", "test.cov"),
       dev: npsUtils.series.nps("lint", "test.dev"),
       default: npsUtils.series.nps("lint", "test")
@@ -71,6 +72,7 @@ module.exports = {
       default: npsUtils.concurrent.nps("clean.es", "clean.lib", "clean.dist"),
       all: "lerna exec --parallel -- nps clean"
     },
+    "compile-ts": "tsc --project tsconfig.json --noEmit",
     // Version testing helpers
     "lerna-dry-run": "lerna publish --skip-git --skip-npm --loglevel silly",
     // TODO: organize build scripts once build perf is sorted out

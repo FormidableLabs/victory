@@ -487,7 +487,6 @@ export type ColorScalePropType =
 
 export interface VictoryCommonProps {
   animate?: boolean | AnimatePropTypeInterface;
-  categories?: string | { x?: string[]; y?: string[] };
   name?: string;
   height?: number;
   horizontal?: boolean;

@@ -11,6 +11,7 @@
 
 import * as React from "react";
 import {
+  CategoryPropType,
   EventPropTypeInterface,
   DomainPropType,
   DomainPaddingPropType,
@@ -20,6 +21,7 @@ import {
 } from "victory-core";
 
 export interface VictoryChartProps extends VictoryCommonProps {
+  categories?: CategoryPropType;
   domain?: DomainPropType;
   domainPadding?: DomainPaddingPropType;
   events?: EventPropTypeInterface<string, StringOrNumberOrCallback>[];
