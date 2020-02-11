@@ -20,7 +20,8 @@ import {
   VictoryCommonProps,
   VictoryDatableProps,
   VictorySingleLabableProps,
-  VictoryStyleInterface
+  VictoryStyleInterface,
+  VictoryStyleObject
 } from "victory-core";
 
 export interface VictoryLegendProps
@@ -47,7 +48,7 @@ export interface VictoryLegendProps
   labelComponent?: React.ReactElement;
   orientation?: "horizontal" | "vertical";
   rowGutter?: number | Omit<BlockProps, "left" | "right">;
-  style?: VictoryStyleInterface;
+  style?: VictoryStyleInterface & { title?: VictoryStyleObject };
   symbolSpacer?: number;
   title?: string | string[];
   titleComponent?: React.ReactElement;
