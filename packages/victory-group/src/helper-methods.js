@@ -17,13 +17,14 @@ function getCalculatedProps(props, childComponents) {
   props = Helpers.modifyProps(props, fallbackProps, role);
   const style = Wrapper.getStyle(props.theme, props.style, role);
   const { offset, colorScale, color, polar, horizontal } = props;
-  const categories = Wrapper.getCategories(props, childComponents);
-  const datasets = Wrapper.getDataFromChildren(props);
-  const domain = {
+  const categories = props.categories || Wrapper.getCategories(props, childComponents);
+  const datasets = props.datasets || Wrapper.getDataFromChildren(props);
+  // debugger;
+  const domain = props.domain || {
     x: Wrapper.getDomain(assign({}, props, { categories }), "x", childComponents),
     y: Wrapper.getDomain(assign({}, props, { categories }), "y", childComponents)
   };
-  const range = {
+  const range = props.range || {
     x: Helpers.getRange(props, "x"),
     y: Helpers.getRange(props, "y")
   };

@@ -108,6 +108,8 @@ export default class VictoryGroup extends React.Component {
   }
 
   render() {
+    console.log({ "group.this.props": this.props });
+
     const { role } = this.constructor;
     const props =
       this.state && this.state.nodesWillExit ? this.state.oldProps || this.props : this.props;
@@ -120,7 +122,9 @@ export default class VictoryGroup extends React.Component {
       externalEventMutations
     } = modifiedProps;
     const childComponents = React.Children.toArray(modifiedProps.children);
+    debugger;
     const calculatedProps = getCalculatedProps(modifiedProps, childComponents);
+    console.log({ "group.calculatedProps": calculatedProps });
     const newChildren = this.getNewChildren(modifiedProps, childComponents, calculatedProps);
     const containerProps = standalone ? this.getContainerProps(modifiedProps, calculatedProps) : {};
     const container = standalone

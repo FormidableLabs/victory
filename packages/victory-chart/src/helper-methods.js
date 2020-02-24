@@ -91,6 +91,7 @@ function getCalculatedProps(props, childComponents) {
     x: baseScale.x.domain(domain.x).range(horizontal ? range.y : range.x),
     y: baseScale.y.domain(domain.y).range(horizontal ? range.x : range.y)
   };
+
   const origin = polar ? Helpers.getPolarOrigin(props) : Axis.getOrigin(domain);
 
   const originSign = {
