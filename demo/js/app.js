@@ -71,7 +71,7 @@ const MAP = {
   "/victory": { component: VictoryDemo, name: "VictoryDemo" },
   "/horizontal": { component: HorizontalDemo, name: "HorizontalDemo" },
   "/draggable": { component: DraggableDemo, name: "DraggableDemo" },
-  "/wrapper-perf": { component: WrapperPerf, name: "Dillon Perf" }
+  "/wrapper-perf": { component: WrapperPerf, name: "Wrapper Perf" }
 };
 
 class Home extends React.Component {
