@@ -21,7 +21,6 @@ const getBarPosition = (props, datum) => {
 };
 
 const getCalculatedValues = (props) => {
-  debugger;
   const { theme, polar } = props;
   const defaultStyles = theme && theme.bar && theme.bar.style ? theme.bar.style : {};
   const style = Helpers.getStyles(props.style, defaultStyles);

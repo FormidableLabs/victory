@@ -125,7 +125,6 @@ export default class VictoryStack extends React.Component {
   }
 
   render() {
-    console.log({ "stack.this.props": this.props });
     const { role } = this.constructor;
     const props =
       this.state && this.state.nodesWillExit ? this.state.oldProps || this.props : this.props;
@@ -139,7 +138,6 @@ export default class VictoryStack extends React.Component {
     } = modifiedProps;
     const childComponents = React.Children.toArray(modifiedProps.children);
     const calculatedProps = getCalculatedProps(modifiedProps, childComponents);
-    console.log({ "stack.calculatedProps": calculatedProps });
     const newChildren = this.getNewChildren(modifiedProps, childComponents, calculatedProps);
     const containerProps = standalone ? this.getContainerProps(modifiedProps, calculatedProps) : {};
     const container = standalone
