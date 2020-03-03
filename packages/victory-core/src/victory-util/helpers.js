@@ -222,10 +222,18 @@ function reduceChildren(
       const childName = child.props.name || `${childRole}-${names[index]}`;
       if (child.props && child.props.children) {
         const childProps = assign({}, child.props, pick(parentProps, sharedProps));
-        const nestedChildren = React.Children.toArray(child.props.children).map((c) => {
-          const nestedChildProps = assign({}, c.props, pick(childProps, sharedProps));
-          return React.cloneElement(c, nestedChildProps);
-        });
+        // const nestedChildren = React.Children.toArray(child.props.children).map((c) => {
+        //   const nestedChildProps = assign({}, c.props, pick(childProps, sharedProps));
+        //   return React.cloneElement(c, nestedChildProps);
+        // });
+        const nestedChildren =
+          child.type && child.type.role === "stack" && isFunction(child.type.getChildren)
+            ? child.type.getChildren(childProps)
+            : React.Children.toArray(child.props.children).map((c) => {
+                const nestedChildProps = assign({}, c.props, pick(childProps, sharedProps));
+                return React.cloneElement(c, nestedChildProps);
+              });
+
         const childNames = nestedChildren.map((c, i) => `${childName}-${i}`);
         const nestedResults = traverseChildren(nestedChildren, childNames, child);
         memo = combine(memo, nestedResults);

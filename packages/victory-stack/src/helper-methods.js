@@ -112,7 +112,7 @@ function getCalculatedProps(props, childComponents) {
   props = Helpers.modifyProps(props, fallbackProps, role);
   const style = Wrapper.getStyle(props.theme, props.style, role);
   const categories = props.categories || Wrapper.getCategories(props, childComponents);
-  const datasets = props.datasets || stackData(props, childComponents);
+  const datasets = stackData(props, childComponents);
   const children = childComponents.map((c, i) => {
     return React.cloneElement(c, { data: datasets[i] });
   });

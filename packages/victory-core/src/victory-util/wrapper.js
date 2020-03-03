@@ -183,16 +183,22 @@ export default {
       ? assign(baseParentProps, { data: parentData })
       : baseParentProps;
 
+    // HERE
     const iteratee = (child) => {
       const sharedProps = assign({}, child.props, parentProps);
       if (!Domain.isDomainComponent(child)) {
         return null;
       } else if (child.type && isFunction(child.type.getDomain)) {
-        return child.props && child.type.getDomain(sharedProps, axis);
+        const ret = child.props && child.type.getDomain(sharedProps, axis);
+        return ret;
       } else {
-        return Domain.getDomain(sharedProps, axis);
+        const ret = Domain.getDomain(sharedProps, axis);
+
+        return ret;
       }
     };
+    if (axis === "y") debugger;
+
     const childDomains = Helpers.reduceChildren(children, iteratee, props);
     const min = childDomains.length === 0 ? 0 : Collection.getMinValue(childDomains);
     const max = childDomains.length === 0 ? 1 : Collection.getMaxValue(childDomains);
@@ -211,6 +217,7 @@ export default {
       } else if (child.type && isFunction(child.type.getData)) {
         child = parent ? React.cloneElement(child, parent.props) : child;
         childData = child.type.getData(childProps);
+        child = React.cloneElement(child, { test: "test", data: childData });
       } else {
         childData = Data.getData(childProps);
       }

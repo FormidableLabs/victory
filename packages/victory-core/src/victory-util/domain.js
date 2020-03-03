@@ -313,7 +313,7 @@ function getDomainWithZero(props, axis) {
   const formatDomainFunction = (domain) => {
     return formatDomain(ensureZero(domain), props, axis);
   };
-
+  props.data = dataset;
   return createDomainFunction(getDomainFunction, formatDomainFunction)(props, axis);
 }
 
@@ -386,7 +386,8 @@ function isDomainComponent(component) {
   ];
   return includes(whitelist, role);
 }
-
+window.getDomainFromData = getDomainFromData;
+window.getDomainWithZero = getDomainWithZero;
 export default {
   createDomainFunction,
   formatDomain,
