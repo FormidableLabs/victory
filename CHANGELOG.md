@@ -1,5 +1,9 @@
 # Victory Changelog
 
+## 34.1.2 (2020-03-02)
+
+- [#1496](https://github.com/FormidableLabs/victory/pull/1496) - Add missing package dependencies to support Yarn PnP. Thanks @Mike-Dax!
+
 ## 34.1.1 (2020-02-06)
 
 - [#1485](https://github.com/FormidableLabs/victory/pull/1485) - Better typescript linting and minor bug fix for `VictoryChart` types
@@ -8,10 +12,6 @@
 
 - [#1481](https://github.com/FormidableLabs/victory/pull/1481) - Add typescript types from the `definitely-typed` project so that we can maintain them more easily going forward
 
-
-## 34.0.1 (2020-03-02)
-
-- [#1496](https://github.com/FormidableLabs/victory/pull/1496) - Add missing package dependencies to support Yarn PnP. Thanks @Mike-Dax!
 
 ## 34.0.1 (2020-01-22)
 
