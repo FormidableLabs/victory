@@ -23,7 +23,8 @@
     "lodash": "^4.17.15",
     "prop-types": "^15.5.8",
     "victory-core": "^34.1.1",
-    "victory-tooltip": "^34.1.1"
+    "victory-tooltip": "^34.1.1",
+    "react-fast-compare": "^2.0.0"
   },
   "scripts": {
     "version": "nps build-libs && nps build-dists"
