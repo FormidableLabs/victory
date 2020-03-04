@@ -183,21 +183,16 @@ export default {
       ? assign(baseParentProps, { data: parentData })
       : baseParentProps;
 
-    // HERE
     const iteratee = (child) => {
       const sharedProps = assign({}, child.props, parentProps);
       if (!Domain.isDomainComponent(child)) {
         return null;
       } else if (child.type && isFunction(child.type.getDomain)) {
-        const ret = child.props && child.type.getDomain(sharedProps, axis);
-        return ret;
+        return child.props && child.type.getDomain(sharedProps, axis);
       } else {
-        const ret = Domain.getDomain(sharedProps, axis);
-
-        return ret;
+        return Domain.getDomain(sharedProps, axis);
       }
     };
-    if (axis === "y") debugger;
 
     const childDomains = Helpers.reduceChildren(children, iteratee, props);
     const min = childDomains.length === 0 ? 0 : Collection.getMinValue(childDomains);
