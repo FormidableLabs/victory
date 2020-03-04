@@ -212,7 +212,6 @@ export default {
       } else if (child.type && isFunction(child.type.getData)) {
         child = parent ? React.cloneElement(child, parent.props) : child;
         childData = child.type.getData(childProps);
-        child = React.cloneElement(child, { test: "test", data: childData });
       } else {
         childData = Data.getData(childProps);
       }

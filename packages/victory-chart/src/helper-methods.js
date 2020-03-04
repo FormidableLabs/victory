@@ -4,7 +4,6 @@
 import React from "react";
 import { Helpers, Scale, Axis, Wrapper } from "victory-core";
 import { defaults, assign } from "lodash";
-import isFunction from "lodash/isFunction";
 
 const fallbackProps = {
   width: 450,
@@ -158,15 +157,6 @@ function getChildren(props, childComponents, calculatedProps) {
 }
 
 const getChildComponents = (props, defaultAxes) => {
-  // const childComponents = React.Children.toArray(props.children).map((child) => {
-  //   if (child.type && isFunction(child.type.getChildren)) {
-  //     child.children = child.type.getChildren(props);
-  //     return child;
-  //     // const children = child.type.getChildren(props);
-  //   }
-  //   return child;
-  // });
-
   const childComponents = React.Children.toArray(props.children);
   if (childComponents.length === 0) {
     return [defaultAxes.independent, defaultAxes.dependent];
