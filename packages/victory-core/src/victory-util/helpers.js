@@ -224,7 +224,7 @@ function reduceChildren(
         const childProps = assign({}, child.props, pick(parentProps, sharedProps));
 
         const nestedChildren =
-          child.type && isFunction(child.type.getChildren)
+          child.type && child.type.role === "stack" && isFunction(child.type.getChildren)
             ? child.type.getChildren(childProps)
             : React.Children.toArray(child.props.children).map((c) => {
                 const nestedChildProps = assign({}, c.props, pick(childProps, sharedProps));
