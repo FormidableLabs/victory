@@ -1,5 +1,9 @@
 # Victory Changelog
 
+## 34.1.3 (2020-03-09)
+
+- [#1494](https://github.com/FormidableLabs/victory/pull/1494) - Performance improvements targeted at reducing the number of calculations performed for nested charts (charts using the VictoryStack and VictoryGroup wrappers).
+
 ## 34.1.2 (2020-03-02)
 
 - [#1496](https://github.com/FormidableLabs/victory/pull/1496) - Add missing package dependencies to support Yarn PnP. Thanks @Mike-Dax!
