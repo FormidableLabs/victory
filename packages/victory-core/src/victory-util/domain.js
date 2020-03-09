@@ -313,7 +313,6 @@ function getDomainWithZero(props, axis) {
   const formatDomainFunction = (domain) => {
     return formatDomain(ensureZero(domain), props, axis);
   };
-
   return createDomainFunction(getDomainFunction, formatDomainFunction)(props, axis);
 }
 

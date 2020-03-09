@@ -193,6 +193,7 @@ export default {
         return Domain.getDomain(sharedProps, axis);
       }
     };
+
     const childDomains = Helpers.reduceChildren(children, iteratee, props);
     const min = childDomains.length === 0 ? 0 : Collection.getMinValue(childDomains);
     const max = childDomains.length === 0 ? 1 : Collection.getMaxValue(childDomains);

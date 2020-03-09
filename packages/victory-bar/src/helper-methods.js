@@ -24,12 +24,12 @@ const getCalculatedValues = (props) => {
   const { theme, polar } = props;
   const defaultStyles = theme && theme.bar && theme.bar.style ? theme.bar.style : {};
   const style = Helpers.getStyles(props.style, defaultStyles);
-  const data = Data.getData(props);
-  const range = {
+  const data = Data.getData(props); // Data.getData needs to be called to format the data (we may be able to do this in a wrapper component)
+  const range = props.range || {
     x: Helpers.getRange(props, "x"),
     y: Helpers.getRange(props, "y")
   };
-  const domain = {
+  const domain = props.domain || {
     x: Domain.getDomainWithZero(props, "x"),
     y: Domain.getDomainWithZero(props, "y")
   };

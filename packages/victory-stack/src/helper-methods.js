@@ -111,16 +111,16 @@ function getCalculatedProps(props, childComponents) {
   const role = "stack";
   props = Helpers.modifyProps(props, fallbackProps, role);
   const style = Wrapper.getStyle(props.theme, props.style, role);
-  const categories = Wrapper.getCategories(props, childComponents);
-  const datasets = stackData(props, childComponents);
+  const categories = props.categories || Wrapper.getCategories(props, childComponents);
+  const datasets = props.datasets || stackData(props, childComponents);
   const children = childComponents.map((c, i) => {
     return React.cloneElement(c, { data: datasets[i] });
   });
-  const domain = {
+  const domain = props.domain || {
     x: Wrapper.getDomain(assign({}, props, { categories }), "x", children),
     y: Wrapper.getDomain(assign({}, props, { categories }), "y", children)
   };
-  const range = {
+  const range = props.range || {
     x: Helpers.getRange(props, "x"),
     y: Helpers.getRange(props, "y")
   };
