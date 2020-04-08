@@ -14,12 +14,19 @@ import {
   EventPropTypeInterface,
   DomainPropType,
   DomainPaddingPropType,
+  OrientationTypes,
   StringOrNumberOrCallback,
   VictoryDatableProps,
   VictoryCommonProps,
   VictoryStyleInterface,
   VictoryStyleObject
 } from "victory-core";
+
+export type VictoryBoxPlotLabelType =
+  | boolean
+  | any[]
+  | Function
+  | { (data: any): string | null }
 
 export interface VictoryBoxPlotStyleInterface extends VictoryStyleInterface {
   max?: VictoryStyleObject;
@@ -34,6 +41,14 @@ export interface VictoryBoxPlotStyleInterface extends VictoryStyleInterface {
   q3Labels?: VictoryStyleObject;
 }
 
+export interface VictoryBoxPlotLabelOrientationInterface extends VictoryStyleInterface {
+  max?: OrientationTypes;
+  min?: OrientationTypes;
+  median?: OrientationTypes;
+  q1?: OrientationTypes;
+  q3?: OrientationTypes;
+}
+
 export interface VictoryBoxPlotProps extends VictoryCommonProps, VictoryDatableProps {
   boxWidth?: number;
   domain?: DomainPropType;
@@ -41,23 +56,28 @@ export interface VictoryBoxPlotProps extends VictoryCommonProps, VictoryDatableP
   events?: EventPropTypeInterface<string, StringOrNumberOrCallback>[];
   eventKey?: StringOrNumberOrCallback;
   horizontal?: boolean;
-  labelOrientation?: "top" | "bottom" | "left" | "right";
+  labelOrientation?: OrientationTypes | VictoryBoxPlotLabelOrientationInterface;
   labels?: boolean;
   max?: StringOrNumberOrCallback | string[];
   maxComponent?: React.ReactElement;
   maxLabelComponent?: React.ReactElement;
+  maxLabels?: VictoryBoxPlotLabelType;
   median?: StringOrNumberOrCallback | string[];
   medianComponent?: React.ReactElement;
   medianLabelComponent?: React.ReactElement;
+  medianLabels?: VictoryBoxPlotLabelType;
   min?: StringOrNumberOrCallback | string[];
   minComponent?: React.ReactElement;
   minLabelComponent?: React.ReactElement;
+  minLabels?: VictoryBoxPlotLabelType;
   q1?: StringOrNumberOrCallback | string[];
   q1Component?: React.ReactElement;
   q1LabelComponent?: React.ReactElement;
+  q1Labels?: VictoryBoxPlotLabelType;
   q3?: StringOrNumberOrCallback | string[];
   q3Component?: React.ReactElement;
   q3LabelComponent?: React.ReactElement;
+  q3Labels?: VictoryBoxPlotLabelType;
   style?: VictoryBoxPlotStyleInterface;
   whiskerWidth?: number;
 }
