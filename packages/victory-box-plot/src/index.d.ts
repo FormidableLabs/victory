@@ -22,7 +22,11 @@ import {
   VictoryStyleObject
 } from "victory-core";
 
-export type VictoryBoxPlotLabelType = boolean | any[] | Function | { (data: any): string | null };
+export type VictoryBoxPlotLabelType =
+  | boolean
+  | (string | number)[]
+  | Function
+  | { (data: any): string | null };
 
 export interface VictoryBoxPlotStyleInterface extends VictoryStyleInterface {
   max?: VictoryStyleObject;
