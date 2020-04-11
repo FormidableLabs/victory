@@ -22,7 +22,7 @@ export default class VictoryBoxPlotDemo extends React.Component<any, VictoryBoxP
       data: this.getData()
     };
   }
-  
+
   componentDidMount() {
     this.setStateInterval = window.setInterval(() => {
       this.setState({
