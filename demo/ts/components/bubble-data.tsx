@@ -1,8 +1,8 @@
 const bubbleData: {
-  name?: string, 
-  y: number,
-  x: number,
-  z:  number
+  name?: string;
+  y: number;
+  x: number;
+  z: number;
 }[] = [
   {
     name: "Australia",

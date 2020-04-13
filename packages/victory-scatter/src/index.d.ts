@@ -12,6 +12,7 @@
 import * as React from "react";
 import {
   EventPropTypeInterface,
+  OriginType,
   ScatterSymbolType,
   StringOrNumberOrCallback,
   VictoryCommonProps,
@@ -28,10 +29,14 @@ export interface VictoryScatterProps
   events?: EventPropTypeInterface<"data" | "labels" | "parent", StringOrNumberOrCallback>[];
   eventKey?: StringOrNumberOrCallback;
   maxBubbleSize?: number;
+  minBubbleSize?: number;
+  origin?: OriginType;
   samples?: number;
   size?: number | { (data: any): number };
+  sortOrder?: string;
   style?: VictoryStyleInterface;
   symbol?: ScatterSymbolType | { (data: any): ScatterSymbolType };
+  range?: number | [number, number];
 }
 
 export class VictoryScatter extends React.Component<VictoryScatterProps, any> {}

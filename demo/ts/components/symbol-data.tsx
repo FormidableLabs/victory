@@ -1,11 +1,11 @@
 const symbolData: {
-  x: number,
-  y: number,
-  size?: number,
-  symbol?: string,
-  label?: string,
-  fill?: string,
-  opacity?: number
+  x: number;
+  y: number;
+  size?: number;
+  symbol?: string;
+  label?: string;
+  fill?: string;
+  opacity?: number;
 }[] = [
   {
     x: 1,

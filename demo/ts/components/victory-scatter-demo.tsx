@@ -4,11 +4,12 @@ import React from "react";
 import PropTypes from "prop-types";
 import { assign, merge, random, range } from "lodash";
 import { VictoryScatter } from "@packages/victory-scatter/src/index";
-import { 
+import {
   ScatterSymbolType,
   VictoryLabel,
   VictoryContainer,
-  VictoryTheme } from "@packages/victory-core/src/index";
+  VictoryTheme
+} from "@packages/victory-core/src/index";
 import bubbleData from "./bubble-data";
 import symbolData from "./symbol-data";
 
@@ -22,7 +23,7 @@ type DataType = {
 }[];
 
 interface VictoryScatterDemoState {
-  hoverStyle: { 
+  hoverStyle: {
     fill: string;
   };
   data: DataType;
@@ -59,11 +60,15 @@ const getData = () => {
   });
 };
 
-const style = {
-  parent: { border: "1px solid #ccc", margin: "2%", maxWidth: "40%" }
+const style: { [key: string]: React.CSSProperties } = {
+  parent: {
+    border: "1px solid #ccc",
+    margin: "2%",
+    maxWidth: "40%"
+  }
 };
 
-const containerStyle:React.CSSProperties = {
+const containerStyle: React.CSSProperties = {
   display: "flex",
   flexDirection: "row",
   flexWrap: "wrap",
@@ -117,7 +122,7 @@ class CatPoint extends React.Component<any, CatPointInterface> {
 
 export default class VictoryScatterDemo extends React.Component<any, VictoryScatterDemoState> {
   setStateInterval?: number = undefined;
-  constructor(props:any) {
+  constructor(props: any) {
     super(props);
     this.state = {
       hoverStyle: { fill: "gold" },
