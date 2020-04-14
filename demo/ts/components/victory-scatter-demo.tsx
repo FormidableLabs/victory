@@ -106,7 +106,11 @@ class CatPoint extends React.Component<any, CatPointInterface> {
   };
 
   renderSymbol(symbol: ScatterSymbolType): string {
-    return String.fromCodePoint(CatPoint.symbolMap[symbol]);
+    const codePointHigh = (point: number) => Math.floor((point - 0x10000) / 0x400) + 0xd800;
+    const codePointLow = (point: number) => ((point - 0x10000) % 0x400) + 0xdc00;
+    const symbolCode = CatPoint.symbolMap[symbol];
+
+    return String.fromCharCode(codePointHigh(symbolCode), codePointLow(symbolCode));
   }
 
   render() {
