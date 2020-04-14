@@ -452,7 +452,8 @@ export type DataGetterPropType =
   | number
   | string
   | string[]
-  | { (data: any): number | string | string[] };
+  | { (data: any): number | string | string[] }
+  | Function;
 
 export type InterpolationPropType =
   | "basis"

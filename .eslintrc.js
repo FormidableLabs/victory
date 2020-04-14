@@ -2,6 +2,11 @@ module.exports = {
   settings: {
     react: {
       version: "detect"
+    },
+    "import/resolver": {
+      node: {
+        extensions: [".js", ".tsx"]
+      }
     }
   },
   extends: ["formidable/configurations/es6-react", "prettier"],
