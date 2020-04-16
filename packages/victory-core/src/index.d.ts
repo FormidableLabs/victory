@@ -429,6 +429,9 @@ export type DomainPaddingPropType =
       y?: PaddingType;
     };
 
+export type RangeTuple = [number, number];
+export type RangePropType = RangeTuple | { x?: RangeTuple; y?: RangeTuple };
+
 /**
  * D3 scale function shape. Don"t want to introduce typing dependency to d3
  */
@@ -489,6 +492,8 @@ export type ColorScalePropType =
   | "blue"
   | string[];
 
+export type SortOrderPropType = "ascending" | "descending";
+
 export interface VictoryCommonProps {
   animate?: boolean | AnimatePropTypeInterface;
   containerComponent?: React.ReactElement;
@@ -504,6 +509,7 @@ export interface VictoryCommonProps {
   minDomain?: number | { x?: number; y?: number };
   name?: string;
   padding?: PaddingProps;
+  range?: RangePropType;
   samples?: number;
   scale?:
     | ScalePropType
@@ -545,7 +551,10 @@ export interface VictoryDatableProps {
   data?: any[];
   dataComponent?: React.ReactElement;
   domain?: DomainPropType;
+  domainPadding?: DomainPaddingPropType;
+  samples?: number;
   sortKey?: DataGetterPropType;
+  sortOrder?: SortOrderPropType;
   x?: DataGetterPropType;
   y?: DataGetterPropType;
   y0?: DataGetterPropType;
