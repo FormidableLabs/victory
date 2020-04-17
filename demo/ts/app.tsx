@@ -10,6 +10,7 @@ import ChartDemo from "./components/victory-chart-demo";
 import LegendDemo from "./components/victory-legend-demo";
 import LineDemo from "./components/victory-line-demo";
 import PieDemo from "./components/victory-pie-demo";
+import ScatterDemo from "./components/victory-scatter-demo";
 import TooltipDemo from "./components/victory-tooltip-demo";
 
 const MAP = {
@@ -21,7 +22,8 @@ const MAP = {
   "/line": { component: LineDemo, name: "LineDemo" },
   "/tooltip": { component: TooltipDemo, name: "TooltipDemo" },
   "/legend": { component: LegendDemo, name: "LegendDemo" },
-  "/pie": { component: PieDemo, name: "PieDemo" }
+  "/pie": { component: PieDemo, name: "PieDemo" },
+  "/scatter": { component: ScatterDemo, name: "ScatterDemo" }
 };
 
 class Home extends React.Component {
