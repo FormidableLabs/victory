@@ -68,6 +68,7 @@ export type ScatterSymbolType =
   | "circle"
   | "diamond"
   | "plus"
+  | "minus"
   | "square"
   | "star"
   | "triangleDown"
