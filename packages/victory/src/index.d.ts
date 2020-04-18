@@ -68,7 +68,7 @@ declare module "victory" {
   import { VictoryScatter } from "victory-scatter";
   import { VictoryBoxPlot } from "victory-box-plot";
 
-  // import { VictoryVoronoi, Voronoi } from "victory-voronoi";
+  import { VictoryVoronoi } from "victory-voronoi";
   // import { VictoryBrushLine } from "victory-brush-line";
 
   import {
@@ -155,7 +155,7 @@ declare module "victory" {
     // VictoryTransition,
     // VictorySharedEvents,
     VictoryTooltip,
-    // VictoryVoronoi,
+    VictoryVoronoi,
     VictoryPortal,
     // Portal,
     VictoryContainer,
