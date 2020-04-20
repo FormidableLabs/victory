@@ -518,6 +518,7 @@ export interface VictoryCommonProps {
         x?: ScalePropType | D3Scale;
         y?: ScalePropType | D3Scale;
       };
+  sharedEvents?: { events: any[]; getEventState: Function };
   singleQuadrantDomainPadding?: boolean | { x?: boolean; y?: boolean };
   standalone?: boolean;
   width?: number;

@@ -40,7 +40,7 @@ export interface VictoryCandlestickStyleInterface extends VictoryStyleInterface 
   parent?: VictoryStyleObject;
 }
 
-export type VictoryCandlestickLabelsType = (string | number)[] | Function | boolean;
+export type VictoryCandlestickLabelsType = (string | number)[] | boolean | ((datum: any) => number);
 
 export interface VictoryCandlestickProps
   extends VictoryCommonProps,
@@ -78,7 +78,6 @@ export interface VictoryCandlestickProps
   openLabels?: VictoryCandlestickLabelsType;
   origin?: OriginType;
   polar?: boolean;
-  sharedEvents?: { events: any[]; getEventState: Function };
   style?: VictoryCandlestickStyleInterface;
   wickStrokeWidth?: number;
 }
