@@ -393,10 +393,11 @@ export interface AnimatePropTypeInterface {
 }
 
 export interface EventCallbackInterface<TTarget, TEventKey> {
-  childName?: string;
+  childName?: string | string[];
   target?: TTarget;
   eventKey?: TEventKey;
   mutation: (props: any) => any;
+  callback?: (props: any) => any;
 }
 
 export interface EventPropTypeInterface<TTarget, TEventKey> {
@@ -492,7 +493,10 @@ export interface VictoryCommonProps {
   animate?: boolean | AnimatePropTypeInterface;
   containerComponent?: React.ReactElement;
   domainPadding?: DomainPaddingPropType;
-  externalEventMutations?: Array<{ key: any }>;
+  externalEventMutations?: EventCallbackInterface<
+    string | string[],
+    string | number | (string | number)[]
+  >[];
   groupComponent?: React.ReactElement;
   height?: number;
   horizontal?: boolean;
