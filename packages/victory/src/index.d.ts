@@ -67,9 +67,9 @@ declare module "victory" {
   } from "victory-line";
   import { VictoryScatter } from "victory-scatter";
   import { VictoryBoxPlot } from "victory-box-plot";
-
+  import { VictoryBrushLine } from "victory-brush-line";
+  // import { Voronoi } from "victory-voronoi";
   import { VictoryVoronoi } from "victory-voronoi";
-  // import { VictoryBrushLine } from "victory-brush-line";
 
   import {
     VictoryBrushContainer
@@ -178,8 +178,8 @@ declare module "victory" {
     // voronoiContainerMixin,
     // combineContainerMixins,
     // makeCreateContainerFunction,
-    createContainer
-    // VictoryBrushLine,
+    createContainer,
+    VictoryBrushLine
     // addEvents,
     // Collection,
     // Data,
