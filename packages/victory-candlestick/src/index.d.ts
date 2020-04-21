@@ -23,14 +23,6 @@ import {
   VictoryStyleInterface
 } from "victory-core";
 
-export interface VictoryCandlestickLabelOrientationInterface extends VictoryStyleInterface {
-  open?: OrientationTypes;
-  close?: OrientationTypes;
-  labels?: OrientationTypes;
-  low?: OrientationTypes;
-  high?: OrientationTypes;
-}
-
 export interface VictoryCandlestickStyleInterface extends VictoryStyleInterface {
   closeLabels?: VictoryStyleObject;
   data?: VictoryStyleObject;
@@ -74,7 +66,13 @@ export interface VictoryCandlestickProps
   high?: StringOrNumberOrCallback | string[];
   highLabelComponenet?: React.ReactElement;
   highLabels?: VictoryCandlestickLabelsType;
-  labelOrientation?: VictoryCandlestickLabelOrientationInterface;
+  labelOrientation?: {
+    open?: OrientationTypes;
+    close?: OrientationTypes;
+    labels?: OrientationTypes;
+    low?: OrientationTypes;
+    high?: OrientationTypes;
+  };
   low?: StringOrNumberOrCallback | string[];
   lowLabelComponent?: React.ReactElement;
   lowLabels?: VictoryCandlestickLabelsType;
