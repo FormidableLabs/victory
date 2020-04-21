@@ -16,14 +16,14 @@ import {
   VictoryCommonProps,
   VictoryCommonPrimitiveProps,
   VictoryDatableProps,
-  VictorySingleLabableProps,
+  VictorySingleLabelableProps,
   VictoryStyleInterface
 } from "victory-core";
 
 export interface VictoryLineProps
   extends VictoryCommonProps,
     VictoryDatableProps,
-    VictorySingleLabableProps {
+    VictorySingleLabelableProps {
   events?: EventPropTypeInterface<"data" | "labels" | "parent", number | string>[];
   interpolation?: InterpolationPropType;
   samples?: number;

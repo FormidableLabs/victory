@@ -15,16 +15,16 @@ import {
   StringOrNumberOrCallback,
   VictoryCommonProps,
   VictoryDatableProps,
-  VictoryLabableProps,
-  VictoryMultiLabeableProps,
+  VictoryLabelableProps,
+  VictoryMultiLabelableProps,
   VictoryStyleInterface
 } from "victory-core";
 
 export interface VictoryVoronoiProps
   extends VictoryCommonProps,
     VictoryDatableProps,
-    VictoryLabableProps,
-    VictoryMultiLabeableProps {
+    VictoryLabelableProps,
+    VictoryMultiLabelableProps {
   events?: EventPropTypeInterface<string, string | number | (string | number)[]>[];
   type?: number;
   sortKey?: StringOrNumberOrCallback | string[];

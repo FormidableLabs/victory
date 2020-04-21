@@ -17,7 +17,7 @@ import {
   SliceNumberOrCallback,
   StringOrNumberOrCallback,
   VictoryCommonProps,
-  VictoryMultiLabeableProps,
+  VictoryMultiLabelableProps,
   VictoryStyleInterface
 } from "victory-core";
 
@@ -46,7 +46,7 @@ export interface VictorySliceProps extends VictoryCommonProps {
   sliceStartAngle?: SliceNumberOrCallback<VictorySliceProps, "sliceStartAngle">;
 }
 
-export interface VictoryPieProps extends VictoryCommonProps, VictoryMultiLabeableProps {
+export interface VictoryPieProps extends VictoryCommonProps, VictoryMultiLabelableProps {
   colorScale?: ColorScalePropType;
   data?: any[];
   dataComponent?: React.ReactElement;

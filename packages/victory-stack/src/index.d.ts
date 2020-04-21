@@ -18,11 +18,11 @@ import {
   EventPropTypeInterface,
   StringOrNumberOrCallback,
   VictoryCommonProps,
-  VictoryMultiLabeableProps,
+  VictoryMultiLabelableProps,
   VictoryStyleInterface
 } from "victory-core";
 
-export interface VictoryStackProps extends VictoryCommonProps, VictoryMultiLabeableProps {
+export interface VictoryStackProps extends VictoryCommonProps, VictoryMultiLabelableProps {
   categories?: CategoryPropType;
   colorScale?: ColorScalePropType;
   domain?: DomainPropType;

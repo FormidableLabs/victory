@@ -17,14 +17,14 @@ import {
   StringOrNumberOrCallback,
   VictoryCommonProps,
   VictoryDatableProps,
-  VictoryMultiLabeableProps,
+  VictoryMultiLabelableProps,
   VictoryStyleInterface
 } from "victory-core";
 
 export interface VictoryScatterProps
   extends VictoryCommonProps,
     VictoryDatableProps,
-    VictoryMultiLabeableProps {
+    VictoryMultiLabelableProps {
   bubbleProperty?: string;
   events?: EventPropTypeInterface<"data" | "labels" | "parent", StringOrNumberOrCallback>[];
   eventKey?: StringOrNumberOrCallback;

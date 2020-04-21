@@ -602,16 +602,16 @@ export interface VictoryDatableProps {
   y0?: DataGetterPropType;
 }
 
-export interface VictoryLabableProps {
+export interface VictoryLabelableProps {
   labelComponent?: React.ReactElement;
 }
 
-export interface VictoryMultiLabeableProps extends VictoryLabableProps {
-  labels?: string[] | number[] | { (data: any): string | number | null };
+export interface VictoryMultiLabelableProps extends VictoryLabelableProps {
+  labels?: string[] | { (data: any): string | null };
 }
 
-export interface VictorySingleLabableProps extends VictoryLabableProps {
-  label?: string | number | { (data: any): string | number };
+export interface VictorySingleLabelableProps extends VictoryLabelableProps {
+  label?: string | { (data: any): string };
 }
 
 // #endregion
