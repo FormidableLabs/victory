@@ -24,11 +24,15 @@ import {
 } from "victory-core";
 
 export interface VictoryCandlestickStyleInterface extends VictoryStyleInterface {
+  close?: VictoryStyleObject;
   closeLabels?: VictoryStyleObject;
   data?: VictoryStyleObject;
+  high?: VictoryStyleObject;
   highLabels?: VictoryStyleObject;
   labels?: VictoryStyleObject;
+  low?: VictoryStyleObject;
   lowLabels?: VictoryStyleObject;
+  open?: VictoryStyleObject;
   openLabels?: VictoryStyleObject;
   parent?: VictoryStyleObject;
 }
