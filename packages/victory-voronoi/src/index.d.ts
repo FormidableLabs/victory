@@ -12,31 +12,26 @@
 import * as React from "react";
 import {
   EventPropTypeInterface,
-  OriginType,
-  ScatterSymbolType,
   StringOrNumberOrCallback,
   VictoryCommonProps,
   VictoryDatableProps,
+  VictoryLabableProps,
   VictoryMultiLabeableProps,
   VictoryStyleInterface
 } from "victory-core";
 
-export interface VictoryScatterProps
+export interface VictoryVoronoiProps
   extends VictoryCommonProps,
     VictoryDatableProps,
+    VictoryLabableProps,
     VictoryMultiLabeableProps {
-  bubbleProperty?: string;
-  events?: EventPropTypeInterface<"data" | "labels" | "parent", StringOrNumberOrCallback>[];
-  eventKey?: StringOrNumberOrCallback;
-  maxBubbleSize?: number;
-  minBubbleSize?: number;
-  origin?: OriginType;
-  samples?: number;
+  events?: EventPropTypeInterface<string, string | number | (string | number)[]>[];
+  type?: number;
+  sortKey?: StringOrNumberOrCallback | string[];
+  sortOrder?: "ascending" | "descending";
   size?: number | { (data: any): number };
-  sortOrder?: string;
   style?: VictoryStyleInterface;
-  symbol?: ScatterSymbolType | { (data: any): ScatterSymbolType };
-  range?: number | [number, number];
+  polar?: boolean;
 }
 
-export class VictoryScatter extends React.Component<VictoryScatterProps, any> {}
+export class VictoryVoronoi extends React.Component<VictoryVoronoiProps, any> {}

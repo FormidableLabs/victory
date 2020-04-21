@@ -68,6 +68,7 @@ export type ScatterSymbolType =
   | "circle"
   | "diamond"
   | "plus"
+  | "minus"
   | "square"
   | "star"
   | "triangleDown"
@@ -132,6 +133,8 @@ export interface VictoryStyleInterface {
   border?: VictoryStyleObject;
 }
 
+// #endregion
+
 // #region Victory Animation
 
 export interface VictoryAnimationProps {
@@ -151,6 +154,7 @@ export class VictoryAnimation extends React.Component<VictoryAnimationProps, any
 
 export type TextAnchorType = "start" | "middle" | "end" | "inherit";
 export type VerticalAnchorType = "start" | "middle" | "end";
+export type OriginType = { x: number; y: number };
 
 export interface VictoryLabelProps {
   angle?: string | number;
@@ -162,7 +166,7 @@ export interface VictoryLabelProps {
   children?: StringOrNumberOrCallback;
   labelPlacement?: "parallel" | "perpendicular" | "vertical";
   lineHeight?: StringOrNumberOrCallback;
-  origin?: { x: number; y: number };
+  origin?: OriginType;
   polar?: boolean;
   renderInPortal?: boolean;
   style?: React.CSSProperties | React.CSSProperties[];
@@ -209,10 +213,7 @@ export interface VictoryClipContainerProps {
   clipWidth?: number;
   events?: React.DOMAttributes<any>;
   groupComponent?: React.ReactElement;
-  origin?: {
-    x?: number;
-    y?: number;
-  };
+  origin?: OriginType;
   polar?: boolean;
   radius?: number;
   rectComponent?: React.ReactElement;
@@ -419,11 +420,12 @@ export type DomainPropType =
   | { x?: DomainTuple; y: DomainTuple }
   | { x: DomainTuple; y?: DomainTuple };
 
+export type PaddingType = number | [number, number];
 export type DomainPaddingPropType =
-  | number
+  | PaddingType
   | {
-      x?: number | [number, number];
-      y?: number | [number, number];
+      x?: PaddingType;
+      y?: PaddingType;
     };
 
 /**
@@ -451,7 +453,8 @@ export type DataGetterPropType =
   | number
   | string
   | string[]
-  | { (data: any): number | string | string[] };
+  | { (data: any): number | string | string[] }
+  | Function;
 
 export type InterpolationPropType =
   | "basis"
@@ -487,12 +490,20 @@ export type ColorScalePropType =
 
 export interface VictoryCommonProps {
   animate?: boolean | AnimatePropTypeInterface;
-  name?: string;
+  containerComponent?: React.ReactElement;
+  domainPadding?: DomainPaddingPropType;
+  groupComponent?: React.ReactElement;
+  externalEventMutations?: EventPropTypeInterface<
+    string | string[],
+    string | number | (string | number)[]
+  >[];
   height?: number;
   horizontal?: boolean;
   maxDomain?: number | { x?: number; y?: number };
   minDomain?: number | { x?: number; y?: number };
+  name?: string;
   padding?: PaddingProps;
+  samples?: number;
   scale?:
     | ScalePropType
     | D3Scale
@@ -503,9 +514,7 @@ export interface VictoryCommonProps {
   singleQuadrantDomainPadding?: boolean | { x?: boolean; y?: boolean };
   standalone?: boolean;
   width?: number;
-  containerComponent?: React.ReactElement;
   theme?: VictoryThemeDefinition;
-  groupComponent?: React.ReactElement;
 }
 
 export interface VictoryCommonPrimitiveProps {
@@ -535,6 +544,7 @@ export interface VictoryDatableProps {
   data?: any[];
   dataComponent?: React.ReactElement;
   domain?: DomainPropType;
+  sortKey?: DataGetterPropType;
   x?: DataGetterPropType;
   y?: DataGetterPropType;
   y0?: DataGetterPropType;
