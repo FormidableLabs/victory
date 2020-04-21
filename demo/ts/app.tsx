@@ -6,6 +6,7 @@ import AreaDemo from "./components/victory-area-demo";
 import AxisDemo from "./components/victory-axis-demo";
 import BarDemo from "./components/victory-bar-demo";
 import BoxPlotDemo from "./components/victory-box-plot-demo";
+import BrushContainerDemo from "./components/victory-brush-container-demo";
 import BrushLineDemo from "./components/victory-brush-line-demo";
 import CandlestickDemo from "./components/victory-candlestick-demo";
 import ChartDemo from "./components/victory-chart-demo";
@@ -21,6 +22,7 @@ const MAP = {
   "/area": { component: AreaDemo, name: "AreaDemo" },
   "/bar": { component: BarDemo, name: "BarDemo" },
   "/box-plot": { component: BoxPlotDemo, name: "BoxPlotDemo" },
+  "/brush-container": { component: BrushContainerDemo, name: "BrushContainerDemo" },
   "/brush-line": { component: BrushLineDemo, name: "BrushLineDemo" },
   "/candlestick": { component: CandlestickDemo, name: "CandlestickDemo" },
   "/chart": { component: ChartDemo, name: "ChartDemo" },
