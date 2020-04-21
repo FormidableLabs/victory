@@ -26,6 +26,7 @@ import {
 export interface VictoryCandlestickLabelOrientationInterface extends VictoryStyleInterface {
   open?: OrientationTypes;
   close?: OrientationTypes;
+  labels?: OrientationTypes;
   low?: OrientationTypes;
   high?: OrientationTypes;
 }
@@ -47,6 +48,10 @@ export interface VictoryCandlestickProps
     VictoryDatableProps,
     VictoryLabableProps,
     VictoryMultiLabeableProps {
+  candleColors?: {
+    positive?: string;
+    negative?: string;
+  };
   candleRatio?: number;
   candleWidth?: number | Function;
   close?: StringOrNumberOrCallback | string[];
@@ -69,7 +74,7 @@ export interface VictoryCandlestickProps
   high?: StringOrNumberOrCallback | string[];
   highLabelComponenet?: React.ReactElement;
   highLabels?: VictoryCandlestickLabelsType;
-  labelOrientation?: OrientationTypes | VictoryCandlestickLabelOrientationInterface;
+  labelOrientation?: VictoryCandlestickLabelOrientationInterface;
   low?: StringOrNumberOrCallback | string[];
   lowLabelComponent?: React.ReactElement;
   lowLabels?: VictoryCandlestickLabelsType;
@@ -78,6 +83,7 @@ export interface VictoryCandlestickProps
   openLabels?: VictoryCandlestickLabelsType;
   origin?: OriginType;
   polar?: boolean;
+  size?: number;
   style?: VictoryCandlestickStyleInterface;
   wickStrokeWidth?: number;
 }
