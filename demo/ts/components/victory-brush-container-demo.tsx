@@ -8,8 +8,8 @@ import { VictoryBar } from "@packages/victory-bar";
 import { VictoryLine } from "@packages/victory-line";
 import { VictoryScatter } from "@packages/victory-scatter";
 import { VictoryLegend } from "@packages/victory-legend";
-import { VictoryZoomContainer } from "@packages/victory-zoom";
-import { VictoryBrushContainer } from "@packages/victory-brush";
+import { VictoryZoomContainer } from "@packages/victory-zoom-container";
+import { VictoryBrushContainer } from "@packages/victory-brush-container";
 
 export default class VictoryBrushContainerDemo extends React.Component<any> {
   constructor(props: any) {
@@ -17,7 +17,7 @@ export default class VictoryBrushContainerDemo extends React.Component<any> {
     this.state = {};
   }
 
-  handleZoom(domain) {
+  handleZoom(domain: any) {
     this.setState({ zoomDomain: domain });
   }
 
