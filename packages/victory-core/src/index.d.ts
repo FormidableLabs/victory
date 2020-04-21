@@ -492,14 +492,18 @@ export interface VictoryCommonProps {
   animate?: boolean | AnimatePropTypeInterface;
   containerComponent?: React.ReactElement;
   domainPadding?: DomainPaddingPropType;
-  externalEventMutations?: Array<{ key: any }>;
   groupComponent?: React.ReactElement;
+  externalEventMutations?: EventPropTypeInterface<
+    string | string[],
+    string | number | (string | number)[]
+  >[];
   height?: number;
   horizontal?: boolean;
   maxDomain?: number | { x?: number; y?: number };
   minDomain?: number | { x?: number; y?: number };
   name?: string;
   padding?: PaddingProps;
+  samples?: number;
   scale?:
     | ScalePropType
     | D3Scale
