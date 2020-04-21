@@ -131,7 +131,7 @@ export default class App extends React.Component {
           horizontal
           style={{ parent: style.parent }}
           labels={({ datum }) => `x: ${datum.x.getDate()}`}
-          labelOrientation={{ low: "left", high: "right", labels: "bottom" }}
+          labelOrientation={{ low: "left", high: "right" }}
           openLabels={({ datum }) => datum.open}
           closeLabels={({ datum }) => datum.close}
           lowLabels={({ datum }) => datum.low}

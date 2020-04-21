@@ -1,3 +1,5 @@
+/*global window:false */
+/*eslint-disable no-magic-numbers */
 import React from "react";
 import { random, range, merge } from "lodash";
 import { VictoryChart } from "@packages/victory-chart";
@@ -142,7 +144,7 @@ export default class VictoryCandlestickDemo extends React.Component<
           horizontal
           style={{ parent: style.parent }}
           labels={({ datum }) => `x: ${datum.x.getDate()}`}
-          labelOrientation={{ low: "left", high: "right", labels: "bottom" }}
+          labelOrientation={{ low: "left", high: "right" }}
           openLabels={({ datum }) => datum.open}
           closeLabels={({ datum }) => datum.close}
           lowLabels={({ datum }) => datum.low}

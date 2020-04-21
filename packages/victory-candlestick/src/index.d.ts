@@ -66,13 +66,14 @@ export interface VictoryCandlestickProps
   high?: StringOrNumberOrCallback | string[];
   highLabelComponenet?: React.ReactElement;
   highLabels?: VictoryCandlestickLabelsType;
-  labelOrientation?: {
-    open?: OrientationTypes;
-    close?: OrientationTypes;
-    labels?: OrientationTypes;
-    low?: OrientationTypes;
-    high?: OrientationTypes;
-  };
+  labelOrientation?:
+    | OrientationTypes
+    | {
+        open?: OrientationTypes;
+        close?: OrientationTypes;
+        low?: OrientationTypes;
+        high?: OrientationTypes;
+      };
   low?: StringOrNumberOrCallback | string[];
   lowLabelComponent?: React.ReactElement;
   lowLabels?: VictoryCandlestickLabelsType;
