@@ -504,6 +504,7 @@ export interface VictoryCommonProps {
   minDomain?: number | { x?: number; y?: number };
   name?: string;
   padding?: PaddingProps;
+  samples?: number;
   scale?:
     | ScalePropType
     | D3Scale

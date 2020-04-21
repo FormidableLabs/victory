@@ -42,7 +42,6 @@ export interface VictoryLegendProps
   dataComponent?: React.ReactElement;
   eventKey?: StringOrNumberOrCallback | string[];
   events?: EventPropTypeInterface<"data" | "labels" | "parent", StringOrNumberOrCallback>[];
-  externalEventMutations?: any[];
   gutter?: number | { left: number; right: number };
   itemsPerRow?: number;
   labelComponent?: React.ReactElement;
