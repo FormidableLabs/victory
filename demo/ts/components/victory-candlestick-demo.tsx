@@ -1,11 +1,23 @@
 /*global window:false */
 /*eslint-disable no-magic-numbers */
 import React from "react";
-import PropTypes from "prop-types";
 import { random, range, merge } from "lodash";
-import { VictoryChart } from "Packages/victory-chart/src/index";
-import { VictoryCandlestick } from "Packages/victory-candlestick/src/index";
-import { VictoryTheme } from "Packages/victory-core/src/index";
+import { VictoryChart } from "@packages/victory-chart";
+import { VictoryCandlestick } from "@packages/victory-candlestick";
+import { VictoryTheme } from "@packages/victory-core";
+
+interface VictoryCandlestickDemoState {
+  data: {
+    x?: number;
+    open?: number;
+    close?: number;
+    high?: number;
+    low?: number;
+    size?: number;
+    fill?: string;
+    opacity?: number;
+  }[];
+}
 
 const getData = () => {
   const colors = [
@@ -31,12 +43,16 @@ const getData = () => {
   });
 };
 
-const style = {
-  parent: {
-    border: "1px solid #ccc",
-    margin: "2%",
-    maxWidth: "40%"
-  }
+const containerStyle: React.CSSProperties = {
+  display: "flex",
+  flexDirection: "row",
+  flexWrap: "wrap",
+  alignItems: "center",
+  justifyContent: "center"
+};
+
+const style: { [key: string]: React.CSSProperties } = {
+  parent: { border: "1px solid #ccc", margin: "2%", maxWidth: "40%" }
 };
 
 const data = [
@@ -46,8 +62,13 @@ const data = [
   { x: new Date(2016, 6, 4), open: 70, close: 22, high: 70, low: 5 }
 ];
 
-export default class App extends React.Component {
-  constructor(props) {
+export default class VictoryCandlestickDemo extends React.Component<
+  any,
+  VictoryCandlestickDemoState
+> {
+  setStateInterval?: number = undefined;
+
+  constructor(props: any) {
     super(props);
     this.state = {
       data: props.data
@@ -68,14 +89,6 @@ export default class App extends React.Component {
   }
 
   render() {
-    const containerStyle = {
-      display: "flex",
-      flexDirection: "row",
-      flexWrap: "wrap",
-      alignItems: "center",
-      justifyContent: "center"
-    };
-
     return (
       <div className="demo" style={containerStyle}>
         <svg height={500} width={500}>
@@ -221,11 +234,3 @@ export default class App extends React.Component {
     );
   }
 }
-
-App.propTypes = {
-  data: PropTypes.arrayOf(PropTypes.object)
-};
-
-App.defaultProps = {
-  data: getData()
-};
