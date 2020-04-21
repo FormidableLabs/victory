@@ -510,7 +510,6 @@ export interface VictoryCommonProps {
   name?: string;
   padding?: PaddingProps;
   range?: RangePropType;
-  samples?: number;
   scale?:
     | ScalePropType
     | D3Scale

@@ -31,7 +31,6 @@ export interface VictoryScatterProps
   maxBubbleSize?: number;
   minBubbleSize?: number;
   origin?: OriginType;
-  samples?: number;
   size?: number | { (data: any): number };
   style?: VictoryStyleInterface;
   symbol?: ScatterSymbolType | { (data: any): ScatterSymbolType };
