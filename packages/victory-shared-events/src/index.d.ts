@@ -6,6 +6,8 @@ import {
 } from "victory-core";
 
 export type VictorySharedEventsProps = {
+  children?: React.ReactElement | React.ReactElement[];
+  container?: React.ReactElement;
   groupComponent?: React.ReactElement;
   events?: EventPropTypeInterface<string, StringOrNumberOrCallback>[];
   eventKey?: StringOrNumberOrCallback;
