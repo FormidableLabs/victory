@@ -29,6 +29,7 @@ export interface VictoryBrushLineProps {
   handleComponent?: React.ReactElement;
   handleStyle?: VictoryStyleObject;
   handleWidth?: number;
+  id?: string | number;
   lineComponent?: React.ReactElement;
   name?: string;
   onBrushDomainChange?: (currentDomain: DomainPropType, props: VictoryBrushLineProps) => void;
