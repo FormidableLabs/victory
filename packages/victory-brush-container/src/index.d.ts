@@ -19,11 +19,13 @@ export interface VictoryBrushContainerProps extends VictoryContainerProps {
   brushDimension?: "x" | "y";
   brushDomain?: DomainPropType;
   brushStyle?: React.CSSProperties;
-  defaultBrushArea?: "all" | "none" | "disable";
+  defaultBrushArea?: "all" | "none" | "disable" | "move";
   disable?: boolean;
   handleComponent?: React.ReactElement;
   handleStyle?: React.CSSProperties;
+  onBrushCleared?: (domain: DomainPropType, props: VictoryBrushContainerProps) => void;
   onBrushDomainChange?: (domain: DomainPropType, props: VictoryBrushContainerProps) => void;
+  onBrushDomainChangeEnd?: (domain: DomainPropType, props: VictoryBrushContainerProps) => void;
 }
 
 export class VictoryBrushContainer extends React.Component<VictoryBrushContainerProps, any> {}
