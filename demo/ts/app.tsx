@@ -21,11 +21,8 @@ const MAP = {
   "/area": { component: AreaDemo, name: "AreaDemo" },
   "/bar": { component: BarDemo, name: "BarDemo" },
   "/box-plot": { component: BoxPlotDemo, name: "BoxPlotDemo" },
-<<<<<<< HEAD
   "/brush-line": { component: BrushLineDemo, name: "BrushLineDemo" },
-=======
   "/candlestick": { component: CandlestickDemo, name: "CandlestickDemo" },
->>>>>>> Adds candlestick typescript demo to app
   "/chart": { component: ChartDemo, name: "ChartDemo" },
   "/line": { component: LineDemo, name: "LineDemo" },
   "/tooltip": { component: TooltipDemo, name: "TooltipDemo" },
