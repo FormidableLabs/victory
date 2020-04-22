@@ -18,6 +18,7 @@ export interface VictoryVoronoiContainerProps extends VictoryContainerProps {
   disable?: boolean;
   labels?: (point: any, index: number, points: any[]) => string;
   labelComponent?: React.ReactElement;
+  mouseFollowTooltips?: boolean;
   onActivated?: (points: any[], props: VictoryVoronoiContainerProps) => void;
   onDeactivated?: (points: any[], props: VictoryVoronoiContainerProps) => void;
   radius?: number;
