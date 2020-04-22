@@ -26,7 +26,7 @@ export interface VictoryPolarAxisProps
     VictoryCommonProps,
     VictorySingleLabableProps {
   axisAngle?: number;
-  axisValue?: number;
+  axisValue?: number | string | Date;
   circularAxisComponent?: React.ReactElement;
   circularGridComponent?: React.ReactElement;
   domain?: DomainPropType;
