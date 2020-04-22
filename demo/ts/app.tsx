@@ -16,6 +16,7 @@ import PieDemo from "./components/victory-pie-demo";
 import PolarAxisDemo from "./components/victory-polar-axis-demo";
 import ScatterDemo from "./components/victory-scatter-demo";
 import TooltipDemo from "./components/victory-tooltip-demo";
+import VictorySharedEventsDemo from "./components/victory-shared-events-demo";
 import VoronoiDemo from "./components/victory-voronoi-demo";
 
 const MAP = {
@@ -33,6 +34,7 @@ const MAP = {
   "/pie": { component: PieDemo, name: "PieDemo" },
   "/polar-axis": { component: PolarAxisDemo, name: "PolarAxisDemo" },
   "/scatter": { component: ScatterDemo, name: "ScatterDemo" },
+  "/victory-shared-events": { component: VictorySharedEventsDemo, name: "VictorySharedEventsDemo" },
   "/voronoi": { component: VoronoiDemo, name: "VoronoiDemo" }
 };
 

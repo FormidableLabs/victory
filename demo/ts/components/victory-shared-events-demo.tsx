@@ -3,7 +3,7 @@ import { VictoryBar } from "@packages/victory-bar";
 import { VictorySharedEvents } from "@packages/victory-shared-events";
 import { merge } from "lodash";
 
-export default class VictoryBarDemo extends React.Component<any, {}> {
+export default class VictorySharedEventsDemo extends React.Component<any, {}> {
   render() {
     const containerStyle: React.CSSProperties = {
       display: "flex",
