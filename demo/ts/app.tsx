@@ -11,6 +11,7 @@ import ChartDemo from "./components/victory-chart-demo";
 import LegendDemo from "./components/victory-legend-demo";
 import LineDemo from "./components/victory-line-demo";
 import PieDemo from "./components/victory-pie-demo";
+import PolarAxisDemo from "./components/victory-polar-axis-demo";
 import ScatterDemo from "./components/victory-scatter-demo";
 import TooltipDemo from "./components/victory-tooltip-demo";
 import VoronoiDemo from "./components/victory-voronoi-demo";
@@ -26,6 +27,7 @@ const MAP = {
   "/tooltip": { component: TooltipDemo, name: "TooltipDemo" },
   "/legend": { component: LegendDemo, name: "LegendDemo" },
   "/pie": { component: PieDemo, name: "PieDemo" },
+  "/polar-axis": { component: PolarAxisDemo, name: "PolarAxisDemo" },
   "/scatter": { component: ScatterDemo, name: "ScatterDemo" },
   "/voronoi": { component: VoronoiDemo, name: "VoronoiDemo" }
 };

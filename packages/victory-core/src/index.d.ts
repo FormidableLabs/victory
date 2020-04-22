@@ -163,9 +163,15 @@ export interface VictoryAxisCommonProps {
   dependentAxis?: boolean;
   invertAxis?: boolean;
   style?: {
-    parent?: React.CSSProperties;
-    axis?: React.CSSProperties;
-    axisLabel?: React.CSSProperties;
+    parent?: {
+      [K in keyof React.CSSProperties]: string | number | ((tick?: any) => string | number)
+    };
+    axis?: {
+      [K in keyof React.CSSProperties]: string | number | ((tick?: any) => string | number)
+    };
+    axisLabel?: {
+      [K in keyof React.CSSProperties]: string | number | ((tick?: any) => string | number)
+    };
     grid?: {
       [K in keyof React.CSSProperties]: string | number | ((tick?: any) => string | number)
     };
@@ -592,11 +598,11 @@ export interface VictoryLabableProps {
 }
 
 export interface VictoryMultiLabeableProps extends VictoryLabableProps {
-  labels?: string[] | { (data: any): string | null };
+  labels?: string[] | number[] | { (data: any): string | number | null };
 }
 
 export interface VictorySingleLabableProps extends VictoryLabableProps {
-  label?: string | { (data: any): string };
+  label?: string | number | { (data: any): string | number };
 }
 
 // #endregion

@@ -17,10 +17,14 @@ import {
   LabelOrientationType,
   StringOrNumberOrCallback,
   VictoryAxisCommonProps,
-  VictoryCommonProps
+  VictoryCommonProps,
+  VictorySingleLabableProps
 } from "victory-core";
 
-export interface VictoryPolarAxisProps extends VictoryAxisCommonProps, VictoryCommonProps {
+export interface VictoryPolarAxisProps
+  extends VictoryAxisCommonProps,
+    VictoryCommonProps,
+    VictorySingleLabableProps {
   axisAngle?: number;
   axisValue?: number;
   circularAxisComponent?: React.ReactElement;
@@ -29,13 +33,14 @@ export interface VictoryPolarAxisProps extends VictoryAxisCommonProps, VictoryCo
   endAngle?: number;
   events?: EventPropTypeInterface<
     "axis" | "axisLabel" | "grid" | "ticks" | "tickLabels",
-    StringOrNumberOrCallback
+    string | number
   >[];
   gridComponent?: React.ReactElement;
   innerRadius?: number;
   labelOrientation?: LabelOrientationType;
+  labelPlacement?: LabelOrientationType;
   origin?: { x: number; y: number };
-  startAngle: number;
+  startAngle?: number;
 }
 
 export class VictoryPolarAxis extends React.Component<VictoryPolarAxisProps, any> {}
