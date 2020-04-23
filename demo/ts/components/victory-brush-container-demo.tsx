@@ -1,28 +1,40 @@
 /*eslint-disable no-magic-numbers */
 import React from "react";
-import { VictoryChart } from "Packages/victory-chart/src/index";
-import { VictoryStack } from "Packages/victory-stack/src/index";
-import { VictoryGroup } from "Packages/victory-group/src/index";
-import { VictoryAxis } from "Packages/victory-axis/src/index";
-import { VictoryBar } from "Packages/victory-bar/src/index";
-import { VictoryLine } from "Packages/victory-line/src/index";
-import { VictoryScatter } from "Packages/victory-scatter/src/index";
-import { VictoryLegend } from "Packages/victory-legend/src/index";
-import { VictoryZoomContainer } from "Packages/victory-zoom-container/src/index";
-import { VictoryBrushContainer } from "Packages/victory-brush-container/src/index";
+import { VictoryChart } from "@packages/victory-chart";
+import { VictoryStack } from "@packages/victory-stack";
+import { VictoryGroup } from "@packages/victory-group";
+import { VictoryAxis } from "@packages/victory-axis";
+import { VictoryBar } from "@packages/victory-bar";
+import { VictoryLine } from "@packages/victory-line";
+import { VictoryScatter } from "@packages/victory-scatter";
+import { VictoryLegend } from "@packages/victory-legend";
+import { VictoryZoomContainer } from "@packages/victory-zoom-container";
+import { VictoryBrushContainer } from "@packages/victory-brush-container";
 
-class App extends React.Component {
-  constructor() {
-    super();
-    this.state = {};
+interface VictoryBrushContainerDemoState {
+  zoomDomain: {
+    x?: [number, number];
+    y?: [number, number];
+  };
+}
+
+export default class VictoryBrushContainerDemo extends React.Component<
+  any,
+  VictoryBrushContainerDemoState
+> {
+  constructor(props: any) {
+    super(props);
+    this.state = {
+      zoomDomain: {}
+    };
   }
 
-  handleZoom(domain) {
+  handleZoom(domain: { x?: [number, number]; y?: [number, number] }) {
     this.setState({ zoomDomain: domain });
   }
 
   render() {
-    const containerStyle = {
+    const containerStyle: React.CSSProperties = {
       display: "flex",
       flexDirection: "row",
       flexWrap: "wrap",
@@ -335,5 +347,3 @@ class App extends React.Component {
     );
   }
 }
-
-export default App;
