@@ -1,9 +1,15 @@
 The MIT License (MIT)
 
-Copyright (c) 2015 Formidable Labs
+Copyright (c) 2015-2020 Formidable Labs.
 
-Copyrights are respective of each contributor listed at the beginning of each
-typescript definition file.
+Copyright (c) 2016-2020 Alexey Svetliakov <https://github.com/asvetliakov>,
+snerks <https://github.com/snerks>, Krzysztof Cebula <https://github.com
+Havret>, Vitaliy Polyanskiy <https://github.com/alreadyExisted>, James Lismore
+<https://github.com/jlismore>, Stack Builders <https://github.com
+stackbuilders>, Esteban Ibarra <https://github.com/ibarrae>, Dominic Lee
+<https://github.com/dominictwlee>, Dave Vedder <https://github.com
+veddermatic>, Alec Flett <https://github.com/alecf> and potentially other
+DefinitelyTyped contributors.
 
 Permission is hereby granted, free of charge, to any person obtaining a copy
 of this software and associated documentation files (the "Software"), to deal
@@ -12,9 +18,6 @@ to use, copy, modify, merge, publish, distribute, sublicense, and/or sell
 copies of the Software, and to permit persons to whom the Software is
 furnished to do so, subject to the following conditions:
 
-The above copyright notice and this permission notice shall be included in all
-copies or substantial portions of the Software.
-
 THE SOFTWARE IS PROVIDED "AS IS", WITHOUT WARRANTY OF ANY KIND, EXPRESS OR
 IMPLIED, INCLUDING BUT NOT LIMITED TO THE WARRANTIES OF MERCHANTABILITY,
 FITNESS FOR A PARTICULAR PURPOSE AND NONINFRINGEMENT. IN NO EVENT SHALL THE
@@ -22,3 +25,6 @@ AUTHORS OR COPYRIGHT HOLDERS BE LIABLE FOR ANY CLAIM, DAMAGES OR OTHER
 LIABILITY, WHETHER IN AN ACTION OF CONTRACT, TORT OR OTHERWISE, ARISING FROM,
 OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE
 SOFTWARE.
+
+The above copyright notice and this permission notice shall be included in all
+copies or substantial portions of the Software.
