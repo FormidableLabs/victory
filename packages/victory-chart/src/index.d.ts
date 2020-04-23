@@ -9,14 +9,23 @@ import {
   VictoryStyleInterface
 } from "victory-core";
 
+export type AxesType = {
+  independent: React.ReactElement;
+  dependent: React.ReactElement;
+}
+
 export interface VictoryChartProps extends VictoryCommonProps {
+  defaultAxes?: AxesType;
+  defaultPolarAxes?: AxesType;
   categories?: CategoryPropType;
+  children?: React.ReactElement | React.ReactElement[];
   domain?: DomainPropType;
-  domainPadding?: DomainPaddingPropType;
+  endAngle?: number;
   events?: EventPropTypeInterface<string, string | number>[];
   eventKey?: StringOrNumberOrCallback;
   innerRadius?: number;
-  polar?: boolean;
+  prependDefaultAxes: boolean;
+  startAngle?: number;
   style?: Pick<VictoryStyleInterface, "parent">;
 }
 

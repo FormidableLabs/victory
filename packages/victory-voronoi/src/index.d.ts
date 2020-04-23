@@ -20,7 +20,6 @@ export interface VictoryVoronoiProps
   sortOrder?: "ascending" | "descending";
   size?: number | { (data: any): number };
   style?: VictoryStyleInterface;
-  polar?: boolean;
 }
 
 export class VictoryVoronoi extends React.Component<VictoryVoronoiProps, any> {}
