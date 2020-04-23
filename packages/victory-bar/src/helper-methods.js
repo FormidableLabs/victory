@@ -8,11 +8,13 @@ const getBarPosition = (props, datum) => {
     let defaultMin = defaultZero;
     const minY = Collection.getMinValue(props.domain[axis]);
     const maxY = Collection.getMaxValue(props.domain[axis]);
+
     if (minY < 0 && maxY <= 0) {
       defaultMin = maxY;
     } else if (minY >= 0 && maxY > 0) {
       defaultMin = minY;
     }
+
     return datum[`_${axis}`] instanceof Date ? new Date(defaultMin) : defaultMin;
   };
   const _y0 = datum._y0 !== undefined ? datum._y0 : getDefaultMin("y");
@@ -48,6 +50,7 @@ const getCalculatedValues = (props) => {
 const getBaseProps = (props, fallbackProps) => {
   const modifiedProps = Helpers.modifyProps(props, fallbackProps, "bar");
   props = assign({}, modifiedProps, getCalculatedValues(modifiedProps));
+
   const {
     alignment,
     barRatio,
@@ -69,6 +72,7 @@ const getBaseProps = (props, fallbackProps) => {
     labels,
     name,
     barWidth,
+    barOffset,
     getPath
   } = props;
   const initialChildProps = {
@@ -89,8 +93,10 @@ const getBaseProps = (props, fallbackProps) => {
     }
   };
 
+  // console.log("hi", { data });
   return data.reduce((childProps, datum, index) => {
     const eventKey = !isNil(datum.eventKey) ? datum.eventKey : index;
+    // console.log(getBarPosition(props, datum));
     const { x, y, y0, x0 } = getBarPosition(props, datum);
     const dataProps = {
       alignment,
@@ -111,6 +117,7 @@ const getBaseProps = (props, fallbackProps) => {
       y0,
       x0,
       barWidth,
+      barOffset,
       getPath
     };
 
@@ -122,6 +129,7 @@ const getBaseProps = (props, fallbackProps) => {
     if ((text !== undefined && text !== null) || (labels && (events || sharedEvents))) {
       childProps[eventKey].labels = LabelHelpers.getProps(props, index);
     }
+
     return childProps;
   }, initialChildProps);
 };

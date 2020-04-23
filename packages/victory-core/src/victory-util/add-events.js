@@ -146,6 +146,7 @@ export default (WrappedComponent, options) => {
       const parentPropsList = baseParentProps.parentControlledProps;
       const parentProps = parentPropsList ? pick(baseParentProps, parentPropsList) : {};
       const modifiedProps = defaults({}, parentProps, props);
+
       return isFunction(WrappedComponent.getBaseProps)
         ? WrappedComponent.getBaseProps(modifiedProps)
         : {};
@@ -164,10 +165,13 @@ export default (WrappedComponent, options) => {
       const name = this.props.name || WrappedComponent.role;
       const key = (this.dataKeys && this.dataKeys[index]) || index;
       const id = `${name}-${type}-${key}`;
+
       const baseProps = (this.baseProps[key] && this.baseProps[key][type]) || this.baseProps[key];
+
       if (!baseProps && !this.hasEvents) {
         return undefined;
       }
+
       if (this.hasEvents) {
         const baseEvents = this.getEvents(this.props, type, key);
         const componentProps = defaults(
@@ -178,13 +182,16 @@ export default (WrappedComponent, options) => {
           baseProps,
           { id }
         );
+
         const events = defaults(
           {},
           Events.getPartialEvents(baseEvents, key, componentProps),
           componentProps.events
         );
+
         return assign({}, componentProps, { events });
       }
+
       return defaults({ index, key: id }, component.props, baseProps, { id });
     }
 

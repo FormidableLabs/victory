@@ -1,7 +1,7 @@
 import React from "react";
 import PropTypes from "prop-types";
 import { Helpers, CommonProps, Path } from "victory-core";
-import { assign, isPlainObject, isFunction, isNil } from "lodash";
+import { assign, isPlainObject, isNil } from "lodash";
 
 import {
   getVerticalBarPath,
@@ -10,13 +10,14 @@ import {
   getCustomBarPath
 } from "./path-helper-methods";
 
-const getBarPath = (props, width, cornerRadius) => {
+const getBarPath = (props, width, cornerRadius, barOffset) => {
   if (props.getPath) {
     return getCustomBarPath(props, width);
   }
+
   return props.horizontal
-    ? getHorizontalBarPath(props, width, cornerRadius)
-    : getVerticalBarPath(props, width, cornerRadius);
+    ? getHorizontalBarPath(props, width, cornerRadius, barOffset)
+    : getVerticalBarPath(props, width, cornerRadius, barOffset);
 };
 
 const getPolarBarPath = (props, cornerRadius) => {
@@ -27,7 +28,7 @@ const getPolarBarPath = (props, cornerRadius) => {
 const getBarWidth = (barWidth, props) => {
   const { scale, data, defaultBarWidth, style } = props;
   if (barWidth) {
-    return isFunction(barWidth) ? Helpers.evaluateProp(barWidth, props) : barWidth;
+    return Helpers.evaluateProp(barWidth, props);
   } else if (style.width) {
     return style.width;
   }
@@ -75,20 +76,26 @@ const getStyle = (style = {}, props) => {
   return Helpers.evaluateStyle(assign(baseStyle, style), props);
 };
 
+const getBarOffset = (barOffset, props) => {
+  return Helpers.evaluateProp(barOffset, props);
+};
+
 const evaluateProps = (props) => {
   // Potential evaluated props are 1) `style`, 2) `barWidth` and 3) `cornerRadius`
   const style = getStyle(props.style, props);
   const barWidth = getBarWidth(props.barWidth, assign({}, props, { style }));
   const cornerRadius = getCornerRadius(props.cornerRadius, assign({}, props, { style, barWidth }));
-  return assign({}, props, { style, barWidth, cornerRadius });
+  const barOffset = getBarOffset(props.barOffset, props);
+  return assign({}, props, { style, barWidth, cornerRadius, barOffset });
 };
 
 const Bar = (props) => {
   props = evaluateProps(props);
-  const { polar, origin, style, barWidth, cornerRadius } = props;
+  const { polar, origin, style, barWidth, cornerRadius, barOffset } = props;
+
   const path = polar
     ? getPolarBarPath(props, cornerRadius)
-    : getBarPath(props, barWidth, cornerRadius);
+    : getBarPath(props, barWidth, cornerRadius, barOffset);
   const defaultTransform = polar && origin ? `translate(${origin.x}, ${origin.y})` : undefined;
 
   return React.cloneElement(props.pathComponent, {
@@ -125,6 +132,7 @@ Bar.propTypes = {
   datum: PropTypes.object,
   getPath: PropTypes.func,
   horizontal: PropTypes.bool,
+  barOffset: PropTypes.arrayOf(PropTypes.number),
   pathComponent: PropTypes.element,
   width: PropTypes.number,
   x: PropTypes.number,
