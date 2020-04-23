@@ -12,31 +12,35 @@
 import * as React from "react";
 import {
   DomainPropType,
+  DomainPaddingPropType,
   EventPropTypeInterface,
+  LabelOrientationType,
+  StringOrNumberOrCallback,
   VictoryAxisCommonProps,
-  VictoryCommonProps
+  VictoryCommonProps,
+  VictorySingleLabableProps
 } from "victory-core";
 
-export interface VictoryAxisProps extends VictoryAxisCommonProps, VictoryCommonProps {
-  axisValue?: number | string | object;
-  crossAxis?: boolean;
+export interface VictoryPolarAxisProps
+  extends VictoryAxisCommonProps,
+    VictoryCommonProps,
+    VictorySingleLabableProps {
+  axisAngle?: number;
+  axisValue?: number | string | Date;
+  circularAxisComponent?: React.ReactElement;
+  circularGridComponent?: React.ReactElement;
   domain?: DomainPropType;
+  endAngle?: number;
   events?: EventPropTypeInterface<
-    "axis" | "axisLabel" | "grid" | "ticks" | "tickLabels" | "parent",
-    number | string
+    "axis" | "axisLabel" | "grid" | "ticks" | "tickLabels",
+    string | number
   >[];
-  fixLabelOverlap?: boolean;
   gridComponent?: React.ReactElement;
-  invertAxis?: boolean;
-  label?: any;
-  offsetX?: number;
-  offsetY?: number;
-  orientation?: "top" | "bottom" | "left" | "right";
+  innerRadius?: number;
+  labelOrientation?: LabelOrientationType;
+  labelPlacement?: LabelOrientationType;
+  origin?: { x: number; y: number };
+  startAngle?: number;
 }
 
-/**
- * VictoryAxis draws an SVG chart axis with React.
- * Styles and data can be customized by passing in your own values as properties to the component.
- * Data changes are animated with VictoryAnimation.
- */
-export class VictoryAxis extends React.Component<VictoryAxisProps, any> {}
+export class VictoryPolarAxis extends React.Component<VictoryPolarAxisProps, any> {}

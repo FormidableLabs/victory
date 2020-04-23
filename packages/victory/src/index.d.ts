@@ -111,8 +111,7 @@ declare module "victory" {
   // import { VictorySharedEvents } from "victory-shared-events";
 
   import { VictoryAxis } from "victory-axis";
-
-  // import { VictoryPolarAxis } from "victory-polar-axis";
+  import { VictoryPolarAxis } from "victory-polar-axis";
 
   export {
     // Area,
@@ -138,7 +137,7 @@ declare module "victory" {
     VictoryAnimation,
     VictoryArea,
     VictoryAxis,
-    // VictoryPolarAxis,
+    VictoryPolarAxis,
     VictoryBar,
     VictoryBoxPlot,
     // VictoryCandlestick,

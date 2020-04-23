@@ -24,8 +24,10 @@ export interface VictoryChartProps extends VictoryCommonProps {
   categories?: CategoryPropType;
   domain?: DomainPropType;
   domainPadding?: DomainPaddingPropType;
-  events?: EventPropTypeInterface<string, StringOrNumberOrCallback>[];
+  events?: EventPropTypeInterface<string, string | number>[];
   eventKey?: StringOrNumberOrCallback;
+  innerRadius?: number;
+  polar?: boolean;
   style?: Pick<VictoryStyleInterface, "parent">;
 }
 

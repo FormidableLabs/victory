@@ -150,11 +150,53 @@ export class VictoryAnimation extends React.Component<VictoryAnimationProps, any
 
 // #endregion
 
+// #region Victory Axis props
+
+export type TickLabelProps = React.CSSProperties & {
+  angle?: number;
+  verticalAnchor?: "start" | "middle" | "end";
+};
+
+export interface VictoryAxisCommonProps {
+  axisComponent?: React.ReactElement;
+  axisLabelComponent?: React.ReactElement;
+  dependentAxis?: boolean;
+  invertAxis?: boolean;
+  style?: {
+    parent?: {
+      [K in keyof React.CSSProperties]: string | number | ((tick?: any) => string | number)
+    };
+    axis?: {
+      [K in keyof React.CSSProperties]: string | number | ((tick?: any) => string | number)
+    };
+    axisLabel?: {
+      [K in keyof React.CSSProperties]: string | number | ((tick?: any) => string | number)
+    };
+    grid?: {
+      [K in keyof React.CSSProperties]: string | number | ((tick?: any) => string | number)
+    };
+    ticks?: {
+      [K in keyof React.CSSProperties]: string | number | ((tick?: any) => string | number)
+    };
+    tickLabels?: {
+      [K in keyof TickLabelProps]: string | number | ((tick?: any) => string | number)
+    };
+  };
+  tickComponent?: React.ReactElement;
+  tickCount?: number;
+  tickLabelComponent?: React.ReactElement;
+  tickFormat?: any[] | { (tick: any, index: number, ticks: any[]): string | number };
+  tickValues?: any[];
+}
+
+// #endregion
+
 // #region Victory Label
 
 export type TextAnchorType = "start" | "middle" | "end" | "inherit";
 export type VerticalAnchorType = "start" | "middle" | "end";
 export type OriginType = { x: number; y: number };
+export type LabelOrientationType = "parallel" | "perpendicular" | "vertical";
 
 export interface VictoryLabelProps {
   angle?: string | number;
@@ -164,7 +206,7 @@ export interface VictoryLabelProps {
   data?: any[];
   events?: React.DOMAttributes<any>;
   children?: StringOrNumberOrCallback;
-  labelPlacement?: "parallel" | "perpendicular" | "vertical";
+  labelPlacement?: LabelOrientationType;
   lineHeight?: StringOrNumberOrCallback;
   origin?: OriginType;
   polar?: boolean;
@@ -565,11 +607,11 @@ export interface VictoryLabableProps {
 }
 
 export interface VictoryMultiLabeableProps extends VictoryLabableProps {
-  labels?: string[] | { (data: any): string | null };
+  labels?: string[] | number[] | { (data: any): string | number | null };
 }
 
 export interface VictorySingleLabableProps extends VictoryLabableProps {
-  label?: string | { (data: any): string };
+  label?: string | number | { (data: any): string | number };
 }
 
 // #endregion
