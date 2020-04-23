@@ -13,7 +13,6 @@ import * as React from "react";
 import {
   BlockProps,
   ColorScalePropType,
-  EventCallbackInterface,
   EventPropTypeInterface,
   OrientationTypes,
   PaddingProps,

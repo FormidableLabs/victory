@@ -18,8 +18,8 @@ import {
   VictoryCommonProps,
   VictoryDatableProps,
   VictoryStyleObject,
-  VictoryLabableProps,
-  VictoryMultiLabeableProps,
+  VictoryLabelableProps,
+  VictoryMultiLabelableProps,
   VictoryStyleInterface
 } from "victory-core";
 
@@ -42,8 +42,8 @@ export type VictoryCandlestickLabelsType = (string | number)[] | boolean | ((dat
 export interface VictoryCandlestickProps
   extends VictoryCommonProps,
     VictoryDatableProps,
-    VictoryLabableProps,
-    VictoryMultiLabeableProps {
+    VictoryLabelableProps,
+    VictoryMultiLabelableProps {
   candleColors?: {
     positive?: string;
     negative?: string;
