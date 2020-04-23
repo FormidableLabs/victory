@@ -11,18 +11,30 @@ import { VictoryLegend } from "@packages/victory-legend";
 import { VictoryZoomContainer } from "@packages/victory-zoom-container";
 import { VictoryBrushContainer } from "@packages/victory-brush-container";
 
-export default class VictoryBrushContainerDemo extends React.Component<any> {
+interface VictoryBrushContainerDemoState {
+  zoomDomain: {
+    x?: [number, number];
+    y?: [number, number];
+  };
+}
+
+export default class VictoryBrushContainerDemo extends React.Component<
+  any,
+  VictoryBrushContainerDemoState
+> {
   constructor(props: any) {
     super(props);
-    this.state = {};
+    this.state = {
+      zoomDomain: {}
+    };
   }
 
-  handleZoom(domain: any) {
+  handleZoom(domain: { x?: [number, number]; y?: [number, number] }) {
     this.setState({ zoomDomain: domain });
   }
 
   render() {
-    const containerStyle = {
+    const containerStyle: React.CSSProperties = {
       display: "flex",
       flexDirection: "row",
       flexWrap: "wrap",
@@ -111,7 +123,7 @@ export default class VictoryBrushContainerDemo extends React.Component<any> {
             height={400}
             padding={{ top: 100, bottom: 50, left: 50, right: 50 }}
             containerComponent={
-              <VictoryBrushContainer brushDomain={{ x: [2, 4], y: [-2, 2] }} allowDraw={false} />
+              <VictoryBrushContainer brushDomain={{ x: [2, 4], y: [-2, 2] }} allowDrag={false} />
             }
           >
             <VictoryAxis dependentAxis invertAxis />
@@ -262,7 +274,7 @@ export default class VictoryBrushContainerDemo extends React.Component<any> {
                   strokeWidth: 2
                 }
               }}
-              size={({ active }) => (active ? 5 : 3)}
+              barWidth={({ active }) => (active ? 5 : 3)}
               data={[
                 { x: 1, y: -5 },
                 { x: 2, y: 4 },
@@ -281,7 +293,7 @@ export default class VictoryBrushContainerDemo extends React.Component<any> {
                   strokeWidth: 2
                 }
               }}
-              size={({ active }) => (active ? 5 : 3)}
+              barWidth={({ active }) => (active ? 5 : 3)}
               data={[
                 { x: 1, y: -3 },
                 { x: 2, y: 5 },
@@ -313,16 +325,13 @@ export default class VictoryBrushContainerDemo extends React.Component<any> {
           </VictoryStack>
 
           <VictoryLine
-            style={chartStyle}
+            style={{ parent: chartStyle.parent, data: { stroke: "teal" } }}
             containerComponent={
               <VictoryBrushContainer
                 brushDomain={{ y: [-3, 3] }}
                 brushComponent={<rect style={{ fill: "teal" }} />}
               />
             }
-            style={{
-              data: { stroke: "teal" }
-            }}
             data={[
               { x: 1, y: -3 },
               { x: 2, y: 5 },

@@ -111,7 +111,7 @@ class App extends React.Component {
             height={400}
             padding={{ top: 100, bottom: 50, left: 50, right: 50 }}
             containerComponent={
-              <VictoryBrushContainer brushDomain={{ x: [2, 4], y: [-2, 2] }} allowDraw={false} />
+              <VictoryBrushContainer brushDomain={{ x: [2, 4], y: [-2, 2] }} allowDrag={false} />
             }
           >
             <VictoryAxis dependentAxis invertAxis />
@@ -262,7 +262,7 @@ class App extends React.Component {
                   strokeWidth: 2
                 }
               }}
-              size={({ active }) => (active ? 5 : 3)}
+              barWidth={({ active }) => (active ? 5 : 3)}
               data={[
                 { x: 1, y: -5 },
                 { x: 2, y: 4 },
@@ -281,7 +281,7 @@ class App extends React.Component {
                   strokeWidth: 2
                 }
               }}
-              size={({ active }) => (active ? 5 : 3)}
+              barWidth={({ active }) => (active ? 5 : 3)}
               data={[
                 { x: 1, y: -3 },
                 { x: 2, y: 5 },
@@ -313,16 +313,13 @@ class App extends React.Component {
           </VictoryStack>
 
           <VictoryLine
-            style={chartStyle}
+            style={{ parent: chartStyle.parent, data: { stroke: "teal" } }}
             containerComponent={
               <VictoryBrushContainer
                 brushDomain={{ y: [-3, 3] }}
                 brushComponent={<rect style={{ fill: "teal" }} />}
               />
             }
-            style={{
-              data: { stroke: "teal" }
-            }}
             data={[
               { x: 1, y: -3 },
               { x: 2, y: 5 },
