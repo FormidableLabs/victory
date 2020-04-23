@@ -19,14 +19,14 @@ import {
   StringOrNumberOrCallback,
   VictoryCommonProps,
   VictoryDatableProps,
-  VictoryMultiLabeableProps,
+  VictoryMultiLabelableProps,
   VictoryStyleInterface
 } from "victory-core";
 
 export interface VictoryGroupProps
   extends VictoryCommonProps,
     VictoryDatableProps,
-    VictoryMultiLabeableProps {
+    VictoryMultiLabelableProps {
   categories?: CategoryPropType;
   color?: string;
   colorScale?: ColorScalePropType;

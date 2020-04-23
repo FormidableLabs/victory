@@ -16,14 +16,14 @@ import {
   StringOrNumberOrCallback,
   VictoryCommonProps,
   VictoryDatableProps,
-  VictoryMultiLabeableProps,
+  VictoryMultiLabelableProps,
   VictoryStyleInterface
 } from "victory-core";
 
 export interface VictoryBarProps
   extends VictoryCommonProps,
     VictoryDatableProps,
-    VictoryMultiLabeableProps {
+    VictoryMultiLabelableProps {
   alignment?: "start" | "middle" | "end";
   barRatio?: number;
   barWidth?: NumberOrCallback;

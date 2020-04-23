@@ -13,15 +13,13 @@ import * as React from "react";
 import {
   BlockProps,
   ColorScalePropType,
-  EventCallbackInterface,
   EventPropTypeInterface,
   OrientationTypes,
   PaddingProps,
   StringOrNumberOrCallback,
   VictoryCommonProps,
   VictoryDatableProps,
-  VictoryLabableProps,
-  VictorySingleLabableProps,
+  VictorySingleLabelableProps,
   VictoryStyleInterface,
   VictoryStyleObject
 } from "victory-core";
@@ -29,8 +27,7 @@ import {
 export interface VictoryLegendProps
   extends VictoryCommonProps,
     VictoryDatableProps,
-    VictoryLabableProps,
-    VictorySingleLabableProps {
+    VictorySingleLabelableProps {
   borderComponent?: React.ReactElement;
   borderPadding?: PaddingProps;
   centerTitle?: boolean;

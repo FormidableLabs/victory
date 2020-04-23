@@ -12,19 +12,17 @@
 import * as React from "react";
 import {
   DomainPropType,
-  DomainPaddingPropType,
   EventPropTypeInterface,
   LabelOrientationType,
-  StringOrNumberOrCallback,
   VictoryAxisCommonProps,
   VictoryCommonProps,
-  VictorySingleLabableProps
+  VictorySingleLabelableProps
 } from "victory-core";
 
 export interface VictoryPolarAxisProps
   extends VictoryAxisCommonProps,
     VictoryCommonProps,
-    VictorySingleLabableProps {
+    VictorySingleLabelableProps {
   axisAngle?: number;
   axisValue?: number | string | Date;
   circularAxisComponent?: React.ReactElement;

@@ -15,14 +15,14 @@ import {
   InterpolationPropType,
   VictoryCommonProps,
   VictoryDatableProps,
-  VictorySingleLabableProps,
+  VictorySingleLabelableProps,
   VictoryStyleInterface
 } from "victory-core";
 
 export interface VictoryAreaProps
   extends VictoryCommonProps,
     VictoryDatableProps,
-    VictorySingleLabableProps {
+    VictorySingleLabelableProps {
   events?: EventPropTypeInterface<"data" | "labels" | "parent", string | number>[];
   interpolation?: InterpolationPropType;
   labels?: string[] | number[] | Function;
