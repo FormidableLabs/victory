@@ -10,22 +10,31 @@
 //                 Alec Flett <https://github.com/alecf>
 
 import * as React from "react";
-import { DomainPropType, VictoryContainerProps } from "victory-core";
+import { RangeTuple, VictoryContainerProps } from "victory-core";
 
 export interface VictoryBrushContainerProps extends VictoryContainerProps {
   allowDrag?: boolean;
   allowResize?: boolean;
   brushComponent?: React.ReactElement;
   brushDimension?: "x" | "y";
-  brushDomain?: DomainPropType;
+  brushDomain?: { x?: RangeTuple; y?: RangeTuple };
   brushStyle?: React.CSSProperties;
   defaultBrushArea?: "all" | "none" | "disable" | "move";
   disable?: boolean;
   handleComponent?: React.ReactElement;
   handleStyle?: React.CSSProperties;
-  onBrushCleared?: (domain: DomainPropType, props: VictoryBrushContainerProps) => void;
-  onBrushDomainChange?: (domain: DomainPropType, props: VictoryBrushContainerProps) => void;
-  onBrushDomainChangeEnd?: (domain: DomainPropType, props: VictoryBrushContainerProps) => void;
+  onBrushCleared?: (
+    domain: { x?: RangeTuple; y?: RangeTuple },
+    props: VictoryBrushContainerProps
+  ) => void;
+  onBrushDomainChange?: (
+    domain: { x?: RangeTuple; y?: RangeTuple },
+    props: VictoryBrushContainerProps
+  ) => void;
+  onBrushDomainChangeEnd?: (
+    domain: { x?: RangeTuple; y?: RangeTuple },
+    props: VictoryBrushContainerProps
+  ) => void;
 }
 
 export class VictoryBrushContainer extends React.Component<VictoryBrushContainerProps, any> {}
