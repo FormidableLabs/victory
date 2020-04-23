@@ -8,7 +8,10 @@ import {
   VictorySingleLabelableProps
 } from "victory-core";
 
-export interface VictoryAxisProps extends VictoryAxisCommonProps, VictoryCommonProps, VictorySingleLabelableProps {
+export interface VictoryAxisProps
+  extends VictoryAxisCommonProps,
+    VictoryCommonProps,
+    VictorySingleLabelableProps {
   crossAxis?: boolean;
   domain?: DomainPropType;
   events?: EventPropTypeInterface<
