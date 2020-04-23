@@ -29,6 +29,7 @@ export interface VictoryBarProps
   events?: EventPropTypeInterface<"data" | "labels" | "parent", number | string>[];
   eventKey?: StringOrNumberOrCallback;
   horizontal?: boolean;
+  polar?: boolean;
   style?: VictoryStyleInterface;
 }
 
