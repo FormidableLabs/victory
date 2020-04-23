@@ -443,7 +443,7 @@ export interface EventCallbackInterface<TTarget, TEventKey> {
 }
 
 export interface EventPropTypeInterface<TTarget, TEventKey> {
-  childName?: string;
+  childName?: string | Array<StringOrNumberOrCallback>;
   target: TTarget;
   eventKey?: TEventKey;
   eventHandlers: {

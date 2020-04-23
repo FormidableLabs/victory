@@ -13,12 +13,14 @@ import * as React from "react";
 import {
   BlockProps,
   ColorScalePropType,
+  EventCallbackInterface,
   EventPropTypeInterface,
   OrientationTypes,
   PaddingProps,
   StringOrNumberOrCallback,
   VictoryCommonProps,
   VictoryDatableProps,
+  VictoryLabableProps,
   VictorySingleLabableProps,
   VictoryStyleInterface,
   VictoryStyleObject
@@ -27,6 +29,7 @@ import {
 export interface VictoryLegendProps
   extends VictoryCommonProps,
     VictoryDatableProps,
+    VictoryLabableProps,
     VictorySingleLabableProps {
   borderComponent?: React.ReactElement;
   borderPadding?: PaddingProps;
@@ -34,6 +37,9 @@ export interface VictoryLegendProps
   colorScale?: ColorScalePropType;
   data?: Array<{
     name?: string;
+    labels?: {
+      fill?: string;
+    };
     symbol?: {
       fill?: string;
       type?: string;
@@ -44,7 +50,6 @@ export interface VictoryLegendProps
   events?: EventPropTypeInterface<"data" | "labels" | "parent", StringOrNumberOrCallback>[];
   gutter?: number | { left: number; right: number };
   itemsPerRow?: number;
-  labelComponent?: React.ReactElement;
   orientation?: "horizontal" | "vertical";
   rowGutter?: number | Omit<BlockProps, "left" | "right">;
   style?: VictoryStyleInterface & { title?: VictoryStyleObject };
