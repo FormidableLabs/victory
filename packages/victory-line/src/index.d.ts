@@ -8,12 +8,14 @@ import {
   VictoryCommonPrimitiveProps,
   VictoryDatableProps,
   VictoryMultiLabelableProps,
+  VictoryLabelableProps,
   VictoryStyleInterface
 } from "victory-core";
 
 export interface VictoryLineProps
   extends VictoryCommonProps,
     VictoryDatableProps,
+    VictoryLabelableProps,
     VictoryMultiLabelableProps {
   events?: EventPropTypeInterface<"data" | "labels" | "parent", number | string>[];
   eventKey?: StringOrNumberOrCallback | string[];
@@ -25,7 +27,7 @@ export interface VictoryLineProps
 }
 
 export interface VictoryCurveProps extends VictoryCommonPrimitiveProps {
-  interpolation?: InterpolationPropType | Function;
+  interpolation?: string | Function;
   openCurve?: boolean;
   pathComponent?: React.ReactElement;
 }
