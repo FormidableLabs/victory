@@ -149,7 +149,9 @@ export type TickLabelProps = React.CSSProperties & {
 export interface VictoryAxisCommonProps {
   axisComponent?: React.ReactElement;
   axisLabelComponent?: React.ReactElement;
+  axisValue?: number | string | object | Date;
   dependentAxis?: boolean;
+  gridComponent?: React.ReactElement;
   invertAxis?: boolean;
   style?: {
     parent?: {
