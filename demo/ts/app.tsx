@@ -18,6 +18,7 @@ import ScatterDemo from "./components/victory-scatter-demo";
 import TooltipDemo from "./components/victory-tooltip-demo";
 import VictorySharedEventsDemo from "./components/victory-shared-events-demo";
 import VoronoiDemo from "./components/victory-voronoi-demo";
+import ZoomContainerDemo from "./components/victory-zoom-container-demo";
 
 const MAP = {
   "/axis": { component: AxisDemo, name: "AxisDemo" },
@@ -35,7 +36,8 @@ const MAP = {
   "/polar-axis": { component: PolarAxisDemo, name: "PolarAxisDemo" },
   "/scatter": { component: ScatterDemo, name: "ScatterDemo" },
   "/victory-shared-events": { component: VictorySharedEventsDemo, name: "VictorySharedEventsDemo" },
-  "/voronoi": { component: VoronoiDemo, name: "VoronoiDemo" }
+  "/voronoi": { component: VoronoiDemo, name: "VoronoiDemo" },
+  "/zoom-container": { component: ZoomContainerDemo, name: "ZoomContainerDemo" }
 };
 
 class Home extends React.Component {
