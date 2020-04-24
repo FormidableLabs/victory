@@ -4,7 +4,7 @@ import { VictoryContainerProps, CursorData } from "victory-core";
 export interface VictoryCursorContainerProps extends VictoryContainerProps {
   cursorComponent?: React.ReactElement;
   cursorDimension?: "x" | "y";
-  cursorLabel?: (point: CursorData) => void;
+  cursorLabel?: (point: CursorData) => number;
   cursorLabelComponent?: React.ReactElement;
   cursorLabelOffset?: number | CursorData;
   defaultCursorValue?: number | CursorData;
