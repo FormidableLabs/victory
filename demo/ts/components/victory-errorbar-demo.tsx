@@ -1,24 +1,9 @@
 import React from "react";
 import { merge, random, range } from "lodash";
-import {
-  VictoryChart,
-  VictoryErrorBar,
-  ErrorBar,
-  VictoryScatter,
-  VictoryContainer,
-  VictoryTheme
-} from "@packages/victory-core";
-
-const getData = () => {
-  return range(4).map(() => {
-    return {
-      x: random(6),
-      y: random(6),
-      errorX: [random(1, true), random(3, true)],
-      errorY: [random(2, true), random(2, true)]
-    };
-  });
-};
+import { VictoryChart } from "@packages/victory-chart";
+import { VictoryScatter } from "@packages/victory-scatter";
+import { VictoryErrorBar } from "@packages/victory-errorbar";
+import { VictoryContainer, VictoryTheme } from "@packages/victory-core";
 
 const basicData = [
   { x: 1, y: 1, errorX: [1, 0.5], errorY: 0.1 },
@@ -28,16 +13,37 @@ const basicData = [
   { x: 5, y: 1, errorX: [1, 0.5], errorY: 0.2 }
 ];
 
-// this.state = {
-//   hoverStyle: { stroke: "gold" },
-//   data: props.data
-// };
-export default class VictoryErrorBarDemo extends React.Component<any> {
+const style = {
+  parent: { border: "1px solid #ccc", margin: "2%", maxWidth: "40%" }
+};
+
+type dataType = {
+  x?: string | number;
+  y?: string | number;
+};
+
+interface VictoryErrorBarState {
+  hoverStyle: { stroke: string };
+  data: dataType[];
+}
+
+export default class VictoryErrorBarDemo extends React.Component<any, VictoryErrorBarState> {
+  setStateInterval?: number = undefined;
+
+  constructor(props: any) {
+    super(props);
+
+    this.state = {
+      data: this.getData(),
+      hoverStyle: { stroke: "gold " }
+    };
+  }
+
   componentDidMount() {
     /* eslint-disable react/no-did-mount-set-state */
     this.setStateInterval = window.setInterval(() => {
       this.setState({
-        data: getData()
+        data: this.getData()
       });
     }, 2000);
   }
@@ -45,6 +51,17 @@ export default class VictoryErrorBarDemo extends React.Component<any> {
   componentWillUnmount() {
     window.clearInterval(this.setStateInterval);
   }
+
+  getData = () => {
+    return range(4).map(() => {
+      return {
+        x: random(6),
+        y: random(6),
+        errorX: [random(1, true), random(3, true)],
+        errorY: [random(2, true), random(2, true)]
+      };
+    });
+  };
 
   render() {
     return (
@@ -58,28 +75,22 @@ export default class VictoryErrorBarDemo extends React.Component<any> {
           justifyContent: "center"
         }}
       >
-        <VictoryChart
-          style={{ parent: { border: "1px solid #ccc", margin: "2%", maxWidth: "40%" } }}
-        >
+        <VictoryChart style={style}>
           <VictoryErrorBar data={basicData} />
           <VictoryScatter data={basicData} />
         </VictoryChart>
 
-        <VictoryChart
-          horizontal
-          style={{ parent: { border: "1px solid #ccc", margin: "2%", maxWidth: "40%" } }}
-        >
+        <VictoryChart horizontal style={style}>
           <VictoryErrorBar data={basicData} />
           <VictoryScatter data={basicData} />
         </VictoryChart>
 
         <VictoryErrorBar
-          style={{ parent: { border: "1px solid #ccc", margin: "2%", maxWidth: "40%" } }}
+          style={style}
           width={500}
           height={500}
           animate={{ duration: 2000 }}
           data={this.state.data}
-          dataComponent={<ErrorBar />}
           containerComponent={
             <VictoryContainer
               title="ErrorBar Chart"
@@ -91,7 +102,7 @@ export default class VictoryErrorBarDemo extends React.Component<any> {
 
         <VictoryErrorBar
           horizontal
-          style={{ parent: { border: "1px solid #ccc", margin: "2%", maxWidth: "40%" } }}
+          style={style}
           width={500}
           height={500}
           animate={{ duration: 2000 }}
@@ -118,7 +129,7 @@ export default class VictoryErrorBarDemo extends React.Component<any> {
           data={this.state.data}
         />
 
-        <svg style={style} width={500} height={300}>
+        <svg style={style.parent} width={500} height={300}>
           <VictoryErrorBar style={style} standalone={false} />
         </svg>
 
@@ -132,9 +143,9 @@ export default class VictoryErrorBarDemo extends React.Component<any> {
                 onClick: () => {
                   return [
                     {
-                      mutation: ({ style }) => {
+                      mutation: (props: any) => {
                         return {
-                          style: merge({}, style, { stroke: "orange" })
+                          style: merge({}, props.style, { stroke: "orange" })
                         };
                       }
                     }
