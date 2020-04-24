@@ -105,7 +105,7 @@ export type SliceNumberOrCallback<T, P = null> = number | ((props: Omit<T, P>) =
 
 export type VictoryStyleObject = { [K in keyof React.CSSProperties]: StringOrNumberOrCallback };
 
-export type CursorData = {
+export type CoordinatesPropType = {
   x: number;
   y: number;
 };

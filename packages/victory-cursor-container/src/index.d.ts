@@ -1,15 +1,15 @@
 import * as React from "react";
-import { VictoryContainerProps, CursorData } from "victory-core";
+import { VictoryContainerProps, CoordinatesPropType } from "victory-core";
 
 export interface VictoryCursorContainerProps extends VictoryContainerProps {
   cursorComponent?: React.ReactElement;
   cursorDimension?: "x" | "y";
-  cursorLabel?: (point: CursorData) => void;
+  cursorLabel?: (point: CoordinatesPropType) => void;
   cursorLabelComponent?: React.ReactElement;
-  cursorLabelOffset?: number | CursorData;
-  defaultCursorValue?: number | CursorData;
+  cursorLabelOffset?: number | CoordinatesPropType;
+  defaultCursorValue?: number | CoordinatesPropType;
   disable?: boolean;
-  onCursorChange?: (value: CursorData, props: VictoryCursorContainerProps) => void;
+  onCursorChange?: (value: CoordinatesPropType, props: VictoryCursorContainerProps) => void;
 }
 
 export class VictoryCursorContainer extends React.Component<VictoryCursorContainerProps, any> {}
