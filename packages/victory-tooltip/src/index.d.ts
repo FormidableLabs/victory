@@ -4,43 +4,41 @@ import {
   NumberOrCallback,
   StringOrNumberOrCallback,
   VictoryCommonProps,
+  VictoryLabelableProps,
   VictoryNumberCallback,
   VictoryThemeDefinition,
   VictoryStyleObject
 } from "victory-core";
 
-export interface VictoryTooltipProps {
+export interface VictoryTooltipProps extends VictoryCommonProps, VictoryLabelableProps {
   active?: boolean;
   activateData?: boolean;
+  activePoints?: any[];
   angle?: string | number;
+  center?: { x: number; y: number };
   centerOffset?: {
-    x?: number | Function;
-    y?: number | Function;
+    x?: NumberOrCallback;
+    y?: NumberOrCallback;
   };
   constrainToVisibleArea?: boolean;
   cornerRadius?: NumberOrCallback;
   datum?: {};
   data?: any[];
-  dx?: StringOrNumberOrCallback;
-  dy?: StringOrNumberOrCallback;
-  events?: {};
+  dx?: NumberOrCallback;
+  dy?: NumberOrCallback;
+  events?: { [key: string]: (event: React.SyntheticEvent<any>) => void };
   flyoutHeight?: NumberOrCallback;
   flyoutWidth?: NumberOrCallback;
   flyoutStyle?: VictoryStyleObject;
   flyoutComponent?: React.ReactElement;
-  groupComponent?: React.ReactElement;
-  height?: number;
-  horizontal?: boolean;
   index?: number | string;
-  labelComponent?: React.ReactElement;
   orientation?: OrientationTypes | VictoryNumberCallback;
   pointerLength?: NumberOrCallback;
+  pointerOrientation?: OrientationTypes | ((...args: any[]) => OrientationTypes);
   pointerWidth?: NumberOrCallback;
   renderInPortal?: boolean;
   style?: React.CSSProperties;
   text?: StringOrNumberOrCallback | string[] | number[];
-  theme?: VictoryThemeDefinition;
-  width?: number;
   x?: number;
   y?: number;
 }
