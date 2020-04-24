@@ -95,7 +95,6 @@ class VictoryBar extends React.Component {
   }
 
   render() {
-    console.log(this.props.scale.x.domain());
     const { animationWhitelist, role } = VictoryBar;
     const props = Helpers.modifyProps(this.props, fallbackProps, role);
 

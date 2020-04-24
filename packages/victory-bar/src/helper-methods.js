@@ -94,7 +94,6 @@ const getBaseProps = (props, fallbackProps) => {
     }
   };
 
-  // console.log("hi", { data });
   return data.reduce((childProps, datum, index) => {
     const eventKey = !isNil(datum.eventKey) ? datum.eventKey : index;
 

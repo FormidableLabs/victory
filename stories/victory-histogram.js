@@ -7,48 +7,59 @@ import { VictoryHistogram } from "../packages/victory-histogram/src/index";
 
 // import { VictoryTheme } from "../packages/victory-core/src/index";
 // import { getChartDecorator } from "./decorators";
-const data = Array.from({ length: 60 }, () => ({
-  x: Math.floor(Math.random() * 100)
-}));
 
 storiesOf("VictoryHistogram", module).add("default rendering", () => <VictoryHistogram />);
 
-storiesOf("VictoryHistogram.chart", module)
-  .add("custom bar width (20)", () => <VictoryHistogram barWidth={20} />)
-  .add("custom bar width (2)", () => <VictoryHistogram barWidth={5} />)
+storiesOf("VictoryHistogram.vertical.barWidth", module)
+  .add("numeric bar width = 20", () => <VictoryHistogram barWidth={20} />)
+  .add("numeric bar width = 5", () => <VictoryHistogram barWidth={5} />)
+  .add("functional bar width (datum.x)", () => (
+    <VictoryHistogram barWidth={({ datum }) => datum.x} />
+  ));
 
-  .add("custom bar spacing (10)", () => <VictoryHistogram barSpacing={10} />)
+storiesOf("VictoryHistogram.vertical.barSpacing", module)
+  .add("bar spacing = 10", () => <VictoryHistogram barSpacing={10} />)
+  .add("bar spacing = 5", () => <VictoryHistogram barSpacing={5} />);
 
-  .add("bin - bin count (2)", () => <VictoryHistogram bins={2} />)
-  .add("bin - bin count (100)", () => <VictoryHistogram bins={100} />)
+storiesOf("VictoryHistogram.vertical.bins", module)
+  .add("numeric bins = 2", () => <VictoryHistogram bins={2} />)
+  .add("numeric bins = 100", () => <VictoryHistogram bins={100} />)
+  .add("custom bins/edges = [0, 30, 50, 100]", () => <VictoryHistogram bins={[0, 30, 50, 100]} />)
+  .add("custom bins/edges = [0, 20, 30, 70, 100]", () => (
+    <VictoryHistogram bins={[0, 20, 30, 70, 100]} />
+  ));
 
-  .add("bin - custom edges", () => <VictoryHistogram bins={[0, 30, 50, 100]} />)
-  .add("bin - custom edges - 2", () => <VictoryHistogram bins={[0, 20, 30, 70, 100]} />)
+storiesOf("VictoryHistogram.horizontal.styles", module).add("with styles", () => (
+  <VictoryHistogram
+    horizontal
+    style={{ data: { transform: "translate(0px, -20px) skew(2deg, 2deg)" } }}
+  />
+));
 
-  .add("styles - custom styles", () => (
-    <VictoryHistogram style={{ data: { transform: "translate(0px, -20px) skew(2deg, 2deg)" } }} />
-  ))
+storiesOf("VictoryHistogram.horizontal.barWidth", module)
+  .add("numeric bar width = 20", () => <VictoryHistogram horizontal barWidth={20} />)
+  .add("numeric bar width = 5", () => <VictoryHistogram horizontal barWidth={5} />)
+  .add("functional bar width (datum.x)", () => (
+    <VictoryHistogram horizontal barWidth={({ datum }) => datum.x} />
+  ));
 
-  .add("z-horizontal custom bar width (20)", () => <VictoryHistogram horizontal barWidth={20} />)
-  .add("z-horizontal custom bar width (2)", () => <VictoryHistogram horizontal barWidth={5} />)
+storiesOf("VictoryHistogram.horizontal.barSpacing", module)
+  .add("bar spacing = 10", () => <VictoryHistogram horizontal barSpacing={10} />)
+  .add("bar spacing = 5", () => <VictoryHistogram horizontal barSpacing={5} />);
 
-  .add("z-horizontal custom bar spacing (10)", () => (
-    <VictoryHistogram horizontal barSpacing={10} />
-  ))
-
-  .add("z-horizontal bin - bin count (10)", () => <VictoryHistogram horizontal bins={10} />)
-  .add("z-horizontal bin - bin count (100)", () => <VictoryHistogram horizontal bins={100} />)
-
-  .add("z-horizontal bin - custom edges", () => (
+storiesOf("VictoryHistogram.horizontal.bins", module)
+  .add("numeric bins = 2", () => <VictoryHistogram horizontal bins={2} />)
+  .add("numeric bins = 100", () => <VictoryHistogram horizontal bins={100} />)
+  .add("custom bins/edges = [0, 30, 50, 100]", () => (
     <VictoryHistogram horizontal bins={[0, 30, 50, 100]} />
   ))
-  .add("z-horizontal bin - custom edges - 2", () => (
+  .add("custom bins/edges = [0, 20, 30, 70, 100]", () => (
     <VictoryHistogram horizontal bins={[0, 20, 30, 70, 100]} />
-  ))
-
-  .add("z-horizontal styles - custom styles", () => (
-    <VictoryHistogram
-      horizontal
-      style={{ data: { transform: "translate(0px, -20px) skew(2deg, 2deg)" } }}
-    />
   ));
+
+storiesOf("VictoryHistogram.horizontal.styles", module).add("with styles", () => (
+  <VictoryHistogram
+    horizontal
+    style={{ data: { transform: "translate(0px, -20px) skew(2deg, 2deg)" } }}
+  />
+));

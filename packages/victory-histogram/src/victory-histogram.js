@@ -3,6 +3,7 @@ import PropTypes from "prop-types";
 import { VictoryBar } from "../../victory-bar/src";
 import { VictoryAxis } from "../../victory-axis/src";
 import { VictoryChart } from "../../victory-chart/src";
+import { Helpers } from "../../victory-core/src";
 import * as d3Array from "d3-array";
 import * as d3Scale from "d3-scale";
 
@@ -145,7 +146,7 @@ export class VictoryHistogram extends React.Component {
   static propTypes = {
     barSpacing: PropTypes.number,
     barWidth: PropTypes.number,
-    bins: PropTypes.number,
+    bins: PropTypes.oneOfType([PropTypes.arrayOf(PropTypes.number), PropTypes.number]),
     data: PropTypes.any,
     style: PropTypes.any
   };
@@ -205,14 +206,13 @@ export class VictoryHistogram extends React.Component {
           data={this.data}
           barWidth={(props) => {
             if (barWidth) {
-              return barWidth;
+              return Helpers.evaluateProp(barWidth, props);
             } else if (barSpacing) {
               return this.getDistance(props) - barSpacing;
             }
 
             return this.getDistance(props);
           }}
-          barRatio={undefined}
           alignment="start"
           style={{
             ...this.props.style,
@@ -225,7 +225,8 @@ export class VictoryHistogram extends React.Component {
           }}
           barOffset={(props) => {
             if (barWidth) {
-              const distance = this.getDistance(props) / 2 - barWidth / 2;
+              const distance =
+                this.getDistance(props) / 2 - Helpers.evaluateProp(barWidth, props) / 2;
               return [distance, 0];
             } else if (barSpacing) {
               const distance = barSpacing / 2;
