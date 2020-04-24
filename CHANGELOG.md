@@ -97,7 +97,7 @@ This version uses the context API introduced in `react@16.3.0`
 
 - [#1375](https://github.com/FormidableLabs/victory/pull/1375) - Evaluates / calculates some props early so they are available when functional props are being evaluated. Most notably, `text` is evaluated before any other functional props for `VictoryLabel` so it may be used to determine things like style, etc.
 
-## 33.0.0 (2018-08-21)
+## 33.0.0 (2019-08-21)
 
 ### Breaking Changes
 
@@ -222,7 +222,7 @@ Related PR: [#1365](https://github.com/FormidableLabs/victory/pull/1365)
 - Swapped out React component primitives (`Bar`, `Path` etc) with for function primitives to match performance-improving changes in `victory-native`. (This is a breaking change for anyone extending from `victory` components)
 
 
-## 32.3.7 (2018-08-19)
+## 32.3.7 (2019-08-19)
 
 [#1368](https://github.com/FormidableLabs/victory/pull/1368) Ensures that animations finish for unmounting components. Thanks @fbarbat!
 
