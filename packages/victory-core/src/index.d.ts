@@ -540,6 +540,7 @@ export interface VictoryCommonProps {
   minDomain?: number | { x?: number; y?: number };
   name?: string;
   padding?: PaddingProps;
+  polar?: boolean;
   range?: RangePropType;
   scale?:
     | ScalePropType
