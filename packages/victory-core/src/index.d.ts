@@ -220,13 +220,23 @@ export class VictoryLabel extends React.Component<VictoryLabelProps, any> {}
 // #region Victory Container
 
 export interface VictoryContainerProps {
+  children?: React.ReactElement | React.ReactElement[];
+  className?: string;
+  containerId?: number | string;
+  desc?: string;
+  events?: React.DOMAttributes<any>;
+  height?: number;
+  name?: string;
+  origin?: OriginType;
+  polar?: boolean;
+  portalComponent?: React.ReactElement;
+  portalZIndex?: number;
   responsive?: boolean;
   style?: React.CSSProperties;
-  height?: number;
-  width?: number;
-  events?: React.DOMAttributes<any>;
+  tabIndex?: number;
+  theme?: VictoryThemeDefinition;
   title?: string;
-  desc?: string;
+  width?: number;
 }
 
 export class VictoryContainer extends React.Component<VictoryContainerProps, any> {}
