@@ -143,8 +143,8 @@ const defaultData = [
 
 export class VictoryHistogram extends React.Component {
   static propTypes = {
-    barWidth: PropTypes.number,
     barSpacing: PropTypes.number,
+    barWidth: PropTypes.number,
     bins: PropTypes.number,
     data: PropTypes.any,
     style: PropTypes.any
@@ -191,11 +191,11 @@ export class VictoryHistogram extends React.Component {
     const current = scale.x(datum.x);
     const next = scale.x(datum.end);
 
-    return next - current;
+    return Math.abs(next - current);
   };
 
   render() {
-    const { barWidth, barSpacing } = this.props;
+    const { barWidth, barSpacing, horizontal } = this.props;
 
     return (
       <VictoryChart>
@@ -226,7 +226,6 @@ export class VictoryHistogram extends React.Component {
           barOffset={(props) => {
             if (barWidth) {
               const distance = this.getDistance(props) / 2 - barWidth / 2;
-              console.log([distance, 0]);
               return [distance, 0];
             } else if (barSpacing) {
               const distance = barSpacing / 2;

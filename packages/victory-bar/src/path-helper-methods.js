@@ -6,7 +6,6 @@ const getPosition = (props, width, barOffset = [0, 0]) => {
   const barOffsetX = barOffset[0];
   const barOffsetY = barOffset[1];
 
-  console.log(barOffset);
   const { x, x0, y, y0, horizontal } = props;
   const alignment = props.alignment || "middle";
   const size = alignment === "middle" ? width / 2 : width;
@@ -15,8 +14,8 @@ const getPosition = (props, width, barOffset = [0, 0]) => {
     return {
       x0,
       x1: x,
-      y0: alignment === "start" ? y : y - sign * size,
-      y1: alignment === "end" ? y : y + sign * size
+      y0: alignment === "start" ? y - barOffsetX : y - sign * size - barOffsetX,
+      y1: alignment === "end" ? y - barOffsetX : y + sign * size - barOffsetX
     };
   }
 
@@ -206,7 +205,6 @@ const getHorizontalBarPoints = (position, sign, cr) => {
 };
 
 export const getVerticalBarPath = (props, width, cornerRadius, barOffset) => {
-  console.log(barOffset);
   const position = getPosition(props, width, barOffset);
 
   const sign = position.y0 > position.y1 ? 1 : -1;
@@ -215,9 +213,9 @@ export const getVerticalBarPath = (props, width, cornerRadius, barOffset) => {
   return mapPointsToPath(points, cornerRadius, direction);
 };
 
-export const getHorizontalBarPath = (props, width, cornerRadius) => {
-  // todo use barOffset in horizontal bar path
-  const position = getPosition(props, width);
+export const getHorizontalBarPath = (props, width, cornerRadius, barOffset) => {
+  const position = getPosition(props, width, barOffset);
+
   const sign = position.x0 < position.x1 ? 1 : -1;
   const direction = "0 0 1";
   const cr = {

@@ -27,4 +27,28 @@ storiesOf("VictoryHistogram.chart", module)
 
   .add("styles - custom styles", () => (
     <VictoryHistogram style={{ data: { transform: "translate(0px, -20px) skew(2deg, 2deg)" } }} />
+  ))
+
+  .add("z-horizontal custom bar width (20)", () => <VictoryHistogram horizontal barWidth={20} />)
+  .add("z-horizontal custom bar width (2)", () => <VictoryHistogram horizontal barWidth={5} />)
+
+  .add("z-horizontal custom bar spacing (10)", () => (
+    <VictoryHistogram horizontal barSpacing={10} />
+  ))
+
+  .add("z-horizontal bin - bin count (10)", () => <VictoryHistogram horizontal bins={10} />)
+  .add("z-horizontal bin - bin count (100)", () => <VictoryHistogram horizontal bins={100} />)
+
+  .add("z-horizontal bin - custom edges", () => (
+    <VictoryHistogram horizontal bins={[0, 30, 50, 100]} />
+  ))
+  .add("z-horizontal bin - custom edges - 2", () => (
+    <VictoryHistogram horizontal bins={[0, 20, 30, 70, 100]} />
+  ))
+
+  .add("z-horizontal styles - custom styles", () => (
+    <VictoryHistogram
+      horizontal
+      style={{ data: { transform: "translate(0px, -20px) skew(2deg, 2deg)" } }}
+    />
   ));

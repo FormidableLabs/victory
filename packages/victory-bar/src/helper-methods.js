@@ -19,6 +19,7 @@ const getBarPosition = (props, datum) => {
   };
   const _y0 = datum._y0 !== undefined ? datum._y0 : getDefaultMin("y");
   const _x0 = datum._x0 !== undefined ? datum._x0 : getDefaultMin("x");
+
   return Helpers.scalePoint(props, assign({}, datum, { _y0, _x0 }));
 };
 
@@ -96,8 +97,9 @@ const getBaseProps = (props, fallbackProps) => {
   // console.log("hi", { data });
   return data.reduce((childProps, datum, index) => {
     const eventKey = !isNil(datum.eventKey) ? datum.eventKey : index;
-    // console.log(getBarPosition(props, datum));
+
     const { x, y, y0, x0 } = getBarPosition(props, datum);
+
     const dataProps = {
       alignment,
       barRatio,
