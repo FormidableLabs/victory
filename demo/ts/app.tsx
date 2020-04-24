@@ -21,6 +21,7 @@ import TooltipDemo from "./components/victory-tooltip-demo";
 import VictorySelectionContainerDemo from "./components/victory-selection-container-demo";
 import VictorySharedEventsDemo from "./components/victory-shared-events-demo";
 import VoronoiDemo from "./components/victory-voronoi-demo";
+import ZoomContainerDemo from "./components/victory-zoom-container-demo";
 
 const MAP = {
   "/area": { component: AreaDemo, name: "AreaDemo" },
@@ -44,7 +45,8 @@ const MAP = {
     name: "VictorySelectionContainerDemo"
   },
   "/victory-shared-events": { component: VictorySharedEventsDemo, name: "VictorySharedEventsDemo" },
-  "/voronoi": { component: VoronoiDemo, name: "VoronoiDemo" }
+  "/voronoi": { component: VoronoiDemo, name: "VoronoiDemo" },
+  "/zoom-container": { component: ZoomContainerDemo, name: "ZoomContainerDemo" }
 };
 
 class Home extends React.Component {
