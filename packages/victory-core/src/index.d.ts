@@ -597,11 +597,11 @@ export interface VictoryLabelableProps {
 }
 
 export interface VictoryMultiLabelableProps extends VictoryLabelableProps {
-  labels?: string[] | { (data: any): string | null };
+  labels?: string[] | number[] | { (data: any): string | number | null };
 }
 
 export interface VictorySingleLabelableProps extends VictoryLabelableProps {
-  label?: string | { (data: any): string };
+  label?: string | { (data: any): string | number | null };
 }
 
 // #endregion
