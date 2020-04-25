@@ -9,11 +9,11 @@ export interface VictoryZoomContainerProps extends VictoryContainerProps {
   downsample?: number | boolean;
   minimumZoom?: CoordinatesPropType;
   onZoomDomainChange?: (
-    domain: { x?: RangeTuple; y?: RangeTuple },
+    domain: { x?: RangeTuple | [Date, Date]; y?: RangeTuple | [Date, Date] },
     props: VictoryZoomContainerProps
   ) => void;
   zoomDimension?: "x" | "y";
-  zoomDomain?: { x?: RangeTuple; y?: RangeTuple };
+  zoomDomain?: { x?: RangeTuple | [Date, Date]; y?: RangeTuple | [Date, Date] };
 }
 
 export class VictoryZoomContainer extends React.Component<VictoryZoomContainerProps, any> {}
