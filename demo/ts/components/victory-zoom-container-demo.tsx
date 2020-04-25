@@ -13,14 +13,28 @@ import { VictoryScatter } from "@packages/victory-scatter";
 import { VictoryZoomContainer } from "@packages/victory-zoom-container";
 import { VictoryTooltip } from "@packages/victory-tooltip";
 import { VictoryLegend } from "@packages/victory-legend";
-import { VictoryClipContainer, VictoryPortal, VictoryTheme } from "@packages/victory-core";
+import {
+  RangeTuple,
+  VictoryClipContainer,
+  VictoryPortal,
+  VictoryTheme
+} from "@packages/victory-core";
 
 const allData = range(0, 10, 0.001).map((x) => ({
   x,
   y: (Math.sin((Math.PI * x) / 2) * x) / 10
 }));
 
-class CustomChart extends React.Component {
+interface CustomChartProps {
+  data: { x: number; y: number }[];
+  maxPoint: number;
+  style: React.CSSProperties;
+  zoomedXDomain: RangeTuple;
+}
+
+class CustomChart extends React.Component<any, CustomChartProps> {
+  entireDomain?: { x?: RangeTuple; y?: RangeTuple };
+
   static propTypes = {
     data: PropTypes.array,
     maxPoints: PropTypes.number,
@@ -35,7 +49,7 @@ class CustomChart extends React.Component {
     };
   }
 
-  onDomainChange(domain) {
+  onDomainChange(domain: { x?: RangeTuple | [Date, Date]; y?: RangeTuple | [Date, Date] }) {
     this.setState({
       zoomedXDomain: domain.x
     });
@@ -44,22 +58,25 @@ class CustomChart extends React.Component {
   getData() {
     const { zoomedXDomain } = this.state;
     const { data, maxPoints } = this.props;
-    const filtered = data.filter((d) => d.x >= zoomedXDomain[0] && d.x <= zoomedXDomain[1]);
+    const filtered = data.filter(
+      (d: { x: number }) => d.x >= zoomedXDomain[0] && d.x <= zoomedXDomain[1]
+    );
 
     if (filtered.length > maxPoints) {
       const k = Math.ceil(filtered.length / maxPoints);
-      return filtered.filter((d, i) => i % k === 0);
+      return filtered.filter((d: { x: number[] }, i: number) => i % k === 0);
     }
     return filtered;
   }
 
-  getEntireDomain(props) {
+  getEntireDomain(props: any) {
     const { data } = props;
     return {
-      y: [minBy(data, (d) => d.y).y, maxBy(data, (d) => d.y).y],
-      x: [data[0].x, last(data).x]
+      y: [minBy(data, (d: { y: number }) => d.y), maxBy(data, (d: { y: number }) => d.y)],
+      x: [data[0], last(data)]
     };
   }
+
   getZoomFactor() {
     const { zoomedXDomain } = this.state;
     const factor = 10 / (zoomedXDomain[1] - zoomedXDomain[0]);
@@ -86,10 +103,53 @@ class CustomChart extends React.Component {
   }
 }
 
-export default class VictoryZoomContainerDemo extends React.Component<any> {
-  constructor() {
-    super();
+interface VictoryZoomContainerDemoState {
+  arrayData: number[][];
+  barData: {
+    x?: number;
+    y?: number;
+  }[];
+  data: {
+    a?: number;
+    b?: number;
+  }[];
+  style: React.CSSProperties;
+  transitionData: {
+    x?: number;
+    y?: number;
+  }[];
+  zoomDomain: {
+    x?: RangeTuple | [Date, Date] | number[];
+    y?: RangeTuple | [Date, Date] | number[];
+  };
+}
+
+const parentStyle: React.CSSProperties = {
+  border: "1px solid #ccc",
+  margin: "2%",
+  maxWidth: "40%"
+};
+
+const containerStyle: React.CSSProperties = {
+  display: "flex",
+  flexDirection: "row",
+  flexWrap: "wrap",
+  alignItems: "center",
+  justifyContent: "center"
+};
+
+const makeData = () => range(-50, 75).map((i) => ({ x: i, y: Math.random() }));
+
+export default class VictoryZoomContainerDemo extends React.Component<
+  any,
+  VictoryZoomContainerDemoState
+> {
+  setStateInterval?: number = undefined;
+
+  constructor(props: any) {
+    super(props);
     this.state = {
+      barData: makeData(),
       data: this.getData(),
       transitionData: this.getTransitionData(),
       arrayData: this.getArrayData(),
@@ -100,10 +160,6 @@ export default class VictoryZoomContainerDemo extends React.Component<any> {
       zoomDomain: this.getZoomDomain()
     };
   }
-
-  state = {
-    barData: range(-50, 75).map((i) => ({ x: i, y: Math.random() }))
-  };
 
   componentDidMount() {
     /* eslint-disable react/no-did-mount-set-state */
@@ -122,7 +178,7 @@ export default class VictoryZoomContainerDemo extends React.Component<any> {
 
   getZoomDomain() {
     return {
-      y: [random(0, 0.4, 0.1), random(0.6, 1, 0.1)]
+      y: [random(0, 0.4), random(0.6, 1)]
     };
   }
 
@@ -153,15 +209,6 @@ export default class VictoryZoomContainerDemo extends React.Component<any> {
     };
   }
   render() {
-    const parentStyle = { border: "1px solid #ccc", margin: "2%", maxWidth: "40%" };
-    const containerStyle = {
-      display: "flex",
-      flexDirection: "row",
-      flexWrap: "wrap",
-      alignItems: "center",
-      justifyContent: "center"
-    };
-
     return (
       <div className="demo" style={containerStyle}>
         <CustomChart style={{ parent: parentStyle }} data={allData} maxPoints={120} />
@@ -179,7 +226,7 @@ export default class VictoryZoomContainerDemo extends React.Component<any> {
           containerComponent={
             <VictoryZoomContainer
               zoomDomain={{ x: [new Date(1993, 1, 1), new Date(2005, 1, 1)] }}
-              dimension="x"
+              zoomDimension="x"
             />
           }
           scale={{
@@ -317,7 +364,7 @@ export default class VictoryZoomContainerDemo extends React.Component<any> {
             name="line"
             style={{ parent: parentStyle, data: { stroke: "blue" } }}
             y={(d) => Math.sin(2 * Math.PI * d.x)}
-            sample={25}
+            samples={25}
           />
         </VictoryChart>
 
