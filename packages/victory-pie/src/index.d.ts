@@ -1,26 +1,34 @@
 import * as React from "react";
 import {
+  CategoryPropType,
   ColorScalePropType,
   DataGetterPropType,
   EventPropTypeInterface,
+  NumberOrCallback,
+  OriginType,
   SliceNumberOrCallback,
   StringOrNumberOrCallback,
   VictoryCommonProps,
+  VictoryLabelableProps,
   VictoryMultiLabelableProps,
   VictoryStyleInterface
 } from "victory-core";
 
+export type labelPositionType = "startAngle" | "centroid" | "endAngle";
+
+export type innerRadiusType =
+  | number
+  | ((
+      props: {
+        active?: boolean;
+        datum?: any;
+      }
+    ) => number);
+
 export interface VictorySliceProps extends VictoryCommonProps {
   cornerRadius?: SliceNumberOrCallback<VictorySliceProps, "cornerRadius">;
   datum?: any;
-  innerRadius?:
-    | number
-    | ((
-        props: {
-          active?: boolean;
-          datum?: any;
-        }
-      ) => number);
+  innerRadius?: innerRadiusType;
   padAngle?: SliceNumberOrCallback<VictorySliceProps, "padAngle">;
   pathComponent?: React.ReactElement;
   pathFunction?: (props: VictorySliceProps) => string;
@@ -35,22 +43,27 @@ export interface VictorySliceProps extends VictoryCommonProps {
   sliceStartAngle?: SliceNumberOrCallback<VictorySliceProps, "sliceStartAngle">;
 }
 
-export interface VictoryPieProps extends VictoryCommonProps, VictoryMultiLabelableProps {
+export interface VictoryPieProps
+  extends VictoryCommonProps,
+    VictoryLabelableProps,
+    VictoryMultiLabelableProps {
+  categories?: CategoryPropType;
   colorScale?: ColorScalePropType;
+  cornerRadius?: number;
   data?: any[];
   dataComponent?: React.ReactElement;
-  labelPosition?: "startAngle" | "centroid" | "endAngle" | ((props: VictorySliceProps) => string);
-  labelRadius?: number | ((props: VictorySliceProps) => number);
   endAngle?: number;
   events?: EventPropTypeInterface<
     "data" | "labels" | "parent",
     StringOrNumberOrCallback | string[] | number[]
   >[];
   eventKey?: StringOrNumberOrCallback;
-  radius?: number | ((props: VictorySliceProps) => number);
-  innerRadius?: number | ((props: VictorySliceProps) => number);
-  cornerRadius?: number;
-  padAngle?: number;
+  innerRadius?: innerRadiusType;
+  labelPosition?: labelPositionType | ((props: VictorySliceProps) => labelPositionType);
+  labelRadius?: number | ((props: VictorySliceProps) => number);
+  origin?: OriginType;
+  padAngle?: NumberOrCallback;
+  radius?: NumberOrCallback;
   startAngle?: number;
   style?: VictoryStyleInterface;
   x?: DataGetterPropType;
