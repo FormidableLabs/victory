@@ -2,19 +2,22 @@ import * as React from "react";
 import {
   EventPropTypeInterface,
   InterpolationPropType,
+  OriginType,
+  StringOrNumberOrCallback,
   VictoryCommonProps,
   VictoryDatableProps,
-  VictorySingleLabelableProps,
+  VictoryMultiLabelableProps,
   VictoryStyleInterface
 } from "victory-core";
 
 export interface VictoryAreaProps
   extends VictoryCommonProps,
     VictoryDatableProps,
-    VictorySingleLabelableProps {
+    VictoryMultiLabelableProps {
+  eventKey?: string[] | number[] | StringOrNumberOrCallback;
   events?: EventPropTypeInterface<"data" | "labels" | "parent", string | number>[];
   interpolation?: InterpolationPropType;
-  labels?: string[] | number[] | Function;
+  origin?: OriginType;
   samples?: number;
   style?: VictoryStyleInterface;
 }
