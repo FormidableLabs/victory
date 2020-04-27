@@ -3,6 +3,7 @@ import {
   OrientationTypes,
   NumberOrCallback,
   StringOrNumberOrCallback,
+  VictoryCommonProps,
   VictoryLabelableProps,
   VictoryNumberCallback,
   VictoryThemeDefinition,
