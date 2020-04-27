@@ -3,14 +3,13 @@ import {
   OrientationTypes,
   NumberOrCallback,
   StringOrNumberOrCallback,
-  VictoryCommonProps,
   VictoryLabelableProps,
   VictoryNumberCallback,
   VictoryThemeDefinition,
   VictoryStyleObject
 } from "victory-core";
 
-export interface VictoryTooltipProps extends VictoryCommonProps, VictoryLabelableProps {
+export interface VictoryTooltipProps extends VictoryLabelableProps {
   active?: boolean;
   activateData?: boolean;
   activePoints?: any[];
@@ -26,6 +25,9 @@ export interface VictoryTooltipProps extends VictoryCommonProps, VictoryLabelabl
   data?: any[];
   dx?: NumberOrCallback;
   dy?: NumberOrCallback;
+  groupComponent?: React.ReactElement;
+  height?: number;
+  horizontal?: boolean;
   events?: { [key: string]: (event: React.SyntheticEvent<any>) => void };
   flyoutHeight?: NumberOrCallback;
   flyoutWidth?: NumberOrCallback;
