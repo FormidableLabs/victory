@@ -42,6 +42,7 @@ export interface VictoryTooltipProps extends VictoryLabelableProps {
   renderInPortal?: boolean;
   style?: React.CSSProperties;
   text?: StringOrNumberOrCallback | string[] | number[];
+  width?: number;
   x?: number;
   y?: number;
 }
