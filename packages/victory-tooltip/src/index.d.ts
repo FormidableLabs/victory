@@ -68,7 +68,6 @@ export interface FlyoutProps extends VictoryCommonProps {
   pathComponent?: React.ReactElement;
   pointerLength?: number;
   pointerWidth?: number;
-  polar?: boolean;
   role?: string;
   shapeRendering?: string;
   style?: VictoryStyleObject;

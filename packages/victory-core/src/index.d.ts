@@ -149,7 +149,9 @@ export type TickLabelProps = React.CSSProperties & {
 export interface VictoryAxisCommonProps {
   axisComponent?: React.ReactElement;
   axisLabelComponent?: React.ReactElement;
+  axisValue?: number | string | object | Date;
   dependentAxis?: boolean;
+  gridComponent?: React.ReactElement;
   invertAxis?: boolean;
   style?: {
     parent?: {
@@ -540,6 +542,7 @@ export interface VictoryCommonProps {
   minDomain?: number | { x?: number; y?: number };
   name?: string;
   padding?: PaddingProps;
+  polar?: boolean;
   range?: RangePropType;
   scale?:
     | ScalePropType
@@ -596,7 +599,7 @@ export interface VictoryLabelableProps {
 }
 
 export interface VictoryMultiLabelableProps extends VictoryLabelableProps {
-  labels?: string[] | { (data: any): string | number | null };
+  labels?: string[] | number[] | { (data: any): string | number | null };
 }
 
 export interface VictorySingleLabelableProps extends VictoryLabelableProps {
