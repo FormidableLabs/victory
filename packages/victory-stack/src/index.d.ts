@@ -5,20 +5,26 @@ import {
   DomainPaddingPropType,
   DomainPropType,
   EventPropTypeInterface,
+  OriginType,
   StringOrNumberOrCallback,
   VictoryCommonProps,
+  VictoryLabelableProps,
   VictoryMultiLabelableProps,
   VictoryStyleInterface
 } from "victory-core";
 
-export interface VictoryStackProps extends VictoryCommonProps, VictoryMultiLabelableProps {
+export interface VictoryStackProps
+  extends VictoryCommonProps,
+    VictoryLabelableProps,
+    VictoryMultiLabelableProps {
   categories?: CategoryPropType;
+  children?: React.ReactNode | React.ReactNode[];
   colorScale?: ColorScalePropType;
   domain?: DomainPropType;
-  domainPadding?: DomainPaddingPropType;
   events?: EventPropTypeInterface<"data" | "labels" | "parent", StringOrNumberOrCallback>[];
   eventKey?: StringOrNumberOrCallback;
-  horizontal?: boolean;
+  fillInMissingData?: boolean;
+  origin?: OriginType;
   style?: VictoryStyleInterface;
   xOffset?: number;
 }
