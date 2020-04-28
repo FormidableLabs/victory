@@ -82,19 +82,19 @@ export class VictoryHistogram extends React.Component {
     "containerComponent"
   ];
 
-  get accessor() {
-    return (d) => d.x;
-  }
+  // get accessor() {
+  //   return (d) => d.x;
+  // }
 
-  get scale() {
-    const scale = d3Scale
-      .scaleLinear()
-      .domain(d3Array.extent(this.props.data, this.accessor))
-      .nice()
-      .domain();
+  // get scale() {
+  //   const scale = d3Scale
+  //     .scaleLinear()
+  //     .domain(d3Array.extent(this.props.data, this.accessor))
+  //     .nice()
+  //     .domain();
 
-    return scale;
-  }
+  //   return scale;
+  // }
 
   get data() {
     const { bins } = this.props;

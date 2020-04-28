@@ -62,7 +62,6 @@ const getDomain = (props, axis) => {
     const firstBin = data[0];
     const lastBin = data[data.length - 1];
 
-    console.log([firstBin.x, lastBin.end]);
     return [firstBin.x, lastBin.end];
   }
 
@@ -72,9 +71,7 @@ const getDomain = (props, axis) => {
 const getCalculatedValues = (props) => {
   const { theme } = props;
   const defaultStyles =
-    theme && theme.histogram && theme.histogram.style
-      ? theme.histogram.style
-      : { data: { stroke: "black", fill: "gold" } };
+    theme && theme.histogram && theme.histogram.style ? theme.histogram.style : {};
   const style = Helpers.getStyles(props.style, defaultStyles);
 
   const data = Data.getData(props);
@@ -85,8 +82,8 @@ const getCalculatedValues = (props) => {
   };
 
   const domain = props.domain || {
-    x: Domain.getDomainWithZero(props, "x"),
-    y: Domain.getDomainWithZero(props, "y")
+    x: getDomain(props, "x"),
+    y: getDomain(props, "y")
   };
 
   const scale = {
@@ -151,7 +148,7 @@ const getBaseProps = (props, fallbackProps) => {
     const eventKey = !isNil(datum.eventKey) ? datum.eventKey : index;
 
     const { x, y, y0, x0 } = getBarPosition(props, datum);
-
+    console.log({ x, y, y0, x0 });
     const barWidth = (() => {
       if (barSpacing) {
         return getDistance(datum) - barSpacing;

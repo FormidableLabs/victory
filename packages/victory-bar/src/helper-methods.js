@@ -1,5 +1,5 @@
 import { assign, isNil } from "lodash";
-import { Helpers, LabelHelpers, Data, Domain, Scale, Collection } from "victory-core";
+import { Helpers, LabelHelpers, Data, Domain, Scale, Collection } from "../../victory-core/src";
 
 const getBarPosition = (props, datum) => {
   const getDefaultMin = (axis) => {
@@ -19,7 +19,6 @@ const getBarPosition = (props, datum) => {
   };
   const _y0 = datum._y0 !== undefined ? datum._y0 : getDefaultMin("y");
   const _x0 = datum._x0 !== undefined ? datum._x0 : getDefaultMin("x");
-
   return Helpers.scalePoint(props, assign({}, datum, { _y0, _x0 }));
 };
 
