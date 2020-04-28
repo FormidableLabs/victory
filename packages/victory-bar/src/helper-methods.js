@@ -133,4 +133,4 @@ const getBaseProps = (props, fallbackProps) => {
   }, initialChildProps);
 };
 
-export { getBaseProps };
+export { getBaseProps, getBarPosition };

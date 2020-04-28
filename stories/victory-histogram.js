@@ -8,8 +8,132 @@ import { VictoryHistogram } from "../packages/victory-histogram/src/index";
 import { VictoryTheme } from "../packages/victory-core/src/index";
 import { getChartDecorator } from "./decorators";
 
+const data = [
+  {
+    x: 18
+  },
+  {
+    x: 85
+  },
+  {
+    x: 27
+  },
+  {
+    x: 62
+  },
+  {
+    x: 26
+  },
+  {
+    x: 90
+  },
+  {
+    x: 85
+  },
+  {
+    x: 60
+  },
+  {
+    x: 85
+  },
+  {
+    x: 21
+  },
+  {
+    x: 86
+  },
+  {
+    x: 89
+  },
+  {
+    x: 60
+  },
+  {
+    x: 82
+  },
+  {
+    x: 70
+  },
+  {
+    x: 22
+  },
+  {
+    x: 68
+  },
+  {
+    x: 79
+  },
+  {
+    x: 18
+  },
+  {
+    x: 76
+  },
+  {
+    x: 32
+  },
+  {
+    x: 26
+  },
+  {
+    x: 18
+  },
+  {
+    x: 63
+  },
+  {
+    x: 71
+  },
+  {
+    x: 98
+  },
+  {
+    x: 91
+  },
+  {
+    x: 22
+  },
+  {
+    x: 25
+  },
+  {
+    x: 91
+  },
+  {
+    x: 18
+  },
+  {
+    x: 49
+  },
+  {
+    x: 18
+  },
+  {
+    x: 79
+  },
+  {
+    x: 56
+  },
+  {
+    x: 18
+  },
+  {
+    x: 18
+  },
+  {
+    x: 28
+  },
+  {
+    x: 79
+  },
+  {
+    x: 44
+  }
+];
+
 storiesOf("VictoryHistogram", module).add("default rendering", () => <VictoryHistogram />);
 
+/* VERTICAL */
 storiesOf("VictoryHistogram.vertical.barSpacing", module)
   .addDecorator(getChartDecorator({ theme: VictoryTheme.grayscale }))
   .add("bar spacing = 10", () => <VictoryHistogram barSpacing={10} />)
@@ -25,17 +149,13 @@ storiesOf("VictoryHistogram.vertical.bins", module)
     <VictoryHistogram bins={[0, 20, 30, 70, 100]} />
   ));
 
-storiesOf("VictoryHistogram.horizontal.styles", module)
+storiesOf("VictoryHistogram.vertical.styles", module)
   .addDecorator(getChartDecorator({ theme: VictoryTheme.grayscale }))
   .add("with styles", () => (
-    <VictoryHistogram
-      horizontal
-      style={{ data: { transform: "translate(0px, -20px) skew(2deg, 2deg)" } }}
-    />
+    <VictoryHistogram style={{ data: { transform: "translate(0px, -20px) skew(2deg, 2deg)" } }} />
   ));
 
 /* HORIZONTAL */
-
 storiesOf("VictoryHistogram.horizontal.barSpacing", module)
   .addDecorator(getChartDecorator({ theme: VictoryTheme.grayscale }))
   .add("bar spacing = 10", () => <VictoryHistogram horizontal barSpacing={10} />)

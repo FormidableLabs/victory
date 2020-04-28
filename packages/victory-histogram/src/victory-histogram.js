@@ -34,16 +34,10 @@ export class VictoryHistogram extends React.Component {
   static role = "histogram";
 
   static propTypes = {
-    barSpacing: PropTypes.number,
-    barWidth: PropTypes.oneOfType([PropTypes.number, PropTypes.func]),
-    bins: PropTypes.oneOfType([PropTypes.arrayOf(PropTypes.number), PropTypes.number]),
-    data: PropTypes.any,
-    style: PropTypes.any,
     ...CommonProps.baseProps,
     ...CommonProps.dataProps,
-    alignment: PropTypes.oneOf(["start", "middle", "end"]),
-    barRatio: PropTypes.number,
-    barWidth: PropTypes.oneOfType([PropTypes.number, PropTypes.func]),
+    barSpacing: PropTypes.number,
+    bins: PropTypes.oneOfType([PropTypes.arrayOf(PropTypes.number), PropTypes.number]),
     cornerRadius: PropTypes.oneOfType([
       PropTypes.number,
       PropTypes.func,
@@ -81,83 +75,6 @@ export class VictoryHistogram extends React.Component {
     "groupComponent",
     "containerComponent"
   ];
-
-  // get accessor() {
-  //   return (d) => d.x;
-  // }
-
-  // get scale() {
-  //   const scale = d3Scale
-  //     .scaleLinear()
-  //     .domain(d3Array.extent(this.props.data, this.accessor))
-  //     .nice()
-  //     .domain();
-
-  //   return scale;
-  // }
-
-  get data() {
-    const { bins } = this.props;
-    const bin1 = d3Array.bin().value(this.accessor);
-    bin1.domain(this.scale.domain());
-
-    if (bins) {
-      bin1.thresholds(bins);
-    }
-
-    const binnedData = bin1(this.props.data);
-
-    const formattedData = binnedData.map((bin) => ({
-      x: bin.x0,
-      end: bin.x1,
-      y: bin.length
-    }));
-
-    return formattedData;
-  }
-
-  getDistance = ({ scale, datum }) => {
-    const current = scale.x(datum.x);
-    const next = scale.x(datum.end);
-
-    return Math.abs(next - current);
-  };
-
-  brender() {
-    const { barWidth, barSpacing, horizontal } = this.props;
-
-    return (
-      <VictoryChart>
-        <VictoryBar
-          {...this.props}
-          domain={{ x: this.scale.domain() }}
-          data={this.data}
-          barWidth={(props) => {
-            if (barSpacing) {
-              return this.getDistance(props) - barSpacing;
-            }
-
-            return this.getDistance(props);
-          }}
-          alignment="start"
-          style={{
-            ...this.props.style
-          }}
-          barOffset={(props) => {
-            if (barSpacing) {
-              const distance = barSpacing / 2;
-              return [distance, 0];
-            }
-
-            return [0, 0];
-          }}
-        />
-
-        <VictoryAxis />
-        <VictoryAxis dependentAxis />
-      </VictoryChart>
-    );
-  }
 
   // Overridden in native versions
   shouldAnimate() {
