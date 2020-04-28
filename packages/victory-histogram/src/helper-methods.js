@@ -1,9 +1,9 @@
 import { assign, isNil } from "lodash";
 import { Helpers, LabelHelpers, Data, Domain, Scale, Collection } from "../../victory-core/src";
 import * as d3Array from "d3-array";
+import * as d3Scale from "d3-scale";
 
 const getBarPosition = (props, datum) => {
-  console.log(datum);
   const getDefaultMin = (axis) => {
     const defaultZero =
       Scale.getType(props.scale[axis]) === "log" ? 1 / Number.MAX_SAFE_INTEGER : 0;
@@ -30,12 +30,20 @@ const getData = (props) => {
   const xAccesssor = Helpers.createAccessor(props.x || "x");
   const bin1 = d3Array.bin().value(xAccesssor);
 
+  const scale = d3Scale
+    .scaleLinear()
+    .domain(d3Array.extent(data, xAccesssor))
+    .nice();
+
+  bin1.domain(scale.domain());
+
   if (bins) {
+    console.log({ bins });
     bin1.thresholds(bins);
   }
 
   const binnedData = bin1(data);
-
+  console.log(binnedData);
   const formattedData = binnedData.map((bin) => ({
     x: bin.x0,
     end: bin.x1,
@@ -48,13 +56,26 @@ const getData = (props) => {
 const getDomain = (props, axis) => {
   const data = getData(props);
 
+  if (!data.length) {
+    return [0, 0];
+  }
+
+  if (axis === "x") {
+    const firstBin = data[0];
+    const lastBin = data[data.length - 1];
+
+    return [firstBin.x, lastBin.end];
+  }
+
   return Domain.getDomainWithZero({ ...props, data }, axis);
 };
 
 const getCalculatedValues = (props) => {
   const { theme } = props;
   const defaultStyles =
-    theme && theme.histogram && theme.histogram.style ? theme.histogram.style : {};
+    theme && theme.histogram && theme.histogram.style
+      ? theme.histogram.style
+      : { data: { stroke: "black", fill: "gold" } };
   const style = Helpers.getStyles(props.style, defaultStyles);
 
   const data = Data.getData(props);
@@ -84,9 +105,10 @@ const getCalculatedValues = (props) => {
 const getBaseProps = (props, fallbackProps) => {
   const modifiedProps = Helpers.modifyProps(props, fallbackProps, "histogram");
   props = assign({}, modifiedProps, getCalculatedValues(modifiedProps));
+  const data = getData(props);
 
   const {
-    alignment,
+    barSpacing,
     cornerRadius,
     domain,
     events,
@@ -101,7 +123,6 @@ const getBaseProps = (props, fallbackProps) => {
     width,
     labels,
     name,
-    barOffset,
     getPath
   } = props;
   const initialChildProps = {
@@ -120,15 +141,38 @@ const getBaseProps = (props, fallbackProps) => {
     }
   };
 
-  const data = getData(props);
+  const getDistance = (datum) => {
+    const current = scale.x(datum.x);
+    const next = scale.x(datum.end);
+
+    return Math.abs(next - current);
+  };
 
   return data.reduce((childProps, datum, index) => {
     const eventKey = !isNil(datum.eventKey) ? datum.eventKey : index;
 
     const { x, y, y0, x0 } = getBarPosition(props, datum);
 
+    const barWidth = (() => {
+      if (barSpacing) {
+        return getDistance(datum) - barSpacing;
+      }
+
+      return getDistance(datum);
+    })();
+
+    const barOffset = (() => {
+      if (barSpacing) {
+        const distance = barSpacing / 2;
+        return [distance, 0];
+      }
+
+      return [0, 0];
+    })();
+
     const dataProps = {
-      alignment,
+      alignment: "start",
+      barWidth,
       cornerRadius,
       data,
       datum,

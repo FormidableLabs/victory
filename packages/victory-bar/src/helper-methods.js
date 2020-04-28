@@ -96,7 +96,6 @@ const getBaseProps = (props, fallbackProps) => {
 
   return data.reduce((childProps, datum, index) => {
     const eventKey = !isNil(datum.eventKey) ? datum.eventKey : index;
-
     const { x, y, y0, x0 } = getBarPosition(props, datum);
 
     const dataProps = {

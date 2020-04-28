@@ -149,6 +149,18 @@ export default {
     },
     baseProps
   ),
+  histogram: assign(
+    {
+      style: {
+        data: {
+          stroke: "black",
+          fill: "gold",
+          strokeWidth: 2
+        }
+      }
+    },
+    baseProps
+  ),
   legend: {
     colorScale: colors,
     gutter: 10,

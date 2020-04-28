@@ -23,7 +23,7 @@ const fallbackProps = {
 };
 
 const defaultData = Array.from({ length: 40 }, () => ({
-  x: Math.floor(Math.random() * 100)
+  x: Math.max(18, Math.floor(Math.random() * 100))
 }));
 
 export class VictoryHistogram extends React.Component {
@@ -90,7 +90,8 @@ export class VictoryHistogram extends React.Component {
     const scale = d3Scale
       .scaleLinear()
       .domain(d3Array.extent(this.props.data, this.accessor))
-      .nice();
+      .nice()
+      .domain();
 
     return scale;
   }
@@ -132,9 +133,7 @@ export class VictoryHistogram extends React.Component {
           domain={{ x: this.scale.domain() }}
           data={this.data}
           barWidth={(props) => {
-            if (barWidth) {
-              return Helpers.evaluateProp(barWidth, props);
-            } else if (barSpacing) {
+            if (barSpacing) {
               return this.getDistance(props) - barSpacing;
             }
 
@@ -142,20 +141,10 @@ export class VictoryHistogram extends React.Component {
           }}
           alignment="start"
           style={{
-            ...this.props.style,
-            data: {
-              strokeWidth: 2,
-              stroke: "black",
-              fill: "gold",
-              ...(this.props.style && this.props.style.data)
-            }
+            ...this.props.style
           }}
           barOffset={(props) => {
-            if (barWidth) {
-              const distance =
-                this.getDistance(props) / 2 - Helpers.evaluateProp(barWidth, props) / 2;
-              return [distance, 0];
-            } else if (barSpacing) {
+            if (barSpacing) {
               const distance = barSpacing / 2;
               return [distance, 0];
             }
