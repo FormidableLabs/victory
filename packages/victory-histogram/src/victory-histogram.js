@@ -1,9 +1,18 @@
 import React from "react";
 import PropTypes from "prop-types";
-import { VictoryBar } from "../../victory-bar/src";
+import { VictoryBar, Bar } from "../../victory-bar/src";
 import { VictoryAxis } from "../../victory-axis/src";
 import { VictoryChart } from "../../victory-chart/src";
-import { Helpers } from "../../victory-core/src";
+import {
+  Helpers,
+  VictoryLabel,
+  VictoryContainer,
+  VictoryTheme,
+  CommonProps,
+  Domain,
+  addEvents
+} from "../../victory-core/src";
+import { getBaseProps, getData, getDomain } from "./helper-methods";
 import * as d3Array from "d3-array";
 import * as d3Scale from "d3-scale";
 
@@ -13,147 +22,65 @@ const fallbackProps = {
   padding: 50
 };
 
-// const defaultData = Array.from({ length: 40 }, () => ({
-//   x: Math.floor(Math.random() * 100)
-// }));
-
-const defaultData = [
-  {
-    x: 3
-  },
-  { x: 0 },
-  {
-    x: 9
-  },
-  {
-    x: 63
-  },
-  {
-    x: 9
-  },
-  {
-    x: 92
-  },
-  {
-    x: 67
-  },
-  {
-    x: 40
-  },
-  {
-    x: 56
-  },
-  {
-    x: 4
-  },
-  {
-    x: 15
-  },
-  {
-    x: 47
-  },
-  {
-    x: 74
-  },
-  {
-    x: 86
-  },
-  {
-    x: 91
-  },
-  {
-    x: 87
-  },
-  {
-    x: 15
-  },
-  {
-    x: 96
-  },
-  {
-    x: 34
-  },
-  {
-    x: 84
-  },
-  {
-    x: 92
-  },
-  {
-    x: 70
-  },
-  {
-    x: 89
-  },
-  {
-    x: 80
-  },
-  {
-    x: 37
-  },
-  {
-    x: 35
-  },
-  {
-    x: 19
-  },
-  {
-    x: 20
-  },
-  {
-    x: 55
-  },
-  {
-    x: 57
-  },
-  {
-    x: 28
-  },
-  {
-    x: 34
-  },
-  {
-    x: 23
-  },
-  {
-    x: 55
-  },
-  {
-    x: 48
-  },
-  {
-    x: 20
-  },
-  {
-    x: 89
-  },
-  {
-    x: 72
-  },
-  {
-    x: 10
-  },
-  {
-    x: 63
-  },
-  {
-    x: 46
-  }
-  // { x: 100 }
-];
+const defaultData = Array.from({ length: 40 }, () => ({
+  x: Math.floor(Math.random() * 100)
+}));
 
 export class VictoryHistogram extends React.Component {
+  static animationWhitelist = ["data", "domain", "height", "padding", "style", "width"];
+
+  static displayName = "VictoryHistogram";
+
+  static role = "histogram";
+
   static propTypes = {
     barSpacing: PropTypes.number,
-    barWidth: PropTypes.number,
+    barWidth: PropTypes.oneOfType([PropTypes.number, PropTypes.func]),
     bins: PropTypes.oneOfType([PropTypes.arrayOf(PropTypes.number), PropTypes.number]),
     data: PropTypes.any,
-    style: PropTypes.any
+    style: PropTypes.any,
+    ...CommonProps.baseProps,
+    ...CommonProps.dataProps,
+    alignment: PropTypes.oneOf(["start", "middle", "end"]),
+    barRatio: PropTypes.number,
+    barWidth: PropTypes.oneOfType([PropTypes.number, PropTypes.func]),
+    cornerRadius: PropTypes.oneOfType([
+      PropTypes.number,
+      PropTypes.func,
+      PropTypes.shape({
+        top: PropTypes.oneOfType([PropTypes.number, PropTypes.func]),
+        topLeft: PropTypes.oneOfType([PropTypes.number, PropTypes.func]),
+        topRight: PropTypes.oneOfType([PropTypes.number, PropTypes.func]),
+        bottom: PropTypes.oneOfType([PropTypes.number, PropTypes.func]),
+        bottomLeft: PropTypes.oneOfType([PropTypes.number, PropTypes.func]),
+        bottomRight: PropTypes.oneOfType([PropTypes.number, PropTypes.func])
+      })
+    ]),
+    getPath: PropTypes.func,
+    horizontal: PropTypes.bool
   };
 
   static defaultProps = {
-    data: defaultData
+    containerComponent: <VictoryContainer />,
+    data: defaultData,
+    dataComponent: <Bar />,
+    groupComponent: <g role="presentation" />,
+    labelComponent: <VictoryLabel />,
+    samples: 50,
+    sortOrder: "ascending",
+    standalone: true,
+    theme: VictoryTheme.grayscale
   };
+
+  static getDomain = getDomain;
+  static getData = getData;
+  static getBaseProps = (props) => getBaseProps(props, fallbackProps);
+  static expectedComponents = [
+    "dataComponent",
+    "labelComponent",
+    "groupComponent",
+    "containerComponent"
+  ];
 
   get accessor() {
     return (d) => d.x;
@@ -195,7 +122,7 @@ export class VictoryHistogram extends React.Component {
     return Math.abs(next - current);
   };
 
-  render() {
+  brender() {
     const { barWidth, barSpacing, horizontal } = this.props;
 
     return (
@@ -242,6 +169,23 @@ export class VictoryHistogram extends React.Component {
       </VictoryChart>
     );
   }
+
+  // Overridden in native versions
+  shouldAnimate() {
+    return !!this.props.animate;
+  }
+
+  render() {
+    const { animationWhitelist, role } = VictoryHistogram;
+    const props = Helpers.modifyProps(this.props, fallbackProps, role);
+
+    if (this.shouldAnimate()) {
+      return this.animateComponent(props, animationWhitelist);
+    }
+
+    const children = this.renderData(props);
+    return props.standalone ? this.renderContainer(props.containerComponent, children) : children;
+  }
 }
 
-export default VictoryHistogram;
+export default addEvents(VictoryHistogram);

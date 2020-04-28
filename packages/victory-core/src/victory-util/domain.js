@@ -381,6 +381,7 @@ function isDomainComponent(component) {
     "candlestick",
     "errorbar",
     "group",
+    "histogram",
     "line",
     "pie",
     "scatter",

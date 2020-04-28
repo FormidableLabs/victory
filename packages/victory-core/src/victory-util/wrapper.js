@@ -47,9 +47,11 @@ export default {
 
   getDomain(props, axis, childComponents) {
     childComponents = childComponents || React.Children.toArray(props.children);
+
     const propsDomain = Domain.getDomainFromProps(props, axis);
     const domainPadding = this.getDefaultDomainPadding(props, axis, childComponents);
     let domain;
+
     if (propsDomain) {
       domain = propsDomain;
     } else {
