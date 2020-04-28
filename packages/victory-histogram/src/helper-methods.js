@@ -38,12 +38,10 @@ const getData = (props) => {
   bin1.domain(scale.domain());
 
   if (bins) {
-    console.log({ bins });
     bin1.thresholds(bins);
   }
 
-  const binnedData = bin1(data);
-  console.log(binnedData);
+  const binnedData = bin1(data).filter(({ x0, x1 }) => x0 !== x1);
   const formattedData = binnedData.map((bin) => ({
     x: bin.x0,
     end: bin.x1,
@@ -64,6 +62,7 @@ const getDomain = (props, axis) => {
     const firstBin = data[0];
     const lastBin = data[data.length - 1];
 
+    console.log([firstBin.x, lastBin.end]);
     return [firstBin.x, lastBin.end];
   }
 

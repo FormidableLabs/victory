@@ -19,7 +19,7 @@ storiesOf("VictoryHistogram.vertical.bins", module)
   .addDecorator(getChartDecorator({ theme: VictoryTheme.grayscale }))
   .add("numeric bins = 2", () => <VictoryHistogram bins={2} />)
   .add("numeric bins = 8", () => <VictoryHistogram bins={8} />)
-  .add("numeric bins = 100", () => <VictoryHistogram bins={100} />)
+  .add("numeric bins = 40", () => <VictoryHistogram bins={40} />)
   .add("custom bins/edges = [0, 30, 50, 100]", () => <VictoryHistogram bins={[0, 30, 50, 100]} />)
   .add("custom bins/edges = [0, 20, 30, 70, 100]", () => (
     <VictoryHistogram bins={[0, 20, 30, 70, 100]} />
@@ -45,7 +45,7 @@ storiesOf("VictoryHistogram.horizontal.bins", module)
   .addDecorator(getChartDecorator({ theme: VictoryTheme.grayscale }))
   .add("numeric bins = 2", () => <VictoryHistogram horizontal bins={2} />)
   .add("numeric bins = 8", () => <VictoryHistogram bins={8} />)
-  .add("numeric bins = 100", () => <VictoryHistogram horizontal bins={100} />)
+  .add("numeric bins = 40", () => <VictoryHistogram horizontal bins={40} />)
   .add("custom bins/edges = [0, 30, 50, 100]", () => (
     <VictoryHistogram horizontal bins={[0, 30, 50, 100]} />
   ))
