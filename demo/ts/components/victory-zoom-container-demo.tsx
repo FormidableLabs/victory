@@ -25,15 +25,12 @@ const allData = range(0, 10, 0.001).map((x) => ({
   y: (Math.sin((Math.PI * x) / 2) * x) / 10
 }));
 
-interface CustomChartProps {
-  data: { x: number; y: number }[];
-  maxPoint: number;
-  style: React.CSSProperties;
+interface CustomChartState {
   zoomedXDomain: RangeTuple;
 }
 
-class CustomChart extends React.Component<any, CustomChartProps> {
-  entireDomain?: { x?: RangeTuple; y?: RangeTuple };
+class CustomChart extends React.Component<any, CustomChartState> {
+  entireDomain: { x: RangeTuple; y: RangeTuple };
 
   static propTypes = {
     data: PropTypes.array,
@@ -49,7 +46,7 @@ class CustomChart extends React.Component<any, CustomChartProps> {
     };
   }
 
-  onDomainChange(domain: { x?: RangeTuple | [Date, Date]; y?: RangeTuple | [Date, Date] }) {
+  onDomainChange(domain: { x: RangeTuple; y: RangeTuple }) {
     this.setState({
       zoomedXDomain: domain.x
     });
@@ -69,11 +66,24 @@ class CustomChart extends React.Component<any, CustomChartProps> {
     return filtered;
   }
 
-  getEntireDomain(props: any) {
-    const { data } = props;
+  getEntireDomain(props: { data: { x: RangeTuple; y: RangeTuple }[] }) {
+    const { data }: { data: { x: RangeTuple; y: RangeTuple }[] } = props;
+
+    const minPoint = minBy(data, (d: { x: RangeTuple; y: RangeTuple }) => d.y);
+    const yMin = minPoint ? minPoint.y : 0;
+
+    const maxPoint = maxBy(data, (d: { x: RangeTuple; y: RangeTuple }) => d.y);
+    const yMax = maxPoint ? maxPoint.y : 0;
+
+    const lastPoint = last(data);
+    const xLast = lastPoint ? lastPoint.x : 0;
+
+    const yArr: RangeTuple = [yMin, yMax];
+    const xArr: RangeTuple = [data[0].x, xLast];
+
     return {
-      y: [minBy(data, (d: { y: number }) => d.y), maxBy(data, (d: { y: number }) => d.y)],
-      x: [data[0], last(data)]
+      y: yArr,
+      x: xArr
     };
   }
 
@@ -106,21 +116,21 @@ class CustomChart extends React.Component<any, CustomChartProps> {
 interface VictoryZoomContainerDemoState {
   arrayData: number[][];
   barData: {
-    x?: number;
-    y?: number;
+    x: number;
+    y: number;
   }[];
   data: {
-    a?: number;
-    b?: number;
+    a: number;
+    b: number;
   }[];
   style: React.CSSProperties;
   transitionData: {
-    x?: number;
-    y?: number;
+    x: number;
+    y: number;
   }[];
   zoomDomain: {
-    x?: RangeTuple | [Date, Date] | number[];
-    y?: RangeTuple | [Date, Date] | number[];
+    x?: RangeTuple;
+    y?: RangeTuple;
   };
 }
 
