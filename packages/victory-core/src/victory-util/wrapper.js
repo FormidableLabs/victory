@@ -82,7 +82,6 @@ export default {
     const childScale = uniq(Helpers.reduceChildren(children, iteratee, props));
     // default to linear scale if more than one uniq scale type is given by children
 
-    console.log("or here???");
     return childScale.length > 1
       ? Scale.getScaleFromName("linear")
       : Scale.getScaleFromName(childScale[0]);
@@ -170,6 +169,7 @@ export default {
 
   getDomainFromChildren(props, axis, childComponents) {
     // eslint-disable-line max-statements, complexity, max-len
+    console.log("here bruh in getDomainFromChildsss");
     const children = childComponents
       ? childComponents.slice(0)
       : React.Children.toArray(props.children);

@@ -9,12 +9,9 @@ import {
   VictoryContainer,
   VictoryTheme,
   CommonProps,
-  Domain,
   addEvents
 } from "../../victory-core/src";
 import { getBaseProps, getData, getDomain } from "./helper-methods";
-import * as d3Array from "d3-array";
-import * as d3Scale from "d3-scale";
 
 const fallbackProps = {
   width: 450,

@@ -4,27 +4,117 @@ import { getBarPosition } from "../../victory-bar/src/helper-methods";
 import * as d3Array from "d3-array";
 import * as d3Scale from "d3-scale";
 
-const getData = (props) => {
-  const { bins, data } = props;
-  const xAccessor = Helpers.createAccessor(props.x || "x");
-  const bin = d3Array.bin().value(xAccessor);
+const addDays = (date, days) => {
+  const result = new Date(date);
+  result.setDate(result.getDate() + days);
+  return result;
+};
 
-  const scale = d3Scale
+const addMonths = (date, months) => {
+  const result = new Date(date);
+  result.setMonth(result.getMonth() + months);
+  return result;
+};
+
+const addYears = (date, years) => {
+  const result = new Date(date);
+  result.setFullYear(result.getFullYear() + years);
+  return result;
+};
+
+const getNextDate = (date, strategy) => {
+  if (strategy === "month") {
+    return addMonths(date, 1);
+  } else if (strategy === "year") {
+    return addYears(date, 1);
+  }
+
+  return addDays(date, 1);
+};
+
+const resetDate = (date, strategy) => {
+  const newDate = new Date(date);
+  if (strategy === "day") {
+    newDate.setHours(0, 0, 0, 0);
+  } else if (strategy === "month") {
+    newDate.setHours(0, 0, 0, 0);
+    newDate.setDate(1);
+  } else {
+    newDate.setHours(0, 0, 0, 0);
+    newDate.setDate(1);
+    newDate.setMonth(0);
+  }
+
+  return newDate;
+};
+
+const getBinningFunc = ({ data, xAccessor, bins }) => {
+  const dataIsDates = data.some((datum) => xAccessor(datum) instanceof Date);
+  const bin = d3Array.bin().value(xAccessor);
+  const niceScale = d3Scale
     .scaleLinear()
     .domain(d3Array.extent(data, xAccessor))
     .nice();
 
-  bin.domain(scale.domain());
-
-  if (bins) {
+  if (Array.isArray(bins)) {
+    bin.domain([bins[0], bins[bins.length - 1]]);
     bin.thresholds(bins);
+
+    return bin;
   }
 
-  const binnedData = bin(data).filter(({ x0, x1 }) => x0 !== x1);
+  if (Number.isInteger(bins)) {
+    bin.domain(niceScale.domain());
+    bin.thresholds(bins);
+
+    return bin;
+  }
+
+  if (dataIsDates) {
+    const sortedData = data.sort((a, b) => xAccessor(a) - xAccessor(b));
+
+    const earliestDate = xAccessor(sortedData[0]);
+    const latestDate = xAccessor(sortedData[data.length - 1]);
+
+    // 'day', 'month', 'year'
+    const binningStrategy = bins ? bins : "day";
+
+    const dateBins = (() => {
+      let currentDateBins = [resetDate(earliestDate, binningStrategy)];
+
+      while (currentDateBins[currentDateBins.length - 1] < latestDate) {
+        const lastDate = currentDateBins[currentDateBins.length - 1];
+        const nextDate = getNextDate(lastDate, binningStrategy);
+
+        currentDateBins = [...currentDateBins, nextDate];
+      }
+
+      return currentDateBins;
+    })();
+
+    bin.thresholds(dateBins);
+
+    return bin;
+  }
+
+  bin.domain(niceScale.domain());
+
+  return bin;
+};
+
+const getData = (props) => {
+  const { bins, data } = props;
+  const xAccessor = Helpers.createAccessor(props.x || "x");
+
+  const binFunc = getBinningFunc({ data, xAccessor, bins });
+
+  const binnedData = binFunc(data).filter(({ x0, x1 }) => x0 !== x1);
   const formattedData = binnedData.map((bin) => ({
     x: bin.x0,
     end: bin.x1,
-    y: bin.length
+    range: `${new Date(bin.x0)} - ${new Date(bin.x1)}`,
+    y: bin.length,
+    binnedDatums: [...bin]
   }));
 
   return Data.getData({ ...props, data: formattedData });
@@ -53,7 +143,7 @@ const getCalculatedValues = (props) => {
     theme && theme.histogram && theme.histogram.style ? theme.histogram.style : {};
   const style = Helpers.getStyles(props.style, defaultStyles);
 
-  const data = Data.getData(props);
+  const data = getData(props);
 
   const range = props.range || {
     x: Helpers.getRange(props, "x"),
@@ -61,8 +151,8 @@ const getCalculatedValues = (props) => {
   };
 
   const domain = props.domain || {
-    x: getDomain(props, "x"),
-    y: getDomain(props, "y")
+    x: getDomain(data, "x"),
+    y: getDomain(data, "y")
   };
 
   const scale = {
@@ -80,11 +170,11 @@ const getCalculatedValues = (props) => {
 const getBaseProps = (props, fallbackProps) => {
   const modifiedProps = Helpers.modifyProps(props, fallbackProps, "histogram");
   props = assign({}, modifiedProps, getCalculatedValues(modifiedProps));
-  const data = getData(props);
 
   const {
     barSpacing,
     cornerRadius,
+    data,
     domain,
     events,
     height,
