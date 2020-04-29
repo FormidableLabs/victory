@@ -143,7 +143,7 @@ export class VictoryAnimation extends React.Component<VictoryAnimationProps, any
 
 export type TickLabelProps = React.CSSProperties & {
   angle?: number;
-  verticalAnchor?: "start" | "middle" | "end";
+  verticalAnchor?: VerticalAnchorType;
 };
 
 export interface VictoryAxisCommonProps {
@@ -636,16 +636,7 @@ export interface VictoryPointProps extends VictoryCommonPrimitiveProps {
   getPath?: Function;
   pathComponent?: React.ReactElement;
   size?: number | Function;
-  symbol?:
-    | "circle"
-    | "diamond"
-    | "plus"
-    | "minus"
-    | "square"
-    | "star"
-    | "triangleDown"
-    | "triangleUp"
-    | Function;
+  symbol?: ScatterSymbolType | Function;
   x?: number;
   y?: number;
 }

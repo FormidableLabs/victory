@@ -19,6 +19,8 @@ import {
   VictorySingleLabelableProps
 } from "victory-core";
 
+export type VictoryPolarAxisTTargetType = "axis" | "axisLabel" | "grid" | "ticks" | "tickLabels";
+
 export interface VictoryPolarAxisProps
   extends VictoryAxisCommonProps,
     VictoryCommonProps,
@@ -29,10 +31,7 @@ export interface VictoryPolarAxisProps
   circularGridComponent?: React.ReactElement;
   domain?: DomainPropType;
   endAngle?: number;
-  events?: EventPropTypeInterface<
-    "axis" | "axisLabel" | "grid" | "ticks" | "tickLabels",
-    string | number
-  >[];
+  events?: EventPropTypeInterface<VictoryPolarAxisTTargetType, string | number>[];
   gridComponent?: React.ReactElement;
   innerRadius?: number;
   labelOrientation?: LabelOrientationType;

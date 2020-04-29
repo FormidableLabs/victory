@@ -10,12 +10,14 @@ import {
   VictoryStyleInterface
 } from "victory-core";
 
+export type VictoryAreaTTargetType = "data" | "labels" | "parent";
+
 export interface VictoryAreaProps
   extends VictoryCommonProps,
     VictoryDatableProps,
     VictoryMultiLabelableProps {
   eventKey?: string[] | number[] | StringOrNumberOrCallback;
-  events?: EventPropTypeInterface<"data" | "labels" | "parent", string | number>[];
+  events?: EventPropTypeInterface<VictoryAreaTTargetType, string | number>[];
   interpolation?: InterpolationPropType;
   origin?: OriginType;
   samples?: number;

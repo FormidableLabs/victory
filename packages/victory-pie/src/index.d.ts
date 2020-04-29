@@ -10,6 +10,9 @@ import {
   VictoryStyleInterface
 } from "victory-core";
 
+export type VictorySliceLabelPositionType = "startAngle" | "centroid" | "endAngle";
+export type VictorySliceTTargetType = "data" | "labels" | "parent";
+
 export interface VictorySliceProps extends VictoryCommonProps {
   cornerRadius?: SliceNumberOrCallback<VictorySliceProps, "cornerRadius">;
   datum?: any;
@@ -39,11 +42,11 @@ export interface VictoryPieProps extends VictoryCommonProps, VictoryMultiLabelab
   colorScale?: ColorScalePropType;
   data?: any[];
   dataComponent?: React.ReactElement;
-  labelPosition?: "startAngle" | "centroid" | "endAngle" | ((props: VictorySliceProps) => string);
+  labelPosition?: VictorySliceLabelPositionType | ((props: VictorySliceProps) => string);
   labelRadius?: number | ((props: VictorySliceProps) => number);
   endAngle?: number;
   events?: EventPropTypeInterface<
-    "data" | "labels" | "parent",
+    VictorySliceTTargetType,
     StringOrNumberOrCallback | string[] | number[]
   >[];
   eventKey?: StringOrNumberOrCallback;
