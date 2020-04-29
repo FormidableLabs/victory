@@ -16,19 +16,10 @@ import {
 
 export type labelPositionType = "startAngle" | "centroid" | "endAngle";
 
-export type innerRadiusType =
-  | number
-  | ((
-      props: {
-        active?: boolean;
-        datum?: any;
-      }
-    ) => number);
-
 export interface VictorySliceProps extends VictoryCommonProps {
   cornerRadius?: SliceNumberOrCallback<VictorySliceProps, "cornerRadius">;
   datum?: any;
-  innerRadius?: innerRadiusType;
+  innerRadius?: NumberOrCallback;
   padAngle?: SliceNumberOrCallback<VictorySliceProps, "padAngle">;
   pathComponent?: React.ReactElement;
   pathFunction?: (props: VictorySliceProps) => string;
@@ -49,7 +40,7 @@ export interface VictoryPieProps
     VictoryMultiLabelableProps {
   categories?: CategoryPropType;
   colorScale?: ColorScalePropType;
-  cornerRadius?: number;
+  cornerRadius?: SliceNumberOrCallback<VictorySliceProps, "cornerRadius">;
   data?: any[];
   dataComponent?: React.ReactElement;
   endAngle?: number;
@@ -58,7 +49,7 @@ export interface VictoryPieProps
     StringOrNumberOrCallback | string[] | number[]
   >[];
   eventKey?: StringOrNumberOrCallback;
-  innerRadius?: innerRadiusType;
+  innerRadius?: NumberOrCallback;
   labelPosition?: labelPositionType | ((props: VictorySliceProps) => labelPositionType);
   labelRadius?: number | ((props: VictorySliceProps) => number);
   origin?: OriginType;
