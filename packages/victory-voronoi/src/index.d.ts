@@ -3,6 +3,7 @@ import {
   EventPropTypeInterface,
   StringOrNumberOrCallback,
   VictoryCommonProps,
+  VictoryCommonPrimitiveProps,
   VictoryDatableProps,
   VictoryLabelableProps,
   VictoryMultiLabelableProps,
@@ -22,4 +23,19 @@ export interface VictoryVoronoiProps
   style?: VictoryStyleInterface;
 }
 
+export interface VoronoiProps extends VictoryCommonPrimitiveProps {
+  circleComponent?: React.ReactElement;
+  clipId?: number | string;
+  clipPathComponent?: React.ReactElement;
+  datum?: any;
+  groupComponent?: React.ReactElement;
+  pathComponent?: React.ReactElement;
+  polygon?: [];
+  size?: number;
+  x?: number;
+  y?: number;
+}
+
 export class VictoryVoronoi extends React.Component<VictoryVoronoiProps, any> {}
+
+export class Voronoi extends React.Component<VoronoiProps, any> {}
