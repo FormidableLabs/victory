@@ -2,12 +2,16 @@ import * as React from "react";
 import {
   DomainPropType,
   EventPropTypeInterface,
+  OrientationTypes,
   VictoryAxisCommonProps,
-  VictoryCommonProps
+  VictoryCommonProps,
+  VictorySingleLabelableProps
 } from "victory-core";
 
-export interface VictoryAxisProps extends VictoryAxisCommonProps, VictoryCommonProps {
-  axisValue?: number | string | object;
+export interface VictoryAxisProps
+  extends VictoryAxisCommonProps,
+    VictoryCommonProps,
+    VictorySingleLabelableProps {
   crossAxis?: boolean;
   domain?: DomainPropType;
   events?: EventPropTypeInterface<
@@ -15,12 +19,9 @@ export interface VictoryAxisProps extends VictoryAxisCommonProps, VictoryCommonP
     number | string
   >[];
   fixLabelOverlap?: boolean;
-  gridComponent?: React.ReactElement;
-  invertAxis?: boolean;
-  label?: any;
   offsetX?: number;
   offsetY?: number;
-  orientation?: "top" | "bottom" | "left" | "right";
+  orientation?: OrientationTypes;
 }
 
 /**

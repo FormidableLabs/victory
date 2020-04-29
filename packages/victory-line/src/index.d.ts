@@ -2,21 +2,26 @@ import * as React from "react";
 import {
   EventPropTypeInterface,
   InterpolationPropType,
+  OriginType,
+  StringOrNumberOrCallback,
   VictoryCommonProps,
   VictoryCommonPrimitiveProps,
   VictoryDatableProps,
-  VictorySingleLabelableProps,
+  VictoryMultiLabelableProps,
+  VictoryLabelableProps,
   VictoryStyleInterface
 } from "victory-core";
 
 export interface VictoryLineProps
   extends VictoryCommonProps,
     VictoryDatableProps,
-    VictorySingleLabelableProps {
+    VictoryLabelableProps,
+    VictoryMultiLabelableProps {
   events?: EventPropTypeInterface<"data" | "labels" | "parent", number | string>[];
-  interpolation?: InterpolationPropType;
+  eventKey?: StringOrNumberOrCallback | string[];
+  interpolation?: InterpolationPropType | Function;
+  origin?: OriginType;
   samples?: number;
-  labels?: string[] | number[] | Function;
   sortKey?: string | string[] | Function;
   style?: VictoryStyleInterface;
 }
