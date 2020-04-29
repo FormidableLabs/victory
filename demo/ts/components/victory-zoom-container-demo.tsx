@@ -26,11 +26,11 @@ const allData = range(0, 10, 0.001).map((x) => ({
   y: (Math.sin((Math.PI * x) / 2) * x) / 10
 }));
 
-interface CustomChartProps {
+interface CustomChartState {
   zoomedXDomain: RangeTuple;
 }
 
-class CustomChart extends React.Component<any, CustomChartProps> {
+class CustomChart extends React.Component<any, CustomChartState> {
   entireDomain: { x: RangeTuple; y: RangeTuple };
 
   constructor(props: any) {
