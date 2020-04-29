@@ -8,16 +8,21 @@ import {
   VictorySingleLabelableProps
 } from "victory-core";
 
+export type VictoryAxisTTargetType =
+  | "axis"
+  | "axisLabel"
+  | "grid"
+  | "ticks"
+  | "tickLabels"
+  | "parent";
+
 export interface VictoryAxisProps
   extends VictoryAxisCommonProps,
     VictoryCommonProps,
     VictorySingleLabelableProps {
   crossAxis?: boolean;
   domain?: DomainPropType;
-  events?: EventPropTypeInterface<
-    "axis" | "axisLabel" | "grid" | "ticks" | "tickLabels" | "parent",
-    number | string
-  >[];
+  events?: EventPropTypeInterface<VictoryAxisTTargetType, number | string>[];
   fixLabelOverlap?: boolean;
   offsetX?: number;
   offsetY?: number;

@@ -12,6 +12,8 @@ import {
   VictoryStyleInterface
 } from "victory-core";
 
+export type VictoryStackTTargetType = "data" | "labels" | "parent";
+
 export interface VictoryStackProps
   extends VictoryCommonProps,
     VictoryLabelableProps,
@@ -20,7 +22,7 @@ export interface VictoryStackProps
   children?: React.ReactNode | React.ReactNode[];
   colorScale?: ColorScalePropType;
   domain?: DomainPropType;
-  events?: EventPropTypeInterface<"data" | "labels" | "parent", StringOrNumberOrCallback>[];
+  events?: EventPropTypeInterface<VictoryStackTTargetType, StringOrNumberOrCallback>[];
   eventKey?: StringOrNumberOrCallback;
   fillInMissingData?: boolean;
   style?: VictoryStyleInterface;

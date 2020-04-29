@@ -13,6 +13,7 @@ import ChartDemo from "./components/victory-chart-demo";
 import CursorContainerDemo from "./components/victory-cursor-container-demo";
 import DraggableDemo from "./components/draggable-demo";
 import ErrorBarDemo from "./components/victory-errorbar-demo";
+import EventsDemo from "./components/events-demo";
 import LegendDemo from "./components/victory-legend-demo";
 import LineDemo from "./components/victory-line-demo";
 import PieDemo from "./components/victory-pie-demo";
@@ -37,6 +38,7 @@ const MAP = {
   "/cursor-container": { component: CursorContainerDemo, name: "CursorContainerDemo" },
   "/draggable-demo": { component: DraggableDemo, name: "DraggableDemo" },
   "/error-bar": { component: ErrorBarDemo, name: "ErrorBarDemo" },
+  "/events-demo": { component: EventsDemo, name: "EventsDemo" },
   "/legend": { component: LegendDemo, name: "LegendDemo" },
   "/line": { component: LineDemo, name: "LineDemo" },
   "/pie": { component: PieDemo, name: "PieDemo" },

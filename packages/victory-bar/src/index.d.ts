@@ -9,11 +9,14 @@ import {
   VictoryStyleInterface
 } from "victory-core";
 
+export type VictoryBarTTargetType = "data" | "labels" | "parent";
+export type VictoryBarAlignmentType = "start" | "middle" | "end";
+
 export interface VictoryBarProps
   extends VictoryCommonProps,
     VictoryDatableProps,
     VictoryMultiLabelableProps {
-  alignment?: "start" | "middle" | "end";
+  alignment?: VictoryBarAlignmentType;
   barRatio?: number;
   barWidth?: NumberOrCallback;
   cornerRadius?:
@@ -26,7 +29,7 @@ export interface VictoryBarProps
         bottomLeft?: NumberOrCallback;
         bottomRight?: NumberOrCallback;
       };
-  events?: EventPropTypeInterface<"data" | "labels" | "parent", number | string>[];
+  events?: EventPropTypeInterface<VictoryBarTTargetType, number | string | number[] | string[]>[];
   eventKey?: StringOrNumberOrCallback;
   horizontal?: boolean;
   polar?: boolean;
