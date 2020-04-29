@@ -1,16 +1,15 @@
-/*global window:false*/
-/*eslint no-magic-numbers:0*/
 import React from "react";
-import { VictoryChart } from "@packages/victory-chart";
-import { VictoryPolarAxis } from "@packages/victory-polar-axis";
 import { VictoryArea } from "@packages/victory-area";
 import { VictoryBar } from "@packages/victory-bar";
+import { VictoryChart } from "@packages/victory-chart";
 import { VictoryLine } from "@packages/victory-line";
+import { VictoryPolarAxis } from "@packages/victory-polar-axis";
 import { VictoryScatter } from "@packages/victory-scatter";
-import { VictoryZoomContainer } from "@packages/victory-zoom-container";
-import { VictoryVoronoiContainer } from "@packages/victory-voronoi-container";
-import { random, range, keys } from "lodash";
+import { VictorySelectionContainer } from "@packages/victory-selection-container";
 import { VictoryTheme, VictoryLabel, VictoryStyleInterface } from "@packages/victory-core";
+import { VictoryVoronoiContainer } from "@packages/victory-voronoi-container";
+import { VictoryZoomContainer } from "@packages/victory-zoom-container";
+import { random, range, keys } from "lodash";
 
 type multiAxisDataListType = {
   strength?: number;
@@ -18,25 +17,13 @@ type multiAxisDataListType = {
   stealth?: number;
 }[];
 
-type dataType = {
-  x?: string | number;
-  y?: string | number;
-};
-
 const multiAxisData: multiAxisDataListType = [
   { strength: 1, intelligence: 250, stealth: 45 },
   { strength: 2, intelligence: 300, stealth: 75 },
   { strength: 5, intelligence: 225, stealth: 60 }
 ];
 
-interface VictoryPolarAxisState {
-  data: dataType[];
-  staticData: dataType[];
-  multiAxisData: dataType[][];
-  multiAxisMaxima: React.ReactElement[];
-}
-
-class App extends React.Component<any, VictoryPolarAxisState> {
+class VictorySelectionContainerDemo extends React.Component<any, any> {
   setStateInterval?: number = undefined;
 
   constructor(props: any) {
@@ -128,6 +115,7 @@ class App extends React.Component<any, VictoryPolarAxisState> {
             theme={VictoryTheme.material}
             domain={{ y: [0, 10] }}
             style={chartStyle}
+            containerComponent={<VictorySelectionContainer />}
           >
             <VictoryPolarAxis
               dependentAxis
@@ -469,4 +457,4 @@ class App extends React.Component<any, VictoryPolarAxisState> {
   }
 }
 
-export default App;
+export default VictorySelectionContainerDemo;
