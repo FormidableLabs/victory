@@ -17,12 +17,13 @@ import PieDemo from "./components/victory-pie-demo";
 import PolarAxisDemo from "./components/victory-polar-axis-demo";
 import ScatterDemo from "./components/victory-scatter-demo";
 import TooltipDemo from "./components/victory-tooltip-demo";
+import VictorySelectionContainerDemo from "./components/victory-selection-container-demo";
 import VictorySharedEventsDemo from "./components/victory-shared-events-demo";
 import VoronoiDemo from "./components/victory-voronoi-demo";
 
 const MAP = {
-  "/axis": { component: AxisDemo, name: "AxisDemo" },
   "/area": { component: AreaDemo, name: "AreaDemo" },
+  "/axis": { component: AxisDemo, name: "AxisDemo" },
   "/bar": { component: BarDemo, name: "BarDemo" },
   "/box-plot": { component: BoxPlotDemo, name: "BoxPlotDemo" },
   "/brush-container": { component: BrushContainerDemo, name: "BrushContainerDemo" },
@@ -30,12 +31,16 @@ const MAP = {
   "/candlestick": { component: CandlestickDemo, name: "CandlestickDemo" },
   "/chart": { component: ChartDemo, name: "ChartDemo" },
   "/cursor-container": { component: CursorContainerDemo, name: "CursorContainerDemo" },
-  "/line": { component: LineDemo, name: "LineDemo" },
-  "/tooltip": { component: TooltipDemo, name: "TooltipDemo" },
   "/legend": { component: LegendDemo, name: "LegendDemo" },
+  "/line": { component: LineDemo, name: "LineDemo" },
   "/pie": { component: PieDemo, name: "PieDemo" },
   "/polar-axis": { component: PolarAxisDemo, name: "PolarAxisDemo" },
   "/scatter": { component: ScatterDemo, name: "ScatterDemo" },
+  "/tooltip": { component: TooltipDemo, name: "TooltipDemo" },
+  "/victory-selection-container": {
+    component: VictorySelectionContainerDemo,
+    name: "VictorySelectionContainerDemo"
+  },
   "/victory-shared-events": { component: VictorySharedEventsDemo, name: "VictorySharedEventsDemo" },
   "/voronoi": { component: VoronoiDemo, name: "VoronoiDemo" }
 };
