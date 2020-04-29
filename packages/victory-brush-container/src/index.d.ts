@@ -17,11 +17,11 @@ export interface VictoryBrushContainerProps extends VictoryContainerProps {
     props: VictoryBrushContainerProps
   ) => void;
   onBrushDomainChange?: (
-    domain: { x?: DomainTuple; y?: DomainTuple },
+    domain: { x: DomainTuple; y: DomainTuple },
     props: VictoryBrushContainerProps
   ) => void;
   onBrushDomainChangeEnd?: (
-    domain: { x?: DomainTuple; y?: DomainTuple },
+    domain: { x: DomainTuple; y: DomainTuple },
     props: VictoryBrushContainerProps
   ) => void;
 }
