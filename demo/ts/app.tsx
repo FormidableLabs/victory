@@ -31,7 +31,7 @@ const MAP = {
   "/candlestick": { component: CandlestickDemo, name: "CandlestickDemo" },
   "/chart": { component: ChartDemo, name: "ChartDemo" },
   "/cursor-container": { component: CursorContainerDemo, name: "CursorContainerDemo" },
-  "/error-bar": {component: ErrorBarDemo, name: "ErrorBarDemo"},
+  "/error-bar": { component: ErrorBarDemo, name: "ErrorBarDemo" },
   "/line": { component: LineDemo, name: "LineDemo" },
   "/tooltip": { component: TooltipDemo, name: "TooltipDemo" },
   "/legend": { component: LegendDemo, name: "LegendDemo" },

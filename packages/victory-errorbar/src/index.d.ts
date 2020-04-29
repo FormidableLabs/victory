@@ -1,11 +1,16 @@
 import * as React from "react";
-import { VictoryCommonProps } from "victory-core";
+import {
+  EventPropTypeInterface,
+  StringOrNumberOrCallback,
+  VictoryCommonProps,
+  VictoryStyleInterface
+} from "victory-core";
 
 type dataType = {
-  x: string | number;
-  y: string | number;
-  errorX: number | number[];
-  errorY: number | number[];
+  x?: string | number;
+  y?: string | number;
+  errorX?: number | number[];
+  errorY?: number | number[];
 };
 
 export interface VictoryErrorBarProps extends VictoryCommonProps {
@@ -13,7 +18,8 @@ export interface VictoryErrorBarProps extends VictoryCommonProps {
   data?: dataType | dataType[];
   errorX?: number | number[];
   errorY?: number | number[];
-  style?: React.CSSProperties;
+  events?: EventPropTypeInterface<"data" | "labels" | "parent", StringOrNumberOrCallback>[];
+  style?: VictoryStyleInterface;
 }
 
 export class VictoryErrorBar extends React.Component<VictoryErrorBarProps, any> {}

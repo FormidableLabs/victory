@@ -20,6 +20,8 @@ const style = {
 type dataType = {
   x?: string | number;
   y?: string | number;
+  errorX?: number | number[];
+  errorY?: number | number[];
 };
 
 interface VictoryErrorBarState {
