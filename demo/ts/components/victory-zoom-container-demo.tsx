@@ -1,7 +1,6 @@
 /*eslint-disable no-magic-numbers,react/no-multi-comp */
 import React from "react";
-import PropTypes from "prop-types";
-import { range, merge, random, minBy, maxBy, last, round } from "lodash";
+import { range, merge, random, minBy, maxBy, last } from "lodash";
 import { VictoryChart } from "@packages/victory-chart";
 import { VictoryStack } from "@packages/victory-stack";
 import { VictoryGroup } from "@packages/victory-group";
@@ -20,27 +19,25 @@ import {
   VictoryTheme
 } from "@packages/victory-core";
 
+type DomainType = {x: number, y: number}
+
 const allData = range(0, 10, 0.001).map((x) => ({
   x,
   y: (Math.sin((Math.PI * x) / 2) * x) / 10
 }));
 
-interface CustomChartState {
+interface CustomChartProps {
   zoomedXDomain: RangeTuple;
 }
 
-class CustomChart extends React.Component<any, CustomChartState> {
+class CustomChart extends React.Component<any, CustomChartProps> {
   entireDomain: { x: RangeTuple; y: RangeTuple };
-
-  static propTypes = {
-    data: PropTypes.array,
-    maxPoints: PropTypes.number,
-    style: PropTypes.object
-  };
 
   constructor(props: any) {
     super(props);
+
     this.entireDomain = this.getEntireDomain(props);
+
     this.state = {
       zoomedXDomain: this.entireDomain.x
     };
@@ -66,15 +63,13 @@ class CustomChart extends React.Component<any, CustomChartState> {
     return filtered;
   }
 
-  getEntireDomain(props: { data: { x: RangeTuple; y: RangeTuple }[] }) {
-    const { data }: { data: { x: RangeTuple; y: RangeTuple }[] } = props;
 
-    const minPoint = minBy(data, (d: { x: RangeTuple; y: RangeTuple }) => d.y);
+  getEntireDomain(props: {data: DomainType[]}) {
+    const { data }: { data: DomainType[] } = props;
+    const minPoint = minBy(data, (d: DomainType) => d.y);
     const yMin = minPoint ? minPoint.y : 0;
-
-    const maxPoint = maxBy(data, (d: { x: RangeTuple; y: RangeTuple }) => d.y);
+    const maxPoint = maxBy(data, (d: DomainType) => d.y);
     const yMax = maxPoint ? maxPoint.y : 0;
-
     const lastPoint = last(data);
     const xLast = lastPoint ? lastPoint.x : 0;
 
@@ -85,12 +80,6 @@ class CustomChart extends React.Component<any, CustomChartState> {
       y: yArr,
       x: xArr
     };
-  }
-
-  getZoomFactor() {
-    const { zoomedXDomain } = this.state;
-    const factor = 10 / (zoomedXDomain[1] - zoomedXDomain[0]);
-    return round(factor, factor < 3 ? 1 : 0);
   }
 
   render() {
@@ -187,8 +176,10 @@ export default class VictoryZoomContainerDemo extends React.Component<
   }
 
   getZoomDomain() {
+    const yZoomDomain: RangeTuple = [random(0, 0.4), random(0.6, 1)];
+
     return {
-      y: [random(0, 0.4), random(0.6, 1)]
+      y: yZoomDomain
     };
   }
 

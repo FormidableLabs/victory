@@ -10,11 +10,12 @@ import { VictoryScatter } from "@packages/victory-scatter";
 import { VictoryLegend } from "@packages/victory-legend";
 import { VictoryZoomContainer } from "@packages/victory-zoom-container";
 import { VictoryBrushContainer } from "@packages/victory-brush-container";
+import { RangeTuple } from "@packages/victory-core";
 
 interface VictoryBrushContainerDemoState {
   zoomDomain: {
-    x?: [number, number];
-    y?: [number, number];
+    x?: RangeTuple;
+    y?: RangeTuple;
   };
 }
 
@@ -29,7 +30,7 @@ export default class VictoryBrushContainerDemo extends React.Component<
     };
   }
 
-  handleZoom(domain: { x?: [number, number]; y?: [number, number] }) {
+  handleZoom(domain: { x?: RangeTuple; y?: RangeTuple}) {
     this.setState({ zoomDomain: domain });
   }
 

@@ -462,7 +462,7 @@ export type DomainPaddingPropType =
       y?: PaddingType;
     };
 
-export type RangeTuple = [number, number];
+export type RangeTuple = [number, number] | [Date, Date];
 export type RangePropType = RangeTuple | { x?: RangeTuple; y?: RangeTuple };
 
 /**
