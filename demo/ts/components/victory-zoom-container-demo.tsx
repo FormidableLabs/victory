@@ -1,7 +1,6 @@
 /*eslint-disable no-magic-numbers,react/no-multi-comp */
 import React from "react";
-import PropTypes from "prop-types";
-import { range, merge, random, minBy, maxBy, last, round } from "lodash";
+import { range, merge, random, minBy, maxBy, last } from "lodash";
 import { VictoryChart } from "@packages/victory-chart";
 import { VictoryStack } from "@packages/victory-stack";
 import { VictoryGroup } from "@packages/victory-group";
@@ -14,7 +13,8 @@ import { VictoryZoomContainer } from "@packages/victory-zoom-container";
 import { VictoryTooltip } from "@packages/victory-tooltip";
 import { VictoryLegend } from "@packages/victory-legend";
 import {
-  RangeTuple,
+  CoordinatesPropType,
+  DomainTuple,
   VictoryClipContainer,
   VictoryPortal,
   VictoryTheme
@@ -26,27 +26,23 @@ const allData = range(0, 10, 0.001).map((x) => ({
 }));
 
 interface CustomChartState {
-  zoomedXDomain: RangeTuple;
+  zoomedXDomain: DomainTuple;
 }
 
 class CustomChart extends React.Component<any, CustomChartState> {
-  entireDomain: { x: RangeTuple; y: RangeTuple };
-
-  static propTypes = {
-    data: PropTypes.array,
-    maxPoints: PropTypes.number,
-    style: PropTypes.object
-  };
+  entireDomain: { x: DomainTuple; y: DomainTuple };
 
   constructor(props: any) {
     super(props);
+
     this.entireDomain = this.getEntireDomain(props);
+
     this.state = {
       zoomedXDomain: this.entireDomain.x
     };
   }
 
-  onDomainChange(domain: { x: RangeTuple; y: RangeTuple }) {
+  onDomainChange(domain: { x: DomainTuple; y: DomainTuple }) {
     this.setState({
       zoomedXDomain: domain.x
     });
@@ -66,31 +62,25 @@ class CustomChart extends React.Component<any, CustomChartState> {
     return filtered;
   }
 
-  getEntireDomain(props: { data: { x: RangeTuple; y: RangeTuple }[] }) {
-    const { data }: { data: { x: RangeTuple; y: RangeTuple }[] } = props;
+  getEntireDomain(props: { data: CoordinatesPropType[] }) {
+    const { data }: { data: CoordinatesPropType[] } = props;
 
-    const minPoint = minBy(data, (d: { x: RangeTuple; y: RangeTuple }) => d.y);
+    const minPoint = minBy(data, (d: CoordinatesPropType) => d.y);
     const yMin = minPoint ? minPoint.y : 0;
 
-    const maxPoint = maxBy(data, (d: { x: RangeTuple; y: RangeTuple }) => d.y);
+    const maxPoint = maxBy(data, (d: CoordinatesPropType) => d.y);
     const yMax = maxPoint ? maxPoint.y : 0;
 
     const lastPoint = last(data);
     const xLast = lastPoint ? lastPoint.x : 0;
 
-    const yArr: RangeTuple = [yMin, yMax];
-    const xArr: RangeTuple = [data[0].x, xLast];
+    const yArr: DomainTuple = [yMin, yMax];
+    const xArr: DomainTuple = [data[0].x, xLast];
 
     return {
-      y: yArr,
-      x: xArr
+      x: xArr,
+      y: yArr
     };
-  }
-
-  getZoomFactor() {
-    const { zoomedXDomain } = this.state;
-    const factor = 10 / (zoomedXDomain[1] - zoomedXDomain[0]);
-    return round(factor, factor < 3 ? 1 : 0);
   }
 
   render() {
@@ -129,8 +119,8 @@ interface VictoryZoomContainerDemoState {
     y: number;
   }[];
   zoomDomain: {
-    x?: RangeTuple;
-    y?: RangeTuple;
+    x?: DomainTuple;
+    y?: DomainTuple;
   };
 }
 
@@ -187,8 +177,10 @@ export default class VictoryZoomContainerDemo extends React.Component<
   }
 
   getZoomDomain() {
+    const yZoomDomain: DomainTuple = [random(0, 0.4), random(0.6, 1)];
+
     return {
-      y: [random(0, 0.4), random(0.6, 1)]
+      y: yZoomDomain
     };
   }
 
