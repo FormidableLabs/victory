@@ -2,7 +2,10 @@ import * as React from "react";
 import {
   EventPropTypeInterface,
   StringOrNumberOrCallback,
+  VictoryDatableProps,
   VictoryCommonProps,
+  VictoryLabelableProps,
+  VictoryMultiLabelableProps,
   VictoryStyleInterface
 } from "victory-core";
 
@@ -13,9 +16,12 @@ type dataType = {
   errorY?: number | number[];
 };
 
-export interface VictoryErrorBarProps extends VictoryCommonProps {
+export interface VictoryErrorBarProps
+  extends VictoryCommonProps,
+    VictoryDatableProps,
+    VictoryLabelableProps,
+    VictoryMultiLabelableProps {
   borderWidth?: number;
-  data?: dataType | dataType[];
   errorX?: number | number[];
   errorY?: number | number[];
   events?: EventPropTypeInterface<"data" | "labels" | "parent", StringOrNumberOrCallback>[];
