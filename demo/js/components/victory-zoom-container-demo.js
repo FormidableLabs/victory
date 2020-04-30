@@ -2,7 +2,7 @@
 /*eslint-disable no-magic-numbers,react/no-multi-comp */
 import React from "react";
 import PropTypes from "prop-types";
-import { range, merge, random, minBy, maxBy, last, round } from "lodash";
+import { range, merge, random, minBy, maxBy, last } from "lodash";
 import { VictoryChart } from "Packages/victory-chart/src/index";
 import { VictoryStack } from "Packages/victory-stack/src/index";
 import { VictoryGroup } from "Packages/victory-group/src/index";
@@ -60,11 +60,6 @@ class CustomChart extends React.Component {
       y: [minBy(data, (d) => d.y).y, maxBy(data, (d) => d.y).y],
       x: [data[0].x, last(data).x]
     };
-  }
-  getZoomFactor() {
-    const { zoomedXDomain } = this.state;
-    const factor = 10 / (zoomedXDomain[1] - zoomedXDomain[0]);
-    return round(factor, factor < 3 ? 1 : 0);
   }
 
   render() {
