@@ -69,7 +69,6 @@ export default {
 
   getScale(props, axis, childComponents) {
     if (props.data) {
-      console.log("here");
       return Scale.getBaseScale(props, axis);
     }
     const children = childComponents
@@ -169,7 +168,6 @@ export default {
 
   getDomainFromChildren(props, axis, childComponents) {
     // eslint-disable-line max-statements, complexity, max-len
-    console.log("here bruh in getDomainFromChildsss");
     const children = childComponents
       ? childComponents.slice(0)
       : React.Children.toArray(props.children);

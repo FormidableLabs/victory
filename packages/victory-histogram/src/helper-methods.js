@@ -1,6 +1,7 @@
 import { assign, isNil } from "lodash";
 import { Helpers, LabelHelpers, Data, Domain, Scale } from "../../victory-core/src";
 import { getBarPosition } from "../../victory-bar/src/helper-methods";
+import isEqual from "react-fast-compare";
 import * as d3Array from "d3-array";
 import * as d3Scale from "d3-scale";
 
@@ -23,13 +24,13 @@ const addYears = (date, years) => {
 };
 
 const getNextDate = (date, strategy) => {
-  if (strategy === "month") {
+  if (strategy === "day") {
+    return addDays(date, 1);
+  } else if (strategy === "month") {
     return addMonths(date, 1);
-  } else if (strategy === "year") {
-    return addYears(date, 1);
   }
 
-  return addDays(date, 1);
+  return addYears(date, 1);
 };
 
 const resetDate = (date, strategy) => {
@@ -48,7 +49,28 @@ const resetDate = (date, strategy) => {
   return newDate;
 };
 
-const getBinningFunc = ({ data, xAccessor, bins }) => {
+const cacheLastValue = (func) => {
+  let called = false;
+  let lastArgs;
+  let lastReturnVal;
+
+  return (...args) => {
+    if (called && isEqual(lastArgs, args)) {
+      return lastReturnVal;
+    }
+
+    const value = func(...args);
+
+    called = true;
+    lastReturnVal = value;
+    lastArgs = args;
+
+    return value;
+  };
+};
+
+const getBinningFunc = ({ data, x, bins }) => {
+  const xAccessor = Helpers.createAccessor(x || "x");
   const dataIsDates = data.some((datum) => xAccessor(datum) instanceof Date);
   const bin = d3Array.bin().value(xAccessor);
   const niceScale = d3Scale
@@ -78,7 +100,6 @@ const getBinningFunc = ({ data, xAccessor, bins }) => {
 
     // 'day', 'month', 'year'
     const binningStrategy = bins ? bins : "day";
-
     const dateBins = (() => {
       let currentDateBins = [resetDate(earliestDate, binningStrategy)];
 
@@ -102,11 +123,8 @@ const getBinningFunc = ({ data, xAccessor, bins }) => {
   return bin;
 };
 
-const getData = (props) => {
-  const { bins, data } = props;
-  const xAccessor = Helpers.createAccessor(props.x || "x");
-
-  const binFunc = getBinningFunc({ data, xAccessor, bins });
+const getFormattedData = cacheLastValue(({ data, x, bins }) => {
+  const binFunc = getBinningFunc({ data, x, bins });
 
   const binnedData = binFunc(data).filter(({ x0, x1 }) => x0 !== x1);
   const formattedData = binnedData.map((bin) => ({
@@ -116,6 +134,13 @@ const getData = (props) => {
     y: bin.length,
     binnedDatums: [...bin]
   }));
+
+  return formattedData;
+});
+
+const getData = (props) => {
+  const { bins, data, x } = props;
+  const formattedData = getFormattedData({ data, x, bins });
 
   return Data.getData({ ...props, data: formattedData });
 };
@@ -142,7 +167,6 @@ const getCalculatedValues = (props) => {
   const defaultStyles =
     theme && theme.histogram && theme.histogram.style ? theme.histogram.style : {};
   const style = Helpers.getStyles(props.style, defaultStyles);
-
   const data = getData(props);
 
   const range = props.range || {
@@ -151,8 +175,8 @@ const getCalculatedValues = (props) => {
   };
 
   const domain = props.domain || {
-    x: getDomain(data, "x"),
-    y: getDomain(data, "y")
+    x: getDomain(props, "x"),
+    y: getDomain(props, "y")
   };
 
   const scale = {
