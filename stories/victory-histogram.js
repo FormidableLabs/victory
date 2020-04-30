@@ -367,7 +367,9 @@ storiesOf("VictoryHistogram.with other charts", module)
   ]);
 
 const stackedData = [
-  ...[50, 30, 100, 32, 50, 10, 49, 78, 20].map((count) => getData(count, count, 100)),
+  ...[50, 30, 100, 32, 50, 10, 49, 78, 20, 30, 300, 200, 300].map((count) =>
+    getData(count, count, 100)
+  ),
   [{ x: 1 }, { x: 3 }, { x: 1 }, { x: 2 }]
 ];
 

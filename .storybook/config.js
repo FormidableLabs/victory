@@ -2,6 +2,7 @@ import { configure, addDecorator } from "@storybook/react";
 import React from "react";
 import "react-chromatic/storybook-addon";
 import { setOptions } from "@storybook/addon-options";
+import { withPerformance } from "storybook-addon-performance";
 
 setOptions({
   name: "Victory",
@@ -18,6 +19,7 @@ const storyWrapper = (story) => {
 };
 
 addDecorator(storyWrapper);
+addDecorator(withPerformance);
 
 const loadStories = () => {
   require("../stories/victory-area");
