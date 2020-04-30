@@ -115,6 +115,7 @@ const Bar = (props) => {
 Bar.propTypes = {
   ...CommonProps.primitiveProps,
   alignment: PropTypes.oneOf(["start", "middle", "end"]),
+  barOffset: PropTypes.arrayOf(PropTypes.number),
   barRatio: PropTypes.number,
   barWidth: PropTypes.oneOfType([PropTypes.number, PropTypes.func]),
   cornerRadius: PropTypes.oneOfType([
@@ -132,7 +133,6 @@ Bar.propTypes = {
   datum: PropTypes.object,
   getPath: PropTypes.func,
   horizontal: PropTypes.bool,
-  barOffset: PropTypes.arrayOf(PropTypes.number),
   pathComponent: PropTypes.element,
   width: PropTypes.number,
   x: PropTypes.number,
