@@ -153,10 +153,11 @@ export default {
     {
       style: {
         data: {
-          stroke: "black",
-          fill: "gold",
+          fill: "palevioletred",
+          stroke: charcoal,
           strokeWidth: 2
-        }
+        },
+        labels: baseLabelStyles
       }
     },
     baseProps

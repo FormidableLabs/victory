@@ -1669,6 +1669,13 @@ storiesOf("VictoryHistogram.data", module)
   .add("with data accessors", () => (
     <VictoryHistogram data={data.map(({ x }) => ({ value: x }))} x={({ value }) => value} />
   ))
+  .add("with time data accessors", () => (
+    <VictoryHistogram
+      bins="year"
+      data={timeData.map(({ x }) => ({ value: x }))}
+      x={({ value }) => value}
+    />
+  ))
   .add("with empty data", () => <VictoryHistogram data={[]} />);
 
 storiesOf("VictoryHistogram.bins.vertical", module)

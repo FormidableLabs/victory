@@ -167,6 +167,19 @@ export default {
     },
     baseProps
   ),
+  histogram: assign(
+    {
+      style: {
+        data: {
+          fill: blueGrey700,
+          stroke: grey900,
+          strokeWidth: 2
+        },
+        labels: baseLabelStyles
+      }
+    },
+    baseProps
+  ),
   legend: {
     colorScale: colors,
     gutter: 10,
