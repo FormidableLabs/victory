@@ -288,7 +288,7 @@ const getBaseProps = (props, fallbackProps) => {
 
     const text = LabelHelpers.getText(props, datum, index);
     if ((text !== undefined && text !== null) || (labels && (events || sharedEvents))) {
-      childProps[eventKey].labels = LabelHelpers.getProps(props, index);
+      childProps[eventKey].labels = LabelHelpers.getProps(props, index, [barWidth / 2, 0]);
     }
 
     return childProps;

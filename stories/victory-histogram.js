@@ -1772,6 +1772,9 @@ storiesOf("VictoryHistogram.labels", module)
   .add("function labels", () => (
     <VictoryHistogram data={data} labels={({ datum }) => `x: ${datum.x}`} />
   ))
+  .add("function labels (horizontal)", () => (
+    <VictoryHistogram horizontal data={data} labels={({ datum }) => `x: ${datum.x}`} />
+  ))
   .add("array labels", () => (
     <VictoryHistogram data={data} labels={["", "", "three", "four", 5, "six"]} />
   ))

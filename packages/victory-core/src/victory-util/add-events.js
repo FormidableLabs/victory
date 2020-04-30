@@ -225,6 +225,7 @@ export default (WrappedComponent, options) => {
         }
         return memo;
       }, []);
+
       const dataProps = this.getComponentProps(dataComponent, "data", "all");
       const children = [React.cloneElement(dataComponent, dataProps), ...labelComponents];
       return this.renderContainer(groupComponent, children);
