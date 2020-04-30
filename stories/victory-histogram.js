@@ -2,7 +2,7 @@
 import React from "react";
 import { storiesOf } from "@storybook/react";
 import { VictoryHistogram } from "../packages/victory-histogram/src";
-import { VictoryAxis } from "../packages/victory-axis/src";
+import { VictoryTooltip } from "../packages/victory-tooltip/src/index";
 
 import { VictoryTheme } from "../packages/victory-core/src";
 import { getChartDecorator } from "./decorators";
@@ -1665,6 +1665,10 @@ storiesOf("VictoryHistogram.bins.dates", module)
   .add("year bins", () => <VictoryHistogram data={timeData} bins="year" />)
   .add("default", () => <VictoryHistogram data={timeData} />);
 
+storiesOf("VictoryHistogram.data", module).add("with data accessors", () => (
+  <VictoryHistogram data={data.map(({ x }) => ({ value: x }))} x={({ value }) => value} />
+));
+
 storiesOf("VictoryHistogram.bins.vertical", module)
   .addDecorator(getChartDecorator({ theme: VictoryTheme.grayscale }))
   .add("numeric bins = 2", () => <VictoryHistogram bins={2} />)
@@ -1703,12 +1707,113 @@ storiesOf("VictoryHistogram.bins.horizontal", module)
 
 storiesOf("VictoryHistogram.styles", module)
   .addDecorator(getChartDecorator({ theme: VictoryTheme.grayscale }))
-  .add("vertical - with styles", () => (
+  .add("with styles", () => (
     <VictoryHistogram style={{ data: { transform: "translate(0px, -20px) skew(2deg, 2deg)" } }} />
   ))
-  .add("horizontal - with styles", () => (
+  .add("with functional styles - TODO", () => (
     <VictoryHistogram
       horizontal
       style={{ data: { transform: "translate(0px, -20px) skew(2deg, 2deg)" } }}
     />
   ));
+
+storiesOf("VictoryHistogram.theme", module)
+  .addDecorator(getChartDecorator({ theme: VictoryTheme.material }))
+  .add("material theme", () => <VictoryHistogram data={data} />);
+
+storiesOf("VictoryHistogram.theme", module)
+  .addDecorator(getChartDecorator({ theme: VictoryTheme.grayscale }))
+  .add("grayscale (default) theme", () => <VictoryHistogram data={data} />);
+
+storiesOf("VictoryHistogram.cornerRadius", module)
+  .addDecorator(getChartDecorator())
+  .add("cornerRadius = 1", () => <VictoryHistogram data={data} cornerRadius={1} />)
+  .add("cornerRadius = 5", () => <VictoryHistogram data={data} cornerRadius={5} />)
+  .add("cornerRadius = 7", () => <VictoryHistogram data={data} cornerRadius={7} />)
+  .add("cornerRadius = 5 (horizontal)", () => (
+    <VictoryHistogram horizontal data={data} cornerRadius={5} />
+  ));
+
+storiesOf("VictoryHistogram.getPath", module)
+  .addDecorator(getChartDecorator({ domainPadding: 25 }))
+  .add("custom bar path (vertical)", () => {
+    const getPathFn = (props) => {
+      const { x0, x1, y0, y1 } = props;
+      return `M ${x0}, ${y0}
+        L ${(x1 + x0) / 2}, ${y1}
+        L ${x1}, ${y0}
+        z`;
+    };
+    return <VictoryHistogram data={data} getPath={getPathFn} />;
+  })
+  .add("custom bar path (horizontal)", () => {
+    const getPathFn = (props) => {
+      const { x0, x1, y0, y1 } = props;
+      return `M ${x0}, ${y1}
+        L ${x1}, ${(y0 + y1) / 2}
+        L ${x0}, ${y0}
+        z`;
+    };
+    return <VictoryHistogram data={data} horizontal getPath={getPathFn} />;
+  });
+
+// need to figure out labels
+storiesOf("VictoryHistogram.labels", module)
+  .addDecorator(getChartDecorator({ domainPadding: 25 }))
+  .add("function labels", () => (
+    <VictoryHistogram data={data} labels={({ datum }) => `x: ${datum.x}`} />
+  ))
+  .add("array labels", () => (
+    <VictoryHistogram data={data} labels={["", "", "three", "four", 5, "six"]} />
+  ))
+  .add("data labels", () => (
+    <VictoryHistogram
+      data={[
+        { x: 1, y: 2, label: "cat" },
+        { x: 2, y: 5, label: "dog" },
+        { x: 3, y: 3, label: "dog" },
+        { x: 4, y: -2, label: "bird" },
+        { x: 5, y: -5, label: "cat" }
+      ]}
+    />
+  ));
+
+storiesOf("VictoryHistogram.tooltips", module)
+  .addDecorator(getChartDecorator({ domainPadding: 25 }))
+  .add("tooltips", () => (
+    <VictoryHistogram
+      data={data}
+      labels={({ datum }) => `x: ${datum.x}`}
+      labelComponent={<VictoryTooltip active />}
+    />
+  ))
+  .add("tooltips (horizontal)", () => (
+    <VictoryHistogram
+      horizontal
+      data={data}
+      labels={({ datum }) => `x: ${datum.x}`}
+      labelComponent={<VictoryTooltip active />}
+    />
+  ))
+  .add("tooltips with long and short strings", () => (
+    <VictoryHistogram
+      data={data}
+      labels={["one", "two", 3, "wow, four tooltips", "five"]}
+      labelComponent={<VictoryTooltip active />}
+    />
+  ));
+
+storiesOf("VictoryHistogram.scale", module)
+  .addDecorator(getChartDecorator({ domainPadding: 25 }))
+  .add("time scale", () => <VictoryHistogram data={data} />)
+  .add("time scale with labels", () => (
+    <VictoryHistogram data={data} labels={({ datum }) => datum.x.getFullYear()} />
+  ))
+  .add(" horizontal time scale with labels", () => (
+    <VictoryHistogram horizontal data={data} labels={({ datum }) => datum.x.getFullYear()} />
+  ));
+
+storiesOf("VictoryHistogram.scale", module)
+  .addDecorator(getChartDecorator({ scale: { y: "log" }, domainPadding: 25 }))
+  .add("log scale", () => <VictoryHistogram data={data} />)
+  .add(" horizontal log scale", () => <VictoryHistogram horizontal data={data} />);
