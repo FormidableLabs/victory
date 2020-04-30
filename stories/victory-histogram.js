@@ -1770,10 +1770,10 @@ storiesOf("VictoryHistogram.getPath", module)
 storiesOf("VictoryHistogram.labels", module)
   .addDecorator(getChartDecorator({ domainPadding: 25 }))
   .add("function labels", () => (
-    <VictoryHistogram data={data} labels={({ datum }) => `x: ${datum.x}`} />
+    <VictoryHistogram data={data} labels={({ datum }) => `${datum.x} - ${datum.end}`} />
   ))
   .add("function labels (horizontal)", () => (
-    <VictoryHistogram horizontal data={data} labels={({ datum }) => `x: ${datum.x}`} />
+    <VictoryHistogram horizontal data={data} labels={({ datum }) => `${datum.x} - ${datum.end}`} />
   ))
   .add("array labels", () => (
     <VictoryHistogram data={data} labels={["", "", "three", "four", 5, "six"]} />
@@ -1795,7 +1795,7 @@ storiesOf("VictoryHistogram.tooltips", module)
   .add("tooltips", () => (
     <VictoryHistogram
       data={data}
-      labels={({ datum }) => `x: ${datum.x}`}
+      labels={({ datum }) => `${datum.x} - ${datum.end}`}
       labelComponent={<VictoryTooltip active />}
     />
   ))
@@ -1803,11 +1803,11 @@ storiesOf("VictoryHistogram.tooltips", module)
     <VictoryHistogram
       horizontal
       data={data}
-      labels={({ datum }) => `x: ${datum.x}`}
+      labels={({ datum }) => `${datum.x} - ${datum.end}`}
       labelComponent={<VictoryTooltip active />}
     />
   ))
-  .add("tooltips with long and short strings", () => (
+  .add("array tooltips with long and short strings", () => (
     <VictoryHistogram
       data={data}
       labels={["one", "two", 3, "wow, four tooltips", "five"]}
@@ -1817,12 +1817,23 @@ storiesOf("VictoryHistogram.tooltips", module)
 
 storiesOf("VictoryHistogram.scale", module)
   .addDecorator(getChartDecorator({ domainPadding: 25 }))
-  .add("time scale", () => <VictoryHistogram data={data} />)
+  .add("time scale", () => <VictoryHistogram bins="month" data={timeData} />)
   .add("time scale with labels", () => (
-    <VictoryHistogram data={data} labels={({ datum }) => datum.x.getFullYear()} />
+    <VictoryHistogram
+      barSpacing={10}
+      data={timeData}
+      bins="year"
+      labels={({ datum }) => `${datum.x.getFullYear()} - ${datum.end.getFullYear()}`}
+    />
   ))
   .add(" horizontal time scale with labels", () => (
-    <VictoryHistogram horizontal data={data} labels={({ datum }) => datum.x.getFullYear()} />
+    <VictoryHistogram
+      horizontal
+      barSpacing={10}
+      data={timeData}
+      bins="year"
+      labels={({ datum }) => `${datum.x.getFullYear()} - ${datum.end.getFullYear()}`}
+    />
   ));
 
 storiesOf("VictoryHistogram.scale", module)
