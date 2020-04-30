@@ -299,7 +299,6 @@ export default class SelectionDemo extends React.Component<any, SelectionDemoSta
                     strokeWidth: 2
                   }
                 }}
-                size={({ active }) => (active ? 5 : 3)}
                 data={[
                   { x: 1, y: -5 },
                   { x: 2, y: 4 },
@@ -318,7 +317,6 @@ export default class SelectionDemo extends React.Component<any, SelectionDemoSta
                     strokeWidth: 2
                   }
                 }}
-                size={({ active }) => (active ? 5 : 3)}
                 data={[
                   { x: 1, y: -3 },
                   { x: 2, y: 5 },
