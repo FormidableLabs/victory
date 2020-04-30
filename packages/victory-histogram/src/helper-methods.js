@@ -146,7 +146,7 @@ const getData = (props) => {
   }
 
   const formattedData = getFormattedData({ data, x, bins });
-  return Data.getData({ ...props, data: formattedData });
+  return Data.getData({ ...props, data: formattedData, x: "x" });
 };
 
 const getDomain = (props, axis) => {
@@ -245,7 +245,6 @@ const getBaseProps = (props, fallbackProps) => {
     const eventKey = !isNil(datum.eventKey) ? datum.eventKey : index;
 
     const { x, y, y0, x0 } = getBarPosition(props, datum);
-
     const barWidth = (() => {
       if (barSpacing) {
         return getDistance(datum) - barSpacing;
