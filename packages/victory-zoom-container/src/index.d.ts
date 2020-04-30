@@ -1,5 +1,5 @@
 import * as React from "react";
-import { RangeTuple, VictoryContainerProps, CursorData } from "victory-core";
+import { DomainPropType, RangeTuple, VictoryContainerProps, CursorData } from "victory-core";
 
 export interface VictoryZoomContainerProps extends VictoryContainerProps {
   allowPan?: boolean;
@@ -10,12 +10,9 @@ export interface VictoryZoomContainerProps extends VictoryContainerProps {
   disable?: boolean;
   downsample?: number | boolean;
   minimumZoom?: CursorData;
-  onZoomDomainChange?: (
-    domain: { x?: RangeTuple; y?: RangeTuple },
-    props: VictoryZoomContainerProps
-  ) => void;
+  onZoomDomainChange?: (domain: DomainPropType, props: VictoryZoomContainerProps) => void;
   zoomDimension?: "x" | "y";
-  zoomDomain?: { x?: RangeTuple; y?: RangeTuple };
+  zoomDomain?: DomainPropType;
 }
 
 export class VictoryZoomContainer extends React.Component<VictoryZoomContainerProps, any> {}
