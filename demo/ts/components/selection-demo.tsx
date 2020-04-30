@@ -11,7 +11,7 @@ import { VictoryLegend } from "@packages/victory-legend";
 import { VictoryTooltip } from "@packages/victory-tooltip";
 
 interface SelectionDemoState {
-  points: [];
+  points: { x: number; y: number }[];
 }
 
 interface DataSet {
