@@ -118,7 +118,7 @@ export default class App extends React.Component {
 
   getZoomDomain() {
     return {
-      y: [random(0, 0.4, 0.1), random(0.6, 1, 0.1)]
+      y: [random(0, 0.4), random(0.6, 1)]
     };
   }
 
