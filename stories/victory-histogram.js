@@ -1665,9 +1665,11 @@ storiesOf("VictoryHistogram.bins.dates", module)
   .add("year bins", () => <VictoryHistogram data={timeData} bins="year" />)
   .add("default", () => <VictoryHistogram data={timeData} />);
 
-storiesOf("VictoryHistogram.data", module).add("with data accessors", () => (
-  <VictoryHistogram data={data.map(({ x }) => ({ value: x }))} x={({ value }) => value} />
-));
+storiesOf("VictoryHistogram.data", module)
+  .add("with data accessors", () => (
+    <VictoryHistogram data={data.map(({ x }) => ({ value: x }))} x={({ value }) => value} />
+  ))
+  .add("with empty data", () => <VictoryHistogram data={[]} />);
 
 storiesOf("VictoryHistogram.bins.vertical", module)
   .addDecorator(getChartDecorator({ theme: VictoryTheme.grayscale }))

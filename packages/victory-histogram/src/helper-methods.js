@@ -140,8 +140,12 @@ const getFormattedData = cacheLastValue(({ data, x, bins }) => {
 
 const getData = (props) => {
   const { bins, data, x } = props;
-  const formattedData = getFormattedData({ data, x, bins });
 
+  if (!data || !data.length) {
+    return [];
+  }
+
+  const formattedData = getFormattedData({ data, x, bins });
   return Data.getData({ ...props, data: formattedData });
 };
 
