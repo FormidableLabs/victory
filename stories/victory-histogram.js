@@ -1633,18 +1633,20 @@ const timeData = [
   }
 ];
 
-storiesOf("VictoryHistogram", module).add("default rendering", () => <VictoryHistogram />);
+storiesOf("VictoryHistogram", module)
+  .add("default rendering", () => <VictoryHistogram />)
+  .add("default rendering with data", () => <VictoryHistogram data={data} />);
 
 /* barSpacing */
 storiesOf("VictoryHistogram.barSpacing.vertical", module)
   .addDecorator(getChartDecorator({ theme: VictoryTheme.grayscale }))
-  .add("bar spacing = 10", () => <VictoryHistogram barSpacing={10} />)
-  .add("bar spacing = 5", () => <VictoryHistogram barSpacing={5} />);
+  .add("bar spacing = 10", () => <VictoryHistogram data={data} barSpacing={10} />)
+  .add("bar spacing = 5", () => <VictoryHistogram data={data} barSpacing={5} />);
 
 storiesOf("VictoryHistogram.barSpacing.horizontal", module)
   .addDecorator(getChartDecorator({ theme: VictoryTheme.grayscale }))
-  .add("bar spacing = 10", () => <VictoryHistogram horizontal barSpacing={10} />)
-  .add("bar spacing = 5", () => <VictoryHistogram horizontal barSpacing={5} />);
+  .add("bar spacing = 10", () => <VictoryHistogram data={data} horizontal barSpacing={10} />)
+  .add("bar spacing = 5", () => <VictoryHistogram data={data} horizontal barSpacing={5} />);
 
 /* data */
 storiesOf("VictoryHistogram.data.dates", module)
@@ -1685,52 +1687,72 @@ storiesOf("VictoryHistogram.data", module)
 
 storiesOf("VictoryHistogram.bins.vertical", module)
   .addDecorator(getChartDecorator({ theme: VictoryTheme.grayscale }))
-  .add("numeric bins = 2", () => <VictoryHistogram bins={2} />)
-  .add("numeric bins = 8", () => <VictoryHistogram bins={8} />)
-  .add("numeric bins = 40", () => <VictoryHistogram bins={40} />)
-  .add("custom bins/edges = [0, 30, 50, 100]", () => <VictoryHistogram bins={[0, 30, 50, 100]} />)
-  .add("custom bins/edges = [0, 30, 50]", () => <VictoryHistogram bins={[0, 30, 50]} />)
+  .add("numeric bins = 2", () => <VictoryHistogram data={data} bins={2} />)
+  .add("numeric bins = 8", () => <VictoryHistogram data={data} bins={8} />)
+  .add("numeric bins = 40", () => <VictoryHistogram data={data} bins={40} />)
+  .add("custom bins/edges = [0, 30, 50, 100]", () => (
+    <VictoryHistogram data={data} bins={[0, 30, 50, 100]} />
+  ))
+  .add("custom bins/edges = [0, 30, 50]", () => <VictoryHistogram data={data} bins={[0, 30, 50]} />)
   .add("custom bins/edges = [0, 20, 30, 70, 100]", () => (
-    <VictoryHistogram bins={[0, 20, 30, 70, 100]} />
+    <VictoryHistogram data={data} bins={[0, 20, 30, 70, 100]} />
   ))
   .add("custom bins/edges = [0, 30, 70, 100, 130]", () => (
-    <VictoryHistogram bins={[0, 30, 70, 100, 130]} />
+    <VictoryHistogram data={data} bins={[0, 30, 70, 100, 130]} />
   ))
   .add("custom bins/edges = [0, 10, 30, 70, 150]", () => (
-    <VictoryHistogram bins={[0, 10, 30, 70, 150]} />
+    <VictoryHistogram data={data} bins={[0, 10, 30, 70, 150]} />
   ));
 
 storiesOf("VictoryHistogram.bins.horizontal", module)
   .addDecorator(getChartDecorator({ theme: VictoryTheme.grayscale }))
-  .add("numeric bins = 2", () => <VictoryHistogram horizontal bins={2} />)
-  .add("numeric bins = 8", () => <VictoryHistogram horizontal bins={8} />)
-  .add("numeric bins = 40", () => <VictoryHistogram horizontal bins={40} />)
+  .add("numeric bins = 2", () => <VictoryHistogram data={data} horizontal bins={2} />)
+  .add("numeric bins = 8", () => <VictoryHistogram data={data} horizontal bins={8} />)
+  .add("numeric bins = 40", () => <VictoryHistogram data={data} horizontal bins={40} />)
   .add("custom bins/edges = [0, 30, 50, 100]", () => (
-    <VictoryHistogram horizontal bins={[0, 30, 50, 100]} />
+    <VictoryHistogram data={data} horizontal bins={[0, 30, 50, 100]} />
   ))
-  .add("custom bins/edges = [0, 30, 50]", () => <VictoryHistogram horizontal bins={[0, 30, 50]} />)
+  .add("custom bins/edges = [0, 30, 50]", () => (
+    <VictoryHistogram data={data} horizontal bins={[0, 30, 50]} />
+  ))
   .add("custom bins/edges = [0, 20, 30, 70, 100]", () => (
-    <VictoryHistogram horizontal bins={[0, 20, 30, 70, 100]} />
+    <VictoryHistogram data={data} horizontal bins={[0, 20, 30, 70, 100]} />
   ))
   .add("custom bins/edges = [0, 30, 70, 100, 130]", () => (
-    <VictoryHistogram horizontal bins={[0, 30, 70, 100, 130]} />
+    <VictoryHistogram data={data} horizontal bins={[0, 30, 70, 100, 130]} />
   ))
   .add("custom bins/edges = [0, 10, 30, 70, 150]", () => (
-    <VictoryHistogram horizontal bins={[0, 10, 30, 70, 150]} />
+    <VictoryHistogram data={data} horizontal bins={[0, 10, 30, 70, 150]} />
   ));
 
 storiesOf("VictoryHistogram.styles", module)
   .addDecorator(getChartDecorator({ theme: VictoryTheme.grayscale }))
   .add("with styles", () => (
-    <VictoryHistogram style={{ data: { transform: "translate(0px, -20px) skew(2deg, 2deg)" } }} />
+    <VictoryHistogram
+      data={data}
+      style={{ data: { transform: "translate(0px, -20px) skew(2deg, 2deg)" } }}
+    />
   ))
-  .add("with functional styles - TODO", () => (
+  .add("with functional styles", () => (
     <VictoryHistogram
       horizontal
-      style={{ data: { transform: "translate(0px, -20px) skew(2deg, 2deg)" } }}
+      data={data}
+      style={{
+        labels: {
+          fill: ({ datum }) =>
+            datum.binnedDatums.some(({ x }) => x === 22) ? "palevioletred" : "black"
+        },
+        data: {
+          stroke: ({ datum }) => (datum.y > 3 ? "red" : "transparent"),
+          strokeWidth: 3,
+          opacity: ({ datum }) => (datum.y > 3 ? 1 : 0.4)
+        }
+      }}
+      labels={["one", "two", "three", "four", "five"]}
     />
   ));
 
+/* theme */
 storiesOf("VictoryHistogram.theme", module)
   .addDecorator(getChartDecorator({ theme: VictoryTheme.material }))
   .add("material theme", () => <VictoryHistogram data={data} />);
@@ -1739,6 +1761,7 @@ storiesOf("VictoryHistogram.theme", module)
   .addDecorator(getChartDecorator({ theme: VictoryTheme.grayscale }))
   .add("grayscale (default) theme", () => <VictoryHistogram data={data} />);
 
+/* corner radius */
 storiesOf("VictoryHistogram.cornerRadius", module)
   .addDecorator(getChartDecorator())
   .add("cornerRadius = 1", () => <VictoryHistogram data={data} cornerRadius={1} />)
@@ -1748,6 +1771,7 @@ storiesOf("VictoryHistogram.cornerRadius", module)
     <VictoryHistogram horizontal data={data} cornerRadius={5} />
   ));
 
+/* getPath */
 storiesOf("VictoryHistogram.getPath", module)
   .addDecorator(getChartDecorator({ domainPadding: 25 }))
   .add("custom bar path (vertical)", () => {
@@ -1771,7 +1795,7 @@ storiesOf("VictoryHistogram.getPath", module)
     return <VictoryHistogram data={data} horizontal getPath={getPathFn} />;
   });
 
-// need to figure out labels
+/* labels */
 storiesOf("VictoryHistogram.labels", module)
   .addDecorator(getChartDecorator({ domainPadding: 25 }))
   .add("function labels", () => (
@@ -1782,19 +1806,9 @@ storiesOf("VictoryHistogram.labels", module)
   ))
   .add("array labels", () => (
     <VictoryHistogram data={data} labels={["", "", "three", "four", 5, "six"]} />
-  ))
-  .add("data labels", () => (
-    <VictoryHistogram
-      data={[
-        { x: 1, y: 2, label: "cat" },
-        { x: 2, y: 5, label: "dog" },
-        { x: 3, y: 3, label: "dog" },
-        { x: 4, y: -2, label: "bird" },
-        { x: 5, y: -5, label: "cat" }
-      ]}
-    />
   ));
 
+/* tooltips */
 storiesOf("VictoryHistogram.tooltips", module)
   .addDecorator(getChartDecorator({ domainPadding: 25 }))
   .add("tooltips", () => (
@@ -1820,6 +1834,7 @@ storiesOf("VictoryHistogram.tooltips", module)
     />
   ));
 
+/* scale */
 storiesOf("VictoryHistogram.scale", module)
   .addDecorator(getChartDecorator({ domainPadding: 25 }))
   .add("time scale", () => <VictoryHistogram bins="month" data={timeData} />)
