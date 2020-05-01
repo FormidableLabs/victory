@@ -2,6 +2,7 @@ import * as React from "react";
 import {
   EventPropTypeInterface,
   StringOrNumberOrCallback,
+  StringOrNumberOrList,
   VictoryDatableProps,
   VictoryCommonProps,
   VictoryLabelableProps,
@@ -9,12 +10,8 @@ import {
   VictoryStyleInterface
 } from "victory-core";
 
-type dataType = {
-  x?: string | number;
-  y?: string | number;
-  errorX?: number | number[];
-  errorY?: number | number[];
-};
+export type VictoryErrorBarTTargetType = "data" | "labels" | "parent";
+export type ErrorType = StringOrNumberOrList | ((...args: any[]) => StringOrNumberOrList);
 
 export interface VictoryErrorBarProps
   extends VictoryCommonProps,
@@ -22,9 +19,9 @@ export interface VictoryErrorBarProps
     VictoryLabelableProps,
     VictoryMultiLabelableProps {
   borderWidth?: number;
-  errorX?: number | number[];
-  errorY?: number | number[];
-  events?: EventPropTypeInterface<"data" | "labels" | "parent", StringOrNumberOrCallback>[];
+  errorX?: ErrorType;
+  errorY?: ErrorType;
+  events?: EventPropTypeInterface<VictoryErrorBarTTargetType, StringOrNumberOrCallback>[];
   style?: VictoryStyleInterface;
 }
 

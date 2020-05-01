@@ -2,7 +2,7 @@ import React from "react";
 import { merge, random, range } from "lodash";
 import { VictoryChart } from "@packages/victory-chart";
 import { VictoryScatter } from "@packages/victory-scatter";
-import { VictoryErrorBar } from "@packages/victory-errorbar";
+import { ErrorType, VictoryErrorBar } from "@packages/victory-errorbar";
 import { VictoryContainer, VictoryTheme } from "@packages/victory-core";
 
 const basicData = [
@@ -20,8 +20,8 @@ const style = {
 type dataType = {
   x?: string | number;
   y?: string | number;
-  errorX?: number | number[];
-  errorY?: number | number[];
+  errorX?: ErrorType;
+  errorY?: ErrorType;
 };
 
 interface VictoryErrorBarState {
