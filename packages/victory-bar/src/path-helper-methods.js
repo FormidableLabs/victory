@@ -4,7 +4,6 @@ import { circle, point } from "./geometry-helper-methods";
 
 const getPosition = (props, width, barOffset = [0, 0]) => {
   const barOffsetX = barOffset[0];
-  const barOffsetY = barOffset[1];
 
   const { x, x0, y, y0, horizontal } = props;
   const alignment = props.alignment || "middle";
@@ -204,6 +203,7 @@ const getHorizontalBarPoints = (position, sign, cr) => {
   return [bottomPoints[1], bottomPoints[0], ...topPoints, bottomPoints[3], bottomPoints[2]];
 };
 
+// eslint-disable-next-line max-params
 export const getVerticalBarPath = (props, width, cornerRadius, barOffset) => {
   const position = getPosition(props, width, barOffset);
 
@@ -213,6 +213,7 @@ export const getVerticalBarPath = (props, width, cornerRadius, barOffset) => {
   return mapPointsToPath(points, cornerRadius, direction);
 };
 
+// eslint-disable-next-line max-params
 export const getHorizontalBarPath = (props, width, cornerRadius, barOffset) => {
   const position = getPosition(props, width, barOffset);
 

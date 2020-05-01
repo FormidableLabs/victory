@@ -124,7 +124,7 @@ const getBinningFunc = ({ data, x, bins }) => {
   return bin;
 };
 
-const getFormattedData = ({ data = [], x, bins }) => {
+const getFormattedData = cacheLastValue(({ data = [], x, bins }) => {
   if ((!data || !data.length) && !Array.isArray(bins)) {
     return [];
   }
@@ -140,7 +140,7 @@ const getFormattedData = ({ data = [], x, bins }) => {
   }));
 
   return formattedData;
-};
+});
 
 const getData = (props) => {
   const { bins, data, x } = props;

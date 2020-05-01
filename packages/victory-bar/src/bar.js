@@ -10,6 +10,7 @@ import {
   getCustomBarPath
 } from "./path-helper-methods";
 
+// eslint-disable-next-line max-params
 const getBarPath = (props, width, cornerRadius, barOffset) => {
   if (props.getPath) {
     return getCustomBarPath(props, width);
