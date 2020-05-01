@@ -1648,7 +1648,7 @@ storiesOf("VictoryHistogram.barSpacing.horizontal", module)
 
 /* data */
 storiesOf("VictoryHistogram.data.dates", module)
-  .addDecorator(getChartDecorator({ theme: VictoryTheme.grayscale, tickCount: 3 }))
+  .addDecorator(getChartDecorator({ theme: VictoryTheme.grayscale }))
   .add("default", () => <VictoryHistogram data={timeData} />);
 
 storiesOf("VictoryHistogram.bins.dates", module)
@@ -1666,6 +1666,7 @@ storiesOf("VictoryHistogram.bins.dates", module)
   .add("default", () => <VictoryHistogram data={timeData} />);
 
 storiesOf("VictoryHistogram.data", module)
+  .addDecorator(getChartDecorator({ theme: VictoryTheme.grayscale }))
   .add("with data accessors", () => (
     <VictoryHistogram data={data.map(({ x }) => ({ value: x }))} x={({ value }) => value} />
   ))
@@ -1676,7 +1677,11 @@ storiesOf("VictoryHistogram.data", module)
       x={({ value }) => value}
     />
   ))
-  .add("with empty data", () => <VictoryHistogram data={[]} />);
+  .add("with empty data", () => <VictoryHistogram data={[]} />)
+  .add("with empty data and numeric bins", () => <VictoryHistogram data={[]} bins={2} />)
+  .add("with empty data and defined bins", () => (
+    <VictoryHistogram data={[]} bins={[0, 30, 100, 150]} />
+  ));
 
 storiesOf("VictoryHistogram.bins.vertical", module)
   .addDecorator(getChartDecorator({ theme: VictoryTheme.grayscale }))

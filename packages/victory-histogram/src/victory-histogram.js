@@ -1,8 +1,6 @@
 import React from "react";
 import PropTypes from "prop-types";
-import { VictoryBar, Bar } from "../../victory-bar/src";
-import { VictoryAxis } from "../../victory-axis/src";
-import { VictoryChart } from "../../victory-chart/src";
+import { Bar } from "../../victory-bar/src";
 import {
   Helpers,
   VictoryLabel,
@@ -19,9 +17,7 @@ const fallbackProps = {
   padding: 50
 };
 
-const defaultData = Array.from({ length: 40 }, () => ({
-  x: Math.max(18, Math.floor(Math.random() * 100))
-}));
+const defaultData = [];
 
 export class VictoryHistogram extends React.Component {
   static animationWhitelist = ["data", "domain", "height", "padding", "style", "width"];

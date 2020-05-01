@@ -124,14 +124,15 @@ const getBinningFunc = ({ data, x, bins }) => {
   return bin;
 };
 
-const getFormattedData = cacheLastValue(({ data, x, bins }) => {
-  if (!data || !data.length) {
+const getFormattedData = cacheLastValue(({ data = [], x, bins }) => {
+  if ((!data || !data.length) && !Array.isArray(bins)) {
     return [];
   }
 
   const binFunc = getBinningFunc({ data, x, bins });
 
   const binnedData = binFunc(data).filter(({ x0, x1 }) => x0 !== x1);
+
   const formattedData = binnedData.map((bin) => ({
     x: bin.x0,
     end: bin.x1,
@@ -153,7 +154,7 @@ const getDomain = (props, axis) => {
   const data = getData(props);
 
   if (!data.length) {
-    return [0, 0];
+    return [0, 1];
   }
 
   if (axis === "x") {
@@ -163,7 +164,7 @@ const getDomain = (props, axis) => {
     return [firstBin.x, lastBin.end];
   }
 
-  return Domain.getDomainWithZero({ ...props, data }, "y");
+  return props.data.length ? Domain.getDomainWithZero({ ...props, data }, "y") : [0, 1];
 };
 
 const getCalculatedValues = (props) => {
