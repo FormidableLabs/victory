@@ -5,7 +5,6 @@ import {
   DomainPaddingPropType,
   DomainPropType,
   EventPropTypeInterface,
-  OriginType,
   StringOrNumberOrCallback,
   VictoryCommonProps,
   VictoryLabelableProps,
@@ -24,7 +23,6 @@ export interface VictoryStackProps
   events?: EventPropTypeInterface<"data" | "labels" | "parent", StringOrNumberOrCallback>[];
   eventKey?: StringOrNumberOrCallback;
   fillInMissingData?: boolean;
-  origin?: OriginType;
   style?: VictoryStyleInterface;
   xOffset?: number;
 }

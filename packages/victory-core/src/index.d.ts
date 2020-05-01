@@ -551,6 +551,7 @@ export interface VictoryCommonProps {
   maxDomain?: number | { x?: number; y?: number };
   minDomain?: number | { x?: number; y?: number };
   name?: string;
+  origin?: OriginType;
   padding?: PaddingProps;
   polar?: boolean;
   range?: RangePropType;

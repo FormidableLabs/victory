@@ -2,7 +2,6 @@ import * as React from "react";
 import {
   EventPropTypeInterface,
   OrientationTypes,
-  OriginType,
   StringOrNumberOrCallback,
   VictoryCommonProps,
   VictoryDatableProps,
@@ -73,7 +72,6 @@ export interface VictoryCandlestickProps
   open?: StringOrNumberOrCallback | string[];
   openLabelComponent?: React.ReactElement;
   openLabels?: VictoryCandlestickLabelsType;
-  origin?: OriginType;
   polar?: boolean;
   size?: number;
   style?: VictoryCandlestickStyleInterface;
