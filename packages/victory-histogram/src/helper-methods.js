@@ -113,6 +113,7 @@ const getBinningFunc = ({ data, x, bins }) => {
       return currentDateBins;
     })();
 
+    bin.domain([dateBins[0], dateBins[dateBins.length - 1]]);
     bin.thresholds(dateBins);
 
     return bin;
@@ -124,13 +125,16 @@ const getBinningFunc = ({ data, x, bins }) => {
 };
 
 const getFormattedData = cacheLastValue(({ data, x, bins }) => {
+  if (!data || !data.length) {
+    return [];
+  }
+
   const binFunc = getBinningFunc({ data, x, bins });
 
   const binnedData = binFunc(data).filter(({ x0, x1 }) => x0 !== x1);
   const formattedData = binnedData.map((bin) => ({
     x: bin.x0,
     end: bin.x1,
-    range: `${new Date(bin.x0)} - ${new Date(bin.x1)}`,
     y: bin.length,
     binnedDatums: [...bin]
   }));
@@ -140,10 +144,6 @@ const getFormattedData = cacheLastValue(({ data, x, bins }) => {
 
 const getData = (props) => {
   const { bins, data, x } = props;
-
-  if (!data || !data.length) {
-    return [];
-  }
 
   const formattedData = getFormattedData({ data, x, bins });
   return Data.getData({ ...props, data: formattedData, x: "x" });
