@@ -124,13 +124,12 @@ const getBinningFunc = ({ data, x, bins }) => {
   return bin;
 };
 
-const getFormattedData = cacheLastValue(({ data = [], x, bins }) => {
+const getFormattedData = ({ data = [], x, bins }) => {
   if ((!data || !data.length) && !Array.isArray(bins)) {
     return [];
   }
 
   const binFunc = getBinningFunc({ data, x, bins });
-
   const binnedData = binFunc(data).filter(({ x0, x1 }) => x0 !== x1);
 
   const formattedData = binnedData.map((bin) => ({
@@ -141,7 +140,7 @@ const getFormattedData = cacheLastValue(({ data = [], x, bins }) => {
   }));
 
   return formattedData;
-});
+};
 
 const getData = (props) => {
   const { bins, data, x } = props;
@@ -242,26 +241,28 @@ const getBaseProps = (props, fallbackProps) => {
     return Math.abs(next - current);
   };
 
+  const getBarWidth = (datum) => {
+    if (barSpacing) {
+      return getDistance(datum) - barSpacing;
+    }
+
+    return getDistance(datum);
+  };
+
+  const barOffset = (() => {
+    if (barSpacing) {
+      const distance = barSpacing / 2;
+      return [distance, 0];
+    }
+
+    return [0, 0];
+  })();
+
   return data.reduce((childProps, datum, index) => {
     const eventKey = !isNil(datum.eventKey) ? datum.eventKey : index;
 
     const { x, y, y0, x0 } = getBarPosition(props, datum);
-    const barWidth = (() => {
-      if (barSpacing) {
-        return getDistance(datum) - barSpacing;
-      }
-
-      return getDistance(datum);
-    })();
-
-    const barOffset = (() => {
-      if (barSpacing) {
-        const distance = barSpacing / 2;
-        return [distance, 0];
-      }
-
-      return [0, 0];
-    })();
+    const barWidth = getBarWidth(datum);
 
     const dataProps = {
       alignment: "start",
