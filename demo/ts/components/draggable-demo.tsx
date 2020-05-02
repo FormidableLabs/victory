@@ -7,13 +7,13 @@ import { VictoryAxis } from "@packages/victory-axis";
 import { VictoryBar } from "@packages/victory-bar";
 import { VictoryBrushLine } from "@packages/victory-brush-line";
 import { VictoryScatter } from "@packages/victory-scatter";
-import { DomainTuple, DomainPropType, VictoryClipContainer, Point } from "@packages/victory-core";
+import { DomainTuple, DomainPropType, VictoryClipContainer, Point, Selection } from "@packages/victory-core";
 import { VictoryZoomContainer } from "@packages/victory-zoom-container";
 import { VictoryBrushContainer } from "@packages/victory-brush-container";
 
 type BarDataType = {
   name: string;
-  range: DomainTuple | DomainPropType;
+  range: DomainTuple;
 };
 
 type PointDataType = {
@@ -67,17 +67,19 @@ class DraggablePoint extends React.Component<TargetPropsInterface, any> {
           ];
         },
         onMouseMove: (evt: any, targetProps: any) => {
-          const { onPointChange, datum } = targetProps;
-          if (targetProps.dragging) {
-            // const { x } = getSVGEventCoordinates(evt);
+          const { onPointChange, datum, scale } = targetProps;
 
-            // const point = scale.y.invert(x);
+          if (targetProps.dragging) {
+            const { x } = Selection.getSVGEventCoordinates(evt);
+            const point = scale.y.invert(x);
             const name = datum.name;
-            onPointChange({ name, date: points });
+
+            onPointChange({ name, date: point });
+
             return [
               {
                 // mutation: () => merge(targetProps, { x })
-                mutation: () => targetProps
+                 mutation: () => targetProps
               }
             ];
           }
@@ -116,7 +118,7 @@ class App extends React.Component<any, DraggableDemoInterface> {
     this.setState({ zoomDomain: domain });
   }
 
-  onDomainChange(domain: DomainPropType, props: any) {
+  onDomainChange(domain: DomainTuple, props: any) {
     const { name } = props;
     const newBars = this.state.bars.map((bar) =>
       bar.name === name ? { name, range: domain } : bar
@@ -149,7 +151,7 @@ class App extends React.Component<any, DraggableDemoInterface> {
       domain
     };
 
-    return (
+     return (
       <div style={containerStyle}>
         <VictoryChart
           horizontal
@@ -184,6 +186,7 @@ class App extends React.Component<any, DraggableDemoInterface> {
                   name={bar.name}
                   width={20}
                   allowDraw={false}
+                  brushDomain={bar.range}
                   onBrushDomainChange={this.onDomainChange.bind(this)}
                   brushStyle={{
                     fill: "skyBlue",

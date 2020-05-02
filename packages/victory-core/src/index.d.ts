@@ -615,6 +615,14 @@ export interface VictorySingleLabelableProps extends VictoryLabelableProps {
   label?: string | { (data: any): string | number | null };
 }
 
+export class Selection {
+  getParentSVG: (evt: React.SyntheticEvent) => string;
+  getSVGEventCoordinates: (evt: React.SyntheticEvent, svg: SVGElement) => SVGCoordinateType;
+  getDomainCoordinates: (props: any, domain: DomainPropType) => DomainPropType;
+  getDataCoordinates: (props: any, scale: ScalePropType, x: number, y: number) => SVGCoordinateType;
+  getBounds: (props: any) => SVGCoordinateType;
+}
+
 // #endregion
 
 // #region Victory Portal
@@ -625,14 +633,6 @@ export interface VictoryPortalProps {
 }
 
 export class VictoryPortal extends React.Component<VictoryPortalProps, any> {}
-
-export interface VictorySelection {
-  getParentSVG: (evt: React.SyntheticEvent) => string;
-  getSVGEventCoordinates: (evt: React.SyntheticEvent, svg: SVGElement) => SVGCoordinateType;
-  getDomainCoordinates: (props: any, domain: DomainPropType) => DomainPropType;
-  getDataCoordinates: (props: any, scale: ScalePropType, x: number, y: number) => SVGCoordinateType;
-  getBounds: (props: any) => SVGCoordinateType;
-}
 
 // #endregion
 

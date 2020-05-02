@@ -22,7 +22,7 @@ export interface VictoryBrushLineProps {
   id?: string | number;
   lineComponent?: React.ReactElement;
   name?: string;
-  onBrushDomainChange?: (domain: DomainPropType, props?: VictoryBrushLineProps) => void;
+  onBrushDomainChange?: (domain: DomainTuple, props?: VictoryBrushLineProps) => void;
   style?: VictoryStyleObject;
   type?: string;
   width?: number;
