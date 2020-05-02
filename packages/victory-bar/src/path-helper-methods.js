@@ -13,14 +13,14 @@ const getPosition = (props, width, barOffset = [0, 0]) => {
     return {
       x0,
       x1: x,
-      y0: alignment === "start" ? y - barOffsetX : y - sign * size - barOffsetX,
-      y1: alignment === "end" ? y - barOffsetX : y + sign * size - barOffsetX
+      y0: (alignment === "start" ? y : y - sign * size) - barOffsetX,
+      y1: (alignment === "end" ? y : y + sign * size) - barOffsetX
     };
   }
 
   return {
-    x0: alignment === "start" ? x + barOffsetX : x - sign * size + barOffsetX,
-    x1: alignment === "end" ? x + barOffsetX : x + sign * size + barOffsetX,
+    x0: (alignment === "start" ? x : x - sign * size) + barOffsetX,
+    x1: (alignment === "end" ? x : x + sign * size) + barOffsetX,
     y0,
     y1: y
   };
