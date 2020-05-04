@@ -107,7 +107,7 @@ export type VictoryStyleObject = { [K in keyof React.CSSProperties]: StringOrNum
 
 export type StringOrNumberOrList = string | number | (string | number)[];
 
-export type CursorData = {
+export type CoordinatesPropType = {
   x: number;
   y: number;
 };
