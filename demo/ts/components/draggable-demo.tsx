@@ -7,7 +7,13 @@ import { VictoryAxis } from "@packages/victory-axis";
 import { VictoryBar } from "@packages/victory-bar";
 import { VictoryBrushLine } from "@packages/victory-brush-line";
 import { VictoryScatter } from "@packages/victory-scatter";
-import { DomainTuple, DomainPropType, VictoryClipContainer, Point, Selection } from "@packages/victory-core";
+import {
+  DomainTuple,
+  DomainPropType,
+  VictoryClipContainer,
+  Point,
+  Selection
+} from "@packages/victory-core";
 import { VictoryZoomContainer } from "@packages/victory-zoom-container";
 import { VictoryBrushContainer } from "@packages/victory-brush-container";
 
@@ -66,7 +72,7 @@ class DraggablePoint extends React.Component<TargetPropsInterface, any> {
             }
           ];
         },
-        onMouseMove: (evt: any, targetProps: any) => {
+        onMouseMove: (evt: React.SyntheticEvent, targetProps: any) => {
           const { onPointChange, datum, scale } = targetProps;
 
           if (targetProps.dragging) {
@@ -78,8 +84,7 @@ class DraggablePoint extends React.Component<TargetPropsInterface, any> {
 
             return [
               {
-                // mutation: () => merge(targetProps, { x })
-                 mutation: () => targetProps
+                mutation: () => merge(targetProps, { x })
               }
             ];
           }
@@ -151,7 +156,7 @@ class App extends React.Component<any, DraggableDemoInterface> {
       domain
     };
 
-     return (
+    return (
       <div style={containerStyle}>
         <VictoryChart
           horizontal

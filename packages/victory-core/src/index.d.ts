@@ -537,7 +537,7 @@ export type ColorScalePropType =
 
 export type SortOrderPropType = "ascending" | "descending";
 
-export type SVGCoordinateType = {x: number; y: number};
+export type SVGCoordinateType = { x: number; y: number };
 
 export interface VictoryCommonProps {
   animate?: boolean | AnimatePropTypeInterface;
@@ -615,12 +615,20 @@ export interface VictorySingleLabelableProps extends VictoryLabelableProps {
   label?: string | { (data: any): string | number | null };
 }
 
-export class Selection {
-  getParentSVG: (evt: React.SyntheticEvent) => string;
-  getSVGEventCoordinates: (evt: React.SyntheticEvent, svg: SVGElement) => SVGCoordinateType;
-  getDomainCoordinates: (props: any, domain: DomainPropType) => DomainPropType;
-  getDataCoordinates: (props: any, scale: ScalePropType, x: number, y: number) => SVGCoordinateType;
-  getBounds: (props: any) => SVGCoordinateType;
+export namespace Selection {
+  export function getParentSVG(evt: React.SyntheticEvent): string;
+  export function getSVGEventCoordinates(
+    evt: React.SyntheticEvent,
+    svg?: SVGElement
+  ): SVGCoordinateType;
+  export function getDomainCoordinates(props: any, domain: DomainPropType): DomainPropType;
+  export function getDataCoordinates(
+    props: any,
+    scale: ScalePropType,
+    x: number,
+    y: number
+  ): SVGCoordinateType;
+  export function getBounds(props: any): SVGCoordinateType;
 }
 
 // #endregion
