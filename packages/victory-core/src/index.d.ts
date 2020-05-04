@@ -621,7 +621,7 @@ export namespace Selection {
     evt: React.SyntheticEvent,
     svg?: SVGElement
   ): SVGCoordinateType;
-  export function getDomainCoordinates(props: any, domain: DomainPropType): DomainPropType;
+  export function getDomainCoordinates(props: any, domain?: DomainPropType): DomainPropType;
   export function getDataCoordinates(
     props: any,
     scale: ScalePropType,
