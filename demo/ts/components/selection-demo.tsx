@@ -1,25 +1,33 @@
 /*eslint-disable no-magic-numbers */
 import React from "react";
-import { VictoryChart } from "Packages/victory-chart/src/index";
-import { VictoryStack } from "Packages/victory-stack/src/index";
-import { VictoryGroup } from "Packages/victory-group/src/index";
-import { VictoryBar } from "Packages/victory-bar/src/index";
-import { VictoryLine } from "Packages/victory-line/src/index";
-import { VictoryScatter } from "Packages/victory-scatter/src/index";
-import { VictorySelectionContainer } from "Packages/victory-selection-container/src/index";
-import { VictoryLegend } from "Packages/victory-legend/src/index";
-import { VictoryTooltip } from "Packages/victory-tooltip/src/index";
+import { VictoryChart } from "@packages/victory-chart";
+import { VictoryStack } from "@packages/victory-stack";
+import { VictoryGroup } from "@packages/victory-group";
+import { VictoryBar } from "@packages/victory-bar";
+import { VictoryLine } from "@packages/victory-line";
+import { VictoryScatter } from "@packages/victory-scatter";
+import { VictorySelectionContainer } from "@packages/victory-selection-container";
+import { VictoryLegend } from "@packages/victory-legend";
+import { VictoryTooltip } from "@packages/victory-tooltip";
 
-class App extends React.Component {
-  constructor() {
-    super();
+interface SelectionDemoState {
+  points: { x: number; y: number }[];
+}
+
+interface DataSet {
+  data?: { x: number; y: number }[];
+}
+
+export default class SelectionDemo extends React.Component<any, SelectionDemoState> {
+  constructor(props: any) {
+    super(props);
     this.state = {
       points: []
     };
   }
 
-  handleSelection(datasets) {
-    const points = datasets.reduce((memo, dataset) => {
+  handleSelection(datasets: DataSet[]) {
+    const points = datasets.reduce((memo: any, dataset: DataSet) => {
       memo = memo.concat(dataset.data);
       return memo;
     }, []);
@@ -31,7 +39,7 @@ class App extends React.Component {
   }
 
   listData() {
-    const points = this.state.points.map((point, index) => {
+    const points = this.state.points.map((point: { x: number; y: number }, index: number) => {
       return <li key={index}>{`${point.x}, ${point.y}`}</li>;
     });
 
@@ -44,7 +52,7 @@ class App extends React.Component {
   }
 
   render() {
-    const containerStyle = {
+    const containerStyle: React.CSSProperties = {
       display: "flex",
       flexDirection: "row",
       flexWrap: "wrap",
@@ -344,5 +352,3 @@ class App extends React.Component {
     );
   }
 }
-
-export default App;

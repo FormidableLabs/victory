@@ -17,6 +17,7 @@ import LineDemo from "./components/victory-line-demo";
 import PieDemo from "./components/victory-pie-demo";
 import PolarAxisDemo from "./components/victory-polar-axis-demo";
 import ScatterDemo from "./components/victory-scatter-demo";
+import SelectionDemo from "./components/selection-demo";
 import TooltipDemo from "./components/victory-tooltip-demo";
 import VictorySelectionContainerDemo from "./components/victory-selection-container-demo";
 import VictorySharedEventsDemo from "./components/victory-shared-events-demo";
@@ -39,6 +40,7 @@ const MAP = {
   "/pie": { component: PieDemo, name: "PieDemo" },
   "/polar-axis": { component: PolarAxisDemo, name: "PolarAxisDemo" },
   "/scatter": { component: ScatterDemo, name: "ScatterDemo" },
+  "/selection": { component: SelectionDemo, name: "SelectionDemo" },
   "/tooltip": { component: TooltipDemo, name: "TooltipDemo" },
   "/victory-selection-container": {
     component: VictorySelectionContainerDemo,
