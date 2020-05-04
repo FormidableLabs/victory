@@ -1,7 +1,6 @@
 import * as React from "react";
 import {
   EventPropTypeInterface,
-  OriginType,
   ScatterSymbolType,
   StringOrNumberOrCallback,
   VictoryCommonProps,
@@ -19,7 +18,6 @@ export interface VictoryScatterProps
   eventKey?: StringOrNumberOrCallback;
   maxBubbleSize?: number;
   minBubbleSize?: number;
-  origin?: OriginType;
   size?: number | { (data: any): number };
   style?: VictoryStyleInterface;
   symbol?: ScatterSymbolType | { (data: any): ScatterSymbolType };

@@ -65,7 +65,6 @@ export interface FlyoutProps extends VictoryCommonProps {
   id?: string | number;
   index?: number;
   orientation?: OrientationTypes;
-  origin?: object;
   pathComponent?: React.ReactElement;
   pointerLength?: number;
   pointerWidth?: number;
