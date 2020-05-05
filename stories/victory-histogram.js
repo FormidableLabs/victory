@@ -3,6 +3,7 @@ import React from "react";
 import { storiesOf } from "@storybook/react";
 import { VictoryHistogram } from "../packages/victory-histogram/src";
 import { VictoryLine } from "../packages/victory-line/src";
+import { VictoryScatter } from "../packages/victory-scatter/src";
 import { VictoryTooltip } from "../packages/victory-tooltip/src/index";
 
 import { VictoryTheme } from "../packages/victory-core/src";
@@ -854,6 +855,22 @@ storiesOf("VictoryHistogram.with other charts", module)
     <VictoryHistogram key="histogram" data={data} />,
     <VictoryLine
       key="line"
+      data={[
+        { x: 0, y: 5 },
+        { x: 10, y: 5 },
+        { x: 20, y: 2 },
+        { x: 30, y: 9 },
+        { x: 50, y: 2 },
+        { x: 60, y: 4 },
+        { x: 80, y: 12 },
+        { x: 120, y: 8 }
+      ]}
+    />
+  ])
+  .add("with scatter", () => [
+    <VictoryHistogram key="histogram" data={data} />,
+    <VictoryScatter
+      key="scatter"
       data={[
         { x: 0, y: 5 },
         { x: 10, y: 5 },
