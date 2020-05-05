@@ -25,9 +25,15 @@ const cacheLastValue = (func) => {
   };
 };
 
-const getBinningFunc = ({ data, x, bins }) => {
+const isDataDates = (data, x) => {
   const xAccessor = Helpers.createAccessor(x || "x");
   const dataIsDates = data.some((datum) => xAccessor(datum) instanceof Date);
+
+  return dataIsDates;
+};
+
+const getBinningFunc = ({ data, x, bins, dataIsDates }) => {
+  const xAccessor = Helpers.createAccessor(x || "x");
   const bin = d3Array.bin().value(xAccessor);
   const niceScale = (dataIsDates ? d3Scale.scaleLinear() : d3Scale.scaleTime())
     .domain(d3Array.extent(data, xAccessor))
@@ -64,12 +70,13 @@ const getFormattedData = cacheLastValue(({ data = [], x, bins }) => {
     return [];
   }
 
-  const binFunc = getBinningFunc({ data, x, bins });
+  const dataIsDates = isDataDates(data, x);
+  const binFunc = getBinningFunc({ data, x, bins, dataIsDates });
   const binnedData = binFunc(data).filter(({ x0, x1 }) => x0 !== x1);
 
   const formattedData = binnedData.map((bin) => ({
-    x: bin.x0,
-    end: bin.x1,
+    x: dataIsDates ? new Date(bin.x0) : bin.x0,
+    end: dataIsDates ? new Date(bin.x1) : bin.x1,
     y: bin.length,
     binnedDatums: [...bin]
   }));
