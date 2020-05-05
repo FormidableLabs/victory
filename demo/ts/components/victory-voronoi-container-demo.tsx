@@ -194,7 +194,7 @@ export default class VictoryVoronoiContainerDemo extends React.Component<
                   <VictoryTooltip
                     y={150}
                     flyoutStyle={{ fill: "white" }}
-                    style={{ fill: "green" }}
+                    style={[{ fill: "green" }, { fill: "magenta" }]}
                   />
                 }
               />
