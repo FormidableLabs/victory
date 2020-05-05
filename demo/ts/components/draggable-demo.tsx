@@ -7,13 +7,7 @@ import { VictoryAxis } from "@packages/victory-axis";
 import { VictoryBar } from "@packages/victory-bar";
 import { VictoryBrushLine } from "@packages/victory-brush-line";
 import { VictoryScatter } from "@packages/victory-scatter";
-import {
-  DomainTuple,
-  DomainPropType,
-  VictoryClipContainer,
-  Point,
-  Selection
-} from "@packages/victory-core";
+import { DomainTuple, VictoryClipContainer, Point, Selection } from "@packages/victory-core";
 import { VictoryZoomContainer } from "@packages/victory-zoom-container";
 import { VictoryBrushContainer } from "@packages/victory-brush-container";
 
@@ -27,10 +21,12 @@ type PointDataType = {
   date: Date;
 };
 
+type ZoomDomainType = { x?: DomainTuple; y: DomainTuple } | { x: DomainTuple; y?: DomainTuple };
+
 interface DraggableDemoInterface {
   bars: BarDataType[];
   points: PointDataType[];
-  zoomDomain: DomainPropType | undefined;
+  zoomDomain: ZoomDomainType | undefined;
 }
 
 interface TargetPropsInterface {
@@ -119,7 +115,7 @@ class App extends React.Component<any, DraggableDemoInterface> {
     this.state = { bars, points, zoomDomain: undefined };
   }
 
-  handleZoom(domain: DomainPropType) {
+  handleZoom(domain: ZoomDomainType) {
     this.setState({ zoomDomain: domain });
   }
 
@@ -146,7 +142,7 @@ class App extends React.Component<any, DraggableDemoInterface> {
       justifyContent: "center"
     };
 
-    const domain: DomainPropType = {
+    const domain: ZoomDomainType = {
       y: [new Date(2012, 1, 1), new Date(2019, 1, 1)],
       x: [0.5, 4.5]
     };

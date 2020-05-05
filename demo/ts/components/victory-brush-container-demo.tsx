@@ -1,7 +1,6 @@
 /*eslint-disable no-magic-numbers */
 import React from "react";
 import { VictoryChart } from "@packages/victory-chart";
-import { DomainPropType } from "@packages/victory-core";
 import { VictoryStack } from "@packages/victory-stack";
 import { VictoryGroup } from "@packages/victory-group";
 import { VictoryAxis } from "@packages/victory-axis";
@@ -11,9 +10,13 @@ import { VictoryScatter } from "@packages/victory-scatter";
 import { VictoryLegend } from "@packages/victory-legend";
 import { VictoryZoomContainer } from "@packages/victory-zoom-container";
 import { VictoryBrushContainer } from "@packages/victory-brush-container";
+import { DomainTuple } from "@packages/victory-core";
 
 interface VictoryBrushContainerDemoState {
-  zoomDomain: DomainPropType;
+  zoomDomain: {
+    x?: DomainTuple;
+    y?: DomainTuple;
+  };
 }
 
 export default class VictoryBrushContainerDemo extends React.Component<
@@ -24,7 +27,7 @@ export default class VictoryBrushContainerDemo extends React.Component<
     super(props);
   }
 
-  handleZoom(domain: DomainPropType) {
+  handleZoom(domain: { x?: DomainTuple; y?: DomainTuple }) {
     this.setState({ zoomDomain: domain });
   }
 

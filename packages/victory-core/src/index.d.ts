@@ -105,7 +105,9 @@ export type SliceNumberOrCallback<T, P = null> = number | ((props: Omit<T, P>) =
 
 export type VictoryStyleObject = { [K in keyof React.CSSProperties]: StringOrNumberOrCallback };
 
-export type CursorData = {
+export type StringOrNumberOrList = string | number | (string | number)[];
+
+export type CoordinatesPropType = {
   x: number;
   y: number;
 };
@@ -543,16 +545,14 @@ export interface VictoryCommonProps {
   animate?: boolean | AnimatePropTypeInterface;
   containerComponent?: React.ReactElement;
   domainPadding?: DomainPaddingPropType;
-  externalEventMutations?: EventCallbackInterface<
-    string | string[],
-    string | number | (string | number)[]
-  >[];
+  externalEventMutations?: EventCallbackInterface<string | string[], StringOrNumberOrList>[];
   groupComponent?: React.ReactElement;
   height?: number;
   horizontal?: boolean;
   maxDomain?: number | { x?: number; y?: number };
   minDomain?: number | { x?: number; y?: number };
   name?: string;
+  origin?: OriginType;
   padding?: PaddingProps;
   polar?: boolean;
   range?: RangePropType;

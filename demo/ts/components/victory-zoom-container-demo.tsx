@@ -1,42 +1,48 @@
-/* globals window */
 /*eslint-disable no-magic-numbers,react/no-multi-comp */
 import React from "react";
-import PropTypes from "prop-types";
 import { range, merge, random, minBy, maxBy, last } from "lodash";
-import { VictoryChart } from "Packages/victory-chart/src/index";
-import { VictoryStack } from "Packages/victory-stack/src/index";
-import { VictoryGroup } from "Packages/victory-group/src/index";
-import { VictoryAxis } from "Packages/victory-axis/src/index";
-import { VictoryArea } from "Packages/victory-area/src/index";
-import { VictoryBar } from "Packages/victory-bar/src/index";
-import { VictoryLine } from "Packages/victory-line/src/index";
-import { VictoryScatter } from "Packages/victory-scatter/src/index";
-import { VictoryZoomContainer } from "Packages/victory-zoom-container/src/index";
-import { VictoryTooltip } from "Packages/victory-tooltip/src/index";
-import { VictoryLegend } from "Packages/victory-legend/src/index";
-import { VictoryTheme, VictoryClipContainer, VictoryPortal } from "Packages/victory-core/src/index";
+import { VictoryChart } from "@packages/victory-chart";
+import { VictoryStack } from "@packages/victory-stack";
+import { VictoryGroup } from "@packages/victory-group";
+import { VictoryAxis } from "@packages/victory-axis";
+import { VictoryArea } from "@packages/victory-area";
+import { VictoryBar } from "@packages/victory-bar";
+import { VictoryLine } from "@packages/victory-line";
+import { VictoryScatter } from "@packages/victory-scatter";
+import { VictoryZoomContainer } from "@packages/victory-zoom-container";
+import { VictoryTooltip } from "@packages/victory-tooltip";
+import { VictoryLegend } from "@packages/victory-legend";
+import {
+  CoordinatesPropType,
+  DomainTuple,
+  VictoryClipContainer,
+  VictoryPortal,
+  VictoryTheme
+} from "@packages/victory-core";
 
 const allData = range(0, 10, 0.001).map((x) => ({
   x,
   y: (Math.sin((Math.PI * x) / 2) * x) / 10
 }));
 
-class CustomChart extends React.Component {
-  static propTypes = {
-    data: PropTypes.array,
-    maxPoints: PropTypes.number,
-    style: PropTypes.object
-  };
+interface CustomChartState {
+  zoomedXDomain: DomainTuple;
+}
 
-  constructor(props) {
-    super();
+class CustomChart extends React.Component<any, CustomChartState> {
+  entireDomain: { x: DomainTuple; y: DomainTuple };
+
+  constructor(props: any) {
+    super(props);
+
     this.entireDomain = this.getEntireDomain(props);
+
     this.state = {
       zoomedXDomain: this.entireDomain.x
     };
   }
 
-  onDomainChange(domain) {
+  onDomainChange(domain: { x: DomainTuple; y: DomainTuple }) {
     this.setState({
       zoomedXDomain: domain.x
     });
@@ -45,20 +51,35 @@ class CustomChart extends React.Component {
   getData() {
     const { zoomedXDomain } = this.state;
     const { data, maxPoints } = this.props;
-    const filtered = data.filter((d) => d.x >= zoomedXDomain[0] && d.x <= zoomedXDomain[1]);
+    const filtered = data.filter(
+      (d: { x: number }) => d.x >= zoomedXDomain[0] && d.x <= zoomedXDomain[1]
+    );
 
     if (filtered.length > maxPoints) {
       const k = Math.ceil(filtered.length / maxPoints);
-      return filtered.filter((d, i) => i % k === 0);
+      return filtered.filter((d: { x: number[] }, i: number) => i % k === 0);
     }
     return filtered;
   }
 
-  getEntireDomain(props) {
-    const { data } = props;
+  getEntireDomain(props: { data: CoordinatesPropType[] }) {
+    const { data }: { data: CoordinatesPropType[] } = props;
+
+    const minPoint = minBy(data, (d: CoordinatesPropType) => d.y);
+    const yMin = minPoint ? minPoint.y : 0;
+
+    const maxPoint = maxBy(data, (d: CoordinatesPropType) => d.y);
+    const yMax = maxPoint ? maxPoint.y : 0;
+
+    const lastPoint = last(data);
+    const xLast = lastPoint ? lastPoint.x : 0;
+
+    const yArr: DomainTuple = [yMin, yMax];
+    const xArr: DomainTuple = [data[0].x, xLast];
+
     return {
-      y: [minBy(data, (d) => d.y).y, maxBy(data, (d) => d.y).y],
-      x: [data[0].x, last(data).x]
+      x: xArr,
+      y: yArr
     };
   }
 
@@ -82,10 +103,53 @@ class CustomChart extends React.Component {
   }
 }
 
-export default class App extends React.Component {
-  constructor() {
-    super();
+interface VictoryZoomContainerDemoState {
+  arrayData: number[][];
+  barData: {
+    x: number;
+    y: number;
+  }[];
+  data: {
+    a: number;
+    b: number;
+  }[];
+  style: React.CSSProperties;
+  transitionData: {
+    x: number;
+    y: number;
+  }[];
+  zoomDomain: {
+    x?: DomainTuple;
+    y?: DomainTuple;
+  };
+}
+
+const parentStyle: React.CSSProperties = {
+  border: "1px solid #ccc",
+  margin: "2%",
+  maxWidth: "40%"
+};
+
+const containerStyle: React.CSSProperties = {
+  display: "flex",
+  flexDirection: "row",
+  flexWrap: "wrap",
+  alignItems: "center",
+  justifyContent: "center"
+};
+
+const makeData = () => range(-50, 75).map((i) => ({ x: i, y: Math.random() }));
+
+export default class VictoryZoomContainerDemo extends React.Component<
+  any,
+  VictoryZoomContainerDemoState
+> {
+  setStateInterval?: number = undefined;
+
+  constructor(props: any) {
+    super(props);
     this.state = {
+      barData: makeData(),
       data: this.getData(),
       transitionData: this.getTransitionData(),
       arrayData: this.getArrayData(),
@@ -96,10 +160,6 @@ export default class App extends React.Component {
       zoomDomain: this.getZoomDomain()
     };
   }
-
-  state = {
-    barData: range(-50, 75).map((i) => ({ x: i, y: Math.random() }))
-  };
 
   componentDidMount() {
     /* eslint-disable react/no-did-mount-set-state */
@@ -117,8 +177,10 @@ export default class App extends React.Component {
   }
 
   getZoomDomain() {
+    const yZoomDomain: DomainTuple = [random(0, 0.4), random(0.6, 1)];
+
     return {
-      y: [random(0, 0.4), random(0.6, 1)]
+      y: yZoomDomain
     };
   }
 
@@ -149,15 +211,6 @@ export default class App extends React.Component {
     };
   }
   render() {
-    const parentStyle = { border: "1px solid #ccc", margin: "2%", maxWidth: "40%" };
-    const containerStyle = {
-      display: "flex",
-      flexDirection: "row",
-      flexWrap: "wrap",
-      alignItems: "center",
-      justifyContent: "center"
-    };
-
     return (
       <div className="demo" style={containerStyle}>
         <CustomChart style={{ parent: parentStyle }} data={allData} maxPoints={120} />
@@ -175,7 +228,7 @@ export default class App extends React.Component {
           containerComponent={
             <VictoryZoomContainer
               zoomDomain={{ x: [new Date(1993, 1, 1), new Date(2005, 1, 1)] }}
-              dimension="x"
+              zoomDimension="x"
             />
           }
           scale={{
@@ -313,7 +366,7 @@ export default class App extends React.Component {
             name="line"
             style={{ parent: parentStyle, data: { stroke: "blue" } }}
             y={(d) => Math.sin(2 * Math.PI * d.x)}
-            sample={25}
+            samples={25}
           />
         </VictoryChart>
 

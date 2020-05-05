@@ -1,5 +1,5 @@
 import * as React from "react";
-import { DomainPropType, DomainTuple, VictoryStyleObject } from "victory-core";
+import { DomainTuple, VictoryStyleObject } from "victory-core";
 
 export interface VictoryBrushLineProps {
   allowDrag?: boolean;

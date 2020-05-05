@@ -2,7 +2,6 @@ import * as React from "react";
 import {
   EventPropTypeInterface,
   InterpolationPropType,
-  OriginType,
   StringOrNumberOrCallback,
   VictoryCommonProps,
   VictoryDatableProps,
@@ -17,7 +16,6 @@ export interface VictoryAreaProps
   eventKey?: string[] | number[] | StringOrNumberOrCallback;
   events?: EventPropTypeInterface<"data" | "labels" | "parent", string | number>[];
   interpolation?: InterpolationPropType;
-  origin?: OriginType;
   samples?: number;
   style?: VictoryStyleInterface;
 }

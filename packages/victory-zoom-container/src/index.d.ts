@@ -1,18 +1,21 @@
 import * as React from "react";
-import { DomainPropType, RangeTuple, VictoryContainerProps, CursorData } from "victory-core";
+import { DomainTuple, VictoryContainerProps } from "victory-core";
+
+export type ZoomDimensionType = "x" | "y";
 
 export interface VictoryZoomContainerProps extends VictoryContainerProps {
   allowPan?: boolean;
   allowZoom?: boolean;
-  brushStyle?: React.CSSProperties;
   clipContainerComponent?: React.ReactElement;
-  defaultBrushArea?: "all" | "none" | "disable";
   disable?: boolean;
   downsample?: number | boolean;
-  minimumZoom?: CursorData;
-  onZoomDomainChange?: (domain: DomainPropType, props: VictoryZoomContainerProps) => void;
-  zoomDimension?: "x" | "y";
-  zoomDomain?: DomainPropType;
+  minimumZoom?: { x?: number; y?: number };
+  onZoomDomainChange?: (
+    domain: { x: DomainTuple; y: DomainTuple },
+    props: VictoryZoomContainerProps
+  ) => void;
+  zoomDimension?: ZoomDimensionType;
+  zoomDomain?: { x?: DomainTuple; y?: DomainTuple };
 }
 
 export class VictoryZoomContainer extends React.Component<VictoryZoomContainerProps, any> {}

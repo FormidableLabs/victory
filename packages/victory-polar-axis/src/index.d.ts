@@ -37,7 +37,6 @@ export interface VictoryPolarAxisProps
   innerRadius?: number;
   labelOrientation?: LabelOrientationType;
   labelPlacement?: LabelOrientationType;
-  origin?: { x: number; y: number };
   startAngle?: number;
 }
 
