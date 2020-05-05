@@ -48,6 +48,7 @@ const getBinningFunc = ({ data, x, bins }) => {
   }
 
   if (dataIsDates) {
+    bin.domain(niceScale.domain());
     bin.thresholds(niceScale.ticks());
 
     return bin;

@@ -6,6 +6,9 @@ import { VictoryTooltip } from "../packages/victory-tooltip/src/index";
 
 import { VictoryTheme } from "../packages/victory-core/src";
 import { getChartDecorator } from "./decorators";
+import * as d3Array from "d3-array";
+import * as d3Scale from "d3-scale";
+import * as d3Time from "d3-time";
 
 const data = [
   { x: 18 },
@@ -571,7 +574,38 @@ storiesOf("VictoryHistogram.barSpacing.horizontal", module)
 /* data */
 storiesOf("VictoryHistogram.data.dates", module)
   .addDecorator(getChartDecorator({ theme: VictoryTheme.grayscale }))
-  .add("default", () => <VictoryHistogram data={timeData} />);
+  .add("date data from 2015-2020", () => <VictoryHistogram data={timeData} />)
+  .add("date data from 2020", () => {
+    const newTimeData = timeData.map(({ x }) => {
+      const newDate = new Date(x);
+
+      newDate.setFullYear(2020);
+      return { x: newDate };
+    });
+    return <VictoryHistogram data={newTimeData} />;
+  })
+  .add("date data from Jan-June 2020", () => {
+    const newTimeData = timeData.map(({ x }, index) => {
+      const newDate = new Date(x);
+
+      newDate.setFullYear(2020);
+
+      newDate.setMonth(Math.ceil(index / 100));
+      return { x: newDate };
+    });
+    return <VictoryHistogram data={newTimeData} />;
+  })
+  .add("data date from May 2020", () => {
+    const newTimeData = timeData.map(({ x }) => {
+      const newDate = new Date(x);
+
+      newDate.setMonth(4);
+      newDate.setFullYear(2020);
+
+      return { x: newDate };
+    });
+    return <VictoryHistogram data={newTimeData} />;
+  });
 
 storiesOf("VictoryHistogram.data", module)
   .addDecorator(getChartDecorator({ theme: VictoryTheme.grayscale }))
@@ -601,9 +635,33 @@ storiesOf("VictoryHistogram.bins.dates", module)
   ))
   .add("numeric bins = 2", () => <VictoryHistogram data={timeData} bins={2} />)
   .add("numeric bins = 10", () => <VictoryHistogram data={timeData} bins={10} />)
-  .add("day bins", () => <VictoryHistogram data={timeData} bins="day" />)
-  .add("month bins", () => <VictoryHistogram data={timeData} bins="month" />)
-  .add("year bins", () => <VictoryHistogram data={timeData} bins="year" />)
+  .add("day bins", () => {
+    const niceTimeScale = d3Scale
+      .scaleTime()
+      .domain(d3Array.extent(timeData, ({ x }) => x))
+      .nice();
+    const ticks = niceTimeScale.ticks(d3Time.utcDay);
+
+    return <VictoryHistogram data={timeData} bins={ticks} />;
+  })
+  .add("month bins", () => {
+    const niceTimeScale = d3Scale
+      .scaleTime()
+      .domain(d3Array.extent(timeData, ({ x }) => x))
+      .nice();
+    const ticks = niceTimeScale.ticks(d3Time.utcMonth);
+
+    return <VictoryHistogram data={timeData} bins={ticks} />;
+  })
+  .add("year bins", () => {
+    const niceTimeScale = d3Scale
+      .scaleTime()
+      .domain(d3Array.extent(timeData, ({ x }) => x))
+      .nice();
+    const ticks = niceTimeScale.ticks(d3Time.utcYear);
+
+    return <VictoryHistogram data={timeData} bins={ticks} />;
+  })
   .add("default", () => <VictoryHistogram data={timeData} />);
 
 storiesOf("VictoryHistogram.bins.vertical", module)
