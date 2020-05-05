@@ -1,7 +1,6 @@
 /* global window:false */
 /* eslint-disable no-magic-numbers, react/no-multi-comp */
 import React from "react";
-// import PropTypes from "prop-types";
 import { assign, merge, keys, random, range, round } from "lodash";
 import { fromJS } from "immutable";
 import { VictoryChart } from "@packages/victory-chart";
@@ -13,7 +12,7 @@ import { VictoryPolarAxis } from "@packages/victory-polar-axis";
 import { VictoryBar } from "@packages/victory-bar";
 import { VictoryLine } from "@packages/victory-line";
 import { VictoryScatter } from "@packages/victory-scatter";
-// import { VictoryErrorBar } from "@packages/victory-errorbar";
+import { VictoryErrorBar } from "@packages/victory-errorbar";
 import { VictoryCandlestick } from "@packages/victory-candlestick";
 import { VictoryVoronoi } from "@packages/victory-voronoi";
 import { VictoryZoomContainer } from "@packages/victory-zoom-container";
@@ -36,10 +35,6 @@ interface WrapperProps {
 }
 
 class Wrapper extends React.Component<WrapperProps> {
-  // static propTypes = {
-  //   children: PropTypes.oneOfType([PropTypes.arrayOf(PropTypes.node), PropTypes.node])
-  // };
-
   renderChildren(props: WrapperProps) {
     const children = React.Children.toArray(props.children);
     return children.map((child: any) => {
@@ -340,7 +335,7 @@ export default class ImmutableDemo extends React.Component<any, ImmutableDemoSta
           />
 
           <VictoryChart style={chartStyle}>
-            {/* <VictoryErrorBar
+            <VictoryErrorBar
               data={fromJS([
                 { x: 1, y: 1, errorX: [1, 0.5], errorY: 0.1 },
                 { x: 2, y: 2, errorX: [1, 3], errorY: 0.1 },
@@ -348,7 +343,7 @@ export default class ImmutableDemo extends React.Component<any, ImmutableDemoSta
                 { x: 4, y: 2, errorX: [1, 0.5], errorY: 0.1 },
                 { x: 5, y: 1, errorX: [1, 0.5], errorY: 0.2 }
               ])}
-            /> */}
+            />
             <VictoryLine
               data={fromJS([
                 { x: 1, y: 1, errorX: [1, 0.5], errorY: 0.1 },
