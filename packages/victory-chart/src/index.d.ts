@@ -3,7 +3,6 @@ import {
   CategoryPropType,
   EventPropTypeInterface,
   DomainPropType,
-  DomainPaddingPropType,
   StringOrNumberOrCallback,
   VictoryCommonProps,
   VictoryStyleInterface
