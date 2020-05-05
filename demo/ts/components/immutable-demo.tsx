@@ -677,7 +677,7 @@ export default class ImmutableDemo extends React.Component<any, ImmutableDemoSta
                   <VictoryTooltip
                     y={150}
                     flyoutStyle={{ fill: "white" }}
-                    style={[{ fill: "green" }, { fill: "magenta" }]}
+                    style={{ fill: "green" }}
                   />
                 }
               />
