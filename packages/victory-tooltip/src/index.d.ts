@@ -40,7 +40,7 @@ export interface VictoryTooltipProps extends VictoryLabelableProps {
   pointerOrientation?: OrientationTypes | ((...args: any[]) => OrientationTypes);
   pointerWidth?: NumberOrCallback;
   renderInPortal?: boolean;
-  style?: React.CSSProperties;
+  style?: React.CSSProperties | React.CSSProperties[];
   text?: StringOrNumberOrCallback | string[] | number[];
   theme?: VictoryThemeDefinition;
   width?: number;
