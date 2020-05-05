@@ -109,7 +109,7 @@ class App extends React.Component {
               <VictoryVoronoiContainer
                 labels={({ datum }) => `I'm kind of a long label ${datum.y}`}
                 mouseFollowTooltips
-                labelComponent={<VictoryTooltip constrainToVisibleArea tooltipWidth={80} />}
+                labelComponent={<VictoryTooltip constrainToVisibleArea width={80} />}
               />
             }
           >
