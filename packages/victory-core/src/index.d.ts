@@ -632,11 +632,11 @@ export namespace Selection {
 }
 
 export interface TextSizeStyleInterface {
+  angle?: number;
+  characterConstant?: string;
   fontFamily?: string;
   fontSize?: number | string;
-  angle?: number;
   letterSpacing?: string;
-  characterConstant?: string;
   lineHeight?: number;
 }
 
