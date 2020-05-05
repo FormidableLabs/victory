@@ -2,7 +2,6 @@ import * as React from "react";
 import {
   CategoryPropType,
   ColorScalePropType,
-  DomainPaddingPropType,
   DomainPropType,
   EventPropTypeInterface,
   StringOrNumberOrCallback,
