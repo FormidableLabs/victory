@@ -34,7 +34,7 @@ declare module "victory" {
     // PropTypes,
     // Scale,
     // Style,
-    // TextSize,
+    TextSize,
     // Transitions,
     Selection
     // LabelHelpers,
@@ -190,7 +190,7 @@ declare module "victory" {
     // PropTypes,
     // Scale,
     // Style,
-    // TextSize,
+    TextSize,
     // Transitions,
     Selection
     // LabelHelpers,
