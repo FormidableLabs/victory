@@ -23,6 +23,7 @@ import SelectionDemo from "./components/selection-demo";
 import TooltipDemo from "./components/victory-tooltip-demo";
 import VictorySelectionContainerDemo from "./components/victory-selection-container-demo";
 import VictorySharedEventsDemo from "./components/victory-shared-events-demo";
+import VoronoiContainerDemo from "./components/victory-voronoi-container-demo";
 import VoronoiDemo from "./components/victory-voronoi-demo";
 import ZoomContainerDemo from "./components/victory-zoom-container-demo";
 
@@ -52,6 +53,7 @@ const MAP = {
   },
   "/victory-shared-events": { component: VictorySharedEventsDemo, name: "VictorySharedEventsDemo" },
   "/voronoi": { component: VoronoiDemo, name: "VoronoiDemo" },
+  "/voronoi-container": { component: VoronoiContainerDemo, name: "VoronoiContainerDemo" },
   "/zoom-container": { component: ZoomContainerDemo, name: "ZoomContainerDemo" }
 };
 
