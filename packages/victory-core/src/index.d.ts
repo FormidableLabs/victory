@@ -461,10 +461,10 @@ export interface EventPropTypeInterface<TTarget, TEventKey> {
 }
 
 export type DomainTuple = [number, number] | [Date, Date];
-export type DomainPropType =
-  | DomainTuple
+export type DomainPropObjectType =
   | { x?: DomainTuple; y: DomainTuple }
   | { x: DomainTuple; y?: DomainTuple };
+export type DomainPropType = DomainPropObjectType | DomainTuple;
 
 export type PaddingType = number | [number, number];
 export type DomainPaddingPropType =

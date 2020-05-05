@@ -7,7 +7,13 @@ import { VictoryAxis } from "@packages/victory-axis";
 import { VictoryBar } from "@packages/victory-bar";
 import { VictoryBrushLine } from "@packages/victory-brush-line";
 import { VictoryScatter } from "@packages/victory-scatter";
-import { DomainTuple, VictoryClipContainer, Point, Selection } from "@packages/victory-core";
+import {
+  DomainTuple,
+  DomainPropObjectType,
+  VictoryClipContainer,
+  Point,
+  Selection
+} from "@packages/victory-core";
 import { VictoryZoomContainer } from "@packages/victory-zoom-container";
 import { VictoryBrushContainer } from "@packages/victory-brush-container";
 
@@ -21,7 +27,7 @@ type PointDataType = {
   date: Date;
 };
 
-type ZoomDomainType = { x?: DomainTuple; y: DomainTuple } | { x: DomainTuple; y?: DomainTuple };
+type ZoomDomainType = DomainPropObjectType;
 
 interface DraggableDemoInterface {
   bars: BarDataType[];
