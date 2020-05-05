@@ -12,6 +12,8 @@ import {
   VictoryStyleInterface
 } from "victory-core";
 
+export type VictoryGroupTTargetType = "data" | "labels" | "parent";
+
 export interface VictoryGroupProps
   extends VictoryCommonProps,
     VictoryDatableProps,
@@ -21,7 +23,7 @@ export interface VictoryGroupProps
   colorScale?: ColorScalePropType;
   domain?: DomainPropType;
   domainPadding?: DomainPaddingPropType;
-  events?: EventPropTypeInterface<"data" | "labels" | "parent", StringOrNumberOrCallback>[];
+  events?: EventPropTypeInterface<VictoryGroupTTargetType, StringOrNumberOrCallback>[];
   eventKey?: StringOrNumberOrCallback;
   horizontal?: boolean;
   offset?: number;

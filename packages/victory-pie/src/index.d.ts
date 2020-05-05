@@ -14,7 +14,8 @@ import {
   VictoryStyleInterface
 } from "victory-core";
 
-export type labelPositionType = "startAngle" | "centroid" | "endAngle";
+export type VictorySliceLabelPositionType = "startAngle" | "centroid" | "endAngle";
+export type VictorySliceTTargetType = "data" | "labels" | "parent";
 
 export interface VictorySliceProps extends VictoryCommonProps {
   cornerRadius?: SliceNumberOrCallback<VictorySliceProps, "cornerRadius">;
@@ -45,12 +46,14 @@ export interface VictoryPieProps
   dataComponent?: React.ReactElement;
   endAngle?: number;
   events?: EventPropTypeInterface<
-    "data" | "labels" | "parent",
+    VictorySliceTTargetType,
     StringOrNumberOrCallback | string[] | number[]
   >[];
   eventKey?: StringOrNumberOrCallback;
   innerRadius?: NumberOrCallback;
-  labelPosition?: labelPositionType | ((props: VictorySliceProps) => labelPositionType);
+  labelPosition?:
+    | VictorySliceLabelPositionType
+    | ((props: VictorySliceProps) => VictorySliceLabelPositionType);
   labelRadius?: number | ((props: VictorySliceProps) => number);
   origin?: OriginType;
   padAngle?: NumberOrCallback;

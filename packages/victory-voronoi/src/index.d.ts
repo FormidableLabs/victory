@@ -10,6 +10,8 @@ import {
   VictoryStyleInterface
 } from "victory-core";
 
+export type VictoryVoronoiSortOrderType = "ascending" | "descending";
+
 export interface VictoryVoronoiProps
   extends VictoryCommonProps,
     VictoryDatableProps,
@@ -18,7 +20,7 @@ export interface VictoryVoronoiProps
   events?: EventPropTypeInterface<string, string | number | (string | number)[]>[];
   type?: number;
   sortKey?: StringOrNumberOrCallback | string[];
-  sortOrder?: "ascending" | "descending";
+  sortOrder?: VictoryVoronoiSortOrderType;
   size?: number | { (data: any): number };
   style?: VictoryStyleInterface;
 }
