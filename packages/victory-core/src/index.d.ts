@@ -107,7 +107,7 @@ export type VictoryStyleObject = { [K in keyof React.CSSProperties]: StringOrNum
 
 export type StringOrNumberOrList = string | number | (string | number)[];
 
-export type CursorData = {
+export type CoordinatesPropType = {
   x: number;
   y: number;
 };
@@ -145,7 +145,7 @@ export class VictoryAnimation extends React.Component<VictoryAnimationProps, any
 
 export type TickLabelProps = React.CSSProperties & {
   angle?: number;
-  verticalAnchor?: "start" | "middle" | "end";
+  verticalAnchor?: VerticalAnchorType;
 };
 
 export interface VictoryAxisCommonProps {
@@ -461,10 +461,10 @@ export interface EventPropTypeInterface<TTarget, TEventKey> {
 }
 
 export type DomainTuple = [number, number] | [Date, Date];
-export type DomainPropType =
-  | DomainTuple
+export type DomainPropObjectType =
   | { x?: DomainTuple; y: DomainTuple }
   | { x: DomainTuple; y?: DomainTuple };
+export type DomainPropType = DomainPropObjectType | DomainTuple;
 
 export type PaddingType = number | [number, number];
 export type DomainPaddingPropType =
@@ -539,6 +539,8 @@ export type ColorScalePropType =
 
 export type SortOrderPropType = "ascending" | "descending";
 
+export type SVGCoordinateType = { x: number; y: number };
+
 export interface VictoryCommonProps {
   animate?: boolean | AnimatePropTypeInterface;
   containerComponent?: React.ReactElement;
@@ -577,10 +579,7 @@ export interface VictoryCommonPrimitiveProps {
   events?: object;
   id?: number | string;
   index?: number | string;
-  origin?: {
-    x: number;
-    y: number;
-  };
+  origin?: OriginType;
   polar?: boolean;
   role?: string;
   scale?: any;
@@ -616,6 +615,22 @@ export interface VictorySingleLabelableProps extends VictoryLabelableProps {
   label?: string | { (data: any): string | number | null };
 }
 
+export namespace Selection {
+  export function getParentSVG(evt: React.SyntheticEvent): string;
+  export function getSVGEventCoordinates(
+    evt: React.SyntheticEvent,
+    svg?: SVGElement
+  ): SVGCoordinateType;
+  export function getDomainCoordinates(props: any, domain?: DomainPropType): DomainPropType;
+  export function getDataCoordinates(
+    props: any,
+    scale: ScalePropType,
+    x: number,
+    y: number
+  ): SVGCoordinateType;
+  export function getBounds(props: any): SVGCoordinateType;
+}
+
 // #endregion
 
 // #region Victory Portal
@@ -636,16 +651,7 @@ export interface VictoryPointProps extends VictoryCommonPrimitiveProps {
   getPath?: Function;
   pathComponent?: React.ReactElement;
   size?: number | Function;
-  symbol?:
-    | "circle"
-    | "diamond"
-    | "plus"
-    | "minus"
-    | "square"
-    | "star"
-    | "triangleDown"
-    | "triangleUp"
-    | Function;
+  symbol?: ScatterSymbolType | Function;
   x?: number;
   y?: number;
 }

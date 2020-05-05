@@ -13,6 +13,9 @@ import {
   VictoryStyleObject
 } from "victory-core";
 
+export type VictoryLegendTTargetType = "data" | "labels" | "parent";
+export type VictoryLegendOrientationType = "horizontal" | "vertical";
+
 export interface VictoryLegendProps
   extends VictoryCommonProps,
     VictoryDatableProps,
@@ -33,10 +36,10 @@ export interface VictoryLegendProps
   }>;
   dataComponent?: React.ReactElement;
   eventKey?: StringOrNumberOrCallback | string[];
-  events?: EventPropTypeInterface<"data" | "labels" | "parent", StringOrNumberOrCallback>[];
+  events?: EventPropTypeInterface<VictoryLegendTTargetType, StringOrNumberOrCallback>[];
   gutter?: number | { left: number; right: number };
   itemsPerRow?: number;
-  orientation?: "horizontal" | "vertical";
+  orientation?: VictoryLegendOrientationType;
   rowGutter?: number | Omit<BlockProps, "left" | "right">;
   style?: VictoryStyleInterface & { title?: VictoryStyleObject };
   symbolSpacer?: number;

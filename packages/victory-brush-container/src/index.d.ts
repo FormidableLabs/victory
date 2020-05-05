@@ -1,27 +1,27 @@
 import * as React from "react";
-import { RangeTuple, VictoryContainerProps } from "victory-core";
+import { DomainTuple, VictoryContainerProps } from "victory-core";
 
 export interface VictoryBrushContainerProps extends VictoryContainerProps {
   allowDrag?: boolean;
   allowResize?: boolean;
   brushComponent?: React.ReactElement;
   brushDimension?: "x" | "y";
-  brushDomain?: { x?: RangeTuple; y?: RangeTuple };
+  brushDomain?: { x?: DomainTuple; y?: DomainTuple };
   brushStyle?: React.CSSProperties;
   defaultBrushArea?: "all" | "none" | "disable" | "move";
   disable?: boolean;
   handleComponent?: React.ReactElement;
   handleStyle?: React.CSSProperties;
   onBrushCleared?: (
-    domain: { x?: RangeTuple; y?: RangeTuple },
+    domain: { x: DomainTuple; y: DomainTuple },
     props: VictoryBrushContainerProps
   ) => void;
   onBrushDomainChange?: (
-    domain: { x?: RangeTuple; y?: RangeTuple },
+    domain: { x: DomainTuple; y: DomainTuple },
     props: VictoryBrushContainerProps
   ) => void;
   onBrushDomainChangeEnd?: (
-    domain: { x?: RangeTuple; y?: RangeTuple },
+    domain: { x: DomainTuple; y: DomainTuple },
     props: VictoryBrushContainerProps
   ) => void;
 }

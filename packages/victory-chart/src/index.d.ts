@@ -21,7 +21,7 @@ export interface VictoryChartProps extends VictoryCommonProps {
   children?: React.ReactNode | React.ReactNode[];
   domain?: DomainPropType;
   endAngle?: number;
-  events?: EventPropTypeInterface<string, string | number>[];
+  events?: EventPropTypeInterface<string, string[] | number[] | string | number>[];
   eventKey?: StringOrNumberOrCallback;
   innerRadius?: number;
   prependDefaultAxes?: boolean;

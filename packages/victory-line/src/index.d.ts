@@ -11,12 +11,14 @@ import {
   VictoryStyleInterface
 } from "victory-core";
 
+export type VictoryLineTTargetType = "data" | "labels" | "parent";
+
 export interface VictoryLineProps
   extends VictoryCommonProps,
     VictoryDatableProps,
     VictoryLabelableProps,
     VictoryMultiLabelableProps {
-  events?: EventPropTypeInterface<"data" | "labels" | "parent", number | string>[];
+  events?: EventPropTypeInterface<VictoryLineTTargetType, number | string>[];
   eventKey?: StringOrNumberOrCallback | string[];
   interpolation?: InterpolationPropType | Function;
   samples?: number;
