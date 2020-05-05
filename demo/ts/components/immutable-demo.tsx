@@ -712,10 +712,10 @@ export default class ImmutableDemo extends React.Component<any, ImmutableDemoSta
                 { x: 2, y: -4, l: "dog" },
                 { x: 3, y: -2, l: "bird" }
               ])}
-              style={fromJS({
+              style={{
                 data: { stroke: "black", strokeWidth: ({ active }) => (active ? 4 : 2) },
                 labels: { fill: "black" }
-              })}
+              }}
             />
           </VictoryChart>
 
@@ -726,7 +726,7 @@ export default class ImmutableDemo extends React.Component<any, ImmutableDemoSta
             padding={{ top: 100, bottom: 40, left: 50, right: 50 }}
             containerComponent={
               <VictoryCursorContainer
-                cursorLabel={({ datum }) => `${round(datum.x, 2)} , ${round(datum.y, 2)}`}
+                cursorLabel={(datum) => `${round(datum.x, 2)} , ${round(datum.y, 2)}`}
               />
             }
           >
