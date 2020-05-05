@@ -1,15 +1,15 @@
 /*eslint-disable no-magic-numbers*/
 import React from "react";
-import { VictoryAxis } from "@packages/victory-axis"
-import { VictoryArea } from "@packages/victory-area"
-import { VictoryBar } from "@packages/victory-bar"
-import { VictoryChart } from "@packages/victory-chart"
-import { VictoryLine } from "@packages/victory-line"
-import { VictoryPie } from "@packages/victory-pie"
-import { VictoryScatter } from "@packages/victory-scatter"
-import { VictoryStack } from "@packages/victory-stack"
-import { VictoryGroup } from "@packages/victory-group"
-import { VictorySelectionContainer } from "@packages/victory-selection-container"
+import { VictoryAxis } from "@packages/victory-axis";
+import { VictoryArea } from "@packages/victory-area";
+import { VictoryBar } from "@packages/victory-bar";
+import { VictoryChart } from "@packages/victory-chart";
+import { VictoryLine } from "@packages/victory-line";
+import { VictoryPie } from "@packages/victory-pie";
+import { VictoryScatter } from "@packages/victory-scatter";
+import { VictoryStack } from "@packages/victory-stack";
+import { VictoryGroup } from "@packages/victory-group";
+import { VictorySelectionContainer } from "@packages/victory-selection-container";
 
 export default class App extends React.Component {
   render() {
