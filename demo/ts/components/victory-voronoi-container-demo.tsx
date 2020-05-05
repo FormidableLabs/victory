@@ -68,11 +68,11 @@ export default class VictoryVoronoiContainerDemo extends React.Component<
   render() {
     const dy = 13;
     const CustomLabel = (props: any) => {
-      const x = props.x - 2 - 4 * Math.max(...props.text.map((t) => t.length));
+      const x = props.x - 2 - 4 * Math.max(...props.text.map((t: string) => t.length));
       const startY = 2 + props.y - (props.text.length * dy) / 2;
       return (
         <g>
-          {props.activePoints.map((pt, idx) => {
+          {props.activePoints.map((pt: any, idx: number) => {
             return (
               <rect
                 key={`square_${idx}`}
@@ -89,7 +89,7 @@ export default class VictoryVoronoiContainerDemo extends React.Component<
       );
     };
 
-    const CustomFlyout = (props) => {
+    const CustomFlyout = (props: any) => {
       return <Flyout {...props} width={props.width + 15} />;
     };
 
