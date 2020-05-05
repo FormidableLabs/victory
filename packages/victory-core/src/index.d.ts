@@ -631,6 +631,20 @@ export namespace Selection {
   export function getBounds(props: any): SVGCoordinateType;
 }
 
+export interface TextSizeStyleInterface {
+  fontFamily?: string;
+  fontSize?: number | string;
+  angle?: number;
+  letterSpacing?: string;
+  characterConstant?: string;
+  lineHeight?: number;
+}
+
+export namespace TextSize {
+  export function approximateTextSize(text: string, style: TextSizeStyleInterface): number;
+  export function convertLengthToPixels(length: string, fontSize: number): number;
+}
+
 // #endregion
 
 // #region Victory Portal
