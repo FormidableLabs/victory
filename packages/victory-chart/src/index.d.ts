@@ -3,7 +3,6 @@ import {
   CategoryPropType,
   EventPropTypeInterface,
   DomainPropType,
-  DomainPaddingPropType,
   StringOrNumberOrCallback,
   VictoryCommonProps,
   VictoryStyleInterface
@@ -21,7 +20,11 @@ export interface VictoryChartProps extends VictoryCommonProps {
   children?: React.ReactNode | React.ReactNode[];
   domain?: DomainPropType;
   endAngle?: number;
+<<<<<<< HEAD
   events?: EventPropTypeInterface<string, string[] | number[] | string | number>[];
+=======
+  events?: EventPropTypeInterface<string, string | number | string[] | number[]>[];
+>>>>>>> Removes unused import and adds addition type definiton for events prop
   eventKey?: StringOrNumberOrCallback;
   innerRadius?: number;
   prependDefaultAxes?: boolean;

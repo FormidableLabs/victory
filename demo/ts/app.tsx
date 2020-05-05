@@ -13,11 +13,8 @@ import ChartDemo from "./components/victory-chart-demo";
 import CursorContainerDemo from "./components/victory-cursor-container-demo";
 import DraggableDemo from "./components/draggable-demo";
 import ErrorBarDemo from "./components/victory-errorbar-demo";
-<<<<<<< HEAD
 import EventsDemo from "./components/events-demo";
-=======
 import ImmutableDemo from "./components/immutable-demo";
->>>>>>> Adds ImmutableDemo to app
 import LegendDemo from "./components/victory-legend-demo";
 import LineDemo from "./components/victory-line-demo";
 import PieDemo from "./components/victory-pie-demo";
