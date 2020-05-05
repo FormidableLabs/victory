@@ -25,9 +25,6 @@ export default class VictoryBrushContainerDemo extends React.Component<
 > {
   constructor(props: any) {
     super(props);
-    this.state = {
-      zoomDomain: {}
-    };
   }
 
   handleZoom(domain: { x?: DomainTuple; y?: DomainTuple }) {

@@ -1,14 +1,15 @@
 import * as React from "react";
-import { DomainPropType, VictoryStyleObject } from "victory-core";
+import { DomainTuple, VictoryStyleObject } from "victory-core";
 
 export interface VictoryBrushLineProps {
   allowDrag?: boolean;
+  allowDraw?: boolean;
   allowResize?: boolean;
   brushAreaComponent?: React.ReactElement;
   brushAreaStyle?: VictoryStyleObject;
   brushAreaWidth?: number;
   brushComponent?: React.ReactElement;
-  brushDomain?: [number, number];
+  brushDomain?: DomainTuple;
   brushStyle?: VictoryStyleObject;
   brushWidth?: number;
   className?: string;
@@ -21,7 +22,7 @@ export interface VictoryBrushLineProps {
   id?: string | number;
   lineComponent?: React.ReactElement;
   name?: string;
-  onBrushDomainChange?: (currentDomain: DomainPropType, props: VictoryBrushLineProps) => void;
+  onBrushDomainChange?: (domain: DomainTuple, props?: VictoryBrushLineProps) => void;
   style?: VictoryStyleObject;
   type?: string;
   width?: number;

@@ -11,6 +11,7 @@ import BrushLineDemo from "./components/victory-brush-line-demo";
 import CandlestickDemo from "./components/victory-candlestick-demo";
 import ChartDemo from "./components/victory-chart-demo";
 import CursorContainerDemo from "./components/victory-cursor-container-demo";
+import DraggableDemo from "./components/draggable-demo";
 import ErrorBarDemo from "./components/victory-errorbar-demo";
 import LegendDemo from "./components/victory-legend-demo";
 import LineDemo from "./components/victory-line-demo";
@@ -34,6 +35,7 @@ const MAP = {
   "/candlestick": { component: CandlestickDemo, name: "CandlestickDemo" },
   "/chart": { component: ChartDemo, name: "ChartDemo" },
   "/cursor-container": { component: CursorContainerDemo, name: "CursorContainerDemo" },
+  "/draggable-demo": { component: DraggableDemo, name: "DraggableDemo" },
   "/error-bar": { component: ErrorBarDemo, name: "ErrorBarDemo" },
   "/legend": { component: LegendDemo, name: "LegendDemo" },
   "/line": { component: LineDemo, name: "LineDemo" },

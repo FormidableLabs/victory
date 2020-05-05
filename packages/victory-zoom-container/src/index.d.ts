@@ -1,6 +1,8 @@
 import * as React from "react";
 import { DomainTuple, VictoryContainerProps } from "victory-core";
 
+export type ZoomDimensionType = "x" | "y";
+
 export interface VictoryZoomContainerProps extends VictoryContainerProps {
   allowPan?: boolean;
   allowZoom?: boolean;
@@ -12,7 +14,7 @@ export interface VictoryZoomContainerProps extends VictoryContainerProps {
     domain: { x: DomainTuple; y: DomainTuple },
     props: VictoryZoomContainerProps
   ) => void;
-  zoomDimension?: "x" | "y";
+  zoomDimension?: ZoomDimensionType;
   zoomDomain?: { x?: DomainTuple; y?: DomainTuple };
 }
 

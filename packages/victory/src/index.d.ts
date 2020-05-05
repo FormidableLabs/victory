@@ -22,7 +22,7 @@ declare module "victory" {
     // VictoryTransition,
     VictoryPortal,
     // Portal,
-    VictoryClipContainer
+    VictoryClipContainer,
     // addEvents,
     // Collection,
     // Data,
@@ -36,7 +36,7 @@ declare module "victory" {
     // Style,
     // TextSize,
     // Transitions,
-    // Selection,
+    Selection
     // LabelHelpers,
     // Axis,
     // Wrapper
@@ -178,7 +178,7 @@ declare module "victory" {
     // combineContainerMixins,
     // makeCreateContainerFunction,
     createContainer,
-    VictoryBrushLine
+    VictoryBrushLine,
     // addEvents,
     // Collection,
     // Data,
@@ -192,7 +192,7 @@ declare module "victory" {
     // Style,
     // TextSize,
     // Transitions,
-    // Selection,
+    Selection
     // LabelHelpers,
     // Axis,
     // Wrapper
