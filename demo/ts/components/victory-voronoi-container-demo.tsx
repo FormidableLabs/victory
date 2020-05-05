@@ -1,21 +1,45 @@
 /*global window:false*/
 /*eslint-disable no-magic-numbers */
 import React from "react";
-import { VictoryChart } from "Packages/victory-chart/src/index";
-import { VictoryStack } from "Packages/victory-stack/src/index";
-import { VictoryGroup } from "Packages/victory-group/src/index";
-import { VictoryBar } from "Packages/victory-bar/src/index";
-import { VictoryLine } from "Packages/victory-line/src/index";
-import { VictoryScatter } from "Packages/victory-scatter/src/index";
-import { VictoryVoronoiContainer } from "Packages/victory-voronoi-container/src/index";
 import { random, range } from "lodash";
-import { Flyout, VictoryTooltip } from "Packages/victory-tooltip/src/index";
-import { VictoryLegend } from "Packages/victory-legend/src/index";
-import { VictoryLabel, VictoryTheme } from "Packages/victory-core/src/index";
+import { VictoryChart } from "@packages/victory-chart";
+import { VictoryStack } from "@packages/victory-stack";
+import { VictoryGroup } from "@packages/victory-group";
+import { VictoryBar } from "@packages/victory-bar";
+import { VictoryLine } from "@packages/victory-line";
+import { VictoryScatter } from "@packages/victory-scatter";
+import { VictoryVoronoiContainer } from "@packages/victory-voronoi-container";
+import { Flyout, VictoryTooltip } from "@packages/victory-tooltip";
+import { VictoryLegend } from "@packages/victory-legend";
+import { VictoryLabel, VictoryTheme } from "@packages/victory-core";
 
-class App extends React.Component {
-  constructor() {
-    super();
+interface VictoryVoronoiContainerDemoState {
+  data: {
+    a: number;
+    b: number;
+  }[];
+}
+
+const containerStyle: React.CSSProperties = {
+  display: "flex",
+  flexDirection: "row",
+  flexWrap: "wrap",
+  alignItems: "center",
+  justifyContent: "center"
+};
+
+const chartStyle: { [key: string]: React.CSSProperties } = {
+  parent: { border: "1px solid #ccc", margin: "2%", maxWidth: "40%" }
+};
+
+export default class VictoryVoronoiContainerDemo extends React.Component<
+  any,
+  VictoryVoronoiContainerDemoState
+> {
+  setStateInterval?: number = undefined;
+
+  constructor(props: any) {
+    super(props);
     this.state = {
       data: this.getData()
     };
@@ -42,23 +66,13 @@ class App extends React.Component {
   }
 
   render() {
-    const containerStyle = {
-      display: "flex",
-      flexDirection: "row",
-      flexWrap: "wrap",
-      alignItems: "center",
-      justifyContent: "center"
-    };
-
-    const chartStyle = { parent: { border: "1px solid #ccc", margin: "2%", maxWidth: "40%" } };
-
     const dy = 13;
-    const CustomLabel = (props) => {
-      const x = props.x - 2 - 4 * Math.max(...props.text.map((t) => t.length));
+    const CustomLabel = (props: any) => {
+      const x = props.x - 2 - 4 * Math.max(...props.text.map((t: string) => t.length));
       const startY = 2 + props.y - (props.text.length * dy) / 2;
       return (
         <g>
-          {props.activePoints.map((pt, idx) => {
+          {props.activePoints.map((pt: any, idx: number) => {
             return (
               <rect
                 key={`square_${idx}`}
@@ -75,7 +89,7 @@ class App extends React.Component {
       );
     };
 
-    const CustomFlyout = (props) => {
+    const CustomFlyout = (props: any) => {
       return <Flyout {...props} width={props.width + 15} />;
     };
 
@@ -581,5 +595,3 @@ class App extends React.Component {
     );
   }
 }
-
-export default App;

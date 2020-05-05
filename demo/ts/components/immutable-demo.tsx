@@ -1,39 +1,43 @@
 /* global window:false */
 /* eslint-disable no-magic-numbers, react/no-multi-comp */
 import React from "react";
-import PropTypes from "prop-types";
 import { assign, merge, keys, random, range, round } from "lodash";
 import { fromJS } from "immutable";
-import { VictoryClipContainer, VictoryLabel, VictoryTheme } from "Packages/victory-core/src/index";
+import { VictoryChart } from "@packages/victory-chart";
+import { VictoryStack } from "@packages/victory-stack";
+import { VictoryGroup } from "@packages/victory-group";
+import { VictoryArea } from "@packages/victory-area";
+import { VictoryAxis } from "@packages/victory-axis";
+import { VictoryPolarAxis } from "@packages/victory-polar-axis";
+import { VictoryBar } from "@packages/victory-bar";
+import { VictoryLine } from "@packages/victory-line";
+import { VictoryScatter } from "@packages/victory-scatter";
+import { VictoryErrorBar } from "@packages/victory-errorbar";
+import { VictoryCandlestick } from "@packages/victory-candlestick";
+import { VictoryVoronoi } from "@packages/victory-voronoi";
+import { VictoryZoomContainer } from "@packages/victory-zoom-container";
+import { VictoryVoronoiContainer } from "@packages/victory-voronoi-container";
+import { VictorySelectionContainer } from "@packages/victory-selection-container";
+import { VictoryCursorContainer } from "@packages/victory-cursor-container";
+import { VictoryBrushContainer } from "@packages/victory-brush-container";
+import { VictoryTooltip } from "@packages/victory-tooltip";
+import { VictoryLegend } from "@packages/victory-legend";
+import {
+  DomainTuple,
+  VictoryClipContainer,
+  VictoryLabel,
+  VictoryStyleInterface,
+  VictoryTheme
+} from "@packages/victory-core";
 
-import { VictoryChart } from "Packages/victory-chart/src/index";
-import { VictoryStack } from "Packages/victory-stack/src/index";
-import { VictoryGroup } from "Packages/victory-group/src/index";
-import { VictoryArea } from "Packages/victory-area/src/index";
-import { VictoryAxis } from "Packages/victory-axis/src/index";
-import { VictoryPolarAxis } from "Packages/victory-polar-axis/src/index";
-import { VictoryBar } from "Packages/victory-bar/src/index";
-import { VictoryLine } from "Packages/victory-line/src/index";
-import { VictoryScatter } from "Packages/victory-scatter/src/index";
-import { VictoryErrorBar } from "Packages/victory-errorbar/src/index";
-import { VictoryCandlestick } from "Packages/victory-candlestick/src/index";
-import { VictoryVoronoi } from "Packages/victory-voronoi/src/index";
-import { VictoryZoomContainer } from "Packages/victory-zoom-container/src/index";
-import { VictoryVoronoiContainer } from "Packages/victory-voronoi-container/src/index";
-import { VictorySelectionContainer } from "Packages/victory-selection-container/src/index";
-import { VictoryCursorContainer } from "Packages/victory-cursor-container/src/index";
-import { VictoryBrushContainer } from "Packages/victory-brush-container/src/index";
-import { VictoryTooltip } from "Packages/victory-tooltip/src/index";
-import { VictoryLegend } from "Packages/victory-legend/src/index";
+interface WrapperProps {
+  children?: React.ReactElement | React.ReactElement[];
+}
 
-class Wrapper extends React.Component {
-  static propTypes = {
-    children: PropTypes.oneOfType([PropTypes.arrayOf(PropTypes.node), PropTypes.node])
-  };
-
-  renderChildren(props) {
+class Wrapper extends React.Component<WrapperProps> {
+  renderChildren(props: WrapperProps) {
     const children = React.Children.toArray(props.children);
-    return children.map((child) => {
+    return children.map((child: any) => {
       return React.cloneElement(child, assign({}, child.props, props));
     });
   }
@@ -43,14 +47,43 @@ class Wrapper extends React.Component {
   }
 }
 
-const multiAxisData = [
+type MultiAxisDataType = {
+  strength?: number;
+  intelligence?: number;
+  stealth?: number;
+}[];
+
+const multiAxisData: MultiAxisDataType = [
   { strength: 1, intelligence: 250, stealth: 45 },
   { strength: 2, intelligence: 300, stealth: 75 },
   { strength: 5, intelligence: 225, stealth: 60 }
 ];
 
-class App extends React.Component {
-  constructor(props) {
+type DataType = {
+  x?: string | number;
+  y?: string | number;
+};
+
+interface ImmutableDemoState {
+  scatterData: {
+    x: number;
+    y: number;
+    size: number;
+    symbol: string;
+    fill: string;
+    opacity: number;
+  }[];
+  multiTransitionData: DataType[][];
+  multiTransitionAreaData: DataType[][];
+  multiAxisData: DataType[][];
+  multiAxisMaxima: React.ReactElement[];
+  zoomDomain: { x?: DomainTuple; y?: DomainTuple };
+}
+
+export default class ImmutableDemo extends React.Component<any, ImmutableDemoState> {
+  setStateInterval?: number = undefined;
+
+  constructor(props: any) {
     super(props);
     this.state = {
       scatterData: this.getScatterData(),
@@ -122,21 +155,21 @@ class App extends React.Component {
     );
   }
 
-  getMaxData(data) {
-    const groupedData = keys(data[0]).reduce((memo, key) => {
+  getMaxData(data: MultiAxisDataType) {
+    const groupedData = keys(data[0]).reduce((memo: any, key: string | number) => {
       memo[key] = data.map((d) => d[key]);
       return memo;
     }, {});
-    return keys(groupedData).reduce((memo, key) => {
+    return keys(groupedData).reduce((memo: any, key: string | number) => {
       memo[key] = Math.max(...groupedData[key]);
       return memo;
     }, {});
   }
 
-  processMultiAxisData(data) {
+  processMultiAxisData(data: MultiAxisDataType) {
     const maxByGroup = this.getMaxData(data);
-    const makeDataArray = (d) => {
-      return keys(d).map((key) => {
+    const makeDataArray = (d: any) => {
+      return keys(d).map((key: string) => {
         return { x: key, y: d[key] / maxByGroup[key] };
       });
     };
@@ -144,7 +177,7 @@ class App extends React.Component {
   }
 
   render() {
-    const containerStyle = {
+    const containerStyle: React.CSSProperties = {
       display: "flex",
       flexDirection: "row",
       flexWrap: "wrap",
@@ -152,7 +185,7 @@ class App extends React.Component {
       justifyContent: "center"
     };
 
-    const chartStyle = {
+    const chartStyle: VictoryStyleInterface = {
       parent: {
         border: "1px solid #ccc",
         margin: "2%",
@@ -855,5 +888,3 @@ class App extends React.Component {
     );
   }
 }
-
-export default App;

@@ -16,6 +16,7 @@ import ErrorBarDemo from "./components/victory-errorbar-demo";
 import EventsDemo from "./components/events-demo";
 import GroupDemo from "./components/group-demo";
 import HorizontalDemo from "./components/horizontal-demo";
+import ImmutableDemo from "./components/immutable-demo";
 import LegendDemo from "./components/victory-legend-demo";
 import LineDemo from "./components/victory-line-demo";
 import PieDemo from "./components/victory-pie-demo";
@@ -26,6 +27,7 @@ import TooltipDemo from "./components/victory-tooltip-demo";
 import VictoryDemo from "./components/victory-demo";
 import VictorySelectionContainerDemo from "./components/victory-selection-container-demo";
 import VictorySharedEventsDemo from "./components/victory-shared-events-demo";
+import VoronoiContainerDemo from "./components/victory-voronoi-container-demo";
 import VoronoiDemo from "./components/victory-voronoi-demo";
 import ZoomContainerDemo from "./components/victory-zoom-container-demo";
 
@@ -44,6 +46,7 @@ const MAP = {
   "/draggable-demo": { component: DraggableDemo, name: "DraggableDemo" },
   "/error-bar": { component: ErrorBarDemo, name: "ErrorBarDemo" },
   "/events-demo": { component: EventsDemo, name: "EventsDemo" },
+  "/immutable": { component: ImmutableDemo, name: "ImmutableDemo" },
   "/legend": { component: LegendDemo, name: "LegendDemo" },
   "/line": { component: LineDemo, name: "LineDemo" },
   "/pie": { component: PieDemo, name: "PieDemo" },
@@ -58,6 +61,7 @@ const MAP = {
   },
   "/victory-shared-events": { component: VictorySharedEventsDemo, name: "VictorySharedEventsDemo" },
   "/voronoi": { component: VoronoiDemo, name: "VoronoiDemo" },
+  "/voronoi-container": { component: VoronoiContainerDemo, name: "VoronoiContainerDemo" },
   "/zoom-container": { component: ZoomContainerDemo, name: "ZoomContainerDemo" }
 };
 
