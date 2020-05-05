@@ -123,7 +123,7 @@ export default class VictoryVoronoiContainerDemo extends React.Component<
               <VictoryVoronoiContainer
                 labels={({ datum }) => `I'm kind of a long label ${datum.y}`}
                 mouseFollowTooltips
-                labelComponent={<VictoryTooltip constrainToVisibleArea width={80} />}
+                labelComponent={<VictoryTooltip constrainToVisibleArea flyoutWidth={80} />}
               />
             }
           >
