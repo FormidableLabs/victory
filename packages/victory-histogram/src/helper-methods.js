@@ -5,50 +5,6 @@ import isEqual from "react-fast-compare";
 import * as d3Array from "d3-array";
 import * as d3Scale from "d3-scale";
 
-const addDays = (date, days) => {
-  const result = new Date(date);
-  result.setDate(result.getDate() + days);
-  return result;
-};
-
-const addMonths = (date, months) => {
-  const result = new Date(date);
-  result.setMonth(result.getMonth() + months);
-  return result;
-};
-
-const addYears = (date, years) => {
-  const result = new Date(date);
-  result.setFullYear(result.getFullYear() + years);
-  return result;
-};
-
-const getNextDate = (date, strategy) => {
-  if (strategy === "day") {
-    return addDays(date, 1);
-  } else if (strategy === "month") {
-    return addMonths(date, 1);
-  }
-
-  return addYears(date, 1);
-};
-
-const resetDate = (date, strategy) => {
-  const newDate = new Date(date);
-  if (strategy === "day") {
-    newDate.setHours(0, 0, 0, 0);
-  } else if (strategy === "month") {
-    newDate.setHours(0, 0, 0, 0);
-    newDate.setDate(1);
-  } else {
-    newDate.setHours(0, 0, 0, 0);
-    newDate.setDate(1);
-    newDate.setMonth(0);
-  }
-
-  return newDate;
-};
-
 const cacheLastValue = (func) => {
   let called = false;
   let lastArgs;
@@ -73,8 +29,7 @@ const getBinningFunc = ({ data, x, bins }) => {
   const xAccessor = Helpers.createAccessor(x || "x");
   const dataIsDates = data.some((datum) => xAccessor(datum) instanceof Date);
   const bin = d3Array.bin().value(xAccessor);
-  const niceScale = d3Scale
-    .scaleLinear()
+  const niceScale = (dataIsDates ? d3Scale.scaleLinear() : d3Scale.scaleTime())
     .domain(d3Array.extent(data, xAccessor))
     .nice();
 
@@ -93,28 +48,7 @@ const getBinningFunc = ({ data, x, bins }) => {
   }
 
   if (dataIsDates) {
-    const sortedData = data.sort((a, b) => xAccessor(a) - xAccessor(b));
-
-    const earliestDate = xAccessor(sortedData[0]);
-    const latestDate = xAccessor(sortedData[data.length - 1]);
-
-    // 'day', 'month', 'year'
-    const binningStrategy = bins ? bins : "day";
-    const dateBins = (() => {
-      let currentDateBins = [resetDate(earliestDate, binningStrategy)];
-
-      while (currentDateBins[currentDateBins.length - 1] < latestDate) {
-        const lastDate = currentDateBins[currentDateBins.length - 1];
-        const nextDate = getNextDate(lastDate, binningStrategy);
-
-        currentDateBins = [...currentDateBins, nextDate];
-      }
-
-      return currentDateBins;
-    })();
-
-    bin.domain([dateBins[0], dateBins[dateBins.length - 1]]);
-    bin.thresholds(dateBins);
+    bin.thresholds(niceScale.ticks());
 
     return bin;
   }
