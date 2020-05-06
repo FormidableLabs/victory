@@ -25,17 +25,18 @@ const cacheLastValue = (func) => {
   };
 };
 
-const isDataDates = (data, x) => {
+const dataOrBinsContainDates = ({ data, bins, x }) => {
   const xAccessor = Helpers.createAccessor(x || "x");
   const dataIsDates = data.some((datum) => xAccessor(datum) instanceof Date);
+  const binsHasDates = Array.isArray(bins) && bins.some((bin) => bin instanceof Date);
 
-  return dataIsDates;
+  return dataIsDates || binsHasDates;
 };
 
-const getBinningFunc = ({ data, x, bins, dataIsDates }) => {
+const getBinningFunc = ({ data, x, bins, dataOrBinsContainsDates }) => {
   const xAccessor = Helpers.createAccessor(x || "x");
   const bin = d3Array.bin().value(xAccessor);
-  const niceScale = (dataIsDates ? d3Scale.scaleLinear() : d3Scale.scaleTime())
+  const niceScale = (dataOrBinsContainsDates ? d3Scale.scaleTime() : d3Scale.scaleLinear())
     .domain(d3Array.extent(data, xAccessor))
     .nice();
 
@@ -53,7 +54,7 @@ const getBinningFunc = ({ data, x, bins, dataIsDates }) => {
     return bin;
   }
 
-  if (dataIsDates) {
+  if (dataOrBinsContainsDates) {
     bin.domain(niceScale.domain());
     bin.thresholds(niceScale.ticks());
 
@@ -69,14 +70,13 @@ const getFormattedData = cacheLastValue(({ data = [], x, bins }) => {
   if ((!data || !data.length) && !Array.isArray(bins)) {
     return [];
   }
-
-  const dataIsDates = isDataDates(data, x);
-  const binFunc = getBinningFunc({ data, x, bins, dataIsDates });
+  const dataOrBinsContainsDates = dataOrBinsContainDates({ data, bins, x });
+  const binFunc = getBinningFunc({ data, x, bins, dataOrBinsContainsDates });
   const binnedData = binFunc(data).filter(({ x0, x1 }) => x0 !== x1);
 
   const formattedData = binnedData.map((bin) => ({
-    x: dataIsDates ? new Date(bin.x0) : bin.x0,
-    end: dataIsDates ? new Date(bin.x1) : bin.x1,
+    x: dataOrBinsContainsDates ? new Date(bin.x0) : bin.x0,
+    end: dataOrBinsContainsDates ? new Date(bin.x1) : bin.x1,
     y: bin.length,
     binnedDatums: [...bin]
   }));
