@@ -165,10 +165,26 @@ storiesOf("VictoryChart.calculated domain", module)
     </VictoryChart>
   ));
 
-storiesOf("VictoryChart.style", module).add("with parent styles", () => (
-  <VictoryChart
-    style={{
-      parent: { border: "2px solid #000", margin: 20, backgroundColor: "cyan" }
-    }}
-  />
-));
+storiesOf("VictoryChart.style", module)
+  .add("with parent styles", () => (
+    <VictoryChart
+      style={{
+        parent: { border: "2px solid #000", margin: 20, backgroundColor: "cyan" }
+      }}
+    />
+  ))
+  .add("with background style", () => (
+    <VictoryChart
+      style={{
+        background: { fill: "pink" }
+      }}
+    />
+  ))
+  .add("with background and parent styles", () => (
+    <VictoryChart
+      style={{
+        background: { fill: "pink" },
+        parent: { border: "2px solid #000", margin: 20, backgroundColor: "cyan" }
+      }}
+    />
+  ));
