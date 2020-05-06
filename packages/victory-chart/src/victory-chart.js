@@ -119,14 +119,14 @@ export default class VictoryChart extends React.Component {
 
   renderBackground(backgroundComponent, props) {
     const backgroundProps = defaults({}, backgroundComponent.props, props);
-    
+
     return React.cloneElement(backgroundComponent, backgroundProps);
   }
 
   getBackgroundProps(props, calculatedProps) {
     const { width, height, standalone, theme, polar, name } = props;
     const { domain, scale, style, origin, radius, horizontal } = calculatedProps;
-    
+
     return {
       domain,
       scale,
@@ -155,16 +155,19 @@ export default class VictoryChart extends React.Component {
       externalEventMutations
     } = modifiedProps;
     const axes = props.polar ? modifiedProps.defaultPolarAxes : modifiedProps.defaultAxes;
-    const backgroundProps = props.style && props.style.background ? this.getBackgroundProps(modifiedProps, calculatedProps) : {};
     const childComponents = getChildComponents(modifiedProps, axes);
     const calculatedProps = getCalculatedProps(modifiedProps, childComponents);
+    const backgroundProps =
+      props.style && props.style.background
+        ? this.getBackgroundProps(modifiedProps, calculatedProps)
+        : {};
     const newChildren = this.getNewChildren(modifiedProps, childComponents, calculatedProps);
     const containerProps = standalone ? this.getContainerProps(modifiedProps, calculatedProps) : {};
     const container = standalone
       ? this.renderContainer(containerComponent, containerProps)
       : groupComponent;
     const events = Wrapper.getAllEvents(props);
-    
+
     if (!isEmpty(events)) {
       return (
         <VictorySharedEvents

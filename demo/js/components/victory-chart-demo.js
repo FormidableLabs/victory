@@ -180,7 +180,10 @@ class App extends React.Component {
       alignItems: "center",
       justifyContent: "center"
     };
-    const chartStyle = { parent: { border: "1px solid #ccc", margin: "2%", maxWidth: "40%" } };
+    const chartStyle = { 
+      parent: { border: "1px solid #ccc", margin: "2%", maxWidth: "40%" },
+      background: { fill: "orange" }
+    };
     const axisStyle = {
       grid: { stroke: "grey", strokeWidth: 1 },
       axis: { stroke: "transparent" },

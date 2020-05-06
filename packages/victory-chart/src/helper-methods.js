@@ -172,6 +172,11 @@ const getChildComponents = (props, defaultAxes) => {
       ? [defaultAxes.independent, defaultAxes.dependent].concat(childComponents)
       : childComponents.concat([defaultAxes.independent, defaultAxes.dependent]);
   }
+
+  if (props.style && props.style.background && typeof props.backgroundComponent === "object") {
+    return [props.backgroundComponent].concat(childComponents);
+  }
+
   return childComponents;
 };
 
