@@ -14,6 +14,8 @@ import CursorContainerDemo from "./components/victory-cursor-container-demo";
 import DraggableDemo from "./components/draggable-demo";
 import ErrorBarDemo from "./components/victory-errorbar-demo";
 import EventsDemo from "./components/events-demo";
+import GroupDemo from "./components/group-demo";
+import HorizontalDemo from "./components/horizontal-demo";
 import ImmutableDemo from "./components/immutable-demo";
 import LegendDemo from "./components/victory-legend-demo";
 import LineDemo from "./components/victory-line-demo";
@@ -22,6 +24,7 @@ import PolarAxisDemo from "./components/victory-polar-axis-demo";
 import ScatterDemo from "./components/victory-scatter-demo";
 import SelectionDemo from "./components/selection-demo";
 import TooltipDemo from "./components/victory-tooltip-demo";
+import VictoryDemo from "./components/victory-demo";
 import VictorySelectionContainerDemo from "./components/victory-selection-container-demo";
 import VictorySharedEventsDemo from "./components/victory-shared-events-demo";
 import VoronoiContainerDemo from "./components/victory-voronoi-container-demo";
@@ -35,6 +38,8 @@ const MAP = {
   "/box-plot": { component: BoxPlotDemo, name: "BoxPlotDemo" },
   "/brush-container": { component: BrushContainerDemo, name: "BrushContainerDemo" },
   "/brush-line": { component: BrushLineDemo, name: "BrushLineDemo" },
+  "/group-demo": { component: GroupDemo, name: "GroupDemo" },
+  "/horizontal-demo": { component: HorizontalDemo, name: "HorizontalDemo" },
   "/candlestick": { component: CandlestickDemo, name: "CandlestickDemo" },
   "/chart": { component: ChartDemo, name: "ChartDemo" },
   "/cursor-container": { component: CursorContainerDemo, name: "CursorContainerDemo" },
@@ -49,6 +54,7 @@ const MAP = {
   "/scatter": { component: ScatterDemo, name: "ScatterDemo" },
   "/selection": { component: SelectionDemo, name: "SelectionDemo" },
   "/tooltip": { component: TooltipDemo, name: "TooltipDemo" },
+  "/victory-demo": { component: VictoryDemo, name: "VictoryDemo" },
   "/victory-selection-container": {
     component: VictorySelectionContainerDemo,
     name: "VictorySelectionContainerDemo"
