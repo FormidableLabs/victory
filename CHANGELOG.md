@@ -1,5 +1,12 @@
 # Victory Changelog
 
+## 34.2.0 (2020-05-06)
+
+Update typescript types for all Victory components. A huge thanks to @maddles @wparsons and @kale-stew for this work. This release includes the following PRs
+
+[#1557](https://github.com/FormidableLabs/victory/pull/1557), [#1556](https://github.com/FormidableLabs/victory/pull/1556), [#1554](https://github.com/FormidableLabs/victory/pull/1554), [#1552](https://github.com/FormidableLabs/victory/pull/1552), [#1551](https://github.com/FormidableLabs/victory/pull/1551), [#1550](https://github.com/FormidableLabs/victory/pull/1550), [#1547](https://github.com/FormidableLabs/victory/pull/1547), [#1546](https://github.com/FormidableLabs/victory/pull/1546), [#1543](https://github.com/FormidableLabs/victory/pull/1543), [#1538](https://github.com/FormidableLabs/victory/pull/1538), [#1536](https://github.com/FormidableLabs/victory/pull/1536), [#1535](https://github.com/FormidableLabs/victory/pull/1535), [#1534](https://github.com/FormidableLabs/victory/pull/1534), [#1533](https://github.com/FormidableLabs/victory/pull/1533), [#1532](https://github.com/FormidableLabs/victory/pull/1532), [#1530](https://github.com/FormidableLabs/victory/pull/1530),[#1529](https://github.com/FormidableLabs/victory/pull/1529), [#1528](https://github.com/FormidableLabs/victory/pull/1528), [#1527](https://github.com/FormidableLabs/victory/pull/1527), [#1526](https://github.com/FormidableLabs/victory/pull/1526), [#1525](https://github.com/FormidableLabs/victory/pull/1525), [#1524](https://github.com/FormidableLabs/victory/pull/1524), [#1522](https://github.com/FormidableLabs/victory/pull/1522), [#1521](https://github.com/FormidableLabs/victory/pull/1521), [#1520](https://github.com/FormidableLabs/victory/pull/1520), [#1519](https://github.com/FormidableLabs/victory/pull/1519),  [#1515](https://github.com/FormidableLabs/victory/pull/1515), [#1514](https://github.com/FormidableLabs/victory/pull/1514), [#1512](https://github.com/FormidableLabs/victory/pull/1512), [#1510](https://github.com/FormidableLabs/victory/pull/1510), [#1508](https://github.com/FormidableLabs/victory/pull/1508)
+
+
 ## 34.1.3 (2020-03-09)
 
 - [#1494](https://github.com/FormidableLabs/victory/pull/1494) - Performance improvements targeted at reducing the number of calculations performed for nested charts (charts using the VictoryStack and VictoryGroup wrappers).
