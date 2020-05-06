@@ -5,8 +5,10 @@ import CommonProps from "../victory-util/common-props";
 import Rect from "./rect";
 import Circle from "./circle";
 
-const getRangeBounds = (props) => { x: props.range.x[0], y: props.range.y[1] };
-const getHeight = (props) => props.range.y[0] - props.range.y[1];
+const getRangeBounds = (props) => ({ x: props.range.x[0], y: props.range.y[1] });
+const getHeight = (props) =>  props.polar
+  ? props.range.y[1]
+  : props.range.y[0] - props.range.y[1];
 const getWidth = (props) => props.range.x[1] - props.range.x[0];
 
 const Background = (props) => {
