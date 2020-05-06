@@ -47,12 +47,15 @@ function getChildProps(child, props, calculatedProps) {
 
 function getStyles(props) {
   const styleProps = props.style && props.style.parent;
+  const background = props.style && props.style.background;
+  
   return {
     parent: defaults({}, styleProps, {
       height: "100%",
       width: "100%",
       userSelect: "none"
-    })
+    }),
+    background
   };
 }
 
@@ -126,6 +129,7 @@ function getChildren(props, childComponents, calculatedProps) {
   childComponents = childComponents || getChildComponents(props);
   calculatedProps = calculatedProps || getCalculatedProps(props, childComponents);
   const baseStyle = calculatedProps.style.parent;
+  const backgroundStyle = calculatedProps.style.background;
   const { height, polar, theme, width } = props;
   const { origin, horizontal } = calculatedProps;
   const parentName = props.name || "chart";
@@ -133,7 +137,7 @@ function getChildren(props, childComponents, calculatedProps) {
     const role = child.type && child.type.role;
     const style = Array.isArray(child.props.style)
       ? child.props.style
-      : defaults({}, child.props.style, { parent: baseStyle });
+      : defaults({}, child.props.style, { parent: baseStyle, background: backgroundStyle });
     const childProps = getChildProps(child, props, calculatedProps);
     const name = child.props.name || `${parentName}-${role}-${index}`;
     const newProps = defaults(
