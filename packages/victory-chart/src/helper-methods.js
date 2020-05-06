@@ -48,7 +48,7 @@ function getChildProps(child, props, calculatedProps) {
 function getStyles(props) {
   const styleProps = props.style && props.style.parent;
   const background = props.style && props.style.background;
-  
+
   return {
     parent: defaults({}, styleProps, {
       height: "100%",
@@ -162,26 +162,28 @@ function getChildren(props, childComponents, calculatedProps) {
 
 const getChildComponents = (props, defaultAxes) => {
   const childComponents = React.Children.toArray(props.children);
+  let newChildComponents = [...childComponents];
+
   if (childComponents.length === 0) {
-    return [defaultAxes.independent, defaultAxes.dependent];
-  }
+    newChildComponents.push(defaultAxes.independent, defaultAxes.dependent);
+  } else {
+    const axisComponents = {
+      dependent: Axis.getAxisComponentsWithParent(childComponents, "dependent"),
+      independent: Axis.getAxisComponentsWithParent(childComponents, "independent")
+    };
 
-  const axisComponents = {
-    dependent: Axis.getAxisComponentsWithParent(childComponents, "dependent"),
-    independent: Axis.getAxisComponentsWithParent(childComponents, "independent")
-  };
-
-  if (axisComponents.dependent.length === 0 && axisComponents.independent.length === 0) {
-    return props.prependDefaultAxes
-      ? [defaultAxes.independent, defaultAxes.dependent].concat(childComponents)
-      : childComponents.concat([defaultAxes.independent, defaultAxes.dependent]);
+    if (axisComponents.dependent.length === 0 && axisComponents.independent.length === 0) {
+      newChildComponents = props.prependDefaultAxes
+        ? [defaultAxes.independent, defaultAxes.dependent].concat(newChildComponents)
+        : newChildComponents.concat([defaultAxes.independent, defaultAxes.dependent]);
+    }
   }
 
   if (props.style && props.style.background && typeof props.backgroundComponent === "object") {
-    return [props.backgroundComponent].concat(childComponents);
+    newChildComponents.unshift(props.backgroundComponent);
   }
 
-  return childComponents;
+  return newChildComponents;
 };
 
 const getDomain = (props, axis, childComponents) => {

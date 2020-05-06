@@ -8,17 +8,17 @@ import Rect from "./rect";
 const Background = (props) =>
   React.cloneElement(props.rectComponent, {
     ...props.events,
-    style: Helpers.evaluateStyle(assign({ fill: "none" }, props.style), props),
+    style: props.style && props.style.background,
     desc: Helpers.evaluateProp(props.desc, props),
     tabIndex: Helpers.evaluateProp(props.tabIndex, props),
     transform: props.transform,
     className: props.className,
     role: props.role,
     shapeRendering: props.shapeRendering,
-    x: props.x,
-    y: props.y,
-    width: props.width,
-    height: props.height,
+    x: props.range.x[0],
+    y: props.range.y[1],
+    width: props.range.x[1] - props.range.x[0],
+    height: props.range.y[0] - props.range.y[1],
     clipPath: props.clipPath
   });
 
