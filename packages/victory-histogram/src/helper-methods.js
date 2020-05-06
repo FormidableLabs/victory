@@ -86,8 +86,10 @@ const getFormattedData = cacheLastValue(({ data = [], x, bins }) => {
 
 const getData = (props) => {
   const { bins, data, x } = props;
+  const dataIsPreformatted = data.some(({ _y }) => !isNil(_y));
 
-  const formattedData = getFormattedData({ data, x, bins });
+  const formattedData = dataIsPreformatted ? data : getFormattedData({ data, x, bins });
+
   return Data.getData({ ...props, data: formattedData, x: "x" });
 };
 

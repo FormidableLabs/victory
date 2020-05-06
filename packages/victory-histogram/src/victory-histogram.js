@@ -26,6 +26,23 @@ export class VictoryHistogram extends React.Component {
 
   static role = "histogram";
 
+  static defaultTransitions = {
+    onLoad: {
+      duration: 2000,
+      before: () => ({ _y: 0, _y1: 0, _y0: 0 }),
+      after: (datum) => ({ _y: datum._y, _y1: datum._y1, _y0: datum._y0 })
+    },
+    onExit: {
+      duration: 500,
+      before: () => ({ _y: 0, yOffset: 0 })
+    },
+    onEnter: {
+      duration: 500,
+      before: () => ({ y: 0 }),
+      after: (datum) => ({ _y: datum._y, _y1: datum._y1, _y0: datum._y0 })
+    }
+  };
+
   static propTypes = {
     ...CommonProps.baseProps,
     ...CommonProps.dataProps,
