@@ -42,7 +42,7 @@ export default class App extends React.Component {
 
   render() {
     const style = {
-      parent: { border: "1px solid #ccc", margin: "2%", maxWidth: "40%" }
+      parent: { border: "1px solid #ccc", margin: "2%", maxWidth: "40%" },
     };
 
     const styleOverrides = {

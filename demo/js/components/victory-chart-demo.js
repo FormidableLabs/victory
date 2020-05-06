@@ -182,7 +182,7 @@ class App extends React.Component {
     };
     const chartStyle = {
       parent: { border: "1px solid #ccc", margin: "2%", maxWidth: "40%" },
-      background: { fill: "orange" }
+      background: { fill: "red", opacity: .4 }
     };
     const axisStyle = {
       grid: { stroke: "grey", strokeWidth: 1 },
@@ -190,10 +190,26 @@ class App extends React.Component {
       ticks: { stroke: "transparent" },
       tickLabels: { fill: "none" }
     };
+
     return (
       <div className="demo">
         <h1>VictoryChart</h1>
         <div style={containerStyle}>
+          <VictoryChart polar={true} style={chartStyle}>
+            <VictoryBar
+              data={[
+                { x: 1, y: 1 },
+                { x: 2, y: 2 },
+                { x: 3, y: 3 },
+                { x: 4, y: 4 },
+                { x: 5, y: 5 },
+                { x: 6, y: 4 },
+                { x: 7, y: 3 },
+                { x: 8, y: 2 },
+                { x: 9, y: 1 }
+              ]}
+            />
+          </VictoryChart>
           <VictoryChart style={chartStyle}>
             <VictoryScatter data={[{ x: -3, y: -3 }]} />
           </VictoryChart>

@@ -1,38 +1,67 @@
 import React from "react";
 import PropTypes from "prop-types";
 import Helpers from "../victory-util/helpers";
-import { assign } from "lodash";
 import CommonProps from "../victory-util/common-props";
 import Rect from "./rect";
+import Circle from "./circle";
 
-const Background = (props) =>
-  React.cloneElement(props.rectComponent, {
+const getRangeBounds = (props) => { x: props.range.x[0], y: props.range.y[1] };
+const getHeight = (props) => props.range.y[0] - props.range.y[1];
+const getWidth = (props) => props.range.x[1] - props.range.x[0];
+
+const Background = (props) => {
+  return props.polar
+  ? React.cloneElement(props.circleComponent, {
     ...props.events,
     style: props.style && props.style.background,
-    desc: Helpers.evaluateProp(props.desc, props),
-    tabIndex: Helpers.evaluateProp(props.tabIndex, props),
-    transform: props.transform,
-    className: props.className,
     role: props.role,
     shapeRendering: props.shapeRendering,
-    x: props.range.x[0],
-    y: props.range.y[1],
-    width: props.range.x[1] - props.range.x[0],
-    height: props.range.y[0] - props.range.y[1],
-    clipPath: props.clipPath
-  });
+    cx: '50%',
+    cy: '50%',
+    r: getHeight(props)
+  })
+  : React.cloneElement(props.rectComponent, {
+    ...props.events,
+    style: props.style && props.style.background,
+    role: props.role,
+    shapeRendering: props.shapeRendering,
+    x: getRangeBounds(props).x,
+    y: getRangeBounds(props).y,
+    width: getWidth(props),
+    height: getHeight(props)
+  })
+ };
 
 Background.propTypes = {
-  ...CommonProps.primitiveProps,
-  height: PropTypes.number,
+  ...CommonProps.baseProps,
+  categories: PropTypes.oneOfType([
+    PropTypes.arrayOf(PropTypes.string),
+    PropTypes.shape({
+      x: PropTypes.arrayOf(PropTypes.string),
+      y: PropTypes.arrayOf(PropTypes.string)
+    })
+  ]),
+  domain: PropTypes.shape({
+    x: PropTypes.arrayOf(PropTypes.number),
+    y: PropTypes.arrayOf(PropTypes.number)
+  }),
   rectComponent: PropTypes.element,
-  width: PropTypes.number,
+  circleComponent: PropTypes.element,
+  horizontal: PropTypes.bool,
+  role: PropTypes.string,
+  shapeRendering: PropTypes.string,
+  stringMap: PropTypes.shape({
+    x: PropTypes.arrayOf(PropTypes.string),
+    y: PropTypes.arrayOf(PropTypes.string)
+  }),
+  style: PropTypes.object,
   x: PropTypes.number,
   y: PropTypes.number
 };
 
 Background.defaultProps = {
   rectComponent: <Rect />,
+  circleComponent: <Circle />,
   role: "presentation",
   shapeRendering: "auto"
 };
