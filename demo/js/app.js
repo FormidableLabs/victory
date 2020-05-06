@@ -9,6 +9,7 @@ import AxisDemo from "./components/victory-axis-demo";
 import BarDemo from "./components/victory-bar-demo";
 import ChartDemo from "./components/victory-chart-demo";
 import LineDemo from "./components/victory-line-demo";
+import HistogramDemo from "./components/victory-histogram-demo";
 import ScatterDemo from "./components/victory-scatter-demo";
 import ErrorBarDemo from "./components/victory-errorbar-demo";
 import BoxplotDemo from "./components/victory-box-plot-demo";
@@ -43,6 +44,7 @@ const MAP = {
   "/bar": { component: BarDemo, name: "BarDemo" },
   "/chart": { component: ChartDemo, name: "ChartDemo" },
   "/line": { component: LineDemo, name: "LineDemo" },
+  "/histogram": { component: HistogramDemo, name: "HistogramDemo" },
   "/scatter": { component: ScatterDemo, name: "ScatterDemo" },
   "/errorbar": { component: ErrorBarDemo, name: "ErrorBarDemo" },
   "/candlestick": { component: CandlestickDemo, name: "CandlestickDemo" },
