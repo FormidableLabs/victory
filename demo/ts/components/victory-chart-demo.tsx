@@ -208,13 +208,18 @@ class VictoryChartDemo extends React.Component<any, VictoryChartDemoState> {
       alignItems: "center",
       justifyContent: "center"
     };
-    const chartStyle = { parent: { border: "1px solid #ccc", margin: "2%", maxWidth: "40%" } };
-    const axisStyle = {
+
+    const chartStyle: { [key: string]: React.CSSProperties } = {
+      parent: { border: "1px solid #ccc", margin: "2%", maxWidth: "40%" }
+    };
+
+    const axisStyle: { [key: string]: React.CSSProperties } = {
       grid: { stroke: "grey", strokeWidth: 1 },
       axis: { stroke: "transparent" },
       ticks: { stroke: "transparent" },
       tickLabels: { fill: "none" }
     };
+
     return (
       <div className="demo">
         <h1>VictoryChart</h1>

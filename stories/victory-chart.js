@@ -181,14 +181,6 @@ storiesOf("VictoryChart.style", module)
       }}
     />
   ))
-  .add("with background and parent styles", () => (
-    <VictoryChart
-      style={{
-        background: { fill: "pink" },
-        parent: { border: "2px solid #000", margin: 20, backgroundColor: "cyan" }
-      }}
-    />
-  ))
   .add("with background and parent styles on circle component", () => (
     <VictoryChart
       polar
