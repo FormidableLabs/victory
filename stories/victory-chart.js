@@ -7,6 +7,7 @@ import { VictoryBar } from "../packages/victory-bar/src/index";
 import { VictoryScatter } from "../packages/victory-scatter/src/index";
 import { VictoryLine } from "../packages/victory-line/src/index";
 import { VictoryBoxPlot } from "../packages/victory-box-plot/src/index";
+import { VictoryPolarAxis } from "../packages/victory-polar-axis/src/index";
 import { VictoryTheme } from "../packages/victory-core/src/index";
 import { getData, getFourQuadrantData, getArrayData } from "./data";
 
@@ -182,6 +183,26 @@ storiesOf("VictoryChart.style", module)
   ))
   .add("with background and parent styles", () => (
     <VictoryChart
+      style={{
+        background: { fill: "pink" },
+        parent: { border: "2px solid #000", margin: 20, backgroundColor: "cyan" }
+      }}
+    />
+  ))
+  .add("with background and parent styles on circle component", () => (
+    <VictoryChart
+      polar
+      style={{
+        background: { fill: "pink" },
+        parent: { border: "2px solid #000", margin: 20, backgroundColor: "cyan" }
+      }}
+    >
+      <VictoryPolarAxis />
+    </VictoryChart>
+  ))
+  .add("with background and parent styles on rect component", () => (
+    <VictoryChart
+      domain={[-1, 1]}
       style={{
         background: { fill: "pink" },
         parent: { border: "2px solid #000", margin: 20, backgroundColor: "cyan" }

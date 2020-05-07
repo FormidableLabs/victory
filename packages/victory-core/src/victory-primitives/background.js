@@ -59,8 +59,8 @@ Background.propTypes = {
 };
 
 Background.defaultProps = {
-  rectComponent: <Rect />,
   circleComponent: <Circle />,
+  rectComponent: <Rect />,
   role: "presentation",
   shapeRendering: "auto"
 };
