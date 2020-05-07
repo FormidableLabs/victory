@@ -47,7 +47,7 @@ export class VictoryHistogram extends React.Component {
   static propTypes = {
     ...CommonProps.baseProps,
     ...CommonProps.dataProps,
-    barSpacing: CustomPropTypes.nonNegative,
+    binSpacing: CustomPropTypes.nonNegative,
     bins: PropTypes.oneOfType([
       PropTypes.arrayOf(
         PropTypes.oneOfType([CustomPropTypes.nonNegative, PropTypes.instanceOf(Date)])

@@ -196,7 +196,7 @@ export default class App extends React.Component {
         />
 
         <VictoryHistogram
-          barSpacing={5}
+          binSpacing={5}
           style={{
             parent: parentStyle,
             data: { stroke: "#f67280", strokeWidth: 3, fill: "#355c7d" }
@@ -205,7 +205,7 @@ export default class App extends React.Component {
         />
 
         <VictoryHistogram
-          barSpacing={50}
+          binSpacing={50}
           style={{
             parent: parentStyle,
             data: this.state.style
@@ -387,7 +387,7 @@ export default class App extends React.Component {
 
         <VictoryChart style={{ parent: parentStyle }} animate={{ duration: 500 }}>
           <VictoryHistogram
-            barSpacing={20}
+            binSpacing={20}
             data={this.state.dataLoadedInWithBins.data}
             bins={this.state.dataLoadedInWithBins.bins}
             animate={{ duration: 1500 }}
@@ -417,7 +417,7 @@ export default class App extends React.Component {
 
         <VictoryChart style={{ parent: parentStyle }} theme={VictoryTheme.material}>
           <VictoryHistogram
-            barSpacing={5}
+            binSpacing={5}
             data={this.state.dynamicBins.data}
             bins={this.state.dynamicBins.bins}
             animate={{ duration: 1500 }}

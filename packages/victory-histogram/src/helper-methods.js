@@ -66,7 +66,7 @@ const getBinningFunc = ({ data, x, bins, dataOrBinsContainsDates }) => {
   return bin;
 };
 
-const getFormattedData = cacheLastValue(({ data = [], x, bins }) => {
+export const getFormattedData = cacheLastValue(({ data = [], x, bins }) => {
   if ((!data || !data.length) && !Array.isArray(bins)) {
     return [];
   }
@@ -144,7 +144,7 @@ const getBaseProps = (props, fallbackProps) => {
   props = assign({}, modifiedProps, getCalculatedValues(modifiedProps));
 
   const {
-    barSpacing,
+    binSpacing,
     cornerRadius,
     data,
     domain,
@@ -186,16 +186,16 @@ const getBaseProps = (props, fallbackProps) => {
   };
 
   const getBarWidth = (datum) => {
-    if (barSpacing) {
-      return getDistance(datum) - barSpacing;
+    if (binSpacing) {
+      return getDistance(datum) - binSpacing;
     }
 
     return getDistance(datum);
   };
 
   const barOffset = (() => {
-    if (barSpacing) {
-      const distance = barSpacing / 2;
+    if (binSpacing) {
+      const distance = binSpacing / 2;
       return [distance, 0];
     }
 

@@ -562,16 +562,16 @@ storiesOf("VictoryHistogram", module)
   .add("default rendering", () => <VictoryHistogram />)
   .add("default rendering with data", () => <VictoryHistogram data={data} />);
 
-/* barSpacing */
-storiesOf("VictoryHistogram.barSpacing.vertical", module)
+/* binSpacing */
+storiesOf("VictoryHistogram.binSpacing.vertical", module)
   .addDecorator(getChartDecorator({ theme: VictoryTheme.grayscale }))
-  .add("bar spacing = 10", () => <VictoryHistogram data={data} barSpacing={10} />)
-  .add("bar spacing = 5", () => <VictoryHistogram data={data} barSpacing={5} />);
+  .add("bin spacing = 10", () => <VictoryHistogram data={data} binSpacing={10} />)
+  .add("bin spacing = 5", () => <VictoryHistogram data={data} binSpacing={5} />);
 
-storiesOf("VictoryHistogram.barSpacing.horizontal", module)
+storiesOf("VictoryHistogram.binSpacing.horizontal", module)
   .addDecorator(getChartDecorator({ theme: VictoryTheme.grayscale }))
-  .add("bar spacing = 10", () => <VictoryHistogram data={data} horizontal barSpacing={10} />)
-  .add("bar spacing = 5", () => <VictoryHistogram data={data} horizontal barSpacing={5} />);
+  .add("bin spacing = 10", () => <VictoryHistogram data={data} horizontal binSpacing={10} />)
+  .add("bin spacing = 5", () => <VictoryHistogram data={data} horizontal binSpacing={5} />);
 
 /* data */
 storiesOf("VictoryHistogram.data.dates", module)
@@ -835,7 +835,7 @@ storiesOf("VictoryHistogram.scale", module)
   .add("time scale", () => <VictoryHistogram bins="month" data={timeData} />)
   .add("time scale with labels", () => (
     <VictoryHistogram
-      barSpacing={10}
+      binSpacing={10}
       data={timeData}
       bins="year"
       labels={({ datum }) => `${datum.x.getFullYear()} - ${datum.end.getFullYear()}`}
@@ -844,7 +844,7 @@ storiesOf("VictoryHistogram.scale", module)
   .add("horizontal time scale with labels", () => (
     <VictoryHistogram
       horizontal
-      barSpacing={10}
+      binSpacing={10}
       data={timeData}
       bins="year"
       labels={({ datum }) => `${datum.x.getFullYear()} - ${datum.end.getFullYear()}`}
