@@ -439,32 +439,4 @@ export default class App extends React.Component {
       </div>
     );
   }
-  j;
 }
-
-/*
-basic example
-basic example horizontal
-example with scatter
-example where data is animating + style
-*/
-
-/*
-- styling
-- animations
-- labels
-- scale
-- dates
-- multi chart
-- clicking to alter fill
-*/
-
-/*
-static bins animating
-
-data loading in without preexisting bins
-
-data loading in with preexisting bins
-
-bins changing
-*/
