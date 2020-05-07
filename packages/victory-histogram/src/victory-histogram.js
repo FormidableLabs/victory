@@ -1,6 +1,6 @@
 import React from "react";
 import PropTypes from "prop-types";
-import { Bar } from "../../victory-bar/src";
+import { Bar } from "victory-bar";
 import {
   Helpers,
   VictoryLabel,
@@ -8,7 +8,7 @@ import {
   VictoryTheme,
   CommonProps,
   addEvents
-} from "../../victory-core/src";
+} from "victory-core";
 import { getBaseProps, getData, getDomain } from "./helper-methods";
 
 const fallbackProps = {

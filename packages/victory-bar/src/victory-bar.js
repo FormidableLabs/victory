@@ -11,7 +11,7 @@ import {
   addEvents,
   Data,
   Domain
-} from "../../victory-core/src";
+} from "victory-core";
 
 const fallbackProps = {
   width: 450,
