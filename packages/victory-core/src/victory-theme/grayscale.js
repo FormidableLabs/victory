@@ -153,7 +153,7 @@ export default {
     {
       style: {
         data: {
-          fill: "palevioletred",
+          fill: grey,
           stroke: charcoal,
           strokeWidth: 2
         },

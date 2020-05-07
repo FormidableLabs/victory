@@ -67,10 +67,7 @@ export default class App extends React.Component {
         bins: range(random(1, 12)).map((i) => new Date(2012, i, 1))
       },
 
-      style: {
-        stroke: "blue",
-        strokeWidth: 2
-      }
+      style: this.getStyles()
     };
   }
 
@@ -123,6 +120,7 @@ export default class App extends React.Component {
           data: getData({ dates: true, min: new Date(2012, 0, 1), max: new Date(2012, 12, 1) }),
           bins: range(random(1, 12)).map((i) => new Date(2012, i, 1))
         },
+
         style: this.getStyles()
       });
     }, 4000);
@@ -133,7 +131,7 @@ export default class App extends React.Component {
   }
 
   getStyles() {
-    const colors = ["red", "orange", "cyan", "green", "blue", "purple"];
+    const colors = ["palevioletred", "orange", "cyan", "green", "blue", "purple"];
     return {
       stroke: colors[random(0, 5)],
       strokeWidth: random(1, 5)
@@ -152,7 +150,31 @@ export default class App extends React.Component {
 
     return (
       <div className="demo" style={containerStyle}>
-        <VictoryHistogram style={{ parent: parentStyle }} data={this.data} />
+        <VictoryHistogram
+          style={{ parent: parentStyle }}
+          data={this.data}
+          events={[
+            {
+              target: "data",
+              eventHandlers: {
+                onMouseOver: () => [
+                  {
+                    mutation: (props) => {
+                      return { style: merge({}, props.style, { fill: "pink" }) };
+                    }
+                  }
+                ],
+                onMouseOut: () => [
+                  {
+                    mutation: (props) => {
+                      return { style: merge({}, props.style, { fill: "yellow" }) };
+                    }
+                  }
+                ]
+              }
+            }
+          ]}
+        />
 
         <VictoryHistogram
           horizontal
@@ -188,7 +210,7 @@ export default class App extends React.Component {
             parent: parentStyle,
             data: this.state.style
           }}
-          animate={{ duration: 400 }}
+          animate={{ duration: 800 }}
           data={this.data2}
         />
 
@@ -303,7 +325,7 @@ export default class App extends React.Component {
             data={this.data2}
           />
           <VictoryLine
-            style={{ data: { stroke: "red" } }}
+            style={{ data: { stroke: "palevioletred" } }}
             data={[
               { x: 0, y: 5 },
               { x: 10, y: 5 },
@@ -326,7 +348,7 @@ export default class App extends React.Component {
             data={this.data2}
           />
           <VictoryScatter
-            style={{ data: { fill: "red" } }}
+            style={{ data: { fill: "palevioletred" } }}
             data={[
               { x: 0, y: 5 },
               { x: 10, y: 5 },
@@ -370,6 +392,19 @@ export default class App extends React.Component {
             bins={this.state.dataLoadedInWithBins.bins}
             animate={{ duration: 1500 }}
           />
+          <VictoryLine
+            style={{ data: { stroke: "palevioletred" } }}
+            data={[
+              { x: 0, y: 5 },
+              { x: 10, y: 5 },
+              { x: 20, y: 2 },
+              { x: 30, y: 9 },
+              { x: 50, y: 2 },
+              { x: 60, y: 4 },
+              { x: 80, y: 50 },
+              { x: 120, y: 8 }
+            ]}
+          />
         </VictoryChart>
 
         <VictoryChart style={{ parent: parentStyle }} animate={{ duration: 500 }}>
@@ -380,7 +415,7 @@ export default class App extends React.Component {
           />
         </VictoryChart>
 
-        <VictoryChart style={{ parent: parentStyle }}>
+        <VictoryChart style={{ parent: parentStyle }} theme={VictoryTheme.material}>
           <VictoryHistogram
             barSpacing={5}
             data={this.state.dynamicBins.data}
@@ -389,8 +424,9 @@ export default class App extends React.Component {
           />
         </VictoryChart>
 
-        <VictoryChart style={{ parent: parentStyle }}>
+        <VictoryChart style={{ parent: parentStyle }} theme={VictoryTheme.material}>
           <VictoryHistogram
+            horizontal
             data={this.state.dynamicBinsBasedOnData.data}
             bins={this.state.dynamicBinsBasedOnData.bins}
             animate={{ duration: 1500 }}
@@ -403,6 +439,9 @@ export default class App extends React.Component {
           scale={{ x: "time" }}
         >
           <VictoryHistogram
+            style={{
+              data: { stroke: "#fc85ae", strokeWidth: 3, fill: "#574b90" }
+            }}
             data={this.state.dateDataLoadedInWithBins.data}
             bins={this.state.dateDataLoadedInWithBins.bins}
             animate={{ duration: 1500 }}
