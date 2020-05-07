@@ -5,6 +5,7 @@ import { merge, random, range } from "lodash";
 import { VictoryChart } from "Packages/victory-chart/src/index";
 import { VictoryHistogram } from "Packages/victory-histogram/src/index";
 import { VictoryLine } from "Packages/victory-line/src/index";
+import { VictoryScatter } from "Packages/victory-scatter/src/index";
 import { VictoryContainer, VictoryTheme } from "Packages/victory-core/src/index";
 import { VictoryTooltip } from "Packages/victory-tooltip/src/index";
 
@@ -210,6 +211,16 @@ export default class App extends React.Component {
         />
 
         <VictoryHistogram
+          horizontal
+          bins={100}
+          style={{
+            parent: parentStyle,
+            data: { stroke: "#f67280", strokeWidth: 3, fill: "#355c7d" }
+          }}
+          data={this.data2}
+        />
+
+        <VictoryHistogram
           bins={[0, 20, 50, 500]}
           style={{
             parent: parentStyle,
@@ -291,6 +302,65 @@ export default class App extends React.Component {
             }}
             data={this.data2}
           />
+          <VictoryLine
+            style={{ data: { stroke: "red" } }}
+            data={[
+              { x: 0, y: 5 },
+              { x: 10, y: 5 },
+              { x: 20, y: 2 },
+              { x: 30, y: 9 },
+              { x: 50, y: 2 },
+              { x: 60, y: 4 },
+              { x: 80, y: 50 },
+              { x: 120, y: 8 }
+            ]}
+          />
+        </VictoryChart>
+
+        <VictoryChart style={{ parent: parentStyle }}>
+          <VictoryHistogram
+            bins={[0, 20, 50, 70, 100]}
+            style={{
+              data: { stroke: "#f67280", strokeWidth: 3, fill: "#355c7d" }
+            }}
+            data={this.data2}
+          />
+          <VictoryScatter
+            style={{ data: { fill: "red" } }}
+            data={[
+              { x: 0, y: 5 },
+              { x: 10, y: 5 },
+              { x: 20, y: 2 },
+              { x: 30, y: 9 },
+              { x: 50, y: 2 },
+              { x: 60, y: 4 },
+              { x: 80, y: 12 },
+              { x: 120, y: 8 }
+            ]}
+          />
+        </VictoryChart>
+
+        <VictoryChart style={{ parent: parentStyle }}>
+          <VictoryHistogram
+            horizontal
+            bins={[0, 20, 50, 70, 100]}
+            style={{
+              data: { stroke: "#f67280", strokeWidth: 3, fill: "#355c7d" }
+            }}
+            data={this.data2}
+          />
+          <VictoryLine
+            data={[
+              { x: 0, y: 5 },
+              { x: 10, y: 5 },
+              { x: 20, y: 2 },
+              { x: 30, y: 9 },
+              { x: 50, y: 2 },
+              { x: 60, y: 4 },
+              { x: 80, y: 50 },
+              { x: 120, y: 8 }
+            ]}
+          />
         </VictoryChart>
 
         <VictoryChart style={{ parent: parentStyle }} animate={{ duration: 500 }}>
@@ -369,6 +439,7 @@ export default class App extends React.Component {
       </div>
     );
   }
+  j;
 }
 
 /*
