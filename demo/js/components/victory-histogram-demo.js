@@ -454,6 +454,9 @@ export default class App extends React.Component {
           scale={{ x: "time" }}
         >
           <VictoryHistogram
+            style={{
+              data: { stroke: "#833B61", strokeWidth: 3, fill: "#F67E7D" }
+            }}
             data={this.state.dateDataLoadedInWithoutBins.data}
             bins={this.state.dateDataLoadedInWithoutBins.bins}
             animate={{ duration: 1000 }}
@@ -462,6 +465,9 @@ export default class App extends React.Component {
 
         <VictoryChart style={{ parent: parentStyle }} animate={{ duration: 500 }}>
           <VictoryHistogram
+            style={{
+              data: { stroke: "#833B61", strokeWidth: 3, fill: "#F67E7D" }
+            }}
             data={this.state.dateDynamicBinsBasedOnData.data}
             bins={this.state.dateDynamicBinsBasedOnData.bins}
             animate={{ duration: 1000 }}
@@ -470,6 +476,9 @@ export default class App extends React.Component {
 
         <VictoryChart style={{ parent: parentStyle }} animate={{ duration: 500 }}>
           <VictoryHistogram
+            style={{
+              data: { stroke: "#833B61", strokeWidth: 3, fill: "#F67E7D" }
+            }}
             data={this.state.dateDynamicBins.data}
             bins={this.state.dateDynamicBins.bins}
             animate={{ duration: 500 }}
