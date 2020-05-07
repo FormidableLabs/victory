@@ -6,7 +6,7 @@ import { VictoryChart } from "Packages/victory-chart/src/index";
 import { VictoryHistogram } from "Packages/victory-histogram/src/index";
 import { VictoryLine } from "Packages/victory-line/src/index";
 import { VictoryScatter } from "Packages/victory-scatter/src/index";
-import { VictoryContainer, VictoryTheme } from "Packages/victory-core/src/index";
+import { VictoryTheme } from "Packages/victory-core/src/index";
 import { VictoryTooltip } from "Packages/victory-tooltip/src/index";
 
 const randomDate = (start, end) => {
