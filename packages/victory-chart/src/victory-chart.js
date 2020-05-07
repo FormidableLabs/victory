@@ -117,32 +117,6 @@ export default class VictoryChart extends React.Component {
     };
   }
 
-  renderBackground(backgroundComponent, props) {
-    const backgroundProps = defaults({}, backgroundComponent.props, props);
-
-    return React.cloneElement(backgroundComponent, backgroundProps);
-  }
-
-  getBackgroundProps(props, calculatedProps) {
-    const { width, height, standalone, theme, polar, name } = props;
-    const { domain, scale, style, origin, radius, horizontal } = calculatedProps;
-
-    return {
-      domain,
-      scale,
-      width,
-      height,
-      standalone,
-      theme,
-      style: style.background,
-      horizontal,
-      name,
-      polar,
-      radius,
-      origin: polar ? origin : undefined
-    };
-  }
-
   render() {
     const props =
       this.state && this.state.nodesWillExit ? this.state.oldProps || this.props : this.props;
