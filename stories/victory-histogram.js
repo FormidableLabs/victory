@@ -625,6 +625,13 @@ storiesOf("VictoryHistogram.data", module)
   .add("with empty data and numeric bins", () => <VictoryHistogram data={[]} bins={2} />)
   .add("with empty data and defined bins", () => (
     <VictoryHistogram data={[]} bins={[0, 30, 100, 150]} />
+  ))
+  .add("with empty data and defined date bins", () => (
+    <VictoryHistogram
+      scale={{ x: "time" }}
+      data={[]}
+      bins={[new Date(2020, 0, 1), new Date(2020, 5, 1), new Date(2021, 0, 1)]}
+    />
   ));
 
 /* bins */
@@ -850,7 +857,7 @@ storiesOf("VictoryHistogram.scale", module)
   .add("horizontal log scale", () => <VictoryHistogram horizontal data={data} />);
 
 storiesOf("VictoryHistogram.with other charts", module)
-  .addDecorator(getChartDecorator({ domainPadding: 25 }))
+  .addDecorator(getChartDecorator({ domainPadding: 25, theme: VictoryTheme.material }))
   .add("with line", () => [
     <VictoryHistogram key="histogram" data={data} />,
     <VictoryLine
