@@ -10,7 +10,6 @@ import { shallow, mount } from "enzyme";
 import { omit, range } from "lodash";
 import SvgTestHelper from "../svg-test-helper";
 import { VictoryHistogram } from "packages/victory-histogram/src/index";
-import { Bar } from "packages/victory-bar/src/index";
 
 describe("components/victory-histogram", () => {
   describe("default component rendering", () => {
@@ -30,19 +29,19 @@ describe("components/victory-histogram", () => {
 
     it("renders 0 bars", () => {
       const wrapper = shallow(<VictoryHistogram />);
-      const bars = wrapper.find(Bar);
+      const bars = wrapper.find("Bar");
       expect(bars.length).to.equal(0);
     });
 
     it("renders 4 bars", () => {
       const wrapper = shallow(<VictoryHistogram bins={[0, 10, 40, 50, 100]} />);
-      const bars = wrapper.find(Bar);
+      const bars = wrapper.find("Bar");
       expect(bars.length).to.equal(4);
     });
 
     it("renders each bar as a rectangle", () => {
       const wrapper = mount(<VictoryHistogram bins={[0, 10, 40, 50]} />);
-      const bars = wrapper.find(Bar);
+      const bars = wrapper.find("Bar");
       bars.forEach(SvgTestHelper.expectIsRectangular);
     });
   });
@@ -51,21 +50,21 @@ describe("components/victory-histogram", () => {
     it("renders bars for {x} shaped data (default)", () => {
       const data = range(10).map((i) => ({ x: i }));
       const wrapper = shallow(<VictoryHistogram data={data} />);
-      const bars = wrapper.find(Bar);
+      const bars = wrapper.find("Bar");
       expect(bars.length).to.be.greaterThan(0);
     });
 
     it("renders bars for deeply-nested data", () => {
       const data = range(10).map((i) => ({ a: { b: [{ x: i }] } }));
       const wrapper = shallow(<VictoryHistogram data={data} x="a.b[0].x" />);
-      const bars = wrapper.find(Bar);
+      const bars = wrapper.find("Bar");
       expect(bars.length).to.be.greaterThan(0);
     });
 
     it("renders bars values with null accessor", () => {
       const data = range(30);
       const wrapper = shallow(<VictoryHistogram data={data} x={null} y={null} />);
-      const bars = wrapper.find(Bar);
+      const bars = wrapper.find("Bar");
       expect(bars.length).to.be.greaterThan(0);
     });
 
@@ -76,7 +75,7 @@ describe("components/victory-histogram", () => {
           bins={[1, 2, 3, 4]}
         />
       );
-      const bars = wrapper.find(Bar);
+      const bars = wrapper.find("Bar");
       const heights = bars.map(SvgTestHelper.getBarHeight);
 
       expect(heights[1] / 2).to.be.closeTo(heights[0], 0.5);
@@ -119,7 +118,7 @@ describe("components/victory-histogram", () => {
         />
       );
 
-      const Data = wrapper.find(Bar);
+      const Data = wrapper.find("Bar");
       expect(Data).to.have.lengthOf(2);
       Data.forEach((node, index) => {
         const initialProps = Data.at(index).props();
