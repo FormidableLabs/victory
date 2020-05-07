@@ -7,7 +7,8 @@ import {
   VictoryContainer,
   VictoryTheme,
   CommonProps,
-  addEvents
+  addEvents,
+  PropTypes as CustomPropTypes
 } from "victory-core";
 import { getBaseProps, getData, getDomain } from "./helper-methods";
 
@@ -46,8 +47,13 @@ export class VictoryHistogram extends React.Component {
   static propTypes = {
     ...CommonProps.baseProps,
     ...CommonProps.dataProps,
-    barSpacing: PropTypes.number,
-    bins: PropTypes.oneOfType([PropTypes.arrayOf(PropTypes.number), PropTypes.number]),
+    barSpacing: CustomPropTypes.nonNegative,
+    bins: PropTypes.oneOfType([
+      PropTypes.arrayOf(
+        PropTypes.oneOfType([CustomPropTypes.nonNegative, PropTypes.instanceOf(Date)])
+      ),
+      CustomPropTypes.nonNegative
+    ]),
     cornerRadius: PropTypes.oneOfType([
       PropTypes.number,
       PropTypes.func,
