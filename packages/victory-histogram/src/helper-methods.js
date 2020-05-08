@@ -1,6 +1,6 @@
 import { assign, isNil } from "lodash";
-import { Helpers, LabelHelpers, Data, Domain, Scale } from "../../victory-core/src";
-import { getBarPosition } from "../../victory-bar/src/helper-methods";
+import { Helpers, LabelHelpers, Data, Domain, Scale } from "victory-core";
+import { getBarPosition } from "victory-bar";
 import isEqual from "react-fast-compare";
 import * as d3Array from "d3-array";
 import * as d3Scale from "d3-scale";
@@ -204,8 +204,6 @@ const getBaseProps = (props, fallbackProps) => {
     const eventKey = !isNil(datum.eventKey) ? datum.eventKey : index;
 
     const { x, y, y0, x0 } = getBarPosition(props, datum);
-    console.log({ x, y, x0, y0 });
-
     const barWidth = getBarWidth(datum);
 
     const dataProps = {
