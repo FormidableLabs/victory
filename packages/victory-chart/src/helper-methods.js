@@ -36,6 +36,23 @@ function getAxisProps(child, props, calculatedProps) {
   };
 }
 
+function getBackgroundWithProps(props, calculatedProps) {
+  const backgroundElement = props.backgroundComponent;
+  const height = props.polar ? calculatedProps.range.y[1] : calculatedProps.range.y[0] - calculatedProps.range.y[1];
+  const width = calculatedProps.range.x[1] - calculatedProps.range.x[0];
+
+  const backgroundProps = {
+    height: height,
+    origin: calculatedProps.origin,
+    polar: props.polar,
+    scale: calculatedProps.scale,
+    style: props.style.background,
+    width: width
+  };
+
+  return React.cloneElement(backgroundElement, backgroundProps);
+}
+
 function getChildProps(child, props, calculatedProps) {
   const axisChild = Axis.findAxisComponents([child]);
   if (axisChild.length > 0) {
@@ -133,6 +150,7 @@ function getChildren(props, childComponents, calculatedProps) {
   const { height, polar, theme, width } = props;
   const { origin, horizontal } = calculatedProps;
   const parentName = props.name || "chart";
+
   return childComponents.map((child, index) => {
     const role = child.type && child.type.role;
     const style = Array.isArray(child.props.style)
@@ -177,10 +195,6 @@ const getChildComponents = (props, defaultAxes) => {
         ? [defaultAxes.independent, defaultAxes.dependent].concat(newChildComponents)
         : newChildComponents.concat([defaultAxes.independent, defaultAxes.dependent]);
     }
-  }
-
-  if (props.style && props.style.background && typeof props.backgroundComponent === "object") {
-    newChildComponents.unshift(props.backgroundComponent);
   }
 
   return newChildComponents;
@@ -263,4 +277,4 @@ const createStringMap = (props, childComponents) => {
   return { x, y };
 };
 
-export { getChildren, getCalculatedProps, getChildComponents };
+export { getBackgroundWithProps, getChildren, getCalculatedProps, getChildComponents };

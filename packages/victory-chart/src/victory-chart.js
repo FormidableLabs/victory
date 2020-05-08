@@ -13,7 +13,7 @@ import {
 import { VictorySharedEvents } from "victory-shared-events";
 import { VictoryAxis } from "victory-axis";
 import { VictoryPolarAxis } from "victory-polar-axis";
-import { getChildComponents, getCalculatedProps, getChildren } from "./helper-methods";
+import { getBackgroundWithProps, getChildComponents, getCalculatedProps, getChildren } from "./helper-methods";
 import isEqual from "react-fast-compare";
 
 const fallbackProps = {
@@ -87,10 +87,18 @@ export default class VictoryChart extends React.Component {
   getNewChildren(props, childComponents, calculatedProps) {
     const children = getChildren(props, childComponents, calculatedProps);
     const getAnimationProps = Wrapper.getAnimationProps.bind(this);
-    return children.map((child, index) => {
+    const backgroundComponent = getBackgroundWithProps(props, calculatedProps);
+    
+    let newChildren = children.map((child, index) => {
       const childProps = assign({ animate: getAnimationProps(props, child, index) }, child.props);
       return React.cloneElement(child, childProps);
     });
+
+    if (props.style.background) {
+      newChildren.unshift(backgroundComponent);
+    }
+    
+    return newChildren;
   }
 
   renderContainer(containerComponent, props) {
