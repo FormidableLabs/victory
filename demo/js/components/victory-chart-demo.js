@@ -181,8 +181,7 @@ class App extends React.Component {
       justifyContent: "center"
     };
     const chartStyle = {
-      parent: { border: "1px solid #ccc", margin: "2%", maxWidth: "40%" },
-      background: {fill: "cornflowerblue"}
+      parent: { border: "1px solid #ccc", margin: "2%", maxWidth: "40%" }
     };
     const axisStyle = {
       grid: { stroke: "grey", strokeWidth: 1 },
@@ -195,7 +194,7 @@ class App extends React.Component {
       <div className="demo">
         <h1>VictoryChart</h1>
         <div style={containerStyle}>
-        <VictoryChart style={chartStyle} polar={true}>
+          <VictoryChart style={chartStyle} polar>
             <VictoryScatter data={[{ x: -3, y: -3 }]} />
           </VictoryChart>
 

@@ -38,16 +38,29 @@ function getAxisProps(child, props, calculatedProps) {
 
 function getBackgroundWithProps(props, calculatedProps) {
   const backgroundElement = props.backgroundComponent;
-  const height = props.polar ? calculatedProps.range.y[1] : calculatedProps.range.y[0] - calculatedProps.range.y[1];
+
+  const height = props.polar
+    ? calculatedProps.range.y[1]
+    : calculatedProps.range.y[0] - calculatedProps.range.y[1];
   const width = calculatedProps.range.x[1] - calculatedProps.range.x[0];
 
+  const xScale = props.horizontal
+    ? calculatedProps.scale.y.range()[0]
+    : calculatedProps.scale.x.range()[0];
+  const yScale = props.horizontal
+    ? calculatedProps.scale.x.range()[1]
+    : calculatedProps.scale.y.range()[1];
+
+  const xCoordinate = props.polar ? calculatedProps.origin.x : xScale;
+  const yCoordinate = props.polar ? calculatedProps.origin.y : yScale;
+
   const backgroundProps = {
-    height: height,
-    origin: calculatedProps.origin,
+    height,
     polar: props.polar,
-    scale: calculatedProps.scale,
     style: props.style.background,
-    width: width
+    x: xCoordinate,
+    y: yCoordinate,
+    width
   };
 
   return React.cloneElement(backgroundElement, backgroundProps);

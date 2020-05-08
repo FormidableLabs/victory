@@ -11,8 +11,8 @@ const Background = (props) => {
         style: props.style,
         role: props.role,
         shapeRendering: props.shapeRendering,
-        cx: origin.x,
-        cy: origin.y,
+        cx: props.x,
+        cy: props.y,
         r: props.height
       })
     : React.cloneElement(props.rectComponent, {
@@ -20,8 +20,8 @@ const Background = (props) => {
         style: props.style,
         role: props.role,
         shapeRendering: props.shapeRendering,
-        x: props.scale.x.range(),
-        y: props.scale.y.range(),
+        x: props.x,
+        y: props.y,
         width: props.width,
         height: props.height
       });
@@ -30,7 +30,7 @@ const Background = (props) => {
 Background.propTypes = {
   ...CommonProps.primitiveProps,
   circleComponent: PropTypes.element,
-  rectComponent: PropTypes.element,
+  rectComponent: PropTypes.element
 };
 
 Background.defaultProps = {
