@@ -99,7 +99,7 @@ export default class VictoryChart extends React.Component {
       return React.cloneElement(child, childProps);
     });
 
-    if (props.style.background) {
+    if (props.style && props.style.background) {
       newChildren.unshift(backgroundComponent);
     }
 
