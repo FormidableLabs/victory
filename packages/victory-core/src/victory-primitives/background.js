@@ -30,7 +30,13 @@ const Background = (props) => {
 Background.propTypes = {
   ...CommonProps.primitiveProps,
   circleComponent: PropTypes.element,
-  rectComponent: PropTypes.element
+  cx: PropTypes.number,
+  cy: PropTypes.number,
+  height: PropTypes.number,
+  rectComponent: PropTypes.element,
+  width: PropTypes.number,
+  x: PropTypes.number,
+  y: PropTypes.number
 };
 
 Background.defaultProps = {

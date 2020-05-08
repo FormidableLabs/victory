@@ -660,6 +660,19 @@ export class VictoryPortal extends React.Component<VictoryPortalProps, any> {}
 
 // #region Victory Primitives
 
+export interface BackgroundProps extends VictoryCommonPrimitiveProps {
+  circleComponent?: React.ReactElement;
+  cx?: number;
+  cy?: number;
+  height?: number;
+  rectComponent?: React.ReactElement;
+  width?: number;
+  x?: number;
+  y?: number;
+}
+
+export class Background extends React.Component<BackgroundProps> {}
+
 export interface VictoryPointProps extends VictoryCommonPrimitiveProps {
   datum?: any;
   getPath?: Function;

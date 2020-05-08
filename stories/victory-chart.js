@@ -4,10 +4,12 @@ import { storiesOf } from "@storybook/react";
 import { VictoryChart } from "../packages/victory-chart/src/index";
 import { VictoryAxis } from "../packages/victory-axis/src/index";
 import { VictoryBar } from "../packages/victory-bar/src/index";
+import { VictoryGroup } from "../packages/victory-group/src/index";
 import { VictoryScatter } from "../packages/victory-scatter/src/index";
 import { VictoryLine } from "../packages/victory-line/src/index";
 import { VictoryBoxPlot } from "../packages/victory-box-plot/src/index";
 import { VictoryPolarAxis } from "../packages/victory-polar-axis/src/index";
+import { VictoryStack } from "../packages/victory-stack/src/index";
 import { VictoryTheme } from "../packages/victory-core/src/index";
 import { getData, getFourQuadrantData, getArrayData } from "./data";
 
@@ -200,4 +202,31 @@ storiesOf("VictoryChart.style", module)
         parent: { border: "2px solid #000", margin: 20, backgroundColor: "cyan" }
       }}
     />
+  ))
+  .add("with background on group", () => (
+    <VictoryChart style={{ background: { fill: "pink" } }}>
+      <VictoryGroup labels={["a", "b", "c"]} horizontal offset={20} colorScale={"qualitative"}>
+        <VictoryBar data={[{ x: 1, y: 1 }, { x: 2, y: 2 }, { x: 3, y: 5 }]} />
+        <VictoryBar data={[{ x: 1, y: 2 }, { x: 2, y: 1 }, { x: 3, y: 7 }]} />
+        <VictoryBar data={[{ x: 1, y: 3 }, { x: 2, y: 4 }, { x: 3, y: 9 }]} />
+      </VictoryGroup>
+    </VictoryChart>
+  ))
+  .add("with background on stacked chart", () => (
+    <VictoryChart style={{ background: { fill: "pink" } }}>
+      <VictoryStack colorScale={"qualitative"}>
+        <VictoryBar data={[{ x: 1, y: 1 }, { x: 2, y: 2 }, { x: 3, y: 5 }]} />
+        <VictoryBar data={[{ x: 1, y: 2 }, { x: 2, y: 1 }, { x: 3, y: 7 }]} />
+        <VictoryBar data={[{ x: 1, y: 3 }, { x: 2, y: 4 }, { x: 3, y: 9 }]} />
+      </VictoryStack>
+    </VictoryChart>
+  ))
+  .add("with background on horizontal chart", () => (
+    <VictoryChart horizontal style={{ background: { fill: "pink" } }}>
+      <VictoryStack colorScale={"qualitative"}>
+        <VictoryBar data={[{ x: 1, y: 1 }, { x: 2, y: 2 }, { x: 3, y: 5 }]} />
+        <VictoryBar data={[{ x: 1, y: 2 }, { x: 2, y: 1 }, { x: 3, y: 7 }]} />
+        <VictoryBar data={[{ x: 1, y: 3 }, { x: 2, y: 4 }, { x: 3, y: 9 }]} />
+      </VictoryStack>
+    </VictoryChart>
   ));
