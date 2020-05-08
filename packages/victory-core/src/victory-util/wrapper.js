@@ -20,7 +20,7 @@ import Events from "./events";
 import Collection from "./collection";
 import Helpers from "./helpers";
 import Scale from "./scale";
-import { getFormattedData } from "./../../../victory-histogram/src/helper-methods";
+import Log from "./log";
 
 export default {
   getData(props, childComponents) {
@@ -212,13 +212,25 @@ export default {
       ? childComponents.slice(0)
       : React.Children.toArray(props.children);
 
-    const childrenAreHistograms = children.some((child) => {
+    const someChildrenAreHistograms = children.some((child) => {
       return child.type && child.type.role === "histogram";
     });
 
+    const allChildrenAreHistograms =
+      children.length &&
+      children.every((child) => {
+        return child.type && child.type.role === "histogram";
+      });
+
+    if (someChildrenAreHistograms && !allChildrenAreHistograms) {
+      Log.warn(
+        "VictoryHistogram only supports being stacked with other VictoryHistogram components. Check to make sure that you are only passing VictoryHistogram components to VictoryStack"
+      );
+    }
+
     // if we are stacking histograms, we need to generate explicit bins
     // or else each histogram may end up having different bins
-    if (childrenAreHistograms) {
+    if (allChildrenAreHistograms) {
       let childBins = props.bins || childComponents[0].props.bins;
 
       // if we have explicit bins then we don't need to calculate them
@@ -235,7 +247,8 @@ export default {
 
         // use the same function to generate bins as VictoryHistogram but with
         // the combined data from above, then get explicit bins from that
-        childBins = getFormattedData({ data: combinedData, bins: childBins }).reduce(
+        const getFormattedHistogramData = children[0].type.getFormattedData;
+        childBins = getFormattedHistogramData({ data: combinedData, bins: childBins }).reduce(
           (memo, { x0, x1 }, index) => (index === 0 ? memo.concat([x0, x1]) : memo.concat(x1)),
           []
         );

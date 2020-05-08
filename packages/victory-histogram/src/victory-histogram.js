@@ -10,7 +10,7 @@ import {
   addEvents,
   PropTypes as CustomPropTypes
 } from "victory-core";
-import { getBaseProps, getData, getDomain } from "./helper-methods";
+import { getBaseProps, getData, getDomain, getFormattedData } from "./helper-methods";
 
 const fallbackProps = {
   width: 450,
@@ -43,6 +43,8 @@ export class VictoryHistogram extends React.Component {
       after: (datum) => ({ _y: datum._y, _y1: datum._y1, _y0: datum._y0 })
     }
   };
+
+  static getFormattedData = getFormattedData;
 
   static propTypes = {
     ...CommonProps.baseProps,
