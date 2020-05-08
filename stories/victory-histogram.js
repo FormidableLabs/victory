@@ -4,10 +4,12 @@ import { storiesOf } from "@storybook/react";
 import { VictoryHistogram } from "../packages/victory-histogram/src";
 import { VictoryLine } from "../packages/victory-line/src";
 import { VictoryScatter } from "../packages/victory-scatter/src";
-import { VictoryTooltip } from "../packages/victory-tooltip/src/index";
-
+import { VictoryTooltip } from "../packages/victory-tooltip/src";
+import { VictoryStack } from "../packages/victory-stack/src";
 import { VictoryTheme } from "../packages/victory-core/src";
 import { getChartDecorator } from "./decorators";
+import { getData } from "./data";
+
 import * as d3Array from "d3-array";
 import * as d3Scale from "d3-scale";
 import * as d3Time from "d3-time";
@@ -623,10 +625,10 @@ storiesOf("VictoryHistogram.data", module)
   ))
   .add("with empty data", () => <VictoryHistogram data={[]} />)
   .add("with empty data and numeric bins", () => <VictoryHistogram data={[]} bins={2} />)
-  .add("with empty data and defined bins", () => (
+  .add("with empty data and explicit bins", () => (
     <VictoryHistogram data={[]} bins={[0, 30, 100, 150]} />
   ))
-  .add("with empty data and defined date bins", () => (
+  .add("with empty data and explicit date bins", () => (
     <VictoryHistogram
       scale={{ x: "time" }}
       data={[]}
@@ -907,3 +909,47 @@ storiesOf("VictoryHistogram.with other charts", module)
       ]}
     />
   ]);
+
+const stackedData = [
+  ...[50, 30, 100, 32, 50, 10, 49, 78, 20].map((count) => getData(count, count, 100)),
+  [{ x: 1 }, { x: 3 }, { x: 1 }, { x: 2 }]
+];
+
+storiesOf("VictoryHistogram.stacked", module)
+  .addDecorator(getChartDecorator())
+  .add("stacked area with explicit bins passed to stack", () => (
+    <VictoryStack colorScale="qualitative" bins={[0, 20, 100]}>
+      {stackedData.map((d, index) => (
+        <VictoryHistogram data={d} key={index} />
+      ))}
+    </VictoryStack>
+  ))
+  .add("stacked area with numeric bins passed to stack", () => (
+    <VictoryStack colorScale="qualitative" bins={2}>
+      {stackedData.map((d, index) => (
+        <VictoryHistogram data={d} key={index} />
+      ))}
+    </VictoryStack>
+  ))
+  .add("stacked area with bins passed to first child", () => (
+    <VictoryStack colorScale="qualitative">
+      {stackedData.map((d, index) => (
+        <VictoryHistogram data={d} key={index} />
+      ))}
+    </VictoryStack>
+  ))
+  .add("stacked area", () => (
+    <VictoryStack colorScale="qualitative">
+      {stackedData.map((d, index) => (
+        <VictoryHistogram binSpacing={10} data={d} key={index} />
+      ))}
+    </VictoryStack>
+  ))
+  .add("stacked area with nested data", () => (
+    <VictoryStack colorScale="qualitative">
+      <VictoryHistogram data={data.map(({ x }) => ({ a: { b: { c: x } } }))} x="a.b.c" />
+      {stackedData.map((d, index) => (
+        <VictoryHistogram data={d} key={index} />
+      ))}
+    </VictoryStack>
+  ));
