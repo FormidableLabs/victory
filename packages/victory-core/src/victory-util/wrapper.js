@@ -236,7 +236,7 @@ export default {
         // use the same function to generate bins as VictoryHistogram but with
         // the combined data from above, then get explicit bins from that
         childBins = getFormattedData({ data: combinedData, bins: childBins }).reduce(
-          (memo, { x, end }, index) => (index === 0 ? memo.concat([x, end]) : memo.concat(end)),
+          (memo, { x0, x1 }, index) => (index === 0 ? memo.concat([x0, x1]) : memo.concat(x1)),
           []
         );
       }

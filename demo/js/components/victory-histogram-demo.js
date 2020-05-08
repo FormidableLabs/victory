@@ -289,7 +289,7 @@ export default class App extends React.Component {
             data: { stroke: "#f67280", strokeWidth: 3, fill: "#355c7d" }
           }}
           data={this.data2}
-          labels={({ datum }) => `${datum.x} - ${datum.end}`}
+          labels={({ datum }) => `${datum.x0} - ${datum.x1}`}
         />
 
         <VictoryHistogram
@@ -299,7 +299,7 @@ export default class App extends React.Component {
             data: { stroke: "#f67280", strokeWidth: 3, fill: "#355c7d" }
           }}
           data={this.data2}
-          labels={({ datum }) => `${datum.x} - ${datum.end}`}
+          labels={({ datum }) => `${datum.x0} - ${datum.x1}`}
           labelComponent={<VictoryTooltip active />}
         />
 
@@ -311,7 +311,7 @@ export default class App extends React.Component {
           }}
           data={this.data2}
           labels={({ datum }) =>
-            `${datum.binnedDatums.length} data points were grouped into this bin`
+            `${datum.binnedData.length} data points were grouped into this bin`
           }
           labelComponent={<VictoryTooltip active />}
         />

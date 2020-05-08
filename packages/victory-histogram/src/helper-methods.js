@@ -75,10 +75,10 @@ export const getFormattedData = cacheLastValue(({ data = [], x, bins }) => {
   const binnedData = binFunc(data).filter(({ x0, x1 }) => x0 !== x1);
 
   const formattedData = binnedData.map((bin) => ({
-    x: dataOrBinsContainsDates ? new Date(bin.x0) : bin.x0,
-    end: dataOrBinsContainsDates ? new Date(bin.x1) : bin.x1,
+    x0: dataOrBinsContainsDates ? new Date(bin.x0) : bin.x0,
+    x1: dataOrBinsContainsDates ? new Date(bin.x1) : bin.x1,
     y: bin.length,
-    binnedDatums: [...bin]
+    binnedData: [...bin]
   }));
 
   return formattedData;
@@ -89,8 +89,7 @@ const getData = (props) => {
   const dataIsPreformatted = data.some(({ _y }) => !isNil(_y));
 
   const formattedData = dataIsPreformatted ? data : getFormattedData({ data, x, bins });
-
-  return Data.getData({ ...props, data: formattedData, x: "x" });
+  return Data.getData({ ...props, data: formattedData, x: "x0" });
 };
 
 const getDomain = (props, axis) => {
@@ -104,7 +103,7 @@ const getDomain = (props, axis) => {
     const firstBin = data[0];
     const lastBin = data[data.length - 1];
 
-    return [firstBin.x, lastBin.end];
+    return [firstBin.x0, lastBin.x1];
   }
 
   return props.data.length ? Domain.getDomainWithZero({ ...props, data }, "y") : [0, 1];
@@ -179,9 +178,8 @@ const getBaseProps = (props, fallbackProps) => {
   };
 
   const getDistance = (datum) => {
-    const current = scale.x(datum.x);
-    const next = scale.x(datum.end);
-
+    const current = scale.x(datum.x0);
+    const next = scale.x(datum.x1);
     return Math.abs(next - current);
   };
 
@@ -206,6 +204,8 @@ const getBaseProps = (props, fallbackProps) => {
     const eventKey = !isNil(datum.eventKey) ? datum.eventKey : index;
 
     const { x, y, y0, x0 } = getBarPosition(props, datum);
+    console.log({ x, y, x0, y0 });
+
     const barWidth = getBarWidth(datum);
 
     const dataProps = {
