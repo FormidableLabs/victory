@@ -29,9 +29,9 @@ const getCalculatedValues = (props) => {
     x: Helpers.getRange(props, "x"),
     y: Helpers.getRange(props, "y")
   };
-  const domain = props.domain || {
-    x: Domain.getDomainWithZero(props, "x"),
-    y: Domain.getDomainWithZero(props, "y")
+  const domain = {
+    x: Domain.getDomainFromProps(props, "x") || Domain.getDomainWithZero(props, "x"),
+    y: Domain.getDomainFromProps(props, "y") || Domain.getDomainWithZero(props, "y")
   };
   const scale = {
     x: Scale.getBaseScale(props, "x")
