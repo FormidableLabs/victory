@@ -1,7 +1,14 @@
 import { assign, defaults, isEmpty } from "lodash";
 import PropTypes from "prop-types";
 import React from "react";
-import { Helpers, VictoryContainer, VictoryTheme, CommonProps, Wrapper } from "victory-core";
+import {
+  Helpers,
+  VictoryContainer,
+  VictoryTheme,
+  CommonProps,
+  Wrapper,
+  PropTypes as CustomPropTypes
+} from "victory-core";
 import { VictorySharedEvents } from "victory-shared-events";
 import { getChildren, getCalculatedProps } from "./helper-methods";
 import isEqual from "react-fast-compare";
@@ -19,6 +26,12 @@ export default class VictoryStack extends React.Component {
 
   static propTypes = {
     ...CommonProps.baseProps,
+    bins: PropTypes.oneOfType([
+      PropTypes.arrayOf(
+        PropTypes.oneOfType([CustomPropTypes.nonNegative, PropTypes.instanceOf(Date)])
+      ),
+      CustomPropTypes.nonNegative
+    ]),
     categories: PropTypes.oneOfType([
       PropTypes.arrayOf(PropTypes.string),
       PropTypes.shape({
