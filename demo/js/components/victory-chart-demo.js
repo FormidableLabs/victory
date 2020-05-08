@@ -182,8 +182,7 @@ class App extends React.Component {
     };
     const chartStyle = {
       parent: { border: "1px solid #ccc", margin: "2%", maxWidth: "40%" }
-    }
-    ;
+    };
     const axisStyle = {
       grid: { stroke: "grey", strokeWidth: 1 },
       axis: { stroke: "transparent" },
@@ -193,7 +192,7 @@ class App extends React.Component {
 
     const bgStyle = {
       background: { fill: "#e6e6ff" }
-    }
+    };
 
     return (
       <div className="demo">

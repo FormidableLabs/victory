@@ -30,8 +30,6 @@ const Background = (props) => {
 Background.propTypes = {
   ...CommonProps.primitiveProps,
   circleComponent: PropTypes.element,
-  cx: PropTypes.number,
-  cy: PropTypes.number,
   height: PropTypes.number,
   rectComponent: PropTypes.element,
   width: PropTypes.number,

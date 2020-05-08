@@ -57,6 +57,7 @@ function getBackgroundWithProps(props, calculatedProps) {
   const backgroundProps = {
     height,
     polar: props.polar,
+    scale: calculatedProps.scale,
     style: props.style.background,
     x: xCoordinate,
     y: yCoordinate,

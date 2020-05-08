@@ -662,8 +662,6 @@ export class VictoryPortal extends React.Component<VictoryPortalProps, any> {}
 
 export interface BackgroundProps extends VictoryCommonPrimitiveProps {
   circleComponent?: React.ReactElement;
-  cx?: number;
-  cy?: number;
   height?: number;
   rectComponent?: React.ReactElement;
   width?: number;

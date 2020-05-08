@@ -92,7 +92,6 @@ export default class VictoryChart extends React.Component {
   getNewChildren(props, childComponents, calculatedProps) {
     const children = getChildren(props, childComponents, calculatedProps);
     const getAnimationProps = Wrapper.getAnimationProps.bind(this);
-    const backgroundComponent = getBackgroundWithProps(props, calculatedProps);
 
     const newChildren = children.map((child, index) => {
       const childProps = assign({ animate: getAnimationProps(props, child, index) }, child.props);
@@ -100,6 +99,8 @@ export default class VictoryChart extends React.Component {
     });
 
     if (props.style && props.style.background) {
+      const backgroundComponent = getBackgroundWithProps(props, calculatedProps);
+
       newChildren.unshift(backgroundComponent);
     }
 
