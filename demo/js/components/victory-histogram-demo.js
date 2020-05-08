@@ -8,6 +8,7 @@ import { VictoryLine } from "Packages/victory-line/src/index";
 import { VictoryScatter } from "Packages/victory-scatter/src/index";
 import { VictoryTheme } from "Packages/victory-core/src/index";
 import { VictoryTooltip } from "Packages/victory-tooltip/src/index";
+import { VictoryStack } from "Packages/victory-stack/src/index";
 
 const randomDate = (start, end) => {
   return new Date(start.getTime() + Math.random() * (end.getTime() - start.getTime()));
@@ -463,7 +464,7 @@ export default class App extends React.Component {
           />
         </VictoryChart>
 
-        <VictoryChart style={{ parent: parentStyle }} animate={{ duration: 500 }}>
+        <VictoryChart style={{ parent: parentStyle }}>
           <VictoryHistogram
             style={{
               data: { stroke: "#833B61", strokeWidth: 3, fill: "#F67E7D" }
@@ -474,7 +475,7 @@ export default class App extends React.Component {
           />
         </VictoryChart>
 
-        <VictoryChart style={{ parent: parentStyle }} animate={{ duration: 500 }}>
+        <VictoryChart style={{ parent: parentStyle }}>
           <VictoryHistogram
             style={{
               data: { stroke: "#833B61", strokeWidth: 3, fill: "#F67E7D" }
@@ -483,6 +484,27 @@ export default class App extends React.Component {
             bins={this.state.dateDynamicBins.bins}
             animate={{ duration: 500 }}
           />
+        </VictoryChart>
+
+        <VictoryChart style={{ parent: parentStyle }} scale={{ x: "time" }}>
+          <VictoryStack colorScale="qualitative">
+            <VictoryHistogram
+              style={{
+                data: { stroke: "#833B61" }
+              }}
+              data={this.state.dateDynamicBins.data}
+              bins={this.state.dateDynamicBins.bins}
+              animate={{ duration: 500 }}
+            />
+            <VictoryHistogram
+              style={{
+                data: { stroke: "#833B61" }
+              }}
+              data={this.state.dateDynamicBins.data}
+              bins={this.state.dateDynamicBins.bins}
+              animate={{ duration: 500 }}
+            />
+          </VictoryStack>
         </VictoryChart>
       </div>
     );
