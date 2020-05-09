@@ -2,7 +2,7 @@
 /* eslint-disable no-use-before-define */
 import { assign } from "lodash";
 import React from "react";
-import { Helpers, Scale, Data, Domain, Wrapper } from "victory-core";
+import { Helpers, Scale, Data, Wrapper } from "victory-core";
 
 const fallbackProps = {
   width: 450,
