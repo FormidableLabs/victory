@@ -1,5 +1,10 @@
 # Victory Changelog
 
+## 34.2.1 (2020-05-09)
+
+- [#1563](https://github.com/FormidableLabs/victory/pull/1563) - Fixes a regression introduced in 34.1.3 that was effecting charts with the `domain` prop defined for a single dimension.
+- [#1564](https://github.com/FormidableLabs/victory/pull/1564) - Fixes a regression introduced in 34.1.3 that was causing `domainPadding` to not be applied to stacked and grouped charts with `domain` props defined.
+
 ## 34.2.0 (2020-05-06)
 
 Update typescript types for all Victory components. A huge thanks to @maddles @wparsons and @kale-stew for this work. This release includes the following PRs
