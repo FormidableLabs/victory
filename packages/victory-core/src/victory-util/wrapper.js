@@ -48,13 +48,13 @@ export default {
   getDomain(props, axis, childComponents) {
     childComponents = childComponents || React.Children.toArray(props.children);
     const propsDomain = Domain.getDomainFromProps(props, axis);
-    const minDomain = Domain.getMinFromProps(props, axis);
-    const maxDomain = Domain.getMaxFromProps(props, axis);
     const domainPadding = this.getDefaultDomainPadding(props, axis, childComponents);
     let domain;
     if (propsDomain) {
       domain = propsDomain;
     } else {
+      const minDomain = Domain.getMinFromProps(props, axis);
+      const maxDomain = Domain.getMaxFromProps(props, axis);
       const dataset = (props.data || props.y) && Data.getData(props);
       const dataDomain = dataset ? Domain.getDomainFromData(props, axis, dataset) : [];
       const childDomain = this.getDomainFromChildren(props, axis, childComponents);
