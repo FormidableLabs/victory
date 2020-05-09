@@ -1,7 +1,7 @@
 /* eslint-disable func-style */
 /* eslint-disable no-use-before-define */
 import React from "react";
-import { flatten, isPlainObject, sortedUniq, isFunction, includes } from "lodash";
+import { flatten, isPlainObject, sortedUniq, isFunction, includes, isDate } from "lodash";
 import Data from "./data";
 import Scale from "./scale";
 import Helpers from "./helpers";
@@ -320,26 +320,30 @@ function getDomainWithZero(props, axis) {
  * Returns the maxDomain from props if it exists
  * @param {Object} props: the props object
  * @param {String} axis: the current axis
- * @returns {Number|undefined} the maxDomain based on props
+ * @returns {Number|Date|undefined} the maxDomain based on props
  */
 function getMaxFromProps(props, axis) {
   if (isPlainObject(props.maxDomain) && props.maxDomain[axis] !== undefined) {
     return props.maxDomain[axis];
   }
-  return typeof props.maxDomain === "number" ? props.maxDomain : undefined;
+  return typeof props.maxDomain === "number" || isDate(props.maxDomain)
+    ? props.maxDomain
+    : undefined;
 }
 
 /**
  * Returns the minDomain from props if it exists
  * @param {Object} props: the props object
  * @param {String} axis: the current axis
- * @returns {Number|undefined} the minDomain based on props
+ * @returns {Number|Date|undefined} the minDomain based on props
  */
 function getMinFromProps(props, axis) {
   if (isPlainObject(props.minDomain) && props.minDomain[axis] !== undefined) {
     return props.minDomain[axis];
   }
-  return typeof props.minDomain === "number" ? props.minDomain : undefined;
+  return typeof props.minDomain === "number" || isDate(props.minDomain)
+    ? props.minDomain
+    : undefined;
 }
 
 /**

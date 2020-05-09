@@ -20,12 +20,8 @@ function getCalculatedProps(props, childComponents) {
   const categories = props.categories || Wrapper.getCategories(props, childComponents);
   const datasets = props.datasets || Wrapper.getDataFromChildren(props);
   const domain = {
-    x:
-      Domain.getDomainFromProps(props, "x") ||
-      Wrapper.getDomain(assign({}, props, { categories }), "x", childComponents),
-    y:
-      Domain.getDomainFromProps(props, "y") ||
-      Wrapper.getDomain(assign({}, props, { categories }), "y", childComponents)
+    x: Wrapper.getDomain(assign({}, props, { categories }), "x", childComponents),
+    y: Wrapper.getDomain(assign({}, props, { categories }), "y", childComponents)
   };
   const range = props.range || {
     x: Helpers.getRange(props, "x"),

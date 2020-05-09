@@ -117,12 +117,8 @@ function getCalculatedProps(props, childComponents) {
     return React.cloneElement(c, { data: datasets[i] });
   });
   const domain = {
-    x:
-      Domain.getDomainFromProps(props, "x") ||
-      Wrapper.getDomain(assign({}, props, { categories }), "x", children),
-    y:
-      Domain.getDomainFromProps(props, "y") ||
-      Wrapper.getDomain(assign({}, props, { categories }), "y", children)
+    x: Wrapper.getDomain(assign({}, props, { categories }), "x", children),
+    y: Wrapper.getDomain(assign({}, props, { categories }), "y", children)
   };
   const range = props.range || {
     x: Helpers.getRange(props, "x"),
