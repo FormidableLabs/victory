@@ -2,7 +2,7 @@
 /* eslint-disable no-use-before-define */
 import { assign, keys, orderBy } from "lodash";
 import React from "react";
-import { Helpers, Scale, Wrapper } from "victory-core";
+import { Domain, Helpers, Scale, Wrapper } from "victory-core";
 
 const fallbackProps = {
   width: 450,
@@ -116,9 +116,13 @@ function getCalculatedProps(props, childComponents) {
   const children = childComponents.map((c, i) => {
     return React.cloneElement(c, { data: datasets[i] });
   });
-  const domain = props.domain || {
-    x: Wrapper.getDomain(assign({}, props, { categories }), "x", children),
-    y: Wrapper.getDomain(assign({}, props, { categories }), "y", children)
+  const domain = {
+    x:
+      Domain.getDomainFromProps(props, "x") ||
+      Wrapper.getDomain(assign({}, props, { categories }), "x", children),
+    y:
+      Domain.getDomainFromProps(props, "y") ||
+      Wrapper.getDomain(assign({}, props, { categories }), "y", children)
   };
   const range = props.range || {
     x: Helpers.getRange(props, "x"),

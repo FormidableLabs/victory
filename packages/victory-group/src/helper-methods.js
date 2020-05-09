@@ -2,7 +2,7 @@
 /* eslint-disable no-use-before-define */
 import { assign } from "lodash";
 import React from "react";
-import { Helpers, Scale, Data, Wrapper } from "victory-core";
+import { Helpers, Scale, Data, Domain, Wrapper } from "victory-core";
 
 const fallbackProps = {
   width: 450,
@@ -19,9 +19,13 @@ function getCalculatedProps(props, childComponents) {
   const { offset, colorScale, color, polar, horizontal } = props;
   const categories = props.categories || Wrapper.getCategories(props, childComponents);
   const datasets = props.datasets || Wrapper.getDataFromChildren(props);
-  const domain = props.domain || {
-    x: Wrapper.getDomain(assign({}, props, { categories }), "x", childComponents),
-    y: Wrapper.getDomain(assign({}, props, { categories }), "y", childComponents)
+  const domain = {
+    x:
+      Domain.getDomainFromProps(props, "x") ||
+      Wrapper.getDomain(assign({}, props, { categories }), "x", childComponents),
+    y:
+      Domain.getDomainFromProps(props, "y") ||
+      Wrapper.getDomain(assign({}, props, { categories }), "y", childComponents)
   };
   const range = props.range || {
     x: Helpers.getRange(props, "x"),
