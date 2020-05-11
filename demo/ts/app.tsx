@@ -15,6 +15,7 @@ import DraggableDemo from "./components/draggable-demo";
 import ErrorBarDemo from "./components/victory-errorbar-demo";
 import EventsDemo from "./components/events-demo";
 import GroupDemo from "./components/group-demo";
+import HistogramDemo from "./components/victory-histogram-demo";
 import HorizontalDemo from "./components/horizontal-demo";
 import ImmutableDemo from "./components/immutable-demo";
 import LegendDemo from "./components/victory-legend-demo";
@@ -40,6 +41,7 @@ const MAP = {
   "/brush-line": { component: BrushLineDemo, name: "BrushLineDemo" },
   "/group-demo": { component: GroupDemo, name: "GroupDemo" },
   "/horizontal-demo": { component: HorizontalDemo, name: "HorizontalDemo" },
+  "/histogram-demo": { component: HistogramDemo, name: "HistogramDemo" },
   "/candlestick": { component: CandlestickDemo, name: "CandlestickDemo" },
   "/chart": { component: ChartDemo, name: "ChartDemo" },
   "/cursor-container": { component: CursorContainerDemo, name: "CursorContainerDemo" },
