@@ -235,15 +235,10 @@ export default {
 
       // if we have explicit bins then we don't need to calculate them
       if (!Array.isArray(childBins)) {
-        // combine all histograms data
-        const combinedData = Helpers.reduceChildren(children, (child) => {
-          if (child.type.role === "histogram") {
-            const xAccessor = Helpers.createAccessor(child.props.x || "x");
-            return child.props.data.map((datum) => ({ x: xAccessor(datum) }));
-          }
-
-          return [];
-        });
+        const combinedData = children.reduce((memo, child) => {
+          const xAccessor = Helpers.createAccessor(child.props.x || "x");
+          return memo.concat(child.props.data.map((datum) => ({ x: xAccessor(datum) })));
+        }, []);
 
         // use the same function to generate bins as VictoryHistogram but with
         // the combined data from above, then get explicit bins from that
