@@ -87,8 +87,6 @@ export const getFormattedData = cacheLastValue(({ data = [], x, bins }) => {
     binnedData: [...bin]
   }));
 
-  console.log(formattedData);
-
   return formattedData;
 });
 

@@ -1,12 +1,15 @@
 /**
  * Client tests
  */
-/*eslint-disable max-nested-callbacks */
+/* global sinon:false, console */
+/* eslint-disable max-nested-callbacks */
+/* eslint-disable no-console */
 
 import React from "react";
 import { mount } from "enzyme";
 import { VictoryStack } from "packages/victory-stack/src/index";
 import { VictoryBar } from "packages/victory-bar/src/index";
+import { VictoryHistogram } from "packages/victory-histogram/src/index";
 
 describe("components/victory-stack", () => {
   describe("default component rendering", () => {
@@ -32,6 +35,42 @@ describe("components/victory-stack", () => {
       const svg = wrapper.find("svg").at(0);
       const viewBoxValue = `0 0 ${450} ${300}`;
       expect(svg.prop("viewBox")).to.equal(viewBoxValue);
+    });
+  });
+
+  describe("warnings", () => {
+    let sandbox;
+
+    beforeEach(() => {
+      sandbox = sinon.sandbox.create();
+      sandbox.stub(console, "warn");
+    });
+
+    afterEach(() => {
+      console.warn.restore();
+      sandbox.reset();
+    });
+
+    it("should warn when histogram children are mixed with non-histogram children", () => {
+      mount(
+        <VictoryStack>
+          <VictoryHistogram />
+          <VictoryBar />
+        </VictoryStack>
+      );
+
+      expect(console.warn.callCount).to.equal(1);
+    });
+
+    it("should not warn when only histogram children are passed", () => {
+      mount(
+        <VictoryStack>
+          <VictoryHistogram />
+          <VictoryHistogram />
+        </VictoryStack>
+      );
+
+      expect(console.warn.callCount).to.equal(0);
     });
   });
 });
