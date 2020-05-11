@@ -129,7 +129,7 @@ const getCalculatedValues = (props) => {
     y: Helpers.getRange(props, "y")
   };
 
-  const domain = props.domain || {
+  const domain = {
     x: getDomain(props, "x"),
     y: getDomain(props, "y")
   };
