@@ -204,19 +204,13 @@ export default {
     return [min, max];
   },
 
-  getDataFromChildren(props, childComponents) {
-    const { polar, startAngle, endAngle, categories, minDomain, maxDomain } = props;
-    const parentProps = { polar, startAngle, endAngle, categories, minDomain, maxDomain };
-    let stack = 0;
-    const children = childComponents
-      ? childComponents.slice(0)
-      : React.Children.toArray(props.children);
-
+  addBinsToParentPropsIfHistogram({ children, props, childComponents, parentProps }) {
     const someChildrenAreHistograms = children.some((child) => {
       return child.type && child.type.role === "histogram";
     });
 
     const allChildrenAreHistograms =
+      someChildrenAreHistograms &&
       children.length &&
       children.every((child) => {
         return child.type && child.type.role === "histogram";
@@ -230,27 +224,45 @@ export default {
 
     // if we are stacking histograms, we need to generate explicit bins
     // or else each histogram may end up having different bins
-    if (allChildrenAreHistograms) {
-      let childBins = props.bins || childComponents[0].props.bins;
-
-      // if we have explicit bins then we don't need to calculate them
-      if (!Array.isArray(childBins)) {
-        const combinedData = children.reduce((memo, child) => {
-          const xAccessor = Helpers.createAccessor(child.props.x || "x");
-          return memo.concat(child.props.data.map((datum) => ({ x: xAccessor(datum) })));
-        }, []);
-
-        // use the same function to generate bins as VictoryHistogram but with
-        // the combined data from above, then get explicit bins from that
-        const getFormattedHistogramData = children[0].type.getFormattedData;
-        childBins = getFormattedHistogramData({ data: combinedData, bins: childBins }).reduce(
-          (memo, { x0, x1 }, index) => (index === 0 ? memo.concat([x0, x1]) : memo.concat(x1)),
-          []
-        );
-      }
-
-      parentProps.bins = childBins;
+    if (!allChildrenAreHistograms) {
+      return parentProps;
     }
+
+    let childBins = props.bins || childComponents[0].props.bins;
+
+    // if we have explicit bins then we don't need to calculate them
+    if (!Array.isArray(childBins)) {
+      const combinedData = children.reduce((memo, child) => {
+        const xAccessor = Helpers.createAccessor(child.props.x || "x");
+        return memo.concat(child.props.data.map((datum) => ({ x: xAccessor(datum) })));
+      }, []);
+
+      // use the same function to generate bins as VictoryHistogram but with
+      // the combined data from above, then get explicit bins from that
+      const getFormattedHistogramData = children[0].type.getFormattedData;
+      childBins = getFormattedHistogramData({ data: combinedData, bins: childBins }).reduce(
+        (memo, { x0, x1 }, index) => (index === 0 ? memo.concat([x0, x1]) : memo.concat(x1)),
+        []
+      );
+    }
+
+    return { ...parentProps, bins: childBins };
+  },
+
+  getDataFromChildren(props, childComponents) {
+    const { polar, startAngle, endAngle, categories, minDomain, maxDomain } = props;
+    let parentProps = { polar, startAngle, endAngle, categories, minDomain, maxDomain };
+    let stack = 0;
+    const children = childComponents
+      ? childComponents.slice(0)
+      : React.Children.toArray(props.children);
+
+    parentProps = this.addBinsToParentPropsIfHistogram({
+      children,
+      props,
+      childComponents,
+      parentProps
+    });
 
     const iteratee = (child, childName, parent) => {
       const childProps = assign({}, child.props, parentProps);
