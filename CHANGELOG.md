@@ -1,5 +1,9 @@
 # Victory Changelog
 
+## 34.2.2 (2020-05-11)
+
+- [#1558](https://github.com/FormidableLabs/victory/pull/1558) - Adds a `backgroundComponent` for `VictoryChart` that will be rendered if `VictoryChart`'s `style` component includes `background` styles. The `Background` component renders a `rect` for cartesian charts and a `circle` for polar charts that is correctly sized and positioned to fill the entire range of the chart. Thanks @maddles and @wparsons!
+
 ## 34.2.1 (2020-05-09)
 
 - [#1563](https://github.com/FormidableLabs/victory/pull/1563) - Fixes a regression introduced in 34.1.3 that was effecting charts with the `domain` prop defined for a single dimension.
