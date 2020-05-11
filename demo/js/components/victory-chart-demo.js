@@ -203,11 +203,7 @@ class App extends React.Component {
           </VictoryChart>
 
           <VictoryChart style={assign({}, chartStyle, bgStyle)}>
-            <VictoryScatter data={[{ x: -3, y: -3 }]} />
-          </VictoryChart>
-
-          <VictoryChart style={chartStyle} theme={dependentAxisTheme}>
-            <VictoryScatter />
+            <VictoryScatter data={[{ x: -3, y: -3 }, { x: -2, y: 2 }, { x: 1, y: -1 }]} />
           </VictoryChart>
 
           <VictoryChart style={chartStyle} theme={dependentAxisTheme}>

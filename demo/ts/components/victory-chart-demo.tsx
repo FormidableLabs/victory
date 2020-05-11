@@ -220,12 +220,20 @@ class VictoryChartDemo extends React.Component<any, VictoryChartDemoState> {
       tickLabels: { fill: "none" }
     };
 
+    const bgStyle: { [key: string]: React.CSSProperties } = {
+      background: { fill: "#e6e6ff" }
+    };
+
     return (
       <div className="demo">
         <h1>VictoryChart</h1>
         <div style={containerStyle}>
-          <VictoryChart style={chartStyle}>
-            <VictoryScatter data={[{ x: -3, y: -3 }]} />
+          <VictoryChart style={chartStyle} polar>
+            <VictoryScatter />
+          </VictoryChart>
+
+          <VictoryChart style={assign({}, chartStyle, bgStyle)}>
+            <VictoryScatter data={[{ x: -3, y: -3 }, { x: -2, y: 2 }, { x: 1, y: -1 }]} />
           </VictoryChart>
 
           <VictoryChart style={chartStyle} theme={dependentAxisTheme}>
