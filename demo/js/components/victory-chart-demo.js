@@ -11,12 +11,7 @@ import { VictoryArea } from "Packages/victory-area/src/index";
 import { VictoryBar } from "Packages/victory-bar/src/index";
 import { VictoryLine } from "Packages/victory-line/src/index";
 import { VictoryScatter } from "Packages/victory-scatter/src/index";
-import {
-  Background,
-  VictoryLabel,
-  VictoryTheme,
-  VictoryClipContainer
-} from "Packages/victory-core/src/index";
+import { VictoryLabel, VictoryTheme, VictoryClipContainer } from "Packages/victory-core/src/index";
 
 const UPDATE_INTERVAL = 3000;
 
