@@ -3,6 +3,7 @@
 
 declare module "victory" {
   import {
+    Background,
     // Border,
     // Box,
     // ClipPath,
@@ -115,6 +116,7 @@ declare module "victory" {
 
   export {
     // Area,
+    Background,
     // Bar,
     // Border,
     // Box,

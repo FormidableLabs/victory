@@ -1,4 +1,5 @@
 import {
+  Background,
   Border,
   Box,
   ClipPath,
@@ -87,6 +88,7 @@ import { VictoryPolarAxis } from "victory-polar-axis";
 
 export {
   Area,
+  Background,
   Bar,
   Border,
   Box,

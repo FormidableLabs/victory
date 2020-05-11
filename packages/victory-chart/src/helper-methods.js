@@ -64,7 +64,10 @@ function getBackgroundWithProps(props, calculatedProps) {
     width
   };
 
-  return React.cloneElement(backgroundElement, backgroundProps);
+  return React.cloneElement(
+    backgroundElement,
+    defaults({}, backgroundElement.props, backgroundProps)
+  );
 }
 
 function getChildProps(child, props, calculatedProps) {
