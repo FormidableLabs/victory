@@ -193,7 +193,8 @@ export default class App extends React.Component {
             parent: parentStyle,
             data: { stroke: "#f67280", strokeWidth: 3, fill: "#355c7d" }
           }}
-          data={this.data}
+          data={this.data.map(({ x }) => ({ value: x }))}
+          x="value"
         />
 
         <VictoryHistogram

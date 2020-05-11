@@ -213,7 +213,8 @@ export default class App extends React.Component<{}, VictoryBarDemoState> {
             parent: parentStyle,
             data: { stroke: "#1f4068", strokeWidth: 4, fill: "#e43f5a" }
           }}
-          data={this.data}
+          data={this.data.map(({ x }) => ({ value: x }))}
+          x="value"
         />
 
         <VictoryHistogram
