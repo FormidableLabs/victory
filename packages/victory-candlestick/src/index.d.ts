@@ -28,7 +28,7 @@ export interface VictoryCandlestickStyleInterface extends VictoryStyleInterface 
 export type VictoryCandlestickLabelsType = (string | number)[] | boolean | ((datum: any) => number);
 
 export interface VictoryCandlestickProps
-  extends VictoryCommonProps,
+  extends Omit<VictoryCommonProps, "polar">,
     VictoryDatableProps,
     VictoryLabelableProps,
     VictoryMultiLabelableProps {
@@ -72,7 +72,6 @@ export interface VictoryCandlestickProps
   open?: StringOrNumberOrCallback | string[];
   openLabelComponent?: React.ReactElement;
   openLabels?: VictoryCandlestickLabelsType;
-  polar?: boolean;
   size?: number;
   style?: VictoryCandlestickStyleInterface;
   wickStrokeWidth?: number;

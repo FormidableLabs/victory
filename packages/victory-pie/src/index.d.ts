@@ -36,7 +36,7 @@ export interface VictorySliceProps extends VictoryCommonProps {
 }
 
 export interface VictoryPieProps
-  extends VictoryCommonProps,
+  extends Omit<VictoryCommonProps, "polar">,
     VictoryLabelableProps,
     VictoryMultiLabelableProps {
   categories?: CategoryPropType;

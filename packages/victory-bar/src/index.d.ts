@@ -32,7 +32,6 @@ export interface VictoryBarProps
   events?: EventPropTypeInterface<VictoryBarTTargetType, number | string | number[] | string[]>[];
   eventKey?: StringOrNumberOrCallback;
   horizontal?: boolean;
-  polar?: boolean;
   style?: VictoryStyleInterface;
 }
 

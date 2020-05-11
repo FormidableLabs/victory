@@ -12,8 +12,8 @@ import {
 export type VictoryHistogramTargetType = "data" | "labels" | "parent";
 
 export interface VictoryHistogramProps
-  extends VictoryCommonProps,
-    VictoryDatableProps,
+  extends Omit<VictoryCommonProps, "polar">,
+    Omit<VictoryDatableProps, "y" | "y0">,
     VictoryMultiLabelableProps {
   binSpacing?: number;
   bins?: number | number[] | Date[];
