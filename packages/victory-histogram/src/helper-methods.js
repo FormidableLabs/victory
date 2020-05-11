@@ -111,7 +111,10 @@ const getDomain = (props, axis) => {
     const firstBin = data[0];
     const lastBin = data[data.length - 1];
 
-    return [firstBin.x0, lastBin.x1];
+    return Domain.getDomainWithZero(
+      { ...props, data: [{ x: firstBin.x0 }, { x: lastBin.x1 }], x: "x" },
+      "x"
+    );
   }
 
   return props.data.length ? Domain.getDomainWithZero({ ...props, data }, "y") : [0, 1];

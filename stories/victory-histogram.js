@@ -265,9 +265,10 @@ storiesOf("VictoryHistogram.tooltips", module)
   .addDecorator(getChartDecorator({ domainPadding: 25 }))
   .add("tooltips", () => (
     <VictoryHistogram
-      data={data}
+      data={data.map(({ x }) => ({ value: x }))}
       labels={({ datum }) => `${datum.x0} - ${datum.x1}`}
       labelComponent={<VictoryTooltip active />}
+      x="value"
     />
   ))
   .add("tooltips (horizontal)", () => (
