@@ -7,6 +7,7 @@ export { default as VictoryTheme } from "./victory-theme/victory-theme";
 export { default as VictoryPortal } from "./victory-portal/victory-portal";
 export { default as Portal } from "./victory-portal/portal";
 export { default as Arc } from "./victory-primitives/arc";
+export { default as Background } from "./victory-primitives/background";
 export { default as Border, default as Box } from "./victory-primitives/border";
 export { default as ClipPath } from "./victory-primitives/clip-path";
 export { default as LineSegment } from "./victory-primitives/line-segment";

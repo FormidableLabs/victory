@@ -10,7 +10,7 @@ import { VictoryScatter } from "@packages/victory-scatter";
 import { VictoryZoomContainer } from "@packages/victory-zoom-container";
 import { VictoryVoronoiContainer } from "@packages/victory-voronoi-container";
 import { random, range, keys } from "lodash";
-import { VictoryTheme, VictoryLabel, VictoryStyleInterface } from "@packages/victory-core";
+import { VictoryTheme, VictoryLabel } from "@packages/victory-core";
 
 type multiAxisDataListType = {
   strength?: number;
@@ -115,7 +115,7 @@ class App extends React.Component<any, VictoryPolarAxisState> {
       justifyContent: "center"
     };
 
-    const chartStyle: VictoryStyleInterface = {
+    const chartStyle: { [key: string]: React.CSSProperties } = {
       parent: { border: "1px solid #ccc", margin: "2%", maxWidth: "40%" }
     };
 

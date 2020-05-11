@@ -2,6 +2,7 @@ import { defaults, assign, isEmpty } from "lodash";
 import PropTypes from "prop-types";
 import React from "react";
 import {
+  Background,
   Helpers,
   VictoryContainer,
   VictoryTheme,
@@ -12,7 +13,12 @@ import {
 import { VictorySharedEvents } from "victory-shared-events";
 import { VictoryAxis } from "victory-axis";
 import { VictoryPolarAxis } from "victory-polar-axis";
-import { getChildComponents, getCalculatedProps, getChildren } from "./helper-methods";
+import {
+  getBackgroundWithProps,
+  getChildComponents,
+  getCalculatedProps,
+  getChildren
+} from "./helper-methods";
 import isEqual from "react-fast-compare";
 
 const fallbackProps = {
@@ -26,6 +32,7 @@ export default class VictoryChart extends React.Component {
 
   static propTypes = {
     ...CommonProps.baseProps,
+    backgroundComponent: PropTypes.element,
     children: PropTypes.oneOfType([PropTypes.arrayOf(PropTypes.node), PropTypes.node]),
     defaultAxes: PropTypes.shape({
       independent: PropTypes.element,
@@ -42,6 +49,7 @@ export default class VictoryChart extends React.Component {
   };
 
   static defaultProps = {
+    backgroundComponent: <Background />,
     containerComponent: <VictoryContainer />,
     defaultAxes: {
       independent: <VictoryAxis />,
@@ -84,10 +92,19 @@ export default class VictoryChart extends React.Component {
   getNewChildren(props, childComponents, calculatedProps) {
     const children = getChildren(props, childComponents, calculatedProps);
     const getAnimationProps = Wrapper.getAnimationProps.bind(this);
-    return children.map((child, index) => {
+
+    const newChildren = children.map((child, index) => {
       const childProps = assign({ animate: getAnimationProps(props, child, index) }, child.props);
       return React.cloneElement(child, childProps);
     });
+
+    if (props.style && props.style.background) {
+      const backgroundComponent = getBackgroundWithProps(props, calculatedProps);
+
+      newChildren.unshift(backgroundComponent);
+    }
+
+    return newChildren;
   }
 
   renderContainer(containerComponent, props) {
@@ -134,6 +151,7 @@ export default class VictoryChart extends React.Component {
       ? this.renderContainer(containerComponent, containerProps)
       : groupComponent;
     const events = Wrapper.getAllEvents(props);
+
     if (!isEmpty(events)) {
       return (
         <VictorySharedEvents

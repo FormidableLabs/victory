@@ -36,6 +36,40 @@ function getAxisProps(child, props, calculatedProps) {
   };
 }
 
+function getBackgroundWithProps(props, calculatedProps) {
+  const backgroundElement = props.backgroundComponent;
+
+  const height = props.polar
+    ? calculatedProps.range.y[1]
+    : calculatedProps.range.y[0] - calculatedProps.range.y[1];
+  const width = calculatedProps.range.x[1] - calculatedProps.range.x[0];
+
+  const xScale = props.horizontal
+    ? calculatedProps.scale.y.range()[0]
+    : calculatedProps.scale.x.range()[0];
+  const yScale = props.horizontal
+    ? calculatedProps.scale.x.range()[1]
+    : calculatedProps.scale.y.range()[1];
+
+  const xCoordinate = props.polar ? calculatedProps.origin.x : xScale;
+  const yCoordinate = props.polar ? calculatedProps.origin.y : yScale;
+
+  const backgroundProps = {
+    height,
+    polar: props.polar,
+    scale: calculatedProps.scale,
+    style: props.style.background,
+    x: xCoordinate,
+    y: yCoordinate,
+    width
+  };
+
+  return React.cloneElement(
+    backgroundElement,
+    defaults({}, backgroundElement.props, backgroundProps)
+  );
+}
+
 function getChildProps(child, props, calculatedProps) {
   const axisChild = Axis.findAxisComponents([child]);
   if (axisChild.length > 0) {
@@ -47,6 +81,7 @@ function getChildProps(child, props, calculatedProps) {
 
 function getStyles(props) {
   const styleProps = props.style && props.style.parent;
+
   return {
     parent: defaults({}, styleProps, {
       height: "100%",
@@ -129,6 +164,7 @@ function getChildren(props, childComponents, calculatedProps) {
   const { height, polar, theme, width } = props;
   const { origin, horizontal } = calculatedProps;
   const parentName = props.name || "chart";
+
   return childComponents.map((child, index) => {
     const role = child.type && child.type.role;
     const style = Array.isArray(child.props.style)
@@ -158,21 +194,24 @@ function getChildren(props, childComponents, calculatedProps) {
 
 const getChildComponents = (props, defaultAxes) => {
   const childComponents = React.Children.toArray(props.children);
+  let newChildComponents = [...childComponents];
+
   if (childComponents.length === 0) {
-    return [defaultAxes.independent, defaultAxes.dependent];
+    newChildComponents.push(defaultAxes.independent, defaultAxes.dependent);
+  } else {
+    const axisComponents = {
+      dependent: Axis.getAxisComponentsWithParent(childComponents, "dependent"),
+      independent: Axis.getAxisComponentsWithParent(childComponents, "independent")
+    };
+
+    if (axisComponents.dependent.length === 0 && axisComponents.independent.length === 0) {
+      newChildComponents = props.prependDefaultAxes
+        ? [defaultAxes.independent, defaultAxes.dependent].concat(newChildComponents)
+        : newChildComponents.concat([defaultAxes.independent, defaultAxes.dependent]);
+    }
   }
 
-  const axisComponents = {
-    dependent: Axis.getAxisComponentsWithParent(childComponents, "dependent"),
-    independent: Axis.getAxisComponentsWithParent(childComponents, "independent")
-  };
-
-  if (axisComponents.dependent.length === 0 && axisComponents.independent.length === 0) {
-    return props.prependDefaultAxes
-      ? [defaultAxes.independent, defaultAxes.dependent].concat(childComponents)
-      : childComponents.concat([defaultAxes.independent, defaultAxes.dependent]);
-  }
-  return childComponents;
+  return newChildComponents;
 };
 
 const getDomain = (props, axis, childComponents) => {
@@ -252,4 +291,4 @@ const createStringMap = (props, childComponents) => {
   return { x, y };
 };
 
-export { getChildren, getCalculatedProps, getChildComponents };
+export { getBackgroundWithProps, getChildren, getCalculatedProps, getChildComponents };

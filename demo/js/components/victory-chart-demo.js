@@ -180,19 +180,30 @@ class App extends React.Component {
       alignItems: "center",
       justifyContent: "center"
     };
-    const chartStyle = { parent: { border: "1px solid #ccc", margin: "2%", maxWidth: "40%" } };
+    const chartStyle = {
+      parent: { border: "1px solid #ccc", margin: "2%", maxWidth: "40%" }
+    };
     const axisStyle = {
       grid: { stroke: "grey", strokeWidth: 1 },
       axis: { stroke: "transparent" },
       ticks: { stroke: "transparent" },
       tickLabels: { fill: "none" }
     };
+
+    const bgStyle = {
+      background: { fill: "#e6e6ff" }
+    };
+
     return (
       <div className="demo">
         <h1>VictoryChart</h1>
         <div style={containerStyle}>
-          <VictoryChart style={chartStyle}>
-            <VictoryScatter data={[{ x: -3, y: -3 }]} />
+          <VictoryChart style={chartStyle} polar>
+            <VictoryScatter />
+          </VictoryChart>
+
+          <VictoryChart style={assign({}, chartStyle, bgStyle)}>
+            <VictoryScatter data={[{ x: -3, y: -3 }, { x: -2, y: 2 }, { x: 1, y: -1 }]} />
           </VictoryChart>
 
           <VictoryChart style={chartStyle} theme={dependentAxisTheme}>
