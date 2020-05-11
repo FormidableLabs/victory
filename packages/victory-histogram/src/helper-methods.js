@@ -72,14 +72,22 @@ export const getFormattedData = cacheLastValue(({ data = [], x, bins }) => {
   }
   const dataOrBinsContainsDates = dataOrBinsContainDates({ data, bins, x });
   const binFunc = getBinningFunc({ data, x, bins, dataOrBinsContainsDates });
-  const binnedData = binFunc(data).filter(({ x0, x1 }) => x0 !== x1);
+  const binnedData = binFunc(data).filter(({ x0, x1 }) => {
+    if (x0 instanceof Date) {
+      return x0.getTime() !== x1.getTime();
+    }
+
+    return x0 !== x1;
+  });
 
   const formattedData = binnedData.map((bin) => ({
-    x0: dataOrBinsContainsDates ? new Date(bin.x0) : bin.x0,
-    x1: dataOrBinsContainsDates ? new Date(bin.x1) : bin.x1,
+    x0: bin.x0,
+    x1: bin.x1,
     y: bin.length,
     binnedData: [...bin]
   }));
+
+  console.log(formattedData);
 
   return formattedData;
 });
