@@ -39,7 +39,7 @@ export class VictoryHistogram extends React.Component {
     },
     onEnter: {
       duration: 500,
-      before: () => ({ y: 0 }),
+      before: () => ({ _y: 0, _y1: 0, _y0: 0 }),
       after: (datum) => ({ _y: datum._y, _y1: datum._y1, _y0: datum._y0 })
     }
   };
