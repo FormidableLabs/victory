@@ -346,7 +346,7 @@ function getStringsFromData(props, axis) {
 }
 
 /**
- * Checks whether a given component can be used to calculate date
+ * Checks whether a given component can be used to calculate data
  * @param {Component} component: a React component instance
  * @returns {Boolean} Returns true if the given component has a role included in the whitelist
  */
@@ -366,6 +366,7 @@ function isDataComponent(component) {
     "candlestick",
     "errorbar",
     "group",
+    "histogram",
     "line",
     "pie",
     "scatter",
