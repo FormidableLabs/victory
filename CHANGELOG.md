@@ -1,5 +1,22 @@
 # Victory Changelog
 
+## 34.3.0 (2020-05-12)
+
+- [#1531](https://github.com/FormidableLabs/victory/pull/1531) - Adds a `VictoryHistogram` component. Huge thanks to @NgoKnows for this new feature!
+
+```
+<VictoryHistogram
+  binSpacing={1}
+  bins={[0, 20, 50, 500]}
+  data={[
+    { value: 1 }, { value: 1 }, { value: 2 }, { value: 3 } ...
+  ]}
+  x="value"
+/>
+```
+
+ Histogram bins may be defined with the `bin` prop, which takes either an array of bin edges, or a single number which corresponds to an approximate number of bins. `VictoryHistogram` is meant to work with continuous data, and expects a data prop as an array of objects with x values. By default, histogram bins will be laid out with no spaces between bins, but the optional `binSpacing` prop may be provided to change this behavior. Additional documentation and examples will be coming soon.
+
 ## 34.2.2 (2020-05-11)
 
 - [#1558](https://github.com/FormidableLabs/victory/pull/1558) - Adds a `backgroundComponent` for `VictoryChart` that will be rendered if `VictoryChart`'s `style` component includes `background` styles. The `Background` component renders a `rect` for cartesian charts and a `circle` for polar charts that is correctly sized and positioned to fill the entire range of the chart. Thanks @maddles and @wparsons!
