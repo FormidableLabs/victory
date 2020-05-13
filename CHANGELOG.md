@@ -1,6 +1,10 @@
 # Victory Changelog
 
-## 34.3.1 (2020-06-13)
+## 34.3.2 (2020-05-13)
+
+- [#1570](https://github.com/FormidableLabs/victory/pull/1570) - Correct missing `victory-histogram` dependency
+
+## 34.3.1 (2020-05-13)
 
 - [#1568](https://github.com/FormidableLabs/victory/pull/1568) - Correct export for VictoryHistogram
 
