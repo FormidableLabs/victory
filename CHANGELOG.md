@@ -1,5 +1,9 @@
 # Victory Changelog
 
+## 34.3.1 (2020-06-13)
+
+- [#1568](https://github.com/FormidableLabs/victory/pull/1568) - Correct export for VictoryHistogram
+
 ## 34.3.0 (2020-05-12)
 
 - [#1531](https://github.com/FormidableLabs/victory/pull/1531) - Adds a `VictoryHistogram` component. Huge thanks to @NgoKnows for this new feature!
