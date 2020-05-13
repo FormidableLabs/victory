@@ -66,6 +66,7 @@ declare module "victory" {
     VictoryLine
     // Curve
   } from "victory-line";
+  import { VictoryHistogram } from "victory-histogram";
   import { VictoryScatter } from "victory-scatter";
   import { VictoryBoxPlot } from "victory-box-plot";
   import { VictoryBrushLine } from "victory-brush-line";
@@ -145,6 +146,7 @@ declare module "victory" {
     // VictoryCandlestick,
     VictoryChart,
     // VictoryErrorBar,
+    VictoryHistogram,
     VictoryGroup,
     VictoryLine,
     VictoryLabel,
