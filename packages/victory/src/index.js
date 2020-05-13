@@ -47,6 +47,7 @@ import { VictoryArea, Area } from "victory-area";
 import { VictoryBar, Bar } from "victory-bar";
 import { VictoryCandlestick, Candle } from "victory-candlestick";
 import { VictoryErrorBar, ErrorBar } from "victory-errorbar";
+import { VictoryHistogram } from "victory-histogram";
 import { VictoryLine, Curve } from "victory-line";
 import { VictoryScatter } from "victory-scatter";
 import { VictoryBoxPlot } from "victory-box-plot";
@@ -117,6 +118,7 @@ export {
   VictoryCandlestick,
   VictoryChart,
   VictoryErrorBar,
+  VictoryHistogram,
   VictoryGroup,
   VictoryLine,
   VictoryLabel,
