@@ -32,6 +32,7 @@
     "victory-cursor-container": "^34.3.0",
     "victory-errorbar": "^34.3.0",
     "victory-group": "^34.3.0",
+    "victory-histogram": "^34.3.0",
     "victory-legend": "^34.3.0",
     "victory-line": "^34.3.0",
     "victory-pie": "^34.3.0",
