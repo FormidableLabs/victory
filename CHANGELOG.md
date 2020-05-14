@@ -1,5 +1,9 @@
 # Victory Changelog
 
+## 34.3.3 (2020-05-13)
+
+- [#1572](https://github.com/FormidableLabs/victory/pull/1572) - Add missing `backgroundComponent` type
+
 ## 34.3.2 (2020-05-13)
 
 - [#1570](https://github.com/FormidableLabs/victory/pull/1570) - Correct missing `victory-histogram` dependency
