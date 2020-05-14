@@ -19,7 +19,8 @@ before_install:
 script:
 - yarn --version
 - yarn nps check.ci
-- if [ "${TRAVIS_NODE_VERSION}" = "8" ]; then CI=true yarn run chromatic-ci || echo "Chromatic tests failed. Please investigate"; fi
+# disable chromatic until billing issues are resolved
+# - if [ "${TRAVIS_NODE_VERSION}" = "8" ]; then CI=true yarn run chromatic-ci || echo "Chromatic tests failed. Please investigate"; fi
 after_success:
 - yarn config delete ignore-engines
 env:
