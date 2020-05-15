@@ -168,7 +168,8 @@ const evaluateProps = (props) => {
   */
   const text = getContent(props.text, props);
   const style = getStyles(props.style, assign({}, props, { text }));
-  return assign({}, props, { style, text });
+  const id = Helpers.evaluateProp(props.id, props);
+  return assign({}, props, { style, text, id });
 };
 
 const VictoryLabel = (props) => {
@@ -195,7 +196,7 @@ VictoryLabel.propTypes = {
   dx: PropTypes.oneOfType([PropTypes.number, PropTypes.string, PropTypes.func]),
   dy: PropTypes.oneOfType([PropTypes.number, PropTypes.string, PropTypes.func]),
   events: PropTypes.object,
-  id: PropTypes.oneOfType([PropTypes.number, PropTypes.string]),
+  id: PropTypes.oneOfType([PropTypes.number, PropTypes.string, PropTypes.func]),
   index: PropTypes.oneOfType([PropTypes.number, PropTypes.string]),
   inline: PropTypes.bool,
   labelPlacement: PropTypes.oneOf(["parallel", "perpendicular", "vertical"]),
