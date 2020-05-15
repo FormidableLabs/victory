@@ -10,6 +10,7 @@ import { omit } from "lodash";
 import { shallow, mount } from "enzyme";
 import SvgTestHelper from "../svg-test-helper";
 import { VictoryAxis } from "packages/victory-axis/src/index";
+import { VictoryLabel } from "packages/victory-core/src/index";
 import { TextSize } from "packages/victory-core";
 
 describe("components/victory-axis", () => {
@@ -76,6 +77,36 @@ describe("components/victory-axis", () => {
       const line = wrapper.find('[type="axis"]');
       SvgTestHelper.expectIsALine(line);
     });
+  });
+
+  it("renders labels with auto-generated ids if id is not provided", () => {
+    const wrapper = shallow(
+      <VictoryAxis tickCount={3} tickLabelComponent={<VictoryLabel text="Some Label" />} />
+    );
+    const labels = wrapper.find("VictoryLabel");
+    expect(labels.length).to.equal(3);
+    expect(labels.at(0).prop("id")).to.equal("axis-tickLabels-0");
+    expect(labels.at(1).prop("id")).to.equal("axis-tickLabels-1");
+    expect(labels.at(2).prop("id")).to.equal("axis-tickLabels-2");
+  });
+
+  it("renders labels with calculated ids if a function is provided", () => {
+    const wrapper = shallow(
+      <VictoryAxis
+        tickCount={3}
+        tickLabelComponent={
+          <VictoryLabel
+            text={["Apple", "Banana", "Carrot"]}
+            id={(props) => `generated-id-${props.text[props.index].toLowerCase()}`}
+          />
+        }
+      />
+    );
+    const labels = wrapper.find("VictoryLabel");
+    expect(labels.length).to.equal(3);
+    expect(labels.at(0).html()).to.contain('id="generated-id-apple"');
+    expect(labels.at(1).html()).to.contain('id="generated-id-banana"');
+    expect(labels.at(2).html()).to.contain('id="generated-id-carrot"');
   });
 
   describe("dependentAxis prop", () => {

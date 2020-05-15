@@ -157,4 +157,33 @@ describe("components/victory-label", () => {
       expect(tspan.prop("style")).to.be.eql(defaultStyles);
     });
   });
+
+  it("passes id if provided as a string", () => {
+    const wrapper = shallow(<VictoryLabel text="Some Label" id={"my-custom-id"} />);
+
+    const output = wrapper.find(Text);
+    output.forEach((text) => {
+      expect(text.prop("id")).to.be.eql("my-custom-id");
+    });
+  });
+
+  it("passes id if provided as a number", () => {
+    const wrapper = shallow(<VictoryLabel text="Some Label" id={12345} />);
+
+    const output = wrapper.find(Text);
+    output.forEach((text) => {
+      expect(text.prop("id")).to.be.eql(12345);
+    });
+  });
+
+  it("runs function if id provided as a function", () => {
+    const wrapper = shallow(
+      <VictoryLabel text="Some Label" id={() => `created-in-function-${Math.random()}`} />
+    );
+
+    const output = wrapper.find(Text);
+    output.forEach((text) => {
+      expect(text.prop("id")).to.match(/^created-in-function-[\d\.]+$/);
+    });
+  });
 });
