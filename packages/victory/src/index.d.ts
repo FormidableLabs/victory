@@ -3,6 +3,7 @@
 
 declare module "victory" {
   import {
+    Arc,
     Background,
     // Border,
     // Box,

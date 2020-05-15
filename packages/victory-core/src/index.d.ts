@@ -740,13 +740,13 @@ export type WhiskerAxes = {
   x2?: number;
   y1?: number;
   y2?: number;
-}
+};
 
 export interface VictoryWhiskerProps extends VictoryCommonPrimitiveProps {
-  groupComponent?: PropTypes.element,
-  lineComponent?: PropTypes.element,
+  groupComponent?: PropTypes.element;
+  lineComponent?: PropTypes.element;
   majorWhisker?: WhiskerAxes;
-  minorWhisker?: WhiskerAxes;   
+  minorWhisker?: WhiskerAxes;
 }
 
 export class Whisker extends React.Component<VictoryWhiskerProps> {}
