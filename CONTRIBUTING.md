@@ -4,7 +4,7 @@ Thanks for helping out!
 
 ## Monorepo!
 
-Victory is a monorepo built with [Lerna](https://lernajs.io/) and [Yarn](https://yarnpkg.com/) workspaces. All `victory-*` packages live in the `packages` directory, and each has its own `package.json`. Installing this repo with `yarn` will automatically link all interdependent `victory-*` packages. **You must use `yarn` rather than `npm` when installing and running `package.json` scripts in this project.**
+Victory is a monorepo built with [Lerna](https://lerna.js.org/) and [Yarn](https://yarnpkg.com/) workspaces. All `victory-*` packages live in the `packages` directory, and each has its own `package.json`. Installing this repo with `yarn` will automatically link all interdependent `victory-*` packages. **You must use `yarn` rather than `npm` when installing and running `package.json` scripts in this project.**
 
 ## `package-scripts.js`
 
@@ -77,7 +77,7 @@ $ yarn chromatic
 
 Before publishing any new version, please update `CHANGELOG.md` with a summary of changes and links to any PRs involved in the release.
 
-Victory uses [Lerna](https://lernajs.io/) to automate versioning and publishing packages.
+Victory uses [Lerna](https://lerna.js.org/) to automate versioning and publishing packages.
 
 Each package must contain the following `version` script `package.json`:
 
