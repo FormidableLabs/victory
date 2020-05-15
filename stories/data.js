@@ -26,10 +26,10 @@ const getTimeData = (num, seed) => {
   });
 };
 
-const getData = (num, seed) => {
+const getData = (num, seed, max = 10) => {
   seed = seed || "getData";
   const baseSeed = seedrandom(seed);
-  const rand = () => baseSeed.quick() * 10;
+  const rand = () => baseSeed.quick() * max;
   return range(num).map((v) => ({ x: v + 1, y: rand() }));
 };
 

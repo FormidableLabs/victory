@@ -14,7 +14,7 @@ export type VictoryErrorBarTTargetType = "data" | "labels" | "parent";
 export type ErrorType = StringOrNumberOrList | ((...args: any[]) => StringOrNumberOrList);
 
 export interface VictoryErrorBarProps
-  extends VictoryCommonProps,
+  extends Omit<VictoryCommonProps, "polar">,
     VictoryDatableProps,
     VictoryLabelableProps,
     VictoryMultiLabelableProps {

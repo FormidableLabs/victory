@@ -17,6 +17,7 @@ export interface VictoryStackProps
   extends VictoryCommonProps,
     VictoryLabelableProps,
     VictoryMultiLabelableProps {
+  bins?: number | number[] | Date[];
   categories?: CategoryPropType;
   children?: React.ReactNode | React.ReactNode[];
   colorScale?: ColorScalePropType;

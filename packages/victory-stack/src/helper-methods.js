@@ -116,7 +116,7 @@ function getCalculatedProps(props, childComponents) {
   const children = childComponents.map((c, i) => {
     return React.cloneElement(c, { data: datasets[i] });
   });
-  const domain = props.domain || {
+  const domain = {
     x: Wrapper.getDomain(assign({}, props, { categories }), "x", children),
     y: Wrapper.getDomain(assign({}, props, { categories }), "y", children)
   };

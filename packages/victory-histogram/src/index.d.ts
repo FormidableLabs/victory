@@ -9,16 +9,14 @@ import {
   VictoryStyleInterface
 } from "victory-core";
 
-export type VictoryBarTTargetType = "data" | "labels" | "parent";
-export type VictoryBarAlignmentType = "start" | "middle" | "end";
+export type VictoryHistogramTargetType = "data" | "labels" | "parent";
 
-export interface VictoryBarProps
-  extends VictoryCommonProps,
-    VictoryDatableProps,
+export interface VictoryHistogramProps
+  extends Omit<VictoryCommonProps, "polar">,
+    Omit<VictoryDatableProps, "y" | "y0">,
     VictoryMultiLabelableProps {
-  alignment?: VictoryBarAlignmentType;
-  barRatio?: number;
-  barWidth?: NumberOrCallback;
+  binSpacing?: number;
+  bins?: number | number[] | Date[];
   cornerRadius?:
     | NumberOrCallback
     | {
@@ -29,14 +27,17 @@ export interface VictoryBarProps
         bottomLeft?: NumberOrCallback;
         bottomRight?: NumberOrCallback;
       };
-  events?: EventPropTypeInterface<VictoryBarTTargetType, number | string | number[] | string[]>[];
+  events?: EventPropTypeInterface<
+    VictoryHistogramTargetType,
+    number | string | number[] | string[]
+  >[];
   eventKey?: StringOrNumberOrCallback;
   horizontal?: boolean;
   style?: VictoryStyleInterface;
 }
 
 /**
- * Draw SVG bar charts with React. VictoryBar is a composable component, so it doesn"t include axes
- * Check out VictoryChart for complete bar charts and more.
+ * Draw SVG histogram charts with React. VictoryHistogram is a composable component, so it doesn't include axes
+ * Check out VictoryChart for complete histogram charts and more.
  */
-export class VictoryBar extends React.Component<VictoryBarProps, any> {}
+export class VictoryHistogram extends React.Component<VictoryHistogramProps, any> {}

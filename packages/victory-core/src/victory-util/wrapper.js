@@ -20,6 +20,7 @@ import Events from "./events";
 import Collection from "./collection";
 import Helpers from "./helpers";
 import Scale from "./scale";
+import Log from "./log";
 
 export default {
   getData(props, childComponents) {
@@ -47,14 +48,16 @@ export default {
 
   getDomain(props, axis, childComponents) {
     childComponents = childComponents || React.Children.toArray(props.children);
+
     const propsDomain = Domain.getDomainFromProps(props, axis);
-    const minDomain = Domain.getMinFromProps(props, axis);
-    const maxDomain = Domain.getMaxFromProps(props, axis);
     const domainPadding = this.getDefaultDomainPadding(props, axis, childComponents);
     let domain;
+
     if (propsDomain) {
       domain = propsDomain;
     } else {
+      const minDomain = Domain.getMinFromProps(props, axis);
+      const maxDomain = Domain.getMaxFromProps(props, axis);
       const dataset = (props.data || props.y) && Data.getData(props);
       const dataDomain = dataset ? Domain.getDomainFromData(props, axis, dataset) : [];
       const childDomain = this.getDomainFromChildren(props, axis, childComponents);
@@ -78,6 +81,7 @@ export default {
     };
     const childScale = uniq(Helpers.reduceChildren(children, iteratee, props));
     // default to linear scale if more than one uniq scale type is given by children
+
     return childScale.length > 1
       ? Scale.getScaleFromName("linear")
       : Scale.getScaleFromName(childScale[0]);
@@ -200,10 +204,66 @@ export default {
     return [min, max];
   },
 
+  addBinsToParentPropsIfHistogram({ children, props, childComponents, parentProps }) {
+    const someChildrenAreHistograms = children.some((child) => {
+      return child.type && child.type.role === "histogram";
+    });
+
+    const allChildrenAreHistograms =
+      someChildrenAreHistograms &&
+      children.length &&
+      children.every((child) => {
+        return child.type && child.type.role === "histogram";
+      });
+
+    if (someChildrenAreHistograms && !allChildrenAreHistograms) {
+      Log.warn(
+        "VictoryHistogram only supports being stacked with other VictoryHistogram components. Check to make sure that you are only passing VictoryHistogram components to VictoryStack"
+      );
+    }
+
+    // if we are stacking histograms, we need to generate explicit bins
+    // or else each histogram may end up having different bins
+    if (!allChildrenAreHistograms) {
+      return parentProps;
+    }
+
+    let childBins = props.bins || childComponents[0].props.bins;
+
+    // if we have explicit bins then we don't need to calculate them
+    if (!Array.isArray(childBins)) {
+      const combinedData = children.reduce((memo, child) => {
+        const xAccessor = Helpers.createAccessor(child.props.x || "x");
+        return memo.concat(child.props.data.map((datum) => ({ x: xAccessor(datum) })));
+      }, []);
+
+      // use the same function to generate bins as VictoryHistogram but with
+      // the combined data from above, then get explicit bins from that
+      const getFormattedHistogramData = children[0].type.getFormattedData;
+      childBins = getFormattedHistogramData({ data: combinedData, bins: childBins }).reduce(
+        (memo, { x0, x1 }, index) => (index === 0 ? memo.concat([x0, x1]) : memo.concat(x1)),
+        []
+      );
+    }
+
+    return { ...parentProps, bins: childBins };
+  },
+
   getDataFromChildren(props, childComponents) {
     const { polar, startAngle, endAngle, categories, minDomain, maxDomain } = props;
-    const parentProps = { polar, startAngle, endAngle, categories, minDomain, maxDomain };
+    let parentProps = { polar, startAngle, endAngle, categories, minDomain, maxDomain };
     let stack = 0;
+    const children = childComponents
+      ? childComponents.slice(0)
+      : React.Children.toArray(props.children);
+
+    parentProps = this.addBinsToParentPropsIfHistogram({
+      children,
+      props,
+      childComponents,
+      parentProps
+    });
+
     const iteratee = (child, childName, parent) => {
       const childProps = assign({}, child.props, parentProps);
       let childData;
@@ -218,9 +278,7 @@ export default {
       stack += 1;
       return childData.map((datum, index) => assign({ _stack: stack, _group: index }, datum));
     };
-    const children = childComponents
-      ? childComponents.slice(0)
-      : React.Children.toArray(props.children);
+
     const stacked = children.filter((c) => c.type && c.type.role === "stack").length;
     const combine = (memo, val) => memo.concat(uniqBy(val, "_group"));
     const datasets = Helpers.reduceChildren(children, iteratee, props, [], combine);

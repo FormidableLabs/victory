@@ -15,6 +15,7 @@ export type AxesType = {
 };
 
 export interface VictoryChartProps extends VictoryCommonProps {
+  backgroundComponent?: React.ReactElement;
   categories?: CategoryPropType;
   children?: React.ReactNode | React.ReactNode[];
   defaultAxes?: AxesType;

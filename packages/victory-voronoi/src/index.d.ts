@@ -13,7 +13,7 @@ import {
 export type VictoryVoronoiSortOrderType = "ascending" | "descending";
 
 export interface VictoryVoronoiProps
-  extends VictoryCommonProps,
+  extends Omit<VictoryCommonProps, "polar">,
     VictoryDatableProps,
     VictoryLabelableProps,
     VictoryMultiLabelableProps {

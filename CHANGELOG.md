@@ -1,5 +1,47 @@
 # Victory Changelog
 
+## 34.3.4 (2020=05-14)
+
+- [#1573](https://github.com/FormidableLabs/victory/pull/1573) - Add explicit dependencies on `d3-scale` and `react-fast-compare` for `victory-histogram`. Thanks @Mike-Dax!
+
+## 34.3.3 (2020-05-13)
+
+- [#1572](https://github.com/FormidableLabs/victory/pull/1572) - Add missing `backgroundComponent` type
+
+## 34.3.2 (2020-05-13)
+
+- [#1570](https://github.com/FormidableLabs/victory/pull/1570) - Correct missing `victory-histogram` dependency
+
+## 34.3.1 (2020-05-13)
+
+- [#1568](https://github.com/FormidableLabs/victory/pull/1568) - Correct export for VictoryHistogram
+
+## 34.3.0 (2020-05-12)
+
+- [#1531](https://github.com/FormidableLabs/victory/pull/1531) - Adds a `VictoryHistogram` component. Huge thanks to @NgoKnows for this new feature!
+
+```
+<VictoryHistogram
+  binSpacing={1}
+  bins={[0, 20, 50, 500]}
+  data={[
+    { value: 1 }, { value: 1 }, { value: 2 }, { value: 3 } ...
+  ]}
+  x="value"
+/>
+```
+
+ Histogram bins may be defined with the `bin` prop, which takes either an array of bin edges, or a single number which corresponds to an approximate number of bins. `VictoryHistogram` is meant to work with continuous data, and expects a data prop as an array of objects with x values. By default, histogram bins will be laid out with no spaces between bins, but the optional `binSpacing` prop may be provided to change this behavior. Additional documentation and examples will be coming soon.
+
+## 34.2.2 (2020-05-11)
+
+- [#1558](https://github.com/FormidableLabs/victory/pull/1558) - Adds a `backgroundComponent` for `VictoryChart` that will be rendered if `VictoryChart`'s `style` component includes `background` styles. The `Background` component renders a `rect` for cartesian charts and a `circle` for polar charts that is correctly sized and positioned to fill the entire range of the chart. Thanks @maddles and @wparsons!
+
+## 34.2.1 (2020-05-09)
+
+- [#1563](https://github.com/FormidableLabs/victory/pull/1563) - Fixes a regression introduced in 34.1.3 that was effecting charts with the `domain` prop defined for a single dimension.
+- [#1564](https://github.com/FormidableLabs/victory/pull/1564) - Fixes a regression introduced in 34.1.3 that was causing `domainPadding` to not be applied to stacked and grouped charts with `domain` props defined.
+
 ## 34.2.0 (2020-05-06)
 
 Update typescript types for all Victory components. A huge thanks to @maddles @wparsons and @kale-stew for this work. This release includes the following PRs
