@@ -1,6 +1,10 @@
 # Victory Changelog
 
-## 34.3.4 (2020=05-14)
+## 34.3.5 (2020-05-15)
+
+-[#1575](https://github.com/FormidableLabs/victory/pull/1575) - Allow the `id` prop for `VictoryLabel` to be given as a function. Thanks @amyboyd!
+
+## 34.3.4 (2020-05-14)
 
 - [#1573](https://github.com/FormidableLabs/victory/pull/1573) - Add explicit dependencies on `d3-scale` and `react-fast-compare` for `victory-histogram`. Thanks @Mike-Dax!
 
