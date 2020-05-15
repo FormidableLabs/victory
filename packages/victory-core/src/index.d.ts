@@ -659,6 +659,18 @@ export class VictoryPortal extends React.Component<VictoryPortalProps, any> {}
 // #endregion
 
 // #region Victory Primitives
+export interface ArcProps extends VictoryCommonPrimitiveProps {
+  closedPath?: boolean;
+  cx?: number;
+  cy?: number;
+  datum?: PropTypes.any;
+  endAngle?: number;
+  pathComponent?: React.ReactElement;
+  r?: number;
+  startAngle?: number;
+}
+
+export class Arc extends React.Component<ArcProps> {}
 
 export interface BackgroundProps extends VictoryCommonPrimitiveProps {
   circleComponent?: React.ReactElement;
@@ -692,5 +704,51 @@ export interface VictoryBorderProps extends VictoryCommonPrimitiveProps {
 }
 
 export class Border extends React.Component<VictoryBorderProps> {}
+
+export interface VictoryClipPathProps extends VictoryCommonPrimitiveProps {
+  children?: React.ReactNode[] | React.ReactNode;
+  clipId?: number | string;
+}
+
+export class ClipPath extends React.Component<VictoryClipPathProps> {}
+
+export interface VictoryLineSegmentProps extends VictoryCommonPrimitiveProps {
+  datum?: any;
+  lineComponent?: React.ReactElement;
+  x1?: number;
+  x2?: number;
+  y1?: number;
+  y2?: number;
+}
+
+export class LineSegment extends React.Component<VictoryLineSegmentProps> {}
+
+export interface VictoryPointProps extends VictoryCommonPrimitiveProps {
+  datum?: any;
+  getPath?: (props: VictoryPointProps) => void;
+  pathComponent?: React.ReactElement;
+  size?: number | Function;
+  symbol?: ScatterSymbolType | Function;
+  x?: PropTypes.number;
+  y?: PropTypes.number;
+}
+
+export class Point extends React.Component<VictoryPointProps> {}
+
+export type WhiskerAxes = {
+  x1?: number;
+  x2?: number;
+  y1?: number;
+  y2?: number;
+}
+
+export interface VictoryWhiskerProps extends VictoryCommonPrimitiveProps {
+  groupComponent?: PropTypes.element,
+  lineComponent?: PropTypes.element,
+  majorWhisker?: WhiskerAxes;
+  minorWhisker?: WhiskerAxes;   
+}
+
+export class Whisker extends React.Component<VictoryWhiskerProps> {}
 
 // #endregion
