@@ -663,7 +663,7 @@ export interface ArcProps extends VictoryCommonPrimitiveProps {
   closedPath?: boolean;
   cx?: number;
   cy?: number;
-  datum?: PropTypes.any;
+  datum?: any;
   endAngle?: number;
   pathComponent?: React.ReactElement;
   r?: number;
@@ -682,18 +682,6 @@ export interface BackgroundProps extends VictoryCommonPrimitiveProps {
 }
 
 export class Background extends React.Component<BackgroundProps> {}
-
-export interface VictoryPointProps extends VictoryCommonPrimitiveProps {
-  datum?: any;
-  getPath?: Function;
-  pathComponent?: React.ReactElement;
-  size?: number | Function;
-  symbol?: ScatterSymbolType | Function;
-  x?: number;
-  y?: number;
-}
-
-export class Point extends React.Component<VictoryPointProps> {}
 
 export interface VictoryBorderProps extends VictoryCommonPrimitiveProps {
   width?: number;
@@ -729,8 +717,8 @@ export interface VictoryPointProps extends VictoryCommonPrimitiveProps {
   pathComponent?: React.ReactElement;
   size?: number | Function;
   symbol?: ScatterSymbolType | Function;
-  x?: PropTypes.number;
-  y?: PropTypes.number;
+  x?: number;
+  y?: number;
 }
 
 export class Point extends React.Component<VictoryPointProps> {}
@@ -743,8 +731,8 @@ export type WhiskerAxes = {
 };
 
 export interface VictoryWhiskerProps extends VictoryCommonPrimitiveProps {
-  groupComponent?: PropTypes.element;
-  lineComponent?: PropTypes.element;
+  groupComponent?: React.ReactElement;
+  lineComponent?: React.ReactElement;
   majorWhisker?: WhiskerAxes;
   minorWhisker?: WhiskerAxes;
 }

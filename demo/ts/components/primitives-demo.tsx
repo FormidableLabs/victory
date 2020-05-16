@@ -20,19 +20,16 @@ class App extends React.Component<any, PrimitivesDemoState> {
       axisBackgroundColor: "mediumseagreen",
       showWhiskers: true
     };
-
-    this.handleMouseMove = this.handleMouseMove.bind(this);
-    this.toggleWhiskers = this.toggleWhiskers.bind(this);
   }
 
-  handleMouseMove(e: React.SyntheticEvent<any>) {
+  handleMouseMove() {
     const newBackgroundColor =
       this.state.axisBackgroundColor === "mediumseagreen" ? "paleturquoise" : "mediumseagreen";
 
     this.setState({ axisBackgroundColor: newBackgroundColor });
   }
 
-  toggleWhiskers() {
+  handleToggleWhiskers() {
     this.setState({ showWhiskers: !this.state.showWhiskers });
   }
 
@@ -96,7 +93,7 @@ class App extends React.Component<any, PrimitivesDemoState> {
               crossAxis
               axisComponent={
                 <LineSegment
-                  events={{ onMouseMove: this.handleMouseMove }}
+                  events={{ onMouseMove: this.handleMouseMove.bind(this)   }}
                   style={lineSegmentStyle}
                 />
               }
@@ -111,7 +108,7 @@ class App extends React.Component<any, PrimitivesDemoState> {
               crossAxis
               axisComponent={
                 <LineSegment
-                  events={{ onMouseMove: this.handleMouseMove }}
+                  events={{ onMouseMove: this.handleMouseMove.bind(this) }}
                   style={lineSegmentStyle}
                 />
               }
@@ -136,7 +133,7 @@ class App extends React.Component<any, PrimitivesDemoState> {
               ]}
             />
           </VictoryChart>
-          <button onClick={this.toggleWhiskers}>Whiskers?</button>
+          <button onClick={this.handleToggleWhiskers.bind(this)}>Whiskers?</button>
         </div>
       </div>
     );
