@@ -10,15 +10,14 @@ import {
   getCustomBarPath
 } from "./path-helper-methods";
 
-// eslint-disable-next-line max-params
-const getBarPath = (props, width, cornerRadius, barOffset) => {
+const getBarPath = (props, width, cornerRadius) => {
   if (props.getPath) {
     return getCustomBarPath(props, width);
   }
 
   return props.horizontal
-    ? getHorizontalBarPath(props, width, cornerRadius, barOffset)
-    : getVerticalBarPath(props, width, cornerRadius, barOffset);
+    ? getHorizontalBarPath(props, width, cornerRadius)
+    : getVerticalBarPath(props, width, cornerRadius);
 };
 
 const getPolarBarPath = (props, cornerRadius) => {
@@ -77,26 +76,21 @@ const getStyle = (style = {}, props) => {
   return Helpers.evaluateStyle(assign(baseStyle, style), props);
 };
 
-const getBarOffset = (barOffset, props) => {
-  return Helpers.evaluateProp(barOffset, props);
-};
-
 const evaluateProps = (props) => {
   // Potential evaluated props are 1) `style`, 2) `barWidth` and 3) `cornerRadius`
   const style = getStyle(props.style, props);
   const barWidth = getBarWidth(props.barWidth, assign({}, props, { style }));
   const cornerRadius = getCornerRadius(props.cornerRadius, assign({}, props, { style, barWidth }));
-  const barOffset = getBarOffset(props.barOffset, props);
-  return assign({}, props, { style, barWidth, cornerRadius, barOffset });
+  return assign({}, props, { style, barWidth, cornerRadius });
 };
 
 const Bar = (props) => {
   props = evaluateProps(props);
-  const { polar, origin, style, barWidth, cornerRadius, barOffset } = props;
+  const { polar, origin, style, barWidth, cornerRadius } = props;
 
   const path = polar
     ? getPolarBarPath(props, cornerRadius)
-    : getBarPath(props, barWidth, cornerRadius, barOffset);
+    : getBarPath(props, barWidth, cornerRadius);
   const defaultTransform = polar && origin ? `translate(${origin.x}, ${origin.y})` : undefined;
 
   return React.cloneElement(props.pathComponent, {
@@ -116,7 +110,6 @@ const Bar = (props) => {
 Bar.propTypes = {
   ...CommonProps.primitiveProps,
   alignment: PropTypes.oneOf(["start", "middle", "end"]),
-  barOffset: PropTypes.arrayOf(PropTypes.number),
   barRatio: PropTypes.number,
   barWidth: PropTypes.oneOfType([PropTypes.number, PropTypes.func]),
   cornerRadius: PropTypes.oneOfType([

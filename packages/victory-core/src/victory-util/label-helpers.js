@@ -49,17 +49,15 @@ function getPadding(props, datum) {
   };
 }
 
-function getOffset(props, datum, offset) {
+function getOffset(props, datum) {
   if (props.polar) {
     return {};
   }
   const padding = getPadding(props, datum);
-  const xOffset = props.horizontal ? -offset[1] : offset[0];
-  const yOffset = props.horizontal ? -offset[0] : offset[1];
 
   return {
-    dx: padding.x + xOffset,
-    dy: padding.y + yOffset
+    dx: padding.x,
+    dy: padding.y
   };
 }
 
@@ -166,7 +164,7 @@ function getDegrees(props, datum) {
   return Helpers.radiansToDegrees(props.scale.x(x));
 }
 
-function getProps(props, index, offset = [0, 0]) {
+function getProps(props, index) {
   const { scale, data, style, horizontal, polar, width, height } = props;
   const datum = data[index];
   const degrees = getDegrees(props, datum);
@@ -178,7 +176,7 @@ function getProps(props, index, offset = [0, 0]) {
   const text = getText(props, datum, index);
   const labelPlacement = getLabelPlacement(props);
   const { x, y } = getPosition(props, datum);
-  const { dx, dy } = getOffset(props, datum, offset);
+  const { dx, dy } = getOffset(props, datum);
   return {
     angle,
     data,

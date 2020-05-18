@@ -72,7 +72,6 @@ const getBaseProps = (props, fallbackProps) => {
     labels,
     name,
     barWidth,
-    barOffset,
     getPath
   } = props;
   const initialChildProps = {
@@ -116,7 +115,6 @@ const getBaseProps = (props, fallbackProps) => {
       y0,
       x0,
       barWidth,
-      barOffset,
       getPath
     };
 

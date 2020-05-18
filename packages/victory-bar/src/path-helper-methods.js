@@ -2,9 +2,7 @@ import * as d3Shape from "d3-shape";
 
 import { circle, point } from "./geometry-helper-methods";
 
-const getPosition = (props, width, barOffset = [0, 0]) => {
-  const barOffsetX = barOffset[0];
-
+const getPosition = (props, width) => {
   const { x, x0, y, y0, horizontal } = props;
   const alignment = props.alignment || "middle";
   const size = alignment === "middle" ? width / 2 : width;
@@ -13,14 +11,14 @@ const getPosition = (props, width, barOffset = [0, 0]) => {
     return {
       x0,
       x1: x,
-      y0: (alignment === "start" ? y : y - sign * size) - barOffsetX,
-      y1: (alignment === "end" ? y : y + sign * size) - barOffsetX
+      y0: alignment === "start" ? y : y - sign * size,
+      y1: alignment === "end" ? y : y + sign * size
     };
   }
 
   return {
-    x0: (alignment === "start" ? x : x - sign * size) + barOffsetX,
-    x1: (alignment === "end" ? x : x + sign * size) + barOffsetX,
+    x0: alignment === "start" ? x : x - sign * size,
+    x1: alignment === "end" ? x : x + sign * size,
     y0,
     y1: y
   };
@@ -204,8 +202,8 @@ const getHorizontalBarPoints = (position, sign, cr) => {
 };
 
 // eslint-disable-next-line max-params
-export const getVerticalBarPath = (props, width, cornerRadius, barOffset) => {
-  const position = getPosition(props, width, barOffset);
+export const getVerticalBarPath = (props, width, cornerRadius) => {
+  const position = getPosition(props, width);
 
   const sign = position.y0 > position.y1 ? 1 : -1;
   const direction = sign > 0 ? "0 0 1" : "0 0 0";
@@ -214,8 +212,8 @@ export const getVerticalBarPath = (props, width, cornerRadius, barOffset) => {
 };
 
 // eslint-disable-next-line max-params
-export const getHorizontalBarPath = (props, width, cornerRadius, barOffset) => {
-  const position = getPosition(props, width, barOffset);
+export const getHorizontalBarPath = (props, width, cornerRadius) => {
+  const position = getPosition(props, width);
 
   const sign = position.x0 < position.x1 ? 1 : -1;
   const direction = "0 0 1";

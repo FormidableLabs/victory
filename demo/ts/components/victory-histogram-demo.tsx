@@ -7,6 +7,7 @@ import { VictoryScatter } from "@packages/victory-scatter";
 import { VictoryTheme } from "@packages/victory-core";
 import { VictoryTooltip } from "@packages/victory-tooltip";
 import { VictoryStack } from "@packages/victory-stack";
+import { VictoryVoronoiContainer } from "@packages/victory-voronoi-container";
 
 const randomDate = (start: Date, end: Date) => {
   return new Date(start.getTime() + Math.random() * (end.getTime() - start.getTime()));
@@ -54,6 +55,7 @@ export default class App extends React.Component<{}, VictoryBarDemoState> {
 
   data = getData();
   data2 = getData({ max: 100 });
+  dateData = getData({ dates: true, min: new Date(2012, 0, 1), max: new Date(2014, 0, 1) });
 
   constructor(props: any) {
     super(props);
@@ -348,7 +350,16 @@ export default class App extends React.Component<{}, VictoryBarDemoState> {
           labelComponent={<VictoryTooltip active />}
         />
 
-        <VictoryChart style={{ parent: parentStyle }}>
+        <VictoryChart
+          style={{ parent: parentStyle }}
+          containerComponent={
+            <VictoryVoronoiContainer
+              labels={() => "hi"}
+              voronoiDimension="x"
+              labelComponent={<VictoryTooltip />}
+            />
+          }
+        >
           <VictoryHistogram
             bins={[0, 20, 50, 70, 100]}
             style={{
@@ -368,6 +379,43 @@ export default class App extends React.Component<{}, VictoryBarDemoState> {
               { x: 80, y: 50 },
               { x: 120, y: 8 }
             ]}
+          />
+        </VictoryChart>
+
+        <VictoryChart
+          style={{ parent: parentStyle }}
+          containerComponent={
+            <VictoryVoronoiContainer
+              labels={() => "hi"}
+              voronoiDimension="x"
+              labelComponent={<VictoryTooltip />}
+            />
+          }
+        >
+          <VictoryHistogram
+            style={{
+              data: { stroke: "#f67280", strokeWidth: 3, fill: "#355c7d" }
+            }}
+            data={this.dateData}
+          />
+        </VictoryChart>
+
+        <VictoryChart
+          style={{ parent: parentStyle }}
+          containerComponent={
+            <VictoryVoronoiContainer
+              labels={() => "hi"}
+              voronoiDimension="x"
+              labelComponent={<VictoryTooltip />}
+            />
+          }
+        >
+          <VictoryHistogram
+            horizontal
+            style={{
+              data: { stroke: "#f67280", strokeWidth: 3, fill: "#355c7d" }
+            }}
+            data={this.dateData}
           />
         </VictoryChart>
 
