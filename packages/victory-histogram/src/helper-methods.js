@@ -210,7 +210,8 @@ const getBaseProps = (props, fallbackProps) => {
 
   const barOffset = (() => {
     if (binSpacing) {
-      const distance = binSpacing / 2;
+      // eslint-disable-next-line no-magic-numbers
+      const distance = binSpacing / 4;
       return [distance, 0];
     }
 
