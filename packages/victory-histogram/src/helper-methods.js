@@ -82,12 +82,18 @@ export const getFormattedData = cacheLastValue(({ data = [], x, bins }) => {
     return x0 !== x1;
   });
 
-  const formattedData = binnedData.map((bin) => ({
-    x0: dataOrBinsContainsDates ? new Date(bin.x0) : bin.x0,
-    x1: dataOrBinsContainsDates ? new Date(bin.x1) : bin.x1,
-    y: bin.length,
-    binnedData: [...bin]
-  }));
+  const formattedData = binnedData.map((bin) => {
+    const x0 = dataOrBinsContainsDates ? new Date(bin.x0) : bin.x0;
+    const x1 = dataOrBinsContainsDates ? new Date(bin.x1) : bin.x1;
+
+    return {
+      x0,
+      x1,
+      x: dataOrBinsContainsDates ? new Date((x0.getTime() + x1.getTime()) / 2) : (x0 + x1) / 2,
+      y: bin.length,
+      binnedData: [...bin]
+    };
+  });
 
   return formattedData;
 });
@@ -97,7 +103,7 @@ const getData = (props) => {
   const dataIsPreformatted = data.some(({ _y }) => !isNil(_y));
 
   const formattedData = dataIsPreformatted ? data : getFormattedData({ data, x, bins });
-  return Data.getData({ ...props, data: formattedData, x: "x0" });
+  return Data.getData({ ...props, data: formattedData, x: "x" });
 };
 
 const getDomain = (props, axis) => {
@@ -218,7 +224,7 @@ const getBaseProps = (props, fallbackProps) => {
     const barWidth = getBarWidth(datum);
 
     const dataProps = {
-      alignment: "start",
+      alignment: "middle",
       barWidth,
       cornerRadius,
       data,
@@ -243,10 +249,7 @@ const getBaseProps = (props, fallbackProps) => {
 
     const text = LabelHelpers.getText(props, datum, index);
     if ((text !== undefined && text !== null) || (labels && (events || sharedEvents))) {
-      childProps[eventKey].labels = LabelHelpers.getProps(props, index, [
-        barWidth / 2 + barOffset[0],
-        0
-      ]);
+      childProps[eventKey].labels = LabelHelpers.getProps(props, index);
     }
 
     return childProps;
