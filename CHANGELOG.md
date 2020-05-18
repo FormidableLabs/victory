@@ -1,5 +1,10 @@
 # Victory Changelog
 
+## 34.3.6 (2020-05-18)
+
+- [#1580](https://github.com/FormidableLabs/victory/pull/1580) - Improve histogram tooltip positioning for `VictoryVoronoiContainer`
+- [#1581](https://github.com/FormidableLabs/victory/pull/1581) - Prevent `VictoryVoronoiContainer` from rendering tooltips with empty text
+
 ## 34.3.5 (2020-05-15)
 
 -[#1575](https://github.com/FormidableLabs/victory/pull/1575) - Allow the `id` prop for `VictoryLabel` to be given as a function. Thanks @amyboyd!
