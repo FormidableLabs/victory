@@ -35,6 +35,8 @@ export interface VictorySliceProps extends VictoryCommonProps {
   sliceStartAngle?: SliceNumberOrCallback<VictorySliceProps, "sliceStartAngle">;
 }
 
+export class Slice extends React.Component<VictorySliceProps, any> {}
+
 export interface VictoryPieProps
   extends Omit<VictoryCommonProps, "polar">,
     VictoryLabelableProps,

@@ -723,6 +723,14 @@ export interface VictoryPointProps extends VictoryCommonPrimitiveProps {
 
 export class Point extends React.Component<VictoryPointProps> {}
 
+export interface VictoryTextProps extends VictoryCommonPrimitiveProps {
+  children?: React.ReactNode;
+  desc?: string;
+  title?: string;
+}
+
+export class Text extends React.Component<VictoryTextProps> {}
+
 export type WhiskerAxes = {
   x1?: number;
   x2?: number;
@@ -738,5 +746,17 @@ export interface VictoryWhiskerProps extends VictoryCommonPrimitiveProps {
 }
 
 export class Whisker extends React.Component<VictoryWhiskerProps> {}
+
+export interface VictoryPrimitiveShapeProps extends VictoryCommonPrimitiveProps {
+  desc?: string;
+}
+
+export class Circle extends React.Component<VictoryPrimitiveShapeProps> {}
+
+export class Line extends React.Component<VictoryPrimitiveShapeProps> {}
+
+export class Rect extends React.Component<VictoryPrimitiveShapeProps> {}
+
+export class TSpan extends React.Component<VictoryCommonPrimitiveProps> {}
 
 // #endregion

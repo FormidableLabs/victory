@@ -7,22 +7,43 @@ import { VictoryBoxPlot } from "@packages/victory-box-plot";
 import { VictoryChart } from "@packages/victory-chart";
 import { VictoryPolarAxis } from "@packages/victory-polar-axis";
 import { Arc, LineSegment, Whisker } from "@packages/victory-core";
+import { range, random } from "lodash";
 
 interface PrimitivesDemoState {
   axisBackgroundColor: string;
-  showWhiskers: boolean;
+  whiskersActive: boolean;
+  boxPlotData?: { x?: number; y?: number[] }[];
 }
 
 class App extends React.Component<any, PrimitivesDemoState> {
+  setStateInterval?: number = undefined;
+
   constructor(props: any) {
     super(props);
     this.state = {
       axisBackgroundColor: "mediumseagreen",
-      showWhiskers: true
+      whiskersActive: true
     };
   }
 
-  handleMouseMove() {
+  componentDidMount() {
+    this.setStateInterval = window.setInterval(() => {
+      this.setState({
+        boxPlotData: this.getBoxPlotData()
+      });
+    }, 3000);
+  }
+
+  getBoxPlotData() {
+    return range(5).map((i: number) => {
+      return {
+        x: i,
+        y: [random(2, 100), random(2, 100), random(2, 100), random(2, 100)]
+      };
+    });
+  }
+
+  handleClick() {
     const newBackgroundColor =
       this.state.axisBackgroundColor === "mediumseagreen" ? "paleturquoise" : "mediumseagreen";
 
@@ -30,7 +51,7 @@ class App extends React.Component<any, PrimitivesDemoState> {
   }
 
   handleToggleWhiskers() {
-    this.setState({ showWhiskers: !this.state.showWhiskers });
+    this.setState({ whiskersActive: !this.state.whiskersActive });
   }
 
   render() {
@@ -55,7 +76,7 @@ class App extends React.Component<any, PrimitivesDemoState> {
       background: { fill: this.state.axisBackgroundColor }
     };
 
-    const lineSegmentStyle = { stroke: "white", strokeWidth: 4 };
+    const lineSegmentStyle = { stroke: "white", strokeWidth: 5, cursor: "pointer" };
 
     return (
       <div className="demo">
@@ -93,7 +114,7 @@ class App extends React.Component<any, PrimitivesDemoState> {
               crossAxis
               axisComponent={
                 <LineSegment
-                  events={{ onMouseMove: this.handleMouseMove.bind(this)   }}
+                  events={{ onClick: this.handleClick.bind(this) }}
                   style={lineSegmentStyle}
                 />
               }
@@ -108,7 +129,7 @@ class App extends React.Component<any, PrimitivesDemoState> {
               crossAxis
               axisComponent={
                 <LineSegment
-                  events={{ onMouseMove: this.handleMouseMove.bind(this) }}
+                  events={{ onClick: this.handleClick.bind(this) }}
                   style={lineSegmentStyle}
                 />
               }
@@ -123,14 +144,9 @@ class App extends React.Component<any, PrimitivesDemoState> {
           <VictoryChart domainPadding={20}>
             <VictoryBoxPlot
               boxWidth={20}
-              maxComponent={<Whisker active={this.state.showWhiskers} />}
-              minComponent={<Whisker active={this.state.showWhiskers} />}
-              data={[
-                { x: 1, y: [1, 2, 3, 5] },
-                { x: 2, y: [3, 2, 8, 10] },
-                { x: 3, y: [2, 8, 6, 5] },
-                { x: 4, y: [1, 3, 2, 9] }
-              ]}
+              data={this.state.boxPlotData}
+              maxComponent={<Whisker active={this.state.whiskersActive} />}
+              minComponent={<Whisker active={this.state.whiskersActive} />}
             />
           </VictoryChart>
           <button onClick={this.handleToggleWhiskers.bind(this)}>Whiskers?</button>

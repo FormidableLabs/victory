@@ -4,6 +4,7 @@ import {
   OrientationTypes,
   StringOrNumberOrCallback,
   VictoryCommonProps,
+  VictoryCommonPrimitiveProps,
   VictoryDatableProps,
   VictoryStyleObject,
   VictoryLabelableProps,
@@ -83,3 +84,21 @@ export interface VictoryCandlestickProps
  */
 
 export class VictoryCandlestick extends React.Component<VictoryCandlestickProps, any> {}
+
+export interface VictoryCandleProps extends VictoryCommonPrimitiveProps {
+  candleRatio?: number;
+  candleWidth?: number | Function;
+  close?: number;
+  datum?: any;
+  groupComponent?: React.ReactElement;
+  high?: number;
+  lineComponent?: React.ReactElement;
+  low?: number;
+  open?: number;
+  rectComponent?: React.ReactElement;
+  wickStrokeWidth?: number;
+  width?: number;
+  x?: number;
+}
+
+export class Candle extends React.Component<VictoryCandleProps, any> {}
