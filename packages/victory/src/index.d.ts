@@ -5,18 +5,18 @@ declare module "victory" {
   import {
     Arc,
     Background,
-    // Border,
-    // Box,
-    // ClipPath,
-    // LineSegment,
-    // Whisker,
-    // Circle,
-    // Rect,
-    // Line,
+    Border,
+    Border as Box,
+    ClipPath,
+    LineSegment,
+    Whisker,
+    Circle,
+    Rect,
+    Line,
     // Path,
-    // TSpan,
-    // Text,
-    // Point,
+    TSpan,
+    Text,
+    Point,
     VictoryAnimation,
     VictoryContainer,
     VictoryLabel,
@@ -47,32 +47,19 @@ declare module "victory" {
   import { VictoryChart } from "victory-chart";
   import { VictoryGroup } from "victory-group";
   import { VictoryStack } from "victory-stack";
-  import {
-    VictoryPie
-    // Slice
-  } from "victory-pie";
-  import {
-    VictoryArea
-    // Area
-  } from "victory-area";
-  import {
-    VictoryBar
-    // Bar
-  } from "victory-bar";
+  import { VictoryPie, Slice } from "victory-pie";
+  import { VictoryArea, Area } from "victory-area";
+  import { VictoryBar, Bar } from "victory-bar";
 
-  // import { VictoryCandlestick, Candle } from "victory-candlestick";
-  // import { VictoryErrorBar, ErrorBar } from "victory-errorbar";
+  import { VictoryCandlestick, Candle } from "victory-candlestick";
+  import { VictoryErrorBar, ErrorBar } from "victory-errorbar";
 
-  import {
-    VictoryLine
-    // Curve
-  } from "victory-line";
+  import { VictoryLine, Curve } from "victory-line";
   import { VictoryHistogram } from "victory-histogram";
   import { VictoryScatter } from "victory-scatter";
   import { VictoryBoxPlot } from "victory-box-plot";
   import { VictoryBrushLine } from "victory-brush-line";
-  // import { Voronoi } from "victory-voronoi";
-  import { VictoryVoronoi } from "victory-voronoi";
+  import { Voronoi, VictoryVoronoi } from "victory-voronoi";
 
   import {
     VictoryBrushContainer
@@ -117,36 +104,36 @@ declare module "victory" {
   import { VictoryPolarAxis } from "victory-polar-axis";
 
   export {
-    // Area,
+    Area,
     Background,
-    // Bar,
-    // Border,
-    // Box,
-    // Candle,
-    // ClipPath,
-    // Curve,
-    // ErrorBar,
-    // LineSegment,
-    // Point,
-    // Slice,
-    // Voronoi,
+    Bar,
+    Border,
+    Box,
+    Candle,
+    ClipPath,
+    Curve,
+    ErrorBar,
+    LineSegment,
+    Point,
+    Slice,
+    Voronoi,
     Flyout,
-    // Whisker,
-    // Circle,
-    // Rect,
-    // Line,
+    Whisker,
+    Circle,
+    Rect,
+    Line,
     // Path,
-    // TSpan,
-    // Text,
+    TSpan,
+    Text,
     VictoryAnimation,
     VictoryArea,
     VictoryAxis,
     VictoryPolarAxis,
     VictoryBar,
     VictoryBoxPlot,
-    // VictoryCandlestick,
+    VictoryCandlestick,
     VictoryChart,
-    // VictoryErrorBar,
+    VictoryErrorBar,
     VictoryHistogram,
     VictoryGroup,
     VictoryLine,

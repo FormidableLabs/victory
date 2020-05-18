@@ -4,6 +4,7 @@ import {
   NumberOrCallback,
   StringOrNumberOrCallback,
   VictoryCommonProps,
+  VictoryCommonPrimitiveProps,
   VictoryDatableProps,
   VictoryMultiLabelableProps,
   VictoryStyleInterface
@@ -40,3 +41,30 @@ export interface VictoryBarProps
  * Check out VictoryChart for complete bar charts and more.
  */
 export class VictoryBar extends React.Component<VictoryBarProps, any> {}
+
+export interface VictoryBarPrimitiveProps extends VictoryCommonPrimitiveProps {
+  alignment?: VictoryBarAlignmentType;
+  barOffset?: number[];
+  barRatio?: number;
+  barWidth?: NumberOrCallback;
+  cornerRadius?:
+    | NumberOrCallback
+    | {
+        top?: NumberOrCallback;
+        topLeft?: NumberOrCallback;
+        topRight?: NumberOrCallback;
+        bottom?: NumberOrCallback;
+        bottomLeft?: NumberOrCallback;
+        bottomRight?: NumberOrCallback;
+      };
+  datum?: any;
+  getPath?: Function;
+  horizontal?: boolean;
+  pathComponent?: React.ReactElement;
+  width?: number;
+  x?: number;
+  y?: number;
+  y0?: number;
+}
+
+export class Bar extends React.Component<VictoryBarPrimitiveProps, any> {}
