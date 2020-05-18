@@ -29,14 +29,14 @@ export interface VictoryErrorBarProps
 export class VictoryErrorBar extends React.Component<VictoryErrorBarProps, any> {}
 
 export interface VictoryErrorBarPrimitiveProps extends VictoryCommonPrimitiveProps {
-  borderWidth: number;
-  datum: any;
-  errorX: number | any[] | boolean;
-  errorY: number | any[] | boolean;
-  groupComponent: React.ReactElement;
-  lineComponent: React.ReactElement;
-  x: number;
-  y: number;
+  borderWidth?: number;
+  datum?: any;
+  errorX?: number | any[] | boolean;
+  errorY?: number | any[] | boolean;
+  groupComponent?: React.ReactElement;
+  lineComponent?: React.ReactElement;
+  x?: number;
+  y?: number;
 }
 
 export class ErrorBar extends React.Component<VictoryErrorBarPrimitiveProps, any> {}
