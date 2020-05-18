@@ -182,7 +182,9 @@ export const voronoiContainerMixin = (base) =>
       }
       if (Array.isArray(activePoints) && activePoints.length) {
         const labelProps = this.getLabelProps(props, activePoints);
-        return React.cloneElement(labelComponent, labelProps);
+        const { text } = labelProps;
+        const showLabel = Array.isArray(text) ? text.filter(Boolean).length : text;
+        return showLabel ? React.cloneElement(labelComponent, labelProps) : null;
       } else {
         return null;
       }
