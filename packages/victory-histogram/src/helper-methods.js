@@ -208,16 +208,6 @@ const getBaseProps = (props, fallbackProps) => {
     return getDistance(datum);
   };
 
-  const barOffset = (() => {
-    if (binSpacing) {
-      // eslint-disable-next-line no-magic-numbers
-      const distance = binSpacing / 4;
-      return [distance, 0];
-    }
-
-    return [0, 0];
-  })();
-
   return data.reduce((childProps, datum, index) => {
     const eventKey = !isNil(datum.eventKey) ? datum.eventKey : index;
 
@@ -240,7 +230,6 @@ const getBaseProps = (props, fallbackProps) => {
       y,
       y0,
       x0,
-      barOffset,
       getPath
     };
 
