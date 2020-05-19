@@ -1,10 +1,25 @@
 import React from "react";
 import PropTypes from "prop-types";
+import { assign } from "lodash";
+import Helpers from "../victory-util/helpers";
 import CommonProps from "../victory-util/common-props";
 import Rect from "./rect";
 import Circle from "./circle";
 
+const evaluateProps = (props) => {
+  /**
+   * Potential evaluated props are
+   * 1) `id`
+   * 2) everything else
+   */
+  const id = Helpers.evaluateProp(props.id, props);
+
+  return assign({}, props, { id });
+};
+
 const Background = (props) => {
+  props = evaluateProps(props);
+
   return props.polar
     ? React.cloneElement(props.circleComponent, {
         ...props.events,
