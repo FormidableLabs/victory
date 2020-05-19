@@ -19,6 +19,7 @@ export default class App extends React.Component {
           <VictoryLabel
             x={200}
             y={50}
+            backgroundStyle={{ fill: "pink" }}
             title={"Victory is awesome. This is a title."}
             desc={"Victory is awesome. This is a description."}
             text={"Victory is awesome.\nThis has a title and description."}
