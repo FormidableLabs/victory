@@ -93,7 +93,25 @@ const getAreaFunction = (props) => {
     : getCartesianArea(props, interpolation);
 };
 
+const evaluateProps = (props) => {
+  /**
+   * Potential evaluated props are
+   * 1) `desc`
+   * 2) `id`
+   * 3) `style`
+   * 4) `tabIndex`
+   * 5) everything else
+   */
+  const desc = Helpers.evaluateProp(props.desc, props);
+  const id = Helpers.evaluateProp(props.id, props);
+  const style = Helpers.evaluateStyle(assign({ fill: "black" }, props.style), props);
+  const tabIndex = Helpers.evaluateProp(props.tabIndex, props);
+
+  return assign({}, props, { desc, id, style, tabIndex });
+};
+
 const Area = (props) => {
+  props = evaluateProps(props);
   const {
     role,
     shapeRendering,
@@ -105,9 +123,11 @@ const Area = (props) => {
     events,
     groupComponent,
     clipPath,
-    id
+    id,
+    style,
+    desc,
+    tabIndex
   } = props;
-  const style = Helpers.evaluateStyle(assign({ fill: "black" }, props.style), props);
   const defaultTransform = polar && origin ? `translate(${origin.x}, ${origin.y})` : undefined;
   const transform = props.transform || defaultTransform;
   const renderLine = style.stroke && style.stroke !== "none" && style.stroke !== "transparent";
@@ -124,8 +144,8 @@ const Area = (props) => {
         key: `${id}-area`,
         style: assign({}, style, { stroke: areaStroke }),
         d: areaFunction(data),
-        desc: Helpers.evaluateProp(props.desc, props),
-        tabIndex: Helpers.evaluateProp(props.tabIndex, props)
+        desc,
+        tabIndex
       },
       sharedProps
     )
