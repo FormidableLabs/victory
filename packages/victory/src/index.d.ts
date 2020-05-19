@@ -13,7 +13,7 @@ declare module "victory" {
     Circle,
     Rect,
     Line,
-    // Path,
+    Path,
     TSpan,
     Text,
     Point,

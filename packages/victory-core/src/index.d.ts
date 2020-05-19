@@ -755,6 +755,8 @@ export class Circle extends React.Component<VictoryPrimitiveShapeProps> {}
 
 export class Line extends React.Component<VictoryPrimitiveShapeProps> {}
 
+export class Path extends React.Component<VictoryPrimitiveShapeProps> {}
+
 export class Rect extends React.Component<VictoryPrimitiveShapeProps> {}
 
 export class TSpan extends React.Component<VictoryCommonPrimitiveProps> {}
