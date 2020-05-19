@@ -54,14 +54,32 @@ const getLineFunction = (props) => {
         .y(horizontal ? getXAccessor(scale) : getYAccessor(scale));
 };
 
+const evaluateProps = (props) => {
+  /**
+   * Potential evaluated props are
+   * 1) `id`
+   * 2) `style`
+   * 3) everything else
+   */
+  const id = Helpers.evaluateProp(props.id, props);
+  const style = Helpers.evaluateStyle(
+    assign({ fill: "none", stroke: "black" }, props.style),
+    props
+  );
+
+  return assign({}, props, { id, style });
+};
+
 const Curve = (props) => {
+  props = evaluateProps(props);
   const { polar, origin } = props;
   const lineFunction = getLineFunction(props);
   const defaultTransform = polar && origin ? `translate(${origin.x}, ${origin.y})` : undefined;
+
   return React.cloneElement(props.pathComponent, {
     ...props.events,
     d: lineFunction(props.data),
-    style: Helpers.evaluateStyle(assign({ fill: "none", stroke: "black" }, props.style), props),
+    style: props.style,
     transform: props.transform || defaultTransform,
     className: props.className,
     role: props.role,
