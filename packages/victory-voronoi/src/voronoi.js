@@ -1,6 +1,7 @@
 /*eslint no-magic-numbers: ["error", { "ignore": [2] }]*/
 import React from "react";
 import PropTypes from "prop-types";
+import { assign } from "lodash";
 import { Helpers, CommonProps, ClipPath, Path, Circle } from "victory-core";
 
 const getVoronoiPath = (props) => {
@@ -8,12 +9,26 @@ const getVoronoiPath = (props) => {
   return Array.isArray(polygon) && polygon.length ? `M ${props.polygon.join("L")} Z` : "";
 };
 
-const Voronoi = (props) => {
-  const { role, shapeRendering, className, events, transform } = props;
-
-  const voronoiPath = getVoronoiPath(props);
-  const style = Helpers.evaluateStyle(props.style, props);
+const evaluateProps = (props) => {
+  /**
+   * Potential evaluated props are
+   * 1) `id`
+   * 2) `size`
+   * 3) `style`
+   * 4) everything else
+   */
+  const id = Helpers.evaluateProp(props.id, props);
   const size = Helpers.evaluateProp(props.size, props);
+  const style = Helpers.evaluateStyle(props.style, props);
+
+  return assign({}, props, { id, size, style });
+};
+
+const Voronoi = (props) => {
+  props = evaluateProps(props);
+
+  const { role, shapeRendering, className, events, transform, style, size } = props;
+  const voronoiPath = getVoronoiPath(props);
   const sharedProps = { className, role, shapeRendering, style, transform, ...events };
 
   if (size) {
