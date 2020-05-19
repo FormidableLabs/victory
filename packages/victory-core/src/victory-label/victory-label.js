@@ -1,6 +1,7 @@
 import React from "react";
 import PropTypes from "prop-types";
 import VictoryPortal from "../victory-portal/victory-portal";
+import Background from "../victory-primitives/background";
 import CustomPropTypes from "../victory-util/prop-types";
 import Helpers from "../victory-util/helpers";
 import LabelHelpers from "../victory-util/label-helpers";
@@ -110,7 +111,26 @@ const getTransform = (props) => {
   return transformPart || angle ? Style.toTransformString(transformPart, rotatePart) : undefined;
 };
 
-const renderElements = (props) => {
+const getBackgroundElement = (props) => {
+  const { backgroundComponent, backgroundStyle } = props;
+  const capHeight = getHeight(props, "capHeight");
+  const x = props.x !== undefined ? props.x : getPosition(props, "x");
+  const y = props.y !== undefined ? props.y : getPosition(props, "y");
+
+  const backgroundProps = {
+    height: capHeight,
+    style: backgroundStyle,
+    x,
+    y
+  };
+
+  return React.cloneElement(
+    backgroundComponent,
+    defaults({}, backgroundComponent.props, backgroundProps)
+  );
+};
+
+const renderTextElements = (props) => {
   const { inline, className, title, events, direction, text, style } = props;
   const lineHeight = getHeight(props, "lineHeight");
   const textAnchor = props.textAnchor ? Helpers.evaluateProp(props.textAnchor, props) : "start";
@@ -140,6 +160,7 @@ const renderElements = (props) => {
     };
     return React.cloneElement(props.tspanComponent, tspanProps);
   });
+
   return React.cloneElement(
     props.textComponent,
     {
@@ -177,7 +198,21 @@ const VictoryLabel = (props) => {
   if (props.text === null || props.text === undefined) {
     return null;
   }
-  const label = renderElements(props);
+  const label = renderTextElements(props);
+
+  if (props.backgroundStyle) {
+    const backgroundElement = getBackgroundElement(props);
+
+    return props.renderInPortal ? (
+      <VictoryPortal>
+        {backgroundElement}
+        {label}
+      </VictoryPortal>
+    ) : (
+      [backgroundElement, label]
+    );
+  }
+
   return props.renderInPortal ? <VictoryPortal>{label}</VictoryPortal> : label;
 };
 
@@ -187,6 +222,8 @@ VictoryLabel.defaultStyles = defaultStyles;
 VictoryLabel.propTypes = {
   active: PropTypes.bool,
   angle: PropTypes.oneOfType([PropTypes.string, PropTypes.number]),
+  backgroundComponent: PropTypes.element,
+  backgroundStyle: PropTypes.oneOfType([PropTypes.object, PropTypes.array]),
   capHeight: PropTypes.oneOfType([PropTypes.string, CustomPropTypes.nonNegative, PropTypes.func]),
   className: PropTypes.string,
   data: PropTypes.array,
@@ -236,6 +273,7 @@ VictoryLabel.propTypes = {
 };
 
 VictoryLabel.defaultProps = {
+  backgroundComponent: <Background />,
   direction: "inherit",
   textComponent: <Text />,
   tspanComponent: <TSpan />,
