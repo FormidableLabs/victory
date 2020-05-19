@@ -77,11 +77,24 @@ const getStyle = (style = {}, props) => {
 };
 
 const evaluateProps = (props) => {
-  // Potential evaluated props are 1) `style`, 2) `barWidth` and 3) `cornerRadius`
+  /**
+   * Potential evaluated props are
+   * 1) `style`
+   * 2) `barWidth`
+   * 3) `cornerRadius`
+   * 4) `desc`
+   * 5) `id`
+   * 6) `tabIndex`
+   * 7) everything else
+   */
   const style = getStyle(props.style, props);
   const barWidth = getBarWidth(props.barWidth, assign({}, props, { style }));
   const cornerRadius = getCornerRadius(props.cornerRadius, assign({}, props, { style, barWidth }));
-  return assign({}, props, { style, barWidth, cornerRadius });
+  const desc = Helpers.evaluateProp(props.desc, props);
+  const id = Helpers.evaluateProp(props.id, props);
+  const tabIndex = Helpers.evaluateProp(props.tabIndex, props);
+
+  return assign({}, props, { style, barWidth, cornerRadius, desc, id, tabIndex });
 };
 
 const Bar = (props) => {
@@ -102,8 +115,8 @@ const Bar = (props) => {
     role: props.role,
     shapeRendering: props.shapeRendering,
     clipPath: props.clipPath,
-    desc: Helpers.evaluateProp(props.desc, props),
-    tabIndex: Helpers.evaluateProp(props.tabIndex, props)
+    desc: props.desc,
+    tabIndex: props.tabIndex
   });
 };
 
