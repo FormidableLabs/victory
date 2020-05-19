@@ -1,7 +1,6 @@
 /*eslint-disable no-magic-numbers */
 import React from "react";
 
-// import { VictoryArea } from "@packages/victory-area";
 import { VictoryAxis } from "@packages/victory-axis";
 import { VictoryBoxPlot } from "@packages/victory-box-plot";
 import { VictoryChart } from "@packages/victory-chart";
