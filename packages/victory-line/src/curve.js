@@ -56,10 +56,9 @@ const getLineFunction = (props) => {
 
 const evaluateProps = (props) => {
   /**
-   * Potential evaluated props are
-   * 1) `id`
-   * 2) `style`
-   * 3) everything else
+   * Potential evaluated props are:
+   * `id`
+   * `style`
    */
   const id = Helpers.evaluateProp(props.id, props);
   const style = Helpers.evaluateStyle(

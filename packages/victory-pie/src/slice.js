@@ -22,20 +22,22 @@ const getPath = (props) => {
 
 const evaluateProps = (props) => {
   /**
-   * Potential evaluated props are
+   * * Potential evaluated props of following must be evaluated in this order:
    * 1) `style`
    * 2) `radius`
    * 3) `innerRadius`
-   * 4) `id`
-   * 5) `cornerRadius`
-   * 6) `padAngle`
-   * 7) `sliceStartAngle`
-   * 8) `sliceEndAngle`
-   * 9) everything else
+   *
+   * Everything else does not have to be evaluated in a particular order:
+   * `id`
+   * `cornerRadius`
+   * `padAngle`
+   * `sliceStartAngle`
+   * `sliceEndAngle`
    */
   const style = Helpers.evaluateStyle(props.style, props);
   const radius = Helpers.evaluateProp(props.radius, assign({}, props, { style }));
   const innerRadius = Helpers.evaluateProp(props.innerRadius, assign({}, props, { style, radius }));
+
   const id = Helpers.evaluateProp(props.id, props);
   const cornerRadius = Helpers.evaluateProp(props.cornerRadius, props);
   const padAngle = Helpers.evaluateProp(props.padAngle, props);

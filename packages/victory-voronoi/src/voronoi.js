@@ -11,11 +11,10 @@ const getVoronoiPath = (props) => {
 
 const evaluateProps = (props) => {
   /**
-   * Potential evaluated props are
-   * 1) `id`
-   * 2) `size`
-   * 3) `style`
-   * 4) everything else
+   * Potential evaluated props are:
+   * `id`
+   * `size`
+   * `style`
    */
   const id = Helpers.evaluateProp(props.id, props);
   const size = Helpers.evaluateProp(props.size, props);

@@ -8,9 +8,8 @@ import Circle from "./circle";
 
 const evaluateProps = (props) => {
   /**
-   * Potential evaluated props are
-   * 1) `id`
-   * 2) everything else
+   * Potential evaluated prop is:
+   * `id`
    */
   const id = Helpers.evaluateProp(props.id, props);
 

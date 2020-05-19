@@ -53,16 +53,18 @@ const getLowWickProps = (props, style) => {
 
 const evaluateProps = (props) => {
   /**
-   * Potential evaulated props are
+   * Potential evaluated props of following must be evaluated in this order:
    * 1) `style`
-   * 2) `candleWidth`
-   * 3) `desc`
-   * 4) `id`
-   * 5) `tabIndex`
-   * 6) everything else
+   * 2) `cornerRadius`
+   *
+   * Everything else does not have to be evaluated in a particular order:
+   * `desc`
+   * `id`
+   * `tabIndex`
    */
   const style = Helpers.evaluateStyle(assign({ stroke: "black" }, props.style), props);
   const candleWidth = getCandleWidth(props.candleWidth, assign({}, props, { style }));
+
   const desc = Helpers.evaluateProp(props.desc, props);
   const id = Helpers.evaluateProp(props.id, props);
   const tabIndex = Helpers.evaluateProp(props.tabIndex, props);

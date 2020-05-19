@@ -7,12 +7,11 @@ import Line from "./line";
 
 const evaluateProps = (props) => {
   /**
-   * Potential evaluated props are
-   * 1) `desc`
-   * 2) `id`
-   * 3) `style`
-   * 4) `tabIndex`
-   * 5) everything else
+   * Potential evaluated props are:
+   * `desc`
+   * `id`
+   * `style`
+   * `tabIndex`
    */
   const desc = Helpers.evaluateProp(props.desc, props);
   const id = Helpers.evaluateProp(props.id, props);

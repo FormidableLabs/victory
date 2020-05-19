@@ -78,18 +78,20 @@ const getStyle = (style = {}, props) => {
 
 const evaluateProps = (props) => {
   /**
-   * Potential evaluated props are
+   * Potential evaluated props of following must be evaluated in this order:
    * 1) `style`
    * 2) `barWidth`
    * 3) `cornerRadius`
-   * 4) `desc`
-   * 5) `id`
-   * 6) `tabIndex`
-   * 7) everything else
+   *
+   * Everything else does not have to be evaluated in a particular order:
+   * `desc`
+   * `id`
+   * `tabIndex`
    */
   const style = getStyle(props.style, props);
   const barWidth = getBarWidth(props.barWidth, assign({}, props, { style }));
   const cornerRadius = getCornerRadius(props.cornerRadius, assign({}, props, { style, barWidth }));
+
   const desc = Helpers.evaluateProp(props.desc, props);
   const id = Helpers.evaluateProp(props.id, props);
   const tabIndex = Helpers.evaluateProp(props.tabIndex, props);
