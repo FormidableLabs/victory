@@ -2,7 +2,7 @@
 import React from "react";
 import PropTypes from "prop-types";
 import { Helpers, CommonProps, Path } from "victory-core";
-import { isPlainObject } from "lodash";
+import { isPlainObject, assign } from "lodash";
 
 const getVerticalPath = (props) => {
   const { pointerWidth, cornerRadius, orientation, width, height, center } = props;
@@ -67,10 +67,25 @@ const getFlyoutPath = (props) => {
     : getVerticalPath(props);
 };
 
-const Flyout = (props) =>
-  React.cloneElement(props.pathComponent, {
+const evaluateProps = (props) => {
+  /**
+   * Potential evaluated props are
+   * 1) `id`
+   * 2) `style`
+   * 3) everything else
+   */
+  const id = Helpers.evaluateProp(props.id, props);
+  const style = Helpers.evaluateStyle(props.style, props);
+
+  return assign({}, props, { id, style });
+};
+
+const Flyout = (props) => {
+  props = evaluateProps(props);
+
+  return React.cloneElement(props.pathComponent, {
     ...props.events,
-    style: Helpers.evaluateStyle(props.style, props),
+    style: props.style,
     d: getFlyoutPath(props),
     className: props.className,
     shapeRendering: props.shapeRendering,
@@ -78,6 +93,7 @@ const Flyout = (props) =>
     transform: props.transform,
     clipPath: props.clipPath
   });
+};
 
 Flyout.propTypes = {
   ...CommonProps.primitiveProps,
