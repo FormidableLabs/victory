@@ -52,10 +52,22 @@ const getLowWickProps = (props, style) => {
 };
 
 const evaluateProps = (props) => {
-  // Potential evaluated props are 1) `style`, 2) `candleWidth`
+  /**
+   * Potential evaulated props are
+   * 1) `style`
+   * 2) `candleWidth`
+   * 3) `desc`
+   * 4) `id`
+   * 5) `tabIndex`
+   * 6) everything else
+   */
   const style = Helpers.evaluateStyle(assign({ stroke: "black" }, props.style), props);
   const candleWidth = getCandleWidth(props.candleWidth, assign({}, props, { style }));
-  return assign({}, props, { style, candleWidth });
+  const desc = Helpers.evaluateProp(props.desc, props);
+  const id = Helpers.evaluateProp(props.id, props);
+  const tabIndex = Helpers.evaluateProp(props.tabIndex, props);
+
+  return assign({}, props, { style, candleWidth, desc, id, tabIndex });
 };
 
 const Candle = (props) => {
@@ -71,7 +83,9 @@ const Candle = (props) => {
     className,
     wickStrokeWidth,
     transform,
-    style
+    style,
+    desc,
+    tabIndex
   } = props;
   const wickStyle = defaults({ strokeWidth: wickStrokeWidth }, style);
   const sharedProps = {
@@ -81,8 +95,8 @@ const Candle = (props) => {
     className,
     transform,
     clipPath,
-    desc: Helpers.evaluateProp(props.desc, props),
-    tabIndex: Helpers.evaluateProp(props.tabIndex, props)
+    desc,
+    tabIndex
   };
   const candleProps = assign(getCandleProps(props, style), sharedProps);
   const highWickProps = assign(getHighWickProps(props, wickStyle), sharedProps);
