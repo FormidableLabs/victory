@@ -42,7 +42,7 @@ export interface VictoryBarProps
  */
 export class VictoryBar extends React.Component<VictoryBarProps, any> {}
 
-export interface VictoryBarPrimitiveProps extends VictoryCommonPrimitiveProps {
+export interface BarProps extends VictoryCommonPrimitiveProps {
   alignment?: VictoryBarAlignmentType;
   barOffset?: number[];
   barRatio?: number;
@@ -67,4 +67,4 @@ export interface VictoryBarPrimitiveProps extends VictoryCommonPrimitiveProps {
   y0?: number;
 }
 
-export class Bar extends React.Component<VictoryBarPrimitiveProps, any> {}
+export class Bar extends React.Component<BarProps, any> {}

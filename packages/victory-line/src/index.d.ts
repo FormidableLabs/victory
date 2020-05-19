@@ -26,12 +26,12 @@ export interface VictoryLineProps
   style?: VictoryStyleInterface;
 }
 
-export interface VictoryCurveProps extends VictoryCommonPrimitiveProps {
+export interface CurveProps extends VictoryCommonPrimitiveProps {
   interpolation?: string | Function;
   openCurve?: boolean;
   pathComponent?: React.ReactElement;
 }
 
-export class Curve extends React.Component<VictoryCurveProps> {}
+export class Curve extends React.Component<CurveProps> {}
 
 export class VictoryLine extends React.Component<VictoryLineProps, any> {}

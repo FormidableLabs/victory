@@ -17,25 +17,25 @@ import {
 export type VictorySliceLabelPositionType = "startAngle" | "centroid" | "endAngle";
 export type VictorySliceTTargetType = "data" | "labels" | "parent";
 
-export interface VictorySliceProps extends VictoryCommonProps {
-  cornerRadius?: SliceNumberOrCallback<VictorySliceProps, "cornerRadius">;
+export interface SliceProps extends VictoryCommonProps {
+  cornerRadius?: SliceNumberOrCallback<SliceProps, "cornerRadius">;
   datum?: any;
   innerRadius?: NumberOrCallback;
-  padAngle?: SliceNumberOrCallback<VictorySliceProps, "padAngle">;
+  padAngle?: SliceNumberOrCallback<SliceProps, "padAngle">;
   pathComponent?: React.ReactElement;
-  pathFunction?: (props: VictorySliceProps) => string;
-  radius?: SliceNumberOrCallback<VictorySliceProps, "radius">;
+  pathFunction?: (props: SliceProps) => string;
+  radius?: SliceNumberOrCallback<SliceProps, "radius">;
   slice: {
     startAngle?: number;
     endAngle?: number;
     padAngle?: number;
     data?: any[];
   };
-  sliceEndAngle?: SliceNumberOrCallback<VictorySliceProps, "sliceEndAngle">;
-  sliceStartAngle?: SliceNumberOrCallback<VictorySliceProps, "sliceStartAngle">;
+  sliceEndAngle?: SliceNumberOrCallback<SliceProps, "sliceEndAngle">;
+  sliceStartAngle?: SliceNumberOrCallback<SliceProps, "sliceStartAngle">;
 }
 
-export class Slice extends React.Component<VictorySliceProps, any> {}
+export class Slice extends React.Component<SliceProps, any> {}
 
 export interface VictoryPieProps
   extends Omit<VictoryCommonProps, "polar">,
@@ -43,7 +43,7 @@ export interface VictoryPieProps
     VictoryMultiLabelableProps {
   categories?: CategoryPropType;
   colorScale?: ColorScalePropType;
-  cornerRadius?: SliceNumberOrCallback<VictorySliceProps, "cornerRadius">;
+  cornerRadius?: SliceNumberOrCallback<SliceProps, "cornerRadius">;
   data?: any[];
   dataComponent?: React.ReactElement;
   endAngle?: number;
@@ -55,8 +55,8 @@ export interface VictoryPieProps
   innerRadius?: NumberOrCallback;
   labelPosition?:
     | VictorySliceLabelPositionType
-    | ((props: VictorySliceProps) => VictorySliceLabelPositionType);
-  labelRadius?: number | ((props: VictorySliceProps) => number);
+    | ((props: SliceProps) => VictorySliceLabelPositionType);
+  labelRadius?: number | ((props: SliceProps) => number);
   origin?: OriginType;
   padAngle?: NumberOrCallback;
   radius?: NumberOrCallback;

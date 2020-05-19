@@ -29,7 +29,7 @@ export interface VictoryAreaProps
  */
 export class VictoryArea extends React.Component<VictoryAreaProps, any> {}
 
-export interface VictoryAreaPrimitiveProps extends VictoryCommonPrimitiveProps {
+export interface AreaProps extends VictoryCommonPrimitiveProps {
   groupComponent?: React.ReactElement;
   interpolation?: string | Function;
   pathComponent?: React.ReactElement;
@@ -38,4 +38,4 @@ export interface VictoryAreaPrimitiveProps extends VictoryCommonPrimitiveProps {
 /**
  * The area primitive used by VictoryArea
  */
-export class Area extends React.Component<VictoryAreaPrimitiveProps, any> {}
+export class Area extends React.Component<AreaProps, any> {}

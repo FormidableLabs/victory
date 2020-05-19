@@ -683,7 +683,7 @@ export interface BackgroundProps extends VictoryCommonPrimitiveProps {
 
 export class Background extends React.Component<BackgroundProps> {}
 
-export interface VictoryBorderProps extends VictoryCommonPrimitiveProps {
+export interface BorderProps extends VictoryCommonPrimitiveProps {
   width?: number;
   height?: number;
   rectComponent?: React.ReactElement;
@@ -691,16 +691,16 @@ export interface VictoryBorderProps extends VictoryCommonPrimitiveProps {
   y?: number;
 }
 
-export class Border extends React.Component<VictoryBorderProps> {}
+export class Border extends React.Component<BorderProps> {}
 
-export interface VictoryClipPathProps extends VictoryCommonPrimitiveProps {
+export interface ClipPathProps extends VictoryCommonPrimitiveProps {
   children?: React.ReactNode[] | React.ReactNode;
   clipId?: number | string;
 }
 
-export class ClipPath extends React.Component<VictoryClipPathProps> {}
+export class ClipPath extends React.Component<ClipPathProps> {}
 
-export interface VictoryLineSegmentProps extends VictoryCommonPrimitiveProps {
+export interface LineSegmentProps extends VictoryCommonPrimitiveProps {
   datum?: any;
   lineComponent?: React.ReactElement;
   x1?: number;
@@ -709,9 +709,9 @@ export interface VictoryLineSegmentProps extends VictoryCommonPrimitiveProps {
   y2?: number;
 }
 
-export class LineSegment extends React.Component<VictoryLineSegmentProps> {}
+export class LineSegment extends React.Component<LineSegmentProps> {}
 
-export interface VictoryPointProps extends VictoryCommonPrimitiveProps {
+export interface PointProps extends VictoryCommonPrimitiveProps {
   datum?: any;
   getPath?: (props: VictoryPointProps) => void;
   pathComponent?: React.ReactElement;
@@ -721,15 +721,15 @@ export interface VictoryPointProps extends VictoryCommonPrimitiveProps {
   y?: number;
 }
 
-export class Point extends React.Component<VictoryPointProps> {}
+export class Point extends React.Component<PointProps> {}
 
-export interface VictoryTextProps extends VictoryCommonPrimitiveProps {
+export interface TextProps extends VictoryCommonPrimitiveProps {
   children?: React.ReactNode;
   desc?: string;
   title?: string;
 }
 
-export class Text extends React.Component<VictoryTextProps> {}
+export class Text extends React.Component<TextProps> {}
 
 export type WhiskerAxes = {
   x1?: number;
@@ -738,14 +738,14 @@ export type WhiskerAxes = {
   y2?: number;
 };
 
-export interface VictoryWhiskerProps extends VictoryCommonPrimitiveProps {
+export interface WhiskerProps extends VictoryCommonPrimitiveProps {
   groupComponent?: React.ReactElement;
   lineComponent?: React.ReactElement;
   majorWhisker?: WhiskerAxes;
   minorWhisker?: WhiskerAxes;
 }
 
-export class Whisker extends React.Component<VictoryWhiskerProps> {}
+export class Whisker extends React.Component<WhiskerProps> {}
 
 export interface VictoryPrimitiveShapeProps extends VictoryCommonPrimitiveProps {
   desc?: string;

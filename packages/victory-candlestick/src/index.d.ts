@@ -85,7 +85,7 @@ export interface VictoryCandlestickProps
 
 export class VictoryCandlestick extends React.Component<VictoryCandlestickProps, any> {}
 
-export interface VictoryCandleProps extends VictoryCommonPrimitiveProps {
+export interface CandleProps extends VictoryCommonPrimitiveProps {
   candleRatio?: number;
   candleWidth?: number | Function;
   close?: number;
@@ -101,4 +101,4 @@ export interface VictoryCandleProps extends VictoryCommonPrimitiveProps {
   x?: number;
 }
 
-export class Candle extends React.Component<VictoryCandleProps, any> {}
+export class Candle extends React.Component<CandleProps, any> {}

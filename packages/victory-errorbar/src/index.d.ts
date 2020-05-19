@@ -28,7 +28,7 @@ export interface VictoryErrorBarProps
 
 export class VictoryErrorBar extends React.Component<VictoryErrorBarProps, any> {}
 
-export interface VictoryErrorBarPrimitiveProps extends VictoryCommonPrimitiveProps {
+export interface ErrorBarProps extends VictoryCommonPrimitiveProps {
   borderWidth?: number;
   datum?: any;
   errorX?: number | any[] | boolean;
@@ -39,4 +39,4 @@ export interface VictoryErrorBarPrimitiveProps extends VictoryCommonPrimitivePro
   y?: number;
 }
 
-export class ErrorBar extends React.Component<VictoryErrorBarPrimitiveProps, any> {}
+export class ErrorBar extends React.Component<ErrorBarProps, any> {}
