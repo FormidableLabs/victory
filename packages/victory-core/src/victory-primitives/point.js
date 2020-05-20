@@ -1,13 +1,13 @@
 import React from "react";
 import PropTypes from "prop-types";
+import { assign } from "lodash";
 import Helpers from "../victory-util/helpers";
 import pathHelpers from "./path-helpers";
 import CommonProps from "../victory-util/common-props";
 import Path from "./path";
 
 const getPath = (props) => {
-  const { x, y } = props;
-  const size = Helpers.evaluateProp(props.size, props);
+  const { x, y, size, symbol } = props;
   if (props.getPath) {
     return props.getPath(x, y, size);
   }
@@ -21,25 +21,47 @@ const getPath = (props) => {
     minus: pathHelpers.minus,
     star: pathHelpers.star
   };
-  const symbol = Helpers.evaluateProp(props.symbol, props);
   const symbolFunction =
     typeof pathFunctions[symbol] === "function" ? pathFunctions[symbol] : pathFunctions.circle;
   return symbolFunction(x, y, size);
 };
 
-const Point = (props) =>
-  React.cloneElement(props.pathComponent, {
+const evaluateProps = (props) => {
+  /**
+   * Potential evaluated props are:
+   * `desc`
+   * `id`
+   * `size`
+   * `style`
+   * `symbol`
+   * `tabIndex`
+   */
+  const desc = Helpers.evaluateProp(props.desc, props);
+  const id = Helpers.evaluateProp(props.id, props);
+  const size = Helpers.evaluateProp(props.size, props);
+  const style = Helpers.evaluateStyle(props.style, props);
+  const symbol = Helpers.evaluateProp(props.symbol, props);
+  const tabIndex = Helpers.evaluateProp(props.tabIndex, props);
+
+  return assign({}, props, { desc, id, size, style, symbol, tabIndex });
+};
+
+const Point = (props) => {
+  props = evaluateProps(props);
+
+  return React.cloneElement(props.pathComponent, {
     ...props.events,
     d: getPath(props),
-    style: Helpers.evaluateStyle(props.style, props),
-    desc: Helpers.evaluateProp(props.desc, props),
-    tabIndex: Helpers.evaluateProp(props.tabIndex, props),
+    style: props.style,
+    desc: props.desc,
+    tabIndex: props.tabIndex,
     role: props.role,
     shapeRendering: props.shapeRendering,
     className: props.className,
     transform: props.transform,
     clipPath: props.clipPath
   });
+};
 
 Point.propTypes = {
   ...CommonProps.primitiveProps,

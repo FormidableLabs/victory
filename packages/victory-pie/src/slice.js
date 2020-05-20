@@ -5,14 +5,13 @@ import { defaults, isFunction, assign } from "lodash";
 import * as d3Shape from "d3-shape";
 
 const getPath = (props) => {
-  const { slice, radius, innerRadius } = props;
+  const { slice, radius, innerRadius, cornerRadius } = props;
   if (isFunction(props.pathFunction)) {
     return props.pathFunction(slice);
   }
-  const cornerRadius = Helpers.evaluateProp(props.cornerRadius, props);
-  const padAngle = Helpers.degreesToRadians(Helpers.evaluateProp(props.padAngle, props));
-  const startAngle = Helpers.degreesToRadians(Helpers.evaluateProp(props.sliceStartAngle, props));
-  const endAngle = Helpers.degreesToRadians(Helpers.evaluateProp(props.sliceEndAngle, props));
+  const padAngle = Helpers.degreesToRadians(props.padAngle);
+  const startAngle = Helpers.degreesToRadians(props.sliceStartAngle);
+  const endAngle = Helpers.degreesToRadians(props.sliceEndAngle);
   const pathFunction = d3Shape
     .arc()
     .cornerRadius(cornerRadius)
@@ -22,16 +21,39 @@ const getPath = (props) => {
 };
 
 const evaluateProps = (props) => {
-  /* Potential evaluated props are
-    1) style
-    2) radius
-    3) innerRadius
-    4) everything else
-  */
+  /**
+   * * Potential evaluated props of following must be evaluated in this order:
+   * 1) `style`
+   * 2) `radius`
+   * 3) `innerRadius`
+   *
+   * Everything else does not have to be evaluated in a particular order:
+   * `id`
+   * `cornerRadius`
+   * `padAngle`
+   * `sliceStartAngle`
+   * `sliceEndAngle`
+   */
   const style = Helpers.evaluateStyle(props.style, props);
   const radius = Helpers.evaluateProp(props.radius, assign({}, props, { style }));
   const innerRadius = Helpers.evaluateProp(props.innerRadius, assign({}, props, { style, radius }));
-  return assign({}, props, { style, radius, innerRadius });
+
+  const id = Helpers.evaluateProp(props.id, props);
+  const cornerRadius = Helpers.evaluateProp(props.cornerRadius, props);
+  const padAngle = Helpers.evaluateProp(props.padAngle, props);
+  const sliceStartAngle = Helpers.evaluateProp(props.sliceStartAngle, props);
+  const sliceEndAngle = Helpers.evaluateProp(props.sliceEndAngle, props);
+
+  return assign({}, props, {
+    style,
+    radius,
+    innerRadius,
+    id,
+    cornerRadius,
+    padAngle,
+    sliceStartAngle,
+    sliceEndAngle
+  });
 };
 
 const Slice = (props) => {
@@ -39,6 +61,7 @@ const Slice = (props) => {
   const defaultTransform = props.origin
     ? `translate(${props.origin.x}, ${props.origin.y})`
     : undefined;
+
   return React.cloneElement(props.pathComponent, {
     ...props.events,
     d: getPath(props),

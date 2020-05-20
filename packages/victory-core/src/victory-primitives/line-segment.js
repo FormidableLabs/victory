@@ -5,12 +5,30 @@ import { assign } from "lodash";
 import CommonProps from "../victory-util/common-props";
 import Line from "./line";
 
-const LineSegment = (props) =>
-  React.cloneElement(props.lineComponent, {
+const evaluateProps = (props) => {
+  /**
+   * Potential evaluated props are:
+   * `desc`
+   * `id`
+   * `style`
+   * `tabIndex`
+   */
+  const desc = Helpers.evaluateProp(props.desc, props);
+  const id = Helpers.evaluateProp(props.id, props);
+  const style = Helpers.evaluateStyle(assign({ stroke: "black" }, props.style), props);
+  const tabIndex = Helpers.evaluateProp(props.tabIndex, props);
+
+  return assign({}, props, { desc, id, style, tabIndex });
+};
+
+const LineSegment = (props) => {
+  props = evaluateProps(props);
+
+  return React.cloneElement(props.lineComponent, {
     ...props.events,
-    style: Helpers.evaluateStyle(assign({ stroke: "black" }, props.style), props),
-    desc: Helpers.evaluateProp(props.desc, props),
-    tabIndex: Helpers.evaluateProp(props.tabIndex, props),
+    style: props.style,
+    desc: props.desc,
+    tabIndex: props.tabIndex,
     className: props.className,
     role: props.role,
     shapeRendering: props.shapeRendering,
@@ -21,6 +39,7 @@ const LineSegment = (props) =>
     transform: props.transform,
     clipPath: props.clipPath
   });
+};
 
 LineSegment.propTypes = {
   ...CommonProps.primitiveProps,
