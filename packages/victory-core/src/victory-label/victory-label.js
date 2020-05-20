@@ -112,7 +112,7 @@ const getTransform = (props) => {
   return transformPart || angle ? Style.toTransformString(transformPart, rotatePart) : undefined;
 };
 
-const getBackgroundElement = (props) => {
+const getFullBackground = (props) => {
   const { backgroundComponent, backgroundStyle } = props;
   const capHeight = getHeight(props, "capHeight");
   const x = props.x !== undefined ? props.x : getPosition(props, "x");
@@ -126,13 +126,23 @@ const getBackgroundElement = (props) => {
       : sumBy(props.style, (s) => s.fontSize);
   const width = TextSize.approximateTextSize(longestString, props.style).width;
 
-  const backgroundProps = {
+  return {
     height: textHeight + totalLineHeight,
     style: backgroundStyle,
     width,
     x,
     y
   };
+}
+
+getChildBackgrounds = (props) => {
+  return
+}
+
+const getBackgroundElement = (props) => {
+  const backgroundProps = Array.isArray(props.backgroundStyle)
+    ? getChildBackgrounds
+    : getFullBackground;
 
   return React.cloneElement(
     backgroundComponent,
