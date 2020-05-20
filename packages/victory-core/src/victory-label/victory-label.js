@@ -7,9 +7,10 @@ import Helpers from "../victory-util/helpers";
 import LabelHelpers from "../victory-util/label-helpers";
 import Style from "../victory-util/style";
 import Log from "../victory-util/log";
+import TextSize from "../victory-util/textsize";
 import TSpan from "../victory-primitives/tspan";
 import Text from "../victory-primitives/text";
-import { assign, defaults, isEmpty } from "lodash";
+import { assign, defaults, find, isEmpty, sumBy } from "lodash";
 
 const defaultStyles = {
   fill: "#252525",
@@ -116,10 +117,19 @@ const getBackgroundElement = (props) => {
   const capHeight = getHeight(props, "capHeight");
   const x = props.x !== undefined ? props.x : getPosition(props, "x");
   const y = props.y !== undefined ? props.y : getPosition(props, "y");
+  const totalLineHeight = getHeight(props, "lineHeight") * props.text.length;
+  const longestString = props.text.sort((a, b) => b.length - a.length)[0];
+  const textHeight =
+    props.text.length > props.style.length
+      ? sumBy(props.style, (s) => s.fontSize) +
+        defaultStyles.fontSize * (props.text.length - props.style.length)
+      : sumBy(props.style, (s) => s.fontSize);
+  const width = TextSize.approximateTextSize(longestString, props.style).width;
 
   const backgroundProps = {
-    height: capHeight,
+    height: textHeight + totalLineHeight,
     style: backgroundStyle,
+    width,
     x,
     y
   };
