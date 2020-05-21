@@ -59,9 +59,21 @@ const calculateError = (props) => {
   return result;
 };
 
-const ErrorBar = (props) => {
+const evaluateProps = (props) => {
+  /**
+   * Potential evaluated props are:
+   * `id`
+   * `style`
+   */
+  const id = Helpers.evaluateProp(props.id, props);
   const style = Helpers.evaluateStyle(assign({ stroke: "black" }, props.style), props);
-  props = assign({}, props, { style });
+
+  return assign({}, props, { id, style });
+};
+
+const ErrorBar = (props) => {
+  props = evaluateProps(props);
+
   const error = calculateError(props);
   const children = [
     error.right ? renderBorder(props, error, "right") : null,

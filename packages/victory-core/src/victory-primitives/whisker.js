@@ -1,11 +1,28 @@
 import React from "react";
+import { assign } from "lodash";
 import PropTypes from "prop-types";
 import Helpers from "../victory-util/helpers";
 import CommonProps from "../victory-util/common-props";
 import Line from "./line";
-import { assign } from "lodash";
+
+const evaluateProps = (props) => {
+  /**
+   * Potential evaluated props are:
+   * `desc`
+   * `id`
+   * `style`
+   * `tabIndex`
+   */
+  const desc = Helpers.evaluateProp(props.desc, props);
+  const id = Helpers.evaluateProp(props.id, props);
+  const style = Helpers.evaluateStyle(props.style, props);
+  const tabIndex = Helpers.evaluateProp(props.tabIndex, props);
+
+  return assign({}, props, { desc, id, style, tabIndex });
+};
 
 const Whisker = (props) => {
+  props = evaluateProps(props);
   const {
     groupComponent,
     lineComponent,
@@ -16,19 +33,23 @@ const Whisker = (props) => {
     transform,
     clipPath,
     role,
-    shapeRendering
+    shapeRendering,
+    style,
+    desc,
+    tabIndex
   } = props;
   const baseProps = {
     ...events,
-    style: Helpers.evaluateStyle(props.style, props),
-    desc: Helpers.evaluateProp(props.desc, props),
-    tabIndex: Helpers.evaluateProp(props.tabIndex, props),
+    style,
+    desc,
+    tabIndex,
     className,
     transform,
     clipPath,
     role,
     shapeRendering
   };
+
   return React.cloneElement(groupComponent, {}, [
     React.cloneElement(lineComponent, assign({ key: "major-whisker" }, baseProps, majorWhisker)),
     React.cloneElement(lineComponent, assign({ key: "minor-whisker" }, baseProps, minorWhisker))

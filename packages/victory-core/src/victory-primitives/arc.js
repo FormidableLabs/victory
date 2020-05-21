@@ -25,19 +25,41 @@ const getArcPath = (props) => {
   return `${arcStart} ${arc1} ${arc2} ${arcEnd}`;
 };
 
-const Arc = (props) =>
-  React.cloneElement(props.pathComponent, {
+const evaluateProps = (props) => {
+  /**
+   * Potential evaluated props are:
+   * `desc`
+   * `id`
+   * `style`
+   * `tabIndex`
+   */
+  const desc = Helpers.evaluateProp(props.desc, props);
+  const id = Helpers.evaluateProp(props.id, props);
+  const style = Helpers.evaluateStyle(
+    assign({ stroke: "black", fill: "none" }, props.style),
+    props
+  );
+  const tabIndex = Helpers.evaluateProp(props.tabIndex, props);
+
+  return assign({}, props, { desc, id, style, tabIndex });
+};
+
+const Arc = (props) => {
+  props = evaluateProps(props);
+
+  return React.cloneElement(props.pathComponent, {
     ...props.events,
     d: getArcPath(props),
-    style: Helpers.evaluateStyle(assign({ stroke: "black", fill: "none" }, props.style), props),
-    desc: Helpers.evaluateProp(props.desc, props),
-    tabIndex: Helpers.evaluateProp(props.tabIndex, props),
+    style: props.style,
+    desc: props.desc,
+    tabIndex: props.tabIndex,
     className: props.className,
     role: props.role,
     shapeRendering: props.shapeRendering,
     transform: props.transform,
     clipPath: props.clipPath
   });
+};
 
 Arc.propTypes = {
   ...CommonProps.primitiveProps,

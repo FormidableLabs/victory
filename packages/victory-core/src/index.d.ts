@@ -579,7 +579,7 @@ export interface VictoryCommonPrimitiveProps {
   data?: any;
   desc?: string | Function;
   events?: object;
-  id?: number | string;
+  id?: number | string | Function;
   index?: number | string;
   origin?: OriginType;
   polar?: boolean;

@@ -151,7 +151,7 @@ const primitiveProps = {
   data: PropTypes.oneOfType([PropTypes.array, PropTypes.object]),
   desc: PropTypes.oneOfType([PropTypes.string, PropTypes.func]),
   events: PropTypes.object,
-  id: PropTypes.oneOfType([PropTypes.number, PropTypes.string]),
+  id: PropTypes.oneOfType([PropTypes.number, PropTypes.string, PropTypes.func]),
   index: PropTypes.oneOfType([PropTypes.number, PropTypes.string]),
   origin: PropTypes.shape({ x: PropTypes.number, y: PropTypes.number }),
   polar: PropTypes.bool,
