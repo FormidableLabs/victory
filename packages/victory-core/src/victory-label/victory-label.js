@@ -112,37 +112,80 @@ const getTransform = (props) => {
   return transformPart || angle ? Style.toTransformString(transformPart, rotatePart) : undefined;
 };
 
-const getFullBackground = (props) => {
-  const { backgroundComponent, backgroundStyle } = props;
-  const capHeight = getHeight(props, "capHeight");
+const getXCoordinate = (props, labelSizeWidth) => {
+  const textAnchor = props.textAnchor ? Helpers.evaluateProp(props.textAnchor, props) : "start";
   const x = props.x !== undefined ? props.x : getPosition(props, "x");
+  const direction = props.direction ? props.direction : "inherit";
+
+  // still needs some work figuring out this
+  if (direction === "rtl") {
+    return x - labelSizeWidth;
+  }
+
+  switch (textAnchor) {
+    case "start":
+      return x;
+    case "middle":
+      return x - labelSizeWidth / 2;
+    case "end":
+      return x - labelSizeWidth;
+    default:
+      return x;
+  }
+};
+
+const getYCoordinate = (props, labelSizeHeight, textHeight, totalLineHeight) => {
+  const verticalAnchor = props.verticalAnchor
+    ? Helpers.evaluateProp(props.verticalAnchor, props)
+    : "middle";
   const y = props.y !== undefined ? props.y : getPosition(props, "y");
+
+  switch (verticalAnchor) {
+    case "start":
+      return y;
+    // "middle" & default calculation still need some work
+    case "middle":
+      return y - labelSizeHeight - totalLineHeight;
+    case "end":
+      return y - textHeight;
+    default:
+      return y - labelSizeHeight - totalLineHeight;
+  }
+};
+
+const getFullBackground = (props) => {
+  const { backgroundStyle } = props;
   const totalLineHeight = getHeight(props, "lineHeight") * props.text.length;
-  const longestString = props.text.sort((a, b) => b.length - a.length)[0];
   const textHeight =
     props.text.length > props.style.length
       ? sumBy(props.style, (s) => s.fontSize) +
         defaultStyles.fontSize * (props.text.length - props.style.length)
       : sumBy(props.style, (s) => s.fontSize);
-  const width = TextSize.approximateTextSize(longestString, props.style).width;
+  const longestString = props.text.reduce((a, b) => (a.length > b.length ? a : b));
+  const labelSize = TextSize.approximateTextSize(longestString, props.style);
+  const xCoordinate = getXCoordinate(props, labelSize.width);
+  const yCoordinate = getYCoordinate(props, labelSize.height, textHeight, totalLineHeight);
 
   return {
     height: textHeight + totalLineHeight,
     style: backgroundStyle,
-    width,
-    x,
-    y
+    width: labelSize.width,
+    x: xCoordinate,
+    y: yCoordinate
   };
-}
+};
 
-getChildBackgrounds = (props) => {
-  return
-}
+const getChildBackgrounds = (props) => {
+  const { backgroundStyle } = props;
+
+  return;
+};
 
 const getBackgroundElement = (props) => {
+  const backgroundComponent = props.backgroundComponent;
   const backgroundProps = Array.isArray(props.backgroundStyle)
-    ? getChildBackgrounds
-    : getFullBackground;
+    ? getChildBackgrounds(props)
+    : getFullBackground(props);
 
   return React.cloneElement(
     backgroundComponent,
