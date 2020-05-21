@@ -119,7 +119,7 @@ const getXCoordinate = (props, labelSizeWidth) => {
 
   // still needs some work figuring out this
   if (direction === "rtl") {
-    return x - labelSizeWidth;
+    return x - (labelSizeWidth / 2);
   }
 
   switch (textAnchor) {
@@ -153,31 +153,27 @@ const getYCoordinate = (props, labelSizeHeight, textHeight, totalLineHeight) => 
   }
 };
 
-const getFullBackground = (props) => {
-  const { backgroundStyle } = props;
+const getFullBackground = (props, textComponent) => {
+  const { backgroundStyle, x, y } = props;
   const totalLineHeight = getHeight(props, "lineHeight") * props.text.length;
+  const longestString = props.text.reduce((a, b) => (a.length > b.length ? a : b));
   const textHeight =
     props.text.length > props.style.length
       ? sumBy(props.style, (s) => s.fontSize) +
         defaultStyles.fontSize * (props.text.length - props.style.length)
       : sumBy(props.style, (s) => s.fontSize);
   const width = TextSize.approximateTextSize(longestString, props.style).width;
-  const labelSize = TextSize.approximateTextSize(longestString, props.style);
-  const longestString = props.text.reduce((a, b) => (a.length > b.length ? a : b));
+  const labelSize = TextSize.approximateTextSize(textComponent, props.style);
   const xCoordinate = getXCoordinate(props, labelSize.width);
-  const yCoordinate = getYCoordinate(props, labelSize.height, textHeight, totalLineHeight);
+  const yCoordinate = getYCoordinate(props, totalLineHeight, labelSize.height, totalLineHeight);
 
   return {
-    height: textHeight + totalLineHeight,
+    height: textHeight,
     style: backgroundStyle,
-    width,
-    x,
-    y
+    width: width,
+    x: xCoordinate,
+    y: yCoordinate
   };
-}
-
-getChildBackgrounds = (props) => {
-  return
 }
 
 const getChildBackgrounds = (props) => {
@@ -186,11 +182,11 @@ const getChildBackgrounds = (props) => {
   return;
 };
 
-const getBackgroundElement = (props) => {
+const getBackgroundElement = (props, textComponent) => {
   const backgroundComponent = props.backgroundComponent;
   const backgroundProps = Array.isArray(props.backgroundStyle)
     ? getChildBackgrounds(props)
-    : getFullBackground(props);
+    : getFullBackground(props, textComponent);
 
   return React.cloneElement(
     backgroundComponent,
@@ -207,6 +203,7 @@ const renderTextElements = (props) => {
   const transform = getTransform(props);
   const x = props.x !== undefined ? props.x : getPosition(props, "x");
   const y = props.y !== undefined ? props.y : getPosition(props, "y");
+  let backgroundEl;
 
   const textChildren = text.map((line, i) => {
     const currentStyle = style[i] || style[0];
@@ -229,7 +226,7 @@ const renderTextElements = (props) => {
     return React.cloneElement(props.tspanComponent, tspanProps);
   });
 
-  return React.cloneElement(
+  const textComponent = React.cloneElement(
     props.textComponent,
     {
       ...events,
@@ -247,6 +244,12 @@ const renderTextElements = (props) => {
     },
     textChildren
   );
+
+  if (props.backgroundStyle) {
+    backgroundEl = getBackgroundElement(props, textComponent);
+  }
+
+  return backgroundEl ? [backgroundEl, textComponent] : textComponent;
 };
 
 const evaluateProps = (props) => {
@@ -266,20 +269,8 @@ const VictoryLabel = (props) => {
   if (props.text === null || props.text === undefined) {
     return null;
   }
+  
   const label = renderTextElements(props);
-
-  if (props.backgroundStyle) {
-    const backgroundElement = getBackgroundElement(props);
-
-    return props.renderInPortal ? (
-      <VictoryPortal>
-        {backgroundElement}
-        {label}
-      </VictoryPortal>
-    ) : (
-      [backgroundElement, label]
-    );
-  }
 
   return props.renderInPortal ? <VictoryPortal>{label}</VictoryPortal> : label;
 };
