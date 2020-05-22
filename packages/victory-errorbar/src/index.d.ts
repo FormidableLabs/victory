@@ -5,6 +5,7 @@ import {
   StringOrNumberOrList,
   VictoryDatableProps,
   VictoryCommonProps,
+  VictoryCommonPrimitiveProps,
   VictoryLabelableProps,
   VictoryMultiLabelableProps,
   VictoryStyleInterface
@@ -26,3 +27,16 @@ export interface VictoryErrorBarProps
 }
 
 export class VictoryErrorBar extends React.Component<VictoryErrorBarProps, any> {}
+
+export interface ErrorBarProps extends VictoryCommonPrimitiveProps {
+  borderWidth?: number;
+  datum?: any;
+  errorX?: number | any[] | boolean;
+  errorY?: number | any[] | boolean;
+  groupComponent?: React.ReactElement;
+  lineComponent?: React.ReactElement;
+  x?: number;
+  y?: number;
+}
+
+export class ErrorBar extends React.Component<ErrorBarProps, any> {}

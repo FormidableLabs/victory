@@ -4,6 +4,7 @@ import {
   InterpolationPropType,
   StringOrNumberOrCallback,
   VictoryCommonProps,
+  VictoryCommonPrimitiveProps,
   VictoryDatableProps,
   VictoryMultiLabelableProps,
   VictoryStyleInterface
@@ -27,3 +28,14 @@ export interface VictoryAreaProps
  * Add VictoryArea as a child of VictoryChart for a complete chart.
  */
 export class VictoryArea extends React.Component<VictoryAreaProps, any> {}
+
+export interface AreaProps extends VictoryCommonPrimitiveProps {
+  groupComponent?: React.ReactElement;
+  interpolation?: string | Function;
+  pathComponent?: React.ReactElement;
+}
+
+/**
+ * The area primitive used by VictoryArea
+ */
+export class Area extends React.Component<AreaProps, any> {}
