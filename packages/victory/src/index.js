@@ -87,6 +87,7 @@ import { VictorySharedEvents } from "victory-shared-events";
 import { VictoryAxis } from "victory-axis";
 import { VictoryPolarAxis } from "victory-polar-axis";
 
+// reexports
 export {
   Area,
   Background,
