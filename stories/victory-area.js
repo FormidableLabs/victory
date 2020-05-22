@@ -14,7 +14,7 @@ storiesOf("VictoryArea", module).add("default rendering", () => <VictoryArea />)
 storiesOf("VictoryArea.theme", module)
   .addDecorator(getChartDecorator({ theme: VictoryTheme.material }))
   .add("material theme", () => <VictoryArea data={getData(8)} />)
-  .add("material theme stacked", () => (
+  .add("material theme stacked area", () => (
     <VictoryStack labels={({ datum }) => datum.x}>
       <VictoryArea data={getData(8)} />
       <VictoryArea data={getData(8, "seed-1")} />
