@@ -10,7 +10,7 @@ import Log from "../victory-util/log";
 import TextSize from "../victory-util/textsize";
 import TSpan from "../victory-primitives/tspan";
 import Text from "../victory-primitives/text";
-import { assign, defaults, find, isEmpty, sumBy } from "lodash";
+import { assign, defaults, isEmpty, sumBy } from "lodash";
 
 const defaultStyles = {
   fill: "#252525",
@@ -154,7 +154,7 @@ const getYCoordinate = (props, labelSizeHeight, textHeight, totalLineHeight) => 
 };
 
 const getFullBackground = (props) => {
-  const { backgroundStyle } = props;
+  const { backgroundStyle, backgroundComponent } = props;
   const totalLineHeight = getHeight(props, "lineHeight") * props.text.length;
   const textHeight =
     props.text.length > props.style.length
@@ -166,31 +166,69 @@ const getFullBackground = (props) => {
   const xCoordinate = getXCoordinate(props, labelSize.width);
   const yCoordinate = getYCoordinate(props, labelSize.height, textHeight, totalLineHeight);
 
-  return {
+  const backgroundProps = {
     height: textHeight + totalLineHeight,
     style: backgroundStyle,
     width: labelSize.width,
     x: xCoordinate,
     y: yCoordinate
   };
-};
-
-const getChildBackgrounds = (props) => {
-  const { backgroundStyle } = props;
-
-  return;
-};
-
-const getBackgroundElement = (props) => {
-  const backgroundComponent = props.backgroundComponent;
-  const backgroundProps = Array.isArray(props.backgroundStyle)
-    ? getChildBackgrounds(props)
-    : getFullBackground(props);
 
   return React.cloneElement(
     backgroundComponent,
     defaults({}, backgroundComponent.props, backgroundProps)
   );
+};
+
+const getChildBackgrounds = (props) => {
+  const { inline, backgroundStyle, backgroundComponent, text, style } = props;
+  const lineHeight = getHeight(props, "lineHeight");
+
+  const backgroundStyleChildren = backgroundStyle.map((bgStyle, i) => {
+    const textElement = text.map((line) => {
+      const currentStyle = style[i] || style[0];
+      const lastStyle = style[i - 1] || style[0];
+      const fontSize = (currentStyle.fontSize + lastStyle.fontSize) / 2;
+      const currentLineHeight = checkLineHeight(
+        lineHeight,
+        (lineHeight[i] + (lineHeight[i - 1] || lineHeight[0])) / 2,
+        1
+      );
+      const labelSize = TextSize.approximateTextSize(line, currentStyle);
+
+      return {
+        fontSize,
+        currentLineHeight,
+        labelSize,
+        dy: i && !inline ? currentLineHeight * fontSize : 0
+      };
+    });
+
+    const backgroundProps = {
+      height: textElement[i].fontSize + textElement[i].currentLineHeight,
+      style: bgStyle,
+      width: textElement[i].labelSize.width,
+      // still need to figure out if this will work for all the different cases
+      x: props.x,
+      // still need to figure out how to add all previous dy values to get current dy value
+      y: textElement[i].dy + props.y
+    };
+
+    return React.cloneElement(
+      backgroundComponent,
+      defaults({}, backgroundComponent.props, backgroundProps)
+    );
+  });
+
+  return backgroundStyleChildren;
+};
+
+const getBackgroundElement = (props) => {
+  const backgroundElement = Array.isArray(props.backgroundStyle)
+    ? getChildBackgrounds(props)
+    : getFullBackground(props);
+
+  return backgroundElement;
 };
 
 const renderTextElements = (props) => {
@@ -265,14 +303,13 @@ const VictoryLabel = (props) => {
 
   if (props.backgroundStyle) {
     const backgroundElement = getBackgroundElement(props);
+    const children = [backgroundElement, label];
+    const backgroundWithLabel = React.cloneElement(props.groupComponent, {}, children);
 
     return props.renderInPortal ? (
-      <VictoryPortal>
-        {backgroundElement}
-        {label}
-      </VictoryPortal>
+      <VictoryPortal>{backgroundWithLabel}</VictoryPortal>
     ) : (
-      [backgroundElement, label]
+      backgroundWithLabel
     );
   }
 
@@ -296,6 +333,7 @@ VictoryLabel.propTypes = {
   dx: PropTypes.oneOfType([PropTypes.number, PropTypes.string, PropTypes.func]),
   dy: PropTypes.oneOfType([PropTypes.number, PropTypes.string, PropTypes.func]),
   events: PropTypes.object,
+  groupComponent: PropTypes.element,
   id: PropTypes.oneOfType([PropTypes.number, PropTypes.string, PropTypes.func]),
   index: PropTypes.oneOfType([PropTypes.number, PropTypes.string]),
   inline: PropTypes.bool,
@@ -337,6 +375,7 @@ VictoryLabel.propTypes = {
 
 VictoryLabel.defaultProps = {
   backgroundComponent: <Background />,
+  groupComponent: <g />,
   direction: "inherit",
   textComponent: <Text />,
   tspanComponent: <TSpan />,

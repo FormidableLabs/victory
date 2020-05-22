@@ -157,6 +157,12 @@ export default class App extends React.Component {
           <VictoryLabel
             x={0}
             y={2000}
+            backgroundStyle={[
+              { fill: "pink" },
+              { fill: "blue" },
+              { fill: "purple" },
+              { fill: "red" }
+            ]}
             text={["Victory is awesome.", "This is variable", "lineHeight", "as an array."]}
             style={[
               { fontSize: 50, fill: "green" },
