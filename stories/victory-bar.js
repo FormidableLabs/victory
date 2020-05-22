@@ -374,6 +374,18 @@ storiesOf("VictoryBar.stacked", module)
       <VictoryBar data={getData(3, "seed-2")} />
     </VictoryStack>
   ))
+  .add("stacked bars with mixed lengths (perf)", () => (
+    <VictoryStack>
+      <VictoryBar data={getData(90)} />
+      <VictoryBar data={getData(50, "seed-1")} />
+      <VictoryBar data={getData(200, "seed-2")} />
+      <VictoryBar data={getData(30, "seed-3")} />
+      <VictoryBar data={getData(200, "seed-4")} />
+      <VictoryBar data={getData(100, "seed-5")} />
+      <VictoryBar data={getData(200, "seed-6")} />
+      <VictoryBar data={getData(190, "seed-7")} />
+    </VictoryStack>
+  ))
   .add("stacked bars with labels", () => (
     <VictoryStack labels={({ datum }) => datum.x}>
       <VictoryBar data={getData(7)} />
