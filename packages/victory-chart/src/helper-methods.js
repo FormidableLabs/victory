@@ -108,9 +108,9 @@ function getCalculatedProps(props, childComponents) {
   const style = getStyles(props);
   props = Helpers.modifyProps(props, fallbackProps, "chart");
   const { horizontal, polar } = props;
-  const categories = Wrapper.getCategories(props, childComponents);
-  const stringMap = createStringMap(props, childComponents);
-
+  const allStrings = Wrapper.getStringsFromChildren(props, childComponents);
+  const categories = Wrapper.getCategories(props, childComponents, allStrings);
+  const stringMap = createStringMap(props, childComponents, allStrings);
   const domain = {
     x: getDomain(assign({}, props, { categories }), "x", childComponents),
     y: getDomain(assign({}, props, { categories }), "y", childComponents)
@@ -270,9 +270,7 @@ const getHorizontalAxisOffset = (props, calculatedProps) => {
   };
 };
 
-const createStringMap = (props, childComponents) => {
-  const allStrings = Wrapper.getStringsFromChildren(props, childComponents);
-
+const createStringMap = (props, childComponents, allStrings) => {
   const x =
     !allStrings.x || allStrings.x.length === 0
       ? null
