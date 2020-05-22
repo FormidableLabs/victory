@@ -27,8 +27,9 @@
     "start": "nps start",
     "start-ts": "nps start.ts",
     "storybook": "nps storybook.server",
-    "chromatic": "chromatic test --storybook-addon --port=6006",
-    "chromatic-ci": "chromatic test --storybook-addon --port=6006 --exit-zero-on-changes"
+    "build-storybook": "build-storybook",
+    "chromatic": "chromatic",
+    "chromatic-ci": "chromatic --exit-zero-on-changes"
   },
   "devDependencies": {
     "@babel/cli": "7.0.0-beta.44",
@@ -60,6 +61,7 @@
     "babel-plugin-module-resolver": "^3.1.1",
     "babel-preset-react-native": "^1.9.0",
     "chai": "^3.5.0",
+    "chromatic": "^4.0.3",
     "core-js": "^2.5.1",
     "cross-env": "^5.2.0",
     "d3-scale": "^1.0.0",
@@ -101,7 +103,6 @@
     "prettier": "^1.15.3",
     "prop-types": "^15.5.8",
     "react": "^16.13.1",
-    "react-chromatic": "^0.8.2",
     "react-dom": "^16.13.1",
     "react-hot-loader": "v2.0.0-alpha-4",
     "rimraf": "^2.4.0",

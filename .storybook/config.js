@@ -1,6 +1,5 @@
 import { configure, addDecorator } from "@storybook/react";
 import React from "react";
-import "react-chromatic/storybook-addon";
 import { setOptions } from "@storybook/addon-options";
 import { withPerformance } from "storybook-addon-performance";
 
@@ -14,11 +13,7 @@ setOptions({
   hierarchySeparator: /\./
 });
 
-const storyWrapper = (story) => {
-  return <div style={{ maxWidth: "80%" }}>{story()}</div>;
-};
-
-addDecorator(storyWrapper);
+addDecorator(story => <div style={{ maxWidth: "80%" }}>{story()}</div>);
 addDecorator(withPerformance);
 
 const loadStories = () => {
