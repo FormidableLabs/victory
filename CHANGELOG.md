@@ -1,5 +1,9 @@
 # Victory Changelog
 
+## 34.3.7 (2020-05-22)
+
+- [#1576](https://github.com/FormidableLabs/victory/pull/1576) - Add more types for primitive components. Thanks @maddles
+
 ## 34.3.6 (2020-05-18)
 
 - [#1580](https://github.com/FormidableLabs/victory/pull/1580) - Improve histogram tooltip positioning for `VictoryVoronoiContainer`
