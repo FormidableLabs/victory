@@ -52,7 +52,7 @@ module.exports = {
       ci: 'prettier --list-different "./**/*.{js,jsx,json,ts,tsx}"'
     },
     check: {
-      ci: npsUtils.series.nps("format.ci", "lint", "karma.ci"),
+      ci: npsUtils.series.nps("format.ci", "lint", "build-package-libs", "karma.ci"),
       cov: npsUtils.series.nps("lint", "test.cov"),
       dev: npsUtils.series.nps("lint", "test.dev"),
       default: npsUtils.series.nps("lint", "test")
