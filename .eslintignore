@@ -1,3 +1,8 @@
 node_modules/*
 config/*
 package-scripts.js
+storybook-static/*
+coverage
+dist
+lib
+es
