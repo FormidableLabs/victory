@@ -33,7 +33,7 @@ module.exports = {
       default: npsUtils.concurrent.nps("watch", "server.dev", "server.test")
     },
     lint: {
-      src: "lerna exec --stream -- eslint --color  --debug --ext  .js,.jsx,.ts,.tsx src",
+      src: "lerna exec --stream -- eslint --color --ext .js,.jsx,.ts,.tsx src",
       demo: "eslint --color --ext .js,.jsx,.ts,.tsx demo",
       stories: "eslint --color stories",
       storybook: "eslint --color --no-ignore .storybook/config.js",
