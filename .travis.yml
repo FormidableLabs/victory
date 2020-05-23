@@ -19,7 +19,15 @@ before_install:
 script:
 - yarn --version
 - yarn nps check.ci
-- if [ "${TRAVIS_NODE_VERSION}" = "10" ]; then yarn chromatic-ci || echo "Chromatic tests failed. Please investigate"; fi
+# Only run chromatic if there are changes in the packages directory or stories directory.
+# We early terminate the entire job otherwise.
+# See: https://reflectoring.io/skip-ci-build/#using-a-git-diff-in-the-ci-build
+- export CHANGED_FILES=$(git diff --name-only $TRAVIS_COMMIT_RANGE)
+- |
+  npx -q match-str -i "^(stories\/|packages\/)" -s "$CHANGED_FILES" && \
+  { echo "[CHANGES] packages or stories changed."; } || \
+  { echo "[NO CHANGES] No package or stories changes."; travis_terminate 0; }
+- if [ "${TRAVIS_PULL_REQUEST}" != "false" && "${TRAVIS_NODE_VERSION}" = "10" ]; then yarn chromatic-ci || echo "Chromatic tests failed. Please investigate"; fi
 after_success:
 - yarn config delete ignore-engines
 env:
