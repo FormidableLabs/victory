@@ -44,8 +44,7 @@ module.exports = {
         "lint.stories",
         "lint.storybook",
         "lint.demo",
-        "lint.src",
-        "lint.ts"
+        "lint.src"
       )
     },
     format: {

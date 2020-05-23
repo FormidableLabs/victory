@@ -10,3 +10,4 @@ yarn-error.log*
 .cache
 lerna.json
 tsconfig.json
+storybook-static
