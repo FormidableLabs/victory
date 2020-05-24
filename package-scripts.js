@@ -33,7 +33,7 @@ module.exports = {
       default: npsUtils.concurrent.nps("watch", "server.dev", "server.test")
     },
     lint: {
-      src: "lerna exec --parallel -- eslint --color --ext .js,.jsx,.ts,.tsx src",
+      src: "lerna exec --stream -- eslint --color --ext .js,.jsx,.ts,.tsx src",
       demo: "eslint --color --ext .js,.jsx,.ts,.tsx demo",
       stories: "eslint --color stories",
       storybook: "eslint --color --no-ignore .storybook/config.js",
@@ -44,8 +44,7 @@ module.exports = {
         "lint.stories",
         "lint.storybook",
         "lint.demo",
-        "lint.src",
-        "lint.ts"
+        "lint.src"
       )
     },
     format: {
@@ -53,7 +52,7 @@ module.exports = {
       ci: 'prettier --list-different "./**/*.{js,jsx,json,ts,tsx}"'
     },
     check: {
-      ci: npsUtils.series.nps("format.ci", "lint", "karma.ci"),
+      ci: npsUtils.series.nps("format.ci", "lint", "build-package-libs", "karma.ci"),
       cov: npsUtils.series.nps("lint", "test.cov"),
       dev: npsUtils.series.nps("lint", "test.dev"),
       default: npsUtils.series.nps("lint", "test")
