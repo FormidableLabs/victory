@@ -407,7 +407,7 @@ export default {
     };
   },
 
-  getCategories(props) {
+  getCategories(props, childComponents, allStrings) {
     const xPropCategories =
       props.categories && !Array.isArray(props.categories) ? props.categories.x : props.categories;
 
@@ -416,7 +416,9 @@ export default {
 
     const fallbackRequired = !xPropCategories || !yPropCategories;
 
-    const fallbackProps = fallbackRequired ? this.getStringsFromChildren(props) : {};
+    const fallbackProps = fallbackRequired
+      ? allStrings || this.getStringsFromChildren(props, childComponents)
+      : {};
 
     const xCategories = xPropCategories || fallbackProps.x;
     const yCategories = yPropCategories || fallbackProps.y;
