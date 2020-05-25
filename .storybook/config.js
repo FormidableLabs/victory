@@ -14,8 +14,6 @@ setOptions({
 });
 
 addDecorator((story) => <div style={{ maxWidth: "80%" }}>{story()}</div>);
-
-addDecorator(storyWrapper);
 addDecorator(withPerformance);
 
 const loadStories = () => {
