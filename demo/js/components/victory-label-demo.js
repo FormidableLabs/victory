@@ -12,7 +12,7 @@ export default class App extends React.Component {
             transform="translate(50)"
             x={0}
             y={0}
-            text={"Victory is awesome. This is default anchoring.\nسلام?"}
+            text={"Victory is awesome.\nThis is default anchoring.\nسلام?"}
           />
 
           <circle cx="200" cy="50" r="2" fill="red" />
