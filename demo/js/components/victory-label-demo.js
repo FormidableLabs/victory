@@ -26,7 +26,13 @@ export default class App extends React.Component {
           />
 
           <circle cx="0" cy="75" r="2" fill="red" />
-          <VictoryLabel x={0} y={75} angle={65} text={"Now with angles!!"} />
+          <VictoryLabel
+            backgroundStyle={{ fill: "pink" }}
+            x={0}
+            y={75}
+            angle={65}
+            text={"Now with angles!!"}
+          />
 
           <circle cx="300" cy="150" r="2" fill="pink" />
           <VictoryLabel

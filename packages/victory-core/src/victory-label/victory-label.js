@@ -132,7 +132,8 @@ const getXCoordinate = (calculatedProps, labelSizeWidth) => {
   }
 };
 
-const getYCoordinate = (calculatedProps, labelSizeHeight, textHeight, totalLineHeight) => {
+const getYCoordinate = (calculatedProps, heightVals) => {
+  const { labelSizeHeight, textHeight, totalLineHeight } = heightVals;
   const { verticalAnchor, y } = calculatedProps;
   // still needs some work figuring out this
   switch (verticalAnchor) {
@@ -149,7 +150,7 @@ const getYCoordinate = (calculatedProps, labelSizeHeight, textHeight, totalLineH
 };
 
 const getFullBackground = (props, calculatedProps) => {
-  const { backgroundStyle, backgroundComponent, style, text } = props;
+  const { angle, backgroundStyle, backgroundComponent, style, text } = props;
   const { lineHeight } = calculatedProps;
 
   const totalLineHeight = lineHeight * text.length;
@@ -159,17 +160,17 @@ const getFullBackground = (props, calculatedProps) => {
       : sumBy(style, (s) => s.fontSize);
   const longestString = text.reduce((a, b) => (a.length > b.length ? a : b));
   const labelSize = TextSize.approximateTextSize(longestString, style);
+  const labelHeight = labelSize.height;
+  const heightVals = { labelHeight, textHeight, totalLineHeight };
   const xCoordinate = getXCoordinate(calculatedProps, labelSize.width);
-  const yCoordinate = getYCoordinate(
-    calculatedProps,
-    labelSize.height,
-    textHeight,
-    totalLineHeight
-  );
+  const yCoordinate = getYCoordinate(calculatedProps, heightVals);
+  const transform =
+    angle === undefined ? undefined : `rotate(${[angle, xCoordinate, yCoordinate]})`;
 
   const backgroundProps = {
     height: textHeight + totalLineHeight,
     style: backgroundStyle,
+    transform,
     width: labelSize.width,
     x: xCoordinate,
     y: yCoordinate
@@ -307,7 +308,6 @@ const getCalculatedProps = (props) => {
 
 const VictoryLabel = (props) => {
   props = evaluateProps(props);
-  console.log(props);
 
   if (props.text === null || props.text === undefined) {
     return null;
