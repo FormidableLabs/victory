@@ -12,7 +12,7 @@ export default class App extends React.Component {
             transform="translate(50)"
             x={0}
             y={0}
-            text={"Victory is awesome. This is default anchoring.\nسلام?"}
+            text={"Victory is awesome.\nThis is default anchoring.\nسلام?"}
           />
 
           <circle cx="200" cy="50" r="2" fill="red" />
@@ -157,6 +157,12 @@ export default class App extends React.Component {
           <VictoryLabel
             x={0}
             y={2000}
+            backgroundStyle={[
+              { fill: "pink" },
+              { fill: "blue" },
+              { fill: "purple" },
+              { fill: "red" }
+            ]}
             text={["Victory is awesome.", "This is variable", "lineHeight", "as an array."]}
             style={[
               { fontSize: 50, fill: "green" },

@@ -1,7 +1,7 @@
 import React from "react";
 import PropTypes from "prop-types";
 import VictoryPortal from "../victory-portal/victory-portal";
-import Background from "../victory-primitives/background";
+import Rect from "../victory-primitives/rect";
 import CustomPropTypes from "../victory-util/prop-types";
 import Helpers from "../victory-util/helpers";
 import LabelHelpers from "../victory-util/label-helpers";
@@ -10,7 +10,7 @@ import Log from "../victory-util/log";
 import TextSize from "../victory-util/textsize";
 import TSpan from "../victory-primitives/tspan";
 import Text from "../victory-primitives/text";
-import { assign, defaults, find, isEmpty, sumBy } from "lodash";
+import { assign, defaults, isEmpty, sumBy } from "lodash";
 
 const defaultStyles = {
   fill: "#252525",
@@ -112,16 +112,14 @@ const getTransform = (props) => {
   return transformPart || angle ? Style.toTransformString(transformPart, rotatePart) : undefined;
 };
 
-const getXCoordinate = (props, labelSizeWidth) => {
-  const textAnchor = props.textAnchor ? Helpers.evaluateProp(props.textAnchor, props) : "start";
-  const x = props.x !== undefined ? props.x : getPosition(props, "x");
-  const direction = props.direction ? props.direction : "inherit";
+const getXCoordinate = (calculatedProps, labelSizeWidth) => {
+  const { direction, textAnchor, x } = calculatedProps;
 
   // still needs some work figuring out this
   if (direction === "rtl") {
-    return x - (labelSizeWidth / 2);
+    return x - labelSizeWidth;
   }
-
+  // still needs some work figuring out this
   switch (textAnchor) {
     case "start":
       return x;
@@ -134,12 +132,9 @@ const getXCoordinate = (props, labelSizeWidth) => {
   }
 };
 
-const getYCoordinate = (props, labelSizeHeight, textHeight, totalLineHeight) => {
-  const verticalAnchor = props.verticalAnchor
-    ? Helpers.evaluateProp(props.verticalAnchor, props)
-    : "middle";
-  const y = props.y !== undefined ? props.y : getPosition(props, "y");
-
+const getYCoordinate = (calculatedProps, labelSizeHeight, textHeight, totalLineHeight) => {
+  const { verticalAnchor, y } = calculatedProps;
+  // still needs some work figuring out this
   switch (verticalAnchor) {
     case "start":
       return y;
@@ -153,40 +148,32 @@ const getYCoordinate = (props, labelSizeHeight, textHeight, totalLineHeight) => 
   }
 };
 
-const getFullBackground = (props, textComponent) => {
-  const { backgroundStyle, x, y } = props;
-  const totalLineHeight = getHeight(props, "lineHeight") * props.text.length;
-  const longestString = props.text.reduce((a, b) => (a.length > b.length ? a : b));
-  const textHeight =
-    props.text.length > props.style.length
-      ? sumBy(props.style, (s) => s.fontSize) +
-        defaultStyles.fontSize * (props.text.length - props.style.length)
-      : sumBy(props.style, (s) => s.fontSize);
-  const width = TextSize.approximateTextSize(longestString, props.style).width;
-  const labelSize = TextSize.approximateTextSize(textComponent, props.style);
-  const xCoordinate = getXCoordinate(props, labelSize.width);
-  const yCoordinate = getYCoordinate(props, totalLineHeight, labelSize.height, totalLineHeight);
+const getFullBackground = (props, calculatedProps) => {
+  const { backgroundStyle, backgroundComponent, style, text } = props;
+  const { lineHeight } = calculatedProps;
 
-  return {
-    height: textHeight,
+  const totalLineHeight = lineHeight * text.length;
+  const textHeight =
+    text.length > style.length
+      ? sumBy(style, (s) => s.fontSize) + defaultStyles.fontSize * (text.length - style.length)
+      : sumBy(style, (s) => s.fontSize);
+  const longestString = text.reduce((a, b) => (a.length > b.length ? a : b));
+  const labelSize = TextSize.approximateTextSize(longestString, style);
+  const xCoordinate = getXCoordinate(calculatedProps, labelSize.width);
+  const yCoordinate = getYCoordinate(
+    calculatedProps,
+    labelSize.height,
+    textHeight,
+    totalLineHeight
+  );
+
+  const backgroundProps = {
+    height: textHeight + totalLineHeight,
     style: backgroundStyle,
-    width: width,
+    width: labelSize.width,
     x: xCoordinate,
     y: yCoordinate
   };
-}
-
-const getChildBackgrounds = (props) => {
-  const { backgroundStyle } = props;
-
-  return;
-};
-
-const getBackgroundElement = (props, textComponent) => {
-  const backgroundComponent = props.backgroundComponent;
-  const backgroundProps = Array.isArray(props.backgroundStyle)
-    ? getChildBackgrounds(props)
-    : getFullBackground(props, textComponent);
 
   return React.cloneElement(
     backgroundComponent,
@@ -194,16 +181,60 @@ const getBackgroundElement = (props, textComponent) => {
   );
 };
 
-const renderTextElements = (props) => {
+const getChildBackgrounds = (props, calculatedProps) => {
+  const { inline, backgroundStyle, backgroundComponent, text, style } = props;
+  const { lineHeight, x, y } = calculatedProps;
+
+  const backgroundStyleChildren = backgroundStyle.map((bgStyle, i) => {
+    const textElement = text.map((line) => {
+      const currentStyle = style[i] || style[0];
+      const lastStyle = style[i - 1] || style[0];
+      const fontSize = (currentStyle.fontSize + lastStyle.fontSize) / 2;
+      const currentLineHeight = checkLineHeight(
+        lineHeight,
+        (lineHeight[i] + (lineHeight[i - 1] || lineHeight[0])) / 2,
+        1
+      );
+      const labelSize = TextSize.approximateTextSize(line, currentStyle);
+
+      return {
+        fontSize,
+        currentLineHeight,
+        labelSize,
+        dy: i && !inline ? currentLineHeight * fontSize : 0
+      };
+    });
+
+    const backgroundProps = {
+      height: textElement[i].fontSize + textElement[i].currentLineHeight,
+      style: bgStyle,
+      width: textElement[i].labelSize.width,
+      // still need to figure out if this will work for all the different cases
+      x,
+      // still need to figure out how to add all previous dy values to get current dy value
+      y: textElement[i].dy + y
+    };
+
+    return React.cloneElement(
+      backgroundComponent,
+      defaults({}, backgroundComponent.props, backgroundProps)
+    );
+  });
+
+  return backgroundStyleChildren;
+};
+
+const getBackgroundElement = (props, calculatedProps) => {
+  const backgroundElement = Array.isArray(props.backgroundStyle)
+    ? getChildBackgrounds(props, calculatedProps)
+    : getFullBackground(props, calculatedProps);
+
+  return backgroundElement;
+};
+
+const renderTextElements = (props, calculatedProps) => {
   const { inline, className, title, events, direction, text, style } = props;
-  const lineHeight = getHeight(props, "lineHeight");
-  const textAnchor = props.textAnchor ? Helpers.evaluateProp(props.textAnchor, props) : "start";
-  const dx = props.dx ? Helpers.evaluateProp(props.dx, props) : 0;
-  const dy = getDy(props, lineHeight);
-  const transform = getTransform(props);
-  const x = props.x !== undefined ? props.x : getPosition(props, "x");
-  const y = props.y !== undefined ? props.y : getPosition(props, "y");
-  let backgroundEl;
+  const { lineHeight, textAnchor, dx, dy, transform, x, y } = calculatedProps;
 
   const textChildren = text.map((line, i) => {
     const currentStyle = style[i] || style[0];
@@ -226,7 +257,7 @@ const renderTextElements = (props) => {
     return React.cloneElement(props.tspanComponent, tspanProps);
   });
 
-  const textComponent = React.cloneElement(
+  return React.cloneElement(
     props.textComponent,
     {
       ...events,
@@ -244,12 +275,6 @@ const renderTextElements = (props) => {
     },
     textChildren
   );
-
-  if (props.backgroundStyle) {
-    backgroundEl = getBackgroundElement(props, textComponent);
-  }
-
-  return backgroundEl ? [backgroundEl, textComponent] : textComponent;
 };
 
 const evaluateProps = (props) => {
@@ -264,13 +289,43 @@ const evaluateProps = (props) => {
   return assign({}, props, { style, text, id });
 };
 
+const getCalculatedProps = (props) => {
+  const lineHeight = getHeight(props, "lineHeight");
+  const direction = props.direction ? Helpers.evaluateProp(props.direction, props) : "inherit";
+  const textAnchor = props.textAnchor ? Helpers.evaluateProp(props.textAnchor, props) : "start";
+  const verticalAnchor = props.verticalAnchor
+    ? Helpers.evaluateProp(props.verticalAnchor, props)
+    : "middle";
+  const dx = props.dx ? Helpers.evaluateProp(props.dx, props) : 0;
+  const dy = getDy(props, lineHeight);
+  const transform = getTransform(props);
+  const x = props.x !== undefined ? props.x : getPosition(props, "x");
+  const y = props.y !== undefined ? props.y : getPosition(props, "y");
+
+  return { lineHeight, direction, textAnchor, verticalAnchor, dx, dy, transform, x, y };
+};
+
 const VictoryLabel = (props) => {
   props = evaluateProps(props);
+  console.log(props);
+
   if (props.text === null || props.text === undefined) {
     return null;
   }
-  
-  const label = renderTextElements(props);
+  const calculatedProps = getCalculatedProps(props);
+  const label = renderTextElements(props, calculatedProps);
+
+  if (props.backgroundStyle) {
+    const backgroundElement = getBackgroundElement(props, calculatedProps);
+    const children = [backgroundElement, label];
+    const backgroundWithLabel = React.cloneElement(props.groupComponent, {}, children);
+
+    return props.renderInPortal ? (
+      <VictoryPortal>{backgroundWithLabel}</VictoryPortal>
+    ) : (
+      backgroundWithLabel
+    );
+  }
 
   return props.renderInPortal ? <VictoryPortal>{label}</VictoryPortal> : label;
 };
@@ -292,6 +347,7 @@ VictoryLabel.propTypes = {
   dx: PropTypes.oneOfType([PropTypes.number, PropTypes.string, PropTypes.func]),
   dy: PropTypes.oneOfType([PropTypes.number, PropTypes.string, PropTypes.func]),
   events: PropTypes.object,
+  groupComponent: PropTypes.element,
   id: PropTypes.oneOfType([PropTypes.number, PropTypes.string, PropTypes.func]),
   index: PropTypes.oneOfType([PropTypes.number, PropTypes.string]),
   inline: PropTypes.bool,
@@ -332,7 +388,8 @@ VictoryLabel.propTypes = {
 };
 
 VictoryLabel.defaultProps = {
-  backgroundComponent: <Background />,
+  backgroundComponent: <Rect />,
+  groupComponent: <g />,
   direction: "inherit",
   textComponent: <Text />,
   tspanComponent: <TSpan />,
