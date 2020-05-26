@@ -133,7 +133,7 @@ const getXCoordinate = (calculatedProps, labelSizeWidth) => {
 };
 
 const getYCoordinate = (calculatedProps, heightVals) => {
-  const { labelSizeHeight, textHeight, totalLineHeight } = heightVals;
+  const { labelHeight, textHeight, totalLineHeight } = heightVals;
   const { verticalAnchor, y } = calculatedProps;
   // still needs some work figuring out this
   switch (verticalAnchor) {
@@ -141,7 +141,7 @@ const getYCoordinate = (calculatedProps, heightVals) => {
       return y;
     // "middle" & default calculation still need some work
     case "middle":
-      return y - labelSizeHeight - totalLineHeight;
+      return y - labelHeight - totalLineHeight;
     case "end":
       return y - textHeight;
     default:
