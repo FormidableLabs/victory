@@ -1,6 +1,6 @@
 {
   "name": "victory-line",
-  "version": "34.3.7",
+  "version": "34.3.8",
   "description": "Line Component for Victory",
   "keywords": [
     "data visualization",
@@ -22,7 +22,7 @@
     "d3-shape": "^1.2.0",
     "lodash": "^4.17.15",
     "prop-types": "^15.5.8",
-    "victory-core": "^34.3.7"
+    "victory-core": "^34.3.8"
   },
   "scripts": {
     "version": "nps build-libs && nps build-dists"
