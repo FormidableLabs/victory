@@ -1,5 +1,10 @@
 # Victory Changelog
 
+## 34.3.8 (2020-05-26)
+
+- [#1588](https://github.com/FormidableLabs/victory/pull/1588) - Improve perfomance by reducing string map calculations. Thanks @NgoKnows!
+
+
 ## 34.3.7 (2020-05-22)
 
 - [#1576](https://github.com/FormidableLabs/victory/pull/1576) - Add more types for primitive components. Thanks @maddles
