@@ -124,51 +124,52 @@ const getXCoordinate = (calculatedProps, labelSizeWidth) => {
     case "start":
       return x;
     case "middle":
-      return x - labelSizeWidth / 2;
+      return Math.round(x - labelSizeWidth / 2);
     case "end":
-      return x - labelSizeWidth;
+      return Math.round(x - labelSizeWidth);
     default:
       return x;
   }
 };
 
 const getYCoordinate = (calculatedProps, heightVals) => {
-  const { labelHeight, textHeight, totalLineHeight } = heightVals;
+  const { capHeight, labelHeight, textHeight } = heightVals;
   const { verticalAnchor, y } = calculatedProps;
   // still needs some work figuring out this
   switch (verticalAnchor) {
     case "start":
-      return y;
+      return Math.floor(y + capHeight);
     // "middle" & default calculation still need some work
     case "middle":
-      return y - labelHeight - totalLineHeight;
+      return Math.floor(y - textHeight / 2);
     case "end":
-      return y - textHeight;
+      return Math.floor(y - textHeight - capHeight);
     default:
-      return y - labelSizeHeight - totalLineHeight;
+      return Math.floor(y - labelHeight - capHeight);
   }
 };
 
 const getFullBackground = (props, calculatedProps) => {
-  const { angle, backgroundStyle, backgroundComponent, style, text } = props;
+  const { angle, backgroundStyle, backgroundComponent, capHeight, style, text } = props;
   const { lineHeight } = calculatedProps;
-
-  const totalLineHeight = lineHeight * text.length;
+  const styledFontHeight = sumBy(style, (s) => s.fontSize);
+  const styledLineHeight = lineHeight + capHeight;
   const textHeight =
     text.length > style.length
-      ? sumBy(style, (s) => s.fontSize) + defaultStyles.fontSize * (text.length - style.length)
-      : sumBy(style, (s) => s.fontSize);
+      ? styledFontHeight * styledLineHeight +
+        defaultStyles.fontSize * lineHeight * (text.length - style.length)
+      : styledFontHeight * styledLineHeight;
   const longestString = text.reduce((a, b) => (a.length > b.length ? a : b));
   const labelSize = TextSize.approximateTextSize(longestString, style);
   const labelHeight = labelSize.height;
-  const heightVals = { labelHeight, textHeight, totalLineHeight };
+  const heightVals = { labelHeight, textHeight, lineHeight, capHeight };
   const xCoordinate = getXCoordinate(calculatedProps, labelSize.width);
   const yCoordinate = getYCoordinate(calculatedProps, heightVals);
   const transform =
     angle === undefined ? undefined : `rotate(${[angle, xCoordinate, yCoordinate]})`;
 
   const backgroundProps = {
-    height: textHeight + totalLineHeight,
+    height: textHeight,
     style: backgroundStyle,
     transform,
     width: labelSize.width,

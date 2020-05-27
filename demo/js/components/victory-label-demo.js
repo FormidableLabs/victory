@@ -19,7 +19,7 @@ export default class App extends React.Component {
           <VictoryLabel
             x={200}
             y={50}
-            backgroundStyle={{ fill: "pink", padding: "20px" }}
+            backgroundStyle={{ fill: "pink" }}
             title={"Victory is awesome. This is a title."}
             desc={"Victory is awesome. This is a description."}
             text={"Victory is awesome.\nThis has a title and description."}
@@ -81,6 +81,7 @@ export default class App extends React.Component {
             lineHeight={2}
             textAnchor="middle"
             verticalAnchor="end"
+            backgroundStyle={{ fill: "pink" }}
             text={"Victory is awesome.\nThis is (middle, end) anchoring.\nGot it?"}
           />
 
@@ -109,6 +110,7 @@ export default class App extends React.Component {
             lineHeight={2}
             textAnchor="middle"
             verticalAnchor="middle"
+            backgroundStyle={{ fill: "pink" }}
             text={"Victory is awesome.\nThis is (middle, middle) anchoring.\nGot it?"}
           />
 
@@ -118,6 +120,7 @@ export default class App extends React.Component {
             y={1350}
             textAnchor="start"
             verticalAnchor="middle"
+            backgroundStyle={{ fill: "pink" }}
             text={"Victory is awesome.\nThis is (start, middle) anchoring.\nCapisce?"}
           />
 
