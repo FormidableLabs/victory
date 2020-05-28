@@ -149,16 +149,12 @@ const getYCoordinate = (calculatedProps, heightVals) => {
   }
 };
 
-const getLineHeight = (lineHeight) => {
-  return lineHeight && typeof lineHeight === "number" ? lineHeight : 1;
-};
-
 const getBlockTextHeight = (props, calculatedProps) => {
   const { text, style, capHeight } = props;
   const { lineHeight } = calculatedProps;
 
   const styledFontHeight = sumBy(style, (s) => s.fontSize);
-  const adjustedLineHeight = getLineHeight(lineHeight) + capHeight;
+  const adjustedLineHeight = checkLineHeight(lineHeight, lineHeight[0], 1) + capHeight;
 
   return text.length > style.length
     ? styledFontHeight * adjustedLineHeight +
@@ -171,7 +167,7 @@ const getInlineTextHeight = (props, calculatedProps) => {
   const { lineHeight } = calculatedProps;
 
   const maxFont = maxBy(style, (s) => s.fontSize).fontSize;
-  const adjustedLineHeight = getLineHeight(lineHeight) + capHeight;
+  const adjustedLineHeight = checkLineHeight(lineHeight, lineHeight[0], 1) + capHeight;
 
   return maxFont * adjustedLineHeight;
 };
