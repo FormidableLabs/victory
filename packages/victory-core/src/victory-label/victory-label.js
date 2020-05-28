@@ -10,7 +10,7 @@ import Log from "../victory-util/log";
 import TextSize from "../victory-util/textsize";
 import TSpan from "../victory-primitives/tspan";
 import Text from "../victory-primitives/text";
-import { assign, defaults, isEmpty, sumBy } from "lodash";
+import { assign, defaults, isEmpty, maxBy, sumBy } from "lodash";
 
 const defaultStyles = {
   fill: "#252525",
@@ -133,7 +133,7 @@ const getXCoordinate = (calculatedProps, labelSizeWidth) => {
 };
 
 const getYCoordinate = (calculatedProps, heightVals) => {
-  const { capHeight, labelHeight, textHeight } = heightVals;
+  const { capHeight, textHeight } = heightVals;
   const { verticalAnchor, y } = calculatedProps;
   // still needs some work figuring out this
   switch (verticalAnchor) {
@@ -145,26 +145,48 @@ const getYCoordinate = (calculatedProps, heightVals) => {
     case "end":
       return Math.floor(y - textHeight - capHeight);
     default:
-      return Math.floor(y - labelHeight - capHeight);
+      return Math.floor(y - textHeight / 2);
   }
 };
 
-const getFullBackground = (props, calculatedProps) => {
-  const { angle, backgroundStyle, backgroundComponent, capHeight, style, text } = props;
+const getLineHeight = (lineHeight) => {
+  return lineHeight && typeof lineHeight === "number" ? lineHeight : 1;
+};
+
+const getBlockTextHeight = (props, calculatedProps) => {
+  const { text, style, capHeight } = props;
   const { lineHeight } = calculatedProps;
+
   const styledFontHeight = sumBy(style, (s) => s.fontSize);
-  const lineHeightDefault = lineHeight && typeof lineHeight === "number" ? lineHeight : 1;
-  const styledLineHeight = lineHeightDefault + capHeight;
-  const textHeight =
-    text.length > style.length
-      ? styledFontHeight * styledLineHeight +
-        defaultStyles.fontSize * lineHeightDefault * (text.length - style.length)
-      : styledFontHeight * styledLineHeight;
-  const longestString = text.reduce((a, b) => (a.length > b.length ? a : b));
-  const labelSize = TextSize.approximateTextSize(longestString, style);
-  const labelHeight = labelSize.height;
-  const heightVals = { labelHeight, textHeight, lineHeight, capHeight };
-  const xCoordinate = getXCoordinate(calculatedProps, labelSize.width);
+  const adjustedLineHeight = getLineHeight(lineHeight) + capHeight;
+
+  return text.length > style.length
+    ? styledFontHeight * adjustedLineHeight +
+        defaultStyles.fontSize * adjustedLineHeight * (text.length - style.length)
+    : styledFontHeight * adjustedLineHeight;
+};
+
+const getInlineTextHeight = (props, calculatedProps) => {
+  const { style, capHeight } = props;
+  const { lineHeight } = calculatedProps;
+
+  const maxFont = maxBy(style, (s) => s.fontSize).fontSize;
+  const adjustedLineHeight = getLineHeight(lineHeight) + capHeight;
+
+  return maxFont * adjustedLineHeight;
+};
+
+const getFullBackground = (props, calculatedProps) => {
+  const { angle, backgroundStyle, backgroundComponent, capHeight, inline, style, text } = props;
+  const maxString = text.reduce((a, b) => (a.length > b.length ? a : b));
+  const textHeight = inline
+    ? getInlineTextHeight(props, calculatedProps)
+    : getBlockTextHeight(props, calculatedProps);
+  const width = inline
+    ? TextSize.approximateTextSize(text.join(" "), style).width
+    : TextSize.approximateTextSize(maxString, style).width;
+  const heightVals = { capHeight, textHeight };
+  const xCoordinate = getXCoordinate(calculatedProps, width);
   const yCoordinate = getYCoordinate(calculatedProps, heightVals);
   const transform =
     angle === undefined ? undefined : `rotate(${[angle, xCoordinate, yCoordinate]})`;
@@ -173,7 +195,7 @@ const getFullBackground = (props, calculatedProps) => {
     height: textHeight,
     style: backgroundStyle,
     transform,
-    width: labelSize.width,
+    width,
     x: xCoordinate,
     y: yCoordinate
   };
