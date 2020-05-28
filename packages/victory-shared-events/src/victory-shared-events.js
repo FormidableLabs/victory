@@ -59,6 +59,7 @@ export default class VictorySharedEvents extends React.Component {
     this.getScopedEvents = Events.getScopedEvents.bind(this);
     this.getEventState = Events.getEventState.bind(this);
     this.baseProps = this.getBaseProps(props);
+    this.sharedEventsCache = {};
   }
 
   shouldComponentUpdate(nextProps) {
@@ -107,6 +108,20 @@ export default class VictorySharedEvents extends React.Component {
       : undefined;
   }
 
+  cacheSharedEvents(name, sharedEvents, cacheValues) {
+    this.sharedEventsCache[name] = [sharedEvents, cacheValues];
+  }
+
+  getCachedSharedEvents(name, cacheValues) {
+    const [sharedEvents, prevCacheValues] = this.sharedEventsCache[name] || [];
+
+    if (sharedEvents && isEqual(cacheValues, prevCacheValues)) {
+      return sharedEvents;
+    }
+
+    return undefined;
+  }
+
   getBaseProps(props) {
     const { container } = props;
     const children = React.Children.toArray(this.props.children);
@@ -131,6 +146,7 @@ export default class VictorySharedEvents extends React.Component {
 
   getNewChildren(props, baseProps) {
     const { events, eventKey } = props;
+
     const alterChildren = (children, childNames) => {
       return children.reduce((memo, child, index) => {
         if (child.props.children) {
@@ -150,13 +166,24 @@ export default class VictorySharedEvents extends React.Component {
                 ? event.childName.indexOf(name) > -1
                 : event.childName === name || event.childName === "all";
             });
-          const sharedEvents = {
+
+          const sharedEventsCacheValues = [
+            name,
+            baseProps,
+            childEvents,
+            JSON.stringify(this.state[name])
+          ];
+
+          const sharedEvents = this.getCachedSharedEvents(name, sharedEventsCacheValues) || {
             events: childEvents,
             // partially apply child name and baseProps,
             getEvents: (evts, target) => this.getScopedEvents(evts, target, name, baseProps),
             // partially apply child name
             getEventState: (key, target) => this.getEventState(key, target, name)
           };
+
+          this.cacheSharedEvents(name, sharedEvents, sharedEventsCacheValues);
+
           return memo.concat(
             React.cloneElement(
               child,
@@ -176,6 +203,7 @@ export default class VictorySharedEvents extends React.Component {
   getContainer(props, baseProps, events) {
     const children = this.getNewChildren(props, baseProps);
     const parents = Array.isArray(events) && events.filter((event) => event.target === "parent");
+
     const sharedEvents =
       parents.length > 0
         ? {
