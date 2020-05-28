@@ -153,11 +153,12 @@ const getFullBackground = (props, calculatedProps) => {
   const { angle, backgroundStyle, backgroundComponent, capHeight, style, text } = props;
   const { lineHeight } = calculatedProps;
   const styledFontHeight = sumBy(style, (s) => s.fontSize);
-  const styledLineHeight = lineHeight + capHeight;
+  const lineHeightDefault = lineHeight && typeof lineHeight === "number" ? lineHeight : 1;
+  const styledLineHeight = lineHeightDefault + capHeight;
   const textHeight =
     text.length > style.length
       ? styledFontHeight * styledLineHeight +
-        defaultStyles.fontSize * lineHeight * (text.length - style.length)
+        defaultStyles.fontSize * lineHeightDefault * (text.length - style.length)
       : styledFontHeight * styledLineHeight;
   const longestString = text.reduce((a, b) => (a.length > b.length ? a : b));
   const labelSize = TextSize.approximateTextSize(longestString, style);
