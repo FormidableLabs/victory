@@ -17,20 +17,20 @@ addDecorator((story) => <div style={{ maxWidth: "80%" }}>{story()}</div>);
 addDecorator(withPerformance);
 
 const loadStories = () => {
-  require("../stories/victory-area");
-  require("../stories/victory-axis");
-  require("../stories/victory-bar");
-  require("../stories/victory-box-plot");
-  require("../stories/victory-candlestick");
-  require("../stories/victory-chart");
-  require("../stories/victory-errorbar");
-  require("../stories/victory-histogram");
-  require("../stories/victory-line");
-  require("../stories/victory-polar-axis");
-  require("../stories/victory-scatter");
-  require("../stories/containers-and-addons");
-  require("../stories/victory-pie");
-  require("../stories/victory-tooltip");
+  require("../stories/victory-area.stories");
+  // require("../stories/victory-axis");
+  // require("../stories/victory-bar");
+  // require("../stories/victory-box-plot");
+  // require("../stories/victory-candlestick");
+  // require("../stories/victory-chart");
+  // require("../stories/victory-errorbar");
+  // require("../stories/victory-histogram");
+  // require("../stories/victory-line");
+  // require("../stories/victory-polar-axis");
+  // require("../stories/victory-scatter");
+  // require("../stories/containers-and-addons");
+  // require("../stories/victory-pie");
+  // require("../stories/victory-tooltip");
 };
 
 configure(loadStories, module);
