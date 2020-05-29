@@ -132,8 +132,7 @@ const getXCoordinate = (calculatedProps, labelSizeWidth) => {
   }
 };
 
-const getYCoordinate = (calculatedProps, heightVals) => {
-  const { textHeight } = heightVals;
+const getYCoordinate = (calculatedProps, inline, textHeight) => {
   const { verticalAnchor, y } = calculatedProps;
   // still needs some work figuring out this
   switch (verticalAnchor) {
@@ -141,26 +140,30 @@ const getYCoordinate = (calculatedProps, heightVals) => {
       return Math.floor(y);
     // "middle" & default calculation still need some work
     case "middle":
-      return Math.floor(y - textHeight / 2);
+      return inline ? Math.floor(y - textHeight) : Math.floor(y - textHeight / 2);
     case "end":
-      return Math.floor(y - textHeight);
+      return inline ? Math.floor(y) : Math.floor(y - textHeight);
     default:
-      return Math.floor(y - textHeight / 2);
+      return inline ? Math.floor(y) : Math.floor(y - textHeight / 2);
   }
 };
 
 const getBlockTextHeight = (props, adjustedLineHeight) => {
-  const { text, style } = props;
+  const { text, style, capHeight } = props;
   const styledFontHeight = sumBy(style, (s) => s.fontSize);
+  const capHeightsPx = sumBy(style, (s) =>
+    TextSize.convertLengthToPixels(`${capHeight}em`, s.fontSize || defaultStyles.fontSize)
+  );
 
   return text.length > style.length
     ? styledFontHeight * adjustedLineHeight +
+        capHeightsPx +
         defaultStyles.fontSize * adjustedLineHeight * (text.length - style.length)
-    : styledFontHeight * adjustedLineHeight;
+    : styledFontHeight * adjustedLineHeight + capHeightsPx;
 };
 
 const getFullBackground = (props, calculatedProps) => {
-  const { angle, backgroundStyle, backgroundComponent, capHeight, inline, style, text } = props;
+  const { angle, backgroundStyle, backgroundComponent, inline, style, text } = props;
   const { lineHeight } = calculatedProps;
   const maxString = text.reduce((a, b) => (a.length > b.length ? a : b));
   const maxFont = maxBy(style, (s) => s.fontSize).fontSize;
@@ -171,9 +174,8 @@ const getFullBackground = (props, calculatedProps) => {
   const width = inline
     ? TextSize.approximateTextSize(text.join(" "), style).width
     : TextSize.approximateTextSize(maxString, style).width;
-  const heightVals = { capHeight, lineHeight, textHeight, maxFont };
   const xCoordinate = getXCoordinate(calculatedProps, width);
-  const yCoordinate = getYCoordinate(calculatedProps, heightVals);
+  const yCoordinate = getYCoordinate(calculatedProps, inline, textHeight);
   const transform =
     angle === undefined ? undefined : `rotate(${[angle, xCoordinate, yCoordinate]})`;
 
