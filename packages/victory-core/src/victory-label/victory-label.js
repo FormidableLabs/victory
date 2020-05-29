@@ -132,8 +132,7 @@ const getXCoordinate = (calculatedProps, labelSizeWidth) => {
   }
 };
 
-const getYCoordinate = (calculatedProps, inline, heightVals) => {
-  const { textHeight } = heightVals;
+const getYCoordinate = (calculatedProps, inline, textHeight) => {
   const { verticalAnchor, y } = calculatedProps;
   // still needs some work figuring out this
   switch (verticalAnchor) {
@@ -153,7 +152,7 @@ const getBlockTextHeight = (props, adjustedLineHeight) => {
   const { text, style, capHeight } = props;
   const styledFontHeight = sumBy(style, (s) => s.fontSize);
   const capHeightsPx = sumBy(style, (s) =>
-    TextSize.convertLengthToPixels(capHeight + "em", s.fontSize || defaultStyles.fontSize)
+    TextSize.convertLengthToPixels(`${capHeight}em`, s.fontSize || defaultStyles.fontSize)
   );
 
   return text.length > style.length
