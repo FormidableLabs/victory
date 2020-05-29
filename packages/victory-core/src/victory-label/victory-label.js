@@ -193,8 +193,8 @@ const getFullBackground = (props, calculatedProps) => {
 };
 
 const getChildBackgrounds = (props, calculatedProps) => {
-  const { inline, backgroundStyle, backgroundComponent, text, style } = props;
-  const { lineHeight, x, y } = calculatedProps;
+  const { angle, backgroundStyle, backgroundComponent, inline, text, style } = props;
+  const { lineHeight, y } = calculatedProps;
 
   const backgroundStyleChildren = backgroundStyle.map((bgStyle, i) => {
     const textElement = text.map((line) => {
@@ -216,14 +216,25 @@ const getChildBackgrounds = (props, calculatedProps) => {
       };
     });
 
+    const xCoordinate = getXCoordinate(calculatedProps, textElement[i].labelSize.width);
+
+    // still need to figure out why some of the background are not lining up
+    // calculation needs to take into consideration of verticalAnchor
+    const yCoordinate = textElement.slice(0, i).reduce((prev, curr) => {
+      return prev + curr.dy;
+    }, y);
+
+    const transform =
+      angle === undefined ? undefined : `rotate(${[angle, xCoordinate, yCoordinate]})`;
+
     const backgroundProps = {
+      key: `bgKey-${i}`,
       height: textElement[i].fontSize + textElement[i].currentLineHeight,
       style: bgStyle,
+      transform,
       width: textElement[i].labelSize.width,
-      // still need to figure out if this will work for all the different cases
-      x,
-      // still need to figure out how to add all previous dy values to get current dy value
-      y: textElement[i].dy + y
+      x: xCoordinate,
+      y: yCoordinate
     };
 
     return React.cloneElement(
