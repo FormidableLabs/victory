@@ -1,5 +1,9 @@
 # Victory Changelog
 
+## 34.3.9 (2020-05-30)
+
+- [#1592](https://github.com/FormidableLabs/victory/pull/1592) - Cache `sharedEvents` to improve performance in evented containers. Thanks @NgoKnows!
+
 ## 34.3.8 (2020-05-26)
 
 - [#1588](https://github.com/FormidableLabs/victory/pull/1588) - Improve perfomance by reducing string map calculations. Thanks @NgoKnows!
