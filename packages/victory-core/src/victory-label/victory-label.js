@@ -10,7 +10,7 @@ import Log from "../victory-util/log";
 import TextSize from "../victory-util/textsize";
 import TSpan from "../victory-primitives/tspan";
 import Text from "../victory-primitives/text";
-import { assign, defaults, isEmpty, maxBy, sumBy } from "lodash";
+import { assign, defaults, isEmpty, maxBy, sumBy, sum } from "lodash";
 
 const defaultStyles = {
   fill: "#252525",
@@ -194,48 +194,48 @@ const getFullBackground = (props, calculatedProps) => {
   );
 };
 
-const getChildBackgrounds = (props, calculatedProps) => {
+const getChildBackgrounds = (props, calculatedProps, label) => {
   const { angle, backgroundStyle, backgroundComponent, inline, text, style } = props;
   const { lineHeight, y } = calculatedProps;
+  const textProps = label.props;
+  const textElement = label.props.children.map(ch => ch.props);
+  console.log(lineHeight  )
 
-  const textElement = text.map((line, i) => {
-    const currentStyle = style[i] || style[0];
-    const previousStyle = style[i - 1] || style[0];
-    const currentLineHeight = lineHeight[i] || lineHeight[0];
-    const previousLineHeight = lineHeight[i - 1] || lineHeight[0];
-    const adjustedLineHeight = checkLineHeight(lineHeight, lineHeight[i] || lineHeight[0], 1);
-    const textHeight = currentStyle.fontSize * adjustedLineHeight;
-    const labelSize = TextSize.approximateTextSize(line, currentStyle);
+  // const textElement = text.map((line, i) => {
+  //   const currentStyle = style[i] || style[0];
+  //   const previousStyle = style[i - 1] || style[0];
+  //   const currentLineHeight = lineHeight[i] || lineHeight[0];
+  //   const previousLineHeight = lineHeight[i - 1] || lineHeight[0];
+  //   const adjustedLineHeight = checkLineHeight(lineHeight, lineHeight[i] || lineHeight[0], 1);
+  //   const textHeight = currentStyle.fontSize * adjustedLineHeight;
+  //   const labelSize = TextSize.approximateTextSize(line, currentStyle);
 
-    return {
-      currentLineHeight,
-      textHeight,
-      labelSize,
-      dy: i && !inline ? previousStyle.fontSize * previousLineHeight : 0
-    };
-  });
+  //   return {
+  //     currentLineHeight,
+  //     textHeight,
+  //     labelSize,
+  //     dy: i && !inline ? previousStyle.fontSize * previousLineHeight : 0
+  //   };
+  // });
+
+
 
   const backgroundStyleChildren = backgroundStyle.map((bgStyle, i) => {
-    const xCoordinate = getXCoordinate(calculatedProps, textElement[i].labelSize.width);
-
-    // still need to figure out why some of the background are not lining up
-    // calculation needs to take into consideration of verticalAnchor
-    const yCoordinate = textElement.slice(0, i).reduce((prev, curr) => {
-      return prev + curr.dy;
-    }, y);
-
-    const transform =
-      angle === undefined ? undefined : `rotate(${[angle, xCoordinate, yCoordinate]})`;
+    const currentElement =  textElement[i];
+    const labelSize = TextSize.approximateTextSize(currentElement.children, currentElement.style);
+    const xCoordinate = getXCoordinate(calculatedProps, labelSize.width);
 
     const backgroundProps = {
       key: `bgKey-${i}`,
-      height: textElement[i].textHeight,
+      height: labelSize.height,
       style: bgStyle,
-      transform,
-      width: textElement[i].labelSize.width,
+      transform: textProps.transform,
+      width: labelSize.width,
       x: xCoordinate,
-      y: yCoordinate
+      y: currentElement.y - (labelSize.height / 2)
     };
+
+    // console.log(backgroundProps)
 
     return React.cloneElement(
       backgroundComponent,
@@ -246,10 +246,10 @@ const getChildBackgrounds = (props, calculatedProps) => {
   return backgroundStyleChildren;
 };
 
-const getBackgroundElement = (props, calculatedProps) => {
+const getBackgroundElement = (props, calculatedProps, label) => {
   const backgroundElement = Array.isArray(props.backgroundStyle)
-    ? getChildBackgrounds(props, calculatedProps)
-    : getFullBackground(props, calculatedProps);
+    ? getChildBackgrounds(props, calculatedProps, label)
+    : getFullBackground(props, calculatedProps, label);
 
   return backgroundElement;
 };
@@ -257,8 +257,7 @@ const getBackgroundElement = (props, calculatedProps) => {
 const renderTextElements = (props, calculatedProps) => {
   const { inline, className, title, events, direction, text, style } = props;
   const { lineHeight, textAnchor, dx, dy, transform, x, y } = calculatedProps;
-
-  const textChildren = text.map((line, i) => {
+  const yOffsets = text.map((line, i) => {
     const currentStyle = style[i] || style[0];
     const lastStyle = style[i - 1] || style[0];
     const fontSize = (currentStyle.fontSize + lastStyle.fontSize) / 2;
@@ -267,11 +266,18 @@ const renderTextElements = (props, calculatedProps) => {
       (lineHeight[i] + (lineHeight[i - 1] || lineHeight[0])) / 2,
       1
     );
+    return i && !inline ? currentLineHeight * fontSize : 0;
+  });
+
+
+  const textChildren = text.map((line, i) => {
+    const currentStyle = style[i] || style[0];
+    const yOffset = sum(yOffsets.slice(0, i + 1));
     const tspanProps = {
       key: `${props.id}-key-${i}`,
-      x: !inline ? props.x : undefined,
+      x: !inline ? x : undefined,
       dx,
-      dy: i && !inline ? currentLineHeight * fontSize : undefined,
+      y: y + (dy || 0) + yOffset,
       textAnchor: currentStyle.textAnchor || textAnchor,
       style: currentStyle,
       children: line
@@ -284,13 +290,10 @@ const renderTextElements = (props, calculatedProps) => {
     {
       ...events,
       direction,
-      dx,
-      dy,
-      x,
-      y,
       transform,
       className,
       title,
+      x,
       desc: Helpers.evaluateProp(props.desc, props),
       tabIndex: Helpers.evaluateProp(props.tabIndex, props),
       id: props.id
@@ -337,7 +340,7 @@ const VictoryLabel = (props) => {
   const label = renderTextElements(props, calculatedProps);
 
   if (props.backgroundStyle) {
-    const backgroundElement = getBackgroundElement(props, calculatedProps);
+    const backgroundElement = getBackgroundElement(props, calculatedProps, label);
     const children = [backgroundElement, label];
     const backgroundWithLabel = React.cloneElement(props.groupComponent, {}, children);
 
