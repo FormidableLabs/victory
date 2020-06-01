@@ -201,14 +201,12 @@ const getChildBackgrounds = (props, calculatedProps) => {
   const textElement = text.map((line, i) => {
     const currentStyle = style[i] || style[0];
     const previousStyle = style[i - 1] || style[0];
-    const currentLineHeight = lineHeight[i] || lineHeight[0];
-    const previousLineHeight = lineHeight[i - 1] || lineHeight[0];
-    const adjustedLineHeight = checkLineHeight(lineHeight, lineHeight[i] || lineHeight[0], 1);
+    const previousLineHeight = checkLineHeight(lineHeight, lineHeight[i - 1], 1);
+    const adjustedLineHeight = checkLineHeight(lineHeight, lineHeight[i], 1);
     const textHeight = currentStyle.fontSize * adjustedLineHeight;
     const labelSize = TextSize.approximateTextSize(line, currentStyle);
 
     return {
-      currentLineHeight,
       textHeight,
       labelSize,
       dy: i && !inline ? previousStyle.fontSize * previousLineHeight : 0
@@ -216,11 +214,12 @@ const getChildBackgrounds = (props, calculatedProps) => {
   });
 
   const backgroundStyleChildren = backgroundStyle.map((bgStyle, i) => {
+    // still need to figure out how to calculate when there is inline prop
     const xCoordinate = getXCoordinate(calculatedProps, textElement[i].labelSize.width);
 
     // still need to figure out why some of the background are not lining up
     // calculation needs to take into consideration of verticalAnchor
-    const yCoordinate = textElement.slice(0, i).reduce((prev, curr) => {
+    const yCoordinate = textElement.slice(0, i + 1).reduce((prev, curr) => {
       return prev + curr.dy;
     }, y);
 
