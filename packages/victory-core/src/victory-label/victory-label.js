@@ -132,28 +132,27 @@ const getXCoordinate = (calculatedProps, labelSizeWidth) => {
   }
 };
 
-const getYCoordinate = (calculatedProps, inline, textHeight) => {
+const getYCoordinate = (calculatedProps, props, textHeight) => {
   const { verticalAnchor, y } = calculatedProps;
-  // still needs some work figuring out this
+  const { inline, dy } = props;
+  const offset = y + (dy || 0);
+
   switch (verticalAnchor) {
     case "start":
-      return Math.floor(y);
+      return Math.floor(offset);
     // "middle" & default calculation still need some work
     case "middle":
-      return inline ? Math.floor(y - textHeight) : Math.floor(y - textHeight / 2);
+      return Math.floor(offset - textHeight / 2);
     case "end":
-      return inline ? Math.floor(y) : Math.floor(y - textHeight);
+      return inline ? Math.ceil(offset) : Math.ceil(offset - textHeight);
     default:
-      return inline ? Math.floor(y) : Math.floor(y - textHeight / 2);
+      return inline ? Math.floor(offset) : Math.floor(offset - textHeight / 2);
   }
 };
 
-const getBlockTextHeight = (props, adjustedLineHeight) => {
-  const { text, style, capHeight } = props;
+const getBlockTextHeight = (props, adjustedLineHeight, capHeightsPx) => {
+  const { text, style } = props;
   const styledFontHeight = sumBy(style, (s) => s.fontSize);
-  const capHeightsPx = sumBy(style, (s) =>
-    TextSize.convertLengthToPixels(`${capHeight}em`, s.fontSize || defaultStyles.fontSize)
-  );
 
   return text.length > style.length
     ? styledFontHeight * adjustedLineHeight +
@@ -163,21 +162,21 @@ const getBlockTextHeight = (props, adjustedLineHeight) => {
 };
 
 const getFullBackground = (props, calculatedProps) => {
-  const { angle, backgroundStyle, backgroundComponent, inline, style, text } = props;
-  const { lineHeight } = calculatedProps;
+  const { backgroundStyle, backgroundComponent, capHeight, inline, style, text } = props;
+  const { lineHeight, dx } = calculatedProps;
   const maxString = text.reduce((a, b) => (a.length > b.length ? a : b));
-  const maxFont = maxBy(style, (s) => s.fontSize).fontSize;
+  const maxFontSize = maxBy(style, (s) => s.fontSize).fontSize;
   const adjustedLineHeight = checkLineHeight(lineHeight, lineHeight[0], 1);
+  const capHeightsPx = TextSize.convertLengthToPixels(`${capHeight}em`, maxFontSize);
   const textHeight = inline
-    ? maxFont * adjustedLineHeight
-    : getBlockTextHeight(props, adjustedLineHeight);
+    ? maxFontSize * adjustedLineHeight + capHeightsPx
+    : getBlockTextHeight(props, adjustedLineHeight, capHeightsPx);
   const width = inline
-    ? TextSize.approximateTextSize(text.join(" "), style).width
-    : TextSize.approximateTextSize(maxString, style).width;
+    ? TextSize.approximateTextSize(text.join(" "), style).width + (dx || 0) * text.length
+    : TextSize.approximateTextSize(maxString, style).width + (dx || 0);
   const xCoordinate = getXCoordinate(calculatedProps, width);
-  const yCoordinate = getYCoordinate(calculatedProps, inline, textHeight);
-  const transform =
-    angle === undefined ? undefined : `rotate(${[angle, xCoordinate, yCoordinate]})`;
+  const yCoordinate = getYCoordinate(calculatedProps, props, textHeight);
+  const transform = getTransform(props);
 
   const backgroundProps = {
     height: textHeight,

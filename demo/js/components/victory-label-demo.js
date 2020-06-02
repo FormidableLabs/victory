@@ -9,16 +9,14 @@ export default class App extends React.Component {
         <svg width="600" height="2500" style={{ border: "1px solid #ccc", padding: 40 }}>
           <circle cx="0" cy="0" r="2" fill="red" />
           <VictoryLabel
-            backgroundStyle={{ fill: "pink" }}
             transform="translate(50)"
             x={0}
-            y={0}
+            y={20}
             text={"Victory is awesome.\nThis is default anchoring.\nسلام?"}
           />
 
           <circle cx="200" cy="50" r="2" fill="red" />
           <VictoryLabel
-            backgroundStyle={{ fill: "pink" }}
             x={200}
             y={50}
             title={"Victory is awesome. This is a title."}
@@ -27,17 +25,10 @@ export default class App extends React.Component {
           />
 
           <circle cx="0" cy="75" r="2" fill="red" />
-          <VictoryLabel
-            backgroundStyle={{ fill: "pink" }}
-            x={0}
-            y={75}
-            angle={65}
-            text={"Now with angles!!"}
-          />
+          <VictoryLabel x={0} y={75} angle={65} text={"Now with angles!!"} />
 
           <circle cx="300" cy="150" r="2" fill="pink" />
           <VictoryLabel
-            backgroundStyle={{ fill: "pink" }}
             x={300}
             y={150}
             direction="rtl"
@@ -48,7 +39,6 @@ export default class App extends React.Component {
 
           <circle cx="300" cy="300" r="2" fill="blue" />
           <VictoryLabel
-            backgroundStyle={{ fill: "pink" }}
             x={300}
             y={300}
             textAnchor="middle"
@@ -110,7 +100,6 @@ export default class App extends React.Component {
 
           <circle cx="300" cy="1200" r="2" fill="blue" />
           <VictoryLabel
-            backgroundStyle={{ fill: "pink" }}
             x={300}
             y={1200}
             lineHeight={2}
@@ -121,7 +110,6 @@ export default class App extends React.Component {
 
           <circle cx="300" cy="1350" r="2" fill="red" />
           <VictoryLabel
-            backgroundStyle={{ fill: "pink" }}
             x={300}
             y={1350}
             textAnchor="start"
@@ -132,7 +120,6 @@ export default class App extends React.Component {
           {/* examples for inlining VictoryLabel with mutlitple labels */}
           <circle cx="300" cy="1500" r="2" fill="red" />
           <VictoryLabel
-            backgroundStyle={{ fill: "pink" }}
             x={300}
             y={1500}
             textAnchor="end"
@@ -143,7 +130,6 @@ export default class App extends React.Component {
 
           <circle cx="300" cy="1650" r="2" fill="red" />
           <VictoryLabel
-            backgroundStyle={{ fill: "pink" }}
             x={300}
             y={1650}
             textAnchor="start"
@@ -156,7 +142,6 @@ export default class App extends React.Component {
 
           <circle cx="0" cy="1800" r="2" fill="red" />
           <VictoryLabel
-            backgroundStyle={{ fill: "pink" }}
             x={0}
             y={1800}
             textAnchor="start"
