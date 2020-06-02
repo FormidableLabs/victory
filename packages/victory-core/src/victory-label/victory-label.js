@@ -195,30 +195,9 @@ const getFullBackground = (props, calculatedProps) => {
 };
 
 const getChildBackgrounds = (props, calculatedProps, label) => {
-  const { angle, backgroundStyle, backgroundComponent, inline, text, style } = props;
-  const { lineHeight, y } = calculatedProps;
+  const { backgroundStyle, backgroundComponent } = props;
   const textProps = label.props;
   const textElement = label.props.children.map(ch => ch.props);
-  console.log(lineHeight  )
-
-  // const textElement = text.map((line, i) => {
-  //   const currentStyle = style[i] || style[0];
-  //   const previousStyle = style[i - 1] || style[0];
-  //   const currentLineHeight = lineHeight[i] || lineHeight[0];
-  //   const previousLineHeight = lineHeight[i - 1] || lineHeight[0];
-  //   const adjustedLineHeight = checkLineHeight(lineHeight, lineHeight[i] || lineHeight[0], 1);
-  //   const textHeight = currentStyle.fontSize * adjustedLineHeight;
-  //   const labelSize = TextSize.approximateTextSize(line, currentStyle);
-
-  //   return {
-  //     currentLineHeight,
-  //     textHeight,
-  //     labelSize,
-  //     dy: i && !inline ? previousStyle.fontSize * previousLineHeight : 0
-  //   };
-  // });
-
-
 
   const backgroundStyleChildren = backgroundStyle.map((bgStyle, i) => {
     const currentElement =  textElement[i];
@@ -234,8 +213,6 @@ const getChildBackgrounds = (props, calculatedProps, label) => {
       x: xCoordinate,
       y: currentElement.y - (labelSize.height / 2)
     };
-
-    // console.log(backgroundProps)
 
     return React.cloneElement(
       backgroundComponent,

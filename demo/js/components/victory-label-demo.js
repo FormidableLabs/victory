@@ -164,7 +164,6 @@ export default class App extends React.Component {
             text={["Use", "dx", "attribute", "to", "shift", "labels", "relative to one another."]}
             inline
             dx={10}
-            backgroundStyle={{ fill: "pink" }}
           />
 
           {/**
@@ -196,7 +195,12 @@ export default class App extends React.Component {
           {/* example for guarding against empty style and lineHeight arrays */}
           <circle cx="300" cy="2300" r="2" fill="red" />
           <VictoryLabel
-            backgroundStyle={{ fill: "pink" }}
+            backgroundStyle={[
+              { fill: "pink" },
+              { fill: "blue" },
+              { fill: "purple" },
+              { fill: "red" }
+            ]}
             x={300}
             y={2300}
             text={[
