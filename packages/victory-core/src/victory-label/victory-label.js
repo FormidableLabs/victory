@@ -194,21 +194,28 @@ const getFullBackground = (props, calculatedProps) => {
 };
 
 const getChildBackgrounds = (props, calculatedProps) => {
-  const { angle, backgroundStyle, backgroundComponent, inline, text, style } = props;
-  const { lineHeight, y } = calculatedProps;
+  const { angle, backgroundStyle, backgroundComponent, capHeight, inline, text, style, y } = props;
+  const { lineHeight } = calculatedProps;
 
   const textElement = text.map((line, i) => {
     const currentStyle = style[i] || style[0];
     const previousStyle = style[i - 1] || style[0];
-    const previousLineHeight = checkLineHeight(lineHeight, lineHeight[i - 1], 1);
+    const previousLineHeight = checkLineHeight(lineHeight, lineHeight[i - 1] || 0, 1);
     const adjustedLineHeight = checkLineHeight(lineHeight, lineHeight[i], 1);
-    const textHeight = currentStyle.fontSize * adjustedLineHeight;
     const labelSize = TextSize.approximateTextSize(line, currentStyle);
+    const totalLineHeight = currentStyle.fontSize * adjustedLineHeight;
+    const textHeight = Math.ceil(totalLineHeight + capHeight * 2);
 
     return {
       textHeight,
       labelSize,
-      dy: i && !inline ? previousStyle.fontSize * previousLineHeight : 0
+      y,
+      fontSize: style.fontSize || defaultStyles.fontSize,
+      dy:
+        i && !inline
+          ? Math.ceil(previousStyle.fontSize * previousLineHeight) + Math.ceil(capHeight * 2)
+          : Math.ceil(((adjustedLineHeight * currentStyle.fontSize) % currentStyle.fontSize) / 2) +
+            Math.ceil(capHeight)
     };
   });
 
