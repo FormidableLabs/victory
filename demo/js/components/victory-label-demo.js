@@ -173,7 +173,7 @@ export default class App extends React.Component {
               { fontSize: 30 }
             ]}
             // eslint-disable-next-line no-magic-numbers
-            lineHeight={[1.22, 2, 3, 1]}
+            lineHeight={[2, 2, 3, 1]}
             verticalAnchor="start"
           />
 
