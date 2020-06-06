@@ -98,4 +98,78 @@ storiesOf("VictoryLabel.background", module)
       dx={10}
       backgroundStyle={{ fill: "lavender" }}
     />
+   ))
+   .add("Multi-line with multiple backgrounds and defaults", () => (
+     <VictoryLabel
+      backgroundStyle={[
+        { fill: "pink" },
+        { fill: "lavender" },
+        { fill: "purple" },
+        { fill: "darkviolet" }
+      ]}
+      x={30}
+      y={30}
+      text={[
+        "Victory is awesome.",
+        "Even if we leave blank arrays",
+        "for style or lineHeight,",
+        "Victory will save us with defaults."
+      ]}
+      style={[]}
+      lineHeight={[]}
+      verticalAnchor="middle"
+    />
+  ))
+  .add("Multi-line with multiple backgrounds", () => (
+   <VictoryLabel
+      x={50}
+      y={250}
+      backgroundStyle={[
+        { fill: "pink" },
+        { fill: "blue" },
+        { fill: "purple" },
+        { fill: "red" }
+      ]}
+      text={["Victory is awesome.", "This is variabley", "lineHeight", "as an array."]}
+      style={[
+        { fontSize: 50, fill: "green" },
+        { fontSize: 60 },
+        { fontSize: 30 },
+        { fontSize: 30 }
+      ]}
+      // eslint-disable-next-line no-magic-numbers
+      lineHeight={[2, 2, 3, 1]}
+      verticalAnchor="middle"
+    />))
+  .add("Multi-line with multiple backgrounds 2", () => (
+    <VictoryLabel
+      backgroundStyle={[
+        { fill: "pink" },
+        { fill: "lavender" },
+        { fill: "purple" },
+        { fill: "lavender" },
+        { fill: "purple" },
+        { fill: "pink" }
+      ]}
+      x={30}
+      y={130}
+      style={[
+        { fontSize: 14, fill: "green" },
+        { fontSize: 60 },
+        { fontSize: 30 },
+        { fontSize: 14 },
+        { fontSize: 45 },
+        { fontSize: 30 }
+      ]}
+      text={[
+        "Does",
+        "This thingy",
+        "Work hey?",
+        "more",
+        "And again",
+        "Let's just go Wild"
+      ]}
+      lineHeight={[2, 1.2, 1.4, 1.6, 1, 6]}
+      verticalAnchor="middle"
+    />
   ));
