@@ -86,5 +86,6 @@ export default {
     32, // eslint-disable-line no-magic-numbers
     { leading: true, trailing: false }
   ),
+  onMouseLeave: CursorHelpers.onMouseMove.bind(CursorHelpers),
   onTouchEnd: CursorHelpers.onTouchEnd.bind(CursorHelpers)
 };

@@ -44,8 +44,8 @@ export const cursorContainerMixin = (base) =>
         {
           target: "parent",
           eventHandlers: {
-            onMouseLeave: () => {
-              return [];
+            onMouseLeave: (evt, targetProps) => {
+              return props.disable ? {} : CursorHelpers.onMouseLeave(evt, targetProps);
             },
             onTouchCancel: () => {
               return [];
