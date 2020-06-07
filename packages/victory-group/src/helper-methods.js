@@ -66,14 +66,20 @@ function pixelsToValue(props, axis, calculatedProps) {
   return (domainExtent / rangeExtent) * props.offset;
 }
 
-function getX0(props, calculatedProps, index) {
-  const center = (calculatedProps.datasets.length - 1) / 2;
+// eslint-disable-next-line max-params
+function getX0(props, calculatedProps, index, role) {
+  const groupLength =
+    role === "stack" ? calculatedProps.datasets[0].length : calculatedProps.datasets.length;
+  const center = (groupLength - 1) / 2;
   const totalWidth = pixelsToValue(props, "x", calculatedProps);
   return (index - center) * totalWidth;
 }
 
-function getPolarX0(props, calculatedProps, index) {
-  const center = (calculatedProps.datasets.length - 1) / 2;
+// eslint-disable-next-line max-params
+function getPolarX0(props, calculatedProps, index, role) {
+  const groupLength =
+    role === "stack" ? calculatedProps.datasets[0].length : calculatedProps.datasets.length;
+  const center = (groupLength - 1) / 2;
   const width = getAngularWidth(props, calculatedProps);
   return (index - center) * width;
 }
@@ -144,8 +150,8 @@ function getChildren(props, childComponents, calculatedProps) {
   return childComponents.map((child, index) => {
     const role = child.type && child.type.role;
     const xOffset = polar
-      ? getPolarX0(props, calculatedProps, index)
-      : getX0(props, calculatedProps, index);
+      ? getPolarX0(props, calculatedProps, index, role)
+      : getX0(props, calculatedProps, index, role);
     const style =
       role === "voronoi" || role === "tooltip" || role === "label"
         ? child.props.style
@@ -163,7 +169,7 @@ function getChildren(props, childComponents, calculatedProps) {
           data: getDataWithOffset(props, datasets[index], xOffset),
           colorScale: getColorScale(props, child),
           labelComponent: labelComponent || child.props.labelComponent,
-          xOffset: role === "stack" ? xOffset : undefined
+          xOffset
         },
         childProps
       )
