@@ -486,6 +486,25 @@ storiesOf("VictoryBar.grouped", module)
       </VictoryStack>
     </VictoryGroup>
   ))
+  .add("grouped stacks (regression)", () => (
+    <VictoryGroup offset={20} style={{ data: { width: 15 } }} labels={({ datum }) => datum.x}>
+      <VictoryStack colorScale="red">
+        <VictoryBar data={getData(4)} />
+        <VictoryBar data={getData(4, "seed-1")} />
+        <VictoryBar data={getData(4, "seed-2")} />
+      </VictoryStack>
+      <VictoryStack colorScale="green">
+        <VictoryBar data={getData(4)} />
+        <VictoryBar data={getData(4, "seed-3")} />
+        <VictoryBar data={getData(4, "seed-4")} />
+      </VictoryStack>
+      <VictoryStack colorScale="blue">
+        <VictoryBar data={getData(4)} />
+        <VictoryBar data={getData(4, "seed-5")} />
+        <VictoryBar data={getData(4, "seed-6")} />
+      </VictoryStack>
+    </VictoryGroup>
+  ))
   .add("grouped negative stacks", () => (
     <VictoryGroup offset={20} style={{ data: { width: 15 } }} labels={({ datum }) => datum.x}>
       <VictoryStack colorScale="red">
