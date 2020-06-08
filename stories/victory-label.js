@@ -98,4 +98,66 @@ storiesOf("VictoryLabel.background", module)
       dx={10}
       backgroundStyle={{ fill: "lavender" }}
     />
+  ))
+  .add("Multi-line with multiple backgrounds and defaults", () => (
+    <VictoryLabel
+      backgroundStyle={[
+        { fill: "pink" },
+        { fill: "lavender" },
+        { fill: "purple" },
+        { fill: "darkviolet" }
+      ]}
+      x={30}
+      y={30}
+      text={[
+        "Victory is awesome.",
+        "Even if we leave blank arrays",
+        "for style or lineHeight,",
+        "Victory will save us with defaults."
+      ]}
+      style={[]}
+      lineHeight={[]}
+      verticalAnchor="middle"
+    />
+  ))
+  .add("Multi-line with multiple backgrounds middle aligned", () => (
+    <VictoryLabel
+      x={50}
+      y={250}
+      backgroundStyle={[{ fill: "pink" }, { fill: "blue" }, { fill: "purple" }, { fill: "red" }]}
+      text={["Victory is awesome.", "This is variable", "lineHeight", "as an array."]}
+      style={[
+        { fontSize: 50, fill: "green" },
+        { fontSize: 60 },
+        { fontSize: 30 },
+        { fontSize: 30 }
+      ]}
+      // eslint-disable-next-line no-magic-numbers
+      lineHeight={[2, 2, 3, 1]}
+      verticalAnchor="middle"
+    />
+  ))
+  .add("Multi-line with multiple backgrounds start aligned", () => (
+    <VictoryLabel
+      x={50}
+      y={50}
+      backgroundStyle={[{ fill: "pink" }, { fill: "blue" }, { fill: "purple" }, { fill: "red" }]}
+      text={["Victory is awesome.", "This is variable", "lineHeight", "as an array."]}
+      style={[{ fontSize: 10 }, { fontSize: 60 }, { fontSize: 30 }, { fontSize: 30 }]}
+      // eslint-disable-next-line no-magic-numbers
+      lineHeight={[2, 2, 3, 1.22]}
+      verticalAnchor="start"
+    />
+  ))
+  .add("Multi-line with multiple backgrounds end aligned", () => (
+    <VictoryLabel
+      x={50}
+      y={110}
+      backgroundStyle={[{ fill: "pink" }, { fill: "blue" }, { fill: "purple" }, { fill: "red" }]}
+      text={["Victory is awesome.", "This is variable", "lineHeight", "as an array."]}
+      style={[{ fontSize: 12 }, { fontSize: 60 }, { fontSize: 30 }, { fontSize: 30 }]}
+      // eslint-disable-next-line no-magic-numbers
+      lineHeight={[2, 2, 3, 1.22]}
+      verticalAnchor="end"
+    />
   ));

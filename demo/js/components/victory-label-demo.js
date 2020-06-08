@@ -165,7 +165,7 @@ export default class App extends React.Component {
               { fill: "purple" },
               { fill: "red" }
             ]}
-            text={["Victory is awesome.", "This is variabley", "lineHeight", "as an array."]}
+            text={["Victory is awesome.", "This is variable", "lineHeight", "as an array."]}
             style={[
               { fontSize: 50, fill: "green" },
               { fontSize: 60 },
@@ -173,7 +173,7 @@ export default class App extends React.Component {
               { fontSize: 30 }
             ]}
             // eslint-disable-next-line no-magic-numbers
-            lineHeight={[1.22, 2, 3, 1]}
+            lineHeight={[2, 2, 3, 1]}
             verticalAnchor="start"
           />
 
