@@ -199,14 +199,23 @@ const getFirstDy = (verticalAnchor, totalLineHeight, dy, fontSize) => {
       return dy - Math.abs(dy * 0.2);
     case "middle":
       return dy - Math.abs(dy * 0.5);
-      // return dy
+    // return dy
     default:
-      return Math.ceil(((totalLineHeight) % fontSize) * 0.5)
-  } 
-}
+      return Math.ceil((totalLineHeight % fontSize) * 0.5);
+  }
+};
 
 const getChildBackgrounds = (props, calculatedProps) => {
-  const { angle, backgroundStyle, backgroundComponent, inline, text, style, verticalAnchor, y } = props;
+  const {
+    angle,
+    backgroundStyle,
+    backgroundComponent,
+    inline,
+    text,
+    style,
+    verticalAnchor,
+    y
+  } = props;
   const { dy, lineHeight } = calculatedProps;
 
   const textElement = text.map((line, i) => {
@@ -225,10 +234,10 @@ const getChildBackgrounds = (props, calculatedProps) => {
       fontSize: style.fontSize || defaultStyles.fontSize,
       dy:
         i && !inline
-          // ? Math.ceil(previousStyle.fontSize * previousLineHeight)
-          // : Math.ceil((dy || 0) + ((adjustedLineHeight * currentStyle.fontSize) % currentStyle.fontSize) / 2)
-        ? Math.ceil(previousStyle.fontSize * previousLineHeight)
-        : getFirstDy(verticalAnchor, totalLineHeight, dy, currentStyle.fontSize)
+          ? // ? Math.ceil(previousStyle.fontSize * previousLineHeight)
+            // : Math.ceil((dy || 0) + ((adjustedLineHeight * currentStyle.fontSize) % currentStyle.fontSize) / 2)
+            Math.ceil(previousStyle.fontSize * previousLineHeight)
+          : getFirstDy(verticalAnchor, totalLineHeight, dy, currentStyle.fontSize)
     };
   });
 

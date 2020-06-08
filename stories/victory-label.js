@@ -98,9 +98,9 @@ storiesOf("VictoryLabel.background", module)
       dx={10}
       backgroundStyle={{ fill: "lavender" }}
     />
-   ))
-   .add("Multi-line with multiple backgrounds and defaults", () => (
-     <VictoryLabel
+  ))
+  .add("Multi-line with multiple backgrounds and defaults", () => (
+    <VictoryLabel
       backgroundStyle={[
         { fill: "pink" },
         { fill: "lavender" },
@@ -121,16 +121,11 @@ storiesOf("VictoryLabel.background", module)
     />
   ))
   .add("Multi-line with multiple backgrounds middle aligned", () => (
-   <VictoryLabel
+    <VictoryLabel
       x={50}
       y={250}
-      backgroundStyle={[
-        { fill: "pink" },
-        { fill: "blue" },
-        { fill: "purple" },
-        { fill: "red" }
-      ]}
-      text={["Victory is awesome.", "This is variabley", "lineHeight", "as an array."]}
+      backgroundStyle={[{ fill: "pink" }, { fill: "blue" }, { fill: "purple" }, { fill: "red" }]}
+      text={["Victory is awesome.", "This is variable", "lineHeight", "as an array."]}
       style={[
         { fontSize: 50, fill: "green" },
         { fontSize: 60 },
@@ -146,19 +141,9 @@ storiesOf("VictoryLabel.background", module)
     <VictoryLabel
       x={50}
       y={50}
-      backgroundStyle={[
-        { fill: "pink" },
-        { fill: "blue" },
-        { fill: "purple" },
-        { fill: "red" }
-      ]}
-      text={["Victory is awesome.", "This is variabley", "lineHeight", "as an array."]}
-      style={[
-        { fontSize: 10 },
-        { fontSize: 60 },
-        { fontSize: 30 },
-        { fontSize: 30 }
-      ]}
+      backgroundStyle={[{ fill: "pink" }, { fill: "blue" }, { fill: "purple" }, { fill: "red" }]}
+      text={["Victory is awesome.", "This is variable", "lineHeight", "as an array."]}
+      style={[{ fontSize: 10 }, { fontSize: 60 }, { fontSize: 30 }, { fontSize: 30 }]}
       // eslint-disable-next-line no-magic-numbers
       lineHeight={[2, 2, 3, 1.22]}
       verticalAnchor="start"
@@ -168,19 +153,9 @@ storiesOf("VictoryLabel.background", module)
     <VictoryLabel
       x={50}
       y={110}
-      backgroundStyle={[
-        { fill: "pink" },
-        { fill: "blue" },
-        { fill: "purple" },
-        { fill: "red" }
-      ]}
-      text={["Victory is awesome.", "This is variabley", "lineHeight", "as an array."]}
-      style={[
-        { fontSize: 12 },
-        { fontSize: 60 },
-        { fontSize: 30 },
-        { fontSize: 30 }
-      ]}
+      backgroundStyle={[{ fill: "pink" }, { fill: "blue" }, { fill: "purple" }, { fill: "red" }]}
+      text={["Victory is awesome.", "This is variable", "lineHeight", "as an array."]}
+      style={[{ fontSize: 12 }, { fontSize: 60 }, { fontSize: 30 }, { fontSize: 30 }]}
       // eslint-disable-next-line no-magic-numbers
       lineHeight={[2, 2, 3, 1.22]}
       verticalAnchor="end"

@@ -165,7 +165,7 @@ export default class App extends React.Component {
               { fill: "purple" },
               { fill: "red" }
             ]}
-            text={["Victory is awesome.", "This is variabley", "lineHeight", "as an array."]}
+            text={["Victory is awesome.", "This is variable", "lineHeight", "as an array."]}
             style={[
               { fontSize: 50, fill: "green" },
               { fontSize: 60 },
