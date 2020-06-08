@@ -198,12 +198,11 @@ const getFirstDy = (verticalAnchor, totalLineHeight, dy, fontSize) => {
     case "end":
       return dy - Math.abs(dy * 0.2);
     case "middle":
-      return dy - Math.abs(dy * 0.5);
-    // return dy
+      return dy - (totalLineHeight * .25) - (fontSize * .5);
     default:
-      return Math.ceil((totalLineHeight % fontSize) * 0.5);
-  }
-};
+      return ((totalLineHeight) % fontSize) * 0.5
+  } 
+}
 
 const getChildBackgrounds = (props, calculatedProps) => {
   const {

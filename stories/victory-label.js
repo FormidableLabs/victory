@@ -133,7 +133,7 @@ storiesOf("VictoryLabel.background", module)
         { fontSize: 30 }
       ]}
       // eslint-disable-next-line no-magic-numbers
-      lineHeight={[2, 2, 3, 1]}
+      lineHeight={[1, 2, 3, 1]}
       verticalAnchor="middle"
     />
   ))
