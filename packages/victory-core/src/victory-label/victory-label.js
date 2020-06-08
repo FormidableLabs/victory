@@ -196,9 +196,9 @@ const getFullBackground = (props, calculatedProps) => {
 const getFirstDy = (verticalAnchor, totalLineHeight, dy, fontSize) => {
   switch (verticalAnchor) {
     case "end":
-      return dy + Math.ceil(((totalLineHeight) % fontSize) * 0.5);
+      return dy - Math.abs(dy * 0.2);
     case "middle":
-      return dy - Math.ceil((totalLineHeight / fontSize) * (fontSize * 0.65));
+      return dy - Math.abs(dy * 0.5);
       // return dy
     default:
       return Math.ceil(((totalLineHeight) % fontSize) * 0.5)

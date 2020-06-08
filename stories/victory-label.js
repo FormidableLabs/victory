@@ -120,7 +120,7 @@ storiesOf("VictoryLabel.background", module)
       verticalAnchor="middle"
     />
   ))
-  .add("Multi-line with multiple backgrounds", () => (
+  .add("Multi-line with multiple backgrounds middle aligned", () => (
    <VictoryLabel
       x={50}
       y={250}
@@ -140,36 +140,49 @@ storiesOf("VictoryLabel.background", module)
       // eslint-disable-next-line no-magic-numbers
       lineHeight={[2, 2, 3, 1]}
       verticalAnchor="middle"
-    />))
-  .add("Multi-line with multiple backgrounds 2", () => (
+    />
+  ))
+  .add("Multi-line with multiple backgrounds start aligned", () => (
     <VictoryLabel
+      x={50}
+      y={50}
       backgroundStyle={[
         { fill: "pink" },
-        { fill: "lavender" },
+        { fill: "blue" },
         { fill: "purple" },
-        { fill: "lavender" },
-        { fill: "purple" },
-        { fill: "pink" }
+        { fill: "red" }
       ]}
-      x={30}
-      y={130}
+      text={["Victory is awesome.", "This is variabley", "lineHeight", "as an array."]}
       style={[
-        { fontSize: 14, fill: "green" },
+        { fontSize: 10 },
         { fontSize: 60 },
         { fontSize: 30 },
-        { fontSize: 14 },
-        { fontSize: 45 },
         { fontSize: 30 }
       ]}
-      text={[
-        "Does",
-        "This thingy",
-        "Work hey?",
-        "more",
-        "And again",
-        "Let's just go Wild"
+      // eslint-disable-next-line no-magic-numbers
+      lineHeight={[2, 2, 3, 1.22]}
+      verticalAnchor="start"
+    />
+  ))
+  .add("Multi-line with multiple backgrounds end aligned", () => (
+    <VictoryLabel
+      x={50}
+      y={110}
+      backgroundStyle={[
+        { fill: "pink" },
+        { fill: "blue" },
+        { fill: "purple" },
+        { fill: "red" }
       ]}
-      lineHeight={[2, 1.2, 1.4, 1.6, 1, 6]}
-      verticalAnchor="middle"
+      text={["Victory is awesome.", "This is variabley", "lineHeight", "as an array."]}
+      style={[
+        { fontSize: 12 },
+        { fontSize: 60 },
+        { fontSize: 30 },
+        { fontSize: 30 }
+      ]}
+      // eslint-disable-next-line no-magic-numbers
+      lineHeight={[2, 2, 3, 1.22]}
+      verticalAnchor="end"
     />
   ));
