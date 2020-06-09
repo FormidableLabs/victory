@@ -229,6 +229,7 @@ export default class VictoryZoomContainerDemo extends React.Component<
             <VictoryZoomContainer
               zoomDomain={{ x: [new Date(1993, 1, 1), new Date(2005, 1, 1)] }}
               zoomDimension="x"
+              containerRef={(ref) => ref}
             />
           }
           scale={{
