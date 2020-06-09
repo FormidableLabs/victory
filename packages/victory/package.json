@@ -1,6 +1,6 @@
 {
   "name": "victory",
-  "version": "34.3.10",
+  "version": "34.3.11",
   "description": "Data viz for React",
   "keywords": [
     "data visualization",
@@ -26,7 +26,7 @@
     "victory-brush-container": "^34.3.8",
     "victory-brush-line": "^34.3.8",
     "victory-candlestick": "^34.3.8",
-    "victory-chart": "^34.3.9",
+    "victory-chart": "^34.3.11",
     "victory-core": "^34.3.8",
     "victory-create-container": "^34.3.10",
     "victory-cursor-container": "^34.3.10",
