@@ -1,6 +1,6 @@
 # Victory Changelog
 
-## 34.4.11 (2020-06-09)
+## 34.3.11 (2020-06-09)
 
 - [#1605](https://github.com/FormidableLabs/victory/pull/1605) - Fixes padding for axes with non-standard orientations. Thanks @glvnsky!
 
