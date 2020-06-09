@@ -226,8 +226,14 @@ const getAxisOffset = (props, calculatedProps, orientation) => {
   const { scale, origin, domain, padding } = calculatedProps;
   const { top, bottom, left, right } = padding;
   const orientations = {
-    x: orientation === "bottom" || orientation === "top" ? orientation : calculatedProps.orientations.x,
-    y: orientation === "left" || orientation === "right" ? orientation : calculatedProps.orientations.y
+    x:
+      orientation === "bottom" || orientation === "top"
+        ? orientation
+        : calculatedProps.orientations.x,
+    y:
+      orientation === "left" || orientation === "right"
+        ? orientation
+        : calculatedProps.orientations.y
   };
   // make the axes line up, and cross when appropriate
   const orientationOffset = {
@@ -254,8 +260,14 @@ const getHorizontalAxisOffset = (props, calculatedProps, orientation) => {
   const { scale, origin, domain, padding } = calculatedProps;
   const { top, bottom, left, right } = padding;
   const orientations = {
-    y: orientation === "bottom" || orientation === "top" ? orientation : calculatedProps.orientations.x,
-    x: orientation === "left" || orientation === "right" ? orientation : calculatedProps.orientations.y
+    y:
+      orientation === "bottom" || orientation === "top"
+        ? orientation
+        : calculatedProps.orientations.x,
+    x:
+      orientation === "left" || orientation === "right"
+        ? orientation
+        : calculatedProps.orientations.y
   };
   // make the axes line up, and cross when appropriate
   const orientationOffset = {
