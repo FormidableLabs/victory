@@ -15,11 +15,11 @@ function getAxisProps(child, props, calculatedProps) {
   const { domain, scale, stringMap, categories, horizontal, orientations } = calculatedProps;
   const childProps = Axis.modifyProps(defaults({ horizontal, theme: props.theme }, child.props));
   const axis = child.type.getAxis(childProps);
-  const axisOffset = horizontal
-    ? getHorizontalAxisOffset(props, calculatedProps)
-    : getAxisOffset(props, calculatedProps);
   const crossAxis = childProps.crossAxis === false ? false : true;
   const orientation = childProps.orientation || orientations[axis];
+  const axisOffset = horizontal
+    ? getHorizontalAxisOffset(props, calculatedProps, orientation)
+    : getAxisOffset(props, calculatedProps, orientation);
   return {
     stringMap,
     horizontal,
@@ -222,9 +222,19 @@ const getDomain = (props, axis, childComponents) => {
   return invertDomain ? domain.concat().reverse() : domain;
 };
 
-const getAxisOffset = (props, calculatedProps) => {
-  const { scale, origin, domain, padding, orientations } = calculatedProps;
+const getAxisOffset = (props, calculatedProps, orientation) => {
+  const { scale, origin, domain, padding } = calculatedProps;
   const { top, bottom, left, right } = padding;
+  const orientations = {
+    x:
+      orientation === "bottom" || orientation === "top"
+        ? orientation
+        : calculatedProps.orientations.x,
+    y:
+      orientation === "left" || orientation === "right"
+        ? orientation
+        : calculatedProps.orientations.y
+  };
   // make the axes line up, and cross when appropriate
   const orientationOffset = {
     y: orientations.x === "bottom" ? bottom : top,
@@ -246,9 +256,19 @@ const getAxisOffset = (props, calculatedProps) => {
   };
 };
 
-const getHorizontalAxisOffset = (props, calculatedProps) => {
-  const { scale, origin, domain, padding, orientations } = calculatedProps;
+const getHorizontalAxisOffset = (props, calculatedProps, orientation) => {
+  const { scale, origin, domain, padding } = calculatedProps;
   const { top, bottom, left, right } = padding;
+  const orientations = {
+    y:
+      orientation === "bottom" || orientation === "top"
+        ? orientation
+        : calculatedProps.orientations.x,
+    x:
+      orientation === "left" || orientation === "right"
+        ? orientation
+        : calculatedProps.orientations.y
+  };
   // make the axes line up, and cross when appropriate
   const orientationOffset = {
     x: orientations.y === "bottom" ? bottom : top,
