@@ -16,5 +16,5 @@ module.exports = {
       }
     }
   ],
-  stories: ["../stories/victory-area.stories.js"],
+  stories: ["../stories/*.stories.js"],
 };

@@ -25,18 +25,12 @@ const defaultChartProps = {
   style: parentStyle, theme: VictoryTheme.material
 };
 
-const makeChart = (areaProps, chartProps = defaultChartProps) => (
-  <VictoryChart {...chartProps}>
-    <VictoryArea {...areaProps}/>
-  </VictoryChart>
-);
-
 export default {
   title: "VictoryArea",
   component: VictoryArea
 };
 
-export const DefaultRendering = () => <VictoryArea />;
+export const DefaultRendering = () => <VictoryArea style={{ data: { fill: "red" } }}/>;
 export const Theme = () => {
   return (
     <div style={containerStyle}>
