@@ -189,273 +189,254 @@ export const BarWidth = () => {
       <VictoryChart {...defaultChartProps}>
         <VictoryBar data={getData(7)} barWidth={({ datum }) => datum.x * 4} />
       </VictoryChart>
-      <VictoryChart polar {...defaultChartProps}>
-        <VictoryBar data={getData(7)} barWidth={5} />
-      </VictoryChart>
     </div>
   );
 }
-
 
 export const CornerRadius = () => {
   return (
     <div style={containerStyle}>
       <VictoryChart {...defaultChartProps}>
-        <VictoryBar data={getData(7)} barWidth={5} />
+        <VictoryBar data={getData(7)} cornerRadius={1} />
       </VictoryChart>
       <VictoryChart {...defaultChartProps}>
-        <VictoryBar data={getData(7)} barWidth={10} />
+        <VictoryBar data={getData(7)} cornerRadius={5} />
       </VictoryChart>
       <VictoryChart {...defaultChartProps}>
-        <VictoryBar data={getData(7)} barWidth={20} />
+        <VictoryBar data={getData(7)} cornerRadius={7} />
+      </VictoryChart>
+      <VictoryChart horizontal {...defaultChartProps}>
+        <VictoryBar data={getData(7)} cornerRadius={7} />
+      </VictoryChart>
+      <VictoryChart horizontal {...defaultChartProps}>
+        <VictoryBar data={getMixedData(7)} barWidth={40} cornerRadius={20} />
       </VictoryChart>
       <VictoryChart {...defaultChartProps}>
-        <VictoryBar data={getData(7)} barWidth={({ datum }) => datum.x * 4} />
+        <VictoryBar data={getMixedData(7)} barWidth={40} cornerRadius={20} />
+      </VictoryChart>
+      <VictoryChart horizontal {...defaultChartProps}>
+        <VictoryBar
+          data={getMixedData(7)}
+          barWidth={40}
+          cornerRadius={{ topLeft: 5, topRight: 20, bottomLeft: 20, bottomRight: 0 }}
+        />
+      </VictoryChart>
+      <VictoryChart {...defaultChartProps}>
+        <VictoryBar
+          data={getMixedData(7)}
+          barWidth={40}
+          cornerRadius={{ topLeft: 5, topRight: 20, bottomLeft: 20, bottomRight: 0 }}
+        />
+      </VictoryChart>
+      <VictoryChart polar innerRadius={60} {...defaultChartProps}>
+        <VictoryBar
+          data={[
+            { x: 45, y: 6 },
+            { x: 90, y: 30 },
+            { x: 135, y: 65 },
+            { x: 180, y: 50 },
+            { x: 270, y: 40 },
+            { x: 315, y: 30 }
+          ]}
+          style={{ data: { fill: "tomato", width: 40 } }}
+          cornerRadius={{ topRight: 1, topLeft: 20, bottomRight: 5, bottomLeft: 0 }}
+        />
+        <VictoryPolarAxis
+          labelPlacement="parallel"
+          tickValues={[0, 45, 90, 135, 180, 225, 270, 315]}
+        />
+      </VictoryChart>
+      <VictoryChart polar {...defaultChartProps}>
+        <VictoryBar
+          data={[
+            { x: 45, y: 6 },
+            { x: 90, y: 30 },
+            { x: 135, y: 65 },
+            { x: 180, y: 50 },
+            { x: 270, y: 40 },
+            { x: 315, y: 30 }
+          ]}
+          style={{ data: { fill: "tomato", width: 40 } }}
+          cornerRadius={{ topRight: 1, topLeft: 20, bottomRight: 5, bottomLeft: 0 }}
+        />
+        <VictoryPolarAxis
+          labelPlacement="parallel"
+          tickValues={[0, 45, 90, 135, 180, 225, 270, 315]}
+        />
+      </VictoryChart>
+    </div>
+  );
+}
+
+export const GetPath = () => {
+  const verticalPathFn = (props) => {
+    //eslint-disable-next-line react/prop-types
+    const { x0, x1, y0, y1 } = props;
+    return `M ${x0}, ${y0}
+      L ${(x1 + x0) / 2}, ${y1}
+      L ${x1}, ${y0}
+      z`;
+  };
+
+  const horizontalPathFn = (props) => {
+    //eslint-disable-next-line react/prop-types
+    const { x0, x1, y0, y1 } = props;
+    return `M ${x0}, ${y1}
+      L ${x1}, ${(y0 + y1) / 2}
+      L ${x0}, ${y0}
+      z`;
+  };
+
+  return (
+    <div style={containerStyle}>
+      <VictoryChart {...defaultChartProps}>
+        <VictoryBar data={getData(7)} getPath={verticalPathFn} />
+      </VictoryChart>
+      <VictoryChart horizontal {...defaultChartProps}>
+        <VictoryBar data={getData(7)} getPath={horizontalPathFn} />
+      </VictoryChart>
+    </div>
+  );
+}
+
+export const Data = () => {
+  return (
+    <div style={containerStyle}>
+      <VictoryChart {...defaultChartProps}>
+        <VictoryBar
+          data={[
+            { animal: "Cat", pet: 45, wild: 17 },
+            { animal: "Dog", pet: 85, wild: 6 },
+            { animal: "Fish", pet: 55, wild: 0 },
+            { animal: "Bird", pet: 15, wild: 40 }
+          ]}
+          x={"animal"}
+          y={(data) => data.pet + data.wild}
+        />
+      </VictoryChart>
+      <VictoryChart {...defaultChartProps}>
+        <VictoryBar data={getData(8)} y0={(d) => d.y - d.x} />
+      </VictoryChart>
+      <VictoryChart horizontal {...defaultChartProps}>
+        <VictoryBar data={getData(8)} y0={(d) => d.y - d.x} />
+      </VictoryChart>
+      <VictoryChart polar {...defaultChartProps}>
+        <VictoryBar data={getData(8)} y0={(d) => d.y - d.x} />
+      </VictoryChart>
+      <VictoryChart {...defaultChartProps}>
+        <VictoryBar
+          data={[
+            { a: { b: { c: 1, d: 1 } } },
+            { a: { b: { c: 2, d: 3 } } },
+            { a: { b: { c: 3, d: 2 } } }
+          ]}
+          x={"a.b.c"}
+          y={"a.b.d"}
+        />
+      </VictoryChart>
+      <VictoryChart {...defaultChartProps}>
+        <VictoryBar
+          data={fromJS([
+            { x: 1, y: 2, label: "cat" },
+            { x: 2, y: 5, label: "dog" },
+            { x: 3, y: 3, label: "dog" },
+            { x: 4, y: -2, label: "bird" },
+            { x: 5, y: -5, label: "cat" }
+          ])}
+        />
+      </VictoryChart>
+    </div>
+  );
+}
+
+export const Labels = () => {
+  return (
+    <div style={containerStyle}>
+      <VictoryChart {...defaultChartProps}>
+        <VictoryBar data={getData(7)} labels={({ datum }) => `x: ${datum.x}`} />
+      </VictoryChart>
+      <VictoryChart {...defaultChartProps}>
+        <VictoryBar data={getData(7)} labels={["", "", "three", "four", 5, "six"]} />
+      </VictoryChart>
+      <VictoryChart {...defaultChartProps}>
+        <VictoryBar
+          data={[
+            { x: 1, y: 2, label: "cat" },
+            { x: 2, y: 5, label: "dog" },
+            { x: 3, y: 3, label: "dog" },
+            { x: 4, y: -2, label: "bird" },
+            { x: 5, y: -5, label: "cat" }
+          ]}
+        />
+      </VictoryChart>
+      <VictoryChart polar {...defaultChartProps} domainPadding={{ y: 20 }}>
+        <VictoryBar
+          data={[
+            { x: 1, y: 2, label: "cat" },
+            { x: 2, y: 5, label: "dog" },
+            { x: 3, y: 3, label: "dog" },
+            { x: 4, y: 2, label: "bird" },
+            { x: 5, y: 5, label: "cat" }
+          ]}
+        />
+        <VictoryPolarAxis />
+      </VictoryChart>
+    </div>
+  );
+}
+
+export const Tooltips = () => {
+  return (
+    <div style={containerStyle}>
+      <VictoryChart {...defaultChartProps}>
+        <VictoryBar
+          data={getData(5)}
+          labels={({ datum }) => `x: ${datum.x}`}
+          labelComponent={<VictoryTooltip active />}
+        />
+      </VictoryChart>
+      <VictoryChart horizontal {...defaultChartProps}>
+        <VictoryBar
+          data={getData(5)}
+          labels={({ datum }) => `x: ${datum.x}`}
+          labelComponent={<VictoryTooltip active />}
+        />
+      </VictoryChart>
+      <VictoryChart {...defaultChartProps}>
+        <VictoryBar
+          data={getMixedData(5)}
+          labels={({ datum }) => `x: ${datum.x}`}
+          labelComponent={<VictoryTooltip active />}
+        />
+      </VictoryChart>
+      <VictoryChart horizontal {...defaultChartProps}>
+        <VictoryBar
+          data={getMixedData(5)}
+          labels={({ datum }) => `x: ${datum.x}`}
+          labelComponent={<VictoryTooltip active />}
+        />
+      </VictoryChart>
+      <VictoryChart {...defaultChartProps}>
+        <VictoryBar
+          data={getData(5)}
+          labels={["one", "two", 3, "wow, four tooltips", "five"]}
+          labelComponent={<VictoryTooltip active />}
+        />
+      </VictoryChart>
+      <VictoryChart polar {...defaultChartProps}>
+        <VictoryBar
+          data={getData(5)}
+          style={{ data: { width: 20 } }}
+          labels={["one", "two", 3, "wow, four tooltips", "five"]}
+          labelComponent={<VictoryTooltip active />}
+        />
+        <VictoryPolarAxis />
       </VictoryChart>
     </div>
   );
 }
 
 
-
-
-
-// storiesOf("VictoryBar.categories", module)
-//   .addDecorator(getChartDecorator({ domainPadding: 25 }))
-//   .add("string categories", () => {
-//     return (
-//       <VictoryBar
-//         categories={{ x: ["Bird", "Fish", "Cat", "Dog"] }}
-//         data={[
-//           { x: "Cat", y: 45 },
-//           { x: "Dog", y: 85 },
-//           { x: "Fish", y: 55 },
-//           { x: "Bird", y: 15 }
-//         ]}
-//       />
-//     );
-//   });
-
-// storiesOf("VictoryBar.cornerRadius", module)
-//   .addDecorator(getChartDecorator({ domainPadding: 25 }))
-//   .add("cornerRadius = 1", () => <VictoryBar data={getData(7)} cornerRadius={1} />)
-//   .add("cornerRadius = 5", () => <VictoryBar data={getData(7)} cornerRadius={5} />)
-//   .add("cornerRadius = 7", () => <VictoryBar data={getData(7)} cornerRadius={7} />)
-//   .add("cornerRadius = 5 (horizontal)", () => (
-//     <VictoryBar horizontal data={getData(7)} cornerRadius={5} />
-//   ))
-//   .add("cornerRadius = 5 (negative values)", () => (
-//     <VictoryBar data={getMixedData(5)} cornerRadius={5} />
-//   ))
-//   .add("cornerRadius = 5 (horizontal negative values)", () => (
-//     <VictoryBar horizontal data={getMixedData(5)} cornerRadius={5} />
-//   ))
-//   .add("cornerRadius = 3 (20 bars)", () => <VictoryBar data={getData(20)} cornerRadius={3} />)
-//   .add("cornerRadius = mixed", () => (
-//     <VictoryBar
-//       data={getDescendingSmallData()}
-//       cornerRadius={{ topLeft: 5, topRight: 2, bottomLeft: 7, bottomRight: 3 }}
-//     />
-//   ))
-//   .add("cornerRadius = mixed (horizontal)", () => (
-//     <VictoryBar
-//       horizontal
-//       data={getDescendingSmallData()}
-//       cornerRadius={{ topLeft: 5, topRight: 2, bottomLeft: 7, bottomRight: 3 }}
-//     />
-//   ));
-
-// storiesOf("VictoryBar.cornerRadius", module).add("cornerRadius = mixed (polar)", () => (
-//   <VictoryChart polar theme={VictoryTheme.material} domain={{ x: [0, 360] }} innerRadius={60}>
-//     <VictoryPolarAxis labelPlacement="parallel" tickValues={[0, 45, 90, 135, 180, 225, 270, 315]} />
-//     <VictoryBar
-//       cornerRadius={{ topRight: 1, topLeft: 10, bottomRight: 5, bottomLeft: 0 }}
-//       style={{ data: { fill: "tomato", width: 20 } }}
-//       data={[
-//         { x: 45, y: 20 },
-//         { x: 90, y: 30 },
-//         { x: 135, y: 65 },
-//         { x: 180, y: 50 },
-//         { x: 270, y: 40 },
-//         { x: 315, y: 30 }
-//       ]}
-//     />
-//   </VictoryChart>
-// ));
-
-// storiesOf("VictoryBar.getPath", module)
-//   .addDecorator(getChartDecorator({ domainPadding: 25 }))
-//   .add("custom bar path (vertical)", () => {
-//     const getPathFn = (props) => {
-//       const { x0, x1, y0, y1 } = props;
-//       return `M ${x0}, ${y0}
-//         L ${(x1 + x0) / 2}, ${y1}
-//         L ${x1}, ${y0}
-//         z`;
-//     };
-//     return <VictoryBar data={getData(7)} getPath={getPathFn} />;
-//   })
-//   .add("custom bar path (horizontal)", () => {
-//     const getPathFn = (props) => {
-//       const { x0, x1, y0, y1 } = props;
-//       return `M ${x0}, ${y1}
-//         L ${x1}, ${(y0 + y1) / 2}
-//         L ${x0}, ${y0}
-//         z`;
-//     };
-//     return <VictoryBar data={getData(4)} horizontal getPath={getPathFn} />;
-//   });
-
-// storiesOf("VictoryBar.getPath", module)
-//   .addDecorator(getPolarChartDecorator())
-//   .add("custom bar path (polar)", () => {
-//     const getPathFn = (props) => {
-//       const { datum, startAngle, endAngle, r1, r2 } = props;
-//       const pathFunction = d3Shape
-//         .arc()
-//         .innerRadius(r1)
-//         .outerRadius(r2)
-//         .startAngle(endAngle)
-//         .endAngle(startAngle)
-//         .cornerRadius(0);
-//       const path = pathFunction();
-//       const coords = path.split(/[A-Z]/).slice(1);
-//       // add a star symbol to the end of each bar
-//       const star = d3Shape
-//         .symbol()
-//         .size(datum.y * 20)
-//         .type(d3Shape.symbolStar)();
-//       const movesStar = star.match(/[A-Z]/g);
-//       const coordsStar = star.split(/[A-Z]/).slice(1);
-//       const [x0, y0] = coords[0].split(",").map(Number);
-//       const [x1, y1] = coords[1]
-//         .split(",")
-//         .slice(coords[1].split(",").length - 2)
-//         .map(Number);
-//       const [xOrigin, yOrigin] = [(x0 + x1) / 2, (y0 + y1) / 2];
-//       const adjustedCoordsStar = coordsStar.map((coord) => {
-//         if (coord.length === 0) {
-//           return "";
-//         }
-//         const [x, y] = coord.split(",").map(Number);
-//         return [x + xOrigin, y + yOrigin].join(",");
-//       });
-//       const adjustedStar = movesStar.map((m, i) => m + adjustedCoordsStar[i]).join();
-//       return adjustedStar + pathFunction();
-//     };
-//     return (
-//       <VictoryBar
-//         alignment={"middle"}
-//         polar
-//         width={0}
-//         data={getData(7)}
-//         style={{ data: { width: 10 } }}
-//         getPath={getPathFn}
-//       />
-//     );
-//   });
-
-// storiesOf("VictoryBar.data", module)
-//   .addDecorator(getChartDecorator({ domainPadding: 25 }))
-//   .add("with data accessors", () => {
-//     return (
-//       <VictoryBar
-//         data={[
-//           { animal: "Cat", pet: 45, wild: 17 },
-//           { animal: "Dog", pet: 85, wild: 6 },
-//           { animal: "Fish", pet: 55, wild: 0 },
-//           { animal: "Bird", pet: 15, wild: 40 }
-//         ]}
-//         x={"animal"}
-//         y={(data) => data.pet + data.wild}
-//       />
-//     );
-//   })
-//   .add("with y0", () => <VictoryBar data={getData(8)} y0={(d) => d.y - d.x} />)
-//   .add("with nested data accessors", () => {
-//     return (
-//       <VictoryBar
-//         data={[
-//           { a: { b: { c: 1, d: 1 } } },
-//           { a: { b: { c: 2, d: 3 } } },
-//           { a: { b: { c: 3, d: 2 } } }
-//         ]}
-//         x={"a.b.c"}
-//         y={"a.b.d"}
-//       />
-//     );
-//   })
-//   .add("with immutable data", () => (
-//     <VictoryBar
-//       data={fromJS([
-//         { x: 1, y: 2, label: "cat" },
-//         { x: 2, y: 5, label: "dog" },
-//         { x: 3, y: 3, label: "dog" },
-//         { x: 4, y: -2, label: "bird" },
-//         { x: 5, y: -5, label: "cat" }
-//       ])}
-//     />
-//   ));
-
-// storiesOf("VictoryBar.labels", module)
-//   .addDecorator(getChartDecorator({ domainPadding: 25 }))
-//   .add("function labels", () => (
-//     <VictoryBar data={getData(7)} labels={({ datum }) => `x: ${datum.x}`} />
-//   ))
-//   .add("array labels", () => (
-//     <VictoryBar data={getData(7)} labels={["", "", "three", "four", 5, "six"]} />
-//   ))
-//   .add("data labels", () => (
-//     <VictoryBar
-//       data={[
-//         { x: 1, y: 2, label: "cat" },
-//         { x: 2, y: 5, label: "dog" },
-//         { x: 3, y: 3, label: "dog" },
-//         { x: 4, y: -2, label: "bird" },
-//         { x: 5, y: -5, label: "cat" }
-//       ]}
-//     />
-//   ));
-
-// storiesOf("VictoryBar.tooltips", module)
-//   .addDecorator(getChartDecorator({ domainPadding: 25 }))
-//   .add("tooltips", () => (
-//     <VictoryBar
-//       data={getData(5)}
-//       labels={({ datum }) => `x: ${datum.x}`}
-//       labelComponent={<VictoryTooltip active />}
-//     />
-//   ))
-//   .add("tooltips (negative)", () => (
-//     <VictoryBar
-//       data={getMixedData(5)}
-//       labels={({ datum }) => `x: ${datum.x}`}
-//       labelComponent={<VictoryTooltip active />}
-//     />
-//   ))
-//   .add("tooltips (horizontal)", () => (
-//     <VictoryBar
-//       horizontal
-//       data={getData(5)}
-//       labels={({ datum }) => `x: ${datum.x}`}
-//       labelComponent={<VictoryTooltip active />}
-//     />
-//   ))
-//   .add("tooltips (negative horizontal)", () => (
-//     <VictoryBar
-//       horizontal
-//       data={getMixedData(5)}
-//       labels={({ datum }) => `x: ${datum.x}`}
-//       labelComponent={<VictoryTooltip active />}
-//     />
-//   ))
-//   .add("tooltips with long and short strings", () => (
-//     <VictoryBar
-//       data={getData(5)}
-//       labels={["one", "two", 3, "wow, four tooltips", "five"]}
-//       labelComponent={<VictoryTooltip active />}
-//     />
-//   ));
 
 // storiesOf("VictoryBar.style", module)
 //   .addDecorator(getChartDecorator({ domainPadding: 25 }))
