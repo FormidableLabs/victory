@@ -29,8 +29,14 @@ export default {
   title: "VictoryArea",
   component: VictoryArea
 };
-
-export const DefaultRendering = () => <VictoryArea style={{ data: { fill: "red" } }}/>;
+export const DefaultRendering = () => {
+  return (
+    <div style={containerStyle}>
+      <VictoryArea {...defaultChartProps}/>
+      <VictoryArea style={parentStyle}/>
+    </div>
+  );
+}
 export const Theme = () => {
   return (
     <div style={containerStyle}>

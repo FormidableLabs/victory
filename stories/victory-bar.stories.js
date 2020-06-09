@@ -1,13 +1,14 @@
 /*eslint-disable no-magic-numbers*/
+/*eslint-disable react/no-multi-comp*/
 import React from "react";
-import { storiesOf } from "@storybook/react";
+import { VictoryAxis } from "../packages/victory-axis/src";
+import { VictoryBar } from "../packages/victory-bar/src";
+import { VictoryChart } from "../packages/victory-chart/src";
 import { VictoryGroup } from "../packages/victory-group/src/index";
 import { VictoryStack } from "../packages/victory-stack/src/index";
-import { VictoryBar } from "../packages/victory-bar/src/index";
 import { VictoryTooltip } from "../packages/victory-tooltip/src/index";
 import { VictoryTheme } from "../packages/victory-core/src/index";
 import { VictoryPolarAxis } from "../packages/victory-polar-axis/src/index";
-import { VictoryChart } from "../packages/victory-chart/src/index";
 import { getChartDecorator, getPolarChartDecorator } from "./decorators";
 import {
   getData,
@@ -20,78 +21,204 @@ import {
 import * as d3Shape from "d3-shape";
 import { fromJS } from "immutable";
 
-storiesOf("VictoryBar", module).add("default rendering", () => <VictoryBar />);
+const containerStyle = {
+  display: "flex",
+  flexDirection: "row",
+  flexWrap: "wrap",
+  alignItems: "center",
+  justifyContent: "center"
+};
 
-// storiesOf("VictoryBar.theme", module)
-//   .addDecorator(getChartDecorator({ theme: VictoryTheme.material }))
-//   .add("material theme", () => <VictoryBar data={getData(8)} />)
-//   .add("material theme stacked", () => (
-//     <VictoryStack labels={({ datum }) => datum.x}>
-//       <VictoryBar data={getData(8)} />
-//       <VictoryBar data={getData(8, "seed-1")} />
-//       <VictoryBar data={getData(8, "seed-2")} />
-//       <VictoryBar data={getData(8, "seed-3")} />
-//       <VictoryBar data={getData(8, "seed-4")} />
-//     </VictoryStack>
-//   ));
-// storiesOf("VictoryBar.theme", module)
-//   .addDecorator(getChartDecorator({ theme: VictoryTheme.grayscale }))
-//   .add("grayscale (default) theme", () => <VictoryBar data={getData(8)} />)
-//   .add("grayscale (default) stacked", () => (
-//     <VictoryStack labels={({ datum }) => datum.x}>
-//       <VictoryBar data={getData(8)} />
-//       <VictoryBar data={getData(8, "seed-1")} />
-//       <VictoryBar data={getData(8, "seed-2")} />
-//       <VictoryBar data={getData(8, "seed-3")} />
-//       <VictoryBar data={getData(8, "seed-4")} />
-//     </VictoryStack>
-//   ));
+const parentStyle = {
+  parent: { border: "1px solid #ccc", margin: "2%", maxWidth: "40%" }
+};
 
-// storiesOf("VictoryBar.alignment", module)
-//   .addDecorator(getChartDecorator({ theme: VictoryTheme.material }))
-//   .add("start", () => <VictoryBar data={getData(7)} alignment="start" />)
-//   .add("middle", () => <VictoryBar data={getData(7)} alignment="middle" />)
-//   .add("end", () => <VictoryBar data={getData(7)} alignment="end" />)
-//   .add("start (negative values)", () => <VictoryBar data={getMixedData(5)} alignment="start" />)
-//   .add("end (negative values)", () => <VictoryBar data={getMixedData(5)} alignment="end" />)
-//   .add("start (horizontal)", () => <VictoryBar data={getData(7)} horizontal alignment="start" />)
-//   .add("end (horizontal)", () => <VictoryBar data={getData(7)} horizontal alignment="end" />);
+const defaultChartProps = {
+  style: parentStyle, theme: VictoryTheme.material
+};
 
-// storiesOf("VictoryBar.barRatio", module)
-//   .addDecorator(getChartDecorator())
-//   .add("barRatio = 0.01", () => <VictoryBar data={getData(7)} barRatio={0.01} />)
-//   .add("barRatio = 0.25", () => <VictoryBar data={getData(7)} barRatio={0.25} />)
-//   .add("barRatio = 0.5", () => <VictoryBar data={getData(7)} barRatio={0.5} />)
-//   .add("barRatio = 0.75", () => <VictoryBar data={getData(7)} barRatio={0.75} />)
-//   .add("barRatio = 1", () => <VictoryBar data={getData(7)} barRatio={1} />)
-//   .add("barRatio = 0.5 (single bar)", () => <VictoryBar data={getData(1)} barRatio={0.5} />)
-//   .add("barRatio = 0.01 (horizontal)", () => (
-//     <VictoryBar horizontal data={getData(7)} barRatio={0.01} />
-//   ))
-//   .add("barRatio = 0.5 (horizontal)", () => (
-//     <VictoryBar horizontal data={getData(7)} barRatio={0.5} />
-//   ))
-//   .add("barRatio = 1 (horizontal)", () => <VictoryBar horizontal data={getData(7)} barRatio={1} />)
-//   .add("barRatio = 0.5 (horizontal, single bar)", () => (
-//     <VictoryBar horizontal data={getData(1)} barRatio={0.5} />
-//   ))
-//   .add("barRatio = 0.01 (50 bars)", () => <VictoryBar data={getData(50)} barRatio={0.01} />)
-//   .add("barRatio = 0.5 (50 bars)", () => <VictoryBar data={getData(50)} barRatio={0.5} />)
-//   .add("barRatio = 1 (50 bars)", () => <VictoryBar data={getData(50)} barRatio={1} />);
+export default {
+  title: "VictoryBar",
+  component: VictoryBar
+};
 
-// storiesOf("VictoryBar.barWidth", module)
-//   .addDecorator(getChartDecorator())
-//   .add("numeric bar width = 5", () => <VictoryBar data={getData(7)} barWidth={5} />)
-//   .add("numeric bar width = 10", () => <VictoryBar data={getData(7)} barWidth={10} />)
-//   .add("numeric bar width = 20", () => <VictoryBar data={getData(7)} barWidth={20} />)
-//   .add("functional bar width (2 * datum.x)", () => (
-//     <VictoryBar
-//       data={getData(7)}
-//       barWidth={({ datum }) => {
-//         return datum.x * 2;
-//       }}
-//     />
-//   ));
+export const DefaultRendering = () => {
+  return (
+    <div style={containerStyle}>
+      <VictoryBar {...defaultChartProps}/>
+      <VictoryBar style={parentStyle}/>
+    </div>
+  );
+}
+
+export const Theme = () => {
+  return (
+    <div style={containerStyle}>
+      <VictoryChart {...defaultChartProps}>
+        <VictoryBar data={getData(8)} />
+      </VictoryChart>
+      <VictoryChart {...defaultChartProps}>
+        <VictoryStack labels={({ datum }) => datum.x}>
+          <VictoryBar data={getData(8)} />
+          <VictoryBar data={getData(8, "seed-1")} />
+          <VictoryBar data={getData(8, "seed-2")} />
+          <VictoryBar data={getData(8, "seed-3")} />
+          <VictoryBar data={getData(8, "seed-4")} />
+        </VictoryStack>
+      </VictoryChart>
+      <VictoryChart style={parentStyle} theme={VictoryTheme.grayscale}>
+        <VictoryBar data={getData(8)} />
+      </VictoryChart>
+      <VictoryChart style={parentStyle} theme={VictoryTheme.grayscale}>
+        <VictoryStack labels={({ datum }) => datum.x}>
+          <VictoryBar data={getData(8)} />
+          <VictoryBar data={getData(8, "seed-1")} />
+          <VictoryBar data={getData(8, "seed-2")} />
+          <VictoryBar data={getData(8, "seed-3")} />
+          <VictoryBar data={getData(8, "seed-4")} />
+        </VictoryStack>
+      </VictoryChart>
+    </div>
+  );
+}
+
+export const Alignment = () => {
+  return (
+    <div style={containerStyle}>
+      <VictoryChart {...defaultChartProps}>
+        <VictoryBar data={getData(7)} alignment="start" />
+      </VictoryChart>
+      <VictoryChart horizontal {...defaultChartProps}>
+        <VictoryBar data={getData(7)} alignment="start" />
+      </VictoryChart>
+      <VictoryChart {...defaultChartProps}>
+        <VictoryBar data={getData(7)} alignment="middle" />
+      </VictoryChart>
+      <VictoryChart horizontal {...defaultChartProps}>
+        <VictoryBar data={getData(7)} alignment="middle" />
+      </VictoryChart>
+      <VictoryChart {...defaultChartProps}>
+        <VictoryBar data={getData(7)} alignment="end" />
+      </VictoryChart>
+      <VictoryChart horizontal {...defaultChartProps}>
+        <VictoryBar data={getData(7)} alignment="end" />
+      </VictoryChart>
+      <VictoryChart {...defaultChartProps}>
+        <VictoryBar data={getMixedData(5)} alignment="start" />
+      </VictoryChart>
+      <VictoryChart horizontal {...defaultChartProps}>
+        <VictoryBar data={getMixedData(5)} alignment="start" />
+      </VictoryChart>
+      <VictoryChart {...defaultChartProps}>
+        <VictoryBar data={getMixedData(5)} alignment="end" />
+      </VictoryChart>
+      <VictoryChart horizontal {...defaultChartProps}>
+        <VictoryBar data={getMixedData(5)} alignment="end" />
+      </VictoryChart>
+    </div>
+  );
+}
+
+export const BarRatio = () => {
+  return (
+    <div style={containerStyle}>
+      <VictoryChart {...defaultChartProps}>
+        <VictoryBar data={getData(2)} barRatio={0.01} />
+      </VictoryChart>
+      <VictoryChart {...defaultChartProps}>
+        <VictoryBar data={getData(50)} barRatio={0.01} />
+      </VictoryChart>
+      <VictoryChart {...defaultChartProps}>
+        <VictoryBar data={getData(7)} barRatio={0.01} />
+      </VictoryChart>
+      <VictoryChart horizontal {...defaultChartProps}>
+        <VictoryBar data={getData(7)} barRatio={0.01} />
+      </VictoryChart>
+      <VictoryChart {...defaultChartProps}>
+        <VictoryBar data={getData(2)} barRatio={0.5} />
+      </VictoryChart>
+      <VictoryChart {...defaultChartProps}>
+        <VictoryBar data={getData(50)} barRatio={0.5} />
+      </VictoryChart>
+      <VictoryChart {...defaultChartProps}>
+        <VictoryBar data={getData(7)} barRatio={0.5} />
+      </VictoryChart>
+      <VictoryChart horizontal {...defaultChartProps}>
+        <VictoryBar data={getData(7)} barRatio={0.5} />
+      </VictoryChart>
+      <VictoryChart {...defaultChartProps}>
+        <VictoryBar data={getData(2)} barRatio={1} />
+      </VictoryChart>
+      <VictoryChart {...defaultChartProps}>
+        <VictoryBar data={getData(50)} barRatio={1} />
+      </VictoryChart>
+      <VictoryChart {...defaultChartProps}>
+        <VictoryBar data={getData(7)} barRatio={1} />
+      </VictoryChart>
+      <VictoryChart horizontal {...defaultChartProps}>
+        <VictoryBar data={getData(7)} barRatio={1} />
+      </VictoryChart>
+      <VictoryChart {...defaultChartProps}>
+        <VictoryBar data={getData(2)} barRatio={1.5} />
+      </VictoryChart>
+      <VictoryChart {...defaultChartProps}>
+        <VictoryBar data={getData(50)} barRatio={1.5} />
+      </VictoryChart>
+      <VictoryChart {...defaultChartProps}>
+        <VictoryBar data={getData(7)} barRatio={1.5} />
+      </VictoryChart>
+      <VictoryChart horizontal {...defaultChartProps}>
+        <VictoryBar data={getData(7)} barRatio={1.5} />
+      </VictoryChart>
+    </div>
+  );
+}
+
+export const BarWidth = () => {
+  return (
+    <div style={containerStyle}>
+      <VictoryChart {...defaultChartProps}>
+        <VictoryBar data={getData(7)} barWidth={5} />
+      </VictoryChart>
+      <VictoryChart {...defaultChartProps}>
+        <VictoryBar data={getData(7)} barWidth={10} />
+      </VictoryChart>
+      <VictoryChart {...defaultChartProps}>
+        <VictoryBar data={getData(7)} barWidth={20} />
+      </VictoryChart>
+      <VictoryChart {...defaultChartProps}>
+        <VictoryBar data={getData(7)} barWidth={({ datum }) => datum.x * 4} />
+      </VictoryChart>
+      <VictoryChart polar {...defaultChartProps}>
+        <VictoryBar data={getData(7)} barWidth={5} />
+      </VictoryChart>
+    </div>
+  );
+}
+
+
+export const CornerRadius = () => {
+  return (
+    <div style={containerStyle}>
+      <VictoryChart {...defaultChartProps}>
+        <VictoryBar data={getData(7)} barWidth={5} />
+      </VictoryChart>
+      <VictoryChart {...defaultChartProps}>
+        <VictoryBar data={getData(7)} barWidth={10} />
+      </VictoryChart>
+      <VictoryChart {...defaultChartProps}>
+        <VictoryBar data={getData(7)} barWidth={20} />
+      </VictoryChart>
+      <VictoryChart {...defaultChartProps}>
+        <VictoryBar data={getData(7)} barWidth={({ datum }) => datum.x * 4} />
+      </VictoryChart>
+    </div>
+  );
+}
+
+
+
+
 
 // storiesOf("VictoryBar.categories", module)
 //   .addDecorator(getChartDecorator({ domainPadding: 25 }))
@@ -727,3 +854,4 @@ storiesOf("VictoryBar", module).add("default rendering", () => <VictoryBar />);
 //       </VictoryStack>
 //     </VictoryGroup>
 //   ));
+
