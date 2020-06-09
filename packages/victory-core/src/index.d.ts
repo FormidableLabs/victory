@@ -225,6 +225,7 @@ export interface VictoryContainerProps {
   children?: React.ReactElement | React.ReactElement[];
   className?: string;
   containerId?: number | string;
+  containerRef?: React.Ref<HTMLElement>;
   desc?: string;
   events?: React.DOMAttributes<any>;
   height?: number;
