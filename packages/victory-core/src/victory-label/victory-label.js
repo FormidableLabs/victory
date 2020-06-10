@@ -193,22 +193,12 @@ const getFullBackground = (props, calculatedProps) => {
   );
 };
 
-const getFirstDy = (verticalAnchor, totalLineHeight, dy, fontSize) => {
-  switch (verticalAnchor) {
-    case "end":
-      return dy - Math.abs(dy * 0.2);
-    case "middle":
-      return dy - (totalLineHeight * .25) - (fontSize * .5);
-    default:
-      return ((totalLineHeight) % fontSize) * 0.5
-  } 
-}
-
 const getChildBackgrounds = (props, calculatedProps) => {
   const {
     angle,
     backgroundStyle,
     backgroundComponent,
+    capHeight,
     inline,
     text,
     style,
@@ -223,7 +213,8 @@ const getChildBackgrounds = (props, calculatedProps) => {
     const previousLineHeight = checkLineHeight(lineHeight, lineHeight[i - 1] || 0, 1);
     const adjustedLineHeight = checkLineHeight(lineHeight, lineHeight[i], 1);
     const labelSize = TextSize.approximateTextSize(line, currentStyle);
-    const totalLineHeight = currentStyle.fontSize * adjustedLineHeight;
+    const capHeightPx = TextSize.convertLengthToPixels(`${capHeight}em`, currentStyle.fontSize)
+    const totalLineHeight = (currentStyle.fontSize * adjustedLineHeight);
     const textHeight = Math.ceil(totalLineHeight);
 
     return {
@@ -233,10 +224,8 @@ const getChildBackgrounds = (props, calculatedProps) => {
       fontSize: style.fontSize || defaultStyles.fontSize,
       dy:
         i && !inline
-          ? // ? Math.ceil(previousStyle.fontSize * previousLineHeight)
-            // : Math.ceil((dy || 0) + ((adjustedLineHeight * currentStyle.fontSize) % currentStyle.fontSize) / 2)
-            Math.ceil(previousStyle.fontSize * previousLineHeight)
-          : getFirstDy(verticalAnchor, totalLineHeight, dy, currentStyle.fontSize)
+          ? Math.ceil(previousStyle.fontSize * previousLineHeight)
+          : dy - totalLineHeight * 0.5 - (currentStyle.fontSize - capHeightPx)
     };
   });
 
@@ -280,7 +269,7 @@ const getBackgroundElement = (props, calculatedProps) => {
   return backgroundElement;
 };
 
-const getTSpanDy = (previousFontSize, previousLineHeight, fontSize, lineHeight) => {
+const getTSpanDy = (previousFontSize, previousLineHeight, fontSize, lineHeight, i) => {
   return (
     -0.5 * previousFontSize -
     0.5 * (previousFontSize * previousLineHeight) +
@@ -291,12 +280,13 @@ const getTSpanDy = (previousFontSize, previousLineHeight, fontSize, lineHeight) 
 };
 
 const renderTextElements = (props, calculatedProps) => {
-  const { inline, className, title, events, direction, text, style } = props;
+  const { inline, capHeight, className, title, events, direction, text, style } = props;
   const { lineHeight, textAnchor, dx, dy, transform, x, y } = calculatedProps;
 
   const textChildren = text.map((line, i) => {
     const currentStyle = style[i] || style[0];
     const lastStyle = style[i - 1] || style[0];
+    const capHeightPx = TextSize.convertLengthToPixels(`${capHeight}em`, currentStyle.fontSize);
 
     const tspanProps = {
       key: `${props.id}-key-${i}`,
@@ -308,7 +298,8 @@ const renderTextElements = (props, calculatedProps) => {
               lastStyle.fontSize || defaultStyles.fontSize,
               lineHeight[i - 1] || 1,
               currentStyle.fontSize || defaultStyles.fontSize,
-              lineHeight[i] || 1
+              lineHeight[i] || 1,
+              i
             )
           : undefined,
       textAnchor: currentStyle.textAnchor || textAnchor,

@@ -123,17 +123,17 @@ storiesOf("VictoryLabel.background", module)
   .add("Multi-line with multiple backgrounds middle aligned", () => (
     <VictoryLabel
       x={50}
-      y={250}
+      y={290}
       backgroundStyle={[{ fill: "pink" }, { fill: "blue" }, { fill: "purple" }, { fill: "red" }]}
       text={["Victory is awesome.", "This is variable", "lineHeight", "as an array."]}
       style={[
-        { fontSize: 50, fill: "green" },
+        { fontSize: 12, fill: "green" },
         { fontSize: 60 },
         { fontSize: 30 },
         { fontSize: 30 }
       ]}
       // eslint-disable-next-line no-magic-numbers
-      lineHeight={[1, 2, 3, 1]}
+      lineHeight={[3, 2, 3, 1]}
       verticalAnchor="middle"
     />
   ))
@@ -143,21 +143,21 @@ storiesOf("VictoryLabel.background", module)
       y={50}
       backgroundStyle={[{ fill: "pink" }, { fill: "blue" }, { fill: "purple" }, { fill: "red" }]}
       text={["Victory is awesome.", "This is variable", "lineHeight", "as an array."]}
-      style={[{ fontSize: 10 }, { fontSize: 60 }, { fontSize: 30 }, { fontSize: 30 }]}
+      style={[{ fontSize: 50 }, { fontSize: 60 }, { fontSize: 30 }, { fontSize: 30 }]}
       // eslint-disable-next-line no-magic-numbers
-      lineHeight={[2, 2, 3, 1.22]}
+      lineHeight={[2, 2, 3, 1]}
       verticalAnchor="start"
     />
   ))
   .add("Multi-line with multiple backgrounds end aligned", () => (
     <VictoryLabel
       x={50}
-      y={110}
+      y={580}
       backgroundStyle={[{ fill: "pink" }, { fill: "blue" }, { fill: "purple" }, { fill: "red" }]}
-      text={["Victory is awesome.", "This is variable", "lineHeight", "as an array."]}
-      style={[{ fontSize: 12 }, { fontSize: 60 }, { fontSize: 30 }, { fontSize: 30 }]}
+      text={["Victory is awesome.", "yThis is variable", "lineHeight", "as an array."]}
+      style={[{ fontSize: 70 }, { fontSize: 60 }, { fontSize: 30 }, { fontSize: 30 }]}
       // eslint-disable-next-line no-magic-numbers
-      lineHeight={[2, 2, 3, 1.22]}
+      lineHeight={[2, 2, 3, 1]}
       verticalAnchor="end"
     />
   ));
