@@ -352,13 +352,13 @@ export const Data = () => {
 export const Labels = () => {
   return (
     <div style={containerStyle}>
-      <VictoryChart {...defaultChartProps}>
+      <VictoryChart {...defaultChartProps} domainPadding={8}>
         <VictoryBar data={getData(7)} labels={({ datum }) => `x: ${datum.x}`} />
       </VictoryChart>
-      <VictoryChart {...defaultChartProps}>
+      <VictoryChart {...defaultChartProps} domainPadding={8}>
         <VictoryBar data={getData(7)} labels={["", "", "three", "four", 5, "six"]} />
       </VictoryChart>
-      <VictoryChart {...defaultChartProps}>
+      <VictoryChart {...defaultChartProps} domainPadding={10}>
         <VictoryBar
           data={[
             { x: 1, y: 2, label: "cat" },
@@ -388,35 +388,35 @@ export const Labels = () => {
 export const Tooltips = () => {
   return (
     <div style={containerStyle}>
-      <VictoryChart {...defaultChartProps}>
+      <VictoryChart {...defaultChartProps} domainPadding={10}>
         <VictoryBar
           data={getData(5)}
           labels={({ datum }) => `x: ${datum.x}`}
           labelComponent={<VictoryTooltip active />}
         />
       </VictoryChart>
-      <VictoryChart horizontal {...defaultChartProps}>
+      <VictoryChart horizontal {...defaultChartProps} domainPadding={10}>
         <VictoryBar
           data={getData(5)}
           labels={({ datum }) => `x: ${datum.x}`}
           labelComponent={<VictoryTooltip active />}
         />
       </VictoryChart>
-      <VictoryChart {...defaultChartProps}>
+      <VictoryChart {...defaultChartProps} domainPadding={10}>
         <VictoryBar
           data={getMixedData(5)}
           labels={({ datum }) => `x: ${datum.x}`}
           labelComponent={<VictoryTooltip active />}
         />
       </VictoryChart>
-      <VictoryChart horizontal {...defaultChartProps}>
+      <VictoryChart horizontal {...defaultChartProps} domainPadding={10}>
         <VictoryBar
           data={getMixedData(5)}
           labels={({ datum }) => `x: ${datum.x}`}
           labelComponent={<VictoryTooltip active />}
         />
       </VictoryChart>
-      <VictoryChart {...defaultChartProps}>
+      <VictoryChart {...defaultChartProps} domainPadding={10}>
         <VictoryBar
           data={getData(5)}
           labels={["one", "two", 3, "wow, four tooltips", "five"]}
@@ -436,35 +436,38 @@ export const Tooltips = () => {
   );
 }
 
+export const Style = () => {
+  return (
+    <div style={containerStyle}>
+      <VictoryChart {...defaultChartProps} domainPadding={10}>
+        <VictoryBar
+          labels={({ datum }) => datum.y}
+          style={{
+            labels: { fontSize: 20, fill: "tomato", fontFamily: "monospace" },
+            data: { fill: "tomato", fillOpacity: 0.7, stroke: "tomato", strokeWidth: 2 }
+          }}
+        />
+      </VictoryChart>
+      <VictoryChart {...defaultChartProps} domainPadding={10}>
+        <VictoryBar
+          style={{
+            labels: {
+              fill: ({ datum }) => (datum.x === "Dog" ? "red" : "black")
+            },
+            data: {
+              stroke: ({ datum }) => (datum.y > 75 ? "red" : "transparent"),
+              strokeWidth: 3,
+              opacity: ({ datum }) => (datum.y > 75 ? 1 : 0.4)
+            }
+          }}
+          labels={({ datum }) => datum.x}
+          data={[{ x: "Cat", y: 62 }, { x: "Dog", y: 91 }, { x: "Fish", y: 55 }, { x: "Bird", y: 55 }]}
+        />
+      </VictoryChart>
+    </div>
+  );
+}
 
-
-// storiesOf("VictoryBar.style", module)
-//   .addDecorator(getChartDecorator({ domainPadding: 25 }))
-//   .add("with styles", () => (
-//     <VictoryBar
-//       labels={({ datum }) => datum.y}
-//       style={{
-//         labels: { fontSize: 20, fill: "tomato", fontFamily: "monospace" },
-//         data: { fill: "tomato", fillOpacity: 0.7, stroke: "tomato", strokeWidth: 2 }
-//       }}
-//     />
-//   ))
-//   .add("with functional styles", () => (
-//     <VictoryBar
-//       style={{
-//         labels: {
-//           fill: ({ datum }) => (datum.x === "Dog" ? "red" : "black")
-//         },
-//         data: {
-//           stroke: ({ datum }) => (datum.y > 75 ? "red" : "transparent"),
-//           strokeWidth: 3,
-//           opacity: ({ datum }) => (datum.y > 75 ? 1 : 0.4)
-//         }
-//       }}
-//       labels={({ datum }) => datum.x}
-//       data={[{ x: "Cat", y: 62 }, { x: "Dog", y: 91 }, { x: "Fish", y: 55 }, { x: "Bird", y: 55 }]}
-//     />
-//   ));
 
 // storiesOf("VictoryBar.stacked", module)
 //   .addDecorator(getChartDecorator({ domainPadding: 25 }))
