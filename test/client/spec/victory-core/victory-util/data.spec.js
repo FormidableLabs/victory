@@ -32,7 +32,11 @@ describe("victory-util/data", () => {
 
     [dataTest, immutableDataTest].forEach(({ createData, testLabel }) => {
       describe(`returning string maps with ${testLabel}`, () => {
-        const data = createData([{ x: "one", y: 1 }, { x: "red", y: 2 }, { x: "cat", y: 3 }]);
+        const data = createData([
+          { x: "one", y: 1 },
+          { x: "red", y: 2 },
+          { x: "cat", y: 3 }
+        ]);
 
         it("returns a string map from strings in data", () => {
           const props = { data };
@@ -59,7 +63,11 @@ describe("victory-util/data", () => {
     describe(`getStringsFromData with ${testLabel}`, () => {
       it("returns an array of strings from a data prop", () => {
         const props = {
-          data: createData([{ x: "one", y: 1 }, { x: "red", y: 2 }, { x: "cat", y: 3 }])
+          data: createData([
+            { x: "one", y: 1 },
+            { x: "red", y: 2 },
+            { x: "cat", y: 3 }
+          ])
         };
         const dataStrings = Data.getStringsFromData(props, "x");
         expect(dataStrings).to.eql(["one", "red", "cat"]);
@@ -67,7 +75,11 @@ describe("victory-util/data", () => {
 
       it("returns an array of strings from array-type data", () => {
         const props = {
-          data: createData([["one", 1], ["red", 2], ["cat", 3]]),
+          data: createData([
+            ["one", 1],
+            ["red", 2],
+            ["cat", 3]
+          ]),
           x: 0,
           y: 1
         };
@@ -77,13 +89,21 @@ describe("victory-util/data", () => {
 
       it("only returns strings, if data is mixed", () => {
         const props = {
-          data: createData([{ x: 1, y: 1 }, { x: "three", y: 3 }])
+          data: createData([
+            { x: 1, y: 1 },
+            { x: "three", y: 3 }
+          ])
         };
         expect(Data.getStringsFromData(props, "x")).to.eql(["three"]);
       });
 
       it("returns an empty array when no strings are present", () => {
-        const props = { data: createData([{ x: 1, y: 1 }, { x: 3, y: 3 }]) };
+        const props = {
+          data: createData([
+            { x: 1, y: 1 },
+            { x: 3, y: 3 }
+          ])
+        };
         expect(Data.getStringsFromData(props, "x")).to.eql([]);
       });
 
@@ -133,7 +153,10 @@ describe("victory-util/data", () => {
   [dataTest, immutableDataTest].forEach(({ createData, testLabel }) => {
     describe(`formatData with ${testLabel}`, () => {
       it("formats a single dataset", () => {
-        const dataset = [{ _x: 1, _y: 3, x: 1, y: 3 }, { _x: 2, _y: 5, x: 2, y: 5 }];
+        const dataset = [
+          { _x: 1, _y: 3, x: 1, y: 3 },
+          { _x: 2, _y: 5, x: 2, y: 5 }
+        ];
         const props = { data: createData(dataset) };
         const formatted = Data.formatData(dataset, props);
         expect(formatted).to.be.an.array;
@@ -146,7 +169,10 @@ describe("victory-util/data", () => {
     [dataTest, immutableDataTest].forEach(({ createData, testLabel }) => {
       describe(`with ${testLabel}`, () => {
         it("formats and returns the data prop", () => {
-          const data = createData([{ x: "kittens", y: 3 }, { x: "cats", y: 5 }]);
+          const data = createData([
+            { x: "kittens", y: 3 },
+            { x: "cats", y: 5 }
+          ]);
           const props = { data, x: "x", y: "y" };
           const expectedReturnWithEventKeys = [
             { _x: 1, x: "kittens", xName: "kittens", _y: 3, y: 3 },
@@ -189,7 +215,11 @@ describe("victory-util/data", () => {
         });
 
         it("uses a eventKey functions", () => {
-          const data = createData([{ x: 2, y: 2 }, { x: 1, y: 3 }, { x: 3, y: 1 }]);
+          const data = createData([
+            { x: 2, y: 2 },
+            { x: 1, y: 3 },
+            { x: 3, y: 1 }
+          ]);
 
           const returnData = Data.getData({ data, eventKey: (d) => d.x });
 
@@ -201,7 +231,11 @@ describe("victory-util/data", () => {
         });
 
         it("uses a eventKey functions with index", () => {
-          const data = createData([{ x: 2, y: 2 }, { x: 1, y: 3 }, { x: 3, y: 1 }]);
+          const data = createData([
+            { x: 2, y: 2 },
+            { x: 1, y: 3 },
+            { x: 3, y: 1 }
+          ]);
 
           const returnData = Data.getData({ data, eventKey: (d, i) => i });
 
@@ -213,7 +247,11 @@ describe("victory-util/data", () => {
         });
 
         it("does not sort data when sort key not passed", () => {
-          const data = createData([{ x: 2, y: 2 }, { x: 1, y: 3 }, { x: 3, y: 1 }]);
+          const data = createData([
+            { x: 2, y: 2 },
+            { x: 1, y: 3 },
+            { x: 3, y: 1 }
+          ]);
 
           const returnData = Data.getData({ data });
 
@@ -287,14 +325,21 @@ describe("victory-util/data", () => {
     });
 
     it("generates a dataset from domain", () => {
-      const generatedReturn = [{ x: 0, y: 0 }, { x: 10, y: 10 }];
+      const generatedReturn = [
+        { x: 0, y: 0 },
+        { x: 10, y: 10 }
+      ];
       const props = { x: "x", y: "y", domain: { x: [0, 10], y: [0, 10] } };
       const returnData = Data.generateData(props);
       expect(returnData).to.eql(generatedReturn);
     });
 
     it("generates a dataset from domain and samples", () => {
-      const generatedReturn = [{ x: 0, y: 0 }, { x: 5, y: 5 }, { x: 10, y: 10 }];
+      const generatedReturn = [
+        { x: 0, y: 0 },
+        { x: 5, y: 5 },
+        { x: 10, y: 10 }
+      ];
       const props = {
         x: "x",
         y: "y",

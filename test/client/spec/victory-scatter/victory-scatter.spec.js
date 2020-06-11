@@ -103,7 +103,11 @@ describe("components/victory-scatter", () => {
       const svgDimensions = { width: 350, height: 200, padding: 75 };
       const wrapper = mount(
         <VictoryScatter
-          data={[{ x: 0, y: 0 }, { x: 2, y: 3 }, { x: 5, y: 5 }]}
+          data={[
+            { x: 0, y: 0 },
+            { x: 2, y: 3 },
+            { x: 5, y: 5 }
+          ]}
           {...svgDimensions}
         />
       );
@@ -115,11 +119,19 @@ describe("components/victory-scatter", () => {
         return SvgTestHelper.convertSvgCoordinatesToCartesian(coord, svgDimensions, domain);
       });
 
-      expect(coordinates).to.eql([[0, 0], [2, 3], [5, 5]]);
+      expect(coordinates).to.eql([
+        [0, 0],
+        [2, 3],
+        [5, 5]
+      ]);
     });
 
     it("does not render data with null x or y values", () => {
-      const data = [{ x: 1, y: 2 }, { x: null, y: 4 }, { x: 5, y: null }];
+      const data = [
+        { x: 1, y: 2 },
+        { x: null, y: 4 },
+        { x: 5, y: null }
+      ];
       const wrapper = mount(<VictoryScatter data={data} />);
       expect(wrapper.find(Point).length).to.equal(1);
     });

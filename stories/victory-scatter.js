@@ -255,7 +255,12 @@ storiesOf("VictoryScatter.style", module)
         }
       }}
       labels={({ datum }) => datum.x}
-      data={[{ x: "Cat", y: 62 }, { x: "Dog", y: 91 }, { x: "Fish", y: 55 }, { x: "Bird", y: 55 }]}
+      data={[
+        { x: "Cat", y: 62 },
+        { x: "Dog", y: 91 },
+        { x: "Fish", y: 55 },
+        { x: "Bird", y: 55 }
+      ]}
     />
   ));
 

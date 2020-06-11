@@ -73,7 +73,11 @@ describe("components/victory-line", () => {
         padding: 50,
         width: 400,
         height: 300,
-        data: [{ x: 0, y: 0 }, { x: 1, y: 1 }, { x: 2, y: 2 }]
+        data: [
+          { x: 0, y: 0 },
+          { x: 1, y: 1 },
+          { x: 2, y: 2 }
+        ]
       };
       const wrapper = mount(<VictoryLine {...props} />);
       const line = wrapper.find(Curve);
@@ -86,7 +90,11 @@ describe("components/victory-line", () => {
         padding: 50,
         width: 400,
         height: 300,
-        data: [{ x: 0, y: 0 }, { x: 1, y: 1 }, { x: 2, y: 2 }]
+        data: [
+          { x: 0, y: 0 },
+          { x: 1, y: 1 },
+          { x: 2, y: 2 }
+        ]
       };
       const stringWrapper = mount(<VictoryLine {...props} interpolation="catmullRom" />);
       const stringLine = stringWrapper.find(Curve);
@@ -112,7 +120,10 @@ describe("components/victory-line", () => {
 
   describe("rendering with accessors", () => {
     it("renders array-type data", () => {
-      const data = [[1, 2], [3, 4]];
+      const data = [
+        [1, 2],
+        [3, 4]
+      ];
       const wrapper = mount(<VictoryLine data={data} x={0} y={1} />);
       const lines = wrapper.find("path");
       expect(lines.length).to.equal(1);
@@ -153,7 +164,10 @@ describe("components/victory-line", () => {
     });
 
     it("reverses data with the sortOrder prop", () => {
-      const data = [{ t: 0, x: 10, y: 1 }, { t: 1, x: 9, y: 1 }];
+      const data = [
+        { t: 0, x: 10, y: 1 },
+        { t: 1, x: 9, y: 1 }
+      ];
       const wrapper = shallow(
         <VictoryLine
           data={data}

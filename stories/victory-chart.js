@@ -120,7 +120,12 @@ storiesOf("VictoryChart.calculated domain", module)
       <VictoryScatter
         size={6}
         symbol="star"
-        data={[{ x: "cat", y: 2 }, { x: "dog", y: 3 }, { x: "bird", y: 1 }, { x: "frog", y: 4 }]}
+        data={[
+          { x: "cat", y: 2 },
+          { x: "dog", y: 3 },
+          { x: "bird", y: 1 },
+          { x: "frog", y: 4 }
+        ]}
       />
       <VictoryScatter
         size={6}
@@ -140,7 +145,12 @@ storiesOf("VictoryChart.calculated domain", module)
       <VictoryScatter
         size={6}
         symbol="star"
-        data={[{ x: "cat", y: 2 }, { x: "dog", y: 3 }, { x: "bird", y: 1 }, { x: "frog", y: 4 }]}
+        data={[
+          { x: "cat", y: 2 },
+          { x: "dog", y: 3 },
+          { x: "bird", y: 1 },
+          { x: "frog", y: 4 }
+        ]}
       />
       <VictoryScatter
         size={6}
@@ -206,27 +216,81 @@ storiesOf("VictoryChart.style", module)
   .add("with background on group", () => (
     <VictoryChart style={{ background: { fill: "pink" } }}>
       <VictoryGroup labels={["a", "b", "c"]} horizontal offset={20} colorScale={"qualitative"}>
-        <VictoryBar data={[{ x: 1, y: 1 }, { x: 2, y: 2 }, { x: 3, y: 5 }]} />
-        <VictoryBar data={[{ x: 1, y: 2 }, { x: 2, y: 1 }, { x: 3, y: 7 }]} />
-        <VictoryBar data={[{ x: 1, y: 3 }, { x: 2, y: 4 }, { x: 3, y: 9 }]} />
+        <VictoryBar
+          data={[
+            { x: 1, y: 1 },
+            { x: 2, y: 2 },
+            { x: 3, y: 5 }
+          ]}
+        />
+        <VictoryBar
+          data={[
+            { x: 1, y: 2 },
+            { x: 2, y: 1 },
+            { x: 3, y: 7 }
+          ]}
+        />
+        <VictoryBar
+          data={[
+            { x: 1, y: 3 },
+            { x: 2, y: 4 },
+            { x: 3, y: 9 }
+          ]}
+        />
       </VictoryGroup>
     </VictoryChart>
   ))
   .add("with background on stacked chart", () => (
     <VictoryChart style={{ background: { fill: "pink" } }}>
       <VictoryStack colorScale={"qualitative"}>
-        <VictoryBar data={[{ x: 1, y: 1 }, { x: 2, y: 2 }, { x: 3, y: 5 }]} />
-        <VictoryBar data={[{ x: 1, y: 2 }, { x: 2, y: 1 }, { x: 3, y: 7 }]} />
-        <VictoryBar data={[{ x: 1, y: 3 }, { x: 2, y: 4 }, { x: 3, y: 9 }]} />
+        <VictoryBar
+          data={[
+            { x: 1, y: 1 },
+            { x: 2, y: 2 },
+            { x: 3, y: 5 }
+          ]}
+        />
+        <VictoryBar
+          data={[
+            { x: 1, y: 2 },
+            { x: 2, y: 1 },
+            { x: 3, y: 7 }
+          ]}
+        />
+        <VictoryBar
+          data={[
+            { x: 1, y: 3 },
+            { x: 2, y: 4 },
+            { x: 3, y: 9 }
+          ]}
+        />
       </VictoryStack>
     </VictoryChart>
   ))
   .add("with background on horizontal chart", () => (
     <VictoryChart horizontal style={{ background: { fill: "pink" } }}>
       <VictoryStack colorScale={"qualitative"}>
-        <VictoryBar data={[{ x: 1, y: 1 }, { x: 2, y: 2 }, { x: 3, y: 5 }]} />
-        <VictoryBar data={[{ x: 1, y: 2 }, { x: 2, y: 1 }, { x: 3, y: 7 }]} />
-        <VictoryBar data={[{ x: 1, y: 3 }, { x: 2, y: 4 }, { x: 3, y: 9 }]} />
+        <VictoryBar
+          data={[
+            { x: 1, y: 1 },
+            { x: 2, y: 2 },
+            { x: 3, y: 5 }
+          ]}
+        />
+        <VictoryBar
+          data={[
+            { x: 1, y: 2 },
+            { x: 2, y: 1 },
+            { x: 3, y: 7 }
+          ]}
+        />
+        <VictoryBar
+          data={[
+            { x: 1, y: 3 },
+            { x: 2, y: 4 },
+            { x: 3, y: 9 }
+          ]}
+        />
       </VictoryStack>
     </VictoryChart>
   ));

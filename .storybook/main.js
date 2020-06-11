@@ -4,17 +4,17 @@ module.exports = {
     "storybook-addon-performance/register",
     "@storybook/addon-options/register",
     {
-      name: '@storybook/addon-storysource',
+      name: "@storybook/addon-storysource",
       options: {
         rule: {
           test: [/\.stories\.jsx?$/],
-          include: [path.resolve(__dirname, '../stories')],
+          include: [path.resolve(__dirname, "../stories")]
         },
         loaderOptions: {
-          prettierConfig: { printWidth: 80, singleQuote: false },
+          prettierConfig: { printWidth: 80, singleQuote: false }
         }
       }
     }
   ],
-  stories: ["../stories/*.stories.js"],
+  stories: ["../stories/*.stories.js"]
 };

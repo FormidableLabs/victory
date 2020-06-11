@@ -231,7 +231,13 @@ class App extends React.Component<any, BrushLineDemoState> {
           <button onClick={this.clearMutation.bind(this)}>reset domain</button>
           {this.state.externalMutation && (
             <VictoryChart style={chartStyle}>
-              <VictoryBar data={[{ x: "one", y: 4 }, { x: "two", y: 5 }, { x: "three", y: 6 }]} />
+              <VictoryBar
+                data={[
+                  { x: "one", y: 4 },
+                  { x: "two", y: 5 },
+                  { x: "three", y: 6 }
+                ]}
+              />
               <VictoryAxis
                 axisComponent={<VictoryBrushLine brushWidth={20} />}
                 externalEventMutations={this.state.externalMutation}
@@ -239,18 +245,36 @@ class App extends React.Component<any, BrushLineDemoState> {
             </VictoryChart>
           )}
           <VictoryChart style={chartStyle} domainPadding={{ x: 50 }}>
-            <VictoryBar data={[{ x: "one", y: 4 }, { x: "two", y: 5 }, { x: "three", y: 6 }]} />
+            <VictoryBar
+              data={[
+                { x: "one", y: 4 },
+                { x: "two", y: 5 },
+                { x: "three", y: 6 }
+              ]}
+            />
             <VictoryAxis
               dependentAxis
               axisComponent={<VictoryBrushLine brushWidth={20} brushDomain={[2, 3]} />}
             />
           </VictoryChart>
           <VictoryChart style={chartStyle}>
-            <VictoryScatter data={[{ x: "one", y: 0 }, { x: "two", y: 2 }, { x: "three", y: 4 }]} />
+            <VictoryScatter
+              data={[
+                { x: "one", y: 0 },
+                { x: "two", y: 2 },
+                { x: "three", y: 4 }
+              ]}
+            />
             <VictoryAxis gridComponent={<VictoryBrushLine brushWidth={20} />} />
           </VictoryChart>
           <VictoryChart style={chartStyle}>
-            <VictoryScatter data={[{ x: "one", y: 0 }, { x: "two", y: 2 }, { x: "three", y: 4 }]} />
+            <VictoryScatter
+              data={[
+                { x: "one", y: 0 },
+                { x: "two", y: 2 },
+                { x: "three", y: 4 }
+              ]}
+            />
             <VictoryAxis
               dependentAxis
               crossAxis={false}

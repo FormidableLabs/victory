@@ -8,13 +8,7 @@ import { VictoryStack } from "../packages/victory-stack/src/index";
 import { VictoryTooltip } from "../packages/victory-tooltip/src/index";
 import { VictoryTheme, VictoryLabel } from "../packages/victory-core/src/index";
 import { VictoryPolarAxis } from "../packages/victory-polar-axis/src/index";
-import {
-  getData,
-  getStackedData,
-  getMixedData,
-  getTimeData,
-  getLogData,
-} from "./data";
+import { getData, getStackedData, getMixedData, getTimeData, getLogData } from "./data";
 import { fromJS } from "immutable";
 
 const containerStyle = {
@@ -30,7 +24,8 @@ const parentStyle = {
 };
 
 const defaultChartProps = {
-  style: parentStyle, theme: VictoryTheme.material
+  style: parentStyle,
+  theme: VictoryTheme.material
 };
 
 export default {
@@ -41,11 +36,11 @@ export default {
 export const DefaultRendering = () => {
   return (
     <div style={containerStyle}>
-      <VictoryBar {...defaultChartProps}/>
-      <VictoryBar style={parentStyle}/>
+      <VictoryBar {...defaultChartProps} />
+      <VictoryBar style={parentStyle} />
     </div>
   );
-}
+};
 
 export const Theme = () => {
   return (
@@ -76,7 +71,7 @@ export const Theme = () => {
       </VictoryChart>
     </div>
   );
-}
+};
 
 export const Alignment = () => {
   return (
@@ -113,7 +108,7 @@ export const Alignment = () => {
       </VictoryChart>
     </div>
   );
-}
+};
 
 export const BarRatio = () => {
   return (
@@ -168,7 +163,7 @@ export const BarRatio = () => {
       </VictoryChart>
     </div>
   );
-}
+};
 
 export const BarWidth = () => {
   return (
@@ -187,7 +182,7 @@ export const BarWidth = () => {
       </VictoryChart>
     </div>
   );
-}
+};
 
 export const CornerRadius = () => {
   return (
@@ -262,7 +257,7 @@ export const CornerRadius = () => {
       </VictoryChart>
     </div>
   );
-}
+};
 
 export const GetPath = () => {
   const verticalPathFn = (props) => {
@@ -293,7 +288,7 @@ export const GetPath = () => {
       </VictoryChart>
     </div>
   );
-}
+};
 
 export const Data = () => {
   return (
@@ -343,7 +338,7 @@ export const Data = () => {
       </VictoryChart>
     </div>
   );
-}
+};
 
 export const Labels = () => {
   return (
@@ -379,7 +374,7 @@ export const Labels = () => {
       </VictoryChart>
     </div>
   );
-}
+};
 
 export const Tooltips = () => {
   return (
@@ -430,7 +425,7 @@ export const Tooltips = () => {
       </VictoryChart>
     </div>
   );
-}
+};
 
 export const Style = () => {
   return (
@@ -457,33 +452,32 @@ export const Style = () => {
             }
           }}
           labels={({ datum }) => datum.x}
-          data={[{ x: "Cat", y: 62 }, { x: "Dog", y: 91 }, { x: "Fish", y: 55 }, { x: "Bird", y: 55 }]}
+          data={[
+            { x: "Cat", y: 62 },
+            { x: "Dog", y: 91 },
+            { x: "Fish", y: 55 },
+            { x: "Bird", y: 55 }
+          ]}
         />
       </VictoryChart>
     </div>
   );
-}
+};
 
 export const Scale = () => {
   return (
     <div style={containerStyle}>
       <VictoryChart {...defaultChartProps} scale={{ y: "log" }} minDomain={1}>
-        <VictoryBar
-          data={getLogData(7)}
-          labels={({ datum }) => datum.y.toPrecision(1) }
-        />
+        <VictoryBar data={getLogData(7)} labels={({ datum }) => datum.y.toPrecision(1)} />
       </VictoryChart>
       <VictoryChart horizontal {...defaultChartProps} scale={{ y: "log" }} minDomain={1}>
-        <VictoryBar
-          data={getLogData(7)}
-          labels={({ datum }) => datum.y.toPrecision(1) }
-        />
+        <VictoryBar data={getLogData(7)} labels={({ datum }) => datum.y.toPrecision(1)} />
       </VictoryChart>
       <VictoryChart {...defaultChartProps}>
-        <VictoryBar data={getTimeData(5)} labels={({ datum }) => datum.x.getFullYear()}/>
+        <VictoryBar data={getTimeData(5)} labels={({ datum }) => datum.x.getFullYear()} />
       </VictoryChart>
       <VictoryChart horizontal {...defaultChartProps}>
-        <VictoryBar data={getTimeData(5)} labels={({ datum }) => datum.x.getFullYear()}/>
+        <VictoryBar data={getTimeData(5)} labels={({ datum }) => datum.x.getFullYear()} />
       </VictoryChart>
       <VictoryChart {...defaultChartProps}>
         <VictoryStack labels={({ datum }) => datum.x.getFullYear()}>
@@ -515,7 +509,7 @@ export const Scale = () => {
       </VictoryChart>
     </div>
   );
-}
+};
 
 export const StackedBars = () => {
   return (
@@ -554,14 +548,14 @@ export const StackedBars = () => {
         </VictoryStack>
       </VictoryChart>
       <VictoryChart {...defaultChartProps} domainPadding={8}>
-        <VictoryStack labels={({ datum }) => datum._y1.toPrecision(2)} >
+        <VictoryStack labels={({ datum }) => datum._y1.toPrecision(2)}>
           <VictoryBar data={getMixedData(7)} />
           <VictoryBar data={getMixedData(7, "seed-1")} />
           <VictoryBar data={getMixedData(7, "seed-2")} />
         </VictoryStack>
       </VictoryChart>
       <VictoryChart horizontal {...defaultChartProps} domainPadding={8}>
-        <VictoryStack labels={({ datum }) => datum._y1.toPrecision(2)} >
+        <VictoryStack labels={({ datum }) => datum._y1.toPrecision(2)}>
           <VictoryBar data={getMixedData(7)} />
           <VictoryBar data={getMixedData(7, "seed-1")} />
           <VictoryBar data={getMixedData(7, "seed-2")} />
@@ -601,7 +595,7 @@ export const StackedBars = () => {
       </VictoryChart>
     </div>
   );
-}
+};
 
 export const GroupedBars = () => {
   return (
@@ -621,14 +615,14 @@ export const GroupedBars = () => {
         </VictoryGroup>
       </VictoryChart>
       <VictoryChart {...defaultChartProps} domainPadding={30}>
-        <VictoryGroup offset={20} labels={({ datum }) => datum.x} >
+        <VictoryGroup offset={20} labels={({ datum }) => datum.x}>
           <VictoryBar data={getMixedData(3)} />
           <VictoryBar data={getMixedData(3, "seed")} />
           <VictoryBar data={getMixedData(3, "seed-1")} />
         </VictoryGroup>
       </VictoryChart>
       <VictoryChart horizontal {...defaultChartProps} domainPadding={30}>
-        <VictoryGroup offset={20} labels={({ datum }) => datum.x} >
+        <VictoryGroup offset={20} labels={({ datum }) => datum.x}>
           <VictoryBar data={getMixedData(3)} />
           <VictoryBar data={getMixedData(3, "seed")} />
           <VictoryBar data={getMixedData(3, "seed-1")} />
@@ -657,11 +651,7 @@ export const GroupedBars = () => {
         </VictoryGroup>
       </VictoryChart>
       <VictoryChart {...defaultChartProps} domainPadding={30}>
-        <VictoryGroup
-          offset={20}
-          labels={({ datum }) => datum.x}
-          style={{ data: { width: 15 } }}
-        >
+        <VictoryGroup offset={20} labels={({ datum }) => datum.x} style={{ data: { width: 15 } }}>
           <VictoryStack colorScale="red">
             <VictoryBar data={getData(3)} />
             <VictoryBar data={getData(3, "seed-1")} />
@@ -680,11 +670,7 @@ export const GroupedBars = () => {
         </VictoryGroup>
       </VictoryChart>
       <VictoryChart horizontal {...defaultChartProps} domainPadding={30}>
-        <VictoryGroup
-          offset={20}
-          labels={({ datum }) => datum.x}
-          style={{ data: { width: 15 } }}
-        >
+        <VictoryGroup offset={20} labels={({ datum }) => datum.x} style={{ data: { width: 15 } }}>
           <VictoryStack colorScale="red">
             <VictoryBar data={getData(3)} />
             <VictoryBar data={getData(3, "seed-1")} />
@@ -750,16 +736,13 @@ export const GroupedBars = () => {
       </VictoryChart>
     </div>
   );
-}
+};
 
 export const PolarBars = () => {
   return (
     <div style={containerStyle}>
       <VictoryChart {...defaultChartProps} polar>
-        <VictoryBar
-          style={{ data: { width: 20 } }}
-          data={getData(7)}
-        />
+        <VictoryBar style={{ data: { width: 20 } }} data={getData(7)} />
       </VictoryChart>
       <VictoryChart {...defaultChartProps} polar>
         <VictoryBar
@@ -829,7 +812,7 @@ export const PolarBars = () => {
       </VictoryChart>
     </div>
   );
-}
+};
 
 export const Sorting = () => {
   return (
@@ -876,7 +859,7 @@ export const Sorting = () => {
       </VictoryChart>
     </div>
   );
-}
+};
 
 export const Regressions = () => {
   return (
@@ -902,4 +885,4 @@ export const Regressions = () => {
       </VictoryChart>
     </div>
   );
-}
+};

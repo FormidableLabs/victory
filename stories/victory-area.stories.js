@@ -22,7 +22,8 @@ const parentStyle = {
 };
 
 const defaultChartProps = {
-  style: parentStyle, theme: VictoryTheme.material
+  style: parentStyle,
+  theme: VictoryTheme.material
 };
 
 export default {
@@ -32,11 +33,11 @@ export default {
 export const DefaultRendering = () => {
   return (
     <div style={containerStyle}>
-      <VictoryArea {...defaultChartProps}/>
-      <VictoryArea style={parentStyle}/>
+      <VictoryArea {...defaultChartProps} />
+      <VictoryArea style={parentStyle} />
     </div>
   );
-}
+};
 export const Theme = () => {
   return (
     <div style={containerStyle}>
@@ -66,12 +67,12 @@ export const Theme = () => {
       </VictoryChart>
     </div>
   );
-}
+};
 export const Interpolation = () => {
   const makeInterpolationChart = (interpolation) => (
     <VictoryChart {...defaultChartProps}>
       <VictoryLabel x={175} y={30} style={{ textAnchor: "middle" }} text={interpolation} />
-      <VictoryArea data={getData(8)} interpolation={interpolation}/>
+      <VictoryArea data={getData(8)} interpolation={interpolation} />
     </VictoryChart>
   );
 
@@ -88,28 +89,26 @@ export const Interpolation = () => {
         "step",
         "stepAfter",
         "stepBefore"
-        ].map(interpolation => makeInterpolationChart(interpolation))
-      }
+      ].map((interpolation) => makeInterpolationChart(interpolation))}
     </div>
   );
-}
+};
 export const PolarInterpolation = () => {
   const makeInterpolationChart = (interpolation) => (
     <VictoryChart polar {...defaultChartProps}>
       <VictoryLabel x={175} y={30} style={{ textAnchor: "middle" }} text={interpolation} />
-      <VictoryArea data={getData(8)} interpolation={interpolation}/>
+      <VictoryArea data={getData(8)} interpolation={interpolation} />
     </VictoryChart>
   );
 
   return (
     <div style={containerStyle}>
-    {
-      ["basis","cardinal","catmullRom","linear",]
-        .map(interpolation => makeInterpolationChart(interpolation))
-    }
+      {["basis", "cardinal", "catmullRom", "linear"].map((interpolation) =>
+        makeInterpolationChart(interpolation)
+      )}
     </div>
   );
-}
+};
 
 export const DataAccessors = () => {
   return (
@@ -173,16 +172,16 @@ export const DataAccessors = () => {
       <VictoryChart {...defaultChartProps}>
         <VictoryArea
           data={fromJS([
-          { x: "Cat", y: 45, y0: 17 },
-          { x: "Dog", y: 85, y0: 6 },
-          { x: "Fish", y: 55, y0: 9 },
-          { x: "Bird", y: 15, y0: 4 }
-        ])}
-      />
-     </VictoryChart>
+            { x: "Cat", y: 45, y0: 17 },
+            { x: "Dog", y: 85, y0: 6 },
+            { x: "Fish", y: 55, y0: 9 },
+            { x: "Bird", y: 15, y0: 4 }
+          ])}
+        />
+      </VictoryChart>
     </div>
   );
-}
+};
 
 export const PlottingFunctions = () => {
   return (
@@ -210,14 +209,11 @@ export const PlottingFunctions = () => {
         <VictoryArea y={(d) => Math.sin(Math.PI * d.x)} />
       </VictoryChart>
       <VictoryChart polar {...defaultChartProps}>
-        <VictoryArea
-          y={(d) => Math.sin(Math.PI * d.x)}
-          y0={(d) => Math.sin(Math.PI * d.x) - 0.5 }
-        />
+        <VictoryArea y={(d) => Math.sin(Math.PI * d.x)} y0={(d) => Math.sin(Math.PI * d.x) - 0.5} />
       </VictoryChart>
     </div>
   );
-}
+};
 
 export const Labels = () => {
   return (
@@ -229,19 +225,19 @@ export const Labels = () => {
         <VictoryArea data={getData(7)} labels={["", "", "three", "four", 5, "six"]} />
       </VictoryChart>
       <VictoryChart style={parentStyle}>
-      <VictoryArea
-        data={[
-          { x: 1, y: 2, label: "cat" },
-          { x: 2, y: 5, label: "dog" },
-          { x: 3, y: 3, label: "dog" },
-          { x: 4, y: -2, label: "bird" },
-          { x: 5, y: -5, label: "cat" }
-        ]}
-      />
+        <VictoryArea
+          data={[
+            { x: 1, y: 2, label: "cat" },
+            { x: 2, y: 5, label: "dog" },
+            { x: 3, y: 3, label: "dog" },
+            { x: 4, y: -2, label: "bird" },
+            { x: 5, y: -5, label: "cat" }
+          ]}
+        />
       </VictoryChart>
     </div>
   );
-}
+};
 
 export const Tooltips = () => {
   return (
@@ -276,7 +272,7 @@ export const Tooltips = () => {
       </VictoryChart>
     </div>
   );
-}
+};
 
 export const Styles = () => {
   return (
@@ -299,12 +295,17 @@ export const Styles = () => {
             }
           }}
           labels={({ datum }) => datum.x}
-          data={[{ x: "Cat", y: 62 }, { x: "Dog", y: 91 }, { x: "Fish", y: 55 }, { x: "Bird", y: 55 }]}
+          data={[
+            { x: "Cat", y: 62 },
+            { x: "Dog", y: 91 },
+            { x: "Fish", y: 55 },
+            { x: "Bird", y: 55 }
+          ]}
         />
       </VictoryChart>
     </div>
   );
-}
+};
 
 export const Stacked = () => {
   return (
@@ -353,14 +354,14 @@ export const Stacked = () => {
       </VictoryChart>
     </div>
   );
-}
- export const TimeScale = () => {
+};
+export const TimeScale = () => {
   return (
     <div style={containerStyle}>
       <VictoryChart {...defaultChartProps}>
         <VictoryArea data={getTimeData(5)} labels={({ datum }) => datum.x.getFullYear()} />
       </VictoryChart>
-      <VictoryChart  horizontal {...defaultChartProps}>
+      <VictoryChart horizontal {...defaultChartProps}>
         <VictoryArea data={getTimeData(5)} labels={({ datum }) => datum.x.getFullYear()} />
       </VictoryChart>
       <VictoryChart {...defaultChartProps}>
@@ -379,9 +380,9 @@ export const Stacked = () => {
       </VictoryChart>
     </div>
   );
- }
+};
 
- export const LogScale = () => {
+export const LogScale = () => {
   return (
     <div style={containerStyle}>
       <VictoryChart {...defaultChartProps} scale={{ y: "log" }}>
@@ -395,7 +396,7 @@ export const Stacked = () => {
       </VictoryChart>
     </div>
   );
- }
+};
 
 export const Polar = () => {
   return (
@@ -444,4 +445,4 @@ export const Polar = () => {
       </VictoryChart>
     </div>
   );
-}
+};

@@ -21,7 +21,8 @@ const parentStyle = {
 };
 
 const defaultChartProps = {
-  style: parentStyle, theme: VictoryTheme.material
+  style: parentStyle,
+  theme: VictoryTheme.material
 };
 
 const getTimeValues = (num) => {
@@ -53,13 +54,13 @@ export default {
 export const DefaultRendering = () => {
   return (
     <div style={containerStyle}>
-      <VictoryChart {...defaultChartProps}/>
-      <VictoryChart {...defaultChartProps} domain={[-1, 1]}/>
-      <VictoryChart style={parentStyle}/>
-      <VictoryChart style={parentStyle} domain={[-1, 1]}/>
+      <VictoryChart {...defaultChartProps} />
+      <VictoryChart {...defaultChartProps} domain={[-1, 1]} />
+      <VictoryChart style={parentStyle} />
+      <VictoryChart style={parentStyle} domain={[-1, 1]} />
     </div>
   );
-}
+};
 
 export const AxisValue = () => {
   return (
@@ -71,30 +72,36 @@ export const AxisValue = () => {
       <VictoryChart {...defaultChartProps}>
         <VictoryAxis axisValue={"zero"} />
         <VictoryAxis dependentAxis tickValues={["-", "zero", "+"]} />
-       </VictoryChart>
-       <VictoryChart {...defaultChartProps} scale={{ x: "time " }}>
-         <VictoryAxis
-           tickValues={[
-             new Date(1985, 1, 1),
-             new Date(1995, 1, 1),
-             new Date(2005, 1, 1),
-             new Date(2015, 1, 1)
-           ]}
-           tickFormat={(t) => t.getFullYear()}
-         />
-         <VictoryAxis dependentAxis axisValue={new Date(2000, 1, 1)} />
-       </VictoryChart>
-       <VictoryChart {...defaultChartProps} horizontal>
-        <VictoryBar data={[{ x: "a", y: 1 }, { x: "b", y: 2 }, { x: "c", y: 5 }]} />
+      </VictoryChart>
+      <VictoryChart {...defaultChartProps} scale={{ x: "time " }}>
+        <VictoryAxis
+          tickValues={[
+            new Date(1985, 1, 1),
+            new Date(1995, 1, 1),
+            new Date(2005, 1, 1),
+            new Date(2015, 1, 1)
+          ]}
+          tickFormat={(t) => t.getFullYear()}
+        />
+        <VictoryAxis dependentAxis axisValue={new Date(2000, 1, 1)} />
+      </VictoryChart>
+      <VictoryChart {...defaultChartProps} horizontal>
+        <VictoryBar
+          data={[
+            { x: "a", y: 1 },
+            { x: "b", y: 2 },
+            { x: "c", y: 5 }
+          ]}
+        />
         <VictoryAxis dependentAxis axisValue="b" />
         <VictoryAxis />
       </VictoryChart>
     </div>
   );
-}
+};
 
 export const TickValues = () => {
-  return(
+  return (
     <div style={containerStyle}>
       <VictoryChart {...defaultChartProps}>
         <VictoryAxis tickValues={getValues(5)} />
@@ -124,31 +131,34 @@ export const TickValues = () => {
       </VictoryChart>
     </div>
   );
-}
+};
 
 export const TickFormat = () => {
   return (
     <div style={containerStyle}>
       <VictoryChart {...defaultChartProps}>
-        <VictoryAxis tickValues={getValues(5)} tickFormat={["one", "two", "three", "four", "five"]} />
+        <VictoryAxis
+          tickValues={getValues(5)}
+          tickFormat={["one", "two", "three", "four", "five"]}
+        />
       </VictoryChart>
       <VictoryChart {...defaultChartProps}>
         <VictoryAxis tickValues={getValues(5)} tickFormat={(t) => `#${t}`} />
       </VictoryChart>
     </div>
   );
-}
+};
 
 export const WithDomain = () => {
   return (
     <div style={containerStyle}>
       <VictoryAxis {...defaultChartProps} domain={[-10, 10]} />
-      <VictoryAxis {...defaultChartProps} domain={[-10, 10]} tickValues={getValues(5)}/>
-      <VictoryAxis {...defaultChartProps} domain={[-10, 10]} tickValues={[8, 9, 10, 11, 12, 13]}/>
-      <VictoryAxis {...defaultChartProps} domain={[-2, 2]} tickValues={["cat", "dog", "bird"]}/>
+      <VictoryAxis {...defaultChartProps} domain={[-10, 10]} tickValues={getValues(5)} />
+      <VictoryAxis {...defaultChartProps} domain={[-10, 10]} tickValues={[8, 9, 10, 11, 12, 13]} />
+      <VictoryAxis {...defaultChartProps} domain={[-2, 2]} tickValues={["cat", "dog", "bird"]} />
     </div>
   );
-}
+};
 
 export const FixLabelOverlap = () => {
   return (
@@ -182,7 +192,7 @@ export const FixLabelOverlap = () => {
       />
     </div>
   );
-}
+};
 
 export const Offsets = () => {
   return (
@@ -191,7 +201,7 @@ export const Offsets = () => {
       <VictoryAxis {...defaultChartProps} offsetY={250} />
     </div>
   );
-}
+};
 
 export const Orientation = () => {
   return (
@@ -206,7 +216,7 @@ export const Orientation = () => {
       </VictoryChart>
       <VictoryChart {...defaultChartProps}>
         <VictoryAxis orientation="top" invertAxis />
-        <VictoryAxis dependentAxis orientation="right" invertAxis/>
+        <VictoryAxis dependentAxis orientation="right" invertAxis />
       </VictoryChart>
       <VictoryChart {...defaultChartProps} domain={[-1, 1]}>
         <VictoryAxis orientation="top" />
@@ -214,7 +224,7 @@ export const Orientation = () => {
       </VictoryChart>
     </div>
   );
-}
+};
 
 export const Style = () => {
   return (
@@ -233,4 +243,4 @@ export const Style = () => {
       </VictoryChart>
     </div>
   );
-}
+};

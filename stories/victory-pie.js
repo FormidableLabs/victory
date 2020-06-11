@@ -10,7 +10,12 @@ storiesOf("VictoryPie", module)
   .add("by default", () => <VictoryPie />)
   .add("with basic data", () => (
     <VictoryPie
-      data={[{ x: "Cat", y: 62 }, { x: "Dog", y: 91 }, { x: "Fish", y: 55 }, { x: "Bird", y: 55 }]}
+      data={[
+        { x: "Cat", y: 62 },
+        { x: "Dog", y: 91 },
+        { x: "Fish", y: 55 },
+        { x: "Bird", y: 55 }
+      ]}
     />
   ))
   .add("with flexible data", () => (
@@ -53,7 +58,10 @@ storiesOf("VictoryPie", module)
       startAngle={-90}
       endAngle={90}
       innerRadius={90}
-      data={[{ x: "Cat", y: 62 }, { x: "Bird", y: 25 }]}
+      data={[
+        { x: "Cat", y: 62 },
+        { x: "Bird", y: 25 }
+      ]}
       labelPosition={({ index }) => (index === 0 ? "endAngle" : "startAngle")}
     />
   ))
@@ -89,7 +97,12 @@ storiesOf("VictoryPie", module)
           opacity: ({ datum }) => (datum.y > 75 ? 1 : 0.4)
         }
       }}
-      data={[{ x: "Cat", y: 62 }, { x: "Dog", y: 91 }, { x: "Fish", y: 55 }, { x: "Bird", y: 55 }]}
+      data={[
+        { x: "Cat", y: 62 },
+        { x: "Dog", y: 91 },
+        { x: "Fish", y: 55 },
+        { x: "Bird", y: 55 }
+      ]}
     />
   ))
   .add("with functional radius", () => (
@@ -99,27 +112,47 @@ storiesOf("VictoryPie", module)
       style={{
         labels: { fill: "white" }
       }}
-      data={[{ x: "Cat", y: 62 }, { x: "Dog", y: 91 }, { x: "Fish", y: 55 }, { x: "Bird", y: 55 }]}
+      data={[
+        { x: "Cat", y: 62 },
+        { x: "Dog", y: 91 },
+        { x: "Fish", y: 55 },
+        { x: "Bird", y: 55 }
+      ]}
     />
   ))
   .add("with functional innerRadius", () => (
     <VictoryPie
       innerRadius={({ datum }) => datum.y}
-      data={[{ x: "Cat", y: 62 }, { x: "Dog", y: 91 }, { x: "Fish", y: 55 }, { x: "Bird", y: 55 }]}
+      data={[
+        { x: "Cat", y: 62 },
+        { x: "Dog", y: 91 },
+        { x: "Fish", y: 55 },
+        { x: "Bird", y: 55 }
+      ]}
     />
   ))
   .add("with functional cornerRadius", () => (
     <VictoryPie
       cornerRadius={({ datum }) => (datum.y > 70 ? 10 : 0)}
       innerRadius={100}
-      data={[{ x: "Cat", y: 62 }, { x: "Dog", y: 91 }, { x: "Fish", y: 55 }, { x: "Bird", y: 55 }]}
+      data={[
+        { x: "Cat", y: 62 },
+        { x: "Dog", y: 91 },
+        { x: "Fish", y: 55 },
+        { x: "Bird", y: 55 }
+      ]}
     />
   ))
   .add("with functional padAngle", () => (
     <VictoryPie
       padAngle={({ datum }) => (datum.y > 70 ? 5 : 0)}
       innerRadius={100}
-      data={[{ x: "Cat", y: 62 }, { x: "Dog", y: 91 }, { x: "Fish", y: 55 }, { x: "Bird", y: 55 }]}
+      data={[
+        { x: "Cat", y: 62 },
+        { x: "Dog", y: 91 },
+        { x: "Fish", y: 55 },
+        { x: "Bird", y: 55 }
+      ]}
     />
   ))
   .add("with sliceStartAngle and sliceEndAngle", () => (
