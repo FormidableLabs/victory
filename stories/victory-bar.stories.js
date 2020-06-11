@@ -1,24 +1,20 @@
 /*eslint-disable no-magic-numbers*/
 /*eslint-disable react/no-multi-comp*/
 import React from "react";
-import { VictoryAxis } from "../packages/victory-axis/src";
 import { VictoryBar } from "../packages/victory-bar/src";
 import { VictoryChart } from "../packages/victory-chart/src";
 import { VictoryGroup } from "../packages/victory-group/src/index";
 import { VictoryStack } from "../packages/victory-stack/src/index";
 import { VictoryTooltip } from "../packages/victory-tooltip/src/index";
-import { VictoryTheme } from "../packages/victory-core/src/index";
+import { VictoryTheme, VictoryLabel } from "../packages/victory-core/src/index";
 import { VictoryPolarAxis } from "../packages/victory-polar-axis/src/index";
-import { getChartDecorator, getPolarChartDecorator } from "./decorators";
 import {
   getData,
   getStackedData,
   getMixedData,
   getTimeData,
   getLogData,
-  getDescendingSmallData
 } from "./data";
-import * as d3Shape from "d3-shape";
 import { fromJS } from "immutable";
 
 const containerStyle = {
@@ -468,374 +464,442 @@ export const Style = () => {
   );
 }
 
+export const Scale = () => {
+  return (
+    <div style={containerStyle}>
+      <VictoryChart {...defaultChartProps} scale={{ y: "log" }} minDomain={1}>
+        <VictoryBar
+          data={getLogData(7)}
+          labels={({ datum }) => datum.y.toPrecision(1) }
+        />
+      </VictoryChart>
+      <VictoryChart horizontal {...defaultChartProps} scale={{ y: "log" }} minDomain={1}>
+        <VictoryBar
+          data={getLogData(7)}
+          labels={({ datum }) => datum.y.toPrecision(1) }
+        />
+      </VictoryChart>
+      <VictoryChart {...defaultChartProps}>
+        <VictoryBar data={getTimeData(5)} labels={({ datum }) => datum.x.getFullYear()}/>
+      </VictoryChart>
+      <VictoryChart horizontal {...defaultChartProps}>
+        <VictoryBar data={getTimeData(5)} labels={({ datum }) => datum.x.getFullYear()}/>
+      </VictoryChart>
+      <VictoryChart {...defaultChartProps}>
+        <VictoryStack labels={({ datum }) => datum.x.getFullYear()}>
+          <VictoryBar data={getTimeData(5)} />
+          <VictoryBar data={getTimeData(5, "seed-1")} />
+          <VictoryBar data={getTimeData(5, "seed-2")} />
+        </VictoryStack>
+      </VictoryChart>
+      <VictoryChart horizontal {...defaultChartProps}>
+        <VictoryStack labels={({ datum }) => datum.x.getFullYear()}>
+          <VictoryBar data={getTimeData(5)} />
+          <VictoryBar data={getTimeData(5, "seed-1")} />
+          <VictoryBar data={getTimeData(5, "seed-2")} />
+        </VictoryStack>
+      </VictoryChart>
+      <VictoryChart {...defaultChartProps}>
+        <VictoryGroup offset={10} labels={({ datum }) => datum.x.getFullYear()}>
+          <VictoryBar data={getTimeData(5)} />
+          <VictoryBar data={getTimeData(5, "seed-1")} />
+          <VictoryBar data={getTimeData(5, "seed-2")} />
+        </VictoryGroup>
+      </VictoryChart>
+      <VictoryChart horizontal {...defaultChartProps}>
+        <VictoryGroup offset={10} labels={({ datum }) => datum.x.getFullYear()}>
+          <VictoryBar data={getTimeData(5)} />
+          <VictoryBar data={getTimeData(5, "seed-1")} />
+          <VictoryBar data={getTimeData(5, "seed-2")} />
+        </VictoryGroup>
+      </VictoryChart>
+    </div>
+  );
+}
 
-// storiesOf("VictoryBar.stacked", module)
-//   .addDecorator(getChartDecorator({ domainPadding: 25 }))
-//   .add("stacked bars", () => (
-//     <VictoryStack>
-//       <VictoryBar data={getData(7)} />
-//       <VictoryBar data={getData(7, "seed-1")} />
-//       <VictoryBar data={getData(7, "seed-2")} />
-//     </VictoryStack>
-//   ))
-//   .add("stacked bars with mixed lengths", () => (
-//     <VictoryStack>
-//       <VictoryBar data={getData(9)} />
-//       <VictoryBar data={getData(5, "seed-1")} />
-//       <VictoryBar data={getData(3, "seed-2")} />
-//     </VictoryStack>
-//   ))
-//   .add("stacked bars with mixed lengths (perf)", () => (
-//     <VictoryStack>
-//       <VictoryBar data={getData(90)} />
-//       <VictoryBar data={getData(50, "seed-1")} />
-//       <VictoryBar data={getData(200, "seed-2")} />
-//       <VictoryBar data={getData(30, "seed-3")} />
-//       <VictoryBar data={getData(200, "seed-4")} />
-//       <VictoryBar data={getData(100, "seed-5")} />
-//       <VictoryBar data={getData(200, "seed-6")} />
-//       <VictoryBar data={getData(190, "seed-7")} />
-//     </VictoryStack>
-//   ))
-//   .add("stacked bars with labels", () => (
-//     <VictoryStack labels={({ datum }) => datum.x}>
-//       <VictoryBar data={getData(7)} />
-//       <VictoryBar data={getData(7, "seed-1")} />
-//       <VictoryBar data={getData(7, "seed-2")} />
-//     </VictoryStack>
-//   ))
-//   .add("stacked negative bars", () => (
-//     <VictoryStack labels={({ datum }) => datum.x}>
-//       <VictoryBar data={getMixedData(7)} />
-//       <VictoryBar data={getMixedData(7, "seed-1")} />
-//       <VictoryBar data={getMixedData(7, "seed-2")} />
-//     </VictoryStack>
-//   ))
-//   .add("horizontal stacked bars", () => (
-//     <VictoryStack horizontal labels={({ datum }) => datum.x}>
-//       <VictoryBar data={getData(7)} />
-//       <VictoryBar data={getData(7, "seed-1")} />
-//       <VictoryBar data={getData(7, "seed-2")} />
-//     </VictoryStack>
-//   ))
-//   .add("horizontal stacked bars with mixed lengths", () => (
-//     <VictoryStack horizontal>
-//       <VictoryBar data={getData(9)} />
-//       <VictoryBar data={getData(5, "seed-1")} />
-//       <VictoryBar data={getData(3, "seed-2")} />
-//     </VictoryStack>
-//   ))
-//   .add("horizontal stacked negative bars", () => (
-//     <VictoryStack horizontal labels={({ datum }) => datum.x}>
-//       <VictoryBar data={getMixedData(7)} />
-//       <VictoryBar data={getMixedData(7, "seed-1")} />
-//       <VictoryBar data={getMixedData(7, "seed-2")} />
-//     </VictoryStack>
-//   ));
+export const StackedBars = () => {
+  return (
+    <div style={containerStyle}>
+      <VictoryChart {...defaultChartProps} domainPadding={8}>
+        <VictoryStack labels={({ datum }) => datum._y1.toPrecision(2)}>
+          <VictoryBar data={getData(7)} />
+          <VictoryBar data={getData(7, "seed-1")} />
+          <VictoryBar data={getData(7, "seed-2")} />
+        </VictoryStack>
+      </VictoryChart>
+      <VictoryChart {...defaultChartProps} domainPadding={8}>
+        <VictoryStack>
+          <VictoryBar
+            data={getData(7)}
+            labels={({ datum }) => datum.y.toPrecision(2)}
+            labelComponent={<VictoryLabel renderInPortal />}
+          />
+          <VictoryBar
+            data={getData(7, "seed-1")}
+            labels={({ datum }) => datum.y.toPrecision(2)}
+            labelComponent={<VictoryLabel renderInPortal />}
+          />
+          <VictoryBar
+            data={getData(7, "seed-2")}
+            labels={({ datum }) => datum.y.toPrecision(2)}
+            labelComponent={<VictoryLabel renderInPortal />}
+          />
+        </VictoryStack>
+      </VictoryChart>
+      <VictoryChart {...defaultChartProps} domainPadding={8}>
+        <VictoryStack labels={({ datum }) => datum._y1.toPrecision(2)}>
+          <VictoryBar data={getData(9)} />
+          <VictoryBar data={getData(5, "seed-1")} />
+          <VictoryBar data={getData(3, "seed-2")} />
+        </VictoryStack>
+      </VictoryChart>
+      <VictoryChart {...defaultChartProps} domainPadding={8}>
+        <VictoryStack labels={({ datum }) => datum._y1.toPrecision(2)} >
+          <VictoryBar data={getMixedData(7)} />
+          <VictoryBar data={getMixedData(7, "seed-1")} />
+          <VictoryBar data={getMixedData(7, "seed-2")} />
+        </VictoryStack>
+      </VictoryChart>
+      <VictoryChart horizontal {...defaultChartProps} domainPadding={8}>
+        <VictoryStack labels={({ datum }) => datum._y1.toPrecision(2)} >
+          <VictoryBar data={getMixedData(7)} />
+          <VictoryBar data={getMixedData(7, "seed-1")} />
+          <VictoryBar data={getMixedData(7, "seed-2")} />
+        </VictoryStack>
+      </VictoryChart>
+      <VictoryChart {...defaultChartProps} domainPadding={8}>
+        <VictoryStack
+          labels={({ datum }) => datum._y1.toPrecision(2)}
+          labelComponent={<VictoryTooltip active />}
+        >
+          <VictoryBar data={getMixedData(7)} />
+          <VictoryBar data={getMixedData(7, "seed-1")} />
+          <VictoryBar data={getMixedData(7, "seed-2")} />
+        </VictoryStack>
+      </VictoryChart>
+      <VictoryChart horizontal {...defaultChartProps} domainPadding={8}>
+        <VictoryStack
+          labels={({ datum }) => datum._y1.toPrecision(2)}
+          labelComponent={<VictoryTooltip active />}
+        >
+          <VictoryBar data={getMixedData(7)} />
+          <VictoryBar data={getMixedData(7, "seed-1")} />
+          <VictoryBar data={getMixedData(7, "seed-2")} />
+        </VictoryStack>
+      </VictoryChart>
+      <VictoryChart {...defaultChartProps}>
+        <VictoryStack>
+          <VictoryBar data={getData(90)} />
+          <VictoryBar data={getData(50, "seed-1")} />
+          <VictoryBar data={getData(200, "seed-2")} />
+          <VictoryBar data={getData(30, "seed-3")} />
+          <VictoryBar data={getData(200, "seed-4")} />
+          <VictoryBar data={getData(100, "seed-5")} />
+          <VictoryBar data={getData(200, "seed-6")} />
+          <VictoryBar data={getData(190, "seed-7")} />
+        </VictoryStack>
+      </VictoryChart>
+    </div>
+  );
+}
 
-// storiesOf("VictoryBar.grouped", module)
-//   .addDecorator(getChartDecorator())
-//   .add("grouped bars (offset = 20)", () => (
-//     <VictoryGroup offset={20}>
-//       <VictoryBar data={getData(3)} />
-//       <VictoryBar data={getData(3, "seed-1")} />
-//       <VictoryBar data={getData(3, "seed-2")} />
-//     </VictoryGroup>
-//   ))
-//   .add("grouped negative bars", () => (
-//     <VictoryGroup offset={20}>
-//       <VictoryBar data={getMixedData(3)} />
-//       <VictoryBar data={getMixedData(3, "seed-1")} />
-//       <VictoryBar data={getMixedData(3, "seed-2")} />
-//     </VictoryGroup>
-//   ))
-//   .add("grouped bars with labels", () => (
-//     <VictoryGroup offset={20} labels={({ datum }) => datum.x}>
-//       <VictoryBar data={getData(3)} />
-//       <VictoryBar data={getData(3, "seed-1")} />
-//       <VictoryBar data={getData(3, "seed-2")} />
-//     </VictoryGroup>
-//   ))
-//   .add("grouped bars with tooltips", () => (
-//     <VictoryGroup
-//       offset={20}
-//       labels={({ datum }) => datum.x}
-//       labelComponent={<VictoryTooltip active />}
-//     >
-//       <VictoryBar data={getData(3)} />
-//       <VictoryBar data={getData(3, "seed-1")} />
-//       <VictoryBar data={getData(3, "seed-2")} />
-//     </VictoryGroup>
-//   ))
-//   .add("grouped negative bars with tooltips", () => (
-//     <VictoryGroup
-//       offset={20}
-//       labels={({ datum }) => datum.x}
-//       labelComponent={<VictoryTooltip active />}
-//     >
-//       <VictoryBar data={getMixedData(3)} />
-//       <VictoryBar data={getMixedData(3, "seed-1")} />
-//       <VictoryBar data={getMixedData(3, "seed-2")} />
-//     </VictoryGroup>
-//   ))
-//   .add("grouped stacks", () => (
-//     <VictoryGroup offset={20} style={{ data: { width: 15 } }} labels={({ datum }) => datum.x}>
-//       <VictoryStack colorScale="red">
-//         <VictoryBar data={getData(3)} />
-//         <VictoryBar data={getData(3, "seed-1")} />
-//         <VictoryBar data={getData(3, "seed-2")} />
-//       </VictoryStack>
-//       <VictoryStack colorScale="green">
-//         <VictoryBar data={getData(3)} />
-//         <VictoryBar data={getData(3, "seed-3")} />
-//         <VictoryBar data={getData(3, "seed-4")} />
-//       </VictoryStack>
-//       <VictoryStack colorScale="blue">
-//         <VictoryBar data={getData(3)} />
-//         <VictoryBar data={getData(3, "seed-5")} />
-//         <VictoryBar data={getData(3, "seed-6")} />
-//       </VictoryStack>
-//     </VictoryGroup>
-//   ))
-//   .add("grouped negative stacks", () => (
-//     <VictoryGroup offset={20} style={{ data: { width: 15 } }} labels={({ datum }) => datum.x}>
-//       <VictoryStack colorScale="red">
-//         <VictoryBar data={getMixedData(3)} />
-//         <VictoryBar data={getMixedData(3, "seed-1")} />
-//         <VictoryBar data={getMixedData(3, "seed-2")} />
-//       </VictoryStack>
-//       <VictoryStack colorScale="green">
-//         <VictoryBar data={getMixedData(3)} />
-//         <VictoryBar data={getMixedData(3, "seed-3")} />
-//         <VictoryBar data={getMixedData(3, "seed-4")} />
-//       </VictoryStack>
-//       <VictoryStack colorScale="blue">
-//         <VictoryBar data={getMixedData(3)} />
-//         <VictoryBar data={getMixedData(3, "seed-5")} />
-//         <VictoryBar data={getMixedData(3, "seed-6")} />
-//       </VictoryStack>
-//     </VictoryGroup>
-//   ))
-//   .add("horizontal grouped bars (offset = 20)", () => (
-//     <VictoryGroup offset={20} horizontal>
-//       <VictoryBar data={getData(3)} />
-//       <VictoryBar data={getData(3, "seed-1")} />
-//       <VictoryBar data={getData(3, "seed-2")} />
-//     </VictoryGroup>
-//   ))
-//   .add("horizontal grouped negative bars", () => (
-//     <VictoryGroup horizontal offset={20}>
-//       <VictoryBar data={getMixedData(3)} />
-//       <VictoryBar data={getMixedData(3, "seed-1")} />
-//       <VictoryBar data={getMixedData(3, "seed-2")} />
-//     </VictoryGroup>
-//   ))
-//   .add("horizontal grouped bars with labels", () => (
-//     <VictoryGroup offset={20} horizontal labels={({ datum }) => datum.x}>
-//       <VictoryBar data={getData(3)} />
-//       <VictoryBar data={getData(3, "seed-1")} />
-//       <VictoryBar data={getData(3, "seed-2")} />
-//     </VictoryGroup>
-//   ))
-//   .add(" horizontal grouped negative bars with tooltips", () => (
-//     <VictoryGroup
-//       horizontal
-//       offset={20}
-//       labels={({ datum }) => datum.x}
-//       labelComponent={<VictoryTooltip active />}
-//     >
-//       <VictoryBar data={getMixedData(3)} />
-//       <VictoryBar data={getMixedData(3, "seed-1")} />
-//       <VictoryBar data={getMixedData(3, "seed-2")} />
-//     </VictoryGroup>
-//   ))
-//   .add("horizontal grouped bars with tooltips", () => (
-//     <VictoryGroup
-//       horizontal
-//       offset={20}
-//       labels={({ datum }) => datum.x}
-//       labelComponent={<VictoryTooltip active />}
-//     >
-//       <VictoryBar data={getData(3)} />
-//       <VictoryBar data={getData(3, "seed-1")} />
-//       <VictoryBar data={getData(3, "seed-2")} />
-//     </VictoryGroup>
-//   ))
-//   .add("horizontal grouped stacks", () => (
-//     <VictoryGroup
-//       horizontal
-//       offset={20}
-//       style={{ data: { width: 15 } }}
-//       labels={({ datum }) => datum.x}
-//     >
-//       <VictoryStack colorScale="red">
-//         <VictoryBar data={getData(3)} />
-//         <VictoryBar data={getData(3, "seed-1")} />
-//         <VictoryBar data={getData(3, "seed-2")} />
-//       </VictoryStack>
-//       <VictoryStack colorScale="green">
-//         <VictoryBar data={getData(3)} />
-//         <VictoryBar data={getData(3, "seed-3")} />
-//         <VictoryBar data={getData(3, "seed-4")} />
-//       </VictoryStack>
-//       <VictoryStack colorScale="blue">
-//         <VictoryBar data={getData(3)} />
-//         <VictoryBar data={getData(3, "seed-5")} />
-//         <VictoryBar data={getData(3, "seed-6")} />
-//       </VictoryStack>
-//     </VictoryGroup>
-//   ));
+export const GroupedBars = () => {
+  return (
+    <div style={containerStyle}>
+      <VictoryChart {...defaultChartProps} domainPadding={30}>
+        <VictoryGroup offset={20} labels={({ datum }) => datum.x}>
+          <VictoryBar data={getData(3)} />
+          <VictoryBar data={getData(3, "seed-1")} />
+          <VictoryBar data={getData(3, "seed-2")} />
+        </VictoryGroup>
+      </VictoryChart>
+      <VictoryChart {...defaultChartProps} domainPadding={30}>
+        <VictoryGroup offset={10} labels={({ datum }) => datum.x}>
+          <VictoryBar data={getData(5)} />
+          <VictoryBar data={getData(3, "seed-1")} />
+          <VictoryBar data={getData(2, "seed-2")} />
+        </VictoryGroup>
+      </VictoryChart>
+      <VictoryChart {...defaultChartProps} domainPadding={30}>
+        <VictoryGroup offset={20} labels={({ datum }) => datum.x} >
+          <VictoryBar data={getMixedData(3)} />
+          <VictoryBar data={getMixedData(3, "seed")} />
+          <VictoryBar data={getMixedData(3, "seed-1")} />
+        </VictoryGroup>
+      </VictoryChart>
+      <VictoryChart horizontal {...defaultChartProps} domainPadding={30}>
+        <VictoryGroup offset={20} labels={({ datum }) => datum.x} >
+          <VictoryBar data={getMixedData(3)} />
+          <VictoryBar data={getMixedData(3, "seed")} />
+          <VictoryBar data={getMixedData(3, "seed-1")} />
+        </VictoryGroup>
+      </VictoryChart>
+      <VictoryChart {...defaultChartProps} domainPadding={30}>
+        <VictoryGroup
+          offset={20}
+          labels={({ datum }) => datum.x}
+          labelComponent={<VictoryTooltip active />}
+        >
+          <VictoryBar data={getMixedData(3)} />
+          <VictoryBar data={getMixedData(3, "seed")} />
+          <VictoryBar data={getMixedData(3, "seed-1")} />
+        </VictoryGroup>
+      </VictoryChart>
+      <VictoryChart horizontal {...defaultChartProps} domainPadding={30}>
+        <VictoryGroup
+          offset={20}
+          labels={({ datum }) => datum.x}
+          labelComponent={<VictoryTooltip active />}
+        >
+          <VictoryBar data={getMixedData(3)} />
+          <VictoryBar data={getMixedData(3, "seed")} />
+          <VictoryBar data={getMixedData(3, "seed-1")} />
+        </VictoryGroup>
+      </VictoryChart>
+      <VictoryChart {...defaultChartProps} domainPadding={30}>
+        <VictoryGroup
+          offset={20}
+          labels={({ datum }) => datum.x}
+          style={{ data: { width: 15 } }}
+        >
+          <VictoryStack colorScale="red">
+            <VictoryBar data={getData(3)} />
+            <VictoryBar data={getData(3, "seed-1")} />
+            <VictoryBar data={getData(3, "seed-2")} />
+          </VictoryStack>
+          <VictoryStack colorScale="green">
+            <VictoryBar data={getData(3)} />
+            <VictoryBar data={getData(3, "seed-3")} />
+            <VictoryBar data={getData(3, "seed-4")} />
+          </VictoryStack>
+          <VictoryStack colorScale="blue">
+            <VictoryBar data={getData(3)} />
+            <VictoryBar data={getData(3, "seed-5")} />
+            <VictoryBar data={getData(3, "seed-6")} />
+          </VictoryStack>
+        </VictoryGroup>
+      </VictoryChart>
+      <VictoryChart horizontal {...defaultChartProps} domainPadding={30}>
+        <VictoryGroup
+          offset={20}
+          labels={({ datum }) => datum.x}
+          style={{ data: { width: 15 } }}
+        >
+          <VictoryStack colorScale="red">
+            <VictoryBar data={getData(3)} />
+            <VictoryBar data={getData(3, "seed-1")} />
+            <VictoryBar data={getData(3, "seed-2")} />
+          </VictoryStack>
+          <VictoryStack colorScale="green">
+            <VictoryBar data={getData(3)} />
+            <VictoryBar data={getData(3, "seed-3")} />
+            <VictoryBar data={getData(3, "seed-4")} />
+          </VictoryStack>
+          <VictoryStack colorScale="blue">
+            <VictoryBar data={getData(3)} />
+            <VictoryBar data={getData(3, "seed-5")} />
+            <VictoryBar data={getData(3, "seed-6")} />
+          </VictoryStack>
+        </VictoryGroup>
+      </VictoryChart>
+      <VictoryChart {...defaultChartProps} domainPadding={30}>
+        <VictoryGroup
+          offset={20}
+          labels={({ datum }) => datum.x}
+          labelComponent={<VictoryTooltip active />}
+        >
+          <VictoryStack colorScale="red">
+            <VictoryBar data={getMixedData(3)} />
+            <VictoryBar data={getMixedData(3, "seed-1")} />
+            <VictoryBar data={getMixedData(3, "seed-2")} />
+          </VictoryStack>
+          <VictoryStack colorScale="green">
+            <VictoryBar data={getMixedData(3)} />
+            <VictoryBar data={getMixedData(3, "seed-3")} />
+            <VictoryBar data={getMixedData(3, "seed-4")} />
+          </VictoryStack>
+          <VictoryStack colorScale="blue">
+            <VictoryBar data={getMixedData(3)} />
+            <VictoryBar data={getMixedData(3, "seed-5")} />
+            <VictoryBar data={getMixedData(3, "seed-6")} />
+          </VictoryStack>
+        </VictoryGroup>
+      </VictoryChart>
+      <VictoryChart horizontal {...defaultChartProps} domainPadding={30}>
+        <VictoryGroup
+          offset={20}
+          labels={({ datum }) => datum.x}
+          labelComponent={<VictoryTooltip active />}
+        >
+          <VictoryStack colorScale="red">
+            <VictoryBar data={getMixedData(3)} />
+            <VictoryBar data={getMixedData(3, "seed-1")} />
+            <VictoryBar data={getMixedData(3, "seed-2")} />
+          </VictoryStack>
+          <VictoryStack colorScale="green">
+            <VictoryBar data={getMixedData(3)} />
+            <VictoryBar data={getMixedData(3, "seed-3")} />
+            <VictoryBar data={getMixedData(3, "seed-4")} />
+          </VictoryStack>
+          <VictoryStack colorScale="blue">
+            <VictoryBar data={getMixedData(3)} />
+            <VictoryBar data={getMixedData(3, "seed-5")} />
+            <VictoryBar data={getMixedData(3, "seed-6")} />
+          </VictoryStack>
+        </VictoryGroup>
+      </VictoryChart>
+    </div>
+  );
+}
 
-// storiesOf("VictoryBar.scale", module)
-//   .addDecorator(getChartDecorator({ domainPadding: 25 }))
-//   .add("time scale", () => <VictoryBar data={getTimeData(5)} />)
-//   .add("time scale with labels", () => (
-//     <VictoryBar data={getTimeData(5)} labels={({ datum }) => datum.x.getFullYear()} />
-//   ))
-//   .add("stacked time scale with labels", () => (
-//     <VictoryStack labels={({ datum }) => datum.x.getFullYear()}>
-//       <VictoryBar data={getTimeData(5)} />
-//       <VictoryBar data={getTimeData(5, "seed-1")} />
-//       <VictoryBar data={getTimeData(5, "seed-2")} />
-//     </VictoryStack>
-//   ))
-//   .add("grouped time scale with labels", () => (
-//     <VictoryGroup offset={20} labels={({ datum }) => datum.x.getFullYear()}>
-//       <VictoryBar data={getTimeData(3)} />
-//       <VictoryBar data={getTimeData(3, "seed-1")} />
-//       <VictoryBar data={getTimeData(3, "seed-2")} />
-//     </VictoryGroup>
-//   ))
-//   .add(" horizontal time scale with labels", () => (
-//     <VictoryBar horizontal data={getTimeData(5)} labels={({ datum }) => datum.x.getFullYear()} />
-//   ))
-//   .add("horizontal stacked time scale with labels", () => (
-//     <VictoryStack horizontal labels={({ datum }) => datum.x.getFullYear()}>
-//       <VictoryBar data={getTimeData(5)} />
-//       <VictoryBar data={getTimeData(5, "seed-1")} />
-//       <VictoryBar data={getTimeData(5, "seed-2")} />
-//     </VictoryStack>
-//   ))
-//   .add("horizontal grouped time scale with labels", () => (
-//     <VictoryGroup horizontal offset={20} labels={({ datum }) => datum.x.getFullYear()}>
-//       <VictoryBar data={getTimeData(3)} />
-//       <VictoryBar data={getTimeData(3, "seed-1")} />
-//       <VictoryBar data={getTimeData(3, "seed-2")} />
-//     </VictoryGroup>
-//   ));
+export const PolarBars = () => {
+  return (
+    <div style={containerStyle}>
+      <VictoryChart {...defaultChartProps} polar>
+        <VictoryBar
+          style={{ data: { width: 20 } }}
+          data={getData(7)}
+        />
+      </VictoryChart>
+      <VictoryChart {...defaultChartProps} polar>
+        <VictoryBar
+          style={{ data: { stroke: "red", strokeWidth: 2 } }}
+          data={[
+            { x: "Cat", y: 62 },
+            { x: "Dog", y: 91 },
+            { x: "Fish", y: 55 },
+            { x: "Bird", y: 55 },
+            { x: "Frog", y: 75 }
+          ]}
+        />
+        <VictoryPolarAxis />
+      </VictoryChart>
+      <VictoryChart {...defaultChartProps} polar endAngle={180}>
+        <VictoryBar
+          style={{ data: { stroke: "red", strokeWidth: 2 } }}
+          data={[
+            { x: "Cat", y: 62 },
+            { x: "Dog", y: 91 },
+            { x: "Fish", y: 55 },
+            { x: "Bird", y: 55 },
+            { x: "Frog", y: 75 }
+          ]}
+        />
+        <VictoryPolarAxis />
+      </VictoryChart>
+      <VictoryChart {...defaultChartProps} polar>
+        <VictoryStack colorScale="qualitative">
+          <VictoryBar data={getData(7)} />
+          <VictoryBar data={getData(7, "seed-1")} />
+          <VictoryBar data={getData(7, "seed-2")} />
+        </VictoryStack>
+        <VictoryPolarAxis />
+      </VictoryChart>
+      <VictoryChart {...defaultChartProps} polar>
+        <VictoryStack colorScale="qualitative" style={{ data: { width: 15 } }}>
+          <VictoryBar data={getData(7)} />
+          <VictoryBar data={getData(7, "seed-1")} />
+          <VictoryBar data={getData(7, "seed-2")} />
+        </VictoryStack>
+        <VictoryPolarAxis />
+      </VictoryChart>
+      <VictoryChart {...defaultChartProps} polar>
+        <VictoryGroup offset={25} colorScale="qualitative" style={{ data: { width: 15 } }}>
+          <VictoryBar data={getData(5)} />
+          <VictoryBar data={getData(5, "seed-1")} />
+          <VictoryBar data={getData(5, "seed-2")} />
+        </VictoryGroup>
+        <VictoryPolarAxis />
+      </VictoryChart>
+      <VictoryChart {...defaultChartProps} polar innerRadius={50}>
+        <VictoryGroup offset={25} colorScale="qualitative" style={{ data: { width: 15 } }}>
+          <VictoryBar data={getData(5)} />
+          <VictoryBar data={getData(5, "seed-1")} />
+          <VictoryBar data={getData(5, "seed-2")} />
+        </VictoryGroup>
+        <VictoryPolarAxis />
+      </VictoryChart>
+      <VictoryChart {...defaultChartProps} polar endAngle={180} innerRadius={50}>
+        <VictoryStack colorScale="qualitative" style={{ data: { width: 15 } }}>
+          <VictoryBar data={getData(5)} />
+          <VictoryBar data={getData(5, "seed-1")} />
+          <VictoryBar data={getData(5, "seed-2")} />
+        </VictoryStack>
+        <VictoryPolarAxis />
+      </VictoryChart>
+    </div>
+  );
+}
 
-// storiesOf("VictoryBar.scale", module)
-//   .addDecorator(getChartDecorator({ scale: { y: "log" }, domainPadding: 25 }))
-//   .add("log scale", () => <VictoryBar data={getLogData(7)} />)
-//   .add(" horizontal log scale", () => <VictoryBar horizontal data={getLogData(7)} />);
+export const Sorting = () => {
+  return (
+    <div style={containerStyle}>
+      <VictoryChart {...defaultChartProps}>
+        <VictoryBar
+          data={[
+            { x: "low", y: 1, sort: 1 },
+            { x: "med", y: 2, sort: 2 },
+            { x: "high", y: 3, sort: 3 }
+          ]}
+          sortKey={"sort"}
+        />
+      </VictoryChart>
+      <VictoryChart {...defaultChartProps} horizontal>
+        <VictoryBar
+          data={[
+            { x: "low", y: 1, sort: 1 },
+            { x: "med", y: 2, sort: 2 },
+            { x: "high", y: 3, sort: 3 }
+          ]}
+          sortKey={"sort"}
+        />
+      </VictoryChart>
+      <VictoryChart {...defaultChartProps}>
+        <VictoryBar
+          data={[
+            { x: "low", y: 1, sort: 3 },
+            { x: "med", y: 2, sort: 2 },
+            { x: "high", y: 3, sort: 1 }
+          ]}
+          sortKey={"sort"}
+        />
+      </VictoryChart>
+      <VictoryChart {...defaultChartProps} horizontal>
+        <VictoryBar
+          data={[
+            { x: "low", y: 1, sort: 3 },
+            { x: "med", y: 2, sort: 2 },
+            { x: "high", y: 3, sort: 1 }
+          ]}
+          sortKey={"sort"}
+        />
+      </VictoryChart>
+    </div>
+  );
+}
 
-// storiesOf("VictoryBar.polar", module)
-//   .add("Polar bar", () => <VictoryBar polar theme={VictoryTheme.material} data={getData(7)} />)
-//   .add("Polar bar with width", () => (
-//     <VictoryBar
-//       polar
-//       theme={VictoryTheme.material}
-//       style={{ data: { width: 20 } }}
-//       data={getData(7)}
-//     />
-//   ));
-
-// storiesOf("VictoryBar.polar", module)
-//   .addDecorator(getPolarChartDecorator())
-//   .add("Polar bar chart", () => <VictoryBar data={getData(7)} />)
-//   .add("Polar bar chart with alignment", () => <VictoryBar alignment="end" data={getData(7)} />)
-//   .add("Polar bar chart and width", () => (
-//     <VictoryBar data={getData(7)} style={{ data: { width: 20 } }} />
-//   ))
-//   .add("Polar bar chart with cornerRadius", () => (
-//     <VictoryBar cornerRadius={10} data={getData(7)} />
-//   ))
-//   .add("Polar bar chart with cornerRadius and width", () => (
-//     <VictoryBar cornerRadius={10} data={getData(7)} style={{ data: { width: 20 } }} />
-//   ))
-//   .add("Polar bar chart with categorical data", () => (
-//     <VictoryBar
-//       data={[
-//         { x: "Cat", y: 62 },
-//         { x: "Dog", y: 91 },
-//         { x: "Fish", y: 55 },
-//         { x: "Bird", y: 55 },
-//         { x: "Frog", y: 75 }
-//       ]}
-//     />
-//   ))
-//   .add("Polar stacked bar chart", () => (
-//     <VictoryStack colorScale="qualitative">
-//       <VictoryBar data={getData(7)} />
-//       <VictoryBar data={getData(7, "seed-1")} />
-//       <VictoryBar data={getData(7, "seed-2")} />
-//     </VictoryStack>
-//   ))
-//   .add("Polar stacked bar chart with width", () => (
-//     <VictoryStack colorScale="qualitative" style={{ data: { width: 20 } }}>
-//       <VictoryBar data={getData(7)} />
-//       <VictoryBar data={getData(7, "seed-1")} />
-//       <VictoryBar data={getData(7, "seed-2")} />
-//     </VictoryStack>
-//   ))
-//   .add("Polar grouped bar chart with width", () => (
-//     <VictoryGroup offset={25} colorScale="qualitative" style={{ data: { width: 15 } }}>
-//       <VictoryBar data={getData(5)} />
-//       <VictoryBar data={getData(5, "seed-1")} />
-//       <VictoryBar data={getData(5, "seed-2")} />
-//     </VictoryGroup>
-//   ));
-// storiesOf("VictoryBar.polar", module)
-//   .addDecorator(getPolarChartDecorator({ innerRadius: 50 }))
-//   .add("Polar bar with innerRadius", () => <VictoryBar data={getData(7)} />)
-//   .add("Polar stacked bar with innerRadius", () => (
-//     <VictoryStack colorScale="qualitative">
-//       <VictoryBar data={getData(7)} />
-//       <VictoryBar data={getData(7, "seed-1")} />
-//       <VictoryBar data={getData(7, "seed-2")} />
-//     </VictoryStack>
-//   ));
-// storiesOf("VictoryBar.regressions", module)
-//   .addDecorator(getChartDecorator({ domainPadding: 25 }))
-//   .add("sorting horizontal bars (ascending)", () => (
-//     <VictoryBar
-//       horizontal
-//       data={[
-//         { x: "low", y: 1, sort: 1 },
-//         { x: "med", y: 2, sort: 2 },
-//         { x: "high", y: 3, sort: 3 }
-//       ]}
-//       sortKey={"sort"}
-//     />
-//   ))
-//   .add("sorting horizontal bars (descending)", () => (
-//     <VictoryBar
-//       horizontal
-//       data={[
-//         { x: "low", y: 1, sort: 3 },
-//         { x: "med", y: 2, sort: 2 },
-//         { x: "high", y: 3, sort: 1 }
-//       ]}
-//       sortKey={"sort"}
-//     />
-//   ))
-//   .add("horizontal stacked grouped bars with categorical data", () => (
-//     <VictoryGroup offset={20} style={{ data: { width: 10 } }}>
-//       <VictoryStack colorScale={"red"}>
-//         {getStackedData(5, 3, "useStrings").map((data, index) => {
-//           return <VictoryBar horizontal key={index} data={data} />;
-//         })}
-//       </VictoryStack>
-//       <VictoryStack colorScale={"green"}>
-//         {getStackedData(5, 3, "useStrings").map((data, index) => {
-//           return <VictoryBar horizontal key={index} data={data} />;
-//         })}
-//       </VictoryStack>
-//       <VictoryStack colorScale={"blue"}>
-//         {getStackedData(5, 3, "useStrings").map((data, index) => {
-//           return <VictoryBar horizontal key={index} data={data} />;
-//         })}
-//       </VictoryStack>
-//     </VictoryGroup>
-//   ));
-
+export const Regressions = () => {
+  return (
+    <div style={containerStyle}>
+      <VictoryChart {...defaultChartProps}>
+        <VictoryGroup offset={20} style={{ data: { width: 10 } }}>
+          <VictoryStack colorScale={"red"}>
+            {getStackedData(5, 3, "useStrings").map((data, index) => {
+              return <VictoryBar horizontal key={index} data={data} />;
+            })}
+          </VictoryStack>
+          <VictoryStack colorScale={"green"}>
+            {getStackedData(5, 3, "useStrings").map((data, index) => {
+              return <VictoryBar horizontal key={index} data={data} />;
+            })}
+          </VictoryStack>
+          <VictoryStack colorScale={"blue"}>
+            {getStackedData(5, 3, "useStrings").map((data, index) => {
+              return <VictoryBar horizontal key={index} data={data} />;
+            })}
+          </VictoryStack>
+        </VictoryGroup>
+      </VictoryChart>
+    </div>
+  );
+}
