@@ -154,10 +154,23 @@ storiesOf("VictoryLabel.background", module)
       x={50}
       y={580}
       backgroundStyle={[{ fill: "pink" }, { fill: "blue" }, { fill: "purple" }, { fill: "red" }]}
-      text={["Victory is awesome.", "yThis is variable", "lineHeight", "as an array."]}
+      text={["Victory is awesome.", "This is variable", "lineHeight", "as an array."]}
       style={[{ fontSize: 70 }, { fontSize: 60 }, { fontSize: 30 }, { fontSize: 30 }]}
       // eslint-disable-next-line no-magic-numbers
       lineHeight={[2, 2, 3, 1]}
       verticalAnchor="end"
+    />
+  ))
+  .add("Multi-line with multiple backgrounds angled", () => (
+    <VictoryLabel
+      x={50}
+      y={180}
+      backgroundStyle={[{ fill: "pink" }, { fill: "blue" }, { fill: "purple" }, { fill: "red" }]}
+      text={["Victory is awesome.", "This is variable", "lineHeight", "as an array."]}
+      style={[{ fontSize: 14 }, { fontSize: 16 }, { fontSize: 20 }, { fontSize: 15 }]}
+      // eslint-disable-next-line no-magic-numbers
+      lineHeight={[2, 2, 3, 1]}
+      verticalAnchor="end"
+      angle={65}
     />
   ));
