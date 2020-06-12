@@ -214,6 +214,7 @@ const getChildBackgrounds = (props, calculatedProps) => {
     );
     const totalLineHeight = currentStyle.fontSize * adjustedLineHeight;
     const textHeight = Math.ceil(totalLineHeight);
+    const prevPaddingProp = Array.isArray(padding) && padding[i - 1] ? padding[i - 1] : padding;
 
     return {
       textHeight,
@@ -222,7 +223,7 @@ const getChildBackgrounds = (props, calculatedProps) => {
       fontSize: style.fontSize || defaultStyles.fontSize,
       dy:
         i && !inline
-          ? Math.floor(previousStyle.fontSize * previousLineHeight)
+          ? Math.floor(previousStyle.fontSize * previousLineHeight) + (prevPaddingProp.top || 0) + (prevPaddingProp.bottom || 0)
           : Math.floor(dy - totalLineHeight * 0.5 - (currentStyle.fontSize - capHeightPx))
     };
   });
@@ -266,12 +267,15 @@ const getTSpanDy = (
   fontSize,
   lineHeight,
   prevCapHeightPx,
-  capHeightPx
+  capHeightPx,
+  padding,
+  prevPadding
 ) => {
   return Math.floor(
     -0.5 * previousFontSize -
       0.5 * (previousFontSize * previousLineHeight) +
       previousFontSize * previousLineHeight +
+      (prevPadding.top || 0) + (prevPadding.bottom || 0) +
       0.5 * fontSize +
       0.5 * fontSize * lineHeight -
       (fontSize - capHeightPx) * 0.5 +
@@ -289,6 +293,7 @@ const renderTextElements = (props, calculatedProps) => {
     const prevCapHeightPx = TextSize.convertLengthToPixels(`${capHeight}em`, lastStyle.fontSize);
     const capHeightPx = TextSize.convertLengthToPixels(`${capHeight}em`, currentStyle.fontSize);
     const paddingProp = Array.isArray(padding) && padding[i] ? padding[i] : padding;
+    const prevPaddingProp = Array.isArray(padding) && padding[i - 1] ? padding[i - 1] : padding;
 
     const tspanProps = {
       key: `${props.id}-key-${i}`,
@@ -301,7 +306,9 @@ const renderTextElements = (props, calculatedProps) => {
             currentStyle.fontSize || defaultStyles.fontSize,
             lineHeight[i] || 1,
             prevCapHeightPx,
-            capHeightPx
+            capHeightPx,
+            paddingProp,
+            prevPaddingProp
           )
         : dy + (paddingProp.top || 0),
       textAnchor: currentStyle.textAnchor || textAnchor,
