@@ -122,6 +122,7 @@ export default class App extends React.Component {
           <VictoryLabel
             x={300}
             y={1500}
+            backgroundStyle={{ fill: "lavender" }}
             textAnchor="end"
             verticalAnchor="middle"
             text={["Victory is awesome.", "This is inline styling for labels."]}
@@ -132,6 +133,7 @@ export default class App extends React.Component {
           <VictoryLabel
             x={300}
             y={1650}
+            backgroundStyle={{ fill: "lavender" }}
             textAnchor="start"
             verticalAnchor="middle"
             text={["This is varying styles", "inline."]}
@@ -146,6 +148,7 @@ export default class App extends React.Component {
             y={1800}
             textAnchor="start"
             verticalAnchor="start"
+            backgroundStyle={{ fill: "lavender" }}
             text={["Use", "dx", "attribute", "to", "shift", "labels", "relative to one another."]}
             inline
             dx={10}

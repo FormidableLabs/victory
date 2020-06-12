@@ -195,6 +195,7 @@ export interface VictoryLabelProps {
   angle?: string | number;
   backgroundComponent?: React.ReactElement;
   backgroundStyle?: React.CSSProperties;
+  backgroundPadding?: PaddingProps | PaddingProps[];
   capHeight?: StringOrNumberOrCallback;
   className?: string;
   datum?: {};

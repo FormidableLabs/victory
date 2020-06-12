@@ -18,6 +18,7 @@ storiesOf("VictoryLabel.background", module)
   .add("single background on multiple lines", () => (
     <VictoryLabel
       backgroundStyle={{ fill: "pink" }}
+      backgroundPadding={5}
       x={50}
       y={50}
       text={"Here is line one\nAnd some other details."}
@@ -92,7 +93,7 @@ storiesOf("VictoryLabel.background", module)
       x={20}
       y={18}
       textAnchor="start"
-      verticalAnchor="start"
+      verticalAnchor="middle"
       text={["Using", "dx", "attribute", "to", "shift", "labels", "relative to one another."]}
       inline
       dx={10}
@@ -125,13 +126,8 @@ storiesOf("VictoryLabel.background", module)
       x={50}
       y={290}
       backgroundStyle={[{ fill: "pink" }, { fill: "blue" }, { fill: "purple" }, { fill: "red" }]}
-      text={["Victory is awesome.", "This is variable", "lineHeight", "as an array."]}
-      style={[
-        { fontSize: 12, fill: "green" },
-        { fontSize: 60 },
-        { fontSize: 30 },
-        { fontSize: 30 }
-      ]}
+      text={["Victory is awesome.", "This is variable", "lineHeight", "As an array."]}
+      style={[{ fontSize: 14 }, { fontSize: 60 }, { fontSize: 30 }, { fontSize: 30 }]}
       // eslint-disable-next-line no-magic-numbers
       lineHeight={[3, 2, 3, 1]}
       verticalAnchor="middle"
@@ -142,7 +138,7 @@ storiesOf("VictoryLabel.background", module)
       x={50}
       y={50}
       backgroundStyle={[{ fill: "pink" }, { fill: "blue" }, { fill: "purple" }, { fill: "red" }]}
-      text={["Victory is awesome.", "This is variable", "lineHeight", "as an array."]}
+      text={["Victory is awesome.", "This is variable", "lineHeight", "As an array."]}
       style={[{ fontSize: 50 }, { fontSize: 60 }, { fontSize: 30 }, { fontSize: 30 }]}
       // eslint-disable-next-line no-magic-numbers
       lineHeight={[2, 2, 3, 1]}
@@ -153,8 +149,9 @@ storiesOf("VictoryLabel.background", module)
     <VictoryLabel
       x={50}
       y={580}
+      backgroundPadding={[5, 10]}
       backgroundStyle={[{ fill: "pink" }, { fill: "blue" }, { fill: "purple" }, { fill: "red" }]}
-      text={["Victory is awesome.", "This is variable", "lineHeight", "as an array."]}
+      text={["Victory is awesome.", "This is variable", "lineHeight", "As an array."]}
       style={[{ fontSize: 70 }, { fontSize: 60 }, { fontSize: 30 }, { fontSize: 30 }]}
       // eslint-disable-next-line no-magic-numbers
       lineHeight={[2, 2, 3, 1]}
@@ -166,7 +163,7 @@ storiesOf("VictoryLabel.background", module)
       x={50}
       y={180}
       backgroundStyle={[{ fill: "pink" }, { fill: "blue" }, { fill: "purple" }, { fill: "red" }]}
-      text={["Victory is awesome.", "This is variable", "lineHeight", "as an array."]}
+      text={["Victory is awesome.", "This is variable", "lineHeight", "As an array."]}
       style={[{ fontSize: 14 }, { fontSize: 16 }, { fontSize: 20 }, { fontSize: 15 }]}
       // eslint-disable-next-line no-magic-numbers
       lineHeight={[2, 2, 3, 1]}
