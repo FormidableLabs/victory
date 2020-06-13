@@ -6,7 +6,7 @@ import { VictoryLabel } from "../packages/victory-core/src/index";
 const svgDecorator = () => {
   return (story) => {
     return (
-      <svg width="500" height="500">
+      <svg width="700" height="500">
         {story()}
       </svg>
     );
@@ -98,6 +98,7 @@ storiesOf("VictoryLabel.background", module)
       inline
       dx={10}
       backgroundStyle={{ fill: "lavender" }}
+      backgroundPadding={20}
     />
   ))
   .add("Multi-line with multiple backgrounds and defaults", () => (
