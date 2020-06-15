@@ -97,8 +97,7 @@ class VictoryPolarAxis extends React.Component {
       axisLabel: PropTypes.object,
       grid: PropTypes.object,
       ticks: PropTypes.object,
-      tickLabels: PropTypes.object,
-      background: PropTypes.object
+      tickLabels: PropTypes.object
     }),
     tickComponent: PropTypes.element,
     tickCount: CustomPropTypes.allOfType([

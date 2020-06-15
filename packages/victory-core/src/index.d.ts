@@ -197,11 +197,12 @@ export interface VictoryLabelProps {
   backgroundStyle?: React.CSSProperties;
   backgroundPadding?: PaddingProps | PaddingProps[];
   capHeight?: StringOrNumberOrCallback;
+  children?: StringOrNumberOrCallback;
   className?: string;
   datum?: {};
   data?: any[];
   events?: React.DOMAttributes<any>;
-  children?: StringOrNumberOrCallback;
+  groupComponent?: React.ReactElement;
   labelPlacement?: LabelOrientationType;
   lineHeight?: StringOrNumberOrCallback;
   origin?: OriginType;
