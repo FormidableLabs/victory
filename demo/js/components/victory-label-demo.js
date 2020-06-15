@@ -193,9 +193,7 @@ export default class App extends React.Component {
             angle={20}
             backgroundStyle={[
               { fill: "pink" },
-              { fill: "blue" },
-              { fill: "purple" },
-              { fill: "none" }
+              { fill: "blue" }
             ]}
             x={300}
             y={2300}
@@ -206,7 +204,7 @@ export default class App extends React.Component {
               "Victory will save us with defaults."
             ]}
             style={[]}
-            lineHeight={[1, 2]}
+            lineHeight={[1, 2, 2]}
             verticalAnchor="start"
           />
         </svg>
