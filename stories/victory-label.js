@@ -18,7 +18,7 @@ storiesOf("VictoryLabel.background", module)
   .add("single background on multiple lines with backgroundPadding", () => (
     <VictoryLabel
       backgroundStyle={{ fill: "pink" }}
-      backgroundPadding={5}
+      backgroundPadding={50}
       x={50}
       y={50}
       text={"Here is line one\nAnd some other details."}

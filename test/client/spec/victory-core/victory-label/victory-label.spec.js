@@ -106,7 +106,7 @@ describe("components/victory-label", () => {
     output.forEach((tspan) => {
       // passing `inline` sets x and dy to undefined
       expect(tspan.prop("x")).to.be.eql(undefined);
-      expect(tspan.prop("dy")).be.oneOf([undefined, 0])
+      expect(tspan.prop("dy")).be.oneOf([undefined, 0]);
       expect(tspan.prop("dx")).to.be.eql(5);
     });
   });

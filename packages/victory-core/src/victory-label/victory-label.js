@@ -71,7 +71,7 @@ const getLineHeight = (props) => {
   } else {
     return [lineHeight];
   }
-}
+};
 
 const getContent = (text, props) => {
   if (text === undefined || text === null) {
@@ -153,20 +153,42 @@ const getYCoordinate = (calculatedProps, props, textHeight) => {
   }
 };
 
+const getBackgroundPadding = (props) => {
+  if (props.backgroundPadding) {
+    if (Array.isArray(props.backgroundPadding)) {
+      return props.backgroundPadding.map((backgroundPadding) =>
+        Helpers.getBackgroundPadding({ backgroundPadding })
+      );
+    } else {
+      return Helpers.getBackgroundPadding(props);
+    }
+  } else {
+    return defaultPadding;
+  }
+};
+
+const getBackgroundPaddingProp = (i, backgroundPadding) => {
+  if (Array.isArray(backgroundPadding)) {
+    return backgroundPadding[i] || backgroundPadding[0] || defaultPadding;
+  } else {
+    return backgroundPadding;
+  }
+};
+
 const getFullBackground = (props, calculatedProps, tspanValues) => {
   const { backgroundComponent, backgroundStyle, inline } = props;
   const { dx, backgroundPadding, transform } = calculatedProps;
-  const textSizes = tspanValues.map(tspan => {
-    return TextSize.approximateTextSize(tspan.text, tspan.style)
+  const textSizes = tspanValues.map((tspan) => {
+    return TextSize.approximateTextSize(tspan.text, tspan.style);
   });
 
   const height = inline
-    ? Math.max(...textSizes.map(size => size.height))
-    : textSizes.reduce((memo, size, i) => memo + (size.height * tspanValues[i].lineHeight), 0);
+    ? Math.max(...textSizes.map((size) => size.height))
+    : textSizes.reduce((memo, size, i) => memo + size.height * tspanValues[i].lineHeight, 0);
 
   const width = inline
     ? textSizes.reduce((memo, size) => memo + size.width, 0) + (dx || 0)
-    : Math.max(...textSizes.map(size => size.width)) + (dx || 0)
+    : Math.max(...textSizes.map((size) => size.width)) + (dx || 0);
 
   const xCoordinate = getXCoordinate(calculatedProps, width);
   const yCoordinate = getYCoordinate(calculatedProps, props, height);
@@ -188,7 +210,7 @@ const getFullBackground = (props, calculatedProps, tspanValues) => {
 };
 
 const getChildBackgrounds = (props, calculatedProps, tspanValues) => {
-  const { backgroundStyle, backgroundComponent, inline, padding, y } = props;
+  const { backgroundStyle, backgroundComponent, inline, y } = props;
   const { dy, backgroundPadding, transform } = calculatedProps;
 
   const textElements = tspanValues.map((current, i) => {
@@ -198,9 +220,10 @@ const getChildBackgrounds = (props, calculatedProps, tspanValues) => {
     const textHeight = Math.ceil(totalLineHeight);
     const prevPaddingProp = getBackgroundPaddingProp(i - 1, backgroundPadding);
 
-    const childDy = i && !inline
-      ? previous.fontSize * previous.lineHeight + prevPaddingProp.top + prevPaddingProp.bottom
-      : dy - totalLineHeight * 0.5 - (current.fontSize - current.capHeight);
+    const childDy =
+      i && !inline
+        ? previous.fontSize * previous.lineHeight + prevPaddingProp.top + prevPaddingProp.bottom
+        : dy - totalLineHeight * 0.5 - (current.fontSize - current.capHeight);
 
     return {
       textHeight,
@@ -209,7 +232,7 @@ const getChildBackgrounds = (props, calculatedProps, tspanValues) => {
       fontSize: current.fontSize,
       dy: childDy
     };
-  })
+  });
 
   return textElements.map((textElement, i) => {
     const xCoordinate = getXCoordinate(calculatedProps, textElement.labelSize.width);
@@ -254,19 +277,21 @@ const calculateSpanDy = (current, previous) => {
 };
 
 const getTSpanDy = (tspanValues, props, i) => {
-  const { inline, backgroundStyle } = props
+  const { inline, backgroundStyle } = props;
   const current = tspanValues[i];
   const previous = tspanValues[i - 1] || tspanValues[0];
 
   if (i && !inline) {
-    return backgroundStyle && Array.isArray(backgroundStyle) && backgroundStyle.length > 1  
-      ? calculateSpanDy(current, previous) + current.backgroundPadding.top + previous.backgroundPadding.bottom  
-      : calculateSpanDy(current, previous);  
-  } else if (inline) {  
-    return i === 0 ? current.backgroundPadding.top : undefined;  
-  } else {  
-    return current.backgroundPadding.top;  
-  }  
+    return backgroundStyle && Array.isArray(backgroundStyle) && backgroundStyle.length > 1
+      ? calculateSpanDy(current, previous) +
+          current.backgroundPadding.top +
+          previous.backgroundPadding.bottom
+      : calculateSpanDy(current, previous);
+  } else if (inline) {
+    return i === 0 ? current.backgroundPadding.top : undefined;
+  } else {
+    return current.backgroundPadding.top;
+  }
 };
 
 const evaluateProps = (props) => {
@@ -280,26 +305,6 @@ const evaluateProps = (props) => {
   const id = Helpers.evaluateProp(props.id, props);
   return assign({}, props, { style, text, id });
 };
-
-const getBackgroundPadding = (props) => {
-  if (props.backgroundPadding) {
-    if (Array.isArray(props.backgroundPadding)) {
-      return props.backgroundPadding.map((backgroundPadding) => Helpers.getBackgroundPadding({backgroundPadding}));
-    } else {
-      return Helpers.getBackgroundPadding(props);
-    }
-  } else {
-    return defaultPadding;
-  }
-};
-
-const getBackgroundPaddingProp = (i, backgroundPadding) => {
-    if (Array.isArray(backgroundPadding)) {
-      return backgroundPadding[i] || backgroundPadding[0] || defaultPadding;
-    } else {
-      return backgroundPadding;
-    }
-  };
 
 const getCalculatedProps = (props) => {
   const lineHeight = getLineHeight(props);
@@ -330,7 +335,6 @@ const getCalculatedProps = (props) => {
 };
 
 const renderLabel = (props, calculatedProps, tspanValues) => {
-
   const { inline, className, title, events, direction, text } = props;
   const { textAnchor, dx, dy, transform, x, y } = calculatedProps;
 
@@ -364,7 +368,7 @@ const renderLabel = (props, calculatedProps, tspanValues) => {
   });
 
   return React.cloneElement(props.textComponent, textProps, tspans);
-}
+};
 
 const VictoryLabel = (props) => {
   props = evaluateProps(props);
@@ -389,7 +393,6 @@ const VictoryLabel = (props) => {
       backgroundPadding: getBackgroundPaddingProp(i, backgroundPadding)
     };
   });
-
 
   const label = renderLabel(props, calculatedProps, tspanValues);
 

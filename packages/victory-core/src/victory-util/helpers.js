@@ -94,7 +94,7 @@ function getBackgroundPadding(props) {
   const { backgroundPadding } = props;
   const padding = backgroundPadding;
 
-  return getPadding({padding})
+  return getPadding({ padding });
 }
 
 function getStyles(style, defaultStyles) {
