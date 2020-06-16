@@ -58,8 +58,8 @@ describe("components/victory-legend", () => {
 
     expect(output.eq(0).prop("x")).to.equal("30.8");
     expect(output.eq(1).prop("x")).to.equal("117.08016194331982");
-    expect(output.eq(0).prop("y")).to.equal("14");
-    expect(output.eq(1).prop("y")).to.equal("14");
+    expect(output.eq(0).prop("y")).to.equal("18.97");
+    expect(output.eq(1).prop("y")).to.equal("18.97");
   });
 
   it("has expected vertical legend labels position", () => {
@@ -68,8 +68,8 @@ describe("components/victory-legend", () => {
 
     expect(output.eq(0).prop("x")).to.equal("30.8");
     expect(output.eq(1).prop("x")).to.equal("30.8");
-    expect(output.eq(0).prop("y")).to.equal("14");
-    expect(output.eq(1).prop("y")).to.equal("44.905");
+    expect(output.eq(0).prop("y")).to.equal("18.97");
+    expect(output.eq(1).prop("y")).to.equal("49.875");
   });
 
   describe("symbols", () => {

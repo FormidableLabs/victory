@@ -18,14 +18,14 @@ describe("components/victory-label", () => {
     const output = wrapper.find(Text);
     expect(output.prop("dx")).to.eql(30);
     // dy = props.dy + (capHeight(0.71) / 2 + (0.5 - length(1) / 2) * lineHeight(1)) * fontSize(14);
-    expect(output.prop("dy")).to.eql(34.97);
+    expect(output.prop("dy")).to.eql(undefined);
   });
 
   it("sets x and y for text element", () => {
     const wrapper = shallow(<VictoryLabel x={"100%"} y={30} text={"such text, wow"} />);
     const output = wrapper.find(Text);
     expect(output.prop("x")).to.eql("100%");
-    expect(output.prop("y")).to.eql(30);
+    expect(output.prop("y")).to.eql(34.97);
   });
 
   it("has a transform property that rotates the text to match the labelAngle prop", () => {
@@ -113,7 +113,7 @@ describe("components/victory-label", () => {
 
   it("passes lineHeight as an array if provided", () => {
     const lineHeight = [1, 2, 3];
-    const expectedDy = [undefined, 21, 35];
+    const expectedDy = [0, 21, 35];
     const wrapper = shallow(
       <VictoryLabel text={["lineHeight", "array", "testing"]} lineHeight={lineHeight} />
     );
@@ -129,7 +129,7 @@ describe("components/victory-label", () => {
   });
 
   it("defaults lineHeight to 1 if an empty array is provided for lineHeight", () => {
-    const expectedDy = [undefined, 14, 14, 14];
+    const expectedDy = [0, 14, 14, 14];
     const wrapper = shallow(
       <VictoryLabel text={["lineHeight", "empty", "array", "testing"]} lineHeight={[]} />
     );

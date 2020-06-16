@@ -48,6 +48,16 @@ export default class App extends React.Component<any, {}> {
             text={"Victory is awesome.\nThis is (middle, start) anchoring.\nGot it?"}
           />
 
+          <circle cx="150" cy="250" r="2" fill="blue" />
+          <VictoryLabel
+            x={150}
+            y={250}
+            dx={30}
+            dy={30}
+            backgroundStyle={{ fill: "green" }}
+            text={"such text, wow"}
+          />
+
           <circle cx="300" cy="450" r="2" fill="red" />
           <VictoryLabel
             backgroundStyle={{ fill: "pink" }}
