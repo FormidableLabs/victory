@@ -15,7 +15,7 @@ const svgDecorator = () => {
 
 storiesOf("VictoryLabel.background", module)
   .addDecorator(svgDecorator())
-  .add("single background on multiple lines", () => (
+  .add("single background on multiple lines with backgroundPadding", () => (
     <VictoryLabel
       backgroundStyle={{ fill: "pink" }}
       backgroundPadding={5}
@@ -98,7 +98,6 @@ storiesOf("VictoryLabel.background", module)
       inline
       dx={10}
       backgroundStyle={{ fill: "lavender" }}
-      backgroundPadding={20}
     />
   ))
   .add("Multi-line with multiple backgrounds and defaults", () => (
@@ -150,12 +149,37 @@ storiesOf("VictoryLabel.background", module)
     <VictoryLabel
       x={50}
       y={580}
-      backgroundPadding={[5, 10]}
       backgroundStyle={[{ fill: "pink" }, { fill: "blue" }, { fill: "purple" }, { fill: "red" }]}
       text={["Victory is awesome.", "This is variable", "lineHeight", "As an array."]}
       style={[{ fontSize: 70 }, { fontSize: 60 }, { fontSize: 30 }, { fontSize: 30 }]}
       // eslint-disable-next-line no-magic-numbers
       lineHeight={[2, 2, 3, 1]}
+      verticalAnchor="end"
+    />
+  ))
+  .add("Multi-line with multiple backgrounds angled", () => (
+    <VictoryLabel
+      x={50}
+      y={180}
+      backgroundStyle={[{ fill: "pink" }, { fill: "blue" }, { fill: "purple" }, { fill: "red" }]}
+      text={["Victory is awesome.", "This is variable", "lineHeight", "As an array."]}
+      style={[{ fontSize: 14 }, { fontSize: 16 }, { fontSize: 20 }, { fontSize: 15 }]}
+      // eslint-disable-next-line no-magic-numbers
+      lineHeight={[2, 2, 3, 1]}
+      verticalAnchor="end"
+      angle={65}
+    />
+  ))
+  .add("Multi-line with multiple backgrounds with backgroundPadding", () => (
+    <VictoryLabel
+      x={50}
+      y={180}
+      backgroundStyle={[{ fill: "pink" }, { fill: "blue" }, { fill: "purple" }, { fill: "red" }]}
+      text={["Victory is awesome.", "This is variable", "lineHeight", "As an array."]}
+      style={[{ fontSize: 14 }, { fontSize: 16 }, { fontSize: 20 }, { fontSize: 15 }]}
+      // eslint-disable-next-line no-magic-numbers
+      lineHeight={[2, 2, 3, 1]}
+      backgroundPadding={[20, 40]}
       verticalAnchor="end"
     />
   ))
