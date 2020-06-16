@@ -20,8 +20,6 @@ const defaultStyles = {
   stroke: "transparent"
 };
 
-const defaultPadding = { top: 0, left: 0, bottom: 0, right: 0 };
-
 const getPosition = (props, dimension) => {
   if (!props.datum) {
     return 0;
@@ -154,22 +152,18 @@ const getYCoordinate = (calculatedProps, props, textHeight) => {
 };
 
 const getBackgroundPadding = (props) => {
-  if (props.backgroundPadding) {
-    if (Array.isArray(props.backgroundPadding)) {
-      return props.backgroundPadding.map((backgroundPadding) =>
-        Helpers.getBackgroundPadding({ backgroundPadding })
-      );
-    } else {
-      return Helpers.getBackgroundPadding(props);
-    }
+  if (props.backgroundPadding && Array.isArray(props.backgroundPadding)) {
+    return props.backgroundPadding.map((backgroundPadding) =>
+      Helpers.getPadding({ backgroundPadding }, "backgroundPadding")
+    );
   } else {
-    return defaultPadding;
+    return Helpers.getPadding(props, "backgroundPadding");
   }
 };
 
 const getBackgroundPaddingProp = (i, backgroundPadding) => {
   if (Array.isArray(backgroundPadding)) {
-    return backgroundPadding[i] || backgroundPadding[0] || defaultPadding;
+    return backgroundPadding[i] || backgroundPadding[0];
   } else {
     return backgroundPadding;
   }
