@@ -6,7 +6,7 @@ export default class App extends React.Component {
     return (
       <div className="demo">
         <p>VictoryLabel demo! The little circles show the anchor points for each label.</p>
-        <svg width="600" height="2500" style={{ border: "1px solid #ccc", padding: 40 }}>
+        <svg width="600" height="2800" style={{ border: "1px solid #ccc", padding: 40 }}>
           <circle cx="0" cy="0" r="2" fill="red" />
           <VictoryLabel
             transform="translate(50)"
@@ -50,6 +50,11 @@ export default class App extends React.Component {
           <circle cx="300" cy="450" r="2" fill="red" />
           <VictoryLabel
             backgroundStyle={{ fill: "pink" }}
+            style={[
+              { fontSize: 40, fill: "green" },
+              { fontSize: 10 }
+            ]}
+            lineHeight={[1, 3, 1]}
             x={300}
             y={450}
             textAnchor="start"
@@ -168,12 +173,14 @@ export default class App extends React.Component {
               { fill: "purple" },
               { fill: "red" }
             ]}
+            backgroundPadding={[
+              { right: -25 },
+              { right: -80, bottom: -30 }
+            ]}
             text={["Victory is awesome.", "This is variable", "lineHeight", "as an array."]}
             style={[
               { fontSize: 50, fill: "green" },
-              { fontSize: 60 },
-              { fontSize: 30 },
-              { fontSize: 30 }
+              { fontSize: 60 }
             ]}
             // eslint-disable-next-line no-magic-numbers
             lineHeight={[2, 2, 3, 1]}
@@ -183,11 +190,10 @@ export default class App extends React.Component {
           {/* example for guarding against empty style and lineHeight arrays */}
           <circle cx="300" cy="2300" r="2" fill="red" />
           <VictoryLabel
+            angle={20}
             backgroundStyle={[
               { fill: "pink" },
-              { fill: "blue" },
-              { fill: "purple" },
-              { fill: "red" }
+              { fill: "blue" }
             ]}
             x={300}
             y={2300}
@@ -198,7 +204,7 @@ export default class App extends React.Component {
               "Victory will save us with defaults."
             ]}
             style={[]}
-            lineHeight={[]}
+            lineHeight={[1, 2, 2]}
             verticalAnchor="start"
           />
         </svg>
