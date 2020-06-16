@@ -90,6 +90,13 @@ function getPadding(props) {
   };
 }
 
+function getBackgroundPadding(props) {
+  const { backgroundPadding } = props;
+  const padding = backgroundPadding;
+
+  return getPadding({padding})
+}
+
 function getStyles(style, defaultStyles) {
   const width = "100%";
   const height = "100%";
@@ -273,6 +280,7 @@ export default {
   omit,
   getPoint,
   scalePoint,
+  getBackgroundPadding,
   getPadding,
   getStyles,
   evaluateProp,

@@ -369,9 +369,9 @@ const evaluateProps = (props) => {
 const getBackgroundPadding = (props) => {
   if (props.backgroundPadding) {
     if (Array.isArray(props.backgroundPadding)) {
-      return props.backgroundPadding.map((val) => Helpers.getPadding(val));
+      return props.backgroundPadding.map((backgroundPadding) => Helpers.getBackgroundPadding({backgroundPadding}));
     } else {
-      return Helpers.getPadding(props.backgroundPadding);
+      return Helpers.getBackgroundPadding(props);
     }
   } else {
     return defaultPadding;
