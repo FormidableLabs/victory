@@ -25,6 +25,7 @@ const loadStories = () => {
   require("../stories/victory-chart");
   require("../stories/victory-errorbar");
   require("../stories/victory-histogram");
+  require("../stories/victory-label");
   require("../stories/victory-line");
   require("../stories/victory-polar-axis");
   require("../stories/victory-scatter");

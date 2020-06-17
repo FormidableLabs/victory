@@ -78,8 +78,8 @@ function scalePoint(props, datum) {
   };
 }
 
-function getPadding(props) {
-  const { padding } = props;
+function getPadding(props, name = "padding") {
+  const padding = props[name];
   const paddingVal = typeof padding === "number" ? padding : 0;
   const paddingObj = typeof padding === "object" ? padding : {};
   return {
