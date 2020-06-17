@@ -119,7 +119,7 @@ export default {
           stroke: charcoal,
           strokeWidth: 1
         },
-        labels: baseLabelStyles
+        labels: assign({}, baseLabelStyles, { padding: 5 })
       },
       candleColors: {
         positive: "#ffffff",

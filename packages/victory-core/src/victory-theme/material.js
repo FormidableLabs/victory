@@ -136,7 +136,7 @@ export default {
         data: {
           stroke: blueGrey700
         },
-        labels: baseLabelStyles
+        labels: assign({}, baseLabelStyles, { padding: 5 })
       },
       candleColors: {
         positive: "#ffffff",
