@@ -116,15 +116,15 @@ export default {
     {
       style: {
         max: { padding, stroke: blueGrey700, strokeWidth: 1 },
-        maxLabels: baseLabelStyles,
+        maxLabels: assign({}, baseLabelStyles, { padding: 3 }),
         median: { padding, stroke: blueGrey700, strokeWidth: 1 },
-        medianLabels: baseLabelStyles,
+        medianLabels: assign({}, baseLabelStyles, { padding: 3 }),
         min: { padding, stroke: blueGrey700, strokeWidth: 1 },
-        minLabels: baseLabelStyles,
+        minLabels: assign({}, baseLabelStyles, { padding: 3 }),
         q1: { padding, fill: blueGrey700 },
-        q1Labels: baseLabelStyles,
+        q1Labels: assign({}, baseLabelStyles, { padding: 3 }),
         q3: { padding, fill: blueGrey700 },
-        q3Labels: baseLabelStyles
+        q3Labels: assign({}, baseLabelStyles, { padding: 3 })
       },
       boxWidth: 20
     },
