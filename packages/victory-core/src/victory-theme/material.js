@@ -99,6 +99,17 @@ export default {
     },
     baseProps
   ),
+  polarDependentAxis: assign(
+    {
+      style: {
+        ticks: {
+          fill: "transparent",
+          size: 1,
+          stroke: "transparent"
+        }
+      }
+    }
+  ),
   bar: assign(
     {
       style: {

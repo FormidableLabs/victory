@@ -3,7 +3,6 @@ import PropTypes from "prop-types";
 import { assign, isEmpty } from "lodash";
 import {
   PropTypes as CustomPropTypes,
-  Helpers,
   VictoryLabel,
   CommonProps,
   VictoryContainer,
