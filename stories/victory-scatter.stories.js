@@ -6,7 +6,7 @@ import { VictoryStack } from "../packages/victory-stack/src/index";
 import { VictoryScatter } from "../packages/victory-scatter/src/index";
 import { VictoryChart } from "../packages/victory-chart/src/index";
 import { VictoryTooltip } from "../packages/victory-tooltip/src/index";
-import { VictoryTheme, VictoryLabel } from "../packages/victory-core/src/index";
+import { VictoryTheme } from "../packages/victory-core/src/index";
 import { getData, getMixedData, getTimeData, getLogData } from "./data";
 import { fromJS } from "immutable";
 
@@ -265,193 +265,237 @@ export const DataAccessors = () => {
 };
 
 
+export const Labels = () => {
+  return (
+    <div style={containerStyle}>
+      <VictoryChart style={parentStyle}>
+        <VictoryScatter data={getData(7)} labels={({ datum }) => `x: ${datum.x}`} />
+      </VictoryChart>
+      <VictoryChart style={parentStyle}>
+        <VictoryScatter data={getData(7)} labels={["", "", "three", "four", 5, "six"]} />
+      </VictoryChart>
+      <VictoryChart style={parentStyle}>
+        <VictoryScatter
+          data={[
+            { x: 1, y: 2, label: "cat" },
+            { x: 2, y: 5, label: "dog" },
+            { x: 3, y: 3, label: "dog" },
+            { x: 4, y: -2, label: "bird" },
+            { x: 5, y: -5, label: "cat" }
+          ]}
+        />
+      </VictoryChart>
+    </div>
+  );
+};
 
-// storiesOf("VictoryScatter.labels", module)
-//   .addDecorator(getChartDecorator({ domainPadding: 25 }))
-//   .add("function labels", () => (
-//     <VictoryScatter data={getData(7)} labels={({ datum }) => `x: ${datum.x}`} />
-//   ))
-//   .add("array labels", () => (
-//     <VictoryScatter data={getData(7)} labels={["", "", "three", "four", 5, "six"]} />
-//   ))
-//   .add("data labels", () => (
-//     <VictoryScatter
-//       data={[
-//         { x: 1, y: 2, label: "cat" },
-//         { x: 2, y: 5, label: "dog" },
-//         { x: 3, y: 3, label: "dog" },
-//         { x: 4, y: -2, label: "bird" },
-//         { x: 5, y: -5, label: "cat" }
-//       ]}
-//     />
-//   ))
-//   .add("data labels (horizontal)", () => (
-//     <VictoryScatter
-//       horizontal
-//       data={[
-//         { x: 1, y: 2, label: "cat" },
-//         { x: 2, y: 5, label: "dog" },
-//         { x: 3, y: 3, label: "dog" },
-//         { x: 4, y: -2, label: "bird" },
-//         { x: 5, y: -5, label: "cat" }
-//       ]}
-//     />
-//   ));
+export const Tooltips = () => {
+  return (
+    <div style={containerStyle}>
+      <VictoryChart {...defaultChartProps}>
+        <VictoryScatter
+          data={getData(5)}
+          labels={({ datum }) => `x: ${datum.x}`}
+          labelComponent={<VictoryTooltip active />}
+        />
+      </VictoryChart>
+      <VictoryChart horizontal {...defaultChartProps}>
+        <VictoryScatter
+          data={getData(5)}
+          labels={({ datum }) => `x: ${datum.x}`}
+          labelComponent={<VictoryTooltip active />}
+        />
+      </VictoryChart>
+      <VictoryChart {...defaultChartProps}>
+        <VictoryScatter
+          data={getMixedData(5)}
+          labels={({ datum }) => `x: ${datum.x}`}
+          labelComponent={<VictoryTooltip active />}
+        />
+      </VictoryChart>
+      <VictoryChart {...defaultChartProps}>
+        <VictoryScatter
+          data={getData(5)}
+          labels={["one", "two", 3, "wow, four tooltips", "five"]}
+          labelComponent={<VictoryTooltip active />}
+        />
+      </VictoryChart>
+    </div>
+  );
+};
 
-// storiesOf("VictoryScatter.tooltips", module)
-//   .addDecorator(getChartDecorator({ domainPadding: 25 }))
-//   .add("tooltips", () => (
-//     <VictoryScatter
-//       data={getData(5)}
-//       labels={({ datum }) => `x: ${datum.x}`}
-//       labelComponent={<VictoryTooltip active />}
-//     />
-//   ))
-//   .add("tooltips (negative)", () => (
-//     <VictoryScatter
-//       data={getMixedData(5)}
-//       labels={({ datum }) => `x: ${datum.x}`}
-//       labelComponent={<VictoryTooltip active />}
-//     />
-//   ))
-//   .add("tooltips (horizontal)", () => (
-//     <VictoryScatter
-//       horizontal
-//       data={getMixedData(5)}
-//       labels={({ datum }) => `x: ${datum.x}`}
-//       labelComponent={<VictoryTooltip active />}
-//     />
-//   ))
-//   .add("tooltips with long and short strings", () => (
-//     <VictoryScatter
-//       data={getData(5)}
-//       labels={["one", "two", 3, "wow, four tooltips", "five"]}
-//       labelComponent={<VictoryTooltip active />}
-//     />
-//   ));
+export const Styles = () => {
+  return (
+    <div style={containerStyle}>
+      <VictoryChart {...defaultChartProps}>
+        <VictoryScatter
+          data={getData(7)}
+          labels={({ datum }) => datum.x}
+          style={{
+            labels: { fontSize: 20, fill: "tomato", fontFamily: "monospace" },
+            data: { fill: "tomato" }
+          }}
+        />
+      </VictoryChart>
+      <VictoryChart {...defaultChartProps}>
+        <VictoryScatter
+          style={{
+            labels: {
+              fill: ({ datum }) => (datum.x === "Dog" ? "red" : "black")
+            },
+            data: {
+              fill: ({ datum }) => (datum.x === "Dog" ? "red" : "black")
+            }
+          }}
+          labels={({ datum }) => datum.x}
+          data={[
+            { x: "Cat", y: 62 },
+            { x: "Dog", y: 91 },
+            { x: "Fish", y: 55 },
+            { x: "Bird", y: 55 }
+          ]}
+        />
+      </VictoryChart>
+    </div>
+  );
+};
 
-// storiesOf("VictoryScatter.style", module)
-//   .addDecorator(getChartDecorator({ domainPadding: 25 }))
-//   .add("with styles", () => (
-//     <VictoryScatter
-//       data={getData(7)}
-//       size={5}
-//       labels={({ datum }) => datum.x}
-//       style={{
-//         labels: { fontSize: 20, fill: "tomato", fontFamily: "monospace" },
-//         data: { fill: "tomato", fillOpacity: 0.7, stroke: "tomato", strokeWidth: 2 }
-//       }}
-//     />
-//   ))
-//   .add("with functional styles", () => (
-//     <VictoryScatter
-//       size={5}
-//       style={{
-//         labels: {
-//           fill: ({ datum }) => (datum.x === "Dog" ? "red" : "black")
-//         },
-//         data: {
-//           stroke: ({ datum }) => (datum.y > 75 ? "red" : "transparent"),
-//           strokeWidth: 3,
-//           opacity: ({ datum }) => (datum.y > 75 ? 1 : 0.4)
-//         }
-//       }}
-//       labels={({ datum }) => datum.x}
-//       data={[
-//         { x: "Cat", y: 62 },
-//         { x: "Dog", y: 91 },
-//         { x: "Fish", y: 55 },
-//         { x: "Bird", y: 55 }
-//       ]}
-//     />
-//   ));
+export const Stacked = () => {
+  return (
+    <div style={containerStyle}>
+      <VictoryChart {...defaultChartProps}>
+        <VictoryStack colorScale="qualitative" labels={({ datum }) => datum.x}>
+          <VictoryScatter data={getData(7)} />
+          <VictoryScatter data={getData(7, "seed-1")} />
+          <VictoryScatter data={getData(7, "seed-2")} />
+        </VictoryStack>
+      </VictoryChart>
+      <VictoryChart {...defaultChartProps}>
+        <VictoryStack colorScale="qualitative" labels={({ datum }) => datum.x}>
+          <VictoryScatter data={getData(9)} />
+          <VictoryScatter data={getData(5, "seed-1")} />
+          <VictoryScatter data={getData(3, "seed-2")} />
+        </VictoryStack>
+      </VictoryChart>
+      <VictoryChart horizontal {...defaultChartProps}>
+        <VictoryStack colorScale="qualitative" labels={({ datum }) => datum.x}>
+          <VictoryScatter data={getData(7)} />
+          <VictoryScatter data={getData(7, "seed-1")} />
+          <VictoryScatter data={getData(7, "seed-2")} />
+        </VictoryStack>
+      </VictoryChart>
+      <VictoryChart horizontal {...defaultChartProps}>
+        <VictoryStack colorScale="qualitative" labels={({ datum }) => datum.x}>
+          <VictoryScatter data={getData(9)} />
+          <VictoryScatter data={getData(5, "seed-1")} />
+          <VictoryScatter data={getData(3, "seed-2")} />
+        </VictoryStack>
+      </VictoryChart>
+      <VictoryChart domainPadding={{ y: 20 }} polar {...defaultChartProps}>
+        <VictoryStack colorScale="qualitative" labels={({ datum }) => datum.x}>
+          <VictoryScatter data={getData(7)} />
+          <VictoryScatter data={getData(7, "seed-1")} />
+          <VictoryScatter data={getData(7, "seed-2")} />
+        </VictoryStack>
+      </VictoryChart>
+      <VictoryChart domainPadding={{ y: 20 }} polar {...defaultChartProps}>
+        <VictoryStack colorScale="qualitative" labels={({ datum }) => datum.x}>
+          <VictoryScatter data={getData(9)} />
+          <VictoryScatter data={getData(5, "seed-1")} />
+          <VictoryScatter data={getData(3, "seed-2")} />
+        </VictoryStack>
+      </VictoryChart>
+    </div>
+  );
+};
+export const TimeScale = () => {
+  return (
+    <div style={containerStyle}>
+      <VictoryChart {...defaultChartProps}>
+        <VictoryScatter data={getTimeData(5)} labels={({ datum }) => datum.x.getFullYear()} />
+      </VictoryChart>
+      <VictoryChart horizontal {...defaultChartProps}>
+        <VictoryScatter data={getTimeData(5)} labels={({ datum }) => datum.x.getFullYear()} />
+      </VictoryChart>
+      <VictoryChart {...defaultChartProps}>
+        <VictoryStack labels={({ datum }) => datum.x.getFullYear()}>
+          <VictoryScatter data={getTimeData(5)} />
+          <VictoryScatter data={getTimeData(5, "seed-1")} />
+          <VictoryScatter data={getTimeData(5, "seed-2")} />
+        </VictoryStack>
+      </VictoryChart>
+      <VictoryChart horizontal {...defaultChartProps}>
+        <VictoryStack labels={({ datum }) => datum.x.getFullYear()}>
+          <VictoryScatter data={getTimeData(5)} />
+          <VictoryScatter data={getTimeData(5, "seed-1")} />
+          <VictoryScatter data={getTimeData(5, "seed-2")} />
+        </VictoryStack>
+      </VictoryChart>
+    </div>
+  );
+};
 
-// storiesOf("VictoryScatter.stacked", module)
-//   .addDecorator(getChartDecorator({ domainPadding: 25 }))
-//   .add("stacked points", () => (
-//     <VictoryStack colorScale="qualitative">
-//       <VictoryScatter data={getData(7)} size={5} />
-//       <VictoryScatter data={getData(7, "seed-1")} size={5} />
-//       <VictoryScatter data={getData(7, "seed-2")} size={5} />
-//     </VictoryStack>
-//   ))
-//   .add("stacked points (horizontal)", () => (
-//     <VictoryStack horizontal colorScale="qualitative">
-//       <VictoryScatter data={getData(7)} size={5} />
-//       <VictoryScatter data={getData(7, "seed-1")} size={5} />
-//       <VictoryScatter data={getData(7, "seed-2")} size={5} />
-//     </VictoryStack>
-//   ))
-//   .add("stacked points with mixed lengths", () => (
-//     <VictoryStack colorScale="qualitative">
-//       <VictoryScatter data={getData(9)} size={5} />
-//       <VictoryScatter data={getData(5, "seed-1")} size={5} />
-//       <VictoryScatter data={getData(3, "seed-2")} size={5} />
-//     </VictoryStack>
-//   ))
-//   .add("stacked points with labels", () => (
-//     <VictoryStack colorScale="qualitative" labels={({ datum }) => datum.x}>
-//       <VictoryScatter data={getData(7)} size={5} />
-//       <VictoryScatter data={getData(7, "seed-1")} size={5} />
-//       <VictoryScatter data={getData(7, "seed-2")} size={5} />
-//     </VictoryStack>
-//   ))
-//   .add("stacked negative points", () => (
-//     <VictoryStack colorScale="qualitative" labels={({ datum }) => datum.x}>
-//       <VictoryScatter data={getMixedData(7)} size={5} />
-//       <VictoryScatter data={getMixedData(7, "seed-1")} size={5} />
-//       <VictoryScatter data={getMixedData(7, "seed-2")} size={5} />
-//     </VictoryStack>
-//   ));
+export const LogScale = () => {
+  return (
+    <div style={containerStyle}>
+      <VictoryChart {...defaultChartProps} scale={{ y: "log" }}>
+        <VictoryScatter data={getLogData(7)} labels={({ datum }) => `x: ${datum.x}`} />
+      </VictoryChart>
+      <VictoryChart horizontal {...defaultChartProps} scale={{ y: "log" }}>
+        <VictoryScatter data={getLogData(7)} labels={({ datum }) => `x: ${datum.x}`} />
+      </VictoryChart>
+      <VictoryChart polar {...defaultChartProps} scale={{ y: "log" }}>
+        <VictoryScatter data={getLogData(7)} />
+      </VictoryChart>
+    </div>
+  );
+};
 
-// storiesOf("VictoryScatter.scale", module)
-//   .addDecorator(getChartDecorator({ scale: { x: "time" }, domainPadding: 25 }))
-//   .add("time scale", () => <VictoryScatter data={getTimeData(5)} />)
-//   .add("time scale with labels", () => (
-//     <VictoryScatter data={getTimeData(5)} labels={({ datum }) => datum.x.getFullYear()} />
-//   ))
-//   .add("stacked time scale with labels", () => (
-//     <VictoryStack labels={({ datum }) => datum.x.getFullYear()}>
-//       <VictoryScatter data={getTimeData(5)} />
-//       <VictoryScatter data={getTimeData(5, "seed-1")} />
-//       <VictoryScatter data={getTimeData(5, "seed-2")} />
-//     </VictoryStack>
-//   ));
-// storiesOf("VictoryScatter.scale", module)
-//   .addDecorator(getChartDecorator({ scale: { y: "log" }, domainPadding: 25 }))
-//   .add("log scale", () => <VictoryScatter data={getLogData(7)} />);
-
-// storiesOf("VictoryScatter.polar", module).add("Polar Scatter", () => (
-//   <VictoryScatter polar theme={VictoryTheme.material} data={getData(7)} />
-// ));
-// storiesOf("VictoryScatter.polar", module)
-//   .addDecorator(getPolarChartDecorator())
-//   .add("Polar Scatter with chart", () => <VictoryScatter data={getData(7)} />)
-//   .add("Polar Scatter with categorical data", () => (
-//     <VictoryScatter
-//       data={[
-//         { x: "Cat", y: 62 },
-//         { x: "Dog", y: 91 },
-//         { x: "Fish", y: 55 },
-//         { x: "Bird", y: 55 },
-//         { x: "Frog", y: 75 }
-//       ]}
-//     />
-//   ))
-//   .add("Polar stacked Scatter", () => (
-//     <VictoryStack colorScale="qualitative">
-//       <VictoryScatter data={getData(7)} />
-//       <VictoryScatter data={getData(7, "seed-1")} />
-//       <VictoryScatter data={getData(7, "seed-2")} />
-//     </VictoryStack>
-//   ));
-// storiesOf("VictoryScatter.polar", module)
-//   .addDecorator(getPolarChartDecorator({ innerRadius: 50 }))
-//   .add("Polar Scatter with innerRadius", () => <VictoryScatter data={getData(7)} />)
-//   .add("Polar stacked Scatter with innerRadius", () => (
-//     <VictoryStack colorScale="qualitative">
-//       <VictoryScatter data={getData(7)} />
-//       <VictoryScatter data={getData(7, "seed-1")} />
-//       <VictoryScatter data={getData(7, "seed-2")} />
-//     </VictoryStack>
-//   ));
+export const Polar = () => {
+  return (
+    <div style={containerStyle}>
+      <VictoryChart polar {...defaultChartProps}>
+        <VictoryScatter data={getData(7)} />
+      </VictoryChart>
+      <VictoryChart polar innerRadius={50} {...defaultChartProps}>
+        <VictoryScatter data={getData(7)} />
+      </VictoryChart>
+      <VictoryChart polar {...defaultChartProps} minDomain={{ y: 1 }}>
+        <VictoryScatter
+          data={[
+            { x: "Cat", y: 62 },
+            { x: "Dog", y: 91 },
+            { x: "Fish", y: 55 },
+            { x: "Bird", y: 55 },
+            { x: "Frog", y: 75 }
+          ]}
+        />
+      </VictoryChart>
+      <VictoryChart polar innerRadius={50} {...defaultChartProps}>
+        <VictoryScatter
+          data={[
+            { x: "Cat", y: 62 },
+            { x: "Dog", y: 91 },
+            { x: "Fish", y: 55 },
+            { x: "Bird", y: 55 },
+            { x: "Frog", y: 75 }
+          ]}
+        />
+      </VictoryChart>
+      <VictoryChart polar {...defaultChartProps}>
+        <VictoryStack>
+          <VictoryScatter data={getData(5)} />
+          <VictoryScatter data={getData(5, "seed-1")} />
+          <VictoryScatter data={getData(5, "seed-2")} />
+        </VictoryStack>
+      </VictoryChart>
+      <VictoryChart polar innerRadius={50} {...defaultChartProps}>
+        <VictoryStack>
+          <VictoryScatter data={getData(5)} />
+          <VictoryScatter data={getData(5, "seed-1")} />
+          <VictoryScatter data={getData(5, "seed-2")} />
+        </VictoryStack>
+      </VictoryChart>
+    </div>
+  );
+};
