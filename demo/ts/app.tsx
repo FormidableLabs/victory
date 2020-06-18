@@ -18,6 +18,7 @@ import GroupDemo from "./components/group-demo";
 import HistogramDemo from "./components/victory-histogram-demo";
 import HorizontalDemo from "./components/horizontal-demo";
 import ImmutableDemo from "./components/immutable-demo";
+import LabelDemo from "./components/victory-label-demo";
 import LegendDemo from "./components/victory-legend-demo";
 import LineDemo from "./components/victory-line-demo";
 import PieDemo from "./components/victory-pie-demo";
@@ -50,6 +51,7 @@ const MAP = {
   "/error-bar": { component: ErrorBarDemo, name: "ErrorBarDemo" },
   "/events-demo": { component: EventsDemo, name: "EventsDemo" },
   "/immutable": { component: ImmutableDemo, name: "ImmutableDemo" },
+  "/label": { component: LabelDemo, name: "LabelDemo" },
   "/legend": { component: LegendDemo, name: "LegendDemo" },
   "/line": { component: LineDemo, name: "LineDemo" },
   "/pie": { component: PieDemo, name: "PieDemo" },

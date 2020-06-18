@@ -1,5 +1,19 @@
 # Victory Changelog
 
+## 34.3.11 (2020-06-09)
+
+- [#1605](https://github.com/FormidableLabs/victory/pull/1605) - Fixes padding for axes with non-standard orientations. Thanks @glvnsky!
+
+## 34.3.10 (2020-06-07)
+
+- [#1604](https://github.com/FormidableLabs/victory/pull/1604) - Fixes offsets for groups of stacked bars. Thanks @cneltyn!
+
+- [#1599](https://github.com/FormidableLabs/victory/pull/1599) - Fixes a bug causing incorrect cursor behavior `onMouseLeave`. Thanks @NgoKnows!
+
+## 34.3.9 (2020-05-30)
+
+- [#1592](https://github.com/FormidableLabs/victory/pull/1592) - Cache `sharedEvents` to improve performance in evented containers. Thanks @NgoKnows!
+
 ## 34.3.8 (2020-05-26)
 
 - [#1588](https://github.com/FormidableLabs/victory/pull/1588) - Improve perfomance by reducing string map calculations. Thanks @NgoKnows!
