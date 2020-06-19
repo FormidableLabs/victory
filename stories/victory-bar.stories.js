@@ -884,11 +884,7 @@ export const Regressions = () => {
         </VictoryGroup>
       </VictoryChart>
       <VictoryChart style={parentStyle}>
-        <VictoryGroup
-          offset={20}
-          style={{ data: { width: 15 } }}
-          labels={({ datum }) => datum.x}
-        >
+        <VictoryGroup offset={20} style={{ data: { width: 15 } }} labels={({ datum }) => datum.x}>
           <VictoryStack colorScale="red">
             <VictoryBar data={getData(4)} />
             <VictoryBar data={getData(4, "seed-1")} />

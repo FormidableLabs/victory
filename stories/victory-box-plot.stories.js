@@ -90,7 +90,7 @@ export const BoxWidth = () => {
         <VictoryBoxPlot data={getData(5)} boxWidth={35} />
       </VictoryChart>
       <VictoryChart {...defaultChartProps}>
-        <VictoryBoxPlot data={getData(5)} boxWidth={35} whiskerWidth={0}/>
+        <VictoryBoxPlot data={getData(5)} boxWidth={35} whiskerWidth={0} />
       </VictoryChart>
       <VictoryChart {...defaultChartProps}>
         <VictoryBoxPlot data={getData(5)} boxWidth={0} />

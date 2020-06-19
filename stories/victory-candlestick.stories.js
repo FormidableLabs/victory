@@ -109,10 +109,7 @@ export const WickStrokeWidth = () => {
   return (
     <div style={containerStyle}>
       <VictoryChart {...defaultChartProps}>
-        <VictoryCandlestick
-          data={getData(7)}
-          wickStrokeWidth={5}
-        />
+        <VictoryCandlestick data={getData(7)} wickStrokeWidth={5} />
       </VictoryChart>
       <VictoryChart {...defaultChartProps}>
         <VictoryCandlestick
@@ -127,7 +124,6 @@ export const WickStrokeWidth = () => {
     </div>
   );
 };
-
 
 export const Data = () => {
   return (

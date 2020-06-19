@@ -23,7 +23,6 @@ const getData = (num, symmetric, seed) => {
   });
 };
 
-
 const containerStyle = {
   display: "flex",
   flexDirection: "row",
@@ -131,10 +130,7 @@ export const Labels = () => {
   return (
     <div style={containerStyle}>
       <VictoryChart style={parentStyle} horizontal>
-        <VictoryErrorBar
-          data={getData(5)}
-          labels={({ datum }) => `x: ${datum.x}`}
-        />
+        <VictoryErrorBar data={getData(5)} labels={({ datum }) => `x: ${datum.x}`} />
       </VictoryChart>
       <VictoryChart style={parentStyle} horizontal>
         <VictoryErrorBar

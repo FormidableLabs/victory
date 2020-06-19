@@ -61,7 +61,7 @@ export const Axes = () => {
       </VictoryChart>
       <VictoryChart style={parentStyle}>
         <VictoryAxis />
-        <VictoryAxis orientation="top"/>
+        <VictoryAxis orientation="top" />
         <VictoryAxis dependentAxis />
         <VictoryAxis dependentAxis orientation="right" />
       </VictoryChart>
@@ -226,14 +226,21 @@ export const Style = () => {
       <VictoryChart
         style={{
           parent: {
-            border: "5px solid #000", margin: "2%", maxWidth: "40%", backgroundColor: "cyan"
+            border: "5px solid #000",
+            margin: "2%",
+            maxWidth: "40%",
+            backgroundColor: "cyan"
           }
         }}
       />
-      <VictoryChart polar
+      <VictoryChart
+        polar
         style={{
           parent: {
-            border: "5px solid #000", margin: "2%", maxWidth: "40%", backgroundColor: "cyan"
+            border: "5px solid #000",
+            margin: "2%",
+            maxWidth: "40%",
+            backgroundColor: "cyan"
           }
         }}
       >
@@ -242,15 +249,22 @@ export const Style = () => {
       <VictoryChart
         style={{
           parent: {
-            border: "5px solid #000", margin: "2%", maxWidth: "40%", backgroundColor: "cyan"
+            border: "5px solid #000",
+            margin: "2%",
+            maxWidth: "40%",
+            backgroundColor: "cyan"
           },
           background: { fill: "pink" }
         }}
       />
-      <VictoryChart polar
+      <VictoryChart
+        polar
         style={{
           parent: {
-            border: "5px solid #000", margin: "2%", maxWidth: "40%", backgroundColor: "cyan"
+            border: "5px solid #000",
+            margin: "2%",
+            maxWidth: "40%",
+            backgroundColor: "cyan"
           },
           background: { fill: "pink" }
         }}
@@ -261,7 +275,10 @@ export const Style = () => {
         horizontal
         style={{
           parent: {
-            border: "5px solid #000", margin: "2%", maxWidth: "40%", backgroundColor: "cyan"
+            border: "5px solid #000",
+            margin: "2%",
+            maxWidth: "40%",
+            backgroundColor: "cyan"
           },
           background: { fill: "pink" }
         }}
@@ -296,7 +313,10 @@ export const Style = () => {
         innerRadius={30}
         style={{
           parent: {
-            border: "5px solid #000", margin: "2%", maxWidth: "40%", backgroundColor: "cyan"
+            border: "5px solid #000",
+            margin: "2%",
+            maxWidth: "40%",
+            backgroundColor: "cyan"
           },
           background: { fill: "pink" }
         }}
@@ -335,7 +355,10 @@ export const Style = () => {
         domainPadding={{ x: 17 }}
         style={{
           parent: {
-            border: "5px solid #000", margin: "2%", maxWidth: "40%", backgroundColor: "cyan"
+            border: "5px solid #000",
+            margin: "2%",
+            maxWidth: "40%",
+            backgroundColor: "cyan"
           },
           background: { fill: "pink" }
         }}
@@ -369,7 +392,10 @@ export const Style = () => {
         domainPadding={{ y: 30 }}
         style={{
           parent: {
-            border: "5px solid #000", margin: "2%", maxWidth: "40%", backgroundColor: "cyan"
+            border: "5px solid #000",
+            margin: "2%",
+            maxWidth: "40%",
+            backgroundColor: "cyan"
           },
           background: { fill: "pink" }
         }}
@@ -410,16 +436,21 @@ export const Style = () => {
 export const Orientations = () => {
   return (
     <div style={containerStyle}>
-    <VictoryChart style={parentStyle} padding={{ left: 20, right: 30, top: 15, bottom: 40 }}>
-      <VictoryAxis tickValues={[1, 2, 3, 4, 5]} />
-      <VictoryAxis orientation="left" dependentAxis tickValues={[1, 2, 3, 4, 5, 6, 7, 8]} />
-      <VictoryAxis orientation="right" dependentAxis tickValues={[1, 2, 3, 4, 5, 6, 7, 8, 9]} />
-      <VictoryBar
-        style={{ data: { fill: "#c43a31" } }}
-        data={[{ x: 1, y: 1 }, { x: 2, y: 7 }, { x: 3, y: 4 }, { x: 4, y: 5 }, { x: 5, y: 2 }]}
-      />
-    </VictoryChart>
+      <VictoryChart style={parentStyle} padding={{ left: 20, right: 30, top: 15, bottom: 40 }}>
+        <VictoryAxis tickValues={[1, 2, 3, 4, 5]} />
+        <VictoryAxis orientation="left" dependentAxis tickValues={[1, 2, 3, 4, 5, 6, 7, 8]} />
+        <VictoryAxis orientation="right" dependentAxis tickValues={[1, 2, 3, 4, 5, 6, 7, 8, 9]} />
+        <VictoryBar
+          style={{ data: { fill: "#c43a31" } }}
+          data={[
+            { x: 1, y: 1 },
+            { x: 2, y: 7 },
+            { x: 3, y: 4 },
+            { x: 4, y: 5 },
+            { x: 5, y: 2 }
+          ]}
+        />
+      </VictoryChart>
     </div>
   );
 };
-

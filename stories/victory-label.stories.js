@@ -36,9 +36,7 @@ export default {
 export const DefaultRendering = () => {
   return (
     <div style={containerStyle}>
-      <VictoryScatter {...defaultScatterProps}
-        labelComponent={<VictoryLabel />}
-      />
+      <VictoryScatter {...defaultScatterProps} labelComponent={<VictoryLabel />} />
     </div>
   );
 };
@@ -46,23 +44,29 @@ export const DefaultRendering = () => {
 export const Positioning = () => {
   return (
     <div style={containerStyle}>
-      <VictoryScatter {...defaultScatterProps}
-        labelComponent={<VictoryLabel x={100} text="x = 100"/>}
+      <VictoryScatter
+        {...defaultScatterProps}
+        labelComponent={<VictoryLabel x={100} text="x = 100" />}
       />
-      <VictoryScatter {...defaultScatterProps}
-        labelComponent={<VictoryLabel y={100} text="y = 100"/>}
+      <VictoryScatter
+        {...defaultScatterProps}
+        labelComponent={<VictoryLabel y={100} text="y = 100" />}
       />
-      <VictoryScatter {...defaultScatterProps}
-        labelComponent={<VictoryLabel dx={50} text="dx = 50"/>}
+      <VictoryScatter
+        {...defaultScatterProps}
+        labelComponent={<VictoryLabel dx={50} text="dx = 50" />}
       />
-      <VictoryScatter {...defaultScatterProps}
-        labelComponent={<VictoryLabel dy={50} text="dy = 50"/>}
+      <VictoryScatter
+        {...defaultScatterProps}
+        labelComponent={<VictoryLabel dy={50} text="dy = 50" />}
       />
-      <VictoryScatter {...defaultScatterProps}
-        labelComponent={<VictoryLabel dx={({ datum }) => datum.x + 50} text="dx function"/>}
+      <VictoryScatter
+        {...defaultScatterProps}
+        labelComponent={<VictoryLabel dx={({ datum }) => datum.x + 50} text="dx function" />}
       />
-      <VictoryScatter {...defaultScatterProps}
-        labelComponent={<VictoryLabel dy={({ datum }) => datum.x - 20} text="dy function"/>}
+      <VictoryScatter
+        {...defaultScatterProps}
+        labelComponent={<VictoryLabel dy={({ datum }) => datum.x - 20} text="dy function" />}
       />
     </div>
   );
@@ -71,7 +75,8 @@ export const Positioning = () => {
 export const Anchors = () => {
   return (
     <div style={containerStyle}>
-      <VictoryScatter {...defaultScatterProps}
+      <VictoryScatter
+        {...defaultScatterProps}
         labelComponent={
           <VictoryLabel
             textAnchor="end"
@@ -81,7 +86,8 @@ export const Anchors = () => {
           />
         }
       />
-      <VictoryScatter {...defaultScatterProps}
+      <VictoryScatter
+        {...defaultScatterProps}
         labelComponent={
           <VictoryLabel
             textAnchor="end"
@@ -91,7 +97,8 @@ export const Anchors = () => {
           />
         }
       />
-      <VictoryScatter {...defaultScatterProps}
+      <VictoryScatter
+        {...defaultScatterProps}
         labelComponent={
           <VictoryLabel
             textAnchor="end"
@@ -101,7 +108,8 @@ export const Anchors = () => {
           />
         }
       />
-      <VictoryScatter {...defaultScatterProps}
+      <VictoryScatter
+        {...defaultScatterProps}
         labelComponent={
           <VictoryLabel
             textAnchor="middle"
@@ -111,7 +119,8 @@ export const Anchors = () => {
           />
         }
       />
-      <VictoryScatter {...defaultScatterProps}
+      <VictoryScatter
+        {...defaultScatterProps}
         labelComponent={
           <VictoryLabel
             textAnchor="middle"
@@ -121,7 +130,8 @@ export const Anchors = () => {
           />
         }
       />
-      <VictoryScatter {...defaultScatterProps}
+      <VictoryScatter
+        {...defaultScatterProps}
         labelComponent={
           <VictoryLabel
             textAnchor="middle"
@@ -131,7 +141,8 @@ export const Anchors = () => {
           />
         }
       />
-      <VictoryScatter {...defaultScatterProps}
+      <VictoryScatter
+        {...defaultScatterProps}
         labelComponent={
           <VictoryLabel
             textAnchor="start"
@@ -141,7 +152,8 @@ export const Anchors = () => {
           />
         }
       />
-      <VictoryScatter {...defaultScatterProps}
+      <VictoryScatter
+        {...defaultScatterProps}
         labelComponent={
           <VictoryLabel
             textAnchor="start"
@@ -151,7 +163,8 @@ export const Anchors = () => {
           />
         }
       />
-      <VictoryScatter {...defaultScatterProps}
+      <VictoryScatter
+        {...defaultScatterProps}
         labelComponent={
           <VictoryLabel
             textAnchor="end"
@@ -168,7 +181,8 @@ export const Anchors = () => {
 export const Styles = () => {
   return (
     <div style={containerStyle}>
-      <VictoryScatter {...defaultScatterProps}
+      <VictoryScatter
+        {...defaultScatterProps}
         labelComponent={
           <VictoryLabel
             style={{ fontSize: 20 }}
@@ -177,7 +191,8 @@ export const Styles = () => {
           />
         }
       />
-      <VictoryScatter {...defaultScatterProps}
+      <VictoryScatter
+        {...defaultScatterProps}
         labelComponent={
           <VictoryLabel
             style={[{ fontSize: 20 }]}
@@ -186,7 +201,8 @@ export const Styles = () => {
           />
         }
       />
-      <VictoryScatter {...defaultScatterProps}
+      <VictoryScatter
+        {...defaultScatterProps}
         labelComponent={
           <VictoryLabel
             style={[{ fontSize: 20 }, { fontSize: 18, fill: "red" }]}
@@ -195,7 +211,8 @@ export const Styles = () => {
           />
         }
       />
-      <VictoryScatter {...defaultScatterProps}
+      <VictoryScatter
+        {...defaultScatterProps}
         labelComponent={
           <VictoryLabel
             style={{ fontSize: 20 }}
@@ -204,7 +221,8 @@ export const Styles = () => {
           />
         }
       />
-      <VictoryScatter {...defaultScatterProps}
+      <VictoryScatter
+        {...defaultScatterProps}
         labelComponent={
           <VictoryLabel
             style={[{ fontSize: 20 }]}
@@ -213,7 +231,8 @@ export const Styles = () => {
           />
         }
       />
-      <VictoryScatter {...defaultScatterProps}
+      <VictoryScatter
+        {...defaultScatterProps}
         labelComponent={
           <VictoryLabel
             style={[{ fontSize: 20 }, { fontSize: 12, fill: "red" }]}
@@ -222,60 +241,66 @@ export const Styles = () => {
           />
         }
       />
-      <VictoryScatter {...defaultScatterProps}
+      <VictoryScatter
+        {...defaultScatterProps}
         labelComponent={
           <VictoryLabel
-            style={{ fontSize: ({ datum }) => datum.y === 0 ? 12 : 15 }}
+            style={{ fontSize: ({ datum }) => (datum.y === 0 ? 12 : 15) }}
             text={["object", "with", "functions"]}
             backgroundStyle={{ stroke: "blue", fill: "none" }}
           />
         }
       />
-      <VictoryScatter {...defaultScatterProps}
+      <VictoryScatter
+        {...defaultScatterProps}
         labelComponent={
           <VictoryLabel
-            style={[{ fontSize: ({ datum }) => datum.y === 0 ? 12 : 15 }]}
+            style={[{ fontSize: ({ datum }) => (datum.y === 0 ? 12 : 15) }]}
             text={["single array", "with", "functions"]}
             backgroundStyle={{ stroke: "blue", fill: "none" }}
           />
         }
       />
-      <VictoryScatter {...defaultScatterProps}
+      <VictoryScatter
+        {...defaultScatterProps}
         labelComponent={
           <VictoryLabel
             style={[
-              { fontSize: ({ datum }) => datum.y === 0 ? 12 : 15 },
-              { fill: ({ datum }) => datum.y === 0 ? "red" : "blue" }
+              { fontSize: ({ datum }) => (datum.y === 0 ? 12 : 15) },
+              { fill: ({ datum }) => (datum.y === 0 ? "red" : "blue") }
             ]}
             text={["multi array", "with", "functions"]}
             backgroundStyle={{ stroke: "blue", fill: "none" }}
           />
         }
       />
-      <VictoryScatter {...defaultScatterProps}
+      <VictoryScatter
+        {...defaultScatterProps}
         labelComponent={
           <VictoryLabel
-            style={{ fontSize: ({ datum }) => datum.y === 0 ? 12 : 15 }}
+            style={{ fontSize: ({ datum }) => (datum.y === 0 ? 12 : 15) }}
             text={["object", "with", "functions"]}
             backgroundStyle={[{ stroke: "blue", fill: "none" }]}
           />
         }
       />
-      <VictoryScatter {...defaultScatterProps}
+      <VictoryScatter
+        {...defaultScatterProps}
         labelComponent={
           <VictoryLabel
-            style={[{ fontSize: ({ datum }) => datum.y === 0 ? 12 : 15 }]}
+            style={[{ fontSize: ({ datum }) => (datum.y === 0 ? 12 : 15) }]}
             text={["single array", "with", "functions"]}
             backgroundStyle={[{ stroke: "blue", fill: "none" }]}
           />
         }
       />
-      <VictoryScatter {...defaultScatterProps}
+      <VictoryScatter
+        {...defaultScatterProps}
         labelComponent={
           <VictoryLabel
             style={[
-              { fontSize: ({ datum }) => datum.y === 0 ? 12 : 15 },
-              { fill: ({ datum }) => datum.y === 0 ? "red" : "blue" }
+              { fontSize: ({ datum }) => (datum.y === 0 ? 12 : 15) },
+              { fill: ({ datum }) => (datum.y === 0 ? "red" : "blue") }
             ]}
             text={["multi array", "with", "functions"]}
             backgroundStyle={[{ stroke: "blue", fill: "none" }]}
@@ -289,7 +314,8 @@ export const Styles = () => {
 export const LineHeight = () => {
   return (
     <div style={containerStyle}>
-      <VictoryScatter {...defaultScatterProps}
+      <VictoryScatter
+        {...defaultScatterProps}
         labelComponent={
           <VictoryLabel
             lineHeight={2}
@@ -298,7 +324,8 @@ export const LineHeight = () => {
           />
         }
       />
-      <VictoryScatter {...defaultScatterProps}
+      <VictoryScatter
+        {...defaultScatterProps}
         labelComponent={
           <VictoryLabel
             lineHeight={[2]}
@@ -307,7 +334,8 @@ export const LineHeight = () => {
           />
         }
       />
-      <VictoryScatter {...defaultScatterProps}
+      <VictoryScatter
+        {...defaultScatterProps}
         labelComponent={
           <VictoryLabel
             lineHeight={[2, 1, 3]}
@@ -316,7 +344,8 @@ export const LineHeight = () => {
           />
         }
       />
-      <VictoryScatter {...defaultScatterProps}
+      <VictoryScatter
+        {...defaultScatterProps}
         labelComponent={
           <VictoryLabel
             lineHeight={2}
@@ -325,7 +354,8 @@ export const LineHeight = () => {
           />
         }
       />
-      <VictoryScatter {...defaultScatterProps}
+      <VictoryScatter
+        {...defaultScatterProps}
         labelComponent={
           <VictoryLabel
             lineHeight={[2]}
@@ -334,7 +364,8 @@ export const LineHeight = () => {
           />
         }
       />
-      <VictoryScatter {...defaultScatterProps}
+      <VictoryScatter
+        {...defaultScatterProps}
         labelComponent={
           <VictoryLabel
             lineHeight={[2, 1, 3]}
@@ -350,7 +381,8 @@ export const LineHeight = () => {
 export const Angles = () => {
   return (
     <div style={containerStyle}>
-      <VictoryScatter {...defaultScatterProps}
+      <VictoryScatter
+        {...defaultScatterProps}
         labelComponent={
           <VictoryLabel
             angle={45}
@@ -360,7 +392,8 @@ export const Angles = () => {
           />
         }
       />
-      <VictoryScatter {...defaultScatterProps}
+      <VictoryScatter
+        {...defaultScatterProps}
         labelComponent={
           <VictoryLabel
             angle={45}
@@ -370,7 +403,8 @@ export const Angles = () => {
           />
         }
       />
-      <VictoryScatter {...defaultScatterProps}
+      <VictoryScatter
+        {...defaultScatterProps}
         labelComponent={
           <VictoryLabel
             angle={45}
@@ -381,7 +415,8 @@ export const Angles = () => {
           />
         }
       />
-      <VictoryScatter {...defaultScatterProps}
+      <VictoryScatter
+        {...defaultScatterProps}
         labelComponent={
           <VictoryLabel
             angle={-45}
@@ -391,7 +426,8 @@ export const Angles = () => {
           />
         }
       />
-      <VictoryScatter {...defaultScatterProps}
+      <VictoryScatter
+        {...defaultScatterProps}
         labelComponent={
           <VictoryLabel
             angle={-45}
@@ -401,7 +437,8 @@ export const Angles = () => {
           />
         }
       />
-      <VictoryScatter {...defaultScatterProps}
+      <VictoryScatter
+        {...defaultScatterProps}
         labelComponent={
           <VictoryLabel
             angle={-45}
@@ -419,7 +456,8 @@ export const Angles = () => {
 export const BackgroundStyles = () => {
   return (
     <div style={containerStyle}>
-      <VictoryScatter {...defaultScatterProps}
+      <VictoryScatter
+        {...defaultScatterProps}
         labelComponent={
           <VictoryLabel
             backgroundStyle={[
@@ -439,7 +477,8 @@ export const BackgroundStyles = () => {
           />
         }
       />
-      <VictoryScatter {...defaultScatterProps}
+      <VictoryScatter
+        {...defaultScatterProps}
         labelComponent={
           <VictoryLabel
             backgroundStyle={[
@@ -458,7 +497,8 @@ export const BackgroundStyles = () => {
           />
         }
       />
-      <VictoryScatter {...defaultScatterProps}
+      <VictoryScatter
+        {...defaultScatterProps}
         labelComponent={
           <VictoryLabel
             angle={70}
@@ -484,7 +524,8 @@ export const BackgroundStyles = () => {
 export const BackgroundPadding = () => {
   return (
     <div style={containerStyle}>
-      <VictoryScatter {...defaultScatterProps}
+      <VictoryScatter
+        {...defaultScatterProps}
         labelComponent={
           <VictoryLabel
             backgroundStyle={[
@@ -503,7 +544,8 @@ export const BackgroundPadding = () => {
           />
         }
       />
-      <VictoryScatter {...defaultScatterProps}
+      <VictoryScatter
+        {...defaultScatterProps}
         labelComponent={
           <VictoryLabel
             backgroundStyle={[
@@ -522,7 +564,8 @@ export const BackgroundPadding = () => {
           />
         }
       />
-      <VictoryScatter {...defaultScatterProps}
+      <VictoryScatter
+        {...defaultScatterProps}
         labelComponent={
           <VictoryLabel
             backgroundStyle={[
@@ -546,7 +589,8 @@ export const BackgroundPadding = () => {
           />
         }
       />
-      <VictoryScatter {...defaultScatterProps}
+      <VictoryScatter
+        {...defaultScatterProps}
         labelComponent={
           <VictoryLabel
             angle={45}
@@ -566,7 +610,8 @@ export const BackgroundPadding = () => {
           />
         }
       />
-      <VictoryScatter {...defaultScatterProps}
+      <VictoryScatter
+        {...defaultScatterProps}
         labelComponent={
           <VictoryLabel
             angle={45}
@@ -586,7 +631,8 @@ export const BackgroundPadding = () => {
           />
         }
       />
-      <VictoryScatter {...defaultScatterProps}
+      <VictoryScatter
+        {...defaultScatterProps}
         labelComponent={
           <VictoryLabel
             angle={45}
@@ -614,4 +660,3 @@ export const BackgroundPadding = () => {
     </div>
   );
 };
-

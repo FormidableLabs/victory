@@ -7,7 +7,6 @@ import { VictoryTooltip } from "../packages/victory-tooltip/src/index";
 import { VictoryTheme, Helpers } from "../packages/victory-core/src/index";
 import { fromJS } from "immutable";
 
-
 const containerStyle = {
   display: "flex",
   flexDirection: "row",
@@ -40,11 +39,11 @@ export const Data = () => {
       <VictoryPie
         style={parentStyle}
         data={[
-         { x: "Cat", y: 62 },
-         { x: "Dog", y: 91 },
-         { x: "Fish", y: 55 },
-         { x: "Bird", y: 55 }
-       ]}
+          { x: "Cat", y: 62 },
+          { x: "Dog", y: 91 },
+          { x: "Fish", y: 55 },
+          { x: "Bird", y: 55 }
+        ]}
       />
       <VictoryPie
         style={parentStyle}
@@ -73,10 +72,7 @@ export const Data = () => {
 export const Radius = () => {
   return (
     <div style={containerStyle}>
-      <VictoryPie
-        style={parentStyle}
-        radius={100}
-      />
+      <VictoryPie style={parentStyle} radius={100} />
       <VictoryPie
         style={parentStyle}
         radius={({ datum }) => datum.radius}
@@ -124,10 +120,7 @@ export const Radius = () => {
 export const InnerRadius = () => {
   return (
     <div style={containerStyle}>
-      <VictoryPie
-        style={parentStyle}
-        innerRadius={100}
-      />
+      <VictoryPie style={parentStyle} innerRadius={100} />
       <VictoryPie
         style={parentStyle}
         radius={({ datum }) => datum.radius}
@@ -153,7 +146,7 @@ export const InnerRadius = () => {
       />
       <VictoryPie
         style={parentStyle}
-        innerRadius={({ datum }) => datum.radius }
+        innerRadius={({ datum }) => datum.radius}
         data={[
           { x: 1, y: 1, radius: 50 },
           { x: 2, y: 3 },
@@ -169,15 +162,8 @@ export const InnerRadius = () => {
 export const CornerRadius = () => {
   return (
     <div style={containerStyle}>
-      <VictoryPie
-        style={parentStyle}
-        cornerRadius={10}
-      />
-      <VictoryPie
-        style={parentStyle}
-        cornerRadius={10}
-        innerRadius={100}
-      />
+      <VictoryPie style={parentStyle} cornerRadius={10} />
+      <VictoryPie style={parentStyle} cornerRadius={10} innerRadius={100} />
       <VictoryPie
         style={parentStyle}
         cornerRadius={({ datum }) => datum.x * 5}
@@ -209,15 +195,8 @@ export const CornerRadius = () => {
 export const PadAngle = () => {
   return (
     <div style={containerStyle}>
-      <VictoryPie
-        style={parentStyle}
-        padAngle={6}
-      />
-      <VictoryPie
-        style={parentStyle}
-        padAngle={6}
-        innerRadius={100}
-      />
+      <VictoryPie style={parentStyle} padAngle={6} />
+      <VictoryPie style={parentStyle} padAngle={6} innerRadius={100} />
       <VictoryPie
         style={parentStyle}
         padAngle={({ datum }) => datum.x * 2}
@@ -249,14 +228,8 @@ export const PadAngle = () => {
 export const Labels = () => {
   return (
     <div style={containerStyle}>
-      <VictoryPie
-        style={parentStyle}
-        labels={["one", "two", "three", "four"]}
-      />
-      <VictoryPie
-        style={parentStyle}
-        labels={({ index }) => `#${index}`}
-      />
+      <VictoryPie style={parentStyle} labels={["one", "two", "three", "four"]} />
+      <VictoryPie style={parentStyle} labels={({ index }) => `#${index}`} />
       <VictoryPie
         style={parentStyle}
         labels={({ index }) => `#${index}`}
@@ -270,7 +243,7 @@ export const Labels = () => {
       <VictoryPie
         style={parentStyle}
         labels={({ index }) => `#${index}`}
-        labelPosition={({ index }) => index ? undefined : "startAngle"}
+        labelPosition={({ index }) => (index ? undefined : "startAngle")}
       />
     </div>
   );
@@ -284,20 +257,14 @@ export const Tooltips = () => {
         radius={100}
         labels={["one", "two", "three labels", "four"]}
         labelComponent={<VictoryTooltip active />}
-
       />
-      <VictoryPie
-        style={parentStyle}
-        radius={100}
-        labelComponent={<VictoryTooltip active />}
-      />
+      <VictoryPie style={parentStyle} radius={100} labelComponent={<VictoryTooltip active />} />
       <VictoryPie
         style={parentStyle}
         radius={100}
         labels={({ index }) => `#${index}`}
         labelPosition="startAngle"
         labelComponent={<VictoryTooltip active />}
-
       />
       <VictoryPie
         style={parentStyle}
@@ -305,13 +272,12 @@ export const Tooltips = () => {
         labels={({ index }) => `#${index}`}
         labelPosition="endAngle"
         labelComponent={<VictoryTooltip active />}
-
       />
       <VictoryPie
         style={parentStyle}
         radius={100}
         labels={({ index }) => `#${index}`}
-        labelPosition={({ index }) => index ? undefined : "startAngle"}
+        labelPosition={({ index }) => (index ? undefined : "startAngle")}
         labelComponent={<VictoryTooltip active />}
       />
     </div>
@@ -321,13 +287,10 @@ export const Tooltips = () => {
 export const LabelRadius = () => {
   return (
     <div style={containerStyle}>
+      <VictoryPie style={{ ...parentStyle, labels: { fill: "magenta" } }} labelRadius={100} />
       <VictoryPie
-        style={{...parentStyle, labels: { fill: "magenta" } }}
-        labelRadius={100}
-      />
-      <VictoryPie
-        style={{...parentStyle, labels: { fill: "magenta" } }}
-        labelRadius={({ datum }) => datum.y }
+        style={{ ...parentStyle, labels: { fill: "magenta" } }}
+        labelRadius={({ datum }) => datum.y}
         radius={80}
         innerRadius={100}
         data={[
@@ -339,8 +302,8 @@ export const LabelRadius = () => {
         ]}
       />
       <VictoryPie
-        style={{...parentStyle, labels: { fill: "magenta" } }}
-        labelRadius={({ datum }) => datum.r }
+        style={{ ...parentStyle, labels: { fill: "magenta" } }}
+        labelRadius={({ datum }) => datum.r}
         innerRadius={100}
         data={[
           { x: 1, y: 100 },
@@ -351,8 +314,8 @@ export const LabelRadius = () => {
         ]}
       />
       <VictoryPie
-        style={{...parentStyle, labels: { fill: "magenta" } }}
-        labelRadius={({ datum }) => datum.r }
+        style={{ ...parentStyle, labels: { fill: "magenta" } }}
+        labelRadius={({ datum }) => datum.r}
         innerRadius={100}
         labelPosition="startAngle"
         data={[
@@ -379,7 +342,7 @@ export const Styles = () => {
             strokeWidth: 3,
             fillOpacity: 0.3
           }
-       }}
+        }}
       />
       <VictoryPie
         colorScale="cool"
@@ -389,19 +352,19 @@ export const Styles = () => {
           data: {
             fillOpacity: 0.3
           }
-       }}
+        }}
       />
       <VictoryPie
         style={{
           ...parentStyle,
           labels: {
-            fontSize: ({ index }) => index === 4 ? 25 : 15
+            fontSize: ({ index }) => (index === 4 ? 25 : 15)
           },
           data: {
-            stroke: ({ index }) => index === 4 ? "red" : undefined,
+            stroke: ({ index }) => (index === 4 ? "red" : undefined),
             strokeWidth: 3
           }
-       }}
+        }}
       />
       <VictoryPie
         style={{
@@ -432,11 +395,7 @@ export const Styles = () => {
 export const StartAndEndAngles = () => {
   return (
     <div style={containerStyle}>
-      <VictoryPie
-        style={parentStyle}
-        endAngle={90}
-        startAngle={-90}
-      />
+      <VictoryPie style={parentStyle} endAngle={90} startAngle={-90} />
       <VictoryPie
         style={parentStyle}
         endAngle={90}
@@ -463,7 +422,7 @@ export const StartAndEndAngles = () => {
         dataComponent={
           <Slice
             sliceStartAngle={-90}
-            sliceEndAngle={({ slice }) => Helpers.radiansToDegrees(slice.endAngle) - 90 }
+            sliceEndAngle={({ slice }) => Helpers.radiansToDegrees(slice.endAngle) - 90}
           />
         }
         labels={() => null}
@@ -485,19 +444,19 @@ export const Origin = () => {
   return (
     <div style={containerStyle}>
       <VictoryPie
-        style={{...parentStyle, labels: { fill: "magenta" } }}
+        style={{ ...parentStyle, labels: { fill: "magenta" } }}
         origin={{ x: 150, y: 150 }}
         labelRadius={100}
       />
       <VictoryPie
-        style={{...parentStyle, labels: { fill: "magenta" } }}
+        style={{ ...parentStyle, labels: { fill: "magenta" } }}
         origin={{ x: 150, y: 150 }}
         labelRadius={100}
         endAngle={90}
         startAngle={-90}
       />
       <VictoryPie
-        style={{...parentStyle, labels: { fill: "magenta" } }}
+        style={{ ...parentStyle, labels: { fill: "magenta" } }}
         origin={{ y: 0 }}
         labelRadius={100}
         startAngle={-270}
@@ -507,15 +466,8 @@ export const Origin = () => {
   );
 };
 
-
-
-
-
-
 //   .add("as only a portion of a pie", () => <VictoryPie endAngle={90} startAngle={-90} />)
 //   .add("with space between slices", () => (
 //     <VictoryPie endAngle={90} innerRadius={140} padAngle={5} startAngle={-90} />
 //   ))
 //   .add("with an origin prop", () => <VictoryPie radius={100} origin={{ x: 150, y: 150 }} />)
-
-

@@ -81,25 +81,25 @@ export const Data = () => {
   });
 
   const oneMonth = timeData.map(({ x }) => {
-      const newDate = new Date(x);
-      newDate.setMonth(4);
-      newDate.setFullYear(2020);
-      return { x: newDate };
-    });
+    const newDate = new Date(x);
+    newDate.setMonth(4);
+    newDate.setFullYear(2020);
+    return { x: newDate };
+  });
 
   return (
     <div style={containerStyle}>
       <VictoryChart style={parentStyle} horizontal>
-        <VictoryHistogram data={timeData}/>
+        <VictoryHistogram data={timeData} />
       </VictoryChart>
       <VictoryChart style={parentStyle}>
-        <VictoryHistogram data={oneYear}/>
+        <VictoryHistogram data={oneYear} />
       </VictoryChart>
       <VictoryChart style={parentStyle}>
-        <VictoryHistogram data={fourMonths}/>
+        <VictoryHistogram data={fourMonths} />
       </VictoryChart>
       <VictoryChart style={parentStyle} horizontal>
-        <VictoryHistogram data={oneMonth}/>
+        <VictoryHistogram data={oneMonth} />
       </VictoryChart>
       <VictoryChart style={parentStyle}>
         <VictoryHistogram data={data.map(({ x }) => ({ value: x }))} x={({ value }) => value} />
@@ -281,7 +281,6 @@ export const CornerRadius = () => {
       <VictoryChart style={parentStyle} horizontal>
         <VictoryHistogram data={data} cornerRadius={{ topLeft: 15, bottomRight: 22 }} />
       </VictoryChart>
-
     </div>
   );
 };
@@ -335,18 +334,10 @@ export const Labels = () => {
         />
       </VictoryChart>
       <VictoryChart style={parentStyle}>
-        <VictoryHistogram
-          data={data}
-          bins={5}
-          labels={["", "", "three", "four", 5, "six"]}
-        />
+        <VictoryHistogram data={data} bins={5} labels={["", "", "three", "four", 5, "six"]} />
       </VictoryChart>
       <VictoryChart style={parentStyle} horizontal>
-        <VictoryHistogram
-          data={data}
-          bins={5}
-          labels={["", "", "three", "four", 5, "six"]}
-        />
+        <VictoryHistogram data={data} bins={5} labels={["", "", "three", "four", 5, "six"]} />
       </VictoryChart>
       <VictoryChart style={parentStyle}>
         <VictoryHistogram
@@ -430,7 +421,6 @@ export const MixedCharts = () => {
           ]}
         />
       </VictoryChart>
-
     </div>
   );
 };

@@ -162,7 +162,7 @@ export const DataAccessors = () => {
         />
       </VictoryChart>
       <VictoryChart {...defaultChartProps}>
-        <VictoryLine data={getData(8)}/>
+        <VictoryLine data={getData(8)} />
       </VictoryChart>
       <VictoryChart polar {...defaultChartProps}>
         <VictoryLine data={getData(8)} />
@@ -282,7 +282,6 @@ export const Tooltips = () => {
     </div>
   );
 };
-
 
 export const Styles = () => {
   return (

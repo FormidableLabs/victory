@@ -21,7 +21,6 @@ const SYMBOLS = [
   "triangleUp"
 ];
 
-
 const containerStyle = {
   display: "flex",
   flexDirection: "row",
@@ -91,21 +90,13 @@ export const Theme = () => {
 };
 
 export const Symbols = () => {
-  return SYMBOLS.map(symbol => (
+  return SYMBOLS.map((symbol) => (
     <div style={containerStyle} key={symbol}>
       <VictoryChart {...defaultChartProps}>
-        <VictoryScatter
-          data={getMixedData(8)}
-          symbol={symbol} size={10}
-          labels={() => symbol}
-        />
+        <VictoryScatter data={getMixedData(8)} symbol={symbol} size={10} labels={() => symbol} />
       </VictoryChart>
       <VictoryChart {...defaultChartProps} polar>
-        <VictoryScatter
-          data={getMixedData(8)}
-          symbol={symbol} size={10}
-          labels={() => symbol}
-        />
+        <VictoryScatter data={getMixedData(8)} symbol={symbol} size={10} labels={() => symbol} />
       </VictoryChart>
     </div>
   ));
@@ -170,7 +161,12 @@ export const BubbleCharts = () => {
         <VictoryScatter data={getData(10)} bubbleProperty="x" minBubbleSize={10} />
       </VictoryChart>
       <VictoryChart {...defaultChartProps} domainPadding={25}>
-        <VictoryScatter data={getData(10)} bubbleProperty="x" minBubbleSize={8} maxBubbleSize={20} />
+        <VictoryScatter
+          data={getData(10)}
+          bubbleProperty="x"
+          minBubbleSize={8}
+          maxBubbleSize={20}
+        />
       </VictoryChart>
       <VictoryChart {...defaultChartProps} polar>
         <VictoryScatter data={getData(10)} bubbleProperty="x" maxBubbleSize={25} />
@@ -263,7 +259,6 @@ export const DataAccessors = () => {
     </div>
   );
 };
-
 
 export const Labels = () => {
   return (

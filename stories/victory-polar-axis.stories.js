@@ -63,21 +63,25 @@ export const TickValues = () => {
   return (
     <div style={containerStyle}>
       <VictoryPolarAxis {...defaultAxisProps} tickValues={getValues(5)} />
-      <VictoryPolarAxis {...defaultAxisProps}
+      <VictoryPolarAxis
+        {...defaultAxisProps}
         dependentAxis
         axisAngle={45}
         tickValues={getValues(5)}
       />
       <VictoryPolarAxis {...defaultAxisProps} tickValues={getRandomValues(5)} />
-      <VictoryPolarAxis {...defaultAxisProps}
+      <VictoryPolarAxis
+        {...defaultAxisProps}
         dependentAxis
         axisAngle={45}
         tickValues={getRandomValues(5)}
       />
-      <VictoryPolarAxis {...defaultAxisProps}
+      <VictoryPolarAxis
+        {...defaultAxisProps}
         tickValues={["one", "two", "three", "four", "five"]}
       />
-      <VictoryPolarAxis {...defaultAxisProps}
+      <VictoryPolarAxis
+        {...defaultAxisProps}
         dependentAxis
         axisAngle={45}
         tickValues={["one", "two", "three", "four", "five"]}
@@ -89,21 +93,25 @@ export const TickValues = () => {
 export const TickFormat = () => {
   return (
     <div style={containerStyle}>
-      <VictoryPolarAxis {...defaultAxisProps}
+      <VictoryPolarAxis
+        {...defaultAxisProps}
         tickValues={getValues(5)}
         tickFormat={["one", "two", "three", "four", "five"]}
       />
-      <VictoryPolarAxis {...defaultAxisProps}
+      <VictoryPolarAxis
+        {...defaultAxisProps}
         dependentAxis
         axisAngle={45}
         tickValues={getValues(5)}
         tickFormat={["one", "two", "three", "four", "five"]}
       />
-      <VictoryPolarAxis {...defaultAxisProps}
+      <VictoryPolarAxis
+        {...defaultAxisProps}
         tickValues={getValues(5)}
         tickFormat={(t) => `#${t}`}
       />
-      <VictoryPolarAxis {...defaultAxisProps}
+      <VictoryPolarAxis
+        {...defaultAxisProps}
         dependentAxis
         axisAngle={45}
         tickValues={getValues(5)}
@@ -119,25 +127,30 @@ export const Domain = () => {
       <VictoryPolarAxis {...defaultAxisProps} domain={[-10, 10]} />
       <VictoryPolarAxis {...defaultAxisProps} dependentAxis domain={[-10, 10]} />
       <VictoryPolarAxis {...defaultAxisProps} tickValues={getValues(5)} domain={[-10, 10]} />
-      <VictoryPolarAxis {...defaultAxisProps}
+      <VictoryPolarAxis
+        {...defaultAxisProps}
         dependentAxis
         tickValues={getValues(5)}
         domain={[-10, 10]}
       />
-      <VictoryPolarAxis {...defaultAxisProps}
+      <VictoryPolarAxis
+        {...defaultAxisProps}
         tickValues={[8, 9, 10, 11, 12, 13]}
         domain={[-10, 10]}
       />
-      <VictoryPolarAxis {...defaultAxisProps}
+      <VictoryPolarAxis
+        {...defaultAxisProps}
         dependentAxis
         tickValues={[8, 9, 10, 11, 12, 13]}
         domain={[-10, 10]}
       />
-      <VictoryPolarAxis {...defaultAxisProps}
+      <VictoryPolarAxis
+        {...defaultAxisProps}
         tickValues={["cat", "dog", "bird"]}
         domain={[-2, 2]}
       />
-      <VictoryPolarAxis {...defaultAxisProps}
+      <VictoryPolarAxis
+        {...defaultAxisProps}
         dependentAxis
         tickValues={["cat", "dog", "bird"]}
         domain={[-2, 2]}
@@ -149,23 +162,27 @@ export const Domain = () => {
 export const AxisAngle = () => {
   return (
     <div style={containerStyle}>
-      <VictoryPolarAxis {...defaultAxisProps}
+      <VictoryPolarAxis
+        {...defaultAxisProps}
         dependentAxis
         axisAngle={45}
         tickFormat={["one", "two", "three", "four", "five"]}
       />
-      <VictoryPolarAxis {...defaultAxisProps}
+      <VictoryPolarAxis
+        {...defaultAxisProps}
         dependentAxis
         axisAngle={315}
         tickFormat={["one", "two", "three", "four", "five"]}
       />
-      <VictoryPolarAxis {...defaultAxisProps}
+      <VictoryPolarAxis
+        {...defaultAxisProps}
         dependentAxis
         axisAngle={45}
         endAngle={180}
         tickFormat={["one", "two", "three", "four", "five"]}
       />
-      <VictoryPolarAxis {...defaultAxisProps}
+      <VictoryPolarAxis
+        {...defaultAxisProps}
         dependentAxis
         axisAngle={315}
         endAngle={180}
@@ -222,17 +239,23 @@ export const labelPlacement = () => {
   return (
     <div style={containerStyle}>
       <VictoryPolarAxis {...defaultAxisProps} labelPlacement="parallel" />
-      <VictoryPolarAxis {...defaultAxisProps} dependentAxis
+      <VictoryPolarAxis
+        {...defaultAxisProps}
+        dependentAxis
         axisAngle={45}
         labelPlacement="parallel"
       />
       <VictoryPolarAxis {...defaultAxisProps} labelPlacement="perpendicular" />
-      <VictoryPolarAxis {...defaultAxisProps} dependentAxis
+      <VictoryPolarAxis
+        {...defaultAxisProps}
+        dependentAxis
         axisAngle={45}
         labelPlacement="perpendicular"
       />
       <VictoryPolarAxis {...defaultAxisProps} labelPlacement="vertical" />
-      <VictoryPolarAxis {...defaultAxisProps} dependentAxis
+      <VictoryPolarAxis
+        {...defaultAxisProps}
+        dependentAxis
         axisAngle={45}
         labelPlacement="vertical"
       />
@@ -254,7 +277,8 @@ export const Style = () => {
           tickLabels: { fontSize: 15, padding: 5 }
         }}
       />
-      <VictoryPolarAxis dependentAxis
+      <VictoryPolarAxis
+        dependentAxis
         theme={VictoryTheme.material}
         style={{
           ...parentStyle,
@@ -272,20 +296,16 @@ export const Style = () => {
 export const Scale = () => {
   return (
     <div style={containerStyle}>
-      <VictoryPolarAxis {...defaultAxisProps}
-        tickValues={getTimeValues(5)}
-        scale="time"
-      />
-      <VictoryPolarAxis {...defaultAxisProps}
+      <VictoryPolarAxis {...defaultAxisProps} tickValues={getTimeValues(5)} scale="time" />
+      <VictoryPolarAxis
+        {...defaultAxisProps}
         dependentAxis
         tickValues={getTimeValues(5)}
         scale="time"
       />
-      <VictoryPolarAxis {...defaultAxisProps}
-        tickValues={[1, 5, 10, 50, 500, 10000]}
-        scale="log"
-      />
-      <VictoryPolarAxis {...defaultAxisProps}
+      <VictoryPolarAxis {...defaultAxisProps} tickValues={[1, 5, 10, 50, 500, 10000]} scale="log" />
+      <VictoryPolarAxis
+        {...defaultAxisProps}
         dependentAxis
         tickValues={[1, 5, 10, 50, 500, 10000]}
         scale="log"
