@@ -64,14 +64,15 @@ class VictoryBar extends React.Component {
       })
     ]),
     getPath: PropTypes.func,
-    horizontal: PropTypes.bool
+    horizontal: PropTypes.bool,
+    hasTableRole: PropTypes.bool
   };
 
   static defaultProps = {
     containerComponent: <VictoryContainer />,
     data: defaultData,
     dataComponent: <Bar />,
-    groupComponent: <g role="presentation" />,
+    groupComponent: <g role="row"/>,
     labelComponent: <VictoryLabel />,
     samples: 50,
     sortOrder: "ascending",

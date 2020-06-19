@@ -28,7 +28,8 @@ export default class VictoryContainer extends React.Component {
     tabIndex: PropTypes.number,
     theme: PropTypes.object,
     title: PropTypes.string,
-    width: CustomPropTypes.nonNegative
+    width: CustomPropTypes.nonNegative,
+    role: PropTypes.string
   };
 
   static defaultProps = {
@@ -97,6 +98,7 @@ export default class VictoryContainer extends React.Component {
       className,
       width,
       height,
+      role,
       portalZIndex,
       responsive
     } = props;
@@ -115,6 +117,7 @@ export default class VictoryContainer extends React.Component {
     const portalProps = {
       width,
       height,
+      role,
       viewBox: svgProps.viewBox,
       style: portalSvgStyle
     };
@@ -145,7 +148,7 @@ export default class VictoryContainer extends React.Component {
   }
 
   render() {
-    const { width, height, responsive, events, title, desc, tabIndex } = this.props;
+    const { role, width, height, responsive, events, title, desc, tabIndex } = this.props;
     const style = responsive
       ? this.props.style
       : Helpers.omit(this.props.style, ["height", "width"]);
@@ -154,7 +157,7 @@ export default class VictoryContainer extends React.Component {
         width,
         height,
         tabIndex,
-        role: "img",
+        role: role ? role : "img",
         "aria-labelledby": title ? this.getIdForElement("title") : undefined,
         "aria-describedby": desc ? this.getIdForElement("desc") : undefined,
         viewBox: responsive ? `0 0 ${width} ${height}` : undefined
