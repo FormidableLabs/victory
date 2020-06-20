@@ -35,11 +35,7 @@ describe("components/victory-voronoi", () => {
         height: 300,
         padding: 50,
         domain: { x: [0, 5], y: [0, 5] },
-        data: [
-          { x: 0, y: 0 },
-          { x: 2, y: 3 },
-          { x: 4, y: 1 }
-        ]
+        data: [{ x: 0, y: 0 }, { x: 2, y: 3 }, { x: 4, y: 1 }]
       };
       const wrapper = mount(<VictoryVoronoi {...props} />);
 
@@ -70,11 +66,7 @@ describe("components/victory-voronoi", () => {
     });
 
     it("does not render data with null x or y values", () => {
-      const data = [
-        { x: 1, y: 2 },
-        { x: null, y: 4 },
-        { x: 5, y: null }
-      ];
+      const data = [{ x: 1, y: 2 }, { x: null, y: 4 }, { x: 5, y: null }];
       const wrapper = mount(<VictoryVoronoi data={data} />);
       expect(wrapper.find(Voronoi).length).to.equal(1);
     });

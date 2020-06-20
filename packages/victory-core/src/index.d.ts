@@ -157,22 +157,22 @@ export interface VictoryAxisCommonProps {
   invertAxis?: boolean;
   style?: {
     parent?: {
-      [K in keyof React.CSSProperties]: string | number | ((tick?: any) => string | number);
+      [K in keyof React.CSSProperties]: string | number | ((tick?: any) => string | number)
     };
     axis?: {
-      [K in keyof React.CSSProperties]: string | number | ((tick?: any) => string | number);
+      [K in keyof React.CSSProperties]: string | number | ((tick?: any) => string | number)
     };
     axisLabel?: {
-      [K in keyof React.CSSProperties]: string | number | ((tick?: any) => string | number);
+      [K in keyof React.CSSProperties]: string | number | ((tick?: any) => string | number)
     };
     grid?: {
-      [K in keyof React.CSSProperties]: string | number | ((tick?: any) => string | number);
+      [K in keyof React.CSSProperties]: string | number | ((tick?: any) => string | number)
     };
     ticks?: {
-      [K in keyof React.CSSProperties]: string | number | ((tick?: any) => string | number);
+      [K in keyof React.CSSProperties]: string | number | ((tick?: any) => string | number)
     };
     tickLabels?: {
-      [K in keyof TickLabelProps]: string | number | ((tick?: any) => string | number);
+      [K in keyof TickLabelProps]: string | number | ((tick?: any) => string | number)
     };
   };
   tickComponent?: React.ReactElement;

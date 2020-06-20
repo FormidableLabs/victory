@@ -13,10 +13,7 @@ describe("victory-scatter/helper-methods", () => {
     afterEach(() => {
       sandbox.restore();
     });
-    const data = [
-      { x: 1, y: 2, z: 1, t: 4 },
-      { x: 2, y: 3, z: 1, t: 2 }
-    ];
+    const data = [{ x: 1, y: 2, z: 1, t: 4 }, { x: 2, y: 3, z: 1, t: 2 }];
     const datum = data[0];
     it("returns a size attribute from data", () => {
       const point = { size: 3, ...datum };
@@ -46,10 +43,7 @@ describe("victory-scatter/helper-methods", () => {
 
   describe("getBubbleSize", () => {
     it("determines the size of a point", () => {
-      const data = [
-        { x: 1, y: 2, z: 5 },
-        { x: 2, y: 3, z: 1 }
-      ];
+      const data = [{ x: 1, y: 2, z: 5 }, { x: 2, y: 3, z: 1 }];
       const props = { data, z: "z" };
       const sizeResult = getBubbleSize(data[0], props);
       expect(sizeResult).to.equal(5);

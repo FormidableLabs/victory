@@ -132,13 +132,7 @@ class App extends React.Component {
           </VictoryChart>
 
           <VictoryChart style={chartStyle} containerComponent={<VictorySelectionContainer />}>
-            <VictoryGroup
-              data={[
-                { x: 1, y: 5 },
-                { x: 2, y: 4 },
-                { x: 3, y: -2 }
-              ]}
-            >
+            <VictoryGroup data={[{ x: 1, y: 5 }, { x: 2, y: 4 }, { x: 3, y: -2 }]}>
               <VictoryLine style={{ data: { stroke: "tomato" } }} />
               <VictoryScatter
                 style={{ data: { fill: ({ active }) => (active ? "tomato" : "gray") } }}
@@ -147,13 +141,7 @@ class App extends React.Component {
               />
             </VictoryGroup>
 
-            <VictoryGroup
-              data={[
-                { x: 1, y: -3 },
-                { x: 2, y: 5 },
-                { x: 3, y: 3 }
-              ]}
-            >
+            <VictoryGroup data={[{ x: 1, y: -3 }, { x: 2, y: 5 }, { x: 3, y: 3 }]}>
               <VictoryLine style={{ data: { stroke: "blue" } }} />
               <VictoryScatter
                 style={{ data: { fill: ({ active }) => (active ? "blue" : "gray") } }}
@@ -162,13 +150,7 @@ class App extends React.Component {
               />
             </VictoryGroup>
 
-            <VictoryGroup
-              data={[
-                { x: 1, y: 5 },
-                { x: 2, y: -4 },
-                { x: 3, y: -2 }
-              ]}
-            >
+            <VictoryGroup data={[{ x: 1, y: 5 }, { x: 2, y: -4 }, { x: 3, y: -2 }]}>
               <VictoryLine style={{ data: { stroke: "black" } }} />
               <VictoryScatter
                 style={{ data: { fill: ({ active }) => (active ? "black" : "gray") } }}

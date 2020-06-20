@@ -92,11 +92,7 @@ const Charts = ({ behaviors }) => {
           />
 
           <VictoryLine
-            data={[
-              { x: 1, y: 5, l: "cat" },
-              { x: 2, y: -4, l: "dog" },
-              { x: 3, y: -2, l: "bird" }
-            ]}
+            data={[{ x: 1, y: 5, l: "cat" }, { x: 2, y: -4, l: "dog" }, { x: 3, y: -2, l: "bird" }]}
             style={{
               data: {
                 stroke: "black",
