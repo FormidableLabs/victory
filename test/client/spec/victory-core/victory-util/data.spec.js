@@ -83,7 +83,9 @@ describe("victory-util/data", () => {
       });
 
       it("returns an empty array when no strings are present", () => {
-        const props = { data: createData([{ x: 1, y: 1 }, { x: 3, y: 3 }]) };
+        const props = {
+          data: createData([{ x: 1, y: 1 }, { x: 3, y: 3 }])
+        };
         expect(Data.getStringsFromData(props, "x")).to.eql([]);
       });
 
