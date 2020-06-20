@@ -22,7 +22,8 @@ class MockDataComponent extends React.Component {
     } = this.props;
     return (
       <p style={style} {...events}>
-        `${x}: ${y}`
+        `$
+        {x}: ${y}`
       </p>
     );
   }
@@ -39,7 +40,12 @@ class MockLabel extends React.Component {
   render() {
     const { text } = this.props;
 
-    return <p>`${text}`</p>;
+    return (
+      <p>
+        `$
+        {text}`
+      </p>
+    );
   }
 }
 

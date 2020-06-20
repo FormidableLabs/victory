@@ -88,15 +88,7 @@ describe("components/victory-bar", () => {
     });
 
     it("renders bars with appropriate relative heights", () => {
-      const wrapper = mount(
-        <VictoryBar
-          data={[
-            { x: 1, y: 1 },
-            { x: 2, y: 2 },
-            { x: 3, y: 3 }
-          ]}
-        />
-      );
+      const wrapper = mount(<VictoryBar data={[{ x: 1, y: 1 }, { x: 2, y: 2 }, { x: 3, y: 3 }]} />);
       const bars = wrapper.find(Bar);
       const heights = bars.map(SvgTestHelper.getBarHeight);
 
@@ -105,11 +97,7 @@ describe("components/victory-bar", () => {
     });
 
     it("does not render data with null x or y values", () => {
-      const data = [
-        { x: 1, y: 2 },
-        { x: null, y: 4 },
-        { x: 5, y: null }
-      ];
+      const data = [{ x: 1, y: 2 }, { x: null, y: 4 }, { x: 5, y: null }];
       const wrapper = mount(<VictoryBar data={data} />);
       expect(wrapper.find(Bar).length).to.equal(1);
     });

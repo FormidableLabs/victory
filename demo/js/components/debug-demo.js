@@ -26,53 +26,25 @@ class App extends React.Component {
       <div style={containerStyle}>
         <VictoryChart style={chartStyle} containerComponent={<VictoryZoomContainer />}>
           <VictoryStack colorScale="warm">
-            <VictoryGroup
-              data={[
-                { x: 1, y: 2 },
-                { x: 2, y: 3 },
-                { x: 3, y: 5 },
-                { x: 4, y: 4 }
-              ]}
-            >
+            <VictoryGroup data={[{ x: 1, y: 2 }, { x: 2, y: 3 }, { x: 3, y: 5 }, { x: 4, y: 4 }]}>
               <VictoryArea />
               <VictoryPortal>
                 <VictoryScatter style={{ data: { fill: "black" } }} />
               </VictoryPortal>
             </VictoryGroup>
-            <VictoryGroup
-              data={[
-                { x: 1, y: 4 },
-                { x: 2, y: 3 },
-                { x: 3, y: 2 },
-                { x: 4, y: 5 }
-              ]}
-            >
+            <VictoryGroup data={[{ x: 1, y: 4 }, { x: 2, y: 3 }, { x: 3, y: 2 }, { x: 4, y: 5 }]}>
               <VictoryArea />
               <VictoryPortal>
                 <VictoryScatter style={{ data: { fill: "green" } }} />
               </VictoryPortal>
             </VictoryGroup>
-            <VictoryGroup
-              data={[
-                { x: 1, y: 3 },
-                { x: 2, y: 1 },
-                { x: 3, y: 4 },
-                { x: 4, y: 2 }
-              ]}
-            >
+            <VictoryGroup data={[{ x: 1, y: 3 }, { x: 2, y: 1 }, { x: 3, y: 4 }, { x: 4, y: 2 }]}>
               <VictoryArea />
               <VictoryPortal>
                 <VictoryScatter style={{ data: { fill: "blue" } }} />
               </VictoryPortal>
             </VictoryGroup>
-            <VictoryGroup
-              data={[
-                { x: 1, y: 3 },
-                { x: 2, y: 1 },
-                { x: 3, y: 4 },
-                { x: 4, y: 2 }
-              ]}
-            >
+            <VictoryGroup data={[{ x: 1, y: 3 }, { x: 2, y: 1 }, { x: 3, y: 4 }, { x: 4, y: 2 }]}>
               <VictoryArea />
               <VictoryPortal>
                 <VictoryScatter style={{ data: { fill: "cyan" } }} />

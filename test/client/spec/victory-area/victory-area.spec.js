@@ -37,11 +37,7 @@ describe("components/victory-area", () => {
         padding: 50,
         scale: "linear",
         interpolation: "linear",
-        data: [
-          { x: 0, y: 0, y0: 0 },
-          { x: 2, y: 3, y0: 0 },
-          { x: 4, y: 1, y0: 0 }
-        ]
+        data: [{ x: 0, y: 0, y0: 0 }, { x: 2, y: 3, y0: 0 }, { x: 4, y: 1, y0: 0 }]
       };
       const wrapper = mount(<VictoryArea {...props} />);
       const area = wrapper.find(Area);
@@ -54,11 +50,7 @@ describe("components/victory-area", () => {
         height: 300,
         padding: 50,
         scale: "linear",
-        data: [
-          { x: 0, y: 0, y0: 0 },
-          { x: 2, y: 3, y0: 0 },
-          { x: 4, y: 1, y0: 0 }
-        ]
+        data: [{ x: 0, y: 0, y0: 0 }, { x: 2, y: 3, y0: 0 }, { x: 4, y: 1, y0: 0 }]
       };
       const stringWrapper = mount(<VictoryArea {...props} interpolation="catmullRom" />);
       const stringArea = stringWrapper.find(Area);
