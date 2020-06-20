@@ -93,8 +93,8 @@ class App extends React.Component {
 
   onDomainChange(domain, props) {
     const { name } = props;
-    const newBars = this.state.bars.map(
-      (bar) => (bar.name === name ? { name, range: domain } : bar)
+    const newBars = this.state.bars.map((bar) =>
+      bar.name === name ? { name, range: domain } : bar
     );
     this.setState({ bars: newBars });
   }

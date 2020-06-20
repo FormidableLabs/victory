@@ -49,7 +49,13 @@ class App extends React.Component {
             }
             labels={({ datum }) => `hello000000 #${datum.x}`}
             size={({ active }) => (active ? 5 : 3)}
-            data={[{ x: 1, y: 5 }, { x: 2, y: 2 }, { x: 3, y: 3 }, { x: 4, y: 2 }, { x: 5, y: 1 }]}
+            data={[
+              { x: 1, y: 5 },
+              { x: 2, y: 2 },
+              { x: 3, y: 3 },
+              { x: 4, y: 2 },
+              { x: 5, y: 1 }
+            ]}
           />
 
           <VictoryChart style={{ parent: parentStyle }}>
@@ -61,9 +67,27 @@ class App extends React.Component {
               colorScale={"qualitative"}
               style={{ data: { width: 15 } }}
             >
-              <VictoryBar data={[{ x: 1, y: 1 }, { x: 2, y: 2 }, { x: 3, y: 5 }]} />
-              <VictoryBar data={[{ x: 1, y: -2 }, { x: 2, y: 1 }, { x: 3, y: 7 }]} />
-              <VictoryBar data={[{ x: 1, y: 3 }, { x: 2, y: 4 }, { x: 3, y: 9 }]} />
+              <VictoryBar
+                data={[
+                  { x: 1, y: 1 },
+                  { x: 2, y: 2 },
+                  { x: 3, y: 5 }
+                ]}
+              />
+              <VictoryBar
+                data={[
+                  { x: 1, y: -2 },
+                  { x: 2, y: 1 },
+                  { x: 3, y: 7 }
+                ]}
+              />
+              <VictoryBar
+                data={[
+                  { x: 1, y: 3 },
+                  { x: 2, y: 4 },
+                  { x: 3, y: 9 }
+                ]}
+              />
             </VictoryGroup>
           </VictoryChart>
 
@@ -75,9 +99,27 @@ class App extends React.Component {
               labelComponent={<VictoryTooltip />}
               style={{ data: { width: 30 } }}
             >
-              <VictoryBar data={[{ x: 1, y: 1 }, { x: 2, y: 2 }, { x: 3, y: 5 }]} />
-              <VictoryBar data={[{ x: 1, y: 2 }, { x: 2, y: 1 }, { x: 3, y: 7 }]} />
-              <VictoryBar data={[{ x: 1, y: 3 }, { x: 2, y: 4 }, { x: 3, y: 9 }]} />
+              <VictoryBar
+                data={[
+                  { x: 1, y: 1 },
+                  { x: 2, y: 2 },
+                  { x: 3, y: 5 }
+                ]}
+              />
+              <VictoryBar
+                data={[
+                  { x: 1, y: 2 },
+                  { x: 2, y: 1 },
+                  { x: 3, y: 7 }
+                ]}
+              />
+              <VictoryBar
+                data={[
+                  { x: 1, y: 3 },
+                  { x: 2, y: 4 },
+                  { x: 3, y: 9 }
+                ]}
+              />
             </VictoryStack>
           </VictoryChart>
         </div>

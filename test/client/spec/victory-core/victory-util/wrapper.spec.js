@@ -49,7 +49,11 @@ describe("helpers/wrapper", () => {
 
     it("returns an array of strings from a data prop", () => {
       const props = {
-        data: [{ x: "one", y: 1 }, { x: "red", y: 2 }, { x: "cat", y: 3 }]
+        data: [
+          { x: "one", y: 1 },
+          { x: "red", y: 2 },
+          { x: "cat", y: 3 }
+        ]
       };
       const childComponents = [getVictoryLine(props)];
       const dataStrings = Wrapper.getStringsFromData(childComponents).x;
@@ -58,7 +62,11 @@ describe("helpers/wrapper", () => {
 
     it("returns an array of strings from array-type data", () => {
       const props = {
-        data: [["one", 1], ["red", 2], ["cat", 3]],
+        data: [
+          ["one", 1],
+          ["red", 2],
+          ["cat", 3]
+        ],
         x: 0,
         y: 1
       };
@@ -69,7 +77,10 @@ describe("helpers/wrapper", () => {
 
     it("only returns strings, if data is mixed", () => {
       const props = {
-        data: [{ x: 1, y: 1 }, { x: "three", y: 3 }]
+        data: [
+          { x: 1, y: 1 },
+          { x: "three", y: 3 }
+        ]
       };
       const childComponents = [getVictoryLine(props)];
       expect(Wrapper.getStringsFromData(childComponents).x).to.eql(["three"]);
@@ -77,7 +88,10 @@ describe("helpers/wrapper", () => {
 
     it("returns an empty array when no strings are present", () => {
       const props = {
-        data: [{ x: 1, y: 1 }, { x: 3, y: 3 }]
+        data: [
+          { x: 1, y: 1 },
+          { x: 3, y: 3 }
+        ]
       };
       const childComponents = [getVictoryLine(props)];
       expect(Wrapper.getStringsFromData(childComponents).x).to.eql([]);

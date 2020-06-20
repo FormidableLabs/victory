@@ -7,7 +7,10 @@ import React from "react";
 import * as d3Scale from "d3-scale";
 
 const scale = { x: d3Scale.scaleLinear(), y: d3Scale.scaleLinear() };
-const data = [{ x: 0, y: 0 }, { x: 0.5, y: 0.5 }];
+const data = [
+  { x: 0, y: 0 },
+  { x: 0.5, y: 0.5 }
+];
 const labelComponent = <VictoryLabel />;
 const style = { labels: { fontSize: 8 } };
 
@@ -31,7 +34,10 @@ describe("victory-util/label-helpers", () => {
       });
     });
     it("returns the correct label text from datum", () => {
-      const dataWithLabels = [{ x: 0, y: 0, label: "one" }, { x: 0.5, y: 0.5, label: "two" }];
+      const dataWithLabels = [
+        { x: 0, y: 0, label: "one" },
+        { x: 0.5, y: 0.5, label: "two" }
+      ];
       const props = assign({}, basicProps, { data: dataWithLabels });
       data.forEach((datum, index) => {
         const labelProps = LabelHelpers.getProps(props, index);

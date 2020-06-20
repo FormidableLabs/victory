@@ -59,11 +59,10 @@ function getY0(datum, index, datasets) {
   const previousPoints = previousDatasets.reduce((prev, dataset) => {
     return prev.concat(
       dataset
-        .filter(
-          (previousDatum) =>
-            datum._x instanceof Date
-              ? previousDatum._x.getTime() === datum._x.getTime()
-              : previousDatum._x === datum._x
+        .filter((previousDatum) =>
+          datum._x instanceof Date
+            ? previousDatum._x.getTime() === datum._x.getTime()
+            : previousDatum._x === datum._x
         )
         .map((previousDatum) => previousDatum._y || 0)
     );
@@ -88,14 +87,14 @@ function addLayoutData(props, datasets, index) {
         datum._y === null
           ? null
           : datum._y instanceof Date
-            ? new Date(+datum._y + +yOffset)
-            : datum._y + yOffset,
+          ? new Date(+datum._y + +yOffset)
+          : datum._y + yOffset,
       _x1:
         datum._x === null
           ? null
           : datum._x instanceof Date
-            ? new Date(+datum._x + +xOffset)
-            : datum._x + xOffset
+          ? new Date(+datum._x + +xOffset)
+          : datum._x + xOffset
     });
   });
 }

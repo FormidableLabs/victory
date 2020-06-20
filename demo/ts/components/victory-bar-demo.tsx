@@ -191,14 +191,24 @@ export default class VictoryBarDemo extends React.Component<any, VictoryBarDemoS
           <VictoryBar
             horizontal
             labels={({ datum }) => datum.y}
-            data={[{ x: 1, y: 20 }, { x: 7, y: -40 }, { x: 3, y: -60 }, { x: 4, y: 80 }]}
+            data={[
+              { x: 1, y: 20 },
+              { x: 7, y: -40 },
+              { x: 3, y: -60 },
+              { x: 4, y: 80 }
+            ]}
           />
         </ChartWrap>
 
         <ChartWrap>
           <VictoryBar
             labels={({ datum }) => datum.y}
-            data={[{ x: 1, y: 20 }, { x: 7, y: -40 }, { x: 3, y: -60 }, { x: 4, y: 80 }]}
+            data={[
+              { x: 1, y: 20 },
+              { x: 7, y: -40 },
+              { x: 3, y: -60 },
+              { x: 4, y: 80 }
+            ]}
           />
         </ChartWrap>
 
@@ -366,7 +376,11 @@ export default class VictoryBarDemo extends React.Component<any, VictoryBarDemoS
         <VictoryStack colorScale="warm" style={{ parent: parentStyle }}>
           <Wrapper>
             <VictoryBar
-              data={[{ x: "a", y: 2 }, { x: "b", y: 3 }, { x: "c", y: 4 }]}
+              data={[
+                { x: "a", y: 2 },
+                { x: "b", y: 3 },
+                { x: "c", y: 4 }
+              ]}
               events={[
                 {
                   target: "data",
@@ -386,7 +400,11 @@ export default class VictoryBarDemo extends React.Component<any, VictoryBarDemoS
             />
           </Wrapper>
           <VictoryBar
-            data={[{ x: "c", y: 2 }, { x: "d", y: 3 }, { x: "e", y: 4 }]}
+            data={[
+              { x: "c", y: 2 },
+              { x: "d", y: 3 },
+              { x: "e", y: 4 }
+            ]}
             events={[
               {
                 target: "data",
@@ -469,7 +487,16 @@ export default class VictoryBarDemo extends React.Component<any, VictoryBarDemoS
         </VictoryChart>
 
         <VictoryChart>
-          <VictoryBar data={[[5, 10], [10, 15], [15, 20], [20, 25]]} x={0} y={1} />
+          <VictoryBar
+            data={[
+              [5, 10],
+              [10, 15],
+              [15, 20],
+              [20, 25]
+            ]}
+            x={0}
+            y={1}
+          />
         </VictoryChart>
       </div>
     );

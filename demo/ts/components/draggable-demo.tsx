@@ -127,8 +127,8 @@ class App extends React.Component<any, DraggableDemoInterface> {
 
   onDomainChange(domain: DomainTuple, props: any) {
     const { name } = props;
-    const newBars = this.state.bars.map(
-      (bar) => (bar.name === name ? { name, range: domain } : bar)
+    const newBars = this.state.bars.map((bar) =>
+      bar.name === name ? { name, range: domain } : bar
     );
 
     this.setState({ bars: newBars });

@@ -86,7 +86,13 @@ export const AxisValue = () => {
         <VictoryAxis dependentAxis axisValue={new Date(2000, 1, 1)} />
       </VictoryChart>
       <VictoryChart {...defaultChartProps} horizontal>
-        <VictoryBar data={[{ x: "a", y: 1 }, { x: "b", y: 2 }, { x: "c", y: 5 }]} />
+        <VictoryBar
+          data={[
+            { x: "a", y: 1 },
+            { x: "b", y: 2 },
+            { x: "c", y: 5 }
+          ]}
+        />
         <VictoryAxis dependentAxis axisValue="b" />
         <VictoryAxis />
       </VictoryChart>

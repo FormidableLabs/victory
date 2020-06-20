@@ -24,7 +24,10 @@ describe("victory-util/add-events", () => {
   it("should set up events on data components to target themselves", () => {
     const wrapper = mount(
       <EventedMockVictoryComponent
-        data={[{ x: 1, y: 2 }, { x: 3, y: 4 }]}
+        data={[
+          { x: 1, y: 2 },
+          { x: 3, y: 4 }
+        ]}
         events={[
           {
             target: "data",
@@ -63,7 +66,10 @@ describe("victory-util/add-events", () => {
   it("should set up events on data components scoped with an event key", () => {
     const wrapper = mount(
       <EventedMockVictoryComponent
-        data={[{ x: 1, y: 2 }, { x: 3, y: 4 }]}
+        data={[
+          { x: 1, y: 2 },
+          { x: 3, y: 4 }
+        ]}
         events={[
           {
             target: "data",
@@ -103,7 +109,10 @@ describe("victory-util/add-events", () => {
   it("should set up events on data components to target labels", () => {
     const wrapper = mount(
       <EventedMockVictoryComponent
-        data={[{ x: 1, y: 2 }, { x: 3, y: 4 }]}
+        data={[
+          { x: 1, y: 2 },
+          { x: 3, y: 4 }
+        ]}
         labelComponent={<MockLabel text="unaffected" />}
         events={[
           {

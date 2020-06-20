@@ -7,7 +7,10 @@ import { assign, merge } from "lodash";
 
 describe("victory-primitives/bar", () => {
   const baseProps = {
-    data: [{ _x: 2, x: 2, _y: 4, y: 4, eventKey: 0 }, { _x: 3, x: 3, _y: 5, y: 5, eventKey: 1 }],
+    data: [
+      { _x: 2, x: 2, _y: 4, y: 4, eventKey: 0 },
+      { _x: 3, x: 3, _y: 5, y: 5, eventKey: 1 }
+    ],
     datum: { _x: 2, x: 2, _y: 4, y: 4, eventKey: 0 },
     x: 2,
     x0: 0,

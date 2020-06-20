@@ -19,7 +19,10 @@ describe("getInitialTransitionState", () => {
   });
 
   it("it returns childTransitions entering and exiting false for identical data", () => {
-    const child = makeChild([{ x: 1, y: 1 }, { x: 2, y: 3 }]);
+    const child = makeChild([
+      { x: 1, y: 1 },
+      { x: 2, y: 3 }
+    ]);
     const result = Transitions.getInitialTransitionState(child, child);
     expect(result).to.eql({
       childrenTransitions: [{ entering: false, exiting: false }],
@@ -30,7 +33,10 @@ describe("getInitialTransitionState", () => {
   });
 
   it("it returns childTransitions with exiting data", () => {
-    const child1 = makeChild([{ x: 1, y: 1 }, { x: 2, y: 3 }]);
+    const child1 = makeChild([
+      { x: 1, y: 1 },
+      { x: 2, y: 3 }
+    ]);
     const child2 = makeChild([{ x: 1, y: 1 }]);
     const result = Transitions.getInitialTransitionState(child1, child2);
     expect(result).to.eql({
@@ -43,7 +49,10 @@ describe("getInitialTransitionState", () => {
 
   it("it returns childTransitions with entering data", () => {
     const child1 = makeChild([{ x: 1, y: 1 }]);
-    const child2 = makeChild([{ x: 1, y: 1 }, { x: 2, y: 3 }]);
+    const child2 = makeChild([
+      { x: 1, y: 1 },
+      { x: 2, y: 3 }
+    ]);
     const result = Transitions.getInitialTransitionState(child1, child2);
     expect(result).to.eql({
       childrenTransitions: [{ entering: { 1: true }, exiting: false }],
@@ -80,12 +89,18 @@ describe("getTransitionPropsFactory", () => {
       nodesDoneLoad: true
     };
     const result = Transitions.getTransitionPropsFactory({}, exitingState, callback);
-    const child = makeChild([{ x: 1, y: 1 }, { x: 2, y: 3 }]);
+    const child = makeChild([
+      { x: 1, y: 1 },
+      { x: 2, y: 3 }
+    ]);
     const calledResult = result(child);
     expect(result).to.be.a("function");
     expect(calledResult).to.have.keys(["animate", "data"]);
     expect(toZero).calledWith({ x: 2, y: 3 });
-    expect(calledResult.data).to.eql([{ x: 1, y: 1 }, { x: 2, y: 0 }]);
+    expect(calledResult.data).to.eql([
+      { x: 1, y: 1 },
+      { x: 2, y: 0 }
+    ]);
     expect(calledResult.animate.duration).to.equal(child.type.defaultTransitions.onExit.duration);
   });
 
@@ -99,13 +114,19 @@ describe("getTransitionPropsFactory", () => {
       nodesDoneLoad: true
     };
     const result = Transitions.getTransitionPropsFactory({}, enteringState, callback);
-    const child = makeChild([{ x: 1, y: 1 }, { x: 2, y: 3 }]);
+    const child = makeChild([
+      { x: 1, y: 1 },
+      { x: 2, y: 3 }
+    ]);
     const calledResult = result(child);
     expect(result).to.be.a("function");
     expect(calledResult).to.be.a("object");
     expect(calledResult).to.be.a("object");
     expect(calledResult).to.have.keys(["animate", "data"]);
     expect(toZero).calledWith({ x: 2, y: 3 });
-    expect(calledResult.data).to.eql([{ x: 1, y: 1 }, { x: 2, y: 0 }]);
+    expect(calledResult.data).to.eql([
+      { x: 1, y: 1 },
+      { x: 2, y: 0 }
+    ]);
   });
 });
