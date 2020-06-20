@@ -16,7 +16,7 @@ const getPath = (props) => {
     .arc()
     .cornerRadius(cornerRadius)
     .outerRadius(radius)
-    .innerRadius(innerRadius);
+    .innerRadius(innerRadius || 0);
   return pathFunction(defaults({ startAngle, endAngle, padAngle }, slice));
 };
 

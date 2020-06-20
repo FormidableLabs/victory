@@ -35,7 +35,10 @@ describe("helpers/selection", () => {
   describe("filterDatasets", () => {
     it("returns null when no datasets are within bounds", () => {
       const datasets = [
-        { childName: "a", data: [{ eventKey: 0, _x: 1, _y: 3 }, { eventKey: 1, _x: 2, _y: 5 }] }
+        {
+          childName: "a",
+          data: [{ eventKey: 0, _x: 1, _y: 3 }, { eventKey: 1, _x: 2, _y: 5 }]
+        }
       ];
       const props = { scale, x1: 0, y1: 0, x2: 0.5, y2: 0.5 };
       const bounds = { x: [0, 1], y: [10, 15] };
