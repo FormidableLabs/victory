@@ -36,13 +36,11 @@ module.exports = {
       src: "lerna exec --stream -- eslint --color --ext .js,.jsx,.ts,.tsx src",
       demo: "eslint --color --ext .js,.jsx,.ts,.tsx demo",
       stories: "eslint --color stories",
-      storybook: "eslint --color --no-ignore .storybook/config.js",
       test: "eslint --color test",
       ts: npsUtils.series.nps("build-package-libs", "compile-ts"),
       default: npsUtils.series.nps(
         "lint.test",
         "lint.stories",
-        "lint.storybook",
         "lint.demo",
         "lint.src"
       )
