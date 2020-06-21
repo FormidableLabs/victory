@@ -1,5 +1,5 @@
 import * as React from "react";
-import { VictoryContainerProps } from "victory-core";
+import { PaddingProps, VictoryContainerProps } from "victory-core";
 
 export interface VictoryVoronoiContainerProps extends VictoryContainerProps {
   activateData?: boolean;
@@ -13,7 +13,7 @@ export interface VictoryVoronoiContainerProps extends VictoryContainerProps {
   radius?: number;
   voronoiBlacklist?: string[];
   voronoiDimension?: "x" | "y";
-  voronoiPadding?: number;
+  voronoiPadding?: PaddingProps;
 }
 
 export class VictoryVoronoiContainer extends React.Component<VictoryVoronoiContainerProps, any> {}

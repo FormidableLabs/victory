@@ -6,15 +6,20 @@ import React from "react";
 
 const VoronoiHelpers = {
   withinBounds(props, point) {
-    const { width, height, voronoiPadding, polar, origin, scale } = props;
-    const padding = voronoiPadding || 0;
+    const { width, height, polar, origin, scale } = props;
+    const padding = Helpers.getPadding(props, "voronoiPadding");
     const { x, y } = point;
     if (polar) {
       const distanceSquared = Math.pow(x - origin.x, 2) + Math.pow(y - origin.y, 2);
       const radius = Math.max(...scale.y.range());
       return distanceSquared < Math.pow(radius, 2);
     } else {
-      return x >= padding && x <= width - padding && y >= padding && y <= height - padding;
+      return (
+        x >= padding.left &&
+        x <= width - padding.right &&
+        y >= padding.top &&
+        y <= height - padding.bottom
+      );
     }
   },
 
