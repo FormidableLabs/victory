@@ -520,6 +520,65 @@ export const BackgroundStyles = () => {
     </div>
   );
 };
+export const Inline = () => {
+  return (
+    <div style={containerStyle}>
+      <VictoryScatter
+        {...defaultScatterProps}
+        labelComponent={
+          <VictoryLabel
+            backgroundStyle={{ fill: "lavender" }}
+            verticalAnchor="middle"
+            text={["Victory is awesome.", "This is inline styling for labels."]}
+            inline
+          />
+        }
+      />
+      <VictoryScatter
+        {...defaultScatterProps}
+        labelComponent={
+          <VictoryLabel
+            inline
+            backgroundStyle={[
+              { fill: "pink" },
+              { fill: "lavender" },
+              { fill: "thistle" },
+              { fill: "plum" }
+            ]}
+            text={[
+              "Victory is awesome.",
+              "backgrounds work with ",
+              "multiple lineHeights,",
+              "but the positioning does change"
+            ]}
+            lineHeight={[1, 2, 1, 3]}
+          />
+        }
+      />
+      <VictoryScatter
+        {...defaultScatterProps}
+        labelComponent={
+          <VictoryLabel
+            inline
+            angle={70}
+            backgroundStyle={[
+              { fill: "pink" },
+              { fill: "lavender" },
+              { fill: "thistle" },
+              { fill: "plum" }
+            ]}
+            text={[
+              "Victory is awesome.",
+              "background rects",
+              "all get appropriate",
+              "angle transforms"
+            ]}
+          />
+        }
+      />
+    </div>
+  );
+};
 
 export const BackgroundPadding = () => {
   return (
