@@ -317,10 +317,15 @@ export default class App extends React.Component {
                 { fill: "orange", opacity: 0.2 },
                 { fill: "cyan", opacity: 0.2 }
               ]}
+              backgroundPadding={[
+                { right: -22 },
+                { right: -30, top: 15 },
+                { top: 50 }
+              ]}
               text={[
-                "Victory is awesome. ",
+                "Victory is awesome!!!! ",
                 "inline labels ",
-                "with multiple backgrounds"
+                "+ backgrounds"
               ]}
               lineHeight={[1, 2, 2]}
               verticalAnchor="start"

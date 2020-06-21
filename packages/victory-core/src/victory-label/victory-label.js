@@ -223,7 +223,7 @@ const getInlineXOffset = (calculatedProps, textElements, index) => {
       }, 0);
     case "end":
       return widths.reduce((memo, width, i) => {
-        memo = i < index ? memo - width : memo;
+        memo = i > index ? memo - width : memo;
         return memo;
       }, 0);
     default: // middle
