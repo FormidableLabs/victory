@@ -271,6 +271,9 @@ const getLabelProps = (props, text, type) => {
   const orientation = getOrientation(labelOrientation, type);
   const namespace = `${type}Labels`;
   const labelStyle = style[namespace] || style.labels;
+  const component = props[`${type}LabelComponent`];
+  const role = component && component.type && component.type.role;
+  const theme = role === "tooltip" ? props.theme : undefined;
   const defaultVerticalAnchors = { top: "end", bottom: "start", left: "middle", right: "middle" };
   const defaultTextAnchors = { left: "end", right: "start", top: "middle", bottom: "middle" };
   const whiskerWidth = typeof props.whiskerWidth === "number" ? props.whiskerWidth : boxWidth;
@@ -297,7 +300,8 @@ const getLabelProps = (props, text, type) => {
     textAnchor: labelStyle.textAnchor || defaultTextAnchors[orientation],
     verticalAnchor: labelStyle.verticalAnchor || defaultVerticalAnchors[orientation],
     angle: labelStyle.angle,
-    horizontal
+    horizontal,
+    theme
   };
 };
 

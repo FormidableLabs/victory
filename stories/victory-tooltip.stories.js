@@ -645,7 +645,8 @@ export const FlyoutPadding = () => {
         }
       />
       <VictoryBar
-        {...defaultBarProps} horizontal
+        {...defaultBarProps}
+        horizontal
         labelComponent={
           <VictoryTooltip
             active

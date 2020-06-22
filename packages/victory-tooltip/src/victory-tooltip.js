@@ -20,7 +20,7 @@ const fallbackProps = {
 
 export default class VictoryTooltip extends React.Component {
   static displayName = "VictoryTooltip";
-
+  static role = "tooltip";
   static propTypes = {
     activateData: PropTypes.bool,
     active: PropTypes.oneOfType([PropTypes.bool, PropTypes.func]),
@@ -91,8 +91,7 @@ export default class VictoryTooltip extends React.Component {
     renderInPortal: true,
     labelComponent: <VictoryLabel />,
     flyoutComponent: <Flyout />,
-    groupComponent: <g />,
-    flyoutPadding: {top: 2, bottom: 2, left: 4, right: 4 }
+    groupComponent: <g />
   };
 
   static defaultEvents = (props) => {
@@ -378,7 +377,12 @@ export default class VictoryTooltip extends React.Component {
 
   getDimensions(props, labelSize) {
     const {
-      orientation, pointerLength, pointerWidth, flyoutHeight, flyoutWidth, flyoutPadding
+      orientation,
+      pointerLength,
+      pointerWidth,
+      flyoutHeight,
+      flyoutWidth,
+      flyoutPadding
     } = props;
     const cornerRadius = Helpers.evaluateProp(props.cornerRadius, props);
     const getHeight = () => {

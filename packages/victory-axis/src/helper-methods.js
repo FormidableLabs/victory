@@ -336,12 +336,19 @@ const getBaseProps = (props, fallbackProps) => {
     stringTicks,
     name
   } = calculatedValues;
+  const { axisLabelComponent, tickLabelComponent } = props;
   const otherAxis = axis === "x" ? "y" : "x";
   const { width, height, standalone, theme, polar, padding, horizontal } = props;
   const { globalTransform, gridOffset, gridEdge } = getLayoutProps(props, calculatedValues);
   const sharedProps = { scale: { [axis]: scale }, polar, horizontal, ticks, stringTicks };
   const axisProps = getAxisProps(props, calculatedValues, globalTransform);
   const axisLabelProps = getAxisLabelProps(props, calculatedValues, globalTransform);
+  const axisLabelRole =
+    axisLabelComponent && axisLabelComponent.type && axisLabelComponent.type.role;
+  const tickLabelRole =
+    tickLabelComponent && tickLabelComponent.type && tickLabelComponent.type.role;
+  const axisLabelTheme = axisLabelRole === "tooltip" ? props.theme : undefined;
+  const tickLabelTheme = tickLabelRole === "tooltip" ? props.theme : undefined;
   const initialChildProps = {
     parent: assign(
       { style: style.parent, ticks, standalone, theme, width, height, padding, domain, name },
@@ -375,12 +382,13 @@ const getBaseProps = (props, fallbackProps) => {
     };
     childProps[index] = {
       axis: assign({ dimension: axis }, sharedProps, axisProps),
-      axisLabel: assign({}, sharedProps, axisLabelProps),
+      axisLabel: assign({}, sharedProps, axisLabelProps, { theme: axisLabelTheme }),
       ticks: assign({}, sharedProps, getTickProps(tickLayout, styles.tickStyle, tickValue)),
       tickLabels: assign(
         {},
         sharedProps,
-        getTickLabelProps(tickLayout, styles.labelStyle, anchors, tickValue, text)
+        getTickLabelProps(tickLayout, styles.labelStyle, anchors, tickValue, text),
+        { theme: tickLabelTheme }
       ),
       grid: assign(
         {},

@@ -165,7 +165,8 @@ function getDegrees(props, datum) {
 }
 
 function getProps(props, index) {
-  const { scale, data, style, horizontal, polar, width, height } = props;
+  const { scale, data, style, horizontal, polar, width, height, theme, labelComponent } = props;
+  const role = labelComponent.type && labelComponent.type.role;
   const datum = data[index];
   const degrees = getDegrees(props, datum);
   const textAnchor = polar ? getPolarTextAnchor(props, degrees) : getTextAnchor(props, datum);
@@ -195,7 +196,8 @@ function getProps(props, index) {
     dy,
     width,
     height,
-    style: style.labels
+    style: style.labels,
+    theme: role === "tooltip" ? theme : undefined
   };
 }
 

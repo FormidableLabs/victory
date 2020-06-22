@@ -105,7 +105,7 @@ const relativeMeasurementUnitsCoef = {
 
 const coefficients = {
   heightOverlapCoef: 1.05, // Coefficient for height value to prevent overlap.
-  lineCapitalCoef: 1.15, // Coefficient for height value. Reserve space for capital chars.
+  lineCapitalCoef: 1.15 // Coefficient for height value. Reserve space for capital chars.
 };
 const defaultStyle = {
   lineHeight: 1,
@@ -118,8 +118,8 @@ const defaultStyle = {
 const _degreeToRadian = (angle) => (angle * Math.PI) / 180;
 
 const _getFontData = (fontFamily) => {
-  const possibleFonts = fontFamily.split(",").map(f => f.replace(/'|"/g, ""));
-  const fontMatch = possibleFonts.find(f => fonts[f]) || "Helvetica";
+  const possibleFonts = fontFamily.split(",").map((f) => f.replace(/'|"/g, ""));
+  const fontMatch = possibleFonts.find((f) => fonts[f]) || "Helvetica";
   return fonts[fontMatch];
 };
 
@@ -193,7 +193,7 @@ const _approximateTextWidthInternal = (text, style) => {
             : fontData.avg;
         })
         .reduce((cur, acc) => acc + cur) * fontSize;
-    return width + (letterSpacing * Math.max(len - 1, 0));
+    return width + letterSpacing * Math.max(len - 1, 0);
   });
   return Math.max(...widths);
 };
@@ -208,7 +208,7 @@ const _approximateTextHeightInternal = (text, style) => {
     const height = containsCaps
       ? lineStyle.fontSize * coefficients.lineCapitalCoef
       : lineStyle.fontSize;
-    return total + lineStyle.lineHeight * (height);
+    return total + lineStyle.lineHeight * height;
   }, 0);
 };
 

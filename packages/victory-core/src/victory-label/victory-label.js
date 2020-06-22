@@ -126,7 +126,7 @@ const getDy = (props, verticalAnchor, lineHeight) => {
     return dy + (capHeight / 2 + lineHeights[0] / 2) * fontSizes[0];
   } else if (props.inline) {
     return anchor === "end"
-      ? dy + (capHeight / 2 - (lineHeights[0] / 2)) * fontSizes[0]
+      ? dy + (capHeight / 2 - lineHeights[0] / 2) * fontSizes[0]
       : dy + (capHeight / 2) * fontSizes[0];
   } else if (length === 1) {
     return anchor === "end"
@@ -138,7 +138,7 @@ const getDy = (props, verticalAnchor, lineHeight) => {
     }, 0);
     return anchor === "end"
       ? dy + allHeights
-      : dy + allHeights / 2 + ((capHeight / 2  * lineHeights[length - 1]) * fontSizes[length - 1])
+      : dy + allHeights / 2 + (capHeight / 2) * lineHeights[length - 1] * fontSizes[length - 1];
   }
 };
 
@@ -188,7 +188,13 @@ const getYCoordinate = (calculatedProps, textHeight) => {
 
 const getFullBackground = (calculatedProps, tspanValues) => {
   const {
-    dx = 0, transform, backgroundComponent, backgroundStyle, inline, backgroundPadding, capHeight
+    dx = 0,
+    transform,
+    backgroundComponent,
+    backgroundStyle,
+    inline,
+    backgroundPadding,
+    capHeight
   } = calculatedProps;
   const textSizes = tspanValues.map((tspan) => {
     return tspan.textSize;
@@ -197,9 +203,9 @@ const getFullBackground = (calculatedProps, tspanValues) => {
   const height = inline
     ? Math.max(...textSizes.map((size) => size.height))
     : textSizes.reduce((memo, size, i) => {
-      const capHeightAdjustment = i ? capHeight / 2 : 0;
-      return memo + size.height * (tspanValues[i].lineHeight - capHeightAdjustment)
-    }, 0);
+        const capHeightAdjustment = i ? capHeight / 2 : 0;
+        return memo + size.height * (tspanValues[i].lineHeight - capHeightAdjustment);
+      }, 0);
 
   const width = inline
     ? textSizes.reduce((memo, size, index) => {
@@ -255,7 +261,14 @@ const getInlineXOffset = (calculatedProps, textElements, index) => {
 
 const getChildBackgrounds = (calculatedProps, tspanValues) => {
   const {
-    dy, dx, transform, backgroundStyle, backgroundPadding, backgroundComponent, inline, y
+    dy,
+    dx,
+    transform,
+    backgroundStyle,
+    backgroundPadding,
+    backgroundComponent,
+    inline,
+    y
   } = calculatedProps;
 
   const textElements = tspanValues.map((current, i) => {
@@ -293,9 +306,7 @@ const getChildBackgrounds = (calculatedProps, tspanValues) => {
     const xCoord = inline
       ? getInlineXOffset(calculatedProps, textElements, i) + xCoordinate - padding.left
       : xCoordinate;
-    const yCoord = inline
-      ? getYCoordinate(calculatedProps, height) - padding.top
-      : yCoordinate;
+    const yCoord = inline ? getYCoordinate(calculatedProps, height) - padding.top : yCoordinate;
     const backgroundProps = {
       key: `tspan-background-${i}`,
       height,
@@ -338,7 +349,7 @@ const calculateSpanDy = (tspanValues, i, calculatedProps) => {
 
   return useMultiLineBackgrounds(calculatedProps)
     ? textHeight + current.backgroundPadding.top + previous.backgroundPadding.bottom
-    : textHeight
+    : textHeight;
 };
 
 const getTSpanDy = (tspanValues, calculatedProps, i) => {
@@ -402,7 +413,23 @@ const getCalculatedProps = (props) => {
 
 const renderLabel = (calculatedProps, tspanValues) => {
   const {
-    inline, className, title, events, direction, text, textAnchor, dx, dy, transform, x, y, desc, tabIndex, id, tspanComponent, textComponent
+    inline,
+    className,
+    title,
+    events,
+    direction,
+    text,
+    textAnchor,
+    dx,
+    dy,
+    transform,
+    x,
+    y,
+    desc,
+    tabIndex,
+    id,
+    tspanComponent,
+    textComponent
   } = calculatedProps;
 
   const textProps = {
