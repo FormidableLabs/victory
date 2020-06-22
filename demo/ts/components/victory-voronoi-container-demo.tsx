@@ -590,6 +590,48 @@ export default class VictoryVoronoiContainerDemo extends React.Component<
               }}
             />
           </VictoryChart>
+
+          <VictoryChart
+            height={450}
+            padding={{ top: 100, bottom: 50, left: 50, right: 50 }}
+            style={chartStyle}
+            domain={{ y: [0, 6] }}
+            containerComponent={
+              <VictoryVoronoiContainer
+                voronoiDimension="x"
+                labels={({ datum }) => `y: ${datum.y}`}
+                labelComponent={<VictoryTooltip />}
+                voronoiPadding={{
+                  bottom: 50,
+                  left: 50,
+                  right: 50,
+                  top: 100
+                }}
+              />
+            }
+          >
+            <VictoryLegend
+              x={165}
+              y={10}
+              title="Voronoi padding"
+              centerTitle
+              orientation="horizontal"
+              gutter={20}
+              style={{ border: { stroke: "black" }, title: { fontSize: 20 } }}
+              data={[
+                { name: "One", symbol: { fill: "tomato" } },
+                { name: "Two", symbol: { fill: "orange" } }
+              ]}
+            />
+            <VictoryScatter
+              style={{ data: { fill: "tomato" }, labels: { fill: "tomato" } }}
+              data={[{ x: 0, y: 2 }, { x: 2, y: 3 }, { x: 4, y: 4 }, { x: 6, y: 5 }]}
+            />
+            <VictoryScatter
+              style={{ data: { fill: "orange" }, labels: { fill: "orange" } }}
+              data={[{ x: 2, y: 2 }, { x: 4, y: 3 }, { x: 6, y: 4 }, { x: 8, y: 5 }]}
+            />
+          </VictoryChart>
         </div>
       </div>
     );

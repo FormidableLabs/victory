@@ -23,7 +23,15 @@ export const voronoiContainerMixin = (base) =>
         PropTypes.oneOfType([PropTypes.string, CustomPropTypes.regExp])
       ),
       voronoiDimension: PropTypes.oneOf(["x", "y"]),
-      voronoiPadding: PropTypes.number
+      voronoiPadding: PropTypes.oneOfType([
+        PropTypes.number,
+        PropTypes.shape({
+          top: PropTypes.number,
+          bottom: PropTypes.number,
+          left: PropTypes.number,
+          right: PropTypes.number
+        })
+      ])
     };
     static defaultProps = {
       ...VictoryContainer.defaultProps,
