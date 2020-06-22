@@ -234,7 +234,7 @@ export default class App extends React.Component {
               style={[{ fontSize: 20, fill: "green" }, { fontSize: 30 }]}
               // eslint-disable-next-line no-magic-numbers
               lineHeight={[2, 2, 3, 1]}
-              verticalAnchor="end"
+              verticalAnchor="middle"
             />
           }
         />
@@ -243,7 +243,7 @@ export default class App extends React.Component {
           labelComponent={
             <VictoryLabel
               angle={20}
-              backgroundStyle={[{ fill: "pink" }, { fill: "lavender" }]}
+              backgroundStyle={[{ fill: "pink", opacity: 0.5 }, { fill: "lavender", opacity: 0.5 }]}
               text={[
                 "Victory is awesome.",
                 "Victory is awesome.",
@@ -256,7 +256,7 @@ export default class App extends React.Component {
                 { right: 0 },
                 { right: -20, left: -10 }
               ]}
-              verticalAnchor="end"
+              verticalAnchor="middle"
             />
           }
         />
@@ -326,7 +326,7 @@ export default class App extends React.Component {
               backgroundStyle={[
                 { fill: "pink", opacity: 0.5 },
                 { fill: "orange", opacity: 0.2 },
-                { fill: "cyan", opacity: 0.2 }
+                { fill: "green", opacity: 0.2 }
               ]}
               text={["Victory is awesome. ", "inline labels ", "with multiple backgrounds"]}
               lineHeight={[1, 2, 2]}

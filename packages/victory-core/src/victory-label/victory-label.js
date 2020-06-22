@@ -114,21 +114,31 @@ const getContent = (text, props) => {
   return Array.isArray(child) ? child : `${child}`.split("\n");
 };
 
-const getDy = (props, lineHeight) => {
-  const style = getSingleValue(props.style);
-  const fontSize = style.fontSize;
+const getDy = (props, verticalAnchor, lineHeight) => {
   const dy = props.dy ? Helpers.evaluateProp(props.dy, props) : 0;
   const length = props.inline ? 1 : props.text.length;
   const capHeight = Helpers.evaluateProp(props.capHeight, props);
-  const verticalAnchor = style.verticalAnchor || props.verticalAnchor;
   const anchor = verticalAnchor ? Helpers.evaluateProp(verticalAnchor, props) : "middle";
-  switch (anchor) {
-    case "end":
-      return dy + (capHeight / 2 + (0.5 - length) * lineHeight) * fontSize;
-    case "middle":
-      return dy + (capHeight / 2 + (0.5 - length / 2) * lineHeight) * fontSize;
-    default:
-      return dy + (capHeight / 2 + lineHeight / 2) * fontSize;
+  const fontSizes = [...Array(length).keys()].map((i) => getSingleValue(props.style, i).fontSize);
+  const lineHeights = [...Array(length).keys()].map((i) => getSingleValue(lineHeight, i));
+
+  if (anchor === "start") {
+    return dy + (capHeight / 2 + lineHeights[0] / 2) * fontSizes[0];
+  } else if (props.inline) {
+    return anchor === "end"
+      ? dy + (capHeight / 2 - (lineHeights[0] / 2)) * fontSizes[0]
+      : dy + (capHeight / 2) * fontSizes[0];
+  } else if (length === 1) {
+    return anchor === "end"
+      ? dy + (capHeight / 2 + (0.5 - length) * lineHeights[0]) * fontSizes[0]
+      : dy + (capHeight / 2 + (0.5 - length / 2) * lineHeights[0]) * fontSizes[0];
+  } else {
+    const allHeights = [...Array(length).keys()].reduce((memo, i) => {
+      return memo + (capHeight / 2 - lineHeights[i]) * fontSizes[i];
+    }, 0);
+    return anchor === "end"
+      ? dy + allHeights
+      : dy + allHeights / 2
   }
 };
 
@@ -368,7 +378,7 @@ const getCalculatedProps = (props) => {
     ? Helpers.evaluateProp(props.verticalAnchor, props)
     : "middle";
   const dx = props.dx ? Helpers.evaluateProp(props.dx, props) : 0;
-  const dy = getDy(props, getSingleValue(lineHeight));
+  const dy = getDy(props, verticalAnchor, lineHeight);
   const transform = getTransform(props);
   const x = props.x !== undefined ? props.x : getPosition(props, "x");
   const y = props.y !== undefined ? props.y : getPosition(props, "y");
