@@ -630,3 +630,40 @@ export const FlyoutStyle = () => {
     </div>
   );
 };
+
+export const FlyoutPadding = () => {
+  return (
+    <div style={containerStyle}>
+      <VictoryBar
+        {...defaultBarProps}
+        labelComponent={
+          <VictoryTooltip
+            active
+            flyoutPadding={{ top: 20, left: 15, right: 5 }}
+            text={`flyoutPadding`}
+          />
+        }
+      />
+      <VictoryBar
+        {...defaultBarProps} horizontal
+        labelComponent={
+          <VictoryTooltip
+            active
+            flyoutPadding={{ top: 30, bottom: 10 }}
+            text={`flyoutPadding\nhorizontal`}
+          />
+        }
+      />
+      <VictoryBar
+        {...polarBarProps}
+        labelComponent={
+          <VictoryTooltip
+            active
+            flyoutPadding={{ top: 20, left: 15, right: 5 }}
+            text={`flyoutPadding\npolar`}
+          />
+        }
+      />
+    </div>
+  );
+};

@@ -40,6 +40,15 @@ export default class VictoryTooltip extends React.Component {
     events: PropTypes.object,
     flyoutComponent: PropTypes.element,
     flyoutHeight: PropTypes.oneOfType([CustomPropTypes.nonNegative, PropTypes.func]),
+    flyoutPadding: PropTypes.oneOfType([
+      PropTypes.number,
+      PropTypes.shape({
+        top: PropTypes.number,
+        bottom: PropTypes.number,
+        left: PropTypes.number,
+        right: PropTypes.number
+      })
+    ]),
     flyoutStyle: PropTypes.object,
     flyoutWidth: PropTypes.oneOfType([CustomPropTypes.nonNegative, PropTypes.func]),
     groupComponent: PropTypes.element,
@@ -82,7 +91,8 @@ export default class VictoryTooltip extends React.Component {
     renderInPortal: true,
     labelComponent: <VictoryLabel />,
     flyoutComponent: <Flyout />,
-    groupComponent: <g />
+    groupComponent: <g />,
+    flyoutPadding: {top: 2, bottom: 2, left: 4, right: 4 }
   };
 
   static defaultEvents = (props) => {
@@ -190,11 +200,13 @@ export default class VictoryTooltip extends React.Component {
   }
 
   getEvaluatedProps(props) {
-    const { horizontal, pointerLength, pointerWidth, cornerRadius, centerOffset, dx, dy } = props;
+    const { pointerLength, pointerWidth, cornerRadius, centerOffset, dx, dy } = props;
 
     const active = Helpers.evaluateProp(props.active, props);
     const text = Helpers.evaluateProp(props.text, assign({}, props, { active }));
     const { style, flyoutStyle } = this.getStyles(assign({}, props, { active, text }));
+    const padding = props.flyoutPadding || this.getLabelPadding(style);
+    const flyoutPadding = Helpers.getPadding({ padding });
     const orientation =
       Helpers.evaluateProp(
         props.orientation,
@@ -202,8 +214,9 @@ export default class VictoryTooltip extends React.Component {
       ) || this.getDefaultOrientation(props);
 
     const labelSize = TextSize.approximateTextSize(text, style);
+
     const { flyoutHeight, flyoutWidth } = this.getDimensions(
-      assign({}, props, { style, flyoutStyle, active, text, orientation }),
+      assign({}, props, { style, flyoutStyle, active, text, orientation, flyoutPadding }),
       labelSize
     );
 
@@ -214,7 +227,8 @@ export default class VictoryTooltip extends React.Component {
       flyoutStyle,
       orientation,
       flyoutHeight,
-      flyoutWidth
+      flyoutWidth,
+      flyoutPadding
     });
 
     const offsetX =
@@ -227,21 +241,10 @@ export default class VictoryTooltip extends React.Component {
         ? Helpers.evaluateProp(centerOffset.y, evaluatedProps)
         : 0;
 
-    const padding = (flyoutStyle && flyoutStyle.padding) || 0;
-    const defaultDx = horizontal ? padding : 0;
-    const defaultDy = horizontal ? 0 : padding;
-
-    return assign({}, props, {
-      active,
-      text,
-      style,
-      flyoutStyle,
-      orientation,
-      flyoutHeight,
-      flyoutWidth,
+    return assign({}, evaluatedProps, {
       centerOffset: { x: offsetX, y: offsetY },
-      dx: dx !== undefined ? Helpers.evaluateProp(dx, evaluatedProps) : defaultDx,
-      dy: dy !== undefined ? Helpers.evaluateProp(dy, evaluatedProps) : defaultDy,
+      dx: dx !== undefined ? Helpers.evaluateProp(dx, evaluatedProps) : 0,
+      dy: dy !== undefined ? Helpers.evaluateProp(dy, evaluatedProps) : 0,
       cornerRadius: Helpers.evaluateProp(cornerRadius, evaluatedProps),
       pointerLength: Helpers.evaluateProp(pointerLength, evaluatedProps),
       pointerWidth: Helpers.evaluateProp(pointerWidth, evaluatedProps)
@@ -374,11 +377,13 @@ export default class VictoryTooltip extends React.Component {
   }
 
   getDimensions(props, labelSize) {
-    const { orientation, pointerLength, pointerWidth, style, flyoutHeight, flyoutWidth } = props;
-    const padding = this.getLabelPadding(style);
+    const {
+      orientation, pointerLength, pointerWidth, flyoutHeight, flyoutWidth, flyoutPadding
+    } = props;
     const cornerRadius = Helpers.evaluateProp(props.cornerRadius, props);
     const getHeight = () => {
-      const calculatedHeight = labelSize.height + padding;
+      const calculatedHeight = labelSize.height + flyoutPadding.top + flyoutPadding.bottom;
+
       const minHeight =
         orientation === "top" || orientation === "bottom"
           ? 2 * cornerRadius
@@ -386,7 +391,8 @@ export default class VictoryTooltip extends React.Component {
       return Math.max(minHeight, calculatedHeight);
     };
     const getWidth = () => {
-      const calculatedWidth = labelSize.width + padding;
+      const calculatedWidth = labelSize.width + flyoutPadding.left + flyoutPadding.right;
+
       const minWidth =
         orientation === "left" || orientation === "right"
           ? 2 * cornerRadius + pointerLength
@@ -396,19 +402,22 @@ export default class VictoryTooltip extends React.Component {
     return {
       flyoutHeight: flyoutHeight
         ? Helpers.evaluateProp(flyoutHeight, props)
-        : getHeight(props, labelSize, orientation) + padding / 2,
+        : getHeight(props, labelSize, orientation),
       flyoutWidth: flyoutWidth
         ? Helpers.evaluateProp(flyoutWidth, props)
-        : getWidth(props, labelSize, orientation) + padding
+        : getWidth(props, labelSize, orientation)
     };
   }
 
   getLabelProps(props, calculatedValues) {
-    const { flyoutCenter, style, labelSize, dy, dx } = calculatedValues;
-    const { text, datum, activePoints, labelComponent, index } = props;
+    const { flyoutCenter, style, labelSize, dy = 0, dx = 0 } = calculatedValues;
+    const { text, datum, activePoints, labelComponent, index, flyoutPadding } = props;
     const textAnchor =
       (Array.isArray(style) && style.length ? style[0].textAnchor : style.textAnchor) || "middle";
     const getLabelX = () => {
+      if (!textAnchor || textAnchor === "middle") {
+        return flyoutCenter.x;
+      }
       const sign = textAnchor === "end" ? -1 : 1;
       return flyoutCenter.x - sign * (labelSize.width / 2);
     };
@@ -421,8 +430,8 @@ export default class VictoryTooltip extends React.Component {
       dy,
       dx,
       style,
-      x: !textAnchor || textAnchor === "middle" ? flyoutCenter.x : getLabelX(),
-      y: flyoutCenter.y,
+      x: getLabelX() + (flyoutPadding.left - flyoutPadding.right) / 2,
+      y: flyoutCenter.y + (flyoutPadding.top - flyoutPadding.bottom) / 2,
       verticalAnchor: "middle",
       angle: style.angle
     });
