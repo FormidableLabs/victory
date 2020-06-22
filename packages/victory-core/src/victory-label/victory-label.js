@@ -138,7 +138,7 @@ const getDy = (props, verticalAnchor, lineHeight) => {
     }, 0);
     return anchor === "end"
       ? dy + allHeights
-      : dy + allHeights / 2
+      : dy + allHeights / 2 + ((capHeight / 2  * lineHeights[length - 1]) * fontSizes[length - 1])
   }
 };
 
@@ -188,7 +188,7 @@ const getYCoordinate = (calculatedProps, textHeight) => {
 
 const getFullBackground = (calculatedProps, tspanValues) => {
   const {
-    dx = 0, transform, backgroundComponent, backgroundStyle, inline, backgroundPadding
+    dx = 0, transform, backgroundComponent, backgroundStyle, inline, backgroundPadding, capHeight
   } = calculatedProps;
   const textSizes = tspanValues.map((tspan) => {
     return tspan.textSize;
@@ -196,7 +196,10 @@ const getFullBackground = (calculatedProps, tspanValues) => {
 
   const height = inline
     ? Math.max(...textSizes.map((size) => size.height))
-    : textSizes.reduce((memo, size, i) => memo + size.height * tspanValues[i].lineHeight, 0);
+    : textSizes.reduce((memo, size, i) => {
+      const capHeightAdjustment = i ? capHeight / 2 : 0;
+      return memo + size.height * (tspanValues[i].lineHeight - capHeightAdjustment)
+    }, 0);
 
   const width = inline
     ? textSizes.reduce((memo, size, index) => {

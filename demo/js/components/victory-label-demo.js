@@ -164,6 +164,7 @@ export default class App extends React.Component {
             <VictoryLabel
               lineHeight={2}
               textAnchor="middle"
+              backgroundStyle={{ fill: "cyan", opacity: 0.4 }}
               verticalAnchor="middle"
               text={"Victory is awesome.\nThis is (middle, middle) anchoring.\nGot it?"}
             />
