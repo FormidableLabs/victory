@@ -27,14 +27,6 @@ const defaultScatterProps = {
   size: 5
 };
 
-// export const DefaultRendering = () => {
-//   return (
-//     <div style={containerStyle}>
-//       <VictoryScatter {...defaultScatterProps} labelComponent={<VictoryLabel />} />
-//     </div>
-//   );
-// };
-
 export default class App extends React.Component {
   render() {
     return (
@@ -176,7 +168,8 @@ export default class App extends React.Component {
           }
         />
         <VictoryScatter
-          {...defaultScatterProps} data={[{ x: 0, y: 5 }]}
+          {...defaultScatterProps}
+          data={[{ x: 0, y: 5 }]}
           labelComponent={
             <VictoryLabel
               backgroundStyle={{ fill: "lavender" }}
@@ -187,7 +180,8 @@ export default class App extends React.Component {
           }
         />
         <VictoryScatter
-          {...defaultScatterProps} data={[{ x: -5, y: 5 }]}
+          {...defaultScatterProps}
+          data={[{ x: -5, y: 5 }]}
           labelComponent={
             <VictoryLabel
               backgroundStyle={{ fill: "lavender" }}
@@ -201,13 +195,14 @@ export default class App extends React.Component {
           }
         />
         <VictoryScatter
-          {...defaultScatterProps} data={[{ x: -10, y: 5 }]}
+          {...defaultScatterProps}
+          data={[{ x: -10, y: 5 }]}
           labelComponent={
             <VictoryLabel
               textAnchor="start"
               verticalAnchor="start"
               backgroundStyle={{ fill: "lavender" }}
-              text={["Use", "dx", "attribute", "to shift", "labels", "inline."]}
+              text={["Use", "dx", "attribute", "to shift", "labels"]}
               inline
               dx={25}
             />
@@ -223,7 +218,6 @@ export default class App extends React.Component {
                 { fill: "purple" },
                 { fill: "red" }
               ]}
-
               text={["Victory is awesome.", "This is variable", "lineHeight", "as an array."]}
               style={[{ fontSize: 20, fill: "green" }, { fontSize: 30 }]}
               // eslint-disable-next-line no-magic-numbers
@@ -242,22 +236,20 @@ export default class App extends React.Component {
                 "Victory is awesome.",
                 "Victory is awesome.",
                 "Victory is awesome.",
-                "Victory is awesome.",
+                "Victory is awesome."
               ]}
-              backgroundPadding={[
-                { left: -40 },
-                { right: -40 },
-                { right: 0 }
-              ]}
+              backgroundPadding={[{ left: -40 }, { right: -40 }, { right: 0 }]}
               verticalAnchor="end"
             />
           }
         />
         <VictoryScatter
-          {...defaultScatterProps}  data={[{ x: -10, y: 5 }]}
+          {...defaultScatterProps}
+          data={[{ x: -10, y: 5 }]}
           labelComponent={
             <VictoryLabel
               inline
+              dx={20}
               angle={20}
               textAnchor="start"
               backgroundStyle={[
@@ -265,23 +257,15 @@ export default class App extends React.Component {
                 { fill: "orange", opacity: 0.2 },
                 { fill: "cyan", opacity: 0.2 }
               ]}
-              backgroundPadding={[
-                { right: -22 },
-                { right: -30, top: 15 },
-                { top: 20 }
-              ]}
-              text={[
-                "Victory is awesome. ",
-                "inline labels ",
-                "with multiple backgrounds"
-              ]}
+              text={["Victory is awesome. ", "inline labels ", "with multiple backgrounds"]}
               lineHeight={[1, 2, 2]}
               verticalAnchor="start"
             />
           }
         />
         <VictoryScatter
-          {...defaultScatterProps}  data={[{ x: -10, y: 5 }]}
+          {...defaultScatterProps}
+          data={[{ x: -10, y: 5 }]}
           labelComponent={
             <VictoryLabel
               angle={20}
@@ -291,22 +275,14 @@ export default class App extends React.Component {
                 { fill: "orange", opacity: 0.2 },
                 { fill: "cyan", opacity: 0.2 }
               ]}
-              text={[
-                "Victory is awesome. ",
-                "inline labels ",
-                "with multiple backgrounds"
-              ]}
-              backgroundPadding={[
-                { right: -22 },
-                { right: -30, top: 15 },
-                { top: 50 }
-              ]}
+              text={["Victory is awesome. ", "inline labels ", "with multiple backgrounds"]}
               verticalAnchor="middle"
             />
           }
         />
         <VictoryScatter
-          {...defaultScatterProps}  data={[{ x: 10, y: -5 }]}
+          {...defaultScatterProps}
+          data={[{ x: 10, y: -5 }]}
           labelComponent={
             <VictoryLabel
               inline
@@ -317,23 +293,15 @@ export default class App extends React.Component {
                 { fill: "orange", opacity: 0.2 },
                 { fill: "cyan", opacity: 0.2 }
               ]}
-              backgroundPadding={[
-                { right: -22 },
-                { right: -30, top: 15 },
-                { top: 50 }
-              ]}
-              text={[
-                "Victory is awesome!!!! ",
-                "inline labels ",
-                "+ backgrounds"
-              ]}
+              text={["Victory is awesome!!!! ", "inline labels ", "+ backgrounds"]}
               lineHeight={[1, 2, 2]}
               verticalAnchor="start"
             />
           }
         />
         <VictoryScatter
-          {...defaultScatterProps}  data={[{ x: 10, y: -5 }]}
+          {...defaultScatterProps}
+          data={[{ x: 10, y: -5 }]}
           labelComponent={
             <VictoryLabel
               angle={20}
@@ -343,11 +311,7 @@ export default class App extends React.Component {
                 { fill: "orange", opacity: 0.2 },
                 { fill: "cyan", opacity: 0.2 }
               ]}
-              text={[
-                "Victory is awesome. ",
-                "inline labels ",
-                "with multiple backgrounds"
-              ]}
+              text={["Victory is awesome. ", "inline labels ", "with multiple backgrounds"]}
               lineHeight={[1, 2, 2]}
               verticalAnchor="end"
             />
@@ -365,11 +329,7 @@ export default class App extends React.Component {
                 { fill: "orange", opacity: 0.2 },
                 { fill: "cyan", opacity: 0.2 }
               ]}
-              text={[
-                "Victory is awesome. ",
-                "inline labels ",
-                "with multiple backgrounds"
-              ]}
+              text={["Victory is awesome. ", "inline labels ", "with multiple backgrounds"]}
               lineHeight={[1, 2, 2]}
               verticalAnchor="start"
             />
@@ -386,11 +346,7 @@ export default class App extends React.Component {
                 { fill: "orange", opacity: 0.2 },
                 { fill: "cyan", opacity: 0.2 }
               ]}
-              text={[
-                "Victory is awesome. ",
-                "inline labels ",
-                "with multiple backgrounds"
-              ]}
+              text={["Victory is awesome. ", "inline labels ", "with multiple backgrounds"]}
               lineHeight={[1, 2, 2]}
               verticalAnchor="start"
             />
@@ -406,12 +362,8 @@ export default class App extends React.Component {
                 { fill: "orange", opacity: 0.2 },
                 { fill: "cyan", opacity: 0.2 }
               ]}
-              style={[{ fontSize: 15 }, { fontSize: 20 }, { fontSize: 12 }]}
-              text={[
-                "Victory is awesome. ",
-                "inline labels ",
-                "with multiple backgrounds"
-              ]}
+              style={[{ letterSpacing: 2, fontSize: 15 }, { fontSize: 20 }, { fontSize: 12 }]}
+              text={["Victory is awesome. ", "inline labels ", "with multiple backgrounds"]}
               lineHeight={[1, 2, 2]}
               verticalAnchor="start"
             />

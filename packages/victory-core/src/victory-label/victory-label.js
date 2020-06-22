@@ -144,9 +144,8 @@ const getTransform = (props) => {
   return transformPart || angle ? Style.toTransformString(transformPart, rotatePart) : undefined;
 };
 
-const getXCoordinate = (props, calculatedProps, labelSizeWidth) => {
-  const { direction, textAnchor, x } = calculatedProps;
-  const { dx } = props;
+const getXCoordinate = (calculatedProps, labelSizeWidth) => {
+  const { direction, textAnchor, x, dx } = calculatedProps;
   if (direction === "rtl") {
     return x - labelSizeWidth;
   }
@@ -156,31 +155,33 @@ const getXCoordinate = (props, calculatedProps, labelSizeWidth) => {
       return Math.round(x - labelSizeWidth / 2);
     case "end":
       return Math.round(x - labelSizeWidth);
-    default: // start
+    default:
+      // start
       return x + (dx || 0);
   }
 };
 
-const getYCoordinate = (calculatedProps, props, textHeight) => {
-  const { verticalAnchor, y } = calculatedProps;
-  const { dy } = props;
-  const offset = y + (dy || 0);
+const getYCoordinate = (calculatedProps, textHeight) => {
+  const { verticalAnchor, y, originalDy = 0 } = calculatedProps;
+  const offset = y + originalDy;
 
   switch (verticalAnchor) {
     case "start":
       return Math.floor(offset);
     case "end":
       return Math.ceil(offset - textHeight);
-    default: // middle
+    default:
+      // middle
       return Math.floor(offset - textHeight / 2);
   }
 };
 
-const getFullBackground = (props, calculatedProps, tspanValues) => {
-  const { backgroundComponent, backgroundStyle, inline, backgroundPadding } = props;
-  const { dx, transform } = calculatedProps;
+const getFullBackground = (calculatedProps, tspanValues) => {
+  const {
+    dx = 0, transform, backgroundComponent, backgroundStyle, inline, backgroundPadding
+  } = calculatedProps;
   const textSizes = tspanValues.map((tspan) => {
-    return TextSize.approximateTextSize(tspan.text, tspan.style);
+    return tspan.textSize;
   });
 
   const height = inline
@@ -188,11 +189,14 @@ const getFullBackground = (props, calculatedProps, tspanValues) => {
     : textSizes.reduce((memo, size, i) => memo + size.height * tspanValues[i].lineHeight, 0);
 
   const width = inline
-    ? textSizes.reduce((memo, size) => memo + size.width, 0) + (dx || 0)
-    : Math.max(...textSizes.map((size) => size.width)) + (dx || 0);
+    ? textSizes.reduce((memo, size, index) => {
+        const offset = index ? dx : 0;
+        return memo + size.width + offset;
+      }, 0)
+    : Math.max(...textSizes.map((size) => size.width));
 
-  const xCoordinate = getXCoordinate(props, calculatedProps, width);
-  const yCoordinate = getYCoordinate(calculatedProps, props, height);
+  const xCoordinate = getXCoordinate(calculatedProps, width);
+  const yCoordinate = getYCoordinate(calculatedProps, height);
 
   const backgroundProps = {
     key: "background",
@@ -200,7 +204,7 @@ const getFullBackground = (props, calculatedProps, tspanValues) => {
     style: backgroundStyle,
     transform,
     width: width + backgroundPadding.left + backgroundPadding.right,
-    x: xCoordinate,
+    x: inline ? xCoordinate - backgroundPadding.left : xCoordinate + dx - backgroundPadding.left,
     y: yCoordinate
   };
 
@@ -212,7 +216,7 @@ const getFullBackground = (props, calculatedProps, tspanValues) => {
 
 const getInlineXOffset = (calculatedProps, textElements, index) => {
   const { textAnchor } = calculatedProps;
-  const widths = textElements.map(t => t.widthWithPadding);
+  const widths = textElements.map((t) => t.widthWithPadding);
   const totalWidth = widths.reduce((memo, width) => memo + width, 0);
   const centerOffset = -totalWidth / 2;
   switch (textAnchor) {
@@ -226,22 +230,24 @@ const getInlineXOffset = (calculatedProps, textElements, index) => {
         memo = i > index ? memo - width : memo;
         return memo;
       }, 0);
-    default: // middle
+    default:
+      // middle
       return widths.reduce((memo, width, i) => {
         const offsetWidth = i < index ? width : 0;
         memo = i === index ? memo + width / 2 : memo + offsetWidth;
         return memo;
       }, centerOffset);
   }
-}
+};
 
-const getChildBackgrounds = (props, calculatedProps, tspanValues) => {
-  const { backgroundStyle, backgroundPadding, backgroundComponent, inline, y } = props;
-  const { dy, transform } = calculatedProps;
+const getChildBackgrounds = (calculatedProps, tspanValues) => {
+  const {
+    dy, transform, backgroundStyle, backgroundPadding, backgroundComponent, inline, y
+  } = calculatedProps;
 
   const textElements = tspanValues.map((current, i) => {
     const previous = getSingleValue(tspanValues, i - 1);
-    const labelSize = TextSize.approximateTextSize(current.text, current.style);
+    const labelSize = current.textSize;
     const totalLineHeight = current.fontSize * current.lineHeight;
     const textHeight = Math.ceil(totalLineHeight);
     const padding = getSingleValue(backgroundPadding, i);
@@ -264,7 +270,7 @@ const getChildBackgrounds = (props, calculatedProps, tspanValues) => {
   });
 
   return textElements.map((textElement, i) => {
-    const xCoordinate = getXCoordinate(props, calculatedProps, textElement.widthWithPadding);
+    const xCoordinate = getXCoordinate(calculatedProps, textElement.widthWithPadding);
     const yCoordinate = textElements.slice(0, i + 1).reduce((prev, curr) => {
       return prev + curr.dy;
     }, y);
@@ -274,7 +280,7 @@ const getChildBackgrounds = (props, calculatedProps, tspanValues) => {
       ? getInlineXOffset(calculatedProps, textElements, i) + xCoordinate - padding.left
       : xCoordinate;
     const yCoord = inline
-      ? getYCoordinate(calculatedProps, props, height) - padding.top
+      ? getYCoordinate(calculatedProps, height) - padding.top
       : yCoordinate;
     const backgroundProps = {
       key: `tspan-background-${i}`,
@@ -293,31 +299,37 @@ const getChildBackgrounds = (props, calculatedProps, tspanValues) => {
   });
 };
 
-const getBackgroundElement = (props, calculatedProps, tspanValues) => {
-  return useMultiLineBackgrounds(props)
-    ? getChildBackgrounds(props, calculatedProps, tspanValues)
-    : getFullBackground(props, calculatedProps, tspanValues);
+const getBackgroundElement = (calculatedProps, tspanValues) => {
+  return useMultiLineBackgrounds(calculatedProps)
+    ? getChildBackgrounds(calculatedProps, tspanValues)
+    : getFullBackground(calculatedProps, tspanValues);
 };
 
 const calculateSpanDy = (current, previous) => {
-  return (
-    -0.5 * previous.fontSize -
-    0.5 * (previous.fontSize * previous.lineHeight) +
-    previous.fontSize * previous.lineHeight +
-    0.5 * current.fontSize +
-    0.5 * current.fontSize * current.lineHeight -
-    (current.fontSize - current.capHeight) * 0.5 +
-    (previous.fontSize - previous.capHeight) * 0.5
-  );
+  const previousHeight = previous.fontSize * previous.lineHeight;
+  const currentHeight = current.fontSize * current.lineHeight;
+  const previousCaps = previous.fontSize - previous.capHeight;
+  const currentCaps = current.fontSize - current.capHeight;
+
+  const textHeight =
+    previousHeight -
+    previous.fontSize / 2 +
+    current.fontSize / 2 -
+    previousHeight / 2 +
+    currentHeight / 2 -
+    currentCaps / 2 +
+    previousCaps / 2;
+
+  return textHeight
 };
 
-const getTSpanDy = (tspanValues, props, i) => {
-  const { inline } = props;
+const getTSpanDy = (tspanValues, calculatedProps, i) => {
+  const { inline } = calculatedProps;
   const current = getSingleValue(tspanValues, i);
   const previous = getSingleValue(tspanValues, i - 1);
 
   if (i && !inline) {
-    return useMultiLineBackgrounds(props)
+    return useMultiLineBackgrounds(calculatedProps)
       ? calculateSpanDy(current, previous) +
           current.backgroundPadding.top +
           previous.backgroundPadding.bottom
@@ -361,22 +373,24 @@ const getCalculatedProps = (props) => {
   const x = props.x !== undefined ? props.x : getPosition(props, "x");
   const y = props.y !== undefined ? props.y : getPosition(props, "y");
 
-  return {
+  return assign({}, props, {
     lineHeight,
     direction,
     textAnchor,
     verticalAnchor,
     dx,
     dy,
+    originalDy: props.dy,
     transform,
     x,
     y
-  };
+  });
 };
 
-const renderLabel = (props, calculatedProps, tspanValues) => {
-  const { inline, className, title, events, direction, text } = props;
-  const { textAnchor, dx, dy, transform, x, y } = calculatedProps;
+const renderLabel = (calculatedProps, tspanValues) => {
+  const {
+    inline, className, title, events, direction, text, textAnchor, dx, dy, transform, x, y, desc, tabIndex, id, tspanComponent, textComponent
+  } = calculatedProps;
 
   const textProps = {
     key: "text",
@@ -388,26 +402,26 @@ const renderLabel = (props, calculatedProps, tspanValues) => {
     transform,
     className,
     title,
-    desc: Helpers.evaluateProp(props.desc, props),
-    tabIndex: Helpers.evaluateProp(props.tabIndex, props),
-    id: props.id
+    desc: Helpers.evaluateProp(desc, calculatedProps),
+    tabIndex: Helpers.evaluateProp(tabIndex, calculatedProps),
+    id
   };
 
   const tspans = text.map((line, i) => {
     const currentStyle = tspanValues[i].style;
     const tspanProps = {
-      key: `${props.id}-key-${i}`,
-      x: !inline ? props.x : undefined,
+      key: `${id}-key-${i}`,
+      x: !inline ? x : undefined,
       dx: inline ? dx + tspanValues[i].backgroundPadding.left : dx,
-      dy: getTSpanDy(tspanValues, props, i),
+      dy: getTSpanDy(tspanValues, calculatedProps, i),
       textAnchor: currentStyle.textAnchor || textAnchor,
       style: currentStyle,
       children: line
     };
-    return React.cloneElement(props.tspanComponent, tspanProps);
+    return React.cloneElement(tspanComponent, tspanProps);
   });
 
-  return React.cloneElement(props.textComponent, textProps, tspans);
+  return React.cloneElement(textComponent, textProps, tspans);
 };
 
 const VictoryLabel = (props) => {
@@ -417,8 +431,7 @@ const VictoryLabel = (props) => {
     return null;
   }
   const calculatedProps = getCalculatedProps(props);
-  const { text, style, capHeight, backgroundPadding } = props;
-  const { lineHeight } = calculatedProps;
+  const { text, style, capHeight, backgroundPadding, lineHeight } = calculatedProps;
 
   const tspanValues = text.map((line, i) => {
     const currentStyle = getSingleValue(style, i);
@@ -429,15 +442,16 @@ const VictoryLabel = (props) => {
       fontSize: currentStyle.fontSize || defaultStyles.fontSize,
       capHeight: capHeightPx,
       text: line,
+      textSize: TextSize.approximateTextSize(line, currentStyle),
       lineHeight: currentLineHeight,
       backgroundPadding: getSingleValue(backgroundPadding, i)
     };
   });
 
-  const label = renderLabel(props, calculatedProps, tspanValues);
+  const label = renderLabel(calculatedProps, tspanValues);
 
   if (props.backgroundStyle) {
-    const backgroundElement = getBackgroundElement(props, calculatedProps, tspanValues);
+    const backgroundElement = getBackgroundElement(calculatedProps, tspanValues);
     const children = [backgroundElement, label];
     const backgroundWithLabel = React.cloneElement(props.groupComponent, {}, children);
 
