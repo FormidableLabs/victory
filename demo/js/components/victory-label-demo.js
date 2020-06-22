@@ -96,7 +96,19 @@ export default class App extends React.Component {
               style={[{ fontSize: 20, fill: "green" }, { fontSize: 10 }]}
               lineHeight={[1, 3, 1]}
               textAnchor="start"
-              verticalAnchor="start"
+              verticalAnchor="end"
+              text={"Victory is awesome.\nThis is (start, start) anchoring.\nCapisce?"}
+            />
+          }
+        />
+        <VictoryScatter
+          {...defaultScatterProps}
+          labelComponent={
+            <VictoryLabel
+              style={[{ fontSize: 20, fill: "green" }, { fontSize: 10 }]}
+              lineHeight={[1, 3, 1]}
+              textAnchor="start"
+              verticalAnchor="end"
               text={"Victory is awesome.\nThis is (start, start) anchoring.\nCapisce?"}
             />
           }
@@ -213,16 +225,16 @@ export default class App extends React.Component {
           labelComponent={
             <VictoryLabel
               backgroundStyle={[
-                { fill: "pink" },
-                { fill: "blue" },
-                { fill: "purple" },
-                { fill: "red" }
+                { fill: "pink", opacity: 0.4 },
+                { fill: "blue", opacity: 0.4 },
+                { fill: "purple", opacity: 0.4 },
+                { fill: "red", opacity: 0.4 }
               ]}
               text={["Victory is awesome.", "This is variable", "lineHeight", "as an array."]}
               style={[{ fontSize: 20, fill: "green" }, { fontSize: 30 }]}
               // eslint-disable-next-line no-magic-numbers
               lineHeight={[2, 2, 3, 1]}
-              verticalAnchor="start"
+              verticalAnchor="end"
             />
           }
         />
@@ -238,7 +250,12 @@ export default class App extends React.Component {
                 "Victory is awesome.",
                 "Victory is awesome."
               ]}
-              backgroundPadding={[{ left: -40 }, { right: -40 }, { right: 0 }]}
+              backgroundPadding={[
+                { left: -10 },
+                { right: -20 },
+                { right: 0 },
+                { right: -20, left: -10 }
+              ]}
               verticalAnchor="end"
             />
           }

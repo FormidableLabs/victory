@@ -242,7 +242,7 @@ const getInlineXOffset = (calculatedProps, textElements, index) => {
 
 const getChildBackgrounds = (calculatedProps, tspanValues) => {
   const {
-    dy, transform, backgroundStyle, backgroundPadding, backgroundComponent, inline, y
+    dy, dx, transform, backgroundStyle, backgroundPadding, backgroundComponent, inline, y
   } = calculatedProps;
 
   const textElements = tspanValues.map((current, i) => {
@@ -252,6 +252,7 @@ const getChildBackgrounds = (calculatedProps, tspanValues) => {
     const textHeight = Math.ceil(totalLineHeight);
     const padding = getSingleValue(backgroundPadding, i);
     const prevPadding = getSingleValue(backgroundPadding, i - 1);
+    const xOffset = inline ? dx || 0 : 0;
 
     const childDy =
       i && !inline
@@ -262,7 +263,7 @@ const getChildBackgrounds = (calculatedProps, tspanValues) => {
       textHeight,
       labelSize,
       heightWithPadding: textHeight + padding.top + padding.bottom,
-      widthWithPadding: labelSize.width + padding.left + padding.right,
+      widthWithPadding: labelSize.width + padding.left + padding.right + xOffset,
       y,
       fontSize: current.fontSize,
       dy: childDy
@@ -270,7 +271,7 @@ const getChildBackgrounds = (calculatedProps, tspanValues) => {
   });
 
   return textElements.map((textElement, i) => {
-    const xCoordinate = getXCoordinate(calculatedProps, textElement.widthWithPadding);
+    const xCoordinate = getXCoordinate(calculatedProps, textElement.labelSize.width);
     const yCoordinate = textElements.slice(0, i + 1).reduce((prev, curr) => {
       return prev + curr.dy;
     }, y);
@@ -288,7 +289,7 @@ const getChildBackgrounds = (calculatedProps, tspanValues) => {
       style: getSingleValue(backgroundStyle, i),
       width: textElement.widthWithPadding,
       transform,
-      x: xCoord + padding.left,
+      x: xCoord - padding.left,
       y: yCoord
     };
 
@@ -305,7 +306,9 @@ const getBackgroundElement = (calculatedProps, tspanValues) => {
     : getFullBackground(calculatedProps, tspanValues);
 };
 
-const calculateSpanDy = (current, previous) => {
+const calculateSpanDy = (tspanValues, i, calculatedProps) => {
+  const current = getSingleValue(tspanValues, i);
+  const previous = getSingleValue(tspanValues, i - 1);
   const previousHeight = previous.fontSize * previous.lineHeight;
   const currentHeight = current.fontSize * current.lineHeight;
   const previousCaps = previous.fontSize - previous.capHeight;
@@ -320,20 +323,17 @@ const calculateSpanDy = (current, previous) => {
     currentCaps / 2 +
     previousCaps / 2;
 
-  return textHeight
+  return useMultiLineBackgrounds(calculatedProps)
+    ? textHeight + current.backgroundPadding.top + previous.backgroundPadding.bottom
+    : textHeight
 };
 
 const getTSpanDy = (tspanValues, calculatedProps, i) => {
   const { inline } = calculatedProps;
   const current = getSingleValue(tspanValues, i);
-  const previous = getSingleValue(tspanValues, i - 1);
 
   if (i && !inline) {
-    return useMultiLineBackgrounds(calculatedProps)
-      ? calculateSpanDy(current, previous) +
-          current.backgroundPadding.top +
-          previous.backgroundPadding.bottom
-      : calculateSpanDy(current, previous);
+    return calculateSpanDy(tspanValues, i, calculatedProps);
   } else if (inline) {
     return i === 0 ? current.backgroundPadding.top : undefined;
   } else {
