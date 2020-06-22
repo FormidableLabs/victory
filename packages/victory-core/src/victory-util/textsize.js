@@ -106,7 +106,6 @@ const relativeMeasurementUnitsCoef = {
 const coefficients = {
   heightOverlapCoef: 1.05, // Coefficient for height value to prevent overlap.
   lineCapitalCoef: 1.15, // Coefficient for height value. Reserve space for capital chars.
-  lineSpaceHeightCoef: 0.2 // Coefficient for height value. Reserve space between lines.
 };
 const defaultStyle = {
   lineHeight: 1,
@@ -209,8 +208,7 @@ const _approximateTextHeightInternal = (text, style) => {
     const height = containsCaps
       ? lineStyle.fontSize * coefficients.lineCapitalCoef
       : lineStyle.fontSize;
-    const emptySpace = index === 0 ? 0 : lineStyle.fontSize * coefficients.lineSpaceHeightCoef;
-    return total + lineStyle.lineHeight * (height + emptySpace);
+    return total + lineStyle.lineHeight * (height);
   }, 0);
 };
 
