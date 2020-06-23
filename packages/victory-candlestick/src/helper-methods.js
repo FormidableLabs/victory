@@ -202,6 +202,8 @@ const getLabelProps = (props, text, style, type) => {
   } = props;
 
   const component = props[`${type}LabelComponent`] || props.labelComponent;
+  const role = component && component.type && component.type.role;
+  const theme = role === "tooltip" ? props.theme : undefined;
   const defaultOrientation = horizontal ? "top" : "right";
   const orientation =
     (component.props && component.props.orientation) ||
@@ -240,7 +242,8 @@ const getLabelProps = (props, text, style, type) => {
     textAnchor: labelStyle.textAnchor || defaultTextAnchors[orientation],
     verticalAnchor: labelStyle.verticalAnchor || defaultVerticalAnchors[orientation],
     angle: labelStyle.angle,
-    horizontal
+    horizontal,
+    theme
   };
 };
 /* eslint-enable max-params*/

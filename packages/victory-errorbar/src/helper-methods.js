@@ -94,7 +94,7 @@ const getCalculatedValues = (props) => {
 };
 
 const getLabelProps = (dataProps, text, style) => {
-  const { x, y, index, scale, errorY, errorX, horizontal } = dataProps;
+  const { x, y, index, scale, errorY, errorX, horizontal, labelComponent } = dataProps;
   const getError = (type = "x") => {
     const baseError = type === "y" ? errorY : errorX;
     const error = baseError && Array.isArray(baseError) ? baseError[0] : baseError;
@@ -104,6 +104,8 @@ const getLabelProps = (dataProps, text, style) => {
   const padding = labelStyle.padding || 0;
   const textAnchor = horizontal ? "start" : "middle";
   const verticalAnchor = horizontal ? "middle" : "end";
+  const labelRole = labelComponent && labelComponent.type && labelComponent.type.role;
+  const theme = labelRole === "tooltip" ? dataProps.theme : undefined;
   return {
     style: labelStyle,
     y: horizontal ? y : getError("y"),
@@ -118,7 +120,8 @@ const getLabelProps = (dataProps, text, style) => {
     textAnchor: labelStyle.textAnchor || textAnchor,
     verticalAnchor: labelStyle.verticalAnchor || verticalAnchor,
     angle: labelStyle.angle,
-    horizontal
+    horizontal,
+    theme
   };
 };
 
@@ -188,7 +191,7 @@ const getBaseProps = (props, fallbackProps) => {
     };
     const text = LabelHelpers.getText(props, datum, index);
     if ((text !== undefined && text !== null) || (labels && (events || sharedEvents))) {
-      childProps[eventKey].labels = getLabelProps(dataProps, text, style);
+      childProps[eventKey].labels = getLabelProps(assign({}, props, dataProps), text, style);
     }
 
     return childProps;

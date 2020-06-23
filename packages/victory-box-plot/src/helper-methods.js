@@ -377,7 +377,7 @@ const getBaseProps = (props, fallbackProps) => {
         (labelProp && (events || sharedEvents))
       ) {
         const target = `${type}Labels`;
-        acc[eventKey][target] = getLabelProps(dataProps, labelText, type);
+        acc[eventKey][target] = getLabelProps(assign({}, props, dataProps), labelText, type);
       }
     });
 

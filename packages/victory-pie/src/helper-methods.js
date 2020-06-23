@@ -136,7 +136,7 @@ const getVerticalAnchor = (orientation) => {
 };
 
 const getLabelProps = (text, dataProps, calculatedValues) => {
-  const { index, datum, data, slice } = dataProps;
+  const { index, datum, data, slice, labelComponent } = dataProps;
   const { style, defaultRadius, origin, width, height } = calculatedValues;
   const labelRadius = Helpers.evaluateProp(
     calculatedValues.labelRadius,
@@ -154,6 +154,8 @@ const getLabelProps = (text, dataProps, calculatedValues) => {
   const labelArc = getLabelArc(defaultRadius, labelRadius, evaluatedStyle);
   const position = getLabelPosition(labelArc, slice, labelPosition);
   const orientation = getLabelOrientation(slice);
+  const labelRole = labelComponent && labelComponent.type && labelComponent.type.role;
+  const theme = labelRole === "tooltip" ? dataProps.theme : undefined;
   return {
     width,
     height,
@@ -168,7 +170,8 @@ const getLabelProps = (text, dataProps, calculatedValues) => {
     y: Math.round(position[1]) + origin.y,
     textAnchor: labelStyle.textAnchor || getTextAnchor(orientation),
     verticalAnchor: labelStyle.verticalAnchor || getVerticalAnchor(orientation),
-    angle: labelStyle.angle
+    angle: labelStyle.angle,
+    theme
   };
 };
 
@@ -222,7 +225,9 @@ export const getBaseProps = (props, fallbackProps) => {
     const text = getLabelText(props, datum, index);
     if ((text !== undefined && text !== null) || (labels && (events || sharedEvents))) {
       const evaluatedText = Helpers.evaluateProp(text, dataProps);
-      childProps[eventKey].labels = getLabelProps(evaluatedText, dataProps, calculatedValues);
+      childProps[eventKey].labels = getLabelProps(
+        evaluatedText, assign({}, props, dataProps), calculatedValues
+        );
     }
     return childProps;
   }, initialChildProps);

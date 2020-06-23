@@ -136,7 +136,7 @@ export const voronoiContainerMixin = (base) =>
     }
 
     getLabelProps(props, points) {
-      const { labels, scale, labelComponent, theme, width, height } = props;
+      const { labels, scale, labelComponent, width, height } = props;
       const componentProps = labelComponent.props || {};
       const text = points.reduce((memo, datum) => {
         const labelProps = defaults({}, componentProps, { datum, active: true });
@@ -152,6 +152,8 @@ export const voronoiContainerMixin = (base) =>
       // eslint-disable-next-line no-unused-vars
       const { childName, eventKey, style, continuous, ...datum } = points[0];
       const name = props.name === childName ? childName : `${props.name}-${childName}`;
+      const labelRole = labelComponent && labelComponent.type && labelComponent.type.role;
+      const theme = labelRole === "tooltip" ? props.theme : undefined;
       const labelProps = defaults(
         {
           key: `${name}-${eventKey}-voronoi-tooltip`,
@@ -163,10 +165,10 @@ export const voronoiContainerMixin = (base) =>
           activePoints: points,
           datum,
           scale,
-          theme,
           text,
           width,
-          height
+          height,
+          theme
         },
         componentProps,
         this.getDefaultLabelProps(props, points)
