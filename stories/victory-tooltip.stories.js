@@ -15,7 +15,6 @@ const containerStyle = {
 
 const style = {
   parent: { border: "1px solid #ccc", margin: "1%", maxWidth: "25%" },
-  labels: { padding: 0 },
   data: { fill: "gold", width: 20 }
 };
 

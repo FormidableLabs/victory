@@ -44,10 +44,7 @@ const getSize = (datum, props) => {
 };
 
 const getCalculatedValues = (props) => {
-  const defaultStyles =
-    props.theme && props.theme.scatter && props.theme.scatter.style
-      ? props.theme.scatter.style
-      : {};
+  const defaultStyles = Helpers.getDefaultStyles(props, "scatter");
   const style = Helpers.getStyles(props.style, defaultStyles);
   const data = Data.getData(props);
   const range = {

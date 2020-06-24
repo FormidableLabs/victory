@@ -38,7 +38,17 @@ const getDomain = (props, axis) => {
   return Domain.createDomainFunction(getDomainFromData)(props, axis);
 };
 
-const getStyles = (style, defaultStyles = {}) => {
+const getLabelStyle = (props, styleObject, namespace) => {
+  const component = props[`${namespace}LabelComponent`];
+  const baseStyle = styleObject[`${namespace}Labels`] || styleObject.labels;
+  if (!Helpers.isTooltip(component)) {
+    return baseStyle;
+  }
+  const tooltipTheme = (props.theme && props.theme.tooltip) || {};
+  return defaults({}, tooltipTheme.style, baseStyle);
+};
+
+const getStyles = (props, style, defaultStyles = {}) => {
   const width = "100%";
   const height = "100%";
 
@@ -65,18 +75,37 @@ const getStyles = (style, defaultStyles = {}) => {
     }),
     labels: labelStyle,
     data: defaults({}, style.data, defaultData),
-    openLabels: defaults({}, style.openLabels, defaultStyles.openLabels, labelStyle),
-    closeLabels: defaults({}, style.closeLabels, defaultStyles.closeLabels, labelStyle),
-    lowLabels: defaults({}, style.lowLabels, defaultStyles.lowLabels, labelStyle),
-    highLabels: defaults({}, style.highLabels, defaultStyles.highLabels, labelStyle)
+    openLabels: defaults(
+      {},
+      style.openLabels,
+      getLabelStyle(props, defaultStyles, "open"),
+      labelStyle
+    ),
+    closeLabels: defaults(
+      {},
+      style.closeLabels,
+      getLabelStyle(props, defaultStyles, "close"),
+      labelStyle
+    ),
+    lowLabels: defaults(
+      {},
+      style.lowLabels,
+      getLabelStyle(props, defaultStyles, "low"),
+      labelStyle
+    ),
+    highLabels: defaults(
+      {},
+      style.highLabels,
+      getLabelStyle(props, defaultStyles, "high"),
+      labelStyle
+    )
   };
 };
 
 const getCalculatedValues = (props) => {
-  const { theme, polar } = props;
-  const defaultStyle =
-    theme && theme.candlestick && theme.candlestick.style ? theme.candlestick.style : {};
-  const style = getStyles(props.style, defaultStyle);
+  const { polar } = props;
+  const defaultStyle = Helpers.getDefaultStyles(props, "candlestick");
+  const style = getStyles(props, props.style, defaultStyle);
   const data = getData(props);
   const range = {
     x: Helpers.getRange(props, "x"),

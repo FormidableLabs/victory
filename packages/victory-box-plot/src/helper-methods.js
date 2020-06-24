@@ -137,11 +137,21 @@ const getDomain = (props, axis) => {
   return Domain.createDomainFunction(getDomainFromData)(props, axis);
 };
 
+const getLabelStyle = (props, styleObject, namespace) => {
+  const component = props[`${namespace}LabelComponent`] || props.labelComponent;
+  const baseStyle = styleObject[`${namespace}Labels`] || styleObject.labels;
+  if (!Helpers.isTooltip(component)) {
+    return baseStyle;
+  }
+  const tooltipTheme = (props.theme && props.theme.tooltip) || {};
+  return defaults({}, tooltipTheme.style, baseStyle);
+};
+
 const getStyles = (props, styleObject) => {
   const style = props.style || {};
   styleObject = styleObject || {};
   const parentStyles = { height: "100%", width: "100%" };
-  const labelStyles = defaults({}, style.labels, styleObject.labels);
+  const labelStyles = defaults({}, style.labels, getLabelStyle(props, styleObject));
   const boxStyles = defaults({}, style.boxes, styleObject.boxes);
   const whiskerStyles = defaults({}, style.whiskers, styleObject.whiskers);
   return {
@@ -149,15 +159,20 @@ const getStyles = (props, styleObject) => {
     labels: labelStyles,
     parent: defaults({}, style.parent, styleObject.parent, parentStyles),
     max: defaults({}, style.max, styleObject.max, whiskerStyles),
-    maxLabels: defaults({}, style.maxLabels, styleObject.maxLabels, labelStyles),
+    maxLabels: defaults({}, style.maxLabels, getLabelStyle(props, styleObject, "max"), labelStyles),
     median: defaults({}, style.median, styleObject.median, whiskerStyles),
-    medianLabels: defaults({}, style.medianLabels, styleObject.medianLabels, labelStyles),
+    medianLabels: defaults(
+      {},
+      style.medianLabels,
+      getLabelStyle(props, styleObject, "median"),
+      labelStyles
+    ),
     min: defaults({}, style.min, styleObject.min, whiskerStyles),
-    minLabels: defaults({}, style.minLabels, styleObject.minLabels, labelStyles),
+    minLabels: defaults({}, style.minLabels, getLabelStyle(props, styleObject, "min"), labelStyles),
     q1: defaults({}, style.q1, styleObject.q1, boxStyles),
-    q1Labels: defaults({}, style.q1Labels, styleObject.q1Labels, labelStyles),
+    q1Labels: defaults({}, style.q1Labels, getLabelStyle(props, styleObject, "q1"), labelStyles),
     q3: defaults({}, style.q3, styleObject.q3, boxStyles),
-    q3Labels: defaults({}, style.q3Labels, styleObject.q3Labels, labelStyles),
+    q3Labels: defaults({}, style.q3Labels, getLabelStyle(props, styleObject, "q3"), labelStyles),
     whiskers: whiskerStyles
   };
 };

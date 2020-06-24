@@ -67,10 +67,7 @@ const getDomain = (props, axis) => {
 };
 
 const getCalculatedValues = (props) => {
-  const defaultStyles =
-    props.theme && props.theme.errorbar && props.theme.errorbar.style
-      ? props.theme.errorbar.style
-      : {};
+  const defaultStyles = Helpers.getDefaultStyles(props, "errorbar");
   const style = Helpers.getStyles(props.style, defaultStyles) || {};
   const data = getData(props);
   const range = {

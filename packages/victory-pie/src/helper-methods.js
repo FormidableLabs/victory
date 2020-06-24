@@ -55,8 +55,8 @@ const getSlices = (props, data) => {
 };
 
 const getCalculatedValues = (props) => {
-  const { theme, colorScale } = props;
-  const styleObject = theme && theme.pie && theme.pie.style ? theme.pie.style : {};
+  const { colorScale } = props;
+  const styleObject = Helpers.getDefaultStyles(props, "pie");
   const style = Helpers.getStyles(props.style, styleObject, "auto", "100%");
   const colors = Array.isArray(colorScale) ? colorScale : Style.getColorScale(colorScale);
   const padding = Helpers.getPadding(props);
@@ -226,8 +226,10 @@ export const getBaseProps = (props, fallbackProps) => {
     if ((text !== undefined && text !== null) || (labels && (events || sharedEvents))) {
       const evaluatedText = Helpers.evaluateProp(text, dataProps);
       childProps[eventKey].labels = getLabelProps(
-        evaluatedText, assign({}, props, dataProps), calculatedValues
-        );
+        evaluatedText,
+        assign({}, props, dataProps),
+        calculatedValues
+      );
     }
     return childProps;
   }, initialChildProps);

@@ -222,7 +222,7 @@ export default {
     baseProps
   ),
   tooltip: {
-    style: assign({}, baseLabelStyles, { padding: 5, pointerEvents: "none" }),
+    style: assign({}, baseLabelStyles, { padding: 0, pointerEvents: "none" }),
     flyoutStyle: {
       stroke: charcoal,
       strokeWidth: 1,
