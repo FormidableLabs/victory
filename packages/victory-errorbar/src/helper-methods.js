@@ -1,4 +1,4 @@
-import { assign, isNil } from "lodash";
+import { defaults, assign, isNil } from "lodash";
 import { Helpers, LabelHelpers, Scale, Domain, Data } from "victory-core";
 
 const getErrors = (props, datum, axis) => {
@@ -91,7 +91,7 @@ const getCalculatedValues = (props) => {
 };
 
 const getLabelProps = (dataProps, text, style) => {
-  const { x, y, index, scale, errorY, errorX, horizontal, labelComponent } = dataProps;
+  const { x, y, index, scale, errorY, errorX, horizontal, labelComponent, theme } = dataProps;
   const getError = (type = "x") => {
     const baseError = type === "y" ? errorY : errorX;
     const error = baseError && Array.isArray(baseError) ? baseError[0] : baseError;
@@ -101,9 +101,7 @@ const getLabelProps = (dataProps, text, style) => {
   const padding = labelStyle.padding || 0;
   const textAnchor = horizontal ? "start" : "middle";
   const verticalAnchor = horizontal ? "middle" : "end";
-  const labelRole = labelComponent && labelComponent.type && labelComponent.type.role;
-  const theme = labelRole === "tooltip" ? dataProps.theme : undefined;
-  return {
+  const labelProps = {
     style: labelStyle,
     y: horizontal ? y : getError("y"),
     x: horizontal ? getError("x") : x,
@@ -117,9 +115,14 @@ const getLabelProps = (dataProps, text, style) => {
     textAnchor: labelStyle.textAnchor || textAnchor,
     verticalAnchor: labelStyle.verticalAnchor || verticalAnchor,
     angle: labelStyle.angle,
-    horizontal,
-    theme
+    horizontal
   };
+
+  if (!Helpers.isTooltip(labelComponent)) {
+    return labelProps;
+  }
+  const tooltipTheme = (theme && theme.tooltip) || {};
+  return defaults({}, labelProps, Helpers.omit(tooltipTheme, ["style"]));
 };
 
 const getBaseProps = (props, fallbackProps) => {

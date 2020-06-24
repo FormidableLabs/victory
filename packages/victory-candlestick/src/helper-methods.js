@@ -227,12 +227,11 @@ const getLabelProps = (props, text, style, type) => {
     data,
     horizontal,
     candleWidth,
-    labelOrientation
+    labelOrientation,
+    theme
   } = props;
 
   const component = props[`${type}LabelComponent`] || props.labelComponent;
-  const role = component && component.type && component.type.role;
-  const theme = role === "tooltip" ? props.theme : undefined;
   const defaultOrientation = horizontal ? "top" : "right";
   const orientation =
     (component.props && component.props.orientation) ||
@@ -256,7 +255,7 @@ const getLabelProps = (props, text, style, type) => {
   };
   const { yValue, xValue, dx, dy } = calculatePlotValues(plotProps);
 
-  return {
+  const labelProps = {
     style: labelStyle,
     y: yValue,
     x: xValue,
@@ -271,9 +270,14 @@ const getLabelProps = (props, text, style, type) => {
     textAnchor: labelStyle.textAnchor || defaultTextAnchors[orientation],
     verticalAnchor: labelStyle.verticalAnchor || defaultVerticalAnchors[orientation],
     angle: labelStyle.angle,
-    horizontal,
-    theme
+    horizontal
   };
+
+  if (!Helpers.isTooltip(component)) {
+    return labelProps;
+  }
+  const tooltipTheme = (theme && theme.tooltip) || {};
+  return defaults({}, labelProps, Helpers.omit(tooltipTheme, ["style"]));
 };
 /* eslint-enable max-params*/
 

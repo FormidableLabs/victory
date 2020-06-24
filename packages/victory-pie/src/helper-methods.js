@@ -136,7 +136,7 @@ const getVerticalAnchor = (orientation) => {
 };
 
 const getLabelProps = (text, dataProps, calculatedValues) => {
-  const { index, datum, data, slice, labelComponent } = dataProps;
+  const { index, datum, data, slice, labelComponent, theme } = dataProps;
   const { style, defaultRadius, origin, width, height } = calculatedValues;
   const labelRadius = Helpers.evaluateProp(
     calculatedValues.labelRadius,
@@ -154,9 +154,7 @@ const getLabelProps = (text, dataProps, calculatedValues) => {
   const labelArc = getLabelArc(defaultRadius, labelRadius, evaluatedStyle);
   const position = getLabelPosition(labelArc, slice, labelPosition);
   const orientation = getLabelOrientation(slice);
-  const labelRole = labelComponent && labelComponent.type && labelComponent.type.role;
-  const theme = labelRole === "tooltip" ? dataProps.theme : undefined;
-  return {
+  const labelProps = {
     width,
     height,
     index,
@@ -170,9 +168,14 @@ const getLabelProps = (text, dataProps, calculatedValues) => {
     y: Math.round(position[1]) + origin.y,
     textAnchor: labelStyle.textAnchor || getTextAnchor(orientation),
     verticalAnchor: labelStyle.verticalAnchor || getVerticalAnchor(orientation),
-    angle: labelStyle.angle,
-    theme
+    angle: labelStyle.angle
   };
+
+  if (!Helpers.isTooltip(labelComponent)) {
+    return labelProps;
+  }
+  const tooltipTheme = (theme && theme.tooltip) || {};
+  return defaults({}, labelProps, Helpers.omit(tooltipTheme, ["style"]));
 };
 
 export const getBaseProps = (props, fallbackProps) => {

@@ -1,6 +1,7 @@
 /* eslint-disable func-style */
 /* eslint-disable no-use-before-define */
 import Helpers from "./helpers";
+import { defaults } from "lodash";
 
 // Private Functions
 
@@ -166,7 +167,6 @@ function getDegrees(props, datum) {
 
 function getProps(props, index) {
   const { scale, data, style, horizontal, polar, width, height, theme, labelComponent } = props;
-  const role = labelComponent.type && labelComponent.type.role;
   const datum = data[index];
   const degrees = getDegrees(props, datum);
   const textAnchor = polar ? getPolarTextAnchor(props, degrees) : getTextAnchor(props, datum);
@@ -178,7 +178,7 @@ function getProps(props, index) {
   const labelPlacement = getLabelPlacement(props);
   const { x, y } = getPosition(props, datum);
   const { dx, dy } = getOffset(props, datum);
-  return {
+  const labelProps = {
     angle,
     data,
     datum,
@@ -196,9 +196,13 @@ function getProps(props, index) {
     dy,
     width,
     height,
-    style: style.labels,
-    theme: role === "tooltip" ? theme : undefined
+    style: style.labels
   };
+  if (!Helpers.isTooltip(labelComponent)) {
+    return labelProps;
+  }
+  const tooltipTheme = (theme && theme.tooltip) || {};
+  return defaults({}, labelProps, Helpers.omit(tooltipTheme, ["style"]));
 }
 
 export default {

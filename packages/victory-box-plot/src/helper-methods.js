@@ -282,13 +282,10 @@ const getOrientation = (labelOrientation, type) =>
   (typeof labelOrientation === "object" && labelOrientation[type]) || labelOrientation;
 
 const getLabelProps = (props, text, type) => {
-  const { datum, positions, index, boxWidth, horizontal, labelOrientation, style } = props;
+  const { datum, positions, index, boxWidth, horizontal, labelOrientation, style, theme } = props;
   const orientation = getOrientation(labelOrientation, type);
   const namespace = `${type}Labels`;
   const labelStyle = style[namespace] || style.labels;
-  const component = props[`${type}LabelComponent`];
-  const role = component && component.type && component.type.role;
-  const theme = role === "tooltip" ? props.theme : undefined;
   const defaultVerticalAnchors = { top: "end", bottom: "start", left: "middle", right: "middle" };
   const defaultTextAnchors = { left: "end", right: "start", top: "middle", bottom: "middle" };
   const whiskerWidth = typeof props.whiskerWidth === "number" ? props.whiskerWidth : boxWidth;
@@ -302,7 +299,7 @@ const getLabelProps = (props, text, type) => {
     return (sign[coord] * width) / 2 + sign[coord] * (labelStyle.padding || 0);
   };
 
-  return {
+  const labelProps = {
     text,
     datum,
     index,
@@ -315,9 +312,15 @@ const getLabelProps = (props, text, type) => {
     textAnchor: labelStyle.textAnchor || defaultTextAnchors[orientation],
     verticalAnchor: labelStyle.verticalAnchor || defaultVerticalAnchors[orientation],
     angle: labelStyle.angle,
-    horizontal,
-    theme
+    horizontal
   };
+
+  const component = props[`${type}LabelComponent`];
+  if (!Helpers.isTooltip(component)) {
+    return labelProps;
+  }
+  const tooltipTheme = (theme && theme.tooltip) || {};
+  return defaults({}, labelProps, Helpers.omit(tooltipTheme, ["style"]));
 };
 
 const getDataProps = (props, type) => {
