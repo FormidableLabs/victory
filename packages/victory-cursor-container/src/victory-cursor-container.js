@@ -112,7 +112,8 @@ export const cursorContainerMixin = (base) =>
         width,
         height,
         name,
-        horizontal
+        horizontal,
+        theme
       } = props;
       const cursorDimension = CursorHelpers.getDimension(props);
       const cursorValue = this.getCursorPosition(props);
@@ -129,17 +130,17 @@ export const cursorContainerMixin = (base) =>
         y: horizontal ? scale.x(cursorValue.x) : scale.y(cursorValue.y)
       };
       if (cursorLabel) {
-        const labelRole =
-          cursorLabelComponent && cursorLabelComponent.type && cursorLabelComponent.type.role;
-        const theme = labelRole === "tooltip" ? props.theme : undefined;
-        const labelProps = defaults({ active: true }, cursorLabelComponent.props, {
+        let labelProps = defaults({ active: true }, cursorLabelComponent.props, {
           x: cursorCoordinates.x + cursorLabelOffset.x,
           y: cursorCoordinates.y + cursorLabelOffset.y,
           datum: cursorValue,
           active: true,
           key: `${name}-cursor-label`,
-          theme
         });
+        if (Helpers.isTooltip(cursorLabelComponent)) {
+          const tooltipTheme = theme && theme.tooltip || {};
+          labelProps = defaults({}, labelProps, tooltipTheme);
+        }
         newElements.push(
           React.cloneElement(
             cursorLabelComponent,
