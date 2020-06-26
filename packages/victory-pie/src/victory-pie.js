@@ -123,6 +123,10 @@ class VictoryPie extends React.Component {
     height: CustomPropTypes.nonNegative,
     innerRadius: PropTypes.oneOfType([CustomPropTypes.nonNegative, PropTypes.func]),
     labelComponent: PropTypes.element,
+    labelPlacement: PropTypes.oneOfType([
+      PropTypes.func,
+      PropTypes.oneOf(["parallel", "perpendicular", "vertical"])
+    ]),
     labelPosition: PropTypes.oneOfType([
       PropTypes.func,
       PropTypes.oneOf(["startAngle", "centroid", "endAngle"])

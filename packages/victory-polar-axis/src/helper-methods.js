@@ -203,8 +203,6 @@ const getTickLabelProps = (props, calculatedValues, tickValue, index) => {
   const textAnchor =
     labelStyle.textAnchor ||
     LabelHelpers.getPolarTextAnchor(assign({}, props, { labelPlacement }), labelAngle);
-  const labelRole = tickLabelComponent && tickLabelComponent.type && tickLabelComponent.type.role;
-  const theme = labelRole === "tooltip" ? props.theme : undefined;
   return {
     index,
     datum: tick,
@@ -213,8 +211,7 @@ const getTickLabelProps = (props, calculatedValues, tickValue, index) => {
     textAnchor,
     text,
     x: labelRadius * Math.cos(Helpers.degreesToRadians(labelAngle)) + origin.x,
-    y: -labelRadius * Math.sin(Helpers.degreesToRadians(labelAngle)) + origin.y,
-    theme
+    y: -labelRadius * Math.sin(Helpers.degreesToRadians(labelAngle)) + origin.y
   };
 };
 
@@ -290,8 +287,6 @@ const getAxisLabelProps = (props, calculatedValues) => {
   const verticalAnchor =
     labelStyle.verticalAnchor ||
     LabelHelpers.getPolarVerticalAnchor(assign({}, props, { labelPlacement }), axisAngle);
-  const labelRole = axisLabelComponent && axisLabelComponent.type && axisLabelComponent.type.role;
-  const theme = labelRole === "tooltip" ? props.theme : undefined;
   return {
     style: labelStyle,
     angle: textAngle,
@@ -299,8 +294,7 @@ const getAxisLabelProps = (props, calculatedValues) => {
     verticalAnchor,
     text: props.label,
     x: getPosition(labelRadius, Helpers.degreesToRadians(axisAngle), "x") + origin.x,
-    y: getPosition(labelRadius, Helpers.degreesToRadians(axisAngle), "y") + origin.y,
-    theme
+    y: getPosition(labelRadius, Helpers.degreesToRadians(axisAngle), "y") + origin.y
   };
 };
 

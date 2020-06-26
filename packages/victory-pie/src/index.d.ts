@@ -15,6 +15,7 @@ import {
 } from "victory-core";
 
 export type VictorySliceLabelPositionType = "startAngle" | "centroid" | "endAngle";
+export type VictorySliceLabelPlacementType = "vertical" | "parallel" | "perpendicular";
 export type VictorySliceTTargetType = "data" | "labels" | "parent";
 
 export interface SliceProps extends VictoryCommonProps {
@@ -53,6 +54,9 @@ export interface VictoryPieProps
   >[];
   eventKey?: StringOrNumberOrCallback;
   innerRadius?: NumberOrCallback;
+  labelPlacement?:
+    | VictorySliceLabelPlacementType
+    | ((props: SliceProps) => VictorySliceLabelPlacementType);
   labelPosition?:
     | VictorySliceLabelPositionType
     | ((props: SliceProps) => VictorySliceLabelPositionType);

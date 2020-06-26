@@ -146,9 +146,9 @@ function getPolarAngle(props, baseAngle) {
   if (!labelPlacement || labelPlacement === "vertical") {
     return 0;
   }
-  const degrees = baseAngle !== undefined ? baseAngle : getDegrees(props, datum);
+  const degrees = baseAngle !== undefined ? baseAngle % 360 : getDegrees(props, datum);
   const sign = (degrees > 90 && degrees < 180) || degrees > 270 ? 1 : -1;
-  let angle;
+  let angle = 0;
   if (degrees === 0 || degrees === 180) {
     angle = 90;
   } else if (degrees > 0 && degrees < 180) {
@@ -162,7 +162,7 @@ function getPolarAngle(props, baseAngle) {
 
 function getDegrees(props, datum) {
   const { x } = Helpers.getPoint(datum);
-  return Helpers.radiansToDegrees(props.scale.x(x));
+  return Helpers.radiansToDegrees(props.scale.x(x)) % 360;
 }
 
 function getProps(props, index) {
