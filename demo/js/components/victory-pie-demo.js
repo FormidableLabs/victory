@@ -260,7 +260,7 @@ export default class App extends React.Component {
             innerRadius={140}
           />
           <VictoryPie
-            style={{ parent: parentStyle, labels: { fill: "magenta" }}}
+            style={{ parent: parentStyle, labels: { fill: "magenta" } }}
             radius={100}
             labelPosition="startAngle"
             labelPlacement="parallel"
@@ -273,11 +273,11 @@ export default class App extends React.Component {
               { x: 5, y: 1, l: 180 },
               { x: 6, y: 1, l: 225 },
               { x: 7, y: 1, l: 270 },
-              { x: 8, y: 1, l: 315 },
+              { x: 8, y: 1, l: 315 }
             ]}
           />
           <VictoryPie
-            style={{ parent: parentStyle, labels: { fill: "magenta" }}}
+            style={{ parent: parentStyle, labels: { fill: "magenta" } }}
             radius={100}
             labelPosition="startAngle"
             labelPlacement="perpendicular"
@@ -290,7 +290,7 @@ export default class App extends React.Component {
               { x: 5, y: 1, l: 180 },
               { x: 6, y: 1, l: 225 },
               { x: 7, y: 1, l: 270 },
-              { x: 8, y: 1, l: 315 },
+              { x: 8, y: 1, l: 315 }
             ]}
           />
         </div>

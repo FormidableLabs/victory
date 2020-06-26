@@ -105,12 +105,12 @@ const getLabelPosition = (arc, slice, position) => {
 
 const getLabelOrientation = (degree, labelPlacement) => {
   if (labelPlacement === "perpendicular") {
-    return (degree > 90 && degree < 270) ? "bottom" : "top"
+    return degree > 90 && degree < 270 ? "bottom" : "top";
   } else if (labelPlacement === "parallel") {
-    return (degree >= 0 && degree <= 180 ) ? "right" : "left"
+    return degree >= 0 && degree <= 180 ? "right" : "left";
   }
   if (degree < 45 || degree > 315) {
-    return "top"
+    return "top";
   } else if (degree >= 45 && degree < 135) {
     return "right";
   } else if (degree >= 135 && degree < 225) {
@@ -139,11 +139,12 @@ const getBaseLabelAngle = (slice, labelPosition, labelStyle) => {
   if (labelPosition.angle !== undefined) {
     baseAngle = labelStyle.angle;
   } else if (labelPosition === "centroid") {
-    baseAngle = Helpers.radiansToDegrees((slice.startAngle + slice.endAngle) / 2)
+    baseAngle = Helpers.radiansToDegrees((slice.startAngle + slice.endAngle) / 2);
   } else {
-    baseAngle = labelPosition === "startAngle"
-      ? Helpers.radiansToDegrees(slice.startAngle)
-      : Helpers.radiansToDegrees(slice.endAngle);
+    baseAngle =
+      labelPosition === "startAngle"
+        ? Helpers.radiansToDegrees(slice.startAngle)
+        : Helpers.radiansToDegrees(slice.endAngle);
   }
   const positiveAngle = baseAngle < 0 ? 360 - baseAngle : baseAngle;
   return positiveAngle % 360;
@@ -166,14 +167,11 @@ const getLabelProps = (text, dataProps, calculatedValues) => {
     calculatedValues.labelRadius,
     assign({ text }, dataProps)
   );
-  const labelPosition = Helpers.evaluateProp(
-    calculatedValues.labelPosition,
-    assign({ text }, dataProps)
-  ) || "centroid";
-  const labelPlacement = Helpers.evaluateProp(
-    calculatedValues.labelPlacement,
-    assign({ text }, dataProps)
-  ) || "vertical";
+  const labelPosition =
+    Helpers.evaluateProp(calculatedValues.labelPosition, assign({ text }, dataProps)) || "centroid";
+  const labelPlacement =
+    Helpers.evaluateProp(calculatedValues.labelPlacement, assign({ text }, dataProps)) ||
+    "vertical";
   const labelStyle = assign({ padding: 0 }, style.labels);
   const evaluatedStyle = Helpers.evaluateStyle(
     labelStyle,

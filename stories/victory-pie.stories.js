@@ -475,13 +475,13 @@ export const LabelPlacement = () => {
           { x: 5, y: 1, l: 180 },
           { x: 6, y: 1, l: 225 },
           { x: 7, y: 1, l: 270 },
-          { x: 8, y: 1, l: 315 },
+          { x: 8, y: 1, l: 315 }
         ]}
       />
       <VictoryPie
         style={{ ...parentStyle, labels: { fill: "magenta" } }}
-        labelPlacement={({ index }) => index ? "parallel" : "perpendicular" }
-        labelRadius={({ index }) => index ? 50 : undefined}
+        labelPlacement={({ index }) => (index ? "parallel" : "perpendicular")}
+        labelRadius={({ index }) => (index ? 50 : undefined)}
         labels={({ datum }) => `${datum.l} degrees`}
         data={[
           { x: 1, y: 1, l: 0 },
@@ -491,7 +491,7 @@ export const LabelPlacement = () => {
           { x: 5, y: 1, l: 180 },
           { x: 6, y: 1, l: 225 },
           { x: 7, y: 1, l: 270 },
-          { x: 8, y: 1, l: 315 },
+          { x: 8, y: 1, l: 315 }
         ]}
       />
       <VictoryPie
@@ -508,7 +508,7 @@ export const LabelPlacement = () => {
           { x: 5, y: 1, l: 180 },
           { x: 6, y: 1, l: 225 },
           { x: 7, y: 1, l: 270 },
-          { x: 8, y: 1, l: 315 },
+          { x: 8, y: 1, l: 315 }
         ]}
       />
       <VictoryPie
@@ -526,7 +526,7 @@ export const LabelPlacement = () => {
           { x: 5, y: 1, l: 180 },
           { x: 6, y: 1, l: 225 },
           { x: 7, y: 1, l: 270 },
-          { x: 8, y: 1, l: 315 },
+          { x: 8, y: 1, l: 315 }
         ]}
       />
     </div>

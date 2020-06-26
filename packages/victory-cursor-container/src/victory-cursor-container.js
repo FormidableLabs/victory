@@ -135,10 +135,10 @@ export const cursorContainerMixin = (base) =>
           y: cursorCoordinates.y + cursorLabelOffset.y,
           datum: cursorValue,
           active: true,
-          key: `${name}-cursor-label`,
+          key: `${name}-cursor-label`
         });
         if (Helpers.isTooltip(cursorLabelComponent)) {
-          const tooltipTheme = theme && theme.tooltip || {};
+          const tooltipTheme = (theme && theme.tooltip) || {};
           labelProps = defaults({}, labelProps, tooltipTheme);
         }
         newElements.push(
