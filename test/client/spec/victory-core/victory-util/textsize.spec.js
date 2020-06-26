@@ -23,21 +23,21 @@ describe("victory-util/textsize", () => {
     it("return correct width with signed angle", () => {
       expect(
         TextSize.approximateTextSize(testString, { angle: -45, fontSize: 14 }).width.toFixed(2)
-      ).to.be.eql("31.36");
+      ).to.be.eql("31.71");
     });
     it("return correct width with pixel fontsize", () => {
       expect(
         TextSize.approximateTextSize(testString, { fontSize: "14px" }).width.toFixed(2)
-      ).to.be.eql("24.22");
+      ).to.be.eql("28.74");
     });
     it("return appropriate width with defined fontSize", () => {
       expect(TextSize.approximateTextSize(testString, { fontSize: 12 }).width.toFixed(2)).to.be.eql(
-        "20.76"
+        "24.64"
       );
     });
     it("consider font", () => {
       expect(TextSize.approximateTextSize(testString, { fontSize: 16 }).width.toFixed(2)).to.be.eql(
-        "27.68"
+        "32.85"
       );
     });
     it("consider letterSpacing", () => {
@@ -46,17 +46,17 @@ describe("victory-util/textsize", () => {
           fontSize: 12,
           letterSpacing: "1px"
         }).width.toFixed(2)
-      ).to.be.eql("23.26");
+      ).to.be.eql("26.64");
     });
     it("consider angle", () => {
       expect(
         TextSize.approximateTextSize(testString, { fontSize: 12, angle: 30 }).width.toFixed(2)
-      ).to.be.eql("26.60");
+      ).to.be.eql("28.24");
     });
     it("not consider lineHeight without angle", () => {
       expect(
         TextSize.approximateTextSize(testString, { fontSize: 12, lineHeight: 2 }).width.toFixed(2)
-      ).to.eql("20.76");
+      ).to.eql("24.64");
     });
     it("consider lineHeight with angle", () => {
       expect(
@@ -65,12 +65,12 @@ describe("victory-util/textsize", () => {
           lineHeight: 2,
           angle: 30
         }).width.toFixed(2)
-      ).to.eql("35.23");
+      ).to.eql("35.14");
     });
     it("return width of widest string in text", () => {
       expect(
         TextSize.approximateTextSize("ABC\nDEFGH\nIJK", { fontSize: 12 }).width.toFixed(2)
-      ).to.eql("34.60");
+      ).to.eql("41.94");
     });
   });
 
@@ -81,7 +81,7 @@ describe("victory-util/textsize", () => {
     it("return correct height with signed angle", () => {
       expect(
         TextSize.approximateTextSize(testString, { angle: -45, fontSize: 14 }).height.toFixed(2)
-      ).to.be.eql("26.34");
+      ).to.be.eql("33.29");
     });
     it("return correct height with pixel fontsize", () => {
       expect(
@@ -101,7 +101,7 @@ describe("victory-util/textsize", () => {
     it("consider angle", () => {
       expect(
         TextSize.approximateTextSize(testString, { fontSize: 12, angle: 30 }).height.toFixed(2)
-      ).to.be.eql("21.27");
+      ).to.be.eql("25.48");
     });
     it("not consider letterSpacing without angle", () => {
       expect(
@@ -118,7 +118,7 @@ describe("victory-util/textsize", () => {
           angle: 30,
           letterSpacing: "1px"
         }).height.toFixed(2)
-      ).to.be.eql("22.32");
+      ).to.be.eql("26.53");
     });
     it("consider lineHeight", () => {
       expect(
@@ -128,7 +128,7 @@ describe("victory-util/textsize", () => {
     it("consider multiLines text", () => {
       expect(
         TextSize.approximateTextSize(`ABC\n${"DBCDEFG"}\n123`, { fontSize: 12 }).height.toFixed(2)
-      ).to.be.eql("48.51");
+      ).to.be.eql("43.47");
     });
   });
 });
