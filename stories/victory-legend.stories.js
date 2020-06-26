@@ -38,7 +38,7 @@ const legendStyle = {
 
 const getData = (num, { getName, getSize, getSymbol, getFill } = {}) => {
   return range(num).map((v) => ({
-    name:  isFunction(getName) ? getName(v) : `Series ${v + 1}`,
+    name: isFunction(getName) ? getName(v) : `Series ${v + 1}`,
     symbol: {
       size: isFunction(getSize) ? getSize(v) : 5,
       type: isFunction(getSymbol) ? getSymbol(v) : "circle",
@@ -105,7 +105,7 @@ export const Title = () => {
           title={`TITLE\nmultiline`}
           orientation="horizontal"
           itemsPerRow={3}
-          style={{...legendStyle, title: { padding: 20 }}}
+          style={{ ...legendStyle, title: { padding: 20 } }}
         />
       </Wrapper>
       <Wrapper>
@@ -134,7 +134,7 @@ export const Title = () => {
           itemsPerRow={3}
           style={legendStyle}
           titleOrientation="right"
-          style={{...legendStyle, title: { padding: 20 }}}
+          style={{ ...legendStyle, title: { padding: 20 } }}
         />
       </Wrapper>
     </div>
