@@ -385,12 +385,15 @@ const evaluateProps = (props) => {
 };
 
 const getCalculatedProps = (props) => {
+  const style = getSingleValue(props.style);
   const lineHeight = getLineHeight(props);
   const direction = props.direction ? Helpers.evaluateProp(props.direction, props) : "inherit";
-  const textAnchor = props.textAnchor ? Helpers.evaluateProp(props.textAnchor, props) : "start";
+  const textAnchor = props.textAnchor
+    ? Helpers.evaluateProp(props.textAnchor, props)
+    : style.textAnchor || "start";
   const verticalAnchor = props.verticalAnchor
     ? Helpers.evaluateProp(props.verticalAnchor, props)
-    : "middle";
+    : style.verticalAnchor || "middle";
   const dx = props.dx ? Helpers.evaluateProp(props.dx, props) : 0;
   const dy = getDy(props, verticalAnchor, lineHeight);
   const transform = getTransform(props);

@@ -210,10 +210,11 @@ export default class VictoryTooltip extends React.Component {
         props.orientation,
         assign({}, props, { active, text, style, flyoutStyle })
       ) || this.getDefaultOrientation(props);
-    const padding = Helpers.evaluateProp(
-      props.flyoutPadding,
-      assign({}, props, { active, text, style, flyoutStyle, orientation })
-    ) || this.getLabelPadding(style);
+    const padding =
+      Helpers.evaluateProp(
+        props.flyoutPadding,
+        assign({}, props, { active, text, style, flyoutStyle, orientation })
+      ) || this.getLabelPadding(style);
     const flyoutPadding = Helpers.getPadding({ padding });
 
     const labelSize = TextSize.approximateTextSize(text, style);
