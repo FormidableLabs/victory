@@ -41,6 +41,7 @@ export default class VictoryTooltip extends React.Component {
     flyoutComponent: PropTypes.element,
     flyoutHeight: PropTypes.oneOfType([CustomPropTypes.nonNegative, PropTypes.func]),
     flyoutPadding: PropTypes.oneOfType([
+      PropTypes.func,
       PropTypes.number,
       PropTypes.shape({
         top: PropTypes.number,
@@ -204,13 +205,16 @@ export default class VictoryTooltip extends React.Component {
     const active = Helpers.evaluateProp(props.active, props);
     const text = Helpers.evaluateProp(props.text, assign({}, props, { active }));
     const { style, flyoutStyle } = this.getStyles(assign({}, props, { active, text }));
-    const padding = props.flyoutPadding || this.getLabelPadding(style);
-    const flyoutPadding = Helpers.getPadding({ padding });
     const orientation =
       Helpers.evaluateProp(
         props.orientation,
         assign({}, props, { active, text, style, flyoutStyle })
       ) || this.getDefaultOrientation(props);
+    const padding = Helpers.evaluateProp(
+      props.flyoutPadding,
+      assign({}, props, { active, text, style, flyoutStyle, orientation })
+    ) || this.getLabelPadding(style);
+    const flyoutPadding = Helpers.getPadding({ padding });
 
     const labelSize = TextSize.approximateTextSize(text, style);
 

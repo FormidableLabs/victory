@@ -655,6 +655,16 @@ export const FlyoutPadding = () => {
         }
       />
       <VictoryBar
+        {...defaultBarProps}
+        labelComponent={
+          <VictoryTooltip
+            active
+            flyoutPadding={({ datum }) => datum.y > 0 ? { top: 20, left: 15, right: 5 } : 2}
+            text={`flyoutPadding\nfunction`}
+          />
+        }
+      />
+      <VictoryBar
         {...polarBarProps}
         labelComponent={
           <VictoryTooltip

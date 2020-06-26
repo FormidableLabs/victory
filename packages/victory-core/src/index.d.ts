@@ -98,8 +98,10 @@ export interface CallbackArgs {
 
 export type VictoryStringOrNumberCallback = (args: CallbackArgs) => string | number;
 export type VictoryNumberCallback = (args: CallbackArgs) => number;
+export type VictoryPaddingCallback = (args: CallbackArgs) => number | BlockProps;
 export type StringOrNumberOrCallback = string | number | VictoryStringOrNumberCallback;
 export type NumberOrCallback = number | VictoryNumberCallback;
+export type PaddingOrCallback = number | BlockProps | VictoryPaddingCallback;
 
 export type SliceNumberOrCallback<T, P = null> = number | ((props: Omit<T, P>) => number);
 
