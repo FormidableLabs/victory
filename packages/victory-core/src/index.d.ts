@@ -395,6 +395,33 @@ export interface VictoryThemeDefinition {
       labels?: React.CSSProperties;
     };
   } & ThemeBaseProps;
+  polarAxis?: {
+    style?: {
+      axis?: React.CSSProperties;
+      axisLabel?: React.CSSProperties;
+      grid?: React.CSSProperties;
+      ticks?: TickProps;
+      tickLabels?: React.CSSProperties;
+    };
+  } & ThemeBaseProps;
+  polarDependentAxis?: {
+    style?: {
+      axis?: React.CSSProperties;
+      axisLabel?: React.CSSProperties;
+      grid?: React.CSSProperties;
+      ticks?: TickProps;
+      tickLabels?: React.CSSProperties;
+    };
+  } & ThemeBaseProps;
+  polarIndependentAxis?: {
+    style?: {
+      axis?: React.CSSProperties;
+      axisLabel?: React.CSSProperties;
+      grid?: React.CSSProperties;
+      ticks?: TickProps;
+      tickLabels?: React.CSSProperties;
+    };
+  } & ThemeBaseProps;
   scatter?: {
     style?: {
       data?: React.CSSProperties;
@@ -407,6 +434,7 @@ export interface VictoryThemeDefinition {
     flyoutStyle?: React.CSSProperties;
     cornerRadius?: number;
     pointerLength?: number;
+    flyoutPadding?: number;
   };
   voronoi?: {
     style?: {
