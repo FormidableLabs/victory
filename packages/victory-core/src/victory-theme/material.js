@@ -17,7 +17,7 @@ const grey900 = "#212121";
 // *
 // * Typography
 // *
-const sansSerif = "'Roboto', 'Helvetica Neue', Helvetica, sans-serif";
+const sansSerif = "'Helvetica Neue', 'Helvetica', sans-serif";
 const letterSpacing = "normal";
 const fontSize = 12;
 // *
@@ -99,6 +99,15 @@ export default {
     },
     baseProps
   ),
+  polarDependentAxis: assign({
+    style: {
+      ticks: {
+        fill: "transparent",
+        size: 1,
+        stroke: "transparent"
+      }
+    }
+  }),
   bar: assign(
     {
       style: {
@@ -116,15 +125,15 @@ export default {
     {
       style: {
         max: { padding, stroke: blueGrey700, strokeWidth: 1 },
-        maxLabels: baseLabelStyles,
+        maxLabels: assign({}, baseLabelStyles, { padding: 3 }),
         median: { padding, stroke: blueGrey700, strokeWidth: 1 },
-        medianLabels: baseLabelStyles,
+        medianLabels: assign({}, baseLabelStyles, { padding: 3 }),
         min: { padding, stroke: blueGrey700, strokeWidth: 1 },
-        minLabels: baseLabelStyles,
+        minLabels: assign({}, baseLabelStyles, { padding: 3 }),
         q1: { padding, fill: blueGrey700 },
-        q1Labels: baseLabelStyles,
+        q1Labels: assign({}, baseLabelStyles, { padding: 3 }),
         q3: { padding, fill: blueGrey700 },
-        q3Labels: baseLabelStyles
+        q3Labels: assign({}, baseLabelStyles, { padding: 3 })
       },
       boxWidth: 20
     },
@@ -136,7 +145,7 @@ export default {
         data: {
           stroke: blueGrey700
         },
-        labels: baseLabelStyles
+        labels: assign({}, baseLabelStyles, { padding: 5 })
       },
       candleColors: {
         positive: "#ffffff",
@@ -242,13 +251,14 @@ export default {
     baseProps
   ),
   tooltip: {
-    style: assign({}, baseLabelStyles, { padding: 5, pointerEvents: "none" }),
+    style: assign({}, baseLabelStyles, { padding: 0, pointerEvents: "none" }),
     flyoutStyle: {
       stroke: grey900,
       strokeWidth: 1,
       fill: "#f0f0f0",
       pointerEvents: "none"
     },
+    flyoutPadding: 5,
     cornerRadius: 5,
     pointerLength: 10
   },

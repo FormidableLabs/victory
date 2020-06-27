@@ -7,8 +7,10 @@ import {
   VictoryLabelableProps,
   VictoryNumberCallback,
   VictoryThemeDefinition,
-  VictoryStyleObject
+  VictoryStyleObject,
+  PaddingOrCallback
 } from "victory-core";
+import { PaddingOrCallback } from "victory-core/src";
 
 export interface VictoryTooltipProps extends VictoryLabelableProps {
   active?: boolean;
@@ -34,6 +36,7 @@ export interface VictoryTooltipProps extends VictoryLabelableProps {
   flyoutWidth?: NumberOrCallback;
   flyoutStyle?: VictoryStyleObject;
   flyoutComponent?: React.ReactElement;
+  flyoutPadding?: PaddingOrCallback;
   index?: number | string;
   orientation?: OrientationTypes | VictoryNumberCallback;
   pointerLength?: NumberOrCallback;

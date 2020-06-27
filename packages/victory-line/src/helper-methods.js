@@ -25,8 +25,7 @@ const getCalculatedValues = (props) => {
       .range(props.horizontal ? range.x : range.y)
   };
   const origin = props.polar ? props.origin || Helpers.getPolarOrigin(props) : undefined;
-  const defaultStyles =
-    props.theme && props.theme.line && props.theme.line.style ? props.theme.line.style : {};
+  const defaultStyles = Helpers.getDefaultStyles(props, "line");
   const style = Helpers.getStyles(props.style, defaultStyles);
 
   return { domain, data, scale, style, origin };

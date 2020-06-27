@@ -1,4 +1,4 @@
-import { assign, isNil } from "lodash";
+import { defaults, assign, isNil } from "lodash";
 import { Helpers, LabelHelpers, Scale, Domain, Data } from "victory-core";
 
 const getErrors = (props, datum, axis) => {
@@ -67,10 +67,7 @@ const getDomain = (props, axis) => {
 };
 
 const getCalculatedValues = (props) => {
-  const defaultStyles =
-    props.theme && props.theme.errorbar && props.theme.errorbar.style
-      ? props.theme.errorbar.style
-      : {};
+  const defaultStyles = Helpers.getDefaultStyles(props, "errorbar");
   const style = Helpers.getStyles(props.style, defaultStyles) || {};
   const data = getData(props);
   const range = {
@@ -94,7 +91,7 @@ const getCalculatedValues = (props) => {
 };
 
 const getLabelProps = (dataProps, text, style) => {
-  const { x, y, index, scale, errorY, errorX, horizontal } = dataProps;
+  const { x, y, index, scale, errorY, errorX, horizontal, labelComponent, theme } = dataProps;
   const getError = (type = "x") => {
     const baseError = type === "y" ? errorY : errorX;
     const error = baseError && Array.isArray(baseError) ? baseError[0] : baseError;
@@ -104,7 +101,7 @@ const getLabelProps = (dataProps, text, style) => {
   const padding = labelStyle.padding || 0;
   const textAnchor = horizontal ? "start" : "middle";
   const verticalAnchor = horizontal ? "middle" : "end";
-  return {
+  const labelProps = {
     style: labelStyle,
     y: horizontal ? y : getError("y"),
     x: horizontal ? getError("x") : x,
@@ -120,6 +117,12 @@ const getLabelProps = (dataProps, text, style) => {
     angle: labelStyle.angle,
     horizontal
   };
+
+  if (!Helpers.isTooltip(labelComponent)) {
+    return labelProps;
+  }
+  const tooltipTheme = (theme && theme.tooltip) || {};
+  return defaults({}, labelProps, Helpers.omit(tooltipTheme, ["style"]));
 };
 
 const getBaseProps = (props, fallbackProps) => {
@@ -188,7 +191,7 @@ const getBaseProps = (props, fallbackProps) => {
     };
     const text = LabelHelpers.getText(props, datum, index);
     if ((text !== undefined && text !== null) || (labels && (events || sharedEvents))) {
-      childProps[eventKey].labels = getLabelProps(dataProps, text, style);
+      childProps[eventKey].labels = getLabelProps(assign({}, props, dataProps), text, style);
     }
 
     return childProps;

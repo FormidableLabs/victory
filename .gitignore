@@ -39,3 +39,4 @@ lerna-debug.log*
 yarn-error.log*
 .cache
 storybook-static
+build-storybook.log*

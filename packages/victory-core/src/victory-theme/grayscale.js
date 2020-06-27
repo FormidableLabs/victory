@@ -10,7 +10,7 @@ const grey = "#969696";
 // *
 // * Typography
 // *
-const sansSerif = "'Gill Sans', 'Gill Sans MT', 'Seravek', 'Trebuchet MS', sans-serif";
+const sansSerif = "'Gill Sans', 'Seravek', 'Trebuchet MS', sans-serif";
 const letterSpacing = "normal";
 const fontSize = 14;
 // *
@@ -98,15 +98,15 @@ export default {
     {
       style: {
         max: { padding: 8, stroke: charcoal, strokeWidth: 1 },
-        maxLabels: baseLabelStyles,
+        maxLabels: assign({}, baseLabelStyles, { padding: 3 }),
         median: { padding: 8, stroke: charcoal, strokeWidth: 1 },
-        medianLabels: baseLabelStyles,
+        medianLabels: assign({}, baseLabelStyles, { padding: 3 }),
         min: { padding: 8, stroke: charcoal, strokeWidth: 1 },
-        minLabels: baseLabelStyles,
+        minLabels: assign({}, baseLabelStyles, { padding: 3 }),
         q1: { padding: 8, fill: grey },
-        q1Labels: baseLabelStyles,
+        q1Labels: assign({}, baseLabelStyles, { padding: 3 }),
         q3: { padding: 8, fill: grey },
-        q3Labels: baseLabelStyles
+        q3Labels: assign({}, baseLabelStyles, { padding: 3 })
       },
       boxWidth: 20
     },
@@ -119,7 +119,7 @@ export default {
           stroke: charcoal,
           strokeWidth: 1
         },
-        labels: baseLabelStyles
+        labels: assign({}, baseLabelStyles, { padding: 5 })
       },
       candleColors: {
         positive: "#ffffff",
@@ -222,13 +222,14 @@ export default {
     baseProps
   ),
   tooltip: {
-    style: assign({}, baseLabelStyles, { padding: 5, pointerEvents: "none" }),
+    style: assign({}, baseLabelStyles, { padding: 0, pointerEvents: "none" }),
     flyoutStyle: {
       stroke: charcoal,
       strokeWidth: 1,
       fill: "#f0f0f0",
       pointerEvents: "none"
     },
+    flyoutPadding: 5,
     cornerRadius: 5,
     pointerLength: 10
   },

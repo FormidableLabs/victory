@@ -98,8 +98,10 @@ export interface CallbackArgs {
 
 export type VictoryStringOrNumberCallback = (args: CallbackArgs) => string | number;
 export type VictoryNumberCallback = (args: CallbackArgs) => number;
+export type VictoryPaddingCallback = (args: CallbackArgs) => number | BlockProps;
 export type StringOrNumberOrCallback = string | number | VictoryStringOrNumberCallback;
 export type NumberOrCallback = number | VictoryNumberCallback;
+export type PaddingOrCallback = number | BlockProps | VictoryPaddingCallback;
 
 export type SliceNumberOrCallback<T, P = null> = number | ((props: Omit<T, P>) => number);
 
@@ -393,6 +395,33 @@ export interface VictoryThemeDefinition {
       labels?: React.CSSProperties;
     };
   } & ThemeBaseProps;
+  polarAxis?: {
+    style?: {
+      axis?: React.CSSProperties;
+      axisLabel?: React.CSSProperties;
+      grid?: React.CSSProperties;
+      ticks?: TickProps;
+      tickLabels?: React.CSSProperties;
+    };
+  } & ThemeBaseProps;
+  polarDependentAxis?: {
+    style?: {
+      axis?: React.CSSProperties;
+      axisLabel?: React.CSSProperties;
+      grid?: React.CSSProperties;
+      ticks?: TickProps;
+      tickLabels?: React.CSSProperties;
+    };
+  } & ThemeBaseProps;
+  polarIndependentAxis?: {
+    style?: {
+      axis?: React.CSSProperties;
+      axisLabel?: React.CSSProperties;
+      grid?: React.CSSProperties;
+      ticks?: TickProps;
+      tickLabels?: React.CSSProperties;
+    };
+  } & ThemeBaseProps;
   scatter?: {
     style?: {
       data?: React.CSSProperties;
@@ -405,6 +434,7 @@ export interface VictoryThemeDefinition {
     flyoutStyle?: React.CSSProperties;
     cornerRadius?: number;
     pointerLength?: number;
+    flyoutPadding?: number;
   };
   voronoi?: {
     style?: {

@@ -15,7 +15,7 @@ const containerStyle = {
 
 const style = {
   parent: { border: "1px solid #ccc", margin: "1%", maxWidth: "25%" },
-  labels: { padding: 0 },
+  labels: { fontFamily: "arial" },
   data: { fill: "gold", width: 20 }
 };
 
@@ -42,7 +42,10 @@ const polarBarProps = {
 
 export default {
   title: "VictoryTooltip",
-  component: VictoryTooltip
+  component: VictoryTooltip,
+  parameters: {
+    chromatic: { viewports: [1200] }
+  }
 };
 
 export const DefaultRendering = () => {
@@ -598,7 +601,7 @@ export const FlyoutStyle = () => {
         labelComponent={
           <VictoryTooltip
             active
-            style={{ padding: 5 }}
+            style={{ padding: 5, fontFamily: "arial" }}
             flyoutStyle={{ stroke: "red", strokeWidth: 2, strokeDasharray: "1, 2" }}
             text={`flyoutStyle`}
           />
@@ -610,7 +613,7 @@ export const FlyoutStyle = () => {
         labelComponent={
           <VictoryTooltip
             active
-            style={{ padding: 5, fill: "red" }}
+            style={{ padding: 5, fill: "red", fontFamily: "arial" }}
             flyoutStyle={{ fill: "pink", strokeWidth: 0, opacity: 0.5, padding: 10 }}
             text={`flyoutStyle`}
           />
@@ -621,9 +624,57 @@ export const FlyoutStyle = () => {
         labelComponent={
           <VictoryTooltip
             active
-            style={{ padding: 10 }}
+            style={{ padding: 10, fontFamily: "arial" }}
             flyoutStyle={{ fill: "cyan", strokeWidth: 0, opacity: 0.5 }}
             text={`flyoutStyle\npolar`}
+          />
+        }
+      />
+    </div>
+  );
+};
+
+export const FlyoutPadding = () => {
+  return (
+    <div style={containerStyle}>
+      <VictoryBar
+        {...defaultBarProps}
+        labelComponent={
+          <VictoryTooltip
+            active
+            flyoutPadding={{ top: 20, left: 15, right: 5 }}
+            text={`flyoutPadding`}
+          />
+        }
+      />
+      <VictoryBar
+        {...defaultBarProps}
+        horizontal
+        labelComponent={
+          <VictoryTooltip
+            active
+            flyoutPadding={{ top: 30, bottom: 10 }}
+            text={`flyoutPadding\nhorizontal`}
+          />
+        }
+      />
+      <VictoryBar
+        {...defaultBarProps}
+        labelComponent={
+          <VictoryTooltip
+            active
+            flyoutPadding={({ datum }) => (datum.y > 0 ? { top: 20, left: 15, right: 5 } : 2)}
+            text={`flyoutPadding\nfunction`}
+          />
+        }
+      />
+      <VictoryBar
+        {...polarBarProps}
+        labelComponent={
+          <VictoryTooltip
+            active
+            flyoutPadding={{ top: 20, left: 15, right: 5 }}
+            text={`flyoutPadding\npolar`}
           />
         }
       />

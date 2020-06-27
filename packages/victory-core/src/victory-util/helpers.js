@@ -90,6 +90,22 @@ function getPadding(props, name = "padding") {
   };
 }
 
+function isTooltip(component) {
+  const labelRole = component && component.type && component.type.role;
+  return labelRole === "tooltip";
+}
+
+function getDefaultStyles(props, role) {
+  const { theme = {}, labelComponent } = props;
+  const defaultStyles = (theme[role] && theme[role].style) || {};
+  if (!isTooltip(labelComponent)) {
+    return defaultStyles;
+  }
+  const tooltipStyle = (theme.tooltip && theme.tooltip.style) || {};
+  const labelStyle = defaults({}, tooltipStyle, defaultStyles.labels);
+  return defaults({}, { labels: labelStyle }, defaultStyles);
+}
+
 function getStyles(style, defaultStyles) {
   const width = "100%";
   const height = "100%";
@@ -274,6 +290,7 @@ export default {
   getPoint,
   scalePoint,
   getPadding,
+  getDefaultStyles,
   getStyles,
   evaluateProp,
   evaluateStyle,
@@ -286,5 +303,6 @@ export default {
   modifyProps,
   getCurrentAxis,
   reduceChildren,
-  isHorizontal
+  isHorizontal,
+  isTooltip
 };

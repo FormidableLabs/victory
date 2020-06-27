@@ -244,6 +244,7 @@ export const Tooltips = () => {
         style={parentStyle}
         radius={100}
         labels={["one", "two", "three labels", "four"]}
+        labelPlacement="perpendicular"
         labelComponent={<VictoryTooltip active />}
       />
       <VictoryPie style={parentStyle} radius={100} labelComponent={<VictoryTooltip active />} />
@@ -252,6 +253,7 @@ export const Tooltips = () => {
         radius={100}
         labels={({ index }) => `#${index}`}
         labelPosition="startAngle"
+        labelPlacement="perpendicular"
         labelComponent={<VictoryTooltip active />}
       />
       <VictoryPie
@@ -259,12 +261,14 @@ export const Tooltips = () => {
         radius={100}
         labels={({ index }) => `#${index}`}
         labelPosition="endAngle"
+        labelPlacement="parallel"
         labelComponent={<VictoryTooltip active />}
       />
       <VictoryPie
         style={parentStyle}
         radius={100}
         labels={({ index }) => `#${index}`}
+        labelPlacement="parallel"
         labelPosition={({ index }) => (index ? undefined : "startAngle")}
         labelComponent={<VictoryTooltip active />}
       />
@@ -454,8 +458,77 @@ export const Origin = () => {
   );
 };
 
-//   .add("as only a portion of a pie", () => <VictoryPie endAngle={90} startAngle={-90} />)
-//   .add("with space between slices", () => (
-//     <VictoryPie endAngle={90} innerRadius={140} padAngle={5} startAngle={-90} />
-//   ))
-//   .add("with an origin prop", () => <VictoryPie radius={100} origin={{ x: 150, y: 150 }} />)
+export const LabelPlacement = () => {
+  return (
+    <div style={containerStyle}>
+      <VictoryPie
+        style={{ ...parentStyle, labels: { fill: "magenta" } }}
+        labelPosition="startAngle"
+        labelPlacement="parallel"
+        labelRadius={50}
+        labels={({ datum }) => `${datum.l} degrees`}
+        data={[
+          { x: 1, y: 1, l: 0 },
+          { x: 2, y: 1, l: 45 },
+          { x: 3, y: 1, l: 90 },
+          { x: 4, y: 1, l: 135 },
+          { x: 5, y: 1, l: 180 },
+          { x: 6, y: 1, l: 225 },
+          { x: 7, y: 1, l: 270 },
+          { x: 8, y: 1, l: 315 }
+        ]}
+      />
+      <VictoryPie
+        style={{ ...parentStyle, labels: { fill: "magenta" } }}
+        labelPlacement={({ index }) => (index ? "parallel" : "perpendicular")}
+        labelRadius={({ index }) => (index ? 50 : undefined)}
+        labels={({ datum }) => `${datum.l} degrees`}
+        data={[
+          { x: 1, y: 1, l: 0 },
+          { x: 2, y: 1, l: 45 },
+          { x: 3, y: 1, l: 90 },
+          { x: 4, y: 1, l: 135 },
+          { x: 5, y: 1, l: 180 },
+          { x: 6, y: 1, l: 225 },
+          { x: 7, y: 1, l: 270 },
+          { x: 8, y: 1, l: 315 }
+        ]}
+      />
+      <VictoryPie
+        style={{ ...parentStyle, labels: { fill: "magenta" } }}
+        radius={120}
+        labelPosition="startAngle"
+        labelPlacement="perpendicular"
+        labels={({ datum }) => `${datum.l}\ndegrees`}
+        data={[
+          { x: 1, y: 1, l: 0 },
+          { x: 2, y: 1, l: 45 },
+          { x: 3, y: 1, l: 90 },
+          { x: 4, y: 1, l: 135 },
+          { x: 5, y: 1, l: 180 },
+          { x: 6, y: 1, l: 225 },
+          { x: 7, y: 1, l: 270 },
+          { x: 8, y: 1, l: 315 }
+        ]}
+      />
+      <VictoryPie
+        style={{ ...parentStyle, labels: { fill: "magenta" } }}
+        radius={120}
+        labelPosition="startAngle"
+        labelPlacement="perpendicular"
+        labelComponent={<VictoryTooltip active />}
+        labels={({ datum }) => `${datum.l}\ndegrees`}
+        data={[
+          { x: 1, y: 1, l: 0 },
+          { x: 2, y: 1, l: 45 },
+          { x: 3, y: 1, l: 90 },
+          { x: 4, y: 1, l: 135 },
+          { x: 5, y: 1, l: 180 },
+          { x: 6, y: 1, l: 225 },
+          { x: 7, y: 1, l: 270 },
+          { x: 8, y: 1, l: 315 }
+        ]}
+      />
+    </div>
+  );
+};

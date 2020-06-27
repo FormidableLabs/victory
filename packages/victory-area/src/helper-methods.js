@@ -30,8 +30,8 @@ const getDataWithBaseline = (props, scale) => {
 };
 
 const getCalculatedValues = (props) => {
-  const { theme, polar } = props;
-  const defaultStyles = theme && theme.area && theme.area.style ? theme.area.style : {};
+  const { polar } = props;
+  const defaultStyles = Helpers.getDefaultStyles(props, "area");
   const style = Helpers.getStyles(props.style, defaultStyles);
   const range = {
     x: Helpers.getRange(props, "x"),

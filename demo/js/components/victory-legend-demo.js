@@ -83,7 +83,7 @@ const data = [
 
 const LegendDemo = () => (
   <div className="demo" style={containerStyle}>
-    <svg height={800} width={1000} style={{ border: "1px solid #ccc", margin: "2%" }}>
+    <svg height={1000} width={1000} style={{ border: "1px solid #ccc", margin: "2%" }}>
       <VictoryLegend
         standalone={false}
         x={25}
@@ -139,7 +139,7 @@ const LegendDemo = () => (
 
       <VictoryLegend
         standalone={false}
-        x={600}
+        x={700}
         y={20}
         titleOrientation="bottom"
         title={["TITLE", "subtitle", "more"]}
@@ -166,6 +166,19 @@ const LegendDemo = () => (
         rowGutter={{ top: 5, bottom: 8 }}
         style={{ border: { stroke: "black" } }}
         data={[{ name: "One" }, { name: "Two" }, { name: "Three" }]}
+      />
+      <VictoryLegend
+        x={25}
+        y={750}
+        standalone={false}
+        borderComponent={<Border height={110} />}
+        centerTitle
+        title={["TITLE"]}
+        gutter={30}
+        symbolSpacer={symbolSpacer}
+        itemsPerRow={3}
+        data={data}
+        style={legendStyle}
       />
     </svg>
     <VictoryLegend

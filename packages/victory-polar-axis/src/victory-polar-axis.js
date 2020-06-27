@@ -3,7 +3,6 @@ import PropTypes from "prop-types";
 import { assign, isEmpty } from "lodash";
 import {
   PropTypes as CustomPropTypes,
-  Helpers,
   VictoryLabel,
   CommonProps,
   VictoryContainer,
@@ -212,10 +211,7 @@ class VictoryPolarAxis extends React.Component {
   // Overridden in victory-native
   renderGroup(props, children) {
     const { groupComponent } = props;
-    const groupComponentProps = groupComponent.props || {};
-    const origin = Helpers.getPolarOrigin(props);
-    const transform = groupComponentProps.transform || `translate(${origin.x}, ${origin.y})`;
-    return React.cloneElement(groupComponent, { transform }, children);
+    return React.cloneElement(groupComponent, {}, children);
   }
 
   shouldAnimate() {

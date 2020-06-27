@@ -14,7 +14,7 @@ const containerStyle = {
 
 const style = {
   parent: { border: "1px solid #ccc", margin: "1%", maxWidth: "25%" },
-  labels: { padding: 0 },
+  labels: { padding: 0, fontFamily: "arial" },
   data: { fill: "gold" }
 };
 
@@ -185,7 +185,7 @@ export const Styles = () => {
         {...defaultScatterProps}
         labelComponent={
           <VictoryLabel
-            style={{ fontSize: 20 }}
+            style={{ fontSize: 20, fontFamily: "arial" }}
             text={["single", "style", "object"]}
             backgroundStyle={{ stroke: "blue", fill: "none" }}
           />
@@ -195,7 +195,7 @@ export const Styles = () => {
         {...defaultScatterProps}
         labelComponent={
           <VictoryLabel
-            style={[{ fontSize: 20 }]}
+            style={[{ fontSize: 20, fontFamily: "arial" }]}
             text={["single", "element", "array"]}
             backgroundStyle={{ stroke: "blue", fill: "none" }}
           />
@@ -205,7 +205,10 @@ export const Styles = () => {
         {...defaultScatterProps}
         labelComponent={
           <VictoryLabel
-            style={[{ fontSize: 20 }, { fontSize: 18, fill: "red" }]}
+            style={[
+              { fontSize: 20, fontFamily: "arial" },
+              { fontSize: 18, fill: "red", fontFamily: "arial" }
+            ]}
             text={["multi", "element", "array"]}
             backgroundStyle={{ stroke: "blue", fill: "none" }}
           />
@@ -215,7 +218,7 @@ export const Styles = () => {
         {...defaultScatterProps}
         labelComponent={
           <VictoryLabel
-            style={{ fontSize: 20 }}
+            style={{ fontSize: 20, fontFamily: "arial" }}
             text={["single", "style", "object"]}
             backgroundStyle={[{ stroke: "blue", fill: "none" }]}
           />
@@ -225,7 +228,7 @@ export const Styles = () => {
         {...defaultScatterProps}
         labelComponent={
           <VictoryLabel
-            style={[{ fontSize: 20 }]}
+            style={[{ fontSize: 20, fontFamily: "arial" }]}
             text={["single", "element", "array"]}
             backgroundStyle={[{ stroke: "blue", fill: "none" }]}
           />
@@ -235,7 +238,10 @@ export const Styles = () => {
         {...defaultScatterProps}
         labelComponent={
           <VictoryLabel
-            style={[{ fontSize: 20 }, { fontSize: 12, fill: "red" }]}
+            style={[
+              { fontSize: 20, fontFamily: "arial" },
+              { fontSize: 12, fill: "red", fontFamily: "arial" }
+            ]}
             text={["multi", "element", "array"]}
             backgroundStyle={[{ stroke: "blue", fill: "none" }]}
           />
@@ -245,7 +251,7 @@ export const Styles = () => {
         {...defaultScatterProps}
         labelComponent={
           <VictoryLabel
-            style={{ fontSize: ({ datum }) => (datum.y === 0 ? 12 : 15) }}
+            style={{ fontSize: ({ datum }) => (datum.y === 0 ? 12 : 15), fontFamily: "arial" }}
             text={["object", "with", "functions"]}
             backgroundStyle={{ stroke: "blue", fill: "none" }}
           />
@@ -255,7 +261,7 @@ export const Styles = () => {
         {...defaultScatterProps}
         labelComponent={
           <VictoryLabel
-            style={[{ fontSize: ({ datum }) => (datum.y === 0 ? 12 : 15) }]}
+            style={[{ fontSize: ({ datum }) => (datum.y === 0 ? 12 : 15), fontFamily: "arial" }]}
             text={["single array", "with", "functions"]}
             backgroundStyle={{ stroke: "blue", fill: "none" }}
           />
@@ -266,8 +272,8 @@ export const Styles = () => {
         labelComponent={
           <VictoryLabel
             style={[
-              { fontSize: ({ datum }) => (datum.y === 0 ? 12 : 15) },
-              { fill: ({ datum }) => (datum.y === 0 ? "red" : "blue") }
+              { fontSize: ({ datum }) => (datum.y === 0 ? 12 : 15), fontFamily: "arial" },
+              { fill: ({ datum }) => (datum.y === 0 ? "red" : "blue"), fontFamily: "arial" }
             ]}
             text={["multi array", "with", "functions"]}
             backgroundStyle={{ stroke: "blue", fill: "none" }}
@@ -278,7 +284,7 @@ export const Styles = () => {
         {...defaultScatterProps}
         labelComponent={
           <VictoryLabel
-            style={{ fontSize: ({ datum }) => (datum.y === 0 ? 12 : 15) }}
+            style={{ fontSize: ({ datum }) => (datum.y === 0 ? 12 : 15), fontFamily: "arial" }}
             text={["object", "with", "functions"]}
             backgroundStyle={[{ stroke: "blue", fill: "none" }]}
           />
@@ -288,7 +294,7 @@ export const Styles = () => {
         {...defaultScatterProps}
         labelComponent={
           <VictoryLabel
-            style={[{ fontSize: ({ datum }) => (datum.y === 0 ? 12 : 15) }]}
+            style={[{ fontSize: ({ datum }) => (datum.y === 0 ? 12 : 15), fontFamily: "arial" }]}
             text={["single array", "with", "functions"]}
             backgroundStyle={[{ stroke: "blue", fill: "none" }]}
           />
@@ -299,8 +305,8 @@ export const Styles = () => {
         labelComponent={
           <VictoryLabel
             style={[
-              { fontSize: ({ datum }) => (datum.y === 0 ? 12 : 15) },
-              { fill: ({ datum }) => (datum.y === 0 ? "red" : "blue") }
+              { fontSize: ({ datum }) => (datum.y === 0 ? 12 : 15), fontFamily: "arial" },
+              { fill: ({ datum }) => (datum.y === 0 ? "red" : "blue"), fontFamily: "arial" }
             ]}
             text={["multi array", "with", "functions"]}
             backgroundStyle={[{ stroke: "blue", fill: "none" }]}
@@ -472,7 +478,6 @@ export const BackgroundStyles = () => {
               "for style or lineHeight,",
               "Victory will save us with defaults."
             ]}
-            style={[]}
             lineHeight={[]}
           />
         }
@@ -501,6 +506,65 @@ export const BackgroundStyles = () => {
         {...defaultScatterProps}
         labelComponent={
           <VictoryLabel
+            angle={70}
+            backgroundStyle={[
+              { fill: "pink" },
+              { fill: "lavender" },
+              { fill: "thistle" },
+              { fill: "plum" }
+            ]}
+            text={[
+              "Victory is awesome.",
+              "background rects",
+              "all get appropriate",
+              "angle transforms"
+            ]}
+          />
+        }
+      />
+    </div>
+  );
+};
+export const Inline = () => {
+  return (
+    <div style={containerStyle}>
+      <VictoryScatter
+        {...defaultScatterProps}
+        labelComponent={
+          <VictoryLabel
+            backgroundStyle={{ fill: "lavender" }}
+            verticalAnchor="middle"
+            text={["Victory is awesome.", "This is inline styling for labels."]}
+            inline
+          />
+        }
+      />
+      <VictoryScatter
+        {...defaultScatterProps}
+        labelComponent={
+          <VictoryLabel
+            inline
+            backgroundStyle={[
+              { fill: "pink" },
+              { fill: "lavender" },
+              { fill: "thistle" },
+              { fill: "plum" }
+            ]}
+            text={[
+              "Victory is awesome.",
+              "backgrounds work with ",
+              "multiple lineHeights,",
+              "but the positioning does change"
+            ]}
+            lineHeight={[1, 2, 1, 3]}
+          />
+        }
+      />
+      <VictoryScatter
+        {...defaultScatterProps}
+        labelComponent={
+          <VictoryLabel
+            inline
             angle={70}
             backgroundStyle={[
               { fill: "pink" },

@@ -37,7 +37,7 @@ describe("components/victory-legend", () => {
     const output = wrappedLegend.find("Point");
 
     expect(output.at(0).prop("x")).to.equal(14);
-    expect(output.at(1).prop("x")).to.equal(100.28016194331983);
+    expect(output.at(1).prop("x")).to.equal(88.39999999999999);
     expect(output.at(0).prop("y")).to.equal(14);
     expect(output.at(1).prop("y")).to.equal(14);
   });
@@ -57,7 +57,7 @@ describe("components/victory-legend", () => {
     const output = wrappedLegend.find("text");
 
     expect(output.eq(0).prop("x")).to.equal("30.8");
-    expect(output.eq(1).prop("x")).to.equal("117.08016194331982");
+    expect(output.eq(1).prop("x")).to.equal("105.19999999999999");
     expect(output.eq(0).prop("y")).to.equal("18.97");
     expect(output.eq(1).prop("y")).to.equal("18.97");
   });

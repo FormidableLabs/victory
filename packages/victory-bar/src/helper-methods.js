@@ -23,8 +23,8 @@ const getBarPosition = (props, datum) => {
 };
 
 const getCalculatedValues = (props) => {
-  const { theme, polar } = props;
-  const defaultStyles = theme && theme.bar && theme.bar.style ? theme.bar.style : {};
+  const { polar } = props;
+  const defaultStyles = Helpers.getDefaultStyles(props, "bar");
   const style = Helpers.getStyles(props.style, defaultStyles);
   const data = Data.getData(props); // Data.getData needs to be called to format the data (we may be able to do this in a wrapper component)
   const range = props.range || {

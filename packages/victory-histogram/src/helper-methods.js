@@ -127,9 +127,7 @@ const getDomain = (props, axis) => {
 };
 
 const getCalculatedValues = (props) => {
-  const { theme } = props;
-  const defaultStyles =
-    theme && theme.histogram && theme.histogram.style ? theme.histogram.style : {};
+  const defaultStyles = Helpers.getDefaultStyles(props, "histogram");
   const style = Helpers.getStyles(props.style, defaultStyles);
   const data = getData(props);
 

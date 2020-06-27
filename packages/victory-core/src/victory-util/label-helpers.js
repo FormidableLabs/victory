@@ -1,6 +1,7 @@
 /* eslint-disable func-style */
 /* eslint-disable no-use-before-define */
 import Helpers from "./helpers";
+import { defaults } from "lodash";
 
 // Private Functions
 
@@ -145,9 +146,9 @@ function getPolarAngle(props, baseAngle) {
   if (!labelPlacement || labelPlacement === "vertical") {
     return 0;
   }
-  const degrees = baseAngle !== undefined ? baseAngle : getDegrees(props, datum);
+  const degrees = baseAngle !== undefined ? baseAngle % 360 : getDegrees(props, datum);
   const sign = (degrees > 90 && degrees < 180) || degrees > 270 ? 1 : -1;
-  let angle;
+  let angle = 0;
   if (degrees === 0 || degrees === 180) {
     angle = 90;
   } else if (degrees > 0 && degrees < 180) {
@@ -161,11 +162,11 @@ function getPolarAngle(props, baseAngle) {
 
 function getDegrees(props, datum) {
   const { x } = Helpers.getPoint(datum);
-  return Helpers.radiansToDegrees(props.scale.x(x));
+  return Helpers.radiansToDegrees(props.scale.x(x)) % 360;
 }
 
 function getProps(props, index) {
-  const { scale, data, style, horizontal, polar, width, height } = props;
+  const { scale, data, style, horizontal, polar, width, height, theme, labelComponent } = props;
   const datum = data[index];
   const degrees = getDegrees(props, datum);
   const textAnchor = polar ? getPolarTextAnchor(props, degrees) : getTextAnchor(props, datum);
@@ -177,7 +178,7 @@ function getProps(props, index) {
   const labelPlacement = getLabelPlacement(props);
   const { x, y } = getPosition(props, datum);
   const { dx, dy } = getOffset(props, datum);
-  return {
+  const labelProps = {
     angle,
     data,
     datum,
@@ -197,6 +198,11 @@ function getProps(props, index) {
     height,
     style: style.labels
   };
+  if (!Helpers.isTooltip(labelComponent)) {
+    return labelProps;
+  }
+  const tooltipTheme = (theme && theme.tooltip) || {};
+  return defaults({}, labelProps, Helpers.omit(tooltipTheme, ["style"]));
 }
 
 export default {

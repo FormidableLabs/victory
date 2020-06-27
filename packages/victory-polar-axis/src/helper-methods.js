@@ -25,10 +25,14 @@ const getEvaluatedStyles = (style, props) => {
 };
 
 const getStyleObject = (props) => {
-  const { theme, dependentAxis } = props;
-  const generalAxisStyle = theme && theme.axis && theme.axis.style;
-  const axisType = dependentAxis ? "dependentAxis" : "independentAxis";
-  const specificAxisStyle = theme && theme[axisType] && theme[axisType].style;
+  const { theme = {}, dependentAxis } = props;
+  const generalAxisStyle =
+    (theme.polarAxis && theme.polarAxis.style) || (theme.axis && theme.axis.style);
+  const polarAxisType = dependentAxis ? "polarDependentAxis" : "polarIndependentAxis";
+  const standardAxisType = dependentAxis ? "dependentAxis" : "independentAxis";
+  const specificAxisStyle =
+    (theme[polarAxisType] && theme[polarAxisType].style) ||
+    (theme[standardAxisType] && theme[standardAxisType].style);
 
   const mergeStyles = () => {
     const styleNamespaces = ["axis", "axisLabel", "grid", "parent", "tickLabels", "ticks"];
@@ -103,7 +107,16 @@ const getAxisAngle = (props) => {
 
 //eslint-disable-next-line max-params
 const getTickProps = (props, calculatedValues, tickValue, index) => {
-  const { axisType, radius, scale, style, stringTicks, ticks, tickFormat } = calculatedValues;
+  const {
+    axisType,
+    radius,
+    scale,
+    style,
+    stringTicks,
+    ticks,
+    tickFormat,
+    origin
+  } = calculatedValues;
   const text = tickFormat(tickValue, index, ticks);
   const tick = stringTicks ? stringTicks[index] : tickValue;
   const { tickStyle } = getEvaluatedStyles(style, {
@@ -117,33 +130,46 @@ const getTickProps = (props, calculatedValues, tickValue, index) => {
     axisType,
     text
   });
-  const tickPadding = tickStyle.padding || 0;
-  const angularPadding = tickPadding; // TODO: do some geometry
   const axisAngle = axisType === "radial" ? getAxisAngle(props, scale) : undefined;
+  const tickPadding = tickStyle.padding || tickStyle.size || 0;
+  const padAngle = Helpers.degreesToRadians(90 - axisAngle);
+  const tickAngle =
+    axisType === "angular" ? scale(tickValue) : Helpers.degreesToRadians(-1 * axisAngle);
+  const tickRadius = axisType === "angular" ? radius : scale(tickValue);
+
   return axisType === "angular"
     ? {
         index,
         datum: tick,
         style: tickStyle,
-        x1: radius * Math.cos(scale(tickValue)),
-        y1: -radius * Math.sin(scale(tickValue)),
-        x2: (radius + tickPadding) * Math.cos(scale(tickValue)),
-        y2: -(radius + tickPadding) * Math.sin(scale(tickValue))
+        x1: getPosition(tickRadius, tickAngle, "x") + origin.x,
+        y1: getPosition(tickRadius, tickAngle, "y") + origin.y,
+        x2: getPosition(tickRadius + tickPadding, tickAngle, "x") + origin.x,
+        y2: getPosition(tickRadius + tickPadding, tickAngle, "y") + origin.y
       }
     : {
-        style,
         index,
         datum: tick,
-        x1: (scale(tickValue) / 2) * Math.cos(axisAngle - angularPadding),
-        x2: (scale(tickValue) / 2) * Math.cos(axisAngle + angularPadding),
-        y1: -(scale(tickValue) / 2) * Math.sin(axisAngle - angularPadding),
-        y2: -(scale(tickValue) / 2) * Math.sin(axisAngle + angularPadding)
+        style: tickStyle,
+        x1: tickRadius * Math.cos(tickAngle) + Math.cos(padAngle) * tickPadding + origin.x,
+        x2: tickRadius * Math.cos(tickAngle) - Math.cos(padAngle) * tickPadding + origin.x,
+        y1: tickRadius * Math.sin(tickAngle) + Math.sin(padAngle) * tickPadding + origin.y,
+        y2: tickRadius * Math.sin(tickAngle) - Math.sin(padAngle) * tickPadding + origin.y
       };
 };
 
 //eslint-disable-next-line max-params
 const getTickLabelProps = (props, calculatedValues, tickValue, index) => {
-  const { axisType, radius, tickFormat, style, scale, ticks, stringTicks } = calculatedValues;
+  const {
+    axisType,
+    radius,
+    tickFormat,
+    style,
+    scale,
+    ticks,
+    stringTicks,
+    origin
+  } = calculatedValues;
   const text = tickFormat(tickValue, index, ticks);
   const tick = stringTicks ? stringTicks[index] : tickValue;
   const { labelStyle } = getEvaluatedStyles(style, {
@@ -184,14 +210,23 @@ const getTickLabelProps = (props, calculatedValues, tickValue, index) => {
     angle: textAngle,
     textAnchor,
     text,
-    x: labelRadius * Math.cos(Helpers.degreesToRadians(labelAngle)),
-    y: -labelRadius * Math.sin(Helpers.degreesToRadians(labelAngle))
+    x: labelRadius * Math.cos(Helpers.degreesToRadians(labelAngle)) + origin.x,
+    y: -labelRadius * Math.sin(Helpers.degreesToRadians(labelAngle)) + origin.y
   };
 };
 
 //eslint-disable-next-line max-params
 const getGridProps = (props, calculatedValues, tickValue, index) => {
-  const { axisType, radius, style, scale, stringTicks, ticks, tickFormat } = calculatedValues;
+  const {
+    axisType,
+    radius,
+    style,
+    scale,
+    stringTicks,
+    ticks,
+    tickFormat,
+    origin
+  } = calculatedValues;
   const text = tickFormat(tickValue, index, ticks);
   const { startAngle, endAngle, innerRadius = 0 } = props;
   const tick = stringTicks ? stringTicks[index] : tickValue;
@@ -212,17 +247,17 @@ const getGridProps = (props, calculatedValues, tickValue, index) => {
         index,
         datum: tick,
         style: gridStyle,
-        x1: getPosition(radius, angle, "x"),
-        y1: getPosition(radius, angle, "y"),
-        x2: getPosition(innerRadius, angle, "x"),
-        y2: getPosition(innerRadius, angle, "y")
+        x1: getPosition(radius, angle, "x") + origin.x,
+        y1: getPosition(radius, angle, "y") + origin.y,
+        x2: getPosition(innerRadius, angle, "x") + origin.x,
+        y2: getPosition(innerRadius, angle, "y") + origin.y
       }
     : {
         style: gridStyle,
         index,
         datum: tick,
-        cx: 0,
-        cy: 0,
+        cx: origin.x,
+        cy: origin.y,
         r: scale(tickValue),
         startAngle,
         endAngle
@@ -230,7 +265,7 @@ const getGridProps = (props, calculatedValues, tickValue, index) => {
 };
 
 const getAxisLabelProps = (props, calculatedValues) => {
-  const { axisType, radius, style, scale } = calculatedValues;
+  const { axisType, radius, style, scale, origin } = calculatedValues;
   const { axisLabelComponent } = props;
   if (axisType !== "radial") {
     return {};
@@ -258,13 +293,13 @@ const getAxisLabelProps = (props, calculatedValues) => {
     textAnchor,
     verticalAnchor,
     text: props.label,
-    x: getPosition(labelRadius, Helpers.degreesToRadians(axisAngle), "x"),
-    y: getPosition(labelRadius, Helpers.degreesToRadians(axisAngle), "y")
+    x: getPosition(labelRadius, Helpers.degreesToRadians(axisAngle), "x") + origin.x,
+    y: getPosition(labelRadius, Helpers.degreesToRadians(axisAngle), "y") + origin.y
   };
 };
 
 const getAxisProps = (modifiedProps, calculatedValues) => {
-  const { style, axisType, radius, scale } = calculatedValues;
+  const { style, axisType, radius, scale, origin } = calculatedValues;
   const { startAngle, endAngle, innerRadius = 0 } = modifiedProps;
   const axisAngle =
     axisType === "radial"
@@ -273,15 +308,15 @@ const getAxisProps = (modifiedProps, calculatedValues) => {
   return axisType === "radial"
     ? {
         style: style.axis,
-        x1: getPosition(innerRadius, axisAngle, "x"),
-        x2: getPosition(radius, axisAngle, "x"),
-        y1: getPosition(innerRadius, axisAngle, "y"),
-        y2: getPosition(radius, axisAngle, "y")
+        x1: getPosition(innerRadius, axisAngle, "x") + origin.x,
+        x2: getPosition(radius, axisAngle, "x") + origin.x,
+        y1: getPosition(innerRadius, axisAngle, "y") + origin.y,
+        y2: getPosition(radius, axisAngle, "y") + origin.y
       }
     : {
         style: style.axis,
-        cx: 0,
-        cy: 0,
+        cx: origin.x,
+        cy: origin.y,
         r: radius,
         startAngle,
         endAngle
@@ -303,6 +338,7 @@ const getCalculatedValues = (props) => {
   const ticks = axisType === "angular" ? filterTicks(initialTicks, scale) : initialTicks;
   const tickFormat = Axis.getTickFormat(props, scale);
   const radius = getRadius(props);
+  const origin = Helpers.getPolarOrigin(props);
   return {
     axis,
     style,
@@ -314,7 +350,8 @@ const getCalculatedValues = (props) => {
     tickFormat,
     domain,
     range,
-    radius
+    radius,
+    origin
   };
 };
 
