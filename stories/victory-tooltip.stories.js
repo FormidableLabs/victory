@@ -41,7 +41,10 @@ const polarBarProps = {
 
 export default {
   title: "VictoryTooltip",
-  component: VictoryTooltip
+  component: VictoryTooltip,
+  parameters: {
+    chromatic: { viewports: [1200] }
+  }
 };
 
 export const DefaultRendering = () => {
