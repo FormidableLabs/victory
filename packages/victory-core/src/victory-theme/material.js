@@ -258,7 +258,7 @@ export default {
       fill: "#f0f0f0",
       pointerEvents: "none"
     },
-    flyoutPadding: 10,
+    flyoutPadding: 5,
     cornerRadius: 5,
     pointerLength: 10
   },
