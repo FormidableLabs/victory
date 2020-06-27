@@ -1422,7 +1422,7 @@ _This may be a breaking change for animating VictoryArea and VictoryLine. Animat
 _VictoryTheme_
 
 - All Victory components support a `theme` prop that can be used to define styles and props across different component types.
-- `victory-core` includes the [material theme](https://github.com/FormidableLabs/victory-core/blob/master/src/victory-theme/material.js)
+- `victory-core` includes the [material theme](https://github.com/FormidableLabs/victory-core/blob/main/src/victory-theme/material.js)
 
 _VictoryCandlestick_
 
