@@ -1,6 +1,6 @@
 {
   "name": "victory-group",
-  "version": "34.3.12",
+  "version": "35.0.0",
   "description": "Group Layout Component for Victory",
   "keywords": [
     "data visualization",
@@ -22,8 +22,8 @@
     "lodash": "^4.17.15",
     "prop-types": "^15.5.8",
     "react-fast-compare": "^2.0.0",
-    "victory-core": "^34.3.12",
-    "victory-shared-events": "^34.3.12"
+    "victory-core": "^35.0.0",
+    "victory-shared-events": "^35.0.0"
   },
   "scripts": {
     "version": "nps build-libs && nps build-dists"

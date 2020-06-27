@@ -1,6 +1,6 @@
 {
   "name": "victory-cursor-container",
-  "version": "34.3.12",
+  "version": "35.0.0",
   "description": "Interactive Cursor Component for Victory",
   "keywords": [
     "data visualization",
@@ -21,7 +21,7 @@
   "dependencies": {
     "lodash": "^4.17.15",
     "prop-types": "^15.5.8",
-    "victory-core": "^34.3.12"
+    "victory-core": "^35.0.0"
   },
   "scripts": {
     "version": "nps build-libs && nps build-dists"
