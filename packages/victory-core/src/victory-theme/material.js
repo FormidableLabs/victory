@@ -17,7 +17,7 @@ const grey900 = "#212121";
 // *
 // * Typography
 // *
-const sansSerif = "'Roboto', 'Helvetica Neue', Helvetica, sans-serif";
+const sansSerif = "'Helvetica Neue', 'Helvetica', 'Arial', sans-serif";
 const letterSpacing = "normal";
 const fontSize = 12;
 // *

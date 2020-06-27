@@ -10,7 +10,7 @@ const grey = "#969696";
 // *
 // * Typography
 // *
-const sansSerif = "'Gill Sans', 'Gill Sans MT', 'Seravek', 'Trebuchet MS', sans-serif";
+const sansSerif = "'Gill Sans', 'Seravek', 'Trebuchet MS', sans-serif";
 const letterSpacing = "normal";
 const fontSize = 14;
 // *
