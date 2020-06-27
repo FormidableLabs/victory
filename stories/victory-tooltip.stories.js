@@ -15,6 +15,7 @@ const containerStyle = {
 
 const style = {
   parent: { border: "1px solid #ccc", margin: "1%", maxWidth: "25%" },
+  labels: { fontFamily: "arial" },
   data: { fill: "gold", width: 20 }
 };
 
@@ -600,7 +601,7 @@ export const FlyoutStyle = () => {
         labelComponent={
           <VictoryTooltip
             active
-            style={{ padding: 5 }}
+            style={{ padding: 5, fontFamily: "arial" }}
             flyoutStyle={{ stroke: "red", strokeWidth: 2, strokeDasharray: "1, 2" }}
             text={`flyoutStyle`}
           />
@@ -612,7 +613,7 @@ export const FlyoutStyle = () => {
         labelComponent={
           <VictoryTooltip
             active
-            style={{ padding: 5, fill: "red" }}
+            style={{ padding: 5, fill: "red", fontFamily: "arial" }}
             flyoutStyle={{ fill: "pink", strokeWidth: 0, opacity: 0.5, padding: 10 }}
             text={`flyoutStyle`}
           />
@@ -623,7 +624,7 @@ export const FlyoutStyle = () => {
         labelComponent={
           <VictoryTooltip
             active
-            style={{ padding: 10 }}
+            style={{ padding: 10, fontFamily: "arial" }}
             flyoutStyle={{ fill: "cyan", strokeWidth: 0, opacity: 0.5 }}
             text={`flyoutStyle\npolar`}
           />
