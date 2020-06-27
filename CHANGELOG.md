@@ -1,5 +1,57 @@
 # Victory Changelog
 
+## 35.0.0 (2020-06-27)
+
+### Label and Theme Improvements!
+
+This release introduces new label features and makes improvements to themes. This release includes breaking style changes. Please double check your label and tooltip styles when upgrading. Polar axes and pie charts may be particularly impacted.
+
+### New Features!
+- `VictoryLabel` now supports label backgrounds, which are rendered as `rect` elements behind your labels. Backgrounds are styled via the new `backgroundStyle` prop on `VictoryLabel`. This prop may be given as a style object, or an array of objects for styling multi-line labels. Background elements are sized for their corresponding text elements, but padding may also be added with the `backgroundPadding` prop, which accepts a single number, an object with values for "top", "bottom", "left" and "right", or an array of either of these for adding background padding to multi-line labels.
+
+- `VictoryTooltip` has a new `flyoutPadding` prop that may be used to add padding between the edge of the flyout and the label within it. The `flyoutPadding` prop may be given as a single number of as an object with values for "top", "bottom", "left" and "right". **This is a breaking change**, as `style.padding` no longer adds padding between the flyout and its label. Both of Victory's built-in themes have been altered so that tooltips get `flyoutPadding={5}` by default.
+
+- `VictoryPie` now supports the `labelPlacement` prop used in polar charts. Possible values are "vertical" "parallel" and "perpendicular". When not given, vertical labels are rendered as before.
+
+- Themes now support `polarAxis`, `polarDependentAxis`, and `polarIndependentAxis` namespaces that are merges with the less specific `axis`, `dependentAxis`, and `independentAxis` themes as appropriate.
+
+### Improvements
+- Changes Victory's default branch from `master` to `main` 🖤
+
+- `Textsize` approximations have changed, and are much more accurate in most cases. **This may be a breaking change for layouts that depended on approximated text size**
+
+- Tooltip themes are now correctly merged with label styles and props.
+
+- `VictoryPolarAxis` elements are now rendered relative to the origin independently, rather than being translated as a group. This allows for correct positioning of elements within `VictoryPortal` **This may be a breaking change for custom components in `VictoryPolarAxis`**
+
+- Corrects the `labelPosition` prop on `VictoryPie` (previously `startAngle` and `endAngle` were inverted) **This is a breaking change**
+
+- Alters `material` and `greyscale` themes. **The following theme updates may cause breaking style changes**
+  - Uses more widely available default fonts for labels
+  - Reduces default label padding for `boxplot` and `candlestick`
+  - Adds `polarDependentAxis` settings to the `material` theme
+  - Zero padding on from `tooltip` styles override label styles on all other theme namespaces. This means that tooltips pointers will now all start exactly at the data element they correspond to by default. To alter this behavior, either 1) provide a different theme, 2) alter padding in via label styles like so:
+    ```
+      <VictoryBar
+        style={{ labels: { padding: 5 } }}
+        labelComponent={<VictoryTooltip />}
+      />
+    ```
+    or
+    ```
+    <VictoryBar
+      labelComponent={
+        <VictoryTooltip style={{ padding: 5 }} />
+      }
+    />
+    ```
+
+### Associated PRs
+- [#1583](https://github.com/FormidableLabs/victory/pull/1583) - Initial label background work
+- [#1625](https://github.com/FormidableLabs/victory/pull/1625) - Label and theme improvements
+- [#1627](https://github.com/FormidableLabs/victory/pull/1627) - Switch CI to main
+
+
 ## 34.3.12 (2020-06-22)
 
 -[#1620](https://github.com/FormidableLabs/victory/pull/1620) - Allow granular `voronoiPadding`. Thanks @dlabrecq!
