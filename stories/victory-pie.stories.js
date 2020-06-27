@@ -39,7 +39,7 @@ export const Data = () => {
       <VictoryPie
         style={parentStyle}
         data={[
-          { x: "Cat", y: 62 },
+          { x: "Cat", y: 63 },
           { x: "Dog", y: 91 },
           { x: "Fish", y: 55 },
           { x: "Bird", y: 55 }

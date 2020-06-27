@@ -9,7 +9,7 @@ node_js:
 sudo: false
 branches:
   only:
-    - master
+    - main
 before_install:
   - yarn config set ignore-engines true
   - export DISPLAY=:99.0
