@@ -200,7 +200,7 @@ export default class VictoryTooltip extends React.Component {
   }
 
   getEvaluatedProps(props) {
-    const { pointerLength, pointerWidth, cornerRadius, centerOffset, dx, dy } = props;
+    const { cornerRadius, centerOffset, dx, dy } = props;
 
     const active = Helpers.evaluateProp(props.active, props);
     const text = Helpers.evaluateProp(props.text, assign({}, props, { active }));
@@ -210,17 +210,37 @@ export default class VictoryTooltip extends React.Component {
         props.orientation,
         assign({}, props, { active, text, style, flyoutStyle })
       ) || this.getDefaultOrientation(props);
+
     const padding =
       Helpers.evaluateProp(
         props.flyoutPadding,
         assign({}, props, { active, text, style, flyoutStyle, orientation })
       ) || this.getLabelPadding(style);
+
     const flyoutPadding = Helpers.getPadding({ padding });
 
+    const pointerWidth = Helpers.evaluateProp(
+      props.pointerWidth,
+      assign({}, props, { active, text, style, flyoutStyle, orientation })
+    );
+
+    const pointerLength = Helpers.evaluateProp(
+      props.pointerLength,
+      assign({}, props, { active, text, style, flyoutStyle, orientation })
+    );
     const labelSize = TextSize.approximateTextSize(text, style);
 
     const { flyoutHeight, flyoutWidth } = this.getDimensions(
-      assign({}, props, { style, flyoutStyle, active, text, orientation, flyoutPadding }),
+      assign({}, props, {
+        style,
+        flyoutStyle,
+        active,
+        text,
+        orientation,
+        flyoutPadding,
+        pointerWidth,
+        pointerLength
+      }),
       labelSize
     );
 
@@ -232,7 +252,9 @@ export default class VictoryTooltip extends React.Component {
       orientation,
       flyoutHeight,
       flyoutWidth,
-      flyoutPadding
+      flyoutPadding,
+      pointerWidth,
+      pointerLength
     });
 
     const offsetX =
@@ -249,9 +271,7 @@ export default class VictoryTooltip extends React.Component {
       centerOffset: { x: offsetX, y: offsetY },
       dx: dx !== undefined ? Helpers.evaluateProp(dx, evaluatedProps) : 0,
       dy: dy !== undefined ? Helpers.evaluateProp(dy, evaluatedProps) : 0,
-      cornerRadius: Helpers.evaluateProp(cornerRadius, evaluatedProps),
-      pointerLength: Helpers.evaluateProp(pointerLength, evaluatedProps),
-      pointerWidth: Helpers.evaluateProp(pointerWidth, evaluatedProps)
+      cornerRadius: Helpers.evaluateProp(cornerRadius, evaluatedProps)
     });
   }
 
