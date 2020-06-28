@@ -10,7 +10,6 @@ import {
   VictoryStyleObject,
   PaddingOrCallback
 } from "victory-core";
-import { PaddingOrCallback } from "victory-core/src";
 
 export interface VictoryTooltipProps extends VictoryLabelableProps {
   active?: boolean;
