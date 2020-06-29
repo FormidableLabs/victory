@@ -1,0 +1,22 @@
+language: node_js
+
+dist: trusty
+
+node_js:
+  - "10"
+
+sudo: false
+
+branches:
+  only:
+    - master
+    - rewrite
+
+install:
+  # Fail if lockfile outdated.
+  # https://yarnpkg.com/lang/en/docs/cli/install/#toc-yarn-install-frozen-lockfile
+  - yarn install --frozen-lockfile
+
+script:
+  - yarn run lint
+  - yarn run build

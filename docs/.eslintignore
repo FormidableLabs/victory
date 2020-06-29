@@ -1,0 +1,8 @@
+# Ignore built files 
+public/* 
+
+# Ignore static assets 
+static/*
+
+# Ignore node modules
+node_modules/*
