@@ -1,6 +1,0 @@
-/*
-!/dist
-dist/client-stats.json
-*.map
-!README.md
-!package.json

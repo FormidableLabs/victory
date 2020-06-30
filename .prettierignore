@@ -11,3 +11,10 @@ yarn-error.log*
 lerna.json
 tsconfig.json
 storybook-static
+docs/artifacts
+docs/dist
+docs/public
+docs/tmp
+docs/static
+docs/.cache
+docs/node_modules
