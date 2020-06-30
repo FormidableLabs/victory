@@ -10,6 +10,8 @@ sudo: false
 branches:
   only:
     - main
+    # TODO: Remove
+    - improvement/docs
 before_install:
   - yarn config set ignore-engines true
   - export DISPLAY=:99.0
@@ -27,7 +29,8 @@ script:
     npx -q match-str -i "^(stories\/|packages\/)" -s "$CHANGED_FILES" && \
     { echo "[CHANGES] packages or stories changed."; } || \
     { echo "[NO CHANGES] No package or stories changes."; travis_terminate 0; }
-  - if [[ "${TRAVIS_PULL_REQUEST}" != "false" && "${TRAVIS_NODE_VERSION}" = "10" ]]; then yarn chromatic-ci || echo "Chromatic tests failed. Please investigate"; fi
+  # TODO: re-enable chromatic
+  # - if [[ "${TRAVIS_PULL_REQUEST}" != "false" && "${TRAVIS_NODE_VERSION}" = "10" ]]; then yarn chromatic-ci || echo "Chromatic tests failed. Please investigate"; fi
 after_success:
   - yarn config delete ignore-engines
 env:
@@ -69,4 +72,5 @@ jobs:
           script: yarn run deploy:prod
           skip_cleanup: true
           on:
-            branch: main
+            # TODO: change to main
+            branch: improvement/docs
