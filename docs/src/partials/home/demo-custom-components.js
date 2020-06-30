@@ -2,13 +2,7 @@
 
 import React from "react";
 import { range, random } from "lodash";
-import {
-  Area,
-  VictoryArea,
-  VictoryAxis,
-  VictoryChart,
-  VictoryLine
-} from "victory";
+import { Area, VictoryArea, VictoryAxis, VictoryChart, VictoryLine } from "victory";
 
 import importedTheme from "../../styles/theme";
 
@@ -26,8 +20,7 @@ const GradientPath = props => {
   const { percent, style = {}, ...rest } = props;
 
   const gradientId = `gradient-${Math.random()}`;
-  const isBrowser =
-    typeof window !== "undefined" && window.__STATIC_GENERATOR !== true;
+  const isBrowser = typeof window !== "undefined" && window.__STATIC_GENERATOR !== true;
   const loc = isBrowser ? window.location.href : "";
   const areaStyle = Object.assign({}, style, {
     fill: `url(${loc}#${gradientId})`,
@@ -120,11 +113,7 @@ export default class App extends React.Component {
             interpolation="monotoneX"
             data={d}
             style={{ data: { fill: colors[i] } }}
-            dataComponent={
-              <Area
-                pathComponent={<GradientPath percent={this.state.percent} />}
-              />
-            }
+            dataComponent={<Area pathComponent={<GradientPath percent={this.state.percent} />} />}
           />
         ))}
         <VictoryLine

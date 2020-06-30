@@ -29,8 +29,7 @@ const getLinkStylesByDepth = (depth, theme) => {
 const SubItemListItem = styled.li`
   padding-left: ${({ depth }) => (depth === 3 ? "7.7rem" : "5.3rem")};
   line-height: ${({ depth }) => (depth === 3 ? "1.3rem" : "2.3rem")};
-  margin: ${({ depth }) =>
-    depth === 3 ? "0 .7rem 1.3rem 0" : "0 0.7rem 0.7rem 0"};
+  margin: ${({ depth }) => (depth === 3 ? "0 .7rem 1.3rem 0" : "0 0.7rem 0.7rem 0")};
   display: block;
   hyphens: auto;
 `;
@@ -67,10 +66,7 @@ const TableOfContents = ({ active, link, headings }) => {
       return memo;
     }, []);
     return parentIndices.reduce((memo, curr, index) => {
-      const lastChild =
-        index === parentIndices.length + 1
-          ? undefined
-          : parentIndices[index + 1];
+      const lastChild = index === parentIndices.length + 1 ? undefined : parentIndices[index + 1];
       const children = [treeHeadings.slice(curr + 1, lastChild)];
       memo =
         children.length > 0
@@ -94,9 +90,7 @@ const TableOfContents = ({ active, link, headings }) => {
     // and take a long sip from a mint julep while mumbling something about the brittleness of scope and the joys of
     // referential transparency, but we're not generalizing this behavior and location-injection is table stakes
     // for front-end routing
-    return location.pathname.includes(absPath)
-      ? hashPath
-      : `${absPath}${hashPath}`;
+    return location.pathname.includes(absPath) ? hashPath : `${absPath}${hashPath}`;
   };
 
   const getTOC = (tocLink, tocHeadings, i = 0) => {

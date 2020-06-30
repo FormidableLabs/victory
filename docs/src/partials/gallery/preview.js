@@ -59,12 +59,8 @@ const Preview = props => {
     const compiledCode = compileCode();
     if (noRender) {
       /* eslint-disable no-eval, prefer-spread */
-      const Comp = React.createElement(
-        eval(compiledCode).apply(null, tempScope)
-      );
-      ReactDOMServer.renderToString(
-        React.createElement(previewComponent, {}, Comp)
-      );
+      const Comp = React.createElement(eval(compiledCode).apply(null, tempScope));
+      ReactDOMServer.renderToString(React.createElement(previewComponent, {}, Comp));
       render(React.createElement(previewComponent, {}, Comp), mountNode);
     } else {
       eval(compiledCode).apply(null, tempScope);

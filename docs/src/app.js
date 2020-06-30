@@ -17,10 +17,7 @@ const SCROLL_PIXEL_OFFSET = 25;
 const DEFAULT_PAGE_CONTENT_CLASS = ".Page-content";
 const ROUTES = ["docs", "faq", "guides"];
 
-const scrollContent = async (
-  hash,
-  contentPaneClass = DEFAULT_PAGE_CONTENT_CLASS
-) => {
+const scrollContent = async (hash, contentPaneClass = DEFAULT_PAGE_CONTENT_CLASS) => {
   const item = document.querySelector(`${contentPaneClass} ${hash}`);
 
   if (!item) {
@@ -40,8 +37,7 @@ const scrollContent = async (
   });
 };
 
-const checkScrollRoutes = (pathname, routes = ROUTES) =>
-  routes.some(r => pathname.includes(r));
+const checkScrollRoutes = (pathname, routes = ROUTES) => routes.some(r => pathname.includes(r));
 
 const ScrollToCurrentSection = ({ location, children }) => {
   const { pathname, hash = "" } = location;
@@ -54,22 +50,28 @@ const ScrollToCurrentSection = ({ location, children }) => {
     observer.disconnect();
   });
 
-  useEffect(() => {
-    if (typeof window !== "undefined" && pageContentHeight === null) {
-      const mainElement = document.querySelector(DEFAULT_PAGE_CONTENT_CLASS);
-      if (mainElement) {
-        pageContentHeightObserver.observe(mainElement);
+  useEffect(
+    () => {
+      if (typeof window !== "undefined" && pageContentHeight === null) {
+        const mainElement = document.querySelector(DEFAULT_PAGE_CONTENT_CLASS);
+        if (mainElement) {
+          pageContentHeightObserver.observe(mainElement);
+        }
       }
-    }
-  }, [pathname]);
+    },
+    [pathname]
+  );
 
-  useLayoutEffect(() => {
-    if (checkScrollRoutes(pathname)) {
-      scrollContent(hash);
-    }
-    // scroll to top immediately if navigation is not to a sidebar page
-    scroll.scrollTo(0, { duration: 0 });
-  }, [hash, pathname, pageContentHeight]);
+  useLayoutEffect(
+    () => {
+      if (checkScrollRoutes(pathname)) {
+        scrollContent(hash);
+      }
+      // scroll to top immediately if navigation is not to a sidebar page
+      scroll.scrollTo(0, { duration: 0 });
+    },
+    [hash, pathname, pageContentHeight]
+  );
 
   return children;
 };
@@ -94,11 +96,7 @@ const App = () => {
                 <Route path="*">
                   {props => {
                     const Comp = getComponentForPath(routePath) || <NotFound />;
-                    return (
-                      <ScrollToCurrentSection {...props}>
-                        {Comp}
-                      </ScrollToCurrentSection>
-                    );
+                    return <ScrollToCurrentSection {...props}>{Comp}</ScrollToCurrentSection>;
                   }}
                 </Route>
               )}

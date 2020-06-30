@@ -15,11 +15,7 @@ import SearchInput from "./components/search-input";
 import TableOfContents from "./components/table-of-contents";
 import { TABLE_OF_CONTENTS_SECTIONS } from "./constants";
 
-import {
-  SidebarSectionHeading,
-  SidebarListItemLink,
-  SidebarListItem
-} from "./styles";
+import { SidebarSectionHeading, SidebarListItemLink, SidebarListItem } from "./styles";
 
 // was gonna pass this but I'm leaning towards this being an internal detail since at the end of the day the proper
 // behavior is based on a bunch of magic strings for a non-configurable internal method
@@ -85,25 +81,18 @@ const getMatchTree = (link, filterTerm) => {
   if (!isEmpty(matches)) {
     const maxDepth = maxBy(matches, "depth").depth;
     let matchIndices = matches.map(match =>
-      findIndex(link.subHeadings, heading =>
-        includes(heading.value, match.value)
-      )
+      findIndex(link.subHeadings, heading => includes(heading.value, match.value))
     );
 
     matchIndices = matchIndices.sort((a, b) => a - b);
-    return link.subHeadings
-      .slice(0, last(matchIndices) + 1)
-      .reduce((memo, curr, i) => {
-        const useHeading =
-          i === matchIndices[0] ||
-          (i < matchIndices[0] && curr.depth < maxDepth);
-        if (useHeading && curr.value !== "Props") {
-          memo = memo.concat(curr);
-          matchIndices =
-            i === matchIndices[0] ? matchIndices.slice(1) : matchIndices;
-        }
-        return memo;
-      }, []);
+    return link.subHeadings.slice(0, last(matchIndices) + 1).reduce((memo, curr, i) => {
+      const useHeading = i === matchIndices[0] || (i < matchIndices[0] && curr.depth < maxDepth);
+      if (useHeading && curr.value !== "Props") {
+        memo = memo.concat(curr);
+        matchIndices = i === matchIndices[0] ? matchIndices.slice(1) : matchIndices;
+      }
+      return memo;
+    }, []);
   }
   return [];
 };
@@ -142,9 +131,7 @@ const Sidebar = ({ className, content, onCloseClick }) => {
           return edge.data && edge.data.type === sectionCategory.type;
         });
       return filteredEdges
-        ? (filteredByCategory[
-            [sectionCategory.category]
-          ] = filteredEdges.filter(edge =>
+        ? (filteredByCategory[[sectionCategory.category]] = filteredEdges.filter(edge =>
             sectionCategory.category.includes(edge.data.category)
           ))
         : null;
@@ -171,8 +158,7 @@ const Sidebar = ({ className, content, onCloseClick }) => {
           location.pathname.includes(`/${link.type}/${link.slug}`)
             ? true
             : filterTerm !== "";
-        const headings =
-          filterTerm !== "" ? getMatchTree(link, filterTerm) : link.subHeadings;
+        const headings = filterTerm !== "" ? getMatchTree(link, filterTerm) : link.subHeadings;
 
         return (
           <SidebarListItem key={link.slug} onClick={handleClearInput}>
@@ -216,16 +202,8 @@ const Sidebar = ({ className, content, onCloseClick }) => {
       ) : (
         <>
           <Introduction content={linksLists.introduction} />
-          <Category
-            title="Support"
-            content={linksLists.support}
-            location={location}
-          />
-          <Category
-            title="Guides"
-            content={linksLists.guides}
-            location={location}
-          />
+          <Category title="Support" content={linksLists.support} location={location} />
+          <Category title="Guides" content={linksLists.guides} location={location} />
           <Category
             title="Documentation"
             content={linksLists.documentation}

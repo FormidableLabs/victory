@@ -71,15 +71,14 @@ const About = ({ sidebarContent }) => {
         </iframe>
       </GitHubIconContainer>
       <p>
-        Victory is a set of modular charting components for React and React
-        Native. Victory makes it easy to get started without sacrificing
-        flexibility. Create one of a kind data visualizations with fully
-        customizable styles and behaviors. Victory uses the same API for web and
-        React Native applications for easy cross-platform charting.
+        Victory is a set of modular charting components for React and React Native. Victory makes it
+        easy to get started without sacrificing flexibility. Create one of a kind data
+        visualizations with fully customizable styles and behaviors. Victory uses the same API for
+        web and React Native applications for easy cross-platform charting.
       </p>
       <p>
-        Victory is helmed by Formidable’s{" "}
-        <a href="https://github.com/boygirl"> Lauren Eastridge</a>.
+        Victory is helmed by Formidable’s <a href="https://github.com/boygirl"> Lauren Eastridge</a>
+        .
       </p>
       <p>
         <a href="https://github.com/FormidableLabs/victory/graphs/contributors">
@@ -92,8 +91,8 @@ const About = ({ sidebarContent }) => {
       <Section>
         <Subheader id="showcase">Victory in Use</Subheader>
         <p>
-          Victory is used for charting across the web, from publicly-consumed
-          informational graphs to internal tracking and reporting.
+          Victory is used for charting across the web, from publicly-consumed informational graphs
+          to internal tracking and reporting.
         </p>
       </Section>
 
@@ -102,12 +101,10 @@ const About = ({ sidebarContent }) => {
       <Section>
         <Subheader>About Formidable</Subheader>
         <p>
-          Formidable is a Seattle-based consultancy and development shop,
-          focused on open-source, full-stack JavaScript using React.js and
-          Node.js, and the architecture of large-scale JavaScript applications.
-          We build products for some of the world’s biggest companies, while
-          helping their internal teams develop smart, thoughtful, and scalable
-          systems.
+          Formidable is a Seattle-based consultancy and development shop, focused on open-source,
+          full-stack JavaScript using React.js and Node.js, and the architecture of large-scale
+          JavaScript applications. We build products for some of the world’s biggest companies,
+          while helping their internal teams develop smart, thoughtful, and scalable systems.
         </p>
       </Section>
     </Page>

@@ -12,9 +12,7 @@ export default App;
 if (typeof document !== "undefined") {
   const target = document.getElementById("root");
 
-  const renderMethod = target.hasChildNodes()
-    ? ReactDOM.hydrate
-    : ReactDOM.render;
+  const renderMethod = target.hasChildNodes() ? ReactDOM.hydrate : ReactDOM.render;
 
   const render = Comp => {
     renderMethod(

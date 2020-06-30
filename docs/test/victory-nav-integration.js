@@ -16,9 +16,7 @@ try {
       if (markdownEndpoints.includes(l)) {
         const heading = await page.waitForSelector(".Recipe h1");
         if (!heading) {
-          throw new Error(
-            `Expected Markdown did not render as expected for route ${l}!`
-          );
+          throw new Error(`Expected Markdown did not render as expected for route ${l}!`);
         }
       }
       await page.screenshot({

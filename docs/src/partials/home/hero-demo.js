@@ -35,30 +35,24 @@ const font = color => ({
   fontFamily: "Helvetica"
 });
 
-const numberWithCommas = x =>
-  x.toString().replace(/\B(?=(\d{3})+(?!\d))/g, ",");
+const numberWithCommas = x => x.toString().replace(/\B(?=(\d{3})+(?!\d))/g, ",");
 
 const groupDownloadsByWeek = dates => {
   const downloadsGroupedByPeriod = {};
   const today = new Date();
 
   dates.forEach(date => {
-    const start = format(
-      startOfWeek(parse(date.day, "yyyy-MM-dd", today)),
-      "yyyy-MM-dd"
-    );
+    const start = format(startOfWeek(parse(date.day, "yyyy-MM-dd", today)), "yyyy-MM-dd");
 
     downloadsGroupedByPeriod[start] = downloadsGroupedByPeriod[start]
       ? downloadsGroupedByPeriod[start] + date.downloads
       : date.downloads;
   });
 
-  const weeklyDownloads = Object.entries(downloadsGroupedByPeriod).map(
-    ([key, value]) => ({
-      date: key,
-      downloads: value
-    })
-  );
+  const weeklyDownloads = Object.entries(downloadsGroupedByPeriod).map(([key, value]) => ({
+    date: key,
+    downloads: value
+  }));
   // remove the last element in the array, as it may not be a full week
   weeklyDownloads.pop();
   return weeklyDownloads;
@@ -110,13 +104,7 @@ const VoronoiLabel = props => {
   return (
     <g>
       <Point x={x} y={y} size={6} style={{ fill: "white" }} />
-      <rect
-        x={x - 30}
-        y={y - 30}
-        width={60}
-        height={20}
-        fill={importedTheme.color.deepBrown}
-      />
+      <rect x={x - 30} y={y - 30} width={60} height={20} fill={importedTheme.color.deepBrown} />
       <VictoryLabel {...props} style={labelStyles} dy={-20} />
     </g>
   );
@@ -131,19 +119,22 @@ const HeroDemo = () => {
   const [downloadsPerWeek, setData] = useState(oldDownloads);
   const url = `https://api.npmjs.org/downloads/range/${lastDate}:${recentDate}/victory`;
 
-  useEffect(() => {
-    const fetchData = async () => {
-      try {
-        const result = await axios(url);
-        const freshData = result.data;
-        const allDownloads = downloads.data.concat(freshData.downloads);
-        setData(groupDownloadsByWeek(allDownloads));
-      } catch (error) {
-        setData(oldDownloads);
-      }
-    };
-    fetchData();
-  }, [url]);
+  useEffect(
+    () => {
+      const fetchData = async () => {
+        try {
+          const result = await axios(url);
+          const freshData = result.data;
+          const allDownloads = downloads.data.concat(freshData.downloads);
+          setData(groupDownloadsByWeek(allDownloads));
+        } catch (error) {
+          setData(oldDownloads);
+        }
+      };
+      fetchData();
+    },
+    [url]
+  );
 
   return (
     <HeroDemoContainer>
@@ -167,27 +158,9 @@ const HeroDemo = () => {
           />
         }
       >
-        <VictoryLabel
-          text="DEC 2015"
-          textAnchor="end"
-          style={font()}
-          x={190}
-          y={190}
-        />
-        <VictoryLabel
-          text="PROJECT START"
-          textAnchor="end"
-          style={font()}
-          x={190}
-          y={215}
-        />
-        <VictoryLabel
-          text="TODAY"
-          textAnchor="start"
-          style={font()}
-          x={1710}
-          y={190}
-        />
+        <VictoryLabel text="DEC 2015" textAnchor="end" style={font()} x={190} y={190} />
+        <VictoryLabel text="PROJECT START" textAnchor="end" style={font()} x={190} y={215} />
+        <VictoryLabel text="TODAY" textAnchor="start" style={font()} x={1710} y={190} />
         <VictoryLabel
           text={`v${latestVersion}`}
           textAnchor="start"
@@ -261,9 +234,7 @@ const HeroDemo = () => {
               ]}
             />
           }
-          labels={({ datum }) =>
-            `${numberWithCommas(datum.downloads)}\nDOWNLOADS / WEEK`
-          }
+          labels={({ datum }) => `${numberWithCommas(datum.downloads)}\nDOWNLOADS / WEEK`}
         />
       </VictoryChart>
     </HeroDemoContainer>

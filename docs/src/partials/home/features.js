@@ -4,11 +4,7 @@ import PropTypes from "prop-types";
 import { Element } from "react-scroll";
 
 import LazyImage from "../lazy-image";
-import {
-  LandingSectionWrapper,
-  LandingSectionContent,
-  DropShadow
-} from "./styles";
+import { LandingSectionWrapper, LandingSectionContent, DropShadow } from "./styles";
 
 const SectionHeading = styled.h2`
   color: ${({ theme }) => theme.color.darkBrown};

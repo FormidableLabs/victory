@@ -14,11 +14,7 @@ import TUNE from "../../../static/logos/logo-tune.svg";
 import ZILLOW from "../../../static/logos/logo-zillow.svg";
 import BENAROYA from "../../../static/logos/logo-benaroya.png";
 import importedTheme from "../../styles/theme";
-import {
-  LinkButton,
-  LandingSectionWrapper,
-  LandingSectionContent
-} from "./styles";
+import { LinkButton, LandingSectionWrapper, LandingSectionContent } from "./styles";
 
 const SectionHeading = styled.h2`
   color: ${({ theme }) => theme.color.darkBrown};
@@ -87,10 +83,7 @@ const Companies = () => (
           <CompanyLogo src={TUNE} alt="Tune" />
         </Company>
       </CompaniesList>
-      <LinkButton
-        to={createPath("about#showcase")}
-        color={importedTheme.color.black}
-      >
+      <LinkButton to={createPath("about#showcase")} color={importedTheme.color.black}>
         SEE SHOWCASE
       </LinkButton>
     </LandingSectionContent>

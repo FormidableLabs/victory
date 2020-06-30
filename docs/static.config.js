@@ -55,13 +55,7 @@ export default {
     const commonPropsIntro = commonProps[0];
 
     const orderById = items => _.orderBy(items, ["data.id"], ["asc"]);
-    const allSidebarItems = [
-      ...introduction,
-      ...faq,
-      ...guides,
-      commonPropsIntro,
-      ...trueDocs
-    ];
+    const allSidebarItems = [...introduction, ...faq, ...guides, commonPropsIntro, ...trueDocs];
 
     const sidebarContent = allSidebarItems.reduce((av, cv, i, arr) => {
       const category = cv.data.category;

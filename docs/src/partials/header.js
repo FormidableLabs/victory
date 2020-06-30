@@ -71,8 +71,7 @@ const NavLinksList = styled.ul`
 `;
 
 const navItemStyle = css`
-  color: ${({ active, theme }) =>
-    active ? theme.color.red : theme.color.darkBrown};
+  color: ${({ active, theme }) => (active ? theme.color.red : theme.color.darkBrown)};
   font-size: 1.4rem;
   letter-spacing: 0.1rem;
   margin-right: 2rem;
@@ -130,10 +129,7 @@ const Header = ({ className = "", onMenuClick }) => {
           <VictoryLogoLink to={createPath("/")}>Victory</VictoryLogoLink>
 
           <NavLinksList>
-            <NavLink
-              active={pathname.includes("about")}
-              to={createPath("about")}
-            >
+            <NavLink active={pathname.includes("about")} to={createPath("about")}>
               About
             </NavLink>
             {/* /faq is nested under /docs but is at top-level for convenience
@@ -149,45 +145,26 @@ const Header = ({ className = "", onMenuClick }) => {
             >
               Docs
             </NavLink>
-            <NavLink
-              active={pathname.includes("gallery")}
-              to={createPath("gallery")}
-            >
+            <NavLink active={pathname.includes("gallery")} to={createPath("gallery")}>
               Gallery
             </NavLink>
 
             {config.projectLinks.map(link => (
-              <NavAnchor
-                key={link.url}
-                href={link.url}
-                target="_blank"
-                rel="noopener noreferrer"
-              >
+              <NavAnchor key={link.url} href={link.url} target="_blank" rel="noopener noreferrer">
                 {link.label}
               </NavAnchor>
             ))}
 
-            <NavLink
-              active={pathname.includes("faq")}
-              to={createPath("docs/faq")}
-            >
+            <NavLink active={pathname.includes("faq")} to={createPath("docs/faq")}>
               FAQs
             </NavLink>
           </NavLinksList>
         </LeftContainer>
 
-        <a
-          href="https://formidable.com/"
-          target="_blank"
-          rel="noopener noreferrer"
-        >
+        <a href="https://formidable.com/" target="_blank" rel="noopener noreferrer">
           <FormidableIcon src={formidableIcon} />
         </a>
-        <a
-          href="https://formidable.com/"
-          target="_blank"
-          rel="noopener noreferrer"
-        >
+        <a href="https://formidable.com/" target="_blank" rel="noopener noreferrer">
           <FormidableLogo src={formidableLogo} />
         </a>
       </InnerContainer>

@@ -118,8 +118,7 @@ const Tooltip = styled.div`
   z-index: 100;
   box-shadow: 2px 2px 6px rgba(0, 0, 0, 0.28);
   transition: transform 0.3s ease-out;
-  transform: ${({ dragging }) =>
-    `translate(-50%, ${dragging ? "-36px" : "-25px"})`};
+  transform: ${({ dragging }) => `translate(-50%, ${dragging ? "-36px" : "-25px"})`};
   border-radius: 3px;
   font-weight: bold;
   font-size: 16px;
@@ -136,8 +135,7 @@ const Triangle = styled.div`
   border-left: solid transparent 14px;
   border-right: solid transparent 14px;
   border-top: solid ${({ color }) => color} 14px;
-  transform: ${({ dragging }) =>
-    `translate(-50%, ${dragging ? "-36px" : "-25px"})`};
+  transform: ${({ dragging }) => `translate(-50%, ${dragging ? "-36px" : "-25px"})`};
   transition: color 0.3s ease-out, transform 0.3s ease-out;
 `;
 
@@ -169,9 +167,7 @@ const Slider = ({ tooltipValues, color, value, maxValue, onChange }) => {
       if (dragging) {
         const left = containerRef.current.getBoundingClientRect().left;
         const sliderWidth = containerRef.current.clientWidth;
-        const location = isTouchEvent(ev)
-          ? ev.touches[0].clientX - left
-          : ev.clientX - left;
+        const location = isTouchEvent(ev) ? ev.touches[0].clientX - left : ev.clientX - left;
 
         const newPercentage = clamp(location / sliderWidth, 0, 1);
 
@@ -184,17 +180,18 @@ const Slider = ({ tooltipValues, color, value, maxValue, onChange }) => {
     [dragging, maxValue, onChange, percentage]
   );
 
-  const handleDragDone = useCallback(() => {
-    setDragging(false);
-    onChange(percentage * maxValue);
-  }, [maxValue, onChange, percentage]);
+  const handleDragDone = useCallback(
+    () => {
+      setDragging(false);
+      onChange(percentage * maxValue);
+    },
+    [maxValue, onChange, percentage]
+  );
 
   const handleDragStart = ev => {
     const left = containerRef.current.getBoundingClientRect().left;
     const sliderWidth = containerRef.current.clientWidth;
-    const location = isTouchEvent(ev)
-      ? ev.touches[0].clientX - left
-      : ev.clientX - left;
+    const location = isTouchEvent(ev) ? ev.touches[0].clientX - left : ev.clientX - left;
 
     const newPercentage = location / sliderWidth;
 
@@ -210,26 +207,25 @@ const Slider = ({ tooltipValues, color, value, maxValue, onChange }) => {
     return tooltipValues[index];
   };
 
-  useLayoutEffect(() => {
-    window.addEventListener("mousemove", handleDrag);
-    window.addEventListener("touchmove", handleDrag);
-    window.addEventListener("touchend", handleDragDone);
-    window.addEventListener("mouseup", handleDragDone);
+  useLayoutEffect(
+    () => {
+      window.addEventListener("mousemove", handleDrag);
+      window.addEventListener("touchmove", handleDrag);
+      window.addEventListener("touchend", handleDragDone);
+      window.addEventListener("mouseup", handleDragDone);
 
-    return () => {
-      window.removeEventListener("mousemove", handleDrag);
-      window.removeEventListener("touchmove", handleDrag);
-      window.removeEventListener("touchend", handleDragDone);
-      window.removeEventListener("mouseup", handleDragDone);
-    };
-  }, [handleDrag, handleDragDone]);
+      return () => {
+        window.removeEventListener("mousemove", handleDrag);
+        window.removeEventListener("touchmove", handleDrag);
+        window.removeEventListener("touchend", handleDragDone);
+        window.removeEventListener("mouseup", handleDragDone);
+      };
+    },
+    [handleDrag, handleDragDone]
+  );
 
   return (
-    <Container
-      ref={containerRef}
-      onMouseDown={handleDragStart}
-      onTouchStart={handleDragStart}
-    >
+    <Container ref={containerRef} onMouseDown={handleDragStart} onTouchStart={handleDragStart}>
       <UnfilledBar />
       <ColoredBar percentage={percentage} color={color} />
 

@@ -4,10 +4,4 @@ import LandingSectionContent from "./landing-section-content";
 import DropShadow from "./drop-shadow";
 import BounceAnimation from "./bounce-animation";
 
-export {
-  LinkButton,
-  LandingSectionWrapper,
-  LandingSectionContent,
-  DropShadow,
-  BounceAnimation
-};
+export { LinkButton, LandingSectionWrapper, LandingSectionContent, DropShadow, BounceAnimation };

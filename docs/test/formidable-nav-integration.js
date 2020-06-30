@@ -7,14 +7,7 @@ try {
     const page = await browser.newPage();
     await page.setViewport({ width: 1280, height: 800 });
     await page.goto("http://localhost:3000/open-source/victory/");
-    const links = [
-      "about",
-      "work",
-      "careers",
-      "open-source",
-      "blog",
-      "contact"
-    ];
+    const links = ["about", "work", "careers", "open-source", "blog", "contact"];
     for (let i = 0; i < links.length; i++) {
       const l = links[i];
       await page.click(`[href='https://formidable.com/${l}']`);
@@ -27,9 +20,7 @@ try {
         type: "png"
       });
       await page.goBack();
-      console.log(
-        `See resolved route screenshot at screenshots/${l}-formidable`
-      );
+      console.log(`See resolved route screenshot at screenshots/${l}-formidable`);
     }
     await browser.close();
   })();

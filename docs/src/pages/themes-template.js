@@ -105,10 +105,8 @@ const ThemesTemplate = props => {
       <h1>Themes</h1>
       <p>
         Try out the Victory themes and make your own. Check out the{" "}
-        <Link to={createPath("docs/victory-theme/")}>
-          VictoryTheme documentation
-        </Link>{" "}
-        more details on themes.
+        <Link to={createPath("docs/victory-theme/")}>VictoryTheme documentation</Link> more details
+        on themes.
       </p>
       {renderMenu()}
       <PureRender themeName={themeName} edited={edited}>

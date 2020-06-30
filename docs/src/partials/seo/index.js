@@ -19,9 +19,7 @@ class SEO extends Component {
     const { postNode, postSEO } = this.props;
     let description;
     if (postSEO) {
-      description = postNode.description
-        ? postNode.description
-        : postNode.excerpt;
+      description = postNode.description ? postNode.description : postNode.excerpt;
     } else {
       description = config.siteDescription;
     }
@@ -43,9 +41,7 @@ class SEO extends Component {
 
   render() {
     const { postPath, postSEO } = this.props;
-    const postURL = postSEO
-      ? config.siteUrl + config.pathPrefix + postPath
-      : null;
+    const postURL = postSEO ? config.siteUrl + config.pathPrefix + postPath : null;
     const blogURL = config.siteUrl + config.pathPrefix;
     const title = this.generateTitle();
     const description = this.generateDescription();
@@ -100,9 +96,7 @@ class SEO extends Component {
         <meta name="image" content={image} />
 
         {/* Schema.org tags */}
-        <script type="application/ld+json">
-          {JSON.stringify(schemaOrgJSONLD)}
-        </script>
+        <script type="application/ld+json">{JSON.stringify(schemaOrgJSONLD)}</script>
 
         {/* OpenGraph tags */}
         <meta property="og:url" content={postSEO ? postURL : blogURL} />
@@ -110,10 +104,7 @@ class SEO extends Component {
         <meta property="og:title" content={title} />
         <meta property="og:description" content={description} />
         <meta property="og:image" content={image} />
-        <meta
-          property="fb:app_id"
-          content={config.siteFBAppID ? config.siteFBAppID : ""}
-        />
+        <meta property="fb:app_id" content={config.siteFBAppID ? config.siteFBAppID : ""} />
       </Helmet>
     );
   }

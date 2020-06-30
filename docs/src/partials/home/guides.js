@@ -2,11 +2,7 @@ import React from "react";
 import { Link } from "react-router-dom";
 
 import LazyRender from "../lazy-render";
-import {
-  LandingSectionWrapper,
-  LandingSectionContent,
-  DropShadow
-} from "./styles";
+import { LandingSectionWrapper, LandingSectionContent, DropShadow } from "./styles";
 
 import createPath from "../../helpers/path-helpers";
 
@@ -89,25 +85,19 @@ const Guides = () => (
           <GuideDemo>
             <LazyRender LazyRenderedComponent={DemoCustomChart} />
           </GuideDemo>
-          <GuideLink to={createPath("/guides/custom-charts")}>
-            Custom Charts
-          </GuideLink>
+          <GuideLink to={createPath("/guides/custom-charts")}>Custom Charts</GuideLink>
         </li>
         <li>
           <GuideDemo>
             <LazyRender LazyRenderedComponent={DemoZoom} />
           </GuideDemo>
-          <GuideLink to={createPath("/guides/brush-and-zoom")}>
-            Brush and Zoom
-          </GuideLink>
+          <GuideLink to={createPath("/guides/brush-and-zoom")}>Brush and Zoom</GuideLink>
         </li>
         <li>
           <GuideDemo>
             <LazyRender LazyRenderedComponent={DemoCustomComponents} />
           </GuideDemo>
-          <GuideLink to={createPath("/guides/custom-components")}>
-            Custom Components
-          </GuideLink>
+          <GuideLink to={createPath("/guides/custom-components")}>Custom Components</GuideLink>
         </li>
         <li>
           <GuideDemo>
@@ -125,9 +115,7 @@ const Guides = () => (
           <GuideDemo>
             <LazyRender LazyRenderedComponent={DemoAnimation} />
           </GuideDemo>
-          <GuideLink to={createPath("/guides/animations")}>
-            Animations
-          </GuideLink>
+          <GuideLink to={createPath("/guides/animations")}>Animations</GuideLink>
         </li>
       </GuidesList>
     </LandingSectionContent>

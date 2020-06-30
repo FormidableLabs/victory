@@ -81,11 +81,15 @@ const ContentContainer = styled.article`
   display: flex;
   justify-content: center;
   padding: ${({ theme }) =>
-    `${theme.layout.pageGutterTop} ${theme.layout.pageGutterRight} ${theme.layout.pageGutterBottom} ${theme.layout.pageGutterLeft}`};
+    `${theme.layout.pageGutterTop} ${theme.layout.pageGutterRight} ${
+      theme.layout.pageGutterBottom
+    } ${theme.layout.pageGutterLeft}`};
 
   @media ${({ theme }) => theme.mediaQuery.md} {
     padding: ${({ theme }) =>
-      `${theme.layout.md.pageGutterTop} ${theme.layout.md.pageGutterRight} ${theme.layout.md.pageGutterBottom} ${theme.layout.md.pageGutterLeft}`};
+      `${theme.layout.md.pageGutterTop} ${theme.layout.md.pageGutterRight} ${
+        theme.layout.md.pageGutterBottom
+      } ${theme.layout.md.pageGutterLeft}`};
   }
 `;
 
@@ -100,11 +104,7 @@ const Page = props => {
   const ref = useRef();
 
   const handleOutsideClick = e => {
-    if (
-      ref.current &&
-      !ref.current.contains(e.target) &&
-      sidebarOpen === true
-    ) {
+    if (ref.current && !ref.current.contains(e.target) && sidebarOpen === true) {
       setSidebarOpen(false);
     }
   };
@@ -119,10 +119,7 @@ const Page = props => {
 
   return (
     <PageContainer spaceForSidebar={withSidebar} className="Page-content">
-      <Header
-        spaceForSidebar={withSidebar}
-        onMenuClick={() => setSidebarOpen(true)}
-      />
+      <Header spaceForSidebar={withSidebar} onMenuClick={() => setSidebarOpen(true)} />
 
       <SidebarContainer ref={ref}>
         <RedStripe />
