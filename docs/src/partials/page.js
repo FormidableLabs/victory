@@ -1,3 +1,4 @@
+/*global document:false */
 import React, { useState, useRef, useEffect } from "react";
 import PropTypes from "prop-types";
 import styled, { css } from "styled-components";

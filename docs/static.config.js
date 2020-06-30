@@ -59,6 +59,7 @@ export default {
     const orderById = items => _.orderBy(items, ["data.id"], ["asc"]);
     const allSidebarItems = [...introduction, ...faq, ...guides, commonPropsIntro, ...trueDocs];
 
+    // eslint-disable-next-line max-params
     const sidebarContent = allSidebarItems.reduce((av, cv, i, arr) => {
       const category = cv.data.category;
       if (category && Array.isArray(av[category])) {

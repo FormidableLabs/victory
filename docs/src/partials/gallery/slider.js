@@ -1,3 +1,5 @@
+/*global window:false */
+/*eslint no-magic-numbers: ["error", { "ignore": [0, 1, 100] }]*/
 /* eslint-disable react/no-multi-comp */
 import React, { useLayoutEffect, useState, useRef, useCallback } from "react";
 import PropTypes from "prop-types";
@@ -7,6 +9,8 @@ import styled from "styled-components";
 const BAR_HEIGHT = 8;
 const LIGHT_GREY = "hsl(355, 32%, 87%)";
 const GREY = "hsl(355, 10%, 60%)";
+const DRAG_OPACITY = 0.3;
+const HOVER_OPACITY = 0.2;
 
 const isTouchEvent = event => {
   return event.touches !== undefined;
@@ -87,13 +91,13 @@ const BiggerCircle = styled.div`
   border-radius: 50%;
   cursor: ${({ dragging }) => (dragging ? "grabbing" : "grab")};
   background-color: ${LIGHT_GREY};
-  opacity: ${({ dragging }) => (dragging ? 0.3 : 0)};
+  opacity: ${({ dragging }) => (dragging ? DRAG_OPACITY : 0)};
   z-index: 9;
   transform: translate(-50%, -50%);
   transition: opacity 0.25s ease-out;
   :hover,
   ${Circle}:hover + & {
-    opacity: ${({ dragging }) => (dragging ? 0.3 : 0.2)};
+    opacity: ${({ dragging }) => (dragging ? DRAG_OPACITY : HOVER_OPACITY)};
   }
 
   a & {

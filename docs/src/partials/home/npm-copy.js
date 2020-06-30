@@ -1,3 +1,5 @@
+/*global setTimeout:false */
+/*global clearTimeout:false */
 import React, { useState, useRef } from "react";
 import PropTypes from "prop-types";
 import { CopyToClipboard } from "react-copy-to-clipboard";

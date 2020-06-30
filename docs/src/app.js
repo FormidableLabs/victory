@@ -1,3 +1,5 @@
+/*global window:false */
+/*global document:false */
 import React, { useLayoutEffect, useEffect, useState } from "react";
 import PropTypes from "prop-types";
 import { Root, Routes, useBasepath } from "react-static";
@@ -12,6 +14,7 @@ import theme from "./styles/theme";
 import Analytics from "./google-analytics";
 import NotFound from "./pages/404";
 
+// eslint-disable-next-line no-magic-numbers
 const HEADER_PIXEL_HEIGHT = theme.layout.headerHeight.split("rem")[0] * 10;
 const SCROLL_PIXEL_OFFSET = 25;
 const DEFAULT_PAGE_CONTENT_CLASS = ".Page-content";

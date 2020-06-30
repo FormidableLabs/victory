@@ -1,5 +1,5 @@
 /* global window:false */
-
+/*eslint-disable no-magic-numbers */
 import React from "react";
 import { range, random } from "lodash";
 import { Area, VictoryArea, VictoryAxis, VictoryChart, VictoryLine } from "victory";

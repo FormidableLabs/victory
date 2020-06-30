@@ -6,3 +6,10 @@ coverage
 dist
 lib
 es
+docs/artifacts
+docs/dist
+docs/public
+docs/tmp
+docs/static
+docs/.cache
+docs/node_modules

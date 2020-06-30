@@ -1,3 +1,4 @@
+/*eslint-disable no-magic-numbers */
 import _ from "lodash";
 import * as d3Array from "d3-array";
 import * as d3Scale from "d3-scale";

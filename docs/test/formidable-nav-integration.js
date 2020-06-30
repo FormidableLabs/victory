@@ -1,5 +1,7 @@
+/*global console:false */
 const puppeteer = require("puppeteer");
 const path = require("path");
+const TIMEOUT = 2500;
 
 try {
   (async () => {
@@ -11,7 +13,7 @@ try {
     for (let i = 0; i < links.length; i++) {
       const l = links[i];
       await page.click(`[href='https://formidable.com/${l}']`);
-      await page.waitFor(2500);
+      await page.waitFor(TIMEOUT);
       await page.screenshot({
         path:
           path.basename(process.cwd()) === "test"
@@ -20,6 +22,7 @@ try {
         type: "png"
       });
       await page.goBack();
+      // eslint-disable-next-line no-console
       console.log(`See resolved route screenshot at screenshots/${l}-formidable`);
     }
     await browser.close();

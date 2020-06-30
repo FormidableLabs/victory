@@ -1,5 +1,5 @@
 /* global window:false */
-
+/*eslint-disable no-magic-numbers */
 import React from "react";
 import { VictoryScatter, VictoryChart } from "victory";
 import { range, random } from "lodash";

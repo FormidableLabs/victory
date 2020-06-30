@@ -1,5 +1,7 @@
+/*global console:false */
 const puppeteer = require("puppeteer");
 const path = require("path");
+const TIMEOUT = 3000;
 
 try {
   (async () => {
@@ -12,7 +14,7 @@ try {
     for (let i = 0; i < links.length; i++) {
       const l = links[i];
       await page.click(`[href='/open-source/victory/${l}/']`);
-      await page.waitFor(3000);
+      await page.waitFor(TIMEOUT);
       if (markdownEndpoints.includes(l)) {
         const heading = await page.waitForSelector(".Recipe h1");
         if (!heading) {
@@ -26,6 +28,7 @@ try {
             : `test/screenshots/${l}-victory.png`,
         type: "png"
       });
+      // eslint-disable-next-line no-console
       console.log(`See resolved route screenshot at screenshots/${l}-victory`);
     }
     // we can do these too, but really validating that they exist is probably sufficient, lemme know!
