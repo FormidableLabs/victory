@@ -25,8 +25,10 @@ export default {
     root: process.cwd(), // The root of your project. Don't change this unless you know what you're doing.
     src: "src", // The source directory. Must include an index.js entry file.
     // See app.js for how stage is used to make client-side routing resolve correctly by stage.
-    dist: stage === "staging" ? `dist/${landerBasePath}` : "dist", // The production output directory.
-    devDist: "tmp/dev-server", // The development scratch directory.
+    dist: `dist/${landerBasePath}`,
+    buildArtifacts: 'node_modules/.cache/react-static/artifacts/',
+    devDist: 'node_modules/.cache/react-static/dist/',
+    temp: 'node_modules/.cache/react-static/temp/',
     public: "public" // The public directory (files copied to dist during build)
   },
   generateSourceMaps: false,
