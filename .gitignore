@@ -40,3 +40,9 @@ yarn-error.log*
 .cache
 storybook-static
 build-storybook.log*
+
+tmp
+artifacts
+public
+docs/test/screenshots
+.cache
