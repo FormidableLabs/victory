@@ -680,7 +680,10 @@ export interface TextSizeStyleInterface {
 }
 
 export namespace TextSize {
-  export function approximateTextSize(text: string, style: TextSizeStyleInterface): number;
+  export function approximateTextSize(
+    text: string,
+    style?: TextSizeStyleInterface
+  ): { width: number; height: number };
   export function convertLengthToPixels(length: string, fontSize: number): number;
 }
 
