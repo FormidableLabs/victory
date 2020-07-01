@@ -1,5 +1,13 @@
 # Victory Changelog
 
+## 35.0.2 (2020-06-30)
+
+- [#1631](https://github.com/FormidableLabs/victory/pull/1631) - Correct types for `TextSize` utility. Thanks @jlismore!
+
+## 35.0.1 (2020-06-27)
+
+- [#1628](https://github.com/FormidableLabs/victory/pull/1628) - Correct typescript error
+
 ## 35.0.0 (2020-06-27)
 
 ### Label and Theme Improvements!
