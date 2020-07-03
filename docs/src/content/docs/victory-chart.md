@@ -523,7 +523,7 @@ width={400}
 [victoryhistogram]: /docs/victory-histogram
 [victorystack]: /docs/victory-stack
 [victoryvoronoi]: /docs/victory-voronoi
-[grayscale theme]: https://github.com/FormidableLabs/victory/blob/master/packages/victory-core/src/victory-theme/grayscale.js
+[grayscale theme]: https://github.com/FormidableLabs/victory/blob/main/packages/victory-core/src/victory-theme/grayscale.js
 [animations guide]: /guides/animations
 [events guide]: /guides/events
 [themes guide]: /guides/themes

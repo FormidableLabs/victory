@@ -516,4 +516,4 @@ y={(d) => d.value + d.error}
 [`y`]: /docs/victory-candlestick#y
 [`errorx`]: /docs/victory-candlestick#errorX
 [`errory`]: /docs/victory-candlestick#errorY
-[grayscale theme]: https://github.com/FormidableLabs/victory/blob/master/packages/victory-core/src/victory-theme/grayscale.js
+[grayscale theme]: https://github.com/FormidableLabs/victory/blob/main/packages/victory-core/src/victory-theme/grayscale.js

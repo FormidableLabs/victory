@@ -9,7 +9,7 @@ scope: null
 
 Implement themes for your Victory charts. `VictoryTheme` allows you to create a consistent look across all of your chart elements, either by using one of the included themes or by creating your own. `VictoryTheme` and custom themes are supported by all Victory components. By default, Victory components use the [grayscale theme][].
 
-[Read more about themes here][].
+[See all Victory Themes here][].
 
 To create your own theme, create an object with props and styles specified for any combination of the following namespaces:
 
@@ -36,5 +36,5 @@ To create your own theme, create an object with props and styles specified for a
 }
 ```
 
-[grayscale theme]: https://github.com/FormidableLabs/victory/blob/master/packages/victory-core/src/victory-theme/grayscale.js
-[Read more about themes here]: /guides/themes
+[grayscale theme]: https://github.com/FormidableLabs/victory/blob/main/packages/victory-core/src/victory-theme/grayscale.js
+[See all Victory Themes here]: https://github.com/FormidableLabs/victory/blob/main/packages/victory-core/src/victory-theme

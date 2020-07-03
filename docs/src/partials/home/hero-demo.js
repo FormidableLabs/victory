@@ -76,7 +76,7 @@ const LinkLabel = props => {
   return (
     <foreignObject x={x - 25} y={5} width={50} height={50}>
       <a
-        href={`https://github.com/FormidableLabs/victory/blob/master/CHANGELOG.md#${hash}`}
+        href={`https://github.com/FormidableLabs/victory/blob/main/CHANGELOG.md#${hash}`}
         target="_blank"
         rel="noopener noreferrer"
         style={linkStyle}

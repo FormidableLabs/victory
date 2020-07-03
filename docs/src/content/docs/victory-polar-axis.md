@@ -570,7 +570,7 @@ width={400}
 [`victorychart`]: /docs/victory-chart
 [tickformat]: /docs/victory-axis#tickformat
 [d3scale]: https://github.com/d3/d3-scale
-[grayscale theme]: https://github.com/FormidableLabs/victory/blob/master/packages/victory-core/src/victory-theme/grayscale.js
+[grayscale theme]: https://github.com/FormidableLabs/victory/blob/main/packages/victory-core/src/victory-theme/grayscale.js
 [linesegment component]: /docs/victory-primitives#linesegment
 [arc component]: /docs/victory-primitives#arc
 [`victorylabel`]: /docs/victory-label

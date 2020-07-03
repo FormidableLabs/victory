@@ -11,7 +11,7 @@ scope:
 
 # New Features
 
-Victory is actively developed. You can read about some of our newest feature here. For more information on improvements and bug fixes, check out our [changelog](https://github.com/FormidableLabs/victory/blob/master/CHANGELOG.md).
+Victory is actively developed. You can read about some of our newest feature here. For more information on improvements and bug fixes, check out our [changelog](https://github.com/FormidableLabs/victory/blob/main/CHANGELOG.md).
 
 ## VictoryHistogram
 

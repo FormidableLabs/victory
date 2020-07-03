@@ -99,7 +99,7 @@ const ThemesTemplate = props => {
         <meta name="description" content={config.siteDescription} />
       </Helmet>
       {/* <Seo postPath={slug} postNode={contents} postSEO />*/}
-      {/* TODO: Add edit this page link once everything is merged to master
+      {/* TODO: Add edit this page link once everything is merged to main
               <a className="SubHeading" href="">Edit this page</a>
             */}
       <h1>Themes</h1>

@@ -920,7 +920,7 @@ y={(d) => d.value + d.error}
 [events guide]: /guides/events
 [themes guide]: /guides/themes
 [`victorychart`]: /docs/victory-chart
-[grayscale theme]: https://github.com/FormidableLabs/victory/blob/master/packages/victory-core/src/victory-theme/grayscale.js
+[grayscale theme]: https://github.com/FormidableLabs/victory/blob/main/packages/victory-core/src/victory-theme/grayscale.js
 [`x`]: /docs/victory-boxplot#x
 [`y`]: /docs/victory-boxplot#y
 [`max`]: /docs/victory-boxplot#max

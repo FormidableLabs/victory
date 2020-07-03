@@ -45,4 +45,4 @@ scope: null
 The `groupComponent` prop takes a component instance which will be used to create a group element for `VictoryPortal` to render its child component into. This prop defaults to a `<g>` tag.
 
 [victorycontainer]: /docs/victory-container
-[portal]: https://github.com/FormidableLabs/victory/blob/master/packages/victory-core/src/victory-portal/portal.js
+[portal]: https://github.com/FormidableLabs/victory/blob/main/packages/victory-core/src/victory-portal/portal.js
