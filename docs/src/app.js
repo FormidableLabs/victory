@@ -40,7 +40,7 @@ const scrollContent = async (hash, contentPaneClass = DEFAULT_PAGE_CONTENT_CLASS
   });
 };
 
-const checkScrollRoutes = (pathname, routes = ROUTES) => routes.some(r => pathname.includes(r));
+const checkScrollRoutes = (pathname, routes = ROUTES) => routes.some((r) => pathname.includes(r));
 
 const ScrollToCurrentSection = ({ location, children }) => {
   const { pathname, hash = "" } = location;
@@ -97,7 +97,7 @@ const App = () => {
             <Routes
               render={({ routePath, getComponentForPath }) => (
                 <Route path="*">
-                  {props => {
+                  {(props) => {
                     const Comp = getComponentForPath(routePath) || <NotFound />;
                     return <ScrollToCurrentSection {...props}>{Comp}</ScrollToCurrentSection>;
                   }}

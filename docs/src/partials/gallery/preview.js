@@ -8,14 +8,14 @@ import { transform } from "babel-standalone";
 const PreviewWrapper = styled.div``;
 
 // <Preview> component from component-playground without updating
-const Preview = props => {
+const Preview = (props) => {
   let ref = useRef();
 
   const compileCode = () => {
     const { codeText, context, noRender, scope } = props;
-    const generateContextTypes = c =>
+    const generateContextTypes = (c) =>
       `{ ${Object.keys(c)
-        .map(val => `${val}: PropTypes.any.isRequired`)
+        .map((val) => `${val}: PropTypes.any.isRequired`)
         .join(", ")} }`;
 
     if (noRender) {
@@ -54,7 +54,7 @@ const Preview = props => {
     const { scope, noRender, previewComponent } = props;
     const tempScope = [];
 
-    Object.keys(scope).forEach(s => tempScope.push(scope[s]));
+    Object.keys(scope).forEach((s) => tempScope.push(scope[s]));
     tempScope.push(mountNode);
     const compiledCode = compileCode();
     if (noRender) {
@@ -73,7 +73,7 @@ const Preview = props => {
 
   return (
     <PreviewWrapper
-      ref={div => {
+      ref={(div) => {
         ref = div;
       }}
     />

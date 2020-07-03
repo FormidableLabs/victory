@@ -152,14 +152,14 @@ renderLink.propTypes = {
 };
 
 /* eslint-enable react/prop-types, no-magic-numbers */
-const Markdown = props => {
+const Markdown = (props) => {
   const { className, source, scope, theme } = props;
   /* eslint-disable react/prop-types, no-magic-numbers */
   const renderers = {
     link: renderLink,
     linkReference: renderLink,
     heading: renderHeading,
-    code: p => renderCodeBlock(p, scope, theme)
+    code: (p) => renderCodeBlock(p, scope, theme)
   };
 
   return (

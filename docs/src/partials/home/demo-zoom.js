@@ -141,7 +141,7 @@ export default class App extends React.Component {
               new Date(2015, 1, 1),
               new Date(2020, 1, 1)
             ]}
-            tickFormat={x => new Date(x).getFullYear()}
+            tickFormat={(x) => new Date(x).getFullYear()}
           />
           <VictoryLine
             style={{

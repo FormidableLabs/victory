@@ -30,19 +30,19 @@ const HeroDemoContainer = styled.div`
   }
 `;
 
-const font = color => ({
+const font = (color) => ({
   fill: color || importedTheme.color.brown,
   fontSize: 20,
   fontFamily: "Helvetica"
 });
 
-const numberWithCommas = x => x.toString().replace(/\B(?=(\d{3})+(?!\d))/g, ",");
+const numberWithCommas = (x) => x.toString().replace(/\B(?=(\d{3})+(?!\d))/g, ",");
 
-const groupDownloadsByWeek = dates => {
+const groupDownloadsByWeek = (dates) => {
   const downloadsGroupedByPeriod = {};
   const today = new Date();
 
-  dates.forEach(date => {
+  dates.forEach((date) => {
     const start = format(startOfWeek(parse(date.day, "yyyy-MM-dd", today)), "yyyy-MM-dd");
 
     downloadsGroupedByPeriod[start] = downloadsGroupedByPeriod[start]
@@ -59,11 +59,11 @@ const groupDownloadsByWeek = dates => {
   return weeklyDownloads;
 };
 
-const minorVersions = versions.data.filter(v => v.version.endsWith("0"));
+const minorVersions = versions.data.filter((v) => v.version.endsWith("0"));
 const latestVersion = versions.data[0].version;
-const voronoiBlacklist = minorVersions.map(v => `ignore-${v.version}`);
+const voronoiBlacklist = minorVersions.map((v) => `ignore-${v.version}`);
 
-const LinkLabel = props => {
+const LinkLabel = (props) => {
   /* eslint-disable react/prop-types */
   const { x, index, version } = props;
   /* eslint-disable react/prop-types*/
@@ -88,7 +88,7 @@ const LinkLabel = props => {
 };
 
 // eslint-disable-next-line react/no-multi-comp
-const VoronoiLabel = props => {
+const VoronoiLabel = (props) => {
   /* eslint-disable react/prop-types */
   const { datum, x, y, data } = props;
   if (last(data).downloads === datum.downloads) {
@@ -177,7 +177,7 @@ const HeroDemo = () => {
           scale={{ x: "time" }}
         />
 
-        {minorVersions.map(v => (
+        {minorVersions.map((v) => (
           <VictoryLine
             name={`ignore-${v.version}`}
             key={v.version}
@@ -198,7 +198,7 @@ const HeroDemo = () => {
           data={downloadsPerWeek}
           groupComponent={<g />}
           y="downloads"
-          x={d => new Date(d.date)}
+          x={(d) => new Date(d.date)}
           style={{
             data: { stroke: importedTheme.color.white, strokeWidth: 4 }
           }}
@@ -207,7 +207,7 @@ const HeroDemo = () => {
           name="ignore-scatter"
           data={[last(downloadsPerWeek)]}
           y="downloads"
-          x={d => new Date(d.date)}
+          x={(d) => new Date(d.date)}
           size={6}
           style={{
             data: { fill: importedTheme.color.white },

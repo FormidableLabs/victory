@@ -7,9 +7,9 @@ const getMdFiles = require("./get-md-files");
 // The only difference between this and allMarkdownRemark(sort: { fields: [frontmatter___title], order: ASC })
 // is how numbers are handled orderBy places number before letter, prior ordering disregarded numbers and used
 // first alphabetical character.
-const orderByTitle = items => _.orderBy(items, ["data.title"], ["asc"]);
+const orderByTitle = (items) => _.orderBy(items, ["data.title"], ["asc"]);
 
-const orderByIdAndAddThemesEntry = items => {
+const orderByIdAndAddThemesEntry = (items) => {
   // Themes is a one-off guide that is a react component with no associated markdown.
   // This is sort of a hacky way to add it, but lets us simplify the logic we use to create sidebar content
   const themes = {
@@ -27,7 +27,7 @@ const orderByIdAndAddThemesEntry = items => {
   return _.orderBy(items.concat(themes), ["data.id"], ["asc"]);
 };
 
-const slugMutation = mdData => {
+const slugMutation = (mdData) => {
   const base = mdData.data.slug || mdData.data.title;
   return (mdData.data.slug = _.kebabCase(base)
     .toLowerCase()
@@ -36,11 +36,11 @@ const slugMutation = mdData => {
 
 // for sidebar purposes, guide type and guide category are the same, but we'd rather have
 // a consistent shape at the component layer than need an additional check there
-const sidebarTypeMutation = mdData => {
+const sidebarTypeMutation = (mdData) => {
   return (mdData.data.type = mdData.data.category);
 };
 
-const sidebarTreeMutation = mdData => {
+const sidebarTreeMutation = (mdData) => {
   if (!mdData.data.subHeadings || !mdData.data.subHeadings.length) {
     mdData.data.sidebarTree = [];
     return;

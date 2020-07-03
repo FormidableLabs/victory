@@ -25,7 +25,7 @@ const SidebarSearchInput = ({ content, onHandleInputChange, searchText }) => (
       placeholder="Filter..."
       type="search"
       value={searchText}
-      onChange={e => onHandleInputChange(e.target.value, content)}
+      onChange={(e) => onHandleInputChange(e.target.value, content)}
     />
   </InputContainer>
 );

@@ -23,7 +23,7 @@ const Company = styled.h3`
   margin-bottom: 0.5rem;
 `;
 
-const ShowcaseApp = props => {
+const ShowcaseApp = (props) => {
   return (
     <Grid>
       <div>

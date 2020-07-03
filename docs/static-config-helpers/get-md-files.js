@@ -39,12 +39,12 @@ function setYamlToFile(subHeadingRange = subHeadingRangeDefaults) {
       // store subheading data for sidebar
       file.data.subHeadings = children
         .filter(
-          c =>
+          (c) =>
             c.type === "heading" &&
             c.depth >= subHeadingRange.start &&
             c.depth <= subHeadingRange.end
         )
-        .map(c => ({
+        .map((c) => ({
           type: c.type,
           value: c.children[0].value,
           depth: c.depth,
@@ -64,10 +64,10 @@ const renderer = remark()
 /* eslint-disable max-params */
 const getMdFiles = async (mdPath, mutations = [], sort = defaultSort) => {
   const items = [];
-  return new Promise(resolve => {
+  return new Promise((resolve) => {
     if (fs.existsSync(mdPath)) {
       klaw(mdPath)
-        .on("data", item => {
+        .on("data", (item) => {
           if (path.extname(item.path) === ".md") {
             const data = fs.readFileSync(item.path, "utf8");
             renderer.process(data, (err, result) => {
@@ -75,14 +75,14 @@ const getMdFiles = async (mdPath, mutations = [], sort = defaultSort) => {
                 throw err;
               }
               const mdData = result;
-              mutations.forEach(m => {
+              mutations.forEach((m) => {
                 m(mdData, item.path);
               });
               items.push(mdData);
             });
           }
         })
-        .on("error", e => {
+        .on("error", (e) => {
           throw e;
         })
         .on("end", () => {

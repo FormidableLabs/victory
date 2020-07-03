@@ -59,7 +59,7 @@ const NpmCopy = ({ text }) => {
   const animatingTimeout = useRef(null);
   const copiedTimeout = useRef(null);
 
-  const handleCopy = e => {
+  const handleCopy = (e) => {
     e.preventDefault();
     setAnimating(true);
     setCopied(true);

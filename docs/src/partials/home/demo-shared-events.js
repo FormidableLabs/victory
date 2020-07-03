@@ -31,7 +31,7 @@ class SharedEvents extends React.Component {
                 onMouseOver: () => [
                   {
                     childName: ["pie", "bar"],
-                    mutation: props => ({
+                    mutation: (props) => ({
                       style: Object.assign({}, props.style, {
                         fill: "tomato"
                       })

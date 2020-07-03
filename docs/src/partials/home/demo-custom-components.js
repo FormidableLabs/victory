@@ -6,8 +6,8 @@ import { Area, VictoryArea, VictoryAxis, VictoryChart, VictoryLine } from "victo
 
 import importedTheme from "../../styles/theme";
 
-const GradientPath = props => {
-  const toGrayscale = color => {
+const GradientPath = (props) => {
+  const toGrayscale = (color) => {
     const integerColor = parseInt(color.replace("#", ""), 16);
     const r = (integerColor >> 16) & 255; // eslint-disable-line no-bitwise
     const g = (integerColor >> 8) & 255; // eslint-disable-line no-bitwise
@@ -50,8 +50,8 @@ export default class App extends React.Component {
   }
 
   getStreamData() {
-    return range(7).map(i =>
-      range(26).map(j => ({
+    return range(7).map((i) =>
+      range(26).map((j) => ({
         x: j,
         y: (10 - i) * random(10 - i, 20 - 2 * i),
         _y0: -1 * (10 - i) * random(10 - i, 20 - 2 * i)

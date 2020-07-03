@@ -11,7 +11,7 @@ const Category = ({ content, title, subCategories }) => {
   const sectionContent =
     !isEmpty(subCategories) &&
     subCategories
-      .filter(category => category && !isEmpty(category.content))
+      .filter((category) => category && !isEmpty(category.content))
       .map((subcategory, index) => {
         return (
           <div key={index}>

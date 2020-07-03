@@ -45,7 +45,7 @@ const ButtonRow = styled.div`
   width: 100%;
 `;
 
-const ThemesTemplate = props => {
+const ThemesTemplate = (props) => {
   const [themeName, setThemeName] = useState("grayscale");
   const [edited, setEdited] = useState(false);
 
@@ -54,13 +54,13 @@ const ThemesTemplate = props => {
     material: MaterialExample
   };
 
-  const processCodeText = text => {
+  const processCodeText = (text) => {
     return text
       .replace(/\/\* [global|eslint|NOTE](.|[\n])*?\*\//g, "") // remove dev comments
       .trim(); // remove left-over whitespace
   };
 
-  const resetTheme = theme => {
+  const resetTheme = (theme) => {
     setThemeName(theme);
     setEdited(false);
   };

@@ -71,7 +71,7 @@ const Divider = styled.hr`
 `;
 
 const Gallery = ({ gallery, sidebarContent }) => {
-  const parseRaw = str => {
+  const parseRaw = (str) => {
     const playground = "playground_norender";
     const start = str.indexOf(playground) + playground.length;
     const end = str.indexOf("```", start);
@@ -79,7 +79,7 @@ const Gallery = ({ gallery, sidebarContent }) => {
   };
 
   // eslint-disable-next-line react/no-multi-comp
-  const renderPreviewItem = item => {
+  const renderPreviewItem = (item) => {
     const code = parseRaw(item.content);
     const slug = item.data.slug;
     const title = item.data.title;

@@ -21,7 +21,7 @@ import { SidebarSectionHeading, SidebarListItemLink, SidebarListItem } from "./s
 // behavior is based on a bunch of magic strings for a non-configurable internal method
 const documentationSubcategories = ["charts", "containers", "more"];
 
-const getPathPrefix = item => {
+const getPathPrefix = (item) => {
   // just a bunch of one-offs, elegance is harder to realize gains from
   if (item.category === "introduction") {
     return item.slug === "getting-started" ? "/docs" : `/docs/${item.slug}`;
@@ -80,8 +80,8 @@ const getMatchTree = (link, filterTerm) => {
   const matches = fuse.search(filterTerm);
   if (!isEmpty(matches)) {
     const maxDepth = maxBy(matches, "depth").depth;
-    let matchIndices = matches.map(match =>
-      findIndex(link.subHeadings, heading => includes(heading.value, match.value))
+    let matchIndices = matches.map((match) =>
+      findIndex(link.subHeadings, (heading) => includes(heading.value, match.value))
     );
 
     matchIndices = matchIndices.sort((a, b) => a - b);
@@ -102,7 +102,7 @@ const Sidebar = ({ className, content, onCloseClick }) => {
   const [filteredResults, setFilteredResults] = useState(content);
   const [filterTerm, setFilterTerm] = useState("");
 
-  const handleInputChange = value => {
+  const handleInputChange = (value) => {
     const options = {
       keys: ["data.subHeadings.value", "data.title", "data.category"],
       threshold: 0.2,
@@ -124,14 +124,14 @@ const Sidebar = ({ className, content, onCloseClick }) => {
   // We need this to rerender every time a new item is clicked in the side nav until the visibility isn't tied to the currently selected item
   const linksLists = (() => {
     const filteredByCategory = {};
-    TABLE_OF_CONTENTS_SECTIONS.map(sectionCategory => {
+    TABLE_OF_CONTENTS_SECTIONS.map((sectionCategory) => {
       const filteredEdges =
         filteredResults &&
-        filteredResults.filter(edge => {
+        filteredResults.filter((edge) => {
           return edge.data && edge.data.type === sectionCategory.type;
         });
       return filteredEdges
-        ? (filteredByCategory[[sectionCategory.category]] = filteredEdges.filter(edge =>
+        ? (filteredByCategory[[sectionCategory.category]] = filteredEdges.filter((edge) =>
             sectionCategory.category.includes(edge.data.category)
           ))
         : null;
@@ -139,10 +139,10 @@ const Sidebar = ({ className, content, onCloseClick }) => {
 
     const renderList = {};
 
-    Object.entries(filteredByCategory).map(category => {
+    Object.entries(filteredByCategory).map((category) => {
       const filteredCategoryKey = category[0];
       const filteredCategory = category[1];
-      renderList[filteredCategoryKey] = filteredCategory.map(edge => {
+      renderList[filteredCategoryKey] = filteredCategory.map((edge) => {
         const link = edge.data;
         // if (link.display === false) { // display isn't actually in all of the links we want, i'm not sure what happened with the data but we just want to return null if link isn't present
         //   return null;

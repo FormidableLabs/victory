@@ -4,7 +4,7 @@ import { withRouteData } from "react-static";
 import { Redirect } from "react-router";
 import createPath from "../helpers/path-helpers";
 
-const RedirectPage = props => {
+const RedirectPage = (props) => {
   return <Redirect to={createPath(props.redirect)} />;
 };
 

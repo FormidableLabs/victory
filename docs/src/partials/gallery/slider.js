@@ -12,7 +12,7 @@ const GREY = "hsl(355, 10%, 60%)";
 const DRAG_OPACITY = 0.3;
 const HOVER_OPACITY = 0.2;
 
-const isTouchEvent = event => {
+const isTouchEvent = (event) => {
   return event.touches !== undefined;
 };
 
@@ -167,7 +167,7 @@ const Slider = ({ tooltipValues, color, value, maxValue, onChange }) => {
   const containerRef = useRef();
 
   const handleDrag = useCallback(
-    ev => {
+    (ev) => {
       if (dragging) {
         const left = containerRef.current.getBoundingClientRect().left;
         const sliderWidth = containerRef.current.clientWidth;
@@ -192,7 +192,7 @@ const Slider = ({ tooltipValues, color, value, maxValue, onChange }) => {
     [maxValue, onChange, percentage]
   );
 
-  const handleDragStart = ev => {
+  const handleDragStart = (ev) => {
     const left = containerRef.current.getBoundingClientRect().left;
     const sliderWidth = containerRef.current.clientWidth;
     const location = isTouchEvent(ev) ? ev.touches[0].clientX - left : ev.clientX - left;

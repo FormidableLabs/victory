@@ -1,6 +1,6 @@
 import { useBasepath } from "react-static";
 
-const createPath = path => {
+const createPath = (path) => {
   if (/^\w+:/.test(path) || path.startsWith("#")) {
     return path;
   }

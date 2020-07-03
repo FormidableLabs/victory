@@ -99,12 +99,12 @@ const Content = styled.div`
   width: 100%;
 `;
 
-const Page = props => {
+const Page = (props) => {
   const { children, sidebarContent, withSidebar } = props;
   const [sidebarOpen, setSidebarOpen] = useState(false);
   const ref = useRef();
 
-  const handleOutsideClick = e => {
+  const handleOutsideClick = (e) => {
     if (ref.current && !ref.current.contains(e.target) && sidebarOpen === true) {
       setSidebarOpen(false);
     }

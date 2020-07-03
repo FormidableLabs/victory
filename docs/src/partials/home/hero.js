@@ -245,7 +245,7 @@ const Hero = ({ background, code, cornerIcon, cornerText, description, linksArra
           </GetStarted>
         </CenterWrapper>
         <LinkContainer>
-          {linksArray.map(l => {
+          {linksArray.map((l) => {
             return l.external ? (
               <LinkItem key={l.text} href={l.location} target="_blank" rel="noopener noreferrer">
                 {l.text}

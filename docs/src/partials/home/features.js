@@ -100,7 +100,7 @@ const Features = ({ featureArray }) => (
         <SectionHeading>Features</SectionHeading>
       </Element>
       <FeaturesList>
-        {featureArray.map(feature => (
+        {featureArray.map((feature) => (
           <Feature key={feature.title}>
             <FeatureImg src={feature.icon} />
             <FeatureTitle>{feature.title}</FeatureTitle>

@@ -29,7 +29,7 @@ const StyledLink = styled.a`
   margin-top: 2rem;
 `;
 
-const NotFound = props => {
+const NotFound = (props) => {
   return (
     <Page withSidebar sidebarContent={props.sidebarContent}>
       <h1>Uh oh.</h1>

@@ -38,7 +38,7 @@ SubItemListItem.propTypes = {
   depth: PropTypes.number.isRequired
 };
 
-const SubItemLink = styled(NavLink)(props => ({
+const SubItemLink = styled(NavLink)((props) => ({
   ...getLinkStylesByDepth(props.depth, props.theme),
   "font-family": props.theme.font.bold
 }));
@@ -51,7 +51,7 @@ const TableOfContents = ({ active, link, headings }) => {
   if (!active || isEmpty(headings)) {
     return null;
   }
-  const getTree = treeHeadings => {
+  const getTree = (treeHeadings) => {
     if (!treeHeadings || !treeHeadings.length) {
       return [];
     }
@@ -78,7 +78,7 @@ const TableOfContents = ({ active, link, headings }) => {
   };
 
   const getPath = (item, itemLink) => {
-    const toAnchor = content => {
+    const toAnchor = (content) => {
       const baseContent = content.toLowerCase();
       const safeString = baseContent.replace(/[^\w]+/g, " ");
       return safeString.trim().replace(/\s/g, "-");

@@ -149,7 +149,7 @@ const Header = ({ className = "", onMenuClick }) => {
               Gallery
             </NavLink>
 
-            {config.projectLinks.map(link => (
+            {config.projectLinks.map((link) => (
               <NavAnchor key={link.url} href={link.url} target="_blank" rel="noopener noreferrer">
                 {link.label}
               </NavAnchor>

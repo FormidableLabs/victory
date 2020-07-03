@@ -12,12 +12,12 @@ import {
   VictoryAxis
 } from "victory";
 
-const scatterData = times(20, i => ({
+const scatterData = times(20, (i) => ({
   x: (i - 10) / 3,
   y: i / 2 - 2 * Math.random() - 4
 }));
 
-const toInteger = number => parseInt(number).toString();
+const toInteger = (number) => parseInt(number).toString();
 
 const DemoComponent = ({ theme }) => {
   const positions = [
@@ -57,7 +57,7 @@ const DemoComponent = ({ theme }) => {
         <VictoryChart theme={theme} standalone={false} height={250} width={250}>
           <VictoryAxis tickCount={4} domain={[0, 3]} tickFormat={toInteger} />
           <VictoryAxis tickCount={4} dependentAxis domain={[0, 10]} />
-          <VictoryLine y={data => data.x * data.x} />
+          <VictoryLine y={(data) => data.x * data.x} />
         </VictoryChart>
       </g>
 

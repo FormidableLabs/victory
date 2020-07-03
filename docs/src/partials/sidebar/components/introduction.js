@@ -18,8 +18,8 @@ const MobileSidebarLinks = styled.div`
   }
 `;
 
-const renderMobileSidebarLinks = mobileLinks => {
-  return mobileLinks.map(link => {
+const renderMobileSidebarLinks = (mobileLinks) => {
+  return mobileLinks.map((link) => {
     const isExternal = link.slug.charAt(0) !== "/";
     return (
       <SidebarListItem key={link.slug}>

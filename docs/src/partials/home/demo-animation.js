@@ -37,7 +37,7 @@ export default class App extends React.Component {
       importedTheme.color.accentBrown
     ];
     const symbols = ["circle", "star", "square", "triangleUp", "triangleDown", "diamond", "plus"];
-    return range(25).map(index => {
+    return range(25).map((index) => {
       const scaledIndex = Math.floor(index % 7);
       return {
         x: random(10, 50),

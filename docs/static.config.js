@@ -26,9 +26,9 @@ export default {
     src: "src", // The source directory. Must include an index.js entry file.
     // See app.js for how stage is used to make client-side routing resolve correctly by stage.
     dist: `dist/${landerBasePath}`,
-    buildArtifacts: 'node_modules/.cache/react-static/artifacts/',
-    devDist: 'node_modules/.cache/react-static/dist/',
-    temp: 'node_modules/.cache/react-static/temp/',
+    buildArtifacts: "node_modules/.cache/react-static/artifacts/",
+    devDist: "node_modules/.cache/react-static/dist/",
+    temp: "node_modules/.cache/react-static/temp/",
     public: "public" // The public directory (files copied to dist during build)
   },
   generateSourceMaps: false,
@@ -51,12 +51,12 @@ export default {
 
     // sure we *happen* to sort by id as part of data ingestion right now, but it shouldn't create unexpected behavior
     // if we ever change that.
-    const homeIntro = _.find(introduction, intro => intro.data.id === 0);
+    const homeIntro = _.find(introduction, (intro) => intro.data.id === 0);
     // only one file here, use a selector-style fn if that ever changes
     const faqIntro = faq[0];
     const commonPropsIntro = commonProps[0];
 
-    const orderById = items => _.orderBy(items, ["data.id"], ["asc"]);
+    const orderById = (items) => _.orderBy(items, ["data.id"], ["asc"]);
     const allSidebarItems = [...introduction, ...faq, ...guides, commonPropsIntro, ...trueDocs];
 
     // eslint-disable-next-line max-params
@@ -68,7 +68,7 @@ export default {
         av[category] = [].concat(cv);
       }
       if (i === arr.length - 1) {
-        Object.keys(av).forEach(k => (av[k] = orderById(av[k])));
+        Object.keys(av).forEach((k) => (av[k] = orderById(av[k])));
       }
 
       return av;
@@ -79,7 +79,7 @@ export default {
     // about up front and less tangible to modify later
     const docSubroutes = commonProps.concat(introduction, trueDocs);
 
-    const convertToSidebarArray = content => {
+    const convertToSidebarArray = (content) => {
       const { charts, containers, more } = content;
       return [
         ...introduction,
@@ -114,7 +114,7 @@ export default {
           return { redirect: firstGuidePath };
         },
         sharedData: { sidebarContent: sharedSidebarContent },
-        children: guides.map(g => ({
+        children: guides.map((g) => ({
           path: `/${g.data.slug}`,
           template: g.component || "src/pages/docs-template",
           getData: () => ({
@@ -132,7 +132,7 @@ export default {
           docs: trueDocs,
           sidebarContent: sbContent
         }),
-        children: docSubroutes.map(doc => ({
+        children: docSubroutes.map((doc) => ({
           path: `/${doc.data.slug}`,
           template: "src/pages/docs-template",
           getData: () => ({ doc, sidebarContent: sbContent })
@@ -153,7 +153,7 @@ export default {
         template: "src/pages/gallery",
         getData: () => ({ gallery }),
         sharedData: { sidebarContent: sharedSidebarContent },
-        children: gallery.map(galleryItem => ({
+        children: gallery.map((galleryItem) => ({
           path: `/${galleryItem.data.slug}/`,
           template: "src/pages/gallery-item-template",
           getData: () => ({ galleryItem })

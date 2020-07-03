@@ -295,7 +295,7 @@ class MultipleAxes extends React.Component {
             standalone={false}
             style={styles.axisYears}
             tickValues={tickValues}
-            tickFormat={x => {
+            tickFormat={(x) => {
               if (x.getFullYear() === 2000) {
                 return x.getFullYear();
               }
