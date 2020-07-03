@@ -11,7 +11,7 @@ branches:
   only:
     - main
     # TODO: Remove
-    - improvement/docs
+    - task/migrate-docs
 before_install:
   - yarn config set ignore-engines true
   - export DISPLAY=:99.0
@@ -73,4 +73,4 @@ jobs:
           skip_cleanup: true
           on:
             # TODO: change to main
-            branch: improvement/docs
+            branch: task/migrate-docs
