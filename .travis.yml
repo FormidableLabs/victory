@@ -51,10 +51,9 @@ jobs:
           { echo "[CHANGES] Building docs."; } || \
           { echo "[NO CHANGES] No doc changes. Skipping build + deploy."; travis_terminate 0; }
 
-        # Install, test.
+        # Install
         - cd docs
         - yarn install --frozen-lockfile
-        - yarn run check-ci
 
         # Build and deploy to staging.
         - yarn run clean
