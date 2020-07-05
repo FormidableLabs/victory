@@ -15,7 +15,7 @@ PREPROCESSORS[POLYFILL_PATH] = ["webpack"];
  * then the alternate `karma.conf.js` file will _also_ run the webpack dev
  * server during the test run.
  */
-module.exports = function(config) {
+module.exports = function (config) {
   config.set({
     frameworks: ["mocha"],
     reporters: ["spec"],

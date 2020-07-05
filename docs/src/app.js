@@ -53,28 +53,22 @@ const ScrollToCurrentSection = ({ location, children }) => {
     observer.disconnect();
   });
 
-  useEffect(
-    () => {
-      if (typeof window !== "undefined" && pageContentHeight === null) {
-        const mainElement = document.querySelector(DEFAULT_PAGE_CONTENT_CLASS);
-        if (mainElement) {
-          pageContentHeightObserver.observe(mainElement);
-        }
+  useEffect(() => {
+    if (typeof window !== "undefined" && pageContentHeight === null) {
+      const mainElement = document.querySelector(DEFAULT_PAGE_CONTENT_CLASS);
+      if (mainElement) {
+        pageContentHeightObserver.observe(mainElement);
       }
-    },
-    [pathname]
-  );
+    }
+  }, [pathname]);
 
-  useLayoutEffect(
-    () => {
-      if (checkScrollRoutes(pathname)) {
-        scrollContent(hash);
-      }
-      // scroll to top immediately if navigation is not to a sidebar page
-      scroll.scrollTo(0, { duration: 0 });
-    },
-    [hash, pathname, pageContentHeight]
-  );
+  useLayoutEffect(() => {
+    if (checkScrollRoutes(pathname)) {
+      scrollContent(hash);
+    }
+    // scroll to top immediately if navigation is not to a sidebar page
+    scroll.scrollTo(0, { duration: 0 });
+  }, [hash, pathname, pageContentHeight]);
 
   return children;
 };

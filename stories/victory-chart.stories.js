@@ -166,7 +166,12 @@ export const DomainFromData = () => {
         <VictoryScatter
           size={6}
           symbol="star"
-          data={[{ x: "cat", y: 2 }, { x: "dog", y: 3 }, { x: "bird", y: 1 }, { x: "frog", y: 4 }]}
+          data={[
+            { x: "cat", y: 2 },
+            { x: "dog", y: 3 },
+            { x: "bird", y: 1 },
+            { x: "frog", y: 4 }
+          ]}
         />
         <VictoryScatter
           size={6}
@@ -184,7 +189,12 @@ export const DomainFromData = () => {
         <VictoryScatter
           size={6}
           symbol="star"
-          data={[{ x: "cat", y: 2 }, { x: "dog", y: 3 }, { x: "bird", y: 1 }, { x: "frog", y: 4 }]}
+          data={[
+            { x: "cat", y: 2 },
+            { x: "dog", y: 3 },
+            { x: "bird", y: 1 },
+            { x: "frog", y: 4 }
+          ]}
         />
         <VictoryScatter
           size={6}
@@ -274,9 +284,27 @@ export const Style = () => {
         }}
       >
         <VictoryGroup labels={["a", "b", "c"]} offset={20} colorScale={"qualitative"}>
-          <VictoryBar data={[{ x: 1, y: 1 }, { x: 2, y: 2 }, { x: 3, y: 5 }]} />
-          <VictoryBar data={[{ x: 1, y: 2 }, { x: 2, y: 1 }, { x: 3, y: 7 }]} />
-          <VictoryBar data={[{ x: 1, y: 3 }, { x: 2, y: 4 }, { x: 3, y: 9 }]} />
+          <VictoryBar
+            data={[
+              { x: 1, y: 1 },
+              { x: 2, y: 2 },
+              { x: 3, y: 5 }
+            ]}
+          />
+          <VictoryBar
+            data={[
+              { x: 1, y: 2 },
+              { x: 2, y: 1 },
+              { x: 3, y: 7 }
+            ]}
+          />
+          <VictoryBar
+            data={[
+              { x: 1, y: 3 },
+              { x: 2, y: 4 },
+              { x: 3, y: 9 }
+            ]}
+          />
         </VictoryGroup>
       </VictoryChart>
       <VictoryChart
@@ -299,9 +327,27 @@ export const Style = () => {
           colorScale={"qualitative"}
           style={{ data: { width: 15 } }}
         >
-          <VictoryBar data={[{ x: 1, y: 1 }, { x: 2, y: 2 }, { x: 3, y: 5 }]} />
-          <VictoryBar data={[{ x: 1, y: 2 }, { x: 2, y: 1 }, { x: 3, y: 7 }]} />
-          <VictoryBar data={[{ x: 1, y: 3 }, { x: 2, y: 4 }, { x: 3, y: 9 }]} />
+          <VictoryBar
+            data={[
+              { x: 1, y: 1 },
+              { x: 2, y: 2 },
+              { x: 3, y: 5 }
+            ]}
+          />
+          <VictoryBar
+            data={[
+              { x: 1, y: 2 },
+              { x: 2, y: 1 },
+              { x: 3, y: 7 }
+            ]}
+          />
+          <VictoryBar
+            data={[
+              { x: 1, y: 3 },
+              { x: 2, y: 4 },
+              { x: 3, y: 9 }
+            ]}
+          />
         </VictoryGroup>
         <VictoryPolarAxis />
       </VictoryChart>
@@ -318,9 +364,27 @@ export const Style = () => {
         }}
       >
         <VictoryStack labels={["a", "b", "c"]} colorScale={"qualitative"}>
-          <VictoryBar data={[{ x: 1, y: 1 }, { x: 2, y: 2 }, { x: 3, y: 5 }]} />
-          <VictoryBar data={[{ x: 1, y: 2 }, { x: 2, y: 1 }, { x: 3, y: 7 }]} />
-          <VictoryBar data={[{ x: 1, y: 3 }, { x: 2, y: 4 }, { x: 3, y: 9 }]} />
+          <VictoryBar
+            data={[
+              { x: 1, y: 1 },
+              { x: 2, y: 2 },
+              { x: 3, y: 5 }
+            ]}
+          />
+          <VictoryBar
+            data={[
+              { x: 1, y: 2 },
+              { x: 2, y: 1 },
+              { x: 3, y: 7 }
+            ]}
+          />
+          <VictoryBar
+            data={[
+              { x: 1, y: 3 },
+              { x: 2, y: 4 },
+              { x: 3, y: 9 }
+            ]}
+          />
         </VictoryStack>
       </VictoryChart>
       <VictoryChart
@@ -341,9 +405,27 @@ export const Style = () => {
           colorScale={"qualitative"}
           style={{ data: { width: 15 } }}
         >
-          <VictoryBar data={[{ x: 1, y: 1 }, { x: 2, y: 2 }, { x: 3, y: 5 }]} />
-          <VictoryBar data={[{ x: 1, y: 2 }, { x: 2, y: 1 }, { x: 3, y: 7 }]} />
-          <VictoryBar data={[{ x: 1, y: 3 }, { x: 2, y: 4 }, { x: 3, y: 9 }]} />
+          <VictoryBar
+            data={[
+              { x: 1, y: 1 },
+              { x: 2, y: 2 },
+              { x: 3, y: 5 }
+            ]}
+          />
+          <VictoryBar
+            data={[
+              { x: 1, y: 2 },
+              { x: 2, y: 1 },
+              { x: 3, y: 7 }
+            ]}
+          />
+          <VictoryBar
+            data={[
+              { x: 1, y: 3 },
+              { x: 2, y: 4 },
+              { x: 3, y: 9 }
+            ]}
+          />
         </VictoryStack>
         <VictoryPolarAxis />
       </VictoryChart>
@@ -360,7 +442,13 @@ export const Orientations = () => {
         <VictoryAxis orientation="right" dependentAxis tickValues={[1, 2, 3, 4, 5, 6, 7, 8, 9]} />
         <VictoryBar
           style={{ data: { fill: "#c43a31" } }}
-          data={[{ x: 1, y: 1 }, { x: 2, y: 7 }, { x: 3, y: 4 }, { x: 4, y: 5 }, { x: 5, y: 2 }]}
+          data={[
+            { x: 1, y: 1 },
+            { x: 2, y: 7 },
+            { x: 3, y: 4 },
+            { x: 4, y: 5 },
+            { x: 5, y: 2 }
+          ]}
         />
       </VictoryChart>
     </div>

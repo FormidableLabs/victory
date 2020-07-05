@@ -120,22 +120,19 @@ const HeroDemo = () => {
   const [downloadsPerWeek, setData] = useState(oldDownloads);
   const url = `https://api.npmjs.org/downloads/range/${lastDate}:${recentDate}/victory`;
 
-  useEffect(
-    () => {
-      const fetchData = async () => {
-        try {
-          const result = await axios(url);
-          const freshData = result.data;
-          const allDownloads = downloads.data.concat(freshData.downloads);
-          setData(groupDownloadsByWeek(allDownloads));
-        } catch (error) {
-          setData(oldDownloads);
-        }
-      };
-      fetchData();
-    },
-    [url]
-  );
+  useEffect(() => {
+    const fetchData = async () => {
+      try {
+        const result = await axios(url);
+        const freshData = result.data;
+        const allDownloads = downloads.data.concat(freshData.downloads);
+        setData(groupDownloadsByWeek(allDownloads));
+      } catch (error) {
+        setData(oldDownloads);
+      }
+    };
+    fetchData();
+  }, [url]);
 
   return (
     <HeroDemoContainer>

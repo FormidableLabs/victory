@@ -29,9 +29,7 @@ const orderByIdAndAddThemesEntry = (items) => {
 
 const slugMutation = (mdData) => {
   const base = mdData.data.slug || mdData.data.title;
-  return (mdData.data.slug = _.kebabCase(base)
-    .toLowerCase()
-    .trim());
+  return (mdData.data.slug = _.kebabCase(base).toLowerCase().trim());
 };
 
 // for sidebar purposes, guide type and guide category are the same, but we'd rather have

@@ -24,7 +24,10 @@ describe("victory-util/domain", () => {
         x: "x",
         y: "y",
         domain: { y: [1, 2] },
-        data: [{ x: 1, y: 3 }, { x: 3, y: 5 }]
+        data: [
+          { x: 1, y: 3 },
+          { x: 3, y: 5 }
+        ]
       };
       const domainGetter = Domain.createDomainFunction();
       expect(domainGetter(props, "x")).to.eql(Domain.getDomain(props, "x"));
@@ -34,7 +37,10 @@ describe("victory-util/domain", () => {
       const props = {
         x: "x",
         y: "y",
-        data: [{ x: 1, y: 3 }, { x: 3, y: 5 }]
+        data: [
+          { x: 1, y: 3 },
+          { x: 3, y: 5 }
+        ]
       };
       const getDomainFromData = () => [0, 10];
       const domainGetter = Domain.createDomainFunction(getDomainFromData);
@@ -91,7 +97,10 @@ describe("victory-util/domain", () => {
         x: "x",
         y: "y",
         domain: { y: [1, 2] },
-        data: [{ x: 1, y: 3 }, { x: 3, y: 5 }]
+        data: [
+          { x: 1, y: 3 },
+          { x: 3, y: 5 }
+        ]
       };
       const resultDomain = Domain.getDomain(props, "x");
       expect(resultDomain).to.eql([1, 3]);
@@ -120,7 +129,10 @@ describe("victory-util/domain", () => {
 
   describe("getDomainFromData", () => {
     it("returns a domain from a dataset", () => {
-      const dataset = [{ _x: 1, _y: 3 }, { _x: 3, _y: 5 }];
+      const dataset = [
+        { _x: 1, _y: 3 },
+        { _x: 3, _y: 5 }
+      ];
       const resultDomain = Domain.getDomainFromData({}, "x", dataset);
       expect(resultDomain).to.eql([1, 3]);
     });
@@ -204,7 +216,10 @@ describe("victory-util/domain", () => {
   describe("getDomainWithZero", () => {
     it("ensures that the domain includes zero for the dependent axis", () => {
       const props = {
-        data: [{ x: 1, y: 3 }, { x: 3, y: 5 }]
+        data: [
+          { x: 1, y: 3 },
+          { x: 3, y: 5 }
+        ]
       };
       const resultDomain = Domain.getDomainWithZero(props, "y");
       expect(resultDomain).to.eql([0, 5]);
@@ -212,7 +227,10 @@ describe("victory-util/domain", () => {
 
     it("allows minimum domain values less than zero", () => {
       const props = {
-        data: [{ x: 1, y: -3 }, { x: 3, y: 5 }]
+        data: [
+          { x: 1, y: -3 },
+          { x: 3, y: 5 }
+        ]
       };
       const resultDomain = Domain.getDomainWithZero(props, "y");
       expect(resultDomain).to.eql([-3, 5]);
@@ -220,7 +238,10 @@ describe("victory-util/domain", () => {
 
     it("allows explicit y0 values in props.data to set the minimum domain", () => {
       const props = {
-        data: [{ x: 1, y: 3, y0: 2 }, { x: 3, y: 5, y0: 3 }]
+        data: [
+          { x: 1, y: 3, y0: 2 },
+          { x: 3, y: 5, y0: 3 }
+        ]
       };
       const resultDomain = Domain.getDomainWithZero(props, "y");
       expect(resultDomain).to.eql([2, 5]);
@@ -228,7 +249,10 @@ describe("victory-util/domain", () => {
 
     it("handles negative y0 values", () => {
       const props = {
-        data: [{ x: 1, y: -3, y0: -7 }, { x: 3, y: -5, y0: -7 }]
+        data: [
+          { x: 1, y: -3, y0: -7 },
+          { x: 3, y: -5, y0: -7 }
+        ]
       };
       const resultDomain = Domain.getDomainWithZero(props, "y");
       expect(resultDomain).to.eql([-7, -3]);
@@ -236,7 +260,10 @@ describe("victory-util/domain", () => {
 
     it("respects props.minDomain when present", () => {
       const props = {
-        data: [{ x: 1, y: 3, y0: 2 }, { x: 3, y: 5, y0: 2 }],
+        data: [
+          { x: 1, y: 3, y0: 2 },
+          { x: 3, y: 5, y0: 2 }
+        ],
         minDomain: { y: 4 }
       };
       const resultDomain = Domain.getDomainWithZero(props, "y");
@@ -245,7 +272,10 @@ describe("victory-util/domain", () => {
 
     it("does not force the independent domain to include zero", () => {
       const props = {
-        data: [{ x: 1, y: 3 }, { x: 3, y: 5 }]
+        data: [
+          { x: 1, y: 3 },
+          { x: 3, y: 5 }
+        ]
       };
       const resultDomain = Domain.getDomainWithZero(props, "x");
       expect(resultDomain).to.eql([1, 3]);

@@ -109,10 +109,20 @@ export default class VictoryVoronoiContainerDemo extends React.Component<
           >
             <VictoryScatter
               style={{ data: { fill: "red" }, labels: { fill: "red" } }}
-              data={[{ x: 0, y: 2 }, { x: 2, y: 3 }, { x: 4, y: 4 }, { x: 6, y: 5 }]}
+              data={[
+                { x: 0, y: 2 },
+                { x: 2, y: 3 },
+                { x: 4, y: 4 },
+                { x: 6, y: 5 }
+              ]}
             />
             <VictoryScatter
-              data={[{ x: 2, y: 2 }, { x: 4, y: 3 }, { x: 6, y: 4 }, { x: 8, y: 5 }]}
+              data={[
+                { x: 2, y: 2 },
+                { x: 4, y: 3 },
+                { x: 6, y: 4 },
+                { x: 8, y: 5 }
+              ]}
             />
           </VictoryChart>
           <VictoryChart
@@ -625,11 +635,21 @@ export default class VictoryVoronoiContainerDemo extends React.Component<
             />
             <VictoryScatter
               style={{ data: { fill: "tomato" }, labels: { fill: "tomato" } }}
-              data={[{ x: 0, y: 2 }, { x: 2, y: 3 }, { x: 4, y: 4 }, { x: 6, y: 5 }]}
+              data={[
+                { x: 0, y: 2 },
+                { x: 2, y: 3 },
+                { x: 4, y: 4 },
+                { x: 6, y: 5 }
+              ]}
             />
             <VictoryScatter
               style={{ data: { fill: "orange" }, labels: { fill: "orange" } }}
-              data={[{ x: 2, y: 2 }, { x: 4, y: 3 }, { x: 6, y: 4 }, { x: 8, y: 5 }]}
+              data={[
+                { x: 2, y: 2 },
+                { x: 4, y: 3 },
+                { x: 6, y: 4 },
+                { x: 8, y: 5 }
+              ]}
             />
           </VictoryChart>
         </div>

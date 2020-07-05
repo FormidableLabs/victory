@@ -781,10 +781,7 @@ describe("components/victory-errorbar", () => {
       Data.forEach((node, index) => {
         const initialProps = Data.at(index).props();
         // click the border line
-        node
-          .find("line")
-          .at(3)
-          .simulate("click");
+        node.find("line").at(3).simulate("click");
         expect(clickHandler.called).to.equal(true);
         // the first argument is the standard evt object
         expect(omit(clickHandler.args[index][1], ["events", "key"])).to.eql(
@@ -810,10 +807,7 @@ describe("components/victory-errorbar", () => {
       Data.forEach((node, index) => {
         const initialProps = Data.at(index).props();
         // click the cross line
-        node
-          .find("line")
-          .at(7)
-          .simulate("click");
+        node.find("line").at(7).simulate("click");
         expect(clickHandler.called).to.equal(true);
         // the first argument is the standard evt object
         expect(omit(clickHandler.args[index][1], ["events", "key"])).to.eql(

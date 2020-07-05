@@ -64,14 +64,22 @@ export default class App extends React.Component {
         </VictoryChart>
         <VictoryChart style={chartStyle}>
           <VictoryBoxPlot
-            data={[{ x: 1, y: 10 }, { x: 1, y: 7 }, { x: 1, y: 3 }, { x: 1, y: 5 }]}
+            data={[
+              { x: 1, y: 10 },
+              { x: 1, y: 7 },
+              { x: 1, y: 3 },
+              { x: 1, y: 5 }
+            ]}
           />
         </VictoryChart>
         <VictoryChart style={chartStyle} domain={{ x: [0, 3], y: [0, 20] }}>
           <VictoryBoxPlot
             boxWidth={20}
             labels
-            data={[{ x: 1, y: [5, 10, 9, 2] }, { x: 2, y: [1, 15, 6, 8] }]}
+            data={[
+              { x: 1, y: [5, 10, 9, 2] },
+              { x: 2, y: [1, 15, 6, 8] }
+            ]}
             style={{
               min: { stroke: "black", strokeWidth: 2 },
               max: { stroke: "black", strokeWidth: 2 },
@@ -93,7 +101,10 @@ export default class App extends React.Component {
             maxLabels
             q1Labels={({ datum }) => `x: ${datum.x}`}
             whiskerWidth={50}
-            data={[{ x: 1, y: [5, 10, 9, 2] }, { x: 2, y: [1, 15, 6, 8] }]}
+            data={[
+              { x: 1, y: [5, 10, 9, 2] },
+              { x: 2, y: [1, 15, 6, 8] }
+            ]}
             boxWidth={20}
             labelOrientation={"top"}
             events={[

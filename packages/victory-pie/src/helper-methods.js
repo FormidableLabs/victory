@@ -88,10 +88,7 @@ const getLabelText = (props, datum, index) => {
 const getLabelArc = (radius, labelRadius, style) => {
   const padding = (style && style.padding) || 0;
   const arcRadius = labelRadius || radius + padding;
-  return d3Shape
-    .arc()
-    .outerRadius(arcRadius)
-    .innerRadius(arcRadius);
+  return d3Shape.arc().outerRadius(arcRadius).innerRadius(arcRadius);
 };
 
 const getLabelPosition = (arc, slice, position) => {

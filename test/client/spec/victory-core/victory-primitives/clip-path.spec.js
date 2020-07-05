@@ -23,10 +23,7 @@ describe("victory-primitives/clip-path", () => {
         <rect />
       </ClipPath>
     );
-    const rect = wrapper
-      .find("defs")
-      .find("clipPath")
-      .find("rect");
+    const rect = wrapper.find("defs").find("clipPath").find("rect");
 
     expect(rect.length).to.equal(1);
   });

@@ -71,11 +71,19 @@ export default class VictorySharedEventsDemo extends React.Component<any, {}> {
               style={{
                 data: { width: 25, fill: "gold" }
               }}
-              data={[{ x: "a", y: 2 }, { x: "b", y: 3 }, { x: "c", y: 4 }]}
+              data={[
+                { x: "a", y: 2 },
+                { x: "b", y: 3 },
+                { x: "c", y: 4 }
+              ]}
             />
             <VictoryBar
               name={"secondBar"}
-              data={[{ x: "a", y: 2 }, { x: "b", y: 3 }, { x: "c", y: 4 }]}
+              data={[
+                { x: "a", y: 2 },
+                { x: "b", y: 3 },
+                { x: "c", y: 4 }
+              ]}
             />
           </VictorySharedEvents>
         </svg>

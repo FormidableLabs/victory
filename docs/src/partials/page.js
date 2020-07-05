@@ -82,15 +82,11 @@ const ContentContainer = styled.article`
   display: flex;
   justify-content: center;
   padding: ${({ theme }) =>
-    `${theme.layout.pageGutterTop} ${theme.layout.pageGutterRight} ${
-      theme.layout.pageGutterBottom
-    } ${theme.layout.pageGutterLeft}`};
+    `${theme.layout.pageGutterTop} ${theme.layout.pageGutterRight} ${theme.layout.pageGutterBottom} ${theme.layout.pageGutterLeft}`};
 
   @media ${({ theme }) => theme.mediaQuery.md} {
     padding: ${({ theme }) =>
-      `${theme.layout.md.pageGutterTop} ${theme.layout.md.pageGutterRight} ${
-        theme.layout.md.pageGutterBottom
-      } ${theme.layout.md.pageGutterLeft}`};
+      `${theme.layout.md.pageGutterTop} ${theme.layout.md.pageGutterRight} ${theme.layout.md.pageGutterBottom} ${theme.layout.md.pageGutterLeft}`};
   }
 `;
 

@@ -184,13 +184,10 @@ const Slider = ({ tooltipValues, color, value, maxValue, onChange }) => {
     [dragging, maxValue, onChange, percentage]
   );
 
-  const handleDragDone = useCallback(
-    () => {
-      setDragging(false);
-      onChange(percentage * maxValue);
-    },
-    [maxValue, onChange, percentage]
-  );
+  const handleDragDone = useCallback(() => {
+    setDragging(false);
+    onChange(percentage * maxValue);
+  }, [maxValue, onChange, percentage]);
 
   const handleDragStart = (ev) => {
     const left = containerRef.current.getBoundingClientRect().left;
@@ -211,22 +208,19 @@ const Slider = ({ tooltipValues, color, value, maxValue, onChange }) => {
     return tooltipValues[index];
   };
 
-  useLayoutEffect(
-    () => {
-      window.addEventListener("mousemove", handleDrag);
-      window.addEventListener("touchmove", handleDrag);
-      window.addEventListener("touchend", handleDragDone);
-      window.addEventListener("mouseup", handleDragDone);
+  useLayoutEffect(() => {
+    window.addEventListener("mousemove", handleDrag);
+    window.addEventListener("touchmove", handleDrag);
+    window.addEventListener("touchend", handleDragDone);
+    window.addEventListener("mouseup", handleDragDone);
 
-      return () => {
-        window.removeEventListener("mousemove", handleDrag);
-        window.removeEventListener("touchmove", handleDrag);
-        window.removeEventListener("touchend", handleDragDone);
-        window.removeEventListener("mouseup", handleDragDone);
-      };
-    },
-    [handleDrag, handleDragDone]
-  );
+    return () => {
+      window.removeEventListener("mousemove", handleDrag);
+      window.removeEventListener("touchmove", handleDrag);
+      window.removeEventListener("touchend", handleDragDone);
+      window.removeEventListener("mouseup", handleDragDone);
+    };
+  }, [handleDrag, handleDragDone]);
 
   return (
     <Container ref={containerRef} onMouseDown={handleDragStart} onTouchStart={handleDragStart}>
