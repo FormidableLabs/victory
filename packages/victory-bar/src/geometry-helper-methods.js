@@ -4,7 +4,7 @@
  * @param {number} y - y coordinate
  * @returns {object} - point object
  */
-const point = function(x, y) {
+const point = function (x, y) {
   return {
     x,
     y,
@@ -42,7 +42,7 @@ const point = function(x, y) {
  * @param {number} radius - radius of circle
  * @returns {object} - point object
  */
-const circle = function(center, radius) {
+const circle = function (center, radius) {
   return {
     center,
     radius,
@@ -84,11 +84,7 @@ const circle = function(center, radius) {
       }
       const a = (Math.pow(r0, 2) - Math.pow(r1, 2) + Math.pow(d, 2)) / (2 * d);
       const h = Math.sqrt(Math.pow(r0, 2) - Math.pow(a, 2));
-      const P2 = P0.add(
-        P1.subtract(P0)
-          .scalarMult(a)
-          .scalarDivide(d)
-      );
+      const P2 = P0.add(P1.subtract(P0).scalarMult(a).scalarDivide(d));
       const { x: x0, y: y0 } = P0;
       const { x: x1, y: y1 } = P1;
       const { x: x2, y: y2 } = P2;

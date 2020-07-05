@@ -6,7 +6,7 @@ var LodashModuleReplacementPlugin = require("lodash-webpack-plugin");
 
 var ROOT = process.cwd();
 var PACKAGES = glob.sync("packages/*/src", { root: ROOT });
-var FILES = PACKAGES.map(function(p) {
+var FILES = PACKAGES.map(function (p) {
   return path.join(ROOT, p);
 });
 var DEMO = path.resolve("demo");

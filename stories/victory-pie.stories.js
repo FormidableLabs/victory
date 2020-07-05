@@ -168,7 +168,13 @@ export const CornerRadius = () => {
         style={parentStyle}
         cornerRadius={({ datum }) => datum.x * 5}
         innerRadius={100}
-        data={[{ x: 1, y: 1 }, { x: 2, y: 3 }, { x: 3, y: 5 }, { x: 4, y: 2 }, { x: 5, y: 3 }]}
+        data={[
+          { x: 1, y: 1 },
+          { x: 2, y: 3 },
+          { x: 3, y: 5 },
+          { x: 4, y: 2 },
+          { x: 5, y: 3 }
+        ]}
       />
       <VictoryPie
         style={parentStyle}
@@ -195,7 +201,13 @@ export const PadAngle = () => {
         style={parentStyle}
         padAngle={({ datum }) => datum.x * 2}
         innerRadius={100}
-        data={[{ x: 1, y: 1 }, { x: 2, y: 3 }, { x: 3, y: 5 }, { x: 4, y: 2 }, { x: 5, y: 3 }]}
+        data={[
+          { x: 1, y: 1 },
+          { x: 2, y: 3 },
+          { x: 3, y: 5 },
+          { x: 4, y: 2 },
+          { x: 5, y: 3 }
+        ]}
       />
       <VictoryPie
         style={parentStyle}

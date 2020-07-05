@@ -11,3 +11,4 @@ yarn-error.log*
 lerna.json
 tsconfig.json
 storybook-static
+public

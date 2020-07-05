@@ -30,13 +30,16 @@ describe("components/victory-shared-events", () => {
   };
 
   const findDataComponent = (parentName, index, component) => {
-    return findComponentByName(parentName, component)
-      .find(MockDataComponent)
-      .at(index);
+    return findComponentByName(parentName, component).find(MockDataComponent).at(index);
   };
 
   it("should trigger shared events exclusively on selected children", () => {
-    const data = [{ x: "a", y: 2 }, { x: "b", y: 3 }, { x: "c", y: 5 }, { x: "d", y: 4 }];
+    const data = [
+      { x: "a", y: 2 },
+      { x: "b", y: 3 },
+      { x: "c", y: 5 },
+      { x: "d", y: 4 }
+    ];
     const wrapper = mount(
       <svg>
         <VictorySharedEvents

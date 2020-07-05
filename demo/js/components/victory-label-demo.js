@@ -244,7 +244,10 @@ export default class App extends React.Component {
           labelComponent={
             <VictoryLabel
               angle={20}
-              backgroundStyle={[{ fill: "pink", opacity: 0.5 }, { fill: "lavender", opacity: 0.5 }]}
+              backgroundStyle={[
+                { fill: "pink", opacity: 0.5 },
+                { fill: "lavender", opacity: 0.5 }
+              ]}
               text={[
                 "Victory is awesome.",
                 "Victory is awesome.",

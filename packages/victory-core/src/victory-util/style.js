@@ -7,7 +7,7 @@
  * @param {Object} obj An object of transform definitions.
  * @returns {String} The generated transform string.
  */
-const toTransformString = function(obj, ...more) {
+const toTransformString = function (obj, ...more) {
   if (more.length > 0) {
     return more
       .reduce((memo, currentObj) => {

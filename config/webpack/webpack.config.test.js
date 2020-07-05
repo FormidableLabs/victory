@@ -9,7 +9,7 @@ var glob = require("glob");
 var ROOT = process.cwd();
 var WDS_PORT = 3001;
 var PACKAGES = glob.sync("packages/*/src", { root: ROOT });
-var FILES = PACKAGES.map(function(p) {
+var FILES = PACKAGES.map(function (p) {
   return path.join(ROOT, p);
 });
 

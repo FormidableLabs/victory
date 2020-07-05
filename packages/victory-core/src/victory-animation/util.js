@@ -1,7 +1,7 @@
 import { interpolate } from "d3-interpolate";
 import { isPlainObject, orderBy } from "lodash";
 
-export const isInterpolatable = function(obj) {
+export const isInterpolatable = function (obj) {
   // d3 turns null into 0 and undefined into NaN, which we don't want.
   if (obj !== null) {
     switch (typeof obj) {
@@ -55,8 +55,8 @@ export const isInterpolatable = function(obj) {
  * @param {Number} when - Step value (0 to 1) at which to jump to `b`.
  * @returns {Function} An interpolation function.
  */
-export const interpolateImmediate = function(a, b, when = 0) {
-  return function(t) {
+export const interpolateImmediate = function (a, b, when = 0) {
+  return function (t) {
     return t < when ? a : b;
   };
 };
@@ -73,12 +73,12 @@ export const interpolateImmediate = function(a, b, when = 0) {
  * @param {any} b - End value.
  * @returns {Function} An interpolation function.
  */
-export const interpolateFunction = function(a, b) {
-  return function(t) {
+export const interpolateFunction = function (a, b) {
+  return function (t) {
     if (t >= 1) {
       return b;
     }
-    return function() {
+    return function () {
       /* eslint-disable no-invalid-this */
       const aval = typeof a === "function" ? a.apply(this, arguments) : a;
       const bval = typeof b === "function" ? b.apply(this, arguments) : b;
@@ -97,7 +97,7 @@ export const interpolateFunction = function(a, b) {
  * @param {any} b - End value.
  * @returns {Function} An interpolation function.
  */
-export const interpolateObject = function(a, b) {
+export const interpolateObject = function (a, b) {
   const interpolateTypes = (x, y) => {
     if (x === y || !isInterpolatable(x) || !isInterpolatable(y)) {
       return interpolateImmediate(x, y);
@@ -139,7 +139,7 @@ export const interpolateObject = function(a, b) {
     }
   }
 
-  return function(t) {
+  return function (t) {
     for (k in i) {
       c[k] = i[k](t);
     }
@@ -147,7 +147,7 @@ export const interpolateObject = function(a, b) {
   };
 };
 
-export const interpolateString = function(a, b) {
+export const interpolateString = function (a, b) {
   const format = (val) => {
     return typeof val === "string" ? val.replace(/,/g, "") : val;
   };
@@ -178,7 +178,7 @@ export const interpolateString = function(a, b) {
  * @param {any} b - End value.
  * @returns {Function|undefined} An interpolation function, if necessary.
  */
-export const victoryInterpolator = function(a, b) {
+export const victoryInterpolator = function (a, b) {
   // If the values are strictly equal, or either value is not interpolatable,
   // just use either the start value `a` or end value `b` at every step, as
   // there is no reasonable in-between value.

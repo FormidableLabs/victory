@@ -164,7 +164,7 @@ export default class VictoryBrushLine extends React.Component {
     width: 10
   };
 
-  static defaultEvents = function(props) {
+  static defaultEvents = function (props) {
     return props.disable
       ? undefined
       : [

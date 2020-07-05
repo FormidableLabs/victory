@@ -10,9 +10,9 @@ import PropTypes from "prop-types";
  * @param {Function} validator Validation function.
  * @returns {Function} Validator with `isRequired` option.
  */
-const makeChainable = function(validator) {
+const makeChainable = function (validator) {
   /* eslint-disable max-params */
-  const _chainable = function(isRequired, props, propName, componentName, ...rest) {
+  const _chainable = function (isRequired, props, propName, componentName, ...rest) {
     const value = props[propName];
     if (value === undefined || value === null) {
       if (isRequired) {

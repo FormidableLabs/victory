@@ -63,7 +63,7 @@ describe("victory-util/prop-types", () => {
   /* eslint-enable no-console */
 
   describe("allOfType", () => {
-    const validate = function(prop) {
+    const validate = function (prop) {
       return CustomPropTypes.allOfType([CustomPropTypes.nonNegative, CustomPropTypes.integer])(
         { testProp: prop },
         "testProp",
@@ -92,7 +92,7 @@ describe("victory-util/prop-types", () => {
   });
 
   describe("nonNegative", () => {
-    const validate = function(prop) {
+    const validate = function (prop) {
       return CustomPropTypes.nonNegative({ testProp: prop }, "testProp", "TestComponent");
     };
 
@@ -124,7 +124,7 @@ describe("victory-util/prop-types", () => {
   });
 
   describe("integer", () => {
-    const validate = function(prop) {
+    const validate = function (prop) {
       return CustomPropTypes.integer({ testProp: prop }, "testProp", "TestComponent");
     };
 
@@ -151,7 +151,7 @@ describe("victory-util/prop-types", () => {
   });
 
   describe("greaterThanZero", () => {
-    const validate = function(prop) {
+    const validate = function (prop) {
       return CustomPropTypes.greaterThanZero({ testProp: prop }, "testProp", "TestComponent");
     };
 
@@ -190,7 +190,7 @@ describe("victory-util/prop-types", () => {
   });
 
   describe("domain", () => {
-    const validate = function(prop) {
+    const validate = function (prop) {
       return CustomPropTypes.domain({ testProp: prop }, "testProp", "TestComponent");
     };
 
@@ -235,7 +235,7 @@ describe("victory-util/prop-types", () => {
   });
 
   describe("scale", () => {
-    const validate = function(prop) {
+    const validate = function (prop) {
       return CustomPropTypes.scale({ testProp: prop }, "testProp", "TestComponent");
     };
 
@@ -262,7 +262,7 @@ describe("victory-util/prop-types", () => {
   });
 
   describe("homogeneousArray", () => {
-    const validate = function(prop) {
+    const validate = function (prop) {
       return CustomPropTypes.homogeneousArray({ testProp: prop }, "testProp", "TestComponent");
     };
 
@@ -298,7 +298,7 @@ describe("victory-util/prop-types", () => {
   });
 
   describe("matchDataLength", () => {
-    const validate = function(prop, dataProp) {
+    const validate = function (prop, dataProp) {
       const props = { testProp: prop, data: dataProp };
       return CustomPropTypes.matchDataLength(props, "testProp", "TestComponent");
     };

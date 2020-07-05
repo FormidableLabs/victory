@@ -15,7 +15,7 @@ var PREPROCESSORS = {};
 PREPROCESSORS[MAIN_PATH] = ["webpack"];
 PREPROCESSORS[POLYFILL_PATH] = ["webpack"];
 
-module.exports = function(config) {
+module.exports = function (config) {
   /* eslint-disable global-require */
 
   // Start with the "dev" (webpack-dev-server is already running) config

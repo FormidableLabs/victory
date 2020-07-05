@@ -283,7 +283,7 @@ function getTransitionPropsFactory(props, state, setState) {
     });
   };
 
-  const getChildTransitionDuration = function(child, type) {
+  const getChildTransitionDuration = function (child, type) {
     const animate = child.props.animate;
     if (!child.type) {
       return {};

@@ -63,7 +63,11 @@ class App extends React.Component {
             >
               <VictoryGroup
                 color={"purple"}
-                data={[{ x: 1, y: 3 }, { x: 2, y: 4 }, { x: 3, y: 2 }]}
+                data={[
+                  { x: 1, y: 3 },
+                  { x: 2, y: 4 },
+                  { x: 3, y: 2 }
+                ]}
                 style={{
                   data: { width: 40, opacity: 0.6 }
                 }}
@@ -72,7 +76,11 @@ class App extends React.Component {
                 <VictoryLine />
               </VictoryGroup>
               <VictoryGroup
-                data={[{ x: 1, y: 4 }, { x: 2, y: 5 }, { x: 3, y: 1 }]}
+                data={[
+                  { x: 1, y: 4 },
+                  { x: 2, y: 5 },
+                  { x: 3, y: 1 }
+                ]}
                 style={{
                   data: { width: 20, opacity: 0.8 }
                 }}
@@ -81,7 +89,11 @@ class App extends React.Component {
                 <VictoryLine />
               </VictoryGroup>
               <VictoryGroup
-                data={[{ x: 1, y: 3 }, { x: 2, y: 2 }, { x: 3, y: 5 }]}
+                data={[
+                  { x: 1, y: 3 },
+                  { x: 2, y: 2 },
+                  { x: 3, y: 5 }
+                ]}
                 style={{
                   data: { width: 10, opacity: 1 }
                 }}

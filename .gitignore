@@ -40,3 +40,5 @@ yarn-error.log*
 .cache
 storybook-static
 build-storybook.log*
+artifacts
+tmp

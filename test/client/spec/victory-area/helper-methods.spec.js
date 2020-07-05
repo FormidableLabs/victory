@@ -17,7 +17,10 @@ describe("victory-area/helper-methods", () => {
       sandbox.restore();
     });
 
-    const data = [{ _x: 1, _y: 1 }, { _x: 2, _y: 1 }];
+    const data = [
+      { _x: 1, _y: 1 },
+      { _x: 2, _y: 1 }
+    ];
     const stackedData = [
       { _x: 1, _x0: 0, _x1: 1, _y: 1, _y0: 1, _y1: 2 },
       { _x: 2, _x0: 0, _x1: 2, _y: 1, _y0: 1, _y1: 2 }

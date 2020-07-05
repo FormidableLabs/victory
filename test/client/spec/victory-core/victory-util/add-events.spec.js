@@ -24,7 +24,10 @@ describe("victory-util/add-events", () => {
   it("should set up events on data components to target themselves", () => {
     const wrapper = mount(
       <EventedMockVictoryComponent
-        data={[{ x: 1, y: 2 }, { x: 3, y: 4 }]}
+        data={[
+          { x: 1, y: 2 },
+          { x: 3, y: 4 }
+        ]}
         events={[
           {
             target: "data",
@@ -50,20 +53,19 @@ describe("victory-util/add-events", () => {
     };
 
     expectEventsTriggered(getDataComponents, dataComponentIsAltered, [false, false], wrapper);
-    getDataComponents(wrapper)
-      .at(0)
-      .simulate("click");
+    getDataComponents(wrapper).at(0).simulate("click");
     expectEventsTriggered(getDataComponents, dataComponentIsAltered, [true, false], wrapper);
-    getDataComponents(wrapper)
-      .at(1)
-      .simulate("click");
+    getDataComponents(wrapper).at(1).simulate("click");
     expectEventsTriggered(getDataComponents, dataComponentIsAltered, [true, true], wrapper);
   });
 
   it("should set up events on data components scoped with an event key", () => {
     const wrapper = mount(
       <EventedMockVictoryComponent
-        data={[{ x: 1, y: 2 }, { x: 3, y: 4 }]}
+        data={[
+          { x: 1, y: 2 },
+          { x: 3, y: 4 }
+        ]}
         events={[
           {
             target: "data",
@@ -90,20 +92,19 @@ describe("victory-util/add-events", () => {
     };
 
     expectEventsTriggered(getDataComponents, dataComponentIsAltered, [false, false], wrapper);
-    getDataComponents(wrapper)
-      .at(0)
-      .simulate("click");
+    getDataComponents(wrapper).at(0).simulate("click");
     expectEventsTriggered(getDataComponents, dataComponentIsAltered, [false, false], wrapper);
-    getDataComponents(wrapper)
-      .at(1)
-      .simulate("click");
+    getDataComponents(wrapper).at(1).simulate("click");
     expectEventsTriggered(getDataComponents, dataComponentIsAltered, [false, true], wrapper);
   });
 
   it("should set up events on data components to target labels", () => {
     const wrapper = mount(
       <EventedMockVictoryComponent
-        data={[{ x: 1, y: 2 }, { x: 3, y: 4 }]}
+        data={[
+          { x: 1, y: 2 },
+          { x: 3, y: 4 }
+        ]}
         labelComponent={<MockLabel text="unaffected" />}
         events={[
           {
@@ -130,13 +131,9 @@ describe("victory-util/add-events", () => {
     };
 
     expectEventsTriggered(getLabelComponents, labelComponentIsAltered, [false, false], wrapper);
-    getDataComponents(wrapper)
-      .at(0)
-      .simulate("click");
+    getDataComponents(wrapper).at(0).simulate("click");
     expectEventsTriggered(getLabelComponents, labelComponentIsAltered, [true, false], wrapper);
-    getDataComponents(wrapper)
-      .at(1)
-      .simulate("click");
+    getDataComponents(wrapper).at(1).simulate("click");
     expectEventsTriggered(getLabelComponents, labelComponentIsAltered, [true, true], wrapper);
   });
 

@@ -58,7 +58,10 @@ describe("components/victory-box-plot", () => {
   });
 
   it("does not render data with null y values when given an array", () => {
-    const data = [{ x: 1, y: [1, 2, 3, 5, 8] }, { x: 1, y: [null, 2, 5, 9, 14] }];
+    const data = [
+      { x: 1, y: [1, 2, 3, 5, 8] },
+      { x: 1, y: [null, 2, 5, 9, 14] }
+    ];
     const wrapper = mount(<VictoryBoxPlot data={data} groupComponent={<TestGroup />} />);
     expect(wrapper.find('[data-test="testGroup"]').length).to.equal(1);
   });

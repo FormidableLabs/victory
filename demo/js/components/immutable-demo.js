@@ -451,7 +451,11 @@ class App extends React.Component {
             >
               <VictoryGroup
                 color={"purple"}
-                data={fromJS([{ x: 1, y: 3 }, { x: 2, y: 4 }, { x: 3, y: 2 }])}
+                data={fromJS([
+                  { x: 1, y: 3 },
+                  { x: 2, y: 4 },
+                  { x: 3, y: 2 }
+                ])}
                 style={{
                   data: { width: 40, opacity: 0.6 }
                 }}
@@ -460,7 +464,11 @@ class App extends React.Component {
                 <VictoryLine />
               </VictoryGroup>
               <VictoryGroup
-                data={fromJS([{ x: 1, y: 4 }, { x: 2, y: 5 }, { x: 3, y: 1 }])}
+                data={fromJS([
+                  { x: 1, y: 4 },
+                  { x: 2, y: 5 },
+                  { x: 3, y: 1 }
+                ])}
                 style={{
                   data: { width: 20, opacity: 0.8 }
                 }}
@@ -469,7 +477,11 @@ class App extends React.Component {
                 <VictoryLine />
               </VictoryGroup>
               <VictoryGroup
-                data={fromJS([{ x: 1, y: 3 }, { x: 2, y: 2 }, { x: 3, y: 5 }])}
+                data={fromJS([
+                  { x: 1, y: 3 },
+                  { x: 2, y: 2 },
+                  { x: 3, y: 5 }
+                ])}
                 style={{
                   data: { width: 10, opacity: 1 }
                 }}
@@ -794,7 +806,13 @@ class App extends React.Component {
           </VictoryChart>
 
           <VictoryChart style={chartStyle} containerComponent={<VictorySelectionContainer />}>
-            <VictoryGroup data={fromJS([{ x: 1, y: 5 }, { x: 2, y: 4 }, { x: 3, y: -2 }])}>
+            <VictoryGroup
+              data={fromJS([
+                { x: 1, y: 5 },
+                { x: 2, y: 4 },
+                { x: 3, y: -2 }
+              ])}
+            >
               <VictoryLine style={{ data: { stroke: "tomato" } }} />
               <VictoryScatter
                 style={{ data: { fill: ({ active }) => (active ? "tomato" : "gray") } }}
@@ -802,7 +820,13 @@ class App extends React.Component {
                 labelComponent={<VictoryTooltip />}
               />
             </VictoryGroup>
-            <VictoryGroup data={fromJS([{ x: 1, y: -3 }, { x: 2, y: 5 }, { x: 3, y: 3 }])}>
+            <VictoryGroup
+              data={fromJS([
+                { x: 1, y: -3 },
+                { x: 2, y: 5 },
+                { x: 3, y: 3 }
+              ])}
+            >
               <VictoryLine style={{ data: { stroke: "blue" } }} />
               <VictoryScatter
                 style={{ data: { fill: ({ active }) => (active ? "blue" : "gray") } }}
@@ -810,7 +834,13 @@ class App extends React.Component {
                 labelComponent={<VictoryTooltip />}
               />
             </VictoryGroup>
-            <VictoryGroup data={fromJS([{ x: 1, y: 5 }, { x: 2, y: -4 }, { x: 3, y: -2 }])}>
+            <VictoryGroup
+              data={fromJS([
+                { x: 1, y: 5 },
+                { x: 2, y: -4 },
+                { x: 3, y: -2 }
+              ])}
+            >
               <VictoryLine style={{ data: { stroke: "black" } }} />
               <VictoryScatter
                 style={{ data: { fill: ({ active }) => (active ? "black" : "gray") } }}
