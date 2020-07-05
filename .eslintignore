@@ -1,8 +1,12 @@
-node_modules/*
-config/*
+node_modules
+config
 package-scripts.js
-storybook-static/*
+storybook-static
 coverage
 dist
 lib
 es
+public
+artifacts
+tmp
+
