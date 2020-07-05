@@ -4,12 +4,31 @@ cache: yarn
 addons:
   chrome: stable
 node_js:
+  - "8"
   - "10"
-  - "12"
 sudo: false
 branches:
   only:
     - main
+    # TODO: Remove
+    - task/migrate-docs
+env:
+  global:
+    # CHROMATIC_APP_CODE
+    - secure: "PhxMzo4z4W8O12BqBB2zg/0CWALa/DgeHEDy1woYnYtB224q4WKsVkvNqqAkrGF6Y18ESDrLqebhAFqFEoy3Q8M4GsExAOxqdTipvr2ES/5amifL22fmTCJ0JVQUyyRgP348Jqa2fXsIY9mqpp7gaGjJWvjJbz9wh7B/6IZRU6TQmeqWM+2J96XhKvaesWc4dJ/kzA8M3w/ORK+JXnBpiXS4OKka8Zq6K22+iZzSYx6mxpbKmNIMi97XH3n16IkAG2+KXV8f7urKxlqHg45Be341U4N1TF1M9I3+4zE3Qhgdrlz1V7+z4pW5P5Ze12i1JSopV8/SwkyhLHBNId1nm0DPxc8N4yKVzLd351LL4b6dq0F7lA+fs9D7aT2B1v46Iu5cobR81qVny2xzbuTKyN113aaDwqNfF7lzllH0YzcyUqBtmk46af3TU+of3JiX/dtFNs8z+r3TawlCj20/cWUFXNkICakbjwT2MA9q9K84mDWcNmwM1jhmWXGZfxM0W6hm+HexM7+VXAcJFG4eA+12/s8pQ41mYdXSXp0lq9A72e/5jMdDF0y8hYL3t6SptoM3xBFxNJ/xmKJIb2jguDSYsPH9pMSLykO+zjoLWLx/iSju99eJ/XPWTB5bBXGUgUkY7iXO1xh0U6pw5JKcgNCNHzE9YHHZGR+QnsdWpAY="
+
+    # **Staging**: surge (`Surge.sh`)
+    # SURGE_LOGIN
+    - secure: "dVAUq8c76OWwISFhW8oG4zo9UcuoLAeT88R1x6Txa/cAUR+0dDwuYaZDZZY0OmBg+jjl4t8mgoNTuuKeAiwz65n8v8rnD4QkzcwnlyQ4BhGjpsg7qOW2GCKQbQ872QGeqzeLZ6BreS/gfkArv2RvJ4QUeTGukeXMhZ5kHJxBCdPiZlRdykIjxb6wEYqeli+u/Zv8X9Qe5gxltaGTkIapPReiqio0q63vzyeJLI8HopUCBy8HBM1gQY1i6Jipsd/DpYud4q7wcxC6NbBPkR45DP6olwL7zKcas7CgcyntS2P9ykCSKA2lUVvpDG1KwhudnNVrBGt3DpAHK9leKmcJd57AiluLSOCYtjSbEBa+Eoge707ztve+i9uKFD0T2K7eyXvUijZ+QJe75zWOL2N6rUTPc8RkOhh4ZZs3A5af6zxTBN1wAEvPcoACEDCEMebXzrmSFQ2aJiz5y9quPdRQHtfGmr/RCXflwthqAOezUXsz1HX/e/We3HQUivKF1DN4aOyZqdSAwdRFRFhToqXN569rFxmoHFCasSIP79NGiTwhiRLYyH+ydFYDis5nd9KvJPp5Fp68InAeWNrVLJrHRAuY0+ANuDzCtAbe//69Egx6wu1J36zMgCaStndBKKitNltgpK9I/zdSQKCDfkEPbuStvpcXfxUSg1YbQOX4UrQ="
+    # SURGE_TOKEN
+    - secure: "YUEISkxgM/23tW05/DR/ZPw0Dd9Ejq2VMjKRq3iGT2iq/S6foLTvj297HSuerYhL0iVMfuoe4VlL748al5bM2vv4n0WnEn/soV1OYSYAf/c05/95cNyuxXNG89QnzPYYWKNKXwyntEK8nN+fxdoum7FH+leOYsbZRYgMj7z+JWTSajeSQ1Z9tqj5Z5KimZEIGP3IG2veqy1c5tNdXTO5QvMo5SoL2j0gBrCAuVdqSOW8yddsthvrmtsNvtOxaaXcEJv9dbflBbCa1XXRWtmqbeg5bsLQDtKIEUva9aWaNhUOv/XD0ZzcF5baYUK7a+FNJLfLTdAsdpSFR19WuDNKkqHznwyaXhTkDFcKb/dkJU72zQWQF2AkKs01RUgC4WYXQtSJ3glx6gpjgNkQd8o5ujWLyKF3S37hK5HIsAu8bS2QvHdYVZ5DxC+yTC8IaT15nyZiNRZH8Q67md0hcfmT1PHQRLuQoK3encs8MwIlD4rUHTLftF5as4yxfXN/7KZ8s9Ccn8NSBDol4m2TEaIKS5kS0n7VdmKJVt6A+Zipafa7lcw/OfcqcsD1VOA4sWnXkwQf/C60JsASyO3pHdc6y8Gdq32eRT8+rI+VN0tyMn3xYBT3DrspRnnaYpSkbmdN0Ne7efeEthua7QgJ84kWdx54p1HhaRt81tW9mXq0n80="
+
+    # **Production**: `AWS IAM (renature-ci)` (AWS user: `tf-formidops-renature-ci`)
+    # AWS_ACCESS_KEY_ID
+    - secure: "PEGFbzGgGF4JeUlr/4BWaQYCXA1fogIuw441N329ZsplbOB3cBof+TzpvyrY0XzrHwI77+1GiCdU8v2yMklA42HYmaVCNMSeJqe0BaG5fDMOuFTQ9yXQOnXxvs20CR8vVbOF64Ne/lWSaUEuYrAwz2ItGfrlCwI0OFC3aB+hVh/J9tVMzOpNXMnFRymH/7Q9KPxbMLw+no7V7mrYjWHG7fmEv3fBtXorsuj+0rqGa2WTUezVvDKBh7s78gszvi0UZzjYBvorT8Sh736aw1U+2yvwNUa5AVXEWiZra0AfteSCvn9RGErcfxnvq86IEaiiyXZflUhl67xXgNvrw+QLdVp+rFEbo+rNOthPxzFBfON4k6k3E2v8fMRsvEKeVcrE7gSMB0NdTwbpeLCQA0FQ5G5qCnTBPtq0NnSui5Xy86ABsYt/LVEUuCCI/INm/kJMERIdFULxO85go5WxqgVPgJMjXBG+tGqGeJ8Xx4NdbHdrHaehG3hjr8PhjXKsRYlVY5KY2Z2Wf9z8A3oHY1+tMxHcOxD0XWA9beLN4qoXYh+DLUnR8Kly7CJIlJ1g/dN92xQUts0a/6vTKA1Yd2oac6VfI3ok714TzPZkYz07B9ACFnUiAongpENUaBRaA2ELg38O01boT0BAkFvuLirWEdU/Gt/zIGTIOE0iPH8Zp9g="
+    # AWS_SECRET_ACCESS_KEY
+    - secure: "n5Y/n0Jc9gyvtLXcU1gqxAeh4YBgOQkEwHFg+AIZi+mWBNh5BcFquP3VuEssyXxPwx0wIJ58hzcWR3Dex6b6C9Is2mdYVlJbmfuCyrcqlXqdUnBW75LXic6jwlUSYyqhXFDyjJEqBNUY3lvfu1876pdl/bIQafW0jLy8+Cqn0iDWEqRNpBi4VXQjtAqQEtTRZZVICIo++JnBMJlQW+KUYOZsGTPE3EDqvEaQAdCLPWJaGhjaVbgL2mGHjNnZ5W6qXWYka+eHZj2JlRQ206FGDkDCL5KRBb7yMqRttmtCc5RtHyphXjLWICXbL/pVM/7i36nafwMfkAuBSP+cEmiN04RC3/Nq05u2wxxZ4I/wgZPufvl0kX3WWy9i24vYU7Yd46HSUpL2ORSJOnu4HBRkNiMNnCPknsIUDurm4lYBvLutBkDBM8+yYPQjrnaYs9V76lDEoKqPgsVRcW7F8foKLm2jUNpZ/UwAPkOoGU9+gB9Xi9w6IIPMv0PC02X5TXTopqE/Z9eEwGUnAQQvaT+Kk/mc7XqG3Lo+SZ/yXn6vlFTwDoPJer6VJOOT9AmjE9Uy0NnLxY/8GUGeVnWL9bXTPJSdrFmKNErIzotrmOqLm8So979GhdtL1EJkv2rPbUzKygsr8p9IY2Afbp+4EWeJHwRfiX7gXSOpSlrMMi9VTfw="
+
 before_install:
   - yarn config set ignore-engines true
   - export DISPLAY=:99.0
@@ -30,7 +49,40 @@ script:
   - if [[ "${TRAVIS_PULL_REQUEST}" != "false" && "${TRAVIS_NODE_VERSION}" = "10" ]]; then yarn chromatic-ci || echo "Chromatic tests failed. Please investigate"; fi
 after_success:
   - yarn config delete ignore-engines
-env:
-  global:
-    # CHROMATIC_APP_CODE
-    secure: NFO3H6SGsTYyuFqIwNrFhpmYrwFCB7nrmZu7C7rP98vtaVm5WWXbvgXGy01Ply3pIn5DEpqckvzz7wgG60A7uldlADPP50x06WqawC9uOCTfj6u1ZnLwLUWykcT7v/iliCWI0XTu25zfTOe52w0Pts8YhnNA8VWMQ2/jijMRRKOMQFbdhqmH6uu5Tb8lhayPoqLCfjpPiZu0QzLtwoXYoCAKAtNjG1877QdtVi4gzFHvNtW165Gc9HDwED4WmiCHsrBtxgu3RCAeIRYyb5jCSnS9iOqozXNXtSK8VJh43tHaun/cuODCf3NTNhNLflTfcAmQ7E5vSsrKuu8szctZxRTLhaJjDkFovhFwFqhps8pIHI0yxRbw8uHXoTO5xZvHcFsMZYJU8xrWOEl6IT8FKZ2YYoomsOIKcPozPE+ue37R+Wzu9RH7yDCHPazprVBqqY+71Q9+OqXDHajp7n3umR0rrE8geOFsZp4R8QZFyHaWtQmBusUUVs1rqD9d8k3Bt1Ze0TrvWcThq1oGmlfCG72LdDT+6VE+3UTlQ8xxCywotejV8l4gqOgp8C7SQUXF3+Q+HfZ3cpCOiIFg8vFJVCMeKdYiYx+fBt5I1NSI+jQ2VF+PEDY4gb6x7KNVatg/krC/pWN0eL77T4aZPm4B07nF9QRk/WIsXp0R8opEiN4=
+
+jobs:
+  include:
+    - stage: documentation
+      node_js: '12'
+      script:
+        # Only do the docs build/deploy if docs changes.
+        # We early terminate the entire job which should also skip `deploy` tasks.
+        #
+        # Note: If there is an empty diff (like git internal catchup) this will exit 1 with
+        #       stack trace which is still what we want (no changes).
+        # See: https://reflectoring.io/skip-ci-build/#using-a-git-diff-in-the-ci-build
+        - export CHANGED_FILES=$(git diff --name-only $TRAVIS_COMMIT_RANGE)
+        - |
+          npx -q match-str -i "^(\.travis\.yml|docs\/)" -s "${CHANGED_FILES}" && \
+          { echo "[CHANGES] Building docs."; } || \
+          { echo "[NO CHANGES] No doc changes. Skipping build + deploy."; travis_terminate 0; }
+
+        # Install
+        - cd docs
+        - yarn install --frozen-lockfile
+
+        # Build and deploy to staging.
+        - yarn run clean
+        - yarn run build
+        - yarn run deploy:stage
+
+      deploy:
+        # Deploy main to production
+        - provider: script
+          # _Note_: `deploy.script` must be a **single** command string
+          script: yarn run deploy:prod
+          skip_cleanup: true
+          on:
+            # TODO: change to main
+            branch: task/migrate-docs
+
