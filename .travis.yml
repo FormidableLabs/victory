@@ -39,6 +39,9 @@ before_install:
   - sh -e /etc/init.d/xvfb start
   # Headless chrome
   - google-chrome-stable --headless --disable-gpu --remote-debugging-port=9222 http://localhost &
+  # Add `aws` CLI tool for production docs deployment
+  - pip install --user awscli
+
 script:
   - yarn --version
   - yarn nps check.ci
