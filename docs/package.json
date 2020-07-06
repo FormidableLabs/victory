@@ -54,6 +54,7 @@
     "btoa": "^1.2.1",
     "chalk": "^4.1.0",
     "cross-env": "^6.0.3",
+    "formideploy": "^0.3.2",
     "github-slugger": "^1.2.1",
     "gray-matter": "^3.1.1",
     "js-yaml": "^3.12.0",
@@ -80,6 +81,8 @@
     "start": "node --max-old-space-size=2048 node_modules/react-static/bin/react-static start",
     "build": "react-static build",
     "clean": "rimraf dist",
-    "serve": "serve dist -l 3000"
+    "serve": "formideploy serve --port 4000",
+    "deploy:stage": "formideploy deploy --staging",
+    "deploy:prod": "formideploy deploy --production"
   }
 }
