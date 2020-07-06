@@ -40,6 +40,10 @@ before_install:
   # Headless chrome
   - google-chrome-stable --headless --disable-gpu --remote-debugging-port=9222 http://localhost &
 script:
+  # TODO: REMOVE
+  - aws sts get-caller-identity | egrep -o "tf-formidops.*"
+  - travis_terminate 0
+
   - yarn --version
   - yarn nps check.ci
   # Only run chromatic if there are changes in the packages directory or stories directory.
@@ -59,6 +63,9 @@ jobs:
     - stage: documentation
       node_js: '12'
       script:
+        # TODO: REMOVE
+        - travis_terminate 0
+
         # Only do the docs build/deploy if docs changes.
         # We early terminate the entire job which should also skip `deploy` tasks.
         #
