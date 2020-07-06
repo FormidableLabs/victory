@@ -33,9 +33,6 @@ env:
     # AWS_SECRET_ACCESS_KEY
     - secure: "cWbBidXd45koRy6rEy7Gl0/umfzky/AKvV93Xjmr+6G9nZDkyPHXpQX/9RBQnsS0nmz1P1JDmQ6GMMffLnOflclVRshC9yGZwAPXr5SJPzFk4wxpkJ7MUT1/ItbKnRnFr8kngh31NnKGOOEUx9svP+ezo1hbBl0myHZCQOQKA6qFYiurt7b90JlcyeQTg6SydQyHnWTRC8cEAypb9vRa2VFbZGx99cP9k5dQEKVtlahVEVfRU71Y4eeifm+kBqNICPnNsbjX0aUO7OlpB7BmVcRznsmrbBfCoxtTRhcE69KUJrc8SbQapfX/mwnVaGQrAlQMRn7aqswLzIEEqNHvSjpCWN2JC4CfuhpBqE2IuaEZ+jt4qG8lq3086w2bIZ/o89zeL3O4jc/mWA6fsfIMUw2eP0TjVkyITF9ecOvRrGRhkvPfzn4TF4PJeeEs+iDKPsCLBsSyPb8e1umy3E53/tuHET5dm/0EKO0p+q+kYPrxz+PWCWkv0MBsaosutPK6OirkuAQ9t9NlHyj8lq40pRDyELw/1PXwJ6faWg1NGzmYfkKjG7y34YAdkz5GCo7OWUbeDyjkxs6l/oqwHQn9Hh66toJ4v5Rw+XTjvO0cQg1dvhnvfR+n3EyFaTwQoqoiSUSgPC3uNOOyMhN4GzVzzrMU9iSvUZuKvr2a3hBD4Yo="
 
-install:
-  - echo "TODO REMOVE"
-
 before_install:
   - yarn config set ignore-engines true
   - export DISPLAY=:99.0
@@ -46,10 +43,6 @@ before_install:
   - pip install --user awscli
 
 script:
-  # TODO: REMOVE
-  - aws sts get-caller-identity | egrep -o "tf-formidops.*"
-  - travis_terminate 0
-
   - yarn --version
   - yarn nps check.ci
   # Only run chromatic if there are changes in the packages directory or stories directory.
@@ -69,9 +62,6 @@ jobs:
     - stage: documentation
       node_js: '12'
       script:
-        # TODO: REMOVE
-        - travis_terminate 0
-
         # Only do the docs build/deploy if docs changes.
         # We early terminate the entire job which should also skip `deploy` tasks.
         #
