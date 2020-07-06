@@ -10,8 +10,6 @@ sudo: false
 branches:
   only:
     - main
-    # TODO: Remove
-    - task/migrate-docs
 env:
   global:
     # CHROMATIC_APP_CODE
@@ -90,6 +88,5 @@ jobs:
           script: yarn run deploy:prod
           skip_cleanup: true
           on:
-            # TODO: change to main
-            branch: task/migrate-docs
+            branch: main
 
