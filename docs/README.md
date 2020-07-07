@@ -76,7 +76,7 @@ Then build for production and deploy with dry run to check things:
 ```sh
 $ cd docs
 $ yarn clean && \
-  yarn prod:build
+  yarn build
 $ aws-vault exec fmd-victory-ci --no-session -- \
   yarn deploy:prod --dryrun
 ```
