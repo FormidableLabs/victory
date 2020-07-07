@@ -4,4 +4,4 @@
 
 To view documentation for `VictorySharedEvents` please see https://formidable.com/open-source/victory/docs/victory-shared-events
 
-To suggest an addition or correction to this documentation please see https://github.com/FormidableLabs/victory-docs/blob/master/src/content/docs/victory-shared-events.md
+To suggest an addition or correction to this documentation please see https://github.com/FormidableLabs/victory/blob/main/docs/src/content/docs/victory-shared-events.md
