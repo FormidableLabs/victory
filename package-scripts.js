@@ -1,5 +1,4 @@
 var npsUtils = require("nps-utils");
-var path = require("path");
 
 module.exports = {
   scripts: {
@@ -39,7 +38,13 @@ module.exports = {
       stories: "eslint --color stories",
       test: "eslint --color test",
       ts: npsUtils.series.nps("build-package-libs", "compile-ts"),
-      default: npsUtils.series.nps("lint.test", "lint.stories", "lint.demo", "lint.src")
+      default: npsUtils.series.nps(
+        "lint.test",
+        "lint.stories",
+        "lint.demo",
+        "lint.docs",
+        "lint.src"
+      )
     },
     format: {
       default: 'prettier --write "./**/*.{js,jsx,json,ts,tsx}"',

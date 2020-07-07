@@ -10,12 +10,36 @@ sudo: false
 branches:
   only:
     - main
+env:
+  global:
+    # CHROMATIC_APP_CODE
+    - secure: "PhxMzo4z4W8O12BqBB2zg/0CWALa/DgeHEDy1woYnYtB224q4WKsVkvNqqAkrGF6Y18ESDrLqebhAFqFEoy3Q8M4GsExAOxqdTipvr2ES/5amifL22fmTCJ0JVQUyyRgP348Jqa2fXsIY9mqpp7gaGjJWvjJbz9wh7B/6IZRU6TQmeqWM+2J96XhKvaesWc4dJ/kzA8M3w/ORK+JXnBpiXS4OKka8Zq6K22+iZzSYx6mxpbKmNIMi97XH3n16IkAG2+KXV8f7urKxlqHg45Be341U4N1TF1M9I3+4zE3Qhgdrlz1V7+z4pW5P5Ze12i1JSopV8/SwkyhLHBNId1nm0DPxc8N4yKVzLd351LL4b6dq0F7lA+fs9D7aT2B1v46Iu5cobR81qVny2xzbuTKyN113aaDwqNfF7lzllH0YzcyUqBtmk46af3TU+of3JiX/dtFNs8z+r3TawlCj20/cWUFXNkICakbjwT2MA9q9K84mDWcNmwM1jhmWXGZfxM0W6hm+HexM7+VXAcJFG4eA+12/s8pQ41mYdXSXp0lq9A72e/5jMdDF0y8hYL3t6SptoM3xBFxNJ/xmKJIb2jguDSYsPH9pMSLykO+zjoLWLx/iSju99eJ/XPWTB5bBXGUgUkY7iXO1xh0U6pw5JKcgNCNHzE9YHHZGR+QnsdWpAY="
+
+    # **GitHub**: `GitHub (victory-ci)` "Tokens"
+    # GITHUB_DEPLOYMENT_TOKEN
+    - secure: "GIgCSzrWu6GX2VSs35FPpaM9tnifBwuS1iQDZZVTU9ImzOOBARGE8zGT46aGAI9y9hWa+jAYBralUgNnv4YneR/Tqu9/EzIav8zj1oQ49rJ9+lmm/kQD3FAMrAS6RQFNKkW2K7vLruXHVRM9MlrAo3zecRYG47A4rHH/YJwcBzLlPUn3O46UBizQVzxsHqRTmz97SdnprbLX1rqelxRgDCWQwR8tRa7GbjQEWJW9V1qW12BdsMDBQVBNnAEzuHEAN1hyxbXWhagwTJubdJBQkAaAnaQApsFF2cpwyjsW7TTO8xaOxaxpg4hR2nCRgllG04yC9fGUEUjcERjgnWLWqnmL0bzsX63ytHuIovc8wFF6T47BvXgl4o4Rb8aoR+3DIm9Iblc6iOyVxiyzjnlkalQZ8SiNX3sPfuhv0/h4Z8+DGNjmLim+1J8KvW/Ti+VvZp51s+44htncqcxrw/qpKjPD3Donmk0ZHz4phzU44WSh1/lVa8NU3qDjj2+6JonYmrzJgNZDeQhKqdutRrU3t8gIP/Hs+mZ1IvO83jtqJTBdpvQ+mE5tYBh6CUVmREqG7zofA4iiEOEiYJmi15uiTRVcFkzuFxPM9aYSw8ZDn+MzpyX5U5UsE6JlDCNGtwDRFkuSKeHxi1AOGhaIVFfoFR/WPmcUXA6Ob9pgePZ1Ars="
+
+    # **Staging**: surge (`Surge.sh`)
+    # SURGE_LOGIN
+    - secure: "dVAUq8c76OWwISFhW8oG4zo9UcuoLAeT88R1x6Txa/cAUR+0dDwuYaZDZZY0OmBg+jjl4t8mgoNTuuKeAiwz65n8v8rnD4QkzcwnlyQ4BhGjpsg7qOW2GCKQbQ872QGeqzeLZ6BreS/gfkArv2RvJ4QUeTGukeXMhZ5kHJxBCdPiZlRdykIjxb6wEYqeli+u/Zv8X9Qe5gxltaGTkIapPReiqio0q63vzyeJLI8HopUCBy8HBM1gQY1i6Jipsd/DpYud4q7wcxC6NbBPkR45DP6olwL7zKcas7CgcyntS2P9ykCSKA2lUVvpDG1KwhudnNVrBGt3DpAHK9leKmcJd57AiluLSOCYtjSbEBa+Eoge707ztve+i9uKFD0T2K7eyXvUijZ+QJe75zWOL2N6rUTPc8RkOhh4ZZs3A5af6zxTBN1wAEvPcoACEDCEMebXzrmSFQ2aJiz5y9quPdRQHtfGmr/RCXflwthqAOezUXsz1HX/e/We3HQUivKF1DN4aOyZqdSAwdRFRFhToqXN569rFxmoHFCasSIP79NGiTwhiRLYyH+ydFYDis5nd9KvJPp5Fp68InAeWNrVLJrHRAuY0+ANuDzCtAbe//69Egx6wu1J36zMgCaStndBKKitNltgpK9I/zdSQKCDfkEPbuStvpcXfxUSg1YbQOX4UrQ="
+    # SURGE_TOKEN
+    - secure: "YUEISkxgM/23tW05/DR/ZPw0Dd9Ejq2VMjKRq3iGT2iq/S6foLTvj297HSuerYhL0iVMfuoe4VlL748al5bM2vv4n0WnEn/soV1OYSYAf/c05/95cNyuxXNG89QnzPYYWKNKXwyntEK8nN+fxdoum7FH+leOYsbZRYgMj7z+JWTSajeSQ1Z9tqj5Z5KimZEIGP3IG2veqy1c5tNdXTO5QvMo5SoL2j0gBrCAuVdqSOW8yddsthvrmtsNvtOxaaXcEJv9dbflBbCa1XXRWtmqbeg5bsLQDtKIEUva9aWaNhUOv/XD0ZzcF5baYUK7a+FNJLfLTdAsdpSFR19WuDNKkqHznwyaXhTkDFcKb/dkJU72zQWQF2AkKs01RUgC4WYXQtSJ3glx6gpjgNkQd8o5ujWLyKF3S37hK5HIsAu8bS2QvHdYVZ5DxC+yTC8IaT15nyZiNRZH8Q67md0hcfmT1PHQRLuQoK3encs8MwIlD4rUHTLftF5as4yxfXN/7KZ8s9Ccn8NSBDol4m2TEaIKS5kS0n7VdmKJVt6A+Zipafa7lcw/OfcqcsD1VOA4sWnXkwQf/C60JsASyO3pHdc6y8Gdq32eRT8+rI+VN0tyMn3xYBT3DrspRnnaYpSkbmdN0Ne7efeEthua7QgJ84kWdx54p1HhaRt81tW9mXq0n80="
+
+    # **Production**: `AWS IAM (victory-ci)` (AWS user: `tf-formidops-victory-ci`)
+    # AWS_ACCESS_KEY_ID
+    - secure: "g4DFZSIUhCNLyY+NYZEDcsDXcNunt0Es0or0Kq4moCe5IocPwhTOytu4olFAd6lRMEOv/Q52dJ7QkVbZNT5WYdaUvHQL7rhUJJVbkZvhN5xlFrZOz0mLrJ3EJsL04ZJv/woriUCbIDvdPfS+WZHHPOHsGpGpGjrdQAjKiAltGLA0ZXVIF0asYQIDhjutkvmN0b8ucEVdE/3+2Le7+P5Y842CLZ9hV/G7vMS6DzoqM5n1ITLjjQZ2D6H0bEiY85HDsg7N6RtMllt9aDm4RH/F0x+N/Ib9+RtuUYuZ/jNRElnC3jHwib1/aMiqGLzGM7TU7TYKm7B9Jf00aDRrXgjHaquejY5XWaCaUX+6qE7qdGFZi6UNyDU3sbTTyfeWAAYZZA46PgmKcl9ozV75c6rgROUIbOOkQWvEv61BQDwM05Mw8vMgbQ+VnlRn0sf3J/gAMqEVe5zTsNziCu87mVk6zMr5RCoVtWe7vd+EMjsKt/PcrWmqku87BWijJiz6QQTzG8k1nlNmW7NDyIERsJZ/2I1wccgBaLEFWsK5YUc3OAI9oHUYNTkt4wSD/TOmRMXAmPBZF+8fq6htER0gJ7YDKYLPPTGuXdg1yFESuihHDWoZ70vysxblxgfU8Y58AlfSdQ3+f8H3vzgDsAKDQh5WYROm7FrVL9BjLHLQ6nMMsSU="
+    # AWS_SECRET_ACCESS_KEY
+    - secure: "cWbBidXd45koRy6rEy7Gl0/umfzky/AKvV93Xjmr+6G9nZDkyPHXpQX/9RBQnsS0nmz1P1JDmQ6GMMffLnOflclVRshC9yGZwAPXr5SJPzFk4wxpkJ7MUT1/ItbKnRnFr8kngh31NnKGOOEUx9svP+ezo1hbBl0myHZCQOQKA6qFYiurt7b90JlcyeQTg6SydQyHnWTRC8cEAypb9vRa2VFbZGx99cP9k5dQEKVtlahVEVfRU71Y4eeifm+kBqNICPnNsbjX0aUO7OlpB7BmVcRznsmrbBfCoxtTRhcE69KUJrc8SbQapfX/mwnVaGQrAlQMRn7aqswLzIEEqNHvSjpCWN2JC4CfuhpBqE2IuaEZ+jt4qG8lq3086w2bIZ/o89zeL3O4jc/mWA6fsfIMUw2eP0TjVkyITF9ecOvRrGRhkvPfzn4TF4PJeeEs+iDKPsCLBsSyPb8e1umy3E53/tuHET5dm/0EKO0p+q+kYPrxz+PWCWkv0MBsaosutPK6OirkuAQ9t9NlHyj8lq40pRDyELw/1PXwJ6faWg1NGzmYfkKjG7y34YAdkz5GCo7OWUbeDyjkxs6l/oqwHQn9Hh66toJ4v5Rw+XTjvO0cQg1dvhnvfR+n3EyFaTwQoqoiSUSgPC3uNOOyMhN4GzVzzrMU9iSvUZuKvr2a3hBD4Yo="
+
 before_install:
   - yarn config set ignore-engines true
   - export DISPLAY=:99.0
   - sh -e /etc/init.d/xvfb start
   # Headless chrome
   - google-chrome-stable --headless --disable-gpu --remote-debugging-port=9222 http://localhost &
+  # Add `aws` CLI tool for production docs deployment
+  - pip install --user awscli
+
 script:
   - yarn --version
   - yarn nps check.ci
@@ -30,7 +54,39 @@ script:
   - if [[ "${TRAVIS_PULL_REQUEST}" != "false" && "${TRAVIS_NODE_VERSION}" = "10" ]]; then yarn chromatic-ci || echo "Chromatic tests failed. Please investigate"; fi
 after_success:
   - yarn config delete ignore-engines
-env:
-  global:
-    # CHROMATIC_APP_CODE
-    secure: NFO3H6SGsTYyuFqIwNrFhpmYrwFCB7nrmZu7C7rP98vtaVm5WWXbvgXGy01Ply3pIn5DEpqckvzz7wgG60A7uldlADPP50x06WqawC9uOCTfj6u1ZnLwLUWykcT7v/iliCWI0XTu25zfTOe52w0Pts8YhnNA8VWMQ2/jijMRRKOMQFbdhqmH6uu5Tb8lhayPoqLCfjpPiZu0QzLtwoXYoCAKAtNjG1877QdtVi4gzFHvNtW165Gc9HDwED4WmiCHsrBtxgu3RCAeIRYyb5jCSnS9iOqozXNXtSK8VJh43tHaun/cuODCf3NTNhNLflTfcAmQ7E5vSsrKuu8szctZxRTLhaJjDkFovhFwFqhps8pIHI0yxRbw8uHXoTO5xZvHcFsMZYJU8xrWOEl6IT8FKZ2YYoomsOIKcPozPE+ue37R+Wzu9RH7yDCHPazprVBqqY+71Q9+OqXDHajp7n3umR0rrE8geOFsZp4R8QZFyHaWtQmBusUUVs1rqD9d8k3Bt1Ze0TrvWcThq1oGmlfCG72LdDT+6VE+3UTlQ8xxCywotejV8l4gqOgp8C7SQUXF3+Q+HfZ3cpCOiIFg8vFJVCMeKdYiYx+fBt5I1NSI+jQ2VF+PEDY4gb6x7KNVatg/krC/pWN0eL77T4aZPm4B07nF9QRk/WIsXp0R8opEiN4=
+
+jobs:
+  include:
+    - stage: documentation
+      node_js: '12'
+      script:
+        # Only do the docs build/deploy if docs changes.
+        # We early terminate the entire job which should also skip `deploy` tasks.
+        #
+        # Note: If there is an empty diff (like git internal catchup) this will exit 1 with
+        #       stack trace which is still what we want (no changes).
+        # See: https://reflectoring.io/skip-ci-build/#using-a-git-diff-in-the-ci-build
+        - export CHANGED_FILES=$(git diff --name-only $TRAVIS_COMMIT_RANGE)
+        - |
+          npx -q match-str -i "^(\.travis\.yml|docs\/)" -s "${CHANGED_FILES}" && \
+          { echo "[CHANGES] Building docs."; } || \
+          { echo "[NO CHANGES] No doc changes. Skipping build + deploy."; travis_terminate 0; }
+
+        # Install
+        - cd docs
+        - yarn install --frozen-lockfile
+
+        # Build and deploy to staging.
+        - yarn run clean
+        - yarn run build
+        - yarn run deploy:stage
+
+      deploy:
+        # Deploy main to production
+        - provider: script
+          # _Note_: `deploy.script` must be a **single** command string
+          script: yarn run deploy:prod
+          skip_cleanup: true
+          on:
+            branch: main
+
