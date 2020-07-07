@@ -1,5 +1,9 @@
 # Victory Changelog
 
+## 35.0.3 (2020-07-07)
+
+- [#1640](https://github.com/FormidableLabs/victory/pull/1640) - Update package readmes with new docs links
+
 ## 35.0.2 (2020-06-30)
 
 - [#1631](https://github.com/FormidableLabs/victory/pull/1631) - Correct types for `TextSize` utility. Thanks @jlismore!
