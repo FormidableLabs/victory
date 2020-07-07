@@ -129,6 +129,16 @@ The `events` prop attaches arbitrary event handlers to the label component. This
 
 _examples:_ `events={{onClick: (evt) => alert("x: " + evt.clientX)}}`
 
+## flyoutComponent
+
+`type: element`
+
+The `flyoutComponent` prop takes a component instance which will be used to create the flyout path for each tooltip. The new element created from the passed `flyoutComponent` will be supplied with the following properties: x, y, dx, dy, index, datum, cornerRadius, pointerLength, pointerWidth, width, height, orientation, style, and events. Any of these props may be overridden by passing in props to the supplied component, or modified or ignored within the custom component itself. If `flyoutComponent` is omitted, a default [Flyout][] component will be created with props described above.
+
+_examples:_ `flyoutComponent={<Flyout x={50} y={50}/>}`, `flyoutComponent={<MyCustomFlyout/>}`
+
+_default:_ `<Flyout/>`
+
 ## flyoutHeight
 
 `type: number || function`
@@ -140,6 +150,33 @@ The `flyoutHeight` prop defines the height of the tooltip flyout. This prop may 
   data={sampleData}
   labels={({ datum }) => `y: ${datum.y}`}
   labelComponent={<VictoryTooltip  flyoutHeight={60} />}
+/>
+```
+
+## flyoutPadding
+
+`type: number || function || { top: number, bottom: number, left: number, right: number }`
+
+The `flyoutPadding` prop may be used to adjust the spacing between the tooltip label and the edges of the flyout outline. This prop may be given as a single number, an object with values for "top", "bottom", "left" and "right", or as a function that returns one of these.
+
+_default (provided by default theme):_ `flyoutPadding={5}`
+
+```playground
+<VictoryBar
+  data={sampleData}
+  labels={({ datum }) => datum.x % 2 === 0
+    ? [`x: ${datum.x}`, `y: ${datum.y}`]
+    : [`y: ${datum.y}`]
+  }
+  labelComponent={
+    <VictoryTooltip
+      flyoutPadding={({ text }) =>
+        text.length > 1
+          ? { top: 0, bottom: 0, left: 7, right: 7 }
+          : 7
+        }
+    />
+  }
 />
 ```
 
@@ -174,16 +211,6 @@ The `flyoutWidth` prop defines the width of the tooltip flyout. This prop may be
   labelComponent={<VictoryTooltip  flyoutWidth={90} />}
 />
 ```
-
-## flyoutComponent
-
-`type: element`
-
-The `flyoutComponent` prop takes a component instance which will be used to create the flyout path for each tooltip. The new element created from the passed `flyoutComponent` will be supplied with the following properties: x, y, dx, dy, index, datum, cornerRadius, pointerLength, pointerWidth, width, height, orientation, style, and events. Any of these props may be overridden by passing in props to the supplied component, or modified or ignored within the custom component itself. If `flyoutComponent` is omitted, a default [Flyout][] component will be created with props described above.
-
-_examples:_ `flyoutComponent={<Flyout x={50} y={50}/>}`, `flyoutComponent={<MyCustomFlyout/>}`
-
-_default:_ `<Flyout/>`
 
 ## groupComponent
 
