@@ -17,4 +17,4 @@
 Please visit our documentation site to read more about these components
 https://formidable.com/open-source/victory
 
-To suggest an addition or correction to this documentation please see https://github.com/FormidableLabs/victory-docs/blob/master/src/content/docs
+To suggest an addition or correction to this documentation please see https://github.com/FormidableLabs/victory/blob/main/docs/src/content/docs
