@@ -282,25 +282,9 @@ Long axis labels can be problematic. There are several ways to address the issue
     <VictoryAxis/>
     <VictoryLine/>
   </VictoryChart>
-
-  <VictoryChart>
-    <VictoryLabel text="overflowing labels with VictoryPortal" x={225} y={30} textAnchor="middle"/>
-    <VictoryAxis dependentAxis
-      tickLabelComponent={<VictoryPortal><VictoryLabel/></VictoryPortal>}
-      tickFormat={[
-        "first label",
-        "second label",
-        "third label",
-        "forth label",
-        "fifth label"
-      ]}
-    />
-    <VictoryAxis/>
-    <VictoryLine/>
-  </VictoryChart>
-
 </div>
 ```
+
 
 ### My axis labels are showing very small numbers. How do I fix this?
 
