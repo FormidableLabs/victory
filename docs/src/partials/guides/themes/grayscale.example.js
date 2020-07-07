@@ -27,8 +27,7 @@ const charcoal = "#252525";
 const grey = "#969696";
 
 // Typography
-const sansSerif =
-  "'Gill Sans', 'Gill Sans MT', 'Ser­avek', 'Trebuchet MS', sans-serif";
+const sansSerif = "'Gill Sans', 'Seravek', 'Trebuchet MS', sans-serif";
 const letterSpacing = "normal";
 const fontSize = 14;
 
@@ -49,6 +48,7 @@ const baseLabelStyles = {
   fill: charcoal,
   stroke: "transparent"
 };
+
 const centeredLabelStyles = assign({ textAnchor: "middle" }, baseLabelStyles);
 
 // Strokes
@@ -63,7 +63,7 @@ const theme = {
         data: {
           fill: charcoal
         },
-        labels: centeredLabelStyles
+        labels: baseLabelStyles
       }
     },
     baseProps
@@ -112,34 +112,16 @@ const theme = {
   boxplot: assign(
     {
       style: {
-        max: {
-          padding: 8,
-          stroke: charcoal,
-          strokeWidth: 1
-        },
-        maxLabels: baseLabelStyles,
-        median: {
-          padding: 8,
-          stroke: charcoal,
-          strokeWidth: 1
-        },
-        medianLabels: baseLabelStyles,
-        min: {
-          padding: 8,
-          stroke: charcoal,
-          strokeWidth: 1
-        },
-        minLabels: baseLabelStyles,
-        q1: {
-          padding: 8,
-          fill: grey
-        },
-        q1Labels: baseLabelStyles,
-        q3: {
-          padding: 8,
-          fill: grey
-        },
-        q3Labels: baseLabelStyles
+        max: { padding: 8, stroke: charcoal, strokeWidth: 1 },
+        maxLabels: assign({}, baseLabelStyles, { padding: 3 }),
+        median: { padding: 8, stroke: charcoal, strokeWidth: 1 },
+        medianLabels: assign({}, baseLabelStyles, { padding: 3 }),
+        min: { padding: 8, stroke: charcoal, strokeWidth: 1 },
+        minLabels: assign({}, baseLabelStyles, { padding: 3 }),
+        q1: { padding: 8, fill: grey },
+        q1Labels: assign({}, baseLabelStyles, { padding: 3 }),
+        q3: { padding: 8, fill: grey },
+        q3Labels: assign({}, baseLabelStyles, { padding: 3 })
       },
       boxWidth: 20
     },
@@ -152,7 +134,7 @@ const theme = {
           stroke: charcoal,
           strokeWidth: 1
         },
-        labels: centeredLabelStyles
+        labels: assign({}, baseLabelStyles, { padding: 5 })
       },
       candleColors: {
         positive: "#ffffff",
@@ -171,7 +153,7 @@ const theme = {
           stroke: charcoal,
           strokeWidth: 2
         },
-        labels: centeredLabelStyles
+        labels: baseLabelStyles
       }
     },
     baseProps
@@ -179,6 +161,19 @@ const theme = {
   group: assign(
     {
       colorScale: colors
+    },
+    baseProps
+  ),
+  histogram: assign(
+    {
+      style: {
+        data: {
+          fill: grey,
+          stroke: charcoal,
+          strokeWidth: 2
+        },
+        labels: baseLabelStyles
+      }
     },
     baseProps
   ),
@@ -203,7 +198,7 @@ const theme = {
           stroke: charcoal,
           strokeWidth: 2
         },
-        labels: centeredLabelStyles
+        labels: baseLabelStyles
       }
     },
     baseProps
@@ -230,7 +225,7 @@ const theme = {
           stroke: "transparent",
           strokeWidth: 0
         },
-        labels: centeredLabelStyles
+        labels: baseLabelStyles
       }
     },
     baseProps
@@ -242,16 +237,14 @@ const theme = {
     baseProps
   ),
   tooltip: {
-    style: assign({}, centeredLabelStyles, {
-      padding: 5,
-      pointerEvents: "none"
-    }),
+    style: assign({}, baseLabelStyles, { padding: 0, pointerEvents: "none" }),
     flyoutStyle: {
       stroke: charcoal,
       strokeWidth: 1,
       fill: "#f0f0f0",
       pointerEvents: "none"
     },
+    flyoutPadding: 5,
     cornerRadius: 5,
     pointerLength: 10
   },
@@ -263,10 +256,7 @@ const theme = {
           stroke: "transparent",
           strokeWidth: 0
         },
-        labels: assign({}, centeredLabelStyles, {
-          padding: 5,
-          pointerEvents: "none"
-        }),
+        labels: assign({}, baseLabelStyles, { padding: 5, pointerEvents: "none" }),
         flyout: {
           stroke: charcoal,
           strokeWidth: 1,

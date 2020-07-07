@@ -13,7 +13,7 @@ Implement themes for your Victory charts. `VictoryTheme` allows you to create a 
 
 To create your own theme, create an object with props and styles specified for any combination of the following namespaces:
 
-*Note:* The `dependentAxis` and `independentAxis` will be merged with any props and styles supplied in the `axis` namespace.
+*Note:* The `dependentAxis` and `independentAxis`, `polarDependentAxis`, and `polarIndependentAxis` will be merged with any props and styles supplied in the `axis` namespace.
 
 ```js
 {
@@ -21,10 +21,13 @@ To create your own theme, create an object with props and styles specified for a
   axis: {...props},
   dependentAxis: {...props},
   independentAxis: {...props},
+  polarDependentAxis: {...props},
+  polarIndependentAxis: {...props},
   bar: {...props},
   candlestick: {...props},
   chart: {...props},
   errorbar: {...props},
+  histogram: {...props},
   group: {...props},
   legend: {...props},
   line: {...props},

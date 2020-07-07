@@ -32,7 +32,7 @@ const blueGrey700 = "#455A64";
 const grey900 = "#212121";
 
 // Typography
-const sansSerif = "'Roboto', 'Helvetica Neue', Helvetica, sans-serif";
+const sansSerif = "'Helvetica Neue', 'Helvetica', sans-serif";
 const letterSpacing = "normal";
 const fontSize = 12;
 
@@ -70,7 +70,7 @@ const theme = {
         data: {
           fill: grey900
         },
-        labels: centeredLabelStyles
+        labels: baseLabelStyles
       }
     },
     baseProps
@@ -112,6 +112,15 @@ const theme = {
     },
     baseProps
   ),
+  polarDependentAxis: assign({
+    style: {
+      ticks: {
+        fill: "transparent",
+        size: 1,
+        stroke: "transparent"
+      }
+    }
+  }),
   bar: assign(
     {
       style: {
@@ -128,34 +137,16 @@ const theme = {
   boxplot: assign(
     {
       style: {
-        max: {
-          padding,
-          stroke: blueGrey700,
-          strokeWidth: 1
-        },
-        maxLabels: baseLabelStyles,
-        median: {
-          padding,
-          stroke: blueGrey700,
-          strokeWidth: 1
-        },
-        medianLabels: baseLabelStyles,
-        min: {
-          padding,
-          stroke: blueGrey700,
-          strokeWidth: 1
-        },
-        minLabels: baseLabelStyles,
-        q1: {
-          padding,
-          fill: blueGrey700
-        },
-        q1Labels: baseLabelStyles,
-        q3: {
-          padding,
-          fill: blueGrey700
-        },
-        q3Labels: baseLabelStyles
+        max: { padding, stroke: blueGrey700, strokeWidth: 1 },
+        maxLabels: assign({}, baseLabelStyles, { padding: 3 }),
+        median: { padding, stroke: blueGrey700, strokeWidth: 1 },
+        medianLabels: assign({}, baseLabelStyles, { padding: 3 }),
+        min: { padding, stroke: blueGrey700, strokeWidth: 1 },
+        minLabels: assign({}, baseLabelStyles, { padding: 3 }),
+        q1: { padding, fill: blueGrey700 },
+        q1Labels: assign({}, baseLabelStyles, { padding: 3 }),
+        q3: { padding, fill: blueGrey700 },
+        q3Labels: assign({}, baseLabelStyles, { padding: 3 })
       },
       boxWidth: 20
     },
@@ -167,7 +158,7 @@ const theme = {
         data: {
           stroke: blueGrey700
         },
-        labels: centeredLabelStyles
+        labels: assign({}, baseLabelStyles, { padding: 5 })
       },
       candleColors: {
         positive: "#ffffff",
@@ -187,7 +178,7 @@ const theme = {
           stroke: blueGrey700,
           strokeWidth: 2
         },
-        labels: centeredLabelStyles
+        labels: baseLabelStyles
       }
     },
     baseProps
@@ -195,6 +186,19 @@ const theme = {
   group: assign(
     {
       colorScale: colors
+    },
+    baseProps
+  ),
+  histogram: assign(
+    {
+      style: {
+        data: {
+          fill: blueGrey700,
+          stroke: grey900,
+          strokeWidth: 2
+        },
+        labels: baseLabelStyles
+      }
     },
     baseProps
   ),
@@ -220,7 +224,7 @@ const theme = {
           stroke: blueGrey700,
           strokeWidth: 2
         },
-        labels: centeredLabelStyles
+        labels: baseLabelStyles
       }
     },
     baseProps
@@ -248,7 +252,7 @@ const theme = {
           stroke: "transparent",
           strokeWidth: 0
         },
-        labels: centeredLabelStyles
+        labels: baseLabelStyles
       }
     },
     baseProps
@@ -260,16 +264,14 @@ const theme = {
     baseProps
   ),
   tooltip: {
-    style: assign({}, centeredLabelStyles, {
-      padding: 5,
-      pointerEvents: "none"
-    }),
+    style: assign({}, baseLabelStyles, { padding: 0, pointerEvents: "none" }),
     flyoutStyle: {
       stroke: grey900,
       strokeWidth: 1,
       fill: "#f0f0f0",
       pointerEvents: "none"
     },
+    flyoutPadding: 5,
     cornerRadius: 5,
     pointerLength: 10
   },
@@ -281,10 +283,7 @@ const theme = {
           stroke: "transparent",
           strokeWidth: 0
         },
-        labels: assign({}, centeredLabelStyles, {
-          padding: 5,
-          pointerEvents: "none"
-        }),
+        labels: assign({}, baseLabelStyles, { padding: 5, pointerEvents: "none" }),
         flyout: {
           stroke: grey900,
           strokeWidth: 1,
