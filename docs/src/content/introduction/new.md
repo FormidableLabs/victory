@@ -13,6 +13,99 @@ scope:
 
 Victory is actively developed. You can read about some of our newest feature here. For more information on improvements and bug fixes, check out our [changelog](https://github.com/FormidableLabs/victory/blob/main/CHANGELOG.md).
 
+## Backgrounds for Victory Label
+
+`VictoryLabel` now supports backgrounds! The [`backgroundStyle`](/docs/victory-label#backgroundstyle) prop lets you render and style a `rect` element behind your label. The size of the `rect` is determined for you based on the size and style of the label. The [`backgroundPadding`](/docs/victory-label#backgroundpadding) prop may be used to adjust the size of the background `rect`.
+
+```playground
+<VictoryBar
+  domainPadding={20}
+  data={[
+    { x: 1, y: 3, label: "first label" },
+    { x: 2, y: 4, label: "second label" },
+    { x: 3, y: 2, label: "third and final label" },
+  ]}
+  labelComponent={
+    <VictoryLabel
+      dy={-20}
+      backgroundStyle={{ fill: "tomato", opacity: 0.6 }}
+      backgroundPadding={{ bottom: 5, top: 5 }}
+    />
+  }
+/>
+```
+Label backgrounds also work with multi-line and inline labels:
+
+```playground
+<VictoryBar
+  domainPadding={20}
+  data={[
+    { x: 1, y: 3, label: ["first", "label"] },
+    { x: 2, y: 4, label: ["second", "label"] },
+    { x: 3, y: 2, label: ["third", "and final", "label"] }
+  ]}
+  labelComponent={
+    <VictoryLabel
+      backgroundStyle={[{ fill: "orange" }, { fill: "gold" }]}
+      backgroundPadding={{ left: 5, right: 5 }}
+    />
+  }
+/>
+```
+
+Label backgrounds are also compatible with tooltips!
+
+```playground
+<VictoryBar polar
+  data={[
+    { x: 1, y: 3, label: ["first", "label"] },
+    { x: 2, y: 4, label: ["second", "label"] },
+    { x: 3, y: 2, label: ["third", "and final", "label"] }
+  ]}
+  style={{ data: { width: 40, fill: "tomato" } }}
+  labelComponent={
+    <VictoryTooltip active
+      labelPlacement="perpendicular"
+      pointerLength={30}
+      pointerWidth={0}
+      flyoutPadding={0}
+      labelComponent={
+        <VictoryLabel
+          verticalAnchor="end"
+          dy={8}
+          backgroundStyle={{ fill: "white" }}
+          backgroundPadding={8}
+        />
+      }
+    />
+  }
+/>
+```
+
+
+
+
+## Better label placement options for VictoryPie
+
+We added a [`labelPlacement`](/docs/victory-pie#labelplacement) prop to `VictoryPie` that makes it easier to match label angles to the angles of their corresponding slices. Placement options are "vertical", "parallel", and "perpendicular". This prop may also be given as a function. It works with tooltips, too!
+
+```playground
+<VictoryPie
+  colorScale="warm"
+  radius={120}
+  style={{ labels: { padding: 5, fontSize: 20 } }}
+  data={[
+    { x: 1, y: 3, placement: "vertical" },
+    { x: 2, y: 4, placement: "parallel" },
+    { x: 3, y: 2, placement: "perpendicular" },
+  ]}
+  labels={({ datum }) => `${datum.placement}\nlabel`}
+  labelPlacement={({ datum }) => datum.placement}
+  labelPosition="startAngle"
+  labelComponent={<VictoryTooltip active />}
+/>
+```
+
 ## VictoryHistogram
 
 We've added a new charting component to allow you to easily create histogram charts. With [`VictoryHistogram`](/docs/victory-histogram) you can create beautiful and interactive histograms.
@@ -161,7 +254,7 @@ As with other components Victory renders, you can add props directly to `Backgro
 const CustomBackground = props => {
   return (
     <image
-      href={"https://i.picsum.photos/id/906/525/300.jpg"}
+      href={"https://picsum.photos/id/906/525/300.jpg"}
       {...props}
     />
   );
