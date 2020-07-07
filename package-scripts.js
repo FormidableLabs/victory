@@ -42,7 +42,6 @@ module.exports = {
         "lint.test",
         "lint.stories",
         "lint.demo",
-        "lint.docs",
         "lint.src"
       )
     },
