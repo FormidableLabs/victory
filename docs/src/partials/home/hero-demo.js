@@ -105,8 +105,13 @@ const VoronoiLabel = (props) => {
   return (
     <g>
       <Point x={x} y={y} size={6} style={{ fill: "white" }} />
-      <rect x={x - 30} y={y - 30} width={60} height={20} fill={importedTheme.color.deepBrown} />
-      <VictoryLabel {...props} style={labelStyles} dy={-20} />
+      <VictoryLabel
+        {...props}
+        style={labelStyles}
+        dy={-30}
+        backgroundStyle={{ fill: importedTheme.color.deepBrown }}
+        backgroundPadding={3}
+      />
     </g>
   );
 };
@@ -145,7 +150,8 @@ const HeroDemo = () => {
             boxSizing: "border-box",
             display: "flex",
             justifyContent: "center",
-            paddingTop: "2rem"
+            paddingTop: "2rem",
+            cursor: "crosshair"
           }
         }}
         containerComponent={

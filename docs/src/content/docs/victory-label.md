@@ -22,6 +22,80 @@ The `active` prop specifies whether the label is active or not. The `active` pro
 
 The `angle` prop specifies the angle to rotate the text around its anchor point.
 
+```playground
+<VictoryScatter
+  domain={[-10, 10]}
+  data={[{ x: 0, y: 0 }]}
+  labels="This is a label"
+  labelComponent={
+    <VictoryLabel angle={-45} textAnchor="end"/>
+  }
+/>
+```
+
+## backgroundComponent
+
+`type: element`
+
+The `backgroundComponent` prop takes a component instance which will be used to create backgrounds for labels. The new element created from the passed `backgroundComponent` will be supplied with the following properties: x, y, height, width, style, and transform. Any of these props may be overridden by passing in props to the supplied component, or modified or ignored within the custom component itself. If `backgroundComponent` is omitted, a default [Rect][] component will be created with props described above. `backgroundComponent` is only rendered when a `backgroundStyle` prop is added to `VictoryLabel`.
+
+_examples:_ `backgroundComponent={<Rect height={50}/>}`
+
+_default:_ `<Rect/>`
+
+## backgroundPadding
+
+`type: number || array || { top: number, bottom: number, left: number, right: number }`
+
+The `backgroundPadding` prop adds padding around background elements. This prop may be given as a number or an object with values for "top", "bottom", "left", and "right". In the case of multi-line, multi-background labels, this prop may be given as an array.
+
+```playground
+<VictoryScatter
+  domain={[-10, 10]}
+  data={[{ x: 0, y: 0 }]}
+  labels={() => ["This is a", "multi-line", "label"]}
+  labelComponent={
+    <VictoryLabel
+      dy={-20}
+      textAnchor="start"
+      backgroundPadding={[
+      	3,
+      	{ left: 20, right: 20 },
+        { left: 20}
+      ]}
+      backgroundStyle={[
+        { fill: "red", opacity: 0.2 },
+        { fill: "green", opacity: 0.2 },
+        { fill: "blue", opacity: 0.2 }
+      ]}
+    />
+  }
+/>
+```
+
+## backgroundStyle
+
+`type: object || array`
+
+The `backgroundStyle` prop defines a set of SVG style properties that will be applied to the rendered
+background element(s). This prop should be given as an object, or array of objects. When this prop is
+given as an array of objects _and_ there are multi-line labels, multiple background elements will be rendered, and styled individually. When this prop is given as an object, a single background element will be rendered for the entire label.
+
+```playground
+<VictoryScatter
+  domain={[-10, 10]}
+  data={[{ x: 0, y: 0 }]}
+  labels={() => ["This is a", "multi-line", "label"]}
+  labelComponent={
+    <VictoryLabel
+      backgroundStyle={{ fill: "pink" }}
+      backgroundPadding={3}
+    />
+  }
+/>
+```
+
+
 ## capHeight
 
 `type: string || number || function`
@@ -68,11 +142,43 @@ _default:_ `direction="inherit"`
 
 The `dx` prop defines a horizontal shift from the `x` coordinate.
 
+```playground
+<VictoryScatter
+  domain={[-10, 10]}
+  data={[{ x: 0, y: 0 }]}
+  labels={() => ["This is a", "multi-line", "label"]}
+  style={{ labels: { padding: 0 } }}
+  labelComponent={
+    <VictoryLabel
+      dx={20}
+      textAnchor="start"
+      verticalAnchor="middle"
+    />
+  }
+/>
+```
+
 ## dy
 
 `type: string || number || function`
 
 The `dy` prop defines a vertical shift from the `y` coordinate. This prop is affected by `capHeight`, `lineHeight`, and `verticalAnchor`, and the number of lines of text that make up the label.
+
+```playground
+<VictoryScatter
+  domain={[-10, 10]}
+  data={[{ x: 0, y: 0 }]}
+  labels={() => ["This is a", "multi-line", "label"]}
+  style={{ labels: { padding: 0 } }}
+  labelComponent={
+    <VictoryLabel
+      dy={20}
+      textAnchor="end"
+      verticalAnchor="start"
+    />
+  }
+/>
+```
 
 ## events
 
@@ -81,6 +187,14 @@ The `dy` prop defines a vertical shift from the `y` coordinate. This prop is aff
 The `events` prop attaches arbitrary event handlers to the label component. This prop should be given as an object of event names and corresponding event handlers. When events are provided via Victory's event system, event handlers will be called with the event, the props of the component it is attached to, and an `eventKey`.
 
 _example:_ `events={{onClick: (evt) => alert("x: " + evt.clientX)}}`
+
+## groupComponent
+
+`type: element`
+
+The `groupComponent` prop takes a component instance which will be used to create group elements when `VictoryLabel` renders both labels and backgrounds.
+
+_default:_ `<g/>`
 
 ## height
 
@@ -108,6 +222,24 @@ When the `text` property contains an array of strings, the `inline` property let
 
 _default:_ `false`
 
+```playground
+<VictoryScatter
+  domain={[-10, 10]}
+  data={[{ x: 0, y: 0 }]}
+  labels={() => ["This is a", "multi-line", "label"]}
+  labelComponent={
+    <VictoryLabel
+      inline
+      style={[
+        { fill: "red" },
+        { fill: "green" },
+        { fill: "blue" }
+      ]}
+    />
+  }
+/>
+```
+
 ## labelPlacement
 
 `type: "parallel" || "perpendicular" || "vertical"`
@@ -116,9 +248,27 @@ The `labelPlacement` prop is used to specify the placement of labels relative to
 
 ## lineHeight
 
-`type: string || number || function`
+`type: string || number || function || array`
 
 The `lineHeight` prop defines how much space a single line of text should take up. Note that SVG has no notion of line-height, so the positioning may differ slightly from what you would expect with CSS, but the result is similar: a roughly equal amount of extra space is distributed above and below the line of text. This prop should be given as a number of ems.
+
+```playground
+<VictoryScatter
+  domain={[-10, 10]}
+  data={[{ x: 0, y: 0 }]}
+  labels={() => ["This is a", "multi-line", "label"]}
+  labelComponent={
+    <VictoryLabel
+      lineHeight={[1, 1, 3]}
+      style={[
+        { fill: "red" },
+        { fill: "green" },
+        { fill: "blue" }
+      ]}
+    />
+  }
+/>
+```
 
 ## origin
 
@@ -146,12 +296,35 @@ Victory components can pass a `scale` prop to their label component. This can be
 
 ## style
 
-`type: object`
+`type: object || array`
 
 The `style` prop defines a set of SVG style properties that will be applied to the rendered
 `<text/>` element. This prop should be given as an object, or array of objects. When this prop is
 given as an array of objects, each style object in the array will be applied to the corresponding
-`<tspan/>` in multi-line labels.
+`<tspan/>` in multi-line labels. When this prop is given as an array with fewer elements than there are `<tspan/>` elements, the _first_ element of the style array will be applied to extra lines.
+
+```playground
+<VictoryScatter
+  domain={[-10, 10]}
+  data={[{ x: 0, y: 0 }]}
+  labels={() => ["This is a", "multi-line", "label"]}
+  labelComponent={
+    <VictoryLabel
+      style={[
+        { fill: "red", fontSize: 25 },
+        { fill: "green", fontFamily: "monospace" }
+      ]}
+    />
+  }
+/>
+```
+
+## tabIndex
+
+`type: number || function`
+
+The `tabIndex` prop specifies the `tabIndex` that will be applied to the rendered label. This prop may be given as a number or as a function that returns a number.
+
 
 ## text
 
@@ -164,11 +337,37 @@ as an array, separate `<tspan/>` elements will be created for each element in th
 
 _examples:_ `text={(datum) => "x: " + datum.x}`, `text="Apples\n(green)"`, `text={["first line", "second line"]}`
 
+```playground
+<VictoryScatter
+  domain={[-10, 10]}
+  data={[{ x: 0, y: 0 }]}
+  labels={true}
+  labelComponent={
+    <VictoryLabel
+      text={({ datum }) => [`x: ${datum.x}`, `y: ${datum.y}`]}
+    />
+  }
+/>
+```
+
 ## textAnchor
 
-`type: "start" || "middle" || "end" || "inherit"`
+`type: "start" || "middle" || "end" || "inherit" || function`
 
-The `textAnchor` prop defines how the text is horizontally positioned relative to the given `x` and `y` coordinates. Options are "start", "middle", "end", and "inherit".
+The `textAnchor` prop defines how the text is horizontally positioned relative to the given `x` and `y` coordinates. Options are "start", "middle", "end", and "inherit". This prop may also be given as a function that returns one of these options.
+
+```playground
+<VictoryScatter
+  domain={[-10, 10]}
+  data={[{ x: 0, y: 0 }]}
+  labels={() => ["This is a", "multi-line", "label"]}
+  labelComponent={
+    <VictoryLabel
+      textAnchor={({ text }) => text.length > 1 ? "start" : "middle"}
+    />
+  }
+/>
+```
 
 ## transform
 
@@ -176,11 +375,37 @@ The `textAnchor` prop defines how the text is horizontally positioned relative t
 
 The `transform` prop applies a transform to the rendered `<text>` element. This prop may be supplied as a string or an object containing transform definitions.
 
+```playground
+<VictoryScatter
+  domain={[-10, 10]}
+  data={[{ x: 0, y: 0 }]}
+  labels={() => ["This is a", "multi-line", "label"]}
+  labelComponent={
+    <VictoryLabel
+      transform="skewX(30)"
+    />
+  }
+/>
+```
+
 ## verticalAnchor
 
 `type: "start" || "middle" || "end"`
 
-The `verticalAnchor` prop defines how the text is vertically positioned relative to the given `x` and `y` coordinates. Options are "start", "middle" and "end".
+The `verticalAnchor` prop defines how the text is vertically positioned relative to the given `x` and `y` coordinates. Options are "start", "middle" and "end". This prop may also be given as a function that returns one of these options.
+
+```playground
+<VictoryScatter
+  domain={[-10, 10]}
+  data={[{ x: 0, y: 0 }]}
+  labels={() => ["This is a", "multi-line", "label"]}
+  labelComponent={
+    <VictoryLabel
+      verticalAnchor={({ text }) => text.length > 1 ? "start" : "middle"}
+    />
+  }
+/>
+```
 
 ## width
 
@@ -199,3 +424,5 @@ The `x` prop defines the x coordinate to use as a basis for positioning the labe
 `type: number`
 
 The `y` prop defines the y coordinate to use as a basis for positioning the label element.
+
+[Rect]: /docs/victory-primitives#rect

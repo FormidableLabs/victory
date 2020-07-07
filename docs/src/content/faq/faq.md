@@ -8,7 +8,7 @@ slug: faq
 ---
 # Frequently Asked Questions (FAQ)
 
-Thanks for trying Victory! The FAQs below are based on issues and questions from our [support channel](https://spectrum.chat/victory). You can find more examples in [our gallery](/gallery). Can't find what you're looking for? Help us improve these docs by [opening an issue](https://github.com/FormidableLabs/victory-docs/issues/new).
+Thanks for trying Victory! The FAQs below are based on issues and questions from our [support channel](https://spectrum.chat/victory). You can find more examples in [our gallery](/gallery). Can't find what you're looking for? Help us improve these docs by [opening an issue](https://github.com/FormidableLabs/victory/issues/new) with the "docs" tag, or by making a pull request.
 
 ## Styles
 
@@ -282,25 +282,9 @@ Long axis labels can be problematic. There are several ways to address the issue
     <VictoryAxis/>
     <VictoryLine/>
   </VictoryChart>
-
-  <VictoryChart>
-    <VictoryLabel text="overflowing labels with VictoryPortal" x={225} y={30} textAnchor="middle"/>
-    <VictoryAxis dependentAxis
-      tickLabelComponent={<VictoryPortal><VictoryLabel/></VictoryPortal>}
-      tickFormat={[
-        "first label",
-        "second label",
-        "third label",
-        "forth label",
-        "fifth label"
-      ]}
-    />
-    <VictoryAxis/>
-    <VictoryLine/>
-  </VictoryChart>
-
 </div>
 ```
+
 
 ### My axis labels are showing very small numbers. How do I fix this?
 

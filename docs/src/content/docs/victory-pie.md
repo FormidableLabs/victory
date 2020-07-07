@@ -250,17 +250,41 @@ _default:_ `<VictoryLabel/>`
 />
 ```
 
+## labelPlacement
+
+`type "parallel" || "perpendicular" || "vertical" || function`
+
+The `labelPlacement` prop specifies the angular placement of each label relative to the angle of its corresponding slice. This prop should be given as "parallel", "perpendicular", "vertical", or as a function that returns one of these values. When this prop is not given, the label will be placed vertically.
+
+```playground
+<VictoryPie
+  data={sampleData}
+  labels={({ datum }) => `y: ${datum.y}`}
+  labelPosition={({ index }) => index
+    ? "centroid"
+    : "startAngle"
+  }
+  labelPlacement={({ index }) => index
+    ? "parallel"
+    : "vertical"
+  }
+/>
+```
+
 ## labelPosition
 
-`type "startAngle" || "endAngle" || "centroid"
+`type "startAngle" || "endAngle" || "centroid" || function`
 
-The `labelPosition` prop specifies the angular position of each label relative to its corresponding slice. When this prop is not given, the label will be positioned at the centroid of each slice.
+The `labelPosition` prop specifies the position of each label relative to its corresponding slice. This prop should be given as "startAngle", "endAngle", "centroid", or as a function that returns one of these values. When this prop is not given, the label will be positioned at the centroid of each slice.
 
 ```playground
 <VictoryPie
   data={sampleData}
   labels={({ datum }) => datum.y}
-  labelPosition="endAngle"
+  labelPosition={({ index }) => index
+    ? "centroid"
+    : "startAngle"
+  }
 />
 ```
 
