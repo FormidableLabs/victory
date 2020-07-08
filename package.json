@@ -92,7 +92,7 @@
     "karma-ie-launcher": "^1.0.0",
     "karma-mocha": "^1.1.1",
     "karma-safari-launcher": "^1.0.0",
-    "karma-sauce-launcher": "^1.1.0",
+    "karma-sauce-launcher": "^4.1.5",
     "karma-spec-reporter": "0.0.26",
     "karma-webpack": "^2.0.4",
     "lerna": "^2.11.0",
