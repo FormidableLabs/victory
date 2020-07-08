@@ -1,6 +1,6 @@
 {
   "name": "victory-area",
-  "version": "35.0.2",
+  "version": "35.0.3",
   "description": "Area Component for Victory",
   "keywords": [
     "data visualization",
@@ -22,7 +22,7 @@
     "d3-shape": "^1.2.0",
     "lodash": "^4.17.15",
     "prop-types": "^15.5.8",
-    "victory-core": "^35.0.2"
+    "victory-core": "^35.0.3"
   },
   "scripts": {
     "version": "nps build-libs && nps build-dists"
