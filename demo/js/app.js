@@ -23,6 +23,7 @@ import VoronoiContainerDemo from "./components/victory-voronoi-container-demo";
 import CursorContainerDemo from "./components/victory-cursor-container-demo";
 import CreateContainerDemo from "./components/create-container-demo";
 import BrushContainerDemo from "./components/victory-brush-container-demo";
+import AccessibilityDemo from "./components/victory-accessibility-demo";
 import AnimationDemo from "./components/animation-demo";
 import SelectionDemo from "./components/selection-demo";
 import PolarDemo from "./components/victory-polar-chart-demo";
@@ -57,6 +58,7 @@ const MAP = {
   "/voronoi-container": { component: VoronoiContainerDemo, name: "VoronoiContainerDemo" },
   "/cursor-container": { component: CursorContainerDemo, name: "CursorContainerDemo" },
   "/brush-container": { component: BrushContainerDemo, name: "BrushContainerDemo" },
+  "/accessibility": { component: AccessibilityDemo, name: "AccessibilityDemo" },
   "/animation": { component: AnimationDemo, name: "AnimationDemo" },
   "/selection-container": { component: SelectionDemo, name: "SelectionDemo" },
   "/create-container": { component: CreateContainerDemo, name: "CreateContainerDemo" },

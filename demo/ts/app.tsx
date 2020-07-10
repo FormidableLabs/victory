@@ -2,6 +2,7 @@ import * as React from "react";
 import * as ReactDOM from "react-dom";
 import { keys } from "lodash";
 
+import AccessibilityDemo from "./components/victory-accessibility-demo";
 import AreaDemo from "./components/victory-area-demo";
 import AxisDemo from "./components/victory-axis-demo";
 import BarDemo from "./components/victory-bar-demo";
@@ -35,6 +36,7 @@ import VoronoiDemo from "./components/victory-voronoi-demo";
 import ZoomContainerDemo from "./components/victory-zoom-container-demo";
 
 const MAP = {
+  "/accessibility": { component: AccessibilityDemo, name: "AccessibilityDemo"},
   "/area": { component: AreaDemo, name: "AreaDemo" },
   "/axis": { component: AxisDemo, name: "AxisDemo" },
   "/bar": { component: BarDemo, name: "BarDemo" },

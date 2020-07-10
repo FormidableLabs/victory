@@ -190,8 +190,8 @@ class VictoryPie extends React.Component {
     standalone: true,
     dataComponent: <Slice />,
     labelComponent: <VictoryLabel />,
-    containerComponent: <VictoryContainer />,
-    groupComponent: <g />,
+    containerComponent: <VictoryContainer role="group"/>,
+    groupComponent: <g aria-describedby="pie" />,
     sortOrder: "ascending",
     theme: VictoryTheme.grayscale
   };
