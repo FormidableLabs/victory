@@ -43,6 +43,9 @@ const evaluateProps = (props) => {
   const padAngle = Helpers.evaluateProp(props.padAngle, props);
   const sliceStartAngle = Helpers.evaluateProp(props.sliceStartAngle, props);
   const sliceEndAngle = Helpers.evaluateProp(props.sliceEndAngle, props);
+  const tabIndex = Helpers.evaluateProp(props.tabIndex, props);
+  const ariaLabel = Helpers.evaluateProp(props.ariaLabel, props);
+  const ariaDescribedBy = Helpers.evaluateProp(props.ariaDescribedBy, props);
 
   return assign({}, props, {
     style,
@@ -52,7 +55,10 @@ const evaluateProps = (props) => {
     cornerRadius,
     padAngle,
     sliceStartAngle,
-    sliceEndAngle
+    sliceEndAngle,
+    tabIndex,
+    ariaLabel,
+    ariaDescribedBy
   });
 };
 
@@ -70,7 +76,10 @@ const Slice = (props) => {
     className: props.className,
     role: props.role,
     shapeRendering: props.shapeRendering,
-    clipPath: props.clipPath
+    clipPath: props.clipPath,
+    tabIndex: props.tabIndex,
+    "aria-label": props.ariaLabel,
+    "aria-describedby": props.ariaDescribedBy
   });
 };
 

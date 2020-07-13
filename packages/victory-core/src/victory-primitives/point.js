@@ -35,6 +35,8 @@ const evaluateProps = (props) => {
    * `style`
    * `symbol`
    * `tabIndex`
+   * `ariaLabel`
+   * `ariaDescribedBy`
    */
   const desc = Helpers.evaluateProp(props.desc, props);
   const id = Helpers.evaluateProp(props.id, props);
@@ -42,8 +44,10 @@ const evaluateProps = (props) => {
   const style = Helpers.evaluateStyle(props.style, props);
   const symbol = Helpers.evaluateProp(props.symbol, props);
   const tabIndex = Helpers.evaluateProp(props.tabIndex, props);
+  const ariaLabel = Helpers.evaluateProp(props.ariaLabel, props);
+  const ariaDescribedBy = Helpers.evaluateProp(props.ariaDescribedBy, props);
 
-  return assign({}, props, { desc, id, size, style, symbol, tabIndex });
+  return assign({}, props, { desc, id, size, style, symbol, tabIndex, ariaLabel, ariaDescribedBy });
 };
 
 const Point = (props) => {
@@ -59,7 +63,9 @@ const Point = (props) => {
     shapeRendering: props.shapeRendering,
     className: props.className,
     transform: props.transform,
-    clipPath: props.clipPath
+    clipPath: props.clipPath,
+    "aria-label": props.ariaLabel,
+    "aria-describedby": props.ariaDescribedBy
   });
 };
 

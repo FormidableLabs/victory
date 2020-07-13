@@ -176,7 +176,8 @@ class VictoryPie extends React.Component {
       CustomPropTypes.allOfType([CustomPropTypes.integer, CustomPropTypes.nonNegative]),
       PropTypes.string,
       PropTypes.arrayOf(PropTypes.string)
-    ])
+    ]),
+    role: PropTypes.string
   };
 
   static defaultProps = {
@@ -190,7 +191,7 @@ class VictoryPie extends React.Component {
     standalone: true,
     dataComponent: <Slice />,
     labelComponent: <VictoryLabel />,
-    containerComponent: <VictoryContainer role="group"/>,
+    containerComponent: <VictoryContainer />,
     groupComponent: <g aria-describedby="pie" />,
     sortOrder: "ascending",
     theme: VictoryTheme.grayscale
