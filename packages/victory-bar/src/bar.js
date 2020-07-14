@@ -95,8 +95,10 @@ const evaluateProps = (props) => {
   const desc = Helpers.evaluateProp(props.desc, props);
   const id = Helpers.evaluateProp(props.id, props);
   const tabIndex = Helpers.evaluateProp(props.tabIndex, props);
+  const ariaLabel = Helpers.evaluateProp(props.ariaLabel, props);
+  const ariaDescribedBy = Helpers.evaluateProp(props.ariaDescribedBy, props);
 
-  return assign({}, props, { style, barWidth, cornerRadius, desc, id, tabIndex });
+  return assign({}, props, { style, barWidth, cornerRadius, desc, id, tabIndex, ariaLabel, ariaDescribedBy });
 };
 
 const Bar = (props) => {
@@ -118,7 +120,9 @@ const Bar = (props) => {
     shapeRendering: props.shapeRendering,
     clipPath: props.clipPath,
     desc: props.desc,
-    tabIndex: props.tabIndex
+    tabIndex: props.tabIndex,
+    "aria-label": props.ariaLabel,
+    "aria-describedby": props.ariaDescribedBy
   });
 };
 

@@ -72,7 +72,7 @@ class VictoryBar extends React.Component {
     containerComponent: <VictoryContainer />,
     data: defaultData,
     dataComponent: <Bar />,
-    groupComponent: <g role="row"/>,
+    groupComponent: <g role="row" />,
     labelComponent: <VictoryLabel />,
     samples: 50,
     sortOrder: "ascending",

@@ -115,7 +115,10 @@ export default class VictoryClipContainer extends React.Component {
         x: translateX - left,
         y: translateY - top,
         width: Math.max(clipWidth + left + right, 0),
-        height: Math.max(clipHeight + top + bottom, 0)
+        height: Math.max(clipHeight + top + bottom, 0),
+        tabindex: props.tabIndex,
+        "aria-label": props.ariaLabel,
+        "aria-describedby": props.ariaDescribedBy
       };
       child = React.cloneElement(rectComponent, rectProps);
     }
