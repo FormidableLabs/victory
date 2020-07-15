@@ -159,7 +159,7 @@ export default class App extends React.Component {
                 role="group"
                 desc="Percentage of cats, dogs and birds."
                 tabIndex="0"
-                label="Pie Chart"
+                ariaLabel="Pie Chart"
               />
             }
             dataComponent={<Slice tabIndex="0" ariaLabel={({index}) => pieDataAriaLabels[index]} ariaDescribedBy="victory-container-1-desc" />}
@@ -183,7 +183,7 @@ export default class App extends React.Component {
                 desc="Temperature in Boston over time."
                 tabIndex="0"
                 role="group"
-                label="Scatter chart"
+                ariaLabel="Scatter chart"
               />
             }
           >
@@ -215,7 +215,7 @@ export default class App extends React.Component {
                 responsive={false}
                 desc="Temperature in Boston over time."
                 tabIndex="0"
-                label="Bar chart"
+                ariaLabel="Bar chart"
                 role="group"
               />
             }
@@ -241,7 +241,7 @@ export default class App extends React.Component {
                 responsive={false}
                 desc="Number of beverages drank in 2019 in USA, UK, and Canada per household (in hundreds)"
                 tabIndex="0"
-                label="Stack chart"
+                ariaLabel="Stack chart"
                 role="group"
               />
             }
@@ -293,7 +293,7 @@ export default class App extends React.Component {
                 responsive={false}
                 desc="Number of endangered species in Africa (in thousands)"
                 tabIndex="0"
-                label="Area chart"
+                ariaLabel="Area chart"
                 role="group"
               />
             }
@@ -316,7 +316,7 @@ export default class App extends React.Component {
                 role="group"
                 desc="Ice cream sales per month in 2019"
                 tabIndex="0"
-                label="Animals"
+                ariaLabel="Line chart"
                 theme={VictoryTheme.material}
               />
             }

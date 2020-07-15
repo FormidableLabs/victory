@@ -198,19 +198,19 @@ class App extends React.Component {
       <div className="demo">
         <h1>VictoryChart</h1>
         <div style={containerStyle}>
-          <VictoryChart style={chartStyle} polar role="table">
+          <VictoryChart style={chartStyle}>
             <VictoryScatter />
           </VictoryChart>
 
-          <VictoryChart style={assign({}, chartStyle, bgStyle)} role="table">
+          <VictoryChart style={assign({}, chartStyle, bgStyle)}>
             <VictoryScatter data={[{ x: -3, y: -3 }, { x: -2, y: 2 }, { x: 1, y: -1 }]} />
           </VictoryChart>
 
-          <VictoryChart style={chartStyle} theme={dependentAxisTheme} role="table">
+          <VictoryChart style={chartStyle} theme={dependentAxisTheme}>
             <VictoryScatter />
           </VictoryChart>
 
-          <VictoryChart style={chartStyle} domainPadding={{ x: [0, 20] }} role="table">
+          <VictoryChart style={chartStyle} domainPadding={{ x: [0, 20] }}>
             <VictoryAxis dependentAxis style={axisStyle} />
             <VictoryAxis style={axisStyle} tickCount={6} />
             <VictoryBar
@@ -228,7 +228,7 @@ class App extends React.Component {
             />
           </VictoryChart>
 
-          <VictoryChart style={chartStyle} role="table">
+          <VictoryChart style={chartStyle}>
             <VictoryAxis tickFormat={(t, i, ts) => `${t}s ${i} ${ts[0]}`} />
             <VictoryBar
               groupComponent={<VictoryClipContainer />}
@@ -237,7 +237,7 @@ class App extends React.Component {
             />
           </VictoryChart>
 
-          <VictoryChart style={chartStyle} role="table">
+          <VictoryChart style={chartStyle}>
             <VictoryGroup
               labels={["a", "b", "c"]}
               horizontal

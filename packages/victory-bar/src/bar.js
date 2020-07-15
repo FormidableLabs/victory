@@ -156,7 +156,7 @@ Bar.propTypes = {
 Bar.defaultProps = {
   defaultBarWidth: 8,
   pathComponent: <Path />,
-  role: "cell",
+  role: "presentation",
   shapeRendering: "auto"
 };
 
