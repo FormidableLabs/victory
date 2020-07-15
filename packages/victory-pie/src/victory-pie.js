@@ -176,8 +176,7 @@ class VictoryPie extends React.Component {
       CustomPropTypes.allOfType([CustomPropTypes.integer, CustomPropTypes.nonNegative]),
       PropTypes.string,
       PropTypes.arrayOf(PropTypes.string)
-    ]),
-    role: PropTypes.string
+    ])
   };
 
   static defaultProps = {

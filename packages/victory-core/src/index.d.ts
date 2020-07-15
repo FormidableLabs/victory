@@ -230,6 +230,7 @@ export class VictoryLabel extends React.Component<VictoryLabelProps, any> {}
 // #region Victory Container
 
 export interface VictoryContainerProps {
+  ariaLabel?: string;
   children?: React.ReactElement | React.ReactElement[];
   className?: string;
   containerId?: number | string;
@@ -243,8 +244,9 @@ export interface VictoryContainerProps {
   portalComponent?: React.ReactElement;
   portalZIndex?: number;
   responsive?: boolean;
+  role?: string;
   style?: React.CSSProperties;
-  tabIndex?: number;
+  tabIndex?: string;
   theme?: VictoryThemeDefinition;
   title?: string;
   width?: number;

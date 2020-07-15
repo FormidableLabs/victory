@@ -18,6 +18,8 @@ export interface VictoryBarProps
     VictoryDatableProps,
     VictoryMultiLabelableProps {
   alignment?: VictoryBarAlignmentType;
+  ariaLabel?: string;
+  ariaDescribedBy?: string;
   barRatio?: number;
   barWidth?: NumberOrCallback;
   cornerRadius?:
@@ -34,6 +36,7 @@ export interface VictoryBarProps
   eventKey?: StringOrNumberOrCallback;
   horizontal?: boolean;
   style?: VictoryStyleInterface;
+  tabIndex: string;
 }
 
 /**

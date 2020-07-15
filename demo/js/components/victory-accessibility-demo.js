@@ -16,27 +16,12 @@ import Slice from "Packages/victory-pie/src/slice";
 import Bar from "Packages/victory-bar/src/bar";
 
 export default class App extends React.Component {
-  setStateInterval = undefined;
 
   constructor(props) {
     super(props);
-    this.state = {
-    };
-  }
-
-  componentDidMount() {
-    this.setStateInterval = window.setInterval(() => {
-      this.setState({
-      });
-    }, 5000);
-  }
-
-  componentWillUnmount() {
-    window.clearInterval(this.setStateInterval);
   }
 
   render() {
-    // const parentStyle = { border: "1px solid #ccc", margin: "2%", maxWidth: "40%" };
 
     const containerStyle = {
       display: "flex",
@@ -166,9 +151,9 @@ export default class App extends React.Component {
             groupComponent={
               <g aria-label="Cats, dogs and birds" aria-describedby="victory-container-1-desc" />
             }
-            height="250"
-            width="350"
             data={pieData}
+            width={350}
+            height={350}
           />
         </div>
 
@@ -331,25 +316,6 @@ export default class App extends React.Component {
           />
         </div>
       </React.Fragment>
-    );
-  }
-}
-
-class ChartWrap extends React.Component {
-  static defaultProps = {
-    height: 250,
-    width: 350
-  };
-  // renders both a standalone chart, and a version wrapped in VictoryChart,
-  // to test both cases at once
-  render() {
-    const parentStyle = { border: "1px solid #ccc", margin: "2%", maxWidth: "40%" };
-
-    return (
-      <div style={parentStyle}>
-        {React.cloneElement(this.props.children)}
-        <VictoryChart {...this.props}>{this.props.children}</VictoryChart>
-      </div>
     );
   }
 }

@@ -18,6 +18,8 @@ export type VictorySliceLabelPositionType = "startAngle" | "centroid" | "endAngl
 export type VictorySliceTTargetType = "data" | "labels" | "parent";
 
 export interface SliceProps extends VictoryCommonProps {
+  ariaLabel?: string;
+  ariaDescribedBy?: string;
   cornerRadius?: SliceNumberOrCallback<SliceProps, "cornerRadius">;
   datum?: any;
   innerRadius?: NumberOrCallback;
@@ -33,6 +35,7 @@ export interface SliceProps extends VictoryCommonProps {
   };
   sliceEndAngle?: SliceNumberOrCallback<SliceProps, "sliceEndAngle">;
   sliceStartAngle?: SliceNumberOrCallback<SliceProps, "sliceStartAngle">;
+  tabIndex?: string;
 }
 
 export class Slice extends React.Component<SliceProps, any> {}

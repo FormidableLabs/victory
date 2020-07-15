@@ -198,7 +198,7 @@ class App extends React.Component {
       <div className="demo">
         <h1>VictoryChart</h1>
         <div style={containerStyle}>
-          <VictoryChart style={chartStyle}>
+          <VictoryChart style={chartStyle} polar>
             <VictoryScatter />
           </VictoryChart>
 

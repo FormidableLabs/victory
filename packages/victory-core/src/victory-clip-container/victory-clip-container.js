@@ -11,6 +11,8 @@ export default class VictoryClipContainer extends React.Component {
   static displayName = "VictoryClipContainer";
   static role = "container";
   static propTypes = {
+    ariaLabel: PropTypes.string,
+    ariaDescribedBy: PropTypes.string,
     children: PropTypes.oneOfType([PropTypes.arrayOf(PropTypes.node), PropTypes.node]),
     circleComponent: PropTypes.element,
     className: PropTypes.string,
@@ -30,6 +32,7 @@ export default class VictoryClipContainer extends React.Component {
     polar: PropTypes.bool,
     radius: CustomPropTypes.nonNegative,
     style: PropTypes.object,
+    tabIndex: PropTypes.number,
     transform: PropTypes.string,
     translateX: PropTypes.number,
     translateY: PropTypes.number
@@ -98,7 +101,10 @@ export default class VictoryClipContainer extends React.Component {
       translateY = 0,
       circleComponent,
       rectComponent,
-      clipPathComponent
+      clipPathComponent,
+      tabIndex,
+      ariaLabel,
+      ariaDescribedBy
     } = props;
     const { top, bottom, left, right } = Helpers.getPadding({ padding: props.clipPadding });
     let child;
@@ -116,9 +122,9 @@ export default class VictoryClipContainer extends React.Component {
         y: translateY - top,
         width: Math.max(clipWidth + left + right, 0),
         height: Math.max(clipHeight + top + bottom, 0),
-        tabindex: props.tabIndex,
-        "aria-label": props.ariaLabel,
-        "aria-describedby": props.ariaDescribedBy
+        tabindex: tabIndex,
+        "aria-label": ariaLabel,
+        "aria-describedby": ariaDescribedBy
       };
       child = React.cloneElement(rectComponent, rectProps);
     }
