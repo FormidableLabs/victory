@@ -1,5 +1,9 @@
 # Victory Changelog
 
+## 35.0.4 (2020-07-15)
+
+- [#1645](https://github.com/FormidableLabs/victory/pull/1645) - Fix bug in text size approximation. Thanks @nburt!
+
 ## 35.0.3 (2020-07-07)
 
 - [#1640](https://github.com/FormidableLabs/victory/pull/1640) - Update package readmes with new docs links
