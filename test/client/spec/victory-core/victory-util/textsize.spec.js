@@ -72,6 +72,12 @@ describe("victory-util/textsize", () => {
         TextSize.approximateTextSize("ABC\nDEFGH\nIJK", { fontSize: 12 }).width.toFixed(2)
       ).to.eql("41.94");
     });
+
+    it("returns width of widest string in array if array has an empty string", () => {
+      expect(
+        TextSize.approximateTextSize(["06-14-20", ""], { fontSize: 12 }).width.toFixed(2)
+      ).to.eql("47.93");
+    });
   });
 
   describe("approximateHeight", () => {

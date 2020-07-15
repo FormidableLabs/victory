@@ -204,7 +204,7 @@ const _approximateTextWidthInternal = (text, style) => {
             ? fontData.widths[c.charCodeAt(0)]
             : fontData.avg;
         })
-        .reduce((cur, acc) => acc + cur) * fontSize;
+        .reduce((cur, acc) => acc + cur, 0) * fontSize;
     return width + letterSpacing * Math.max(len - 1, 0);
   });
   return Math.max(...widths);
