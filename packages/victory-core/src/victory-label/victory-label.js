@@ -76,7 +76,7 @@ const getBackgroundStyles = (style, props) => {
   }
   return Array.isArray(style) && !isEmpty(style)
     ? style.map((s) => Helpers.evaluateStyle(s, props))
-    : Helpers.evaluateStyle(style);
+    : Helpers.evaluateStyle(style, props);
 };
 
 const getBackgroundPadding = (props) => {
