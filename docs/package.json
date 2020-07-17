@@ -24,7 +24,7 @@
     "date-fns": "^2.12.0",
     "formidable-oss-badges": "^0.3.4",
     "fuse.js": "^3.2.1",
-    "lodash": "^4.17.15",
+    "lodash": "^4.17.19",
     "prismjs": "^1.15.0",
     "prop-types": "^15.6.2",
     "react": "^16.8.0",
