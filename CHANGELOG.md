@@ -1,5 +1,11 @@
 # Victory Changelog
 
+## 35.0.5 (2020-07-17)
+
+- [#1648](https://github.com/FormidableLabs/victory/pull/1648) - Fix a bug effecting `backgroundStyles` when using functional styles. Thanks @chacestew!
+
+- [#1649](https://github.com/FormidableLabs/victory/pull/1649) - update lodash dependency
+
 ## 35.0.4 (2020-07-15)
 
 - [#1645](https://github.com/FormidableLabs/victory/pull/1645) - Fix bug in text size approximation. Thanks @nburt!
