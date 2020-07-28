@@ -81,6 +81,9 @@ const VoronoiHelpers = {
   },
 
   withinRadius(point, mousePosition, radius) {
+    if (!point) {
+      return false;
+    }
     if (!radius) {
       return true;
     }
