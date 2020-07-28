@@ -1,5 +1,9 @@
 # Victory Changelog
 
+## 35.0.6 (2020-07-28)
+
+- [#1652](https://github.com/FormidableLabs/victory/pull/1652) - Fix a bug related to voronoi radius. Thanks @sseppola!
+
 ## 35.0.5 (2020-07-17)
 
 - [#1648](https://github.com/FormidableLabs/victory/pull/1648) - Fix a bug effecting `backgroundStyles` when using functional styles. Thanks @chacestew!
