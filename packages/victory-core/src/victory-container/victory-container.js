@@ -20,6 +20,9 @@ export default class VictoryContainer extends React.Component {
     height: CustomPropTypes.nonNegative,
     name: PropTypes.string,
     origin: PropTypes.shape({ x: CustomPropTypes.nonNegative, y: CustomPropTypes.nonNegative }),
+    ouiaId: PropTypes.oneOfType([PropTypes.number, PropTypes.string]),
+    ouiaSafe: PropTypes.boolean,
+    ouiaType: PropTypes.string,
     polar: PropTypes.bool,
     portalComponent: PropTypes.element,
     portalZIndex: CustomPropTypes.integer,
@@ -89,6 +92,17 @@ export default class VictoryContainer extends React.Component {
     return props.children;
   }
 
+  // Get props defined by the Open UI Automation (OUIA) 1.0-RC spec
+  // See https://ouia.readthedocs.io/en/latest/README.html#ouia-component
+  getOUIAProps(props) {
+    const { ouiaId, ouiaSafe, ouiaType } = props;
+    return {
+      ...(ouiaId && { "data-ouia-component-id": ouiaId }),
+      ...(ouiaType && { "data-ouia-component-type": ouiaType }),
+      ...(ouiaSafe !== undefined && { "data-ouia-safe": ouiaSafe })
+    };
+  }
+
   renderContainer(props, svgProps, style) {
     const {
       title,
@@ -130,6 +144,7 @@ export default class VictoryContainer extends React.Component {
           style={defaults({}, style, divStyle)}
           className={className}
           ref={this.saveContainerRef}
+          {...this.getOUIAProps(props)}
         >
           <svg {...svgProps} style={svgStyle}>
             {title ? <title id={this.getIdForElement("title")}>{title}</title> : null}

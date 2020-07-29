@@ -33,6 +33,7 @@ import VictorySharedEventsDemo from "./components/victory-shared-events-demo";
 import VoronoiContainerDemo from "./components/victory-voronoi-container-demo";
 import VoronoiDemo from "./components/victory-voronoi-demo";
 import ZoomContainerDemo from "./components/victory-zoom-container-demo";
+import OuiaDemo from "./components/ouia-demo";
 
 const MAP = {
   "/area": { component: AreaDemo, name: "AreaDemo" },
@@ -68,7 +69,8 @@ const MAP = {
   "/victory-shared-events": { component: VictorySharedEventsDemo, name: "VictorySharedEventsDemo" },
   "/voronoi": { component: VoronoiDemo, name: "VoronoiDemo" },
   "/voronoi-container": { component: VoronoiContainerDemo, name: "VoronoiContainerDemo" },
-  "/zoom-container": { component: ZoomContainerDemo, name: "ZoomContainerDemo" }
+  "/zoom-container": { component: ZoomContainerDemo, name: "ZoomContainerDemo" },
+  "/ouia-demo": { component: OuiaDemo, name: "OuiaDemo" }
 };
 
 class Home extends React.Component {
