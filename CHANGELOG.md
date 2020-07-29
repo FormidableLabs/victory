@@ -1,5 +1,9 @@
 # Victory Changelog
 
+## 35.0.7 (2020-07-29)
+
+- [#1654](https://github.com/FormidableLabs/victory/pull/1654) - Add optional OUIA props for `VictoryContainer`. Thanks @dlabrecq!
+
 ## 35.0.6 (2020-07-28)
 
 - [#1652](https://github.com/FormidableLabs/victory/pull/1652) - Fix a bug related to voronoi radius. Thanks @sseppola!
