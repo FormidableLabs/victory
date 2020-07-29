@@ -241,6 +241,9 @@ export interface VictoryContainerProps {
   height?: number;
   name?: string;
   origin?: OriginType;
+  ouiaId?: number | string;
+  ouiaSafe?: boolean;
+  ouiaType?: string;
   polar?: boolean;
   portalComponent?: React.ReactElement;
   portalZIndex?: number;

@@ -65,6 +65,34 @@ The `height` prop determines the height of the containing `<svg>`. By default Vi
 
 _example:_ `height={350}`
 
+## ouiaId
+
+`type: number || string`
+
+The `ouiaId` prop outputs an id attribute called `data-ouia-component-id`, which must be unique within the surrounding context of the component.
+
+This prop is used by the Open UI Automation 1.0-RC spec to help maintain automated testing environments. Components that are OUIA compliant must provide the following props; `ouiaId`, `ouiaSafe`, and `ouiaType`.
+
+## ouiaSafe
+
+`type: boolean`
+
+The `ouiaSafe` outputs an attribute called `data-ouia-safe`, which indicates that the component is in a static state.
+
+This prop is used by the Open UI Automation 1.0-RC spec to help maintain automated testing environments. Components that are OUIA compliant must provide the following props; `ouiaId`, `ouiaSafe`, and `ouiaType`.
+
+_default:_ `ouiaId={true}`
+
+## ouiaType
+
+`type: string`
+
+The `ouiaType` prop outputs an attribute called `data-ouia-component-type`, which specifies a unique name identifying the root level HTML element.
+
+This prop is used by the Open UI Automation 1.0-RC spec to help maintain automated testing environments. Components that are OUIA compliant must provide the following props; `ouiaId`, `ouiaSafe`, and `ouiaType`.
+
+_example:_ A page that has a special container could choose to name that container as `FrameworkA/CustomContainer`.
+
 ## portalComponent
 
 `type: element`

@@ -37,6 +37,7 @@ import VictoryPieDemo from "./components/victory-pie-demo";
 import VictoryDemo from "./components/victory-demo";
 import HorizontalDemo from "./components/horizontal-demo";
 import DraggableDemo from "./components/draggable-demo";
+import OuiaDemo from "./components/ouia-demo";
 
 const MAP = {
   "/axis": { component: AxisDemo, name: "AxisDemo" },
@@ -71,7 +72,8 @@ const MAP = {
   "/pie": { component: VictoryPieDemo, name: "PieDemo" },
   "/victory": { component: VictoryDemo, name: "VictoryDemo" },
   "/horizontal": { component: HorizontalDemo, name: "HorizontalDemo" },
-  "/draggable": { component: DraggableDemo, name: "DraggableDemo" }
+  "/draggable": { component: DraggableDemo, name: "DraggableDemo" },
+  "/ouia": { component: OuiaDemo, name: "OuiaDemo" }
 };
 
 class Home extends React.Component {
