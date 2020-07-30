@@ -21,7 +21,7 @@ export default class VictoryContainer extends React.Component {
     name: PropTypes.string,
     origin: PropTypes.shape({ x: CustomPropTypes.nonNegative, y: CustomPropTypes.nonNegative }),
     ouiaId: PropTypes.oneOfType([PropTypes.number, PropTypes.string]),
-    ouiaSafe: PropTypes.boolean,
+    ouiaSafe: PropTypes.bool,
     ouiaType: PropTypes.string,
     polar: PropTypes.bool,
     portalComponent: PropTypes.element,
