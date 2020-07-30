@@ -1,5 +1,9 @@
 # Victory Changelog
 
+## 35.0.8 (2020-07-30)
+
+- [#1657](https://github.com/FormidableLabs/victory/pull/1657) - Fix bug in `ouiaSafe` prop on `VictoryContainer`
+
 ## 35.0.7 (2020-07-29)
 
 - [#1654](https://github.com/FormidableLabs/victory/pull/1654) - Add optional OUIA props for `VictoryContainer`. Thanks @dlabrecq!
