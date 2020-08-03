@@ -554,6 +554,8 @@ export type SVGCoordinateType = { x: number; y: number };
 
 export interface VictoryCommonProps {
   animate?: boolean | AnimatePropTypeInterface;
+  ariaLabel?: string;
+  ariaDescribedBy?: string;
   containerComponent?: React.ReactElement;
   domainPadding?: DomainPaddingPropType;
   externalEventMutations?: EventCallbackInterface<string | string[], StringOrNumberOrList>[];
@@ -577,6 +579,7 @@ export interface VictoryCommonProps {
   sharedEvents?: { events: any[]; getEventState: Function };
   singleQuadrantDomainPadding?: boolean | { x?: boolean; y?: boolean };
   standalone?: boolean;
+  tabIndex?: string;
   width?: number;
   theme?: VictoryThemeDefinition;
 }

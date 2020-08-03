@@ -212,7 +212,7 @@ export default class App extends React.Component {
               groupComponent={
                 <g aria-label="Group of scatter points" aria-describedby="victory-container-3-desc" />
               }
-              dataComponent={<Bar ariaLabel={({index}) => barDataAriaLabels[index]} tabIndex="0" ariaDescribedBy="victory-container-2-desc" />}
+              dataComponent={<Bar ariaLabel={({index}) => barDataAriaLabels[index]} tabIndex="0" ariaDescribedBy="victory-container-3-desc" />}
             />
           </VictoryChart>
         </div>
@@ -237,21 +237,21 @@ export default class App extends React.Component {
             >
               <VictoryBar
                 data={stackData1}
-                dataComponent={<Bar ariaLabel={({index}) => stackDataAriaLabels1[index]} tabIndex="0" ariaDescribedBy="victory-container-2-desc" />}
+                dataComponent={<Bar ariaLabel={({index}) => stackDataAriaLabels1[index]} tabIndex="0" ariaDescribedBy="victory-container-4-desc" />}
                 groupComponent={
-                  <g aria-label="USA" aria-describedby="victory-container-4-desc"/>
+                  <g aria-label="USA" aria-describedby="victory-container-4-desc"></g>
                 }
               />
               <VictoryBar
                 data={stackData2}
-                dataComponent={<Bar ariaLabel={({index}) => stackDataAriaLabels2[index]} tabIndex="0" ariaDescribedBy="victory-container-2-desc" />}
+                dataComponent={<Bar ariaLabel={({index}) => stackDataAriaLabels2[index]} tabIndex="0" ariaDescribedBy="victory-container-4-desc" />}
                 groupComponent={
                   <g aria-label="UK" aria-describedby="victory-container-4-desc" />
                 }
               />
               <VictoryBar
                 data={stackData3}
-                dataComponent={<Bar ariaLabel={({index}) => stackDataAriaLabels3[index]} tabIndex="0" ariaDescribedBy="victory-container-2-desc" />}
+                dataComponent={<Bar ariaLabel={({index}) => stackDataAriaLabels3[index]} tabIndex="0" ariaDescribedBy="victory-container-4-desc" />}
                 groupComponent={
                   <g aria-label="Canada" aria-describedby="victory-container-4-desc" />
                 }

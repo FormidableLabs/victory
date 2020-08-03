@@ -11,6 +11,7 @@ export default class VictoryContainer extends React.Component {
   static displayName = "VictoryContainer";
   static role = "container";
   static propTypes = {
+    ariaLabel: PropTypes.string,
     children: PropTypes.oneOfType([PropTypes.arrayOf(PropTypes.node), PropTypes.node]),
     className: PropTypes.string,
     containerId: PropTypes.oneOfType([PropTypes.number, PropTypes.string]),
@@ -24,20 +25,20 @@ export default class VictoryContainer extends React.Component {
     portalComponent: PropTypes.element,
     portalZIndex: CustomPropTypes.integer,
     responsive: PropTypes.bool,
+    role: PropTypes.string,
     style: PropTypes.object,
     tabIndex: PropTypes.string,
     theme: PropTypes.object,
     title: PropTypes.string,
-    width: CustomPropTypes.nonNegative,
-    role: PropTypes.string,
-    ariaLabel: PropTypes.string
+    width: CustomPropTypes.nonNegative
   };
 
   static defaultProps = {
     className: "VictoryContainer",
     portalComponent: <Portal />,
     portalZIndex: 99,
-    responsive: true
+    responsive: true,
+    role: "img"
   };
 
   static contextType = TimerContext;
@@ -159,7 +160,7 @@ export default class VictoryContainer extends React.Component {
       {
         width,
         height,
-        role: role ? role : "img",
+        role,
         "aria-label": ariaLabel ? ariaLabel : undefined,
         "aria-labelledby": title ? this.getIdForElement("title") : undefined,
         "aria-describedby": desc ? this.getIdForElement("desc") : undefined,
