@@ -10,6 +10,7 @@ import { VictoryStack } from "Packages/victory-stack/src/index";
 import { VictoryLine } from "Packages/victory-line/src/index";
 import { VictoryArea } from "Packages/victory-area/src/index";
 import { VictoryLegend } from "Packages/victory-legend/src/index";
+import { VictoryGroup } from "Packages/victory-group/src/index";
 import { VictoryContainer, VictoryClipContainer, VictoryTheme } from "Packages/victory-core/src/index";
 import Point from "Packages/victory-core/src/victory-primitives/point";
 import Slice from "Packages/victory-pie/src/slice";
@@ -132,6 +133,43 @@ export default class App extends React.Component {
       return "Line chart with the following data points" + string;
     }
 
+    const groupData1 = [
+      { x: "2013", y: 350 },
+      { x: "2014", y: 300 },
+      { x: "2015", y: 250 },
+      { x: "2016", y: 200 }
+    ];
+
+    const groupData2 = [
+      { x: "2013", y: 150 },
+      { x: "2014", y: 100 },
+      { x: "2015", y: 200 },
+      { x: "2016", y: 180 }
+    ];
+
+    const groupData3 = [
+      { x: "2013", y: 350 },
+      { x: "2014", y: 200 },
+      { x: "2015", y: 150 },
+      { x: "2016", y: 100 }
+    ];
+
+    const groupDataAriaLabels1 = groupData1.map(data => (
+      "In " + data.x + " sales were " + data.y + " dollars."
+    ));
+
+    const groupDataAriaLabels2 = groupData2.map(data => (
+      "In " + data.x + " sales were " + data.y + " dollars."
+    ));
+
+    const groupDataAriaLabels3 = groupData3.map(data => (
+      "In " + data.x + " sales were " + data.y + " dollars."
+    ));
+
+    const AccessibleGroupComponent = ({ ariaLabel, ariaDescribedBy, description, descriptionId, children }) => {
+      return <g aria-label={ariaLabel} aria-describedby={ariaDescribedBy}><desc id={descriptionId}>{description}</desc>{children}</g>;
+    };
+
     return (
       <React.Fragment>
         <h2>Pie Chart Accessibility Demo</h2>
@@ -217,58 +255,6 @@ export default class App extends React.Component {
           </VictoryChart>
         </div>
 
-        <h2>Stack Chart Accessibility Demo</h2>
-        <h3>Number of beverages drank in 2019 in USA, UK, and Canada per household (in hundreds)</h3>
-        <div className="demo" style={containerStyle}>
-          <VictoryChart
-            containerComponent={
-              <VictoryContainer
-                responsive={false}
-                desc="Number of beverages drank in 2019 in USA, UK, and Canada per household (in hundreds)"
-                tabIndex="0"
-                ariaLabel="Stack chart"
-                role="group"
-              />
-            }
-          >
-            <VictoryStack
-              colorScale={["tomato", "orange", "gold"]}
-              groupComponent={<g aria-label="Group of countries: USA, UK, Canada" />}
-            >
-              <VictoryBar
-                data={stackData1}
-                dataComponent={<Bar ariaLabel={({index}) => stackDataAriaLabels1[index]} tabIndex="0" ariaDescribedBy="victory-container-4-desc" />}
-                groupComponent={
-                  <g aria-label="USA" aria-describedby="victory-container-4-desc"></g>
-                }
-              />
-              <VictoryBar
-                data={stackData2}
-                dataComponent={<Bar ariaLabel={({index}) => stackDataAriaLabels2[index]} tabIndex="0" ariaDescribedBy="victory-container-4-desc" />}
-                groupComponent={
-                  <g aria-label="UK" aria-describedby="victory-container-4-desc" />
-                }
-              />
-              <VictoryBar
-                data={stackData3}
-                dataComponent={<Bar ariaLabel={({index}) => stackDataAriaLabels3[index]} tabIndex="0" ariaDescribedBy="victory-container-4-desc" />}
-                groupComponent={
-                  <g aria-label="Canada" aria-describedby="victory-container-4-desc" />
-                }
-              />
-            </VictoryStack>
-            <VictoryLegend x={125} y={10}
-              orientation="horizontal"
-              gutter={20}
-              style={{ border: { stroke: "black" } }}
-              colorScale={["tomato", "orange", "gold"]}
-              data={[
-                { name: "USA" }, { name: "UK" }, { name: "Canada" }
-              ]}
-            />
-          </VictoryChart>
-        </div>
-
         <h2>Area Chart Accessibility Demo</h2>
         <h3>Number of endangered species in Africa (in thousands)</h3>
         <div className="demo" style={containerStyle}>
@@ -286,7 +272,7 @@ export default class App extends React.Component {
             <VictoryArea
               data={areaData}
               groupComponent={
-                <VictoryClipContainer tabIndex="0" ariaLabel={areaDataAriaLabel()} ariaDescribedBy="victory-container-5-desc" />
+                <VictoryClipContainer tabIndex="0" ariaLabel={areaDataAriaLabel()} ariaDescribedBy="victory-container-4-desc" />
               }
             />
           </VictoryChart>
@@ -311,9 +297,116 @@ export default class App extends React.Component {
             }}
             data={lineData}
             groupComponent={
-              <VictoryClipContainer tabIndex="0" ariaLabel={lineDataAriaLabel()} ariaDescribedBy="victory-container-6-desc" />
+              <VictoryClipContainer tabIndex="0" ariaLabel={lineDataAriaLabel()} ariaDescribedBy="victory-container-5-desc" />
             }
           />
+        </div>
+
+        <br/>
+        <br/>
+        <h2>Charts with Group Components</h2>
+        <br/>
+        <h2>Stack Chart Accessibility Demo</h2>
+        <h3>Number of beverages drank in 2019 in USA, UK, and Canada per household (in hundreds)</h3>
+        <div className="demo" style={containerStyle}>
+          <VictoryChart
+            containerComponent={
+              <VictoryContainer
+                responsive={false}
+                desc="Number of beverages drank in 2019 in USA, UK, and Canada per household (in hundreds)"
+                tabIndex="0"
+                ariaLabel="Stack chart"
+                role="group"
+              />
+            }
+          >
+            <VictoryStack
+              colorScale={["tomato", "orange", "gold"]}
+              groupComponent={<g aria-label="Group of countries: USA, UK, Canada" />}
+            >
+              <VictoryBar
+                data={stackData1}
+                dataComponent={<Bar ariaLabel={({index}) => stackDataAriaLabels1[index]} tabIndex="0" ariaDescribedBy="USA-group" />}
+                groupComponent={
+                  <AccessibleGroupComponent ariaLabel="USA" ariaDescribedBy="USA-group" description="Total beverages in the USA is 16." descriptionId="USA-group" />
+                }
+              />
+              <VictoryBar
+                data={stackData2}
+                dataComponent={<Bar ariaLabel={({index}) => stackDataAriaLabels2[index]} tabIndex="0" ariaDescribedBy="UK-group" />}
+                groupComponent={
+                  <AccessibleGroupComponent ariaLabel="UK" ariaDescribedBy="UK-group" description="Total beverages in the UK is 13." descriptionId="UK-group" />
+                }
+              />
+              <VictoryBar
+                data={stackData3}
+                dataComponent={<Bar ariaLabel={({index}) => stackDataAriaLabels3[index]} tabIndex="0" ariaDescribedBy="Canada-group" />}
+                groupComponent={
+                  <AccessibleGroupComponent ariaLabel="Canada" ariaDescribedBy="Canada-group" description="Total beverages in Canada is 10." descriptionId="Canada-group" />
+                }
+              />
+            </VictoryStack>
+            <VictoryLegend x={125} y={10}
+              orientation="horizontal"
+              gutter={20}
+              style={{ border: { stroke: "black" } }}
+              colorScale={["tomato", "orange", "gold"]}
+              data={[
+                { name: "USA" }, { name: "UK" }, { name: "Canada" }
+              ]}
+            />
+          </VictoryChart>
+        </div>
+
+        <h2>Group Chart Accessibility Demo</h2>
+        <h3>Starbucks sales for Texas, North Carolina, and Illinois from 2013 to 2016 (in $100,000).</h3>
+        <div className="demo" style={containerStyle}>
+          <VictoryChart
+            containerComponent={
+              <VictoryContainer
+                responsive={false}
+                desc="Starbucks sales for Texas, North Carolina, and Illinois from 2013 to 2016 (in $100,000)"
+                tabIndex="0"
+                ariaLabel="Group chart"
+                role="group"
+              />
+            }
+          >
+            <VictoryGroup offset={20}
+              colorScale={"qualitative"}
+            >
+              <VictoryBar
+                data={groupData1}
+                dataComponent={<Bar ariaLabel={({index}) => groupDataAriaLabels1[index]} tabIndex="0" ariaDescribedBy="Texas-group" />}
+                groupComponent={
+                  <AccessibleGroupComponent ariaLabel="Texas" ariaDescribedBy="Texas-group" description="Sales in Texas from 2013 to 2016." descriptionId="Texas-group" />
+                }
+              />
+              <VictoryBar
+                data={groupData2}
+                dataComponent={<Bar ariaLabel={({index}) => groupDataAriaLabels2[index]} tabIndex="0" ariaDescribedBy="NC-group" />}
+                groupComponent={
+                  <AccessibleGroupComponent ariaLabel="North Carolina" ariaDescribedBy="NC-group" description="Sales in North Carolina from 2013 to 2016." descriptionId="NC-group" />
+                }
+              />
+              <VictoryBar
+                data={groupData3}
+                dataComponent={<Bar ariaLabel={({index}) => groupDataAriaLabels3[index]} tabIndex="0" ariaDescribedBy="Illinois-group" />}
+                groupComponent={
+                  <AccessibleGroupComponent ariaLabel="Illinois" ariaDescribedBy="Illinois-group" description="Sales in Illinois from 2013 to 2016." descriptionId="Illinois-group" />
+                }
+              />
+            </VictoryGroup>
+            <VictoryLegend x={125} y={10}
+              orientation="horizontal"
+              gutter={20}
+              style={{ border: { stroke: "black" } }}
+              colorScale={"qualitative"}
+              data={[
+                { name: "Texas" }, { name: "North Carolina" }, { name: "Illinois" }
+              ]}
+            />
+          </VictoryChart>
         </div>
       </React.Fragment>
     );
