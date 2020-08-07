@@ -8,8 +8,9 @@ import {
   VictoryTheme,
   CommonProps,
   addEvents,
+  PropTypes as CustomPropTypes
 } from "victory-core";
-import { getBaseProps, getData, getDomain } from "./helper-methods";
+import { getBaseProps, getData, getDomain, getFormattedData } from "./helper-methods";
 
 const fallbackProps = {
   width: 450,
@@ -43,9 +44,31 @@ export class VictoryHeatmap extends React.Component {
     }
   };
 
+  static getFormattedData = getFormattedData;
+
   static propTypes = {
     ...CommonProps.baseProps,
     ...CommonProps.dataProps,
+    binSpacing: CustomPropTypes.nonNegative,
+    bins: PropTypes.oneOfType([
+      PropTypes.arrayOf(
+        PropTypes.oneOfType([CustomPropTypes.nonNegative, PropTypes.instanceOf(Date)])
+      ),
+      CustomPropTypes.nonNegative
+    ]),
+    cornerRadius: PropTypes.oneOfType([
+      PropTypes.number,
+      PropTypes.func,
+      PropTypes.shape({
+        top: PropTypes.oneOfType([PropTypes.number, PropTypes.func]),
+        topLeft: PropTypes.oneOfType([PropTypes.number, PropTypes.func]),
+        topRight: PropTypes.oneOfType([PropTypes.number, PropTypes.func]),
+        bottom: PropTypes.oneOfType([PropTypes.number, PropTypes.func]),
+        bottomLeft: PropTypes.oneOfType([PropTypes.number, PropTypes.func]),
+        bottomRight: PropTypes.oneOfType([PropTypes.number, PropTypes.func])
+      })
+    ]),
+    getPath: PropTypes.func,
     horizontal: PropTypes.bool
   };
 
