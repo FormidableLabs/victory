@@ -38,6 +38,7 @@ import VictoryDemo from "./components/victory-demo";
 import HorizontalDemo from "./components/horizontal-demo";
 import DraggableDemo from "./components/draggable-demo";
 import OuiaDemo from "./components/ouia-demo";
+import VictoryHeatmapDemo from "./components/victory-heatmap-demo";
 
 const MAP = {
   "/axis": { component: AxisDemo, name: "AxisDemo" },
@@ -73,7 +74,8 @@ const MAP = {
   "/victory": { component: VictoryDemo, name: "VictoryDemo" },
   "/horizontal": { component: HorizontalDemo, name: "HorizontalDemo" },
   "/draggable": { component: DraggableDemo, name: "DraggableDemo" },
-  "/ouia": { component: OuiaDemo, name: "OuiaDemo" }
+  "/ouia": { component: OuiaDemo, name: "OuiaDemo" },
+  "/heatmap": { component: VictoryHeatmapDemo, name: "VictoryHeatmapDemo" }
 };
 
 class Home extends React.Component {

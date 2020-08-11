@@ -1,9 +1,10 @@
-import { assign, isNil } from "lodash";
+import { assign, isNil, flatten, maxBy } from "lodash";
 import { Helpers, LabelHelpers, Data, Domain, Scale } from "victory-core";
 import { getBarPosition } from "victory-bar";
 import isEqual from "react-fast-compare";
 import * as d3Array from "d3-array";
 import * as d3Scale from "d3-scale";
+import * as d3ScaleChromatic from "d3-scale-chromatic";
 
 const cacheLastValue = (func) => {
   let called = false;
@@ -25,15 +26,14 @@ const cacheLastValue = (func) => {
   };
 };
 
-const dataOrBinsContainDates = ({ data, bins, x }) => {
-  const xAccessor = Helpers.createAccessor(x || "x");
-  const dataIsDates = data.some((datum) => xAccessor(datum) instanceof Date);
+const dataOrBinsContainDates = ({ data, bins, accessor }) => {
+  const dataIsDates = data.some((datum) => accessor(datum) instanceof Date);
   const binsHasDates = Array.isArray(bins) && bins.some((bin) => bin instanceof Date);
 
   return dataIsDates || binsHasDates;
 };
 
-const getBinningFunc = ({ data, x, bins, dataOrBinsContainsDates }) => {
+const getXBinningFunc = ({ data, x, bins, dataOrBinsContainsDates }) => {
   const xAccessor = Helpers.createAccessor(x || "x");
   const bin = d3Array.bin().value(xAccessor);
 
@@ -67,14 +67,50 @@ const getBinningFunc = ({ data, x, bins, dataOrBinsContainsDates }) => {
   return bin;
 };
 
+const getYBinningFunc = ({ data, y, bins, dataOrBinsContainsDates }) => {
+  const yAccessor = Helpers.createAccessor(y || "y");
+  const bin = d3Array.bin().value(yAccessor);
+
+  const niceScale = (dataOrBinsContainsDates ? d3Scale.scaleTime() : d3Scale.scaleLinear())
+    .domain(d3Array.extent(data, yAccessor))
+    .nice();
+
+  if (Array.isArray(bins)) {
+    bin.domain([bins[0], bins[bins.length - 1]]);
+    bin.thresholds(bins);
+
+    return bin;
+  }
+
+  if (Number.isInteger(bins)) {
+    bin.domain(niceScale.domain());
+    bin.thresholds(bins);
+
+    return bin;
+  }
+
+  if (dataOrBinsContainsDates) {
+    bin.domain(niceScale.domain());
+    bin.thresholds(niceScale.ticks());
+
+    return bin;
+  }
+
+  bin.domain(niceScale.domain());
+
+  return bin;
+};
+
 export const getFormattedData = cacheLastValue(({ data = [], x, bins }) => {
   if ((!data || !data.length) && !Array.isArray(bins)) {
     return [];
   }
-  const dataOrBinsContainsDates = dataOrBinsContainDates({ data, bins, x });
-  const binFunc = getBinningFunc({ data, x, bins, dataOrBinsContainsDates });
-  const foo = binFunc(data);
-  const binnedData = foo.filter(({ x0, x1 }) => {
+  const accessor = Helpers.createAccessor(x || "x");
+  // const yAccessor = Helpers.createAccessor(y || "y");
+  const dataOrBinsContainsDates = dataOrBinsContainDates({ data, bins, accessor });
+  const binFunc = getXBinningFunc({ data, x, bins, dataOrBinsContainsDates });
+  const rawBinnedData = binFunc(data);
+  const binnedData = rawBinnedData.filter(({ x0, x1 }) => {
     if (dataOrBinsContainsDates) {
       return new Date(x0).getTime() !== new Date(x1).getTime();
     }
@@ -82,20 +118,40 @@ export const getFormattedData = cacheLastValue(({ data = [], x, bins }) => {
     return x0 !== x1;
   });
 
+  // const yDataOrBinsContainsDates = dataOrBinsContainDates({ data, bins, yAccessor });
+  const yDataOrBinsContainsDates = false;
+  const yBinFunc = getYBinningFunc({ data, x, bins, yDataOrBinsContainsDates });
+
   const formattedData = binnedData.map((bin) => {
     const x0 = dataOrBinsContainsDates ? new Date(bin.x0) : bin.x0;
     const x1 = dataOrBinsContainsDates ? new Date(bin.x1) : bin.x1;
 
-    return {
-      x0,
-      x1,
-      x: dataOrBinsContainsDates ? new Date((x0.getTime() + x1.getTime()) / 2) : (x0 + x1) / 2,
-      y: bin.length,
-      binnedData: [...bin]
-    };
+    const rawYBins = yBinFunc(bin);
+
+    return rawYBins.map(yBin => {
+      return {
+        x0,
+        x1,
+        x: (x0 + x1) / 2,
+        y0: yBin.x0,
+        y: yBin.x1,
+        points: yBin,
+        binLength: yBin.length
+      }
+    })
+
+    // return {
+    //   x0,
+    //   x1,
+    //   x: dataOrBinsContainsDates ? new Date((x0.getTime() + x1.getTime()) / 2) : (x0 + x1) / 2,
+    //   y: bin.length,
+    //   binnedData: [...bin]
+    // };
   });
 
-  return formattedData;
+  const result = flatten(formattedData);
+  console.log(result)
+  return result;
 });
 
 const getData = (props) => {
@@ -206,11 +262,15 @@ const getBaseProps = (props, fallbackProps) => {
     return getDistance(datum);
   };
 
+  const maxLength = maxBy(data, "binLength");
+
   return data.reduce((childProps, datum, index) => {
     const eventKey = !isNil(datum.eventKey) ? datum.eventKey : index;
 
     const { x, y, y0, x0 } = getBarPosition(props, datum);
     const barWidth = getBarWidth(datum);
+    const t = datum.binLength / maxLength.binLength;
+    const fill = d3ScaleChromatic.interpolateRdYlBu(t);
 
     const dataProps = {
       alignment: "middle",
@@ -221,7 +281,7 @@ const getBaseProps = (props, fallbackProps) => {
       horizontal,
       index,
       scale,
-      style: style.data,
+      style: assign({}, style.data, { fill }),
       width,
       height,
       x,

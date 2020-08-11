@@ -366,6 +366,7 @@ function isDataComponent(component) {
     "candlestick",
     "errorbar",
     "group",
+    "heatmap",
     "histogram",
     "line",
     "pie",
