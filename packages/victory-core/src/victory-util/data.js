@@ -211,7 +211,7 @@ function formatData(dataset, props, expectedKeys) {
     : dataset.reduce((dataArr, datum, index) => {
         // eslint-disable-line complexity
         datum = parseDatum(datum);
-        const fallbackValues = { x: index, y: datum };
+        const fallbackValues = { x: index, y: null };
         const processedValues = expectedKeys.reduce((memo, type) => {
           const processedValue = accessor[type](datum);
           const value = processedValue !== undefined ? processedValue : fallbackValues[type];
