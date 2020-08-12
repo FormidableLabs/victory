@@ -153,6 +153,39 @@ export default class App extends React.Component {
 
     return (
       <div className="demo" style={containerStyle}>
+        <VictoryChart style={{ parent: parentStyle }}>
+          <VictoryHistogram
+            style={{
+              data: { stroke: "#833B61" }
+            }}
+            data={[
+              { x: "red" },
+              { x: "green" },
+              { x: "blue" },
+              { x: "red"}
+            ]}
+          />
+        </VictoryChart>
+       <VictoryChart style={{ parent: parentStyle }}>
+          <VictoryStack colorScale="warm">
+            <VictoryHistogram
+              data={[
+                { x: "red" },
+                { x: "green" },
+                { x: "blue" },
+                { x: "red"}
+              ]}
+            />
+            <VictoryHistogram
+              data={[
+                { x: "red" },
+                { x: "green" },
+                { x: "blue" },
+                { x: "green"}
+              ]}
+            />
+          </VictoryStack>
+        </VictoryChart>
         <VictoryHistogram
           style={{ parent: parentStyle }}
           data={this.data}

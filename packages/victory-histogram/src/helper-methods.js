@@ -1,5 +1,5 @@
-import { assign, isNil } from "lodash";
-import { Helpers, LabelHelpers, Data, Domain, Scale } from "victory-core";
+import { assign, isNil, uniq, flatten, last } from "lodash";
+import { Helpers, LabelHelpers, Data, Domain, Scale, Collection } from "victory-core";
 import { getBarPosition } from "victory-bar";
 import isEqual from "react-fast-compare";
 import * as d3Array from "d3-array";
@@ -33,32 +33,41 @@ const dataOrBinsContainDates = ({ data, bins, x }) => {
   return dataIsDates || binsHasDates;
 };
 
-const getBinningFunc = ({ data, x, bins, dataOrBinsContainsDates }) => {
-  const xAccessor = Helpers.createAccessor(x || "x");
+const getBinningFunc = ({ data, x, bins }) => {
+  const xAccessor = Helpers.createAccessor("_x");
   const bin = d3Array.bin().value(xAccessor);
 
-  const niceScale = (dataOrBinsContainsDates ? d3Scale.scaleTime() : d3Scale.scaleLinear())
+  const containsDates = dataOrBinsContainDates({ data, bins, x});
+  const containsStrings =  data.some(({ xName }) => !isNil(xName))
+
+
+  const niceScale = (containsDates ? d3Scale.scaleTime() : d3Scale.scaleLinear())
     .domain(d3Array.extent(data, xAccessor))
     .nice();
+
+  if (containsStrings) {
+    const stringMapValues = uniq(data.map(d => d._x)).sort();
+    const thresholds = flatten(stringMapValues.map(v => [v - 0.5, v + 0.5]));
+    bin.domain([thresholds[0], last(thresholds)]);
+    bin.thresholds(thresholds);
+    return bin;
+  }
 
   if (Array.isArray(bins)) {
     bin.domain([bins[0], bins[bins.length - 1]]);
     bin.thresholds(bins);
-
     return bin;
   }
 
   if (Number.isInteger(bins)) {
     bin.domain(niceScale.domain());
     bin.thresholds(bins);
-
     return bin;
   }
 
-  if (dataOrBinsContainsDates) {
+  if (containsDates) {
     bin.domain(niceScale.domain());
     bin.thresholds(niceScale.ticks());
-
     return bin;
   }
 
@@ -73,24 +82,26 @@ export const getFormattedData = cacheLastValue(({ data = [], x, bins }) => {
   }
   const dataOrBinsContainsDates = dataOrBinsContainDates({ data, bins, x });
   const binFunc = getBinningFunc({ data, x, bins, dataOrBinsContainsDates });
-  const foo = binFunc(data);
-  const binnedData = foo.filter(({ x0, x1 }) => {
+  const rawBinnedData = binFunc(data);
+  const binnedData = rawBinnedData.filter(({ x0, x1 }) => {
     if (dataOrBinsContainsDates) {
       return new Date(x0).getTime() !== new Date(x1).getTime();
     }
 
     return x0 !== x1;
   });
-
   const formattedData = binnedData.map((bin) => {
     const x0 = dataOrBinsContainsDates ? new Date(bin.x0) : bin.x0;
     const x1 = dataOrBinsContainsDates ? new Date(bin.x1) : bin.x1;
-
+    const firstBin = bin.length ? bin[0] : {};
+    const xName = firstBin.xName;
+    const _x = dataOrBinsContainsDates ? new Date((x0.getTime() + x1.getTime()) / 2) : (x0 + x1) / 2;
     return {
       x0,
       x1,
-      x: dataOrBinsContainsDates ? new Date((x0.getTime() + x1.getTime()) / 2) : (x0 + x1) / 2,
-      y: bin.length,
+      _x: xName ? firstBin._x : _x,
+      _y: bin.length,
+      xName,
       binnedData: [...bin]
     };
   });
@@ -99,31 +110,67 @@ export const getFormattedData = cacheLastValue(({ data = [], x, bins }) => {
 });
 
 const getData = (props) => {
-  const { bins, data, x } = props;
+  const { bins, x } = props;
+  const data = Data.getData(props);
   const dataIsPreformatted = data.some(({ _y }) => !isNil(_y));
+  return dataIsPreformatted ? data : getFormattedData({ data, x, bins });
+};
 
-  const formattedData = dataIsPreformatted ? data : getFormattedData({ data, x, bins });
-  return Data.getData({ ...props, data: formattedData, x: "x" });
+const reduceData = (dataset, axis, type) => {
+  const xDataTypes = { min: "x0", max: "x1" };
+  const yDataTypes = { min: "_y0", max: "_y1" };
+  const dataType = axis === "x" ? xDataTypes[type] : yDataTypes[type];
+  const baseCondition = type === "min" ? Infinity : -Infinity;
+  const result = dataset.reduce((memo, datum) => {
+    const current = axis === "x" ? datum[dataType] : datum[dataType] || datum._y;
+    return (memo < current && type === "min") || (memo > current && type === "max")
+      ? memo
+      : current;
+  }, baseCondition);
+  return result;
+};
+
+const getDomainFromData = (props, axis) => {
+  const minDomain = Domain.getMinFromProps(props, axis);
+  const maxDomain = Domain.getMaxFromProps(props, axis);
+  const dataset = getData(props);
+  if (dataset.length < 1) {
+    return minDomain !== undefined && maxDomain !== undefined
+      ? Domain.getDomainFromMinMax(minDomain, maxDomain)
+      : undefined;
+  }
+  const min = minDomain !== undefined ? minDomain : reduceData(dataset, axis, "min");
+  const max = maxDomain !== undefined ? maxDomain : reduceData(dataset, axis, "max");
+  return Domain.getDomainFromMinMax(min, max);
 };
 
 const getDomain = (props, axis) => {
-  const data = getData(props);
+  const dataset = getData(props);
 
-  if (!data.length) {
-    return [0, 1];
-  }
+  const ensureZero = (domain) => {
+    const maxDomainProp = Domain.getMaxFromProps(props, axis);
+    const minDomainProp = Domain.getMinFromProps(props, axis);
+    if (axis === "x") {
+      return domain;
+    }
+    const y0Min = dataset.reduce((min, datum) => (datum._y0 < min ? datum._y0 : min), Infinity);
+    const defaultMin = y0Min !== Infinity ? y0Min : 0;
+    const max =
+      maxDomainProp !== undefined ? maxDomainProp : Collection.getMaxValue(domain, defaultMin);
+    const min =
+      minDomainProp !== undefined ? minDomainProp : Collection.getMinValue(domain, defaultMin);
 
-  if (axis === "x") {
-    const firstBin = data[0];
-    const lastBin = data[data.length - 1];
+    return Domain.getDomainFromMinMax(min, max);
+  };
+  const formatDomain = (domain) => {
+    return Domain.formatDomain(ensureZero(domain), props, axis);
+  };
 
-    return Domain.getDomainWithZero(
-      { ...props, data: [{ x: firstBin.x0 }, { x: lastBin.x1 }], x: "x" },
-      "x"
-    );
-  }
-
-  return props.data.length ? Domain.getDomainWithZero({ ...props, data }, "y") : [0, 1];
+  const domain =
+    Domain.getDomainFromProps(props, axis)
+    || getDomainFromData(props, axis, dataset)
+    || Scale.getBaseScale(props, axis).domain();
+  return formatDomain(domain);
 };
 
 const getCalculatedValues = (props) => {
