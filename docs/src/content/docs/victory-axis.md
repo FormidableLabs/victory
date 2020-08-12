@@ -434,7 +434,7 @@ theme={VictoryTheme.material}
 
 `type: element`
 
-The `tickComponent` prop takes a component instance which will be responsible for rendering a tick element. The new element created from the passed `tickComponent` will be provided with the following props calculated by `VictoryAxis`: `x1`, `y1`, `x2`, `y2`, `tick`, `style` and `events`. Any of these props may be overridden by passing in props to the supplied component, or modified or ignored within the custom component itself. If a `tickComponent` is not provided, `VictoryAxis` will use its default [LinSegmente component][].
+The `tickComponent` prop takes a component instance which will be responsible for rendering a tick element. The new element created from the passed `tickComponent` will be provided with the following props calculated by `VictoryAxis`: `x1`, `y1`, `x2`, `y2`, `tick`, `style` and `events`. Any of these props may be overridden by passing in props to the supplied component, or modified or ignored within the custom component itself. If a `tickComponent` is not provided, `VictoryAxis` will use its default [LineSegment component][].
 
 _default:_ `tickComponent={<LineSegment type={"tick"}/>}`
 
