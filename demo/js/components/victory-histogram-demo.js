@@ -153,7 +153,7 @@ export default class App extends React.Component {
 
     return (
       <div className="demo" style={containerStyle}>
-        <VictoryChart style={{ parent: parentStyle }}>
+        <VictoryChart style={{ parent: parentStyle }} polar>
           <VictoryHistogram
             style={{
               data: { stroke: "#833B61" }
@@ -186,7 +186,7 @@ export default class App extends React.Component {
             />
           </VictoryStack>
         </VictoryChart>
-        <VictoryHistogram
+        <VictoryHistogram polar
           style={{ parent: parentStyle }}
           data={this.data}
           events={[
@@ -587,7 +587,7 @@ export default class App extends React.Component {
               animate={{ duration: 500 }}
             />
           </VictoryStack>
-        </VictoryChart>
+        </VictoryChart> */}
       </div>
     );
   }

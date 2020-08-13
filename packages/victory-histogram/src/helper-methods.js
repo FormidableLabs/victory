@@ -25,24 +25,23 @@ const cacheLastValue = (func) => {
   };
 };
 
-const dataOrBinsContainDates = ({ data, bins, x }) => {
-  const xAccessor = Helpers.createAccessor(x || "x");
-  const dataIsDates = data.some((datum) => xAccessor(datum) instanceof Date);
+const dataOrBinsContainDates = ({ data, bins, accessor }) => {
+  const dataIsDates = data.some((datum) => accessor(datum) instanceof Date);
   const binsHasDates = Array.isArray(bins) && bins.some((bin) => bin instanceof Date);
 
   return dataIsDates || binsHasDates;
 };
 
-const getBinningFunc = ({ data, x, bins }) => {
-  const xAccessor = Helpers.createAccessor("_x");
-  const bin = d3Array.bin().value(xAccessor);
+const getBinningFunc = ({ data, bins }) => {
+  const accessor = Helpers.createAccessor("_x");
+  const bin = d3Array.bin().value(accessor);
 
-  const containsDates = dataOrBinsContainDates({ data, bins, x});
+  const containsDates = dataOrBinsContainDates({ data, bins, accessor });
   const containsStrings =  data.some(({ xName }) => !isNil(xName))
 
 
   const niceScale = (containsDates ? d3Scale.scaleTime() : d3Scale.scaleLinear())
-    .domain(d3Array.extent(data, xAccessor))
+    .domain(d3Array.extent(data, accessor))
     .nice();
 
   if (containsStrings) {
@@ -76,26 +75,29 @@ const getBinningFunc = ({ data, x, bins }) => {
   return bin;
 };
 
-export const getFormattedData = cacheLastValue(({ data = [], x, bins }) => {
+export const getFormattedData = cacheLastValue(({ data = [], bins }) => {
   if ((!data || !data.length) && !Array.isArray(bins)) {
     return [];
   }
-  const dataOrBinsContainsDates = dataOrBinsContainDates({ data, bins, x });
-  const binFunc = getBinningFunc({ data, x, bins, dataOrBinsContainsDates });
-  const rawBinnedData = binFunc(data);
-  const binnedData = rawBinnedData.filter(({ x0, x1 }) => {
-    if (dataOrBinsContainsDates) {
-      return new Date(x0).getTime() !== new Date(x1).getTime();
+  const makeBinFilter = () => {
+    const accessor = Helpers.createAccessor("_x");
+    const dataOrBinsContainsDates = dataOrBinsContainDates({ data, bins, accessor });
+    return ({ x0, x1 }) => {
+      if (dataOrBinsContainsDates) {
+        return new Date(x0).getTime() !== new Date(x1).getTime();
+      }
+      return x0 !== x1;
     }
+  }
 
-    return x0 !== x1;
-  });
+  const binFunc = getBinningFunc({ data, bins });
+  const rawBinnedData = binFunc(data);
+  const binnedData = rawBinnedData.filter(makeBinFilter());
   const formattedData = binnedData.map((bin) => {
-    const x0 = dataOrBinsContainsDates ? new Date(bin.x0) : bin.x0;
-    const x1 = dataOrBinsContainsDates ? new Date(bin.x1) : bin.x1;
+    const { x0, x1 } = bin;
     const firstBin = bin.length ? bin[0] : {};
     const xName = firstBin.xName;
-    const _x = dataOrBinsContainsDates ? new Date((x0.getTime() + x1.getTime()) / 2) : (x0 + x1) / 2;
+    const _x = x0 instanceof Date ? new Date((x0.getTime() + x1.getTime()) / 2) : (x0 + x1) / 2;
     return {
       x0,
       x1,
@@ -197,7 +199,9 @@ const getCalculatedValues = (props) => {
       .range(props.horizontal ? range.x : range.y)
   };
 
-  return { style, data, scale, domain };
+  const origin = props.polar ? props.origin || Helpers.getPolarOrigin(props) : undefined;
+
+  return { style, data, scale, domain, origin };
 };
 
 const getBaseProps = (props, fallbackProps) => {
@@ -221,7 +225,9 @@ const getBaseProps = (props, fallbackProps) => {
     width,
     labels,
     name,
-    getPath
+    getPath,
+    polar,
+    origin
   } = props;
   const initialChildProps = {
     parent: {
@@ -275,7 +281,9 @@ const getBaseProps = (props, fallbackProps) => {
       y,
       y0,
       x0,
-      getPath
+      getPath,
+      polar,
+      origin,
     };
 
     childProps[eventKey] = {
