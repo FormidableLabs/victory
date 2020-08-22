@@ -6,6 +6,8 @@ export default class Timer {
     this.subscribers = [];
     this.loop = this.loop.bind(this);
     this.timer = timer(this.loop);
+    this.timer.stop();
+    this.timerActive = false;
   }
 
   bypassAnimation() {
@@ -24,13 +26,19 @@ export default class Timer {
 
   start() {
     this.timer.start();
+    this.timerActive = true;
   }
 
   stop() {
     this.timer.stop();
+    this.timerActive = false;
   }
 
   subscribe(callback, duration) {
+    if (!this.timerActive) {
+      this.timer.restart(this.loop);
+      this.timerActive = true;
+    }
     duration = this.shouldAnimate ? duration : 0;
     return this.subscribers.push({
       startTime: now(),
@@ -42,6 +50,10 @@ export default class Timer {
   unsubscribe(id) {
     if (id !== null) {
       delete this.subscribers[id - 1];
+      if (this.subscribers[this.subscribers.length - 1] === undefined) {
+        this.timer.stop();
+        this.timerActive = false;
+      }
     }
   }
 }
