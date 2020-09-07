@@ -4,22 +4,37 @@
 declare module "victory" {
   import {
     Arc,
+    ArcProps,
     Background,
+    BackgroundProps,
     Border,
+    BorderProps,
     Border as Box,
+    BorderProps as BoxProps,
     ClipPath,
+    ClipPathProps,
     LineSegment,
+    LineSegmentProps,
     Whisker,
+    WhiskerProps,
     Circle,
+    CircleProps,
     Rect,
+    RectProps,
     Line,
+    LineProps,
     Path,
+    PathProps,
     TSpan,
+    TSpanProps,
     Text,
+    TextProps,
     Point,
+    PointProps,
     VictoryAnimation,
     VictoryAnimationProps,
     VictoryContainer,
+    VictoryContainerProps,
     VictoryLabel,
     VictoryLabelProps,
     VictoryTheme,
@@ -42,8 +57,10 @@ declare module "victory" {
     // Scale,
     // Style,
     TextSize,
+    TextSizeProps,
     // Transitions,
-    Selection
+    Selection,
+    SelectionProps
     // LabelHelpers,
     // Axis,
     // Wrapper
@@ -56,7 +73,12 @@ declare module "victory" {
   import { VictoryArea, Area, VictoryAreaProps, AreaProps } from "victory-area";
   import { VictoryBar, Bar, VictoryBarProps, BarProps } from "victory-bar";
 
-  import { VictoryCandlestick, Candle, VictoryCandlestick, CandleProps } from "victory-candlestick";
+  import {
+    VictoryCandlestick,
+    VictoryCandlestickProps,
+    Candle,
+    CandleProps
+  } from "victory-candlestick";
   import { VictoryErrorBar, ErrorBar, VictoryErrorBarProps, ErrorBarProps } from "victory-errorbar";
 
   import { VictoryLine, Curve, VictoryLineProps, CurveProps } from "victory-line";
@@ -113,27 +135,50 @@ declare module "victory" {
   import { VictoryPolarAxis, VictoryPolarAxisProps } from "victory-polar-axis";
 
   export {
+    Arc,
+    ArcProps,
     Area,
+    AreaProps,
     Background,
+    BackgroundProps,
     Bar,
+    BarProps,
     Border,
+    BorderProps,
     Box,
+    BoxProps,
     Candle,
+    CandleProps,
     ClipPath,
+    ClipPathProps,
     Curve,
+    CurveProps,
     ErrorBar,
+    ErrorBarProps,
     LineSegment,
+    LineSegmentProps,
     Point,
+    PointProps,
     Slice,
+    SliceProps,
     Voronoi,
+    VoronoiProps,
     Flyout,
+    FlyoutProps,
     Whisker,
+    WhiskerProps,
     Circle,
+    CircleProps,
     Rect,
+    RectProps,
     Line,
+    LineProps,
     Path,
+    PathProps,
     TSpan,
+    TSpanProps,
     Text,
+    TextProps,
     VictoryAnimation,
     VictoryAnimationProps,
     VictoryArea,
@@ -220,8 +265,10 @@ declare module "victory" {
     // Scale,
     // Style,
     TextSize,
+    TextSizeProps,
     // Transitions,
-    Selection
+    Selection,
+    SelectionProps
     // LabelHelpers,
     // Axis,
     // Wrapper
