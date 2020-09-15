@@ -1,5 +1,9 @@
 # Victory Changelog
 
+## 35.0.9 (2020-09-08)
+
+- [#1677](https://github.com/FormidableLabs/victory/pull/1677) - Add missing TS exports from the main victory package. Thanks @sarah-vanderlaan!
+
 ## 35.0.8 (2020-07-30)
 
 - [#1657](https://github.com/FormidableLabs/victory/pull/1657) - Fix bug in `ouiaSafe` prop on `VictoryContainer`
