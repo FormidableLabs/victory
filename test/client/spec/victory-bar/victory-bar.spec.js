@@ -17,7 +17,7 @@ describe("components/victory-bar", () => {
       const wrapper = mount(<VictoryBar />);
       const svg = wrapper.find("svg").at(0);
       expect(svg.prop("style").width).to.equal("100%");
-      expect(svg.prop("style").height).to.equal("auto");
+      expect(svg.prop("style").height).to.equal("100%");
     });
 
     it("renders an svg with the correct viewBox", () => {
