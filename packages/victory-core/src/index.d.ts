@@ -247,6 +247,7 @@ export interface VictoryContainerProps {
   polar?: boolean;
   portalComponent?: React.ReactElement;
   portalZIndex?: number;
+  preserveAspectRatio?: string;
   responsive?: boolean;
   style?: React.CSSProperties;
   tabIndex?: number;
