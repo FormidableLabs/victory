@@ -14,11 +14,11 @@ const containerStyle = {
 };
 
 const style = {
-  parent: { border: "1px solid #ccc", margin: "1%", maxWidth: "45%" },
+  parent: { border: "1px solid #ccc", margin: "1%", maxWidth: "45%" }
 };
 
 const responsiveStyle = {
-  parent: { border: "1px solid #ccc", margin: "1%", maxWidth: "30%" },
+  parent: { border: "1px solid #ccc", margin: "1%", maxWidth: "30%" }
 };
 
 export default {
@@ -28,39 +28,31 @@ export default {
 
 export const PreserveAspectRatio = () => {
   return (
-    <div style={{...containerStyle, height: "400px"}}>
+    <div style={{ ...containerStyle, height: "400px" }}>
       <VictoryChart style={style}>
         <VictoryLine />
-        <VictoryLabel x={50} y={20}
-          text="default (undefined)"
-        />
+        <VictoryLabel x={50} y={20} text="default (undefined)" />
       </VictoryChart>
       <VictoryChart
         style={style}
         containerComponent={<VictoryContainer preserveAspectRatio="none" />}
       >
         <VictoryLine />
-        <VictoryLabel x={50} y={20}
-          text={`preserveAspectRatio="none"`}
-        />
+        <VictoryLabel x={50} y={20} text={`preserveAspectRatio="none"`} />
       </VictoryChart>
       <VictoryChart
         style={style}
         containerComponent={<VictoryContainer preserveAspectRatio="xMinYMin meet" />}
       >
         <VictoryLine />
-        <VictoryLabel x={50} y={20}
-          text={`preserveAspectRatio="xMinYMin meet"`}
-        />
+        <VictoryLabel x={50} y={20} text={`preserveAspectRatio="xMinYMin meet"`} />
       </VictoryChart>
       <VictoryChart
         style={style}
         containerComponent={<VictoryContainer preserveAspectRatio="xMinYMin slice" />}
       >
         <VictoryLine />
-        <VictoryLabel x={50} y={20}
-          text={`preserveAspectRatio="xMinYMin slice"`}
-        />
+        <VictoryLabel x={50} y={20} text={`preserveAspectRatio="xMinYMin slice"`} />
       </VictoryChart>
     </div>
   );
@@ -68,21 +60,17 @@ export const PreserveAspectRatio = () => {
 
 export const Responsive = () => {
   return (
-    <div style={{...containerStyle}}>
+    <div style={{ ...containerStyle }}>
       <VictoryChart style={responsiveStyle}>
         <VictoryLine />
-        <VictoryLabel x={50} y={20}
-          text="default responsive={true}"
-        />
+        <VictoryLabel x={50} y={20} text="default responsive={true}" />
       </VictoryChart>
       <VictoryChart
         style={responsiveStyle}
         containerComponent={<VictoryContainer responsive={false} />}
       >
         <VictoryLine />
-        <VictoryLabel x={50} y={20}
-          text={`responsive={false}`}
-        />
+        <VictoryLabel x={50} y={20} text={`responsive={false}`} />
       </VictoryChart>
     </div>
   );
