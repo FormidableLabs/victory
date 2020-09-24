@@ -8,6 +8,7 @@ import Line from "./line";
 const evaluateProps = (props) => {
   /**
    * Potential evaluated props are:
+   * `ariaLabel`
    * `desc`
    * `id`
    * `style`
@@ -17,13 +18,15 @@ const evaluateProps = (props) => {
   const id = Helpers.evaluateProp(props.id, props);
   const style = Helpers.evaluateStyle(props.style, props);
   const tabIndex = Helpers.evaluateProp(props.tabIndex, props);
+  const ariaLabel = Helpers.evaluateProp(props.ariaLabel, props);
 
-  return assign({}, props, { desc, id, style, tabIndex });
+  return assign({}, props, { ariaLabel, desc, id, style, tabIndex });
 };
 
 const Whisker = (props) => {
   props = evaluateProps(props);
   const {
+    ariaLabel,
     groupComponent,
     lineComponent,
     events,
@@ -51,8 +54,14 @@ const Whisker = (props) => {
   };
 
   return React.cloneElement(groupComponent, {}, [
-    React.cloneElement(lineComponent, assign({ key: "major-whisker" }, baseProps, majorWhisker)),
-    React.cloneElement(lineComponent, assign({ key: "minor-whisker" }, baseProps, minorWhisker))
+    React.cloneElement(
+      lineComponent,
+      assign({ key: "major-whisker", "aria-label": ariaLabel }, baseProps, majorWhisker)
+    ),
+    React.cloneElement(
+      lineComponent,
+      assign({ key: "minor-whisker", "aria-label": ariaLabel }, baseProps, minorWhisker)
+    )
   ]);
 };
 

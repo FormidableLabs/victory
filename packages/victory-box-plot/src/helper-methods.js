@@ -206,12 +206,23 @@ const getCalculatedValues = (props) => {
 
 // eslint-disable-next-line complexity
 const getWhiskerProps = (props, type) => {
-  const { horizontal, style, boxWidth, whiskerWidth, datum, scale, index } = props;
+  const {
+    ariaLabel,
+    horizontal,
+    style,
+    boxWidth,
+    whiskerWidth,
+    datum,
+    scale,
+    index,
+    tabIndex
+  } = props;
   const { min, max, q1, q3, x, y } = props.positions;
   const boxValue = type === "min" ? q1 : q3;
   const whiskerValue = type === "min" ? min : max;
   const width = typeof whiskerWidth === "number" ? whiskerWidth : boxWidth;
   return {
+    ariaLabel,
     datum,
     index,
     scale,
@@ -227,18 +238,20 @@ const getWhiskerProps = (props, type) => {
       x2: horizontal ? whiskerValue : x + width / 2,
       y2: horizontal ? y + width / 2 : whiskerValue
     },
-    style: style[type] || style.whisker
+    style: style[type] || style.whisker,
+    tabIndex
   };
 };
 
 const getBoxProps = (props, type) => {
-  const { horizontal, boxWidth, style, scale, datum, index } = props;
+  const { ariaLabel, horizontal, boxWidth, style, scale, datum, index, tabIndex } = props;
   const { median, q1, q3, x, y } = props.positions;
   const defaultX = type === "q1" ? q1 : median;
   const defaultY = type === "q1" ? median : q3;
   const defaultWidth = type === "q1" ? median - q1 : q3 - median;
   const defaultHeight = type === "q1" ? q1 - median : median - q3;
   return {
+    ariaLabel,
     datum,
     scale,
     index,
@@ -246,14 +259,16 @@ const getBoxProps = (props, type) => {
     y: horizontal ? y - boxWidth / 2 : defaultY,
     width: horizontal ? defaultWidth : boxWidth,
     height: horizontal ? boxWidth : defaultHeight,
-    style: style[type] || style.boxes
+    style: style[type] || style.boxes,
+    tabIndex
   };
 };
 
 const getMedianProps = (props) => {
-  const { boxWidth, horizontal, style, datum, scale, index } = props;
+  const { ariaLabel, boxWidth, horizontal, style, datum, scale, index, tabIndex } = props;
   const { median, x, y } = props.positions;
   return {
+    ariaLabel,
     datum,
     scale,
     index,
@@ -261,7 +276,8 @@ const getMedianProps = (props) => {
     y1: horizontal ? y - boxWidth / 2 : median,
     x2: horizontal ? median : x + boxWidth / 2,
     y2: horizontal ? y + boxWidth / 2 : median,
-    style: style.median
+    style: style.median,
+    tabIndex
   };
 };
 
@@ -282,7 +298,18 @@ const getOrientation = (labelOrientation, type) =>
   (typeof labelOrientation === "object" && labelOrientation[type]) || labelOrientation;
 
 const getLabelProps = (props, text, type) => {
-  const { datum, positions, index, boxWidth, horizontal, labelOrientation, style, theme } = props;
+  const {
+    ariaLabel,
+    datum,
+    positions,
+    index,
+    boxWidth,
+    horizontal,
+    labelOrientation,
+    style,
+    theme,
+    tabIndex
+  } = props;
   const orientation = getOrientation(labelOrientation, type);
   const namespace = `${type}Labels`;
   const labelStyle = style[namespace] || style.labels;
@@ -300,6 +327,7 @@ const getLabelProps = (props, text, type) => {
   };
 
   const labelProps = {
+    ariaLabel,
     text,
     datum,
     index,
@@ -312,7 +340,8 @@ const getLabelProps = (props, text, type) => {
     textAnchor: labelStyle.textAnchor || defaultTextAnchors[orientation],
     verticalAnchor: labelStyle.verticalAnchor || defaultVerticalAnchors[orientation],
     angle: labelStyle.angle,
-    horizontal
+    horizontal,
+    tabIndex
   };
 
   const component = props[`${type}LabelComponent`];
@@ -336,6 +365,7 @@ const getBaseProps = (props, fallbackProps) => {
   const modifiedProps = Helpers.modifyProps(props, fallbackProps, "boxplot");
   props = assign({}, modifiedProps, getCalculatedValues(modifiedProps));
   const {
+    ariaLabel,
     groupComponent,
     width,
     height,
@@ -349,7 +379,8 @@ const getBaseProps = (props, fallbackProps) => {
     data,
     style,
     domain,
-    name
+    name,
+    tabIndex
   } = props;
   const initialChildProps = {
     parent: {
@@ -379,7 +410,7 @@ const getBaseProps = (props, fallbackProps) => {
       q1: boxScale(datum._q1),
       q3: boxScale(datum._q3)
     };
-    const dataProps = assign({ index, datum, positions }, props);
+    const dataProps = assign({ ariaLabel, index, datum, positions, tabIndex }, props);
     const dataObj = TYPES.reduce((memo, type) => {
       memo[type] = getDataProps(dataProps, type);
       return memo;
