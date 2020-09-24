@@ -35,6 +35,7 @@ const getBaseProps = (props, fallbackProps) => {
   const modifiedProps = Helpers.modifyProps(props, fallbackProps, "line");
   props = assign({}, modifiedProps, getCalculatedValues(modifiedProps));
   const {
+    ariaLabel,
     data,
     domain,
     events,
@@ -56,6 +57,7 @@ const getBaseProps = (props, fallbackProps) => {
   } = props;
   const initialChildProps = {
     parent: {
+      ariaLabel,
       style: style.parent,
       scale,
       data,
@@ -71,6 +73,7 @@ const getBaseProps = (props, fallbackProps) => {
     },
     all: {
       data: {
+        ariaLabel,
         horizontal,
         polar,
         origin,

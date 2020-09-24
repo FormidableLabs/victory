@@ -98,7 +98,7 @@ const evaluateProps = (props) => {
   const id = Helpers.evaluateProp(props.id, props);
   const tabIndex = Helpers.evaluateProp(props.tabIndex, props);
 
-  return assign({}, props, { style, barWidth, cornerRadius, desc, id, tabIndex, ariaLabel });
+  return assign({}, props, { ariaLabel, style, barWidth, cornerRadius, desc, id, tabIndex });
 };
 
 const Bar = (props) => {

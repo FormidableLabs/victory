@@ -32,7 +32,7 @@ const toNewName = (interpolation) => {
 };
 
 const getLineFunction = (props) => {
-  const { polar, scale, horizontal } = props;
+  const { ariaLabel, polar, scale, horizontal } = props;
   const defaultOpenCurve = polar ? false : true;
   const openCurve = props.openCurve === undefined ? defaultOpenCurve : props.openCurve;
   const interpolationFunction = typeof props.interpolation === "function" && props.interpolation;
@@ -57,16 +57,18 @@ const getLineFunction = (props) => {
 const evaluateProps = (props) => {
   /**
    * Potential evaluated props are:
+   * `ariaLabel`
    * `id`
    * `style`
    */
+  const ariaLabel = Helpers.evaluateProp(props.ariaLabel, props);
   const id = Helpers.evaluateProp(props.id, props);
   const style = Helpers.evaluateStyle(
     assign({ fill: "none", stroke: "black" }, props.style),
     props
   );
 
-  return assign({}, props, { id, style });
+  return assign({}, props, { ariaLabel, id, style });
 };
 
 const Curve = (props) => {
@@ -77,6 +79,7 @@ const Curve = (props) => {
 
   return React.cloneElement(props.pathComponent, {
     ...props.events,
+    "aria-label": props.ariaLabel,
     d: lineFunction(props.data),
     style: props.style,
     transform: props.transform || defaultTransform,

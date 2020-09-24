@@ -1,8 +1,22 @@
 import React from "react";
-import { VictoryChart } from "@packages/victory-chart";
+import { Curve } from "@packages/victory-line";
 import { VictoryBar, Bar } from "@packages/victory-bar";
+import { VictoryPie } from "@packages/victory-pie";
+import { VictoryLine } from "@packages/victory-line";
+import { VictoryArea } from "@packages/victory-area";
+import { VictoryStack } from "@packages/victory-stack";
+import { VictoryChart } from "@packages/victory-chart";
+import { VictoryScatter } from "@packages/victory-scatter";
 import { VictoryBoxPlot } from "@packages/victory-box-plot";
 import { LineSegment, Whisker, Border } from "@packages/victory-core";
+import {
+  accessibilityBarData,
+  accessibilityBoxData,
+  accessibilityAreaData,
+  accessibilityPieDemo,
+  accessibilityScatterDemo,
+  accessibilityLineDemo
+} from "../../demo-data";
 
 const headingStyle: React.CSSProperties = {
   display: "flex",
@@ -12,11 +26,11 @@ const headingStyle: React.CSSProperties = {
 };
 const containerStyle: React.CSSProperties = {
   display: "flex",
-  flexDirection: "row",
-  flexWrap: "wrap",
+  flexFlow: "row wrap",
   alignItems: "center",
   justifyContent: "flex-start"
 };
+
 const chartContainerStyle: React.CSSProperties = {
   display: "flex",
   flexDirection: "column",
@@ -37,12 +51,7 @@ export default class VictoryAccessibilityDemo extends React.Component<any> {
             <h3> Bar chart</h3>
             <VictoryChart domainPadding={{ x: 40, y: 40 }}>
               <VictoryBar
-                data={[
-                  { x: "A", y: 1 },
-                  { x: "B", y: 3 },
-                  { x: "C", y: 5 },
-                  { x: "D", y: 7 }
-                ]}
+                data={accessibilityBarData}
                 dataComponent={
                   <Bar
                     ariaLabel={({ datum }) => `bar-value-${datum.x}`}
@@ -58,13 +67,7 @@ export default class VictoryAccessibilityDemo extends React.Component<any> {
               <VictoryBoxPlot
                 minLabels
                 maxLabels
-                data={[
-                  { x: "red", y: [5, 10, 9, 2] },
-                  { x: "blue", y: [1, 15, 6, 8] },
-                  { x: "green", y: [3, 5, 6, 9] },
-                  { x: "yellow", y: [5, 20, 8, 12] },
-                  { x: "white", y: [2, 11, 12, 13] }
-                ]}
+                data={accessibilityBoxData}
                 /** datum props available ex:
                  * x: "green"
                  * xName: "green"
@@ -109,6 +112,70 @@ export default class VictoryAccessibilityDemo extends React.Component<any> {
                 }
               />
             </VictoryChart>
+          </div>
+          {/** AREA */}
+          <div style={chartContainerStyle}>
+            <h3> Area </h3>
+            <VictoryChart domainPadding={{ y: 10 }}>
+              <VictoryStack>
+                <VictoryArea data={accessibilityAreaData.a} />
+                <VictoryArea
+                  data={accessibilityAreaData.b}
+                  // ariaLabel={({ datum }) => `${datum.x} min is ${datum._min}`}
+                  // tabIndex={({ index }) => index + 21}
+                />
+                <VictoryArea data={accessibilityAreaData.c} />
+                <VictoryArea data={accessibilityAreaData.d} />
+              </VictoryStack>
+            </VictoryChart>
+          </div>
+          <div style={chartContainerStyle}>
+            <h3> Line </h3>
+            <VictoryChart>
+              <VictoryLine
+                data={accessibilityLineDemo}
+                dataComponent={
+                  <Curve
+                    ariaLabel={(props) => {
+                      console.log("props", props);
+                      return "test";
+                    }}
+                  />
+                }
+              />
+            </VictoryChart>
+          </div>
+          <div style={chartContainerStyle}>
+            <h3>Pie</h3>
+            <VictoryChart>
+              <VictoryPie
+                style={{ labels: { fill: "white", fontSize: 10 } }}
+                labelRadius={({ datum }) => datum.radius - 12}
+                padding={{ bottom: 50, left: 50, right: 10 }}
+                width={400}
+                height={200}
+                radius={({ datum }) => datum.radius}
+                data={accessibilityPieDemo}
+              />
+            </VictoryChart>
+          </div>
+          <div style={chartContainerStyle}>
+            <h3>Scatter</h3>
+            <VictoryChart domain={{ x: [0, 6], y: [0, 8] }}>
+              <VictoryScatter
+                style={{ data: { fill: "#c43a31" } }}
+                size={7}
+                data={accessibilityScatterDemo}
+              />
+            </VictoryChart>
+          </div>
+          <div style={chartContainerStyle}>
+            <h3>Voronoi</h3>
+            <VictoryChart></VictoryChart>
+          </div>
+          <div style={chartContainerStyle}>
+            <h3>Histogram</h3>
+            <VictoryChart></VictoryChart>
           </div>
         </div>
       </>

@@ -3,11 +3,25 @@ import { VictoryBar } from "Packages/victory-bar";
 import { VictoryChart } from "Packages/victory-chart";
 import { VictoryBoxPlot } from "Packages/victory-box-plot";
 import { LineSegment, Whisker, Border } from "victory-core/src";
+import { VictoryStack } from "Packages/victory-stack";
+import { VictoryGroup } from "Packages/victory-group";
+import { VictoryArea } from "Packages/victory-area";
+import {
+  accessibilityBarData,
+  accessibilityBoxData,
+  accessibilityAreaData
+} from "../../demo-data.ts";
 
-const containerStyle = {
+const heading = {
   display: "flex",
   flexDirection: "row",
-  flexWrap: "wrap",
+  width: "100%",
+  alignItems: "center",
+  justifyContent: "center"
+};
+const containerStyle = {
+  display: "flex",
+  flexFlow: "row wrap",
   alignItems: "center",
   justifyContent: "flex-start"
 };
@@ -24,13 +38,13 @@ export default class App extends React.Component {
   render() {
     return (
       <>
-        <div>
-          <h2>Tabbable charts with aria-labels</h2>
+        <div style={heading}>
+          <h3>Tabbable charts with aria-labels</h3>
         </div>
         <div className="demo" style={containerStyle}>
           {/** BAR CHART */}
           <div style={chartContainerStyle}>
-            <h3> Bar chart</h3>
+            <h3> Bar </h3>
             <VictoryChart domainPadding={{ x: 40, y: 40 }}>
               <VictoryBar
                 data={[
@@ -53,16 +67,7 @@ export default class App extends React.Component {
             <h3> Box plot </h3>
             <VictoryChart domainPadding={{ x: 40, y: 40 }}>
               <VictoryBoxPlot
-                minLabels
-                maxLabels
-                data={[
-                  { x: "red", y: [5, 10, 9, 2] },
-                  { x: "blue", y: [1, 15, 6, 8] },
-                  { x: "green", y: [3, 5, 6, 9] },
-                  { x: "yellow", y: [5, 20, 8, 12] },
-                  { x: "white", y: [2, 11, 12, 13] }
-                ]}
-                /** datum props available ex:
+                /** datum props available w/example values:
                  * x: "green"
                  * xName: "green"
                  * y: (4) [3, 5, 6, 9]
@@ -74,6 +79,9 @@ export default class App extends React.Component {
                  * _x: 3
                  * _y: 3
                  */
+                minLabels
+                maxLabels
+                data={accessibilityBoxData}
                 maxComponent={
                   <Whisker
                     ariaLabel={({ datum }) => `${datum.x} max is ${datum._max}`}
@@ -89,13 +97,13 @@ export default class App extends React.Component {
                 medianComponent={
                   <LineSegment
                     ariaLabel={({ datum }) => `${datum.x} median value is ${datum._median}`}
-                    tabIndex={({ index }) => index + 5.3}
+                    tabIndex={({ index }) => index + 5.1}
                   />
                 }
                 q1Component={
                   <Border
                     ariaLabel={({ datum }) => `${datum.x} q1 value is ${datum._q1}`}
-                    tabIndex={({ index }) => index + 6}
+                    tabIndex={({ index }) => index + 6.2}
                   />
                 }
                 minComponent={
@@ -105,6 +113,57 @@ export default class App extends React.Component {
                   />
                 }
               />
+            </VictoryChart>
+          </div>
+          {/** AREA */}
+          <div style={chartContainerStyle}>
+            <h3> Area </h3>
+            <VictoryChart domainPadding={{ y: 10 }}>
+              {/* <VictoryStack
+                ariaLabel={(props) => {
+                  console.log("stack props", props);
+                }}
+              >
+                <VictoryArea
+                  data={accessibilityAreaData.a}
+                  ariaLabel={(props) => {
+                    console.log("area props", props);
+                  }}
+                  tabIndex={({ index }) => index + 20}
+                />
+                <VictoryArea
+                  data={accessibilityAreaData.b}
+                  // ariaLabel={({ datum }) => `${datum.x} min is ${datum._min}`}
+                  // tabIndex={({ index }) => index + 21}
+                />
+                <VictoryArea data={accessibilityAreaData.c} />
+                <VictoryArea data={accessibilityAreaData.d} />
+              </VictoryStack> */}
+            </VictoryChart>
+          </div>
+          <div>
+            <VictoryChart>
+              <h3> Line </h3>
+            </VictoryChart>
+          </div>
+          <div>
+            <VictoryChart>
+              <h3>Pie</h3>
+            </VictoryChart>
+          </div>
+          <div>
+            <VictoryChart>
+              <h3>Scatter</h3>
+            </VictoryChart>
+          </div>
+          <div>
+            <VictoryChart>
+              <h3>Voronoi</h3>
+            </VictoryChart>
+          </div>
+          <div>
+            <VictoryChart>
+              <h3>Histogram</h3>
             </VictoryChart>
           </div>
         </div>
