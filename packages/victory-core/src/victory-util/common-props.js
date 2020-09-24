@@ -2,6 +2,7 @@ import PropTypes from "prop-types";
 import CustomPropTypes from "./prop-types";
 
 const dataProps = {
+  ariaLabel: PropTypes.oneOfType([PropTypes.func, PropTypes.arrayOf(PropTypes.string)]),
   categories: PropTypes.oneOfType([
     PropTypes.arrayOf(PropTypes.string),
     PropTypes.shape({
@@ -26,6 +27,7 @@ const dataProps = {
     data: PropTypes.object,
     labels: PropTypes.object
   }),
+  tabIndex: PropTypes.oneOfType([PropTypes.number, PropTypes.func]),
   x: PropTypes.oneOfType([
     PropTypes.func,
     CustomPropTypes.allOfType([CustomPropTypes.integer, CustomPropTypes.nonNegative]),
@@ -146,6 +148,7 @@ const baseProps = {
 
 const primitiveProps = {
   active: PropTypes.bool,
+  ariaLabel: PropTypes.oneOfType([PropTypes.string, PropTypes.func]),
   className: PropTypes.string,
   clipPath: PropTypes.string,
   data: PropTypes.oneOfType([PropTypes.array, PropTypes.object]),
