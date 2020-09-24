@@ -7,16 +7,18 @@ import { VictoryBar, Bar } from "@packages/victory-bar";
 import { VictoryPie, Slice } from "@packages/victory-pie";
 import { VictoryArea, Area } from "@packages/victory-area";
 import { VictoryChart } from "@packages/victory-chart";
-//import { VictoryScatter } from "@packages/victory-scatter";
+import { VictoryScatter } from "@packages/victory-scatter";
 import { VictoryBoxPlot } from "@packages/victory-box-plot";
-import { LineSegment, Whisker, Border, VictoryLabel } from "@packages/victory-core";
+import { VictoryVoronoi, Voronoi } from "@packages/victory-voronoi";
+import { LineSegment, Whisker, Border, Point, VictoryLabel } from "@packages/victory-core";
 import {
   accessibilityBarData,
   accessibilityBoxData,
   accessibilityAreaData,
   accessibilityPieDemo,
-  //accessibilityScatterDemo,
-  accessibilityLineDemo
+  accessibilityScatterDemo,
+  accessibilityLineDemo,
+  accessibilityVoronoiData
 } from "../../demo-data";
 
 const pageHeadingStyle: React.CSSProperties = {
@@ -222,7 +224,7 @@ export default class VictoryAccessibilityDemo extends React.Component<any> {
           </div>
 
           {/** Scatter */}
-          {/* <div style={chartContainerStyle}>
+          <div style={chartContainerStyle}>
             <h3>Scatter</h3>
             <VictoryChart domain={{ x: [0, 6], y: [0, 8] }}>
               <VictoryScatter
@@ -237,19 +239,24 @@ export default class VictoryAccessibilityDemo extends React.Component<any> {
                 }
               />
             </VictoryChart>
-          </div> */}
+          </div>
 
           {/** VORONOI */}
-          {/* <div style={chartContainerStyle}>
+          <div style={chartContainerStyle}>
             <h3>Voronoi</h3>
-            <VictoryChart></VictoryChart>
-          </div> */}
-
-          {/** HISTOGRAM */}
-          {/* <div style={chartContainerStyle}>
-            <h3>Histogram</h3>
-            <VictoryChart></VictoryChart>
-          </div> */}
+            <VictoryChart>
+              <VictoryVoronoi
+                style={{ data: { stroke: "#c43a31", strokeWidth: 2 } }}
+                data={accessibilityVoronoiData}
+                dataComponent={
+                  <Voronoi
+                    ariaLabel={({ datum }) => `${datum.x}`}
+                    tabIndex={({ index }) => index + 32}
+                  />
+                }
+              />
+            </VictoryChart>
+          </div>
         </div>
       </>
     );

@@ -12,15 +12,18 @@ const getVoronoiPath = (props) => {
 const evaluateProps = (props) => {
   /**
    * Potential evaluated props are:
+   * `aria-label`
    * `id`
    * `size`
    * `style`
+   * `tabIndex
    */
+  const ariaLabel = Helpers.evaluateProp(props.ariaLabel, props);
   const id = Helpers.evaluateProp(props.id, props);
   const size = Helpers.evaluateProp(props.size, props);
   const style = Helpers.evaluateStyle(props.style, props);
-
-  return assign({}, props, { id, size, style });
+  const tabIndex = Helpers.evaluateStyle(props.tabIndex, props);
+  return assign({}, props, { ariaLabel, id, size, style, tabIndex });
 };
 
 const Voronoi = (props) => {
@@ -33,11 +36,13 @@ const Voronoi = (props) => {
   if (size) {
     const circle = React.cloneElement(props.circleComponent, {
       ...sharedProps,
+      "aria-label": props.ariaLabel,
       key: `${props.id}-circle-clip`,
       clipPath: `url(#${props.clipId})`,
       cx: props.x,
       cy: props.y,
-      r: size
+      r: size,
+      tabIndex: props.tabIndex
     });
 
     const voronoiClipPath = React.cloneElement(

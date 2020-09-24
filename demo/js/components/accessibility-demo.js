@@ -1,21 +1,23 @@
 import React from "react";
 import { Curve } from "Packages/victory-line";
-import { VictoryBar, Bar } from "Packages/victory-bar";
-import { VictoryPie, Slice } from "Packages/victory-pie";
 import { VictoryLine } from "Packages/victory-line";
-import { VictoryArea, Area } from "Packages/victory-area";
 import { VictoryStack } from "Packages/victory-stack";
 import { VictoryChart } from "Packages/victory-chart";
-//import { VictoryScatter } from "Packages/victory-scatter";
+import { VictoryScatter } from "Packages/victory-scatter";
 import { VictoryBoxPlot } from "Packages/victory-box-plot";
-import { LineSegment, Whisker, Border, VictoryLabel } from "Packages/victory-core";
+import { VictoryBar, Bar } from "Packages/victory-bar";
+import { VictoryPie, Slice } from "Packages/victory-pie";
+import { VictoryArea, Area } from "Packages/victory-area";
+import { VictoryVoronoi, Voronoi } from "Packages/victory-voronoi";
+import { LineSegment, Whisker, Border, Point, VictoryLabel } from "Packages/victory-core";
 import {
+  accessibilityAreaData,
   accessibilityBarData,
   accessibilityBoxData,
-  accessibilityAreaData,
+  accessibilityLineDemo,
   accessibilityPieDemo,
-  //accessibilityScatterDemo,
-  accessibilityLineDemo
+  accessibilityScatterDemo,
+  accessibilityVoronoiData
 } from "../../demo-data.ts";
 
 const pageHeadingStyle = {
@@ -131,7 +133,6 @@ export default class App extends React.Component {
               <VictoryStack>
                 <VictoryArea
                   data={accessibilityAreaData.a}
-                  labelComponent={<VictoryLabel ariaLabel={({ datum }) => datum.y} />}
                   dataComponent={
                     <Area
                       ariaLabel={({ data }) => `area chart stack ${data[0]._stack}`}
@@ -180,7 +181,7 @@ export default class App extends React.Component {
                 labelComponent={
                   <VictoryLabel
                     ariaLabel={({ datum }) => datum.y}
-                    tabIndex={({ index }) => index + 21}
+                    tabIndex={({ index }) => assignIndexValue(index, 21)}
                   />
                 }
                 dataComponent={
@@ -199,7 +200,7 @@ export default class App extends React.Component {
 
           {/** PIE */}
           <div style={chartContainerStyle}>
-            <h3 style={chartHeadingStyle}> Pie </h3>
+            <h3 style={chartHeadingStyle}>Pie</h3>
             <VictoryPie
               style={{ labels: { fill: "white", fontSize: 10 } }}
               labelRadius={({ datum }) => datum.radius - 12}
@@ -217,22 +218,39 @@ export default class App extends React.Component {
           </div>
 
           {/** Scatter */}
-          {/* <div style={chartContainerStyle}>
+          <div style={chartContainerStyle}>
             <h3>Scatter</h3>
             <VictoryChart domain={{ x: [0, 6], y: [0, 8] }}>
               <VictoryScatter
                 style={{ data: { fill: "#c43a31" } }}
                 size={7}
                 data={accessibilityScatterDemo}
+                dataComponent={
+                  <Point
+                    ariaLabel={({ datum }) => `scatter point x: ${datum.x}, y:${datum.y}`}
+                    tabIndex={({ index }) => index + 28}
+                  />
+                }
               />
             </VictoryChart>
-          </div> */}
+          </div>
 
           {/** VORONOI */}
-          {/* <div style={chartContainerStyle}>
+          <div style={chartContainerStyle}>
             <h3>Voronoi</h3>
-            <VictoryChart></VictoryChart>
-          </div> */}
+            <VictoryChart>
+              <VictoryVoronoi
+                style={{ data: { stroke: "#c43a31", strokeWidth: 2 } }}
+                data={accessibilityVoronoiData}
+                dataComponent={
+                  <Voronoi
+                    ariaLabel={({ datum }) => `${datum.x}`}
+                    tabIndex={({ index }) => index + 32}
+                  />
+                }
+              />
+            </VictoryChart>
+          </div>
 
           {/** HISTOGRAM */}
           {/* <div style={chartContainerStyle}>

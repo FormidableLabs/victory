@@ -87,7 +87,7 @@ const getBaseProps = (props, fallbackProps) => {
     const text = LabelHelpers.getText(props, datum, index);
     if ((text !== undefined && text !== null) || (labels && (events || sharedEvents))) {
       const eventKey = !isNil(datum.eventKey) ? datum.eventKey : index;
-      childProps[eventKey] = { labels: LabelHelpers.getProps(props, index) };
+      childProps[eventKey] = { labels: LabelHelpers.getText(props, datum, index) };
     }
     return childProps;
   }, initialChildProps);
