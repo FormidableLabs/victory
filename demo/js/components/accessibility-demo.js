@@ -1,5 +1,3 @@
-/*global window:false*/
-/*eslint-disable no-magic-numbers,react/no-multi-comp */
 import React from "react";
 import { VictoryChart } from "Packages/victory-chart/src/index";
 import { VictoryBar } from "Packages/victory-bar/src/index";
