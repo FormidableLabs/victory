@@ -26,6 +26,7 @@ export default class VictoryContainer extends React.Component {
     polar: PropTypes.bool,
     portalComponent: PropTypes.element,
     portalZIndex: CustomPropTypes.integer,
+    preserveAspectRatio: PropTypes.string,
     responsive: PropTypes.bool,
     style: PropTypes.object,
     tabIndex: PropTypes.number,
@@ -115,7 +116,7 @@ export default class VictoryContainer extends React.Component {
       responsive
     } = props;
     const children = this.getChildren(props);
-    const dimensions = responsive ? { width: "100%", height: "auto" } : { width, height };
+    const dimensions = responsive ? { width: "100%", height: "100%" } : { width, height };
     const divStyle = assign(
       { pointerEvents: "none", touchAction: "none", position: "relative" },
       dimensions
@@ -130,6 +131,7 @@ export default class VictoryContainer extends React.Component {
       width,
       height,
       viewBox: svgProps.viewBox,
+      preserveAspectRatio: svgProps.preserveAspectRatio,
       style: portalSvgStyle
     };
     return (
@@ -160,7 +162,16 @@ export default class VictoryContainer extends React.Component {
   }
 
   render() {
-    const { width, height, responsive, events, title, desc, tabIndex } = this.props;
+    const {
+      width,
+      height,
+      responsive,
+      events,
+      title,
+      desc,
+      tabIndex,
+      preserveAspectRatio
+    } = this.props;
     const style = responsive
       ? this.props.style
       : Helpers.omit(this.props.style, ["height", "width"]);
@@ -172,7 +183,8 @@ export default class VictoryContainer extends React.Component {
         role: "img",
         "aria-labelledby": title ? this.getIdForElement("title") : undefined,
         "aria-describedby": desc ? this.getIdForElement("desc") : undefined,
-        viewBox: responsive ? `0 0 ${width} ${height}` : undefined
+        viewBox: responsive ? `0 0 ${width} ${height}` : undefined,
+        preserveAspectRatio: responsive ? preserveAspectRatio : undefined
       },
       events
     );
