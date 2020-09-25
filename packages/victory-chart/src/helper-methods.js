@@ -53,6 +53,7 @@ function getBackgroundWithProps(props, calculatedProps) {
 
   const xCoordinate = props.polar ? calculatedProps.origin.x : xScale;
   const yCoordinate = props.polar ? calculatedProps.origin.y : yScale;
+  const parentName = props.name || "chart";
 
   const backgroundProps = {
     height,
@@ -61,6 +62,7 @@ function getBackgroundWithProps(props, calculatedProps) {
     style: props.style.background,
     x: xCoordinate,
     y: yCoordinate,
+    key: `${parentName}-background`,
     width
   };
 
