@@ -134,7 +134,7 @@ const getDy = (props, verticalAnchor, lineHeight) => {
       : dy + (capHeight / 2 + (0.5 - length / 2) * lineHeights[0]) * fontSizes[0];
   } else {
     const allHeights = [...Array(length).keys()].reduce((memo, i) => {
-      return memo + (capHeight / 2 - lineHeights[i]) * fontSizes[i];
+      return memo + ((capHeight / 2 + (0.5 - length) * lineHeights[i]) * fontSizes[i]) / length;
     }, 0);
     return anchor === "end"
       ? dy + allHeights

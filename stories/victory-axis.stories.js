@@ -244,3 +244,23 @@ export const Style = () => {
     </div>
   );
 };
+
+export const WithMultilineLabels = () => {
+  return (
+    <div style={containerStyle}>
+      <VictoryChart {...defaultChartProps}>
+        <VictoryAxis
+          tickValues={getValues(5, -2)}
+          tickFormat={(tick) => (tick >= 0 ? tick : `minus\n${-tick}`)}
+        />
+      </VictoryChart>
+      <VictoryChart {...defaultChartProps}>
+        <VictoryAxis
+          tickValues={getValues(5, -2)}
+          tickFormat={(tick) => (tick >= 0 ? tick : `minus\n${-tick}`)}
+          orientation="top"
+        />
+      </VictoryChart>
+    </div>
+  );
+};
