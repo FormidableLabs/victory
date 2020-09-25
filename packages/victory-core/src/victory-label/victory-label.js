@@ -203,7 +203,7 @@ const getFullBackground = (calculatedProps, tspanValues) => {
   const height = inline
     ? Math.max(...textSizes.map((size) => size.height))
     : textSizes.reduce((memo, size, i) => {
-        const capHeightAdjustment = i ? capHeight / 2 : 0;
+        const capHeightAdjustment = i ? 0 : capHeight / 2;
         return memo + size.height * (tspanValues[i].lineHeight - capHeightAdjustment);
       }, 0);
 
