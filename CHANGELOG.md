@@ -2,6 +2,7 @@
 
 ## 35.1.0 (2020-09-25)
 
+- [#1692](https://github.com/FormidableLabs/victory/pull/1692) - Adds a unique key prop for chart backgrounds
 - [#1690](https://github.com/FormidableLabs/victory/pull/1690) - Fixes a minor positioning bug in label backgrounds
 - [#1688](https://github.com/FormidableLabs/victory/pull/1688) - Fixes vertical alignment issue for labels. Thanks @Hypnosphi!
 - [#1685](https://github.com/FormidableLabs/victory/pull/1685) - Adds an optional `preserveAspectRatio` prop to `VictoryContainer`, and uses `height: "100%"` rather than `height: "auto"`, giving users finer control over how Victory's svgs are positioned and scaled within their containers.
