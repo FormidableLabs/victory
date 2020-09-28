@@ -2,6 +2,7 @@ import React from "react";
 import { VictoryChart } from "Packages/victory-chart/src/index";
 import { VictoryBoxPlot } from "Packages/victory-box-plot/src/index";
 import { VictoryBar } from "Packages/victory-bar/src/index";
+import { VictoryLabel } from "Packages/victory-core/src/index";
 import { LineSegment, Whisker, Box } from "victory-core/src";
 
 export default class App extends React.Component {
@@ -46,7 +47,7 @@ export default class App extends React.Component {
         </div> */}
         {/** BOX PLOT */}
         <div style={chartContainerStyle}>
-          <h3>Tabbable with aria-labels: bar chart</h3>
+          <h3>Tabbable with aria-labels: box plot </h3>
           <VictoryChart domainPadding={{ x: 40, y: 40 }}>
             <VictoryBoxPlot
               minLabels
@@ -65,15 +66,26 @@ export default class App extends React.Component {
                   tabIndex={({ index }) => index + 1}
                 />
               }
+              q3Component={
+                <Box
+                  ariaLabel={({ datum }) => `${datum.x} q2 value is ${datum._q3}`}
+                  tabIndex={({ index }) => index + 1}
+                />
+              }
+              q1Component={
+                <Box
+                  ariaLabel={({ datum }) => `${datum.x} q1 value is ${datum._q1}`}
+                  tabIndex={({ index }) => index + 1}
+                />
+              }
               minComponent={
                 <Whisker
                   ariaLabel={({ datum }) => `${datum.x} min is ${Math.min(...datum.y)}`}
-                  tabIndex={({ index }) => index + 4}
+                  tabIndex={({ index }) => index + 1}
                 />
               }
-              dataComponent={
-                <Box ariaLabel={"THE DATA BOX COMPONENT"} tabIndex={({ index }) => index + 1} />
-              }
+              // not working, investigate
+              q1LabelComponent={<VictoryLabel dx={5} dy={5} />}
             />
           </VictoryChart>
         </div>

@@ -8,6 +8,7 @@ import Rect from "./rect";
 const evaluateProps = (props) => {
   /**
    * Potential evaluated props are:
+   * `ariaLabel`
    * `desc`
    * `id`
    * `style`
@@ -17,8 +18,9 @@ const evaluateProps = (props) => {
   const id = Helpers.evaluateProp(props.id, props);
   const style = Helpers.evaluateStyle(assign({ fill: "none" }, props.style), props);
   const tabIndex = Helpers.evaluateProp(props.tabIndex, props);
+  const ariaLabel = Helpers.evaluateProp(props.ariaLabel, props);
 
-  return assign({}, props, { desc, id, style, tabIndex });
+  return assign({}, props, { ariaLabel, desc, id, style, tabIndex });
 };
 
 const Border = (props) => {
@@ -26,6 +28,7 @@ const Border = (props) => {
 
   return React.cloneElement(props.rectComponent, {
     ...props.events,
+    "aria-label": props.ariaLabel,
     style: props.style,
     desc: props.desc,
     tabIndex: props.tabIndex,

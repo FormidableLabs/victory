@@ -2,6 +2,8 @@ import React from "react";
 import { VictoryChart } from "@packages/victory-chart";
 import { VictoryBoxPlot } from "@packages/victory-box-plot/src/index";
 import { VictoryBar } from "@packages/victory-bar";
+import { VictoryLabel } from "@packages/victory-core/src/index";
+import { LineSegment, Whisker, Border } from "@packages/victory-core";
 
 export default class VictoryAccessibilityDemo extends React.Component<any> {
   render() {
@@ -38,7 +40,7 @@ export default class VictoryAccessibilityDemo extends React.Component<any> {
           </VictoryChart>
         </div>
         <div style={chartContainerStyle}>
-          <h3>Tabbable with aria-labels: bar chart</h3>
+          <h3>Tabbable with aria-labels: box plot </h3>
           <VictoryChart domainPadding={{ x: 40, y: 40 }}>
             <VictoryBoxPlot
               minLabels
@@ -50,11 +52,32 @@ export default class VictoryAccessibilityDemo extends React.Component<any> {
                 { x: "yellow", y: [5, 20, 8, 12] },
                 { x: "white", y: [2, 11, 12, 13] }
               ]}
-              // ariaLabel={({ datum }) => `bar-value-${datum.x}`}
-              // tabIndex={({ index }) => {
-              //   console.log("-----", index);
-              //   return 1;
-              // }}
+              medianComponent={<LineSegment ariaLabel={({ datum }) => `custom-label-${datum}`} />}
+              maxComponent={
+                <Whisker
+                  ariaLabel={({ datum }) => `${datum.x} max is ${Math.max(...datum.y)}`}
+                  tabIndex={({ index }) => index + 1}
+                />
+              }
+              q3Component={
+                <Border
+                  ariaLabel={({ datum }) => `${datum.x} q2 value is ${datum._q3}`}
+                  tabIndex={({ index }) => index + 1}
+                />
+              }
+              q1Component={
+                <Border
+                  ariaLabel={({ datum }) => `${datum.x} q1 value is ${datum._q1}`}
+                  tabIndex={({ index }) => index + 1}
+                />
+              }
+              minComponent={
+                <Whisker
+                  ariaLabel={({ datum }) => `${datum.x} min is ${Math.min(...datum.y)}`}
+                  tabIndex={({ index }) => index + 1}
+                />
+              }
+              q1LabelComponent={<VictoryLabel dx={5} dy={5} />}
             />
           </VictoryChart>
         </div>
