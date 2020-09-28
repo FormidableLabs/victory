@@ -1,5 +1,9 @@
 # Victory Changelog
 
+## 35.1.1 (2020-09-28)
+
+- [#1693](https://github.com/FormidableLabs/victory/pull/1693) - Add `aria-labelledby` and `aria-describedby` props to `VictoryContainer`. Thanks @elliotdickison!
+
 ## 35.1.0 (2020-09-25)
 
 - [#1692](https://github.com/FormidableLabs/victory/pull/1692) - Adds a unique key prop for chart backgrounds
