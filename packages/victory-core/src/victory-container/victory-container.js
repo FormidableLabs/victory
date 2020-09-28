@@ -11,6 +11,8 @@ export default class VictoryContainer extends React.Component {
   static displayName = "VictoryContainer";
   static role = "container";
   static propTypes = {
+    "aria-describedby": PropTypes.string,
+    "aria-labelledby": PropTypes.string,
     children: PropTypes.oneOfType([PropTypes.arrayOf(PropTypes.node), PropTypes.node]),
     className: PropTypes.string,
     containerId: PropTypes.oneOfType([PropTypes.number, PropTypes.string]),
@@ -19,7 +21,10 @@ export default class VictoryContainer extends React.Component {
     events: PropTypes.object,
     height: CustomPropTypes.nonNegative,
     name: PropTypes.string,
-    origin: PropTypes.shape({ x: CustomPropTypes.nonNegative, y: CustomPropTypes.nonNegative }),
+    origin: PropTypes.shape({
+      x: CustomPropTypes.nonNegative,
+      y: CustomPropTypes.nonNegative
+    }),
     ouiaId: PropTypes.oneOfType([PropTypes.number, PropTypes.string]),
     ouiaSafe: PropTypes.bool,
     ouiaType: PropTypes.string,
@@ -154,7 +159,10 @@ export default class VictoryContainer extends React.Component {
             {children}
           </svg>
           <div style={portalDivStyle}>
-            {React.cloneElement(portalComponent, { ...portalProps, ref: this.savePortalRef })}
+            {React.cloneElement(portalComponent, {
+              ...portalProps,
+              ref: this.savePortalRef
+            })}
           </div>
         </div>
       </PortalContext.Provider>
@@ -181,8 +189,14 @@ export default class VictoryContainer extends React.Component {
         height,
         tabIndex,
         role: "img",
-        "aria-labelledby": title ? this.getIdForElement("title") : undefined,
-        "aria-describedby": desc ? this.getIdForElement("desc") : undefined,
+        "aria-labelledby":
+          [title && this.getIdForElement("title"), this.props["aria-labelledby"]]
+            .filter(Boolean)
+            .join(" ") || undefined,
+        "aria-describedby":
+          [desc && this.getIdForElement("desc"), this.props["aria-describedby"]]
+            .filter(Boolean)
+            .join(" ") || undefined,
         viewBox: responsive ? `0 0 ${width} ${height}` : undefined,
         preserveAspectRatio: responsive ? preserveAspectRatio : undefined
       },

@@ -232,6 +232,8 @@ export class VictoryLabel extends React.Component<VictoryLabelProps, any> {}
 // #region Victory Container
 
 export interface VictoryContainerProps {
+  "aria-describedby"?: string;
+  "aria-labelledby"?: string;
   children?: React.ReactElement | React.ReactElement[];
   className?: string;
   containerId?: number | string;
