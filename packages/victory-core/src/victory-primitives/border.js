@@ -14,11 +14,11 @@ const evaluateProps = (props) => {
    * `style`
    * `tabIndex`
    */
+  const ariaLabel = Helpers.evaluateProp(props.ariaLabel, props);
   const desc = Helpers.evaluateProp(props.desc, props);
   const id = Helpers.evaluateProp(props.id, props);
   const style = Helpers.evaluateStyle(assign({ fill: "none" }, props.style), props);
   const tabIndex = Helpers.evaluateProp(props.tabIndex, props);
-  const ariaLabel = Helpers.evaluateProp(props.ariaLabel, props);
 
   return assign({}, props, { ariaLabel, desc, id, style, tabIndex });
 };
