@@ -88,6 +88,7 @@ export interface CallbackArgs {
   active: boolean;
   datum: any;
   horizontal: boolean;
+  index: number;
   x: number;
   y: number;
   scale?: {
@@ -98,9 +99,11 @@ export interface CallbackArgs {
 
 export type VictoryStringOrNumberCallback = (args: CallbackArgs) => string | number;
 export type VictoryNumberCallback = (args: CallbackArgs) => number;
+export type VictoryStringCallback = (args: CallbackArgs) => string;
 export type VictoryPaddingCallback = (args: CallbackArgs) => number | BlockProps;
 export type StringOrNumberOrCallback = string | number | VictoryStringOrNumberCallback;
 export type NumberOrCallback = number | VictoryNumberCallback;
+export type StringOrCallback = string | VictoryStringCallback;
 export type PaddingOrCallback = number | BlockProps | VictoryPaddingCallback;
 
 export type SliceNumberOrCallback<T, P = null> = number | ((props: Omit<T, P>) => number);
@@ -617,6 +620,7 @@ export interface VictoryCommonProps {
 
 export interface VictoryCommonPrimitiveProps {
   active?: boolean;
+  ariaLabel?: StringOrCallback;
   className?: string;
   clipPath?: string;
   data?: any;
@@ -630,7 +634,7 @@ export interface VictoryCommonPrimitiveProps {
   scale?: any;
   shapeRendering?: string;
   style?: any;
-  tabIndex?: number | Function;
+  tabIndex?: NumberOrCallback;
   transform?: string;
 }
 

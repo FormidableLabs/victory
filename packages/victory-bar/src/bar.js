@@ -95,8 +95,9 @@ const evaluateProps = (props) => {
   const desc = Helpers.evaluateProp(props.desc, props);
   const id = Helpers.evaluateProp(props.id, props);
   const tabIndex = Helpers.evaluateProp(props.tabIndex, props);
+  const ariaLabel = Helpers.evaluateProp(props.ariaLabel, props);
 
-  return assign({}, props, { style, barWidth, cornerRadius, desc, id, tabIndex });
+  return assign({}, props, { style, barWidth, cornerRadius, desc, id, tabIndex, ariaLabel });
 };
 
 const Bar = (props) => {
@@ -107,17 +108,18 @@ const Bar = (props) => {
     ? getPolarBarPath(props, cornerRadius)
     : getBarPath(props, barWidth, cornerRadius);
   const defaultTransform = polar && origin ? `translate(${origin.x}, ${origin.y})` : undefined;
-
   return React.cloneElement(props.pathComponent, {
     ...props.events,
     style,
     d: path,
-    transform: props.transform || defaultTransform,
+    "aria-label": props.ariaLabel,
     className: props.className,
-    role: props.role,
-    shapeRendering: props.shapeRendering,
     clipPath: props.clipPath,
     desc: props.desc,
+    index: props.index,
+    role: props.role,
+    shapeRendering: props.shapeRendering,
+    transform: props.transform || defaultTransform,
     tabIndex: props.tabIndex
   });
 };

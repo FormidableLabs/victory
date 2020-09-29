@@ -2,6 +2,7 @@ import * as React from "react";
 import {
   EventPropTypeInterface,
   NumberOrCallback,
+  StringOrCallback,
   StringOrNumberOrCallback,
   VictoryCommonProps,
   VictoryCommonPrimitiveProps,
@@ -18,6 +19,7 @@ export interface VictoryBarProps
     VictoryDatableProps,
     VictoryMultiLabelableProps {
   alignment?: VictoryBarAlignmentType;
+  ariaLabel?: StringOrCallback;
   barRatio?: number;
   barWidth?: NumberOrCallback;
   cornerRadius?:
@@ -33,7 +35,9 @@ export interface VictoryBarProps
   events?: EventPropTypeInterface<VictoryBarTTargetType, number | string | number[] | string[]>[];
   eventKey?: StringOrNumberOrCallback;
   horizontal?: boolean;
+  index?: number;
   style?: VictoryStyleInterface;
+  tabIndex?: NumberOrCallback;
 }
 
 /**
@@ -60,6 +64,7 @@ export interface BarProps extends VictoryCommonPrimitiveProps {
   datum?: any;
   getPath?: Function;
   horizontal?: boolean;
+  index?: number;
   pathComponent?: React.ReactElement;
   width?: number;
   x?: number;
