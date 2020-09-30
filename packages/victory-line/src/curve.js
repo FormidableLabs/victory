@@ -32,7 +32,7 @@ const toNewName = (interpolation) => {
 };
 
 const getLineFunction = (props) => {
-  const { ariaLabel, polar, scale, horizontal } = props;
+  const { polar, scale, horizontal } = props;
   const defaultOpenCurve = polar ? false : true;
   const openCurve = props.openCurve === undefined ? defaultOpenCurve : props.openCurve;
   const interpolationFunction = typeof props.interpolation === "function" && props.interpolation;
@@ -60,6 +60,7 @@ const evaluateProps = (props) => {
    * `ariaLabel`
    * `id`
    * `style`
+   * `tabIndex`
    */
   const ariaLabel = Helpers.evaluateProp(props.ariaLabel, props);
   const id = Helpers.evaluateProp(props.id, props);
@@ -67,8 +68,9 @@ const evaluateProps = (props) => {
     assign({ fill: "none", stroke: "black" }, props.style),
     props
   );
+  const tabIndex = Helpers.evaluateProp(props.tabIndex, props);
 
-  return assign({}, props, { ariaLabel, id, style });
+  return assign({}, props, { ariaLabel, id, style, tabIndex });
 };
 
 const Curve = (props) => {
@@ -86,7 +88,8 @@ const Curve = (props) => {
     className: props.className,
     role: props.role,
     shapeRendering: props.shapeRendering,
-    clipPath: props.clipPath
+    clipPath: props.clipPath,
+    tabIndex: props.tabIndex
   });
 };
 

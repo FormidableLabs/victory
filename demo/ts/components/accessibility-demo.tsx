@@ -135,14 +135,19 @@ export default class VictoryAccessibilityDemo extends React.Component<any> {
             <VictoryChart domain={{ x: [0, 6], y: [0, 7] }}>
               <VictoryLine
                 data={accessibilityLineDemo}
-                labels={(props) => {
-                  console.log("vic line label props", props);
-                  return "line test";
-                }}
-                ariaLabel={(props) => {
-                  console.log("vic line props", props);
-                  return "line test";
-                }}
+                dataComponent={
+                  <Curve
+                    ariaLabel={({ data }) =>
+                      data.map(
+                        (dataPoint: any, i: number) =>
+                          `data point ${i + 1} x value is ${dataPoint.x} and y value is ${
+                            dataPoint.y
+                          }`
+                      )
+                    }
+                    tabIndex={18}
+                  />
+                }
               />
             </VictoryChart>
           </div>

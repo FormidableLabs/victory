@@ -29,9 +29,11 @@ export interface VictoryLineProps
 }
 
 export interface CurveProps extends VictoryCommonPrimitiveProps {
+  ariaLabel?: StringOrCallback;
   interpolation?: string | Function;
   openCurve?: boolean;
   pathComponent?: React.ReactElement;
+  tabIndex?: NumberOrCallback;
 }
 
 export class Curve extends React.Component<CurveProps> {}

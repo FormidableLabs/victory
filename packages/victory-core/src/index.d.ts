@@ -86,6 +86,7 @@ export type PaddingProps = number | BlockProps;
  */
 export interface CallbackArgs {
   active: boolean;
+  data: any;
   datum: any;
   horizontal: boolean;
   index: number | string;

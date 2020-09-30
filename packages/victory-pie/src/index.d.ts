@@ -28,7 +28,7 @@ export interface SliceProps extends VictoryCommonProps {
   pathComponent?: React.ReactElement;
   pathFunction?: (props: SliceProps) => string;
   radius?: SliceNumberOrCallback<SliceProps, "radius">;
-  slice: {
+  slice?: {
     startAngle?: number;
     endAngle?: number;
     padAngle?: number;
@@ -36,7 +36,7 @@ export interface SliceProps extends VictoryCommonProps {
   };
   sliceEndAngle?: SliceNumberOrCallback<SliceProps, "sliceEndAngle">;
   sliceStartAngle?: SliceNumberOrCallback<SliceProps, "sliceStartAngle">;
-  tabIndex: NumberOrCallback;
+  tabIndex?: NumberOrCallback;
 }
 
 export class Slice extends React.Component<SliceProps, any> {}

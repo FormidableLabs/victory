@@ -233,7 +233,8 @@ export const getBaseProps = (props, fallbackProps) => {
     name,
     innerRadius,
     cornerRadius,
-    padAngle
+    padAngle,
+    tabIndex
   } = calculatedValues;
   const radius = props.radius || defaultRadius;
   const initialChildProps = {
@@ -258,7 +259,8 @@ export const getBaseProps = (props, fallbackProps) => {
       radius,
       cornerRadius,
       padAngle,
-      style: getSliceStyle(index, calculatedValues)
+      style: getSliceStyle(index, calculatedValues),
+      tabIndex
     };
     childProps[eventKey] = {
       data: dataProps

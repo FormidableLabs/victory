@@ -53,6 +53,7 @@ export default class App extends React.Component {
             <h3> Bar </h3>
             <VictoryChart domainPadding={{ x: 40, y: 40 }}>
               <VictoryBar
+                style={{ data: { fill: "#c43a31" } }}
                 data={accessibilityBarData}
                 dataComponent={
                   <Bar
@@ -116,24 +117,25 @@ export default class App extends React.Component {
               />
             </VictoryChart>
           </div>
-          {/** AREA */}
-          <div style={chartContainerStyle}>
-            <h3> Area </h3>
-            <VictoryChart domainPadding={{ y: 10 }}>
-              <VictoryStack>
-                <VictoryArea data={accessibilityAreaData.a} />
-                <VictoryArea data={accessibilityAreaData.b} />
-                <VictoryArea data={accessibilityAreaData.c} />
-                <VictoryArea data={accessibilityAreaData.d} />
-              </VictoryStack>
-            </VictoryChart>
-          </div>
 
           {/** LINE */}
           <div style={chartContainerStyle}>
             <h3> Line </h3>
             <VictoryChart domain={{ x: [0, 6], y: [0, 7] }}>
-              <VictoryLine data={accessibilityLineDemo} />
+              <VictoryLine
+                data={accessibilityLineDemo}
+                dataComponent={
+                  <Curve
+                    ariaLabel={({ data }) =>
+                      data.map(
+                        (data, i) =>
+                          `data point ${i + 1} x value is ${data.x} and y value is ${data.y}`
+                      )
+                    }
+                    tabIndex={22}
+                  />
+                }
+              />
             </VictoryChart>
           </div>
 
@@ -154,6 +156,18 @@ export default class App extends React.Component {
                 />
               }
             />
+          </div>
+          {/** AREA */}
+          <div style={chartContainerStyle}>
+            <h3> Area </h3>
+            <VictoryChart domainPadding={{ y: 10 }}>
+              <VictoryStack>
+                <VictoryArea data={accessibilityAreaData.a} />
+                <VictoryArea data={accessibilityAreaData.b} />
+                <VictoryArea data={accessibilityAreaData.c} />
+                <VictoryArea data={accessibilityAreaData.d} />
+              </VictoryStack>
+            </VictoryChart>
           </div>
 
           {/** Scatter */}
