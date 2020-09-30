@@ -1,4 +1,5 @@
 /** ACCESSIBILITY DEMO */
+
 export const accessibilityBarData = [
   { x: "A", y: 1 },
   { x: "B", y: 3 },

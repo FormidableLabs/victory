@@ -2,7 +2,7 @@
  * Client tests
  */
 /* global sinon */
-/*eslint-disable max-nested-callbacks */
+/* eslint-disable max-nested-callbacks */
 /* eslint no-unused-expressions: 0 */
 import React from "react";
 import { range, omit } from "lodash";
@@ -197,6 +197,30 @@ describe("components/victory-area", () => {
           expect(role).to.be.a("string");
           expect(role).to.equal("presentation");
         }
+      });
+    });
+
+    it("adds aria-label and tabIndex to Area primitive", () => {
+      const data = [
+        { x: 1, y: 2 },
+        { x: 2, y: 3 },
+        { x: 3, y: 5 },
+        { x: 4, y: 4 },
+        { x: 5, y: 7 }
+      ];
+      const wrapper = mount(
+        <VictoryArea
+          data={data}
+          dataComponent={
+            <Area ariaLabel={({ data }) => `data point 1's x value is ${data[0].x}`} tabIndex={4} />
+          }
+        />
+      );
+
+      expect(wrapper.find("path")).to.have.length(1);
+      wrapper.find("path").forEach((p, i) => {
+        expect(p.prop("aria-label")).to.equal(`data point 1's x value is ${data[i].x}`);
+        expect(p.prop("tabIndex")).to.equal(4);
       });
     });
   });

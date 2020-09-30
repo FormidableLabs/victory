@@ -218,7 +218,6 @@ export const getBaseProps = (props, fallbackProps) => {
   props = Helpers.modifyProps(props, fallbackProps, "pie");
   const calculatedValues = getCalculatedValues(props);
   const {
-    ariaLabel,
     slices,
     style,
     data,
@@ -233,8 +232,7 @@ export const getBaseProps = (props, fallbackProps) => {
     name,
     innerRadius,
     cornerRadius,
-    padAngle,
-    tabIndex
+    padAngle
   } = calculatedValues;
   const radius = props.radius || defaultRadius;
   const initialChildProps = {
@@ -249,7 +247,6 @@ export const getBaseProps = (props, fallbackProps) => {
     });
     const eventKey = !isNil(datum.eventKey) ? datum.eventKey : index;
     const dataProps = {
-      ariaLabel,
       index,
       slice,
       datum,
@@ -259,8 +256,7 @@ export const getBaseProps = (props, fallbackProps) => {
       radius,
       cornerRadius,
       padAngle,
-      style: getSliceStyle(index, calculatedValues),
-      tabIndex
+      style: getSliceStyle(index, calculatedValues)
     };
     childProps[eventKey] = {
       data: dataProps

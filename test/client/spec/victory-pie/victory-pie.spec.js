@@ -320,6 +320,7 @@ describe("components/victory-pie", () => {
         expect(`${clickHandler.args[index][2]}`).to.eql(`${index}`);
       });
     });
+
     it("attaches an event to label", () => {
       const clickHandler = sinon.spy();
       const wrapper = mount(
@@ -340,6 +341,29 @@ describe("components/victory-pie", () => {
         // the first argument is the standard evt object
         expect(clickHandler.args[index][1].datum).to.eql(initialProps.datum);
         expect(`${clickHandler.args[index][2]}`).to.eql(`${index}`);
+      });
+    });
+  });
+
+  describe("accessbility", () => {
+    it("adds aria-label and tabIndex to Slice primitive", () => {
+      const data = [
+        { x: "bird", y: 3 },
+        { x: "lizard", y: 5 },
+        { x: "insect", y: 3 }
+      ];
+      const wrapper = mount(
+        <VictoryPie
+          data={data}
+          dataComponent={
+            <Slice ariaLabel={({ datum }) => `${datum.x}`} tabIndex={({ index }) => index + 5} />
+          }
+        />
+      );
+      expect(wrapper.find("path")).to.have.length(3);
+      wrapper.find("path").forEach((p, i) => {
+        expect(p.prop("aria-label")).to.equal(data[i].x);
+        expect(p.prop("tabIndex")).to.equal(i + 5);
       });
     });
   });

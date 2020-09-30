@@ -3,10 +3,10 @@ import { Curve } from "Packages/victory-line";
 import { VictoryBar, Bar } from "Packages/victory-bar";
 import { VictoryPie, Slice } from "Packages/victory-pie";
 import { VictoryLine } from "Packages/victory-line";
-import { VictoryArea } from "Packages/victory-area";
+import { VictoryArea, Area } from "Packages/victory-area";
 import { VictoryStack } from "Packages/victory-stack";
 import { VictoryChart } from "Packages/victory-chart";
-import { VictoryScatter } from "Packages/victory-scatter";
+//import { VictoryScatter } from "Packages/victory-scatter";
 import { VictoryBoxPlot } from "Packages/victory-box-plot";
 import { LineSegment, Whisker, Border } from "Packages/victory-core";
 import {
@@ -14,17 +14,23 @@ import {
   accessibilityBoxData,
   accessibilityAreaData,
   accessibilityPieDemo,
-  accessibilityScatterDemo,
+  //accessibilityScatterDemo,
   accessibilityLineDemo
 } from "../../demo-data.ts";
 
-const heading = {
+const pageHeadingStyle = {
   display: "flex",
   flexDirection: "row",
   width: "100%",
   alignItems: "center",
   justifyContent: "center"
 };
+
+const chartHeadingStyle = {
+  marginBottom: "0px",
+  marginTop: "25px"
+};
+
 const containerStyle = {
   display: "flex",
   flexFlow: "row wrap",
@@ -44,13 +50,13 @@ export default class App extends React.Component {
   render() {
     return (
       <>
-        <div style={heading}>
+        <div style={pageHeadingStyle}>
           <h3>Tabbable charts with aria-labels</h3>
         </div>
         <div className="demo" style={containerStyle}>
           {/** BAR CHART */}
           <div style={chartContainerStyle}>
-            <h3> Bar </h3>
+            <h3 style={chartHeadingStyle}> Bar </h3>
             <VictoryChart domainPadding={{ x: 40, y: 40 }}>
               <VictoryBar
                 style={{ data: { fill: "#c43a31" } }}
@@ -66,7 +72,7 @@ export default class App extends React.Component {
           </div>
           {/** BOX PLOT */}
           <div style={chartContainerStyle}>
-            <h3> Box plot </h3>
+            <h3 style={chartHeadingStyle}> Box plot </h3>
             <VictoryChart domainPadding={{ x: 40, y: 40 }}>
               <VictoryBoxPlot
                 /** datum props available w/example values:
@@ -118,9 +124,54 @@ export default class App extends React.Component {
             </VictoryChart>
           </div>
 
+          {/** AREA */}
+          <div style={chartContainerStyle}>
+            <h3 style={chartHeadingStyle}> Area </h3>
+            <VictoryChart domainPadding={{ y: 10 }}>
+              <VictoryStack>
+                <VictoryArea
+                  data={accessibilityAreaData.a}
+                  dataComponent={
+                    <Area
+                      ariaLabel={({ data }) => `area chart stack ${data[0]._stack}`}
+                      tabIndex={20}
+                    />
+                  }
+                />
+                <VictoryArea
+                  data={accessibilityAreaData.b}
+                  dataComponent={
+                    <Area
+                      ariaLabel={({ data }) => `area chart stack ${data[0]._stack}`}
+                      tabIndex={20.1}
+                    />
+                  }
+                />
+                <VictoryArea
+                  data={accessibilityAreaData.c}
+                  dataComponent={
+                    <Area
+                      ariaLabel={({ data }) => `area chart stack ${data[0]._stack}`}
+                      tabIndex={20.2}
+                    />
+                  }
+                />
+                <VictoryArea
+                  data={accessibilityAreaData.d}
+                  dataComponent={
+                    <Area
+                      ariaLabel={({ data }) => `area chart stack ${data[0]._stack}`}
+                      tabIndex={20.3}
+                    />
+                  }
+                />
+              </VictoryStack>
+            </VictoryChart>
+          </div>
+
           {/** LINE */}
           <div style={chartContainerStyle}>
-            <h3> Line </h3>
+            <h3 style={chartHeadingStyle}> Line </h3>
             <VictoryChart domain={{ x: [0, 6], y: [0, 7] }}>
               <VictoryLine
                 data={accessibilityLineDemo}
@@ -132,7 +183,7 @@ export default class App extends React.Component {
                           `data point ${i + 1} x value is ${data.x} and y value is ${data.y}`
                       )
                     }
-                    tabIndex={22}
+                    tabIndex={21}
                   />
                 }
               />
@@ -141,7 +192,7 @@ export default class App extends React.Component {
 
           {/** PIE */}
           <div style={chartContainerStyle}>
-            <h3>Pie</h3>
+            <h3 style={chartHeadingStyle}> Pie </h3>
             <VictoryPie
               style={{ labels: { fill: "white", fontSize: 10 } }}
               labelRadius={({ datum }) => datum.radius - 12}
@@ -152,26 +203,14 @@ export default class App extends React.Component {
               dataComponent={
                 <Slice
                   ariaLabel={({ datum }) => `pie slice ${datum.x}`}
-                  tabIndex={({ index }) => index + 20}
+                  tabIndex={({ index }) => index + 22}
                 />
               }
             />
           </div>
-          {/** AREA */}
-          <div style={chartContainerStyle}>
-            <h3> Area </h3>
-            <VictoryChart domainPadding={{ y: 10 }}>
-              <VictoryStack>
-                <VictoryArea data={accessibilityAreaData.a} />
-                <VictoryArea data={accessibilityAreaData.b} />
-                <VictoryArea data={accessibilityAreaData.c} />
-                <VictoryArea data={accessibilityAreaData.d} />
-              </VictoryStack>
-            </VictoryChart>
-          </div>
 
           {/** Scatter */}
-          <div style={chartContainerStyle}>
+          {/* <div style={chartContainerStyle}>
             <h3>Scatter</h3>
             <VictoryChart domain={{ x: [0, 6], y: [0, 8] }}>
               <VictoryScatter
@@ -180,19 +219,19 @@ export default class App extends React.Component {
                 data={accessibilityScatterDemo}
               />
             </VictoryChart>
-          </div>
+          </div> */}
 
           {/** VORONOI */}
-          <div style={chartContainerStyle}>
+          {/* <div style={chartContainerStyle}>
             <h3>Voronoi</h3>
             <VictoryChart></VictoryChart>
-          </div>
+          </div> */}
 
           {/** HISTOGRAM */}
-          <div style={chartContainerStyle}>
+          {/* <div style={chartContainerStyle}>
             <h3>Histogram</h3>
             <VictoryChart></VictoryChart>
-          </div>
+          </div> */}
         </div>
       </>
     );

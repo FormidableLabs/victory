@@ -1,12 +1,12 @@
 import React from "react";
 import { Curve } from "@packages/victory-line";
-import { VictoryBar, Bar } from "@packages/victory-bar";
-import { VictoryPie } from "@packages/victory-pie";
-import { VictoryLine } from "@packages/victory-line";
-import { VictoryArea } from "@packages/victory-area";
 import { VictoryStack } from "@packages/victory-stack";
+import { VictoryLine } from "@packages/victory-line";
+import { VictoryBar, Bar } from "@packages/victory-bar";
+import { VictoryPie, Slice } from "@packages/victory-pie";
+import { VictoryArea, Area } from "@packages/victory-area";
 import { VictoryChart } from "@packages/victory-chart";
-import { VictoryScatter } from "@packages/victory-scatter";
+//import { VictoryScatter } from "@packages/victory-scatter";
 import { VictoryBoxPlot } from "@packages/victory-box-plot";
 import { LineSegment, Whisker, Border } from "@packages/victory-core";
 import {
@@ -14,16 +14,23 @@ import {
   accessibilityBoxData,
   accessibilityAreaData,
   accessibilityPieDemo,
-  accessibilityScatterDemo,
+  //accessibilityScatterDemo,
   accessibilityLineDemo
 } from "../../demo-data";
 
-const headingStyle: React.CSSProperties = {
+const pageHeadingStyle: React.CSSProperties = {
   display: "flex",
+  flexDirection: "row",
+  width: "100%",
   alignItems: "center",
-  justifyContent: "center",
-  marginBottom: "50px"
+  justifyContent: "center"
 };
+
+const chartHeadingStyle: React.CSSProperties = {
+  marginBottom: "0px",
+  marginTop: "25px"
+};
+
 const containerStyle: React.CSSProperties = {
   display: "flex",
   flexFlow: "row wrap",
@@ -43,18 +50,19 @@ export default class VictoryAccessibilityDemo extends React.Component<any> {
   render() {
     return (
       <>
-        <div style={headingStyle}>
-          <h3>TTabbable charts with aria-labels</h3>
+        <div style={pageHeadingStyle}>
+          <h3>Tabbable charts with aria-labels</h3>
         </div>
         <div className="demo" style={containerStyle}>
           <div style={chartContainerStyle} data-testid="bar-accessibility-chart">
-            <h3> Bar chart</h3>
+            <h3 style={chartHeadingStyle}> Bar chart</h3>
             <VictoryChart domainPadding={{ x: 40, y: 40 }}>
               <VictoryBar
+                style={{ data: { fill: "#c43a31" } }}
                 data={accessibilityBarData}
                 dataComponent={
                   <Bar
-                    ariaLabel={({ datum }) => `bar-value-${datum.x}`}
+                    ariaLabel={({ datum }) => `x: ${datum.x}`}
                     tabIndex={({ index }) => index + 1}
                   />
                 }
@@ -62,7 +70,7 @@ export default class VictoryAccessibilityDemo extends React.Component<any> {
             </VictoryChart>
           </div>
           <div style={chartContainerStyle}>
-            <h3> Box plot </h3>
+            <h3 style={chartHeadingStyle}> Box plot </h3>
             <VictoryChart domainPadding={{ x: 40, y: 40 }}>
               <VictoryBoxPlot
                 minLabels
@@ -95,13 +103,13 @@ export default class VictoryAccessibilityDemo extends React.Component<any> {
                 medianComponent={
                   <LineSegment
                     ariaLabel={({ datum }) => `${datum.x} median value is ${datum._median}`}
-                    tabIndex={({ index }) => index + 5.3}
+                    tabIndex={({ index }) => index + 5.1}
                   />
                 }
                 q1Component={
                   <Border
                     ariaLabel={({ datum }) => `${datum.x} q1 value is ${datum._q1}`}
-                    tabIndex={({ index }) => index + 6}
+                    tabIndex={({ index }) => index + 6.2}
                   />
                 }
                 minComponent={
@@ -113,25 +121,55 @@ export default class VictoryAccessibilityDemo extends React.Component<any> {
               />
             </VictoryChart>
           </div>
+
           {/** AREA */}
           <div style={chartContainerStyle}>
-            <h3> Area </h3>
+            <h3 style={chartHeadingStyle}> Area </h3>
             <VictoryChart domainPadding={{ y: 10 }}>
               <VictoryStack>
-                <VictoryArea data={accessibilityAreaData.a} />
+                <VictoryArea
+                  data={accessibilityAreaData.a}
+                  dataComponent={
+                    <Area
+                      ariaLabel={({ data }) => `area chart stack ${data[0]._stack}`}
+                      tabIndex={20}
+                    />
+                  }
+                />
                 <VictoryArea
                   data={accessibilityAreaData.b}
-                  // ariaLabel={({ datum }) => `${datum.x} min is ${datum._min}`}
-                  // tabIndex={({ index }) => index + 21}
+                  dataComponent={
+                    <Area
+                      ariaLabel={({ data }) => `area chart stack ${data[0]._stack}`}
+                      tabIndex={20.1}
+                    />
+                  }
                 />
-                <VictoryArea data={accessibilityAreaData.c} />
-                <VictoryArea data={accessibilityAreaData.d} />
+                <VictoryArea
+                  data={accessibilityAreaData.c}
+                  dataComponent={
+                    <Area
+                      ariaLabel={({ data }) => `area chart stack ${data[0]._stack}`}
+                      tabIndex={20.2}
+                    />
+                  }
+                />
+                <VictoryArea
+                  data={accessibilityAreaData.d}
+                  dataComponent={
+                    <Area
+                      ariaLabel={({ data }) => `area chart stack ${data[0]._stack}`}
+                      tabIndex={20.3}
+                    />
+                  }
+                />
               </VictoryStack>
             </VictoryChart>
           </div>
+
           {/** LINE */}
           <div style={chartContainerStyle}>
-            <h3> Line </h3>
+            <h3 style={chartHeadingStyle}> Line </h3>
             <VictoryChart domain={{ x: [0, 6], y: [0, 7] }}>
               <VictoryLine
                 data={accessibilityLineDemo}
@@ -145,7 +183,7 @@ export default class VictoryAccessibilityDemo extends React.Component<any> {
                           }`
                       )
                     }
-                    tabIndex={18}
+                    tabIndex={21}
                   />
                 }
               />
@@ -154,7 +192,7 @@ export default class VictoryAccessibilityDemo extends React.Component<any> {
 
           {/** PIE */}
           <div style={chartContainerStyle}>
-            <h3>Pie</h3>
+            <h3 style={chartHeadingStyle}> Pie </h3>
             <VictoryPie
               style={{ labels: { fill: "white", fontSize: 10 } }}
               labelRadius={({ datum }) => datum.radius - 12}
@@ -165,14 +203,14 @@ export default class VictoryAccessibilityDemo extends React.Component<any> {
               dataComponent={
                 <Slice
                   ariaLabel={({ datum }) => `pie slice ${datum.x}`}
-                  tabIndex={({ index }) => index + 20}
+                  tabIndex={({ index }) => index + 22}
                 />
               }
             />
           </div>
 
           {/** Scatter */}
-          <div style={chartContainerStyle}>
+          {/* <div style={chartContainerStyle}>
             <h3>Scatter</h3>
             <VictoryChart domain={{ x: [0, 6], y: [0, 8] }}>
               <VictoryScatter
@@ -181,19 +219,19 @@ export default class VictoryAccessibilityDemo extends React.Component<any> {
                 data={accessibilityScatterDemo}
               />
             </VictoryChart>
-          </div>
+          </div> */}
 
           {/** VORONOI */}
-          <div style={chartContainerStyle}>
+          {/* <div style={chartContainerStyle}>
             <h3>Voronoi</h3>
             <VictoryChart></VictoryChart>
-          </div>
+          </div> */}
 
           {/** HISTOGRAM */}
-          <div style={chartContainerStyle}>
+          {/* <div style={chartContainerStyle}>
             <h3>Histogram</h3>
             <VictoryChart></VictoryChart>
-          </div>
+          </div> */}
         </div>
       </>
     );

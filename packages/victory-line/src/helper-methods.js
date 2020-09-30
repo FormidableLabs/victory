@@ -35,7 +35,6 @@ const getBaseProps = (props, fallbackProps) => {
   const modifiedProps = Helpers.modifyProps(props, fallbackProps, "line");
   props = assign({}, modifiedProps, getCalculatedValues(modifiedProps));
   const {
-    ariaLabel,
     data,
     domain,
     events,
@@ -53,8 +52,7 @@ const getBaseProps = (props, fallbackProps) => {
     theme,
     width,
     labels,
-    name,
-    tabIndex
+    name
   } = props;
   const initialChildProps = {
     parent: {
@@ -73,7 +71,6 @@ const getBaseProps = (props, fallbackProps) => {
     },
     all: {
       data: {
-        ariaLabel,
         horizontal,
         polar,
         origin,
@@ -82,8 +79,7 @@ const getBaseProps = (props, fallbackProps) => {
         interpolation,
         groupComponent,
         style: style.data,
-        theme,
-        tabIndex
+        theme
       }
     }
   };
@@ -91,7 +87,7 @@ const getBaseProps = (props, fallbackProps) => {
     const text = LabelHelpers.getText(props, datum, index);
     if ((text !== undefined && text !== null) || (labels && (events || sharedEvents))) {
       const eventKey = !isNil(datum.eventKey) ? datum.eventKey : index;
-      childProps[eventKey].labels = LabelHelpers.getText(props, datum, index);
+      childProps[eventKey] = { labels: LabelHelpers.getText(props, datum, index) };
     }
     return childProps;
   }, initialChildProps);
