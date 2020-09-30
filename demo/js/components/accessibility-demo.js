@@ -1,6 +1,5 @@
 import React from "react";
 import { VictoryBar } from "Packages/victory-bar";
-import { VictoryLabel } from "Packages/victory-core";
 import { VictoryChart } from "Packages/victory-chart";
 import { VictoryBoxPlot } from "Packages/victory-box-plot";
 import { LineSegment, Whisker, Border } from "victory-core/src";
@@ -74,31 +73,31 @@ export default class App extends React.Component {
                 maxComponent={
                   <Whisker
                     ariaLabel={({ datum }) => `${datum.x} max is ${datum._max}`}
-                    tabIndex={({ index }) => index + 1}
+                    tabIndex={({ index }) => index + 5}
                   />
                 }
                 q3Component={
                   <Border
                     ariaLabel={({ datum }) => `${datum.x} q3 value is ${datum._q3}`}
-                    tabIndex={({ index }) => index + 2.1}
+                    tabIndex={({ index }) => index + 6.1}
                   />
                 }
                 medianComponent={
                   <LineSegment
                     ariaLabel={({ datum }) => `${datum.x} median value is ${datum._median}`}
-                    tabIndex={({ index }) => index + 1.3}
+                    tabIndex={({ index }) => index + 5.3}
                   />
                 }
                 q1Component={
                   <Border
                     ariaLabel={({ datum }) => `${datum.x} q1 value is ${datum._q1}`}
-                    tabIndex={({ index }) => index + 2}
+                    tabIndex={({ index }) => index + 6}
                   />
                 }
                 minComponent={
                   <Whisker
                     ariaLabel={({ datum }) => `${datum.x} min is ${datum._min}`}
-                    tabIndex={({ index }) => index + 1.2}
+                    tabIndex={({ index }) => index + 5.2}
                   />
                 }
               />

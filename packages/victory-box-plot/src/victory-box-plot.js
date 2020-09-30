@@ -5,12 +5,12 @@ import {
   Helpers,
   VictoryLabel,
   addEvents,
-  LineSegment, // primitives/line-segment
+  LineSegment,
   PropTypes as CustomPropTypes,
   VictoryContainer,
   VictoryTheme,
-  Box, // border
-  Whisker, // whisker
+  Box,
+  Whisker,
   DefaultTransitions,
   CommonProps
 } from "victory-core";

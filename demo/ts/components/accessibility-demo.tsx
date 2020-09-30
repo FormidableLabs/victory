@@ -1,8 +1,7 @@
 import React from "react";
 import { VictoryChart } from "@packages/victory-chart";
-import { VictoryBoxPlot } from "@packages/victory-box-plot/src/index";
-import { VictoryBar } from "@packages/victory-bar";
-import { VictoryLabel } from "@packages/victory-core/src/index";
+import { VictoryBar, Bar } from "@packages/victory-bar";
+import { VictoryBoxPlot } from "@packages/victory-box-plot";
 import { LineSegment, Whisker, Border } from "@packages/victory-core";
 
 const headingStyle: React.CSSProperties = {
@@ -44,8 +43,12 @@ export default class VictoryAccessibilityDemo extends React.Component<any> {
                   { x: "C", y: 5 },
                   { x: "D", y: 7 }
                 ]}
-                ariaLabel={({ datum }) => `bar-value-${datum.x}`}
-                tabIndex={({ index }) => index + 1}
+                dataComponent={
+                  <Bar
+                    ariaLabel={({ datum }) => `bar-value-${datum.x}`}
+                    tabIndex={({ index }) => index + 1}
+                  />
+                }
               />
             </VictoryChart>
           </div>
@@ -77,31 +80,31 @@ export default class VictoryAccessibilityDemo extends React.Component<any> {
                 maxComponent={
                   <Whisker
                     ariaLabel={({ datum }) => `${datum.x} max is ${datum._max}`}
-                    tabIndex={({ index }) => index + 1}
+                    tabIndex={({ index }) => index + 5}
                   />
                 }
                 q3Component={
                   <Border
                     ariaLabel={({ datum }) => `${datum.x} q3 value is ${datum._q3}`}
-                    tabIndex={({ index }) => index + 2.1}
+                    tabIndex={({ index }) => index + 6.1}
                   />
                 }
                 medianComponent={
                   <LineSegment
                     ariaLabel={({ datum }) => `${datum.x} median value is ${datum._median}`}
-                    tabIndex={({ index }) => index + 1.3}
+                    tabIndex={({ index }) => index + 5.3}
                   />
                 }
                 q1Component={
                   <Border
                     ariaLabel={({ datum }) => `${datum.x} q1 value is ${datum._q1}`}
-                    tabIndex={({ index }) => index + 2}
+                    tabIndex={({ index }) => index + 6}
                   />
                 }
                 minComponent={
                   <Whisker
                     ariaLabel={({ datum }) => `${datum.x} min is ${datum._min}`}
-                    tabIndex={({ index }) => index + 1.2}
+                    tabIndex={({ index }) => index + 5.2}
                   />
                 }
               />

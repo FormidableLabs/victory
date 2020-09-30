@@ -200,44 +200,8 @@ describe("components/victory-bar", () => {
         expect(roleValue).to.equal("presentation");
       });
     });
-    it("adds a tabIndex and aria-label to each bar in the series", () => {
-      const data = range(10).map((y, x) => ({ x, y }));
-      const wrapper = mount(<VictoryBar data={data} tabIndex={1} ariaLabel={"test-label"} />);
-      wrapper.find("path").forEach((p) => {
-        // tabIndex
-        const tabIndex = p.prop("tabIndex");
-        expect(tabIndex).to.be.a("number");
-        expect(tabIndex).to.equal(1);
-        // aria-label
-        const ariaLabel = p.prop("aria-label");
-        expect(ariaLabel).to.be.a("string");
-        expect(ariaLabel).to.equal("test-label");
-      });
-    });
 
-    it("adds a data specific aria-label and tabIndex to each bar in the series", () => {
-      const data = range(5, 11).map((y, x) => ({ y, x }));
-      const wrapper = mount(
-        <VictoryBar
-          data={data}
-          tabIndex={({ index }) => index + 2}
-          ariaLabel={({ datum }) => `bar-value-${datum.y}`}
-        />
-      );
-
-      wrapper.find("path").forEach((p, i) => {
-        // tabIndex
-        const index = p.prop("index");
-        const tabIndex = p.prop("tabIndex");
-        expect(tabIndex).to.not.be.a("string");
-        expect(tabIndex).to.equal(index + 2);
-        // aria-label
-        const ariaLabel = p.prop("aria-label");
-        expect(ariaLabel).to.equal(`bar-value-${data[i].y}`);
-      });
-    });
-
-    it("aria-label and tabIndex can be applied to the Bar primitive", () => {
+    it("applies aria-label and tabIndex to the Bar primitive", () => {
       const data = range(5, 11).map((y, x) => ({ y, x }));
       const wrapper = mount(
         <VictoryBar
@@ -247,12 +211,42 @@ describe("components/victory-bar", () => {
           }
         />
       );
-      wrapper.find("path").forEach((b, i) => {
-        const index = b.prop("index");
-        const tabIndex = b.prop("tabIndex");
+      wrapper.find("path").forEach((p, i) => {
+        const index = p.prop("index");
+        const tabIndex = p.prop("tabIndex");
         expect(tabIndex).to.equal(index + 1);
-        // aria-label
-        const ariaLabel = b.prop("aria-label");
+        const ariaLabel = p.prop("aria-label");
+        expect(ariaLabel).to.equal(`x: ${data[i].x}`);
+      });
+    });
+
+    it("does not apply tabIndex or aria label via the parent", () => {
+      const data = range(5, 11).map((y, x) => ({ y, x }));
+      const wrapper = mount(
+        <VictoryBar
+          data={data}
+          ariaLabel={({ datum }) => `${datum.x} should not show up`}
+          tabIndex={({ index }) => `${index + 5}`}
+        />
+      );
+
+      wrapper.find("path").forEach((p) => expect(p.prop("aria-label")).to.equal.undefined);
+      wrapper.find("path").forEach((p) => expect(p.prop("tabindex")).to.equal.undefined);
+
+      const wrapper2 = mount(
+        <VictoryBar
+          data={data}
+          dataComponent={
+            <Bar ariaLabel={({ datum }) => `x: ${datum.x}`} tabIndex={({ index }) => index + 4} />
+          }
+        />
+      );
+
+      wrapper2.find("path").forEach((p, i) => {
+        const index = p.prop("index");
+        const tabIndex = p.prop("tabIndex");
+        expect(tabIndex).to.equal(index + 4);
+        const ariaLabel = p.prop("aria-label");
         expect(ariaLabel).to.equal(`x: ${data[i].x}`);
       });
     });
