@@ -1,4 +1,3 @@
-
 /** ACCESSIBILITY DEMO */
 export const accessibilityBarData = [
   { x: "A", y: 1 },
@@ -44,15 +43,15 @@ export const accessibilityAreaData = {
     { x: 4, y: 4 },
     { x: 5, y: 7 }
   ]
-}
+};
 
 export const accessibilityPieDemo = [
-  { x: 1, y: 1, radius: 40 },
-  { x: 2, y: 3, radius: 50 },
-  { x: 3, y: 5, radius: 70 },
-  { x: 4, y: 2, radius: 80 },
-  { x: 5, y: 3, radius: 60 }
-]
+  { x: "a", y: 1, radius: 40 },
+  { x: "b", y: 3, radius: 50 },
+  { x: "c", y: 5, radius: 70 },
+  { x: "d", y: 2, radius: 80 },
+  { x: "e", y: 3, radius: 60 }
+];
 
 export const accessibilityScatterDemo = [
   { x: 1, y: 2 },
@@ -60,7 +59,7 @@ export const accessibilityScatterDemo = [
   { x: 3, y: 5 },
   { x: 4, y: 4 },
   { x: 5, y: 7 }
-]
+];
 
 export const accessibilityLineDemo = [
   { x: 1, y: 2 },
@@ -68,4 +67,4 @@ export const accessibilityLineDemo = [
   { x: 3, y: 5 },
   { x: 4, y: 4 },
   { x: 5, y: 6 }
-]
+];

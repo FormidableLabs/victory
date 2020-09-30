@@ -58,6 +58,7 @@ const getBaseProps = (props, fallbackProps) => {
   const modifiedProps = Helpers.modifyProps(props, fallbackProps, "area");
   props = assign({}, modifiedProps, getCalculatedValues(modifiedProps));
   const {
+    ariaLabel,
     data,
     domain,
     events,
@@ -95,6 +96,7 @@ const getBaseProps = (props, fallbackProps) => {
     },
     all: {
       data: {
+        ariaLabel,
         horizontal,
         polar,
         origin,

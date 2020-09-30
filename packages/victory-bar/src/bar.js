@@ -111,9 +111,9 @@ const Bar = (props) => {
   const defaultTransform = polar && origin ? `translate(${origin.x}, ${origin.y})` : undefined;
   return React.cloneElement(props.pathComponent, {
     ...props.events,
+    "aria-label": props.ariaLabel,
     style,
     d: path,
-    "aria-label": props.ariaLabel,
     className: props.className,
     clipPath: props.clipPath,
     desc: props.desc,

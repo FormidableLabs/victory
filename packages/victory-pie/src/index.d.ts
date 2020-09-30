@@ -4,6 +4,7 @@ import {
   ColorScalePropType,
   DataGetterPropType,
   EventPropTypeInterface,
+  StringOrCallback,
   NumberOrCallback,
   OriginType,
   SliceNumberOrCallback,
@@ -19,6 +20,7 @@ export type VictorySliceLabelPlacementType = "vertical" | "parallel" | "perpendi
 export type VictorySliceTTargetType = "data" | "labels" | "parent";
 
 export interface SliceProps extends VictoryCommonProps {
+  ariaLabel?: StringOrCallback;
   cornerRadius?: SliceNumberOrCallback<SliceProps, "cornerRadius">;
   datum?: any;
   innerRadius?: NumberOrCallback;
@@ -34,6 +36,7 @@ export interface SliceProps extends VictoryCommonProps {
   };
   sliceEndAngle?: SliceNumberOrCallback<SliceProps, "sliceEndAngle">;
   sliceStartAngle?: SliceNumberOrCallback<SliceProps, "sliceStartAngle">;
+  tabIndex: NumberOrCallback;
 }
 
 export class Slice extends React.Component<SliceProps, any> {}

@@ -64,7 +64,15 @@ const getCalculatedValues = (props) => {
   const origin = getOrigin(props, padding);
   const data = Data.getData(props);
   const slices = getSlices(props, data);
-  return assign({}, props, { style, colors, padding, defaultRadius, data, slices, origin });
+  return assign({}, props, {
+    style,
+    colors,
+    padding,
+    defaultRadius,
+    data,
+    slices,
+    origin
+  });
 };
 
 const getSliceStyle = (index, calculatedValues) => {
@@ -210,6 +218,7 @@ export const getBaseProps = (props, fallbackProps) => {
   props = Helpers.modifyProps(props, fallbackProps, "pie");
   const calculatedValues = getCalculatedValues(props);
   const {
+    ariaLabel,
     slices,
     style,
     data,
@@ -239,6 +248,7 @@ export const getBaseProps = (props, fallbackProps) => {
     });
     const eventKey = !isNil(datum.eventKey) ? datum.eventKey : index;
     const dataProps = {
+      ariaLabel,
       index,
       slice,
       datum,

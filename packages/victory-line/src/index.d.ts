@@ -3,6 +3,8 @@ import {
   EventPropTypeInterface,
   InterpolationPropType,
   StringOrNumberOrCallback,
+  StringOrCallback,
+  NumberOrCallback,
   VictoryCommonProps,
   VictoryCommonPrimitiveProps,
   VictoryDatableProps,

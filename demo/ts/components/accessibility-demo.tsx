@@ -44,7 +44,7 @@ export default class VictoryAccessibilityDemo extends React.Component<any> {
     return (
       <>
         <div style={headingStyle}>
-          <h3>Tabbable charts with aria-labels</h3>
+          <h3>TTabbable charts with aria-labels</h3>
         </div>
         <div className="demo" style={containerStyle}>
           <div style={chartContainerStyle} data-testid="bar-accessibility-chart">
@@ -129,36 +129,44 @@ export default class VictoryAccessibilityDemo extends React.Component<any> {
               </VictoryStack>
             </VictoryChart>
           </div>
+          {/** LINE */}
           <div style={chartContainerStyle}>
             <h3> Line </h3>
-            <VictoryChart>
+            <VictoryChart domain={{ x: [0, 6], y: [0, 7] }}>
               <VictoryLine
                 data={accessibilityLineDemo}
-                dataComponent={
-                  <Curve
-                    ariaLabel={(props) => {
-                      console.log("props", props);
-                      return "test";
-                    }}
-                  />
-                }
+                labels={(props) => {
+                  console.log("vic line label props", props);
+                  return "line test";
+                }}
+                ariaLabel={(props) => {
+                  console.log("vic line props", props);
+                  return "line test";
+                }}
               />
             </VictoryChart>
           </div>
+
+          {/** PIE */}
           <div style={chartContainerStyle}>
             <h3>Pie</h3>
-            <VictoryChart>
-              <VictoryPie
-                style={{ labels: { fill: "white", fontSize: 10 } }}
-                labelRadius={({ datum }) => datum.radius - 12}
-                padding={{ bottom: 50, left: 50, right: 10 }}
-                width={400}
-                height={200}
-                radius={({ datum }) => datum.radius}
-                data={accessibilityPieDemo}
-              />
-            </VictoryChart>
+            <VictoryPie
+              style={{ labels: { fill: "white", fontSize: 10 } }}
+              labelRadius={({ datum }) => datum.radius - 12}
+              width={400}
+              height={250}
+              radius={({ datum }) => datum.radius}
+              data={accessibilityPieDemo}
+              dataComponent={
+                <Slice
+                  ariaLabel={({ datum }) => `pie slice ${datum.x}`}
+                  tabIndex={({ index }) => index + 20}
+                />
+              }
+            />
           </div>
+
+          {/** Scatter */}
           <div style={chartContainerStyle}>
             <h3>Scatter</h3>
             <VictoryChart domain={{ x: [0, 6], y: [0, 8] }}>
@@ -169,10 +177,14 @@ export default class VictoryAccessibilityDemo extends React.Component<any> {
               />
             </VictoryChart>
           </div>
+
+          {/** VORONOI */}
           <div style={chartContainerStyle}>
             <h3>Voronoi</h3>
             <VictoryChart></VictoryChart>
           </div>
+
+          {/** HISTOGRAM */}
           <div style={chartContainerStyle}>
             <h3>Histogram</h3>
             <VictoryChart></VictoryChart>

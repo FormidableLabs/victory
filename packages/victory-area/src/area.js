@@ -96,22 +96,25 @@ const getAreaFunction = (props) => {
 const evaluateProps = (props) => {
   /**
    * Potential evaluated props are:
+   * `ariaLabel`
    * `desc`
    * `id`
    * `style`
    * `tabIndex`
    */
+  const ariaLabel = Helpers.evaluateProp(props.ariaLabel, props);
   const desc = Helpers.evaluateProp(props.desc, props);
   const id = Helpers.evaluateProp(props.id, props);
   const style = Helpers.evaluateStyle(assign({ fill: "black" }, props.style), props);
   const tabIndex = Helpers.evaluateProp(props.tabIndex, props);
 
-  return assign({}, props, { desc, id, style, tabIndex });
+  return assign({}, props, { ariaLabel, desc, id, style, tabIndex });
 };
 
 const Area = (props) => {
   props = evaluateProps(props);
   const {
+    ariaLabel,
     role,
     shapeRendering,
     className,
@@ -135,7 +138,16 @@ const Area = (props) => {
 
   const areaStroke = style.stroke ? "none" : style.fill;
 
-  const sharedProps = { className, role, shapeRendering, transform, ...events, clipPath };
+  const sharedProps = {
+    "aria-label": ariaLabel,
+    className,
+    role,
+    shapeRendering,
+    transform,
+    ...events,
+    clipPath,
+    tabIndex
+  };
   const area = React.cloneElement(
     pathComponent,
     assign(

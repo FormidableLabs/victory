@@ -1,15 +1,21 @@
 import React from "react";
-import { VictoryBar } from "Packages/victory-bar";
-import { VictoryChart } from "Packages/victory-chart";
-import { VictoryBoxPlot } from "Packages/victory-box-plot";
-import { LineSegment, Whisker, Border } from "victory-core/src";
-import { VictoryStack } from "Packages/victory-stack";
-import { VictoryGroup } from "Packages/victory-group";
+import { Curve } from "Packages/victory-line";
+import { VictoryBar, Bar } from "Packages/victory-bar";
+import { VictoryPie, Slice } from "Packages/victory-pie";
+import { VictoryLine } from "Packages/victory-line";
 import { VictoryArea } from "Packages/victory-area";
+import { VictoryStack } from "Packages/victory-stack";
+import { VictoryChart } from "Packages/victory-chart";
+import { VictoryScatter } from "Packages/victory-scatter";
+import { VictoryBoxPlot } from "Packages/victory-box-plot";
+import { LineSegment, Whisker, Border } from "Packages/victory-core";
 import {
   accessibilityBarData,
   accessibilityBoxData,
-  accessibilityAreaData
+  accessibilityAreaData,
+  accessibilityPieDemo,
+  accessibilityScatterDemo,
+  accessibilityLineDemo
 } from "../../demo-data.ts";
 
 const heading = {
@@ -47,15 +53,10 @@ export default class App extends React.Component {
             <h3> Bar </h3>
             <VictoryChart domainPadding={{ x: 40, y: 40 }}>
               <VictoryBar
-                data={[
-                  { x: "A", y: 1 },
-                  { x: "B", y: 3 },
-                  { x: "C", y: 5 },
-                  { x: "D", y: 7 }
-                ]}
+                data={accessibilityBarData}
                 dataComponent={
                   <Bar
-                    ariaLabel={({ datum }) => `bar-value-${datum.x}`}
+                    ariaLabel={({ datum }) => `x: ${datum.x}`}
                     tabIndex={({ index }) => index + 1}
                   />
                 }
@@ -119,52 +120,64 @@ export default class App extends React.Component {
           <div style={chartContainerStyle}>
             <h3> Area </h3>
             <VictoryChart domainPadding={{ y: 10 }}>
-              {/* <VictoryStack
-                ariaLabel={(props) => {
-                  console.log("stack props", props);
-                }}
-              >
-                <VictoryArea
-                  data={accessibilityAreaData.a}
-                  ariaLabel={(props) => {
-                    console.log("area props", props);
-                  }}
-                  tabIndex={({ index }) => index + 20}
-                />
-                <VictoryArea
-                  data={accessibilityAreaData.b}
-                  // ariaLabel={({ datum }) => `${datum.x} min is ${datum._min}`}
-                  // tabIndex={({ index }) => index + 21}
-                />
+              <VictoryStack>
+                <VictoryArea data={accessibilityAreaData.a} />
+                <VictoryArea data={accessibilityAreaData.b} />
                 <VictoryArea data={accessibilityAreaData.c} />
                 <VictoryArea data={accessibilityAreaData.d} />
-              </VictoryStack> */}
+              </VictoryStack>
             </VictoryChart>
           </div>
-          <div>
-            <VictoryChart>
-              <h3> Line </h3>
+
+          {/** LINE */}
+          <div style={chartContainerStyle}>
+            <h3> Line </h3>
+            <VictoryChart domain={{ x: [0, 6], y: [0, 7] }}>
+              <VictoryLine data={accessibilityLineDemo} />
             </VictoryChart>
           </div>
-          <div>
-            <VictoryChart>
-              <h3>Pie</h3>
+
+          {/** PIE */}
+          <div style={chartContainerStyle}>
+            <h3>Pie</h3>
+            <VictoryPie
+              style={{ labels: { fill: "white", fontSize: 10 } }}
+              labelRadius={({ datum }) => datum.radius - 12}
+              width={400}
+              height={250}
+              radius={({ datum }) => datum.radius}
+              data={accessibilityPieDemo}
+              dataComponent={
+                <Slice
+                  ariaLabel={({ datum }) => `pie slice ${datum.x}`}
+                  tabIndex={({ index }) => index + 20}
+                />
+              }
+            />
+          </div>
+
+          {/** Scatter */}
+          <div style={chartContainerStyle}>
+            <h3>Scatter</h3>
+            <VictoryChart domain={{ x: [0, 6], y: [0, 8] }}>
+              <VictoryScatter
+                style={{ data: { fill: "#c43a31" } }}
+                size={7}
+                data={accessibilityScatterDemo}
+              />
             </VictoryChart>
           </div>
-          <div>
-            <VictoryChart>
-              <h3>Scatter</h3>
-            </VictoryChart>
+
+          {/** VORONOI */}
+          <div style={chartContainerStyle}>
+            <h3>Voronoi</h3>
+            <VictoryChart></VictoryChart>
           </div>
-          <div>
-            <VictoryChart>
-              <h3>Voronoi</h3>
-            </VictoryChart>
-          </div>
-          <div>
-            <VictoryChart>
-              <h3>Histogram</h3>
-            </VictoryChart>
+
+          {/** HISTOGRAM */}
+          <div style={chartContainerStyle}>
+            <h3>Histogram</h3>
+            <VictoryChart></VictoryChart>
           </div>
         </div>
       </>
