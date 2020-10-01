@@ -219,36 +219,5 @@ describe("components/victory-bar", () => {
         expect(ariaLabel).to.equal(`x: ${data[i].x}`);
       });
     });
-
-    it("does not apply tabIndex or aria label via the parent", () => {
-      const data = range(5, 11).map((y, x) => ({ y, x }));
-      const wrapper = mount(
-        <VictoryBar
-          data={data}
-          ariaLabel={({ datum }) => `${datum.x} should not show up`}
-          tabIndex={({ index }) => `${index + 5}`}
-        />
-      );
-
-      wrapper.find("path").forEach((p) => expect(p.prop("aria-label")).to.equal.undefined);
-      wrapper.find("path").forEach((p) => expect(p.prop("tabindex")).to.equal.undefined);
-
-      const wrapper2 = mount(
-        <VictoryBar
-          data={data}
-          dataComponent={
-            <Bar ariaLabel={({ datum }) => `x: ${datum.x}`} tabIndex={({ index }) => index + 4} />
-          }
-        />
-      );
-
-      wrapper2.find("path").forEach((p, i) => {
-        const index = p.prop("index");
-        const tabIndex = p.prop("tabIndex");
-        expect(tabIndex).to.equal(index + 4);
-        const ariaLabel = p.prop("aria-label");
-        expect(ariaLabel).to.equal(`x: ${data[i].x}`);
-      });
-    });
   });
 });

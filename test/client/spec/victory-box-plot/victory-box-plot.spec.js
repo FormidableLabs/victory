@@ -92,32 +92,6 @@ describe("components/victory-box-plot", () => {
       });
     });
 
-    it("does not apply aria-label or tabIndex via the parent", () => {
-      const wrapper = mount(
-        <VictoryBoxPlot data={dataset} ariaLabel={"should not apply"} tabIndex={18} />
-      );
-      expect(wrapper.find("aria-label")).to.have.length(0);
-      expect(wrapper.find("tabindex")).to.have.length(0);
-    });
-
-    it("does not apply aria-label or tabIndex via the parent", () => {
-      const wrapper = mount(
-        <VictoryBoxPlot
-          data={dataset}
-          ariaLabel={() => `should not show up`}
-          tabIndex={({ index }) => `${index + 2}`}
-        />
-      );
-      wrapper.find("rect").forEach((p) => {
-        expect(p.prop("aria-label")).to.equal.undefined;
-        expect(p.prop("tabIndex")).to.equal.undefined;
-      });
-      wrapper.find("line").forEach((p) => {
-        expect(p.prop("tabindex")).to.equal.undefined;
-        expect(p.prop("aria-label")).to.equal.undefined;
-      });
-    });
-
     it("applies tabIndex and aria-label to whisker primitive ", () => {
       const wrapper = mount(
         <VictoryBoxPlot
