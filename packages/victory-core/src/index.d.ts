@@ -199,6 +199,7 @@ export type LabelOrientationType = "parallel" | "perpendicular" | "vertical";
 
 export interface VictoryLabelProps {
   angle?: string | number;
+  ariaLabel?: StringOrCallback;
   backgroundComponent?: React.ReactElement;
   backgroundStyle?: React.CSSProperties | React.CSSProperties[];
   backgroundPadding?: PaddingProps | PaddingProps[];

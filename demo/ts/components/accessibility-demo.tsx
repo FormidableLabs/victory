@@ -8,7 +8,7 @@ import { VictoryArea, Area } from "@packages/victory-area";
 import { VictoryChart } from "@packages/victory-chart";
 //import { VictoryScatter } from "@packages/victory-scatter";
 import { VictoryBoxPlot } from "@packages/victory-box-plot";
-import { LineSegment, Whisker, Border } from "@packages/victory-core";
+import { LineSegment, Whisker, Border /*, VictoryLabel */ } from "@packages/victory-core";
 import {
   accessibilityBarData,
   accessibilityBoxData,
@@ -170,9 +170,11 @@ export default class VictoryAccessibilityDemo extends React.Component<any> {
           {/** LINE */}
           <div style={chartContainerStyle}>
             <h3 style={chartHeadingStyle}> Line </h3>
-            <VictoryChart domain={{ x: [0, 6], y: [0, 7] }}>
+            <VictoryChart domain={{ x: [0, 6], y: [1, 7] }}>
               <VictoryLine
                 data={accessibilityLineDemo}
+                labels={({ datum }) => datum.y}
+                // labelComponent={<VictoryLabel datum />}
                 dataComponent={
                   <Curve
                     ariaLabel={({ data }) =>
