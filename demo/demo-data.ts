@@ -81,3 +81,17 @@ export const accessibilityVoronoiData = [
   { x: 4, y: 4 },
   { x: 5, y: 7 }
 ];
+
+export const accessibilityCandlestickDemo = [
+  { x: new Date(2016, 6, 1), open: 20, close: 43, high: 66, low: 7 },
+  { x: new Date(2016, 6, 2), open: 80, close: 40, high: 120, low: 10 },
+  { x: new Date(2016, 6, 3), open: 50, close: 80, high: 90, low: 20 },
+  { x: new Date(2016, 6, 4), open: 70, close: 22, high: 70, low: 5 }
+];
+
+export const accessibilityErrorBarDemo = [
+  { x: 10, y: 30, error: 0.2 },
+  { x: 20, y: 43, error: 0.3 },
+  { x: 34, y: 65, error: 0.15 },
+  { x: 43, y: 50, error: 0.2 }
+];
