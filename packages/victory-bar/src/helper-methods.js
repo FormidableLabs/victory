@@ -52,7 +52,6 @@ const getBaseProps = (props, fallbackProps) => {
   props = assign({}, modifiedProps, getCalculatedValues(modifiedProps));
   const {
     alignment,
-    ariaLabel,
     barRatio,
     cornerRadius,
     data,
@@ -67,7 +66,6 @@ const getBaseProps = (props, fallbackProps) => {
     sharedEvents,
     standalone,
     style,
-    tabIndex,
     theme,
     width,
     labels,
@@ -98,7 +96,6 @@ const getBaseProps = (props, fallbackProps) => {
     const { x, y, y0, x0 } = getBarPosition(props, datum);
 
     const dataProps = {
-      ariaLabel,
       alignment,
       barRatio,
       barWidth,
@@ -114,7 +111,6 @@ const getBaseProps = (props, fallbackProps) => {
       style: style.data,
       width,
       height,
-      tabIndex,
       x,
       y,
       y0,

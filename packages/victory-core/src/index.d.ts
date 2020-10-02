@@ -88,7 +88,7 @@ export interface CallbackArgs {
   active: boolean;
   datum: any;
   horizontal: boolean;
-  index: number;
+  index: number | string;
   x: number;
   y: number;
   scale?: {
