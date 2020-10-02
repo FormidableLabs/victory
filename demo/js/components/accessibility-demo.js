@@ -39,8 +39,12 @@ export default class App extends React.Component {
                   { x: "C", y: 5 },
                   { x: "D", y: 7 }
                 ]}
-                ariaLabel={({ datum }) => `bar-value-${datum.x}`}
-                tabIndex={({ index }) => index + 1}
+                dataComponent={
+                  <Bar
+                    ariaLabel={({ datum }) => `bar-value-${datum.x}`}
+                    tabIndex={({ index }) => index + 1}
+                  />
+                }
               />
             </VictoryChart>
           </div>
