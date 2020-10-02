@@ -8,7 +8,7 @@ import { VictoryStack } from "Packages/victory-stack";
 import { VictoryChart } from "Packages/victory-chart";
 //import { VictoryScatter } from "Packages/victory-scatter";
 import { VictoryBoxPlot } from "Packages/victory-box-plot";
-import { LineSegment, Whisker, Border /*, VictoryLabel */ } from "Packages/victory-core";
+import { LineSegment, Whisker, Border, VictoryLabel } from "Packages/victory-core";
 import {
   accessibilityBarData,
   accessibilityBoxData,
@@ -131,6 +131,7 @@ export default class App extends React.Component {
               <VictoryStack>
                 <VictoryArea
                   data={accessibilityAreaData.a}
+                  labelComponent={<VictoryLabel ariaLabel={({ datum }) => datum.y} />}
                   dataComponent={
                     <Area
                       ariaLabel={({ data }) => `area chart stack ${data[0]._stack}`}
@@ -176,7 +177,12 @@ export default class App extends React.Component {
               <VictoryLine
                 data={accessibilityLineDemo}
                 labels={({ datum }) => datum.y}
-                // labelComponent={<VictoryLabel datum />}
+                labelComponent={
+                  <VictoryLabel
+                    ariaLabel={({ datum }) => datum.y}
+                    tabIndex={({ index }) => index + 21}
+                  />
+                }
                 dataComponent={
                   <Curve
                     ariaLabel={({ data }) =>
@@ -185,7 +191,6 @@ export default class App extends React.Component {
                           `data point ${i + 1} x value is ${data.x} and y value is ${data.y}`
                       )
                     }
-                    tabIndex={21}
                   />
                 }
               />

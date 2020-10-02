@@ -211,14 +211,15 @@ export interface VictoryLabelProps {
   desc?: string;
   direction?: string;
   events?: React.DOMAttributes<any>;
-  inline?: boolean;
   groupComponent?: React.ReactElement;
+  inline?: boolean;
   labelPlacement?: LabelOrientationType;
   lineHeight?: StringOrNumberOrCallback | (string | number)[];
   origin?: OriginType;
   polar?: boolean;
   renderInPortal?: boolean;
   style?: React.CSSProperties | React.CSSProperties[];
+  tabIndex?: NumberOrCallback;
   text?: string[] | StringOrNumberOrCallback;
   textAnchor?: TextAnchorType | { (): TextAnchorType };
   title?: string;

@@ -1,4 +1,5 @@
 import React from "react";
+import { isNumber } from "lodash";
 import { Curve } from "@packages/victory-line";
 import { VictoryStack } from "@packages/victory-stack";
 import { VictoryLine } from "@packages/victory-line";
@@ -8,7 +9,7 @@ import { VictoryArea, Area } from "@packages/victory-area";
 import { VictoryChart } from "@packages/victory-chart";
 //import { VictoryScatter } from "@packages/victory-scatter";
 import { VictoryBoxPlot } from "@packages/victory-box-plot";
-import { LineSegment, Whisker, Border /*, VictoryLabel */ } from "@packages/victory-core";
+import { LineSegment, Whisker, Border, VictoryLabel } from "@packages/victory-core";
 import {
   accessibilityBarData,
   accessibilityBoxData,
@@ -46,6 +47,11 @@ const chartContainerStyle: React.CSSProperties = {
   height: "50%"
 };
 
+export const assignIndexValue = (index: number | string, value: number): number => {
+  const determineValidNumber = Number(index);
+  return isNumber(determineValidNumber) ? determineValidNumber + value : 1;
+};
+
 export default class VictoryAccessibilityDemo extends React.Component<any> {
   render() {
     return (
@@ -63,7 +69,7 @@ export default class VictoryAccessibilityDemo extends React.Component<any> {
                 dataComponent={
                   <Bar
                     ariaLabel={({ datum }) => `x: ${datum.x}`}
-                    tabIndex={({ index }) => index + 1}
+                    tabIndex={({ index }) => assignIndexValue(index, 1)}
                   />
                 }
               />
@@ -91,31 +97,31 @@ export default class VictoryAccessibilityDemo extends React.Component<any> {
                 maxComponent={
                   <Whisker
                     ariaLabel={({ datum }) => `${datum.x} max is ${datum._max}`}
-                    tabIndex={({ index }) => index + 5}
+                    tabIndex={({ index }) => assignIndexValue(index, 5)}
                   />
                 }
                 q3Component={
                   <Border
                     ariaLabel={({ datum }) => `${datum.x} q3 value is ${datum._q3}`}
-                    tabIndex={({ index }) => index + 6.1}
+                    tabIndex={({ index }) => assignIndexValue(index, 6.1)}
                   />
                 }
                 medianComponent={
                   <LineSegment
                     ariaLabel={({ datum }) => `${datum.x} median value is ${datum._median}`}
-                    tabIndex={({ index }) => index + 5.1}
+                    tabIndex={({ index }) => assignIndexValue(index, 5.1)}
                   />
                 }
                 q1Component={
                   <Border
                     ariaLabel={({ datum }) => `${datum.x} q1 value is ${datum._q1}`}
-                    tabIndex={({ index }) => index + 6.2}
+                    tabIndex={({ index }) => assignIndexValue(index, 6.2)}
                   />
                 }
                 minComponent={
                   <Whisker
                     ariaLabel={({ datum }) => `${datum.x} min is ${datum._min}`}
-                    tabIndex={({ index }) => index + 5.2}
+                    tabIndex={({ index }) => assignIndexValue(index, 5.2)}
                   />
                 }
               />
@@ -174,7 +180,12 @@ export default class VictoryAccessibilityDemo extends React.Component<any> {
               <VictoryLine
                 data={accessibilityLineDemo}
                 labels={({ datum }) => datum.y}
-                // labelComponent={<VictoryLabel datum />}
+                labelComponent={
+                  <VictoryLabel
+                    ariaLabel={({ datum }) => datum.y}
+                    tabIndex={({ index }) => assignIndexValue(index, 21)}
+                  />
+                }
                 dataComponent={
                   <Curve
                     ariaLabel={({ data }) =>
@@ -185,7 +196,6 @@ export default class VictoryAccessibilityDemo extends React.Component<any> {
                           }`
                       )
                     }
-                    tabIndex={21}
                   />
                 }
               />
@@ -205,7 +215,7 @@ export default class VictoryAccessibilityDemo extends React.Component<any> {
               dataComponent={
                 <Slice
                   ariaLabel={({ datum }) => `pie slice ${datum.x}`}
-                  tabIndex={({ index }) => index + 22}
+                  tabIndex={({ index }) => assignIndexValue(index, 30)}
                 />
               }
             />
@@ -219,6 +229,12 @@ export default class VictoryAccessibilityDemo extends React.Component<any> {
                 style={{ data: { fill: "#c43a31" } }}
                 size={7}
                 data={accessibilityScatterDemo}
+                dataComponent={
+                  <Point
+                    ariaLabel={({ datum }) => `scatter point x: ${datum.x}, y:${datum.y}`}
+                    tabIndex={({ index }) => assignIndexValue(index, 28)}
+                  />
+                }
               />
             </VictoryChart>
           </div> */}

@@ -432,8 +432,8 @@ const renderLabel = (calculatedProps, tspanValues) => {
     x,
     y,
     desc,
-    tabIndex,
     id,
+    tabIndex,
     tspanComponent,
     textComponent
   } = calculatedProps;

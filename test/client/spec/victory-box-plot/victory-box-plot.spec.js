@@ -3,7 +3,6 @@
  */
 /*eslint-disable max-nested-callbacks,no-unused-expressions,react/prop-types */
 import React from "react";
-import { range } from "lodash";
 import { shallow, mount } from "enzyme";
 import { VictoryBoxPlot } from "packages/victory-box-plot/src/index";
 import { LineSegment, Whisker, Border, Box } from "packages/victory-core";
