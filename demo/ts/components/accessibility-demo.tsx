@@ -251,7 +251,7 @@ export default class VictoryAccessibilityDemo extends React.Component<any> {
                 dataComponent={
                   <Voronoi
                     ariaLabel={({ datum }) => `${datum.x}`}
-                    tabIndex={({ index }) => index + 32}
+                    tabIndex={({ index }) => assignIndexValue(index, 35)}
                   />
                 }
               />

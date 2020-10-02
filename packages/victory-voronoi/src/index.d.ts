@@ -27,7 +27,6 @@ export interface VictoryVoronoiProps
 }
 
 export interface VoronoiProps extends VictoryCommonPrimitiveProps {
-  ariaLabel?: StringOrCallback;
   circleComponent?: React.ReactElement;
   clipId?: number | string;
   clipPathComponent?: React.ReactElement;
@@ -36,7 +35,6 @@ export interface VoronoiProps extends VictoryCommonPrimitiveProps {
   pathComponent?: React.ReactElement;
   polygon?: [];
   size?: number;
-  tabIndex?: number;
   x?: number;
   y?: number;
 }

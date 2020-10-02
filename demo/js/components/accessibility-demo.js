@@ -181,7 +181,7 @@ export default class App extends React.Component {
                 labelComponent={
                   <VictoryLabel
                     ariaLabel={({ datum }) => datum.y}
-                    tabIndex={({ index }) => assignIndexValue(index, 21)}
+                    tabIndex={({ index }) => index + 21}
                   />
                 }
                 dataComponent={
@@ -245,7 +245,7 @@ export default class App extends React.Component {
                 dataComponent={
                   <Voronoi
                     ariaLabel={({ datum }) => `${datum.x}`}
-                    tabIndex={({ index }) => index + 32}
+                    tabIndex={({ index }) => index + 35}
                   />
                 }
               />
