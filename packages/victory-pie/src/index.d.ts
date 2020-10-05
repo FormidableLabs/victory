@@ -39,12 +39,12 @@ export interface SliceProps extends VictoryCommonProps {
   tabIndex?: NumberOrCallback;
 }
 
-export class Slice extends React.Component<SliceProps, any> { }
+export class Slice extends React.Component<SliceProps, any> {}
 
 export interface VictoryPieProps
   extends Omit<VictoryCommonProps, "polar">,
-  VictoryLabelableProps,
-  VictoryMultiLabelableProps {
+    VictoryLabelableProps,
+    VictoryMultiLabelableProps {
   categories?: CategoryPropType;
   colorScale?: ColorScalePropType;
   cornerRadius?: SliceNumberOrCallback<SliceProps, "cornerRadius">;
@@ -58,11 +58,11 @@ export interface VictoryPieProps
   eventKey?: StringOrNumberOrCallback;
   innerRadius?: NumberOrCallback;
   labelPlacement?:
-  | VictorySliceLabelPlacementType
-  | ((props: SliceProps) => VictorySliceLabelPlacementType);
+    | VictorySliceLabelPlacementType
+    | ((props: SliceProps) => VictorySliceLabelPlacementType);
   labelPosition?:
-  | VictorySliceLabelPositionType
-  | ((props: SliceProps) => VictorySliceLabelPositionType);
+    | VictorySliceLabelPositionType
+    | ((props: SliceProps) => VictorySliceLabelPositionType);
   labelRadius?: number | ((props: SliceProps) => number);
   origin?: OriginType;
   padAngle?: NumberOrCallback;
@@ -73,4 +73,4 @@ export interface VictoryPieProps
   y?: DataGetterPropType;
 }
 
-export class VictoryPie extends React.Component<VictoryPieProps, any> { }
+export class VictoryPie extends React.Component<VictoryPieProps, any> {}

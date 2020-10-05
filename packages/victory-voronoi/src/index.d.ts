@@ -7,8 +7,7 @@ import {
   VictoryDatableProps,
   VictoryLabelableProps,
   VictoryMultiLabelableProps,
-  VictoryStyleInterface,
-  StringOrCallback
+  VictoryStyleInterface
 } from "victory-core";
 
 export type VictoryVoronoiSortOrderType = "ascending" | "descending";

@@ -62,7 +62,7 @@ export default class App extends React.Component {
         <div className="demo" style={containerStyle}>
           {/** BAR CHART */}
           <div style={chartContainerStyle}>
-            <h3 style={chartHeadingStyle}> Bar </h3>
+            <h3 style={chartHeadingStyle}>Bar</h3>
             <VictoryChart domainPadding={{ x: 40, y: 40 }}>
               <VictoryBar
                 style={{ data: { fill: "#c43a31" } }}
@@ -78,7 +78,7 @@ export default class App extends React.Component {
           </div>
           {/** BOX PLOT */}
           <div style={chartContainerStyle}>
-            <h3 style={chartHeadingStyle}> Box plot </h3>
+            <h3 style={chartHeadingStyle}>Boxplot</h3>
             <VictoryChart domainPadding={{ x: 40, y: 40 }}>
               <VictoryBoxPlot
                 /** datum props available w/example values:
@@ -132,7 +132,7 @@ export default class App extends React.Component {
 
           {/** AREA */}
           <div style={chartContainerStyle}>
-            <h3 style={chartHeadingStyle}> Area </h3>
+            <h3 style={chartHeadingStyle}>Area</h3>
             <VictoryChart domainPadding={{ y: 10 }}>
               <VictoryStack>
                 <VictoryArea
@@ -177,7 +177,7 @@ export default class App extends React.Component {
 
           {/** LINE */}
           <div style={chartContainerStyle}>
-            <h3 style={chartHeadingStyle}> Line </h3>
+            <h3 style={chartHeadingStyle}>Line</h3>
             <VictoryChart domain={{ x: [0, 6], y: [0, 7] }}>
               <VictoryLine
                 data={accessibilityLineDemo}
@@ -221,7 +221,7 @@ export default class App extends React.Component {
             />
           </div>
 
-          {/** Scatter */}
+          {/** SCATTER */}
           <div style={chartContainerStyle}>
             <h3 style={chartHeadingStyle}>Scatter</h3>
             <VictoryChart domain={{ x: [0, 6], y: [0, 8] }}>

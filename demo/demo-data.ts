@@ -1,8 +1,4 @@
-<<<<<<< HEAD
 /* ACCESSIBILITY DEMO */
-=======
-/** ACCESSIBILITY DEMO */
->>>>>>> 19fe2682... feat - area applies tab/aria label via Area primitive, test updates
 
 export const accessibilityBarData = [
   { x: "A", y: 1 },
@@ -12,11 +8,11 @@ export const accessibilityBarData = [
 ];
 
 export const accessibilityBoxData = [
-  { x: "red", y: [5, 10, 9, 2] },
-  { x: "blue", y: [1, 15, 6, 8] },
-  { x: "green", y: [3, 5, 6, 9] },
-  { x: "yellow", y: [5, 20, 8, 12] },
-  { x: "white", y: [2, 11, 12, 13] }
+  { x: 1, y: [5, 10, 9, 2] },
+  { x: 2, y: [1, 15, 6, 8] },
+  { x: 3, y: [3, 5, 6, 9] },
+  { x: 4, y: [5, 20, 8, 12] },
+  { x: 5, y: [2, 11, 12, 13] }
 ];
 
 export const accessibilityAreaData = {
@@ -75,18 +71,18 @@ export const accessibilityLineDemo = [
 ];
 
 export const accessibilityVoronoiData = [
-  { x: 1, y: 2 },
-  { x: 2, y: 3 },
-  { x: 3, y: 5 },
-  { x: 4, y: 4 },
-  { x: 5, y: 7 }
+  { x: 11, y: 20 },
+  { x: 21, y: 30 },
+  { x: 31, y: 50 },
+  { x: 42, y: 40 },
+  { x: 52, y: 70 }
 ];
 
 export const accessibilityCandlestickDemo = [
-  { x: new Date(2016, 6, 1), open: 20, close: 43, high: 66, low: 7 },
-  { x: new Date(2016, 6, 2), open: 80, close: 40, high: 120, low: 10 },
-  { x: new Date(2016, 6, 3), open: 50, close: 80, high: 90, low: 20 },
-  { x: new Date(2016, 6, 4), open: 70, close: 22, high: 70, low: 5 }
+  { x: "6/1", open: 20, close: 43, high: 66, low: 7 },
+  { x: "6/2", open: 80, close: 40, high: 120, low: 10 },
+  { x: "6/3", open: 50, close: 80, high: 90, low: 20 },
+  { x: "6/4", open: 70, close: 22, high: 70, low: 5 }
 ];
 
 export const accessibilityErrorBarDemo = [

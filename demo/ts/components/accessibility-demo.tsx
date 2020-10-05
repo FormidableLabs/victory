@@ -67,7 +67,7 @@ export default class VictoryAccessibilityDemo extends React.Component<any> {
         </div>
         <div className="demo" style={containerStyle}>
           <div style={chartContainerStyle} data-testid="bar-accessibility-chart">
-            <h3 style={chartHeadingStyle}> Bar chart</h3>
+            <h3 style={chartHeadingStyle}>Bar chart</h3>
             <VictoryChart domainPadding={{ x: 40, y: 40 }}>
               <VictoryBar
                 style={{ data: { fill: "#c43a31" } }}
@@ -82,7 +82,7 @@ export default class VictoryAccessibilityDemo extends React.Component<any> {
             </VictoryChart>
           </div>
           <div style={chartContainerStyle}>
-            <h3 style={chartHeadingStyle}> Box plot </h3>
+            <h3 style={chartHeadingStyle}>BoxPlot</h3>
             <VictoryChart domainPadding={{ x: 40, y: 40 }}>
               <VictoryBoxPlot
                 minLabels
@@ -136,7 +136,7 @@ export default class VictoryAccessibilityDemo extends React.Component<any> {
 
           {/** AREA */}
           <div style={chartContainerStyle}>
-            <h3 style={chartHeadingStyle}> Area </h3>
+            <h3 style={chartHeadingStyle}>Area</h3>
             <VictoryChart domainPadding={{ y: 10 }}>
               <VictoryStack>
                 <VictoryArea
@@ -181,7 +181,7 @@ export default class VictoryAccessibilityDemo extends React.Component<any> {
 
           {/** LINE */}
           <div style={chartContainerStyle}>
-            <h3 style={chartHeadingStyle}> Line </h3>
+            <h3 style={chartHeadingStyle}>Line</h3>
             <VictoryChart domain={{ x: [0, 6], y: [1, 7] }}>
               <VictoryLine
                 data={accessibilityLineDemo}
@@ -227,7 +227,7 @@ export default class VictoryAccessibilityDemo extends React.Component<any> {
             />
           </div>
 
-          {/** Scatter */}
+          {/** SCATTER */}
           <div style={chartContainerStyle}>
             <h3 style={chartHeadingStyle}>Scatter</h3>
             <VictoryChart domain={{ x: [0, 6], y: [0, 8] }}>

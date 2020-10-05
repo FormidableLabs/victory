@@ -816,5 +816,35 @@ describe("components/victory-errorbar", () => {
         expect(`${clickHandler.args[index][2]}`).to.eql(`${index}`);
       });
     });
+    describe("accessibility", () => {
+      it("adds an aria label-label and tabIndex to Error Bar primitive", () => {
+        const data = [
+          { x: 35, y: 50, error: 0.2 },
+          { x: 10, y: 43, error: 0.15 },
+          { x: 45, y: 65, error: 0.5 }
+        ];
+        const wrapper = mount(
+          <VictoryErrorBar
+            data={data}
+            dataComponent={
+              <ErrorBar
+                ariaLabel={({ datum }) => `error bar chart, x ${datum.x}`}
+                tabIndex={({ index }) => index + 2}
+              />
+            }
+          />
+        );
+
+        expect(wrapper.find("g")).to.have.length(4);
+        // first "g" holds the datagroup, child "g"s represent each data point, so we remove the first "g"
+        wrapper
+          .find("g")
+          .slice(1)
+          .forEach((g, i) => {
+            expect(g.prop("aria-label")).to.equal(`error bar chart, x ${data[i].x}`);
+            expect(g.prop("tabIndex")).to.equal(i + 2);
+          });
+      });
+    });
   });
 });
