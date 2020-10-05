@@ -86,6 +86,7 @@ export type PaddingProps = number | BlockProps;
  */
 export interface CallbackArgs {
   active: boolean;
+  data: any;
   datum: any;
   horizontal: boolean;
   index: number | string;
@@ -198,6 +199,7 @@ export type LabelOrientationType = "parallel" | "perpendicular" | "vertical";
 
 export interface VictoryLabelProps {
   angle?: string | number;
+  ariaLabel?: StringOrCallback;
   backgroundComponent?: React.ReactElement;
   backgroundStyle?: React.CSSProperties | React.CSSProperties[];
   backgroundPadding?: PaddingProps | PaddingProps[];
@@ -209,14 +211,15 @@ export interface VictoryLabelProps {
   desc?: string;
   direction?: string;
   events?: React.DOMAttributes<any>;
-  inline?: boolean;
   groupComponent?: React.ReactElement;
+  inline?: boolean;
   labelPlacement?: LabelOrientationType;
   lineHeight?: StringOrNumberOrCallback | (string | number)[];
   origin?: OriginType;
   polar?: boolean;
   renderInPortal?: boolean;
   style?: React.CSSProperties | React.CSSProperties[];
+  tabIndex?: NumberOrCallback;
   text?: string[] | StringOrNumberOrCallback;
   textAnchor?: TextAnchorType | { (): TextAnchorType };
   title?: string;

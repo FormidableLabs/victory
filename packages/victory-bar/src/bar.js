@@ -98,7 +98,7 @@ const evaluateProps = (props) => {
   const id = Helpers.evaluateProp(props.id, props);
   const tabIndex = Helpers.evaluateProp(props.tabIndex, props);
 
-  return assign({}, props, { style, barWidth, cornerRadius, desc, id, tabIndex, ariaLabel });
+  return assign({}, props, { ariaLabel, style, barWidth, cornerRadius, desc, id, tabIndex });
 };
 
 const Bar = (props) => {
@@ -111,9 +111,9 @@ const Bar = (props) => {
   const defaultTransform = polar && origin ? `translate(${origin.x}, ${origin.y})` : undefined;
   return React.cloneElement(props.pathComponent, {
     ...props.events,
+    "aria-label": props.ariaLabel,
     style,
     d: path,
-    "aria-label": props.ariaLabel,
     className: props.className,
     clipPath: props.clipPath,
     desc: props.desc,

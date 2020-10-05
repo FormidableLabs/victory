@@ -28,23 +28,28 @@ const evaluateProps = (props) => {
    * 3) `innerRadius`
    *
    * Everything else does not have to be evaluated in a particular order:
+   * `ariaLabel`
    * `id`
    * `cornerRadius`
    * `padAngle`
    * `sliceStartAngle`
    * `sliceEndAngle`
+   * `tabIndex`
    */
   const style = Helpers.evaluateStyle(props.style, props);
   const radius = Helpers.evaluateProp(props.radius, assign({}, props, { style }));
   const innerRadius = Helpers.evaluateProp(props.innerRadius, assign({}, props, { style, radius }));
 
+  const ariaLabel = Helpers.evaluateProp(props.ariaLabel, props);
   const id = Helpers.evaluateProp(props.id, props);
   const cornerRadius = Helpers.evaluateProp(props.cornerRadius, props);
   const padAngle = Helpers.evaluateProp(props.padAngle, props);
   const sliceStartAngle = Helpers.evaluateProp(props.sliceStartAngle, props);
   const sliceEndAngle = Helpers.evaluateProp(props.sliceEndAngle, props);
+  const tabIndex = Helpers.evaluateProp(props.tabIndex, props);
 
   return assign({}, props, {
+    ariaLabel,
     style,
     radius,
     innerRadius,
@@ -52,7 +57,8 @@ const evaluateProps = (props) => {
     cornerRadius,
     padAngle,
     sliceStartAngle,
-    sliceEndAngle
+    sliceEndAngle,
+    tabIndex
   });
 };
 
@@ -64,13 +70,15 @@ const Slice = (props) => {
 
   return React.cloneElement(props.pathComponent, {
     ...props.events,
+    "aria-label": props.ariaLabel,
     d: getPath(props),
     style: props.style,
     transform: props.transform || defaultTransform,
     className: props.className,
     role: props.role,
     shapeRendering: props.shapeRendering,
-    clipPath: props.clipPath
+    clipPath: props.clipPath,
+    tabIndex: props.tabIndex
   });
 };
 

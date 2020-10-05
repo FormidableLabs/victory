@@ -213,10 +213,8 @@ describe("components/victory-bar", () => {
       );
       wrapper.find("path").forEach((p, i) => {
         const index = p.prop("index");
-        const tabIndex = p.prop("tabIndex");
-        expect(tabIndex).to.equal(index + 1);
-        const ariaLabel = p.prop("aria-label");
-        expect(ariaLabel).to.equal(`x: ${data[i].x}`);
+        expect(p.prop("tabIndex")).to.equal(index + 1);
+        expect(p.prop("aria-label")).to.equal(`x: ${data[i].x}`);
       });
     });
   });

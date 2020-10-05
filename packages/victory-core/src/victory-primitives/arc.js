@@ -28,11 +28,13 @@ const getArcPath = (props) => {
 const evaluateProps = (props) => {
   /**
    * Potential evaluated props are:
+   * `ariaLabel`
    * `desc`
    * `id`
    * `style`
    * `tabIndex`
    */
+  const ariaLabel = Helpers.evaluateProp(props.ariaLabel, props);
   const desc = Helpers.evaluateProp(props.desc, props);
   const id = Helpers.evaluateProp(props.id, props);
   const style = Helpers.evaluateStyle(
@@ -41,7 +43,7 @@ const evaluateProps = (props) => {
   );
   const tabIndex = Helpers.evaluateProp(props.tabIndex, props);
 
-  return assign({}, props, { desc, id, style, tabIndex });
+  return assign({}, props, { ariaLabel, desc, id, style, tabIndex });
 };
 
 const Arc = (props) => {
@@ -49,6 +51,7 @@ const Arc = (props) => {
 
   return React.cloneElement(props.pathComponent, {
     ...props.events,
+    "aria-label": props.ariaLabel,
     d: getArcPath(props),
     style: props.style,
     desc: props.desc,

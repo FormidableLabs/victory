@@ -385,6 +385,7 @@ const evaluateProps = (props) => {
 };
 
 const getCalculatedProps = (props) => {
+  const ariaLabel = Helpers.evaluateProp(props.ariaLabel, props);
   const style = getSingleValue(props.style);
   const lineHeight = getLineHeight(props);
   const direction = props.direction ? Helpers.evaluateProp(props.direction, props) : "inherit";
@@ -401,6 +402,7 @@ const getCalculatedProps = (props) => {
   const y = props.y !== undefined ? props.y : getPosition(props, "y");
 
   return assign({}, props, {
+    ariaLabel,
     lineHeight,
     direction,
     textAnchor,
@@ -416,6 +418,7 @@ const getCalculatedProps = (props) => {
 
 const renderLabel = (calculatedProps, tspanValues) => {
   const {
+    ariaLabel,
     inline,
     className,
     title,
@@ -429,13 +432,14 @@ const renderLabel = (calculatedProps, tspanValues) => {
     x,
     y,
     desc,
-    tabIndex,
     id,
+    tabIndex,
     tspanComponent,
     textComponent
   } = calculatedProps;
 
   const textProps = {
+    "aria-label": ariaLabel,
     key: "text",
     ...events,
     direction,
@@ -513,6 +517,7 @@ VictoryLabel.role = "label";
 VictoryLabel.defaultStyles = defaultStyles;
 VictoryLabel.propTypes = {
   active: PropTypes.bool,
+  ariaLabel: PropTypes.oneOfType([PropTypes.string, PropTypes.func]),
   angle: PropTypes.oneOfType([PropTypes.string, PropTypes.number]),
   backgroundComponent: PropTypes.element,
   backgroundPadding: PropTypes.oneOfType([PropTypes.number, PropTypes.object, PropTypes.array]),
