@@ -9,6 +9,18 @@ type: docs
 
 # Common Container Props
 
+##  aria-describedby
+
+`type: string`
+
+The `aria-describedby` prop applies to the `svg` element rendered by `VictoryContainer`. This prop should be given as a string corresponding to the id of an element that describes the chart. If the `desc` prop is set on `VictoryContainer`, the `aria-describedby` prop applied to `VictoryContainer`'s `svg` will correspond to the id of the `desc` tag `VictoryContainer` renders.
+
+##  aria-labelledby
+
+`type: string`
+
+The `aria-labelledby` prop applies to the `svg` element rendered by `VictoryContainer`. This prop should be given as a string corresponding to the id of an element that labels the chart. If the `title` prop is set on `VictoryContainer`, the `aria-labelledby` prop applied to `VictoryContainer`'s `svg` will correspond to the id of the `title` tag `VictoryContainer` renders.
+
 ## children
 
 `type: element || array[element]`
@@ -107,6 +119,29 @@ _default:_ `portalComponent={<Portal/>}`
 
 The `portalZIndex` prop determines the z-index of the div enclosing the portal component. If a `portalZIndex` prop is not set, the z-index of the enclosing div will be set to 99.
 
+## preserveAspectRatio
+
+`type: string`
+
+The `preserveAspectRatio` prop applies to the `svg` elements rendered by `VictoryContainer` to give users more control over how responsive svgs are positioned and scaled. When the `responsive` prop on `VictoryContainer` is set to `false`, this prop has no effect.
+
+```playground
+<div style={{ width: "400px", height: "400px"}}>
+  <VictoryChart
+    height={300}
+    width={400}
+    style={{ parent: { border: "1px solid black" } }}
+    containerComponent={
+      <VictoryContainer
+        preserveAspectRatio="none"
+      />
+    }
+  >
+    <VictoryLine/>
+  </VictoryChart>
+</div>
+```
+
 ## responsive
 
 `type: boolean`
@@ -126,6 +161,12 @@ relative layout for components.
 _example:_ `style={{border: "1px solid #ccc"}}`
 
 _default (provided by default theme):_ VictoryTheme.grayscale. See [VictoryTheme][] for more detail.
+
+## tabIndex
+
+`type: number`
+
+The `tabIndex` prop applies to the `svg` element rendered by `VictoryContainer` to allow users to focus on the chart container via keyboard navigation. This prop should be given as a number.
 
 ## theme
 

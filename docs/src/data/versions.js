@@ -1,5 +1,14 @@
 export default {
   data: [
+    { version: "35.1.1", date: "2020-09-28" },
+    { version: "35.1.0", date: "2020-09-25" },
+    { version: "35.0.9", date: "2020-09-08" },
+    { version: "35.0.8", date: "2020-07-30" },
+    { version: "35.0.7", date: "2020-07-29" },
+    { version: "35.0.6", date: "2020-07-28" },
+    { version: "35.0.5", date: "2020-07-17" },
+    { version: "35.0.4", date: "2020-07-15" },
+    { version: "35.0.3", date: "2020-07-07" },
     { version: "35.0.2", date: "2020-06-30" },
     { version: "35.0.1", date: "2020-06-27" },
     { version: "35.0.0", date: "2020-06-27", label: "v35.0" },
