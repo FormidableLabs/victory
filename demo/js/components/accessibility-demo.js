@@ -1,6 +1,7 @@
 import React from "react";
 import { Curve } from "Packages/victory-line";
 import { VictoryLine } from "Packages/victory-line";
+import { VictoryGroup } from "Packages/victory-group";
 import { VictoryStack } from "Packages/victory-stack";
 import { VictoryChart } from "Packages/victory-chart";
 import { VictoryScatter } from "Packages/victory-scatter";
@@ -11,13 +12,21 @@ import { VictoryArea, Area } from "Packages/victory-area";
 import { VictoryVoronoi, Voronoi } from "Packages/victory-voronoi";
 import { ErrorBar, VictoryErrorBar } from "Packages/victory-errorbar";
 import { Candle, VictoryCandlestick } from "Packages/victory-candlestick";
-import { LineSegment, Whisker, Border, Point, VictoryLabel } from "Packages/victory-core";
+import {
+  LineSegment,
+  Whisker,
+  Border,
+  Point,
+  VictoryLabel,
+  VictoryAccessibilityGroup
+} from "Packages/victory-core";
 import {
   accessibilityBarData,
   accessibilityBoxData,
   accessibilityPieData,
-  accessibilityLineData,
   accessibilityAreaData,
+  accessibilityLineData,
+  accessibilityGroupData,
   accessibilityScatterData,
   accessibilityVoronoiData,
   accessibilityErrorBarData,
@@ -76,6 +85,7 @@ export default class App extends React.Component {
               />
             </VictoryChart>
           </div>
+
           {/** BOX PLOT */}
           <div style={chartContainerStyle}>
             <h3 style={chartHeadingStyle}>Boxplot</h3>
@@ -291,6 +301,32 @@ export default class App extends React.Component {
                   />
                 }
               />
+            </VictoryChart>
+          </div>
+
+          {/**ACCESSIBILITYGROUP */}
+          <div style={chartContainerStyle}>
+            <h3 style={chartHeadingStyle}>Accessibility Group</h3>
+            <VictoryChart domainPadding={{ x: 40 }}>
+              <VictoryGroup
+                offset={20}
+                groupComponent={
+                  <VictoryAccessibilityGroup
+                    aria-label="access-group"
+                    aria-describedby="horizontal bar chart"
+                    desc="horizontal bar chart"
+                    tabIndex={66}
+                  />
+                }
+              >
+                <VictoryBar horizontal data={accessibilityGroupData.a} />
+                <VictoryBar
+                  horizontal
+                  style={{ data: { fill: "#c43a31", opacity: 0.9 } }}
+                  data={accessibilityGroupData.b}
+                />
+                <VictoryBar horizontal data={accessibilityGroupData.c} />
+              </VictoryGroup>
             </VictoryChart>
           </div>
         </div>

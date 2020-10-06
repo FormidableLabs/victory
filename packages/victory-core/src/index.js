@@ -1,3 +1,4 @@
+export { default as VictoryAccessibilityGroup } from "./victory-accessibility-group/victory-accessibility-group";
 export { default as VictoryAnimation } from "./victory-animation/victory-animation";
 export { default as VictoryContainer } from "./victory-container/victory-container";
 export { default as VictoryLabel } from "./victory-label/victory-label";

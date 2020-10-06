@@ -91,3 +91,22 @@ export const accessibilityErrorBarData = [
   { x: 34, y: 65, error: 0.15 },
   { x: 43, y: 50, error: 0.2 }
 ];
+
+export const accessibilityGroupData = {
+  a: [
+    { x: 1, y: 1 },
+    { x: 2, y: 2 },
+    { x: 3, y: 5 }
+  ],
+  b: [
+    { x: 1, y: 2 },
+    { x: 2, y: 1 },
+    { x: 3, y: 7 }
+  ],
+  c: [
+    { x: 1, y: 3 },
+    { x: 2, y: 4 },
+    { x: 3, y: 9 }
+  ]
+
+}

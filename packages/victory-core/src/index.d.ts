@@ -271,6 +271,7 @@ export class VictoryContainer extends React.Component<VictoryContainerProps, any
 // #region Victory Clip Container
 
 export interface VictoryClipContainerProps {
+  "aria-label"?: string;
   children?: React.ReactElement | React.ReactElement[];
   circleComponent?: React.ReactElement;
   className?: string;
@@ -290,6 +291,25 @@ export interface VictoryClipContainerProps {
 }
 
 export class VictoryClipContainer extends React.Component<VictoryClipContainerProps, any> {}
+
+// #endregion
+
+// #region Victory Accessibility Group
+
+export interface VictoryAccessibilityGroupProps {
+  "aria-describedby"?: string;
+  "aria-label": string;
+  desc?: string;
+  descId?: string;
+  children?: React.ReactElement | React.ReactElement[];
+  className?: string;
+  tabIndex?: number;
+}
+
+export class VictoryAccessibilityGroup extends React.Component<
+  VictoryAccessibilityGroupProps,
+  any
+> {}
 
 // #endregion
 
