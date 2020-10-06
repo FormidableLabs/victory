@@ -13,15 +13,15 @@ import { ErrorBar, VictoryErrorBar } from "Packages/victory-errorbar";
 import { Candle, VictoryCandlestick } from "Packages/victory-candlestick";
 import { LineSegment, Whisker, Border, Point, VictoryLabel } from "Packages/victory-core";
 import {
-  accessibilityAreaData,
   accessibilityBarData,
   accessibilityBoxData,
-  accessibilityLineDemo,
-  accessibilityPieDemo,
-  accessibilityScatterDemo,
+  accessibilityPieData,
+  accessibilityLineData,
+  accessibilityAreaData,
+  accessibilityScatterData,
   accessibilityVoronoiData,
-  accessibilityCandlestickDemo,
-  accessibilityErrorBarDemo
+  accessibilityErrorBarData,
+  accessibilityCandlestickData
 } from "../../demo-data.ts";
 
 const pageHeadingStyle = {
@@ -180,7 +180,7 @@ export default class App extends React.Component {
             <h3 style={chartHeadingStyle}>Line</h3>
             <VictoryChart domain={{ x: [0, 6], y: [0, 7] }}>
               <VictoryLine
-                data={accessibilityLineDemo}
+                data={accessibilityLineData}
                 labels={({ datum }) => datum.y}
                 labelComponent={
                   <VictoryLabel
@@ -211,7 +211,7 @@ export default class App extends React.Component {
               width={400}
               height={250}
               radius={({ datum }) => datum.radius}
-              data={accessibilityPieDemo}
+              data={accessibilityPieData}
               dataComponent={
                 <Slice
                   ariaLabel={({ datum }) => `pie slice ${datum.x}`}
@@ -228,7 +228,7 @@ export default class App extends React.Component {
               <VictoryScatter
                 style={{ data: { fill: "#c43a31" } }}
                 size={7}
-                data={accessibilityScatterDemo}
+                data={accessibilityScatterData}
                 dataComponent={
                   <Point
                     ariaLabel={({ datum }) => `scatter point x: ${datum.x}, y:${datum.y}`}
@@ -261,7 +261,7 @@ export default class App extends React.Component {
             <h3 style={chartHeadingStyle}>Candlestick</h3>
             <VictoryChart domainPadding={{ x: 25 }}>
               <VictoryCandlestick
-                data={accessibilityCandlestickDemo}
+                data={accessibilityCandlestickData}
                 dataComponent={
                   <Candle
                     ariaLabel={({ datum }) =>
@@ -279,7 +279,7 @@ export default class App extends React.Component {
             <h3 style={chartHeadingStyle}>ErrorBar</h3>
             <VictoryChart domainPadding={15}>
               <VictoryErrorBar
-                data={accessibilityErrorBarDemo}
+                data={accessibilityErrorBarData}
                 errorX={(datum) => datum.error * datum.x}
                 errorY={(datum) => datum.error * datum.y}
                 dataComponent={
