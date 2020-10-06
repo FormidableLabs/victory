@@ -108,5 +108,4 @@ export const accessibilityGroupData = {
     { x: 2, y: 4 },
     { x: 3, y: 9 }
   ]
-
-}
+};

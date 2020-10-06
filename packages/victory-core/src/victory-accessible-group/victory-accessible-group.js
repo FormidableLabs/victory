@@ -1,8 +1,8 @@
 import React from "react";
 import PropTypes from "prop-types";
 
-class VictoryAccessibilityGroup extends React.Component {
-  static displayName = "VictoryAccessibilityGroup";
+class VictoryAccessibleGroup extends React.Component {
+  static displayName = "VictoryAccessibleGroup";
   static role = "container";
   static propTypes = {
     "aria-describedby": PropTypes.string,
@@ -15,25 +15,33 @@ class VictoryAccessibilityGroup extends React.Component {
   };
 
   static defaultProps = {
-    className: "VictoryAccessibilityGroup"
+    className: "VictoryAccessibleGroup"
   };
 
   render() {
     const { desc, children, className, descId, tabIndex } = this.props;
 
     return desc ? (
-      <g aria-label={this.props["aria-label"]} className={className} tabIndex={tabIndex}>
-        <desc aria-describedby={this.props["aria-describedby"]} id={descId}>
-          {desc}
-        </desc>
+      <g
+        aria-label={this.props["aria-label"]}
+        aria-describedby={this.props["aria-describedby"]}
+        className={className}
+        tabIndex={tabIndex}
+      >
+        <desc id={descId}>{desc}</desc>
         {children}
       </g>
     ) : (
-      <g aria-label={this.props["aria-label"]} className={className} tabIndex={tabIndex}>
+      <g
+        aria-label={this.props["aria-label"]}
+        aria-describedby={this.props["aria-describedby"]}
+        className={className}
+        tabIndex={tabIndex}
+      >
         {children}
       </g>
     );
   }
 }
 
-export default VictoryAccessibilityGroup;
+export default VictoryAccessibleGroup;

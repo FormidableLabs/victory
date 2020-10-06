@@ -18,7 +18,7 @@ import {
   Border,
   Point,
   VictoryLabel,
-  VictoryAccessibilityGroup
+  VictoryAccessibleGroup
 } from "Packages/victory-core";
 import {
   accessibilityBarData,
@@ -312,7 +312,7 @@ export default class App extends React.Component {
               <VictoryGroup
                 offset={20}
                 groupComponent={
-                  <VictoryAccessibilityGroup
+                  <VictoryAccessibleGroup
                     aria-label="access-group"
                     aria-describedby="horizontal bar chart"
                     desc="horizontal bar chart"
