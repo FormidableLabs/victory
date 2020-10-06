@@ -51,8 +51,7 @@ const containerStyle: React.CSSProperties = {
   display: "flex",
   flexFlow: "row wrap",
   alignItems: "center",
-  justifyContent: "flex-start",
-  margin: "0 20px"
+  justifyContent: "flex-start"
 };
 
 const chartContainerStyle: React.CSSProperties = {
@@ -61,7 +60,7 @@ const chartContainerStyle: React.CSSProperties = {
   alignItems: "center",
   width: "50%",
   height: "50%",
-  padding: "50px"
+  padding: "25px"
 };
 
 export const assignIndexValue = (index: number | string, value: number): number => {
@@ -76,7 +75,7 @@ export default class VictoryAccessibilityDemo extends React.Component<any> {
         <div style={pageHeadingStyle}>
           <h3>Tabbable charts with aria-labels</h3>
         </div>
-        <div style={containerStyle}>
+        <div className="demo" style={containerStyle}>
           {/**BAR */}
           <div style={chartContainerStyle} data-testid="bar-accessibility-chart">
             <h3 style={chartHeadingStyle}>Bar chart</h3>

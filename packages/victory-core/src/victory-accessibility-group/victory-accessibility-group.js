@@ -1,8 +1,5 @@
 import React from "react";
 import PropTypes from "prop-types";
-// import CustomPropTypes from "../victory-util/prop-types";
-// import Helpers from "../victory-util/helpers";
-import { assign /*defaults, isObject, uniqueId */ } from "lodash";
 
 class VictoryAccessibilityGroup extends React.Component {
   static displayName = "VictoryAccessibilityGroup";

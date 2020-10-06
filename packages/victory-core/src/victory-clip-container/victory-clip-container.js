@@ -77,7 +77,7 @@ export default class VictoryClipContainer extends React.Component {
     );
     return React.cloneElement(
       groupComponent,
-      { ...groupProps, "aria-label": props[("aria-label", tabIndex)] },
+      { ...groupProps, "aria-label": props["aria-label"], tabIndex },
       [clipComponent, ...React.Children.toArray(children)]
     );
   }

@@ -58,7 +58,8 @@ const chartContainerStyle = {
   flexDirection: "column",
   alignItems: "center",
   width: "50%",
-  height: "50%"
+  height: "50%",
+  padding: "25px"
 };
 
 export default class App extends React.Component {
