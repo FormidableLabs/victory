@@ -89,7 +89,13 @@ class App extends React.Component {
               <VictoryVoronoiContainer
                 voronoiDimension="x"
                 labels={({ datum }) => `y: ${datum.y}`}
-                labelComponent={<VictoryTooltip />}
+                labelComponent={
+                  <VictoryTooltip
+                    text={({ activePoints }) => {
+                      return activePoints.map(({ y }) => `value: ${y}`).join(" - ");
+                    }}
+                  />
+                }
               />
             }
           >
