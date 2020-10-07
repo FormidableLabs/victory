@@ -26,9 +26,9 @@ class App extends React.Component {
       <div className="demo">
         <div style={containerStyle}>
           <VictoryBar
-            style={{ parent: parentStyle }}
             labelComponent={
               <VictoryTooltip
+                activateData
                 constrainToVisibleArea
                 flyoutStyle={{ stroke: "red" }}
                 cornerRadius={0}
@@ -36,6 +36,7 @@ class App extends React.Component {
               />
             }
             labels={({ datum }) => `hello0000000000 #${datum.x}`}
+            style={{ parent: parentStyle, data: { fill: ({ active }) => active ? "red" : "black" }}}
             data={[
               { x: 1, y: 1 },
               { x: 2, y: -2 },
