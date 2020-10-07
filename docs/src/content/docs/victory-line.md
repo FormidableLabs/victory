@@ -10,7 +10,7 @@ scope:
 
 # VictoryLine
 
-VictoryLine renders a dataset as a single line. VictoryLine can be composed with [`VictoryChart`][] to create line charts.
+VictoryLine renders a dataset as a single line path. Since VictoryLine renders only a single element to represent a dataset rather than individual elements for each data point, some of its behavior is different from other Victory components. Pay special attention to [style](/docs/victory-line#style) and [events](/docs/victory-line#events) props, and take advantage of [`VictoryVoronoiContainer`](/docs/victory-voronoi-container) to enable tooltips. VictoryLine can be composed with [`VictoryChart`][] to create line charts.
 
 ```playground
 <VictoryChart
@@ -97,6 +97,8 @@ See the [Data Accessors Guide][] for more detail on formatting and processing da
 
 `VictoryLine` supplies the following props to its `dataComponent`: `data`, `events`, `groupComponent`, `interpolation`, `origin` (for polar charts), `polar`, `scale`, `style`
 
+_note:_ Because `VictoryLine` renders a single element to represent the entire dataset, the `dataComponent` it renders will not have access to `datum` like the `dataComponent` elements rendered by other Victory components such as `VictoryScatter`.
+
 See the [Custom Components Guide][] for more detail on creating your own `dataComponents`
 
 _default:_ `<Curve/>`
@@ -131,7 +133,7 @@ domainPadding={{x: [10, -10], y: 5}}
 
 `VictoryLine` uses the standard `eventKey` prop. **This prop is not commonly used.** [Read about the `eventKey` prop in more detail here](/docs/common-props#eventkey)
 
-**note:** `VictoryLine` only renders one element per dataset, so only one event key will be generated.
+*note:* `VictoryLine` only renders one element per dataset, so only one event key will be generated.
 
 ```jsx
 eventKey = "x";
@@ -189,7 +191,7 @@ See the [Events Guide][] for more information on defining events.
 
 `VictoryLine` uses the standard `groupComponent` prop. [Read about it here](/docs/common-props#groupcomponent)
 
-**note:** `VictoryLine` uses [`VictoryClipContainer`][] as its default `groupComponent` `VictoryClipContainer` renders a `<g>` tag with a `clipPath` `def`. This allows continuous data components to transition smoothly when new data points enter and exit. **Supplying a completely custom `groupComponent` to `VictoryLine` may result in broken animations.**
+*note:* `VictoryLine` uses [`VictoryClipContainer`][] as its default `groupComponent` `VictoryClipContainer` renders a `<g>` tag with a `clipPath` `def`. This allows continuous data components to transition smoothly when new data points enter and exit. **Supplying a completely custom `groupComponent` to `VictoryLine` may result in broken animations.**
 
 _default:_ `<VictoryClipContainer/>`
 
@@ -255,6 +257,8 @@ _default:_ `"linear"`
 `type: element`
 
 `VictoryLine` uses the standard `labelComponent` prop. [Read about it here](/docs/common-props#labelcomponent)
+
+*note:* To enable tooltips on `VictoryLine`, it is necessary to use [`VictoryVoronoiContainer`](docs/victory-voronoi-container)
 
 _default:_ `<VictoryLabel renderInPortal/>`
 
@@ -462,6 +466,8 @@ _default:_ `standalone={true}`
 `type: { parent: object, data: object, labels: object }`
 
 `VictoryLine` uses the standard `style` prop. [Read about it here](/docs/common-props#style)
+
+*note:* Since `VictoryLine` renders a single element to represent an entire dataset, it is not possible to use functional styles to change the style of the line as a function of individual `datum`. Instead, try using [gradient fills](/docs/faq/#how-can-i-use-gradient-fills-in-victory) for styling continuous data.
 
 _default (provided by default theme):_ See [grayscale theme][] for more detail
 
