@@ -11,6 +11,7 @@ export default class VictoryClipContainer extends React.Component {
   static displayName = "VictoryClipContainer";
   static role = "container";
   static propTypes = {
+    "aria-label": PropTypes.string,
     children: PropTypes.oneOfType([PropTypes.arrayOf(PropTypes.node), PropTypes.node]),
     circleComponent: PropTypes.element,
     className: PropTypes.string,
@@ -30,6 +31,7 @@ export default class VictoryClipContainer extends React.Component {
     polar: PropTypes.bool,
     radius: CustomPropTypes.nonNegative,
     style: PropTypes.object,
+    tabIndex: PropTypes.number,
     transform: PropTypes.string,
     translateX: PropTypes.number,
     translateY: PropTypes.number
@@ -61,7 +63,7 @@ export default class VictoryClipContainer extends React.Component {
   }
 
   renderClippedGroup(props, clipId) {
-    const { style, events, transform, children, className, groupComponent } = props;
+    const { style, events, transform, children, className, groupComponent, tabIndex } = props;
     const clipComponent = this.renderClipComponent(props, clipId);
     const groupProps = assign(
       {
@@ -73,17 +75,18 @@ export default class VictoryClipContainer extends React.Component {
       },
       events
     );
-    return React.cloneElement(groupComponent, groupProps, [
-      clipComponent,
-      ...React.Children.toArray(children)
-    ]);
+    return React.cloneElement(
+      groupComponent,
+      { ...groupProps, "aria-label": props["aria-label"], tabIndex },
+      [clipComponent, ...React.Children.toArray(children)]
+    );
   }
 
   renderGroup(props) {
-    const { style, events, transform, children, className, groupComponent } = props;
+    const { style, events, transform, children, className, groupComponent, tabIndex } = props;
     return React.cloneElement(
       groupComponent,
-      assign({ className, style, transform }, events),
+      assign({ className, style, transform, "aria-label": props["aria-label"], tabIndex }, events),
       children
     );
   }

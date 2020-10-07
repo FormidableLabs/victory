@@ -1,6 +1,7 @@
 import React from "react";
 import { isNumber } from "lodash";
 import { Curve } from "@packages/victory-line";
+import { VictoryGroup } from "@packages/victory-group";
 import { VictoryStack } from "@packages/victory-stack";
 import { VictoryLine } from "@packages/victory-line";
 import { VictoryBar, Bar } from "@packages/victory-bar";
@@ -12,13 +13,21 @@ import { VictoryBoxPlot } from "@packages/victory-box-plot";
 import { VictoryVoronoi, Voronoi } from "@packages/victory-voronoi";
 import { ErrorBar, VictoryErrorBar } from "@packages/victory-errorbar";
 import { Candle, VictoryCandlestick } from "@packages/victory-candlestick";
-import { LineSegment, Whisker, Border, Point, VictoryLabel } from "@packages/victory-core";
+import {
+  LineSegment,
+  Whisker,
+  Border,
+  Point,
+  VictoryLabel,
+  VictoryAccessibleGroup
+} from "@packages/victory-core";
 import {
   accessibilityBarData,
   accessibilityBoxData,
   accessibilityPieData,
-  accessibilityLineData,
   accessibilityAreaData,
+  accessibilityLineData,
+  accessibilityGroupData,
   accessibilityScatterData,
   accessibilityVoronoiData,
   accessibilityErrorBarData,
@@ -35,7 +44,8 @@ const pageHeadingStyle: React.CSSProperties = {
 
 const chartHeadingStyle: React.CSSProperties = {
   marginBottom: "0px",
-  marginTop: "25px"
+  marginTop: "25px",
+  fontSize: "calc(1vw + 5px)"
 };
 
 const containerStyle: React.CSSProperties = {
@@ -50,7 +60,8 @@ const chartContainerStyle: React.CSSProperties = {
   flexDirection: "column",
   alignItems: "center",
   width: "50%",
-  height: "50%"
+  height: "50%",
+  padding: "25px"
 };
 
 export const assignIndexValue = (index: number | string, value: number): number => {
@@ -66,6 +77,7 @@ export default class VictoryAccessibilityDemo extends React.Component<any> {
           <h3>Tabbable charts with aria-labels</h3>
         </div>
         <div className="demo" style={containerStyle}>
+          {/**BAR */}
           <div style={chartContainerStyle} data-testid="bar-accessibility-chart">
             <h3 style={chartHeadingStyle}>Bar chart</h3>
             <VictoryChart domainPadding={{ x: 40, y: 40 }}>
@@ -81,6 +93,8 @@ export default class VictoryAccessibilityDemo extends React.Component<any> {
               />
             </VictoryChart>
           </div>
+
+          {/** BOXPLOT */}
           <div style={chartContainerStyle}>
             <h3 style={chartHeadingStyle}>BoxPlot</h3>
             <VictoryChart domainPadding={{ x: 40, y: 40 }}>
@@ -137,10 +151,20 @@ export default class VictoryAccessibilityDemo extends React.Component<any> {
           {/** AREA */}
           <div style={chartContainerStyle}>
             <h3 style={chartHeadingStyle}>Area</h3>
-            <VictoryChart domainPadding={{ y: 10 }}>
-              <VictoryStack>
+            <VictoryChart>
+              <VictoryStack
+                groupComponent={
+                  <VictoryAccessibleGroup
+                    aria-label="stack graph"
+                    desc="stack graph description"
+                    aria-describedby="stack graph aria description, descId should match"
+                    tabIndex={67}
+                  />
+                }
+              >
                 <VictoryArea
                   data={accessibilityAreaData.a}
+                  style={{ data: { fill: "#c43a31" } }}
                   dataComponent={
                     <Area
                       ariaLabel={({ data }) => `area chart stack ${data[0]._stack}`}
@@ -149,6 +173,7 @@ export default class VictoryAccessibilityDemo extends React.Component<any> {
                   }
                 />
                 <VictoryArea
+                  style={{ data: { fill: "#c43a31", opacity: 0.9 } }}
                   data={accessibilityAreaData.b}
                   dataComponent={
                     <Area
@@ -159,6 +184,7 @@ export default class VictoryAccessibilityDemo extends React.Component<any> {
                 />
                 <VictoryArea
                   data={accessibilityAreaData.c}
+                  style={{ data: { fill: "#c43a31", opacity: 0.8 } }}
                   dataComponent={
                     <Area
                       ariaLabel={({ data }) => `area chart stack ${data[0]._stack}`}
@@ -168,6 +194,7 @@ export default class VictoryAccessibilityDemo extends React.Component<any> {
                 />
                 <VictoryArea
                   data={accessibilityAreaData.d}
+                  style={{ data: { fill: "#c43a31", opacity: 0.6 } }}
                   dataComponent={
                     <Area
                       ariaLabel={({ data }) => `area chart stack ${data[0]._stack}`}
@@ -297,6 +324,38 @@ export default class VictoryAccessibilityDemo extends React.Component<any> {
                   />
                 }
               />
+            </VictoryChart>
+          </div>
+
+          {/**ACCESSIBLE GROUP */}
+          <div style={chartContainerStyle}>
+            <h3 style={chartHeadingStyle}>Accessible Group</h3>
+            <VictoryChart domainPadding={{ x: 40 }}>
+              <VictoryGroup
+                offset={20}
+                groupComponent={
+                  <VictoryAccessibleGroup
+                    aria-label="victory group"
+                    desc="accessible bar group chart"
+                  />
+                }
+              >
+                <VictoryBar horizontal data={accessibilityGroupData.a} />
+                <VictoryBar
+                  horizontal
+                  style={{ data: { fill: "#c43a31", opacity: 0.9 } }}
+                  data={accessibilityGroupData.b}
+                  groupComponent={
+                    <VictoryAccessibleGroup
+                      aria-label="victory bar group 2"
+                      desc="accessible bar chart group 2"
+                      aria-describedby="accessible bar chart group 2 aria description"
+                      tabIndex={67}
+                    />
+                  }
+                />
+                <VictoryBar horizontal data={accessibilityGroupData.c} />
+              </VictoryGroup>
             </VictoryChart>
           </div>
         </div>

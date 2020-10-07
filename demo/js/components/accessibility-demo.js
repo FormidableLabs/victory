@@ -1,6 +1,7 @@
 import React from "react";
 import { Curve } from "Packages/victory-line";
 import { VictoryLine } from "Packages/victory-line";
+import { VictoryGroup } from "Packages/victory-group";
 import { VictoryStack } from "Packages/victory-stack";
 import { VictoryChart } from "Packages/victory-chart";
 import { VictoryScatter } from "Packages/victory-scatter";
@@ -11,13 +12,21 @@ import { VictoryArea, Area } from "Packages/victory-area";
 import { VictoryVoronoi, Voronoi } from "Packages/victory-voronoi";
 import { ErrorBar, VictoryErrorBar } from "Packages/victory-errorbar";
 import { Candle, VictoryCandlestick } from "Packages/victory-candlestick";
-import { LineSegment, Whisker, Border, Point, VictoryLabel } from "Packages/victory-core";
+import {
+  LineSegment,
+  Whisker,
+  Border,
+  Point,
+  VictoryLabel,
+  VictoryAccessibleGroup
+} from "Packages/victory-core";
 import {
   accessibilityBarData,
   accessibilityBoxData,
   accessibilityPieData,
-  accessibilityLineData,
   accessibilityAreaData,
+  accessibilityLineData,
+  accessibilityGroupData,
   accessibilityScatterData,
   accessibilityVoronoiData,
   accessibilityErrorBarData,
@@ -34,14 +43,16 @@ const pageHeadingStyle = {
 
 const chartHeadingStyle = {
   marginBottom: "0px",
-  marginTop: "25px"
+  marginTop: "25px",
+  fontSize: "calc(1vw + 5px)"
 };
 
 const containerStyle = {
   display: "flex",
   flexFlow: "row wrap",
   alignItems: "center",
-  justifyContent: "flex-start"
+  justifyContent: "flex-start",
+  maxWidth: "1300px"
 };
 
 const chartContainerStyle = {
@@ -49,7 +60,8 @@ const chartContainerStyle = {
   flexDirection: "column",
   alignItems: "center",
   width: "50%",
-  height: "50%"
+  height: "50%",
+  padding: "25px"
 };
 
 export default class App extends React.Component {
@@ -76,6 +88,7 @@ export default class App extends React.Component {
               />
             </VictoryChart>
           </div>
+
           {/** BOX PLOT */}
           <div style={chartContainerStyle}>
             <h3 style={chartHeadingStyle}>Boxplot</h3>
@@ -291,6 +304,38 @@ export default class App extends React.Component {
                   />
                 }
               />
+            </VictoryChart>
+          </div>
+
+          {/**ACCESSIBLE GROUP */}
+          <div style={chartContainerStyle}>
+            <h2 style={chartHeadingStyle}>Accessible Group</h2>
+            <VictoryChart domainPadding={{ x: 40 }}>
+              <VictoryGroup
+                offset={20}
+                groupComponent={
+                  <VictoryAccessibleGroup
+                    aria-label="victory group"
+                    desc="accessible bar group chart"
+                  />
+                }
+              >
+                <VictoryBar horizontal data={accessibilityGroupData.a} />
+                <VictoryBar
+                  horizontal
+                  style={{ data: { fill: "#c43a31", opacity: 0.9 } }}
+                  data={accessibilityGroupData.b}
+                  groupComponent={
+                    <VictoryAccessibleGroup
+                      aria-label="victory bar group 2"
+                      desc="accessible bar chart group 2"
+                      aria-describedby="accessible bar chart group 2 aria description"
+                      tabIndex={67}
+                    />
+                  }
+                />
+                <VictoryBar horizontal data={accessibilityGroupData.c} />
+              </VictoryGroup>
             </VictoryChart>
           </div>
         </div>
