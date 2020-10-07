@@ -12,23 +12,45 @@ const getVoronoiPath = (props) => {
 const evaluateProps = (props) => {
   /**
    * Potential evaluated props are:
+   * `aria-label`
    * `id`
    * `size`
    * `style`
+   * `tabIndex
    */
+  const ariaLabel = Helpers.evaluateProp(props.ariaLabel, props);
   const id = Helpers.evaluateProp(props.id, props);
   const size = Helpers.evaluateProp(props.size, props);
   const style = Helpers.evaluateStyle(props.style, props);
-
-  return assign({}, props, { id, size, style });
+  const tabIndex = Helpers.evaluateProp(props.tabIndex, props);
+  return assign({}, props, { ariaLabel, id, size, style, tabIndex });
 };
 
 const Voronoi = (props) => {
   props = evaluateProps(props);
 
-  const { role, shapeRendering, className, events, transform, style, size } = props;
+  const {
+    ariaLabel,
+    role,
+    shapeRendering,
+    className,
+    events,
+    transform,
+    style,
+    size,
+    tabIndex
+  } = props;
   const voronoiPath = getVoronoiPath(props);
-  const sharedProps = { className, role, shapeRendering, style, transform, ...events };
+  const sharedProps = {
+    "aria-label": ariaLabel,
+    className,
+    role,
+    shapeRendering,
+    style,
+    tabIndex,
+    transform,
+    ...events
+  };
 
   if (size) {
     const circle = React.cloneElement(props.circleComponent, {

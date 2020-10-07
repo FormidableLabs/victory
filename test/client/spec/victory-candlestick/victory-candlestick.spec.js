@@ -199,5 +199,38 @@ describe("components/victory-candlestick", () => {
         }
       });
     });
+
+    it("adds an aria-label and tabIndex to Candle primitive", () => {
+      const data = [
+        { x: new Date(2016, 6, 1), open: 20, close: 43, high: 66, low: 7 },
+        { x: new Date(2016, 6, 2), open: 80, close: 40, high: 120, low: 10 },
+        { x: new Date(2016, 6, 3), open: 50, close: 80, high: 90, low: 20 }
+      ];
+      const wrapper = mount(
+        <VictoryCandlestick
+          data={data}
+          dataComponent={
+            <Candle
+              ariaLabel={({ datum }) => `open ${datum.open}, close ${datum.close}`}
+              tabIndex={({ index }) => index + 5}
+            />
+          }
+        />
+      );
+
+      expect(wrapper.find("rect")).to.have.length(3);
+      expect(wrapper.find("line")).to.have.length(6);
+      wrapper.find("rect").forEach((p, i) => {
+        expect(p.prop("aria-label")).to.equal(`open ${data[i].open}, close ${data[i].close}`);
+        expect(p.prop("tabIndex")).to.equal(i + 5);
+      });
+      wrapper.find("line").forEach((p, i) => {
+        const dataI = Math.floor(i / 2);
+        expect(p.prop("aria-label")).to.equal(
+          `open ${data[dataI].open}, close ${data[dataI].close}`
+        );
+        expect(p.prop("tabIndex")).to.equal(dataI + 5);
+      });
+    });
   });
 });

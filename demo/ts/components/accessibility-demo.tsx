@@ -7,16 +7,22 @@ import { VictoryBar, Bar } from "@packages/victory-bar";
 import { VictoryPie, Slice } from "@packages/victory-pie";
 import { VictoryArea, Area } from "@packages/victory-area";
 import { VictoryChart } from "@packages/victory-chart";
-//import { VictoryScatter } from "@packages/victory-scatter";
+import { VictoryScatter } from "@packages/victory-scatter";
 import { VictoryBoxPlot } from "@packages/victory-box-plot";
-import { LineSegment, Whisker, Border, VictoryLabel } from "@packages/victory-core";
+import { VictoryVoronoi, Voronoi } from "@packages/victory-voronoi";
+import { ErrorBar, VictoryErrorBar } from "@packages/victory-errorbar";
+import { Candle, VictoryCandlestick } from "@packages/victory-candlestick";
+import { LineSegment, Whisker, Border, Point, VictoryLabel } from "@packages/victory-core";
 import {
   accessibilityBarData,
   accessibilityBoxData,
+  accessibilityPieData,
+  accessibilityLineData,
   accessibilityAreaData,
-  accessibilityPieDemo,
-  //accessibilityScatterDemo,
-  accessibilityLineDemo
+  accessibilityScatterData,
+  accessibilityVoronoiData,
+  accessibilityErrorBarData,
+  accessibilityCandlestickData
 } from "../../demo-data";
 
 const pageHeadingStyle: React.CSSProperties = {
@@ -61,7 +67,7 @@ export default class VictoryAccessibilityDemo extends React.Component<any> {
         </div>
         <div className="demo" style={containerStyle}>
           <div style={chartContainerStyle} data-testid="bar-accessibility-chart">
-            <h3 style={chartHeadingStyle}> Bar chart</h3>
+            <h3 style={chartHeadingStyle}>Bar chart</h3>
             <VictoryChart domainPadding={{ x: 40, y: 40 }}>
               <VictoryBar
                 style={{ data: { fill: "#c43a31" } }}
@@ -76,7 +82,7 @@ export default class VictoryAccessibilityDemo extends React.Component<any> {
             </VictoryChart>
           </div>
           <div style={chartContainerStyle}>
-            <h3 style={chartHeadingStyle}> Box plot </h3>
+            <h3 style={chartHeadingStyle}>BoxPlot</h3>
             <VictoryChart domainPadding={{ x: 40, y: 40 }}>
               <VictoryBoxPlot
                 minLabels
@@ -130,7 +136,7 @@ export default class VictoryAccessibilityDemo extends React.Component<any> {
 
           {/** AREA */}
           <div style={chartContainerStyle}>
-            <h3 style={chartHeadingStyle}> Area </h3>
+            <h3 style={chartHeadingStyle}>Area</h3>
             <VictoryChart domainPadding={{ y: 10 }}>
               <VictoryStack>
                 <VictoryArea
@@ -175,10 +181,10 @@ export default class VictoryAccessibilityDemo extends React.Component<any> {
 
           {/** LINE */}
           <div style={chartContainerStyle}>
-            <h3 style={chartHeadingStyle}> Line </h3>
+            <h3 style={chartHeadingStyle}>Line</h3>
             <VictoryChart domain={{ x: [0, 6], y: [1, 7] }}>
               <VictoryLine
-                data={accessibilityLineDemo}
+                data={accessibilityLineData}
                 labels={({ datum }) => datum.y}
                 labelComponent={
                   <VictoryLabel
@@ -204,14 +210,14 @@ export default class VictoryAccessibilityDemo extends React.Component<any> {
 
           {/** PIE */}
           <div style={chartContainerStyle}>
-            <h3 style={chartHeadingStyle}> Pie </h3>
+            <h3 style={chartHeadingStyle}>Pie</h3>
             <VictoryPie
               style={{ labels: { fill: "white", fontSize: 10 } }}
               labelRadius={({ datum }) => datum.radius - 12}
               width={400}
               height={250}
               radius={({ datum }) => datum.radius}
-              data={accessibilityPieDemo}
+              data={accessibilityPieData}
               dataComponent={
                 <Slice
                   ariaLabel={({ datum }) => `pie slice ${datum.x}`}
@@ -221,14 +227,14 @@ export default class VictoryAccessibilityDemo extends React.Component<any> {
             />
           </div>
 
-          {/** Scatter */}
-          {/* <div style={chartContainerStyle}>
-            <h3>Scatter</h3>
+          {/** SCATTER */}
+          <div style={chartContainerStyle}>
+            <h3 style={chartHeadingStyle}>Scatter</h3>
             <VictoryChart domain={{ x: [0, 6], y: [0, 8] }}>
               <VictoryScatter
                 style={{ data: { fill: "#c43a31" } }}
                 size={7}
-                data={accessibilityScatterDemo}
+                data={accessibilityScatterData}
                 dataComponent={
                   <Point
                     ariaLabel={({ datum }) => `scatter point x: ${datum.x}, y:${datum.y}`}
@@ -237,19 +243,62 @@ export default class VictoryAccessibilityDemo extends React.Component<any> {
                 }
               />
             </VictoryChart>
-          </div> */}
+          </div>
 
           {/** VORONOI */}
-          {/* <div style={chartContainerStyle}>
-            <h3>Voronoi</h3>
-            <VictoryChart></VictoryChart>
-          </div> */}
+          <div style={chartContainerStyle}>
+            <h3 style={chartHeadingStyle}>Voronoi</h3>
+            <VictoryChart>
+              <VictoryVoronoi
+                style={{ data: { stroke: "#c43a31", strokeWidth: 2 } }}
+                data={accessibilityVoronoiData}
+                dataComponent={
+                  <Voronoi
+                    ariaLabel={({ datum }) => `voronoi chart, x ${datum.x}, y ${datum.y}`}
+                    tabIndex={({ index }) => assignIndexValue(index, 35)}
+                  />
+                }
+              />
+            </VictoryChart>
+          </div>
 
-          {/** HISTOGRAM */}
-          {/* <div style={chartContainerStyle}>
-            <h3>Histogram</h3>
-            <VictoryChart></VictoryChart>
-          </div> */}
+          {/** CANDLESTICK */}
+          <div style={chartContainerStyle}>
+            <h3 style={chartHeadingStyle}>Candlestick</h3>
+            <VictoryChart domainPadding={{ x: 25 }}>
+              <VictoryCandlestick
+                data={accessibilityCandlestickData}
+                dataComponent={
+                  <Candle
+                    ariaLabel={({ datum }) =>
+                      `candlestick chart, ${datum.x} open ${datum.open}, close ${datum.close}, low ${datum.low}, high ${datum.high}`
+                    }
+                    tabIndex={({ index }) => assignIndexValue(index, 43)}
+                  />
+                }
+              />
+            </VictoryChart>
+          </div>
+
+          {/** ERRORBAR */}
+          <div style={chartContainerStyle}>
+            <h3 style={chartHeadingStyle}>ErrorBar</h3>
+            <VictoryChart domainPadding={15}>
+              <VictoryErrorBar
+                data={accessibilityErrorBarData}
+                errorX={(datum) => datum.error * datum.x}
+                errorY={(datum) => datum.error * datum.y}
+                dataComponent={
+                  <ErrorBar
+                    ariaLabel={({ datum }) =>
+                      `error bar chart, x ${datum.x}, y ${datum.y}, error margin ${datum.error}`
+                    }
+                    tabIndex={({ index }) => assignIndexValue(index, 60)}
+                  />
+                }
+              />
+            </VictoryChart>
+          </div>
         </div>
       </>
     );

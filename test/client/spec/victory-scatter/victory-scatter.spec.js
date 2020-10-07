@@ -222,5 +222,25 @@ describe("components/victory-scatter", () => {
         expect(roleValue).to.equal("presentation");
       });
     });
+
+    it("adds an aria-label and tabIndex to Point primitive", () => {
+      const data = range(2, 7).map((x) => ({ x, y: x + 2 }));
+      const wrapper = mount(
+        <VictoryScatter
+          data={data}
+          dataComponent={
+            <Point
+              ariaLabel={({ datum }) => `scatter point x: ${datum.x}, y:${datum.y}`}
+              tabIndex={({ index }) => index + 10}
+            />
+          }
+        />
+      );
+      expect(wrapper.find("path")).to.have.length(5);
+      wrapper.find("path").forEach((p, i) => {
+        expect(p.prop("aria-label")).to.equal(`scatter point x: ${data[i].x}, y:${data[i].y}`);
+        expect(p.prop("tabIndex")).to.equal(i + 10);
+      });
+    });
   });
 });
