@@ -33,7 +33,7 @@ The resulting container uses the events from both behaviors.
 For example, if both behaviors use the click event (like zoom and selection) the combined container
 will trigger both behaviors' events on each click.
 
-**Note**: Order of the behaviors matters in a few cases.
+*Note*: Order of the behaviors matters in a few cases.
 It is recommended to use `"zoom"` before any other behaviors: for example,
 `createContainer("zoom", "voronoi")` instead of `createContainer("voronoi", "zoom")`.
 

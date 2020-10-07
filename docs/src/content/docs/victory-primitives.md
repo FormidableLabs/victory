@@ -210,7 +210,8 @@ The `Background` component is used to render an SVG background on VictoryChart. 
 ### Box
 
 [VictoryLegend][] uses the `Box` component to draw a border around a legend area. `Box` renders a `<Rect/>` element. [View the source][border]
-**Note** `Box` also exported as `Border`
+
+*note* `Box` also exported as `Border`
 
 **Props**
 

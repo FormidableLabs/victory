@@ -66,7 +66,7 @@ _default (provided by default theme):_ `colorScale="grayscale"`
 
 `VictoryPie` uses the standard `containerComponent` prop. [Read about it here](/docs/common-props#containercomponent)
 
-**Note:** `VictoryPie` only works with the `VictoryContainer` component
+*Note:* `VictoryPie` only works with the `VictoryContainer` component
 
 _default:_ `containerComponent={<VictoryContainer/>}`
 

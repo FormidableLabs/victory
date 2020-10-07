@@ -165,9 +165,9 @@ _default:_ `containerComponent={<VictoryContainer/>}`
 
 Specify data via the `data` prop. By default, Victory components expect data as an array of objects with `x` and `y` properties. Use the [x][] and [y][] data accessor props to define a custom data format. The `data` prop must be given as an array. Data objects may also include information about ~~styles~~, labels, and props that may be applied to individual data components.
 
-**Note:** All values stored on the data object will be interpolated during animation. Do not store functions on data objects.
+*note:* All values stored on the data object will be interpolated during animation. Do not store functions on data objects.
 
-**Note:** As of `victory@0.26.0` styles provided via the `data` prop are no longer automatically applied. To use styles from the data object, add functional styles as in the example below.
+*note* As of `victory@0.26.0` styles provided via the `data` prop are no longer automatically applied. To use styles from the data object, add functional styles as in the example below.
 
 ```playground
 <VictoryScatter
@@ -260,7 +260,7 @@ _examples:_
 - `domainPadding={20}`
 - `domainPadding={{x: [20, 0]}}`
 
-**note:** Values supplied for `domainPadding` will be coerced so that padding a domain will never result in charts including an additional quadrant. For example, if an original domain included only positive values, `domainPadding` will be coerced so that the resulted padded domain will not include negative values.
+*note* Values supplied for `domainPadding` will be coerced so that padding a domain will never result in charts including an additional quadrant. For example, if an original domain included only positive values, `domainPadding` will be coerced so that the resulted padded domain will not include negative values.
 
 ```playground
 <VictoryChart
@@ -824,11 +824,11 @@ style={{
 }}
 ```
 
-**note:** The `style` prop used by `VictoryAxis` has a different format than the standard `style` prop.
+*note* The `style` prop used by `VictoryAxis` has a different format than the standard `style` prop.
 
-**note:** When a component is rendered as a child of another Victory component, or within a custom `<svg>` element with `standalone={false}` parent styles will be applied to the enclosing `<g>` tag. Many styles that can be applied to a parent `<svg>` will not be expressed when applied to a `<g>`.
+*note* When a component is rendered as a child of another Victory component, or within a custom `<svg>` element with `standalone={false}` parent styles will be applied to the enclosing `<g>` tag. Many styles that can be applied to a parent `<svg>` will not be expressed when applied to a `<g>`.
 
-**note:** custom `angle` and `verticalAnchor` properties maybe included in labels styles.
+*note* custom `angle` and `verticalAnchor` properties maybe included in labels styles.
 
 _default (provided by default theme):_ See [grayscale theme][] for more detail
 

@@ -408,7 +408,7 @@ padding={{ top: 20, bottom: 60 }}
 
 `type: boolean`
 
-**Note:** Polar Charts are not yet supported for `VictoryHistogram`
+*note:* Polar Charts are not yet supported for `VictoryHistogram`
 
 ## range
 
@@ -467,7 +467,7 @@ _default:_ `sortOrder="ascending"`
 
 `VictoryHistogram` uses the standard `standalone` prop. [Read about it here](/docs/common-props#standalone)
 
-**note:** When `VictoryHistogram` is nested within a component like `VictoryChart`, this prop will be set to `false`
+*note:* When `VictoryHistogram` is nested within a component like `VictoryChart`, this prop will be set to `false`
 
 _default:_ `standalone={true}`
 

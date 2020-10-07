@@ -348,7 +348,7 @@ padding={{ top: 20, bottom: 60 }}
 
 `VictoryErrorBar` uses the standard `polar` prop. [Read about it here](/docs/common-props#polar)
 
-**Note:** Polar Charts are not yet supported for `VictoryErrorBar`
+*note:* Polar Charts are not yet supported for `VictoryErrorBar`
 
 ## range
 
@@ -419,7 +419,7 @@ _default:_ `sortOrder="ascending"`
 
 `VictoryErrorBar` uses the standard `standalone` prop. [Read about it here](/docs/common-props#standalone)
 
-**note:** When `VictoryErrorBar` is nested within a component like `VictoryChart`, this prop will be set to `false`
+*note:* When `VictoryErrorBar` is nested within a component like `VictoryChart`, this prop will be set to `false`
 
 _default:_ `standalone={true}`
 

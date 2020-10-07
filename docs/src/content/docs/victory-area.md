@@ -418,7 +418,7 @@ _default:_ `sortOrder="ascending"`
 
 `VictoryArea` uses the standard `standalone` prop. [Read about it here](/docs/common-props#standalone)
 
-**note:** When `VictoryArea` is nested within a component like `VictoryChart`, this prop will be set to `false`
+*note:* When `VictoryArea` is nested within a component like `VictoryChart`, this prop will be set to `false`
 
 _default:_ `standalone={true}`
 

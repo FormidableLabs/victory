@@ -40,7 +40,7 @@ scope:
 
 See the [Animations Guide][] for more detail on animations and transitions
 
-**note: `VictoryStack` controls the `animate` prop of its children when set**
+*note:* `VictoryStack` controls the `animate` prop of its children when set
 
 ```jsx
 animate={{
@@ -55,7 +55,7 @@ animate={{
 
 `VictoryStack` uses the standard `categories` prop. [Read about it here](/docs/common-props#categories)
 
-**note: When this prop is set, `VictoryGroup` controls the `categories` prop of its children.**
+*note:* When this prop is set, `VictoryGroup` controls the `categories` prop of its children.
 
 ```jsx
 categories={["dogs", "cats", "mice"]}
@@ -107,7 +107,7 @@ containerComponent={<VictoryVoronoiContainer/>}
 
 `VictoryStack` uses the standard `domain` prop. [Read about it in detail here](/docs/common-props#domain)
 
-**note: `VictoryStack` controls the `domain` prop of its children.**
+*note:* `VictoryStack` controls the `domain` prop of its children.
 
 ```jsx
 domain={{x: [0, 100], y: [0, 1]}}
@@ -119,7 +119,7 @@ domain={{x: [0, 100], y: [0, 1]}}
 
 `VictoryStack` uses the standard `domainPadding` prop. [Read about it in detail here](/docs/common-props#domainpadding)
 
-**note: `VictoryStack` controls the `domainPadding` prop of its children.**
+*note:* `VictoryStack` controls the `domainPadding` prop of its children.
 
 ```jsx
 domainPadding={{x: [10, -10], y: 5}}
@@ -143,7 +143,7 @@ eventKey = "x";
 
 See the [Events Guide][] for more information on defining events.
 
-**Note: `VictoryStack` coordinates events between children using the `VictorySharedEvents` and the `sharedEvents` prop**
+*note:* `VictoryStack` coordinates events between children using the `VictorySharedEvents` and the `sharedEvents` prop
 
 ```playground
 <VictoryStack
@@ -299,7 +299,7 @@ padding={{ top: 20, bottom: 60 }}
 `VictoryStack` uses the standard `scale` prop. [Read about it here](/docs/common-props#scale)
 Options for scale include "linear", "time", "log", "sqrt" and the `d3-scale` functions that correspond to these options.
 
-**note: `VictoryStack` controls the `scale` prop of its children.**
+*note:* `VictoryStack` controls the `scale` prop of its children.
 
 _default:_ `scale="linear"`
 
@@ -323,7 +323,7 @@ scale={{x: "linear", y: "log"}}
 
 `VictoryStack` uses the standard `standalone` prop. [Read about it here](/docs/common-props#standalone)
 
-**note:** When `VictoryGroup` is nested within a component like `VictoryChart`, this prop will be set to `false`
+*note:* When `VictoryGroup` is nested within a component like `VictoryChart`, this prop will be set to `false`
 
 _default:_ `standalone={true}`
 

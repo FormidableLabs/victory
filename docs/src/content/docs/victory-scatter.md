@@ -485,7 +485,7 @@ _default:_ `sortOrder="ascending"`
 
 `VictoryScatter` uses the standard `standalone` prop. [Read about it in detail here](/docs/common-props#standalone)
 
-**note:** When `VictoryScatter` is nested within a component like `VictoryChart`, this prop will be set to `false`
+*note:* When `VictoryScatter` is nested within a component like `VictoryChart`, this prop will be set to `false`
 
 _default:_ `standalone={true}`
 

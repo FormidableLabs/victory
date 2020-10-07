@@ -260,7 +260,9 @@ The `orientation` prop determines which side of the (x, y) coordinate the toolti
 
 `type: number || function`
 
-The `pointerLength` prop determines the length of the triangular pointer extending from the flyout. This prop may be given as a positive number or a function of datum. **Note: When `center`, `centerOffset` or `constrainToVisibleArea` props are used, non-zero `pointerLength` values are not guaranteed.**
+The `pointerLength` prop determines the length of the triangular pointer extending from the flyout. This prop may be given as a positive number or a function of datum.
+
+*note:* When `center`, `centerOffset` or `constrainToVisibleArea` props are used, non-zero `pointerLength` values are not guaranteed.
 
 ```playground
 <VictoryBar

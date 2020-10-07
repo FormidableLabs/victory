@@ -147,7 +147,7 @@ eventKey = "x";
 
 See the [Events Guide][] for more information on defining events.
 
-**note:** `VictoryLine` will use the special `eventKey` "all" rather than referring to data by index, as it renders only one element for an entire dataset
+*note:* `VictoryLine` will use the special `eventKey` "all" rather than referring to data by index, as it renders only one element for an entire dataset
 
 ```playground
 <div>
@@ -446,7 +446,7 @@ _default:_ `sortOrder="ascending"`
 
 `VictoryLine` uses the standard `standalone` prop. [Read about it here](/docs/common-props#standalone)
 
-**note:** When `VictoryLine` is nested within a component like `VictoryChart`, this prop will be set to `false`
+*note:* When `VictoryLine` is nested within a component like `VictoryChart`, this prop will be set to `false`
 
 _default:_ `standalone={true}`
 
