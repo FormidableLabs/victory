@@ -1,11 +1,10 @@
 /**
  * Client tests
  */
-/* global sinon */
 /*eslint-disable max-nested-callbacks */
 /* eslint no-unused-expressions: 0 */
 import React from "react";
-import { shallow, mount } from "enzyme";
+import { shallow } from "enzyme";
 import VictoryAccessibleGroup from "packages/victory-core/src/victory-accessible-group/victory-accessible-group";
 
 describe("components/victory-accessible-group", () => {

@@ -281,10 +281,10 @@ describe("components/victory-line", () => {
     });
 
     it("adds aria-label and tabIndex to Area primitive", () => {
-      const data = range(4).map((x) => ({ x, y: random(1, 7) }));
+      const ariaTestData = range(4).map((x) => ({ x, y: random(1, 7) }));
       const wrapper = mount(
         <VictoryLine
-          data={data}
+          data={ariaTestData}
           dataComponent={
             <Curve
               ariaLabel={({ data }) => `data point ${data[2].x + 1}'s x value is ${data[2].x}`}
@@ -294,7 +294,7 @@ describe("components/victory-line", () => {
         />
       );
       expect(wrapper.find("path")).to.have.length(1);
-      wrapper.find("path").forEach((p, i) => {
+      wrapper.find("path").forEach((p) => {
         expect(p.prop("aria-label")).to.equal(`data point 3's x value is 2`);
         expect(p.prop("tabIndex")).to.equal(3);
       });

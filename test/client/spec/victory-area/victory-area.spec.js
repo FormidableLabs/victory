@@ -201,7 +201,7 @@ describe("components/victory-area", () => {
     });
 
     it("adds aria-label and tabIndex to Area primitive", () => {
-      const data = [
+      const ariaTestData = [
         { x: 1, y: 2 },
         { x: 2, y: 3 },
         { x: 3, y: 5 },
@@ -210,7 +210,7 @@ describe("components/victory-area", () => {
       ];
       const wrapper = mount(
         <VictoryArea
-          data={data}
+          data={ariaTestData}
           dataComponent={
             <Area ariaLabel={({ data }) => `data point 1's x value is ${data[0].x}`} tabIndex={4} />
           }
@@ -219,7 +219,7 @@ describe("components/victory-area", () => {
 
       expect(wrapper.find("path")).to.have.length(1);
       wrapper.find("path").forEach((p, i) => {
-        expect(p.prop("aria-label")).to.equal(`data point 1's x value is ${data[i].x}`);
+        expect(p.prop("aria-label")).to.equal(`data point 1's x value is ${ariaTestData[i].x}`);
         expect(p.prop("tabIndex")).to.equal(4);
       });
     });
