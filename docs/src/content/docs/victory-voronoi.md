@@ -288,7 +288,7 @@ padding={{ top: 20, bottom: 60 }}
 
 `VictoryVoronoi` uses the standard `polar` prop. [Read about it in detail here](/docs/common-props#polar)
 
-**Note:** Polar Charts are not yet supported for `VictoryVoronoi`
+*note:* Polar Charts are not yet supported for `VictoryVoronoi`
 
 ## range
 
@@ -373,7 +373,7 @@ _default:_ `sortOrder="ascending"`
 
 `VictoryVoronoi` uses the standard `standalone` prop. [Read about it in detail here](/docs/common-props#standalone)
 
-**note:** When `VictoryVoronoi` is nested within a component like `VictoryChart`, this prop will be set to `false`
+*note:* When `VictoryVoronoi` is nested within a component like `VictoryChart`, this prop will be set to `false`
 
 _default:_ `standalone={true}`
 

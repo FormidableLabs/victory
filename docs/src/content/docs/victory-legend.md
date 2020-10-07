@@ -100,7 +100,7 @@ The `colorScale` prop defines a color scale to be applied to each data symbol in
 
 `VictoryLegend` uses the standard `containerComponent` prop. [Read about it here](/docs/common-props#containercomponent)
 
-**Note:** `VictoryLegend` only works with the `VictoryContainer` component
+*note:* `VictoryLegend` only works with the `VictoryContainer` component
 
 _default:_ `containerComponent={<VictoryContainer/>}`
 
@@ -335,9 +335,9 @@ _default:_ `standalone={true}`
 
 The `style` prop defines the style of the component. The style prop should be given as an object with styles defined for `parent`, `data`, `labels`, `title`, and `border`. Any valid svg styles are supported, but `width`, `height`, and `padding` should be specified via props as they determine relative layout for components in VictoryChart. Functional styles may be defined for `data`, and `labels` style properties, and they will be evaluated with the props corresponding to each element.
 
-**note:** When a component is rendered as a child of another Victory component, or within a custom `<svg>` element with `standalone={false}` parent styles will be applied to the enclosing `<g>` tag. Many styles that can be applied to a parent `<svg>` will not be expressed when applied to a `<g>`.
+*note:* When a component is rendered as a child of another Victory component, or within a custom `<svg>` element with `standalone={false}` parent styles will be applied to the enclosing `<g>` tag. Many styles that can be applied to a parent `<svg>` will not be expressed when applied to a `<g>`.
 
-**note:** custom `angle` and `verticalAnchor` properties may be included in `labels` and `title` styles.
+*note:* custom `angle` and `verticalAnchor` properties may be included in `labels` and `title` styles.
 
 _default (provided by default theme):_ See [grayscale theme][] for more detail
 

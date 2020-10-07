@@ -11,6 +11,8 @@ scope:
 
 `VictoryTooltip` renders a tooltip component with a set of default events. When `VictoryTooltip` is used as a label component for any Victory component that renders data, it will attach events to rendered data components that will activate the tooltip when hovered. `VictoryTooltip` renders text as well as a configurable [Flyout][] container.
 
+*note:* When providing tooltips for `VictoryLine` or `VictoryArea`, it is necessary to use [`VictoryVoronoiContainer`](/docs/victory-voronoi-container), as these components only render a single element for the entire dataset.
+
 ## active
 
 `type: boolean`
@@ -258,7 +260,9 @@ The `orientation` prop determines which side of the (x, y) coordinate the toolti
 
 `type: number || function`
 
-The `pointerLength` prop determines the length of the triangular pointer extending from the flyout. This prop may be given as a positive number or a function of datum. **Note: When `center`, `centerOffset` or `constrainToVisibleArea` props are used, non-zero `pointerLength` values are not guaranteed.**
+The `pointerLength` prop determines the length of the triangular pointer extending from the flyout. This prop may be given as a positive number or a function of datum.
+
+*note:* When `center`, `centerOffset` or `constrainToVisibleArea` props are used, non-zero `pointerLength` values are not guaranteed.
 
 ```playground
 <VictoryBar

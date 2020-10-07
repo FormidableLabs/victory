@@ -620,7 +620,7 @@ padding={{ top: 20, bottom: 60 }}
 
 `VictoryCandlestick` uses the standard `polar` prop. [Read about it here](/docs/common-props#polar)
 
-**Note:** Polar Charts are not yet supported for `VictoryCandlestick`
+*note:* Polar Charts are not yet supported for `VictoryCandlestick`
 
 ## range
 
@@ -691,7 +691,7 @@ _default:_ `sortOrder="ascending"`
 
 `VictoryCandlestick` uses the standard `standalone` prop. [Read about it here](/docs/common-props#standalone)
 
-**note:** When `VictoryCandlestick` is nested within a component like `VictoryChart`, this prop will be set to `false`
+*note:* When `VictoryCandlestick` is nested within a component like `VictoryChart`, this prop will be set to `false`
 
 _default:_ `standalone={true}`
 
@@ -722,9 +722,9 @@ type: {
 
 The `style` prop defines the style of the component. The style prop should be given as an object with styles defined for `parent`, `data`, `labels`, `closeLabels`, `highLabels`,`lowLabels`, and `openLabels`. Any valid svg styles are supported, but `width`, `height`, and `padding` should be specified via props as they determine relative layout for components in VictoryChart. Functional styles may be defined for style properties, and they will be evaluated with the props corresponding to each element.
 
-**note:** When a component is rendered as a child of another Victory component, or within a custom `<svg>` element with `standalone={false}` parent styles will be applied to the enclosing `<g>` tag. Many styles that can be applied to a parent `<svg>` will not be expressed when applied to a `<g>`.
+*note:* When a component is rendered as a child of another Victory component, or within a custom `<svg>` element with `standalone={false}` parent styles will be applied to the enclosing `<g>` tag. Many styles that can be applied to a parent `<svg>` will not be expressed when applied to a `<g>`.
 
-**note:** custom `angle` and `verticalAnchor` properties may be included in `labels` styles.
+*note:* custom `angle` and `verticalAnchor` properties may be included in `labels` styles.
 
 _default (provided by default theme):_ See [grayscale theme][] for more detail
 

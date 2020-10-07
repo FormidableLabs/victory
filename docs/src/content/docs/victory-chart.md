@@ -36,7 +36,7 @@ scope:
 
 See the [Animations Guide][] for more detail on animations and transitions
 
-**note: `VictoryChart` controls the `animate` prop of its children when set. To animate individual children of `VictoryChart`, set the `animate` prop only on children, and not on the `VictoryChart` wrapper.**
+*note:* `VictoryChart` controls the `animate` prop of its children when set. To animate individual children of `VictoryChart`, set the `animate` prop only on children, and not on the `VictoryChart` wrapper.
 
 ```jsx
 animate={{
@@ -75,7 +75,7 @@ backgroundComponent={<Background/>}
 
 `VictoryChart` works with any combination of the following children: [VictoryArea][], [VictoryAxis][] / [VictoryPolarAxis][], [VictoryBar][], [VictoryCandlestick][], [VictoryErrorBar][], [VictoryGroup][], [VictoryLine][], [VictoryScatter][], [VictoryHistogram][], [VictoryStack][], and [VictoryVoronoi][]. Children supplied to `VictoryChart` will be cloned and rendered with new props so that all children share common props such as `domain` and `scale`.
 
-**Note: polar charts must use `VictoryPolarAxis` rather than `VictoryAxis`**
+*note:* polar charts must use `VictoryPolarAxis` rather than `VictoryAxis`
 
 ## containerComponent
 
@@ -93,7 +93,7 @@ containerComponent={<VictoryVoronoiContainer/>}
 
 `VictoryChart` uses the standard `domain` prop. [Read about it in detail here](/docs/common-props/#domain)
 
-**note: `VictoryChart` controls the `domain` prop of its children.**
+*note:* `VictoryChart` controls the `domain` prop of its children.
 
 ```jsx
 domain={{x: [0, 100], y: [0, 1]}}
@@ -105,7 +105,7 @@ domain={{x: [0, 100], y: [0, 1]}}
 
 `VictoryChart` uses the standard `domainPadding` prop. [Read about it in detail here](/docs/common-props#domainpadding)
 
-**note: `VictoryChart` controls the `domainPadding` prop of its children.**
+*note: `VictoryChart` controls the `domainPadding` prop of its children.*
 
 ```jsx
 domainPadding={{x: [10, -10], y: 5}}
@@ -172,7 +172,7 @@ _default:_ `endAngle={360}`
 
 See the [Events Guide][] for more information on defining events.
 
-**Note: `VictoryChart` coordinates events between children using the `VictorySharedEvents` and the `sharedEvents` prop**
+*note:* `VictoryChart` coordinates events between children using the `VictorySharedEvents` and the `sharedEvents` prop
 
 ```playground
 <VictoryChart
@@ -233,7 +233,7 @@ groupComponent={<g transform="translate(10, 10)" />}
 
 `VictoryChart` uses the standard `height` prop. [Read about it in detail here](/docs/common-props/#height)
 
-**note: `VictoryChart` controls the `height` prop of its children.**
+*note:* `VictoryChart` controls the `height` prop of its children.
 
 _default (provided by default theme):_ `height={300}`
 
@@ -309,7 +309,7 @@ When the `innerRadius` prop is set, polar charts will be hollow rather than circ
 
 `VictoryChart` uses the standard `padding` prop. [Read about it in detail here](/docs/common-props/#padding)
 
-**note: `VictoryChart` controls the `padding` prop of its children.**
+*note:* `VictoryChart` controls the `padding` prop of its children.
 
 _default (provided by default theme):_ `padding={50}`
 
@@ -323,7 +323,7 @@ padding={{ top: 20, bottom: 60 }}
 
 `VictoryChart` uses the standard `polar` prop. [Read about it in detail here](/docs/common-props/#polar)
 
-**Notes:**
+*Notes:*
 
 - `VictoryChart` controls the `polar` prop of its children
 - Polar charts should use `VictoryPolarAxis` rather than `VictoryAxis`
@@ -358,7 +358,7 @@ padding={{ top: 20, bottom: 60 }}
 
 **The `range` prop is usually calculated based on other props. It will not typically be necessary to set a `range` prop manually**
 
-**note: `VictoryChart` controls the `range` prop of its children.**
+*note:* `VictoryChart` controls the `range` prop of its children.
 
 [Read about the `range` prop in detail](/docs/common-props/#range)
 
@@ -369,7 +369,7 @@ padding={{ top: 20, bottom: 60 }}
 `VictoryChart` uses the standard `scale` prop. [Read about it here](/docs/common-props/#scale)
 Options for scale include "linear", "time", "log", "sqrt" and the `d3-scale` functions that correspond to these options.
 
-**note: `VictoryChart` controls the `scale` prop of its children.**
+*note:* `VictoryChart` controls the `scale` prop of its children.
 
 _default:_ `scale="linear"`
 
@@ -393,7 +393,7 @@ scale={{x: "linear", y: "log"}}
 
 `VictoryChart` uses the standard `standalone` prop. [Read about it in detail here](/docs/common-props/#standalone)
 
-**note:** `VictoryChart` sets `standalone={false} for all of its children.
+*note:* `VictoryChart` sets `standalone={false} for all of its children.
 
 _default:_ `standalone={true}`
 
@@ -503,7 +503,7 @@ theme={VictoryTheme.material}
 
 `VictoryChart` uses the standard `width` prop. [Read about it in detail here](/docs/common-props/#width)
 
-**note: `VictoryChart` controls the `width` prop of its children.**
+*note:* `VictoryChart` controls the `width` prop of its children.
 
 _default (provided by default theme):_ `width={450}`
 

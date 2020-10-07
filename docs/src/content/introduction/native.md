@@ -33,7 +33,7 @@ This step is not required if you are using Expo (SDK 23.0.0 or higher) as it is 
 $ react-native install react-native-svg
 ```
 
-**Note:** If you run the iOS app and see a linker error for `-lRNSVG-tvOS` you will need to remove `libRNSVG-tvOS.a` from the “Link Binary with Libraries” section within your iOS app’s target’s properties.
+*note:* If you run the iOS app and see a linker error for `-lRNSVG-tvOS` you will need to remove `libRNSVG-tvOS.a` from the “Link Binary with Libraries” section within your iOS app’s target’s properties.
 
 #### 3. Using Victory Native in your React Native app
 
@@ -105,6 +105,6 @@ it("renders correctly", () => {
 });
 ```
 
-**Note:** `renderer` must be imported _after_ `react-native` for tests to work.
+*note:* `renderer` must be imported _after_ `react-native` for tests to work.
 
 [getting started guide]: /docs/

@@ -42,7 +42,7 @@ scope:
 
 See the [Animations Guide][] for more detail on animations and transitions
 
-**note: `VictoryGroup` controls the `animate` prop of its children when set**
+*note:* `VictoryGroup` controls the `animate` prop of its children when set
 
 ```jsx
   animate={{
@@ -57,7 +57,7 @@ See the [Animations Guide][] for more detail on animations and transitions
 
 `VictoryGroup` uses the standard `categories` prop. [Read about it here](/docs/common-props#categories)
 
-**note: When this prop is set, `VictoryGroup` controls the `categories` prop of its children.**
+*note:* When this prop is set, `VictoryGroup` controls the `categories` prop of its children.
 
 ```jsx
 categories={["dogs", "cats", "mice"]}
@@ -146,7 +146,7 @@ When `data` is provided for `VictoryGroup` it will be passed to every child in t
 
 `VictoryGroup` uses the standard `domain` prop. [Read about it in detail here](/docs/common-props#domain)
 
-**note: `VictoryGroup` controls the `domain` prop of its children.**
+*note:* `VictoryGroup` controls the `domain` prop of its children.
 
 ```jsx
 domain={{x: [0, 100], y: [0, 1]}}
@@ -158,7 +158,7 @@ domain={{x: [0, 100], y: [0, 1]}}
 
 `VictoryGroup` uses the standard `domainPadding` prop. [Read about it in detail here](/docs/common-props#domainpadding)
 
-**note: `VictoryGroup` controls the `domainPadding` prop of its children.**
+*note:* `VictoryGroup` controls the `domainPadding` prop of its children.
 
 ```jsx
 domainPadding={{x: [10, -10], y: 5}}
@@ -182,7 +182,7 @@ eventKey = "x";
 
 See the [Events Guide][] for more information on defining events.
 
-**Note: `VictoryGroup` coordinates events between children using the `VictorySharedEvents` and the `sharedEvents` prop**
+*note:* `VictoryGroup` coordinates events between children using the `VictorySharedEvents` and the `sharedEvents` prop
 
 ```playground
 <VictoryGroup
@@ -381,7 +381,7 @@ samples={100}
 `VictoryGroup` uses the standard `scale` prop. [Read about it here](/docs/common-props#scale)
 Options for scale include "linear", "time", "log", "sqrt" and the `d3-scale` functions that correspond to these options.
 
-**note: `VictoryGroup` controls the `scale` prop of its children.**
+*note:* `VictoryGroup` controls the `scale` prop of its children.
 
 _default:_ `scale="linear"`
 
@@ -425,7 +425,7 @@ _default:_ `sortOrder="ascending"`
 
 `VictoryGroup` uses the standard `standalone` prop. [Read about it here](/docs/common-props#standalone)
 
-**note:** When `VictoryGroup` is nested within a component like `VictoryChart`, this prop will be set to `false`
+*note:* When `VictoryGroup` is nested within a component like `VictoryChart`, this prop will be set to `false`
 
 _default:_ `standalone={true}`
 

@@ -67,7 +67,7 @@ an object of SVG style attributes. Styles supplied to `brushAreaStyle` are assig
 }
 ```
 
-**Note:** `cursor` styles should not be applied via this prop, as they are dynamically assigned
+*Note:* `cursor` styles should not be applied via this prop, as they are dynamically assigned
 
 ## brushAreaWidth
 

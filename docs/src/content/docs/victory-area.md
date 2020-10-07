@@ -9,7 +9,7 @@ scope:
 
 # VictoryArea
 
-VictoryArea renders a dataset as a single area. VictoryArea can be composed with [`VictoryChart`][] to create area charts.
+VictoryArea renders a dataset as a single area path. Since VictoryArea renders only a single element to represent a dataset rather than individual elements for each data point, some of its behavior is different from other Victory components. Pay special attention to [style](/docs/victory-area#style) and [events](/docs/victory-area#events) props, and take advantage of [`VictoryVoronoiContainer`](/docs/victory-voronoi-container) to enable tooltips. VictoryArea can be composed with [`VictoryChart`][] to create area charts.
 
 ```playground
 <VictoryChart
@@ -87,6 +87,8 @@ See the [Data Accessors Guide][] for more detail on formatting and processing da
 
 `VictoryArea` supplies the following props to its `dataComponent`: `data`, `events`, `groupComponent`, `interpolation`, `origin` (for polar charts), `polar`, `scale`, `style`
 
+*note:* Because `VictoryArea` renders a single element to represent the entire dataset, the `dataComponent` it renders will not have access to `datum` like the `dataComponent` elements rendered by other Victory components such as `VictoryScatter`.
+
 See the [Custom Components Guide][] for more detail on creating your own `dataComponents`
 
 _default:_ `<Area/>`
@@ -121,7 +123,7 @@ domainPadding={{x: [10, -10], y: 5}}
 
 `VictoryArea` uses the standard `eventKey` prop. **This prop is not commonly used.** [Read about the `eventKey` prop in more detail here](/docs/common-props#eventkey)
 
-**note:** `VictoryArea` only renders one element per dataset, so only one event key will be generated.
+*note:* `VictoryArea` only renders one element per dataset, so only one event key will be generated.
 
 ```jsx
 eventKey = "x";
@@ -135,7 +137,7 @@ eventKey = "x";
 
 See the [Events Guide][] for more information on defining events.
 
-**note:** `VictoryArea` will use the special `eventKey` "all" rather than referring to data by index, as it renders only one element for an entire dataset
+*note:* `VictoryArea` will use the special `eventKey` "all" rather than referring to data by index, as it renders only one element for an entire dataset
 
 ```playground
 <div style={{ margin: 50 }}>
@@ -177,7 +179,7 @@ See the [Events Guide][] for more information on defining events.
 
 `VictoryArea` uses the standard `groupComponent` prop. [Read about it in detail](/docs/common-props#groupcomponent)
 
-**note:** `VictoryArea` uses [`VictoryClipContainer`][] as its default `groupComponent` `VictoryClipContainer` renders a `<g>` tag with a `clipPath` `def`. This allows continuous data components to transition smoothly when new data points enter and exit. **Supplying a custom `groupComponent` to `VictoryArea` may result in broken animations.**
+*note:* `VictoryArea` uses [`VictoryClipContainer`][] as its default `groupComponent` `VictoryClipContainer` renders a `<g>` tag with a `clipPath` `def`. This allows continuous data components to transition smoothly when new data points enter and exit. **Supplying a custom `groupComponent` to `VictoryArea` may result in broken animations.**
 
 _default:_ `<VictoryClipContainer/>`
 
@@ -243,6 +245,8 @@ _default:_ `"linear"`
 `type: element`
 
 `VictoryArea` uses the standard `labelComponent` prop. [Read about it in detail](/docs/common-props#labelcomponent)
+
+*note:* To enable tooltips on `VictoryArea`, it is necessary to use [`VictoryVoronoiContainer`](docs/victory-voronoi-container)
 
 _default:_ `<VictoryLabel renderInPortal/>`
 
@@ -414,7 +418,7 @@ _default:_ `sortOrder="ascending"`
 
 `VictoryArea` uses the standard `standalone` prop. [Read about it here](/docs/common-props#standalone)
 
-**note:** When `VictoryArea` is nested within a component like `VictoryChart`, this prop will be set to `false`
+*note:* When `VictoryArea` is nested within a component like `VictoryChart`, this prop will be set to `false`
 
 _default:_ `standalone={true}`
 
@@ -434,6 +438,8 @@ _default:_ `standalone={true}`
 `type: { parent: object, data: object, labels: object }`
 
 `VictoryArea` uses the standard `style` prop. [Read about it here](/docs/common-props#style)
+
+*note:* Since `VictoryArea` renders a single element to represent an entire dataset, it is not possible to use functional styles to change the style of the line as a function of individual `datum`. Instead, try using [gradient fills](/docs/faq/#how-can-i-use-gradient-fills-in-victory) for styling continuous data.
 
 _default (provided by default theme):_ See [grayscale theme][] for more detail
 

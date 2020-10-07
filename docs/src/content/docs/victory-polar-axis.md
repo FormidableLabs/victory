@@ -76,7 +76,7 @@ axisComponent={<LineSegment events={{ onClick: handleClick }}/>}
 
 The `axisLabelComponent` prop takes a component instance which will be used to render the axis label. The new element created from the passed `axisLabelComponent` will be supplied with the following props: `x`, `y`, `verticalAnchor`, `textAnchor`, `angle`, `transform`, `style` and `events`. Any of these props may be overridden by passing in props to the supplied component, or modified or ignored within the custom component itself. If `axisLabelComponent` is omitted, a new [`VictoryLabel`][] will be created with props described above.
 
-**Note:** Axis labels are only rendered with the dependent axis in polar charts.
+*note:* Axis labels are only rendered with the dependent axis in polar charts.
 
 _default:_ `axisLabelComponent={<VictoryLabel/>}`
 
@@ -225,7 +225,7 @@ _default:_ `endAngle={360}`
 
 See the [Events Guide][]for more information on defining events.
 
-**note:** valid event targets for `VictoryPolarAxis` are "axis", "axisLabel", "grid", "ticks", and "tickLabels".
+*note:* valid event targets for `VictoryPolarAxis` are "axis", "axisLabel", "grid", "ticks", and "tickLabels".
 Targets that correspond to only one element {"axis" and "axisLabel") should use the special eventKey "all".
 
 ## externalEventMutations
@@ -390,7 +390,7 @@ padding={{ top: 20, bottom: 60 }}
 `VictoryPolarAxis` uses the standard `scale` prop. [Read about it here](/docs/common-props#scale)
 Options for scale include "linear", "time", "log", "sqrt" and the `d3-scale` functions that correspond to these options.
 
-**note:** Though `VictoryPolarAxis` can take a `scale` prop with scales defined for both `x` and `y`, only the scale that corresponds the given axis will be used.
+*note:* Though `VictoryPolarAxis` can take a `scale` prop with scales defined for both `x` and `y`, only the scale that corresponds the given axis will be used.
 
 _default:_ `scale="linear"`
 
@@ -414,7 +414,7 @@ scale={{x: "linear", y: "log"}}
 
 `VictoryPolarAxis` uses the standard `standalone` prop. [Read about it here](/docs/common-props#standalone)
 
-**note:** When `VictoryPolarAxis` is nested within a component like `VictoryChart`, this prop will be set to `false`
+*note:* When `VictoryPolarAxis` is nested within a component like `VictoryChart`, this prop will be set to `false`
 
 _default:_ `standalone={true}`
 
@@ -463,9 +463,9 @@ _default:_ `startAngle={0}`
 
 The `style` prop defines the style of the component. The style prop should be given as an object with styles defined for `parent`, `axis`, `axisLabel`, `grid`, `ticks`, and `tickLabels`. Any valid svg styles are supported, but `width`, `height`, and `padding` should be specified via props as they determine relative layout for components in VictoryChart. Functional styles may be defined for `grid`, `tick`, and `tickLabel` style properties, and they will be evaluated with the props corresponding to each axis element, such as `tick` and `index`.
 
-**note:** When a component is rendered as a child of another Victory component, or within a custom `<svg>` element with `standalone={false}` parent styles will be applied to the enclosing `<g>` tag. Many styles that can be applied to a parent `<svg>` will not be expressed when applied to a `<g>`.
+*note:* When a component is rendered as a child of another Victory component, or within a custom `<svg>` element with `standalone={false}` parent styles will be applied to the enclosing `<g>` tag. Many styles that can be applied to a parent `<svg>` will not be expressed when applied to a `<g>`.
 
-**note:** custom `angle` and `verticalAnchor` properties may be included in `labels` styles.
+*note:* custom `angle` and `verticalAnchor` properties may be included in `labels` styles.
 
 _default (provided by default theme):_ See [grayscale theme][] for more detail
 

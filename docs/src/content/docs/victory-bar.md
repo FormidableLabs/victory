@@ -477,7 +477,7 @@ _default:_ `sortOrder="ascending"`
 
 `VictoryBar` uses the standard `standalone` prop. [Read about it here](/docs/common-props#standalone)
 
-**note:** When `VictoryBar` is nested within a component like `VictoryChart`, this prop will be set to `false`
+*note:* When `VictoryBar` is nested within a component like `VictoryChart`, this prop will be set to `false`
 
 _default:_ `standalone={true}`
 
