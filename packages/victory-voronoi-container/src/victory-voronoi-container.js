@@ -177,7 +177,7 @@ export const voronoiContainerMixin = (base) =>
           width,
           height,
           style: this.getStyle(props, points, "labels"),
-          flyoutStyle: this.getStyle(props, points, "flyout")[0],
+          flyoutStyle: this.getStyle(props, points, "flyout")[0]
         },
         this.getDefaultLabelProps(props, points)
       );
