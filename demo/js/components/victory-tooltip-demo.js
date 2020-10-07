@@ -36,7 +36,10 @@ class App extends React.Component {
               />
             }
             labels={({ datum }) => `hello0000000000 #${datum.x}`}
-            style={{ parent: parentStyle, data: { fill: ({ active }) => active ? "red" : "black" }}}
+            style={{
+              parent: parentStyle,
+              data: { fill: ({ active }) => (active ? "red" : "black") }
+            }}
             data={[
               { x: 1, y: 1 },
               { x: 2, y: -2 },
