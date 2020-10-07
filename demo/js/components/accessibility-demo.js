@@ -1,6 +1,5 @@
+/*eslint-disable no-magic-numbers */
 import React from "react";
-import { Curve } from "Packages/victory-line";
-import { VictoryLine } from "Packages/victory-line";
 import { VictoryGroup } from "Packages/victory-group";
 import { VictoryStack } from "Packages/victory-stack";
 import { VictoryChart } from "Packages/victory-chart";
@@ -9,6 +8,7 @@ import { VictoryBoxPlot } from "Packages/victory-box-plot";
 import { VictoryBar, Bar } from "Packages/victory-bar";
 import { VictoryPie, Slice } from "Packages/victory-pie";
 import { VictoryArea, Area } from "Packages/victory-area";
+import { VictoryLine, Curve } from "Packages/victory-line";
 import { VictoryVoronoi, Voronoi } from "Packages/victory-voronoi";
 import { ErrorBar, VictoryErrorBar } from "Packages/victory-errorbar";
 import { Candle, VictoryCandlestick } from "Packages/victory-candlestick";
@@ -205,8 +205,10 @@ export default class App extends React.Component {
                   <Curve
                     ariaLabel={({ data }) =>
                       data.map(
-                        (data, i) =>
-                          `data point ${i + 1} x value is ${data.x} and y value is ${data.y}`
+                        (dataPoint, i) =>
+                          `data point ${i + 1} x value is ${dataPoint.x} and y value is ${
+                            dataPoint.y
+                          }`
                       )
                     }
                   />

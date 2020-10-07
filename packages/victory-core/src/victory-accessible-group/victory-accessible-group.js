@@ -6,9 +6,9 @@ class VictoryAccessibleGroup extends React.Component {
   static propTypes = {
     "aria-describedby": PropTypes.string,
     "aria-label": PropTypes.string,
-    desc: PropTypes.string,
     children: PropTypes.oneOfType([PropTypes.arrayOf(PropTypes.node), PropTypes.node]),
     className: PropTypes.string,
+    desc: PropTypes.string,
     tabIndex: PropTypes.number
   };
 

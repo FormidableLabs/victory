@@ -2,7 +2,6 @@ import * as React from "react";
 import {
   EventPropTypeInterface,
   NumberOrCallback,
-  StringOrCallback,
   StringOrNumberOrCallback,
   VictoryCommonProps,
   VictoryCommonPrimitiveProps,

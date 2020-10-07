@@ -517,8 +517,8 @@ VictoryLabel.role = "label";
 VictoryLabel.defaultStyles = defaultStyles;
 VictoryLabel.propTypes = {
   active: PropTypes.bool,
-  ariaLabel: PropTypes.oneOfType([PropTypes.string, PropTypes.func]),
   angle: PropTypes.oneOfType([PropTypes.string, PropTypes.number]),
+  ariaLabel: PropTypes.oneOfType([PropTypes.string, PropTypes.func]),
   backgroundComponent: PropTypes.element,
   backgroundPadding: PropTypes.oneOfType([PropTypes.number, PropTypes.object, PropTypes.array]),
   backgroundStyle: PropTypes.oneOfType([PropTypes.object, PropTypes.array]),

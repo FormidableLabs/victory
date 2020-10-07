@@ -1,15 +1,15 @@
+/*eslint-disable no-magic-numbers */
 import React from "react";
 import { isNumber } from "lodash";
-import { Curve } from "@packages/victory-line";
 import { VictoryGroup } from "@packages/victory-group";
 import { VictoryStack } from "@packages/victory-stack";
-import { VictoryLine } from "@packages/victory-line";
-import { VictoryBar, Bar } from "@packages/victory-bar";
-import { VictoryPie, Slice } from "@packages/victory-pie";
-import { VictoryArea, Area } from "@packages/victory-area";
 import { VictoryChart } from "@packages/victory-chart";
 import { VictoryScatter } from "@packages/victory-scatter";
 import { VictoryBoxPlot } from "@packages/victory-box-plot";
+import { VictoryBar, Bar } from "@packages/victory-bar";
+import { VictoryPie, Slice } from "@packages/victory-pie";
+import { VictoryArea, Area } from "@packages/victory-area";
+import { VictoryLine, Curve } from "@packages/victory-line";
 import { VictoryVoronoi, Voronoi } from "@packages/victory-voronoi";
 import { ErrorBar, VictoryErrorBar } from "@packages/victory-errorbar";
 import { Candle, VictoryCandlestick } from "@packages/victory-candlestick";
@@ -102,7 +102,7 @@ export default class VictoryAccessibilityDemo extends React.Component<any> {
                 minLabels
                 maxLabels
                 data={accessibilityBoxData}
-                /** datum props available ex:
+                /* datum props available ex:
                  * x: "green"
                  * xName: "green"
                  * y: (4) [3, 5, 6, 9]
