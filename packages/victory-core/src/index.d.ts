@@ -296,25 +296,14 @@ export class VictoryClipContainer extends React.Component<VictoryClipContainerPr
 
 // #region Victory Accessibile Group
 
-export type VictoryAccessibleGroupProps =
-  | {
-      desc: string;
-      descId: string;
-      "aria-describedby"?: string;
-      "aria-label": string;
-      children?: React.ReactElement | React.ReactElement[];
-      className?: string;
-      tabIndex?: number;
-    }
-  | {
-      desc?: false;
-      descId?: never;
-      "aria-describedby"?: string;
-      "aria-label": string;
-      children?: React.ReactElement | React.ReactElement[];
-      className?: string;
-      tabIndex?: number;
-    };
+export interface VictoryAccessibleGroupProps {
+  desc?: string;
+  "aria-describedby"?: string;
+  "aria-label": string;
+  children?: React.ReactElement | React.ReactElement[];
+  className?: string;
+  tabIndex?: number;
+}
 
 export class VictoryAccessibleGroup extends React.Component<VictoryAccessibleGroupProps, any> {}
 

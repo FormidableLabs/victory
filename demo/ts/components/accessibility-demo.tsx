@@ -44,7 +44,8 @@ const pageHeadingStyle: React.CSSProperties = {
 
 const chartHeadingStyle: React.CSSProperties = {
   marginBottom: "0px",
-  marginTop: "25px"
+  marginTop: "25px",
+  fontSize: "calc(1vw + 5px)"
 };
 
 const containerStyle: React.CSSProperties = {
@@ -151,7 +152,16 @@ export default class VictoryAccessibilityDemo extends React.Component<any> {
           <div style={chartContainerStyle}>
             <h3 style={chartHeadingStyle}>Area</h3>
             <VictoryChart>
-              <VictoryStack>
+              <VictoryStack
+                groupComponent={
+                  <VictoryAccessibleGroup
+                    aria-label="stack graph"
+                    desc="stack graph description"
+                    aria-describedby="stack graph aria description, descId should match"
+                    tabIndex={67}
+                  />
+                }
+              >
                 <VictoryArea
                   data={accessibilityAreaData.a}
                   style={{ data: { fill: "#c43a31" } }}
@@ -317,19 +327,16 @@ export default class VictoryAccessibilityDemo extends React.Component<any> {
             </VictoryChart>
           </div>
 
-          {/**ACCESSIBILITYGROUP */}
+          {/**ACCESSIBLE GROUP */}
           <div style={chartContainerStyle}>
-            <h3 style={chartHeadingStyle}>Accessibility Group</h3>
+            <h3 style={chartHeadingStyle}>Accessible Group</h3>
             <VictoryChart domainPadding={{ x: 40 }}>
               <VictoryGroup
                 offset={20}
                 groupComponent={
                   <VictoryAccessibleGroup
-                    aria-label="access-group"
-                    aria-describedby="grouped bar chart"
-                    desc="horizontal bar chart"
-                    descId=""
-                    tabIndex={66}
+                    aria-label="victory group"
+                    desc="accessible bar group chart"
                   />
                 }
               >
@@ -338,6 +345,14 @@ export default class VictoryAccessibilityDemo extends React.Component<any> {
                   horizontal
                   style={{ data: { fill: "#c43a31", opacity: 0.9 } }}
                   data={accessibilityGroupData.b}
+                  groupComponent={
+                    <VictoryAccessibleGroup
+                      aria-label="victory bar group 2"
+                      desc="accessible bar chart group 2"
+                      aria-describedby="accessible bar chart group 2 aria description"
+                      tabIndex={67}
+                    />
+                  }
                 />
                 <VictoryBar horizontal data={accessibilityGroupData.c} />
               </VictoryGroup>

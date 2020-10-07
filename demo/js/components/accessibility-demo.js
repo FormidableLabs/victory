@@ -43,14 +43,16 @@ const pageHeadingStyle = {
 
 const chartHeadingStyle = {
   marginBottom: "0px",
-  marginTop: "25px"
+  marginTop: "25px",
+  fontSize: "calc(1vw + 5px)"
 };
 
 const containerStyle = {
   display: "flex",
   flexFlow: "row wrap",
   alignItems: "center",
-  justifyContent: "flex-start"
+  justifyContent: "flex-start",
+  maxWidth: "1300px"
 };
 
 const chartContainerStyle = {
@@ -305,18 +307,16 @@ export default class App extends React.Component {
             </VictoryChart>
           </div>
 
-          {/**ACCESSIBILITYGROUP */}
+          {/**ACCESSIBLE GROUP */}
           <div style={chartContainerStyle}>
-            <h3 style={chartHeadingStyle}>Accessibility Group</h3>
+            <h2 style={chartHeadingStyle}>Accessible Group</h2>
             <VictoryChart domainPadding={{ x: 40 }}>
               <VictoryGroup
                 offset={20}
                 groupComponent={
                   <VictoryAccessibleGroup
-                    aria-label="access-group"
-                    aria-describedby="horizontal bar chart"
-                    desc="horizontal bar chart"
-                    tabIndex={66}
+                    aria-label="victory group"
+                    desc="accessible bar group chart"
                   />
                 }
               >
@@ -325,6 +325,14 @@ export default class App extends React.Component {
                   horizontal
                   style={{ data: { fill: "#c43a31", opacity: 0.9 } }}
                   data={accessibilityGroupData.b}
+                  groupComponent={
+                    <VictoryAccessibleGroup
+                      aria-label="victory bar group 2"
+                      desc="accessible bar chart group 2"
+                      aria-describedby="accessible bar chart group 2 aria description"
+                      tabIndex={67}
+                    />
+                  }
                 />
                 <VictoryBar horizontal data={accessibilityGroupData.c} />
               </VictoryGroup>

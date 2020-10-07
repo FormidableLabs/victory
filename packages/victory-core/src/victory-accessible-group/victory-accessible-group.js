@@ -3,12 +3,10 @@ import PropTypes from "prop-types";
 
 class VictoryAccessibleGroup extends React.Component {
   static displayName = "VictoryAccessibleGroup";
-  static role = "container";
   static propTypes = {
     "aria-describedby": PropTypes.string,
     "aria-label": PropTypes.string,
     desc: PropTypes.string,
-    descId: PropTypes.string,
     children: PropTypes.oneOfType([PropTypes.arrayOf(PropTypes.node), PropTypes.node]),
     className: PropTypes.string,
     tabIndex: PropTypes.number
@@ -19,12 +17,13 @@ class VictoryAccessibleGroup extends React.Component {
   };
 
   render() {
-    const { desc, children, className, descId, tabIndex } = this.props;
+    const { desc, children, className, tabIndex } = this.props;
+    const descId = desc && (this.props["aria-describedby"] || desc.split(" ").join("-"));
 
     return desc ? (
       <g
         aria-label={this.props["aria-label"]}
-        aria-describedby={this.props["aria-describedby"]}
+        aria-describedby={descId}
         className={className}
         tabIndex={tabIndex}
       >
