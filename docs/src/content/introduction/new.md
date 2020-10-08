@@ -34,6 +34,7 @@ Victory is actively developed. You can read about some of our newest feature her
   }
 />
 ```
+
 Label backgrounds also work with multi-line and inline labels:
 
 ```playground
@@ -81,9 +82,6 @@ Label backgrounds are also compatible with tooltips!
   }
 />
 ```
-
-
-
 
 ## Better label placement options for VictoryPie
 
@@ -296,4 +294,27 @@ const Matterhorn = props => {
 };
 
 ReactDOM.render(<Matterhorn/>, mountNode);
+```
+
+## VictoryAccessibleGroup and primitive accessible props
+
+With improved chart and chart component accessibilty in mind, we've added a [`VictoryAccessibleGroup`](/docs/victory-accessible-group) for use with the [`groupComponent`](/docs/common-props#groupcomponent) prop. This component will wrap is children in a `g` tag with a user provided `aria-label` and optional description via `desc` prop. Other available props can be found in the [docs](/docs/victory-accessible-group).
+
+We've also added an `ariaLabel` and `tabIndex` prop to all our primitives. Documentation on these can be found in under [`VictoryPrimitives`](/docs/victory-primitives#victory-primitives)
+
+A new `Accessiblity` page has been added to our demos as well and viewable when running the development server. More information on that [here](https://github.com/FormidableLabs/victory/blob/main/CONTRIBUTING.md)
+
+```playground
+<VictoryChart domainPadding={{ x: 40, y: 40 }}>
+  <VictoryBar
+    style={{ data: { fill: "#c43a31" } }}
+    data={sampleData}
+    dataComponent={
+      <Bar
+        tabIndex={({ index }) => index + 2}
+        ariaLabel={({ datum }) => `x: ${datum.x}`}
+      />
+     }
+    />
+</VictoryChart>
 ```

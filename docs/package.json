@@ -47,7 +47,7 @@
     "styled-components": "^5.1.0",
     "styled-normalize": "^8.0.6",
     "unist-util-visit": "^1.4.0",
-    "victory": "^35.1.1"
+    "victory": "^35.2.0"
   },
   "devDependencies": {
     "babel-cli": "^6.26.0",
