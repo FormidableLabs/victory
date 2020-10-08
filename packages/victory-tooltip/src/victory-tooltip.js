@@ -96,42 +96,28 @@ export default class VictoryTooltip extends React.Component {
   };
 
   static defaultEvents = (props) => {
+    const activate = props.activateData
+      ? [
+          { target: "labels", mutation: () => ({ active: true }) },
+          { target: "data", mutation: () => ({ active: true }) }
+        ]
+      : [{ target: "labels", mutation: () => ({ active: true }) }];
+    const deactivate = props.activateData
+      ? [
+          { target: "labels", mutation: () => ({ active: undefined }) },
+          { target: "data", mutation: () => ({ active: undefined }) }
+        ]
+      : [{ target: "labels", mutation: () => ({ active: undefined }) }];
     return [
       {
         target: "data",
         eventHandlers: {
-          onMouseOver: () => {
-            return props.activateData
-              ? [
-                  { target: "labels", mutation: () => ({ active: true }) },
-                  { target: "data", mutation: () => ({ active: true }) }
-                ]
-              : [{ target: "labels", mutation: () => ({ active: true }) }];
-          },
-          onTouchStart: () => {
-            return props.activateData
-              ? [
-                  { target: "labels", mutation: () => ({ active: true }) },
-                  { target: "data", mutation: () => ({ active: true }) }
-                ]
-              : [{ target: "labels", mutation: () => ({ active: true }) }];
-          },
-          onMouseOut: () => {
-            return props.activateData
-              ? [
-                  { target: "labels", mutation: () => ({ active: undefined }) },
-                  { target: "data", mutation: () => ({ active: undefined }) }
-                ]
-              : [{ target: "labels", mutation: () => ({ active: undefined }) }];
-          },
-          onTouchEnd: () => {
-            return props.activateData
-              ? [
-                  { target: "labels", mutation: () => ({ active: undefined }) },
-                  { target: "data", mutation: () => ({ active: undefined }) }
-                ]
-              : [{ target: "labels", mutation: () => ({ active: undefined }) }];
-          }
+          onMouseOver: () => activate,
+          onFocus: () => activate,
+          onTouchStart: () => activate,
+          onMouseOut: () => deactivate,
+          onBlur: () => deactivate,
+          onTouchEnd: () => deactivate
         }
       }
     ];
