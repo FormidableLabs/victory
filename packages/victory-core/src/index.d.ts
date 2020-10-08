@@ -198,7 +198,7 @@ export type OriginType = { x: number; y: number };
 export type LabelOrientationType = "parallel" | "perpendicular" | "vertical";
 
 export interface VictoryLabelProps {
-  angle?: string | number;
+  angle?: StringOrNumberOrCallback;
   ariaLabel?: StringOrCallback;
   backgroundComponent?: React.ReactElement;
   backgroundStyle?: React.CSSProperties | React.CSSProperties[];
