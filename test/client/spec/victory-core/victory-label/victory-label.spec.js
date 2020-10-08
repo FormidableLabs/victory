@@ -34,6 +34,12 @@ describe("components/victory-label", () => {
     expect(output.prop("transform")).to.contain("rotate(46");
   });
 
+  it("accepts the angle prop as a function", () => {
+    const wrapper = shallow(<VictoryLabel angle={() => 46} text={"such text, wow"} />);
+    const output = wrapper.find(Text);
+    expect(output.prop("transform")).to.contain("rotate(46");
+  });
+
   it("strips px from fontSize", () => {
     const wrapper = shallow(<VictoryLabel style={{ fontSize: "10px" }} text={"such text, wow"} />);
     const output = wrapper.find(TSpan);

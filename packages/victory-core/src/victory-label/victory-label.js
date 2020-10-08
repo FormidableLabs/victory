@@ -146,7 +146,8 @@ const getTransform = (props) => {
   const { x, y, polar } = props;
   const style = getSingleValue(props.style);
   const defaultAngle = polar ? LabelHelpers.getPolarAngle(props) : 0;
-  const baseAngle = style.angle === undefined ? props.angle : style.angle;
+  const baseAngle =
+    style.angle === undefined ? Helpers.evaluateProp(props.angle, props) : style.angle;
   const angle = baseAngle === undefined ? defaultAngle : baseAngle;
   const transform = props.transform || style.transform;
   const transformPart = transform && Helpers.evaluateProp(transform, props);
@@ -517,7 +518,7 @@ VictoryLabel.role = "label";
 VictoryLabel.defaultStyles = defaultStyles;
 VictoryLabel.propTypes = {
   active: PropTypes.bool,
-  angle: PropTypes.oneOfType([PropTypes.string, PropTypes.number]),
+  angle: PropTypes.oneOfType([PropTypes.string, PropTypes.number, PropTypes.func]),
   ariaLabel: PropTypes.oneOfType([PropTypes.string, PropTypes.func]),
   backgroundComponent: PropTypes.element,
   backgroundPadding: PropTypes.oneOfType([PropTypes.number, PropTypes.object, PropTypes.array]),
