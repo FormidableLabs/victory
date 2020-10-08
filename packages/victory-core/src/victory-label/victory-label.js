@@ -142,8 +142,8 @@ const getDy = (props, verticalAnchor, lineHeight) => {
   }
 };
 
-const getTransform = (props) => {
-  const { x, y, polar } = props;
+const getTransform = (props, x, y) => {
+  const { polar } = props;
   const style = getSingleValue(props.style);
   const defaultAngle = polar ? LabelHelpers.getPolarAngle(props) : 0;
   const baseAngle = style.angle === undefined ? props.angle : style.angle;
@@ -397,9 +397,9 @@ const getCalculatedProps = (props) => {
     : style.verticalAnchor || "middle";
   const dx = props.dx ? Helpers.evaluateProp(props.dx, props) : 0;
   const dy = getDy(props, verticalAnchor, lineHeight);
-  const transform = getTransform(props);
   const x = props.x !== undefined ? props.x : getPosition(props, "x");
   const y = props.y !== undefined ? props.y : getPosition(props, "y");
+  const transform = getTransform(props, x, y);
 
   return assign({}, props, {
     ariaLabel,
