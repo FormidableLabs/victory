@@ -1,5 +1,22 @@
 # Victory Changelog
 
+## 35.2.0 (2020-10-08)
+
+### Accessibility Improvements
+
+- [#1708](https://github.com/FormidableLabs/victory/pull/1708) - This PR adds `ariaLabel` to Victory's primitive components (`VictoryLabel`, `Area`, `Bar` etc.). This new prop can take a string or a function that expected to return a string, and adds `aria-label` attributes to svg elements Victory renders. This PR also adds `tabIndex` and `aria-label` props to `VictoryClipContainer`, and creates a new `groupContainer`, `VictoryAccessibleGroup`, which renders a `g` tag and an optional `desc` tag along with its other children. `VictoryAccessibleGroup` also takes `aria-label` and `aria-describedby` props. Thanks @ljones87 for all the hard work on this new feature!
+
+- [#1709](https://github.com/FormidableLabs/victory/pull/1709) - Adds default `onFocus` and `onBlur` event handlers to `VictoryTooltip` so that users can trigger tooltips by tabbing through the chart elements when `tabIndex` is set.
+
+### Bug fixes for labels and tooltips
+
+- [#1707](https://github.com/FormidableLabs/victory/pull/1707) - Respects user-provided props on the label component `VictoryVoronoiContainer` renders, including `text`, `style`, `flyoutStyle`, `width` and `height`
+- [#1710](https://github.com/FormidableLabs/victory/pull/1710) - Adds support for providing functions to the `angle` prop on `VictoryLabel`
+- [#1711](https://github.com/FormidableLabs/victory/pull/1711) - Fixes a bug related to applying angles to labels whose position is set by `datum` rather than coordinate.
+
+
+
+
 ## 35.1.1 (2020-09-28)
 
 - [#1693](https://github.com/FormidableLabs/victory/pull/1693) - Add `aria-labelledby` and `aria-describedby` props to `VictoryContainer`. Thanks @elliotdickison!
