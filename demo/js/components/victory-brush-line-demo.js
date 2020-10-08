@@ -81,9 +81,7 @@ class App extends React.Component {
     };
 
     return this.state.datasets
-      .map((dataset) => {
-        return isActive(dataset, filters) ? dataset.name : null;
-      })
+      .map((dataset) => (isActive(dataset) ? dataset.name : null))
       .filter(Boolean);
   }
 
