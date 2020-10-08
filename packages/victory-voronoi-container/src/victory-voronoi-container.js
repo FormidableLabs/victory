@@ -165,18 +165,20 @@ export const voronoiContainerMixin = (base) =>
           key: `${name}-${eventKey}-voronoi-tooltip`,
           id: `${name}-${eventKey}-voronoi-tooltip`,
           active: true,
-          flyoutStyle: this.getStyle(props, points, "flyout")[0],
           renderInPortal: false,
-          style: this.getStyle(props, points, "labels"),
           activePoints: points,
           datum,
           scale,
-          theme,
-          text,
-          width,
-          height
+          theme
         },
         componentProps,
+        {
+          text,
+          width,
+          height,
+          style: this.getStyle(props, points, "labels"),
+          flyoutStyle: this.getStyle(props, points, "flyout")[0]
+        },
         this.getDefaultLabelProps(props, points)
       );
       const labelPosition = this.getLabelPosition(props, labelProps, points);
