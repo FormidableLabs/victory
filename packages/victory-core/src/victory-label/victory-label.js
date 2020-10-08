@@ -146,9 +146,8 @@ const getTransform = (props) => {
   const { x, y, polar } = props;
   const style = getSingleValue(props.style);
   const defaultAngle = polar ? LabelHelpers.getPolarAngle(props) : 0;
-  const baseAngle = style.angle === undefined
-    ? Helpers.evaluateProp(props.angle, props)
-    : style.angle;
+  const baseAngle =
+    style.angle === undefined ? Helpers.evaluateProp(props.angle, props) : style.angle;
   const angle = baseAngle === undefined ? defaultAngle : baseAngle;
   const transform = props.transform || style.transform;
   const transformPart = transform && Helpers.evaluateProp(transform, props);
