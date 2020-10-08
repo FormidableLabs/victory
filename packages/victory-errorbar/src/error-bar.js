@@ -62,18 +62,22 @@ const calculateError = (props) => {
 const evaluateProps = (props) => {
   /**
    * Potential evaluated props are:
+   * `ariaLabel`
    * `id`
    * `style`
+   * `tabIndex`
    */
+  const ariaLabel = Helpers.evaluateProp(props.ariaLabel, props);
   const id = Helpers.evaluateProp(props.id, props);
   const style = Helpers.evaluateStyle(assign({ stroke: "black" }, props.style), props);
+  const tabIndex = Helpers.evaluateProp(props.tabIndex, props);
 
-  return assign({}, props, { id, style });
+  return assign({}, props, { ariaLabel, id, style, tabIndex });
 };
 
 const ErrorBar = (props) => {
   props = evaluateProps(props);
-
+  const { ariaLabel, tabIndex } = props;
   const error = calculateError(props);
   const children = [
     error.right ? renderBorder(props, error, "right") : null,
@@ -85,7 +89,7 @@ const ErrorBar = (props) => {
     error.bottom ? renderCross(props, error, "bottom") : null,
     error.top ? renderCross(props, error, "top") : null
   ].filter(Boolean);
-  return React.cloneElement(props.groupComponent, {}, children);
+  return React.cloneElement(props.groupComponent, { "aria-label": ariaLabel, tabIndex }, children);
 };
 
 ErrorBar.propTypes = {

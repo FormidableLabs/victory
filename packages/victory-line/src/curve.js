@@ -57,16 +57,20 @@ const getLineFunction = (props) => {
 const evaluateProps = (props) => {
   /**
    * Potential evaluated props are:
+   * `ariaLabel`
    * `id`
    * `style`
+   * `tabIndex`
    */
+  const ariaLabel = Helpers.evaluateProp(props.ariaLabel, props);
   const id = Helpers.evaluateProp(props.id, props);
   const style = Helpers.evaluateStyle(
     assign({ fill: "none", stroke: "black" }, props.style),
     props
   );
+  const tabIndex = Helpers.evaluateProp(props.tabIndex, props);
 
-  return assign({}, props, { id, style });
+  return assign({}, props, { ariaLabel, id, style, tabIndex });
 };
 
 const Curve = (props) => {
@@ -77,13 +81,15 @@ const Curve = (props) => {
 
   return React.cloneElement(props.pathComponent, {
     ...props.events,
+    "aria-label": props.ariaLabel,
     d: lineFunction(props.data),
     style: props.style,
     transform: props.transform || defaultTransform,
     className: props.className,
     role: props.role,
     shapeRendering: props.shapeRendering,
-    clipPath: props.clipPath
+    clipPath: props.clipPath,
+    tabIndex: props.tabIndex
   });
 };
 

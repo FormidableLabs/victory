@@ -58,6 +58,7 @@ const evaluateProps = (props) => {
    * 2) `cornerRadius`
    *
    * Everything else does not have to be evaluated in a particular order:
+   * `ariaLabel`
    * `desc`
    * `id`
    * `tabIndex`
@@ -65,16 +66,18 @@ const evaluateProps = (props) => {
   const style = Helpers.evaluateStyle(assign({ stroke: "black" }, props.style), props);
   const candleWidth = getCandleWidth(props.candleWidth, assign({}, props, { style }));
 
+  const ariaLabel = Helpers.evaluateProp(props.ariaLabel, props);
   const desc = Helpers.evaluateProp(props.desc, props);
   const id = Helpers.evaluateProp(props.id, props);
   const tabIndex = Helpers.evaluateProp(props.tabIndex, props);
 
-  return assign({}, props, { style, candleWidth, desc, id, tabIndex });
+  return assign({}, props, { ariaLabel, style, candleWidth, desc, id, tabIndex });
 };
 
 const Candle = (props) => {
   props = evaluateProps(props);
   const {
+    ariaLabel,
     events,
     groupComponent,
     clipPath,
@@ -92,6 +95,7 @@ const Candle = (props) => {
   const wickStyle = defaults({ strokeWidth: wickStrokeWidth }, style);
   const sharedProps = {
     ...events,
+    "aria-label": ariaLabel,
     role,
     shapeRendering,
     className,

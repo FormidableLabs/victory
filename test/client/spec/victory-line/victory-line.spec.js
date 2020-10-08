@@ -6,7 +6,7 @@
 /* eslint no-unused-expressions: 0 */
 
 import React from "react";
-import { omit } from "lodash";
+import { omit, random, range } from "lodash";
 import { shallow, mount } from "enzyme";
 import { curveCatmullRom } from "d3-shape";
 import SvgTestHelper from "../svg-test-helper";
@@ -277,6 +277,26 @@ describe("components/victory-line", () => {
         const roleValue = p.prop("role");
         expect(roleValue).to.be.a("string");
         expect(roleValue).to.equal("presentation");
+      });
+    });
+
+    it("adds aria-label and tabIndex to Area primitive", () => {
+      const ariaTestData = range(4).map((x) => ({ x, y: random(1, 7) }));
+      const wrapper = mount(
+        <VictoryLine
+          data={ariaTestData}
+          dataComponent={
+            <Curve
+              ariaLabel={({ data }) => `data point ${data[2].x + 1}'s x value is ${data[2].x}`}
+              tabIndex={3}
+            />
+          }
+        />
+      );
+      expect(wrapper.find("path")).to.have.length(1);
+      wrapper.find("path").forEach((p) => {
+        expect(p.prop("aria-label")).to.equal(`data point 3's x value is 2`);
+        expect(p.prop("tabIndex")).to.equal(3);
       });
     });
   });

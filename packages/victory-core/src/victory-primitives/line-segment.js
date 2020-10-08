@@ -8,17 +8,19 @@ import Line from "./line";
 const evaluateProps = (props) => {
   /**
    * Potential evaluated props are:
+   * `ariaLabel`
    * `desc`
    * `id`
    * `style`
    * `tabIndex`
    */
+  const ariaLabel = Helpers.evaluateProp(props.ariaLabel, props);
   const desc = Helpers.evaluateProp(props.desc, props);
   const id = Helpers.evaluateProp(props.id, props);
   const style = Helpers.evaluateStyle(assign({ stroke: "black" }, props.style), props);
   const tabIndex = Helpers.evaluateProp(props.tabIndex, props);
 
-  return assign({}, props, { desc, id, style, tabIndex });
+  return assign({}, props, { ariaLabel, desc, id, style, tabIndex });
 };
 
 const LineSegment = (props) => {
@@ -26,6 +28,7 @@ const LineSegment = (props) => {
 
   return React.cloneElement(props.lineComponent, {
     ...props.events,
+    "aria-label": props.ariaLabel,
     style: props.style,
     desc: props.desc,
     tabIndex: props.tabIndex,

@@ -200,5 +200,22 @@ describe("components/victory-bar", () => {
         expect(roleValue).to.equal("presentation");
       });
     });
+
+    it("applies aria-label and tabIndex to the Bar primitive", () => {
+      const data = range(5, 11).map((y, x) => ({ y, x }));
+      const wrapper = mount(
+        <VictoryBar
+          data={data}
+          dataComponent={
+            <Bar ariaLabel={({ datum }) => `x: ${datum.x}`} tabIndex={({ index }) => index + 1} />
+          }
+        />
+      );
+      wrapper.find("path").forEach((p, i) => {
+        const index = p.prop("index");
+        expect(p.prop("tabIndex")).to.equal(index + 1);
+        expect(p.prop("aria-label")).to.equal(`x: ${data[i].x}`);
+      });
+    });
   });
 });

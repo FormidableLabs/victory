@@ -50,7 +50,6 @@ const getCalculatedValues = (props) => {
 const getBaseProps = (props, fallbackProps) => {
   const modifiedProps = Helpers.modifyProps(props, fallbackProps, "bar");
   props = assign({}, modifiedProps, getCalculatedValues(modifiedProps));
-
   const {
     alignment,
     barRatio,
@@ -99,9 +98,11 @@ const getBaseProps = (props, fallbackProps) => {
     const dataProps = {
       alignment,
       barRatio,
+      barWidth,
       cornerRadius,
       data,
       datum,
+      getPath,
       horizontal,
       index,
       polar,
@@ -113,9 +114,7 @@ const getBaseProps = (props, fallbackProps) => {
       x,
       y,
       y0,
-      x0,
-      barWidth,
-      getPath
+      x0
     };
 
     childProps[eventKey] = {

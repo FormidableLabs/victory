@@ -86,8 +86,10 @@ export type PaddingProps = number | BlockProps;
  */
 export interface CallbackArgs {
   active: boolean;
+  data: any;
   datum: any;
   horizontal: boolean;
+  index: number | string;
   x: number;
   y: number;
   scale?: {
@@ -98,9 +100,11 @@ export interface CallbackArgs {
 
 export type VictoryStringOrNumberCallback = (args: CallbackArgs) => string | number;
 export type VictoryNumberCallback = (args: CallbackArgs) => number;
+export type VictoryStringCallback = (args: CallbackArgs) => string;
 export type VictoryPaddingCallback = (args: CallbackArgs) => number | BlockProps;
 export type StringOrNumberOrCallback = string | number | VictoryStringOrNumberCallback;
 export type NumberOrCallback = number | VictoryNumberCallback;
+export type StringOrCallback = string | VictoryStringCallback;
 export type PaddingOrCallback = number | BlockProps | VictoryPaddingCallback;
 
 export type SliceNumberOrCallback<T, P = null> = number | ((props: Omit<T, P>) => number);
@@ -195,6 +199,7 @@ export type LabelOrientationType = "parallel" | "perpendicular" | "vertical";
 
 export interface VictoryLabelProps {
   angle?: string | number;
+  ariaLabel?: StringOrCallback;
   backgroundComponent?: React.ReactElement;
   backgroundStyle?: React.CSSProperties | React.CSSProperties[];
   backgroundPadding?: PaddingProps | PaddingProps[];
@@ -206,14 +211,15 @@ export interface VictoryLabelProps {
   desc?: string;
   direction?: string;
   events?: React.DOMAttributes<any>;
-  inline?: boolean;
   groupComponent?: React.ReactElement;
+  inline?: boolean;
   labelPlacement?: LabelOrientationType;
   lineHeight?: StringOrNumberOrCallback | (string | number)[];
   origin?: OriginType;
   polar?: boolean;
   renderInPortal?: boolean;
   style?: React.CSSProperties | React.CSSProperties[];
+  tabIndex?: NumberOrCallback;
   text?: string[] | StringOrNumberOrCallback;
   textAnchor?: TextAnchorType | { (): TextAnchorType };
   title?: string;
@@ -265,6 +271,7 @@ export class VictoryContainer extends React.Component<VictoryContainerProps, any
 // #region Victory Clip Container
 
 export interface VictoryClipContainerProps {
+  "aria-label"?: string;
   children?: React.ReactElement | React.ReactElement[];
   circleComponent?: React.ReactElement;
   className?: string;
@@ -284,6 +291,21 @@ export interface VictoryClipContainerProps {
 }
 
 export class VictoryClipContainer extends React.Component<VictoryClipContainerProps, any> {}
+
+// #endregion
+
+// #region Victory Accessibile Group
+
+export interface VictoryAccessibleGroupProps {
+  desc?: string;
+  "aria-describedby"?: string;
+  "aria-label": string;
+  children?: React.ReactElement | React.ReactElement[];
+  className?: string;
+  tabIndex?: number;
+}
+
+export class VictoryAccessibleGroup extends React.Component<VictoryAccessibleGroupProps, any> {}
 
 // #endregion
 
@@ -617,6 +639,7 @@ export interface VictoryCommonProps {
 
 export interface VictoryCommonPrimitiveProps {
   active?: boolean;
+  ariaLabel?: StringOrCallback;
   className?: string;
   clipPath?: string;
   data?: any;
@@ -630,7 +653,7 @@ export interface VictoryCommonPrimitiveProps {
   scale?: any;
   shapeRendering?: string;
   style?: any;
-  tabIndex?: number | Function;
+  tabIndex?: NumberOrCallback;
   transform?: string;
 }
 

@@ -146,6 +146,7 @@ const baseProps = {
 
 const primitiveProps = {
   active: PropTypes.bool,
+  ariaLabel: PropTypes.oneOfType([PropTypes.string, PropTypes.func]),
   className: PropTypes.string,
   clipPath: PropTypes.string,
   data: PropTypes.oneOfType([PropTypes.array, PropTypes.object]),

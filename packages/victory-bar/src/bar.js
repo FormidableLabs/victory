@@ -84,6 +84,7 @@ const evaluateProps = (props) => {
    * 3) `cornerRadius`
    *
    * Everything else does not have to be evaluated in a particular order:
+   * `ariaLabel`
    * `desc`
    * `id`
    * `tabIndex`
@@ -92,11 +93,12 @@ const evaluateProps = (props) => {
   const barWidth = getBarWidth(props.barWidth, assign({}, props, { style }));
   const cornerRadius = getCornerRadius(props.cornerRadius, assign({}, props, { style, barWidth }));
 
+  const ariaLabel = Helpers.evaluateProp(props.ariaLabel, props);
   const desc = Helpers.evaluateProp(props.desc, props);
   const id = Helpers.evaluateProp(props.id, props);
   const tabIndex = Helpers.evaluateProp(props.tabIndex, props);
 
-  return assign({}, props, { style, barWidth, cornerRadius, desc, id, tabIndex });
+  return assign({}, props, { ariaLabel, style, barWidth, cornerRadius, desc, id, tabIndex });
 };
 
 const Bar = (props) => {
@@ -107,17 +109,18 @@ const Bar = (props) => {
     ? getPolarBarPath(props, cornerRadius)
     : getBarPath(props, barWidth, cornerRadius);
   const defaultTransform = polar && origin ? `translate(${origin.x}, ${origin.y})` : undefined;
-
   return React.cloneElement(props.pathComponent, {
     ...props.events,
+    "aria-label": props.ariaLabel,
     style,
     d: path,
-    transform: props.transform || defaultTransform,
     className: props.className,
-    role: props.role,
-    shapeRendering: props.shapeRendering,
     clipPath: props.clipPath,
     desc: props.desc,
+    index: props.index,
+    role: props.role,
+    shapeRendering: props.shapeRendering,
+    transform: props.transform || defaultTransform,
     tabIndex: props.tabIndex
   });
 };

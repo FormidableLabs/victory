@@ -29,6 +29,7 @@ const getPath = (props) => {
 const evaluateProps = (props) => {
   /**
    * Potential evaluated props are:
+   * `ariaLabel`
    * `desc`
    * `id`
    * `size`
@@ -36,6 +37,7 @@ const evaluateProps = (props) => {
    * `symbol`
    * `tabIndex`
    */
+  const ariaLabel = Helpers.evaluateProp(props.ariaLabel, props);
   const desc = Helpers.evaluateProp(props.desc, props);
   const id = Helpers.evaluateProp(props.id, props);
   const size = Helpers.evaluateProp(props.size, props);
@@ -43,7 +45,7 @@ const evaluateProps = (props) => {
   const symbol = Helpers.evaluateProp(props.symbol, props);
   const tabIndex = Helpers.evaluateProp(props.tabIndex, props);
 
-  return assign({}, props, { desc, id, size, style, symbol, tabIndex });
+  return assign({}, props, { ariaLabel, desc, id, size, style, symbol, tabIndex });
 };
 
 const Point = (props) => {
@@ -51,6 +53,7 @@ const Point = (props) => {
 
   return React.cloneElement(props.pathComponent, {
     ...props.events,
+    "aria-label": props.ariaLabel,
     d: getPath(props),
     style: props.style,
     desc: props.desc,

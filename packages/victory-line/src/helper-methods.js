@@ -78,8 +78,8 @@ const getBaseProps = (props, fallbackProps) => {
         data,
         interpolation,
         groupComponent,
-        theme,
-        style: style.data
+        style: style.data,
+        theme
       }
     }
   };

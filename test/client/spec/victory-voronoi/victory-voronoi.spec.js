@@ -5,7 +5,7 @@
 /*eslint-disable max-nested-callbacks */
 /* eslint no-unused-expressions: 0 */
 import React from "react";
-import { range, omit } from "lodash";
+import { range, omit, random } from "lodash";
 import { shallow, mount } from "enzyme";
 import SvgTestHelper from "../svg-test-helper";
 import { VictoryVoronoi, Voronoi } from "packages/victory-voronoi/src/index";
@@ -157,6 +157,23 @@ describe("components/victory-voronoi", () => {
           expect(roleValue).to.be.a("string");
           expect(roleValue).to.equal("presentation");
         }
+      });
+    });
+
+    it("adds an aria-label and tabIndex to Voronoi primitive", () => {
+      const data = range(3, 6).map((x) => ({ x, y: random(5) }));
+      const wrapper = mount(
+        <VictoryVoronoi
+          data={data}
+          dataComponent={
+            <Voronoi ariaLabel={({ datum }) => `${datum.x}`} tabIndex={({ index }) => index + 6} />
+          }
+        />
+      );
+      expect(wrapper.find("path")).to.have.length(3);
+      wrapper.find("path").forEach((p, i) => {
+        expect(p.prop("aria-label")).to.equal(`${data[i].x}`);
+        expect(p.prop("tabIndex")).to.equal(i + 6);
       });
     });
   });

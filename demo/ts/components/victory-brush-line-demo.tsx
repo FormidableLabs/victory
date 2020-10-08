@@ -90,10 +90,10 @@ class App extends React.Component<any, BrushLineDemoState> {
     return filters;
   }
 
-  getActiveDatasets(filters: {}) {
+  getActiveDatasets(filters: {}): string[] {
     // Return the names from all datasets that have values within all filters
-    const isActive = (dataset: DataSet, filters: {}): (string | null | undefined)[] => {
-      return _.keys(filters).reduce((memo: any, name: any) => {
+    const isActive = (dataset: DataSet): (string | null | undefined)[] => {
+      return _.keys(filters).reduce((memo: any, name) => {
         if (!memo || !Array.isArray(filters[name])) {
           return memo;
         }
@@ -102,15 +102,11 @@ class App extends React.Component<any, BrushLineDemoState> {
           point && Math.max(...filters[name]) >= point.y && Math.min(...filters[name]) <= point.y
         );
       }, true);
-
-      return this.state.datasets
-        .map((dataset: DataSet) => {
-          return isActive(dataset, filters) && dataset ? dataset.name : null;
-        })
-        .filter(Boolean);
     };
 
-    return [];
+    return this.state.datasets
+      .map((dataset) => (isActive(dataset) ? dataset.name : null))
+      .filter(Boolean) as string[];
   }
 
   onDomainChange(domain: DomainPropType, props: any) {
