@@ -13,6 +13,27 @@ scope:
 
 Victory is actively developed. You can read about some of our newest feature here. For more information on improvements and bug fixes, check out our [changelog](https://github.com/FormidableLabs/victory/blob/main/CHANGELOG.md).
 
+## New Accessibility Features
+
+With improved chart and chart component accessibilty in mind, we've added a [`VictoryAccessibleGroup`](/docs/victory-accessible-group) for use with the [`groupComponent`](/docs/common-props#groupcomponent) prop. This component will wrap its children in a `g` tag with a user provided `aria-label` and optional description via the `desc` prop. Other available props can be found in the [docs](/docs/victory-accessible-group).
+
+We've also added `ariaLabel` and `tabIndex` props to all our primitives. Documentation on these can be found in under [`VictoryPrimitives`](/docs/victory-primitives#victory-primitives)
+
+```playground
+<VictoryChart domainPadding={{ x: 40, y: 40 }}>
+  <VictoryBar
+    style={{ data: { fill: "#c43a31" } }}
+    data={sampleData}
+    dataComponent={
+      <Bar
+        tabIndex={({ index }) => index + 2}
+        ariaLabel={({ datum }) => `x: ${datum.x}`}
+      />
+     }
+    />
+</VictoryChart>
+```
+
 ## Backgrounds for Victory Label
 
 `VictoryLabel` now supports backgrounds! The [`backgroundStyle`](/docs/victory-label#backgroundstyle) prop lets you render and style a `rect` element behind your label. The size of the `rect` is determined for you based on the size and style of the label. The [`backgroundPadding`](/docs/victory-label#backgroundpadding) prop may be used to adjust the size of the background `rect`.
@@ -294,27 +315,4 @@ const Matterhorn = props => {
 };
 
 ReactDOM.render(<Matterhorn/>, mountNode);
-```
-
-## VictoryAccessibleGroup and primitive accessible props
-
-With improved chart and chart component accessibilty in mind, we've added a [`VictoryAccessibleGroup`](/docs/victory-accessible-group) for use with the [`groupComponent`](/docs/common-props#groupcomponent) prop. This component will wrap is children in a `g` tag with a user provided `aria-label` and optional description via `desc` prop. Other available props can be found in the [docs](/docs/victory-accessible-group).
-
-We've also added an `ariaLabel` and `tabIndex` prop to all our primitives. Documentation on these can be found in under [`VictoryPrimitives`](/docs/victory-primitives#victory-primitives)
-
-A new `Accessiblity` page has been added to our demos as well and viewable when running the development server. More information on that [here](https://github.com/FormidableLabs/victory/blob/main/CONTRIBUTING.md)
-
-```playground
-<VictoryChart domainPadding={{ x: 40, y: 40 }}>
-  <VictoryBar
-    style={{ data: { fill: "#c43a31" } }}
-    data={sampleData}
-    dataComponent={
-      <Bar
-        tabIndex={({ index }) => index + 2}
-        ariaLabel={({ datum }) => `x: ${datum.x}`}
-      />
-     }
-    />
-</VictoryChart>
 ```
