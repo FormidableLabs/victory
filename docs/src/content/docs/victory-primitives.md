@@ -19,7 +19,7 @@ Each of these primitive components renders SVG elements. The following component
 Used by `Background`, `VictoryClipContainer`, and `Voronoi`
 
 ```jsx
-const Circle = props => <circle vectorEffect="non-scaling-stroke" {...props} />;
+const Circle = (props) => <circle vectorEffect="non-scaling-stroke" {...props} />;
 ```
 
 ### ClipPath
@@ -27,7 +27,7 @@ const Circle = props => <circle vectorEffect="non-scaling-stroke" {...props} />;
 Used by `VictoryClipContainer` and `Voronoi`
 
 ```jsx
-const ClipPath = props => (
+const ClipPath = (props) => (
   <defs>
     <clipPath id={props.clipId}>{props.children}</clipPath>
   </defs>
@@ -39,7 +39,7 @@ const ClipPath = props => (
 Used by `Axis`, `Candle`, and `ErrorBar`
 
 ```jsx
-const Line = props => <line vectorEffect="non-scaling-stroke" {...props} />;
+const Line = (props) => <line vectorEffect="non-scaling-stroke" {...props} />;
 ```
 
 ### Path
@@ -47,7 +47,7 @@ const Line = props => <line vectorEffect="non-scaling-stroke" {...props} />;
 Used by `Arc`, `Area`, `Bar`, `Curve`, `Flyout`, `Point`, `Slice`, and `Voronoi`
 
 ```jsx
-const Path = props => <path {...props} />;
+const Path = (props) => <path {...props} />;
 ```
 
 ### Rect
@@ -55,7 +55,7 @@ const Path = props => <path {...props} />;
 Used by `VictoryClipPath`, `Background`, `Border`, and `Candle`
 
 ```jsx
-const Rect = props => <rect vectorEffect="non-scaling-stroke" {...props} />;
+const Rect = (props) => <rect vectorEffect="non-scaling-stroke" {...props} />;
 ```
 
 ### Text
@@ -63,7 +63,7 @@ const Rect = props => <rect vectorEffect="non-scaling-stroke" {...props} />;
 Used by `VictoryLabel`
 
 ```jsx
-const Text = props => {
+const Text = (props) => {
   const { children, title, desc, ...rest } = props;
   return (
     <text {...rest}>
@@ -80,7 +80,7 @@ const Text = props => {
 Used by `VictoryLabel`
 
 ```jsx
-const TSpan = props => <tspan {...props} />;
+const TSpan = (props) => <tspan {...props} />;
 ```
 
 ## Simple Components
@@ -92,6 +92,7 @@ const TSpan = props => <tspan {...props} />;
 **Props**
 
 - `active` _boolean_ a flag signifying whether the component is active
+- `ariaLabel` _string or function_ a prop controlling the aria-label that will be applied to the rendered path. When this prop is given as a function it will be called with the rest of the props supplied to `Arc`
 - `className` _string_ the class name that will be applied to the rendered path
 - `closedPath` _boolean_ a flag signifying whether this arc is should render a closed path
 - `cx` _number_ the x coordinate of the center of the arc path
@@ -108,6 +109,7 @@ const TSpan = props => <tspan {...props} />;
 - `shapeRendering` _string_ the shape rendering attribute to apply to the rendered path
 - `startAngle` _number_ the start angle of the arc given in degrees
 - `style` _object_ the styles to apply to the rendered element
+- `tabIndex` _number or function_ will be applied to the rendered path. When this prop is given as a function it will be called with the rest of the props supplied to `Arc`
 - `transform` _string_ a transform that will be supplied to elements this component renders
 
 ### Area
@@ -117,6 +119,7 @@ const TSpan = props => <tspan {...props} />;
 **Props**
 
 - `active` _boolean_ a flag signifying whether the component is active
+- `ariaLabel` _string or function_ a prop controlling the aria-label that will be applied to the rendered path. When this prop is given as a function it will be called with the rest of the props supplied to `Area`
 - `className` _string_ the class name that will be applied to the rendered path
 - `data` _array_ the entire dataset used to define the area
 - `events` _object_ events to attach to the rendered element
@@ -130,6 +133,7 @@ const TSpan = props => <tspan {...props} />;
 - `scale` _object_ the x and y scale of the parent chart with `domain` and `range` applied
 - `shapeRendering` _string_ the shape rendering attribute to apply to the rendered path
 - `style` _object_ the styles to apply to the rendered element
+- `tabIndex` _number or function_ that will be applied to rendered path. When this prop is given as a function it will be called with the rest of the props supplied to `Area`
 - `transform` _string_ a transform that will be supplied to elements this component renders
 
 ### LineSegment
@@ -139,6 +143,7 @@ The `LineSegment` component renders straight lines. This component is used to re
 **Props**
 
 - `active` _boolean_ a flag signifying whether the component is active
+- `ariaLabel` _string or function_ a prop controlling the aria-label that will be applied to the rendered lineComponent. When this prop is given as a function it will be called with the rest of the props supplied to `LineSegment`
 - `className` _string_ the class name that will be applied to the rendered element
 - `data` _array_ the entire dataset
 - `datum` _object_ the data point corresponding to this line
@@ -149,6 +154,7 @@ The `LineSegment` component renders straight lines. This component is used to re
 - `role` _string_ the aria role to assign to the element
 - `shapeRendering` _string_ the shape rendering attribute to apply to the rendered elements
 - `style` _object_ the styles to apply to the rendered element
+- `tabIndex` _number or funciton_ will be applied to the rendered lineComponent. When this prop is given as a function it will be called with the rest of the props supplied to `LineSegment`
 - `transform` _string_ a transform that will be supplied to elements this component renders
 - `x1` _number_ the x coordinate of the beginning of the line
 - `x2` _number_ the x coordinate of the end of the line
@@ -185,6 +191,7 @@ The `Background` component is used to render an SVG background on VictoryChart. 
 
 - `active` _boolean_ a flag signifying whether the component is active
 - `alignment` \*"start", "middle", or "end" specifies how a bar path should be aligned in relation to its data point
+- `ariaLabel` _string or function_ a prop controlling the aria-label that will be applied to the rendered path. When this prop is given as a function it will be called with the rest of the props supplied to `Bar`
 - `barRatio` _number_ a number between zero and one that will be used to calculate bar width when an explicit width is not given
 - `barWidth` _number or function_ A prop defining the width of the bar. When this prop is given as a function, it will be called with the rest of the props supplied to `Bar`.
 - `className` _string_ the class name that will be applied to the rendered path
@@ -201,6 +208,7 @@ The `Background` component is used to render an SVG background on VictoryChart. 
 - `scale` _object_ the x and y scale of the parent chart with `domain` and `range` applied
 - `shapeRendering` _string_ the shape rendering attribute to apply to the rendered path
 - `style` _object_ the styles to apply to the rendered element
+- `tabIndex` _number or function_ number applied to rendered path. When given as a function it will be called with the rest of the props supplied to `Bar`
 - `transform` _string_ a transform that will be supplied to elements this component renders
 - `width` _number_ the width of parent chart (used to calculate default bar width `style.width` is not supplied)
 - `x` _number_ the x coordinate of the top of the bar
@@ -211,11 +219,12 @@ The `Background` component is used to render an SVG background on VictoryChart. 
 
 [VictoryLegend][] uses the `Box` component to draw a border around a legend area. `Box` renders a `<Rect/>` element. [View the source][border]
 
-*note* `Box` also exported as `Border`
+_note_ `Box` also exported as `Border`
 
 **Props**
 
 - `active` _boolean_ a flag signifying whether the component is active
+- `ariaLabel` _string or function_ a prop that controls the a propcontrollings the aria-label that will be applied to the rendered path. When this prop is given as a function it will be called with the rest of the props supplied to `Box`
 - `className` _string_ the class name that will be applied to the rendered element
 - `events` _object_ events to attach to the rendered element
 - `height` _number_ the height of the `<rect/>` element
@@ -224,6 +233,7 @@ The `Background` component is used to render an SVG background on VictoryChart. 
 - `role` _string_ the aria role to assign to the element
 - `shapeRendering` _string_ the shape rendering attribute to apply to the rendered element
 - `style` _object_ the styles to apply to the rendered element
+- `tabIndex` _number or function_ will be applied to the rendered path. When given as a function it will be called with the rest of the props supplied to `Box`
 - `transform` _string_ a transform that will be supplied to elements this component renders
 - `width` _number_ the width of the `<rect/>` element
 - `x` _number_ the x coordinate of the upper-left corner of the `<rect/>` element
@@ -236,6 +246,7 @@ The `Background` component is used to render an SVG background on VictoryChart. 
 **Props**
 
 - `active` _boolean_ a flag signifying whether the component is active
+- `ariaLabel` _string or function_ a prop controlling the aria-label that will be applied to the rendered `<Rect>` and `<Line>` elements. When this prop is given as a function it will be called with the rest of the props supplied to `Candle`
 - `candleRatio` _number_ a number between zero and one that will be used to calculate candle width when an explicit width is not given
 - `candleWidth` _number or function_ A prop defining the width of the candle. When this prop is given as a function, it will be called with the rest of the props supplied to `Candle`.
 - `className` _string_ the class name that will be applied to the rendered element
@@ -255,6 +266,7 @@ The `Background` component is used to render an SVG background on VictoryChart. 
 - `scale` _object_ the x and y scale of the parent chart with `domain` and `range` applied
 - `shapeRendering` _string_ the shape rendering attribute to apply to the rendered elements
 - `style` _object_ the styles to apply to the rendered element
+- `tabIndex` _number or function_ a prop controlling the aria-label that will be applied to the rendered `<Rect>` and `<Line>` elements. When given as a function it will be called with the rest of the props supplied to `Candle`
 - `transform` _string_ a transform that will be supplied to elements this component renders
 - `width` _number_ the width of parent chart (used to calculate default candle width `style.width` is not supplied)
 - `widthStrokeWidth` _number_ the stroke width of the candle wick. (style.strokeWidth will be used when this value is not given)
@@ -267,6 +279,7 @@ The `Background` component is used to render an SVG background on VictoryChart. 
 **Props**
 
 - `active` _boolean_ a flag signifying whether the component is active
+- `ariaLabel` _string or function_ a prop controlling the aria-label that will be applied to the rendered path. When this prop is given as a function it will be called with the rest of the props supplied to `Curve`
 - `className` _string_ the class name that will be applied to the rendered element
 - `data` _array_ the entire dataset used to define the curve
 - `events` _object_ events to attach to the rendered element
@@ -280,6 +293,7 @@ The `Background` component is used to render an SVG background on VictoryChart. 
 - `scale` _object_ the x and y scale of the parent chart with `domain` and `range` applied
 - `shapeRendering` _string_ the shape rendering attribute to apply to the rendered path
 - `style` _object_ the styles to apply to the rendered element
+- `tabIndex` _number or function_ will be applied to the rendered path. When given as a function it will be called with the rest of the props supplied to `Curve`
 - `transform` _string_ a transform that will be supplied to elements this component renders
 
 ### ErrorBar
@@ -289,6 +303,7 @@ The `Background` component is used to render an SVG background on VictoryChart. 
 **Props**
 
 - `active` _boolean_ a flag signifying whether the component is active
+- `ariaLabel` _string or function_ a prop controlling the aria-label that will be applied to the group, `g`, containing the rendered `<Line>` elements. When this prop is given as a function it will be called with the rest of the props supplied to `ErrorBar`
 - `borderWidth` _number_ the width of the cross-hairs on the end of each error bar _default: 10_
 - `className` _string_ the class name that will be applied to the rendered element
 - `data` _array_ the entire dataset
@@ -306,6 +321,7 @@ The `Background` component is used to render an SVG background on VictoryChart. 
 - `scale` _object_ the x and y scale of the parent chart with `domain` and `range` applied
 - `shapeRendering` _string_ the shape rendering attribute to apply to the rendered elements
 - `style` _object_ the styles to apply to the rendered element
+- `tabIndex` _number or function_ applies to the group, `g`, containing the `<Line>` elements. When this prop is given as a function it will be called with the rest of the props supplied to `ErrorBar`
 - `transform` _string_ a transform that will be supplied to elements this component renders
 - `x` _number_ the x coordinate of the center of the error bar
 - `y` _number_ the y coordinate of the center of the error bar
@@ -349,6 +365,7 @@ The `Background` component is used to render an SVG background on VictoryChart. 
 **Props**
 
 - `active` _boolean_ a flag signifying whether the component is active
+- `ariaLabel` _string or function_ a prop controlling the aria-label that will be applied to the rendered path. When this prop is given as a function it will be called with the rest of the props supplied to `Point`
 - `className` _string_ the class name that will be applied to the rendered element
 - `data` _array_ the entire dataset
 - `datum` _object_ the data point corresponding to this point
@@ -365,6 +382,7 @@ The `Background` component is used to render an SVG background on VictoryChart. 
 - `size` _number or function_ the size of the point. When this prop is given as a function, it will be called with the rest of the props supplied to `Point`.
 - `style` _object_ the styles to apply to the rendered element
 - `symbol` _"circle", "diamond", "plus", "minus", "square", "star", "triangleDown", "triangleUp"_ which symbol the point should render. This prop may also be given as a function that returns one of the above options. When this prop is given as a function, it will be called with the rest of the props supplied to `Point`.
+- `tabIndex` _number or function_ number will be applied to the rendered path. When this prop is given as a function it will be called with the rest of the props supplied to `Point`
 - `transform` _string_ a transform that will be supplied to elements this component renders
 - `x` _number_ the x coordinate of the center of the point
 - `y` _number_ the y coordinate of the center of the point
@@ -376,6 +394,7 @@ The `Background` component is used to render an SVG background on VictoryChart. 
 **Props**
 
 - `active` _boolean_ a flag signifying whether the component is active
+- `ariaLabel` _string or function_ a prop controlling the aria-label that will be applied to the rendered path. When this prop is given as a function it will be called with the rest of the props supplied to `Slice`
 - `className` _string_ the class name that will be applied to the rendered element
 - `cornerRadius` _number or function_ the corner radius to apply to this slice. When this prop is given as a function it will be called with the rest of the props supplied to `Slice`.
 - `data` _array_ the entire dataset
@@ -394,6 +413,7 @@ The `Background` component is used to render an SVG background on VictoryChart. 
 - `sliceEndAngle` _number or function_ the end angle the slice. When this prop is given as a function it will be called with the rest of the props supplied to `Slice`.
 - `sliceStartAngle` _number or function_ the start angle the slice. When this prop is given as a function it will be called with the rest of the props supplied to `Slice`.
 - `style` _object_ the styles to apply to the rendered element
+- `tabIndex` _number or function_ number will be applied to the rendered path. When this prop is given as a function it will be called with the rest of the props supplied to `Slice`.
 - `transform` _string_ a transform that will be supplied to elements this component renders
 
 ### Voronoi
@@ -403,6 +423,7 @@ The `Background` component is used to render an SVG background on VictoryChart. 
 **Props**
 
 - `active` _boolean_ a flag signifying whether the component is active
+- `ariaLabel` _string or function_ a prop controlling the aria-label that will be applied to the rendered path. When this prop is given as a function it will be called with the rest of the props supplied to `Voronoi`
 - `circleComponent` _element_ the rendered circle element _default_ `<Circle/>`
 - `className` _string_ the class name that will be applied to the rendered element
 - `clipPathComponent` _element_ the rendered clipPath element _default_ `<ClipPath/>`
@@ -420,6 +441,7 @@ The `Background` component is used to render an SVG background on VictoryChart. 
 - `shapeRendering` _string_ the shape rendering attribute to apply to the rendered path
 - `size` _number_ the maximum size of the voronoi polygon
 - `style` _object_ the styles to apply to the rendered element
+- `tabIndex` _number or function_ will be applied to the rendered path. When this prop is given as a function it will be called with the rest of the props supplied to `Voronoi`
 - `transform` _string_ a transform that will be supplied to elements this component renders.
 - `x` _number_ the x coordinate of the data point
 - `y` _number_ the y coordinate of the data point
@@ -431,6 +453,7 @@ The `Background` component is used to render an SVG background on VictoryChart. 
 **Props**
 
 - `active` _boolean_ a flag signifying whether the component is active
+- `ariaLabel` _string or function_ a prop controlling the aria-label that will be applied to the rendered `<Line>` elements. When this prop is given as a function it will be called with the rest of the props supplied to `Whisker`
 - `className` _string_ the class name that will be applied to the rendered element
 - `events` _object_ events to attach to the rendered element
 - `groupComponent` _element_ the rendered group element _default_ `<g/>`
@@ -441,6 +464,7 @@ The `Background` component is used to render an SVG background on VictoryChart. 
 - `role` _string_ the aria role to assign to the element
 - `shapeRendering` _string_ the shape rendering attribute to apply to the rendered element
 - `style` _object_ the styles to apply to the rendered element
+- `tabIndex` _number or function_ will be applied to the rendered `<Line>`. When this prop is given as a function it will be called with the rest of the props supplied to `Whisker`
 - `transform` _string_ a transform that will be supplied to elements this component renders.
 
 [victorycontainer]: /docs/victory-container
