@@ -269,18 +269,22 @@ several tooltips being active at the same time. Provide a `labels` and (optional
 static defaultEvents = [{
   target: "data",
   eventHandlers: {
-    onMouseOver: () => {
-      return {
-        target: "labels",
-        mutation: () => ({ active: true })
-      };
-    },
-    onMouseOut: () => {
-      return {
-        target: "labels",
-        mutation: () => ({ active: false })
-      };
-    }
+    onMouseOver: () => ({
+      target: "labels",
+      mutation: () => ({ active: true })
+    }),
+    onMouseOut: () => ({
+      target: "labels",
+      mutation: () => ({ active: undefined })
+    }),
+    onFocus: () => ({
+      target: "labels",
+      mutation: () => ({ active: true })
+    }),
+    onBlur: () => ({
+      target: "labels",
+      mutation: () => ({ active: undefined })
+    })
   }
 }];
 ```

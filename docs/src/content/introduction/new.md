@@ -13,20 +13,24 @@ scope:
 
 Victory is actively developed. You can read about some of our newest feature here. For more information on improvements and bug fixes, check out our [changelog](https://github.com/FormidableLabs/victory/blob/main/CHANGELOG.md).
 
-## New Accessibility Features
+## Accessibility Features
 
 With improved chart and chart component accessibilty in mind, we've added a [`VictoryAccessibleGroup`](/docs/victory-accessible-group) for use with the [`groupComponent`](/docs/common-props#groupcomponent) prop. This component will wrap its children in a `g` tag with a user provided `aria-label` and optional description via the `desc` prop. Other available props can be found in the [docs](/docs/victory-accessible-group).
 
-We've also added `ariaLabel` and `tabIndex` props to all our primitives. Documentation on these can be found in under [`VictoryPrimitives`](/docs/victory-primitives#victory-primitives)
+We've also added `ariaLabel` and `tabIndex` props to all our primitives. Documentation on these can be found in under [`VictoryPrimitives`](/docs/victory-primitives#victory-primitives).
+
+We've also added automatic `onFocus` and `onBlur` events for `VictoryTooltip` so that charts with `tabIndex` defined can easily show tooltips to users navigating with a keyboard.
 
 ```playground
 <VictoryChart domainPadding={{ x: 40, y: 40 }}>
   <VictoryBar
     style={{ data: { fill: "#c43a31" } }}
     data={sampleData}
+    labels={({ datum }) => `y: ${datum.y}`}
+    labelComponent={<VictoryTooltip />}
     dataComponent={
       <Bar
-        tabIndex={({ index }) => index + 2}
+        tabIndex={0}
         ariaLabel={({ datum }) => `x: ${datum.x}`}
       />
      }
