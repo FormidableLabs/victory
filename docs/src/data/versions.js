@@ -1,5 +1,6 @@
 export default {
   data: [
+    { version: "35.2.0", date: "2020-10-08" },
     { version: "35.1.1", date: "2020-09-28" },
     { version: "35.1.0", date: "2020-09-25" },
     { version: "35.0.9", date: "2020-09-08" },
