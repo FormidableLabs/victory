@@ -1,5 +1,10 @@
 # Victory Changelog
 
+## 35.3.0 (2020-10-13)
+
+- [#1715](https://github.com/FormidableLabs/victory/pull/1715) Adds a dependency on `json-safe-stringify` in `VictorySharedEvents`
+- [#1716](https://github.com/FormidableLabs/victory/pull/1716) Changes how event updates are cached to support React Strict Mode
+
 ## 35.2.0 (2020-10-08)
 
 ### Accessibility Improvements
