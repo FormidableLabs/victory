@@ -55,10 +55,8 @@ export default (WrappedComponent, options) => {
 
     componentDidUpdate(prevProps) {
       const calculatedValues = this.getCalculatedValues(prevProps);
-      const externalMutations = this.getExternalMutations(prevProps);
       const calculatedState = this.getStateChanges(prevProps, calculatedValues);
       this.calculatedState = calculatedState;
-      this.externalMutations = externalMutations;
       this.cacheValues(calculatedValues);
     }
 
