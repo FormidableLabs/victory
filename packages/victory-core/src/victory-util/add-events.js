@@ -45,16 +45,23 @@ export default (WrappedComponent, options) => {
       }
       const calculatedState = this.getStateChanges(nextProps, calculatedValues);
       if (!isEqual(this.calculatedState, calculatedState)) {
-        this.calculatedState = calculatedState;
-        this.cacheValues(calculatedValues);
         return true;
       }
       if (!isEqual(this.props, nextProps)) {
-        this.cacheValues(calculatedValues);
         return true;
       }
       return false;
     }
+
+    componentDidUpdate(prevProps) {
+      const calculatedValues = this.getCalculatedValues(prevProps);
+      const externalMutations = this.getExternalMutations(prevProps);
+      const calculatedState = this.getStateChanges(prevProps, calculatedValues);
+      this.calculatedState = calculatedState;
+      this.externalMutations = externalMutations;
+      this.cacheValues(calculatedValues);
+    }
+
 
     // compile all state changes from own and parent state. Order doesn't matter, as any state
     // state change should trigger a re-render

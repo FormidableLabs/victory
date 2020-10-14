@@ -121,7 +121,7 @@ class App extends React.Component {
             );
           })}
         </ul>
-        <Child />
+        <React.StrictMode><Child /></React.StrictMode>
       </div>
     );
   }
