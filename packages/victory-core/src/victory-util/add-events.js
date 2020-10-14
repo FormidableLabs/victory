@@ -62,7 +62,6 @@ export default (WrappedComponent, options) => {
       this.cacheValues(calculatedValues);
     }
 
-
     // compile all state changes from own and parent state. Order doesn't matter, as any state
     // state change should trigger a re-render
     getStateChanges(props, calculatedValues) {
