@@ -3,6 +3,7 @@ import React from "react";
 import PropTypes from "prop-types";
 import { PropTypes as CustomPropTypes, Events, Helpers, TimerContext } from "victory-core";
 import isEqual from "react-fast-compare";
+import stringify from "json-stringify-safe";
 
 export default class VictorySharedEvents extends React.Component {
   static displayName = "VictorySharedEvents";
@@ -171,7 +172,7 @@ export default class VictorySharedEvents extends React.Component {
             name,
             baseProps,
             childEvents,
-            JSON.stringify(this.state[name])
+            stringify(this.state[name])
           ];
 
           const sharedEvents = this.getCachedSharedEvents(name, sharedEventsCacheValues) || {

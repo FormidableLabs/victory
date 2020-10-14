@@ -19,6 +19,7 @@
   "author": "Formidable",
   "license": "MIT",
   "dependencies": {
+    "json-stringify-safe": "^5.0.1",
     "lodash": "^4.17.19",
     "prop-types": "^15.5.8",
     "react-fast-compare": "^2.0.0",
