@@ -201,7 +201,7 @@ export default {
     // eslint-disable-next-line max-params
     const onEvent = (evt, childProps, eventKey, eventName) => {
       const eventReturn = events[eventName](evt, childProps, eventKey, this);
-      if (eventReturn) {
+      if (!isEmpty(eventReturn)) {
         const callbacks = compileCallbacks(eventReturn);
         this.setState(parseEventReturn(eventReturn, eventKey), callbacks);
       }
