@@ -1,5 +1,11 @@
 # Victory Changelog
 
+## 35.3.1 (2020-10-20)
+
+- [#1724](https://github.com/FormidableLabs/victory/pull/1724) Fixes a regression introduced in `35.3.0` affecting charts whose dimensions are updated via a `useEffect` hook
+
+- [#1723](https://github.com/FormidableLabs/victory/pull/1723) - Avoids unnecessary re-renders caused by empty events. Thanks @Hypnosphi!
+
 ## 35.3.0 (2020-10-13)
 
 - [#1715](https://github.com/FormidableLabs/victory/pull/1715) Adds a dependency on `json-safe-stringify` in `VictorySharedEvents`
