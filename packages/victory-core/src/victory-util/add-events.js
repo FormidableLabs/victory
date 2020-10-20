@@ -29,47 +29,49 @@ export default (WrappedComponent, options) => {
       const calculatedValues = this.getCalculatedValues(props);
       this.cacheValues(calculatedValues);
       this.externalMutations = this.getExternalMutations(props);
-      this.calculatedState = this.getStateChanges(props, calculatedValues);
+      this.calculatedState = this.getStateChanges(props);
     }
 
     shouldComponentUpdate(nextProps) {
-      const calculatedValues = this.getCalculatedValues(nextProps);
       const externalMutations = this.getExternalMutations(nextProps);
       const animating = this.props.animating || this.props.animate;
       const newMutation = !isEqual(externalMutations, this.externalMutations);
       if (animating || newMutation) {
-        this.cacheValues(calculatedValues);
+        this.cacheValues(this.getCalculatedValues(nextProps));
         this.externalMutations = externalMutations;
         this.applyExternalMutations(nextProps, externalMutations);
         return true;
       }
-      const calculatedState = this.getStateChanges(nextProps, calculatedValues);
+      const calculatedState = this.getStateChanges(nextProps);
       if (!isEqual(this.calculatedState, calculatedState)) {
+        this.cacheValues(this.getCalculatedValues(nextProps));
         return true;
       }
       if (!isEqual(this.props, nextProps)) {
+        this.cacheValues(this.getCalculatedValues(nextProps));
         return true;
       }
       return false;
     }
 
     componentDidUpdate(prevProps) {
-      const calculatedValues = this.getCalculatedValues(prevProps);
-      const calculatedState = this.getStateChanges(prevProps, calculatedValues);
+      const calculatedState = this.getStateChanges(prevProps);
       this.calculatedState = calculatedState;
-      this.cacheValues(calculatedValues);
     }
 
     // compile all state changes from own and parent state. Order doesn't matter, as any state
     // state change should trigger a re-render
-    getStateChanges(props, calculatedValues) {
-      const { hasEvents, getSharedEventState } = calculatedValues;
-      if (!hasEvents) {
+    getStateChanges(props) {
+      if (!this.hasEvents) {
         return {};
       }
 
       const getState = (key, type) => {
-        const result = defaults({}, this.getEventState(key, type), getSharedEventState(key, type));
+        const result = defaults(
+          {},
+          this.getEventState(key, type),
+          this.getSharedEventState(key, type)
+        );
         return isEmpty(result) ? undefined : result;
       };
 
@@ -83,9 +85,7 @@ export default (WrappedComponent, options) => {
           } else {
             return component.index !== undefined
               ? getState(component.index, component.name)
-              : calculatedValues.dataKeys
-                  .map((key) => getState(key, component.name))
-                  .filter(Boolean);
+              : this.dataKeys.map((key) => getState(key, component.name)).filter(Boolean);
           }
         })
         .filter(Boolean);
