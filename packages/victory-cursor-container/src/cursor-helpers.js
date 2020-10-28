@@ -1,6 +1,8 @@
 import { Selection } from "victory-core";
 import { throttle, isFunction, mapValues } from "lodash";
 
+const ON_MOUSE_MOVE_THROTTLE_MS = 16;
+
 const CursorHelpers = {
   getDimension(props) {
     const { horizontal, cursorDimension } = props;
@@ -81,11 +83,10 @@ const CursorHelpers = {
 
 export default {
   ...CursorHelpers,
-  onMouseMove: throttle(
-    CursorHelpers.onMouseMove.bind(CursorHelpers),
-    32, // eslint-disable-line no-magic-numbers
-    { leading: true, trailing: false }
-  ),
+  onMouseMove: throttle(CursorHelpers.onMouseMove.bind(CursorHelpers), ON_MOUSE_MOVE_THROTTLE_MS, {
+    leading: true,
+    trailing: false
+  }),
   onMouseLeave: CursorHelpers.onMouseMove.bind(CursorHelpers),
   onTouchEnd: CursorHelpers.onTouchEnd.bind(CursorHelpers)
 };
