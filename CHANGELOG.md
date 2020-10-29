@@ -1,5 +1,10 @@
 # Victory Changelog
 
+## 35.3.2 (2020-10-28)
+
+- [#1728](https://github.com/FormidableLabs/victory/pull/1728) - Use exact versions for Victory interdependencies to make it easier for users to specify exact versions
+- [#1726](https://github.com/FormidableLabs/victory/pull/1726) - Decrease throttle on `VictoryCursorContainer` for smoother movement. Thanks @Alexander-AJ-Berman!
+
 ## 35.3.1 (2020-10-20)
 
 - [#1724](https://github.com/FormidableLabs/victory/pull/1724) Fixes a regression introduced in `35.3.0` affecting charts whose dimensions are updated via a `useEffect` hook
