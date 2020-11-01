@@ -676,7 +676,7 @@ export interface VictoryLabelableProps {
 }
 
 export interface VictoryMultiLabelableProps extends VictoryLabelableProps {
-  labels?: string[] | number[] | { (data: any): string[] | number[] | null };
+  labels?: string[] | number[] | { (data: any): string | string[] | number | number[] | null };
 }
 
 export interface VictorySingleLabelableProps extends VictoryLabelableProps {
