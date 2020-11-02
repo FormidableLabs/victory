@@ -1,5 +1,10 @@
 # Victory Changelog
 
+## 35.3.3 (2020-11-02)
+
+- [#1733](https://github.com/FormidableLabs/victory/pull/1733) - Fix TS definitions affection multi-line labels and tooltip orientations. Thanks @paolostyle!
+- [#1732](https://github.com/FormidableLabs/victory/pull/1732) - Fix a bug affecting stacked histograms. Thanks @keithbro!
+
 ## 35.3.2 (2020-10-28)
 
 - [#1728](https://github.com/FormidableLabs/victory/pull/1728) - Use exact versions for Victory interdependencies to make it easier for users to specify exact versions
