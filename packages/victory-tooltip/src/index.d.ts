@@ -5,7 +5,6 @@ import {
   StringOrNumberOrCallback,
   VictoryCommonProps,
   VictoryLabelableProps,
-  VictoryNumberCallback,
   VictoryThemeDefinition,
   VictoryStyleObject,
   PaddingOrCallback
@@ -37,7 +36,7 @@ export interface VictoryTooltipProps extends VictoryLabelableProps {
   flyoutComponent?: React.ReactElement;
   flyoutPadding?: PaddingOrCallback;
   index?: number | string;
-  orientation?: OrientationTypes | VictoryNumberCallback;
+  orientation?: OrientationTypes | ((...args: any[]) => OrientationTypes);
   pointerLength?: NumberOrCallback;
   pointerOrientation?: OrientationTypes | ((...args: any[]) => OrientationTypes);
   pointerWidth?: NumberOrCallback;
