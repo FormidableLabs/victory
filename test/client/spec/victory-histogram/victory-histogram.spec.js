@@ -61,6 +61,17 @@ describe("components/victory-histogram", () => {
       expect(bars.length).to.be.greaterThan(0);
     });
 
+    it("renders 2 bars of equal height", () => {
+      const data = [{ x: 2 }, { x: 3 }];
+      const wrapper = mount(<VictoryHistogram data={data} bins={[2, 2.5, 3]} />);
+      const bars = wrapper.find("Bar");
+      const heights = bars.map(SvgTestHelper.getBarHeight).map((n) => parseInt(n));
+
+      expect(bars.length).to.equal(2);
+      expect(heights[0]).to.equal(heights[1]);
+      expect(heights[0]).to.be.greaterThan(0);
+    });
+
     it("renders bars values with null accessor", () => {
       const data = range(30);
       const wrapper = shallow(<VictoryHistogram data={data} x={null} y={null} />);

@@ -43,7 +43,7 @@ const getBinningFunc = ({ data, x, bins, dataOrBinsContainsDates }) => {
 
   if (Array.isArray(bins)) {
     bin.domain([bins[0], bins[bins.length - 1]]);
-    bin.thresholds(bins);
+    bin.thresholds(bins.slice(1, bins.length - 1));
 
     return bin;
   }
