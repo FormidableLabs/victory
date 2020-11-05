@@ -49,7 +49,7 @@ module.exports = {
         test: /\.js$/,
         // Use include specifically of our sources.
         // Do _not_ use an `exclude` here.
-        include: FILES.concat([`${DEMO}/js`]),
+        include: FILES.concat([path.join(DEMO, 'js')]),
         loader: "babel-loader"
       }
     ]

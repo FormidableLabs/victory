@@ -36,7 +36,7 @@ module.exports = {
     rules: [
       {
         test: /\.(ts|tsx)$/,
-        include: [`${DEMO}/ts`],
+        include: [path.join(DEMO, 'ts')],
         loader: "ts-loader"
       },
       {
