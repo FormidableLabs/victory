@@ -310,16 +310,6 @@ export class VictoryAccessibleGroup extends React.Component<VictoryAccessibleGro
 // #endregion
 
 // #region Victory Theme
-
-export type ThemeBaseProps = {
-  width?: number;
-  height?: number;
-  colorScale?: ColorScalePropType;
-  padding?: number;
-  offsetX?: number;
-  offsetY?: number;
-};
-
 // Note: Many SVG attributes are missed in CSSProperties interface
 export interface VictoryThemeDefinition {
   area?: {
@@ -327,7 +317,7 @@ export interface VictoryThemeDefinition {
       data?: VictoryStyleObject;
       labels?: VictoryLabelStyleObject;
     };
-  } & ThemeBaseProps;
+  } & VictoryCommonThemeProps & VictoryDatableProps;
   axis?: {
     style?: {
       axis?: VictoryStyleObject;
@@ -336,13 +326,15 @@ export interface VictoryThemeDefinition {
       ticks?: VictoryTickStyleObject;
       tickLabels?: VictoryLabelStyleObject;
     };
-  } & ThemeBaseProps;
+    offsetX?: number;
+    offsetY?: number;
+  } & VictoryCommonThemeProps;
   bar?: {
     style?: {
       data?: VictoryStyleObject;
       labels?: VictoryLabelStyleObject;
     };
-  } & ThemeBaseProps;
+  } & VictoryCommonThemeProps & VictoryDatableProps;
   boxplot?: {
     style?: {
       max?: VictoryStyleObject;
@@ -357,7 +349,7 @@ export interface VictoryThemeDefinition {
       q3Labels?: VictoryLabelStyleObject;
     };
     boxWidth?: number;
-  } & ThemeBaseProps;
+  } & VictoryCommonThemeProps;
   candlestick?: {
     style?: {
       data?: VictoryStyleObject;
@@ -367,8 +359,8 @@ export interface VictoryThemeDefinition {
       positive?: string;
       negative?: string;
     };
-  } & ThemeBaseProps;
-  chart?: ThemeBaseProps;
+  } & VictoryCommonThemeProps;
+  chart?: VictoryCommonThemeProps;
   dependentAxis?: {
     style?: {
       axis?: VictoryStyleObject;
@@ -377,16 +369,18 @@ export interface VictoryThemeDefinition {
       ticks?: VictoryTickStyleObject;
       tickLabels?: VictoryLabelStyleObject;
     };
+    offsetX?: number;
+    offsetY?: number;
     orientation?: OrientationTypes;
-  } & ThemeBaseProps;
+  } & VictoryCommonThemeProps;
   errorbar?: {
     borderWidth?: number;
     style?: {
       data?: VictoryStyleObject;
       labels?: VictoryLabelStyleObject;
     };
-  } & ThemeBaseProps;
-  group?: ThemeBaseProps;
+  } & VictoryCommonThemeProps;
+  group?: VictoryCommonThemeProps;
   independentAxis?: {
     style?: {
       axis?: VictoryStyleObject;
@@ -395,32 +389,41 @@ export interface VictoryThemeDefinition {
       ticks?: VictoryTickStyleObject;
       tickLabels?: VictoryLabelStyleObject;
     };
+    offsetX?: number;
+    offsetY?: number;
     orientation?: OrientationTypes;
-  } & ThemeBaseProps;
+  } & VictoryCommonThemeProps;
   legend?: {
-    gutter?: number;
+    gutter?: number | BlockProps;
+    rowGutter?: number | BlockProps;
     orientation?: string;
     titleOrientation?: string;
     style?: {
       data?: VictoryStyleObject & {
         type?: string;
       };
+      border?: VictoryStyleObject;
       labels?: VictoryLabelStyleObject;
       title?: VictoryLabelStyleObject;
     };
-  } & ThemeBaseProps;
+    itemsPerRow?: number;
+    x?: number;
+    y?: number;
+    centerTitle?: boolean;
+    borderPadding?: number | BlockProps;
+  } & VictoryCommonThemeProps;
   line?: {
     style?: {
       data?: VictoryStyleObject;
       labels?: VictoryLabelStyleObject;
     };
-  } & ThemeBaseProps;
+  } & VictoryCommonThemeProps & VictoryDatableProps;
   pie?: {
     style?: {
       data?: VictoryStyleObject;
       labels?: VictoryLabelStyleObject;
     };
-  } & ThemeBaseProps;
+  } & VictoryCommonThemeProps & VictoryDatableProps;
   polarAxis?: {
     style?: {
       axis?: VictoryStyleObject;
@@ -429,7 +432,7 @@ export interface VictoryThemeDefinition {
       ticks?: VictoryTickStyleObject;
       tickLabels?: VictoryLabelStyleObject;
     };
-  } & ThemeBaseProps;
+  } & VictoryCommonThemeProps;
   polarDependentAxis?: {
     style?: {
       axis?: VictoryStyleObject;
@@ -438,7 +441,7 @@ export interface VictoryThemeDefinition {
       ticks?: VictoryTickStyleObject;
       tickLabels?: VictoryLabelStyleObject;
     };
-  } & ThemeBaseProps;
+  } & VictoryCommonThemeProps;
   polarIndependentAxis?: {
     style?: {
       axis?: VictoryStyleObject;
@@ -447,14 +450,14 @@ export interface VictoryThemeDefinition {
       ticks?: VictoryTickStyleObject;
       tickLabels?: VictoryLabelStyleObject;
     };
-  } & ThemeBaseProps;
+  } & VictoryCommonThemeProps;
   scatter?: {
     style?: {
       data?: VictoryStyleObject;
       labels?: VictoryLabelStyleObject;
     };
-  } & ThemeBaseProps;
-  stack?: ThemeBaseProps;
+  } & VictoryCommonThemeProps & VictoryDatableProps;
+  stack?: VictoryCommonThemeProps;
   tooltip?: {
     style?: VictoryLabelStyleObject;
     flyoutStyle?: VictoryStyleObject;
@@ -472,7 +475,7 @@ export interface VictoryThemeDefinition {
       labels?: VictoryLabelStyleObject;
       flyout?: VictoryStyleObject;
     };
-  } & ThemeBaseProps;
+  } & VictoryCommonThemeProps & VictoryDatableProps;
 }
 
 export interface VictoryThemeInterface {
@@ -610,8 +613,9 @@ export type SortOrderPropType = "ascending" | "descending";
 
 export type SVGCoordinateType = { x: number; y: number };
 
-export interface VictoryCommonProps {
+export interface VictoryCommonThemeProps {
   animate?: boolean | AnimatePropTypeInterface;
+  colorScale?: ColorScalePropType;
   containerComponent?: React.ReactElement;
   domainPadding?: DomainPaddingPropType;
   externalEventMutations?: EventCallbackInterface<string | string[], StringOrNumberOrList>[];
@@ -636,6 +640,9 @@ export interface VictoryCommonProps {
   singleQuadrantDomainPadding?: boolean | { x?: boolean; y?: boolean };
   standalone?: boolean;
   width?: number;
+}
+
+export interface VictoryCommonProps extends VictoryCommonThemeProps {
   theme?: VictoryThemeDefinition;
 }
 
