@@ -5,7 +5,8 @@ export default class Timer {
     this.shouldAnimate = true;
     this.subscribers = [];
     this.loop = this.loop.bind(this);
-    this.timer = timer(this.loop);
+    this.timer = null;
+    this.activeSubscriptions = 0;
   }
 
   bypassAnimation() {
@@ -23,25 +24,37 @@ export default class Timer {
   }
 
   start() {
-    this.timer.start();
+    if (!this.timer) {
+      this.timer = timer(this.loop);
+    }
   }
 
   stop() {
-    this.timer.stop();
+    if (this.timer) {
+      this.timer.stop();
+      this.timer = null;
+    }
   }
 
   subscribe(callback, duration) {
     duration = this.shouldAnimate ? duration : 0;
-    return this.subscribers.push({
+    const subscriptionID = this.subscribers.push({
       startTime: now(),
       callback,
       duration
     });
+    this.activeSubscriptions++;
+    this.start();
+    return subscriptionID;
   }
 
   unsubscribe(id) {
-    if (id !== null) {
+    if (id !== null && this.subscribers[id - 1]) {
       delete this.subscribers[id - 1];
+      this.activeSubscriptions--;
+    }
+    if (this.activeSubscriptions === 0) {
+      this.stop();
     }
   }
 }
