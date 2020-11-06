@@ -123,7 +123,6 @@ export type CoordinatesPropType = {
   y: number;
 };
 
-
 export type VictoryStyleObject = { [K in keyof React.CSSProperties]: StringOrNumberOrCallback };
 
 export type LabelProps = React.CSSProperties & {
@@ -317,7 +316,8 @@ export interface VictoryThemeDefinition {
       data?: VictoryStyleObject;
       labels?: VictoryLabelStyleObject | VictoryLabelStyleObject[];
     };
-  } & VictoryCommonThemeProps & VictoryDatableProps;
+  } & VictoryCommonThemeProps &
+    VictoryDatableProps;
   axis?: {
     style?: {
       axis?: VictoryStyleObject;
@@ -334,7 +334,8 @@ export interface VictoryThemeDefinition {
       data?: VictoryStyleObject;
       labels?: VictoryLabelStyleObject | VictoryLabelStyleObject[];
     };
-  } & VictoryCommonThemeProps & VictoryDatableProps;
+  } & VictoryCommonThemeProps &
+    VictoryDatableProps;
   boxplot?: {
     style?: {
       max?: VictoryStyleObject;
@@ -417,13 +418,15 @@ export interface VictoryThemeDefinition {
       data?: VictoryStyleObject;
       labels?: VictoryLabelStyleObject | VictoryLabelStyleObject[];
     };
-  } & VictoryCommonThemeProps & VictoryDatableProps;
+  } & VictoryCommonThemeProps &
+    VictoryDatableProps;
   pie?: {
     style?: {
       data?: VictoryStyleObject;
       labels?: VictoryLabelStyleObject | VictoryLabelStyleObject[];
     };
-  } & VictoryCommonThemeProps & VictoryDatableProps;
+  } & VictoryCommonThemeProps &
+    VictoryDatableProps;
   polarAxis?: {
     style?: {
       axis?: VictoryStyleObject;
@@ -456,7 +459,8 @@ export interface VictoryThemeDefinition {
       data?: VictoryStyleObject;
       labels?: VictoryLabelStyleObject | VictoryLabelStyleObject[];
     };
-  } & VictoryCommonThemeProps & VictoryDatableProps;
+  } & VictoryCommonThemeProps &
+    VictoryDatableProps;
   stack?: VictoryCommonThemeProps;
   tooltip?: {
     style?: VictoryLabelStyleObject | VictoryLabelStyleObject[];
@@ -475,7 +479,8 @@ export interface VictoryThemeDefinition {
       labels?: VictoryLabelStyleObject | VictoryLabelStyleObject[];
       flyout?: VictoryStyleObject;
     };
-  } & VictoryCommonThemeProps & VictoryDatableProps;
+  } & VictoryCommonThemeProps &
+    VictoryDatableProps;
 }
 
 export interface VictoryThemeInterface {
