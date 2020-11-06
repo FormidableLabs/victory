@@ -7,22 +7,22 @@ import {
   VictoryCommonPrimitiveProps,
   VictoryDatableProps,
   VictoryStyleObject,
+  VictoryLabelStyleObject,
   VictoryLabelableProps,
   VictoryMultiLabelableProps,
-  VictoryStyleInterface
 } from "victory-core";
 
-export interface VictoryCandlestickStyleInterface extends VictoryStyleInterface {
+export interface VictoryCandlestickStyleInterface {
   close?: VictoryStyleObject;
-  closeLabels?: VictoryStyleObject;
+  closeLabels?: VictoryLabelStyleObject | VictoryLabelStyleObject[];
   data?: VictoryStyleObject;
   high?: VictoryStyleObject;
-  highLabels?: VictoryStyleObject;
-  labels?: VictoryStyleObject;
+  highLabels?: VictoryLabelStyleObject | VictoryLabelStyleObject[];
+  labels?: VictoryLabelStyleObject | VictoryLabelStyleObject[];
   low?: VictoryStyleObject;
-  lowLabels?: VictoryStyleObject;
+  lowLabels?: VictoryLabelStyleObject | VictoryLabelStyleObject[];
   open?: VictoryStyleObject;
-  openLabels?: VictoryStyleObject;
+  openLabels?: VictoryLabelStyleObject | VictoryLabelStyleObject[];
   parent?: VictoryStyleObject;
 }
 

@@ -7,6 +7,7 @@ import {
   VictoryLabelableProps,
   VictoryThemeDefinition,
   VictoryStyleObject,
+  VictoryLabelStyleObject,
   PaddingOrCallback
 } from "victory-core";
 
@@ -41,7 +42,7 @@ export interface VictoryTooltipProps extends VictoryLabelableProps {
   pointerOrientation?: OrientationTypes | ((...args: any[]) => OrientationTypes);
   pointerWidth?: NumberOrCallback;
   renderInPortal?: boolean;
-  style?: React.CSSProperties | React.CSSProperties[];
+  style?: VictoryLabelStyleObject | VictoryLabelStyleObject[];
   text?: StringOrNumberOrCallback | string[] | number[];
   theme?: VictoryThemeDefinition;
   width?: number;

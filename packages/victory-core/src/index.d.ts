@@ -139,7 +139,7 @@ export type VictoryLabelStyleObject = { [K in keyof LabelProps]: StringOrNumberO
 export interface VictoryStyleInterface {
   parent?: VictoryStyleObject;
   data?: VictoryStyleObject;
-  labels?: VictoryLabelStyleObject;
+  labels?: VictoryLabelStyleObject | VictoryLabelStyleObject[];
   border?: VictoryStyleObject;
 }
 
@@ -176,10 +176,10 @@ export interface VictoryAxisCommonProps {
   style?: {
     parent?: VictoryStyleObject;
     axis?: VictoryStyleObject;
-    axisLabel?: VictoryLabelStyleObject;
+    axisLabel?: VictoryLabelStyleObject | VictoryLabelStyleObject[];
     grid?: VictoryStyleObject;
     ticks?: VictoryTickStyleObject;
-    tickLabels?: VictoryLabelStyleObject;
+    tickLabels?: VictoryLabelStyleObject | VictoryLabelStyleObject[];
   };
   tickComponent?: React.ReactElement;
   tickCount?: number;
@@ -315,16 +315,16 @@ export interface VictoryThemeDefinition {
   area?: {
     style?: {
       data?: VictoryStyleObject;
-      labels?: VictoryLabelStyleObject;
+      labels?: VictoryLabelStyleObject | VictoryLabelStyleObject[];
     };
   } & VictoryCommonThemeProps & VictoryDatableProps;
   axis?: {
     style?: {
       axis?: VictoryStyleObject;
-      axisLabel?: VictoryLabelStyleObject;
+      axisLabel?: VictoryLabelStyleObject | VictoryLabelStyleObject[];
       grid?: VictoryStyleObject;
       ticks?: VictoryTickStyleObject;
-      tickLabels?: VictoryLabelStyleObject;
+      tickLabels?: VictoryLabelStyleObject | VictoryLabelStyleObject[];
     };
     offsetX?: number;
     offsetY?: number;
@@ -332,28 +332,28 @@ export interface VictoryThemeDefinition {
   bar?: {
     style?: {
       data?: VictoryStyleObject;
-      labels?: VictoryLabelStyleObject;
+      labels?: VictoryLabelStyleObject | VictoryLabelStyleObject[];
     };
   } & VictoryCommonThemeProps & VictoryDatableProps;
   boxplot?: {
     style?: {
       max?: VictoryStyleObject;
-      maxLabels?: VictoryLabelStyleObject;
+      maxLabels?: VictoryLabelStyleObject | VictoryLabelStyleObject[];
       median?: VictoryStyleObject;
-      medianLabels?: VictoryLabelStyleObject;
+      medianLabels?: VictoryLabelStyleObject | VictoryLabelStyleObject[];
       min?: VictoryStyleObject;
-      minLabels?: VictoryLabelStyleObject;
+      minLabels?: VictoryLabelStyleObject | VictoryLabelStyleObject[];
       q1?: VictoryStyleObject;
-      q1Labels?: VictoryLabelStyleObject;
+      q1Labels?: VictoryLabelStyleObject | VictoryLabelStyleObject[];
       q3?: VictoryStyleObject;
-      q3Labels?: VictoryLabelStyleObject;
+      q3Labels?: VictoryLabelStyleObject | VictoryLabelStyleObject[];
     };
     boxWidth?: number;
   } & VictoryCommonThemeProps;
   candlestick?: {
     style?: {
       data?: VictoryStyleObject;
-      labels?: VictoryLabelStyleObject;
+      labels?: VictoryLabelStyleObject | VictoryLabelStyleObject[];
     };
     candleColors?: {
       positive?: string;
@@ -364,10 +364,10 @@ export interface VictoryThemeDefinition {
   dependentAxis?: {
     style?: {
       axis?: VictoryStyleObject;
-      axisLabel?: VictoryLabelStyleObject;
+      axisLabel?: VictoryLabelStyleObject | VictoryLabelStyleObject[];
       grid?: VictoryStyleObject;
       ticks?: VictoryTickStyleObject;
-      tickLabels?: VictoryLabelStyleObject;
+      tickLabels?: VictoryLabelStyleObject | VictoryLabelStyleObject[];
     };
     offsetX?: number;
     offsetY?: number;
@@ -377,17 +377,17 @@ export interface VictoryThemeDefinition {
     borderWidth?: number;
     style?: {
       data?: VictoryStyleObject;
-      labels?: VictoryLabelStyleObject;
+      labels?: VictoryLabelStyleObject | VictoryLabelStyleObject[];
     };
   } & VictoryCommonThemeProps;
   group?: VictoryCommonThemeProps;
   independentAxis?: {
     style?: {
       axis?: VictoryStyleObject;
-      axisLabel?: VictoryLabelStyleObject;
+      axisLabel?: VictoryLabelStyleObject | VictoryLabelStyleObject[];
       grid?: VictoryStyleObject;
       ticks?: VictoryTickStyleObject;
-      tickLabels?: VictoryLabelStyleObject;
+      tickLabels?: VictoryLabelStyleObject | VictoryLabelStyleObject[];
     };
     offsetX?: number;
     offsetY?: number;
@@ -403,7 +403,7 @@ export interface VictoryThemeDefinition {
         type?: string;
       };
       border?: VictoryStyleObject;
-      labels?: VictoryLabelStyleObject;
+      labels?: VictoryLabelStyleObject | VictoryLabelStyleObject[];
       title?: VictoryLabelStyleObject;
     };
     itemsPerRow?: number;
@@ -415,51 +415,51 @@ export interface VictoryThemeDefinition {
   line?: {
     style?: {
       data?: VictoryStyleObject;
-      labels?: VictoryLabelStyleObject;
+      labels?: VictoryLabelStyleObject | VictoryLabelStyleObject[];
     };
   } & VictoryCommonThemeProps & VictoryDatableProps;
   pie?: {
     style?: {
       data?: VictoryStyleObject;
-      labels?: VictoryLabelStyleObject;
+      labels?: VictoryLabelStyleObject | VictoryLabelStyleObject[];
     };
   } & VictoryCommonThemeProps & VictoryDatableProps;
   polarAxis?: {
     style?: {
       axis?: VictoryStyleObject;
-      axisLabel?: VictoryLabelStyleObject;
+      axisLabel?: VictoryLabelStyleObject | VictoryLabelStyleObject[];
       grid?: VictoryStyleObject;
       ticks?: VictoryTickStyleObject;
-      tickLabels?: VictoryLabelStyleObject;
+      tickLabels?: VictoryLabelStyleObject | VictoryLabelStyleObject[];
     };
   } & VictoryCommonThemeProps;
   polarDependentAxis?: {
     style?: {
       axis?: VictoryStyleObject;
-      axisLabel?: VictoryLabelStyleObject;
+      axisLabel?: VictoryLabelStyleObject | VictoryLabelStyleObject[];
       grid?: VictoryStyleObject;
       ticks?: VictoryTickStyleObject;
-      tickLabels?: VictoryLabelStyleObject;
+      tickLabels?: VictoryLabelStyleObject | VictoryLabelStyleObject[];
     };
   } & VictoryCommonThemeProps;
   polarIndependentAxis?: {
     style?: {
       axis?: VictoryStyleObject;
-      axisLabel?: VictoryLabelStyleObject;
+      axisLabel?: VictoryLabelStyleObject | VictoryLabelStyleObject[];
       grid?: VictoryStyleObject;
       ticks?: VictoryTickStyleObject;
-      tickLabels?: VictoryLabelStyleObject;
+      tickLabels?: VictoryLabelStyleObject | VictoryLabelStyleObject[];
     };
   } & VictoryCommonThemeProps;
   scatter?: {
     style?: {
       data?: VictoryStyleObject;
-      labels?: VictoryLabelStyleObject;
+      labels?: VictoryLabelStyleObject | VictoryLabelStyleObject[];
     };
   } & VictoryCommonThemeProps & VictoryDatableProps;
   stack?: VictoryCommonThemeProps;
   tooltip?: {
-    style?: VictoryLabelStyleObject;
+    style?: VictoryLabelStyleObject | VictoryLabelStyleObject[];
     flyoutStyle?: VictoryStyleObject;
     cornerRadius?: NumberOrCallback;
     pointerLength?: NumberOrCallback;
@@ -472,7 +472,7 @@ export interface VictoryThemeDefinition {
   voronoi?: {
     style?: {
       data?: VictoryStyleObject;
-      labels?: VictoryLabelStyleObject;
+      labels?: VictoryLabelStyleObject | VictoryLabelStyleObject[];
       flyout?: VictoryStyleObject;
     };
   } & VictoryCommonThemeProps & VictoryDatableProps;
