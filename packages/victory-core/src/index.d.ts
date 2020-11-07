@@ -85,31 +85,36 @@ export type PaddingProps = number | BlockProps;
  * values of properties from the VictoryXXXProps for each component.
  */
 export interface CallbackArgs {
-  active: boolean;
-  data: any;
-  datum: any;
-  horizontal: boolean;
+  active?: boolean;
+  data?: any;
+  datum?: any;
+  horizontal?: boolean;
   index: number | string;
-  x: number;
-  y: number;
+  x?: number;
+  y?: number;
   scale?: {
     x?: D3Scale;
     y?: D3Scale;
   };
+  tick?: any;
+  ticks?: any;
+  text?: any;
 }
+
+export type OrientationTypes = "top" | "bottom" | "left" | "right";
 
 export type VictoryStringOrNumberCallback = (args: CallbackArgs) => string | number;
 export type VictoryNumberCallback = (args: CallbackArgs) => number;
 export type VictoryStringCallback = (args: CallbackArgs) => string;
 export type VictoryPaddingCallback = (args: CallbackArgs) => number | BlockProps;
+export type VictoryOrientationCallback = (args: CallbackArgs) => OrientationTypes;
 export type StringOrNumberOrCallback = string | number | VictoryStringOrNumberCallback;
 export type NumberOrCallback = number | VictoryNumberCallback;
 export type StringOrCallback = string | VictoryStringCallback;
 export type PaddingOrCallback = number | BlockProps | VictoryPaddingCallback;
+export type OrientationOrCallback = OrientationTypes | VictoryOrientationCallback;
 
 export type SliceNumberOrCallback<T, P = null> = number | ((props: Omit<T, P>) => number);
-
-export type VictoryStyleObject = { [K in keyof React.CSSProperties]: StringOrNumberOrCallback };
 
 export type StringOrNumberOrList = string | number | (string | number)[];
 
@@ -118,7 +123,14 @@ export type CoordinatesPropType = {
   y: number;
 };
 
-export type OrientationTypes = "top" | "bottom" | "left" | "right";
+export type VictoryStyleObject = { [K in keyof React.CSSProperties]: StringOrNumberOrCallback };
+
+export type LabelProps = React.CSSProperties & {
+  angle?: number;
+  verticalAnchor?: VerticalAnchorType;
+};
+
+export type VictoryLabelStyleObject = { [K in keyof LabelProps]: StringOrNumberOrCallback };
 
 /**
  * Style interface used in components/themeing
@@ -126,7 +138,7 @@ export type OrientationTypes = "top" | "bottom" | "left" | "right";
 export interface VictoryStyleInterface {
   parent?: VictoryStyleObject;
   data?: VictoryStyleObject;
-  labels?: VictoryStyleObject;
+  labels?: VictoryLabelStyleObject | VictoryLabelStyleObject[];
   border?: VictoryStyleObject;
 }
 
@@ -149,10 +161,9 @@ export class VictoryAnimation extends React.Component<VictoryAnimationProps, any
 
 // #region Victory Axis props
 
-export type TickLabelProps = React.CSSProperties & {
-  angle?: number;
-  verticalAnchor?: VerticalAnchorType;
-};
+export type TickProps = React.CSSProperties & { size?: number };
+
+export type VictoryTickStyleObject = { [K in keyof TickProps]: StringOrNumberOrCallback };
 
 export interface VictoryAxisCommonProps {
   axisComponent?: React.ReactElement;
@@ -162,24 +173,12 @@ export interface VictoryAxisCommonProps {
   gridComponent?: React.ReactElement;
   invertAxis?: boolean;
   style?: {
-    parent?: {
-      [K in keyof React.CSSProperties]: string | number | ((tick?: any) => string | number);
-    };
-    axis?: {
-      [K in keyof React.CSSProperties]: string | number | ((tick?: any) => string | number);
-    };
-    axisLabel?: {
-      [K in keyof React.CSSProperties]: string | number | ((tick?: any) => string | number);
-    };
-    grid?: {
-      [K in keyof React.CSSProperties]: string | number | ((tick?: any) => string | number);
-    };
-    ticks?: {
-      [K in keyof React.CSSProperties]: string | number | ((tick?: any) => string | number);
-    };
-    tickLabels?: {
-      [K in keyof TickLabelProps]: string | number | ((tick?: any) => string | number);
-    };
+    parent?: VictoryStyleObject;
+    axis?: VictoryStyleObject;
+    axisLabel?: VictoryLabelStyleObject | VictoryLabelStyleObject[];
+    grid?: VictoryStyleObject;
+    ticks?: VictoryTickStyleObject;
+    tickLabels?: VictoryLabelStyleObject | VictoryLabelStyleObject[];
   };
   tickComponent?: React.ReactElement;
   tickCount?: number;
@@ -201,7 +200,7 @@ export interface VictoryLabelProps {
   angle?: StringOrNumberOrCallback;
   ariaLabel?: StringOrCallback;
   backgroundComponent?: React.ReactElement;
-  backgroundStyle?: React.CSSProperties | React.CSSProperties[];
+  backgroundStyle?: VictoryLabelStyleObject | VictoryLabelStyleObject[];
   backgroundPadding?: PaddingProps | PaddingProps[];
   capHeight?: StringOrNumberOrCallback;
   children?: StringOrNumberOrCallback;
@@ -218,7 +217,7 @@ export interface VictoryLabelProps {
   origin?: OriginType;
   polar?: boolean;
   renderInPortal?: boolean;
-  style?: React.CSSProperties | React.CSSProperties[];
+  style?: VictoryLabelStyleObject | VictoryLabelStyleObject[];
   tabIndex?: NumberOrCallback;
   text?: string[] | StringOrNumberOrCallback;
   textAnchor?: TextAnchorType | { (): TextAnchorType };
@@ -310,167 +309,178 @@ export class VictoryAccessibleGroup extends React.Component<VictoryAccessibleGro
 // #endregion
 
 // #region Victory Theme
-
-export type ThemeBaseProps = {
-  width?: number;
-  height?: number;
-  colorScale?: string[];
-  padding?: number;
-  offsetX?: number;
-  offsetY?: number;
-};
-
-export type TickProps = React.CSSProperties & { size?: number };
-
 // Note: Many SVG attributes are missed in CSSProperties interface
 export interface VictoryThemeDefinition {
   area?: {
     style?: {
-      data?: React.CSSProperties;
-      labels?: React.CSSProperties;
+      data?: VictoryStyleObject;
+      labels?: VictoryLabelStyleObject | VictoryLabelStyleObject[];
     };
-  } & ThemeBaseProps;
+  } & VictoryCommonThemeProps &
+    VictoryDatableProps;
   axis?: {
     style?: {
-      axis?: React.CSSProperties;
-      axisLabel?: React.CSSProperties;
-      grid?: React.CSSProperties;
-      ticks?: TickProps;
-      tickLabels?: React.CSSProperties;
+      axis?: VictoryStyleObject;
+      axisLabel?: VictoryLabelStyleObject | VictoryLabelStyleObject[];
+      grid?: VictoryStyleObject;
+      ticks?: VictoryTickStyleObject;
+      tickLabels?: VictoryLabelStyleObject | VictoryLabelStyleObject[];
     };
-  } & ThemeBaseProps;
+    offsetX?: number;
+    offsetY?: number;
+  } & VictoryCommonThemeProps;
   bar?: {
     style?: {
-      data?: React.CSSProperties;
-      labels?: React.CSSProperties;
+      data?: VictoryStyleObject;
+      labels?: VictoryLabelStyleObject | VictoryLabelStyleObject[];
     };
-  } & ThemeBaseProps;
+  } & VictoryCommonThemeProps &
+    VictoryDatableProps;
   boxplot?: {
     style?: {
-      max?: React.CSSProperties;
-      maxLabels?: React.CSSProperties;
-      median?: React.CSSProperties;
-      medianLabels?: React.CSSProperties;
-      min?: React.CSSProperties;
-      minLabels?: React.CSSProperties;
-      q1?: React.CSSProperties;
-      q1Labels?: React.CSSProperties;
-      q3?: React.CSSProperties;
-      q3Labels?: React.CSSProperties;
+      max?: VictoryStyleObject;
+      maxLabels?: VictoryLabelStyleObject | VictoryLabelStyleObject[];
+      median?: VictoryStyleObject;
+      medianLabels?: VictoryLabelStyleObject | VictoryLabelStyleObject[];
+      min?: VictoryStyleObject;
+      minLabels?: VictoryLabelStyleObject | VictoryLabelStyleObject[];
+      q1?: VictoryStyleObject;
+      q1Labels?: VictoryLabelStyleObject | VictoryLabelStyleObject[];
+      q3?: VictoryStyleObject;
+      q3Labels?: VictoryLabelStyleObject | VictoryLabelStyleObject[];
     };
     boxWidth?: number;
-  } & ThemeBaseProps;
+  } & VictoryCommonThemeProps;
   candlestick?: {
     style?: {
-      data?: React.CSSProperties;
-      labels?: React.CSSProperties;
+      data?: VictoryStyleObject;
+      labels?: VictoryLabelStyleObject | VictoryLabelStyleObject[];
     };
     candleColors?: {
       positive?: string;
       negative?: string;
     };
-  } & ThemeBaseProps;
-  chart?: ThemeBaseProps;
+  } & VictoryCommonThemeProps;
+  chart?: VictoryCommonThemeProps;
   dependentAxis?: {
     style?: {
-      axis?: React.CSSProperties;
-      axisLabel?: React.CSSProperties;
-      grid?: React.CSSProperties;
-      ticks?: TickProps;
-      tickLabels?: React.CSSProperties;
+      axis?: VictoryStyleObject;
+      axisLabel?: VictoryLabelStyleObject | VictoryLabelStyleObject[];
+      grid?: VictoryStyleObject;
+      ticks?: VictoryTickStyleObject;
+      tickLabels?: VictoryLabelStyleObject | VictoryLabelStyleObject[];
     };
+    offsetX?: number;
+    offsetY?: number;
     orientation?: OrientationTypes;
-  } & ThemeBaseProps;
+  } & VictoryCommonThemeProps;
   errorbar?: {
     borderWidth?: number;
     style?: {
-      data?: React.CSSProperties;
-      labels?: React.CSSProperties;
+      data?: VictoryStyleObject;
+      labels?: VictoryLabelStyleObject | VictoryLabelStyleObject[];
     };
-  } & ThemeBaseProps;
-  group?: ThemeBaseProps;
+  } & VictoryCommonThemeProps;
+  group?: VictoryCommonThemeProps;
   independentAxis?: {
     style?: {
-      axis?: React.CSSProperties;
-      axisLabel?: React.CSSProperties;
-      grid?: React.CSSProperties;
-      ticks?: TickProps;
-      tickLabels?: React.CSSProperties;
+      axis?: VictoryStyleObject;
+      axisLabel?: VictoryLabelStyleObject | VictoryLabelStyleObject[];
+      grid?: VictoryStyleObject;
+      ticks?: VictoryTickStyleObject;
+      tickLabels?: VictoryLabelStyleObject | VictoryLabelStyleObject[];
     };
+    offsetX?: number;
+    offsetY?: number;
     orientation?: OrientationTypes;
-  } & ThemeBaseProps;
+  } & VictoryCommonThemeProps;
   legend?: {
-    gutter?: number;
-    orientation?: "vertical" | "horizontal";
-    titleOrientation?: OrientationTypes;
+    gutter?: number | BlockProps;
+    rowGutter?: number | BlockProps;
+    orientation?: string;
+    titleOrientation?: string;
     style?: {
-      data?: React.CSSProperties & {
-        type?: ScatterSymbolType;
+      data?: VictoryStyleObject & {
+        type?: string;
       };
-      labels?: React.CSSProperties;
-      title?: React.CSSProperties;
+      border?: VictoryStyleObject;
+      labels?: VictoryLabelStyleObject | VictoryLabelStyleObject[];
+      title?: VictoryLabelStyleObject;
     };
-  } & ThemeBaseProps;
+    itemsPerRow?: number;
+    x?: number;
+    y?: number;
+    centerTitle?: boolean;
+    borderPadding?: number | BlockProps;
+  } & VictoryCommonThemeProps;
   line?: {
     style?: {
-      data?: React.CSSProperties;
-      labels?: React.CSSProperties;
+      data?: VictoryStyleObject;
+      labels?: VictoryLabelStyleObject | VictoryLabelStyleObject[];
     };
-  } & ThemeBaseProps;
+  } & VictoryCommonThemeProps &
+    VictoryDatableProps;
   pie?: {
     style?: {
-      data?: React.CSSProperties;
-      labels?: React.CSSProperties;
+      data?: VictoryStyleObject;
+      labels?: VictoryLabelStyleObject | VictoryLabelStyleObject[];
     };
-  } & ThemeBaseProps;
+  } & VictoryCommonThemeProps &
+    VictoryDatableProps;
   polarAxis?: {
     style?: {
-      axis?: React.CSSProperties;
-      axisLabel?: React.CSSProperties;
-      grid?: React.CSSProperties;
-      ticks?: TickProps;
-      tickLabels?: React.CSSProperties;
+      axis?: VictoryStyleObject;
+      axisLabel?: VictoryLabelStyleObject | VictoryLabelStyleObject[];
+      grid?: VictoryStyleObject;
+      ticks?: VictoryTickStyleObject;
+      tickLabels?: VictoryLabelStyleObject | VictoryLabelStyleObject[];
     };
-  } & ThemeBaseProps;
+  } & VictoryCommonThemeProps;
   polarDependentAxis?: {
     style?: {
-      axis?: React.CSSProperties;
-      axisLabel?: React.CSSProperties;
-      grid?: React.CSSProperties;
-      ticks?: TickProps;
-      tickLabels?: React.CSSProperties;
+      axis?: VictoryStyleObject;
+      axisLabel?: VictoryLabelStyleObject | VictoryLabelStyleObject[];
+      grid?: VictoryStyleObject;
+      ticks?: VictoryTickStyleObject;
+      tickLabels?: VictoryLabelStyleObject | VictoryLabelStyleObject[];
     };
-  } & ThemeBaseProps;
+  } & VictoryCommonThemeProps;
   polarIndependentAxis?: {
     style?: {
-      axis?: React.CSSProperties;
-      axisLabel?: React.CSSProperties;
-      grid?: React.CSSProperties;
-      ticks?: TickProps;
-      tickLabels?: React.CSSProperties;
+      axis?: VictoryStyleObject;
+      axisLabel?: VictoryLabelStyleObject | VictoryLabelStyleObject[];
+      grid?: VictoryStyleObject;
+      ticks?: VictoryTickStyleObject;
+      tickLabels?: VictoryLabelStyleObject | VictoryLabelStyleObject[];
     };
-  } & ThemeBaseProps;
+  } & VictoryCommonThemeProps;
   scatter?: {
     style?: {
-      data?: React.CSSProperties;
-      labels?: React.CSSProperties;
+      data?: VictoryStyleObject;
+      labels?: VictoryLabelStyleObject | VictoryLabelStyleObject[];
     };
-  } & ThemeBaseProps;
-  stack?: ThemeBaseProps;
+  } & VictoryCommonThemeProps &
+    VictoryDatableProps;
+  stack?: VictoryCommonThemeProps;
   tooltip?: {
-    style?: React.CSSProperties;
-    flyoutStyle?: React.CSSProperties;
-    cornerRadius?: number;
-    pointerLength?: number;
-    flyoutPadding?: number;
+    style?: VictoryLabelStyleObject | VictoryLabelStyleObject[];
+    flyoutStyle?: VictoryStyleObject;
+    cornerRadius?: NumberOrCallback;
+    pointerLength?: NumberOrCallback;
+    flyoutPadding?: PaddingOrCallback;
+    flyoutWidth?: NumberOrCallback;
+    flyoutHeight?: NumberOrCallback;
+    orientation?: OrientationOrCallback;
+    pointerOrientation?: OrientationOrCallback;
   };
   voronoi?: {
     style?: {
-      data?: React.CSSProperties;
-      labels?: React.CSSProperties;
-      flyout?: React.CSSProperties;
+      data?: VictoryStyleObject;
+      labels?: VictoryLabelStyleObject | VictoryLabelStyleObject[];
+      flyout?: VictoryStyleObject;
     };
-  } & ThemeBaseProps;
+  } & VictoryCommonThemeProps &
+    VictoryDatableProps;
 }
 
 export interface VictoryThemeInterface {
@@ -608,8 +618,9 @@ export type SortOrderPropType = "ascending" | "descending";
 
 export type SVGCoordinateType = { x: number; y: number };
 
-export interface VictoryCommonProps {
+export interface VictoryCommonThemeProps {
   animate?: boolean | AnimatePropTypeInterface;
+  colorScale?: ColorScalePropType;
   containerComponent?: React.ReactElement;
   domainPadding?: DomainPaddingPropType;
   externalEventMutations?: EventCallbackInterface<string | string[], StringOrNumberOrList>[];
@@ -634,6 +645,9 @@ export interface VictoryCommonProps {
   singleQuadrantDomainPadding?: boolean | { x?: boolean; y?: boolean };
   standalone?: boolean;
   width?: number;
+}
+
+export interface VictoryCommonProps extends VictoryCommonThemeProps {
   theme?: VictoryThemeDefinition;
 }
 

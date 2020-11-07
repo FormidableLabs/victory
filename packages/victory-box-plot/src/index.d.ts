@@ -7,8 +7,8 @@ import {
   StringOrNumberOrCallback,
   VictoryDatableProps,
   VictoryCommonProps,
-  VictoryStyleInterface,
-  VictoryStyleObject
+  VictoryStyleObject,
+  VictoryLabelStyleObject
 } from "victory-core";
 
 export type VictoryBoxPlotLabelType =
@@ -17,20 +17,21 @@ export type VictoryBoxPlotLabelType =
   | Function
   | { (data: any): string | null };
 
-export interface VictoryBoxPlotStyleInterface extends VictoryStyleInterface {
+export interface VictoryBoxPlotStyleInterface {
+  parent?: VictoryStyleObject;
   max?: VictoryStyleObject;
-  maxLabels?: VictoryStyleObject;
+  maxLabels?: VictoryLabelStyleObject | VictoryLabelStyleObject[];
   min?: VictoryStyleObject;
-  minLabels?: VictoryStyleObject;
+  minLabels?: VictoryLabelStyleObject | VictoryLabelStyleObject[];
   median?: VictoryStyleObject;
-  medianLabels?: VictoryStyleObject;
+  medianLabels?: VictoryLabelStyleObject | VictoryLabelStyleObject[];
   q1?: VictoryStyleObject;
-  q1Labels?: VictoryStyleObject;
+  q1Labels?: VictoryLabelStyleObject | VictoryLabelStyleObject[];
   q3?: VictoryStyleObject;
-  q3Labels?: VictoryStyleObject;
+  q3Labels?: VictoryLabelStyleObject | VictoryLabelStyleObject[];
 }
 
-export interface VictoryBoxPlotLabelOrientationInterface extends VictoryStyleInterface {
+export interface VictoryBoxPlotLabelOrientationInterface {
   max?: OrientationTypes;
   min?: OrientationTypes;
   median?: OrientationTypes;
