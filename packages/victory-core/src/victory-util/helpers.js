@@ -1,7 +1,7 @@
 /* eslint-disable func-style */
 /* eslint-disable no-use-before-define */
 import React from "react";
-import { defaults, isFunction, property, pick, assign } from "lodash";
+import { defaults, isFunction, property, pick, assign, keys } from "lodash";
 
 // Private Functions
 
@@ -30,14 +30,14 @@ function getPolarRange(props, axis) {
  * creates an object with some keys excluded
  * replacement for lodash.omit for performance. does not mimick the entire lodash.omit api
  * @param {Object} originalObject: created object will be based on this object
- * @param {Array<String>} keys: an array of keys to omit from the new object
+ * @param {Array<String>} ks: an array of keys to omit from the new object
  * @returns {Object} new object with same properties as originalObject
  */
-function omit(originalObject, keys = []) {
+function omit(originalObject, ks = []) {
   // code based on babel's _objectWithoutProperties
   const newObject = {};
   for (const key in originalObject) {
-    if (keys.indexOf(key) >= 0) {
+    if (ks.indexOf(key) >= 0) {
       continue;
     }
     if (!Object.prototype.hasOwnProperty.call(originalObject, key)) {
@@ -128,10 +128,10 @@ function evaluateProp(prop, props) {
 }
 
 function evaluateStyle(style, props) {
-  if (!style || !Object.keys(style).some((value) => isFunction(style[value]))) {
+  if (!style || !keys(style).some((value) => isFunction(style[value]))) {
     return style;
   }
-  return Object.keys(style).reduce((prev, curr) => {
+  return keys(style).reduce((prev, curr) => {
     prev[curr] = evaluateProp(style[curr], props);
     return prev;
   }, {});
