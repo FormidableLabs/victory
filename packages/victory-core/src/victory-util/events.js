@@ -166,8 +166,7 @@ export default {
       };
 
       // returns an entire mutated state for all children
-      const allChildNames =
-        childNames === "all" ? without(keys(baseProps), "parent") : childNames;
+      const allChildNames = childNames === "all" ? without(keys(baseProps), "parent") : childNames;
       return Array.isArray(allChildNames)
         ? allChildNames.reduce((memo, childName) => {
             return assign(memo, getReturnByChild(childName));
