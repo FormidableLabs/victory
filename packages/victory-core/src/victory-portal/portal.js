@@ -1,6 +1,7 @@
 import React from "react";
 import PropTypes from "prop-types";
 import CustomPropTypes from "../victory-util/prop-types";
+import { keys } from "lodash";
 
 export default class Portal extends React.Component {
   static displayName = "Portal";
@@ -37,7 +38,7 @@ export default class Portal extends React.Component {
   }
 
   getChildren() {
-    return Object.keys(this.map).map((key) => {
+    return keys(this.map).map((key) => {
       const el = this.map[key];
       return el ? React.cloneElement(el, { key }) : el;
     });

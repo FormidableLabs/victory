@@ -1,5 +1,5 @@
 /* eslint-disable func-style */
-import { assign, defaults, identity } from "lodash";
+import { assign, defaults, identity, keys } from "lodash";
 import React from "react";
 
 function getDatumKey(datum, idx) {
@@ -16,7 +16,7 @@ function getKeyedData(data) {
 
 function getKeyedDataDifference(a, b) {
   let hasDifference = false;
-  const difference = Object.keys(a).reduce((_difference, key) => {
+  const difference = keys(a).reduce((_difference, key) => {
     if (!(key in b)) {
       hasDifference = true;
       _difference[key] = true;

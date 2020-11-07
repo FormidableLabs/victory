@@ -1,4 +1,4 @@
-import { toPairs, groupBy, forOwn, includes, flow, isEmpty, isFunction } from "lodash";
+import { toPairs, groupBy, forOwn, includes, flow, isEmpty, isFunction, keys } from "lodash";
 import { VictoryContainer, Log } from "victory-core";
 import { voronoiContainerMixin } from "victory-voronoi-container";
 import { zoomContainerMixin } from "victory-zoom-container";
@@ -112,7 +112,7 @@ const checkBehaviorName = (behavior, behaviors) => {
 
 const makeCreateContainerFunction = (mixinMap, Container) => (behaviorA, behaviorB, ...invalid) => {
   // eslint-disable-line
-  const behaviors = Object.keys(mixinMap);
+  const behaviors = keys(mixinMap);
 
   checkBehaviorName(behaviorA, behaviors);
   checkBehaviorName(behaviorB, behaviors);

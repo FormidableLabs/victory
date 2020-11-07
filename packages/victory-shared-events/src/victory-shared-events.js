@@ -1,4 +1,4 @@
-import { assign, isFunction, defaults, isEmpty, fromPairs } from "lodash";
+import { assign, isFunction, defaults, isEmpty, fromPairs, keys } from "lodash";
 import React from "react";
 import PropTypes from "prop-types";
 import { PropTypes as CustomPropTypes, Events, Helpers, TimerContext } from "victory-core";
@@ -104,7 +104,7 @@ export default class VictorySharedEvents extends React.Component {
           props.externalEventMutations,
           baseProps,
           this.state,
-          Object.keys(baseProps)
+          keys(baseProps)
         )
       : undefined;
   }
@@ -196,7 +196,7 @@ export default class VictorySharedEvents extends React.Component {
         }
       }, []);
     };
-    const childNames = Object.keys(baseProps);
+    const childNames = keys(baseProps);
     const childComponents = React.Children.toArray(props.children);
     return alterChildren(childComponents, childNames);
   }

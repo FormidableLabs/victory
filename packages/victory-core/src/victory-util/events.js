@@ -1,4 +1,4 @@
-import { assign, isEmpty, isFunction, without, pickBy, uniq, includes } from "lodash";
+import { assign, isEmpty, isFunction, without, pickBy, uniq, includes, keys } from "lodash";
 
 export default {
   /* Returns all own and shared events that should be attached to a single target element,
@@ -108,10 +108,10 @@ export default {
         }
         if (eventReturn.eventKey === "all") {
           return baseProps[childName]
-            ? without(Object.keys(baseProps[childName]), "parent")
-            : without(Object.keys(baseProps), "parent");
+            ? without(keys(baseProps[childName]), "parent")
+            : without(keys(baseProps), "parent");
         } else if (eventReturn.eventKey === undefined && eventKey === "parent") {
-          return baseProps[childName] ? Object.keys(baseProps[childName]) : Object.keys(baseProps);
+          return baseProps[childName] ? keys(baseProps[childName]) : keys(baseProps);
         }
         return eventReturn.eventKey !== undefined ? eventReturn.eventKey : eventKey;
       };
@@ -134,7 +134,7 @@ export default {
           if (state[key] && state[key][target]) {
             delete state[key][target];
           }
-          if (state[key] && !Object.keys(state[key]).length) {
+          if (state[key] && !keys(state[key]).length) {
             delete state[key];
           }
           return state;
@@ -167,7 +167,7 @@ export default {
 
       // returns an entire mutated state for all children
       const allChildNames =
-        childNames === "all" ? without(Object.keys(baseProps), "parent") : childNames;
+        childNames === "all" ? without(keys(baseProps), "parent") : childNames;
       return Array.isArray(allChildNames)
         ? allChildNames.reduce((memo, childName) => {
             return assign(memo, getReturnByChild(childName));
@@ -208,7 +208,7 @@ export default {
     };
 
     // returns a new events object with enhanced event handlers
-    return Object.keys(events).reduce((memo, event) => {
+    return keys(events).reduce((memo, event) => {
       memo[event] = onEvent;
       return memo;
     }, {});
@@ -219,7 +219,7 @@ export default {
    */
   getPartialEvents(events, eventKey, childProps) {
     return events
-      ? Object.keys(events).reduce((memo, eventName) => {
+      ? keys(events).reduce((memo, eventName) => {
           const appliedEvent = (evt) => events[eventName](evt, childProps, eventKey, eventName);
           memo[eventName] = appliedEvent;
           return memo;
@@ -283,7 +283,7 @@ export default {
     baseProps = baseProps || {};
     baseState = baseState || {};
 
-    const eventKeys = Object.keys(baseProps);
+    const eventKeys = keys(baseProps);
     return eventKeys.reduce((memo, eventKey) => {
       const keyState = baseState[eventKey] || {};
       const keyProps = baseProps[eventKey] || {};
@@ -294,7 +294,7 @@ export default {
       } else {
         // use keys from both state and props so that elements not intially included in baseProps
         // will be used. (i.e. labels)
-        const targets = uniq(Object.keys(keyProps).concat(Object.keys(keyState)));
+        const targets = uniq(keys(keyProps).concat(keys(keyState)));
         memo[eventKey] = targets.reduce((m, target) => {
           const identifier = { eventKey, target, childName };
           const mutation = this.getExternalMutation(
