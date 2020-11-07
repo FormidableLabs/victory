@@ -1,5 +1,11 @@
 # Victory Changelog
 
+## 35.3.4 (2020-11-06)
+
+- [#1738](https://github.com/FormidableLabs/victory/pull/1738) - Stop timers used by `VictoryAnimation` when there are no active subscriptions. Thanks @noVerity!
+- [#1739](https://github.com/FormidableLabs/victory/pull/1739) - Improve types related to styles and themes across all packages.
+- [#1740](https://github.com/FormidableLabs/victory/pull/1740) - Replace all instances of `Object.keys` with lodash `keys` for consistency.
+
 ## 35.3.3 (2020-11-02)
 
 - [#1733](https://github.com/FormidableLabs/victory/pull/1733) - Fix TS definitions affection multi-line labels and tooltip orientations. Thanks @paolostyle!
