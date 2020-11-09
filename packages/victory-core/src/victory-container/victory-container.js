@@ -33,6 +33,7 @@ export default class VictoryContainer extends React.Component {
     portalZIndex: CustomPropTypes.integer,
     preserveAspectRatio: PropTypes.string,
     responsive: PropTypes.bool,
+    role: PropTypes.string,
     style: PropTypes.object,
     tabIndex: PropTypes.number,
     theme: PropTypes.object,
@@ -44,7 +45,8 @@ export default class VictoryContainer extends React.Component {
     className: "VictoryContainer",
     portalComponent: <Portal />,
     portalZIndex: 99,
-    responsive: true
+    responsive: true,
+    role: "img"
   };
 
   static contextType = TimerContext;
@@ -178,7 +180,8 @@ export default class VictoryContainer extends React.Component {
       title,
       desc,
       tabIndex,
-      preserveAspectRatio
+      preserveAspectRatio,
+      role
     } = this.props;
     const style = responsive
       ? this.props.style
@@ -188,7 +191,7 @@ export default class VictoryContainer extends React.Component {
         width,
         height,
         tabIndex,
-        role: "img",
+        role,
         "aria-labelledby":
           [title && this.getIdForElement("title"), this.props["aria-labelledby"]]
             .filter(Boolean)
