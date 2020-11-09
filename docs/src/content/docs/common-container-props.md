@@ -150,6 +150,14 @@ The `responsive` prop specifies whether the rendered container should be a respo
 
 _default:_ `responsive={true}`
 
+## role
+
+`type: string`
+
+The `role` prop specifies the role attribute that will be applied to the `svg` element rendered by `VictoryContainer`
+
+_default:_ `role="img"`
+
 ## style
 
 `type: object`
