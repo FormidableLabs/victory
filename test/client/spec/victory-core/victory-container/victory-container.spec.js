@@ -16,6 +16,12 @@ describe("components/victory-container", () => {
     expect(output.prop("role")).to.contain("img");
   });
 
+  it("renders an svg with a custom role", () => {
+    const wrapper = shallow(<VictoryContainer role="presentation" />);
+    const output = wrapper.find("svg").at(0);
+    expect(output.prop("role")).to.contain("presentation");
+  });
+
   it("renders an svg with a title node", () => {
     const wrapper = shallow(<VictoryContainer title="Victory Chart" />);
     const output = wrapper.find("title");
