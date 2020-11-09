@@ -1,5 +1,9 @@
 # Victory Changelog
 
+## 35.3.5 (2020-11-09)
+
+- [#1743](https://github.com/FormidableLabs/victory/pull/1743) - Add a `role` prop for `VictoryContainer`
+
 ## 35.3.4 (2020-11-06)
 
 - [#1738](https://github.com/FormidableLabs/victory/pull/1738) - Stop timers used by `VictoryAnimation` when there are no active subscriptions. Thanks @noVerity!
