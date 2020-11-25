@@ -238,10 +238,8 @@ export default (WrappedComponent, options) => {
           Events.getPartialEvents(baseEvents, key, componentProps),
           componentProps.events
         );
-        this.globalEvents = Events.getGlobalEvents(events);
-        const localEvents = Events.omitGlobalEvents(events);
 
-        return assign({}, componentProps, { events: localEvents });
+        return assign({}, componentProps, { events });
       }
 
       return defaults({ index, key: id }, component.props, baseProps, { id });
@@ -250,6 +248,10 @@ export default (WrappedComponent, options) => {
     renderContainer(component, children) {
       const isContainer = component.type && component.type.role === "container";
       const parentProps = isContainer ? this.getComponentProps(component, "parent", "parent") : {};
+      if (parentProps.events) {
+        this.globalEvents = Events.getGlobalEvents(parentProps.events);
+        parentProps.events = Events.omitGlobalEvents(parentProps.events);
+      }
       return React.cloneElement(component, parentProps, children);
     }
 
