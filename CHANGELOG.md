@@ -1,5 +1,15 @@
 # Victory Changelog
 
+## 35.4.0 (2020-11-25)
+
+- [#1748](https://github.com/FormidableLabs/victory/pull/1748) - Thank you @Hypnosphi!
+
+### Support for Global Events
+This release adds a concept of global events that are attached to `window` rather than to any of the elements rendered by Victory components. Global events are only supported for "parent" events that would normally be attached to `svg` elements rendered by Victory's containerComponents. Events that should be global can be flagged by including `onGlobal` in the name of the event handler. So, for example, use `onGlobalMouseUp` rather than `onMouseUp` to create a global mouse up handler.
+
+### VictoryBrushContainer uses Global Events
+`VictoryBrushContainer` now uses global events in its `defaultEvents` so that brushing continues even as the user's mouse moves outside of the chart area.
+
 ## 35.3.5 (2020-11-09)
 
 - [#1743](https://github.com/FormidableLabs/victory/pull/1743) - Add a `role` prop for `VictoryContainer`
