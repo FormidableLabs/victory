@@ -151,6 +151,14 @@ const Helpers = {
     };
   },
 
+  constrainPoint(point, fullDomainBox) {
+    const { x1, y1, x2, y2 } = mapValues(fullDomainBox, Number);
+    return {
+      x: Math.min(Math.max(point.x, x1), x2),
+      y: Math.min(Math.max(point.y, y1), y2)
+    };
+  },
+
   hasMoved(props) {
     const { x1, x2, y1, y2, mouseMoveThreshold } = props;
     const brushDimension = this.getDimension(props);
@@ -262,11 +270,7 @@ const Helpers = {
   },
 
   // eslint-disable-next-line max-statements, complexity
-  onMouseMove(evt, targetProps) {
-    // if a panning or selection has not been started, ignore the event
-    if (!targetProps.isPanning && !targetProps.isSelecting) {
-      return {};
-    }
+  onGlobalMouseMove(evt, targetProps) {
     const {
       scale,
       isPanning,
@@ -276,15 +280,13 @@ const Helpers = {
       allowResize,
       allowDrag,
       horizontal,
-      mouseMoveThreshold
+      mouseMoveThreshold,
+      parentSVG
     } = targetProps;
     const brushDimension = this.getDimension(targetProps);
-    const parentSVG = targetProps.parentSVG || Selection.getParentSVG(evt);
     const { x, y } = Selection.getSVGEventCoordinates(evt, parentSVG);
-    // Ignore events that occur outside of the maximum domain region
     if (
       (!allowResize && !allowDrag) ||
-      !this.withinBounds({ x, y }, fullDomainBox) ||
       (mouseMoveThreshold > 0 && !this.hasMoved({ ...targetProps, x2: x, y2: y }))
     ) {
       return {};
@@ -312,8 +314,13 @@ const Helpers = {
         }
       ];
     } else if (allowResize && isSelecting) {
-      const x2 = brushDimension !== "y" ? x : targetProps.x2;
-      const y2 = brushDimension !== "x" ? y : targetProps.y2;
+      const { x: x2, y: y2 } = this.constrainPoint(
+        {
+          x: brushDimension !== "y" ? x : targetProps.x2,
+          y: brushDimension !== "x" ? y : targetProps.y2
+        },
+        fullDomainBox
+      );
       const currentDomain = Selection.getBounds({
         x2,
         y2,
@@ -337,7 +344,12 @@ const Helpers = {
     return {};
   },
 
-  onMouseUp(evt, targetProps) {
+  // eslint-disable-next-line complexity
+  onGlobalMouseUp(evt, targetProps) {
+    // if a panning or selection has not been started, ignore the event
+    if (!targetProps.isPanning && !targetProps.isSelecting) {
+      return {};
+    }
     // eslint-disable-line max-statements, complexity
     const {
       x1,
@@ -384,25 +396,15 @@ const Helpers = {
         mutation: () => mutatedProps
       }
     ];
-  },
-
-  onMouseLeave() {
-    return [
-      {
-        target: "parent",
-        mutation: () => ({ isPanning: false, isSelecting: false })
-      }
-    ];
   }
 };
 
 export default {
   ...Helpers,
   onMouseDown: Helpers.onMouseDown.bind(Helpers),
-  onMouseUp: Helpers.onMouseUp.bind(Helpers),
-  onMouseLeave: Helpers.onMouseLeave.bind(Helpers),
-  onMouseMove: throttle(
-    Helpers.onMouseMove.bind(Helpers),
+  onGlobalMouseUp: Helpers.onGlobalMouseUp.bind(Helpers),
+  onGlobalMouseMove: throttle(
+    Helpers.onGlobalMouseMove.bind(Helpers),
     16, // eslint-disable-line no-magic-numbers
     { leading: true, trailing: false }
   )

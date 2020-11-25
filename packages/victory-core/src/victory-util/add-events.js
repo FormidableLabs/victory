@@ -1,5 +1,16 @@
+/*global window:false */
 import React from "react";
-import { defaults, assign, keys, isFunction, pick, without, isEmpty, isNil } from "lodash";
+import {
+  defaults,
+  assign,
+  keys,
+  isFunction,
+  pick,
+  without,
+  isEmpty,
+  isNil,
+  difference
+} from "lodash";
 import Events from "./events";
 import isEqual from "react-fast-compare";
 import VictoryTransition from "../victory-transition/victory-transition";
@@ -30,6 +41,9 @@ export default (WrappedComponent, options) => {
       this.cacheValues(calculatedValues);
       this.externalMutations = this.getExternalMutations(props);
       this.calculatedState = this.getStateChanges(props);
+      this.globalEvents = {};
+      this.prevGlobalEventKeys = [];
+      this.boundGlobalEvents = {};
     }
 
     shouldComponentUpdate(nextProps) {
@@ -54,9 +68,41 @@ export default (WrappedComponent, options) => {
       return false;
     }
 
+    componentDidMount() {
+      const globalEventKeys = keys(this.globalEvents);
+      globalEventKeys.forEach((key) => this.addGlobalListener(key));
+      this.prevGlobalEventKeys = globalEventKeys;
+    }
+
     componentDidUpdate(prevProps) {
       const calculatedState = this.getStateChanges(prevProps);
       this.calculatedState = calculatedState;
+      const globalEventKeys = keys(this.globalEvents);
+      const removedGlobalEventKeys = difference(this.prevGlobalEventKeys, globalEventKeys);
+      removedGlobalEventKeys.forEach((key) => this.removeGlobalListener(key));
+      const addedGlobalEventKeys = difference(globalEventKeys, this.prevGlobalEventKeys);
+      addedGlobalEventKeys.forEach((key) => this.addGlobalListener(key));
+      this.prevGlobalEventKeys = globalEventKeys;
+    }
+
+    componentWillUnmount() {
+      this.prevGlobalEventKeys.forEach((key) => this.removeGlobalListener(key));
+    }
+
+    addGlobalListener(key) {
+      const boundListener = (event) => {
+        const listener = this.globalEvents[key];
+        return listener && listener(Events.emulateReactEvent(event));
+      };
+      this.boundGlobalEvents[key] = boundListener;
+      window.addEventListener(Events.getGlobalEventNameFromKey(key), boundListener);
+    }
+
+    removeGlobalListener(key) {
+      window.removeEventListener(
+        Events.getGlobalEventNameFromKey(key),
+        this.boundGlobalEvents[key]
+      );
     }
 
     // compile all state changes from own and parent state. Order doesn't matter, as any state
@@ -202,6 +248,10 @@ export default (WrappedComponent, options) => {
     renderContainer(component, children) {
       const isContainer = component.type && component.type.role === "container";
       const parentProps = isContainer ? this.getComponentProps(component, "parent", "parent") : {};
+      if (parentProps.events) {
+        this.globalEvents = Events.getGlobalEvents(parentProps.events);
+        parentProps.events = Events.omitGlobalEvents(parentProps.events);
+      }
       return React.cloneElement(component, parentProps, children);
     }
 

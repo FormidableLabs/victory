@@ -1,4 +1,6 @@
-import { assign, isEmpty, isFunction, without, pickBy, uniq, includes, keys } from "lodash";
+import { assign, isEmpty, isFunction, without, pickBy, omitBy, uniq, includes, keys } from "lodash";
+
+const GLOBAL_EVENT_REGEX = /^onGlobal(.*)$/;
 
 export default {
   /* Returns all own and shared events that should be attached to a single target element,
@@ -372,5 +374,15 @@ export default {
         return memo;
       }, []);
     return events && events.length ? events : undefined;
-  }
+  },
+
+  getGlobalEventNameFromKey(key) {
+    const match = key.match(GLOBAL_EVENT_REGEX);
+    return match && match[1] && match[1].toLowerCase();
+  },
+
+  getGlobalEvents: (events) => pickBy(events, (_, key) => GLOBAL_EVENT_REGEX.test(key)),
+  omitGlobalEvents: (events) => omitBy(events, (_, key) => GLOBAL_EVENT_REGEX.test(key)),
+
+  emulateReactEvent: (event) => assign(event, { nativeEvent: event })
 };

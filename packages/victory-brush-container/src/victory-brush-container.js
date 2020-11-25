@@ -60,23 +60,24 @@ export const brushContainerMixin = (base) =>
             onTouchStart: (evt, targetProps) => {
               return props.disable ? {} : BrushHelpers.onMouseDown(evt, targetProps);
             },
-            onMouseMove: (evt, targetProps) => {
-              return props.disable ? {} : BrushHelpers.onMouseMove(evt, targetProps);
+            onGlobalMouseMove: (evt, targetProps) => {
+              return props.disable || (!targetProps.isPanning && !targetProps.isSelecting)
+                ? {}
+                : BrushHelpers.onGlobalMouseMove(evt, targetProps);
             },
-            onTouchMove: (evt, targetProps) => {
-              return props.disable ? {} : BrushHelpers.onMouseMove(evt, targetProps);
+            onGlobalTouchMove: (evt, targetProps) => {
+              return props.disable || (!targetProps.isPanning && !targetProps.isSelecting)
+                ? {}
+                : BrushHelpers.onGlobalMouseMove(evt, targetProps);
             },
-            onMouseUp: (evt, targetProps) => {
-              return props.disable ? {} : BrushHelpers.onMouseUp(evt, targetProps);
+            onGlobalMouseUp: (evt, targetProps) => {
+              return props.disable ? {} : BrushHelpers.onGlobalMouseUp(evt, targetProps);
             },
-            onTouchEnd: (evt, targetProps) => {
-              return props.disable ? {} : BrushHelpers.onMouseUp(evt, targetProps);
+            onGlobalTouchEnd: (evt, targetProps) => {
+              return props.disable ? {} : BrushHelpers.onGlobalMouseUp(evt, targetProps);
             },
-            onMouseLeave: (evt, targetProps) => {
-              return props.disable ? {} : BrushHelpers.onMouseLeave(evt, targetProps);
-            },
-            onTouchCancel: (evt, targetProps) => {
-              return props.disable ? {} : BrushHelpers.onMouseLeave(evt, targetProps);
+            onGlobalTouchCancel: (evt, targetProps) => {
+              return props.disable ? {} : BrushHelpers.onGlobalMouseUp(evt, targetProps);
             }
           }
         }

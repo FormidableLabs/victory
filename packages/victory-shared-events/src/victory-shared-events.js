@@ -1,4 +1,5 @@
-import { assign, isFunction, defaults, isEmpty, fromPairs, keys } from "lodash";
+/*global window:false */
+import { assign, isFunction, defaults, isEmpty, fromPairs, keys, difference } from "lodash";
 import React from "react";
 import PropTypes from "prop-types";
 import { PropTypes as CustomPropTypes, Events, Helpers, TimerContext } from "victory-core";
@@ -61,6 +62,9 @@ export default class VictorySharedEvents extends React.Component {
     this.getEventState = Events.getEventState.bind(this);
     this.baseProps = this.getBaseProps(props);
     this.sharedEventsCache = {};
+    this.globalEvents = {};
+    this.prevGlobalEventKeys = [];
+    this.boundGlobalEvents = {};
   }
 
   shouldComponentUpdate(nextProps) {
@@ -70,6 +74,38 @@ export default class VictorySharedEvents extends React.Component {
       this.applyExternalMutations(nextProps, externalMutations);
     }
     return true;
+  }
+
+  componentDidMount() {
+    const globalEventKeys = keys(this.globalEvents);
+    globalEventKeys.forEach((key) => this.addGlobalListener(key));
+    this.prevGlobalEventKeys = globalEventKeys;
+  }
+
+  componentDidUpdate() {
+    const globalEventKeys = keys(this.globalEvents);
+    const removedGlobalEventKeys = difference(this.prevGlobalEventKeys, globalEventKeys);
+    removedGlobalEventKeys.forEach((key) => this.removeGlobalListener(key));
+    const addedGlobalEventKeys = difference(globalEventKeys, this.prevGlobalEventKeys);
+    addedGlobalEventKeys.forEach((key) => this.addGlobalListener(key));
+    this.prevGlobalEventKeys = globalEventKeys;
+  }
+
+  componentWillUnmount() {
+    this.prevGlobalEventKeys.forEach((key) => this.removeGlobalListener(key));
+  }
+
+  addGlobalListener(key) {
+    const boundListener = (event) => {
+      const listener = this.globalEvents[key];
+      return listener && listener(Events.emulateReactEvent(event));
+    };
+    this.boundGlobalEvents[key] = boundListener;
+    window.addEventListener(Events.getGlobalEventNameFromKey(key), boundListener);
+  }
+
+  removeGlobalListener(key) {
+    window.removeEventListener(Events.getGlobalEventNameFromKey(key), this.boundGlobalEvents[key]);
   }
 
   getAllEvents(props) {
@@ -231,9 +267,11 @@ export default class VictorySharedEvents extends React.Component {
       Events.getPartialEvents(parentEvents, "parent", parentProps),
       containerProps.events
     );
+    this.globalEvents = Events.getGlobalEvents(containerEvents);
+    const localEvents = Events.omitGlobalEvents(containerEvents);
     return role === "container"
-      ? React.cloneElement(container, assign({}, parentProps, { events: containerEvents }))
-      : React.cloneElement(container, containerEvents, children);
+      ? React.cloneElement(container, assign({}, parentProps, { events: localEvents }))
+      : React.cloneElement(container, localEvents, children);
   }
 
   render() {
