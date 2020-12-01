@@ -1,6 +1,10 @@
 # Victory Changelog
 
-## 35.4.1 (2020-10-01)
+## 35.4.2 (2020-12-01)
+
+- [#1751](https://github.com/FormidableLabs/victory/pull/1751) - Add missing static `defaultEvents` to `VictoryTooltip` types. Thanks @beccanelson!
+
+## 35.4.1 (2020-12-01)
 
 - [#1750](https://github.com/FormidableLabs/victory/pull/1750) - Add missing `className` prop to the `Background` primitive component. Thanks @beccanelson!
 
