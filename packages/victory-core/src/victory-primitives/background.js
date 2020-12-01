@@ -27,7 +27,8 @@ const Background = (props) => {
         shapeRendering: props.shapeRendering,
         cx: props.x,
         cy: props.y,
-        r: props.height
+        r: props.height,
+        className: props.className
       })
     : React.cloneElement(props.rectComponent, {
         ...props.events,
@@ -37,7 +38,8 @@ const Background = (props) => {
         x: props.x,
         y: props.y,
         width: props.width,
-        height: props.height
+        height: props.height,
+        className: props.className
       });
 };
 
