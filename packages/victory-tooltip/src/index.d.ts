@@ -8,7 +8,8 @@ import {
   VictoryThemeDefinition,
   VictoryStyleObject,
   VictoryLabelStyleObject,
-  PaddingOrCallback
+  PaddingOrCallback,
+  EventPropTypeInterface
 } from "victory-core";
 
 export interface VictoryTooltipProps extends VictoryLabelableProps {
@@ -80,4 +81,7 @@ export interface FlyoutProps extends VictoryCommonProps {
 }
 
 export class Flyout extends React.Component<FlyoutProps, any> {}
-export class VictoryTooltip extends React.Component<VictoryTooltipProps, any> {}
+
+export class VictoryTooltip extends React.Component<VictoryTooltipProps, any> {
+  static defaultEvents: EventPropTypeInterface<string, StringOrNumberOrCallback>[];
+}
