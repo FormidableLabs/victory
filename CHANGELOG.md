@@ -1,5 +1,9 @@
 # Victory Changelog
 
+## 35.4.1 (2020-10-01)
+
+- [#1750](https://github.com/FormidableLabs/victory/pull/1750) - Add missing `className` prop to the `Background` primitive component. Thanks @beccanelson!
+
 ## 35.4.0 (2020-11-25)
 
 - [#1748](https://github.com/FormidableLabs/victory/pull/1748) - Thank you @Hypnosphi!
