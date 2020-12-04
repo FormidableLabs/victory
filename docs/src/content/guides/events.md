@@ -301,7 +301,7 @@ const ScatterPoint = ({ x, y, datum }) => {
       cx={x}
       cy={y}
       r={datum.x * datum.y}
-      stroke={hovered ? "yellow" : "white"}
+      stroke={hovered ? "purple" : "white"}
       strokeWidth={2}
       fill={selected ? "cyan" : "magenta"}
       onClick={() => setSelected(!selected)}
