@@ -6,6 +6,7 @@ scope:
   - range
   - random
 ---
+
 # Custom Components
 
 Every element that a Victory component renders may be altered or completely replaced. Most components expose `dataComponent`, `labelComponent`, `groupComponent`, and `containerComponent` props. The primitive components that Victory components render by default are simple, stateless components with a consistent set of props whenever possible. These [primitive components][] are exported for users to alter, wrap, extend and reference when creating custom components.
@@ -78,11 +79,9 @@ class App extends React.Component {
 ReactDOM.render(<App/>, mountNode);
 ```
 
-
 ## Creating new components
 
 Any component that renders valid svg elements (or elements wrapped in `<foreignObject>`) may be used as a `dataComponent` or `labelComponent` in Victory components. Custom components will be provided with the same props as default components. In the following example, a custom `CatPoint` component is used in place of `Point` in `VictoryScatter`.
-
 
 ```playground_norender
 class CatPoint extends React.Component {
@@ -163,7 +162,6 @@ ReactDOM.render(<App/>, mountNode)
 
 Other Victory components may even be used in creating custom components, as in the example below.
 
-
 ```playground_norender
 class CustomPie extends React.Component {
   render() {
@@ -229,6 +227,60 @@ class CustomDataComponent extends React.Component {
 }
 
 ReactDOM.render(<CustomDataComponent/>, mountNode)
+```
+
+Since any custom SVG element can be used as a Victory component, any styling system can be used to style custom components, including styled components, CSS modules, or inline styles.
+
+Here's an example using SVG + styled components.
+
+```playground_norender
+const StyledPoint = styled.circle`
+  fill: ${(props) => props.color};
+`;
+
+const colors = ["#A8E6CE", "#DCEDC2", "#FFD3B5", "#FFAAA6", "#FF8C94"];
+
+const ScatterPoint = ({ x, y, datum, min, max }) => {
+  const i = React.useMemo(() => {
+    return Math.floor(((datum.y - min) / (max - min)) * (colors.length - 1));
+  }, [datum, min, max]);
+
+  return <StyledPoint color={colors[i]} cx={x} cy={y} r={6} />;
+};
+
+const App = () => {
+  const data = [
+    { x: "Jan", y: 43 },
+    { x: "Feb", y: 44 },
+    { x: "Mar", y: 47 },
+    { x: "Apr", y: 51 },
+    { x: "May", y: 57 },
+    { x: "Jun", y: 62 },
+    { x: "Jul", y: 67 },
+    { x: "Aug", y: 68 },
+    { x: "Sep", y: 63 },
+    { x: "Oct", y: 54 },
+    { x: "Nov", y: 47 },
+    { x: "Dec", y: 42 }
+  ];
+
+  const temperatures = data.map(({ y }) => y);
+  const min = Math.min(...temperatures);
+  const max = Math.max(...temperatures);
+
+  return (
+    <VictoryChart>
+      <VictoryLine data={data} />
+      <VictoryScatter
+        data={data}
+        dataComponent={<ScatterPoint min={min} max={max} />}
+      />
+    </VictoryChart>
+  );
+}
+
+ReactDOM.render(<App/>, mountNode)
+
 ```
 
 [primitive components]: /docs/victory-primitives
