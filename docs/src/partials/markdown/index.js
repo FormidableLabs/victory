@@ -36,6 +36,7 @@ const renderPlayground = (props, scope, theme) => {
 
   const playgroundScope = Object.assign({}, scopeObject, {
     ...Victory,
+    styled,
     React,
     ReactDOM
   });
