@@ -52,7 +52,7 @@ _default:_ `allowZoom={true}`
 
 `VictoryZoomContainer` works by clipping data outside of a given domain. `VictoryZoomContainer` uses `VictoryClipContainer` by default. This prop should not be replaced with a custom component, but you may want to set props on `VictoryClipContainer`, such as `clipPadding`
 
-_example:_ `clipContainerComponent={<VictoryClipContainer clipPadding={{top: 10, right: 10}}}/>}`
+_example:_ `clipContainerComponent={<VictoryClipContainer clipPadding={{top: 10, right: 10}} />}`
 
 ## disable
 
