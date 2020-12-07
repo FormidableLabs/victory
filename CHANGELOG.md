@@ -1,5 +1,9 @@
 # Victory Changelog
 
+## 35.4.3 (2020-12-07)
+
+- [#1755](https://github.com/FormidableLabs/victory/pull/1755) - Export `Portal` type
+
 ## 35.4.2 (2020-12-01)
 
 - [#1751](https://github.com/FormidableLabs/victory/pull/1751) - Add missing static `defaultEvents` to `VictoryTooltip` types. Thanks @beccanelson!
