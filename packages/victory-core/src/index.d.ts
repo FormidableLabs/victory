@@ -735,6 +735,16 @@ export namespace TextSize {
 
 // #region Victory Portal
 
+export interface PortalProps {
+  className?: string;
+  height: number;
+  style?: React.CSSProperties;
+  viewBox?: string;
+  width: number;
+}
+
+export class Portal extends React.Component<PortalProps, any> {}
+
 export interface VictoryPortalProps {
   children?: React.ReactElement;
   groupComponent?: React.ReactElement;
