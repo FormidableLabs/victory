@@ -317,7 +317,9 @@ The `pointerWidth` prop determines the width of the base of the triangular point
 
 `type: boolean`
 
-When `renderInPortal` is true, rendered tooltips will be wrapped in [VictoryPortal][] and rendered within the [Portal][] element within [VictoryContainer][]. _Note:_ This prop should _not_ be set to true when using a custom container element.
+When `renderInPortal` is true, rendered tooltips will be wrapped in [VictoryPortal][] and rendered within the [Portal][] element within [VictoryContainer][]. _Note:_ This prop should be set to _false_ when using a custom container element.
+
+_default:_ `renderInPortal={true}`
 
 ## style
 
