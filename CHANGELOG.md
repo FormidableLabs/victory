@@ -1,5 +1,9 @@
 # Victory Changelog
 
+## 35.4.4 (2020-12-24)
+
+- [#1761](https://github.com/FormidableLabs/victory/pull/1761) - Add more font widths for the textsize util. Thanks @dlabrecq!
+
 ## 35.4.3 (2020-12-07)
 
 - [#1755](https://github.com/FormidableLabs/victory/pull/1755) - Export `Portal` type
