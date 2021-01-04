@@ -75,6 +75,25 @@ export default {
       z`;
   },
 
+  cross(x, y, size) {
+    const baseSize = 1.1 * size; // eslint-disable-line no-magic-numbers
+    const distance = baseSize / 1.5; // eslint-disable-line no-magic-numbers
+    return `
+      M ${x - distance / 2}, ${y + baseSize + distance}
+      v-${distance * 2}
+      h-${distance}
+      v-${distance}
+      h${distance}
+      v-${distance}
+      h${distance}
+      v${distance}
+      h${distance}
+      v${distance}
+      h-${distance}
+      v${distance * 2}
+      z`;
+  },
+
   minus(x, y, size) {
     const baseSize = 1.1 * size; // eslint-disable-line no-magic-numbers
     const lineHeight = baseSize - baseSize * 0.3; // eslint-disable-line no-magic-numbers

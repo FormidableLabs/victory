@@ -55,6 +55,7 @@ export type AnimationEasing =
 
 export type ScatterSymbolType =
   | "circle"
+  | "cross"
   | "diamond"
   | "plus"
   | "minus"
