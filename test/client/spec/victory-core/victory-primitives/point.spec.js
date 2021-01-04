@@ -25,7 +25,7 @@ describe("victory-primitives/point", () => {
   });
 
   it("should render the appropriate symbol", () => {
-    ["circle", "square", "diamond", "triangleDown", "triangleUp", "plus", "minus", "star"].forEach(
+    ["circle", "square", "diamond", "triangleDown", "triangleUp", "plus", "minus", "star", "cross"].forEach(
       (symbol) => {
         const stub = sandbox.stub(pathHelpers, symbol).returns(`${symbol} symbol`);
         const props = assign({}, baseProps, { symbol });
