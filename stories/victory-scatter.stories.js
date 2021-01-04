@@ -116,7 +116,7 @@ export const FunctionalSymbols = () => {
       </VictoryChart>
       <VictoryChart {...defaultChartProps} horizontal>
         <VictoryScatter
-          data={getMixedData(9))}
+          data={getMixedData(9)}
           symbol={({ index }) => SYMBOLS[index]}
           labels={({ index }) => SYMBOLS[index]}
           size={8}
