@@ -37,6 +37,8 @@ const Background = (props) => {
         shapeRendering: props.shapeRendering,
         x: props.x,
         y: props.y,
+        rx: props.rx,
+        ry: props.ry,
         width: props.width,
         height: props.height,
         className: props.className
@@ -48,6 +50,8 @@ Background.propTypes = {
   circleComponent: PropTypes.element,
   height: PropTypes.number,
   rectComponent: PropTypes.element,
+  rx: PropTypes.number,
+  ry: PropTypes.number,
   width: PropTypes.number,
   x: PropTypes.number,
   y: PropTypes.number

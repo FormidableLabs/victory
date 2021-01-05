@@ -773,6 +773,8 @@ export interface BackgroundProps extends VictoryCommonPrimitiveProps {
   circleComponent?: React.ReactElement;
   height?: number;
   rectComponent?: React.ReactElement;
+  rx?: number;
+  ry?: number;
   width?: number;
   x?: number;
   y?: number;
