@@ -1,5 +1,11 @@
 # Victory Changelog
 
+## 35.4.5 (2021-01-04)
+
+- [#1765](https://github.com/FormidableLabs/victory/pull/1765) - Adds "cross" symbol for `VictoryScatter` and the `Point` primitive.
+
+- [#1766](https://github.com/FormidableLabs/victory/pull/1766) - Allows the `bin` prop on `VictoryHistogram` to accept arrays of negative numbers. Thanks @NgoKnows!
+
 ## 35.4.4 (2020-12-24)
 
 - [#1761](https://github.com/FormidableLabs/victory/pull/1761) - Add more font widths for the textsize util. Thanks @dlabrecq!
