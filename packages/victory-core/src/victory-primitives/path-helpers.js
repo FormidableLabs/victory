@@ -76,7 +76,7 @@ export default {
   },
 
   cross(x, y, size) {
-    const baseSize = 1.1 * size; // eslint-disable-line no-magic-numbers
+    const baseSize = 0.8 * size; // eslint-disable-line no-magic-numbers
     const distance = baseSize / 1.5; // eslint-disable-line no-magic-numbers
     return `
       M ${x - distance / 2}, ${y + baseSize + distance}

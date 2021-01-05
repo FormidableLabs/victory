@@ -94,10 +94,10 @@ export const Symbols = () => {
   return SYMBOLS.map((symbol) => (
     <div style={containerStyle} key={symbol}>
       <VictoryChart {...defaultChartProps}>
-        <VictoryScatter data={getMixedData(9)} symbol={symbol} size={10} labels={() => symbol} />
+        <VictoryScatter data={getMixedData(8)} symbol={symbol} size={10} labels={() => symbol} />
       </VictoryChart>
       <VictoryChart {...defaultChartProps} polar>
-        <VictoryScatter data={getMixedData(9)} symbol={symbol} size={10} labels={() => symbol} />
+        <VictoryScatter data={getMixedData(8)} symbol={symbol} size={10} labels={() => symbol} />
       </VictoryChart>
     </div>
   ));
@@ -108,7 +108,7 @@ export const FunctionalSymbols = () => {
     <div style={containerStyle}>
       <VictoryChart {...defaultChartProps}>
         <VictoryScatter
-          data={getMixedData(9)}
+          data={getMixedData(8)}
           symbol={({ index }) => SYMBOLS[index]}
           labels={({ index }) => SYMBOLS[index]}
           size={8}
@@ -116,7 +116,7 @@ export const FunctionalSymbols = () => {
       </VictoryChart>
       <VictoryChart {...defaultChartProps} horizontal>
         <VictoryScatter
-          data={getMixedData(9)}
+          data={getMixedData(8)}
           symbol={({ index }) => SYMBOLS[index]}
           labels={({ index }) => SYMBOLS[index]}
           size={8}
@@ -136,7 +136,7 @@ export const FunctionalSymbols = () => {
       </VictoryChart>
       <VictoryChart {...defaultChartProps} polar innerRadius={30}>
         <VictoryScatter
-          data={getData(9)}
+          data={getData(8)}
           symbol={({ index }) => SYMBOLS[index]}
           labels={({ index }) => SYMBOLS[index]}
           size={8}
