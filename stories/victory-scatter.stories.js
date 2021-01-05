@@ -12,6 +12,7 @@ import { fromJS } from "immutable";
 
 const SYMBOLS = [
   "circle",
+  "cross",
   "diamond",
   "plus",
   "minus",

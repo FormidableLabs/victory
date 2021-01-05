@@ -50,6 +50,7 @@ class VictoryScatter extends React.Component {
     symbol: PropTypes.oneOfType([
       PropTypes.oneOf([
         "circle",
+        "cross",
         "diamond",
         "plus",
         "minus",

@@ -19,7 +19,8 @@ const getPath = (props) => {
     triangleUp: pathHelpers.triangleUp,
     plus: pathHelpers.plus,
     minus: pathHelpers.minus,
-    star: pathHelpers.star
+    star: pathHelpers.star,
+    cross: pathHelpers.cross
   };
   const symbolFunction =
     typeof pathFunctions[symbol] === "function" ? pathFunctions[symbol] : pathFunctions.circle;
@@ -75,6 +76,7 @@ Point.propTypes = {
   symbol: PropTypes.oneOfType([
     PropTypes.oneOf([
       "circle",
+      "cross",
       "diamond",
       "plus",
       "minus",

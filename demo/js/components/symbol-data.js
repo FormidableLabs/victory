@@ -61,6 +61,15 @@ const symbolData = [
     label: "triangleUp",
     fill: "red",
     opacity: 0.8
+  },
+  {
+    x: 8,
+    y: 8,
+    size: 8,
+    symbol: "cross",
+    label: "cross",
+    fill: "red",
+    opacity: 0.8
   }
 ];
 
