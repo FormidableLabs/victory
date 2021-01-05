@@ -1,5 +1,9 @@
 # Victory Changelog
 
+## 35.4.6 (2021-01-05)
+
+-[#1767](https://github.com/FormidableLabs/victory/pull/1767) - Adds support for `rx` and `ry` props on the `Background` primitive component. Thanks @NgoKnows!
+
 ## 35.4.5 (2021-01-04)
 
 - [#1765](https://github.com/FormidableLabs/victory/pull/1765) - Adds "cross" symbol for `VictoryScatter` and the `Point` primitive.
