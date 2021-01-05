@@ -37,6 +37,8 @@ const Background = (props) => {
         shapeRendering: props.shapeRendering,
         x: props.x,
         y: props.y,
+        rx: props.rx,
+        ry: props.ry,
         width: props.width,
         height: props.height,
         className: props.className
