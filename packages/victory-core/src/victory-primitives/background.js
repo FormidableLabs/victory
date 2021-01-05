@@ -50,6 +50,8 @@ Background.propTypes = {
   circleComponent: PropTypes.element,
   height: PropTypes.number,
   rectComponent: PropTypes.element,
+  rx: PropTypes.number,
+  ry: PropTypes.number,
   width: PropTypes.number,
   x: PropTypes.number,
   y: PropTypes.number
