@@ -533,7 +533,7 @@ _default (provided by default theme):_ See [grayscale theme][] for more detail
 
 `type: function || options`
 
-The `symbol` prop determines which symbol should be drawn to represent data points. Options are: "circle", "diamond", "plus", "minus", "square", "star", "triangleDown", "triangleUp". When this prop is given as a function, it will be evaluated for each point with the props corresponding to that point. If no `symbol` prop is specified, a circle will be rendered. `symbol` may also be set directly on each data object.
+The `symbol` prop determines which symbol should be drawn to represent data points. Options are: "circle", "cross", "diamond", "plus", "minus", "square", "star", "triangleDown", "triangleUp". When this prop is given as a function, it will be evaluated for each point with the props corresponding to that point. If no `symbol` prop is specified, a circle will be rendered. `symbol` may also be set directly on each data object.
 
 _default:_ `symbol="circle"`
 
