@@ -176,6 +176,8 @@ The `Background` component is used to render an SVG background on VictoryChart. 
 - `polar` _boolean_ a flag specifying whether the component is part of a polar chart
 - `rectComponent` _element_ the rendered rect element _default_ `<Rect/>`
 - `role` _string_ the aria role to assign to the element
+- `rx` _number_ the x radius of the rendered `<rect/>` element
+- `ry` _number_ the y radius of the rendered `<rect/>` element
 - `scale` _object_ the x and y scale of the parent chart with `domain` and `range` applied
 - `shapeRendering` _string_ the shape rendering attribute to apply to the rendered path
 - `style` _object_ the styles to apply to the rendered element
@@ -381,7 +383,7 @@ _note_ `Box` also exported as `Border`
 - `shapeRendering` _string_ the shape rendering attribute to apply to the rendered path
 - `size` _number or function_ the size of the point. When this prop is given as a function, it will be called with the rest of the props supplied to `Point`.
 - `style` _object_ the styles to apply to the rendered element
-- `symbol` _"circle", "diamond", "plus", "minus", "square", "star", "triangleDown", "triangleUp"_ which symbol the point should render. This prop may also be given as a function that returns one of the above options. When this prop is given as a function, it will be called with the rest of the props supplied to `Point`.
+- `symbol` _"circle", "cross", "diamond", "plus", "minus", "square", "star", "triangleDown", "triangleUp"_ which symbol the point should render. This prop may also be given as a function that returns one of the above options. When this prop is given as a function, it will be called with the rest of the props supplied to `Point`.
 - `tabIndex` _number or function_ number will be applied to the rendered path. When this prop is given as a function it will be called with the rest of the props supplied to `Point`
 - `transform` _string_ a transform that will be supplied to elements this component renders
 - `x` _number_ the x coordinate of the center of the point
