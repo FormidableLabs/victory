@@ -124,6 +124,7 @@ export default class VictoryContainer extends React.Component {
     } = props;
     const children = this.getChildren(props);
     const dimensions = responsive ? { width: "100%", height: "100%" } : { width, height };
+    const portalDimensions = responsive ? { width: "100%", height: "auto" } : { width, height };
     const divStyle = assign(
       { pointerEvents: "none", touchAction: "none", position: "relative" },
       dimensions
@@ -133,7 +134,7 @@ export default class VictoryContainer extends React.Component {
       dimensions
     );
     const svgStyle = assign({ pointerEvents: "all" }, dimensions);
-    const portalSvgStyle = assign({ overflow: "visible" }, dimensions);
+    const portalSvgStyle = assign({ overflow: "visible" }, portalDimensions);
     const portalProps = {
       width,
       height,
