@@ -146,6 +146,14 @@ with cursors appropriate to their orientation.
 
 _default:_ `handleStyle={{stroke: "transparent", fill: "transparent"}}
 
+## handleWidth
+
+`type: number`
+
+The `handleWidth` prop specifies the size of the rendered handle component in pixels. This prop will determine the width of "left" and "right" handles and the height of "top" and "bottom" handles.
+
+_default:_ `handleWidth={8}`
+
 ## onBrushCleared
 
 `type: function`
