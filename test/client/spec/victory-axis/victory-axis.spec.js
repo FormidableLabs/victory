@@ -10,7 +10,7 @@ import { omit } from "lodash";
 import { shallow, mount } from "enzyme";
 import SvgTestHelper from "../svg-test-helper";
 import { VictoryAxis } from "packages/victory-axis/src/index";
-import { VictoryLabel } from "packages/victory-core/src/index";
+import { VictoryLabel, LineSegment } from "packages/victory-core/src/index";
 import { TextSize } from "packages/victory-core";
 
 describe("components/victory-axis", () => {
@@ -32,7 +32,13 @@ describe("components/victory-axis", () => {
     it("renders the appropriate number of ticks", () => {
       const tickValues = [1, 2, 3];
       const style = { ticks: { stroke: "black" } };
-      const wrapper = shallow(<VictoryAxis tickValues={tickValues} style={style} />);
+      const wrapper = shallow(
+        <VictoryAxis
+          tickValues={tickValues}
+          style={style}
+          tickComponent={<LineSegment type="tick" />}
+        />
+      );
       const ticks = wrapper.find('[type="tick"]');
       expect(ticks.length).to.equal(tickValues.length);
     });
@@ -40,7 +46,13 @@ describe("components/victory-axis", () => {
     it("does not render invisible ticks", () => {
       const tickValues = [1, 2, 3];
       const style = { ticks: { stroke: "none" } };
-      const wrapper = shallow(<VictoryAxis tickValues={tickValues} style={style} />);
+      const wrapper = shallow(
+        <VictoryAxis
+          tickValues={tickValues}
+          style={style}
+          tickComponent={<LineSegment type="tick" />}
+        />
+      );
       const ticks = wrapper.find('[type="tick"]');
       expect(ticks.length).to.equal(0);
     });
@@ -60,6 +72,7 @@ describe("components/victory-axis", () => {
           ]}
           tickValues={tickValues}
           style={style}
+          tickComponent={<LineSegment type="tick" />}
         />
       );
       const ticks = wrapper.find('[type="tick"]');
@@ -67,13 +80,13 @@ describe("components/victory-axis", () => {
     });
 
     it("renders ticks as lines", () => {
-      const wrapper = mount(<VictoryAxis />);
+      const wrapper = mount(<VictoryAxis axisComponent={<LineSegment type="axis" />} />);
       const ticks = wrapper.find('[type="axis"]');
       ticks.forEach(SvgTestHelper.expectIsALine);
     });
 
     it("renders a line", () => {
-      const wrapper = mount(<VictoryAxis />);
+      const wrapper = mount(<VictoryAxis axisComponent={<LineSegment type="axis" />} />);
       const line = wrapper.find('[type="axis"]');
       SvgTestHelper.expectIsALine(line);
     });
@@ -112,14 +125,16 @@ describe("components/victory-axis", () => {
   describe("dependentAxis prop", () => {
     it("renders a horizontal axis by default", () => {
       const props = { padding: 50, width: 300 };
-      const wrapper = mount(<VictoryAxis {...props} />);
+      const wrapper = mount(<VictoryAxis {...props} axisComponent={<LineSegment type="axis" />} />);
       const line = wrapper.find('[type="axis"]');
       expect(SvgTestHelper.isHorizontalAxis(line, props)).to.equal(true);
     });
 
     it("renders a vertical axis if specified", () => {
       const props = { padding: 50, height: 300 };
-      const wrapper = mount(<VictoryAxis dependentAxis {...props} />);
+      const wrapper = mount(
+        <VictoryAxis dependentAxis {...props} axisComponent={<LineSegment type="axis" />} />
+      );
       const line = wrapper.find('[type="axis"]');
       expect(SvgTestHelper.isVerticalAxis(line, props)).to.equal(true);
     });
@@ -155,6 +170,7 @@ describe("components/victory-axis", () => {
               eventHandlers: { onClick: clickHandler }
             }
           ]}
+          axisComponent={<LineSegment type="axis" />}
         />
       );
       const Data = wrapper.find('[type="axis"]');
@@ -189,6 +205,7 @@ describe("components/victory-axis", () => {
               ticks: { stroke: "black" },
               tickLabels: { padding: 0 }
             }}
+            tickComponent={<LineSegment type="tick" />}
           />
         );
         expect(wrapper.find('[type="tick"]').length).to.equal(3);
@@ -206,7 +223,12 @@ describe("components/victory-axis", () => {
       it("renders the appropriate number of ticks with default options", () => {
         const style = { ticks: { stroke: "black" } };
         const wrapper = shallow(
-          <VictoryAxis tickValues={["1", "2", "3"]} style={style} width={10} />
+          <VictoryAxis
+            tickValues={["1", "2", "3"]}
+            style={style}
+            width={10}
+            tickComponent={<LineSegment type="tick" />}
+          />
         );
         expect(wrapper.find('[type="tick"]').length).to.equal(3);
       });
@@ -220,6 +242,7 @@ describe("components/victory-axis", () => {
               ticks: { stroke: "black" },
               tickLabels: { padding: 0 }
             }}
+            tickComponent={<LineSegment type="tick" />}
           />
         );
         expect(wrapper.find('[type="tick"]').length).to.equal(2);
@@ -272,6 +295,7 @@ describe("components/victory-axis", () => {
               ticks: { stroke: "black" },
               tickLabels: { padding: 10 }
             }}
+            tickComponent={<LineSegment type="tick" />}
           />
         );
         expect(wrapper.find('[type="tick"]').length).to.equal(2);
@@ -287,6 +311,7 @@ describe("components/victory-axis", () => {
               ticks: { stroke: "black" },
               tickLabels: { padding: { top: 10 } }
             }}
+            tickComponent={<LineSegment type="tick" />}
           />
         );
         expect(wrapper.find('[type="tick"]').length).to.equal(2);
