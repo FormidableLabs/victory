@@ -112,11 +112,11 @@ class VictoryAxis extends React.Component {
   };
 
   static defaultProps = {
-    axisComponent: <LineSegment type={"axis"} />,
+    axisComponent: <LineSegment />,
     axisLabelComponent: <VictoryLabel />,
     tickLabelComponent: <VictoryLabel />,
-    tickComponent: <LineSegment type={"tick"} />,
-    gridComponent: <LineSegment type={"grid"} />,
+    tickComponent: <LineSegment />,
+    gridComponent: <LineSegment />,
     standalone: true,
     theme: VictoryTheme.grayscale,
     containerComponent: <VictoryContainer />,

@@ -109,19 +109,19 @@ class VictoryPolarAxis extends React.Component {
   };
 
   static defaultProps = {
-    axisComponent: <LineSegment type={"axis"} />,
+    axisComponent: <LineSegment />,
     axisLabelComponent: <VictoryLabel />,
-    circularAxisComponent: <Arc type={"axis"} />,
-    circularGridComponent: <Arc type={"grid"} />,
+    circularAxisComponent: <Arc />,
+    circularGridComponent: <Arc />,
     containerComponent: <VictoryContainer />,
     endAngle: 360,
-    gridComponent: <LineSegment type={"grid"} />,
+    gridComponent: <LineSegment />,
     groupComponent: <g role="presentation" />,
     labelPlacement: "parallel",
     startAngle: 0,
     standalone: true,
     theme: VictoryTheme.grayscale,
-    tickComponent: <LineSegment type={"tick"} />,
+    tickComponent: <LineSegment />,
     tickLabelComponent: <VictoryLabel />
   };
 

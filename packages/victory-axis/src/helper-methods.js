@@ -92,7 +92,6 @@ const getTickLabelProps = (layout, style, anchors, datum, text) => {
 const getGridProps = (layout, style, datum) => {
   const { edge, transform } = layout;
   return {
-    type: "grid",
     x1: transform.x,
     y1: transform.y,
     x2: edge.x + transform.x,
@@ -106,7 +105,6 @@ const getAxisProps = (modifiedProps, calculatedValues, globalTransform) => {
   const { style, padding, isVertical } = calculatedValues;
   const { width, height } = modifiedProps;
   return {
-    type: "axis",
     style: style.axis,
     x1: isVertical ? globalTransform.x : padding.left + globalTransform.x,
     x2: isVertical ? globalTransform.x : width - padding.right + globalTransform.x,
