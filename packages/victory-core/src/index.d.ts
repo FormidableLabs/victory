@@ -812,7 +812,7 @@ export class LineSegment extends React.Component<LineSegmentProps> {}
 
 export interface PointProps extends VictoryCommonPrimitiveProps {
   datum?: any;
-  getPath?: (props: PointProps) => void;
+  getPath?: (x: number, y: number, size: number) => string;
   pathComponent?: React.ReactElement;
   size?: number | Function;
   symbol?: ScatterSymbolType | Function;
