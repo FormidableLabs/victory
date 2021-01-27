@@ -1,5 +1,10 @@
 # Victory Changelog
 
+## 35.4.7 (2021-01-26)
+
+- [#1780](https://github.com/FormidableLabs/victory/pull/1780) - Remove unused `type` prop from primitive components used by `VictoryAxis` and `VictoryPolarAxis`
+- [#1782](https://github.com/FormidableLabs/victory/pull/1782) - Fix type definition for the `getPath` prop used by the `Point` primitive. Thanks @ASmartLynx!
+
 ## 35.4.6 (2021-01-05)
 
 -[#1767](https://github.com/FormidableLabs/victory/pull/1767) - Adds support for `rx` and `ry` props on the `Background` primitive component. Thanks @NgoKnows!
