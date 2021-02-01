@@ -1,5 +1,9 @@
 # Victory Changelog
 
+## 35.4.8 (2021-02-01)
+
+-[#1784](https://github.com/FormidableLabs/victory/pull/1784) - - Add more font widths for the textsize util. Thanks @eatyourpeas!
+
 ## 35.4.7 (2021-01-26)
 
 - [#1780](https://github.com/FormidableLabs/victory/pull/1780) - Remove unused `type` prop from primitive components used by `VictoryAxis` and `VictoryPolarAxis`
