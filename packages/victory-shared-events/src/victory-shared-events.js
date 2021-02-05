@@ -191,7 +191,11 @@ export default class VictorySharedEvents extends React.Component {
           const names = childNames.slice(index, index + newChildren.length);
           const results = React.cloneElement(child, child.props, alterChildren(newChildren, names));
           return memo.concat(results);
-        } else if (child.type && isFunction(child.type.getBaseProps)) {
+        } else if (
+          childNames[index] !== "parent" &&
+          child.type &&
+          isFunction(child.type.getBaseProps)
+        ) {
           const name = child.props.name || childNames[index];
           const childEvents =
             Array.isArray(events) &&
