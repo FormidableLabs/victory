@@ -1,5 +1,9 @@
 # Victory Changelog
 
+## 35.4.9 (2021-02-12)
+
+- [#1789](https://github.com/FormidableLabs/victory/pull/1789) - Skip the parent namespace when caching event state in `VictorySharedEvents`. Thanks @the-kwisatz-haderach!
+
 ## 35.4.8 (2021-02-01)
 
 -[#1784](https://github.com/FormidableLabs/victory/pull/1784) - - Add more font widths for the textsize util. Thanks @eatyourpeas!
