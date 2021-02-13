@@ -1,6 +1,6 @@
 {
   "name": "victory-chart",
-  "version": "35.4.8",
+  "version": "35.4.9",
   "description": "Chart Component for Victory",
   "keywords": [
     "data visualization",
@@ -25,7 +25,7 @@
     "victory-axis": "^35.4.8",
     "victory-core": "^35.4.8",
     "victory-polar-axis": "^35.4.8",
-    "victory-shared-events": "^35.4.8"
+    "victory-shared-events": "^35.4.9"
   },
   "scripts": {
     "version": "nps build-libs && nps build-dists"

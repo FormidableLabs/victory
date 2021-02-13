@@ -1,6 +1,6 @@
 {
   "name": "victory-stack",
-  "version": "35.4.8",
+  "version": "35.4.9",
   "description": "Stack Layout Component for Victory",
   "keywords": [
     "data visualization",
@@ -23,7 +23,7 @@
     "prop-types": "^15.5.8",
     "react-fast-compare": "^2.0.0",
     "victory-core": "^35.4.8",
-    "victory-shared-events": "^35.4.8"
+    "victory-shared-events": "^35.4.9"
   },
   "scripts": {
     "version": "nps build-libs && nps build-dists"
