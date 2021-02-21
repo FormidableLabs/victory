@@ -19,7 +19,7 @@ export default ({ Html, Head, Body, children }) => (
       {/* CodeMirror for Component Playgrounds */}
       <link
         rel="stylesheet"
-        href="https://cdnjs.cloudflare.com/ajax/libs/codemirror/5.0.0/codemirror.min.css"
+        href="https://cdnjs.cloudflare.com/ajax/libs/codemirror/5.59.2/codemirror.min.css"
       />
     </Head>
     <title>Victory</title>
