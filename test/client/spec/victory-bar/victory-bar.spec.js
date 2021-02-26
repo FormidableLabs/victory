@@ -137,8 +137,14 @@ describe("components/victory-bar", () => {
 
     it("attaches an event to data", () => {
       const clickHandler = sinon.spy();
+      const data = [
+        { x: 0, y: 0, label: "0" },
+        { x: 1, y: 1, label: "1" },
+        { x: 2, y: 2, label: "2" }
+      ];
       const wrapper = mount(
         <VictoryBar
+          data={data}
           events={[
             {
               target: "data",
@@ -156,6 +162,10 @@ describe("components/victory-bar", () => {
         expect(omit(clickHandler.args[index][1], ["events", "key"])).to.eql(
           omit(initialProps, ["events", "key"])
         );
+        // It should also include the datum
+        expect(clickHandler.args[index][1].datum).to.include({
+          ...data[index]
+        });
         expect(`${clickHandler.args[index][2]}`).to.eql(`${index}`);
       });
     });
