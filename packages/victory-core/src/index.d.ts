@@ -531,10 +531,16 @@ export interface EventPropTypeInterface<TTarget, TEventKey> {
   eventHandlers: {
     [key: string]:
       | {
-          (event: React.SyntheticEvent<any>): EventCallbackInterface<TTarget, TEventKey>;
+          (event: React.SyntheticEvent<any>, props?: any): EventCallbackInterface<
+            TTarget,
+            TEventKey
+          >;
         }
       | {
-          (event: React.SyntheticEvent<any>): EventCallbackInterface<TTarget, TEventKey>[];
+          (event: React.SyntheticEvent<any>, props?: any): EventCallbackInterface<
+            TTarget,
+            TEventKey
+          >[];
         };
   };
 }
