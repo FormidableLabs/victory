@@ -1,5 +1,9 @@
 # Victory Changelog
 
+## 35.4.10 (2021-03-01)
+
+- [#1799](https://github.com/FormidableLabs/victory/pull/1799) - Improve event prop interface. Thanks @loganwedwards!
+
 ## 35.4.9 (2021-02-12)
 
 - [#1789](https://github.com/FormidableLabs/victory/pull/1789) - Skip the parent namespace when caching event state in `VictorySharedEvents`. Thanks @the-kwisatz-haderach!
