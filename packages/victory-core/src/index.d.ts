@@ -212,7 +212,7 @@ export interface VictoryLabelProps {
   direction?: string;
   events?: React.DOMAttributes<any>;
   groupComponent?: React.ReactElement;
-  id?: string | number | Function;
+  id?: StringOrNumberOrCallback;
   inline?: boolean;
   labelPlacement?: LabelOrientationType;
   lineHeight?: StringOrNumberOrCallback | (string | number)[];
