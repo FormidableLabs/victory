@@ -1,5 +1,9 @@
 # Victory Changelog
 
+## 35.4.11 (2021-03-04)
+
+- [#1800](https://github.com/FormidableLabs/victory/pull/1800) - Add missing `id` prop to `VictoryLabelProps` interface. Thanks @nielsboecker!
+
 ## 35.4.10 (2021-03-01)
 
 - [#1799](https://github.com/FormidableLabs/victory/pull/1799) - Improve event prop interface. Thanks @loganwedwards!
