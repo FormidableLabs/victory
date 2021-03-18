@@ -12,6 +12,7 @@ export interface VictoryBrushContainerProps extends VictoryContainerProps {
   disable?: boolean;
   handleComponent?: React.ReactElement;
   handleStyle?: React.CSSProperties;
+  handleWidth?: number;
   onBrushCleared?: (
     domain: { x: DomainTuple; y: DomainTuple },
     props: VictoryBrushContainerProps
