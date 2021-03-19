@@ -329,7 +329,7 @@ export default class VictoryBrushContainerDemo extends React.Component<
                 brushDomain={{ y: [-3, 3] }}
                 brushComponent={<rect style={{ fill: "teal" }} />}
                 handleWidth={1}
-                handleStyle={{stroke: "black", fill: "black"}}
+                handleStyle={{ stroke: "black", fill: "black" }}
               />
             }
             data={[
