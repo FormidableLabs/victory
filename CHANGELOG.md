@@ -1,5 +1,9 @@
 # Victory Changelog
 
+## 35.4.12 (2021-03-19)
+
+- [#1807](https://github.com/FormidableLabs/victory/pull/1807) - Add missing `handleWidth` type to `VictoryBrushContainer` interface. Thanks @aknaut!
+
 ## 35.4.11 (2021-03-04)
 
 - [#1800](https://github.com/FormidableLabs/victory/pull/1800) - Add missing `id` prop to `VictoryLabelProps` interface. Thanks @nielsboecker!
