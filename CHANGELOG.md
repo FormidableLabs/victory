@@ -1,5 +1,9 @@
 # Victory Changelog
 
+## 35.4.13 (2021-04-02)
+
+- [#1812](https://github.com/FormidableLabs/victory/pull/1812) - Update `VictoryTooltip` types to allow users to set single dimensions for the `center` prop
+
 ## 35.4.12 (2021-03-19)
 
 - [#1807](https://github.com/FormidableLabs/victory/pull/1807) - Add missing `handleWidth` type to `VictoryBrushContainer` interface. Thanks @aknaut!
