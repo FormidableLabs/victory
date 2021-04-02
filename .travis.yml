@@ -4,8 +4,8 @@ cache: yarn
 addons:
   chrome: stable
 node_js:
-  - "10"
   - "12"
+  - "14"
 sudo: false
 branches:
   only:
@@ -58,7 +58,7 @@ after_success:
 jobs:
   include:
     - stage: documentation
-      node_js: '12'
+      node_js: '14'
       script:
         # Only do the docs build/deploy if docs changes.
         # We early terminate the entire job which should also skip `deploy` tasks.
