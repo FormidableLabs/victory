@@ -17,7 +17,7 @@ export interface VictoryTooltipProps extends VictoryLabelableProps {
   activateData?: boolean;
   activePoints?: any[];
   angle?: string | number;
-  center?: { x: number; y: number };
+  center?: { x: number | undefined; y: number | undefined };
   centerOffset?: {
     x?: NumberOrCallback;
     y?: NumberOrCallback;
