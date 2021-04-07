@@ -84,7 +84,9 @@ const Helpers = {
   },
 
   getDefaultBrushArea(targetProps, cachedDomain, evt) {
-    const { defaultBrushArea, domain, fullDomain, scale, horizontal } = targetProps;
+    const { domain, fullDomain, scale, horizontal, allowResize } = targetProps;
+    const defaultBrushArea =
+      !allowResize && !targetProps.defaultBrushArea ? "move" : targetProps.defaultBrushArea;
     if (defaultBrushArea === "none") {
       return this.getMinimumDomain();
     } else if (defaultBrushArea === "disable") {
@@ -186,7 +188,8 @@ const Helpers = {
       allowDraw
     } = targetProps;
     const brushDimension = this.getDimension(targetProps);
-
+    const defaultBrushArea =
+      !allowResize && !targetProps.defaultBrushArea ? "move" : targetProps.defaultBrushArea;
     // Don't trigger events for static brushes
     if (!allowResize && !allowDrag) {
       return {};
@@ -254,7 +257,7 @@ const Helpers = {
             {
               target: "parent",
               mutation: () => ({
-                isSelecting: allowResize,
+                isSelecting: allowResize || defaultBrushArea === "move",
                 domainBox,
                 fullDomainBox,
                 parentSVG,
@@ -363,10 +366,10 @@ const Helpers = {
       onBrushCleared,
       currentDomain,
       allowResize,
-      allowDrag,
-      defaultBrushArea
+      allowDrag
     } = targetProps;
-
+    const defaultBrushArea =
+      !allowResize && !targetProps.defaultBrushArea ? "move" : targetProps.defaultBrushArea;
     const defaultBrushHasArea = defaultBrushArea !== undefined && defaultBrushArea !== "none";
     const mutatedProps = { isPanning: false, isSelecting: false };
 
