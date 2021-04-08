@@ -1,5 +1,9 @@
 # Victory Changelog
 
+## 35.5.0 (2021-04-07)
+
+- [#1815](https://github.com/FormidableLabs/victory/pull/1815) - Fix a bug affecting `VictoryBrushContainer` with `allowResize` set to false, and use `defaultBrushArea="move"` by default when `allowResize` is set to false.
+
 ## 35.4.13 (2021-04-02)
 
 - [#1812](https://github.com/FormidableLabs/victory/pull/1812) - Update `VictoryTooltip` types to allow users to set single dimensions for the `center` prop
