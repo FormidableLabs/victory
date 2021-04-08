@@ -1,5 +1,10 @@
 export default {
   data: [
+    { version: "35.5.0", date: "2021-04-07" },
+    { version: "35.4.13", date: "2021-04-02" },
+    { version: "35.4.12", date: "2021-03-19" },
+    { version: "35.4.11", date: "2021-03-04" },
+    { version: "35.4.10", date: "2021-03-01" },
     { version: "35.4.9", date: "2021-02-12" },
     { version: "35.4.8", date: "2021-02-01" },
     { version: "35.4.7", date: "2021-01-26" },
