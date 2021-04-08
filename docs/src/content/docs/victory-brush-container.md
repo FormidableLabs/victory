@@ -49,13 +49,61 @@ The optional `allowDrag` prop accepts a boolean that enables dragging behavior f
 
 _default:_ `allowDrag={true}`
 
+```playground
+<VictoryChart
+  containerComponent={
+    <VictoryBrushContainer
+      allowDrag={false}
+      brushDomain={{x: [0.1, 0.3]}}
+    />
+  }
+>
+  <VictoryLine />
+</VictoryChart>
+```
+
+## allowDraw
+
+`type: boolean`
+
+The optional `allowDraw` prop accepts a boolean that enables drawing new brush areas. When this prop is set to false, existing brush areas may still be resized or dragged, but clicking outside of existing brush areas will not trigger the creation of new brush areas.
+
+_default:_ `allowDraw={true}`
+
+```playground
+<VictoryChart
+  containerComponent={
+    <VictoryBrushContainer
+      allowDraw={false}
+      brushDomain={{x: [0.1, 0.3]}}
+    />
+  }
+>
+  <VictoryLine />
+</VictoryChart>
+```
+
 ## allowResize
 
 `type: boolean`
 
-The optional `allowResize` prop accepts a boolean that enables resizing the highlighted brush area. Dragging will still be enabled when the `allowResize` prop is set to false, but the dimensions of the brush area will be fixed.
+The optional `allowResize` prop accepts a boolean that enables resizing the highlighted brush area. Dragging will still be enabled when the `allowResize` prop is set to false, but the dimensions of the brush area will be fixed. By default, when `allowResize` is set to false, clicking outside of the brush area will center the brush on the user's mouse position without resizing it. This behavior can be controlled via the [defaultBrushArea prop](/docs/victory-brush-container/#defaultbrusharea).
 
 _default:_ `allowResize={true}`
+
+
+```playground
+<VictoryChart
+  containerComponent={
+    <VictoryBrushContainer
+      allowResize={false}
+      brushDomain={{x: [0.1, 0.3]}}
+    />
+  }
+>
+  <VictoryLine />
+</VictoryChart>
+```
 
 ## brushComponent
 
