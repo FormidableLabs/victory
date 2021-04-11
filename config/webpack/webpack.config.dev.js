@@ -1,6 +1,5 @@
 "use strict";
 
-var webpack = require("webpack");
 var config = require("./webpack.config");
 var LodashModuleReplacementPlugin = require("lodash-webpack-plugin");
 
@@ -9,6 +8,7 @@ var LodashModuleReplacementPlugin = require("lodash-webpack-plugin");
 config.output.filename = config.output.filename.replace(/\.min\.js$/, ".js");
 config.output.pathinfo = true;
 config.mode = "development";
+config.devtool = false;
 config.plugins = [
   new LodashModuleReplacementPlugin({
     currying: true,
@@ -16,9 +16,6 @@ config.plugins = [
     paths: true,
     placeholders: true,
     shorthands: true
-  }),
-  new webpack.SourceMapDevToolPlugin({
-    filename: "[file].map"
   })
 ];
 
