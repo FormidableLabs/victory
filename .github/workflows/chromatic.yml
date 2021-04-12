@@ -1,20 +1,16 @@
 name: CI
 
 # Runs build and test on:
-#   every pull request with main branch as the base that has a change in a file in the stories or packages directories and with the "ready" label
+#   every pull request when the "ready" label is added
 on:
   pull_request:
-    branches:
-      - main
-    paths:
-      - 'stories/**'
-      - 'packages/**'
     types:
       [labeled]
 
 jobs:
   chromatic:
     name: Run Chromatic Tests
+    if: ${{ github.event.label.name == 'ready' }}
     runs-on: ubuntu-latest
     strategy:
       matrix:
@@ -43,7 +39,6 @@ jobs:
         run: yarn --prefer-offline --frozen-lockfile --non-interactive
 
       - name: Check with Chromatic ${{ matrix.node-version }}
-        if: ${{ github.event.label.name == 'ready' }}
         run: yarn chromatic-ci
 
       - name: Remove Yarn Config to Ignore Engines
