@@ -1,25 +1,21 @@
 name: CI
 
-# Runs build and test on:
+# Runs chromatic on:
 #   every pull request when the "ready" label is added
 on:
   pull_request:
-    types:
-      [labeled]
+    types: [labeled]
 
 jobs:
   chromatic:
     name: Run Chromatic Tests
     if: ${{ github.event.label.name == 'ready' }}
     runs-on: ubuntu-latest
-    strategy:
-      matrix:
-        node-version: [15.x]
     steps:
       - uses: actions/checkout@v2
       - uses: actions/setup-node@v2
         with:
-          node-version: ${{ matrix.node-version }}
+          node-version: '15'
 
       - name: Get Yarn Cache Directory Path
         id: cache-dir-path
@@ -30,15 +26,15 @@ jobs:
         id: cache
         with:
           path: ${{ steps.cache-dir-path.outputs.dir }}
-          key: ${{ runner.os }}-yarn-${{ matrix.node-version }}-${{ hashFiles('**/yarn.lock') }}
+          key: ${{ runner.os }}-yarn-${{ hashFiles('**/yarn.lock') }}
 
       - name: Set Yarn to Ignore Engines
         run: yarn config set ignore-engines true
 
-      - name: Installation ${{ matrix.node-version }}
+      - name: Installation
         run: yarn --prefer-offline --frozen-lockfile --non-interactive
 
-      - name: Check with Chromatic ${{ matrix.node-version }}
+      - name: Check with Chromatic
         run: yarn chromatic-ci
 
       - name: Remove Yarn Config to Ignore Engines
