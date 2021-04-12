@@ -1,5 +1,9 @@
 # Victory Changelog
 
+## 35.5.1 (2021-04-12)
+
+- [#1819](https://github.com/FormidableLabs/victory/pull/1819) - Improve built `dist` output
+
 ## 35.5.0 (2021-04-07)
 
 - [#1815](https://github.com/FormidableLabs/victory/pull/1815) - Fix a bug affecting `VictoryBrushContainer` with `allowResize` set to false, and use `defaultBrushArea="move"` by default when `allowResize` is set to false.

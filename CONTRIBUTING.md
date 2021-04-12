@@ -112,7 +112,6 @@ You will be prompted to select an appropriate version before continuing. Lerna w
 
 Some of our scripts are intended to run only in the context of individual packages. If you are developing scripts and need to run them individually from the root directory, you can do so with `lerna exec --scope <PACKAGE_NAME> <SCRIPT>`. For example, building `dist` for each package is typically done only when versioning packages, and is run by Lerna for each package, when it runs the `version` script for that package. To test building `dist` for only `victory-core`, run `lerna exec --scope victory-core nps build-dists`
 
-
 ## Contributor Covenant Code of Conduct
 
 ### Our Pledge
