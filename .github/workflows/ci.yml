@@ -18,7 +18,7 @@ on:
       - '!docs/**'
 
 jobs:
-  build:
+  test:
     name: Check and build codebase
     runs-on: ubuntu-latest
     strategy:
@@ -39,7 +39,7 @@ jobs:
         id: cache
         with:
           path: ${{ steps.cache-dir-path.outputs.dir }}
-          key: ${{ runner.os }}-yarn-${{ matrix.node-version }}-${{ hashFiles('./yarn.lock') }}
+          key: ${{ runner.os }}-yarn-${{ matrix.node-version }}-${{ hashFiles('**/yarn.lock') }}
 
       - name: Set Yarn to Ignore Engines
         run: yarn config set ignore-engines true
@@ -55,8 +55,9 @@ jobs:
         with:
           paths: packages stories
 
+      # Due to rate-limiting, run chromatic tests only if there are changes in the right folders and the node version is 15.x
       - name: Check with Chromatic ${{ matrix.node-version }}
-        if: steps.chromatic-changes.outputs.changed == 'true'
+        if: steps.chromatic-changes.outputs.changed == 'true' && matrix.node-version == '15.x'
         run: yarn chromatic-ci
 
       - name: Remove Yarn Config to Ignore Engines
