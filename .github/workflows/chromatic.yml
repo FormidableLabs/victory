@@ -1,4 +1,4 @@
-name: CI
+name: Chromatic
 
 # Runs chromatic on:
 #   every pull request when the "ready" label is added
