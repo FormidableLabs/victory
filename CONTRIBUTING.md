@@ -8,7 +8,7 @@ Victory is a monorepo built with [Lerna](https://lerna.js.org/) and [Yarn](https
 
 ## `package-scripts.js`
 
-Victory uses [`nps`](https://github.com/kentcdodds/nps) to organize package scripts. Check `package-scripts.js` for the full list of commands.
+Victory uses [`nps`](https://github.com/kentcdodds/nps) to organize package scripts. Check `package-scripts.js` for the full list of commands. Note that some of these commands are intended to be run for individual packages but require common development dependencies. [Use `lerna exec` to run these scripts](#scoped-package-scripts-with-lerna).
 
 ### Requirements
 
@@ -107,6 +107,11 @@ $ lerna publish
 ```
 
 You will be prompted to select an appropriate version before continuing. Lerna will run preversion checks, bump versions in all packages, create git commits, build libs, and publish packages. The whole process takes about 5 minutes. Be patient!
+
+## Scoped package scripts with Lerna
+
+Some of our scripts are intended to run only in the context of individual packages. If you are developing scripts and need to run them individually from the root directory, you can do so with `lerna exec --scope <PACKAGE_NAME> <SCRIPT>`. For example, building `dist` for each package is typically done only when versioning packages, and is run by Lerna for each package, when it runs the `version` script for that package. To test building `dist` for only `victory-core`, run `lerna exec --scope victory-core nps build-dists`
+
 
 ## Contributor Covenant Code of Conduct
 
