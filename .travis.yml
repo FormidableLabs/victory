@@ -40,6 +40,9 @@ before_install:
   # Add `aws` CLI tool for production docs deployment
   - pip install --user awscli
 
+install:
+  - yarn install --frozen-lockfile
+
 script:
   - yarn --version
   - yarn nps check.ci
@@ -51,7 +54,7 @@ script:
     npx -q match-str -i "^(stories\/|packages\/)" -s "$CHANGED_FILES" && \
     { echo "[CHANGES] packages or stories changed."; } || \
     { echo "[NO CHANGES] No package or stories changes."; travis_terminate 0; }
-  - if [[ "${TRAVIS_PULL_REQUEST}" != "false" && "${TRAVIS_NODE_VERSION}" = "10" ]]; then yarn chromatic-ci || echo "Chromatic tests failed. Please investigate"; fi
+  - if [[ "${TRAVIS_PULL_REQUEST}" != "false" && "${TRAVIS_NODE_VERSION}" = "12" ]]; then yarn chromatic-ci || echo "Chromatic tests failed. Please investigate"; fi
 after_success:
   - yarn config delete ignore-engines
 
