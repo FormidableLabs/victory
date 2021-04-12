@@ -1,29 +1,24 @@
 name: CI
 
 # Runs build and test on:
-#   every push to main that has a change in a file not in the docs folder
-#   every pull request with main branch as the base that has a change in a file not in the docs folder
+#   every pull request with main branch as the base that has a change in a file in the stories or packages directories and with the "ready" label
 on:
-  push:
-    branches:
-      - main
-    paths:
-      - '**'
-      - '!docs/**'
   pull_request:
     branches:
       - main
     paths:
-      - '**'
-      - '!docs/**'
+      - 'stories/**'
+      - 'packages/**'
+    types:
+      [labeled]
 
 jobs:
-  test:
-    name: Check and build codebase
+  chromatic:
+    name: Run Chromatic Tests
     runs-on: ubuntu-latest
     strategy:
       matrix:
-        node-version: [12.x, 14.x, 15.x]
+        node-version: [15.x]
     steps:
       - uses: actions/checkout@v2
       - uses: actions/setup-node@v2
@@ -47,8 +42,9 @@ jobs:
       - name: Installation ${{ matrix.node-version }}
         run: yarn --prefer-offline --frozen-lockfile --non-interactive
 
-      - name: Check Code ${{ matrix.node-version }}
-        run: yarn nps check.ci
+      - name: Check with Chromatic ${{ matrix.node-version }}
+        if: ${{ github.event.label.name == 'ready' }}
+        run: yarn chromatic-ci
 
       - name: Remove Yarn Config to Ignore Engines
         run: yarn config delete ignore-engines
