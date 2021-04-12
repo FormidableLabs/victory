@@ -21,6 +21,8 @@ jobs:
   test:
     name: Check and build codebase
     runs-on: ubuntu-latest
+    env:
+      DISPLAY: :0
     strategy:
       matrix:
         node-version: [12.x, 14.x, 15.x]
