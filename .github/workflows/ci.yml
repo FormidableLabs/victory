@@ -19,7 +19,7 @@ on:
 
 jobs:
   test:
-    name: Check and build codebase
+    name: Check Code
     runs-on: ubuntu-latest
     env:
       DISPLAY: :99.0
