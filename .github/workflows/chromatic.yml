@@ -1,15 +1,19 @@
 name: Chromatic
 
 # Runs chromatic on:
-#   every pull request when the "ready" label is added
+#   every pull request where there are changes in stories/ or packages/ and the PR is not in draft mode
 on:
   pull_request:
-    types: [labeled]
+    branches:
+      - main
+    paths:
+      - 'stories/**'
+      - 'packages/**'
 
 jobs:
   chromatic:
     name: Storybook Publish
-    if: ${{ github.event.label.name == 'ready' }}
+    if: github.event.pull_request.draft == false
     runs-on: ubuntu-latest
     steps:
       - uses: actions/checkout@v2
