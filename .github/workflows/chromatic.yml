@@ -38,7 +38,7 @@ jobs:
         run: yarn nps build-package-libs
 
       - name: Run Storybook and Chromatic
-        run: CHROMATIC_APP_CODE=$CHROMATIC_APP_CODE yarn chromatic-ci
+        run: yarn chromatic-ci
 
       - name: Remove Yarn Config to Ignore Engines
         run: yarn config delete ignore-engines
