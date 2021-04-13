@@ -9,6 +9,7 @@ on:
     paths:
       - 'stories/**'
       - 'packages/**'
+    types: [ready_for_review]
 
 jobs:
   chromatic:
