@@ -26,7 +26,7 @@ jobs:
         id: cache
         with:
           path: ${{ steps.cache-dir-path.outputs.dir }}
-          key: ${{ runner.os }}-yarn-${{ hashFiles('**/yarn.lock') }}
+          key: ${{ runner.os }}-yarn-${{ hashFiles('./yarn.lock') }}
 
       - name: Set Yarn to Ignore Engines
         run: yarn config set ignore-engines true
