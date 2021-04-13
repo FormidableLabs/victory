@@ -54,7 +54,7 @@
     "btoa": "^1.2.1",
     "chalk": "^4.1.0",
     "cross-env": "^6.0.3",
-    "formideploy": "^0.3.2",
+    "formideploy": "^0.4.0",
     "github-slugger": "^1.2.1",
     "gray-matter": "^3.1.1",
     "js-yaml": "^3.12.0",

@@ -3821,6 +3821,11 @@ filesize@^3.6.1:
   version "3.6.1"
   resolved "https://registry.yarnpkg.com/filesize/-/filesize-3.6.1.tgz#090bb3ee01b6f801a8a8be99d31710b3422bb317"
 
+filesize@^6.1.0:
+  version "6.2.1"
+  resolved "https://registry.yarnpkg.com/filesize/-/filesize-6.2.1.tgz#e14ee29440d24bc82bca41f4a740d4e0397e79ac"
+  integrity sha512-neMilKeMJQ0zUWuxAciRVhtncuxF/Gkhig4+8FrL4g7ppqN7JEGRb1uZFjVid7OJk7CE3ulZuO7V+nB2WDJW+A==
+
 fill-range@^2.1.0:
   version "2.2.4"
   resolved "https://registry.yarnpkg.com/fill-range/-/fill-range-2.2.4.tgz#eb1e773abb056dcd8df2bfdf6af59b8b3a936565"
@@ -3925,14 +3930,15 @@ formidable-oss-badges@^0.3.4:
   version "0.3.5"
   resolved "https://registry.yarnpkg.com/formidable-oss-badges/-/formidable-oss-badges-0.3.5.tgz#875a81d45cf3db849aece33805992d26ca6df061"
 
-formideploy@^0.3.2:
-  version "0.3.2"
-  resolved "https://registry.yarnpkg.com/formideploy/-/formideploy-0.3.2.tgz#e0d6b19ea919b58ba11ca4f14459827b862aefb8"
-  integrity sha512-SpcRxlAgGby51/7r2EDQwMfRbt542Mp2r04OFXTYfU0KeynVj+xrS60McuNwS/VJWCFRRsOtGYdKGh2cuvnuJQ==
+formideploy@^0.4.0:
+  version "0.4.1"
+  resolved "https://registry.yarnpkg.com/formideploy/-/formideploy-0.4.1.tgz#b6e1df1e668bf3f23d416ce63b35a4e57d948cf2"
+  integrity sha512-z5Litc03eVMSnePen+zbhIUAM8tkADcmbcH/5QtDRyKY25qN2KAKn9no8kvXSx3Fh7gLZajEiNIG8/VWTsjY1A==
   dependencies:
     "@octokit/rest" "^17.8.0"
     chalk "^4.0.0"
     execa "^4.0.1"
+    filesize "^6.1.0"
     markdown-table "^2.0.0"
     serve-handler "^6.1.2"
     strip-ansi "^6.0.0"
