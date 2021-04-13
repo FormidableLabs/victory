@@ -50,7 +50,9 @@ jobs:
         run: yarn --prefer-offline --frozen-lockfile --non-interactive
 
       - name: Check Code ${{ matrix.node-version }}
-        run: yarn nps check.ci
+        uses: GabrielBB/xvfb-action@v1
+        with:
+          run: yarn nps check.ci
 
       - name: Remove Yarn Config to Ignore Engines
         run: yarn config delete ignore-engines
