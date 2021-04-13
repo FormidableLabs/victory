@@ -8,7 +8,7 @@ on:
 
 jobs:
   chromatic:
-    name: Run Chromatic Tests
+    name: Storybook Publish
     if: ${{ github.event.label.name == 'ready' }}
     runs-on: ubuntu-latest
     steps:
@@ -37,7 +37,7 @@ jobs:
       - name: Build Package Libs
         run: yarn nps build-package-libs
 
-      - name: Check with Chromatic
+      - name: Run Storybook and Chromatic
         run: CHROMATIC_APP_CODE=$CHROMATIC_APP_CODE yarn chromatic-ci
 
       - name: Remove Yarn Config to Ignore Engines
