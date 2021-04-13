@@ -25,7 +25,7 @@ const getY0Accessor = (scale) => {
 const getAngleAccessor = (scale) => {
   return (d) => {
     const x = scale.x(d._x1 !== undefined ? d._x1 : d._x);
-    return -1 * x + Math.PI / 2 + 1;
+    return -1 * x + Math.PI / 2;
   };
 };
 
