@@ -37,7 +37,7 @@ Our CI deploys to staging for each PR using surge.sh at the following URL:
 
 `https://formidable-com-victory-staging-${PR_NUMBER}.surge.sh/open-source/victory`
 
-To test things out locally find the `Surge.sh` entry in 1password in the IC vault and make up some pretend values for a PR number in `TRAVIS_PULL_REQUEST`:
+To test things out locally find the `Surge.sh` entry in 1password in the IC vault and make up some pretend values for a PR number in `FORMIDEPLOY_PULL_REQUEST`:
 
 ```sh
 $ cd docs
@@ -45,7 +45,7 @@ $ yarn clean && \
   yarn build
 $ SURGE_LOGIN=<SNIPPED> \
   SURGE_TOKEN=<SNIPPED> \
-  TRAVIS_PULL_REQUEST=12 \
+  FORMIDEPLOY_PULL_REQUEST=12 \
   yarn deploy:stage
 ```
 
