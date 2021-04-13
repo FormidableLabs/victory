@@ -34,6 +34,9 @@ jobs:
       - name: Installation
         run: yarn --prefer-offline --frozen-lockfile --non-interactive
 
+      - name: Build Package Libs
+        run: yarn nps build-package-libs
+
       - name: Check with Chromatic
         run: yarn chromatic-ci
 
