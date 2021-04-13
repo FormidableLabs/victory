@@ -21,14 +21,11 @@ jobs:
   docs:
     name: Build the docs
     runs-on: ubuntu-latest
-    strategy:
-      matrix:
-        node-version: [14.x]
     steps:
       - uses: actions/checkout@v2
       - uses: actions/setup-node@v2
         with:
-          node-version: ${{ matrix.node-version }}
+          node-version: 14.x
 
       - name: Get Yarn Cache Directory Path
         id: cache-dir-path
@@ -41,13 +38,13 @@ jobs:
           path: ${{ steps.cache-dir-path.outputs.dir }}
           key: ${{ runner.os }}-yarn-${{ hashFiles('./docs/yarn.lock') }}
 
-      - name: Installation ${{ matrix.node-version }}
+      - name: Installation
         run: yarn --prefer-offline --frozen-lockfile --non-interactive
 
-      - name: Clean Code ${{ matrix.node-version }}
+      - name: Clean Code
         run: yarn clean
 
-      - name: Build Docs ${{ matrix.node-version }}
+      - name: Build Docs
         run: yarn build
 
       # deploy to staging if the branch is not main
