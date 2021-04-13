@@ -14,7 +14,7 @@ on:
 jobs:
   chromatic:
     name: Storybook Publish
-    if: github.event.pull_request.draft == false
+    if: github.event.pull_request.draft == false && github.repository == 'FormidableLabs/victory'
     runs-on: ubuntu-latest
     steps:
       - uses: actions/checkout@v2
