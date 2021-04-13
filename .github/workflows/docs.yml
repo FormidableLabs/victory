@@ -9,6 +9,8 @@ defaults:
 #   every pull request with main branch as the base and has a change in the docs folder
 on:
   push:
+    branches:
+      - main
     paths:
       - 'docs/**'
   pull_request:
