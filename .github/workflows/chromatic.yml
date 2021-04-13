@@ -13,6 +13,9 @@ jobs:
     runs-on: ubuntu-latest
     steps:
       - uses: actions/checkout@v2
+        with:
+          fetch-depth: 0
+
       - uses: actions/setup-node@v2
         with:
           node-version: 14.x
@@ -37,8 +40,14 @@ jobs:
       - name: Build Package Libs
         run: yarn nps build-package-libs
 
-      - name: Run Storybook and Chromatic
-        run: yarn chromatic-ci
+      - name: Build Storybook
+        run: yarn build-storybook
+
+      - name: Publish to Chromatic
+        uses: chromaui/action@v1
+        with:
+          token: ${{ secrets.GITHUB_TOKEN }}
+          projectToken: ${{ secrets.CHROMATIC_PROJECT_TOKEN }}
 
       - name: Remove Yarn Config to Ignore Engines
         run: yarn config delete ignore-engines
