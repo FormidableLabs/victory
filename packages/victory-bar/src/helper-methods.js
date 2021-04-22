@@ -17,8 +17,22 @@ const getBarPosition = (props, datum) => {
 
     return datum[`_${axis}`] instanceof Date ? new Date(defaultMin) : defaultMin;
   };
-  const _y0 = datum._y0 !== undefined ? datum._y0 : getDefaultMin("y");
-  const _x0 = datum._x0 !== undefined ? datum._x0 : getDefaultMin("x");
+
+  const defaultMinY = getDefaultMin("y");
+  const defaultMinX = getDefaultMin("x");
+
+  let _y0 = datum._y0 !== undefined ? datum._y0 : defaultMinY;
+  let _x0 = datum._x0 !== undefined ? datum._x0 : defaultMinX;
+
+  // if minY or minX (minDomain) is greater than the x/y position in the data,
+  // set x/y to the minX/minY, so it doesn't go outside the bounds of the chart
+  if (defaultMinY > datum._y) datum._y = defaultMinY;
+  if (defaultMinY > _y0) _y0 = defaultMinY;
+  if (defaultMinY > datum._y1) datum._y1 = defaultMinY;
+
+  if (defaultMinX > datum._x) datum._x = Scale.getType(props.scale.x) === "log" ? 1 / Number.MAX_SAFE_INTEGER : 0;
+  if (defaultMinX > _x0) _x0 = Scale.getType(props.scale.x) === "log" ? 1 / Number.MAX_SAFE_INTEGER : 0;
+
   return Helpers.scalePoint(props, assign({}, datum, { _y0, _x0 }));
 };
 
