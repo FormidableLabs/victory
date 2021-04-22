@@ -32,7 +32,7 @@ const getBarPosition = (props, datum) => {
 
   if (defaultMinX > Math.abs(datum._x)) datum._x = defaultMinX;
   if (defaultMinX > Math.abs(_x0)) _x0 = defaultMinX;
-
+  if (defaultMinX > Math.abs(datum._x1)) datum._x1 = defaultMinX;
 
   return Helpers.scalePoint(props, assign({}, datum, { _y0, _x0 }));
 };
