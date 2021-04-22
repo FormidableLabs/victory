@@ -24,17 +24,18 @@ const getBarPosition = (props, datum) => {
   let _y0 = datum._y0 !== undefined ? datum._y0 : defaultMinY;
   let _x0 = datum._x0 !== undefined ? datum._x0 : defaultMinX;
 
+  let { _x, _y, _y1, _x1 } = datum;
+
   // if minY or minX (minDomain) is greater than the x/y position in the data,
   // set x/y to the minX/minY, so it doesn't go outside the bounds of the chart
-  if (defaultMinY > Math.abs(datum._y)) datum._y = defaultMinY;
+  if (defaultMinY > Math.abs(_y)) _y = defaultMinY;
   if (defaultMinY > Math.abs(_y0)) _y0 = defaultMinY;
-  if (defaultMinY > Math.abs(datum._y1)) datum._y1 = defaultMinY;
-
-  if (defaultMinX > Math.abs(datum._x)) datum._x = defaultMinX;
+  if (defaultMinY > Math.abs(_y1)) _y1 = defaultMinY;
+  if (defaultMinX > Math.abs(_x)) _x = defaultMinX;
   if (defaultMinX > Math.abs(_x0)) _x0 = defaultMinX;
-  if (defaultMinX > Math.abs(datum._x1)) datum._x1 = defaultMinX;
+  if (defaultMinX > Math.abs(_x1)) _x1 = defaultMinX;
 
-  return Helpers.scalePoint(props, assign({}, datum, { _y0, _x0 }));
+  return Helpers.scalePoint(props, assign({}, datum, { _x, _y, _y0, _x0, _x1, _y1}));
 };
 
 const getCalculatedValues = (props) => {
