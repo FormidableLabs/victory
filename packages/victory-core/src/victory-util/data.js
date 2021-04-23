@@ -91,6 +91,74 @@ function cleanData(dataset, props) {
   });
 }
 
+// This method will remove data points that fall outside of the desired domain (non-continuous charts only)
+function formatDataFromDomain(dataset, props) {
+  const { domain, symbol } = props;
+
+  if (!domain) return dataset;
+
+  const [ minDomainX, maxDomainX ] = domain.x;
+  const [ minDomainY, maxDomainY ] = domain.y;
+
+  const exists = (val) => val !== undefined;
+
+  // eslint-disable-next-line complexity
+  return dataset.map((datum) => {
+    let { _x, _y, _y0, _y1 } = datum;
+
+    // single x point less than min domain
+    if (exists(_x) && (_x < minDomainX)) {
+      _x = undefined;
+    }
+
+    // single x point greater than max domain
+    if (exists(_x) && (_x > maxDomainX)) {
+      _x = undefined;
+    }
+
+
+    // single y point less than min domain
+    if (exists(_y) && !exists(_y0) && (_y < minDomainY)) {
+      if (exists(symbol)) _y = undefined;
+      else _y = minDomainY;
+    }
+
+    // single y point greater than max domain
+    if (exists(_y) && !exists(_y0) && (_y > maxDomainY)) {
+      if (exists(symbol)) _y = undefined;
+      else _y = maxDomainY;
+    }
+
+
+    // multiple y points all less than min domain
+    if (exists(_y0) && exists(_y1) && (_y0 < minDomainY && _y1 < minDomainY)) {
+      _y = undefined;
+      _y0 = undefined;
+      _y1 = undefined;
+    }
+
+    // multiple y points all greather than max domain
+    if (exists(_y0) && exists(_y1) && (_y0 > maxDomainY && _y1 > maxDomainY)) {
+      _y = undefined;
+      _y0 = undefined;
+      _y1 = undefined;
+    }
+
+
+    // multiple y points with lower point only below min
+    if (exists(_y0) && exists(_y1) && (_y0 < minDomainY && _y1 >= minDomainY)) {
+      _y0 = minDomainY;
+    }
+
+    // multiple y points with upper point only above max
+    if (exists(_y0) && exists(_y1) && (_y0 <= maxDomainY && _y1 > maxDomainY)) {
+      _y1 = maxDomainY;
+    }
+
+    return assign({}, datum, { _x, _y, _y0, _y1 });
+  });
+}
+
 // Returns a data accessor given an eventKey prop
 function getEventKey(key) {
   // creates a data accessor function
@@ -236,7 +304,8 @@ function formatData(dataset, props, expectedKeys) {
 
   const sortedData = sortData(data, props.sortKey, props.sortOrder);
   const cleanedData = cleanData(sortedData, props);
-  return addEventKeys(props, cleanedData);
+  const domainFormattedData = formatDataFromDomain(cleanedData, props);
+  return addEventKeys(props, domainFormattedData);
 }
 
 /**
