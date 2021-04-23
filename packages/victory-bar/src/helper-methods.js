@@ -17,7 +17,6 @@ const getBarPosition = (props, datum) => {
 
     return datum[`_${axis}`] instanceof Date ? new Date(defaultMin) : defaultMin;
   };
-
   const _y0 = datum._y0 !== undefined ? datum._y0 : getDefaultMin("y");
   const _x0 = datum._x0 !== undefined ? datum._x0 : getDefaultMin("x");
   return Helpers.scalePoint(props, assign({}, datum, { _y0, _x0 }));

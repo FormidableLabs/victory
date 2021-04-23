@@ -97,8 +97,8 @@ function formatDataFromDomain(dataset, props) {
 
   if (!domain) return dataset;
 
-  const [ minDomainX, maxDomainX ] = domain.x;
-  const [ minDomainY, maxDomainY ] = domain.y;
+  const [minDomainX, maxDomainX] = domain.x;
+  const [minDomainY, maxDomainY] = domain.y;
 
   const exists = (val) => val !== undefined;
 
@@ -107,51 +107,48 @@ function formatDataFromDomain(dataset, props) {
     let { _x, _y, _y0, _y1 } = datum;
 
     // single x point less than min domain
-    if (exists(_x) && (_x < minDomainX)) {
+    if (exists(_x) && _x < minDomainX) {
       _x = undefined;
     }
 
     // single x point greater than max domain
-    if (exists(_x) && (_x > maxDomainX)) {
+    if (exists(_x) && _x > maxDomainX) {
       _x = undefined;
     }
 
-
     // single y point less than min domain
-    if (exists(_y) && !exists(_y0) && (_y < minDomainY)) {
+    if (exists(_y) && !exists(_y0) && _y < minDomainY) {
       if (exists(symbol)) _y = undefined;
       else _y = minDomainY;
     }
 
     // single y point greater than max domain
-    if (exists(_y) && !exists(_y0) && (_y > maxDomainY)) {
+    if (exists(_y) && !exists(_y0) && _y > maxDomainY) {
       if (exists(symbol)) _y = undefined;
       else _y = maxDomainY;
     }
 
-
     // multiple y points all less than min domain
-    if (exists(_y0) && exists(_y1) && (_y0 < minDomainY && _y1 < minDomainY)) {
+    if (exists(_y0) && exists(_y1) && _y0 < minDomainY && _y1 < minDomainY) {
       _y = undefined;
       _y0 = undefined;
       _y1 = undefined;
     }
 
     // multiple y points all greather than max domain
-    if (exists(_y0) && exists(_y1) && (_y0 > maxDomainY && _y1 > maxDomainY)) {
+    if (exists(_y0) && exists(_y1) && _y0 > maxDomainY && _y1 > maxDomainY) {
       _y = undefined;
       _y0 = undefined;
       _y1 = undefined;
     }
 
-
     // multiple y points with lower point only below min
-    if (exists(_y0) && exists(_y1) && (_y0 < minDomainY && _y1 >= minDomainY)) {
+    if (exists(_y0) && exists(_y1) && _y0 < minDomainY && _y1 >= minDomainY) {
       _y0 = minDomainY;
     }
 
     // multiple y points with upper point only above max
-    if (exists(_y0) && exists(_y1) && (_y0 <= maxDomainY && _y1 > maxDomainY)) {
+    if (exists(_y0) && exists(_y1) && _y0 <= maxDomainY && _y1 > maxDomainY) {
       _y1 = maxDomainY;
     }
 
