@@ -114,34 +114,34 @@ function formatDataFromDomain(dataset, props) {
 
     // single x point less than min domain
     if (exists(_x) && _x < minDomainX) {
-      _x = undefined;
+      _x = null;
     }
 
     // single x point greater than max domain
     if (exists(_x) && _x > maxDomainX) {
-      _x = undefined;
+      _x = null;
     }
 
     // single y point less than min domain
     if (exists(_y) && !exists(_y0) && _y < minDomainY) {
-      if (exists(symbol)) _y = undefined;
+      if (exists(symbol)) _y = null;
       else _y = minDomainY;
     }
 
     // single y point greater than max domain
     if (exists(_y) && !exists(_y0) && _y > maxDomainY) {
-      if (exists(symbol)) _y = undefined;
+      if (exists(symbol)) _y = null;
       else _y = maxDomainY;
     }
 
     // multiple y points all less than min domain
     if (exists(_y0) && exists(_y1) && _y0 < minDomainY && _y1 < minDomainY) {
-      _y = _y0 = _y1 = undefined;
+      _y = _y0 = _y1 = null;
     }
 
     // multiple y points all greather than max domain
     if (exists(_y0) && exists(_y1) && _y0 > maxDomainY && _y1 > maxDomainY) {
-      _y = _y0 = _y1 = undefined;
+      _y = _y0 = _y1 = null;
     }
 
     // multiple y points with lower point only below min
