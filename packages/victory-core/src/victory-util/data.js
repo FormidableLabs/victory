@@ -15,6 +15,7 @@ import {
   includes
 } from "lodash";
 import Helpers from "./helpers";
+import Domain from "./domain";
 import Collection from "./collection";
 import Scale from "./scale";
 import Immutable from "./immutable";
@@ -97,8 +98,13 @@ function formatDataFromDomain(dataset, props) {
 
   if (!domain) return dataset;
 
-  const [minDomainX, maxDomainX] = domain.x;
-  const [minDomainY, maxDomainY] = domain.y;
+  const domainX = domain.x || Domain.getDomainFromData(props, "x", dataset);
+  const domainY = domain.y || Domain.getDomainFromData(props, "y", dataset);
+
+  const minDomainX = Collection.getMinValue(domainX);
+  const maxDomainX = Collection.getMaxValue(domainX);
+  const minDomainY = Collection.getMinValue(domainY);
+  const maxDomainY = Collection.getMaxValue(domainY);
 
   const exists = (val) => val !== undefined;
 
