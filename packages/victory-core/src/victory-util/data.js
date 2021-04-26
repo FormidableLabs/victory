@@ -94,9 +94,9 @@ function cleanData(dataset, props) {
 
 // This method will remove data points that fall outside of the desired domain (non-continuous charts only)
 function formatDataFromDomain(dataset, props) {
-  const { domain, symbol } = props;
+  const { domain, symbol, interpolation } = props;
 
-  if (!domain) return dataset;
+  if (!domain || interpolation) return dataset;
 
   const domainX = domain.x || Domain.getDomainFromData(props, "x", dataset);
   const domainY = domain.y || Domain.getDomainFromData(props, "y", dataset);
