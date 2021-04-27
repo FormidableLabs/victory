@@ -68,8 +68,8 @@ const getDomain = (props, axis) => {
 
 // This method will edit or remove errorbar data points that fall outside of the desired domain
 const formatDataFromDomain = (datum, domain) => {
-  const [ minDomainX, maxDomainX ] = domain.x;
-  const [ minDomainY, maxDomainY ] = domain.y;
+  const [minDomainX, maxDomainX] = domain.x;
+  const [minDomainY, maxDomainY] = domain.y;
 
   let { _x, _y } = datum;
 
@@ -77,7 +77,7 @@ const formatDataFromDomain = (datum, domain) => {
   if (_x < minDomainX || _x > maxDomainX || _y < minDomainY || _y > maxDomainY) _x = _y = null;
 
   return Object.assign({}, datum, { _x, _y });
-}
+};
 
 const getCalculatedValues = (props) => {
   const defaultStyles = Helpers.getDefaultStyles(props, "errorbar");

@@ -368,7 +368,7 @@ const getBaseProps = (props, fallbackProps) => {
     }
   };
   const boxScale = scale.y;
-  const [ minDomainY, maxDomainY ] = domain.y;
+  const [minDomainY, maxDomainY] = domain.y;
   return data.reduce((acc, datum, index) => {
     const eventKey = !isNil(datum.eventKey) ? datum.eventKey : index;
     const { y } = datum;
