@@ -1,5 +1,5 @@
 import { assign, defaults, isNil, isFunction, isPlainObject } from "lodash";
-import { Helpers, Scale, Domain, Data, LabelHelpers, Collection } from "victory-core";
+import { Helpers, Scale, Domain, Data, LabelHelpers } from "victory-core";
 
 const TYPES = ["close", "open", "high", "low"];
 
@@ -345,13 +345,11 @@ const getBaseProps = (props, fallbackProps) => {
     }
   };
 
-  const domainY = [Collection.getMinValue(domain.y), Collection.getMaxValue(domain.y)];
-
   // eslint-disable-next-line complexity
   return data.reduce((childProps, datum, index) => {
     const eventKey = !isNil(datum.eventKey) ? datum.eventKey : index;
     const x = scale.x(datum._x1 !== undefined ? datum._x1 : datum._x);
-    datum = formatDataFromDomain(datum, domainY);
+    datum = formatDataFromDomain(datum, domain.y);
     const { _low, _open, _close, _high } = datum;
     const high = scale.y(_high);
     const close = scale.y(_close);
