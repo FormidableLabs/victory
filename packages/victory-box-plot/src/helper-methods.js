@@ -371,11 +371,15 @@ const getBaseProps = (props, fallbackProps) => {
   const [minDomainY, maxDomainY] = domain.y;
   return data.reduce((acc, datum, index) => {
     const eventKey = !isNil(datum.eventKey) ? datum.eventKey : index;
-    const { y } = datum;
+
+    // if all y points are out of bound of the domain, filter out this datum
+    const { _min, _max } = datum;
     const underMin = (val) => val < minDomainY;
     const overMax = (val) => val > maxDomainY;
-    const yOutOfBounds = y.every(underMin) || y.every(overMax);
-    // if all y points are out of bound of the domain, filter out this datum
+    const exists = (val) => val !== undefined;
+    let yOutOfBounds;
+    if (exists(_min) && exists(_max) && underMin(_min) && underMin(_max)) yOutOfBounds = true;
+    if (exists(_min) && exists(_max) && overMax(_min) && overMax(_max)) yOutOfBounds = true;
     if (yOutOfBounds) return acc;
 
     const positions = {
