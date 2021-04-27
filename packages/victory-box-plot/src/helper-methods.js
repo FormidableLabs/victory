@@ -368,8 +368,16 @@ const getBaseProps = (props, fallbackProps) => {
     }
   };
   const boxScale = scale.y;
+  const [ minDomainY, maxDomainY ] = domain.y;
   return data.reduce((acc, datum, index) => {
     const eventKey = !isNil(datum.eventKey) ? datum.eventKey : index;
+    const { y } = datum;
+    const underMin = (val) => val < minDomainY;
+    const overMax = (val) => val > maxDomainY;
+    const yOutOfBounds = y.every(underMin) || y.every(overMax);
+    // if all y points are out of bound of the domain, filter out this datum
+    if (yOutOfBounds) return acc;
+
     const positions = {
       x: horizontal ? scale.y(datum._y) : scale.x(datum._x),
       y: horizontal ? scale.x(datum._x) : scale.y(datum._y),
