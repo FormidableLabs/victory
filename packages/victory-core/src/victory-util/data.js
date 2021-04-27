@@ -94,9 +94,13 @@ function cleanData(dataset, props) {
 
 // This method will remove data points that fall outside of the desired domain (non-continuous charts only)
 function formatDataFromDomain(dataset, props) {
-  const { domain, symbol, interpolation } = props;
+  // domain for checking data points that are outside of the bounds
+  // symbol to determine chart types with a single y value point
+  // interpolation for determining chart types with continuous data points that shouldn't be altered
+  // errorX/Y for determining chart types with error whiskers that shouldn't be altered here
+  const { domain, symbol, interpolation, errorX, errorY } = props;
 
-  if (!domain || interpolation) return dataset;
+  if (!domain || interpolation || errorX || errorY) return dataset;
 
   const domainX = domain.x || Domain.getDomainFromData(props, "x", dataset);
   const domainY = domain.y || Domain.getDomainFromData(props, "y", dataset);
@@ -112,22 +116,19 @@ function formatDataFromDomain(dataset, props) {
   return dataset.map((datum) => {
     let { _x, _y, _y0, _y1 } = datum;
 
-    // single x point less than min domain
-    if (exists(_x) && _x < minDomainX) {
-      _x = null;
-    }
+    // don't alter data points if _y is an array of values
+    if (Array.isArray(_y)) return datum;
 
+    // single x point less than min domain
+    if (exists(_x) && _x < minDomainX) _x = null;
     // single x point greater than max domain
-    if (exists(_x) && _x > maxDomainX) {
-      _x = null;
-    }
+    if (exists(_x) && _x > maxDomainX) _x = null;
 
     // single y point less than min domain
     if (exists(_y) && !exists(_y0) && _y < minDomainY) {
       if (exists(symbol)) _y = null;
       else _y = minDomainY;
     }
-
     // single y point greater than max domain
     if (exists(_y) && !exists(_y0) && _y > maxDomainY) {
       if (exists(symbol)) _y = null;
@@ -135,24 +136,14 @@ function formatDataFromDomain(dataset, props) {
     }
 
     // multiple y points all less than min domain
-    if (exists(_y0) && exists(_y1) && _y0 < minDomainY && _y1 < minDomainY) {
-      _y = _y0 = _y1 = null;
-    }
-
+    if (exists(_y0) && exists(_y1) && _y0 < minDomainY && _y1 < minDomainY) _y = _y0 = _y1 = null;
     // multiple y points all greather than max domain
-    if (exists(_y0) && exists(_y1) && _y0 > maxDomainY && _y1 > maxDomainY) {
-      _y = _y0 = _y1 = null;
-    }
+    if (exists(_y0) && exists(_y1) && _y0 > maxDomainY && _y1 > maxDomainY) _y = _y0 = _y1 = null;
 
     // multiple y points with lower point only below min
-    if (exists(_y0) && exists(_y1) && _y0 < minDomainY && _y1 >= minDomainY) {
-      _y0 = minDomainY;
-    }
-
+    if (exists(_y0) && exists(_y1) && _y0 < minDomainY && _y1 >= minDomainY) _y0 = minDomainY;
     // multiple y points with upper point only above max
-    if (exists(_y0) && exists(_y1) && _y0 <= maxDomainY && _y1 > maxDomainY) {
-      _y1 = maxDomainY;
-    }
+    if (exists(_y0) && exists(_y1) && _y0 <= maxDomainY && _y1 > maxDomainY) _y1 = maxDomainY;
 
     return assign({}, datum, { _x, _y, _y0, _y1 });
   });
