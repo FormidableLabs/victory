@@ -102,10 +102,14 @@ function formatDataFromDomain(dataset, props) {
 
   if (interpolation || errorX || errorY) return dataset;
 
-  const minDomainX = !domain || !domain.x ? Domain.getMinFromProps(props, "x") : Collection.getMinValue(domain.x);
-  const maxDomainX = !domain || !domain.x ? Domain.getMaxFromProps(props, "x") : Collection.getMaxValue(domain.x);
-  const minDomainY = !domain || !domain.y ? Domain.getMinFromProps(props, "y") : Collection.getMinValue(domain.y);
-  const maxDomainY = !domain || !domain.y ? Domain.getMaxFromProps(props, "y") : Collection.getMaxValue(domain.y);
+  const minDomainX =
+    !domain || !domain.x ? Domain.getMinFromProps(props, "x") : Collection.getMinValue(domain.x);
+  const maxDomainX =
+    !domain || !domain.x ? Domain.getMaxFromProps(props, "x") : Collection.getMaxValue(domain.x);
+  const minDomainY =
+    !domain || !domain.y ? Domain.getMinFromProps(props, "y") : Collection.getMinValue(domain.y);
+  const maxDomainY =
+    !domain || !domain.y ? Domain.getMaxFromProps(props, "y") : Collection.getMaxValue(domain.y);
 
   const exists = (val) => val !== undefined;
 
