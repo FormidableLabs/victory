@@ -15,7 +15,6 @@ import {
   includes
 } from "lodash";
 import Helpers from "./helpers";
-import Domain from "./domain";
 import Collection from "./collection";
 import Scale from "./scale";
 import Immutable from "./immutable";
@@ -100,15 +99,13 @@ function formatDataFromDomain(dataset, props) {
   // errorX/Y for determining chart types with error whiskers that shouldn't be altered here
   const { domain, symbol, interpolation, errorX, errorY } = props;
 
-  if (!domain || interpolation || errorX || errorY) return dataset;
+  if (!domain || !domain.x || !domain.y) return dataset;
+  if (interpolation || errorX || errorY) return dataset;
 
-  const domainX = domain.x || Domain.getDomainFromData(props, "x", dataset);
-  const domainY = domain.y || Domain.getDomainFromData(props, "y", dataset);
-
-  const minDomainX = Collection.getMinValue(domainX);
-  const maxDomainX = Collection.getMaxValue(domainX);
-  const minDomainY = Collection.getMinValue(domainY);
-  const maxDomainY = Collection.getMaxValue(domainY);
+  const minDomainX = Collection.getMinValue(domain.x);
+  const maxDomainX = Collection.getMaxValue(domain.x);
+  const minDomainY = Collection.getMinValue(domain.y);
+  const maxDomainY = Collection.getMaxValue(domain.y);
 
   const exists = (val) => val !== undefined;
 
