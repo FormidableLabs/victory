@@ -136,10 +136,12 @@ function formatDataFromDomain(dataset, props) {
     // value only and less than min domain or greater than max domain
     if (!exists(baseline) && (isUnderMinY(value) || isOverMaxY(value))) _y = null;
 
-    // baseline and value are both less than min domain
-    if (isUnderMinY(baseline) && isUnderMinY(value)) _y = _y0 = _y1 = null;
-    // baseline and value are both greater than max domain
-    if (isOverMaxY(baseline) && isOverMaxY(value)) _y = _y0 = _y1 = null;
+    // baseline and value are both less than min domain or both greater than max domain
+    if (
+      (isUnderMinY(baseline) && isUnderMinY(value)) ||
+      (isOverMaxY(baseline) && isOverMaxY(value))
+    )
+      _y = _y0 = _y1 = null;
 
     // baseline and value with only baseline below min, set baseline to minDomainY
     if (isUnderMinY(baseline) && !isUnderMinY(value)) _y0 = minDomainY;
