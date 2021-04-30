@@ -97,7 +97,6 @@ function formatDataFromDomain(dataset, props) {
   const exists = (val) => val !== undefined;
 
   // domain for checking data points that are outside of the bounds
-  // symbol to determine chart types with a single y value point
   // interpolation for determining chart types with continuous data points that shouldn't be altered
   const { domain, interpolation } = props;
 
@@ -115,36 +114,37 @@ function formatDataFromDomain(dataset, props) {
   if (!exists(minDomainX) && !exists(maxDomainX) && !exists(minDomainY) && !exists(maxDomainY))
     return dataset;
 
-  // eslint-disable-next-line complexity
+  const underMin = (min) => (val) => exists(val) && val < min;
+  const overMax = (max) => (val) => exists(val) && val > max;
+
+  const isUnderMinX = underMin(minDomainX);
+  const isUnderMinY = underMin(minDomainY);
+  const isOverMaxX = overMax(maxDomainX);
+  const isOverMaxY = overMax(maxDomainY);
+
   return dataset.map((datum) => {
     let { _x, _y, _y0, _y1 } = datum;
 
-    const baseline = _y0;
-    const value = exists(_y1) ? _y1 : _y;
-
     // single x point less than min domain
-    if (exists(_x) && _x < minDomainX) _x = null;
-    // single x point greater than max domain
-    if (exists(_x) && _x > maxDomainX) _x = null;
+    if (isUnderMinX(_x) || isOverMaxX(_x)) _x = null;
 
-    // value only and less than min domain
-    if (exists(value) && !exists(baseline) && value < minDomainY) _y = null;
-    // value only and greater than max domain
-    if (exists(value) && !exists(baseline) && value > maxDomainY) _y = null;
+    const baseline = _y0;
+    const value = exists(_y) ? _y : _y1;
 
-    // baseline and value with both less than min domain
-    if (exists(baseline) && exists(value) && baseline < minDomainY && value < minDomainY)
-      _y = _y0 = _y1 = null;
-    // baseline and value with both greater than max domain
-    if (exists(baseline) && exists(value) && baseline > maxDomainY && value > maxDomainY)
-      _y = _y0 = _y1 = null;
+    if (!exists(value)) return datum;
+
+    // value only and less than min domain or greater than max domain
+    if (!exists(baseline) && (isUnderMinY(value) || isOverMaxY(value))) _y = null;
+
+    // baseline and value are both less than min domain
+    if (isUnderMinY(baseline) && isUnderMinY(value)) _y = _y0 = _y1 = null;
+    // baseline and value are both greater than max domain
+    if (isOverMaxY(baseline) && isOverMaxY(value)) _y = _y0 = _y1 = null;
 
     // baseline and value with only baseline below min, set baseline to minDomainY
-    if (exists(baseline) && exists(value) && baseline < minDomainY && value >= minDomainY)
-      _y0 = minDomainY;
+    if (isUnderMinY(baseline) && !isUnderMinY(value)) _y0 = minDomainY;
     // baseline and value with only baseline above max, set baseline to maxDomainY
-    if (exists(baseline) && exists(value) && baseline > maxDomainY && value <= maxDomainY)
-      _y0 = maxDomainY;
+    if (isOverMaxY(baseline) && !isOverMaxY(value)) _y0 = maxDomainY;
 
     return assign({}, datum, { _x, _y, _y0, _y1 });
   });
