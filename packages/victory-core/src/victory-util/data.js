@@ -298,8 +298,7 @@ function formatData(dataset, props, expectedKeys) {
 
   const sortedData = sortData(data, props.sortKey, props.sortOrder);
   const cleanedData = cleanData(sortedData, props);
-  const domainFormattedData = formatDataFromDomain(cleanedData, props);
-  return addEventKeys(props, domainFormattedData);
+  return addEventKeys(props, cleanedData);
 }
 
 /**
@@ -334,7 +333,10 @@ function getCategories(props, axis) {
  * @returns {Array} an array of data
  */
 function getData(props) {
-  return props.data ? formatData(props.data, props) : formatData(generateData(props), props);
+  const formattedData = props.data
+    ? formatData(props.data, props)
+    : formatData(generateData(props), props);
+  return formatDataFromDomain(formattedData, props);
 }
 
 /**
