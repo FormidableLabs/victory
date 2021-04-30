@@ -374,12 +374,12 @@ const getBaseProps = (props, fallbackProps) => {
 
     // if all y points are out of bound of the domain, filter out this datum
     const { _min, _max } = datum;
-    const underMin = (val) => val < minDomainY;
-    const overMax = (val) => val > maxDomainY;
     const exists = (val) => val !== undefined;
+    const underMin = (val) => exists(val) && val < minDomainY;
+    const overMax = (val) => exists(val) && val > maxDomainY;
     let yOutOfBounds;
-    if (exists(_min) && exists(_max) && underMin(_min) && underMin(_max)) yOutOfBounds = true;
-    if (exists(_min) && exists(_max) && overMax(_min) && overMax(_max)) yOutOfBounds = true;
+    if (underMin(_min) && underMin(_max)) yOutOfBounds = true;
+    if (overMax(_min) && overMax(_max)) yOutOfBounds = true;
     if (yOutOfBounds) return acc;
 
     const positions = {
