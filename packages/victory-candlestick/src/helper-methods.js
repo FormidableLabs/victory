@@ -104,9 +104,15 @@ const getStyles = (props, style, defaultStyles = {}) => {
 
 // This method will edit or remove candlestick data points that fall outside of the desired domain
 // eslint-disable-next-line complexity
-const formatDataFromDomain = (datum, domainY) => {
-  const [minDomainY, maxDomainY] = domainY;
-  let { _low, _open, _close, _high } = datum;
+const formatDataFromDomain = (datum, domain) => {
+  const [minDomainX, maxDomainX] = domain.x;
+  const [minDomainY, maxDomainY] = domain.y;
+  let { _x, _low, _open, _close, _high } = datum;
+
+  // single x point less than min domain
+  if (_x < minDomainX) _x = null;
+  // single x point greater than max domain
+  if (_x > maxDomainX) _x = null;
 
   // if all values fall outside of domain, null the data point
   if (_low < minDomainY && _open < minDomainY && _close < minDomainY && _high < minDomainY)
@@ -114,7 +120,7 @@ const formatDataFromDomain = (datum, domainY) => {
   if (_low > maxDomainY && _open > maxDomainY && _close > maxDomainY && _high > maxDomainY)
     _low = _open = _close = _high = null;
 
-  return Object.assign({}, datum, { _low, _open, _close, _high });
+  return Object.assign({}, datum, { _x, _low, _open, _close, _high });
 };
 
 const getCalculatedValues = (props) => {
@@ -340,7 +346,7 @@ const getBaseProps = (props, fallbackProps) => {
   return data.reduce((childProps, datum, index) => {
     const eventKey = !isNil(datum.eventKey) ? datum.eventKey : index;
     const x = scale.x(datum._x1 !== undefined ? datum._x1 : datum._x);
-    datum = formatDataFromDomain(datum, domain.y);
+    datum = formatDataFromDomain(datum, domain);
     const { _low, _open, _close, _high } = datum;
     const high = scale.y(_high);
     const close = scale.y(_close);
