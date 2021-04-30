@@ -120,10 +120,7 @@ function formatDataFromDomain(dataset, props) {
     let { _x, _y, _y0, _y1 } = datum;
 
     const baseline = _y0;
-    const value = _y || _y1;
-
-    // don't alter data points if _y is an array of values
-    if (Array.isArray(value)) return datum;
+    const value = exists(_y1) ? _y1 : _y;
 
     // single x point less than min domain
     if (exists(_x) && _x < minDomainX) _x = null;
