@@ -94,6 +94,8 @@ function cleanData(dataset, props) {
 
 // This method will remove data points that fall outside of the desired domain (non-continuous charts only)
 function formatDataFromDomain(dataset, props) {
+  const exists = (val) => val !== undefined;
+
   // domain for checking data points that are outside of the bounds
   // symbol to determine chart types with a single y value point
   // interpolation for determining chart types with continuous data points that shouldn't be altered
@@ -111,7 +113,7 @@ function formatDataFromDomain(dataset, props) {
   const maxDomainY =
     !domain || !domain.y ? Domain.getMaxFromProps(props, "y") : Collection.getMaxValue(domain.y);
 
-  const exists = (val) => val !== undefined;
+  if (!exists(minDomainX) && !exists(maxDomainX) && !exists(minDomainY) && !exists(maxDomainY)) return dataset;
 
   // eslint-disable-next-line complexity
   return dataset.map((datum) => {
