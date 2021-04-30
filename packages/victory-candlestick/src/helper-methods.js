@@ -109,10 +109,8 @@ const formatDataFromDomain = (datum, domain) => {
   const [minDomainY, maxDomainY] = domain.y;
   let { _x, _low, _open, _close, _high } = datum;
 
-  // single x point less than min domain
-  if (_x < minDomainX) _x = null;
-  // single x point greater than max domain
-  if (_x > maxDomainX) _x = null;
+  // if _x falls outside of min or max
+  if (_x < minDomainX || _x > maxDomainX) _x = null;
 
   // if all values fall outside of domain, null the data point
   if (_low < minDomainY && _open < minDomainY && _close < minDomainY && _high < minDomainY)
