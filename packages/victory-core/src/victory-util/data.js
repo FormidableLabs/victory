@@ -130,10 +130,10 @@ function formatDataFromDomain(dataset, props) {
     // single x point greater than max domain
     if (exists(_x) && _x > maxDomainX) _x = null;
 
-    // single y point less than min domain
-    if (exists(value) && !exists(baseline) && Math.abs(value) < minDomainY) _y = null;
-    // single y point greater than max domain
-    if (exists(value) && !exists(baseline) && Math.abs(value) > maxDomainY) _y = null;
+    // value only and less than min domain
+    if (exists(value) && !exists(baseline) && value < minDomainY) _y = null;
+    // value only and greater than max domain
+    if (exists(value) && !exists(baseline) && value > maxDomainY) _y = null;
 
     // baseline and value with both less than min domain
     if (exists(baseline) && exists(value) && baseline < minDomainY && value < minDomainY)
