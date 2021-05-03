@@ -97,27 +97,38 @@ export default class VictoryAnimation extends React.Component {
     }
   }
 
-  shouldComponentUpdate(nextProps, nextState) {
-    const equalProps = isEqual(this.props, nextProps);
+  componentDidUpdate(prevProps) {
+    const equalProps = isEqual(this.props, prevProps);
     if (!equalProps) {
-      /* cancel existing loop if it exists */
-      this.timer.unsubscribe(this.loopID);
-
-      /* If an object was supplied */
-      if (!Array.isArray(nextProps.data)) {
-        // Replace the tween queue. Could set `this.queue = [nextProps.data]`,
-        // but let's reuse the same array.
-        this.queue.length = 0;
-        this.queue.push(nextProps.data);
-        /* If an array was supplied */
+      /* If the previous animation didn't finish, force it to complete before starting a new one */
+      if (this.interpolator && this.state.animationInfo && this.state.animationInfo.progress < 1) {
+        // eslint-disable-next-line react/no-did-update-set-state
+        this.setState({
+          data: this.interpolator(1),
+          animationInfo: {
+            progress: 1,
+            animating: false,
+            terminating: true
+          }
+        });
       } else {
-        /* Extend the tween queue */
-        this.queue.push(...nextProps.data);
+        /* cancel existing loop if it exists */
+        this.timer.unsubscribe(this.loopID);
+        /* If an object was supplied */
+        if (!Array.isArray(this.props.data)) {
+          // Replace the tween queue. Could set `this.queue = [nextProps.data]`,
+          // but let's reuse the same array.
+          this.queue.length = 0;
+          this.queue.push(this.props.data);
+          /* If an array was supplied */
+        } else {
+          /* Extend the tween queue */
+          this.queue.push(...this.props.data);
+        }
+        /* Start traversing the tween queue */
+        this.traverseQueue();
       }
-      /* Start traversing the tween queue */
-      this.traverseQueue();
     }
-    return nextState.animationInfo.animating || nextState.animationInfo.terminating || !equalProps;
   }
 
   componentWillUnmount() {
