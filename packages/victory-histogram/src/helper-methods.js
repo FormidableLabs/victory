@@ -129,7 +129,6 @@ const getDomain = (props, axis) => {
 const getCalculatedValues = (props) => {
   const defaultStyles = Helpers.getDefaultStyles(props, "histogram");
   const style = Helpers.getStyles(props.style, defaultStyles);
-  const data = getData(props);
 
   const range = props.range || {
     x: Helpers.getRange(props, "x"),
@@ -140,6 +139,9 @@ const getCalculatedValues = (props) => {
     x: getDomain(props, "x"),
     y: getDomain(props, "y")
   };
+
+  let data = getData(props);
+  data = Data.formatDataFromDomain(data, domain, 0);
 
   const scale = {
     x: Scale.getBaseScale(props, "x")

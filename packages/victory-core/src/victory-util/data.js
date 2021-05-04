@@ -15,7 +15,6 @@ import {
   includes
 } from "lodash";
 import Helpers from "./helpers";
-import Domain from "./domain";
 import Collection from "./collection";
 import Scale from "./scale";
 import Immutable from "./immutable";
@@ -93,26 +92,11 @@ function cleanData(dataset, props) {
 }
 
 // This method will remove data points that fall outside of the desired domain (non-continuous charts only)
-function formatDataFromDomain(dataset, props) {
+function formatDataFromDomain(dataset, domain, defaultBaseline) {
   const exists = (val) => val !== undefined;
 
-  // domain for checking data points that are outside of the bounds
-  // interpolation for determining chart types with continuous data points that shouldn't be altered
-  const { domain, interpolation } = props;
-
-  if (interpolation) return dataset;
-
-  const minDomainX =
-    !domain || !domain.x ? Domain.getMinFromProps(props, "x") : Collection.getMinValue(domain.x);
-  const maxDomainX =
-    !domain || !domain.x ? Domain.getMaxFromProps(props, "x") : Collection.getMaxValue(domain.x);
-  const minDomainY =
-    !domain || !domain.y ? Domain.getMinFromProps(props, "y") : Collection.getMinValue(domain.y);
-  const maxDomainY =
-    !domain || !domain.y ? Domain.getMaxFromProps(props, "y") : Collection.getMaxValue(domain.y);
-
-  if (!exists(minDomainX) && !exists(maxDomainX) && !exists(minDomainY) && !exists(maxDomainY))
-    return dataset;
+  const [minDomainX, maxDomainX] = domain.x;
+  const [minDomainY, maxDomainY] = domain.y;
 
   const underMin = (min) => (val) => exists(val) && val < min;
   const overMax = (max) => (val) => exists(val) && val > max;
@@ -122,13 +106,14 @@ function formatDataFromDomain(dataset, props) {
   const isOverMaxX = overMax(maxDomainX);
   const isOverMaxY = overMax(maxDomainY);
 
+  // eslint-disable-next-line complexity
   return dataset.map((datum) => {
     let { _x, _y, _y0, _y1 } = datum;
 
     // single x point less than min domain
     if (isUnderMinX(_x) || isOverMaxX(_x)) _x = null;
 
-    const baseline = _y0;
+    const baseline = exists(_y0) ? _y0 : defaultBaseline;
     const value = exists(_y) ? _y : _y1;
 
     if (!exists(value)) return datum;
@@ -332,10 +317,7 @@ function getCategories(props, axis) {
  * @returns {Array} an array of data
  */
 function getData(props) {
-  const formattedData = props.data
-    ? formatData(props.data, props)
-    : formatData(generateData(props), props);
-  return formatDataFromDomain(formattedData, props);
+  return props.data ? formatData(props.data, props) : formatData(generateData(props), props);
 }
 
 /**
@@ -444,6 +426,7 @@ export default {
   createStringMap,
   downsample,
   formatData,
+  formatDataFromDomain,
   generateData,
   getCategories,
   getData,
