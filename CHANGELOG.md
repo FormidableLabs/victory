@@ -1,5 +1,9 @@
 # Victory Changelog
 
+## 35.6.0 (2021-05-04)
+
+- [#1827](https://github.com/FormidableLabs/victory/pull/1827) - Points fully outside of a chart domain are now given null values to prevent them from being rendered. Exceptions are made for continuous chart types like `VictoryArea` and `VictoryLine`. This PR also includes a fix for animations so that animating data always reaches its final state before a new animation begins. Thanks @jhumbug!
+
 ## 35.5.1 (2021-04-12)
 
 - [#1819](https://github.com/FormidableLabs/victory/pull/1819) - Improve built `dist` output
