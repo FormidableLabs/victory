@@ -31,7 +31,6 @@ const getCalculatedValues = (props) => {
       ? props.theme.voronoi.style
       : {};
   const style = Helpers.getStyles(props.style, defaultStyles);
-  const data = Data.getData(props);
   const range = {
     x: Helpers.getRange(props, "x"),
     y: Helpers.getRange(props, "y")
@@ -48,6 +47,10 @@ const getCalculatedValues = (props) => {
       .domain(domain.y)
       .range(props.horizontal ? range.x : range.y)
   };
+
+  let data = Data.getData(props);
+  data = Data.formatDataFromDomain(data, domain);
+
   const voronoi = getVoronoi(props, range, scale);
   const polygons = voronoi.polygons(data);
   const origin = props.polar ? props.origin || Helpers.getPolarOrigin(props) : undefined;
