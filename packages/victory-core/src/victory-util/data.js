@@ -12,7 +12,9 @@ import {
   orderBy,
   isEmpty,
   isEqual,
-  includes
+  includes,
+  isUndefined,
+  omitBy
 } from "lodash";
 import Helpers from "./helpers";
 import Collection from "./collection";
@@ -133,7 +135,7 @@ function formatDataFromDomain(dataset, domain, defaultBaseline) {
     // baseline and value with only baseline above max, set baseline to maxDomainY
     if (isOverMaxY(baseline) && !isOverMaxY(value)) _y0 = maxDomainY;
 
-    return assign({}, datum, { _x, _y, _y0, _y1 });
+    return assign({}, datum, omitBy({ _x, _y, _y0, _y1 }, isUndefined));
   });
 }
 
