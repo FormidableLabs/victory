@@ -480,3 +480,20 @@ export const Stacked = () => {
     </div>
   );
 };
+
+export const Domain = () => {
+  return (
+    <div style={containerStyle}>
+      <VictoryHistogram style={parentStyle} data={data} domain={{ x: [20, 100], y: [3, 10] }} />
+      <VictoryChart style={parentStyle} domain={{ x: [20, 100], y: [3, 10] }}>
+        <VictoryHistogram data={data} />
+      </VictoryChart>
+      <VictoryChart style={parentStyle} minDomain={{ x: 40 }}>
+        <VictoryHistogram data={data} />
+      </VictoryChart>
+      <VictoryChart style={parentStyle} maxDomain={{ y: 4 }}>
+        <VictoryHistogram data={data} />
+      </VictoryChart>
+    </div>
+  );
+};
