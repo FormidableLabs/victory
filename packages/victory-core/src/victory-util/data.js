@@ -12,7 +12,9 @@ import {
   orderBy,
   isEmpty,
   isEqual,
-  includes
+  includes,
+  isUndefined,
+  omitBy
 } from "lodash";
 import Helpers from "./helpers";
 import Collection from "./collection";
@@ -88,6 +90,52 @@ function cleanData(dataset, props) {
       return datum;
     }
     return sanitize(datum);
+  });
+}
+
+// This method will remove data points that fall outside of the desired domain (non-continuous charts only)
+function formatDataFromDomain(dataset, domain, defaultBaseline) {
+  const exists = (val) => val !== undefined;
+
+  const [minDomainX, maxDomainX] = domain.x;
+  const [minDomainY, maxDomainY] = domain.y;
+
+  const underMin = (min) => (val) => exists(val) && val < min;
+  const overMax = (max) => (val) => exists(val) && val > max;
+
+  const isUnderMinX = underMin(minDomainX);
+  const isUnderMinY = underMin(minDomainY);
+  const isOverMaxX = overMax(maxDomainX);
+  const isOverMaxY = overMax(maxDomainY);
+
+  // eslint-disable-next-line complexity
+  return dataset.map((datum) => {
+    let { _x, _y, _y0, _y1 } = datum;
+
+    // single x point less than min domain
+    if (isUnderMinX(_x) || isOverMaxX(_x)) _x = null;
+
+    const baseline = exists(_y0) ? _y0 : defaultBaseline;
+    const value = exists(_y) ? _y : _y1;
+
+    if (!exists(value)) return datum;
+
+    // value only and less than min domain or greater than max domain
+    if (!exists(baseline) && (isUnderMinY(value) || isOverMaxY(value))) _y = null;
+
+    // baseline and value are both less than min domain or both greater than max domain
+    if (
+      (isUnderMinY(baseline) && isUnderMinY(value)) ||
+      (isOverMaxY(baseline) && isOverMaxY(value))
+    )
+      _y = _y0 = _y1 = null;
+
+    // baseline and value with only baseline below min, set baseline to minDomainY
+    if (isUnderMinY(baseline) && !isUnderMinY(value)) _y0 = minDomainY;
+    // baseline and value with only baseline above max, set baseline to maxDomainY
+    if (isOverMaxY(baseline) && !isOverMaxY(value)) _y0 = maxDomainY;
+
+    return assign({}, datum, omitBy({ _x, _y, _y0, _y1 }, isUndefined));
   });
 }
 
@@ -380,6 +428,7 @@ export default {
   createStringMap,
   downsample,
   formatData,
+  formatDataFromDomain,
   generateData,
   getCategories,
   getData,

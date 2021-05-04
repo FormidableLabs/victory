@@ -495,3 +495,17 @@ export const Polar = () => {
     </div>
   );
 };
+
+export const Domain = () => {
+  return (
+    <div style={containerStyle}>
+      <VictoryScatter data={getData(5)} style={parentStyle} domain={{ x: [0, 4], y: [5, 10] }} />
+      <VictoryChart style={parentStyle} minDomain={{ x: 3 }}>
+        <VictoryScatter data={getData(5)} />
+      </VictoryChart>
+      <VictoryChart style={parentStyle} maxDomain={{ y: 5 }}>
+        <VictoryScatter data={getData(5)} />
+      </VictoryChart>
+    </div>
+  );
+};

@@ -905,3 +905,20 @@ export const Regressions = () => {
     </div>
   );
 };
+
+export const Domain = () => {
+  return (
+    <div style={containerStyle}>
+      <VictoryBar style={parentStyle} data={getData(7)} domain={{ x: [0, 5], y: [0, 8] }} />
+      <VictoryChart style={parentStyle} domain={{ x: [0, 5], y: [0, 8] }}>
+        <VictoryBar data={getData(7)} />
+      </VictoryChart>
+      <VictoryChart style={parentStyle} minDomain={{ y: 2 }}>
+        <VictoryBar data={getData(7)} />
+      </VictoryChart>
+      <VictoryChart style={parentStyle} maxDomain={{ x: 4 }}>
+        <VictoryBar data={getData(7)} />
+      </VictoryChart>
+    </div>
+  );
+};

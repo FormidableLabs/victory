@@ -320,3 +320,54 @@ export const Scale = () => {
     </div>
   );
 };
+
+export const Domain = () => {
+  return (
+    <div style={containerStyle}>
+      <VictoryCandlestick
+        {...defaultChartProps}
+        domain={{ x: [2, 5], y: [50, 150] }}
+        data={fromJS([
+          { x: 1, open: 9, close: 30, high: 56, low: 7 },
+          { x: 2, open: 80, close: 40, high: 120, low: 10 },
+          { x: 3, open: 50, close: 80, high: 90, low: 20 },
+          { x: 4, open: 70, close: 22, high: 70, low: 5 },
+          { x: 5, open: 20, close: 35, high: 50, low: 10 }
+        ])}
+      />
+      <VictoryChart domain={{ x: [2, 5], y: [50, 150] }} {...defaultChartProps}>
+        <VictoryCandlestick
+          data={fromJS([
+            { x: 1, open: 9, close: 30, high: 56, low: 7 },
+            { x: 2, open: 80, close: 40, high: 120, low: 10 },
+            { x: 3, open: 50, close: 80, high: 90, low: 20 },
+            { x: 4, open: 70, close: 22, high: 70, low: 5 },
+            { x: 5, open: 20, close: 35, high: 50, low: 10 }
+          ])}
+        />
+      </VictoryChart>
+      <VictoryChart minDomain={{ y: 70 }} {...defaultChartProps}>
+        <VictoryCandlestick
+          data={fromJS([
+            { x: 1, open: 9, close: 30, high: 56, low: 7 },
+            { x: 2, open: 80, close: 40, high: 120, low: 10 },
+            { x: 3, open: 50, close: 80, high: 90, low: 20 },
+            { x: 4, open: 70, close: 22, high: 70, low: 5 },
+            { x: 5, open: 20, close: 35, high: 50, low: 10 }
+          ])}
+        />
+      </VictoryChart>
+      <VictoryChart maxDomain={{ x: 4 }} {...defaultChartProps}>
+        <VictoryCandlestick
+          data={fromJS([
+            { x: 1, open: 9, close: 30, high: 56, low: 7 },
+            { x: 2, open: 80, close: 40, high: 120, low: 10 },
+            { x: 3, open: 50, close: 80, high: 90, low: 20 },
+            { x: 4, open: 70, close: 22, high: 70, low: 5 },
+            { x: 5, open: 20, close: 35, high: 50, low: 10 }
+          ])}
+        />
+      </VictoryChart>
+    </div>
+  );
+};

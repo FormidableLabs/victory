@@ -46,7 +46,6 @@ const getSize = (datum, props) => {
 const getCalculatedValues = (props) => {
   const defaultStyles = Helpers.getDefaultStyles(props, "scatter");
   const style = Helpers.getStyles(props.style, defaultStyles);
-  const data = Data.getData(props);
   const range = {
     x: Helpers.getRange(props, "x"),
     y: Helpers.getRange(props, "y")
@@ -65,6 +64,10 @@ const getCalculatedValues = (props) => {
   };
   const origin = props.polar ? props.origin || Helpers.getPolarOrigin(props) : undefined;
   const z = props.bubbleProperty || "z";
+
+  let data = Data.getData(props);
+  data = Data.formatDataFromDomain(data, domain);
+
   return { domain, data, scale, style, origin, z };
 };
 

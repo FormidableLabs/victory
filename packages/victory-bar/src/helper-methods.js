@@ -26,7 +26,6 @@ const getCalculatedValues = (props) => {
   const { polar } = props;
   const defaultStyles = Helpers.getDefaultStyles(props, "bar");
   const style = Helpers.getStyles(props.style, defaultStyles);
-  const data = Data.getData(props); // Data.getData needs to be called to format the data (we may be able to do this in a wrapper component)
   const range = props.range || {
     x: Helpers.getRange(props, "x"),
     y: Helpers.getRange(props, "y")
@@ -44,6 +43,10 @@ const getCalculatedValues = (props) => {
       .range(props.horizontal ? range.x : range.y)
   };
   const origin = polar ? props.origin || Helpers.getPolarOrigin(props) : undefined;
+
+  let data = Data.getData(props);
+  data = Data.formatDataFromDomain(data, domain, 0);
+
   return { style, data, scale, domain, origin };
 };
 

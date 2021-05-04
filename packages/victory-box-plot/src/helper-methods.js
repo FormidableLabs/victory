@@ -332,6 +332,30 @@ const getDataProps = (props, type) => {
   return getBoxProps(props, type);
 };
 
+// if all data points on an axis are out of bound of the domain, filter out this datum
+const isDatumOutOfBounds = (datum, domain) => {
+  const exists = (val) => val !== undefined;
+  const { _x, _min, _max } = datum;
+  const [minDomainX, maxDomainX] = domain.x;
+  const [minDomainY, maxDomainY] = domain.y;
+  const underMin = (min) => (val) => exists(val) && val < min;
+  const overMax = (max) => (val) => exists(val) && val > max;
+  const isUnderMinX = underMin(minDomainX);
+  const isUnderMinY = underMin(minDomainY);
+  const isOverMaxX = overMax(maxDomainX);
+  const isOverMaxY = overMax(maxDomainY);
+  let yOutOfBounds;
+  let xOutOfBounds;
+
+  // if x is out of the bounds of the domain
+  if (isUnderMinX(_x) || isOverMaxX(_x)) xOutOfBounds = true;
+  // if min/max are out of the bounds of the domain
+  if ((isUnderMinY(_min) && isUnderMinY(_max)) || (isOverMaxY(_min) && isOverMaxY(_max)))
+    yOutOfBounds = true;
+
+  return yOutOfBounds || xOutOfBounds;
+};
+
 const getBaseProps = (props, fallbackProps) => {
   const modifiedProps = Helpers.modifyProps(props, fallbackProps, "boxplot");
   props = assign({}, modifiedProps, getCalculatedValues(modifiedProps));
@@ -370,6 +394,9 @@ const getBaseProps = (props, fallbackProps) => {
   const boxScale = scale.y;
   return data.reduce((acc, datum, index) => {
     const eventKey = !isNil(datum.eventKey) ? datum.eventKey : index;
+
+    if (isDatumOutOfBounds(datum, domain)) return acc;
+
     const positions = {
       x: horizontal ? scale.y(datum._y) : scale.x(datum._x),
       y: horizontal ? scale.x(datum._x) : scale.y(datum._y),

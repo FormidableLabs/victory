@@ -102,7 +102,10 @@ function addLayoutData(props, datasets, index) {
 
 function stackData(props, childComponents) {
   const dataFromChildren = Wrapper.getDataFromChildren(props, childComponents);
-  const datasets = fillData(props, dataFromChildren);
+  const filterNullChildData = dataFromChildren.map((dataset) =>
+    dataset.filter((datum) => datum._x !== null && datum._y !== null)
+  );
+  const datasets = fillData(props, filterNullChildData);
   return datasets.map((d, i) => addLayoutData(props, datasets, i));
 }
 

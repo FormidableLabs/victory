@@ -300,3 +300,24 @@ export const Style = () => {
     </div>
   );
 };
+
+export const Domain = () => {
+  return (
+    <div style={containerStyle}>
+      <VictoryBoxPlot
+        style={parentStyle}
+        data={getArrayData(5, 10)}
+        domain={{ x: [3, 5.5], y: [0, 10] }}
+      />
+      <VictoryChart {...defaultChartProps} domain={{ x: [3, 5.5], y: [0, 10] }}>
+        <VictoryBoxPlot data={getArrayData(5, 10)} />
+      </VictoryChart>
+      <VictoryChart {...defaultChartProps} minDomain={{ y: 2 }}>
+        <VictoryBoxPlot data={getArrayData(5, 10)} />
+      </VictoryChart>
+      <VictoryChart {...defaultChartProps} maxDomain={{ x: 4 }}>
+        <VictoryBoxPlot data={getArrayData(5, 10)} />
+      </VictoryChart>
+    </div>
+  );
+};
