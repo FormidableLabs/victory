@@ -55,6 +55,9 @@ function getY0(datum, index, datasets) {
     return datum.y0;
   }
   const y = datum._y;
+  const group = datum._group;
+  let customY0Points = datasets[0].map(datum => datum.y0);
+
   const previousDatasets = datasets.slice(0, index);
   const previousPoints = previousDatasets.reduce((prev, dataset) => {
     return prev.concat(
@@ -67,12 +70,13 @@ function getY0(datum, index, datasets) {
         .map((previousDatum) => previousDatum._y || 0)
     );
   }, []);
+
   const y0 =
     previousPoints.length &&
     previousPoints.reduce((memo, value) => {
       const sameSign = (y < 0 && value < 0) || (y >= 0 && value >= 0);
       return sameSign ? +value + memo : memo;
-    }, 0);
+    }, customY0Points[group] || 0);
   return previousPoints.some((point) => point instanceof Date) ? new Date(y0) : y0;
 }
 
