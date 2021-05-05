@@ -33,6 +33,13 @@ const getData = (num, seed, max = 10) => {
   return range(num).map((v) => ({ x: v + 1, y: rand() }));
 };
 
+const getDataWithBaseline = (num, seed, max = 10) => {
+  seed = seed || "getData";
+  const baseSeed = seedrandom(seed);
+  const rand = () => baseSeed.quick() * max;
+  return range(num).map((v) => ({ x: v + 1, y: rand(), y0: rand() }));
+};
+
 const getDescendingSmallData = () => {
   return [
     { x: 1, y: 2 },
@@ -97,6 +104,7 @@ const getStackedData = (num, samples, useStrings) => {
 
 export {
   getData,
+  getDataWithBaseline,
   getStringData,
   getMixedData,
   getTimeData,

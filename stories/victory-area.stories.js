@@ -6,7 +6,7 @@ import { VictoryArea } from "../packages/victory-area/src";
 import { VictoryTooltip } from "../packages/victory-tooltip/src";
 import { VictoryTheme, VictoryLabel } from "../packages/victory-core/src";
 import { VictoryChart } from "../packages/victory-chart/src";
-import { getData, getMixedData, getTimeData, getLogData } from "./data";
+import { getData, getMixedData, getTimeData, getLogData, getDataWithBaseline } from "./data";
 import { fromJS } from "immutable";
 
 const containerStyle = {
@@ -350,6 +350,13 @@ export const Stacked = () => {
           <VictoryArea data={getData(9)} />
           <VictoryArea data={getData(5, "seed-1")} />
           <VictoryArea data={getData(3, "seed-2")} />
+        </VictoryStack>
+      </VictoryChart>
+      <VictoryChart {...defaultChartProps}>
+        <VictoryStack>
+          <VictoryArea data={getDataWithBaseline(5)} />
+          <VictoryArea data={getData(5, "seed-1")} />
+          <VictoryArea data={getData(5, "seed-2")} />
         </VictoryStack>
       </VictoryChart>
     </div>
