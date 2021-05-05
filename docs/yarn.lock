@@ -9068,7 +9068,7 @@ victory-zoom-container@^35.6.1:
     prop-types "^15.5.8"
     victory-core "^35.6.1"
 
-victory@^36.1.0:
+victory@^35.6.1:
   version "35.6.1"
   resolved "https://registry.yarnpkg.com/victory/-/victory-35.6.1.tgz#7a52d066d29ac07ca0b4efe3807e36a24ab92ca2"
   integrity sha512-gw+xM1NpKu3shjZa7RTAK+8ou0StH4WstjtsiGcxRyhH3MXuO3d7+Ith6mzHCI0UNZ5jZs1bRC1XEDltm8IJZA==
