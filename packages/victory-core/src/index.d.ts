@@ -259,6 +259,10 @@ export interface VictoryContainerProps {
   preserveAspectRatio?: string;
   responsive?: boolean;
   role?: string;
+  scale?: {
+    x?: D3Scale;
+    y?: D3Scale;
+  };
   style?: React.CSSProperties;
   tabIndex?: number;
   theme?: VictoryThemeDefinition;
