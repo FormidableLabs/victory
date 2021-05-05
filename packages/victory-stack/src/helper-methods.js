@@ -56,7 +56,7 @@ function getY0(datum, index, datasets) {
   }
   const y = datum._y;
   const group = datum._group;
-  const firstDatasetBaseline = datasets[0].map(d => d.y0);
+  const firstDatasetBaseline = datasets[0].map((d) => d.y0);
 
   const previousDatasets = datasets.slice(0, index);
   const previousPoints = previousDatasets.reduce((prev, dataset) => {
