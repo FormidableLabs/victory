@@ -1,5 +1,10 @@
 # Victory Changelog
 
+## 35.6.1 (2021-05-05)
+
+- [#1832](https://github.com/FormidableLabs/victory/pull/1832) - Add support for custom baselines for `VictoryStack`. Thanks @jhumbug!
+- [#1833](https://github.com/FormidableLabs/victory/pull/1833) - Add missing scale prop type for container type definitions.
+
 ## 35.6.0 (2021-05-04)
 
 - [#1827](https://github.com/FormidableLabs/victory/pull/1827) - Points fully outside of a chart domain are now given null values to prevent them from being rendered. Exceptions are made for continuous chart types like `VictoryArea` and `VictoryLine`. This PR also includes a fix for animations so that animating data always reaches its final state before a new animation begins. Thanks @jhumbug!
