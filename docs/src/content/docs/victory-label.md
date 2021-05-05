@@ -417,12 +417,43 @@ This props refers to the width of the `svg` that `VictoryLabel` is rendered with
 
 `type: number`
 
-The `x` prop defines the x coordinate to use as a basis for positioning the label element.
+The `x` prop defines the x coordinate to use as a basis for positioning the label element. Please note that this prop should be given in terms of `svg` coordinates, not data coordinates. To add a label annotation to a chart that is fixed to a specific _data_ coordinate, please use the `scale` prop that `VictoryChart` provides to its children to transform data coordinates into `svg` coordinates.
+
+```playground_norender
+  const DataLabel = props => {
+    const x = props.scale.x(props.x);
+    const y = props.scale.y(props.y);
+    return <VictoryLabel {...props} x={x} y={y}/>
+  };
+
+  const MyChart = () => {
+    return (
+      <VictoryChart domain={ [0, 10]}>
+        <VictoryLine />
+        <VictoryScatter data={[{ x: 5, y: 5 }]} />
+        <DataLabel
+          x={5}
+          y={5}
+          dy={10}
+          text="a custom data coordinate label"
+        />
+        <VictoryLabel
+          x={55}
+          y={50}
+          text="an svg coordinate label"
+        />
+      </VictoryChart>
+    );
+  };
+
+
+ReactDOM.render(<MyChart/>, mountNode);
+```
 
 ## y
 
 `type: number`
 
-The `y` prop defines the y coordinate to use as a basis for positioning the label element.
+The `y` prop defines the y coordinate to use as a basis for positioning the label element. Please note that this prop should be given in terms of `svg` coordinates, not data coordinates.
 
 [Rect]: /docs/victory-primitives#rect
