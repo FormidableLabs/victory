@@ -8,7 +8,14 @@ import { VictoryStack } from "../packages/victory-stack/src/index";
 import { VictoryTooltip } from "../packages/victory-tooltip/src/index";
 import { VictoryTheme, VictoryLabel } from "../packages/victory-core/src/index";
 import { VictoryPolarAxis } from "../packages/victory-polar-axis/src/index";
-import { getData, getStackedData, getMixedData, getTimeData, getLogData } from "./data";
+import {
+  getData,
+  getStackedData,
+  getMixedData,
+  getTimeData,
+  getLogData,
+  getDataWithBaseline
+} from "./data";
 import { fromJS } from "immutable";
 
 const containerStyle = {
@@ -591,6 +598,13 @@ export const StackedBars = () => {
           <VictoryBar data={getData(100, "seed-5")} />
           <VictoryBar data={getData(200, "seed-6")} />
           <VictoryBar data={getData(190, "seed-7")} />
+        </VictoryStack>
+      </VictoryChart>
+      <VictoryChart {...defaultChartProps}>
+        <VictoryStack>
+          <VictoryBar data={getDataWithBaseline(7)} />
+          <VictoryBar data={getData(7, "seed-1")} />
+          <VictoryBar data={getData(7, "seed-2")} />
         </VictoryStack>
       </VictoryChart>
     </div>
