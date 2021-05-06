@@ -1,5 +1,5 @@
 import { orderBy, defaults, assign, uniq, groupBy, keys, isNaN, isNil } from "lodash";
-import { Helpers, Scale, Domain, Data } from "victory-core";
+import { Helpers, Scale, Domain, Data, Collection } from "victory-core";
 import { min as d3Min, max as d3Max, quantile as d3Quantile } from "d3-array";
 
 const TYPES = ["max", "min", "median", "q1", "q3"];
@@ -336,8 +336,11 @@ const getDataProps = (props, type) => {
 const isDatumOutOfBounds = (datum, domain) => {
   const exists = (val) => val !== undefined;
   const { _x, _min, _max } = datum;
-  const [minDomainX, maxDomainX] = domain.x;
-  const [minDomainY, maxDomainY] = domain.y;
+
+  const minDomainX = Collection.getMinValue(domain.x);
+  const maxDomainX = Collection.getMaxValue(domain.x);
+  const minDomainY = Collection.getMinValue(domain.y);
+  const maxDomainY = Collection.getMaxValue(domain.y);
   const underMin = (min) => (val) => exists(val) && val < min;
   const overMax = (max) => (val) => exists(val) && val > max;
   const isUnderMinX = underMin(minDomainX);

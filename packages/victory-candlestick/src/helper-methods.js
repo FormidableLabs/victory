@@ -1,5 +1,5 @@
 import { assign, defaults, isNil, isFunction, isPlainObject } from "lodash";
-import { Helpers, Scale, Domain, Data, LabelHelpers } from "victory-core";
+import { Helpers, Scale, Domain, Data, LabelHelpers, Collection } from "victory-core";
 
 const TYPES = ["close", "open", "high", "low"];
 
@@ -105,8 +105,10 @@ const getStyles = (props, style, defaultStyles = {}) => {
 // This method will edit or remove candlestick data points that fall outside of the desired domain
 // eslint-disable-next-line complexity
 const formatDataFromDomain = (datum, domain) => {
-  const [minDomainX, maxDomainX] = domain.x;
-  const [minDomainY, maxDomainY] = domain.y;
+  const minDomainX = Collection.getMinValue(domain.x);
+  const maxDomainX = Collection.getMaxValue(domain.x);
+  const minDomainY = Collection.getMinValue(domain.y);
+  const maxDomainY = Collection.getMaxValue(domain.y);
   let { _x, _low, _open, _close, _high } = datum;
 
   // if _x falls outside of min or max
