@@ -3,6 +3,7 @@
 import React from "react";
 import { VictoryAxis } from "../packages/victory-axis/src";
 import { VictoryBar } from "../packages/victory-bar/src";
+import { VictoryScatter } from "../packages/victory-scatter/src";
 import { VictoryTheme } from "../packages/victory-core/src";
 import { VictoryChart } from "../packages/victory-chart/src";
 import { range } from "lodash";
@@ -156,6 +157,32 @@ export const WithDomain = () => {
       <VictoryAxis {...defaultChartProps} domain={[-10, 10]} tickValues={getValues(5)} />
       <VictoryAxis {...defaultChartProps} domain={[-10, 10]} tickValues={[8, 9, 10, 11, 12, 13]} />
       <VictoryAxis {...defaultChartProps} domain={[-2, 2]} tickValues={["cat", "dog", "bird"]} />
+      <VictoryChart {...defaultChartProps} domain={[1, 4]}>
+        <VictoryScatter
+          data={[
+            { x: 0, y: 1 },
+            { x: 1, y: 2 },
+            { x: 1, y: 3 },
+            { x: 2, y: 4 },
+            { x: 3, y: 3 }
+          ]}
+        />
+        <VictoryAxis dependentAxis />
+        <VictoryAxis/>
+      </VictoryChart>
+      <VictoryChart {...defaultChartProps} domain={[1, 4]}>
+        <VictoryScatter
+          data={[
+            { x: 0, y: 1 },
+            { x: 1, y: 2 },
+            { x: 1, y: 3 },
+            { x: 2, y: 4 },
+            { x: 3, y: 3 }
+          ]}
+        />
+        <VictoryAxis dependentAxis invertAxis />
+        <VictoryAxis/>
+      </VictoryChart>
     </div>
   );
 };
