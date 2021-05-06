@@ -168,7 +168,7 @@ export const WithDomain = () => {
           ]}
         />
         <VictoryAxis dependentAxis />
-        <VictoryAxis/>
+        <VictoryAxis />
       </VictoryChart>
       <VictoryChart {...defaultChartProps} domain={[1, 4]}>
         <VictoryScatter
@@ -181,7 +181,7 @@ export const WithDomain = () => {
           ]}
         />
         <VictoryAxis dependentAxis invertAxis />
-        <VictoryAxis/>
+        <VictoryAxis />
       </VictoryChart>
     </div>
   );
