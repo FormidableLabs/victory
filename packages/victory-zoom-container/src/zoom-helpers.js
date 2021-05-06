@@ -265,7 +265,6 @@ const RawZoomHelpers = {
         startX: x,
         startY: y,
         parentSVG,
-        domain: currentDomain,
         currentDomain,
         originalDomain,
         cachedZoomDomain: zoomDomain,
@@ -307,7 +306,6 @@ const RawZoomHelpers = {
       (targetProps.zoomActive && !this.checkDomainEquality(originalDomain, lastDomain));
 
     const mutatedProps = {
-      domain: currentDomain,
       currentDomain,
       originalDomain,
       cachedZoomDomain: zoomDomain,
