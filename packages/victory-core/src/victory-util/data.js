@@ -97,8 +97,12 @@ function cleanData(dataset, props) {
 function formatDataFromDomain(dataset, domain, defaultBaseline) {
   const exists = (val) => val !== undefined;
 
-  const [minDomainX, maxDomainX] = domain.x;
-  const [minDomainY, maxDomainY] = domain.y;
+  let [minDomainX, maxDomainX] = domain.x;
+  let [minDomainY, maxDomainY] = domain.y;
+
+  // if min/max domain values are inverted, set them back to true min/max
+  if (minDomainX > maxDomainX) [minDomainX, maxDomainX] = [maxDomainX, minDomainX];
+  if (minDomainY > maxDomainY) [minDomainY, maxDomainY] = [maxDomainY, minDomainY];
 
   const underMin = (min) => (val) => exists(val) && val < min;
   const overMax = (max) => (val) => exists(val) && val > max;
