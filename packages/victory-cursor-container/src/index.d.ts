@@ -6,7 +6,7 @@ export type CursorCoordinatesPropType = CoordinatesPropType | number;
 export interface VictoryCursorContainerProps extends VictoryContainerProps {
   cursorComponent?: React.ReactElement;
   cursorDimension?: "x" | "y";
-  cursorLabel?: (point: CursorCoordinatesPropType, args: CallbackArgs) => any | void;
+  cursorLabel?: (point: CoordinatesPropType, args: CallbackArgs) => any | void;
   cursorLabelComponent?: React.ReactElement;
   cursorLabelOffset?: CursorCoordinatesPropType;
   defaultCursorValue?: CursorCoordinatesPropType;
