@@ -1,5 +1,5 @@
 import { defaults, assign, isNil } from "lodash";
-import { Helpers, LabelHelpers, Scale, Domain, Data } from "victory-core";
+import { Helpers, LabelHelpers, Scale, Domain, Data, Collection } from "victory-core";
 
 const getErrors = (props, datum, axis) => {
   /**
@@ -68,9 +68,10 @@ const getDomain = (props, axis) => {
 
 // This method will edit or remove errorbar data points that fall outside of the desired domain
 const formatDataFromDomain = (datum, domain) => {
-  const [minDomainX, maxDomainX] = domain.x;
-  const [minDomainY, maxDomainY] = domain.y;
-
+  const minDomainX = Collection.getMinValue(domain.x);
+  const maxDomainX = Collection.getMaxValue(domain.x);
+  const minDomainY = Collection.getMinValue(domain.y);
+  const maxDomainY = Collection.getMaxValue(domain.y);
   let { _x, _y } = datum;
 
   // if either x or y center point is outside of the domain, null the entire data point
