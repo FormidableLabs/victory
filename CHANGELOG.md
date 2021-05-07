@@ -1,5 +1,10 @@
 # Victory Changelog
 
+## 35.6.2 (2021 -05-07)
+
+- [#1840](https://github.com/FormidableLabs/victory/pull/1840) - Improve cursor coordinate type definitions.
+- [#1837](https://github.com/FormidableLabs/victory/pull/1837) - Fix a regression introduced in `v35.6.0` impacting inverted domain charts. Thanks @jhumbug!
+
 ## 35.6.1 (2021-05-05)
 
 - [#1832](https://github.com/FormidableLabs/victory/pull/1832) - Add support for custom baselines for `VictoryStack`. Thanks @jhumbug!
