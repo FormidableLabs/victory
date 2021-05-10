@@ -1,6 +1,11 @@
 # Victory Changelog
 
-## 35.6.2 (2021 -05-07)
+## 35.6.3 (2021-05-10)
+
+- [#1844](https://github.com/FormidableLabs/victory/pull/1844) - Export missing `VictoryAccessibleGroup` from the main `victory` package
+- Security updates
+
+## 35.6.2 (2021-05-07)
 
 - [#1840](https://github.com/FormidableLabs/victory/pull/1840) - Improve cursor coordinate type definitions.
 - [#1837](https://github.com/FormidableLabs/victory/pull/1837) - Fix a regression introduced in `v35.6.0` impacting inverted domain charts. Thanks @jhumbug!
