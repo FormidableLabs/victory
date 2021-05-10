@@ -1,5 +1,5 @@
 import { assign, defaults } from "lodash";
-import { Helpers, Scale, Axis } from "victory-core";
+import { Helpers, Scale, Axis, Domain } from "victory-core";
 
 const orientationSign = {
   top: -1,
@@ -389,8 +389,23 @@ const getCalculatedValues = (props) => {
   const stringTicks = Axis.stringTicks(props) ? props.tickValues : undefined;
   const axis = Axis.getAxis(props);
   const orientation = getOrientation(props);
-  // const scale = getScale(props);
-  // const domain = Axis.getDomain(props);
+
+  const range = {
+    x: Helpers.getRange(props, "x"),
+    y: Helpers.getRange(props, "y")
+  };
+  const domain = {
+    x: Domain.getDomain(props, "x"),
+    y: Domain.getDomain(props, "y")
+  };
+  const scale = {
+    x: Scale.getBaseScale(props, "x")
+      .domain(domain.x)
+      .range(props.horizontal ? range.y : range.x),
+    y: Scale.getBaseScale(props, "y")
+      .domain(domain.y)
+      .range(props.horizontal ? range.x : range.y)
+  };
   const ticks = Axis.getTicks(props, getScale(props), props.crossAxis);
   const tickFormat = Axis.getTickFormat(props, getScale(props));
   const anchors = getAnchors(orientation, isVertical);
@@ -404,10 +419,10 @@ const getCalculatedValues = (props) => {
     labelPadding,
     stringTicks,
     anchors,
-    scale: props.scale,
+    scale,
     ticks,
     tickFormat,
-    domain: props.domain
+    domain
   };
 };
 
