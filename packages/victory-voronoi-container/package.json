@@ -19,7 +19,7 @@
   "author": "Formidable",
   "license": "MIT",
   "dependencies": {
-    "delaunay-find": "0.0.5",
+    "delaunay-find": "0.0.6",
     "lodash": "^4.17.19",
     "prop-types": "^15.5.8",
     "react-fast-compare": "^2.0.0",
