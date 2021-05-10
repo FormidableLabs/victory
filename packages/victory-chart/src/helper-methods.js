@@ -29,8 +29,8 @@ function getAxisProps(child, props, calculatedProps) {
     innerRadius: props.innerRadius,
     domain,
     scale,
-    offsetY: childProps.offsetY !== undefined ? childProps.offsetY : axisOffset.y,
-    offsetX: childProps.offsetX !== undefined ? childProps.offsetX : axisOffset.x,
+    // offsetY: childProps.offsetY !== undefined ? childProps.offsetY : axisOffset.y,
+    // offsetX: childProps.offsetX !== undefined ? childProps.offsetX : axisOffset.x,
     crossAxis,
     orientation
   };
@@ -91,19 +91,6 @@ function getStyles(props) {
       userSelect: "none"
     })
   };
-}
-
-function getOrientation(axis, originSign, horizontal) {
-  const sign = originSign || "positive";
-  const orientations = {
-    positive: { x: "bottom", y: "left" },
-    negative: { x: "top", y: "right" }
-  };
-  const horizontalOrientations = {
-    positive: { x: "left", y: "bottom" },
-    negative: { x: "right", y: "top" }
-  };
-  return horizontal ? horizontalOrientations[sign][axis] : orientations[sign][axis];
 }
 
 function getCalculatedProps(props, childComponents) {
@@ -291,6 +278,19 @@ const getHorizontalAxisOffset = (props, calculatedProps, orientation) => {
     x: originPosition.y ? Math.abs(originOffset.y - originPosition.y) : orientationOffset.y
   };
 };
+
+function getOrientation(axis, originSign, horizontal) {
+  const sign = originSign || "positive";
+  const orientations = {
+    positive: { x: "bottom", y: "left" },
+    negative: { x: "top", y: "right" }
+  };
+  const horizontalOrientations = {
+    positive: { x: "left", y: "bottom" },
+    negative: { x: "right", y: "top" }
+  };
+  return horizontal ? horizontalOrientations[sign][axis] : orientations[sign][axis];
+}
 
 const createStringMap = (props, childComponents, allStrings) => {
   const x =
