@@ -36,7 +36,8 @@ import {
   Selection,
   LabelHelpers,
   Axis,
-  Wrapper
+  Wrapper,
+  VictoryAccessibleGroup
 } from "victory-core";
 
 import { VictoryChart } from "victory-chart";
@@ -171,5 +172,6 @@ export {
   Selection,
   LabelHelpers,
   Axis,
-  Wrapper
+  Wrapper,
+  VictoryAccessibleGroup
 };
