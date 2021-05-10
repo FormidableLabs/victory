@@ -226,14 +226,8 @@ const getOffset = (props, calculatedValues) => {
     y: getAltOrientation("y", originSign.x, horizontal)
   };
   const orientations = {
-    x:
-      orientation === "bottom" || orientation === "top"
-        ? orientation
-        : altOrientations.x,
-    y:
-      orientation === "left" || orientation === "right"
-        ? orientation
-        : altOrientations.y
+    x: orientation === "bottom" || orientation === "top" ? orientation : altOrientations.x,
+    y: orientation === "left" || orientation === "right" ? orientation : altOrientations.y
   };
   const orientationOffset = {
     y: orientations.x === "bottom" ? bottom : top,
@@ -420,8 +414,12 @@ const getBaseProps = (props, fallbackProps) => {
     const gridLayout = {
       edge: gridEdge,
       transform: {
-        x: isVertical ? -gridOffset.x + globalTransform.x : scale[axis](tickValue) + globalTransform.x,
-        y: isVertical ? scale[axis](tickValue) + globalTransform.y : gridOffset.y + globalTransform.y
+        x: isVertical
+          ? -gridOffset.x + globalTransform.x
+          : scale[axis](tickValue) + globalTransform.x,
+        y: isVertical
+          ? scale[axis](tickValue) + globalTransform.y
+          : gridOffset.y + globalTransform.y
       }
     };
     childProps[index] = {
