@@ -17,9 +17,6 @@ function getAxisProps(child, props, calculatedProps) {
   const axis = child.type.getAxis(childProps);
   const crossAxis = childProps.crossAxis === false ? false : true;
   const orientation = childProps.orientation || orientations[axis];
-  const axisOffset = horizontal
-    ? getHorizontalAxisOffset(props, calculatedProps, orientation)
-    : getAxisOffset(props, calculatedProps, orientation);
   return {
     stringMap,
     horizontal,
@@ -29,8 +26,6 @@ function getAxisProps(child, props, calculatedProps) {
     innerRadius: props.innerRadius,
     domain,
     scale,
-    // offsetY: childProps.offsetY !== undefined ? childProps.offsetY : axisOffset.y,
-    // offsetX: childProps.offsetX !== undefined ? childProps.offsetX : axisOffset.x,
     crossAxis,
     orientation
   };
@@ -211,73 +206,73 @@ const getDomain = (props, axis, childComponents) => {
   return invertDomain ? domain.concat().reverse() : domain;
 };
 
-const getAxisOffset = (props, calculatedProps, orientation) => {
-  const { scale, origin, domain, padding } = calculatedProps;
-  const { top, bottom, left, right } = padding;
-  const orientations = {
-    x:
-      orientation === "bottom" || orientation === "top"
-        ? orientation
-        : calculatedProps.orientations.x,
-    y:
-      orientation === "left" || orientation === "right"
-        ? orientation
-        : calculatedProps.orientations.y
-  };
-  // make the axes line up, and cross when appropriate
-  const orientationOffset = {
-    y: orientations.x === "bottom" ? bottom : top,
-    x: orientations.y === "left" ? left : right
-  };
-  const originOffset = {
-    x: orientations.y === "left" ? 0 : props.width,
-    y: orientations.x === "bottom" ? props.height : 0
-  };
+// const getAxisOffset = (props, calculatedProps, orientation) => {
+//   const { scale, origin, domain, padding } = calculatedProps;
+//   const { top, bottom, left, right } = padding;
+//   const orientations = {
+//     x:
+//       orientation === "bottom" || orientation === "top"
+//         ? orientation
+//         : calculatedProps.orientations.x,
+//     y:
+//       orientation === "left" || orientation === "right"
+//         ? orientation
+//         : calculatedProps.orientations.y
+//   };
+//   // make the axes line up, and cross when appropriate
+//   const orientationOffset = {
+//     y: orientations.x === "bottom" ? bottom : top,
+//     x: orientations.y === "left" ? left : right
+//   };
+//   const originOffset = {
+//     x: orientations.y === "left" ? 0 : props.width,
+//     y: orientations.x === "bottom" ? props.height : 0
+//   };
 
-  const originPosition = {
-    x: origin.x === domain.x[0] || origin.x === domain.x[1] ? 0 : scale.x(origin.x),
-    y: origin.y === domain.y[0] || origin.y === domain.y[1] ? 0 : scale.y(origin.y)
-  };
+//   const originPosition = {
+//     x: origin.x === domain.x[0] || origin.x === domain.x[1] ? 0 : scale.x(origin.x),
+//     y: origin.y === domain.y[0] || origin.y === domain.y[1] ? 0 : scale.y(origin.y)
+//   };
 
-  return {
-    x: originPosition.x ? Math.abs(originOffset.x - originPosition.x) : orientationOffset.x,
-    y: originPosition.y ? Math.abs(originOffset.y - originPosition.y) : orientationOffset.y
-  };
-};
+//   return {
+//     x: originPosition.x ? Math.abs(originOffset.x - originPosition.x) : orientationOffset.x,
+//     y: originPosition.y ? Math.abs(originOffset.y - originPosition.y) : orientationOffset.y
+//   };
+// };
 
-const getHorizontalAxisOffset = (props, calculatedProps, orientation) => {
-  const { scale, origin, domain, padding } = calculatedProps;
-  const { top, bottom, left, right } = padding;
-  const orientations = {
-    y:
-      orientation === "bottom" || orientation === "top"
-        ? orientation
-        : calculatedProps.orientations.x,
-    x:
-      orientation === "left" || orientation === "right"
-        ? orientation
-        : calculatedProps.orientations.y
-  };
-  // make the axes line up, and cross when appropriate
-  const orientationOffset = {
-    x: orientations.y === "bottom" ? bottom : top,
-    y: orientations.x === "left" ? left : right
-  };
-  const originOffset = {
-    y: orientations.x === "left" ? 0 : props.width,
-    x: orientations.y === "bottom" ? props.height : 0
-  };
+// const getHorizontalAxisOffset = (props, calculatedProps, orientation) => {
+//   const { scale, origin, domain, padding } = calculatedProps;
+//   const { top, bottom, left, right } = padding;
+//   const orientations = {
+//     y:
+//       orientation === "bottom" || orientation === "top"
+//         ? orientation
+//         : calculatedProps.orientations.x,
+//     x:
+//       orientation === "left" || orientation === "right"
+//         ? orientation
+//         : calculatedProps.orientations.y
+//   };
+//   // make the axes line up, and cross when appropriate
+//   const orientationOffset = {
+//     x: orientations.y === "bottom" ? bottom : top,
+//     y: orientations.x === "left" ? left : right
+//   };
+//   const originOffset = {
+//     y: orientations.x === "left" ? 0 : props.width,
+//     x: orientations.y === "bottom" ? props.height : 0
+//   };
 
-  const originPosition = {
-    x: origin.x === domain.x[0] || origin.x === domain.x[1] ? 0 : scale.x(origin.x),
-    y: origin.y === domain.y[0] || origin.y === domain.y[1] ? 0 : scale.y(origin.y)
-  };
+//   const originPosition = {
+//     x: origin.x === domain.x[0] || origin.x === domain.x[1] ? 0 : scale.x(origin.x),
+//     y: origin.y === domain.y[0] || origin.y === domain.y[1] ? 0 : scale.y(origin.y)
+//   };
 
-  return {
-    y: originPosition.x ? Math.abs(originOffset.x - originPosition.x) : orientationOffset.x,
-    x: originPosition.y ? Math.abs(originOffset.y - originPosition.y) : orientationOffset.y
-  };
-};
+//   return {
+//     y: originPosition.x ? Math.abs(originOffset.x - originPosition.x) : orientationOffset.x,
+//     x: originPosition.y ? Math.abs(originOffset.y - originPosition.y) : orientationOffset.y
+//   };
+// };
 
 function getOrientation(axis, originSign, horizontal) {
   const sign = originSign || "positive";

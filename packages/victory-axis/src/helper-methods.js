@@ -156,6 +156,20 @@ const getAnchors = (orientation, isVertical) => {
   };
 };
 
+// eslint-disable-next-line func-style
+function getAltOrientation(axis, originSign, horizontal) {
+  const sign = originSign || "positive";
+  const orientations = {
+    positive: { x: "bottom", y: "left" },
+    negative: { x: "top", y: "right" }
+  };
+  const horizontalOrientations = {
+    positive: { x: "left", y: "bottom" },
+    negative: { x: "right", y: "top" }
+  };
+  return horizontal ? horizontalOrientations[sign][axis] : orientations[sign][axis];
+}
+
 const getLabelPadding = (props, style) => {
   const labelStyle = style.axisLabel || {};
   if (labelStyle.padding !== undefined && labelStyle.padding !== null) {
@@ -202,20 +216,6 @@ const getOffset = (props, calculatedValues) => {
 
   const { top, bottom, left, right } = padding;
 
-  // eslint-disable-next-line func-style
-  function getAltOrientation(ax, originSign, ho) {
-    const sign = originSign || "positive";
-    const orientations = {
-      positive: { x: "bottom", y: "left" },
-      negative: { x: "top", y: "right" }
-    };
-    const horizontalOrientations = {
-      positive: { x: "left", y: "bottom" },
-      negative: { x: "right", y: "top" }
-    };
-    return ho ? horizontalOrientations[sign][ax] : orientations[sign][ax];
-  }
-
   const origin = polar ? Helpers.getPolarOrigin(props) : Axis.getOrigin(domain);
   const originSign = {
     x: Axis.getOriginSign(origin.x, domain.x),
@@ -229,29 +229,75 @@ const getOffset = (props, calculatedValues) => {
     x: orientation === "bottom" || orientation === "top" ? orientation : altOrientations.x,
     y: orientation === "left" || orientation === "right" ? orientation : altOrientations.y
   };
+
+  // padding
   const orientationOffset = {
     y: orientations.x === "bottom" ? bottom : top,
     x: orientations.y === "left" ? left : right
   };
+  // if left & bottom - this is 0 for x and 300 (height) for y
   const originOffset = {
     x: orientations.y === "left" ? 0 : props.width,
     y: orientations.x === "bottom" ? props.height : 0
   };
+  // distance from top left corner
+  const originPosition = {
+    x: origin.x === domain.x[0] || origin.x === domain.x[1] ? 0 : scale.x(origin.x),
+    y: origin.y === domain.y[0] || origin.y === domain.y[1] ? 0 : scale.y(origin.y)
+  };
+
+  const x = originPosition.x ? Math.abs(originOffset.x - originPosition.x) : orientationOffset.x;
+  const y = originPosition.y ? Math.abs(originOffset.y - originPosition.y) : orientationOffset.y;
+  const offsetX = props.offsetX !== null && props.offsetX !== undefined ? x - props.offsetX : x;
+  const offsetY = props.offsetY !== null && props.offsetY !== undefined ? y - props.offsetY : y;
+
+  return {
+    x: offsetX,
+    y: offsetY
+  };
+};
+
+// eslint-disable-next-line complexity
+const getHorizontalOffset = (props, calculatedValues) => {
+  const { scale, orientation, domain, padding } = calculatedValues;
+  const { polar, horizontal } = props;
+  const { top, bottom, left, right } = padding;
+  const origin = polar ? Helpers.getPolarOrigin(props) : Axis.getOrigin(domain);
+  const originSign = {
+    x: Axis.getOriginSign(origin.x, domain.x),
+    y: Axis.getOriginSign(origin.y, domain.y)
+  };
+  const altOrientations = {
+    x: getAltOrientation("x", originSign.y, horizontal),
+    y: getAltOrientation("y", originSign.x, horizontal)
+  };
+  const orientations = {
+    y: orientation === "bottom" || orientation === "top" ? orientation : altOrientations.x,
+    x: orientation === "left" || orientation === "right" ? orientation : altOrientations.y
+  };
+
+  // make the axes line up, and cross when appropriate
+  const orientationOffset = {
+    x: orientations.y === "bottom" ? bottom : top,
+    y: orientations.x === "left" ? left : right
+  };
+  const originOffset = {
+    y: orientations.x === "left" ? 0 : props.width,
+    x: orientations.y === "bottom" ? props.height : 0
+  };
+
   const originPosition = {
     x: origin.x === domain.x[0] || origin.x === domain.x[1] ? 0 : scale.x(origin.x),
     y: origin.y === domain.y[0] || origin.y === domain.y[1] ? 0 : scale.y(origin.y)
   };
 
   return {
-    // x: offsetX !== null && offsetX !== undefined ? offsetX : x,
-    // y: offsetY !== null && offsetY !== undefined ? offsetY : y
-    x: originPosition.x ? Math.abs(originOffset.x - originPosition.x) : orientationOffset.x,
-    y: originPosition.y ? Math.abs(originOffset.y - originPosition.y) : orientationOffset.y
+    y: originPosition.x ? Math.abs(originOffset.x - originPosition.x) : orientationOffset.x,
+    x: originPosition.y ? Math.abs(originOffset.y - originPosition.y) : orientationOffset.y
   };
 };
 
 const getTransform = (props, calculatedValues, offset) => {
-  //
   const { orientation, axis } = calculatedValues;
   const axisValue = Axis.getAxisValue(props, axis);
   return {
@@ -315,7 +361,7 @@ const getGridOffset = (props, calculatedValues, offset) => {
 };
 
 const getLayoutProps = (modifiedProps, calculatedValues) => {
-  const offset = getOffset(modifiedProps, calculatedValues);
+  const offset = modifiedProps.horizontal ? getHorizontalOffset(modifiedProps, calculatedValues) : getOffset(modifiedProps, calculatedValues);
   return {
     globalTransform: getTransform(modifiedProps, calculatedValues, offset),
     gridOffset: getGridOffset(modifiedProps, calculatedValues, offset),
