@@ -247,8 +247,8 @@ const getHorizontalOffset = (props, calculatedValues) => {
   const offsetY = props.offsetY !== null && props.offsetY !== undefined ? y - props.offsetY : y;
 
   return {
-    y: offsetX,
-    x: offsetY
+    x: offsetX,
+    y: offsetY
   };
 };
 
@@ -305,13 +305,13 @@ const getGridEdge = (props, calculatedValues) => {
   return { x, y };
 };
 
-const getGridOffset = (props, calculatedValues, offset) => {
-  const { padding, orientation } = calculatedValues;
+const getGridOffset = (calculatedValues, offset) => {
+  const { padding, orientation, crossAxis } = calculatedValues;
   const xPadding = orientation === "right" ? padding.right : padding.left;
   const yPadding = orientation === "top" ? padding.top : padding.bottom;
   return {
-    x: props.crossAxis ? offset.x - xPadding : 0,
-    y: props.crossAxis ? offset.y - yPadding : 0
+    x: crossAxis ? offset.x - xPadding : 0,
+    y: crossAxis ? offset.y - yPadding : 0
   };
 };
 
@@ -321,7 +321,7 @@ const getLayoutProps = (modifiedProps, calculatedValues) => {
     : getOffset(modifiedProps, calculatedValues);
   return {
     globalTransform: getTransform(modifiedProps, calculatedValues, offset),
-    gridOffset: getGridOffset(modifiedProps, calculatedValues, offset),
+    gridOffset: getGridOffset(calculatedValues, offset),
     gridEdge: getGridEdge(modifiedProps, calculatedValues)
   };
 };
@@ -387,7 +387,8 @@ const getCalculatedValues = (props) => {
     tickFormat,
     domain,
     origin,
-    orientations
+    orientations,
+    crossAxis
   };
 };
 
