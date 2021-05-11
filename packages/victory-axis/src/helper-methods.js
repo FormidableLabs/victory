@@ -327,6 +327,7 @@ const getOrientation = (props) => {
   return props.dependentAxis ? defaultOrientations.dependent : defaultOrientations.independent;
 };
 
+// eslint-disable-next-line complexity
 const getCalculatedValues = (props) => {
   const defaultStyles = getStyleObject(props);
   const style = getStyles(props, defaultStyles);
@@ -338,7 +339,8 @@ const getCalculatedValues = (props) => {
   const orientation = getOrientation(props);
   const currentAxisDomain = Axis.getDomain(props);
   const currentAxisScale = getScale(props);
-  const ticks = Axis.getTicks(props, currentAxisScale, props.crossAxis);
+  const crossAxis = props.crossAxis === false || props.standalone === true ? false : true;
+  const ticks = Axis.getTicks(props, currentAxisScale, crossAxis);
   const tickFormat = Axis.getTickFormat(props, currentAxisScale);
   const anchors = getAnchors(orientation, isVertical);
   const range = {

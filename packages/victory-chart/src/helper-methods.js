@@ -12,11 +12,7 @@ const fallbackProps = {
 };
 
 function getAxisProps(child, props, calculatedProps) {
-  const { domain, scale, stringMap, categories, horizontal, orientations } = calculatedProps;
-  const childProps = Axis.modifyProps(defaults({ horizontal, theme: props.theme }, child.props));
-  const axis = child.type.getAxis(childProps);
-  const crossAxis = childProps.crossAxis === false ? false : true;
-  const orientation = childProps.orientation || orientations[axis];
+  const { domain, scale, stringMap, categories, horizontal } = calculatedProps;
   return {
     stringMap,
     horizontal,
@@ -25,9 +21,7 @@ function getAxisProps(child, props, calculatedProps) {
     endAngle: props.endAngle,
     innerRadius: props.innerRadius,
     domain,
-    scale,
-    crossAxis,
-    orientation
+    scale
   };
 }
 
