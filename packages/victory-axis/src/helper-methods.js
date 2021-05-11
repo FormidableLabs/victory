@@ -184,37 +184,18 @@ const getDefaultOrientations = (axis, originSign, horizontal) => {
 
 // eslint-disable-next-line complexity
 const getOffset = (props, calculatedValues) => {
-  const { scale, orientation, domain, padding } = calculatedValues;
-  const { polar, horizontal } = props;
+  const { scale, origin, orientations, domain, padding } = calculatedValues;
   const { top, bottom, left, right } = padding;
-  const origin = polar ? Helpers.getPolarOrigin(props) : Axis.getOrigin(domain);
-  const originSign = {
-    x: Axis.getOriginSign(origin.x, domain.x),
-    y: Axis.getOriginSign(origin.y, domain.y)
-  };
-  const orientations = {
-    x:
-      orientation === "bottom" || orientation === "top"
-        ? orientation
-        : getDefaultOrientations("x", originSign.y, horizontal),
-    y:
-      orientation === "left" || orientation === "right"
-        ? orientation
-        : getDefaultOrientations("y", originSign.x, horizontal)
-  };
 
-  // padding
+  // make the axes line up, and cross when appropriate
   const orientationOffset = {
     y: orientations.x === "bottom" ? bottom : top,
     x: orientations.y === "left" ? left : right
   };
-  // if left & bottom - this is 0 for x and height for y
-  // else - width for x and 0 for y
   const originOffset = {
     x: orientations.y === "left" ? 0 : props.width,
     y: orientations.x === "bottom" ? props.height : 0
   };
-  // distance from top left corner
   const originPosition = {
     x: origin.x === domain.x[0] || origin.x === domain.x[1] ? 0 : scale.x(origin.x),
     y: origin.y === domain.y[0] || origin.y === domain.y[1] ? 0 : scale.y(origin.y)
@@ -233,24 +214,8 @@ const getOffset = (props, calculatedValues) => {
 
 // eslint-disable-next-line complexity
 const getHorizontalOffset = (props, calculatedValues) => {
-  const { scale, orientation, domain, padding } = calculatedValues;
-  const { polar, horizontal } = props;
+  const { scale, origin, orientations, domain, padding } = calculatedValues;
   const { top, bottom, left, right } = padding;
-  const origin = polar ? Helpers.getPolarOrigin(props) : Axis.getOrigin(domain);
-  const originSign = {
-    x: Axis.getOriginSign(origin.x, domain.x),
-    y: Axis.getOriginSign(origin.y, domain.y)
-  };
-  const orientations = {
-    y:
-      orientation === "bottom" || orientation === "top"
-        ? orientation
-        : getDefaultOrientations("x", originSign.y, horizontal),
-    x:
-      orientation === "left" || orientation === "right"
-        ? orientation
-        : getDefaultOrientations("y", originSign.x, horizontal)
-  };
 
   // make the axes line up, and cross when appropriate
   const orientationOffset = {
@@ -261,7 +226,6 @@ const getHorizontalOffset = (props, calculatedValues) => {
     y: orientations.x === "left" ? 0 : props.width,
     x: orientations.y === "bottom" ? props.height : 0
   };
-
   const originPosition = {
     x: origin.x === domain.x[0] || origin.x === domain.x[1] ? 0 : scale.x(origin.x),
     y: origin.y === domain.y[0] || origin.y === domain.y[1] ? 0 : scale.y(origin.y)
@@ -372,26 +336,47 @@ const getCalculatedValues = (props) => {
   const stringTicks = Axis.stringTicks(props) ? props.tickValues : undefined;
   const axis = Axis.getAxis(props);
   const orientation = getOrientation(props);
+  const currentAxisDomain = Axis.getDomain(props);
   const currentAxisScale = getScale(props);
   const ticks = Axis.getTicks(props, currentAxisScale, props.crossAxis);
   const tickFormat = Axis.getTickFormat(props, currentAxisScale);
   const anchors = getAnchors(orientation, isVertical);
-
   const range = {
     x: Helpers.getRange(props, "x"),
     y: Helpers.getRange(props, "y")
   };
   const domain = {
-    x: Domain.getDomain(props, "x"),
-    y: Domain.getDomain(props, "y")
+    x: axis === "x" && currentAxisDomain ? currentAxisDomain : Domain.getDomain(props, "x"),
+    y: axis === "y" && currentAxisDomain ? currentAxisDomain : Domain.getDomain(props, "y")
   };
   const scale = {
-    x: Scale.getBaseScale(props, "x")
-      .domain(domain.x)
-      .range(props.horizontal ? range.y : range.x),
-    y: Scale.getBaseScale(props, "y")
-      .domain(domain.y)
-      .range(props.horizontal ? range.x : range.y)
+    x:
+      axis === "x" && currentAxisScale
+        ? currentAxisScale
+        : Scale.getBaseScale(props, "x")
+            .domain(domain.x)
+            .range(props.horizontal ? range.y : range.x),
+    y:
+      axis === "y" && currentAxisScale
+        ? currentAxisScale
+        : Scale.getBaseScale(props, "y")
+            .domain(domain.y)
+            .range(props.horizontal ? range.x : range.y)
+  };
+  const origin = Axis.getOrigin(domain);
+  const originSign = {
+    x: Axis.getOriginSign(origin.x, domain.x),
+    y: Axis.getOriginSign(origin.y, domain.y)
+  };
+  const orientations = {
+    x:
+      orientation === "bottom" || orientation === "top"
+        ? orientation
+        : getDefaultOrientations("x", originSign.y, props.horizontal),
+    y:
+      orientation === "left" || orientation === "right"
+        ? orientation
+        : getDefaultOrientations("y", originSign.x, props.horizontal)
   };
 
   return {
@@ -406,7 +391,9 @@ const getCalculatedValues = (props) => {
     scale,
     ticks,
     tickFormat,
-    domain
+    domain,
+    origin,
+    orientations
   };
 };
 
