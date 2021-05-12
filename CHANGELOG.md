@@ -1,5 +1,9 @@
 # Victory Changelog
 
+## 35.6.4 (2021-05-12)
+
+- [#1850](https://github.com/FormidableLabs/victory/pull/1850) - Update `VictoryTheme` type definition to allow adding an optional style prop to `VictoryGroup` via theme. Thanks @hknowlton!
+
 ## 35.6.3 (2021-05-10)
 
 - [#1844](https://github.com/FormidableLabs/victory/pull/1844) - Export missing `VictoryAccessibleGroup` from the main `victory` package
