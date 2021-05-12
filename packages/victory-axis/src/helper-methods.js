@@ -407,16 +407,18 @@ const getCalculatedValues = (props) => {
   // use full scale if passed in from parent,
   // otherwise use the just the one axis available
   const scale = {
-    x: domain.x
-      ? Scale.getBaseScale(props, "x")
-          .domain(domain.x)
-          .range(props.horizontal ? range.y : range.x)
-      : xAxisScale,
-    y: domain.y
-      ? Scale.getBaseScale(props, "y")
-          .domain(domain.y)
-          .range(props.horizontal ? range.x : range.y)
-      : yAxisScale
+    x:
+      props.domain && props.domain.x
+        ? Scale.getBaseScale(props, "x")
+            .domain(props.domain.x)
+            .range(props.horizontal ? range.y : range.x)
+        : xAxisScale,
+    y:
+      props.domain && props.domain.y
+        ? Scale.getBaseScale(props, "y")
+            .domain(props.domain.y)
+            .range(props.horizontal ? range.x : range.y)
+        : yAxisScale
   };
   const origin = domain.x && domain.y ? Axis.getOrigin(domain) : undefined;
   const originSign = origin
