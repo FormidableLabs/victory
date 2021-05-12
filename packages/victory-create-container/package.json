@@ -1,6 +1,6 @@
 {
   "name": "victory-create-container",
-  "version": "35.6.4",
+  "version": "35.7.0",
   "description": "Container Helper for Victory",
   "keywords": [
     "data visualization",
@@ -25,7 +25,7 @@
     "victory-cursor-container": "^35.6.4",
     "victory-selection-container": "^35.6.4",
     "victory-voronoi-container": "^35.6.4",
-    "victory-zoom-container": "^35.6.4"
+    "victory-zoom-container": "^35.7.0"
   },
   "scripts": {
     "version": "nps build-libs && nps build-dists"
