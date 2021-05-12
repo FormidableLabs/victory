@@ -1,5 +1,5 @@
 import { assign, defaults } from "lodash";
-import { Helpers, Scale, Axis, Domain } from "victory-core";
+import { Helpers, Scale, Axis } from "victory-core";
 
 const orientationSign = {
   top: -1,
@@ -182,6 +182,41 @@ const getDefaultOrientations = (axis, originSign, horizontal) => {
   return horizontal ? horizontalOrientations[sign][axis] : orientations[sign][axis];
 };
 
+const getStandaloneOffset = (props, calculatedValues) => {
+  const {
+    style,
+    scale,
+    orientation,
+    padding,
+    axis,
+    ticks,
+    stringTicks,
+    isVertical,
+    labelPadding
+  } = calculatedValues;
+  const { polar, horizontal } = props;
+  const sharedProps = { scale: { [axis]: scale }, polar, horizontal, ticks, stringTicks };
+  const xPadding = orientation === "right" ? padding.right : padding.left;
+  const yPadding = orientation === "top" ? padding.top : padding.bottom;
+  const offsetX = props.offsetX !== null && props.offsetX !== undefined ? props.offsetX : xPadding;
+  const offsetY = props.offsetY !== null && props.offsetY !== undefined ? props.offsetY : yPadding;
+  const fontSize = style.axisLabel.fontSize || 14; // eslint-disable-line no-magic-numbers
+  const tickSizes = ticks.map((data, index) => {
+    const tick = stringTicks ? props.tickValues[data - 1] : data;
+    const tickStyle = Helpers.evaluateStyle(style.ticks, assign({}, sharedProps, { tick, index }));
+    return tickStyle.size || 0;
+  });
+  const totalPadding = fontSize + 2 * Math.max(...tickSizes) + labelPadding;
+  const minimumPadding = 1.2 * fontSize; // eslint-disable-line no-magic-numbers
+  const x = isVertical ? totalPadding : minimumPadding;
+  const y = isVertical ? minimumPadding : totalPadding;
+
+  return {
+    x: offsetX !== null && offsetX !== undefined ? offsetX : x,
+    y: offsetY !== null && offsetY !== undefined ? offsetY : y
+  };
+};
+
 // eslint-disable-next-line complexity
 const getOffset = (props, calculatedValues) => {
   const { scale, origin, orientation, orientations, domain, padding } = calculatedValues;
@@ -191,7 +226,7 @@ const getOffset = (props, calculatedValues) => {
     x: orientation === "bottom" || orientation === "top" ? orientation : orientations.x,
     y: orientation === "left" || orientation === "right" ? orientation : orientations.y
   };
-  //
+
   // make the axes line up, and cross when appropriate
   const orientationOffset = {
     x: calculatedOrientation.y === "left" ? left : right,
@@ -316,14 +351,30 @@ const getGridOffset = (calculatedValues, offset) => {
 };
 
 const getLayoutProps = (modifiedProps, calculatedValues) => {
-  const offset = modifiedProps.horizontal
-    ? getHorizontalOffset(modifiedProps, calculatedValues)
-    : getOffset(modifiedProps, calculatedValues);
+  let offset;
+  if (modifiedProps.standalone) {
+    offset = getStandaloneOffset(modifiedProps, calculatedValues);
+  } else {
+    offset = modifiedProps.horizontal
+      ? getHorizontalOffset(modifiedProps, calculatedValues)
+      : getOffset(modifiedProps, calculatedValues);
+  }
   return {
     globalTransform: getTransform(modifiedProps, calculatedValues, offset),
     gridOffset: getGridOffset(calculatedValues, offset),
     gridEdge: getGridEdge(modifiedProps, calculatedValues)
   };
+};
+
+const getOrientation = (props) => {
+  if (props.orientation) {
+    return props.orientation;
+  }
+  const defaultOrientations = {
+    dependent: props.horizontal ? "bottom" : "left",
+    independent: props.horizontal ? "left" : "bottom"
+  };
+  return props.dependentAxis ? defaultOrientations.dependent : defaultOrientations.independent;
 };
 
 // eslint-disable-next-line complexity
@@ -334,61 +385,73 @@ const getCalculatedValues = (props) => {
   const labelPadding = getLabelPadding(props, style);
   const stringTicks = Axis.stringTicks(props) ? props.tickValues : undefined;
   const axis = Axis.getAxis(props);
-  const currentAxisDomain = Axis.getDomain(props);
-  const currentAxisScale = getScale(props);
+  const axisDomain = Axis.getDomain(props);
+  const axisScale = getScale(props);
+  const xAxisDomain = axis === "x" ? axisDomain : undefined;
+  const yAxisDomain = axis === "y" ? axisDomain : undefined;
+  const xAxisScale = axis === "x" ? axisScale : undefined;
+  const yAxisScale = axis === "y" ? axisScale : undefined;
   const crossAxis = props.crossAxis === false || props.standalone === true ? false : true;
-  const ticks = Axis.getTicks(props, currentAxisScale, crossAxis);
-  const tickFormat = Axis.getTickFormat(props, currentAxisScale);
+  const ticks = Axis.getTicks(props, axisScale, crossAxis);
+  const tickFormat = Axis.getTickFormat(props, axisScale);
   const range = {
     x: Helpers.getRange(props, "x"),
     y: Helpers.getRange(props, "y")
   };
+  // use full domain if passed in from parent,
+  // otherwise use the just the one axis available
   const domain = {
-    x: axis === "x" && currentAxisDomain ? currentAxisDomain : Domain.getDomain(props, "x"),
-    y: axis === "y" && currentAxisDomain ? currentAxisDomain : Domain.getDomain(props, "y")
+    x: props.domain && props.domain.x ? props.domain.x : xAxisDomain,
+    y: props.domain && props.domain.y ? props.domain.y : yAxisDomain
   };
+  // use full scale if passed in from parent,
+  // otherwise use the just the one axis available
   const scale = {
-    x:
-      axis === "x" && currentAxisScale
-        ? currentAxisScale
-        : Scale.getBaseScale(props, "x")
-            .domain(domain.x)
-            .range(props.horizontal ? range.y : range.x),
-    y:
-      axis === "y" && currentAxisScale
-        ? currentAxisScale
-        : Scale.getBaseScale(props, "y")
-            .domain(domain.y)
-            .range(props.horizontal ? range.x : range.y)
+    x: domain.x
+      ? Scale.getBaseScale(props, "x")
+          .domain(domain.x)
+          .range(props.horizontal ? range.y : range.x)
+      : xAxisScale,
+    y: domain.y
+      ? Scale.getBaseScale(props, "y")
+          .domain(domain.y)
+          .range(props.horizontal ? range.x : range.y)
+      : yAxisScale
   };
-  const origin = Axis.getOrigin(domain);
-  const originSign = {
-    x: Axis.getOriginSign(origin.x, domain.x),
-    y: Axis.getOriginSign(origin.y, domain.y)
-  };
-  const orientations = {
-    x: getDefaultOrientations("x", originSign.y, props.horizontal),
-    y: getDefaultOrientations("y", originSign.x, props.horizontal)
-  };
-  const orientation = props.orientation || orientations[axis];
+  const origin = domain.x && domain.y ? Axis.getOrigin(domain) : undefined;
+  const originSign = origin
+    ? {
+        x: Axis.getOriginSign(origin.x, domain.x),
+        y: Axis.getOriginSign(origin.y, domain.y)
+      }
+    : undefined;
+  const orientations = originSign
+    ? {
+        x: getDefaultOrientations("x", originSign.y, props.horizontal),
+        y: getDefaultOrientations("y", originSign.x, props.horizontal)
+      }
+    : undefined;
+  const orientation = orientations
+    ? props.orientation || orientations[axis]
+    : getOrientation(props);
   const isVertical = Axis.isVertical(Object.assign({}, props, { orientation }));
   const anchors = getAnchors(orientation, isVertical);
   return {
+    anchors,
     axis,
-    style,
-    padding,
-    orientation,
+    crossAxis,
+    domain,
     isVertical,
     labelPadding,
-    stringTicks,
-    anchors,
-    scale,
-    ticks,
-    tickFormat,
-    domain,
-    origin,
+    orientation,
     orientations,
-    crossAxis
+    origin,
+    padding,
+    scale,
+    stringTicks,
+    style,
+    tickFormat,
+    ticks
   };
 };
 
