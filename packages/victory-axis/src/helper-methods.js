@@ -352,12 +352,12 @@ const getGridOffset = (calculatedValues, offset) => {
 
 const getLayoutProps = (modifiedProps, calculatedValues) => {
   let offset;
-  if (modifiedProps.standalone) {
-    offset = getStandaloneOffset(modifiedProps, calculatedValues);
-  } else {
+  if (calculatedValues.domain.x && calculatedValues.domain.y) {
     offset = modifiedProps.horizontal
       ? getHorizontalOffset(modifiedProps, calculatedValues)
       : getOffset(modifiedProps, calculatedValues);
+  } else {
+    offset = getStandaloneOffset(modifiedProps, calculatedValues);
   }
   return {
     globalTransform: getTransform(modifiedProps, calculatedValues, offset),
