@@ -109,16 +109,6 @@ function getCalculatedProps(props, childComponents) {
 
   const origin = polar ? Helpers.getPolarOrigin(props) : Axis.getOrigin(domain);
 
-  const originSign = {
-    x: Axis.getOriginSign(origin.x, domain.x),
-    y: Axis.getOriginSign(origin.y, domain.y)
-  };
-
-  const orientations = {
-    x: getOrientation("x", originSign.y, horizontal),
-    y: getOrientation("y", originSign.x, horizontal)
-  };
-
   const padding = Helpers.getPadding(props);
 
   return {
@@ -130,8 +120,7 @@ function getCalculatedProps(props, childComponents) {
     stringMap,
     style,
     origin,
-    padding,
-    orientations
+    padding
   };
 }
 
@@ -199,19 +188,6 @@ const getDomain = (props, axis, childComponents) => {
   const invertDomain = axisComponent && axisComponent.props && axisComponent.props.invertAxis;
   return invertDomain ? domain.concat().reverse() : domain;
 };
-
-function getOrientation(axis, originSign, horizontal) {
-  const sign = originSign || "positive";
-  const orientations = {
-    positive: { x: "bottom", y: "left" },
-    negative: { x: "top", y: "right" }
-  };
-  const horizontalOrientations = {
-    positive: { x: "left", y: "bottom" },
-    negative: { x: "right", y: "top" }
-  };
-  return horizontal ? horizontalOrientations[sign][axis] : orientations[sign][axis];
-}
 
 const createStringMap = (props, childComponents, allStrings) => {
   const x =
