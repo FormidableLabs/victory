@@ -12,14 +12,7 @@ const fallbackProps = {
 };
 
 function getAxisProps(child, props, calculatedProps) {
-  const { domain, scale, stringMap, categories, horizontal, orientations } = calculatedProps;
-  const childProps = Axis.modifyProps(defaults({ horizontal, theme: props.theme }, child.props));
-  const axis = child.type.getAxis(childProps);
-  const crossAxis = childProps.crossAxis === false ? false : true;
-  const orientation = childProps.orientation || orientations[axis];
-  const axisOffset = horizontal
-    ? getHorizontalAxisOffset(props, calculatedProps, orientation)
-    : getAxisOffset(props, calculatedProps, orientation);
+  const { domain, scale, stringMap, categories, horizontal } = calculatedProps;
   return {
     stringMap,
     horizontal,
@@ -28,11 +21,7 @@ function getAxisProps(child, props, calculatedProps) {
     endAngle: props.endAngle,
     innerRadius: props.innerRadius,
     domain,
-    scale,
-    offsetY: childProps.offsetY !== undefined ? childProps.offsetY : axisOffset.y,
-    offsetX: childProps.offsetX !== undefined ? childProps.offsetX : axisOffset.x,
-    crossAxis,
-    orientation
+    scale
   };
 }
 
@@ -93,19 +82,6 @@ function getStyles(props) {
   };
 }
 
-function getOrientation(axis, originSign, horizontal) {
-  const sign = originSign || "positive";
-  const orientations = {
-    positive: { x: "bottom", y: "left" },
-    negative: { x: "top", y: "right" }
-  };
-  const horizontalOrientations = {
-    positive: { x: "left", y: "bottom" },
-    negative: { x: "right", y: "top" }
-  };
-  return horizontal ? horizontalOrientations[sign][axis] : orientations[sign][axis];
-}
-
 function getCalculatedProps(props, childComponents) {
   const style = getStyles(props);
   props = Helpers.modifyProps(props, fallbackProps, "chart");
@@ -133,16 +109,6 @@ function getCalculatedProps(props, childComponents) {
 
   const origin = polar ? Helpers.getPolarOrigin(props) : Axis.getOrigin(domain);
 
-  const originSign = {
-    x: Axis.getOriginSign(origin.x, domain.x),
-    y: Axis.getOriginSign(origin.y, domain.y)
-  };
-
-  const orientations = {
-    x: getOrientation("x", originSign.y, horizontal),
-    y: getOrientation("y", originSign.x, horizontal)
-  };
-
   const padding = Helpers.getPadding(props);
 
   return {
@@ -154,8 +120,7 @@ function getCalculatedProps(props, childComponents) {
     stringMap,
     style,
     origin,
-    padding,
-    orientations
+    padding
   };
 }
 
@@ -222,74 +187,6 @@ const getDomain = (props, axis, childComponents) => {
   const axisComponent = Axis.getAxisComponent(childComponents, axis);
   const invertDomain = axisComponent && axisComponent.props && axisComponent.props.invertAxis;
   return invertDomain ? domain.concat().reverse() : domain;
-};
-
-const getAxisOffset = (props, calculatedProps, orientation) => {
-  const { scale, origin, domain, padding } = calculatedProps;
-  const { top, bottom, left, right } = padding;
-  const orientations = {
-    x:
-      orientation === "bottom" || orientation === "top"
-        ? orientation
-        : calculatedProps.orientations.x,
-    y:
-      orientation === "left" || orientation === "right"
-        ? orientation
-        : calculatedProps.orientations.y
-  };
-  // make the axes line up, and cross when appropriate
-  const orientationOffset = {
-    y: orientations.x === "bottom" ? bottom : top,
-    x: orientations.y === "left" ? left : right
-  };
-  const originOffset = {
-    x: orientations.y === "left" ? 0 : props.width,
-    y: orientations.x === "bottom" ? props.height : 0
-  };
-
-  const originPosition = {
-    x: origin.x === domain.x[0] || origin.x === domain.x[1] ? 0 : scale.x(origin.x),
-    y: origin.y === domain.y[0] || origin.y === domain.y[1] ? 0 : scale.y(origin.y)
-  };
-
-  return {
-    x: originPosition.x ? Math.abs(originOffset.x - originPosition.x) : orientationOffset.x,
-    y: originPosition.y ? Math.abs(originOffset.y - originPosition.y) : orientationOffset.y
-  };
-};
-
-const getHorizontalAxisOffset = (props, calculatedProps, orientation) => {
-  const { scale, origin, domain, padding } = calculatedProps;
-  const { top, bottom, left, right } = padding;
-  const orientations = {
-    y:
-      orientation === "bottom" || orientation === "top"
-        ? orientation
-        : calculatedProps.orientations.x,
-    x:
-      orientation === "left" || orientation === "right"
-        ? orientation
-        : calculatedProps.orientations.y
-  };
-  // make the axes line up, and cross when appropriate
-  const orientationOffset = {
-    x: orientations.y === "bottom" ? bottom : top,
-    y: orientations.x === "left" ? left : right
-  };
-  const originOffset = {
-    y: orientations.x === "left" ? 0 : props.width,
-    x: orientations.y === "bottom" ? props.height : 0
-  };
-
-  const originPosition = {
-    x: origin.x === domain.x[0] || origin.x === domain.x[1] ? 0 : scale.x(origin.x),
-    y: origin.y === domain.y[0] || origin.y === domain.y[1] ? 0 : scale.y(origin.y)
-  };
-
-  return {
-    y: originPosition.x ? Math.abs(originOffset.x - originPosition.x) : orientationOffset.x,
-    x: originPosition.y ? Math.abs(originOffset.y - originPosition.y) : orientationOffset.y
-  };
 };
 
 const createStringMap = (props, childComponents, allStrings) => {
