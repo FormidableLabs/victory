@@ -191,11 +191,13 @@ function getTickArray(props) {
     const domain = (props.domain && props.domain[axis]) || props.domain;
     if (arr) {
       arr.forEach(function (t, index) {
-        if (Array.isArray(domain) && t >= Math.min(...domain) && t <= Math.max(...domain)) {
-          newTickArray.push({
-            value: t,
-            index
-          });
+        if (Array.isArray(domain)) {
+          if (t >= Math.min(...domain) && t <= Math.max(...domain)) {
+            newTickArray.push({
+              value: t,
+              index
+            });
+          }
         } else {
           newTickArray.push({
             value: t,
