@@ -71,6 +71,9 @@ const getCornerRadius = (cornerRadius, props) => {
 };
 
 const getStyle = (style = {}, props) => {
+  if (props.disableInlineStyle) {
+    return {};
+  }
   const stroke = style.fill || "black";
   const baseStyle = { fill: "black", stroke };
   return Helpers.evaluateStyle(assign(baseStyle, style), props);
@@ -143,6 +146,7 @@ Bar.propTypes = {
     })
   ]),
   datum: PropTypes.object,
+  disableInlineStyles: PropTypes.bool,
   getPath: PropTypes.func,
   horizontal: PropTypes.bool,
   pathComponent: PropTypes.element,

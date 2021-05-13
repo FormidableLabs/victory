@@ -1,7 +1,7 @@
 /*eslint-disable no-magic-numbers*/
 /*eslint-disable react/no-multi-comp*/
 import React from "react";
-import { VictoryBar } from "../packages/victory-bar/src";
+import { VictoryBar, Bar } from "../packages/victory-bar/src";
 import { VictoryChart } from "../packages/victory-chart/src";
 import { VictoryGroup } from "../packages/victory-group/src/index";
 import { VictoryStack } from "../packages/victory-stack/src/index";
@@ -932,6 +932,19 @@ export const Domain = () => {
       </VictoryChart>
       <VictoryChart style={parentStyle} maxDomain={{ x: 4 }}>
         <VictoryBar data={getData(7)} />
+      </VictoryChart>
+    </div>
+  );
+};
+
+export const DisableInlineStyles = () => {
+  return (
+    <div style={containerStyle}>
+      <VictoryChart>
+        <VictoryBar disableInlineStyles />
+      </VictoryChart>
+      <VictoryChart>
+        <VictoryBar dataComponent={<Bar disableInlineStyles />} />
       </VictoryChart>
     </div>
   );
