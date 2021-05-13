@@ -393,6 +393,13 @@ const getCalculatedValues = (props) => {
   const yAxisScale = axis === "y" ? axisScale : undefined;
   const crossAxis = props.crossAxis === false || props.standalone === true ? false : true;
   const ticks = Axis.getTicks(props, axisScale, crossAxis);
+  const originalTicks = props.originalDomain
+    ? Axis.getTicks(
+        Object.assign({}, props, { domain: props.originalDomain }),
+        axisScale,
+        crossAxis
+      )
+    : ticks;
   const tickFormat = Axis.getTickFormat(props, axisScale);
   const range = {
     x: Helpers.getRange(props, "x"),
@@ -453,7 +460,8 @@ const getCalculatedValues = (props) => {
     stringTicks,
     style,
     tickFormat,
-    ticks
+    ticks,
+    originalTicks
   };
 };
 
@@ -471,6 +479,7 @@ const getBaseProps = (props, fallbackProps) => {
     anchors,
     domain,
     stringTicks,
+    originalTicks,
     name
   } = calculatedValues;
   const otherAxis = axis === "x" ? "y" : "x";
@@ -493,7 +502,7 @@ const getBaseProps = (props, fallbackProps) => {
   };
   return ticks.reduce((childProps, tickValue, index) => {
     const tick = stringTicks ? stringTicks[index] : tickValue;
-    const text = tickFormat(tickValue, index, ticks);
+    const text = tickFormat(tickValue, originalTicks.indexOf(tickValue), ticks);
     const styles = getEvaluatedStyles(
       style,
       assign({}, sharedProps, { tick, tickValue, index, text })

@@ -193,9 +193,10 @@ export const zoomContainerMixin = (base) =>
           isDataComponent && role !== "stack"
             ? {
                 domain: newDomain,
+                originalDomain,
                 data: this.downsampleZoomData(props, child, newDomain)
               }
-            : { domain: newDomain };
+            : { domain: newDomain, originalDomain };
         return React.cloneElement(child, defaults(newProps, child.props));
       });
     }
