@@ -186,44 +186,27 @@ function getTickArray(props) {
     ticks = stringMap ? tickValues.map((tick) => stringMap[tick]) : range(1, tickValues.length + 1);
   }
   const tickArray = ticks ? uniq(ticks) : getTicksFromFormat(props);
-  const filterArray = (arr) => {
+  const buildTickArray = (arr) => {
+    const newTickArray = [];
     const domain = (props.domain && props.domain[axis]) || props.domain;
-    return Array.isArray(domain)
-      ? arr.filter((t) => t >= Math.min(...domain) && t <= Math.max(...domain))
-      : arr;
+    if (arr) {
+      arr.forEach(function (t, index) {
+        if (Array.isArray(domain) && t >= Math.min(...domain) && t <= Math.max(...domain)) {
+          newTickArray.push({
+            value: t,
+            index
+          });
+        } else {
+          newTickArray.push({
+            value: t,
+            index
+          });
+        }
+      });
+      return newTickArray;
+    } else return undefined;
   };
-  return Array.isArray(tickArray) && tickArray.length ? filterArray(tickArray) : undefined;
-}
-
-function getTickArrayIndices(props) {
-  const { tickValues, tickFormat } = props;
-  const axis = getAxis(props);
-  const stringMap = props.stringMap && props.stringMap[axis];
-  const getTicksFromFormat = () => {
-    if (!tickFormat || !Array.isArray(tickFormat)) {
-      return undefined;
-    }
-    return Collection.containsStrings(tickFormat) ? tickFormat.map((t, i) => i) : tickFormat;
-  };
-
-  let ticks = tickValues;
-  if (stringMap) {
-    ticks = getStringTicks(props);
-  }
-  if (tickValues && Collection.containsStrings(tickValues)) {
-    ticks = stringMap ? tickValues.map((tick) => stringMap[tick]) : range(1, tickValues.length + 1);
-  }
-  const tickArray = ticks ? uniq(ticks) : getTicksFromFormat(props);
-  const tickArrayIndices = [];
-  const domain = (props.domain && props.domain[axis]) || props.domain;
-  if (Array.isArray(tickArray) && tickArray.length) {
-    tickArray.forEach(function (t, index) {
-      if (t >= Math.min(...domain) && t <= Math.max(...domain)) {
-        tickArrayIndices.push(index);
-      }
-    });
-  }
-  return tickArrayIndices;
+  return Array.isArray(tickArray) && tickArray.length ? buildTickArray(tickArray) : undefined;
 }
 
 function getTickFormat(props, scale) {
@@ -236,7 +219,9 @@ function getTickFormat(props, scale) {
       scale.tickFormat && isFunction(scale.tickFormat) ? scale.tickFormat() : (x) => x;
     return defaultTickFormat || scaleTickFormat;
   } else if (tickFormat && Array.isArray(tickFormat)) {
-    const tickArrayIndices = getTickArrayIndices(props);
+    const tickArrayIndices = getTickArray(props)
+      ? getTickArray(props).map((v) => v.index)
+      : undefined;
     const filteredTickFormat = tickFormat.filter((t, index) => tickArrayIndices.includes(index));
     return (x, index) => filteredTickFormat[index];
   } else if (tickFormat && isFunction(tickFormat)) {
@@ -261,7 +246,7 @@ function downsampleTicks(ticks, tickCount) {
 
 function getTicks(props, scale, filterZero) {
   const { tickCount } = props;
-  const tickValues = getTickArray(props);
+  const tickValues = getTickArray(props) ? getTickArray(props).map((v) => v.value) : undefined;
   if (tickValues) {
     return downsampleTicks(tickValues, tickCount);
   } else if (scale.ticks && isFunction(scale.ticks)) {
@@ -288,7 +273,7 @@ function getTicks(props, scale, filterZero) {
 //eslint-disable-next-line max-statements
 function getDomainFromData(props, axis) {
   const { polar, startAngle = 0, endAngle = 360 } = props;
-  const tickValues = getTickArray(props);
+  const tickValues = getTickArray(props) ? getTickArray(props).map((v) => v.value) : undefined;
   if (!Array.isArray(tickValues)) {
     return undefined;
   }
