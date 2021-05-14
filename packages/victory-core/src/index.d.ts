@@ -551,6 +551,9 @@ export interface EventPropTypeInterface<TTarget, TEventKey> {
             TTarget,
             TEventKey
           >[];
+        }
+      | {
+          (event: React.SyntheticEvent<any>, props?: any): void;
         };
   };
 }
