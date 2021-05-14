@@ -192,7 +192,7 @@ function getTickArray(props) {
     if (arr) {
       arr.forEach(function (t, index) {
         if (Array.isArray(domain)) {
-          if (t >= Math.min(...domain) && t <= Math.max(...domain)) {
+          if (t >= Collection.getMinValue(domain) && t <= Collection.getMaxValue(domain)) {
             newTickArray.push({
               value: t,
               index
@@ -221,9 +221,8 @@ function getTickFormat(props, scale) {
       scale.tickFormat && isFunction(scale.tickFormat) ? scale.tickFormat() : (x) => x;
     return defaultTickFormat || scaleTickFormat;
   } else if (tickFormat && Array.isArray(tickFormat)) {
-    const tickArrayIndices = getTickArray(props)
-      ? getTickArray(props).map((v) => v.index)
-      : undefined;
+    const tickArray = getTickArray(props);
+    const tickArrayIndices = tickArray ? tickArray.map((v) => v.index) : undefined;
     const filteredTickFormat = tickFormat.filter((t, index) => tickArrayIndices.includes(index));
     return (x, index) => filteredTickFormat[index];
   } else if (tickFormat && isFunction(tickFormat)) {
@@ -248,15 +247,17 @@ function downsampleTicks(ticks, tickCount) {
 
 function getTicks(props, scale, filterZero) {
   const { tickCount } = props;
-  const tickValues = getTickArray(props) ? getTickArray(props).map((v) => v.value) : undefined;
+  const tickArray = getTickArray(props);
+  const tickValues = tickArray ? tickArray.map((v) => v.value) : undefined;
   if (tickValues) {
     return downsampleTicks(tickValues, tickCount);
   } else if (scale.ticks && isFunction(scale.ticks)) {
     // eslint-disable-next-line no-magic-numbers
     const defaultTickCount = tickCount || 5;
     const scaleTicks = scale.ticks(defaultTickCount);
-    const tickArray = Array.isArray(scaleTicks) && scaleTicks.length ? scaleTicks : scale.domain();
-    const ticks = downsampleTicks(tickArray, tickCount);
+    const scaledTickArray =
+      Array.isArray(scaleTicks) && scaleTicks.length ? scaleTicks : scale.domain();
+    const ticks = downsampleTicks(scaledTickArray, tickCount);
     if (filterZero) {
       const filteredTicks = includes(ticks, 0) ? without(ticks, 0) : ticks;
       return filteredTicks.length ? filteredTicks : ticks;
@@ -275,7 +276,8 @@ function getTicks(props, scale, filterZero) {
 //eslint-disable-next-line max-statements
 function getDomainFromData(props, axis) {
   const { polar, startAngle = 0, endAngle = 360 } = props;
-  const tickValues = getTickArray(props) ? getTickArray(props).map((v) => v.value) : undefined;
+  const tickArray = getTickArray(props);
+  const tickValues = tickArray ? tickArray.map((v) => v.value) : undefined;
   if (!Array.isArray(tickValues)) {
     return undefined;
   }
