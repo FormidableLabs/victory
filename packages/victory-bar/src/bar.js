@@ -71,7 +71,7 @@ const getCornerRadius = (cornerRadius, props) => {
 };
 
 const getStyle = (style = {}, props) => {
-  if (props.disableInlineStyle) {
+  if (props.disableInlineStyles) {
     return {};
   }
   const stroke = style.fill || "black";
