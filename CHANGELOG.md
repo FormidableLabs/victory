@@ -1,5 +1,9 @@
 # Victory Changelog
 
+## 35.7.1 (2021-05-14)
+
+-[#1853](https://github.com/FormidableLabs/victory/pull/1853) - Fixes a bug related to event prop types. Thanks @tvsmk!
+
 ## 35.7.0 (2021-05-12)
 
 - [#1835](https://github.com/FormidableLabs/victory/pull/1835) - This PR makes `VictoryAxis` responsible for calculating its own default `xOffset`, `yOffset`, `orientation`, and `crossAxis` values rather than relying on `VictoryChart` to determine these values. This change corrects several bugs related to how axes update on charts that use `VictoryZoomContainer`. We don't anticipate breaking changes with this update, but axis positioning will update differently (more correctly) when zooming. Thanks @jhumbug!
