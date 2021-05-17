@@ -151,29 +151,6 @@ function getDefaultTickFormat(props) {
   }
 }
 
-function getTickFormat(props, scale) {
-  const { tickFormat } = props;
-  const axis = getAxis(props);
-  const stringMap = props.stringMap && props.stringMap[axis];
-  if (!tickFormat) {
-    const defaultTickFormat = getDefaultTickFormat(props);
-    const scaleTickFormat =
-      scale.tickFormat && isFunction(scale.tickFormat) ? scale.tickFormat() : (x) => x;
-    return defaultTickFormat || scaleTickFormat;
-  } else if (tickFormat && Array.isArray(tickFormat)) {
-    return (x, index) => tickFormat[index];
-  } else if (tickFormat && isFunction(tickFormat)) {
-    const applyStringTicks = (tick, index, ticks) => {
-      const invertedStringMap = invert(stringMap);
-      const stringTickArray = ticks.map((t) => invertedStringMap[t]);
-      return props.tickFormat(invertedStringMap[tick], index, stringTickArray);
-    };
-    return stringMap ? applyStringTicks : tickFormat;
-  } else {
-    return (x) => x;
-  }
-}
-
 function getStringTicks(props) {
   const axis = getAxis(props);
   const stringMap = props.stringMap && props.stringMap[axis];
@@ -209,13 +186,55 @@ function getTickArray(props) {
     ticks = stringMap ? tickValues.map((tick) => stringMap[tick]) : range(1, tickValues.length + 1);
   }
   const tickArray = ticks ? uniq(ticks) : getTicksFromFormat(props);
-  const filterArray = (arr) => {
+  const buildTickArray = (arr) => {
+    const newTickArray = [];
     const domain = (props.domain && props.domain[axis]) || props.domain;
-    return Array.isArray(domain)
-      ? arr.filter((t) => t >= Math.min(...domain) && t <= Math.max(...domain))
-      : arr;
+    if (arr) {
+      arr.forEach(function (t, index) {
+        if (Array.isArray(domain)) {
+          if (t >= Collection.getMinValue(domain) && t <= Collection.getMaxValue(domain)) {
+            newTickArray.push({
+              value: t,
+              index
+            });
+          }
+        } else {
+          newTickArray.push({
+            value: t,
+            index
+          });
+        }
+      });
+      return newTickArray;
+    } else return undefined;
   };
-  return Array.isArray(tickArray) && tickArray.length ? filterArray(tickArray) : undefined;
+  return Array.isArray(tickArray) && tickArray.length ? buildTickArray(tickArray) : undefined;
+}
+
+function getTickFormat(props, scale) {
+  const { tickFormat } = props;
+  const axis = getAxis(props);
+  const stringMap = props.stringMap && props.stringMap[axis];
+  if (!tickFormat) {
+    const defaultTickFormat = getDefaultTickFormat(props);
+    const scaleTickFormat =
+      scale.tickFormat && isFunction(scale.tickFormat) ? scale.tickFormat() : (x) => x;
+    return defaultTickFormat || scaleTickFormat;
+  } else if (tickFormat && Array.isArray(tickFormat)) {
+    const tickArray = getTickArray(props);
+    const tickArrayIndices = tickArray ? tickArray.map((v) => v.index) : undefined;
+    const filteredTickFormat = tickFormat.filter((t, index) => tickArrayIndices.includes(index));
+    return (x, index) => filteredTickFormat[index];
+  } else if (tickFormat && isFunction(tickFormat)) {
+    const applyStringTicks = (tick, index, ticks) => {
+      const invertedStringMap = invert(stringMap);
+      const stringTickArray = ticks.map((t) => invertedStringMap[t]);
+      return props.tickFormat(invertedStringMap[tick], index, stringTickArray);
+    };
+    return stringMap ? applyStringTicks : tickFormat;
+  } else {
+    return (x) => x;
+  }
 }
 
 function downsampleTicks(ticks, tickCount) {
@@ -228,15 +247,17 @@ function downsampleTicks(ticks, tickCount) {
 
 function getTicks(props, scale, filterZero) {
   const { tickCount } = props;
-  const tickValues = getTickArray(props);
+  const tickArray = getTickArray(props);
+  const tickValues = tickArray ? tickArray.map((v) => v.value) : undefined;
   if (tickValues) {
     return downsampleTicks(tickValues, tickCount);
   } else if (scale.ticks && isFunction(scale.ticks)) {
     // eslint-disable-next-line no-magic-numbers
     const defaultTickCount = tickCount || 5;
     const scaleTicks = scale.ticks(defaultTickCount);
-    const tickArray = Array.isArray(scaleTicks) && scaleTicks.length ? scaleTicks : scale.domain();
-    const ticks = downsampleTicks(tickArray, tickCount);
+    const scaledTickArray =
+      Array.isArray(scaleTicks) && scaleTicks.length ? scaleTicks : scale.domain();
+    const ticks = downsampleTicks(scaledTickArray, tickCount);
     if (filterZero) {
       const filteredTicks = includes(ticks, 0) ? without(ticks, 0) : ticks;
       return filteredTicks.length ? filteredTicks : ticks;
@@ -255,7 +276,8 @@ function getTicks(props, scale, filterZero) {
 //eslint-disable-next-line max-statements
 function getDomainFromData(props, axis) {
   const { polar, startAngle = 0, endAngle = 360 } = props;
-  const tickValues = getTickArray(props);
+  const tickArray = getTickArray(props);
+  const tickValues = tickArray ? tickArray.map((v) => v.value) : undefined;
   if (!Array.isArray(tickValues)) {
     return undefined;
   }
