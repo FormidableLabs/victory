@@ -1,5 +1,9 @@
 # Victory Changelog
 
+## 35.7.2 (2021-05-18)
+
+- [#1852](https://github.com/FormidableLabs/victory/pull/1852) - Fixes a bug related to zooming axes when `tickFormat` is given as an array. Thanks @jhumbug!
+
 ## 35.7.1 (2021-05-14)
 
 -[#1853](https://github.com/FormidableLabs/victory/pull/1853) - Fixes a bug related to event prop types. Thanks @tvsmk!
