@@ -1,13 +1,13 @@
 # Victory Changelog
 
-## 35.8.0 (2020-05-19)
+## 35.8.0 (2021-05-19)
 
 - [#1858](https://github.com/FormidableLabs/victory/pull/1858) - `domainPadding` updates
 
-- updates how `domainPadding` is applied to charts when 1) the additional padding _would not_ result new quadradants being added, or 2) the user has set `singleQuadrantDomainPadding={false}`. In these cases, `domainPadding` is applied by calculating a new, smaller range that takes the desired, pixel-based padding into account, and then adding domain padding such that the previous domain fits entirely within the new, smaller range. In most cases, this change will make it much easier to do things like create bar charts where the first bar starts cleanly at the edge of the chart, by setting `domainPadding={{ x: myBarWidth / 2 }}`
+updates how `domainPadding` is applied to charts when 1) the additional padding _would not_ result new quadradants being added, or 2) the user has set `singleQuadrantDomainPadding={false}`. In these cases, `domainPadding` is applied by calculating a new, smaller range that takes the desired, pixel-based padding into account, and then adding domain padding such that the previous domain fits entirely within the new, smaller range. In most cases, this change will make it much easier to do things like create bar charts where the first bar starts cleanly at the edge of the chart, by setting `domainPadding={{ x: myBarWidth / 2 }}`
 **This may cause visual changes for charts that use very large values for `domainPadding`. The `domainPadding` prop may need to be adjusted**
 
-- calculates a more exact `defaultDomainPadding` for grouped bar charts based on the `offset`, number of bars, and the width of each bar (either from the `barWidth` prop or from a default `barWidth` based on the number of bars and the range). Previously, `defaultDomainPadding` was approximated based only on `offset` and number of bars.
+calculates a more exact `defaultDomainPadding` for grouped bar charts based on the `offset`, number of bars, and the width of each bar (either from the `barWidth` prop or from a default `barWidth` based on the number of bars and the range). Previously, `defaultDomainPadding` was approximated based only on `offset` and number of bars.
 
 ## 35.7.2 (2021-05-18)
 
@@ -15,7 +15,7 @@
 
 ## 35.7.1 (2021-05-14)
 
--[#1853](https://github.com/FormidableLabs/victory/pull/1853) - Fixes a bug related to event prop types. Thanks @tvsmk!
+- [#1853](https://github.com/FormidableLabs/victory/pull/1853) - Fixes a bug related to event prop types. Thanks @tvsmk!
 
 ## 35.7.0 (2021-05-12)
 
