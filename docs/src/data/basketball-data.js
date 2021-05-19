@@ -1,5 +1,5 @@
 export default {
-  "1990": [
+  1990: [
     {
       player: "Michael Jordan",
       "3pa": 1.1
@@ -621,7 +621,7 @@ export default {
       "3pa": 0
     }
   ],
-  "1991": [
+  1991: [
     {
       player: "Michael Jordan",
       "3pa": 1.3
@@ -1215,7 +1215,7 @@ export default {
       "3pa": 0
     }
   ],
-  "1992": [
+  1992: [
     {
       player: "Michael Jordan",
       "3pa": 2.9
@@ -1801,7 +1801,7 @@ export default {
       "3pa": 0.1
     }
   ],
-  "1993": [
+  1993: [
     {
       player: "David Robinson",
       "3pa": 0.4
@@ -2383,7 +2383,7 @@ export default {
       "3pa": 0
     }
   ],
-  "1994": [
+  1994: [
     {
       player: "Shaquille O'Neal",
       "3pa": 0.1
@@ -2937,7 +2937,7 @@ export default {
       "3pa": 0
     }
   ],
-  "1995": [
+  1995: [
     {
       player: "Michael Jordan",
       "3pa": 3.2
@@ -3551,7 +3551,7 @@ export default {
       "3pa": 0
     }
   ],
-  "1996": [
+  1996: [
     {
       player: "Michael Jordan",
       "3pa": 3.6
@@ -4097,7 +4097,7 @@ export default {
       "3pa": 0
     }
   ],
-  "1997": [
+  1997: [
     {
       player: "Michael Jordan",
       "3pa": 1.5
@@ -4679,7 +4679,7 @@ export default {
       "3pa": 0.8
     }
   ],
-  "1998": [
+  1998: [
     {
       player: "Allen Iverson",
       "3pa": 4.1
@@ -5305,7 +5305,7 @@ export default {
       "3pa": 0
     }
   ],
-  "1999": [
+  1999: [
     {
       player: "Shaquille O'Neal",
       "3pa": 0
@@ -5899,7 +5899,7 @@ export default {
       "3pa": 0
     }
   ],
-  "2000": [
+  2000: [
     {
       player: "Allen Iverson",
       "3pa": 4.3
@@ -6497,7 +6497,7 @@ export default {
       "3pa": 0
     }
   ],
-  "2001": [
+  2001: [
     {
       player: "Allen Iverson",
       "3pa": 4.5
@@ -7091,7 +7091,7 @@ export default {
       "3pa": 0
     }
   ],
-  "2002": [
+  2002: [
     {
       player: "Tracy McGrady",
       "3pa": 6
@@ -7693,7 +7693,7 @@ export default {
       "3pa": 0.5
     }
   ],
-  "2003": [
+  2003: [
     {
       player: "Tracy McGrady",
       "3pa": 7.7
@@ -8279,7 +8279,7 @@ export default {
       "3pa": 0
     }
   ],
-  "2004": [
+  2004: [
     {
       player: "Allen Iverson",
       "3pa": 4.5
@@ -8829,7 +8829,7 @@ export default {
       "3pa": 0.6
     }
   ],
-  "2005": [
+  2005: [
     {
       player: "Kobe Bryant",
       "3pa": 6.5
@@ -9423,7 +9423,7 @@ export default {
       "3pa": 0.2
     }
   ],
-  "2006": [
+  2006: [
     {
       player: "Kobe Bryant",
       "3pa": 5.2
@@ -10037,7 +10037,7 @@ export default {
       "3pa": 0
     }
   ],
-  "2007": [
+  2007: [
     {
       player: "LeBron James",
       "3pa": 4.8
@@ -10679,7 +10679,7 @@ export default {
       "3pa": 0.1
     }
   ],
-  "2008": [
+  2008: [
     {
       player: "Dwyane Wade",
       "3pa": 3.5
@@ -11265,7 +11265,7 @@ export default {
       "3pa": 0.1
     }
   ],
-  "2009": [
+  2009: [
     {
       player: "Kevin Durant",
       "3pa": 4.3
@@ -11895,7 +11895,7 @@ export default {
       "3pa": 0
     }
   ],
-  "2010": [
+  2010: [
     {
       player: "Kevin Durant",
       "3pa": 5.3
@@ -12525,7 +12525,7 @@ export default {
       "3pa": 0
     }
   ],
-  "2011": [
+  2011: [
     {
       player: "Kevin Durant",
       "3pa": 5.2
@@ -13135,7 +13135,7 @@ export default {
       "3pa": 0
     }
   ],
-  "2012": [
+  2012: [
     {
       player: "Carmelo Anthony",
       "3pa": 6.2
@@ -13733,7 +13733,7 @@ export default {
       "3pa": 0
     }
   ],
-  "2013": [
+  2013: [
     {
       player: "Kevin Durant",
       "3pa": 6.1
@@ -14483,7 +14483,7 @@ export default {
       "3pa": 2.9
     }
   ],
-  "2014": [
+  2014: [
     {
       player: "Russell Westbrook",
       "3pa": 4.3
@@ -15265,7 +15265,7 @@ export default {
       "3pa": 2.5
     }
   ],
-  "2015": [
+  2015: [
     {
       player: "Stephen Curry",
       "3pa": 11.2
@@ -16059,7 +16059,7 @@ export default {
       "3pa": 0.8
     }
   ],
-  "2016": [
+  2016: [
     {
       player: "Russell Westbrook",
       "3pa": 7.2
@@ -16833,7 +16833,7 @@ export default {
       "3pa": 2.4
     }
   ],
-  "2017": [
+  2017: [
     {
       player: "James Harden",
       "3pa": 10
@@ -17587,7 +17587,7 @@ export default {
       "3pa": 2.4
     }
   ],
-  "2018": [
+  2018: [
     {
       player: "James Harden",
       "3pa": 13.2
@@ -18357,7 +18357,7 @@ export default {
       "3pa": 2.6
     }
   ],
-  "2019": [
+  2019: [
     {
       player: "James Harden",
       "3pa": 12.6

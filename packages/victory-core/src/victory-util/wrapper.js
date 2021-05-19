@@ -43,7 +43,20 @@ export default {
       return undefined;
     }
     const { offset, children } = groupComponent[0].props;
-    return { x: (offset * children.length) / 2 };
+    if (!offset) {
+      return undefined;
+    }
+
+    const firstChild = Array.isArray(children) && children[0];
+    let barWidth = firstChild.props.barWidth;
+    let dataLength = (firstChild.props.data && firstChild.props.data.length) || 1;
+    if (firstChild && firstChild.type.role === "stack") {
+      const nestedChild = firstChild.props.children && firstChild.props.children[0];
+      barWidth = nestedChild.props.barWidth;
+      dataLength = firstChild.props.children.length;
+    }
+    const width = barWidth || this.getWidth(props, children.length, dataLength);
+    return { x: (width * children.length) / 2 + (offset - width * ((children.length - 1) / 2)) };
   },
 
   getDomain(props, axis, childComponents) {
@@ -302,14 +315,18 @@ export default {
     return color || colors[index % colors.length];
   },
 
-  getWidth(props) {
-    const { datasets, scale, horizontal } = props;
-    const range = horizontal ? scale.y.range() : scale.x.range();
+  getWidth(props, groupLength, seriesLength) {
+    const { datasets, horizontal } = props;
+    const range = horizontal ? Helpers.getRange(props, "y") : Helpers.getRange(props, "x");
     const extent = Math.abs(range[1] - range[0]);
-    const seriesLength = Array.isArray(datasets[0]) ? datasets[0].length : 1;
-    const bars = datasets.length * seriesLength + 2;
+    seriesLength =
+      seriesLength !== undefined
+        ? seriesLength
+        : (Array.isArray(datasets[0]) && datasets[0].length) || 1;
+    groupLength = groupLength || datasets.length;
+    const bars = groupLength * seriesLength;
     const barRatio = 0.5;
-    return { width: Math.round((barRatio * extent) / bars) };
+    return Math.round((barRatio * extent) / bars);
   },
 
   getStyle(theme, style, role) {
@@ -328,7 +345,7 @@ export default {
       childRole === "stack" ? undefined : this.getColor(calculatedProps, child, index);
     const defaultColor =
       childRole === "line" ? { fill: "none", stroke: defaultFill } : { fill: defaultFill };
-    const dataWidth = role === "stack" ? {} : this.getWidth(calculatedProps);
+    const dataWidth = role === "stack" ? {} : { width: this.getWidth(calculatedProps) };
     const dataStyle = defaults(
       {},
       childStyle.data,

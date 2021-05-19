@@ -80,42 +80,57 @@ function padDomain(domain, props, axis) {
   const range = Helpers.getRange(props, currentAxis);
   const rangeExtent = Math.abs(range[0] - range[1]);
 
-  // Naive initial padding calculation
-  const initialPadding = {
-    left: (Math.abs(max - min) * padding.left) / rangeExtent,
-    right: (Math.abs(max - min) * padding.right) / rangeExtent
+  const paddedRangeExtent = Math.max(rangeExtent - padding.left - padding.right, 1);
+  const paddedDomainExtent =
+    (Math.abs(max.valueOf() - min.valueOf()) / paddedRangeExtent) * rangeExtent;
+
+  const simplePadding = {
+    left: (paddedDomainExtent * padding.left) / rangeExtent,
+    right: (paddedDomainExtent * padding.right) / rangeExtent
+  };
+
+  let paddedDomain = {
+    min: min.valueOf() - simplePadding.left,
+    max: max.valueOf() + simplePadding.right
   };
 
   const singleQuadrantDomainPadding = isPlainObject(props.singleQuadrantDomainPadding)
     ? props.singleQuadrantDomainPadding[axis]
     : props.singleQuadrantDomainPadding;
 
+  const addsQuadrants = (min >= 0 && paddedDomain.min <= 0) || (max <= 0 && paddedDomain.max >= 0);
+
   const adjust = (val, type) => {
-    if (singleQuadrantDomainPadding === false) {
-      return val;
-    }
     const coerce =
       (type === "min" && min >= 0 && val <= 0) || (type === "max" && max <= 0 && val >= 0);
     return coerce ? 0 : val;
   };
 
-  // Adjust the domain by the initial padding
-  const adjustedDomain = {
-    min: adjust(min.valueOf() - initialPadding.left, "min"),
-    max: adjust(max.valueOf() + initialPadding.right, "max")
-  };
+  if (addsQuadrants && singleQuadrantDomainPadding !== false) {
+    // Naive initial padding calculation
+    const initialPadding = {
+      left: (Math.abs(max - min) * padding.left) / rangeExtent,
+      right: (Math.abs(max - min) * padding.right) / rangeExtent
+    };
 
-  // re-calculate padding, taking the adjusted domain into account
-  const finalPadding = {
-    left: (Math.abs(adjustedDomain.max - adjustedDomain.min) * padding.left) / rangeExtent,
-    right: (Math.abs(adjustedDomain.max - adjustedDomain.min) * padding.right) / rangeExtent
-  };
+    // Adjust the domain by the initial padding
+    const adjustedDomain = {
+      min: adjust(min.valueOf() - initialPadding.left, "min"),
+      max: adjust(max.valueOf() + initialPadding.right, "max")
+    };
 
-  // Adjust the domain by the final padding
-  const paddedDomain = {
-    min: adjust(min.valueOf() - finalPadding.left, "min"),
-    max: adjust(max.valueOf() + finalPadding.right, "max")
-  };
+    // re-calculate padding, taking the adjusted domain into account
+    const finalPadding = {
+      left: (Math.abs(adjustedDomain.max - adjustedDomain.min) * padding.left) / rangeExtent,
+      right: (Math.abs(adjustedDomain.max - adjustedDomain.min) * padding.right) / rangeExtent
+    };
+
+    // Adjust the domain by the final padding
+    paddedDomain = {
+      min: adjust(min.valueOf() - finalPadding.left, "min"),
+      max: adjust(max.valueOf() + finalPadding.right, "max")
+    };
+  }
 
   // default to minDomain / maxDomain if they exist
   const finalDomain = {
