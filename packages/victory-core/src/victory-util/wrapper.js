@@ -341,11 +341,11 @@ export default {
       childRole === "stack" ? undefined : this.getColor(calculatedProps, child, index);
     const defaultColor =
       childRole === "line" ? { fill: "none", stroke: defaultFill } : { fill: defaultFill };
-    const dataWidth = role === "stack" ? {} : this.getWidth(calculatedProps);
+    const dataWidth = role === "stack" ? {} : { width: this.getWidth(calculatedProps) };
     const dataStyle = defaults(
       {},
       childStyle.data,
-      assign({}, { width: dataWidth }, style.data, defaultColor)
+      assign({}, dataWidth, style.data, defaultColor)
     );
     const labelsStyle = defaults({}, childStyle.labels, style.labels);
     return {
