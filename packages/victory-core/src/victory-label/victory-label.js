@@ -59,6 +59,9 @@ const useMultiLineBackgrounds = (props) => {
 };
 
 const getStyles = (style, props) => {
+  if (props.disableInlineStyles) {
+    return {};
+  }
   const getSingleStyle = (s) => {
     s = s ? defaults({}, s, defaultStyles) : defaultStyles;
     const baseStyles = Helpers.evaluateStyle(s, props);

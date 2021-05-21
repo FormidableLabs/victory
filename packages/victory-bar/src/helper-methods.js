@@ -25,7 +25,7 @@ const getBarPosition = (props, datum) => {
 const getCalculatedValues = (props) => {
   const { polar } = props;
   const defaultStyles = Helpers.getDefaultStyles(props, "bar");
-  const style = Helpers.getStyles(props.style, defaultStyles);
+  const style = !props.disableInlineStyles ? Helpers.getStyles(props.style, defaultStyles) : {};
   const range = props.range || {
     x: Helpers.getRange(props, "x"),
     y: Helpers.getRange(props, "y")
@@ -58,6 +58,7 @@ const getBaseProps = (props, fallbackProps) => {
     barRatio,
     cornerRadius,
     data,
+    disableInlineStyles,
     domain,
     events,
     height,
@@ -105,6 +106,7 @@ const getBaseProps = (props, fallbackProps) => {
       cornerRadius,
       data,
       datum,
+      disableInlineStyles,
       getPath,
       horizontal,
       index,

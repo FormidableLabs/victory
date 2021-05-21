@@ -166,7 +166,7 @@ function getDegrees(props, datum) {
 }
 
 function getProps(props, index) {
-  const { scale, data, style, horizontal, polar, width, height, theme, labelComponent } = props;
+  const { scale, data, style, horizontal, polar, width, height, theme, labelComponent, disableInlineStyles } = props;
   const datum = data[index];
   const degrees = getDegrees(props, datum);
   const textAnchor = polar ? getPolarTextAnchor(props, degrees) : getTextAnchor(props, datum);
@@ -182,6 +182,7 @@ function getProps(props, index) {
     angle,
     data,
     datum,
+    disableInlineStyles,
     horizontal,
     index,
     polar,
