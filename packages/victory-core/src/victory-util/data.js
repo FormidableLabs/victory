@@ -118,7 +118,7 @@ function formatDataFromDomain(dataset, domain, defaultBaseline) {
     if (isUnderMinX(_x) || isOverMaxX(_x)) _x = null;
 
     const baseline = exists(_y0) ? _y0 : defaultBaseline;
-    const value = exists(_y) ? _y : _y1;
+    const value = exists(_y1) ? _y1 : _y;
 
     if (!exists(value)) return datum;
 
