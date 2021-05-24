@@ -1,5 +1,9 @@
 # Victory Changelog
 
+## 35.8.1 (2021-05-24)
+
+- [#1863](https://github.com/FormidableLabs/victory/pull/1863) - Fixes a regression impacting stacked bar charts with `minDomain` introduced in `35.6.0`.
+
 ## 35.8.0 (2021-05-19)
 
 - [#1858](https://github.com/FormidableLabs/victory/pull/1858) - `domainPadding` updates
