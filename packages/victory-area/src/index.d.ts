@@ -18,7 +18,7 @@ export interface VictoryAreaProps
     VictoryMultiLabelableProps {
   eventKey?: string[] | number[] | StringOrNumberOrCallback;
   events?: EventPropTypeInterface<VictoryAreaTTargetType, string | number>[];
-  interpolation?: InterpolationPropType;
+  interpolation?: InterpolationPropType | Function;
   samples?: number;
   style?: VictoryStyleInterface;
 }
