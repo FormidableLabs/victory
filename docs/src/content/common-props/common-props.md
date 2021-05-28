@@ -251,7 +251,7 @@ _examples:_
 
 `type: number || array[left, right] || { x: [left, right], y: [bottom, top] }`
 
-The `domainPadding` prop specifies a number of pixels of padding to add the beginning or end of a domain. This prop is useful for explicitly spacing data elements farther from the beginning or end of a domain to prevent axis crowding. When given as a single number, `domainPadding` will be applied to the upper and lower bound of both the x and y domains. This prop may also be given as an object with numbers or two-element arrays specified for x and y. When specifying arrays for `domainPadding`, the first element of the array will specify the padding to be applied to domain minimum, and the second element will specify padding the be applied to domain maximum.
+The `domainPadding` prop specifies a number of pixels of padding to add to the beginning or end of a domain. This prop is useful for explicitly spacing data elements farther from the beginning or end of a domain to prevent axis crowding. When given as a single number, `domainPadding` will be applied to the upper and lower bound of both the x and y domains. This prop may also be given as an object with numbers or two-element arrays specified for x and y. When specifying arrays for `domainPadding`, the first element of the array will specify the padding to be applied to domain minimum, and the second element will specify padding the be applied to domain maximum.
 
 _note:_ The `x` value supplied to the `domainPadding` prop refers to the _independent_ variable, and the `y` value refers to the _dependent_ variable. This may cause confusion in horizontal charts, as the independent variable will corresponds to the y axis.
 
