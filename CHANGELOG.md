@@ -1,5 +1,9 @@
 # Victory Changelog
 
+## 35.8.3 (2021-05-31)
+
+- [#1870](https://github.com/FormidableLabs/victory/pull/1870) - Fixes a regression impacting `offsetX` and `offsetY` props for multi-quadrant charts
+
 ## 35.8.2 (2021-05-26)
 
 - [#1865](https://github.com/FormidableLabs/victory/pull/1865) - Improves the `interpolation` type definition for `VictoryArea`. Thanks @pmilic021!
