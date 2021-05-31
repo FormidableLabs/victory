@@ -8,6 +8,8 @@ const orientationSign = {
   bottom: 1
 };
 
+const exists = (val) => val !== null && val !== undefined;
+
 const getCurrentAxis = (props, axis) => {
   const { orientation, horizontal } = props;
   if (orientation) {
@@ -243,8 +245,8 @@ const getOffset = (props, calculatedValues) => {
 
   const x = originPosition.x ? Math.abs(originOffset.x - originPosition.x) : orientationOffset.x;
   const y = originPosition.y ? Math.abs(originOffset.y - originPosition.y) : orientationOffset.y;
-  const offsetX = props.offsetX !== null && props.offsetX !== undefined ? x - props.offsetX : x;
-  const offsetY = props.offsetY !== null && props.offsetY !== undefined ? y - props.offsetY : y;
+  const offsetX = exists(props.offsetX) ? props.offsetX : x;
+  const offsetY = exists(props.offsetY) ? props.offsetY : y;
 
   return {
     x: offsetX,
@@ -278,8 +280,8 @@ const getHorizontalOffset = (props, calculatedValues) => {
 
   const y = originPosition.x ? Math.abs(originOffset.x - originPosition.x) : orientationOffset.x;
   const x = originPosition.y ? Math.abs(originOffset.y - originPosition.y) : orientationOffset.y;
-  const offsetX = props.offsetX !== null && props.offsetX !== undefined ? x - props.offsetX : x;
-  const offsetY = props.offsetY !== null && props.offsetY !== undefined ? y - props.offsetY : y;
+  const offsetX = exists(props.offsetX) ? props.offsetX : x;
+  const offsetY = exists(props.offsetY) ? props.offsetY : y;
 
   return {
     x: offsetX,
