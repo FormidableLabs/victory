@@ -1,5 +1,9 @@
 # Victory Changelog
 
+## 35.8.4 (2021-06-01)
+
+- [#1871](https://github.com/FormidableLabs/victory/pull/1871) - Fixes a bug impacting log scale charts using `VictoryVoronoiContainer` with `voronoiDimension`.
+
 ## 35.8.3 (2021-05-31)
 
 - [#1870](https://github.com/FormidableLabs/victory/pull/1870) - Fixes a regression impacting `offsetX` and `offsetY` props for multi-quadrant charts
