@@ -1,5 +1,9 @@
 # Victory Changelog
 
+## 35.8.5 (2021-06-09)
+
+- [#1874](https://github.com/FormidableLabs/victory/pull/1874) - Adds missing `allowDraw` type definition for `VictoryBrushContainer`. Thanks @justindomingue!
+
 ## 35.8.4 (2021-06-01)
 
 - [#1871](https://github.com/FormidableLabs/victory/pull/1871) - Fixes a bug impacting log scale charts using `VictoryVoronoiContainer` with `voronoiDimension`.
