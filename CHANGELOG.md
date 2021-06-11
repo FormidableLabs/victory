@@ -1,5 +1,9 @@
 # Victory Changelog
 
+## 35.8.6 (2021-06-11)
+
+- [#1878](https://github.com/FormidableLabs/victory/pull/1878) - Downgrade `d3-array` dependency to correct for babel issue
+
 ## 35.8.5 (2021-06-09)
 
 - [#1874](https://github.com/FormidableLabs/victory/pull/1874) - Adds missing `allowDraw` type definition for `VictoryBrushContainer`. Thanks @justindomingue!
