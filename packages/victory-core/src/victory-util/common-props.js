@@ -11,6 +11,7 @@ const dataProps = {
   ]),
   data: PropTypes.oneOfType([PropTypes.array, PropTypes.object]),
   dataComponent: PropTypes.element,
+  disableInlineStyles: PropTypes.bool,
   labelComponent: PropTypes.element,
   labels: PropTypes.oneOfType([PropTypes.func, PropTypes.array]),
   samples: CustomPropTypes.nonNegative,

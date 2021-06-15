@@ -459,6 +459,8 @@ export const Polar = () => {
 
 const StyledCurve = styled(Curve)`
   stroke: blue;
+  stroke-width: 10px;
+  fill: transparent;
 `;
 
 export const DisableInlineStyles = () => {
