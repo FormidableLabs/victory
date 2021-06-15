@@ -89,6 +89,7 @@ class VictoryPie extends React.Component {
     cornerRadius: PropTypes.oneOfType([CustomPropTypes.nonNegative, PropTypes.func]),
     data: PropTypes.array,
     dataComponent: PropTypes.element,
+    disableInlineStyes: PropTypes.bool,
     endAngle: PropTypes.number,
     eventKey: PropTypes.oneOfType([
       PropTypes.func,

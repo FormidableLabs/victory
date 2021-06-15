@@ -73,6 +73,7 @@ class VictoryPolarAxis extends React.Component {
     circularGridComponent: PropTypes.element,
     containerComponent: PropTypes.element,
     dependentAxis: PropTypes.bool,
+    disableInlineStyles: PropTypes.bool,
     endAngle: PropTypes.number,
     events: PropTypes.arrayOf(
       PropTypes.shape({
