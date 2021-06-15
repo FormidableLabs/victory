@@ -95,7 +95,6 @@ const Curve = (props) => {
 
 Curve.propTypes = {
   ...CommonProps.primitiveProps,
-  disableInlineStyles: PropTypes.bool,
   interpolation: PropTypes.oneOfType([PropTypes.string, PropTypes.func]),
   openCurve: PropTypes.bool,
   origin: PropTypes.object,

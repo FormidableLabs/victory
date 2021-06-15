@@ -181,7 +181,6 @@ const Area = (props) => {
 
 Area.propTypes = {
   ...CommonProps.primitiveProps,
-  disableInlineStyles: PropTypes.bool,
   groupComponent: PropTypes.element,
   interpolation: PropTypes.oneOfType([PropTypes.string, PropTypes.func]),
   pathComponent: PropTypes.element

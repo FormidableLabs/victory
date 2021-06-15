@@ -152,6 +152,7 @@ const primitiveProps = {
   clipPath: PropTypes.string,
   data: PropTypes.oneOfType([PropTypes.array, PropTypes.object]),
   desc: PropTypes.oneOfType([PropTypes.string, PropTypes.func]),
+  disableInlineStyles: PropTypes.bool,
   events: PropTypes.object,
   id: PropTypes.oneOfType([PropTypes.number, PropTypes.string, PropTypes.func]),
   index: PropTypes.oneOfType([PropTypes.number, PropTypes.string]),

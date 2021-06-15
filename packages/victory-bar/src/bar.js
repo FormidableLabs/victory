@@ -146,7 +146,6 @@ Bar.propTypes = {
     })
   ]),
   datum: PropTypes.object,
-  disableInlineStyles: PropTypes.bool,
   getPath: PropTypes.func,
   horizontal: PropTypes.bool,
   pathComponent: PropTypes.element,
