@@ -43,6 +43,7 @@ class VictoryLine extends React.Component {
   static propTypes = {
     ...CommonProps.baseProps,
     ...CommonProps.dataProps,
+    disableInlineStyles: PropTypes.bool,
     interpolation: PropTypes.oneOfType([
       PropTypes.oneOf([
         "basis",

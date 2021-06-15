@@ -2,12 +2,13 @@
 /*eslint-disable react/no-multi-comp*/
 import React from "react";
 import { VictoryStack } from "../packages/victory-stack/src/index";
-import { VictoryLine } from "../packages/victory-line/src/index";
+import { VictoryLine, Curve } from "../packages/victory-line/src/index";
 import { VictoryChart } from "../packages/victory-chart/src/index";
 import { VictoryTooltip } from "../packages/victory-tooltip/src/index";
 import { VictoryTheme, VictoryLabel } from "../packages/victory-core/src/index";
 import { getData, getMixedData, getTimeData, getLogData } from "./data";
 import { fromJS } from "immutable";
+import styled from "styled-components";
 
 const containerStyle = {
   display: "flex",
@@ -451,6 +452,23 @@ export const Polar = () => {
           <VictoryLine data={getData(5, "seed-1")} />
           <VictoryLine data={getData(5, "seed-2")} />
         </VictoryStack>
+      </VictoryChart>
+    </div>
+  );
+};
+
+const StyledCurve = styled(Curve)`
+  stroke: blue;
+`;
+
+export const DisableInlineStyles = () => {
+  return (
+    <div style={containerStyle}>
+      <VictoryChart>
+        <VictoryLine disableInlineStyles />
+      </VictoryChart>
+      <VictoryChart>
+        <VictoryLine dataComponent={<StyledCurve disableInlineStyles />} />
       </VictoryChart>
     </div>
   );

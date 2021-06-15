@@ -78,6 +78,15 @@ describe("victory-util/helpers", () => {
       };
       expect(Helpers.evaluateStyle(style, data)).to.deep.equal({ color: "red", size: 5 });
     });
+    it("returns no styles if disableInlineStyles is true", () => {
+      const style = {
+        color: "blue"
+      };
+      const props = {
+        disableInlineStyles: true
+      };
+      expect(Helpers.evaluateStyle(style, props)).to.deep.equal({});
+    });
   });
 
   describe("getRange", () => {
