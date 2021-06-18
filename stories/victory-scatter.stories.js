@@ -6,9 +6,10 @@ import { VictoryStack } from "../packages/victory-stack/src/index";
 import { VictoryScatter } from "../packages/victory-scatter/src/index";
 import { VictoryChart } from "../packages/victory-chart/src/index";
 import { VictoryTooltip } from "../packages/victory-tooltip/src/index";
-import { VictoryTheme } from "../packages/victory-core/src/index";
+import { VictoryTheme, Point } from "../packages/victory-core/src/index";
 import { getData, getMixedData, getTimeData, getLogData } from "./data";
 import { fromJS } from "immutable";
+import styled from "styled-components";
 
 const SYMBOLS = [
   "circle",
@@ -505,6 +506,23 @@ export const Domain = () => {
       </VictoryChart>
       <VictoryChart style={parentStyle} maxDomain={{ y: 5 }}>
         <VictoryScatter data={getData(5)} />
+      </VictoryChart>
+    </div>
+  );
+};
+
+const StyledPoint = styled(Point)`
+  fill: darkmagenta;
+`;
+
+export const DisableInlineStyles = () => {
+  return (
+    <div style={containerStyle}>
+      <VictoryChart style={parentStyle}>
+        <VictoryScatter disableInlineStyles />
+      </VictoryChart>
+      <VictoryChart style={parentStyle}>
+        <VictoryScatter dataComponent={<StyledPoint disableInlineStyles />} />
       </VictoryChart>
     </div>
   );
