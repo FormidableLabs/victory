@@ -1,13 +1,14 @@
 /*eslint-disable no-magic-numbers*/
 /*eslint-disable react/no-multi-comp*/
 import React from "react";
-import { VictoryErrorBar } from "../packages/victory-errorbar/src/index";
+import { VictoryErrorBar, ErrorBar } from "../packages/victory-errorbar/src/index";
 import { VictoryChart } from "../packages/victory-chart/src/index";
 import { VictoryTooltip } from "../packages/victory-tooltip/src/index";
 import { VictoryTheme } from "../packages/victory-core/src/index";
 import { range } from "lodash";
 import seedrandom from "seedrandom";
 import { fromJS } from "immutable";
+import styled from "styled-components";
 
 const getData = (num, symmetric, seed) => {
   seed = seed || "getData";
@@ -255,6 +256,23 @@ export const Domain = () => {
             { x: 5, y: 20, errorX: 0.3, errorY: 2 }
           ]}
         />
+      </VictoryChart>
+    </div>
+  );
+};
+
+const StyledErrorBar = styled(ErrorBar)`
+  stroke: deeppink;
+`;
+
+export const DisableInlineStyles = () => {
+  return (
+    <div style={containerStyle}>
+      <VictoryChart style={parentStyle}>
+        <VictoryErrorBar data={getData(4)} disableInlineStyles />
+      </VictoryChart>
+      <VictoryChart style={parentStyle}>
+        <VictoryErrorBar data={getData(4)} dataComponent={<StyledErrorBar disableInlineStyles />} />
       </VictoryChart>
     </div>
   );

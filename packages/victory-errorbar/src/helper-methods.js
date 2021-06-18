@@ -105,7 +105,18 @@ const getCalculatedValues = (props) => {
 };
 
 const getLabelProps = (dataProps, text, style) => {
-  const { x, y, index, scale, errorY, errorX, horizontal, labelComponent, theme } = dataProps;
+  const {
+    x,
+    y,
+    index,
+    scale,
+    errorY,
+    errorX,
+    horizontal,
+    labelComponent,
+    theme,
+    disableInlineStyles
+  } = dataProps;
   const getError = (type = "x") => {
     const baseError = type === "y" ? errorY : errorX;
     const error = baseError && Array.isArray(baseError) ? baseError[0] : baseError;
@@ -129,7 +140,8 @@ const getLabelProps = (dataProps, text, style) => {
     textAnchor: labelStyle.textAnchor || textAnchor,
     verticalAnchor: labelStyle.verticalAnchor || verticalAnchor,
     angle: labelStyle.angle,
-    horizontal
+    horizontal,
+    disableInlineStyles
   };
 
   if (!Helpers.isTooltip(labelComponent)) {
@@ -160,7 +172,8 @@ const getBaseProps = (props, fallbackProps) => {
     standalone,
     style,
     theme,
-    width
+    width,
+    disableInlineStyles
   } = props;
   const initialChildProps = {
     parent: {
@@ -198,7 +211,8 @@ const getBaseProps = (props, fallbackProps) => {
       scale,
       style: style.data,
       x,
-      y
+      y,
+      disableInlineStyles
     };
 
     childProps[eventKey] = {
