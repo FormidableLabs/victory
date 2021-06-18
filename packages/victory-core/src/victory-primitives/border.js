@@ -6,6 +6,7 @@ import CommonProps from "../victory-util/common-props";
 import Rect from "./rect";
 
 const evaluateProps = (props) => {
+  console.log("in box", props);
   /**
    * Potential evaluated props are:
    * `ariaLabel`
@@ -24,6 +25,7 @@ const evaluateProps = (props) => {
 };
 
 const Border = (props) => {
+  console.log("initial props", props);
   props = evaluateProps(props);
 
   return React.cloneElement(props.rectComponent, {
@@ -46,6 +48,7 @@ const Border = (props) => {
 
 Border.propTypes = {
   ...CommonProps.primitiveProps,
+  disableInlineStyles: PropTypes.bool,
   height: PropTypes.number,
   rectComponent: PropTypes.element,
   width: PropTypes.number,

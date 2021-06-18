@@ -10,10 +10,12 @@ import { VictoryStack } from "../packages/victory-stack/src";
 import { VictoryTheme } from "../packages/victory-core/src";
 import { getData } from "./data";
 import { data, timeData } from "./victory-histogram-data";
+import { Bar } from "../packages/victory-bar/src";
 
 import * as d3Array from "d3-array";
 import * as d3Scale from "d3-scale";
 import * as d3Time from "d3-time";
+import styled from "styled-components";
 
 const containerStyle = {
   display: "flex",
@@ -493,6 +495,24 @@ export const Domain = () => {
       </VictoryChart>
       <VictoryChart style={parentStyle} maxDomain={{ y: 4 }}>
         <VictoryHistogram data={data} />
+      </VictoryChart>
+    </div>
+  );
+};
+
+const StyledBar = styled(Bar)`
+  stroke: black;
+  fill: teal;
+`;
+
+export const DisableInlineStyles = () => {
+  return (
+    <div style={containerStyle}>
+      <VictoryChart style={parentStyle}>
+        <VictoryHistogram data={data} disableInlineStyles />
+      </VictoryChart>
+      <VictoryChart style={parentStyle}>
+        <VictoryHistogram data={data} dataComponent={<StyledBar disableInlineStyles />} />
       </VictoryChart>
     </div>
   );

@@ -176,7 +176,8 @@ const getBaseProps = (props, fallbackProps) => {
     width,
     labels,
     name,
-    getPath
+    getPath,
+    disableInlineStyles
   } = props;
   const initialChildProps = {
     parent: {
@@ -223,14 +224,15 @@ const getBaseProps = (props, fallbackProps) => {
       horizontal,
       index,
       scale,
-      style: style.data,
+      style: disableInlineStyles ? {} : style.data,
       width,
       height,
       x,
       y,
       y0,
       x0,
-      getPath
+      getPath,
+      disableInlineStyles
     };
 
     childProps[eventKey] = {

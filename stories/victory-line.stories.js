@@ -458,18 +458,17 @@ export const Polar = () => {
 };
 
 const StyledCurve = styled(Curve)`
-  stroke: blue;
+  stroke: purple;
   stroke-width: 10px;
-  fill: transparent;
 `;
 
 export const DisableInlineStyles = () => {
   return (
     <div style={containerStyle}>
-      <VictoryChart>
+      <VictoryChart {...defaultChartProps}>
         <VictoryLine disableInlineStyles />
       </VictoryChart>
-      <VictoryChart>
+      <VictoryChart {...defaultChartProps}>
         <VictoryLine dataComponent={<StyledCurve disableInlineStyles />} />
       </VictoryChart>
     </div>

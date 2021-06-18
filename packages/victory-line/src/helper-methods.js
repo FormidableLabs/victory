@@ -52,7 +52,8 @@ const getBaseProps = (props, fallbackProps) => {
     theme,
     width,
     labels,
-    name
+    name,
+    disableInlineStyles
   } = props;
   const initialChildProps = {
     parent: {
@@ -79,7 +80,8 @@ const getBaseProps = (props, fallbackProps) => {
         interpolation,
         groupComponent,
         style: style.data,
-        theme
+        theme,
+        disableInlineStyles
       }
     }
   };
