@@ -60,7 +60,11 @@ const useMultiLineBackgrounds = (props) => {
 
 const getStyles = (style, props) => {
   if (props.disableInlineStyles) {
-    return {};
+    const baseStyles = Helpers.evaluateStyle(style, props);
+    return {
+      // Font size is necessary to calculate the y position of the label
+      fontSize: getFontSize(baseStyles)
+    };
   }
   const getSingleStyle = (s) => {
     s = s ? defaults({}, s, defaultStyles) : defaultStyles;
