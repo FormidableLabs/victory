@@ -232,6 +232,39 @@ ReactDOM.render(<App/>, mountNode);
 
 The `disableInlineStyles` prop allows Victory components to work better with CSS classes or styled-components. By default, Victory provides inline styles to chart components, which will override any conflicting CSS styles. This flag will remove the inline styles, making it easier to provide custom styling for components via CSS.
 
+If this prop is passed to a chart type (e.g. `VictoryBar`), it will apply to all data and label components for that chart.
+
+```playground_norender
+
+const StyledBar = styled(Bar)`
+  fill: purple;
+`
+
+const StyledLabel = styled(VictoryLabel)`
+  tspan {
+    fill: magenta;
+    font-family: Papyrus, fantasy;
+  }
+`
+
+function CustomStyledBarChart() {
+  return (
+    <VictoryChart>
+      <VictoryBar
+        disableInlineStyles
+        labels={[1, 2, 3, 4]}
+        dataComponent={<StyledBar />}
+        labelComponent={<StyledLabel />}
+      />
+    </VictoryChart>
+  )
+}
+
+ReactDOM.render(<CustomStyledBarChart/>, mountNode);
+```
+
+It can also be passed to individual data or label components to disable styles on a more granular level.
+
 ```playground_norender
 
 const StyledBar = styled(Bar)`
@@ -241,7 +274,10 @@ const StyledBar = styled(Bar)`
 function CustomStyledBarChart() {
   return (
     <VictoryChart>
-      <VictoryBar dataComponent={<StyledBar disableInlineStyles />} />
+      <VictoryBar
+        labels={[1, 2, 3, 4]}
+        dataComponent={<StyledBar disableInlineStyles />}
+      />
     </VictoryChart>
   )
 }
