@@ -13,6 +13,7 @@
   },
   "homepage": "https://github.com/FormidableLabs/victory-docs#readme",
   "dependencies": {
+    "@d3fc/d3fc-discontinuous-scale": "^4.0.2",
     "@juggle/resize-observer": "^3.0.2",
     "axios": "^0.19.2",
     "babel-standalone": "^6.26.0",
