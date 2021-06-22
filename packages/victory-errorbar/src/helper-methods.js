@@ -209,7 +209,7 @@ const getBaseProps = (props, fallbackProps) => {
       horizontal,
       index,
       scale,
-      style: style.data,
+      style: disableInlineStyles ? {} : style.data,
       x,
       y,
       disableInlineStyles

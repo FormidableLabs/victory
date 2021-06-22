@@ -30,7 +30,6 @@ export interface VictoryBarProps
         bottomLeft?: NumberOrCallback;
         bottomRight?: NumberOrCallback;
       };
-  disableInlineStyles?: boolean;
   events?: EventPropTypeInterface<VictoryBarTTargetType, number | string | number[] | string[]>[];
   eventKey?: StringOrNumberOrCallback;
   horizontal?: boolean;
@@ -59,7 +58,6 @@ export interface BarProps extends VictoryCommonPrimitiveProps {
         bottomRight?: NumberOrCallback;
       };
   datum?: any;
-  disableInlineStyles?: boolean;
   getPath?: Function;
   horizontal?: boolean;
   pathComponent?: React.ReactElement;

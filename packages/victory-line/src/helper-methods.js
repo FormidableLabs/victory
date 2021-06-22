@@ -79,7 +79,7 @@ const getBaseProps = (props, fallbackProps) => {
         data,
         interpolation,
         groupComponent,
-        style: style.data,
+        style: disableInlineStyles ? {} : style.data,
         theme,
         disableInlineStyles
       }

@@ -99,7 +99,6 @@ Flyout.propTypes = {
   center: PropTypes.shape({ x: PropTypes.number, y: PropTypes.number }),
   cornerRadius: PropTypes.number,
   datum: PropTypes.object,
-  disableInlineStyles: PropTypes.bool,
   dx: PropTypes.number,
   dy: PropTypes.number,
   height: PropTypes.number,

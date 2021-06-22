@@ -46,7 +46,6 @@ const Border = (props) => {
 
 Border.propTypes = {
   ...CommonProps.primitiveProps,
-  disableInlineStyles: PropTypes.bool,
   height: PropTypes.number,
   rectComponent: PropTypes.element,
   width: PropTypes.number,
