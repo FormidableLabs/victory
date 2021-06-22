@@ -21,6 +21,8 @@ function App() {
     { x: new Date(2021, 5, 11), y: 6 }
   ];
 
+  // scaleDiscontinuous and discontinuitySkipWeekends are both
+  // plugins imported from @d3fc/d3fc-discontinuous-scale
   const discontinuousScale = scaleDiscontinuous(
     d3Scale.scaleTime()
   ).discontinuityProvider(discontinuitySkipWeekends());
