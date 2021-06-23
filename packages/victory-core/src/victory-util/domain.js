@@ -300,8 +300,8 @@ function getDomainFromData(props, axis, dataset) {
 function getDomainFromMinMax(min, max) {
   const getSinglePointDomain = (val) => {
     // d3-scale does not properly resolve very small differences.
-    // eslint-disable-next-line no-magic-numbers
     const verySmallNumber =
+      // eslint-disable-next-line no-magic-numbers
       val === 0 ? 2 * Math.pow(10, -10) : Math.pow(10, -10);
     const verySmallDate = 1;
     const minVal =

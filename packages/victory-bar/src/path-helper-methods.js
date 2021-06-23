@@ -217,11 +217,11 @@ const getHorizontalBarPoints = (position, sign, cr) => {
   };
   const topPoints = getHalfPoints("top");
   const bottomPoints = getHalfPoints("bottom");
-  // eslint-disable-next-line no-magic-numbers
   return [
     bottomPoints[1],
     bottomPoints[0],
     ...topPoints,
+    // eslint-disable-next-line no-magic-numbers
     bottomPoints[3],
     bottomPoints[2]
   ];
