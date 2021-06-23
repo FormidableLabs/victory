@@ -2,8 +2,10 @@
 /*eslint-disable react/no-multi-comp*/
 import React from "react";
 import { VictoryBar } from "../packages/victory-bar/src/index";
-import { VictoryTooltip } from "../packages/victory-tooltip/src/index";
+import { VictoryTooltip, Flyout } from "../packages/victory-tooltip/src/index";
+import { VictoryLabel } from "victory-core/src";
 import { getData, getMixedData } from "./data";
+import styled from "styled-components";
 
 const containerStyle = {
   display: "flex",
@@ -675,6 +677,35 @@ export const FlyoutPadding = () => {
             active
             flyoutPadding={{ top: 20, left: 15, right: 5 }}
             text={`flyoutPadding\npolar`}
+          />
+        }
+      />
+    </div>
+  );
+};
+
+const StyledFlyout = styled(Flyout)`
+  fill: aquamarine;
+`;
+
+const StyledLabel = styled(VictoryLabel)`
+  fill: blue;
+`;
+
+export const DisableInlineStyles = () => {
+  return (
+    <div style={containerStyle}>
+      <VictoryBar
+        {...defaultBarProps}
+        labelComponent={<VictoryTooltip active disableInlineStyles />}
+      />
+      <VictoryBar
+        {...defaultBarProps}
+        labelComponent={
+          <VictoryTooltip
+            active
+            flyoutComponent={<StyledFlyout disableInlineStyles />}
+            labelComponent={<StyledLabel disableInlineStyles />}
           />
         }
       />

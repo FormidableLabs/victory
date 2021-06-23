@@ -68,7 +68,6 @@ class VictoryBar extends React.Component {
         bottomRight: PropTypes.oneOfType([PropTypes.number, PropTypes.func])
       })
     ]),
-    disableInlineStyles: PropTypes.bool,
     getPath: PropTypes.func,
     horizontal: PropTypes.bool
   };

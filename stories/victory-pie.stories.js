@@ -6,6 +6,7 @@ import { VictoryPie, Slice } from "../packages/victory-pie/src/index";
 import { VictoryTooltip } from "../packages/victory-tooltip/src/index";
 import { VictoryTheme, Helpers } from "../packages/victory-core/src/index";
 import { fromJS } from "immutable";
+import styled from "styled-components";
 
 const containerStyle = {
   display: "flex",
@@ -541,6 +542,19 @@ export const LabelPlacement = () => {
           { x: 8, y: 1, l: 315 }
         ]}
       />
+    </div>
+  );
+};
+
+const StyledSlice = styled(Slice)`
+  fill: pink;
+`;
+
+export const DisableInlineStyles = () => {
+  return (
+    <div style={containerStyle}>
+      <VictoryPie disableInlineStyles style={parentStyle} />
+      <VictoryPie style={parentStyle} dataComponent={<StyledSlice disableInlineStyles />} />
     </div>
   );
 };

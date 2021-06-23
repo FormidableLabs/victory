@@ -49,6 +49,9 @@ const getLabelStyle = (props, styleObject, namespace) => {
 };
 
 const getStyles = (props, style, defaultStyles = {}) => {
+  if (props.disableInlineStyles) {
+    return {};
+  }
   const width = "100%";
   const height = "100%";
 
@@ -155,6 +158,9 @@ const isTransparent = (attr) => {
 };
 
 const getDataStyles = (datum, style, props) => {
+  if (props.disableInlineStyles) {
+    return {};
+  }
   style = style || {};
   const candleColor =
     datum._open > datum._close ? props.candleColors.negative : props.candleColors.positive;
@@ -322,7 +328,8 @@ const getBaseProps = (props, fallbackProps) => {
     labels,
     events,
     sharedEvents,
-    horizontal
+    horizontal,
+    disableInlineStyles
   } = props;
   const initialChildProps = {
     parent: {
@@ -373,7 +380,8 @@ const getBaseProps = (props, fallbackProps) => {
       open,
       close,
       horizontal,
-      labelOrientation
+      labelOrientation,
+      disableInlineStyles
     };
     dataProps.candleWidth = getCandleWidth(dataProps);
     const extendedProps = defaults(Object.assign({}, dataProps), props);

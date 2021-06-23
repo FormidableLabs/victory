@@ -90,7 +90,8 @@ const getBaseProps = (props, fallbackProps) => {
     theme,
     width,
     labels,
-    horizontal
+    horizontal,
+    disableInlineStyles
   } = props;
   const initialChildProps = {
     parent: {
@@ -125,7 +126,8 @@ const getBaseProps = (props, fallbackProps) => {
       horizontal,
       size: getSize(datum, props),
       symbol: getSymbol(datum, props),
-      style: style.data
+      style: disableInlineStyles ? {} : style.data,
+      disableInlineStyles
     };
 
     childProps[eventKey] = { data: dataProps };

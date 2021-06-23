@@ -17,6 +17,7 @@ import {
   getDataWithBaseline
 } from "./data";
 import { fromJS } from "immutable";
+import styled from "styled-components";
 
 const containerStyle = {
   display: "flex",
@@ -937,14 +938,18 @@ export const Domain = () => {
   );
 };
 
+const StyledBar = styled(Bar)`
+  fill: purple;
+`;
+
 export const DisableInlineStyles = () => {
   return (
     <div style={containerStyle}>
-      <VictoryChart>
+      <VictoryChart style={parentStyle}>
         <VictoryBar disableInlineStyles />
       </VictoryChart>
-      <VictoryChart>
-        <VictoryBar dataComponent={<Bar disableInlineStyles />} />
+      <VictoryChart style={parentStyle}>
+        <VictoryBar dataComponent={<StyledBar disableInlineStyles />} />
       </VictoryChart>
     </div>
   );

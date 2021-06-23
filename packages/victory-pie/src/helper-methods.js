@@ -232,7 +232,8 @@ export const getBaseProps = (props, fallbackProps) => {
     name,
     innerRadius,
     cornerRadius,
-    padAngle
+    padAngle,
+    disableInlineStyles
   } = calculatedValues;
   const radius = props.radius || defaultRadius;
   const initialChildProps = {
@@ -256,7 +257,8 @@ export const getBaseProps = (props, fallbackProps) => {
       radius,
       cornerRadius,
       padAngle,
-      style: getSliceStyle(index, calculatedValues)
+      style: disableInlineStyles ? {} : getSliceStyle(index, calculatedValues),
+      disableInlineStyles
     };
     childProps[eventKey] = {
       data: dataProps

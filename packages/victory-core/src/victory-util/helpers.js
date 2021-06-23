@@ -128,6 +128,9 @@ function evaluateProp(prop, props) {
 }
 
 function evaluateStyle(style, props) {
+  if (props.disableInlineStyles) {
+    return {};
+  }
   if (!style || !keys(style).some((value) => isFunction(style[value]))) {
     return style;
   }

@@ -82,6 +82,9 @@ const getScale = (props) => {
 };
 
 const getStyles = (props, styleObject) => {
+  if (props.disableInlineStyles) {
+    return {};
+  }
   const style = props.style || {};
   styleObject = styleObject || {};
   const parentStyleProps = { height: "auto", width: "100%" };

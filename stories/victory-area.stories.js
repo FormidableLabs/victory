@@ -8,6 +8,8 @@ import { VictoryTheme, VictoryLabel } from "../packages/victory-core/src";
 import { VictoryChart } from "../packages/victory-chart/src";
 import { getData, getMixedData, getTimeData, getLogData, getDataWithBaseline } from "./data";
 import { fromJS } from "immutable";
+import Area from "../packages/victory-area/src/area";
+import styled from "styled-components";
 
 const containerStyle = {
   display: "flex",
@@ -450,6 +452,19 @@ export const Polar = () => {
           <VictoryArea data={getData(5, "seed-2")} />
         </VictoryStack>
       </VictoryChart>
+    </div>
+  );
+};
+
+const StyledArea = styled(Area)`
+  fill: pink;
+`;
+
+export const DisableInlineStyles = () => {
+  return (
+    <div style={containerStyle}>
+      <VictoryArea {...defaultChartProps} disableInlineStyles />
+      <VictoryArea {...defaultChartProps} dataComponent={<StyledArea disableInlineStyles />} />
     </div>
   );
 };

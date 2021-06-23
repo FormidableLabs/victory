@@ -171,6 +171,7 @@ export interface VictoryAxisCommonProps {
   axisLabelComponent?: React.ReactElement;
   axisValue?: number | string | object | Date;
   dependentAxis?: boolean;
+  disableInlineStyles?: boolean;
   gridComponent?: React.ReactElement;
   invertAxis?: boolean;
   style?: {
@@ -210,6 +211,7 @@ export interface VictoryLabelProps {
   data?: any[];
   desc?: string;
   direction?: string;
+  disableInlineStyles?: boolean;
   events?: React.DOMAttributes<any>;
   groupComponent?: React.ReactElement;
   id?: StringOrNumberOrCallback;
@@ -679,6 +681,7 @@ export interface VictoryCommonPrimitiveProps {
   clipPath?: string;
   data?: any;
   desc?: string | Function;
+  disableInlineStyles?: boolean;
   events?: object;
   id?: number | string | Function;
   index?: number | string;

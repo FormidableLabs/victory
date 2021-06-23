@@ -4,10 +4,11 @@ import React from "react";
 import { VictoryBoxPlot } from "../packages/victory-box-plot/src/index";
 import { VictoryChart } from "../packages/victory-chart/src/index";
 import { VictoryTooltip } from "../packages/victory-tooltip/src/index";
-import { VictoryTheme } from "../packages/victory-core/src/index";
+import { VictoryTheme, Box, Whisker, LineSegment } from "../packages/victory-core/src/index";
 import { range } from "lodash";
 import seedrandom from "seedrandom";
 import { getArrayData } from "./data";
+import styled from "styled-components";
 
 const getRepeatData = (num, samples) => {
   const seed = "getRepeatData";
@@ -317,6 +318,38 @@ export const Domain = () => {
       </VictoryChart>
       <VictoryChart {...defaultChartProps} maxDomain={{ x: 4 }}>
         <VictoryBoxPlot data={getArrayData(5, 10)} />
+      </VictoryChart>
+    </div>
+  );
+};
+
+const StyledBox = styled(Box)`
+  fill: blueviolet;
+`;
+
+const StyledWhisker = styled(Whisker)`
+  stroke: aqua;
+`;
+
+const StyledLineSegment = styled(LineSegment)`
+  stroke: lavender;
+`;
+
+export const DisableInlineStyles = () => {
+  return (
+    <div style={containerStyle}>
+      <VictoryChart style={parentStyle}>
+        <VictoryBoxPlot disableInlineStyles data={getData(8)} />
+      </VictoryChart>
+      <VictoryChart style={parentStyle}>
+        <VictoryBoxPlot
+          data={getData(8)}
+          q1Component={<StyledBox disableInlineStyles />}
+          q3Component={<StyledBox disableInlineStyles />}
+          maxComponent={<StyledWhisker disableInlineStyles />}
+          minComponent={<StyledWhisker disableInlineStyles />}
+          medianComponent={<StyledLineSegment disableInlineStyles />}
+        />
       </VictoryChart>
     </div>
   );
