@@ -271,9 +271,8 @@ export const getVerticalPolarBarPath = (props, cornerRadius) => {
   const getTopPath = () => {
     const { topRight, topLeft } = cornerRadius;
     const arcLength = r2 * Math.abs(end - start);
-    const { rightMoves, rightCoords, rightMiddle, leftMoves, leftCoords, leftMiddle } = getPathData(
-      "top"
-    );
+    const { rightMoves, rightCoords, rightMiddle, leftMoves, leftCoords, leftMiddle } =
+      getPathData("top");
     let moves;
     let coords;
     if (topRight === topLeft || arcLength < 2 * topRight + 2 * topLeft) {
@@ -305,9 +304,8 @@ export const getVerticalPolarBarPath = (props, cornerRadius) => {
   const getBottomPath = () => {
     const { bottomRight, bottomLeft } = cornerRadius;
     const arcLength = r1 * Math.abs(end - start);
-    const { rightMoves, rightCoords, rightMiddle, leftMoves, leftCoords, leftMiddle } = getPathData(
-      "bottom"
-    );
+    const { rightMoves, rightCoords, rightMiddle, leftMoves, leftCoords, leftMiddle } =
+      getPathData("bottom");
     let moves;
     let coords;
     if (bottomRight === bottomLeft || arcLength < 2 * bottomRight + 2 * bottomLeft) {

@@ -135,13 +135,8 @@ export default class VictoryChart extends React.Component {
     const props =
       this.state && this.state.nodesWillExit ? this.state.oldProps || this.props : this.props;
     const modifiedProps = Helpers.modifyProps(props, fallbackProps, "chart");
-    const {
-      eventKey,
-      containerComponent,
-      groupComponent,
-      standalone,
-      externalEventMutations
-    } = modifiedProps;
+    const { eventKey, containerComponent, groupComponent, standalone, externalEventMutations } =
+      modifiedProps;
     const axes = props.polar ? modifiedProps.defaultPolarAxes : modifiedProps.defaultAxes;
     const childComponents = getChildComponents(modifiedProps, axes);
     const calculatedProps = getCalculatedProps(modifiedProps, childComponents);

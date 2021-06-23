@@ -199,13 +199,8 @@ export default class VictoryBrushLine extends React.Component {
               },
               onMouseDown: (evt, targetProps) => {
                 evt.preventDefault();
-                const {
-                  allowResize,
-                  allowDrag,
-                  allowDraw,
-                  activeBrushes,
-                  brushDomain
-                } = targetProps;
+                const { allowResize, allowDrag, allowDraw, activeBrushes, brushDomain } =
+                  targetProps;
                 const dimension = getDimension(targetProps);
 
                 // Don't trigger events for static brushes
@@ -373,12 +368,8 @@ export default class VictoryBrushLine extends React.Component {
                 return [];
               },
               onMouseUp(evt, targetProps) {
-                const {
-                  onBrushDomainChange,
-                  brushDomain,
-                  allowResize,
-                  activeBrushes
-                } = targetProps;
+                const { onBrushDomainChange, brushDomain, allowResize, activeBrushes } =
+                  targetProps;
                 // if the mouse hasn't moved since a mouseDown event, select the whole domain region
                 const mutatedProps = {
                   isPanning: false,

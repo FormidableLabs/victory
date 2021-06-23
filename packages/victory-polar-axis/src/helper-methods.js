@@ -110,16 +110,8 @@ const getAxisAngle = (props) => {
 
 //eslint-disable-next-line max-params
 const getTickProps = (props, calculatedValues, tickValue, index) => {
-  const {
-    axisType,
-    radius,
-    scale,
-    style,
-    stringTicks,
-    ticks,
-    tickFormat,
-    origin
-  } = calculatedValues;
+  const { axisType, radius, scale, style, stringTicks, ticks, tickFormat, origin } =
+    calculatedValues;
   const text = tickFormat(tickValue, index, ticks);
   const tick = stringTicks ? stringTicks[index] : tickValue;
   const { tickStyle } = getEvaluatedStyles(style, {
@@ -163,16 +155,8 @@ const getTickProps = (props, calculatedValues, tickValue, index) => {
 
 //eslint-disable-next-line max-params
 const getTickLabelProps = (props, calculatedValues, tickValue, index) => {
-  const {
-    axisType,
-    radius,
-    tickFormat,
-    style,
-    scale,
-    ticks,
-    stringTicks,
-    origin
-  } = calculatedValues;
+  const { axisType, radius, tickFormat, style, scale, ticks, stringTicks, origin } =
+    calculatedValues;
   const text = tickFormat(tickValue, index, ticks);
   const tick = stringTicks ? stringTicks[index] : tickValue;
   const { labelStyle } = getEvaluatedStyles(style, {
@@ -220,16 +204,8 @@ const getTickLabelProps = (props, calculatedValues, tickValue, index) => {
 
 //eslint-disable-next-line max-params
 const getGridProps = (props, calculatedValues, tickValue, index) => {
-  const {
-    axisType,
-    radius,
-    style,
-    scale,
-    stringTicks,
-    ticks,
-    tickFormat,
-    origin
-  } = calculatedValues;
+  const { axisType, radius, style, scale, stringTicks, ticks, tickFormat, origin } =
+    calculatedValues;
   const text = tickFormat(tickValue, index, ticks);
   const { startAngle, endAngle, innerRadius = 0 } = props;
   const tick = stringTicks ? stringTicks[index] : tickValue;

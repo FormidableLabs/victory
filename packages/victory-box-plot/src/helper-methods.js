@@ -209,16 +209,8 @@ const getCalculatedValues = (props) => {
 
 // eslint-disable-next-line complexity
 const getWhiskerProps = (props, type) => {
-  const {
-    horizontal,
-    style,
-    boxWidth,
-    whiskerWidth,
-    datum,
-    scale,
-    index,
-    disableInlineStyles
-  } = props;
+  const { horizontal, style, boxWidth, whiskerWidth, datum, scale, index, disableInlineStyles } =
+    props;
   const { min, max, q1, q3, x, y } = props.positions;
   const boxValue = type === "min" ? q1 : q3;
   const whiskerValue = type === "min" ? min : max;

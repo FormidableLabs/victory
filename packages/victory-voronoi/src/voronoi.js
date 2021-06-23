@@ -29,17 +29,8 @@ const evaluateProps = (props) => {
 const Voronoi = (props) => {
   props = evaluateProps(props);
 
-  const {
-    ariaLabel,
-    role,
-    shapeRendering,
-    className,
-    events,
-    transform,
-    style,
-    size,
-    tabIndex
-  } = props;
+  const { ariaLabel, role, shapeRendering, className, events, transform, style, size, tabIndex } =
+    props;
   const voronoiPath = getVoronoiPath(props);
   const sharedProps = {
     "aria-label": ariaLabel,

@@ -333,16 +333,8 @@ export default class VictoryTooltip extends React.Component {
 
   // eslint-disable-next-line complexity
   getFlyoutCenter(props, dimensions) {
-    const {
-      x,
-      y,
-      dx,
-      dy,
-      pointerLength,
-      orientation,
-      constrainToVisibleArea,
-      centerOffset
-    } = props;
+    const { x, y, dx, dy, pointerLength, orientation, constrainToVisibleArea, centerOffset } =
+      props;
     const { height, width } = dimensions;
     const xSign = orientation === "left" ? -1 : 1;
     const ySign = orientation === "bottom" ? -1 : 1;
@@ -387,14 +379,8 @@ export default class VictoryTooltip extends React.Component {
   }
 
   getDimensions(props, labelSize) {
-    const {
-      orientation,
-      pointerLength,
-      pointerWidth,
-      flyoutHeight,
-      flyoutWidth,
-      flyoutPadding
-    } = props;
+    const { orientation, pointerLength, pointerWidth, flyoutHeight, flyoutWidth, flyoutPadding } =
+      props;
     const cornerRadius = Helpers.evaluateProp(props.cornerRadius, props);
     const getHeight = () => {
       const calculatedHeight = labelSize.height + flyoutPadding.top + flyoutPadding.bottom;
@@ -512,13 +498,8 @@ export default class VictoryTooltip extends React.Component {
   // Overridden in victory-core-native
   renderTooltip(props) {
     const evaluatedProps = this.getEvaluatedProps(props);
-    const {
-      flyoutComponent,
-      labelComponent,
-      groupComponent,
-      active,
-      renderInPortal
-    } = evaluatedProps;
+    const { flyoutComponent, labelComponent, groupComponent, active, renderInPortal } =
+      evaluatedProps;
     if (!active) {
       return renderInPortal ? <VictoryPortal>{null}</VictoryPortal> : null;
     }

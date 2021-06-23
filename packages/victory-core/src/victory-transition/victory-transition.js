@@ -61,12 +61,8 @@ export default class VictoryTransition extends React.Component {
     } else {
       const oldChildren = React.Children.toArray(props.children);
       const nextChildren = React.Children.toArray(nextProps.children);
-      const {
-        nodesWillExit,
-        nodesWillEnter,
-        childrenTransitions,
-        nodesShouldEnter
-      } = Transitions.getInitialTransitionState(oldChildren, nextChildren);
+      const { nodesWillExit, nodesWillEnter, childrenTransitions, nodesShouldEnter } =
+        Transitions.getInitialTransitionState(oldChildren, nextChildren);
       return {
         nodesWillExit,
         nodesWillEnter,

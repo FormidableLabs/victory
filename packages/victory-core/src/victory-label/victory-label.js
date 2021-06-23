@@ -268,16 +268,8 @@ const getInlineXOffset = (calculatedProps, textElements, index) => {
 };
 
 const getChildBackgrounds = (calculatedProps, tspanValues) => {
-  const {
-    dy,
-    dx,
-    transform,
-    backgroundStyle,
-    backgroundPadding,
-    backgroundComponent,
-    inline,
-    y
-  } = calculatedProps;
+  const { dy, dx, transform, backgroundStyle, backgroundPadding, backgroundComponent, inline, y } =
+    calculatedProps;
 
   const textElements = tspanValues.map((current, i) => {
     const previous = getSingleValue(tspanValues, i - 1);

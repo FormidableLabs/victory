@@ -110,26 +110,28 @@ const checkBehaviorName = (behavior, behaviors) => {
   }
 };
 
-const makeCreateContainerFunction = (mixinMap, Container) => (behaviorA, behaviorB, ...invalid) => {
-  // eslint-disable-line
-  const behaviors = keys(mixinMap);
+const makeCreateContainerFunction =
+  (mixinMap, Container) =>
+  (behaviorA, behaviorB, ...invalid) => {
+    // eslint-disable-line
+    const behaviors = keys(mixinMap);
 
-  checkBehaviorName(behaviorA, behaviors);
-  checkBehaviorName(behaviorB, behaviors);
+    checkBehaviorName(behaviorA, behaviors);
+    checkBehaviorName(behaviorB, behaviors);
 
-  if (invalid.length) {
-    Log.warn("too many arguments given to createContainer (maximum accepted: 2).");
-  }
+    if (invalid.length) {
+      Log.warn("too many arguments given to createContainer (maximum accepted: 2).");
+    }
 
-  const firstMixins = mixinMap[behaviorA];
-  const secondMixins = mixinMap[behaviorB] || [];
+    const firstMixins = mixinMap[behaviorA];
+    const secondMixins = mixinMap[behaviorB] || [];
 
-  if (!firstMixins) {
-    return Container;
-  }
+    if (!firstMixins) {
+      return Container;
+    }
 
-  return combineContainerMixins([...firstMixins, ...secondMixins], Container);
-};
+    return combineContainerMixins([...firstMixins, ...secondMixins], Container);
+  };
 
 const createContainer = makeCreateContainerFunction(
   {

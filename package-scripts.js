@@ -8,13 +8,11 @@ module.exports = {
         default:
           "webpack-dev-server --config ./config/webpack/demo/webpack.config.dev.js --colors --content-base demo/js"
       },
-      hot:
-        "webpack-dev-server --config ./config/webpack/demo/webpack.config.hot.js --colors --inline --hot --content-base demo/js",
+      hot: "webpack-dev-server --config ./config/webpack/demo/webpack.config.hot.js --colors --inline --hot --content-base demo/js",
       test: "webpack-dev-server --config ./config/webpack/webpack.config.test.js --colors"
     },
     karma: {
-      ci:
-        "karma start --browsers ChromeHeadlessCustom,Firefox ./config/karma/karma.conf.coverage.js",
+      ci: "karma start --browsers ChromeHeadlessCustom,Firefox ./config/karma/karma.conf.coverage.js",
       cov: "karma start ./config/karma/karma.conf.coverage.js",
       default: "karma start ./config/karma/karma.conf.js"
     },
@@ -51,10 +49,8 @@ module.exports = {
       default: npsUtils.series.nps("lint", "test")
     },
     watch: {
-      es:
-        "lerna exec --parallel -- cross-env BABEL_ENV=es babel src --out-dir es --copy-files --watch",
-      lib:
-        "lerna exec --parallel -- cross-env BABEL_ENV=lib babel src --out-dir lib --copy-files --watch",
+      es: "lerna exec --parallel -- cross-env BABEL_ENV=es babel src --out-dir es --copy-files --watch",
+      lib: "lerna exec --parallel -- cross-env BABEL_ENV=lib babel src --out-dir lib --copy-files --watch",
       default: npsUtils.concurrent.nps("watch.es", "watch.lib")
     },
     clean: {

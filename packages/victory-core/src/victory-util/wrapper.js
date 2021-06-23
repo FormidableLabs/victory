@@ -123,12 +123,8 @@ export default {
             isContinuous(child) || (child.props.children && isContinuous(child.props.children))
           );
         });
-      const {
-        nodesWillExit,
-        nodesWillEnter,
-        childrenTransitions,
-        nodesShouldEnter
-      } = Transitions.getInitialTransitionState(oldChildren, nextChildren);
+      const { nodesWillExit, nodesWillEnter, childrenTransitions, nodesShouldEnter } =
+        Transitions.getInitialTransitionState(oldChildren, nextChildren);
 
       this.setState({
         nodesWillExit,

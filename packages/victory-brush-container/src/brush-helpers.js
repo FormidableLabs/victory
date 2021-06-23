@@ -179,14 +179,8 @@ const Helpers = {
   // eslint-disable-next-line max-statements, complexity
   onMouseDown(evt, targetProps) {
     evt.preventDefault();
-    const {
-      handleWidth,
-      cachedBrushDomain,
-      domain,
-      allowResize,
-      allowDrag,
-      allowDraw
-    } = targetProps;
+    const { handleWidth, cachedBrushDomain, domain, allowResize, allowDrag, allowDraw } =
+      targetProps;
     const brushDimension = this.getDimension(targetProps);
     const defaultBrushArea =
       !allowResize && !targetProps.defaultBrushArea ? "move" : targetProps.defaultBrushArea;

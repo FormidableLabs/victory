@@ -183,17 +183,8 @@ const getDefaultOrientations = (axis, originSign, horizontal) => {
 };
 
 const getStandaloneOffset = (props, calculatedValues) => {
-  const {
-    style,
-    scale,
-    orientation,
-    padding,
-    axis,
-    ticks,
-    stringTicks,
-    isVertical,
-    labelPadding
-  } = calculatedValues;
+  const { style, scale, orientation, padding, axis, ticks, stringTicks, isVertical, labelPadding } =
+    calculatedValues;
   const { polar, horizontal } = props;
   const sharedProps = { scale: { [axis]: scale }, polar, horizontal, ticks, stringTicks };
   const xPadding = orientation === "right" ? padding.right : padding.left;

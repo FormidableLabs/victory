@@ -112,16 +112,8 @@ export default class VictoryContainer extends React.Component {
   }
 
   renderContainer(props, svgProps, style) {
-    const {
-      title,
-      desc,
-      portalComponent,
-      className,
-      width,
-      height,
-      portalZIndex,
-      responsive
-    } = props;
+    const { title, desc, portalComponent, className, width, height, portalZIndex, responsive } =
+      props;
     const children = this.getChildren(props);
     const dimensions = responsive ? { width: "100%", height: "100%" } : { width, height };
     const divStyle = assign(
@@ -172,17 +164,8 @@ export default class VictoryContainer extends React.Component {
   }
 
   render() {
-    const {
-      width,
-      height,
-      responsive,
-      events,
-      title,
-      desc,
-      tabIndex,
-      preserveAspectRatio,
-      role
-    } = this.props;
+    const { width, height, responsive, events, title, desc, tabIndex, preserveAspectRatio, role } =
+      this.props;
     const style = responsive
       ? this.props.style
       : Helpers.omit(this.props.style, ["height", "width"]);

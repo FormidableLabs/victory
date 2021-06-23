@@ -235,15 +235,8 @@ const RawZoomHelpers = {
   // eslint-disable-next-line max-params, max-statements
   onMouseMove(evt, targetProps, eventKey, ctx) {
     if (targetProps.panning && targetProps.allowPan) {
-      const {
-        scale,
-        startX,
-        startY,
-        onZoomDomainChange,
-        zoomDomain,
-        zoomDimension,
-        horizontal
-      } = targetProps;
+      const { scale, startX, startY, onZoomDomainChange, zoomDomain, zoomDimension, horizontal } =
+        targetProps;
       const parentSVG = targetProps.parentSVG || Selection.getParentSVG(evt);
       const { x, y } = Selection.getSVGEventCoordinates(evt, parentSVG);
       const originalDomain = this.getDomain(targetProps);
