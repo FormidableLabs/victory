@@ -20,7 +20,10 @@ const SCROLL_PIXEL_OFFSET = 25;
 const DEFAULT_PAGE_CONTENT_CLASS = ".Page-content";
 const ROUTES = ["docs", "faq", "guides"];
 
-const scrollContent = async (hash, contentPaneClass = DEFAULT_PAGE_CONTENT_CLASS) => {
+const scrollContent = async (
+  hash,
+  contentPaneClass = DEFAULT_PAGE_CONTENT_CLASS
+) => {
   const item = document.querySelector(`${contentPaneClass} ${hash}`);
 
   if (!item) {
@@ -40,7 +43,8 @@ const scrollContent = async (hash, contentPaneClass = DEFAULT_PAGE_CONTENT_CLASS
   });
 };
 
-const checkScrollRoutes = (pathname, routes = ROUTES) => routes.some((r) => pathname.includes(r));
+const checkScrollRoutes = (pathname, routes = ROUTES) =>
+  routes.some((r) => pathname.includes(r));
 
 const ScrollToCurrentSection = ({ location, children }) => {
   const { pathname, hash = "" } = location;
@@ -93,7 +97,11 @@ const App = () => {
                 <Route path="*">
                   {(props) => {
                     const Comp = getComponentForPath(routePath) || <NotFound />;
-                    return <ScrollToCurrentSection {...props}>{Comp}</ScrollToCurrentSection>;
+                    return (
+                      <ScrollToCurrentSection {...props}>
+                        {Comp}
+                      </ScrollToCurrentSection>
+                    );
                   }}
                 </Route>
               )}

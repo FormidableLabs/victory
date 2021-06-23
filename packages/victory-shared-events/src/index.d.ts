@@ -17,4 +17,7 @@ export type VictorySharedEventsProps = {
   >[];
 };
 
-export class VictorySharedEvents extends React.Component<VictorySharedEventsProps, any> {}
+export class VictorySharedEvents extends React.Component<
+  VictorySharedEventsProps,
+  any
+> {}

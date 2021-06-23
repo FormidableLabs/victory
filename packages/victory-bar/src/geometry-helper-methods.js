@@ -96,11 +96,15 @@ const circle = function (center, radius) {
       return P3s;
     },
     solveX(y) {
-      const sqrt = Math.sqrt(Math.pow(this.radius, 2) - Math.pow(y - this.center.y, 2));
+      const sqrt = Math.sqrt(
+        Math.pow(this.radius, 2) - Math.pow(y - this.center.y, 2)
+      );
       return [this.center.x - sqrt, this.center.x + sqrt];
     },
     solveY(x) {
-      const sqrt = Math.sqrt(Math.pow(this.radius, 2) - Math.pow(x - this.center.x, 2));
+      const sqrt = Math.sqrt(
+        Math.pow(this.radius, 2) - Math.pow(x - this.center.x, 2)
+      );
       return [this.center.y - sqrt, this.center.y + sqrt];
     }
   };

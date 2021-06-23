@@ -53,7 +53,9 @@ const getCalculatedValues = (props) => {
 
   const voronoi = getVoronoi(props, range, scale);
   const polygons = voronoi.polygons(data);
-  const origin = props.polar ? props.origin || Helpers.getPolarOrigin(props) : undefined;
+  const origin = props.polar
+    ? props.origin || Helpers.getPolarOrigin(props)
+    : undefined;
   return { domain, data, scale, style, polygons, origin };
 };
 
@@ -114,7 +116,10 @@ const getBaseProps = (props, fallbackProps) => {
 
     childProps[eventKey] = { data: dataProps };
     const text = LabelHelpers.getText(props, datum, index);
-    if ((text !== undefined && text !== null) || (labels && (events || sharedEvents))) {
+    if (
+      (text !== undefined && text !== null) ||
+      (labels && (events || sharedEvents))
+    ) {
       childProps[eventKey].labels = LabelHelpers.getProps(props, index);
     }
 

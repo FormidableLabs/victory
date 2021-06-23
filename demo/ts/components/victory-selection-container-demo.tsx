@@ -6,7 +6,11 @@ import { VictoryLine } from "@packages/victory-line";
 import { VictoryPolarAxis } from "@packages/victory-polar-axis";
 import { VictoryScatter } from "@packages/victory-scatter";
 import { VictorySelectionContainer } from "@packages/victory-selection-container";
-import { VictoryTheme, VictoryLabel, VictoryStyleInterface } from "@packages/victory-core";
+import {
+  VictoryTheme,
+  VictoryLabel,
+  VictoryStyleInterface
+} from "@packages/victory-core";
 import { VictoryVoronoiContainer } from "@packages/victory-voronoi-container";
 import { VictoryZoomContainer } from "@packages/victory-zoom-container";
 import { random, range, keys } from "lodash";
@@ -69,11 +73,14 @@ class VictorySelectionContainerDemo extends React.Component<any, any> {
   }
 
   getMaxData(data: multiAxisDataListType) {
-    const groupedData = keys(data[0]).reduce((memo: any, key: string | number) => {
-      memo[key] = data.map((d) => d[key]);
+    const groupedData = keys(data[0]).reduce(
+      (memo: any, key: string | number) => {
+        memo[key] = data.map((d) => d[key]);
 
-      return memo;
-    }, {});
+        return memo;
+      },
+      {}
+    );
 
     return keys(groupedData).reduce((memo: any, key: string | number) => {
       memo[key] = Math.max(...groupedData[key]);
@@ -232,7 +239,9 @@ class VictorySelectionContainerDemo extends React.Component<any, any> {
             />
             <VictoryBar
               alignment="start"
-              style={{ data: { fill: ({ datum }) => datum.fill, opacity: 0.5 } }}
+              style={{
+                data: { fill: ({ datum }) => datum.fill, opacity: 0.5 }
+              }}
               data={[
                 { x: 45, y: 20, label: 1, fill: "red" },
                 { x: 90, y: 30, label: 2, fill: "orange" },
@@ -258,7 +267,9 @@ class VictorySelectionContainerDemo extends React.Component<any, any> {
           <VictoryChart polar theme={VictoryTheme.material} style={chartStyle}>
             <VictoryBar
               alignment="start"
-              style={{ data: { fill: ({ datum }) => datum.fill, opacity: 0.5 } }}
+              style={{
+                data: { fill: ({ datum }) => datum.fill, opacity: 0.5 }
+              }}
               data={[
                 { x: 15, y: 20, label: 1, fill: "red" },
                 { x: 25, y: 30, label: 2, fill: "orange" },
@@ -363,7 +374,13 @@ class VictorySelectionContainerDemo extends React.Component<any, any> {
             />
             <VictoryPolarAxis
               labelPlacement="perpendicular"
-              tickFormat={["strength", "intelligence", "stealth", "luck", "charisma"]}
+              tickFormat={[
+                "strength",
+                "intelligence",
+                "stealth",
+                "luck",
+                "charisma"
+              ]}
             />
             <VictoryScatter
               style={{ data: { fill: "tomato" } }}
@@ -395,7 +412,9 @@ class VictorySelectionContainerDemo extends React.Component<any, any> {
             startAngle={20}
             endAngle={380}
             domain={[0, 360]}
-            tickValues={[0, 20, 45, 65, 90, 120, 135, 180, 225, 250, 270, 300, 315]}
+            tickValues={[
+              0, 20, 45, 65, 90, 120, 135, 180, 225, 250, 270, 300, 315
+            ]}
           />
 
           <VictoryPolarAxis

@@ -7,7 +7,9 @@ import { assign, defaults, isFunction } from "lodash";
 const getCandleWidth = (candleWidth, props) => {
   const { style } = props;
   if (candleWidth) {
-    return isFunction(candleWidth) ? Helpers.evaluateProp(candleWidth, props) : candleWidth;
+    return isFunction(candleWidth)
+      ? Helpers.evaluateProp(candleWidth, props)
+      : candleWidth;
   } else if (style.width) {
     return style.width;
   }
@@ -63,15 +65,28 @@ const evaluateProps = (props) => {
    * `id`
    * `tabIndex`
    */
-  const style = Helpers.evaluateStyle(assign({ stroke: "black" }, props.style), props);
-  const candleWidth = getCandleWidth(props.candleWidth, assign({}, props, { style }));
+  const style = Helpers.evaluateStyle(
+    assign({ stroke: "black" }, props.style),
+    props
+  );
+  const candleWidth = getCandleWidth(
+    props.candleWidth,
+    assign({}, props, { style })
+  );
 
   const ariaLabel = Helpers.evaluateProp(props.ariaLabel, props);
   const desc = Helpers.evaluateProp(props.desc, props);
   const id = Helpers.evaluateProp(props.id, props);
   const tabIndex = Helpers.evaluateProp(props.tabIndex, props);
 
-  return assign({}, props, { ariaLabel, style, candleWidth, desc, id, tabIndex });
+  return assign({}, props, {
+    ariaLabel,
+    style,
+    candleWidth,
+    desc,
+    id,
+    tabIndex
+  });
 };
 
 const Candle = (props) => {

@@ -37,7 +37,8 @@ const toNewName = (interpolation) => {
 
 const getLineFunction = (props) => {
   const { polar, scale, horizontal } = props;
-  const interpolationFunction = typeof props.interpolation === "function" && props.interpolation;
+  const interpolationFunction =
+    typeof props.interpolation === "function" && props.interpolation;
   const interpolationName =
     typeof props.interpolation === "string" && toNewName(props.interpolation);
   return polar
@@ -57,7 +58,8 @@ const getLineFunction = (props) => {
 
 const getCartesianArea = (props, interpolation) => {
   const { horizontal, scale } = props;
-  const interpolationFunction = typeof interpolation === "function" && interpolation;
+  const interpolationFunction =
+    typeof interpolation === "function" && interpolation;
   const interpolationName = typeof interpolation === "string" && interpolation;
   return horizontal
     ? d3Shape
@@ -78,7 +80,8 @@ const getCartesianArea = (props, interpolation) => {
 
 const getAreaFunction = (props) => {
   const { polar, scale } = props;
-  const interpolationFunction = typeof props.interpolation === "function" && props.interpolation;
+  const interpolationFunction =
+    typeof props.interpolation === "function" && props.interpolation;
   const interpolationName =
     typeof props.interpolation === "string" && toNewName(props.interpolation);
   const interpolation = interpolationFunction || interpolationName;
@@ -105,7 +108,10 @@ const evaluateProps = (props) => {
   const ariaLabel = Helpers.evaluateProp(props.ariaLabel, props);
   const desc = Helpers.evaluateProp(props.desc, props);
   const id = Helpers.evaluateProp(props.id, props);
-  const style = Helpers.evaluateStyle(assign({ fill: "black" }, props.style), props);
+  const style = Helpers.evaluateStyle(
+    assign({ fill: "black" }, props.style),
+    props
+  );
   const tabIndex = Helpers.evaluateProp(props.tabIndex, props);
 
   return assign({}, props, { ariaLabel, desc, id, style, tabIndex });
@@ -130,9 +136,11 @@ const Area = (props) => {
     desc,
     tabIndex
   } = props;
-  const defaultTransform = polar && origin ? `translate(${origin.x}, ${origin.y})` : undefined;
+  const defaultTransform =
+    polar && origin ? `translate(${origin.x}, ${origin.y})` : undefined;
   const transform = props.transform || defaultTransform;
-  const renderLine = style.stroke && style.stroke !== "none" && style.stroke !== "transparent";
+  const renderLine =
+    style.stroke && style.stroke !== "none" && style.stroke !== "transparent";
   const areaFunction = getAreaFunction(props);
   const lineFunction = renderLine && getLineFunction(props);
 
@@ -176,7 +184,9 @@ const Area = (props) => {
       )
     : null;
 
-  return renderLine ? React.cloneElement(groupComponent, {}, [area, line]) : area;
+  return renderLine
+    ? React.cloneElement(groupComponent, {}, [area, line])
+    : area;
 };
 
 Area.propTypes = {

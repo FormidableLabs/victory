@@ -6,7 +6,11 @@ import { VictoryAxis } from "Packages/victory-axis/src/index";
 import { VictoryBar } from "Packages/victory-bar/src/index";
 import { VictoryBrushLine } from "Packages/victory-brush-line/src/index";
 import { VictoryScatter } from "Packages/victory-scatter/src/index";
-import { VictoryClipContainer, Point, Selection } from "Packages/victory-core/src/index";
+import {
+  VictoryClipContainer,
+  Point,
+  Selection
+} from "Packages/victory-core/src/index";
 import { VictoryZoomContainer } from "Packages/victory-zoom-container/src/index";
 import { VictoryBrushContainer } from "Packages/victory-brush-container/src/index";
 
@@ -61,14 +65,22 @@ class DraggablePoint extends React.Component {
         onMouseUp: (evt, targetProps) => {
           return [
             {
-              mutation: () => Object.assign({}, targetProps, { dragging: false, active: false })
+              mutation: () =>
+                Object.assign({}, targetProps, {
+                  dragging: false,
+                  active: false
+                })
             }
           ];
         },
         onMouseLeave: (evt, targetProps) => {
           return [
             {
-              mutation: () => Object.assign({}, targetProps, { dragging: false, active: false })
+              mutation: () =>
+                Object.assign({}, targetProps, {
+                  dragging: false,
+                  active: false
+                })
             }
           ];
         }
@@ -100,7 +112,9 @@ class App extends React.Component {
   }
 
   onPointChange(point) {
-    const newPoints = this.state.points.map((p) => (p.name === point.name ? point : p));
+    const newPoints = this.state.points.map((p) =>
+      p.name === point.name ? point : p
+    );
     this.setState({ points: newPoints });
   }
 
@@ -170,7 +184,9 @@ class App extends React.Component {
           ))}
           <VictoryScatter
             data={points}
-            dataComponent={<DraggablePoint onPointChange={this.onPointChange.bind(this)} />}
+            dataComponent={
+              <DraggablePoint onPointChange={this.onPointChange.bind(this)} />
+            }
             style={{
               data: {
                 fill: "skyBlue",

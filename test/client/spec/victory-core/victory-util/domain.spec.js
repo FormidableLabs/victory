@@ -71,7 +71,8 @@ describe("victory-util/domain", () => {
         const props = { ...baseProps, domainPadding };
         const paddedDomain = Domain.formatDomain(domain, props, "x");
         const adjustedDomain = domain[1] + pad;
-        const adjustedPercent = adjustedDomain / (baseProps.width - baseProps.padding);
+        const adjustedPercent =
+          adjustedDomain / (baseProps.width - baseProps.padding);
         const totalPadding = adjustedPercent * pad;
         expect(paddedDomain).to.eql([0, domain[1] + totalPadding]);
       });

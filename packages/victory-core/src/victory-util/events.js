@@ -1,4 +1,14 @@
-import { assign, isEmpty, isFunction, without, pickBy, omitBy, uniq, includes, keys } from "lodash";
+import {
+  assign,
+  isEmpty,
+  isFunction,
+  without,
+  pickBy,
+  omitBy,
+  uniq,
+  includes,
+  keys
+} from "lodash";
 
 const GLOBAL_EVENT_REGEX = /^onGlobal(.*)$/;
 
@@ -100,7 +110,9 @@ export default {
     // applied to the appropriate property on the state object
     const parseEvent = (eventReturn, eventKey) => {
       const childNames =
-        namespace === "parent" ? eventReturn.childName : eventReturn.childName || childType;
+        namespace === "parent"
+          ? eventReturn.childName
+          : eventReturn.childName || childType;
       const target = eventReturn.target || namespace;
 
       // returns all eventKeys to modify for a targeted childName
@@ -112,10 +124,17 @@ export default {
           return baseProps[childName]
             ? without(keys(baseProps[childName]), "parent")
             : without(keys(baseProps), "parent");
-        } else if (eventReturn.eventKey === undefined && eventKey === "parent") {
-          return baseProps[childName] ? keys(baseProps[childName]) : keys(baseProps);
+        } else if (
+          eventReturn.eventKey === undefined &&
+          eventKey === "parent"
+        ) {
+          return baseProps[childName]
+            ? keys(baseProps[childName])
+            : keys(baseProps);
         }
-        return eventReturn.eventKey !== undefined ? eventReturn.eventKey : eventKey;
+        return eventReturn.eventKey !== undefined
+          ? eventReturn.eventKey
+          : eventKey;
       };
 
       // returns the state object with mutated props applied for a single key
@@ -124,8 +143,14 @@ export default {
         if (!isFunction(eventReturn.mutation)) {
           return baseState;
         }
-        const mutationTargetProps = getTargetProps({ childName, key, target }, "props");
-        const mutationTargetState = getTargetProps({ childName, key, target }, "state");
+        const mutationTargetProps = getTargetProps(
+          { childName, key, target },
+          "props"
+        );
+        const mutationTargetState = getTargetProps(
+          { childName, key, target },
+          "state"
+        );
         const mutatedProps = eventReturn.mutation(
           assign({}, mutationTargetProps, mutationTargetState),
           baseProps
@@ -145,7 +170,9 @@ export default {
         const extendState = (state) => {
           return target === "parent"
             ? assign(state, { [key]: assign(state[key], mutatedProps) })
-            : assign(state, { [key]: assign(state[key], { [target]: mutatedProps }) });
+            : assign(state, {
+                [key]: assign(state[key], { [target]: mutatedProps })
+              });
         };
 
         const updateState = (state) => {
@@ -168,7 +195,8 @@ export default {
       };
 
       // returns an entire mutated state for all children
-      const allChildNames = childNames === "all" ? without(keys(baseProps), "parent") : childNames;
+      const allChildNames =
+        childNames === "all" ? without(keys(baseProps), "parent") : childNames;
       return Array.isArray(allChildNames)
         ? allChildNames.reduce((memo, childName) => {
             return assign(memo, getReturnByChild(childName));
@@ -221,7 +249,8 @@ export default {
   getPartialEvents(events, eventKey, childProps) {
     return events
       ? keys(events).reduce((memo, eventName) => {
-          const appliedEvent = (evt) => events[eventName](evt, childProps, eventKey, eventName);
+          const appliedEvent = (evt) =>
+            events[eventName](evt, childProps, eventKey, eventName);
           memo[eventName] = appliedEvent;
           return memo;
         }, {})
@@ -238,7 +267,11 @@ export default {
         ? (state[eventKey] && state[eventKey][namespace]) || state[eventKey]
         : state[eventKey] && state[eventKey][namespace];
     }
-    return state[childType] && state[childType][eventKey] && state[childType][eventKey][namespace];
+    return (
+      state[childType] &&
+      state[childType][eventKey] &&
+      state[childType][eventKey][namespace]
+    );
   },
 
   /**
@@ -252,7 +285,12 @@ export default {
    * @return {Object} a object describing all mutations for VictorySharedEvents
    */
   // eslint-disable-next-line max-params
-  getExternalMutationsWithChildren(mutations, baseProps, baseState, childNames) {
+  getExternalMutationsWithChildren(
+    mutations,
+    baseProps,
+    baseState,
+    childNames
+  ) {
     baseProps = baseProps || {};
     baseState = baseState || {};
 
@@ -290,8 +328,14 @@ export default {
       const keyProps = baseProps[eventKey] || {};
       if (eventKey === "parent") {
         const identifier = { eventKey, target: "parent" };
-        const mutation = this.getExternalMutation(mutations, keyProps, keyState, identifier);
-        memo[eventKey] = mutation !== undefined ? assign({}, keyState, mutation) : keyState;
+        const mutation = this.getExternalMutation(
+          mutations,
+          keyProps,
+          keyState,
+          identifier
+        );
+        memo[eventKey] =
+          mutation !== undefined ? assign({}, keyState, mutation) : keyState;
       } else {
         // use keys from both state and props so that elements not intially included in baseProps
         // will be used. (i.e. labels)
@@ -305,7 +349,9 @@ export default {
             identifier
           );
           m[target] =
-            mutation !== undefined ? assign({}, keyState[target], mutation) : keyState[target];
+            mutation !== undefined
+              ? assign({}, keyState[target], mutation)
+              : keyState[target];
           return pickBy(m, (v) => !isEmpty(v));
         }, {});
       }
@@ -340,20 +386,29 @@ export default {
     mutations = Array.isArray(mutations) ? mutations : [mutations];
     let scopedMutations = mutations;
     if (identifier.childName) {
-      scopedMutations = mutations.filter((m) => filterMutations(m, "childName"));
+      scopedMutations = mutations.filter((m) =>
+        filterMutations(m, "childName")
+      );
     }
     // find any mutation objects that match the target
-    const targetMutations = scopedMutations.filter((m) => filterMutations(m, "target"));
+    const targetMutations = scopedMutations.filter((m) =>
+      filterMutations(m, "target")
+    );
     if (isEmpty(targetMutations)) {
       return undefined;
     }
-    const keyMutations = targetMutations.filter((m) => filterMutations(m, "eventKey"));
+    const keyMutations = targetMutations.filter((m) =>
+      filterMutations(m, "eventKey")
+    );
     if (isEmpty(keyMutations)) {
       return undefined;
     }
     return keyMutations.reduce((memo, curr) => {
-      const mutationFunction = curr && isFunction(curr.mutation) ? curr.mutation : () => undefined;
-      const currentMutation = mutationFunction(assign({}, baseProps, baseState));
+      const mutationFunction =
+        curr && isFunction(curr.mutation) ? curr.mutation : () => undefined;
+      const currentMutation = mutationFunction(
+        assign({}, baseProps, baseState)
+      );
       return assign({}, memo, currentMutation);
     }, {});
   },
@@ -366,11 +421,14 @@ export default {
       Array.isArray(components) &&
       components.reduce((memo, componentName) => {
         const component = props[componentName];
-        const defaultEvents = component && component.type && component.type.defaultEvents;
+        const defaultEvents =
+          component && component.type && component.type.defaultEvents;
         const componentEvents = isFunction(defaultEvents)
           ? defaultEvents(component.props)
           : defaultEvents;
-        memo = Array.isArray(componentEvents) ? memo.concat(...componentEvents) : memo;
+        memo = Array.isArray(componentEvents)
+          ? memo.concat(...componentEvents)
+          : memo;
         return memo;
       }, []);
     return events && events.length ? events : undefined;
@@ -381,8 +439,10 @@ export default {
     return match && match[1] && match[1].toLowerCase();
   },
 
-  getGlobalEvents: (events) => pickBy(events, (_, key) => GLOBAL_EVENT_REGEX.test(key)),
-  omitGlobalEvents: (events) => omitBy(events, (_, key) => GLOBAL_EVENT_REGEX.test(key)),
+  getGlobalEvents: (events) =>
+    pickBy(events, (_, key) => GLOBAL_EVENT_REGEX.test(key)),
+  omitGlobalEvents: (events) =>
+    omitBy(events, (_, key) => GLOBAL_EVENT_REGEX.test(key)),
 
   emulateReactEvent: (event) => assign(event, { nativeEvent: event })
 };

@@ -50,10 +50,17 @@ describe("victory-util/label-helpers", () => {
         y: d3Scale.scaleLinear()
       };
       data.forEach((datum, index) => {
-        const props = assign({}, basicProps, { scale: polarScale, polar: true });
+        const props = assign({}, basicProps, {
+          scale: polarScale,
+          polar: true
+        });
         const labelProps = LabelHelpers.getProps(props, index);
-        expect(labelProps.x).to.equal(datum.y * Math.cos(datum.x * Math.PI * 2));
-        expect(labelProps.y).to.equal(-datum.y * Math.sin(datum.x * Math.PI * 2));
+        expect(labelProps.x).to.equal(
+          datum.y * Math.cos(datum.x * Math.PI * 2)
+        );
+        expect(labelProps.y).to.equal(
+          -datum.y * Math.sin(datum.x * Math.PI * 2)
+        );
       });
     });
   });
@@ -64,24 +71,56 @@ describe("victory-util/label-helpers", () => {
       expect(angle).to.equal(0);
     });
     it("returns angles corresponding to perpendicular labelPlacement", () => {
-      expect(LabelHelpers.getPolarAngle({ labelPlacement: "perpendicular" }, 15)).to.equal(75);
-      expect(LabelHelpers.getPolarAngle({ labelPlacement: "perpendicular" }, 45)).to.equal(45);
-      expect(LabelHelpers.getPolarAngle({ labelPlacement: "perpendicular" }, 90)).to.equal(0);
-      expect(LabelHelpers.getPolarAngle({ labelPlacement: "perpendicular" }, 135)).to.equal(-45);
-      expect(LabelHelpers.getPolarAngle({ labelPlacement: "perpendicular" }, 180)).to.equal(90);
-      expect(LabelHelpers.getPolarAngle({ labelPlacement: "perpendicular" }, 225)).to.equal(45);
-      expect(LabelHelpers.getPolarAngle({ labelPlacement: "perpendicular" }, 270)).to.equal(0);
-      expect(LabelHelpers.getPolarAngle({ labelPlacement: "perpendicular" }, 315)).to.equal(-45);
+      expect(
+        LabelHelpers.getPolarAngle({ labelPlacement: "perpendicular" }, 15)
+      ).to.equal(75);
+      expect(
+        LabelHelpers.getPolarAngle({ labelPlacement: "perpendicular" }, 45)
+      ).to.equal(45);
+      expect(
+        LabelHelpers.getPolarAngle({ labelPlacement: "perpendicular" }, 90)
+      ).to.equal(0);
+      expect(
+        LabelHelpers.getPolarAngle({ labelPlacement: "perpendicular" }, 135)
+      ).to.equal(-45);
+      expect(
+        LabelHelpers.getPolarAngle({ labelPlacement: "perpendicular" }, 180)
+      ).to.equal(90);
+      expect(
+        LabelHelpers.getPolarAngle({ labelPlacement: "perpendicular" }, 225)
+      ).to.equal(45);
+      expect(
+        LabelHelpers.getPolarAngle({ labelPlacement: "perpendicular" }, 270)
+      ).to.equal(0);
+      expect(
+        LabelHelpers.getPolarAngle({ labelPlacement: "perpendicular" }, 315)
+      ).to.equal(-45);
     });
     it("returns angles corresponding to parallel labelPlacement", () => {
-      expect(LabelHelpers.getPolarAngle({ labelPlacement: "parallel" }, 15)).to.equal(-15);
-      expect(LabelHelpers.getPolarAngle({ labelPlacement: "parallel" }, 45)).to.equal(-45);
-      expect(LabelHelpers.getPolarAngle({ labelPlacement: "parallel" }, 90)).to.equal(-90);
-      expect(LabelHelpers.getPolarAngle({ labelPlacement: "parallel" }, 135)).to.equal(45);
-      expect(LabelHelpers.getPolarAngle({ labelPlacement: "parallel" }, 180)).to.equal(0);
-      expect(LabelHelpers.getPolarAngle({ labelPlacement: "parallel" }, 225)).to.equal(-45);
-      expect(LabelHelpers.getPolarAngle({ labelPlacement: "parallel" }, 270)).to.equal(-90);
-      expect(LabelHelpers.getPolarAngle({ labelPlacement: "parallel" }, 315)).to.equal(45);
+      expect(
+        LabelHelpers.getPolarAngle({ labelPlacement: "parallel" }, 15)
+      ).to.equal(-15);
+      expect(
+        LabelHelpers.getPolarAngle({ labelPlacement: "parallel" }, 45)
+      ).to.equal(-45);
+      expect(
+        LabelHelpers.getPolarAngle({ labelPlacement: "parallel" }, 90)
+      ).to.equal(-90);
+      expect(
+        LabelHelpers.getPolarAngle({ labelPlacement: "parallel" }, 135)
+      ).to.equal(45);
+      expect(
+        LabelHelpers.getPolarAngle({ labelPlacement: "parallel" }, 180)
+      ).to.equal(0);
+      expect(
+        LabelHelpers.getPolarAngle({ labelPlacement: "parallel" }, 225)
+      ).to.equal(-45);
+      expect(
+        LabelHelpers.getPolarAngle({ labelPlacement: "parallel" }, 270)
+      ).to.equal(-90);
+      expect(
+        LabelHelpers.getPolarAngle({ labelPlacement: "parallel" }, 315)
+      ).to.equal(45);
     });
   });
 });

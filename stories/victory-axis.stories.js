@@ -116,7 +116,10 @@ export const TickValues = () => {
       </VictoryChart>
       <VictoryChart {...defaultChartProps}>
         <VictoryAxis tickValues={["one", "two", "three", "four"]} />
-        <VictoryAxis dependentAxis tickValues={["one", "two", "three", "four"]} />
+        <VictoryAxis
+          dependentAxis
+          tickValues={["one", "two", "three", "four"]}
+        />
       </VictoryChart>
       <VictoryChart {...defaultChartProps} horizontal scale={{ x: "time" }}>
         <VictoryAxis tickValues={getTimeValues(5)} />
@@ -154,9 +157,21 @@ export const WithDomain = () => {
   return (
     <div style={containerStyle}>
       <VictoryAxis {...defaultChartProps} domain={[-10, 10]} />
-      <VictoryAxis {...defaultChartProps} domain={[-10, 10]} tickValues={getValues(5)} />
-      <VictoryAxis {...defaultChartProps} domain={[-10, 10]} tickValues={[8, 9, 10, 11, 12, 13]} />
-      <VictoryAxis {...defaultChartProps} domain={[-2, 2]} tickValues={["cat", "dog", "bird"]} />
+      <VictoryAxis
+        {...defaultChartProps}
+        domain={[-10, 10]}
+        tickValues={getValues(5)}
+      />
+      <VictoryAxis
+        {...defaultChartProps}
+        domain={[-10, 10]}
+        tickValues={[8, 9, 10, 11, 12, 13]}
+      />
+      <VictoryAxis
+        {...defaultChartProps}
+        domain={[-2, 2]}
+        tickValues={["cat", "dog", "bird"]}
+      />
       <VictoryChart {...defaultChartProps} domain={[1, 4]}>
         <VictoryScatter
           data={[
@@ -190,14 +205,22 @@ export const WithDomain = () => {
 export const FixLabelOverlap = () => {
   return (
     <div style={containerStyle}>
-      <VictoryAxis {...defaultChartProps} fixLabelOverlap tickValues={getValues(30)} />
+      <VictoryAxis
+        {...defaultChartProps}
+        fixLabelOverlap
+        tickValues={getValues(30)}
+      />
       <VictoryAxis
         {...defaultChartProps}
         dependentAxis
         fixLabelOverlap
         tickValues={getValues(30)}
       />
-      <VictoryAxis {...defaultChartProps} fixLabelOverlap tickValues={getRandomValues(30)} />
+      <VictoryAxis
+        {...defaultChartProps}
+        fixLabelOverlap
+        tickValues={getRandomValues(30)}
+      />
       <VictoryAxis
         {...defaultChartProps}
         dependentAxis
@@ -233,10 +256,26 @@ export const Offsets = () => {
 export const Orientation = () => {
   return (
     <div style={containerStyle}>
-      <VictoryAxis {...defaultChartProps} tickValues={getValues(5)} orientation="top" />
-      <VictoryAxis {...defaultChartProps} tickValues={getValues(5)} orientation="bottom" />
-      <VictoryAxis {...defaultChartProps} tickValues={getValues(5)} orientation="left" />
-      <VictoryAxis {...defaultChartProps} tickValues={getValues(5)} orientation="right" />
+      <VictoryAxis
+        {...defaultChartProps}
+        tickValues={getValues(5)}
+        orientation="top"
+      />
+      <VictoryAxis
+        {...defaultChartProps}
+        tickValues={getValues(5)}
+        orientation="bottom"
+      />
+      <VictoryAxis
+        {...defaultChartProps}
+        tickValues={getValues(5)}
+        orientation="left"
+      />
+      <VictoryAxis
+        {...defaultChartProps}
+        tickValues={getValues(5)}
+        orientation="right"
+      />
       <VictoryChart {...defaultChartProps}>
         <VictoryAxis orientation="top" />
         <VictoryAxis dependentAxis orientation="right" />

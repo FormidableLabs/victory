@@ -17,11 +17,20 @@ function getCalculatedProps(props, childComponents) {
   props = Helpers.modifyProps(props, fallbackProps, role);
   const style = Wrapper.getStyle(props.theme, props.style, role);
   const { offset, colorScale, color, polar, horizontal } = props;
-  const categories = props.categories || Wrapper.getCategories(props, childComponents);
+  const categories =
+    props.categories || Wrapper.getCategories(props, childComponents);
   const datasets = props.datasets || Wrapper.getDataFromChildren(props);
   const domain = {
-    x: Wrapper.getDomain(assign({}, props, { categories }), "x", childComponents),
-    y: Wrapper.getDomain(assign({}, props, { categories }), "y", childComponents)
+    x: Wrapper.getDomain(
+      assign({}, props, { categories }),
+      "x",
+      childComponents
+    ),
+    y: Wrapper.getDomain(
+      assign({}, props, { categories }),
+      "y",
+      childComponents
+    )
   };
   const range = props.range || {
     x: Helpers.getRange(props, "x"),
@@ -69,7 +78,9 @@ function pixelsToValue(props, axis, calculatedProps) {
 // eslint-disable-next-line max-params
 function getX0(props, calculatedProps, index, role) {
   const groupLength =
-    role === "stack" ? calculatedProps.datasets[0].length : calculatedProps.datasets.length;
+    role === "stack"
+      ? calculatedProps.datasets[0].length
+      : calculatedProps.datasets.length;
   const center = (groupLength - 1) / 2;
   const totalWidth = pixelsToValue(props, "x", calculatedProps);
   return (index - center) * totalWidth;
@@ -78,7 +89,9 @@ function getX0(props, calculatedProps, index, role) {
 // eslint-disable-next-line max-params
 function getPolarX0(props, calculatedProps, index, role) {
   const groupLength =
-    role === "stack" ? calculatedProps.datasets[0].length : calculatedProps.datasets.length;
+    role === "stack"
+      ? calculatedProps.datasets[0].length
+      : calculatedProps.datasets.length;
   const center = (groupLength - 1) / 2;
   const width = getAngularWidth(props, calculatedProps);
   return (index - center) * width;
@@ -99,7 +112,8 @@ function getLabels(props, datasets, index) {
 }
 
 function getChildProps(props, calculatedProps) {
-  const { categories, domain, range, scale, horizontal, origin, padding } = calculatedProps;
+  const { categories, domain, range, scale, horizontal, origin, padding } =
+    calculatedProps;
   const { width, height, theme, polar } = props;
   return {
     height,
@@ -133,7 +147,9 @@ function getDataWithOffset(props, defaultDataset = [], offset) {
   const xOffset = offset || 0;
   return dataset.map((datum) => {
     const _x1 =
-      datum._x instanceof Date ? new Date(datum._x.getTime() + xOffset) : datum._x + xOffset;
+      datum._x instanceof Date
+        ? new Date(datum._x.getTime() + xOffset)
+        : datum._x + xOffset;
 
     return assign({}, datum, { _x1 });
   });
@@ -142,7 +158,8 @@ function getDataWithOffset(props, defaultDataset = [], offset) {
 function getChildren(props, childComponents, calculatedProps) {
   props = Helpers.modifyProps(props, fallbackProps, "stack");
   childComponents = childComponents || React.Children.toArray(props.children);
-  calculatedProps = calculatedProps || getCalculatedProps(props, childComponents);
+  calculatedProps =
+    calculatedProps || getCalculatedProps(props, childComponents);
   const { datasets } = calculatedProps;
   const { labelComponent, polar } = props;
   const childProps = getChildProps(props, calculatedProps);
@@ -156,7 +173,9 @@ function getChildren(props, childComponents, calculatedProps) {
       role === "voronoi" || role === "tooltip" || role === "label"
         ? child.props.style
         : Wrapper.getChildStyle(child, index, calculatedProps);
-    const labels = props.labels ? getLabels(props, datasets, index) : child.props.labels;
+    const labels = props.labels
+      ? getLabels(props, datasets, index)
+      : child.props.labels;
     const name = child.props.name || `${parentName}-${role}-${index}`;
     return React.cloneElement(
       child,

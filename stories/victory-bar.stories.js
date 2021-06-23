@@ -217,14 +217,24 @@ export const CornerRadius = () => {
         <VictoryBar
           data={getMixedData(7)}
           barWidth={40}
-          cornerRadius={{ topLeft: 5, topRight: 20, bottomLeft: 20, bottomRight: 0 }}
+          cornerRadius={{
+            topLeft: 5,
+            topRight: 20,
+            bottomLeft: 20,
+            bottomRight: 0
+          }}
         />
       </VictoryChart>
       <VictoryChart {...defaultChartProps}>
         <VictoryBar
           data={getMixedData(7)}
           barWidth={40}
-          cornerRadius={{ topLeft: 5, topRight: 20, bottomLeft: 20, bottomRight: 0 }}
+          cornerRadius={{
+            topLeft: 5,
+            topRight: 20,
+            bottomLeft: 20,
+            bottomRight: 0
+          }}
         />
       </VictoryChart>
       <VictoryChart polar innerRadius={60} {...defaultChartProps}>
@@ -238,7 +248,12 @@ export const CornerRadius = () => {
             { x: 315, y: 30 }
           ]}
           style={{ data: { fill: "tomato", width: 40 } }}
-          cornerRadius={{ topRight: 1, topLeft: 20, bottomRight: 5, bottomLeft: 0 }}
+          cornerRadius={{
+            topRight: 1,
+            topLeft: 20,
+            bottomRight: 5,
+            bottomLeft: 0
+          }}
         />
         <VictoryPolarAxis
           labelPlacement="parallel"
@@ -256,7 +271,12 @@ export const CornerRadius = () => {
             { x: 315, y: 30 }
           ]}
           style={{ data: { fill: "tomato", width: 40 } }}
-          cornerRadius={{ topRight: 1, topLeft: 20, bottomRight: 5, bottomLeft: 0 }}
+          cornerRadius={{
+            topRight: 1,
+            topLeft: 20,
+            bottomRight: 5,
+            bottomLeft: 0
+          }}
         />
         <VictoryPolarAxis
           labelPlacement="parallel"
@@ -355,7 +375,10 @@ export const Labels = () => {
         <VictoryBar data={getData(7)} labels={({ datum }) => `x: ${datum.x}`} />
       </VictoryChart>
       <VictoryChart {...defaultChartProps} domainPadding={8}>
-        <VictoryBar data={getData(7)} labels={["", "", "three", "four", 5, "six"]} />
+        <VictoryBar
+          data={getData(7)}
+          labels={["", "", "three", "four", 5, "six"]}
+        />
       </VictoryChart>
       <VictoryChart {...defaultChartProps} domainPadding={10}>
         <VictoryBar
@@ -443,7 +466,12 @@ export const Style = () => {
           labels={({ datum }) => datum.y}
           style={{
             labels: { fontSize: 20, fill: "tomato", fontFamily: "monospace" },
-            data: { fill: "tomato", fillOpacity: 0.7, stroke: "tomato", strokeWidth: 2 }
+            data: {
+              fill: "tomato",
+              fillOpacity: 0.7,
+              stroke: "tomato",
+              strokeWidth: 2
+            }
           }}
         />
       </VictoryChart>
@@ -476,16 +504,33 @@ export const Scale = () => {
   return (
     <div style={containerStyle}>
       <VictoryChart {...defaultChartProps} scale={{ y: "log" }} minDomain={1}>
-        <VictoryBar data={getLogData(7)} labels={({ datum }) => datum.y.toPrecision(1)} />
+        <VictoryBar
+          data={getLogData(7)}
+          labels={({ datum }) => datum.y.toPrecision(1)}
+        />
       </VictoryChart>
-      <VictoryChart horizontal {...defaultChartProps} scale={{ y: "log" }} minDomain={1}>
-        <VictoryBar data={getLogData(7)} labels={({ datum }) => datum.y.toPrecision(1)} />
+      <VictoryChart
+        horizontal
+        {...defaultChartProps}
+        scale={{ y: "log" }}
+        minDomain={1}
+      >
+        <VictoryBar
+          data={getLogData(7)}
+          labels={({ datum }) => datum.y.toPrecision(1)}
+        />
       </VictoryChart>
       <VictoryChart {...defaultChartProps}>
-        <VictoryBar data={getTimeData(5)} labels={({ datum }) => datum.x.getFullYear()} />
+        <VictoryBar
+          data={getTimeData(5)}
+          labels={({ datum }) => datum.x.getFullYear()}
+        />
       </VictoryChart>
       <VictoryChart horizontal {...defaultChartProps}>
-        <VictoryBar data={getTimeData(5)} labels={({ datum }) => datum.x.getFullYear()} />
+        <VictoryBar
+          data={getTimeData(5)}
+          labels={({ datum }) => datum.x.getFullYear()}
+        />
       </VictoryChart>
       <VictoryChart {...defaultChartProps}>
         <VictoryStack labels={({ datum }) => datum.x.getFullYear()}>
@@ -666,7 +711,11 @@ export const GroupedBars = () => {
         </VictoryGroup>
       </VictoryChart>
       <VictoryChart {...defaultChartProps}>
-        <VictoryGroup offset={20} labels={({ datum }) => datum.x} style={{ data: { width: 15 } }}>
+        <VictoryGroup
+          offset={20}
+          labels={({ datum }) => datum.x}
+          style={{ data: { width: 15 } }}
+        >
           <VictoryStack colorScale="red">
             <VictoryBar data={getData(3)} />
             <VictoryBar data={getData(3, "seed-1")} />
@@ -685,7 +734,11 @@ export const GroupedBars = () => {
         </VictoryGroup>
       </VictoryChart>
       <VictoryChart horizontal {...defaultChartProps}>
-        <VictoryGroup offset={20} labels={({ datum }) => datum.x} style={{ data: { width: 15 } }}>
+        <VictoryGroup
+          offset={20}
+          labels={({ datum }) => datum.x}
+          style={{ data: { width: 15 } }}
+        >
           <VictoryStack colorScale="red">
             <VictoryBar data={getData(3)} />
             <VictoryBar data={getData(3, "seed-1")} />
@@ -802,7 +855,11 @@ export const PolarBars = () => {
         <VictoryPolarAxis />
       </VictoryChart>
       <VictoryChart {...defaultChartProps} polar>
-        <VictoryGroup offset={25} colorScale="qualitative" style={{ data: { width: 15 } }}>
+        <VictoryGroup
+          offset={25}
+          colorScale="qualitative"
+          style={{ data: { width: 15 } }}
+        >
           <VictoryBar data={getData(5)} />
           <VictoryBar data={getData(5, "seed-1")} />
           <VictoryBar data={getData(5, "seed-2")} />
@@ -810,14 +867,23 @@ export const PolarBars = () => {
         <VictoryPolarAxis />
       </VictoryChart>
       <VictoryChart {...defaultChartProps} polar innerRadius={50}>
-        <VictoryGroup offset={25} colorScale="qualitative" style={{ data: { width: 15 } }}>
+        <VictoryGroup
+          offset={25}
+          colorScale="qualitative"
+          style={{ data: { width: 15 } }}
+        >
           <VictoryBar data={getData(5)} />
           <VictoryBar data={getData(5, "seed-1")} />
           <VictoryBar data={getData(5, "seed-2")} />
         </VictoryGroup>
         <VictoryPolarAxis />
       </VictoryChart>
-      <VictoryChart {...defaultChartProps} polar endAngle={180} innerRadius={50}>
+      <VictoryChart
+        {...defaultChartProps}
+        polar
+        endAngle={180}
+        innerRadius={50}
+      >
         <VictoryStack colorScale="qualitative" style={{ data: { width: 15 } }}>
           <VictoryBar data={getData(5)} />
           <VictoryBar data={getData(5, "seed-1")} />
@@ -899,7 +965,11 @@ export const Regressions = () => {
         </VictoryGroup>
       </VictoryChart>
       <VictoryChart style={parentStyle}>
-        <VictoryGroup offset={20} style={{ data: { width: 15 } }} labels={({ datum }) => datum.x}>
+        <VictoryGroup
+          offset={20}
+          style={{ data: { width: 15 } }}
+          labels={({ datum }) => datum.x}
+        >
           <VictoryStack colorScale="red">
             <VictoryBar data={getData(4)} />
             <VictoryBar data={getData(4, "seed-1")} />
@@ -924,7 +994,11 @@ export const Regressions = () => {
 export const Domain = () => {
   return (
     <div style={containerStyle}>
-      <VictoryBar style={parentStyle} data={getData(7)} domain={{ x: [0, 5], y: [0, 8] }} />
+      <VictoryBar
+        style={parentStyle}
+        data={getData(7)}
+        domain={{ x: [0, 5], y: [0, 8] }}
+      />
       <VictoryChart style={parentStyle} domain={{ x: [0, 5], y: [0, 8] }}>
         <VictoryBar data={getData(7)} />
       </VictoryChart>

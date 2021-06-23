@@ -44,8 +44,10 @@ function getNodeTransitions(oldData, nextData) {
   const nextDataKeyed = nextData && getKeyedData(nextData);
 
   return {
-    entering: oldDataKeyed && getKeyedDataDifference(nextDataKeyed, oldDataKeyed),
-    exiting: nextDataKeyed && getKeyedDataDifference(oldDataKeyed, nextDataKeyed)
+    entering:
+      oldDataKeyed && getKeyedDataDifference(nextDataKeyed, oldDataKeyed),
+    exiting:
+      nextDataKeyed && getKeyedDataDifference(oldDataKeyed, nextDataKeyed)
   };
 }
 
@@ -121,7 +123,8 @@ function getInitialTransitionState(oldChildren, nextChildren) {
 }
 
 function getInitialChildProps(animate, data) {
-  const after = animate.onEnter && animate.onEnter.after ? animate.onEnter.after : identity;
+  const after =
+    animate.onEnter && animate.onEnter.after ? animate.onEnter.after : identity;
   return {
     data: data.map((datum, idx) => assign({}, datum, after(datum, idx, data)))
   };
@@ -133,7 +136,8 @@ function getChildBeforeLoad(animate, child, data, cb) {
   if (animate && animate.onLoad && !animate.onLoad.duration) {
     return { animate, data };
   }
-  const before = animate.onLoad && animate.onLoad.before ? animate.onLoad.before : identity;
+  const before =
+    animate.onLoad && animate.onLoad.before ? animate.onLoad.before : identity;
   // If nodes need to exit, transform them with the provided onLoad.before function.
   data = data.map((datum, idx) => {
     return assign({}, datum, before(datum, idx, data));
@@ -148,7 +152,8 @@ function getChildOnLoad(animate, data, cb) {
   if (animate && animate.onLoad && !animate.onLoad.duration) {
     return { animate, data };
   }
-  const after = animate.onLoad && animate.onLoad.after ? animate.onLoad.after : identity;
+  const after =
+    animate.onLoad && animate.onLoad.after ? animate.onLoad.after : identity;
   // If nodes need to exit, transform them with the provided onLoad.after function.
   data = data.map((datum, idx) => {
     return assign({}, datum, after(datum, idx, data));
@@ -168,11 +173,16 @@ function getChildPropsOnExit(animate, child, data, exitingNodes, cb) {
     // After the exit transition occurs, trigger the animations for
     // nodes that are neither exiting or entering.
     animate.onEnd = cb;
-    const before = animate.onExit && animate.onExit.before ? animate.onExit.before : identity;
+    const before =
+      animate.onExit && animate.onExit.before
+        ? animate.onExit.before
+        : identity;
     // If nodes need to exit, transform them with the provided onExit.before function.
     data = data.map((datum, idx) => {
       const key = (datum.key || idx).toString();
-      return exitingNodes[key] ? assign({}, datum, before(datum, idx, data)) : datum;
+      return exitingNodes[key]
+        ? assign({}, datum, before(datum, idx, data))
+        : datum;
     });
   }
 
@@ -185,13 +195,18 @@ function getChildPropsBeforeEnter(animate, child, data, enteringNodes, cb) {
     // Perform a normal animation here, except - when it finishes - trigger
     // the transition for entering nodes.
     animate = assign({}, animate, { onEnd: cb });
-    const before = animate.onEnter && animate.onEnter.before ? animate.onEnter.before : identity;
+    const before =
+      animate.onEnter && animate.onEnter.before
+        ? animate.onEnter.before
+        : identity;
     // We want the entering nodes to be included in the transition target
     // domain.  However, we may not want these nodes to be displayed initially,
     // so perform the `onEnter.before` transformation on each node.
     data = data.map((datum, idx) => {
       const key = (datum.key || idx).toString();
-      return enteringNodes[key] ? assign({}, datum, before(datum, idx, data)) : datum;
+      return enteringNodes[key]
+        ? assign({}, datum, before(datum, idx, data))
+        : datum;
     });
   }
 
@@ -210,10 +225,15 @@ function getChildPropsOnEnter(animate, data, enteringNodes, cb) {
     // domain should encompass the nodes that will now enter. So perform
     // the `onEnter.after` transformation on each node.
     animate.onEnd = cb;
-    const after = animate.onEnter && animate.onEnter.after ? animate.onEnter.after : identity;
+    const after =
+      animate.onEnter && animate.onEnter.after
+        ? animate.onEnter.after
+        : identity;
     data = data.map((datum, idx) => {
       const key = getDatumKey(datum, idx);
-      return enteringNodes[key] ? assign({}, datum, after(datum, idx, data)) : datum;
+      return enteringNodes[key]
+        ? assign({}, datum, after(datum, idx, data))
+        : datum;
     });
   }
   return { animate, data };
@@ -245,9 +265,12 @@ function getTransitionPropsFactory(props, state, setState) {
   const nodesDoneLoad = state && state.nodesDoneLoad;
   const childrenTransitions = (state && state.childrenTransitions) || [];
   const transitionDurations = {
-    enter: props.animate && props.animate.onEnter && props.animate.onEnter.duration,
-    exit: props.animate && props.animate.onExit && props.animate.onExit.duration,
-    load: props.animate && props.animate.onLoad && props.animate.onLoad.duration,
+    enter:
+      props.animate && props.animate.onEnter && props.animate.onEnter.duration,
+    exit:
+      props.animate && props.animate.onExit && props.animate.onExit.duration,
+    load:
+      props.animate && props.animate.onLoad && props.animate.onLoad.duration,
     move: props.animate && props.animate.duration
   };
 
@@ -310,15 +333,24 @@ function getTransitionPropsFactory(props, state, setState) {
       ? child.type.defaultPolarTransitions || child.type.defaultTransitions
       : child.type.defaultTransitions;
 
-    animate.onExit = defaults({}, animate.onExit, defaultTransitions && defaultTransitions.onExit);
+    animate.onExit = defaults(
+      {},
+      animate.onExit,
+      defaultTransitions && defaultTransitions.onExit
+    );
     animate.onEnter = defaults(
       {},
       animate.onEnter,
       defaultTransitions && defaultTransitions.onEnter
     );
-    animate.onLoad = defaults({}, animate.onLoad, defaultTransitions && defaultTransitions.onLoad);
+    animate.onLoad = defaults(
+      {},
+      animate.onLoad,
+      defaultTransitions && defaultTransitions.onLoad
+    );
 
-    const childTransitions = childrenTransitions[index] || childrenTransitions[0];
+    const childTransitions =
+      childrenTransitions[index] || childrenTransitions[0];
     if (!nodesDoneLoad) {
       // should do onLoad animation
       const load =
@@ -349,7 +381,12 @@ function getTransitionPropsFactory(props, state, setState) {
       const animation = {
         duration: nodesShouldEnter && enteringNodes ? enter : move
       };
-      return onEnter(enteringNodes, child, data, assign({}, animate, animation));
+      return onEnter(
+        enteringNodes,
+        child,
+        data,
+        assign({}, animate, animation)
+      );
     } else if (!state && animate && animate.onExit) {
       // This is the initial render, and nodes may enter when props change. Because
       // animation interpolation is determined by old- and next- props, data may need

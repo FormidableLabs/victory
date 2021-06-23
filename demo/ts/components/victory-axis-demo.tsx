@@ -2,7 +2,11 @@ import React from "react";
 import { merge, random, range } from "lodash";
 import { DomainPropType } from "@packages/victory-core";
 import { VictoryAxis, VictoryAxisProps } from "@packages/victory-axis";
-import { VictoryLabel, VictoryContainer, VictoryTheme } from "@packages/victory-core";
+import {
+  VictoryLabel,
+  VictoryContainer,
+  VictoryTheme
+} from "@packages/victory-core";
 import XYTheme from "../theme/victory-axis-differential-styling-theme";
 
 interface VictoryAxisDemoState {
@@ -10,7 +14,10 @@ interface VictoryAxisDemoState {
   domain: DomainPropType;
 }
 
-export default class VictoryAxisDemo extends React.Component<any, VictoryAxisDemoState> {
+export default class VictoryAxisDemo extends React.Component<
+  any,
+  VictoryAxisDemoState
+> {
   setStateInterval?: number = undefined;
 
   constructor(props: any) {
@@ -69,7 +76,8 @@ export default class VictoryAxisDemo extends React.Component<any, VictoryAxisDem
         stroke: ({ tick }: any) => (tick === "Mariners\nSEA" ? "red" : "grey")
       },
       tickLabels: {
-        fontWeight: ({ tick }: any) => (tick === "Mariners\nSEA" ? "bold" : "normal")
+        fontWeight: ({ tick }: any) =>
+          tick === "Mariners\nSEA" ? "bold" : "normal"
       }
     };
 
@@ -112,7 +120,9 @@ export default class VictoryAxisDemo extends React.Component<any, VictoryAxisDem
               tickLabels: { angle: 45 },
               grid: { stroke: "#F4511E", strokeWidth: 2 }
             }}
-            containerComponent={<VictoryContainer title="Time Scale Axis Example" />}
+            containerComponent={
+              <VictoryContainer title="Time Scale Axis Example" />
+            }
             events={[
               {
                 target: "grid",
@@ -121,7 +131,9 @@ export default class VictoryAxisDemo extends React.Component<any, VictoryAxisDem
                     return [
                       {
                         mutation: (props: any) => {
-                          return { style: merge({}, props.style, { stroke: "orange" }) };
+                          return {
+                            style: merge({}, props.style, { stroke: "orange" })
+                          };
                         }
                       },
                       {
@@ -170,7 +182,12 @@ export default class VictoryAxisDemo extends React.Component<any, VictoryAxisDem
           </svg>
 
           <svg style={style.parent} width={500} height={400}>
-            <VictoryAxis crossAxis domain={this.state.domain} theme={XYTheme} standalone={false} />
+            <VictoryAxis
+              crossAxis
+              domain={this.state.domain}
+              theme={XYTheme}
+              standalone={false}
+            />
             <VictoryAxis
               dependentAxis
               crossAxis
@@ -208,21 +225,39 @@ export default class VictoryAxisDemo extends React.Component<any, VictoryAxisDem
             padding={{ top: 90, bottom: 40, left: 40, right: 40 }}
             orientation="top"
             style={styleOverrides}
-            tickValues={["Mets\nNY", "Giants\nSF", "Yankees\nNY", "Nationals\nDC", "Mariners\nSEA"]}
+            tickValues={[
+              "Mets\nNY",
+              "Giants\nSF",
+              "Yankees\nNY",
+              "Nationals\nDC",
+              "Mariners\nSEA"
+            ]}
           />
           <VictoryAxis
             label="TEAMS"
             padding={{ top: 40, bottom: 40, left: 40, right: 90 }}
             orientation="right"
             style={styleOverrides}
-            tickValues={["Mets\nNY", "Giants\nSF", "Yankees\nNY", "Nationals\nDC", "Mariners\nSEA"]}
+            tickValues={[
+              "Mets\nNY",
+              "Giants\nSF",
+              "Yankees\nNY",
+              "Nationals\nDC",
+              "Mariners\nSEA"
+            ]}
           />
           <VictoryAxis
             label="TEAMS"
             orientation="bottom"
             padding={{ top: 40, bottom: 90, left: 40, right: 40 }}
             style={styleOverrides}
-            tickValues={["Mets\nNY", "Giants\nSF", "Yankees\nNY", "Nationals\nDC", "Mariners\nSEA"]}
+            tickValues={[
+              "Mets\nNY",
+              "Giants\nSF",
+              "Yankees\nNY",
+              "Nationals\nDC",
+              "Mariners\nSEA"
+            ]}
           />
 
           <VictoryAxis
@@ -230,7 +265,13 @@ export default class VictoryAxisDemo extends React.Component<any, VictoryAxisDem
             padding={{ top: 40, bottom: 40, left: 90, right: 40 }}
             orientation="left"
             style={styleOverrides}
-            tickValues={["Mets\nNY", "Giants\nSF", "Yankees\nNY", "Nationals\nDC", "Mariners\nSEA"]}
+            tickValues={[
+              "Mets\nNY",
+              "Giants\nSF",
+              "Yankees\nNY",
+              "Nationals\nDC",
+              "Mariners\nSEA"
+            ]}
           />
         </div>
       </div>

@@ -47,7 +47,9 @@ describe("victory-util/helpers", () => {
         ...props,
         data: 42
       };
-      expect(Helpers.modifyProps(props, fallbackProps, role)).to.eql(modifiedProps);
+      expect(Helpers.modifyProps(props, fallbackProps, role)).to.eql(
+        modifiedProps
+      );
     });
     it("uses fallbackProps", () => {
       const props = { x: 2, y: 3 };
@@ -76,7 +78,10 @@ describe("victory-util/helpers", () => {
         color: (datum) => (datum.y > 0 ? "red" : "blue"),
         size: 5
       };
-      expect(Helpers.evaluateStyle(style, data)).to.deep.equal({ color: "red", size: 5 });
+      expect(Helpers.evaluateStyle(style, data)).to.deep.equal({
+        color: "red",
+        size: 5
+      });
     });
     it("returns no styles if disableInlineStyles is true", () => {
       const style = {
@@ -116,16 +121,28 @@ describe("victory-util/helpers", () => {
     it("merges styles", () => {
       const style = { data: { fill: "red" }, labels: { fontSize: 12 } };
       const styles = Helpers.getStyles(style, defaultStyles);
-      expect(styles.parent).to.deep.equal({ border: "black", width: "100%", height: "100%" });
+      expect(styles.parent).to.deep.equal({
+        border: "black",
+        width: "100%",
+        height: "100%"
+      });
       expect(styles.data).to.deep.equal({ fill: "red", stroke: "black" });
-      expect(styles.labels).to.deep.equal({ fontSize: 12, fontFamily: "Helvetica" });
+      expect(styles.labels).to.deep.equal({
+        fontSize: 12,
+        fontFamily: "Helvetica"
+      });
     });
   });
 
   describe("getPadding", () => {
     it("sets padding from a single number", () => {
       const props = { padding: 40 };
-      expect(Helpers.getPadding(props)).to.deep.equal({ top: 40, bottom: 40, left: 40, right: 40 });
+      expect(Helpers.getPadding(props)).to.deep.equal({
+        top: 40,
+        bottom: 40,
+        left: 40,
+        right: 40
+      });
     });
     it("sets padding from a complete object", () => {
       const props = {
@@ -137,7 +154,12 @@ describe("victory-util/helpers", () => {
       const props = {
         padding: { top: 40, bottom: 40 }
       };
-      expect(Helpers.getPadding(props)).to.deep.equal({ top: 40, bottom: 40, left: 0, right: 0 });
+      expect(Helpers.getPadding(props)).to.deep.equal({
+        top: 40,
+        bottom: 40,
+        left: 0,
+        right: 0
+      });
     });
   });
 

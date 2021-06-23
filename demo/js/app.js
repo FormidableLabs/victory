@@ -56,17 +56,38 @@ const MAP = {
   "/group": { component: GroupDemo, name: "GroupDemo" },
   "/voronoi": { component: VoronoiDemo, name: "VoronoiDemo" },
   "/tooltip": { component: TooltipDemo, name: "TooltipDemo" },
-  "/zoom-container": { component: ZoomContainerDemo, name: "ZoomContainerDemo" },
-  "/voronoi-container": { component: VoronoiContainerDemo, name: "VoronoiContainerDemo" },
-  "/cursor-container": { component: CursorContainerDemo, name: "CursorContainerDemo" },
-  "/brush-container": { component: BrushContainerDemo, name: "BrushContainerDemo" },
+  "/zoom-container": {
+    component: ZoomContainerDemo,
+    name: "ZoomContainerDemo"
+  },
+  "/voronoi-container": {
+    component: VoronoiContainerDemo,
+    name: "VoronoiContainerDemo"
+  },
+  "/cursor-container": {
+    component: CursorContainerDemo,
+    name: "CursorContainerDemo"
+  },
+  "/brush-container": {
+    component: BrushContainerDemo,
+    name: "BrushContainerDemo"
+  },
   "/animation": { component: AnimationDemo, name: "AnimationDemo" },
   "/selection-container": { component: SelectionDemo, name: "SelectionDemo" },
-  "/create-container": { component: CreateContainerDemo, name: "CreateContainerDemo" },
+  "/create-container": {
+    component: CreateContainerDemo,
+    name: "CreateContainerDemo"
+  },
   "/polar": { component: PolarDemo, name: "PolarDemo" },
   "/immutable": { component: ImmutableDemo, name: "ImmutableDemo" },
-  "/external-events": { component: ExternalEventsDemo, name: "ExternalEventsDemo" },
-  "/victory-brush-line": { component: VictoryBrushLineDemo, name: "BrushLineDemo" },
+  "/external-events": {
+    component: ExternalEventsDemo,
+    name: "ExternalEventsDemo"
+  },
+  "/victory-brush-line": {
+    component: VictoryBrushLineDemo,
+    name: "BrushLineDemo"
+  },
   "/performance": { component: PerformanceDemo, name: "PerformanceDemo" },
   "/debug": { component: DebugDemo, name: "DebugDemo" },
   "/label": { component: VictoryLabelDemo, name: "LabelDemo" },

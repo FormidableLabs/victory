@@ -229,7 +229,10 @@ export const PadAngle = () => {
 export const Labels = () => {
   return (
     <div style={containerStyle}>
-      <VictoryPie style={parentStyle} labels={["one", "two", "three", "four"]} />
+      <VictoryPie
+        style={parentStyle}
+        labels={["one", "two", "three", "four"]}
+      />
       <VictoryPie style={parentStyle} labels={({ index }) => `#${index}`} />
       <VictoryPie
         style={parentStyle}
@@ -260,7 +263,11 @@ export const Tooltips = () => {
         labelPlacement="perpendicular"
         labelComponent={<VictoryTooltip active />}
       />
-      <VictoryPie style={parentStyle} radius={100} labelComponent={<VictoryTooltip active />} />
+      <VictoryPie
+        style={parentStyle}
+        radius={100}
+        labelComponent={<VictoryTooltip active />}
+      />
       <VictoryPie
         style={parentStyle}
         radius={100}
@@ -292,7 +299,10 @@ export const Tooltips = () => {
 export const LabelRadius = () => {
   return (
     <div style={containerStyle}>
-      <VictoryPie style={{ ...parentStyle, labels: { fill: "magenta" } }} labelRadius={100} />
+      <VictoryPie
+        style={{ ...parentStyle, labels: { fill: "magenta" } }}
+        labelRadius={100}
+      />
       <VictoryPie
         style={{ ...parentStyle, labels: { fill: "magenta" } }}
         labelRadius={({ datum }) => datum.y}
@@ -391,7 +401,15 @@ export const Styles = () => {
         ]}
         innerRadius={100}
         labelRadius={110}
-        colorScale={["#D85F49", "#F66D3B", "#D92E1D", "#D73C4C", "#FFAF59", "#E28300", "#F6A57F"]}
+        colorScale={[
+          "#D85F49",
+          "#F66D3B",
+          "#D92E1D",
+          "#D73C4C",
+          "#FFAF59",
+          "#E28300",
+          "#F6A57F"
+        ]}
       />
     </div>
   );
@@ -410,7 +428,12 @@ export const StartAndEndAngles = () => {
       />
       <VictoryPie
         style={parentStyle}
-        dataComponent={<Slice sliceStartAngle={0} sliceEndAngle={({ datum }) => datum.endAngle} />}
+        dataComponent={
+          <Slice
+            sliceStartAngle={0}
+            sliceEndAngle={({ datum }) => datum.endAngle}
+          />
+        }
         labels={() => null}
         cornerRadius={5}
         radius={({ datum }) => datum.radius}
@@ -427,7 +450,9 @@ export const StartAndEndAngles = () => {
         dataComponent={
           <Slice
             sliceStartAngle={-90}
-            sliceEndAngle={({ slice }) => Helpers.radiansToDegrees(slice.endAngle) - 90}
+            sliceEndAngle={({ slice }) =>
+              Helpers.radiansToDegrees(slice.endAngle) - 90
+            }
           />
         }
         labels={() => null}
@@ -554,7 +579,10 @@ export const DisableInlineStyles = () => {
   return (
     <div style={containerStyle}>
       <VictoryPie disableInlineStyles style={parentStyle} />
-      <VictoryPie style={parentStyle} dataComponent={<StyledSlice disableInlineStyles />} />
+      <VictoryPie
+        style={parentStyle}
+        dataComponent={<StyledSlice disableInlineStyles />}
+      />
     </div>
   );
 };

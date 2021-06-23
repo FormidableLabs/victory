@@ -95,14 +95,16 @@ class DraggablePoint extends React.Component<TargetPropsInterface, any> {
         onMouseUp: (evt: any, targetProps: any) => {
           return [
             {
-              mutation: () => merge(targetProps, { dragging: false, active: false })
+              mutation: () =>
+                merge(targetProps, { dragging: false, active: false })
             }
           ];
         },
         onMouseLeave: (evt: any, targetProps: any) => {
           return [
             {
-              mutation: () => merge(targetProps, { dragging: false, active: false })
+              mutation: () =>
+                merge(targetProps, { dragging: false, active: false })
             }
           ];
         }
@@ -135,7 +137,9 @@ class App extends React.Component<any, DraggableDemoInterface> {
   }
 
   onPointChange(point: PointDataType) {
-    const newPoints = this.state.points.map((p) => (p.name === point.name ? point : p));
+    const newPoints = this.state.points.map((p) =>
+      p.name === point.name ? point : p
+    );
     this.setState({ points: newPoints });
   }
 
@@ -210,7 +214,9 @@ class App extends React.Component<any, DraggableDemoInterface> {
           ))}
           <VictoryScatter
             data={points}
-            dataComponent={<DraggablePoint onPointChange={this.onPointChange.bind(this)} />}
+            dataComponent={
+              <DraggablePoint onPointChange={this.onPointChange.bind(this)} />
+            }
             style={{
               data: {
                 fill: "skyBlue",

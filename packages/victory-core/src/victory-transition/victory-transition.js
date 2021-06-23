@@ -61,8 +61,12 @@ export default class VictoryTransition extends React.Component {
     } else {
       const oldChildren = React.Children.toArray(props.children);
       const nextChildren = React.Children.toArray(nextProps.children);
-      const { nodesWillExit, nodesWillEnter, childrenTransitions, nodesShouldEnter } =
-        Transitions.getInitialTransitionState(oldChildren, nextChildren);
+      const {
+        nodesWillExit,
+        nodesWillEnter,
+        childrenTransitions,
+        nodesShouldEnter
+      } = Transitions.getInitialTransitionState(oldChildren, nextChildren);
       return {
         nodesWillExit,
         nodesWillEnter,
@@ -78,10 +82,13 @@ export default class VictoryTransition extends React.Component {
     const getChildDomains = (children) => {
       return children.reduce((memo, child) => {
         if (child.type && isFunction(child.type.getDomain)) {
-          const childDomain = child.props && child.type.getDomain(child.props, axis);
+          const childDomain =
+            child.props && child.type.getDomain(child.props, axis);
           return childDomain ? memo.concat(childDomain) : memo;
         } else if (child.props && child.props.children) {
-          return memo.concat(getChildDomains(React.Children.toArray(child.props.children)));
+          return memo.concat(
+            getChildDomains(React.Children.toArray(child.props.children))
+          );
         }
         return memo;
       }, []);
@@ -98,7 +105,10 @@ export default class VictoryTransition extends React.Component {
       const childDomains = getChildDomains([child]);
       return childDomains.length === 0
         ? [0, 1]
-        : [Collection.getMinValue(childDomains), Collection.getMaxValue(childDomains)];
+        : [
+            Collection.getMinValue(childDomains),
+            Collection.getMaxValue(childDomains)
+          ];
     }
   }
 
@@ -106,7 +116,9 @@ export default class VictoryTransition extends React.Component {
     if (!this.state) {
       return this.props;
     }
-    return this.state.nodesWillExit ? this.state.oldProps || this.props : this.props;
+    return this.state.nodesWillExit
+      ? this.state.oldProps || this.props
+      : this.props;
   }
 
   pickDomainProps(props) {
@@ -116,7 +128,9 @@ export default class VictoryTransition extends React.Component {
         ? parentState.nextProps || this.state.nextProps || props
         : props;
     }
-    return this.continuous && this.state.nodesWillExit ? this.state.nextProps || props : props;
+    return this.continuous && this.state.nodesWillExit
+      ? this.state.nextProps || props
+      : props;
   }
 
   getClipWidth(props, child) {
@@ -124,7 +138,9 @@ export default class VictoryTransition extends React.Component {
       const range = Helpers.getRange(child.props, "x");
       return range ? Math.abs(range[1] - range[0]) : props.width;
     };
-    const clipWidth = this.transitionProps ? this.transitionProps.clipWidth : undefined;
+    const clipWidth = this.transitionProps
+      ? this.transitionProps.clipWidth
+      : undefined;
     return clipWidth !== undefined ? clipWidth : getDefaultClipWidth();
   }
 
@@ -144,10 +160,16 @@ export default class VictoryTransition extends React.Component {
       y: this.getDomainFromChildren(props, "y")
     };
     const clipWidth = this.getClipWidth(props, child);
-    const combinedProps = defaults({ domain, clipWidth }, transitionProps, child.props);
+    const combinedProps = defaults(
+      { domain, clipWidth },
+      transitionProps,
+      child.props
+    );
     const animationWhitelist = props.animationWhitelist || [];
     const whitelist = animationWhitelist.concat(["clipWidth"]);
-    const propsToAnimate = whitelist.length ? pick(combinedProps, whitelist) : combinedProps;
+    const propsToAnimate = whitelist.length
+      ? pick(combinedProps, whitelist)
+      : combinedProps;
     return (
       <VictoryAnimation {...combinedProps.animate} data={propsToAnimate}>
         {(newProps) => {
@@ -159,12 +181,20 @@ export default class VictoryTransition extends React.Component {
               : child.props.groupComponent;
             return React.cloneElement(
               child,
-              defaults({ animate: null, animating: true, groupComponent }, newProps, combinedProps)
+              defaults(
+                { animate: null, animating: true, groupComponent },
+                newProps,
+                combinedProps
+              )
             );
           }
           return React.cloneElement(
             child,
-            defaults({ animate: null, animating: true }, newProps, combinedProps)
+            defaults(
+              { animate: null, animating: true },
+              newProps,
+              combinedProps
+            )
           );
         }}
       </VictoryAnimation>

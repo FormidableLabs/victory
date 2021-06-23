@@ -78,7 +78,9 @@ const NpmCopy = ({ text }) => {
       <HeroNPMWrapper>
         <HeroNPMCopy>{text}</HeroNPMCopy>
         <HeroNPMButton onClick={handleCopy}>
-          <BounceAnimation bouncing={animating}>{copied ? "Copied" : "Copy"}</BounceAnimation>
+          <BounceAnimation bouncing={animating}>
+            {copied ? "Copied" : "Copy"}
+          </BounceAnimation>
         </HeroNPMButton>
       </HeroNPMWrapper>
     </CopyToClipboard>

@@ -33,7 +33,9 @@ const getBubbleSize = (datum, props) => {
 const getSize = (datum, props) => {
   const { size, z } = props;
   if (datum.size) {
-    return typeof datum.size === "function" ? datum.size : Math.max(datum.size, 1);
+    return typeof datum.size === "function"
+      ? datum.size
+      : Math.max(datum.size, 1);
   } else if (typeof props.size === "function") {
     return size;
   } else if (datum[z]) {
@@ -62,7 +64,9 @@ const getCalculatedValues = (props) => {
       .domain(domain.y)
       .range(props.horizontal ? range.x : range.y)
   };
-  const origin = props.polar ? props.origin || Helpers.getPolarOrigin(props) : undefined;
+  const origin = props.polar
+    ? props.origin || Helpers.getPolarOrigin(props)
+    : undefined;
   const z = props.bubbleProperty || "z";
 
   let data = Data.getData(props);
@@ -132,7 +136,10 @@ const getBaseProps = (props, fallbackProps) => {
 
     childProps[eventKey] = { data: dataProps };
     const text = LabelHelpers.getText(props, datum, index);
-    if ((text !== undefined && text !== null) || (labels && (events || sharedEvents))) {
+    if (
+      (text !== undefined && text !== null) ||
+      (labels && (events || sharedEvents))
+    ) {
       childProps[eventKey].labels = LabelHelpers.getProps(props, index);
     }
 

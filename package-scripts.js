@@ -36,14 +36,25 @@ module.exports = {
       stories: "eslint --color stories",
       test: "eslint --color test",
       ts: npsUtils.series.nps("build-package-libs", "compile-ts"),
-      default: npsUtils.series.nps("lint.test", "lint.stories", "lint.demo", "lint.src")
+      default: npsUtils.series.nps(
+        "lint.test",
+        "lint.stories",
+        "lint.demo",
+        "lint.src"
+      )
     },
     format: {
       default: 'prettier --write "./**/*.{js,jsx,json,ts,tsx}"',
       ci: 'prettier --list-different "./**/*.{js,jsx,json,ts,tsx}"'
     },
     check: {
-      ci: npsUtils.series.nps("format.ci", "lint", "build-package-libs", "karma.ci", "compile-ts"),
+      ci: npsUtils.series.nps(
+        "format.ci",
+        "lint",
+        "build-package-libs",
+        "karma.ci",
+        "compile-ts"
+      ),
       cov: npsUtils.series.nps("lint", "test.cov"),
       dev: npsUtils.series.nps("lint", "test.dev"),
       default: npsUtils.series.nps("lint", "test")
@@ -65,13 +76,16 @@ module.exports = {
     "lerna-dry-run": "lerna publish --skip-git --skip-npm --loglevel silly",
     // TODO: organize build scripts once build perf is sorted out
     "babel-es": "cross-env BABEL_ENV=es babel src --out-dir es --copy-files",
-    "babel-lib": "cross-env BABEL_ENV=commonjs babel src --out-dir lib --copy-files",
+    "babel-lib":
+      "cross-env BABEL_ENV=commonjs babel src --out-dir lib --copy-files",
     "build-es": npsUtils.series.nps("clean.es", "babel-es"),
     "build-lib": npsUtils.series.nps("clean.lib", "babel-lib"),
     "build-libs": npsUtils.series.nps("build-lib", "build-es"),
     "build-package-libs": "lerna exec --parallel -- nps build-libs",
-    "build-dist-dev": "webpack --bail --config ../../config/webpack/webpack.config.dev.js --colors",
-    "build-dist-min": "webpack --bail --config ../../config/webpack/webpack.config.js --colors",
+    "build-dist-dev":
+      "webpack --bail --config ../../config/webpack/webpack.config.dev.js --colors",
+    "build-dist-min":
+      "webpack --bail --config ../../config/webpack/webpack.config.js --colors",
     "build-dists": npsUtils.concurrent.nps("build-dist-min", "build-dist-dev"),
     "build-dist": npsUtils.series.nps("clean.dist", "build-dists")
   }

@@ -63,7 +63,9 @@ export default class VictoryPortal extends React.Component {
       : this.props.children;
     const { groupComponent } = this.props;
     const childProps = (children && children.props) || {};
-    const standardProps = childProps.groupComponent ? { groupComponent, standalone: false } : {};
+    const standardProps = childProps.groupComponent
+      ? { groupComponent, standalone: false }
+      : {};
     const newProps = defaults(
       standardProps,
       childProps,

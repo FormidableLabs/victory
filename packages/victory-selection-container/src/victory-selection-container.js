@@ -36,22 +36,34 @@ export const selectionContainerMixin = (base) =>
           target: "parent",
           eventHandlers: {
             onMouseDown: (evt, targetProps) => {
-              return props.disable ? {} : SelectionHelpers.onMouseDown(evt, targetProps);
+              return props.disable
+                ? {}
+                : SelectionHelpers.onMouseDown(evt, targetProps);
             },
             onTouchStart: (evt, targetProps) => {
-              return props.disable ? {} : SelectionHelpers.onMouseDown(evt, targetProps);
+              return props.disable
+                ? {}
+                : SelectionHelpers.onMouseDown(evt, targetProps);
             },
             onMouseMove: (evt, targetProps) => {
-              return props.disable ? {} : SelectionHelpers.onMouseMove(evt, targetProps);
+              return props.disable
+                ? {}
+                : SelectionHelpers.onMouseMove(evt, targetProps);
             },
             onTouchMove: (evt, targetProps) => {
-              return props.disable ? {} : SelectionHelpers.onMouseMove(evt, targetProps);
+              return props.disable
+                ? {}
+                : SelectionHelpers.onMouseMove(evt, targetProps);
             },
             onMouseUp: (evt, targetProps) => {
-              return props.disable ? {} : SelectionHelpers.onMouseUp(evt, targetProps);
+              return props.disable
+                ? {}
+                : SelectionHelpers.onMouseUp(evt, targetProps);
             },
             onTouchEnd: (evt, targetProps) => {
-              return props.disable ? {} : SelectionHelpers.onMouseUp(evt, targetProps);
+              return props.disable
+                ? {}
+                : SelectionHelpers.onMouseUp(evt, targetProps);
             }
           }
         }
@@ -59,7 +71,8 @@ export const selectionContainerMixin = (base) =>
     };
 
     getRect(props) {
-      const { x1, x2, y1, y2, selectionStyle, selectionComponent, name } = props;
+      const { x1, x2, y1, y2, selectionStyle, selectionComponent, name } =
+        props;
       const width = Math.abs(x2 - x1) || 1;
       const height = Math.abs(y2 - y1) || 1;
       const x = Math.min(x1, x2);

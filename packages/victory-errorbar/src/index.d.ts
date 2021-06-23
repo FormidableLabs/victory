@@ -12,7 +12,9 @@ import {
 } from "victory-core";
 
 export type VictoryErrorBarTTargetType = "data" | "labels" | "parent";
-export type ErrorType = StringOrNumberOrList | ((...args: any[]) => StringOrNumberOrList);
+export type ErrorType =
+  | StringOrNumberOrList
+  | ((...args: any[]) => StringOrNumberOrList);
 
 export interface VictoryErrorBarProps
   extends Omit<VictoryCommonProps, "polar">,
@@ -22,11 +24,17 @@ export interface VictoryErrorBarProps
   borderWidth?: number;
   errorX?: ErrorType;
   errorY?: ErrorType;
-  events?: EventPropTypeInterface<VictoryErrorBarTTargetType, StringOrNumberOrCallback>[];
+  events?: EventPropTypeInterface<
+    VictoryErrorBarTTargetType,
+    StringOrNumberOrCallback
+  >[];
   style?: VictoryStyleInterface;
 }
 
-export class VictoryErrorBar extends React.Component<VictoryErrorBarProps, any> {}
+export class VictoryErrorBar extends React.Component<
+  VictoryErrorBarProps,
+  any
+> {}
 
 export interface ErrorBarProps extends VictoryCommonPrimitiveProps {
   borderWidth?: number;

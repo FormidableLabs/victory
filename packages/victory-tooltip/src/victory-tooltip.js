@@ -26,20 +26,29 @@ export default class VictoryTooltip extends React.Component {
     active: PropTypes.oneOfType([PropTypes.bool, PropTypes.func]),
     activePoints: PropTypes.array,
     angle: PropTypes.number,
-    center: PropTypes.shape({ x: CustomPropTypes.nonNegative, y: CustomPropTypes.nonNegative }),
+    center: PropTypes.shape({
+      x: CustomPropTypes.nonNegative,
+      y: CustomPropTypes.nonNegative
+    }),
     centerOffset: PropTypes.shape({
       x: PropTypes.oneOfType([PropTypes.number, PropTypes.func]),
       y: PropTypes.oneOfType([PropTypes.number, PropTypes.func])
     }),
     constrainToVisibleArea: PropTypes.bool,
-    cornerRadius: PropTypes.oneOfType([CustomPropTypes.nonNegative, PropTypes.func]),
+    cornerRadius: PropTypes.oneOfType([
+      CustomPropTypes.nonNegative,
+      PropTypes.func
+    ]),
     data: PropTypes.array,
     datum: PropTypes.object,
     dx: PropTypes.oneOfType([PropTypes.number, PropTypes.func]),
     dy: PropTypes.oneOfType([PropTypes.number, PropTypes.func]),
     events: PropTypes.object,
     flyoutComponent: PropTypes.element,
-    flyoutHeight: PropTypes.oneOfType([CustomPropTypes.nonNegative, PropTypes.func]),
+    flyoutHeight: PropTypes.oneOfType([
+      CustomPropTypes.nonNegative,
+      PropTypes.func
+    ]),
     flyoutPadding: PropTypes.oneOfType([
       PropTypes.func,
       PropTypes.number,
@@ -51,7 +60,10 @@ export default class VictoryTooltip extends React.Component {
       })
     ]),
     flyoutStyle: PropTypes.object,
-    flyoutWidth: PropTypes.oneOfType([CustomPropTypes.nonNegative, PropTypes.func]),
+    flyoutWidth: PropTypes.oneOfType([
+      CustomPropTypes.nonNegative,
+      PropTypes.func
+    ]),
     groupComponent: PropTypes.element,
     height: PropTypes.number,
     horizontal: PropTypes.bool,
@@ -62,12 +74,18 @@ export default class VictoryTooltip extends React.Component {
       PropTypes.oneOf(["top", "bottom", "left", "right"]),
       PropTypes.func
     ]),
-    pointerLength: PropTypes.oneOfType([CustomPropTypes.nonNegative, PropTypes.func]),
+    pointerLength: PropTypes.oneOfType([
+      CustomPropTypes.nonNegative,
+      PropTypes.func
+    ]),
     pointerOrientation: PropTypes.oneOfType([
       PropTypes.oneOf(["top", "bottom", "left", "right"]),
       PropTypes.func
     ]),
-    pointerWidth: PropTypes.oneOfType([CustomPropTypes.nonNegative, PropTypes.func]),
+    pointerWidth: PropTypes.oneOfType([
+      CustomPropTypes.nonNegative,
+      PropTypes.func
+    ]),
     polar: PropTypes.bool,
     renderInPortal: PropTypes.bool,
     scale: PropTypes.shape({
@@ -174,14 +192,19 @@ export default class VictoryTooltip extends React.Component {
       ? props.style.map((s) => defaults({}, s, defaultLabelStyles))
       : defaults({}, props.style, defaultLabelStyles);
     const defaultFlyoutStyles =
-      theme && theme.tooltip && theme.tooltip.flyoutStyle ? theme.tooltip.flyoutStyle : {};
+      theme && theme.tooltip && theme.tooltip.flyoutStyle
+        ? theme.tooltip.flyoutStyle
+        : {};
     const baseFlyoutStyle = props.flyoutStyle
       ? defaults({}, props.flyoutStyle, defaultFlyoutStyles)
       : defaultFlyoutStyles;
     const style = Array.isArray(baseLabelStyle)
       ? baseLabelStyle.map((s) => Helpers.evaluateStyle(s, props))
       : Helpers.evaluateStyle(baseLabelStyle, props);
-    const flyoutStyle = Helpers.evaluateStyle(baseFlyoutStyle, assign({}, props, { style }));
+    const flyoutStyle = Helpers.evaluateStyle(
+      baseFlyoutStyle,
+      assign({}, props, { style })
+    );
     return { style, flyoutStyle };
   }
 
@@ -189,8 +212,13 @@ export default class VictoryTooltip extends React.Component {
     const { cornerRadius, centerOffset, dx, dy } = props;
 
     const active = Helpers.evaluateProp(props.active, props);
-    const text = Helpers.evaluateProp(props.text, assign({}, props, { active }));
-    const { style, flyoutStyle } = this.getStyles(assign({}, props, { active, text }));
+    const text = Helpers.evaluateProp(
+      props.text,
+      assign({}, props, { active })
+    );
+    const { style, flyoutStyle } = this.getStyles(
+      assign({}, props, { active, text })
+    );
     const orientation =
       Helpers.evaluateProp(
         props.orientation,
@@ -280,7 +308,8 @@ export default class VictoryTooltip extends React.Component {
   getTransform(props) {
     const { x, y, style } = props;
     const labelStyle = style || {};
-    const angle = labelStyle.angle || props.angle || this.getDefaultAngle(props);
+    const angle =
+      labelStyle.angle || props.angle || this.getDefaultAngle(props);
     return angle ? `rotate(${angle} ${x} ${y})` : undefined;
   }
 
@@ -333,8 +362,16 @@ export default class VictoryTooltip extends React.Component {
 
   // eslint-disable-next-line complexity
   getFlyoutCenter(props, dimensions) {
-    const { x, y, dx, dy, pointerLength, orientation, constrainToVisibleArea, centerOffset } =
-      props;
+    const {
+      x,
+      y,
+      dx,
+      dy,
+      pointerLength,
+      orientation,
+      constrainToVisibleArea,
+      centerOffset
+    } = props;
     const { height, width } = dimensions;
     const xSign = orientation === "left" ? -1 : 1;
     const ySign = orientation === "bottom" ? -1 : 1;
@@ -374,16 +411,25 @@ export default class VictoryTooltip extends React.Component {
     if (!style) {
       return 0;
     }
-    const paddings = Array.isArray(style) ? style.map((s) => s.padding) : [style.padding];
+    const paddings = Array.isArray(style)
+      ? style.map((s) => s.padding)
+      : [style.padding];
     return Math.max(...paddings, 0);
   }
 
   getDimensions(props, labelSize) {
-    const { orientation, pointerLength, pointerWidth, flyoutHeight, flyoutWidth, flyoutPadding } =
-      props;
+    const {
+      orientation,
+      pointerLength,
+      pointerWidth,
+      flyoutHeight,
+      flyoutWidth,
+      flyoutPadding
+    } = props;
     const cornerRadius = Helpers.evaluateProp(props.cornerRadius, props);
     const getHeight = () => {
-      const calculatedHeight = labelSize.height + flyoutPadding.top + flyoutPadding.bottom;
+      const calculatedHeight =
+        labelSize.height + flyoutPadding.top + flyoutPadding.bottom;
 
       const minHeight =
         orientation === "top" || orientation === "bottom"
@@ -392,7 +438,8 @@ export default class VictoryTooltip extends React.Component {
       return Math.max(minHeight, calculatedHeight);
     };
     const getWidth = () => {
-      const calculatedWidth = labelSize.width + flyoutPadding.left + flyoutPadding.right;
+      const calculatedWidth =
+        labelSize.width + flyoutPadding.left + flyoutPadding.right;
 
       const minWidth =
         orientation === "left" || orientation === "right"
@@ -412,9 +459,12 @@ export default class VictoryTooltip extends React.Component {
 
   getLabelProps(props, calculatedValues) {
     const { flyoutCenter, style, labelSize, dy = 0, dx = 0 } = calculatedValues;
-    const { text, datum, activePoints, labelComponent, index, flyoutPadding } = props;
+    const { text, datum, activePoints, labelComponent, index, flyoutPadding } =
+      props;
     const textAnchor =
-      (Array.isArray(style) && style.length ? style[0].textAnchor : style.textAnchor) || "middle";
+      (Array.isArray(style) && style.length
+        ? style[0].textAnchor
+        : style.textAnchor) || "middle";
     const getLabelX = () => {
       if (!textAnchor || textAnchor === "middle") {
         return flyoutCenter.x;
@@ -448,8 +498,14 @@ export default class VictoryTooltip extends React.Component {
 
     const gaps = [
       { side: "top", val: edges.top > point.y ? edges.top - point.y : -1 },
-      { side: "bottom", val: edges.bottom < point.y ? point.y - edges.bottom : -1 },
-      { side: "right", val: edges.right < point.x ? point.x - edges.right : -1 },
+      {
+        side: "bottom",
+        val: edges.bottom < point.y ? point.y - edges.bottom : -1
+      },
+      {
+        side: "right",
+        val: edges.right < point.x ? point.x - edges.right : -1
+      },
       { side: "left", val: edges.left > point.x ? edges.left - point.x : -1 }
     ];
 
@@ -472,7 +528,10 @@ export default class VictoryTooltip extends React.Component {
       events,
       flyoutComponent
     } = props;
-    const pointerOrientation = Helpers.evaluateProp(props.pointerOrientation, props);
+    const pointerOrientation = Helpers.evaluateProp(
+      props.pointerOrientation,
+      props
+    );
     return defaults({}, flyoutComponent.props, {
       x,
       y,
@@ -486,7 +545,8 @@ export default class VictoryTooltip extends React.Component {
       cornerRadius,
       events,
       orientation:
-        pointerOrientation || this.getPointerOrientation({ x, y }, flyoutCenter, flyoutDimensions),
+        pointerOrientation ||
+        this.getPointerOrientation({ x, y }, flyoutCenter, flyoutDimensions),
       key: `${this.id}-tooltip-${index}`,
       width: flyoutDimensions.width,
       height: flyoutDimensions.height,
@@ -498,15 +558,26 @@ export default class VictoryTooltip extends React.Component {
   // Overridden in victory-core-native
   renderTooltip(props) {
     const evaluatedProps = this.getEvaluatedProps(props);
-    const { flyoutComponent, labelComponent, groupComponent, active, renderInPortal } =
-      evaluatedProps;
+    const {
+      flyoutComponent,
+      labelComponent,
+      groupComponent,
+      active,
+      renderInPortal
+    } = evaluatedProps;
     if (!active) {
       return renderInPortal ? <VictoryPortal>{null}</VictoryPortal> : null;
     }
     const calculatedValues = this.getCalculatedValues(evaluatedProps);
     const children = [
-      React.cloneElement(flyoutComponent, this.getFlyoutProps(evaluatedProps, calculatedValues)),
-      React.cloneElement(labelComponent, this.getLabelProps(evaluatedProps, calculatedValues))
+      React.cloneElement(
+        flyoutComponent,
+        this.getFlyoutProps(evaluatedProps, calculatedValues)
+      ),
+      React.cloneElement(
+        labelComponent,
+        this.getLabelProps(evaluatedProps, calculatedValues)
+      )
     ];
     const tooltip = React.cloneElement(
       groupComponent,

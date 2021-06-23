@@ -3,7 +3,9 @@ import { Helpers, Style, TextSize } from "victory-core";
 
 const getColorScale = (props) => {
   const { colorScale } = props;
-  return typeof colorScale === "string" ? Style.getColorScale(colorScale) : colorScale || [];
+  return typeof colorScale === "string"
+    ? Style.getColorScale(colorScale)
+    : colorScale || [];
 };
 
 const getLabelStyles = (props) => {
@@ -29,7 +31,8 @@ const getStyles = (props, styleObject) => {
 
 const getCalculatedValues = (props) => {
   const { orientation, theme } = props;
-  const defaultStyles = theme && theme.legend && theme.legend.style ? theme.legend.style : {};
+  const defaultStyles =
+    theme && theme.legend && theme.legend.style ? theme.legend.style : {};
   const style = getStyles(props, defaultStyles);
   const colorScale = getColorScale(props);
   const isHorizontal = orientation === "horizontal";
@@ -78,7 +81,9 @@ const groupData = (props) => {
 const getColumnWidths = (props, data) => {
   const gutter = props.gutter || {};
   const gutterWidth =
-    typeof gutter === "object" ? (gutter.left || 0) + (gutter.right || 0) : gutter || 0;
+    typeof gutter === "object"
+      ? (gutter.left || 0) + (gutter.right || 0)
+      : gutter || 0;
   const dataByColumn = groupBy(data, "column");
   const columns = keys(dataByColumn);
   return columns.reduce((memo, curr, index) => {
@@ -93,7 +98,9 @@ const getColumnWidths = (props, data) => {
 const getRowHeights = (props, data) => {
   const gutter = props.rowGutter || {};
   const gutterHeight =
-    typeof gutter === "object" ? (gutter.top || 0) + (gutter.bottom || 0) : gutter || 0;
+    typeof gutter === "object"
+      ? (gutter.top || 0) + (gutter.bottom || 0)
+      : gutter || 0;
   const dataByRow = groupBy(data, "row");
   return keys(dataByRow).reduce((memo, curr, index) => {
     const rows = dataByRow[curr];
@@ -109,7 +116,10 @@ const getTitleDimensions = (props) => {
   const style = (props.style && props.style.title) || {};
   const textSize = TextSize.approximateTextSize(props.title, style);
   const padding = style.padding || 0;
-  return { height: textSize.height + 2 * padding || 0, width: textSize.width + 2 * padding || 0 };
+  return {
+    height: textSize.height + 2 * padding || 0,
+    width: textSize.width + 2 * padding || 0
+  };
 };
 
 const getOffset = (datum, rowHeights, columnWidths) => {
@@ -132,7 +142,8 @@ const getAnchors = (titleOrientation, centerTitle) => {
     verticalAnchor: titleOrientation === "bottom" ? "end" : "start"
   };
   if (centerTitle) {
-    const horizontal = titleOrientation === "top" || titleOrientation === "bottom";
+    const horizontal =
+      titleOrientation === "top" || titleOrientation === "bottom";
     return {
       textAnchor: horizontal ? "middle" : standardAnchors.textAnchor,
       verticalAnchor: horizontal ? standardAnchors.verticalAnchor : "middle"
@@ -145,7 +156,8 @@ const getAnchors = (titleOrientation, centerTitle) => {
 const getTitleStyle = (props) => {
   const { titleOrientation, centerTitle, titleComponent } = props;
   const baseStyle = (props.style && props.style.title) || {};
-  const componentStyle = (titleComponent.props && titleComponent.props.style) || {};
+  const componentStyle =
+    (titleComponent.props && titleComponent.props.style) || {};
   const anchors = getAnchors(titleOrientation, centerTitle);
   return Array.isArray(componentStyle)
     ? componentStyle.map((obj) => defaults({}, obj, baseStyle, anchors))
@@ -158,7 +170,8 @@ const getTitleProps = (props, borderProps) => {
   const { height, width } = borderProps;
   const style = getTitleStyle(props);
   const padding = Array.isArray(style) ? style[0].padding : style.padding;
-  const horizontal = titleOrientation === "top" || titleOrientation === "bottom";
+  const horizontal =
+    titleOrientation === "top" || titleOrientation === "bottom";
   const xOrientation = titleOrientation === "bottom" ? "bottom" : "top";
   const yOrientation = titleOrientation === "right" ? "right" : "left";
   const standardPadding = {
@@ -172,8 +185,14 @@ const getTitleProps = (props, borderProps) => {
   const yOffset = horizontal ? getPadding() : standardPadding.y;
 
   return {
-    x: titleOrientation === "right" ? props.x + width - xOffset : props.x + xOffset,
-    y: titleOrientation === "bottom" ? props.y + height - yOffset : props.y + yOffset,
+    x:
+      titleOrientation === "right"
+        ? props.x + width - xOffset
+        : props.x + xOffset,
+    y:
+      titleOrientation === "bottom"
+        ? props.y + height - yOffset
+        : props.y + yOffset,
     style,
     text: title
   };
@@ -181,7 +200,8 @@ const getTitleProps = (props, borderProps) => {
 
 const getBorderProps = (props, contentHeight, contentWidth) => {
   const { x, y, borderPadding, style } = props;
-  const height = (contentHeight || 0) + borderPadding.top + borderPadding.bottom;
+  const height =
+    (contentHeight || 0) + borderPadding.top + borderPadding.bottom;
   const width = (contentWidth || 0) + borderPadding.left + borderPadding.right;
   return { x, y, height, width, style: assign({ fill: "none" }, style.border) };
 };
@@ -193,7 +213,9 @@ const getDimensions = (props, fallbackProps) => {
   const groupedData = groupData(props);
   const columnWidths = getColumnWidths(props, groupedData);
   const rowHeights = getRowHeights(props, groupedData);
-  const titleDimensions = title ? getTitleDimensions(props) : { height: 0, width: 0 };
+  const titleDimensions = title
+    ? getTitleDimensions(props)
+    : { height: 0, width: 0 };
 
   return {
     height:
@@ -230,7 +252,9 @@ const getBaseProps = (props, fallbackProps) => {
   const columnWidths = getColumnWidths(props, groupedData);
   const rowHeights = getRowHeights(props, groupedData);
   const labelStyles = getLabelStyles(props);
-  const titleDimensions = title ? getTitleDimensions(props) : { height: 0, width: 0 };
+  const titleDimensions = title
+    ? getTitleDimensions(props)
+    : { height: 0, width: 0 };
   const titleOffset = {
     x: titleOrientation === "left" ? titleDimensions.width : 0,
     y: titleOrientation === "top" ? titleDimensions.height : 0

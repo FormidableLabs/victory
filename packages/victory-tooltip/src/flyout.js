@@ -5,7 +5,8 @@ import { Helpers, CommonProps, Path } from "victory-core";
 import { isPlainObject, assign } from "lodash";
 
 const getVerticalPath = (props) => {
-  const { pointerWidth, cornerRadius, orientation, width, height, center } = props;
+  const { pointerWidth, cornerRadius, orientation, width, height, center } =
+    props;
   const sign = orientation === "bottom" ? 1 : -1;
   const x = props.x + (props.dx || 0);
   const y = props.y + (props.dy || 0);
@@ -19,7 +20,9 @@ const getVerticalPath = (props) => {
   const direction = orientation === "bottom" ? "0 0 0" : "0 0 1";
   const arc = `${cornerRadius} ${cornerRadius} ${direction}`;
   return `M ${centerX - pointerWidth / 2}, ${pointerEdge}
-    L ${pointerLength ? x : centerX + pointerWidth / 2}, ${pointerLength ? y : pointerEdge}
+    L ${pointerLength ? x : centerX + pointerWidth / 2}, ${
+    pointerLength ? y : pointerEdge
+  }
     L ${centerX + pointerWidth / 2}, ${pointerEdge}
     L ${rightEdge - cornerRadius}, ${pointerEdge}
     A ${arc} ${rightEdge}, ${pointerEdge - sign * cornerRadius}
@@ -33,7 +36,8 @@ const getVerticalPath = (props) => {
 };
 
 const getHorizontalPath = (props) => {
-  const { pointerWidth, cornerRadius, orientation, width, height, center } = props;
+  const { pointerWidth, cornerRadius, orientation, width, height, center } =
+    props;
   const sign = orientation === "left" ? 1 : -1;
   const x = props.x + (props.dx || 0);
   const y = props.y + (props.dy || 0);
@@ -47,7 +51,9 @@ const getHorizontalPath = (props) => {
   const direction = orientation === "left" ? "0 0 0" : "0 0 1";
   const arc = `${cornerRadius} ${cornerRadius} ${direction}`;
   return `M ${pointerEdge}, ${centerY - pointerWidth / 2}
-    L ${pointerLength ? x : pointerEdge}, ${pointerLength ? y : centerY + pointerWidth / 2}
+    L ${pointerLength ? x : pointerEdge}, ${
+    pointerLength ? y : centerY + pointerWidth / 2
+  }
     L ${pointerEdge}, ${centerY + pointerWidth / 2}
     L ${pointerEdge}, ${bottomEdge - cornerRadius}
     A ${arc} ${pointerEdge + sign * cornerRadius}, ${bottomEdge}

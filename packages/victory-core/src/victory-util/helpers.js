@@ -172,7 +172,9 @@ function getRange(props, axis) {
   } else if (props.range && Array.isArray(props.range)) {
     return props.range;
   }
-  return props.polar ? getPolarRange(props, axis) : getCartesianRange(props, axis);
+  return props.polar
+    ? getPolarRange(props, axis)
+    : getCartesianRange(props, axis);
 }
 
 function createAccessor(key) {
@@ -240,18 +242,32 @@ function reduceChildren(
       const childRole = child.type && child.type.role;
       const childName = child.props.name || `${childRole}-${names[index]}`;
       if (child.props && child.props.children) {
-        const childProps = assign({}, child.props, pick(parentProps, sharedProps));
+        const childProps = assign(
+          {},
+          child.props,
+          pick(parentProps, sharedProps)
+        );
 
         const nestedChildren =
-          child.type && child.type.role === "stack" && isFunction(child.type.getChildren)
+          child.type &&
+          child.type.role === "stack" &&
+          isFunction(child.type.getChildren)
             ? child.type.getChildren(childProps)
             : React.Children.toArray(child.props.children).map((c) => {
-                const nestedChildProps = assign({}, c.props, pick(childProps, sharedProps));
+                const nestedChildProps = assign(
+                  {},
+                  c.props,
+                  pick(childProps, sharedProps)
+                );
                 return React.cloneElement(c, nestedChildProps);
               });
 
         const childNames = nestedChildren.map((c, i) => `${childName}-${i}`);
-        const nestedResults = traverseChildren(nestedChildren, childNames, child);
+        const nestedResults = traverseChildren(
+          nestedChildren,
+          childNames,
+          child
+        );
         memo = combine(memo, nestedResults);
       } else {
         const result = iteratee(child, childName, parent);

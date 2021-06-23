@@ -4,7 +4,11 @@ import React from "react";
 import PropTypes from "prop-types";
 import { assign, merge, random, range } from "lodash";
 import { VictoryScatter } from "Packages/victory-scatter/src/index";
-import { VictoryLabel, VictoryContainer, VictoryTheme } from "Packages/victory-core/src/index";
+import {
+  VictoryLabel,
+  VictoryContainer,
+  VictoryTheme
+} from "Packages/victory-core/src/index";
 import bubbleData from "./bubble-data.js";
 import symbolData from "./symbol-data.js";
 
@@ -18,7 +22,15 @@ const getData = () => {
     "tomato",
     "greenyellow"
   ];
-  const symbols = ["circle", "star", "square", "triangleUp", "triangleDown", "diamond", "plus"];
+  const symbols = [
+    "circle",
+    "star",
+    "square",
+    "triangleUp",
+    "triangleDown",
+    "diamond",
+    "plus"
+  ];
   // symbol: symbols[scaledIndex],
   return range(100).map((index) => {
     const scaledIndex = Math.floor(index % 7);
@@ -230,7 +242,9 @@ export default class App extends React.Component {
           style={style}
           theme={VictoryTheme.material}
           data={range(0, 200).map((i) => {
-            return { a: { b: [{ y: i * Math.sin(i * 0.3) }], x: Math.cos(i * 0.3) } };
+            return {
+              a: { b: [{ y: i * Math.sin(i * 0.3) }], x: Math.cos(i * 0.3) }
+            };
           })}
           x="a.x"
           y="a.b[0]y"

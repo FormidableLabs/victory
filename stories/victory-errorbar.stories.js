@@ -1,7 +1,10 @@
 /*eslint-disable no-magic-numbers*/
 /*eslint-disable react/no-multi-comp*/
 import React from "react";
-import { VictoryErrorBar, ErrorBar } from "../packages/victory-errorbar/src/index";
+import {
+  VictoryErrorBar,
+  ErrorBar
+} from "../packages/victory-errorbar/src/index";
 import { VictoryChart } from "../packages/victory-chart/src/index";
 import { VictoryTooltip } from "../packages/victory-tooltip/src/index";
 import { VictoryTheme } from "../packages/victory-core/src/index";
@@ -131,7 +134,10 @@ export const Labels = () => {
   return (
     <div style={containerStyle}>
       <VictoryChart style={parentStyle} horizontal>
-        <VictoryErrorBar data={getData(5)} labels={({ datum }) => `x: ${datum.x}`} />
+        <VictoryErrorBar
+          data={getData(5)}
+          labels={({ datum }) => `x: ${datum.x}`}
+        />
       </VictoryChart>
       <VictoryChart style={parentStyle} horizontal>
         <VictoryErrorBar
@@ -188,7 +194,12 @@ export const Style = () => {
           labels={({ datum }) => datum.x}
           style={{
             labels: { fontSize: 20, fill: "tomato", fontFamily: "monospace" },
-            data: { fill: "tomato", fillOpacity: 0.7, stroke: "tomato", strokeWidth: 2 }
+            data: {
+              fill: "tomato",
+              fillOpacity: 0.7,
+              stroke: "tomato",
+              strokeWidth: 2
+            }
           }}
         />
       </VictoryChart>
@@ -196,10 +207,12 @@ export const Style = () => {
         <VictoryErrorBar
           style={{
             labels: {
-              fill: ({ datum }) => (datum.errorX > datum.errorY ? "red" : "black")
+              fill: ({ datum }) =>
+                datum.errorX > datum.errorY ? "red" : "black"
             },
             data: {
-              stroke: ({ datum }) => (datum.errorX > datum.errorY ? "red" : "black")
+              stroke: ({ datum }) =>
+                datum.errorX > datum.errorY ? "red" : "black"
             }
           }}
           labels={({ datum }) => datum.x}
@@ -272,7 +285,10 @@ export const DisableInlineStyles = () => {
         <VictoryErrorBar data={getData(4)} disableInlineStyles />
       </VictoryChart>
       <VictoryChart style={parentStyle}>
-        <VictoryErrorBar data={getData(4)} dataComponent={<StyledErrorBar disableInlineStyles />} />
+        <VictoryErrorBar
+          data={getData(4)}
+          dataComponent={<StyledErrorBar disableInlineStyles />}
+        />
       </VictoryChart>
     </div>
   );

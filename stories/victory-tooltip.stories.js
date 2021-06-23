@@ -53,9 +53,19 @@ export default {
 export const DefaultRendering = () => {
   return (
     <div style={containerStyle}>
-      <VictoryBar {...defaultBarProps} labelComponent={<VictoryTooltip active />} />
-      <VictoryBar {...defaultBarProps} horizontal labelComponent={<VictoryTooltip active />} />
-      <VictoryBar {...polarBarProps} labelComponent={<VictoryTooltip active />} />
+      <VictoryBar
+        {...defaultBarProps}
+        labelComponent={<VictoryTooltip active />}
+      />
+      <VictoryBar
+        {...defaultBarProps}
+        horizontal
+        labelComponent={<VictoryTooltip active />}
+      />
+      <VictoryBar
+        {...polarBarProps}
+        labelComponent={<VictoryTooltip active />}
+      />
     </div>
   );
 };
@@ -65,47 +75,71 @@ export const CenterOffset = () => {
     <div style={containerStyle}>
       <VictoryBar
         {...defaultBarProps}
-        labelComponent={<VictoryTooltip active centerOffset={{ x: 20 }} text={`x\noffset`} />}
-      />
-      <VictoryBar
-        {...defaultBarProps}
-        horizontal
-        labelComponent={<VictoryTooltip active centerOffset={{ x: 20 }} text={`x\noffset`} />}
-      />
-      <VictoryBar
-        {...polarBarProps}
-        labelComponent={<VictoryTooltip active centerOffset={{ x: 20 }} text={`x\noffset`} />}
-      />
-      <VictoryBar
-        {...defaultBarProps}
-        labelComponent={<VictoryTooltip active centerOffset={{ y: 20 }} text={`y\noffset`} />}
-      />
-      <VictoryBar
-        {...defaultBarProps}
-        horizontal
-        labelComponent={<VictoryTooltip active centerOffset={{ y: 20 }} text={`y\noffset`} />}
-      />
-      <VictoryBar
-        {...polarBarProps}
-        labelComponent={<VictoryTooltip active centerOffset={{ y: 20 }} text={`y\noffset`} />}
-      />
-      <VictoryBar
-        {...defaultBarProps}
         labelComponent={
-          <VictoryTooltip active centerOffset={{ x: 20, y: 20 }} text={`x, y\noffset`} />
+          <VictoryTooltip active centerOffset={{ x: 20 }} text={`x\noffset`} />
         }
       />
       <VictoryBar
         {...defaultBarProps}
         horizontal
         labelComponent={
-          <VictoryTooltip active centerOffset={{ x: 20, y: 20 }} text={`x, y\noffset`} />
+          <VictoryTooltip active centerOffset={{ x: 20 }} text={`x\noffset`} />
         }
       />
       <VictoryBar
         {...polarBarProps}
         labelComponent={
-          <VictoryTooltip active centerOffset={{ x: 20, y: 20 }} text={`x, y\noffset`} />
+          <VictoryTooltip active centerOffset={{ x: 20 }} text={`x\noffset`} />
+        }
+      />
+      <VictoryBar
+        {...defaultBarProps}
+        labelComponent={
+          <VictoryTooltip active centerOffset={{ y: 20 }} text={`y\noffset`} />
+        }
+      />
+      <VictoryBar
+        {...defaultBarProps}
+        horizontal
+        labelComponent={
+          <VictoryTooltip active centerOffset={{ y: 20 }} text={`y\noffset`} />
+        }
+      />
+      <VictoryBar
+        {...polarBarProps}
+        labelComponent={
+          <VictoryTooltip active centerOffset={{ y: 20 }} text={`y\noffset`} />
+        }
+      />
+      <VictoryBar
+        {...defaultBarProps}
+        labelComponent={
+          <VictoryTooltip
+            active
+            centerOffset={{ x: 20, y: 20 }}
+            text={`x, y\noffset`}
+          />
+        }
+      />
+      <VictoryBar
+        {...defaultBarProps}
+        horizontal
+        labelComponent={
+          <VictoryTooltip
+            active
+            centerOffset={{ x: 20, y: 20 }}
+            text={`x, y\noffset`}
+          />
+        }
+      />
+      <VictoryBar
+        {...polarBarProps}
+        labelComponent={
+          <VictoryTooltip
+            active
+            centerOffset={{ x: 20, y: 20 }}
+            text={`x, y\noffset`}
+          />
         }
       />
       <VictoryBar
@@ -124,7 +158,10 @@ export const CenterOffset = () => {
         labelComponent={
           <VictoryTooltip
             active
-            centerOffset={{ x: ({ datum }) => (datum.y < 0 ? -10 : 10), y: -10 }}
+            centerOffset={{
+              x: ({ datum }) => (datum.y < 0 ? -10 : 10),
+              y: -10
+            }}
             text={`function\noffset`}
           />
         }
@@ -152,7 +189,9 @@ export const PointerOrientation = () => {
           <VictoryTooltip
             active
             pointerOrientation={({ datum }) => (datum.y > 0 ? "bottom" : "top")}
-            text={({ datum }) => (datum.y > 0 ? `orientation\nbottom` : `orientation\ntop`)}
+            text={({ datum }) =>
+              datum.y > 0 ? `orientation\nbottom` : `orientation\ntop`
+            }
           />
         }
       />
@@ -167,7 +206,9 @@ export const PointerOrientation = () => {
               x: ({ datum }) => (datum.y > 0 ? -20 : 20)
             }}
             pointerOrientation={({ datum }) => (datum.y > 0 ? "bottom" : "top")}
-            text={({ datum }) => (datum.y > 0 ? `orientation\nbottom` : `orientation\ntop`)}
+            text={({ datum }) =>
+              datum.y > 0 ? `orientation\nbottom` : `orientation\ntop`
+            }
           />
         }
       />
@@ -177,7 +218,9 @@ export const PointerOrientation = () => {
           <VictoryTooltip
             active
             pointerOrientation={({ index }) => (index < 3 ? "bottom" : "top")}
-            text={({ index }) => (index < 3 ? `orientation\nbottom` : `orientation\ntop`)}
+            text={({ index }) =>
+              index < 3 ? `orientation\nbottom` : `orientation\ntop`
+            }
           />
         }
       />
@@ -190,7 +233,9 @@ export const PointerOrientation = () => {
               x: ({ datum }) => (datum.y > 0 ? 55 : -55)
             }}
             pointerOrientation={({ datum }) => (datum.y > 0 ? "left" : "right")}
-            text={({ datum }) => (datum.y > 0 ? `orientation\nleft` : `orientation\nright`)}
+            text={({ datum }) =>
+              datum.y > 0 ? `orientation\nleft` : `orientation\nright`
+            }
           />
         }
       />
@@ -201,7 +246,9 @@ export const PointerOrientation = () => {
           <VictoryTooltip
             active
             pointerOrientation={({ datum }) => (datum.y > 0 ? "left" : "right")}
-            text={({ datum }) => (datum.y > 0 ? `orientation\nleft` : `orientation\nright`)}
+            text={({ datum }) =>
+              datum.y > 0 ? `orientation\nleft` : `orientation\nright`
+            }
           />
         }
       />
@@ -212,9 +259,13 @@ export const PointerOrientation = () => {
           <VictoryTooltip
             active
             labelPlacement="parallel"
-            pointerOrientation={({ index }) => (index === 2 || index === 3 ? "right" : "left")}
+            pointerOrientation={({ index }) =>
+              index === 2 || index === 3 ? "right" : "left"
+            }
             text={({ index }) =>
-              index === 2 || index === 3 ? `orientation\nleft` : `orientation\nright`
+              index === 2 || index === 3
+                ? `orientation\nleft`
+                : `orientation\nright`
             }
           />
         }
@@ -297,16 +348,22 @@ export const FlyoutHeight = () => {
     <div style={containerStyle}>
       <VictoryBar
         {...defaultBarProps}
-        labelComponent={<VictoryTooltip active flyoutHeight={50} text={`flyoutHeight\n50`} />}
+        labelComponent={
+          <VictoryTooltip active flyoutHeight={50} text={`flyoutHeight\n50`} />
+        }
       />
       <VictoryBar
         {...defaultBarProps}
         horizontal
-        labelComponent={<VictoryTooltip active flyoutHeight={50} text={`flyoutHeight\n50`} />}
+        labelComponent={
+          <VictoryTooltip active flyoutHeight={50} text={`flyoutHeight\n50`} />
+        }
       />
       <VictoryBar
         {...polarBarProps}
-        labelComponent={<VictoryTooltip active flyoutHeight={50} text={`flyoutHeight\n50`} />}
+        labelComponent={
+          <VictoryTooltip active flyoutHeight={50} text={`flyoutHeight\n50`} />
+        }
       />
       <VictoryBar
         {...defaultBarProps}
@@ -348,16 +405,22 @@ export const FlyoutWidth = () => {
     <div style={containerStyle}>
       <VictoryBar
         {...defaultBarProps}
-        labelComponent={<VictoryTooltip active flyoutWidth={100} text={`flyoutWidth\n100`} />}
+        labelComponent={
+          <VictoryTooltip active flyoutWidth={100} text={`flyoutWidth\n100`} />
+        }
       />
       <VictoryBar
         {...defaultBarProps}
         horizontal
-        labelComponent={<VictoryTooltip active flyoutWidth={100} text={`flyoutWidth\n100`} />}
+        labelComponent={
+          <VictoryTooltip active flyoutWidth={100} text={`flyoutWidth\n100`} />
+        }
       />
       <VictoryBar
         {...polarBarProps}
-        labelComponent={<VictoryTooltip active flyoutWidth={100} text={`flyoutWidth\n100`} />}
+        labelComponent={
+          <VictoryTooltip active flyoutWidth={100} text={`flyoutWidth\n100`} />
+        }
       />
       <VictoryBar
         {...defaultBarProps}
@@ -459,7 +522,9 @@ export const PointerWidth = () => {
         labelComponent={
           <VictoryTooltip
             active
-            centerOffset={{ x: ({ index }) => (index === 0 || index === 4 ? 20 : null) }}
+            centerOffset={{
+              x: ({ index }) => (index === 0 || index === 4 ? 20 : null)
+            }}
             pointerWidth={({ text }) => (text === "skinny" ? 0 : 20)}
             text={({ index }) => (index > 2 ? "skinny" : "wide ")}
           />
@@ -534,7 +599,9 @@ export const PointerLength = () => {
         labelComponent={
           <VictoryTooltip
             active
-            centerOffset={{ x: ({ index }) => (index === 0 || index === 4 ? 20 : null) }}
+            centerOffset={{
+              x: ({ index }) => (index === 0 || index === 4 ? 20 : null)
+            }}
             pointerLength={({ text }) => (text === "short" ? 1 : 30)}
             text={({ index }) => (index > 2 ? "short" : "long ")}
           />
@@ -549,16 +616,22 @@ export const CornerRadius = () => {
     <div style={containerStyle}>
       <VictoryBar
         {...defaultBarProps}
-        labelComponent={<VictoryTooltip active cornerRadius={10} text={`cornerRadius\n10`} />}
+        labelComponent={
+          <VictoryTooltip active cornerRadius={10} text={`cornerRadius\n10`} />
+        }
       />
       <VictoryBar
         {...defaultBarProps}
         horizontal
-        labelComponent={<VictoryTooltip active cornerRadius={10} text={`cornerRadius\n10`} />}
+        labelComponent={
+          <VictoryTooltip active cornerRadius={10} text={`cornerRadius\n10`} />
+        }
       />
       <VictoryBar
         {...polarBarProps}
-        labelComponent={<VictoryTooltip active cornerRadius={10} text={`cornerRadius\n10`} />}
+        labelComponent={
+          <VictoryTooltip active cornerRadius={10} text={`cornerRadius\n10`} />
+        }
       />
       <VictoryBar
         {...defaultBarProps}
@@ -604,7 +677,11 @@ export const FlyoutStyle = () => {
           <VictoryTooltip
             active
             style={{ padding: 5, fontFamily: "arial" }}
-            flyoutStyle={{ stroke: "red", strokeWidth: 2, strokeDasharray: "1, 2" }}
+            flyoutStyle={{
+              stroke: "red",
+              strokeWidth: 2,
+              strokeDasharray: "1, 2"
+            }}
             text={`flyoutStyle`}
           />
         }
@@ -616,7 +693,12 @@ export const FlyoutStyle = () => {
           <VictoryTooltip
             active
             style={{ padding: 5, fill: "red", fontFamily: "arial" }}
-            flyoutStyle={{ fill: "pink", strokeWidth: 0, opacity: 0.5, padding: 10 }}
+            flyoutStyle={{
+              fill: "pink",
+              strokeWidth: 0,
+              opacity: 0.5,
+              padding: 10
+            }}
             text={`flyoutStyle`}
           />
         }
@@ -665,7 +747,9 @@ export const FlyoutPadding = () => {
         labelComponent={
           <VictoryTooltip
             active
-            flyoutPadding={({ datum }) => (datum.y > 0 ? { top: 20, left: 15, right: 5 } : 2)}
+            flyoutPadding={({ datum }) =>
+              datum.y > 0 ? { top: 20, left: 15, right: 5 } : 2
+            }
             text={`flyoutPadding\nfunction`}
           />
         }

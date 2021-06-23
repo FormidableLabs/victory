@@ -22,7 +22,10 @@ export interface VictoryStackProps
   children?: React.ReactNode | React.ReactNode[];
   colorScale?: ColorScalePropType;
   domain?: DomainPropType;
-  events?: EventPropTypeInterface<VictoryStackTTargetType, StringOrNumberOrCallback>[];
+  events?: EventPropTypeInterface<
+    VictoryStackTTargetType,
+    StringOrNumberOrCallback
+  >[];
   eventKey?: StringOrNumberOrCallback;
   fillInMissingData?: boolean;
   style?: VictoryStyleInterface;

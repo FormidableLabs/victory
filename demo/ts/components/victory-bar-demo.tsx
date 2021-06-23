@@ -5,7 +5,11 @@ import { VictoryStack } from "@packages/victory-stack";
 import { VictoryGroup } from "@packages/victory-group";
 import { VictoryBar } from "@packages/victory-bar";
 
-import { VictoryContainer, VictoryTheme, VictoryLabel } from "@packages/victory-core";
+import {
+  VictoryContainer,
+  VictoryTheme,
+  VictoryLabel
+} from "@packages/victory-core";
 import { assign, random, range, merge } from "lodash";
 
 interface WrapperProps {
@@ -14,7 +18,10 @@ interface WrapperProps {
 
 class Wrapper extends React.Component<WrapperProps> {
   static propTypes = {
-    children: PropTypes.oneOfType([PropTypes.arrayOf(PropTypes.node), PropTypes.node])
+    children: PropTypes.oneOfType([
+      PropTypes.arrayOf(PropTypes.node),
+      PropTypes.node
+    ])
   };
 
   renderChildren(props: WrapperProps) {
@@ -44,7 +51,10 @@ interface VictoryBarDemoState {
   numericBarData: BarData;
 }
 
-export default class VictoryBarDemo extends React.Component<any, VictoryBarDemoState> {
+export default class VictoryBarDemo extends React.Component<
+  any,
+  VictoryBarDemoState
+> {
   setStateInterval?: number = undefined;
 
   constructor(props: any) {
@@ -127,7 +137,11 @@ export default class VictoryBarDemo extends React.Component<any, VictoryBarDemoS
   }
 
   render() {
-    const parentStyle = { border: "1px solid #ccc", margin: "2%", maxWidth: "40%" };
+    const parentStyle = {
+      border: "1px solid #ccc",
+      margin: "2%",
+      maxWidth: "40%"
+    };
 
     const containerStyle: React.CSSProperties = {
       display: "flex",
@@ -223,7 +237,10 @@ export default class VictoryBarDemo extends React.Component<any, VictoryBarDemoS
           />
         </VictoryChart>
 
-        <VictoryChart style={{ parent: parentStyle }} theme={VictoryTheme.material}>
+        <VictoryChart
+          style={{ parent: parentStyle }}
+          theme={VictoryTheme.material}
+        >
           <VictoryBar
             horizontal
             alignment="start"
@@ -239,7 +256,9 @@ export default class VictoryBarDemo extends React.Component<any, VictoryBarDemoS
         <VictoryBar
           style={{ parent: parentStyle }}
           labels={() => "HELLO"}
-          labelComponent={<VictoryLabel angle={45} verticalAnchor="end" textAnchor="end" />}
+          labelComponent={
+            <VictoryLabel angle={45} verticalAnchor="end" textAnchor="end" />
+          }
           animate={{
             duration: 500,
             onExit: {
@@ -263,7 +282,9 @@ export default class VictoryBarDemo extends React.Component<any, VictoryBarDemoS
                   return [
                     {
                       mutation: (props) => {
-                        return { style: merge({}, props.style, { fill: "orange" }) };
+                        return {
+                          style: merge({}, props.style, { fill: "orange" })
+                        };
                       }
                     },
                     {
@@ -281,7 +302,10 @@ export default class VictoryBarDemo extends React.Component<any, VictoryBarDemoS
           x="a"
           y="b"
         />
-        <VictoryStack style={{ parent: parentStyle }} animate={{ duration: 1000 }}>
+        <VictoryStack
+          style={{ parent: parentStyle }}
+          animate={{ duration: 1000 }}
+        >
           {this.state.multiTransitionData.map((data, index) => {
             return (
               <Wrapper key={index}>
@@ -296,7 +320,11 @@ export default class VictoryBarDemo extends React.Component<any, VictoryBarDemoS
           domainPadding={{ x: 30 }}
           theme={VictoryTheme.material}
         >
-          <VictoryGroup offset={12} animate={{ duration: 1000 }} colorScale={"warm"}>
+          <VictoryGroup
+            offset={12}
+            animate={{ duration: 1000 }}
+            colorScale={"warm"}
+          >
             {this.state.multiTransitionData.map((data, index) => {
               return (
                 <Wrapper key={index}>
@@ -314,7 +342,9 @@ export default class VictoryBarDemo extends React.Component<any, VictoryBarDemoS
           animate={{ duration: 2000 }}
         >
           {this.getBarData().map((data, index) => {
-            return <VictoryBar key={index} data={data} labels={["a", "b", "c"]} />;
+            return (
+              <VictoryBar key={index} data={data} labels={["a", "b", "c"]} />
+            );
           })}
         </VictoryGroup>
 
@@ -389,7 +419,9 @@ export default class VictoryBarDemo extends React.Component<any, VictoryBarDemoS
                       return [
                         {
                           mutation: (props) => {
-                            return { style: merge({}, props.style, { fill: "orange" }) };
+                            return {
+                              style: merge({}, props.style, { fill: "orange" })
+                            };
                           }
                         }
                       ];
@@ -413,7 +445,9 @@ export default class VictoryBarDemo extends React.Component<any, VictoryBarDemoS
                     return [
                       {
                         mutation: (props) => {
-                          return { style: merge({}, props.style, { fill: "blue" }) };
+                          return {
+                            style: merge({}, props.style, { fill: "blue" })
+                          };
                         }
                       }
                     ];
@@ -517,7 +551,11 @@ class ChartWrap extends React.Component<ChartWrapProps> {
   // renders both a standalone chart, and a version wrapped in VictoryChart,
   // to test both cases at once
   render() {
-    const parentStyle = { border: "1px solid #ccc", margin: "2%", maxWidth: "40%" };
+    const parentStyle = {
+      border: "1px solid #ccc",
+      margin: "2%",
+      maxWidth: "40%"
+    };
 
     return (
       <div style={parentStyle}>

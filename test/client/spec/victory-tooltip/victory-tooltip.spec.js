@@ -47,7 +47,9 @@ describe("components/victory-tooltip", () => {
   describe("event handling", () => {
     it("attaches an to the flyout object", () => {
       const clickHandler = sinon.spy();
-      const wrapper = mount(<VictoryTooltip {...baseProps} events={{ onClick: clickHandler }} />);
+      const wrapper = mount(
+        <VictoryTooltip {...baseProps} events={{ onClick: clickHandler }} />
+      );
       wrapper.find("path").simulate("click");
       expect(clickHandler.called).to.equal(true);
     });

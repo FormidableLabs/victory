@@ -79,7 +79,12 @@ class Icon extends React.Component {
 }
 
 Icon.propTypes = {
-  glyph: PropTypes.oneOf(["back", "coming-soon", "external-link", "internal-link"]),
+  glyph: PropTypes.oneOf([
+    "back",
+    "coming-soon",
+    "external-link",
+    "internal-link"
+  ]),
   style: PropTypes.object
 };
 

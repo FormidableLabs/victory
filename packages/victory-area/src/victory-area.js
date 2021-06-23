@@ -32,7 +32,14 @@ const options = {
 };
 
 class VictoryArea extends React.Component {
-  static animationWhitelist = ["data", "domain", "height", "padding", "style", "width"];
+  static animationWhitelist = [
+    "data",
+    "domain",
+    "height",
+    "padding",
+    "style",
+    "width"
+  ];
 
   static propTypes = {
     ...CommonProps.baseProps,
@@ -74,7 +81,8 @@ class VictoryArea extends React.Component {
   static role = "area";
   static continuous = true;
   static defaultTransitions = DefaultTransitions.continuousTransitions();
-  static defaultPolarTransitions = DefaultTransitions.continuousPolarTransitions();
+  static defaultPolarTransitions =
+    DefaultTransitions.continuousPolarTransitions();
   static getDomain = Domain.getDomainWithZero;
   static getData = Data.getData;
   static getBaseProps = (props) => getBaseProps(props, fallbackProps);
@@ -99,7 +107,9 @@ class VictoryArea extends React.Component {
     }
 
     const children = this.renderContinuousData(props);
-    return props.standalone ? this.renderContainer(props.containerComponent, children) : children;
+    return props.standalone
+      ? this.renderContainer(props.containerComponent, children)
+      : children;
   }
 }
 

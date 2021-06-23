@@ -13,7 +13,8 @@ import { VictoryTooltip } from "Packages/victory-tooltip/src/index";
 import { VictoryLegend } from "Packages/victory-legend/src/index";
 import { VictoryTheme } from "Packages/victory-core/src/index";
 
-const makeData = () => range(1500).map((x) => ({ x, y: x + 10 * Math.random() }));
+const makeData = () =>
+  range(1500).map((x) => ({ x, y: x + 10 * Math.random() }));
 
 class App extends React.Component {
   constructor() {
@@ -55,9 +56,12 @@ class App extends React.Component {
       justifyContent: "center"
     };
 
-    const chartStyle = { parent: { border: "1px solid #ccc", margin: "2%", maxWidth: "40%" } };
+    const chartStyle = {
+      parent: { border: "1px solid #ccc", margin: "2%", maxWidth: "40%" }
+    };
 
-    const cursorLabel = ({ datum }) => `${round(datum.x, 2)} , ${round(datum.y, 2)}`;
+    const cursorLabel = ({ datum }) =>
+      `${round(datum.x, 2)} , ${round(datum.y, 2)}`;
 
     return (
       <div className="demo">
@@ -67,7 +71,9 @@ class App extends React.Component {
             theme={VictoryTheme.material}
             height={400}
             padding={{ top: 100, bottom: 40, left: 50, right: 50 }}
-            containerComponent={<VictoryCursorContainer cursorLabel={cursorLabel} />}
+            containerComponent={
+              <VictoryCursorContainer cursorLabel={cursorLabel} />
+            }
           >
             <VictoryLegend
               x={90}
@@ -240,7 +246,10 @@ class App extends React.Component {
             </VictoryGroup>
           </VictoryChart>
 
-          <VictoryStack style={chartStyle} containerComponent={<VictoryCursorContainer />}>
+          <VictoryStack
+            style={chartStyle}
+            containerComponent={<VictoryCursorContainer />}
+          >
             <VictoryBar
               style={{
                 data: {

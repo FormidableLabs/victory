@@ -4,7 +4,9 @@
 // react-static build, aka production:  REACT_STATIC_ENV="production" && REACT_STATIC_STAGING=undefined
 
 const stage =
-  process.env.REACT_STATIC_STAGING === "true" ? "staging" : process.env.REACT_STATIC_ENV;
+  process.env.REACT_STATIC_STAGING === "true"
+    ? "staging"
+    : process.env.REACT_STATIC_ENV;
 const landerBasePath = "open-source/victory";
 
 module.exports = { stage, landerBasePath };

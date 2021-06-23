@@ -4,7 +4,12 @@ import React from "react";
 import { VictoryBoxPlot } from "../packages/victory-box-plot/src/index";
 import { VictoryChart } from "../packages/victory-chart/src/index";
 import { VictoryTooltip } from "../packages/victory-tooltip/src/index";
-import { VictoryTheme, Box, Whisker, LineSegment } from "../packages/victory-core/src/index";
+import {
+  VictoryTheme,
+  Box,
+  Whisker,
+  LineSegment
+} from "../packages/victory-core/src/index";
 import { range } from "lodash";
 import seedrandom from "seedrandom";
 import { getArrayData } from "./data";
@@ -290,8 +295,14 @@ export const Style = () => {
           style={{
             min: { stroke: "#FF530D", strokeWidth: 2 },
             max: { stroke: "#2bbee0", strokeWidth: 2 },
-            q1: { fill: "#FF530D", fillOpacity: ({ datum }) => (datum.q1 < 10 ? 1 : 0.5) },
-            q3: { fill: "#2bbee0", fillOpacity: ({ datum }) => (datum.q3 > 15 ? 1 : 0.5) },
+            q1: {
+              fill: "#FF530D",
+              fillOpacity: ({ datum }) => (datum.q1 < 10 ? 1 : 0.5)
+            },
+            q3: {
+              fill: "#2bbee0",
+              fillOpacity: ({ datum }) => (datum.q3 > 15 ? 1 : 0.5)
+            },
             median: { stroke: "#fff", strokeWidth: 2 },
             minLabels: { fill: "#FF530D", padding: 10 },
             maxLabels: { fill: "#2bbee0", padding: 10 }

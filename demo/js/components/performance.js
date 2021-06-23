@@ -5,7 +5,10 @@ import { VictorySelectionContainer } from "Packages/victory-selection-container/
 import { VictoryScatter } from "Packages/victory-scatter/src/index";
 import { VictoryChart } from "Packages/victory-chart/src/index";
 
-const scatterData = range(4000).map(() => ({ x: Math.random(), y: Math.random() }));
+const scatterData = range(4000).map(() => ({
+  x: Math.random(),
+  y: Math.random()
+}));
 
 class App extends React.Component {
   constructor() {
@@ -49,7 +52,9 @@ class App extends React.Component {
       justifyContent: "center"
     };
 
-    const chartStyle = { parent: { border: "1px solid #ccc", margin: "2%", maxWidth: "40%" } };
+    const chartStyle = {
+      parent: { border: "1px solid #ccc", margin: "2%", maxWidth: "40%" }
+    };
 
     return (
       <div className="demo">

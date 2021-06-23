@@ -112,7 +112,9 @@ export default class VictoryCandlestickDemo extends React.Component<
                       {
                         mutation: (props) => {
                           return {
-                            style: merge({}, props.style.labels, { fill: "orange" })
+                            style: merge({}, props.style.labels, {
+                              fill: "orange"
+                            })
                           };
                         }
                       }
@@ -161,7 +163,9 @@ export default class VictoryCandlestickDemo extends React.Component<
                     {
                       mutation: (props) => {
                         return {
-                          style: merge({}, props.style.labels, { fill: "orange" })
+                          style: merge({}, props.style.labels, {
+                            fill: "orange"
+                          })
                         };
                       }
                     }
@@ -188,7 +192,11 @@ export default class VictoryCandlestickDemo extends React.Component<
           ]}
         />
 
-        <VictoryChart scale={{ x: "time" }} style={style} domainPadding={{ x: [20, 50] }}>
+        <VictoryChart
+          scale={{ x: "time" }}
+          style={style}
+          domainPadding={{ x: [20, 50] }}
+        >
           <VictoryCandlestick
             candleColors={{ positive: "#8BC34A", negative: "#C62828" }}
             data={data}
@@ -211,7 +219,11 @@ export default class VictoryCandlestickDemo extends React.Component<
           }}
         />
 
-        <VictoryChart scale={{ x: "time" }} style={style} domainPadding={{ x: [20, 50] }}>
+        <VictoryChart
+          scale={{ x: "time" }}
+          style={style}
+          domainPadding={{ x: [20, 50] }}
+        >
           <VictoryCandlestick
             candleColors={{ positive: "#8BC34A", negative: "#C62828" }}
             data={data}

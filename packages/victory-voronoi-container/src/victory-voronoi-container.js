@@ -2,7 +2,11 @@ import PropTypes from "prop-types";
 import React from "react";
 import { defaults, isFunction, pick } from "lodash";
 import { VictoryTooltip } from "victory-tooltip";
-import { VictoryContainer, Helpers, PropTypes as CustomPropTypes } from "victory-core";
+import {
+  VictoryContainer,
+  Helpers,
+  PropTypes as CustomPropTypes
+} from "victory-core";
 import VoronoiHelpers from "./voronoi-helpers";
 
 export const voronoiContainerMixin = (base) =>
@@ -47,16 +51,24 @@ export const voronoiContainerMixin = (base) =>
           target: "parent",
           eventHandlers: {
             onMouseLeave: (evt, targetProps) => {
-              return props.disable ? {} : VoronoiHelpers.onMouseLeave(evt, targetProps);
+              return props.disable
+                ? {}
+                : VoronoiHelpers.onMouseLeave(evt, targetProps);
             },
             onTouchCancel: (evt, targetProps) => {
-              return props.disable ? {} : VoronoiHelpers.onMouseLeave(evt, targetProps);
+              return props.disable
+                ? {}
+                : VoronoiHelpers.onMouseLeave(evt, targetProps);
             },
             onMouseMove: (evt, targetProps) => {
-              return props.disable ? {} : VoronoiHelpers.onMouseMove(evt, targetProps);
+              return props.disable
+                ? {}
+                : VoronoiHelpers.onMouseMove(evt, targetProps);
             },
             onTouchMove: (evt, targetProps) => {
-              return props.disable ? {} : VoronoiHelpers.onMouseMove(evt, targetProps);
+              return props.disable
+                ? {}
+                : VoronoiHelpers.onMouseMove(evt, targetProps);
             }
           }
         },
@@ -94,7 +106,10 @@ export const voronoiContainerMixin = (base) =>
 
       let center = mouseFollowTooltips ? mousePosition : undefined;
       if (!voronoiDimension || points.length < 2) {
-        return { ...basePosition, center: defaults({}, labelProps.center, center) };
+        return {
+          ...basePosition,
+          center: defaults({}, labelProps.center, center)
+        };
       }
 
       const x = voronoiDimension === "y" ? mousePosition.x : basePosition.x;
@@ -106,11 +121,17 @@ export const voronoiContainerMixin = (base) =>
     getStyle(props, points, type) {
       const { labels, labelComponent, theme } = props;
       const componentProps = labelComponent.props || {};
-      const themeStyles = theme && theme.voronoi && theme.voronoi.style ? theme.voronoi.style : {};
+      const themeStyles =
+        theme && theme.voronoi && theme.voronoi.style
+          ? theme.voronoi.style
+          : {};
       const componentStyleArray =
         type === "flyout" ? componentProps.flyoutStyle : componentProps.style;
       return points.reduce((memo, datum, index) => {
-        const labelProps = defaults({}, componentProps, { datum, active: true });
+        const labelProps = defaults({}, componentProps, {
+          datum,
+          active: true
+        });
         const text = isFunction(labels) ? labels(labelProps) : undefined;
         const textArray = text !== undefined ? `${text}`.split("\n") : [];
         const baseStyle = (datum.style && datum.style[type]) || {};
@@ -121,7 +142,9 @@ export const voronoiContainerMixin = (base) =>
           defaults({}, componentStyle, baseStyle, themeStyles[type]),
           labelProps
         );
-        const styleArray = textArray.length ? textArray.map(() => style) : [style];
+        const styleArray = textArray.length
+          ? textArray.map(() => style)
+          : [style];
         memo = memo.concat(styleArray);
         return memo;
       }, []);
@@ -134,12 +157,15 @@ export const voronoiContainerMixin = (base) =>
       const y = point._y1 !== undefined ? point._y1 : point._y;
       const defaultHorizontalOrientation = y < 0 ? "left" : "right";
       const defaultOrientation = y < 0 ? "bottom" : "top";
-      const labelOrientation = horizontal ? defaultHorizontalOrientation : defaultOrientation;
+      const labelOrientation = horizontal
+        ? defaultHorizontalOrientation
+        : defaultOrientation;
       const orientation = mouseFollowTooltips ? undefined : labelOrientation;
       return {
         orientation,
         pointerLength: multiPoint ? 0 : undefined,
-        constrainToVisibleArea: multiPoint || mouseFollowTooltips ? true : undefined
+        constrainToVisibleArea:
+          multiPoint || mouseFollowTooltips ? true : undefined
       };
     }
 
@@ -147,7 +173,10 @@ export const voronoiContainerMixin = (base) =>
       const { labels, scale, labelComponent, theme, width, height } = props;
       const componentProps = labelComponent.props || {};
       const text = points.reduce((memo, datum) => {
-        const labelProps = defaults({}, componentProps, { datum, active: true });
+        const labelProps = defaults({}, componentProps, {
+          datum,
+          active: true
+        });
         const t = isFunction(labels) ? labels(labelProps) : null;
         if (t === null || t === undefined) {
           return memo;
@@ -159,7 +188,8 @@ export const voronoiContainerMixin = (base) =>
       // remove properties from first point to make datum
       // eslint-disable-next-line no-unused-vars
       const { childName, eventKey, style, continuous, ...datum } = points[0];
-      const name = props.name === childName ? childName : `${props.name}-${childName}`;
+      const name =
+        props.name === childName ? childName : `${props.name}-${childName}`;
       const labelProps = defaults(
         {
           key: `${name}-${eventKey}-voronoi-tooltip`,
@@ -193,8 +223,12 @@ export const voronoiContainerMixin = (base) =>
       if (Array.isArray(activePoints) && activePoints.length) {
         const labelProps = this.getLabelProps(props, activePoints);
         const { text } = labelProps;
-        const showLabel = Array.isArray(text) ? text.filter(Boolean).length : text;
-        return showLabel ? React.cloneElement(labelComponent, labelProps) : null;
+        const showLabel = Array.isArray(text)
+          ? text.filter(Boolean).length
+          : text;
+        return showLabel
+          ? React.cloneElement(labelComponent, labelProps)
+          : null;
       } else {
         return null;
       }
@@ -202,7 +236,10 @@ export const voronoiContainerMixin = (base) =>
 
     // Overrides method in VictoryContainer
     getChildren(props) {
-      return [...React.Children.toArray(props.children), this.getTooltip(props)];
+      return [
+        ...React.Children.toArray(props.children),
+        this.getTooltip(props)
+      ];
     }
   };
 

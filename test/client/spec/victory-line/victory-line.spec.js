@@ -45,7 +45,9 @@ describe("components/victory-line", () => {
         { x: 6, y: 4 },
         { x: 7, y: 6 }
       ];
-      const wrapper = shallow(<VictoryLine data={data} dataComponent={<MyLineSegment />} />);
+      const wrapper = shallow(
+        <VictoryLine data={data} dataComponent={<MyLineSegment />} />
+      );
 
       const lines = wrapper.find(MyLineSegment);
       expect(lines.length).to.equal(1);
@@ -96,7 +98,9 @@ describe("components/victory-line", () => {
           { x: 2, y: 2 }
         ]
       };
-      const stringWrapper = mount(<VictoryLine {...props} interpolation="catmullRom" />);
+      const stringWrapper = mount(
+        <VictoryLine {...props} interpolation="catmullRom" />
+      );
       const stringLine = stringWrapper.find(Curve);
       const stringPath = stringLine.find("path").prop("d");
       SvgTestHelper.expectCorrectD3Path(
@@ -105,7 +109,9 @@ describe("components/victory-line", () => {
         "line"
       );
 
-      const functionWrapper = mount(<VictoryLine {...props} interpolation={curveCatmullRom} />);
+      const functionWrapper = mount(
+        <VictoryLine {...props} interpolation={curveCatmullRom} />
+      );
       const functionLine = functionWrapper.find(Curve);
       const functionPath = functionLine.find("path").prop("d");
       SvgTestHelper.expectCorrectD3Path(
@@ -137,15 +143,22 @@ describe("components/victory-line", () => {
     });
 
     it("renders deeply nested data", () => {
-      const data = [{ a: { b: [{ x: 1, y: 2 }] } }, { a: { b: [{ x: 3, y: 4 }] } }];
-      const wrapper = shallow(<VictoryLine data={data} x={"a.b[0].x"} y={"a.b.0.y"} />);
+      const data = [
+        { a: { b: [{ x: 1, y: 2 }] } },
+        { a: { b: [{ x: 3, y: 4 }] } }
+      ];
+      const wrapper = shallow(
+        <VictoryLine data={data} x={"a.b[0].x"} y={"a.b.0.y"} />
+      );
       const lines = wrapper.find(Curve);
       expect(lines.length).to.equal(1);
     });
 
     it("renders data ordered by x-value, by default", () => {
       const data = [{ t: 0 /*x: 10, y: 1*/ }, { t: 1 /*x:  9, y: 1*/ }];
-      const wrapper = shallow(<VictoryLine data={data} x={({ t }) => 10 - t} y={() => 1} />);
+      const wrapper = shallow(
+        <VictoryLine data={data} x={({ t }) => 10 - t} y={() => 1} />
+      );
       const lines = wrapper.find(Curve);
 
       expect(lines.props().data[0].t).to.equal(1);
@@ -155,7 +168,12 @@ describe("components/victory-line", () => {
     it("renders data ordered by value of sortKey, if given", () => {
       const data = [{ t: 0 /*x: 10, y: 1*/ }, { t: 1 /*x:  9, y: 1*/ }];
       const wrapper = shallow(
-        <VictoryLine data={data} sortKey={"t"} x={({ t }) => 10 - t} y={() => 1} />
+        <VictoryLine
+          data={data}
+          sortKey={"t"}
+          x={({ t }) => 10 - t}
+          y={() => 1}
+        />
       );
       const lines = wrapper.find(Curve);
 
@@ -201,7 +219,13 @@ describe("components/victory-line", () => {
       svg.simulate("click");
       expect(clickHandler).called;
       // the first argument is the standard evt object
-      expect(clickHandler.args[0][1]).to.include.keys("data", "scale", "width", "height", "style");
+      expect(clickHandler.args[0][1]).to.include.keys(
+        "data",
+        "scale",
+        "width",
+        "height",
+        "style"
+      );
     });
 
     it("attaches an event to data", () => {
@@ -287,7 +311,9 @@ describe("components/victory-line", () => {
           data={ariaTestData}
           dataComponent={
             <Curve
-              ariaLabel={({ data }) => `data point ${data[2].x + 1}'s x value is ${data[2].x}`}
+              ariaLabel={({ data }) =>
+                `data point ${data[2].x + 1}'s x value is ${data[2].x}`
+              }
               tabIndex={3}
             />
           }

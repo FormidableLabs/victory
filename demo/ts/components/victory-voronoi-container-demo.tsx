@@ -68,7 +68,8 @@ export default class VictoryVoronoiContainerDemo extends React.Component<
   render() {
     const dy = 13;
     const CustomLabel = (props: any) => {
-      const x = props.x - 2 - 4 * Math.max(...props.text.map((t: string) => t.length));
+      const x =
+        props.x - 2 - 4 * Math.max(...props.text.map((t: string) => t.length));
       const startY = 2 + props.y - (props.text.length * dy) / 2;
       return (
         <g>
@@ -133,7 +134,9 @@ export default class VictoryVoronoiContainerDemo extends React.Component<
               <VictoryVoronoiContainer
                 labels={({ datum }) => `I'm kind of a long label ${datum.y}`}
                 mouseFollowTooltips
-                labelComponent={<VictoryTooltip constrainToVisibleArea flyoutWidth={80} />}
+                labelComponent={
+                  <VictoryTooltip constrainToVisibleArea flyoutWidth={80} />
+                }
               />
             }
           >
@@ -173,7 +176,9 @@ export default class VictoryVoronoiContainerDemo extends React.Component<
             height={450}
             domain={{ y: [0, 1] }}
             style={chartStyle}
-            containerComponent={<VictoryVoronoiContainer labels={({ datum }) => datum.y} />}
+            containerComponent={
+              <VictoryVoronoiContainer labels={({ datum }) => datum.y} />
+            }
           >
             <VictoryScatter
               data={[
@@ -219,7 +224,10 @@ export default class VictoryVoronoiContainerDemo extends React.Component<
                 { x: 3, y: -2, l: "three" }
               ]}
               style={{
-                data: { stroke: "tomato", strokeWidth: ({ active }) => (active ? 4 : 2) },
+                data: {
+                  stroke: "tomato",
+                  strokeWidth: ({ active }) => (active ? 4 : 2)
+                },
                 labels: { fill: "tomato" }
               }}
             />
@@ -232,7 +240,10 @@ export default class VictoryVoronoiContainerDemo extends React.Component<
                 { x: 3, y: 3, l: "blue" }
               ]}
               style={{
-                data: { stroke: "blue", strokeWidth: ({ active }) => (active ? 4 : 2) },
+                data: {
+                  stroke: "blue",
+                  strokeWidth: ({ active }) => (active ? 4 : 2)
+                },
                 labels: { fill: "blue" }
               }}
             />
@@ -245,7 +256,10 @@ export default class VictoryVoronoiContainerDemo extends React.Component<
                 { x: 3, y: -2, l: "bird" }
               ]}
               style={{
-                data: { stroke: "black", strokeWidth: ({ active }) => (active ? 4 : 2) },
+                data: {
+                  stroke: "black",
+                  strokeWidth: ({ active }) => (active ? 4 : 2)
+                },
                 labels: { fill: "black" }
               }}
             />
@@ -274,7 +288,10 @@ export default class VictoryVoronoiContainerDemo extends React.Component<
           <VictoryChart
             style={chartStyle}
             containerComponent={
-              <VictoryVoronoiContainer radius={20} voronoiBlacklist={["ignore"]} />
+              <VictoryVoronoiContainer
+                radius={20}
+                voronoiBlacklist={["ignore"]}
+              />
             }
           >
             <VictoryScatter
@@ -329,7 +346,10 @@ export default class VictoryVoronoiContainerDemo extends React.Component<
                 }}
                 size={({ active }) => (active ? 8 : 3)}
               />
-              <VictoryLine name="ignore" style={{ data: { stroke: "tomato" } }} />
+              <VictoryLine
+                name="ignore"
+                style={{ data: { stroke: "tomato" } }}
+              />
             </VictoryGroup>
             <VictoryGroup
               data={[
@@ -370,7 +390,9 @@ export default class VictoryVoronoiContainerDemo extends React.Component<
             height={450}
             padding={{ top: 100, bottom: 20, left: 50, right: 50 }}
             style={chartStyle}
-            containerComponent={<VictoryVoronoiContainer voronoiBlacklist={["red"]} />}
+            containerComponent={
+              <VictoryVoronoiContainer voronoiBlacklist={["red"]} />
+            }
           >
             <VictoryLegend
               x={140}
@@ -441,7 +463,9 @@ export default class VictoryVoronoiContainerDemo extends React.Component<
 
           <VictoryChart
             style={chartStyle}
-            containerComponent={<VictoryVoronoiContainer voronoiBlacklist={["red"]} />}
+            containerComponent={
+              <VictoryVoronoiContainer voronoiBlacklist={["red"]} />
+            }
           >
             <VictoryStack>
               <VictoryBar
@@ -502,7 +526,10 @@ export default class VictoryVoronoiContainerDemo extends React.Component<
             </VictoryStack>
           </VictoryChart>
 
-          <VictoryStack style={chartStyle} containerComponent={<VictoryVoronoiContainer />}>
+          <VictoryStack
+            style={chartStyle}
+            containerComponent={<VictoryVoronoiContainer />}
+          >
             <VictoryBar
               style={{
                 data: {
@@ -584,7 +611,10 @@ export default class VictoryVoronoiContainerDemo extends React.Component<
                 { x: 3, y: 0, c: "red", l: "error" }
               ]}
               style={{
-                data: { stroke: "red", strokeWidth: ({ active }) => (active ? 4 : 2) }
+                data: {
+                  stroke: "red",
+                  strokeWidth: ({ active }) => (active ? 4 : 2)
+                }
               }}
             />
 
@@ -596,7 +626,10 @@ export default class VictoryVoronoiContainerDemo extends React.Component<
                 { x: 3, y: 3, c: "green", l: "success" }
               ]}
               style={{
-                data: { stroke: "green", strokeWidth: ({ active }) => (active ? 4 : 2) }
+                data: {
+                  stroke: "green",
+                  strokeWidth: ({ active }) => (active ? 4 : 2)
+                }
               }}
             />
           </VictoryChart>

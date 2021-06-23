@@ -111,15 +111,17 @@ const Gallery = ({ gallery, sidebarContent }) => {
     );
   };
 
-  const previews = gallery.map((item, index) => <div key={index}>{renderPreviewItem(item)}</div>);
+  const previews = gallery.map((item, index) => (
+    <div key={index}>{renderPreviewItem(item)}</div>
+  ));
 
   return (
     <Page sidebarContent={sidebarContent}>
       <PageHeader>Victory Gallery</PageHeader>
       <p>
-        Here are some examples to help you get started. Each example below links to a live, editable
-        playground. Code samples provided in these examples are free to use or modify however you
-        like.
+        Here are some examples to help you get started. Each example below links
+        to a live, editable playground. Code samples provided in these examples
+        are free to use or modify however you like.
       </p>
       <Divider />
       <GalleryWrapper>{previews}</GalleryWrapper>

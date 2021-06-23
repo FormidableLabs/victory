@@ -5,7 +5,11 @@ import PropTypes from "prop-types";
 import { merge, random, range } from "lodash";
 import { VictoryChart } from "Packages/victory-chart/src/index";
 import { VictoryLine, Curve } from "Packages/victory-line/src/index";
-import { VictoryContainer, VictoryTheme, Point } from "Packages/victory-core/src/index";
+import {
+  VictoryContainer,
+  VictoryTheme,
+  Point
+} from "Packages/victory-core/src/index";
 
 class PointedLine extends React.Component {
   static propTypes = {
@@ -108,7 +112,11 @@ export default class App extends React.Component {
   }
 
   render() {
-    const parentStyle = { border: "1px solid #ccc", margin: "2%", maxWidth: "40%" };
+    const parentStyle = {
+      border: "1px solid #ccc",
+      margin: "2%",
+      maxWidth: "40%"
+    };
     const containerStyle = {
       display: "flex",
       flexDirection: "row",
@@ -138,7 +146,9 @@ export default class App extends React.Component {
                   return [
                     {
                       mutation: (props) => {
-                        return { style: merge({}, props.style, { stroke: "orange" }) };
+                        return {
+                          style: merge({}, props.style, { stroke: "orange" })
+                        };
                       }
                     },
                     {
@@ -165,7 +175,12 @@ export default class App extends React.Component {
           dataComponent={<PointedLine />}
         />
 
-        <VictoryLine style={{ parent: parentStyle }} data={this.state.arrayData} x={0} y={1} />
+        <VictoryLine
+          style={{ parent: parentStyle }}
+          data={this.state.arrayData}
+          x={0}
+          y={1}
+        />
 
         <VictoryLine
           style={{ parent: parentStyle }}
@@ -198,7 +213,10 @@ export default class App extends React.Component {
           ]}
         />
 
-        <VictoryChart style={{ parent: parentStyle }} scale={{ x: "linear", y: "log" }}>
+        <VictoryChart
+          style={{ parent: parentStyle }}
+          scale={{ x: "linear", y: "log" }}
+        >
           <VictoryLine />
         </VictoryChart>
 
@@ -210,7 +228,10 @@ export default class App extends React.Component {
           theme={VictoryTheme.grayscale}
         />
 
-        <VictoryChart style={{ parent: parentStyle }} theme={VictoryTheme.grayscale}>
+        <VictoryChart
+          style={{ parent: parentStyle }}
+          theme={VictoryTheme.grayscale}
+        >
           <VictoryLine data={this.state.arrayData} x={0} y={1} />
         </VictoryChart>
 
@@ -251,7 +272,10 @@ export default class App extends React.Component {
           ]}
         />
 
-        <VictoryLine style={{ parent: parentStyle }} scale={{ x: "linear", y: "log" }} />
+        <VictoryLine
+          style={{ parent: parentStyle }}
+          scale={{ x: "linear", y: "log" }}
+        />
 
         <VictoryLine
           style={{ parent: parentStyle }}
@@ -262,7 +286,10 @@ export default class App extends React.Component {
           theme={VictoryTheme.material}
         />
 
-        <VictoryChart style={{ parent: parentStyle }} theme={VictoryTheme.material}>
+        <VictoryChart
+          style={{ parent: parentStyle }}
+          theme={VictoryTheme.material}
+        >
           <VictoryLine
             style={{ parent: parentStyle, data: this.state.style }}
             data={this.state.transitionData}
@@ -276,7 +303,10 @@ export default class App extends React.Component {
           />
         </VictoryChart>
 
-        <VictoryChart style={{ parent: parentStyle }} theme={VictoryTheme.material}>
+        <VictoryChart
+          style={{ parent: parentStyle }}
+          theme={VictoryTheme.material}
+        >
           <VictoryLine style={{ parent: parentStyle }} data={[]} />
         </VictoryChart>
 

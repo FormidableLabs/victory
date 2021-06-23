@@ -72,7 +72,9 @@ export default class VictoryAnimation extends React.Component {
     super(props, context);
     /* defaults */
     this.state = {
-      data: Array.isArray(this.props.data) ? this.props.data[0] : this.props.data,
+      data: Array.isArray(this.props.data)
+        ? this.props.data[0]
+        : this.props.data,
       animationInfo: {
         progress: 0,
         animating: false
@@ -101,7 +103,11 @@ export default class VictoryAnimation extends React.Component {
     const equalProps = isEqual(this.props, prevProps);
     if (!equalProps) {
       /* If the previous animation didn't finish, force it to complete before starting a new one */
-      if (this.interpolator && this.state.animationInfo && this.state.animationInfo.progress < 1) {
+      if (
+        this.interpolator &&
+        this.state.animationInfo &&
+        this.state.animationInfo.progress < 1
+      ) {
         // eslint-disable-next-line react/no-did-update-set-state
         this.setState({
           data: this.interpolator(1),
@@ -155,10 +161,16 @@ export default class VictoryAnimation extends React.Component {
       /* reset step to zero */
       if (this.props.delay) {
         setTimeout(() => {
-          this.loopID = this.timer.subscribe(this.functionToBeRunEachFrame, this.props.duration);
+          this.loopID = this.timer.subscribe(
+            this.functionToBeRunEachFrame,
+            this.props.duration
+          );
         }, this.props.delay);
       } else {
-        this.loopID = this.timer.subscribe(this.functionToBeRunEachFrame, this.props.duration);
+        this.loopID = this.timer.subscribe(
+          this.functionToBeRunEachFrame,
+          this.props.duration
+        );
       }
     } else if (this.props.onEnd) {
       this.props.onEnd();

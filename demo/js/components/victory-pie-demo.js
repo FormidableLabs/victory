@@ -12,7 +12,15 @@ export default class App extends React.Component {
     this.state = {
       data: this.getData(),
       transitionData: this.getTransitionData(),
-      colorScale: ["#D85F49", "#F66D3B", "#D92E1D", "#D73C4C", "#FFAF59", "#E28300", "#F6A57F"],
+      colorScale: [
+        "#D85F49",
+        "#F66D3B",
+        "#D92E1D",
+        "#D73C4C",
+        "#FFAF59",
+        "#E28300",
+        "#F6A57F"
+      ],
       sliceWidth: 60,
       style: {
         parent: {
@@ -87,14 +95,20 @@ export default class App extends React.Component {
           <VictoryPie
             startAngle={90}
             endAngle={-90}
-            style={{ parent: parentStyle, labels: { fill: "white", fontSize: 10 } }}
+            style={{
+              parent: parentStyle,
+              labels: { fill: "white", fontSize: 10 }
+            }}
             labelRadius={60}
             padding={{ bottom: 50, left: 50, right: 10 }}
             width={400}
             height={200}
           />
           <VictoryPie
-            style={{ parent: parentStyle, labels: { fill: "white", fontSize: 10 } }}
+            style={{
+              parent: parentStyle,
+              labels: { fill: "white", fontSize: 10 }
+            }}
             labelRadius={({ datum }) => datum.radius - 12}
             padding={{ bottom: 50, left: 50, right: 10 }}
             width={400}
@@ -120,7 +134,11 @@ export default class App extends React.Component {
             width={200}
             height={400}
           />
-          <VictoryPie style={{ parent: parentStyle }} width={200} height={400} />
+          <VictoryPie
+            style={{ parent: parentStyle }}
+            width={200}
+            height={400}
+          />
 
           <VictoryPie style={{ parent: parentStyle }} />
 
@@ -193,7 +211,11 @@ export default class App extends React.Component {
             colorScale="grayscale"
           />
 
-          <VictoryPie style={{ ...this.state.style }} labelRadius={120} innerRadius={140} />
+          <VictoryPie
+            style={{ ...this.state.style }}
+            labelRadius={120}
+            innerRadius={140}
+          />
 
           <VictoryPie
             style={{
@@ -234,7 +256,10 @@ export default class App extends React.Component {
             x={0}
             y={1}
             animate={{ duration: 2000 }}
-            style={{ ...this.state.style, data: { stroke: "#252525", strokeWidth: 2 } }}
+            style={{
+              ...this.state.style,
+              data: { stroke: "#252525", strokeWidth: 2 }
+            }}
             colorScale="warm"
           />
 

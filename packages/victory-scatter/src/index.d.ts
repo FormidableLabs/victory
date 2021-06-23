@@ -16,7 +16,10 @@ export interface VictoryScatterProps
     VictoryDatableProps,
     VictoryMultiLabelableProps {
   bubbleProperty?: string;
-  events?: EventPropTypeInterface<VictoryScatterTTargetType, StringOrNumberOrCallback>[];
+  events?: EventPropTypeInterface<
+    VictoryScatterTTargetType,
+    StringOrNumberOrCallback
+  >[];
   eventKey?: StringOrNumberOrCallback;
   maxBubbleSize?: number;
   minBubbleSize?: number;

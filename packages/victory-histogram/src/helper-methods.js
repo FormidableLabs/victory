@@ -28,7 +28,8 @@ const cacheLastValue = (func) => {
 const dataOrBinsContainDates = ({ data, bins, x }) => {
   const xAccessor = Helpers.createAccessor(x || "x");
   const dataIsDates = data.some((datum) => xAccessor(datum) instanceof Date);
-  const binsHasDates = Array.isArray(bins) && bins.some((bin) => bin instanceof Date);
+  const binsHasDates =
+    Array.isArray(bins) && bins.some((bin) => bin instanceof Date);
 
   return dataIsDates || binsHasDates;
 };
@@ -37,7 +38,9 @@ const getBinningFunc = ({ data, x, bins, dataOrBinsContainsDates }) => {
   const xAccessor = Helpers.createAccessor(x || "x");
   const bin = d3Array.bin().value(xAccessor);
 
-  const niceScale = (dataOrBinsContainsDates ? d3Scale.scaleTime() : d3Scale.scaleLinear())
+  const niceScale = (
+    dataOrBinsContainsDates ? d3Scale.scaleTime() : d3Scale.scaleLinear()
+  )
     .domain(d3Array.extent(data, xAccessor))
     .nice();
 
@@ -89,7 +92,9 @@ export const getFormattedData = cacheLastValue(({ data = [], x, bins }) => {
     return {
       x0,
       x1,
-      x: dataOrBinsContainsDates ? new Date((x0.getTime() + x1.getTime()) / 2) : (x0 + x1) / 2,
+      x: dataOrBinsContainsDates
+        ? new Date((x0.getTime() + x1.getTime()) / 2)
+        : (x0 + x1) / 2,
       y: bin.length,
       binnedData: [...bin]
     };
@@ -102,7 +107,9 @@ const getData = (props) => {
   const { bins, data, x } = props;
   const dataIsPreformatted = data.some(({ _y }) => !isNil(_y));
 
-  const formattedData = dataIsPreformatted ? data : getFormattedData({ data, x, bins });
+  const formattedData = dataIsPreformatted
+    ? data
+    : getFormattedData({ data, x, bins });
   return Data.getData({ ...props, data: formattedData, x: "x" });
 };
 
@@ -123,7 +130,9 @@ const getDomain = (props, axis) => {
     );
   }
 
-  return props.data.length ? Domain.getDomainWithZero({ ...props, data }, "y") : [0, 1];
+  return props.data.length
+    ? Domain.getDomainWithZero({ ...props, data }, "y")
+    : [0, 1];
 };
 
 const getCalculatedValues = (props) => {
@@ -240,7 +249,10 @@ const getBaseProps = (props, fallbackProps) => {
     };
 
     const text = LabelHelpers.getText(props, datum, index);
-    if ((text !== undefined && text !== null) || (labels && (events || sharedEvents))) {
+    if (
+      (text !== undefined && text !== null) ||
+      (labels && (events || sharedEvents))
+    ) {
       childProps[eventKey].labels = LabelHelpers.getProps(props, index);
     }
 

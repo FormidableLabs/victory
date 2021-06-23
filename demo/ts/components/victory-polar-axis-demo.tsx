@@ -82,11 +82,14 @@ class App extends React.Component<any, VictoryPolarAxisState> {
   }
 
   getMaxData(data: multiAxisDataListType) {
-    const groupedData = keys(data[0]).reduce((memo: any, key: string | number) => {
-      memo[key] = data.map((d) => d[key]);
+    const groupedData = keys(data[0]).reduce(
+      (memo: any, key: string | number) => {
+        memo[key] = data.map((d) => d[key]);
 
-      return memo;
-    }, {});
+        return memo;
+      },
+      {}
+    );
 
     return keys(groupedData).reduce((memo: any, key: string | number) => {
       memo[key] = Math.max(...groupedData[key]);
@@ -244,7 +247,9 @@ class App extends React.Component<any, VictoryPolarAxisState> {
             />
             <VictoryBar
               alignment="start"
-              style={{ data: { fill: ({ datum }) => datum.fill, opacity: 0.5 } }}
+              style={{
+                data: { fill: ({ datum }) => datum.fill, opacity: 0.5 }
+              }}
               data={[
                 { x: 45, y: 20, label: 1, fill: "red" },
                 { x: 90, y: 30, label: 2, fill: "orange" },
@@ -270,7 +275,9 @@ class App extends React.Component<any, VictoryPolarAxisState> {
           <VictoryChart polar theme={VictoryTheme.material} style={chartStyle}>
             <VictoryBar
               alignment="start"
-              style={{ data: { fill: ({ datum }) => datum.fill, opacity: 0.5 } }}
+              style={{
+                data: { fill: ({ datum }) => datum.fill, opacity: 0.5 }
+              }}
               data={[
                 { x: 15, y: 20, label: 1, fill: "red" },
                 { x: 25, y: 30, label: 2, fill: "orange" },
@@ -375,7 +382,13 @@ class App extends React.Component<any, VictoryPolarAxisState> {
             />
             <VictoryPolarAxis
               labelPlacement="perpendicular"
-              tickFormat={["strength", "intelligence", "stealth", "luck", "charisma"]}
+              tickFormat={[
+                "strength",
+                "intelligence",
+                "stealth",
+                "luck",
+                "charisma"
+              ]}
             />
             <VictoryScatter
               style={{ data: { fill: "tomato" } }}
@@ -407,7 +420,9 @@ class App extends React.Component<any, VictoryPolarAxisState> {
             startAngle={20}
             endAngle={380}
             domain={[0, 360]}
-            tickValues={[0, 20, 45, 65, 90, 120, 135, 180, 225, 250, 270, 300, 315]}
+            tickValues={[
+              0, 20, 45, 65, 90, 120, 135, 180, 225, 250, 270, 300, 315
+            ]}
           />
 
           <VictoryPolarAxis

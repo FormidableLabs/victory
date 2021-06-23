@@ -18,7 +18,9 @@ class App extends React.Component {
       justifyContent: "center"
     };
 
-    const chartStyle = { parent: { border: "1px solid #ccc", margin: "2%", maxWidth: "40%" } };
+    const chartStyle = {
+      parent: { border: "1px solid #ccc", margin: "2%", maxWidth: "40%" }
+    };
 
     return (
       <div className="demo">
@@ -101,7 +103,9 @@ class App extends React.Component {
                         childName: "line",
                         target: "data",
                         mutation: (props) => {
-                          return { style: merge({}, props.style, { stroke: "lime" }) };
+                          return {
+                            style: merge({}, props.style, { stroke: "lime" })
+                          };
                         }
                       },
                       {
@@ -203,7 +207,9 @@ class App extends React.Component {
                         target: "data",
                         mutation: (props) => {
                           const fill = props.style && props.style.fill;
-                          return fill === "gold" ? null : { style: { fill: "gold" } };
+                          return fill === "gold"
+                            ? null
+                            : { style: { fill: "gold" } };
                         }
                       }
                     ];

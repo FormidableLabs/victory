@@ -1,7 +1,10 @@
 /*eslint-disable no-magic-numbers*/
 /*eslint-disable react/no-multi-comp*/
 import React from "react";
-import { VictoryCandlestick, Candle } from "../packages/victory-candlestick/src/index";
+import {
+  VictoryCandlestick,
+  Candle
+} from "../packages/victory-candlestick/src/index";
 import { VictoryChart } from "../packages/victory-chart/src/index";
 import { VictoryTooltip } from "../packages/victory-tooltip/src/index";
 import { VictoryTheme } from "../packages/victory-core/src/index";
@@ -176,10 +179,16 @@ export const Labels = () => {
   return (
     <div style={containerStyle}>
       <VictoryChart {...defaultChartProps}>
-        <VictoryCandlestick data={getData(5)} labels={({ datum }) => `x: ${datum.x}`} />
+        <VictoryCandlestick
+          data={getData(5)}
+          labels={({ datum }) => `x: ${datum.x}`}
+        />
       </VictoryChart>
       <VictoryChart {...defaultChartProps} horizontal>
-        <VictoryCandlestick data={getData(5)} labels={({ datum }) => `x: ${datum.x}`} />
+        <VictoryCandlestick
+          data={getData(5)}
+          labels={({ datum }) => `x: ${datum.x}`}
+        />
       </VictoryChart>
       <VictoryChart {...defaultChartProps} horizontal>
         <VictoryCandlestick
@@ -283,7 +292,12 @@ export const Style = () => {
           labels={({ datum }) => datum.x}
           style={{
             labels: { fontSize: 20, fill: "tomato", fontFamily: "monospace" },
-            data: { fill: "tomato", fillOpacity: 0.7, stroke: "tomato", strokeWidth: 2 }
+            data: {
+              fill: "tomato",
+              fillOpacity: 0.7,
+              stroke: "tomato",
+              strokeWidth: 2
+            }
           }}
         />
       </VictoryChart>
@@ -294,7 +308,8 @@ export const Style = () => {
               fill: ({ datum }) => (datum.x === 3 ? "red" : "black")
             },
             data: {
-              stroke: ({ datum }) => (datum.open > datum.close ? "red" : "black")
+              stroke: ({ datum }) =>
+                datum.open > datum.close ? "red" : "black"
             }
           }}
           labels={({ datum }) => datum.x}
@@ -309,7 +324,10 @@ export const Scale = () => {
   return (
     <div style={containerStyle}>
       <VictoryChart {...defaultChartProps}>
-        <VictoryCandlestick data={getTimeData(5)} labels={({ datum }) => datum.x.getFullYear()} />
+        <VictoryCandlestick
+          data={getTimeData(5)}
+          labels={({ datum }) => datum.x.getFullYear()}
+        />
       </VictoryChart>
       <VictoryChart {...defaultChartProps}>
         <VictoryCandlestick

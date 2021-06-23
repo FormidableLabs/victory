@@ -40,7 +40,9 @@ export default class VictoryBrushContainerDemo extends React.Component<
       justifyContent: "center"
     };
 
-    const chartStyle = { parent: { border: "1px solid #ccc", margin: "2%", maxWidth: "40%" } };
+    const chartStyle = {
+      parent: { border: "1px solid #ccc", margin: "2%", maxWidth: "40%" }
+    };
 
     return (
       <div className="demo">
@@ -121,7 +123,10 @@ export default class VictoryBrushContainerDemo extends React.Component<
             height={400}
             padding={{ top: 100, bottom: 50, left: 50, right: 50 }}
             containerComponent={
-              <VictoryBrushContainer brushDomain={{ x: [2, 4], y: [-2, 2] }} allowDrag={false} />
+              <VictoryBrushContainer
+                brushDomain={{ x: [2, 4], y: [-2, 2] }}
+                allowDrag={false}
+              />
             }
           >
             <VictoryAxis dependentAxis invertAxis />
@@ -189,7 +194,10 @@ export default class VictoryBrushContainerDemo extends React.Component<
             }}
             domain={{ x: [0, 10], y: [-5, 5] }}
             containerComponent={
-              <VictoryBrushContainer defaultBrushArea="none" brushDomain={{ x: [0, 10] }} />
+              <VictoryBrushContainer
+                defaultBrushArea="none"
+                brushDomain={{ x: [0, 10] }}
+              />
             }
             size={({ active }) => (active ? 5 : 3)}
             data={[
@@ -210,14 +218,18 @@ export default class VictoryBrushContainerDemo extends React.Component<
                 fill: ({ active }) => (active ? "tomato" : "black")
               }
             }}
-            containerComponent={<VictoryBrushContainer defaultBrushArea="disable" />}
+            containerComponent={
+              <VictoryBrushContainer defaultBrushArea="disable" />
+            }
             size={({ active }) => (active ? 5 : 3)}
             y={(d) => d.x * d.x}
           />
 
           <VictoryGroup
             style={chartStyle}
-            containerComponent={<VictoryBrushContainer defaultBrushArea="move" />}
+            containerComponent={
+              <VictoryBrushContainer defaultBrushArea="move" />
+            }
           >
             <VictoryScatter
               style={{
@@ -263,7 +275,10 @@ export default class VictoryBrushContainerDemo extends React.Component<
             />
           </VictoryGroup>
 
-          <VictoryStack style={chartStyle} containerComponent={<VictoryBrushContainer />}>
+          <VictoryStack
+            style={chartStyle}
+            containerComponent={<VictoryBrushContainer />}
+          >
             <VictoryBar
               style={{
                 data: {

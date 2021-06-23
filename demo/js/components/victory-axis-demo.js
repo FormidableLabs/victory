@@ -2,7 +2,11 @@
 /*eslint-disable no-magic-numbers */
 import React from "react";
 import { VictoryAxis } from "Packages/victory-axis/src/index";
-import { VictoryLabel, VictoryContainer, VictoryTheme } from "Packages/victory-core/src/index";
+import {
+  VictoryLabel,
+  VictoryContainer,
+  VictoryTheme
+} from "Packages/victory-core/src/index";
 import { merge, random, range } from "lodash";
 import XYTheme from "../theme/victory-axis-differential-styling-theme";
 
@@ -106,7 +110,9 @@ export default class App extends React.Component {
               tickLabels: { angle: 45 },
               grid: { stroke: "#F4511E", strokeWidth: 2 }
             }}
-            containerComponent={<VictoryContainer title="Time Scale Axis Example" />}
+            containerComponent={
+              <VictoryContainer title="Time Scale Axis Example" />
+            }
             events={[
               {
                 target: "grid",
@@ -115,7 +121,9 @@ export default class App extends React.Component {
                     return [
                       {
                         mutation: (props) => {
-                          return { style: merge({}, props.style, { stroke: "orange" }) };
+                          return {
+                            style: merge({}, props.style, { stroke: "orange" })
+                          };
                         }
                       },
                       {
@@ -164,7 +172,12 @@ export default class App extends React.Component {
           </svg>
 
           <svg style={style} width={500} height={400}>
-            <VictoryAxis crossAxis domain={this.state.domain} theme={XYTheme} standalone={false} />
+            <VictoryAxis
+              crossAxis
+              domain={this.state.domain}
+              theme={XYTheme}
+              standalone={false}
+            />
             <VictoryAxis
               dependentAxis
               crossAxis
@@ -202,21 +215,39 @@ export default class App extends React.Component {
             padding={{ top: 90, bottom: 40, left: 40, right: 40 }}
             orientation="top"
             style={styleOverrides}
-            tickValues={["Mets\nNY", "Giants\nSF", "Yankees\nNY", "Nationals\nDC", "Mariners\nSEA"]}
+            tickValues={[
+              "Mets\nNY",
+              "Giants\nSF",
+              "Yankees\nNY",
+              "Nationals\nDC",
+              "Mariners\nSEA"
+            ]}
           />
           <VictoryAxis
             label="TEAMS"
             padding={{ top: 40, bottom: 40, left: 40, right: 90 }}
             orientation="right"
             style={styleOverrides}
-            tickValues={["Mets\nNY", "Giants\nSF", "Yankees\nNY", "Nationals\nDC", "Mariners\nSEA"]}
+            tickValues={[
+              "Mets\nNY",
+              "Giants\nSF",
+              "Yankees\nNY",
+              "Nationals\nDC",
+              "Mariners\nSEA"
+            ]}
           />
           <VictoryAxis
             label="TEAMS"
             orientation="bottom"
             padding={{ top: 40, bottom: 90, left: 40, right: 40 }}
             style={styleOverrides}
-            tickValues={["Mets\nNY", "Giants\nSF", "Yankees\nNY", "Nationals\nDC", "Mariners\nSEA"]}
+            tickValues={[
+              "Mets\nNY",
+              "Giants\nSF",
+              "Yankees\nNY",
+              "Nationals\nDC",
+              "Mariners\nSEA"
+            ]}
           />
 
           <VictoryAxis
@@ -224,7 +255,13 @@ export default class App extends React.Component {
             padding={{ top: 40, bottom: 40, left: 90, right: 40 }}
             orientation="left"
             style={styleOverrides}
-            tickValues={["Mets\nNY", "Giants\nSF", "Yankees\nNY", "Nationals\nDC", "Mariners\nSEA"]}
+            tickValues={[
+              "Mets\nNY",
+              "Giants\nSF",
+              "Yankees\nNY",
+              "Nationals\nDC",
+              "Mariners\nSEA"
+            ]}
           />
         </div>
       </div>

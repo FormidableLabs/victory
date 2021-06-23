@@ -78,9 +78,15 @@ export default (WrappedComponent, options) => {
       const calculatedState = this.getStateChanges(prevProps);
       this.calculatedState = calculatedState;
       const globalEventKeys = keys(this.globalEvents);
-      const removedGlobalEventKeys = difference(this.prevGlobalEventKeys, globalEventKeys);
+      const removedGlobalEventKeys = difference(
+        this.prevGlobalEventKeys,
+        globalEventKeys
+      );
       removedGlobalEventKeys.forEach((key) => this.removeGlobalListener(key));
-      const addedGlobalEventKeys = difference(globalEventKeys, this.prevGlobalEventKeys);
+      const addedGlobalEventKeys = difference(
+        globalEventKeys,
+        this.prevGlobalEventKeys
+      );
       addedGlobalEventKeys.forEach((key) => this.addGlobalListener(key));
       this.prevGlobalEventKeys = globalEventKeys;
     }
@@ -95,7 +101,10 @@ export default (WrappedComponent, options) => {
         return listener && listener(Events.emulateReactEvent(event));
       };
       this.boundGlobalEvents[key] = boundListener;
-      window.addEventListener(Events.getGlobalEventNameFromKey(key), boundListener);
+      window.addEventListener(
+        Events.getGlobalEventNameFromKey(key),
+        boundListener
+      );
     }
 
     removeGlobalListener(key) {
@@ -131,7 +140,9 @@ export default (WrappedComponent, options) => {
           } else {
             return component.index !== undefined
               ? getState(component.index, component.name)
-              : this.dataKeys.map((key) => getState(key, component.name)).filter(Boolean);
+              : this.dataKeys
+                  .map((key) => getState(key, component.name))
+                  .filter(Boolean);
           }
         })
         .filter(Boolean);
@@ -140,10 +151,15 @@ export default (WrappedComponent, options) => {
 
     applyExternalMutations(props, externalMutations) {
       if (!isEmpty(externalMutations)) {
-        const callbacks = props.externalEventMutations.reduce((memo, mutation) => {
-          memo = isFunction(mutation.callback) ? memo.concat(mutation.callback) : memo;
-          return memo;
-        }, []);
+        const callbacks = props.externalEventMutations.reduce(
+          (memo, mutation) => {
+            memo = isFunction(mutation.callback)
+              ? memo.concat(mutation.callback)
+              : memo;
+            return memo;
+          },
+          []
+        );
         const compiledCallbacks = callbacks.length
           ? () => {
               callbacks.forEach((c) => c());
@@ -179,7 +195,11 @@ export default (WrappedComponent, options) => {
       const { sharedEvents, externalEventMutations } = props;
       return isEmpty(externalEventMutations) || sharedEvents
         ? undefined
-        : Events.getExternalMutations(externalEventMutations, this.baseProps, this.state);
+        : Events.getExternalMutations(
+            externalEventMutations,
+            this.baseProps,
+            this.state
+          );
     }
 
     cacheValues(obj) {
@@ -194,7 +214,9 @@ export default (WrappedComponent, options) => {
       const parentState = this.getEventState("parent", "parent");
       const baseParentProps = defaults({}, parentState, sharedParentState);
       const parentPropsList = baseParentProps.parentControlledProps;
-      const parentProps = parentPropsList ? pick(baseParentProps, parentPropsList) : {};
+      const parentProps = parentPropsList
+        ? pick(baseParentProps, parentPropsList)
+        : {};
       const modifiedProps = defaults({}, parentProps, props);
 
       return isFunction(WrappedComponent.getBaseProps)
@@ -216,7 +238,9 @@ export default (WrappedComponent, options) => {
       const key = (this.dataKeys && this.dataKeys[index]) || index;
       const id = `${name}-${type}-${key}`;
 
-      const baseProps = (this.baseProps[key] && this.baseProps[key][type]) || this.baseProps[key];
+      const baseProps =
+        (this.baseProps[key] && this.baseProps[key][type]) ||
+        this.baseProps[key];
 
       if (!baseProps && !this.hasEvents) {
         return undefined;
@@ -247,7 +271,9 @@ export default (WrappedComponent, options) => {
 
     renderContainer(component, children) {
       const isContainer = component.type && component.type.role === "container";
-      const parentProps = isContainer ? this.getComponentProps(component, "parent", "parent") : {};
+      const parentProps = isContainer
+        ? this.getComponentProps(component, "parent", "parent")
+        : {};
       if (parentProps.events) {
         this.globalEvents = Events.getGlobalEvents(parentProps.events);
         parentProps.events = Events.omitGlobalEvents(parentProps.events);
@@ -262,7 +288,10 @@ export default (WrappedComponent, options) => {
           : defaultAnimationWhitelist;
 
       return (
-        <VictoryTransition animate={props.animate} animationWhitelist={animationWhitelist}>
+        <VictoryTransition
+          animate={props.animate}
+          animationWhitelist={animationWhitelist}
+        >
           {React.createElement(this.constructor, props)}
         </VictoryTransition>
       );
@@ -273,32 +302,56 @@ export default (WrappedComponent, options) => {
       const { dataComponent, labelComponent, groupComponent } = props;
       const dataKeys = without(this.dataKeys, "all");
       const labelComponents = dataKeys.reduce((memo, key) => {
-        const labelProps = this.getComponentProps(labelComponent, "labels", key);
-        if (labelProps && labelProps.text !== undefined && labelProps.text !== null) {
+        const labelProps = this.getComponentProps(
+          labelComponent,
+          "labels",
+          key
+        );
+        if (
+          labelProps &&
+          labelProps.text !== undefined &&
+          labelProps.text !== null
+        ) {
           memo = memo.concat(React.cloneElement(labelComponent, labelProps));
         }
         return memo;
       }, []);
 
       const dataProps = this.getComponentProps(dataComponent, "data", "all");
-      const children = [React.cloneElement(dataComponent, dataProps), ...labelComponents];
+      const children = [
+        React.cloneElement(dataComponent, dataProps),
+        ...labelComponents
+      ];
       return this.renderContainer(groupComponent, children);
     }
 
     renderData(props, shouldRenderDatum = datumHasXandY) {
       const { dataComponent, labelComponent, groupComponent } = props;
 
-      const dataComponents = this.dataKeys.reduce((validDataComponents, _dataKey, index) => {
-        const dataProps = this.getComponentProps(dataComponent, "data", index);
-        if (shouldRenderDatum(dataProps.datum)) {
-          validDataComponents.push(React.cloneElement(dataComponent, dataProps));
-        }
-        return validDataComponents;
-      }, []);
+      const dataComponents = this.dataKeys.reduce(
+        (validDataComponents, _dataKey, index) => {
+          const dataProps = this.getComponentProps(
+            dataComponent,
+            "data",
+            index
+          );
+          if (shouldRenderDatum(dataProps.datum)) {
+            validDataComponents.push(
+              React.cloneElement(dataComponent, dataProps)
+            );
+          }
+          return validDataComponents;
+        },
+        []
+      );
 
       const labelComponents = this.dataKeys
         .map((_dataKey, index) => {
-          const labelProps = this.getComponentProps(labelComponent, "labels", index);
+          const labelProps = this.getComponentProps(
+            labelComponent,
+            "labels",
+            index
+          );
           if (labelProps.text !== undefined && labelProps.text !== null) {
             return React.cloneElement(labelComponent, labelProps);
           }

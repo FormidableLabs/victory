@@ -51,7 +51,11 @@ describe("helpers/selection", () => {
       ];
       const props = { scale, x1: 0, y1: 0, x2: 0.5, y2: 0.5 };
       const bounds = { x: [0, 1], y: [10, 15] };
-      const filteredData = SelectionHelpers.filterDatasets(props, datasets, bounds);
+      const filteredData = SelectionHelpers.filterDatasets(
+        props,
+        datasets,
+        bounds
+      );
       expect(filteredData).to.equal(null);
     });
 
@@ -64,7 +68,11 @@ describe("helpers/selection", () => {
       const datasets = [{ childName, data }];
       const bounds = { x: [0, 1], y: [0, 10] };
       const props = { scale, x1: 0, y1: 0, x2: 0.5, y2: 0.5 };
-      const filteredData = SelectionHelpers.filterDatasets(props, datasets, bounds);
+      const filteredData = SelectionHelpers.filterDatasets(
+        props,
+        datasets,
+        bounds
+      );
       const expected = { eventKey: [0], data: [data[0]] };
       expect(filteredData).to.eql([assign({ childName }, expected)]);
     });

@@ -27,4 +27,7 @@ export interface VictoryBrushContainerProps extends VictoryContainerProps {
   ) => void;
 }
 
-export class VictoryBrushContainer extends React.Component<VictoryBrushContainerProps, any> {}
+export class VictoryBrushContainer extends React.Component<
+  VictoryBrushContainerProps,
+  any
+> {}

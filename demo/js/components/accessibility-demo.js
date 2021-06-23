@@ -117,19 +117,25 @@ export default class App extends React.Component {
                 }
                 q3Component={
                   <Border
-                    ariaLabel={({ datum }) => `${datum.x} q3 value is ${datum._q3}`}
+                    ariaLabel={({ datum }) =>
+                      `${datum.x} q3 value is ${datum._q3}`
+                    }
                     tabIndex={({ index }) => index + 6.1}
                   />
                 }
                 medianComponent={
                   <LineSegment
-                    ariaLabel={({ datum }) => `${datum.x} median value is ${datum._median}`}
+                    ariaLabel={({ datum }) =>
+                      `${datum.x} median value is ${datum._median}`
+                    }
                     tabIndex={({ index }) => index + 5.1}
                   />
                 }
                 q1Component={
                   <Border
-                    ariaLabel={({ datum }) => `${datum.x} q1 value is ${datum._q1}`}
+                    ariaLabel={({ datum }) =>
+                      `${datum.x} q1 value is ${datum._q1}`
+                    }
                     tabIndex={({ index }) => index + 6.2}
                   />
                 }
@@ -152,7 +158,9 @@ export default class App extends React.Component {
                   data={accessibilityAreaData.a}
                   dataComponent={
                     <Area
-                      ariaLabel={({ data }) => `area chart stack ${data[0]._stack}`}
+                      ariaLabel={({ data }) =>
+                        `area chart stack ${data[0]._stack}`
+                      }
                       tabIndex={20}
                     />
                   }
@@ -161,7 +169,9 @@ export default class App extends React.Component {
                   data={accessibilityAreaData.b}
                   dataComponent={
                     <Area
-                      ariaLabel={({ data }) => `area chart stack ${data[0]._stack}`}
+                      ariaLabel={({ data }) =>
+                        `area chart stack ${data[0]._stack}`
+                      }
                       tabIndex={20.1}
                     />
                   }
@@ -170,7 +180,9 @@ export default class App extends React.Component {
                   data={accessibilityAreaData.c}
                   dataComponent={
                     <Area
-                      ariaLabel={({ data }) => `area chart stack ${data[0]._stack}`}
+                      ariaLabel={({ data }) =>
+                        `area chart stack ${data[0]._stack}`
+                      }
                       tabIndex={20.2}
                     />
                   }
@@ -179,7 +191,9 @@ export default class App extends React.Component {
                   data={accessibilityAreaData.d}
                   dataComponent={
                     <Area
-                      ariaLabel={({ data }) => `area chart stack ${data[0]._stack}`}
+                      ariaLabel={({ data }) =>
+                        `area chart stack ${data[0]._stack}`
+                      }
                       tabIndex={20.3}
                     />
                   }
@@ -206,9 +220,9 @@ export default class App extends React.Component {
                     ariaLabel={({ data }) =>
                       data.map(
                         (dataPoint, i) =>
-                          `data point ${i + 1} x value is ${dataPoint.x} and y value is ${
-                            dataPoint.y
-                          }`
+                          `data point ${i + 1} x value is ${
+                            dataPoint.x
+                          } and y value is ${dataPoint.y}`
                       )
                     }
                   />
@@ -246,7 +260,9 @@ export default class App extends React.Component {
                 data={accessibilityScatterData}
                 dataComponent={
                   <Point
-                    ariaLabel={({ datum }) => `scatter point x: ${datum.x}, y:${datum.y}`}
+                    ariaLabel={({ datum }) =>
+                      `scatter point x: ${datum.x}, y:${datum.y}`
+                    }
                     tabIndex={({ index }) => index + 28}
                   />
                 }
@@ -263,7 +279,9 @@ export default class App extends React.Component {
                 data={accessibilityVoronoiData}
                 dataComponent={
                   <Voronoi
-                    ariaLabel={({ datum }) => `voronoi chart, x ${datum.x}, y ${datum.y}`}
+                    ariaLabel={({ datum }) =>
+                      `voronoi chart, x ${datum.x}, y ${datum.y}`
+                    }
                     tabIndex={({ index }) => index + 35}
                   />
                 }

@@ -77,7 +77,9 @@ function getY0(datum, index, datasets) {
       const sameSign = (y < 0 && value < 0) || (y >= 0 && value >= 0);
       return sameSign ? +value + memo : memo;
     }, firstDatasetBaseline[group] || 0);
-  return previousPoints.some((point) => point instanceof Date) ? new Date(y0) : y0;
+  return previousPoints.some((point) => point instanceof Date)
+    ? new Date(y0)
+    : y0;
 }
 
 /* eslint-disable no-nested-ternary */
@@ -86,7 +88,11 @@ function addLayoutData(props, datasets, index) {
   return datasets[index].map((datum) => {
     const yOffset = getY0(datum, index, datasets) || 0;
     return assign({}, datum, {
-      _y0: !(datum._y instanceof Date) ? yOffset : yOffset ? new Date(yOffset) : datum._y,
+      _y0: !(datum._y instanceof Date)
+        ? yOffset
+        : yOffset
+        ? new Date(yOffset)
+        : datum._y,
       _y1:
         datum._y === null
           ? null
@@ -118,7 +124,8 @@ function getCalculatedProps(props, childComponents) {
   const role = "stack";
   props = Helpers.modifyProps(props, fallbackProps, role);
   const style = Wrapper.getStyle(props.theme, props.style, role);
-  const categories = props.categories || Wrapper.getCategories(props, childComponents);
+  const categories =
+    props.categories || Wrapper.getCategories(props, childComponents);
   const datasets = props.datasets || stackData(props, childComponents);
   const children = childComponents.map((c, i) => {
     return React.cloneElement(c, { data: datasets[i] });
@@ -140,7 +147,17 @@ function getCalculatedProps(props, childComponents) {
     y: baseScale.y.domain(domain.y).range(props.horizontal ? range.x : range.y)
   };
   const { colorScale, horizontal } = props;
-  return { datasets, categories, range, domain, horizontal, scale, style, colorScale, role };
+  return {
+    datasets,
+    categories,
+    range,
+    domain,
+    horizontal,
+    scale,
+    style,
+    colorScale,
+    role
+  };
 }
 
 function getLabels(props, datasets, index) {
@@ -172,13 +189,16 @@ function getColorScale(props, child) {
   if (role !== "group" && role !== "stack") {
     return undefined;
   }
-  return props.theme ? colorScaleOptions || props.theme.props.colorScale : colorScaleOptions;
+  return props.theme
+    ? colorScaleOptions || props.theme.props.colorScale
+    : colorScaleOptions;
 }
 
 function getChildren(props, childComponents, calculatedProps) {
   props = Helpers.modifyProps(props, fallbackProps, "stack");
   childComponents = childComponents || React.Children.toArray(props.children);
-  calculatedProps = calculatedProps || getCalculatedProps(props, childComponents);
+  calculatedProps =
+    calculatedProps || getCalculatedProps(props, childComponents);
   const { datasets } = calculatedProps;
   const childProps = getChildProps(props, calculatedProps);
   const parentName = props.name || "stack";
@@ -186,7 +206,9 @@ function getChildren(props, childComponents, calculatedProps) {
     const role = child.type && child.type.role;
     const data = datasets[index];
     const style = Wrapper.getChildStyle(child, index, calculatedProps);
-    const labels = props.labels ? getLabels(props, datasets, index) : child.props.labels;
+    const labels = props.labels
+      ? getLabels(props, datasets, index)
+      : child.props.labels;
     const name = child.props.name || `${parentName}-${role}-${index}`;
     return React.cloneElement(
       child,

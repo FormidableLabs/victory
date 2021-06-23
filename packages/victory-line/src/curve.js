@@ -34,11 +34,15 @@ const toNewName = (interpolation) => {
 const getLineFunction = (props) => {
   const { polar, scale, horizontal } = props;
   const defaultOpenCurve = polar ? false : true;
-  const openCurve = props.openCurve === undefined ? defaultOpenCurve : props.openCurve;
-  const interpolationFunction = typeof props.interpolation === "function" && props.interpolation;
+  const openCurve =
+    props.openCurve === undefined ? defaultOpenCurve : props.openCurve;
+  const interpolationFunction =
+    typeof props.interpolation === "function" && props.interpolation;
   const interpolationName =
     typeof props.interpolation === "string" &&
-    (!openCurve ? `${toNewName(props.interpolation)}Closed` : toNewName(props.interpolation));
+    (!openCurve
+      ? `${toNewName(props.interpolation)}Closed`
+      : toNewName(props.interpolation));
   return polar
     ? d3Shape
         .lineRadial()
@@ -77,7 +81,8 @@ const Curve = (props) => {
   props = evaluateProps(props);
   const { polar, origin } = props;
   const lineFunction = getLineFunction(props);
-  const defaultTransform = polar && origin ? `translate(${origin.x}, ${origin.y})` : undefined;
+  const defaultTransform =
+    polar && origin ? `translate(${origin.x}, ${origin.y})` : undefined;
 
   return React.cloneElement(props.pathComponent, {
     ...props.events,

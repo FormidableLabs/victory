@@ -32,12 +32,21 @@ const options = {
 };
 
 class VictoryLine extends React.Component {
-  static animationWhitelist = ["data", "domain", "height", "padding", "samples", "style", "width"];
+  static animationWhitelist = [
+    "data",
+    "domain",
+    "height",
+    "padding",
+    "samples",
+    "style",
+    "width"
+  ];
 
   static displayName = "VictoryLine";
   static role = "line";
   static defaultTransitions = DefaultTransitions.continuousTransitions();
-  static defaultPolarTransitions = DefaultTransitions.continuousPolarTransitions();
+  static defaultPolarTransitions =
+    DefaultTransitions.continuousPolarTransitions();
   static continuous = true;
 
   static propTypes = {
@@ -101,7 +110,9 @@ class VictoryLine extends React.Component {
     }
 
     const children = this.renderContinuousData(props);
-    return props.standalone ? this.renderContainer(props.containerComponent, children) : children;
+    return props.standalone
+      ? this.renderContainer(props.containerComponent, children)
+      : children;
   }
 }
 export default addEvents(VictoryLine, options);

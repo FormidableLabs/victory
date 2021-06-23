@@ -64,7 +64,10 @@ class VictoryLegend extends React.Component {
     dataComponent: PropTypes.element,
     eventKey: PropTypes.oneOfType([
       PropTypes.func,
-      CustomPropTypes.allOfType([CustomPropTypes.integer, CustomPropTypes.nonNegative]),
+      CustomPropTypes.allOfType([
+        CustomPropTypes.integer,
+        CustomPropTypes.nonNegative
+      ]),
       PropTypes.string
     ]),
     events: PropTypes.arrayOf(
@@ -72,7 +75,10 @@ class VictoryLegend extends React.Component {
         target: PropTypes.oneOf(["data", "labels", "parent"]),
         eventKey: PropTypes.oneOfType([
           PropTypes.array,
-          CustomPropTypes.allOfType([CustomPropTypes.integer, CustomPropTypes.nonNegative]),
+          CustomPropTypes.allOfType([
+            CustomPropTypes.integer,
+            CustomPropTypes.nonNegative
+          ]),
           PropTypes.string
         ]),
         eventHandlers: PropTypes.object
@@ -84,7 +90,10 @@ class VictoryLegend extends React.Component {
         childName: PropTypes.oneOfType([PropTypes.string, PropTypes.array]),
         eventKey: PropTypes.oneOfType([
           PropTypes.array,
-          CustomPropTypes.allOfType([CustomPropTypes.integer, CustomPropTypes.nonNegative]),
+          CustomPropTypes.allOfType([
+            CustomPropTypes.integer,
+            CustomPropTypes.nonNegative
+          ]),
           PropTypes.string
         ]),
         mutation: PropTypes.function,
@@ -182,19 +191,38 @@ class VictoryLegend extends React.Component {
         if (_dataKey === "all") {
           return undefined;
         }
-        const labelProps = this.getComponentProps(labelComponent, "labels", index);
+        const labelProps = this.getComponentProps(
+          labelComponent,
+          "labels",
+          index
+        );
         if (labelProps.text !== undefined && labelProps.text !== null) {
           return React.cloneElement(labelComponent, labelProps);
         }
         return undefined;
       })
       .filter(Boolean);
-    const borderProps = this.getComponentProps(props.borderComponent, "border", "all");
-    const borderComponent = React.cloneElement(props.borderComponent, borderProps);
+    const borderProps = this.getComponentProps(
+      props.borderComponent,
+      "border",
+      "all"
+    );
+    const borderComponent = React.cloneElement(
+      props.borderComponent,
+      borderProps
+    );
     if (title) {
       const titleProps = this.getComponentProps(props.title, "title", "all");
-      const titleComponent = React.cloneElement(props.titleComponent, titleProps);
-      return [borderComponent, ...dataComponents, titleComponent, ...labelComponents];
+      const titleComponent = React.cloneElement(
+        props.titleComponent,
+        titleProps
+      );
+      return [
+        borderComponent,
+        ...dataComponents,
+        titleComponent,
+        ...labelComponents
+      ];
     }
     return [borderComponent, ...dataComponents, ...labelComponents];
   }

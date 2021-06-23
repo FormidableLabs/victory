@@ -62,7 +62,11 @@ class VictoryAxis extends React.Component {
     ...CommonProps.baseProps,
     axisComponent: PropTypes.element,
     axisLabelComponent: PropTypes.element,
-    axisValue: PropTypes.oneOfType([PropTypes.number, PropTypes.string, PropTypes.object]),
+    axisValue: PropTypes.oneOfType([
+      PropTypes.number,
+      PropTypes.string,
+      PropTypes.object
+    ]),
     categories: PropTypes.oneOfType([
       PropTypes.arrayOf(PropTypes.string),
       PropTypes.shape({
@@ -74,10 +78,19 @@ class VictoryAxis extends React.Component {
     dependentAxis: PropTypes.bool,
     events: PropTypes.arrayOf(
       PropTypes.shape({
-        target: PropTypes.oneOf(["axis", "axisLabel", "grid", "ticks", "tickLabels"]),
+        target: PropTypes.oneOf([
+          "axis",
+          "axisLabel",
+          "grid",
+          "ticks",
+          "tickLabels"
+        ]),
         eventKey: PropTypes.oneOfType([
           PropTypes.array,
-          CustomPropTypes.allOfType([CustomPropTypes.integer, CustomPropTypes.nonNegative]),
+          CustomPropTypes.allOfType([
+            CustomPropTypes.integer,
+            CustomPropTypes.nonNegative
+          ]),
           PropTypes.string
         ]),
         eventHandlers: PropTypes.object
@@ -106,7 +119,10 @@ class VictoryAxis extends React.Component {
       CustomPropTypes.integer,
       CustomPropTypes.greaterThanZero
     ]),
-    tickFormat: PropTypes.oneOfType([PropTypes.func, CustomPropTypes.homogeneousArray]),
+    tickFormat: PropTypes.oneOfType([
+      PropTypes.func,
+      CustomPropTypes.homogeneousArray
+    ]),
     tickLabelComponent: PropTypes.element,
     tickValues: CustomPropTypes.homogeneousArray
   };
@@ -149,7 +165,11 @@ class VictoryAxis extends React.Component {
     if (!label) {
       return null;
     }
-    const axisLabelProps = this.getComponentProps(axisLabelComponent, "axisLabel", 0);
+    const axisLabelProps = this.getComponentProps(
+      axisLabelComponent,
+      "axisLabel",
+      0
+    );
     return React.cloneElement(axisLabelComponent, axisLabelProps);
   }
 
@@ -158,20 +178,32 @@ class VictoryAxis extends React.Component {
     const shouldRender = (componentProps) => {
       const { style = {}, events = {} } = componentProps;
       const visible =
-        style.stroke !== "transparent" && style.stroke !== "none" && style.strokeWidth !== 0;
+        style.stroke !== "transparent" &&
+        style.stroke !== "none" &&
+        style.strokeWidth !== 0;
       return visible || !isEmpty(events);
     };
 
     return this.dataKeys.map((key, index) => {
       const tickProps = this.getComponentProps(tickComponent, "ticks", index);
       const BaseTickComponent = React.cloneElement(tickComponent, tickProps);
-      const TickComponent = shouldRender(BaseTickComponent.props) ? BaseTickComponent : undefined;
+      const TickComponent = shouldRender(BaseTickComponent.props)
+        ? BaseTickComponent
+        : undefined;
       const gridProps = this.getComponentProps(gridComponent, "grid", index);
       const BaseGridComponent = React.cloneElement(gridComponent, gridProps);
-      const GridComponent = shouldRender(BaseGridComponent.props) ? BaseGridComponent : undefined;
-      const tickLabelProps = this.getComponentProps(tickLabelComponent, "tickLabels", index);
+      const GridComponent = shouldRender(BaseGridComponent.props)
+        ? BaseGridComponent
+        : undefined;
+      const tickLabelProps = this.getComponentProps(
+        tickLabelComponent,
+        "tickLabels",
+        index
+      );
       const TickLabel = React.cloneElement(tickLabelComponent, tickLabelProps);
-      const children = [GridComponent, TickComponent, TickLabel].filter(Boolean);
+      const children = [GridComponent, TickComponent, TickLabel].filter(
+        Boolean
+      );
       return React.cloneElement(
         props.groupComponent,
         { key: `${name}-tick-group-${key}` },
@@ -208,12 +240,17 @@ class VictoryAxis extends React.Component {
           : labelSize.width + padding.right + padding.left)
       );
     }, 0);
-    const availiableLabelCount = Math.floor((size * gridAndTicks.length) / labelsSumSize);
+    const availiableLabelCount = Math.floor(
+      (size * gridAndTicks.length) / labelsSumSize
+    );
     const divider = Math.ceil(gridAndTicks.length / availiableLabelCount) || 1;
     const getLabelCoord = (gridAndTick) =>
       gridAndTick.props.children
         .filter(isVictoryLabel)
-        .reduce((prev, child) => (isVertical ? child.props.y : child.props.x) || 0, 0);
+        .reduce(
+          (prev, child) => (isVertical ? child.props.y : child.props.x) || 0,
+          0
+        );
     const sorted = gridAndTicks.sort(
       (a, b) =>
         isVertical
@@ -240,7 +277,11 @@ class VictoryAxis extends React.Component {
     const modifiedGridAndTicks = props.fixLabelOverlap
       ? this.fixLabelOverlap(gridAndTicks, props)
       : gridAndTicks;
-    const children = [this.renderLine(props), this.renderLabel(props), ...modifiedGridAndTicks];
+    const children = [
+      this.renderLine(props),
+      this.renderLabel(props),
+      ...modifiedGridAndTicks
+    ];
     return props.standalone
       ? this.renderContainer(props.containerComponent, children)
       : React.cloneElement(props.groupComponent, {}, children);

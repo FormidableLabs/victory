@@ -6,7 +6,10 @@ class VictoryAccessibleGroup extends React.Component {
   static propTypes = {
     "aria-describedby": PropTypes.string,
     "aria-label": PropTypes.string,
-    children: PropTypes.oneOfType([PropTypes.arrayOf(PropTypes.node), PropTypes.node]),
+    children: PropTypes.oneOfType([
+      PropTypes.arrayOf(PropTypes.node),
+      PropTypes.node
+    ]),
     className: PropTypes.string,
     desc: PropTypes.string,
     tabIndex: PropTypes.number
@@ -18,7 +21,8 @@ class VictoryAccessibleGroup extends React.Component {
 
   render() {
     const { desc, children, className, tabIndex } = this.props;
-    const descId = desc && (this.props["aria-describedby"] || desc.split(" ").join("-"));
+    const descId =
+      desc && (this.props["aria-describedby"] || desc.split(" ").join("-"));
 
     return desc ? (
       <g

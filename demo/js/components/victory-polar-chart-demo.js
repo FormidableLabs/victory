@@ -94,7 +94,9 @@ class App extends React.Component {
       justifyContent: "center"
     };
 
-    const chartStyle = { parent: { border: "1px solid #ccc", margin: "2%", maxWidth: "40%" } };
+    const chartStyle = {
+      parent: { border: "1px solid #ccc", margin: "2%", maxWidth: "40%" }
+    };
 
     return (
       <div className="demo">
@@ -113,7 +115,9 @@ class App extends React.Component {
                   style={{
                     axisLabel: { padding: 10 }
                   }}
-                  tickLabelComponent={<VictoryLabel labelPlacement="vertical" />}
+                  tickLabelComponent={
+                    <VictoryLabel labelPlacement="vertical" />
+                  }
                   labelPlacement="perpendicular"
                   axisValue={i + 1}
                   label={key}
@@ -148,7 +152,9 @@ class App extends React.Component {
             >
               <VictoryLine style={{ data: { stroke: "tomato" } }} />
               <VictoryScatter
-                style={{ data: { fill: ({ active }) => (active ? "tomato" : "gray") } }}
+                style={{
+                  data: { fill: ({ active }) => (active ? "tomato" : "gray") }
+                }}
                 labels={({ datum }) => datum.y}
                 labelComponent={<VictoryTooltip />}
               />
@@ -166,7 +172,9 @@ class App extends React.Component {
             >
               <VictoryLine style={{ data: { stroke: "blue" } }} />
               <VictoryScatter
-                style={{ data: { fill: ({ active }) => (active ? "blue" : "gray") } }}
+                style={{
+                  data: { fill: ({ active }) => (active ? "blue" : "gray") }
+                }}
                 labels={({ datum }) => `y: ${datum.y}`}
                 labelComponent={<VictoryTooltip />}
               />
@@ -183,7 +191,9 @@ class App extends React.Component {
             >
               <VictoryLine style={{ data: { stroke: "black" } }} />
               <VictoryScatter
-                style={{ data: { fill: ({ active }) => (active ? "black" : "gray") } }}
+                style={{
+                  data: { fill: ({ active }) => (active ? "black" : "gray") }
+                }}
                 labels={({ datum }) => datum.y}
                 labelComponent={<VictoryTooltip />}
               />
@@ -302,13 +312,17 @@ class App extends React.Component {
                       {
                         childName: "bar-2",
                         mutation: () => {
-                          return { style: merge({}, props.style, { fill: "cyan" }) };
+                          return {
+                            style: merge({}, props.style, { fill: "cyan" })
+                          };
                         }
                       },
                       {
                         childName: "bar-3",
                         mutation: () => {
-                          return { style: merge({}, props.style, { fill: "blue" }) };
+                          return {
+                            style: merge({}, props.style, { fill: "blue" })
+                          };
                         }
                       }
                     ];
@@ -393,7 +407,10 @@ class App extends React.Component {
                       {
                         mutation: () => {
                           return {
-                            style: merge({}, props.style, { fill: "cyan", stroke: "cyan" })
+                            style: merge({}, props.style, {
+                              fill: "cyan",
+                              stroke: "cyan"
+                            })
                           };
                         }
                       }
@@ -427,7 +444,12 @@ class App extends React.Component {
                 name="area-1"
                 interpolation="cardinal"
                 style={{
-                  data: { fill: "tomato", stroke: "tomato", fillOpacity: 0.5, strokeWidth: 2 }
+                  data: {
+                    fill: "tomato",
+                    stroke: "tomato",
+                    fillOpacity: 0.5,
+                    strokeWidth: 2
+                  }
                 }}
                 data={[
                   { x: 45, y: 20 },
@@ -442,7 +464,12 @@ class App extends React.Component {
                 name="area-2"
                 interpolation="cardinal"
                 style={{
-                  data: { fill: "orange", stroke: "orange", fillOpacity: 0.5, strokeWidth: 2 }
+                  data: {
+                    fill: "orange",
+                    stroke: "orange",
+                    fillOpacity: 0.5,
+                    strokeWidth: 2
+                  }
                 }}
                 data={[
                   { x: 45, y: 20 },
@@ -457,7 +484,12 @@ class App extends React.Component {
                 name="area-3"
                 interpolation="cardinal"
                 style={{
-                  data: { fill: "gold", stroke: "gold", fillOpacity: 0.5, strokeWidth: 2 }
+                  data: {
+                    fill: "gold",
+                    stroke: "gold",
+                    fillOpacity: 0.5,
+                    strokeWidth: 2
+                  }
                 }}
                 data={[
                   { x: 45, y: 20 },
@@ -593,7 +625,9 @@ class App extends React.Component {
             />
             <VictoryBar
               alignment="start"
-              style={{ data: { fill: ({ datum }) => datum.fill, opacity: 0.5 } }}
+              style={{
+                data: { fill: ({ datum }) => datum.fill, opacity: 0.5 }
+              }}
               data={[
                 { x: 45, y: 20, label: 1, fill: "red" },
                 { x: 90, y: 30, label: 2, fill: "orange" },
@@ -619,7 +653,9 @@ class App extends React.Component {
           <VictoryChart polar theme={VictoryTheme.material} style={chartStyle}>
             <VictoryBar
               alignment="start"
-              style={{ data: { fill: ({ datum }) => datum.fill, opacity: 0.5 } }}
+              style={{
+                data: { fill: ({ datum }) => datum.fill, opacity: 0.5 }
+              }}
               data={[
                 { x: 15, y: 20, label: 1, fill: "red" },
                 { x: 25, y: 30, label: 2, fill: "orange" },
@@ -724,7 +760,13 @@ class App extends React.Component {
             />
             <VictoryPolarAxis
               labelPlacement="perpendicular"
-              tickFormat={["strength", "intelligence", "stealth", "luck", "charisma"]}
+              tickFormat={[
+                "strength",
+                "intelligence",
+                "stealth",
+                "luck",
+                "charisma"
+              ]}
             />
             <VictoryScatter
               style={{ data: { fill: "tomato" } }}
@@ -756,7 +798,9 @@ class App extends React.Component {
             startAngle={20}
             endAngle={380}
             domain={[0, 360]}
-            tickValues={[0, 20, 45, 65, 90, 120, 135, 180, 225, 250, 270, 300, 315]}
+            tickValues={[
+              0, 20, 45, 65, 90, 120, 135, 180, 225, 250, 270, 300, 315
+            ]}
           />
 
           <VictoryPolarAxis

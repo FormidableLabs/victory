@@ -23,11 +23,16 @@ export interface VictoryChartProps extends VictoryCommonProps {
   domain?: DomainPropType;
   endAngle?: number;
   eventKey?: StringOrNumberOrCallback;
-  events?: EventPropTypeInterface<string, string[] | number[] | string | number>[];
+  events?: EventPropTypeInterface<
+    string,
+    string[] | number[] | string | number
+  >[];
   innerRadius?: number;
   prependDefaultAxes?: boolean;
   startAngle?: number;
-  style?: Pick<VictoryStyleInterface, "parent"> & { background?: VictoryStyleObject };
+  style?: Pick<VictoryStyleInterface, "parent"> & {
+    background?: VictoryStyleObject;
+  };
 }
 
 export class VictoryChart extends React.Component<VictoryChartProps, any> {}

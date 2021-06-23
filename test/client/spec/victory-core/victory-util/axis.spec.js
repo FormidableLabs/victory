@@ -89,8 +89,12 @@ describe("helpers/axis", () => {
     it("returns the independent axis when called with 'x'", () => {
       const childComponents = [dependentAxis, independentAxis, bar];
       const componentResult = Axis.getAxisComponent(childComponents, "x");
-      expect(dependentAxis.type.getAxis).calledWith(dependentAxis.props).and.returned("y");
-      expect(independentAxis.type.getAxis).calledWith(independentAxis.props).and.returned("x");
+      expect(dependentAxis.type.getAxis)
+        .calledWith(dependentAxis.props)
+        .and.returned("y");
+      expect(independentAxis.type.getAxis)
+        .calledWith(independentAxis.props)
+        .and.returned("x");
       expect(componentResult).to.eql(independentAxis);
     });
   });

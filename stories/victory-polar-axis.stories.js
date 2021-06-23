@@ -125,8 +125,16 @@ export const Domain = () => {
   return (
     <div style={containerStyle}>
       <VictoryPolarAxis {...defaultAxisProps} domain={[-10, 10]} />
-      <VictoryPolarAxis {...defaultAxisProps} dependentAxis domain={[-10, 10]} />
-      <VictoryPolarAxis {...defaultAxisProps} tickValues={getValues(5)} domain={[-10, 10]} />
+      <VictoryPolarAxis
+        {...defaultAxisProps}
+        dependentAxis
+        domain={[-10, 10]}
+      />
+      <VictoryPolarAxis
+        {...defaultAxisProps}
+        tickValues={getValues(5)}
+        domain={[-10, 10]}
+      />
       <VictoryPolarAxis
         {...defaultAxisProps}
         dependentAxis
@@ -196,12 +204,22 @@ export const AxisValue = () => {
   return (
     <div style={containerStyle}>
       <VictoryChart polar {...defaultAxisProps}>
-        <VictoryPolarAxis dependentAxis axisValue={1.5} tickValues={getValues(3)} />
+        <VictoryPolarAxis
+          dependentAxis
+          axisValue={1.5}
+          tickValues={getValues(3)}
+        />
         <VictoryPolarAxis tickValues={getValues(5)} />
       </VictoryChart>
       <VictoryChart polar {...defaultAxisProps}>
-        <VictoryPolarAxis dependentAxis axisValue="three" tickValues={getValues(3)} />
-        <VictoryPolarAxis tickValues={["one", "two", "three", "four", "five"]} />
+        <VictoryPolarAxis
+          dependentAxis
+          axisValue="three"
+          tickValues={getValues(3)}
+        />
+        <VictoryPolarAxis
+          tickValues={["one", "two", "three", "four", "five"]}
+        />
       </VictoryChart>
     </div>
   );
@@ -214,8 +232,17 @@ export const StartAndEndAngle = () => {
       <VictoryPolarAxis {...defaultAxisProps} dependentAxis startAngle={45} />
       <VictoryPolarAxis {...defaultAxisProps} endAngle={90} />
       <VictoryPolarAxis {...defaultAxisProps} dependentAxis endAngle={90} />
-      <VictoryPolarAxis {...defaultAxisProps} startAngle={45} endAngle={360 + 45} />
-      <VictoryPolarAxis {...defaultAxisProps} dependentAxis startAngle={45} endAngle={360 + 45} />
+      <VictoryPolarAxis
+        {...defaultAxisProps}
+        startAngle={45}
+        endAngle={360 + 45}
+      />
+      <VictoryPolarAxis
+        {...defaultAxisProps}
+        dependentAxis
+        startAngle={45}
+        endAngle={360 + 45}
+      />
     </div>
   );
 };
@@ -296,14 +323,22 @@ export const Style = () => {
 export const Scale = () => {
   return (
     <div style={containerStyle}>
-      <VictoryPolarAxis {...defaultAxisProps} tickValues={getTimeValues(5)} scale="time" />
+      <VictoryPolarAxis
+        {...defaultAxisProps}
+        tickValues={getTimeValues(5)}
+        scale="time"
+      />
       <VictoryPolarAxis
         {...defaultAxisProps}
         dependentAxis
         tickValues={getTimeValues(5)}
         scale="time"
       />
-      <VictoryPolarAxis {...defaultAxisProps} tickValues={[1, 5, 10, 50, 500, 10000]} scale="log" />
+      <VictoryPolarAxis
+        {...defaultAxisProps}
+        tickValues={[1, 5, 10, 50, 500, 10000]}
+        scale="log"
+      />
       <VictoryPolarAxis
         {...defaultAxisProps}
         dependentAxis

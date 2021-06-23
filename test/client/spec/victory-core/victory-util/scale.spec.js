@@ -92,7 +92,11 @@ describe("victory-util/scale", () => {
     });
 
     it("returns 'time' when no scale is set, and data contains dates", () => {
-      const props = { x: "x", y: "y", data: [{ x: new Date("2016-01-13"), y: 1 }] };
+      const props = {
+        x: "x",
+        y: "y",
+        data: [{ x: new Date("2016-01-13"), y: 1 }]
+      };
       const scaleType = Scale.getScaleType(props, "x");
       expect(scaleType).to.equal("time");
     });

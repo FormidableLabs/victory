@@ -14,7 +14,11 @@ import { VictoryScatter } from "Packages/victory-scatter/src/index";
 import { VictoryZoomContainer } from "Packages/victory-zoom-container/src/index";
 import { VictoryTooltip } from "Packages/victory-tooltip/src/index";
 import { VictoryLegend } from "Packages/victory-legend/src/index";
-import { VictoryTheme, VictoryClipContainer, VictoryPortal } from "Packages/victory-core/src/index";
+import {
+  VictoryTheme,
+  VictoryClipContainer,
+  VictoryPortal
+} from "Packages/victory-core/src/index";
 
 const allData = range(0, 10, 0.001).map((x) => ({
   x,
@@ -45,7 +49,9 @@ class CustomChart extends React.Component {
   getData() {
     const { zoomedXDomain } = this.state;
     const { data, maxPoints } = this.props;
-    const filtered = data.filter((d) => d.x >= zoomedXDomain[0] && d.x <= zoomedXDomain[1]);
+    const filtered = data.filter(
+      (d) => d.x >= zoomedXDomain[0] && d.x <= zoomedXDomain[1]
+    );
 
     if (filtered.length > maxPoints) {
       const k = Math.ceil(filtered.length / maxPoints);
@@ -149,7 +155,11 @@ export default class App extends React.Component {
     };
   }
   render() {
-    const parentStyle = { border: "1px solid #ccc", margin: "2%", maxWidth: "40%" };
+    const parentStyle = {
+      border: "1px solid #ccc",
+      margin: "2%",
+      maxWidth: "40%"
+    };
     const containerStyle = {
       display: "flex",
       flexDirection: "row",
@@ -160,14 +170,21 @@ export default class App extends React.Component {
 
     return (
       <div className="demo" style={containerStyle}>
-        <CustomChart style={{ parent: parentStyle }} data={allData} maxPoints={120} />
+        <CustomChart
+          style={{ parent: parentStyle }}
+          data={allData}
+          maxPoints={120}
+        />
 
         <VictoryGroup
           containerComponent={<VictoryZoomContainer zoomDimension="y" />}
           style={{ parent: parentStyle }}
           data={this.state.transitionData}
         >
-          <VictoryLine animate={{ duration: 1500 }} style={{ data: this.state.style }} />
+          <VictoryLine
+            animate={{ duration: 1500 }}
+            style={{ data: this.state.style }}
+          />
         </VictoryGroup>
 
         <VictoryChart
@@ -252,7 +269,10 @@ export default class App extends React.Component {
           />
         </VictoryChart>
 
-        <VictoryChart style={{ parent: parentStyle }} containerComponent={<VictoryZoomContainer />}>
+        <VictoryChart
+          style={{ parent: parentStyle }}
+          containerComponent={<VictoryZoomContainer />}
+        >
           <VictoryLine
             style={{
               parent: parentStyle,
@@ -266,7 +286,9 @@ export default class App extends React.Component {
                     return [
                       {
                         mutation: (props) => {
-                          return { style: merge({}, props.style, { stroke: "orange" }) };
+                          return {
+                            style: merge({}, props.style, { stroke: "orange" })
+                          };
                         }
                       },
                       {
@@ -285,26 +307,42 @@ export default class App extends React.Component {
           />
         </VictoryChart>
 
-        <VictoryChart style={{ parent: parentStyle }} containerComponent={<VictoryZoomContainer />}>
+        <VictoryChart
+          style={{ parent: parentStyle }}
+          containerComponent={<VictoryZoomContainer />}
+        >
           <VictoryArea
-            style={{ parent: parentStyle, data: { stroke: "#333", fill: "#888", opacity: 0.4 } }}
+            style={{
+              parent: parentStyle,
+              data: { stroke: "#333", fill: "#888", opacity: 0.4 }
+            }}
             data={this.state.data}
             x="a"
             y="b"
             interpolation="stepBefore"
           />
           <VictoryAxis />
-          <VictoryLine data={this.state.data} x="a" y="b" interpolation="stepBefore" />
+          <VictoryLine
+            data={this.state.data}
+            x="a"
+            y="b"
+            interpolation="stepBefore"
+          />
           <VictoryAxis dependentAxis />
         </VictoryChart>
 
-        <button onClick={() => this.setState({ zoomDomain: this.getZoomDomain() })}>
+        <button
+          onClick={() => this.setState({ zoomDomain: this.getZoomDomain() })}
+        >
           random y domain
         </button>
 
         <VictoryChart
           containerComponent={
-            <VictoryZoomContainer zoomDimension="x" zoomDomain={this.state.zoomDomain} />
+            <VictoryZoomContainer
+              zoomDimension="x"
+              zoomDomain={this.state.zoomDomain}
+            />
           }
           animate={{ duration: 500 }}
           style={{ parent: parentStyle }}
@@ -334,7 +372,9 @@ export default class App extends React.Component {
                       childName: "area-2",
                       target: "data",
                       mutation: (props) => {
-                        return { style: merge({}, props.style, { fill: "gold" }) };
+                        return {
+                          style: merge({}, props.style, { fill: "gold" })
+                        };
                       }
                     },
                     {

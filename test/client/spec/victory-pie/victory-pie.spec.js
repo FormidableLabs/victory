@@ -67,7 +67,9 @@ describe("components/victory-pie", () => {
   describe("rendering data", () => {
     it("renders dataComponents for {x, y} shaped data (default)", () => {
       const data = range(5).map((i) => ({ x: i, y: i }));
-      const wrapper = shallow(<VictoryPie data={data} dataComponent={<PizzaSlice />} />);
+      const wrapper = shallow(
+        <VictoryPie data={data} dataComponent={<PizzaSlice />} />
+      );
       const slices = wrapper.find(PizzaSlice);
       expect(slices.length).to.equal(5);
     });
@@ -88,7 +90,9 @@ describe("components/victory-pie", () => {
 
     it("renders points for deeply-nested data", () => {
       const data = range(7).map((i) => ({ a: { b: [{ x: i, y: i }] } }));
-      const wrapper = shallow(<VictoryPie data={data} x="a.b[0].x" y="a.b[0].y" />);
+      const wrapper = shallow(
+        <VictoryPie data={data} x="a.b[0].x" y="a.b[0].y" />
+      );
       const slices = wrapper.find(Slice);
       expect(slices.length).to.equal(7);
     });
@@ -127,7 +131,9 @@ describe("components/victory-pie", () => {
     it("renders data values sorted by sortKey prop and sortOrder", () => {
       const data = range(9).map((i) => ({ x: i, y: i }));
 
-      const wrapper = shallow(<VictoryPie data={data} sortKey={"x"} sortOrder={"descending"} />);
+      const wrapper = shallow(
+        <VictoryPie data={data} sortKey={"x"} sortOrder={"descending"} />
+      );
       const xValues = wrapper.find(Slice).map((slice) => {
         return slice.prop("datum")._x;
       });
@@ -153,7 +159,8 @@ describe("components/victory-pie", () => {
 
         const firstSlice = wrapper.find(Slice).first();
         const coordinates = SvgTestHelper.getSliceArcStart(firstSlice);
-        const renderedAngle = SvgTestHelper.getSvgCoordinatesAngleFromCartesianYAxis(coordinates);
+        const renderedAngle =
+          SvgTestHelper.getSvgCoordinatesAngleFromCartesianYAxis(coordinates);
 
         // There is a small degree of inprecision due to how D3 renders the paths
         expect(renderedAngle).to.be.closeTo(angle, 0.0001);
@@ -174,7 +181,9 @@ describe("components/victory-pie", () => {
 
       const slices = wrapper.find(Slice);
       slices.forEach((slice) => {
-        expect(SvgTestHelper.getInnerRadiusOfCircularOrAnnularSlice(slice)).to.eql(70);
+        expect(
+          SvgTestHelper.getInnerRadiusOfCircularOrAnnularSlice(slice)
+        ).to.eql(70);
       });
     });
   });
@@ -189,8 +198,12 @@ describe("components/victory-pie", () => {
       const arcStart = SvgTestHelper.getSliceArcStart(firstSlice);
       const arcEnd = SvgTestHelper.getSliceArcEnd(lastSlice);
 
-      expect(SvgTestHelper.getSvgCoordinatesAngleFromCartesianYAxis(arcStart)).to.eql(270);
-      expect(SvgTestHelper.getSvgCoordinatesAngleFromCartesianYAxis(arcEnd)).to.eql(90);
+      expect(
+        SvgTestHelper.getSvgCoordinatesAngleFromCartesianYAxis(arcStart)
+      ).to.eql(270);
+      expect(
+        SvgTestHelper.getSvgCoordinatesAngleFromCartesianYAxis(arcEnd)
+      ).to.eql(90);
     });
   });
 
@@ -217,7 +230,9 @@ describe("components/victory-pie", () => {
       it("renders each slice with the next color in the array, reiterating through colors as necessary", () => {
         const data = range(5);
         const colorScale = ["#fffff", "#eeeee", "#ddddd"];
-        const wrapper = shallow(<VictoryPie data={data} colorScale={colorScale} />);
+        const wrapper = shallow(
+          <VictoryPie data={data} colorScale={colorScale} />
+        );
 
         const slices = wrapper.find(Slice);
         expect(slices.length).to.equal(5);
@@ -245,7 +260,9 @@ describe("components/victory-pie", () => {
           VALID_VICTORY_COLOR_SCALE_NAMES.map((colorScaleName) => {
             const colorScale = Style.getColorScale(colorScaleName);
             const data = range(colorScale.length + 1);
-            const wrapper = shallow(<VictoryPie colorScale={colorScale} data={data} />);
+            const wrapper = shallow(
+              <VictoryPie colorScale={colorScale} data={data} />
+            );
 
             wrapper.find(Slice).map((slice, i) => {
               const expectedColor = colorScale[i % colorScale.length];
@@ -263,7 +280,9 @@ describe("components/victory-pie", () => {
             const grayscale = Style.getColorScale("grayscale");
             const data = range(grayscale.length);
 
-            const wrapper = shallow(<VictoryPie colorScale={invalidColorScale} data={data} />);
+            const wrapper = shallow(
+              <VictoryPie colorScale={invalidColorScale} data={data} />
+            );
 
             const slices = wrapper.find(Slice);
             slices.map((slice, i) => {
@@ -293,7 +312,12 @@ describe("components/victory-pie", () => {
       svg.simulate("click");
       expect(clickHandler).called;
       // the first argument is the standard evt object
-      expect(clickHandler.args[0][1]).to.include.keys("slices", "width", "height", "style");
+      expect(clickHandler.args[0][1]).to.include.keys(
+        "slices",
+        "width",
+        "height",
+        "style"
+      );
     });
 
     it("attaches an event to data", () => {
@@ -356,7 +380,10 @@ describe("components/victory-pie", () => {
         <VictoryPie
           data={data}
           dataComponent={
-            <Slice ariaLabel={({ datum }) => `${datum.x}`} tabIndex={({ index }) => index + 5} />
+            <Slice
+              ariaLabel={({ datum }) => `${datum.x}`}
+              tabIndex={({ index }) => index + 5}
+            />
           }
         />
       );

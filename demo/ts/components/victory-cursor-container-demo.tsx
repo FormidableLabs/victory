@@ -19,7 +19,8 @@ interface VictoryCursorContainerStateInterface {
   bigData: CoordinatesPropType[];
 }
 
-const makeData = () => range(1500).map((x) => ({ x, y: x + 10 * Math.random() }));
+const makeData = () =>
+  range(1500).map((x) => ({ x, y: x + 10 * Math.random() }));
 
 class App extends React.Component<any, VictoryCursorContainerStateInterface> {
   defaultCursorValue?: CoordinatesPropType = undefined;
@@ -65,7 +66,9 @@ class App extends React.Component<any, VictoryCursorContainerStateInterface> {
       justifyContent: "center"
     };
 
-    const chartStyle = { parent: { border: "1px solid #ccc", margin: "2%", maxWidth: "40%" } };
+    const chartStyle = {
+      parent: { border: "1px solid #ccc", margin: "2%", maxWidth: "40%" }
+    };
 
     const cursorLabel = (datum: CoordinatesPropType) => round(datum.x, 2);
 
@@ -77,7 +80,9 @@ class App extends React.Component<any, VictoryCursorContainerStateInterface> {
             theme={VictoryTheme.material}
             height={400}
             padding={{ top: 100, bottom: 40, left: 50, right: 50 }}
-            containerComponent={<VictoryCursorContainer cursorLabel={cursorLabel} />}
+            containerComponent={
+              <VictoryCursorContainer cursorLabel={cursorLabel} />
+            }
           >
             <VictoryLegend
               x={90}
@@ -250,7 +255,10 @@ class App extends React.Component<any, VictoryCursorContainerStateInterface> {
             </VictoryGroup>
           </VictoryChart>
 
-          <VictoryStack style={chartStyle} containerComponent={<VictoryCursorContainer />}>
+          <VictoryStack
+            style={chartStyle}
+            containerComponent={<VictoryCursorContainer />}
+          >
             <VictoryBar
               style={{
                 data: {

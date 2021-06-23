@@ -1,5 +1,12 @@
 import { assign, isNil } from "lodash";
-import { Helpers, LabelHelpers, Data, Domain, Scale, Collection } from "victory-core";
+import {
+  Helpers,
+  LabelHelpers,
+  Data,
+  Domain,
+  Scale,
+  Collection
+} from "victory-core";
 
 const getDataWithBaseline = (props, scale) => {
   let data = Data.getData(props);
@@ -7,7 +14,8 @@ const getDataWithBaseline = (props, scale) => {
     data = [];
   }
   const getDefaultMin = (axis) => {
-    const defaultZero = Scale.getType(scale[axis]) === "log" ? 1 / Number.MAX_SAFE_INTEGER : 0;
+    const defaultZero =
+      Scale.getType(scale[axis]) === "log" ? 1 / Number.MAX_SAFE_INTEGER : 0;
     const domain = scale[axis].domain();
     const minY = Collection.getMinValue(domain);
     const maxY = Collection.getMaxValue(domain);
@@ -49,7 +57,9 @@ const getCalculatedValues = (props) => {
       .domain(domain.y)
       .range(props.horizontal ? range.x : range.y)
   };
-  const origin = polar ? props.origin || Helpers.getPolarOrigin(props) : undefined;
+  const origin = polar
+    ? props.origin || Helpers.getPolarOrigin(props)
+    : undefined;
   const data = getDataWithBaseline(props, scale);
   return { style, data, scale, domain, origin };
 };
@@ -110,7 +120,10 @@ const getBaseProps = (props, fallbackProps) => {
   };
   return data.reduce((childProps, datum, index) => {
     const text = LabelHelpers.getText(props, datum, index);
-    if ((text !== undefined && text !== null) || (labels && (events || sharedEvents))) {
+    if (
+      (text !== undefined && text !== null) ||
+      (labels && (events || sharedEvents))
+    ) {
       const eventKey = !isNil(datum.eventKey) ? datum.eventKey : index;
       childProps[eventKey] = { labels: LabelHelpers.getProps(props, index) };
     }

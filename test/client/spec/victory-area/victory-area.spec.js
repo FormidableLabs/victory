@@ -60,7 +60,9 @@ describe("components/victory-area", () => {
           { x: 4, y: 1, y0: 0 }
         ]
       };
-      const stringWrapper = mount(<VictoryArea {...props} interpolation="catmullRom" />);
+      const stringWrapper = mount(
+        <VictoryArea {...props} interpolation="catmullRom" />
+      );
       const stringArea = stringWrapper.find(Area);
       const stringPath = stringArea.find("path").prop("d");
       SvgTestHelper.expectCorrectD3Path(
@@ -69,7 +71,9 @@ describe("components/victory-area", () => {
         "area"
       );
 
-      const functionWrapper = mount(<VictoryArea {...props} interpolation={curveCatmullRom} />);
+      const functionWrapper = mount(
+        <VictoryArea {...props} interpolation={curveCatmullRom} />
+      );
       const functionArea = functionWrapper.find(Area);
       const functionPath = functionArea.find("path").prop("d");
       SvgTestHelper.expectCorrectD3Path(
@@ -138,7 +142,13 @@ describe("components/victory-area", () => {
       svg.simulate("click");
       expect(clickHandler).called;
       // the first argument is the standard evt object
-      expect(clickHandler.args[0][1]).to.include.keys("data", "scale", "width", "height", "style");
+      expect(clickHandler.args[0][1]).to.include.keys(
+        "data",
+        "scale",
+        "width",
+        "height",
+        "style"
+      );
     });
 
     it("attaches an event to data", () => {
@@ -212,14 +222,19 @@ describe("components/victory-area", () => {
         <VictoryArea
           data={ariaTestData}
           dataComponent={
-            <Area ariaLabel={({ data }) => `data point 1's x value is ${data[0].x}`} tabIndex={4} />
+            <Area
+              ariaLabel={({ data }) => `data point 1's x value is ${data[0].x}`}
+              tabIndex={4}
+            />
           }
         />
       );
 
       expect(wrapper.find("path")).to.have.length(1);
       wrapper.find("path").forEach((p, i) => {
-        expect(p.prop("aria-label")).to.equal(`data point 1's x value is ${ariaTestData[i].x}`);
+        expect(p.prop("aria-label")).to.equal(
+          `data point 1's x value is ${ariaTestData[i].x}`
+        );
         expect(p.prop("tabIndex")).to.equal(4);
       });
     });

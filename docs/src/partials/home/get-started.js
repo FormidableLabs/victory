@@ -1,7 +1,11 @@
 import React from "react";
 import styled, { css } from "styled-components";
 import createPath from "../../helpers/path-helpers";
-import { LinkButton, LandingSectionWrapper, LandingSectionContent } from "./styles";
+import {
+  LinkButton,
+  LandingSectionWrapper,
+  LandingSectionContent
+} from "./styles";
 import importedTheme from "../../styles/theme";
 import PropTypes from "prop-types";
 const stripeStyle = css`
@@ -34,7 +38,10 @@ const GetStarted = ({ description, link }) => {
       <StyledLandingSectionContent color={importedTheme.color.white}>
         <SectionHeading>Get Started</SectionHeading>
         <SectionDescription>{description}</SectionDescription>
-        <LinkButton to={createPath(link.location)} color={importedTheme.color.darkBrown}>
+        <LinkButton
+          to={createPath(link.location)}
+          color={importedTheme.color.darkBrown}
+        >
           {link.text}
         </LinkButton>
       </StyledLandingSectionContent>

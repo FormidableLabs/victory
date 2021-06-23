@@ -55,29 +55,41 @@ export const brushContainerMixin = (base) =>
           target: "parent",
           eventHandlers: {
             onMouseDown: (evt, targetProps) => {
-              return props.disable ? {} : BrushHelpers.onMouseDown(evt, targetProps);
+              return props.disable
+                ? {}
+                : BrushHelpers.onMouseDown(evt, targetProps);
             },
             onTouchStart: (evt, targetProps) => {
-              return props.disable ? {} : BrushHelpers.onMouseDown(evt, targetProps);
+              return props.disable
+                ? {}
+                : BrushHelpers.onMouseDown(evt, targetProps);
             },
             onGlobalMouseMove: (evt, targetProps) => {
-              return props.disable || (!targetProps.isPanning && !targetProps.isSelecting)
+              return props.disable ||
+                (!targetProps.isPanning && !targetProps.isSelecting)
                 ? {}
                 : BrushHelpers.onGlobalMouseMove(evt, targetProps);
             },
             onGlobalTouchMove: (evt, targetProps) => {
-              return props.disable || (!targetProps.isPanning && !targetProps.isSelecting)
+              return props.disable ||
+                (!targetProps.isPanning && !targetProps.isSelecting)
                 ? {}
                 : BrushHelpers.onGlobalMouseMove(evt, targetProps);
             },
             onGlobalMouseUp: (evt, targetProps) => {
-              return props.disable ? {} : BrushHelpers.onGlobalMouseUp(evt, targetProps);
+              return props.disable
+                ? {}
+                : BrushHelpers.onGlobalMouseUp(evt, targetProps);
             },
             onGlobalTouchEnd: (evt, targetProps) => {
-              return props.disable ? {} : BrushHelpers.onGlobalMouseUp(evt, targetProps);
+              return props.disable
+                ? {}
+                : BrushHelpers.onGlobalMouseUp(evt, targetProps);
             },
             onGlobalTouchCancel: (evt, targetProps) => {
-              return props.disable ? {} : BrushHelpers.onGlobalMouseUp(evt, targetProps);
+              return props.disable
+                ? {}
+                : BrushHelpers.onGlobalMouseUp(evt, targetProps);
             }
           }
         }
@@ -87,7 +99,8 @@ export const brushContainerMixin = (base) =>
     getSelectBox(props, coordinates) {
       const { x, y } = coordinates;
       const { brushStyle, brushComponent, name } = props;
-      const brushComponentStyle = brushComponent.props && brushComponent.props.style;
+      const brushComponentStyle =
+        brushComponent.props && brushComponent.props.style;
       const cursor = !props.allowDrag && !props.allowResize ? "auto" : "move";
       return x[0] !== x[1] && y[0] !== y[1]
         ? React.cloneElement(brushComponent, {
@@ -121,15 +134,29 @@ export const brushContainerMixin = (base) =>
       const { handleWidth, handleStyle, handleComponent, name } = props;
       const domainBox = BrushHelpers.getDomainBox(props, domain);
       const { x1, x2, y1, y2 } = domainBox;
-      const { top, bottom, left, right } = BrushHelpers.getHandles(props, domainBox);
+      const { top, bottom, left, right } = BrushHelpers.getHandles(
+        props,
+        domainBox
+      );
       const width = Math.abs(x2 - x1) || 1;
       const height = Math.abs(y2 - y1) || 1;
-      const handleComponentStyle = (handleComponent.props && handleComponent.props.style) || {};
+      const handleComponentStyle =
+        (handleComponent.props && handleComponent.props.style) || {};
       const style = defaults({}, handleComponentStyle, handleStyle);
 
       const cursors = this.getCursorPointers(props);
-      const yProps = { style, width, height: handleWidth, cursor: cursors.yProps };
-      const xProps = { style, width: handleWidth, height, cursor: cursors.xProps };
+      const yProps = {
+        style,
+        width,
+        height: handleWidth,
+        cursor: cursors.yProps
+      };
+      const xProps = {
+        style,
+        width: handleWidth,
+        height,
+        cursor: cursors.xProps
+      };
 
       const handleProps = {
         top: top && assign({ x: top.x1, y: top.y1 }, yProps),
@@ -137,17 +164,20 @@ export const brushContainerMixin = (base) =>
         left: left && assign({ y: left.y1, x: left.x1 }, xProps),
         right: right && assign({ y: right.y1, x: right.x1 }, xProps)
       };
-      const handles = ["top", "bottom", "left", "right"].reduce((memo, curr) => {
-        memo = handleProps[curr]
-          ? memo.concat(
-              React.cloneElement(
-                handleComponent,
-                assign({ key: `${name}-handle-${curr}` }, handleProps[curr])
+      const handles = ["top", "bottom", "left", "right"].reduce(
+        (memo, curr) => {
+          memo = handleProps[curr]
+            ? memo.concat(
+                React.cloneElement(
+                  handleComponent,
+                  assign({ key: `${name}-handle-${curr}` }, handleProps[curr])
+                )
               )
-            )
-          : memo;
-        return memo;
-      }, []);
+            : memo;
+          return memo;
+        },
+        []
+      );
       return handles.length ? handles : null;
     }
 
@@ -164,7 +194,10 @@ export const brushContainerMixin = (base) =>
 
     // Overrides method in VictoryContainer
     getChildren(props) {
-      return [...React.Children.toArray(props.children), ...this.getRect(props)];
+      return [
+        ...React.Children.toArray(props.children),
+        ...this.getRect(props)
+      ];
     }
   };
 

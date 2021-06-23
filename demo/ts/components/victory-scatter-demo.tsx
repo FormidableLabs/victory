@@ -45,7 +45,15 @@ const getData = () => {
     "tomato",
     "greenyellow"
   ];
-  const symbols = ["circle", "star", "square", "triangleUp", "triangleDown", "diamond", "plus"];
+  const symbols = [
+    "circle",
+    "star",
+    "square",
+    "triangleUp",
+    "triangleDown",
+    "diamond",
+    "plus"
+  ];
   // symbol: symbols[scaledIndex],
   return range(100).map((index) => {
     const scaledIndex = Math.floor(index % 7);
@@ -106,11 +114,16 @@ class CatPoint extends React.Component<any, CatPointInterface> {
   };
 
   renderSymbol(symbol: ScatterSymbolType): string {
-    const codePointHigh = (point: number) => Math.floor((point - 0x10000) / 0x400) + 0xd800;
-    const codePointLow = (point: number) => ((point - 0x10000) % 0x400) + 0xdc00;
+    const codePointHigh = (point: number) =>
+      Math.floor((point - 0x10000) / 0x400) + 0xd800;
+    const codePointLow = (point: number) =>
+      ((point - 0x10000) % 0x400) + 0xdc00;
     const symbolCode = CatPoint.symbolMap[symbol];
 
-    return String.fromCharCode(codePointHigh(symbolCode), codePointLow(symbolCode));
+    return String.fromCharCode(
+      codePointHigh(symbolCode),
+      codePointLow(symbolCode)
+    );
   }
 
   render() {
@@ -124,7 +137,10 @@ class CatPoint extends React.Component<any, CatPointInterface> {
   }
 }
 
-export default class VictoryScatterDemo extends React.Component<any, VictoryScatterDemoState> {
+export default class VictoryScatterDemo extends React.Component<
+  any,
+  VictoryScatterDemoState
+> {
   setStateInterval?: number = undefined;
   constructor(props: any) {
     super(props);
@@ -265,7 +281,9 @@ export default class VictoryScatterDemo extends React.Component<any, VictoryScat
           style={style}
           theme={VictoryTheme.material}
           data={range(0, 200).map((i) => {
-            return { a: { b: [{ y: i * Math.sin(i * 0.3) }], x: Math.cos(i * 0.3) } };
+            return {
+              a: { b: [{ y: i * Math.sin(i * 0.3) }], x: Math.cos(i * 0.3) }
+            };
           })}
           x="a.x"
           y="a.b[0]y"

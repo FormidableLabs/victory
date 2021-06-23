@@ -56,7 +56,10 @@ function setYamlToFile(subHeadingRange = subHeadingRangeDefaults) {
   return transformer;
 }
 
-const renderer = remark().use(frontmatter, ["yaml", "toml"]).use(setYamlToFile).use(slug);
+const renderer = remark()
+  .use(frontmatter, ["yaml", "toml"])
+  .use(setYamlToFile)
+  .use(slug);
 
 /* eslint-disable max-params */
 const getMdFiles = async (mdPath, mutations = [], sort = defaultSort) => {

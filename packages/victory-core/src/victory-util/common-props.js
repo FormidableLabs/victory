@@ -17,7 +17,10 @@ const dataProps = {
   samples: CustomPropTypes.nonNegative,
   sortKey: PropTypes.oneOfType([
     PropTypes.func,
-    CustomPropTypes.allOfType([CustomPropTypes.integer, CustomPropTypes.nonNegative]),
+    CustomPropTypes.allOfType([
+      CustomPropTypes.integer,
+      CustomPropTypes.nonNegative
+    ]),
     PropTypes.string,
     PropTypes.arrayOf(PropTypes.string)
   ]),
@@ -29,19 +32,28 @@ const dataProps = {
   }),
   x: PropTypes.oneOfType([
     PropTypes.func,
-    CustomPropTypes.allOfType([CustomPropTypes.integer, CustomPropTypes.nonNegative]),
+    CustomPropTypes.allOfType([
+      CustomPropTypes.integer,
+      CustomPropTypes.nonNegative
+    ]),
     PropTypes.string,
     PropTypes.arrayOf(PropTypes.string)
   ]),
   y: PropTypes.oneOfType([
     PropTypes.func,
-    CustomPropTypes.allOfType([CustomPropTypes.integer, CustomPropTypes.nonNegative]),
+    CustomPropTypes.allOfType([
+      CustomPropTypes.integer,
+      CustomPropTypes.nonNegative
+    ]),
     PropTypes.string,
     PropTypes.arrayOf(PropTypes.string)
   ]),
   y0: PropTypes.oneOfType([
     PropTypes.func,
-    CustomPropTypes.allOfType([CustomPropTypes.integer, CustomPropTypes.nonNegative]),
+    CustomPropTypes.allOfType([
+      CustomPropTypes.integer,
+      CustomPropTypes.nonNegative
+    ]),
     PropTypes.string,
     PropTypes.arrayOf(PropTypes.string)
   ])
@@ -72,15 +84,24 @@ const baseProps = {
   ]),
   domainPadding: PropTypes.oneOfType([
     PropTypes.shape({
-      x: PropTypes.oneOfType([PropTypes.number, PropTypes.arrayOf(PropTypes.number)]),
-      y: PropTypes.oneOfType([PropTypes.number, PropTypes.arrayOf(PropTypes.number)])
+      x: PropTypes.oneOfType([
+        PropTypes.number,
+        PropTypes.arrayOf(PropTypes.number)
+      ]),
+      y: PropTypes.oneOfType([
+        PropTypes.number,
+        PropTypes.arrayOf(PropTypes.number)
+      ])
     }),
     PropTypes.number,
     PropTypes.arrayOf(PropTypes.number)
   ]),
   eventKey: PropTypes.oneOfType([
     PropTypes.func,
-    CustomPropTypes.allOfType([CustomPropTypes.integer, CustomPropTypes.nonNegative]),
+    CustomPropTypes.allOfType([
+      CustomPropTypes.integer,
+      CustomPropTypes.nonNegative
+    ]),
     PropTypes.string
   ]),
   events: PropTypes.arrayOf(
@@ -88,7 +109,10 @@ const baseProps = {
       target: PropTypes.oneOf(["data", "labels", "parent"]),
       eventKey: PropTypes.oneOfType([
         PropTypes.array,
-        CustomPropTypes.allOfType([CustomPropTypes.integer, CustomPropTypes.nonNegative]),
+        CustomPropTypes.allOfType([
+          CustomPropTypes.integer,
+          CustomPropTypes.nonNegative
+        ]),
         PropTypes.string
       ]),
       eventHandlers: PropTypes.object
@@ -100,7 +124,10 @@ const baseProps = {
       childName: PropTypes.oneOfType([PropTypes.string, PropTypes.array]),
       eventKey: PropTypes.oneOfType([
         PropTypes.array,
-        CustomPropTypes.allOfType([CustomPropTypes.integer, CustomPropTypes.nonNegative]),
+        CustomPropTypes.allOfType([
+          CustomPropTypes.integer,
+          CustomPropTypes.nonNegative
+        ]),
         PropTypes.string
       ]),
       mutation: PropTypes.function,

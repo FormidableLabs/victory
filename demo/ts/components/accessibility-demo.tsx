@@ -64,7 +64,10 @@ const chartContainerStyle: React.CSSProperties = {
   padding: "25px"
 };
 
-export const assignIndexValue = (index: number | string, value: number): number => {
+export const assignIndexValue = (
+  index: number | string,
+  value: number
+): number => {
   const determineValidNumber = Number(index);
   return isNumber(determineValidNumber) ? determineValidNumber + value : 1;
 };
@@ -78,7 +81,10 @@ export default class VictoryAccessibilityDemo extends React.Component<any> {
         </div>
         <div className="demo" style={containerStyle}>
           {/**BAR */}
-          <div style={chartContainerStyle} data-testid="bar-accessibility-chart">
+          <div
+            style={chartContainerStyle}
+            data-testid="bar-accessibility-chart"
+          >
             <h3 style={chartHeadingStyle}>Bar chart</h3>
             <VictoryChart domainPadding={{ x: 40, y: 40 }}>
               <VictoryBar
@@ -122,19 +128,25 @@ export default class VictoryAccessibilityDemo extends React.Component<any> {
                 }
                 q3Component={
                   <Border
-                    ariaLabel={({ datum }) => `${datum.x} q3 value is ${datum._q3}`}
+                    ariaLabel={({ datum }) =>
+                      `${datum.x} q3 value is ${datum._q3}`
+                    }
                     tabIndex={({ index }) => assignIndexValue(index, 6.1)}
                   />
                 }
                 medianComponent={
                   <LineSegment
-                    ariaLabel={({ datum }) => `${datum.x} median value is ${datum._median}`}
+                    ariaLabel={({ datum }) =>
+                      `${datum.x} median value is ${datum._median}`
+                    }
                     tabIndex={({ index }) => assignIndexValue(index, 5.1)}
                   />
                 }
                 q1Component={
                   <Border
-                    ariaLabel={({ datum }) => `${datum.x} q1 value is ${datum._q1}`}
+                    ariaLabel={({ datum }) =>
+                      `${datum.x} q1 value is ${datum._q1}`
+                    }
                     tabIndex={({ index }) => assignIndexValue(index, 6.2)}
                   />
                 }
@@ -167,7 +179,9 @@ export default class VictoryAccessibilityDemo extends React.Component<any> {
                   style={{ data: { fill: "#c43a31" } }}
                   dataComponent={
                     <Area
-                      ariaLabel={({ data }) => `area chart stack ${data[0]._stack}`}
+                      ariaLabel={({ data }) =>
+                        `area chart stack ${data[0]._stack}`
+                      }
                       tabIndex={20}
                     />
                   }
@@ -177,7 +191,9 @@ export default class VictoryAccessibilityDemo extends React.Component<any> {
                   data={accessibilityAreaData.b}
                   dataComponent={
                     <Area
-                      ariaLabel={({ data }) => `area chart stack ${data[0]._stack}`}
+                      ariaLabel={({ data }) =>
+                        `area chart stack ${data[0]._stack}`
+                      }
                       tabIndex={20.1}
                     />
                   }
@@ -187,7 +203,9 @@ export default class VictoryAccessibilityDemo extends React.Component<any> {
                   style={{ data: { fill: "#c43a31", opacity: 0.8 } }}
                   dataComponent={
                     <Area
-                      ariaLabel={({ data }) => `area chart stack ${data[0]._stack}`}
+                      ariaLabel={({ data }) =>
+                        `area chart stack ${data[0]._stack}`
+                      }
                       tabIndex={20.2}
                     />
                   }
@@ -197,7 +215,9 @@ export default class VictoryAccessibilityDemo extends React.Component<any> {
                   style={{ data: { fill: "#c43a31", opacity: 0.6 } }}
                   dataComponent={
                     <Area
-                      ariaLabel={({ data }) => `area chart stack ${data[0]._stack}`}
+                      ariaLabel={({ data }) =>
+                        `area chart stack ${data[0]._stack}`
+                      }
                       tabIndex={20.3}
                     />
                   }
@@ -224,9 +244,9 @@ export default class VictoryAccessibilityDemo extends React.Component<any> {
                     ariaLabel={({ data }) =>
                       data.map(
                         (dataPoint: any, i: number) =>
-                          `data point ${i + 1} x value is ${dataPoint.x} and y value is ${
-                            dataPoint.y
-                          }`
+                          `data point ${i + 1} x value is ${
+                            dataPoint.x
+                          } and y value is ${dataPoint.y}`
                       )
                     }
                   />
@@ -264,7 +284,9 @@ export default class VictoryAccessibilityDemo extends React.Component<any> {
                 data={accessibilityScatterData}
                 dataComponent={
                   <Point
-                    ariaLabel={({ datum }) => `scatter point x: ${datum.x}, y:${datum.y}`}
+                    ariaLabel={({ datum }) =>
+                      `scatter point x: ${datum.x}, y:${datum.y}`
+                    }
                     tabIndex={({ index }) => assignIndexValue(index, 28)}
                   />
                 }
@@ -281,7 +303,9 @@ export default class VictoryAccessibilityDemo extends React.Component<any> {
                 data={accessibilityVoronoiData}
                 dataComponent={
                   <Voronoi
-                    ariaLabel={({ datum }) => `voronoi chart, x ${datum.x}, y ${datum.y}`}
+                    ariaLabel={({ datum }) =>
+                      `voronoi chart, x ${datum.x}, y ${datum.y}`
+                    }
                     tabIndex={({ index }) => assignIndexValue(index, 35)}
                   />
                 }

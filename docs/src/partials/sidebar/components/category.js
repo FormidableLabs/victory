@@ -2,7 +2,11 @@ import React from "react";
 import PropTypes from "prop-types";
 import isEmpty from "lodash/isEmpty";
 
-import { SidebarSectionHeading, SidebarSectionList, SidebarSectionSublist } from "../styles";
+import {
+  SidebarSectionHeading,
+  SidebarSectionList,
+  SidebarSectionSublist
+} from "../styles";
 
 const Category = ({ content, title, subCategories }) => {
   if (isEmpty(subCategories) && isEmpty(content)) {

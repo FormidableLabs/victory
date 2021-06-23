@@ -53,7 +53,9 @@ describe("components/victory-box-plot", () => {
       { x: 2, y: null },
       { x: 2, y: null }
     ];
-    const wrapper = mount(<VictoryBoxPlot data={data} groupComponent={<TestGroup />} />);
+    const wrapper = mount(
+      <VictoryBoxPlot data={data} groupComponent={<TestGroup />} />
+    );
     expect(wrapper.find('[data-test="testGroup"]').length).to.equal(1);
   });
 
@@ -62,7 +64,9 @@ describe("components/victory-box-plot", () => {
       { x: 1, y: [1, 2, 3, 5, 8] },
       { x: 1, y: [null, 2, 5, 9, 14] }
     ];
-    const wrapper = mount(<VictoryBoxPlot data={data} groupComponent={<TestGroup />} />);
+    const wrapper = mount(
+      <VictoryBoxPlot data={data} groupComponent={<TestGroup />} />
+    );
     expect(wrapper.find('[data-test="testGroup"]').length).to.equal(1);
   });
 
@@ -75,7 +79,9 @@ describe("components/victory-box-plot", () => {
       { x: 5, min: 2, median: 8, max: 15, q1: null, q3: 12 },
       { x: 5, min: 2, median: 10, max: 20, q1: 8, q3: null }
     ];
-    const wrapper = mount(<VictoryBoxPlot data={data} groupComponent={<TestGroup />} />);
+    const wrapper = mount(
+      <VictoryBoxPlot data={data} groupComponent={<TestGroup />} />
+    );
     expect(wrapper.find('[data-test="testGroup"]').length).to.equal(1);
   });
 
@@ -111,10 +117,18 @@ describe("components/victory-box-plot", () => {
         />
       );
 
-      const whiskersWithAriaLabel = wrapper.find("line").filterWhere((l) => l.prop("aria-label"));
-      expect(whiskersWithAriaLabel.first().html().includes("1 max is 18")).to.equal(true);
-      expect(whiskersWithAriaLabel.last().html().includes("3 max is 12")).to.equal(true);
-      expect(whiskersWithAriaLabel.at(3).html().includes("2 max is 25")).to.equal(false);
+      const whiskersWithAriaLabel = wrapper
+        .find("line")
+        .filterWhere((l) => l.prop("aria-label"));
+      expect(
+        whiskersWithAriaLabel.first().html().includes("1 max is 18")
+      ).to.equal(true);
+      expect(
+        whiskersWithAriaLabel.last().html().includes("3 max is 12")
+      ).to.equal(true);
+      expect(
+        whiskersWithAriaLabel.at(3).html().includes("2 max is 25")
+      ).to.equal(false);
       // 2 whiskers for each max value for "T" shape
       expect(whiskersWithAriaLabel).to.have.length(6);
     });
@@ -131,11 +145,21 @@ describe("components/victory-box-plot", () => {
           }
         />
       );
-      const q3Elements = wrapper.find("rect").filterWhere((l) => l.prop("aria-label"));
-      expect(q3Elements.first().html().includes("1 q3 value is 15")).to.equal(true);
-      expect(q3Elements.at(1).html().includes("2 q3 value is 15")).to.equal(true);
-      expect(q3Elements.at(1).html().includes("2 q3 value is 8")).to.equal(false);
-      expect(q3Elements.last().html().includes("3 q3 value is 10")).to.equal(true);
+      const q3Elements = wrapper
+        .find("rect")
+        .filterWhere((l) => l.prop("aria-label"));
+      expect(q3Elements.first().html().includes("1 q3 value is 15")).to.equal(
+        true
+      );
+      expect(q3Elements.at(1).html().includes("2 q3 value is 15")).to.equal(
+        true
+      );
+      expect(q3Elements.at(1).html().includes("2 q3 value is 8")).to.equal(
+        false
+      );
+      expect(q3Elements.last().html().includes("3 q3 value is 10")).to.equal(
+        true
+      );
       // 2 whiskers for each max value for "T" shape
       expect(q3Elements).to.have.length(3);
     });
@@ -146,17 +170,29 @@ describe("components/victory-box-plot", () => {
           data={dataset}
           medianComponent={
             <LineSegment
-              ariaLabel={({ datum }) => `${datum.x} median value is ${datum._median}`}
+              ariaLabel={({ datum }) =>
+                `${datum.x} median value is ${datum._median}`
+              }
               tabIndex={({ index }) => index + 1.3}
             />
           }
         />
       );
-      const medianLine = wrapper.find("line").filterWhere((l) => l.prop("aria-label"));
-      expect(medianLine.first().html().includes("1 median value is 8")).to.equal(true);
-      expect(medianLine.at(1).html().includes("2 median value is 10")).to.equal(true);
-      expect(medianLine.at(1).html().includes("2 median value is 8")).to.equal(false);
-      expect(medianLine.last().html().includes("3 median value is 6")).to.equal(true);
+      const medianLine = wrapper
+        .find("line")
+        .filterWhere((l) => l.prop("aria-label"));
+      expect(
+        medianLine.first().html().includes("1 median value is 8")
+      ).to.equal(true);
+      expect(medianLine.at(1).html().includes("2 median value is 10")).to.equal(
+        true
+      );
+      expect(medianLine.at(1).html().includes("2 median value is 8")).to.equal(
+        false
+      );
+      expect(medianLine.last().html().includes("3 median value is 6")).to.equal(
+        true
+      );
       // 2 whiskers for each max value for "T" shape
       expect(medianLine).to.have.length(3);
     });

@@ -61,7 +61,9 @@ describe("components/victory-bar", () => {
       const data = range(5)
         .map((i) => ({ x: i, y: i }))
         .reverse();
-      const wrapper = shallow(<VictoryBar data={data} sortKey="x" sortOrder="descending" />);
+      const wrapper = shallow(
+        <VictoryBar data={data} sortKey="x" sortOrder="descending" />
+      );
       const xValues = wrapper.find(Bar).map((bar) => bar.prop("datum")._x);
       expect(xValues).to.eql([4, 3, 2, 1, 0]);
     });
@@ -75,7 +77,9 @@ describe("components/victory-bar", () => {
 
     it("renders bars for deeply-nested data", () => {
       const data = range(40).map((i) => ({ a: { b: [{ x: i, y: i }] } }));
-      const wrapper = shallow(<VictoryBar data={data} x="a.b[0].x" y="a.b[0].y" />);
+      const wrapper = shallow(
+        <VictoryBar data={data} x="a.b[0].x" y="a.b[0].y" />
+      );
       const bars = wrapper.find(Bar);
       expect(bars.length).to.equal(40);
     });
@@ -132,7 +136,13 @@ describe("components/victory-bar", () => {
       svg.simulate("click");
       expect(clickHandler).called;
       // the first argument is the standard evt object
-      expect(clickHandler.args[0][1]).to.include.keys("data", "scale", "width", "height", "style");
+      expect(clickHandler.args[0][1]).to.include.keys(
+        "data",
+        "scale",
+        "width",
+        "height",
+        "style"
+      );
     });
 
     it("attaches an event to data", () => {
@@ -217,7 +227,10 @@ describe("components/victory-bar", () => {
         <VictoryBar
           data={data}
           dataComponent={
-            <Bar ariaLabel={({ datum }) => `x: ${datum.x}`} tabIndex={({ index }) => index + 1} />
+            <Bar
+              ariaLabel={({ datum }) => `x: ${datum.x}`}
+              tabIndex={({ index }) => index + 1}
+            />
           }
         />
       );

@@ -104,18 +104,31 @@ export interface CallbackArgs {
 
 export type OrientationTypes = "top" | "bottom" | "left" | "right";
 
-export type VictoryStringOrNumberCallback = (args: CallbackArgs) => string | number;
+export type VictoryStringOrNumberCallback = (
+  args: CallbackArgs
+) => string | number;
 export type VictoryNumberCallback = (args: CallbackArgs) => number;
 export type VictoryStringCallback = (args: CallbackArgs) => string;
-export type VictoryPaddingCallback = (args: CallbackArgs) => number | BlockProps;
-export type VictoryOrientationCallback = (args: CallbackArgs) => OrientationTypes;
-export type StringOrNumberOrCallback = string | number | VictoryStringOrNumberCallback;
+export type VictoryPaddingCallback = (
+  args: CallbackArgs
+) => number | BlockProps;
+export type VictoryOrientationCallback = (
+  args: CallbackArgs
+) => OrientationTypes;
+export type StringOrNumberOrCallback =
+  | string
+  | number
+  | VictoryStringOrNumberCallback;
 export type NumberOrCallback = number | VictoryNumberCallback;
 export type StringOrCallback = string | VictoryStringCallback;
 export type PaddingOrCallback = number | BlockProps | VictoryPaddingCallback;
-export type OrientationOrCallback = OrientationTypes | VictoryOrientationCallback;
+export type OrientationOrCallback =
+  | OrientationTypes
+  | VictoryOrientationCallback;
 
-export type SliceNumberOrCallback<T, P = null> = number | ((props: Omit<T, P>) => number);
+export type SliceNumberOrCallback<T, P = null> =
+  | number
+  | ((props: Omit<T, P>) => number);
 
 export type StringOrNumberOrList = string | number | (string | number)[];
 
@@ -124,14 +137,18 @@ export type CoordinatesPropType = {
   y: number;
 };
 
-export type VictoryStyleObject = { [K in keyof React.CSSProperties]: StringOrNumberOrCallback };
+export type VictoryStyleObject = {
+  [K in keyof React.CSSProperties]: StringOrNumberOrCallback;
+};
 
 export type LabelProps = React.CSSProperties & {
   angle?: number;
   verticalAnchor?: VerticalAnchorType;
 };
 
-export type VictoryLabelStyleObject = { [K in keyof LabelProps]: StringOrNumberOrCallback };
+export type VictoryLabelStyleObject = {
+  [K in keyof LabelProps]: StringOrNumberOrCallback;
+};
 
 /**
  * Style interface used in components/themeing
@@ -156,7 +173,10 @@ export interface VictoryAnimationProps {
   data?: AnimationData;
 }
 
-export class VictoryAnimation extends React.Component<VictoryAnimationProps, any> {}
+export class VictoryAnimation extends React.Component<
+  VictoryAnimationProps,
+  any
+> {}
 
 // #endregion
 
@@ -164,7 +184,9 @@ export class VictoryAnimation extends React.Component<VictoryAnimationProps, any
 
 export type TickProps = React.CSSProperties & { size?: number };
 
-export type VictoryTickStyleObject = { [K in keyof TickProps]: StringOrNumberOrCallback };
+export type VictoryTickStyleObject = {
+  [K in keyof TickProps]: StringOrNumberOrCallback;
+};
 
 export interface VictoryAxisCommonProps {
   axisComponent?: React.ReactElement;
@@ -185,7 +207,9 @@ export interface VictoryAxisCommonProps {
   tickComponent?: React.ReactElement;
   tickCount?: number;
   tickLabelComponent?: React.ReactElement;
-  tickFormat?: any[] | { (tick: any, index: number, ticks: any[]): string | number };
+  tickFormat?:
+    | any[]
+    | { (tick: any, index: number, ticks: any[]): string | number };
   tickValues?: any[];
 }
 
@@ -272,7 +296,10 @@ export interface VictoryContainerProps {
   width?: number;
 }
 
-export class VictoryContainer extends React.Component<VictoryContainerProps, any> {}
+export class VictoryContainer extends React.Component<
+  VictoryContainerProps,
+  any
+> {}
 
 // #endregion
 
@@ -298,7 +325,10 @@ export interface VictoryClipContainerProps {
   translateY?: number;
 }
 
-export class VictoryClipContainer extends React.Component<VictoryClipContainerProps, any> {}
+export class VictoryClipContainer extends React.Component<
+  VictoryClipContainerProps,
+  any
+> {}
 
 // #endregion
 
@@ -313,7 +343,10 @@ export interface VictoryAccessibleGroupProps {
   tabIndex?: number;
 }
 
-export class VictoryAccessibleGroup extends React.Component<VictoryAccessibleGroupProps, any> {}
+export class VictoryAccessibleGroup extends React.Component<
+  VictoryAccessibleGroupProps,
+  any
+> {}
 
 // #endregion
 
@@ -543,16 +576,16 @@ export interface EventPropTypeInterface<TTarget, TEventKey> {
   eventHandlers: {
     [key: string]:
       | {
-          (event: React.SyntheticEvent<any>, props?: any): EventCallbackInterface<
-            TTarget,
-            TEventKey
-          >;
+          (
+            event: React.SyntheticEvent<any>,
+            props?: any
+          ): EventCallbackInterface<TTarget, TEventKey>;
         }
       | {
-          (event: React.SyntheticEvent<any>, props?: any): EventCallbackInterface<
-            TTarget,
-            TEventKey
-          >[];
+          (
+            event: React.SyntheticEvent<any>,
+            props?: any
+          ): EventCallbackInterface<TTarget, TEventKey>[];
         }
       | {
           (event: React.SyntheticEvent<any>, props?: any): void;
@@ -646,7 +679,10 @@ export interface VictoryCommonThemeProps {
   colorScale?: ColorScalePropType;
   containerComponent?: React.ReactElement;
   domainPadding?: DomainPaddingPropType;
-  externalEventMutations?: EventCallbackInterface<string | string[], StringOrNumberOrList>[];
+  externalEventMutations?: EventCallbackInterface<
+    string | string[],
+    StringOrNumberOrList
+  >[];
   groupComponent?: React.ReactElement;
   height?: number;
   horizontal?: boolean;
@@ -714,7 +750,10 @@ export interface VictoryLabelableProps {
 }
 
 export interface VictoryMultiLabelableProps extends VictoryLabelableProps {
-  labels?: string[] | number[] | { (data: any): string | string[] | number | number[] | null };
+  labels?:
+    | string[]
+    | number[]
+    | { (data: any): string | string[] | number | number[] | null };
 }
 
 export interface VictorySingleLabelableProps extends VictoryLabelableProps {
@@ -727,7 +766,10 @@ export namespace Selection {
     evt: React.SyntheticEvent,
     svg?: SVGElement
   ): SVGCoordinateType;
-  export function getDomainCoordinates(props: any, domain?: DomainPropType): DomainPropType;
+  export function getDomainCoordinates(
+    props: any,
+    domain?: DomainPropType
+  ): DomainPropType;
   export function getDataCoordinates(
     props: any,
     scale: ScalePropType,
@@ -751,7 +793,10 @@ export namespace TextSize {
     text: string,
     style?: TextSizeStyleInterface
   ): { width: number; height: number };
-  export function convertLengthToPixels(length: string, fontSize: number): number;
+  export function convertLengthToPixels(
+    length: string,
+    fontSize: number
+  ): number;
 }
 
 // #endregion
@@ -868,7 +913,8 @@ export interface WhiskerProps extends VictoryCommonPrimitiveProps {
 
 export class Whisker extends React.Component<WhiskerProps> {}
 
-export interface VictoryPrimitiveShapeProps extends VictoryCommonPrimitiveProps {
+export interface VictoryPrimitiveShapeProps
+  extends VictoryCommonPrimitiveProps {
   desc?: string;
 }
 

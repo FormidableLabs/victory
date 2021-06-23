@@ -177,7 +177,15 @@ class VictoryChartDemo extends React.Component<any, VictoryChartDemoState> {
       "tomato",
       "greenyellow"
     ];
-    const symbols = ["circle", "star", "square", "triangleUp", "triangleDown", "diamond", "plus"];
+    const symbols = [
+      "circle",
+      "star",
+      "square",
+      "triangleUp",
+      "triangleDown",
+      "diamond",
+      "plus"
+    ];
     const elementNum = random(10, 40);
     return range(elementNum).map((index) => {
       const scaledIndex = Math.floor(index % 7);
@@ -360,7 +368,11 @@ class VictoryChartDemo extends React.Component<any, VictoryChartDemoState> {
             </VictoryStack>
           </VictoryChart>
           <VictoryChart style={chartStyle}>
-            <VictoryStack horizontal labels={["a", "b", "c"]} colorScale={"qualitative"}>
+            <VictoryStack
+              horizontal
+              labels={["a", "b", "c"]}
+              colorScale={"qualitative"}
+            >
               <VictoryBar
                 data={[
                   { x: 1, y: 1 },
@@ -458,7 +470,12 @@ class VictoryChartDemo extends React.Component<any, VictoryChartDemoState> {
 
           <VictoryChart style={chartStyle} scale={"linear"}>
             <VictoryAxis label={"A LABEL"} />
-            <VictoryAxis label={"A LABEL"} dependentAxis crossAxis={false} offsetX={30} />
+            <VictoryAxis
+              label={"A LABEL"}
+              dependentAxis
+              crossAxis={false}
+              offsetX={30}
+            />
 
             <VictoryLine
               style={{ data: { stroke: "red", strokeWidth: 4 } }}
@@ -478,7 +495,10 @@ class VictoryChartDemo extends React.Component<any, VictoryChartDemoState> {
               orientation="left"
               style={{ grid: { strokeWidth: 1 } }}
             />
-            <VictoryLine data={this.state.lineData} style={{ data: this.state.lineStyle }} />
+            <VictoryLine
+              data={this.state.lineData}
+              style={{ data: this.state.lineStyle }}
+            />
           </VictoryChart>
 
           <VictoryChart
@@ -544,11 +564,21 @@ class VictoryChartDemo extends React.Component<any, VictoryChartDemoState> {
           <VictoryChart style={chartStyle}>
             <VictoryAxis label={"A LABEL"} dependentAxis orientation="right" />
             <VictoryAxis label={"A LABEL"} orientation="top" />
-            <VictoryLine y={(d) => 0.5 * d.x + 0.5} style={{ data: { stroke: "red" } }} />
-            <VictoryScatter y={(d) => d.x * d.x} style={{ data: { stroke: "red" } }} />
+            <VictoryLine
+              y={(d) => 0.5 * d.x + 0.5}
+              style={{ data: { stroke: "red" } }}
+            />
+            <VictoryScatter
+              y={(d) => d.x * d.x}
+              style={{ data: { stroke: "red" } }}
+            />
           </VictoryChart>
 
-          <VictoryChart style={chartStyle} animate={{ duration: 2000 }} domainPadding={{ x: 100 }}>
+          <VictoryChart
+            style={chartStyle}
+            animate={{ duration: 2000 }}
+            domainPadding={{ x: 100 }}
+          >
             <VictoryAxis tickFormat={["one", "two", "three"]} />
             <VictoryStack>
               {this.state.barData.map((data, index) => {
@@ -581,7 +611,9 @@ class VictoryChartDemo extends React.Component<any, VictoryChartDemoState> {
                         target: "data",
                         eventKey: "all",
                         mutation: (props) => {
-                          return { style: merge({}, props.style, { stroke: "lime" }) };
+                          return {
+                            style: merge({}, props.style, { stroke: "lime" })
+                          };
                         }
                       },
                       {
@@ -627,7 +659,11 @@ class VictoryChartDemo extends React.Component<any, VictoryChartDemoState> {
               style={{ data: { stroke: "blue", strokeWidth: 5 } }}
             />
           </VictoryChart>
-          <VictoryChart style={chartStyle} domainPadding={{ x: 50 }} animate={{ duration: 2000 }}>
+          <VictoryChart
+            style={chartStyle}
+            domainPadding={{ x: 50 }}
+            animate={{ duration: 2000 }}
+          >
             <VictoryGroup offset={20} style={{ data: { width: 15 } }}>
               <VictoryStack colorScale={"red"}>
                 {this.getBarData().map((data, index) => {
@@ -661,7 +697,9 @@ class VictoryChartDemo extends React.Component<any, VictoryChartDemoState> {
                         childName: "area-2",
                         target: "data",
                         mutation: (props) => {
-                          return { style: merge({}, props.style, { fill: "gold" }) };
+                          return {
+                            style: merge({}, props.style, { fill: "gold" })
+                          };
                         }
                       },
                       {

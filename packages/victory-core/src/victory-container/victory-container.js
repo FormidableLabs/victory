@@ -13,7 +13,10 @@ export default class VictoryContainer extends React.Component {
   static propTypes = {
     "aria-describedby": PropTypes.string,
     "aria-labelledby": PropTypes.string,
-    children: PropTypes.oneOfType([PropTypes.arrayOf(PropTypes.node), PropTypes.node]),
+    children: PropTypes.oneOfType([
+      PropTypes.arrayOf(PropTypes.node),
+      PropTypes.node
+    ]),
     className: PropTypes.string,
     containerId: PropTypes.oneOfType([PropTypes.number, PropTypes.string]),
     containerRef: PropTypes.func,
@@ -112,10 +115,20 @@ export default class VictoryContainer extends React.Component {
   }
 
   renderContainer(props, svgProps, style) {
-    const { title, desc, portalComponent, className, width, height, portalZIndex, responsive } =
-      props;
+    const {
+      title,
+      desc,
+      portalComponent,
+      className,
+      width,
+      height,
+      portalZIndex,
+      responsive
+    } = props;
     const children = this.getChildren(props);
-    const dimensions = responsive ? { width: "100%", height: "100%" } : { width, height };
+    const dimensions = responsive
+      ? { width: "100%", height: "100%" }
+      : { width, height };
     const divStyle = assign(
       { pointerEvents: "none", touchAction: "none", position: "relative" },
       dimensions
@@ -148,8 +161,12 @@ export default class VictoryContainer extends React.Component {
           {...this.getOUIAProps(props)}
         >
           <svg {...svgProps} style={svgStyle}>
-            {title ? <title id={this.getIdForElement("title")}>{title}</title> : null}
-            {desc ? <desc id={this.getIdForElement("desc")}>{desc}</desc> : null}
+            {title ? (
+              <title id={this.getIdForElement("title")}>{title}</title>
+            ) : null}
+            {desc ? (
+              <desc id={this.getIdForElement("desc")}>{desc}</desc>
+            ) : null}
             {children}
           </svg>
           <div style={portalDivStyle}>
@@ -164,8 +181,17 @@ export default class VictoryContainer extends React.Component {
   }
 
   render() {
-    const { width, height, responsive, events, title, desc, tabIndex, preserveAspectRatio, role } =
-      this.props;
+    const {
+      width,
+      height,
+      responsive,
+      events,
+      title,
+      desc,
+      tabIndex,
+      preserveAspectRatio,
+      role
+    } = this.props;
     const style = responsive
       ? this.props.style
       : Helpers.omit(this.props.style, ["height", "width"]);
@@ -176,7 +202,10 @@ export default class VictoryContainer extends React.Component {
         tabIndex,
         role,
         "aria-labelledby":
-          [title && this.getIdForElement("title"), this.props["aria-labelledby"]]
+          [
+            title && this.getIdForElement("title"),
+            this.props["aria-labelledby"]
+          ]
             .filter(Boolean)
             .join(" ") || undefined,
         "aria-describedby":

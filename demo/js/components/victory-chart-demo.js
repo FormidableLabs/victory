@@ -11,13 +11,20 @@ import { VictoryArea } from "Packages/victory-area/src/index";
 import { VictoryBar } from "Packages/victory-bar/src/index";
 import { VictoryLine } from "Packages/victory-line/src/index";
 import { VictoryScatter } from "Packages/victory-scatter/src/index";
-import { VictoryLabel, VictoryTheme, VictoryClipContainer } from "Packages/victory-core/src/index";
+import {
+  VictoryLabel,
+  VictoryTheme,
+  VictoryClipContainer
+} from "Packages/victory-core/src/index";
 
 const UPDATE_INTERVAL = 3000;
 
 class Wrapper extends React.Component {
   static propTypes = {
-    children: PropTypes.oneOfType([PropTypes.arrayOf(PropTypes.node), PropTypes.node])
+    children: PropTypes.oneOfType([
+      PropTypes.arrayOf(PropTypes.node),
+      PropTypes.node
+    ])
   };
 
   renderChildren() {
@@ -149,7 +156,15 @@ class App extends React.Component {
       "tomato",
       "greenyellow"
     ];
-    const symbols = ["circle", "star", "square", "triangleUp", "triangleDown", "diamond", "plus"];
+    const symbols = [
+      "circle",
+      "star",
+      "square",
+      "triangleUp",
+      "triangleDown",
+      "diamond",
+      "plus"
+    ];
     const elementNum = random(10, 40);
     return range(elementNum).map((index) => {
       const scaledIndex = Math.floor(index % 7);
@@ -330,7 +345,11 @@ class App extends React.Component {
             </VictoryStack>
           </VictoryChart>
           <VictoryChart style={chartStyle}>
-            <VictoryStack horizontal labels={["a", "b", "c"]} colorScale={"qualitative"}>
+            <VictoryStack
+              horizontal
+              labels={["a", "b", "c"]}
+              colorScale={"qualitative"}
+            >
               <VictoryBar
                 data={[
                   { x: 1, y: 1 },
@@ -428,7 +447,12 @@ class App extends React.Component {
 
           <VictoryChart style={chartStyle} scale={"linear"}>
             <VictoryAxis label={"A LABEL"} />
-            <VictoryAxis label={"A LABEL"} dependentAxis crossAxis={false} offsetX={30} />
+            <VictoryAxis
+              label={"A LABEL"}
+              dependentAxis
+              crossAxis={false}
+              offsetX={30}
+            />
 
             <VictoryLine
               style={{ data: { stroke: "red", strokeWidth: 4 } }}
@@ -448,7 +472,10 @@ class App extends React.Component {
               orientation="left"
               style={{ grid: { strokeWidth: 1 } }}
             />
-            <VictoryLine data={this.state.lineData} style={{ data: this.state.lineStyle }} />
+            <VictoryLine
+              data={this.state.lineData}
+              style={{ data: this.state.lineStyle }}
+            />
           </VictoryChart>
 
           <VictoryChart
@@ -514,11 +541,21 @@ class App extends React.Component {
           <VictoryChart style={chartStyle}>
             <VictoryAxis label={"A LABEL"} dependentAxis orientation="right" />
             <VictoryAxis label={"A LABEL"} orientation="top" />
-            <VictoryLine y={(d) => 0.5 * d.x + 0.5} style={{ data: { stroke: "red" } }} />
-            <VictoryScatter y={(d) => d.x * d.x} style={{ data: { stroke: "red" } }} />
+            <VictoryLine
+              y={(d) => 0.5 * d.x + 0.5}
+              style={{ data: { stroke: "red" } }}
+            />
+            <VictoryScatter
+              y={(d) => d.x * d.x}
+              style={{ data: { stroke: "red" } }}
+            />
           </VictoryChart>
 
-          <VictoryChart style={chartStyle} animate={{ duration: 2000 }} domainPadding={{ x: 100 }}>
+          <VictoryChart
+            style={chartStyle}
+            animate={{ duration: 2000 }}
+            domainPadding={{ x: 100 }}
+          >
             <VictoryAxis tickFormat={["one", "two", "three"]} />
             <VictoryStack>
               {this.state.barData.map((data, index) => {
@@ -551,7 +588,9 @@ class App extends React.Component {
                         target: "data",
                         eventKey: "all",
                         mutation: (props) => {
-                          return { style: merge({}, props.style, { stroke: "lime" }) };
+                          return {
+                            style: merge({}, props.style, { stroke: "lime" })
+                          };
                         }
                       },
                       {
@@ -597,7 +636,11 @@ class App extends React.Component {
               style={{ data: { stroke: "blue", strokeWidth: 5 } }}
             />
           </VictoryChart>
-          <VictoryChart style={chartStyle} domainPadding={{ x: 50 }} animate={{ duration: 2000 }}>
+          <VictoryChart
+            style={chartStyle}
+            domainPadding={{ x: 50 }}
+            animate={{ duration: 2000 }}
+          >
             <VictoryGroup offset={20} style={{ data: { width: 15 } }}>
               <VictoryStack colorScale={"red"}>
                 {this.getBarData().map((data, index) => {
@@ -631,7 +674,9 @@ class App extends React.Component {
                         childName: "area-2",
                         target: "data",
                         mutation: (props) => {
-                          return { style: merge({}, props.style, { fill: "gold" }) };
+                          return {
+                            style: merge({}, props.style, { fill: "gold" })
+                          };
                         }
                       },
                       {

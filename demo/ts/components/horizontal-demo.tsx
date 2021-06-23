@@ -43,7 +43,9 @@ class App extends React.Component {
       justifyContent: "center"
     };
 
-    const chartStyle = { parent: { border: "1px solid #ccc", margin: "2%", maxWidth: "40%" } };
+    const chartStyle = {
+      parent: { border: "1px solid #ccc", margin: "2%", maxWidth: "40%" }
+    };
     return (
       <div style={containerStyle}>
         <VictoryChart horizontal scale={{ y: "log" }} style={chartStyle}>
@@ -177,7 +179,11 @@ class App extends React.Component {
         </VictoryChart>
 
         <VictoryChart horizontal style={chartStyle}>
-          <VictoryGroup labels={["a", "b", "c"]} offset={20} colorScale={"qualitative"}>
+          <VictoryGroup
+            labels={["a", "b", "c"]}
+            offset={20}
+            colorScale={"qualitative"}
+          >
             <VictoryBar
               data={[
                 { x: 1, y: 1 },
@@ -368,13 +374,55 @@ class App extends React.Component {
             labels={() => "yo"}
             data={[
               { x: new Date(2014, 6, 1), open: 9, close: 30, high: 56, low: 7 },
-              { x: new Date(2015, 6, 2), open: 80, close: 40, high: 120, low: 10 },
-              { x: new Date(2016, 6, 3), open: 50, close: 80, high: 90, low: 20 },
-              { x: new Date(2017, 6, 4), open: 70, close: 22, high: 70, low: 5 },
-              { x: new Date(2018, 6, 5), open: 20, close: 35, high: 50, low: 10 },
-              { x: new Date(2019, 6, 6), open: 35, close: 30, high: 40, low: 3 },
-              { x: new Date(2020, 6, 7), open: 30, close: 90, high: 95, low: 30 },
-              { x: new Date(2021, 6, 8), open: 80, close: 81, high: 83, low: 75 }
+              {
+                x: new Date(2015, 6, 2),
+                open: 80,
+                close: 40,
+                high: 120,
+                low: 10
+              },
+              {
+                x: new Date(2016, 6, 3),
+                open: 50,
+                close: 80,
+                high: 90,
+                low: 20
+              },
+              {
+                x: new Date(2017, 6, 4),
+                open: 70,
+                close: 22,
+                high: 70,
+                low: 5
+              },
+              {
+                x: new Date(2018, 6, 5),
+                open: 20,
+                close: 35,
+                high: 50,
+                low: 10
+              },
+              {
+                x: new Date(2019, 6, 6),
+                open: 35,
+                close: 30,
+                high: 40,
+                low: 3
+              },
+              {
+                x: new Date(2020, 6, 7),
+                open: 30,
+                close: 90,
+                high: 95,
+                low: 30
+              },
+              {
+                x: new Date(2021, 6, 8),
+                open: 80,
+                close: 81,
+                high: 83,
+                low: 75
+              }
             ]}
           />
         </VictoryChart>
@@ -411,7 +459,11 @@ class App extends React.Component {
             ]}
           />
         </VictoryChart>
-        <VictoryChart style={chartStyle} horizontal categories={{ y: ["E", "F", "G", "H"] }}>
+        <VictoryChart
+          style={chartStyle}
+          horizontal
+          categories={{ y: ["E", "F", "G", "H"] }}
+        >
           <VictoryLine
             data={[
               { x: 6, y: "E" },
@@ -438,7 +490,9 @@ class App extends React.Component {
         <VictoryChart
           horizontal
           style={chartStyle}
-          containerComponent={<VictoryBrushContainer brushDomain={{ x: [2, 4], y: [-2, 2] }} />}
+          containerComponent={
+            <VictoryBrushContainer brushDomain={{ x: [2, 4], y: [-2, 2] }} />
+          }
         >
           <VictoryLine
             style={{

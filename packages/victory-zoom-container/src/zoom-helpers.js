@@ -38,13 +38,18 @@ const RawZoomHelpers = {
     const percent = this.getScalePercent(evt, props, axis);
     const point = factor * from + percent * (factor * range);
     const minDomain = this.getMinimumDomain(point, props, axis);
-    const [newMin, newMax] = this.getScaledDomain(currentDomain, factor, percent);
+    const [newMin, newMax] = this.getScaledDomain(
+      currentDomain,
+      factor,
+      percent
+    );
     const newDomain = [
       newMin > fromBound && newMin < toBound ? newMin : fromBound,
       newMax < toBound && newMax > fromBound ? newMax : toBound
     ];
     const domain =
-      Math.abs(minDomain[1] - minDomain[0]) > Math.abs(newDomain[1] - newDomain[0])
+      Math.abs(minDomain[1] - minDomain[0]) >
+      Math.abs(newDomain[1] - newDomain[0])
         ? minDomain
         : newDomain;
     return Collection.containsDates([fromBound, toBound])
@@ -128,7 +133,8 @@ const RawZoomHelpers = {
     } else {
       newDomain = currentDomain;
     }
-    return Collection.containsDates(currentDomain) || Collection.containsDates(originalDomain)
+    return Collection.containsDates(currentDomain) ||
+      Collection.containsDates(originalDomain)
       ? newDomain.map((val) => new Date(val))
       : newDomain;
   },
@@ -171,7 +177,11 @@ const RawZoomHelpers = {
     if (childComponents.length) {
       childrenDomain = zoomDimension
         ? {
-            [zoomDimension]: Wrapper.getDomainFromChildren(props, zoomDimension, childComponents)
+            [zoomDimension]: Wrapper.getDomainFromChildren(
+              props,
+              zoomDimension,
+              childComponents
+            )
           }
         : {
             x: Wrapper.getDomainFromChildren(props, "x", childComponents),
@@ -235,19 +245,34 @@ const RawZoomHelpers = {
   // eslint-disable-next-line max-params, max-statements
   onMouseMove(evt, targetProps, eventKey, ctx) {
     if (targetProps.panning && targetProps.allowPan) {
-      const { scale, startX, startY, onZoomDomainChange, zoomDomain, zoomDimension, horizontal } =
-        targetProps;
+      const {
+        scale,
+        startX,
+        startY,
+        onZoomDomainChange,
+        zoomDomain,
+        zoomDimension,
+        horizontal
+      } = targetProps;
       const parentSVG = targetProps.parentSVG || Selection.getParentSVG(evt);
       const { x, y } = Selection.getSVGEventCoordinates(evt, parentSVG);
       const originalDomain = this.getDomain(targetProps);
       const lastDomain = this.getLastDomain(targetProps, originalDomain);
       const deltaX = horizontal ? y - startY : startX - x;
       const deltaY = horizontal ? startX - x : y - startY;
-      const dx = deltaX / this.getDomainScale(lastDomain, scale, "x", horizontal);
-      const dy = deltaY / this.getDomainScale(lastDomain, scale, "y", horizontal);
+      const dx =
+        deltaX / this.getDomainScale(lastDomain, scale, "x", horizontal);
+      const dy =
+        deltaY / this.getDomainScale(lastDomain, scale, "y", horizontal);
       const currentDomain = {
-        x: zoomDimension === "y" ? originalDomain.x : this.pan(lastDomain.x, originalDomain.x, dx),
-        y: zoomDimension === "x" ? originalDomain.y : this.pan(lastDomain.y, originalDomain.y, dy)
+        x:
+          zoomDimension === "y"
+            ? originalDomain.x
+            : this.pan(lastDomain.x, originalDomain.x, dx),
+        y:
+          zoomDimension === "x"
+            ? originalDomain.y
+            : this.pan(lastDomain.y, originalDomain.y, dy)
       };
       const resumeAnimation = this.handleAnimation(ctx);
 
@@ -265,7 +290,10 @@ const RawZoomHelpers = {
       };
 
       if (isFunction(onZoomDomainChange)) {
-        onZoomDomainChange(currentDomain, defaults({}, mutatedProps, targetProps));
+        onZoomDomainChange(
+          currentDomain,
+          defaults({}, mutatedProps, targetProps)
+        );
       }
       return [
         {
@@ -288,15 +316,22 @@ const RawZoomHelpers = {
     const lastDomain = this.getLastDomain(targetProps, originalDomain);
     const { x, y } = lastDomain;
     const currentDomain = {
-      x: zoomDimension === "y" ? lastDomain.x : this.scale(x, evt, targetProps, "x"),
-      y: zoomDimension === "x" ? lastDomain.y : this.scale(y, evt, targetProps, "y")
+      x:
+        zoomDimension === "y"
+          ? lastDomain.x
+          : this.scale(x, evt, targetProps, "x"),
+      y:
+        zoomDimension === "x"
+          ? lastDomain.y
+          : this.scale(y, evt, targetProps, "y")
     };
     const resumeAnimation = this.handleAnimation(ctx);
 
     const zoomActive =
       !this.zoommingOut(evt) || // if zoomming in or
       //   if zoomActive is already set AND user hasn't zoommed out all the way
-      (targetProps.zoomActive && !this.checkDomainEquality(originalDomain, lastDomain));
+      (targetProps.zoomActive &&
+        !this.checkDomainEquality(originalDomain, lastDomain));
 
     const mutatedProps = {
       currentDomain,
@@ -308,7 +343,10 @@ const RawZoomHelpers = {
     };
 
     if (isFunction(onZoomDomainChange)) {
-      onZoomDomainChange(currentDomain, defaults({}, mutatedProps, targetProps));
+      onZoomDomainChange(
+        currentDomain,
+        defaults({}, mutatedProps, targetProps)
+      );
     }
 
     return [

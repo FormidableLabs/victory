@@ -81,7 +81,12 @@ export const Theme = () => {
 export const Interpolation = () => {
   const makeInterpolationChart = (interpolation) => (
     <VictoryChart {...defaultChartProps}>
-      <VictoryLabel x={175} y={30} style={{ textAnchor: "middle" }} text={interpolation} />
+      <VictoryLabel
+        x={175}
+        y={30}
+        style={{ textAnchor: "middle" }}
+        text={interpolation}
+      />
       <VictoryLine data={getData(8)} interpolation={interpolation} />
     </VictoryChart>
   );
@@ -106,7 +111,12 @@ export const Interpolation = () => {
 export const PolarInterpolation = () => {
   const makeInterpolationChart = (interpolation) => (
     <VictoryChart polar {...defaultChartProps}>
-      <VictoryLabel x={175} y={30} style={{ textAnchor: "middle" }} text={interpolation} />
+      <VictoryLabel
+        x={175}
+        y={30}
+        style={{ textAnchor: "middle" }}
+        text={interpolation}
+      />
       <VictoryLine data={getData(8)} interpolation={interpolation} />
     </VictoryChart>
   );
@@ -219,7 +229,10 @@ export const PlottingFunctions = () => {
         <VictoryLine y={(d) => Math.sin(Math.PI * d.x)} />
       </VictoryChart>
       <VictoryChart polar {...defaultChartProps}>
-        <VictoryLine y={(d) => Math.sin(Math.PI * d.x)} y0={(d) => Math.sin(Math.PI * d.x) - 0.5} />
+        <VictoryLine
+          y={(d) => Math.sin(Math.PI * d.x)}
+          y0={(d) => Math.sin(Math.PI * d.x) - 0.5}
+        />
       </VictoryChart>
     </div>
   );
@@ -229,10 +242,16 @@ export const Labels = () => {
   return (
     <div style={containerStyle}>
       <VictoryChart style={parentStyle}>
-        <VictoryLine data={getData(7)} labels={({ datum }) => `x: ${datum.x}`} />
+        <VictoryLine
+          data={getData(7)}
+          labels={({ datum }) => `x: ${datum.x}`}
+        />
       </VictoryChart>
       <VictoryChart style={parentStyle}>
-        <VictoryLine data={getData(7)} labels={["", "", "three", "four", 5, "six"]} />
+        <VictoryLine
+          data={getData(7)}
+          labels={["", "", "three", "four", 5, "six"]}
+        />
       </VictoryChart>
       <VictoryChart style={parentStyle}>
         <VictoryLine
@@ -369,10 +388,16 @@ export const TimeScale = () => {
   return (
     <div style={containerStyle}>
       <VictoryChart {...defaultChartProps}>
-        <VictoryLine data={getTimeData(5)} labels={({ datum }) => datum.x.getFullYear()} />
+        <VictoryLine
+          data={getTimeData(5)}
+          labels={({ datum }) => datum.x.getFullYear()}
+        />
       </VictoryChart>
       <VictoryChart horizontal {...defaultChartProps}>
-        <VictoryLine data={getTimeData(5)} labels={({ datum }) => datum.x.getFullYear()} />
+        <VictoryLine
+          data={getTimeData(5)}
+          labels={({ datum }) => datum.x.getFullYear()}
+        />
       </VictoryChart>
       <VictoryChart {...defaultChartProps}>
         <VictoryStack labels={({ datum }) => datum.x.getFullYear()}>
@@ -396,10 +421,16 @@ export const LogScale = () => {
   return (
     <div style={containerStyle}>
       <VictoryChart {...defaultChartProps} scale={{ y: "log" }}>
-        <VictoryLine data={getLogData(7)} labels={({ datum }) => `x: ${datum.x}`} />
+        <VictoryLine
+          data={getLogData(7)}
+          labels={({ datum }) => `x: ${datum.x}`}
+        />
       </VictoryChart>
       <VictoryChart horizontal {...defaultChartProps} scale={{ y: "log" }}>
-        <VictoryLine data={getLogData(7)} labels={({ datum }) => `x: ${datum.x}`} />
+        <VictoryLine
+          data={getLogData(7)}
+          labels={({ datum }) => `x: ${datum.x}`}
+        />
       </VictoryChart>
       <VictoryChart polar {...defaultChartProps} scale={{ y: "log" }}>
         <VictoryLine data={getLogData(7)} />

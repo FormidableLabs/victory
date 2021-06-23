@@ -34,7 +34,11 @@ const SelectionHelpers = {
         return childData ? { childName, data: childData } : null;
       }
     };
-    return Helpers.reduceChildren(React.Children.toArray(props.children), iteratee, props);
+    return Helpers.reduceChildren(
+      React.Children.toArray(props.children),
+      iteratee,
+      props
+    );
   },
 
   filterDatasets(props, datasets, bounds) {
@@ -80,17 +84,30 @@ const SelectionHelpers = {
   // eslint-disable-next-line complexity, max-statements
   onMouseDown(evt, targetProps) {
     evt.preventDefault();
-    const { activateSelectedData, allowSelection, polar, selectedData } = targetProps;
+    const { activateSelectedData, allowSelection, polar, selectedData } =
+      targetProps;
     if (!allowSelection) {
       return {};
     }
     const dimension = this.getDimension(targetProps);
     const parentSVG = targetProps.parentSVG || Selection.getParentSVG(evt);
     const { x, y } = Selection.getSVGEventCoordinates(evt, parentSVG);
-    const x1 = polar || dimension !== "y" ? x : Selection.getDomainCoordinates(targetProps).x[0];
-    const y1 = polar || dimension !== "x" ? y : Selection.getDomainCoordinates(targetProps).y[0];
-    const x2 = polar || dimension !== "y" ? x : Selection.getDomainCoordinates(targetProps).x[1];
-    const y2 = polar || dimension !== "x" ? y : Selection.getDomainCoordinates(targetProps).y[1];
+    const x1 =
+      polar || dimension !== "y"
+        ? x
+        : Selection.getDomainCoordinates(targetProps).x[0];
+    const y1 =
+      polar || dimension !== "x"
+        ? y
+        : Selection.getDomainCoordinates(targetProps).y[0];
+    const x2 =
+      polar || dimension !== "y"
+        ? x
+        : Selection.getDomainCoordinates(targetProps).x[1];
+    const y2 =
+      polar || dimension !== "x"
+        ? y
+        : Selection.getDomainCoordinates(targetProps).y[1];
 
     const mutatedProps = { x1, y1, select: true, x2, y2, parentSVG };
     if (selectedData && isFunction(targetProps.onSelectionCleared)) {
@@ -120,8 +137,14 @@ const SelectionHelpers = {
     } else {
       const parentSVG = targetProps.parentSVG || Selection.getParentSVG(evt);
       const { x, y } = Selection.getSVGEventCoordinates(evt, parentSVG);
-      const x2 = polar || dimension !== "y" ? x : Selection.getDomainCoordinates(targetProps).x[1];
-      const y2 = polar || dimension !== "x" ? y : Selection.getDomainCoordinates(targetProps).y[1];
+      const x2 =
+        polar || dimension !== "y"
+          ? x
+          : Selection.getDomainCoordinates(targetProps).x[1];
+      const y2 =
+        polar || dimension !== "x"
+          ? y
+          : Selection.getDomainCoordinates(targetProps).y[1];
       return {
         target: "parent",
         mutation: () => {
@@ -160,7 +183,11 @@ const SelectionHelpers = {
     };
     const callbackMutation =
       selectedData && isFunction(targetProps.onSelection)
-        ? targetProps.onSelection(selectedData, bounds, defaults({}, mutatedProps, targetProps))
+        ? targetProps.onSelection(
+            selectedData,
+            bounds,
+            defaults({}, mutatedProps, targetProps)
+          )
         : {};
     const parentMutation = [
       {

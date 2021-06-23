@@ -80,7 +80,10 @@ interface ImmutableDemoState {
   zoomDomain: { x?: DomainTuple; y?: DomainTuple };
 }
 
-export default class ImmutableDemo extends React.Component<any, ImmutableDemoState> {
+export default class ImmutableDemo extends React.Component<
+  any,
+  ImmutableDemoState
+> {
   setStateInterval?: number = undefined;
 
   constructor(props: any) {
@@ -116,7 +119,15 @@ export default class ImmutableDemo extends React.Component<any, ImmutableDemoSta
       "tomato",
       "greenyellow"
     ];
-    const symbols = ["circle", "star", "square", "triangleUp", "triangleDown", "diamond", "plus"];
+    const symbols = [
+      "circle",
+      "star",
+      "square",
+      "triangleUp",
+      "triangleDown",
+      "diamond",
+      "plus"
+    ];
     const elementNum = random(10, 40);
     return fromJS(
       range(elementNum).map((index) => {
@@ -156,10 +167,13 @@ export default class ImmutableDemo extends React.Component<any, ImmutableDemoSta
   }
 
   getMaxData(data: MultiAxisDataType) {
-    const groupedData = keys(data[0]).reduce((memo: any, key: string | number) => {
-      memo[key] = data.map((d) => d[key]);
-      return memo;
-    }, {});
+    const groupedData = keys(data[0]).reduce(
+      (memo: any, key: string | number) => {
+        memo[key] = data.map((d) => d[key]);
+        return memo;
+      },
+      {}
+    );
     return keys(groupedData).reduce((memo: any, key: string | number) => {
       memo[key] = Math.max(...groupedData[key]);
       return memo;
@@ -236,7 +250,9 @@ export default class ImmutableDemo extends React.Component<any, ImmutableDemoSta
                         childName: "area-2",
                         target: "data",
                         mutation: (props) => {
-                          return { style: merge({}, props.style, { fill: "gold" }) };
+                          return {
+                            style: merge({}, props.style, { fill: "gold" })
+                          };
                         }
                       },
                       {
@@ -307,8 +323,16 @@ export default class ImmutableDemo extends React.Component<any, ImmutableDemoSta
             </VictoryStack>
           </VictoryChart>
 
-          <VictoryChart style={chartStyle} domainPadding={{ x: 30 }} theme={VictoryTheme.material}>
-            <VictoryGroup offset={12} animate={{ duration: 1000 }} colorScale={"warm"}>
+          <VictoryChart
+            style={chartStyle}
+            domainPadding={{ x: 30 }}
+            theme={VictoryTheme.material}
+          >
+            <VictoryGroup
+              offset={12}
+              animate={{ duration: 1000 }}
+              colorScale={"warm"}
+            >
               {this.state.multiTransitionData.map((data, index) => {
                 return (
                   <Wrapper key={index}>
@@ -359,14 +383,62 @@ export default class ImmutableDemo extends React.Component<any, ImmutableDemoSta
             <VictoryCandlestick
               style={merge({}, chartStyle, { data: { width: 10 } })}
               data={fromJS([
-                { x: new Date(2016, 6, 1), open: 9, close: 30, high: 56, low: 7 },
-                { x: new Date(2016, 6, 2), open: 80, close: 40, high: 120, low: 10 },
-                { x: new Date(2016, 6, 3), open: 50, close: 80, high: 90, low: 20 },
-                { x: new Date(2016, 6, 4), open: 70, close: 22, high: 70, low: 5 },
-                { x: new Date(2016, 6, 5), open: 20, close: 35, high: 50, low: 10 },
-                { x: new Date(2016, 6, 6), open: 35, close: 30, high: 40, low: 3 },
-                { x: new Date(2016, 6, 7), open: 30, close: 90, high: 95, low: 30 },
-                { x: new Date(2016, 6, 8), open: 80, close: 81, high: 83, low: 75 }
+                {
+                  x: new Date(2016, 6, 1),
+                  open: 9,
+                  close: 30,
+                  high: 56,
+                  low: 7
+                },
+                {
+                  x: new Date(2016, 6, 2),
+                  open: 80,
+                  close: 40,
+                  high: 120,
+                  low: 10
+                },
+                {
+                  x: new Date(2016, 6, 3),
+                  open: 50,
+                  close: 80,
+                  high: 90,
+                  low: 20
+                },
+                {
+                  x: new Date(2016, 6, 4),
+                  open: 70,
+                  close: 22,
+                  high: 70,
+                  low: 5
+                },
+                {
+                  x: new Date(2016, 6, 5),
+                  open: 20,
+                  close: 35,
+                  high: 50,
+                  low: 10
+                },
+                {
+                  x: new Date(2016, 6, 6),
+                  open: 35,
+                  close: 30,
+                  high: 40,
+                  low: 3
+                },
+                {
+                  x: new Date(2016, 6, 7),
+                  open: 30,
+                  close: 90,
+                  high: 95,
+                  low: 30
+                },
+                {
+                  x: new Date(2016, 6, 8),
+                  open: 80,
+                  close: 81,
+                  high: 83,
+                  low: 75
+                }
               ])}
               size={8}
               standalone={false}
@@ -379,7 +451,9 @@ export default class ImmutableDemo extends React.Component<any, ImmutableDemoSta
                         {
                           mutation: (props) => {
                             return {
-                              style: merge({}, props.style.labels, { fill: "orange" })
+                              style: merge({}, props.style.labels, {
+                                fill: "orange"
+                              })
                             };
                           }
                         }
@@ -430,7 +504,9 @@ export default class ImmutableDemo extends React.Component<any, ImmutableDemoSta
                         childName: "line",
                         target: "data",
                         mutation: (props) => {
-                          return { style: merge({}, props.style, { stroke: "lime" }) };
+                          return {
+                            style: merge({}, props.style, { stroke: "lime" })
+                          };
                         }
                       },
                       {
@@ -534,7 +610,12 @@ export default class ImmutableDemo extends React.Component<any, ImmutableDemoSta
 
           <VictoryVoronoi
             style={merge({}, chartStyle, {
-              data: { fill: "gray", opacity: 0.1, stroke: "black", strokeWidth: 2 }
+              data: {
+                fill: "gray",
+                opacity: 0.1,
+                stroke: "black",
+                strokeWidth: 2
+              }
             })}
             data={fromJS([
               { x: 1, y: 1 },
@@ -586,7 +667,9 @@ export default class ImmutableDemo extends React.Component<any, ImmutableDemoSta
                       childName: "area-2",
                       target: "data",
                       mutation: (props) => {
-                        return { style: merge({}, props.style, { fill: "gold" }) };
+                        return {
+                          style: merge({}, props.style, { fill: "gold" })
+                        };
                       }
                     },
                     {
@@ -698,7 +781,10 @@ export default class ImmutableDemo extends React.Component<any, ImmutableDemoSta
                 { x: 3, y: -2, l: "three" }
               ])}
               style={{
-                data: { stroke: "tomato", strokeWidth: ({ active }) => (active ? 4 : 2) },
+                data: {
+                  stroke: "tomato",
+                  strokeWidth: ({ active }) => (active ? 4 : 2)
+                },
                 labels: { fill: "tomato" }
               }}
             />
@@ -709,7 +795,10 @@ export default class ImmutableDemo extends React.Component<any, ImmutableDemoSta
                 { x: 3, y: 3, l: "blue" }
               ])}
               style={{
-                data: { stroke: "blue", strokeWidth: ({ active }) => (active ? 4 : 2) },
+                data: {
+                  stroke: "blue",
+                  strokeWidth: ({ active }) => (active ? 4 : 2)
+                },
                 labels: { fill: "blue" }
               }}
             />
@@ -720,7 +809,10 @@ export default class ImmutableDemo extends React.Component<any, ImmutableDemoSta
                 { x: 3, y: -2, l: "bird" }
               ])}
               style={{
-                data: { stroke: "black", strokeWidth: ({ active }) => (active ? 4 : 2) },
+                data: {
+                  stroke: "black",
+                  strokeWidth: ({ active }) => (active ? 4 : 2)
+                },
                 labels: { fill: "black" }
               }}
             />
@@ -733,7 +825,9 @@ export default class ImmutableDemo extends React.Component<any, ImmutableDemoSta
             padding={{ top: 100, bottom: 40, left: 50, right: 50 }}
             containerComponent={
               <VictoryCursorContainer
-                cursorLabel={(datum) => `${round(datum.x, 2)} , ${round(datum.y, 2)}`}
+                cursorLabel={(datum) =>
+                  `${round(datum.x, 2)} , ${round(datum.y, 2)}`
+                }
               />
             }
           >
@@ -752,7 +846,9 @@ export default class ImmutableDemo extends React.Component<any, ImmutableDemoSta
               ]}
             />
             <VictoryLine
-              data={fromJS(range(1500).map((x) => ({ x, y: x + 10 * Math.random() })))}
+              data={fromJS(
+                range(1500).map((x) => ({ x, y: x + 10 * Math.random() }))
+              )}
             />
           </VictoryChart>
 
@@ -766,7 +862,9 @@ export default class ImmutableDemo extends React.Component<any, ImmutableDemoSta
                   responsive={false}
                   zoomDomain={this.state.zoomDomain}
                   zoomDimension="x"
-                  onZoomDomainChange={(domain) => this.setState({ zoomDomain: domain })}
+                  onZoomDomainChange={(domain) =>
+                    this.setState({ zoomDomain: domain })
+                  }
                 />
               }
             >
@@ -797,7 +895,9 @@ export default class ImmutableDemo extends React.Component<any, ImmutableDemoSta
                   responsive={false}
                   brushDomain={this.state.zoomDomain}
                   brushDimension="x"
-                  onBrushDomainChange={(domain) => this.setState({ zoomDomain: domain })}
+                  onBrushDomainChange={(domain) =>
+                    this.setState({ zoomDomain: domain })
+                  }
                 />
               }
             >
@@ -830,15 +930,28 @@ export default class ImmutableDemo extends React.Component<any, ImmutableDemoSta
             </VictoryChart>
           </div>
 
-          <VictoryChart style={chartStyle} animate theme={VictoryTheme.material}>
+          <VictoryChart
+            style={chartStyle}
+            animate
+            theme={VictoryTheme.material}
+          >
             <VictoryStack colorScale={"warm"}>
               {this.state.multiTransitionAreaData.map((data, index) => {
-                return <VictoryArea key={index} data={data} interpolation={"basis"} />;
+                return (
+                  <VictoryArea
+                    key={index}
+                    data={data}
+                    interpolation={"basis"}
+                  />
+                );
               })}
             </VictoryStack>
           </VictoryChart>
 
-          <VictoryChart style={chartStyle} containerComponent={<VictorySelectionContainer />}>
+          <VictoryChart
+            style={chartStyle}
+            containerComponent={<VictorySelectionContainer />}
+          >
             <VictoryGroup
               data={fromJS([
                 { x: 1, y: 5 },
@@ -848,7 +961,9 @@ export default class ImmutableDemo extends React.Component<any, ImmutableDemoSta
             >
               <VictoryLine style={{ data: { stroke: "tomato" } }} />
               <VictoryScatter
-                style={{ data: { fill: ({ active }) => (active ? "tomato" : "gray") } }}
+                style={{
+                  data: { fill: ({ active }) => (active ? "tomato" : "gray") }
+                }}
                 labels={({ datum }) => datum.y}
                 labelComponent={<VictoryTooltip />}
               />
@@ -862,7 +977,9 @@ export default class ImmutableDemo extends React.Component<any, ImmutableDemoSta
             >
               <VictoryLine style={{ data: { stroke: "blue" } }} />
               <VictoryScatter
-                style={{ data: { fill: ({ active }) => (active ? "blue" : "gray") } }}
+                style={{
+                  data: { fill: ({ active }) => (active ? "blue" : "gray") }
+                }}
                 labels={({ datum }) => datum.y}
                 labelComponent={<VictoryTooltip />}
               />
@@ -876,7 +993,9 @@ export default class ImmutableDemo extends React.Component<any, ImmutableDemoSta
             >
               <VictoryLine style={{ data: { stroke: "black" } }} />
               <VictoryScatter
-                style={{ data: { fill: ({ active }) => (active ? "black" : "gray") } }}
+                style={{
+                  data: { fill: ({ active }) => (active ? "black" : "gray") }
+                }}
                 labels={({ datum }) => datum.y}
                 labelComponent={<VictoryTooltip />}
               />
@@ -897,7 +1016,9 @@ export default class ImmutableDemo extends React.Component<any, ImmutableDemoSta
                   style={{
                     axisLabel: { padding: 10 }
                   }}
-                  tickLabelComponent={<VictoryLabel labelPlacement="vertical" />}
+                  tickLabelComponent={
+                    <VictoryLabel labelPlacement="vertical" />
+                  }
                   labelPlacement="perpendicular"
                   axisValue={i + 1}
                   label={key}

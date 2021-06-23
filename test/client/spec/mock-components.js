@@ -102,11 +102,22 @@ class MockVictoryComponent extends React.Component {
     });
 
     const labelComponents = map(this.dataKeys, (_key, index) => {
-      const labelProps = this.getComponentProps(labelComponent, "labels", index);
-      return get(labelProps, "text") ? React.cloneElement(labelComponent, labelProps) : undefined;
+      const labelProps = this.getComponentProps(
+        labelComponent,
+        "labels",
+        index
+      );
+      return get(labelProps, "text")
+        ? React.cloneElement(labelComponent, labelProps)
+        : undefined;
     });
 
-    return React.cloneElement(groupComponent, {}, ...dataComponents, ...labelComponents);
+    return React.cloneElement(
+      groupComponent,
+      {},
+      ...dataComponents,
+      ...labelComponents
+    );
   }
 }
 

@@ -6,7 +6,10 @@ import { assign, merge, random, range } from "lodash";
 import { VictoryChart } from "Packages/victory-chart/src/index";
 import { VictoryErrorBar, ErrorBar } from "Packages/victory-errorbar/src/index";
 import { VictoryScatter } from "Packages/victory-scatter/src/index";
-import { VictoryContainer, VictoryTheme } from "Packages/victory-core/src/index";
+import {
+  VictoryContainer,
+  VictoryTheme
+} from "Packages/victory-core/src/index";
 
 const getData = () => {
   return range(4).map(() => {

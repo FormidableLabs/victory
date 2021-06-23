@@ -17,7 +17,11 @@ function toNewName(scale) {
 
 function validScale(scale) {
   if (typeof scale === "function") {
-    return isFunction(scale.copy) && isFunction(scale.domain) && isFunction(scale.range);
+    return (
+      isFunction(scale.copy) &&
+      isFunction(scale.domain) &&
+      isFunction(scale.range)
+    );
   } else if (typeof scale === "string") {
     return includes(supportedScaleStrings, scale);
   }
@@ -60,7 +64,9 @@ function getScaleTypeFromData(props, axis) {
   }
   const accessor = Helpers.createAccessor(props[axis]);
   const axisData = props.data.map((datum) => {
-    const processedData = isPlainObject(accessor(datum)) ? accessor(datum)[axis] : accessor(datum);
+    const processedData = isPlainObject(accessor(datum))
+      ? accessor(datum)[axis]
+      : accessor(datum);
     return processedData !== undefined ? processedData : datum[axis];
   });
   return Collection.containsDates(axisData) ? "time" : "linear";
@@ -77,7 +83,8 @@ function getBaseScale(props, axis) {
   if (scale) {
     return typeof scale === "string" ? getScaleFromName(scale) : scale;
   }
-  const defaultScale = getScaleFromDomain(props, axis) || getScaleTypeFromData(props, axis);
+  const defaultScale =
+    getScaleFromDomain(props, axis) || getScaleTypeFromData(props, axis);
   return d3Scale[toNewName(defaultScale)]();
 }
 
@@ -98,7 +105,9 @@ function getScaleFromProps(props, axis) {
 
 function getScaleType(props, axis) {
   // if the scale was not given in props, it will be set to linear or time depending on data
-  return getScaleTypeFromProps(props, axis) || getScaleTypeFromData(props, axis);
+  return (
+    getScaleTypeFromProps(props, axis) || getScaleTypeFromData(props, axis)
+  );
 }
 
 function getType(scale) {

@@ -12,11 +12,19 @@ import PropTypes from "prop-types";
  */
 const makeChainable = function (validator) {
   /* eslint-disable max-params */
-  const _chainable = function (isRequired, props, propName, componentName, ...rest) {
+  const _chainable = function (
+    isRequired,
+    props,
+    propName,
+    componentName,
+    ...rest
+  ) {
     const value = props[propName];
     if (value === undefined || value === null) {
       if (isRequired) {
-        return new Error(`Required \`${propName}\` was not specified in \`${componentName}\`.`);
+        return new Error(
+          `Required \`${propName}\` was not specified in \`${componentName}\`.`
+        );
       }
       return null;
     }
@@ -74,9 +82,16 @@ export default {
     return (props, propName, componentName) => {
       const value = props[propName];
       if (value !== null && value !== undefined) {
-        Log.warn(`"${propName}" property of "${componentName}" has been deprecated ${explanation}`);
+        Log.warn(
+          `"${propName}" property of "${componentName}" has been deprecated ${explanation}`
+        );
       }
-      return PropTypes.checkPropTypes({ [propName]: propType }, props, propName, componentName);
+      return PropTypes.checkPropTypes(
+        { [propName]: propType },
+        props,
+        propName,
+        componentName
+      );
     };
   },
 
@@ -90,7 +105,8 @@ export default {
   allOfType(validators) {
     return makeChainable((props, propName, componentName, ...rest) =>
       validators.reduce(
-        (result, validator) => result || validator(props, propName, componentName, ...rest),
+        (result, validator) =>
+          result || validator(props, propName, componentName, ...rest),
         undefined
       )
     );
@@ -102,7 +118,9 @@ export default {
   nonNegative: makeChainable((props, propName, componentName) => {
     const value = props[propName];
     if (typeof value !== "number" || value < 0) {
-      return new Error(`\`${propName}\` in \`${componentName}\` must be a non-negative number.`);
+      return new Error(
+        `\`${propName}\` in \`${componentName}\` must be a non-negative number.`
+      );
     }
     return undefined;
   }),
@@ -113,7 +131,9 @@ export default {
   integer: makeChainable((props, propName, componentName) => {
     const value = props[propName];
     if (typeof value !== "number" || value % 1 !== 0) {
-      return new Error(`\`${propName}\` in \`${componentName}\` must be an integer.`);
+      return new Error(
+        `\`${propName}\` in \`${componentName}\` must be an integer.`
+      );
     }
     return undefined;
   }),
@@ -151,7 +171,11 @@ export default {
     const supportedScaleStrings = ["linear", "time", "log", "sqrt"];
     const validScale = (scl) => {
       if (isFunction(scl)) {
-        return isFunction(scl.copy) && isFunction(scl.domain) && isFunction(scl.range);
+        return (
+          isFunction(scl.copy) &&
+          isFunction(scl.domain) &&
+          isFunction(scl.range)
+        );
       } else if (typeof scl === "string") {
         return supportedScaleStrings.indexOf(scl) !== -1;
       }
@@ -160,7 +184,9 @@ export default {
 
     const value = props[propName];
     if (!validScale(value)) {
-      return new Error(`\`${propName}\` in \`${componentName}\` must be a d3 scale.`);
+      return new Error(
+        `\`${propName}\` in \`${componentName}\` must be a d3 scale.`
+      );
     }
     return undefined;
   }),
@@ -171,7 +197,9 @@ export default {
   homogeneousArray: makeChainable((props, propName, componentName) => {
     const values = props[propName];
     if (!Array.isArray(values)) {
-      return new Error(`\`${propName}\` in \`${componentName}\` must be an array.`);
+      return new Error(
+        `\`${propName}\` in \`${componentName}\` must be an array.`
+      );
     }
 
     if (values.length < 2) {
@@ -216,7 +244,9 @@ export default {
    */
   regExp: makeChainable((props, propName, componentName) => {
     if (props[propName] && !isRegExp(props[propName])) {
-      return new Error(`\`${propName}\` in \`${componentName}\` must be a regular expression.`);
+      return new Error(
+        `\`${propName}\` in \`${componentName}\` must be a regular expression.`
+      );
     }
     return undefined;
   })

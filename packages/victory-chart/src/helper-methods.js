@@ -66,7 +66,8 @@ function getChildProps(child, props, calculatedProps) {
   if (axisChild.length > 0) {
     return getAxisProps(axisChild[0], props, calculatedProps);
   }
-  const { categories, domain, range, scale, stringMap, horizontal } = calculatedProps;
+  const { categories, domain, range, scale, stringMap, horizontal } =
+    calculatedProps;
   return { categories, domain, range, scale, stringMap, horizontal };
 }
 
@@ -126,7 +127,8 @@ function getCalculatedProps(props, childComponents) {
 
 function getChildren(props, childComponents, calculatedProps) {
   childComponents = childComponents || getChildComponents(props);
-  calculatedProps = calculatedProps || getCalculatedProps(props, childComponents);
+  calculatedProps =
+    calculatedProps || getCalculatedProps(props, childComponents);
   const baseStyle = calculatedProps.style.parent;
   const { height, polar, theme, width } = props;
   const { origin, horizontal } = calculatedProps;
@@ -168,13 +170,24 @@ const getChildComponents = (props, defaultAxes) => {
   } else {
     const axisComponents = {
       dependent: Axis.getAxisComponentsWithParent(childComponents, "dependent"),
-      independent: Axis.getAxisComponentsWithParent(childComponents, "independent")
+      independent: Axis.getAxisComponentsWithParent(
+        childComponents,
+        "independent"
+      )
     };
 
-    if (axisComponents.dependent.length === 0 && axisComponents.independent.length === 0) {
+    if (
+      axisComponents.dependent.length === 0 &&
+      axisComponents.independent.length === 0
+    ) {
       newChildComponents = props.prependDefaultAxes
-        ? [defaultAxes.independent, defaultAxes.dependent].concat(newChildComponents)
-        : newChildComponents.concat([defaultAxes.independent, defaultAxes.dependent]);
+        ? [defaultAxes.independent, defaultAxes.dependent].concat(
+            newChildComponents
+          )
+        : newChildComponents.concat([
+            defaultAxes.independent,
+            defaultAxes.dependent
+          ]);
     }
   }
 
@@ -185,7 +198,8 @@ const getDomain = (props, axis, childComponents) => {
   childComponents = childComponents || React.Children.toArray(props.children);
   const domain = Wrapper.getDomain(props, axis, childComponents);
   const axisComponent = Axis.getAxisComponent(childComponents, axis);
-  const invertDomain = axisComponent && axisComponent.props && axisComponent.props.invertAxis;
+  const invertDomain =
+    axisComponent && axisComponent.props && axisComponent.props.invertAxis;
   return invertDomain ? domain.concat().reverse() : domain;
 };
 
@@ -208,4 +222,9 @@ const createStringMap = (props, childComponents, allStrings) => {
   return { x, y };
 };
 
-export { getBackgroundWithProps, getChildren, getCalculatedProps, getChildComponents };
+export {
+  getBackgroundWithProps,
+  getChildren,
+  getCalculatedProps,
+  getChildComponents
+};

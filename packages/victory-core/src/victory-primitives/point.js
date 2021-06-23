@@ -23,7 +23,9 @@ const getPath = (props) => {
     cross: pathHelpers.cross
   };
   const symbolFunction =
-    typeof pathFunctions[symbol] === "function" ? pathFunctions[symbol] : pathFunctions.circle;
+    typeof pathFunctions[symbol] === "function"
+      ? pathFunctions[symbol]
+      : pathFunctions.circle;
   return symbolFunction(x, y, size);
 };
 
@@ -46,7 +48,15 @@ const evaluateProps = (props) => {
   const symbol = Helpers.evaluateProp(props.symbol, props);
   const tabIndex = Helpers.evaluateProp(props.tabIndex, props);
 
-  return assign({}, props, { ariaLabel, desc, id, size, style, symbol, tabIndex });
+  return assign({}, props, {
+    ariaLabel,
+    desc,
+    id,
+    size,
+    style,
+    symbol,
+    tabIndex
+  });
 };
 
 const Point = (props) => {

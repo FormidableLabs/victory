@@ -84,7 +84,11 @@ export const DomainPadding = () => {
       <VictoryChart style={parentStyle} domainPadding={{ x: [25, 0], y: 25 }}>
         <VictoryBar data={getData(5)} />
       </VictoryChart>
-      <VictoryChart style={parentStyle} horizontal domainPadding={{ x: [25, 0], y: 25 }}>
+      <VictoryChart
+        style={parentStyle}
+        horizontal
+        domainPadding={{ x: [25, 0], y: 25 }}
+      >
         <VictoryBar data={getData(5)} />
       </VictoryChart>
       <VictoryChart
@@ -118,7 +122,11 @@ export const Domain = () => {
       <VictoryChart style={parentStyle} domain={{ x: [0, 6], y: [0, 10] }}>
         <VictoryBar data={getData(5)} />
       </VictoryChart>
-      <VictoryChart style={parentStyle} horizontal domain={{ x: [0, 6], y: [0, 10] }}>
+      <VictoryChart
+        style={parentStyle}
+        horizontal
+        domain={{ x: [0, 6], y: [0, 10] }}
+      >
         <VictoryBar data={getData(5)} />
       </VictoryChart>
       <VictoryChart style={parentStyle} minDomain={1} maxDomain={7}>
@@ -127,10 +135,19 @@ export const Domain = () => {
       <VictoryChart style={parentStyle} horizontal minDomain={1} maxDomain={7}>
         <VictoryLine data={getData(100)} />
       </VictoryChart>
-      <VictoryChart style={parentStyle} minDomain={{ x: 50 }} maxDomain={{ y: 7 }}>
+      <VictoryChart
+        style={parentStyle}
+        minDomain={{ x: 50 }}
+        maxDomain={{ y: 7 }}
+      >
         <VictoryLine data={getData(100)} />
       </VictoryChart>
-      <VictoryChart style={parentStyle} horizontal minDomain={{ x: 50 }} maxDomain={{ y: 7 }}>
+      <VictoryChart
+        style={parentStyle}
+        horizontal
+        minDomain={{ x: 50 }}
+        maxDomain={{ y: 7 }}
+      >
         <VictoryLine data={getData(100)} />
       </VictoryChart>
     </div>
@@ -142,13 +159,27 @@ export const DomainFromData = () => {
     <div style={containerStyle}>
       <VictoryChart style={parentStyle}>
         <VictoryScatter size={5} symbol="plus" data={getData(10)} />
-        <VictoryScatter size={5} symbol="triangleUp" data={getFourQuadrantData(10)} />
-        <VictoryLine samples={100} y={(d) => 10 * Math.sin(13 * Math.PI * d.x)} />
+        <VictoryScatter
+          size={5}
+          symbol="triangleUp"
+          data={getFourQuadrantData(10)}
+        />
+        <VictoryLine
+          samples={100}
+          y={(d) => 10 * Math.sin(13 * Math.PI * d.x)}
+        />
       </VictoryChart>
       <VictoryChart style={parentStyle} horizontal>
         <VictoryScatter size={5} symbol="plus" data={getData(10)} />
-        <VictoryScatter size={5} symbol="triangleUp" data={getFourQuadrantData(10)} />
-        <VictoryLine samples={100} y={(d) => 10 * Math.sin(13 * Math.PI * d.x)} />
+        <VictoryScatter
+          size={5}
+          symbol="triangleUp"
+          data={getFourQuadrantData(10)}
+        />
+        <VictoryLine
+          samples={100}
+          y={(d) => 10 * Math.sin(13 * Math.PI * d.x)}
+        />
       </VictoryChart>
       <VictoryChart style={parentStyle}>
         <VictoryAxis tickValues={[-10, -5, 5, 10]} />
@@ -283,7 +314,11 @@ export const Style = () => {
           background: { fill: "pink" }
         }}
       >
-        <VictoryGroup labels={["a", "b", "c"]} offset={20} colorScale={"qualitative"}>
+        <VictoryGroup
+          labels={["a", "b", "c"]}
+          offset={20}
+          colorScale={"qualitative"}
+        >
           <VictoryBar
             data={[
               { x: 1, y: 1 },
@@ -436,10 +471,21 @@ export const Style = () => {
 export const Orientations = () => {
   return (
     <div style={containerStyle}>
-      <VictoryChart style={parentStyle} padding={{ left: 20, right: 30, top: 15, bottom: 40 }}>
+      <VictoryChart
+        style={parentStyle}
+        padding={{ left: 20, right: 30, top: 15, bottom: 40 }}
+      >
         <VictoryAxis tickValues={[1, 2, 3, 4, 5]} />
-        <VictoryAxis orientation="left" dependentAxis tickValues={[1, 2, 3, 4, 5, 6, 7, 8]} />
-        <VictoryAxis orientation="right" dependentAxis tickValues={[1, 2, 3, 4, 5, 6, 7, 8, 9]} />
+        <VictoryAxis
+          orientation="left"
+          dependentAxis
+          tickValues={[1, 2, 3, 4, 5, 6, 7, 8]}
+        />
+        <VictoryAxis
+          orientation="right"
+          dependentAxis
+          tickValues={[1, 2, 3, 4, 5, 6, 7, 8, 9]}
+        />
         <VictoryBar
           style={{ data: { fill: "#c43a31" } }}
           data={[

@@ -21,10 +21,15 @@ class App extends React.Component {
       alignItems: "center",
       justifyContent: "center"
     };
-    const chartStyle = { parent: { border: "1px solid #ccc", margin: "2%", maxWidth: "40%" } };
+    const chartStyle = {
+      parent: { border: "1px solid #ccc", margin: "2%", maxWidth: "40%" }
+    };
     return (
       <div style={containerStyle}>
-        <VictoryChart style={chartStyle} containerComponent={<VictoryZoomContainer />}>
+        <VictoryChart
+          style={chartStyle}
+          containerComponent={<VictoryZoomContainer />}
+        >
           <VictoryStack colorScale="warm">
             <VictoryGroup
               data={[
@@ -84,10 +89,14 @@ class App extends React.Component {
         <VictoryChart
           horizontal
           style={chartStyle}
-          containerComponent={<VictoryVoronoiContainer labels={() => "HELLO"} />}
+          containerComponent={
+            <VictoryVoronoiContainer labels={() => "HELLO"} />
+          }
         >
           <VictoryBar
-            style={{ data: { fill: ({ active }) => (active ? "red" : "black") } }}
+            style={{
+              data: { fill: ({ active }) => (active ? "red" : "black") }
+            }}
             data={[
               { x: 0, y: 3.5, y0: 2.5 },
               { x: 0, y: 11, y0: 5 },
@@ -98,7 +107,9 @@ class App extends React.Component {
             ]}
           />
           <VictoryScatter
-            style={{ data: { fill: ({ active }) => (active ? "black" : "red") } }}
+            style={{
+              data: { fill: ({ active }) => (active ? "black" : "red") }
+            }}
             data={[
               { x: 0, y: 3.5 },
               { x: 0, y: 11 },

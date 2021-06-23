@@ -55,7 +55,9 @@ describe("components/victory-voronoi", () => {
         .reverse();
       const wrapper = shallow(<VictoryVoronoi data={data} sortKey="x" />);
 
-      const xValues = wrapper.find(Voronoi).map((voronoi) => voronoi.prop("datum")._x);
+      const xValues = wrapper
+        .find(Voronoi)
+        .map((voronoi) => voronoi.prop("datum")._x);
       expect(xValues).to.eql([0, 1, 2, 3, 4]);
     });
 
@@ -63,9 +65,13 @@ describe("components/victory-voronoi", () => {
       const data = range(5)
         .map((i) => ({ x: i, y: i }))
         .reverse();
-      const wrapper = shallow(<VictoryVoronoi data={data} sortKey="x" sortOrder="descending" />);
+      const wrapper = shallow(
+        <VictoryVoronoi data={data} sortKey="x" sortOrder="descending" />
+      );
 
-      const xValues = wrapper.find(Voronoi).map((voronoi) => voronoi.prop("datum")._x);
+      const xValues = wrapper
+        .find(Voronoi)
+        .map((voronoi) => voronoi.prop("datum")._x);
       expect(xValues).to.eql([4, 3, 2, 1, 0]);
     });
 
@@ -97,7 +103,13 @@ describe("components/victory-voronoi", () => {
       svg.simulate("click");
       expect(clickHandler).called;
       // the first argument is the standard evt object
-      expect(clickHandler.args[0][1]).to.include.keys("data", "scale", "width", "height", "style");
+      expect(clickHandler.args[0][1]).to.include.keys(
+        "data",
+        "scale",
+        "width",
+        "height",
+        "style"
+      );
     });
 
     it("attaches an event to data", () => {
@@ -166,7 +178,10 @@ describe("components/victory-voronoi", () => {
         <VictoryVoronoi
           data={data}
           dataComponent={
-            <Voronoi ariaLabel={({ datum }) => `${datum.x}`} tabIndex={({ index }) => index + 6} />
+            <Voronoi
+              ariaLabel={({ datum }) => `${datum.x}`}
+              tabIndex={({ index }) => index + 6}
+            />
           }
         />
       );

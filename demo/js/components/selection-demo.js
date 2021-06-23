@@ -52,7 +52,9 @@ class App extends React.Component {
       justifyContent: "center"
     };
 
-    const chartStyle = { parent: { border: "1px solid #ccc", margin: "2%", maxWidth: "40%" } };
+    const chartStyle = {
+      parent: { border: "1px solid #ccc", margin: "2%", maxWidth: "40%" }
+    };
 
     return (
       <div className="demo">
@@ -131,7 +133,10 @@ class App extends React.Component {
             />
           </VictoryChart>
 
-          <VictoryChart style={chartStyle} containerComponent={<VictorySelectionContainer />}>
+          <VictoryChart
+            style={chartStyle}
+            containerComponent={<VictorySelectionContainer />}
+          >
             <VictoryGroup
               data={[
                 { x: 1, y: 5 },
@@ -141,7 +146,9 @@ class App extends React.Component {
             >
               <VictoryLine style={{ data: { stroke: "tomato" } }} />
               <VictoryScatter
-                style={{ data: { fill: ({ active }) => (active ? "tomato" : "gray") } }}
+                style={{
+                  data: { fill: ({ active }) => (active ? "tomato" : "gray") }
+                }}
                 labels={({ datum }) => datum.y}
                 labelComponent={<VictoryTooltip />}
               />
@@ -156,7 +163,9 @@ class App extends React.Component {
             >
               <VictoryLine style={{ data: { stroke: "blue" } }} />
               <VictoryScatter
-                style={{ data: { fill: ({ active }) => (active ? "blue" : "gray") } }}
+                style={{
+                  data: { fill: ({ active }) => (active ? "blue" : "gray") }
+                }}
                 labels={({ datum }) => datum.y}
                 labelComponent={<VictoryTooltip />}
               />
@@ -171,7 +180,9 @@ class App extends React.Component {
             >
               <VictoryLine style={{ data: { stroke: "black" } }} />
               <VictoryScatter
-                style={{ data: { fill: ({ active }) => (active ? "black" : "gray") } }}
+                style={{
+                  data: { fill: ({ active }) => (active ? "black" : "gray") }
+                }}
                 labels={({ datum }) => datum.y}
                 labelComponent={<VictoryTooltip />}
               />

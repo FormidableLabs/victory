@@ -49,7 +49,14 @@ const options = {
 };
 
 class VictoryBoxPlot extends React.Component {
-  static animationWhitelist = ["data", "domain", "height", "padding", "style", "width"];
+  static animationWhitelist = [
+    "data",
+    "domain",
+    "height",
+    "padding",
+    "style",
+    "width"
+  ];
 
   static displayName = "VictoryBoxPlot";
   static role = "boxplot";
@@ -75,7 +82,10 @@ class VictoryBoxPlot extends React.Component {
         ]),
         eventKey: PropTypes.oneOfType([
           PropTypes.array,
-          CustomPropTypes.allOfType([CustomPropTypes.integer, CustomPropTypes.nonNegative]),
+          CustomPropTypes.allOfType([
+            CustomPropTypes.integer,
+            CustomPropTypes.nonNegative
+          ]),
           PropTypes.string
         ]),
         eventHandlers: PropTypes.object
@@ -95,49 +105,84 @@ class VictoryBoxPlot extends React.Component {
     labels: PropTypes.bool,
     max: PropTypes.oneOfType([
       PropTypes.func,
-      CustomPropTypes.allOfType([CustomPropTypes.integer, CustomPropTypes.nonNegative]),
+      CustomPropTypes.allOfType([
+        CustomPropTypes.integer,
+        CustomPropTypes.nonNegative
+      ]),
       PropTypes.string,
       PropTypes.arrayOf(PropTypes.string)
     ]),
     maxComponent: PropTypes.element,
     maxLabelComponent: PropTypes.element,
-    maxLabels: PropTypes.oneOfType([PropTypes.func, PropTypes.array, PropTypes.bool]),
+    maxLabels: PropTypes.oneOfType([
+      PropTypes.func,
+      PropTypes.array,
+      PropTypes.bool
+    ]),
     median: PropTypes.oneOfType([
       PropTypes.func,
-      CustomPropTypes.allOfType([CustomPropTypes.integer, CustomPropTypes.nonNegative]),
+      CustomPropTypes.allOfType([
+        CustomPropTypes.integer,
+        CustomPropTypes.nonNegative
+      ]),
       PropTypes.string,
       PropTypes.arrayOf(PropTypes.string)
     ]),
     medianComponent: PropTypes.element,
     medianLabelComponent: PropTypes.element,
-    medianLabels: PropTypes.oneOfType([PropTypes.func, PropTypes.array, PropTypes.bool]),
+    medianLabels: PropTypes.oneOfType([
+      PropTypes.func,
+      PropTypes.array,
+      PropTypes.bool
+    ]),
     min: PropTypes.oneOfType([
       PropTypes.func,
-      CustomPropTypes.allOfType([CustomPropTypes.integer, CustomPropTypes.nonNegative]),
+      CustomPropTypes.allOfType([
+        CustomPropTypes.integer,
+        CustomPropTypes.nonNegative
+      ]),
       PropTypes.string,
       PropTypes.arrayOf(PropTypes.string)
     ]),
     minComponent: PropTypes.element,
     minLabelComponent: PropTypes.element,
-    minLabels: PropTypes.oneOfType([PropTypes.func, PropTypes.array, PropTypes.bool]),
+    minLabels: PropTypes.oneOfType([
+      PropTypes.func,
+      PropTypes.array,
+      PropTypes.bool
+    ]),
     q1: PropTypes.oneOfType([
       PropTypes.func,
-      CustomPropTypes.allOfType([CustomPropTypes.integer, CustomPropTypes.nonNegative]),
+      CustomPropTypes.allOfType([
+        CustomPropTypes.integer,
+        CustomPropTypes.nonNegative
+      ]),
       PropTypes.string,
       PropTypes.arrayOf(PropTypes.string)
     ]),
     q1Component: PropTypes.element,
     q1LabelComponent: PropTypes.element,
-    q1Labels: PropTypes.oneOfType([PropTypes.func, PropTypes.array, PropTypes.bool]),
+    q1Labels: PropTypes.oneOfType([
+      PropTypes.func,
+      PropTypes.array,
+      PropTypes.bool
+    ]),
     q3: PropTypes.oneOfType([
       PropTypes.func,
-      CustomPropTypes.allOfType([CustomPropTypes.integer, CustomPropTypes.nonNegative]),
+      CustomPropTypes.allOfType([
+        CustomPropTypes.integer,
+        CustomPropTypes.nonNegative
+      ]),
       PropTypes.string,
       PropTypes.arrayOf(PropTypes.string)
     ]),
     q3Component: PropTypes.element,
     q3LabelComponent: PropTypes.element,
-    q3Labels: PropTypes.oneOfType([PropTypes.func, PropTypes.array, PropTypes.bool]),
+    q3Labels: PropTypes.oneOfType([
+      PropTypes.func,
+      PropTypes.array,
+      PropTypes.bool
+    ]),
     style: PropTypes.shape({
       boxes: PropTypes.object,
       labels: PropTypes.object,
@@ -203,9 +248,15 @@ class VictoryBoxPlot extends React.Component {
       types.map((type) => {
         return this.dataKeys.reduce((validDataComponents, _key, index) => {
           const baseComponent = props[`${type}Component`];
-          const componentProps = this.getComponentProps(baseComponent, type, index);
+          const componentProps = this.getComponentProps(
+            baseComponent,
+            type,
+            index
+          );
           if (this.shouldRenderDatum(componentProps.datum)) {
-            validDataComponents.push(React.cloneElement(baseComponent, componentProps));
+            validDataComponents.push(
+              React.cloneElement(baseComponent, componentProps)
+            );
           }
           return validDataComponents;
         }, []);
@@ -257,7 +308,9 @@ class VictoryBoxPlot extends React.Component {
     }
 
     const children = this.renderBoxPlot(props);
-    return props.standalone ? this.renderContainer(props.containerComponent, children) : children;
+    return props.standalone
+      ? this.renderContainer(props.containerComponent, children)
+      : children;
   }
 }
 

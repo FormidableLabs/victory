@@ -6,19 +6,31 @@ function isNonEmptyArray(collection) {
 }
 
 function containsStrings(collection) {
-  return Array.isArray(collection) && collection.some((value) => typeof value === "string");
+  return (
+    Array.isArray(collection) &&
+    collection.some((value) => typeof value === "string")
+  );
 }
 
 function containsDates(collection) {
-  return Array.isArray(collection) && collection.some((value) => value instanceof Date);
+  return (
+    Array.isArray(collection) &&
+    collection.some((value) => value instanceof Date)
+  );
 }
 
 function containsNumbers(collection) {
-  return Array.isArray(collection) && collection.some((value) => typeof value === "number");
+  return (
+    Array.isArray(collection) &&
+    collection.some((value) => typeof value === "number")
+  );
 }
 
 function containsOnlyStrings(collection) {
-  return isNonEmptyArray(collection) && collection.every((value) => typeof value === "string");
+  return (
+    isNonEmptyArray(collection) &&
+    collection.every((value) => typeof value === "string")
+  );
 }
 
 function isArrayOfArrays(collection) {
@@ -31,12 +43,16 @@ function removeUndefined(arr) {
 
 function getMaxValue(arr, ...values) {
   const array = arr.concat(values);
-  return containsDates(array) ? new Date(Math.max(...array)) : Math.max(...array);
+  return containsDates(array)
+    ? new Date(Math.max(...array))
+    : Math.max(...array);
 }
 
 function getMinValue(arr, ...values) {
   const array = arr.concat(values);
-  return containsDates(array) ? new Date(Math.min(...array)) : Math.min(...array);
+  return containsDates(array)
+    ? new Date(Math.min(...array))
+    : Math.min(...array);
 }
 
 export default {

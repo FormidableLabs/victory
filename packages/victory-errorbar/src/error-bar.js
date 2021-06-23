@@ -69,7 +69,10 @@ const evaluateProps = (props) => {
    */
   const ariaLabel = Helpers.evaluateProp(props.ariaLabel, props);
   const id = Helpers.evaluateProp(props.id, props);
-  const style = Helpers.evaluateStyle(assign({ stroke: "black" }, props.style), props);
+  const style = Helpers.evaluateStyle(
+    assign({ stroke: "black" }, props.style),
+    props
+  );
   const tabIndex = Helpers.evaluateProp(props.tabIndex, props);
 
   return assign({}, props, { ariaLabel, id, style, tabIndex });
@@ -89,15 +92,27 @@ const ErrorBar = (props) => {
     error.bottom ? renderCross(props, error, "bottom") : null,
     error.top ? renderCross(props, error, "top") : null
   ].filter(Boolean);
-  return React.cloneElement(props.groupComponent, { "aria-label": ariaLabel, tabIndex }, children);
+  return React.cloneElement(
+    props.groupComponent,
+    { "aria-label": ariaLabel, tabIndex },
+    children
+  );
 };
 
 ErrorBar.propTypes = {
   ...CommonProps.primitiveProps,
   borderWidth: PropTypes.number,
   datum: PropTypes.object,
-  errorX: PropTypes.oneOfType([PropTypes.number, PropTypes.array, PropTypes.bool]),
-  errorY: PropTypes.oneOfType([PropTypes.number, PropTypes.array, PropTypes.bool]),
+  errorX: PropTypes.oneOfType([
+    PropTypes.number,
+    PropTypes.array,
+    PropTypes.bool
+  ]),
+  errorY: PropTypes.oneOfType([
+    PropTypes.number,
+    PropTypes.array,
+    PropTypes.bool
+  ]),
   groupComponent: PropTypes.element,
   lineComponent: PropTypes.element,
   x: PropTypes.number,

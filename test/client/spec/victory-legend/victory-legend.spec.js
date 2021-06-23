@@ -33,7 +33,9 @@ describe("components/victory-legend", () => {
   });
 
   it("has expected horizontal symbol position", () => {
-    const wrappedLegend = shallow(<VictoryLegend data={initialData} orientation="horizontal" />);
+    const wrappedLegend = shallow(
+      <VictoryLegend data={initialData} orientation="horizontal" />
+    );
     const output = wrappedLegend.find("Point");
 
     expect(output.at(0).prop("x")).to.equal(14);
@@ -43,7 +45,9 @@ describe("components/victory-legend", () => {
   });
 
   it("has expected vertical symbol position", () => {
-    const wrappedLegend = shallow(<VictoryLegend data={initialData} orientation="vertical" />);
+    const wrappedLegend = shallow(
+      <VictoryLegend data={initialData} orientation="vertical" />
+    );
     const output = wrappedLegend.find("Point");
 
     expect(output.at(0).prop("x")).to.equal(14);
@@ -53,7 +57,9 @@ describe("components/victory-legend", () => {
   });
 
   it("has expected horizontal legend labels position", () => {
-    const wrappedLegend = render(<VictoryLegend data={initialData} orientation="horizontal" />);
+    const wrappedLegend = render(
+      <VictoryLegend data={initialData} orientation="horizontal" />
+    );
     const output = wrappedLegend.find("text");
 
     expect(output.eq(0).prop("x")).to.equal("30.8");
@@ -63,7 +69,9 @@ describe("components/victory-legend", () => {
   });
 
   it("has expected vertical legend labels position", () => {
-    const wrappedLegend = render(<VictoryLegend data={initialData} orientation="vertical" />);
+    const wrappedLegend = render(
+      <VictoryLegend data={initialData} orientation="vertical" />
+    );
     const output = wrappedLegend.find("text");
 
     expect(output.eq(0).prop("x")).to.equal("30.8");
@@ -192,12 +200,18 @@ describe("components/victory-legend", () => {
       // columns are the same distance apart
       expect(outputPoints.get(0).props.x - outputPoints.get(3).props.x)
         .to.equal(outputPoints.get(1).props.x - outputPoints.get(4).props.x)
-        .and.to.equal(outputPoints.get(2).props.x - outputPoints.get(5).props.x);
+        .and.to.equal(
+          outputPoints.get(2).props.x - outputPoints.get(5).props.x
+        );
     });
 
     it("displays items in rows", () => {
       wrapper = shallow(
-        <VictoryLegend data={legendData} itemsPerRow={3} orientation="horizontal" />
+        <VictoryLegend
+          data={legendData}
+          itemsPerRow={3}
+          orientation="horizontal"
+        />
       );
       const outputLabels = wrapper.find("VictoryLabel");
       const outputPoints = wrapper.find("Point");
@@ -213,7 +227,9 @@ describe("components/victory-legend", () => {
       // rows are the same distance apart
       expect(outputPoints.get(0).props.y - outputPoints.get(3).props.y)
         .to.equal(outputPoints.get(1).props.y - outputPoints.get(4).props.y)
-        .and.to.equal(outputPoints.get(2).props.y - outputPoints.get(5).props.y);
+        .and.to.equal(
+          outputPoints.get(2).props.y - outputPoints.get(5).props.y
+        );
     });
   });
 });

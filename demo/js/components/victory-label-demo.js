@@ -31,7 +31,10 @@ export default class App extends React.Component {
   render() {
     return (
       <div style={containerStyle}>
-        <VictoryScatter {...defaultScatterProps} labelComponent={<VictoryLabel />} />
+        <VictoryScatter
+          {...defaultScatterProps}
+          labelComponent={<VictoryLabel />}
+        />
         <VictoryScatter
           {...defaultScatterProps}
           labelComponent={
@@ -53,7 +56,9 @@ export default class App extends React.Component {
         />
         <VictoryScatter
           {...defaultScatterProps}
-          labelComponent={<VictoryLabel angle={65} text={"Now with angles!!"} />}
+          labelComponent={
+            <VictoryLabel angle={65} text={"Now with angles!!"} />
+          }
         />
         <VictoryScatter
           {...defaultScatterProps}
@@ -73,7 +78,9 @@ export default class App extends React.Component {
               textAnchor="middle"
               verticalAnchor="start"
               style={{ padding: 15 }}
-              text={"Victory is awesome.\nThis is (middle, start) anchoring.\nGot it?"}
+              text={
+                "Victory is awesome.\nThis is (middle, start) anchoring.\nGot it?"
+              }
             />
           }
         />
@@ -97,7 +104,9 @@ export default class App extends React.Component {
               lineHeight={[1, 3, 1]}
               textAnchor="start"
               verticalAnchor="end"
-              text={"Victory is awesome.\nThis is (start, start) anchoring.\nCapisce?"}
+              text={
+                "Victory is awesome.\nThis is (start, start) anchoring.\nCapisce?"
+              }
             />
           }
         />
@@ -109,7 +118,9 @@ export default class App extends React.Component {
               lineHeight={[1, 3, 1]}
               textAnchor="start"
               verticalAnchor="end"
-              text={"Victory is awesome.\nThis is (start, start) anchoring.\nCapisce?"}
+              text={
+                "Victory is awesome.\nThis is (start, start) anchoring.\nCapisce?"
+              }
             />
           }
         />
@@ -132,7 +143,9 @@ export default class App extends React.Component {
               lineHeight={2}
               textAnchor="middle"
               verticalAnchor="end"
-              text={"Victory is awesome.\nThis is (middle, end) anchoring.\nGot it?"}
+              text={
+                "Victory is awesome.\nThis is (middle, end) anchoring.\nGot it?"
+              }
             />
           }
         />
@@ -143,7 +156,9 @@ export default class App extends React.Component {
               backgroundStyle={{ fill: "pink" }}
               textAnchor="start"
               verticalAnchor="end"
-              text={"Victory is awesome.\nThis is (start, end) anchoring.\nCapisce?"}
+              text={
+                "Victory is awesome.\nThis is (start, end) anchoring.\nCapisce?"
+              }
             />
           }
         />
@@ -154,7 +169,9 @@ export default class App extends React.Component {
               backgroundStyle={{ fill: "pink" }}
               textAnchor="end"
               verticalAnchor="middle"
-              text={"Victory is awesome.\nThis is (end, middle) anchoring.\nOK?"}
+              text={
+                "Victory is awesome.\nThis is (end, middle) anchoring.\nOK?"
+              }
             />
           }
         />
@@ -166,7 +183,9 @@ export default class App extends React.Component {
               textAnchor="middle"
               backgroundStyle={{ fill: "cyan", opacity: 0.4 }}
               verticalAnchor="middle"
-              text={"Victory is awesome.\nThis is (middle, middle) anchoring.\nGot it?"}
+              text={
+                "Victory is awesome.\nThis is (middle, middle) anchoring.\nGot it?"
+              }
             />
           }
         />
@@ -176,7 +195,9 @@ export default class App extends React.Component {
             <VictoryLabel
               textAnchor="start"
               verticalAnchor="middle"
-              text={"Victory is awesome.\nThis is (start, middle) anchoring.\nCapisce?"}
+              text={
+                "Victory is awesome.\nThis is (start, middle) anchoring.\nCapisce?"
+              }
             />
           }
         />
@@ -186,7 +207,10 @@ export default class App extends React.Component {
           labelComponent={
             <VictoryLabel
               backgroundStyle={{ fill: "lavender" }}
-              text={["Victory is awesome.", "This is inline styling for labels."]}
+              text={[
+                "Victory is awesome.",
+                "This is inline styling for labels."
+              ]}
               inline
               verticalAnchor="end"
             />
@@ -231,7 +255,12 @@ export default class App extends React.Component {
                 { fill: "purple", opacity: 0.4 },
                 { fill: "red", opacity: 0.4 }
               ]}
-              text={["Victory is awesome.", "This is variable", "lineHeight", "as an array."]}
+              text={[
+                "Victory is awesome.",
+                "This is variable",
+                "lineHeight",
+                "as an array."
+              ]}
               style={[{ fontSize: 20, fill: "green" }, { fontSize: 30 }]}
               // eslint-disable-next-line no-magic-numbers
               lineHeight={[2, 2, 3, 1]}
@@ -278,7 +307,11 @@ export default class App extends React.Component {
                 { fill: "orange", opacity: 0.2 },
                 { fill: "cyan", opacity: 0.2 }
               ]}
-              text={["Victory is awesome. ", "inline labels ", "with multiple backgrounds"]}
+              text={[
+                "Victory is awesome. ",
+                "inline labels ",
+                "with multiple backgrounds"
+              ]}
               lineHeight={[1, 2, 2]}
               verticalAnchor="start"
             />
@@ -296,7 +329,11 @@ export default class App extends React.Component {
                 { fill: "orange", opacity: 0.2 },
                 { fill: "cyan", opacity: 0.2 }
               ]}
-              text={["Victory is awesome. ", "inline labels ", "with multiple backgrounds"]}
+              text={[
+                "Victory is awesome. ",
+                "inline labels ",
+                "with multiple backgrounds"
+              ]}
               verticalAnchor="middle"
             />
           }
@@ -314,7 +351,11 @@ export default class App extends React.Component {
                 { fill: "orange", opacity: 0.2 },
                 { fill: "cyan", opacity: 0.2 }
               ]}
-              text={["Victory is awesome!!!! ", "inline labels ", "+ backgrounds"]}
+              text={[
+                "Victory is awesome!!!! ",
+                "inline labels ",
+                "+ backgrounds"
+              ]}
               lineHeight={[1, 2, 2]}
               verticalAnchor="start"
             />
@@ -332,7 +373,11 @@ export default class App extends React.Component {
                 { fill: "orange", opacity: 0.2 },
                 { fill: "green", opacity: 0.2 }
               ]}
-              text={["Victory is awesome. ", "inline labels ", "with multiple backgrounds"]}
+              text={[
+                "Victory is awesome. ",
+                "inline labels ",
+                "with multiple backgrounds"
+              ]}
               lineHeight={[1, 2, 2]}
               verticalAnchor="end"
             />
@@ -350,7 +395,11 @@ export default class App extends React.Component {
                 { fill: "orange", opacity: 0.2 },
                 { fill: "cyan", opacity: 0.2 }
               ]}
-              text={["Victory is awesome. ", "inline labels ", "with multiple backgrounds"]}
+              text={[
+                "Victory is awesome. ",
+                "inline labels ",
+                "with multiple backgrounds"
+              ]}
               lineHeight={[1, 2, 2]}
               verticalAnchor="start"
             />
@@ -367,7 +416,11 @@ export default class App extends React.Component {
                 { fill: "orange", opacity: 0.2 },
                 { fill: "cyan", opacity: 0.2 }
               ]}
-              text={["Victory is awesome. ", "inline labels ", "with multiple backgrounds"]}
+              text={[
+                "Victory is awesome. ",
+                "inline labels ",
+                "with multiple backgrounds"
+              ]}
               lineHeight={[1, 2, 2]}
               verticalAnchor="start"
             />
@@ -383,8 +436,16 @@ export default class App extends React.Component {
                 { fill: "orange", opacity: 0.2 },
                 { fill: "cyan", opacity: 0.2 }
               ]}
-              style={[{ letterSpacing: 2, fontSize: 15 }, { fontSize: 20 }, { fontSize: 12 }]}
-              text={["Victory is awesome. ", "inline labels ", "with multiple backgrounds"]}
+              style={[
+                { letterSpacing: 2, fontSize: 15 },
+                { fontSize: 20 },
+                { fontSize: 12 }
+              ]}
+              text={[
+                "Victory is awesome. ",
+                "inline labels ",
+                "with multiple backgrounds"
+              ]}
               lineHeight={[1, 2, 2]}
               verticalAnchor="start"
             />

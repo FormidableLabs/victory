@@ -27,7 +27,14 @@ const defaultData = [
 ];
 
 class VictoryBar extends React.Component {
-  static animationWhitelist = ["data", "domain", "height", "padding", "style", "width"];
+  static animationWhitelist = [
+    "data",
+    "domain",
+    "height",
+    "padding",
+    "style",
+    "width"
+  ];
 
   static displayName = "VictoryBar";
 
@@ -108,7 +115,9 @@ class VictoryBar extends React.Component {
     }
 
     const children = this.renderData(props);
-    return props.standalone ? this.renderContainer(props.containerComponent, children) : children;
+    return props.standalone
+      ? this.renderContainer(props.containerComponent, children)
+      : children;
   }
 }
 

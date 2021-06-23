@@ -18,7 +18,9 @@ const getArcPath = (props) => {
   const y3 = cy - r * Math.sin(Helpers.degreesToRadians(endAngle));
   const largerArcFlag1 = halfAngle - startAngle <= 180 ? 0 : 1;
   const largerArcFlag2 = endAngle - halfAngle <= 180 ? 0 : 1;
-  const arcStart = closedPath ? ` M ${cx}, ${cy} L ${x1}, ${y1}` : `M ${x1}, ${y1}`;
+  const arcStart = closedPath
+    ? ` M ${cx}, ${cy} L ${x1}, ${y1}`
+    : `M ${x1}, ${y1}`;
   const arc1 = `A ${r}, ${r}, 0, ${largerArcFlag1}, 0, ${x2}, ${y2}`;
   const arc2 = `A ${r}, ${r}, 0, ${largerArcFlag2}, 0, ${x3}, ${y3}`;
   const arcEnd = closedPath ? "Z" : "";
