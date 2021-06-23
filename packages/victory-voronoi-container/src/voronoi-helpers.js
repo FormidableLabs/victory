@@ -1,4 +1,4 @@
-import { Selection, Data, Helpers } from "victory-core";
+import { Collection, Selection, Data, Helpers } from "victory-core";
 import {
   assign,
   throttle,
@@ -33,6 +33,10 @@ const VoronoiHelpers = {
   },
 
   getDatasets(props) {
+    const minDomain = {
+      x: Collection.getMinValue(props.domain.x),
+      y: Collection.getMinValue(props.domain.y)
+    };
     const children = React.Children.toArray(props.children);
     const addMeta = (data, name, child) => {
       const continuous = child && child.type && child.type.continuous;
@@ -41,10 +45,11 @@ const VoronoiHelpers = {
         const { x, y, y0, x0 } = Helpers.getPoint(datum);
         const voronoiX = (+x + +x0) / 2;
         const voronoiY = (+y + +y0) / 2;
+
         return assign(
           {
-            _voronoiX: props.voronoiDimension === "y" ? 0 : voronoiX,
-            _voronoiY: props.voronoiDimension === "x" ? 0 : voronoiY,
+            _voronoiX: props.voronoiDimension === "y" ? minDomain.x : voronoiX,
+            _voronoiY: props.voronoiDimension === "x" ? minDomain.y : voronoiY,
             eventKey: index,
             childName: name,
             continuous,

@@ -10,6 +10,10 @@ import { Link } from "react-router-dom";
 import ComponentPlayground from "component-playground";
 import * as Victory from "victory";
 import styled, { withTheme } from "styled-components";
+import {
+  scaleDiscontinuous,
+  discontinuitySkipWeekends
+} from "@d3fc/d3fc-discontinuous-scale";
 import scopeMap from "./scope-map";
 import PlaygroundContainer from "./playground-container";
 import createPath from "../../helpers/path-helpers";
@@ -42,6 +46,8 @@ const renderPlayground = (props, scope, theme) => {
   const playgroundScope = Object.assign({}, scopeObject, {
     ...Victory,
     styled,
+    scaleDiscontinuous,
+    discontinuitySkipWeekends,
     React,
     ReactDOM
   });

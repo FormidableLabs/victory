@@ -13,6 +13,26 @@ import { Flyout, VictoryTooltip } from "Packages/victory-tooltip/src/index";
 import { VictoryLegend } from "Packages/victory-legend/src/index";
 import { VictoryLabel, VictoryTheme } from "Packages/victory-core/src/index";
 
+const series1 = [
+  { x: 0, y: 2500 },
+  { x: 2, y: 3300 },
+  { x: 4, y: 4300 },
+  { x: 6, y: 2400 },
+  { x: 8, y: 3300 },
+  { x: 10, y: 5400 },
+  { x: 12, y: 8900 }
+];
+
+const series2 = [
+  { x: 0, y: 200 },
+  { x: 2, y: 3100 },
+  { x: 4, y: 2500 },
+  { x: 6, y: 870 },
+  { x: 8, y: 2300 },
+  { x: 10, y: 550 },
+  { x: 12, y: 5200 }
+];
+
 class App extends React.Component {
   constructor() {
     super();
@@ -84,6 +104,22 @@ class App extends React.Component {
     return (
       <div className="demo">
         <div style={containerStyle}>
+          <VictoryChart
+            style={chartStyle}
+            scale={{ y: "log" }}
+            containerComponent={
+              <VictoryVoronoiContainer
+                voronoiDimension="x"
+                labels={({ datum }) => `y: ${datum.y}`}
+              />
+            }
+          >
+            <VictoryScatter
+              style={{ data: { fill: "red" }, labels: { fill: "red" } }}
+              data={series1}
+            />
+            <VictoryScatter data={series2} />
+          </VictoryChart>
           <VictoryChart
             style={chartStyle}
             domain={{ y: [0, 6] }}

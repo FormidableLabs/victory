@@ -5,6 +5,11 @@ import ReactDOM from "react-dom";
 import { withRouteData } from "react-static";
 import { Link } from "react-router-dom";
 import * as Victory from "victory";
+import * as d3Scale from "d3-scale";
+import {
+  scaleDiscontinuous,
+  discontinuitySkipWeekends
+} from "@d3fc/d3fc-discontinuous-scale";
 
 import createPath from "../helpers/path-helpers";
 import Page from "../partials/page";
@@ -101,7 +106,10 @@ const Gallery = ({ gallery, sidebarContent }) => {
                 PropTypes,
                 Slider,
                 basketballData,
-                listeningData
+                listeningData,
+                d3Scale,
+                scaleDiscontinuous,
+                discontinuitySkipWeekends
               }}
             />
           )}

@@ -3,6 +3,7 @@ import { DomainTuple, VictoryContainerProps } from "victory-core";
 
 export interface VictoryBrushContainerProps extends VictoryContainerProps {
   allowDrag?: boolean;
+  allowDraw?: boolean;
   allowResize?: boolean;
   brushComponent?: React.ReactElement;
   brushDimension?: "x" | "y";
