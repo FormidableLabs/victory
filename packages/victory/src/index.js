@@ -54,7 +54,11 @@ import { VictoryScatter } from "victory-scatter";
 import { VictoryBoxPlot } from "victory-box-plot";
 import { VictoryVoronoi, Voronoi } from "victory-voronoi";
 import { VictoryBrushLine } from "victory-brush-line";
-import { VictoryBrushContainer, BrushHelpers, brushContainerMixin } from "victory-brush-container";
+import {
+  VictoryBrushContainer,
+  BrushHelpers,
+  brushContainerMixin
+} from "victory-brush-container";
 import {
   VictoryCursorContainer,
   CursorHelpers,

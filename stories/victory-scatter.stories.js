@@ -6,9 +6,10 @@ import { VictoryStack } from "../packages/victory-stack/src/index";
 import { VictoryScatter } from "../packages/victory-scatter/src/index";
 import { VictoryChart } from "../packages/victory-chart/src/index";
 import { VictoryTooltip } from "../packages/victory-tooltip/src/index";
-import { VictoryTheme } from "../packages/victory-core/src/index";
+import { VictoryTheme, Point } from "../packages/victory-core/src/index";
 import { getData, getMixedData, getTimeData, getLogData } from "./data";
 import { fromJS } from "immutable";
+import styled from "styled-components";
 
 const SYMBOLS = [
   "circle",
@@ -63,7 +64,10 @@ export const Theme = () => {
   return (
     <div style={containerStyle}>
       <VictoryChart style={parentStyle}>
-        <VictoryScatter data={getMixedData(8)} labels={({ datum }) => datum.x} />
+        <VictoryScatter
+          data={getMixedData(8)}
+          labels={({ datum }) => datum.x}
+        />
       </VictoryChart>
       <VictoryChart style={parentStyle}>
         <VictoryStack labels={({ datum }) => datum.x}>
@@ -75,7 +79,10 @@ export const Theme = () => {
         </VictoryStack>
       </VictoryChart>
       <VictoryChart style={parentStyle} theme={VictoryTheme.material}>
-        <VictoryScatter data={getMixedData(8)} labels={({ datum }) => datum.x} />
+        <VictoryScatter
+          data={getMixedData(8)}
+          labels={({ datum }) => datum.x}
+        />
       </VictoryChart>
       <VictoryChart style={parentStyle} theme={VictoryTheme.material}>
         <VictoryStack labels={({ datum }) => datum.x}>
@@ -94,10 +101,20 @@ export const Symbols = () => {
   return SYMBOLS.map((symbol) => (
     <div style={containerStyle} key={symbol}>
       <VictoryChart {...defaultChartProps}>
-        <VictoryScatter data={getMixedData(8)} symbol={symbol} size={10} labels={() => symbol} />
+        <VictoryScatter
+          data={getMixedData(8)}
+          symbol={symbol}
+          size={10}
+          labels={() => symbol}
+        />
       </VictoryChart>
       <VictoryChart {...defaultChartProps} polar>
-        <VictoryScatter data={getMixedData(8)} symbol={symbol} size={10} labels={() => symbol} />
+        <VictoryScatter
+          data={getMixedData(8)}
+          symbol={symbol}
+          size={10}
+          labels={() => symbol}
+        />
       </VictoryChart>
     </div>
   ));
@@ -156,10 +173,18 @@ export const BubbleCharts = () => {
         <VictoryScatter data={getData(10)} bubbleProperty="x" />
       </VictoryChart>
       <VictoryChart {...defaultChartProps} domainPadding={25}>
-        <VictoryScatter data={getData(10)} bubbleProperty="x" maxBubbleSize={25} />
+        <VictoryScatter
+          data={getData(10)}
+          bubbleProperty="x"
+          maxBubbleSize={25}
+        />
       </VictoryChart>
       <VictoryChart {...defaultChartProps} domainPadding={25}>
-        <VictoryScatter data={getData(10)} bubbleProperty="x" minBubbleSize={10} />
+        <VictoryScatter
+          data={getData(10)}
+          bubbleProperty="x"
+          minBubbleSize={10}
+        />
       </VictoryChart>
       <VictoryChart {...defaultChartProps} domainPadding={25}>
         <VictoryScatter
@@ -170,7 +195,11 @@ export const BubbleCharts = () => {
         />
       </VictoryChart>
       <VictoryChart {...defaultChartProps} polar>
-        <VictoryScatter data={getData(10)} bubbleProperty="x" maxBubbleSize={25} />
+        <VictoryScatter
+          data={getData(10)}
+          bubbleProperty="x"
+          maxBubbleSize={25}
+        />
       </VictoryChart>
       <VictoryChart {...defaultChartProps} domainPadding={25}>
         <VictoryScatter data={getData(10)} bubbleProperty="x" size={3} />
@@ -265,10 +294,16 @@ export const Labels = () => {
   return (
     <div style={containerStyle}>
       <VictoryChart style={parentStyle}>
-        <VictoryScatter data={getData(7)} labels={({ datum }) => `x: ${datum.x}`} />
+        <VictoryScatter
+          data={getData(7)}
+          labels={({ datum }) => `x: ${datum.x}`}
+        />
       </VictoryChart>
       <VictoryChart style={parentStyle}>
-        <VictoryScatter data={getData(7)} labels={["", "", "three", "four", 5, "six"]} />
+        <VictoryScatter
+          data={getData(7)}
+          labels={["", "", "three", "four", 5, "six"]}
+        />
       </VictoryChart>
       <VictoryChart style={parentStyle}>
         <VictoryScatter
@@ -408,10 +443,16 @@ export const TimeScale = () => {
   return (
     <div style={containerStyle}>
       <VictoryChart {...defaultChartProps}>
-        <VictoryScatter data={getTimeData(5)} labels={({ datum }) => datum.x.getFullYear()} />
+        <VictoryScatter
+          data={getTimeData(5)}
+          labels={({ datum }) => datum.x.getFullYear()}
+        />
       </VictoryChart>
       <VictoryChart horizontal {...defaultChartProps}>
-        <VictoryScatter data={getTimeData(5)} labels={({ datum }) => datum.x.getFullYear()} />
+        <VictoryScatter
+          data={getTimeData(5)}
+          labels={({ datum }) => datum.x.getFullYear()}
+        />
       </VictoryChart>
       <VictoryChart {...defaultChartProps}>
         <VictoryStack labels={({ datum }) => datum.x.getFullYear()}>
@@ -435,10 +476,16 @@ export const LogScale = () => {
   return (
     <div style={containerStyle}>
       <VictoryChart {...defaultChartProps} scale={{ y: "log" }}>
-        <VictoryScatter data={getLogData(7)} labels={({ datum }) => `x: ${datum.x}`} />
+        <VictoryScatter
+          data={getLogData(7)}
+          labels={({ datum }) => `x: ${datum.x}`}
+        />
       </VictoryChart>
       <VictoryChart horizontal {...defaultChartProps} scale={{ y: "log" }}>
-        <VictoryScatter data={getLogData(7)} labels={({ datum }) => `x: ${datum.x}`} />
+        <VictoryScatter
+          data={getLogData(7)}
+          labels={({ datum }) => `x: ${datum.x}`}
+        />
       </VictoryChart>
       <VictoryChart polar {...defaultChartProps} scale={{ y: "log" }}>
         <VictoryScatter data={getLogData(7)} />
@@ -499,12 +546,33 @@ export const Polar = () => {
 export const Domain = () => {
   return (
     <div style={containerStyle}>
-      <VictoryScatter data={getData(5)} style={parentStyle} domain={{ x: [0, 4], y: [5, 10] }} />
+      <VictoryScatter
+        data={getData(5)}
+        style={parentStyle}
+        domain={{ x: [0, 4], y: [5, 10] }}
+      />
       <VictoryChart style={parentStyle} minDomain={{ x: 3 }}>
         <VictoryScatter data={getData(5)} />
       </VictoryChart>
       <VictoryChart style={parentStyle} maxDomain={{ y: 5 }}>
         <VictoryScatter data={getData(5)} />
+      </VictoryChart>
+    </div>
+  );
+};
+
+const StyledPoint = styled(Point)`
+  fill: darkmagenta;
+`;
+
+export const DisableInlineStyles = () => {
+  return (
+    <div style={containerStyle}>
+      <VictoryChart style={parentStyle}>
+        <VictoryScatter disableInlineStyles />
+      </VictoryChart>
+      <VictoryChart style={parentStyle}>
+        <VictoryScatter dataComponent={<StyledPoint disableInlineStyles />} />
       </VictoryChart>
     </div>
   );

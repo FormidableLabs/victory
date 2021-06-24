@@ -42,14 +42,20 @@ const MAP = {
   "/axis": { component: AxisDemo, name: "AxisDemo" },
   "/bar": { component: BarDemo, name: "BarDemo" },
   "/box-plot": { component: BoxPlotDemo, name: "BoxPlotDemo" },
-  "/brush-container": { component: BrushContainerDemo, name: "BrushContainerDemo" },
+  "/brush-container": {
+    component: BrushContainerDemo,
+    name: "BrushContainerDemo"
+  },
   "/brush-line": { component: BrushLineDemo, name: "BrushLineDemo" },
   "/group-demo": { component: GroupDemo, name: "GroupDemo" },
   "/horizontal-demo": { component: HorizontalDemo, name: "HorizontalDemo" },
   "/histogram-demo": { component: HistogramDemo, name: "HistogramDemo" },
   "/candlestick": { component: CandlestickDemo, name: "CandlestickDemo" },
   "/chart": { component: ChartDemo, name: "ChartDemo" },
-  "/cursor-container": { component: CursorContainerDemo, name: "CursorContainerDemo" },
+  "/cursor-container": {
+    component: CursorContainerDemo,
+    name: "CursorContainerDemo"
+  },
   "/draggable-demo": { component: DraggableDemo, name: "DraggableDemo" },
   "/error-bar": { component: ErrorBarDemo, name: "ErrorBarDemo" },
   "/events-demo": { component: EventsDemo, name: "EventsDemo" },
@@ -68,10 +74,19 @@ const MAP = {
     component: VictorySelectionContainerDemo,
     name: "VictorySelectionContainerDemo"
   },
-  "/victory-shared-events": { component: VictorySharedEventsDemo, name: "VictorySharedEventsDemo" },
+  "/victory-shared-events": {
+    component: VictorySharedEventsDemo,
+    name: "VictorySharedEventsDemo"
+  },
   "/voronoi": { component: VoronoiDemo, name: "VoronoiDemo" },
-  "/voronoi-container": { component: VoronoiContainerDemo, name: "VoronoiContainerDemo" },
-  "/zoom-container": { component: ZoomContainerDemo, name: "ZoomContainerDemo" },
+  "/voronoi-container": {
+    component: VoronoiContainerDemo,
+    name: "VoronoiContainerDemo"
+  },
+  "/zoom-container": {
+    component: ZoomContainerDemo,
+    name: "ZoomContainerDemo"
+  },
   "/ouia-demo": { component: OuiaDemo, name: "OuiaDemo" }
 };
 

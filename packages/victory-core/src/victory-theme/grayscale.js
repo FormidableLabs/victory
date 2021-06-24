@@ -3,7 +3,15 @@ import { assign } from "lodash";
 // *
 // * Colors
 // *
-const colors = ["#252525", "#525252", "#737373", "#969696", "#bdbdbd", "#d9d9d9", "#f0f0f0"];
+const colors = [
+  "#252525",
+  "#525252",
+  "#737373",
+  "#969696",
+  "#bdbdbd",
+  "#d9d9d9",
+  "#f0f0f0"
+];
 
 const charcoal = "#252525";
 const grey = "#969696";
@@ -241,7 +249,10 @@ export default {
           stroke: "transparent",
           strokeWidth: 0
         },
-        labels: assign({}, baseLabelStyles, { padding: 5, pointerEvents: "none" }),
+        labels: assign({}, baseLabelStyles, {
+          padding: 5,
+          pointerEvents: "none"
+        }),
         flyout: {
           stroke: charcoal,
           strokeWidth: 1,

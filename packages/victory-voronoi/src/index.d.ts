@@ -17,7 +17,10 @@ export interface VictoryVoronoiProps
     VictoryDatableProps,
     VictoryLabelableProps,
     VictoryMultiLabelableProps {
-  events?: EventPropTypeInterface<string, string | number | (string | number)[]>[];
+  events?: EventPropTypeInterface<
+    string,
+    string | number | (string | number)[]
+  >[];
   type?: number;
   sortKey?: StringOrNumberOrCallback | string[];
   sortOrder?: VictoryVoronoiSortOrderType;

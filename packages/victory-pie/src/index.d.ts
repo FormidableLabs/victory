@@ -15,8 +15,14 @@ import {
   VictoryStyleInterface
 } from "victory-core";
 
-export type VictorySliceLabelPositionType = "startAngle" | "centroid" | "endAngle";
-export type VictorySliceLabelPlacementType = "vertical" | "parallel" | "perpendicular";
+export type VictorySliceLabelPositionType =
+  | "startAngle"
+  | "centroid"
+  | "endAngle";
+export type VictorySliceLabelPlacementType =
+  | "vertical"
+  | "parallel"
+  | "perpendicular";
 export type VictorySliceTTargetType = "data" | "labels" | "parent";
 
 export interface SliceProps extends VictoryCommonProps {

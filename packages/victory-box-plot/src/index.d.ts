@@ -39,7 +39,9 @@ export interface VictoryBoxPlotLabelOrientationInterface {
   q3?: OrientationTypes;
 }
 
-export interface VictoryBoxPlotProps extends VictoryCommonProps, VictoryDatableProps {
+export interface VictoryBoxPlotProps
+  extends VictoryCommonProps,
+    VictoryDatableProps {
   boxWidth?: number;
   domain?: DomainPropType;
   domainPadding?: DomainPaddingPropType;

@@ -1,10 +1,19 @@
 import { assign, isNil } from "lodash";
-import { Helpers, LabelHelpers, Data, Domain, Scale, Collection } from "victory-core";
+import {
+  Helpers,
+  LabelHelpers,
+  Data,
+  Domain,
+  Scale,
+  Collection
+} from "victory-core";
 
 const getBarPosition = (props, datum) => {
   const getDefaultMin = (axis) => {
     const defaultZero =
-      Scale.getType(props.scale[axis]) === "log" ? 1 / Number.MAX_SAFE_INTEGER : 0;
+      Scale.getType(props.scale[axis]) === "log"
+        ? 1 / Number.MAX_SAFE_INTEGER
+        : 0;
     let defaultMin = defaultZero;
     const minY = Collection.getMinValue(props.domain[axis]);
     const maxY = Collection.getMaxValue(props.domain[axis]);
@@ -15,7 +24,9 @@ const getBarPosition = (props, datum) => {
       defaultMin = minY;
     }
 
-    return datum[`_${axis}`] instanceof Date ? new Date(defaultMin) : defaultMin;
+    return datum[`_${axis}`] instanceof Date
+      ? new Date(defaultMin)
+      : defaultMin;
   };
   const _y0 = datum._y0 !== undefined ? datum._y0 : getDefaultMin("y");
   const _x0 = datum._x0 !== undefined ? datum._x0 : getDefaultMin("x");
@@ -25,7 +36,9 @@ const getBarPosition = (props, datum) => {
 const getCalculatedValues = (props) => {
   const { polar } = props;
   const defaultStyles = Helpers.getDefaultStyles(props, "bar");
-  const style = Helpers.getStyles(props.style, defaultStyles);
+  const style = !props.disableInlineStyles
+    ? Helpers.getStyles(props.style, defaultStyles)
+    : {};
   const range = props.range || {
     x: Helpers.getRange(props, "x"),
     y: Helpers.getRange(props, "y")
@@ -42,7 +55,9 @@ const getCalculatedValues = (props) => {
       .domain(domain.y)
       .range(props.horizontal ? range.x : range.y)
   };
-  const origin = polar ? props.origin || Helpers.getPolarOrigin(props) : undefined;
+  const origin = polar
+    ? props.origin || Helpers.getPolarOrigin(props)
+    : undefined;
 
   let data = Data.getData(props);
   data = Data.formatDataFromDomain(data, domain, 0);
@@ -58,6 +73,7 @@ const getBaseProps = (props, fallbackProps) => {
     barRatio,
     cornerRadius,
     data,
+    disableInlineStyles,
     domain,
     events,
     height,
@@ -105,6 +121,7 @@ const getBaseProps = (props, fallbackProps) => {
       cornerRadius,
       data,
       datum,
+      disableInlineStyles,
       getPath,
       horizontal,
       index,
@@ -125,7 +142,10 @@ const getBaseProps = (props, fallbackProps) => {
     };
 
     const text = LabelHelpers.getText(props, datum, index);
-    if ((text !== undefined && text !== null) || (labels && (events || sharedEvents))) {
+    if (
+      (text !== undefined && text !== null) ||
+      (labels && (events || sharedEvents))
+    ) {
       childProps[eventKey].labels = LabelHelpers.getProps(props, index);
     }
 

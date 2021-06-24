@@ -28,7 +28,10 @@ interface VictoryAreaDemoState {
   style?: React.CSSProperties;
 }
 
-export default class VictoryAreaDemo extends React.Component<any, VictoryAreaDemoState> {
+export default class VictoryAreaDemo extends React.Component<
+  any,
+  VictoryAreaDemoState
+> {
   constructor(props: any) {
     super(props);
 
@@ -185,7 +188,9 @@ export default class VictoryAreaDemo extends React.Component<any, VictoryAreaDem
           }
         >
           {this.state.multiTransitionData.map((data, index) => {
-            return <VictoryArea key={index} data={data} interpolation={"basis"} />;
+            return (
+              <VictoryArea key={index} data={data} interpolation={"basis"} />
+            );
           })}
         </VictoryStack>
 
@@ -295,7 +300,9 @@ export default class VictoryAreaDemo extends React.Component<any, VictoryAreaDem
                     {
                       target: "data",
                       mutation: (props) => {
-                        return { style: merge({}, props.style, { fill: "orange" }) };
+                        return {
+                          style: merge({}, props.style, { fill: "orange" })
+                        };
                       }
                     },
                     {
@@ -382,11 +389,16 @@ export default class VictoryAreaDemo extends React.Component<any, VictoryAreaDem
           }
         >
           {this.state.multiTransitionData.map((data, index) => {
-            return <VictoryArea key={index} data={data} interpolation={"basis"} />;
+            return (
+              <VictoryArea key={index} data={data} interpolation={"basis"} />
+            );
           })}
         </VictoryStack>
 
-        <VictoryStack style={{ parent: style.parent }} theme={VictoryTheme.material}>
+        <VictoryStack
+          style={{ parent: style.parent }}
+          theme={VictoryTheme.material}
+        >
           <VictoryArea
             data={[
               { x: 1, y: 2 },

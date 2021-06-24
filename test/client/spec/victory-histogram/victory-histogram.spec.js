@@ -63,9 +63,13 @@ describe("components/victory-histogram", () => {
 
     it("renders 2 bars of equal height", () => {
       const data = [{ x: 2 }, { x: 3 }];
-      const wrapper = mount(<VictoryHistogram data={data} bins={[2, 2.5, 3]} />);
+      const wrapper = mount(
+        <VictoryHistogram data={data} bins={[2, 2.5, 3]} />
+      );
       const bars = wrapper.find("Bar");
-      const heights = bars.map(SvgTestHelper.getBarHeight).map((n) => parseInt(n));
+      const heights = bars
+        .map(SvgTestHelper.getBarHeight)
+        .map((n) => parseInt(n));
 
       expect(bars.length).to.equal(2);
       expect(heights[0]).to.equal(heights[1]);
@@ -74,7 +78,9 @@ describe("components/victory-histogram", () => {
 
     it("renders bars values with null accessor", () => {
       const data = range(30);
-      const wrapper = shallow(<VictoryHistogram data={data} x={null} y={null} />);
+      const wrapper = shallow(
+        <VictoryHistogram data={data} x={null} y={null} />
+      );
       const bars = wrapper.find("Bar");
       expect(bars.length).to.be.greaterThan(0);
     });
@@ -111,7 +117,13 @@ describe("components/victory-histogram", () => {
       svg.simulate("click");
       expect(clickHandler).called;
       // the first argument is the standard evt object
-      expect(clickHandler.args[0][1]).to.include.keys("data", "scale", "width", "height", "style");
+      expect(clickHandler.args[0][1]).to.include.keys(
+        "data",
+        "scale",
+        "width",
+        "height",
+        "style"
+      );
     });
 
     it("attaches an event to data", () => {
@@ -166,7 +178,9 @@ describe("components/victory-histogram", () => {
         node.childAt(0).simulate("click");
         expect(clickHandler).called;
         // the first argument is the standard evt object
-        expect(typeof clickHandler.args[index][1].text === "function").to.eql(true);
+        expect(typeof clickHandler.args[index][1].text === "function").to.eql(
+          true
+        );
         expect(`${clickHandler.args[index][2]}`).to.eql(`${index}`);
       });
     });

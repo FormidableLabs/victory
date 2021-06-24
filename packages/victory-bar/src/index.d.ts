@@ -30,7 +30,10 @@ export interface VictoryBarProps
         bottomLeft?: NumberOrCallback;
         bottomRight?: NumberOrCallback;
       };
-  events?: EventPropTypeInterface<VictoryBarTTargetType, number | string | number[] | string[]>[];
+  events?: EventPropTypeInterface<
+    VictoryBarTTargetType,
+    number | string | number[] | string[]
+  >[];
   eventKey?: StringOrNumberOrCallback;
   horizontal?: boolean;
   style?: VictoryStyleInterface;

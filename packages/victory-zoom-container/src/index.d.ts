@@ -18,4 +18,7 @@ export interface VictoryZoomContainerProps extends VictoryContainerProps {
   zoomDomain?: { x?: DomainTuple; y?: DomainTuple };
 }
 
-export class VictoryZoomContainer extends React.Component<VictoryZoomContainerProps, any> {}
+export class VictoryZoomContainer extends React.Component<
+  VictoryZoomContainerProps,
+  any
+> {}

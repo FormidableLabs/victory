@@ -13,7 +13,10 @@ interface VictoryBoxPlotDemoState {
   }[];
 }
 
-export default class VictoryBoxPlotDemo extends React.Component<any, VictoryBoxPlotDemoState> {
+export default class VictoryBoxPlotDemo extends React.Component<
+  any,
+  VictoryBoxPlotDemoState
+> {
   setStateInterval?: number = undefined;
 
   constructor(props: any) {
@@ -53,11 +56,17 @@ export default class VictoryBoxPlotDemo extends React.Component<any, VictoryBoxP
       justifyContent: "center"
     };
 
-    const chartStyle = { parent: { border: "1px solid #ccc", margin: "2%", maxWidth: "40%" } };
+    const chartStyle = {
+      parent: { border: "1px solid #ccc", margin: "2%", maxWidth: "40%" }
+    };
 
     return (
       <div className="demo" style={containerStyle}>
-        <VictoryChart style={chartStyle} minDomain={0} theme={VictoryTheme.material}>
+        <VictoryChart
+          style={chartStyle}
+          minDomain={0}
+          theme={VictoryTheme.material}
+        >
           <VictoryBoxPlot
             minLabels
             maxLabels
@@ -103,7 +112,11 @@ export default class VictoryBoxPlotDemo extends React.Component<any, VictoryBoxP
           />
         </VictoryChart>
 
-        <VictoryChart horizontal style={chartStyle} domain={{ y: [0, 20], x: [0, 3] }}>
+        <VictoryChart
+          horizontal
+          style={chartStyle}
+          domain={{ y: [0, 20], x: [0, 3] }}
+        >
           <VictoryBoxPlot
             minLabels
             maxLabels
@@ -211,7 +224,12 @@ export default class VictoryBoxPlotDemo extends React.Component<any, VictoryBoxP
         <VictoryChart horizontal animate style={chartStyle} domainPadding={50}>
           <VictoryBoxPlot boxWidth={10} data={this.state.data} />
         </VictoryChart>
-        <VictoryBoxPlot animate style={chartStyle} boxWidth={10} data={this.state.data} />
+        <VictoryBoxPlot
+          animate
+          style={chartStyle}
+          boxWidth={10}
+          data={this.state.data}
+        />
       </div>
     );
   }

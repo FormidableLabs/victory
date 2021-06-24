@@ -83,7 +83,11 @@ const data = [
 
 const LegendDemo = () => (
   <div className="demo" style={containerStyle}>
-    <svg height={1000} width={1000} style={{ border: "1px solid #ccc", margin: "2%" }}>
+    <svg
+      height={1000}
+      width={1000}
+      style={{ border: "1px solid #ccc", margin: "2%" }}
+    >
       <VictoryLegend
         standalone={false}
         x={25}
@@ -93,7 +97,9 @@ const LegendDemo = () => (
         data={data}
         symbolSpacer={symbolSpacer}
         style={legendStyle}
-        titleComponent={<VictoryLabel style={[{ fontSize: 20 }, { fontSize: 10 }]} />}
+        titleComponent={
+          <VictoryLabel style={[{ fontSize: 20 }, { fontSize: 10 }]} />
+        }
         events={[
           {
             target: "data",

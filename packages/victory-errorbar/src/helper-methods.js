@@ -1,5 +1,12 @@
 import { defaults, assign, isNil } from "lodash";
-import { Helpers, LabelHelpers, Scale, Domain, Data, Collection } from "victory-core";
+import {
+  Helpers,
+  LabelHelpers,
+  Scale,
+  Domain,
+  Data,
+  Collection
+} from "victory-core";
 
 const getErrors = (props, datum, axis) => {
   /**
@@ -29,7 +36,8 @@ const getData = (props) => {
   if (props.data) {
     return Data.formatData(props.data, props, accessorTypes);
   } else {
-    const generatedData = props.errorX || props.errorY ? Data.generateData(props) : [];
+    const generatedData =
+      props.errorX || props.errorY ? Data.generateData(props) : [];
     return Data.formatData(generatedData, props, accessorTypes);
   }
 };
@@ -49,9 +57,12 @@ const getDomainFromData = (props, axis) => {
     const errorIndex = type === "min" ? 1 : 0;
     const sign = type === "min" ? -1 : 1;
     return dataset.reduce((memo, datum) => {
-      const currentError = Array.isArray(datum[error]) ? datum[error][errorIndex] : datum[error];
+      const currentError = Array.isArray(datum[error])
+        ? datum[error][errorIndex]
+        : datum[error];
       const current = datum[`_${axis}`] + sign * (currentError || 0);
-      return (memo < current && type === "min") || (memo > current && type === "max")
+      return (memo < current && type === "min") ||
+        (memo > current && type === "max")
         ? memo
         : current;
     }, baseCondition);
@@ -75,7 +86,8 @@ const formatDataFromDomain = (datum, domain) => {
   let { _x, _y } = datum;
 
   // if either x or y center point is outside of the domain, null the entire data point
-  if (_x < minDomainX || _x > maxDomainX || _y < minDomainY || _y > maxDomainY) _x = _y = null;
+  if (_x < minDomainX || _x > maxDomainX || _y < minDomainY || _y > maxDomainY)
+    _x = _y = null;
 
   return Object.assign({}, datum, { _x, _y });
 };
@@ -100,15 +112,29 @@ const getCalculatedValues = (props) => {
       .domain(domain.y)
       .range(props.horizontal ? range.x : range.y)
   };
-  const origin = props.polar ? props.origin || Helpers.getPolarOrigin(props) : undefined;
+  const origin = props.polar
+    ? props.origin || Helpers.getPolarOrigin(props)
+    : undefined;
   return { domain, data, scale, style, origin };
 };
 
 const getLabelProps = (dataProps, text, style) => {
-  const { x, y, index, scale, errorY, errorX, horizontal, labelComponent, theme } = dataProps;
+  const {
+    x,
+    y,
+    index,
+    scale,
+    errorY,
+    errorX,
+    horizontal,
+    labelComponent,
+    theme,
+    disableInlineStyles
+  } = dataProps;
   const getError = (type = "x") => {
     const baseError = type === "y" ? errorY : errorX;
-    const error = baseError && Array.isArray(baseError) ? baseError[0] : baseError;
+    const error =
+      baseError && Array.isArray(baseError) ? baseError[0] : baseError;
     return error || dataProps[type];
   };
   const labelStyle = style.labels || {};
@@ -129,7 +155,8 @@ const getLabelProps = (dataProps, text, style) => {
     textAnchor: labelStyle.textAnchor || textAnchor,
     verticalAnchor: labelStyle.verticalAnchor || verticalAnchor,
     angle: labelStyle.angle,
-    horizontal
+    horizontal,
+    disableInlineStyles
   };
 
   if (!Helpers.isTooltip(labelComponent)) {
@@ -160,7 +187,8 @@ const getBaseProps = (props, fallbackProps) => {
     standalone,
     style,
     theme,
-    width
+    width,
+    disableInlineStyles
   } = props;
   const initialChildProps = {
     parent: {
@@ -196,17 +224,25 @@ const getBaseProps = (props, fallbackProps) => {
       horizontal,
       index,
       scale,
-      style: style.data,
+      style: disableInlineStyles ? {} : style.data,
       x,
-      y
+      y,
+      disableInlineStyles
     };
 
     childProps[eventKey] = {
       data: dataProps
     };
     const text = LabelHelpers.getText(props, datum, index);
-    if ((text !== undefined && text !== null) || (labels && (events || sharedEvents))) {
-      childProps[eventKey].labels = getLabelProps(assign({}, props, dataProps), text, style);
+    if (
+      (text !== undefined && text !== null) ||
+      (labels && (events || sharedEvents))
+    ) {
+      childProps[eventKey].labels = getLabelProps(
+        assign({}, props, dataProps),
+        text,
+        style
+      );
     }
 
     return childProps;

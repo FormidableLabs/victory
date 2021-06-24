@@ -15,7 +15,9 @@ describe("victory-util/collection", () => {
 
     it("returns false for collections of non-strings", () => {
       expect(Collection.containsStrings([0, 1])).to.equal(false);
-      expect(Collection.containsStrings([undefined, null, NaN])).to.equal(false);
+      expect(Collection.containsStrings([undefined, null, NaN])).to.equal(
+        false
+      );
       expect(Collection.containsStrings([{}, { a: "foo" }])).to.equal(false);
     });
 
@@ -37,14 +39,22 @@ describe("victory-util/collection", () => {
 
     it("returns false for collections of non-strings", () => {
       expect(Collection.containsOnlyStrings([0, 1])).to.equal(false);
-      expect(Collection.containsOnlyStrings([undefined, null, NaN])).to.equal(false);
-      expect(Collection.containsOnlyStrings([{}, { a: "foo" }])).to.equal(false);
+      expect(Collection.containsOnlyStrings([undefined, null, NaN])).to.equal(
+        false
+      );
+      expect(Collection.containsOnlyStrings([{}, { a: "foo" }])).to.equal(
+        false
+      );
     });
 
     it("returns false for collections with some strings", () => {
       expect(Collection.containsOnlyStrings(["hello", 0])).to.equal(false);
-      expect(Collection.containsOnlyStrings(["hello", ["not me"]])).to.equal(false);
-      expect(Collection.containsOnlyStrings([0, "hello", {}, null])).to.equal(false);
+      expect(Collection.containsOnlyStrings(["hello", ["not me"]])).to.equal(
+        false
+      );
+      expect(Collection.containsOnlyStrings([0, "hello", {}, null])).to.equal(
+        false
+      );
     });
 
     it("returns true for collections with only strings", () => {
@@ -93,7 +103,16 @@ describe("victory-util/collection", () => {
     });
 
     it("filters out undefineds", () => {
-      const testArray = [undefined, 0, undefined, {}, false, null, NaN, undefined];
+      const testArray = [
+        undefined,
+        0,
+        undefined,
+        {},
+        false,
+        null,
+        NaN,
+        undefined
+      ];
       const expectedArray = [0, {}, false, null, NaN];
       expect(Collection.removeUndefined(testArray)).to.eql(expectedArray);
     });
@@ -118,7 +137,11 @@ describe("victory-util/collection", () => {
 
   describe("getMinValue", () => {
     it("returns a date if array contains dates", () => {
-      const array = [new Date(2016, 3, 6), new Date(2017, 5, 3), new Date(2015, 11, 4)];
+      const array = [
+        new Date(2016, 3, 6),
+        new Date(2017, 5, 3),
+        new Date(2015, 11, 4)
+      ];
       expect(Collection.getMinValue(array)).to.eql(new Date(2015, 11, 4));
     });
 

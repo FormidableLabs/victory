@@ -72,14 +72,29 @@ declare module "victory" {
     Candle,
     CandleProps
   } from "victory-candlestick";
-  import { VictoryErrorBar, ErrorBar, VictoryErrorBarProps, ErrorBarProps } from "victory-errorbar";
+  import {
+    VictoryErrorBar,
+    ErrorBar,
+    VictoryErrorBarProps,
+    ErrorBarProps
+  } from "victory-errorbar";
 
-  import { VictoryLine, Curve, VictoryLineProps, CurveProps } from "victory-line";
+  import {
+    VictoryLine,
+    Curve,
+    VictoryLineProps,
+    CurveProps
+  } from "victory-line";
   import { VictoryHistogram, VictoryHistogramProps } from "victory-histogram";
   import { VictoryScatter, VictoryScatterProps } from "victory-scatter";
   import { VictoryBoxPlot, VictoryBoxPlotProps } from "victory-box-plot";
   import { VictoryBrushLine, VictoryBrushLineProps } from "victory-brush-line";
-  import { Voronoi, VictoryVoronoi, VoronoiProps, VictoryVoronoiProps } from "victory-voronoi";
+  import {
+    Voronoi,
+    VictoryVoronoi,
+    VoronoiProps,
+    VictoryVoronoiProps
+  } from "victory-voronoi";
 
   import {
     VictoryBrushContainer,
@@ -119,7 +134,12 @@ declare module "victory" {
     createContainer
   } from "victory-create-container";
 
-  import { VictoryTooltip, Flyout, VictoryTooltipProps, FlyoutProps } from "victory-tooltip";
+  import {
+    VictoryTooltip,
+    Flyout,
+    VictoryTooltipProps,
+    FlyoutProps
+  } from "victory-tooltip";
   import { VictoryLegend, VictoryLegendProps } from "victory-legend";
 
   // import { VictorySharedEvents } from "victory-shared-events";

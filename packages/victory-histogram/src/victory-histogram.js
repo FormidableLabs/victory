@@ -10,7 +10,12 @@ import {
   addEvents,
   PropTypes as CustomPropTypes
 } from "victory-core";
-import { getBaseProps, getData, getDomain, getFormattedData } from "./helper-methods";
+import {
+  getBaseProps,
+  getData,
+  getDomain,
+  getFormattedData
+} from "./helper-methods";
 
 const fallbackProps = {
   width: 450,
@@ -21,7 +26,14 @@ const fallbackProps = {
 const defaultData = [];
 
 export class VictoryHistogram extends React.Component {
-  static animationWhitelist = ["data", "domain", "height", "padding", "style", "width"];
+  static animationWhitelist = [
+    "data",
+    "domain",
+    "height",
+    "padding",
+    "style",
+    "width"
+  ];
 
   static displayName = "VictoryHistogram";
 
@@ -51,7 +63,9 @@ export class VictoryHistogram extends React.Component {
     ...CommonProps.dataProps,
     binSpacing: CustomPropTypes.nonNegative,
     bins: PropTypes.oneOfType([
-      PropTypes.arrayOf(PropTypes.oneOfType([PropTypes.number, PropTypes.instanceOf(Date)])),
+      PropTypes.arrayOf(
+        PropTypes.oneOfType([PropTypes.number, PropTypes.instanceOf(Date)])
+      ),
       CustomPropTypes.nonNegative
     ]),
     cornerRadius: PropTypes.oneOfType([
@@ -106,7 +120,9 @@ export class VictoryHistogram extends React.Component {
     }
 
     const children = this.renderData(props);
-    return props.standalone ? this.renderContainer(props.containerComponent, children) : children;
+    return props.standalone
+      ? this.renderContainer(props.containerComponent, children)
+      : children;
   }
 }
 

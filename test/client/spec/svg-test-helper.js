@@ -5,10 +5,25 @@ import { assign, without, min, max, property } from "lodash";
 
 const RECTANGULAR_SEQUENCE = ["M", "A", "L", "A", "L", "A", "L", "A", "z"];
 const CIRCULAR_SEQUENCE = ["M", "m", "a", "a"];
-const FLYOUT_SEQUENCE = ["M", "L", "L", "L", "A", "L", "A", "L", "A", "L", "A", "z"];
+const FLYOUT_SEQUENCE = [
+  "M",
+  "L",
+  "L",
+  "L",
+  "A",
+  "L",
+  "A",
+  "L",
+  "A",
+  "L",
+  "A",
+  "z"
+];
 
 const parseSvgPathCommands = (commandStr) => {
-  const matches = commandStr.match(/[MmLlHhVvCcSsQqTtAaZz]+[^MmLlHhVvCcSsQqTtAaZz]*/g);
+  const matches = commandStr.match(
+    /[MmLlHhVvCcSsQqTtAaZz]+[^MmLlHhVvCcSsQqTtAaZz]*/g
+  );
 
   return matches.map((match) => {
     const name = match.charAt(0);
@@ -42,12 +57,15 @@ const exhibitsShapeSequence = (wrapper, shapeSequence) => {
 const calculateD3Path = (props, pathType, index) => {
   // eslint-disable-line max-statements
   const { width, height, padding, scale, interpolation, data, domain } = props;
-  const scaleType = scale ? `scale${scale[0].toUpperCase() + scale.slice(1)}` : "scaleLinear";
+  const scaleType = scale
+    ? `scale${scale[0].toUpperCase() + scale.slice(1)}`
+    : "scaleLinear";
   const curveType =
     typeof interpolation === "string"
       ? `curve${interpolation[0].toUpperCase() + interpolation.slice(1)}`
       : undefined;
-  const curveFunction = typeof interpolation === "function" ? interpolation : d3Shape[curveType];
+  const curveFunction =
+    typeof interpolation === "function" ? interpolation : d3Shape[curveType];
 
   const dataDomain = data.reduce(
     (prev, datum) => {
@@ -179,7 +197,9 @@ const expectations = {
    */
   expectIsFlyout(wrapper) {
     const commands = getPathCommandsFromWrapper(wrapper);
-    expect(exhibitsShapeSequence(wrapper, FLYOUT_SEQUENCE, commands)).to.equal(true);
+    expect(exhibitsShapeSequence(wrapper, FLYOUT_SEQUENCE, commands)).to.equal(
+      true
+    );
   }
 };
 

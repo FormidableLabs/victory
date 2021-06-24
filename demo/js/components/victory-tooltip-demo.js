@@ -20,7 +20,11 @@ class App extends React.Component {
       justifyContent: "center"
     };
 
-    const parentStyle = { border: "1px solid #ccc", margin: "2%", maxWidth: "40%" };
+    const parentStyle = {
+      border: "1px solid #ccc",
+      margin: "2%",
+      maxWidth: "40%"
+    };
 
     return (
       <div className="demo">
@@ -52,7 +56,11 @@ class App extends React.Component {
           <VictoryScatter
             style={{ parent: parentStyle }}
             labelComponent={
-              <VictoryTooltip constrainToVisibleArea dy={0} centerOffset={{ x: 20 }} />
+              <VictoryTooltip
+                constrainToVisibleArea
+                dy={0}
+                centerOffset={{ x: 20 }}
+              />
             }
             labels={({ datum }) => `hello000000 #${datum.x}`}
             size={({ active }) => (active ? 5 : 3)}

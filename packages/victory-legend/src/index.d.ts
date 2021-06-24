@@ -36,12 +36,17 @@ export interface VictoryLegendProps
   }>;
   dataComponent?: React.ReactElement;
   eventKey?: StringOrNumberOrCallback | string[];
-  events?: EventPropTypeInterface<VictoryLegendTTargetType, StringOrNumberOrCallback>[];
+  events?: EventPropTypeInterface<
+    VictoryLegendTTargetType,
+    StringOrNumberOrCallback
+  >[];
   gutter?: number | { left: number; right: number };
   itemsPerRow?: number;
   orientation?: VictoryLegendOrientationType;
   rowGutter?: number | Omit<BlockProps, "left" | "right">;
-  style?: VictoryStyleInterface & { title?: VictoryLabelStyleObject | VictoryLabelStyleObject[] };
+  style?: VictoryStyleInterface & {
+    title?: VictoryLabelStyleObject | VictoryLabelStyleObject[];
+  };
   symbolSpacer?: number;
   title?: string | string[];
   titleComponent?: React.ReactElement;

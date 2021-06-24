@@ -44,7 +44,9 @@ class App extends React.Component<any, PrimitivesDemoState> {
 
   handleClick() {
     const newBackgroundColor =
-      this.state.axisBackgroundColor === "mediumseagreen" ? "paleturquoise" : "mediumseagreen";
+      this.state.axisBackgroundColor === "mediumseagreen"
+        ? "paleturquoise"
+        : "mediumseagreen";
 
     this.setState({ axisBackgroundColor: newBackgroundColor });
   }
@@ -75,7 +77,11 @@ class App extends React.Component<any, PrimitivesDemoState> {
       background: { fill: this.state.axisBackgroundColor }
     };
 
-    const lineSegmentStyle = { stroke: "white", strokeWidth: 5, cursor: "pointer" };
+    const lineSegmentStyle = {
+      stroke: "white",
+      strokeWidth: 5,
+      cursor: "pointer"
+    };
 
     return (
       <div className="demo">
@@ -148,7 +154,9 @@ class App extends React.Component<any, PrimitivesDemoState> {
               minComponent={<Whisker active={this.state.whiskersActive} />}
             />
           </VictoryChart>
-          <button onClick={this.handleToggleWhiskers.bind(this)}>Whiskers?</button>
+          <button onClick={this.handleToggleWhiskers.bind(this)}>
+            Whiskers?
+          </button>
         </div>
       </div>
     );

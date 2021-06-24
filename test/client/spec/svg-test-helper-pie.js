@@ -50,9 +50,10 @@ const SvgTestHelper = {
 
     const firstSweepFlag = commands[1].args[4];
     const secondSweepFlag = commands[3].args[4];
-    expect(firstSweepFlag, "The 2 arcs are drawn in opposite directions").to.not.eql(
-      secondSweepFlag
-    );
+    expect(
+      firstSweepFlag,
+      "The 2 arcs are drawn in opposite directions"
+    ).to.not.eql(secondSweepFlag);
 
     const startOfOuterArc = {
       x: commands[0].args[0],
@@ -120,7 +121,9 @@ const SvgTestHelper = {
    */
   parseSvgPathCommands: (str) => {
     // Match on all valid SVG path commands
-    const matches = str.match(/[MmLlHhVvCcSsQqTtAaZz]+[^MmLlHhVvCcSsQqTtAaZz]*/g);
+    const matches = str.match(
+      /[MmLlHhVvCcSsQqTtAaZz]+[^MmLlHhVvCcSsQqTtAaZz]*/g
+    );
 
     return matches.map((match) => {
       return {
@@ -210,7 +213,8 @@ const SvgTestHelper = {
     const cartesianY1 = coord1.y * -1;
     const cartesianY2 = coord2.y * -1;
 
-    const radians = Math.atan2(cartesianY1, coord1.x) - Math.atan2(cartesianY2, coord2.x);
+    const radians =
+      Math.atan2(cartesianY1, coord1.x) - Math.atan2(cartesianY2, coord2.x);
     const theta = radians * (180 / Math.PI);
 
     return theta < 0 ? 360 + theta : theta;

@@ -14,7 +14,9 @@ describe("components/victory-label", () => {
   });
 
   it("sets dx and dy for text element", () => {
-    const wrapper = shallow(<VictoryLabel dx={30} dy={30} text={"such text, wow"} />);
+    const wrapper = shallow(
+      <VictoryLabel dx={30} dy={30} text={"such text, wow"} />
+    );
     const output = wrapper.find(Text);
     expect(output.prop("dx")).to.eql(30);
     // dy = props.dy + (capHeight(0.71) / 2 + (0.5 - length(1) / 2) * lineHeight(1)) * fontSize(14);
@@ -22,32 +24,42 @@ describe("components/victory-label", () => {
   });
 
   it("sets x and y for text element", () => {
-    const wrapper = shallow(<VictoryLabel x={"100%"} y={30} text={"such text, wow"} />);
+    const wrapper = shallow(
+      <VictoryLabel x={"100%"} y={30} text={"such text, wow"} />
+    );
     const output = wrapper.find(Text);
     expect(output.prop("x")).to.eql("100%");
     expect(output.prop("y")).to.eql(34.97);
   });
 
   it("has a transform property that rotates the text to match the labelAngle prop", () => {
-    const wrapper = shallow(<VictoryLabel angle={46} text={"such text, wow"} />);
+    const wrapper = shallow(
+      <VictoryLabel angle={46} text={"such text, wow"} />
+    );
     const output = wrapper.find(Text);
     expect(output.prop("transform")).to.contain("rotate(46");
   });
 
   it("accepts the angle prop as a function", () => {
-    const wrapper = shallow(<VictoryLabel angle={() => 46} text={"such text, wow"} />);
+    const wrapper = shallow(
+      <VictoryLabel angle={() => 46} text={"such text, wow"} />
+    );
     const output = wrapper.find(Text);
     expect(output.prop("transform")).to.contain("rotate(46");
   });
 
   it("strips px from fontSize", () => {
-    const wrapper = shallow(<VictoryLabel style={{ fontSize: "10px" }} text={"such text, wow"} />);
+    const wrapper = shallow(
+      <VictoryLabel style={{ fontSize: "10px" }} text={"such text, wow"} />
+    );
     const output = wrapper.find(TSpan);
     expect(output.prop("style")).to.contain({ fontSize: 10 });
   });
 
   it("uses a default fontSize when an invalid fontSize is given", () => {
-    const wrapper = shallow(<VictoryLabel style={{ fontSize: "foo" }} text={"such text, wow"} />);
+    const wrapper = shallow(
+      <VictoryLabel style={{ fontSize: "foo" }} text={"such text, wow"} />
+    );
     const output = wrapper.find(TSpan);
     expect(output.prop("style")).to.contain({ fontSize: 14 });
   });
@@ -65,7 +77,9 @@ describe("components/victory-label", () => {
   });
 
   it("renders title and desc if provided ", () => {
-    const wrapper = mount(<VictoryLabel text="title and desc" title="title" desc="desc" />);
+    const wrapper = mount(
+      <VictoryLabel text="title and desc" title="title" desc="desc" />
+    );
 
     const wrapper2 = mount(<VictoryLabel text="title and desc" />);
 
@@ -99,14 +113,18 @@ describe("components/victory-label", () => {
   describe("event handling", () => {
     it("attaches an to the parent object", () => {
       const clickHandler = sinon.spy();
-      const wrapper = mount(<VictoryLabel text="hi" events={{ onClick: clickHandler }} />);
+      const wrapper = mount(
+        <VictoryLabel text="hi" events={{ onClick: clickHandler }} />
+      );
       wrapper.find(Text).simulate("click");
       expect(clickHandler.called).to.equal(true);
     });
   });
 
   it("renders TSpan elements inline when `inline` prop is passed", () => {
-    const wrapper = shallow(<VictoryLabel text={["Inline", "label", "testing"]} inline dx={5} />);
+    const wrapper = shallow(
+      <VictoryLabel text={["Inline", "label", "testing"]} inline dx={5} />
+    );
 
     const output = wrapper.find(TSpan);
     output.forEach((tspan) => {
@@ -121,7 +139,10 @@ describe("components/victory-label", () => {
     const lineHeight = [1, 2, 3];
     const expectedDy = [0, 21, 35];
     const wrapper = shallow(
-      <VictoryLabel text={["lineHeight", "array", "testing"]} lineHeight={lineHeight} />
+      <VictoryLabel
+        text={["lineHeight", "array", "testing"]}
+        lineHeight={lineHeight}
+      />
     );
 
     const output = wrapper.find(TSpan);
@@ -137,7 +158,10 @@ describe("components/victory-label", () => {
   it("defaults lineHeight to 1 if an empty array is provided for lineHeight", () => {
     const expectedDy = [0, 14, 14, 14];
     const wrapper = shallow(
-      <VictoryLabel text={["lineHeight", "empty", "array", "testing"]} lineHeight={[]} />
+      <VictoryLabel
+        text={["lineHeight", "empty", "array", "testing"]}
+        lineHeight={[]}
+      />
     );
 
     const output = wrapper.find(TSpan);
@@ -150,7 +174,8 @@ describe("components/victory-label", () => {
     const defaultStyles = {
       fill: "#252525",
       fontSize: 14,
-      fontFamily: "'Gill Sans', 'Gill Sans MT', 'Ser­avek', 'Trebuchet MS', sans-serif",
+      fontFamily:
+        "'Gill Sans', 'Gill Sans MT', 'Ser­avek', 'Trebuchet MS', sans-serif",
       stroke: "transparent"
     };
 
@@ -165,7 +190,9 @@ describe("components/victory-label", () => {
   });
 
   it("passes id if provided as a string", () => {
-    const wrapper = shallow(<VictoryLabel text="Some Label" id={"my-custom-id"} />);
+    const wrapper = shallow(
+      <VictoryLabel text="Some Label" id={"my-custom-id"} />
+    );
 
     const output = wrapper.find(Text);
     output.forEach((text) => {
@@ -184,7 +211,10 @@ describe("components/victory-label", () => {
 
   it("runs function if id provided as a function", () => {
     const wrapper = shallow(
-      <VictoryLabel text="Some Label" id={() => `created-in-function-${Math.random()}`} />
+      <VictoryLabel
+        text="Some Label"
+        id={() => `created-in-function-${Math.random()}`}
+      />
     );
 
     const output = wrapper.find(Text);

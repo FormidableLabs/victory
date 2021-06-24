@@ -74,7 +74,12 @@ describe("components/victory-chart", () => {
       svg.simulate("click");
       expect(clickHandler).called;
       // the first argument is the standard evt object
-      expect(clickHandler.args[0][1]).to.include.keys("scale", "width", "height", "style");
+      expect(clickHandler.args[0][1]).to.include.keys(
+        "scale",
+        "width",
+        "height",
+        "style"
+      );
     });
   });
 });

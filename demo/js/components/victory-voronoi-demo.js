@@ -47,8 +47,17 @@ class App extends React.Component {
       justifyContent: "center"
     };
 
-    const parentStyle = { border: "1px solid #ccc", margin: "2%", maxWidth: "40%" };
-    const visible = { fill: "gray", opacity: 0.1, stroke: "black", strokeWidth: 2 };
+    const parentStyle = {
+      border: "1px solid #ccc",
+      margin: "2%",
+      maxWidth: "40%"
+    };
+    const visible = {
+      fill: "gray",
+      opacity: 0.1,
+      stroke: "black",
+      strokeWidth: 2
+    };
 
     return (
       <div className="demo">

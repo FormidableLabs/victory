@@ -28,7 +28,10 @@ export default class VictoryStack extends React.Component {
     ...CommonProps.baseProps,
     bins: PropTypes.oneOfType([
       PropTypes.arrayOf(
-        PropTypes.oneOfType([CustomPropTypes.nonNegative, PropTypes.instanceOf(Date)])
+        PropTypes.oneOfType([
+          CustomPropTypes.nonNegative,
+          PropTypes.instanceOf(Date)
+        ])
       ),
       CustomPropTypes.nonNegative
     ]),
@@ -39,7 +42,10 @@ export default class VictoryStack extends React.Component {
         y: PropTypes.arrayOf(PropTypes.string)
       })
     ]),
-    children: PropTypes.oneOfType([PropTypes.arrayOf(PropTypes.node), PropTypes.node]),
+    children: PropTypes.oneOfType([
+      PropTypes.arrayOf(PropTypes.node),
+      PropTypes.node
+    ]),
     colorScale: PropTypes.oneOfType([
       PropTypes.arrayOf(PropTypes.string),
       PropTypes.oneOf([
@@ -73,7 +79,11 @@ export default class VictoryStack extends React.Component {
     fillInMissingData: true
   };
 
-  static expectedComponents = ["groupComponent", "containerComponent", "labelComponent"];
+  static expectedComponents = [
+    "groupComponent",
+    "containerComponent",
+    "labelComponent"
+  ];
 
   static getChildren = getChildren;
 
@@ -103,7 +113,10 @@ export default class VictoryStack extends React.Component {
     const children = getChildren(props, childComponents, calculatedProps);
     const getAnimationProps = Wrapper.getAnimationProps.bind(this);
     const newChildren = children.map((child, index) => {
-      const childProps = assign({ animate: getAnimationProps(props, child, index) }, child.props);
+      const childProps = assign(
+        { animate: getAnimationProps(props, child, index) },
+        child.props
+      );
       return React.cloneElement(child, childProps);
     });
     /*
@@ -140,7 +153,9 @@ export default class VictoryStack extends React.Component {
   render() {
     const { role } = this.constructor;
     const props =
-      this.state && this.state.nodesWillExit ? this.state.oldProps || this.props : this.props;
+      this.state && this.state.nodesWillExit
+        ? this.state.oldProps || this.props
+        : this.props;
     const modifiedProps = Helpers.modifyProps(props, fallbackProps, role);
     const {
       eventKey,
@@ -151,8 +166,14 @@ export default class VictoryStack extends React.Component {
     } = modifiedProps;
     const childComponents = React.Children.toArray(modifiedProps.children);
     const calculatedProps = getCalculatedProps(modifiedProps, childComponents);
-    const newChildren = this.getNewChildren(modifiedProps, childComponents, calculatedProps);
-    const containerProps = standalone ? this.getContainerProps(modifiedProps, calculatedProps) : {};
+    const newChildren = this.getNewChildren(
+      modifiedProps,
+      childComponents,
+      calculatedProps
+    );
+    const containerProps = standalone
+      ? this.getContainerProps(modifiedProps, calculatedProps)
+      : {};
     const container = standalone
       ? this.renderContainer(containerComponent, containerProps)
       : groupComponent;

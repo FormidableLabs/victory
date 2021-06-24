@@ -1,5 +1,13 @@
 import { Collection, Selection, Data, Helpers } from "victory-core";
-import { assign, throttle, isFunction, isEmpty, includes, isString, isRegExp } from "lodash";
+import {
+  assign,
+  throttle,
+  isFunction,
+  isEmpty,
+  includes,
+  isString,
+  isRegExp
+} from "lodash";
 import isEqual from "react-fast-compare";
 import Delaunay from "delaunay-find/lib/index.js";
 import React from "react";
@@ -10,7 +18,8 @@ const VoronoiHelpers = {
     const padding = Helpers.getPadding(props, "voronoiPadding");
     const { x, y } = point;
     if (polar) {
-      const distanceSquared = Math.pow(x - origin.x, 2) + Math.pow(y - origin.y, 2);
+      const distanceSquared =
+        Math.pow(x - origin.x, 2) + Math.pow(y - origin.y, 2);
       const radius = Math.max(...scale.y.range());
       return distanceSquared < Math.pow(radius, 2);
     } else {
@@ -67,11 +76,17 @@ const VoronoiHelpers = {
       const blacklistStr = blacklist.filter(isString);
       const blacklistRegExp = blacklist.filter(isRegExp);
       const isRegExpMatch = blacklistRegExp.some((regExp) => regExp.test(name));
-      if (!Data.isDataComponent(child) || includes(blacklistStr, name) || isRegExpMatch) {
+      if (
+        !Data.isDataComponent(child) ||
+        includes(blacklistStr, name) ||
+        isRegExpMatch
+      ) {
         return null;
       }
       const getChildData =
-        child.type && isFunction(child.type.getData) ? child.type.getData : getData;
+        child.type && isFunction(child.type.getData)
+          ? child.type.getData
+          : getData;
       const childData = getChildData(child.props);
       return childData ? addMeta(childData, name, child) : null;
     };
@@ -93,7 +108,8 @@ const VoronoiHelpers = {
       return true;
     }
     const { x, y } = mousePosition;
-    const distanceSquared = Math.pow(x - point[0], 2) + Math.pow(y - point[1], 2);
+    const distanceSquared =
+      Math.pow(x - point[0], 2) + Math.pow(y - point[1], 2);
     return distanceSquared < Math.pow(radius, 2);
   },
 
@@ -105,8 +121,14 @@ const VoronoiHelpers = {
     });
     const delaunay = Delaunay.from(scaledData);
     const index = delaunay.find(mousePosition.x, mousePosition.y);
-    const withinRadius = this.withinRadius(scaledData[index], mousePosition, props.radius);
-    const points = withinRadius ? this.findPoints(datasets, datasets[index]) : [];
+    const withinRadius = this.withinRadius(
+      scaledData[index],
+      mousePosition,
+      props.radius
+    );
+    const points = withinRadius
+      ? this.findPoints(datasets, datasets[index])
+      : [];
     return { points, index };
   },
 
@@ -117,12 +139,16 @@ const VoronoiHelpers = {
       return [];
     }
     const defaultTarget = activateData ? ["data"] : [];
-    const targets = labels && !activateLabels ? defaultTarget : defaultTarget.concat("labels");
+    const targets =
+      labels && !activateLabels
+        ? defaultTarget
+        : defaultTarget.concat("labels");
     if (isEmpty(targets)) {
       return [];
     }
     return targets.map((target) => {
-      const eventKey = continuous === true && target === "data" ? "all" : point.eventKey;
+      const eventKey =
+        continuous === true && target === "data" ? "all" : point.eventKey;
       return {
         childName,
         eventKey,
@@ -139,7 +165,10 @@ const VoronoiHelpers = {
       return [];
     }
     const defaultTarget = activateData ? ["data"] : [];
-    const targets = labels && !activateLabels ? defaultTarget : defaultTarget.concat("labels");
+    const targets =
+      labels && !activateLabels
+        ? defaultTarget
+        : defaultTarget.concat("labels");
     if (isEmpty(targets)) {
       return [];
     }
@@ -181,7 +210,9 @@ const VoronoiHelpers = {
     const activePoints = targetProps.activePoints || [];
     this.onDeactivated(targetProps, activePoints);
     const inactiveMutations = activePoints.length
-      ? activePoints.map((point) => this.getInactiveMutations(targetProps, point))
+      ? activePoints.map((point) =>
+          this.getInactiveMutations(targetProps, point)
+        )
       : [];
     return this.getParentMutation([]).concat(...inactiveMutations);
   },
@@ -194,12 +225,24 @@ const VoronoiHelpers = {
     if (!this.withinBounds(targetProps, mousePosition)) {
       this.onDeactivated(targetProps, activePoints);
       const inactiveMutations = activePoints.length
-        ? activePoints.map((point) => this.getInactiveMutations(targetProps, point))
+        ? activePoints.map((point) =>
+            this.getInactiveMutations(targetProps, point)
+          )
         : [];
-      return this.getParentMutation([], mousePosition, parentSVG).concat(...inactiveMutations);
+      return this.getParentMutation([], mousePosition, parentSVG).concat(
+        ...inactiveMutations
+      );
     }
-    const { points = [], index } = this.getVoronoiPoints(targetProps, mousePosition);
-    const parentMutations = this.getParentMutation(points, mousePosition, parentSVG, index);
+    const { points = [], index } = this.getVoronoiPoints(
+      targetProps,
+      mousePosition
+    );
+    const parentMutations = this.getParentMutation(
+      points,
+      mousePosition,
+      parentSVG,
+      index
+    );
     if (activePoints.length && isEqual(points, activePoints)) {
       return parentMutations;
     } else {
@@ -209,7 +252,9 @@ const VoronoiHelpers = {
         ? points.map((point) => this.getActiveMutations(targetProps, point))
         : [];
       const inactiveMutations = activePoints.length
-        ? activePoints.map((point) => this.getInactiveMutations(targetProps, point))
+        ? activePoints.map((point) =>
+            this.getInactiveMutations(targetProps, point)
+          )
         : [];
       return parentMutations.concat(...inactiveMutations, ...activeMutations);
     }

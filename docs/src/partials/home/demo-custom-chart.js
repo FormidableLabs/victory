@@ -274,8 +274,20 @@ class MultipleAxes extends React.Component {
     return (
       <svg style={styles.parent} viewBox="0 0 450 350" height={350} width={450}>
         {/* Create stylistic elements */}
-        <rect x="0" y="0" width="10" height="30" fill={importedTheme.color.red} />
-        <rect x="420" y="10" width="20" height="20" fill={importedTheme.color.black} />
+        <rect
+          x="0"
+          y="0"
+          width="10"
+          height="30"
+          fill={importedTheme.color.red}
+        />
+        <rect
+          x="420"
+          y="10"
+          width="20"
+          height="20"
+          fill={importedTheme.color.black}
+        />
 
         {/* Define labels */}
         <VictoryLabel x={25} y={24} style={styles.title} text="An outlook" />
@@ -286,7 +298,12 @@ class MultipleAxes extends React.Component {
           style={styles.labelOne}
           text={"Economy \n % change on a year earlier"}
         />
-        <VictoryLabel x={425} y={55} style={styles.labelTwo} text={"Dinosaur exports\n $bn"} />
+        <VictoryLabel
+          x={425}
+          y={55}
+          style={styles.labelTwo}
+          text={"Dinosaur exports\n $bn"}
+        />
 
         <g transform="translate(0, 40)">
           {/* Add shared independent axis */}

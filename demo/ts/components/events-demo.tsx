@@ -3,7 +3,10 @@ import React from "react";
 import { VictoryChart } from "@packages/victory-chart/src/index";
 import { VictoryStack } from "@packages/victory-stack/src/index";
 import { VictoryArea } from "@packages/victory-area/src/index";
-import { VictoryBar, VictoryBarTTargetType } from "@packages/victory-bar/src/index";
+import {
+  VictoryBar,
+  VictoryBarTTargetType
+} from "@packages/victory-bar/src/index";
 import { VictoryLine } from "@packages/victory-line/src/index";
 import { VictoryTheme, VictoryLabel } from "@packages/victory-core/src/index";
 import { merge } from "lodash";
@@ -18,7 +21,9 @@ class EventsDemo extends React.Component {
       justifyContent: "center"
     };
 
-    const chartStyle = { parent: { border: "1px solid #ccc", margin: "2%", maxWidth: "40%" } };
+    const chartStyle = {
+      parent: { border: "1px solid #ccc", margin: "2%", maxWidth: "40%" }
+    };
     const barTarget: VictoryBarTTargetType = "data";
 
     return (
@@ -102,7 +107,9 @@ class EventsDemo extends React.Component {
                         childName: "line",
                         target: "data",
                         mutation: (props) => {
-                          return { style: merge({}, props.style, { stroke: "lime" }) };
+                          return {
+                            style: merge({}, props.style, { stroke: "lime" })
+                          };
                         }
                       },
                       {
@@ -204,7 +211,9 @@ class EventsDemo extends React.Component {
                         target: "data",
                         mutation: (props) => {
                           const fill = props.style && props.style.fill;
-                          return fill === "gold" ? null : { style: { fill: "gold" } };
+                          return fill === "gold"
+                            ? null
+                            : { style: { fill: "gold" } };
                         }
                       }
                     ];

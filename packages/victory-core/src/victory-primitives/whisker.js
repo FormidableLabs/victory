@@ -56,11 +56,19 @@ const Whisker = (props) => {
   return React.cloneElement(groupComponent, {}, [
     React.cloneElement(
       lineComponent,
-      assign({ key: "major-whisker", "aria-label": ariaLabel }, baseProps, majorWhisker)
+      assign(
+        { key: "major-whisker", "aria-label": ariaLabel },
+        baseProps,
+        majorWhisker
+      )
     ),
     React.cloneElement(
       lineComponent,
-      assign({ key: "minor-whisker", "aria-label": ariaLabel }, baseProps, minorWhisker)
+      assign(
+        { key: "minor-whisker", "aria-label": ariaLabel },
+        baseProps,
+        minorWhisker
+      )
     )
   ]);
 };

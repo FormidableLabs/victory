@@ -27,7 +27,9 @@ export default class VictorySharedEventsDemo extends React.Component<any, {}> {
                     return {
                       childName: "secondBar",
                       mutation: (props) => {
-                        return { style: merge({}, props.style, { fill: "blue" }) };
+                        return {
+                          style: merge({}, props.style, { fill: "blue" })
+                        };
                       }
                     };
                   }
@@ -45,12 +47,16 @@ export default class VictorySharedEventsDemo extends React.Component<any, {}> {
                         mutation: (props) => {
                           return props.style.fill === "cyan"
                             ? null
-                            : { style: merge({}, props.style, { fill: "cyan" }) };
+                            : {
+                                style: merge({}, props.style, { fill: "cyan" })
+                              };
                         }
                       },
                       {
                         mutation: (props) => {
-                          return { style: merge({}, props.style, { fill: "orange" }) };
+                          return {
+                            style: merge({}, props.style, { fill: "orange" })
+                          };
                         }
                       },
                       {

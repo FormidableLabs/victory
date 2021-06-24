@@ -101,7 +101,11 @@ const Page = (props) => {
   const ref = useRef();
 
   const handleOutsideClick = (e) => {
-    if (ref.current && !ref.current.contains(e.target) && sidebarOpen === true) {
+    if (
+      ref.current &&
+      !ref.current.contains(e.target) &&
+      sidebarOpen === true
+    ) {
       setSidebarOpen(false);
     }
   };
@@ -116,7 +120,10 @@ const Page = (props) => {
 
   return (
     <PageContainer spaceForSidebar={withSidebar} className="Page-content">
-      <Header spaceForSidebar={withSidebar} onMenuClick={() => setSidebarOpen(true)} />
+      <Header
+        spaceForSidebar={withSidebar}
+        onMenuClick={() => setSidebarOpen(true)}
+      />
 
       <SidebarContainer ref={ref}>
         <RedStripe />

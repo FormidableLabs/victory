@@ -1,6 +1,9 @@
 /* eslint no-unused-expressions: 0 */
 /* eslint max-nested-callbacks: 0 */
-import { getData, getDomain } from "packages/victory-candlestick/src/helper-methods";
+import {
+  getData,
+  getDomain
+} from "packages/victory-candlestick/src/helper-methods";
 import { range } from "lodash";
 import { fromJS } from "immutable";
 
@@ -45,7 +48,14 @@ const getDataTest = {
 
       it("returns a domain array for the x axis", () => {
         const domainXResult = getDomain(
-          { data: dataSet, x: "x", open: "open", close: "close", high: "high", low: "low" },
+          {
+            data: dataSet,
+            x: "x",
+            open: "open",
+            close: "close",
+            high: "high",
+            low: "low"
+          },
           "x"
         );
         expect(domainXResult).to.eql([5, 10]);
@@ -53,7 +63,13 @@ const getDataTest = {
 
       it("returns a domain array for the y axis", () => {
         const domainYResult = getDomain(
-          { data: dataSet, open: "open", close: "close", high: "high", low: "low" },
+          {
+            data: dataSet,
+            open: "open",
+            close: "close",
+            high: "high",
+            low: "low"
+          },
           "y"
         );
         expect(domainYResult).to.eql([5, 30]);

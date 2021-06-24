@@ -25,7 +25,9 @@ describe("path-helpers", () => {
       const pathResult = PathHelpers.diamond(0, 0, 1);
       const baseSize = 0.87 * size;
       const length = Math.sqrt(2 * (baseSize * baseSize));
-      expect(pathResult).to.contain(`M ${Math.round(x)}, ${Math.round(y + length)}`);
+      expect(pathResult).to.contain(
+        `M ${Math.round(x)}, ${Math.round(y + length)}`
+      );
     });
   });
 

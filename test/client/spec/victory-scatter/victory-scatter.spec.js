@@ -47,7 +47,9 @@ describe("components/victory-scatter", () => {
   describe("rendering data", () => {
     it("renders injected points for {x, y} shaped data (default)", () => {
       const data = range(10).map((i) => ({ x: i, y: i }));
-      const wrapper = shallow(<VictoryScatter data={data} dataComponent={<MyPoint />} />);
+      const wrapper = shallow(
+        <VictoryScatter data={data} dataComponent={<MyPoint />} />
+      );
 
       const points = wrapper.find(MyPoint);
       expect(points.length).to.equal(10);
@@ -65,7 +67,9 @@ describe("components/victory-scatter", () => {
         .map((i) => ({ x: i, y: i }))
         .reverse();
       const wrapper = shallow(<VictoryScatter data={data} sortKey="x" />);
-      const xValues = wrapper.find(Point).map((point) => point.prop("datum")._x);
+      const xValues = wrapper
+        .find(Point)
+        .map((point) => point.prop("datum")._x);
       expect(xValues).to.eql([0, 1, 2, 3, 4]);
     });
 
@@ -73,8 +77,12 @@ describe("components/victory-scatter", () => {
       const data = range(5)
         .map((i) => ({ x: i, y: i }))
         .reverse();
-      const wrapper = shallow(<VictoryScatter data={data} sortKey="x" sortOrder="descending" />);
-      const xValues = wrapper.find(Point).map((point) => point.prop("datum")._x);
+      const wrapper = shallow(
+        <VictoryScatter data={data} sortKey="x" sortOrder="descending" />
+      );
+      const xValues = wrapper
+        .find(Point)
+        .map((point) => point.prop("datum")._x);
       expect(xValues).to.eql([4, 3, 2, 1, 0]);
     });
 
@@ -87,7 +95,9 @@ describe("components/victory-scatter", () => {
 
     it("renders points for deeply-nested data", () => {
       const data = range(40).map((i) => ({ a: { b: [{ x: i, y: i }] } }));
-      const wrapper = shallow(<VictoryScatter data={data} x="a.b[0].x" y="a.b[0].y" />);
+      const wrapper = shallow(
+        <VictoryScatter data={data} x="a.b[0].x" y="a.b[0].y" />
+      );
       const points = wrapper.find(Point);
       expect(points.length).to.equal(40);
     });
@@ -116,7 +126,11 @@ describe("components/victory-scatter", () => {
       const points = wrapper.find(Point);
       const svgCoordinates = points.map(SvgTestHelper.getSvgPointCoordinates);
       const coordinates = svgCoordinates.map((coord) => {
-        return SvgTestHelper.convertSvgCoordinatesToCartesian(coord, svgDimensions, domain);
+        return SvgTestHelper.convertSvgCoordinatesToCartesian(
+          coord,
+          svgDimensions,
+          domain
+        );
       });
 
       expect(coordinates).to.eql([
@@ -154,7 +168,13 @@ describe("components/victory-scatter", () => {
       svg.simulate("click");
       expect(clickHandler).called;
       // the first argument is the standard evt object
-      expect(clickHandler.args[0][1]).to.include.keys("data", "scale", "width", "height", "style");
+      expect(clickHandler.args[0][1]).to.include.keys(
+        "data",
+        "scale",
+        "width",
+        "height",
+        "style"
+      );
     });
 
     it("attaches an event to data", () => {
@@ -230,7 +250,9 @@ describe("components/victory-scatter", () => {
           data={data}
           dataComponent={
             <Point
-              ariaLabel={({ datum }) => `scatter point x: ${datum.x}, y:${datum.y}`}
+              ariaLabel={({ datum }) =>
+                `scatter point x: ${datum.x}, y:${datum.y}`
+              }
               tabIndex={({ index }) => index + 10}
             />
           }
@@ -238,7 +260,9 @@ describe("components/victory-scatter", () => {
       );
       expect(wrapper.find("path")).to.have.length(5);
       wrapper.find("path").forEach((p, i) => {
-        expect(p.prop("aria-label")).to.equal(`scatter point x: ${data[i].x}, y:${data[i].y}`);
+        expect(p.prop("aria-label")).to.equal(
+          `scatter point x: ${data[i].x}, y:${data[i].y}`
+        );
         expect(p.prop("tabIndex")).to.equal(i + 10);
       });
     });

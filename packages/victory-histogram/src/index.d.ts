@@ -40,4 +40,7 @@ export interface VictoryHistogramProps
  * Draw SVG histogram charts with React. VictoryHistogram is a composable component, so it doesn't include axes
  * Check out VictoryChart for complete histogram charts and more.
  */
-export class VictoryHistogram extends React.Component<VictoryHistogramProps, any> {}
+export class VictoryHistogram extends React.Component<
+  VictoryHistogramProps,
+  any
+> {}

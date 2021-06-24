@@ -29,7 +29,10 @@ interface VictoryErrorBarState {
   data: dataType[];
 }
 
-export default class VictoryErrorBarDemo extends React.Component<any, VictoryErrorBarState> {
+export default class VictoryErrorBarDemo extends React.Component<
+  any,
+  VictoryErrorBarState
+> {
   setStateInterval?: number = undefined;
 
   constructor(props: any) {

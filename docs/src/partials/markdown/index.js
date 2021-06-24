@@ -36,7 +36,12 @@ const Pre = styled.pre`
 
 const renderPlayground = (props, scope, theme) => {
   const scopeObject =
-    (scope && scope.reduce((obj, key) => Object.assign(obj, { [key]: scopeMap[key] }), {})) || {};
+    (scope &&
+      scope.reduce(
+        (obj, key) => Object.assign(obj, { [key]: scopeMap[key] }),
+        {}
+      )) ||
+    {};
 
   const playgroundScope = Object.assign({}, scopeObject, {
     ...Victory,
@@ -170,7 +175,12 @@ const Markdown = (props) => {
   };
 
   return (
-    <ReactMarkdown className={className} source={source} renderers={renderers} escapeHtml={false} />
+    <ReactMarkdown
+      className={className}
+      source={source}
+      renderers={renderers}
+      escapeHtml={false}
+    />
   );
 };
 

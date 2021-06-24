@@ -1,4 +1,13 @@
-import { orderBy, defaults, assign, uniq, groupBy, keys, isNaN, isNil } from "lodash";
+import {
+  orderBy,
+  defaults,
+  assign,
+  uniq,
+  groupBy,
+  keys,
+  isNaN,
+  isNil
+} from "lodash";
 import { Helpers, Scale, Domain, Data, Collection } from "victory-core";
 import { min as d3Min, max as d3Max, quantile as d3Quantile } from "d3-array";
 
@@ -58,7 +67,9 @@ const processData = (data) => {
       /* generate summary statistics for each datum. to do this, flatten
       the depedentVarArray and process each datum separately */
       return data.map((datum) => {
-        const dataArray = datum[sortKey].map((d) => assign({}, datum, { [sortKey]: d }));
+        const dataArray = datum[sortKey].map((d) =>
+          assign({}, datum, { [sortKey]: d })
+        );
         const sortedData = orderBy(dataArray, sortKey);
         return getSummaryStatistics(sortedData);
       });
@@ -148,10 +159,17 @@ const getLabelStyle = (props, styleObject, namespace) => {
 };
 
 const getStyles = (props, styleObject) => {
+  if (props.disableInlineStyles) {
+    return {};
+  }
   const style = props.style || {};
   styleObject = styleObject || {};
   const parentStyles = { height: "100%", width: "100%" };
-  const labelStyles = defaults({}, style.labels, getLabelStyle(props, styleObject));
+  const labelStyles = defaults(
+    {},
+    style.labels,
+    getLabelStyle(props, styleObject)
+  );
   const boxStyles = defaults({}, style.boxes, styleObject.boxes);
   const whiskerStyles = defaults({}, style.whiskers, styleObject.whiskers);
   return {
@@ -159,7 +177,12 @@ const getStyles = (props, styleObject) => {
     labels: labelStyles,
     parent: defaults({}, style.parent, styleObject.parent, parentStyles),
     max: defaults({}, style.max, styleObject.max, whiskerStyles),
-    maxLabels: defaults({}, style.maxLabels, getLabelStyle(props, styleObject, "max"), labelStyles),
+    maxLabels: defaults(
+      {},
+      style.maxLabels,
+      getLabelStyle(props, styleObject, "max"),
+      labelStyles
+    ),
     median: defaults({}, style.median, styleObject.median, whiskerStyles),
     medianLabels: defaults(
       {},
@@ -168,11 +191,26 @@ const getStyles = (props, styleObject) => {
       labelStyles
     ),
     min: defaults({}, style.min, styleObject.min, whiskerStyles),
-    minLabels: defaults({}, style.minLabels, getLabelStyle(props, styleObject, "min"), labelStyles),
+    minLabels: defaults(
+      {},
+      style.minLabels,
+      getLabelStyle(props, styleObject, "min"),
+      labelStyles
+    ),
     q1: defaults({}, style.q1, styleObject.q1, boxStyles),
-    q1Labels: defaults({}, style.q1Labels, getLabelStyle(props, styleObject, "q1"), labelStyles),
+    q1Labels: defaults(
+      {},
+      style.q1Labels,
+      getLabelStyle(props, styleObject, "q1"),
+      labelStyles
+    ),
     q3: defaults({}, style.q3, styleObject.q3, boxStyles),
-    q3Labels: defaults({}, style.q3Labels, getLabelStyle(props, styleObject, "q3"), labelStyles),
+    q3Labels: defaults(
+      {},
+      style.q3Labels,
+      getLabelStyle(props, styleObject, "q3"),
+      labelStyles
+    ),
     whiskers: whiskerStyles
   };
 };
@@ -196,7 +234,8 @@ const getCalculatedValues = (props) => {
       .domain(domain.y)
       .range(props.horizontal ? range.x : range.y)
   };
-  const defaultStyles = theme && theme.boxplot && theme.boxplot.style ? theme.boxplot.style : {};
+  const defaultStyles =
+    theme && theme.boxplot && theme.boxplot.style ? theme.boxplot.style : {};
   const style = getStyles(props, defaultStyles);
   const defaultOrientation = props.horizontal ? "top" : "right";
   const labelOrientation = props.labelOrientation || defaultOrientation;
@@ -206,7 +245,16 @@ const getCalculatedValues = (props) => {
 
 // eslint-disable-next-line complexity
 const getWhiskerProps = (props, type) => {
-  const { horizontal, style, boxWidth, whiskerWidth, datum, scale, index } = props;
+  const {
+    horizontal,
+    style,
+    boxWidth,
+    whiskerWidth,
+    datum,
+    scale,
+    index,
+    disableInlineStyles
+  } = props;
   const { min, max, q1, q3, x, y } = props.positions;
   const boxValue = type === "min" ? q1 : q3;
   const whiskerValue = type === "min" ? min : max;
@@ -227,12 +275,21 @@ const getWhiskerProps = (props, type) => {
       x2: horizontal ? whiskerValue : x + width / 2,
       y2: horizontal ? y + width / 2 : whiskerValue
     },
-    style: style[type] || style.whisker
+    style: disableInlineStyles ? {} : style[type] || style.whisker,
+    disableInlineStyles
   };
 };
 
 const getBoxProps = (props, type) => {
-  const { horizontal, boxWidth, style, scale, datum, index } = props;
+  const {
+    horizontal,
+    boxWidth,
+    style,
+    scale,
+    datum,
+    index,
+    disableInlineStyles
+  } = props;
   const { median, q1, q3, x, y } = props.positions;
   const defaultX = type === "q1" ? q1 : median;
   const defaultY = type === "q1" ? median : q3;
@@ -246,12 +303,21 @@ const getBoxProps = (props, type) => {
     y: horizontal ? y - boxWidth / 2 : defaultY,
     width: horizontal ? defaultWidth : boxWidth,
     height: horizontal ? boxWidth : defaultHeight,
-    style: style[type] || style.boxes
+    style: disableInlineStyles ? {} : style[type] || style.boxes,
+    disableInlineStyles
   };
 };
 
 const getMedianProps = (props) => {
-  const { boxWidth, horizontal, style, datum, scale, index } = props;
+  const {
+    boxWidth,
+    horizontal,
+    style,
+    datum,
+    scale,
+    index,
+    disableInlineStyles
+  } = props;
   const { median, x, y } = props.positions;
   return {
     datum,
@@ -261,7 +327,8 @@ const getMedianProps = (props) => {
     y1: horizontal ? y - boxWidth / 2 : median,
     x2: horizontal ? median : x + boxWidth / 2,
     y2: horizontal ? y + boxWidth / 2 : median,
-    style: style.median
+    style: disableInlineStyles ? {} : style.median,
+    disableInlineStyles
   };
 };
 
@@ -279,16 +346,38 @@ const getText = (props, type) => {
 };
 
 const getOrientation = (labelOrientation, type) =>
-  (typeof labelOrientation === "object" && labelOrientation[type]) || labelOrientation;
+  (typeof labelOrientation === "object" && labelOrientation[type]) ||
+  labelOrientation;
 
 const getLabelProps = (props, text, type) => {
-  const { datum, positions, index, boxWidth, horizontal, labelOrientation, style, theme } = props;
+  const {
+    datum,
+    positions,
+    index,
+    boxWidth,
+    horizontal,
+    labelOrientation,
+    style,
+    theme,
+    disableInlineStyles
+  } = props;
   const orientation = getOrientation(labelOrientation, type);
   const namespace = `${type}Labels`;
   const labelStyle = style[namespace] || style.labels;
-  const defaultVerticalAnchors = { top: "end", bottom: "start", left: "middle", right: "middle" };
-  const defaultTextAnchors = { left: "end", right: "start", top: "middle", bottom: "middle" };
-  const whiskerWidth = typeof props.whiskerWidth === "number" ? props.whiskerWidth : boxWidth;
+  const defaultVerticalAnchors = {
+    top: "end",
+    bottom: "start",
+    left: "middle",
+    right: "middle"
+  };
+  const defaultTextAnchors = {
+    left: "end",
+    right: "start",
+    top: "middle",
+    bottom: "middle"
+  };
+  const whiskerWidth =
+    typeof props.whiskerWidth === "number" ? props.whiskerWidth : boxWidth;
   const width = type === "min" || type === "max" ? whiskerWidth : boxWidth;
 
   const getOffset = (coord) => {
@@ -304,15 +393,17 @@ const getLabelProps = (props, text, type) => {
     datum,
     index,
     orientation,
-    style: labelStyle,
+    style: disableInlineStyles ? {} : labelStyle,
     y: horizontal ? positions.y : positions[type],
     x: horizontal ? positions[type] : positions.x,
     dy: horizontal ? getOffset("y") : 0,
     dx: horizontal ? 0 : getOffset("x"),
     textAnchor: labelStyle.textAnchor || defaultTextAnchors[orientation],
-    verticalAnchor: labelStyle.verticalAnchor || defaultVerticalAnchors[orientation],
+    verticalAnchor:
+      labelStyle.verticalAnchor || defaultVerticalAnchors[orientation],
     angle: labelStyle.angle,
-    horizontal
+    horizontal,
+    disableInlineStyles
   };
 
   const component = props[`${type}LabelComponent`];
@@ -353,7 +444,10 @@ const isDatumOutOfBounds = (datum, domain) => {
   // if x is out of the bounds of the domain
   if (isUnderMinX(_x) || isOverMaxX(_x)) xOutOfBounds = true;
   // if min/max are out of the bounds of the domain
-  if ((isUnderMinY(_min) && isUnderMinY(_max)) || (isOverMaxY(_min) && isOverMaxY(_max)))
+  if (
+    (isUnderMinY(_min) && isUnderMinY(_max)) ||
+    (isOverMaxY(_min) && isOverMaxY(_max))
+  )
     yOutOfBounds = true;
 
   return yOutOfBounds || xOutOfBounds;
@@ -425,7 +519,11 @@ const getBaseProps = (props, fallbackProps) => {
         (labelProp && (events || sharedEvents))
       ) {
         const target = `${type}Labels`;
-        acc[eventKey][target] = getLabelProps(assign({}, props, dataProps), labelText, type);
+        acc[eventKey][target] = getLabelProps(
+          assign({}, props, dataProps),
+          labelText,
+          type
+        );
       }
     });
 

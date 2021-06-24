@@ -12,7 +12,10 @@ export default class VictoryClipContainer extends React.Component {
   static role = "container";
   static propTypes = {
     "aria-label": PropTypes.string,
-    children: PropTypes.oneOfType([PropTypes.arrayOf(PropTypes.node), PropTypes.node]),
+    children: PropTypes.oneOfType([
+      PropTypes.arrayOf(PropTypes.node),
+      PropTypes.node
+    ]),
     circleComponent: PropTypes.element,
     className: PropTypes.string,
     clipHeight: CustomPropTypes.nonNegative,
@@ -27,7 +30,10 @@ export default class VictoryClipContainer extends React.Component {
     clipWidth: CustomPropTypes.nonNegative,
     events: PropTypes.object,
     groupComponent: PropTypes.element,
-    origin: PropTypes.shape({ x: CustomPropTypes.nonNegative, y: CustomPropTypes.nonNegative }),
+    origin: PropTypes.shape({
+      x: CustomPropTypes.nonNegative,
+      y: CustomPropTypes.nonNegative
+    }),
     polar: PropTypes.bool,
     radius: CustomPropTypes.nonNegative,
     style: PropTypes.object,
@@ -47,23 +53,46 @@ export default class VictoryClipContainer extends React.Component {
   constructor(props) {
     super(props);
     this.clipId =
-      !isObject(props) || props.clipId === undefined ? uniqueId("victory-clip-") : props.clipId;
+      !isObject(props) || props.clipId === undefined
+        ? uniqueId("victory-clip-")
+        : props.clipId;
   }
 
   calculateAttributes(props) {
-    const { polar, origin, clipWidth = 0, clipHeight = 0, translateX = 0, translateY = 0 } = props;
+    const {
+      polar,
+      origin,
+      clipWidth = 0,
+      clipHeight = 0,
+      translateX = 0,
+      translateY = 0
+    } = props;
     const clipPadding = Helpers.getPadding({ padding: props.clipPadding });
     const radius = props.radius || Helpers.getRadius(props);
     return {
       x: (polar ? origin.x : translateX) - clipPadding.left,
       y: (polar ? origin.y : translateY) - clipPadding.top,
-      width: Math.max((polar ? radius : clipWidth) + clipPadding.left + clipPadding.right, 0),
-      height: Math.max((polar ? radius : clipHeight) + clipPadding.top + clipPadding.bottom, 0)
+      width: Math.max(
+        (polar ? radius : clipWidth) + clipPadding.left + clipPadding.right,
+        0
+      ),
+      height: Math.max(
+        (polar ? radius : clipHeight) + clipPadding.top + clipPadding.bottom,
+        0
+      )
     };
   }
 
   renderClippedGroup(props, clipId) {
-    const { style, events, transform, children, className, groupComponent, tabIndex } = props;
+    const {
+      style,
+      events,
+      transform,
+      children,
+      className,
+      groupComponent,
+      tabIndex
+    } = props;
     const clipComponent = this.renderClipComponent(props, clipId);
     const groupProps = assign(
       {
@@ -83,10 +112,27 @@ export default class VictoryClipContainer extends React.Component {
   }
 
   renderGroup(props) {
-    const { style, events, transform, children, className, groupComponent, tabIndex } = props;
+    const {
+      style,
+      events,
+      transform,
+      children,
+      className,
+      groupComponent,
+      tabIndex
+    } = props;
     return React.cloneElement(
       groupComponent,
-      assign({ className, style, transform, "aria-label": props["aria-label"], tabIndex }, events),
+      assign(
+        {
+          className,
+          style,
+          transform,
+          "aria-label": props["aria-label"],
+          tabIndex
+        },
+        events
+      ),
       children
     );
   }
@@ -103,7 +149,9 @@ export default class VictoryClipContainer extends React.Component {
       rectComponent,
       clipPathComponent
     } = props;
-    const { top, bottom, left, right } = Helpers.getPadding({ padding: props.clipPadding });
+    const { top, bottom, left, right } = Helpers.getPadding({
+      padding: props.clipPadding
+    });
     let child;
     if (polar) {
       const radius = props.radius || Helpers.getRadius(props);
@@ -155,7 +203,12 @@ export default class VictoryClipContainer extends React.Component {
     }
     const translateX = this.getTranslateValue(this.props, "x");
     const translateY = this.getTranslateValue(this.props, "y");
-    const clipProps = defaults({}, this.props, { clipHeight, clipWidth, translateX, translateY });
+    const clipProps = defaults({}, this.props, {
+      clipHeight,
+      clipWidth,
+      translateX,
+      translateY
+    });
     return this.renderClippedGroup(clipProps, this.clipId);
   }
 }

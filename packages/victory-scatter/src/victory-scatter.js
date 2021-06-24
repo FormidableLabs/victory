@@ -98,7 +98,9 @@ class VictoryScatter extends React.Component {
     }
 
     const children = this.renderData(props);
-    return props.standalone ? this.renderContainer(props.containerComponent, children) : children;
+    return props.standalone
+      ? this.renderContainer(props.containerComponent, children)
+      : children;
   }
 }
 

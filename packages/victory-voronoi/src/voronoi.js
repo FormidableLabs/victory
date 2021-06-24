@@ -6,7 +6,9 @@ import { Helpers, CommonProps, ClipPath, Path, Circle } from "victory-core";
 
 const getVoronoiPath = (props) => {
   const { polygon } = props;
-  return Array.isArray(polygon) && polygon.length ? `M ${props.polygon.join("L")} Z` : "";
+  return Array.isArray(polygon) && polygon.length
+    ? `M ${props.polygon.join("L")} Z`
+    : "";
 };
 
 const evaluateProps = (props) => {
@@ -68,10 +70,16 @@ const Voronoi = (props) => {
       React.cloneElement(props.pathComponent, { d: voronoiPath, className })
     );
 
-    return React.cloneElement(props.groupComponent, {}, [voronoiClipPath, circle]);
+    return React.cloneElement(props.groupComponent, {}, [
+      voronoiClipPath,
+      circle
+    ]);
   }
 
-  return React.cloneElement(props.pathComponent, { ...sharedProps, d: voronoiPath });
+  return React.cloneElement(props.pathComponent, {
+    ...sharedProps,
+    d: voronoiPath
+  });
 };
 
 Voronoi.propTypes = {

@@ -80,13 +80,17 @@ describe("components/victory-axis", () => {
     });
 
     it("renders ticks as lines", () => {
-      const wrapper = mount(<VictoryAxis axisComponent={<LineSegment type="axis" />} />);
+      const wrapper = mount(
+        <VictoryAxis axisComponent={<LineSegment type="axis" />} />
+      );
       const ticks = wrapper.find('[type="axis"]');
       ticks.forEach(SvgTestHelper.expectIsALine);
     });
 
     it("renders a line", () => {
-      const wrapper = mount(<VictoryAxis axisComponent={<LineSegment type="axis" />} />);
+      const wrapper = mount(
+        <VictoryAxis axisComponent={<LineSegment type="axis" />} />
+      );
       const line = wrapper.find('[type="axis"]');
       SvgTestHelper.expectIsALine(line);
     });
@@ -94,7 +98,10 @@ describe("components/victory-axis", () => {
 
   it("renders labels with auto-generated ids if id is not provided", () => {
     const wrapper = shallow(
-      <VictoryAxis tickCount={3} tickLabelComponent={<VictoryLabel text="Some Label" />} />
+      <VictoryAxis
+        tickCount={3}
+        tickLabelComponent={<VictoryLabel text="Some Label" />}
+      />
     );
     const labels = wrapper.find("VictoryLabel");
     expect(labels.length).to.equal(3);
@@ -110,7 +117,9 @@ describe("components/victory-axis", () => {
         tickLabelComponent={
           <VictoryLabel
             text={["Apple", "Banana", "Carrot"]}
-            id={(props) => `generated-id-${props.text[props.index].toLowerCase()}`}
+            id={(props) =>
+              `generated-id-${props.text[props.index].toLowerCase()}`
+            }
           />
         }
       />
@@ -125,7 +134,9 @@ describe("components/victory-axis", () => {
   describe("dependentAxis prop", () => {
     it("renders a horizontal axis by default", () => {
       const props = { padding: 50, width: 300 };
-      const wrapper = mount(<VictoryAxis {...props} axisComponent={<LineSegment type="axis" />} />);
+      const wrapper = mount(
+        <VictoryAxis {...props} axisComponent={<LineSegment type="axis" />} />
+      );
       const line = wrapper.find('[type="axis"]');
       expect(SvgTestHelper.isHorizontalAxis(line, props)).to.equal(true);
     });
@@ -133,7 +144,11 @@ describe("components/victory-axis", () => {
     it("renders a vertical axis if specified", () => {
       const props = { padding: 50, height: 300 };
       const wrapper = mount(
-        <VictoryAxis dependentAxis {...props} axisComponent={<LineSegment type="axis" />} />
+        <VictoryAxis
+          dependentAxis
+          {...props}
+          axisComponent={<LineSegment type="axis" />}
+        />
       );
       const line = wrapper.find('[type="axis"]');
       expect(SvgTestHelper.isVerticalAxis(line, props)).to.equal(true);
@@ -157,7 +172,13 @@ describe("components/victory-axis", () => {
       svg.simulate("click");
       expect(clickHandler).called;
       // the first argument is the standard evt object
-      expect(clickHandler.args[0][1]).to.include.keys("ticks", "scale", "width", "height", "style");
+      expect(clickHandler.args[0][1]).to.include.keys(
+        "ticks",
+        "scale",
+        "width",
+        "height",
+        "style"
+      );
     });
 
     it("attaches an event to the axis line", () => {
@@ -189,7 +210,10 @@ describe("components/victory-axis", () => {
   describe("label overlap", () => {
     describe("with empty label widths", () => {
       before(() => {
-        sinon.stub(TextSize, "approximateTextSize", () => ({ width: 0, height: 0 }));
+        sinon.stub(TextSize, "approximateTextSize", () => ({
+          width: 0,
+          height: 0
+        }));
       });
       after(() => {
         TextSize.approximateTextSize.restore();
@@ -213,7 +237,10 @@ describe("components/victory-axis", () => {
     });
     describe("with not empty label widths", () => {
       beforeEach(() => {
-        sinon.stub(TextSize, "approximateTextSize", () => ({ width: 30, height: 30 }));
+        sinon.stub(TextSize, "approximateTextSize", () => ({
+          width: 30,
+          height: 30
+        }));
       });
 
       afterEach(() => {
@@ -261,7 +288,9 @@ describe("components/victory-axis", () => {
             }}
           />
         );
-        const labelTexts = wrapper.find("VictoryLabel").map((tick) => tick.props("text").text);
+        const labelTexts = wrapper
+          .find("VictoryLabel")
+          .map((tick) => tick.props("text").text);
         expect(labelTexts.filter((text) => text === "1")).to.be.not.empty;
         expect(labelTexts.filter((text) => text === "2")).to.be.empty;
         expect(labelTexts.filter((text) => text === "3")).to.be.not.empty;
@@ -280,7 +309,9 @@ describe("components/victory-axis", () => {
             }}
           />
         );
-        const labelTexts = wrapper.find("VictoryLabel").map((tick) => tick.props("text").text);
+        const labelTexts = wrapper
+          .find("VictoryLabel")
+          .map((tick) => tick.props("text").text);
         expect(labelTexts.filter((text) => text === "1")).to.be.not.empty;
         expect(labelTexts.filter((text) => text === "2")).to.be.empty;
         expect(labelTexts.filter((text) => text === "3")).to.be.not.empty;

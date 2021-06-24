@@ -154,7 +154,8 @@ const _splitToLines = (text) => {
 const _getSizeWithRotate = (axisSize, dependentSize, angle) => {
   const angleInRadian = _degreeToRadian(angle);
   return (
-    Math.abs(Math.cos(angleInRadian) * axisSize) + Math.abs(Math.sin(angleInRadian) * dependentSize)
+    Math.abs(Math.cos(angleInRadian) * axisSize) +
+    Math.abs(Math.sin(angleInRadian) * dependentSize)
   );
 };
 
@@ -205,7 +206,10 @@ const _approximateTextWidthInternal = (text, style) => {
 
   const widths = _splitToLines(text).map((line, index) => {
     const len = line.toString().length;
-    const { fontSize, letterSpacing, fontFamily } = _prepareParams(style, index);
+    const { fontSize, letterSpacing, fontFamily } = _prepareParams(
+      style,
+      index
+    );
     const fontData = _getFontData(fontFamily);
     const width =
       line
@@ -248,11 +252,17 @@ const _approximateTextHeightInternal = (text, style) => {
  * @returns {number} Approximate text label height.
  */
 const approximateTextSize = (text, style) => {
-  const angle = Array.isArray(style) ? style[0] && style[0].angle : style && style.angle;
+  const angle = Array.isArray(style)
+    ? style[0] && style[0].angle
+    : style && style.angle;
   const height = _approximateTextHeightInternal(text, style);
   const width = _approximateTextWidthInternal(text, style);
-  const widthWithRotate = angle ? _getSizeWithRotate(width, height, angle) : width;
-  const heightWithRotate = angle ? _getSizeWithRotate(height, width, angle) : height;
+  const widthWithRotate = angle
+    ? _getSizeWithRotate(width, height, angle)
+    : width;
+  const heightWithRotate = angle
+    ? _getSizeWithRotate(height, width, angle)
+    : height;
   return {
     width: widthWithRotate,
     height: heightWithRotate * coefficients.heightOverlapCoef

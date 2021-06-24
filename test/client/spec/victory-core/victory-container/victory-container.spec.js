@@ -35,13 +35,17 @@ describe("components/victory-container", () => {
   });
 
   it("renders an svg with an aria-describedby attribute", () => {
-    const wrapper = shallow(<VictoryContainer aria-describedby="testid" desc="description" />);
+    const wrapper = shallow(
+      <VictoryContainer aria-describedby="testid" desc="description" />
+    );
     const describedElement = wrapper.find(`[aria-describedby~="testid"]`).at(0);
     expect(describedElement.type()).to.equal("svg");
   });
 
   it("renders an svg with an aria-labelledby attribute", () => {
-    const wrapper = shallow(<VictoryContainer aria-labelledby="testid" title="title" />);
+    const wrapper = shallow(
+      <VictoryContainer aria-labelledby="testid" title="title" />
+    );
     const describedElement = wrapper.find(`[aria-labelledby~="testid"]`).at(0);
     expect(describedElement.type()).to.equal("svg");
   });
@@ -57,7 +61,9 @@ describe("components/victory-container", () => {
 
   it("attaches an event to the container", () => {
     const clickHandler = sinon.spy();
-    const wrapper = mount(<VictoryContainer events={{ onClick: clickHandler }} />);
+    const wrapper = mount(
+      <VictoryContainer events={{ onClick: clickHandler }} />
+    );
     const svg = wrapper.find("svg").at(0);
     svg.simulate("click");
     expect(clickHandler).called;

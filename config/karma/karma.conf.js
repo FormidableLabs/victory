@@ -10,7 +10,10 @@ var path = require("path");
 var webpackCfg = require("../webpack/webpack.config.test");
 
 var MAIN_PATH = path.join(process.cwd(), "test/client/main.js");
-var POLYFILL_PATH = path.join(path.dirname(require.resolve("core-js/package.json")), "es6/**/*.js");
+var POLYFILL_PATH = path.join(
+  path.dirname(require.resolve("core-js/package.json")),
+  "es6/**/*.js"
+);
 var PREPROCESSORS = {};
 PREPROCESSORS[MAIN_PATH] = ["webpack"];
 PREPROCESSORS[POLYFILL_PATH] = ["webpack"];

@@ -26,7 +26,10 @@ export interface VictoryCandlestickStyleInterface {
   parent?: VictoryStyleObject;
 }
 
-export type VictoryCandlestickLabelsType = (string | number)[] | boolean | ((datum: any) => number);
+export type VictoryCandlestickLabelsType =
+  | (string | number)[]
+  | boolean
+  | ((datum: any) => number);
 
 export interface VictoryCandlestickProps
   extends Omit<VictoryCommonProps, "polar">,
@@ -83,7 +86,10 @@ export interface VictoryCandlestickProps
  * VictoryCandlestick can be composed with VictoryChart to create candlestick charts.
  */
 
-export class VictoryCandlestick extends React.Component<VictoryCandlestickProps, any> {}
+export class VictoryCandlestick extends React.Component<
+  VictoryCandlestickProps,
+  any
+> {}
 
 export interface CandleProps extends VictoryCommonPrimitiveProps {
   candleRatio?: number;

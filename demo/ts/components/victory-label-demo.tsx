@@ -6,8 +6,15 @@ export default class App extends React.Component<any, {}> {
   render() {
     return (
       <div className="demo">
-        <p>VictoryLabel demo! The little circles show the anchor points for each label.</p>
-        <svg width="600" height="2800" style={{ border: "1px solid #ccc", padding: 40 }}>
+        <p>
+          VictoryLabel demo! The little circles show the anchor points for each
+          label.
+        </p>
+        <svg
+          width="600"
+          height="2800"
+          style={{ border: "1px solid #ccc", padding: 40 }}
+        >
           <circle cx="0" cy="0" r="2" fill="red" />
           <VictoryLabel
             transform="translate(50)"
@@ -45,7 +52,9 @@ export default class App extends React.Component<any, {}> {
             textAnchor="middle"
             verticalAnchor="start"
             style={{ padding: 15 }}
-            text={"Victory is awesome.\nThis is (middle, start) anchoring.\nGot it?"}
+            text={
+              "Victory is awesome.\nThis is (middle, start) anchoring.\nGot it?"
+            }
           />
 
           <circle cx="150" cy="250" r="2" fill="blue" />
@@ -67,7 +76,9 @@ export default class App extends React.Component<any, {}> {
             y={450}
             textAnchor="start"
             verticalAnchor="start"
-            text={"Victory is awesome.\nThis is (start, start) anchoring.\nCapisce?"}
+            text={
+              "Victory is awesome.\nThis is (start, start) anchoring.\nCapisce?"
+            }
           />
 
           <circle cx="300" cy="600" r="2" fill="green" />
@@ -88,7 +99,9 @@ export default class App extends React.Component<any, {}> {
             lineHeight={2}
             textAnchor="middle"
             verticalAnchor="end"
-            text={"Victory is awesome.\nThis is (middle, end) anchoring.\nGot it?"}
+            text={
+              "Victory is awesome.\nThis is (middle, end) anchoring.\nGot it?"
+            }
           />
 
           <circle cx="300" cy="900" r="2" fill="red" />
@@ -98,7 +111,9 @@ export default class App extends React.Component<any, {}> {
             y={900}
             textAnchor="start"
             verticalAnchor="end"
-            text={"Victory is awesome.\nThis is (start, end) anchoring.\nCapisce?"}
+            text={
+              "Victory is awesome.\nThis is (start, end) anchoring.\nCapisce?"
+            }
           />
 
           <circle cx="300" cy="1050" r="2" fill="green" />
@@ -118,7 +133,9 @@ export default class App extends React.Component<any, {}> {
             lineHeight={2}
             textAnchor="middle"
             verticalAnchor="middle"
-            text={"Victory is awesome.\nThis is (middle, middle) anchoring.\nGot it?"}
+            text={
+              "Victory is awesome.\nThis is (middle, middle) anchoring.\nGot it?"
+            }
           />
 
           <circle cx="300" cy="1350" r="2" fill="red" />
@@ -127,7 +144,9 @@ export default class App extends React.Component<any, {}> {
             y={1350}
             textAnchor="start"
             verticalAnchor="middle"
-            text={"Victory is awesome.\nThis is (start, middle) anchoring.\nCapisce?"}
+            text={
+              "Victory is awesome.\nThis is (start, middle) anchoring.\nCapisce?"
+            }
           />
 
           {/* examples for inlining VictoryLabel with mutlitple labels */}
@@ -162,7 +181,15 @@ export default class App extends React.Component<any, {}> {
             textAnchor="start"
             verticalAnchor="start"
             backgroundStyle={{ fill: "lavender" }}
-            text={["Use", "dx", "attribute", "to", "shift", "labels", "relative to one another."]}
+            text={[
+              "Use",
+              "dx",
+              "attribute",
+              "to",
+              "shift",
+              "labels",
+              "relative to one another."
+            ]}
             inline
             dx={10}
           />
@@ -182,7 +209,12 @@ export default class App extends React.Component<any, {}> {
               { fill: "red" }
             ]}
             backgroundPadding={[{ right: -25 }, { right: -80, bottom: -30 }]}
-            text={["Victory is awesome.", "This is variable", "lineHeight", "as an array."]}
+            text={[
+              "Victory is awesome.",
+              "This is variable",
+              "lineHeight",
+              "as an array."
+            ]}
             style={[{ fontSize: 50, fill: "green" }, { fontSize: 60 }]}
             // eslint-disable-next-line no-magic-numbers
             lineHeight={[2, 2, 3, 1]}

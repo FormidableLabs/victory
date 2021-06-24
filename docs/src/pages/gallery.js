@@ -5,8 +5,11 @@ import ReactDOM from "react-dom";
 import { withRouteData } from "react-static";
 import { Link } from "react-router-dom";
 import * as Victory from "victory";
-import * as d3Scale from 'd3-scale';
-import { scaleDiscontinuous, discontinuitySkipWeekends } from "@d3fc/d3fc-discontinuous-scale";
+import * as d3Scale from "d3-scale";
+import {
+  scaleDiscontinuous,
+  discontinuitySkipWeekends
+} from "@d3fc/d3fc-discontinuous-scale";
 
 import createPath from "../helpers/path-helpers";
 import Page from "../partials/page";
@@ -116,15 +119,17 @@ const Gallery = ({ gallery, sidebarContent }) => {
     );
   };
 
-  const previews = gallery.map((item, index) => <div key={index}>{renderPreviewItem(item)}</div>);
+  const previews = gallery.map((item, index) => (
+    <div key={index}>{renderPreviewItem(item)}</div>
+  ));
 
   return (
     <Page sidebarContent={sidebarContent}>
       <PageHeader>Victory Gallery</PageHeader>
       <p>
-        Here are some examples to help you get started. Each example below links to a live, editable
-        playground. Code samples provided in these examples are free to use or modify however you
-        like.
+        Here are some examples to help you get started. Each example below links
+        to a live, editable playground. Code samples provided in these examples
+        are free to use or modify however you like.
       </p>
       <Divider />
       <GalleryWrapper>{previews}</GalleryWrapper>

@@ -23,7 +23,10 @@ export interface VictoryGroupProps
   colorScale?: ColorScalePropType;
   domain?: DomainPropType;
   domainPadding?: DomainPaddingPropType;
-  events?: EventPropTypeInterface<VictoryGroupTTargetType, StringOrNumberOrCallback>[];
+  events?: EventPropTypeInterface<
+    VictoryGroupTTargetType,
+    StringOrNumberOrCallback
+  >[];
   eventKey?: StringOrNumberOrCallback;
   horizontal?: boolean;
   offset?: number;

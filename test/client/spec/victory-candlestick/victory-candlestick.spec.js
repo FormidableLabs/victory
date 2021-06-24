@@ -6,7 +6,10 @@
 import React from "react";
 import { shallow, mount } from "enzyme";
 import { range, omit } from "lodash";
-import { VictoryCandlestick, Candle } from "packages/victory-candlestick/src/index";
+import {
+  VictoryCandlestick,
+  Candle
+} from "packages/victory-candlestick/src/index";
 import { VictoryLabel } from "packages/victory-core";
 
 class MyCandle extends React.Component {
@@ -43,15 +46,29 @@ describe("components/victory-candlestick", () => {
 
   describe("rendering data", () => {
     it("renders injected points for {x, y} shaped data (default)", () => {
-      const data = range(10).map((i) => ({ x: i, open: i, close: i, high: i, low: i }));
-      const wrapper = shallow(<VictoryCandlestick data={data} dataComponent={<MyCandle />} />);
+      const data = range(10).map((i) => ({
+        x: i,
+        open: i,
+        close: i,
+        high: i,
+        low: i
+      }));
+      const wrapper = shallow(
+        <VictoryCandlestick data={data} dataComponent={<MyCandle />} />
+      );
 
       const points = wrapper.find(MyCandle);
       expect(points.length).to.equal(10);
     });
 
     it("renders points for {x, y} shaped data (default)", () => {
-      const data = range(10).map((i) => ({ x: i, open: i, close: i, high: i, low: i }));
+      const data = range(10).map((i) => ({
+        x: i,
+        open: i,
+        close: i,
+        high: i,
+        low: i
+      }));
       const wrapper = shallow(<VictoryCandlestick data={data} />);
       const points = wrapper.find(Candle);
       expect(points.length).to.equal(10);
@@ -80,7 +97,14 @@ describe("components/victory-candlestick", () => {
     it("renders points for array-shaped data", () => {
       const data = range(20).map((i) => [i, i, i, i, i]);
       const wrapper = shallow(
-        <VictoryCandlestick data={data} x={0} open={1} close={2} high={3} low={4} />
+        <VictoryCandlestick
+          data={data}
+          x={0}
+          open={1}
+          close={2}
+          high={3}
+          low={4}
+        />
       );
       const points = wrapper.find(Candle);
       expect(points.length).to.equal(20);
@@ -107,7 +131,14 @@ describe("components/victory-candlestick", () => {
     it("renders data values with null accessor", () => {
       const data = range(30);
       const wrapper = shallow(
-        <VictoryCandlestick data={data} x={null} open={null} close={null} high={null} low={null} />
+        <VictoryCandlestick
+          data={data}
+          x={null}
+          open={null}
+          close={null}
+          high={null}
+          low={null}
+        />
       );
       const points = wrapper.find(Candle);
       expect(points.length).to.equal(30);
@@ -211,7 +242,9 @@ describe("components/victory-candlestick", () => {
           data={data}
           dataComponent={
             <Candle
-              ariaLabel={({ datum }) => `open ${datum.open}, close ${datum.close}`}
+              ariaLabel={({ datum }) =>
+                `open ${datum.open}, close ${datum.close}`
+              }
               tabIndex={({ index }) => index + 5}
             />
           }
@@ -221,7 +254,9 @@ describe("components/victory-candlestick", () => {
       expect(wrapper.find("rect")).to.have.length(3);
       expect(wrapper.find("line")).to.have.length(6);
       wrapper.find("rect").forEach((p, i) => {
-        expect(p.prop("aria-label")).to.equal(`open ${data[i].open}, close ${data[i].close}`);
+        expect(p.prop("aria-label")).to.equal(
+          `open ${data[i].open}, close ${data[i].close}`
+        );
         expect(p.prop("tabIndex")).to.equal(i + 5);
       });
       wrapper.find("line").forEach((p, i) => {

@@ -5,7 +5,8 @@ const content = {
     background: require("../../../static/hero-background.svg"),
     cornerText: "ANOTHER OSS \n PROJECT BY",
     cornerIcon: require("../../../static/logos/logo-formidable-icon.svg"),
-    description: "React.js components for modular charting and data visualization.",
+    description:
+      "React.js components for modular charting and data visualization.",
     code: "npm install victory",
     link: {
       text: "DOCUMENTATION",
@@ -87,7 +88,8 @@ const content = {
       },
       {
         title: "Renature",
-        description: "A physics-based animation library for React inspired by the natural world.",
+        description:
+          "A physics-based animation library for React inspired by the natural world.",
         link: "https://formidable.com/open-source/renature",
         featured: true
       },

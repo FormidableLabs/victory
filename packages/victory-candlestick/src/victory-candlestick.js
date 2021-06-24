@@ -71,17 +71,27 @@ class VictoryCandlestick extends React.Component {
   static propTypes = {
     ...CommonProps.baseProps,
     ...CommonProps.dataProps,
-    candleColors: PropTypes.shape({ positive: PropTypes.string, negative: PropTypes.string }),
+    candleColors: PropTypes.shape({
+      positive: PropTypes.string,
+      negative: PropTypes.string
+    }),
     candleRatio: PropTypes.number,
     candleWidth: PropTypes.oneOfType([PropTypes.func, PropTypes.number]),
     close: PropTypes.oneOfType([
       PropTypes.func,
-      CustomPropTypes.allOfType([CustomPropTypes.integer, CustomPropTypes.nonNegative]),
+      CustomPropTypes.allOfType([
+        CustomPropTypes.integer,
+        CustomPropTypes.nonNegative
+      ]),
       PropTypes.string,
       PropTypes.arrayOf(PropTypes.string)
     ]),
     closeLabelComponent: PropTypes.element,
-    closeLabels: PropTypes.oneOfType([PropTypes.func, PropTypes.array, PropTypes.bool]),
+    closeLabels: PropTypes.oneOfType([
+      PropTypes.func,
+      PropTypes.array,
+      PropTypes.bool
+    ]),
     events: PropTypes.arrayOf(
       PropTypes.shape({
         target: PropTypes.oneOf([
@@ -98,7 +108,10 @@ class VictoryCandlestick extends React.Component {
         ]),
         eventKey: PropTypes.oneOfType([
           PropTypes.array,
-          CustomPropTypes.allOfType([CustomPropTypes.integer, CustomPropTypes.nonNegative]),
+          CustomPropTypes.allOfType([
+            CustomPropTypes.integer,
+            CustomPropTypes.nonNegative
+          ]),
           PropTypes.string
         ]),
         eventHandlers: PropTypes.object
@@ -106,12 +119,19 @@ class VictoryCandlestick extends React.Component {
     ),
     high: PropTypes.oneOfType([
       PropTypes.func,
-      CustomPropTypes.allOfType([CustomPropTypes.integer, CustomPropTypes.nonNegative]),
+      CustomPropTypes.allOfType([
+        CustomPropTypes.integer,
+        CustomPropTypes.nonNegative
+      ]),
       PropTypes.string,
       PropTypes.arrayOf(PropTypes.string)
     ]),
     highLabelComponent: PropTypes.element,
-    highLabels: PropTypes.oneOfType([PropTypes.func, PropTypes.array, PropTypes.bool]),
+    highLabels: PropTypes.oneOfType([
+      PropTypes.func,
+      PropTypes.array,
+      PropTypes.bool
+    ]),
     labelOrientation: PropTypes.oneOfType([
       PropTypes.oneOf(["top", "bottom", "left", "right"]),
       PropTypes.shape({
@@ -123,20 +143,34 @@ class VictoryCandlestick extends React.Component {
     ]),
     low: PropTypes.oneOfType([
       PropTypes.func,
-      CustomPropTypes.allOfType([CustomPropTypes.integer, CustomPropTypes.nonNegative]),
+      CustomPropTypes.allOfType([
+        CustomPropTypes.integer,
+        CustomPropTypes.nonNegative
+      ]),
       PropTypes.string,
       PropTypes.arrayOf(PropTypes.string)
     ]),
     lowLabelComponent: PropTypes.element,
-    lowLabels: PropTypes.oneOfType([PropTypes.func, PropTypes.array, PropTypes.bool]),
+    lowLabels: PropTypes.oneOfType([
+      PropTypes.func,
+      PropTypes.array,
+      PropTypes.bool
+    ]),
     open: PropTypes.oneOfType([
       PropTypes.func,
-      CustomPropTypes.allOfType([CustomPropTypes.integer, CustomPropTypes.nonNegative]),
+      CustomPropTypes.allOfType([
+        CustomPropTypes.integer,
+        CustomPropTypes.nonNegative
+      ]),
       PropTypes.string,
       PropTypes.arrayOf(PropTypes.string)
     ]),
     openLabelComponent: PropTypes.element,
-    openLabels: PropTypes.oneOfType([PropTypes.func, PropTypes.array, PropTypes.bool]),
+    openLabels: PropTypes.oneOfType([
+      PropTypes.func,
+      PropTypes.array,
+      PropTypes.bool
+    ]),
     style: PropTypes.shape({
       data: PropTypes.object,
       labels: PropTypes.object,
@@ -202,13 +236,18 @@ class VictoryCandlestick extends React.Component {
     const { dataComponent, labelComponent, groupComponent } = props;
     const types = ["close", "open", "low", "high"];
 
-    const dataComponents = this.dataKeys.reduce((validDataComponents, _dataKey, index) => {
-      const dataProps = this.getComponentProps(dataComponent, "data", index);
-      if (shouldRenderDatum(dataProps.datum)) {
-        validDataComponents.push(React.cloneElement(dataComponent, dataProps));
-      }
-      return validDataComponents;
-    }, []);
+    const dataComponents = this.dataKeys.reduce(
+      (validDataComponents, _dataKey, index) => {
+        const dataProps = this.getComponentProps(dataComponent, "data", index);
+        if (shouldRenderDatum(dataProps.datum)) {
+          validDataComponents.push(
+            React.cloneElement(dataComponent, dataProps)
+          );
+        }
+        return validDataComponents;
+      },
+      []
+    );
 
     const labelComponents = flatten(
       types.map((type) => {
@@ -227,7 +266,11 @@ class VictoryCandlestick extends React.Component {
 
     const labelsComponents = this.dataKeys
       .map((_dataKey, index) => {
-        const labelProps = this.getComponentProps(labelComponent, "labels", index);
+        const labelProps = this.getComponentProps(
+          labelComponent,
+          "labels",
+          index
+        );
         if (labelProps.text !== undefined && labelProps.text !== null) {
           return React.cloneElement(labelComponent, labelProps);
         }
@@ -235,7 +278,11 @@ class VictoryCandlestick extends React.Component {
       })
       .filter(Boolean);
 
-    const children = [...dataComponents, ...labelComponents, ...labelsComponents];
+    const children = [
+      ...dataComponents,
+      ...labelComponents,
+      ...labelsComponents
+    ];
     return this.renderContainer(groupComponent, children);
   }
 
@@ -248,7 +295,9 @@ class VictoryCandlestick extends React.Component {
     }
 
     const children = this.renderCandleData(props, this.shouldRenderDatum);
-    return props.standalone ? this.renderContainer(props.containerComponent, children) : children;
+    return props.standalone
+      ? this.renderContainer(props.containerComponent, children)
+      : children;
   }
 }
 

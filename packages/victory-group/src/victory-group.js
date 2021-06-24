@@ -1,7 +1,13 @@
 import { assign, defaults, isEmpty } from "lodash";
 import PropTypes from "prop-types";
 import React from "react";
-import { Helpers, VictoryContainer, VictoryTheme, CommonProps, Wrapper } from "victory-core";
+import {
+  Helpers,
+  VictoryContainer,
+  VictoryTheme,
+  CommonProps,
+  Wrapper
+} from "victory-core";
 import { VictorySharedEvents } from "victory-shared-events";
 import { getChildren, getCalculatedProps } from "./helper-methods";
 import isEqual from "react-fast-compare";
@@ -21,7 +27,10 @@ export default class VictoryGroup extends React.Component {
   static propTypes = {
     ...CommonProps.baseProps,
     ...CommonProps.dataProps,
-    children: PropTypes.oneOfType([PropTypes.arrayOf(PropTypes.node), PropTypes.node]),
+    children: PropTypes.oneOfType([
+      PropTypes.arrayOf(PropTypes.node),
+      PropTypes.node
+    ]),
     color: PropTypes.oneOfType([PropTypes.string, PropTypes.func]),
     colorScale: PropTypes.oneOfType([
       PropTypes.arrayOf(PropTypes.string),
@@ -49,7 +58,11 @@ export default class VictoryGroup extends React.Component {
     theme: VictoryTheme.grayscale
   };
 
-  static expectedComponents = ["groupComponent", "containerComponent", "labelComponent"];
+  static expectedComponents = [
+    "groupComponent",
+    "containerComponent",
+    "labelComponent"
+  ];
 
   static getChildren = getChildren;
 
@@ -79,7 +92,10 @@ export default class VictoryGroup extends React.Component {
     const children = getChildren(props, childComponents, calculatedProps);
     const getAnimationProps = Wrapper.getAnimationProps.bind(this);
     return children.map((child, index) => {
-      const childProps = assign({ animate: getAnimationProps(props, child, index) }, child.props);
+      const childProps = assign(
+        { animate: getAnimationProps(props, child, index) },
+        child.props
+      );
       return React.cloneElement(child, childProps);
     });
   }
@@ -110,7 +126,9 @@ export default class VictoryGroup extends React.Component {
   render() {
     const { role } = this.constructor;
     const props =
-      this.state && this.state.nodesWillExit ? this.state.oldProps || this.props : this.props;
+      this.state && this.state.nodesWillExit
+        ? this.state.oldProps || this.props
+        : this.props;
     const modifiedProps = Helpers.modifyProps(props, fallbackProps, role);
     const {
       eventKey,
@@ -121,8 +139,14 @@ export default class VictoryGroup extends React.Component {
     } = modifiedProps;
     const childComponents = React.Children.toArray(modifiedProps.children);
     const calculatedProps = getCalculatedProps(modifiedProps, childComponents);
-    const newChildren = this.getNewChildren(modifiedProps, childComponents, calculatedProps);
-    const containerProps = standalone ? this.getContainerProps(modifiedProps, calculatedProps) : {};
+    const newChildren = this.getNewChildren(
+      modifiedProps,
+      childComponents,
+      calculatedProps
+    );
+    const containerProps = standalone
+      ? this.getContainerProps(modifiedProps, calculatedProps)
+      : {};
     const container = standalone
       ? this.renderContainer(containerComponent, containerProps)
       : groupComponent;

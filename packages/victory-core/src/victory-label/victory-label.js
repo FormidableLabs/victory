@@ -16,7 +16,8 @@ import { assign, defaults, isEmpty } from "lodash";
 const defaultStyles = {
   fill: "#252525",
   fontSize: 14,
-  fontFamily: "'Gill Sans', 'Gill Sans MT', 'Ser­avek', 'Trebuchet MS', sans-serif",
+  fontFamily:
+    "'Gill Sans', 'Gill Sans MT', 'Ser­avek', 'Trebuchet MS', sans-serif",
   stroke: "transparent"
 };
 
@@ -59,6 +60,13 @@ const useMultiLineBackgrounds = (props) => {
 };
 
 const getStyles = (style, props) => {
+  if (props.disableInlineStyles) {
+    const baseStyles = Helpers.evaluateStyle(style, props);
+    return {
+      // Font size is necessary to calculate the y position of the label
+      fontSize: getFontSize(baseStyles)
+    };
+  }
   const getSingleStyle = (s) => {
     s = s ? defaults({}, s, defaultStyles) : defaultStyles;
     const baseStyles = Helpers.evaluateStyle(s, props);
@@ -118,9 +126,15 @@ const getDy = (props, verticalAnchor, lineHeight) => {
   const dy = props.dy ? Helpers.evaluateProp(props.dy, props) : 0;
   const length = props.inline ? 1 : props.text.length;
   const capHeight = Helpers.evaluateProp(props.capHeight, props);
-  const anchor = verticalAnchor ? Helpers.evaluateProp(verticalAnchor, props) : "middle";
-  const fontSizes = [...Array(length).keys()].map((i) => getSingleValue(props.style, i).fontSize);
-  const lineHeights = [...Array(length).keys()].map((i) => getSingleValue(lineHeight, i));
+  const anchor = verticalAnchor
+    ? Helpers.evaluateProp(verticalAnchor, props)
+    : "middle";
+  const fontSizes = [...Array(length).keys()].map(
+    (i) => getSingleValue(props.style, i).fontSize
+  );
+  const lineHeights = [...Array(length).keys()].map((i) =>
+    getSingleValue(lineHeight, i)
+  );
 
   if (anchor === "start") {
     return dy + (capHeight / 2 + lineHeights[0] / 2) * fontSizes[0];
@@ -131,14 +145,21 @@ const getDy = (props, verticalAnchor, lineHeight) => {
   } else if (length === 1) {
     return anchor === "end"
       ? dy + (capHeight / 2 + (0.5 - length) * lineHeights[0]) * fontSizes[0]
-      : dy + (capHeight / 2 + (0.5 - length / 2) * lineHeights[0]) * fontSizes[0];
+      : dy +
+          (capHeight / 2 + (0.5 - length / 2) * lineHeights[0]) * fontSizes[0];
   } else {
     const allHeights = [...Array(length).keys()].reduce((memo, i) => {
-      return memo + ((capHeight / 2 + (0.5 - length) * lineHeights[i]) * fontSizes[i]) / length;
+      return (
+        memo +
+        ((capHeight / 2 + (0.5 - length) * lineHeights[i]) * fontSizes[i]) /
+          length
+      );
     }, 0);
     return anchor === "end"
       ? dy + allHeights
-      : dy + allHeights / 2 + (capHeight / 2) * lineHeights[length - 1] * fontSizes[length - 1];
+      : dy +
+          allHeights / 2 +
+          (capHeight / 2) * lineHeights[length - 1] * fontSizes[length - 1];
   }
 };
 
@@ -147,12 +168,16 @@ const getTransform = (props, x, y) => {
   const style = getSingleValue(props.style);
   const defaultAngle = polar ? LabelHelpers.getPolarAngle(props) : 0;
   const baseAngle =
-    style.angle === undefined ? Helpers.evaluateProp(props.angle, props) : style.angle;
+    style.angle === undefined
+      ? Helpers.evaluateProp(props.angle, props)
+      : style.angle;
   const angle = baseAngle === undefined ? defaultAngle : baseAngle;
   const transform = props.transform || style.transform;
   const transformPart = transform && Helpers.evaluateProp(transform, props);
   const rotatePart = angle && { rotate: [angle, x, y] };
-  return transformPart || angle ? Style.toTransformString(transformPart, rotatePart) : undefined;
+  return transformPart || angle
+    ? Style.toTransformString(transformPart, rotatePart)
+    : undefined;
 };
 
 const getXCoordinate = (calculatedProps, labelSizeWidth) => {
@@ -205,7 +230,9 @@ const getFullBackground = (calculatedProps, tspanValues) => {
     ? Math.max(...textSizes.map((size) => size.height))
     : textSizes.reduce((memo, size, i) => {
         const capHeightAdjustment = i ? 0 : capHeight / 2;
-        return memo + size.height * (tspanValues[i].lineHeight - capHeightAdjustment);
+        return (
+          memo + size.height * (tspanValues[i].lineHeight - capHeightAdjustment)
+        );
       }, 0);
 
   const width = inline
@@ -224,7 +251,9 @@ const getFullBackground = (calculatedProps, tspanValues) => {
     style: backgroundStyle,
     transform,
     width: width + backgroundPadding.left + backgroundPadding.right,
-    x: inline ? xCoordinate - backgroundPadding.left : xCoordinate + dx - backgroundPadding.left,
+    x: inline
+      ? xCoordinate - backgroundPadding.left
+      : xCoordinate + dx - backgroundPadding.left,
     y: yCoordinate
   };
 
@@ -283,14 +312,17 @@ const getChildBackgrounds = (calculatedProps, tspanValues) => {
 
     const childDy =
       i && !inline
-        ? previous.fontSize * previous.lineHeight + prevPadding.top + prevPadding.bottom
+        ? previous.fontSize * previous.lineHeight +
+          prevPadding.top +
+          prevPadding.bottom
         : dy - totalLineHeight * 0.5 - (current.fontSize - current.capHeight);
 
     return {
       textHeight,
       labelSize,
       heightWithPadding: textHeight + padding.top + padding.bottom,
-      widthWithPadding: labelSize.width + padding.left + padding.right + xOffset,
+      widthWithPadding:
+        labelSize.width + padding.left + padding.right + xOffset,
       y,
       fontSize: current.fontSize,
       dy: childDy
@@ -298,16 +330,23 @@ const getChildBackgrounds = (calculatedProps, tspanValues) => {
   });
 
   return textElements.map((textElement, i) => {
-    const xCoordinate = getXCoordinate(calculatedProps, textElement.labelSize.width);
+    const xCoordinate = getXCoordinate(
+      calculatedProps,
+      textElement.labelSize.width
+    );
     const yCoordinate = textElements.slice(0, i + 1).reduce((prev, curr) => {
       return prev + curr.dy;
     }, y);
     const padding = getSingleValue(backgroundPadding, i);
     const height = textElement.heightWithPadding;
     const xCoord = inline
-      ? getInlineXOffset(calculatedProps, textElements, i) + xCoordinate - padding.left
+      ? getInlineXOffset(calculatedProps, textElements, i) +
+        xCoordinate -
+        padding.left
       : xCoordinate;
-    const yCoord = inline ? getYCoordinate(calculatedProps, height) - padding.top : yCoordinate;
+    const yCoord = inline
+      ? getYCoordinate(calculatedProps, height) - padding.top
+      : yCoordinate;
     const backgroundProps = {
       key: `tspan-background-${i}`,
       height,
@@ -349,7 +388,9 @@ const calculateSpanDy = (tspanValues, i, calculatedProps) => {
     previousCaps / 2;
 
   return useMultiLineBackgrounds(calculatedProps)
-    ? textHeight + current.backgroundPadding.top + previous.backgroundPadding.bottom
+    ? textHeight +
+        current.backgroundPadding.top +
+        previous.backgroundPadding.bottom
     : textHeight;
 };
 
@@ -382,14 +423,22 @@ const evaluateProps = (props) => {
     assign({}, props, { text, style, backgroundStyle })
   );
   const id = Helpers.evaluateProp(props.id, props);
-  return assign({}, props, { backgroundStyle, backgroundPadding, style, text, id });
+  return assign({}, props, {
+    backgroundStyle,
+    backgroundPadding,
+    style,
+    text,
+    id
+  });
 };
 
 const getCalculatedProps = (props) => {
   const ariaLabel = Helpers.evaluateProp(props.ariaLabel, props);
   const style = getSingleValue(props.style);
   const lineHeight = getLineHeight(props);
-  const direction = props.direction ? Helpers.evaluateProp(props.direction, props) : "inherit";
+  const direction = props.direction
+    ? Helpers.evaluateProp(props.direction, props)
+    : "inherit";
   const textAnchor = props.textAnchor
     ? Helpers.evaluateProp(props.textAnchor, props)
     : style.textAnchor || "start";
@@ -479,11 +528,15 @@ const VictoryLabel = (props) => {
     return null;
   }
   const calculatedProps = getCalculatedProps(props);
-  const { text, style, capHeight, backgroundPadding, lineHeight } = calculatedProps;
+  const { text, style, capHeight, backgroundPadding, lineHeight } =
+    calculatedProps;
 
   const tspanValues = text.map((line, i) => {
     const currentStyle = getSingleValue(style, i);
-    const capHeightPx = TextSize.convertLengthToPixels(`${capHeight}em`, currentStyle.fontSize);
+    const capHeightPx = TextSize.convertLengthToPixels(
+      `${capHeight}em`,
+      currentStyle.fontSize
+    );
     const currentLineHeight = getSingleValue(lineHeight, i);
     return {
       style: currentStyle,
@@ -499,9 +552,16 @@ const VictoryLabel = (props) => {
   const label = renderLabel(calculatedProps, tspanValues);
 
   if (props.backgroundStyle) {
-    const backgroundElement = getBackgroundElement(calculatedProps, tspanValues);
+    const backgroundElement = getBackgroundElement(
+      calculatedProps,
+      tspanValues
+    );
     const children = [backgroundElement, label];
-    const backgroundWithLabel = React.cloneElement(props.groupComponent, {}, children);
+    const backgroundWithLabel = React.cloneElement(
+      props.groupComponent,
+      {},
+      children
+    );
 
     return props.renderInPortal ? (
       <VictoryPortal>{backgroundWithLabel}</VictoryPortal>
@@ -518,12 +578,24 @@ VictoryLabel.role = "label";
 VictoryLabel.defaultStyles = defaultStyles;
 VictoryLabel.propTypes = {
   active: PropTypes.bool,
-  angle: PropTypes.oneOfType([PropTypes.string, PropTypes.number, PropTypes.func]),
+  angle: PropTypes.oneOfType([
+    PropTypes.string,
+    PropTypes.number,
+    PropTypes.func
+  ]),
   ariaLabel: PropTypes.oneOfType([PropTypes.string, PropTypes.func]),
   backgroundComponent: PropTypes.element,
-  backgroundPadding: PropTypes.oneOfType([PropTypes.number, PropTypes.object, PropTypes.array]),
+  backgroundPadding: PropTypes.oneOfType([
+    PropTypes.number,
+    PropTypes.object,
+    PropTypes.array
+  ]),
   backgroundStyle: PropTypes.oneOfType([PropTypes.object, PropTypes.array]),
-  capHeight: PropTypes.oneOfType([PropTypes.string, CustomPropTypes.nonNegative, PropTypes.func]),
+  capHeight: PropTypes.oneOfType([
+    PropTypes.string,
+    CustomPropTypes.nonNegative,
+    PropTypes.func
+  ]),
   className: PropTypes.string,
   data: PropTypes.array,
   datum: PropTypes.any,
@@ -555,14 +627,23 @@ VictoryLabel.propTypes = {
   }),
   style: PropTypes.oneOfType([PropTypes.object, PropTypes.array]),
   tabIndex: PropTypes.oneOfType([PropTypes.number, PropTypes.func]),
-  text: PropTypes.oneOfType([PropTypes.string, PropTypes.number, PropTypes.func, PropTypes.array]),
+  text: PropTypes.oneOfType([
+    PropTypes.string,
+    PropTypes.number,
+    PropTypes.func,
+    PropTypes.array
+  ]),
   textAnchor: PropTypes.oneOfType([
     PropTypes.oneOf(["start", "middle", "end", "inherit"]),
     PropTypes.func
   ]),
   textComponent: PropTypes.element,
   title: PropTypes.string,
-  transform: PropTypes.oneOfType([PropTypes.string, PropTypes.object, PropTypes.func]),
+  transform: PropTypes.oneOfType([
+    PropTypes.string,
+    PropTypes.object,
+    PropTypes.func
+  ]),
   tspanComponent: PropTypes.element,
   verticalAnchor: PropTypes.oneOfType([
     PropTypes.oneOf(["start", "middle", "end"]),

@@ -53,7 +53,9 @@ const getStartAngle = (props, index) => {
   const currentAngle = getAngle(props, index);
   const angularRange = Math.abs(scale.x.range()[1] - scale.x.range()[0]);
   const previousAngle =
-    index === 0 ? getAngle(props, data.length - 1) - Math.PI * 2 : getAngle(props, index - 1);
+    index === 0
+      ? getAngle(props, data.length - 1) - Math.PI * 2
+      : getAngle(props, index - 1);
   if (index === 0 && angularRange < 2 * Math.PI) {
     return scale.x.range()[0];
   } else if (alignment === "start" || alignment === "end") {
@@ -68,9 +70,13 @@ const getEndAngle = (props, index) => {
   const currentAngle = getAngle(props, index);
   const angularRange = Math.abs(scale.x.range()[1] - scale.x.range()[0]);
   const lastAngle =
-    scale.x.range()[1] === 2 * Math.PI ? getAngle(props, 0) + Math.PI * 2 : scale.x.range()[1];
+    scale.x.range()[1] === 2 * Math.PI
+      ? getAngle(props, 0) + Math.PI * 2
+      : scale.x.range()[1];
   const nextAngle =
-    index === data.length - 1 ? getAngle(props, 0) + Math.PI * 2 : getAngle(props, index + 1);
+    index === data.length - 1
+      ? getAngle(props, 0) + Math.PI * 2
+      : getAngle(props, index + 1);
   if (index === data.length - 1 && angularRange < 2 * Math.PI) {
     return lastAngle;
   } else if (alignment === "start" || alignment === "end") {
@@ -120,9 +126,15 @@ const getVerticalBarPoints = (position, sign, cr) => {
         ? y0 - cr[`bottom${side}`] < y1 + cr[`top${side}`]
         : y0 + cr[`bottom${side}`] > y1 - cr[`top${side}`];
     if (hasIntersection) {
-      const topCenter = point(x + signL * cr[`top${side}`], y1 + sign * cr[`top${side}`]);
+      const topCenter = point(
+        x + signL * cr[`top${side}`],
+        y1 + sign * cr[`top${side}`]
+      );
       const topCircle = circle(topCenter, cr[`top${side}`]);
-      const bottomCenter = point(x + signL * cr[`bottom${side}`], y0 - sign * cr[`bottom${side}`]);
+      const bottomCenter = point(
+        x + signL * cr[`bottom${side}`],
+        y0 - sign * cr[`bottom${side}`]
+      );
       const bottomCircle = circle(bottomCenter, cr[`bottom${side}`]);
       const circleIntersection = topCircle.intersection(bottomCircle);
       const hasArcIntersection = circleIntersection.length > 0;
@@ -131,7 +143,8 @@ const getVerticalBarPoints = (position, sign, cr) => {
         bottomMiddlePoint = { x: arcIntersection.x, y: arcIntersection.y };
         topMiddlePoint = { x: arcIntersection.x, y: arcIntersection.y };
       } else {
-        const hasBottomLineTopArcIntersection = cr[`top${side}`] > cr[`bottom${side}`];
+        const hasBottomLineTopArcIntersection =
+          cr[`top${side}`] > cr[`bottom${side}`];
         if (hasBottomLineTopArcIntersection) {
           const newX = topCircle.solveX(y0)[isLeft ? 0 : 1];
           bottomPoint = { x: newX, y: y0 };
@@ -168,9 +181,15 @@ const getHorizontalBarPoints = (position, sign, cr) => {
     let rightPoint = { x: x1, y: y - signL * cr[`${side}Right`] };
     const hasIntersection = leftMiddlePoint.x > rightMiddlePoint.x;
     if (hasIntersection) {
-      const leftCenter = point(x0 + cr[`${side}Left`], y - signL * cr[`${side}Left`]);
+      const leftCenter = point(
+        x0 + cr[`${side}Left`],
+        y - signL * cr[`${side}Left`]
+      );
       const leftCircle = circle(leftCenter, cr[`${side}Left`]);
-      const rightCenter = point(x1 - cr[`${side}Right`], y - signL * cr[`${side}Right`]);
+      const rightCenter = point(
+        x1 - cr[`${side}Right`],
+        y - signL * cr[`${side}Right`]
+      );
       const rightCircle = circle(rightCenter, cr[`${side}Right`]);
       const circleIntersection = leftCircle.intersection(rightCircle);
       const hasArcIntersection = circleIntersection.length > 0;
@@ -179,7 +198,8 @@ const getHorizontalBarPoints = (position, sign, cr) => {
         leftMiddlePoint = { x: arcIntersection.x, y: arcIntersection.y };
         rightMiddlePoint = { x: arcIntersection.x, y: arcIntersection.y };
       } else {
-        const hasLeftLineRightArcIntersection = cr[`${side}Right`] > cr[`${side}Left`];
+        const hasLeftLineRightArcIntersection =
+          cr[`${side}Right`] > cr[`${side}Left`];
         if (hasLeftLineRightArcIntersection) {
           const newY = rightCircle.solveY(x0)[isTop ? 0 : 1];
           leftPoint = { x: x0, y: newY };
@@ -197,8 +217,14 @@ const getHorizontalBarPoints = (position, sign, cr) => {
   };
   const topPoints = getHalfPoints("top");
   const bottomPoints = getHalfPoints("bottom");
-  // eslint-disable-next-line no-magic-numbers
-  return [bottomPoints[1], bottomPoints[0], ...topPoints, bottomPoints[3], bottomPoints[2]];
+  return [
+    bottomPoints[1],
+    bottomPoints[0],
+    ...topPoints,
+    // eslint-disable-next-line no-magic-numbers
+    bottomPoints[3],
+    bottomPoints[2]
+  ];
 };
 
 // eslint-disable-next-line max-params
@@ -264,16 +290,28 @@ export const getVerticalPolarBarPath = (props, cornerRadius) => {
     const leftMoves = leftPath.match(/[A-Z]/g);
     const leftCoords = leftPath.split(/[A-Z]/).slice(1);
     const leftMiddle = leftMoves.indexOf("L");
-    return { rightMoves, rightCoords, rightMiddle, leftMoves, leftCoords, leftMiddle };
+    return {
+      rightMoves,
+      rightCoords,
+      rightMiddle,
+      leftMoves,
+      leftCoords,
+      leftMiddle
+    };
   };
 
   // eslint-disable-next-line max-statements
   const getTopPath = () => {
     const { topRight, topLeft } = cornerRadius;
     const arcLength = r2 * Math.abs(end - start);
-    const { rightMoves, rightCoords, rightMiddle, leftMoves, leftCoords, leftMiddle } = getPathData(
-      "top"
-    );
+    const {
+      rightMoves,
+      rightCoords,
+      rightMiddle,
+      leftMoves,
+      leftCoords,
+      leftMiddle
+    } = getPathData("top");
     let moves;
     let coords;
     if (topRight === topLeft || arcLength < 2 * topRight + 2 * topLeft) {
@@ -285,32 +323,51 @@ export const getVerticalPolarBarPath = (props, cornerRadius) => {
       const rightOffset = topLeft > topRight && isShort(rightMiddle) ? 1 : 2;
       let leftOffset;
       if (topRight > topLeft) {
-        const defaultOffset = isShort(rightMiddle) ? leftMiddle : leftMiddle - 2;
+        const defaultOffset = isShort(rightMiddle)
+          ? leftMiddle
+          : leftMiddle - 2;
         leftOffset = isShort(leftMiddle) ? leftMiddle - 1 : defaultOffset;
       } else {
         const defaultOffset = isShort(leftMiddle) ? 1 : 2;
         leftOffset = isShort(rightMiddle) ? defaultOffset : leftMiddle - 2;
       }
-      moves = [...rightMoves.slice(0, rightOffset), ...leftMoves.slice(leftOffset)];
-      coords = [...rightCoords.slice(0, rightOffset), ...leftCoords.slice(leftOffset)];
+      moves = [
+        ...rightMoves.slice(0, rightOffset),
+        ...leftMoves.slice(leftOffset)
+      ];
+      coords = [
+        ...rightCoords.slice(0, rightOffset),
+        ...leftCoords.slice(leftOffset)
+      ];
     }
 
     const middle = moves.indexOf("L");
     const subMoves = moves.slice(0, middle);
     const subCoords = coords.slice(0, middle);
-    return subMoves.map((m, i) => ({ command: m, coords: subCoords[i].split(",") }));
+    return subMoves.map((m, i) => ({
+      command: m,
+      coords: subCoords[i].split(",")
+    }));
   };
 
   // eslint-disable-next-line max-statements
   const getBottomPath = () => {
     const { bottomRight, bottomLeft } = cornerRadius;
     const arcLength = r1 * Math.abs(end - start);
-    const { rightMoves, rightCoords, rightMiddle, leftMoves, leftCoords, leftMiddle } = getPathData(
-      "bottom"
-    );
+    const {
+      rightMoves,
+      rightCoords,
+      rightMiddle,
+      leftMoves,
+      leftCoords,
+      leftMiddle
+    } = getPathData("bottom");
     let moves;
     let coords;
-    if (bottomRight === bottomLeft || arcLength < 2 * bottomRight + 2 * bottomLeft) {
+    if (
+      bottomRight === bottomLeft ||
+      arcLength < 2 * bottomRight + 2 * bottomLeft
+    ) {
       moves = bottomRight > bottomLeft ? rightMoves : leftMoves;
       coords = bottomRight > bottomLeft ? rightCoords : leftCoords;
     } else {
@@ -323,13 +380,22 @@ export const getVerticalPolarBarPath = (props, cornerRadius) => {
       // eslint-disable-next-line no-magic-numbers
       const rightOffset = shortPath ? -1 : -3;
 
-      moves = [...leftMoves.slice(0, leftMiddle + 2), ...rightMoves.slice(rightOffset)];
-      coords = [...leftCoords.slice(0, leftMiddle + 2), ...rightCoords.slice(rightOffset)];
+      moves = [
+        ...leftMoves.slice(0, leftMiddle + 2),
+        ...rightMoves.slice(rightOffset)
+      ];
+      coords = [
+        ...leftCoords.slice(0, leftMiddle + 2),
+        ...rightCoords.slice(rightOffset)
+      ];
     }
     const middle = moves.indexOf("L");
     const subMoves = moves.slice(middle, -1);
     const subCoords = coords.slice(middle, -1);
-    return subMoves.map((m, i) => ({ command: m, coords: subCoords[i].split(",") }));
+    return subMoves.map((m, i) => ({
+      command: m,
+      coords: subCoords[i].split(",")
+    }));
   };
 
   const topPath = getTopPath();

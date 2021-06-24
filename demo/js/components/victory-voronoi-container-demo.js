@@ -70,7 +70,9 @@ class App extends React.Component {
       justifyContent: "center"
     };
 
-    const chartStyle = { parent: { border: "1px solid #ccc", margin: "2%", maxWidth: "40%" } };
+    const chartStyle = {
+      parent: { border: "1px solid #ccc", margin: "2%", maxWidth: "40%" }
+    };
 
     const dy = 13;
     const CustomLabel = (props) => {
@@ -128,7 +130,9 @@ class App extends React.Component {
                 labelComponent={
                   <VictoryTooltip
                     text={({ activePoints }) => {
-                      return activePoints.map(({ y }) => `value: ${y}`).join(" - ");
+                      return activePoints
+                        .map(({ y }) => `value: ${y}`)
+                        .join(" - ");
                     }}
                   />
                 }
@@ -161,7 +165,9 @@ class App extends React.Component {
               <VictoryVoronoiContainer
                 labels={({ datum }) => `I'm kind of a long label ${datum.y}`}
                 mouseFollowTooltips
-                labelComponent={<VictoryTooltip constrainToVisibleArea flyoutWidth={80} />}
+                labelComponent={
+                  <VictoryTooltip constrainToVisibleArea flyoutWidth={80} />
+                }
               />
             }
           >
@@ -201,7 +207,9 @@ class App extends React.Component {
             height={450}
             domain={{ y: [0, 1] }}
             style={chartStyle}
-            containerComponent={<VictoryVoronoiContainer labels={({ datum }) => datum.y} />}
+            containerComponent={
+              <VictoryVoronoiContainer labels={({ datum }) => datum.y} />
+            }
           >
             <VictoryScatter
               data={[
@@ -247,7 +255,10 @@ class App extends React.Component {
                 { x: 3, y: -2, l: "three" }
               ]}
               style={{
-                data: { stroke: "tomato", strokeWidth: ({ active }) => (active ? 4 : 2) },
+                data: {
+                  stroke: "tomato",
+                  strokeWidth: ({ active }) => (active ? 4 : 2)
+                },
                 labels: { fill: "tomato" }
               }}
             />
@@ -260,7 +271,10 @@ class App extends React.Component {
                 { x: 3, y: 3, l: "blue" }
               ]}
               style={{
-                data: { stroke: "blue", strokeWidth: ({ active }) => (active ? 4 : 2) },
+                data: {
+                  stroke: "blue",
+                  strokeWidth: ({ active }) => (active ? 4 : 2)
+                },
                 labels: { fill: "blue" }
               }}
             />
@@ -273,7 +287,10 @@ class App extends React.Component {
                 { x: 3, y: -2, l: "bird" }
               ]}
               style={{
-                data: { stroke: "black", strokeWidth: ({ active }) => (active ? 4 : 2) },
+                data: {
+                  stroke: "black",
+                  strokeWidth: ({ active }) => (active ? 4 : 2)
+                },
                 labels: { fill: "black" }
               }}
             />
@@ -302,7 +319,10 @@ class App extends React.Component {
           <VictoryChart
             style={chartStyle}
             containerComponent={
-              <VictoryVoronoiContainer radius={20} voronoiBlacklist={["ignore"]} />
+              <VictoryVoronoiContainer
+                radius={20}
+                voronoiBlacklist={["ignore"]}
+              />
             }
           >
             <VictoryScatter
@@ -357,7 +377,10 @@ class App extends React.Component {
                 }}
                 size={({ active }) => (active ? 8 : 3)}
               />
-              <VictoryLine name="ignore" style={{ data: { stroke: "tomato" } }} />
+              <VictoryLine
+                name="ignore"
+                style={{ data: { stroke: "tomato" } }}
+              />
             </VictoryGroup>
             <VictoryGroup
               data={[
@@ -398,7 +421,9 @@ class App extends React.Component {
             height={450}
             padding={{ top: 100, bottom: 20, left: 50, right: 50 }}
             style={chartStyle}
-            containerComponent={<VictoryVoronoiContainer voronoiBlacklist={["red"]} />}
+            containerComponent={
+              <VictoryVoronoiContainer voronoiBlacklist={["red"]} />
+            }
           >
             <VictoryLegend
               x={140}
@@ -469,7 +494,9 @@ class App extends React.Component {
 
           <VictoryChart
             style={chartStyle}
-            containerComponent={<VictoryVoronoiContainer voronoiBlacklist={["red"]} />}
+            containerComponent={
+              <VictoryVoronoiContainer voronoiBlacklist={["red"]} />
+            }
           >
             <VictoryStack>
               <VictoryBar
@@ -530,7 +557,10 @@ class App extends React.Component {
             </VictoryStack>
           </VictoryChart>
 
-          <VictoryStack style={chartStyle} containerComponent={<VictoryVoronoiContainer />}>
+          <VictoryStack
+            style={chartStyle}
+            containerComponent={<VictoryVoronoiContainer />}
+          >
             <VictoryBar
               style={{
                 data: {
@@ -612,7 +642,10 @@ class App extends React.Component {
                 { x: 3, y: 0, c: "red", l: "error" }
               ]}
               style={{
-                data: { stroke: "red", strokeWidth: ({ active }) => (active ? 4 : 2) }
+                data: {
+                  stroke: "red",
+                  strokeWidth: ({ active }) => (active ? 4 : 2)
+                }
               }}
             />
 
@@ -624,7 +657,10 @@ class App extends React.Component {
                 { x: 3, y: 3, c: "green", l: "success" }
               ]}
               style={{
-                data: { stroke: "green", strokeWidth: ({ active }) => (active ? 4 : 2) }
+                data: {
+                  stroke: "green",
+                  strokeWidth: ({ active }) => (active ? 4 : 2)
+                }
               }}
             />
           </VictoryChart>

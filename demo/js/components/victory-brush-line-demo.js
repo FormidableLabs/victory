@@ -75,7 +75,9 @@ class App extends React.Component {
         }
         const point = _.find(dataset.data, (d) => d.x === name);
         return (
-          point && Math.max(...filters[name]) >= point.y && Math.min(...filters[name]) <= point.y
+          point &&
+          Math.max(...filters[name]) >= point.y &&
+          Math.min(...filters[name]) <= point.y
         );
       }, true);
     };
@@ -88,17 +90,22 @@ class App extends React.Component {
   onDomainChange(domain, props) {
     const filters = this.addNewFilters(domain, props);
     const isFiltered = !_.isEmpty(_.values(filters).filter(Boolean));
-    const activeDatasets = isFiltered ? this.getActiveDatasets(filters) : this.state.datasets;
+    const activeDatasets = isFiltered
+      ? this.getActiveDatasets(filters)
+      : this.state.datasets;
     this.setState({ activeDatasets, filters, isFiltered });
   }
 
   isActive(dataset) {
     // Determine whether a given dataset is active
-    return !this.state.isFiltered ? true : _.includes(this.state.activeDatasets, dataset.name);
+    return !this.state.isFiltered
+      ? true
+      : _.includes(this.state.activeDatasets, dataset.name);
   }
 
   getAxisOffset(index) {
-    const step = (width - padding.left - padding.right) / (attributes.length - 1);
+    const step =
+      (width - padding.left - padding.right) / (attributes.length - 1);
     return step * index + padding.left;
   }
 
@@ -136,7 +143,9 @@ class App extends React.Component {
       alignItems: "center",
       justifyContent: "center"
     };
-    const chartStyle = { parent: { border: "1px solid #ccc", margin: "2%", maxWidth: "40%" } };
+    const chartStyle = {
+      parent: { border: "1px solid #ccc", margin: "2%", maxWidth: "40%" }
+    };
     return (
       <div className="demo">
         <h1>VictoryBrushLine</h1>
@@ -185,10 +194,16 @@ class App extends React.Component {
                 }
                 offsetX={this.getAxisOffset(index)}
                 style={{
-                  tickLabels: { fontSize: 15, padding: 15, pointerEvents: "none" }
+                  tickLabels: {
+                    fontSize: 15,
+                    padding: 15,
+                    pointerEvents: "none"
+                  }
                 }}
                 tickValues={[0.2, 0.4, 0.6, 0.8, 1]}
-                tickFormat={(tick) => Math.round(tick * this.state.maximumValues[index])}
+                tickFormat={(tick) =>
+                  Math.round(tick * this.state.maximumValues[index])
+                }
               />
             ))}
           </VictoryChart>
@@ -217,7 +232,9 @@ class App extends React.Component {
             />
             <VictoryAxis
               dependentAxis
-              axisComponent={<VictoryBrushLine brushWidth={20} brushDomain={[2, 3]} />}
+              axisComponent={
+                <VictoryBrushLine brushWidth={20} brushDomain={[2, 3]} />
+              }
             />
           </VictoryChart>
           <VictoryChart style={chartStyle}>
@@ -247,7 +264,9 @@ class App extends React.Component {
 
           <VictoryAxis
             style={chartStyle}
-            gridComponent={<VictoryBrushLine brushWidth={20} domain={[0, 10]} />}
+            gridComponent={
+              <VictoryBrushLine brushWidth={20} domain={[0, 10]} />
+            }
           />
         </div>
       </div>

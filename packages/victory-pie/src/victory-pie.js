@@ -86,13 +86,20 @@ class VictoryPie extends React.Component {
       ])
     ]),
     containerComponent: PropTypes.element,
-    cornerRadius: PropTypes.oneOfType([CustomPropTypes.nonNegative, PropTypes.func]),
+    cornerRadius: PropTypes.oneOfType([
+      CustomPropTypes.nonNegative,
+      PropTypes.func
+    ]),
     data: PropTypes.array,
     dataComponent: PropTypes.element,
+    disableInlineStyes: PropTypes.bool,
     endAngle: PropTypes.number,
     eventKey: PropTypes.oneOfType([
       PropTypes.func,
-      CustomPropTypes.allOfType([CustomPropTypes.integer, CustomPropTypes.nonNegative]),
+      CustomPropTypes.allOfType([
+        CustomPropTypes.integer,
+        CustomPropTypes.nonNegative
+      ]),
       PropTypes.string
     ]),
     events: PropTypes.arrayOf(
@@ -100,7 +107,10 @@ class VictoryPie extends React.Component {
         target: PropTypes.oneOf(["data", "labels", "parent"]),
         eventKey: PropTypes.oneOfType([
           PropTypes.func,
-          CustomPropTypes.allOfType([CustomPropTypes.integer, CustomPropTypes.nonNegative]),
+          CustomPropTypes.allOfType([
+            CustomPropTypes.integer,
+            CustomPropTypes.nonNegative
+          ]),
           PropTypes.string
         ]),
         eventHandlers: PropTypes.object
@@ -112,7 +122,10 @@ class VictoryPie extends React.Component {
         childName: PropTypes.oneOfType([PropTypes.string, PropTypes.array]),
         eventKey: PropTypes.oneOfType([
           PropTypes.array,
-          CustomPropTypes.allOfType([CustomPropTypes.integer, CustomPropTypes.nonNegative]),
+          CustomPropTypes.allOfType([
+            CustomPropTypes.integer,
+            CustomPropTypes.nonNegative
+          ]),
           PropTypes.string
         ]),
         mutation: PropTypes.function,
@@ -121,7 +134,10 @@ class VictoryPie extends React.Component {
     ),
     groupComponent: PropTypes.element,
     height: CustomPropTypes.nonNegative,
-    innerRadius: PropTypes.oneOfType([CustomPropTypes.nonNegative, PropTypes.func]),
+    innerRadius: PropTypes.oneOfType([
+      CustomPropTypes.nonNegative,
+      PropTypes.func
+    ]),
     labelComponent: PropTypes.element,
     labelPlacement: PropTypes.oneOfType([
       PropTypes.func,
@@ -131,14 +147,20 @@ class VictoryPie extends React.Component {
       PropTypes.func,
       PropTypes.oneOf(["startAngle", "centroid", "endAngle"])
     ]),
-    labelRadius: PropTypes.oneOfType([CustomPropTypes.nonNegative, PropTypes.func]),
+    labelRadius: PropTypes.oneOfType([
+      CustomPropTypes.nonNegative,
+      PropTypes.func
+    ]),
     labels: PropTypes.oneOfType([PropTypes.func, PropTypes.array]),
     name: PropTypes.string,
     origin: PropTypes.shape({
       x: CustomPropTypes.nonNegative,
       y: CustomPropTypes.nonNegative
     }),
-    padAngle: PropTypes.oneOfType([CustomPropTypes.nonNegative, PropTypes.func]),
+    padAngle: PropTypes.oneOfType([
+      CustomPropTypes.nonNegative,
+      PropTypes.func
+    ]),
     padding: PropTypes.oneOfType([
       PropTypes.number,
       PropTypes.shape({
@@ -155,7 +177,10 @@ class VictoryPie extends React.Component {
     }),
     sortKey: PropTypes.oneOfType([
       PropTypes.func,
-      CustomPropTypes.allOfType([CustomPropTypes.integer, CustomPropTypes.nonNegative]),
+      CustomPropTypes.allOfType([
+        CustomPropTypes.integer,
+        CustomPropTypes.nonNegative
+      ]),
       PropTypes.string,
       PropTypes.arrayOf(PropTypes.string)
     ]),
@@ -171,13 +196,19 @@ class VictoryPie extends React.Component {
     width: CustomPropTypes.nonNegative,
     x: PropTypes.oneOfType([
       PropTypes.func,
-      CustomPropTypes.allOfType([CustomPropTypes.integer, CustomPropTypes.nonNegative]),
+      CustomPropTypes.allOfType([
+        CustomPropTypes.integer,
+        CustomPropTypes.nonNegative
+      ]),
       PropTypes.string,
       PropTypes.arrayOf(PropTypes.string)
     ]),
     y: PropTypes.oneOfType([
       PropTypes.func,
-      CustomPropTypes.allOfType([CustomPropTypes.integer, CustomPropTypes.nonNegative]),
+      CustomPropTypes.allOfType([
+        CustomPropTypes.integer,
+        CustomPropTypes.nonNegative
+      ]),
       PropTypes.string,
       PropTypes.arrayOf(PropTypes.string)
     ])
@@ -223,7 +254,9 @@ class VictoryPie extends React.Component {
     }
 
     const children = this.renderData(props);
-    return props.standalone ? this.renderContainer(props.containerComponent, children) : children;
+    return props.standalone
+      ? this.renderContainer(props.containerComponent, children)
+      : children;
   }
 }
 

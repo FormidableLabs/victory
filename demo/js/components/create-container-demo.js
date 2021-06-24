@@ -41,7 +41,12 @@ const Charts = ({ behaviors }) => {
             <CustomContainer
               voronoiDimension="x"
               labels={({ datum }) => `y: ${datum.y}`}
-              labelComponent={<VictoryTooltip cornerRadius={0} flyoutStyle={{ fill: "white" }} />}
+              labelComponent={
+                <VictoryTooltip
+                  cornerRadius={0}
+                  flyoutStyle={{ fill: "white" }}
+                />
+              }
               selectedDomain={{ x: [1.5, 2] }}
             />
           }
@@ -139,7 +144,9 @@ const Charts = ({ behaviors }) => {
         {/* C */}
         <VictoryChart
           style={chartStyle}
-          containerComponent={<CustomContainer selectedDomain={{ x: [0, 0] }} />}
+          containerComponent={
+            <CustomContainer selectedDomain={{ x: [0, 0] }} />
+          }
         >
           <VictoryGroup style={chartStyle}>
             <VictoryScatter
@@ -196,7 +203,9 @@ const Charts = ({ behaviors }) => {
         {/* D */}
         <VictoryStack
           style={chartStyle}
-          containerComponent={<CustomContainer selectedDomain={{ x: [1.5, 2.5], y: [-3, 4] }} />}
+          containerComponent={
+            <CustomContainer selectedDomain={{ x: [1.5, 2.5], y: [-3, 4] }} />
+          }
         >
           <VictoryBar
             style={{

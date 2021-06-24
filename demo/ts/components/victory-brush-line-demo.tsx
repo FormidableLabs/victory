@@ -43,10 +43,20 @@ interface BrushLineDemoState {
   externalMutation: EventCallbackInterface<string, string>[] | undefined;
 }
 
-const attributes: [string, string, string, string] = ["strength", "intelligence", "speed", "luck"];
+const attributes: [string, string, string, string] = [
+  "strength",
+  "intelligence",
+  "speed",
+  "luck"
+];
 const height = 500;
 const width = 500;
-const padding: { [key: string]: number } = { top: 100, left: 50, right: 50, bottom: 50 };
+const padding: { [key: string]: number } = {
+  top: 100,
+  left: 50,
+  right: 50,
+  bottom: 50
+};
 
 class App extends React.Component<any, BrushLineDemoState> {
   constructor(props: any) {
@@ -99,7 +109,9 @@ class App extends React.Component<any, BrushLineDemoState> {
         }
         const point = _.find(dataset.data, (d) => d.x === name);
         return (
-          point && Math.max(...filters[name]) >= point.y && Math.min(...filters[name]) <= point.y
+          point &&
+          Math.max(...filters[name]) >= point.y &&
+          Math.min(...filters[name]) <= point.y
         );
       }, true);
     };
@@ -112,17 +124,22 @@ class App extends React.Component<any, BrushLineDemoState> {
   onDomainChange(domain: DomainPropType, props: any) {
     const filters = this.addNewFilters(domain, props);
     const isFiltered = !_.isEmpty(_.values(filters).filter(Boolean));
-    const activeDatasets = isFiltered ? this.getActiveDatasets(filters) : this.state.datasets;
+    const activeDatasets = isFiltered
+      ? this.getActiveDatasets(filters)
+      : this.state.datasets;
     this.setState({ activeDatasets, filters, isFiltered });
   }
 
   isActive(dataset: any) {
     // Determine whether a given dataset is active
-    return !this.state.isFiltered ? true : _.includes(this.state.activeDatasets, dataset.name);
+    return !this.state.isFiltered
+      ? true
+      : _.includes(this.state.activeDatasets, dataset.name);
   }
 
   getAxisOffset(index: number) {
-    const step = (width - padding.left - padding.right) / (attributes.length - 1);
+    const step =
+      (width - padding.left - padding.right) / (attributes.length - 1);
     return step * index + padding.left;
   }
 
@@ -216,7 +233,11 @@ class App extends React.Component<any, BrushLineDemoState> {
                 }
                 offsetX={this.getAxisOffset(index)}
                 style={{
-                  tickLabels: { fontSize: 15, padding: 15, pointerEvents: "none" }
+                  tickLabels: {
+                    fontSize: 15,
+                    padding: 15,
+                    pointerEvents: "none"
+                  }
                 }}
                 tickValues={[0.2, 0.4, 0.6, 0.8, 1]}
                 tickFormat={(tick) => Math.round(tick * max[index])}
@@ -250,7 +271,9 @@ class App extends React.Component<any, BrushLineDemoState> {
             />
             <VictoryAxis
               dependentAxis
-              axisComponent={<VictoryBrushLine brushWidth={20} brushDomain={[2, 3]} />}
+              axisComponent={
+                <VictoryBrushLine brushWidth={20} brushDomain={[2, 3]} />
+              }
             />
           </VictoryChart>
           <VictoryChart style={chartStyle}>
@@ -280,7 +303,9 @@ class App extends React.Component<any, BrushLineDemoState> {
 
           <VictoryAxis
             style={chartStyle}
-            gridComponent={<VictoryBrushLine brushWidth={20} brushDomain={[0, 10]} />}
+            gridComponent={
+              <VictoryBrushLine brushWidth={20} brushDomain={[0, 10]} />
+            }
           />
         </div>
       </div>

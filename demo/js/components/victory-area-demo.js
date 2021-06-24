@@ -6,7 +6,10 @@ import { VictoryChart } from "Packages/victory-chart/src/index";
 import { VictoryStack } from "Packages/victory-stack/src/index";
 import { VictoryGroup } from "Packages/victory-group/src/index";
 import { VictoryArea } from "Packages/victory-area/src/index";
-import { VictoryContainer, VictoryTheme } from "Packages/victory-core/src/index";
+import {
+  VictoryContainer,
+  VictoryTheme
+} from "Packages/victory-core/src/index";
 
 export default class App extends React.Component {
   constructor() {
@@ -165,7 +168,9 @@ export default class App extends React.Component {
           }
         >
           {this.state.multiTransitionData.map((data, index) => {
-            return <VictoryArea key={index} data={data} interpolation={"basis"} />;
+            return (
+              <VictoryArea key={index} data={data} interpolation={"basis"} />
+            );
           })}
         </VictoryStack>
 
@@ -276,7 +281,9 @@ export default class App extends React.Component {
                     {
                       target: "data",
                       mutation: (props) => {
-                        return { style: merge({}, props.style, { fill: "orange" }) };
+                        return {
+                          style: merge({}, props.style, { fill: "orange" })
+                        };
                       }
                     },
                     {
@@ -363,11 +370,16 @@ export default class App extends React.Component {
           }
         >
           {this.state.multiTransitionData.map((data, index) => {
-            return <VictoryArea key={index} data={data} interpolation={"basis"} />;
+            return (
+              <VictoryArea key={index} data={data} interpolation={"basis"} />
+            );
           })}
         </VictoryStack>
 
-        <VictoryStack style={{ parent: style.parent }} theme={VictoryTheme.material}>
+        <VictoryStack
+          style={{ parent: style.parent }}
+          theme={VictoryTheme.material}
+        >
           <VictoryArea
             data={[
               { x: 1, y: 2 },

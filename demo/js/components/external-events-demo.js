@@ -85,17 +85,23 @@ class App extends React.Component {
       alignItems: "center",
       justifyContent: "center"
     };
-    const chartStyle = { parent: { border: "1px solid #ccc", margin: "2%", maxWidth: "35%" } };
+    const chartStyle = {
+      parent: { border: "1px solid #ccc", margin: "2%", maxWidth: "35%" }
+    };
     return (
       <div className="demo">
         <h1>Debug</h1>
         <div style={containerStyle}>
           <ul>
             <li>
-              <button onClick={this.handleClick.bind(this)}>External Mutation</button>
+              <button onClick={this.handleClick.bind(this)}>
+                External Mutation
+              </button>
             </li>
             <li>
-              <button onClick={this.clearMutation.bind(this)}>Clear Mutation</button>
+              <button onClick={this.clearMutation.bind(this)}>
+                Clear Mutation
+              </button>
             </li>
           </ul>
           <VictoryChart

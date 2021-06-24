@@ -36,17 +36,29 @@ const getBarWidth = (barWidth, props) => {
   const extent = Math.abs(range[1] - range[0]);
   const bars = data.length + 2;
   const barRatio = props.barRatio || 0.5;
-  const defaultWidth = barRatio * (data.length < 2 ? defaultBarWidth : extent / bars);
+  const defaultWidth =
+    barRatio * (data.length < 2 ? defaultBarWidth : extent / bars);
   return Math.max(1, defaultWidth);
 };
 
 const getCornerRadiusFromObject = (cornerRadius, props) => {
-  const realCornerRadius = { topLeft: 0, topRight: 0, bottomLeft: 0, bottomRight: 0 };
+  const realCornerRadius = {
+    topLeft: 0,
+    topRight: 0,
+    bottomLeft: 0,
+    bottomRight: 0
+  };
   const updateCornerRadius = (corner, fallback) => {
     if (!isNil(cornerRadius[corner])) {
-      realCornerRadius[corner] = Helpers.evaluateProp(cornerRadius[corner], props);
+      realCornerRadius[corner] = Helpers.evaluateProp(
+        cornerRadius[corner],
+        props
+      );
     } else if (!isNil(cornerRadius[fallback])) {
-      realCornerRadius[corner] = Helpers.evaluateProp(cornerRadius[fallback], props);
+      realCornerRadius[corner] = Helpers.evaluateProp(
+        cornerRadius[fallback],
+        props
+      );
     }
   };
   updateCornerRadius("topLeft", "top");
@@ -57,7 +69,12 @@ const getCornerRadiusFromObject = (cornerRadius, props) => {
 };
 
 const getCornerRadius = (cornerRadius, props) => {
-  const realCornerRadius = { topLeft: 0, topRight: 0, bottomLeft: 0, bottomRight: 0 };
+  const realCornerRadius = {
+    topLeft: 0,
+    topRight: 0,
+    bottomLeft: 0,
+    bottomRight: 0
+  };
   if (!cornerRadius) {
     return realCornerRadius;
   }
@@ -71,6 +88,9 @@ const getCornerRadius = (cornerRadius, props) => {
 };
 
 const getStyle = (style = {}, props) => {
+  if (props.disableInlineStyles) {
+    return {};
+  }
   const stroke = style.fill || "black";
   const baseStyle = { fill: "black", stroke };
   return Helpers.evaluateStyle(assign(baseStyle, style), props);
@@ -91,14 +111,25 @@ const evaluateProps = (props) => {
    */
   const style = getStyle(props.style, props);
   const barWidth = getBarWidth(props.barWidth, assign({}, props, { style }));
-  const cornerRadius = getCornerRadius(props.cornerRadius, assign({}, props, { style, barWidth }));
+  const cornerRadius = getCornerRadius(
+    props.cornerRadius,
+    assign({}, props, { style, barWidth })
+  );
 
   const ariaLabel = Helpers.evaluateProp(props.ariaLabel, props);
   const desc = Helpers.evaluateProp(props.desc, props);
   const id = Helpers.evaluateProp(props.id, props);
   const tabIndex = Helpers.evaluateProp(props.tabIndex, props);
 
-  return assign({}, props, { ariaLabel, style, barWidth, cornerRadius, desc, id, tabIndex });
+  return assign({}, props, {
+    ariaLabel,
+    style,
+    barWidth,
+    cornerRadius,
+    desc,
+    id,
+    tabIndex
+  });
 };
 
 const Bar = (props) => {
@@ -108,7 +139,8 @@ const Bar = (props) => {
   const path = polar
     ? getPolarBarPath(props, cornerRadius)
     : getBarPath(props, barWidth, cornerRadius);
-  const defaultTransform = polar && origin ? `translate(${origin.x}, ${origin.y})` : undefined;
+  const defaultTransform =
+    polar && origin ? `translate(${origin.x}, ${origin.y})` : undefined;
   return React.cloneElement(props.pathComponent, {
     ...props.events,
     "aria-label": props.ariaLabel,

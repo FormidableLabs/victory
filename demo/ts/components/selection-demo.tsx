@@ -18,7 +18,10 @@ interface DataSet {
   data?: { x: number; y: number }[];
 }
 
-export default class SelectionDemo extends React.Component<any, SelectionDemoState> {
+export default class SelectionDemo extends React.Component<
+  any,
+  SelectionDemoState
+> {
   constructor(props: any) {
     super(props);
     this.state = {
@@ -39,9 +42,11 @@ export default class SelectionDemo extends React.Component<any, SelectionDemoSta
   }
 
   listData() {
-    const points = this.state.points.map((point: { x: number; y: number }, index: number) => {
-      return <li key={index}>{`${point.x}, ${point.y}`}</li>;
-    });
+    const points = this.state.points.map(
+      (point: { x: number; y: number }, index: number) => {
+        return <li key={index}>{`${point.x}, ${point.y}`}</li>;
+      }
+    );
 
     return (
       <div>
@@ -60,7 +65,9 @@ export default class SelectionDemo extends React.Component<any, SelectionDemoSta
       justifyContent: "center"
     };
 
-    const chartStyle = { parent: { border: "1px solid #ccc", margin: "2%", maxWidth: "40%" } };
+    const chartStyle = {
+      parent: { border: "1px solid #ccc", margin: "2%", maxWidth: "40%" }
+    };
 
     return (
       <div className="demo">
@@ -139,7 +146,10 @@ export default class SelectionDemo extends React.Component<any, SelectionDemoSta
             />
           </VictoryChart>
 
-          <VictoryChart style={chartStyle} containerComponent={<VictorySelectionContainer />}>
+          <VictoryChart
+            style={chartStyle}
+            containerComponent={<VictorySelectionContainer />}
+          >
             <VictoryGroup
               data={[
                 { x: 1, y: 5 },
@@ -149,7 +159,9 @@ export default class SelectionDemo extends React.Component<any, SelectionDemoSta
             >
               <VictoryLine style={{ data: { stroke: "tomato" } }} />
               <VictoryScatter
-                style={{ data: { fill: ({ active }) => (active ? "tomato" : "gray") } }}
+                style={{
+                  data: { fill: ({ active }) => (active ? "tomato" : "gray") }
+                }}
                 labels={({ datum }) => datum.y}
                 labelComponent={<VictoryTooltip />}
               />
@@ -164,7 +176,9 @@ export default class SelectionDemo extends React.Component<any, SelectionDemoSta
             >
               <VictoryLine style={{ data: { stroke: "blue" } }} />
               <VictoryScatter
-                style={{ data: { fill: ({ active }) => (active ? "blue" : "gray") } }}
+                style={{
+                  data: { fill: ({ active }) => (active ? "blue" : "gray") }
+                }}
                 labels={({ datum }) => datum.y}
                 labelComponent={<VictoryTooltip />}
               />
@@ -179,7 +193,9 @@ export default class SelectionDemo extends React.Component<any, SelectionDemoSta
             >
               <VictoryLine style={{ data: { stroke: "black" } }} />
               <VictoryScatter
-                style={{ data: { fill: ({ active }) => (active ? "black" : "gray") } }}
+                style={{
+                  data: { fill: ({ active }) => (active ? "black" : "gray") }
+                }}
                 labels={({ datum }) => datum.y}
                 labelComponent={<VictoryTooltip />}
               />

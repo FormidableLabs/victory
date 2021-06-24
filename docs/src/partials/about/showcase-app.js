@@ -30,7 +30,11 @@ const ShowcaseApp = (props) => {
         <Company>{props.company}</Company>
         {props.description}
       </div>
-      <Img minHeight={200} alt={props.screenshot.alt} src={props.screenshot.src} />
+      <Img
+        minHeight={200}
+        alt={props.screenshot.alt}
+        src={props.screenshot.src}
+      />
     </Grid>
   );
 };

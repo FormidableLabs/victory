@@ -2,7 +2,11 @@ import React from "react";
 import { merge, random, range } from "lodash";
 import { VictoryChart } from "@packages/victory-chart/src/index";
 import { VictoryLine, Curve } from "@packages/victory-line/src/index";
-import { VictoryContainer, VictoryTheme, Point } from "@packages/victory-core/src/index";
+import {
+  VictoryContainer,
+  VictoryTheme,
+  Point
+} from "@packages/victory-core/src/index";
 
 interface PointedLineProps {
   index?: string | number;
@@ -66,7 +70,10 @@ interface VictoryLineDemoState {
   style: React.CSSProperties;
 }
 
-export default class VictoryLineDemo extends React.Component<any, VictoryLineDemoState> {
+export default class VictoryLineDemo extends React.Component<
+  any,
+  VictoryLineDemoState
+> {
   setStateInterval?: number = undefined;
 
   constructor(props: any) {
@@ -124,7 +131,11 @@ export default class VictoryLineDemo extends React.Component<any, VictoryLineDem
   }
 
   render() {
-    const parentStyle = { border: "1px solid #ccc", margin: "2%", maxWidth: "40%" };
+    const parentStyle = {
+      border: "1px solid #ccc",
+      margin: "2%",
+      maxWidth: "40%"
+    };
     const containerStyle: React.CSSProperties = {
       display: "flex",
       flexDirection: "row",
@@ -154,7 +165,9 @@ export default class VictoryLineDemo extends React.Component<any, VictoryLineDem
                   return [
                     {
                       mutation: (props) => {
-                        return { style: merge({}, props.style, { stroke: "orange" }) };
+                        return {
+                          style: merge({}, props.style, { stroke: "orange" })
+                        };
                       }
                     },
                     {
@@ -181,7 +194,12 @@ export default class VictoryLineDemo extends React.Component<any, VictoryLineDem
           dataComponent={<PointedLine />}
         />
 
-        <VictoryLine style={{ parent: parentStyle }} data={this.state.arrayData} x={0} y={1} />
+        <VictoryLine
+          style={{ parent: parentStyle }}
+          data={this.state.arrayData}
+          x={0}
+          y={1}
+        />
 
         <VictoryLine
           style={{ parent: parentStyle }}
@@ -214,7 +232,10 @@ export default class VictoryLineDemo extends React.Component<any, VictoryLineDem
           ]}
         />
 
-        <VictoryChart style={{ parent: parentStyle }} scale={{ x: "linear", y: "log" }}>
+        <VictoryChart
+          style={{ parent: parentStyle }}
+          scale={{ x: "linear", y: "log" }}
+        >
           <VictoryLine />
         </VictoryChart>
 
@@ -226,7 +247,10 @@ export default class VictoryLineDemo extends React.Component<any, VictoryLineDem
           theme={VictoryTheme.grayscale}
         />
 
-        <VictoryChart style={{ parent: parentStyle }} theme={VictoryTheme.grayscale}>
+        <VictoryChart
+          style={{ parent: parentStyle }}
+          theme={VictoryTheme.grayscale}
+        >
           <VictoryLine data={this.state.arrayData} x={0} y={1} />
         </VictoryChart>
 
@@ -267,7 +291,10 @@ export default class VictoryLineDemo extends React.Component<any, VictoryLineDem
           ]}
         />
 
-        <VictoryLine style={{ parent: parentStyle }} scale={{ x: "linear", y: "log" }} />
+        <VictoryLine
+          style={{ parent: parentStyle }}
+          scale={{ x: "linear", y: "log" }}
+        />
 
         <VictoryLine
           style={{ parent: parentStyle }}
@@ -278,7 +305,10 @@ export default class VictoryLineDemo extends React.Component<any, VictoryLineDem
           theme={VictoryTheme.material}
         />
 
-        <VictoryChart style={{ parent: parentStyle }} theme={VictoryTheme.material}>
+        <VictoryChart
+          style={{ parent: parentStyle }}
+          theme={VictoryTheme.material}
+        >
           <VictoryLine
             style={{ parent: parentStyle, data: this.state.style }}
             data={this.state.transitionData}
@@ -292,7 +322,10 @@ export default class VictoryLineDemo extends React.Component<any, VictoryLineDem
           />
         </VictoryChart>
 
-        <VictoryChart style={{ parent: parentStyle }} theme={VictoryTheme.material}>
+        <VictoryChart
+          style={{ parent: parentStyle }}
+          theme={VictoryTheme.material}
+        >
           <VictoryLine style={{ parent: parentStyle }} data={[]} />
         </VictoryChart>
 

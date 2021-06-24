@@ -40,7 +40,9 @@ function getLength(data) {
 
 // Returns generated data for a given axis based on domain and sample from props
 function generateDataArray(props, axis) {
-  const propsDomain = isPlainObject(props.domain) ? props.domain[axis] : props.domain;
+  const propsDomain = isPlainObject(props.domain)
+    ? props.domain[axis]
+    : props.domain;
   const domain = propsDomain || Scale.getBaseScale(props, axis).domain();
   const samples = props.samples || 1;
   const domainMax = Math.max(...domain);
@@ -123,7 +125,8 @@ function formatDataFromDomain(dataset, domain, defaultBaseline) {
     if (!exists(value)) return datum;
 
     // value only and less than min domain or greater than max domain
-    if (!exists(baseline) && (isUnderMinY(value) || isOverMaxY(value))) _y = null;
+    if (!exists(baseline) && (isUnderMinY(value) || isOverMaxY(value)))
+      _y = null;
 
     // baseline and value are both less than min domain or both greater than max domain
     if (
@@ -183,7 +186,11 @@ function createStringMap(props, axis) {
   const stringsFromCategories = getStringsFromCategories(props, axis);
   const stringsFromData = getStringsFromData(props, axis);
 
-  const allStrings = uniq([...stringsFromAxes, ...stringsFromCategories, ...stringsFromData]);
+  const allStrings = uniq([
+    ...stringsFromAxes,
+    ...stringsFromCategories,
+    ...stringsFromData
+  ]);
   return allStrings.length === 0
     ? null
     : allStrings.reduce((memo, string, index) => {
@@ -223,7 +230,8 @@ function downsample(data, maxPoints, startingIndex = 0) {
  * @returns {Array} the formatted data
  */
 function formatData(dataset, props, expectedKeys) {
-  const isArrayOrIterable = Array.isArray(dataset) || Immutable.isIterable(dataset);
+  const isArrayOrIterable =
+    Array.isArray(dataset) || Immutable.isIterable(dataset);
   if (!isArrayOrIterable || getLength(dataset) < 1) {
     return [];
   }
@@ -232,7 +240,9 @@ function formatData(dataset, props, expectedKeys) {
   expectedKeys = Array.isArray(expectedKeys) ? expectedKeys : defaultKeys;
 
   const createAccessor = (name) => {
-    return Helpers.createAccessor(props[name] !== undefined ? props[name] : name);
+    return Helpers.createAccessor(
+      props[name] !== undefined ? props[name] : name
+    );
   };
 
   const accessor = expectedKeys.reduce((memo, type) => {
@@ -250,9 +260,18 @@ function formatData(dataset, props, expectedKeys) {
   if (preformattedData === false) {
     // stringMap is not required if the data is preformatted
     stringMap = {
-      x: expectedKeys.indexOf("x") !== -1 ? createStringMap(props, "x") : undefined,
-      y: expectedKeys.indexOf("y") !== -1 ? createStringMap(props, "y") : undefined,
-      y0: expectedKeys.indexOf("y0") !== -1 ? createStringMap(props, "y") : undefined
+      x:
+        expectedKeys.indexOf("x") !== -1
+          ? createStringMap(props, "x")
+          : undefined,
+      y:
+        expectedKeys.indexOf("y") !== -1
+          ? createStringMap(props, "y")
+          : undefined,
+      y0:
+        expectedKeys.indexOf("y0") !== -1
+          ? createStringMap(props, "y")
+          : undefined
     };
   }
 
@@ -264,7 +283,10 @@ function formatData(dataset, props, expectedKeys) {
         const fallbackValues = { x: index, y: datum };
         const processedValues = expectedKeys.reduce((memo, type) => {
           const processedValue = accessor[type](datum);
-          const value = processedValue !== undefined ? processedValue : fallbackValues[type];
+          const value =
+            processedValue !== undefined
+              ? processedValue
+              : fallbackValues[type];
           if (value !== undefined) {
             if (typeof value === "string" && stringMap[type]) {
               memo[`${type}Name`] = value;
@@ -321,7 +343,9 @@ function getCategories(props, axis) {
  * @returns {Array} an array of data
  */
 function getData(props) {
-  return props.data ? formatData(props.data, props) : formatData(generateData(props), props);
+  return props.data
+    ? formatData(props.data, props)
+    : formatData(generateData(props), props);
 }
 
 /**
@@ -352,7 +376,8 @@ function getStringsFromCategories(props, axis) {
     return [];
   }
   const categories = getCategories(props, axis);
-  const categoryStrings = categories && categories.filter((val) => typeof val === "string");
+  const categoryStrings =
+    categories && categories.filter((val) => typeof val === "string");
   return categoryStrings ? Collection.removeUndefined(categoryStrings) : [];
 }
 
@@ -363,7 +388,8 @@ function getStringsFromCategories(props, axis) {
  * @returns {Array} an array of strings
  */
 function getStringsFromData(props, axis) {
-  const isArrayOrIterable = Array.isArray(props.data) || Immutable.isIterable(props.data);
+  const isArrayOrIterable =
+    Array.isArray(props.data) || Immutable.isIterable(props.data);
   if (!isArrayOrIterable) {
     return [];
   }

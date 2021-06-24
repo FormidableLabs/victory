@@ -28,13 +28,28 @@ const Helpers = {
     fullDomain = defaults({}, fullDomain, props.domain);
     selectedDomain = defaults({}, selectedDomain, fullDomain);
     const fullCoords = Selection.getDomainCoordinates(props, fullDomain);
-    const selectedCoords = Selection.getDomainCoordinates(props, selectedDomain);
+    const selectedCoords = Selection.getDomainCoordinates(
+      props,
+      selectedDomain
+    );
 
     return {
-      x1: brushDimension !== "y" ? Math.min(...selectedCoords.x) : Math.min(...fullCoords.x),
-      x2: brushDimension !== "y" ? Math.max(...selectedCoords.x) : Math.max(...fullCoords.x),
-      y1: brushDimension !== "x" ? Math.min(...selectedCoords.y) : Math.min(...fullCoords.y),
-      y2: brushDimension !== "x" ? Math.max(...selectedCoords.y) : Math.max(...fullCoords.y)
+      x1:
+        brushDimension !== "y"
+          ? Math.min(...selectedCoords.x)
+          : Math.min(...fullCoords.x),
+      x2:
+        brushDimension !== "y"
+          ? Math.max(...selectedCoords.x)
+          : Math.max(...fullCoords.x),
+      y1:
+        brushDimension !== "x"
+          ? Math.min(...selectedCoords.y)
+          : Math.min(...fullCoords.y),
+      y2:
+        brushDimension !== "x"
+          ? Math.max(...selectedCoords.y)
+          : Math.max(...fullCoords.y)
     };
   },
 
@@ -47,19 +62,45 @@ const Helpers = {
     const maxY = Math.max(y1, y2);
     const handleWidth = props.handleWidth / 2;
     return {
-      left: brushDimension !== "y" && { x1: minX - handleWidth, x2: minX + handleWidth, y1, y2 },
-      right: brushDimension !== "y" && { x1: maxX - handleWidth, x2: maxX + handleWidth, y1, y2 },
-      top: brushDimension !== "x" && { x1, x2, y1: minY - handleWidth, y2: minY + handleWidth },
-      bottom: brushDimension !== "x" && { x1, x2, y1: maxY - handleWidth, y2: maxY + handleWidth }
+      left: brushDimension !== "y" && {
+        x1: minX - handleWidth,
+        x2: minX + handleWidth,
+        y1,
+        y2
+      },
+      right: brushDimension !== "y" && {
+        x1: maxX - handleWidth,
+        x2: maxX + handleWidth,
+        y1,
+        y2
+      },
+      top: brushDimension !== "x" && {
+        x1,
+        x2,
+        y1: minY - handleWidth,
+        y2: minY + handleWidth
+      },
+      bottom: brushDimension !== "x" && {
+        x1,
+        x2,
+        y1: maxY - handleWidth,
+        y2: maxY + handleWidth
+      }
     };
   },
 
   getActiveHandles(point, props, domainBox) {
     const handles = this.getHandles(props, domainBox);
-    const activeHandles = ["top", "bottom", "left", "right"].reduce((memo, opt) => {
-      memo = handles[opt] && this.withinBounds(point, handles[opt]) ? memo.concat(opt) : memo;
-      return memo;
-    }, []);
+    const activeHandles = ["top", "bottom", "left", "right"].reduce(
+      (memo, opt) => {
+        memo =
+          handles[opt] && this.withinBounds(point, handles[opt])
+            ? memo.concat(opt)
+            : memo;
+        return memo;
+      },
+      []
+    );
     return activeHandles.length && activeHandles;
   },
 
@@ -86,7 +127,9 @@ const Helpers = {
   getDefaultBrushArea(targetProps, cachedDomain, evt) {
     const { domain, fullDomain, scale, horizontal, allowResize } = targetProps;
     const defaultBrushArea =
-      !allowResize && !targetProps.defaultBrushArea ? "move" : targetProps.defaultBrushArea;
+      !allowResize && !targetProps.defaultBrushArea
+        ? "move"
+        : targetProps.defaultBrushArea;
     if (defaultBrushArea === "none") {
       return this.getMinimumDomain();
     } else if (defaultBrushArea === "disable") {
@@ -104,7 +147,8 @@ const Helpers = {
         },
         Selection.getSVGEventCoordinates(evt, parentSVG)
       );
-      const fullDomainBox = targetProps.fullDomainBox || this.getDomainBox(targetProps, fullDomain);
+      const fullDomainBox =
+        targetProps.fullDomainBox || this.getDomainBox(targetProps, fullDomain);
       const constrainedBox = this.constrainBox(pannedBox, fullDomainBox);
       return Selection.getBounds({ ...constrainedBox, scale, horizontal });
     } else {
@@ -128,7 +172,9 @@ const Helpers = {
     const brushDimension = this.getDimension(props);
     const brushDomain = defaults({}, props.brushDomain, domain);
     const fullDomain = defaults({}, props.fullDomain, domain);
-    const { x1, x2, y1, y2 } = props.x1 ? props : this.getDomainBox(props, fullDomain, brushDomain);
+    const { x1, x2, y1, y2 } = props.x1
+      ? props
+      : this.getDomainBox(props, fullDomain, brushDomain);
 
     const { x, y } = point;
     const delta = {
@@ -136,9 +182,12 @@ const Helpers = {
       y: startY ? startY - y : 0
     };
     return {
-      x1: brushDimension !== "y" ? Math.min(x1, x2) - delta.x : Math.min(x1, x2),
-      x2: brushDimension !== "y" ? Math.max(x1, x2) - delta.x : Math.max(x1, x2),
-      y1: brushDimension !== "x" ? Math.min(y1, y2) - delta.y : Math.min(y1, y2),
+      x1:
+        brushDimension !== "y" ? Math.min(x1, x2) - delta.x : Math.min(x1, x2),
+      x2:
+        brushDimension !== "y" ? Math.max(x1, x2) - delta.x : Math.max(x1, x2),
+      y1:
+        brushDimension !== "x" ? Math.min(y1, y2) - delta.y : Math.min(y1, y2),
       y2: brushDimension !== "x" ? Math.max(y1, y2) - delta.y : Math.max(y1, y2)
     };
   },
@@ -189,13 +238,16 @@ const Helpers = {
     } = targetProps;
     const brushDimension = this.getDimension(targetProps);
     const defaultBrushArea =
-      !allowResize && !targetProps.defaultBrushArea ? "move" : targetProps.defaultBrushArea;
+      !allowResize && !targetProps.defaultBrushArea
+        ? "move"
+        : targetProps.defaultBrushArea;
     // Don't trigger events for static brushes
     if (!allowResize && !allowDrag) {
       return {};
     }
 
-    const fullDomainBox = targetProps.fullDomainBox || this.getDomainBox(targetProps, domain);
+    const fullDomainBox =
+      targetProps.fullDomainBox || this.getDomainBox(targetProps, domain);
     const parentSVG = targetProps.parentSVG || Selection.getParentSVG(evt);
     const { x, y } = Selection.getSVGEventCoordinates(evt, parentSVG);
     // Ignore events that occur outside of the maximum domain region
@@ -211,7 +263,8 @@ const Helpers = {
 
     const domainBox = this.getDomainBox(targetProps, domain, currentDomain);
 
-    const activeHandles = allowResize && this.getActiveHandles({ x, y }, targetProps, domainBox);
+    const activeHandles =
+      allowResize && this.getActiveHandles({ x, y }, targetProps, domainBox);
     // If the event occurs in any of the handle regions, start a resize
     if (activeHandles) {
       return [
@@ -230,7 +283,10 @@ const Helpers = {
           }
         }
       ];
-    } else if (this.withinBounds({ x, y }, domainBox) && !isEqual(domain, currentDomain)) {
+    } else if (
+      this.withinBounds({ x, y }, domainBox) &&
+      !isEqual(domain, currentDomain)
+    ) {
       // if the event occurs within a selected region start a panning event, unless the whole
       // domain is selected
       return [
@@ -264,7 +320,11 @@ const Helpers = {
                 cachedBrushDomain: brushDomain,
                 cachedCurrentDomain: currentDomain,
                 currentDomain: this.getMinimumDomain(),
-                ...this.getSelectionMutation({ x, y }, domainBox, brushDimension)
+                ...this.getSelectionMutation(
+                  { x, y },
+                  domainBox,
+                  brushDimension
+                )
               })
             }
           ]
@@ -290,7 +350,8 @@ const Helpers = {
     const { x, y } = Selection.getSVGEventCoordinates(evt, parentSVG);
     if (
       (!allowResize && !allowDrag) ||
-      (mouseMoveThreshold > 0 && !this.hasMoved({ ...targetProps, x2: x, y2: y }))
+      (mouseMoveThreshold > 0 &&
+        !this.hasMoved({ ...targetProps, x2: x, y2: y }))
     ) {
       return {};
     }
@@ -298,17 +359,30 @@ const Helpers = {
       const { startX, startY } = targetProps;
       const pannedBox = this.panBox(targetProps, { x, y });
       const constrainedBox = this.constrainBox(pannedBox, fullDomainBox);
-      const currentDomain = Selection.getBounds({ ...constrainedBox, scale, horizontal });
+      const currentDomain = Selection.getBounds({
+        ...constrainedBox,
+        scale,
+        horizontal
+      });
       const mutatedProps = {
         currentDomain,
         parentSVG,
-        startX: pannedBox.x2 >= fullDomainBox.x2 || pannedBox.x1 <= fullDomainBox.x1 ? startX : x,
-        startY: pannedBox.y2 >= fullDomainBox.y2 || pannedBox.y1 <= fullDomainBox.y1 ? startY : y,
+        startX:
+          pannedBox.x2 >= fullDomainBox.x2 || pannedBox.x1 <= fullDomainBox.x1
+            ? startX
+            : x,
+        startY:
+          pannedBox.y2 >= fullDomainBox.y2 || pannedBox.y1 <= fullDomainBox.y1
+            ? startY
+            : y,
         ...constrainedBox
       };
 
       if (isFunction(onBrushDomainChange)) {
-        onBrushDomainChange(currentDomain, defaults({}, mutatedProps, targetProps));
+        onBrushDomainChange(
+          currentDomain,
+          defaults({}, mutatedProps, targetProps)
+        );
       }
       return [
         {
@@ -335,7 +409,10 @@ const Helpers = {
 
       const mutatedProps = { x2, y2, currentDomain, parentSVG };
       if (isFunction(onBrushDomainChange)) {
-        onBrushDomainChange(currentDomain, defaults({}, mutatedProps, targetProps));
+        onBrushDomainChange(
+          currentDomain,
+          defaults({}, mutatedProps, targetProps)
+        );
       }
       return [
         {
@@ -369,27 +446,43 @@ const Helpers = {
       allowDrag
     } = targetProps;
     const defaultBrushArea =
-      !allowResize && !targetProps.defaultBrushArea ? "move" : targetProps.defaultBrushArea;
-    const defaultBrushHasArea = defaultBrushArea !== undefined && defaultBrushArea !== "none";
+      !allowResize && !targetProps.defaultBrushArea
+        ? "move"
+        : targetProps.defaultBrushArea;
+    const defaultBrushHasArea =
+      defaultBrushArea !== undefined && defaultBrushArea !== "none";
     const mutatedProps = { isPanning: false, isSelecting: false };
 
     // if the mouse hasn't moved since a mouseDown event, select the default brush area
     if ((allowResize || defaultBrushHasArea) && (x1 === x2 || y1 === y2)) {
       const cachedDomain = targetProps.cachedCurrentDomain || currentDomain;
-      const defaultDomain = this.getDefaultBrushArea(targetProps, cachedDomain, evt);
+      const defaultDomain = this.getDefaultBrushArea(
+        targetProps,
+        cachedDomain,
+        evt
+      );
       mutatedProps.currentDomain = defaultDomain;
       if (isFunction(onBrushDomainChange)) {
-        onBrushDomainChange(defaultDomain, defaults({}, mutatedProps, targetProps));
+        onBrushDomainChange(
+          defaultDomain,
+          defaults({}, mutatedProps, targetProps)
+        );
       }
       if (isFunction(onBrushDomainChangeEnd)) {
-        onBrushDomainChangeEnd(defaultDomain, defaults({}, mutatedProps, targetProps));
+        onBrushDomainChangeEnd(
+          defaultDomain,
+          defaults({}, mutatedProps, targetProps)
+        );
       }
       if (isFunction(onBrushCleared)) {
         onBrushCleared(defaultDomain, defaults({}, mutatedProps, targetProps));
       }
     } else if ((allowDrag && isPanning) || (allowResize && isSelecting)) {
       if (isFunction(onBrushDomainChangeEnd)) {
-        onBrushDomainChangeEnd(currentDomain, defaults({}, mutatedProps, targetProps));
+        onBrushDomainChangeEnd(
+          currentDomain,
+          defaults({}, mutatedProps, targetProps)
+        );
       }
     }
 

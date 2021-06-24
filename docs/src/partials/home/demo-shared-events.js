@@ -2,7 +2,12 @@ import React from "react";
 // import Radium from "radium";
 
 // Common
-import { VictoryBar, VictoryPie, VictorySharedEvents, VictoryLabel } from "victory";
+import {
+  VictoryBar,
+  VictoryPie,
+  VictorySharedEvents,
+  VictoryLabel
+} from "victory";
 
 class SharedEvents extends React.Component {
   getStyles() {

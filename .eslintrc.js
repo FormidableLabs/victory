@@ -15,7 +15,10 @@ module.exports = {
     "import/no-unresolved": [2, { ignore: ["victory*"] }],
     "max-statements": 0,
     complexity: ["error", { max: 16 }],
-    "no-magic-numbers": ["error", { ignore: [-1, 0, 0.5, 1, 2, 90, 180, 270, 360] }]
+    "no-magic-numbers": [
+      "error",
+      { ignore: [-1, 0, 0.5, 1, 2, 90, 180, 270, 360] }
+    ]
   },
   overrides: [
     {

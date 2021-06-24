@@ -50,13 +50,19 @@ class VictoryErrorBar extends React.Component {
     borderWidth: PropTypes.number,
     errorX: PropTypes.oneOfType([
       PropTypes.func,
-      CustomPropTypes.allOfType([CustomPropTypes.integer, CustomPropTypes.nonNegative]),
+      CustomPropTypes.allOfType([
+        CustomPropTypes.integer,
+        CustomPropTypes.nonNegative
+      ]),
       PropTypes.string,
       PropTypes.arrayOf(PropTypes.string)
     ]),
     errorY: PropTypes.oneOfType([
       PropTypes.func,
-      CustomPropTypes.allOfType([CustomPropTypes.integer, CustomPropTypes.nonNegative]),
+      CustomPropTypes.allOfType([
+        CustomPropTypes.integer,
+        CustomPropTypes.nonNegative
+      ]),
       PropTypes.string,
       PropTypes.arrayOf(PropTypes.string)
     ]),
@@ -99,7 +105,9 @@ class VictoryErrorBar extends React.Component {
     }
 
     const children = this.renderData(props);
-    return props.standalone ? this.renderContainer(props.containerComponent, children) : children;
+    return props.standalone
+      ? this.renderContainer(props.containerComponent, children)
+      : children;
   }
 }
 

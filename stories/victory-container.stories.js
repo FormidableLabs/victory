@@ -3,7 +3,10 @@
 import React from "react";
 import { VictoryChart } from "../packages/victory-chart/src/index";
 import { VictoryLine } from "../packages/victory-line/src/index";
-import { VictoryLabel, VictoryContainer } from "../packages/victory-core/src/index";
+import {
+  VictoryLabel,
+  VictoryContainer
+} from "../packages/victory-core/src/index";
 
 const containerStyle = {
   display: "flex",
@@ -42,17 +45,29 @@ export const PreserveAspectRatio = () => {
       </VictoryChart>
       <VictoryChart
         style={style}
-        containerComponent={<VictoryContainer preserveAspectRatio="xMinYMin meet" />}
+        containerComponent={
+          <VictoryContainer preserveAspectRatio="xMinYMin meet" />
+        }
       >
         <VictoryLine />
-        <VictoryLabel x={50} y={20} text={`preserveAspectRatio="xMinYMin meet"`} />
+        <VictoryLabel
+          x={50}
+          y={20}
+          text={`preserveAspectRatio="xMinYMin meet"`}
+        />
       </VictoryChart>
       <VictoryChart
         style={style}
-        containerComponent={<VictoryContainer preserveAspectRatio="xMinYMin slice" />}
+        containerComponent={
+          <VictoryContainer preserveAspectRatio="xMinYMin slice" />
+        }
       >
         <VictoryLine />
-        <VictoryLabel x={50} y={20} text={`preserveAspectRatio="xMinYMin slice"`} />
+        <VictoryLabel
+          x={50}
+          y={20}
+          text={`preserveAspectRatio="xMinYMin slice"`}
+        />
       </VictoryChart>
     </div>
   );

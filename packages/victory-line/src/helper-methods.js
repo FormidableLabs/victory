@@ -24,7 +24,9 @@ const getCalculatedValues = (props) => {
       .domain(domain.y)
       .range(props.horizontal ? range.x : range.y)
   };
-  const origin = props.polar ? props.origin || Helpers.getPolarOrigin(props) : undefined;
+  const origin = props.polar
+    ? props.origin || Helpers.getPolarOrigin(props)
+    : undefined;
   const defaultStyles = Helpers.getDefaultStyles(props, "line");
   const style = Helpers.getStyles(props.style, defaultStyles);
 
@@ -52,7 +54,8 @@ const getBaseProps = (props, fallbackProps) => {
     theme,
     width,
     labels,
-    name
+    name,
+    disableInlineStyles
   } = props;
   const initialChildProps = {
     parent: {
@@ -78,14 +81,18 @@ const getBaseProps = (props, fallbackProps) => {
         data,
         interpolation,
         groupComponent,
-        style: style.data,
-        theme
+        style: disableInlineStyles ? {} : style.data,
+        theme,
+        disableInlineStyles
       }
     }
   };
   return data.reduce((childProps, datum, index) => {
     const text = LabelHelpers.getText(props, datum, index);
-    if ((text !== undefined && text !== null) || (labels && (events || sharedEvents))) {
+    if (
+      (text !== undefined && text !== null) ||
+      (labels && (events || sharedEvents))
+    ) {
       const eventKey = !isNil(datum.eventKey) ? datum.eventKey : index;
       childProps[eventKey] = { labels: LabelHelpers.getProps(props, index) };
     }

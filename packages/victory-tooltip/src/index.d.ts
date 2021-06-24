@@ -40,7 +40,9 @@ export interface VictoryTooltipProps extends VictoryLabelableProps {
   index?: number | string;
   orientation?: OrientationTypes | ((...args: any[]) => OrientationTypes);
   pointerLength?: NumberOrCallback;
-  pointerOrientation?: OrientationTypes | ((...args: any[]) => OrientationTypes);
+  pointerOrientation?:
+    | OrientationTypes
+    | ((...args: any[]) => OrientationTypes);
   pointerWidth?: NumberOrCallback;
   renderInPortal?: boolean;
   style?: VictoryLabelStyleObject | VictoryLabelStyleObject[];
@@ -83,5 +85,8 @@ export interface FlyoutProps extends VictoryCommonProps {
 export class Flyout extends React.Component<FlyoutProps, any> {}
 
 export class VictoryTooltip extends React.Component<VictoryTooltipProps, any> {
-  static defaultEvents: EventPropTypeInterface<string, StringOrNumberOrCallback>[];
+  static defaultEvents: EventPropTypeInterface<
+    string,
+    StringOrNumberOrCallback
+  >[];
 }

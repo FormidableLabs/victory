@@ -1,7 +1,14 @@
 /* eslint-disable func-style */
 /* eslint-disable no-use-before-define */
 import React from "react";
-import { flatten, isPlainObject, sortedUniq, isFunction, includes, isDate } from "lodash";
+import {
+  flatten,
+  isPlainObject,
+  sortedUniq,
+  isFunction,
+  includes,
+  isDate
+} from "lodash";
 import Data from "./data";
 import Scale from "./scale";
 import Helpers from "./helpers";
@@ -18,7 +25,9 @@ function cleanDomain(domain, props, axis) {
 
   const rules = (dom) => {
     const almostZero =
-      dom[0] < 0 || dom[1] < 0 ? -1 / Number.MAX_SAFE_INTEGER : 1 / Number.MAX_SAFE_INTEGER;
+      dom[0] < 0 || dom[1] < 0
+        ? -1 / Number.MAX_SAFE_INTEGER
+        : 1 / Number.MAX_SAFE_INTEGER;
     const domainOne = dom[0] === 0 ? almostZero : dom[0];
     const domainTwo = dom[1] === 0 ? almostZero : dom[1];
     return [domainOne, domainTwo];
@@ -48,14 +57,18 @@ function getFlatData(dataset, axis) {
 }
 
 function getExtremeFromData(dataset, axis, type = "min") {
-  const getExtreme = (arr) => (type === "max" ? Math.max(...arr) : Math.min(...arr));
+  const getExtreme = (arr) =>
+    type === "max" ? Math.max(...arr) : Math.min(...arr);
   const initialValue = type === "max" ? -Infinity : Infinity;
   let containsDate = false;
   const result = flatten(dataset).reduce((memo, datum) => {
-    const current0 = datum[`_${axis}0`] !== undefined ? datum[`_${axis}0`] : datum[`_${axis}`];
-    const current1 = datum[`_${axis}1`] !== undefined ? datum[`_${axis}1`] : datum[`_${axis}`];
+    const current0 =
+      datum[`_${axis}0`] !== undefined ? datum[`_${axis}0`] : datum[`_${axis}`];
+    const current1 =
+      datum[`_${axis}1`] !== undefined ? datum[`_${axis}1`] : datum[`_${axis}`];
     const current = getExtreme([current0, current1]);
-    containsDate = containsDate || current0 instanceof Date || current1 instanceof Date;
+    containsDate =
+      containsDate || current0 instanceof Date || current1 instanceof Date;
     return getExtreme([memo, current]);
   }, initialValue);
   return containsDate ? new Date(result) : result;
@@ -80,7 +93,10 @@ function padDomain(domain, props, axis) {
   const range = Helpers.getRange(props, currentAxis);
   const rangeExtent = Math.abs(range[0] - range[1]);
 
-  const paddedRangeExtent = Math.max(rangeExtent - padding.left - padding.right, 1);
+  const paddedRangeExtent = Math.max(
+    rangeExtent - padding.left - padding.right,
+    1
+  );
   const paddedDomainExtent =
     (Math.abs(max.valueOf() - min.valueOf()) / paddedRangeExtent) * rangeExtent;
 
@@ -94,15 +110,19 @@ function padDomain(domain, props, axis) {
     max: max.valueOf() + simplePadding.right
   };
 
-  const singleQuadrantDomainPadding = isPlainObject(props.singleQuadrantDomainPadding)
+  const singleQuadrantDomainPadding = isPlainObject(
+    props.singleQuadrantDomainPadding
+  )
     ? props.singleQuadrantDomainPadding[axis]
     : props.singleQuadrantDomainPadding;
 
-  const addsQuadrants = (min >= 0 && paddedDomain.min <= 0) || (max <= 0 && paddedDomain.max >= 0);
+  const addsQuadrants =
+    (min >= 0 && paddedDomain.min <= 0) || (max <= 0 && paddedDomain.max >= 0);
 
   const adjust = (val, type) => {
     const coerce =
-      (type === "min" && min >= 0 && val <= 0) || (type === "max" && max <= 0 && val >= 0);
+      (type === "min" && min >= 0 && val <= 0) ||
+      (type === "max" && max <= 0 && val >= 0);
     return coerce ? 0 : val;
   };
 
@@ -121,8 +141,12 @@ function padDomain(domain, props, axis) {
 
     // re-calculate padding, taking the adjusted domain into account
     const finalPadding = {
-      left: (Math.abs(adjustedDomain.max - adjustedDomain.min) * padding.left) / rangeExtent,
-      right: (Math.abs(adjustedDomain.max - adjustedDomain.min) * padding.right) / rangeExtent
+      left:
+        (Math.abs(adjustedDomain.max - adjustedDomain.min) * padding.left) /
+        rangeExtent,
+      right:
+        (Math.abs(adjustedDomain.max - adjustedDomain.min) * padding.right) /
+        rangeExtent
     };
 
     // Adjust the domain by the final padding
@@ -157,7 +181,9 @@ function createDomainFunction(getDomainFromDataFunction, formatDomainFunction) {
   getDomainFromDataFunction = isFunction(getDomainFromDataFunction)
     ? getDomainFromDataFunction
     : getDomainFromData;
-  formatDomainFunction = isFunction(formatDomainFunction) ? formatDomainFunction : formatDomain;
+  formatDomainFunction = isFunction(formatDomainFunction)
+    ? formatDomainFunction
+    : formatDomain;
   return (props, axis) => {
     const propsDomain = getDomainFromProps(props, axis);
     if (propsDomain) {
@@ -217,9 +243,17 @@ function getDomainFromCategories(props, axis, categories) {
           memo[string] = index + 1;
           return memo;
         }, {});
-  const categoryValues = stringMap ? categories.map((value) => stringMap[value]) : categories;
-  const min = minDomain !== undefined ? minDomain : Collection.getMinValue(categoryValues);
-  const max = maxDomain !== undefined ? maxDomain : Collection.getMaxValue(categoryValues);
+  const categoryValues = stringMap
+    ? categories.map((value) => stringMap[value])
+    : categories;
+  const min =
+    minDomain !== undefined
+      ? minDomain
+      : Collection.getMinValue(categoryValues);
+  const max =
+    maxDomain !== undefined
+      ? maxDomain
+      : Collection.getMaxValue(categoryValues);
   const categoryDomain = getDomainFromMinMax(min, max);
   return polar && axis === "x" && Math.abs(startAngle - endAngle) === 360
     ? getSymmetricDomain(categoryDomain, categoryValues)
@@ -243,8 +277,14 @@ function getDomainFromData(props, axis, dataset) {
       ? getDomainFromMinMax(minDomain, maxDomain)
       : undefined;
   }
-  const min = minDomain !== undefined ? minDomain : getExtremeFromData(dataset, axis, "min");
-  const max = maxDomain !== undefined ? maxDomain : getExtremeFromData(dataset, axis, "max");
+  const min =
+    minDomain !== undefined
+      ? minDomain
+      : getExtremeFromData(dataset, axis, "min");
+  const max =
+    maxDomain !== undefined
+      ? maxDomain
+      : getExtremeFromData(dataset, axis, "max");
   const domain = getDomainFromMinMax(min, max);
   return polar && axis === "x" && Math.abs(startAngle - endAngle) === 360
     ? getSymmetricDomain(domain, getFlatData(dataset, axis))
@@ -260,11 +300,18 @@ function getDomainFromData(props, axis, dataset) {
 function getDomainFromMinMax(min, max) {
   const getSinglePointDomain = (val) => {
     // d3-scale does not properly resolve very small differences.
-    // eslint-disable-next-line no-magic-numbers
-    const verySmallNumber = val === 0 ? 2 * Math.pow(10, -10) : Math.pow(10, -10);
+    const verySmallNumber =
+      // eslint-disable-next-line no-magic-numbers
+      val === 0 ? 2 * Math.pow(10, -10) : Math.pow(10, -10);
     const verySmallDate = 1;
-    const minVal = val instanceof Date ? new Date(+val - verySmallDate) : +val - verySmallNumber;
-    const maxVal = val instanceof Date ? new Date(+val + verySmallDate) : +val + verySmallNumber;
+    const minVal =
+      val instanceof Date
+        ? new Date(+val - verySmallDate)
+        : +val - verySmallNumber;
+    const maxVal =
+      val instanceof Date
+        ? new Date(+val + verySmallDate)
+        : +val + verySmallNumber;
     return val === 0 ? [0, maxVal] : [minVal, maxVal];
   };
   return +min === +max ? getSinglePointDomain(max) : [min, max];
@@ -303,7 +350,10 @@ function getDomainWithZero(props, axis) {
   }
 
   const dataset = Data.getData(props);
-  const y0Min = dataset.reduce((min, datum) => (datum._y0 < min ? datum._y0 : min), Infinity);
+  const y0Min = dataset.reduce(
+    (min, datum) => (datum._y0 < min ? datum._y0 : min),
+    Infinity
+  );
 
   const ensureZero = (domain) => {
     if (axis === "x") {
@@ -314,9 +364,13 @@ function getDomainWithZero(props, axis) {
     const maxDomainProp = getMaxFromProps(props, axis);
     const minDomainProp = getMinFromProps(props, axis);
     const max =
-      maxDomainProp !== undefined ? maxDomainProp : Collection.getMaxValue(domain, defaultMin);
+      maxDomainProp !== undefined
+        ? maxDomainProp
+        : Collection.getMaxValue(domain, defaultMin);
     const min =
-      minDomainProp !== undefined ? minDomainProp : Collection.getMinValue(domain, defaultMin);
+      minDomainProp !== undefined
+        ? minDomainProp
+        : Collection.getMinValue(domain, defaultMin);
 
     return getDomainFromMinMax(min, max);
   };
@@ -329,7 +383,10 @@ function getDomainWithZero(props, axis) {
     return formatDomain(ensureZero(domain), props, axis);
   };
 
-  return createDomainFunction(getDomainFunction, formatDomainFunction)(props, axis);
+  return createDomainFunction(getDomainFunction, formatDomainFunction)(
+    props,
+    axis
+  );
 }
 
 /**

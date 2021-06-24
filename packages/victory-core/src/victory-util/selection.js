@@ -39,7 +39,10 @@ function getSVGEventCoordinates(evt, svg) {
       y: evt.nativeEvent.locationY
     };
   }
-  evt = evt.changedTouches && evt.changedTouches.length ? evt.changedTouches[0] : evt;
+  evt =
+    evt.changedTouches && evt.changedTouches.length
+      ? evt.changedTouches[0]
+      : evt;
   svg = svg || getParentSVG(evt);
   const matrix = getTransformationMatrix(svg);
   return {

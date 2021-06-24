@@ -1,5 +1,12 @@
 import { assign, defaults, isNil, isFunction, isPlainObject } from "lodash";
-import { Helpers, Scale, Domain, Data, LabelHelpers, Collection } from "victory-core";
+import {
+  Helpers,
+  Scale,
+  Domain,
+  Data,
+  LabelHelpers,
+  Collection
+} from "victory-core";
 
 const TYPES = ["close", "open", "high", "low"];
 
@@ -14,7 +21,8 @@ const reduceData = (dataset, axis, type) => {
   const baseCondition = type === "min" ? Infinity : -Infinity;
   return dataset.reduce((memo, datum) => {
     const current = datum[dataType];
-    return (memo < current && type === "min") || (memo > current && type === "max")
+    return (memo < current && type === "min") ||
+      (memo > current && type === "max")
       ? memo
       : current;
   }, baseCondition);
@@ -29,8 +37,10 @@ const getDomainFromData = (props, axis) => {
       ? Domain.getDomainFromMinMax(minDomain, maxDomain)
       : undefined;
   }
-  const min = minDomain !== undefined ? minDomain : reduceData(dataset, axis, "min");
-  const max = maxDomain !== undefined ? maxDomain : reduceData(dataset, axis, "max");
+  const min =
+    minDomain !== undefined ? minDomain : reduceData(dataset, axis, "min");
+  const max =
+    maxDomain !== undefined ? maxDomain : reduceData(dataset, axis, "max");
   return Domain.getDomainFromMinMax(min, max);
 };
 
@@ -49,6 +59,9 @@ const getLabelStyle = (props, styleObject, namespace) => {
 };
 
 const getStyles = (props, style, defaultStyles = {}) => {
+  if (props.disableInlineStyles) {
+    return {};
+  }
   const width = "100%";
   const height = "100%";
 
@@ -115,9 +128,19 @@ const formatDataFromDomain = (datum, domain) => {
   if (_x < minDomainX || _x > maxDomainX) _x = null;
 
   // if all values fall outside of domain, null the data point
-  if (_low < minDomainY && _open < minDomainY && _close < minDomainY && _high < minDomainY)
+  if (
+    _low < minDomainY &&
+    _open < minDomainY &&
+    _close < minDomainY &&
+    _high < minDomainY
+  )
     _low = _open = _close = _high = null;
-  if (_low > maxDomainY && _open > maxDomainY && _close > maxDomainY && _high > maxDomainY)
+  if (
+    _low > maxDomainY &&
+    _open > maxDomainY &&
+    _close > maxDomainY &&
+    _high > maxDomainY
+  )
     _low = _open = _close = _high = null;
 
   return Object.assign({}, datum, { _x, _low, _open, _close, _high });
@@ -144,7 +167,9 @@ const getCalculatedValues = (props) => {
       .domain(domain.y)
       .range(props.horizontal ? range.x : range.y)
   };
-  const origin = polar ? props.origin || Helpers.getPolarOrigin(props) : undefined;
+  const origin = polar
+    ? props.origin || Helpers.getPolarOrigin(props)
+    : undefined;
   const defaultOrientation = props.horizontal ? "top" : "right";
   const labelOrientation = props.labelOrientation || defaultOrientation;
   return { domain, data, scale, style, origin, labelOrientation };
@@ -155,9 +180,14 @@ const isTransparent = (attr) => {
 };
 
 const getDataStyles = (datum, style, props) => {
+  if (props.disableInlineStyles) {
+    return {};
+  }
   style = style || {};
   const candleColor =
-    datum._open > datum._close ? props.candleColors.negative : props.candleColors.positive;
+    datum._open > datum._close
+      ? props.candleColors.negative
+      : props.candleColors.positive;
   const fill = style.fill || candleColor;
   const strokeColor = style.stroke;
   const stroke = isTransparent(strokeColor) ? fill : strokeColor || "black";
@@ -180,7 +210,9 @@ const getText = (props, type) => {
 const getCandleWidth = (props, style) => {
   const { data, candleWidth, scale, defaultCandleWidth } = props;
   if (candleWidth) {
-    return isFunction(candleWidth) ? Helpers.evaluateProp(candleWidth, props) : candleWidth;
+    return isFunction(candleWidth)
+      ? Helpers.evaluateProp(candleWidth, props)
+      : candleWidth;
   } else if (style && style.width) {
     return style.width;
   }
@@ -188,17 +220,28 @@ const getCandleWidth = (props, style) => {
   const extent = Math.abs(range[1] - range[0]);
   const candles = data.length + 2;
   const candleRatio = props.candleRatio || 0.5;
-  const defaultWidth = candleRatio * (data.length < 2 ? defaultCandleWidth : extent / candles);
+  const defaultWidth =
+    candleRatio * (data.length < 2 ? defaultCandleWidth : extent / candles);
   return Math.max(1, defaultWidth);
 };
 
 const getOrientation = (labelOrientation, type = "labels") => {
-  return isPlainObject(labelOrientation) ? labelOrientation[type] : labelOrientation;
+  return isPlainObject(labelOrientation)
+    ? labelOrientation[type]
+    : labelOrientation;
 };
 
 /* eslint-disable complexity*/
 const calculatePlotValues = (props) => {
-  const { positions, labelStyle, x, horizontal, computedType, candleWidth, orientation } = props;
+  const {
+    positions,
+    labelStyle,
+    x,
+    horizontal,
+    computedType,
+    candleWidth,
+    orientation
+  } = props;
   positions.labels = (positions.open + positions.close) / 2;
 
   const signX = orientation === "left" ? -1 : 1;
@@ -214,7 +257,9 @@ const calculatePlotValues = (props) => {
         : 0;
 
     const dx =
-      orientation === "top" || orientation === "bottom" ? 0 : signX * (labelStyle.padding || 1);
+      orientation === "top" || orientation === "bottom"
+        ? 0
+        : signX * (labelStyle.padding || 1);
 
     return { yValue, xValue, dx, dy };
   } else {
@@ -222,7 +267,9 @@ const calculatePlotValues = (props) => {
     const yValue = positions[computedType];
 
     const dy =
-      orientation === "top" || orientation === "bottom" ? signY * (labelStyle.padding || 1) : 0;
+      orientation === "top" || orientation === "bottom"
+        ? signY * (labelStyle.padding || 1)
+        : 0;
 
     const dx =
       orientation === "top" || orientation === "bottom"
@@ -261,8 +308,18 @@ const getLabelProps = (props, text, style, type) => {
   const positions = { high, low, open, close };
   const namespace = type ? `${type}Labels` : "labels";
   const labelStyle = style[namespace] || style.labels;
-  const defaultVerticalAnchors = { top: "end", bottom: "start", left: "middle", right: "middle" };
-  const defaultTextAnchors = { left: "end", right: "start", top: "middle", bottom: "middle" };
+  const defaultVerticalAnchors = {
+    top: "end",
+    bottom: "start",
+    left: "middle",
+    right: "middle"
+  };
+  const defaultTextAnchors = {
+    left: "end",
+    right: "start",
+    top: "middle",
+    bottom: "middle"
+  };
   const computedType = type ? type : "labels";
 
   const plotProps = {
@@ -289,7 +346,8 @@ const getLabelProps = (props, text, style, type) => {
     data,
     orientation,
     textAnchor: labelStyle.textAnchor || defaultTextAnchors[orientation],
-    verticalAnchor: labelStyle.verticalAnchor || defaultVerticalAnchors[orientation],
+    verticalAnchor:
+      labelStyle.verticalAnchor || defaultVerticalAnchors[orientation],
     angle: labelStyle.angle,
     horizontal
   };
@@ -306,7 +364,8 @@ const getBaseProps = (props, fallbackProps) => {
   // eslint-disable-line max-statements
   props = Helpers.modifyProps(props, fallbackProps, "candlestick");
   const calculatedValues = getCalculatedValues(props);
-  const { data, style, scale, domain, origin, labelOrientation } = calculatedValues;
+  const { data, style, scale, domain, origin, labelOrientation } =
+    calculatedValues;
   const {
     groupComponent,
     width,
@@ -322,7 +381,8 @@ const getBaseProps = (props, fallbackProps) => {
     labels,
     events,
     sharedEvents,
-    horizontal
+    horizontal,
+    disableInlineStyles
   } = props;
   const initialChildProps = {
     parent: {
@@ -373,7 +433,8 @@ const getBaseProps = (props, fallbackProps) => {
       open,
       close,
       horizontal,
-      labelOrientation
+      labelOrientation,
+      disableInlineStyles
     };
     dataProps.candleWidth = getCandleWidth(dataProps);
     const extendedProps = defaults(Object.assign({}, dataProps), props);
@@ -384,7 +445,10 @@ const getBaseProps = (props, fallbackProps) => {
 
     if (labels) {
       const text = LabelHelpers.getText(props, datum, index);
-      if ((text !== undefined && text !== null) || (labels && (events || sharedEvents))) {
+      if (
+        (text !== undefined && text !== null) ||
+        (labels && (events || sharedEvents))
+      ) {
         childProps[eventKey].labels = getLabelProps(extendedProps, text, style);
       }
     }
@@ -397,7 +461,12 @@ const getBaseProps = (props, fallbackProps) => {
         (labelProp && (events || sharedEvents))
       ) {
         const target = `${type}Labels`;
-        childProps[eventKey][target] = getLabelProps(extendedProps, labelText, style, type);
+        childProps[eventKey][target] = getLabelProps(
+          extendedProps,
+          labelText,
+          style,
+          type
+        );
       }
     });
 

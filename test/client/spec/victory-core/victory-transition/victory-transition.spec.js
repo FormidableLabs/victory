@@ -19,7 +19,10 @@ TestComponent.propTypes = {
 describe("components/victory-transition", () => {
   it("renders a child component", () => {
     const wrapper = mount(
-      <VictoryTransition animate={{ duration: 0 }} animationWhitelist={["data"]}>
+      <VictoryTransition
+        animate={{ duration: 0 }}
+        animationWhitelist={["data"]}
+      >
         <TestComponent animate={{ duration: 0 }} message={["HELLO"]} />
       </VictoryTransition>
     );

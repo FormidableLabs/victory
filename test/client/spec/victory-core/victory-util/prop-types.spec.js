@@ -46,14 +46,18 @@ describe("victory-util/prop-types", () => {
 
     it("Should warn about deprecation and validate OK", () => {
       validate("value");
-      shouldWarn('"pName" property of "ComponentName" has been deprecated Read more at link');
+      shouldWarn(
+        '"pName" property of "ComponentName" has been deprecated Read more at link'
+      );
       shouldNotError();
     });
 
     it(`Should warn about deprecation and throw validation error when property
        value is not OK`, () => {
       validate({});
-      shouldWarn('"pName" property of "ComponentName" has been deprecated Read more at link');
+      shouldWarn(
+        '"pName" property of "ComponentName" has been deprecated Read more at link'
+      );
       shouldError(
         "Warning: Failed pName type: Invalid pName `pName` of type `object` supplied to " +
           "`ComponentName`, expected `string`."
@@ -64,11 +68,10 @@ describe("victory-util/prop-types", () => {
 
   describe("allOfType", () => {
     const validate = function (prop) {
-      return CustomPropTypes.allOfType([CustomPropTypes.nonNegative, CustomPropTypes.integer])(
-        { testProp: prop },
-        "testProp",
-        "TestComponent"
-      );
+      return CustomPropTypes.allOfType([
+        CustomPropTypes.nonNegative,
+        CustomPropTypes.integer
+      ])({ testProp: prop }, "testProp", "TestComponent");
     };
 
     it("returns an error if the first validator is false", () => {
@@ -82,7 +85,9 @@ describe("victory-util/prop-types", () => {
     it("returns an error if the second validator is false", () => {
       const result = validate(1.3);
       expect(result).to.be.an.instanceOf(Error);
-      expect(result.message).contain("`testProp` in `TestComponent` must be an integer.");
+      expect(result.message).contain(
+        "`testProp` in `TestComponent` must be an integer."
+      );
     });
 
     it("does not return an error if both validators are true", () => {
@@ -93,7 +98,11 @@ describe("victory-util/prop-types", () => {
 
   describe("nonNegative", () => {
     const validate = function (prop) {
-      return CustomPropTypes.nonNegative({ testProp: prop }, "testProp", "TestComponent");
+      return CustomPropTypes.nonNegative(
+        { testProp: prop },
+        "testProp",
+        "TestComponent"
+      );
     };
 
     it("returns an error for non numeric values", () => {
@@ -125,19 +134,27 @@ describe("victory-util/prop-types", () => {
 
   describe("integer", () => {
     const validate = function (prop) {
-      return CustomPropTypes.integer({ testProp: prop }, "testProp", "TestComponent");
+      return CustomPropTypes.integer(
+        { testProp: prop },
+        "testProp",
+        "TestComponent"
+      );
     };
 
     it("returns an error for non numeric values", () => {
       const result = validate("a");
       expect(result).to.be.an.instanceOf(Error);
-      expect(result.message).contain("`testProp` in `TestComponent` must be an integer.");
+      expect(result.message).contain(
+        "`testProp` in `TestComponent` must be an integer."
+      );
     });
 
     it("returns an error for non-integer numeric values", () => {
       const result = validate(2.4);
       expect(result).to.be.an.instanceOf(Error);
-      expect(result.message).to.contain("`testProp` in `TestComponent` must be an integer.");
+      expect(result.message).to.contain(
+        "`testProp` in `TestComponent` must be an integer."
+      );
     });
 
     it("does not return an error for integers", () => {
@@ -152,7 +169,11 @@ describe("victory-util/prop-types", () => {
 
   describe("greaterThanZero", () => {
     const validate = function (prop) {
-      return CustomPropTypes.greaterThanZero({ testProp: prop }, "testProp", "TestComponent");
+      return CustomPropTypes.greaterThanZero(
+        { testProp: prop },
+        "testProp",
+        "TestComponent"
+      );
     };
 
     it("returns an error for non numeric values", () => {
@@ -191,7 +212,11 @@ describe("victory-util/prop-types", () => {
 
   describe("domain", () => {
     const validate = function (prop) {
-      return CustomPropTypes.domain({ testProp: prop }, "testProp", "TestComponent");
+      return CustomPropTypes.domain(
+        { testProp: prop },
+        "testProp",
+        "TestComponent"
+      );
     };
 
     it("returns an error for non array values", () => {
@@ -236,13 +261,19 @@ describe("victory-util/prop-types", () => {
 
   describe("scale", () => {
     const validate = function (prop) {
-      return CustomPropTypes.scale({ testProp: prop }, "testProp", "TestComponent");
+      return CustomPropTypes.scale(
+        { testProp: prop },
+        "testProp",
+        "TestComponent"
+      );
     };
 
     it("returns an error for non function values", () => {
       const result = validate("a");
       expect(result).to.be.an.instanceOf(Error);
-      expect(result.message).contain("`testProp` in `TestComponent` must be a d3 scale.");
+      expect(result.message).contain(
+        "`testProp` in `TestComponent` must be a d3 scale."
+      );
     });
 
     it("returns an error when the function does not have a domain, range, and copy methods", () => {
@@ -251,7 +282,9 @@ describe("victory-util/prop-types", () => {
       };
       const result = validate(testFunc);
       expect(result).to.be.an.instanceOf(Error);
-      expect(result.message).contain("`testProp` in `TestComponent` must be a d3 scale.");
+      expect(result.message).contain(
+        "`testProp` in `TestComponent` must be a d3 scale."
+      );
     });
 
     it.skip("does not return an error when the function is a d3 scale", () => {
@@ -263,13 +296,19 @@ describe("victory-util/prop-types", () => {
 
   describe("homogeneousArray", () => {
     const validate = function (prop) {
-      return CustomPropTypes.homogeneousArray({ testProp: prop }, "testProp", "TestComponent");
+      return CustomPropTypes.homogeneousArray(
+        { testProp: prop },
+        "testProp",
+        "TestComponent"
+      );
     };
 
     it("returns an error for non array values", () => {
       const result = validate("a");
       expect(result).to.be.an.instanceOf(Error);
-      expect(result.message).contain("`testProp` in `TestComponent` must be an array.");
+      expect(result.message).contain(
+        "`testProp` in `TestComponent` must be an array."
+      );
     });
 
     it("returns an error when the array has elements of different types", () => {
@@ -300,7 +339,11 @@ describe("victory-util/prop-types", () => {
   describe("matchDataLength", () => {
     const validate = function (prop, dataProp) {
       const props = { testProp: prop, data: dataProp };
-      return CustomPropTypes.matchDataLength(props, "testProp", "TestComponent");
+      return CustomPropTypes.matchDataLength(
+        props,
+        "testProp",
+        "TestComponent"
+      );
     };
 
     it("does not return an error when prop is undefined", () => {
@@ -314,7 +357,10 @@ describe("victory-util/prop-types", () => {
     it("returns an error when prop doesn't have same length as data", () => {
       expect(validate([{}], [1, 2]))
         .to.be.an.instanceOf(Error)
-        .and.to.have.property("message", "Length of data and testProp arrays must match.");
+        .and.to.have.property(
+          "message",
+          "Length of data and testProp arrays must match."
+        );
     });
   });
 });

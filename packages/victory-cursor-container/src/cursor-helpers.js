@@ -48,7 +48,9 @@ const CursorHelpers = {
 
     if (isFunction(onCursorChange)) {
       if (inBounds) {
-        const value = cursorDimension ? cursorValue[cursorDimension] : cursorValue;
+        const value = cursorDimension
+          ? cursorValue[cursorDimension]
+          : cursorValue;
         onCursorChange(value, targetProps);
       } else if (cursorValue !== targetProps.cursorValue) {
         onCursorChange(targetProps.defaultCursorValue || null, targetProps);
@@ -83,10 +85,14 @@ const CursorHelpers = {
 
 export default {
   ...CursorHelpers,
-  onMouseMove: throttle(CursorHelpers.onMouseMove.bind(CursorHelpers), ON_MOUSE_MOVE_THROTTLE_MS, {
-    leading: true,
-    trailing: false
-  }),
+  onMouseMove: throttle(
+    CursorHelpers.onMouseMove.bind(CursorHelpers),
+    ON_MOUSE_MOVE_THROTTLE_MS,
+    {
+      leading: true,
+      trailing: false
+    }
+  ),
   onMouseLeave: CursorHelpers.onMouseMove.bind(CursorHelpers),
   onTouchEnd: CursorHelpers.onTouchEnd.bind(CursorHelpers)
 };

@@ -93,7 +93,8 @@ function getLabelPlacement(props) {
   const defaultLabelPlacement = polar ? "perpendicular" : "vertical";
   return labelPlacement
     ? labelPlacement
-    : (labelComponent.props && labelComponent.props.labelPlacement) || defaultLabelPlacement;
+    : (labelComponent.props && labelComponent.props.labelPlacement) ||
+        defaultLabelPlacement;
 }
 
 function getPolarOrientation(degrees) {
@@ -135,7 +136,11 @@ function getPolarTextAnchor(props, degrees) {
 function getPolarVerticalAnchor(props, degrees) {
   const labelPlacement = getLabelPlacement(props);
   const orientation = getPolarOrientation(degrees);
-  if (labelPlacement === "parallel" || orientation === "left" || orientation === "right") {
+  if (
+    labelPlacement === "parallel" ||
+    orientation === "left" ||
+    orientation === "right"
+  ) {
     return "middle";
   }
   return orientation === "top" ? "end" : "start";
@@ -146,7 +151,8 @@ function getPolarAngle(props, baseAngle) {
   if (!labelPlacement || labelPlacement === "vertical") {
     return 0;
   }
-  const degrees = baseAngle !== undefined ? baseAngle % 360 : getDegrees(props, datum);
+  const degrees =
+    baseAngle !== undefined ? baseAngle % 360 : getDegrees(props, datum);
   const sign = (degrees > 90 && degrees < 180) || degrees > 270 ? 1 : -1;
   let angle = 0;
   if (degrees === 0 || degrees === 180) {
@@ -166,10 +172,23 @@ function getDegrees(props, datum) {
 }
 
 function getProps(props, index) {
-  const { scale, data, style, horizontal, polar, width, height, theme, labelComponent } = props;
+  const {
+    scale,
+    data,
+    style,
+    horizontal,
+    polar,
+    width,
+    height,
+    theme,
+    labelComponent,
+    disableInlineStyles
+  } = props;
   const datum = data[index];
   const degrees = getDegrees(props, datum);
-  const textAnchor = polar ? getPolarTextAnchor(props, degrees) : getTextAnchor(props, datum);
+  const textAnchor = polar
+    ? getPolarTextAnchor(props, degrees)
+    : getTextAnchor(props, datum);
   const verticalAnchor = polar
     ? getPolarVerticalAnchor(props, degrees)
     : getVerticalAnchor(props, datum);
@@ -182,6 +201,7 @@ function getProps(props, index) {
     angle,
     data,
     datum,
+    disableInlineStyles,
     horizontal,
     index,
     polar,

@@ -49,7 +49,9 @@ class App extends React.Component {
       justifyContent: "center"
     };
 
-    const chartStyle = { parent: { border: "1px solid #ccc", margin: "2%", maxWidth: "40%" } };
+    const chartStyle = {
+      parent: { border: "1px solid #ccc", margin: "2%", maxWidth: "40%" }
+    };
 
     return (
       <div className="demo">
@@ -152,7 +154,10 @@ class App extends React.Component {
           <VictoryChart style={chartStyle}>
             <VictoryGroup y={(data) => Math.sin(2 * Math.PI * data.x)}>
               <VictoryLine />
-              <VictoryVoronoi labelComponent={<VictoryTooltip />} labels={({ datum }) => datum.y} />
+              <VictoryVoronoi
+                labelComponent={<VictoryTooltip />}
+                labels={({ datum }) => datum.y}
+              />
             </VictoryGroup>
           </VictoryChart>
         </div>

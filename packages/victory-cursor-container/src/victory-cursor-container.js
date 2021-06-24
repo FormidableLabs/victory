@@ -1,6 +1,11 @@
 import PropTypes from "prop-types";
 import React from "react";
-import { VictoryContainer, VictoryLabel, LineSegment, Helpers } from "victory-core";
+import {
+  VictoryContainer,
+  VictoryLabel,
+  LineSegment,
+  Helpers
+} from "victory-core";
 import { defaults, assign, isObject } from "lodash";
 import CursorHelpers from "./cursor-helpers";
 
@@ -45,16 +50,22 @@ export const cursorContainerMixin = (base) =>
           target: "parent",
           eventHandlers: {
             onMouseLeave: (evt, targetProps) => {
-              return props.disable ? {} : CursorHelpers.onMouseLeave(evt, targetProps);
+              return props.disable
+                ? {}
+                : CursorHelpers.onMouseLeave(evt, targetProps);
             },
             onTouchCancel: () => {
               return [];
             },
             onMouseMove: (evt, targetProps) => {
-              return props.disable ? {} : CursorHelpers.onMouseMove(evt, targetProps);
+              return props.disable
+                ? {}
+                : CursorHelpers.onMouseMove(evt, targetProps);
             },
             onTouchMove: (evt, targetProps) => {
-              return props.disable ? {} : CursorHelpers.onMouseMove(evt, targetProps);
+              return props.disable
+                ? {}
+                : CursorHelpers.onMouseMove(evt, targetProps);
             }
           }
         }
@@ -62,7 +73,8 @@ export const cursorContainerMixin = (base) =>
     };
 
     getCursorPosition(props) {
-      const { cursorValue, defaultCursorValue, domain, cursorDimension } = props;
+      const { cursorValue, defaultCursorValue, domain, cursorDimension } =
+        props;
       if (cursorValue) {
         return cursorValue;
       }
@@ -130,13 +142,17 @@ export const cursorContainerMixin = (base) =>
         y: horizontal ? scale.x(cursorValue.x) : scale.y(cursorValue.y)
       };
       if (cursorLabel) {
-        let labelProps = defaults({ active: true }, cursorLabelComponent.props, {
-          x: cursorCoordinates.x + cursorLabelOffset.x,
-          y: cursorCoordinates.y + cursorLabelOffset.y,
-          datum: cursorValue,
-          active: true,
-          key: `${name}-cursor-label`
-        });
+        let labelProps = defaults(
+          { active: true },
+          cursorLabelComponent.props,
+          {
+            x: cursorCoordinates.x + cursorLabelOffset.x,
+            y: cursorCoordinates.y + cursorLabelOffset.y,
+            datum: cursorValue,
+            active: true,
+            key: `${name}-cursor-label`
+          }
+        );
         if (Helpers.isTooltip(cursorLabelComponent)) {
           const tooltipTheme = (theme && theme.tooltip) || {};
           labelProps = defaults({}, labelProps, tooltipTheme);
@@ -144,12 +160,17 @@ export const cursorContainerMixin = (base) =>
         newElements.push(
           React.cloneElement(
             cursorLabelComponent,
-            defaults({}, labelProps, { text: Helpers.evaluateProp(cursorLabel, labelProps) })
+            defaults({}, labelProps, {
+              text: Helpers.evaluateProp(cursorLabel, labelProps)
+            })
           )
         );
       }
 
-      const cursorStyle = assign({ stroke: "black" }, cursorComponent.props.style);
+      const cursorStyle = assign(
+        { stroke: "black" },
+        cursorComponent.props.style
+      );
       if (cursorDimension === "x" || cursorDimension === undefined) {
         newElements.push(
           React.cloneElement(cursorComponent, {
@@ -179,7 +200,10 @@ export const cursorContainerMixin = (base) =>
 
     // Overrides method in VictoryContainer
     getChildren(props) {
-      return [...React.Children.toArray(props.children), ...this.getCursorElements(props)];
+      return [
+        ...React.Children.toArray(props.children),
+        ...this.getCursorElements(props)
+      ];
     }
   };
 

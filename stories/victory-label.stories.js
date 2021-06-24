@@ -36,7 +36,10 @@ export default {
 export const DefaultRendering = () => {
   return (
     <div style={containerStyle}>
-      <VictoryScatter {...defaultScatterProps} labelComponent={<VictoryLabel />} />
+      <VictoryScatter
+        {...defaultScatterProps}
+        labelComponent={<VictoryLabel />}
+      />
     </div>
   );
 };
@@ -62,11 +65,15 @@ export const Positioning = () => {
       />
       <VictoryScatter
         {...defaultScatterProps}
-        labelComponent={<VictoryLabel dx={({ datum }) => datum.x + 50} text="dx function" />}
+        labelComponent={
+          <VictoryLabel dx={({ datum }) => datum.x + 50} text="dx function" />
+        }
       />
       <VictoryScatter
         {...defaultScatterProps}
-        labelComponent={<VictoryLabel dy={({ datum }) => datum.x - 20} text="dy function" />}
+        labelComponent={
+          <VictoryLabel dy={({ datum }) => datum.x - 20} text="dy function" />
+        }
       />
     </div>
   );
@@ -251,7 +258,10 @@ export const Styles = () => {
         {...defaultScatterProps}
         labelComponent={
           <VictoryLabel
-            style={{ fontSize: ({ datum }) => (datum.y === 0 ? 12 : 15), fontFamily: "arial" }}
+            style={{
+              fontSize: ({ datum }) => (datum.y === 0 ? 12 : 15),
+              fontFamily: "arial"
+            }}
             text={["object", "with", "functions"]}
             backgroundStyle={{ stroke: "blue", fill: "none" }}
           />
@@ -261,7 +271,12 @@ export const Styles = () => {
         {...defaultScatterProps}
         labelComponent={
           <VictoryLabel
-            style={[{ fontSize: ({ datum }) => (datum.y === 0 ? 12 : 15), fontFamily: "arial" }]}
+            style={[
+              {
+                fontSize: ({ datum }) => (datum.y === 0 ? 12 : 15),
+                fontFamily: "arial"
+              }
+            ]}
             text={["single array", "with", "functions"]}
             backgroundStyle={{ stroke: "blue", fill: "none" }}
           />
@@ -272,8 +287,14 @@ export const Styles = () => {
         labelComponent={
           <VictoryLabel
             style={[
-              { fontSize: ({ datum }) => (datum.y === 0 ? 12 : 15), fontFamily: "arial" },
-              { fill: ({ datum }) => (datum.y === 0 ? "red" : "blue"), fontFamily: "arial" }
+              {
+                fontSize: ({ datum }) => (datum.y === 0 ? 12 : 15),
+                fontFamily: "arial"
+              },
+              {
+                fill: ({ datum }) => (datum.y === 0 ? "red" : "blue"),
+                fontFamily: "arial"
+              }
             ]}
             text={["multi array", "with", "functions"]}
             backgroundStyle={{ stroke: "blue", fill: "none" }}
@@ -284,7 +305,10 @@ export const Styles = () => {
         {...defaultScatterProps}
         labelComponent={
           <VictoryLabel
-            style={{ fontSize: ({ datum }) => (datum.y === 0 ? 12 : 15), fontFamily: "arial" }}
+            style={{
+              fontSize: ({ datum }) => (datum.y === 0 ? 12 : 15),
+              fontFamily: "arial"
+            }}
             text={["object", "with", "functions"]}
             backgroundStyle={[{ stroke: "blue", fill: "none" }]}
           />
@@ -294,7 +318,12 @@ export const Styles = () => {
         {...defaultScatterProps}
         labelComponent={
           <VictoryLabel
-            style={[{ fontSize: ({ datum }) => (datum.y === 0 ? 12 : 15), fontFamily: "arial" }]}
+            style={[
+              {
+                fontSize: ({ datum }) => (datum.y === 0 ? 12 : 15),
+                fontFamily: "arial"
+              }
+            ]}
             text={["single array", "with", "functions"]}
             backgroundStyle={[{ stroke: "blue", fill: "none" }]}
           />
@@ -305,8 +334,14 @@ export const Styles = () => {
         labelComponent={
           <VictoryLabel
             style={[
-              { fontSize: ({ datum }) => (datum.y === 0 ? 12 : 15), fontFamily: "arial" },
-              { fill: ({ datum }) => (datum.y === 0 ? "red" : "blue"), fontFamily: "arial" }
+              {
+                fontSize: ({ datum }) => (datum.y === 0 ? 12 : 15),
+                fontFamily: "arial"
+              },
+              {
+                fill: ({ datum }) => (datum.y === 0 ? "red" : "blue"),
+                fontFamily: "arial"
+              }
             ]}
             text={["multi array", "with", "functions"]}
             backgroundStyle={[{ stroke: "blue", fill: "none" }]}

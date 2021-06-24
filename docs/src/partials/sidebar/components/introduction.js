@@ -24,7 +24,11 @@ const renderMobileSidebarLinks = (mobileLinks) => {
     return (
       <SidebarListItem key={link.slug}>
         {isExternal ? (
-          <SidebarListItemAnchorLink href={link.slug} target="_blank" rel="noopener noreferrer">
+          <SidebarListItemAnchorLink
+            href={link.slug}
+            target="_blank"
+            rel="noopener noreferrer"
+          >
             {link.title}
           </SidebarListItemAnchorLink>
         ) : (
@@ -57,7 +61,9 @@ const Introduction = ({ content }) => {
       <SidebarSectionHeading>Introduction</SidebarSectionHeading>
       <SidebarSectionList>
         {content}
-        <MobileSidebarLinks>{renderMobileSidebarLinks(mobileLinks)}</MobileSidebarLinks>
+        <MobileSidebarLinks>
+          {renderMobileSidebarLinks(mobileLinks)}
+        </MobileSidebarLinks>
       </SidebarSectionList>
     </>
   );

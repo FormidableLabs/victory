@@ -2,7 +2,11 @@ import React from "react";
 import PropTypes from "prop-types";
 import { FeaturedBadge, ProjectBadge } from "formidable-oss-badges";
 import styled from "styled-components";
-import { LinkButton, LandingSectionWrapper, LandingSectionContent } from "./styles";
+import {
+  LinkButton,
+  LandingSectionWrapper,
+  LandingSectionContent
+} from "./styles";
 import importedTheme from "../../styles/theme";
 
 const SectionHeading = styled.h2`
@@ -115,7 +119,11 @@ const MoreOSS = ({ ossArray, link }) => (
               )}
             </OSSLink>
             <OSSCopyContainer>
-              <OSSLink href={card.link} target="_blank" rel="noopener noreferrer">
+              <OSSLink
+                href={card.link}
+                target="_blank"
+                rel="noopener noreferrer"
+              >
                 <OSSTitle>{card.title}</OSSTitle>
               </OSSLink>
               <OSSText>{card.description}</OSSText>

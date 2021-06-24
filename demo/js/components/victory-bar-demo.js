@@ -8,12 +8,19 @@ import { VictoryGroup } from "Packages/victory-group/src/index";
 import { VictoryBar } from "Packages/victory-bar/src/index";
 import { VictorySharedEvents } from "Packages/victory-shared-events/src/index";
 
-import { VictoryContainer, VictoryTheme, VictoryLabel } from "Packages/victory-core/src/index";
+import {
+  VictoryContainer,
+  VictoryTheme,
+  VictoryLabel
+} from "Packages/victory-core/src/index";
 import { assign, random, range, merge } from "lodash";
 
 class Wrapper extends React.Component {
   static propTypes = {
-    children: PropTypes.oneOfType([PropTypes.arrayOf(PropTypes.node), PropTypes.node])
+    children: PropTypes.oneOfType([
+      PropTypes.arrayOf(PropTypes.node),
+      PropTypes.node
+    ])
   };
 
   renderChildren(props) {
@@ -110,7 +117,11 @@ export default class App extends React.Component {
   }
 
   render() {
-    const parentStyle = { border: "1px solid #ccc", margin: "2%", maxWidth: "40%" };
+    const parentStyle = {
+      border: "1px solid #ccc",
+      margin: "2%",
+      maxWidth: "40%"
+    };
 
     const containerStyle = {
       display: "flex",
@@ -206,7 +217,10 @@ export default class App extends React.Component {
           />
         </VictoryChart>
 
-        <VictoryChart style={{ parent: parentStyle }} theme={VictoryTheme.material}>
+        <VictoryChart
+          style={{ parent: parentStyle }}
+          theme={VictoryTheme.material}
+        >
           <VictoryBar
             horizontal
             alignment="start"
@@ -222,7 +236,9 @@ export default class App extends React.Component {
         <VictoryBar
           style={{ parent: parentStyle }}
           labels={() => "HELLO"}
-          labelComponent={<VictoryLabel angle={45} verticalAnchor="end" textAnchor="end" />}
+          labelComponent={
+            <VictoryLabel angle={45} verticalAnchor="end" textAnchor="end" />
+          }
           animate={{
             duration: 500,
             onExit: {
@@ -246,7 +262,9 @@ export default class App extends React.Component {
                   return [
                     {
                       mutation: (props) => {
-                        return { style: merge({}, props.style, { fill: "orange" }) };
+                        return {
+                          style: merge({}, props.style, { fill: "orange" })
+                        };
                       }
                     },
                     {
@@ -264,7 +282,10 @@ export default class App extends React.Component {
           x="a"
           y="b"
         />
-        <VictoryStack style={{ parent: parentStyle }} animate={{ duration: 1000 }}>
+        <VictoryStack
+          style={{ parent: parentStyle }}
+          animate={{ duration: 1000 }}
+        >
           {this.state.multiTransitionData.map((data, index) => {
             return (
               <Wrapper key={index}>
@@ -279,7 +300,11 @@ export default class App extends React.Component {
           domainPadding={{ x: 30 }}
           theme={VictoryTheme.material}
         >
-          <VictoryGroup offset={12} animate={{ duration: 1000 }} colorScale={"warm"}>
+          <VictoryGroup
+            offset={12}
+            animate={{ duration: 1000 }}
+            colorScale={"warm"}
+          >
             {this.state.multiTransitionData.map((data, index) => {
               return (
                 <Wrapper key={index}>
@@ -297,7 +322,9 @@ export default class App extends React.Component {
           animate={{ duration: 2000 }}
         >
           {this.getBarData().map((data, index) => {
-            return <VictoryBar key={index} data={data} labels={["a", "b", "c"]} />;
+            return (
+              <VictoryBar key={index} data={data} labels={["a", "b", "c"]} />
+            );
           })}
         </VictoryGroup>
 
@@ -372,7 +399,9 @@ export default class App extends React.Component {
                       return [
                         {
                           mutation: (props) => {
-                            return { style: merge({}, props.style, { fill: "orange" }) };
+                            return {
+                              style: merge({}, props.style, { fill: "orange" })
+                            };
                           }
                         }
                       ];
@@ -396,7 +425,9 @@ export default class App extends React.Component {
                     return [
                       {
                         mutation: (props) => {
-                          return { style: merge({}, props.style, { fill: "blue" }) };
+                          return {
+                            style: merge({}, props.style, { fill: "blue" })
+                          };
                         }
                       }
                     ];
@@ -418,7 +449,9 @@ export default class App extends React.Component {
                     return {
                       childName: "secondBar",
                       mutation: (props) => {
-                        return { style: merge({}, props.style, { fill: "blue" }) };
+                        return {
+                          style: merge({}, props.style, { fill: "blue" })
+                        };
                       }
                     };
                   }
@@ -436,12 +469,16 @@ export default class App extends React.Component {
                         mutation: (props) => {
                           return props.style.fill === "cyan"
                             ? null
-                            : { style: merge({}, props.style, { fill: "cyan" }) };
+                            : {
+                                style: merge({}, props.style, { fill: "cyan" })
+                              };
                         }
                       },
                       {
                         mutation: (props) => {
-                          return { style: merge({}, props.style, { fill: "orange" }) };
+                          return {
+                            style: merge({}, props.style, { fill: "orange" })
+                          };
                         }
                       },
                       {
@@ -571,7 +608,11 @@ class ChartWrap extends React.Component {
   // renders both a standalone chart, and a version wrapped in VictoryChart,
   // to test both cases at once
   render() {
-    const parentStyle = { border: "1px solid #ccc", margin: "2%", maxWidth: "40%" };
+    const parentStyle = {
+      border: "1px solid #ccc",
+      margin: "2%",
+      maxWidth: "40%"
+    };
 
     return (
       <div style={{ parent: parentStyle }}>

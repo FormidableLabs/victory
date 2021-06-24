@@ -42,7 +42,9 @@ function findAxisComponents(childComponents, predicate) {
       if (child.type && child.type.role === "axis" && predicate(child)) {
         return memo.concat(child);
       } else if (child.props && child.props.children) {
-        return memo.concat(findAxes(React.Children.toArray(child.props.children)));
+        return memo.concat(
+          findAxes(React.Children.toArray(child.props.children))
+        );
       }
       return memo;
     }, []);
@@ -74,7 +76,9 @@ function getAxisComponent(childComponents, axis) {
  */
 function getAxisComponentsWithParent(childComponents, type) {
   const matchesType = (child) => {
-    return type === "dependent" ? child.props.dependentAxis : !child.props.dependentAxis;
+    return type === "dependent"
+      ? child.props.dependentAxis
+      : !child.props.dependentAxis;
   };
 
   const findComponents = (children) => {
@@ -82,7 +86,9 @@ function getAxisComponentsWithParent(childComponents, type) {
       if (child.type && child.type.role === "axis" && matchesType(child)) {
         return memo.concat(child);
       } else if (child.props && child.props.children) {
-        const childAxis = findComponents(React.Children.toArray(child.props.children));
+        const childAxis = findComponents(
+          React.Children.toArray(child.props.children)
+        );
         return childAxis.length > 0 ? memo.concat(child) : memo;
       }
       return memo;
@@ -121,7 +127,8 @@ function getOriginSign(origin, domain) {
  * @returns {Boolean} true when the axis is vertical
  */
 function isVertical(props) {
-  const orientation = props.orientation || (props.dependentAxis ? "left" : "bottom");
+  const orientation =
+    props.orientation || (props.dependentAxis ? "left" : "bottom");
   const vertical = { top: false, bottom: false, left: true, right: true };
   return vertical[orientation];
 }
@@ -131,16 +138,22 @@ function isVertical(props) {
  * @returns {Boolean} true when tickValues contain strings
  */
 function stringTicks(props) {
-  return props.tickValues !== undefined && Collection.containsStrings(props.tickValues);
+  return (
+    props.tickValues !== undefined &&
+    Collection.containsStrings(props.tickValues)
+  );
 }
 
 function getDefaultTickFormat(props) {
   const { tickValues } = props;
   const axis = getAxis(props);
   const stringMap = props.stringMap && props.stringMap[axis];
-  const fallbackFormat = tickValues && !Collection.containsDates(tickValues) ? (x) => x : undefined;
+  const fallbackFormat =
+    tickValues && !Collection.containsDates(tickValues) ? (x) => x : undefined;
   if (!stringMap) {
-    return stringTicks(props) ? (x, index) => tickValues[index] : fallbackFormat;
+    return stringTicks(props)
+      ? (x, index) => tickValues[index]
+      : fallbackFormat;
   } else {
     const invertedStringMap = stringMap && invert(stringMap);
     const tickValueArray = orderBy(values(stringMap), (n) => n);
@@ -175,7 +188,9 @@ function getTickArray(props) {
     if (!tickFormat || !Array.isArray(tickFormat)) {
       return undefined;
     }
-    return Collection.containsStrings(tickFormat) ? tickFormat.map((t, i) => i) : tickFormat;
+    return Collection.containsStrings(tickFormat)
+      ? tickFormat.map((t, i) => i)
+      : tickFormat;
   };
 
   let ticks = tickValues;
@@ -183,7 +198,9 @@ function getTickArray(props) {
     ticks = getStringTicks(props);
   }
   if (tickValues && Collection.containsStrings(tickValues)) {
-    ticks = stringMap ? tickValues.map((tick) => stringMap[tick]) : range(1, tickValues.length + 1);
+    ticks = stringMap
+      ? tickValues.map((tick) => stringMap[tick])
+      : range(1, tickValues.length + 1);
   }
   const tickArray = ticks ? uniq(ticks) : getTicksFromFormat(props);
   const buildTickArray = (arr) => {
@@ -192,7 +209,10 @@ function getTickArray(props) {
     if (arr) {
       arr.forEach(function (t, index) {
         if (Array.isArray(domain)) {
-          if (t >= Collection.getMinValue(domain) && t <= Collection.getMaxValue(domain)) {
+          if (
+            t >= Collection.getMinValue(domain) &&
+            t <= Collection.getMaxValue(domain)
+          ) {
             newTickArray.push({
               value: t,
               index
@@ -208,7 +228,9 @@ function getTickArray(props) {
       return newTickArray;
     } else return undefined;
   };
-  return Array.isArray(tickArray) && tickArray.length ? buildTickArray(tickArray) : undefined;
+  return Array.isArray(tickArray) && tickArray.length
+    ? buildTickArray(tickArray)
+    : undefined;
 }
 
 function getTickFormat(props, scale) {
@@ -218,12 +240,18 @@ function getTickFormat(props, scale) {
   if (!tickFormat) {
     const defaultTickFormat = getDefaultTickFormat(props);
     const scaleTickFormat =
-      scale.tickFormat && isFunction(scale.tickFormat) ? scale.tickFormat() : (x) => x;
+      scale.tickFormat && isFunction(scale.tickFormat)
+        ? scale.tickFormat()
+        : (x) => x;
     return defaultTickFormat || scaleTickFormat;
   } else if (tickFormat && Array.isArray(tickFormat)) {
     const tickArray = getTickArray(props);
-    const tickArrayIndices = tickArray ? tickArray.map((v) => v.index) : undefined;
-    const filteredTickFormat = tickFormat.filter((t, index) => tickArrayIndices.includes(index));
+    const tickArrayIndices = tickArray
+      ? tickArray.map((v) => v.index)
+      : undefined;
+    const filteredTickFormat = tickFormat.filter((t, index) =>
+      tickArrayIndices.includes(index)
+    );
     return (x, index) => filteredTickFormat[index];
   } else if (tickFormat && isFunction(tickFormat)) {
     const applyStringTicks = (tick, index, ticks) => {
@@ -256,7 +284,9 @@ function getTicks(props, scale, filterZero) {
     const defaultTickCount = tickCount || 5;
     const scaleTicks = scale.ticks(defaultTickCount);
     const scaledTickArray =
-      Array.isArray(scaleTicks) && scaleTicks.length ? scaleTicks : scale.domain();
+      Array.isArray(scaleTicks) && scaleTicks.length
+        ? scaleTicks
+        : scale.domain();
     const ticks = downsampleTicks(scaledTickArray, tickCount);
     if (filterZero) {
       const filteredTicks = includes(ticks, 0) ? without(ticks, 0) : ticks;
@@ -286,7 +316,9 @@ function getDomainFromData(props, axis) {
   const tickStrings = stringTicks(props);
   const ticks = tickValues.map((value) => +value);
   const defaultMin = tickStrings ? 1 : Collection.getMinValue(ticks);
-  const defaultMax = tickStrings ? tickValues.length : Collection.getMaxValue(ticks);
+  const defaultMax = tickStrings
+    ? tickValues.length
+    : Collection.getMaxValue(ticks);
   const min = minDomain !== undefined ? minDomain : defaultMin;
   const max = maxDomain !== undefined ? maxDomain : defaultMax;
   const initialDomain = Domain.getDomainFromMinMax(min, max);
@@ -324,7 +356,9 @@ function getAxisValue(props, axis) {
   const stringMapAxis = axis === "x" ? "y" : "x";
   const stringMap = isObject(props.stringMap) && props.stringMap[stringMapAxis];
   const axisValue =
-    stringMap && typeof props.axisValue === "string" ? stringMap[props.axisValue] : props.axisValue;
+    stringMap && typeof props.axisValue === "string"
+      ? stringMap[props.axisValue]
+      : props.axisValue;
   return scale(axisValue);
 }
 
@@ -343,7 +377,11 @@ function modifyProps(props, fallbackProps) {
   }
   const axisTheme = defaults({}, props.theme[role], props.theme.axis);
   const theme = assign({}, props.theme, { axis: axisTheme });
-  return Helpers.modifyProps(assign({}, props, { theme }), fallbackProps, "axis");
+  return Helpers.modifyProps(
+    assign({}, props, { theme }),
+    fallbackProps,
+    "axis"
+  );
 }
 
 export default {

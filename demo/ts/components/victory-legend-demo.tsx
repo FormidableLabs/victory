@@ -93,7 +93,9 @@ const LegendDemo = () => (
         data={data}
         symbolSpacer={symbolSpacer}
         style={legendStyle}
-        titleComponent={<VictoryLabel style={[{ fontSize: 20 }, { fontSize: 10 }]} />}
+        titleComponent={
+          <VictoryLabel style={[{ fontSize: 20 }, { fontSize: 10 }]} />
+        }
         events={[
           {
             target: "data",

@@ -216,12 +216,24 @@ const LearnMore = styled(Link)`
   }
 `;
 
-const Hero = ({ background, code, cornerIcon, cornerText, description, linksArray, link }) => (
+const Hero = ({
+  background,
+  code,
+  cornerIcon,
+  cornerText,
+  description,
+  linksArray,
+  link
+}) => (
   <>
     <HeroContainer bg={background}>
       <Corner>
         <CornerText>{cornerText}</CornerText>
-        <a href="https://formidable.com" target="_blank" rel="noopener noreferrer">
+        <a
+          href="https://formidable.com"
+          target="_blank"
+          rel="noopener noreferrer"
+        >
           <CornerF src={cornerIcon} />
         </a>
       </Corner>
@@ -247,7 +259,12 @@ const Hero = ({ background, code, cornerIcon, cornerText, description, linksArra
         <LinkContainer>
           {linksArray.map((l) => {
             return l.external ? (
-              <LinkItem key={l.text} href={l.location} target="_blank" rel="noopener noreferrer">
+              <LinkItem
+                key={l.text}
+                href={l.location}
+                target="_blank"
+                rel="noopener noreferrer"
+              >
                 {l.text}
               </LinkItem>
             ) : (

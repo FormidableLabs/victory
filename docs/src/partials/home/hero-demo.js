@@ -36,24 +36,30 @@ const font = (color) => ({
   fontFamily: "Helvetica"
 });
 
-const numberWithCommas = (x) => x.toString().replace(/\B(?=(\d{3})+(?!\d))/g, ",");
+const numberWithCommas = (x) =>
+  x.toString().replace(/\B(?=(\d{3})+(?!\d))/g, ",");
 
 const groupDownloadsByWeek = (dates) => {
   const downloadsGroupedByPeriod = {};
   const today = new Date();
 
   dates.forEach((date) => {
-    const start = format(startOfWeek(parse(date.day, "yyyy-MM-dd", today)), "yyyy-MM-dd");
+    const start = format(
+      startOfWeek(parse(date.day, "yyyy-MM-dd", today)),
+      "yyyy-MM-dd"
+    );
 
     downloadsGroupedByPeriod[start] = downloadsGroupedByPeriod[start]
       ? downloadsGroupedByPeriod[start] + date.downloads
       : date.downloads;
   });
 
-  const weeklyDownloads = Object.entries(downloadsGroupedByPeriod).map(([key, value]) => ({
-    date: key,
-    downloads: value
-  }));
+  const weeklyDownloads = Object.entries(downloadsGroupedByPeriod).map(
+    ([key, value]) => ({
+      date: key,
+      downloads: value
+    })
+  );
   // remove the last element in the array, as it may not be a full week
   weeklyDownloads.pop();
   return weeklyDownloads;
@@ -162,9 +168,27 @@ const HeroDemo = () => {
           />
         }
       >
-        <VictoryLabel text="DEC 2015" textAnchor="end" style={font()} x={190} y={190} />
-        <VictoryLabel text="PROJECT START" textAnchor="end" style={font()} x={190} y={215} />
-        <VictoryLabel text="TODAY" textAnchor="start" style={font()} x={1710} y={190} />
+        <VictoryLabel
+          text="DEC 2015"
+          textAnchor="end"
+          style={font()}
+          x={190}
+          y={190}
+        />
+        <VictoryLabel
+          text="PROJECT START"
+          textAnchor="end"
+          style={font()}
+          x={190}
+          y={215}
+        />
+        <VictoryLabel
+          text="TODAY"
+          textAnchor="start"
+          style={font()}
+          x={1710}
+          y={190}
+        />
         <VictoryLabel
           text={`v${latestVersion}`}
           textAnchor="start"
@@ -238,7 +262,9 @@ const HeroDemo = () => {
               ]}
             />
           }
-          labels={({ datum }) => `${numberWithCommas(datum.downloads)}\nDOWNLOADS / WEEK`}
+          labels={({ datum }) =>
+            `${numberWithCommas(datum.downloads)}\nDOWNLOADS / WEEK`
+          }
         />
       </VictoryChart>
     </HeroDemoContainer>

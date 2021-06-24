@@ -20,17 +20,25 @@ describe("components/victory-shared-events", () => {
   };
 
   const expectOnDataComponents = (expectationMatrix, testFn, component) => {
-    forEach(expectationMatrix, (dataComponentExpectations, parentComponentName) => {
-      const dataComponentTests = findComponentByName(parentComponentName, component)
-        .find(MockDataComponent)
-        .map(testFn);
+    forEach(
+      expectationMatrix,
+      (dataComponentExpectations, parentComponentName) => {
+        const dataComponentTests = findComponentByName(
+          parentComponentName,
+          component
+        )
+          .find(MockDataComponent)
+          .map(testFn);
 
-      expect(dataComponentTests).to.eql(dataComponentExpectations);
-    });
+        expect(dataComponentTests).to.eql(dataComponentExpectations);
+      }
+    );
   };
 
   const findDataComponent = (parentName, index, component) => {
-    return findComponentByName(parentName, component).find(MockDataComponent).at(index);
+    return findComponentByName(parentName, component)
+      .find(MockDataComponent)
+      .at(index);
   };
 
   it("should trigger shared events exclusively on selected children", () => {

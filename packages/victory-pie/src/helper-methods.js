@@ -35,8 +35,14 @@ const getOrigin = (props, padding) => {
   const { width, height } = props;
   const origin = isPlainObject(props.origin) ? props.origin : {};
   return {
-    x: origin.x !== undefined ? origin.x : (padding.left - padding.right + width) / 2,
-    y: origin.y !== undefined ? origin.y : (padding.top - padding.bottom + height) / 2
+    x:
+      origin.x !== undefined
+        ? origin.x
+        : (padding.left - padding.right + width) / 2,
+    y:
+      origin.y !== undefined
+        ? origin.y
+        : (padding.top - padding.bottom + height) / 2
   };
 };
 
@@ -58,7 +64,9 @@ const getCalculatedValues = (props) => {
   const { colorScale } = props;
   const styleObject = Helpers.getDefaultStyles(props, "pie");
   const style = Helpers.getStyles(props.style, styleObject, "auto", "100%");
-  const colors = Array.isArray(colorScale) ? colorScale : Style.getColorScale(colorScale);
+  const colors = Array.isArray(colorScale)
+    ? colorScale
+    : Style.getColorScale(colorScale);
   const padding = Helpers.getPadding(props);
   const defaultRadius = getRadius(props, padding);
   const origin = getOrigin(props, padding);
@@ -144,7 +152,9 @@ const getBaseLabelAngle = (slice, labelPosition, labelStyle) => {
   if (labelPosition.angle !== undefined) {
     baseAngle = labelStyle.angle;
   } else if (labelPosition === "centroid") {
-    baseAngle = Helpers.radiansToDegrees((slice.startAngle + slice.endAngle) / 2);
+    baseAngle = Helpers.radiansToDegrees(
+      (slice.startAngle + slice.endAngle) / 2
+    );
   } else {
     baseAngle =
       labelPosition === "startAngle"
@@ -173,10 +183,15 @@ const getLabelProps = (text, dataProps, calculatedValues) => {
     assign({ text }, dataProps)
   );
   const labelPosition =
-    Helpers.evaluateProp(calculatedValues.labelPosition, assign({ text }, dataProps)) || "centroid";
+    Helpers.evaluateProp(
+      calculatedValues.labelPosition,
+      assign({ text }, dataProps)
+    ) || "centroid";
   const labelPlacement =
-    Helpers.evaluateProp(calculatedValues.labelPlacement, assign({ text }, dataProps)) ||
-    "vertical";
+    Helpers.evaluateProp(
+      calculatedValues.labelPlacement,
+      assign({ text }, dataProps)
+    ) || "vertical";
   const labelStyle = assign({ padding: 0 }, style.labels);
   const evaluatedStyle = Helpers.evaluateStyle(
     labelStyle,
@@ -188,7 +203,8 @@ const getLabelProps = (text, dataProps, calculatedValues) => {
   const labelAngle = getLabelAngle(baseAngle, labelPlacement);
   const orientation = getLabelOrientation(baseAngle, labelPlacement);
   const textAnchor = labelStyle.textAnchor || getTextAnchor(orientation);
-  const verticalAnchor = labelStyle.verticalAnchor || getVerticalAnchor(orientation);
+  const verticalAnchor =
+    labelStyle.verticalAnchor || getVerticalAnchor(orientation);
 
   const labelProps = {
     width,
@@ -232,7 +248,8 @@ export const getBaseProps = (props, fallbackProps) => {
     name,
     innerRadius,
     cornerRadius,
-    padAngle
+    padAngle,
+    disableInlineStyles
   } = calculatedValues;
   const radius = props.radius || defaultRadius;
   const initialChildProps = {
@@ -256,13 +273,17 @@ export const getBaseProps = (props, fallbackProps) => {
       radius,
       cornerRadius,
       padAngle,
-      style: getSliceStyle(index, calculatedValues)
+      style: disableInlineStyles ? {} : getSliceStyle(index, calculatedValues),
+      disableInlineStyles
     };
     childProps[eventKey] = {
       data: dataProps
     };
     const text = getLabelText(props, datum, index);
-    if ((text !== undefined && text !== null) || (labels && (events || sharedEvents))) {
+    if (
+      (text !== undefined && text !== null) ||
+      (labels && (events || sharedEvents))
+    ) {
       const evaluatedText = Helpers.evaluateProp(text, dataProps);
       childProps[eventKey].labels = getLabelProps(
         evaluatedText,

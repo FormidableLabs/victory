@@ -88,7 +88,11 @@ describe("getTransitionPropsFactory", () => {
       nodesShouldLoad: true,
       nodesDoneLoad: true
     };
-    const result = Transitions.getTransitionPropsFactory({}, exitingState, callback);
+    const result = Transitions.getTransitionPropsFactory(
+      {},
+      exitingState,
+      callback
+    );
     const child = makeChild([
       { x: 1, y: 1 },
       { x: 2, y: 3 }
@@ -101,7 +105,9 @@ describe("getTransitionPropsFactory", () => {
       { x: 1, y: 1 },
       { x: 2, y: 0 }
     ]);
-    expect(calledResult.animate.duration).to.equal(child.type.defaultTransitions.onExit.duration);
+    expect(calledResult.animate.duration).to.equal(
+      child.type.defaultTransitions.onExit.duration
+    );
   });
 
   it("returns a function that describes data entering", () => {
@@ -113,7 +119,11 @@ describe("getTransitionPropsFactory", () => {
       nodesShouldLoad: true,
       nodesDoneLoad: true
     };
-    const result = Transitions.getTransitionPropsFactory({}, enteringState, callback);
+    const result = Transitions.getTransitionPropsFactory(
+      {},
+      enteringState,
+      callback
+    );
     const child = makeChild([
       { x: 1, y: 1 },
       { x: 2, y: 3 }

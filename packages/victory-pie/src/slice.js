@@ -37,8 +37,14 @@ const evaluateProps = (props) => {
    * `tabIndex`
    */
   const style = Helpers.evaluateStyle(props.style, props);
-  const radius = Helpers.evaluateProp(props.radius, assign({}, props, { style }));
-  const innerRadius = Helpers.evaluateProp(props.innerRadius, assign({}, props, { style, radius }));
+  const radius = Helpers.evaluateProp(
+    props.radius,
+    assign({}, props, { style })
+  );
+  const innerRadius = Helpers.evaluateProp(
+    props.innerRadius,
+    assign({}, props, { style, radius })
+  );
 
   const ariaLabel = Helpers.evaluateProp(props.ariaLabel, props);
   const id = Helpers.evaluateProp(props.id, props);

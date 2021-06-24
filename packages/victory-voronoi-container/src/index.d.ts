@@ -16,4 +16,7 @@ export interface VictoryVoronoiContainerProps extends VictoryContainerProps {
   voronoiPadding?: PaddingProps;
 }
 
-export class VictoryVoronoiContainer extends React.Component<VictoryVoronoiContainerProps, any> {}
+export class VictoryVoronoiContainer extends React.Component<
+  VictoryVoronoiContainerProps,
+  any
+> {}

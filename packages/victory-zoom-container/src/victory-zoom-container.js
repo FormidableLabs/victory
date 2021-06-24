@@ -48,22 +48,34 @@ export const zoomContainerMixin = (base) =>
           target: "parent",
           eventHandlers: {
             onMouseDown: (evt, targetProps) => {
-              return props.disable ? {} : ZoomHelpers.onMouseDown(evt, targetProps);
+              return props.disable
+                ? {}
+                : ZoomHelpers.onMouseDown(evt, targetProps);
             },
             onTouchStart: (evt, targetProps) => {
-              return props.disable ? {} : ZoomHelpers.onMouseDown(evt, targetProps);
+              return props.disable
+                ? {}
+                : ZoomHelpers.onMouseDown(evt, targetProps);
             },
             onMouseUp: (evt, targetProps) => {
-              return props.disable ? {} : ZoomHelpers.onMouseUp(evt, targetProps);
+              return props.disable
+                ? {}
+                : ZoomHelpers.onMouseUp(evt, targetProps);
             },
             onTouchEnd: (evt, targetProps) => {
-              return props.disable ? {} : ZoomHelpers.onMouseUp(evt, targetProps);
+              return props.disable
+                ? {}
+                : ZoomHelpers.onMouseUp(evt, targetProps);
             },
             onMouseLeave: (evt, targetProps) => {
-              return props.disable ? {} : ZoomHelpers.onMouseLeave(evt, targetProps);
+              return props.disable
+                ? {}
+                : ZoomHelpers.onMouseLeave(evt, targetProps);
             },
             onTouchCancel: (evt, targetProps) => {
-              return props.disable ? {} : ZoomHelpers.onMouseLeave(evt, targetProps);
+              return props.disable
+                ? {}
+                : ZoomHelpers.onMouseLeave(evt, targetProps);
             },
             // eslint-disable-next-line max-params
             onMouseMove: (evt, targetProps, eventKey, ctx) => {
@@ -80,14 +92,17 @@ export const zoomContainerMixin = (base) =>
               evt.preventDefault();
               return ZoomHelpers.onMouseMove(evt, targetProps, eventKey, ctx);
             },
-            ...(props.disable || !props.allowZoom ? {} : { onWheel: ZoomHelpers.onWheel })
+            ...(props.disable || !props.allowZoom
+              ? {}
+              : { onWheel: ZoomHelpers.onWheel })
           }
         }
       ];
     };
 
     clipDataComponents(children, props) {
-      const { scale, clipContainerComponent, polar, origin, horizontal } = props;
+      const { scale, clipContainerComponent, polar, origin, horizontal } =
+        props;
       const rangeX = horizontal ? scale.y.range() : scale.x.range();
       const rangeY = horizontal ? scale.x.range() : scale.y.range();
       const plottableWidth = Math.abs(rangeX[0] - rangeX[1]);
@@ -126,9 +141,13 @@ export const zoomContainerMixin = (base) =>
       const getData = (childProps) => {
         const { data, x, y } = childProps;
         const defaultGetData =
-          child.type && isFunction(child.type.getData) ? child.type.getData : () => undefined;
+          child.type && isFunction(child.type.getData)
+            ? child.type.getData
+            : () => undefined;
         // skip costly data formatting if x and y accessors are not present
-        return Array.isArray(data) && !x && !y ? data : defaultGetData(childProps);
+        return Array.isArray(data) && !x && !y
+          ? data
+          : defaultGetData(childProps);
       };
 
       const data = getData(child.props);
@@ -143,7 +162,9 @@ export const zoomContainerMixin = (base) =>
 
       // important: assumes data is ordered by dimension
       // get the start and end of the data that is in the current visible domain
-      let startIndex = data.findIndex((d) => d[dimension] >= domain[dimension][0]);
+      let startIndex = data.findIndex(
+        (d) => d[dimension] >= domain[dimension][0]
+      );
       let endIndex = data.findIndex((d) => d[dimension] > domain[dimension][1]);
       // pick one more point (if available) at each end so that VictoryLine, VictoryArea connect
       if (startIndex !== 0) {
@@ -167,7 +188,11 @@ export const zoomContainerMixin = (base) =>
         const { currentDomain, zoomActive, allowZoom } = props;
         const originalDomain = defaults({}, props.originalDomain, props.domain);
         const zoomDomain = defaults({}, props.zoomDomain, props.domain);
-        const cachedZoomDomain = defaults({}, props.cachedZoomDomain, props.domain);
+        const cachedZoomDomain = defaults(
+          {},
+          props.cachedZoomDomain,
+          props.domain
+        );
         let domain;
         if (!ZoomHelpers.checkDomainEquality(zoomDomain, cachedZoomDomain)) {
           // if zoomDomain has been changed, use it
@@ -180,7 +205,9 @@ export const zoomContainerMixin = (base) =>
           domain = defaults({}, currentDomain, originalDomain);
         }
 
-        let newDomain = props.polar ? this.modifyPolarDomain(domain, originalDomain) : domain;
+        let newDomain = props.polar
+          ? this.modifyPolarDomain(domain, originalDomain)
+          : domain;
         if (newDomain && props.zoomDimension) {
           // if zooming is restricted to a dimension, don't squash changes to zoomDomain in other dim
           newDomain = {
