@@ -1,5 +1,57 @@
 # Victory Changelog
 
+## 35.9.0 (2021-06-24)
+
+Adds a new `disableInlineStyles` prop to components and primitives to support users who want to style their components by class, or use a CSS in JS solution like `styled-components`
+
+When the new `disableInlineStyles` prop is supplied to a component like `VictoryBar` no styles will be supplied to either data or label components that it renders:
+
+```jsx
+const StyledBar = styled(Bar)`
+  fill: purple;
+`
+const StyledLabel = styled(VictoryLabel)`
+  tspan {
+    fill: magenta;
+    font-family: Papyrus, fantasy;
+  }
+`
+function CustomStyledBarChart() {
+  return (
+    <VictoryChart>
+      <VictoryBar
+        disableInlineStyles
+        labels={[1, 2, 3, 4]}
+        dataComponent={<StyledBar />}
+        labelComponent={<StyledLabel />}
+      />
+    </VictoryChart>
+  )
+}
+```
+
+The `disableInlineStyles` prop may also be supplied to primitive components for more granular control:
+
+```jsx
+const StyledBar = styled(Bar)`
+  fill: purple;
+`
+function CustomStyledBarChart() {
+  return (
+    <VictoryChart>
+      <VictoryBar
+        labels={[1, 2, 3, 4]}
+        dataComponent={<StyledBar disableInlineStyles />}
+      />
+    </VictoryChart>
+  )
+}
+```
+
+Related PRs
+- [#1882](https://github.com/FormidableLabs/victory/pull/1882) - Thanks @beccanelson!
+- [#1856](https://github.com/FormidableLabs/victory/pull/1856) - Thanks @tvsmk!
+
 ## 35.8.6 (2021-06-11)
 
 - [#1878](https://github.com/FormidableLabs/victory/pull/1878) - Downgrade `d3-array` dependency to correct for babel issue
