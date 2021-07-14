@@ -1,6 +1,6 @@
 {
   "name": "victory-voronoi-container",
-  "version": "35.9.0",
+  "version": "35.9.1",
   "description": "Interactive Voronoi Mouseover Component for Victory",
   "keywords": [
     "data visualization",
@@ -24,7 +24,7 @@
     "prop-types": "^15.5.8",
     "react-fast-compare": "^2.0.0",
     "victory-core": "^35.9.0",
-    "victory-tooltip": "^35.9.0"
+    "victory-tooltip": "^35.9.1"
   },
   "scripts": {
     "version": "nps build-libs && nps build-dists"
