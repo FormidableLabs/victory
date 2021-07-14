@@ -1,5 +1,9 @@
 # Victory Changelog
 
+## 35.9.1 (2021-07-14)
+
+- [#1901](https://github.com/FormidableLabs/victory/pull/1901) Adds a small performance optimization for `VictoryTooltip`. Thanks @beccanelson!
+
 ## 35.9.0 (2021-06-24)
 
 Adds a new `disableInlineStyles` prop to components and primitives to support users who want to style their components by class, or use a CSS in JS solution like `styled-components`
