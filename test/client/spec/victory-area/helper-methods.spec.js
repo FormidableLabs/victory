@@ -2,8 +2,12 @@
 /* eslint-disable max-nested-callbacks */
 /* global sinon */
 import { getDataWithBaseline } from "packages/victory-area/src/helper-methods";
-import { Data } from "packages/victory-core";
+import { getData } from "packages/victory-core/src/victory-util/data";
 import * as d3Scale from "d3-scale";
+
+const Data = {
+  getData
+};
 
 describe("victory-area/helper-methods", () => {
   describe("getDataWithBaseline", () => {

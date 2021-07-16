@@ -95,8 +95,39 @@ function cleanData(dataset, props) {
   });
 }
 
+// Returns a data accessor given an eventKey prop
+function getEventKey(key) {
+  // creates a data accessor function
+  // given a property key, path, array index, or null for identity.
+  if (isFunction(key)) {
+    return key;
+  } else if (key === null || key === undefined) {
+    return () => undefined;
+  }
+  // otherwise, assume it is an array index, property key or path (_.property handles all three)
+  return property(key);
+}
+
+// Returns data with an eventKey prop added to each datum
+function addEventKeys(props, data) {
+  const hasEventKeyAccessor = !!props.eventKey;
+  const eventKeyAccessor = getEventKey(props.eventKey);
+  return data.map((datum, index) => {
+    if (datum.eventKey !== undefined) {
+      return datum;
+    } else if (hasEventKeyAccessor) {
+      const eventKey = eventKeyAccessor(datum, index);
+      return eventKey !== undefined ? assign({ eventKey }, datum) : datum;
+    } else {
+      return datum;
+    }
+  });
+}
+
+// Exported Functions
+
 // This method will remove data points that fall outside of the desired domain (non-continuous charts only)
-function formatDataFromDomain(dataset, domain, defaultBaseline) {
+export function formatDataFromDomain(dataset, domain, defaultBaseline) {
   const exists = (val) => val !== undefined;
 
   const minDomainX = Collection.getMinValue(domain.x);
@@ -144,44 +175,13 @@ function formatDataFromDomain(dataset, domain, defaultBaseline) {
   });
 }
 
-// Returns a data accessor given an eventKey prop
-function getEventKey(key) {
-  // creates a data accessor function
-  // given a property key, path, array index, or null for identity.
-  if (isFunction(key)) {
-    return key;
-  } else if (key === null || key === undefined) {
-    return () => undefined;
-  }
-  // otherwise, assume it is an array index, property key or path (_.property handles all three)
-  return property(key);
-}
-
-// Returns data with an eventKey prop added to each datum
-function addEventKeys(props, data) {
-  const hasEventKeyAccessor = !!props.eventKey;
-  const eventKeyAccessor = getEventKey(props.eventKey);
-  return data.map((datum, index) => {
-    if (datum.eventKey !== undefined) {
-      return datum;
-    } else if (hasEventKeyAccessor) {
-      const eventKey = eventKeyAccessor(datum, index);
-      return eventKey !== undefined ? assign({ eventKey }, datum) : datum;
-    } else {
-      return datum;
-    }
-  });
-}
-
-// Exported Functions
-
 /**
  * Returns an object mapping string data to numeric data
  * @param {Object} props: the props object
  * @param {String} axis: the current axis
  * @returns {Object} an object mapping string data to numeric data
  */
-function createStringMap(props, axis) {
+export function createStringMap(props, axis) {
   const stringsFromAxes = getStringsFromAxes(props, axis);
   const stringsFromCategories = getStringsFromCategories(props, axis);
   const stringsFromData = getStringsFromData(props, axis);
@@ -207,7 +207,7 @@ function createStringMap(props, axis) {
                    assumes `data` param is a subset of larger dataset that has been zoommed
   * @returns {Array} an array of data, a subset of data param
   */
-function downsample(data, maxPoints, startingIndex = 0) {
+export function downsample(data, maxPoints, startingIndex = 0) {
   // ensures that the downampling of data while zooming looks good.
   const dataLength = getLength(data);
   if (dataLength > maxPoints) {
@@ -229,7 +229,7 @@ function downsample(data, maxPoints, startingIndex = 0) {
  * @param {Array} expectedKeys: an array of expected data keys
  * @returns {Array} the formatted data
  */
-function formatData(dataset, props, expectedKeys) {
+export function formatData(dataset, props, expectedKeys) {
   const isArrayOrIterable =
     Array.isArray(dataset) || Immutable.isIterable(dataset);
   if (!isArrayOrIterable || getLength(dataset) < 1) {
@@ -316,7 +316,7 @@ function formatData(dataset, props, expectedKeys) {
  * @param {Object} props: the props object
  * @returns {Array} an array of data
  */
-function generateData(props) {
+export function generateData(props) {
   const xValues = generateDataArray(props, "x");
   const yValues = generateDataArray(props, "y");
   const values = xValues.map((x, i) => {
@@ -331,7 +331,7 @@ function generateData(props) {
  * @param {String} axis: the current axis
  * @returns {Array} an array of categories
  */
-function getCategories(props, axis) {
+export function getCategories(props, axis) {
   return props.categories && !Array.isArray(props.categories)
     ? props.categories[axis]
     : props.categories;
@@ -342,7 +342,7 @@ function getCategories(props, axis) {
  * @param {Object} props: the props object
  * @returns {Array} an array of data
  */
-function getData(props) {
+export function getData(props) {
   return props.data
     ? formatData(props.data, props)
     : formatData(generateData(props), props);
@@ -354,7 +354,7 @@ function getData(props) {
  * @param {String} axis: the current axis
  * @returns {Array} an array of strings
  */
-function getStringsFromAxes(props, axis) {
+export function getStringsFromAxes(props, axis) {
   const { tickValues, tickFormat } = props;
   let tickValueArray;
   if (!tickValues || (!Array.isArray(tickValues) && !tickValues[axis])) {
@@ -371,7 +371,7 @@ function getStringsFromAxes(props, axis) {
  * @param {String} axis: the current axis
  * @returns {Array} an array of strings
  */
-function getStringsFromCategories(props, axis) {
+export function getStringsFromCategories(props, axis) {
   if (!props.categories) {
     return [];
   }
@@ -387,7 +387,7 @@ function getStringsFromCategories(props, axis) {
  * @param {String} axis: the current axis
  * @returns {Array} an array of strings
  */
-function getStringsFromData(props, axis) {
+export function getStringsFromData(props, axis) {
   const isArrayOrIterable =
     Array.isArray(props.data) || Immutable.isIterable(props.data);
   if (!isArrayOrIterable) {
@@ -426,7 +426,7 @@ function getStringsFromData(props, axis) {
  * @param {Component} component: a React component instance
  * @returns {Boolean} Returns true if the given component has a role included in the whitelist
  */
-function isDataComponent(component) {
+export function isDataComponent(component) {
   const getRole = (child) => {
     return child && child.type ? child.type.role : "";
   };
@@ -451,17 +451,3 @@ function isDataComponent(component) {
   ];
   return includes(whitelist, role);
 }
-
-export default {
-  createStringMap,
-  downsample,
-  formatData,
-  formatDataFromDomain,
-  generateData,
-  getCategories,
-  getData,
-  getStringsFromAxes,
-  getStringsFromCategories,
-  getStringsFromData,
-  isDataComponent
-};

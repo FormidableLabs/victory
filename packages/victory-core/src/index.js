@@ -24,7 +24,7 @@ export { default as TSpan } from "./victory-primitives/tspan";
 export { default as Whisker } from "./victory-primitives/whisker";
 export { default as addEvents } from "./victory-util/add-events";
 export * as Collection from "./victory-util/collection";
-export { default as Data } from "./victory-util/data";
+export * as Data from "./victory-util/data";
 export { default as DefaultTransitions } from "./victory-util/default-transitions";
 export { default as Domain } from "./victory-util/domain";
 export { default as Events } from "./victory-util/events";

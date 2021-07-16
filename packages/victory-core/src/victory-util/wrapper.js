@@ -14,7 +14,7 @@ import React from "react";
 import * as Axis from "./axis";
 import Style from "./style";
 import Transitions from "./transitions";
-import Data from "./data";
+import * as Data from "./data";
 import Domain from "./domain";
 import Events from "./events";
 import * as Collection from "./collection";

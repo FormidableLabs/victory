@@ -9,7 +9,7 @@ import {
   includes,
   isDate
 } from "lodash";
-import Data from "./data";
+import * as Data from "./data";
 import Scale from "./scale";
 import * as Helpers from "./helpers";
 import * as Collection from "./collection";
