@@ -114,7 +114,7 @@ function getPolarOrientation(degrees) {
 
 // Exported Functions
 
-function getText(props, datum, index) {
+export function getText(props, datum, index) {
   datum = datum || {};
   if (datum.label !== undefined) {
     return datum.label;
@@ -122,7 +122,7 @@ function getText(props, datum, index) {
   return Array.isArray(props.labels) ? props.labels[index] : props.labels;
 }
 
-function getPolarTextAnchor(props, degrees) {
+export function getPolarTextAnchor(props, degrees) {
   const labelPlacement = getLabelPlacement(props);
   if (
     labelPlacement === "perpendicular" ||
@@ -133,7 +133,7 @@ function getPolarTextAnchor(props, degrees) {
   return degrees <= 90 || degrees > 270 ? "start" : "end";
 }
 
-function getPolarVerticalAnchor(props, degrees) {
+export function getPolarVerticalAnchor(props, degrees) {
   const labelPlacement = getLabelPlacement(props);
   const orientation = getPolarOrientation(degrees);
   if (
@@ -146,7 +146,7 @@ function getPolarVerticalAnchor(props, degrees) {
   return orientation === "top" ? "end" : "start";
 }
 
-function getPolarAngle(props, baseAngle) {
+export function getPolarAngle(props, baseAngle) {
   const { labelPlacement, datum } = props;
   if (!labelPlacement || labelPlacement === "vertical") {
     return 0;
@@ -166,12 +166,12 @@ function getPolarAngle(props, baseAngle) {
   return angle + sign * labelRotation;
 }
 
-function getDegrees(props, datum) {
+export function getDegrees(props, datum) {
   const { x } = Helpers.getPoint(datum);
   return Helpers.radiansToDegrees(props.scale.x(x)) % 360;
 }
 
-function getProps(props, index) {
+export function getProps(props, index) {
   const {
     scale,
     data,
@@ -224,12 +224,3 @@ function getProps(props, index) {
   const tooltipTheme = (theme && theme.tooltip) || {};
   return defaults({}, labelProps, Helpers.omit(tooltipTheme, ["style"]));
 }
-
-export default {
-  getText,
-  getPolarTextAnchor,
-  getPolarVerticalAnchor,
-  getPolarAngle,
-  getDegrees,
-  getProps
-};
