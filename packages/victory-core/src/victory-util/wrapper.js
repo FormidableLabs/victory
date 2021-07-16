@@ -11,7 +11,7 @@ import {
   isPlainObject
 } from "lodash";
 import React from "react";
-import Axis from "./axis";
+import * as Axis from "./axis";
 import Style from "./style";
 import Transitions from "./transitions";
 import Data from "./data";

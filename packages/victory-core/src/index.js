@@ -1,3 +1,5 @@
+// This rule doesn't play well with namespaced exports
+/* eslint-disable import/export */
 export { default as VictoryAccessibleGroup } from "./victory-accessible-group/victory-accessible-group";
 export { default as VictoryAnimation } from "./victory-animation/victory-animation";
 export { default as VictoryContainer } from "./victory-container/victory-container";
@@ -39,6 +41,6 @@ export { default as Timer } from "./victory-util/timer";
 export { default as Transitions } from "./victory-util/transitions";
 export { default as CommonProps } from "./victory-util/common-props";
 export { default as Wrapper } from "./victory-util/wrapper";
-export { default as Axis } from "./victory-util/axis";
+export * as Axis from "./victory-util/axis";
 export { default as TimerContext } from "./victory-util/timer-context";
 export { default as PortalContext } from "./victory-portal/portal-context";

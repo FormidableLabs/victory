@@ -24,7 +24,7 @@ import * as Helpers from "./helpers";
  * @param {Boolean} horizontal: true for horizontal charts
  * @returns {String} the dimension appropriate for the axis given its props
  */
-function getAxis(props) {
+export function getAxis(props) {
   const { dependentAxis } = props;
   return dependentAxis ? "y" : "x";
 }
@@ -35,7 +35,7 @@ function getAxis(props) {
  * @param {Function} predicate: a predicate function that will be called with each
  * @returns {Array} all axis components that pass the given predicate or []
  */
-function findAxisComponents(childComponents, predicate) {
+export function findAxisComponents(childComponents, predicate) {
   predicate = predicate || identity;
   const findAxes = (children) => {
     return children.reduce((memo, child) => {
@@ -59,7 +59,7 @@ function findAxisComponents(childComponents, predicate) {
  * @param {String} axis: desired axis either "x" or "y".
  * @returns {ReactComponent} an axis component of the desired axis or undefined
  */
-function getAxisComponent(childComponents, axis) {
+export function getAxisComponent(childComponents, axis) {
   const matchesAxis = (component) => {
     const type = component.type.getAxis(component.props);
     return type === axis;
@@ -74,7 +74,7 @@ function getAxisComponent(childComponents, axis) {
  * @param {String} type: desired axis either "dependent" or "independent".
  * @returns {ReactComponent} an axis component of the desired type or undefined
  */
-function getAxisComponentsWithParent(childComponents, type) {
+export function getAxisComponentsWithParent(childComponents, type) {
   const matchesType = (child) => {
     return type === "dependent"
       ? child.props.dependentAxis
@@ -98,7 +98,7 @@ function getAxisComponentsWithParent(childComponents, type) {
   return findComponents(childComponents);
 }
 
-function getOrigin(domain) {
+export function getOrigin(domain) {
   const getSingleOrigin = (d) => {
     const domainMin = Math.min(...d);
     const domainMax = Math.max(...d);
@@ -115,7 +115,7 @@ function getOrigin(domain) {
   };
 }
 
-function getOriginSign(origin, domain) {
+export function getOriginSign(origin, domain) {
   const getSign = () => {
     return origin <= 0 && Math.max(...domain) <= 0 ? "negative" : "positive";
   };
@@ -126,7 +126,7 @@ function getOriginSign(origin, domain) {
  * @param {Object} props: axis component props
  * @returns {Boolean} true when the axis is vertical
  */
-function isVertical(props) {
+export function isVertical(props) {
   const orientation =
     props.orientation || (props.dependentAxis ? "left" : "bottom");
   const vertical = { top: false, bottom: false, left: true, right: true };
@@ -137,7 +137,7 @@ function isVertical(props) {
  * @param {Object} props: axis component props
  * @returns {Boolean} true when tickValues contain strings
  */
-function stringTicks(props) {
+export function stringTicks(props) {
   return (
     props.tickValues !== undefined &&
     Collection.containsStrings(props.tickValues)
@@ -233,7 +233,7 @@ function getTickArray(props) {
     : undefined;
 }
 
-function getTickFormat(props, scale) {
+export function getTickFormat(props, scale) {
   const { tickFormat } = props;
   const axis = getAxis(props);
   const stringMap = props.stringMap && props.stringMap[axis];
@@ -273,7 +273,7 @@ function downsampleTicks(ticks, tickCount) {
   return ticks.filter((d, i) => i % k === 0);
 }
 
-function getTicks(props, scale, filterZero) {
+export function getTicks(props, scale, filterZero) {
   const { tickCount } = props;
   const tickArray = getTickArray(props);
   const tickValues = tickArray ? tickArray.map((v) => v.value) : undefined;
@@ -333,7 +333,7 @@ function getDomainFromData(props, axis) {
 }
 
 // exposed for use by VictoryChart
-function getDomain(props, axis) {
+export function getDomain(props, axis) {
   const inherentAxis = getAxis(props);
   if (axis && axis !== inherentAxis) {
     return undefined;
@@ -341,7 +341,7 @@ function getDomain(props, axis) {
   return Domain.createDomainFunction(getDomainFromData)(props, inherentAxis);
 }
 
-function getAxisValue(props, axis) {
+export function getAxisValue(props, axis) {
   if (!props.axisValue) {
     return undefined;
   }
@@ -362,7 +362,7 @@ function getAxisValue(props, axis) {
   return scale(axisValue);
 }
 
-function modifyProps(props, fallbackProps) {
+export function modifyProps(props, fallbackProps) {
   if (!isObject(props.theme)) {
     return Helpers.modifyProps(props, fallbackProps, "axis");
   }
@@ -383,19 +383,3 @@ function modifyProps(props, fallbackProps) {
     "axis"
   );
 }
-
-export default {
-  getTicks,
-  getTickFormat,
-  getAxis,
-  getAxisComponent,
-  getAxisComponentsWithParent,
-  getAxisValue,
-  findAxisComponents,
-  getOrigin,
-  getOriginSign,
-  getDomain,
-  isVertical,
-  modifyProps,
-  stringTicks
-};
