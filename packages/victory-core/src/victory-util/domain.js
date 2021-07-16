@@ -177,7 +177,10 @@ function padDomain(domain, props, axis) {
  * returns a formatted domain
  * @returns {Function} a function that takes props and axis and returns a formatted domain
  */
-function createDomainFunction(getDomainFromDataFunction, formatDomainFunction) {
+export function createDomainFunction(
+  getDomainFromDataFunction,
+  formatDomainFunction
+) {
   getDomainFromDataFunction = isFunction(getDomainFromDataFunction)
     ? getDomainFromDataFunction
     : getDomainFromData;
@@ -204,7 +207,7 @@ function createDomainFunction(getDomainFromDataFunction, formatDomainFunction) {
  * @param {String} axis: the current axis
  * @returns {Array} a domain in the form of a two element array
  */
-function formatDomain(domain, props, axis) {
+export function formatDomain(domain, props, axis) {
   return cleanDomain(padDomain(domain, props, axis), props, axis);
 }
 
@@ -214,7 +217,7 @@ function formatDomain(domain, props, axis) {
  * @param {String} axis: the current axis
  * @returns {Array} the domain for the given axis
  */
-function getDomain(props, axis) {
+export function getDomain(props, axis) {
   return createDomainFunction()(props, axis);
 }
 
@@ -225,7 +228,7 @@ function getDomain(props, axis) {
  * @param {Array} categories: an array of categories corresponding to a given axis
  * @returns {Array|undefined} returns a domain from categories or undefined
  */
-function getDomainFromCategories(props, axis, categories) {
+export function getDomainFromCategories(props, axis, categories) {
   categories = categories || Data.getCategories(props, axis);
   const { polar, startAngle = 0, endAngle = 360 } = props;
   if (!categories) {
@@ -267,7 +270,7 @@ function getDomainFromCategories(props, axis, categories) {
  * @param {Array} dataset: an array of data
  * @returns {Array} the domain based on data
  */
-function getDomainFromData(props, axis, dataset) {
+export function getDomainFromData(props, axis, dataset) {
   dataset = dataset || Data.getData(props);
   const { polar, startAngle = 0, endAngle = 360 } = props;
   const minDomain = getMinFromProps(props, axis);
@@ -297,7 +300,7 @@ function getDomainFromData(props, axis, dataset) {
  * @param {Number|Date} max: the current axis
  * @returns {Array} the minDomain based on props
  */
-function getDomainFromMinMax(min, max) {
+export function getDomainFromMinMax(min, max) {
   const getSinglePointDomain = (val) => {
     // d3-scale does not properly resolve very small differences.
     const verySmallNumber =
@@ -323,7 +326,7 @@ function getDomainFromMinMax(min, max) {
  * @param {String} axis: the current axis
  * @returns {Array|undefined} the domain based on props
  */
-function getDomainFromProps(props, axis) {
+export function getDomainFromProps(props, axis) {
   const minDomain = getMinFromProps(props, axis);
   const maxDomain = getMaxFromProps(props, axis);
   if (isPlainObject(props.domain) && props.domain[axis]) {
@@ -343,7 +346,7 @@ function getDomainFromProps(props, axis) {
  * @param {String} axis: the current axis
  * @returns {Array} the domain for the given axis
  */
-function getDomainWithZero(props, axis) {
+export function getDomainWithZero(props, axis) {
   const propsDomain = getDomainFromProps(props, axis);
   if (propsDomain) {
     return propsDomain;
@@ -395,7 +398,7 @@ function getDomainWithZero(props, axis) {
  * @param {String} axis: the current axis
  * @returns {Number|Date|undefined} the maxDomain based on props
  */
-function getMaxFromProps(props, axis) {
+export function getMaxFromProps(props, axis) {
   if (isPlainObject(props.maxDomain) && props.maxDomain[axis] !== undefined) {
     return props.maxDomain[axis];
   }
@@ -410,7 +413,7 @@ function getMaxFromProps(props, axis) {
  * @param {String} axis: the current axis
  * @returns {Number|Date|undefined} the minDomain based on props
  */
-function getMinFromProps(props, axis) {
+export function getMinFromProps(props, axis) {
   if (isPlainObject(props.minDomain) && props.minDomain[axis] !== undefined) {
     return props.minDomain[axis];
   }
@@ -426,7 +429,7 @@ function getMinFromProps(props, axis) {
  * for a given dimension i.e. only x values.
  * @returns {Array} the symmetric domain
  */
-function getSymmetricDomain(domain, values) {
+export function getSymmetricDomain(domain, values) {
   const processedData = sortedUniq(values.sort((a, b) => a - b));
   const step = processedData[1] - processedData[0];
   return [domain[0], domain[1] + step];
@@ -437,7 +440,7 @@ function getSymmetricDomain(domain, values) {
  * @param {Component} component: a React component instance
  * @returns {Boolean} Returns true if the given component has a role included in the whitelist
  */
-function isDomainComponent(component) {
+export function isDomainComponent(component) {
   const getRole = (child) => {
     return child && child.type ? child.type.role : "";
   };
@@ -463,18 +466,3 @@ function isDomainComponent(component) {
   ];
   return includes(whitelist, role);
 }
-
-export default {
-  createDomainFunction,
-  formatDomain,
-  getDomain,
-  getDomainFromCategories,
-  getDomainFromData,
-  getDomainFromMinMax,
-  getDomainFromProps,
-  getDomainWithZero,
-  getMaxFromProps,
-  getMinFromProps,
-  getSymmetricDomain,
-  isDomainComponent
-};

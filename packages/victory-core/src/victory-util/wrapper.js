@@ -15,7 +15,7 @@ import * as Axis from "./axis";
 import Style from "./style";
 import Transitions from "./transitions";
 import * as Data from "./data";
-import Domain from "./domain";
+import * as Domain from "./domain";
 import Events from "./events";
 import * as Collection from "./collection";
 import * as Helpers from "./helpers";
