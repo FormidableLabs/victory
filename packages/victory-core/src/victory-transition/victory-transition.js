@@ -2,7 +2,7 @@ import React from "react";
 import PropTypes from "prop-types";
 import VictoryAnimation from "../victory-animation/victory-animation";
 import Collection from "../victory-util/collection";
-import Helpers from "../victory-util/helpers";
+import * as Helpers from "../victory-util/helpers";
 import TimerContext from "../victory-util/timer-context";
 import Transitions from "../victory-util/transitions";
 import { defaults, isFunction, pick, isObject } from "lodash";

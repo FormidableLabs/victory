@@ -1,7 +1,7 @@
 import React from "react";
 import PropTypes from "prop-types";
 import CustomPropTypes from "../victory-util/prop-types";
-import Helpers from "../victory-util/helpers";
+import * as Helpers from "../victory-util/helpers";
 import { assign, defaults, isObject, uniqueId } from "lodash";
 import ClipPath from "../victory-primitives/clip-path";
 import Circle from "../victory-primitives/circle";

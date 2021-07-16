@@ -4,7 +4,7 @@ import PropTypes from "prop-types";
 import VictoryPortal from "../victory-portal/victory-portal";
 import Rect from "../victory-primitives/rect";
 import CustomPropTypes from "../victory-util/prop-types";
-import Helpers from "../victory-util/helpers";
+import * as Helpers from "../victory-util/helpers";
 import LabelHelpers from "../victory-util/label-helpers";
 import Style from "../victory-util/style";
 import Log from "../victory-util/log";

@@ -11,7 +11,7 @@ import {
 } from "lodash";
 import Data from "./data";
 import Scale from "./scale";
-import Helpers from "./helpers";
+import * as Helpers from "./helpers";
 import Collection from "./collection";
 
 // Private Methods

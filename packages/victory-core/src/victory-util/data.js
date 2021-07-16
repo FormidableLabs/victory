@@ -16,7 +16,7 @@ import {
   isUndefined,
   omitBy
 } from "lodash";
-import Helpers from "./helpers";
+import * as Helpers from "./helpers";
 import Collection from "./collection";
 import Scale from "./scale";
 import Immutable from "./immutable";

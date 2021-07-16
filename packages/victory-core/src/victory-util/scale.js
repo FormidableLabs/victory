@@ -1,7 +1,7 @@
 /* eslint-disable func-style */
 /* eslint-disable no-use-before-define */
 import { includes, isFunction, isPlainObject } from "lodash";
-import Helpers from "./helpers";
+import * as Helpers from "./helpers";
 import Collection from "./collection";
 import * as d3Scale from "d3-scale";
 

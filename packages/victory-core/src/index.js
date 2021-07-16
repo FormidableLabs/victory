@@ -26,7 +26,7 @@ export { default as Data } from "./victory-util/data";
 export { default as DefaultTransitions } from "./victory-util/default-transitions";
 export { default as Domain } from "./victory-util/domain";
 export { default as Events } from "./victory-util/events";
-export { default as Helpers } from "./victory-util/helpers";
+export * as Helpers from "./victory-util/helpers";
 export { default as Immutable } from "./victory-util/immutable";
 export { default as LabelHelpers } from "./victory-util/label-helpers";
 export { default as Log } from "./victory-util/log";

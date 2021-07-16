@@ -1,6 +1,6 @@
 /* eslint-disable func-style */
 /* eslint-disable no-use-before-define */
-import Helpers from "./helpers";
+import * as Helpers from "./helpers";
 import { defaults } from "lodash";
 
 // Private Functions

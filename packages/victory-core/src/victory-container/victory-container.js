@@ -5,7 +5,7 @@ import { assign, defaults, uniqueId, isObject, isFunction } from "lodash";
 import Portal from "../victory-portal/portal";
 import PortalContext from "../victory-portal/portal-context";
 import TimerContext from "../victory-util/timer-context";
-import Helpers from "../victory-util/helpers";
+import * as Helpers from "../victory-util/helpers";
 
 export default class VictoryContainer extends React.Component {
   static displayName = "VictoryContainer";

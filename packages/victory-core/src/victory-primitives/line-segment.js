@@ -1,6 +1,6 @@
 import React from "react";
 import PropTypes from "prop-types";
-import Helpers from "../victory-util/helpers";
+import * as Helpers from "../victory-util/helpers";
 import { assign } from "lodash";
 import CommonProps from "../victory-util/common-props";
 import Line from "./line";

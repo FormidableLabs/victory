@@ -18,7 +18,7 @@ import Data from "./data";
 import Domain from "./domain";
 import Events from "./events";
 import Collection from "./collection";
-import Helpers from "./helpers";
+import * as Helpers from "./helpers";
 import Scale from "./scale";
 import Log from "./log";
 
