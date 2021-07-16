@@ -1,7 +1,7 @@
 /* eslint-disable func-style */
 /* eslint-disable no-use-before-define */
 
-import Collection from "./collection";
+import * as Collection from "./collection";
 
 // Private Functions
 

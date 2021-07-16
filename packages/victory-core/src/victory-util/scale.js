@@ -2,7 +2,7 @@
 /* eslint-disable no-use-before-define */
 import { includes, isFunction, isPlainObject } from "lodash";
 import * as Helpers from "./helpers";
-import Collection from "./collection";
+import * as Collection from "./collection";
 import * as d3Scale from "d3-scale";
 
 const supportedScaleStrings = ["linear", "time", "log", "sqrt"];

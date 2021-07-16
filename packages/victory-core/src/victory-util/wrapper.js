@@ -17,7 +17,7 @@ import Transitions from "./transitions";
 import Data from "./data";
 import Domain from "./domain";
 import Events from "./events";
-import Collection from "./collection";
+import * as Collection from "./collection";
 import * as Helpers from "./helpers";
 import Scale from "./scale";
 import Log from "./log";

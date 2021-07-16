@@ -14,7 +14,7 @@ import {
   includes,
   without
 } from "lodash";
-import Collection from "./collection";
+import * as Collection from "./collection";
 import Domain from "./domain";
 import * as Helpers from "./helpers";
 

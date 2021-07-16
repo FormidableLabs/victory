@@ -17,7 +17,7 @@ import {
   omitBy
 } from "lodash";
 import * as Helpers from "./helpers";
-import Collection from "./collection";
+import * as Collection from "./collection";
 import Scale from "./scale";
 import Immutable from "./immutable";
 

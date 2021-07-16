@@ -23,7 +23,7 @@ export { default as Text } from "./victory-primitives/text";
 export { default as TSpan } from "./victory-primitives/tspan";
 export { default as Whisker } from "./victory-primitives/whisker";
 export { default as addEvents } from "./victory-util/add-events";
-export { default as Collection } from "./victory-util/collection";
+export * as Collection from "./victory-util/collection";
 export { default as Data } from "./victory-util/data";
 export { default as DefaultTransitions } from "./victory-util/default-transitions";
 export { default as Domain } from "./victory-util/domain";
