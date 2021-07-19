@@ -5,6 +5,7 @@ import { getDataWithBaseline } from "packages/victory-area/src/helper-methods";
 import { getData } from "packages/victory-core/src/victory-util/data";
 import * as d3Scale from "d3-scale";
 
+// The updated module export syntax doesn't work well with sinon
 const Data = {
   getData
 };

@@ -18,7 +18,7 @@ import {
 } from "lodash";
 import * as Helpers from "./helpers";
 import * as Collection from "./collection";
-import Scale from "./scale";
+import * as Scale from "./scale";
 import * as Immutable from "./immutable";
 
 // Private Functions

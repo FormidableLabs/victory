@@ -19,8 +19,8 @@ import * as Domain from "./domain";
 import * as Events from "./events";
 import * as Collection from "./collection";
 import * as Helpers from "./helpers";
-import Scale from "./scale";
-import Log from "./log";
+import * as Scale from "./scale";
+import * as Log from "./log";
 
 export default {
   getData(props, childComponents) {

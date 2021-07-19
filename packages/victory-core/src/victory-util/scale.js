@@ -74,11 +74,11 @@ function getScaleTypeFromData(props, axis) {
 
 // Exported Functions
 
-function getScaleFromName(name) {
+export function getScaleFromName(name) {
   return validScale(name) ? d3Scale[toNewName(name)]() : d3Scale.scaleLinear();
 }
 
-function getBaseScale(props, axis) {
+export function getBaseScale(props, axis) {
   const scale = getScaleFromProps(props, axis);
   if (scale) {
     return typeof scale === "string" ? getScaleFromName(scale) : scale;
@@ -88,11 +88,11 @@ function getBaseScale(props, axis) {
   return d3Scale[toNewName(defaultScale)]();
 }
 
-function getDefaultScale() {
+export function getDefaultScale() {
   return d3Scale.scaleLinear();
 }
 
-function getScaleFromProps(props, axis) {
+export function getScaleFromProps(props, axis) {
   if (!isScaleDefined(props, axis)) {
     return undefined;
   }
@@ -103,14 +103,14 @@ function getScaleFromProps(props, axis) {
   return undefined;
 }
 
-function getScaleType(props, axis) {
+export function getScaleType(props, axis) {
   // if the scale was not given in props, it will be set to linear or time depending on data
   return (
     getScaleTypeFromProps(props, axis) || getScaleTypeFromData(props, axis)
   );
 }
 
-function getType(scale) {
+export function getType(scale) {
   if (typeof scale === "string") {
     return scale;
   }
@@ -126,12 +126,3 @@ function getType(scale) {
   })[0];
   return scaleType ? scaleType.name : undefined;
 }
-
-export default {
-  getBaseScale,
-  getDefaultScale,
-  getScaleFromProps,
-  getScaleType,
-  getType,
-  getScaleFromName
-};

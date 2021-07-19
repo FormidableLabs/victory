@@ -1,7 +1,7 @@
 import React from "react";
 import PropTypes from "prop-types";
 import { defaults } from "lodash";
-import Log from "../victory-util/log";
+import * as Log from "../victory-util/log";
 import * as Helpers from "../victory-util/helpers";
 import PortalContext from "./portal-context";
 

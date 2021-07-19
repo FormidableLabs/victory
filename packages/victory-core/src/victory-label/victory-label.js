@@ -7,7 +7,7 @@ import CustomPropTypes from "../victory-util/prop-types";
 import * as Helpers from "../victory-util/helpers";
 import * as LabelHelpers from "../victory-util/label-helpers";
 import Style from "../victory-util/style";
-import Log from "../victory-util/log";
+import * as Log from "../victory-util/log";
 import TextSize from "../victory-util/textsize";
 import TSpan from "../victory-primitives/tspan";
 import Text from "../victory-primitives/text";

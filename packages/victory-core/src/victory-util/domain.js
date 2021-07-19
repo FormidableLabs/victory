@@ -10,7 +10,7 @@ import {
   isDate
 } from "lodash";
 import * as Data from "./data";
-import Scale from "./scale";
+import * as Scale from "./scale";
 import * as Helpers from "./helpers";
 import * as Collection from "./collection";
 

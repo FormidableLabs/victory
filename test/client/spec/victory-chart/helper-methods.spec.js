@@ -4,7 +4,12 @@ import { getChildComponents } from "packages/victory-chart/src/helper-methods";
 import React from "react";
 import { VictoryAxis } from "packages/victory-axis/src/index";
 import { VictoryLine } from "packages/victory-line/src/index";
-import { Log } from "packages/victory-core";
+import { warn } from "packages/victory-core/src/victory-util/log";
+
+// The updated module export syntax doesn't work well with sinon
+const Log = {
+  warn
+};
 
 describe("victory-chart/helpers-methods", () => {
   const getVictoryLine = (props) => React.createElement(VictoryLine, props);
