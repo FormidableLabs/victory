@@ -19,7 +19,7 @@ import {
 import * as Helpers from "./helpers";
 import * as Collection from "./collection";
 import Scale from "./scale";
-import Immutable from "./immutable";
+import * as Immutable from "./immutable";
 
 // Private Functions
 
