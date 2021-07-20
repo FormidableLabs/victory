@@ -2,13 +2,11 @@
 /* eslint-disable max-nested-callbacks */
 /* global sinon */
 import { getDataWithBaseline } from "packages/victory-area/src/helper-methods";
-import { getData } from "packages/victory-core/src/victory-util/data";
+import { Data as _Data } from "packages/victory-core";
 import * as d3Scale from "d3-scale";
 
 // The updated module export syntax doesn't work well with sinon
-const Data = {
-  getData
-};
+const Data = Object.assign({}, _Data);
 
 describe("victory-area/helper-methods", () => {
   describe("getDataWithBaseline", () => {
