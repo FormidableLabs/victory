@@ -4,7 +4,7 @@ import VictoryAnimation from "../victory-animation/victory-animation";
 import * as Collection from "../victory-util/collection";
 import * as Helpers from "../victory-util/helpers";
 import TimerContext from "../victory-util/timer-context";
-import Transitions from "../victory-util/transitions";
+import * as Transitions from "../victory-util/transitions";
 import { defaults, isFunction, pick, isObject } from "lodash";
 import isEqual from "react-fast-compare";
 

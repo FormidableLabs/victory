@@ -38,7 +38,7 @@ export * as Selection from "./victory-util/selection";
 export * as Style from "./victory-util/style";
 export { default as TextSize } from "./victory-util/textsize";
 export { default as Timer } from "./victory-util/timer";
-export { default as Transitions } from "./victory-util/transitions";
+export * as Transitions from "./victory-util/transitions";
 export { default as CommonProps } from "./victory-util/common-props";
 export { default as Wrapper } from "./victory-util/wrapper";
 export * as Axis from "./victory-util/axis";

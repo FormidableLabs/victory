@@ -13,7 +13,7 @@ import {
 import React from "react";
 import * as Axis from "./axis";
 import * as Style from "./style";
-import Transitions from "./transitions";
+import * as Transitions from "./transitions";
 import * as Data from "./data";
 import * as Domain from "./domain";
 import * as Events from "./events";
