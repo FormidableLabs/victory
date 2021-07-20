@@ -26,7 +26,7 @@ import PieDemo from "./components/victory-pie-demo";
 import PolarAxisDemo from "./components/victory-polar-axis-demo";
 import PrimitivesDemo from "./components/primitives-demo";
 import ScatterDemo from "./components/victory-scatter-demo";
-import * as SelectionDemo from "./components/selection-demo";
+import SelectionDemo from "./components/selection-demo";
 import TooltipDemo from "./components/victory-tooltip-demo";
 import VictoryDemo from "./components/victory-demo";
 import VictorySelectionContainerDemo from "./components/victory-selection-container-demo";

@@ -1,7 +1,7 @@
 import PropTypes from "prop-types";
 import React from "react";
 import { VictoryContainer, Rect } from "victory-core";
-import * as SelectionHelpers from "./selection-helpers";
+import SelectionHelpers from "./selection-helpers";
 
 export const selectionContainerMixin = (base) =>
   class VictorySelectionContainer extends base {
