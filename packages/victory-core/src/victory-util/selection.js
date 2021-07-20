@@ -16,7 +16,7 @@ function getTransformationMatrix(svg) {
 
 // Exported Functions
 
-function getParentSVG(evt) {
+export function getParentSVG(evt) {
   if (evt.nativeEvent && evt.nativeEvent.identifier !== undefined) {
     return undefined;
   }
@@ -30,7 +30,7 @@ function getParentSVG(evt) {
   return getParent(evt.target);
 }
 
-function getSVGEventCoordinates(evt, svg) {
+export function getSVGEventCoordinates(evt, svg) {
   if (evt.nativeEvent && evt.nativeEvent.identifier !== undefined) {
     // react-native override. relies on the RN.View being the _exact_ same size as its child SVG.
     // this should be fine: the svg is the only child of View and the View shirks to its children
@@ -51,7 +51,7 @@ function getSVGEventCoordinates(evt, svg) {
   };
 }
 
-function getDomainCoordinates(props, domain) {
+export function getDomainCoordinates(props, domain) {
   const { scale, horizontal } = props;
   domain = domain || { x: scale.x.domain(), y: scale.y.domain() };
   return {
@@ -65,7 +65,7 @@ function getDomainCoordinates(props, domain) {
 }
 
 // eslint-disable-next-line max-params
-function getDataCoordinates(props, scale, x, y) {
+export function getDataCoordinates(props, scale, x, y) {
   const { polar, horizontal } = props;
   if (!polar) {
     return {
@@ -85,7 +85,7 @@ function getDataCoordinates(props, scale, x, y) {
   }
 }
 
-function getBounds(props) {
+export function getBounds(props) {
   const { x1, x2, y1, y2, scale } = props;
   const point1 = getDataCoordinates(props, scale, x1, y1);
   const point2 = getDataCoordinates(props, scale, x2, y2);
@@ -97,11 +97,3 @@ function getBounds(props) {
     y: makeBound(point1.y, point2.y)
   };
 }
-
-export default {
-  getParentSVG,
-  getSVGEventCoordinates,
-  getDomainCoordinates,
-  getDataCoordinates,
-  getBounds
-};

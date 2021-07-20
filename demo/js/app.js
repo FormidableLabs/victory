@@ -25,7 +25,7 @@ import CursorContainerDemo from "./components/victory-cursor-container-demo";
 import CreateContainerDemo from "./components/create-container-demo";
 import BrushContainerDemo from "./components/victory-brush-container-demo";
 import AnimationDemo from "./components/animation-demo";
-import SelectionDemo from "./components/selection-demo";
+import * as SelectionDemo from "./components/selection-demo";
 import PolarDemo from "./components/victory-polar-chart-demo";
 import ImmutableDemo from "./components/immutable-demo";
 import ExternalEventsDemo from "./components/external-events-demo";

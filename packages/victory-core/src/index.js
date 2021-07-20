@@ -34,7 +34,7 @@ export * as LabelHelpers from "./victory-util/label-helpers";
 export * as Log from "./victory-util/log";
 export * as PropTypes from "./victory-util/prop-types";
 export * as Scale from "./victory-util/scale";
-export { default as Selection } from "./victory-util/selection";
+export * as Selection from "./victory-util/selection";
 export { default as Style } from "./victory-util/style";
 export { default as TextSize } from "./victory-util/textsize";
 export { default as Timer } from "./victory-util/timer";
