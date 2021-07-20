@@ -2,7 +2,7 @@ import React from "react";
 import PropTypes from "prop-types";
 import { assign } from "lodash";
 import * as Helpers from "../victory-util/helpers";
-import CommonProps from "../victory-util/common-props";
+import * as CommonProps from "../victory-util/common-props";
 import Rect from "./rect";
 import Circle from "./circle";
 

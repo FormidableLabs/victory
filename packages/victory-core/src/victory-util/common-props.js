@@ -1,7 +1,7 @@
 import PropTypes from "prop-types";
 import * as CustomPropTypes from "./prop-types";
 
-const dataProps = {
+export const dataProps = {
   categories: PropTypes.oneOfType([
     PropTypes.arrayOf(PropTypes.string),
     PropTypes.shape({
@@ -59,7 +59,7 @@ const dataProps = {
   ])
 };
 
-const baseProps = {
+export const baseProps = {
   animate: PropTypes.oneOfType([PropTypes.bool, PropTypes.object]),
   containerComponent: PropTypes.element,
   domain: PropTypes.oneOfType([
@@ -172,7 +172,7 @@ const baseProps = {
   width: CustomPropTypes.nonNegative
 };
 
-const primitiveProps = {
+export const primitiveProps = {
   active: PropTypes.bool,
   ariaLabel: PropTypes.oneOfType([PropTypes.string, PropTypes.func]),
   className: PropTypes.string,
@@ -195,5 +195,3 @@ const primitiveProps = {
   tabIndex: PropTypes.oneOfType([PropTypes.number, PropTypes.func]),
   transform: PropTypes.string
 };
-
-export default { baseProps, dataProps, primitiveProps };
