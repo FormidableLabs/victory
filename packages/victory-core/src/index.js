@@ -32,7 +32,7 @@ export * as Helpers from "./victory-util/helpers";
 export * as Immutable from "./victory-util/immutable";
 export * as LabelHelpers from "./victory-util/label-helpers";
 export * as Log from "./victory-util/log";
-export { default as PropTypes } from "./victory-util/prop-types";
+export * as PropTypes from "./victory-util/prop-types";
 export * as Scale from "./victory-util/scale";
 export { default as Selection } from "./victory-util/selection";
 export { default as Style } from "./victory-util/style";

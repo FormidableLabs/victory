@@ -1,6 +1,6 @@
 import React from "react";
 import PropTypes from "prop-types";
-import CustomPropTypes from "../victory-util/prop-types";
+import * as CustomPropTypes from "../victory-util/prop-types";
 import { assign, defaults, uniqueId, isObject, isFunction } from "lodash";
 import Portal from "../victory-portal/portal";
 import PortalContext from "../victory-portal/portal-context";
