@@ -18,14 +18,13 @@ describe("victory-chart/helpers-methods", () => {
       independent: getVictoryAxis({}),
       dependent: getVictoryAxis({ dependentAxis: true })
     };
-    let sandbox;
+    let spy;
     beforeEach(() => {
-      sandbox = sinon.sandbox.create();
-      sandbox.spy(Log, "warn");
+      spy = sinon.spy(Log, "warn");
     });
 
     afterEach(() => {
-      sandbox.restore();
+      spy.restore();
     });
 
     it("returns a pair of default axes when no children are given", () => {

@@ -8,7 +8,7 @@ import * as Helpers from "../victory-util/helpers";
 import * as LabelHelpers from "../victory-util/label-helpers";
 import * as Style from "../victory-util/style";
 import * as Log from "../victory-util/log";
-import TextSize from "../victory-util/textsize";
+import * as TextSize from "../victory-util/textsize";
 import TSpan from "../victory-primitives/tspan";
 import Text from "../victory-primitives/text";
 import { assign, defaults, isEmpty } from "lodash";
