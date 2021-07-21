@@ -48,6 +48,9 @@ export default {
     }
 
     const firstChild = Array.isArray(children) && children[0];
+    if (!firstChild) {
+      return undefined;
+    }
     let barWidth = firstChild.props.barWidth;
     let dataLength =
       (firstChild.props.data && firstChild.props.data.length) || 1;
