@@ -85,7 +85,7 @@ const getRange = (props, axis) => {
 };
 
 // exposed for use by VictoryChart (necessary?)
-const getScale = (props) => {
+export const getScale = (props) => {
   const axis = Axis.getAxis(props);
   const scale = Scale.getBaseScale(props, axis);
   const domain = Axis.getDomain(props, axis) || scale.domain();
@@ -95,7 +95,7 @@ const getScale = (props) => {
   return scale;
 };
 
-const getStyles = (props, styleObject) => {
+export const getStyles = (props, styleObject) => {
   if (props.disableInlineStyles) {
     return {};
   }
@@ -410,7 +410,7 @@ const getCalculatedValues = (props) => {
   };
 };
 
-const getBaseProps = (props, fallbackProps) => {
+export const getBaseProps = (props, fallbackProps) => {
   props = Axis.modifyProps(props, fallbackProps);
   const calculatedValues = getCalculatedValues(props);
   const { style, scale, ticks, domain } = calculatedValues;
@@ -443,5 +443,3 @@ const getBaseProps = (props, fallbackProps) => {
     return childProps;
   }, initialChildProps);
 };
-
-export { getScale, getStyles, getBaseProps };

@@ -61,7 +61,7 @@ const getStyleObject = (props) => {
     : specificAxisStyle || generalAxisStyle;
 };
 
-const getStyles = (props, styleObject) => {
+export const getStyles = (props, styleObject) => {
   const style = props.style || {};
   styleObject = styleObject || {};
   const parentStyleProps = { height: "100%", width: "100%" };
@@ -538,7 +538,7 @@ const getCalculatedValues = (props) => {
   };
 };
 
-const getBaseProps = (props, fallbackProps) => {
+export const getBaseProps = (props, fallbackProps) => {
   props = Axis.modifyProps(props, fallbackProps);
   const calculatedValues = getCalculatedValues(props);
   const {
@@ -654,5 +654,3 @@ const getBaseProps = (props, fallbackProps) => {
     return childProps;
   }, initialChildProps);
 };
-
-export { getBaseProps, getStyles };

@@ -31,7 +31,7 @@ const getErrors = (props, datum, axis) => {
     : [scale(errors + datum[`_${axis}`]), scale(datum[`_${axis}`] - errors)];
 };
 
-const getData = (props) => {
+export const getData = (props) => {
   const accessorTypes = ["x", "y", "errorX", "errorY"];
   if (props.data) {
     return Data.formatData(props.data, props, accessorTypes);
@@ -73,7 +73,7 @@ const getDomainFromData = (props, axis) => {
   return Domain.getDomainFromMinMax(min, max);
 };
 
-const getDomain = (props, axis) => {
+export const getDomain = (props, axis) => {
   return Domain.createDomainFunction(getDomainFromData)(props, axis);
 };
 
@@ -166,7 +166,7 @@ const getLabelProps = (dataProps, text, style) => {
   return defaults({}, labelProps, Helpers.omit(tooltipTheme, ["style"]));
 };
 
-const getBaseProps = (props, fallbackProps) => {
+export const getBaseProps = (props, fallbackProps) => {
   const modifiedProps = Helpers.modifyProps(props, fallbackProps, "errorbar");
   props = assign({}, modifiedProps, getCalculatedValues(modifiedProps));
   const {
@@ -248,5 +248,3 @@ const getBaseProps = (props, fallbackProps) => {
     return childProps;
   }, initialChildProps);
 };
-
-export { getBaseProps, getDomain, getData };

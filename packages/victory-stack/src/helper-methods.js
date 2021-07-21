@@ -119,7 +119,7 @@ function stackData(props, childComponents) {
   return datasets.map((d, i) => addLayoutData(props, datasets, i));
 }
 
-function getCalculatedProps(props, childComponents) {
+export function getCalculatedProps(props, childComponents) {
   childComponents = childComponents || React.Children.toArray(props.children);
   const role = "stack";
   props = Helpers.modifyProps(props, fallbackProps, role);
@@ -167,7 +167,7 @@ function getLabels(props, datasets, index) {
   return datasets.length === index + 1 ? props.labels : undefined;
 }
 
-function getChildProps(props, calculatedProps) {
+export function getChildProps(props, calculatedProps) {
   const { categories, domain, range, scale, horizontal } = calculatedProps;
   return {
     height: props.height,
@@ -194,7 +194,7 @@ function getColorScale(props, child) {
     : colorScaleOptions;
 }
 
-function getChildren(props, childComponents, calculatedProps) {
+export function getChildren(props, childComponents, calculatedProps) {
   props = Helpers.modifyProps(props, fallbackProps, "stack");
   childComponents = childComponents || React.Children.toArray(props.children);
   calculatedProps =
@@ -230,5 +230,3 @@ function getChildren(props, childComponents, calculatedProps) {
     );
   });
 }
-
-export { getChildren, getCalculatedProps };

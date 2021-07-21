@@ -103,7 +103,7 @@ export const getFormattedData = cacheLastValue(({ data = [], x, bins }) => {
   return formattedData;
 });
 
-const getData = (props) => {
+export const getData = (props) => {
   const { bins, data, x } = props;
   const dataIsPreformatted = data.some(({ _y }) => !isNil(_y));
 
@@ -113,7 +113,7 @@ const getData = (props) => {
   return Data.getData({ ...props, data: formattedData, x: "x" });
 };
 
-const getDomain = (props, axis) => {
+export const getDomain = (props, axis) => {
   const data = getData(props);
 
   if (!data.length) {
@@ -164,7 +164,7 @@ const getCalculatedValues = (props) => {
   return { style, data, scale, domain };
 };
 
-const getBaseProps = (props, fallbackProps) => {
+export const getBaseProps = (props, fallbackProps) => {
   const modifiedProps = Helpers.modifyProps(props, fallbackProps, "histogram");
   props = assign({}, modifiedProps, getCalculatedValues(modifiedProps));
 
@@ -259,5 +259,3 @@ const getBaseProps = (props, fallbackProps) => {
     return childProps;
   }, initialChildProps);
 };
-
-export { getData, getDomain, getBaseProps };

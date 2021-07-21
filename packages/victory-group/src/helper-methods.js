@@ -12,7 +12,7 @@ const fallbackProps = {
 };
 
 // eslint-disable-next-line max-statements
-function getCalculatedProps(props, childComponents) {
+export function getCalculatedProps(props, childComponents) {
   const role = "group";
   props = Helpers.modifyProps(props, fallbackProps, role);
   const style = Wrapper.getStyle(props.theme, props.style, role);
@@ -155,7 +155,7 @@ function getDataWithOffset(props, defaultDataset = [], offset) {
   });
 }
 
-function getChildren(props, childComponents, calculatedProps) {
+export function getChildren(props, childComponents, calculatedProps) {
   props = Helpers.modifyProps(props, fallbackProps, "stack");
   childComponents = childComponents || React.Children.toArray(props.children);
   calculatedProps =
@@ -195,5 +195,3 @@ function getChildren(props, childComponents, calculatedProps) {
     );
   });
 }
-
-export { getChildren, getCalculatedProps };
