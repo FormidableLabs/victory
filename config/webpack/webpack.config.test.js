@@ -50,7 +50,6 @@ module.exports = {
   // https://stackoverflow.com/questions/64475910/replacing-polyfill-for-process-in-webpack-v5-from-v4
   plugins: [
     new webpack.DefinePlugin({
-      "process.env.NODE_ENV": JSON.stringify(process.env.NODE_ENV),
       "process.env.NODE_DEBUG": JSON.stringify(process.env.NODE_DEBUG),
       "process.type": JSON.stringify(process.type),
       "process.version": JSON.stringify(process.version)

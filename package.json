@@ -97,7 +97,7 @@
     "karma-webpack": "^5.0.0",
     "lerna": "^2.11.0",
     "lodash": "^4.17.19",
-    "lodash-webpack-plugin": "^0.11.4",
+    "lodash-webpack-plugin": "^0.11.6",
     "match-str": "^0.2.1",
     "mocha": "^5.0.0",
     "nps": "^5.9.0",
