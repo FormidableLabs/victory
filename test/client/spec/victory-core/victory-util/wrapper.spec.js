@@ -14,13 +14,14 @@ describe("helpers/wrapper", () => {
     const xAxis = getVictoryAxis({ dependentAxis: false });
     const yAxis = getVictoryAxis({ dependentAxis: true });
     const childComponents = [victoryLine, xAxis, yAxis];
-    let spy;
+    let sandbox;
     beforeEach(() => {
-      spy = sinon.spy(Wrapper, "getDomainFromChildren");
+      sandbox = sinon.createSandbox();
+      sandbox.spy(Wrapper, "getDomainFromChildren");
     });
 
     afterEach(() => {
-      spy.restore();
+      sandbox.restore();
     });
 
     it("calculates a domain from props", () => {
@@ -37,12 +38,13 @@ describe("helpers/wrapper", () => {
   });
 
   describe("getStringsFromData", () => {
-    let spy;
+    let sandbox;
     beforeEach(() => {
-      spy = sinon.spy(Wrapper, "getStringsFromData");
+      sandbox = sinon.createSandbox();
+      sandbox.spy(Wrapper, "getStringsFromData");
     });
     afterEach(() => {
-      spy.restore();
+      sandbox.restore();
     });
 
     it("returns an array of strings from a data prop", () => {

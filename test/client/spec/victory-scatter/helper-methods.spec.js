@@ -8,8 +8,14 @@ import {
 
 describe("victory-scatter/helper-methods", () => {
   describe("getSize", () => {
+    let sandbox;
     beforeEach(() => {
-      sinon.spy(getBubbleSize);
+      sandbox = sinon.createSandbox();
+      sandbox.spy(getBubbleSize);
+    });
+
+    afterEach(() => {
+      sandbox.restore();
     });
 
     const data = [

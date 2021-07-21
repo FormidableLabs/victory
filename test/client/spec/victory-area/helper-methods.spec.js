@@ -7,14 +7,14 @@ import * as d3Scale from "d3-scale";
 
 describe("victory-area/helper-methods", () => {
   describe("getDataWithBaseline", () => {
-    let stub;
+    let sandbox;
     beforeEach(() => {
-      stub = sinon.stub(Data, "getData");
-      stub.callsFake((props) => props.data);
+      sandbox = sinon.createSandbox();
+      sandbox.stub(Data, "getData").callsFake((props) => props.data);
     });
 
     afterEach(() => {
-      stub.restore();
+      sandbox.restore();
     });
 
     const data = [

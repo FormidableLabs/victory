@@ -6,8 +6,7 @@ import { PropTypes as CustomPropTypes } from "packages/victory-core/src/index";
 describe("victory-util/prop-types", () => {
   /* eslint-disable no-console */
   describe("deprecated", () => {
-    let stub1;
-    let stub2;
+    let sandbox;
 
     const shouldWarn = (message) => {
       expect(console.warn).calledOnce;
@@ -34,15 +33,15 @@ describe("victory-util/prop-types", () => {
     };
 
     beforeEach(() => {
-      stub1 = sinon.stub(console, "warn");
-      stub2 = sinon.stub(console, "error");
+      sandbox = sinon.createSandbox();
+      sandbox.stub(console, "warn");
+      sandbox.stub(console, "error");
     });
 
     afterEach(() => {
       console.warn.restore();
       console.error.restore();
-      stub1.reset();
-      stub2.reset();
+      sandbox.reset();
     });
 
     it("Should warn about deprecation and validate OK", () => {

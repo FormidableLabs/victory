@@ -99,15 +99,16 @@ describe("helpers/axis", () => {
   });
 
   describe("getTickFormat", () => {
-    let stub;
+    let sandbox;
     const scale = Scale.getBaseScale({ scale: { x: "linear" } }, "x");
     const ticks = [1, 2, 3, 4, 5];
     beforeEach(() => {
-      stub = sinon.stub(scale, "tickFormat");
+      sandbox = sinon.createSandbox();
+      sandbox.stub(scale, "tickFormat");
     });
 
     afterEach(() => {
-      stub.restore();
+      sandbox.restore();
     });
 
     it("returns tickFormat function from props", () => {
@@ -143,14 +144,15 @@ describe("helpers/axis", () => {
   });
 
   describe("getTicks", () => {
-    let spy;
+    let sandbox;
     const scale = Scale.getBaseScale({ scale: { x: "linear" } }, "x");
     beforeEach(() => {
-      spy = sinon.spy(scale, "ticks");
+      sandbox = sinon.createSandbox();
+      sandbox.spy(scale, "ticks");
     });
 
     afterEach(() => {
-      spy.restore();
+      sandbox.restore();
     });
 
     it("returns tickValues from props", () => {
