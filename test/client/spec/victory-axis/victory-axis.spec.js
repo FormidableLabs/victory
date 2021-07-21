@@ -209,14 +209,16 @@ describe("components/victory-axis", () => {
   });
   describe("label overlap", () => {
     describe("with empty label widths", () => {
+      let stub;
       before(() => {
-        sinon.stub(TextSize, "approximateTextSize", () => ({
+        stub = sinon.stub(TextSize, "approximateTextSize");
+        stub.callsFake(() => ({
           width: 0,
           height: 0
         }));
       });
       after(() => {
-        TextSize.approximateTextSize.restore();
+        stub.restore();
       });
 
       it("renders the appropriate number of ticks", () => {
@@ -236,15 +238,17 @@ describe("components/victory-axis", () => {
       });
     });
     describe("with not empty label widths", () => {
+      let stub;
       beforeEach(() => {
-        sinon.stub(TextSize, "approximateTextSize", () => ({
+        stub = sinon.stub(TextSize, "approximateTextSize");
+        stub.callsFake(() => ({
           width: 30,
           height: 30
         }));
       });
 
       afterEach(() => {
-        TextSize.approximateTextSize.restore();
+        stub.restore();
       });
 
       it("renders the appropriate number of ticks with default options", () => {

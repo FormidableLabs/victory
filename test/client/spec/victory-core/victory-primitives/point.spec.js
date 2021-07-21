@@ -8,11 +8,10 @@ import Path from "packages/victory-core/src/victory-primitives/path";
 import pathHelpers from "packages/victory-core/src/victory-primitives/path-helpers";
 
 describe("victory-primitives/point", () => {
-  let sandbox;
+  let stub;
   let baseProps;
 
   beforeEach(() => {
-    sandbox = sinon.sandbox.create();
     baseProps = {
       x: 5,
       y: 10,
@@ -21,7 +20,7 @@ describe("victory-primitives/point", () => {
   });
 
   afterEach(() => {
-    sandbox.restore();
+    stub.restore();
   });
 
   it("should render the appropriate symbol", () => {
@@ -36,9 +35,7 @@ describe("victory-primitives/point", () => {
       "star",
       "cross"
     ].forEach((symbol) => {
-      const stub = sandbox
-        .stub(pathHelpers, symbol)
-        .returns(`${symbol} symbol`);
+      stub = sinon.stub(pathHelpers, symbol).returns(`${symbol} symbol`);
       const props = assign({}, baseProps, { symbol });
       const wrapper = shallow(<Point {...props} />);
       const directions = wrapper.find(Path).prop("d");

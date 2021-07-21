@@ -165,7 +165,7 @@ const _getSizeWithRotate = (axisSize, dependentSize, angle) => {
  * @param  {number} fontSize Current text font-size.
  * @returns {number} Approximate Css length in pixels.
  */
-const convertLengthToPixels = (length, fontSize) => {
+export const convertLengthToPixels = (length, fontSize) => {
   const attribute = length.match(/[a-zA-Z%]+/) && length.match(/[a-zA-Z%]+/)[0];
   const value = length.match(/[0-9.,]+/);
   let result;
@@ -251,7 +251,7 @@ const _approximateTextHeightInternal = (text, style) => {
  * @param {number} style.lineHeight Line height coefficient.
  * @returns {number} Approximate text label height.
  */
-const approximateTextSize = (text, style) => {
+export const approximateTextSize = (text, style) => {
   const angle = Array.isArray(style)
     ? style[0] && style[0].angle
     : style && style.angle;
@@ -267,9 +267,4 @@ const approximateTextSize = (text, style) => {
     width: widthWithRotate,
     height: heightWithRotate * coefficients.heightOverlapCoef
   };
-};
-
-export default {
-  approximateTextSize,
-  convertLengthToPixels
 };

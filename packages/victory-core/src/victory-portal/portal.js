@@ -1,6 +1,6 @@
 import React from "react";
 import PropTypes from "prop-types";
-import CustomPropTypes from "../victory-util/prop-types";
+import * as CustomPropTypes from "../victory-util/prop-types";
 import { keys } from "lodash";
 
 export default class Portal extends React.Component {

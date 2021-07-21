@@ -33,7 +33,7 @@ function getPolarRange(props, axis) {
  * @param {Array<String>} ks: an array of keys to omit from the new object
  * @returns {Object} new object with same properties as originalObject
  */
-function omit(originalObject, ks = []) {
+export function omit(originalObject, ks = []) {
   // code based on babel's _objectWithoutProperties
   const newObject = {};
   for (const key in originalObject) {
@@ -48,7 +48,7 @@ function omit(originalObject, ks = []) {
   return newObject;
 }
 
-function getPoint(datum) {
+export function getPoint(datum) {
   const exists = (val) => val !== undefined;
   const { _x, _x1, _x0, _voronoiX, _y, _y1, _y0, _voronoiY } = datum;
   const defaultX = exists(_x1) ? _x1 : _x;
@@ -62,7 +62,7 @@ function getPoint(datum) {
   return defaults({}, point, datum);
 }
 
-function scalePoint(props, datum) {
+export function scalePoint(props, datum) {
   const { scale, polar, horizontal } = props;
   const d = getPoint(datum);
   const origin = props.origin || { x: 0, y: 0 };
@@ -78,7 +78,7 @@ function scalePoint(props, datum) {
   };
 }
 
-function getPadding(props, name = "padding") {
+export function getPadding(props, name = "padding") {
   const padding = props[name];
   const paddingVal = typeof padding === "number" ? padding : 0;
   const paddingObj = typeof padding === "object" ? padding : {};
@@ -90,12 +90,12 @@ function getPadding(props, name = "padding") {
   };
 }
 
-function isTooltip(component) {
+export function isTooltip(component) {
   const labelRole = component && component.type && component.type.role;
   return labelRole === "tooltip";
 }
 
-function getDefaultStyles(props, role) {
+export function getDefaultStyles(props, role) {
   const { theme = {}, labelComponent } = props;
   const defaultStyles = (theme[role] && theme[role].style) || {};
   if (!isTooltip(labelComponent)) {
@@ -106,7 +106,7 @@ function getDefaultStyles(props, role) {
   return defaults({}, { labels: labelStyle }, defaultStyles);
 }
 
-function getStyles(style, defaultStyles) {
+export function getStyles(style, defaultStyles) {
   const width = "100%";
   const height = "100%";
   if (!style) {
@@ -123,11 +123,11 @@ function getStyles(style, defaultStyles) {
   };
 }
 
-function evaluateProp(prop, props) {
+export function evaluateProp(prop, props) {
   return isFunction(prop) ? prop(props) : prop;
 }
 
-function evaluateStyle(style, props) {
+export function evaluateStyle(style, props) {
   if (props.disableInlineStyles) {
     return {};
   }
@@ -140,21 +140,21 @@ function evaluateStyle(style, props) {
   }, {});
 }
 
-function degreesToRadians(degrees) {
+export function degreesToRadians(degrees) {
   return typeof degrees === "number" ? degrees * (Math.PI / 180) : degrees;
 }
 
-function radiansToDegrees(radians) {
+export function radiansToDegrees(radians) {
   return typeof radians === "number" ? radians / (Math.PI / 180) : radians;
 }
 
-function getRadius(props) {
+export function getRadius(props) {
   const { left, right, top, bottom } = getPadding(props);
   const { width, height } = props;
   return Math.min(width - left - right, height - top - bottom) / 2;
 }
 
-function getPolarOrigin(props) {
+export function getPolarOrigin(props) {
   const { width, height } = props;
   const { top, bottom, left, right } = getPadding(props);
   const radius = Math.min(width - left - right, height - top - bottom) / 2;
@@ -166,7 +166,7 @@ function getPolarOrigin(props) {
   };
 }
 
-function getRange(props, axis) {
+export function getRange(props, axis) {
   if (props.range && props.range[axis]) {
     return props.range[axis];
   } else if (props.range && Array.isArray(props.range)) {
@@ -177,7 +177,7 @@ function getRange(props, axis) {
     : getCartesianRange(props, axis);
 }
 
-function createAccessor(key) {
+export function createAccessor(key) {
   // creates a data accessor function
   // given a property key, path, array index, or null for identity.
   if (isFunction(key)) {
@@ -190,7 +190,7 @@ function createAccessor(key) {
   return property(key);
 }
 
-function modifyProps(props, fallbackProps, role) {
+export function modifyProps(props, fallbackProps, role) {
   const theme = props.theme && props.theme[role] ? props.theme[role] : {};
   const themeProps = omit(theme, ["style"]);
   const horizontal = isHorizontal(props);
@@ -204,7 +204,7 @@ function modifyProps(props, fallbackProps, role) {
  * @param {Boolean} horizontal: true when the chart is flipped to the horizontal orientation
  * @returns {String} the dimension appropriate for the axis given its props "x" or "y"
  */
-function getCurrentAxis(axis, horizontal) {
+export function getCurrentAxis(axis, horizontal) {
   const otherAxis = axis === "x" ? "y" : "x";
   return horizontal ? otherAxis : axis;
 }
@@ -219,7 +219,7 @@ function getCurrentAxis(axis, horizontal) {
  * @returns {Array} returns an array of results from calling the iteratee on all nested children
  */
 /* eslint-disable max-params */
-function reduceChildren(
+export function reduceChildren(
   children,
   iteratee,
   parentProps = {},
@@ -287,7 +287,7 @@ function reduceChildren(
  * @returns {Boolean} returns true if the props object contains `horizontal: true` of if any
  * children or nested children are hoizontal
  */
-function isHorizontal(props) {
+export function isHorizontal(props) {
   if (props.horizontal !== undefined || !props.children) {
     return props.horizontal;
   }
@@ -303,25 +303,3 @@ function isHorizontal(props) {
   };
   return traverseChildren(React.Children.toArray(props.children));
 }
-
-export default {
-  omit,
-  getPoint,
-  scalePoint,
-  getPadding,
-  getDefaultStyles,
-  getStyles,
-  evaluateProp,
-  evaluateStyle,
-  degreesToRadians,
-  radiansToDegrees,
-  getRadius,
-  getPolarOrigin,
-  getRange,
-  createAccessor,
-  modifyProps,
-  getCurrentAxis,
-  reduceChildren,
-  isHorizontal,
-  isTooltip
-};

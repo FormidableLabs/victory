@@ -1,41 +1,40 @@
-export default {
-  IMMUTABLE_ITERABLE: "@@__IMMUTABLE_ITERABLE__@@",
-  IMMUTABLE_RECORD: "@@__IMMUTABLE_RECORD__@@",
-  IMMUTABLE_LIST: "@@__IMMUTABLE_LIST__@@",
-  IMMUTABLE_MAP: "@@__IMMUTABLE_MAP__@@",
+/* eslint-disable func-style */
+export const IMMUTABLE_ITERABLE = "@@__IMMUTABLE_ITERABLE__@@";
+export const IMMUTABLE_RECORD = "@@__IMMUTABLE_RECORD__@@";
+export const IMMUTABLE_LIST = "@@__IMMUTABLE_LIST__@@";
+export const IMMUTABLE_MAP = "@@__IMMUTABLE_MAP__@@";
 
-  isImmutable(x) {
-    return this.isIterable(x) || this.isRecord(x);
-  },
+export function isIterable(x) {
+  return !!(x && x[IMMUTABLE_ITERABLE]);
+}
 
-  isIterable(x) {
-    return !!(x && x[this.IMMUTABLE_ITERABLE]);
-  },
+export function isRecord(x) {
+  return !!(x && x[IMMUTABLE_RECORD]);
+}
 
-  isRecord(x) {
-    return !!(x && x[this.IMMUTABLE_RECORD]);
-  },
+export function isImmutable(x) {
+  return isIterable(x) || isRecord(x);
+}
 
-  isList(x) {
-    return !!(x && x[this.IMMUTABLE_LIST]);
-  },
+export function isList(x) {
+  return !!(x && x[IMMUTABLE_LIST]);
+}
 
-  isMap(x) {
-    return !!(x && x[this.IMMUTABLE_MAP]);
-  },
+export function isMap(x) {
+  return !!(x && x[IMMUTABLE_MAP]);
+}
 
-  shallowToJS(x, whitelist) {
-    return this.isIterable(x)
-      ? x.reduce(
-          (prev, curr, key) => {
-            if (whitelist && whitelist[key]) {
-              curr = this.shallowToJS(curr);
-            }
-            prev[key] = curr;
-            return prev;
-          },
-          this.isList(x) ? [] : {}
-        )
-      : x;
-  }
-};
+export function shallowToJS(x, whitelist) {
+  return isIterable(x)
+    ? x.reduce(
+        (prev, curr, key) => {
+          if (whitelist && whitelist[key]) {
+            curr = shallowToJS(curr);
+          }
+          prev[key] = curr;
+          return prev;
+        },
+        isList(x) ? [] : {}
+      )
+    : x;
+}

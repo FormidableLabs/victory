@@ -74,7 +74,7 @@ function getChildData(child) {
  *                                    - childrenTransitions
  *                                    - nodesShouldEnter
  */
-function getInitialTransitionState(oldChildren, nextChildren) {
+export function getInitialTransitionState(oldChildren, nextChildren) {
   let nodesWillExit = false;
   let nodesWillEnter = false;
 
@@ -257,7 +257,7 @@ function getChildPropsOnEnter(animate, data, enteringNodes, cb) {
  *
  * @return {Function}              Child-prop transformation function.
  */
-function getTransitionPropsFactory(props, state, setState) {
+export function getTransitionPropsFactory(props, state, setState) {
   const nodesWillExit = state && state.nodesWillExit;
   const nodesWillEnter = state && state.nodesWillEnter;
   const nodesShouldEnter = state && state.nodesShouldEnter;
@@ -402,8 +402,3 @@ function getTransitionPropsFactory(props, state, setState) {
     return { animate, data };
   };
 }
-
-export default {
-  getInitialTransitionState,
-  getTransitionPropsFactory
-};

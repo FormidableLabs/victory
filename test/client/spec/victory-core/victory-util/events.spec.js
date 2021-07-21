@@ -22,10 +22,9 @@ describe("victory-util/events", () => {
   });
 
   describe("getEvents", () => {
-    let sandbox;
+    let spy;
     let fake;
     beforeEach(() => {
-      sandbox = sinon.sandbox.create();
       fake = {
         props: {
           events: [
@@ -51,11 +50,11 @@ describe("victory-util/events", () => {
         setState: (x) => x,
         state: {}
       };
-      sandbox.spy(fake, "setState");
+      spy = sinon.spy(fake, "setState");
     });
 
     afterEach(() => {
-      sandbox.reset();
+      spy.restore();
     });
 
     it("returns new functions that call set state", () => {

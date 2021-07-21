@@ -1,9 +1,9 @@
 import React from "react";
 import PropTypes from "prop-types";
 import { assign } from "lodash";
-import Helpers from "../victory-util/helpers";
+import * as Helpers from "../victory-util/helpers";
 import pathHelpers from "./path-helpers";
-import CommonProps from "../victory-util/common-props";
+import * as CommonProps from "../victory-util/common-props";
 import Path from "./path";
 
 const getPath = (props) => {

@@ -11,16 +11,16 @@ import {
   isPlainObject
 } from "lodash";
 import React from "react";
-import Axis from "./axis";
-import Style from "./style";
-import Transitions from "./transitions";
-import Data from "./data";
-import Domain from "./domain";
-import Events from "./events";
-import Collection from "./collection";
-import Helpers from "./helpers";
-import Scale from "./scale";
-import Log from "./log";
+import * as Axis from "./axis";
+import * as Style from "./style";
+import * as Transitions from "./transitions";
+import * as Data from "./data";
+import * as Domain from "./domain";
+import * as Events from "./events";
+import * as Collection from "./collection";
+import * as Helpers from "./helpers";
+import * as Scale from "./scale";
+import * as Log from "./log";
 
 export default {
   getData(props, childComponents) {

@@ -39,16 +39,15 @@ describe("components/victory-stack", () => {
   });
 
   describe("warnings", () => {
-    let sandbox;
+    let stub;
 
     beforeEach(() => {
-      sandbox = sinon.sandbox.create();
-      sandbox.stub(console, "warn");
+      stub = sinon.stub(console, "warn");
     });
 
     afterEach(() => {
       console.warn.restore();
-      sandbox.reset();
+      stub.reset();
     });
 
     it("should warn when histogram children are mixed with non-histogram children", () => {
