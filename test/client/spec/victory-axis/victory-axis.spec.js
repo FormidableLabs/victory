@@ -9,9 +9,8 @@ import React from "react";
 import { omit } from "lodash";
 import { shallow, mount } from "enzyme";
 import SvgTestHelper from "../svg-test-helper";
-import { VictoryAxis } from "packages/victory-axis/src/index";
-import { VictoryLabel, LineSegment } from "packages/victory-core/src/index";
-import { TextSize } from "packages/victory-core";
+import { VictoryAxis } from "packages/victory-axis";
+import { VictoryLabel, LineSegment, TextSize } from "packages/victory-core";
 
 describe("components/victory-axis", () => {
   describe("default component rendering", () => {
@@ -239,9 +238,10 @@ describe("components/victory-axis", () => {
     });
     describe("with not empty label widths", () => {
       let sandbox;
+      let stub;
       beforeEach(() => {
         sandbox = sinon.createSandbox();
-        sandbox.stub(TextSize, "approximateTextSize").returns({
+        stub = sandbox.stub(TextSize, "approximateTextSize").returns({
           width: 30,
           height: 30
         });
@@ -263,7 +263,9 @@ describe("components/victory-axis", () => {
         );
         expect(wrapper.find('[type="tick"]').length).to.equal(3);
       });
-      it("renders the appropriate number of ticks with fixLabelOverlap options", () => {
+
+      it.only("renders the appropriate number of ticks with fixLabelOverlap options", () => {
+        console.log("TODO HERE TEST", TextSize.approximateTextSize(), stub())
         const wrapper = shallow(
           <VictoryAxis
             tickValues={["1", "2", "3"]}

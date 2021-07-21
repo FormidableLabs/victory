@@ -48,7 +48,8 @@ module.exports = function (config) {
     client: {
       mocha: {
         ui: "bdd"
-      }
+      },
+      captureConsole: true
     }
   });
 };

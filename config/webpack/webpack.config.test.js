@@ -18,6 +18,7 @@ module.exports = {
   mode: "development",
   cache: true,
   context: path.join(ROOT, "test/client"),
+  devtool: false,
   entry: "./main",
   output: {
     filename: "main.js",

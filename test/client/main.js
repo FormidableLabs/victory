@@ -32,11 +32,11 @@ window.mocha.setup({
 // --------------------------------------------------------------------------
 // Use webpack to include all app code _except_ the entry point so we can get
 // code coverage in the bundle, whether tested or not.
-const srcReq = require.context("packages", true, /\.jsx?$/);
+const srcReq = require.context("packages/victory-axis/es", true, /\.jsx?$/);
 srcReq.keys().map(srcReq);
 
 // Use webpack to infer and `require` tests automatically.
-const testsReq = require.context(".", true, /\.spec.jsx?$/);
+const testsReq = require.context("./spec/victory-axis", true, /\.spec.jsx?$/);
 testsReq.keys().map(testsReq);
 
 // Only start mocha in browser.
