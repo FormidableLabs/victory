@@ -1,5 +1,9 @@
 # Victory Changelog
 
+## 35.9.2 (2021-07-22)
+
+- [#1908](https://github.com/FormidableLabs/victory/pull/1908) - Fixes a bug with `barWidth` calculation for stacked / grouped bar charts.
+
 ## 35.9.1 (2021-07-14)
 
 - [#1901](https://github.com/FormidableLabs/victory/pull/1901) Adds a small performance optimization for `VictoryTooltip`. Thanks @beccanelson!
