@@ -57,6 +57,9 @@ export default {
     if (firstChild && firstChild.type.role === "stack") {
       const nestedChild =
         firstChild.props.children && firstChild.props.children[0];
+      if (!nestedChild) {
+        return undefined;
+      }
       barWidth = nestedChild.props.barWidth;
       dataLength = firstChild.props.children.length;
     }
