@@ -1,5 +1,9 @@
 # Victory Changelog
 
+## 35.9.3 (2021-07-23)
+
+- [#1912](https://github.com/FormidableLabs/victory/pull/1912) - Adds a more thorough check before calculating `barWidth` for grouped / stacked charts. Thanks @WaysToGo!
+
 ## 35.9.2 (2021-07-22)
 
 - [#1908](https://github.com/FormidableLabs/victory/pull/1908) - Fixes a bug with `barWidth` calculation for stacked / grouped bar charts.
