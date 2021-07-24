@@ -916,6 +916,8 @@ export class Whisker extends React.Component<WhiskerProps> {}
 export interface VictoryPrimitiveShapeProps
   extends VictoryCommonPrimitiveProps {
   desc?: string;
+  rx?: number;
+  ry?: number;
 }
 
 export class Circle extends React.Component<VictoryPrimitiveShapeProps> {}
