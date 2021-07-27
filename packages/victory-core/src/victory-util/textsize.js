@@ -253,6 +253,7 @@ const _approximateTextHeightInternal = (text, style) => {
  */
 export const approximateTextSize = (text, style) => _approximateTextSizeInternal.impl(text, style);
 
+// Stubbable implementation.
 export const _approximateTextSizeInternal = {
   impl: (text, style) => {
     const angle = Array.isArray(style)
