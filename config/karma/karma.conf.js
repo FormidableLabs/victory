@@ -7,6 +7,7 @@
  * CI environment or if you're not otherwise running `npm run dev|hot`.
  */
 var path = require("path");
+var webpack = require("webpack");
 var webpackCfg = require("../webpack/webpack.config.test");
 
 var MAIN_PATH = path.join(process.cwd(), "test/client/main.js");
@@ -39,7 +40,14 @@ module.exports = function (config) {
       // Test bundle (created via local webpack-dev-server in this config).
       MAIN_PATH
     ],
-    webpack: webpackCfg,
+    webpack: Object.assign(webpackCfg, {
+      plugins: [].concat(
+        webpackCfg.plugins || [],
+        [new webpack.DefinePlugin({
+          "process.env.TEST_MODULE": JSON.stringify(process.env.TEST_MODULE)
+        })]
+      )
+    }),
     webpackServer: {
       port: 3002, // Choose a non-conflicting port (3000 app, 3001 test dev)
       quiet: false,
