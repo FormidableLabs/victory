@@ -27,6 +27,9 @@
     "victory-bar": "^35.9.3",
     "victory-core": "^35.9.3"
   },
+  "peerDependencies": {
+    "react": "^16.6.0 || ^17.0.0"
+  },
   "scripts": {
     "version": "nps build-libs && nps build-dists"
   },
