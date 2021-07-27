@@ -251,20 +251,24 @@ const _approximateTextHeightInternal = (text, style) => {
  * @param {number} style.lineHeight Line height coefficient.
  * @returns {number} Approximate text label height.
  */
-export const approximateTextSize = (text, style) => {
-  const angle = Array.isArray(style)
-    ? style[0] && style[0].angle
-    : style && style.angle;
-  const height = _approximateTextHeightInternal(text, style);
-  const width = _approximateTextWidthInternal(text, style);
-  const widthWithRotate = angle
-    ? _getSizeWithRotate(width, height, angle)
-    : width;
-  const heightWithRotate = angle
-    ? _getSizeWithRotate(height, width, angle)
-    : height;
-  return {
-    width: widthWithRotate,
-    height: heightWithRotate * coefficients.heightOverlapCoef
-  };
+export const approximateTextSize = (text, style) => _approximateTextSizeInternal.impl(text, style);
+
+export const _approximateTextSizeInternal = {
+  impl: (text, style) => {
+    const angle = Array.isArray(style)
+      ? style[0] && style[0].angle
+      : style && style.angle;
+    const height = _approximateTextHeightInternal(text, style);
+    const width = _approximateTextWidthInternal(text, style);
+    const widthWithRotate = angle
+      ? _getSizeWithRotate(width, height, angle)
+      : width;
+    const heightWithRotate = angle
+      ? _getSizeWithRotate(height, width, angle)
+      : height;
+    return {
+      width: widthWithRotate,
+      height: heightWithRotate * coefficients.heightOverlapCoef
+    };
+  }
 };

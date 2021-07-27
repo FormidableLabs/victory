@@ -30,14 +30,26 @@ window.mocha.setup({
 // --------------------------------------------------------------------------
 // Bootstrap
 // --------------------------------------------------------------------------
+// Optional env var filter for module tests.
+const { TEST_MODULE } = process.env;
+
 // Use webpack to include all app code _except_ the entry point so we can get
 // code coverage in the bundle, whether tested or not.
-const srcReq = require.context("packages/victory-axis/es", true, /\.jsx?$/);
-srcReq.keys().map(srcReq);
+const srcReq = require.context("packages", true, /\.jsx?$/);
+srcReq
+  .keys()
+  // TODO: Expand to WIN friendly with `normalize|relative` etc?
+  .filter((m) => TEST_MODULE ? m.startsWith(`./${TEST_MODULE}/es/`) : true)
+  .map(srcReq);
+
 
 // Use webpack to infer and `require` tests automatically.
-const testsReq = require.context("./spec/victory-axis", true, /\.spec.jsx?$/);
-testsReq.keys().map(testsReq);
+const testsReq = require.context(".", true, /\.spec.jsx?$/);
+testsReq
+  .keys()
+  // TODO: Expand to WIN friendly with `normalize|relative` etc?
+  .filter((m) => TEST_MODULE ? m.startsWith(`./spec/${TEST_MODULE}/`) : true)
+  .map(testsReq);
 
 // Only start mocha in browser.
 if (!window.__karma__) {

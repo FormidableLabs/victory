@@ -49,7 +49,7 @@ module.exports = function (config) {
       mocha: {
         ui: "bdd"
       },
-      captureConsole: true
+      captureConsole: process.env.KARMA_CAPTURE_CONSOLE === "true"
     }
   });
 };
