@@ -4,12 +4,12 @@ module.exports = {
   scripts: {
     server: {
       dev: {
-        ts: "webpack-dev-server --config ./config/webpack/demo/webpack.config.dev-ts.js --colors",
+        ts: "webpack serve --config ./config/webpack/demo/webpack.config.dev-ts.js",
         default:
-          "webpack-dev-server --config ./config/webpack/demo/webpack.config.dev.js --colors --content-base demo/js"
+          "webpack serve --config ./config/webpack/demo/webpack.config.dev.js --content-base demo/js"
       },
-      hot: "webpack-dev-server --config ./config/webpack/demo/webpack.config.hot.js --colors --inline --hot --content-base demo/js",
-      test: "webpack-dev-server --config ./config/webpack/webpack.config.test.js --colors"
+      hot: "webpack serve --config ./config/webpack/demo/webpack.config.hot.js --inline --hot --content-base demo/js",
+      test: "webpack serve --config ./config/webpack/webpack.config.test.js"
     },
     karma: {
       ci: "karma start --browsers ChromeHeadlessCustom,Firefox ./config/karma/karma.conf.coverage.js",
