@@ -240,20 +240,6 @@ const _approximateTextHeightInternal = (text, style) => {
   }, 0);
 };
 
-/**
- * Predict text size by font params.
- * @param {string} text Content for width calculation.
- * @param {Object} style Text styles, ,fontFamily, fontSize, etc.
- * @param {string} style.fontFamily Text fontFamily.
- * @param {(number|string)} style.fontSize Text fontSize.
- * @param {number} style.angle Text rotate angle.
- * @param {string} style.letterSpacing Text letterSpacing(space between letters).
- * @param {number} style.lineHeight Line height coefficient.
- * @returns {number} Approximate text label height.
- */
-export const approximateTextSize = (text, style) =>
-  _approximateTextSizeInternal.impl(text, style);
-
 // Stubbable implementation.
 export const _approximateTextSizeInternal = {
   impl: (text, style) => {
@@ -274,3 +260,17 @@ export const _approximateTextSizeInternal = {
     };
   }
 };
+
+/**
+ * Predict text size by font params.
+ * @param {string} text Content for width calculation.
+ * @param {Object} style Text styles, ,fontFamily, fontSize, etc.
+ * @param {string} style.fontFamily Text fontFamily.
+ * @param {(number|string)} style.fontSize Text fontSize.
+ * @param {number} style.angle Text rotate angle.
+ * @param {string} style.letterSpacing Text letterSpacing(space between letters).
+ * @param {number} style.lineHeight Line height coefficient.
+ * @returns {number} Approximate text label height.
+ */
+export const approximateTextSize = (text, style) =>
+  _approximateTextSizeInternal.impl(text, style);
