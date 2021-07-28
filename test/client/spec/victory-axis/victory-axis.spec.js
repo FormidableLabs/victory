@@ -11,7 +11,7 @@ import { shallow, mount } from "enzyme";
 import SvgTestHelper from "../svg-test-helper";
 import { VictoryAxis } from "packages/victory-axis";
 import { VictoryLabel, LineSegment } from "packages/victory-core";
-import { _approximateTextSizeInternal } from "packages/victory-core/es/victory-util/textsize"
+import { _approximateTextSizeInternal } from "packages/victory-core/es/victory-util/textsize";
 
 describe("components/victory-axis", () => {
   describe("default component rendering", () => {

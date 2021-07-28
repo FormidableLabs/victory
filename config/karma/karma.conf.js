@@ -41,12 +41,11 @@ module.exports = function (config) {
       MAIN_PATH
     ],
     webpack: Object.assign(webpackCfg, {
-      plugins: [].concat(
-        webpackCfg.plugins || [],
-        [new webpack.DefinePlugin({
+      plugins: [].concat(webpackCfg.plugins || [], [
+        new webpack.DefinePlugin({
           "process.env.TEST_MODULE": JSON.stringify(process.env.TEST_MODULE)
-        })]
-      )
+        })
+      ])
     }),
     webpackServer: {
       port: 3002, // Choose a non-conflicting port (3000 app, 3001 test dev)

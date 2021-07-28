@@ -39,7 +39,7 @@ const srcReq = require.context("packages", true, /\.jsx?$/);
 srcReq
   .keys()
   // TODO: Expand to WIN friendly with `normalize|relative` etc?
-  .filter((m) => TEST_MODULE ? m.startsWith(`./${TEST_MODULE}/es/`) : true)
+  .filter((m) => (TEST_MODULE ? m.startsWith(`./${TEST_MODULE}/es/`) : true))
   .map(srcReq);
 
 // Use webpack to infer and `require` tests automatically.
@@ -47,7 +47,7 @@ const testsReq = require.context(".", true, /\.spec.jsx?$/);
 testsReq
   .keys()
   // TODO: Expand to WIN friendly with `normalize|relative` etc?
-  .filter((m) => TEST_MODULE ? m.startsWith(`./spec/${TEST_MODULE}/`) : true)
+  .filter((m) => (TEST_MODULE ? m.startsWith(`./spec/${TEST_MODULE}/`) : true))
   .map(testsReq);
 
 // Only start mocha in browser.

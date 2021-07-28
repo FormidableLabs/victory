@@ -251,7 +251,8 @@ const _approximateTextHeightInternal = (text, style) => {
  * @param {number} style.lineHeight Line height coefficient.
  * @returns {number} Approximate text label height.
  */
-export const approximateTextSize = (text, style) => _approximateTextSizeInternal.impl(text, style);
+export const approximateTextSize = (text, style) =>
+  _approximateTextSizeInternal.impl(text, style);
 
 // Stubbable implementation.
 export const _approximateTextSizeInternal = {
