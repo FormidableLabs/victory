@@ -44,4 +44,8 @@ export * as Wrapper from "./victory-util/wrapper";
 export * as Axis from "./victory-util/axis";
 export { default as TimerContext } from "./victory-util/timer-context";
 export { default as PortalContext } from "./victory-portal/portal-context";
+<<<<<<< HEAD
 export * from "./victory-util/hooks";
+=======
+export { useEvents } from "./victory-util/use-events";
+>>>>>>> 98dbc71d (Initial useEvents hook and plugins)
