@@ -1,1 +1,1 @@
-export { default as VictoryScatter } from "./victory-scatter";
+export { default as VictoryScatter } from "./victory-scatter-duplicate";
