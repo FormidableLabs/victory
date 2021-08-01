@@ -9,10 +9,6 @@ export default {
   googleAnalyticsID: "UA-43290258-1", // GA tracking ID.
   projectLinks: [
     {
-      label: "Support",
-      url: "https://spectrum.chat/victory"
-    },
-    {
       label: "GitHub",
       url: "https://github.com/FormidableLabs/victory"
     }

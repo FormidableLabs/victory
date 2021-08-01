@@ -43,7 +43,6 @@
 
 * See the **docs and examples** on the website: http://formidable.com/open-source/victory.
 * **Experiment** with all Victory components in this [code sandbox](https://codesandbox.io/s/m3xo745x2x)
-* For support, join the **Spectrum chat room** at https://spectrum.chat/victory.
 
 ## Getting started
 
