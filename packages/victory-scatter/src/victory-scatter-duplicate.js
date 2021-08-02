@@ -11,7 +11,10 @@ import {
   VictoryLabel,
   VictoryTheme
 } from "victory-core";
-import { getBaseProps } from "./helper-methods";
+import { getBaseProps } from "../../victory-bar/src/helper-methods";
+import { getBaseProps as getBasePropsHelper } from "./helper-methods";
+
+// TODO: Rename this function ?
 
 const fallbackProps = {
   width: 450,
@@ -21,14 +24,30 @@ const fallbackProps = {
   symbol: "circle"
 };
 
+const expectedComponents = [
+  "dataComponent",
+  "labelComponent",
+  "groupComponent",
+  "containerComponent"
+];
+
 const VictoryScatter = (props) => {
   const role = "scatter";
-  const baseProps = getBaseProps(props, fallbackProps);
+  const getBaseProps = (p) => getBasePropsHelper(p, fallbackProps);
   const modifiedProps = Helpers.modifyProps(props, fallbackProps, role);
-  const { renderedData } = useEvents(modifiedProps, baseProps, { role });
+  const { renderedData, renderContainer } = useEvents(modifiedProps, {
+    role,
+    expectedComponents,
+    getBaseProps
+  });
 
-  return renderedData;
+  return props.standalone
+    ? renderContainer(props.containerComponent, renderedData)
+    : renderedData;
 };
+
+VictoryScatter.role = "scatter";
+VictoryScatter.getBaseProps = (props) => getBaseProps(props, fallbackProps);
 
 VictoryScatter.propTypes = {
   ...CommonProps.baseProps,
@@ -64,4 +83,4 @@ VictoryScatter.defaultProps = {
   theme: VictoryTheme.grayscale
 };
 
-export default React.memo(VictoryScatter, isEqual);
+export default VictoryScatter;

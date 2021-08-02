@@ -50,7 +50,7 @@ import { VictoryCandlestick, Candle } from "victory-candlestick";
 import { VictoryErrorBar, ErrorBar } from "victory-errorbar";
 import { VictoryHistogram } from "victory-histogram";
 import { VictoryLine, Curve } from "victory-line";
-import { VictoryScatter } from "victory-scatter";
+import { VictoryScatter, VictoryScatterDuplicate } from "victory-scatter";
 import { VictoryBoxPlot } from "victory-box-plot";
 import { VictoryVoronoi, Voronoi } from "victory-voronoi";
 import { VictoryBrushLine } from "victory-brush-line";
@@ -177,5 +177,6 @@ export {
   LabelHelpers,
   Axis,
   Wrapper,
-  VictoryAccessibleGroup
+  VictoryAccessibleGroup,
+  VictoryScatterDuplicate
 };
