@@ -52,6 +52,7 @@ module.exports = {
         "format.ci",
         "lint",
         "build-package-libs",
+        "build-package-dists",
         "karma.ci",
         "compile-ts"
       ),
@@ -83,10 +84,11 @@ module.exports = {
     "build-libs": npsUtils.series.nps("build-lib", "build-es"),
     "build-package-libs": "lerna exec --parallel -- nps build-libs",
     "build-dist-dev":
-      "webpack --bail --config ../../config/webpack/webpack.config.dev.js --colors",
+      "webpack --bail --config ../../config/webpack/webpack.config.dev.js",
     "build-dist-min":
-      "webpack --bail --config ../../config/webpack/webpack.config.js --colors",
+      "webpack --bail --config ../../config/webpack/webpack.config.js",
     "build-dists": npsUtils.concurrent.nps("build-dist-min", "build-dist-dev"),
-    "build-dist": npsUtils.series.nps("clean.dist", "build-dists")
+    "build-dist": npsUtils.series.nps("clean.dist", "build-dists"),
+    "build-package-dists": "lerna exec --parallel -- nps build-dists"
   }
 };
