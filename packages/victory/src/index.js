@@ -50,7 +50,7 @@ export { VictoryCandlestick, Candle } from "victory-candlestick";
 export { VictoryErrorBar, ErrorBar } from "victory-errorbar";
 export { VictoryHistogram } from "victory-histogram";
 export { VictoryLine, Curve } from "victory-line";
-export { VictoryScatter } from "victory-scatter";
+export { VictoryScatter, VictoryScatterDuplicate } from "victory-scatter";
 export { VictoryBoxPlot } from "victory-box-plot";
 export { VictoryVoronoi, Voronoi } from "victory-voronoi";
 export { VictoryBrushLine } from "victory-brush-line";

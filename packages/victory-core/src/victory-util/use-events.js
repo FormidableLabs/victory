@@ -1,5 +1,6 @@
-import { defaults, isNil } from "lodash";
+import { assign, defaults, isFunction, isNil, pick } from "lodash";
 import React from "react";
+import Events from "./events";
 
 const KEYS = {
   PARENT: "parent",
@@ -14,10 +15,47 @@ const datumHasXandY = (datum) => {
 
 export const useEvents = (
   props,
-  baseProps,
-  { shouldRenderDatum = datumHasXandY, role } = {}
+  {
+    shouldRenderDatum = datumHasXandY,
+    role,
+    getBaseProps,
+    expectedComponents
+  } = {}
 ) => {
-  const { dataComponent, labelComponent, groupComponent, name } = props;
+  const {
+    dataComponent,
+    labelComponent,
+    groupComponent,
+    name,
+    events,
+    sharedEvents
+  } = props;
+
+  const componentEvents = Events.getComponentEvents(props, expectedComponents);
+
+  const hasEvents = !!events || !!sharedEvents || !!componentEvents;
+
+  const getSharedEventState = React.useCallback(
+    (...args) => {
+      if (isFunction(sharedEvents?.getSharedEventState)) {
+        return sharedEvents?.getSharedEventState(...args);
+      }
+      return undefined;
+    },
+    [sharedEvents]
+  );
+
+  const baseProps = React.useMemo(() => {
+    const sharedParentState = getSharedEventState(KEYS.PARENT, KEYS.PARENT);
+    const parentState = Events.getEventState(KEYS.PARENT, KEYS.PARENT);
+    const baseParentProps = defaults({}, parentState, sharedParentState);
+    const { parentControlledProps } = baseParentProps;
+    const parentProps = parentControlledProps
+      ? pick(baseParentProps, parentControlledProps)
+      : {};
+    const modifiedProps = defaults({}, parentProps, props);
+    return isFunction(getBaseProps) ? getBaseProps(modifiedProps) : {};
+  }, [props, getBaseProps, getSharedEventState]);
 
   const dataKeys = React.useMemo(() => {
     return Object.keys(baseProps).filter((key) => key !== KEYS.PARENT);
@@ -29,12 +67,37 @@ export const useEvents = (
       const key = dataKeys[index] || index;
       const id = `${componentName}-${type}-${key}`;
 
-      const dataProps =
+      const currentBaseProps =
         (baseProps[key] && baseProps[key][type]) || baseProps[key];
 
-      return defaults({ index, key: id }, component.props, dataProps, { id });
+      if (!currentBaseProps && !hasEvents) {
+        return undefined;
+      }
+
+      if (hasEvents) {
+        const baseEvents = Events.getEvents(props, type, key);
+        const componentProps = defaults(
+          { index, key: id },
+          Events.getEventState(key, type),
+          getSharedEventState(key, type),
+          component.props,
+          currentBaseProps,
+          { id }
+        );
+
+        const currentEvents = defaults(
+          {},
+          Events.getPartialEvents(baseEvents, key, componentProps)
+        );
+
+        return assign({}, componentProps, { events: currentEvents });
+      }
+
+      return defaults({ index, key: id }, component.props, currentBaseProps, {
+        id
+      });
     },
-    [name, role, dataKeys, baseProps]
+    [name, role, dataKeys, baseProps, hasEvents, getSharedEventState, props]
   );
 
   const renderContainer = React.useCallback(
@@ -44,6 +107,7 @@ export const useEvents = (
       const parentProps = isContainer
         ? getComponentProps(component, KEYS.PARENT, KEYS.PARENT)
         : {};
+
       return React.cloneElement(component, parentProps, children);
     },
     [getComponentProps]
@@ -64,11 +128,14 @@ export const useEvents = (
   }, [dataKeys, dataComponent, getComponentProps, shouldRenderDatum]);
 
   const labelComponents = React.useMemo(() => {
-    return dataKeys.reduce((components, key) => {
+    return dataKeys.reduce((restComponents, key) => {
       const labelProps = getComponentProps(labelComponent, KEYS.LABELS, key);
 
       if (!isNil(labelProps?.text)) {
-        return [...components, React.cloneElement(labelComponent, labelProps)];
+        return [
+          ...restComponents,
+          React.cloneElement(labelComponent, labelProps)
+        ];
       }
       return labelComponents;
     }, []);
