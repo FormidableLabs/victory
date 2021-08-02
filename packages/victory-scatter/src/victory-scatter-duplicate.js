@@ -1,4 +1,3 @@
-import { isEqual } from "lodash";
 import PropTypes from "prop-types";
 import React from "react";
 import {
@@ -11,10 +10,7 @@ import {
   VictoryLabel,
   VictoryTheme
 } from "victory-core";
-import { getBaseProps } from "../../victory-bar/src/helper-methods";
-import { getBaseProps as getBasePropsHelper } from "./helper-methods";
-
-// TODO: Rename this function ?
+import { getBaseProps } from "./helper-methods";
 
 const fallbackProps = {
   width: 450,
@@ -33,12 +29,11 @@ const expectedComponents = [
 
 const VictoryScatter = (props) => {
   const role = "scatter";
-  const getBaseProps = (p) => getBasePropsHelper(p, fallbackProps);
   const modifiedProps = Helpers.modifyProps(props, fallbackProps, role);
   const { renderedData, renderContainer } = useEvents(modifiedProps, {
     role,
     expectedComponents,
-    getBaseProps
+    getBaseProps: VictoryScatter.getBaseProps
   });
 
   return props.standalone
