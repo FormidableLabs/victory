@@ -52,7 +52,6 @@ const Introduction = ({ content }) => {
   const mobileLinks = [
     { slug: "/about", title: "About" },
     { slug: "/gallery", title: "Gallery" },
-    { slug: "https://spectrum.chat/victory", title: "Support" },
     { slug: "https://github.com/FormidableLabs/victory", title: "Github" },
     { slug: "/docs/faq", title: "FAQs" }
   ];

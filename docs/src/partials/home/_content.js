@@ -26,11 +26,6 @@ const content = {
         location: "gallery"
       },
       {
-        text: "SUPPORT",
-        location: "https://spectrum.chat/victory",
-        external: true
-      },
-      {
         text: "GITHUB",
         location: "https://github.com/FormidableLabs/victory",
         external: true
