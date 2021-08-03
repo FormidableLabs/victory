@@ -28,12 +28,15 @@ const expectedComponents = [
 ];
 
 const VictoryScatter = (props) => {
-  const role = "scatter";
-  const modifiedProps = Helpers.modifyProps(props, fallbackProps, role);
+  const modifiedProps = Helpers.modifyProps(
+    props,
+    fallbackProps,
+    VictoryScatter.role
+  );
   const { renderedData, renderContainer } = useEvents(modifiedProps, {
-    role,
     expectedComponents,
-    getBaseProps: VictoryScatter.getBaseProps
+    getBaseProps: VictoryScatter.getBaseProps,
+    role: VictoryScatter.role
   });
 
   return props.standalone

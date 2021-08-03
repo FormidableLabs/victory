@@ -35,15 +35,11 @@ export const useEvents = (
 
   const hasEvents = !!events || !!sharedEvents || !!componentEvents;
 
-  const getSharedEventState = React.useCallback(
-    (...args) => {
-      if (isFunction(sharedEvents?.getSharedEventState)) {
-        return sharedEvents?.getSharedEventState(...args);
-      }
-      return undefined;
-    },
-    [sharedEvents]
-  );
+  const getSharedEventState = React.useMemo(() => {
+    return isFunction(sharedEvents?.getEventState)
+      ? sharedEvents.getEventState
+      : () => undefined;
+  }, [sharedEvents]);
 
   const baseProps = React.useMemo(() => {
     const sharedParentState = getSharedEventState(KEYS.PARENT, KEYS.PARENT);
