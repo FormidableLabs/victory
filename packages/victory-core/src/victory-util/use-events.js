@@ -10,7 +10,7 @@ const KEYS = {
 };
 
 const datumHasXandY = (datum) => {
-  return !isNil(datum._x) && !isNil(datum._y);
+  return !isNil(datum?._x) && !isNil(datum?._y);
 };
 
 export const useEvents = (
@@ -133,7 +133,7 @@ export const useEvents = (
           React.cloneElement(labelComponent, labelProps)
         ];
       }
-      return labelComponents;
+      return restComponents;
     }, []);
   }, [dataKeys, getComponentProps, labelComponent]);
 
@@ -143,5 +143,21 @@ export const useEvents = (
     return renderContainer(groupComponent, children);
   }, [dataComponents, labelComponents, renderContainer, groupComponent]);
 
-  return { renderedData, renderContainer };
+  const renderedContinuousData = React.useMemo(() => {
+    const dataProps = getComponentProps(dataComponent, KEYS.DATA, "all");
+    const children = [
+      React.cloneElement(dataComponent, dataProps),
+      ...labelComponents
+    ];
+
+    return renderContainer(groupComponent, children);
+  }, [
+    dataComponent,
+    labelComponents,
+    groupComponent,
+    renderContainer,
+    getComponentProps
+  ]);
+
+  return { renderedData, renderContainer, renderedContinuousData };
 };
