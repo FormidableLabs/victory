@@ -49,7 +49,7 @@ import { VictoryBar, Bar } from "victory-bar";
 import { VictoryCandlestick, Candle } from "victory-candlestick";
 import { VictoryErrorBar, ErrorBar } from "victory-errorbar";
 import { VictoryHistogram } from "victory-histogram";
-import { VictoryLine, Curve } from "victory-line";
+import { VictoryLine, Curve, VictoryLineDuplicate } from "victory-line";
 import { VictoryScatter, VictoryScatterDuplicate } from "victory-scatter";
 import { VictoryBoxPlot } from "victory-box-plot";
 import { VictoryVoronoi, Voronoi } from "victory-voronoi";
@@ -178,5 +178,6 @@ export {
   Axis,
   Wrapper,
   VictoryAccessibleGroup,
-  VictoryScatterDuplicate
+  VictoryScatterDuplicate,
+  VictoryLineDuplicate
 };
