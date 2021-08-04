@@ -25,7 +25,7 @@ describe("victory-util/events", () => {
     let sandbox;
     let fake;
     beforeEach(() => {
-      sandbox = sinon.sandbox.create();
+      sandbox = sinon.createSandbox();
       fake = {
         props: {
           events: [
@@ -55,7 +55,7 @@ describe("victory-util/events", () => {
     });
 
     afterEach(() => {
-      sandbox.reset();
+      sandbox.restore();
     });
 
     it("returns new functions that call set state", () => {

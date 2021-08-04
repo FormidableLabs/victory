@@ -11,7 +11,7 @@ import {
   isNil,
   difference
 } from "lodash";
-import Events from "./events";
+import * as Events from "./events";
 import isEqual from "react-fast-compare";
 import VictoryTransition from "../victory-transition/victory-transition";
 

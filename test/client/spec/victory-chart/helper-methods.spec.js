@@ -4,7 +4,10 @@ import { getChildComponents } from "packages/victory-chart/src/helper-methods";
 import React from "react";
 import { VictoryAxis } from "packages/victory-axis/src/index";
 import { VictoryLine } from "packages/victory-line/src/index";
-import { Log } from "packages/victory-core";
+import { Log as _Log } from "packages/victory-core";
+
+// The updated module export syntax doesn't work well with sinon
+const Log = Object.assign({}, _Log);
 
 describe("victory-chart/helpers-methods", () => {
   const getVictoryLine = (props) => React.createElement(VictoryLine, props);
@@ -15,14 +18,13 @@ describe("victory-chart/helpers-methods", () => {
       independent: getVictoryAxis({}),
       dependent: getVictoryAxis({ dependentAxis: true })
     };
-    let sandbox;
+    let spy;
     beforeEach(() => {
-      sandbox = sinon.sandbox.create();
-      sandbox.spy(Log, "warn");
+      spy = sinon.spy(Log, "warn");
     });
 
     afterEach(() => {
-      sandbox.restore();
+      spy.restore();
     });
 
     it("returns a pair of default axes when no children are given", () => {

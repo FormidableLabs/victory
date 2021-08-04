@@ -206,7 +206,7 @@ const getBorderProps = (props, contentHeight, contentWidth) => {
   return { x, y, height, width, style: assign({ fill: "none" }, style.border) };
 };
 
-const getDimensions = (props, fallbackProps) => {
+export const getDimensions = (props, fallbackProps) => {
   const modifiedProps = Helpers.modifyProps(props, fallbackProps, "legend");
   props = assign({}, modifiedProps, getCalculatedValues(modifiedProps));
   const { title, titleOrientation } = props;
@@ -229,7 +229,7 @@ const getDimensions = (props, fallbackProps) => {
   };
 };
 
-const getBaseProps = (props, fallbackProps) => {
+export const getBaseProps = (props, fallbackProps) => {
   const modifiedProps = Helpers.modifyProps(props, fallbackProps, "legend");
   props = assign({}, modifiedProps, getCalculatedValues(modifiedProps));
   const {
@@ -310,5 +310,3 @@ const getBaseProps = (props, fallbackProps) => {
     return childProps;
   }, initialProps);
 };
-
-export { getBaseProps, getDimensions };

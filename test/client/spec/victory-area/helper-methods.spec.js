@@ -9,8 +9,8 @@ describe("victory-area/helper-methods", () => {
   describe("getDataWithBaseline", () => {
     let sandbox;
     beforeEach(() => {
-      sandbox = sinon.sandbox.create();
-      sandbox.stub(Data, "getData", (props) => props.data);
+      sandbox = sinon.createSandbox();
+      sandbox.stub(Data, "getData").callsFake((props) => props.data);
     });
 
     afterEach(() => {

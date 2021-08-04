@@ -12,20 +12,27 @@
     "@babel/transform-shorthand-properties",
     "@babel/transform-spread",
     "@babel/transform-template-literals",
-    "@babel/proposal-object-rest-spread"
+    "@babel/proposal-object-rest-spread",
+    "@babel/plugin-proposal-export-namespace-from"
   ],
   "env": {
     "commonjs": {
       "plugins": [
-        ["@babel/transform-modules-commonjs", {
-          "strict": false,
-          "allowTopLevelThis": true
-        }],
-        ["module-resolver", {
-          "alias": {
-            "^victory-(.+)/es/(.+)": "^victory-\\1/lib/\\2"
+        [
+          "@babel/transform-modules-commonjs",
+          {
+            "strict": false,
+            "allowTopLevelThis": true
           }
-        }]
+        ],
+        [
+          "module-resolver",
+          {
+            "alias": {
+              "^victory-(.+)/es/(.+)": "^victory-\\1/lib/\\2"
+            }
+          }
+        ]
       ]
     }
   }

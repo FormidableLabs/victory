@@ -12,7 +12,7 @@ describe("victory-primitives/point", () => {
   let baseProps;
 
   beforeEach(() => {
-    sandbox = sinon.sandbox.create();
+    sandbox = sinon.createSandbox();
     baseProps = {
       x: 5,
       y: 10,

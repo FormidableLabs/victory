@@ -14,11 +14,13 @@ module.exports = {
     karma: {
       ci: "karma start --browsers ChromeHeadlessCustom,Firefox ./config/karma/karma.conf.coverage.js",
       cov: "karma start ./config/karma/karma.conf.coverage.js",
+      watch: "karma start --auto-watch ./config/karma/karma.conf.js",
       default: "karma start ./config/karma/karma.conf.js"
     },
     test: {
       cov: npsUtils.series.nps("build-package-libs", "karma.cov"),
       dev: "karma start ./config/karma/karma.conf.dev.js",
+      watch: npsUtils.series.nps("build-package-libs", "karma.watch"),
       default: npsUtils.series.nps("build-package-libs", "karma")
     },
     storybook: {

@@ -87,7 +87,7 @@ const processData = (data) => {
   }
 };
 
-const getData = (props) => {
+export const getData = (props) => {
   const accessorTypes = TYPES.concat("x", "y");
   const formattedData = Data.formatData(props.data, props, accessorTypes);
   return formattedData.length ? processData(formattedData) : [];
@@ -144,7 +144,7 @@ const getDomainFromData = (props, axis) => {
     : reduceDataset(dataset, props, axis);
 };
 
-const getDomain = (props, axis) => {
+export const getDomain = (props, axis) => {
   return Domain.createDomainFunction(getDomainFromData)(props, axis);
 };
 
@@ -453,7 +453,7 @@ const isDatumOutOfBounds = (datum, domain) => {
   return yOutOfBounds || xOutOfBounds;
 };
 
-const getBaseProps = (props, fallbackProps) => {
+export const getBaseProps = (props, fallbackProps) => {
   const modifiedProps = Helpers.modifyProps(props, fallbackProps, "boxplot");
   props = assign({}, modifiedProps, getCalculatedValues(modifiedProps));
   const {
@@ -530,5 +530,3 @@ const getBaseProps = (props, fallbackProps) => {
     return acc;
   }, initialChildProps);
 };
-
-export { getDomain, getData, getBaseProps };

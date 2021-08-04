@@ -8,7 +8,7 @@ import {
   Collection
 } from "victory-core";
 
-const getDataWithBaseline = (props, scale) => {
+export const getDataWithBaseline = (props, scale) => {
   let data = Data.getData(props);
   if (data.length < 2) {
     data = [];
@@ -64,7 +64,7 @@ const getCalculatedValues = (props) => {
   return { style, data, scale, domain, origin };
 };
 
-const getBaseProps = (props, fallbackProps) => {
+export const getBaseProps = (props, fallbackProps) => {
   const modifiedProps = Helpers.modifyProps(props, fallbackProps, "area");
   props = assign({}, modifiedProps, getCalculatedValues(modifiedProps));
   const {
@@ -130,5 +130,3 @@ const getBaseProps = (props, fallbackProps) => {
     return childProps;
   }, initialChildProps);
 };
-
-export { getBaseProps, getDataWithBaseline };

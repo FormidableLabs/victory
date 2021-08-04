@@ -8,7 +8,7 @@ import {
   Collection
 } from "victory-core";
 
-const getBarPosition = (props, datum) => {
+export const getBarPosition = (props, datum) => {
   const getDefaultMin = (axis) => {
     const defaultZero =
       Scale.getType(props.scale[axis]) === "log"
@@ -65,7 +65,7 @@ const getCalculatedValues = (props) => {
   return { style, data, scale, domain, origin };
 };
 
-const getBaseProps = (props, fallbackProps) => {
+export const getBaseProps = (props, fallbackProps) => {
   const modifiedProps = Helpers.modifyProps(props, fallbackProps, "bar");
   props = assign({}, modifiedProps, getCalculatedValues(modifiedProps));
   const {
@@ -152,5 +152,3 @@ const getBaseProps = (props, fallbackProps) => {
     return childProps;
   }, initialChildProps);
 };
-
-export { getBaseProps, getBarPosition };

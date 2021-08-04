@@ -33,7 +33,7 @@ describe("victory-util/prop-types", () => {
     };
 
     beforeEach(() => {
-      sandbox = sinon.sandbox.create();
+      sandbox = sinon.createSandbox();
       sandbox.stub(console, "warn");
       sandbox.stub(console, "error");
     });

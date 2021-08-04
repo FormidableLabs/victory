@@ -1,14 +1,14 @@
 import { assign, values, isNil } from "lodash";
 import { Helpers, LabelHelpers, Data, Domain, Scale } from "victory-core";
 
-const getSymbol = (data, props) => {
+export const getSymbol = (data, props) => {
   if (props.bubbleProperty) {
     return "circle";
   }
   return data.symbol || props.symbol;
 };
 
-const getBubbleSize = (datum, props) => {
+export const getBubbleSize = (datum, props) => {
   const { data, z, maxBubbleSize, minBubbleSize } = props;
   const zData = data.map((point) => point[z]);
   const zMin = Math.min(...zData);
@@ -30,7 +30,7 @@ const getBubbleSize = (datum, props) => {
   return Math.max(radius, 1);
 };
 
-const getSize = (datum, props) => {
+export const getSize = (datum, props) => {
   const { size, z } = props;
   if (datum.size) {
     return typeof datum.size === "function"
@@ -75,7 +75,7 @@ const getCalculatedValues = (props) => {
   return { domain, data, scale, style, origin, z };
 };
 
-const getBaseProps = (props, fallbackProps) => {
+export const getBaseProps = (props, fallbackProps) => {
   const modifiedProps = Helpers.modifyProps(props, fallbackProps, "scatter");
   props = assign({}, modifiedProps, getCalculatedValues(modifiedProps));
   const {
@@ -146,5 +146,3 @@ const getBaseProps = (props, fallbackProps) => {
     return childProps;
   }, initialChildProps);
 };
-
-export { getBaseProps, getSize, getBubbleSize, getSymbol };

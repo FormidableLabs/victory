@@ -25,7 +25,7 @@ function getAxisProps(child, props, calculatedProps) {
   };
 }
 
-function getBackgroundWithProps(props, calculatedProps) {
+export function getBackgroundWithProps(props, calculatedProps) {
   const backgroundElement = props.backgroundComponent;
 
   const height = props.polar
@@ -83,7 +83,7 @@ function getStyles(props) {
   };
 }
 
-function getCalculatedProps(props, childComponents) {
+export function getCalculatedProps(props, childComponents) {
   const style = getStyles(props);
   props = Helpers.modifyProps(props, fallbackProps, "chart");
   const { horizontal, polar } = props;
@@ -125,7 +125,7 @@ function getCalculatedProps(props, childComponents) {
   };
 }
 
-function getChildren(props, childComponents, calculatedProps) {
+export function getChildren(props, childComponents, calculatedProps) {
   childComponents = childComponents || getChildComponents(props);
   calculatedProps =
     calculatedProps || getCalculatedProps(props, childComponents);
@@ -161,7 +161,7 @@ function getChildren(props, childComponents, calculatedProps) {
   });
 }
 
-const getChildComponents = (props, defaultAxes) => {
+export const getChildComponents = (props, defaultAxes) => {
   const childComponents = React.Children.toArray(props.children);
   let newChildComponents = [...childComponents];
 
@@ -220,11 +220,4 @@ const createStringMap = (props, childComponents, allStrings) => {
           return memo;
         }, {});
   return { x, y };
-};
-
-export {
-  getBackgroundWithProps,
-  getChildren,
-  getCalculatedProps,
-  getChildComponents
 };

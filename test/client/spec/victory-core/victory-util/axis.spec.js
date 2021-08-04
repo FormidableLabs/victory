@@ -76,14 +76,13 @@ describe("helpers/axis", () => {
     const independentAxis = getVictoryAxis({ dependentAxis: false });
     const bar = getVictoryBar({});
 
-    let sandbox;
+    let spy;
     beforeEach(() => {
-      sandbox = sinon.sandbox.create();
-      sandbox.spy(dependentAxis.type, "getAxis");
+      spy = sinon.spy(dependentAxis.type, "getAxis");
     });
 
     afterEach(() => {
-      sandbox.restore();
+      spy.restore();
     });
 
     it("returns the independent axis when called with 'x'", () => {
@@ -104,7 +103,7 @@ describe("helpers/axis", () => {
     const scale = Scale.getBaseScale({ scale: { x: "linear" } }, "x");
     const ticks = [1, 2, 3, 4, 5];
     beforeEach(() => {
-      sandbox = sinon.sandbox.create();
+      sandbox = sinon.createSandbox();
       sandbox.stub(scale, "tickFormat");
     });
 
@@ -148,7 +147,7 @@ describe("helpers/axis", () => {
     let sandbox;
     const scale = Scale.getBaseScale({ scale: { x: "linear" } }, "x");
     beforeEach(() => {
-      sandbox = sinon.sandbox.create();
+      sandbox = sinon.createSandbox();
       sandbox.spy(scale, "ticks");
     });
 

@@ -10,13 +10,14 @@ describe("victory-scatter/helper-methods", () => {
   describe("getSize", () => {
     let sandbox;
     beforeEach(() => {
-      sandbox = sinon.sandbox.create();
+      sandbox = sinon.createSandbox();
       sandbox.spy(getBubbleSize);
     });
 
     afterEach(() => {
       sandbox.restore();
     });
+
     const data = [
       { x: 1, y: 2, z: 1, t: 4 },
       { x: 2, y: 3, z: 1, t: 2 }

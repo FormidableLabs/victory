@@ -10,7 +10,7 @@ import {
 
 const TYPES = ["close", "open", "high", "low"];
 
-const getData = (props) => {
+export const getData = (props) => {
   const accessorTypes = ["x", "high", "low", "close", "open"];
   return Data.formatData(props.data, props, accessorTypes);
 };
@@ -44,7 +44,7 @@ const getDomainFromData = (props, axis) => {
   return Domain.getDomainFromMinMax(min, max);
 };
 
-const getDomain = (props, axis) => {
+export const getDomain = (props, axis) => {
   return Domain.createDomainFunction(getDomainFromData)(props, axis);
 };
 
@@ -360,7 +360,7 @@ const getLabelProps = (props, text, style, type) => {
 };
 /* eslint-enable max-params*/
 
-const getBaseProps = (props, fallbackProps) => {
+export const getBaseProps = (props, fallbackProps) => {
   // eslint-disable-line max-statements
   props = Helpers.modifyProps(props, fallbackProps, "candlestick");
   const calculatedValues = getCalculatedValues(props);
@@ -473,5 +473,3 @@ const getBaseProps = (props, fallbackProps) => {
     return childProps;
   }, initialChildProps);
 };
-
-export { getBaseProps, getDomain, getData };

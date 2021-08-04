@@ -165,7 +165,7 @@ const _getSizeWithRotate = (axisSize, dependentSize, angle) => {
  * @param  {number} fontSize Current text font-size.
  * @returns {number} Approximate Css length in pixels.
  */
-const convertLengthToPixels = (length, fontSize) => {
+export const convertLengthToPixels = (length, fontSize) => {
   const attribute = length.match(/[a-zA-Z%]+/) && length.match(/[a-zA-Z%]+/)[0];
   const value = length.match(/[0-9.,]+/);
   let result;
@@ -240,6 +240,27 @@ const _approximateTextHeightInternal = (text, style) => {
   }, 0);
 };
 
+// Stubbable implementation.
+export const _approximateTextSizeInternal = {
+  impl: (text, style) => {
+    const angle = Array.isArray(style)
+      ? style[0] && style[0].angle
+      : style && style.angle;
+    const height = _approximateTextHeightInternal(text, style);
+    const width = _approximateTextWidthInternal(text, style);
+    const widthWithRotate = angle
+      ? _getSizeWithRotate(width, height, angle)
+      : width;
+    const heightWithRotate = angle
+      ? _getSizeWithRotate(height, width, angle)
+      : height;
+    return {
+      width: widthWithRotate,
+      height: heightWithRotate * coefficients.heightOverlapCoef
+    };
+  }
+};
+
 /**
  * Predict text size by font params.
  * @param {string} text Content for width calculation.
@@ -251,25 +272,5 @@ const _approximateTextHeightInternal = (text, style) => {
  * @param {number} style.lineHeight Line height coefficient.
  * @returns {number} Approximate text label height.
  */
-const approximateTextSize = (text, style) => {
-  const angle = Array.isArray(style)
-    ? style[0] && style[0].angle
-    : style && style.angle;
-  const height = _approximateTextHeightInternal(text, style);
-  const width = _approximateTextWidthInternal(text, style);
-  const widthWithRotate = angle
-    ? _getSizeWithRotate(width, height, angle)
-    : width;
-  const heightWithRotate = angle
-    ? _getSizeWithRotate(height, width, angle)
-    : height;
-  return {
-    width: widthWithRotate,
-    height: heightWithRotate * coefficients.heightOverlapCoef
-  };
-};
-
-export default {
-  approximateTextSize,
-  convertLengthToPixels
-};
+export const approximateTextSize = (text, style) =>
+  _approximateTextSizeInternal.impl(text, style);

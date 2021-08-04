@@ -9,9 +9,9 @@ import React from "react";
 import { omit } from "lodash";
 import { shallow, mount } from "enzyme";
 import SvgTestHelper from "../svg-test-helper";
-import { VictoryAxis } from "packages/victory-axis/src/index";
-import { VictoryLabel, LineSegment } from "packages/victory-core/src/index";
-import { TextSize } from "packages/victory-core";
+import { VictoryAxis } from "packages/victory-axis";
+import { VictoryLabel, LineSegment } from "packages/victory-core";
+import { _approximateTextSizeInternal } from "packages/victory-core/es/victory-util/textsize";
 
 describe("components/victory-axis", () => {
   describe("default component rendering", () => {
@@ -209,14 +209,16 @@ describe("components/victory-axis", () => {
   });
   describe("label overlap", () => {
     describe("with empty label widths", () => {
+      let sandbox;
       before(() => {
-        sinon.stub(TextSize, "approximateTextSize", () => ({
+        sandbox = sinon.createSandbox();
+        sandbox.stub(_approximateTextSizeInternal, "impl").returns({
           width: 0,
           height: 0
-        }));
+        });
       });
       after(() => {
-        TextSize.approximateTextSize.restore();
+        sandbox.restore();
       });
 
       it("renders the appropriate number of ticks", () => {
@@ -236,15 +238,18 @@ describe("components/victory-axis", () => {
       });
     });
     describe("with not empty label widths", () => {
+      let sandbox;
+
       beforeEach(() => {
-        sinon.stub(TextSize, "approximateTextSize", () => ({
+        sandbox = sinon.createSandbox();
+        sandbox.stub(_approximateTextSizeInternal, "impl").returns({
           width: 30,
           height: 30
-        }));
+        });
       });
 
       afterEach(() => {
-        TextSize.approximateTextSize.restore();
+        sandbox.restore();
       });
 
       it("renders the appropriate number of ticks with default options", () => {
@@ -259,6 +264,7 @@ describe("components/victory-axis", () => {
         );
         expect(wrapper.find('[type="tick"]').length).to.equal(3);
       });
+
       it("renders the appropriate number of ticks with fixLabelOverlap options", () => {
         const wrapper = shallow(
           <VictoryAxis

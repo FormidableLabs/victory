@@ -16,7 +16,7 @@ describe("helpers/wrapper", () => {
     const childComponents = [victoryLine, xAxis, yAxis];
     let sandbox;
     beforeEach(() => {
-      sandbox = sinon.sandbox.create();
+      sandbox = sinon.createSandbox();
       sandbox.spy(Wrapper, "getDomainFromChildren");
     });
 
@@ -40,7 +40,7 @@ describe("helpers/wrapper", () => {
   describe("getStringsFromData", () => {
     let sandbox;
     beforeEach(() => {
-      sandbox = sinon.sandbox.create();
+      sandbox = sinon.createSandbox();
       sandbox.spy(Wrapper, "getStringsFromData");
     });
     afterEach(() => {
