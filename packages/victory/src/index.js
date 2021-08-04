@@ -1,4 +1,4 @@
-import {
+export {
   Background,
   Border,
   Box,
@@ -40,142 +40,54 @@ import {
   VictoryAccessibleGroup
 } from "victory-core";
 
-import { VictoryChart } from "victory-chart";
-import { VictoryGroup } from "victory-group";
-import { VictoryStack } from "victory-stack";
-import { VictoryPie, Slice } from "victory-pie";
-import { VictoryArea, Area } from "victory-area";
-import { VictoryBar, Bar } from "victory-bar";
-import { VictoryCandlestick, Candle } from "victory-candlestick";
-import { VictoryErrorBar, ErrorBar } from "victory-errorbar";
-import { VictoryHistogram } from "victory-histogram";
-import { VictoryLine, Curve } from "victory-line";
-import { VictoryScatter } from "victory-scatter";
-import { VictoryBoxPlot } from "victory-box-plot";
-import { VictoryVoronoi, Voronoi } from "victory-voronoi";
-import { VictoryBrushLine } from "victory-brush-line";
-import {
+export { VictoryChart } from "victory-chart";
+export { VictoryGroup } from "victory-group";
+export { VictoryStack } from "victory-stack";
+export { VictoryPie, Slice } from "victory-pie";
+export { VictoryArea, Area } from "victory-area";
+export { VictoryBar, Bar } from "victory-bar";
+export { VictoryCandlestick, Candle } from "victory-candlestick";
+export { VictoryErrorBar, ErrorBar } from "victory-errorbar";
+export { VictoryHistogram } from "victory-histogram";
+export { VictoryLine, Curve } from "victory-line";
+export { VictoryScatter } from "victory-scatter";
+export { VictoryBoxPlot } from "victory-box-plot";
+export { VictoryVoronoi, Voronoi } from "victory-voronoi";
+export { VictoryBrushLine } from "victory-brush-line";
+export {
   VictoryBrushContainer,
   BrushHelpers,
   brushContainerMixin
 } from "victory-brush-container";
-import {
+export {
   VictoryCursorContainer,
   CursorHelpers,
   cursorContainerMixin
 } from "victory-cursor-container";
-import {
+export {
   VictorySelectionContainer,
   SelectionHelpers,
   selectionContainerMixin
 } from "victory-selection-container";
-import {
+export {
   VictoryVoronoiContainer,
   VoronoiHelpers,
   voronoiContainerMixin
 } from "victory-voronoi-container";
-import {
+export {
   VictoryZoomContainer,
   ZoomHelpers,
   zoomContainerMixin,
   RawZoomHelpers
 } from "victory-zoom-container";
-import {
+export {
   combineContainerMixins,
   makeCreateContainerFunction,
   createContainer
 } from "victory-create-container";
 
-import { VictoryTooltip, Flyout } from "victory-tooltip";
-import { VictoryLegend } from "victory-legend";
-import { VictorySharedEvents } from "victory-shared-events";
-import { VictoryAxis } from "victory-axis";
-import { VictoryPolarAxis } from "victory-polar-axis";
-
-export {
-  Area,
-  Background,
-  Bar,
-  Border,
-  Box,
-  Candle,
-  ClipPath,
-  Curve,
-  ErrorBar,
-  LineSegment,
-  Point,
-  Slice,
-  Voronoi,
-  Flyout,
-  Whisker,
-  Circle,
-  Rect,
-  Line,
-  Path,
-  TSpan,
-  Text,
-  VictoryAnimation,
-  VictoryArea,
-  VictoryAxis,
-  VictoryPolarAxis,
-  VictoryBar,
-  VictoryBoxPlot,
-  VictoryCandlestick,
-  VictoryChart,
-  VictoryErrorBar,
-  VictoryHistogram,
-  VictoryGroup,
-  VictoryLine,
-  VictoryLabel,
-  VictoryLegend,
-  VictoryPie,
-  VictoryScatter,
-  VictoryStack,
-  VictoryTheme,
-  VictoryTransition,
-  VictorySharedEvents,
-  VictoryTooltip,
-  VictoryVoronoi,
-  VictoryPortal,
-  Portal,
-  VictoryContainer,
-  VictoryClipContainer,
-  VictoryZoomContainer,
-  ZoomHelpers,
-  zoomContainerMixin,
-  RawZoomHelpers,
-  VictorySelectionContainer,
-  SelectionHelpers,
-  selectionContainerMixin,
-  VictoryBrushContainer,
-  BrushHelpers,
-  brushContainerMixin,
-  VictoryCursorContainer,
-  CursorHelpers,
-  cursorContainerMixin,
-  VictoryVoronoiContainer,
-  VoronoiHelpers,
-  voronoiContainerMixin,
-  combineContainerMixins,
-  makeCreateContainerFunction,
-  createContainer,
-  VictoryBrushLine,
-  addEvents,
-  Collection,
-  Data,
-  DefaultTransitions,
-  Domain,
-  Events,
-  Helpers,
-  Log,
-  PropTypes,
-  Scale,
-  Style,
-  TextSize,
-  Transitions,
-  Selection,
-  LabelHelpers,
-  Axis,
-  Wrapper,
-  VictoryAccessibleGroup
-};
+export { VictoryTooltip, Flyout } from "victory-tooltip";
+export { VictoryLegend } from "victory-legend";
+export { VictorySharedEvents } from "victory-shared-events";
+export { VictoryAxis } from "victory-axis";
+export { VictoryPolarAxis } from "victory-polar-axis";
