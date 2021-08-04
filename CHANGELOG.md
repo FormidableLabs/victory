@@ -1,5 +1,12 @@
 # Victory Changelog
 
+## 35.10.0 (2021-08-04)
+
+- [#1910](https://github.com/FormidableLabs/victory/pull/1910) & [#1920](https://github.com/FormidableLabs/victory/pull/1920) - Upgrade to Webpack 5
+- [#1915](https://github.com/FormidableLabs/victory/pull/1915) - Add React as a `peerDependency` for all Victory packages
+- [#1907](https://github.com/FormidableLabs/victory/pull/1907) - Replace default exports with individual exports and namespaced imports
+- [#1913](https://github.com/FormidableLabs/victory/pull/1913) - Add optional `rx` and `ry` types to the primitive props interface. Thanks @Wesleyzxc!
+
 ## 35.9.3 (2021-07-23)
 
 - [#1912](https://github.com/FormidableLabs/victory/pull/1912) - Adds a more thorough check before calculating `barWidth` for grouped / stacked charts. Thanks @WaysToGo!
