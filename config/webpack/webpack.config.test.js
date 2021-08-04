@@ -5,6 +5,7 @@
 var path = require("path");
 var glob = require("glob");
 var webpack = require("webpack");
+const NodePolyfillPlugin = require("node-polyfill-webpack-plugin");
 
 // Replace with `__dirname` if using in project root.
 var ROOT = process.cwd();
@@ -57,6 +58,7 @@ module.exports = {
     }),
     new webpack.ProvidePlugin({
       Buffer: ["buffer", "Buffer"]
-    })
+    }),
+    new NodePolyfillPlugin()
   ]
 };

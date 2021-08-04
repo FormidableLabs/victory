@@ -100,6 +100,7 @@
     "lodash-webpack-plugin": "^0.11.6",
     "match-str": "^0.2.1",
     "mocha": "^5.0.0",
+    "node-polyfill-webpack-plugin": "^1.1.4",
     "nps": "^5.9.0",
     "nps-utils": "^1.5.0",
     "prettier": "^2.3.1",
