@@ -327,7 +327,7 @@ const getAxisLabelProps = (props, calculatedValues) => {
   const labelRadius = radius + (labelStyle.padding || 0);
   const textAnchor =
     labelStyle.textAnchor ||
-    LabelHelpers.getTextPolarAnchor(
+    LabelHelpers.getPolarTextAnchor(
       assign({}, props, { labelPlacement }),
       axisAngle
     );
