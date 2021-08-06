@@ -86,6 +86,7 @@ export default class VictoryGroup extends React.Component {
       }
     }
     return true;
+    // return false;
   }
 
   getNewChildren(props, childComponents, calculatedProps) {
@@ -125,6 +126,7 @@ export default class VictoryGroup extends React.Component {
 
   render() {
     const { role } = this.constructor;
+    // What is this? How does this.state.oldProps get set?
     const props =
       this.state && this.state.nodesWillExit
         ? this.state.oldProps || this.props
@@ -138,6 +140,7 @@ export default class VictoryGroup extends React.Component {
       externalEventMutations
     } = modifiedProps;
     const childComponents = React.Children.toArray(modifiedProps.children);
+    // getCalculatedProps gets called on each rerender
     const calculatedProps = getCalculatedProps(modifiedProps, childComponents);
     const newChildren = this.getNewChildren(
       modifiedProps,
