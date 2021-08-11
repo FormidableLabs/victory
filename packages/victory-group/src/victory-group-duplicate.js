@@ -1,12 +1,14 @@
 import { assign, defaults, isEmpty } from "lodash";
 import PropTypes from "prop-types";
-import React from "react";
+import React, { useEffect } from "react";
 import {
   Helpers,
   VictoryContainer,
   VictoryTheme,
   CommonProps,
-  Wrapper
+  Wrapper,
+  Collection,
+  Transitions
 } from "victory-core";
 import { VictorySharedEvents } from "victory-shared-events";
 import { getChildren, getCalculatedProps } from "./helper-methods";
@@ -19,8 +21,18 @@ const fallbackProps = {
   offset: 0
 };
 
+// eslint-disable-next-line func-style
+function usePreviousProps(props) {
+  const ref = React.useRef();
+  useEffect(() => {
+    ref.current = props;
+  });
+  return ref.current || {};
+}
+
 const VictoryGroup = (props) => {
   const { role } = VictoryGroup;
+  const [state, setState] = React.useState({});
   const modifiedProps = Helpers.modifyProps(props, fallbackProps, role);
   const {
     eventKey,
@@ -40,11 +52,48 @@ const VictoryGroup = (props) => {
   const calculatedProps = getCalculatedProps(modifiedProps, childComponents);
   const { domain, scale, style, origin } = calculatedProps;
 
+  // This is a copy of Wrapper.getAnimationProps that doesn't use this.setState
+  const getAnimationProps = React.useCallback(
+    (childProps, child, index) => {
+      if (!childProps.animate) {
+        return child.props.animate;
+      }
+      const getFilteredState = () => {
+        let childrenTransitions = state.childrenTransitions;
+        childrenTransitions = Collection.isArrayOfArrays(childrenTransitions)
+          ? childrenTransitions[index]
+          : childrenTransitions;
+        return defaults({ childrenTransitions }, state);
+      };
+
+      let getTransitions =
+        childProps.animate && childProps.animate.getTransitions;
+      const filteredState = getFilteredState();
+      const parentState =
+        (childProps.animate && childProps.animate.parentState) || state;
+      if (!getTransitions) {
+        const getTransitionProps = Transitions.getTransitionPropsFactory(
+          childProps,
+          filteredState,
+          (newState) => setState(newState)
+        );
+        getTransitions = (childComponent) =>
+          getTransitionProps(childComponent, index);
+      }
+      return defaults(
+        { getTransitions, parentState },
+        childProps.animate,
+        child.props.animate
+      );
+    },
+    [state]
+  );
+
   const newChildren = React.useMemo(() => {
     const children = getChildren(props, childComponents, calculatedProps);
     return children.map((child, index) => {
       const childProps = assign(
-        { animate: Wrapper.getAnimationProps(props, child, index) },
+        { animate: getAnimationProps(props, child, index) },
         child.props
       );
       return React.cloneElement(child, childProps);
@@ -97,6 +146,24 @@ const VictoryGroup = (props) => {
   const events = React.useMemo(() => {
     return Wrapper.getAllEvents(props);
   }, [props]);
+
+  const previousProps = usePreviousProps();
+
+  React.useEffect(() => {
+    if (props.animate) {
+      setState({
+        nodesShouldLoad: false,
+        nodesDoneLoad: false,
+        animating: true
+      });
+    }
+  }, []);
+
+  React.useEffect(() => {
+    if (props.animate) {
+      Wrapper.setAnimationState(previousProps, props);
+    }
+  }, [props, previousProps]);
 
   if (!isEmpty(events)) {
     return (
