@@ -1,6 +1,6 @@
 import { assign, defaults, isEmpty } from "lodash";
 import PropTypes from "prop-types";
-import React, { useEffect } from "react";
+import React from "react";
 import {
   Helpers,
   VictoryContainer,
@@ -23,7 +23,7 @@ const fallbackProps = {
 
 const usePreviousProps = (props) => {
   const ref = React.useRef();
-  useEffect(() => {
+  React.useEffect(() => {
     ref.current = props;
   });
   return ref.current || {};
