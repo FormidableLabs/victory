@@ -1,12 +1,14 @@
 import { assign, defaults, isEmpty } from "lodash";
 import PropTypes from "prop-types";
-import React from "react";
+import React, { useEffect } from "react";
 import {
   Helpers,
   VictoryContainer,
   VictoryTheme,
   CommonProps,
-  Wrapper
+  Wrapper,
+  Collection,
+  Transitions
 } from "victory-core";
 import { VictorySharedEvents } from "victory-shared-events";
 import { getChildren, getCalculatedProps } from "./helper-methods";
@@ -19,79 +21,76 @@ const fallbackProps = {
   offset: 0
 };
 
-export default class VictoryGroup extends React.Component {
-  static displayName = "VictoryGroup";
+const usePreviousProps = (props) => {
+  const ref = React.useRef();
+  useEffect(() => {
+    ref.current = props;
+  });
+  return ref.current || {};
+};
 
-  static role = "group";
+const VictoryGroup = (props) => {
+  const { role } = VictoryGroup;
+  const [state, setState] = React.useState({});
 
-  static propTypes = {
-    ...CommonProps.baseProps,
-    ...CommonProps.dataProps,
-    children: PropTypes.oneOfType([
-      PropTypes.arrayOf(PropTypes.node),
-      PropTypes.node
-    ]),
-    color: PropTypes.oneOfType([PropTypes.string, PropTypes.func]),
-    colorScale: PropTypes.oneOfType([
-      PropTypes.arrayOf(PropTypes.string),
-      PropTypes.oneOf([
-        "grayscale",
-        "qualitative",
-        "heatmap",
-        "warm",
-        "cool",
-        "red",
-        "green",
-        "blue"
-      ])
-    ]),
-    horizontal: PropTypes.bool,
-    offset: PropTypes.number
-  };
+  const modifiedProps = Helpers.modifyProps(props, fallbackProps, role);
+  const {
+    eventKey,
+    containerComponent,
+    standalone,
+    groupComponent,
+    externalEventMutations,
+    width,
+    height,
+    theme,
+    polar,
+    horizontal,
+    name
+  } = modifiedProps;
 
-  static defaultProps = {
-    containerComponent: <VictoryContainer />,
-    groupComponent: <g />,
-    samples: 50,
-    sortOrder: "ascending",
-    standalone: true,
-    theme: VictoryTheme.grayscale
-  };
+  const childComponents = React.Children.toArray(modifiedProps.children);
+  const calculatedProps = getCalculatedProps(modifiedProps, childComponents);
+  const { domain, scale, style, origin } = calculatedProps;
 
-  static expectedComponents = [
-    "groupComponent",
-    "containerComponent",
-    "labelComponent"
-  ];
-
-  static getChildren = getChildren;
-
-  constructor(props) {
-    super(props);
-    if (props.animate) {
-      this.state = {
-        nodesShouldLoad: false,
-        nodesDoneLoad: false,
-        animating: true
-      };
-      this.setAnimationState = Wrapper.setAnimationState.bind(this);
-    }
-  }
-
-  shouldComponentUpdate(nextProps) {
-    if (this.props.animate) {
-      if (!isEqual(this.props, nextProps)) {
-        this.setAnimationState(this.props, nextProps);
-        return false;
+  // This is a copy of Wrapper.getAnimationProps that doesn't use this.setState
+  const getAnimationProps = React.useCallback(
+    (childProps, child, index) => {
+      if (!childProps.animate) {
+        return child.props.animate;
       }
-    }
-    return true;
-    // return false;
-  }
+      const getFilteredState = () => {
+        let childrenTransitions = state.childrenTransitions;
+        childrenTransitions = Collection.isArrayOfArrays(childrenTransitions)
+          ? childrenTransitions[index]
+          : childrenTransitions;
+        return defaults({ childrenTransitions }, state);
+      };
 
-  getNewChildren(props, childComponents, calculatedProps) {
+      let getTransitions =
+        childProps.animate && childProps.animate.getTransitions;
+      const filteredState = getFilteredState();
+      const parentState =
+        (childProps.animate && childProps.animate.parentState) || state;
+      if (!getTransitions) {
+        const getTransitionProps = Transitions.getTransitionPropsFactory(
+          childProps,
+          filteredState,
+          (newState) => setState(newState)
+        );
+        getTransitions = (childComponent) =>
+          getTransitionProps(childComponent, index);
+      }
+      return defaults(
+        { getTransitions, parentState },
+        childProps.animate,
+        child.props.animate
+      );
+    },
+    [state]
+  );
+
+  const newChildren = React.useMemo(() => {
     const children = getChildren(props, childComponents, calculatedProps);
-    const getAnimationProps = Wrapper.getAnimationProps.bind(this);
     return children.map((child, index) => {
       const childProps = assign(
         { animate: getAnimationProps(props, child, index) },
@@ -99,73 +98,132 @@ export default class VictoryGroup extends React.Component {
       );
       return React.cloneElement(child, childProps);
     });
-  }
+  }, [props, childComponents, calculatedProps, getAnimationProps]);
 
-  renderContainer(containerComponent, props) {
-    const containerProps = defaults({}, containerComponent.props, props);
-    return React.cloneElement(containerComponent, containerProps);
-  }
-
-  getContainerProps(props, calculatedProps) {
-    const { width, height, standalone, theme, polar, horizontal, name } = props;
-    const { domain, scale, style, origin } = calculatedProps;
-    return {
-      domain,
-      scale,
-      width,
-      height,
-      standalone,
-      theme,
-      style: style.parent,
-      horizontal,
-      polar,
-      origin,
-      name
-    };
-  }
-
-  render() {
-    const { role } = this.constructor;
-    // What is this? How does this.state.oldProps get set?
-    const props =
-      this.state && this.state.nodesWillExit
-        ? this.state.oldProps || this.props
-        : this.props;
-    const modifiedProps = Helpers.modifyProps(props, fallbackProps, role);
-    const {
-      eventKey,
-      containerComponent,
-      standalone,
-      groupComponent,
-      externalEventMutations
-    } = modifiedProps;
-    const childComponents = React.Children.toArray(modifiedProps.children);
-    // getCalculatedProps gets called on each rerender
-    const calculatedProps = getCalculatedProps(modifiedProps, childComponents);
-    const newChildren = this.getNewChildren(
-      modifiedProps,
-      childComponents,
-      calculatedProps
-    );
-    const containerProps = standalone
-      ? this.getContainerProps(modifiedProps, calculatedProps)
-      : {};
-    const container = standalone
-      ? this.renderContainer(containerComponent, containerProps)
-      : groupComponent;
-    const events = Wrapper.getAllEvents(props);
-    if (!isEmpty(events)) {
-      return (
-        <VictorySharedEvents
-          container={container}
-          eventKey={eventKey}
-          events={events}
-          externalEventMutations={externalEventMutations}
-        >
-          {newChildren}
-        </VictorySharedEvents>
-      );
+  const containerProps = React.useMemo(() => {
+    if (standalone) {
+      return {
+        domain,
+        scale,
+        width,
+        height,
+        standalone,
+        theme,
+        style: style.parent,
+        horizontal,
+        polar,
+        origin,
+        name
+      };
     }
-    return React.cloneElement(container, container.props, newChildren);
+    return {};
+  }, [
+    standalone,
+    domain,
+    scale,
+    width,
+    height,
+    theme,
+    style,
+    horizontal,
+    polar,
+    origin,
+    name
+  ]);
+
+  const container = React.useMemo(() => {
+    if (standalone) {
+      const defaultContainerProps = defaults(
+        {},
+        containerComponent.props,
+        containerProps
+      );
+      return React.cloneElement(containerComponent, defaultContainerProps);
+    }
+    return groupComponent;
+  }, [groupComponent, standalone, containerComponent, containerProps]);
+
+  const events = React.useMemo(() => {
+    return Wrapper.getAllEvents(props);
+  }, [props]);
+
+  const previousProps = usePreviousProps();
+
+  React.useEffect(() => {
+    if (props.animate) {
+      setState({
+        nodesShouldLoad: false,
+        nodesDoneLoad: false,
+        animating: true
+      });
+    }
+    // This hook will run once when the component is initialized
+    // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, []);
+
+  React.useEffect(() => {
+    if (props.animate) {
+      Wrapper.setAnimationState(previousProps, props);
+    }
+  }, [props, previousProps]);
+
+  if (!isEmpty(events)) {
+    return (
+      <VictorySharedEvents
+        container={container}
+        eventKey={eventKey}
+        events={events}
+        externalEventMutations={externalEventMutations}
+      >
+        {newChildren}
+      </VictorySharedEvents>
+    );
   }
-}
+  return React.cloneElement(container, container.props, newChildren);
+};
+
+VictoryGroup.displayName = "VictoryGroup";
+VictoryGroup.role = "group";
+VictoryGroup.propTypes = {
+  ...CommonProps.baseProps,
+  ...CommonProps.dataProps,
+  children: PropTypes.oneOfType([
+    PropTypes.arrayOf(PropTypes.node),
+    PropTypes.node
+  ]),
+  color: PropTypes.oneOfType([PropTypes.string, PropTypes.func]),
+  colorScale: PropTypes.oneOfType([
+    PropTypes.arrayOf(PropTypes.string),
+    PropTypes.oneOf([
+      "grayscale",
+      "qualitative",
+      "heatmap",
+      "warm",
+      "cool",
+      "red",
+      "green",
+      "blue"
+    ])
+  ]),
+  horizontal: PropTypes.bool,
+  offset: PropTypes.number
+};
+
+VictoryGroup.defaultProps = {
+  containerComponent: <VictoryContainer />,
+  groupComponent: <g />,
+  samples: 50,
+  sortOrder: "ascending",
+  standalone: true,
+  theme: VictoryTheme.grayscale
+};
+
+VictoryGroup.expectedComponents = [
+  "groupComponent",
+  "containerComponent",
+  "labelComponent"
+];
+
+VictoryGroup.getChildren = getChildren;
+
+export default React.memo(VictoryGroup, isEqual);
