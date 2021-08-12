@@ -1,4 +1,4 @@
-import { assign, defaults, isEmpty, some } from "lodash";
+import { assign, defaults, isEmpty } from "lodash";
 import PropTypes from "prop-types";
 import React from "react";
 import {
@@ -7,9 +7,8 @@ import {
   VictoryTheme,
   CommonProps,
   Wrapper,
-  Collection,
-  Transitions,
-  usePreviousProps
+  usePreviousProps,
+  useAnimationState
 } from "victory-core";
 import { VictorySharedEvents } from "victory-shared-events";
 import { getChildren, getCalculatedProps } from "./helper-methods";
@@ -28,7 +27,8 @@ const fallbackProps = {
 const BaseVictoryGroup = (p) => {
   // eslint-disable-next-line no-use-before-define
   const { role } = VictoryGroup;
-  const [state, setState] = React.useState({});
+  const { getAnimationProps, state, setState, setAnimationState } =
+    useAnimationState();
   const props = state && state.nodesWillExit ? state.oldProps || p : p;
 
   const modifiedProps = Helpers.modifyProps(props, fallbackProps, role);
@@ -49,43 +49,6 @@ const BaseVictoryGroup = (p) => {
   const childComponents = React.Children.toArray(modifiedProps.children);
   const calculatedProps = getCalculatedProps(modifiedProps, childComponents);
   const { domain, scale, style, origin } = calculatedProps;
-
-  // This is a copy of Wrapper.getAnimationProps that doesn't use this.setState
-  const getAnimationProps = React.useCallback(
-    (childProps, child, index) => {
-      if (!childProps.animate) {
-        return child.props.animate;
-      }
-      const getFilteredState = () => {
-        let childrenTransitions = state.childrenTransitions;
-        childrenTransitions = Collection.isArrayOfArrays(childrenTransitions)
-          ? childrenTransitions[index]
-          : childrenTransitions;
-        return defaults({ childrenTransitions }, state);
-      };
-
-      let getTransitions =
-        childProps.animate && childProps.animate.getTransitions;
-      const filteredState = getFilteredState();
-      const parentState =
-        (childProps.animate && childProps.animate.parentState) || state;
-      if (!getTransitions) {
-        const getTransitionProps = Transitions.getTransitionPropsFactory(
-          childProps,
-          filteredState,
-          (newState) => setState(newState)
-        );
-        getTransitions = (childComponent) =>
-          getTransitionProps(childComponent, index);
-      }
-      return defaults(
-        { getTransitions, parentState },
-        childProps.animate,
-        child.props.animate
-      );
-    },
-    [state]
-  );
 
   const newChildren = React.useMemo(() => {
     const children = getChildren(props, childComponents, calculatedProps);
@@ -147,54 +110,6 @@ const BaseVictoryGroup = (p) => {
 
   const previousProps = usePreviousProps();
 
-  // This is a copy of Wrapper.setAnimationState that doesn't use this.setState
-  const setAnimationState = React.useCallback(() => {
-    if (!previousProps.animate) {
-      return;
-    }
-    if (previousProps.animate.parentState) {
-      const nodesWillExit = previousProps.animate.parentState.nodesWillExit;
-      const oldProps = nodesWillExit ? previousProps : null;
-      setState(
-        defaults({ oldProps, props }, previousProps.animate.parentState)
-      );
-    } else {
-      const oldChildren = React.Children.toArray(previousProps.children);
-      const nextChildren = React.Children.toArray(props.children);
-      const isContinuous = (child) => {
-        const check = (c) => c.type && c.type.continuous;
-        return Array.isArray(child) ? some(child, check) : check(child);
-      };
-
-      const continuous =
-        !previousProps.polar &&
-        some(oldChildren, (child) => {
-          return (
-            isContinuous(child) ||
-            (child.props.children && isContinuous(child.props.children))
-          );
-        });
-      const {
-        nodesWillExit,
-        nodesWillEnter,
-        childrenTransitions,
-        nodesShouldEnter
-      } = Transitions.getInitialTransitionState(oldChildren, nextChildren);
-
-      setState({
-        nodesWillExit,
-        nodesWillEnter,
-        nodesShouldEnter,
-        childrenTransitions: Collection.isArrayOfArrays(childrenTransitions)
-          ? childrenTransitions[0]
-          : childrenTransitions,
-        oldProps: nodesWillExit ? previousProps : null,
-        nextProps: props,
-        continuous
-      });
-    }
-  }, [props, previousProps, setState]);
-
   React.useEffect(() => {
     if (props.animate) {
       setState({
@@ -209,9 +124,9 @@ const BaseVictoryGroup = (p) => {
 
   React.useEffect(() => {
     if (props.animate) {
-      setAnimationState();
+      setAnimationState(previousProps, props);
     }
-  }, [props, setAnimationState]);
+  }, [setAnimationState, previousProps, props]);
 
   if (!isEmpty(events)) {
     return (
