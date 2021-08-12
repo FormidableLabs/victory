@@ -1,5 +1,10 @@
 # Victory Changelog
 
+## 35.10.1 (2021-08-12)
+
+- [#1933](https://github.com/FormidableLabs/victory/pull/1933) - Remove invalid `this` references
+- [#1926](https://github.com/FormidableLabs/victory/pull/1926) - Use less verbose import / export syntax
+
 ## 35.10.0 (2021-08-04)
 
 - [#1910](https://github.com/FormidableLabs/victory/pull/1910) & [#1920](https://github.com/FormidableLabs/victory/pull/1920) - Upgrade to Webpack 5
