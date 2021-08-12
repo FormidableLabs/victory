@@ -8,25 +8,21 @@ import {
   CommonProps,
   Wrapper,
   Collection,
-  Transitions
+  Transitions,
+  usePreviousProps
 } from "victory-core";
 import { VictorySharedEvents } from "victory-shared-events";
 import { getChildren, getCalculatedProps } from "./helper-methods";
 import isEqual from "react-fast-compare";
+
+// TODO: There are some opportunities here to extract the shared animation state functions
+// into a custom hook or some shared logic that can be used by function components
 
 const fallbackProps = {
   width: 450,
   height: 300,
   padding: 50,
   offset: 0
-};
-
-const usePreviousProps = (props) => {
-  const ref = React.useRef();
-  React.useEffect(() => {
-    ref.current = props;
-  });
-  return ref.current || {};
 };
 
 const BaseVictoryGroup = (p) => {

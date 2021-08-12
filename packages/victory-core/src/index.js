@@ -44,3 +44,4 @@ export { default as Wrapper } from "./victory-util/wrapper";
 export * as Axis from "./victory-util/axis";
 export { default as TimerContext } from "./victory-util/timer-context";
 export { default as PortalContext } from "./victory-portal/portal-context";
+export * from "./victory-util/hooks";
