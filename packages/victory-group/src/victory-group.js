@@ -1,4 +1,4 @@
-import { assign, defaults, isEmpty } from "lodash";
+import { assign, defaults, isEmpty, some } from "lodash";
 import PropTypes from "prop-types";
 import React from "react";
 import {
@@ -151,6 +151,54 @@ const BaseVictoryGroup = (p) => {
 
   const previousProps = usePreviousProps();
 
+  // This is a copy of Wrapper.setAnimationState that doesn't use this.setState
+  const setAnimationState = React.useCallback(() => {
+    if (!previousProps.animate) {
+      return;
+    }
+    if (previousProps.animate.parentState) {
+      const nodesWillExit = previousProps.animate.parentState.nodesWillExit;
+      const oldProps = nodesWillExit ? previousProps : null;
+      setState(
+        defaults({ oldProps, props }, previousProps.animate.parentState)
+      );
+    } else {
+      const oldChildren = React.Children.toArray(previousProps.children);
+      const nextChildren = React.Children.toArray(props.children);
+      const isContinuous = (child) => {
+        const check = (c) => c.type && c.type.continuous;
+        return Array.isArray(child) ? some(child, check) : check(child);
+      };
+
+      const continuous =
+        !previousProps.polar &&
+        some(oldChildren, (child) => {
+          return (
+            isContinuous(child) ||
+            (child.props.children && isContinuous(child.props.children))
+          );
+        });
+      const {
+        nodesWillExit,
+        nodesWillEnter,
+        childrenTransitions,
+        nodesShouldEnter
+      } = Transitions.getInitialTransitionState(oldChildren, nextChildren);
+
+      setState({
+        nodesWillExit,
+        nodesWillEnter,
+        nodesShouldEnter,
+        childrenTransitions: Collection.isArrayOfArrays(childrenTransitions)
+          ? childrenTransitions[0]
+          : childrenTransitions,
+        oldProps: nodesWillExit ? previousProps : null,
+        nextProps: props,
+        continuous
+      });
+    }
+  }, [props, previousProps, setState]);
+
   React.useEffect(() => {
     if (props.animate) {
       setState({
@@ -165,9 +213,9 @@ const BaseVictoryGroup = (p) => {
 
   React.useEffect(() => {
     if (props.animate) {
-      Wrapper.setAnimationState(previousProps, props);
+      setAnimationState();
     }
-  }, [props, previousProps]);
+  }, [props, setAnimationState]);
 
   if (!isEmpty(events)) {
     return (
