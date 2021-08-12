@@ -1,5 +1,4 @@
-/* eslint-disable no-invalid-this */
-/* eslint-disable func-style */
+/* eslint-disable func-style,no-use-before-define */
 import {
   assign,
   isEmpty,
@@ -61,11 +60,14 @@ export function getEvents(props, target, eventKey, getScopedEvents) {
    * specified in defaultEvents of a sub-component
    */
   const getAllEvents = () => {
+    // Mandatory usage: `getEvents.bind(this)`
+    /* eslint-disable no-invalid-this */
     if (Array.isArray(this.componentEvents)) {
       return Array.isArray(props.events)
         ? this.componentEvents.concat(...props.events)
         : this.componentEvents;
     }
+    /* eslint-enable no-invalid-this */
     return props.events;
   };
 
@@ -95,10 +97,13 @@ export function getScopedEvents(events, namespace, childType, baseProps) {
     return {};
   }
 
+  // Mandatory usage: `getScopedEvents.bind(this)`
+  // eslint-disable-next-line no-invalid-this
   baseProps = baseProps || this.baseProps;
   // returns the original base props or base state of a given target element
   const getTargetProps = (identifier, type) => {
     const { childName, target, key } = identifier;
+    // eslint-disable-next-line no-invalid-this
     const baseType = type === "props" ? baseProps : this.state || {};
     const base =
       childName === undefined || childName === null || !baseType[childName]
@@ -137,6 +142,7 @@ export function getScopedEvents(events, namespace, childType, baseProps) {
 
     // returns the state object with mutated props applied for a single key
     const getMutationObject = (key, childName) => {
+      // eslint-disable-next-line no-invalid-this
       const baseState = this.state || {};
       if (!isFunction(eventReturn.mutation)) {
         return baseState;
@@ -227,9 +233,11 @@ export function getScopedEvents(events, namespace, childType, baseProps) {
   // into a state mutation, and calls setState
   // eslint-disable-next-line max-params
   const onEvent = (evt, childProps, eventKey, eventName) => {
+    // eslint-disable-next-line no-invalid-this
     const eventReturn = events[eventName](evt, childProps, eventKey, this);
     if (!isEmpty(eventReturn)) {
       const callbacks = compileCallbacks(eventReturn);
+      // eslint-disable-next-line no-invalid-this
       this.setState(parseEventReturn(eventReturn, eventKey), callbacks);
     }
   };
@@ -259,6 +267,8 @@ export function getPartialEvents(events, eventKey, childProps) {
  * a particular element
  */
 export function getEventState(eventKey, namespace, childType) {
+  // Mandatory usage: `getEventState.bind(this)`
+  // eslint-disable-next-line no-invalid-this
   const state = this.state || {};
   if (!childType) {
     return eventKey === "parent"
@@ -294,7 +304,7 @@ export function getExternalMutationsWithChildren(
 
   return childNames.reduce((memo, childName) => {
     const childState = baseState[childName];
-    const mutation = this.getExternalMutations(
+    const mutation = getExternalMutations(
       mutations,
       baseProps[childName],
       baseState[childName],
@@ -331,7 +341,7 @@ export function getExternalMutations(
     const keyProps = baseProps[eventKey] || {};
     if (eventKey === "parent") {
       const identifier = { eventKey, target: "parent" };
-      const mutation = this.getExternalMutation(
+      const mutation = getExternalMutation(
         mutations,
         keyProps,
         keyState,
@@ -345,7 +355,7 @@ export function getExternalMutations(
       const targets = uniq(keys(keyProps).concat(keys(keyState)));
       memo[eventKey] = targets.reduce((m, target) => {
         const identifier = { eventKey, target, childName };
-        const mutation = this.getExternalMutation(
+        const mutation = getExternalMutation(
           mutations,
           keyProps[target],
           keyState[target],
