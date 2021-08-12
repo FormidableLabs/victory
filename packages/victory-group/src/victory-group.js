@@ -29,9 +29,11 @@ const usePreviousProps = (props) => {
   return ref.current || {};
 };
 
-const VictoryGroup = (props) => {
+const BaseVictoryGroup = (p) => {
+  // eslint-disable-next-line no-use-before-define
   const { role } = VictoryGroup;
   const [state, setState] = React.useState({});
+  const props = state && state.nodesWillExit ? state.oldProps || p : p;
 
   const modifiedProps = Helpers.modifyProps(props, fallbackProps, role);
   const {
@@ -182,6 +184,10 @@ const VictoryGroup = (props) => {
   return React.cloneElement(container, container.props, newChildren);
 };
 
+// We need to attatch the static properties to the memoized version, or else
+// VictoryChart will not be able to get this component's role type
+const VictoryGroup = React.memo(BaseVictoryGroup, isEqual);
+
 VictoryGroup.displayName = "VictoryGroup";
 VictoryGroup.role = "group";
 VictoryGroup.propTypes = {
@@ -226,4 +232,4 @@ VictoryGroup.expectedComponents = [
 
 VictoryGroup.getChildren = getChildren;
 
-export default React.memo(VictoryGroup, isEqual);
+export default VictoryGroup;
