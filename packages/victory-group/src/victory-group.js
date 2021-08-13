@@ -21,12 +21,15 @@ const fallbackProps = {
   offset: 0
 };
 
-const BaseVictoryGroup = (p) => {
+const BaseVictoryGroup = (initialProps) => {
   // eslint-disable-next-line no-use-before-define
   const { role } = VictoryGroup;
   const { getAnimationProps, state, setState, setAnimationState } =
     useAnimationState();
-  const props = state && state.nodesWillExit ? state.oldProps || p : p;
+  const props =
+    state && state.nodesWillExit
+      ? state.oldProps || initialProps
+      : initialProps;
 
   const modifiedProps = Helpers.modifyProps(props, fallbackProps, role);
   const {
