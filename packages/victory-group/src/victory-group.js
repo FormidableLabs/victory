@@ -14,9 +14,6 @@ import { VictorySharedEvents } from "victory-shared-events";
 import { getChildren, getCalculatedProps } from "./helper-methods";
 import isEqual from "react-fast-compare";
 
-// TODO: There are some opportunities here to extract the shared animation state functions
-// into a custom hook or some shared logic that can be used by function components
-
 const fallbackProps = {
   width: 450,
   height: 300,
