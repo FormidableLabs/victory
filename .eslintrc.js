@@ -9,7 +9,11 @@ module.exports = {
       }
     }
   },
-  extends: ["formidable/configurations/es6-react", "prettier"],
+  extends: [
+    "formidable/configurations/es6-react",
+    "prettier",
+    "plugin:react-hooks/recommended"
+  ],
   rules: {
     "react/sort-comp": "off",
     "import/no-unresolved": [2, { ignore: ["victory*"] }],
