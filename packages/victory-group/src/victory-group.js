@@ -23,7 +23,7 @@ const fallbackProps = {
 
 const VictoryGroup = (initialProps) => {
   // eslint-disable-next-line no-use-before-define
-  const { role } = VictoryGroup;
+  const { role } = VictoryGroupMemo;
   const { getAnimationProps, state, setState, setAnimationState } =
     useAnimationState();
   const props =
