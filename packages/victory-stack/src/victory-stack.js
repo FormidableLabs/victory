@@ -21,7 +21,7 @@ const fallbackProps = {
   padding: 50
 };
 
-const VictoryStackBase = (initialProps) => {
+const VictoryStack = (initialProps) => {
   // eslint-disable-next-line no-use-before-define
   const { role } = VictoryStack;
   const { setState, setAnimationState, getAnimationProps, state } =
@@ -151,12 +151,6 @@ const VictoryStackBase = (initialProps) => {
   return React.cloneElement(container, container.props, newChildren);
 };
 
-const VictoryStack = React.memo(VictoryStackBase, isEqual);
-
-VictoryStack.displayName = "VictoryStack";
-
-VictoryStack.role = "stack";
-
 VictoryStack.propTypes = {
   ...CommonProps.baseProps,
   bins: PropTypes.oneOfType([
@@ -212,12 +206,17 @@ VictoryStack.defaultProps = {
   fillInMissingData: true
 };
 
-VictoryStack.expectedComponents = [
+const VictoryStackMemo = React.memo(VictoryStack, isEqual);
+
+VictoryStackMemo.displayName = "VictoryStack";
+VictoryStackMemo.role = "stack";
+
+VictoryStackMemo.expectedComponents = [
   "groupComponent",
   "containerComponent",
   "labelComponent"
 ];
 
-VictoryStack.getChildren = getChildren;
+VictoryStackMemo.getChildren = getChildren;
 
-export default VictoryStack;
+export default VictoryStackMemo;
