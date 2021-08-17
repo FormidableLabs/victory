@@ -30,8 +30,7 @@ const fallbackProps = {
 };
 
 const VictoryChart = (initialProps) => {
-  // eslint-disable-next-line no-use-before-define
-  const { role } = VictoryChartMemo;
+  const role = "chart";
   const { getAnimationProps, setState, setAnimationState, getProps } =
     useAnimationState();
   const props = getProps(initialProps);
