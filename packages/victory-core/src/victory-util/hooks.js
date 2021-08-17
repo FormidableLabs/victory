@@ -103,5 +103,14 @@ export const useAnimationState = (initialState = {}) => {
     [setState]
   );
 
-  return { state, setState, getAnimationProps, setAnimationState };
+  const getProps = React.useCallback(
+    (initialProps) => {
+      return state && state.nodesWillExit
+        ? state.oldProps || initialProps
+        : initialProps;
+    },
+    [state]
+  );
+
+  return { state, setState, getAnimationProps, setAnimationState, getProps };
 };
