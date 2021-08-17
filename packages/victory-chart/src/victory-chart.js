@@ -8,7 +8,9 @@ import {
   VictoryTheme,
   CommonProps,
   PropTypes as CustomPropTypes,
-  Wrapper
+  Wrapper,
+  usePreviousProps,
+  useAnimationState
 } from "victory-core";
 import { VictorySharedEvents } from "victory-shared-events";
 import { VictoryAxis } from "victory-axis";
@@ -27,76 +29,41 @@ const fallbackProps = {
   padding: 50
 };
 
-export default class VictoryChart extends React.Component {
-  static displayName = "VictoryChart";
+const VictoryChart = (initialProps) => {
+  // eslint-disable-next-line no-use-before-define
+  const { role } = VictoryChartMemo;
+  const { getAnimationProps, state, setState, setAnimationState } =
+    useAnimationState();
+  const props =
+    state && state.nodesWillExit
+      ? state.oldProps || initialProps
+      : initialProps;
 
-  static propTypes = {
-    ...CommonProps.baseProps,
-    backgroundComponent: PropTypes.element,
-    children: PropTypes.oneOfType([
-      PropTypes.arrayOf(PropTypes.node),
-      PropTypes.node
-    ]),
-    defaultAxes: PropTypes.shape({
-      independent: PropTypes.element,
-      dependent: PropTypes.element
-    }),
-    defaultPolarAxes: PropTypes.shape({
-      independent: PropTypes.element,
-      dependent: PropTypes.element
-    }),
-    endAngle: PropTypes.number,
-    innerRadius: CustomPropTypes.nonNegative,
-    prependDefaultAxes: PropTypes.bool,
-    startAngle: PropTypes.number
-  };
+  const modifiedProps = Helpers.modifyProps(props, fallbackProps, role);
+  const {
+    eventKey,
+    containerComponent,
+    standalone,
+    groupComponent,
+    externalEventMutations,
+    width,
+    height,
+    theme,
+    polar,
+    name
+  } = modifiedProps;
 
-  static defaultProps = {
-    backgroundComponent: <Background />,
-    containerComponent: <VictoryContainer />,
-    defaultAxes: {
-      independent: <VictoryAxis />,
-      dependent: <VictoryAxis dependentAxis />
-    },
-    defaultPolarAxes: {
-      independent: <VictoryPolarAxis />,
-      dependent: <VictoryPolarAxis dependentAxis />
-    },
-    groupComponent: <g />,
-    standalone: true,
-    theme: VictoryTheme.grayscale
-  };
+  const axes = props.polar
+    ? modifiedProps.defaultPolarAxes
+    : modifiedProps.defaultAxes;
+  const childComponents = getChildComponents(modifiedProps, axes);
+  const calculatedProps = getCalculatedProps(modifiedProps, childComponents);
+  const { domain, scale, style, origin, radius, horizontal } = calculatedProps;
 
-  static expectedComponents = ["groupComponent", "containerComponent"];
-
-  constructor(props) {
-    super(props);
-    this.state = {};
-    if (props.animate) {
-      this.state = {
-        nodesShouldLoad: false,
-        nodesDoneLoad: false,
-        animating: true
-      };
-      this.setAnimationState = Wrapper.setAnimationState.bind(this);
-    }
-  }
-
-  shouldComponentUpdate(nextProps) {
-    if (this.props.animate) {
-      if (!isEqual(this.props, nextProps)) {
-        this.setAnimationState(this.props, nextProps);
-        return false;
-      }
-    }
-    return true;
-  }
-
-  getNewChildren(props, childComponents, calculatedProps) {
+  const newChildren = React.useMemo(() => {
     const children = getChildren(props, childComponents, calculatedProps);
-    const getAnimationProps = Wrapper.getAnimationProps.bind(this);
 
-    const newChildren = children.map((child, index) => {
+    const mappedChildren = children.map((child, index) => {
       const childProps = assign(
         { animate: getAnimationProps(props, child, index) },
         child.props
@@ -110,80 +77,135 @@ export default class VictoryChart extends React.Component {
         calculatedProps
       );
 
-      newChildren.unshift(backgroundComponent);
+      mappedChildren.unshift(backgroundComponent);
     }
 
-    return newChildren;
-  }
+    return mappedChildren;
+  }, [getAnimationProps, childComponents, props, calculatedProps]);
 
-  renderContainer(containerComponent, props) {
-    const containerProps = defaults({}, containerComponent.props, props);
-    return React.cloneElement(containerComponent, containerProps);
-  }
+  const containerProps = React.useMemo(() => {
+    if (standalone) {
+      return {
+        domain,
+        scale,
+        width,
+        height,
+        standalone,
+        theme,
+        style: style.parent,
+        horizontal,
+        name,
+        polar,
+        radius,
+        origin: polar ? origin : undefined
+      };
+    }
+    return {};
+  }, [
+    domain,
+    scale,
+    width,
+    height,
+    standalone,
+    theme,
+    style,
+    horizontal,
+    name,
+    polar,
+    radius,
+    origin
+  ]);
 
-  getContainerProps(props, calculatedProps) {
-    const { width, height, standalone, theme, polar, name } = props;
-    const { domain, scale, style, origin, radius, horizontal } =
-      calculatedProps;
-    return {
-      domain,
-      scale,
-      width,
-      height,
-      standalone,
-      theme,
-      style: style.parent,
-      horizontal,
-      name,
-      polar,
-      radius,
-      origin: polar ? origin : undefined
-    };
-  }
-
-  render() {
-    const props =
-      this.state && this.state.nodesWillExit
-        ? this.state.oldProps || this.props
-        : this.props;
-    const modifiedProps = Helpers.modifyProps(props, fallbackProps, "chart");
-    const {
-      eventKey,
-      containerComponent,
-      groupComponent,
-      standalone,
-      externalEventMutations
-    } = modifiedProps;
-    const axes = props.polar
-      ? modifiedProps.defaultPolarAxes
-      : modifiedProps.defaultAxes;
-    const childComponents = getChildComponents(modifiedProps, axes);
-    const calculatedProps = getCalculatedProps(modifiedProps, childComponents);
-    const newChildren = this.getNewChildren(
-      modifiedProps,
-      childComponents,
-      calculatedProps
-    );
-    const containerProps = standalone
-      ? this.getContainerProps(modifiedProps, calculatedProps)
-      : {};
-    const container = standalone
-      ? this.renderContainer(containerComponent, containerProps)
-      : groupComponent;
-    const events = Wrapper.getAllEvents(props);
-
-    if (!isEmpty(events)) {
-      return (
-        <VictorySharedEvents
-          container={container}
-          eventKey={eventKey}
-          events={events}
-          externalEventMutations={externalEventMutations}
-        >
-          {newChildren}
-        </VictorySharedEvents>
+  const container = React.useMemo(() => {
+    if (standalone) {
+      const defaultContainerProps = defaults(
+        {},
+        containerComponent.props,
+        containerProps
       );
+      return React.cloneElement(containerComponent, defaultContainerProps);
     }
-    return React.cloneElement(container, container.props, newChildren);
+    return groupComponent;
+  }, [groupComponent, standalone, containerComponent, containerProps]);
+
+  const events = React.useMemo(() => {
+    return Wrapper.getAllEvents(props);
+  }, [props]);
+
+  const previousProps = usePreviousProps();
+
+  React.useEffect(() => {
+    if (initialProps.animate) {
+      setState({
+        nodesShouldLoad: false,
+        nodesDoneLoad: false,
+        animating: true
+      });
+    }
+    // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, []);
+
+  React.useEffect(() => {
+    if (initialProps.animate) {
+      setAnimationState(previousProps, props);
+    }
+  }, [setAnimationState, previousProps, initialProps, props]);
+
+  if (!isEmpty(events)) {
+    return (
+      <VictorySharedEvents
+        container={container}
+        eventKey={eventKey}
+        events={events}
+        externalEventMutations={externalEventMutations}
+      >
+        {newChildren}
+      </VictorySharedEvents>
+    );
   }
-}
+  return React.cloneElement(container, container.props, newChildren);
+};
+
+VictoryChart.propTypes = {
+  ...CommonProps.baseProps,
+  backgroundComponent: PropTypes.element,
+  children: PropTypes.oneOfType([
+    PropTypes.arrayOf(PropTypes.node),
+    PropTypes.node
+  ]),
+  defaultAxes: PropTypes.shape({
+    independent: PropTypes.element,
+    dependent: PropTypes.element
+  }),
+  defaultPolarAxes: PropTypes.shape({
+    independent: PropTypes.element,
+    dependent: PropTypes.element
+  }),
+  endAngle: PropTypes.number,
+  innerRadius: CustomPropTypes.nonNegative,
+  prependDefaultAxes: PropTypes.bool,
+  startAngle: PropTypes.number
+};
+
+VictoryChart.defaultProps = {
+  backgroundComponent: <Background />,
+  containerComponent: <VictoryContainer />,
+  defaultAxes: {
+    independent: <VictoryAxis />,
+    dependent: <VictoryAxis dependentAxis />
+  },
+  defaultPolarAxes: {
+    independent: <VictoryPolarAxis />,
+    dependent: <VictoryPolarAxis dependentAxis />
+  },
+  groupComponent: <g />,
+  standalone: true,
+  theme: VictoryTheme.grayscale
+};
+
+const VictoryChartMemo = React.memo(VictoryChart, isEqual);
+
+VictoryChartMemo.displayName = "VictoryChart";
+VictoryChartMemo.expectedComponents = ["groupComponent", "containerComponent"];
+
+export default VictoryChartMemo;

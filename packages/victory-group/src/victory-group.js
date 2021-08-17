@@ -111,7 +111,7 @@ const VictoryGroup = (initialProps) => {
   const previousProps = usePreviousProps();
 
   React.useEffect(() => {
-    if (props.animate) {
+    if (initialProps.animate) {
       setState({
         nodesShouldLoad: false,
         nodesDoneLoad: false,
@@ -123,10 +123,10 @@ const VictoryGroup = (initialProps) => {
   }, []);
 
   React.useEffect(() => {
-    if (props.animate) {
+    if (initialProps.animate) {
       setAnimationState(previousProps, props);
     }
-  }, [setAnimationState, previousProps, props]);
+  }, [setAnimationState, previousProps, initialProps, props]);
 
   if (!isEmpty(events)) {
     return (
