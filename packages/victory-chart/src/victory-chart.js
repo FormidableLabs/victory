@@ -53,8 +53,16 @@ const VictoryChart = (initialProps) => {
   const axes = props.polar
     ? modifiedProps.defaultPolarAxes
     : modifiedProps.defaultAxes;
-  const childComponents = getChildComponents(modifiedProps, axes);
-  const calculatedProps = getCalculatedProps(modifiedProps, childComponents);
+
+  const childComponents = React.useMemo(
+    () => getChildComponents(modifiedProps, axes),
+    [modifiedProps, axes]
+  );
+
+  const calculatedProps = React.useMemo(
+    () => getCalculatedProps(modifiedProps, childComponents),
+    [modifiedProps, childComponents]
+  );
   const { domain, scale, style, origin, radius, horizontal } = calculatedProps;
 
   const newChildren = React.useMemo(() => {
