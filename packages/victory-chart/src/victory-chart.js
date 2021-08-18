@@ -151,9 +151,10 @@ const VictoryChart = (initialProps) => {
 
   React.useEffect(() => {
     if (initialProps.animate) {
-      setAnimationState(previousProps, props);
+      setAnimationState(previousProps, initialProps);
     }
-  }, [setAnimationState, previousProps, initialProps, props]);
+    return () => setAnimationState(previousProps, initialProps);
+  }, [setAnimationState, previousProps, initialProps]);
 
   if (!isEmpty(events)) {
     return (
