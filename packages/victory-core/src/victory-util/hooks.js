@@ -54,26 +54,24 @@ export const useAnimationState = (initialState = {}) => {
 
   // This is a copy of Wrapper.setAnimationState
   const setAnimationState = React.useCallback(
-    (previousProps, props) => {
-      if (!previousProps.animate) {
+    (props, nextProps) => {
+      if (!props.animate) {
         return;
       }
-      if (previousProps.animate.parentState) {
-        const nodesWillExit = previousProps.animate.parentState.nodesWillExit;
-        const oldProps = nodesWillExit ? previousProps : null;
-        setState(
-          defaults({ oldProps, props }, previousProps.animate.parentState)
-        );
+      if (props.animate.parentState) {
+        const nodesWillExit = props.animate.parentState.nodesWillExit;
+        const oldProps = nodesWillExit ? props : null;
+        setState(defaults({ oldProps, nextProps }, props.animate.parentState));
       } else {
-        const oldChildren = React.Children.toArray(previousProps.children);
-        const nextChildren = React.Children.toArray(props.children);
+        const oldChildren = React.Children.toArray(props.children);
+        const nextChildren = React.Children.toArray(nextProps.children);
         const isContinuous = (child) => {
           const check = (c) => c.type && c.type.continuous;
           return Array.isArray(child) ? some(child, check) : check(child);
         };
 
         const continuous =
-          !previousProps.polar &&
+          !props.polar &&
           some(oldChildren, (child) => {
             return (
               isContinuous(child) ||
@@ -94,8 +92,8 @@ export const useAnimationState = (initialState = {}) => {
           childrenTransitions: Collection.isArrayOfArrays(childrenTransitions)
             ? childrenTransitions[0]
             : childrenTransitions,
-          oldProps: nodesWillExit ? previousProps : null,
-          nextProps: props,
+          oldProps: nodesWillExit ? props : null,
+          nextProps,
           continuous
         });
       }

@@ -153,7 +153,6 @@ const VictoryChart = (initialProps) => {
     if (initialProps.animate) {
       setAnimationState(previousProps, initialProps);
     }
-    return () => setAnimationState(previousProps, initialProps);
   }, [setAnimationState, previousProps, initialProps]);
 
   if (!isEmpty(events)) {
