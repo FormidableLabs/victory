@@ -23,6 +23,7 @@ export const useAnimationState = (initialState = {}) => {
       }
       const getFilteredState = () => {
         let childrenTransitions = state && state.childrenTransitions;
+        // childrenTransitions is sometimes undefined
         childrenTransitions = Collection.isArrayOfArrays(childrenTransitions)
           ? childrenTransitions[index]
           : childrenTransitions;
@@ -31,6 +32,8 @@ export const useAnimationState = (initialState = {}) => {
 
       let getTransitions = props.animate && props.animate.getTransitions;
       const filteredState = getFilteredState();
+      // parentState is alternating between correct value and {childrenTransitions: undefined, nodesDoneLoad: true}
+      // the value of parentState is always filteredState
       const parentState =
         (props.animate && props.animate.parentState) || filteredState;
       if (!getTransitions) {

@@ -110,19 +110,19 @@ export default class App extends React.Component {
 
     return (
       <div className="demo" style={containerStyle}>
-        <VictoryArea
+        {/* <VictoryArea
           style={style}
           animate
           data={this.state.areaTransitionData}
           x={(d) => d.x}
           theme={VictoryTheme.material}
-        />
+        /> */}
 
         <VictoryChart style={style} animate theme={VictoryTheme.material}>
           <VictoryArea data={this.state.areaTransitionData} />
         </VictoryChart>
 
-        <VictoryStack
+        {/* <VictoryStack
           style={style}
           animate
           theme={VictoryTheme.material}
@@ -167,7 +167,7 @@ export default class App extends React.Component {
               data: this.state.style
             }}
           />
-        </VictoryChart>
+        </VictoryChart> */}
       </div>
     );
   }

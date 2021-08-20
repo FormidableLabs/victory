@@ -82,7 +82,8 @@ export function getInitialTransitionState(oldChildren, nextChildren) {
     if (!newChild || oldChild.type !== newChild.type) {
       return {};
     }
-
+    // Entering is getting set to an object like { 7: true, 8: true, 9: true }
+    // I think a new value is added to this object on each rendering
     const { entering, exiting } =
       getNodeTransitions(getChildData(oldChild), getChildData(newChild)) || {};
 
@@ -262,6 +263,7 @@ export function getTransitionPropsFactory(props, state, setState) {
   const nodesWillEnter = state && state.nodesWillEnter;
   const nodesShouldEnter = state && state.nodesShouldEnter;
   const nodesShouldLoad = state && state.nodesShouldLoad;
+  // state.nodesDoneLoad alternates between true and undefined
   const nodesDoneLoad = state && state.nodesDoneLoad;
   const childrenTransitions = (state && state.childrenTransitions) || [];
   const transitionDurations = {
@@ -275,7 +277,10 @@ export function getTransitionPropsFactory(props, state, setState) {
   };
 
   const onLoad = (child, data, animate) => {
+    // This is getting called repeatedly after load
+    // It should only be called once
     if (nodesShouldLoad) {
+      // nodesShouldLoad is always false - it should be true the first time
       return getChildOnLoad(animate, data, () => {
         setState({ nodesShouldLoad: false, nodesDoneLoad: true });
       });

@@ -31,6 +31,7 @@ const fallbackProps = {
 
 const VictoryChart = (initialProps) => {
   const role = "chart";
+  // State is sometimes { nodesDidLoad: true }
   const { getAnimationProps, setState, setAnimationState, getProps } =
     useAnimationState();
   const props = getProps(initialProps);
@@ -68,6 +69,8 @@ const VictoryChart = (initialProps) => {
     const children = getChildren(props, childComponents, calculatedProps);
 
     const mappedChildren = children.map((child, index) => {
+      // This is assigning the parent state to the children based on the filtered state
+      // Should props.animate.parentState be defined?
       const childProps = assign(
         { animate: getAnimationProps(props, child, index) },
         child.props
@@ -142,6 +145,7 @@ const VictoryChart = (initialProps) => {
 
   React.useEffect(() => {
     if (initialProps.animate) {
+      console.log("setting initial state");
       setState({
         nodesShouldLoad: false,
         nodesDoneLoad: false,
