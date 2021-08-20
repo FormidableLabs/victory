@@ -51,7 +51,7 @@ const VictoryGroup = (initialProps) => {
     const children = getChildren(props, childComponents, calculatedProps);
     return children.map((child, index) => {
       const childProps = assign(
-        { animate: getAnimationProps(props, child, index) },
+        { animate: getAnimationProps(props, child, index, "victory-group") },
         child.props
       );
       return React.cloneElement(child, childProps);

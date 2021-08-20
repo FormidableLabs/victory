@@ -15,11 +15,6 @@ export const usePreviousProps = (props) => {
 export const useAnimationState = (initialState = {}) => {
   const [state, setState] = React.useState(initialState);
 
-  React.useEffect(() => {
-    console.log("state", state);
-    console.log(state.nodesShouldLoad);
-  }, [state]);
-
   // This is a copy of Wrapper.getAnimationProps
   const getAnimationProps = React.useCallback(
     (props, child, index) => {
@@ -28,7 +23,6 @@ export const useAnimationState = (initialState = {}) => {
       }
       const getFilteredState = () => {
         let childrenTransitions = state && state.childrenTransitions;
-        // childrenTransitions is sometimes undefined
         childrenTransitions = Collection.isArrayOfArrays(childrenTransitions)
           ? childrenTransitions[index]
           : childrenTransitions;
@@ -37,18 +31,13 @@ export const useAnimationState = (initialState = {}) => {
 
       let getTransitions = props.animate && props.animate.getTransitions;
       const filteredState = getFilteredState();
-      // parentState is alternating between correct value and {childrenTransitions: undefined, nodesDoneLoad: true}
-      // the value of parentState is always filteredState
       const parentState =
         (props.animate && props.animate.parentState) || filteredState;
-      // ERROR IS HERE
-      // If I comment out these lines, it does not change the state to { nodesWillExit: true }
-      // but it still doesn't handle the domain correctly
       if (!getTransitions) {
         const getTransitionProps = Transitions.getTransitionPropsFactory(
           props,
           filteredState,
-          (newState) => setState(newState)
+          (newState) => setState((oldState) => ({ ...oldState, ...newState }))
         );
         getTransitions = (childComponent) =>
           getTransitionProps(childComponent, index);
@@ -71,7 +60,14 @@ export const useAnimationState = (initialState = {}) => {
       if (props.animate.parentState) {
         const nodesWillExit = props.animate.parentState.nodesWillExit;
         const oldProps = nodesWillExit ? props : null;
-        setState(defaults({ oldProps, nextProps }, props.animate.parentState));
+        const newState = defaults(
+          { oldProps, nextProps },
+          props.animate.parentState
+        );
+        setState((oldState) => ({
+          ...oldState,
+          ...newState
+        }));
       } else {
         const oldChildren = React.Children.toArray(props.children);
         const nextChildren = React.Children.toArray(nextProps.children);
@@ -95,7 +91,8 @@ export const useAnimationState = (initialState = {}) => {
           nodesShouldEnter
         } = Transitions.getInitialTransitionState(oldChildren, nextChildren);
 
-        setState({
+        setState((oldState) => ({
+          ...oldState,
           nodesWillExit,
           nodesWillEnter,
           nodesShouldEnter,
@@ -105,7 +102,7 @@ export const useAnimationState = (initialState = {}) => {
           oldProps: nodesWillExit ? props : null,
           nextProps,
           continuous
-        });
+        }));
       }
     },
     [setState]

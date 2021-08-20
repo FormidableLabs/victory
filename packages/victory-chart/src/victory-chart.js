@@ -32,12 +32,11 @@ const fallbackProps = {
 const VictoryChart = (initialProps) => {
   const role = "chart";
   // State is sometimes { nodesDidLoad: true }
-  const { getAnimationProps, setState, setAnimationState, getProps } =
-    useAnimationState({
-      nodesShouldLoad: false,
-      nodesDoneLoad: false,
-      animating: true
-    });
+  const { getAnimationProps, setAnimationState, getProps } = useAnimationState({
+    nodesShouldLoad: false,
+    nodesDoneLoad: false,
+    animating: true
+  });
   const props = getProps(initialProps);
 
   const modifiedProps = Helpers.modifyProps(props, fallbackProps, role);
@@ -76,7 +75,7 @@ const VictoryChart = (initialProps) => {
       // This is assigning the parent state to the children based on the filtered state
       // Should props.animate.parentState be defined?
       const childProps = assign(
-        { animate: getAnimationProps(props, child, index) },
+        { animate: getAnimationProps(props, child, index, "victory chart") },
         child.props
       );
       return React.cloneElement(child, childProps);

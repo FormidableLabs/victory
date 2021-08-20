@@ -52,7 +52,7 @@ const VictoryStack = (initialProps) => {
     const children = getChildren(props, childComponents, calculatedProps);
     const orderedChildren = children.map((child, index) => {
       const childProps = assign(
-        { animate: getAnimationProps(props, child, index) },
+        { animate: getAnimationProps(props, child, index, "victory-stack") },
         child.props
       );
       return React.cloneElement(child, childProps);
