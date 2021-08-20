@@ -17,26 +17,25 @@ export const useAnimationState = (initialState = {}) => {
 
   // This is a copy of Wrapper.getAnimationProps
   const getAnimationProps = React.useCallback(
-    (childProps, child, index) => {
-      if (!childProps.animate) {
+    (props, child, index) => {
+      if (!props.animate) {
         return child.props.animate;
       }
       const getFilteredState = () => {
-        let childrenTransitions = state.childrenTransitions;
+        let childrenTransitions = state && state.childrenTransitions;
         childrenTransitions = Collection.isArrayOfArrays(childrenTransitions)
           ? childrenTransitions[index]
           : childrenTransitions;
         return defaults({ childrenTransitions }, state);
       };
 
-      let getTransitions =
-        childProps.animate && childProps.animate.getTransitions;
+      let getTransitions = props.animate && props.animate.getTransitions;
       const filteredState = getFilteredState();
       const parentState =
-        (childProps.animate && childProps.animate.parentState) || state;
+        (props.animate && props.animate.parentState) || filteredState;
       if (!getTransitions) {
         const getTransitionProps = Transitions.getTransitionPropsFactory(
-          childProps,
+          props,
           filteredState,
           (newState) => setState(newState)
         );
@@ -45,11 +44,11 @@ export const useAnimationState = (initialState = {}) => {
       }
       return defaults(
         { getTransitions, parentState },
-        childProps.animate,
+        props.animate,
         child.props.animate
       );
     },
-    [state]
+    [state, setState]
   );
 
   // This is a copy of Wrapper.setAnimationState
