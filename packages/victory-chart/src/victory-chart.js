@@ -33,7 +33,11 @@ const VictoryChart = (initialProps) => {
   const role = "chart";
   // State is sometimes { nodesDidLoad: true }
   const { getAnimationProps, setState, setAnimationState, getProps } =
-    useAnimationState();
+    useAnimationState({
+      nodesShouldLoad: false,
+      nodesDoneLoad: false,
+      animating: true
+    });
   const props = getProps(initialProps);
 
   const modifiedProps = Helpers.modifyProps(props, fallbackProps, role);
@@ -142,18 +146,6 @@ const VictoryChart = (initialProps) => {
   // usePreviousProps is always returning {}
   // setAnimationState is returning because props.animate is undefined
   const previousProps = usePreviousProps(initialProps);
-
-  React.useEffect(() => {
-    if (initialProps.animate) {
-      console.log("setting initial state");
-      setState({
-        nodesShouldLoad: false,
-        nodesDoneLoad: false,
-        animating: true
-      });
-    }
-    // eslint-disable-next-line react-hooks/exhaustive-deps
-  }, []);
 
   React.useEffect(() => {
     if (initialProps.animate) {

@@ -15,6 +15,11 @@ export const usePreviousProps = (props) => {
 export const useAnimationState = (initialState = {}) => {
   const [state, setState] = React.useState(initialState);
 
+  React.useEffect(() => {
+    console.log("state", state);
+    console.log(state.nodesShouldLoad);
+  }, [state]);
+
   // This is a copy of Wrapper.getAnimationProps
   const getAnimationProps = React.useCallback(
     (props, child, index) => {
@@ -36,6 +41,9 @@ export const useAnimationState = (initialState = {}) => {
       // the value of parentState is always filteredState
       const parentState =
         (props.animate && props.animate.parentState) || filteredState;
+      // ERROR IS HERE
+      // If I comment out these lines, it does not change the state to { nodesWillExit: true }
+      // but it still doesn't handle the domain correctly
       if (!getTransitions) {
         const getTransitionProps = Transitions.getTransitionPropsFactory(
           props,
