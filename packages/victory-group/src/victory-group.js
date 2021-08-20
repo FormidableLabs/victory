@@ -105,7 +105,7 @@ const VictoryGroup = (initialProps) => {
     return Wrapper.getAllEvents(props);
   }, [props]);
 
-  const previousProps = usePreviousProps();
+  const previousProps = usePreviousProps(initialProps);
 
   React.useEffect(() => {
     if (initialProps.animate) {

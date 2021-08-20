@@ -136,7 +136,9 @@ const VictoryChart = (initialProps) => {
     return Wrapper.getAllEvents(props);
   }, [props]);
 
-  const previousProps = usePreviousProps();
+  // usePreviousProps is always returning {}
+  // setAnimationState is returning because props.animate is undefined
+  const previousProps = usePreviousProps(initialProps);
 
   React.useEffect(() => {
     if (initialProps.animate) {
