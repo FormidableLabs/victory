@@ -275,7 +275,6 @@ export function getTransitionPropsFactory(props, state, setState) {
 
   const onLoad = (child, data, animate) => {
     if (nodesShouldLoad) {
-      // nodesShouldLoad is always false - it should be true the first time
       return getChildOnLoad(animate, data, () => {
         setState({ nodesShouldLoad: false, nodesDoneLoad: true });
       });

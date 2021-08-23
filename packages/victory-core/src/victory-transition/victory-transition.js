@@ -56,8 +56,6 @@ export default class VictoryTransition extends React.Component {
       return {};
     } else if (animate.parentState) {
       const state = animate.parentState;
-      // state.nodesWillExit is undefined when it probably should be true?
-      // oldProps is always undefined
       const oldProps = state.nodesWillExit ? props : null;
       return { oldProps, nextProps };
     } else {
