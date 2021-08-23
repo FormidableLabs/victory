@@ -12,8 +12,22 @@ export const usePreviousProps = (props) => {
   return ref.current || {};
 };
 
-export const useAnimationState = (initialState = {}) => {
-  const [state, setState] = React.useState(initialState);
+const INITIAL_STATE = {
+  nodesShouldLoad: false,
+  nodesDoneLoad: false,
+  animating: true
+};
+
+export const useAnimationState = (initialState = INITIAL_STATE) => {
+  const [state, _setState] = React.useState(initialState);
+
+  // This allows us to use a state object and maintain the same API as this.setState
+  const setState = React.useCallback(
+    (newState) => {
+      _setState((oldState) => ({ ...oldState, ...newState }));
+    },
+    [_setState]
+  );
 
   // This is a copy of Wrapper.getAnimationProps
   const getAnimationProps = React.useCallback(
@@ -37,7 +51,7 @@ export const useAnimationState = (initialState = {}) => {
         const getTransitionProps = Transitions.getTransitionPropsFactory(
           props,
           filteredState,
-          (newState) => setState((oldState) => ({ ...oldState, ...newState }))
+          (newState) => setState(newState)
         );
         getTransitions = (childComponent) =>
           getTransitionProps(childComponent, index);
@@ -64,10 +78,7 @@ export const useAnimationState = (initialState = {}) => {
           { oldProps, nextProps },
           props.animate.parentState
         );
-        setState((oldState) => ({
-          ...oldState,
-          ...newState
-        }));
+        setState(newState);
       } else {
         const oldChildren = React.Children.toArray(props.children);
         const nextChildren = React.Children.toArray(nextProps.children);
@@ -91,8 +102,7 @@ export const useAnimationState = (initialState = {}) => {
           nodesShouldEnter
         } = Transitions.getInitialTransitionState(oldChildren, nextChildren);
 
-        setState((oldState) => ({
-          ...oldState,
+        setState({
           nodesWillExit,
           nodesWillEnter,
           nodesShouldEnter,
@@ -102,7 +112,7 @@ export const useAnimationState = (initialState = {}) => {
           oldProps: nodesWillExit ? props : null,
           nextProps,
           continuous
-        }));
+        });
       }
     },
     [setState]

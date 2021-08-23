@@ -24,7 +24,7 @@ const fallbackProps = {
 const VictoryGroup = (initialProps) => {
   // eslint-disable-next-line no-use-before-define
   const { role } = VictoryGroupMemo;
-  const { getAnimationProps, setState, setAnimationState, getProps } =
+  const { getAnimationProps, setAnimationState, getProps } =
     useAnimationState();
   const props = getProps(initialProps);
 
@@ -106,18 +106,6 @@ const VictoryGroup = (initialProps) => {
   }, [props]);
 
   const previousProps = usePreviousProps(initialProps);
-
-  React.useEffect(() => {
-    if (initialProps.animate) {
-      setState({
-        nodesShouldLoad: false,
-        nodesDoneLoad: false,
-        animating: true
-      });
-    }
-    // This hook will run once when the component is initialized
-    // eslint-disable-next-line react-hooks/exhaustive-deps
-  }, []);
 
   React.useEffect(() => {
     if (initialProps.animate) {

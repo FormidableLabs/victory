@@ -32,11 +32,8 @@ const fallbackProps = {
 const VictoryChart = (initialProps) => {
   const role = "chart";
   // State is sometimes { nodesDidLoad: true }
-  const { getAnimationProps, setAnimationState, getProps } = useAnimationState({
-    nodesShouldLoad: false,
-    nodesDoneLoad: false,
-    animating: true
-  });
+  const { getAnimationProps, setAnimationState, getProps } =
+    useAnimationState();
   const props = getProps(initialProps);
 
   const modifiedProps = Helpers.modifyProps(props, fallbackProps, role);
