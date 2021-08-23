@@ -139,14 +139,15 @@ const VictoryChart = (initialProps) => {
     return Wrapper.getAllEvents(props);
   }, [props]);
 
-  // usePreviousProps is always returning {}
-  // setAnimationState is returning because props.animate is undefined
   const previousProps = usePreviousProps(initialProps);
 
   React.useEffect(() => {
-    if (initialProps.animate) {
-      setAnimationState(previousProps, initialProps);
-    }
+    // This is called before dismount to keep state in sync
+    return () => {
+      if (initialProps.animate) {
+        setAnimationState(previousProps, initialProps);
+      }
+    };
   }, [setAnimationState, previousProps, initialProps]);
 
   if (!isEmpty(events)) {

@@ -108,9 +108,12 @@ const VictoryGroup = (initialProps) => {
   const previousProps = usePreviousProps(initialProps);
 
   React.useEffect(() => {
-    if (initialProps.animate) {
-      setAnimationState(previousProps, props);
-    }
+    // This is called before dismount to keep state in sync
+    return () => {
+      if (initialProps.animate) {
+        setAnimationState(previousProps, props);
+      }
+    };
   }, [setAnimationState, previousProps, initialProps, props]);
 
   if (!isEmpty(events)) {

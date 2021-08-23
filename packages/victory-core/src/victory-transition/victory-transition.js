@@ -147,7 +147,6 @@ export default class VictoryTransition extends React.Component {
   }
 
   render() {
-    // Props.parentState is always { childTransitions: undefined, nodesDoneLoad: true}
     const props = this.pickProps();
     const getTransitionProps =
       isObject(this.props.animate) && this.props.animate.getTransitions

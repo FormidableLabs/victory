@@ -115,9 +115,12 @@ const VictoryStack = (initialProps) => {
   const previousProps = usePreviousProps(initialProps);
 
   React.useEffect(() => {
-    if (initialProps.animate) {
-      setAnimationState(previousProps, initialProps);
-    }
+    // This is called before dismount to keep state in sync
+    return () => {
+      if (initialProps.animate) {
+        setAnimationState(previousProps, initialProps);
+      }
+    };
   }, [setAnimationState, previousProps, initialProps]);
 
   if (!isEmpty(events)) {
