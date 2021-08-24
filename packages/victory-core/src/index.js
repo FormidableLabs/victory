@@ -40,7 +40,7 @@ export * as TextSize from "./victory-util/textsize";
 export { default as Timer } from "./victory-util/timer";
 export * as Transitions from "./victory-util/transitions";
 export * as CommonProps from "./victory-util/common-props";
-export { default as Wrapper } from "./victory-util/wrapper";
+export * as Wrapper from "./victory-util/wrapper";
 export * as Axis from "./victory-util/axis";
 export { default as TimerContext } from "./victory-util/timer-context";
 export { default as PortalContext } from "./victory-portal/portal-context";

@@ -1,6 +1,6 @@
 /* global sinon */
 /* eslint-disable no-unused-expressions,react/no-multi-comp */
-import { Wrapper } from "packages/victory-core/src/index";
+import * as Wrapper from "packages/victory-core/src/victory-util/wrapper";
 import React from "react";
 import { VictoryAxis } from "packages/victory-axis/src/index";
 import { VictoryLine } from "packages/victory-line/src/index";
@@ -14,15 +14,6 @@ describe("helpers/wrapper", () => {
     const xAxis = getVictoryAxis({ dependentAxis: false });
     const yAxis = getVictoryAxis({ dependentAxis: true });
     const childComponents = [victoryLine, xAxis, yAxis];
-    let sandbox;
-    beforeEach(() => {
-      sandbox = sinon.createSandbox();
-      sandbox.spy(Wrapper, "getDomainFromChildren");
-    });
-
-    afterEach(() => {
-      sandbox.restore();
-    });
 
     it("calculates a domain from props", () => {
       const props = { domain: { x: [1, 2], y: [2, 3] } };
@@ -38,15 +29,6 @@ describe("helpers/wrapper", () => {
   });
 
   describe("getStringsFromData", () => {
-    let sandbox;
-    beforeEach(() => {
-      sandbox = sinon.createSandbox();
-      sandbox.spy(Wrapper, "getStringsFromData");
-    });
-    afterEach(() => {
-      sandbox.restore();
-    });
-
     it("returns an array of strings from a data prop", () => {
       const props = {
         data: [
