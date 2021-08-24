@@ -1,4 +1,3 @@
-/* global sinon */
 /* eslint-disable no-unused-expressions,react/no-multi-comp */
 import * as Wrapper from "packages/victory-core/src/victory-util/wrapper";
 import React from "react";
