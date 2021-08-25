@@ -9,8 +9,7 @@ import {
   CommonProps,
   PropTypes as CustomPropTypes,
   Wrapper,
-  usePreviousProps,
-  useAnimationState
+  CustomHooks
 } from "victory-core";
 import { VictorySharedEvents } from "victory-shared-events";
 import { VictoryAxis } from "victory-axis";
@@ -32,7 +31,7 @@ const fallbackProps = {
 const VictoryChart = (initialProps) => {
   const role = "chart";
   const { getAnimationProps, setAnimationState, getProps } =
-    useAnimationState();
+    CustomHooks.useAnimationState();
   const props = getProps(initialProps);
 
   const modifiedProps = Helpers.modifyProps(props, fallbackProps, role);
@@ -136,7 +135,7 @@ const VictoryChart = (initialProps) => {
     return Wrapper.getAllEvents(props);
   }, [props]);
 
-  const previousProps = usePreviousProps(initialProps);
+  const previousProps = CustomHooks.usePreviousProps(initialProps);
 
   React.useEffect(() => {
     // This is called before dismount to keep state in sync

@@ -121,8 +121,5 @@
     "webpack-dev-server": "^3.11.2",
     "webpack-stats-plugin": "^0.1.1"
   },
-  "sideEffects": false,
-  "dependencies": {
-    "@babel/plugin-proposal-export-namespace-from": "^7.14.5"
-  }
+  "sideEffects": false
 }

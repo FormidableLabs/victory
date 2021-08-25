@@ -12,8 +12,7 @@
     "@babel/transform-shorthand-properties",
     "@babel/transform-spread",
     "@babel/transform-template-literals",
-    "@babel/proposal-object-rest-spread",
-    "@babel/plugin-proposal-export-namespace-from"
+    "@babel/proposal-object-rest-spread"
   ],
   "env": {
     "commonjs": {

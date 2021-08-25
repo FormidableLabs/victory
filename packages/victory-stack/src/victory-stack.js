@@ -8,8 +8,7 @@ import {
   CommonProps,
   Wrapper,
   PropTypes as CustomPropTypes,
-  useAnimationState,
-  usePreviousProps
+  CustomHooks
 } from "victory-core";
 import { VictorySharedEvents } from "victory-shared-events";
 import { getChildren, getCalculatedProps } from "./helper-methods";
@@ -25,7 +24,7 @@ const VictoryStack = (initialProps) => {
   // eslint-disable-next-line no-use-before-define
   const { role } = VictoryStackMemo;
   const { setAnimationState, getAnimationProps, getProps } =
-    useAnimationState();
+    CustomHooks.useAnimationState();
 
   const props = getProps(initialProps);
 
@@ -112,7 +111,7 @@ const VictoryStack = (initialProps) => {
     return Wrapper.getAllEvents(props);
   }, [props]);
 
-  const previousProps = usePreviousProps(initialProps);
+  const previousProps = CustomHooks.usePreviousProps(initialProps);
 
   React.useEffect(() => {
     // This is called before dismount to keep state in sync

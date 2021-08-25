@@ -7,8 +7,7 @@ import {
   VictoryTheme,
   CommonProps,
   Wrapper,
-  usePreviousProps,
-  useAnimationState
+  CustomHooks
 } from "victory-core";
 import { VictorySharedEvents } from "victory-shared-events";
 import { getChildren, getCalculatedProps } from "./helper-methods";
@@ -25,7 +24,7 @@ const VictoryGroup = (initialProps) => {
   // eslint-disable-next-line no-use-before-define
   const { role } = VictoryGroupMemo;
   const { getAnimationProps, setAnimationState, getProps } =
-    useAnimationState();
+    CustomHooks.useAnimationState();
   const props = getProps(initialProps);
 
   const modifiedProps = Helpers.modifyProps(props, fallbackProps, role);
@@ -105,7 +104,7 @@ const VictoryGroup = (initialProps) => {
     return Wrapper.getAllEvents(props);
   }, [props]);
 
-  const previousProps = usePreviousProps(initialProps);
+  const previousProps = CustomHooks.usePreviousProps(initialProps);
 
   React.useEffect(() => {
     // This is called before dismount to keep state in sync
