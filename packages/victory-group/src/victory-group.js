@@ -6,9 +6,7 @@ import {
   VictoryContainer,
   VictoryTheme,
   CommonProps,
-  Wrapper,
-  usePreviousProps,
-  useAnimationState
+  Wrapper
 } from "victory-core";
 import { VictorySharedEvents } from "victory-shared-events";
 import { getChildren, getCalculatedProps } from "./helper-methods";
@@ -21,163 +19,150 @@ const fallbackProps = {
   offset: 0
 };
 
-const VictoryGroup = (initialProps) => {
-  // eslint-disable-next-line no-use-before-define
-  const { role } = VictoryGroupMemo;
-  const { getAnimationProps, setAnimationState, getProps } =
-    useAnimationState();
-  const props = getProps(initialProps);
+export default class VictoryGroup extends React.Component {
+  static displayName = "VictoryGroup";
 
-  const modifiedProps = Helpers.modifyProps(props, fallbackProps, role);
-  const {
-    eventKey,
-    containerComponent,
-    standalone,
-    groupComponent,
-    externalEventMutations,
-    width,
-    height,
-    theme,
-    polar,
-    horizontal,
-    name
-  } = modifiedProps;
+  static role = "group";
 
-  const childComponents = React.Children.toArray(modifiedProps.children);
-  const calculatedProps = getCalculatedProps(modifiedProps, childComponents);
-  const { domain, scale, style, origin } = calculatedProps;
+  static propTypes = {
+    ...CommonProps.baseProps,
+    ...CommonProps.dataProps,
+    children: PropTypes.oneOfType([
+      PropTypes.arrayOf(PropTypes.node),
+      PropTypes.node
+    ]),
+    color: PropTypes.oneOfType([PropTypes.string, PropTypes.func]),
+    colorScale: PropTypes.oneOfType([
+      PropTypes.arrayOf(PropTypes.string),
+      PropTypes.oneOf([
+        "grayscale",
+        "qualitative",
+        "heatmap",
+        "warm",
+        "cool",
+        "red",
+        "green",
+        "blue"
+      ])
+    ]),
+    horizontal: PropTypes.bool,
+    offset: PropTypes.number
+  };
 
-  const newChildren = React.useMemo(() => {
+  static defaultProps = {
+    containerComponent: <VictoryContainer />,
+    groupComponent: <g />,
+    samples: 50,
+    sortOrder: "ascending",
+    standalone: true,
+    theme: VictoryTheme.grayscale
+  };
+
+  static expectedComponents = [
+    "groupComponent",
+    "containerComponent",
+    "labelComponent"
+  ];
+
+  static getChildren = getChildren;
+
+  constructor(props) {
+    super(props);
+    if (props.animate) {
+      this.state = {
+        nodesShouldLoad: false,
+        nodesDoneLoad: false,
+        animating: true
+      };
+      this.setAnimationState = Wrapper.setAnimationState.bind(this);
+    }
+  }
+
+  shouldComponentUpdate(nextProps) {
+    if (this.props.animate) {
+      if (!isEqual(this.props, nextProps)) {
+        this.setAnimationState(this.props, nextProps);
+        return false;
+      }
+    }
+    return true;
+  }
+
+  getNewChildren(props, childComponents, calculatedProps) {
     const children = getChildren(props, childComponents, calculatedProps);
+    const getAnimationProps = Wrapper.getAnimationProps.bind(this);
     return children.map((child, index) => {
       const childProps = assign(
-        { animate: getAnimationProps(props, child, index, "victory-group") },
+        { animate: getAnimationProps(props, child, index) },
         child.props
       );
       return React.cloneElement(child, childProps);
     });
-  }, [props, childComponents, calculatedProps, getAnimationProps]);
-
-  const containerProps = React.useMemo(() => {
-    if (standalone) {
-      return {
-        domain,
-        scale,
-        width,
-        height,
-        standalone,
-        theme,
-        style: style.parent,
-        horizontal,
-        polar,
-        origin,
-        name
-      };
-    }
-    return {};
-  }, [
-    standalone,
-    domain,
-    scale,
-    width,
-    height,
-    theme,
-    style,
-    horizontal,
-    polar,
-    origin,
-    name
-  ]);
-
-  const container = React.useMemo(() => {
-    if (standalone) {
-      const defaultContainerProps = defaults(
-        {},
-        containerComponent.props,
-        containerProps
-      );
-      return React.cloneElement(containerComponent, defaultContainerProps);
-    }
-    return groupComponent;
-  }, [groupComponent, standalone, containerComponent, containerProps]);
-
-  const events = React.useMemo(() => {
-    return Wrapper.getAllEvents(props);
-  }, [props]);
-
-  const previousProps = usePreviousProps(initialProps);
-
-  React.useEffect(() => {
-    // This is called before dismount to keep state in sync
-    return () => {
-      if (initialProps.animate) {
-        setAnimationState(previousProps, props);
-      }
-    };
-  }, [setAnimationState, previousProps, initialProps, props]);
-
-  if (!isEmpty(events)) {
-    return (
-      <VictorySharedEvents
-        container={container}
-        eventKey={eventKey}
-        events={events}
-        externalEventMutations={externalEventMutations}
-      >
-        {newChildren}
-      </VictorySharedEvents>
-    );
   }
-  return React.cloneElement(container, container.props, newChildren);
-};
 
-VictoryGroup.propTypes = {
-  ...CommonProps.baseProps,
-  ...CommonProps.dataProps,
-  children: PropTypes.oneOfType([
-    PropTypes.arrayOf(PropTypes.node),
-    PropTypes.node
-  ]),
-  color: PropTypes.oneOfType([PropTypes.string, PropTypes.func]),
-  colorScale: PropTypes.oneOfType([
-    PropTypes.arrayOf(PropTypes.string),
-    PropTypes.oneOf([
-      "grayscale",
-      "qualitative",
-      "heatmap",
-      "warm",
-      "cool",
-      "red",
-      "green",
-      "blue"
-    ])
-  ]),
-  horizontal: PropTypes.bool,
-  offset: PropTypes.number
-};
+  renderContainer(containerComponent, props) {
+    const containerProps = defaults({}, containerComponent.props, props);
+    return React.cloneElement(containerComponent, containerProps);
+  }
 
-VictoryGroup.defaultProps = {
-  containerComponent: <VictoryContainer />,
-  groupComponent: <g />,
-  samples: 50,
-  sortOrder: "ascending",
-  standalone: true,
-  theme: VictoryTheme.grayscale
-};
+  getContainerProps(props, calculatedProps) {
+    const { width, height, standalone, theme, polar, horizontal, name } = props;
+    const { domain, scale, style, origin } = calculatedProps;
+    return {
+      domain,
+      scale,
+      width,
+      height,
+      standalone,
+      theme,
+      style: style.parent,
+      horizontal,
+      polar,
+      origin,
+      name
+    };
+  }
 
-// We need to attatch the static properties to the memoized version, or else
-// VictoryChart will not be able to get this component's role type
-const VictoryGroupMemo = React.memo(VictoryGroup, isEqual);
-
-VictoryGroupMemo.displayName = "VictoryGroup";
-VictoryGroupMemo.role = "group";
-
-VictoryGroupMemo.expectedComponents = [
-  "groupComponent",
-  "containerComponent",
-  "labelComponent"
-];
-
-VictoryGroupMemo.getChildren = getChildren;
-
-export default VictoryGroupMemo;
+  render() {
+    const { role } = this.constructor;
+    const props =
+      this.state && this.state.nodesWillExit
+        ? this.state.oldProps || this.props
+        : this.props;
+    const modifiedProps = Helpers.modifyProps(props, fallbackProps, role);
+    const {
+      eventKey,
+      containerComponent,
+      standalone,
+      groupComponent,
+      externalEventMutations
+    } = modifiedProps;
+    const childComponents = React.Children.toArray(modifiedProps.children);
+    const calculatedProps = getCalculatedProps(modifiedProps, childComponents);
+    const newChildren = this.getNewChildren(
+      modifiedProps,
+      childComponents,
+      calculatedProps
+    );
+    const containerProps = standalone
+      ? this.getContainerProps(modifiedProps, calculatedProps)
+      : {};
+    const container = standalone
+      ? this.renderContainer(containerComponent, containerProps)
+      : groupComponent;
+    const events = Wrapper.getAllEvents(props);
+    if (!isEmpty(events)) {
+      return (
+        <VictorySharedEvents
+          container={container}
+          eventKey={eventKey}
+          events={events}
+          externalEventMutations={externalEventMutations}
+        >
+          {newChildren}
+        </VictorySharedEvents>
+      );
+    }
+    return React.cloneElement(container, container.props, newChildren);
+  }
+}

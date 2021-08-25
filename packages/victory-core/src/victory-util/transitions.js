@@ -82,6 +82,7 @@ export function getInitialTransitionState(oldChildren, nextChildren) {
     if (!newChild || oldChild.type !== newChild.type) {
       return {};
     }
+
     const { entering, exiting } =
       getNodeTransitions(getChildData(oldChild), getChildData(newChild)) || {};
 
