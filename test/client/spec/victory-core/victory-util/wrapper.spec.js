@@ -1,3 +1,4 @@
+/* global sinon */
 /* eslint-disable no-unused-expressions,react/no-multi-comp */
 import { Wrapper } from "packages/victory-core/src/index";
 import React from "react";
