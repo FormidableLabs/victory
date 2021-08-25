@@ -7,9 +7,7 @@ import {
   VictoryTheme,
   CommonProps,
   Wrapper,
-  PropTypes as CustomPropTypes,
-  useAnimationState,
-  usePreviousProps
+  PropTypes as CustomPropTypes
 } from "victory-core";
 import { VictorySharedEvents } from "victory-shared-events";
 import { getChildren, getCalculatedProps } from "./helper-methods";
@@ -21,38 +19,102 @@ const fallbackProps = {
   padding: 50
 };
 
-const VictoryStack = (initialProps) => {
-  // eslint-disable-next-line no-use-before-define
-  const { role } = VictoryStackMemo;
-  const { setAnimationState, getAnimationProps, getProps } =
-    useAnimationState();
+export default class VictoryStack extends React.Component {
+  static displayName = "VictoryStack";
 
-  const props = getProps(initialProps);
+  static role = "stack";
 
-  const modifiedProps = Helpers.modifyProps(props, fallbackProps, role);
-  const {
-    eventKey,
-    containerComponent,
-    standalone,
-    groupComponent,
-    externalEventMutations,
-    width,
-    height,
-    theme,
-    polar,
-    horizontal,
-    name
-  } = modifiedProps;
+  static propTypes = {
+    ...CommonProps.baseProps,
+    bins: PropTypes.oneOfType([
+      PropTypes.arrayOf(
+        PropTypes.oneOfType([
+          CustomPropTypes.nonNegative,
+          PropTypes.instanceOf(Date)
+        ])
+      ),
+      CustomPropTypes.nonNegative
+    ]),
+    categories: PropTypes.oneOfType([
+      PropTypes.arrayOf(PropTypes.string),
+      PropTypes.shape({
+        x: PropTypes.arrayOf(PropTypes.string),
+        y: PropTypes.arrayOf(PropTypes.string)
+      })
+    ]),
+    children: PropTypes.oneOfType([
+      PropTypes.arrayOf(PropTypes.node),
+      PropTypes.node
+    ]),
+    colorScale: PropTypes.oneOfType([
+      PropTypes.arrayOf(PropTypes.string),
+      PropTypes.oneOf([
+        "grayscale",
+        "qualitative",
+        "heatmap",
+        "warm",
+        "cool",
+        "red",
+        "green",
+        "blue"
+      ])
+    ]),
+    fillInMissingData: PropTypes.bool,
+    horizontal: PropTypes.bool,
+    labelComponent: PropTypes.element,
+    labels: PropTypes.oneOfType([PropTypes.func, PropTypes.array]),
+    style: PropTypes.shape({
+      parent: PropTypes.object,
+      data: PropTypes.object,
+      labels: PropTypes.object
+    }),
+    xOffset: PropTypes.number
+  };
 
-  const childComponents = React.Children.toArray(modifiedProps.children);
-  const calculatedProps = getCalculatedProps(modifiedProps, childComponents);
-  const { domain, scale, style, origin } = calculatedProps;
+  static defaultProps = {
+    containerComponent: <VictoryContainer />,
+    groupComponent: <g />,
+    standalone: true,
+    theme: VictoryTheme.grayscale,
+    fillInMissingData: true
+  };
 
-  const newChildren = React.useMemo(() => {
+  static expectedComponents = [
+    "groupComponent",
+    "containerComponent",
+    "labelComponent"
+  ];
+
+  static getChildren = getChildren;
+
+  constructor(props) {
+    super(props);
+    if (props.animate) {
+      this.state = {
+        nodesShouldLoad: false,
+        nodesDoneLoad: false,
+        animating: true
+      };
+      this.setAnimationState = Wrapper.setAnimationState.bind(this);
+    }
+  }
+
+  shouldComponentUpdate(nextProps) {
+    if (this.props.animate) {
+      if (!isEqual(this.props, nextProps)) {
+        this.setAnimationState(this.props, nextProps);
+        return false;
+      }
+    }
+    return true;
+  }
+
+  getNewChildren(props, childComponents, calculatedProps) {
     const children = getChildren(props, childComponents, calculatedProps);
-    const orderedChildren = children.map((child, index) => {
+    const getAnimationProps = Wrapper.getAnimationProps.bind(this);
+    const newChildren = children.map((child, index) => {
       const childProps = assign(
-        { animate: getAnimationProps(props, child, index, "victory-stack") },
+        { animate: getAnimationProps(props, child, index) },
         child.props
       );
       return React.cloneElement(child, childProps);
@@ -62,149 +124,73 @@ const VictoryStack = (initialProps) => {
       are rendered behind lower children. This looks nicer for stacked bars with cornerRadius, and
       areas with strokes
     */
-    return orderedChildren.reverse();
-  }, [props, childComponents, calculatedProps, getAnimationProps]);
-
-  const containerProps = React.useMemo(() => {
-    if (standalone) {
-      return {
-        domain,
-        scale,
-        width,
-        height,
-        standalone,
-        theme,
-        style: style.parent,
-        horizontal,
-        polar,
-        origin,
-        name
-      };
-    }
-    return {};
-  }, [
-    standalone,
-    domain,
-    scale,
-    width,
-    height,
-    theme,
-    style,
-    horizontal,
-    polar,
-    origin,
-    name
-  ]);
-
-  const container = React.useMemo(() => {
-    if (standalone) {
-      const defaultContainerProps = defaults(
-        {},
-        containerComponent.props,
-        containerProps
-      );
-      return React.cloneElement(containerComponent, defaultContainerProps);
-    }
-    return groupComponent;
-  }, [groupComponent, standalone, containerComponent, containerProps]);
-
-  const events = React.useMemo(() => {
-    return Wrapper.getAllEvents(props);
-  }, [props]);
-
-  const previousProps = usePreviousProps(initialProps);
-
-  React.useEffect(() => {
-    // This is called before dismount to keep state in sync
-    return () => {
-      if (initialProps.animate) {
-        setAnimationState(previousProps, initialProps);
-      }
-    };
-  }, [setAnimationState, previousProps, initialProps]);
-
-  if (!isEmpty(events)) {
-    return (
-      <VictorySharedEvents
-        container={container}
-        eventKey={eventKey}
-        events={events}
-        externalEventMutations={externalEventMutations}
-      >
-        {newChildren}
-      </VictorySharedEvents>
-    );
+    return newChildren.reverse();
   }
 
-  return React.cloneElement(container, container.props, newChildren);
-};
+  renderContainer(containerComponent, props) {
+    const containerProps = defaults({}, containerComponent.props, props);
+    return React.cloneElement(containerComponent, containerProps);
+  }
 
-VictoryStack.propTypes = {
-  ...CommonProps.baseProps,
-  bins: PropTypes.oneOfType([
-    PropTypes.arrayOf(
-      PropTypes.oneOfType([
-        CustomPropTypes.nonNegative,
-        PropTypes.instanceOf(Date)
-      ])
-    ),
-    CustomPropTypes.nonNegative
-  ]),
-  categories: PropTypes.oneOfType([
-    PropTypes.arrayOf(PropTypes.string),
-    PropTypes.shape({
-      x: PropTypes.arrayOf(PropTypes.string),
-      y: PropTypes.arrayOf(PropTypes.string)
-    })
-  ]),
-  children: PropTypes.oneOfType([
-    PropTypes.arrayOf(PropTypes.node),
-    PropTypes.node
-  ]),
-  colorScale: PropTypes.oneOfType([
-    PropTypes.arrayOf(PropTypes.string),
-    PropTypes.oneOf([
-      "grayscale",
-      "qualitative",
-      "heatmap",
-      "warm",
-      "cool",
-      "red",
-      "green",
-      "blue"
-    ])
-  ]),
-  fillInMissingData: PropTypes.bool,
-  horizontal: PropTypes.bool,
-  labelComponent: PropTypes.element,
-  labels: PropTypes.oneOfType([PropTypes.func, PropTypes.array]),
-  style: PropTypes.shape({
-    parent: PropTypes.object,
-    data: PropTypes.object,
-    labels: PropTypes.object
-  }),
-  xOffset: PropTypes.number
-};
+  getContainerProps(props, calculatedProps) {
+    const { width, height, standalone, theme, polar, horizontal, name } = props;
+    const { domain, scale, style, origin } = calculatedProps;
+    return {
+      domain,
+      scale,
+      width,
+      height,
+      standalone,
+      theme,
+      style: style.parent,
+      horizontal,
+      polar,
+      origin,
+      name
+    };
+  }
 
-VictoryStack.defaultProps = {
-  containerComponent: <VictoryContainer />,
-  groupComponent: <g />,
-  standalone: true,
-  theme: VictoryTheme.grayscale,
-  fillInMissingData: true
-};
+  render() {
+    const { role } = this.constructor;
+    const props =
+      this.state && this.state.nodesWillExit
+        ? this.state.oldProps || this.props
+        : this.props;
+    const modifiedProps = Helpers.modifyProps(props, fallbackProps, role);
+    const {
+      eventKey,
+      containerComponent,
+      standalone,
+      groupComponent,
+      externalEventMutations
+    } = modifiedProps;
+    const childComponents = React.Children.toArray(modifiedProps.children);
+    const calculatedProps = getCalculatedProps(modifiedProps, childComponents);
+    const newChildren = this.getNewChildren(
+      modifiedProps,
+      childComponents,
+      calculatedProps
+    );
+    const containerProps = standalone
+      ? this.getContainerProps(modifiedProps, calculatedProps)
+      : {};
+    const container = standalone
+      ? this.renderContainer(containerComponent, containerProps)
+      : groupComponent;
+    const events = Wrapper.getAllEvents(props);
+    if (!isEmpty(events)) {
+      return (
+        <VictorySharedEvents
+          container={container}
+          eventKey={eventKey}
+          events={events}
+          externalEventMutations={externalEventMutations}
+        >
+          {newChildren}
+        </VictorySharedEvents>
+      );
+    }
 
-const VictoryStackMemo = React.memo(VictoryStack, isEqual);
-
-VictoryStackMemo.displayName = "VictoryStack";
-VictoryStackMemo.role = "stack";
-
-VictoryStackMemo.expectedComponents = [
-  "groupComponent",
-  "containerComponent",
-  "labelComponent"
-];
-
-VictoryStackMemo.getChildren = getChildren;
-
-export default VictoryStackMemo;
+    return React.cloneElement(container, container.props, newChildren);
+  }
+}
