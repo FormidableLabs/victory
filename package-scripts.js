@@ -76,7 +76,8 @@ module.exports = {
     },
     "compile-ts": "tsc --project tsconfig.json --noEmit",
     // Version testing helpers
-    "lerna-dry-run": "lerna version --no-git-tag-version --no-push --loglevel silly",
+    "lerna-dry-run":
+      "lerna version --no-git-tag-version --no-push --loglevel silly",
     // TODO: organize build scripts once build perf is sorted out
     "babel-es": "cross-env BABEL_ENV=es babel src --out-dir es --copy-files",
     "babel-lib":
