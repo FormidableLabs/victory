@@ -96,7 +96,7 @@ Pre version checks are run _once_ for all packages, and are defined in the root 
 The following commands will let you try a version without publishing or creating git commits:
 
 ```console
-// This command bumps versions, runs checks, builds libs. No git commits will be made, and nothing will be published. `package.json` files in all packages will be altered, so be careful to clean up afterwards.
+// This command bumps versions, runs checks, builds libs. No git commits will be made, and nothing will be published. `package.json` files in all packages will be altered, so be careful to clean up afterwards. This commant will only run if there are committed changes to packages, so creating a test commit before running this test will be necessary
 $ nps lerna-dry-run
 ```
 
