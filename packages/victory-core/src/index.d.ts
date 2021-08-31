@@ -429,6 +429,12 @@ export interface VictoryThemeDefinition {
       labels?: VictoryLabelStyleObject | VictoryLabelStyleObject[];
     };
   } & VictoryCommonThemeProps;
+  histogram?: {
+    style?: {
+      data?: VictoryStyleObject;
+      labels?: VictoryLabelStyleObject | VictoryLabelStyleObject[];
+    };
+  } & VictoryCommonThemeProps;
   independentAxis?: {
     style?: {
       axis?: VictoryStyleObject;
