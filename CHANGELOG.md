@@ -1,4 +1,14 @@
 # Victory Changelog
+
+## 35.11.3 (2021-08-31)
+
+- [#1950](https://github.com/FormidableLabs/victory/pull/1950) - Update `d3-interpolate`
+- [#1953](https://github.com/FormidableLabs/victory/pull/1953) - Update `VictoryThemeDefinition` to include `histogram`. Thanks @2metres!
+
+## 35.11.2 (2021-08-30)
+
+- [#1949](https://github.com/FormidableLabs/victory/pull/1949) - temporarily revert [#1940](https://github.com/FormidableLabs/victory/pull/1940) to fix an issue in `victory-native`
+
 ## 35.11.0 (2021-08-23)
 
 - [#1940](https://github.com/FormidableLabs/victory/pull/1940) - Refactor `VictoryChart`, `VictoryGroup` and `VictoryStack` to take advantage of `React.memo`.
