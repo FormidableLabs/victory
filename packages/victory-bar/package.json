@@ -28,7 +28,7 @@
     "react": "^16.6.0 || ^17.0.0"
   },
   "scripts": {
-    "temp-version": "webpack --bail --config ../../config/webpack/webpack.config.js --colors"
+    "version": "yarn run nps build-libs && nps build-dists"
   },
   "sideEffects": false
 }
