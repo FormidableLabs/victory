@@ -23,7 +23,7 @@
   },
   "homepage": "https://formidable.com/open-source/victory",
   "scripts": {
-    "preversion": "nps check && lerna bootstrap && link-parent-bin",
+    "preversion": "lerna bootstrap && link-parent-bin && nps check",
     "start": "nps start",
     "start-ts": "nps start.ts",
     "storybook": "nps storybook.server",

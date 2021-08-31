@@ -87,10 +87,10 @@ Each package must contain the following `version` script `package.json`:
 }
 ```
 
-Pre version checks are run _once_ for all packages, and are defined in the root directory `package.json`
+Before versioning, we run `lerna bootstrap` and `link-parent-bin` to ensure that each individual package has the `devDependencies` it needs to run its `version` script. Pre version checks are run _once_ for all packages, and are defined in the root directory `package.json`
 
 ```
-"preversion": "nps check"
+"preversion": "lerna bootstrap && link-parent-bin && nps check"
 ```
 
 The following commands will let you try a version without publishing or creating git commits:
