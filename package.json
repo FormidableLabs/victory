@@ -78,6 +78,7 @@
     "eslint-plugin-import": "^2.20.1",
     "eslint-plugin-mocha": "^5.0.0",
     "eslint-plugin-react": "^7.0.0",
+    "eslint-plugin-react-hooks": "^4.2.0",
     "glob": "7.1.2",
     "immutable": "^3.8.2",
     "istanbul": "^0.4.5",
