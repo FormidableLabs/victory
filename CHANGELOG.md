@@ -1,5 +1,9 @@
 # Victory Changelog
 
+## 36.0.0 (2021-09-07)
+
+- [#1940](https://github.com/FormidableLabs/victory/pull/1940) - Refactor `VictoryChart`, `VictoryGroup` and `VictoryStack` to take advantage of `React.memo`.
+
 ## 35.11.3 (2021-08-31)
 
 - [#1950](https://github.com/FormidableLabs/victory/pull/1950) - Update `d3-interpolate`
