@@ -9,6 +9,10 @@ import { VictoryGroup } from "packages/victory-group/src/index";
 import { VictoryBar } from "packages/victory-bar/src/index";
 
 describe("components/victory-group", () => {
+  it("has a static role", () => {
+    expect(VictoryGroup.role).to.equal("group");
+  });
+
   describe("default component rendering", () => {
     it("renders an svg with the correct width and height", () => {
       const wrapper = mount(

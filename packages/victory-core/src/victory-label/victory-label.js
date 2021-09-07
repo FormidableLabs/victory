@@ -51,7 +51,7 @@ const getSingleValue = (prop, index = 0) => {
   return Array.isArray(prop) ? prop[index] || prop[0] : prop;
 };
 
-const useMultiLineBackgrounds = (props) => {
+const shouldUseMultilineBackgrounds = (props) => {
   const { backgroundStyle, backgroundPadding } = props;
   return (
     (Array.isArray(backgroundStyle) && !isEmpty(backgroundStyle)) ||
@@ -365,7 +365,7 @@ const getChildBackgrounds = (calculatedProps, tspanValues) => {
 };
 
 const getBackgroundElement = (calculatedProps, tspanValues) => {
-  return useMultiLineBackgrounds(calculatedProps)
+  return shouldUseMultilineBackgrounds(calculatedProps)
     ? getChildBackgrounds(calculatedProps, tspanValues)
     : getFullBackground(calculatedProps, tspanValues);
 };
@@ -387,7 +387,7 @@ const calculateSpanDy = (tspanValues, i, calculatedProps) => {
     currentCaps / 2 +
     previousCaps / 2;
 
-  return useMultiLineBackgrounds(calculatedProps)
+  return shouldUseMultilineBackgrounds(calculatedProps)
     ? textHeight +
         current.backgroundPadding.top +
         previous.backgroundPadding.bottom
