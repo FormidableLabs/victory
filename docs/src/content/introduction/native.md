@@ -12,7 +12,7 @@ In this guide, we’ll show you how to get started with Victory Native and the R
 
 #### 1. Adding Victory Native to your React Native app
 
-Visit the [the guide on getting started](https://facebook.github.io/react-native/docs/getting-started.html) with React Native if you’re just getting started with React Native.
+Visit the [the guide on getting started](https://reactnative.dev/docs/getting-started) with React Native if you’re just getting started with React Native.
 
 Victory Native is compatible with React Native 0.50 or higher.
 
