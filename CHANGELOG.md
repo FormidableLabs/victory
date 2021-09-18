@@ -1,5 +1,9 @@
 # Victory Changelog
 
+## 36.0.1 (2021-09-17)
+
+- [#1967](https://github.com/FormidableLabs/victory/pull/1967) - Updates `events` propTypes for `VictoryPie`. Thanks @tgalfin!
+
 ## 36.0.0 (2021-09-07)
 
 - [#1940](https://github.com/FormidableLabs/victory/pull/1940) - Refactor `VictoryChart`, `VictoryGroup` and `VictoryStack` to take advantage of `React.memo`.
