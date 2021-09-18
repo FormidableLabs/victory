@@ -1,6 +1,6 @@
 {
   "name": "victory",
-  "version": "36.0.0",
+  "version": "36.0.1",
   "description": "Data viz for React",
   "keywords": [
     "data visualization",
@@ -35,7 +35,7 @@
     "victory-histogram": "^36.0.0",
     "victory-legend": "^36.0.0",
     "victory-line": "^36.0.0",
-    "victory-pie": "^36.0.0",
+    "victory-pie": "^36.0.1",
     "victory-polar-axis": "^36.0.0",
     "victory-scatter": "^36.0.0",
     "victory-selection-container": "^36.0.0",
