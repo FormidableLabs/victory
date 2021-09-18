@@ -106,6 +106,7 @@ class VictoryPie extends React.Component {
       PropTypes.shape({
         target: PropTypes.oneOf(["data", "labels", "parent"]),
         eventKey: PropTypes.oneOfType([
+          PropTypes.array,
           PropTypes.func,
           CustomPropTypes.allOfType([
             CustomPropTypes.integer,
