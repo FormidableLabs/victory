@@ -1,6 +1,9 @@
 import { StatusBar } from 'expo-status-bar';
 import React from 'react';
 import { StyleSheet, Text, View } from 'react-native';
+import { VictoryChart } from 'victory-native';
+
+console.log(VictoryChart)
 
 export default function App() {
   return (
