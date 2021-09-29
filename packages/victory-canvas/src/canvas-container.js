@@ -1,5 +1,5 @@
 import React from "react";
-import { CanvasContext } from "./hooks/use-canvas-ref";
+import { CanvasContext } from "./hooks/use-canvas-context";
 import PropTypes from "prop-types";
 
 const CanvasContainer = (props) => {
