@@ -1,8 +1,9 @@
 {
-  "name": "victory",
-  "version": "36.0.1",
-  "description": "Data viz for React",
+  "name": "victory-native",
+  "version": "36.0.0",
+  "description": "Native Port for Victory",
   "keywords": [
+    "TODO:",
     "data visualization",
     "React",
     "d3",
@@ -14,12 +15,12 @@
   },
   "homepage": "https://formidable.com/open-source/victory",
   "source": "src/index.js",
-  "main": "lib/index.js",
-  "module": "es/index.js",
-  "jsnext:main": "es/index.js",
+  "main": "src/index.js",
+  "files": ["src", "index.js"],
   "author": "Formidable",
   "license": "MIT",
   "dependencies": {
+    "victory": "^36.0.0",
     "victory-area": "^36.0.0",
     "victory-axis": "^36.0.0",
     "victory-bar": "^36.0.0",
@@ -36,7 +37,7 @@
     "victory-histogram": "^36.0.0",
     "victory-legend": "^36.0.0",
     "victory-line": "^36.0.0",
-    "victory-pie": "^36.0.1",
+    "victory-pie": "^36.0.0",
     "victory-polar-axis": "^36.0.0",
     "victory-scatter": "^36.0.0",
     "victory-selection-container": "^36.0.0",
@@ -47,8 +48,12 @@
     "victory-voronoi-container": "^36.0.0",
     "victory-zoom-container": "^36.0.0"
   },
-  "peerDependencies": {
-    "react": "^16.6.0 || ^17.0.0"
+  "devDependencies": {
+    "react": "^17.0.2",
+    "@babel/core": "^7.15.5",
+    "react-native": "^0.65.1",
+    "react-native-svg": "^12.1.1",
+    "react-native-gesture-handler": "^1.10.3"
   },
   "scripts": {
     "version": "yarn run nps build-libs && nps build-dists"

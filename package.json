@@ -13,9 +13,9 @@
     "url": "https://github.com/formidablelabs/victory.git"
   },
   "private": true,
-  "workspaces": [
-    "packages/*"
-  ],
+  "workspaces": {
+    "packages": ["packages/*"]
+  },
   "author": "Formidable",
   "license": "MIT",
   "bugs": {
