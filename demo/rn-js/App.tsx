@@ -1,7 +1,7 @@
 import { StatusBar } from "expo-status-bar";
 import React from "react";
 import { StyleSheet, Text, View } from "react-native";
-import { VictoryChart } from "victory-native";
+import { VictoryChart, VictoryBar } from "victory-native";
 
 const data = [
   { quarter: 1, earnings: 13000 },
@@ -11,10 +11,11 @@ const data = [
 ];
 
 export default function App() {
+  console.log("FARTS");
   return (
     <View style={styles.container}>
       <VictoryChart>
-        {/*<VictoryBar data={data} x="quarter" y="earnings" />*/}
+        <VictoryBar data={data} x="quarter" y="earnings" />
       </VictoryChart>
     </View>
   );

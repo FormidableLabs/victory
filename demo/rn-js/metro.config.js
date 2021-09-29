@@ -17,7 +17,7 @@ defaultConfig.transformer.getTransformOptions = async () => ({
 });
 
 // Ensuring we only use one version of React
-const modules = ["react"];
+const modules = ["react", "react-native-svg"];
 defaultConfig.resolver.blacklistRE = blacklist(
   modules.map(
     (m) => new RegExp(`^${escape(path.join(root, "node_modules", m))}\\/.*$`)
