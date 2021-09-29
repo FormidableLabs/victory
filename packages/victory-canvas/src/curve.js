@@ -56,7 +56,7 @@ const getLineFunction = (props) => {
 };
 
 const Curve = (props) => {
-  const canvasRef = useCanvasRef();
+  const { canvasRef, clear } = useCanvasRef();
   const { theme, data } = props;
   const { stroke, strokeWidth } = theme.line.style.data;
 
@@ -74,8 +74,9 @@ const Curve = (props) => {
 
   React.useEffect(() => {
     const ctx = canvasRef.current.getContext("2d");
+    clear();
     draw(ctx);
-  }, [canvasRef, data, draw]);
+  }, [canvasRef, data, draw, clear]);
 
   return null;
 };

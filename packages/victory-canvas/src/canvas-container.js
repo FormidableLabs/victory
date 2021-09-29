@@ -36,10 +36,15 @@ const CanvasContainer = (props) => {
     events
   );
 
+  const clear = React.useCallback(() => {
+    const ctx = canvasRef.current.getContext("2d");
+    return ctx.clearRect(0, 0, width, height);
+  }, [width, height]);
+
   // Dimensions removed for now
   const svgStyle = assign({ pointerEvents: "all" });
   return (
-    <CanvasContext.Provider value={canvasRef}>
+    <CanvasContext.Provider value={{ canvasRef, clear }}>
       <div style={defaults({}, style, divStyle)} className={className}>
         <canvas
           style={{ position: "absolute", ...svgStyle }}

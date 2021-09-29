@@ -44,7 +44,8 @@
     "victory-tooltip": "^36.0.0",
     "victory-voronoi": "^36.0.0",
     "victory-voronoi-container": "^36.0.0",
-    "victory-zoom-container": "^36.0.0"
+    "victory-zoom-container": "^36.0.0",
+    "victory-canvas": "^0.0.1"
   },
   "peerDependencies": {
     "react": "^16.6.0 || ^17.0.0"
