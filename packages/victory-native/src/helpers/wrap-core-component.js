@@ -10,7 +10,13 @@ import React from "react";
 export const wrapCoreComponent = ({ Component, defaultProps, name }) => {
   const WrappedComponent = (props) => <Component {...props} />;
   WrappedComponent.defaultProps = defaultProps;
-  WrappedComponent.name = name;
+
+  if (Component.name) {
+    WrappedComponent.name = Component.name;
+  }
+  if (Component.role) {
+    WrappedComponent.role = Component.role;
+  }
 
   return WrappedComponent;
 };
