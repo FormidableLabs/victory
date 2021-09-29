@@ -15,6 +15,13 @@ const getYAccessor = (scale) => {
   return (d) => scale.y(d._y1 !== undefined ? d._y1 : d._y);
 };
 
+const getAngleAccessor = (scale) => {
+  return (d) => {
+    const x = scale.x(d._x1 !== undefined ? d._x1 : d._x);
+    return -1 * x + Math.PI / 2;
+  };
+};
+
 const toNewName = (interpolation) => {
   // d3 shape changed the naming scheme for interpolators from "basis" -> "curveBasis" etc.
   const capitalize = (s) => s && s[0].toUpperCase() + s.slice(1);
@@ -54,7 +61,7 @@ const Curve = (props) => {
   const { stroke, strokeWidth } = theme.line.style.data;
 
   const draw = React.useCallback(
-    (ctx, data) => {
+    (ctx) => {
       const line = getLineFunction(props);
       ctx.strokeStyle = stroke;
       ctx.lineWidth = strokeWidth;
@@ -62,13 +69,13 @@ const Curve = (props) => {
       line.context(ctx)(data);
       ctx.stroke();
     },
-    [canvasRef, data]
+    [data, props, stroke, strokeWidth]
   );
 
   React.useEffect(() => {
     const ctx = canvasRef.current.getContext("2d");
-    draw(ctx, data);
-  }, [canvasRef, data]);
+    draw(ctx);
+  }, [canvasRef, data, draw]);
 
   return null;
 };

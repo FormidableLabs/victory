@@ -1,7 +1,7 @@
 import React from "react";
 export const CanvasContext = React.createContext();
 
-export function useCanvasRef() {
+export const useCanvasRef = () => {
   const context = React.useContext(CanvasContext);
   if (!context) {
     throw new Error(
@@ -9,4 +9,4 @@ export function useCanvasRef() {
     );
   }
   return context;
-}
+};
