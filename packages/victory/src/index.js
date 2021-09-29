@@ -91,3 +91,4 @@ export { VictoryLegend } from "victory-legend";
 export { VictorySharedEvents } from "victory-shared-events";
 export { VictoryAxis } from "victory-axis";
 export { VictoryPolarAxis } from "victory-polar-axis";
+export { CanvasContainer, Curve as CanvasCurve } from "victory-canvas";
