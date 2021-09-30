@@ -75,7 +75,7 @@ const sections: SectionItem[] = [
       // { key: "BoxPlotView", title: "VictoryBoxPlot" }
     ],
     title: "Charts"
-  }
+  },
   // {
   //   data: [
   //     { key: "ContainersView", title: "Built–in Containers" },
@@ -83,12 +83,12 @@ const sections: SectionItem[] = [
   //   ],
   //   title: "Containers"
   // },
-  // {
-  //   data: [
-  //     { key: "LegendsView", title: "Legends" },
-  //     { key: "AxisView", title: "Axis" }
-  //     // { key: "ErrorsTooltipsView", title: "Errors & Tooltips" }
-  //   ],
-  //   title: "Other"
-  // }
+  {
+    data: [
+      { key: "Legends", title: "Legends" },
+      { key: "Axis", title: "Axis" }
+      // { key: "ErrorsTooltipsView", title: "Errors & Tooltips" }
+    ],
+    title: "Other"
+  }
 ];

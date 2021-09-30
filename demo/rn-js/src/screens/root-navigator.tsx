@@ -8,6 +8,8 @@ import { ChartScreen } from "./chart-screen";
 import { LineScreen } from "./line-screen";
 import { AreaScreen } from "./area-screen";
 import { HistogramScreen } from "./histogram-screen";
+import { LegendsScreen } from "./legends-screen";
+import { AxisScreen } from "./axis-screen";
 
 export const RootNavigator: React.FC = () => {
   return (
@@ -42,6 +44,16 @@ export const RootNavigator: React.FC = () => {
         name="Histogram"
         component={HistogramScreen}
         options={{ title: "VictoryHistogram" }}
+      />
+      <RootStack.Screen
+        name="Legends"
+        component={LegendsScreen}
+        options={{ title: "Legends" }}
+      />
+      <RootStack.Screen
+        name="Axis"
+        component={AxisScreen}
+        options={{ title: "Axis" }}
       />
     </RootStack.Navigator>
   );
