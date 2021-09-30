@@ -5,7 +5,9 @@ import {
   CanvasCurve,
   VictoryAxis,
   VictoryChart,
-  VictoryLine
+  VictoryLine,
+  VictoryScatter,
+  CanvasPoint
 } from "victory";
 
 const populationData = [
@@ -233,6 +235,14 @@ const formatPopulation = (value) => {
   return value;
 };
 
+const getRandomData = (length = 100) => {
+  const data = [];
+  for (let i = 0; i < length; i++) {
+    data.push({ x: Math.random(), y: Math.random() });
+  }
+  return data;
+};
+
 const CanvasDemo = () => {
   return (
     <div className="demo">
@@ -254,6 +264,13 @@ const CanvasDemo = () => {
           })}
           <VictoryAxis tickFormat={(v) => v} />
           <VictoryAxis dependentAxis tickFormat={formatPopulation} />
+        </VictoryChart>
+        <VictoryChart style={{ parent: parentStyle }}>
+          <VictoryScatter
+            groupComponent={<CanvasContainer />}
+            dataComponent={<CanvasPoint />}
+            data={getRandomData(1000)}
+          />
         </VictoryChart>
       </div>
     </div>
