@@ -10,6 +10,8 @@ import { AreaScreen } from "./area-screen";
 import { HistogramScreen } from "./histogram-screen";
 import { LegendsScreen } from "./legends-screen";
 import { AxisScreen } from "./axis-screen";
+import { ScatterScreen } from "./scatter-screen";
+import { BoxPlotScreen } from "./box-plot-screen";
 
 export const RootNavigator: React.FC = () => {
   return (
@@ -44,6 +46,16 @@ export const RootNavigator: React.FC = () => {
         name="Histogram"
         component={HistogramScreen}
         options={{ title: "VictoryHistogram" }}
+      />
+      <RootStack.Screen
+        name="Scatter"
+        component={ScatterScreen}
+        options={{ title: "VictoryScatter" }}
+      />
+      <RootStack.Screen
+        name="BoxPlot"
+        component={BoxPlotScreen}
+        options={{ title: "VictoryBoxPlot" }}
       />
       <RootStack.Screen
         name="Legends"

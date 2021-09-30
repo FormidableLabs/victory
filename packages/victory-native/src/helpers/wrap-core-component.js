@@ -10,11 +10,14 @@ export const wrapCoreComponent = ({ Component, defaultProps }) => {
   const WrappedComponent = (props) => <Component {...props} />;
   WrappedComponent.defaultProps = defaultProps;
 
-  if (Component.name) {
-    WrappedComponent.name = Component.name;
-  }
-  if (Component.role) {
-    WrappedComponent.role = Component.role;
+  /**
+   * Any static properties existing on Component class
+   *  (or tacked onto function component) should be transferred over.
+   */
+  for (const prop in Component) {
+    if (Component.hasOwnProperty(prop)) {
+      WrappedComponent[prop] = Component[prop];
+    }
   }
 
   return WrappedComponent;

@@ -1,7 +1,7 @@
 {
   "expo": {
-    "name": "rn-js",
-    "slug": "rn-js",
+    "name": "rn-demo",
+    "slug": "rn-demo",
     "version": "1.0.0",
     "orientation": "portrait",
     "icon": "./assets/icon.png",

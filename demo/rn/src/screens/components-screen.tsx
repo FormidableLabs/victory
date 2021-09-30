@@ -70,9 +70,9 @@ const sections: SectionItem[] = [
       { key: "Line", title: "VictoryLine" },
       { key: "Area", title: "VictoryArea" },
       { key: "Bar", title: "VictoryBar" },
-      { key: "Histogram", title: "VictoryHistogram" }
-      // { key: "ScatterView", title: "VictoryScatter" },
-      // { key: "BoxPlotView", title: "VictoryBoxPlot" }
+      { key: "Histogram", title: "VictoryHistogram" },
+      { key: "Scatter", title: "VictoryScatter" },
+      { key: "BoxPlot", title: "VictoryBoxPlot" }
     ],
     title: "Charts"
   },
