@@ -3,7 +3,7 @@ import { useCanvasContext } from "./hooks/use-canvas-context";
 import { LineHelpers } from "victory-core";
 
 const Curve = (props) => {
-  const { canvasRef, clear } = useCanvasContext();
+  const { canvasRef } = useCanvasContext();
   const { style, data } = props;
   const { stroke, strokeWidth } = style;
 
@@ -22,7 +22,7 @@ const Curve = (props) => {
   React.useEffect(() => {
     const ctx = canvasRef.current.getContext("2d");
     draw(ctx);
-  }, [canvasRef, data, draw, clear]);
+  }, [canvasRef, draw]);
 
   return null;
 };
