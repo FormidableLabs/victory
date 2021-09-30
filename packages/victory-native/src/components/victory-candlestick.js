@@ -5,13 +5,17 @@ import VictoryLabel from "./victory-label";
 import VictoryContainer from "./victory-container";
 import Candle from "./victory-primitives/candle";
 import { VictoryCandlestick } from "victory-candlestick/es";
+import { wrapCoreComponent } from "../helpers/wrap-core-component";
 
-export default class extends VictoryCandlestick {
-  static defaultProps = Object.assign({}, VictoryCandlestick.defaultProps, {
-    dataComponent: <Candle/>,
-    labelComponent: <VictoryLabel/>,
-    containerComponent: <VictoryContainer/>,
-    groupComponent: <G/>,
+const NativeVictoryCandlestick = wrapCoreComponent({
+  Component: VictoryCandlestick,
+  defaultProps: Object.assign({}, VictoryCandlestick.defaultProps, {
+    dataComponent: <Candle />,
+    labelComponent: <VictoryLabel />,
+    containerComponent: <VictoryContainer />,
+    groupComponent: <G />,
     width: Dimensions.get("window").width
-  });
-}
+  })
+});
+
+export default NativeVictoryCandlestick;

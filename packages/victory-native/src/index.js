@@ -47,48 +47,48 @@ export { default as Slice } from "./components/victory-primitives/slice";
 export { default as Voronoi } from "./components/victory-primitives/voronoi";
 export { default as Flyout } from "./components/victory-primitives/flyout";
 export { default as Whisker } from "./components/victory-primitives/whisker";
-export { default as VictoryTooltip } from "./components/victory-tooltip"; // ❌
-export { default as VictoryPortal } from "./components/victory-portal/victory-portal"; // ❌
-export { default as Portal } from "./components/victory-portal/portal"; // ❌
-export { default as VictoryArea } from "./components/victory-area"; // ❌
-export { default as VictoryAxis } from "./components/victory-axis"; // ❌
-export { default as VictoryPolarAxis } from "./components/victory-polar-axis"; // ❌
-export { default as VictoryBar } from "./components/victory-bar"; // ❌
-export { default as VictoryBoxPlot } from "./components/victory-boxplot"; // ❌
+export { default as VictoryTooltip } from "./components/victory-tooltip";
+export { default as VictoryPortal } from "./components/victory-portal/victory-portal";
+export { default as Portal } from "./components/victory-portal/portal";
+export { default as VictoryArea } from "./components/victory-area";
+export { default as VictoryAxis } from "./components/victory-axis";
+export { default as VictoryPolarAxis } from "./components/victory-polar-axis";
+export { default as VictoryBar } from "./components/victory-bar";
+export { default as VictoryBoxPlot } from "./components/victory-boxplot";
 export { default as VictoryGroup } from "./components/victory-group";
-export { default as VictoryLine } from "./components/victory-line"; // ❌
-export { default as VictoryHistogram } from "./components/victory-histogram"; // ❌
-export { default as VictoryScatter } from "./components/victory-scatter"; // ❌
+export { default as VictoryLine } from "./components/victory-line";
+export { default as VictoryHistogram } from "./components/victory-histogram";
+export { default as VictoryScatter } from "./components/victory-scatter";
 export { default as VictoryStack } from "./components/victory-stack";
 export { default as VictoryChart } from "./components/victory-chart";
-export { default as VictoryErrorBar } from "./components/victory-errorbar"; // ❌
-export { default as VictoryCandlestick } from "./components/victory-candlestick"; // ❌
-export { default as VictoryVoronoi } from "./components/victory-voronoi"; // ❌
-export { default as VictoryPie } from "./components/victory-pie"; // ❌
-export { default as VictoryContainer } from "./components/victory-container"; // ❌
-export { default as VictoryClipContainer } from "./components/victory-clip-container"; // ❌
+export { default as VictoryErrorBar } from "./components/victory-errorbar";
+export { default as VictoryCandlestick } from "./components/victory-candlestick";
+export { default as VictoryVoronoi } from "./components/victory-voronoi";
+export { default as VictoryPie } from "./components/victory-pie";
+export { default as VictoryContainer } from "./components/victory-container";
+export { default as VictoryClipContainer } from "./components/victory-clip-container";
 export { default as VictoryLabel } from "./components/victory-label";
-export { default as VictoryLegend } from "./components/victory-legend"; // ❌
+export { default as VictoryLegend } from "./components/victory-legend";
 export { default as NativeHelpers } from "./helpers/native-helpers";
 export { default as NativeZoomHelpers } from "./helpers/native-zoom-helpers";
 export {
   zoomContainerMixin,
   default as VictoryZoomContainer
-} from "./components/victory-zoom-container"; // ❌
+} from "./components/victory-zoom-container";
 export {
   voronoiContainerMixin,
   default as VictoryVoronoiContainer
-} from "./components/victory-voronoi-container"; // ❌
+} from "./components/victory-voronoi-container";
 export {
   selectionContainerMixin,
   default as VictorySelectionContainer
-} from "./components/victory-selection-container"; // ❌
+} from "./components/victory-selection-container";
 export {
   cursorContainerMixin,
   default as VictoryCursorContainer
-} from "./components/victory-cursor-container"; // ❌
+} from "./components/victory-cursor-container";
 export {
   brushContainerMixin,
   default as VictoryBrushContainer
-} from "./components/victory-brush-container"; // ❌
-export { createContainer } from "./helpers/create-container"; // ❌
+} from "./components/victory-brush-container";
+export { createContainer } from "./helpers/create-container";

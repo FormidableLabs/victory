@@ -5,13 +5,17 @@ import { VictoryVoronoi } from "victory-voronoi/es";
 import VictoryLabel from "./victory-label";
 import VictoryContainer from "./victory-container";
 import Voronoi from "./victory-primitives/voronoi";
+import { wrapCoreComponent } from "../helpers/wrap-core-component";
 
-export default class extends VictoryVoronoi {
-  static defaultProps = Object.assign({}, VictoryVoronoi.defaultProps, {
-    dataComponent: <Voronoi/>,
-    labelComponent: <VictoryLabel/>,
-    containerComponent: <VictoryContainer/>,
-    groupComponent: <G/>,
+const NativeVictoryVoronoi = wrapCoreComponent({
+  Component: VictoryVoronoi,
+  defaultProps: Object.assign({}, VictoryVoronoi.defaultProps, {
+    dataComponent: <Voronoi />,
+    labelComponent: <VictoryLabel />,
+    containerComponent: <VictoryContainer />,
+    groupComponent: <G />,
     width: Dimensions.get("window").width
-  });
-}
+  })
+});
+
+export default NativeVictoryVoronoi;
