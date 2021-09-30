@@ -2,6 +2,8 @@ import { StatusBar } from "expo-status-bar";
 import React from "react";
 import { StyleSheet, Text, View } from "react-native";
 import { VictoryChart, VictoryBar } from "victory-native";
+import { NavigationContainer } from "@react-navigation/native";
+import { RootNavigator } from "./src/screens/root-navigator";
 
 const data = [
   { quarter: 1, earnings: 13000 },
@@ -11,14 +13,18 @@ const data = [
 ];
 
 export default function App() {
-  console.log("FARTS");
   return (
-    <View style={styles.container}>
-      <VictoryChart>
-        <VictoryBar data={data} x="quarter" y="earnings" />
-      </VictoryChart>
-    </View>
+    <NavigationContainer>
+      <RootNavigator />
+    </NavigationContainer>
   );
+  // return (
+  //   <View style={styles.container}>
+  //     <VictoryChart>
+  //       <VictoryBar data={data} x="quarter" y="earnings" />
+  //     </VictoryChart>
+  //   </View>
+  // );
 }
 
 const styles = StyleSheet.create({
