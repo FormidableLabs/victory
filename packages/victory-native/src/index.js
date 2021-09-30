@@ -38,7 +38,7 @@ export {
   default as Box
 } from "./components/victory-primitives/border";
 export { default as Candle } from "./components/victory-primitives/candle";
-export { default as ClipPath } from "./components/victory-primitives/clip-path"; // ❌
+export { default as ClipPath } from "./components/victory-primitives/clip-path";
 export { default as Curve } from "./components/victory-primitives/curve";
 export { default as ErrorBar } from "./components/victory-primitives/error-bar";
 export { default as LineSegment } from "./components/victory-primitives/line-segment";
