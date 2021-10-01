@@ -39,6 +39,7 @@ import VictoryDemo from "./components/victory-demo";
 import HorizontalDemo from "./components/horizontal-demo";
 import DraggableDemo from "./components/draggable-demo";
 import OuiaDemo from "./components/ouia-demo";
+import CanvasDemo from "./components/canvas-demo";
 
 const MAP = {
   "/accessibility": { component: AccessibilityDemo, name: "AccessibilityDemo" },
@@ -96,7 +97,8 @@ const MAP = {
   "/victory": { component: VictoryDemo, name: "VictoryDemo" },
   "/horizontal": { component: HorizontalDemo, name: "HorizontalDemo" },
   "/draggable": { component: DraggableDemo, name: "DraggableDemo" },
-  "/ouia": { component: OuiaDemo, name: "OuiaDemo" }
+  "/ouia": { component: OuiaDemo, name: "OuiaDemo" },
+  "/canvas": { component: CanvasDemo, name: "CanvasDemo" }
 };
 
 class Home extends React.Component {
