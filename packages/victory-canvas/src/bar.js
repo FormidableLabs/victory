@@ -114,18 +114,121 @@ const evaluateProps = (props) => {
 const Bar = (initialProps) => {
   const { canvasRef } = useCanvasContext();
   const props = evaluateProps(initialProps);
-  const { style, barWidth, y0, y, x } = props;
+  const {
+    style,
+    barWidth,
+    horizontal,
+    cornerRadius,
+    x,
+    x0,
+    y,
+    y0,
+    alignment = "middle"
+  } = props;
+
+  const position = React.useMemo(() => {
+    const size = alignment === "middle" ? barWidth / 2 : barWidth;
+    const sign = horizontal ? -1 : 1;
+    if (horizontal) {
+      return {
+        x0,
+        x1: x,
+        y0: alignment === "start" ? y : y - sign * size,
+        y1: alignment === "end" ? y : y + sign * size
+      };
+    }
+
+    return {
+      x0: alignment === "start" ? x : x - sign * size,
+      x1: alignment === "end" ? x : x + sign * size,
+      y0,
+      y1: y
+    };
+  }, [x, x0, y, y0, alignment, barWidth, horizontal]);
+
+  const barPosition = React.useMemo(() => {
+    if (horizontal) {
+      const isPositive = position.x1 - position.x0 > 0;
+      return {
+        x: isPositive ? position.x0 : position.x1,
+        y: position.y0 - barWidth,
+        height: barWidth,
+        width: Math.abs(position.x1 - position.x0)
+      };
+    }
+    const isPositive = position.y0 - position.y1 > 0;
+    return {
+      x: position.x1 - barWidth,
+      y: isPositive ? position.y1 : position.y0,
+      height: Math.abs(position.y0 - position.y1),
+      width: barWidth
+    };
+  }, [position, horizontal, barWidth]);
+
+  const modifiedCornerRadius = React.useMemo(() => {
+    // "Rotate" the corner radius for a horizontal chart
+    if (horizontal) {
+      const isPositive = position.x1 - position.x0 > 0;
+      return {
+        topRight: isPositive ? cornerRadius.topLeft : cornerRadius.bottomLeft,
+        bottomRight: isPositive
+          ? cornerRadius.topRight
+          : cornerRadius.bottomRight,
+        bottomLeft: isPositive
+          ? cornerRadius.bottomRight
+          : cornerRadius.topRight,
+        topLeft: isPositive ? cornerRadius.bottomLeft : cornerRadius.topLeft
+      };
+    }
+    const isPositive = position.y0 - position.y1 > 0;
+    if (!isPositive) {
+      return {
+        topRight: cornerRadius.bottomLeft,
+        bottomRight: cornerRadius.topLeft,
+        bottomLeft: cornerRadius.topRight,
+        topLeft: cornerRadius.bottomRight
+      };
+    }
+
+    return cornerRadius;
+  }, [cornerRadius, horizontal, position]);
 
   const draw = React.useCallback(
     (ctx) => {
-      const xStart = x - barWidth / 2;
-      const height = y0 - y;
+      const { topLeft, topRight, bottomLeft, bottomRight } =
+        modifiedCornerRadius;
+      // eslint-disable-next-line no-shadow
+      const { x, y, width, height } = barPosition;
       ctx.beginPath();
       ctx.fillStyle = style.fill;
-      ctx.rect(xStart, y, barWidth, height);
+      ctx.strokeStyle = style.stroke;
+      ctx.globalAlpha = style.fillOpacity;
+      ctx.lineWidth = style.strokeWidth;
+      // Start at top left
+      ctx.moveTo(x + topLeft, y);
+      ctx.lineTo(x + width - topRight, y);
+      // Top right corner
+      ctx.quadraticCurveTo(x + width, y, x + width, y + topRight);
+      ctx.lineTo(x + width, y + height - bottomRight);
+      // Bottom right corner
+      ctx.quadraticCurveTo(
+        x + width,
+        y + height,
+        x + width - bottomRight,
+        y + height
+      );
+      ctx.lineTo(x + bottomLeft, y + height);
+      // Bottom left corner
+      ctx.quadraticCurveTo(x, y + height, x, y + height - bottomLeft);
+      ctx.lineTo(x, y + topLeft);
+      // Top left corner
+      ctx.quadraticCurveTo(x, y, x + topLeft, y);
+
+      ctx.closePath();
       ctx.fill();
+      ctx.stroke();
     },
-    [style, barWidth, x, y, y0]
+    [style, barPosition, modifiedCornerRadius]
   );
 
   React.useEffect(() => {
@@ -154,9 +257,7 @@ Bar.propTypes = {
     })
   ]),
   datum: PropTypes.object,
-  getPath: PropTypes.func,
   horizontal: PropTypes.bool,
-  pathComponent: PropTypes.element,
   width: PropTypes.number,
   x: PropTypes.number,
   y: PropTypes.number,
