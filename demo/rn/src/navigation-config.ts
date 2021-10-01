@@ -9,7 +9,7 @@ export type RootStackNavigatorParams = {
   Scatter: undefined;
   BoxPlot: undefined;
   ErrorBar: undefined;
-  Veronoi: undefined;
+  Voronoi: undefined;
 
   Legends: undefined;
   Axis: undefined;

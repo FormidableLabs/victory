@@ -74,7 +74,7 @@ const sections: SectionItem[] = [
       { key: "Scatter", title: "VictoryScatter" },
       { key: "BoxPlot", title: "VictoryBoxPlot" },
       { key: "ErrorBar", title: "VictoryErrorBar" },
-      { key: "Veronoi", title: "VictoryVeronoi" }
+      { key: "Voronoi", title: "VictoryVoronoi" }
     ],
     title: "Charts"
   },

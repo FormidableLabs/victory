@@ -14,7 +14,7 @@ import { ScatterScreen } from "./scatter-screen";
 import { BoxPlotScreen } from "./box-plot-screen";
 import { ErrorBarScreen } from "./error-bar-screen";
 import { PolarAxisScreen } from "./polar-axis-screen";
-import { VeronoiScreen } from "./veronoi-screen";
+import { VoronoiScreen } from "./voronoi-screen";
 
 export const RootNavigator: React.FC = () => {
   return (
@@ -66,9 +66,9 @@ export const RootNavigator: React.FC = () => {
         options={{ title: "VictoryErrorBar" }}
       />
       <RootStack.Screen
-        name="Veronoi"
-        component={VeronoiScreen}
-        options={{ title: "VictoryVeronoi" }}
+        name="Voronoi"
+        component={VoronoiScreen}
+        options={{ title: "VictoryVoronoi" }}
       />
 
       {/* Other */}

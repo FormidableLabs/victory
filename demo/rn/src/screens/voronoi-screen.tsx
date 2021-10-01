@@ -3,7 +3,7 @@ import { ScrollView } from "react-native";
 import viewStyles from "../styles/view-styles";
 import { VictoryTheme, VictoryVoronoi, VictoryChart } from "victory-native";
 
-export const VeronoiScreen: React.FC = () => {
+export const VoronoiScreen: React.FC = () => {
   return (
     <ScrollView style={viewStyles.container}>
       <VictoryChart
