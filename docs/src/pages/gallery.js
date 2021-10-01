@@ -90,7 +90,7 @@ const Gallery = ({ gallery, sidebarContent }) => {
     const title = item.data.title;
 
     return (
-      <Link to={createPath(`gallery/${slug}`)}>
+      <>
         <StyledLazyRender
           LazyRenderedComponent={() => (
             <Preview
@@ -114,8 +114,10 @@ const Gallery = ({ gallery, sidebarContent }) => {
             />
           )}
         />
-        <Title>{title}</Title>
-      </Link>
+        <Link to={createPath(`gallery/${slug}`)}>
+          <Title>{title}</Title>
+        </Link>
+      </>
     );
   };
 
