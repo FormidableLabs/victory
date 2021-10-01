@@ -52,7 +52,7 @@ const Point = (initialProps) => {
   React.useEffect(() => {
     const ctx = canvasRef.current.getContext("2d");
     draw(ctx);
-  });
+  }, []);
 
   return null;
 };
