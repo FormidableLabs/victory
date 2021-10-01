@@ -72,7 +72,9 @@ const sections: SectionItem[] = [
       { key: "Bar", title: "VictoryBar" },
       { key: "Histogram", title: "VictoryHistogram" },
       { key: "Scatter", title: "VictoryScatter" },
-      { key: "BoxPlot", title: "VictoryBoxPlot" }
+      { key: "BoxPlot", title: "VictoryBoxPlot" },
+      { key: "ErrorBar", title: "VictoryErrorBar" },
+      { key: "Veronoi", title: "VictoryVeronoi" }
     ],
     title: "Charts"
   },
@@ -86,7 +88,8 @@ const sections: SectionItem[] = [
   {
     data: [
       { key: "Legends", title: "Legends" },
-      { key: "Axis", title: "Axis" }
+      { key: "Axis", title: "Axis" },
+      { key: "PolarAxis", title: "VictoryPolarAxis" }
       // { key: "ErrorsTooltipsView", title: "Errors & Tooltips" }
     ],
     title: "Other"

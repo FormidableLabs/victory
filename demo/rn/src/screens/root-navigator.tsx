@@ -12,6 +12,9 @@ import { LegendsScreen } from "./legends-screen";
 import { AxisScreen } from "./axis-screen";
 import { ScatterScreen } from "./scatter-screen";
 import { BoxPlotScreen } from "./box-plot-screen";
+import { ErrorBarScreen } from "./error-bar-screen";
+import { PolarAxisScreen } from "./polar-axis-screen";
+import { VeronoiScreen } from "./veronoi-screen";
 
 export const RootNavigator: React.FC = () => {
   return (
@@ -58,6 +61,18 @@ export const RootNavigator: React.FC = () => {
         options={{ title: "VictoryBoxPlot" }}
       />
       <RootStack.Screen
+        name="ErrorBar"
+        component={ErrorBarScreen}
+        options={{ title: "VictoryErrorBar" }}
+      />
+      <RootStack.Screen
+        name="Veronoi"
+        component={VeronoiScreen}
+        options={{ title: "VictoryVeronoi" }}
+      />
+
+      {/* Other */}
+      <RootStack.Screen
         name="Legends"
         component={LegendsScreen}
         options={{ title: "Legends" }}
@@ -66,6 +81,11 @@ export const RootNavigator: React.FC = () => {
         name="Axis"
         component={AxisScreen}
         options={{ title: "Axis" }}
+      />
+      <RootStack.Screen
+        name="PolarAxis"
+        component={PolarAxisScreen}
+        options={{ title: "VictoryPolarAxis" }}
       />
     </RootStack.Navigator>
   );

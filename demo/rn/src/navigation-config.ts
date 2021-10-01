@@ -8,7 +8,10 @@ export type RootStackNavigatorParams = {
   Histogram: undefined;
   Scatter: undefined;
   BoxPlot: undefined;
+  ErrorBar: undefined;
+  Veronoi: undefined;
 
   Legends: undefined;
   Axis: undefined;
+  PolarAxis: undefined;
 };
