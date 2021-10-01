@@ -3,10 +3,9 @@
   "version": "36.0.0",
   "description": "Native Port for Victory",
   "keywords": [
-    "TODO:",
     "data visualization",
     "React",
-    "d3",
+    "React Native",
     "charting"
   ],
   "repository": {
@@ -53,9 +52,6 @@
     "react-native": "^0.65.1",
     "react-native-svg": "^12.1.1",
     "react-native-gesture-handler": "^1.10.3"
-  },
-  "scripts": {
-    "version": "yarn run nps build-libs && nps build-dists"
   },
   "sideEffects": false
 }
