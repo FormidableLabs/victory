@@ -14,7 +14,9 @@
   },
   "private": true,
   "workspaces": {
-    "packages": ["packages/*"]
+    "packages": [
+      "packages/*"
+    ]
   },
   "author": "Formidable",
   "license": "MIT",
@@ -76,6 +78,7 @@
     "eslint-config-prettier": "^6.0.0",
     "eslint-plugin-filenames": "^1.2.0",
     "eslint-plugin-import": "^2.20.1",
+    "eslint-plugin-jest": "^24.5.2",
     "eslint-plugin-mocha": "^5.0.0",
     "eslint-plugin-react": "^7.0.0",
     "eslint-plugin-react-hooks": "^4.2.0",

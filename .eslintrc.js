@@ -14,6 +14,7 @@ module.exports = {
     "prettier",
     "plugin:react-hooks/recommended"
   ],
+  plugins: ["jest"],
   rules: {
     "react/sort-comp": "off",
     "import/no-unresolved": [2, { ignore: ["victory*"] }],
@@ -23,6 +24,9 @@ module.exports = {
       "error",
       { ignore: [-1, 0, 0.5, 1, 2, 90, 180, 270, 360] }
     ]
+  },
+  env: {
+    "jest/globals": true
   },
   overrides: [
     {
