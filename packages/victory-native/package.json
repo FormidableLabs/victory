@@ -19,7 +19,8 @@
   "author": "Formidable",
   "license": "MIT",
   "scripts": {
-    "test": "jest --config=jest.config.js"
+    "test": "jest --config=jest.config.js",
+    "test:watch": "jest --config=jest.config.js --watch"
   },
   "dependencies": {
     "victory": "^36.0.0",
