@@ -19,6 +19,7 @@ export interface VictoryGroupProps
     VictoryDatableProps,
     VictoryMultiLabelableProps {
   categories?: CategoryPropType;
+  children?: React.ReactNode;
   color?: string;
   colorScale?: ColorScalePropType;
   domain?: DomainPropType;
