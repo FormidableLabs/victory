@@ -4,7 +4,7 @@ import PropTypes from "prop-types";
 
 const CanvasGroup = (props) => {
   const canvasRef = React.useRef();
-  const { width, height, children } = props;
+  const { children, width, height } = props;
 
   const clear = React.useCallback(
     (ctx) => {
