@@ -22,7 +22,7 @@ const Curve = (props) => {
   React.useEffect(() => {
     const ctx = canvasRef.current.getContext("2d");
     draw(ctx);
-  }, [canvasRef, draw]);
+  }, []);
 
   return null;
 };

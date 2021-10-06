@@ -4,12 +4,14 @@ import PropTypes from "prop-types";
 
 const CanvasGroup = (props) => {
   const canvasRef = React.useRef();
-  const { width, height, children } = props;
+  const { children, width, height } = props;
 
-  const clear = React.useCallback(() => {
-    const ctx = canvasRef.current.getContext("2d");
-    return ctx.clearRect(0, 0, width, height);
-  }, [width, height]);
+  const clear = React.useCallback(
+    (ctx) => {
+      return ctx.clearRect(0, 0, width, height);
+    },
+    [width, height]
+  );
 
   return (
     <CanvasContext.Provider value={{ canvasRef, clear, width, height }}>
@@ -23,6 +25,7 @@ const CanvasGroup = (props) => {
 
 CanvasGroup.propTypes = {
   children: PropTypes.node,
+  data: PropTypes.any,
   height: PropTypes.number,
   width: PropTypes.number
 };

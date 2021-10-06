@@ -1,8 +1,31 @@
 import React from "react";
 import PropTypes from "prop-types";
 import { assign } from "lodash";
-import { Helpers, CommonProps } from "victory-core";
+import { Helpers, CommonProps, PointPathHelpers } from "victory-core";
 import { useCanvasContext } from "./hooks/use-canvas-context";
+
+const getPath = (props) => {
+  const { x, y, size, symbol } = props;
+  if (props.getPath) {
+    return props.getPath(x, y, size);
+  }
+  const pathFunctions = {
+    circle: PointPathHelpers.circle,
+    square: PointPathHelpers.square,
+    diamond: PointPathHelpers.diamond,
+    triangleDown: PointPathHelpers.triangleDown,
+    triangleUp: PointPathHelpers.triangleUp,
+    plus: PointPathHelpers.plus,
+    minus: PointPathHelpers.minus,
+    star: PointPathHelpers.star,
+    cross: PointPathHelpers.cross
+  };
+  const symbolFunction =
+    typeof pathFunctions[symbol] === "function"
+      ? pathFunctions[symbol]
+      : pathFunctions.circle;
+  return symbolFunction(x, y, size);
+};
 
 const evaluateProps = (props) => {
   /**
@@ -37,22 +60,23 @@ const evaluateProps = (props) => {
 const Point = (initialProps) => {
   const { canvasRef } = useCanvasContext();
   const props = evaluateProps(initialProps);
-  const { x, y, style, size } = props;
 
   const draw = React.useCallback(
     (ctx) => {
+      const { style } = props;
+      const path = getPath(props);
       ctx.fillStyle = style.fill;
-      ctx.beginPath();
-      ctx.arc(x, y, size, 0, 2 * Math.PI);
-      ctx.fill();
+      // eslint-disable-next-line no-undef
+      const path2d = new Path2D(path);
+      ctx.fill(path2d);
     },
-    [x, y, style, size]
+    [props]
   );
 
   React.useEffect(() => {
     const ctx = canvasRef.current.getContext("2d");
     draw(ctx);
-  });
+  }, []);
 
   return null;
 };

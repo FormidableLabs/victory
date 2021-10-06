@@ -7,6 +7,7 @@ import { Bar, CanvasGroup } from "../packages/victory-canvas/src";
 import { VictoryChart } from "../packages/victory-chart/src";
 import { VictoryLabel, VictoryTheme } from "../packages/victory-core/src/index";
 import { VictoryGroup } from "../packages/victory-group/src/index";
+import { VictoryPolarAxis } from "../packages/victory-polar-axis/src/index";
 import { VictoryStack } from "../packages/victory-stack/src/index";
 import { VictoryTooltip } from "../packages/victory-tooltip/src/index";
 import { getData, getDataWithBaseline, getMixedData } from "./data";
@@ -423,6 +424,102 @@ export const CornerRadius = () => {
           dataComponent={<Bar />}
           data={getData(7)}
           cornerRadius={7}
+        />
+      </VictoryChart>
+      <VictoryChart horizontal {...defaultChartProps}>
+        <VictoryBar
+          groupComponent={<CanvasGroup />}
+          dataComponent={<Bar />}
+          data={getMixedData(7)}
+          barWidth={40}
+          cornerRadius={20}
+        />
+      </VictoryChart>
+      <VictoryChart {...defaultChartProps}>
+        <VictoryBar
+          groupComponent={<CanvasGroup />}
+          dataComponent={<Bar />}
+          data={getMixedData(7)}
+          barWidth={40}
+          cornerRadius={20}
+        />
+      </VictoryChart>
+      <VictoryChart horizontal {...defaultChartProps}>
+        <VictoryBar
+          groupComponent={<CanvasGroup />}
+          dataComponent={<Bar />}
+          data={getMixedData(7)}
+          barWidth={40}
+          cornerRadius={{
+            topLeft: 5,
+            topRight: 20,
+            bottomLeft: 20,
+            bottomRight: 0
+          }}
+        />
+      </VictoryChart>
+      <VictoryChart {...defaultChartProps}>
+        <VictoryBar
+          groupComponent={<CanvasGroup />}
+          dataComponent={<Bar />}
+          data={getMixedData(7)}
+          barWidth={40}
+          cornerRadius={{
+            topLeft: 5,
+            topRight: 20,
+            bottomLeft: 20,
+            bottomRight: 0
+          }}
+        />
+      </VictoryChart>
+      <VictoryChart polar innerRadius={60} {...defaultChartProps}>
+        <VictoryBar
+          groupComponent={<CanvasGroup />}
+          dataComponent={<Bar />}
+          data={[
+            { x: 45, y: 6 },
+            { x: 90, y: 30 },
+            { x: 135, y: 65 },
+            { x: 180, y: 50 },
+            { x: 270, y: 40 },
+            { x: 315, y: 30 }
+          ]}
+          style={{ data: { fill: "tomato", width: 40 } }}
+          cornerRadius={{
+            topRight: 1,
+            topLeft: 20,
+            bottomRight: 5,
+            bottomLeft: 0
+          }}
+        />
+        <VictoryPolarAxis
+          labelPlacement="parallel"
+          tickValues={[0, 45, 90, 135, 180, 225, 270, 315]}
+        />
+      </VictoryChart>
+      <VictoryChart polar {...defaultChartProps}>
+        <VictoryBar
+          groupComponent={<CanvasGroup />}
+          dataComponent={<Bar />}
+          data={[
+            { x: 45, y: 6 },
+            { x: 90, y: 30 },
+            { x: 135, y: 65 },
+            { x: 180, y: 50 },
+            { x: 270, y: 40 },
+            { x: 315, y: 30 }
+          ]}
+          style={{ data: { fill: "tomato", width: 40 } }}
+          cornerRadius={{
+            topRight: 1,
+            topLeft: 20,
+            bottomRight: 5,
+            bottomLeft: 0
+          }}
+        />
+        <VictoryPolarAxis
+          labelPlacement="parallel"
+          tickValues={[0, 45, 90, 135, 180, 225, 270, 315]}
         />
       </VictoryChart>
     </div>
@@ -1104,6 +1201,163 @@ export const GroupedBars = () => {
             />
           </VictoryStack>
         </VictoryGroup>
+      </VictoryChart>
+    </div>
+  );
+};
+export const PolarBars = () => {
+  return (
+    <div style={containerStyle}>
+      <VictoryChart {...defaultChartProps} polar>
+        <VictoryBar
+          groupComponent={<CanvasGroup />}
+          dataComponent={<Bar />}
+          style={{ data: { width: 20 } }}
+          data={getData(7)}
+        />
+      </VictoryChart>
+      <VictoryChart {...defaultChartProps} polar>
+        <VictoryBar
+          groupComponent={<CanvasGroup />}
+          dataComponent={<Bar />}
+          style={{ data: { stroke: "red", strokeWidth: 2 } }}
+          data={[
+            { x: "Cat", y: 62 },
+            { x: "Dog", y: 91 },
+            { x: "Fish", y: 55 },
+            { x: "Bird", y: 55 },
+            { x: "Frog", y: 75 }
+          ]}
+        />
+        <VictoryPolarAxis />
+      </VictoryChart>
+      <VictoryChart {...defaultChartProps} polar endAngle={180}>
+        <VictoryBar
+          groupComponent={<CanvasGroup />}
+          dataComponent={<Bar />}
+          style={{ data: { stroke: "red", strokeWidth: 2 } }}
+          data={[
+            { x: "Cat", y: 62 },
+            { x: "Dog", y: 91 },
+            { x: "Fish", y: 55 },
+            { x: "Bird", y: 55 },
+            { x: "Frog", y: 75 }
+          ]}
+        />
+        <VictoryPolarAxis />
+      </VictoryChart>
+      <VictoryChart {...defaultChartProps} polar>
+        <VictoryStack colorScale="qualitative">
+          <VictoryBar
+            groupComponent={<CanvasGroup />}
+            dataComponent={<Bar />}
+            data={getData(7)}
+          />
+          <VictoryBar
+            groupComponent={<CanvasGroup />}
+            dataComponent={<Bar />}
+            data={getData(7, "seed-1")}
+          />
+          <VictoryBar
+            groupComponent={<CanvasGroup />}
+            dataComponent={<Bar />}
+            data={getData(7, "seed-2")}
+          />
+        </VictoryStack>
+        <VictoryPolarAxis />
+      </VictoryChart>
+      <VictoryChart {...defaultChartProps} polar>
+        <VictoryStack colorScale="qualitative" style={{ data: { width: 15 } }}>
+          <VictoryBar
+            groupComponent={<CanvasGroup />}
+            dataComponent={<Bar />}
+            data={getData(7)}
+          />
+          <VictoryBar
+            groupComponent={<CanvasGroup />}
+            dataComponent={<Bar />}
+            data={getData(7, "seed-1")}
+          />
+          <VictoryBar
+            groupComponent={<CanvasGroup />}
+            dataComponent={<Bar />}
+            data={getData(7, "seed-2")}
+          />
+        </VictoryStack>
+        <VictoryPolarAxis />
+      </VictoryChart>
+      <VictoryChart {...defaultChartProps} polar>
+        <VictoryGroup
+          offset={25}
+          colorScale="qualitative"
+          style={{ data: { width: 15 } }}
+        >
+          <VictoryBar
+            groupComponent={<CanvasGroup />}
+            dataComponent={<Bar />}
+            data={getData(5)}
+          />
+          <VictoryBar
+            groupComponent={<CanvasGroup />}
+            dataComponent={<Bar />}
+            data={getData(5, "seed-1")}
+          />
+          <VictoryBar
+            groupComponent={<CanvasGroup />}
+            dataComponent={<Bar />}
+            data={getData(5, "seed-2")}
+          />
+        </VictoryGroup>
+        <VictoryPolarAxis />
+      </VictoryChart>
+      <VictoryChart {...defaultChartProps} polar innerRadius={50}>
+        <VictoryGroup
+          offset={25}
+          colorScale="qualitative"
+          style={{ data: { width: 15 } }}
+        >
+          <VictoryBar
+            groupComponent={<CanvasGroup />}
+            dataComponent={<Bar />}
+            data={getData(5)}
+          />
+          <VictoryBar
+            groupComponent={<CanvasGroup />}
+            dataComponent={<Bar />}
+            data={getData(5, "seed-1")}
+          />
+          <VictoryBar
+            groupComponent={<CanvasGroup />}
+            dataComponent={<Bar />}
+            data={getData(5, "seed-2")}
+          />
+        </VictoryGroup>
+        <VictoryPolarAxis />
+      </VictoryChart>
+      <VictoryChart
+        {...defaultChartProps}
+        polar
+        endAngle={180}
+        innerRadius={50}
+      >
+        <VictoryStack colorScale="qualitative" style={{ data: { width: 15 } }}>
+          <VictoryBar
+            groupComponent={<CanvasGroup />}
+            dataComponent={<Bar />}
+            data={getData(5)}
+          />
+          <VictoryBar
+            groupComponent={<CanvasGroup />}
+            dataComponent={<Bar />}
+            data={getData(5, "seed-1")}
+          />
+          <VictoryBar
+            groupComponent={<CanvasGroup />}
+            dataComponent={<Bar />}
+            data={getData(5, "seed-2")}
+          />
+        </VictoryStack>
+        <VictoryPolarAxis />
       </VictoryChart>
     </div>
   );

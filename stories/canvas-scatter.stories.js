@@ -11,6 +11,18 @@ import { VictoryStack } from "../packages/victory-stack/src/index";
 import { VictoryTooltip } from "../packages/victory-tooltip/src/index";
 import { getData, getMixedData } from "./data";
 
+const SYMBOLS = [
+  "circle",
+  "cross",
+  "diamond",
+  "plus",
+  "minus",
+  "square",
+  "star",
+  "triangleDown",
+  "triangleUp"
+];
+
 const containerStyle = {
   display: "flex",
   flexDirection: "row",
@@ -139,6 +151,84 @@ export const Theme = () => {
             data={getData(8, "seed-4")}
           />
         </VictoryStack>
+      </VictoryChart>
+    </div>
+  );
+};
+
+export const Symbols = () => {
+  return SYMBOLS.map((symbol) => (
+    <div style={containerStyle} key={symbol}>
+      <VictoryChart {...defaultChartProps}>
+        <VictoryScatter
+          groupComponent={<CanvasGroup />}
+          dataComponent={<Point />}
+          data={getMixedData(8)}
+          symbol={symbol}
+          size={10}
+          labels={() => symbol}
+        />
+      </VictoryChart>
+      <VictoryChart {...defaultChartProps} polar>
+        <VictoryScatter
+          groupComponent={<CanvasGroup />}
+          dataComponent={<Point />}
+          data={getMixedData(8)}
+          symbol={symbol}
+          size={10}
+          labels={() => symbol}
+        />
+      </VictoryChart>
+    </div>
+  ));
+};
+
+export const FunctionalSymbols = () => {
+  return (
+    <div style={containerStyle}>
+      <VictoryChart {...defaultChartProps}>
+        <VictoryScatter
+          groupComponent={<CanvasGroup />}
+          dataComponent={<Point />}
+          data={getMixedData(8)}
+          symbol={({ index }) => SYMBOLS[index]}
+          labels={({ index }) => SYMBOLS[index]}
+          size={8}
+        />
+      </VictoryChart>
+      <VictoryChart {...defaultChartProps} horizontal>
+        <VictoryScatter
+          groupComponent={<CanvasGroup />}
+          dataComponent={<Point />}
+          data={getMixedData(8)}
+          symbol={({ index }) => SYMBOLS[index]}
+          labels={({ index }) => SYMBOLS[index]}
+          size={8}
+        />
+      </VictoryChart>
+      <VictoryChart {...defaultChartProps}>
+        <VictoryScatter
+          groupComponent={<CanvasGroup />}
+          dataComponent={<Point />}
+          data={[
+            { x: 1, y: 45, symbol: "star" },
+            { x: 2, y: 85 },
+            { x: 3, y: 55, symbol: "square" },
+            { x: 4, y: 15 }
+          ]}
+          symbol="plus"
+          size={8}
+        />
+      </VictoryChart>
+      <VictoryChart {...defaultChartProps} polar innerRadius={30}>
+        <VictoryScatter
+          groupComponent={<CanvasGroup />}
+          dataComponent={<Point />}
+          data={getData(8)}
+          symbol={({ index }) => SYMBOLS[index]}
+          labels={({ index }) => SYMBOLS[index]}
+          size={8}
+        />
       </VictoryChart>
     </div>
   );
