@@ -46,4 +46,5 @@ export { default as TimerContext } from "./victory-util/timer-context";
 export { default as PortalContext } from "./victory-portal/portal-context";
 export * from "./victory-util/hooks";
 export * as LineHelpers from "./victory-util/line-helpers";
-export * as PointPathHelpers from "./victory-util/point-path-helpers";
+// TODO: Fix this default export
+export { default as PointPathHelpers } from "./victory-util/point-path-helpers";
