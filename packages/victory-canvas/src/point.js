@@ -1,9 +1,8 @@
 import React from "react";
 import PropTypes from "prop-types";
 import { assign } from "lodash";
-import { Helpers, CommonProps } from "victory-core";
+import { Helpers, CommonProps, PointPathHelpers } from "victory-core";
 import { useCanvasContext } from "./hooks/use-canvas-context";
-import pathHelpers from "../../victory-core/src/victory-primitives/path-helpers";
 
 const getPath = (props) => {
   const { x, y, size, symbol } = props;
@@ -11,15 +10,15 @@ const getPath = (props) => {
     return props.getPath(x, y, size);
   }
   const pathFunctions = {
-    circle: pathHelpers.circle,
-    square: pathHelpers.square,
-    diamond: pathHelpers.diamond,
-    triangleDown: pathHelpers.triangleDown,
-    triangleUp: pathHelpers.triangleUp,
-    plus: pathHelpers.plus,
-    minus: pathHelpers.minus,
-    star: pathHelpers.star,
-    cross: pathHelpers.cross
+    circle: PointPathHelpers.circle,
+    square: PointPathHelpers.square,
+    diamond: PointPathHelpers.diamond,
+    triangleDown: PointPathHelpers.triangleDown,
+    triangleUp: PointPathHelpers.triangleUp,
+    plus: PointPathHelpers.plus,
+    minus: PointPathHelpers.minus,
+    star: PointPathHelpers.star,
+    cross: PointPathHelpers.cross
   };
   const symbolFunction =
     typeof pathFunctions[symbol] === "function"
