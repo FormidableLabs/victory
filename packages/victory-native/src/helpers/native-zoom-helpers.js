@@ -24,8 +24,8 @@ const Helpers = {
     ];
   },
 
+  // eslint-disable-next-line max-params
   onTouchPinch(evt, targetProps, eventKey, ctx) {
-    // eslint-disable-line max-params
     const { onZoomDomainChange, zoomDimension, domain, zoomDomain } =
       targetProps;
     const { touches } = evt.nativeEvent;
@@ -94,8 +94,8 @@ const Helpers = {
     return 1 - scaledPinchChange;
   },
 
+  // eslint-disable-next-line max-params
   scaleNative(currentDomain, evt, props, axis) {
-    // eslint-disable-line max-params
     const [from, to] = currentDomain;
     const range = Math.abs(to - from);
     const minimumZoom = props.minimumZoom && props.minimumZoom[axis];
@@ -128,6 +128,7 @@ const Helpers = {
 };
 
 const makeThrottledHandler = (handler) => {
+  // eslint-disable-next-line no-magic-numbers
   const throttledHandler = throttle(handler, 16, { leading: true });
   return (evt, ...otherParams) => {
     evt.persist(); // ensure that the react native event is persisted!

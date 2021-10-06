@@ -21,7 +21,7 @@ const VLine = (props) => {
 export default VLine;
 
 VLine.propTypes = {
-  "aria=label": PropTypes.string,
+  "aria-label": PropTypes.string,
   className: PropTypes.string,
   clipPath: PropTypes.string,
   desc: PropTypes.string,

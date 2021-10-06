@@ -23,8 +23,8 @@ const nativeZoomMixin = (base) =>
         {
           target: "parent",
           eventHandlers: {
+            // eslint-disable-next-line max-params
             onTouchStart: (evt, targetProps, eventKey, ctx) => {
-              // eslint-disable-line max-params
               return disable
                 ? {}
                 : NativeZoomHelpers.onTouchStart(
@@ -34,8 +34,8 @@ const nativeZoomMixin = (base) =>
                     ctx
                   );
             },
+            // eslint-disable-next-line max-params
             onTouchMove: (evt, targetProps, eventKey, ctx) => {
-              // eslint-disable-line max-params
               return disable
                 ? {}
                 : NativeZoomHelpers.onTouchMove(
@@ -45,14 +45,14 @@ const nativeZoomMixin = (base) =>
                     ctx
                   );
             },
+            // eslint-disable-next-line max-params
             onTouchEnd: (evt, targetProps, eventKey, ctx) => {
-              // eslint-disable-line max-params
               return disable
                 ? {}
                 : NativeZoomHelpers.onTouchEnd(evt, targetProps, eventKey, ctx);
             },
+            // eslint-disable-next-line max-params
             onTouchPinch: (evt, targetProps, eventKey, ctx) => {
-              // eslint-disable-line max-params
               return disable
                 ? {}
                 : NativeZoomHelpers.onTouchPinch(
