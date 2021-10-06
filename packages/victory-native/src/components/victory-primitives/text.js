@@ -3,8 +3,14 @@ import PropTypes from "prop-types";
 import { Text } from "react-native-svg";
 import { useGetNativeStyle } from "../../helpers/native-helpers";
 
-const VText = props => {
-  const { "aria-label": accessibilityLabel, children, desc, style, ...rest } = props;
+const VText = (props) => {
+  const {
+    "aria-label": accessibilityLabel,
+    children,
+    desc,
+    style,
+    ...rest
+  } = props;
   const nativeStyle = useGetNativeStyle(style);
   return (
     <Text
@@ -16,7 +22,6 @@ const VText = props => {
     >
       {children}
     </Text>
-
   );
 };
 

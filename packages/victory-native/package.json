@@ -15,7 +15,10 @@
   "homepage": "https://formidable.com/open-source/victory",
   "source": "src/index.js",
   "main": "src/index.js",
-  "files": ["src", "index.js"],
+  "files": [
+    "src",
+    "index.js"
+  ],
   "author": "Formidable",
   "license": "MIT",
   "dependencies": {

@@ -18,9 +18,7 @@ export default class VClipPath extends React.Component {
     return (
       <G>
         <Defs>
-          <ClipPath id={clipId}>
-            {children}
-          </ClipPath>
+          <ClipPath id={clipId}>{children}</ClipPath>
         </Defs>
       </G>
     );

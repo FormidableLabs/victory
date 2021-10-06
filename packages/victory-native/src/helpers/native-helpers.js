@@ -52,8 +52,8 @@ export default {
 };
 
 export const useGetNativeStyle = (style, extraOmitProperties) => {
-  return React.useMemo(() => getStyle(style, extraOmitProperties), [
-    style,
-    extraOmitProperties
-  ]);
+  return React.useMemo(
+    () => getStyle(style, extraOmitProperties),
+    [style, extraOmitProperties]
+  );
 };

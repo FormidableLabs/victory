@@ -6,13 +6,12 @@ import ClipPath from "./victory-primitives/clip-path";
 import { VictoryClipContainer } from "victory-core/es";
 import { uniqueId } from "lodash";
 
-
 export default class extends VictoryClipContainer {
   static defaultProps = Object.assign({}, VictoryClipContainer.defaultProps, {
-    groupComponent: <G/>,
-    rectComponent: <Rect/>,
-    clipPathComponent: <ClipPath/>,
-    circleComponent: <Circle/>
+    groupComponent: <G />,
+    rectComponent: <Rect />,
+    clipPathComponent: <ClipPath />,
+    circleComponent: <Circle />
   });
 
   // There seems to be a caching issue with clip paths.
