@@ -161,7 +161,7 @@ export const Symbols = () => {
     <div style={containerStyle} key={symbol}>
       <VictoryChart {...defaultChartProps}>
         <VictoryScatter
-          groupComponent={<CanvasContainer />}
+          groupComponent={<CanvasGroup />}
           dataComponent={<Point />}
           data={getMixedData(8)}
           symbol={symbol}
@@ -171,7 +171,7 @@ export const Symbols = () => {
       </VictoryChart>
       <VictoryChart {...defaultChartProps} polar>
         <VictoryScatter
-          groupComponent={<CanvasContainer />}
+          groupComponent={<CanvasGroup />}
           dataComponent={<Point />}
           data={getMixedData(8)}
           symbol={symbol}
@@ -188,7 +188,7 @@ export const FunctionalSymbols = () => {
     <div style={containerStyle}>
       <VictoryChart {...defaultChartProps}>
         <VictoryScatter
-          groupComponent={<CanvasContainer />}
+          groupComponent={<CanvasGroup />}
           dataComponent={<Point />}
           data={getMixedData(8)}
           symbol={({ index }) => SYMBOLS[index]}
@@ -198,7 +198,7 @@ export const FunctionalSymbols = () => {
       </VictoryChart>
       <VictoryChart {...defaultChartProps} horizontal>
         <VictoryScatter
-          groupComponent={<CanvasContainer />}
+          groupComponent={<CanvasGroup />}
           dataComponent={<Point />}
           data={getMixedData(8)}
           symbol={({ index }) => SYMBOLS[index]}
@@ -208,7 +208,7 @@ export const FunctionalSymbols = () => {
       </VictoryChart>
       <VictoryChart {...defaultChartProps}>
         <VictoryScatter
-          groupComponent={<CanvasContainer />}
+          groupComponent={<CanvasGroup />}
           dataComponent={<Point />}
           data={[
             { x: 1, y: 45, symbol: "star" },
@@ -222,7 +222,7 @@ export const FunctionalSymbols = () => {
       </VictoryChart>
       <VictoryChart {...defaultChartProps} polar innerRadius={30}>
         <VictoryScatter
-          groupComponent={<CanvasContainer />}
+          groupComponent={<CanvasGroup />}
           dataComponent={<Point />}
           data={getData(8)}
           symbol={({ index }) => SYMBOLS[index]}

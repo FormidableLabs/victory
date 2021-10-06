@@ -1114,7 +1114,7 @@ export const PolarBars = () => {
     <div style={containerStyle}>
       <VictoryChart {...defaultChartProps} polar>
         <VictoryBar
-          groupComponent={<CanvasContainer />}
+          groupComponent={<CanvasGroup />}
           dataComponent={<Bar />}
           style={{ data: { width: 20 } }}
           data={getData(7)}
@@ -1122,7 +1122,7 @@ export const PolarBars = () => {
       </VictoryChart>
       <VictoryChart {...defaultChartProps} polar>
         <VictoryBar
-          groupComponent={<CanvasContainer />}
+          groupComponent={<CanvasGroup />}
           dataComponent={<Bar />}
           style={{ data: { stroke: "red", strokeWidth: 2 } }}
           data={[
@@ -1137,7 +1137,7 @@ export const PolarBars = () => {
       </VictoryChart>
       <VictoryChart {...defaultChartProps} polar endAngle={180}>
         <VictoryBar
-          groupComponent={<CanvasContainer />}
+          groupComponent={<CanvasGroup />}
           dataComponent={<Bar />}
           style={{ data: { stroke: "red", strokeWidth: 2 } }}
           data={[
@@ -1153,17 +1153,17 @@ export const PolarBars = () => {
       <VictoryChart {...defaultChartProps} polar>
         <VictoryStack colorScale="qualitative">
           <VictoryBar
-            groupComponent={<CanvasContainer />}
+            groupComponent={<CanvasGroup />}
             dataComponent={<Bar />}
             data={getData(7)}
           />
           <VictoryBar
-            groupComponent={<CanvasContainer />}
+            groupComponent={<CanvasGroup />}
             dataComponent={<Bar />}
             data={getData(7, "seed-1")}
           />
           <VictoryBar
-            groupComponent={<CanvasContainer />}
+            groupComponent={<CanvasGroup />}
             dataComponent={<Bar />}
             data={getData(7, "seed-2")}
           />
@@ -1173,17 +1173,17 @@ export const PolarBars = () => {
       <VictoryChart {...defaultChartProps} polar>
         <VictoryStack colorScale="qualitative" style={{ data: { width: 15 } }}>
           <VictoryBar
-            groupComponent={<CanvasContainer />}
+            groupComponent={<CanvasGroup />}
             dataComponent={<Bar />}
             data={getData(7)}
           />
           <VictoryBar
-            groupComponent={<CanvasContainer />}
+            groupComponent={<CanvasGroup />}
             dataComponent={<Bar />}
             data={getData(7, "seed-1")}
           />
           <VictoryBar
-            groupComponent={<CanvasContainer />}
+            groupComponent={<CanvasGroup />}
             dataComponent={<Bar />}
             data={getData(7, "seed-2")}
           />
@@ -1197,17 +1197,17 @@ export const PolarBars = () => {
           style={{ data: { width: 15 } }}
         >
           <VictoryBar
-            groupComponent={<CanvasContainer />}
+            groupComponent={<CanvasGroup />}
             dataComponent={<Bar />}
             data={getData(5)}
           />
           <VictoryBar
-            groupComponent={<CanvasContainer />}
+            groupComponent={<CanvasGroup />}
             dataComponent={<Bar />}
             data={getData(5, "seed-1")}
           />
           <VictoryBar
-            groupComponent={<CanvasContainer />}
+            groupComponent={<CanvasGroup />}
             dataComponent={<Bar />}
             data={getData(5, "seed-2")}
           />
@@ -1221,17 +1221,17 @@ export const PolarBars = () => {
           style={{ data: { width: 15 } }}
         >
           <VictoryBar
-            groupComponent={<CanvasContainer />}
+            groupComponent={<CanvasGroup />}
             dataComponent={<Bar />}
             data={getData(5)}
           />
           <VictoryBar
-            groupComponent={<CanvasContainer />}
+            groupComponent={<CanvasGroup />}
             dataComponent={<Bar />}
             data={getData(5, "seed-1")}
           />
           <VictoryBar
-            groupComponent={<CanvasContainer />}
+            groupComponent={<CanvasGroup />}
             dataComponent={<Bar />}
             data={getData(5, "seed-2")}
           />
@@ -1246,17 +1246,17 @@ export const PolarBars = () => {
       >
         <VictoryStack colorScale="qualitative" style={{ data: { width: 15 } }}>
           <VictoryBar
-            groupComponent={<CanvasContainer />}
+            groupComponent={<CanvasGroup />}
             dataComponent={<Bar />}
             data={getData(5)}
           />
           <VictoryBar
-            groupComponent={<CanvasContainer />}
+            groupComponent={<CanvasGroup />}
             dataComponent={<Bar />}
             data={getData(5, "seed-1")}
           />
           <VictoryBar
-            groupComponent={<CanvasContainer />}
+            groupComponent={<CanvasGroup />}
             dataComponent={<Bar />}
             data={getData(5, "seed-2")}
           />
