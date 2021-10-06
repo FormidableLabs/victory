@@ -2,7 +2,7 @@ import React from "react";
 import { CanvasContext } from "./hooks/use-canvas-context";
 import PropTypes from "prop-types";
 
-const CanvasContainer = (props) => {
+const CanvasGroup = (props) => {
   const canvasRef = React.useRef();
   const { width, height, children } = props;
 
@@ -21,12 +21,12 @@ const CanvasContainer = (props) => {
   );
 };
 
-CanvasContainer.propTypes = {
+CanvasGroup.propTypes = {
   children: PropTypes.node,
   height: PropTypes.number,
   width: PropTypes.number
 };
-CanvasContainer.role = "container";
-CanvasContainer.displayName = "CanvasContainer";
+CanvasGroup.role = "container";
+CanvasGroup.displayName = "CanvasGroup";
 
-export default CanvasContainer;
+export default CanvasGroup;
