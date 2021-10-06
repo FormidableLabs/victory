@@ -621,8 +621,10 @@ export const Labels = () => {
           ]}
         />
       </VictoryChart>
-      {/* <VictoryChart polar {...defaultChartProps} domainPadding={{ y: 20 }}>
+      <VictoryChart polar {...defaultChartProps} domainPadding={{ y: 20 }}>
         <VictoryBar
+          groupComponent={<CanvasGroup />}
+          dataComponent={<Bar />}
           data={[
             { x: 1, y: 2, label: "cat" },
             { x: 2, y: 5, label: "dog" },
@@ -632,7 +634,7 @@ export const Labels = () => {
           ]}
         />
         <VictoryPolarAxis />
-      </VictoryChart> */}
+      </VictoryChart>
     </div>
   );
 };
@@ -685,15 +687,17 @@ export const Tooltips = () => {
           labelComponent={<VictoryTooltip active />}
         />
       </VictoryChart>
-      {/* <VictoryChart polar {...defaultChartProps}>
+      <VictoryChart polar {...defaultChartProps}>
         <VictoryBar
+          groupComponent={<CanvasGroup />}
+          dataComponent={<Bar />}
           data={getData(5)}
           style={{ data: { width: 20 } }}
           labels={["one", "two", 3, "wow, four tooltips", "five"]}
           labelComponent={<VictoryTooltip active />}
         />
         <VictoryPolarAxis />
-      </VictoryChart> */}
+      </VictoryChart>
     </div>
   );
 };
