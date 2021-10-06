@@ -3,7 +3,7 @@
 import { fromJS } from "immutable";
 import React from "react";
 import { VictoryBar } from "../packages/victory-bar/src";
-import { Bar, CanvasContainer } from "../packages/victory-canvas/src";
+import { Bar, CanvasGroup } from "../packages/victory-canvas/src";
 import { VictoryChart } from "../packages/victory-chart/src";
 import { VictoryLabel, VictoryTheme } from "../packages/victory-core/src/index";
 import { VictoryGroup } from "../packages/victory-group/src/index";
@@ -37,12 +37,12 @@ export const DefaultRendering = () => {
   return (
     <div style={containerStyle}>
       <VictoryBar
-        groupComponent={<CanvasContainer />}
+        groupComponent={<CanvasGroup />}
         dataComponent={<Bar />}
         {...defaultChartProps}
       />
       <VictoryBar
-        groupComponent={<CanvasContainer />}
+        groupComponent={<CanvasGroup />}
         dataComponent={<Bar />}
         style={parentStyle}
       />
@@ -55,7 +55,7 @@ export const Theme = () => {
     <div style={containerStyle}>
       <VictoryChart {...defaultChartProps}>
         <VictoryBar
-          groupComponent={<CanvasContainer />}
+          groupComponent={<CanvasGroup />}
           dataComponent={<Bar />}
           data={getData(8)}
         />
@@ -63,27 +63,27 @@ export const Theme = () => {
       <VictoryChart {...defaultChartProps}>
         <VictoryStack labels={({ datum }) => datum.x}>
           <VictoryBar
-            groupComponent={<CanvasContainer />}
+            groupComponent={<CanvasGroup />}
             dataComponent={<Bar />}
             data={getData(8)}
           />
           <VictoryBar
-            groupComponent={<CanvasContainer />}
+            groupComponent={<CanvasGroup />}
             dataComponent={<Bar />}
             data={getData(8, "seed-1")}
           />
           <VictoryBar
-            groupComponent={<CanvasContainer />}
+            groupComponent={<CanvasGroup />}
             dataComponent={<Bar />}
             data={getData(8, "seed-2")}
           />
           <VictoryBar
-            groupComponent={<CanvasContainer />}
+            groupComponent={<CanvasGroup />}
             dataComponent={<Bar />}
             data={getData(8, "seed-3")}
           />
           <VictoryBar
-            groupComponent={<CanvasContainer />}
+            groupComponent={<CanvasGroup />}
             dataComponent={<Bar />}
             data={getData(8, "seed-4")}
           />
@@ -91,7 +91,7 @@ export const Theme = () => {
       </VictoryChart>
       <VictoryChart style={parentStyle} theme={VictoryTheme.grayscale}>
         <VictoryBar
-          groupComponent={<CanvasContainer />}
+          groupComponent={<CanvasGroup />}
           dataComponent={<Bar />}
           data={getData(8)}
         />
@@ -99,27 +99,27 @@ export const Theme = () => {
       <VictoryChart style={parentStyle} theme={VictoryTheme.grayscale}>
         <VictoryStack labels={({ datum }) => datum.x}>
           <VictoryBar
-            groupComponent={<CanvasContainer />}
+            groupComponent={<CanvasGroup />}
             dataComponent={<Bar />}
             data={getData(8)}
           />
           <VictoryBar
-            groupComponent={<CanvasContainer />}
+            groupComponent={<CanvasGroup />}
             dataComponent={<Bar />}
             data={getData(8, "seed-1")}
           />
           <VictoryBar
-            groupComponent={<CanvasContainer />}
+            groupComponent={<CanvasGroup />}
             dataComponent={<Bar />}
             data={getData(8, "seed-2")}
           />
           <VictoryBar
-            groupComponent={<CanvasContainer />}
+            groupComponent={<CanvasGroup />}
             dataComponent={<Bar />}
             data={getData(8, "seed-3")}
           />
           <VictoryBar
-            groupComponent={<CanvasContainer />}
+            groupComponent={<CanvasGroup />}
             dataComponent={<Bar />}
             data={getData(8, "seed-4")}
           />
@@ -134,7 +134,7 @@ export const Alignment = () => {
     <div style={containerStyle}>
       <VictoryChart {...defaultChartProps}>
         <VictoryBar
-          groupComponent={<CanvasContainer />}
+          groupComponent={<CanvasGroup />}
           dataComponent={<Bar />}
           data={getData(7)}
           alignment="start"
@@ -142,7 +142,7 @@ export const Alignment = () => {
       </VictoryChart>
       <VictoryChart horizontal {...defaultChartProps}>
         <VictoryBar
-          groupComponent={<CanvasContainer />}
+          groupComponent={<CanvasGroup />}
           dataComponent={<Bar />}
           data={getData(7)}
           alignment="start"
@@ -150,7 +150,7 @@ export const Alignment = () => {
       </VictoryChart>
       <VictoryChart {...defaultChartProps}>
         <VictoryBar
-          groupComponent={<CanvasContainer />}
+          groupComponent={<CanvasGroup />}
           dataComponent={<Bar />}
           data={getData(7)}
           alignment="middle"
@@ -158,7 +158,7 @@ export const Alignment = () => {
       </VictoryChart>
       <VictoryChart horizontal {...defaultChartProps}>
         <VictoryBar
-          groupComponent={<CanvasContainer />}
+          groupComponent={<CanvasGroup />}
           dataComponent={<Bar />}
           data={getData(7)}
           alignment="middle"
@@ -166,7 +166,7 @@ export const Alignment = () => {
       </VictoryChart>
       <VictoryChart {...defaultChartProps}>
         <VictoryBar
-          groupComponent={<CanvasContainer />}
+          groupComponent={<CanvasGroup />}
           dataComponent={<Bar />}
           data={getData(7)}
           alignment="end"
@@ -174,7 +174,7 @@ export const Alignment = () => {
       </VictoryChart>
       <VictoryChart horizontal {...defaultChartProps}>
         <VictoryBar
-          groupComponent={<CanvasContainer />}
+          groupComponent={<CanvasGroup />}
           dataComponent={<Bar />}
           data={getData(7)}
           alignment="end"
@@ -182,7 +182,7 @@ export const Alignment = () => {
       </VictoryChart>
       <VictoryChart {...defaultChartProps}>
         <VictoryBar
-          groupComponent={<CanvasContainer />}
+          groupComponent={<CanvasGroup />}
           dataComponent={<Bar />}
           data={getMixedData(5)}
           alignment="start"
@@ -190,7 +190,7 @@ export const Alignment = () => {
       </VictoryChart>
       <VictoryChart horizontal {...defaultChartProps}>
         <VictoryBar
-          groupComponent={<CanvasContainer />}
+          groupComponent={<CanvasGroup />}
           dataComponent={<Bar />}
           data={getMixedData(5)}
           alignment="start"
@@ -198,7 +198,7 @@ export const Alignment = () => {
       </VictoryChart>
       <VictoryChart {...defaultChartProps}>
         <VictoryBar
-          groupComponent={<CanvasContainer />}
+          groupComponent={<CanvasGroup />}
           dataComponent={<Bar />}
           data={getMixedData(5)}
           alignment="end"
@@ -206,7 +206,7 @@ export const Alignment = () => {
       </VictoryChart>
       <VictoryChart horizontal {...defaultChartProps}>
         <VictoryBar
-          groupComponent={<CanvasContainer />}
+          groupComponent={<CanvasGroup />}
           dataComponent={<Bar />}
           data={getMixedData(5)}
           alignment="end"
@@ -221,7 +221,7 @@ export const BarRatio = () => {
     <div style={containerStyle}>
       <VictoryChart {...defaultChartProps}>
         <VictoryBar
-          groupComponent={<CanvasContainer />}
+          groupComponent={<CanvasGroup />}
           dataComponent={<Bar />}
           data={getData(2)}
           barRatio={0.01}
@@ -229,7 +229,7 @@ export const BarRatio = () => {
       </VictoryChart>
       <VictoryChart {...defaultChartProps}>
         <VictoryBar
-          groupComponent={<CanvasContainer />}
+          groupComponent={<CanvasGroup />}
           dataComponent={<Bar />}
           data={getData(50)}
           barRatio={0.01}
@@ -237,7 +237,7 @@ export const BarRatio = () => {
       </VictoryChart>
       <VictoryChart {...defaultChartProps}>
         <VictoryBar
-          groupComponent={<CanvasContainer />}
+          groupComponent={<CanvasGroup />}
           dataComponent={<Bar />}
           data={getData(7)}
           barRatio={0.01}
@@ -245,7 +245,7 @@ export const BarRatio = () => {
       </VictoryChart>
       <VictoryChart horizontal {...defaultChartProps}>
         <VictoryBar
-          groupComponent={<CanvasContainer />}
+          groupComponent={<CanvasGroup />}
           dataComponent={<Bar />}
           data={getData(7)}
           barRatio={0.01}
@@ -253,7 +253,7 @@ export const BarRatio = () => {
       </VictoryChart>
       <VictoryChart {...defaultChartProps}>
         <VictoryBar
-          groupComponent={<CanvasContainer />}
+          groupComponent={<CanvasGroup />}
           dataComponent={<Bar />}
           data={getData(2)}
           barRatio={0.5}
@@ -261,7 +261,7 @@ export const BarRatio = () => {
       </VictoryChart>
       <VictoryChart {...defaultChartProps}>
         <VictoryBar
-          groupComponent={<CanvasContainer />}
+          groupComponent={<CanvasGroup />}
           dataComponent={<Bar />}
           data={getData(50)}
           barRatio={0.5}
@@ -269,7 +269,7 @@ export const BarRatio = () => {
       </VictoryChart>
       <VictoryChart {...defaultChartProps}>
         <VictoryBar
-          groupComponent={<CanvasContainer />}
+          groupComponent={<CanvasGroup />}
           dataComponent={<Bar />}
           data={getData(7)}
           barRatio={0.5}
@@ -277,7 +277,7 @@ export const BarRatio = () => {
       </VictoryChart>
       <VictoryChart horizontal {...defaultChartProps}>
         <VictoryBar
-          groupComponent={<CanvasContainer />}
+          groupComponent={<CanvasGroup />}
           dataComponent={<Bar />}
           data={getData(7)}
           barRatio={0.5}
@@ -285,7 +285,7 @@ export const BarRatio = () => {
       </VictoryChart>
       <VictoryChart {...defaultChartProps}>
         <VictoryBar
-          groupComponent={<CanvasContainer />}
+          groupComponent={<CanvasGroup />}
           dataComponent={<Bar />}
           data={getData(2)}
           barRatio={1}
@@ -293,7 +293,7 @@ export const BarRatio = () => {
       </VictoryChart>
       <VictoryChart {...defaultChartProps}>
         <VictoryBar
-          groupComponent={<CanvasContainer />}
+          groupComponent={<CanvasGroup />}
           dataComponent={<Bar />}
           data={getData(50)}
           barRatio={1}
@@ -301,7 +301,7 @@ export const BarRatio = () => {
       </VictoryChart>
       <VictoryChart {...defaultChartProps}>
         <VictoryBar
-          groupComponent={<CanvasContainer />}
+          groupComponent={<CanvasGroup />}
           dataComponent={<Bar />}
           data={getData(7)}
           barRatio={1}
@@ -309,7 +309,7 @@ export const BarRatio = () => {
       </VictoryChart>
       <VictoryChart horizontal {...defaultChartProps}>
         <VictoryBar
-          groupComponent={<CanvasContainer />}
+          groupComponent={<CanvasGroup />}
           dataComponent={<Bar />}
           data={getData(7)}
           barRatio={1}
@@ -317,7 +317,7 @@ export const BarRatio = () => {
       </VictoryChart>
       <VictoryChart {...defaultChartProps}>
         <VictoryBar
-          groupComponent={<CanvasContainer />}
+          groupComponent={<CanvasGroup />}
           dataComponent={<Bar />}
           data={getData(2)}
           barRatio={1.5}
@@ -325,7 +325,7 @@ export const BarRatio = () => {
       </VictoryChart>
       <VictoryChart {...defaultChartProps}>
         <VictoryBar
-          groupComponent={<CanvasContainer />}
+          groupComponent={<CanvasGroup />}
           dataComponent={<Bar />}
           data={getData(50)}
           barRatio={1.5}
@@ -333,7 +333,7 @@ export const BarRatio = () => {
       </VictoryChart>
       <VictoryChart {...defaultChartProps}>
         <VictoryBar
-          groupComponent={<CanvasContainer />}
+          groupComponent={<CanvasGroup />}
           dataComponent={<Bar />}
           data={getData(7)}
           barRatio={1.5}
@@ -341,7 +341,7 @@ export const BarRatio = () => {
       </VictoryChart>
       <VictoryChart horizontal {...defaultChartProps}>
         <VictoryBar
-          groupComponent={<CanvasContainer />}
+          groupComponent={<CanvasGroup />}
           dataComponent={<Bar />}
           data={getData(7)}
           barRatio={1.5}
@@ -356,7 +356,7 @@ export const BarWidth = () => {
     <div style={containerStyle}>
       <VictoryChart {...defaultChartProps}>
         <VictoryBar
-          groupComponent={<CanvasContainer />}
+          groupComponent={<CanvasGroup />}
           dataComponent={<Bar />}
           data={getData(7)}
           barWidth={5}
@@ -364,7 +364,7 @@ export const BarWidth = () => {
       </VictoryChart>
       <VictoryChart {...defaultChartProps}>
         <VictoryBar
-          groupComponent={<CanvasContainer />}
+          groupComponent={<CanvasGroup />}
           dataComponent={<Bar />}
           data={getData(7)}
           barWidth={10}
@@ -372,7 +372,7 @@ export const BarWidth = () => {
       </VictoryChart>
       <VictoryChart {...defaultChartProps}>
         <VictoryBar
-          groupComponent={<CanvasContainer />}
+          groupComponent={<CanvasGroup />}
           dataComponent={<Bar />}
           data={getData(7)}
           barWidth={20}
@@ -380,7 +380,7 @@ export const BarWidth = () => {
       </VictoryChart>
       <VictoryChart {...defaultChartProps}>
         <VictoryBar
-          groupComponent={<CanvasContainer />}
+          groupComponent={<CanvasGroup />}
           dataComponent={<Bar />}
           data={getData(7)}
           barWidth={({ datum }) => datum.x * 4}
@@ -395,7 +395,7 @@ export const CornerRadius = () => {
     <div style={containerStyle}>
       <VictoryChart {...defaultChartProps}>
         <VictoryBar
-          groupComponent={<CanvasContainer />}
+          groupComponent={<CanvasGroup />}
           dataComponent={<Bar />}
           data={getData(7)}
           cornerRadius={1}
@@ -403,7 +403,7 @@ export const CornerRadius = () => {
       </VictoryChart>
       <VictoryChart {...defaultChartProps}>
         <VictoryBar
-          groupComponent={<CanvasContainer />}
+          groupComponent={<CanvasGroup />}
           dataComponent={<Bar />}
           data={getData(7)}
           cornerRadius={5}
@@ -411,7 +411,7 @@ export const CornerRadius = () => {
       </VictoryChart>
       <VictoryChart {...defaultChartProps}>
         <VictoryBar
-          groupComponent={<CanvasContainer />}
+          groupComponent={<CanvasGroup />}
           dataComponent={<Bar />}
           data={getData(7)}
           cornerRadius={7}
@@ -419,7 +419,7 @@ export const CornerRadius = () => {
       </VictoryChart>
       <VictoryChart horizontal {...defaultChartProps}>
         <VictoryBar
-          groupComponent={<CanvasContainer />}
+          groupComponent={<CanvasGroup />}
           dataComponent={<Bar />}
           data={getData(7)}
           cornerRadius={7}
@@ -434,7 +434,7 @@ export const Data = () => {
     <div style={containerStyle}>
       <VictoryChart {...defaultChartProps}>
         <VictoryBar
-          groupComponent={<CanvasContainer />}
+          groupComponent={<CanvasGroup />}
           dataComponent={<Bar />}
           data={[
             { animal: "Cat", pet: 45, wild: 17 },
@@ -448,7 +448,7 @@ export const Data = () => {
       </VictoryChart>
       <VictoryChart {...defaultChartProps}>
         <VictoryBar
-          groupComponent={<CanvasContainer />}
+          groupComponent={<CanvasGroup />}
           dataComponent={<Bar />}
           data={getData(8)}
           y0={(d) => d.y - d.x}
@@ -456,7 +456,7 @@ export const Data = () => {
       </VictoryChart>
       <VictoryChart horizontal {...defaultChartProps}>
         <VictoryBar
-          groupComponent={<CanvasContainer />}
+          groupComponent={<CanvasGroup />}
           dataComponent={<Bar />}
           data={getData(8)}
           y0={(d) => d.y - d.x}
@@ -464,7 +464,7 @@ export const Data = () => {
       </VictoryChart>
       <VictoryChart {...defaultChartProps}>
         <VictoryBar
-          groupComponent={<CanvasContainer />}
+          groupComponent={<CanvasGroup />}
           dataComponent={<Bar />}
           data={[
             { a: { b: { c: 1, d: 1 } } },
@@ -477,7 +477,7 @@ export const Data = () => {
       </VictoryChart>
       <VictoryChart {...defaultChartProps}>
         <VictoryBar
-          groupComponent={<CanvasContainer />}
+          groupComponent={<CanvasGroup />}
           dataComponent={<Bar />}
           data={fromJS([
             { x: 1, y: 2, label: "cat" },
@@ -497,7 +497,7 @@ export const Labels = () => {
     <div style={containerStyle}>
       <VictoryChart {...defaultChartProps} domainPadding={8}>
         <VictoryBar
-          groupComponent={<CanvasContainer />}
+          groupComponent={<CanvasGroup />}
           dataComponent={<Bar />}
           data={getData(7)}
           labels={({ datum }) => `x: ${datum.x}`}
@@ -505,7 +505,7 @@ export const Labels = () => {
       </VictoryChart>
       <VictoryChart {...defaultChartProps} domainPadding={8}>
         <VictoryBar
-          groupComponent={<CanvasContainer />}
+          groupComponent={<CanvasGroup />}
           dataComponent={<Bar />}
           data={getData(7)}
           labels={["", "", "three", "four", 5, "six"]}
@@ -513,7 +513,7 @@ export const Labels = () => {
       </VictoryChart>
       <VictoryChart {...defaultChartProps} domainPadding={10}>
         <VictoryBar
-          groupComponent={<CanvasContainer />}
+          groupComponent={<CanvasGroup />}
           dataComponent={<Bar />}
           data={[
             { x: 1, y: 2, label: "cat" },
@@ -545,7 +545,7 @@ export const Tooltips = () => {
     <div style={containerStyle}>
       <VictoryChart {...defaultChartProps} domainPadding={10}>
         <VictoryBar
-          groupComponent={<CanvasContainer />}
+          groupComponent={<CanvasGroup />}
           dataComponent={<Bar />}
           data={getData(5)}
           labels={({ datum }) => `x: ${datum.x}`}
@@ -554,7 +554,7 @@ export const Tooltips = () => {
       </VictoryChart>
       <VictoryChart horizontal {...defaultChartProps} domainPadding={10}>
         <VictoryBar
-          groupComponent={<CanvasContainer />}
+          groupComponent={<CanvasGroup />}
           dataComponent={<Bar />}
           data={getData(5)}
           labels={({ datum }) => `x: ${datum.x}`}
@@ -563,7 +563,7 @@ export const Tooltips = () => {
       </VictoryChart>
       <VictoryChart {...defaultChartProps} domainPadding={10}>
         <VictoryBar
-          groupComponent={<CanvasContainer />}
+          groupComponent={<CanvasGroup />}
           dataComponent={<Bar />}
           data={getMixedData(5)}
           labels={({ datum }) => `x: ${datum.x}`}
@@ -572,7 +572,7 @@ export const Tooltips = () => {
       </VictoryChart>
       <VictoryChart horizontal {...defaultChartProps} domainPadding={10}>
         <VictoryBar
-          groupComponent={<CanvasContainer />}
+          groupComponent={<CanvasGroup />}
           dataComponent={<Bar />}
           data={getMixedData(5)}
           labels={({ datum }) => `x: ${datum.x}`}
@@ -581,7 +581,7 @@ export const Tooltips = () => {
       </VictoryChart>
       <VictoryChart {...defaultChartProps} domainPadding={10}>
         <VictoryBar
-          groupComponent={<CanvasContainer />}
+          groupComponent={<CanvasGroup />}
           dataComponent={<Bar />}
           data={getData(5)}
           labels={["one", "two", 3, "wow, four tooltips", "five"]}
@@ -606,7 +606,7 @@ export const Style = () => {
     <div style={containerStyle}>
       <VictoryChart {...defaultChartProps} domainPadding={10}>
         <VictoryBar
-          groupComponent={<CanvasContainer />}
+          groupComponent={<CanvasGroup />}
           dataComponent={<Bar />}
           labels={({ datum }) => datum.y}
           style={{
@@ -622,7 +622,7 @@ export const Style = () => {
       </VictoryChart>
       <VictoryChart {...defaultChartProps} domainPadding={10}>
         <VictoryBar
-          groupComponent={<CanvasContainer />}
+          groupComponent={<CanvasGroup />}
           dataComponent={<Bar />}
           style={{
             labels: {
@@ -653,17 +653,17 @@ export const StackedBars = () => {
       <VictoryChart {...defaultChartProps} domainPadding={8}>
         <VictoryStack labels={({ datum }) => datum._y1.toPrecision(2)}>
           <VictoryBar
-            groupComponent={<CanvasContainer />}
+            groupComponent={<CanvasGroup />}
             dataComponent={<Bar />}
             data={getData(7)}
           />
           <VictoryBar
-            groupComponent={<CanvasContainer />}
+            groupComponent={<CanvasGroup />}
             dataComponent={<Bar />}
             data={getData(7, "seed-1")}
           />
           <VictoryBar
-            groupComponent={<CanvasContainer />}
+            groupComponent={<CanvasGroup />}
             dataComponent={<Bar />}
             data={getData(7, "seed-2")}
           />
@@ -672,21 +672,21 @@ export const StackedBars = () => {
       <VictoryChart {...defaultChartProps} domainPadding={8}>
         <VictoryStack>
           <VictoryBar
-            groupComponent={<CanvasContainer />}
+            groupComponent={<CanvasGroup />}
             dataComponent={<Bar />}
             data={getData(7)}
             labels={({ datum }) => datum.y.toPrecision(2)}
             labelComponent={<VictoryLabel renderInPortal />}
           />
           <VictoryBar
-            groupComponent={<CanvasContainer />}
+            groupComponent={<CanvasGroup />}
             dataComponent={<Bar />}
             data={getData(7, "seed-1")}
             labels={({ datum }) => datum.y.toPrecision(2)}
             labelComponent={<VictoryLabel renderInPortal />}
           />
           <VictoryBar
-            groupComponent={<CanvasContainer />}
+            groupComponent={<CanvasGroup />}
             dataComponent={<Bar />}
             data={getData(7, "seed-2")}
             labels={({ datum }) => datum.y.toPrecision(2)}
@@ -697,17 +697,17 @@ export const StackedBars = () => {
       <VictoryChart {...defaultChartProps} domainPadding={8}>
         <VictoryStack labels={({ datum }) => datum._y1.toPrecision(2)}>
           <VictoryBar
-            groupComponent={<CanvasContainer />}
+            groupComponent={<CanvasGroup />}
             dataComponent={<Bar />}
             data={getData(9)}
           />
           <VictoryBar
-            groupComponent={<CanvasContainer />}
+            groupComponent={<CanvasGroup />}
             dataComponent={<Bar />}
             data={getData(5, "seed-1")}
           />
           <VictoryBar
-            groupComponent={<CanvasContainer />}
+            groupComponent={<CanvasGroup />}
             dataComponent={<Bar />}
             data={getData(3, "seed-2")}
           />
@@ -716,17 +716,17 @@ export const StackedBars = () => {
       <VictoryChart {...defaultChartProps} domainPadding={8}>
         <VictoryStack labels={({ datum }) => datum._y1.toPrecision(2)}>
           <VictoryBar
-            groupComponent={<CanvasContainer />}
+            groupComponent={<CanvasGroup />}
             dataComponent={<Bar />}
             data={getMixedData(7)}
           />
           <VictoryBar
-            groupComponent={<CanvasContainer />}
+            groupComponent={<CanvasGroup />}
             dataComponent={<Bar />}
             data={getMixedData(7, "seed-1")}
           />
           <VictoryBar
-            groupComponent={<CanvasContainer />}
+            groupComponent={<CanvasGroup />}
             dataComponent={<Bar />}
             data={getMixedData(7, "seed-2")}
           />
@@ -735,17 +735,17 @@ export const StackedBars = () => {
       <VictoryChart horizontal {...defaultChartProps} domainPadding={8}>
         <VictoryStack labels={({ datum }) => datum._y1.toPrecision(2)}>
           <VictoryBar
-            groupComponent={<CanvasContainer />}
+            groupComponent={<CanvasGroup />}
             dataComponent={<Bar />}
             data={getMixedData(7)}
           />
           <VictoryBar
-            groupComponent={<CanvasContainer />}
+            groupComponent={<CanvasGroup />}
             dataComponent={<Bar />}
             data={getMixedData(7, "seed-1")}
           />
           <VictoryBar
-            groupComponent={<CanvasContainer />}
+            groupComponent={<CanvasGroup />}
             dataComponent={<Bar />}
             data={getMixedData(7, "seed-2")}
           />
@@ -757,17 +757,17 @@ export const StackedBars = () => {
           labelComponent={<VictoryTooltip active />}
         >
           <VictoryBar
-            groupComponent={<CanvasContainer />}
+            groupComponent={<CanvasGroup />}
             dataComponent={<Bar />}
             data={getMixedData(7)}
           />
           <VictoryBar
-            groupComponent={<CanvasContainer />}
+            groupComponent={<CanvasGroup />}
             dataComponent={<Bar />}
             data={getMixedData(7, "seed-1")}
           />
           <VictoryBar
-            groupComponent={<CanvasContainer />}
+            groupComponent={<CanvasGroup />}
             dataComponent={<Bar />}
             data={getMixedData(7, "seed-2")}
           />
@@ -779,17 +779,17 @@ export const StackedBars = () => {
           labelComponent={<VictoryTooltip active />}
         >
           <VictoryBar
-            groupComponent={<CanvasContainer />}
+            groupComponent={<CanvasGroup />}
             dataComponent={<Bar />}
             data={getMixedData(7)}
           />
           <VictoryBar
-            groupComponent={<CanvasContainer />}
+            groupComponent={<CanvasGroup />}
             dataComponent={<Bar />}
             data={getMixedData(7, "seed-1")}
           />
           <VictoryBar
-            groupComponent={<CanvasContainer />}
+            groupComponent={<CanvasGroup />}
             dataComponent={<Bar />}
             data={getMixedData(7, "seed-2")}
           />
@@ -798,42 +798,42 @@ export const StackedBars = () => {
       <VictoryChart {...defaultChartProps}>
         <VictoryStack>
           <VictoryBar
-            groupComponent={<CanvasContainer />}
+            groupComponent={<CanvasGroup />}
             dataComponent={<Bar />}
             data={getData(90)}
           />
           <VictoryBar
-            groupComponent={<CanvasContainer />}
+            groupComponent={<CanvasGroup />}
             dataComponent={<Bar />}
             data={getData(50, "seed-1")}
           />
           <VictoryBar
-            groupComponent={<CanvasContainer />}
+            groupComponent={<CanvasGroup />}
             dataComponent={<Bar />}
             data={getData(200, "seed-2")}
           />
           <VictoryBar
-            groupComponent={<CanvasContainer />}
+            groupComponent={<CanvasGroup />}
             dataComponent={<Bar />}
             data={getData(30, "seed-3")}
           />
           <VictoryBar
-            groupComponent={<CanvasContainer />}
+            groupComponent={<CanvasGroup />}
             dataComponent={<Bar />}
             data={getData(200, "seed-4")}
           />
           <VictoryBar
-            groupComponent={<CanvasContainer />}
+            groupComponent={<CanvasGroup />}
             dataComponent={<Bar />}
             data={getData(100, "seed-5")}
           />
           <VictoryBar
-            groupComponent={<CanvasContainer />}
+            groupComponent={<CanvasGroup />}
             dataComponent={<Bar />}
             data={getData(200, "seed-6")}
           />
           <VictoryBar
-            groupComponent={<CanvasContainer />}
+            groupComponent={<CanvasGroup />}
             dataComponent={<Bar />}
             data={getData(190, "seed-7")}
           />
@@ -842,17 +842,17 @@ export const StackedBars = () => {
       <VictoryChart {...defaultChartProps}>
         <VictoryStack>
           <VictoryBar
-            groupComponent={<CanvasContainer />}
+            groupComponent={<CanvasGroup />}
             dataComponent={<Bar />}
             data={getDataWithBaseline(7)}
           />
           <VictoryBar
-            groupComponent={<CanvasContainer />}
+            groupComponent={<CanvasGroup />}
             dataComponent={<Bar />}
             data={getData(7, "seed-1")}
           />
           <VictoryBar
-            groupComponent={<CanvasContainer />}
+            groupComponent={<CanvasGroup />}
             dataComponent={<Bar />}
             data={getData(7, "seed-2")}
           />
@@ -868,17 +868,17 @@ export const GroupedBars = () => {
       <VictoryChart {...defaultChartProps}>
         <VictoryGroup offset={20} labels={({ datum }) => datum.x}>
           <VictoryBar
-            groupComponent={<CanvasContainer />}
+            groupComponent={<CanvasGroup />}
             dataComponent={<Bar />}
             data={getData(3)}
           />
           <VictoryBar
-            groupComponent={<CanvasContainer />}
+            groupComponent={<CanvasGroup />}
             dataComponent={<Bar />}
             data={getData(3, "seed-1")}
           />
           <VictoryBar
-            groupComponent={<CanvasContainer />}
+            groupComponent={<CanvasGroup />}
             dataComponent={<Bar />}
             data={getData(3, "seed-2")}
           />
@@ -887,17 +887,17 @@ export const GroupedBars = () => {
       <VictoryChart {...defaultChartProps}>
         <VictoryGroup offset={10} labels={({ datum }) => datum.x}>
           <VictoryBar
-            groupComponent={<CanvasContainer />}
+            groupComponent={<CanvasGroup />}
             dataComponent={<Bar />}
             data={getData(5)}
           />
           <VictoryBar
-            groupComponent={<CanvasContainer />}
+            groupComponent={<CanvasGroup />}
             dataComponent={<Bar />}
             data={getData(3, "seed-1")}
           />
           <VictoryBar
-            groupComponent={<CanvasContainer />}
+            groupComponent={<CanvasGroup />}
             dataComponent={<Bar />}
             data={getData(2, "seed-2")}
           />
@@ -906,17 +906,17 @@ export const GroupedBars = () => {
       <VictoryChart {...defaultChartProps}>
         <VictoryGroup offset={20} labels={({ datum }) => datum.x}>
           <VictoryBar
-            groupComponent={<CanvasContainer />}
+            groupComponent={<CanvasGroup />}
             dataComponent={<Bar />}
             data={getMixedData(3)}
           />
           <VictoryBar
-            groupComponent={<CanvasContainer />}
+            groupComponent={<CanvasGroup />}
             dataComponent={<Bar />}
             data={getMixedData(3, "seed")}
           />
           <VictoryBar
-            groupComponent={<CanvasContainer />}
+            groupComponent={<CanvasGroup />}
             dataComponent={<Bar />}
             data={getMixedData(3, "seed-1")}
           />
@@ -925,17 +925,17 @@ export const GroupedBars = () => {
       <VictoryChart horizontal {...defaultChartProps}>
         <VictoryGroup offset={20} labels={({ datum }) => datum.x}>
           <VictoryBar
-            groupComponent={<CanvasContainer />}
+            groupComponent={<CanvasGroup />}
             dataComponent={<Bar />}
             data={getMixedData(3)}
           />
           <VictoryBar
-            groupComponent={<CanvasContainer />}
+            groupComponent={<CanvasGroup />}
             dataComponent={<Bar />}
             data={getMixedData(3, "seed")}
           />
           <VictoryBar
-            groupComponent={<CanvasContainer />}
+            groupComponent={<CanvasGroup />}
             dataComponent={<Bar />}
             data={getMixedData(3, "seed-1")}
           />
@@ -948,17 +948,17 @@ export const GroupedBars = () => {
           labelComponent={<VictoryTooltip active />}
         >
           <VictoryBar
-            groupComponent={<CanvasContainer />}
+            groupComponent={<CanvasGroup />}
             dataComponent={<Bar />}
             data={getMixedData(3)}
           />
           <VictoryBar
-            groupComponent={<CanvasContainer />}
+            groupComponent={<CanvasGroup />}
             dataComponent={<Bar />}
             data={getMixedData(3, "seed")}
           />
           <VictoryBar
-            groupComponent={<CanvasContainer />}
+            groupComponent={<CanvasGroup />}
             dataComponent={<Bar />}
             data={getMixedData(3, "seed-1")}
           />
@@ -971,17 +971,17 @@ export const GroupedBars = () => {
           labelComponent={<VictoryTooltip active />}
         >
           <VictoryBar
-            groupComponent={<CanvasContainer />}
+            groupComponent={<CanvasGroup />}
             dataComponent={<Bar />}
             data={getMixedData(3)}
           />
           <VictoryBar
-            groupComponent={<CanvasContainer />}
+            groupComponent={<CanvasGroup />}
             dataComponent={<Bar />}
             data={getMixedData(3, "seed")}
           />
           <VictoryBar
-            groupComponent={<CanvasContainer />}
+            groupComponent={<CanvasGroup />}
             dataComponent={<Bar />}
             data={getMixedData(3, "seed-1")}
           />
@@ -995,51 +995,51 @@ export const GroupedBars = () => {
         >
           <VictoryStack colorScale="red">
             <VictoryBar
-              groupComponent={<CanvasContainer />}
+              groupComponent={<CanvasGroup />}
               dataComponent={<Bar />}
               data={getData(3)}
             />
             <VictoryBar
-              groupComponent={<CanvasContainer />}
+              groupComponent={<CanvasGroup />}
               dataComponent={<Bar />}
               data={getData(3, "seed-1")}
             />
             <VictoryBar
-              groupComponent={<CanvasContainer />}
+              groupComponent={<CanvasGroup />}
               dataComponent={<Bar />}
               data={getData(3, "seed-2")}
             />
           </VictoryStack>
           <VictoryStack colorScale="green">
             <VictoryBar
-              groupComponent={<CanvasContainer />}
+              groupComponent={<CanvasGroup />}
               dataComponent={<Bar />}
               data={getData(3)}
             />
             <VictoryBar
-              groupComponent={<CanvasContainer />}
+              groupComponent={<CanvasGroup />}
               dataComponent={<Bar />}
               data={getData(3, "seed-3")}
             />
             <VictoryBar
-              groupComponent={<CanvasContainer />}
+              groupComponent={<CanvasGroup />}
               dataComponent={<Bar />}
               data={getData(3, "seed-4")}
             />
           </VictoryStack>
           <VictoryStack colorScale="blue">
             <VictoryBar
-              groupComponent={<CanvasContainer />}
+              groupComponent={<CanvasGroup />}
               dataComponent={<Bar />}
               data={getData(3)}
             />
             <VictoryBar
-              groupComponent={<CanvasContainer />}
+              groupComponent={<CanvasGroup />}
               dataComponent={<Bar />}
               data={getData(3, "seed-5")}
             />
             <VictoryBar
-              groupComponent={<CanvasContainer />}
+              groupComponent={<CanvasGroup />}
               dataComponent={<Bar />}
               data={getData(3, "seed-6")}
             />
@@ -1054,51 +1054,51 @@ export const GroupedBars = () => {
         >
           <VictoryStack colorScale="red">
             <VictoryBar
-              groupComponent={<CanvasContainer />}
+              groupComponent={<CanvasGroup />}
               dataComponent={<Bar />}
               data={getData(3)}
             />
             <VictoryBar
-              groupComponent={<CanvasContainer />}
+              groupComponent={<CanvasGroup />}
               dataComponent={<Bar />}
               data={getData(3, "seed-1")}
             />
             <VictoryBar
-              groupComponent={<CanvasContainer />}
+              groupComponent={<CanvasGroup />}
               dataComponent={<Bar />}
               data={getData(3, "seed-2")}
             />
           </VictoryStack>
           <VictoryStack colorScale="green">
             <VictoryBar
-              groupComponent={<CanvasContainer />}
+              groupComponent={<CanvasGroup />}
               dataComponent={<Bar />}
               data={getData(3)}
             />
             <VictoryBar
-              groupComponent={<CanvasContainer />}
+              groupComponent={<CanvasGroup />}
               dataComponent={<Bar />}
               data={getData(3, "seed-3")}
             />
             <VictoryBar
-              groupComponent={<CanvasContainer />}
+              groupComponent={<CanvasGroup />}
               dataComponent={<Bar />}
               data={getData(3, "seed-4")}
             />
           </VictoryStack>
           <VictoryStack colorScale="blue">
             <VictoryBar
-              groupComponent={<CanvasContainer />}
+              groupComponent={<CanvasGroup />}
               dataComponent={<Bar />}
               data={getData(3)}
             />
             <VictoryBar
-              groupComponent={<CanvasContainer />}
+              groupComponent={<CanvasGroup />}
               dataComponent={<Bar />}
               data={getData(3, "seed-5")}
             />
             <VictoryBar
-              groupComponent={<CanvasContainer />}
+              groupComponent={<CanvasGroup />}
               dataComponent={<Bar />}
               data={getData(3, "seed-6")}
             />
