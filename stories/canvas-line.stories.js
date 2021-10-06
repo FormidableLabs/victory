@@ -1,6 +1,6 @@
 /* eslint-disable react/no-multi-comp */
 import React from "react";
-import { CanvasContainer, Curve } from "../packages/victory-canvas/src";
+import { CanvasGroup, Curve } from "../packages/victory-canvas/src";
 import { VictoryChart } from "../packages/victory-chart/src/index";
 import { VictoryTheme, VictoryLabel } from "../packages/victory-core/src/index";
 import { VictoryLine } from "../packages/victory-line/src";
@@ -29,25 +29,25 @@ export const DefaultRendering = () => {
     <div style={containerStyle}>
       <VictoryLine
         dataComponent={<Curve />}
-        groupComponent={<CanvasContainer />}
+        groupComponent={<CanvasGroup />}
         style={parentStyle}
       />
       <VictoryChart style={parentStyle}>
         <VictoryLine
           dataComponent={<Curve />}
-          groupComponent={<CanvasContainer />}
+          groupComponent={<CanvasGroup />}
         />
       </VictoryChart>
       <VictoryLine
         dataComponent={<Curve />}
-        groupComponent={<CanvasContainer />}
+        groupComponent={<CanvasGroup />}
         style={parentStyle}
         theme={VictoryTheme.material}
       />
       <VictoryChart style={parentStyle} theme={VictoryTheme.material}>
         <VictoryLine
           dataComponent={<Curve />}
-          groupComponent={<CanvasContainer />}
+          groupComponent={<CanvasGroup />}
         />
       </VictoryChart>
     </div>
@@ -62,34 +62,34 @@ export const Theme = () => {
           data={getMixedData(8)}
           labels={({ datum }) => datum.x}
           dataComponent={<Curve />}
-          groupComponent={<CanvasContainer />}
+          groupComponent={<CanvasGroup />}
         />
       </VictoryChart>
       <VictoryChart style={parentStyle}>
         <VictoryStack labels={({ datum }) => datum.x}>
           <VictoryLine
             dataComponent={<Curve />}
-            groupComponent={<CanvasContainer />}
+            groupComponent={<CanvasGroup />}
             data={getData(8)}
           />
           <VictoryLine
             dataComponent={<Curve />}
-            groupComponent={<CanvasContainer />}
+            groupComponent={<CanvasGroup />}
             data={getData(8, "seed-1")}
           />
           <VictoryLine
             dataComponent={<Curve />}
-            groupComponent={<CanvasContainer />}
+            groupComponent={<CanvasGroup />}
             data={getData(8, "seed-2")}
           />
           <VictoryLine
             dataComponent={<Curve />}
-            groupComponent={<CanvasContainer />}
+            groupComponent={<CanvasGroup />}
             data={getData(8, "seed-3")}
           />
           <VictoryLine
             dataComponent={<Curve />}
-            groupComponent={<CanvasContainer />}
+            groupComponent={<CanvasGroup />}
             data={getData(8, "seed-4")}
           />
         </VictoryStack>
@@ -97,7 +97,7 @@ export const Theme = () => {
       <VictoryChart style={parentStyle} theme={VictoryTheme.material}>
         <VictoryLine
           dataComponent={<Curve />}
-          groupComponent={<CanvasContainer />}
+          groupComponent={<CanvasGroup />}
           data={getMixedData(8)}
           labels={({ datum }) => datum.x}
         />
@@ -106,27 +106,27 @@ export const Theme = () => {
         <VictoryStack labels={({ datum }) => datum.x}>
           <VictoryLine
             dataComponent={<Curve />}
-            groupComponent={<CanvasContainer />}
+            groupComponent={<CanvasGroup />}
             data={getData(8)}
           />
           <VictoryLine
             dataComponent={<Curve />}
-            groupComponent={<CanvasContainer />}
+            groupComponent={<CanvasGroup />}
             data={getData(8, "seed-1")}
           />
           <VictoryLine
             dataComponent={<Curve />}
-            groupComponent={<CanvasContainer />}
+            groupComponent={<CanvasGroup />}
             data={getData(8, "seed-2")}
           />
           <VictoryLine
             dataComponent={<Curve />}
-            groupComponent={<CanvasContainer />}
+            groupComponent={<CanvasGroup />}
             data={getData(8, "seed-3")}
           />
           <VictoryLine
             dataComponent={<Curve />}
-            groupComponent={<CanvasContainer />}
+            groupComponent={<CanvasGroup />}
             data={getData(8, "seed-4")}
           />
         </VictoryStack>
@@ -146,7 +146,7 @@ export const Interpolation = () => {
       />
       <VictoryLine
         dataComponent={<Curve />}
-        groupComponent={<CanvasContainer />}
+        groupComponent={<CanvasGroup />}
         data={getData(8)}
         interpolation={interpolation}
       />

@@ -92,7 +92,7 @@ export { VictorySharedEvents } from "victory-shared-events";
 export { VictoryAxis } from "victory-axis";
 export { VictoryPolarAxis } from "victory-polar-axis";
 export {
-  CanvasContainer,
+  CanvasGroup,
   Curve as CanvasCurve,
   Point as CanvasPoint,
   Bar as CanvasBar
