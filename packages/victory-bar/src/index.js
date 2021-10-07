@@ -4,5 +4,6 @@ export { getBarPosition } from "./helper-methods";
 export {
   getVerticalBarPath,
   getHorizontalBarPath,
-  getVerticalPolarBarPath
+  getVerticalPolarBarPath,
+  getCustomBarPath
 } from "./path-helper-methods";

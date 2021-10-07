@@ -3,7 +3,7 @@ import { useCanvasContext } from "./hooks/use-canvas-context";
 import { LineHelpers } from "victory-core";
 
 const Curve = (props) => {
-  const { canvasRef } = useCanvasContext();
+  const { canvasRef, clear, clip } = useCanvasContext();
   const { style, data } = props;
   const { stroke, strokeWidth } = style;
 
@@ -12,7 +12,6 @@ const Curve = (props) => {
       const line = LineHelpers.getLineFunction(props);
       ctx.strokeStyle = stroke;
       ctx.lineWidth = strokeWidth;
-      ctx.beginPath();
       line.context(ctx)(data);
       ctx.stroke();
     },
@@ -21,8 +20,10 @@ const Curve = (props) => {
 
   React.useEffect(() => {
     const ctx = canvasRef.current.getContext("2d");
+    clear(ctx);
     draw(ctx);
-  }, []);
+    clip(ctx);
+  }, [canvasRef, draw, clear, clip]);
 
   return null;
 };

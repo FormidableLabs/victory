@@ -1,10 +1,10 @@
 import React from "react";
 import { CanvasContext } from "./hooks/use-canvas-context";
-import PropTypes from "prop-types";
+import { VictoryClipContainer } from "victory-core";
 
 const CanvasGroup = (props) => {
   const canvasRef = React.useRef();
-  const { children, width, height } = props;
+  const { children, width, height, clipWidth, padding } = props;
 
   const clear = React.useCallback(
     (ctx) => {
@@ -13,8 +13,29 @@ const CanvasGroup = (props) => {
     [width, height]
   );
 
+  // This needs to be called in the child component to ensure it is called after the
+  // shape is drawn
+  const clip = React.useCallback(
+    (ctx) => {
+      const maxClipWidth = width - padding.right - padding.left;
+      ctx.clearRect(
+        width - padding.right,
+        0,
+        (maxClipWidth - clipWidth) * -1,
+        height
+      );
+    },
+    [width, height, padding, clipWidth]
+  );
+
   return (
-    <CanvasContext.Provider value={{ canvasRef, clear, width, height }}>
+    <CanvasContext.Provider
+      value={{
+        canvasRef,
+        clear,
+        clip
+      }}
+    >
       <foreignObject width={width} height={height} x={0} y={0}>
         <canvas width={width} height={height} ref={canvasRef} />
       </foreignObject>
@@ -23,12 +44,7 @@ const CanvasGroup = (props) => {
   );
 };
 
-CanvasGroup.propTypes = {
-  children: PropTypes.node,
-  data: PropTypes.any,
-  height: PropTypes.number,
-  width: PropTypes.number
-};
+CanvasGroup.propTypes = VictoryClipContainer.propTypes;
 CanvasGroup.role = "container";
 CanvasGroup.displayName = "CanvasGroup";
 
