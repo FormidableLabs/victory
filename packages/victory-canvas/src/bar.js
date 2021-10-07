@@ -1,14 +1,15 @@
+/*global Path2D:false */
+import { assign, isNil, isPlainObject } from "lodash";
 import React from "react";
-import PropTypes from "prop-types";
-import { Helpers, CommonProps } from "victory-core";
-import { assign, isPlainObject, isNil } from "lodash";
-import { useCanvasContext } from "./hooks/use-canvas-context";
 import {
+  Bar as SVGBar,
   getCustomBarPath,
   getHorizontalBarPath,
   getVerticalBarPath,
   getVerticalPolarBarPath
 } from "victory-bar";
+import { Helpers } from "victory-core";
+import { useCanvasContext } from "./hooks/use-canvas-context";
 
 const getBarPath = (props, width, cornerRadius) => {
   if (props.getPath) {
@@ -21,7 +22,6 @@ const getBarPath = (props, width, cornerRadius) => {
 };
 
 const getPolarBarPath = (props, cornerRadius) => {
-  // TODO Radial bars
   return getVerticalPolarBarPath(props, cornerRadius);
 };
 
@@ -132,63 +132,82 @@ const evaluateProps = (props) => {
   });
 };
 
+export const usePreviousValue = (value) => {
+  const ref = React.useRef();
+  React.useEffect(() => {
+    ref.current = value;
+  });
+  return ref.current;
+};
+
 const Bar = (initialProps) => {
   const { canvasRef } = useCanvasContext();
   const props = evaluateProps(initialProps);
+  const { polar, style, barWidth, cornerRadius, origin } = props;
+
+  const path2d = React.useMemo(() => {
+    const p = polar
+      ? getPolarBarPath(props, cornerRadius)
+      : getBarPath(props, barWidth, cornerRadius);
+
+    return new Path2D(p);
+  }, [polar, barWidth, cornerRadius, props]);
+
+  const previousPath = usePreviousValue(path2d);
 
   const draw = React.useCallback(
-    (ctx) => {
-      const { polar, style, barWidth, cornerRadius, origin } = props;
+    (ctx, path) => {
       ctx.fillStyle = style.fill;
       ctx.strokeStyle = style.stroke;
       ctx.globalAlpha = style.fillOpacity;
       ctx.lineWidth = style.strokeWidth;
 
-      const path = polar
-        ? getPolarBarPath(props, cornerRadius)
-        : getBarPath(props, barWidth, cornerRadius);
-      // eslint-disable-next-line no-undef
-      const path2d = new Path2D(path);
       if (polar) {
         ctx.translate(origin.x, origin.y);
       }
-      ctx.fill(path2d);
+      ctx.fill(path);
       ctx.setTransform(1, 0, 0, 1, 0, 0);
     },
-    [props]
+    [style, origin, polar]
+  );
+
+  // This will clear the previous bar without clearing the entire canvas
+  const clearPreviousPath = React.useCallback(
+    (ctx) => {
+      if (previousPath) {
+        ctx.save();
+        // This ensures that the entire shape is erased
+        ctx.lineWidth = style.strokeWidth + 2;
+
+        ctx.globalCompositeOperation = "destination-out";
+        draw(ctx, previousPath);
+        ctx.stroke(previousPath);
+
+        ctx.restore();
+      }
+    },
+    [draw, previousPath, style]
   );
 
   React.useEffect(() => {
     const ctx = canvasRef.current.getContext("2d");
-    draw(ctx);
-  }, []);
+
+    clearPreviousPath(ctx);
+    draw(ctx, path2d);
+  }, [
+    canvasRef,
+    draw,
+    polar,
+    barWidth,
+    cornerRadius,
+    props,
+    path2d,
+    clearPreviousPath
+  ]);
 
   return null;
 };
 
-Bar.propTypes = {
-  ...CommonProps.primitiveProps,
-  alignment: PropTypes.oneOf(["start", "middle", "end"]),
-  barRatio: PropTypes.number,
-  barWidth: PropTypes.oneOfType([PropTypes.number, PropTypes.func]),
-  cornerRadius: PropTypes.oneOfType([
-    PropTypes.number,
-    PropTypes.func,
-    PropTypes.shape({
-      top: PropTypes.oneOfType([PropTypes.number, PropTypes.func]),
-      topLeft: PropTypes.oneOfType([PropTypes.number, PropTypes.func]),
-      topRight: PropTypes.oneOfType([PropTypes.number, PropTypes.func]),
-      bottom: PropTypes.oneOfType([PropTypes.number, PropTypes.func]),
-      bottomLeft: PropTypes.oneOfType([PropTypes.number, PropTypes.func]),
-      bottomRight: PropTypes.oneOfType([PropTypes.number, PropTypes.func])
-    })
-  ]),
-  datum: PropTypes.object,
-  horizontal: PropTypes.bool,
-  width: PropTypes.number,
-  x: PropTypes.number,
-  y: PropTypes.number,
-  y0: PropTypes.number
-};
+Bar.propTypes = SVGBar.propTypes;
 
 export default Bar;
