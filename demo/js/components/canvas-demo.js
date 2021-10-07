@@ -1,7 +1,7 @@
 /* eslint-disable no-magic-numbers */
 import React from "react";
 import {
-  CanvasContainer,
+  CanvasGroup,
   CanvasCurve,
   VictoryAxis,
   VictoryChart,
@@ -247,7 +247,7 @@ const CanvasDemo = () => {
   return (
     <div className="demo">
       <div style={containerStyle}>
-        <VictoryChart style={{ parent: parentStyle }}>
+        <VictoryChart animate style={{ parent: parentStyle }}>
           {populationData.map(({ country, values }) => {
             const data = values.map(({ year, value }) => ({
               x: year,
@@ -257,7 +257,7 @@ const CanvasDemo = () => {
               <VictoryLine
                 key={country}
                 data={data}
-                groupComponent={<CanvasContainer />}
+                groupComponent={<CanvasGroup />}
                 dataComponent={<CanvasCurve />}
               />
             );
@@ -267,7 +267,7 @@ const CanvasDemo = () => {
         </VictoryChart>
         <VictoryChart style={{ parent: parentStyle }}>
           <VictoryScatter
-            groupComponent={<CanvasContainer />}
+            groupComponent={<CanvasGroup />}
             dataComponent={<CanvasPoint />}
             data={getRandomData(1000)}
           />
