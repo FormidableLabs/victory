@@ -1,8 +1,8 @@
 /*global Path2D:false */
-import { assign, isNil, isPlainObject } from "lodash";
+import { assign, isNil, isPlainObject, omit } from "lodash";
 import React from "react";
 import {
-  Bar as SVGBar,
+  Bar,
   getCustomBarPath,
   getHorizontalBarPath,
   getVerticalBarPath,
@@ -140,7 +140,7 @@ export const usePreviousValue = (value) => {
   return ref.current;
 };
 
-const Bar = (initialProps) => {
+const CanvasBar = (initialProps) => {
   const { canvasRef } = useCanvasContext();
   const props = evaluateProps(initialProps);
   const { polar, style, barWidth, cornerRadius, origin } = props;
@@ -208,6 +208,6 @@ const Bar = (initialProps) => {
   return null;
 };
 
-Bar.propTypes = SVGBar.propTypes;
+CanvasBar.propTypes = omit(Bar.propTypes, "pathComponent");
 
-export default Bar;
+export default CanvasBar;

@@ -57,7 +57,7 @@ const evaluateProps = (props) => {
   });
 };
 
-const Point = (initialProps) => {
+const CanvasPoint = (initialProps) => {
   const { canvasRef } = useCanvasContext();
   const props = evaluateProps(initialProps);
 
@@ -81,7 +81,7 @@ const Point = (initialProps) => {
   return null;
 };
 
-Point.propTypes = {
+CanvasPoint.propTypes = {
   ...CommonProps.primitiveProps,
   datum: PropTypes.object,
   size: PropTypes.oneOfType([PropTypes.number, PropTypes.func]),
@@ -89,9 +89,9 @@ Point.propTypes = {
   y: PropTypes.number
 };
 
-Point.defaultProps = {
+CanvasPoint.defaultProps = {
   role: "presentation",
   shapeRendering: "auto"
 };
 
-export default Point;
+export default CanvasPoint;

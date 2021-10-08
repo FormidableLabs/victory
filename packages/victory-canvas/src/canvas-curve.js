@@ -1,8 +1,10 @@
+import { omit } from "lodash";
 import React from "react";
-import { useCanvasContext } from "./hooks/use-canvas-context";
 import { LineHelpers } from "victory-core";
+import { Curve } from "victory-line";
+import { useCanvasContext } from "./hooks/use-canvas-context";
 
-const Curve = (props) => {
+const CanvasCurve = (props) => {
   const { canvasRef, clear, clip } = useCanvasContext();
   const { style, data } = props;
   const { stroke, strokeWidth } = style;
@@ -28,4 +30,6 @@ const Curve = (props) => {
   return null;
 };
 
-export default Curve;
+CanvasCurve.propTypes = omit(Curve.propTypes, "pathComponent");
+
+export default CanvasCurve;

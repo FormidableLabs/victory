@@ -1,6 +1,7 @@
 import React from "react";
 import { CanvasContext } from "./hooks/use-canvas-context";
-import { VictoryClipContainer } from "victory-core";
+import PropTypes from "prop-types";
+import { PropTypes as CustomPropTypes } from "victory-core";
 
 const CanvasGroup = (props) => {
   const canvasRef = React.useRef();
@@ -44,7 +45,26 @@ const CanvasGroup = (props) => {
   );
 };
 
-CanvasGroup.propTypes = VictoryClipContainer.propTypes;
+CanvasGroup.propTypes = {
+  "aria-label": PropTypes.string,
+  children: PropTypes.oneOfType([
+    PropTypes.arrayOf(PropTypes.node),
+    PropTypes.node
+  ]),
+  className: PropTypes.string,
+  clipWidth: CustomPropTypes.nonNegative,
+  height: PropTypes.number,
+  padding: PropTypes.oneOfType([
+    PropTypes.number,
+    PropTypes.shape({
+      top: PropTypes.number,
+      bottom: PropTypes.number,
+      left: PropTypes.number,
+      right: PropTypes.number
+    })
+  ]),
+  width: PropTypes.number
+};
 CanvasGroup.role = "container";
 CanvasGroup.displayName = "CanvasGroup";
 

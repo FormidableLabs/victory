@@ -93,7 +93,7 @@ export { VictoryAxis } from "victory-axis";
 export { VictoryPolarAxis } from "victory-polar-axis";
 export {
   CanvasGroup,
-  Curve as CanvasCurve,
-  Point as CanvasPoint,
-  Bar as CanvasBar
+  CanvasCurve,
+  CanvasPoint,
+  CanvasBar
 } from "victory-canvas";

@@ -1,4 +1,4 @@
-export { default as Bar } from "./bar";
+export { default as CanvasBar } from "./canvas-bar";
 export { default as CanvasGroup } from "./canvas-group";
-export { default as Curve } from "./curve";
-export { default as Point } from "./point";
+export { default as CanvasCurve } from "./canvas-curve";
+export { default as CanvasPoint } from "./canvas-point";
