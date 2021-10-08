@@ -1,14 +1,18 @@
 /* eslint-disable no-magic-numbers */
+/*global window:false */
 import React from "react";
 import {
-  CanvasContainer,
+  CanvasGroup,
   CanvasCurve,
   VictoryAxis,
+  VictoryBar,
+  CanvasBar,
   VictoryChart,
   VictoryLine,
   VictoryScatter,
   CanvasPoint
 } from "victory";
+import { range, random } from "lodash";
 
 const populationData = [
   {
@@ -244,35 +248,73 @@ const getRandomData = (length = 100) => {
 };
 
 const CanvasDemo = () => {
+  const getData = () => {
+    return range(20).map((i) => {
+      return {
+        x: i,
+        y: Math.random()
+      };
+    });
+  };
+
+  const getStyles = () => {
+    const colors = ["red", "orange", "gold", "tomato", "magenta", "purple"];
+    return {
+      fill: colors[random(0, 5)]
+    };
+  };
+
+  const [barData, setBarData] = React.useState(getData());
+  const [barStyle, setBarStyle] = React.useState(getStyles());
+
+  React.useEffect(() => {
+    const interval = window.setInterval(() => {
+      setBarData(getData());
+      setBarStyle(getStyles());
+    }, 3000);
+    return () => {
+      window.clearInterval(interval);
+    };
+  }, [setBarData, setBarStyle]);
+
   return (
-    <div className="demo">
-      <div style={containerStyle}>
-        <VictoryChart style={{ parent: parentStyle }}>
-          {populationData.map(({ country, values }) => {
-            const data = values.map(({ year, value }) => ({
-              x: year,
-              y: value
-            }));
-            return (
-              <VictoryLine
-                key={country}
-                data={data}
-                groupComponent={<CanvasContainer />}
-                dataComponent={<CanvasCurve />}
-              />
-            );
-          })}
-          <VictoryAxis tickFormat={(v) => v} />
-          <VictoryAxis dependentAxis tickFormat={formatPopulation} />
-        </VictoryChart>
-        <VictoryChart style={{ parent: parentStyle }}>
-          <VictoryScatter
-            groupComponent={<CanvasContainer />}
-            dataComponent={<CanvasPoint />}
-            data={getRandomData(1000)}
-          />
-        </VictoryChart>
-      </div>
+    <div className="demo" style={containerStyle}>
+      <VictoryChart animate style={{ parent: parentStyle }}>
+        {populationData.map(({ country, values }) => {
+          const data = values.map(({ year, value }) => ({
+            x: year,
+            y: value
+          }));
+          return (
+            <VictoryLine
+              key={country}
+              data={data}
+              groupComponent={<CanvasGroup />}
+              dataComponent={<CanvasCurve />}
+            />
+          );
+        })}
+        <VictoryAxis tickFormat={(v) => v} />
+        <VictoryAxis dependentAxis tickFormat={formatPopulation} />
+      </VictoryChart>
+      <VictoryChart style={{ parent: parentStyle }}>
+        <VictoryScatter
+          groupComponent={<CanvasGroup />}
+          dataComponent={<CanvasPoint />}
+          data={getRandomData(1000)}
+        />
+      </VictoryChart>
+      <VictoryChart style={{ parent: parentStyle }}>
+        <VictoryBar
+          groupComponent={<CanvasGroup />}
+          dataComponent={<CanvasBar />}
+          animate
+          data={barData}
+          style={{
+            data: barStyle
+          }}
+        />
+      </VictoryChart>
     </div>
   );
 };
