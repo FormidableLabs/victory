@@ -2,6 +2,7 @@
   "presets": ["@babel/react"],
   "plugins": [
     "lodash",
+    "no-side-effect-class-properties",
     "@babel/proposal-class-properties",
     "@babel/transform-arrow-functions",
     "@babel/transform-block-scoping",
