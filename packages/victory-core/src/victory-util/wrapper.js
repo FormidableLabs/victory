@@ -172,7 +172,13 @@ export function getDefaultDomainPadding(props, axis, childComponents) {
     return undefined;
   }
 
-  const firstChild = Array.isArray(children) && children[0];
+  function getFirstChild(childrenComponents) {
+    if (Array.isArray(childrenComponents)) {
+      return getFirstChild(childrenComponents[0]);
+    }
+    return childrenComponents[0];
+  }
+  const firstChild = getFirstChild(children);
   if (!firstChild) {
     return undefined;
   }
