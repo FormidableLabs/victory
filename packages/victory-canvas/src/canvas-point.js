@@ -30,30 +30,21 @@ const getPath = (props) => {
 const evaluateProps = (props) => {
   /**
    * Potential evaluated props are:
-   * `ariaLabel`
-   * `desc`
    * `id`
    * `size`
    * `style`
    * `symbol`
-   * `tabIndex`
    */
-  const ariaLabel = Helpers.evaluateProp(props.ariaLabel, props);
-  const desc = Helpers.evaluateProp(props.desc, props);
   const id = Helpers.evaluateProp(props.id, props);
   const size = Helpers.evaluateProp(props.size, props);
   const style = Helpers.evaluateStyle(props.style, props);
   const symbol = Helpers.evaluateProp(props.symbol, props);
-  const tabIndex = Helpers.evaluateProp(props.tabIndex, props);
 
   return assign({}, props, {
-    ariaLabel,
-    desc,
     id,
     size,
     style,
-    symbol,
-    tabIndex
+    symbol
   });
 };
 

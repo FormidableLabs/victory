@@ -43,8 +43,6 @@ const MyScatter = (props) => (
 **Props**
 
 - `active` _boolean_ a flag signifying whether the component is active
-- `ariaLabel` _string or function_ a prop controlling the aria-label that will be applied to the rendered path. When this prop is given as a function it will be called with the rest of the props supplied to `Point`
-- `className` _string_ the class name that will be applied to the rendered element
 - `data` _array_ the entire dataset
 - `datum` _object_ the data point corresponding to this point
 - `events` _object_ events to attach to the rendered element
@@ -59,7 +57,6 @@ const MyScatter = (props) => (
 - `size` _number or function_ the size of the point. When this prop is given as a function, it will be called with the rest of the props supplied to `Point`.
 - `style` _object_ the styles to apply to the rendered element
 - `symbol` _"circle", "cross", "diamond", "plus", "minus", "square", "star", "triangleDown", "triangleUp"_ which symbol the point should render. This prop may also be given as a function that returns one of the above options. When this prop is given as a function, it will be called with the rest of the props supplied to `Point`.
-- `tabIndex` _number or function_ number will be applied to the rendered path. When this prop is given as a function it will be called with the rest of the props supplied to `Point`
 - `transform` _string_ a transform that will be supplied to elements this component renders
 - `x` _number_ the x coordinate of the center of the point
 - `y` _number_ the y coordinate of the center of the point
@@ -81,8 +78,6 @@ const MyLine = (props) => (
 **Props**
 
 - `active` _boolean_ a flag signifying whether the component is active
-- `ariaLabel` _string or function_ a prop controlling the aria-label that will be applied to the rendered path. When this prop is given as a function it will be called with the rest of the props supplied to `Curve`
-- `className` _string_ the class name that will be applied to the rendered element
 - `data` _array_ the entire dataset used to define the curve
 - `events` _object_ events to attach to the rendered element
 - `id` _string or number_ an id to apply to the rendered component
@@ -93,7 +88,6 @@ const MyLine = (props) => (
 - `scale` _object_ the x and y scale of the parent chart with `domain` and `range` applied
 - `shapeRendering` _string_ the shape rendering attribute to apply to the rendered path
 - `style` _object_ the styles to apply to the rendered element
-- `tabIndex` _number or function_ will be applied to the rendered path. When given as a function it will be called with the rest of the props supplied to `Curve`
 - `transform` _string_ a transform that will be supplied to elements this component renders
 
 ### CanvasBar

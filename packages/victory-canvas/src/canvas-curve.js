@@ -1,7 +1,6 @@
-import { omit } from "lodash";
+import PropTypes from "prop-types";
 import React from "react";
-import { LineHelpers } from "victory-core";
-import { Curve } from "victory-line";
+import { CommonProps, LineHelpers } from "victory-core";
 import { useCanvasContext } from "./hooks/use-canvas-context";
 
 const CanvasCurve = (props) => {
@@ -30,6 +29,12 @@ const CanvasCurve = (props) => {
   return null;
 };
 
-CanvasCurve.propTypes = omit(Curve.propTypes, "pathComponent");
+CanvasCurve.propTypes = {
+  ...CommonProps.primitiveProps,
+  interpolation: PropTypes.oneOfType([PropTypes.string, PropTypes.func]),
+  openCurve: PropTypes.bool,
+  origin: PropTypes.object,
+  polar: PropTypes.bool
+};
 
 export default CanvasCurve;
