@@ -30,18 +30,15 @@ const getPath = (props) => {
 const evaluateProps = (props) => {
   /**
    * Potential evaluated props are:
-   * `id`
    * `size`
    * `style`
    * `symbol`
    */
-  const id = Helpers.evaluateProp(props.id, props);
   const size = Helpers.evaluateProp(props.size, props);
   const style = Helpers.evaluateStyle(props.style, props);
   const symbol = Helpers.evaluateProp(props.symbol, props);
 
   return assign({}, props, {
-    id,
     size,
     style,
     symbol
@@ -78,11 +75,6 @@ CanvasPoint.propTypes = {
   size: PropTypes.oneOfType([PropTypes.number, PropTypes.func]),
   x: PropTypes.number,
   y: PropTypes.number
-};
-
-CanvasPoint.defaultProps = {
-  role: "presentation",
-  shapeRendering: "auto"
 };
 
 export default CanvasPoint;

@@ -1,100 +1,15 @@
 /*global Path2D:false */
-import { assign, isNil, isPlainObject, omit } from "lodash";
+import { assign, omit } from "lodash";
 import React from "react";
 import {
   Bar,
-  getCustomBarPath,
-  getHorizontalBarPath,
-  getVerticalBarPath,
-  getVerticalPolarBarPath
+  getBarPath,
+  getBarWidth,
+  getCornerRadius,
+  getPolarBarPath,
+  getStyle
 } from "victory-bar";
-import { Helpers } from "victory-core";
 import { useCanvasContext } from "./hooks/use-canvas-context";
-
-const getBarPath = (props, width, cornerRadius) => {
-  if (props.getPath) {
-    return getCustomBarPath(props, width);
-  }
-
-  return props.horizontal
-    ? getHorizontalBarPath(props, width, cornerRadius)
-    : getVerticalBarPath(props, width, cornerRadius);
-};
-
-const getPolarBarPath = (props, cornerRadius) => {
-  return getVerticalPolarBarPath(props, cornerRadius);
-};
-
-const getBarWidth = (barWidth, props) => {
-  const { scale, data, defaultBarWidth, style } = props;
-  if (barWidth) {
-    return Helpers.evaluateProp(barWidth, props);
-  } else if (style.width) {
-    return style.width;
-  }
-  const range = scale.x.range();
-  const extent = Math.abs(range[1] - range[0]);
-  const bars = data.length + 2;
-  const barRatio = props.barRatio || 0.5;
-  const defaultWidth =
-    barRatio * (data.length < 2 ? defaultBarWidth : extent / bars);
-  return Math.max(1, defaultWidth);
-};
-
-const getCornerRadiusFromObject = (cornerRadius, props) => {
-  const realCornerRadius = {
-    topLeft: 0,
-    topRight: 0,
-    bottomLeft: 0,
-    bottomRight: 0
-  };
-  const updateCornerRadius = (corner, fallback) => {
-    if (!isNil(cornerRadius[corner])) {
-      realCornerRadius[corner] = Helpers.evaluateProp(
-        cornerRadius[corner],
-        props
-      );
-    } else if (!isNil(cornerRadius[fallback])) {
-      realCornerRadius[corner] = Helpers.evaluateProp(
-        cornerRadius[fallback],
-        props
-      );
-    }
-  };
-  updateCornerRadius("topLeft", "top");
-  updateCornerRadius("topRight", "top");
-  updateCornerRadius("bottomLeft", "bottom");
-  updateCornerRadius("bottomRight", "bottom");
-  return realCornerRadius;
-};
-
-const getCornerRadius = (cornerRadius, props) => {
-  const realCornerRadius = {
-    topLeft: 0,
-    topRight: 0,
-    bottomLeft: 0,
-    bottomRight: 0
-  };
-  if (!cornerRadius) {
-    return realCornerRadius;
-  }
-  if (isPlainObject(cornerRadius)) {
-    return getCornerRadiusFromObject(cornerRadius, props);
-  } else {
-    realCornerRadius.topLeft = Helpers.evaluateProp(cornerRadius, props);
-    realCornerRadius.topRight = Helpers.evaluateProp(cornerRadius, props);
-    return realCornerRadius;
-  }
-};
-
-const getStyle = (style = {}, props) => {
-  if (props.disableInlineStyles) {
-    return {};
-  }
-  const stroke = style.fill || "black";
-  const baseStyle = { fill: "black", stroke };
-  return Helpers.evaluateStyle(assign(baseStyle, style), props);
-};
 
 const evaluateProps = (props) => {
   /**
@@ -102,12 +17,6 @@ const evaluateProps = (props) => {
    * 1) `style`
    * 2) `barWidth`
    * 3) `cornerRadius`
-   *
-   * Everything else does not have to be evaluated in a particular order:
-   * `ariaLabel`
-   * `desc`
-   * `id`
-   * `tabIndex`
    */
   const style = getStyle(props.style, props);
   const barWidth = getBarWidth(props.barWidth, assign({}, props, { style }));
@@ -116,19 +25,10 @@ const evaluateProps = (props) => {
     assign({}, props, { style, barWidth })
   );
 
-  const ariaLabel = Helpers.evaluateProp(props.ariaLabel, props);
-  const desc = Helpers.evaluateProp(props.desc, props);
-  const id = Helpers.evaluateProp(props.id, props);
-  const tabIndex = Helpers.evaluateProp(props.tabIndex, props);
-
   return assign({}, props, {
-    ariaLabel,
     style,
     barWidth,
-    cornerRadius,
-    desc,
-    id,
-    tabIndex
+    cornerRadius
   });
 };
 

@@ -407,3 +407,18 @@ export const getVerticalPolarBarPath = (props, cornerRadius) => {
   }, "");
   return `${path} z`;
 };
+
+export const getBarPath = (props, width, cornerRadius) => {
+  if (props.getPath) {
+    return getCustomBarPath(props, width);
+  }
+
+  return props.horizontal
+    ? getHorizontalBarPath(props, width, cornerRadius)
+    : getVerticalBarPath(props, width, cornerRadius);
+};
+
+export const getPolarBarPath = (props, cornerRadius) => {
+  // TODO Radial bars
+  return getVerticalPolarBarPath(props, cornerRadius);
+};
