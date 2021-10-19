@@ -64,6 +64,7 @@ const CanvasPoint = (initialProps) => {
   React.useEffect(() => {
     const ctx = canvasRef.current.getContext("2d");
     draw(ctx);
+    // eslint-disable-next-line react-hooks/exhaustive-deps
   }, []);
 
   return null;
