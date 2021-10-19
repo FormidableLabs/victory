@@ -6893,6 +6893,11 @@ react-ga@^2.4.1:
   version "2.7.0"
   resolved "https://registry.yarnpkg.com/react-ga/-/react-ga-2.7.0.tgz#24328f157f31e8cffbf4de74a3396536679d8d7c"
 
+react-gtm-module@^2.0.11:
+  version "2.0.11"
+  resolved "https://registry.yarnpkg.com/react-gtm-module/-/react-gtm-module-2.0.11.tgz#14484dac8257acd93614e347c32da9c5ac524206"
+  integrity sha512-8gyj4TTxeP7eEyc2QKawEuQoAZdjKvMY4pgWfycGmqGByhs17fR+zEBs0JUDq4US/l+vbTl+6zvUIx27iDo/Vw==
+
 react-helmet@^5.2.0, react-helmet@^5.2.1:
   version "5.2.1"
   resolved "https://registry.yarnpkg.com/react-helmet/-/react-helmet-5.2.1.tgz#16a7192fdd09951f8e0fe22ffccbf9bb3e591ffa"

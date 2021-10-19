@@ -12,6 +12,7 @@ import get from "lodash/get";
 import GlobalStyle from "./styles/global";
 import theme from "./styles/theme";
 import Analytics from "./google-analytics";
+import { initGoogleTagManager } from './google-tag-manager';
 import NotFound from "./pages/404";
 
 // eslint-disable-next-line no-magic-numbers
@@ -84,6 +85,11 @@ ScrollToCurrentSection.propTypes = {
 
 // eslint-disable-next-line react/no-multi-comp
 const App = () => {
+
+  useEffect(() => {
+    initGoogleTagManager();
+  }, []);
+
   const basePath = useBasepath() || "";
   return (
     <Root>
