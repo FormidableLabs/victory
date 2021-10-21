@@ -1,4 +1,4 @@
-import { assign, defaults, isEmpty, omit } from "lodash";
+import { assign, defaults, isEmpty } from "lodash";
 import PropTypes from "prop-types";
 import React from "react";
 import {
@@ -11,11 +11,7 @@ import {
   useAnimationState
 } from "victory-core";
 import { VictorySharedEvents } from "victory-shared-events";
-import {
-  getChildren,
-  getCalculatedProps,
-  useCalculatedProps
-} from "./helper-methods";
+import { getChildren, useMemoizedProps } from "./helper-methods";
 import isEqual from "react-fast-compare";
 
 const fallbackProps = {
@@ -48,7 +44,7 @@ const VictoryGroup = (initialProps) => {
   } = modifiedProps;
 
   const childComponents = React.Children.toArray(modifiedProps.children);
-  const calculatedProps = useCalculatedProps(modifiedProps, childComponents);
+  const calculatedProps = useMemoizedProps(modifiedProps);
   const { domain, scale, style, origin } = calculatedProps;
 
   const newChildren = React.useMemo(() => {
