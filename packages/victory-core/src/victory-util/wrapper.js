@@ -78,6 +78,7 @@ export function addBinsToParentPropsIfHistogram({
 }
 
 export function getDataFromChildren(props, childComponents) {
+  console.log("calling getDataFromChildren", props);
   const { polar, startAngle, endAngle, categories, minDomain, maxDomain } =
     props;
   let parentProps = {

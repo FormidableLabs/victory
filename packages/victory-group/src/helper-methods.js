@@ -1,8 +1,9 @@
 /* eslint-disable func-style */
 /* eslint-disable no-use-before-define */
-import { assign } from "lodash";
+import { assign, omit } from "lodash";
 import React from "react";
-import { Helpers, Scale, Data, Wrapper } from "victory-core";
+import { Data, Helpers, Scale, Wrapper } from "victory-core";
+import isEqual from "react-fast-compare";
 
 const fallbackProps = {
   width: 450,
@@ -11,42 +12,100 @@ const fallbackProps = {
   offset: 0
 };
 
-// eslint-disable-next-line max-statements
-export function getCalculatedProps(props, childComponents) {
-  const role = "group";
-  props = Helpers.modifyProps(props, fallbackProps, role);
-  const style = Wrapper.getStyle(props.theme, props.style, role);
-  const { offset, colorScale, color, polar, horizontal } = props;
-  const categories =
-    props.categories || Wrapper.getCategories(props, childComponents);
-  const datasets = props.datasets || Wrapper.getDataFromChildren(props);
-  const domain = {
-    x: Wrapper.getDomain(
-      assign({}, props, { categories }),
-      "x",
-      childComponents
-    ),
-    y: Wrapper.getDomain(
-      assign({}, props, { categories }),
-      "y",
-      childComponents
-    )
-  };
-  const range = props.range || {
-    x: Helpers.getRange(props, "x"),
-    y: Helpers.getRange(props, "y")
-  };
-  const baseScale = {
-    x: Scale.getScaleFromProps(props, "x") || Wrapper.getScale(props, "x"),
-    y: Scale.getScaleFromProps(props, "y") || Wrapper.getScale(props, "y")
-  };
-  const scale = {
-    x: baseScale.x.domain(domain.x).range(props.horizontal ? range.y : range.x),
-    y: baseScale.y.domain(domain.y).range(props.horizontal ? range.x : range.y)
-  };
+// We need to remove sharedEvents in order to memoize the calculated data
+// With shared events, the props change on every event, and every value is re-calculated
+const withoutSharedEvents = (props) => {
+  const { children } = props;
+  const modifiedChildren = React.Children.toArray(children).map((child) => {
+    const childProps = child.props;
+    return {
+      ...child,
+      props: omit(childProps, "sharedEvents")
+    };
+  });
+  props.children = modifiedChildren;
+  return props;
+};
 
-  const origin = polar ? props.origin : Helpers.getPolarOrigin(props);
-  const padding = Helpers.getPadding(props);
+export function useCalculatedProps(initialProps, childComponents) {
+  const role = "group";
+  const modifiedProps = withoutSharedEvents(
+    Helpers.modifyProps(initialProps, fallbackProps, role)
+  );
+
+  const [props, setProps] = React.useState(modifiedProps);
+
+  // React.memo uses shallow equality to compare objects. This way props
+  // will only be re-calculated when they change.
+  React.useEffect(() => {
+    if (!isEqual(modifiedProps, props)) {
+      setProps(modifiedProps);
+    }
+  }, [props, setProps, modifiedProps]);
+
+  const { offset, colorScale, color, polar, horizontal, theme } = props;
+
+  const style = React.useMemo(() => {
+    return Wrapper.getStyle(theme, props.style, role);
+  }, [theme, props.style]);
+
+  const categories = React.useMemo(
+    () => props.categories || Wrapper.getCategories(props, childComponents),
+    [props, childComponents]
+  );
+
+  const datasets = React.useMemo(
+    () => props.datasets || Wrapper.getDataFromChildren(props),
+    [props]
+  );
+
+  const domain = React.useMemo(
+    () => ({
+      x: Wrapper.getDomain(
+        assign({}, props, { categories }),
+        "x",
+        childComponents
+      ),
+      y: Wrapper.getDomain(
+        assign({}, props, { categories }),
+        "y",
+        childComponents
+      )
+    }),
+    [props, categories, childComponents]
+  );
+
+  const range = React.useMemo(
+    () =>
+      props.range || {
+        x: Helpers.getRange(props, "x"),
+        y: Helpers.getRange(props, "y")
+      },
+    [props]
+  );
+
+  const baseScale = React.useMemo(
+    () => ({
+      x: Scale.getScaleFromProps(props, "x") || Wrapper.getScale(props, "x"),
+      y: Scale.getScaleFromProps(props, "y") || Wrapper.getScale(props, "y")
+    }),
+    [props]
+  );
+
+  const scale = React.useMemo(
+    () => ({
+      x: baseScale.x.domain(domain.x).range(horizontal ? range.y : range.x),
+      y: baseScale.y.domain(domain.y).range(horizontal ? range.x : range.y)
+    }),
+    [baseScale, domain, horizontal, range]
+  );
+
+  const origin = React.useMemo(
+    () => (polar ? props.origin : Helpers.getPolarOrigin(props)),
+    [props, polar]
+  );
+  const padding = React.useMemo(() => Helpers.getPadding(props), [props]);
+
   return {
     datasets,
     categories,
