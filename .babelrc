@@ -19,6 +19,7 @@
   "env": {
     "commonjs": {
       "plugins": [
+        "@babel/plugin-proposal-optional-chaining",
         [
           "@babel/transform-modules-commonjs",
           {

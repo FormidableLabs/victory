@@ -28,11 +28,11 @@ const expectedComponents = [
 ];
 
 const VictoryScatter = (props) => {
-  const modifiedProps = Helpers.modifyProps(
-    props,
-    fallbackProps,
-    VictoryScatter.role
+  const modifiedProps = React.useMemo(
+    () => Helpers.modifyProps(props, fallbackProps, VictoryScatter.role),
+    [props]
   );
+
   const { renderedData, renderContainer } = useEvents(modifiedProps, {
     expectedComponents,
     getBaseProps: VictoryScatter.getBaseProps,

@@ -1,6 +1,6 @@
 import { assign, defaults, isFunction, isNil, pick } from "lodash";
 import React from "react";
-import Events from "./events";
+import * as Events from "./events";
 
 const KEYS = {
   PARENT: "parent",
@@ -159,5 +159,9 @@ export const useEvents = (
     getComponentProps
   ]);
 
-  return { renderedData, renderContainer, renderedContinuousData };
+  return {
+    renderedData,
+    renderContainer,
+    renderedContinuousData
+  };
 };
