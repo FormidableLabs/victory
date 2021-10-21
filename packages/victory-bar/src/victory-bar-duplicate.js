@@ -1,3 +1,4 @@
+/* eslint-disable react/no-multi-comp */
 import PropTypes from "prop-types";
 import React from "react";
 import { getBaseProps } from "./helper-methods";
@@ -13,6 +14,7 @@ import {
   Domain,
   VictoryTransition
 } from "victory-core";
+import { isEqual } from "react-fast-compare";
 
 const fallbackProps = {
   width: 450,

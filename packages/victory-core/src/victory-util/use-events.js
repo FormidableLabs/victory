@@ -31,7 +31,10 @@ export const useEvents = (
     sharedEvents
   } = props;
 
-  const componentEvents = Events.getComponentEvents(props, expectedComponents);
+  const componentEvents = React.useMemo(
+    () => Events.getComponentEvents(props, expectedComponents),
+    [props, expectedComponents]
+  );
 
   const hasEvents = !!events || !!sharedEvents || !!componentEvents;
 
