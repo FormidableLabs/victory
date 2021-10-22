@@ -74,7 +74,6 @@ const withoutSharedEvents = (props) => {
       ...child,
       props: omit(childProps, "sharedEvents")
     };
-    // child.props = omit(child.props, "sharedEvents");
   });
   props.children = modifiedChildren;
   return props;
