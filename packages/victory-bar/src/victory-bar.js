@@ -1,3 +1,4 @@
+/* eslint-disable react/no-multi-comp */
 import PropTypes from "prop-types";
 import React from "react";
 import { getBaseProps } from "./helper-methods";
@@ -8,9 +9,10 @@ import {
   VictoryContainer,
   VictoryTheme,
   CommonProps,
-  addEvents,
+  useEvents,
   Data,
-  Domain
+  Domain,
+  VictoryTransition
 } from "victory-core";
 
 const fallbackProps = {
@@ -26,99 +28,130 @@ const defaultData = [
   { x: 4, y: 4 }
 ];
 
-class VictoryBar extends React.Component {
-  static animationWhitelist = [
-    "data",
-    "domain",
-    "height",
-    "padding",
-    "style",
-    "width"
-  ];
+const VictoryBar = (props) => {
+  const modifiedProps = React.useMemo(
+    () => Helpers.modifyProps(props, fallbackProps, "bar"),
+    [props]
+  );
 
-  static displayName = "VictoryBar";
+  const { renderedData, renderContainer } = useEvents(modifiedProps, {
+    expectedComponents: VictoryBar.expectedComponents,
+    getBaseProps: VictoryBar.getBaseProps,
+    role: "bar",
+    animationWhitelist: VictoryBar.animationWhitelist
+  });
 
-  static role = "bar";
+  return props.standalone
+    ? renderContainer(props.containerComponent, renderedData)
+    : renderedData;
+};
 
-  static defaultTransitions = {
-    onLoad: {
-      duration: 2000,
-      before: () => ({ _y: 0, _y1: 0, _y0: 0 }),
-      after: (datum) => ({ _y: datum._y, _y1: datum._y1, _y0: datum._y0 })
-    },
-    onExit: {
-      duration: 500,
-      before: () => ({ _y: 0, yOffset: 0 })
-    },
-    onEnter: {
-      duration: 500,
-      before: () => ({ _y: 0, _y1: 0, _y0: 0 }),
-      after: (datum) => ({ _y: datum._y, _y1: datum._y1, _y0: datum._y0 })
-    }
-  };
+VictoryBar.animationWhitelist = [
+  "data",
+  "domain",
+  "height",
+  "padding",
+  "style",
+  "width"
+];
 
-  static propTypes = {
-    ...CommonProps.baseProps,
-    ...CommonProps.dataProps,
-    alignment: PropTypes.oneOf(["start", "middle", "end"]),
-    barRatio: PropTypes.number,
-    barWidth: PropTypes.oneOfType([PropTypes.number, PropTypes.func]),
-    cornerRadius: PropTypes.oneOfType([
-      PropTypes.number,
-      PropTypes.func,
-      PropTypes.shape({
-        top: PropTypes.oneOfType([PropTypes.number, PropTypes.func]),
-        topLeft: PropTypes.oneOfType([PropTypes.number, PropTypes.func]),
-        topRight: PropTypes.oneOfType([PropTypes.number, PropTypes.func]),
-        bottom: PropTypes.oneOfType([PropTypes.number, PropTypes.func]),
-        bottomLeft: PropTypes.oneOfType([PropTypes.number, PropTypes.func]),
-        bottomRight: PropTypes.oneOfType([PropTypes.number, PropTypes.func])
-      })
-    ]),
-    getPath: PropTypes.func,
-    horizontal: PropTypes.bool
-  };
+VictoryBar.displayName = "VictoryBar";
 
-  static defaultProps = {
-    containerComponent: <VictoryContainer />,
-    data: defaultData,
-    dataComponent: <Bar />,
-    groupComponent: <g role="presentation" />,
-    labelComponent: <VictoryLabel />,
-    samples: 50,
-    sortOrder: "ascending",
-    standalone: true,
-    theme: VictoryTheme.grayscale
-  };
+VictoryBar.role = "bar";
 
-  static getDomain = Domain.getDomainWithZero;
-  static getData = Data.getData;
-  static getBaseProps = (props) => getBaseProps(props, fallbackProps);
-  static expectedComponents = [
-    "dataComponent",
-    "labelComponent",
-    "groupComponent",
-    "containerComponent"
-  ];
+VictoryBar.defaultTransitions = {
+  onLoad: {
+    duration: 2000,
+    before: () => ({ _y: 0, _y1: 0, _y0: 0 }),
+    after: (datum) => ({ _y: datum._y, _y1: datum._y1, _y0: datum._y0 })
+  },
+  onExit: {
+    duration: 500,
+    before: () => ({ _y: 0, yOffset: 0 })
+  },
+  onEnter: {
+    duration: 500,
+    before: () => ({ _y: 0, _y1: 0, _y0: 0 }),
+    after: (datum) => ({ _y: datum._y, _y1: datum._y1, _y0: datum._y0 })
+  },
+  onMove: {
+    duration: 500
+  }
+};
 
-  // Overridden in native versions
-  shouldAnimate() {
-    return !!this.props.animate;
+VictoryBar.propTypes = {
+  ...CommonProps.baseProps,
+  ...CommonProps.dataProps,
+  alignment: PropTypes.oneOf(["start", "middle", "end"]),
+  barRatio: PropTypes.number,
+  barWidth: PropTypes.oneOfType([PropTypes.number, PropTypes.func]),
+  cornerRadius: PropTypes.oneOfType([
+    PropTypes.number,
+    PropTypes.func,
+    PropTypes.shape({
+      top: PropTypes.oneOfType([PropTypes.number, PropTypes.func]),
+      topLeft: PropTypes.oneOfType([PropTypes.number, PropTypes.func]),
+      topRight: PropTypes.oneOfType([PropTypes.number, PropTypes.func]),
+      bottom: PropTypes.oneOfType([PropTypes.number, PropTypes.func]),
+      bottomLeft: PropTypes.oneOfType([PropTypes.number, PropTypes.func]),
+      bottomRight: PropTypes.oneOfType([PropTypes.number, PropTypes.func])
+    })
+  ]),
+  getPath: PropTypes.func,
+  horizontal: PropTypes.bool
+};
+
+VictoryBar.defaultProps = {
+  containerComponent: <VictoryContainer />,
+  data: defaultData,
+  dataComponent: <Bar />,
+  groupComponent: <g role="presentation" />,
+  labelComponent: <VictoryLabel />,
+  samples: 50,
+  sortOrder: "ascending",
+  standalone: true,
+  theme: VictoryTheme.grayscale
+};
+
+VictoryBar.getDomain = Domain.getDomainWithZero;
+VictoryBar.getData = Data.getData;
+VictoryBar.getBaseProps = (props) => getBaseProps(props, fallbackProps);
+VictoryBar.expectedComponents = [
+  "dataComponent",
+  "labelComponent",
+  "groupComponent",
+  "containerComponent"
+];
+
+// This component is at the top level so VictoryBar has access to the animation props
+const Wrapper = (props) => {
+  // TODO: Figure out how to override this in victory-native
+  const shouldAnimate = React.useMemo(() => {
+    return !!props.animate;
+  }, [props]);
+
+  const animationWhitelist = React.useMemo(() => {
+    return props.animate && props.animate.animationWhitelist
+      ? props.animate.animationWhitelist
+      : VictoryBar.animationWhitelist;
+  }, [props]);
+
+  if (shouldAnimate) {
+    return (
+      <VictoryTransition
+        animate={props.animate}
+        animationWhitelist={animationWhitelist}
+      >
+        <VictoryBar {...props} />
+      </VictoryTransition>
+    );
   }
 
-  render() {
-    const { animationWhitelist, role } = VictoryBar;
-    const props = Helpers.modifyProps(this.props, fallbackProps, role);
+  return <VictoryBar {...props} />;
+};
 
-    if (this.shouldAnimate()) {
-      return this.animateComponent(props, animationWhitelist);
-    }
+Wrapper.propTypes = VictoryBar.propTypes;
+Wrapper.role = VictoryBar.role;
+Wrapper.getBaseProps = VictoryBar.getBaseProps;
 
-    const children = this.renderData(props);
-    return props.standalone
-      ? this.renderContainer(props.containerComponent, children)
-      : children;
-  }
-}
-
-export default addEvents(VictoryBar);
+export default Wrapper;
