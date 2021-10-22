@@ -14,7 +14,6 @@ import {
   Domain,
   VictoryTransition
 } from "victory-core";
-import { isEqual } from "react-fast-compare";
 
 const fallbackProps = {
   width: 450,
