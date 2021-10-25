@@ -95,5 +95,6 @@ export {
   CanvasGroup,
   CanvasCurve,
   CanvasPoint,
-  CanvasBar
+  CanvasBar,
+  useCanvasContext
 } from "victory-canvas";
