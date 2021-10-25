@@ -6,7 +6,7 @@ The current version of this package includes components for line, bar, and scatt
 
 Example usage:
 
-```js
+```jsx
 <VictoryLine
   groupComponent={<CanvasGroup />}
   dataComponent={<CanvasCurve />}
@@ -14,7 +14,7 @@ Example usage:
 />
 ```
 
-```js
+```jsx
 <VictoryBar
   groupComponent={<CanvasGroup />}
   dataComponent={<CanvasBar />}
@@ -22,7 +22,7 @@ Example usage:
 />
 ```
 
-```js
+```jsx
 <VictoryScatter
   groupComponent={<CanvasGroup />}
   dataComponent={<CanvasPoint />}
