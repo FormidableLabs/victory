@@ -2,6 +2,34 @@
 
 This is an experimental set of primitive components that can be used in place of the default Victory primitives to render data to a Canvas container rather than SVG.
 
+The current version of this package includes components for line, bar, and scatter charts.
+
+Example usage:
+
+```js
+<VictoryLine
+  groupComponent={<CanvasGroup />}
+  dataComponent={<CanvasCurve />}
+  data={data}
+/>
+```
+
+```js
+<VictoryBar
+  groupComponent={<CanvasGroup />}
+  dataComponent={<CanvasBar />}
+  data={data}
+/>
+```
+
+```js
+<VictoryScatter
+  groupComponent={<CanvasGroup />}
+  dataComponent={<CanvasPoint />}
+  data={data}
+/>
+```
+
 This package currently exports:
 
 - `CanvasGroup`
