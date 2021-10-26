@@ -1,5 +1,9 @@
 # Victory Changelog
 
+## 36.1.9 (2021-10-26)
+
+- [#1998](https://github.com/FormidableLabs/victory/pull/1998) - Adds experimental `victory-canvas` package for testing Victory with HTML5 Canvas components.
+
 ## 36.0.1 (2021-09-17)
 
 - [#1967](https://github.com/FormidableLabs/victory/pull/1967) - Updates `events` propTypes for `VictoryPie`. Thanks @tgalfin!
@@ -54,13 +58,13 @@ When the new `disableInlineStyles` prop is supplied to a component like `Victory
 ```jsx
 const StyledBar = styled(Bar)`
   fill: purple;
-`
+`;
 const StyledLabel = styled(VictoryLabel)`
   tspan {
     fill: magenta;
     font-family: Papyrus, fantasy;
   }
-`
+`;
 function CustomStyledBarChart() {
   return (
     <VictoryChart>
@@ -71,7 +75,7 @@ function CustomStyledBarChart() {
         labelComponent={<StyledLabel />}
       />
     </VictoryChart>
-  )
+  );
 }
 ```
 
@@ -80,7 +84,7 @@ The `disableInlineStyles` prop may also be supplied to primitive components for 
 ```jsx
 const StyledBar = styled(Bar)`
   fill: purple;
-`
+`;
 function CustomStyledBarChart() {
   return (
     <VictoryChart>
@@ -89,11 +93,12 @@ function CustomStyledBarChart() {
         dataComponent={<StyledBar disableInlineStyles />}
       />
     </VictoryChart>
-  )
+  );
 }
 ```
 
 Related PRs
+
 - [#1882](https://github.com/FormidableLabs/victory/pull/1882) - Thanks @beccanelson!
 - [#1856](https://github.com/FormidableLabs/victory/pull/1856) - Thanks @tvsmk!
 
@@ -233,9 +238,11 @@ calculates a more exact `defaultDomainPadding` for grouped bar charts based on t
 - [#1748](https://github.com/FormidableLabs/victory/pull/1748) - Thank you @Hypnosphi!
 
 ### Support for Global Events
+
 This release adds a concept of global events that are attached to `window` rather than to any of the elements rendered by Victory components. Global events are only supported for "parent" events that would normally be attached to `svg` elements rendered by Victory's containerComponents. Events that should be global can be flagged by including `onGlobal` in the name of the event handler. So, for example, use `onGlobalMouseUp` rather than `onMouseUp` to create a global mouse up handler.
 
 ### VictoryBrushContainer uses Global Events
+
 `VictoryBrushContainer` now uses global events in its `defaultEvents` so that brushing continues even as the user's mouse moves outside of the chart area.
 
 ## 35.3.5 (2020-11-09)
@@ -282,9 +289,6 @@ This release adds a concept of global events that are attached to `window` rathe
 - [#1707](https://github.com/FormidableLabs/victory/pull/1707) - Respects user-provided props on the label component `VictoryVoronoiContainer` renders, including `text`, `style`, `flyoutStyle`, `width` and `height`
 - [#1710](https://github.com/FormidableLabs/victory/pull/1710) - Adds support for providing functions to the `angle` prop on `VictoryLabel`
 - [#1711](https://github.com/FormidableLabs/victory/pull/1711) - Fixes a bug related to applying angles to labels whose position is set by `datum` rather than coordinate.
-
-
-
 
 ## 35.1.1 (2020-09-28)
 
@@ -342,6 +346,7 @@ This release adds a concept of global events that are attached to `window` rathe
 This release introduces new label features and makes improvements to themes. This release includes breaking style changes. Please double check your label and tooltip styles when upgrading. Polar axes and pie charts may be particularly impacted.
 
 ### New Features!
+
 - `VictoryLabel` now supports label backgrounds, which are rendered as `rect` elements behind your labels. Backgrounds are styled via the new `backgroundStyle` prop on `VictoryLabel`. This prop may be given as a style object, or an array of objects for styling multi-line labels. Background elements are sized for their corresponding text elements, but padding may also be added with the `backgroundPadding` prop, which accepts a single number, an object with values for "top", "bottom", "left" and "right", or an array of either of these for adding background padding to multi-line labels.
 
 - `VictoryTooltip` has a new `flyoutPadding` prop that may be used to add padding between the edge of the flyout and the label within it. The `flyoutPadding` prop may be given as a single number of as an object with values for "top", "bottom", "left" and "right". **This is a breaking change**, as `style.padding` no longer adds padding between the flyout and its label. Both of Victory's built-in themes have been altered so that tooltips get `flyoutPadding={5}` by default.
@@ -351,6 +356,7 @@ This release introduces new label features and makes improvements to themes. Thi
 - Themes now support `polarAxis`, `polarDependentAxis`, and `polarIndependentAxis` namespaces that are merges with the less specific `axis`, `dependentAxis`, and `independentAxis` themes as appropriate.
 
 ### Improvements
+
 - Changes Victory's default branch from `master` to `main` 🖤
 
 - `Textsize` approximations have changed, and are much more accurate in most cases. **This may be a breaking change for layouts that depended on approximated text size**
@@ -382,10 +388,10 @@ This release introduces new label features and makes improvements to themes. Thi
     ```
 
 ### Associated PRs
+
 - [#1583](https://github.com/FormidableLabs/victory/pull/1583) - Initial label background work
 - [#1625](https://github.com/FormidableLabs/victory/pull/1625) - Label and theme improvements
 - [#1627](https://github.com/FormidableLabs/victory/pull/1627) - Switch CI to main
-
 
 ## 34.3.12 (2020-06-22)
 
@@ -410,7 +416,6 @@ This release introduces new label features and makes improvements to themes. Thi
 ## 34.3.8 (2020-05-26)
 
 - [#1588](https://github.com/FormidableLabs/victory/pull/1588) - Improve perfomance by reducing string map calculations. Thanks @NgoKnows!
-
 
 ## 34.3.7 (2020-05-22)
 
@@ -456,7 +461,7 @@ This release introduces new label features and makes improvements to themes. Thi
 />
 ```
 
- Histogram bins may be defined with the `bin` prop, which takes either an array of bin edges, or a single number which corresponds to an approximate number of bins. `VictoryHistogram` is meant to work with continuous data, and expects a data prop as an array of objects with x values. By default, histogram bins will be laid out with no spaces between bins, but the optional `binSpacing` prop may be provided to change this behavior. Additional documentation and examples will be coming soon.
+Histogram bins may be defined with the `bin` prop, which takes either an array of bin edges, or a single number which corresponds to an approximate number of bins. `VictoryHistogram` is meant to work with continuous data, and expects a data prop as an array of objects with x values. By default, histogram bins will be laid out with no spaces between bins, but the optional `binSpacing` prop may be provided to change this behavior. Additional documentation and examples will be coming soon.
 
 ## 34.2.2 (2020-05-11)
 
@@ -471,8 +476,7 @@ This release introduces new label features and makes improvements to themes. Thi
 
 Update typescript types for all Victory components. A huge thanks to @maddles @wparsons and @kale-stew for this work. This release includes the following PRs
 
-[#1557](https://github.com/FormidableLabs/victory/pull/1557), [#1556](https://github.com/FormidableLabs/victory/pull/1556), [#1554](https://github.com/FormidableLabs/victory/pull/1554), [#1552](https://github.com/FormidableLabs/victory/pull/1552), [#1551](https://github.com/FormidableLabs/victory/pull/1551), [#1550](https://github.com/FormidableLabs/victory/pull/1550), [#1547](https://github.com/FormidableLabs/victory/pull/1547), [#1546](https://github.com/FormidableLabs/victory/pull/1546), [#1543](https://github.com/FormidableLabs/victory/pull/1543), [#1538](https://github.com/FormidableLabs/victory/pull/1538), [#1536](https://github.com/FormidableLabs/victory/pull/1536), [#1535](https://github.com/FormidableLabs/victory/pull/1535), [#1534](https://github.com/FormidableLabs/victory/pull/1534), [#1533](https://github.com/FormidableLabs/victory/pull/1533), [#1532](https://github.com/FormidableLabs/victory/pull/1532), [#1530](https://github.com/FormidableLabs/victory/pull/1530),[#1529](https://github.com/FormidableLabs/victory/pull/1529), [#1528](https://github.com/FormidableLabs/victory/pull/1528), [#1527](https://github.com/FormidableLabs/victory/pull/1527), [#1526](https://github.com/FormidableLabs/victory/pull/1526), [#1525](https://github.com/FormidableLabs/victory/pull/1525), [#1524](https://github.com/FormidableLabs/victory/pull/1524), [#1522](https://github.com/FormidableLabs/victory/pull/1522), [#1521](https://github.com/FormidableLabs/victory/pull/1521), [#1520](https://github.com/FormidableLabs/victory/pull/1520), [#1519](https://github.com/FormidableLabs/victory/pull/1519),  [#1515](https://github.com/FormidableLabs/victory/pull/1515), [#1514](https://github.com/FormidableLabs/victory/pull/1514), [#1512](https://github.com/FormidableLabs/victory/pull/1512), [#1510](https://github.com/FormidableLabs/victory/pull/1510), [#1508](https://github.com/FormidableLabs/victory/pull/1508)
-
+[#1557](https://github.com/FormidableLabs/victory/pull/1557), [#1556](https://github.com/FormidableLabs/victory/pull/1556), [#1554](https://github.com/FormidableLabs/victory/pull/1554), [#1552](https://github.com/FormidableLabs/victory/pull/1552), [#1551](https://github.com/FormidableLabs/victory/pull/1551), [#1550](https://github.com/FormidableLabs/victory/pull/1550), [#1547](https://github.com/FormidableLabs/victory/pull/1547), [#1546](https://github.com/FormidableLabs/victory/pull/1546), [#1543](https://github.com/FormidableLabs/victory/pull/1543), [#1538](https://github.com/FormidableLabs/victory/pull/1538), [#1536](https://github.com/FormidableLabs/victory/pull/1536), [#1535](https://github.com/FormidableLabs/victory/pull/1535), [#1534](https://github.com/FormidableLabs/victory/pull/1534), [#1533](https://github.com/FormidableLabs/victory/pull/1533), [#1532](https://github.com/FormidableLabs/victory/pull/1532), [#1530](https://github.com/FormidableLabs/victory/pull/1530),[#1529](https://github.com/FormidableLabs/victory/pull/1529), [#1528](https://github.com/FormidableLabs/victory/pull/1528), [#1527](https://github.com/FormidableLabs/victory/pull/1527), [#1526](https://github.com/FormidableLabs/victory/pull/1526), [#1525](https://github.com/FormidableLabs/victory/pull/1525), [#1524](https://github.com/FormidableLabs/victory/pull/1524), [#1522](https://github.com/FormidableLabs/victory/pull/1522), [#1521](https://github.com/FormidableLabs/victory/pull/1521), [#1520](https://github.com/FormidableLabs/victory/pull/1520), [#1519](https://github.com/FormidableLabs/victory/pull/1519), [#1515](https://github.com/FormidableLabs/victory/pull/1515), [#1514](https://github.com/FormidableLabs/victory/pull/1514), [#1512](https://github.com/FormidableLabs/victory/pull/1512), [#1510](https://github.com/FormidableLabs/victory/pull/1510), [#1508](https://github.com/FormidableLabs/victory/pull/1508)
 
 ## 34.1.3 (2020-03-09)
 
@@ -490,7 +494,6 @@ Update typescript types for all Victory components. A huge thanks to @maddles @w
 
 - [#1481](https://github.com/FormidableLabs/victory/pull/1481) - Add typescript types from the `definitely-typed` project so that we can maintain them more easily going forward
 
-
 ## 34.0.1 (2020-01-22)
 
 - [#1474](https://github.com/FormidableLabs/victory/pull/1474) - Adds an `activePoints` prop to `VictoryTooltip` which `VictoryVoronoiContainer` supplies to its `labelComponent`. Thanks @jotak!
@@ -498,6 +501,7 @@ Update typescript types for all Victory components. A huge thanks to @maddles @w
 ## 34.0.0 (2019-12-20)
 
 ### Breaking Changes
+
 This version uses the context API introduced in `react@16.3.0`
 
 - [#1462](https://github.com/FormidableLabs/victory/pull/1462) - Updates to the new context API. Thanks @fabianishere!
@@ -548,7 +552,6 @@ This version uses the context API introduced in `react@16.3.0`
 
 - [#1402](https://github.com/FormidableLabs/victory/pull/1402) - Fixes a bug affecting user-provided `containerRef` callbacks
 
-
 ## 33.0.5 (2019-08-29)
 
 - [#1387](https://github.com/FormidableLabs/victory/pull/1387) - Add support for custom functions for the `interpolation` prop. Thanks @sanniassin!
@@ -582,38 +585,42 @@ Related PR: [#1360](https://github.com/FormidableLabs/victory/pull/1360)
 Functional props like `labels` and functional styles will now be called with a single argument instead of `datum` and `active`. The argument passed to functional props and styles will be an object containing all the props that control the rendering of the the target the prop applies to. Including things like `datum`, `active`, `index`, `data`, `scale`, etc. We hope this will give users a lot more flexibility and control. In most cases, this change should be very straightforward to apply
 
 old:
+
 ```
 labels={(d) => `x: ${d.x}`}
 ```
+
 new
+
 ```
 labels={({ datum }) => `x: ${datum.x}`}
 ```
 
 Gotchas:
+
 - Some of the props passed into functional props and styles may themselves be functions. These will _not_ be evaluated, because we have no way to determine evaluation order. So, if you create a `cornerRadius` function that depends on `barWidth`, do not also make `barWidth` a function of some other prop.
 - A few props that take functions do not follow this pattern. These include data accessor functions like `y` and `x`, and `tickFormat`. The arguments for these props have not changed.
-
 
 **Changes for `VictoryCandlestick` labels**
 
 Related PR: [#1295](https://github.com/FormidableLabs/victory/pull/1295)
 
 `VictoryCandlestick` now has granular support for labels corresponding to each portion of the candle. The current `labels` and `labelComponent` props will be joined by new props corresponding to each part of the candle.
-*New props*
-  `lowLabels`
-  `lowLabelComponent`
-  `highLabels`
-  `highLabelComponent`
-  `openLabels`
-  `openLabelComponent`
-  `closeLabels`
-  `closeLabelComponent`
+_New props_
+`lowLabels`
+`lowLabelComponent`
+`highLabels`
+`highLabelComponent`
+`openLabels`
+`openLabelComponent`
+`closeLabels`
+`closeLabelComponent`
 
 This will be a breaking change affecting the positioning of the default `label`. In earlier versions, the default label was positioned above the candle, it will now be positioned next to the center of the candle.
 To use older label positioning, use `highLabels` / `highLabelComponent` rather than `label` / `labelComponent`. If you are using tooltips with `VictoryCandlestick`, you will need to register a custom event to trigger your `highLabels` tooltip:
 
 example:
+
 ```
 <VictoryCandlestick
   highLabels={({ datum }) => datum.high}
@@ -641,12 +648,12 @@ Before this version `VictoryVoronoiContainer` had limited functionality for mous
 `mouseFollowLabels={true}`
 ![mouseFollowLabels](https://user-images.githubusercontent.com/3719995/63392113-236ff400-c36a-11e9-91d0-64e674f481d5.gif)
 
-
 `mouseFollowTooltips={false}`
 ![non-mouseFollowTooltips](https://user-images.githubusercontent.com/3719995/63392116-2834a800-c36a-11e9-8a73-a951b131ae2f.gif)
 
 - constrained tooltips: multi-point tooltips rendered by `VictoryVoronoiContainer` will no longer be constrained to the chart area by default. Instead, add the `constrainToVisibleArea` prop to `VictoryTooltip` to enable this behavior for both multi-point and single point tooltips:
-example:
+  example:
+
 ```
 containerComponent={
   <VictoryVoronoiContainer
@@ -680,8 +687,7 @@ New props for `VictoryTooltip`:
 **Changes Affecting `VictoryLabel` and `VictoryTooltip`**
 
 - The `x` and `y` values passed to labels by their parent components have all been adjusted so that their values match the position of the data point they correspond to. All padding is now accounted for in the `dx` and `dy` props instead of being added directly to `x` and `y`.
-This will be a breaking change for anyone who is wrapping label components and relying on the `x` and `y` props they receive, or providing their own `dx` / `dy` props. These breaking changes may take a bit of manual adjustment to correct, but we hope this change will make label positioning easier to reason about in the long run.
-
+  This will be a breaking change for anyone who is wrapping label components and relying on the `x` and `y` props they receive, or providing their own `dx` / `dy` props. These breaking changes may take a bit of manual adjustment to correct, but we hope this change will make label positioning easier to reason about in the long run.
 
 **Other Changes**
 We have been concurrently working on improving performance and the stability of events in `victory-native`. The following changes have been added to support these efforts:
@@ -694,7 +700,6 @@ Related PR: [#1373](https://github.com/FormidableLabs/victory/pull/1373)
 Related PR: [#1365](https://github.com/FormidableLabs/victory/pull/1365)
 
 - Swapped out React component primitives (`Bar`, `Path` etc) with for function primitives to match performance-improving changes in `victory-native`. (This is a breaking change for anyone extending from `victory` components)
-
 
 ## 32.3.7 (2019-08-19)
 
@@ -793,7 +798,9 @@ The change in how props with x and y values are treated (i.e. `scale`, `domain`,
   />
 </VictoryChart>
 ```
+
 Should be changed to:
+
 ```
 <VictoryChart horizontal scale={{ y: "log" }} domain={{ x: [4, 9] }}>
   <VictoryBar
@@ -806,6 +813,7 @@ Should be changed to:
   />
 </VictoryChart>
 ```
+
 Props affected by this change are: `scale`, `domain`, `maxDomain`, `minDomain`, `domainPadding`, and `categories`
 
 **Horizontal Charts with Event Containers**
