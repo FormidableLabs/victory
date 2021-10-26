@@ -1,11 +1,11 @@
 import { assign, isNil } from "lodash";
 import {
-  Helpers,
-  LabelHelpers,
+  Collection,
   Data,
   Domain,
-  Scale,
-  Collection
+  Helpers,
+  LabelHelpers,
+  Scale
 } from "victory-core";
 
 export const getBarPosition = (props, datum) => {

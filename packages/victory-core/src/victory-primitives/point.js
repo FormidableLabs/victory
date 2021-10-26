@@ -2,7 +2,7 @@ import React from "react";
 import PropTypes from "prop-types";
 import { assign } from "lodash";
 import * as Helpers from "../victory-util/helpers";
-import pathHelpers from "./path-helpers";
+import pathHelpers from "../victory-util/point-path-helpers";
 import * as CommonProps from "../victory-util/common-props";
 import Path from "./path";
 
