@@ -3,6 +3,7 @@
 import { assign, keys, orderBy } from "lodash";
 import React from "react";
 import { Helpers, Scale, Wrapper } from "victory-core";
+import isEqual from "react-fast-compare";
 
 const fallbackProps = {
   width: 450,
@@ -158,6 +159,37 @@ export function getCalculatedProps(props, childComponents) {
     colorScale,
     role
   };
+}
+
+// We need to remove sharedEvents in order to memoize the calculated data
+// With shared events, the props change on every event, and every value is re-calculated
+const withoutSharedEvents = (props) => {
+  const { children } = props;
+  const modifiedChildren = React.Children.toArray(children).map((child) => {
+    return {
+      ...child,
+      props: Helpers.omit(child.props, ["sharedEvents"])
+    };
+  });
+  props.children = modifiedChildren;
+  return props;
+};
+
+export function useMemoizedProps(initialProps) {
+  const modifiedProps = withoutSharedEvents(initialProps);
+  const [props, setProps] = React.useState(modifiedProps);
+
+  // React.memo uses shallow equality to compare objects. This way props
+  // will only be re-calculated when they change.
+  React.useEffect(() => {
+    if (!isEqual(modifiedProps, props)) {
+      setProps(modifiedProps);
+    }
+  }, [props, setProps, modifiedProps]);
+
+  return React.useMemo(() => {
+    return getCalculatedProps(props, props.children);
+  }, [props]);
 }
 
 function getLabels(props, datasets, index) {

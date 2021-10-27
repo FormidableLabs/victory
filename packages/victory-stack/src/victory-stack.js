@@ -12,7 +12,7 @@ import {
   usePreviousProps
 } from "victory-core";
 import { VictorySharedEvents } from "victory-shared-events";
-import { getChildren, getCalculatedProps } from "./helper-methods";
+import { getChildren, useMemoizedProps } from "./helper-methods";
 import isEqual from "react-fast-compare";
 
 const fallbackProps = {
@@ -45,7 +45,7 @@ const VictoryStack = (initialProps) => {
   } = modifiedProps;
 
   const childComponents = React.Children.toArray(modifiedProps.children);
-  const calculatedProps = getCalculatedProps(modifiedProps, childComponents);
+  const calculatedProps = useMemoizedProps(modifiedProps);
   const { domain, scale, style, origin } = calculatedProps;
 
   const newChildren = React.useMemo(() => {
