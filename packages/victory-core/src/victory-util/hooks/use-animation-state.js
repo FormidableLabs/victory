@@ -1,16 +1,8 @@
 import React from "react";
 import { defaults, some } from "lodash";
 
-import * as Collection from "./collection";
-import * as Transitions from "./transitions";
-
-export const usePreviousProps = (props) => {
-  const ref = React.useRef();
-  React.useEffect(() => {
-    ref.current = props;
-  });
-  return ref.current || {};
-};
+import * as Collection from "../collection";
+import * as Transitions from "../transitions";
 
 const INITIAL_STATE = {
   nodesShouldLoad: false,
