@@ -168,7 +168,7 @@ const withoutSharedEvents = (props) => {
   const modifiedChildren = React.Children.toArray(children).map((child) => {
     return {
       ...child,
-      props: omit(child.props, "sharedEvents")
+      props: Helpers.omit(child.props, ["sharedEvents"])
     };
   });
   props.children = modifiedChildren;

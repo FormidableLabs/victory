@@ -1,6 +1,6 @@
 /* eslint-disable func-style */
 /* eslint-disable no-use-before-define */
-import { assign, omit } from "lodash";
+import { assign } from "lodash";
 import React from "react";
 import { Data, Helpers, Scale, Wrapper } from "victory-core";
 import isEqual from "react-fast-compare";
@@ -71,7 +71,7 @@ const withoutSharedEvents = (props) => {
   const modifiedChildren = React.Children.toArray(children).map((child) => {
     return {
       ...child,
-      props: omit(child.props, "sharedEvents")
+      props: Helpers.omit(child.props, ["sharedEvents"])
     };
   });
   props.children = modifiedChildren;
