@@ -16724,6 +16724,11 @@ react-native-gesture-handler@^1.10.3:
     invariant "^2.2.4"
     prop-types "^15.7.2"
 
+react-native-svg-mock@2.0.0:
+  version "2.0.0"
+  resolved "https://registry.yarnpkg.com/react-native-svg-mock/-/react-native-svg-mock-2.0.0.tgz#27f4793e860ec6cae783930e6afb54869f0a2ea9"
+  integrity sha512-+Op91zndXy+fUHZlcYo2YU3RzW5yXvKXE/mqMgYOdJLLS2kWwZBjAGt+CiKGl/+ZKnJ8/h0TWiiT0vCSv2NxEA==
+
 react-native-svg@^12.1.1:
   version "12.1.1"
   resolved "https://registry.yarnpkg.com/react-native-svg/-/react-native-svg-12.1.1.tgz#5f292410b8bcc07bbc52b2da7ceb22caf5bcaaee"
