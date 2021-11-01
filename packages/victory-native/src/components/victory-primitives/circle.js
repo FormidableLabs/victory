@@ -3,7 +3,7 @@ import PropTypes from "prop-types";
 import { Circle } from "react-native-svg";
 import { useGetNativeStyle } from "../../helpers/native-helpers";
 
-const VCircle = props => {
+const VCircle = (props) => {
   const { "aria-label": accessibilityLabel, desc, style, ...rest } = props;
   const nativeStyle = useGetNativeStyle(style);
   return (

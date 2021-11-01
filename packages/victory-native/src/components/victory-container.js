@@ -133,16 +133,28 @@ export default class extends VictoryContainer {
         ref={props.containerRef}
         {...this.getOUIAProps(props)}
       >
-        <Svg {...svgProps} style={dimensions}
+        <Svg
+          {...svgProps}
+          style={dimensions}
           accessible={props["aria-labelledby"] && title ? true : undefined}
-          accessibilityLabel={props["aria-labelledby"] && title ? title : undefined}
-          accessibilityHint={props["aria-describedby"] && desc ? desc : undefined}
+          accessibilityLabel={
+            props["aria-labelledby"] && title ? title : undefined
+          }
+          accessibilityHint={
+            props["aria-describedby"] && desc ? desc : undefined
+          }
         >
           {/*
             The following Rect is a temporary solution until the following RNSVG issue is resolved
             https://github.com/react-native-svg/react-native-svg/issues/1488
           */}
-          <Rect x={0} y={0} width={width} height={height} style={{ fill: "none" }} />
+          <Rect
+            x={0}
+            y={0}
+            width={width}
+            height={height}
+            style={{ fill: "none" }}
+          />
           {title ? <title id="title">{title}</title> : null}
           {desc ? <desc id="desc">{desc}</desc> : null}
           {children}

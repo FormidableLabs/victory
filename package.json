@@ -14,7 +14,9 @@
   },
   "private": true,
   "workspaces": {
-    "packages": ["packages/*"]
+    "packages": [
+      "packages/*"
+    ]
   },
   "author": "Formidable",
   "license": "MIT",

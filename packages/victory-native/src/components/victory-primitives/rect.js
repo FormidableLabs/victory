@@ -3,7 +3,7 @@ import PropTypes from "prop-types";
 import { Rect } from "react-native-svg";
 import { useGetNativeStyle } from "../../helpers/native-helpers";
 
-const VRect = props => {
+const VRect = (props) => {
   const { "aria-label": accessibilityLabel, desc, style, ...rest } = props;
   const nativeStyle = useGetNativeStyle(style);
   return (

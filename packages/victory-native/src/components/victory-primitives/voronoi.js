@@ -7,10 +7,10 @@ import { Voronoi } from "victory-voronoi/es";
 
 const NativeVoronoi = (props) => (
   <Voronoi
-    pathComponent={<Path/>}
-    groupComponent={<G/>}
-    clipPathComponent={<ClipPath/>}
-    circleComponent={<Circle/>}
+    pathComponent={<Path />}
+    groupComponent={<G />}
+    clipPathComponent={<ClipPath />}
+    circleComponent={<Circle />}
     {...props}
   />
 );

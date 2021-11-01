@@ -7,4 +7,7 @@ export interface VictoryContainerNativeProps extends VictoryContainerProps {
   onTouchStart?: Function;
 }
 
-export default class extends React.Component<VictoryContainerNativeProps, any> {}
+export default class extends React.Component<
+  VictoryContainerNativeProps,
+  any
+> {}
