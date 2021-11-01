@@ -1,12 +1,56 @@
-import { VictoryArea } from "victory-native";
+import React from "react";
+import {
+  VictoryArea,
+  VictoryAxis,
+  VictoryBar,
+  VictoryBoxPlot,
+  VictoryCandlestick,
+  VictoryChart,
+  VictoryContainer,
+  VictoryErrorBar,
+  VictoryGroup,
+  VictoryHistogram,
+  VictoryLabel,
+  VictoryLine,
+  VictoryPie,
+  VictoryPolarAxis,
+  VictoryScatter,
+  VictoryStack,
+  VictoryTooltip,
+  VictoryVoronoi
+} from "victory-native";
+import enzyme from "enzyme";
+import Adapter from "enzyme-adapter-react-16";
+import { expect } from "chai";
 
-const components = [{ component: VictoryArea, name: "VictoryArea" }];
+enzyme.configure({ adapter: new Adapter() });
+
+const components = [
+  { component: VictoryArea, name: "VictoryArea" },
+  { component: VictoryAxis, name: "VictoryAxis" },
+  { component: VictoryPolarAxis, name: "VictoryPolarAxis" },
+  { component: VictoryBar, name: "VictoryBar" },
+  { component: VictoryBoxPlot, name: "VictoryBoxPlot" },
+  { component: VictoryCandlestick, name: "VictoryCandlestick" },
+  { component: VictoryChart, name: "VictoryChart" },
+  { component: VictoryContainer, name: "VictoryContainer" },
+  { component: VictoryErrorBar, name: "VictoryErrorBar" },
+  { component: VictoryGroup, name: "VictoryGroup" },
+  { component: VictoryHistogram, name: "VictoryHistogram" },
+  { component: VictoryLabel, name: "VictoryLabel" },
+  { component: VictoryLine, name: "VictoryLine" },
+  { component: VictoryPie, name: "VictoryPie" },
+  { component: VictoryScatter, name: "VictoryScatter" },
+  { component: VictoryStack, name: "VictoryStack" },
+  { component: VictoryTooltip, name: "VictoryTooltip" },
+  { component: VictoryVoronoi, name: "VictoryVoronoi" }
+];
 
 describe("Default render", () => {
-  components.forEach((c) => {
-    it(`should work for ${c.name}`, () => {
-      // S TODO: This clearly isn't right :sweat-smile:
-      expect(true).toBeTruthy();
+  components.forEach((C) => {
+    it(`should work for ${C.name}`, () => {
+      const wrapper = enzyme.shallow(React.createElement(C.component));
+      expect(wrapper).to.have.length(1);
     });
   });
 });

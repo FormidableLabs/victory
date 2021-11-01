@@ -3,6 +3,11 @@ import React from "react";
 jest.mock("react-native", () => ({
   Dimensions: {
     get: () => ({ width: 300, height: 100 })
+  },
+  PanResponder: {
+    create: () => ({
+      panHandlers: []
+    })
   }
 }));
 
