@@ -3,7 +3,7 @@ import PropTypes from "prop-types";
 import { TSpan } from "react-native-svg";
 import { useGetNativeStyle } from "../../helpers/native-helpers";
 
-const VTSpan = props => {
+const VTSpan = (props) => {
   const { style, ...rest } = props;
   const nativeStyle = useGetNativeStyle(style);
   return <TSpan {...rest} {...nativeStyle} />;

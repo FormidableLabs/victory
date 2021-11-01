@@ -6,10 +6,14 @@ import {
 
 export const selectionContainerMixin: (base: any) => VictorySelectionContainer;
 
-export interface VictorySelectionContainerNativeProps extends VictorySelectionContainerProps {
+export interface VictorySelectionContainerNativeProps
+  extends VictorySelectionContainerProps {
   disableContainerEvents?: boolean;
   onTouchEnd?: Function;
   onTouchStart?: Function;
 }
 
-export default class extends React.Component<VictorySelectionContainerNativeProps, any> {}
+export default class extends React.Component<
+  VictorySelectionContainerNativeProps,
+  any
+> {}

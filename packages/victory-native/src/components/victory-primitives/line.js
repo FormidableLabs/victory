@@ -3,7 +3,7 @@ import PropTypes from "prop-types";
 import { Line } from "react-native-svg";
 import { useGetNativeStyle } from "../../helpers/native-helpers";
 
-const VLine = props => {
+const VLine = (props) => {
   const { "aria-label": accessibilityLabel, desc, style, ...rest } = props;
   const nativeStyle = useGetNativeStyle(style);
   return (
@@ -21,7 +21,7 @@ const VLine = props => {
 export default VLine;
 
 VLine.propTypes = {
-  "aria=label": PropTypes.string,
+  "aria-label": PropTypes.string,
   className: PropTypes.string,
   clipPath: PropTypes.string,
   desc: PropTypes.string,
