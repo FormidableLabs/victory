@@ -17,6 +17,10 @@ module.exports = {
       watch: "karma start --auto-watch ./config/karma/karma.conf.js",
       default: "karma start ./config/karma/karma.conf.js"
     },
+    jest: {
+      native: "jest --config=jest-native-config.js",
+      default: "jest --config=jest-native-config.js"
+    },
     test: {
       cov: npsUtils.series.nps("build-package-libs", "karma.cov"),
       dev: "karma start ./config/karma/karma.conf.dev.js",
