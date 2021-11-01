@@ -21,7 +21,6 @@ import {
 } from "victory-native";
 import enzyme from "enzyme";
 import Adapter from "enzyme-adapter-react-16";
-import { expect } from "chai";
 
 enzyme.configure({ adapter: new Adapter() });
 
@@ -50,7 +49,7 @@ describe("Default render", () => {
   components.forEach((C) => {
     it(`should work for ${C.name}`, () => {
       const wrapper = enzyme.shallow(React.createElement(C.component));
-      expect(wrapper).to.have.length(1);
+      expect(wrapper).toHaveLength(1);
     });
   });
 });
