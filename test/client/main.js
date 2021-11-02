@@ -35,7 +35,11 @@ const TEST_MODULE = process.env.TEST_MODULE;
 
 // Use webpack to include all app code _except_ the entry point so we can get
 // code coverage in the bundle, whether tested or not.
-const srcReq = require.context("packages", true, /\.jsx?$/);
+const srcReq = require.context(
+  "packages",
+  true,
+  /^.*\/packages\/(?!(victory-native)).*\.jsx?$/
+);
 srcReq
   .keys()
   // TODO: Expand to WIN friendly with `normalize|relative` etc?

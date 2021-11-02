@@ -8,7 +8,8 @@ jest.mock("react-native", () => ({
     create: () => ({
       panHandlers: []
     })
-  }
+  },
+  View: ({ children }) => <>{children}</>
 }));
 
 const createMockComponent = (name) => {
@@ -43,8 +44,11 @@ jest.mock("react-native-svg", () => {
     "Mask"
   ];
 
-  return mockComponents.reduce((acc, name) => {
-    acc[name] = createMockComponent(name);
-    return acc;
-  }, {});
+  const Svg = createMockComponent("Svg");
+
+  mockComponents.forEach((name) => {
+    Svg[name] = createMockComponent(name);
+  });
+
+  return Svg;
 });
