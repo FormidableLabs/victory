@@ -36,9 +36,8 @@ export {
   // Style,
   TextSize,
   // Transitions,
-  Selection
-} from // LabelHelpers,
-// Axis,
+  Selection // LabelHelpers,
+} from // Axis,
 // Wrapper
 "victory-core";
 
