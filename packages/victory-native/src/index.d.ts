@@ -36,10 +36,8 @@ export {
   // Style,
   TextSize,
   // Transitions,
-  Selection // LabelHelpers,
-} from // Axis,
-// Wrapper
-"victory-core";
+  Selection // LabelHelpers, // Axis, // Wrapper
+} from "victory-core";
 
 export { VictoryChart } from "victory-chart";
 export { VictoryGroup } from "victory-group";
