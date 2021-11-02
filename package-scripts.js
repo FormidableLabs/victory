@@ -89,13 +89,15 @@ module.exports = {
     "build-es": npsUtils.series.nps("clean.es", "babel-es"),
     "build-lib": npsUtils.series.nps("clean.lib", "babel-lib"),
     "build-libs": npsUtils.series.nps("build-lib", "build-es"),
-    "build-package-libs": "lerna exec --parallel -- nps build-libs",
+    "build-package-libs":
+      "lerna exec --parallel --ignore victory-native -- nps build-libs",
     "build-dist-dev":
       "webpack --bail --config ../../config/webpack/webpack.config.dev.js",
     "build-dist-min":
       "webpack --bail --config ../../config/webpack/webpack.config.js",
     "build-dists": npsUtils.concurrent.nps("build-dist-min", "build-dist-dev"),
     "build-dist": npsUtils.series.nps("clean.dist", "build-dists"),
-    "build-package-dists": "lerna exec --parallel -- nps build-dists"
+    "build-package-dists":
+      "lerna exec --parallel --ignore victory-native -- nps build-dists"
   }
 };
