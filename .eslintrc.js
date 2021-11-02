@@ -24,6 +24,10 @@ module.exports = {
       { ignore: [-1, 0, 0.5, 1, 2, 90, 180, 270, 360] }
     ]
   },
+  plugins: ["jest"],
+  env: {
+    "jest/globals": true
+  },
   overrides: [
     {
       files: ["*.ts", "*.tsx"],
