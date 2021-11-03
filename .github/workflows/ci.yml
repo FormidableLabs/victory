@@ -13,7 +13,6 @@ on:
   pull_request:
     branches:
       - main
-      - feature/absorb-native-repo # TODO: REMOVE when feature branch has been merged to main
     paths:
       - '**'
       - '!docs/**'
