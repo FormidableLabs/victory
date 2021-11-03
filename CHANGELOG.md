@@ -1,6 +1,12 @@
 # Victory Changelog
 
-## 36.1.9 (2021-10-26)
+## 36.2.0 (2021-11-03)
+
+- [#2015](https://github.com/FormidableLabs/victory/pull/2015) - Moves `victory-native` into the main `victory` monorepo
+- [#2006](https://github.com/FormidableLabs/victory/pull/2006) - Memoize `getCalculatedProps` to improve performance for `VictoryStack` and `VictoryGroup`
+- [#2010](https://github.com/FormidableLabs/victory/pull/2010) - Add a `Hooks` namespace for naming consistency
+
+## 36.1.0 (2021-10-26)
 
 - [#1998](https://github.com/FormidableLabs/victory/pull/1998) - Adds experimental `victory-canvas` package for testing Victory with HTML5 Canvas components.
 
