@@ -17,6 +17,10 @@ module.exports = {
       watch: "karma start --auto-watch ./config/karma/karma.conf.js",
       default: "karma start ./config/karma/karma.conf.js"
     },
+    jest: {
+      native: "jest --config=jest-native-config.js",
+      default: "jest --config=jest-native-config.js"
+    },
     test: {
       cov: npsUtils.series.nps("build-package-libs", "karma.cov"),
       dev: "karma start ./config/karma/karma.conf.dev.js",
@@ -56,6 +60,7 @@ module.exports = {
         "build-package-libs",
         "build-package-dists",
         "karma.ci",
+        "jest",
         "compile-ts"
       ),
       cov: npsUtils.series.nps("lint", "test.cov"),
@@ -85,13 +90,15 @@ module.exports = {
     "build-es": npsUtils.series.nps("clean.es", "babel-es"),
     "build-lib": npsUtils.series.nps("clean.lib", "babel-lib"),
     "build-libs": npsUtils.series.nps("build-lib", "build-es"),
-    "build-package-libs": "lerna exec --parallel -- nps build-libs",
+    "build-package-libs":
+      "lerna exec --parallel --ignore victory-native -- nps build-libs",
     "build-dist-dev":
       "webpack --bail --config ../../config/webpack/webpack.config.dev.js",
     "build-dist-min":
       "webpack --bail --config ../../config/webpack/webpack.config.js",
     "build-dists": npsUtils.concurrent.nps("build-dist-min", "build-dist-dev"),
     "build-dist": npsUtils.series.nps("clean.dist", "build-dists"),
-    "build-package-dists": "lerna exec --parallel -- nps build-dists"
+    "build-package-dists":
+      "lerna exec --parallel --ignore victory-native -- nps build-dists"
   }
 };
