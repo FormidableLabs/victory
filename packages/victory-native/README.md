@@ -59,7 +59,9 @@ We encourage you to use the latest version of `react-native-svg` possible for yo
 
 ### Local Development and Demo
 
-If you'd like to contribute to `victory-native`, you can use the local demo app to test your changes on the iOS simulator.
+If you'd like to contribute to `victory-native`, you can use the local demo app to test your changes on the iOS simulator. The demo app uses [Expo](https://expo.dev/) to streamline this dev experience.
+
+To open the demo app, just fire up the expo app.
 
 ```sh
 # Install victory and its dependencies
@@ -70,10 +72,9 @@ $ yarn install
 $ cd demo/rn
 $ yarn install
 $ yarn start
-
-# Run the demo from a new terminal window
-$ cd demo/rn && npx react-native run-ios
 ```
+
+Once Expo has fired up, it should open a web browser window where you can find instructions to open the demo application (either on a simulator or a physical device using the Expo Go app).
 
 Changes to the Victory and Victory Native source code will be reflected in the demo app.
 
