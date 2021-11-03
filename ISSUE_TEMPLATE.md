@@ -2,8 +2,6 @@
 
 ### Checklist
 
-- [ ] This is not a `victory-native` specific issue. (Issues that only appear in `victory-native` should be opened [here](https://github.com/FormidableLabs/victory-native/issues/new))
-
 - [ ] I have read through the [FAQ](https://formidable.com/open-source/victory/docs/faq) and [Guides](https://formidable.com/open-source/victory/guides/) before asking a question
 
 - [ ] I am using the latest version of Victory
