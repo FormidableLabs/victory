@@ -39,20 +39,20 @@ const nativeBrushMixin = (base) =>
               if (props.disable) {
                 return {};
               }
-              BrushHelpers.onMouseMove.cancel();
+              BrushHelpers.onGlobalMouseMove.cancel();
               return BrushHelpers.onMouseDown(evt, targetProps);
             },
             onTouchMove: (evt, targetProps) => {
               return props.disable
                 ? {}
-                : BrushHelpers.onMouseMove(evt, targetProps);
+                : BrushHelpers.onGlobalMouseMove(evt, targetProps);
             },
             onTouchEnd: (evt, targetProps) => {
               if (props.disable) {
                 return {};
               }
-              BrushHelpers.onMouseMove.cancel();
-              return BrushHelpers.onMouseUp(evt, targetProps);
+              BrushHelpers.onGlobalMouseMove.cancel();
+              return BrushHelpers.onGlobalMouseUp(evt, targetProps);
             }
           }
         }
