@@ -257,9 +257,7 @@ const Helpers = {
 
     const brushDomain = defaults({}, targetProps.brushDomain, domain);
 
-    const currentDomain = isEqual(brushDomain, cachedBrushDomain)
-      ? targetProps.currentDomain || brushDomain || domain
-      : brushDomain || domain;
+    const currentDomain = brushDomain || domain;
 
     const domainBox = this.getDomainBox(targetProps, domain, currentDomain);
 
