@@ -565,6 +565,7 @@ export interface AnimatePropTypeInterface {
     after?: (datum: any) => AnimationStyle;
   };
   easing?: AnimationEasing;
+  animationWhitelist?: string[];
 }
 
 export interface EventCallbackInterface<TTarget, TEventKey> {
