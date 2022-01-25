@@ -28,18 +28,21 @@ const FeaturesList = styled.ul`
   grid-template-columns: 1fr;
   grid-auto-rows: auto;
   grid-gap: 4rem;
-  margin: 6rem 0;
+  margin: 3rem 0;
+  padding: 2rem;
   @media ${({ theme }) => theme.mediaQuery.sm} {
     grid-template-columns: repeat(3, 1fr);
     grid-auto-rows: 1fr;
     grid-gap: 3rem;
+    margin: 6rem 0;
+    padding: 0;
   }
 `;
 
 const Feature = styled.li`
   justify-self: center;
   padding: 0;
-  width: 18.5rem;
+  width: 100%;
   @media ${({ theme }) => theme.mediaQuery.md} {
     width: 28rem;
   }
