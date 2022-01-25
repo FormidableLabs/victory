@@ -158,10 +158,10 @@ export default class extends VictoryContainer {
           {title ? <title id="title">{title}</title> : null}
           {desc ? <desc id="desc">{desc}</desc> : null}
           {children}
+          <View style={portalDivStyle} pointerEvents="box-none">
+            <Portal {...portalProps} ref={this.savePortalRef} />
+          </View>
         </Svg>
-        <View style={portalDivStyle} pointerEvents="box-none">
-          <Portal {...portalProps} ref={this.savePortalRef} />
-        </View>
       </View>
     );
   }
