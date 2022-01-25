@@ -53,29 +53,29 @@ const FeatureImg = styled(LazyImage)`
 
 const FeatureTitle = styled.h3`
   color: ${({ theme }) => theme.color.darkBrown};
-  font-family: HelveticaNeue;
+  font-family: Helvetica Neue;
   font-size: 1.8rem;
   font-weight: bold;
   margin-top: 4rem;
   line-height: 0.96;
   text-align: center;
   @media ${({ theme }) => theme.mediaQuery.sm} {
-    margin-top: 3rem;
-    text-align: left;
+    margin-top: calc(2rem + 20px);
   }
   @media ${({ theme }) => theme.mediaQuery.md} {
-    font-size: 2.4rem;
+    font-size: 2rem;
   }
 `;
 
 const FeatureText = styled.p`
-  font-size: 1.4rem;
+  font-size: 1.5rem;
   line-height: 1.29;
+  text-align: center;
+  margin: 2.75rem 0 0;
   @media ${({ theme }) => theme.mediaQuery.sm} {
     line-height: 1.29;
   }
   @media ${({ theme }) => theme.mediaQuery.md} {
-    font-size: 2.4rem;
     line-height: 1.6;
   }
 `;
