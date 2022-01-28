@@ -1,6 +1,6 @@
 {
   "name": "victory-candlestick",
-  "version": "36.2.0",
+  "version": "36.2.1",
   "description": "Candlestick Component for Victory",
   "keywords": [
     "data visualization",
@@ -21,7 +21,7 @@
   "dependencies": {
     "lodash": "^4.17.19",
     "prop-types": "^15.5.8",
-    "victory-core": "^36.2.0"
+    "victory-core": "^36.2.1"
   },
   "peerDependencies": {
     "react": "^16.6.0 || ^17.0.0"
