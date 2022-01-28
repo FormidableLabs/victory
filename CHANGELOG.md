@@ -1,5 +1,11 @@
 # Victory Changelog
 
+## 36.2.1 (2022-01-28)
+
+- [#2058](https://github.com/FormidableLabs/victory/pull/2058) - Uncomments type definitions for VictorySelectionContainer
+- [#2057](https://github.com/FormidableLabs/victory/pull/2057) - Adds animationWhitelist prop to animation prop type definition
+- [#2032](https://github.com/FormidableLabs/victory/pull/2032) - Fixes bug with victory native touch events in `VictoryBrushContainer`. Thanks @uginy!
+
 ## 36.2.0 (2021-11-03)
 
 - [#2015](https://github.com/FormidableLabs/victory/pull/2015) - Moves `victory-native` into the main `victory` monorepo
