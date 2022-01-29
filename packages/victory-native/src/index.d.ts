@@ -51,12 +51,12 @@ export { VictoryLine, Curve } from "victory-line";
 export { VictoryHistogram } from "victory-histogram";
 export { VictoryScatter } from "victory-scatter";
 export { VictoryBoxPlot } from "victory-box-plot";
-export { VictoryBrushLine } from "victory-brush-line";
 export { Voronoi, VictoryVoronoi } from "victory-voronoi";
 export { VictoryTooltip, Flyout } from "victory-tooltip";
 export { VictoryLegend } from "victory-legend";
 export { VictoryAxis } from "victory-axis";
 export { VictoryPolarAxis } from "victory-polar-axis";
+export { default as VictoryBrushLine } from "./components/victory-brush-line";
 
 export { default as VictoryContainer } from "./components/victory-container";
 //   export { default as NativeHelpers } from "./helpers/native-helpers";
