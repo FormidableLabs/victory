@@ -48,3 +48,4 @@ export * as Hooks from "./victory-util/hooks";
 export * as LineHelpers from "./victory-util/line-helpers";
 // TODO: Fix this default export
 export { default as PointPathHelpers } from "./victory-util/point-path-helpers";
+export * as VictoryState from "./victory-state";

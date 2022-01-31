@@ -23,7 +23,7 @@
     "skipLibCheck": true
   },
   "include": [
-    "**/src/*",
+    "**/src/**/*",
     "demo/ts/*"
   ],
   "exclude": [

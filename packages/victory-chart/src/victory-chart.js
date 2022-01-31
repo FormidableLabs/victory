@@ -9,7 +9,8 @@ import {
   CommonProps,
   PropTypes as CustomPropTypes,
   Wrapper,
-  Hooks
+  Hooks,
+  VictoryState
 } from "victory-core";
 import { VictorySharedEvents } from "victory-shared-events";
 import { VictoryAxis } from "victory-axis";
@@ -21,6 +22,7 @@ import {
   getChildren
 } from "./helper-methods";
 import isEqual from "react-fast-compare";
+import { Provider } from "react-redux";
 
 const fallbackProps = {
   width: 450,
@@ -52,6 +54,7 @@ const VictoryChart = (initialProps) => {
     ? modifiedProps.defaultPolarAxes
     : modifiedProps.defaultAxes;
 
+  // Adds axes to children
   const childComponents = React.useMemo(
     () => getChildComponents(modifiedProps, axes),
     [modifiedProps, axes]
@@ -198,7 +201,16 @@ VictoryChart.defaultProps = {
   theme: VictoryTheme.grayscale
 };
 
-const VictoryChartMemo = React.memo(VictoryChart, isEqual);
+// eslint-disable-next-line react/no-multi-comp
+const VictoryChartWithProvider = (props) => {
+  return (
+    <Provider store={VictoryState.store}>
+      <VictoryChart {...props} />
+    </Provider>
+  );
+};
+
+const VictoryChartMemo = React.memo(VictoryChartWithProvider, isEqual);
 
 VictoryChartMemo.displayName = "VictoryChart";
 VictoryChartMemo.expectedComponents = ["groupComponent", "containerComponent"];
