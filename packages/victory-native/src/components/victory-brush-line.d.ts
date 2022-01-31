@@ -6,7 +6,4 @@ export interface VictoryNativeBrushLine extends VictoryBrushLineProps {
   onTouchEnd?: Function;
 }
 
-export default class extends React.Component<
-  VictoryNativeBrushLine,
-  any
-> {}
+export default class extends React.Component<VictoryNativeBrushLine, any> {}
