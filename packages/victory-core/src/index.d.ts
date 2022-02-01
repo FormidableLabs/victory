@@ -563,7 +563,10 @@ export interface AddEventOptions {
   };
 }
 
-export function addEvents<P>(WrappedComponent: React.ComponentType<P>, options: AddEventOptions): React.ComponentType<P & AddEventProps>;
+export function addEvents<P>(
+  WrappedComponent: React.ComponentType<P>,
+  options: AddEventOptions
+): React.ComponentType<P & AddEventProps>;
 
 export interface AnimatePropTypeInterface {
   duration?: number;
