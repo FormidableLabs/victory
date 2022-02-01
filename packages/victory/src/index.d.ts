@@ -261,7 +261,7 @@ declare module "victory" {
     createContainer,
     VictoryBrushLine,
     VictoryBrushLineProps,
-    // addEvents,
+    addEvents,
     // Collection,
     // Data,
     // DefaultTransitions,

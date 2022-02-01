@@ -546,6 +546,24 @@ export const VictoryTheme: VictoryThemeInterface;
 // #endregion
 
 // #region Victory Util
+export interface AddEventProps {
+  animating: typeof VictoryCommonThemeProps.animating;
+  animate?: typeof VictoryCommonThemeProps.animate;
+  standalone?: typeof VictoryCommonThemeProps.standalone;
+  externalEventMutations?: typeof VictoryCommonThemeProps.externalEventMutations;
+  events: typeof VictoryCommonPrimitiveProps.events;
+  sharedEvents: typeof VictoryCommonThemeProps.sharedEvents;
+  name: typeof VictoryCommonThemeProps.name;
+}
+
+export interface AddEventOptions {
+  components: {
+    name: string;
+    index?: string | number;
+  };
+}
+
+export function addEvents<P>(WrappedComponent: React.ComponentType<P>, options: AddEventOptions): React.ComponentType<P & AddEventProps>;
 
 export interface AnimatePropTypeInterface {
   duration?: number;
