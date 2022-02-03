@@ -1,6 +1,6 @@
 import { defaults, assign, isEmpty } from "lodash";
 import PropTypes from "prop-types";
-import React from "react";
+import React, { useMemo } from "react";
 import {
   Background,
   Helpers,
@@ -34,7 +34,21 @@ const VictoryChart = (initialProps) => {
     Hooks.useAnimationState();
   const props = getProps(initialProps);
 
+  const userEnteredProps = useMemo(() => {
+    const additionalKeys = [
+      "backgroundComponent",
+      "children",
+      "containerComponent",
+      "defaultAxes",
+      "defaultPolarAxes",
+      "groupComponent",
+      "title"
+    ];
+    return Helpers.getUserEnteredProps(initialProps, additionalKeys);
+  }, [initialProps]);
+
   const modifiedProps = Helpers.modifyProps(props, fallbackProps, role);
+
   const {
     eventKey,
     containerComponent,
@@ -45,25 +59,27 @@ const VictoryChart = (initialProps) => {
     height,
     theme,
     polar,
-    name
+    name,
+    title,
+    desc
   } = modifiedProps;
 
   const axes = props.polar
     ? modifiedProps.defaultPolarAxes
     : modifiedProps.defaultAxes;
 
-  const childComponents = React.useMemo(
+  const childComponents = useMemo(
     () => getChildComponents(modifiedProps, axes),
     [modifiedProps, axes]
   );
 
-  const calculatedProps = React.useMemo(
+  const calculatedProps = useMemo(
     () => getCalculatedProps(modifiedProps, childComponents),
     [modifiedProps, childComponents]
   );
   const { domain, scale, style, origin, radius, horizontal } = calculatedProps;
 
-  const newChildren = React.useMemo(() => {
+  const newChildren = useMemo(() => {
     const children = getChildren(props, childComponents, calculatedProps);
 
     const mappedChildren = children.map((child, index) => {
@@ -86,40 +102,46 @@ const VictoryChart = (initialProps) => {
     return mappedChildren;
   }, [getAnimationProps, childComponents, props, calculatedProps]);
 
-  const containerProps = React.useMemo(() => {
+  const containerProps = useMemo(() => {
     if (standalone) {
       return {
+        desc,
         domain,
-        scale,
-        width,
         height,
-        standalone,
-        theme,
-        style: style.parent,
         horizontal,
         name,
+        origin: polar ? origin : undefined,
         polar,
         radius,
-        origin: polar ? origin : undefined
+        scale,
+        standalone,
+        style: style.parent,
+        theme,
+        title,
+        userEnteredProps,
+        width
       };
     }
     return {};
   }, [
+    desc,
     domain,
-    scale,
-    width,
     height,
-    standalone,
-    theme,
-    style,
     horizontal,
     name,
+    origin,
     polar,
     radius,
-    origin
+    scale,
+    standalone,
+    style,
+    theme,
+    title,
+    userEnteredProps,
+    width
   ]);
 
-  const container = React.useMemo(() => {
+  const container = useMemo(() => {
     if (standalone) {
       const defaultContainerProps = defaults(
         {},
@@ -131,7 +153,7 @@ const VictoryChart = (initialProps) => {
     return groupComponent;
   }, [groupComponent, standalone, containerComponent, containerProps]);
 
-  const events = React.useMemo(() => {
+  const events = useMemo(() => {
     return Wrapper.getAllEvents(props);
   }, [props]);
 

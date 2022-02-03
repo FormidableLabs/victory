@@ -2,6 +2,7 @@
 /* eslint-disable no-use-before-define */
 import React from "react";
 import { defaults, isFunction, property, pick, assign, keys } from "lodash";
+import { CommonProps } from "victory-core";
 
 // Private Functions
 
@@ -303,3 +304,28 @@ export function isHorizontal(props) {
   };
   return traverseChildren(React.Children.toArray(props.children));
 }
+
+/**
+ * Takes an object (objectToBeFiltered) and filters our key-value-pairs that
+ * have a key that matches list of keys sent in (additionalKeys) or any key
+ * in the CommonProps list (dataProps, baseProps, primitiveProps).
+ * @param {Object} objectToBeFiltered: the props or object to remove entries
+ * from
+ * @param {Array<String>} additionalKeys: list of additional keys to ignore
+ * @returns {Object} - returns an object with all matching entries removed
+ * to leave only what additional items the user may have entered.
+ */
+export const getUserEnteredProps = (objectToBeFiltered, additionalKeys) => {
+  const { dataProps, baseProps, primitiveProps } = CommonProps;
+  const commonPropKeys = [
+    ...Object.keys(dataProps),
+    ...Object.keys(baseProps),
+    ...Object.keys(primitiveProps),
+    ...additionalKeys
+  ];
+  return Object.fromEntries(
+    Object.entries(objectToBeFiltered).filter(
+      ([key]) => !commonPropKeys.includes(key)
+    )
+  );
+};

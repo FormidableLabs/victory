@@ -123,8 +123,10 @@ export default class VictoryContainer extends React.Component {
       width,
       height,
       portalZIndex,
-      responsive
+      responsive,
+      userEnteredProps
     } = props;
+
     const children = this.getChildren(props);
     const dimensions = responsive
       ? { width: "100%", height: "100%" }
@@ -146,6 +148,7 @@ export default class VictoryContainer extends React.Component {
       preserveAspectRatio: svgProps.preserveAspectRatio,
       style: portalSvgStyle
     };
+
     return (
       <PortalContext.Provider
         value={{
@@ -160,7 +163,7 @@ export default class VictoryContainer extends React.Component {
           ref={this.saveContainerRef}
           {...this.getOUIAProps(props)}
         >
-          <svg {...svgProps} style={svgStyle}>
+          <svg {...svgProps} {...userEnteredProps} style={svgStyle}>
             {title ? (
               <title id={this.getIdForElement("title")}>{title}</title>
             ) : null}
@@ -195,6 +198,7 @@ export default class VictoryContainer extends React.Component {
     const style = responsive
       ? this.props.style
       : Helpers.omit(this.props.style, ["height", "width"]);
+
     const svgProps = assign(
       {
         width,

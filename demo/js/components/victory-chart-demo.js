@@ -213,11 +213,20 @@ class App extends React.Component {
       <div className="demo">
         <h1>VictoryChart</h1>
         <div style={containerStyle}>
-          <VictoryChart style={chartStyle} polar>
+          <VictoryChart
+            style={chartStyle}
+            polar
+            title="Victory Polar Scatter Chart"
+            svg-img-alt="Victory Polar Scatter Chart"
+            desc="Circular graph with a twirl pattern of data points."
+          >
             <VictoryScatter />
           </VictoryChart>
 
-          <VictoryChart style={assign({}, chartStyle, bgStyle)}>
+          <VictoryChart
+            style={assign({}, chartStyle, bgStyle)}
+            title="Victory Scatter Chart"
+          >
             <VictoryScatter
               data={[
                 { x: -3, y: -3 },
@@ -227,11 +236,19 @@ class App extends React.Component {
             />
           </VictoryChart>
 
-          <VictoryChart style={chartStyle} theme={dependentAxisTheme}>
+          <VictoryChart
+            style={chartStyle}
+            theme={dependentAxisTheme}
+            title="Victory Themed Scatter Chart"
+          >
             <VictoryScatter />
           </VictoryChart>
 
-          <VictoryChart style={chartStyle} domainPadding={{ x: [0, 20] }}>
+          <VictoryChart
+            style={chartStyle}
+            domainPadding={{ x: [0, 20] }}
+            title="Victory Bar Chart"
+          >
             <VictoryAxis dependentAxis style={axisStyle} />
             <VictoryAxis style={axisStyle} tickCount={6} />
             <VictoryBar
