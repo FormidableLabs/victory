@@ -248,6 +248,7 @@ export interface VictoryLabelProps {
   style?: VictoryLabelStyleObject | VictoryLabelStyleObject[];
   tabIndex?: NumberOrCallback;
   text?: string[] | StringOrNumberOrCallback;
+  textComponent?: React.ReactElement;
   textAnchor?: TextAnchorType | { (): TextAnchorType };
   title?: string;
   transform?: string | {} | { (): string | {} };
