@@ -350,6 +350,14 @@ _examples:_ `text={(datum) => "x: " + datum.x}`, `text="Apples\n(green)"`, `text
 />
 ```
 
+## textComponent
+
+`type: element`
+
+The `textComponent` prop takes a component instance which will be used to create text elements when `VictoryLabel` renders labels.
+
+_default:_ `<Text />`
+
 ## textAnchor
 
 `type: "start" || "middle" || "end" || "inherit" || function`
