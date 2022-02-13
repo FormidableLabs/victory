@@ -137,7 +137,13 @@ const VictoryChart = (initialProps) => {
       return React.cloneElement(containerComponent, defaultContainerProps);
     }
     return groupComponent;
-  }, [groupComponent, standalone, containerComponent, containerProps, initialProps]);
+  }, [
+    groupComponent,
+    standalone,
+    containerComponent,
+    containerProps,
+    initialProps
+  ]);
 
   const events = useMemo(() => {
     return Wrapper.getAllEvents(props);

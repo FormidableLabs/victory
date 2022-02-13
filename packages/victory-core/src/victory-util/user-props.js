@@ -5,13 +5,13 @@
   The exactMatch will contain a list of exact prop names that are accepted.
 */
 const USER_PROPS_WHITELIST = {
-  startsWith: [ "data-", "aria-"],
+  startsWith: ["data-", "aria-"],
   exactMatch: []
 };
 
 /**
  * doesPropStartWith: Function that takes a prop's key and runs it against all
- * options in the USER_PROPS_WHITELIST and checks to see if it starts with any 
+ * options in the USER_PROPS_WHITELIST and checks to see if it starts with any
  * of those options.
  * @param {string} key: prop key to be tested against whitelist
  * @returns {Boolean}: returns true if the key starts with an option or false if
@@ -19,48 +19,46 @@ const USER_PROPS_WHITELIST = {
  */
 const doesPropStartWith = (key) => {
   let startsWith = false;
-  
-  USER_PROPS_WHITELIST.startsWith.forEach(starterString => {
-    const regex = new RegExp(`\\b(${starterString})(\\w|-)+`, 'g');
+
+  USER_PROPS_WHITELIST.startsWith.forEach((starterString) => {
+    const regex = new RegExp(`\\b(${starterString})(\\w|-)+`, "g");
     if (regex.test(key)) startsWith = true;
-  })
-  
+  });
+
   return startsWith;
-}
+};
 
 /**
  * isExactMatch: checks to see if the given key matches any of the 'exactMatch'
  * items in the whitelist
- * @param {String} key: prop key to be tested against the whitelist-exact match 
+ * @param {String} key: prop key to be tested against the whitelist-exact match
  * array.
- * @returns {Boolean}: return true if whitelist contains that key, otherwise 
+ * @returns {Boolean}: return true if whitelist contains that key, otherwise
  * returns false.
  */
-const isExactMatch = key => USER_PROPS_WHITELIST.exactMatch.includes(key);
+const isExactMatch = (key) => USER_PROPS_WHITELIST.exactMatch.includes(key);
 
 /**
  * testIfSafeProp: tests prop's key against both startsWith and exactMatch values
  * @param {String} key: prop key to be tested against the whitelist
  * @returns {Boolean}: returns true if found in whitelist, otherwise returns false
  */
-const testIfSafeProp = key => {
+const testIfSafeProp = (key) => {
   if (doesPropStartWith(key) || isExactMatch(key)) return true;
   return false;
-}
+};
 
 /**
- * getSafeUserProps - function that takes in a props object and removes any 
+ * getSafeUserProps - function that takes in a props object and removes any
  * key-value entries that do not match filter strings in the USER_PROPS_WHITELIST
  * object.
- * 
+ *
  * @param {Object} props: props to be filtered against USER_PROPS_WHITELIST
  * @returns {Object}: object containing remaining acceptable props
  */
 export const getSafeUserProps = (props) => {
   const propsToFilter = { ...props };
   return Object.fromEntries(
-    Object.entries(propsToFilter).filter(
-      ([key]) => testIfSafeProp(key)
-    )
+    Object.entries(propsToFilter).filter(([key]) => testIfSafeProp(key))
   );
-}
+};
