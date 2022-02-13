@@ -6,6 +6,7 @@ import Portal from "../victory-portal/portal";
 import PortalContext from "../victory-portal/portal-context";
 import TimerContext from "../victory-util/timer-context";
 import * as Helpers from "../victory-util/helpers";
+import * as UserProps from "../victory-util/user-props";
 
 export default class VictoryContainer extends React.Component {
   static displayName = "VictoryContainer";
@@ -124,7 +125,7 @@ export default class VictoryContainer extends React.Component {
       height,
       portalZIndex,
       responsive,
-      userEnteredProps
+      ...otherProps
     } = props;
 
     const children = this.getChildren(props);
@@ -149,6 +150,8 @@ export default class VictoryContainer extends React.Component {
       style: portalSvgStyle
     };
 
+    const safeUserProps = UserProps.getSafeUserProps(otherProps);
+
     return (
       <PortalContext.Provider
         value={{
@@ -163,7 +166,7 @@ export default class VictoryContainer extends React.Component {
           ref={this.saveContainerRef}
           {...this.getOUIAProps(props)}
         >
-          <svg {...svgProps} {...userEnteredProps} style={svgStyle}>
+          <svg {...svgProps} {...safeUserProps} style={svgStyle}>
             {title ? (
               <title id={this.getIdForElement("title")}>{title}</title>
             ) : null}

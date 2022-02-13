@@ -9,7 +9,8 @@ import {
   CommonProps,
   PropTypes as CustomPropTypes,
   Wrapper,
-  Hooks
+  Hooks,
+  UserProps
 } from "victory-core";
 import { VictorySharedEvents } from "victory-shared-events";
 import { VictoryAxis } from "victory-axis";
@@ -33,20 +34,6 @@ const VictoryChart = (initialProps) => {
   const { getAnimationProps, setAnimationState, getProps } =
     Hooks.useAnimationState();
   const props = getProps(initialProps);
-
-  const userEnteredProps = useMemo(() => {
-    const additionalKeys = [
-      "backgroundComponent",
-      "children",
-      "containerComponent",
-      "defaultAxes",
-      "defaultPolarAxes",
-      "groupComponent",
-      "title"
-    ];
-    return Helpers.getUserEnteredProps(initialProps, additionalKeys);
-  }, [initialProps]);
-
   const modifiedProps = Helpers.modifyProps(props, fallbackProps, role);
 
   const {
@@ -118,7 +105,6 @@ const VictoryChart = (initialProps) => {
         style: style.parent,
         theme,
         title,
-        userEnteredProps,
         width
       };
     }
@@ -137,7 +123,6 @@ const VictoryChart = (initialProps) => {
     style,
     theme,
     title,
-    userEnteredProps,
     width
   ]);
 
@@ -146,12 +131,13 @@ const VictoryChart = (initialProps) => {
       const defaultContainerProps = defaults(
         {},
         containerComponent.props,
-        containerProps
+        containerProps,
+        UserProps.getSafeUserProps(initialProps)
       );
       return React.cloneElement(containerComponent, defaultContainerProps);
     }
     return groupComponent;
-  }, [groupComponent, standalone, containerComponent, containerProps]);
+  }, [groupComponent, standalone, containerComponent, containerProps, initialProps]);
 
   const events = useMemo(() => {
     return Wrapper.getAllEvents(props);

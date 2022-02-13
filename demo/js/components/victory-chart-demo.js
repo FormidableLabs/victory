@@ -217,7 +217,8 @@ class App extends React.Component {
             style={chartStyle}
             polar
             title="Victory Polar Scatter Chart"
-            svg-img-alt="Victory Polar Scatter Chart"
+            aria-label="Victory Polar Scatter Chart"
+            data-some-user-prop="TESTING 123"
             desc="Circular graph with a twirl pattern of data points."
           >
             <VictoryScatter />
@@ -278,7 +279,7 @@ class App extends React.Component {
               ]}
             />
           </VictoryChart>
-
+    
           <VictoryChart style={chartStyle}>
             <VictoryGroup
               labels={["a", "b", "c"]}
@@ -309,7 +310,7 @@ class App extends React.Component {
               />
             </VictoryGroup>
           </VictoryChart>
-
+    
           <VictoryChart style={chartStyle}>
             <VictoryGroup offset={20} colorScale={"qualitative"}>
               <VictoryBar
@@ -335,7 +336,7 @@ class App extends React.Component {
               />
             </VictoryGroup>
           </VictoryChart>
-
+    
           <VictoryChart style={chartStyle}>
             <VictoryStack colorScale={"qualitative"}>
               <VictoryBar
@@ -390,15 +391,15 @@ class App extends React.Component {
               />
             </VictoryStack>
           </VictoryChart>
-
+    
           <VictoryChart style={chartStyle} animate={{ duration: 1500 }}>
             <VictoryLine data={this.state.barTransitionData} />
           </VictoryChart>
-
+    
           <VictoryChart style={chartStyle} animate={{ duration: 1500 }}>
             <VictoryBar data={this.state.barTransitionData} />
           </VictoryChart>
-
+    
           <VictoryChart style={chartStyle} animate={{ duration: 1000 }}>
             <VictoryStack colorScale={"warm"}>
               {this.state.multiBarTransitionData.map((data, index) => {
@@ -406,20 +407,20 @@ class App extends React.Component {
               })}
             </VictoryStack>
           </VictoryChart>
-
+    
           <VictoryChart style={chartStyle} />
-
+    
           <VictoryChart style={chartStyle}>
             <Wrapper>
               <VictoryLabel text={"WOW"} x={150} y={150} />
               <VictoryScatter />
             </Wrapper>
           </VictoryChart>
-
+    
           <VictoryChart style={chartStyle}>
             <VictoryLine />
           </VictoryChart>
-
+    
           <VictoryChart
             style={chartStyle}
             events={[
@@ -461,7 +462,7 @@ class App extends React.Component {
             <VictoryBar name="bar" labels={() => null} />
             <VictoryAxis tickFormat={["one", "two", "three", "four"]} />
           </VictoryChart>
-
+    
           <VictoryChart style={chartStyle} scale={"linear"}>
             <VictoryAxis label={"A LABEL"} />
             <VictoryAxis
@@ -470,18 +471,18 @@ class App extends React.Component {
               crossAxis={false}
               offsetX={30}
             />
-
+    
             <VictoryLine
               style={{ data: { stroke: "red", strokeWidth: 4 } }}
               y={(data) => Math.sin(2 * Math.PI * data.x)}
             />
-
+    
             <VictoryLine
               style={{ data: { stroke: "blue", strokeWidth: 4 } }}
               y={(data) => Math.cos(2 * Math.PI * data.x)}
             />
           </VictoryChart>
-
+    
           <VictoryChart style={chartStyle} animate={{ duration: 2000 }}>
             <VictoryAxis
               label={"A LABEL"}
@@ -494,7 +495,7 @@ class App extends React.Component {
               style={{ data: this.state.lineStyle }}
             />
           </VictoryChart>
-
+    
           <VictoryChart
             style={chartStyle}
             scale={{
@@ -530,7 +531,7 @@ class App extends React.Component {
               ]}
             />
           </VictoryChart>
-
+    
           <VictoryChart style={chartStyle} animate={{ duration: 2000 }}>
             <VictoryScatter
               groupComponent={<VictoryClipContainer />}
@@ -554,7 +555,7 @@ class App extends React.Component {
               }}
             />
           </VictoryChart>
-
+    
           <VictoryChart style={chartStyle}>
             <VictoryAxis label={"A LABEL"} dependentAxis orientation="right" />
             <VictoryAxis label={"A LABEL"} orientation="top" />
@@ -567,7 +568,7 @@ class App extends React.Component {
               style={{ data: { stroke: "red" } }}
             />
           </VictoryChart>
-
+    
           <VictoryChart
             style={chartStyle}
             animate={{ duration: 2000 }}
@@ -763,10 +764,10 @@ class App extends React.Component {
               />
             </VictoryStack>
           </VictoryChart>
-        </div>
-      </div>
-    );
-  }
-}
+          </div>
+          </div>
+          );
+        }
+      }
 
 export default App;
