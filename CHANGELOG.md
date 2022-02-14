@@ -1,5 +1,9 @@
 # Victory Changelog
 
+## 36.2.1 (2022-02-14)
+
+- [#2093](https://github.com/FormidableLabs/victory/pull/2093) - Reverts [#2058](https://github.com/FormidableLabs/victory/pull/2058) to fix TS build
+
 ## 36.2.1 (2022-01-28)
 
 - [#2058](https://github.com/FormidableLabs/victory/pull/2058) - Uncomments type definitions for `VictorySelectionContainer`
