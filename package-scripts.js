@@ -99,6 +99,8 @@ module.exports = {
     "build-dists": npsUtils.concurrent.nps("build-dist-min", "build-dist-dev"),
     "build-dist": npsUtils.series.nps("clean.dist", "build-dists"),
     "build-package-dists":
-      "lerna exec --parallel --ignore victory-native -- nps build-dists"
+      "lerna exec --parallel --ignore victory-native -- nps build-dists",
+    bootstrap: "lerna bootstrap",
+    "link-parent-bin": "link-parent-bin"
   }
 };
