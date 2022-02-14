@@ -20,7 +20,7 @@ RectWithStyle.propTypes = {
 };
 
 const nativeBrushMixin = (base) =>
-  class VictoryNativeSelectionContainer extends base {
+  class VictoryNativeBrushContainer extends base {
     // eslint-disable-line max-len
     // assign native specific defaultProps over web `VictoryBrushContainer` defaultProps
     static defaultProps = {
