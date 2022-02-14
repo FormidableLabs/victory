@@ -109,11 +109,11 @@ declare module "victory" {
     // cursorContainerMixin
   } from "victory-cursor-container";
 
-  import {
-    VictorySelectionContainer,
-    SelectionHelpers,
-    selectionContainerMixin
-  } from "victory-selection-container";
+  // import {
+  //   VictorySelectionContainer,
+  //   SelectionHelpers,
+  //   selectionContainerMixin
+  // } from "victory-selection-container";
 
   import {
     VictoryVoronoiContainer,
@@ -241,9 +241,9 @@ declare module "victory" {
     // ZoomHelpers,
     // zoomContainerMixin,
     // RawZoomHelpers,
-    VictorySelectionContainer,
-    SelectionHelpers,
-    selectionContainerMixin,
+    // VictorySelectionContainer,
+    // SelectionHelpers,
+    // selectionContainerMixin,
     VictoryBrushContainer,
     VictoryBrushContainerProps,
     // BrushHelpers,
