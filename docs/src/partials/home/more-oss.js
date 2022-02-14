@@ -84,7 +84,7 @@ const OSSLink = styled.a`
 `;
 
 const OSSTitle = styled.h3`
-  font-family: HelveticaNeue;
+  font-family: Helvetica Neue;
   font-size: 1.8rem;
   font-weight: bold;
   margin: 0;
