@@ -397,5 +397,29 @@ To use one of these containers, change the `containerComponent` prop on your _to
 
 Victory includes a `createContainer` helper that is used to create hybrid containers. `createContainer` can be used to create a new container with behaviors from two existing Victory containers. [Read more about `createContainer` here](/docs/create-container).
 
+## Expo Web apps that use victory-native
 
+Whilst using `victory-native` in Expo apps that target iOS & Android is fully supported, we do not support building for the web with `victory-native`.
 
+However as both `victory-native` and `victory` share the same public API, it's possible to configure your Expo project so that it automatically uses `victory-native` when building your native apps for iOS & Android, and `victory` when building your web app.
+
+> ☣️ Please note that while you can follow the instructions below to configure your Expo project to make this work, Formidable still does not officially support Expo Web apps.
+
+```sh
+yarn add -D @expo/webpack-config
+```
+
+Then, create a `webpack.config.js` file in the root of your Expo project
+
+```js
+const createExpoWebpackConfigAsync = require('@expo/webpack-config');
+
+module.exports = async function(env, argv) {
+  const config = await createExpoWebpackConfigAsync(env, argv);
+
+  // resolve victory-native as victory for the Web app
+  config.resolve.alias['victory-native'] = 'victory';
+
+  return config;
+};
+```
