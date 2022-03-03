@@ -1,17 +1,17 @@
 /*
-  USER_PROPS_WHITELIST is to contain any string deemed safe for user props.
+  USER_PROPS_SAFELIST is to contain any string deemed safe for user props.
   The startsWidth array will contain the start of any accepted user-prop that 
   starts with these characters.
   The exactMatch will contain a list of exact prop names that are accepted.
 */
-const USER_PROPS_WHITELIST = {
+const USER_PROPS_SAFELIST = {
   startsWith: ["data-", "aria-"],
   exactMatch: []
 };
 
 /**
  * doesPropStartWith: Function that takes a prop's key and runs it against all
- * options in the USER_PROPS_WHITELIST and checks to see if it starts with any
+ * options in the USER_PROPS_SAFELIST and checks to see if it starts with any
  * of those options.
  * @param {string} key: prop key to be tested against whitelist
  * @returns {Boolean}: returns true if the key starts with an option or false if
@@ -20,7 +20,7 @@ const USER_PROPS_WHITELIST = {
 const doesPropStartWith = (key) => {
   let startsWith = false;
 
-  USER_PROPS_WHITELIST.startsWith.forEach((starterString) => {
+  USER_PROPS_SAFELIST.startsWith.forEach((starterString) => {
     const regex = new RegExp(`\\b(${starterString})(\\w|-)+`, "g");
     if (regex.test(key)) startsWith = true;
   });
@@ -36,7 +36,7 @@ const doesPropStartWith = (key) => {
  * @returns {Boolean}: return true if whitelist contains that key, otherwise
  * returns false.
  */
-const isExactMatch = (key) => USER_PROPS_WHITELIST.exactMatch.includes(key);
+const isExactMatch = (key) => USER_PROPS_SAFELIST.exactMatch.includes(key);
 
 /**
  * testIfSafeProp: tests prop's key against both startsWith and exactMatch values
@@ -50,10 +50,10 @@ const testIfSafeProp = (key) => {
 
 /**
  * getSafeUserProps - function that takes in a props object and removes any
- * key-value entries that do not match filter strings in the USER_PROPS_WHITELIST
+ * key-value entries that do not match filter strings in the USER_PROPS_SAFELIST
  * object.
  *
- * @param {Object} props: props to be filtered against USER_PROPS_WHITELIST
+ * @param {Object} props: props to be filtered against USER_PROPS_SAFELIST
  * @returns {Object}: object containing remaining acceptable props
  */
 export const getSafeUserProps = (props) => {
