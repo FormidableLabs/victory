@@ -54,6 +54,7 @@ export { default as VictoryArea } from "./components/victory-area";
 export { default as VictoryAxis } from "./components/victory-axis";
 export { default as VictoryPolarAxis } from "./components/victory-polar-axis";
 export { default as VictoryBar } from "./components/victory-bar";
+export { default as VictoryBrushLine } from "./components/victory-brush-line";
 export { default as VictoryBoxPlot } from "./components/victory-boxplot";
 export { default as VictoryGroup } from "./components/victory-group";
 export { default as VictoryLine } from "./components/victory-line";

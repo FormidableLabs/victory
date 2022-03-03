@@ -1,8 +1,13 @@
-# Bugs and Questions
+# Questions
+
+
+**For discussions about features or questions about how to use Victory, please [start a new discussion](https://github.com/FormidableLabs/victory/discussions/new) rather than opening an issue.**
+
+# Bug Reports
 
 ### Checklist
 
-- [ ] I have read through the [FAQ](https://formidable.com/open-source/victory/docs/faq) and [Guides](https://formidable.com/open-source/victory/guides/) before asking a question
+- [ ] I have read through the [FAQ](https://formidable.com/open-source/victory/docs/faq) and [Guides](https://formidable.com/open-source/victory/guides/)
 
 - [ ] I am using the latest version of Victory
 

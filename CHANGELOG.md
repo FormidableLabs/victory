@@ -1,5 +1,19 @@
 # Victory Changelog
 
+## 36.3.0 (2022-02-14)
+* Bump follow-redirects from 1.14.7 to 1.14.8 by @dependabot in https://github.com/FormidableLabs/victory/pull/2095
+* Bump karma from 6.3.4 to 6.3.14 by @dependabot in https://github.com/FormidableLabs/victory/pull/2092
+* Fix font stack and correct margins in docs by @melvin-chen in https://github.com/FormidableLabs/victory/pull/2070
+* Patch missing text component type by @youPickItUp in https://github.com/FormidableLabs/victory/pull/2089
+* Bump nanoid from 3.1.28 to 3.2.0 in /demo/rn by @dependabot in https://github.com/FormidableLabs/victory/pull/2074
+* Patch missing text component type by @becca-bailey in https://github.com/FormidableLabs/victory/pull/2097
+* fix: android touch events by @zibs in https://github.com/FormidableLabs/victory/pull/2071
+* feat: Add VictoryNativeBrushLine component by @zibs in https://github.com/FormidableLabs/victory/pull/2077
+
+## 36.2.1 (2022-02-14)
+
+- [#2093](https://github.com/FormidableLabs/victory/pull/2093) - Reverts [#2058](https://github.com/FormidableLabs/victory/pull/2058) to fix TS build
+
 ## 36.2.1 (2022-01-28)
 
 - [#2058](https://github.com/FormidableLabs/victory/pull/2058) - Uncomments type definitions for `VictorySelectionContainer`

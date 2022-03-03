@@ -11,7 +11,7 @@ export interface VictoryVoronoiContainerProps extends VictoryContainerProps {
   onActivated?: (points: any[], props: VictoryVoronoiContainerProps) => void;
   onDeactivated?: (points: any[], props: VictoryVoronoiContainerProps) => void;
   radius?: number;
-  voronoiBlacklist?: string[];
+  voronoiBlacklist?: (string | RegExp)[];
   voronoiDimension?: "x" | "y";
   voronoiPadding?: PaddingProps;
 }
