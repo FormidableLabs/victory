@@ -8,7 +8,8 @@ import {
   CommonProps,
   Wrapper,
   PropTypes as CustomPropTypes,
-  Hooks
+  Hooks,
+  UserProps
 } from "victory-core";
 import { VictorySharedEvents } from "victory-shared-events";
 import { getChildren, useMemoizedProps } from "./helper-methods";
@@ -94,17 +95,19 @@ const VictoryStack = (initialProps) => {
     origin,
     name
   ]);
+  const userProps = React.useMemo(() => UserProps.getSafeUserProps(initialProps), [initialProps]);
 
   const container = React.useMemo(() => {
     if (standalone) {
       const defaultContainerProps = defaults(
         {},
         containerComponent.props,
-        containerProps
+        containerProps,
+        userProps
       );
       return React.cloneElement(containerComponent, defaultContainerProps);
     }
-    return groupComponent;
+    return React.cloneElement(groupComponent, userProps);
   }, [groupComponent, standalone, containerComponent, containerProps]);
 
   const events = React.useMemo(() => {

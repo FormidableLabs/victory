@@ -27,6 +27,7 @@ import PolarAxisDemo from "./components/victory-polar-axis-demo";
 import PrimitivesDemo from "./components/primitives-demo";
 import ScatterDemo from "./components/victory-scatter-demo";
 import SelectionDemo from "./components/selection-demo";
+import StackDemo from "./components/victory-stack-demo";
 import TooltipDemo from "./components/victory-tooltip-demo";
 import VictoryDemo from "./components/victory-demo";
 import VictorySelectionContainerDemo from "./components/victory-selection-container-demo";
@@ -68,6 +69,7 @@ const MAP = {
   "/primitives": { component: PrimitivesDemo, name: "PrimitivesDemo" },
   "/scatter": { component: ScatterDemo, name: "ScatterDemo" },
   "/selection": { component: SelectionDemo, name: "SelectionDemo" },
+  "/stack": { component: StackDemo, name: "StackDemo" },
   "/tooltip": { component: TooltipDemo, name: "TooltipDemo" },
   "/victory-demo": { component: VictoryDemo, name: "VictoryDemo" },
   "/victory-selection-container": {

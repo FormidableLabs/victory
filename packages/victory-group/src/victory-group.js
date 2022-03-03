@@ -2,12 +2,13 @@ import { assign, defaults, isEmpty } from "lodash";
 import PropTypes from "prop-types";
 import React from "react";
 import {
+  CommonProps,
   Helpers,
+  Hooks,
+  UserProps,
   VictoryContainer,
   VictoryTheme,
-  CommonProps,
-  Wrapper,
-  Hooks
+  Wrapper
 } from "victory-core";
 import { VictorySharedEvents } from "victory-shared-events";
 import { getChildren, useMemoizedProps } from "./helper-methods";
@@ -88,18 +89,22 @@ const VictoryGroup = (initialProps) => {
     name
   ]);
 
+  const userProps = React.useMemo(() => UserProps.getSafeUserProps(initialProps), [initialProps]);
+
   const container = React.useMemo(() => {
     if (standalone) {
       const defaultContainerProps = defaults(
         {},
         containerComponent.props,
-        containerProps
+        containerProps,
+        userProps
       );
       return React.cloneElement(containerComponent, defaultContainerProps);
     }
-    return groupComponent;
-  }, [groupComponent, standalone, containerComponent, containerProps]);
 
+    return React.cloneElement(groupComponent, userProps);
+  }, [groupComponent, standalone, containerComponent, containerProps, userProps]);
+  
   const events = React.useMemo(() => {
     return Wrapper.getAllEvents(props);
   }, [props]);
