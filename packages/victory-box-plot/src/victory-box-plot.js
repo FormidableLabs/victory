@@ -2,17 +2,18 @@ import React from "react";
 import PropTypes from "prop-types";
 import { flatten, isNil } from "lodash";
 import {
-  Helpers,
-  VictoryLabel,
   addEvents,
+  Box,
+  CommonProps,
+  DefaultTransitions,
+  Helpers,
   LineSegment,
   PropTypes as CustomPropTypes,
+  UserProps,
   VictoryContainer,
+  VictoryLabel,
   VictoryTheme,
-  Box,
-  Whisker,
-  DefaultTransitions,
-  CommonProps
+  Whisker
 } from "victory-core";
 import { getDomain, getData, getBaseProps } from "./helper-methods";
 
@@ -278,7 +279,9 @@ class VictoryBoxPlot extends React.Component {
       })
     );
     const children = [...dataComponents, ...labelComponents];
-    return this.renderContainer(props.groupComponent, children);
+
+    const userProps = UserProps.getSafeUserProps(props);
+    return React.cloneElement(props.groupComponent, { ...userProps }, children);
   }
 
   // Overridden in native versions

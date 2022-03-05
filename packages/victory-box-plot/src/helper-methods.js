@@ -8,7 +8,14 @@ import {
   isNaN,
   isNil
 } from "lodash";
-import { Helpers, Scale, Domain, Data, Collection } from "victory-core";
+import {
+  Collection,
+  Data,
+  Domain,
+  Helpers,
+  Scale,
+  UserProps
+} from "victory-core";
 import { min as d3Min, max as d3Max, quantile as d3Quantile } from "d3-array";
 
 const TYPES = ["max", "min", "median", "q1", "q3"];
@@ -456,6 +463,8 @@ const isDatumOutOfBounds = (datum, domain) => {
 export const getBaseProps = (props, fallbackProps) => {
   const modifiedProps = Helpers.modifyProps(props, fallbackProps, "boxplot");
   props = assign({}, modifiedProps, getCalculatedValues(modifiedProps));
+  const userProps = UserProps.getSafeUserProps(props);
+
   const {
     groupComponent,
     width,
@@ -485,7 +494,8 @@ export const getBaseProps = (props, fallbackProps) => {
       style: style.parent || {},
       padding,
       groupComponent,
-      horizontal
+      horizontal,
+      userProps
     }
   };
   const boxScale = scale.y;

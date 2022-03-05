@@ -155,6 +155,8 @@ export default class VictoryBarDemo extends React.Component<
       <div className="demo" style={containerStyle}>
         <ChartWrap>
           <VictoryBar
+            aria-label="This is a test"
+            data-testing-user-props="Testing 123"
             cornerRadius={4}
             scale={{ y: "log", x: "linear" }}
             horizontal
@@ -228,6 +230,8 @@ export default class VictoryBarDemo extends React.Component<
 
         <VictoryChart domainPadding={{ y: 20 }}>
           <VictoryBar
+            aria-label="This is a test 2"
+            data-testing-user-props="Testing 123-2"
             data={[
               { x: 1, y: "Alpha" },
               { x: 7, y: "Beta" },
@@ -458,6 +462,8 @@ export default class VictoryBarDemo extends React.Component<
           />
         </VictoryStack>
         <VictoryBar
+          aria-label="This is a test"
+          data-testing-user-props="Testing 123"
           theme={VictoryTheme.grayscale}
           style={{
             parent: parentStyle,

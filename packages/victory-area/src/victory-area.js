@@ -3,17 +3,17 @@ import React from "react";
 import { getBaseProps } from "./helper-methods";
 import Area from "./area";
 import {
-  PropTypes as CustomPropTypes,
-  Helpers,
-  VictoryLabel,
-  VictoryContainer,
-  CommonProps,
-  DefaultTransitions,
-  VictoryClipContainer,
   addEvents,
-  VictoryTheme,
+  CommonProps,
   Data,
-  Domain
+  DefaultTransitions,
+  Domain,
+  Helpers,
+  PropTypes as CustomPropTypes,
+  VictoryClipContainer,
+  VictoryContainer,
+  VictoryLabel,
+  VictoryTheme
 } from "victory-core";
 
 const fallbackProps = {

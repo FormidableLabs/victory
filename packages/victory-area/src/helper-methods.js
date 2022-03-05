@@ -1,11 +1,12 @@
 import { assign, isNil } from "lodash";
 import {
-  Helpers,
-  LabelHelpers,
+  Collection,
   Data,
   Domain,
+  Helpers,
+  LabelHelpers,
   Scale,
-  Collection
+  UserProps
 } from "victory-core";
 
 export const getDataWithBaseline = (props, scale) => {
@@ -66,6 +67,8 @@ const getCalculatedValues = (props) => {
 
 export const getBaseProps = (props, fallbackProps) => {
   const modifiedProps = Helpers.modifyProps(props, fallbackProps, "area");
+  const userProps = UserProps.getSafeUserProps(props);
+
   props = assign({}, modifiedProps, getCalculatedValues(modifiedProps));
   const {
     data,
@@ -102,7 +105,8 @@ export const getBaseProps = (props, fallbackProps) => {
       origin,
       padding,
       name,
-      horizontal
+      horizontal,
+      userProps
     },
     all: {
       data: {
@@ -115,7 +119,8 @@ export const getBaseProps = (props, fallbackProps) => {
         groupComponent,
         style: disableInlineStyles ? {} : style.data,
         disableInlineStyles
-      }
+      },
+      userProps
     }
   };
   return data.reduce((childProps, datum, index) => {

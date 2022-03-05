@@ -2,6 +2,8 @@ import React from "react";
 import { merge, random, range } from "lodash";
 import { DomainPropType } from "@packages/victory-core";
 import { VictoryAxis, VictoryAxisProps } from "@packages/victory-axis";
+import { VictoryChart } from "@packages/victory-chart";
+import { VictoryScatter } from "@packages/victory-scatter";
 import {
   VictoryLabel,
   VictoryContainer,
@@ -89,10 +91,15 @@ export default class VictoryAxisDemo extends React.Component<
       justifyContent: "center"
     };
 
+    const chartStyle = {
+      parent: { border: "1px solid #ccc", margin: "2%", maxWidth: "40%" }
+    };
+
     return (
       <div className="demo">
         <div style={containerStyle}>
           <VictoryAxis
+            data-user-prop="This prop for testing purposes only"
             style={{
               parent: styleOverrides.parent,
               grid: { stroke: "#CFD8DC" }
@@ -111,7 +118,6 @@ export default class VictoryAxisDemo extends React.Component<
               />
             }
           />
-
           <VictoryAxis
             scale="time"
             style={{
@@ -273,6 +279,22 @@ export default class VictoryAxisDemo extends React.Component<
               "Mariners\nSEA"
             ]}
           />
+
+          <VictoryChart style={chartStyle} horizontal>
+            <VictoryAxis
+              data-user-prop2="This prop for testing purposes only2"
+              tickValues={[
+                new Date(1985, 1, 1),
+                new Date(1990, 1, 1),
+                new Date(1995, 1, 1),
+                new Date(2000, 1, 1),
+                new Date(2005, 1, 1),
+                new Date(2010, 1, 1)
+              ]}
+              tickFormat={(x) => new Date(x).getFullYear()}
+            />
+            <VictoryScatter data={[]} />
+          </VictoryChart>
         </div>
       </div>
     );

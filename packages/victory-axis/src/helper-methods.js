@@ -1,5 +1,5 @@
 import { assign, defaults } from "lodash";
-import { Helpers, Scale, Axis } from "victory-core";
+import { Axis, Helpers, Scale, UserProps } from "victory-core";
 
 const orientationSign = {
   top: -1,
@@ -541,6 +541,8 @@ const getCalculatedValues = (props) => {
 export const getBaseProps = (props, fallbackProps) => {
   props = Axis.modifyProps(props, fallbackProps);
   const calculatedValues = getCalculatedValues(props);
+  const userProps = UserProps.getSafeUserProps(props);
+
   const {
     axis,
     style,
@@ -585,7 +587,8 @@ export const getBaseProps = (props, fallbackProps) => {
         height,
         padding,
         domain,
-        name
+        name,
+        userProps
       },
       sharedProps
     )

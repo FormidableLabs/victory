@@ -5,7 +5,8 @@ import {
   Domain,
   Helpers,
   LabelHelpers,
-  Scale
+  Scale,
+  UserProps
 } from "victory-core";
 
 export const getBarPosition = (props, datum) => {
@@ -68,6 +69,8 @@ const getCalculatedValues = (props) => {
 export const getBaseProps = (props, fallbackProps) => {
   const modifiedProps = Helpers.modifyProps(props, fallbackProps, "bar");
   props = assign({}, modifiedProps, getCalculatedValues(modifiedProps));
+  const userProps = UserProps.getSafeUserProps(props);
+
   const {
     alignment,
     barRatio,
@@ -106,7 +109,8 @@ export const getBaseProps = (props, fallbackProps) => {
       polar,
       origin,
       padding,
-      style: style.parent
+      style: style.parent,
+      userProps
     }
   };
 

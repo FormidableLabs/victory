@@ -226,6 +226,8 @@ class App extends React.Component<any, BrushLineDemoState> {
                 externalEventMutations={this.state.externalMutation}
                 axisComponent={
                   <VictoryBrushLine
+                    aria-label="This is a test"
+                    data-testing-user-props="Testing 123"
                     name={attribute}
                     width={20}
                     onBrushDomainChange={this.onDomainChange.bind(this)}

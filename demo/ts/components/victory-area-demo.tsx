@@ -137,6 +137,8 @@ export default class VictoryAreaDemo extends React.Component<
       <div className="demo" style={containerStyle}>
         <VictoryChart style={style} scale={{ y: "log" }}>
           <VictoryArea
+            data-test-variable="TESTING 123"
+            aria-label="Victory Area Chart"
             style={{ data: { fill: "cyan", stroke: "cyan" } }}
             labels={({ datum }: any) => Math.round(datum.y)}
             data={[
@@ -438,7 +440,11 @@ export default class VictoryAreaDemo extends React.Component<
         </VictoryStack>
 
         <VictoryChart style={style} theme={VictoryTheme.material}>
-          <VictoryArea style={style} data={[]} />
+          <VictoryArea
+            style={style}
+            data={[]}
+            data-something="TESTING User Props"
+          />
         </VictoryChart>
       </div>
     );

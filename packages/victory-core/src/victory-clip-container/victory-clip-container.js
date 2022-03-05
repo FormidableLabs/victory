@@ -91,8 +91,10 @@ export default class VictoryClipContainer extends React.Component {
       children,
       className,
       groupComponent,
-      tabIndex
+      tabIndex,
+      userProps = {}
     } = props;
+
     const clipComponent = this.renderClipComponent(props, clipId);
     const groupProps = assign(
       {
@@ -100,7 +102,8 @@ export default class VictoryClipContainer extends React.Component {
         style,
         transform,
         key: `clipped-group-${clipId}`,
-        clipPath: `url(#${clipId})`
+        clipPath: `url(#${clipId})`,
+        ...userProps
       },
       events
     );
@@ -121,6 +124,7 @@ export default class VictoryClipContainer extends React.Component {
       groupComponent,
       tabIndex
     } = props;
+
     return React.cloneElement(
       groupComponent,
       assign(

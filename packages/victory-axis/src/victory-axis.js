@@ -2,15 +2,16 @@ import PropTypes from "prop-types";
 import React from "react";
 import { assign, isEmpty } from "lodash";
 import {
-  PropTypes as CustomPropTypes,
-  VictoryLabel,
-  CommonProps,
-  VictoryContainer,
-  VictoryTheme,
-  LineSegment,
-  TextSize,
   addEvents,
-  Axis
+  Axis,
+  CommonProps,
+  LineSegment,
+  PropTypes as CustomPropTypes,
+  TextSize,
+  UserProps,
+  VictoryContainer,
+  VictoryLabel,
+  VictoryTheme
 } from "victory-core";
 import { getBaseProps, getStyles } from "./helper-methods";
 
@@ -282,9 +283,11 @@ class VictoryAxis extends React.Component {
       this.renderLabel(props),
       ...modifiedGridAndTicks
     ];
+
+    const userProps = UserProps.getSafeUserProps(props);
     return props.standalone
       ? this.renderContainer(props.containerComponent, children)
-      : React.cloneElement(props.groupComponent, {}, children);
+      : React.cloneElement(props.groupComponent, { ...userProps }, children);
   }
 }
 

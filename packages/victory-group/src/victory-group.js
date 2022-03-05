@@ -89,7 +89,10 @@ const VictoryGroup = (initialProps) => {
     name
   ]);
 
-  const userProps = React.useMemo(() => UserProps.getSafeUserProps(initialProps), [initialProps]);
+  const userProps = React.useMemo(
+    () => UserProps.getSafeUserProps(initialProps),
+    [initialProps]
+  );
 
   const container = React.useMemo(() => {
     if (standalone) {
@@ -103,7 +106,13 @@ const VictoryGroup = (initialProps) => {
     }
     
     return React.cloneElement(groupComponent, userProps);
-  }, [groupComponent, standalone, containerComponent, containerProps, userProps]);
+  }, [
+    groupComponent,
+    standalone,
+    containerComponent,
+    containerProps,
+    userProps
+  ]);
 
   const events = React.useMemo(() => {
     return Wrapper.getAllEvents(props);

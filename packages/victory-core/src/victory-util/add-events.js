@@ -280,7 +280,11 @@ export default (WrappedComponent, options) => {
         this.globalEvents = Events.getGlobalEvents(parentProps.events);
         parentProps.events = Events.omitGlobalEvents(parentProps.events);
       }
+<<<<<<< HEAD
       
+=======
+
+>>>>>>> 0623b6f3 (Allow users to pass user props to the following components: VictoryArea, VictoryAxis, VictoryBar, VictoryBoxPlot, VictoryBrushLine, and VictoryClipContainer. NOTE: User props will be filtered and only ones that match the user props safelist rules will be passed along to the component.)
       const componentProps = { ...parentProps, ...parentProps.userProps };
       return React.cloneElement(component, componentProps, children);
     }

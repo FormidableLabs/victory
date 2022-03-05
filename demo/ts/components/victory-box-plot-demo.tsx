@@ -68,6 +68,8 @@ export default class VictoryBoxPlotDemo extends React.Component<
           theme={VictoryTheme.material}
         >
           <VictoryBoxPlot
+            aria-label="This is a test"
+            data-testing-user-props="Testing 123"
             minLabels
             maxLabels
             data={[
@@ -225,6 +227,8 @@ export default class VictoryBoxPlotDemo extends React.Component<
           <VictoryBoxPlot boxWidth={10} data={this.state.data} />
         </VictoryChart>
         <VictoryBoxPlot
+          aria-label="This is a test"
+          data-testing-user-props="Testing 123"
           animate
           style={chartStyle}
           boxWidth={10}
