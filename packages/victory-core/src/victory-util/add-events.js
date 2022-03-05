@@ -14,6 +14,7 @@ import {
 import * as Events from "./events";
 import isEqual from "react-fast-compare";
 import VictoryTransition from "../victory-transition/victory-transition";
+import * as UserProps from '../victory-util/user-props';
 
 const datumHasXandY = (datum) => {
   return !isNil(datum._x) && !isNil(datum._y);
@@ -274,11 +275,14 @@ export default (WrappedComponent, options) => {
       const parentProps = isContainer
         ? this.getComponentProps(component, "parent", "parent")
         : {};
+
       if (parentProps.events) {
         this.globalEvents = Events.getGlobalEvents(parentProps.events);
         parentProps.events = Events.omitGlobalEvents(parentProps.events);
       }
-      return React.cloneElement(component, parentProps, children);
+      
+      const componentProps = { ...parentProps, ...parentProps.userProps };
+      return React.cloneElement(component, componentProps, children);
     }
 
     animateComponent(props, defaultAnimationWhitelist) {
@@ -327,23 +331,24 @@ export default (WrappedComponent, options) => {
 
     renderData(props, shouldRenderDatum = datumHasXandY) {
       const { dataComponent, labelComponent, groupComponent } = props;
-
+      const userProps = UserProps.getSafeUserProps(props);
+      
       const dataComponents = this.dataKeys.reduce(
         (validDataComponents, _dataKey, index) => {
           const dataProps = this.getComponentProps(
             dataComponent,
             "data",
             index
-          );
-          if (shouldRenderDatum(dataProps.datum)) {
-            validDataComponents.push(
-              React.cloneElement(dataComponent, dataProps)
             );
-          }
-          return validDataComponents;
-        },
-        []
-      );
+            if (shouldRenderDatum(dataProps.datum)) {
+              validDataComponents.push(
+                React.cloneElement(dataComponent, dataProps)
+                );
+              }
+              return validDataComponents;
+            },
+            []
+            );
 
       const labelComponents = this.dataKeys
         .map((_dataKey, index) => {
@@ -360,7 +365,8 @@ export default (WrappedComponent, options) => {
         .filter(Boolean);
 
       const children = [...dataComponents, ...labelComponents];
-      return this.renderContainer(groupComponent, children);
+      const group =  React.cloneElement(groupComponent, { ...userProps }, children);
+      return this.renderContainer(group, children);
     }
   };
 };
