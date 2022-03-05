@@ -64,6 +64,8 @@ class App extends React.Component {
               colorScale="qualitative"
             >
               <VictoryGroup
+                aria-label="Purple Victory Grouping"
+                data-testing="Testing this shows up"
                 color={"purple"}
                 data={[
                   { x: 1, y: 3 },
@@ -160,6 +162,18 @@ class App extends React.Component {
               />
             </VictoryGroup>
           </VictoryChart>
+
+          <VictoryGroup
+            aria-label="Stand Alone Group"
+            data-testing="Testing this shows up"
+            y={(data) => Math.tan(2 * Math.PI * data.x)}
+          >
+            <VictoryLine />
+            <VictoryVoronoi
+              labelComponent={<VictoryTooltip />}
+              labels={({ datum }) => datum.y}
+            />
+          </VictoryGroup>
         </div>
       </div>
     );

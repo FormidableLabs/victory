@@ -6,6 +6,7 @@ import Portal from "../victory-portal/portal";
 import PortalContext from "../victory-portal/portal-context";
 import TimerContext from "../victory-util/timer-context";
 import * as Helpers from "../victory-util/helpers";
+import * as UserProps from "../victory-util/user-props";
 
 export default class VictoryContainer extends React.Component {
   static displayName = "VictoryContainer";
@@ -192,9 +193,13 @@ export default class VictoryContainer extends React.Component {
       preserveAspectRatio,
       role
     } = this.props;
+    
     const style = responsive
       ? this.props.style
       : Helpers.omit(this.props.style, ["height", "width"]);
+    
+    const userProps = UserProps.getSafeUserProps(this.props);
+    
     const svgProps = assign(
       {
         width,
@@ -213,7 +218,8 @@ export default class VictoryContainer extends React.Component {
             .filter(Boolean)
             .join(" ") || undefined,
         viewBox: responsive ? `0 0 ${width} ${height}` : undefined,
-        preserveAspectRatio: responsive ? preserveAspectRatio : undefined
+        preserveAspectRatio: responsive ? preserveAspectRatio : undefined,
+        ...userProps
       },
       events
     );
