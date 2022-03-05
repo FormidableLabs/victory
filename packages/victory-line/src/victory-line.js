@@ -3,17 +3,18 @@ import React from "react";
 import { getBaseProps } from "./helper-methods";
 import Curve from "./curve";
 import {
-  PropTypes as CustomPropTypes,
-  Helpers,
-  VictoryLabel,
   addEvents,
-  VictoryContainer,
-  VictoryTheme,
-  DefaultTransitions,
-  VictoryClipContainer,
+  CommonProps,
   Data,
+  DefaultTransitions,
   Domain,
-  CommonProps
+  Helpers,
+  PropTypes as CustomPropTypes,
+  UserProps,
+  VictoryClipContainer,
+  VictoryContainer,
+  VictoryLabel,
+  VictoryTheme
 } from "victory-core";
 
 const fallbackProps = {
@@ -110,8 +111,14 @@ class VictoryLine extends React.Component {
     }
 
     const children = this.renderContinuousData(props);
+    const userProps = UserProps.getSafeUserProps(props);
+    const container = React.cloneElement(
+      props.containerComponent,
+      { ...userProps },
+      children
+    );
     return props.standalone
-      ? this.renderContainer(props.containerComponent, children)
+      ? this.renderContainer(container, children)
       : children;
   }
 }

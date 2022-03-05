@@ -115,17 +115,20 @@ export default class VictoryPieDemo extends React.Component<
 
         <div style={containerStyle}>
           <VictoryPie
-            startAngle={90}
-            endAngle={-90}
-            style={{
-              parent: parentStyle,
-              labels: { fill: "white", fontSize: 10 }
-            }}
-            labelRadius={60}
-            padding={{ bottom: 50, left: 50, right: 10 }}
-            width={400}
-            height={200}
+            data-test-variable="TESTING 456"
+            aria-label="Victory Pie Standalone"
+            style={this.state.style}
+            data={range(0, 2).map((i) => [i, Math.random()])}
+            x={0}
+            y={1}
+            colorScale={["tomato", "orange"]}
+            labels={[]}
+            cornerRadius={20}
+            startAngle={-6}
+            animate={{ duration: 2000 }}
+            innerRadius={140}
           />
+
           <VictoryPie
             style={{
               parent: parentStyle,
@@ -295,16 +298,18 @@ export default class VictoryPieDemo extends React.Component<
           />
 
           <VictoryPie
-            style={this.state.style}
-            data={range(0, 2).map((i) => [i, Math.random()])}
-            x={0}
-            y={1}
-            colorScale={["tomato", "orange"]}
-            labels={[]}
-            cornerRadius={20}
-            startAngle={-6}
-            animate={{ duration: 2000 }}
-            innerRadius={140}
+            data-test-variable="TESTING 123"
+            aria-label="Victory Pie Standalone"
+            startAngle={90}
+            endAngle={-90}
+            style={{
+              parent: parentStyle,
+              labels: { fill: "white", fontSize: 10 }
+            }}
+            labelRadius={60}
+            padding={{ bottom: 50, left: 50, right: 10 }}
+            width={400}
+            height={200}
           />
         </div>
       </div>

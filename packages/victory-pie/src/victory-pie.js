@@ -3,9 +3,10 @@ import React from "react";
 import PropTypes from "prop-types";
 import {
   addEvents,
-  Helpers,
   Data,
+  Helpers,
   PropTypes as CustomPropTypes,
+  UserProps,
   VictoryContainer,
   VictoryLabel,
   VictoryTheme
@@ -255,8 +256,14 @@ class VictoryPie extends React.Component {
     }
 
     const children = this.renderData(props);
+    const userProps = UserProps.getSafeUserProps(props);
+    const container = React.cloneElement(
+      props.containerComponent,
+      { ...userProps },
+      children
+    );
     return props.standalone
-      ? this.renderContainer(props.containerComponent, children)
+      ? this.renderContainer(container, children)
       : children;
   }
 }

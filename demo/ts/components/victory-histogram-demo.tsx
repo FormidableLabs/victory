@@ -224,35 +224,49 @@ export default class App extends React.Component<{}, VictoryBarDemoState> {
 
     return (
       <div className="demo" style={containerStyle}>
-        <VictoryHistogram
+        <VictoryChart
+          data-test-variable="TESTING 456"
+          aria-label="Victory Histogram with Victory Chart wrapper"
           style={{ parent: parentStyle }}
-          data={this.data}
-          events={[
-            {
-              target: "data",
-              eventHandlers: {
-                onMouseOver: () => [
-                  {
-                    mutation: (props) => {
-                      return {
-                        style: merge({}, props.style, { fill: "pink" })
-                      };
-                    }
-                  }
-                ],
-                onMouseOut: () => [
-                  {
-                    mutation: (props) => {
-                      return {
-                        style: merge({}, props.style, { fill: "yellow" })
-                      };
-                    }
-                  }
-                ]
-              }
-            }
-          ]}
-        />
+          containerComponent={
+            <VictoryVoronoiContainer
+              labels={() => "hi"}
+              voronoiDimension="x"
+              labelComponent={<VictoryTooltip />}
+            />
+          }
+        >
+          <VictoryHistogram
+            horizontal
+            style={{
+              data: { stroke: "#f67280", strokeWidth: 3, fill: "#355c7d" }
+            }}
+            data={this.dateData}
+          />
+        </VictoryChart>
+
+        <VictoryChart style={{ parent: parentStyle }} scale={{ x: "time" }}>
+          <VictoryStack colorScale="qualitative">
+            <VictoryHistogram
+              style={{
+                data: { stroke: "#833B61" }
+              }}
+              data={this.state.dateDynamicBins.data}
+              bins={this.state.dateDynamicBins.bins}
+              animate={{ duration: 500 }}
+            />
+            <VictoryHistogram
+              data-test-variable="TESTING 123"
+              aria-label="Victory Histogram with Victory Chart wrapper"
+              style={{
+                data: { stroke: "#833B61" }
+              }}
+              data={this.state.dateDynamicBins.data}
+              bins={this.state.dateDynamicBins.bins}
+              animate={{ duration: 500 }}
+            />
+          </VictoryStack>
+        </VictoryChart>
 
         <VictoryHistogram
           horizontal
@@ -440,24 +454,6 @@ export default class App extends React.Component<{}, VictoryBarDemoState> {
           }
         >
           <VictoryHistogram
-            style={{
-              data: { stroke: "#f67280", strokeWidth: 3, fill: "#355c7d" }
-            }}
-            data={this.dateData}
-          />
-        </VictoryChart>
-
-        <VictoryChart
-          style={{ parent: parentStyle }}
-          containerComponent={
-            <VictoryVoronoiContainer
-              labels={() => "hi"}
-              voronoiDimension="x"
-              labelComponent={<VictoryTooltip />}
-            />
-          }
-        >
-          <VictoryHistogram
             horizontal
             style={{
               data: { stroke: "#f67280", strokeWidth: 3, fill: "#355c7d" }
@@ -624,26 +620,37 @@ export default class App extends React.Component<{}, VictoryBarDemoState> {
           />
         </VictoryChart>
 
-        <VictoryChart style={{ parent: parentStyle }} scale={{ x: "time" }}>
-          <VictoryStack colorScale="qualitative">
-            <VictoryHistogram
-              style={{
-                data: { stroke: "#833B61" }
-              }}
-              data={this.state.dateDynamicBins.data}
-              bins={this.state.dateDynamicBins.bins}
-              animate={{ duration: 500 }}
-            />
-            <VictoryHistogram
-              style={{
-                data: { stroke: "#833B61" }
-              }}
-              data={this.state.dateDynamicBins.data}
-              bins={this.state.dateDynamicBins.bins}
-              animate={{ duration: 500 }}
-            />
-          </VictoryStack>
-        </VictoryChart>
+        <VictoryHistogram
+          data-test-variable="TESTING 123"
+          aria-label="Victory Histogram Standalone"
+          style={{ parent: parentStyle }}
+          data={this.data}
+          events={[
+            {
+              target: "data",
+              eventHandlers: {
+                onMouseOver: () => [
+                  {
+                    mutation: (props) => {
+                      return {
+                        style: merge({}, props.style, { fill: "pink" })
+                      };
+                    }
+                  }
+                ],
+                onMouseOut: () => [
+                  {
+                    mutation: (props) => {
+                      return {
+                        style: merge({}, props.style, { fill: "yellow" })
+                      };
+                    }
+                  }
+                ]
+              }
+            }
+          ]}
+        />
       </div>
     );
   }

@@ -26,6 +26,7 @@ import CreateContainerDemo from "./components/create-container-demo";
 import BrushContainerDemo from "./components/victory-brush-container-demo";
 import AnimationDemo from "./components/animation-demo";
 import SelectionDemo from "./components/selection-demo";
+import PolarAxisDemo from "./components/victory-polar-axis-demo";
 import PolarDemo from "./components/victory-polar-chart-demo";
 import ImmutableDemo from "./components/immutable-demo";
 import ExternalEventsDemo from "./components/external-events-demo";
@@ -80,6 +81,7 @@ const MAP = {
     name: "CreateContainerDemo"
   },
   "/polar": { component: PolarDemo, name: "PolarDemo" },
+  "/polar-axis": { component: PolarAxisDemo, name: "PolarAxisDemo" },
   "/immutable": { component: ImmutableDemo, name: "ImmutableDemo" },
   "/external-events": {
     component: ExternalEventsDemo,
@@ -103,7 +105,7 @@ const MAP = {
 
 class Home extends React.Component {
   render() {
-    return <h1>Pick A Demo</h1>;
+    return <h2>Pick A Demo</h2>;
   }
 }
 
@@ -132,21 +134,23 @@ class App extends React.Component {
     const Child = this.getDemo();
     const routes = keys(MAP);
     return (
-      <div>
-        <h1>Demos</h1>
-        <ul>
-          {routes.map((route, index) => {
-            const item = MAP[route] || {};
-            return (
-              <li key={index}>
-                <a href={`#${route}`}>{item.name}</a>
-              </li>
-            );
-          })}
-        </ul>
-        <React.StrictMode>
-          <Child />
-        </React.StrictMode>
+      <div style={{ fontFamily: "Helvetica, sans-serif", lineHeight: 1.5 }}>
+        <h1>Demos (Javascript) </h1>
+        <main style={{ display: "flex" }}>
+          <ul style={{ listStyle: "none", padding: "0 1rem" }}>
+            {routes.map((route, index) => {
+              const item = MAP[route] || {};
+              return (
+                <li key={index}>
+                  <a href={`#${route}`}>{item.name}</a>
+                </li>
+              );
+            })}
+          </ul>
+          <React.StrictMode>
+            <Child />
+          </React.StrictMode>
+        </main>
       </div>
     );
   }

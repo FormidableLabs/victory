@@ -4,13 +4,17 @@ import React from "react";
 import PropTypes from "prop-types";
 import { assign, merge, random, range } from "lodash";
 import { VictoryScatter } from "Packages/victory-scatter/src/index";
+import { VictoryChart } from "Packages/victory-chart";
 import {
   VictoryLabel,
   VictoryContainer,
-  VictoryTheme
+  VictoryTheme,
+  Point
 } from "Packages/victory-core/src/index";
 import bubbleData from "./bubble-data.js";
 import symbolData from "./symbol-data.js";
+
+import { accessibilityScatterData } from "../../demo-data.ts";
 
 const getData = () => {
   const colors = [
@@ -126,6 +130,38 @@ export default class App extends React.Component {
   render() {
     return (
       <div className="demo" style={containerStyle}>
+        <VictoryChart domain={{ x: [0, 6], y: [0, 8] }}>
+          <VictoryScatter
+            data-test-variable="TESTING 123"
+            aria-label="Victory Scatter with Victory Chart wrapper"
+            style={{ data: { fill: "#c43a31" } }}
+            size={7}
+            data={accessibilityScatterData}
+            dataComponent={
+              <Point
+                ariaLabel={({ datum }) =>
+                  `scatter point x: ${datum.x}, y:${datum.y}`
+                }
+                tabIndex={({ index }) => index + 28}
+              />
+            }
+          />
+        </VictoryChart>
+
+        <VictoryScatter
+          data-test-variable="TESTING 123"
+          aria-label="Victory Scatter Standalone"
+          style={style}
+          theme={VictoryTheme.material}
+          data={range(0, 200).map((i) => {
+            return {
+              a: { b: [{ y: i * Math.sin(i * 0.3) }], x: Math.cos(i * 0.3) }
+            };
+          })}
+          x="a.x"
+          y="a.b[0]y"
+        />
+
         <VictoryScatter
           style={style}
           width={500}
@@ -239,15 +275,22 @@ export default class App extends React.Component {
         />
 
         <VictoryScatter
+          data-test-variable="TESTING 123"
+          aria-label="Victory Scatter Standalone"
           style={style}
-          theme={VictoryTheme.material}
-          data={range(0, 200).map((i) => {
-            return {
-              a: { b: [{ y: i * Math.sin(i * 0.3) }], x: Math.cos(i * 0.3) }
-            };
-          })}
-          x="a.x"
-          y="a.b[0]y"
+          width={500}
+          height={500}
+          domain={[0, 600]}
+          animate={{ duration: 2000 }}
+          data={this.state.data}
+          dataComponent={<CatPoint />}
+          containerComponent={
+            <VictoryContainer
+              title="Scatter Chart"
+              desc="This is a scatter chart with cat data points!"
+              style={assign({}, style.parent, { border: "1px solid red" })}
+            />
+          }
         />
       </div>
     );

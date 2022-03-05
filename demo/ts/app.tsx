@@ -94,7 +94,7 @@ const MAP = {
 
 class Home extends React.Component {
   render() {
-    return <h1>Pick A Demo</h1>;
+    return <h3>Pick A Demo</h3>;
   }
 }
 
@@ -128,19 +128,27 @@ class App extends React.Component<any, AppState> {
     const Child = this.getDemo();
     const routes = keys(MAP);
     return (
-      <div>
+      <div style={{ fontFamily: "Helvetica, sans-serif", lineHeight: 1.5 }}>
         <h1>Demos (Typescript)</h1>
-        <ul>
-          {routes.map((route, index) => {
-            const item = MAP[route] || {};
-            return (
-              <li key={index}>
-                <a href={`#${route}`}>{item.name}</a>
-              </li>
-            );
-          })}
-        </ul>
-        <Child />
+        <main style={{ display: "flex" }}>
+          <div>
+            <ul style={{ listStyle: "none", padding: "0 1rem" }}>
+              {routes.map((route, index) => {
+                const item = MAP[route] || {};
+                return (
+                  <li key={index}>
+                    <a href={`#${route}`} style={{ textDecoration: "none" }}>
+                      {item.name}
+                    </a>
+                  </li>
+                );
+              })}
+            </ul>
+          </div>
+          <div>
+            <Child />
+          </div>
+        </main>
       </div>
     );
   }

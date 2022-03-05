@@ -78,56 +78,25 @@ export default class App extends React.Component {
 
     return (
       <div className="demo" style={containerStyle}>
-        <svg height={500} width={500}>
+        <VictoryChart
+          scale={{ x: "time" }}
+          style={style}
+          domainPadding={{ x: [20, 50] }}
+        >
           <VictoryCandlestick
-            style={{ data: { width: 10 }, parent: style.parent }}
-            labels={({ datum }) => `x: ${datum.x.getDate()}`}
-            labelOrientation={{ low: "bottom", high: "top" }}
-            openLabels={({ datum }) => datum.open}
+            aria-label="Victory Candlestick with Victory Chart wrapper"
+            candleColors={{ positive: "#8BC34A", negative: "#C62828" }}
             closeLabels={({ datum }) => datum.close}
-            lowLabels={({ datum }) => datum.low}
-            highLabels={({ datum }) => datum.high}
+            data-test-variable="TESTING 123"
             data={data}
+            highLabels={({ datum }) => datum.high}
+            labelOrientation={{ open: "top", high: "top" }}
+            lowLabels={({ datum }) => datum.low}
+            openLabels={({ datum }) => datum.open}
             size={8}
-            standalone={false}
-            events={[
-              {
-                target: "highLabels",
-                eventHandlers: {
-                  onClick: () => {
-                    return [
-                      {
-                        mutation: (props) => {
-                          return {
-                            style: merge({}, props.style.labels, {
-                              fill: "orange"
-                            })
-                          };
-                        }
-                      }
-                    ];
-                  }
-                }
-              },
-              {
-                target: "data",
-                eventHandlers: {
-                  onClick: () => {
-                    return [
-                      {
-                        mutation: (props) => {
-                          return {
-                            style: merge({}, props.style, { fill: "blue" })
-                          };
-                        }
-                      }
-                    ];
-                  }
-                }
-              }
-            ]}
+            style={{ data: { stroke: "none" }, closeLabels: { fill: "blue" } }}
           />
-        </svg>
+        </VictoryChart>
 
         <VictoryCandlestick
           horizontal
@@ -206,29 +175,60 @@ export default class App extends React.Component {
           }}
         />
 
-        <VictoryChart
-          scale={{ x: "time" }}
-          style={style}
-          domainPadding={{ x: [20, 50] }}
-        >
+        <VictoryCandlestick style={style} size={1} />
+
+        <svg height={500} width={500}>
           <VictoryCandlestick
-            candleColors={{ positive: "#8BC34A", negative: "#C62828" }}
-            data={data}
-            style={{ data: { stroke: "none" }, closeLabels: { fill: "blue" } }}
-            size={8}
+            data-test-variable="TESTING 123"
+            aria-label="Victory Candlestick Chart"
+            style={{ data: { width: 10 }, parent: style.parent }}
+            labels={({ datum }) => `x: ${datum.x.getDate()}`}
+            labelOrientation={{ low: "bottom", high: "top" }}
             openLabels={({ datum }) => datum.open}
             closeLabels={({ datum }) => datum.close}
             lowLabels={({ datum }) => datum.low}
             highLabels={({ datum }) => datum.high}
-            labelOrientation={{ open: "top", high: "top" }}
+            data={data}
+            size={8}
+            standalone={false}
+            events={[
+              {
+                target: "highLabels",
+                eventHandlers: {
+                  onClick: () => {
+                    return [
+                      {
+                        mutation: (props) => {
+                          return {
+                            style: merge({}, props.style.labels, {
+                              fill: "orange"
+                            })
+                          };
+                        }
+                      }
+                    ];
+                  }
+                }
+              },
+              {
+                target: "data",
+                eventHandlers: {
+                  onClick: () => {
+                    return [
+                      {
+                        mutation: (props) => {
+                          return {
+                            style: merge({}, props.style, { fill: "blue" })
+                          };
+                        }
+                      }
+                    ];
+                  }
+                }
+              }
+            ]}
           />
-        </VictoryChart>
-
-        <VictoryCandlestick style={style} size={1} />
-
-        <VictoryChart style={style}>
-          <VictoryCandlestick data={[]} />
-        </VictoryChart>
+        </svg>
       </div>
     );
   }

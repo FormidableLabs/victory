@@ -2,7 +2,7 @@
 import { assign, defaults, isFunction, isPlainObject, isNil } from "lodash";
 import * as d3Shape from "d3-shape";
 
-import { Helpers, Data, Style } from "victory-core";
+import { Data, Helpers, Style, UserProps } from "victory-core";
 
 const checkForValidText = (text) => {
   if (text === undefined || text === null || isFunction(text)) {
@@ -233,6 +233,7 @@ const getLabelProps = (text, dataProps, calculatedValues) => {
 export const getBaseProps = (props, fallbackProps) => {
   props = Helpers.modifyProps(props, fallbackProps, "pie");
   const calculatedValues = getCalculatedValues(props);
+  const userProps = UserProps.getSafeUserProps(props);
   const {
     slices,
     style,
@@ -253,7 +254,15 @@ export const getBaseProps = (props, fallbackProps) => {
   } = calculatedValues;
   const radius = props.radius || defaultRadius;
   const initialChildProps = {
-    parent: { standalone, height, width, slices, name, style: style.parent }
+    parent: {
+      standalone,
+      height,
+      width,
+      slices,
+      name,
+      style: style.parent,
+      userProps
+    }
   };
 
   return slices.reduce((childProps, slice, index) => {

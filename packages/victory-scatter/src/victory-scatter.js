@@ -1,17 +1,18 @@
 import PropTypes from "prop-types";
 import React from "react";
 import {
-  PropTypes as CustomPropTypes,
-  Helpers,
-  VictoryLabel,
   addEvents,
   CommonProps,
-  VictoryContainer,
-  VictoryTheme,
-  DefaultTransitions,
   Data,
+  DefaultTransitions,
   Domain,
-  Point
+  Helpers,
+  Point,
+  PropTypes as CustomPropTypes,
+  UserProps,
+  VictoryContainer,
+  VictoryLabel,
+  VictoryTheme
 } from "victory-core";
 import { getBaseProps } from "./helper-methods";
 
@@ -97,9 +98,15 @@ class VictoryScatter extends React.Component {
       return this.animateComponent(props, animationWhitelist);
     }
 
+    const userProps = UserProps.getSafeUserProps(props);
     const children = this.renderData(props);
+    const container = React.cloneElement(
+      props.containerComponent,
+      { ...userProps },
+      children
+    );
     return props.standalone
-      ? this.renderContainer(props.containerComponent, children)
+      ? this.renderContainer(container, children)
       : children;
   }
 }

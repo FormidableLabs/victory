@@ -1,45 +1,25 @@
 /*global window:false*/
 /*eslint no-magic-numbers:0*/
 import React from "react";
-import { VictoryChart } from "@packages/victory-chart";
-import { VictoryPolarAxis } from "@packages/victory-polar-axis";
-import { VictoryArea } from "@packages/victory-area";
-import { VictoryBar } from "@packages/victory-bar";
-import { VictoryLine } from "@packages/victory-line";
-import { VictoryScatter } from "@packages/victory-scatter";
-import { VictoryZoomContainer } from "@packages/victory-zoom-container";
-import { VictoryVoronoiContainer } from "@packages/victory-voronoi-container";
+import { VictoryChart } from "Packages/victory-chart";
+import { VictoryPolarAxis } from "Packages/victory-polar-axis";
+import { VictoryArea } from "Packages/victory-area";
+import { VictoryBar } from "Packages/victory-bar";
+import { VictoryLine } from "Packages/victory-line";
+import { VictoryScatter } from "Packages/victory-scatter";
+import { VictoryZoomContainer } from "Packages/victory-zoom-container";
+import { VictoryVoronoiContainer } from "Packages/victory-voronoi-container";
 import { random, range, keys } from "lodash";
-import { VictoryTheme, VictoryLabel } from "@packages/victory-core";
+import { VictoryTheme, VictoryLabel } from "Packages/victory-core";
 
-type multiAxisDataListType = {
-  strength?: number;
-  intelligence?: number;
-  stealth?: number;
-}[];
-
-type dataType = {
-  x?: string | number;
-  y?: string | number;
-};
-
-const multiAxisData: multiAxisDataListType = [
+const multiAxisData = [
   { strength: 1, intelligence: 250, stealth: 45 },
   { strength: 2, intelligence: 300, stealth: 75 },
   { strength: 5, intelligence: 225, stealth: 60 }
 ];
 
-interface VictoryPolarAxisState {
-  data: dataType[];
-  staticData: dataType[];
-  multiAxisData: dataType[][];
-  multiAxisMaxima: React.ReactElement[];
-}
-
-class App extends React.Component<any, VictoryPolarAxisState> {
-  setStateInterval?: number = undefined;
-
-  constructor(props: any) {
+class App extends React.Component {
+  constructor(props) {
     super(props);
 
     this.state = {
@@ -66,7 +46,7 @@ class App extends React.Component<any, VictoryPolarAxisState> {
 
   getData() {
     const points = random(6, 10);
-    return range(points).map((point: number) => {
+    return range(points).map((point) => {
       const y = random(2, 10);
       return { x: point + 1, y };
     });
@@ -81,27 +61,24 @@ class App extends React.Component<any, VictoryPolarAxisState> {
     });
   }
 
-  getMaxData(data: multiAxisDataListType) {
-    const groupedData = keys(data[0]).reduce(
-      (memo: any, key: string | number) => {
-        memo[key] = data.map((d) => d[key]);
+  getMaxData(data) {
+    const groupedData = keys(data[0]).reduce((memo, key) => {
+      memo[key] = data.map((d) => d[key]);
 
-        return memo;
-      },
-      {}
-    );
+      return memo;
+    }, {});
 
-    return keys(groupedData).reduce((memo: any, key: string | number) => {
+    return keys(groupedData).reduce((memo, key) => {
       memo[key] = Math.max(...groupedData[key]);
 
       return memo;
     }, {});
   }
 
-  processMultiAxisData(data: multiAxisDataListType) {
+  processMultiAxisData(data) {
     const maxByGroup = this.getMaxData(data);
-    const makeDataArray = (d: any) => {
-      return keys(d).map((key: string) => {
+    const makeDataArray = (d) => {
+      return keys(d).map((key) => {
         return { x: key, y: d[key] / maxByGroup[key] };
       });
     };
@@ -110,7 +87,7 @@ class App extends React.Component<any, VictoryPolarAxisState> {
   }
 
   render() {
-    const containerStyle: React.CSSProperties = {
+    const containerStyle = {
       display: "flex",
       flexDirection: "row",
       flexWrap: "wrap",
@@ -118,7 +95,7 @@ class App extends React.Component<any, VictoryPolarAxisState> {
       justifyContent: "center"
     };
 
-    const chartStyle: { [key: string]: React.CSSProperties } = {
+    const chartStyle = {
       parent: { border: "1px solid #ccc", margin: "2%", maxWidth: "40%" }
     };
 
@@ -167,7 +144,7 @@ class App extends React.Component<any, VictoryPolarAxisState> {
             <VictoryPolarAxis labelPlacement="parallel" />
             <VictoryLine
               labelComponent={<VictoryLabel labelPlacement="parallel" />}
-              labels={({ datum }: any) => `y: ${Math.round(datum.y)}`}
+              labels={({ datum }) => `y: ${Math.round(datum.y)}`}
               interpolation="linear"
               style={{
                 data: { stroke: "tomato", strokeWidth: 2 }

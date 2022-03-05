@@ -1,11 +1,12 @@
 import { assign, defaults, isNil, isFunction, isPlainObject } from "lodash";
 import {
-  Helpers,
-  Scale,
-  Domain,
+  Collection,
   Data,
+  Domain,
+  Helpers,
   LabelHelpers,
-  Collection
+  Scale,
+  UserProps
 } from "victory-core";
 
 const TYPES = ["close", "open", "high", "low"];
@@ -363,6 +364,7 @@ const getLabelProps = (props, text, style, type) => {
 export const getBaseProps = (props, fallbackProps) => {
   // eslint-disable-line max-statements
   props = Helpers.modifyProps(props, fallbackProps, "candlestick");
+  const userProps = UserProps.getSafeUserProps(props);
   const calculatedValues = getCalculatedValues(props);
   const { data, style, scale, domain, origin, labelOrientation } =
     calculatedValues;
@@ -398,7 +400,8 @@ export const getBaseProps = (props, fallbackProps) => {
       name,
       style: style.parent,
       padding,
-      horizontal
+      horizontal,
+      userProps
     }
   };
 

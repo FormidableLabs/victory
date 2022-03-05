@@ -81,7 +81,11 @@ export default class VictoryErrorBarDemo extends React.Component<
         }}
       >
         <VictoryChart style={style}>
-          <VictoryErrorBar data={basicData} />
+          <VictoryErrorBar
+            data={basicData}
+            data-test-variable="TESTING 123"
+            aria-label="Victory ErrorBar with Victory Chart wrapper"
+          />
           <VictoryScatter data={basicData} />
         </VictoryChart>
 
@@ -89,31 +93,6 @@ export default class VictoryErrorBarDemo extends React.Component<
           <VictoryErrorBar data={basicData} />
           <VictoryScatter data={basicData} />
         </VictoryChart>
-
-        <VictoryErrorBar
-          style={style}
-          width={500}
-          height={500}
-          animate={{ duration: 2000 }}
-          data={this.state.data}
-          containerComponent={
-            <VictoryContainer
-              title="ErrorBar Chart"
-              desc="This is a errorbar chart with data points!"
-              style={{ border: "1px solid red", margin: "2%", maxWidth: "40%" }}
-            />
-          }
-        />
-
-        <VictoryErrorBar
-          horizontal
-          style={style}
-          width={500}
-          height={500}
-          animate={{ duration: 2000 }}
-          borderWidth={30}
-          data={this.state.data}
-        />
 
         <VictoryErrorBar
           style={{
@@ -168,6 +147,34 @@ export default class VictoryErrorBarDemo extends React.Component<
         <VictoryChart style={style} theme={VictoryTheme.material}>
           <VictoryErrorBar style={style} data={[]} />
         </VictoryChart>
+
+        <VictoryErrorBar
+          style={style}
+          width={500}
+          height={500}
+          animate={{ duration: 2000 }}
+          data={this.state.data}
+          containerComponent={
+            <VictoryContainer
+              title="ErrorBar Chart"
+              desc="This is a errorbar chart with data points!"
+              style={{ border: "1px solid red", margin: "2%", maxWidth: "40%" }}
+            />
+          }
+          data-test-variable="TESTING 123"
+          aria-label="Victory ErrorBar Inside VictoryContainer"
+        />
+        <VictoryErrorBar
+          horizontal
+          style={style}
+          width={500}
+          height={500}
+          animate={{ duration: 2000 }}
+          borderWidth={30}
+          data={this.state.data}
+          data-test-variable="TESTING 123"
+          aria-label="Victory ErrorBar Standalone"
+        />
       </div>
     );
   }

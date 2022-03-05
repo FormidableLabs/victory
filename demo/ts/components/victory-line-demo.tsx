@@ -146,11 +146,17 @@ export default class VictoryLineDemo extends React.Component<
 
     return (
       <div className="demo" style={containerStyle}>
-        <VictoryLine
-          style={{ parent: parentStyle, data: { stroke: "blue" } }}
-          y={(d) => Math.sin(2 * Math.PI * d.x)}
-          samples={25}
-        />
+        <VictoryChart
+          style={{ parent: parentStyle }}
+          theme={VictoryTheme.material}
+        >
+          <VictoryLine
+            style={{ parent: parentStyle }}
+            data={[]}
+            data-test-variable="TESTING 456"
+            aria-label="Victory Line with Victory Chart wrapper"
+          />
+        </VictoryChart>
 
         <VictoryLine
           style={{
@@ -313,6 +319,8 @@ export default class VictoryLineDemo extends React.Component<
             style={{ parent: parentStyle, data: this.state.style }}
             data={this.state.transitionData}
             animate={{ duration: 1500 }}
+            data-test-variable="TESTING 123"
+            aria-label="Victory Line Standalone"
             containerComponent={
               <VictoryContainer
                 title="Line Chart"
@@ -322,19 +330,20 @@ export default class VictoryLineDemo extends React.Component<
           />
         </VictoryChart>
 
-        <VictoryChart
-          style={{ parent: parentStyle }}
-          theme={VictoryTheme.material}
-        >
-          <VictoryLine style={{ parent: parentStyle }} data={[]} />
-        </VictoryChart>
-
         <VictoryLine
           style={{ parent: parentStyle }}
           data={range(0, 2 * Math.PI, 0.01).map((t) => ({ t }))}
           sortKey={"t"}
           x={({ t }) => Math.sin(3 * t + 2 * Math.PI)}
           y={({ t }) => Math.sin(2 * t)}
+        />
+
+        <VictoryLine
+          style={{ parent: parentStyle, data: { stroke: "blue" } }}
+          y={(d) => Math.sin(2 * Math.PI * d.x)}
+          samples={25}
+          data-test-variable="TESTING 123"
+          aria-label="Victory Line Standalone"
         />
       </div>
     );

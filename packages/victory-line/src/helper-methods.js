@@ -1,5 +1,12 @@
 import { assign, isNil } from "lodash";
-import { Helpers, LabelHelpers, Data, Domain, Scale } from "victory-core";
+import {
+  Data,
+  Domain,
+  Helpers,
+  LabelHelpers,
+  Scale,
+  UserProps
+} from "victory-core";
 
 const getCalculatedValues = (props) => {
   let data = Data.getData(props);
@@ -36,6 +43,8 @@ const getCalculatedValues = (props) => {
 export const getBaseProps = (props, fallbackProps) => {
   const modifiedProps = Helpers.modifyProps(props, fallbackProps, "line");
   props = assign({}, modifiedProps, getCalculatedValues(modifiedProps));
+  const userProps = UserProps.getSafeUserProps(props);
+
   const {
     data,
     domain,
@@ -70,7 +79,8 @@ export const getBaseProps = (props, fallbackProps) => {
       polar,
       origin,
       padding,
-      horizontal
+      horizontal,
+      userProps
     },
     all: {
       data: {
@@ -84,7 +94,8 @@ export const getBaseProps = (props, fallbackProps) => {
         style: disableInlineStyles ? {} : style.data,
         theme,
         disableInlineStyles
-      }
+      },
+      userProps
     }
   };
   return data.reduce((childProps, datum, index) => {

@@ -2,13 +2,14 @@ import React from "react";
 import PropTypes from "prop-types";
 import { Bar } from "victory-bar";
 import {
-  Helpers,
-  VictoryLabel,
-  VictoryContainer,
-  VictoryTheme,
-  CommonProps,
   addEvents,
-  PropTypes as CustomPropTypes
+  CommonProps,
+  Helpers,
+  PropTypes as CustomPropTypes,
+  UserProps,
+  VictoryContainer,
+  VictoryLabel,
+  VictoryTheme
 } from "victory-core";
 import {
   getBaseProps,
@@ -120,8 +121,14 @@ export class VictoryHistogram extends React.Component {
     }
 
     const children = this.renderData(props);
+    const userProps = UserProps.getSafeUserProps(props);
+    const container = React.cloneElement(
+      props.containerComponent,
+      { ...userProps },
+      children
+    );
     return props.standalone
-      ? this.renderContainer(props.containerComponent, children)
+      ? this.renderContainer(container, children)
       : children;
   }
 }

@@ -1,5 +1,12 @@
 import { assign, isNil } from "lodash";
-import { Helpers, LabelHelpers, Data, Domain, Scale } from "victory-core";
+import {
+  Data,
+  Domain,
+  Helpers,
+  LabelHelpers,
+  Scale,
+  UserProps
+} from "victory-core";
 import { getBarPosition } from "victory-bar";
 import isEqual from "react-fast-compare";
 import * as d3Array from "d3-array";
@@ -168,6 +175,8 @@ export const getBaseProps = (props, fallbackProps) => {
   const modifiedProps = Helpers.modifyProps(props, fallbackProps, "histogram");
   props = assign({}, modifiedProps, getCalculatedValues(modifiedProps));
 
+  const userProps = UserProps.getSafeUserProps(props);
+
   const {
     binSpacing,
     cornerRadius,
@@ -200,7 +209,8 @@ export const getBaseProps = (props, fallbackProps) => {
       name,
       theme,
       padding,
-      style: style.parent
+      style: style.parent,
+      userProps
     }
   };
 

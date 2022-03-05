@@ -1,11 +1,12 @@
 import { defaults, assign, isNil } from "lodash";
 import {
+  Collection,
+  Data,
+  Domain,
   Helpers,
   LabelHelpers,
   Scale,
-  Domain,
-  Data,
-  Collection
+  UserProps
 } from "victory-core";
 
 const getErrors = (props, datum, axis) => {
@@ -169,6 +170,7 @@ const getLabelProps = (dataProps, text, style) => {
 export const getBaseProps = (props, fallbackProps) => {
   const modifiedProps = Helpers.modifyProps(props, fallbackProps, "errorbar");
   props = assign({}, modifiedProps, getCalculatedValues(modifiedProps));
+  const userProps = UserProps.getSafeUserProps(props);
   const {
     borderWidth,
     data,
@@ -204,7 +206,8 @@ export const getBaseProps = (props, fallbackProps) => {
       standalone,
       style: style.parent,
       theme,
-      width
+      width,
+      userProps
     }
   };
 

@@ -193,13 +193,13 @@ export default class VictoryContainer extends React.Component {
       preserveAspectRatio,
       role
     } = this.props;
-    
+
     const style = responsive
       ? this.props.style
       : Helpers.omit(this.props.style, ["height", "width"]);
-    
+
     const userProps = UserProps.getSafeUserProps(this.props);
-    
+
     const svgProps = assign(
       {
         width,

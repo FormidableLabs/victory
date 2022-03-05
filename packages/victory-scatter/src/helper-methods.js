@@ -1,5 +1,12 @@
 import { assign, values, isNil } from "lodash";
-import { Helpers, LabelHelpers, Data, Domain, Scale } from "victory-core";
+import {
+  Data,
+  Domain,
+  Helpers,
+  LabelHelpers,
+  Scale,
+  UserProps
+} from "victory-core";
 
 export const getSymbol = (data, props) => {
   if (props.bubbleProperty) {
@@ -78,6 +85,8 @@ const getCalculatedValues = (props) => {
 export const getBaseProps = (props, fallbackProps) => {
   const modifiedProps = Helpers.modifyProps(props, fallbackProps, "scatter");
   props = assign({}, modifiedProps, getCalculatedValues(modifiedProps));
+  const userProps = UserProps.getSafeUserProps(props);
+
   const {
     data,
     domain,
@@ -111,7 +120,8 @@ export const getBaseProps = (props, fallbackProps) => {
       polar,
       padding,
       name,
-      horizontal
+      horizontal,
+      userProps
     }
   };
 

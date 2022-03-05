@@ -1,5 +1,5 @@
 import { assign, uniqBy, defaults } from "lodash";
-import { Helpers, LabelHelpers, Scale, Axis } from "victory-core";
+import { Axis, Helpers, LabelHelpers, Scale, UserProps } from "victory-core";
 
 const getPosition = (r, angle, axis) => {
   return axis === "x" ? r * Math.cos(angle) : -r * Math.sin(angle);
@@ -417,6 +417,7 @@ export const getBaseProps = (props, fallbackProps) => {
   const { width, height, standalone, theme, name } = props;
   const axisProps = getAxisProps(props, calculatedValues);
   const axisLabelProps = getAxisLabelProps(props, calculatedValues);
+  const userProps = UserProps.getSafeUserProps(props);
   const initialChildProps = {
     parent: {
       style: style.parent,
@@ -427,7 +428,8 @@ export const getBaseProps = (props, fallbackProps) => {
       domain,
       standalone,
       theme,
-      name
+      name,
+      userProps
     }
   };
 

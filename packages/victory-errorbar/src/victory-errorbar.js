@@ -1,14 +1,14 @@
 import PropTypes from "prop-types";
 import React from "react";
 import {
-  PropTypes as CustomPropTypes,
-  Helpers,
-  VictoryLabel,
   addEvents,
-  VictoryContainer,
-  VictoryTheme,
+  CommonProps,
   DefaultTransitions,
-  CommonProps
+  Helpers,
+  PropTypes as CustomPropTypes,
+  VictoryContainer,
+  VictoryLabel,
+  VictoryTheme
 } from "victory-core";
 import ErrorBar from "./error-bar";
 import { getBaseProps, getDomain, getData } from "./helper-methods";
@@ -105,6 +105,7 @@ class VictoryErrorBar extends React.Component {
     }
 
     const children = this.renderData(props);
+
     return props.standalone
       ? this.renderContainer(props.containerComponent, children)
       : children;

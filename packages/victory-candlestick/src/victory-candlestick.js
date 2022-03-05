@@ -1,14 +1,15 @@
 import PropTypes from "prop-types";
 import React from "react";
 import {
-  PropTypes as CustomPropTypes,
-  Helpers,
-  VictoryLabel,
   addEvents,
-  VictoryContainer,
-  VictoryTheme,
+  CommonProps,
   DefaultTransitions,
-  CommonProps
+  Helpers,
+  PropTypes as CustomPropTypes,
+  UserProps,
+  VictoryContainer,
+  VictoryLabel,
+  VictoryTheme
 } from "victory-core";
 import { isNil, flatten } from "lodash";
 import Candle from "./candle";
@@ -283,7 +284,8 @@ class VictoryCandlestick extends React.Component {
       ...labelComponents,
       ...labelsComponents
     ];
-    return this.renderContainer(groupComponent, children);
+    const userProps = UserProps.getSafeUserProps(props);
+    return React.cloneElement(groupComponent, { ...userProps }, children);
   }
 
   render() {
@@ -295,8 +297,15 @@ class VictoryCandlestick extends React.Component {
     }
 
     const children = this.renderCandleData(props, this.shouldRenderDatum);
+    const userProps = UserProps.getSafeUserProps(this.props);
+    const container = React.cloneElement(
+      props.containerComponent,
+      { ...userProps },
+      children
+    );
+
     return props.standalone
-      ? this.renderContainer(props.containerComponent, children)
+      ? this.renderContainer(container, children)
       : children;
   }
 }

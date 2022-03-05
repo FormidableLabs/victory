@@ -2,15 +2,16 @@ import React from "react";
 import PropTypes from "prop-types";
 import { assign, isEmpty } from "lodash";
 import {
-  PropTypes as CustomPropTypes,
-  VictoryLabel,
-  CommonProps,
-  VictoryContainer,
-  VictoryTheme,
-  LineSegment,
   addEvents,
   Arc,
-  Axis
+  Axis,
+  CommonProps,
+  LineSegment,
+  PropTypes as CustomPropTypes,
+  UserProps,
+  VictoryContainer,
+  VictoryLabel,
+  VictoryTheme
 } from "victory-core";
 import { getScale, getStyles, getBaseProps } from "./helper-methods";
 
@@ -237,7 +238,8 @@ class VictoryPolarAxis extends React.Component {
   // Overridden in victory-native
   renderGroup(props, children) {
     const { groupComponent } = props;
-    return React.cloneElement(groupComponent, {}, children);
+    const userProps = UserProps.getSafeUserProps(props);
+    return React.cloneElement(groupComponent, { ...userProps }, children);
   }
 
   shouldAnimate() {
@@ -251,9 +253,15 @@ class VictoryPolarAxis extends React.Component {
     if (this.shouldAnimate()) {
       return this.animateComponent(props, animationWhitelist);
     }
+    const userProps = UserProps.getSafeUserProps(props);
     const children = this.renderAxis(props);
+    const container = React.cloneElement(
+      props.containerComponent,
+      { ...userProps },
+      children
+    );
     return props.standalone
-      ? this.renderContainer(props.containerComponent, children)
+      ? this.renderContainer(container, children)
       : children;
   }
 }

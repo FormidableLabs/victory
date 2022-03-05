@@ -4,14 +4,17 @@ import React from "react";
 import PropTypes from "prop-types";
 import { assign, merge, random, range } from "lodash";
 import { VictoryScatter } from "@packages/victory-scatter/src/index";
+import { VictoryChart } from "@packages/victory-chart";
 import {
   ScatterSymbolType,
   VictoryLabel,
   VictoryContainer,
-  VictoryTheme
+  VictoryTheme,
+  Point
 } from "@packages/victory-core/src/index";
 import bubbleData from "./bubble-data";
 import symbolData from "./symbol-data";
+import { accessibilityScatterData } from "../../demo-data";
 
 type DataType = {
   x?: string | number;
@@ -166,21 +169,36 @@ export default class VictoryScatterDemo extends React.Component<
   render() {
     return (
       <div className="demo" style={containerStyle}>
+        <VictoryChart domain={{ x: [0, 6], y: [0, 8] }}>
+          <VictoryScatter
+            data-test-variable="TESTING 123"
+            aria-label="Victory Scatter with Victory Chart wrapper"
+            style={{ data: { fill: "#c43a31" } }}
+            size={7}
+            data={accessibilityScatterData}
+            dataComponent={
+              <Point
+                ariaLabel={({ datum }) =>
+                  `scatter point x: ${datum.x}, y:${datum.y}`
+                }
+                tabIndex={({ index }) => index + 28}
+              />
+            }
+          />
+        </VictoryChart>
+
         <VictoryScatter
+          data-test-variable="TESTING 123"
+          aria-label="Victory Scatter Standalone"
           style={style}
-          width={500}
-          height={500}
-          domain={[0, 600]}
-          animate={{ duration: 2000 }}
-          data={this.state.data}
-          dataComponent={<CatPoint />}
-          containerComponent={
-            <VictoryContainer
-              title="Scatter Chart"
-              desc="This is a scatter chart with cat data points!"
-              style={assign({}, style.parent, { border: "1px solid red" })}
-            />
-          }
+          theme={VictoryTheme.material}
+          data={range(0, 200).map((i) => {
+            return {
+              a: { b: [{ y: i * Math.sin(i * 0.3) }], x: Math.cos(i * 0.3) }
+            };
+          })}
+          x="a.x"
+          y="a.b[0]y"
         />
 
         <VictoryScatter
@@ -287,6 +305,25 @@ export default class VictoryScatterDemo extends React.Component<
           })}
           x="a.x"
           y="a.b[0]y"
+        />
+
+        <VictoryScatter
+          data-test-variable="TESTING 123"
+          aria-label="Victory Scatter Standalone"
+          style={style}
+          width={500}
+          height={500}
+          domain={[0, 600]}
+          animate={{ duration: 2000 }}
+          data={this.state.data}
+          dataComponent={<CatPoint />}
+          containerComponent={
+            <VictoryContainer
+              title="Scatter Chart"
+              desc="This is a scatter chart with cat data points!"
+              style={assign({}, style.parent, { border: "1px solid red" })}
+            />
+          }
         />
       </div>
     );

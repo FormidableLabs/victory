@@ -127,11 +127,17 @@ export default class App extends React.Component {
 
     return (
       <div className="demo" style={containerStyle}>
-        <VictoryLine
-          style={{ parent: parentStyle, data: { stroke: "blue" } }}
-          y={(d) => Math.sin(2 * Math.PI * d.x)}
-          sample={25}
-        />
+        <VictoryChart
+          style={{ parent: parentStyle }}
+          theme={VictoryTheme.material}
+        >
+          <VictoryLine
+            style={{ parent: parentStyle }}
+            data={[]}
+            data-test-variable="TESTING 123"
+            aria-label="Victory Line with Victory Chart wrapper"
+          />
+        </VictoryChart>
 
         <VictoryLine
           style={{
@@ -316,6 +322,14 @@ export default class App extends React.Component {
           sortKey={"t"}
           x={({ t }) => Math.sin(3 * t + 2 * Math.PI)}
           y={({ t }) => Math.sin(2 * t)}
+        />
+
+        <VictoryLine
+          style={{ parent: parentStyle, data: { stroke: "blue" } }}
+          y={(d) => Math.sin(2 * Math.PI * d.x)}
+          samples={25}
+          data-test-variable="TESTING 123"
+          aria-label="Victory Line Standalone"
         />
       </div>
     );
