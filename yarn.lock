@@ -16196,7 +16196,7 @@ npmlog@^5.0.1:
     gauge "^3.0.0"
     set-blocking "^2.0.0"
 
-nps-utils@^1.5.0:
+nps-utils@^1.7.0:
   version "1.7.0"
   resolved "https://registry.yarnpkg.com/nps-utils/-/nps-utils-1.7.0.tgz#88ef27925ee7cd916f15a25f1b1a6648e9b21a7d"
   integrity sha512-wq/gUxTR3sgLYTLHlUKwMG2paUV3QdfwMj5aifWpQ60Vv9RQzA6pXDkwrAlMA8SNqoz8FwaGPc1X/7I+qjuYwg==
@@ -16212,7 +16212,7 @@ nps-utils@^1.5.0:
     opn-cli "^3.1.0"
     rimraf "^2.6.1"
 
-nps@^5.9.0:
+nps@^5.10.0:
   version "5.10.0"
   resolved "https://registry.yarnpkg.com/nps/-/nps-5.10.0.tgz#cb7e7c8fe9a0d28061bf1d496a7192694ddc6185"
   integrity sha512-tye+0hoKq3pB6NhykoPcOzwn4nEvwVvh1kJEDc+21gYordNdaBlkPv8ZlrZkuEWLUeujvS8VQ56KO9QGoPKkEA==
