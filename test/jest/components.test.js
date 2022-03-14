@@ -21,7 +21,7 @@ import {
   VictoryVoronoi
 } from "victory-native";
 import enzyme from "enzyme";
-import Adapter from "@wojtekmaj/enzyme-adapter-react-17";
+import Adapter from "enzyme-adapter-react-16";
 
 enzyme.configure({ adapter: new Adapter() });
 
