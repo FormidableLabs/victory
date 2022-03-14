@@ -67,7 +67,7 @@
     "babel-plugin-module-resolver": "^3.1.1",
     "babel-preset-react-native": "^1.9.0",
     "chai": "^3.5.0",
-    "chromatic": "^5.0.0",
+    "chromatic": "^6.5.3",
     "core-js": "^2.5.1",
     "cross-env": "^5.2.0",
     "d3-scale": "^1.0.0",
