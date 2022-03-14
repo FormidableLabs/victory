@@ -6,9 +6,9 @@ module.exports = {
       dev: {
         ts: "webpack serve --config ./config/webpack/demo/webpack.config.dev-ts.js",
         default:
-          "webpack serve --config ./config/webpack/demo/webpack.config.dev.js --content-base demo/js"
+          "webpack serve --config ./config/webpack/demo/webpack.config.dev.js"
       },
-      hot: "webpack serve --config ./config/webpack/demo/webpack.config.hot.js --inline --hot --content-base demo/js",
+      hot: "webpack serve --config ./config/webpack/demo/webpack.config.hot.js --inline --hot",
       test: "webpack serve --config ./config/webpack/webpack.config.test.js"
     },
     karma: {

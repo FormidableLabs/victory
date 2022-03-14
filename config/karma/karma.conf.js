@@ -50,7 +50,6 @@ module.exports = function (config) {
     webpackServer: {
       port: 3002, // Choose a non-conflicting port (3000 app, 3001 test dev)
       quiet: false,
-      noInfo: true,
       stats: {
         assets: false,
         colors: true,

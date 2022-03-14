@@ -12,16 +12,29 @@ module.exports = {
   extends: [
     "formidable/configurations/es6-react",
     "prettier",
-    "plugin:react-hooks/recommended"
+    "plugin:react-hooks/recommended",
+    "plugin:storybook/recommended"
   ],
   rules: {
     "react/sort-comp": "off",
-    "import/no-unresolved": [2, { ignore: ["victory*"] }],
+    "import/no-unresolved": [
+      2,
+      {
+        ignore: ["victory*"]
+      }
+    ],
     "max-statements": 0,
-    complexity: ["error", { max: 16 }],
+    complexity: [
+      "error",
+      {
+        max: 16
+      }
+    ],
     "no-magic-numbers": [
       "error",
-      { ignore: [-1, 0, 0.5, 1, 2, 90, 180, 270, 360] }
+      {
+        ignore: [-1, 0, 0.5, 1, 2, 90, 180, 270, 360]
+      }
     ]
   },
   plugins: ["jest"],
