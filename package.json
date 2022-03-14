@@ -104,7 +104,7 @@
     "karma-webpack": "^5.0.0",
     "lerna": "^3.22.0",
     "link-parent-bin": "^2.0.0",
-    "lodash": "^4.17.19",
+    "lodash": "^4.17.21",
     "lodash-webpack-plugin": "^0.11.6",
     "match-str": "^0.2.1",
     "metro-react-native-babel-preset": "0.66.2",
