@@ -22,8 +22,7 @@ module.exports = {
 
   devServer: {
     port: WDS_PORT,
-    contentBase: "./demo/js",
-    noInfo: false
+    static: "./demo/js"
   },
 
   output: {
