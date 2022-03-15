@@ -46,7 +46,8 @@ module.exports = {
     ]
   },
   devServer: {
-    port: WDS_PORT
+    port: WDS_PORT,
+    noInfo: false
   },
   // https://stackoverflow.com/questions/64475910/replacing-polyfill-for-process-in-webpack-v5-from-v4
   plugins: [

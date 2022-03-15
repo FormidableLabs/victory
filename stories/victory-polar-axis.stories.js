@@ -247,7 +247,7 @@ export const StartAndEndAngle = () => {
   );
 };
 
-export const InnerRadius = () => {
+export const innerRadius = () => {
   return (
     <div style={containerStyle}>
       <VictoryChart polar {...defaultAxisProps} innerRadius={50}>
@@ -262,7 +262,7 @@ export const InnerRadius = () => {
   );
 };
 
-export const LabelPlacement = () => {
+export const labelPlacement = () => {
   return (
     <div style={containerStyle}>
       <VictoryPolarAxis {...defaultAxisProps} labelPlacement="parallel" />

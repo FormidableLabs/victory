@@ -23,7 +23,8 @@ module.exports = {
   entry: "./demo/ts/app.tsx",
   devServer: {
     port: WDS_PORT,
-    static: "./demo/ts"
+    contentBase: "./demo/ts",
+    noInfo: false
   },
   output: {
     path: path.resolve("demo"),
