@@ -10,7 +10,7 @@ import {
   UserProps,
   VictoryContainer,
   VictoryTheme,
-  Wrapper,
+  Wrapper
 } from "victory-core";
 import { VictorySharedEvents } from "victory-shared-events";
 import { VictoryAxis } from "victory-axis";
@@ -131,7 +131,13 @@ const VictoryChart = (initialProps) => {
       return React.cloneElement(containerComponent, defaultContainerProps);
     }
     return groupComponent;
-  }, [groupComponent, standalone, containerComponent, containerProps, initialProps]);
+  }, [
+    groupComponent,
+    standalone,
+    containerComponent,
+    containerProps,
+    initialProps
+  ]);
 
   const events = React.useMemo(() => {
     return Wrapper.getAllEvents(props);
