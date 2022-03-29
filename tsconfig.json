@@ -8,6 +8,10 @@
     "jsx": "react",
     "sourceMap": true,
     "moduleResolution": "node",
+    "typeRoots": [
+      "./node_modules/@types"
+    ],
+    "types": ["react", "lodash"],
     "allowSyntheticDefaultImports": true,
     "forceConsistentCasingInFileNames": true,
     "noImplicitReturns": true,
@@ -20,7 +24,7 @@
     "paths": {
       "@packages/*": ["packages/*"]
     },
-    "skipLibCheck": true
+    "skipLibCheck": false
   },
   "include": [
     "**/src/*",

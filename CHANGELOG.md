@@ -1,5 +1,18 @@
 # Victory Changelog
 
+## 36.3.1 (2022-03-14)
+* add FAQ for Expo Web apps by @jpdriver in https://github.com/FormidableLabs/victory/pull/2121
+* Add RegExp array to voronoiBlacklist type by @brendanmorrell in https://github.com/FormidableLabs/victory/pull/2127
+* Bump url-parse from 1.5.3 to 1.5.10 by @dependabot in https://github.com/FormidableLabs/victory/pull/2143
+* Bump url-parse from 1.5.3 to 1.5.10 in /demo/rn by @dependabot in https://github.com/FormidableLabs/victory/pull/2144
+* Bump node-fetch from 2.6.0 to 2.6.7 in /docs by @dependabot in https://github.com/FormidableLabs/victory/pull/2075
+* Fix TS build 2094 by @matt-hernandez in https://github.com/FormidableLabs/victory/pull/2107
+* Bump karma from 6.3.14 to 6.3.16 by @dependabot in https://github.com/FormidableLabs/victory/pull/2148
+* Bump url-parse from 1.4.7 to 1.5.10 in /docs by @dependabot in https://github.com/FormidableLabs/victory/pull/2147
+* Bump postcss from 7.0.32 to 7.0.39 in /docs by @dependabot in https://github.com/FormidableLabs/victory/pull/2146
+* Bump prismjs from 1.20.0 to 1.27.0 in /docs by @dependabot in https://github.com/FormidableLabs/victory/pull/2145
+* Bump lodash from 4.17.19 to 4.17.21 in /docs by @dependabot in https://github.com/FormidableLabs/victory/pull/2159
+
 ## 36.3.0 (2022-02-14)
 * Bump follow-redirects from 1.14.7 to 1.14.8 by @dependabot in https://github.com/FormidableLabs/victory/pull/2095
 * Bump karma from 6.3.4 to 6.3.14 by @dependabot in https://github.com/FormidableLabs/victory/pull/2092

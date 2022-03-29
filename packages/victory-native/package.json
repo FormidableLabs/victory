@@ -1,6 +1,6 @@
 {
   "name": "victory-native",
-  "version": "36.3.0",
+  "version": "36.3.1",
   "description": "Native Port for Victory",
   "keywords": [
     "data visualization",
@@ -23,7 +23,7 @@
   "author": "Formidable",
   "license": "MIT",
   "dependencies": {
-    "victory": "^36.3.0",
+    "victory": "^36.3.1",
     "victory-area": "^36.3.0",
     "victory-axis": "^36.3.0",
     "victory-bar": "^36.3.0",
@@ -33,7 +33,7 @@
     "victory-candlestick": "^36.3.0",
     "victory-chart": "^36.3.0",
     "victory-core": "^36.3.0",
-    "victory-create-container": "^36.3.0",
+    "victory-create-container": "^36.3.1",
     "victory-cursor-container": "^36.3.0",
     "victory-errorbar": "^36.3.0",
     "victory-group": "^36.3.0",
@@ -48,7 +48,7 @@
     "victory-stack": "^36.3.0",
     "victory-tooltip": "^36.3.0",
     "victory-voronoi": "^36.3.0",
-    "victory-voronoi-container": "^36.3.0",
+    "victory-voronoi-container": "^36.3.1",
     "victory-zoom-container": "^36.3.0"
   },
   "devDependencies": {
