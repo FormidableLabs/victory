@@ -331,7 +331,6 @@ export default (WrappedComponent, options) => {
     renderData(props, shouldRenderDatum = datumHasXandY) {
       const { dataComponent, labelComponent, groupComponent } = props;
       const userProps = UserProps.getSafeUserProps(props);
-
       const dataComponents = this.dataKeys.reduce(
         (validDataComponents, _dataKey, index) => {
           const dataProps = this.getComponentProps(
