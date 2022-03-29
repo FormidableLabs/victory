@@ -240,8 +240,6 @@ class VictoryChartDemo extends React.Component<any, VictoryChartDemoState> {
             style={chartStyle}
             polar
             title="Victory Polar Scatter Chart"
-            aria-label="Victory Polar Scatter Chart"
-            data-some-user-prop="TESTING 123"
             desc="Circular graph with a twirl pattern of data points."
           >
             <VictoryScatter />
