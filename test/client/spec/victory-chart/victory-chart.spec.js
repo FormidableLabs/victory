@@ -55,6 +55,16 @@ describe("components/victory-chart", () => {
       expect(axes.prop("offsetX")).to.equal(50);
       expect(axes.prop("offsetY")).to.equal(50);
     });
+
+    it("accepts user props", () => {
+      const wrapper = mount(
+        <VictoryChart data-testid="victory-chart" aria-label="Chart" />
+      );
+
+      const svgNode = wrapper.find("svg").at(0).getDOMNode();
+      expect(svgNode.getAttribute("data-testid")).to.equal("victory-chart");
+      expect(svgNode.getAttribute("aria-label")).to.equal("Chart");
+    });
   });
 
   describe("event handling", () => {
