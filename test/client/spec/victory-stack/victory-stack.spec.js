@@ -36,6 +36,19 @@ describe("components/victory-stack", () => {
       const viewBoxValue = `0 0 ${450} ${300}`;
       expect(svg.prop("viewBox")).to.equal(viewBoxValue);
     });
+
+    it("accepts user props", () => {
+      const wrapper = mount(
+        <VictoryStack data-testid="victory-stack" aria-label="Stack">
+          <VictoryBar />
+          <VictoryBar />
+        </VictoryStack>
+      );
+
+      const svgNode = wrapper.find("svg").at(0).getDOMNode();
+      expect(svgNode.getAttribute("data-testid")).to.equal("victory-stack");
+      expect(svgNode.getAttribute("aria-label")).to.equal("Stack");
+    });
   });
 
   describe("warnings", () => {
