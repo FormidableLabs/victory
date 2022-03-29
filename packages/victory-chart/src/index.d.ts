@@ -18,6 +18,7 @@ export interface VictoryChartProps extends VictoryCommonProps {
   backgroundComponent?: React.ReactElement;
   categories?: CategoryPropType;
   children?: React.ReactNode | React.ReactNode[];
+  desc?: string;
   defaultAxes?: AxesType;
   defaultPolarAxes?: AxesType;
   domain?: DomainPropType;
@@ -33,6 +34,7 @@ export interface VictoryChartProps extends VictoryCommonProps {
   style?: Pick<VictoryStyleInterface, "parent"> & {
     background?: VictoryStyleObject;
   };
+  title?: string;
 }
 
 export class VictoryChart extends React.Component<VictoryChartProps, any> {}

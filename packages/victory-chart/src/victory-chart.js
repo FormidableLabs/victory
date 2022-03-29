@@ -3,13 +3,14 @@ import PropTypes from "prop-types";
 import React from "react";
 import {
   Background,
+  CommonProps,
   Helpers,
+  Hooks,
+  PropTypes as CustomPropTypes,
+  UserProps,
   VictoryContainer,
   VictoryTheme,
-  CommonProps,
-  PropTypes as CustomPropTypes,
   Wrapper,
-  Hooks
 } from "victory-core";
 import { VictorySharedEvents } from "victory-shared-events";
 import { VictoryAxis } from "victory-axis";
@@ -124,12 +125,13 @@ const VictoryChart = (initialProps) => {
       const defaultContainerProps = defaults(
         {},
         containerComponent.props,
-        containerProps
+        containerProps,
+        UserProps.getSafeUserProps(initialProps)
       );
       return React.cloneElement(containerComponent, defaultContainerProps);
     }
     return groupComponent;
-  }, [groupComponent, standalone, containerComponent, containerProps]);
+  }, [groupComponent, standalone, containerComponent, containerProps, initialProps]);
 
   const events = React.useMemo(() => {
     return Wrapper.getAllEvents(props);

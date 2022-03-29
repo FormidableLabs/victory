@@ -39,6 +39,7 @@ export * as Style from "./victory-util/style";
 export * as TextSize from "./victory-util/textsize";
 export { default as Timer } from "./victory-util/timer";
 export * as Transitions from "./victory-util/transitions";
+export * as UserProps from "./victory-util/user-props";
 export * as CommonProps from "./victory-util/common-props";
 export * as Wrapper from "./victory-util/wrapper";
 export * as Axis from "./victory-util/axis";
