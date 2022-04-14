@@ -19,6 +19,16 @@ const TestGroup = ({ children }) => {
 
 describe("components/victory-box-plot", () => {
   describe("default component rendering", () => {
+    it("accepts user props", () => {
+      const wrapper = mount(
+        <VictoryBoxPlot data-testid="victory-boxplot" aria-label="Chart" />
+      );
+
+      const svgNode = wrapper.find("svg").at(0).getDOMNode();
+      expect(svgNode.getAttribute("data-testid")).to.equal("victory-boxplot");
+      expect(svgNode.getAttribute("aria-label")).to.equal("Chart");
+    });
+
     it("renders an svg with the correct width and height", () => {
       const wrapper = mount(<VictoryBoxPlot data={dataset} />);
       const svg = wrapper.find("svg").at(0);

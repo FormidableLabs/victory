@@ -10,7 +10,8 @@ import {
   CommonProps,
   addEvents,
   Data,
-  Domain
+  Domain,
+  UserProps
 } from "victory-core";
 
 const fallbackProps = {
@@ -115,8 +116,12 @@ class VictoryBar extends React.Component {
     }
 
     const children = this.renderData(props);
+    const container = React.cloneElement(
+      props.containerComponent,
+      UserProps.getSafeUserProps(props)
+    );
     return props.standalone
-      ? this.renderContainer(props.containerComponent, children)
+      ? this.renderContainer(container, children)
       : children;
   }
 }

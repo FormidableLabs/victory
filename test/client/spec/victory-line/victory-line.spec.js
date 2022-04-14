@@ -19,6 +19,16 @@ class MyLineSegment extends React.Component {
 
 describe("components/victory-line", () => {
   describe("default component rendering", () => {
+    it("accepts user props", () => {
+      const wrapper = mount(
+        <VictoryLine data-testid="victory-line" aria-label="Chart" />
+      );
+
+      const svgNode = wrapper.find("svg").at(0).getDOMNode();
+      expect(svgNode.getAttribute("data-testid")).to.equal("victory-line");
+      expect(svgNode.getAttribute("aria-label")).to.equal("Chart");
+    });
+
     it("renders an svg with the correct width and height", () => {
       const wrapper = mount(<VictoryLine />);
       const svg = wrapper.find("svg").at(0);

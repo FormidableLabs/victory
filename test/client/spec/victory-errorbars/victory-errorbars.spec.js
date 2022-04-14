@@ -18,6 +18,16 @@ class MyErrorBar extends React.Component {
 
 describe("components/victory-errorbar", () => {
   describe("default component rendering", () => {
+    it("accepts user props", () => {
+      const wrapper = mount(
+        <VictoryErrorBar data-testid="victory-errorbar" aria-label="Chart" />
+      );
+
+      const svgNode = wrapper.find("svg").at(0).getDOMNode();
+      expect(svgNode.getAttribute("data-testid")).to.equal("victory-errorbar");
+      expect(svgNode.getAttribute("aria-label")).to.equal("Chart");
+    });
+
     it("renders an svg with the correct width and height", () => {
       const wrapper = mount(<VictoryErrorBar />);
       const svg = wrapper.find("svg").at(0);

@@ -13,7 +13,8 @@ import {
   VictoryClipContainer,
   Data,
   Domain,
-  CommonProps
+  CommonProps,
+  UserProps
 } from "victory-core";
 
 const fallbackProps = {
@@ -110,8 +111,12 @@ class VictoryLine extends React.Component {
     }
 
     const children = this.renderContinuousData(props);
+    const container = React.cloneElement(
+      props.containerComponent,
+      UserProps.getSafeUserProps(props)
+    );
     return props.standalone
-      ? this.renderContainer(props.containerComponent, children)
+      ? this.renderContainer(container, children)
       : children;
   }
 }
