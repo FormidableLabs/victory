@@ -31,7 +31,8 @@
     "storybook": "nps storybook.server",
     "build-storybook": "build-storybook",
     "chromatic": "chromatic",
-    "chromatic-ci": "build-storybook && chromatic --ci --exit-zero-on-changes"
+    "chromatic-ci": "build-storybook && chromatic --ci --exit-zero-on-changes",
+    "test": "jest --config=jest-config.js"
   },
   "devDependencies": {
     "@babel/cli": "7.0.0-beta.44",
@@ -54,6 +55,8 @@
     "@storybook/addon-options": "^5.3.18",
     "@storybook/addon-storysource": "^5.3.19",
     "@storybook/react": "^5.3.18",
+    "@testing-library/react": "^12.1.2",
+    "@types/jest": "^27.4.1",
     "@types/lodash": "^4.14.149",
     "@types/react": "^16.9.19",
     "@types/react-dom": "^16.9.5",
@@ -87,7 +90,7 @@
     "immutable": "^3.8.2",
     "istanbul": "^0.4.5",
     "istanbul-instrumenter-loader": "^3.0.0",
-    "jest": "27.3.1",
+    "jest": "^27.5.1",
     "json-loader": "^0.5.4",
     "karma": "^6.3.4",
     "karma-benchmark": "^0.6.0",
@@ -128,5 +131,6 @@
     "webpack-dev-server": "^3.11.2",
     "webpack-stats-plugin": "^0.1.1"
   },
-  "sideEffects": false
+  "sideEffects": false,
+  "dependencies": {}
 }

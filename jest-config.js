@@ -1,4 +1,5 @@
 module.exports = {
+  testEnvironment: "jsdom",
   moduleFileExtensions: ["ts", "tsx", "js", "jsx", "json", "node"],
   testMatch: ["**/jest/**/?(*.)+(spec|test).[jt]s?(x)"],
   transform: {
@@ -7,5 +8,5 @@ module.exports = {
       { configFile: "./babel-native-config.js" }
     ]
   },
-  setupFiles: ["./jest-native-setup.js"]
+  setupFiles: ["./jest-setup.js"]
 };
