@@ -17,6 +17,16 @@ class MyPoint extends React.Component {
 
 describe("components/victory-scatter", () => {
   describe("default component rendering", () => {
+    it("accepts user props", () => {
+      const wrapper = mount(
+        <VictoryScatter data-testid="victory-scatter" aria-label="Chart" />
+      );
+
+      const svgNode = wrapper.find("svg").at(0).getDOMNode();
+      expect(svgNode.getAttribute("data-testid")).to.equal("victory-scatter");
+      expect(svgNode.getAttribute("aria-label")).to.equal("Chart");
+    });
+
     it("renders an svg with the correct width and height", () => {
       const wrapper = mount(<VictoryScatter />);
       const svg = wrapper.find("svg").at(0);

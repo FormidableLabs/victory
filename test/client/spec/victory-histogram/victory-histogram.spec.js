@@ -13,6 +13,16 @@ import { VictoryHistogram } from "packages/victory-histogram/src/index";
 
 describe("components/victory-histogram", () => {
   describe("default component rendering", () => {
+    it("accepts user props", () => {
+      const wrapper = mount(
+        <VictoryHistogram data-testid="victory-histogram" aria-label="Chart" />
+      );
+
+      const svgNode = wrapper.find("svg").at(0).getDOMNode();
+      expect(svgNode.getAttribute("data-testid")).to.equal("victory-histogram");
+      expect(svgNode.getAttribute("aria-label")).to.equal("Chart");
+    });
+
     it("renders an svg with the correct width and height", () => {
       const wrapper = mount(<VictoryHistogram />);
       const svg = wrapper.find("svg").at(0);

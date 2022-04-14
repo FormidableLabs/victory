@@ -23,6 +23,21 @@ const dataSet = [
 
 describe("components/victory-candlestick", () => {
   describe("default component rendering", () => {
+    it("accepts user props", () => {
+      const wrapper = mount(
+        <VictoryCandlestick
+          data-testid="victory-candlestick"
+          aria-label="Chart"
+        />
+      );
+
+      const svgNode = wrapper.find("svg").at(0).getDOMNode();
+      expect(svgNode.getAttribute("data-testid")).to.equal(
+        "victory-candlestick"
+      );
+      expect(svgNode.getAttribute("aria-label")).to.equal("Chart");
+    });
+
     it("renders an svg with the correct width and height", () => {
       const wrapper = mount(<VictoryCandlestick data={dataSet} />);
       const svg = wrapper.find("svg").at(0);

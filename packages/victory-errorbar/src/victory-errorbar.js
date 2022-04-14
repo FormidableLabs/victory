@@ -8,7 +8,8 @@ import {
   VictoryContainer,
   VictoryTheme,
   DefaultTransitions,
-  CommonProps
+  CommonProps,
+  UserProps
 } from "victory-core";
 import ErrorBar from "./error-bar";
 import { getBaseProps, getDomain, getData } from "./helper-methods";
@@ -105,8 +106,12 @@ class VictoryErrorBar extends React.Component {
     }
 
     const children = this.renderData(props);
+    const container = React.cloneElement(
+      props.containerComponent,
+      UserProps.getSafeUserProps(props)
+    );
     return props.standalone
-      ? this.renderContainer(props.containerComponent, children)
+      ? this.renderContainer(container, children)
       : children;
   }
 }

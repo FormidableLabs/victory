@@ -8,7 +8,8 @@ import {
   VictoryContainer,
   VictoryTheme,
   DefaultTransitions,
-  CommonProps
+  CommonProps,
+  UserProps
 } from "victory-core";
 import { isNil, flatten } from "lodash";
 import Candle from "./candle";
@@ -295,8 +296,12 @@ class VictoryCandlestick extends React.Component {
     }
 
     const children = this.renderCandleData(props, this.shouldRenderDatum);
+    const container = React.cloneElement(
+      props.containerComponent,
+      UserProps.getSafeUserProps(props)
+    );
     return props.standalone
-      ? this.renderContainer(props.containerComponent, children)
+      ? this.renderContainer(container, children)
       : children;
   }
 }

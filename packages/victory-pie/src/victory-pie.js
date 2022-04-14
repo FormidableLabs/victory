@@ -8,7 +8,8 @@ import {
   PropTypes as CustomPropTypes,
   VictoryContainer,
   VictoryLabel,
-  VictoryTheme
+  VictoryTheme,
+  UserProps
 } from "victory-core";
 import Slice from "./slice";
 import { getBaseProps } from "./helper-methods";
@@ -255,8 +256,12 @@ class VictoryPie extends React.Component {
     }
 
     const children = this.renderData(props);
+    const container = React.cloneElement(
+      props.containerComponent,
+      UserProps.getSafeUserProps(props)
+    );
     return props.standalone
-      ? this.renderContainer(props.containerComponent, children)
+      ? this.renderContainer(container, children)
       : children;
   }
 }

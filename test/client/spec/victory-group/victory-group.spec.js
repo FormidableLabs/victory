@@ -37,5 +37,18 @@ describe("components/victory-group", () => {
       const viewBoxValue = `0 0 ${450} ${300}`;
       expect(svg.prop("viewBox")).to.equal(viewBoxValue);
     });
+
+    it("accepts user props", () => {
+      const wrapper = mount(
+        <VictoryGroup data-testid="victory-group" aria-label="Group">
+          <VictoryBar />
+          <VictoryBar />
+        </VictoryGroup>
+      );
+
+      const svgNode = wrapper.find("svg").at(0).getDOMNode();
+      expect(svgNode.getAttribute("data-testid")).to.equal("victory-group");
+      expect(svgNode.getAttribute("aria-label")).to.equal("Group");
+    });
   });
 });

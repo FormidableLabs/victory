@@ -13,7 +13,8 @@ import {
   addEvents,
   VictoryTheme,
   Data,
-  Domain
+  Domain,
+  UserProps
 } from "victory-core";
 
 const fallbackProps = {
@@ -107,8 +108,12 @@ class VictoryArea extends React.Component {
     }
 
     const children = this.renderContinuousData(props);
+    const container = React.cloneElement(
+      props.containerComponent,
+      UserProps.getSafeUserProps(props)
+    );
     return props.standalone
-      ? this.renderContainer(props.containerComponent, children)
+      ? this.renderContainer(container, children)
       : children;
   }
 }
