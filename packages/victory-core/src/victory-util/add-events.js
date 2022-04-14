@@ -363,11 +363,7 @@ export default (WrappedComponent, options) => {
         .filter(Boolean);
 
       const children = [...dataComponents, ...labelComponents];
-      const group = React.cloneElement(
-        groupComponent,
-        { ...userProps },
-        children
-      );
+      const group = React.cloneElement(groupComponent, userProps, children);
       return this.renderContainer(group, children);
     }
   };

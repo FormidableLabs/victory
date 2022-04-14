@@ -13,6 +13,16 @@ import { VictoryBar, Bar } from "packages/victory-bar/src/index";
 
 describe("components/victory-bar", () => {
   describe("default component rendering", () => {
+    it("accepts user props", () => {
+      const wrapper = mount(
+        <VictoryBar data-testid="victory-bar" aria-label="Chart" />
+      );
+
+      const svgNode = wrapper.find("svg").at(0).getDOMNode();
+      expect(svgNode.getAttribute("data-testid")).to.equal("victory-bar");
+      expect(svgNode.getAttribute("aria-label")).to.equal("Chart");
+    });
+
     it("renders an svg with the correct width and height", () => {
       const wrapper = mount(<VictoryBar />);
       const svg = wrapper.find("svg").at(0);

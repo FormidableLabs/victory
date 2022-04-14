@@ -12,7 +12,8 @@ import {
   Box,
   Whisker,
   DefaultTransitions,
-  CommonProps
+  CommonProps,
+  UserProps
 } from "victory-core";
 import { getDomain, getData, getBaseProps } from "./helper-methods";
 
@@ -308,8 +309,12 @@ class VictoryBoxPlot extends React.Component {
     }
 
     const children = this.renderBoxPlot(props);
+    const container = React.cloneElement(
+      props.containerComponent,
+      UserProps.getSafeUserProps(props)
+    );
     return props.standalone
-      ? this.renderContainer(props.containerComponent, children)
+      ? this.renderContainer(container, children)
       : children;
   }
 }

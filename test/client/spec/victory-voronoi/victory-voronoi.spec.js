@@ -13,6 +13,16 @@ import { VictoryLabel } from "packages/victory-core";
 
 describe("components/victory-voronoi", () => {
   describe("default component rendering", () => {
+    it("accepts user props", () => {
+      const wrapper = mount(
+        <VictoryVoronoi data-testid="victory-voronoi" aria-label="Chart" />
+      );
+
+      const svgNode = wrapper.find("svg").at(0).getDOMNode();
+      expect(svgNode.getAttribute("data-testid")).to.equal("victory-voronoi");
+      expect(svgNode.getAttribute("aria-label")).to.equal("Chart");
+    });
+
     it("renders an svg with the correct width and height", () => {
       const wrapper = mount(<VictoryVoronoi />);
       const svg = wrapper.find("svg").at(0);
