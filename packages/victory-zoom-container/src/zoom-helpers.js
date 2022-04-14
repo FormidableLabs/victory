@@ -138,12 +138,11 @@ const RawZoomHelpers = {
       ? newDomain.map((val) => new Date(val))
       : newDomain;
   },
-  // eslint-disable-next-line max-params
-  getDomainScale(domain, scale, axis, horizontal) {
+
+  getDomainScale(domain, scale, axis) {
     const axisDomain = Array.isArray(domain) ? domain : domain[axis];
     const [from, to] = axisDomain;
-    const otherAxis = axis === "x" ? "y" : "x";
-    const range = horizontal ? scale[otherAxis].range() : scale[axis].range();
+    const range = scale[axis].range();
     const plottableWidth = Math.abs(range[0] - range[1]);
     return plottableWidth / (to - from);
   },
@@ -260,10 +259,8 @@ const RawZoomHelpers = {
       const lastDomain = this.getLastDomain(targetProps, originalDomain);
       const deltaX = horizontal ? y - startY : startX - x;
       const deltaY = horizontal ? startX - x : y - startY;
-      const dx =
-        deltaX / this.getDomainScale(lastDomain, scale, "x", horizontal);
-      const dy =
-        deltaY / this.getDomainScale(lastDomain, scale, "y", horizontal);
+      const dx = deltaX / this.getDomainScale(lastDomain, scale, "x");
+      const dy = deltaY / this.getDomainScale(lastDomain, scale, "y");
       const currentDomain = {
         x:
           zoomDimension === "y"
