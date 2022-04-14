@@ -138,7 +138,7 @@ const RawZoomHelpers = {
       ? newDomain.map((val) => new Date(val))
       : newDomain;
   },
-  // eslint-disable-next-line max-params
+
   getDomainScale(domain, scale, axis) {
     const axisDomain = Array.isArray(domain) ? domain : domain[axis];
     const [from, to] = axisDomain;
