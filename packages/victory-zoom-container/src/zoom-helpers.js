@@ -259,10 +259,8 @@ const RawZoomHelpers = {
       const lastDomain = this.getLastDomain(targetProps, originalDomain);
       const deltaX = horizontal ? y - startY : startX - x;
       const deltaY = horizontal ? startX - x : y - startY;
-      const dx =
-        deltaX / this.getDomainScale(lastDomain, scale, "x");
-      const dy =
-        deltaY / this.getDomainScale(lastDomain, scale, "y");
+      const dx = deltaX / this.getDomainScale(lastDomain, scale, "x");
+      const dy = deltaY / this.getDomainScale(lastDomain, scale, "y");
       const currentDomain = {
         x:
           zoomDimension === "y"
