@@ -9,7 +9,7 @@ import {
   UserProps,
   VictoryContainer,
   VictoryTheme,
-  Wrapper,
+  Wrapper
 } from "victory-core";
 import { VictorySharedEvents } from "victory-shared-events";
 import { getChildren, useMemoizedProps } from "./helper-methods";
@@ -95,7 +95,10 @@ const VictoryStack = (initialProps) => {
     origin,
     name
   ]);
-  const userProps = React.useMemo(() => UserProps.getSafeUserProps(initialProps), [initialProps]);
+  const userProps = React.useMemo(
+    () => UserProps.getSafeUserProps(initialProps),
+    [initialProps]
+  );
 
   const container = React.useMemo(() => {
     if (standalone) {
@@ -108,7 +111,13 @@ const VictoryStack = (initialProps) => {
       return React.cloneElement(containerComponent, defaultContainerProps);
     }
     return React.cloneElement(groupComponent, userProps);
-  }, [groupComponent, standalone, containerComponent, containerProps, userProps]);
+  }, [
+    groupComponent,
+    standalone,
+    containerComponent,
+    containerProps,
+    userProps
+  ]);
 
   const events = React.useMemo(() => {
     return Wrapper.getAllEvents(props);

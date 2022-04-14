@@ -38,7 +38,7 @@ export {
   VictoryTheme,
   VictoryTransition,
   Whisker,
-  Wrapper,
+  Wrapper
 } from "victory-core";
 
 export { VictoryChart } from "victory-chart";
