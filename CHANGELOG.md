@@ -1,5 +1,17 @@
 # Victory Changelog
 
+## 36.3.2 (2022-04-14)
+* Added functionality to be able to pass user props to components. Safe… by @dlcartright in https://github.com/FormidableLabs/victory/pull/2151
+* Bump moment from 2.29.1 to 2.29.2 by @dependabot in https://github.com/FormidableLabs/victory/pull/2186
+* Add user props tests and remove arbitrary demo props by @becca-bailey in https://github.com/FormidableLabs/victory/pull/2172
+* Bump minimist from 1.2.5 to 1.2.6 in /demo/rn by @dependabot in https://github.com/FormidableLabs/victory/pull/2177
+* Add safe user props to all top-level components by @becca-bailey in https://github.com/FormidableLabs/victory/pull/2191
+* Bump ansi-regex from 3.0.0 to 3.0.1 in /demo/rn by @dependabot in https://github.com/FormidableLabs/victory/pull/2190
+* Bump plist from 3.0.4 to 3.0.5 in /demo/rn by @dependabot in https://github.com/FormidableLabs/victory/pull/2189
+* Bump async from 2.6.3 to 2.6.4 in /demo/rn by @dependabot in https://github.com/FormidableLabs/victory/pull/2193
+* Allow additional props from user, such as `aria-label` and `data-testid` by @becca-bailey in https://github.com/FormidableLabs/victory/pull/2192
+* Fix Horizontal charts panning at the incorrect rate by @TabithaMaudMM in https://github.com/FormidableLabs/victory/pull/2179
+
 ## 36.3.1 (2022-03-14)
 * add FAQ for Expo Web apps by @jpdriver in https://github.com/FormidableLabs/victory/pull/2121
 * Add RegExp array to voronoiBlacklist type by @brendanmorrell in https://github.com/FormidableLabs/victory/pull/2127
