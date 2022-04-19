@@ -217,7 +217,7 @@ class App extends React.Component {
             polar
             style={chartStyle} 
             title="Victory Polar Scatter Chart"
-            desc="Circular graph with a twirl pattern of data points."
+            desc="Circular graph with a twirl pattern of data points"
           >
             <VictoryScatter />
           </VictoryChart>
@@ -240,7 +240,7 @@ class App extends React.Component {
             style={chartStyle} 
             theme={dependentAxisTheme}
             title="Victory Diagonal Scatter Chart"
-            desc="Graph with a diagonal pattern of data points."
+            desc="Graph with a diagonal pattern of data points"
           >
             <VictoryScatter />
           </VictoryChart>
@@ -271,7 +271,7 @@ class App extends React.Component {
           <VictoryChart 
             style={chartStyle}
             title="Victory Bar Chart with label data bars"
-            desc="Bar graph with labeled data bars with different widths."
+            desc="Bar graph with labeled data bars with different widths"
           >
             <VictoryAxis tickFormat={(t, i, ts) => `${t}s ${i} ${ts[0]}`} />
             <VictoryBar
@@ -288,7 +288,7 @@ class App extends React.Component {
           <VictoryChart
             style={chartStyle}
             title="Victory Horizontal Bar Graph"
-            desc="Horizontal bar graph data with x and y axis points."
+            desc="Horizontal bar graph data with x and y axis points"
           >
             <VictoryGroup
               labels={["a", "b", "c"]}
