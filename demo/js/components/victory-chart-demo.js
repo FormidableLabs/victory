@@ -213,11 +213,20 @@ class App extends React.Component {
       <div className="demo">
         <h1>VictoryChart</h1>
         <div style={containerStyle}>
-          <VictoryChart style={chartStyle} polar>
+          <VictoryChart 
+            polar
+            style={chartStyle} 
+            title="Victory Polar Scatter Chart"
+            desc="Circular graph with a twirl pattern of data points."
+          >
             <VictoryScatter />
           </VictoryChart>
 
-          <VictoryChart style={assign({}, chartStyle, bgStyle)}>
+          <VictoryChart
+            style={assign({}, chartStyle, bgStyle)}  
+            title="Victory Scatter Chart"
+            desc="Graph with scattered data points"
+          >
             <VictoryScatter
               data={[
                 { x: -3, y: -3 },
@@ -227,11 +236,21 @@ class App extends React.Component {
             />
           </VictoryChart>
 
-          <VictoryChart style={chartStyle} theme={dependentAxisTheme}>
+          <VictoryChart 
+            style={chartStyle} 
+            theme={dependentAxisTheme}
+            title="Victory Diagonal Scatter Chart"
+            desc="Graph with a diagonal pattern of data points."
+          >
             <VictoryScatter />
           </VictoryChart>
 
-          <VictoryChart style={chartStyle} domainPadding={{ x: [0, 20] }}>
+          <VictoryChart 
+            style={chartStyle} 
+            domainPadding={{ x: [0, 20] }}
+            title="Victory Bar Chart"
+            desc="Bar graph"
+          >
             <VictoryAxis dependentAxis style={axisStyle} />
             <VictoryAxis style={axisStyle} tickCount={6} />
             <VictoryBar
@@ -249,7 +268,11 @@ class App extends React.Component {
             />
           </VictoryChart>
 
-          <VictoryChart style={chartStyle}>
+          <VictoryChart 
+            style={chartStyle}
+            title="Victory Bar Chart with label data bars"
+            desc="Bar graph with labeled data bars with different widths."
+          >
             <VictoryAxis tickFormat={(t, i, ts) => `${t}s ${i} ${ts[0]}`} />
             <VictoryBar
               groupComponent={<VictoryClipContainer />}
@@ -262,7 +285,11 @@ class App extends React.Component {
             />
           </VictoryChart>
 
-          <VictoryChart style={chartStyle}>
+          <VictoryChart
+            style={chartStyle}
+            title="Victory Horizontal Bar Graph"
+            desc="Horizontal bar graph data with x and y axis points."
+          >
             <VictoryGroup
               labels={["a", "b", "c"]}
               horizontal
