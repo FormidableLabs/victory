@@ -20,16 +20,13 @@
   "license": "MIT",
   "dependencies": {
     "d3-ease": "^1.0.0",
-    "d3-interpolate": "^1.1.1",
     "d3-scale": "^1.0.0",
     "d3-shape": "^1.2.0",
     "d3-timer": "^1.0.0",
     "lodash": "^4.17.21",
     "prop-types": "^15.5.8",
-    "react-fast-compare": "^2.0.0"
-  },
-  "resolutions": {
-    "d3-interpolate/d3-color": "^3.0.0"
+    "react-fast-compare": "^2.0.0",
+    "victory-vendor": "^36.3.2"
   },
   "peerDependencies": {
     "react": "^16.6.0 || ^17.0.0"

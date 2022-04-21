@@ -9,7 +9,7 @@
  * $ node ./test/tmp-node-test.js
  * ```
  */
-const { interpolate } = require("../packages/victory-vendor/lib/index.js");
+const { interpolate } = require("../packages/victory-vendor");
 
 const { victoryInterpolator } = require("../packages/victory-core/lib/victory-animation/util.js");
 
