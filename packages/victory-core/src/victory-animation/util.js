@@ -1,4 +1,3 @@
-import { interpolate } from "d3-interpolate";
 import { isPlainObject, orderBy } from "lodash";
 
 
@@ -12,10 +11,10 @@ const getInterpolate = () => {
   // Fetch.
   // TODO: REVIEW AND EXAMINE HOW TO CACHE PROMISE.
   return import("d3-interpolate")
-    .then((d3Interpolate) => {
+    .then(({ interpolate }) => {
       // Cache
-      console.log("TODO HERE IMPORT", d3Interpolate)
-      _interpolate = d3Interpolate.interpolate;
+      console.log("TODO HERE IMPORT", interpolate)
+      _interpolate = interpolate;
       return interpolate;
     });
 }
@@ -101,6 +100,7 @@ export const interpolateImmediate = async function (a, b, when = 0) {
  * @returns {Function} An interpolation function.
  */
 export const interpolateFunction = async function (a, b) {
+  const interpolate = await getInterpolate();
   return function (t) {
     if (t >= 1) {
       return b;
@@ -166,6 +166,7 @@ export const interpolateString = async function (a, b) {
     return typeof val === "string" ? val.replace(/,/g, "") : val;
   };
 
+  const interpolate = await getInterpolate();
   return interpolate(format(a), format(b));
 };
 
@@ -221,5 +222,6 @@ export const victoryInterpolator = async function (a, b) {
 
   // TODO: NEVER HIT? ADD TEST?
   console.log("TODO HERE interpolate");
+  const interpolate = await getInterpolate();
   return interpolate(a, b);
 };
