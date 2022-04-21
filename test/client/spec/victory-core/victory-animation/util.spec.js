@@ -1,7 +1,7 @@
 /* eslint-disable no-unused-expressions */
 import { victoryInterpolator } from "packages/victory-core/src/victory-animation/util";
 
-describe.only("victoryInterpolator", () => {
+describe("victoryInterpolator", () => {
   it("does not attempt to interpolate identical values", async () => {
     // This case fails with the default interpolator, returning *almost* 3.
     const interpolator = await victoryInterpolator(3, 3);

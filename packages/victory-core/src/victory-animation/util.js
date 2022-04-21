@@ -145,6 +145,7 @@ export const interpolateObject = async function (a, b) {
 
   for (k in b) {
     if (k in a) {
+      /* eslint-disable no-use-before-define */
       i[k] = await victoryInterpolator(keyData(a[k]), keyData(b[k]));
     } else {
       c[k] = b[k];
@@ -211,7 +212,6 @@ export const victoryInterpolator = async function (a, b) {
   }
 
   // TODO: NEVER HIT? ADD TEST?
-  console.log("TODO HERE interpolate");
   const { interpolate } = await getInterpolate();
   return interpolate(a, b);
 };

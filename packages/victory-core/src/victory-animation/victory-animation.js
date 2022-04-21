@@ -152,12 +152,12 @@ export default class VictoryAnimation extends React.Component {
   }
 
   /* Traverse the tween queue */
-  traverseQueue() {
+  async traverseQueue() {
     if (this.queue.length) {
       /* Get the next index */
       const data = this.queue[0];
       /* compare cached version to next props */
-      this.interpolator = victoryInterpolator(this.state.data, data);
+      this.interpolator = await victoryInterpolator(this.state.data, data);
       /* reset step to zero */
       if (this.props.delay) {
         setTimeout(() => {

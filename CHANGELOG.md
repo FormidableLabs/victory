@@ -1,5 +1,13 @@
 # Victory Changelog
 
+## UNRELEASED
+
+* BREAKING: Upgrade `d3-interpolate` to ESM-only version and refactor `victoryInterpolator` to be asynchronous.
+* TODO: CHANGES TO DOCUMENT
+    - [ ] Version updates
+    - [ ] Removal of unused exports
+    - [ ] Changing of signature
+
 ## 36.3.2 (2022-04-14)
 * Added functionality to be able to pass user props to components. Safe… by @dlcartright in https://github.com/FormidableLabs/victory/pull/2151
 * Bump moment from 2.29.1 to 2.29.2 by @dependabot in https://github.com/FormidableLabs/victory/pull/2186
