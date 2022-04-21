@@ -1,3 +1,10 @@
+/**
+ * Transform d3 ESM libraries to vendored CommonJS libraries
+ *
+ * This produces `lib-vendor/d3-<package name>/src` files that have
+ * internally consistent references to other d3 packages. It is only meant
+ * to be used for the CommonJS import path.
+ */
 const path = require("path");
 
 module.exports = {
@@ -15,9 +22,8 @@ module.exports = {
     [
       "module-resolver",
       {
-        // "alias": {
-        //   "^d3-([^\/]+)(.*)": "./lib-vendor/d3-\\1/\\2"
-        // }
+        // Convert all imports for _other_ d3 dependencies to the relative
+        // path in our vendor package.
         resolvePath(sourcePath, currentFile) {
           const d3pattern = /^d3-(?<pkg>[^\/]+)(?<path>.*)/;
           const match = d3pattern.exec(sourcePath);
@@ -40,13 +46,6 @@ module.exports = {
             // - `../../d3-color`
             const currentFileVendor = currentFile.replace(/^node_modules/, "lib-vendor");
             const relPathToPkg = path.relative(path.dirname(currentFileVendor), vendorPkg);
-
-            console.log("TODO HERE", {
-              vendorPkg,
-              currentFile,
-              currentFileVendor,
-              relPathToPkg
-            });
 
             return relPathToPkg;
           }
