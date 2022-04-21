@@ -147,6 +147,7 @@ const interpolateObject = async function (a, b) {
 
   for (k in b) {
     if (k in a) {
+      // TODO: Investigate performance implications of await / Promise calls here
       /* eslint-disable no-use-before-define */
       i[k] = await victoryInterpolator(keyData(a[k]), keyData(b[k]));
     } else {
