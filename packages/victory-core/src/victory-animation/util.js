@@ -1,23 +1,22 @@
 import { isPlainObject, orderBy } from "lodash";
 
+// TODO: REVIEW AND EXAMINE HOW TO CACHE PROMISE.
+// TODO: Abstract to util folder
+const getImport = (importFn) => {
+  let __cached = null;
+  return () => {
+    if (__cached !== null) {
+      return Promise.resolve(__cached);
+    }
 
-let _interpolate = null;
-const getInterpolate = () => {
-  // Have result.
-  if (_interpolate !== null) {
-    return Promise.resolve(_interpolate);
-  }
-
-  // Fetch.
-  // TODO: REVIEW AND EXAMINE HOW TO CACHE PROMISE.
-  return import("d3-interpolate")
-    .then(({ interpolate }) => {
-      // Cache
-      console.log("TODO HERE IMPORT", interpolate)
-      _interpolate = interpolate;
-      return interpolate;
+    return importFn().then((importVal) => {
+      __cached = importVal;
+      return importVal;
     });
-}
+  }
+};
+
+const getInterpolate = getImport(() => import("d3-interpolate"));
 
 // TODO: NOT RE-IMPORTED
 export const isInterpolatable = function (obj) {
@@ -100,7 +99,7 @@ export const interpolateImmediate = async function (a, b, when = 0) {
  * @returns {Function} An interpolation function.
  */
 export const interpolateFunction = async function (a, b) {
-  const interpolate = await getInterpolate();
+  const { interpolate } = await getInterpolate();
   return function (t) {
     if (t >= 1) {
       return b;
@@ -166,14 +165,9 @@ export const interpolateString = async function (a, b) {
     return typeof val === "string" ? val.replace(/,/g, "") : val;
   };
 
-  const interpolate = await getInterpolate();
+  const { interpolate } = await getInterpolate();
   return interpolate(format(a), format(b));
 };
-
-  // // const dynamicInterpolate = await getInterpolate();
-  // // console.log("TODO HERE victoryInterpolator", dynamicInterpolate)
-
-  // console.log("TODO HERE DEFAULT INTERPOLATER")
 
 /**
  * By default, the list of interpolators used by `d3.interpolate` has a few
@@ -204,24 +198,20 @@ export const victoryInterpolator = async function (a, b) {
   // just use either the start value `a` or end value `b` at every step, as
   // there is no reasonable in-between value.
   if (a === b || !isInterpolatable(a) || !isInterpolatable(b)) {
-    console.log("TODO HERE interpolateImmediate");
     return interpolateImmediate(a, b);
   }
   if (typeof a === "function" || typeof b === "function") {
-    console.log("TODO HERE interpolateFunction");
     return interpolateFunction(a, b);
   }
   if (isPlainObject(a) || isPlainObject(b)) {
-    console.log("TODO HERE interpolateObject");
     return interpolateObject(a, b);
   }
   if (typeof a === "string" || typeof b === "string") {
-    console.log("TODO HERE interpolateString");
     return interpolateString(a, b);
   }
 
   // TODO: NEVER HIT? ADD TEST?
   console.log("TODO HERE interpolate");
-  const interpolate = await getInterpolate();
+  const { interpolate } = await getInterpolate();
   return interpolate(a, b);
 };
