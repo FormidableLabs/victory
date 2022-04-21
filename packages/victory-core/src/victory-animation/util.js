@@ -1,6 +1,24 @@
 import { interpolate } from "d3-interpolate";
 import { isPlainObject, orderBy } from "lodash";
 
+
+let _interpolate = null;
+const getInterpolate = () => {
+  // Have result.
+  if (_interpolate !== null) {
+    return Promise.resolve(_interpolate);
+  }
+
+  // Fetch.
+  // TODO: REVIEW AND EXAMINE HOW TO CACHE PROMISE.
+  return import("d3-interpolate")
+    .then((interpolate) => {
+      // Cache
+      _interpolate = interpolate;
+      return interpolate;
+    });
+}
+
 export const isInterpolatable = function (obj) {
   // d3 turns null into 0 and undefined into NaN, which we don't want.
   if (obj !== null) {
