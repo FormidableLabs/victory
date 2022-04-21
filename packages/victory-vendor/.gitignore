@@ -1,0 +1,4 @@
+# Allowed because we're manually handling.
+!/es
+!/lib
+/lib-vendor

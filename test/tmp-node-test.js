@@ -9,12 +9,20 @@
  * $ node ./test/tmp-node-test.js
  * ```
  */
+const { interpolate } = require("../packages/victory-vendor/lib/index.js");
+
+const { victoryInterpolator } = require("../packages/victory-core/lib/victory-animation/util.js");
+
 const React = require("react");
 const { renderToString } = require("react-dom/server");
-const { victoryInterpolator } = require("../packages/victory-core/lib/victory-animation/util.js");
 const { VictoryAnimation } = require("../packages/victory-core");
 
 const main = async () => {
+  // Import vendor code
+  console.log("\n## Manual interpolate test");
+  const d3Interpolator = interpolate("red", "blue");
+  console.log("d3Interpolator('red', 'blue')(0.5) -> ", d3Interpolator(0.5));
+
   // Just call the interpolator async
   console.log("\n## Manual victoryInterpolator test");
   const interpolator = victoryInterpolator("red", "blue");
