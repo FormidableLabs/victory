@@ -12,13 +12,15 @@ const getInterpolate = () => {
   // Fetch.
   // TODO: REVIEW AND EXAMINE HOW TO CACHE PROMISE.
   return import("d3-interpolate")
-    .then((interpolate) => {
+    .then((d3Interpolate) => {
       // Cache
-      _interpolate = interpolate;
+      console.log("TODO HERE IMPORT", d3Interpolate)
+      _interpolate = d3Interpolate.interpolate;
       return interpolate;
     });
 }
 
+// TODO: NOT RE-IMPORTED
 export const isInterpolatable = function (obj) {
   // d3 turns null into 0 and undefined into NaN, which we don't want.
   if (obj !== null) {
@@ -62,6 +64,8 @@ export const isInterpolatable = function (obj) {
   return false;
 };
 
+// TODO: NOT RE-IMPORTED
+// TODO: `when` parameter is never used in consumption
 /**
  * Interpolate immediately to the end value at the given step `when`.
  * Some nicer default behavior might be to jump at the halfway point or return
@@ -77,12 +81,13 @@ export const isInterpolatable = function (obj) {
  * @param {Number} when - Step value (0 to 1) at which to jump to `b`.
  * @returns {Function} An interpolation function.
  */
-export const interpolateImmediate = function (a, b, when = 0) {
+export const interpolateImmediate = async function (a, b, when = 0) {
   return function (t) {
     return t < when ? a : b;
   };
 };
 
+// TODO: NOT RE-IMPORTED
 /**
  * Interpolate to or from a function. The interpolated value will be a function
  * that calls `a` (if it's a function) and `b` (if it's a function) and calls
@@ -95,7 +100,7 @@ export const interpolateImmediate = function (a, b, when = 0) {
  * @param {any} b - End value.
  * @returns {Function} An interpolation function.
  */
-export const interpolateFunction = function (a, b) {
+export const interpolateFunction = async function (a, b) {
   return function (t) {
     if (t >= 1) {
       return b;
@@ -109,6 +114,26 @@ export const interpolateFunction = function (a, b) {
   };
 };
 
+// TODO: CONVERT TO PROMISES (?)
+// TODO: This is almost duplicating all of victoryInterpolator -- check if we can remove.
+const interpolateTypes = async (x, y) => {
+  if (x === y || !isInterpolatable(x) || !isInterpolatable(y)) {
+    return interpolateImmediate(x, y);
+  }
+  if (typeof x === "function" || typeof y === "function") {
+    return interpolateFunction(x, y);
+  }
+  if (
+    (typeof x === "object" && isPlainObject(x)) ||
+    (typeof y === "object" && isPlainObject(y))
+  ) {
+    return interpolateObject(x, y);
+  }
+  return interpolate(x, y);
+};
+
+// TODO: NOT RE-IMPORTED
+// TODO: CONVERT TO PROMISES (?)
 /**
  * Interpolate to or from an object. This method is a modification of the object interpolator in
  * d3-interpolate https://github.com/d3/d3-interpolate/blob/master/src/object.js. This interpolator
@@ -119,23 +144,7 @@ export const interpolateFunction = function (a, b) {
  * @param {any} b - End value.
  * @returns {Function} An interpolation function.
  */
-export const interpolateObject = function (a, b) {
-  const interpolateTypes = (x, y) => {
-    if (x === y || !isInterpolatable(x) || !isInterpolatable(y)) {
-      return interpolateImmediate(x, y);
-    }
-    if (typeof x === "function" || typeof y === "function") {
-      return interpolateFunction(x, y);
-    }
-    if (
-      (typeof x === "object" && isPlainObject(x)) ||
-      (typeof y === "object" && isPlainObject(y))
-    ) {
-      return interpolateObject(x, y);
-    }
-    return interpolate(x, y);
-  };
-
+export const interpolateObject = async function (a, b) {
   // When the value is an array, attempt to sort by "key" so that animating nodes may be identified
   // based on "key" instead of index
   const keyData = (val) => {
@@ -155,7 +164,7 @@ export const interpolateObject = function (a, b) {
 
   for (k in b) {
     if (k in a) {
-      i[k] = interpolateTypes(keyData(a[k]), keyData(b[k]));
+      i[k] = await interpolateTypes(keyData(a[k]), keyData(b[k]));
     } else {
       c[k] = b[k];
     }
@@ -169,13 +178,19 @@ export const interpolateObject = function (a, b) {
   };
 };
 
-export const interpolateString = function (a, b) {
+// TODO: NOT RE-IMPORTED
+export const interpolateString = async function (a, b) {
   const format = (val) => {
     return typeof val === "string" ? val.replace(/,/g, "") : val;
   };
 
   return interpolate(format(a), format(b));
 };
+
+  // // const dynamicInterpolate = await getInterpolate();
+  // // console.log("TODO HERE victoryInterpolator", dynamicInterpolate)
+
+  // console.log("TODO HERE DEFAULT INTERPOLATER")
 
 /**
  * By default, the list of interpolators used by `d3.interpolate` has a few
@@ -200,21 +215,30 @@ export const interpolateString = function (a, b) {
  * @param {any} b - End value.
  * @returns {Function|undefined} An interpolation function, if necessary.
  */
-export const victoryInterpolator = function (a, b) {
+// TODO: (1) update signature, (2) switch from async to promises.
+export const victoryInterpolator = async function (a, b) {
   // If the values are strictly equal, or either value is not interpolatable,
   // just use either the start value `a` or end value `b` at every step, as
   // there is no reasonable in-between value.
   if (a === b || !isInterpolatable(a) || !isInterpolatable(b)) {
+    console.log("TODO HERE interpolateImmediate");
     return interpolateImmediate(a, b);
   }
   if (typeof a === "function" || typeof b === "function") {
+    console.log("TODO HERE interpolateFunction");
     return interpolateFunction(a, b);
   }
   if (isPlainObject(a) || isPlainObject(b)) {
+    // TODO: NEVER HIT? ADD TEST?
+    console.log("TODO HERE interpolateObject");
     return interpolateObject(a, b);
   }
   if (typeof a === "string" || typeof b === "string") {
+    console.log("TODO HERE interpolateString");
     return interpolateString(a, b);
   }
+
+  // TODO: NEVER HIT? ADD TEST?
+  console.log("TODO HERE interpolate");
   return interpolate(a, b);
 };
