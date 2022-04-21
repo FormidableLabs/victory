@@ -229,7 +229,6 @@ export const victoryInterpolator = async function (a, b) {
     return interpolateFunction(a, b);
   }
   if (isPlainObject(a) || isPlainObject(b)) {
-    // TODO: NEVER HIT? ADD TEST?
     console.log("TODO HERE interpolateObject");
     return interpolateObject(a, b);
   }
