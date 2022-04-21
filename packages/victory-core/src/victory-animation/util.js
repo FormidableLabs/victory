@@ -114,24 +114,6 @@ export const interpolateFunction = async function (a, b) {
   };
 };
 
-// TODO: CONVERT TO PROMISES (?)
-// TODO: This is almost duplicating all of victoryInterpolator -- check if we can remove.
-const interpolateTypes = async (x, y) => {
-  if (x === y || !isInterpolatable(x) || !isInterpolatable(y)) {
-    return interpolateImmediate(x, y);
-  }
-  if (typeof x === "function" || typeof y === "function") {
-    return interpolateFunction(x, y);
-  }
-  if (
-    (typeof x === "object" && isPlainObject(x)) ||
-    (typeof y === "object" && isPlainObject(y))
-  ) {
-    return interpolateObject(x, y);
-  }
-  return interpolate(x, y);
-};
-
 // TODO: NOT RE-IMPORTED
 // TODO: CONVERT TO PROMISES (?)
 /**
@@ -164,7 +146,7 @@ export const interpolateObject = async function (a, b) {
 
   for (k in b) {
     if (k in a) {
-      i[k] = await interpolateTypes(keyData(a[k]), keyData(b[k]));
+      i[k] = await victoryInterpolator(keyData(a[k]), keyData(b[k]));
     } else {
       c[k] = b[k];
     }
