@@ -4,6 +4,7 @@
 
 * BREAKING: Upgrade `d3-interpolate` to ESM-only version and refactor `victoryInterpolator` to be asynchronous.
     * `victoryInterpolator` in `packages/victory-core/src/victory-animation/util.js` changed its function signature from returning `Function|undefined` to `Promise<Function|undefined>`. Direct consumers should refactor to use `Promise`s or `async`/`await`.
+    * Our code now uses real dynamic `import()`s. Your Node.js runtime must support this as well as user web browsers. You may be able to transpile away the `import()` call for older browsers in your frontend bundling tool.
     * The following `export`s were removed from `packages/victory-core/src/victory-animation/util.js` and are no longer consumable:
         * `isInterpolatable`
         * `interpolateImmediate`

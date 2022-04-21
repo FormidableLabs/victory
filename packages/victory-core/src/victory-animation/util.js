@@ -16,7 +16,13 @@ const getImport = (importFn) => {
   }
 };
 
-const getInterpolate = getImport(() => import("d3-interpolate"));
+// See webpack options: https://webpack.js.org/api/module-methods/
+// Choosing `eager` here means we _don't_ generate a separate chunk for
+// the import.
+const getInterpolate = getImport(() =>import(
+  /* webpackMode: "eager" */
+  "d3-interpolate"
+));
 
 const isInterpolatable = function (obj) {
   // d3 turns null into 0 and undefined into NaN, which we don't want.
