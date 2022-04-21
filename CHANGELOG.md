@@ -3,10 +3,13 @@
 ## UNRELEASED
 
 * BREAKING: Upgrade `d3-interpolate` to ESM-only version and refactor `victoryInterpolator` to be asynchronous.
-* TODO: CHANGES TO DOCUMENT
-    - [ ] Version updates
-    - [ ] Removal of unused exports
-    - [ ] Changing of signature
+    * `victoryInterpolator` in `packages/victory-core/src/victory-animation/util.js` changed its function signature from returning `Function|undefined` to `Promise<Function|undefined>`. Direct consumers should refactor to use `Promise`s or `async`/`await`.
+    * The following `export`s were removed from `packages/victory-core/src/victory-animation/util.js` and are no longer consumable:
+        * `isInterpolatable`
+        * `interpolateImmediate`
+        * `interpolateFunction`
+        * `interpolateObject`
+        * `interpolateString`
 
 ## 36.3.2 (2022-04-14)
 * Added functionality to be able to pass user props to components. Safe… by @dlcartright in https://github.com/FormidableLabs/victory/pull/2151

@@ -18,8 +18,7 @@ const getImport = (importFn) => {
 
 const getInterpolate = getImport(() => import("d3-interpolate"));
 
-// TODO: NOT RE-IMPORTED
-export const isInterpolatable = function (obj) {
+const isInterpolatable = function (obj) {
   // d3 turns null into 0 and undefined into NaN, which we don't want.
   if (obj !== null) {
     switch (typeof obj) {
@@ -62,7 +61,6 @@ export const isInterpolatable = function (obj) {
   return false;
 };
 
-// TODO: NOT RE-IMPORTED
 // TODO: `when` parameter is never used in consumption
 /**
  * Interpolate immediately to the end value at the given step `when`.
@@ -79,13 +77,12 @@ export const isInterpolatable = function (obj) {
  * @param {Number} when - Step value (0 to 1) at which to jump to `b`.
  * @returns {Function} An interpolation function.
  */
-export const interpolateImmediate = async function (a, b, when = 0) {
+const interpolateImmediate = async function (a, b, when = 0) {
   return function (t) {
     return t < when ? a : b;
   };
 };
 
-// TODO: NOT RE-IMPORTED
 /**
  * Interpolate to or from a function. The interpolated value will be a function
  * that calls `a` (if it's a function) and `b` (if it's a function) and calls
@@ -98,7 +95,7 @@ export const interpolateImmediate = async function (a, b, when = 0) {
  * @param {any} b - End value.
  * @returns {Function} An interpolation function.
  */
-export const interpolateFunction = async function (a, b) {
+const interpolateFunction = async function (a, b) {
   const { interpolate } = await getInterpolate();
   return function (t) {
     if (t >= 1) {
@@ -113,7 +110,6 @@ export const interpolateFunction = async function (a, b) {
   };
 };
 
-// TODO: NOT RE-IMPORTED
 // TODO: CONVERT TO PROMISES (?)
 /**
  * Interpolate to or from an object. This method is a modification of the object interpolator in
@@ -125,7 +121,7 @@ export const interpolateFunction = async function (a, b) {
  * @param {any} b - End value.
  * @returns {Function} An interpolation function.
  */
-export const interpolateObject = async function (a, b) {
+const interpolateObject = async function (a, b) {
   // When the value is an array, attempt to sort by "key" so that animating nodes may be identified
   // based on "key" instead of index
   const keyData = (val) => {
@@ -160,8 +156,7 @@ export const interpolateObject = async function (a, b) {
   };
 };
 
-// TODO: NOT RE-IMPORTED
-export const interpolateString = async function (a, b) {
+const interpolateString = async function (a, b) {
   const format = (val) => {
     return typeof val === "string" ? val.replace(/,/g, "") : val;
   };
