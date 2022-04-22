@@ -1,5 +1,7 @@
 {
-  "presets": ["@babel/react"],
+  "presets": [
+    "@babel/preset-react"
+  ],
   "plugins": [
     "lodash",
     "@babel/proposal-class-properties",

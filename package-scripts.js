@@ -68,8 +68,8 @@ module.exports = {
       default: npsUtils.series.nps("lint", "test")
     },
     watch: {
-      es: "lerna exec --parallel -- cross-env BABEL_ENV=es babel src --out-dir es --copy-files --watch",
-      lib: "lerna exec --parallel -- cross-env BABEL_ENV=lib babel src --out-dir lib --copy-files --watch",
+      es: "lerna exec --parallel -- cross-env BABEL_ENV=es babel src --out-dir es --config-file ../../.babelrc --copy-files --watch",
+      lib: "lerna exec --parallel -- cross-env BABEL_ENV=lib babel src --out-dir lib --config-file ../../.babelrc --copy-files --watch",
       default: npsUtils.concurrent.nps("watch.es", "watch.lib")
     },
     clean: {
@@ -84,14 +84,14 @@ module.exports = {
     "lerna-dry-run":
       "lerna version --no-git-tag-version --no-push --loglevel silly",
     // TODO: organize build scripts once build perf is sorted out
-    "babel-es": "cross-env BABEL_ENV=es babel src --out-dir es --copy-files",
+    "babel-es": "cross-env BABEL_ENV=es babel src --out-dir es --config-file ../../.babelrc --copy-files",
     "babel-lib":
-      "cross-env BABEL_ENV=commonjs babel src --out-dir lib --copy-files",
+      "cross-env BABEL_ENV=commonjs babel src --out-dir lib --config-file ../../.babelrc --copy-files",
     "build-es": npsUtils.series.nps("clean.es", "babel-es"),
     "build-lib": npsUtils.series.nps("clean.lib", "babel-lib"),
     "build-libs": npsUtils.series.nps("build-lib", "build-es"),
     "build-package-libs":
-      "lerna exec --parallel --ignore victory-native -- nps build-libs",
+      "lerna exec --parallel --ignore victory-native --ignore victory-vendor -- nps build-libs",
     "build-dist-dev":
       "webpack --bail --config ../../config/webpack/webpack.config.dev.js",
     "build-dist-min":
@@ -99,7 +99,7 @@ module.exports = {
     "build-dists": npsUtils.concurrent.nps("build-dist-min", "build-dist-dev"),
     "build-dist": npsUtils.series.nps("clean.dist", "build-dists"),
     "build-package-dists":
-      "lerna exec --parallel --ignore victory-native -- nps build-dists",
+      "lerna exec --parallel --ignore victory-native --ignore victory-vendor -- nps build-dists",
     bootstrap: "lerna bootstrap",
     "link-parent-bin": "link-parent-bin"
   }

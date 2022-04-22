@@ -45,7 +45,11 @@ module.exports = {
         // Use include specifically of our sources.
         // Do _not_ use an `exclude` here.
         include: FILES,
-        loader: "babel-loader"
+        use: {
+          loader: "babel-loader",
+          // TODO: NOT WORKING
+          options: { babelrc: true }
+        }
       }
     ]
   },
