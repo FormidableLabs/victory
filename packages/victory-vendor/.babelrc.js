@@ -9,7 +9,7 @@ const path = require("path");
 
 module.exports = {
   "only": [
-    "**/src/**/*.js"
+    "node_modules/*/src/**/*.js"
   ],
   "plugins": [
     [
