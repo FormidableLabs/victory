@@ -24,7 +24,11 @@
     }
   },
   "dependencies": {
-    "d3-interpolate": "^3.0.1"
+    "d3-ease": "^3.0.1",
+    "d3-interpolate": "^3.0.1",
+    "d3-scale": "^4.0.2",
+    "d3-shape": "^3.1.0",
+    "d3-timer": "^3.0.1"
   },
   "scripts": {
     "version": "echo TODO IMPLEMENT"
