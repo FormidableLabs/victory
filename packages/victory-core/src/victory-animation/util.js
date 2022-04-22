@@ -1,5 +1,5 @@
 // TODO: Expand to "all vendor", not just d3-interpolate
-import { interpolate } from "victory-vendor";
+import { interpolate } from "victory-vendor/d3-interpolate";
 import { isPlainObject, orderBy } from "lodash";
 
 export const isInterpolatable = function (obj) {

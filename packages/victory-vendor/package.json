@@ -13,11 +13,16 @@
     "url": "https://github.com/formidablelabs/victory.git"
   },
   "homepage": "https://formidable.com/open-source/victory",
-  "main": "lib/index.js",
-  "module": "es/index.js",
-  "jsnext:main": "es/index.js",
   "author": "Formidable",
   "license": "MIT",
+  "main": "./TODO_DOESNT_EXIST.js",
+  "exports": {
+    ".": "./TODO_DOESNT_EXIST.js",
+    "./d3-*": {
+      "import": "./es/d3-*.js",
+      "default": "./lib/d3-*.js"
+    }
+  },
   "dependencies": {
     "d3-interpolate": "^3.0.1"
   },

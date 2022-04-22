@@ -9,13 +9,13 @@
  * $ node ./test/tmp-node-test.js
  * ```
  */
-const { interpolate } = require("../packages/victory-vendor");
+const { interpolate } = require("victory-vendor/d3-interpolate");
 
-const { victoryInterpolator } = require("../packages/victory-core/lib/victory-animation/util.js");
+const { victoryInterpolator } = require("victory-core/lib/victory-animation/util.js");
 
 const React = require("react");
 const { renderToString } = require("react-dom/server");
-const { VictoryAnimation } = require("../packages/victory-core");
+const { VictoryAnimation } = require("victory-core");
 
 const main = async () => {
   // Import vendor code
