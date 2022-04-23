@@ -12,6 +12,7 @@ var FILES = PACKAGES.map(function (p) {
 var DEMO = path.resolve("demo");
 var WDS_PORT = 3000;
 
+// TODO: Can we combine all three webpack configs???
 module.exports = {
   mode: "development",
   resolve: {
@@ -52,8 +53,8 @@ module.exports = {
         include: FILES.concat([path.join(DEMO, "js")]),
         use: {
           loader: "babel-loader",
-          // TODO: NOT WORKING
-          options: { babelrc: true }
+          // TODO: We _should_ just be picking up the .babelrc file, but we're not...
+          options: require("../../../.babelrc.js")
         }
       }
     ]

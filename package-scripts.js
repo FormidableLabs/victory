@@ -68,8 +68,8 @@ module.exports = {
       default: npsUtils.series.nps("lint", "test")
     },
     watch: {
-      es: "lerna exec --parallel -- cross-env BABEL_ENV=es babel src --out-dir es --config-file ../../.babelrc --copy-files --watch",
-      lib: "lerna exec --parallel -- cross-env BABEL_ENV=lib babel src --out-dir lib --config-file ../../.babelrc --copy-files --watch",
+      es: "lerna exec --parallel -- cross-env BABEL_ENV=es babel src --out-dir es --config-file ../../.babelrc.js --copy-files --watch",
+      lib: "lerna exec --parallel -- cross-env BABEL_ENV=lib babel src --out-dir lib --config-file ../../.babelrc.js --copy-files --watch",
       default: npsUtils.concurrent.nps("watch.es", "watch.lib")
     },
     clean: {
@@ -84,9 +84,9 @@ module.exports = {
     "lerna-dry-run":
       "lerna version --no-git-tag-version --no-push --loglevel silly",
     // TODO: organize build scripts once build perf is sorted out
-    "babel-es": "cross-env BABEL_ENV=es babel src --out-dir es --config-file ../../.babelrc --copy-files",
+    "babel-es": "cross-env BABEL_ENV=es babel src --out-dir es --config-file ../../.babelrc.js --copy-files",
     "babel-lib":
-      "cross-env BABEL_ENV=commonjs babel src --out-dir lib --config-file ../../.babelrc --copy-files",
+      "cross-env BABEL_ENV=commonjs babel src --out-dir lib --config-file ../../.babelrc.js --copy-files",
     "build-es": npsUtils.series.nps("clean.es", "babel-es"),
     "build-lib": npsUtils.series.nps("clean.lib", "babel-lib"),
     "build-libs": npsUtils.series.nps("build-lib", "build-es"),

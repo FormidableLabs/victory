@@ -47,8 +47,8 @@ module.exports = {
         include: FILES,
         use: {
           loader: "babel-loader",
-          // TODO: NOT WORKING
-          options: { babelrc: true }
+          // TODO: We _should_ just be picking up the .babelrc file, but we're not...
+          options: require("../../../.babelrc.js")
         }
       }
     ]

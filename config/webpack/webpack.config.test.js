@@ -15,6 +15,13 @@ var FILES = PACKAGES.map(function (p) {
   return path.join(ROOT, p);
 });
 
+console.log("TODO HERE", {
+  PACKAGES,
+  FILES,
+  ROOT,
+  testFiles: path.resolve("test")
+})
+
 module.exports = {
   mode: "development",
   cache: true,
@@ -40,11 +47,15 @@ module.exports = {
         test: /\.js$/,
         // Use include specifically of our sources
         // Do _not_ use an `exclude` here.
-        include: FILES.concat([path.resolve("test")]),
+        // TODO OLD include: FILES.concat([path.resolve("test")]),
+        include: [
+          path.resolve("packages"),
+          path.resolve("test")
+        ],
         use: {
           loader: "babel-loader",
-          // TODO: NOT WORKING
-          options: { babelrc: true }
+          // TODO: We _should_ just be picking up the .babelrc file, but we're not...
+          options: require("../../.babelrc.js")
         }
       }
     ]

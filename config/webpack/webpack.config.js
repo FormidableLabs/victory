@@ -52,7 +52,11 @@ module.exports = {
         // Use include specifically of our sources.
         // Do _not_ use an `exclude` here.
         include: [SRC],
-        loader: require.resolve("babel-loader")
+        use: {
+          loader: "babel-loader",
+          // TODO: We _should_ just be picking up the .babelrc file, but we're not...
+          options: require("../../.babelrc.js")
+        }
       }
     ]
   },
