@@ -5,7 +5,7 @@
 /* eslint no-unused-expressions: 0 */
 import React from "react";
 import { shallow } from "enzyme";
-import VictoryAccessibleGroup from "victory-core/src/victory-accessible-group/victory-accessible-group";
+import { VictoryAccessibleGroup } from "victory-core";
 
 describe("components/victory-accessible-group", () => {
   it("renders an g with an aria-label", () => {
