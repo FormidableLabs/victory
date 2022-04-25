@@ -7,7 +7,7 @@
 import React from "react";
 import { range, omit } from "lodash";
 import { shallow, mount } from "enzyme";
-import { curveCatmullRom } from "d3-shape";
+import { curveCatmullRom } from "victory-vendor/d3-shape";
 import SvgTestHelper from "../svg-test-helper";
 import { VictoryArea, Area } from "packages/victory-area/src/index";
 import { VictoryLabel } from "packages/victory-core";

@@ -4,7 +4,7 @@
 import { LabelHelpers, VictoryLabel } from "packages/victory-core/src/index";
 import { assign } from "lodash";
 import React from "react";
-import * as d3Scale from "d3-scale";
+import * as d3Scale from "victory-vendor/d3-scale";
 
 const scale = { x: d3Scale.scaleLinear(), y: d3Scale.scaleLinear() };
 const data = [

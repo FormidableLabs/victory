@@ -1,5 +1,5 @@
-import * as d3Shape from "d3-shape";
-import * as d3Scale from "d3-scale";
+import * as d3Shape from "victory-vendor/d3-shape";
+import * as d3Scale from "victory-vendor/d3-scale";
 import { voronoi as d3Voronoi } from "d3-voronoi";
 import { assign, without, min, max, property } from "lodash";
 

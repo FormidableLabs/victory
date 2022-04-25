@@ -2,7 +2,7 @@ import React from "react";
 import { shallow } from "enzyme";
 import Candle from "packages/victory-candlestick/src/candle";
 import { Line, Rect } from "packages/victory-core";
-import * as d3Scale from "d3-scale";
+import * as d3Scale from "victory-vendor/d3-scale";
 
 describe("victory-primitives/candle", () => {
   const baseProps = {

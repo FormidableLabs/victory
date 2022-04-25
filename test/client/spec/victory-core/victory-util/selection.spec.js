@@ -2,7 +2,7 @@
 /* eslint max-nested-callbacks: 0 */
 
 import { Selection } from "packages/victory-core/src/index";
-import * as d3Scale from "d3-scale";
+import * as d3Scale from "victory-vendor/d3-scale";
 
 describe("helpers/selection", () => {
   describe("getBounds", () => {
