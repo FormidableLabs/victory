@@ -26,14 +26,6 @@ module.exports = {
             "strict": false,
             "allowTopLevelThis": true
           }
-        ],
-        [
-          "module-resolver",
-          {
-            "alias": {
-              "^victory-(.+)/es/(.+)": "^victory-\\1/lib/\\2"
-            }
-          }
         ]
       ]
     }
