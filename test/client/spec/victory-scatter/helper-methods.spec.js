@@ -4,7 +4,7 @@ import {
   getSize,
   getBubbleSize,
   getSymbol
-} from "victory-scatter/src/helper-methods";
+} from "victory-scatter/es/helper-methods";
 
 describe("victory-scatter/helper-methods", () => {
   describe("getSize", () => {

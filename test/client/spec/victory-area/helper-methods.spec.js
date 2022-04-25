@@ -1,7 +1,7 @@
 /* eslint no-unused-expressions: 0 */
 /* eslint-disable max-nested-callbacks */
 /* global sinon */
-import { getDataWithBaseline } from "victory-area/src/helper-methods";
+import { getDataWithBaseline } from "victory-area/es/helper-methods";
 import { Data } from "victory-core";
 import * as d3Scale from "victory-vendor/d3-scale";
 

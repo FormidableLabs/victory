@@ -3,7 +3,7 @@
 import {
   getData,
   getDomain
-} from "victory-candlestick/src/helper-methods";
+} from "victory-candlestick/es/helper-methods";
 import { range } from "lodash";
 import { fromJS } from "immutable";
 

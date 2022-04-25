@@ -1,6 +1,6 @@
 /* global sinon */
 /* eslint-disable no-unused-expressions,react/no-multi-comp */
-import { getChildComponents } from "victory-chart/src/helper-methods";
+import { getChildComponents } from "victory-chart/es/helper-methods";
 import React from "react";
 import { VictoryAxis } from "victory-axis";
 import { VictoryLine } from "victory-line";
