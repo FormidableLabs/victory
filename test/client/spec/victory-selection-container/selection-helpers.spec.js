@@ -1,8 +1,8 @@
 /* eslint no-unused-expressions: 0 */
 /* eslint max-nested-callbacks: 0 */
 
-import { SelectionHelpers } from "victory-selection-container/src/index";
-import { VictoryBar } from "victory-bar/src/index";
+import { SelectionHelpers } from "victory-selection-container";
+import { VictoryBar } from "victory-bar";
 import React from "react";
 import * as d3Scale from "victory-vendor/d3-scale";
 import { assign } from "lodash";

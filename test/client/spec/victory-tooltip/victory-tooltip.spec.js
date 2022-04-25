@@ -4,7 +4,7 @@
 /* global sinon */
 import React from "react";
 import { mount } from "enzyme";
-import { VictoryTooltip, Flyout } from "victory-tooltip/src/index";
+import { VictoryTooltip, Flyout } from "victory-tooltip";
 import { VictoryLabel } from "victory-core";
 
 describe("components/victory-tooltip", () => {

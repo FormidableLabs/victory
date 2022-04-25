@@ -1,7 +1,7 @@
 /* eslint no-unused-expressions: 0 */
 /* eslint max-nested-callbacks: 0 */
 
-import { LabelHelpers, VictoryLabel } from "victory-core/src/index";
+import { LabelHelpers, VictoryLabel } from "victory-core";
 import { assign } from "lodash";
 import React from "react";
 import * as d3Scale from "victory-vendor/d3-scale";

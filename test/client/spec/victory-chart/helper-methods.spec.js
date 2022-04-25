@@ -2,8 +2,8 @@
 /* eslint-disable no-unused-expressions,react/no-multi-comp */
 import { getChildComponents } from "victory-chart/src/helper-methods";
 import React from "react";
-import { VictoryAxis } from "victory-axis/src/index";
-import { VictoryLine } from "victory-line/src/index";
+import { VictoryAxis } from "victory-axis";
+import { VictoryLine } from "victory-line";
 import { Log as _Log } from "victory-core";
 
 // The updated module export syntax doesn't work well with sinon

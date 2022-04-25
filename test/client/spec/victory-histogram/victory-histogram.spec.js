@@ -9,7 +9,7 @@ import React from "react";
 import { shallow, mount } from "enzyme";
 import { omit, range } from "lodash";
 import SvgTestHelper from "../svg-test-helper";
-import { VictoryHistogram } from "victory-histogram/src/index";
+import { VictoryHistogram } from "victory-histogram";
 
 describe("components/victory-histogram", () => {
   describe("default component rendering", () => {

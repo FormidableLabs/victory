@@ -1,7 +1,7 @@
 /* eslint no-unused-expressions: 0 */
 /* eslint max-nested-callbacks: 0 */
 
-import { Selection } from "victory-core/src/index";
+import { Selection } from "victory-core";
 import * as d3Scale from "victory-vendor/d3-scale";
 
 describe("helpers/selection", () => {

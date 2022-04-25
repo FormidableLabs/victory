@@ -7,7 +7,7 @@
 
 import React from "react";
 import { shallow, mount } from "enzyme";
-import { VictoryChart } from "victory-chart/src/index";
+import { VictoryChart } from "victory-chart";
 import { VictoryAxis } from "victory-axis";
 
 describe("components/victory-chart", () => {

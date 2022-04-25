@@ -8,7 +8,7 @@ import React from "react";
 import { shallow, mount } from "enzyme";
 import { Style, VictoryLabel } from "victory-core";
 import SvgTestHelper from "../svg-test-helper-pie";
-import { VictoryPie, Slice } from "victory-pie/src/index";
+import { VictoryPie, Slice } from "victory-pie";
 
 class PizzaSlice extends React.Component {
   render() {}

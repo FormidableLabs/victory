@@ -7,9 +7,9 @@
 
 import React from "react";
 import { mount } from "enzyme";
-import { VictoryStack } from "victory-stack/src/index";
-import { VictoryBar } from "victory-bar/src/index";
-import { VictoryHistogram } from "victory-histogram/src/index";
+import { VictoryStack } from "victory-stack";
+import { VictoryBar } from "victory-bar";
+import { VictoryHistogram } from "victory-histogram";
 
 describe("components/victory-stack", () => {
   describe("default component rendering", () => {

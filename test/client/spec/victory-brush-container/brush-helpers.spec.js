@@ -1,5 +1,5 @@
 /* eslint-disable no-unused-expressions,react/no-multi-comp */
-import { BrushHelpers } from "victory-brush-container/src/index";
+import { BrushHelpers } from "victory-brush-container";
 
 describe("containers/brush-helpers", () => {
   describe("withinBounds", () => {

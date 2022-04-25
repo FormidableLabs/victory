@@ -4,7 +4,7 @@
 /*eslint-disable max-nested-callbacks,no-unused-expressions,react/prop-types */
 import React from "react";
 import { shallow, mount } from "enzyme";
-import { VictoryBoxPlot } from "victory-box-plot/src/index";
+import { VictoryBoxPlot } from "victory-box-plot";
 import { LineSegment, Whisker, Border, Box } from "victory-core";
 
 const dataset = [

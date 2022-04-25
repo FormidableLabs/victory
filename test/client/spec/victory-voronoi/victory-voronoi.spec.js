@@ -8,7 +8,7 @@ import React from "react";
 import { range, omit, random } from "lodash";
 import { shallow, mount } from "enzyme";
 import SvgTestHelper from "../svg-test-helper";
-import { VictoryVoronoi, Voronoi } from "victory-voronoi/src/index";
+import { VictoryVoronoi, Voronoi } from "victory-voronoi";
 import { VictoryLabel } from "victory-core";
 
 describe("components/victory-voronoi", () => {

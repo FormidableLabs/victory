@@ -1,6 +1,6 @@
 /* eslint no-unused-expressions: 0*/
 /* global sinon */
-import { Transitions } from "victory-core/src/index";
+import { Transitions } from "victory-core";
 import React from "react";
 
 describe("getInitialTransitionState", () => {

@@ -9,7 +9,7 @@ import { range, omit } from "lodash";
 import { shallow, mount } from "enzyme";
 import { curveCatmullRom } from "victory-vendor/d3-shape";
 import SvgTestHelper from "../svg-test-helper";
-import { VictoryArea, Area } from "victory-area/src/index";
+import { VictoryArea, Area } from "victory-area";
 import { VictoryLabel } from "victory-core";
 
 describe("components/victory-area", () => {
