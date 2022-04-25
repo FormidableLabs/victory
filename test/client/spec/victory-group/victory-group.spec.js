@@ -5,8 +5,8 @@
 
 import React from "react";
 import { mount } from "enzyme";
-import { VictoryGroup } from "packages/victory-group/src/index";
-import { VictoryBar } from "packages/victory-bar/src/index";
+import { VictoryGroup } from "victory-group/src/index";
+import { VictoryBar } from "victory-bar/src/index";
 
 describe("components/victory-group", () => {
   it("has a static role", () => {

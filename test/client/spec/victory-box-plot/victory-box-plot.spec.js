@@ -4,8 +4,8 @@
 /*eslint-disable max-nested-callbacks,no-unused-expressions,react/prop-types */
 import React from "react";
 import { shallow, mount } from "enzyme";
-import { VictoryBoxPlot } from "packages/victory-box-plot/src/index";
-import { LineSegment, Whisker, Border, Box } from "packages/victory-core";
+import { VictoryBoxPlot } from "victory-box-plot/src/index";
+import { LineSegment, Whisker, Border, Box } from "victory-core";
 
 const dataset = [
   { x: 1, min: 1, max: 18, median: 8, q1: 5, q3: 15 },

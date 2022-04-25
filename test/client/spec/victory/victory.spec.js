@@ -1,7 +1,7 @@
 /**
  * Client tests
  */
-import * as Victory from "packages/victory/src/index";
+import * as Victory from "victory/src/index";
 
 describe("victory", () => {
   // eslint-disable-line max-statements

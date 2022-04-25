@@ -1,6 +1,6 @@
 /* eslint no-unused-expressions: 0 */
 
-import { Scale } from "packages/victory-core/src/index";
+import { Scale } from "victory-core/src/index";
 import * as d3Scale from "victory-vendor/d3-scale";
 
 describe("victory-util/scale", () => {

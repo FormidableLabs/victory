@@ -1,5 +1,5 @@
 /* eslint no-unused-expressions: 0 */
-import { TextSize } from "packages/victory-core/src/index";
+import { TextSize } from "victory-core/src/index";
 
 const testString = "ABC";
 

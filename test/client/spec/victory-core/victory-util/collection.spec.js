@@ -1,7 +1,7 @@
 /* eslint no-unused-expressions: 0 */
 /* eslint max-statements: 0 */
 
-import { Collection } from "packages/victory-core/src/index";
+import { Collection } from "victory-core/src/index";
 
 describe("victory-util/collection", () => {
   describe("containsStrings", () => {

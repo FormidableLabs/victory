@@ -15,13 +15,6 @@ var FILES = PACKAGES.map(function (p) {
   return path.join(ROOT, p);
 });
 
-console.log("TODO HERE", {
-  PACKAGES,
-  FILES,
-  ROOT,
-  testFiles: path.resolve("test")
-})
-
 module.exports = {
   mode: "development",
   cache: true,
@@ -33,6 +26,7 @@ module.exports = {
     publicPath: "/assets/"
   },
   resolve: {
+    // TODO: REMOVE THIS
     alias: {
       packages: path.join(ROOT, "packages")
     },

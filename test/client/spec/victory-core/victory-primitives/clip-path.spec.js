@@ -1,6 +1,6 @@
 import React from "react";
 import { mount } from "enzyme";
-import ClipPath from "packages/victory-core/src/victory-primitives/clip-path";
+import ClipPath from "victory-core/src/victory-primitives/clip-path";
 
 describe("victory-primitives/clip-path", () => {
   const baseProps = {

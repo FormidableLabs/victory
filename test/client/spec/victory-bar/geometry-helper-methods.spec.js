@@ -1,7 +1,7 @@
 import {
   circle,
   point
-} from "packages/victory-bar/src/geometry-helper-methods";
+} from "victory-bar/src/geometry-helper-methods";
 
 const epsilon = 0.01; // float imprecision
 

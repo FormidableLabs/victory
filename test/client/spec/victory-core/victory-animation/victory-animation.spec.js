@@ -3,7 +3,7 @@
  */
 import React from "react";
 import { shallow } from "enzyme";
-import Component from "packages/victory-core/src/victory-animation/victory-animation";
+import Component from "victory-core/src/victory-animation/victory-animation";
 
 describe("components/victory-animation", () => {
   it("has expected content with shallow render", () => {

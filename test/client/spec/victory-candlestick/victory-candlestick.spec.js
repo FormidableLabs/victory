@@ -9,8 +9,8 @@ import { range, omit } from "lodash";
 import {
   VictoryCandlestick,
   Candle
-} from "packages/victory-candlestick/src/index";
-import { VictoryLabel } from "packages/victory-core";
+} from "victory-candlestick/src/index";
+import { VictoryLabel } from "victory-core";
 
 class MyCandle extends React.Component {
   render() {}

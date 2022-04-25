@@ -4,7 +4,7 @@
 /* global sinon */
 import React from "react";
 import { shallow, mount } from "enzyme";
-import { VictoryLabel, Text, TSpan } from "packages/victory-core/src/index";
+import { VictoryLabel, Text, TSpan } from "victory-core/src/index";
 
 describe("components/victory-label", () => {
   it("has expected content with shallow render", () => {

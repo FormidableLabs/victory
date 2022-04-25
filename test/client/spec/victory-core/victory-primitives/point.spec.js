@@ -3,9 +3,9 @@
 import React from "react";
 import { shallow } from "enzyme";
 import { assign } from "lodash";
-import Point from "packages/victory-core/src/victory-primitives/point";
-import Path from "packages/victory-core/src/victory-primitives/path";
-import pathHelpers from "packages/victory-core/src/victory-util/point-path-helpers";
+import Point from "victory-core/src/victory-primitives/point";
+import Path from "victory-core/src/victory-primitives/path";
+import pathHelpers from "victory-core/src/victory-util/point-path-helpers";
 
 describe("victory-primitives/point", () => {
   let sandbox;

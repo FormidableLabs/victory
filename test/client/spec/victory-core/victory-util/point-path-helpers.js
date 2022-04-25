@@ -1,5 +1,5 @@
 /* eslint no-unused-expressions: 0 */
-import * as PathHelpers from "packages/victory-core/src/victory-util/point-path-helpers";
+import * as PathHelpers from "victory-core/src/victory-util/point-path-helpers";
 
 describe("point-path-helpers", () => {
   const x = 0;

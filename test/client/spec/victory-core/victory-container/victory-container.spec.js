@@ -7,7 +7,7 @@
 
 import React from "react";
 import { shallow, mount } from "enzyme";
-import VictoryContainer from "packages/victory-core/src/victory-container/victory-container";
+import VictoryContainer from "victory-core/src/victory-container/victory-container";
 
 describe("components/victory-container", () => {
   it("renders an svg with a role of img", () => {

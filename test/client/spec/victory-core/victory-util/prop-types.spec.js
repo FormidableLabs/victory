@@ -1,7 +1,7 @@
 /* global sinon:false, console */
 /* eslint no-unused-expressions: 0 */
 import PropTypes from "prop-types";
-import { PropTypes as CustomPropTypes } from "packages/victory-core/src/index";
+import { PropTypes as CustomPropTypes } from "victory-core/src/index";
 
 describe("victory-util/prop-types", () => {
   /* eslint-disable no-console */

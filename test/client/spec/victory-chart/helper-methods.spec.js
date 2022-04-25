@@ -1,10 +1,10 @@
 /* global sinon */
 /* eslint-disable no-unused-expressions,react/no-multi-comp */
-import { getChildComponents } from "packages/victory-chart/src/helper-methods";
+import { getChildComponents } from "victory-chart/src/helper-methods";
 import React from "react";
-import { VictoryAxis } from "packages/victory-axis/src/index";
-import { VictoryLine } from "packages/victory-line/src/index";
-import { Log as _Log } from "packages/victory-core";
+import { VictoryAxis } from "victory-axis/src/index";
+import { VictoryLine } from "victory-line/src/index";
+import { Log as _Log } from "victory-core";
 
 // The updated module export syntax doesn't work well with sinon
 const Log = Object.assign({}, _Log);
