@@ -8,6 +8,9 @@ const { promisify } = require("util");
 const rimraf = require("rimraf");
 const rimrafP = promisify(rimraf);
 
+const vendorPkg = require("../package.json");
+const VENDOR_PKGS = new Set(Object.keys(vendorPkg.dependencies));
+
 // Templates.
 const getEsmIndex = (pkg) => `
 // \`victory-vendor/${pkg.name}\` (ESM)
@@ -29,6 +32,18 @@ module.exports = require("../lib-vendor/${pkg.name}/src/index.js");
 
 // TODO REMOVE
 console.log("TODO LOADED CJS ${pkg.name}");
+`;
+
+const getCjsRootIndex = (pkg) => `
+// \`victory-vendor/${pkg.name}\` (CommonJS)
+// See upstream license: ${pkg.repository.url.replace(/\.git$/, "")}/blob/main/LICENSE
+//
+// This file only exists for tooling that doesn't work yet with package.json:exports
+// by proxying through the CommonJS version.
+module.exports = require("./lib/${pkg.name}");
+
+// TODO REMOVE
+console.log("TODO LOADED CJS ROOT ${pkg.name}");
 `;
 
 // Main.
@@ -59,7 +74,8 @@ const main = async () => {
     [
       EsmBasePath,
       CjsBasePath,
-      VendorBasePath
+      VendorBasePath,
+      path.resolve(__dirname, "../d3-*")
     ]
     .map((libPath) => rimrafP(libPath)
       .then(() => fs.mkdir(libPath, { recursive: true }))
@@ -100,7 +116,14 @@ const main = async () => {
       fs.copyFile(
         path.join(pkgBase, "LICENSE"),
         path.join(libVendorPath, "LICENSE")
-      )
+      ),
+      // Root hack file for non package.json:exports systems
+      VENDOR_PKGS.has(pkgName) ?
+        fs.writeFile(
+          path.resolve(__dirname, `../${pkgName}.js`),
+          getCjsRootIndex(pkg)
+        ) :
+        Promise.resolve()
     ]);
   }
 }

@@ -25,7 +25,7 @@ module.exports = {
         // Convert all imports for _other_ d3 dependencies to the relative
         // path in our vendor package.
         resolvePath(sourcePath, currentFile) {
-          const d3pattern = /^d3-(?<pkg>[^\/]+)(?<path>.*)/;
+          const d3pattern = /^(?<pkg>(d3-[^\/]+|internmap))(?<path>.*)/;
           const match = d3pattern.exec(sourcePath);
           if (match) {
             // We're assuming a common shape of d3 packages:
@@ -36,7 +36,7 @@ module.exports = {
             }
 
             // Get Vendor package path.
-            const vendorPkg = `lib-vendor/d3-${match.groups.pkg}/src/index.js`;
+            const vendorPkg = `lib-vendor/${match.groups.pkg}/src/index.js`;
 
             // Derive relative path to vendor lib to have a file like move from:
             // - 'node_modules/d3-interpolate/src/rgb.js'

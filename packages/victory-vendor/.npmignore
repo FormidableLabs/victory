@@ -5,6 +5,8 @@ dist/*.map
 !/lib
 !/lib-vendor
 !/src
+!/d3-*
+!/internmap.js
 !LICENSE.txt
 !CHANGELOG.md
 !README.md
