@@ -31,7 +31,12 @@
     "d3-timer": "^3.0.1"
   },
   "scripts": {
-    "version": "echo TODO IMPLEMENT"
+    "version": "echo TODO IMPLEMENT",
+    "build": "node ./scripts/build.js"
   },
-  "sideEffects": false
+  "sideEffects": false,
+  "devDependencies": {
+    "execa": "^6.1.0",
+    "rimraf": "^3.0.2"
+  }
 }
