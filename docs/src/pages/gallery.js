@@ -5,7 +5,7 @@ import ReactDOM from "react-dom";
 import { withRouteData } from "react-static";
 import { Link } from "react-router-dom";
 import * as Victory from "victory";
-import * as d3Scale from "d3-scale";
+import * as d3Scale from "victory-vendor/d3-scale";
 import {
   scaleDiscontinuous,
   discontinuitySkipWeekends
