@@ -90,8 +90,11 @@ module.exports = {
     "build-es": npsUtils.series.nps("clean.es", "babel-es"),
     "build-lib": npsUtils.series.nps("clean.lib", "babel-lib"),
     "build-libs": npsUtils.series.nps("build-lib", "build-es"),
-    "build-package-libs":
+    "build-package-libs-core":
       "lerna exec --parallel --ignore victory-native --ignore victory-vendor -- nps build-libs",
+    "build-package-libs-vendor":
+      "lerna exec --scope victory-vendor -- yarn build",
+    "build-package-libs": npsUtils.series.nps("build-package-libs-core", "build-package-libs-vendor"),
     "build-dist-dev":
       "webpack --bail --config ../../config/webpack/webpack.config.dev.js",
     "build-dist-min":
