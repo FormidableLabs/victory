@@ -10,6 +10,8 @@ const NodePolyfillPlugin = require("node-polyfill-webpack-plugin");
 // Replace with `__dirname` if using in project root.
 var ROOT = process.cwd();
 var WDS_PORT = 3001;
+
+// TODO: Can we just remove all `src` processing?
 var PACKAGES = glob.sync("packages/*/src", { root: ROOT });
 var FILES = PACKAGES.map(function (p) {
   return path.join(ROOT, p);

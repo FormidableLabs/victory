@@ -1,6 +1,6 @@
 import React from "react";
 import { mount } from "enzyme";
-import Area from "victory-area/src/area";
+import { Area } from "victory-area";
 import { Path } from "victory-core";
 import { merge } from "lodash";
 

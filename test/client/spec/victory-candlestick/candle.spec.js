@@ -1,6 +1,6 @@
 import React from "react";
 import { shallow } from "enzyme";
-import Candle from "victory-candlestick/src/candle";
+import { Candle } from "victory-candlestick";
 import { Line, Rect } from "victory-core";
 import * as d3Scale from "victory-vendor/d3-scale";
 
