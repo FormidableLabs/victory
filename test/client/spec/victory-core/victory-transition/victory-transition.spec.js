@@ -4,7 +4,7 @@
 import React from "react";
 import PropTypes from "prop-types";
 import { mount } from "enzyme";
-import VictoryTransition from "victory-core/src/victory-transition/victory-transition";
+import { VictoryTransition } from "victory-core";
 
 class TestComponent extends React.Component {
   render() {

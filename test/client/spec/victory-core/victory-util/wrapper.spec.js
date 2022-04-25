@@ -1,5 +1,5 @@
 /* eslint-disable no-unused-expressions,react/no-multi-comp */
-import * as Wrapper from "victory-core/src/victory-util/wrapper";
+import { Wrapper } from "victory-core";
 import React from "react";
 import { VictoryAxis } from "victory-axis";
 import { VictoryLine } from "victory-line";
