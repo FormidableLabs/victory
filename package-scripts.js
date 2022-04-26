@@ -74,6 +74,7 @@ module.exports = {
       es: "lerna exec --parallel --ignore victory-native --ignore victory-vendor -- cross-env BABEL_ENV=es babel src --out-dir es --config-file ../../.babelrc.js --copy-files --watch",
       lib: "lerna exec --parallel --ignore victory-native --ignore victory-vendor -- cross-env BABEL_ENV=lib babel src --out-dir lib --config-file ../../.babelrc.js --copy-files --watch",
       core: npsUtils.concurrent.nps("watch.es", "watch.lib"),
+      // `victory-vendor` is built 1x up front and not watched.
       default: npsUtils.series.nps("build-package-libs-vendor", "watch.core")
     },
     clean: {
