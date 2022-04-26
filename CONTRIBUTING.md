@@ -49,6 +49,13 @@ $ yarn start
 
 running this command will serve demo pages at http://localhost:3000/ and tests at http://localhost:3001/test/client/test.html
 
+As a useful tip if you're working in just one package in the monorepo, you can rebuild just that package:
+
+```sh
+$ lerna exec --scope <package name> -- yarn nps build-libs
+$ lerna exec --scope victory-core -- yarn nps build-libs
+```
+
 ## Checks, Tests
 
 When running a development server, tests will be served automatically at http://localhost:3001/test/client/test.html
@@ -56,7 +63,11 @@ When running a development server, tests will be served automatically at http://
 Tests may also be run in the terminal with:
 
 ```sh
+# Build and run all tests.
 $ yarn nps test
+
+# Run just Karma tests (packages must be already built).
+$ yarn nps karma
 ```
 
 If your terminal is under a proxy, you should turn off the proxy, or ChromeHeadless will not start properly.

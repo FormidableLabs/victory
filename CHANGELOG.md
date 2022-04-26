@@ -4,6 +4,7 @@
 
 * Vendor in d3 libraries to new package `victory-vendor` and upgrade. Our CommonJS path now uses transpiled versions of the `d3-*` libraries while our ESM path continues to use the real underlying dependencies.
     * Update our tests to only refer to _built_ versions of our libraries (in the past there was a mix of source and built). This means Karma uses the ESM version of libraries while Jest uses the CommonJS versions.
+    * Added very basic Node.js tests to catch future ESM issues.
     * Update various dependencies.
 
 ## 36.3.2 (2022-04-14)

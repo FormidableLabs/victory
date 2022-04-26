@@ -72,8 +72,9 @@ module.exports = {
     },
     watch: {
       es: "lerna exec --parallel --ignore victory-native --ignore victory-vendor -- cross-env BABEL_ENV=es babel src --out-dir es --config-file ../../.babelrc.js --copy-files --watch",
-      lib: "lerna exec --parallel--ignore victory-native --ignore victory-vendor -- cross-env BABEL_ENV=lib babel src --out-dir lib --config-file ../../.babelrc.js --copy-files --watch",
-      default: npsUtils.concurrent.nps("watch.es", "watch.lib")
+      lib: "lerna exec --parallel --ignore victory-native --ignore victory-vendor -- cross-env BABEL_ENV=lib babel src --out-dir lib --config-file ../../.babelrc.js --copy-files --watch",
+      core: npsUtils.concurrent.nps("watch.es", "watch.lib"),
+      default: npsUtils.series.nps("build-package-libs-vendor", "watch.core")
     },
     clean: {
       lib: "rimraf lib",
