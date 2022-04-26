@@ -48,7 +48,7 @@ const VictoryChart = (initialProps) => {
     theme,
     polar,
     name,
-    title,
+    title
   } = modifiedProps;
 
   const axes = props.polar
