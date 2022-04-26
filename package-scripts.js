@@ -18,8 +18,10 @@ module.exports = {
       default: "karma start ./config/karma/karma.conf.js"
     },
     jest: {
-      native: "jest --config=jest-native-config.js",
       default: "jest --config=jest-native-config.js"
+    },
+    "test-node": {
+      default: "mocha ./test/node"
     },
     test: {
       cov: npsUtils.series.nps("build-package-libs", "karma.cov"),
@@ -59,8 +61,9 @@ module.exports = {
         "lint",
         "build-package-libs",
         "build-package-dists",
-        "karma.ci",
+        "node",
         "jest",
+        "karma.ci",
         "compile-ts"
       ),
       cov: npsUtils.series.nps("lint", "test.cov"),
@@ -68,8 +71,8 @@ module.exports = {
       default: npsUtils.series.nps("lint", "test")
     },
     watch: {
-      es: "lerna exec --parallel -- cross-env BABEL_ENV=es babel src --out-dir es --config-file ../../.babelrc.js --copy-files --watch",
-      lib: "lerna exec --parallel -- cross-env BABEL_ENV=lib babel src --out-dir lib --config-file ../../.babelrc.js --copy-files --watch",
+      es: "lerna exec --parallel --ignore victory-native --ignore victory-vendor -- cross-env BABEL_ENV=es babel src --out-dir es --config-file ../../.babelrc.js --copy-files --watch",
+      lib: "lerna exec --parallel--ignore victory-native --ignore victory-vendor -- cross-env BABEL_ENV=lib babel src --out-dir lib --config-file ../../.babelrc.js --copy-files --watch",
       default: npsUtils.concurrent.nps("watch.es", "watch.lib")
     },
     clean: {

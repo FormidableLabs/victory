@@ -30,20 +30,20 @@ Victory uses [`nps`](https://github.com/kentcdodds/nps) to organize package scri
 
 Clone this repo:
 
-```console
+```sh
 $ git clone https://github.com/FormidableLabs/victory.git
 $ cd victory
 ```
 
 Use [Yarn](https://yarnpkg.com/) to install dependencies:
 
-```console
+```sh
 $ yarn install
 ```
 
 Run a development server and check out the demos. This command will also build and watch `lib/` and `es/` directories in all packages, so your demos will always be in sync with code changes.
 
-```console
+```sh
 $ yarn start
 ```
 
@@ -55,7 +55,7 @@ When running a development server, tests will be served automatically at http://
 
 Tests may also be run in the terminal with:
 
-```console
+```sh
 $ yarn nps test
 ```
 
@@ -63,7 +63,7 @@ If your terminal is under a proxy, you should turn off the proxy, or ChromeHeadl
 
 Victory uses eslint and prettier to maintain code style consistency. Before creating a pull request, please lint and format your changes with the following commands:
 
-```console
+```sh
 $ yarn nps lint
 $ yarn nps format
 ```
@@ -74,13 +74,13 @@ Victory relies heavily on visual regression testing with [Storybook](https://sto
 
 Write visual tests for new features by adding them in the `stories` directory. Run storybooks and check out changes. Storybooks are served from http://localhost:6006/
 
-```console
+```sh
 $ yarn storybook
 ```
 
 [Chromatic](https://www.chromaticqa.com/) provides automated visual testing. All internal PRs will trigger a new Chromatic build, which will be displayed along with CI status. Chromatic builds for Victory may be viewed in more detail here: https://www.chromaticqa.com/builds?appId=5b4acf7c54c0490024d5980b. Chromatic requires a secret app code to run, so PRs from external contributors will not automatically trigger a Chromatic build. For this reason, changes from external contributors will be checked out and opened as separate PRs so Chromatic may be used to verify any changes. Developers with access to the secret app code may also trigger a chromatic build manually with:
 
-```console
+```sh
 $ yarn chromatic
 ```
 
@@ -90,7 +90,7 @@ Victory uses [Lerna](https://lerna.js.org/) to automate versioning and publishin
 
 Each package must contain the following `version` script `package.json`:
 
-```
+```js
 "scripts": {
   "version": "nps build-libs && nps build-dists",
 }
@@ -98,20 +98,20 @@ Each package must contain the following `version` script `package.json`:
 
 Before versioning, we run `lerna bootstrap` and `link-parent-bin` to ensure that each individual package has the `devDependencies` it needs to run its `version` script. Pre version checks are run _once_ for all packages, and are defined in the root directory `package.json`
 
-```
+```js
 "preversion": "lerna bootstrap && link-parent-bin && nps check"
 ```
 
 The following commands will let you try a version without publishing or creating git commits:
 
-```console
+```sh
 // This command bumps versions, runs checks, builds libs. No git commits will be made, and nothing will be published. `package.json` files in all packages will be altered, so be careful to clean up afterwards. This command will only run all pre-version scripts if there are committed changes to packages, so creating a test commit before running this command will typically be necessary.
 $ nps lerna-dry-run
 ```
 
 To publish a package _for real_
 
-```console
+```sh
 $ lerna publish
 ```
 
