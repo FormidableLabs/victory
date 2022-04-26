@@ -2,7 +2,7 @@
  * Test setup for client-side tests.
  *
  * Intended for:
- * - Karma tests: `builder run test-frontend`
+ * - Karma tests: `yarn nps karma`
  * - Browser tests: `http://localhost:3000/test/client/test.html`
  */
 /*globals window:false*/
@@ -38,7 +38,7 @@ const TEST_MODULE = process.env.TEST_MODULE;
 const srcReq = require.context(
   "packages",
   true,
-  /^.*\/packages\/(?!(victory-native)).*\.jsx?$/
+  /^.*\/packages\/(?!(victory-native)).*\/es\/.*\.jsx?$/
 );
 srcReq
   .keys()
