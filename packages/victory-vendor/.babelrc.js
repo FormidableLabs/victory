@@ -8,15 +8,13 @@
 const path = require("path");
 
 module.exports = {
-  "only": [
-    "node_modules/*/src/**/*.js"
-  ],
-  "plugins": [
+  only: ["node_modules/*/src/**/*.js"],
+  plugins: [
     [
       "@babel/transform-modules-commonjs",
       {
-        "strict": false,
-        "allowTopLevelThis": true
+        strict: false,
+        allowTopLevelThis: true
       }
     ],
     [
@@ -32,7 +30,9 @@ module.exports = {
             // - Only top level imports "d3-<whatever>"
             // - With no path components (like "d3-<whatever>/path/to.js")
             if (match.groups.path) {
-              throw new Error(`Unable to process ${sourcePath} import in ${currentFile}`);
+              throw new Error(
+                `Unable to process ${sourcePath} import in ${currentFile}`
+              );
             }
 
             // Get Vendor package path.
@@ -44,8 +44,14 @@ module.exports = {
             // and have an import transform like:
             // - `d3-color`
             // - `../../d3-color`
-            const currentFileVendor = currentFile.replace(/^node_modules/, "lib-vendor");
-            const relPathToPkg = path.relative(path.dirname(currentFileVendor), vendorPkg);
+            const currentFileVendor = currentFile.replace(
+              /^node_modules/,
+              "lib-vendor"
+            );
+            const relPathToPkg = path.relative(
+              path.dirname(currentFileVendor),
+              vendorPkg
+            );
 
             return relPathToPkg;
           }

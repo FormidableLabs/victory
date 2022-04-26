@@ -1,8 +1,6 @@
 module.exports = {
-  "presets": [
-    "@babel/preset-react"
-  ],
-  "plugins": [
+  presets: ["@babel/preset-react"],
+  plugins: [
     "lodash",
     "@babel/proposal-class-properties",
     "@babel/transform-arrow-functions",
@@ -17,14 +15,14 @@ module.exports = {
     "@babel/proposal-object-rest-spread",
     "@babel/plugin-proposal-export-namespace-from"
   ],
-  "env": {
-    "commonjs": {
-      "plugins": [
+  env: {
+    commonjs: {
+      plugins: [
         [
           "@babel/transform-modules-commonjs",
           {
-            "strict": false,
-            "allowTopLevelThis": true
+            strict: false,
+            allowTopLevelThis: true
           }
         ]
       ]

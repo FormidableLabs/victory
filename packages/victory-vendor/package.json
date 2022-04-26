@@ -21,6 +21,10 @@
       "default": "./lib/d3-*.js"
     }
   },
+  "scripts": {
+    "version": "yarn run build",
+    "build": "node ./scripts/build.js"
+  },
   "dependencies": {
     "d3-array": "^3.1.6",
     "d3-ease": "^3.0.1",
@@ -29,13 +33,9 @@
     "d3-shape": "^3.1.0",
     "d3-timer": "^3.0.1"
   },
-  "scripts": {
-    "version": "echo TODO IMPLEMENT",
-    "build": "node ./scripts/build.js"
-  },
-  "sideEffects": false,
   "devDependencies": {
     "execa": "^6.1.0",
     "rimraf": "^3.0.2"
-  }
+  },
+  "sideEffects": false
 }

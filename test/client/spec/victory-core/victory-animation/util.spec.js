@@ -67,7 +67,10 @@ describe("victoryInterpolator", () => {
 
   it("interpolates object values", () => {
     // From https://github.com/d3/d3-interpolate/blob/main/test/value-test.js#L44
-    const interpolator = victoryInterpolator({ color: "red" }, { color: "blue" });
+    const interpolator = victoryInterpolator(
+      { color: "red" },
+      { color: "blue" }
+    );
     expect(interpolator(0.5)).to.eql({ color: "rgb(128, 0, 128)" });
   });
 });

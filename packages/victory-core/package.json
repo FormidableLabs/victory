@@ -22,7 +22,6 @@
     "lodash": "^4.17.21",
     "prop-types": "^15.5.8",
     "react-fast-compare": "^2.0.0",
-    "victory-vendor": "^36.3.2",
     "victory-vendor": "^36.3.2"
   },
   "peerDependencies": {

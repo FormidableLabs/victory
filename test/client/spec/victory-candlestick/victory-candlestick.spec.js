@@ -6,10 +6,7 @@
 import React from "react";
 import { shallow, mount } from "enzyme";
 import { range, omit } from "lodash";
-import {
-  VictoryCandlestick,
-  Candle
-} from "victory-candlestick";
+import { VictoryCandlestick, Candle } from "victory-candlestick";
 import { VictoryLabel } from "victory-core";
 
 class MyCandle extends React.Component {

@@ -11,7 +11,9 @@
  */
 const { interpolate } = require("victory-vendor/d3-interpolate");
 
-const { victoryInterpolator } = require("victory-core/lib/victory-animation/util.js");
+const {
+  victoryInterpolator
+} = require("victory-core/lib/victory-animation/util.js");
 
 const React = require("react");
 const { renderToString } = require("react-dom/server");
@@ -32,17 +34,21 @@ const main = async () => {
   // TODO: Render Victory Animation
   // TODO: Actually force a resolve on the async interpolation stuff.
   console.log("\n## VictoryAnimation test");
-  const Component = React.createElement(VictoryAnimation, {
-    duration: 1000,
-    data: "TODO"
-  }, function (tweenedProps, animationInfo) {
-    console.log("TODO USE INTERPOLATION", { tweenedProps, animationInfo });
-    return React.createElement("div", null, "hello");
-  });
+  const Component = React.createElement(
+    VictoryAnimation,
+    {
+      duration: 1000,
+      data: "TODO"
+    },
+    function (tweenedProps, animationInfo) {
+      console.log("TODO USE INTERPOLATION", { tweenedProps, animationInfo });
+      return React.createElement("div", null, "hello");
+    }
+  );
 
   const markup = renderToString(Component);
   console.log(markup);
-}
+};
 
 if (require.main === module) {
   main();

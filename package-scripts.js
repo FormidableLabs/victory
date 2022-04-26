@@ -89,7 +89,8 @@ module.exports = {
     "lerna-dry-run":
       "lerna version --no-git-tag-version --no-push --loglevel silly",
     // TODO: organize build scripts once build perf is sorted out
-    "babel-es": "cross-env BABEL_ENV=es babel src --out-dir es --config-file ../../.babelrc.js --copy-files",
+    "babel-es":
+      "cross-env BABEL_ENV=es babel src --out-dir es --config-file ../../.babelrc.js --copy-files",
     "babel-lib":
       "cross-env BABEL_ENV=commonjs babel src --out-dir lib --config-file ../../.babelrc.js --copy-files",
     "build-es": npsUtils.series.nps("clean.es", "babel-es"),
@@ -99,7 +100,10 @@ module.exports = {
       "lerna exec --parallel --ignore victory-native --ignore victory-vendor -- nps build-libs",
     "build-package-libs-vendor":
       "lerna exec --scope victory-vendor -- yarn build",
-    "build-package-libs": npsUtils.series.nps("build-package-libs-core", "build-package-libs-vendor"),
+    "build-package-libs": npsUtils.series.nps(
+      "build-package-libs-core",
+      "build-package-libs-vendor"
+    ),
     "build-dist-dev":
       "webpack --bail --config ../../config/webpack/webpack.config.dev.js",
     "build-dist-min":
