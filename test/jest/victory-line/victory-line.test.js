@@ -129,5 +129,37 @@ describe("victory-line", () => {
       const lines = container.querySelectorAll("path");
       expect(lines).toHaveLength(1);
     });
+
+    it("renders data ordered by x-value, by default", () => {
+      const data = [{ t: 0 /*x: 10, y: 1*/ }, { t: 1 /*x:  9, y: 1*/ }];
+
+      const { container } = render(
+        <VictoryLine data={data} x={({ t }) => 10 - t} y={() => 1} />
+      );
+
+      const line = container.querySelector("path");
+      const renderedData = JSON.parse(line.getAttribute("data-json"));
+
+      expect(renderedData[0].t).toEqual(1);
+      expect(renderedData[1].t).toEqual(0);
+    });
+
+    it("renders data ordered by value of sortKey, if given", () => {
+      const data = [{ t: 0 /*x: 10, y: 1*/ }, { t: 1 /*x:  9, y: 1*/ }];
+      const { container } = render(
+        <VictoryLine
+          data={data}
+          sortKey={"t"}
+          x={({ t }) => 10 - t}
+          y={() => 1}
+        />
+      );
+
+      const line = container.querySelector("path");
+      const renderedData = JSON.parse(line.getAttribute("data-json"));
+
+      expect(renderedData[0].t).toEqual(0);
+      expect(renderedData[1].t).toEqual(1);
+    });
   });
 });
