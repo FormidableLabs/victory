@@ -53,7 +53,7 @@ module.exports = {
         "lint.test",
         "lint.stories",
         "lint.demo",
-        // TODO: Add lint.docs ???
+        "lint.docs",
         "lint.vendor",
         "lint.src"
       )
