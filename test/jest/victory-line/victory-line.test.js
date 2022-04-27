@@ -1,8 +1,9 @@
 import React from "react";
-import { render, screen } from "@testing-library/react";
+import { fireEvent, render, screen } from "@testing-library/react";
 import { VictoryLine, Curve } from "victory-line";
 import { calculateD3Path } from "../../svg-test-helper";
 import { curveCatmullRom } from "d3-shape";
+import { range, random } from "lodash";
 
 describe("victory-line", () => {
   describe("default component rendering", () => {
@@ -160,6 +161,126 @@ describe("victory-line", () => {
 
       expect(renderedData[0].t).toEqual(0);
       expect(renderedData[1].t).toEqual(1);
+    });
+  });
+
+  describe("event handling", () => {
+    it("attaches an event to the parent svg", () => {
+      const clickHandler = jest.fn();
+      render(
+        <VictoryLine
+          data-testid="container"
+          events={[
+            {
+              target: "parent",
+              eventHandlers: { onClick: clickHandler }
+            }
+          ]}
+        />
+      );
+      const svg = screen.getByTestId("container");
+      fireEvent.click(svg);
+
+      expect(clickHandler).toHaveBeenCalled();
+    });
+
+    it("attaches an event to data", () => {
+      const clickHandler = jest.fn();
+      render(
+        <VictoryLine
+          dataComponent={<Curve data-testid="line" />}
+          events={[
+            {
+              target: "data",
+              eventHandlers: { onClick: clickHandler }
+            }
+          ]}
+        />
+      );
+
+      const line = screen.getByTestId("line");
+
+      fireEvent.click(line);
+
+      expect(clickHandler).toHaveBeenCalled();
+    });
+
+    it("attaches an event to a label", () => {
+      const clickHandler = jest.fn();
+      render(
+        <VictoryLine
+          data={[
+            { x: 1, y: 1 },
+            { x: 2, y: 2 }
+          ]}
+          labels={({ datum }) => datum.x}
+          events={[
+            {
+              target: "labels",
+              eventHandlers: { onClick: clickHandler }
+            }
+          ]}
+        />
+      );
+      const label = screen.getByText("1");
+
+      fireEvent.click(label);
+
+      expect(clickHandler).toHaveBeenCalled();
+    });
+  });
+
+  describe("accessibility", () => {
+    it("adds an aria role to a line segment", () => {
+      const { container } = render(<VictoryLine />);
+
+      expect(container.querySelector("path").getAttribute("role")).toEqual(
+        "presentation"
+      );
+    });
+
+    it("adds an aria role to each line segment", () => {
+      const data = [
+        { x: 1, y: 1 },
+        { x: 2, y: 3 },
+        { x: 3, y: 5 },
+        { x: 4, y: 2 },
+        { x: 5, y: null },
+        { x: 6, y: null },
+        { x: 7, y: 6 },
+        { x: 8, y: 7 },
+        { x: 9, y: 8 },
+        { x: 10, y: 12 }
+      ];
+      const { container } = render(<VictoryLine data={data} />);
+
+      container.querySelectorAll("path").forEach((p) => {
+        expect(p.getAttribute("role")).toEqual("presentation");
+      });
+    });
+
+    it("adds aria-label and tabIndex to Curve primitive", () => {
+      const ariaTestData = range(4).map((x) => ({ x, y: random(1, 7) }));
+      const { container } = render(
+        <VictoryLine
+          data={ariaTestData}
+          dataComponent={
+            <Curve
+              ariaLabel={({ data }) =>
+                `data point ${data[2].x + 1}'s x value is ${data[2].x}`
+              }
+              tabIndex={3}
+            />
+          }
+        />
+      );
+      const path = container.querySelector("path");
+
+      expect(path.getAttribute("aria-label")).toEqual(
+        `data point 3's x value is 2`
+      );
+
+      expect(parseInt(path.getAttribute("tabindex"))).toEqual(3);
     });
   });
 });
