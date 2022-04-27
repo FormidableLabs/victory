@@ -38,9 +38,12 @@ module.exports = {
       default: npsUtils.concurrent.nps("watch", "server.dev", "server.test")
     },
     lint: {
+      // Note: Using a base `nps` command with extra args.
+      // 1. You need to add double quotes around the extra part (e.g. `test` below)
+      // 2. If going through a `lerna exec` you need to escape with an extra backslash `\` (e.g. `src` below)
       base: "yarn eslint --color --ext .js,.jsx,.ts,.tsx",
       src: "lerna exec --ignore victory-vendor --stream -- yarn nps \\\"lint.base src\\\"",
-      vendor: "echo TODO lerna exec --scope victory-vendor -- yarn nps \\\"lint.base scripts\\\"",
+      vendor: "lerna exec --scope victory-vendor -- yarn nps \\\"lint.base scripts\\\"",
       demo: "yarn nps \"lint.base demo\"",
       docs: "yarn nps \"lint.base docs\"",
       stories: "yarn nps \"lint.base stories\"",

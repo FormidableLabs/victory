@@ -1,3 +1,4 @@
+/* global __dirname:false */
 /**
  * Build vendor libraries from `node_modules`
  */
@@ -10,6 +11,8 @@ const rimrafP = promisify(rimraf);
 
 const vendorPkg = require("../package.json");
 const VENDOR_PKGS = new Set(Object.keys(vendorPkg.dependencies));
+
+const { log, error } = console; // eslint-disable-line no-undef
 
 // Templates.
 const getEsmIndex = (pkg) => `
@@ -71,7 +74,7 @@ const main = async () => {
 
   // Safety check: we assume that **all** are flattened to root level of this
   // package, and want to make sure there are no nested dependencies.
-  for (let pkgName of pkgs) {
+  for (const pkgName of pkgs) {
     const pkgModsPath = path.resolve(
       __dirname,
       `../node_modules/git${pkgName}/node_modules`
@@ -86,7 +89,7 @@ const main = async () => {
   const EsmBasePath = path.resolve(__dirname, `../es`);
   const CjsBasePath = path.resolve(__dirname, `../lib`);
   const VendorBasePath = path.resolve(__dirname, `../lib-vendor`);
-  console.log("Cleaning old vendor directories.");
+  log("Cleaning old vendor directories.");
   await Promise.all(
     [
       EsmBasePath,
@@ -99,7 +102,7 @@ const main = async () => {
   );
 
   // Transpile.
-  console.log("Transpiling vendor sources.");
+  log("Transpiling vendor sources.");
   await execa(
     "yarn" /*yarn*/,
     [
@@ -116,9 +119,9 @@ const main = async () => {
   );
 
   // Iterate and generate index files.
-  console.log("Copying licenses and generating indexes.");
-  for (let pkgName of pkgs) {
-    console.log(`- ${pkgName}`);
+  log("Copying licenses and generating indexes.");
+  for (const pkgName of pkgs) {
+    log(`- ${pkgName}`);
 
     const pkgBase = path.resolve(__dirname, `../node_modules/${pkgName}`);
     const pkgPath = path.join(pkgBase, `package.json`);
@@ -149,10 +152,10 @@ const main = async () => {
 if (require.main === module) {
   main()
     .then(() => {
-      console.log("Build finished.");
+      log("Build finished.");
     })
     .catch((err) => {
-      console.error(err);
+      error(err);
       process.exit(-1);
     });
 }
