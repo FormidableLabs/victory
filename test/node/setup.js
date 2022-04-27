@@ -1,4 +1,2 @@
-"use strict";
-
 const { expect } = require("chai");
-global.expect = expect;
+global.expect = expect; // eslint-disable-line no-undef

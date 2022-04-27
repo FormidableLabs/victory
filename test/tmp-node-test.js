@@ -1,3 +1,4 @@
+/* eslint-disable */
 /**
  * Temporary Node.js test to exercise ESM issues.
  *

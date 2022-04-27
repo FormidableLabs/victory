@@ -38,16 +38,20 @@ module.exports = {
       default: npsUtils.concurrent.nps("watch", "server.dev", "server.test")
     },
     lint: {
-      src: "lerna exec --stream -- eslint --color --ext .js,.jsx,.ts,.tsx src",
-      demo: "eslint --color --ext .js,.jsx,.ts,.tsx demo",
-      docs: "eslint --color --ext .js,.jsx docs",
-      stories: "eslint --color stories",
-      test: "eslint --color test",
+      base: "yarn eslint --color --ext .js,.jsx,.ts,.tsx",
+      src: "lerna exec --ignore victory-vendor --stream -- yarn nps \\\"lint.base src\\\"",
+      vendor: "echo TODO lerna exec --scope victory-vendor -- yarn nps \\\"lint.base scripts\\\"",
+      demo: "yarn nps \"lint.base demo\"",
+      docs: "yarn nps \"lint.base docs\"",
+      stories: "yarn nps \"lint.base stories\"",
+      test: "echo TODO eslint --color test",
       ts: npsUtils.series.nps("build-package-libs", "compile-ts"),
       default: npsUtils.series.nps(
         "lint.test",
         "lint.stories",
         "lint.demo",
+        // TODO: Add lint.docs ???
+        "lint.vendor",
         "lint.src"
       )
     },
