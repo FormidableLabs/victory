@@ -3,6 +3,9 @@ import { assign, without, isNil } from "lodash";
 import { voronoi as d3Voronoi } from "d3-voronoi";
 import { Helpers, LabelHelpers, Scale, Domain, Data } from "victory-core";
 
+// Re-export for tests
+export { d3Voronoi as _internalD3Voronoi };
+
 const getVoronoi = (props, range, scale) => {
   const minRange = [Math.min(...range.x), Math.min(...range.y)];
   const maxRange = [Math.max(...range.x), Math.max(...range.y)];

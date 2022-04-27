@@ -74,7 +74,6 @@
     "chromatic": "^5.0.0",
     "core-js": "^2.5.1",
     "cross-env": "^5.2.0",
-    "d3-voronoi": "^1.1.4",
     "emotion-theming": "^10.0.27",
     "enzyme": "^3.11.0",
     "enzyme-adapter-react-16": "^1.15.6",
