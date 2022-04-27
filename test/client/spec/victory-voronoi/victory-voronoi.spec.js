@@ -85,7 +85,7 @@ describe("components/victory-voronoi", () => {
       expect(xValues).to.eql([4, 3, 2, 1, 0]);
     });
 
-    // TODO: FIGURE OUT WHY ERROING (revert to 1.1.12?)
+    // TODO: FIGURE OUT WHY ERRORING (revert to 1.1.12?)
     it.skip("does not render data with null x or y values", () => {
       const data = [
         { x: 1, y: 2 },
