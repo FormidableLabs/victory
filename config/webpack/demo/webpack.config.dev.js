@@ -15,11 +15,6 @@ const WDS_PORT = 3000;
 // TODO: Can we combine all three webpack configs???
 module.exports = {
   mode: "development",
-  resolve: {
-    alias: {
-      Packages: path.resolve("packages")
-    }
-  },
 
   devServer: {
     port: WDS_PORT,

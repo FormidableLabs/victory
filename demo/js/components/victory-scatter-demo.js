@@ -3,12 +3,12 @@
 import React from "react";
 import PropTypes from "prop-types";
 import { assign, merge, random, range } from "lodash";
-import { VictoryScatter } from "Packages/victory-scatter/src/index";
+import { VictoryScatter } from "victory-scatter/src/index";
 import {
   VictoryLabel,
   VictoryContainer,
   VictoryTheme
-} from "Packages/victory-core/src/index";
+} from "victory-core/src/index";
 import bubbleData from "./bubble-data.js";
 import symbolData from "./symbol-data.js";
 

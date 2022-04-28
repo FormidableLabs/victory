@@ -1,10 +1,10 @@
 /*global window:false */
 /*eslint-disable no-magic-numbers */
 import React from "react";
-import { VictoryVoronoi } from "Packages/victory-voronoi/src/index";
-import { VictoryTooltip } from "Packages/victory-tooltip/src/index";
-import { VictoryChart } from "Packages/victory-chart/src/index";
-import { VictoryScatter } from "Packages/victory-scatter/src/index";
+import { VictoryVoronoi } from "victory-voronoi/src/index";
+import { VictoryTooltip } from "victory-tooltip/src/index";
+import { VictoryChart } from "victory-chart/src/index";
+import { VictoryScatter } from "victory-scatter/src/index";
 import { range, random } from "lodash";
 
 const getData = () => {

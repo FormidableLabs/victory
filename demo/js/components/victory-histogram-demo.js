@@ -2,14 +2,14 @@
 /*eslint-disable no-magic-numbers,react/no-multi-comp */
 import React from "react";
 import { merge, random, range } from "lodash";
-import { VictoryChart } from "Packages/victory-chart/src/index";
-import { VictoryHistogram } from "Packages/victory-histogram/src/index";
-import { VictoryLine } from "Packages/victory-line/src/index";
-import { VictoryScatter } from "Packages/victory-scatter/src/index";
-import { VictoryTheme } from "Packages/victory-core/src/index";
-import { VictoryTooltip } from "Packages/victory-tooltip/src/index";
-import { VictoryStack } from "Packages/victory-stack/src/index";
-import { VictoryVoronoiContainer } from "Packages/victory-voronoi-container/src/index";
+import { VictoryChart } from "victory-chart/src/index";
+import { VictoryHistogram } from "victory-histogram/src/index";
+import { VictoryLine } from "victory-line/src/index";
+import { VictoryScatter } from "victory-scatter/src/index";
+import { VictoryTheme } from "victory-core/src/index";
+import { VictoryTooltip } from "victory-tooltip/src/index";
+import { VictoryStack } from "victory-stack/src/index";
+import { VictoryVoronoiContainer } from "victory-voronoi-container/src/index";
 
 const randomDate = (start, end) => {
   return new Date(

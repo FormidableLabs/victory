@@ -2,13 +2,13 @@
 /*global window:false*/
 
 import React from "react";
-import { VictoryChart } from "Packages/victory-chart/src/index";
-import { VictoryStack } from "Packages/victory-stack/src/index";
-import { VictoryArea } from "Packages/victory-area/src/index";
-import { VictoryBar } from "Packages/victory-bar/src/index";
-import { VictoryLine } from "Packages/victory-line/src/index";
-import { VictoryZoomContainer } from "Packages/victory-zoom-container/src/index";
-import { VictoryVoronoiContainer } from "Packages/victory-voronoi-container/src/index";
+import { VictoryChart } from "victory-chart/src/index";
+import { VictoryStack } from "victory-stack/src/index";
+import { VictoryArea } from "victory-area/src/index";
+import { VictoryBar } from "victory-bar/src/index";
+import { VictoryLine } from "victory-line/src/index";
+import { VictoryZoomContainer } from "victory-zoom-container/src/index";
+import { VictoryVoronoiContainer } from "victory-voronoi-container/src/index";
 import { range, assign } from "lodash";
 
 class App extends React.Component {

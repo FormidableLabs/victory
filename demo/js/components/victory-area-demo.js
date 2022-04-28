@@ -2,14 +2,14 @@
 /*eslint-disable no-magic-numbers */
 import React from "react";
 import { merge, random, range } from "lodash";
-import { VictoryChart } from "Packages/victory-chart/src/index";
-import { VictoryStack } from "Packages/victory-stack/src/index";
-import { VictoryGroup } from "Packages/victory-group/src/index";
-import { VictoryArea } from "Packages/victory-area/src/index";
+import { VictoryChart } from "victory-chart/src/index";
+import { VictoryStack } from "victory-stack/src/index";
+import { VictoryGroup } from "victory-group/src/index";
+import { VictoryArea } from "victory-area/src/index";
 import {
   VictoryContainer,
   VictoryTheme
-} from "Packages/victory-core/src/index";
+} from "victory-core/src/index";
 
 export default class App extends React.Component {
   constructor() {
