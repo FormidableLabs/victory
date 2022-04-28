@@ -1,4 +1,3 @@
-
 const os = require("os");
 // Can override with, e.g., `CONCURRENCY=2 yarn nps build-package-dists`.
 const CONCURRENCY = parseInt(process.env.CONCURRENCY || os.cpus().length, 10);
@@ -68,7 +67,7 @@ module.exports = {
     format: {
       fix: 'prettier --write "./**/*.{js,jsx,json,ts,tsx}"',
       ci: 'prettier --list-different "./**/*.{js,jsx,json,ts,tsx}"',
-      default: 'yarn nps format.fix"'
+      default: "yarn nps format.fix"
     },
     check: {
       ci: npsUtils.series.nps(
@@ -111,8 +110,7 @@ module.exports = {
     "build-es": npsUtils.series.nps("clean.es", "babel-es"),
     "build-lib": npsUtils.series.nps("clean.lib", "babel-lib"),
     "build-libs": npsUtils.series.nps("build-lib", "build-es"),
-    "build-package-libs-core":
-      `lerna exec --concurrency ${CONCURRENCY} --stream --ignore victory-native --ignore victory-vendor -- nps build-libs`,
+    "build-package-libs-core": `lerna exec --concurrency ${CONCURRENCY} --stream --ignore victory-native --ignore victory-vendor -- nps build-libs`,
     "build-package-libs-vendor":
       "lerna exec --scope victory-vendor -- yarn build",
     "build-package-libs": npsUtils.series.nps(
@@ -125,8 +123,7 @@ module.exports = {
       "webpack --bail --config ../../config/webpack/webpack.config.js",
     "build-dists": npsUtils.concurrent.nps("build-dist-min", "build-dist-dev"),
     "build-dist": npsUtils.series.nps("clean.dist", "build-dists"),
-    "build-package-dists":
-      `lerna exec --concurrency ${CONCURRENCY} --stream --ignore victory-native --ignore victory-vendor -- nps build-dists`,
+    "build-package-dists": `lerna exec --concurrency ${CONCURRENCY} --stream --ignore victory-native --ignore victory-vendor -- nps build-dists`,
     bootstrap: "lerna bootstrap",
     "link-parent-bin": "link-parent-bin"
   }

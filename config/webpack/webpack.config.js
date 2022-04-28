@@ -40,7 +40,7 @@ module.exports = {
   ],
   output: {
     path: path.resolve("dist"),
-    filename: `${libPath  }.min.js`,
+    filename: `${libPath}.min.js`,
     library: libName,
     libraryTarget: "umd"
   },
