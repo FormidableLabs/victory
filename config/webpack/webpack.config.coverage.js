@@ -2,8 +2,8 @@
 /**
  * Webpack frontend test (w/ coverage) configuration.
  */
-var _ = require("lodash");
-var testCfg = require("./webpack.config.test");
+const _ = require("lodash");
+const testCfg = require("./webpack.config.test");
 
 module.exports = _.merge({}, testCfg, {
   module: {

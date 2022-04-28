@@ -1,4 +1,4 @@
-var npsUtils = require("nps-utils");
+const npsUtils = require("nps-utils");
 
 module.exports = {
   scripts: {
@@ -46,12 +46,13 @@ module.exports = {
       src: 'lerna exec --ignore victory-vendor --stream -- yarn nps \\"lint.base src\\"',
       vendor:
         'lerna exec --scope victory-vendor -- yarn nps \\"lint.base scripts\\"',
-      demo: 'yarn nps "lint.base demo"',
+      config: 'yarn nps "lint.base package-scripts.js config"',
       docs: 'yarn nps "lint.base docs"',
       stories: 'yarn nps "lint.base stories"',
       test: 'yarn nps "lint.base test"',
       ts: npsUtils.series.nps("build-package-libs", "compile-ts"),
       default: npsUtils.series.nps(
+        "lint.config",
         "lint.test",
         "lint.stories",
         "lint.demo",

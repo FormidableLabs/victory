@@ -1,11 +1,11 @@
 "use strict";
 
-var _ = require("lodash");
-var base = require("./webpack.config.dev");
+const _ = require("lodash");
+const base = require("./webpack.config.dev");
 
 // Clone our own module object.
-var mod = _.cloneDeep(base.module);
-var firstLoader = mod.rules[0]; // eslint-disable-line no-magic-numbers
+const mod = _.cloneDeep(base.module);
+const firstLoader = mod.rules[0]; // eslint-disable-line no-magic-numbers
 
 // Update rules array. First loader needs react-hot-loader.
 firstLoader.rules = [require.resolve("react-hot-loader")]
