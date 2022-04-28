@@ -48,8 +48,7 @@ const Curve = (props) => {
     role: props.role,
     shapeRendering: props.shapeRendering,
     clipPath: props.clipPath,
-    tabIndex: props.tabIndex,
-    "data-json": JSON.stringify(props.data)
+    tabIndex: props.tabIndex
   });
 };
 

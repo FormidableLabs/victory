@@ -3,8 +3,7 @@ import * as d3Shape from "d3-shape";
 import { voronoi as d3Voronoi } from "d3-voronoi";
 import { without } from "lodash";
 
-export const calculateD3Path = (props, pathType, index) => {
-  // eslint-disable-line max-statements
+export const calculateD3Path = (props, pathType, index = 0) => {
   const { width, height, padding, scale, interpolation, data, domain } = props;
   const scaleType = scale
     ? `scale${scale[0].toUpperCase() + scale.slice(1)}`

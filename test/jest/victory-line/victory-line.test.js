@@ -5,8 +5,15 @@ import { calculateD3Path } from "../../svg-test-helper";
 import { curveCatmullRom } from "d3-shape";
 import { range, random } from "lodash";
 
-describe("victory-line", () => {
+describe("components/victory-line", () => {
   describe("default component rendering", () => {
+    it("accepts user props", () => {
+      render(<VictoryLine data-testid="victory-line" aria-label="Chart" />);
+
+      expect(screen.queryByTestId("victory-line")).toBeDefined();
+      expect(screen.getByLabelText("Chart")).toBeDefined();
+    });
+
     it("renders an svg with the correct viewBox", () => {
       const { container } = render(<VictoryLine />);
       const viewBoxValue = `0 0 ${450} ${300}`;
@@ -135,7 +142,14 @@ describe("victory-line", () => {
       const data = [{ t: 0 /*x: 10, y: 1*/ }, { t: 1 /*x:  9, y: 1*/ }];
 
       const { container } = render(
-        <VictoryLine data={data} x={({ t }) => 10 - t} y={() => 1} />
+        <VictoryLine
+          data={data}
+          x={({ t }) => 10 - t}
+          y={() => 1}
+          dataComponent={
+            <Curve data-json={(props) => JSON.stringify(props.data)} />
+          }
+        />
       );
 
       const line = container.querySelector("path");
@@ -153,6 +167,9 @@ describe("victory-line", () => {
           sortKey={"t"}
           x={({ t }) => 10 - t}
           y={() => 1}
+          dataComponent={
+            <Curve data-json={(props) => JSON.stringify(props.data)} />
+          }
         />
       );
 

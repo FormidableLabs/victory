@@ -49,6 +49,19 @@ const testIfSafeProp = (key) => {
 };
 
 /**
+ * Gets the value from props if a function value is provided
+ * @param {any} value: maybe function value
+ * @param {Object} props: props object
+ * @returns {any} newValue
+ */
+const getValue = (value, props) => {
+  if (typeof value === "function") {
+    return value(props);
+  }
+  return value;
+};
+
+/**
  * getSafeUserProps - function that takes in a props object and removes any
  * key-value entries that do not match filter strings in the USER_PROPS_SAFELIST
  * object.
@@ -59,6 +72,10 @@ const testIfSafeProp = (key) => {
 export const getSafeUserProps = (props) => {
   const propsToFilter = { ...props };
   return Object.fromEntries(
-    Object.entries(propsToFilter).filter(([key]) => testIfSafeProp(key))
+    Object.entries(propsToFilter)
+      .filter(([key]) => testIfSafeProp(key))
+      .map(([key, value]) => {
+        return [key, getValue(value, props)];
+      })
   );
 };
