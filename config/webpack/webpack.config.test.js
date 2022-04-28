@@ -2,14 +2,13 @@
 /**
  * Webpack frontend test configuration.
  */
-var path = require("path");
-var glob = require("glob");
-var webpack = require("webpack");
+ const path = require("path");
+const webpack = require("webpack");
 const NodePolyfillPlugin = require("node-polyfill-webpack-plugin");
 
 // Replace with `__dirname` if using in project root.
-var ROOT = process.cwd();
-var WDS_PORT = 3001;
+const ROOT = process.cwd();
+const WDS_PORT = 3001;
 
 module.exports = {
   mode: "development",
@@ -22,10 +21,6 @@ module.exports = {
     publicPath: "/assets/"
   },
   resolve: {
-    // TODO: REMOVE THIS
-    alias: {
-      packages: path.join(ROOT, "packages")
-    },
     fallback: {
       stream: false
     }
