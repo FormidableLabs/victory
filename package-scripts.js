@@ -1,3 +1,7 @@
+
+const os = require("os");
+// Can override with, e.g., `CONCURRENCY=2 yarn nps build-package-dists`.
+const CONCURRENCY = parseInt(process.env.CONCURRENCY || os.cpus().length, 10);
 const npsUtils = require("nps-utils");
 
 module.exports = {
@@ -108,7 +112,7 @@ module.exports = {
     "build-lib": npsUtils.series.nps("clean.lib", "babel-lib"),
     "build-libs": npsUtils.series.nps("build-lib", "build-es"),
     "build-package-libs-core":
-      "lerna exec --parallel --ignore victory-native --ignore victory-vendor -- nps build-libs",
+      `lerna exec --concurrency ${CONCURRENCY} --stream --ignore victory-native --ignore victory-vendor -- nps build-libs`,
     "build-package-libs-vendor":
       "lerna exec --scope victory-vendor -- yarn build",
     "build-package-libs": npsUtils.series.nps(
@@ -122,7 +126,7 @@ module.exports = {
     "build-dists": npsUtils.concurrent.nps("build-dist-min", "build-dist-dev"),
     "build-dist": npsUtils.series.nps("clean.dist", "build-dists"),
     "build-package-dists":
-      "lerna exec --parallel --ignore victory-native --ignore victory-vendor -- nps build-dists",
+      `lerna exec --concurrency ${CONCURRENCY} --stream --ignore victory-native --ignore victory-vendor -- nps build-dists`,
     bootstrap: "lerna bootstrap",
     "link-parent-bin": "link-parent-bin"
   }
