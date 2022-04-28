@@ -42,12 +42,13 @@ module.exports = {
       // 1. You need to add double quotes around the extra part (e.g. `test` below)
       // 2. If going through a `lerna exec` you need to escape with an extra backslash `\` (e.g. `src` below)
       base: "yarn eslint --color --ext .js,.jsx,.ts,.tsx",
-      src: "lerna exec --ignore victory-vendor --stream -- yarn nps \\\"lint.base src\\\"",
-      vendor: "lerna exec --scope victory-vendor -- yarn nps \\\"lint.base scripts\\\"",
-      demo: "yarn nps \"lint.base demo\"",
-      docs: "yarn nps \"lint.base docs\"",
-      stories: "yarn nps \"lint.base stories\"",
-      test: "yarn nps \"lint.base test\"",
+      src: 'lerna exec --ignore victory-vendor --stream -- yarn nps \\"lint.base src\\"',
+      vendor:
+        'lerna exec --scope victory-vendor -- yarn nps \\"lint.base scripts\\"',
+      demo: 'yarn nps "lint.base demo"',
+      docs: 'yarn nps "lint.base docs"',
+      stories: 'yarn nps "lint.base stories"',
+      test: 'yarn nps "lint.base test"',
       ts: npsUtils.series.nps("build-package-libs", "compile-ts"),
       default: npsUtils.series.nps(
         "lint.test",
@@ -59,8 +60,9 @@ module.exports = {
       )
     },
     format: {
-      default: 'prettier --write "./**/*.{js,jsx,json,ts,tsx}"',
-      ci: 'prettier --list-different "./**/*.{js,jsx,json,ts,tsx}"'
+      fix: 'prettier --write "./**/*.{js,jsx,json,ts,tsx}"',
+      ci: 'prettier --list-different "./**/*.{js,jsx,json,ts,tsx}"',
+      default: 'yarn nps format.fix"'
     },
     check: {
       ci: npsUtils.series.nps(

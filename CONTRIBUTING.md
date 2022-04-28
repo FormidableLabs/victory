@@ -76,7 +76,10 @@ Victory uses eslint and prettier to maintain code style consistency. Before crea
 
 ```sh
 $ yarn nps lint
-$ yarn nps format
+
+# Prettier
+$ yarn nps format.ci  # check
+$ yarn nps format.fix # fix
 ```
 
 ## Visual Tests

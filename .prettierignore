@@ -2,7 +2,9 @@
 coverage
 dist
 lib
+lib-vendor
 es
+packages/victory-vendor/d3-*.js
 node_modules
 npm-debug.log*
 lerna-debug.log*
