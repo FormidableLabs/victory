@@ -75,7 +75,9 @@ If your terminal is under a proxy, you should turn off the proxy, or ChromeHeadl
 Victory uses eslint and prettier to maintain code style consistency. Before creating a pull request, please lint and format your changes with the following commands:
 
 ```sh
-$ yarn nps lint
+# Lint
+$ yarn nps lint                                       # check
+$ lerna exec --scope <pkg name> -- yarn nps lint.fix  # fix specific package
 
 # Prettier
 $ yarn nps format.ci  # check

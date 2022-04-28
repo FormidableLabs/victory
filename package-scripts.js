@@ -42,6 +42,7 @@ module.exports = {
       // 1. You need to add double quotes around the extra part (e.g. `test` below)
       // 2. If going through a `lerna exec` you need to escape with an extra backslash `\` (e.g. `src` below)
       base: "yarn eslint --color --ext .js,.jsx,.ts,.tsx",
+      fix: "yarn eslint --color --ext .js,.jsx,.ts,.tsx --fix",
       src: 'lerna exec --ignore victory-vendor --stream -- yarn nps \\"lint.base src\\"',
       vendor:
         'lerna exec --scope victory-vendor -- yarn nps \\"lint.base scripts\\"',
@@ -54,7 +55,7 @@ module.exports = {
         "lint.test",
         "lint.stories",
         "lint.demo",
-        "lint.docs",
+        // TODO: Needs `docs` install to work -- "lint.docs",
         "lint.vendor",
         "lint.src"
       )
