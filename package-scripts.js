@@ -50,6 +50,7 @@ module.exports = {
       vendor:
         'lerna exec --scope victory-vendor -- yarn nps \\"lint.base scripts\\"',
       config: 'yarn nps "lint.base package-scripts.js config"',
+      demo: 'yarn nps "lint.base demo"',
       docs: 'yarn nps "lint.base docs"',
       stories: 'yarn nps "lint.base stories"',
       test: 'yarn nps "lint.base test"',
