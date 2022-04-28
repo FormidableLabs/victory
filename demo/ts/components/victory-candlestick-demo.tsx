@@ -2,9 +2,9 @@
 /*eslint-disable no-magic-numbers */
 import React from "react";
 import { random, range, merge } from "lodash";
-import { VictoryChart } from "@packages/victory-chart";
-import { VictoryCandlestick } from "@packages/victory-candlestick";
-import { VictoryTheme } from "@packages/victory-core";
+import { VictoryChart } from "victory-chart";
+import { VictoryCandlestick } from "victory-candlestick";
+import { VictoryTheme } from "victory-core";
 
 interface VictoryCandlestickDemoState {
   data: {

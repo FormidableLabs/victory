@@ -1,15 +1,11 @@
 import React from "react";
 import PropTypes from "prop-types";
-import { VictoryChart } from "@packages/victory-chart";
-import { VictoryStack } from "@packages/victory-stack";
-import { VictoryGroup } from "@packages/victory-group";
-import { VictoryBar } from "@packages/victory-bar";
+import { VictoryChart } from "victory-chart";
+import { VictoryStack } from "victory-stack";
+import { VictoryGroup } from "victory-group";
+import { VictoryBar } from "victory-bar";
 
-import {
-  VictoryContainer,
-  VictoryTheme,
-  VictoryLabel
-} from "@packages/victory-core";
+import { VictoryContainer, VictoryTheme, VictoryLabel } from "victory-core";
 import { assign, random, range, merge } from "lodash";
 
 interface WrapperProps {

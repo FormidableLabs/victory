@@ -1,6 +1,6 @@
 import React from "react";
-import { VictoryChart } from "@packages/victory-chart";
-import { VictoryLine } from "@packages/victory-line";
+import { VictoryChart } from "victory-chart";
+import { VictoryLine } from "victory-line";
 import { VictoryContainer } from "victory-core/src";
 
 class OuiaDemo extends React.Component<any> {

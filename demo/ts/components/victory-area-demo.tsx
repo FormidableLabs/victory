@@ -1,10 +1,10 @@
 import React from "react";
 import { merge, random, range } from "lodash";
-import { VictoryChart } from "@packages/victory-chart";
-import { VictoryStack } from "@packages/victory-stack";
-import { VictoryGroup } from "@packages/victory-group";
-import { VictoryArea } from "@packages/victory-area";
-import { VictoryContainer, VictoryTheme } from "@packages/victory-core";
+import { VictoryChart } from "victory-chart";
+import { VictoryStack } from "victory-stack";
+import { VictoryGroup } from "victory-group";
+import { VictoryArea } from "victory-area";
+import { VictoryContainer, VictoryTheme } from "victory-core";
 
 interface VictoryAreaDemoState {
   data: {

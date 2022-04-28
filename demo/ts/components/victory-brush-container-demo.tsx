@@ -1,16 +1,16 @@
 /*eslint-disable no-magic-numbers */
 import React from "react";
-import { VictoryChart } from "@packages/victory-chart";
-import { VictoryStack } from "@packages/victory-stack";
-import { VictoryGroup } from "@packages/victory-group";
-import { VictoryAxis } from "@packages/victory-axis";
-import { VictoryBar } from "@packages/victory-bar";
-import { VictoryLine } from "@packages/victory-line";
-import { VictoryScatter } from "@packages/victory-scatter";
-import { VictoryLegend } from "@packages/victory-legend";
-import { VictoryZoomContainer } from "@packages/victory-zoom-container";
-import { VictoryBrushContainer } from "@packages/victory-brush-container";
-import { DomainTuple } from "@packages/victory-core";
+import { VictoryChart } from "victory-chart";
+import { VictoryStack } from "victory-stack";
+import { VictoryGroup } from "victory-group";
+import { VictoryAxis } from "victory-axis";
+import { VictoryBar } from "victory-bar";
+import { VictoryLine } from "victory-line";
+import { VictoryScatter } from "victory-scatter";
+import { VictoryLegend } from "victory-legend";
+import { VictoryZoomContainer } from "victory-zoom-container";
+import { VictoryBrushContainer } from "victory-brush-container";
+import { DomainTuple } from "victory-core";
 
 interface VictoryBrushContainerDemoState {
   zoomDomain: {

@@ -1,24 +1,24 @@
 /*eslint-disable no-magic-numbers,react/no-multi-comp */
 import React from "react";
 import { range, merge, random, minBy, maxBy, last } from "lodash";
-import { VictoryChart } from "@packages/victory-chart";
-import { VictoryStack } from "@packages/victory-stack";
-import { VictoryGroup } from "@packages/victory-group";
-import { VictoryAxis } from "@packages/victory-axis";
-import { VictoryArea } from "@packages/victory-area";
-import { VictoryBar } from "@packages/victory-bar";
-import { VictoryLine } from "@packages/victory-line";
-import { VictoryScatter } from "@packages/victory-scatter";
-import { VictoryZoomContainer } from "@packages/victory-zoom-container";
-import { VictoryTooltip } from "@packages/victory-tooltip";
-import { VictoryLegend } from "@packages/victory-legend";
+import { VictoryChart } from "victory-chart";
+import { VictoryStack } from "victory-stack";
+import { VictoryGroup } from "victory-group";
+import { VictoryAxis } from "victory-axis";
+import { VictoryArea } from "victory-area";
+import { VictoryBar } from "victory-bar";
+import { VictoryLine } from "victory-line";
+import { VictoryScatter } from "victory-scatter";
+import { VictoryZoomContainer } from "victory-zoom-container";
+import { VictoryTooltip } from "victory-tooltip";
+import { VictoryLegend } from "victory-legend";
 import {
   CoordinatesPropType,
   DomainTuple,
   VictoryClipContainer,
   VictoryPortal,
   VictoryTheme
-} from "@packages/victory-core";
+} from "victory-core";
 
 const allData = range(0, 10, 0.001).map((x) => ({
   x,

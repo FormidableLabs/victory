@@ -1,18 +1,18 @@
 /*eslint-disable no-magic-numbers */
 
 import React from "react";
-import { VictoryChart } from "@packages/victory-chart/src/index";
-import { VictoryStack } from "@packages/victory-stack/src/index";
-import { VictoryGroup } from "@packages/victory-group/src/index";
-import { VictoryBar } from "@packages/victory-bar/src/index";
-import { VictoryScatter } from "@packages/victory-scatter/src/index";
-import { VictoryLine } from "@packages/victory-line/src/index";
-import { VictoryArea } from "@packages/victory-area/src/index";
-import { VictoryCandlestick } from "@packages/victory-candlestick/src/index";
-import { VictoryErrorBar } from "@packages/victory-errorbar/src/index";
-import { VictoryBoxPlot } from "@packages/victory-box-plot/src/index";
-import { VictoryAxis } from "@packages/victory-axis/src/index";
-import { VictoryBrushContainer } from "@packages/victory-brush-container/src/index";
+import { VictoryChart } from "victory-chart/src/index";
+import { VictoryStack } from "victory-stack/src/index";
+import { VictoryGroup } from "victory-group/src/index";
+import { VictoryBar } from "victory-bar/src/index";
+import { VictoryScatter } from "victory-scatter/src/index";
+import { VictoryLine } from "victory-line/src/index";
+import { VictoryArea } from "victory-area/src/index";
+import { VictoryCandlestick } from "victory-candlestick/src/index";
+import { VictoryErrorBar } from "victory-errorbar/src/index";
+import { VictoryBoxPlot } from "victory-box-plot/src/index";
+import { VictoryAxis } from "victory-axis/src/index";
+import { VictoryBrushContainer } from "victory-brush-container/src/index";
 import { range, random } from "lodash";
 
 const errorData = [

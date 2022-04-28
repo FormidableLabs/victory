@@ -1,11 +1,11 @@
 import React from "react";
-import { VictoryChart } from "@packages/victory-chart";
-import { VictoryStack } from "@packages/victory-stack";
-import { VictoryGroup } from "@packages/victory-group";
-import { VictoryAxis } from "@packages/victory-axis";
-import { VictoryBar } from "@packages/victory-bar";
-import { VictoryScatter } from "@packages/victory-scatter";
-import { VictoryTooltip } from "@packages/victory-tooltip";
+import { VictoryChart } from "victory-chart";
+import { VictoryStack } from "victory-stack";
+import { VictoryGroup } from "victory-group";
+import { VictoryAxis } from "victory-axis";
+import { VictoryBar } from "victory-bar";
+import { VictoryScatter } from "victory-scatter";
+import { VictoryTooltip } from "victory-tooltip";
 
 class App extends React.Component {
   render() {

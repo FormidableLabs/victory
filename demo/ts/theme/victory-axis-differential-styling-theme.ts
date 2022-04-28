@@ -1,4 +1,4 @@
-import { VictoryThemeDefinition } from "@packages/victory-core";
+import { VictoryThemeDefinition } from "victory-core";
 
 const theme: VictoryThemeDefinition = {
   axis: {

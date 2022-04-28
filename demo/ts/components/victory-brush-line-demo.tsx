@@ -2,13 +2,13 @@
 /*eslint-disable no-shadow */
 
 import React from "react";
-import { VictoryChart } from "@packages/victory-chart";
-import { VictoryAxis } from "@packages/victory-axis";
-import { VictoryBar } from "@packages/victory-bar";
-import { VictoryBrushLine } from "@packages/victory-brush-line";
-import { VictoryLine } from "@packages/victory-line";
-import { VictoryScatter } from "@packages/victory-scatter";
-import { VictoryLabel } from "@packages/victory-core";
+import { VictoryChart } from "victory-chart";
+import { VictoryAxis } from "victory-axis";
+import { VictoryBar } from "victory-bar";
+import { VictoryBrushLine } from "victory-brush-line";
+import { VictoryLine } from "victory-line";
+import { VictoryScatter } from "victory-scatter";
+import { VictoryLabel } from "victory-core";
 import { DomainPropType, EventCallbackInterface } from "victory-core";
 import _ from "lodash";
 

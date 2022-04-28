@@ -12,7 +12,6 @@ const FILES = PACKAGES.map(function (p) {
 const DEMO = path.resolve("demo");
 const WDS_PORT = 3000;
 
-// TODO: Can we combine all three webpack configs???
 module.exports = {
   mode: "development",
 

@@ -1,14 +1,14 @@
 /*eslint-disable no-magic-numbers */
 import React from "react";
-import { VictoryChart } from "@packages/victory-chart";
-import { VictoryStack } from "@packages/victory-stack";
-import { VictoryGroup } from "@packages/victory-group";
-import { VictoryBar } from "@packages/victory-bar";
-import { VictoryLine } from "@packages/victory-line";
-import { VictoryScatter } from "@packages/victory-scatter";
-import { VictorySelectionContainer } from "@packages/victory-selection-container";
-import { VictoryLegend } from "@packages/victory-legend";
-import { VictoryTooltip } from "@packages/victory-tooltip";
+import { VictoryChart } from "victory-chart";
+import { VictoryStack } from "victory-stack";
+import { VictoryGroup } from "victory-group";
+import { VictoryBar } from "victory-bar";
+import { VictoryLine } from "victory-line";
+import { VictoryScatter } from "victory-scatter";
+import { VictorySelectionContainer } from "victory-selection-container";
+import { VictoryLegend } from "victory-legend";
+import { VictoryTooltip } from "victory-tooltip";
 
 interface SelectionDemoState {
   points: { x: number; y: number }[];

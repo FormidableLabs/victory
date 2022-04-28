@@ -1,6 +1,6 @@
 /*eslint-disable no-magic-numbers*/
 import React from "react";
-import { VictoryLabel } from "@packages/victory-core";
+import { VictoryLabel } from "victory-core";
 
 export default class App extends React.Component<any, {}> {
   render() {

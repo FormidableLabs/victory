@@ -1,13 +1,13 @@
 import React from "react";
 import { merge, random, range } from "lodash";
-import { VictoryChart } from "@packages/victory-chart";
-import { VictoryHistogram } from "@packages/victory-histogram";
-import { VictoryLine } from "@packages/victory-line";
-import { VictoryScatter } from "@packages/victory-scatter";
-import { VictoryTheme } from "@packages/victory-core";
-import { VictoryTooltip } from "@packages/victory-tooltip";
-import { VictoryStack } from "@packages/victory-stack";
-import { VictoryVoronoiContainer } from "@packages/victory-voronoi-container";
+import { VictoryChart } from "victory-chart";
+import { VictoryHistogram } from "victory-histogram";
+import { VictoryLine } from "victory-line";
+import { VictoryScatter } from "victory-scatter";
+import { VictoryTheme } from "victory-core";
+import { VictoryTooltip } from "victory-tooltip";
+import { VictoryStack } from "victory-stack";
+import { VictoryVoronoiContainer } from "victory-voronoi-container";
 
 const randomDate = (start: Date, end: Date) => {
   return new Date(

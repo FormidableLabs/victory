@@ -1,8 +1,8 @@
 import React from "react";
 import { random, range } from "lodash";
-import { VictoryPie } from "@packages/victory-pie";
-import { VictoryTooltip } from "@packages/victory-tooltip";
-import { VictoryTheme } from "@packages/victory-core";
+import { VictoryPie } from "victory-pie";
+import { VictoryTooltip } from "victory-tooltip";
+import { VictoryTheme } from "victory-core";
 
 interface VictoryPieDemoState {
   data: {

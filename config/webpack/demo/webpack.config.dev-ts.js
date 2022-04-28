@@ -15,9 +15,6 @@ const WDS_PORT = 3000;
 module.exports = {
   mode: "development",
   resolve: {
-    alias: {
-      "@packages": path.resolve("packages")
-    },
     extensions: [".ts", ".tsx", ".js", ".json"]
   },
   entry: "./demo/ts/app.tsx",

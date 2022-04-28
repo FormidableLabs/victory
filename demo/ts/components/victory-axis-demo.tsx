@@ -1,12 +1,8 @@
 import React from "react";
 import { merge, random, range } from "lodash";
-import { DomainPropType } from "@packages/victory-core";
-import { VictoryAxis, VictoryAxisProps } from "@packages/victory-axis";
-import {
-  VictoryLabel,
-  VictoryContainer,
-  VictoryTheme
-} from "@packages/victory-core";
+import { DomainPropType } from "victory-core";
+import { VictoryAxis, VictoryAxisProps } from "victory-axis";
+import { VictoryLabel, VictoryContainer, VictoryTheme } from "victory-core";
 import XYTheme from "../theme/victory-axis-differential-styling-theme";
 
 interface VictoryAxisDemoState {
