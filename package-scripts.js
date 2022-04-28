@@ -71,7 +71,7 @@ module.exports = {
         "lint",
         "build-package-libs",
         "build-package-dists",
-        "node",
+        "test-node",
         "jest",
         "karma.ci",
         "compile-ts"
