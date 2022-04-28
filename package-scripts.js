@@ -26,7 +26,7 @@ module.exports = {
     test: {
       cov: npsUtils.series.nps("build-package-libs", "karma.cov"),
       dev: "karma start ./config/karma/karma.conf.dev.js",
-      watch: npsUtils.series.nps("build-package-libs", "karma.watch"),
+      watch: npsUtils.concurrent.nps("watch", "karma.watch"),
       default: npsUtils.series.nps("build-package-libs", "karma")
     },
     storybook: {
