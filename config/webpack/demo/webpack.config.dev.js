@@ -47,7 +47,6 @@ module.exports = {
         include: FILES.concat([path.join(DEMO, "js")]),
         use: {
           loader: "babel-loader",
-          // TODO: We _should_ just be picking up the .babelrc file, but we're not...
           options: require("../../../.babelrc.js")
         }
       }
