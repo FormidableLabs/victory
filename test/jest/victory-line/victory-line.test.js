@@ -164,7 +164,7 @@ describe("components/victory-line", () => {
       const { container } = render(
         <VictoryLine
           data={data}
-          sortKey={"t"}
+          sortKey="t"
           x={({ t }) => 10 - t}
           y={() => 1}
           dataComponent={
@@ -174,10 +174,11 @@ describe("components/victory-line", () => {
       );
 
       const line = container.querySelector("path");
-      const renderedData = JSON.parse(line.getAttribute("data-json"));
+      const renderedData = JSON.parse(line.getAttribute("data-json")).map(
+        ({ t }) => t
+      );
 
-      expect(renderedData[0].t).toEqual(0);
-      expect(renderedData[1].t).toEqual(1);
+      expect(renderedData).toEqual([0, 1]);
     });
   });
 
