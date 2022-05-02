@@ -68,9 +68,23 @@ $ yarn nps test
 
 # Run just Karma tests (packages must be already built).
 $ yarn nps karma
+$ KARMA_CAPTURE_CONSOLE=true yarn nps karma # Same, but enable console logging in CLI
 ```
 
 If your terminal is under a proxy, you should turn off the proxy, or ChromeHeadless will not start properly.
+
+If you are debugging tests with Karma, it's usually easier to debug in a real browser. An example workflow:
+
+```sh
+# In one terminal run a watch on library files
+$ yarn nps watch
+
+# In another terminal the browser Karma server
+$ yarn nps server.test
+
+# Open a browser
+$ open http://localhost:3001/test/client/test.html
+```
 
 Victory uses eslint and prettier to maintain code style consistency. Before creating a pull request, please lint and format your changes with the following commands:
 
