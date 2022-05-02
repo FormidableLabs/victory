@@ -18,7 +18,7 @@ module.exports = {
       default: "karma start ./config/karma/karma.conf.js"
     },
     jest: {
-      native: "jest --config=jest-config.js",
+      native: "jest --config=jest-native-config.js",
       default: "jest --config=jest-config.js"
     },
     test: {
