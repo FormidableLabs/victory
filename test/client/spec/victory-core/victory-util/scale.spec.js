@@ -80,14 +80,9 @@ describe("victory-util/scale", () => {
     });
 
     // TODO: HERE -- FIGURE OUT WHY THIS IS FAILING.
-    it.skip("uses data to distinguish between time and linear scales", () => {
+    it("uses data to distinguish between time and linear scales", () => {
       const props = { scale: { x: d3Scale.scaleLinear() } };
       const scaleType = Scale.getScaleType(props, "x");
-      // console.log("TODO REMOVE TEST", {
-      //   scaleLinear: d3Scale.scaleLinear,
-      //   scaleLinearExec: d3Scale.scaleLinear(),
-      //   scaleType
-      // });
       expect(scaleType).to.equal("linear");
     });
 
@@ -108,7 +103,32 @@ describe("victory-util/scale", () => {
     });
   });
 
-  describe.only("getType", () => {
+  describe("getType", () => {
+    // TODO: Do we even need this function???
+
+    // Check the `.copy()` member and stringify.
+    const copies = Object.keys(d3Scale)
+      .reduce((memo, key) => {
+        const fn = d3Scale[key];
+        if (typeof fn === "function") {
+          const copy = fn().copy;
+          if (typeof copy === "function") {
+            memo[key] = copy.toString();
+          }
+        }
+        return memo;
+      }, {});
+
+    // TODO: HERE -- aside from quantile, no easy way to tell apart
+    // TODO: Consider old d3 as well!!!
+    console.log("TODO HERE FN", {
+      log: d3Scale.scaleLog(),
+      ordinal: d3Scale.scaleOrdinal(),
+      quantile: d3Scale.scaleQuantile(),
+      copies
+    });
+
+
     it("returns undefined on unknown function type", () => {
       const scaleType = Scale.getType(function () {});
       expect(scaleType).to.equal(undefined);
@@ -124,24 +144,20 @@ describe("victory-util/scale", () => {
       expect(scaleType).to.equal("log");
     });
 
-    it("matches 'ordinal'", () => {
+    it.skip("matches 'ordinal'", () => {
       const scaleType = Scale.getType(d3Scale.scaleOrdinal());
       expect(scaleType).to.equal("ordinal");
     });
 
     it("matches 'pow-sqrt'"); // TODO
 
-    // TODO: HERE FAILS
     it("matches 'quantile'", () => {
-      console.log("TODO HERE FN", {
-        ordinal: d3Scale.scaleOrdinal(),
-        ordinalStr: d3Scale.scaleOrdinal().toString(),
-        quantile: d3Scale.scaleQuantile()
-      })
       const scaleType = Scale.getType(d3Scale.scaleQuantile());
       expect(scaleType).to.equal("quantile");
     });
 
     it("matches 'quantize-threshold'"); // TODO
+
+    it("returns undefined for scaleLinear"); // TODO
   });
 });

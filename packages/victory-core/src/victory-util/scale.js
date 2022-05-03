@@ -7,29 +7,6 @@ import * as d3Scale from "victory-vendor/d3-scale";
 
 const supportedScaleStrings = ["linear", "time", "log", "sqrt"];
 
-// const D3_OBJ = {};
-// Object.keys(d3Scale).forEach((meth) => {
-//   try {
-//     // Function call
-//     D3_OBJ[meth] = {
-//       type: "function",
-//       keys: Object.keys(d3Scale[meth]())
-//     };
-//   } catch (err) {
-//     if (err.message.includes("is not a function")) {
-//       // Object
-//       D3_OBJ[meth] = {
-//         type: "object",
-//         keys: Object.keys(d3Scale[meth])
-//       };
-//     } else {
-//       throw err;
-//     }
-//   }
-// });
-
-// console.log("TODO HERE D3_OBJ", JSON.stringify(D3_OBJ, null, 2));
-
 // Private Functions
 
 function toNewName(scale) {
@@ -65,10 +42,6 @@ function getScaleTypeFromProps(props, axis) {
     return undefined;
   }
   const scale = props.scale[axis] || props.scale;
-  // console.log("TODO HERE getScaleFromProps", {
-  //   scale,
-  //   getType: getType(scale)
-  // })
   return typeof scale === "string" ? scale : getType(scale);
 }
 
@@ -131,22 +104,23 @@ export function getScaleFromProps(props, axis) {
 }
 
 export function getScaleType(props, axis) {
-  // console.log("TODO HERE getScaleType", {
-  //   getScaleTypeFromProps: getScaleTypeFromProps(props, axis),
-  //   getScaleTypeFromData: getScaleTypeFromData(props, axis)
-  // })
   // if the scale was not given in props, it will be set to linear or time depending on data
   return (
     getScaleTypeFromProps(props, axis) || getScaleTypeFromData(props, axis)
   );
 }
 
+// Ordered type inference off of function fields.
+// **Note**: Brittle because reliant on d3 internals.
 const DUCK_TYPES = [
-  { name: "log", method: "base" },
-  { name: "ordinal", method: "unknown" },
-  { name: "pow-sqrt", method: "exponent" },
   { name: "quantile", method: "quantiles" },
-  { name: "quantize-threshold", method: "invertExtent" }
+  { name: "log", method: "base" }
+  // TODO: Re-evaluate (1) duck typing approach, and (2) if duck typing,
+  //       do we need a different approach? (Multiple keys? Stringifying functions?)
+  // Below are matches that don't seem to otherwise occur in Victory code base.
+  // { name: "ordinal", method: "unknown" },
+  // { name: "pow-sqrt", method: "exponent" },
+  // { name: "quantize-threshold", method: "invertExtent" }
 ];
 
 export function getType(scale) {
@@ -154,21 +128,9 @@ export function getType(scale) {
     return scale;
   }
 
-  if (isFunction(scale)) {
-    console.log("TODO HERE", {
-      name: scale.name
-    });
-  }
-
   const scaleType = DUCK_TYPES.filter((type) => {
     return scale[type.method] !== undefined;
   })[0];
-
-  // console.log("TODO HERE getType", {
-  //   keys: Object.keys(scale),
-  //   scale,
-  //   scaleType
-  // })
 
   return scaleType ? scaleType.name : undefined;
 }
