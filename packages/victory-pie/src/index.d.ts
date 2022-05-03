@@ -42,6 +42,7 @@ export interface SliceProps extends VictoryCommonProps {
   };
   sliceEndAngle?: SliceNumberOrCallback<SliceProps, "sliceEndAngle">;
   sliceStartAngle?: SliceNumberOrCallback<SliceProps, "sliceStartAngle">;
+  style?: VictoryStyleInterface;
   tabIndex?: NumberOrCallback;
 }
 
