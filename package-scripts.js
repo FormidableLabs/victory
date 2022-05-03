@@ -61,6 +61,7 @@ module.exports = {
         "build-package-dists",
         "karma.ci",
         "jest",
+        "jest.native",
         "compile-ts"
       ),
       cov: npsUtils.series.nps("lint", "test.cov"),
