@@ -83,6 +83,11 @@ describe("victory-util/scale", () => {
     it.skip("uses data to distinguish between time and linear scales", () => {
       const props = { scale: { x: d3Scale.scaleLinear() } };
       const scaleType = Scale.getScaleType(props, "x");
+      // console.log("TODO REMOVE TEST", {
+      //   scaleLinear: d3Scale.scaleLinear,
+      //   scaleLinearExec: d3Scale.scaleLinear(),
+      //   scaleType
+      // });
       expect(scaleType).to.equal("linear");
     });
 
@@ -101,5 +106,42 @@ describe("victory-util/scale", () => {
       const scaleType = Scale.getScaleType(props, "x");
       expect(scaleType).to.equal("time");
     });
+  });
+
+  describe.only("getType", () => {
+    it("returns undefined on unknown function type", () => {
+      const scaleType = Scale.getType(function () {});
+      expect(scaleType).to.equal(undefined);
+    });
+
+    it("returns a string value given a string prop", () => {
+      const scaleType = Scale.getType("linear");
+      expect(scaleType).to.equal("linear");
+    });
+
+    it("returns 'log' for log scales", () => {
+      const scaleType = Scale.getType(d3Scale.scaleLog());
+      expect(scaleType).to.equal("log");
+    });
+
+    it("matches 'ordinal'", () => {
+      const scaleType = Scale.getType(d3Scale.scaleOrdinal());
+      expect(scaleType).to.equal("ordinal");
+    });
+
+    it("matches 'pow-sqrt'"); // TODO
+
+    // TODO: HERE FAILS
+    it("matches 'quantile'", () => {
+      console.log("TODO HERE FN", {
+        ordinal: d3Scale.scaleOrdinal(),
+        ordinalStr: d3Scale.scaleOrdinal().toString(),
+        quantile: d3Scale.scaleQuantile()
+      })
+      const scaleType = Scale.getType(d3Scale.scaleQuantile());
+      expect(scaleType).to.equal("quantile");
+    });
+
+    it("matches 'quantize-threshold'"); // TODO
   });
 });

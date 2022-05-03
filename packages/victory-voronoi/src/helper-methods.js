@@ -65,7 +65,7 @@ const getCalculatedValues = (props) => {
     }
 
     return true;
-  })
+  });
 
   const voronoi = getVoronoi(props, range, scale);
   const polygons = voronoi.polygons(data);
