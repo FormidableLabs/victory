@@ -2,7 +2,13 @@
 import React from "react";
 import PropTypes from "prop-types";
 import { assign } from "lodash";
-import { Helpers, CommonProps, Path, LineHelpers } from "victory-core";
+import {
+  Helpers,
+  CommonProps,
+  Path,
+  LineHelpers,
+  UserProps
+} from "victory-core";
 
 const evaluateProps = (props) => {
   /**
@@ -25,6 +31,7 @@ const evaluateProps = (props) => {
 
 const Curve = (props) => {
   props = evaluateProps(props);
+  const userProps = UserProps.getSafeUserProps(props);
   const { polar, origin } = props;
   const lineFunction = LineHelpers.getLineFunction(props);
   const defaultTransform =
@@ -32,6 +39,7 @@ const Curve = (props) => {
 
   return React.cloneElement(props.pathComponent, {
     ...props.events,
+    ...userProps,
     "aria-label": props.ariaLabel,
     d: lineFunction(props.data),
     style: props.style,

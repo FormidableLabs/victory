@@ -3,7 +3,7 @@ import React from "react";
 import PropTypes from "prop-types";
 import { assign } from "lodash";
 import * as d3Shape from "d3-shape";
-import { Helpers, CommonProps, Path } from "victory-core";
+import { Helpers, CommonProps, Path, UserProps } from "victory-core";
 
 const defined = (d) => {
   const y = d._y1 !== undefined ? d._y1 : d._y;
@@ -136,6 +136,7 @@ const Area = (props) => {
     desc,
     tabIndex
   } = props;
+  const userProps = UserProps.getSafeUserProps(props);
   const defaultTransform =
     polar && origin ? `translate(${origin.x}, ${origin.y})` : undefined;
   const transform = props.transform || defaultTransform;
@@ -156,6 +157,7 @@ const Area = (props) => {
     clipPath,
     tabIndex
   };
+
   const area = React.cloneElement(
     pathComponent,
     assign(
@@ -166,7 +168,8 @@ const Area = (props) => {
         desc,
         tabIndex
       },
-      sharedProps
+      sharedProps,
+      userProps
     )
   );
 
@@ -185,7 +188,7 @@ const Area = (props) => {
     : null;
 
   return renderLine
-    ? React.cloneElement(groupComponent, {}, [area, line])
+    ? React.cloneElement(groupComponent, userProps, [area, line])
     : area;
 };
 

@@ -19,7 +19,7 @@ module.exports = {
     },
     jest: {
       native: "jest --config=jest-native-config.js",
-      default: "jest --config=jest-native-config.js"
+      default: "cross-env BABEL_ENV=commonjs jest --config=jest-config.js"
     },
     test: {
       cov: npsUtils.series.nps("build-package-libs", "karma.cov"),
@@ -61,6 +61,7 @@ module.exports = {
         "build-package-dists",
         "karma.ci",
         "jest",
+        "jest.native",
         "compile-ts"
       ),
       cov: npsUtils.series.nps("lint", "test.cov"),
@@ -69,7 +70,7 @@ module.exports = {
     },
     watch: {
       es: "lerna exec --parallel -- cross-env BABEL_ENV=es babel src --out-dir es --copy-files --watch",
-      lib: "lerna exec --parallel -- cross-env BABEL_ENV=lib babel src --out-dir lib --copy-files --watch",
+      lib: "lerna exec --parallel -- cross-env BABEL_ENV=commonjs babel src --out-dir lib --copy-files --watch",
       default: npsUtils.concurrent.nps("watch.es", "watch.lib")
     },
     clean: {

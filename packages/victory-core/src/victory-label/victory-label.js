@@ -1,17 +1,17 @@
 /*eslint no-magic-numbers: ["error", { "ignore": [-0.5, 0.5, 0, 1, 2] }]*/
-import React from "react";
+import { assign, defaults, isEmpty } from "lodash";
 import PropTypes from "prop-types";
+import React from "react";
 import VictoryPortal from "../victory-portal/victory-portal";
 import Rect from "../victory-primitives/rect";
-import * as CustomPropTypes from "../victory-util/prop-types";
+import Text from "../victory-primitives/text";
+import TSpan from "../victory-primitives/tspan";
 import * as Helpers from "../victory-util/helpers";
 import * as LabelHelpers from "../victory-util/label-helpers";
-import * as Style from "../victory-util/style";
 import * as Log from "../victory-util/log";
+import * as CustomPropTypes from "../victory-util/prop-types";
+import * as Style from "../victory-util/style";
 import * as TextSize from "../victory-util/textsize";
-import TSpan from "../victory-primitives/tspan";
-import Text from "../victory-primitives/text";
-import { assign, defaults, isEmpty } from "lodash";
 
 const defaultStyles = {
   fill: "#252525",
