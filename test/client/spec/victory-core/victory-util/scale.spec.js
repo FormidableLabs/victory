@@ -1,4 +1,5 @@
 /* eslint no-unused-expressions: 0 */
+/* eslint-disable max-nested-callbacks */
 
 import { Scale } from "victory-core";
 import * as d3Scale from "victory-vendor/d3-scale";
@@ -79,7 +80,6 @@ describe("victory-util/scale", () => {
       expect(scaleType).to.equal("linear");
     });
 
-    // TODO: HERE -- FIGURE OUT WHY THIS IS FAILING.
     it("uses data to distinguish between time and linear scales", () => {
       const props = { scale: { x: d3Scale.scaleLinear() } };
       const scaleType = Scale.getScaleType(props, "x");
@@ -104,31 +104,6 @@ describe("victory-util/scale", () => {
   });
 
   describe("getType", () => {
-    // TODO: Do we even need this function???
-
-    // Check the `.copy()` member and stringify.
-    const copies = Object.keys(d3Scale)
-      .reduce((memo, key) => {
-        const fn = d3Scale[key];
-        if (typeof fn === "function") {
-          const copy = fn().copy;
-          if (typeof copy === "function") {
-            memo[key] = copy.toString();
-          }
-        }
-        return memo;
-      }, {});
-
-    // TODO: HERE -- aside from quantile, no easy way to tell apart
-    // TODO: Consider old d3 as well!!!
-    console.log("TODO HERE FN", {
-      log: d3Scale.scaleLog(),
-      ordinal: d3Scale.scaleOrdinal(),
-      quantile: d3Scale.scaleQuantile(),
-      copies
-    });
-
-
     it("returns undefined on unknown function type", () => {
       const scaleType = Scale.getType(function () {});
       expect(scaleType).to.equal(undefined);
@@ -144,20 +119,14 @@ describe("victory-util/scale", () => {
       expect(scaleType).to.equal("log");
     });
 
-    it.skip("matches 'ordinal'", () => {
-      const scaleType = Scale.getType(d3Scale.scaleOrdinal());
-      expect(scaleType).to.equal("ordinal");
-    });
-
-    it("matches 'pow-sqrt'"); // TODO
-
     it("matches 'quantile'", () => {
       const scaleType = Scale.getType(d3Scale.scaleQuantile());
       expect(scaleType).to.equal("quantile");
     });
 
-    it("matches 'quantize-threshold'"); // TODO
-
-    it("returns undefined for scaleLinear"); // TODO
+    it("returns undefined for scaleLinear", () => {
+      const scaleType = Scale.getType(d3Scale.scaleLinear());
+      expect(scaleType).to.equal(undefined);
+    });
   });
 });

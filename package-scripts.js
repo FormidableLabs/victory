@@ -44,7 +44,7 @@ module.exports = {
       // Note: Using a base `nps` command with extra args.
       // 1. You need to add double quotes around the extra part (e.g. `test` below)
       // 2. If going through a `lerna exec` you need to escape with an extra backslash `\` (e.g. `src` below)
-      base: "yarn eslint --color --ext .js,.jsx,.ts,.tsx",
+      base: "yarn eslint --color --ext .js,.jsx,.ts,.tsx --fix",
       fix: "yarn eslint --color --ext .js,.jsx,.ts,.tsx --fix",
       src: 'lerna exec --ignore victory-vendor --stream -- yarn nps \\"lint.base src\\"',
       vendor:
@@ -88,8 +88,6 @@ module.exports = {
     watch: {
       es: "lerna exec --parallel --ignore victory-native --ignore victory-vendor -- cross-env BABEL_ENV=es babel src --out-dir es --config-file ../../.babelrc.js --copy-files --watch",
       lib: "lerna exec --parallel --ignore victory-native --ignore victory-vendor -- cross-env BABEL_ENV=lib babel src --out-dir lib --config-file ../../.babelrc.js --copy-files --watch",
-      // TODO REMOVE
-      TEMP_REMOVE_ES: "lerna exec --scope victory-core -- cross-env BABEL_ENV=es babel src --out-dir es --config-file ../../.babelrc.js --copy-files --watch",
       core: npsUtils.concurrent.nps("watch.es", "watch.lib"),
       // `victory-vendor` is built 1x up front and not watched.
       default: npsUtils.series.nps("build-package-libs-vendor", "watch.core")
