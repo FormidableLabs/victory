@@ -1,7 +1,9 @@
 import * as d3Scale from "d3-scale";
 import * as d3Shape from "d3-shape";
 import { voronoi as d3Voronoi } from "d3-voronoi";
-import { without } from "lodash";
+import { without, min, max, property } from "lodash";
+
+const RECTANGULAR_SEQUENCE = ["M", "A", "L", "A", "L", "A", "L", "A", "z"];
 
 export const calculateD3Path = (props, pathType, index = 0) => {
   const { width, height, padding, scale, interpolation, data, domain } = props;
@@ -79,4 +81,89 @@ export const calculateD3Path = (props, pathType, index = 0) => {
   }
 
   return undefined;
+};
+
+export const parseSvgPathCommands = (commandStr) => {
+  const matches = commandStr.match(
+    /[MmLlHhVvCcSsQqTtAaZz]+[^MmLlHhVvCcSsQqTtAaZz]*/g
+  );
+
+  return matches.map((match) => {
+    const name = match.charAt(0);
+    const args = match
+      .substring(1)
+      .split(",")
+      .map((arg) => {
+        return parseFloat(arg, 10);
+      });
+
+    return {
+      raw: match,
+      name,
+      args
+    };
+  });
+};
+
+export const getPathCommandsFromContainer = (container) => {
+  const commandStr = container.querySelector("path").getAttribute("d");
+  return parseSvgPathCommands(commandStr);
+};
+
+const exhibitsShapeSequence = (commandString, shapeSeqeuence) => {
+  const commands = parseSvgPathCommands(commandString);
+  return commands.every(
+    (command, index) => command.name === shapeSeqeuence[index]
+  );
+};
+
+export const svgExpectations = {
+  /**
+   * Asserts that the provided command string produces a rectangular shape.
+   * 
+   * @param {string} commandString - the "d" attribute of a `path` element.
+   * @returns {void}
+   */
+  expectIsRectangular(commandString) {
+    const isBar = exhibitsShapeSequence(commandString, RECTANGULAR_SEQUENCE);
+    expect(isBar).toEqual(true);
+  }
+};
+
+export const getShapeUtils = {
+  /**
+   * Retrieve the raw svg height of a bar.
+   *
+   * @param {string} commandString - the "d" attribute of a `path` element.
+   * @returns {Number} The height of the bar in svg units.
+   */
+  getBarHeight(commandString) {
+    svgExpectations.expectIsRectangular(commandString);
+    const commands = parseSvgPathCommands(commandString);
+
+    return Math.abs(commands[0].args[1] - commands[2].args[1]);
+  },
+  /**
+   * Assert the provided element renders a 4-sided shape and return dimensions.
+   *
+   * @param {HTMLElement} path - An HTML path element.
+   * @returns {Object}           Dimensions of the shape
+   */
+  getBarShape(path) {
+    const commandstring = path.getAttribute("d");
+    const commands = parseSvgPathCommands(commandstring);
+
+    const points = commands.filter((command) => {
+      return command.name !== "z";
+    });
+    const verticalPoints = points.map(property("args.1"));
+    const horizontalPoints = points.map(property("args.0"));
+    const height = max(verticalPoints) - min(verticalPoints);
+    const width = max(horizontalPoints) - min(horizontalPoints);
+
+    return {
+      height,
+      width
+    };
+  }
 };
