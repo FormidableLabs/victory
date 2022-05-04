@@ -12,9 +12,9 @@ import { getData } from "./data";
 import { data, timeData } from "./victory-histogram-data";
 import { Bar } from "../packages/victory-bar/src";
 
-import * as d3Array from "d3-array";
-import * as d3Scale from "d3-scale";
-import * as d3Time from "d3-time";
+import * as d3Array from "victory-vendor/d3-array";
+import * as d3Scale from "victory-vendor/d3-scale";
+import * as d3Time from "victory-vendor/d3-time";
 import styled from "styled-components";
 
 const containerStyle = {
