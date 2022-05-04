@@ -1,11 +1,11 @@
 /*eslint-disable no-magic-numbers*/
 /*eslint-disable react/no-multi-comp*/
 import React from "react";
-import { VictoryStack } from "../packages/victory-stack/src";
-import { VictoryArea } from "../packages/victory-area/src";
-import { VictoryTooltip } from "../packages/victory-tooltip/src";
-import { VictoryTheme, VictoryLabel } from "../packages/victory-core/src";
-import { VictoryChart } from "../packages/victory-chart/src";
+import { VictoryStack } from "victory-stack";
+import { VictoryArea, Area } from "victory-area";
+import { VictoryTooltip } from "victory-tooltip";
+import { VictoryTheme, VictoryLabel } from "victory-core";
+import { VictoryChart } from "victory-chart";
 import {
   getData,
   getMixedData,
@@ -14,7 +14,6 @@ import {
   getDataWithBaseline
 } from "./data";
 import { fromJS } from "immutable";
-import Area from "../packages/victory-area/src/area";
 import styled from "styled-components";
 
 const containerStyle = {

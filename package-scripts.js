@@ -45,7 +45,7 @@ module.exports = {
       // Note: Using a base `nps` command with extra args.
       // 1. You need to add double quotes around the extra part (e.g. `test` below)
       // 2. If going through a `lerna exec` you need to escape with an extra backslash `\` (e.g. `src` below)
-      base: "yarn eslint --color --ext .js,.jsx,.ts,.tsx --fix",
+      base: "yarn eslint --color --ext .js,.jsx,.ts,.tsx",
       fix: "yarn eslint --color --ext .js,.jsx,.ts,.tsx --fix",
       src: 'lerna exec --ignore victory-vendor --stream -- yarn nps \\"lint.base src\\"',
       vendor:

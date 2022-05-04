@@ -4,6 +4,6 @@ module.exports = {
   testMatch: ["**/jest/**/?(*.)+(spec|test).[jt]s?(x)"],
   testPathIgnorePatterns: ["victory-native"],
   transform: {
-    "^.+\/test\/.+\\.(js|jsx)$": ["babel-jest", { configFile: "./.babelrc.js" }]
+    "^.+/test/.+\\.(js|jsx)$": ["babel-jest", { configFile: "./.babelrc.js" }]
   }
 };

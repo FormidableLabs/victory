@@ -54,6 +54,7 @@ module.exports = {
         include: [SRC],
         use: {
           loader: "babel-loader",
+          // eslint-disable-next-line global-require
           options: require("../../.babelrc.js")
         }
       }

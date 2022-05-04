@@ -1,12 +1,9 @@
 /*eslint-disable no-magic-numbers*/
 /*eslint-disable react/no-multi-comp*/
 import React from "react";
-import { VictoryChart } from "../packages/victory-chart/src/index";
-import { VictoryLine } from "../packages/victory-line/src/index";
-import {
-  VictoryLabel,
-  VictoryContainer
-} from "../packages/victory-core/src/index";
+import { VictoryChart } from "victory-chart";
+import { VictoryLine } from "victory-line";
+import { VictoryLabel, VictoryContainer } from "victory-core";
 
 const containerStyle = {
   display: "flex",

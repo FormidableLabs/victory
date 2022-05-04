@@ -47,6 +47,7 @@ module.exports = {
         include: FILES.concat([path.join(DEMO, "js")]),
         use: {
           loader: "babel-loader",
+          // eslint-disable-next-line global-require
           options: require("../../../.babelrc.js")
         }
       }

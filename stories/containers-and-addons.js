@@ -1,13 +1,13 @@
 /*eslint-disable no-magic-numbers*/
 import React from "react";
 import { storiesOf } from "@storybook/react";
-import { VictoryChart } from "../packages/victory-chart/src/index";
-import { VictoryAxis } from "../packages/victory-axis/src/index";
-import { VictoryLine } from "../packages/victory-line/src/index";
-import { VictoryZoomContainer } from "../packages/victory-zoom-container/src/index";
-import { VictoryCursorContainer } from "../packages/victory-cursor-container/src/index";
-import { VictoryBrushContainer } from "../packages/victory-brush-container/src/index";
-import { VictoryBrushLine } from "../packages/victory-brush-line/src/index";
+import { VictoryChart } from "victory-chart";
+import { VictoryAxis } from "victory-axis";
+import { VictoryLine } from "victory-line";
+import { VictoryZoomContainer } from "victory-zoom-container";
+import { VictoryCursorContainer } from "victory-cursor-container";
+import { VictoryBrushContainer } from "victory-brush-container";
+import { VictoryBrushLine } from "victory-brush-line";
 
 // only add visual test for containers that have visual elements without interaction
 storiesOf("Containers and Addons.VictoryBrushContainer", module)

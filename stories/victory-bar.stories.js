@@ -1,13 +1,13 @@
 /*eslint-disable no-magic-numbers*/
 /*eslint-disable react/no-multi-comp*/
 import React from "react";
-import { VictoryBar, Bar } from "../packages/victory-bar/src";
-import { VictoryChart } from "../packages/victory-chart/src";
-import { VictoryGroup } from "../packages/victory-group/src/index";
-import { VictoryStack } from "../packages/victory-stack/src/index";
-import { VictoryTooltip } from "../packages/victory-tooltip/src/index";
-import { VictoryTheme, VictoryLabel } from "../packages/victory-core/src/index";
-import { VictoryPolarAxis } from "../packages/victory-polar-axis/src/index";
+import { VictoryBar, Bar } from "victory-bar";
+import { VictoryChart } from "victory-chart";
+import { VictoryGroup } from "victory-group";
+import { VictoryStack } from "victory-stack";
+import { VictoryTooltip } from "victory-tooltip";
+import { VictoryTheme, VictoryLabel } from "victory-core";
+import { VictoryPolarAxis } from "victory-polar-axis";
 import {
   getData,
   getStackedData,
