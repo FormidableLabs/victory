@@ -1,6 +1,6 @@
 import * as d3Scale from "victory-vendor/d3-scale";
 import * as d3Shape from "victory-vendor/d3-shape";
-import { _internalD3Voronoi as d3Voronoi } from "victory-voronoi/es/helper-methods";
+import { _internalD3Voronoi as d3Voronoi } from "victory-voronoi/lib/helper-methods";
 import { without } from "lodash";
 
 export const calculateD3Path = (props, pathType, index = 0) => {
