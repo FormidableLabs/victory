@@ -21,7 +21,8 @@ module.exports = {
       default: "karma start ./config/karma/karma.conf.js"
     },
     jest: {
-      default: "jest --config=jest-native-config.js"
+      native: "jest --config=jest-native-config.js",
+      default: "cross-env BABEL_ENV=commonjs jest --config=jest-config.js"
     },
     "test-node": {
       default: "mocha ./test/node"
@@ -78,6 +79,7 @@ module.exports = {
         "build-package-dists",
         "test-node",
         "jest",
+        "jest.native",
         "karma.ci",
         "compile-ts"
       ),
@@ -87,7 +89,7 @@ module.exports = {
     },
     watch: {
       es: "lerna exec --parallel --ignore victory-native --ignore victory-vendor -- cross-env BABEL_ENV=es babel src --out-dir es --config-file ../../.babelrc.js --copy-files --watch",
-      lib: "lerna exec --parallel --ignore victory-native --ignore victory-vendor -- cross-env BABEL_ENV=lib babel src --out-dir lib --config-file ../../.babelrc.js --copy-files --watch",
+      lib: "lerna exec --parallel --ignore victory-native --ignore victory-vendor -- cross-env BABEL_ENV=commonjs babel src --out-dir lib --config-file ../../.babelrc.js --copy-files --watch",
       core: npsUtils.concurrent.nps("watch.es", "watch.lib"),
       // `victory-vendor` is built 1x up front and not watched.
       default: npsUtils.series.nps("build-package-libs-vendor", "watch.core")

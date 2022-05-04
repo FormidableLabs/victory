@@ -37,6 +37,7 @@ const VictoryChart = (initialProps) => {
 
   const modifiedProps = Helpers.modifyProps(props, fallbackProps, role);
   const {
+    desc,
     eventKey,
     containerComponent,
     standalone,
@@ -46,7 +47,8 @@ const VictoryChart = (initialProps) => {
     height,
     theme,
     polar,
-    name
+    name,
+    title
   } = modifiedProps;
 
   const axes = props.polar
@@ -90,34 +92,38 @@ const VictoryChart = (initialProps) => {
   const containerProps = React.useMemo(() => {
     if (standalone) {
       return {
+        desc,
         domain,
-        scale,
         width,
         height,
-        standalone,
-        theme,
-        style: style.parent,
         horizontal,
         name,
+        origin: polar ? origin : undefined,
         polar,
         radius,
-        origin: polar ? origin : undefined
+        theme,
+        title,
+        scale,
+        standalone,
+        style: style.parent
       };
     }
     return {};
   }, [
+    desc,
     domain,
-    scale,
-    width,
     height,
-    standalone,
-    theme,
-    style,
     horizontal,
     name,
+    origin,
     polar,
     radius,
-    origin
+    scale,
+    standalone,
+    style,
+    title,
+    theme,
+    width
   ]);
 
   const container = React.useMemo(() => {
