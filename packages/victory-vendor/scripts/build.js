@@ -26,9 +26,6 @@ const getEsmIndex = (pkg) => `
   pkg.name
 }\`
 export * from "${pkg.name}";
-
-// TODO REMOVE
-console.log("TODO LOADED ESM ${pkg.name}");
 `;
 
 const getCjsIndex = (pkg) => `
@@ -42,9 +39,6 @@ const getCjsIndex = (pkg) => `
   pkg.name
 }\`
 module.exports = require("../lib-vendor/${pkg.name}/src/index.js");
-
-// TODO REMOVE
-console.log("TODO LOADED CJS ${pkg.name}");
 `;
 
 const getCjsRootIndex = (pkg) => `
@@ -57,9 +51,6 @@ const getCjsRootIndex = (pkg) => `
 // This file only exists for tooling that doesn't work yet with package.json:exports
 // by proxying through the CommonJS version.
 module.exports = require("./lib/${pkg.name}");
-
-// TODO REMOVE
-console.log("TODO LOADED CJS ROOT ${pkg.name}");
 `;
 
 // Main.
