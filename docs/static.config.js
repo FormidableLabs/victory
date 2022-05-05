@@ -19,7 +19,7 @@ if (stage === "development") {
   chokidar.watch("src/content/**/*.md").on("all", () => rebuildRoutes());
 }
 
-module.exports = {
+module.exports.default = {
   getSiteData: () => siteData,
   paths: {
     root: process.cwd(), // The root of your project. Don't change this unless you know what you're doing.

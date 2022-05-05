@@ -3,7 +3,7 @@
  */
 const build = require("react-static/lib/commands/build").default;
 
-const { log } = console; // eslint-disable-line no-undef
+const { log, error } = console; // eslint-disable-line no-undef
 
 // Main.
 const main = () => build({
@@ -15,8 +15,9 @@ if (require.main === module) {
     .then(() => {
       log("Build finished.");
     })
-    .catch(() => {
+    .catch((err) => {
       log("Build failed");
+      error(err);
       process.exit(-1);
     });
 }
