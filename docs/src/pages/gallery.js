@@ -5,7 +5,9 @@ import ReactDOM from "react-dom";
 import { withRouteData } from "react-static";
 import { Link } from "react-router-dom";
 import * as Victory from "victory";
-import * as d3Scale from "victory-vendor/d3-scale";
+// TODO(2220): Switch deps to `victory-vendor/d3-*`
+// https://github.com/FormidableLabs/victory/issues/2220
+import * as d3Scale from "d3-scale";
 import {
   scaleDiscontinuous,
   discontinuitySkipWeekends

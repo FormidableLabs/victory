@@ -1,8 +1,10 @@
 /*eslint-disable no-magic-numbers */
 import _ from "lodash";
-import * as d3Array from "victory-vendor/d3-array";
-import * as d3Scale from "victory-vendor/d3-scale";
-import * as d3Time from "victory-vendor/d3-time";
+// TODO(2220): Switch deps to `victory-vendor/d3-*`
+// https://github.com/FormidableLabs/victory/issues/2220
+import * as d3Array from "d3-array";
+import * as d3Scale from "d3-scale";
+import * as d3Time from "d3-time";
 
 import styled from "styled-components";
 import basketballData from "../../data/basketball-data";
