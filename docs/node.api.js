@@ -1,5 +1,8 @@
 export default () => ({
   webpack: (config) => {
+    // Error the build on failures
+    config.bail = true;
+
     // react-static's config.resolve.modules field is causing issues with
     // the correct node_module resolution, so we fix that here
     // https://github.com/react-static/react-static/issues/1423

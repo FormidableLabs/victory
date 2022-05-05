@@ -81,7 +81,7 @@
   "license": "MIT",
   "scripts": {
     "start": "node --max-old-space-size=2048 node_modules/react-static/bin/react-static start",
-    "build": "react-static build",
+    "build": "node ./scripts/build.js",
     "clean": "rimraf dist",
     "serve": "formideploy serve --port 4000",
     "deploy:stage": "formideploy deploy --staging",
