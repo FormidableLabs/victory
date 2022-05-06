@@ -4,18 +4,13 @@ import React from "react";
 import { render, fireEvent, screen } from "@testing-library/react";
 import { range } from "lodash";
 import { VictoryBar, Bar } from "victory-bar";
-import { svgExpectations, getShapeUtils } from "../../svg-test-helper";
+import { isBar, getBarHeight } from "../../svg-test-helper";
 
 describe("components/victory-bar", () => {
   describe("default component rendering", () => {
     it("accepts user props", () => {
-      const { container } = render(
-        <VictoryBar data-testid="victory-bar" aria-label="Chart" />
-      );
-
-      const svgNode = container.querySelector("svg");
-      expect(svgNode.getAttribute("data-testid")).toEqual("victory-bar");
-      expect(svgNode.getAttribute("aria-label")).toEqual("Chart");
+      render(<VictoryBar data-testid="victory-bar" aria-label="Chart" />);
+      expect(screen.getAllByLabelText("Chart")).toBeDefined();
     });
 
     it("renders an svg with the correct width and height", () => {
@@ -42,7 +37,9 @@ describe("components/victory-bar", () => {
       const barCommandStrings = Array.from(
         container.querySelectorAll("path")
       ).map((bar) => bar.getAttribute("d"));
-      barCommandStrings.forEach(svgExpectations.expectIsRectangular);
+      barCommandStrings.forEach((commandString) => {
+        expect(isBar(commandString)).toBeTruthy();
+      });
     });
   });
 
@@ -62,7 +59,7 @@ describe("components/victory-bar", () => {
       const barHeight = Array.from(container.querySelectorAll("path")).map(
         (bar) => {
           const commandString = bar.getAttribute("d");
-          return getShapeUtils.getBarHeight(commandString);
+          return getBarHeight(commandString);
         }
       );
 
@@ -81,7 +78,7 @@ describe("components/victory-bar", () => {
       const barHeight = Array.from(container.querySelectorAll("path")).map(
         (bar) => {
           const commandString = bar.getAttribute("d");
-          return getShapeUtils.getBarHeight(commandString);
+          return getBarHeight(commandString);
         }
       );
       const descendingBars = [...barHeight].sort((a, b) => b - a);
@@ -97,21 +94,21 @@ describe("components/victory-bar", () => {
     });
 
     it("renders bars for deeply-nested data", () => {
-      const data = range(40).map((i) => ({ a: { b: [{ x: i, y: i }] } }));
+      const data = range(8).map((i) => ({ a: { b: [{ x: i, y: i }] } }));
       const { container } = render(
         <VictoryBar data={data} x="a.b[0].x" y="a.b[0].y" />
       );
       const bars = container.querySelectorAll("path");
-      expect(bars).toHaveLength(40);
+      expect(bars).toHaveLength(8);
     });
 
     it("renders bars values with null accessor", () => {
-      const data = range(30);
+      const data = range(8);
       const { container } = render(
         <VictoryBar data={data} x={null} y={null} />
       );
       const bars = container.querySelectorAll("path");
-      expect(bars).toHaveLength(30);
+      expect(bars).toHaveLength(8);
     });
 
     it("renders bars with appropriate relative heights", () => {
@@ -127,7 +124,7 @@ describe("components/victory-bar", () => {
       const bars = Array.from(container.querySelectorAll("path"));
       const heights = bars.map((bar) => {
         const commandString = bar.getAttribute("d");
-        return getShapeUtils.getBarHeight(commandString);
+        return getBarHeight(commandString);
       });
 
       expect(Math.trunc(heights[1] / 2)).toEqual(Math.trunc(heights[0], 0.5));
@@ -226,12 +223,10 @@ describe("components/victory-bar", () => {
 
   describe("accessibility", () => {
     it("adds an aria role to each bar in the series", () => {
-      const data = range(20).map((y, x) => ({ x, y }));
-      const { container } = render(<VictoryBar data={data} />);
-
-      Array.from(container.querySelectorAll("path")).forEach((bar) => {
-        expect(bar.getAttribute("role")).toEqual("presentation");
-      });
+      const data = range(10).map((y, x) => ({ x, y }));
+      render(<VictoryBar data={data} />);
+      const presentationElements = screen.getAllByRole("presentation");
+      expect(presentationElements).toHaveLength(11); // bars plus container
     });
 
     it("applies aria-label and tabIndex to the Bar primitive", () => {

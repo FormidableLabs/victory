@@ -110,60 +110,54 @@ export const getPathCommandsFromContainer = (container) => {
   return parseSvgPathCommands(commandStr);
 };
 
-const exhibitsShapeSequence = (commandString, shapeSeqeuence) => {
+export const exhibitsShapeSequence = (commandString, shapeSeqeuence) => {
   const commands = parseSvgPathCommands(commandString);
   return commands.every(
     (command, index) => command.name === shapeSeqeuence[index]
   );
 };
 
-export const svgExpectations = {
-  /**
-   * Asserts that the provided command string produces a rectangular shape.
-   *
-   * @param {string} commandString - the "d" attribute of a `path` element.
-   * @returns {void}
-   */
-  expectIsRectangular(commandString) {
-    const isBar = exhibitsShapeSequence(commandString, RECTANGULAR_SEQUENCE);
-    expect(isBar).toEqual(true);
-  }
+/**
+ * Retrieve the raw svg height of a bar.
+ *
+ * @param {string} commandString - The "d" attribute of a `path` element.
+ * @returns {Number}             - The height of the bar in svg units.
+ */
+export const getBarHeight = (commandString) => {
+  const commands = parseSvgPathCommands(commandString);
+
+  return Math.abs(commands[0].args[1] - commands[2].args[1]);
 };
 
-export const getShapeUtils = {
-  /**
-   * Retrieve the raw svg height of a bar.
-   *
-   * @param {string} commandString - the "d" attribute of a `path` element.
-   * @returns {Number} The height of the bar in svg units.
-   */
-  getBarHeight(commandString) {
-    svgExpectations.expectIsRectangular(commandString);
-    const commands = parseSvgPathCommands(commandString);
+/**
+ * Assert the provided element renders a 4-sided shape and return dimensions.
+ *
+ * @param {HTMLElement} path - An HTML path element.
+ * @returns {Object}         - Dimensions of the shape
+ */
+export const getBarShape = (path) => {
+  const commandstring = path.getAttribute("d");
+  const commands = parseSvgPathCommands(commandstring);
 
-    return Math.abs(commands[0].args[1] - commands[2].args[1]);
-  },
-  /**
-   * Assert the provided element renders a 4-sided shape and return dimensions.
-   *
-   * @param {HTMLElement} path - An HTML path element.
-   * @returns {Object}           Dimensions of the shape
-   */
-  getBarShape(path) {
-    const commandstring = path.getAttribute("d");
-    const commands = parseSvgPathCommands(commandstring);
+  const points = commands.filter((command) => {
+    return command.name !== "z";
+  });
+  const verticalPoints = points.map(property("args.1"));
+  const horizontalPoints = points.map(property("args.0"));
+  const height = max(verticalPoints) - min(verticalPoints);
+  const width = max(horizontalPoints) - min(horizontalPoints);
 
-    const points = commands.filter((command) => {
-      return command.name !== "z";
-    });
-    const verticalPoints = points.map(property("args.1"));
-    const horizontalPoints = points.map(property("args.0"));
-    const height = max(verticalPoints) - min(verticalPoints);
-    const width = max(horizontalPoints) - min(horizontalPoints);
-
-    return {
-      height,
-      width
-    };
-  }
+  return {
+    height,
+    width
+  };
 };
+
+/**
+ * Determines if a rectangular shape is produced from the provided path command.
+ *
+ * @param {String} commandString - The command attribute of a `path` element.
+ * @returns {Boolean}            - Boolean indicating if the command string produces a rectangular shape.
+ */
+export const isBar = (commandString) =>
+  exhibitsShapeSequence(commandString, RECTANGULAR_SEQUENCE);

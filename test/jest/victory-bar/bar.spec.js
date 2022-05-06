@@ -3,7 +3,7 @@ import { render } from "@testing-library/react";
 import * as d3Scale from "d3-scale";
 import { VictoryContainer } from "victory-core";
 import { Bar } from "victory-bar";
-import { getShapeUtils } from "../../svg-test-helper";
+import { getBarShape } from "../../svg-test-helper";
 
 describe("victory-primitives/bar", () => {
   const baseProps = {
@@ -34,7 +34,7 @@ describe("victory-primitives/bar", () => {
 
   it("should render a vertical bar", () => {
     const bar = renderBarSvg();
-    const barShape = getShapeUtils.getBarShape(bar);
+    const barShape = getBarShape(bar);
     expect(Math.round(barShape.height)).toEqual(10);
   });
 
@@ -42,7 +42,7 @@ describe("victory-primitives/bar", () => {
     const props = { horizontal: true };
 
     const bar = renderBarSvg(props);
-    const barShape = getShapeUtils.getBarShape(bar);
+    const barShape = getBarShape(bar);
 
     expect(Math.round(barShape.width)).toEqual(2);
   });
@@ -55,7 +55,7 @@ describe("victory-primitives/bar", () => {
     };
 
     const bar = renderBarSvg(props);
-    const barShape = getShapeUtils.getBarShape(bar);
+    const barShape = getBarShape(bar);
 
     expect(Math.floor(barShape.width)).toEqual(2);
   });
@@ -64,7 +64,7 @@ describe("victory-primitives/bar", () => {
     const props = { style: { width: 3 } };
 
     const bar = renderBarSvg(props);
-    const barShape = getShapeUtils.getBarShape(bar);
+    const barShape = getBarShape(bar);
 
     expect(Math.floor(barShape.width)).toEqual(3);
   });
@@ -76,7 +76,7 @@ describe("victory-primitives/bar", () => {
     };
 
     const bar = renderBarSvg(props);
-    const barShape = getShapeUtils.getBarShape(bar);
+    const barShape = getBarShape(bar);
 
     expect(Math.floor(barShape.width)).toEqual(24);
   });
