@@ -739,11 +739,11 @@ _default:_ `samples={50}`
 
 `type: scale || { x: scale, y: scale }`
 
-The `scale` prop determines which scales your chart should use. In this case, scale refers to the d3 scale that is used inside Victory to determine he placement of data, ticks, and labels. A scale type can be either a string ("linear", "time", "log", "sqrt"), or a custom d3 scale function. This prop can be passed as a single scale, or as an object with scales specified for x and y. For "time" scales, data points should be `Date` objects or `getTime()` instances.
+The `scale` prop determines which scales your chart should use. In this case, "scale" refers to the d3 scale that is used inside Victory to determine the placement of data, ticks, and labels. A scale type can be either a string ("linear", "time", "log", "sqrt"), or a custom d3 scale function. This prop can be passed as a single scale, or as an object with scales specified for x and y. For "time" scales, data points should be `Date` objects or `getTime()` instances.
 
-This prop should be set at the top-level of the chart in order to avoid being overwritten by the default value. In other words, unless an individual chart component is being used as a standalone component (without a `VictoryChart` wrapper), this prop should be added to the `VictoryChart` component. 
+This prop should be set at the top-level of the chart in order to avoid being overwritten by the default value. In other words, unless an individual chart component is being used as a standalone component (without a `VictoryChart` wrapper), this prop should be added to the `VictoryChart` component.
 
-_note:_ The `x` value supplied to the `scale` prop refers to the _independent_ variable, and the `y` value refers to the _dependent_ variable. This may cause confusion in horizontal charts, as the independent variable will corresponds to the y axis.
+_note:_ The `x` value supplied to the `scale` prop refers to the _independent_ variable, and the `y` value refers to the _dependent_ variable. This may cause confusion in horizontal charts, as the independent variable will correspond to the y axis.
 
 _default:_ `scale="linear"`
 
