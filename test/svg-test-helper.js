@@ -120,7 +120,7 @@ const exhibitsShapeSequence = (commandString, shapeSeqeuence) => {
 export const svgExpectations = {
   /**
    * Asserts that the provided command string produces a rectangular shape.
-   * 
+   *
    * @param {string} commandString - the "d" attribute of a `path` element.
    * @returns {void}
    */
