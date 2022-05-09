@@ -1,7 +1,4 @@
-import {
-  circle,
-  point
-} from "victory-bar/src/geometry-helper-methods";
+import { circle, point } from "victory-bar/src/geometry-helper-methods";
 
 describe("point", () => {
   describe("calculates distances", () => {
