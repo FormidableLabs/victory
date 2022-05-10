@@ -123,7 +123,9 @@ describe("components/victory-box-plot", () => {
         .forEach((label, index) => {
           const [labeledWhisker] = screen.getAllByLabelText(label);
           expect(labeledWhisker).toBeDefined();
-          expect(labeledWhisker.getAttribute("tabindex")).toEqual(`${index + 1}`);
+          expect(labeledWhisker.getAttribute("tabindex")).toEqual(
+            `${index + 1}`
+          );
         });
     });
 
@@ -145,7 +147,9 @@ describe("components/victory-box-plot", () => {
         .forEach((label, index) => {
           const labeledBorder = screen.getByLabelText(label);
           expect(labeledBorder).toBeDefined();
-          expect(labeledBorder.getAttribute("tabindex")).toEqual(`${index + 1}`);
+          expect(labeledBorder.getAttribute("tabindex")).toEqual(
+            `${index + 1}`
+          );
         });
     });
 
