@@ -114,13 +114,14 @@ export function getScaleType(props, axis) {
 // **Note**: Brittle because reliant on d3 internals.
 const DUCK_TYPES = [
   { name: "quantile", method: "quantiles" },
-  { name: "log", method: "base" }
+  { name: "log", method: "base" },
+  // This is not documented, but is required for the log scale Storybook examples
+  { name: "pow-sqrt", method: "exponent" }
   // TODO(2214): Re-evaluate (1) duck typing approach, and (2) if duck typing,
   //   do we need a different approach? (Multiple keys? Stringifying functions?)
   // https://github.com/FormidableLabs/victory/issues/2214
   // Below are matches that don't seem to otherwise occur in Victory code base.
   // { name: "ordinal", method: "unknown" },
-  // { name: "pow-sqrt", method: "exponent" },
   // { name: "quantize-threshold", method: "invertExtent" }
 ];
 
