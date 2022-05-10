@@ -1,6 +1,18 @@
 # Victory Changelog
 
-## UNRELEASED
+## 36.4.0 (2022-05-10)
+
+* Added the ability to add victory charts title and desc props for better accessibility by @shankstee in #2199
+* Bump axios from 0.19.2 to 0.21.2 in /docs by @dependabot in #2188
+* Bump cross-fetch from 3.1.4 to 3.1.5 by @dependabot in #2206
+* add style interface to SliceProps type by @heythisispaul in #2212
+* Add jest and react testing library tests for victory-line and victory-area by @becca-bailey in #2196
+* fix typos in scale prop documentation by @heythisispaul in #2218
+* Bump cross-fetch from 3.1.4 to 3.1.5 by @dependabot in #2213
+* Bump cross-fetch from 3.1.4 to 3.1.5 in /demo/rn by @dependabot in #2207
+* add box plot jest/rtl tests by @heythisispaul in #2225
+* jest and rtl unit tests for bar components by @heythisispaul in #2216
+* Add victory-vendor package for d3 dependencies by @becca-bailey in #2204
 
 * Vendor in d3 libraries to new package `victory-vendor` and upgrade. Our CommonJS path now uses transpiled versions of the `d3-*` libraries while our ESM path continues to use the real underlying dependencies.
     * Update our tests to only refer to _built_ versions of our libraries (in the past there was a mix of source and built). This means Karma uses the ESM version of libraries while Jest uses the CommonJS versions.
