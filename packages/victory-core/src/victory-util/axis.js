@@ -239,6 +239,9 @@ export function getTickFormat(props, scale) {
   const stringMap = props.stringMap && props.stringMap[axis];
   if (!tickFormat) {
     const defaultTickFormat = getDefaultTickFormat(props);
+    // If there is no user-provided tick format, we use d3's tickFormat function
+    // by default. This changed the default formatting for some scale types when
+    // we upgraded to d3-scale@4..
     const scaleTickFormat =
       scale.tickFormat && isFunction(scale.tickFormat)
         ? scale.tickFormat()
