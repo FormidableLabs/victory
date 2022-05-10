@@ -96,7 +96,7 @@ describe("components/victory-box-plot", () => {
   });
 
   describe("accessibility", () => {
-    const buildLabel = (x, max) => `First value: ${x} Second value: ${max}`;
+    const buildLabel = (a, b) => `First value: ${a} Second value: ${b}`;
     it("adds an aria role to each point in the series", () => {
       const { container } = render(<VictoryBoxPlot data={dataset} />);
 
@@ -120,8 +120,10 @@ describe("components/victory-box-plot", () => {
 
       dataset
         .map(({ x, max }) => buildLabel(x, max))
-        .forEach((label) => {
-          expect(screen.getAllByLabelText(label).length).toBeGreaterThan(0);
+        .forEach((label, index) => {
+          const [labeledWhisker] = screen.getAllByLabelText(label);
+          expect(labeledWhisker).toBeDefined();
+          expect(labeledWhisker.getAttribute("tabindex")).toEqual(`${index + 1}`);
         });
     });
 
@@ -140,8 +142,10 @@ describe("components/victory-box-plot", () => {
 
       dataset
         .map(({ x, q3 }) => buildLabel(x, q3))
-        .forEach((label) => {
-          expect(screen.getAllByLabelText(label).length).toBeGreaterThan(0);
+        .forEach((label, index) => {
+          const labeledBorder = screen.getByLabelText(label);
+          expect(labeledBorder).toBeDefined();
+          expect(labeledBorder.getAttribute("tabindex")).toEqual(`${index + 1}`);
         });
     });
 
@@ -160,8 +164,10 @@ describe("components/victory-box-plot", () => {
 
       dataset
         .map(({ x, median }) => buildLabel(x, median))
-        .forEach((label) => {
-          expect(screen.getAllByLabelText(label).length).toBeGreaterThan(0);
+        .forEach((label, index) => {
+          const labeledLine = screen.getByLabelText(label);
+          expect(labeledLine).toBeDefined();
+          expect(labeledLine.getAttribute("tabindex")).toEqual(`${index + 1}`);
         });
     });
   });
