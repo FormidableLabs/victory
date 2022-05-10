@@ -41,6 +41,8 @@ Use [Yarn](https://yarnpkg.com/) to install dependencies:
 $ yarn install
 ```
 
+> *Note*: We use Yarn 1 and not the newer, different Yarn 2+ projects. Please use at least the minimum `yarn` version specified in `package.json:engines.yarn`.
+
 Run a development server and check out the demos. This command will also build and watch `lib/` and `es/` directories in all packages, so your demos will always be in sync with code changes.
 
 ```sh

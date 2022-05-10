@@ -42,13 +42,8 @@ storybook-static
 build-storybook.log*
 artifacts
 tmp
-.pnp.*
 
-# Yarn
-# https://yarnpkg.com/getting-started/qa#which-files-should-be-gitignored
+# Ignore all yarn2+
 .yarn/*
-!.yarn/patches
-!.yarn/plugins
-!.yarn/releases
-!.yarn/sdks
-!.yarn/versions
+.yarnrc*
+.pnp.*
