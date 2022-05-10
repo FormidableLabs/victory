@@ -3,7 +3,7 @@
 import React from "react";
 import { get } from "lodash";
 import { mount } from "enzyme";
-import { addEvents } from "packages/victory-core/src/index";
+import { addEvents } from "victory-core";
 import {
   MockVictoryComponent,
   MockLabel,

@@ -1,16 +1,16 @@
 /*eslint-disable no-magic-numbers*/
 /*eslint-disable react/no-multi-comp*/
 import React from "react";
-import { VictoryChart } from "../packages/victory-chart/src/index";
-import { VictoryAxis } from "../packages/victory-axis/src/index";
-import { VictoryBar } from "../packages/victory-bar/src/index";
-import { VictoryGroup } from "../packages/victory-group/src/index";
-import { VictoryScatter } from "../packages/victory-scatter/src/index";
-import { VictoryLine } from "../packages/victory-line/src/index";
-import { VictoryBoxPlot } from "../packages/victory-box-plot/src/index";
-import { VictoryPolarAxis } from "../packages/victory-polar-axis/src/index";
-import { VictoryStack } from "../packages/victory-stack/src/index";
-import { VictoryTheme } from "../packages/victory-core/src/index";
+import { VictoryChart } from "victory-chart";
+import { VictoryAxis } from "victory-axis";
+import { VictoryBar } from "victory-bar";
+import { VictoryGroup } from "victory-group";
+import { VictoryScatter } from "victory-scatter";
+import { VictoryLine } from "victory-line";
+import { VictoryBoxPlot } from "victory-box-plot";
+import { VictoryPolarAxis } from "victory-polar-axis";
+import { VictoryStack } from "victory-stack";
+import { VictoryTheme } from "victory-core";
 import { getData, getFourQuadrantData, getArrayData } from "./data";
 
 const dependentAxisTheme = {

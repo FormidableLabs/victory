@@ -1,5 +1,5 @@
 import { fireEvent, render, screen } from "@testing-library/react";
-import { curveCatmullRom } from "d3-shape";
+import { curveCatmullRom } from "victory-vendor/d3-shape";
 import { range } from "lodash";
 import React from "react";
 import { Area, VictoryArea } from "victory-area";

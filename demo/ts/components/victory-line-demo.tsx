@@ -1,12 +1,8 @@
 import React from "react";
 import { merge, random, range } from "lodash";
-import { VictoryChart } from "@packages/victory-chart/src/index";
-import { VictoryLine, Curve } from "@packages/victory-line/src/index";
-import {
-  VictoryContainer,
-  VictoryTheme,
-  Point
-} from "@packages/victory-core/src/index";
+import { VictoryChart } from "victory-chart/src/index";
+import { VictoryLine, Curve } from "victory-line/src/index";
+import { VictoryContainer, VictoryTheme, Point } from "victory-core/src/index";
 
 interface PointedLineProps {
   index?: string | number;

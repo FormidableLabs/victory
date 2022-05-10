@@ -1,10 +1,10 @@
 /* eslint no-unused-expressions: 0 */
 /* eslint max-nested-callbacks: 0 */
 
-import { LabelHelpers, VictoryLabel } from "packages/victory-core/src/index";
+import { LabelHelpers, VictoryLabel } from "victory-core";
 import { assign } from "lodash";
 import React from "react";
-import * as d3Scale from "d3-scale";
+import * as d3Scale from "victory-vendor/d3-scale";
 
 const scale = { x: d3Scale.scaleLinear(), y: d3Scale.scaleLinear() };
 const data = [

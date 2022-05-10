@@ -1,15 +1,10 @@
 /*eslint-disable no-magic-numbers*/
 /*eslint-disable react/no-multi-comp*/
 import React from "react";
-import { VictoryBoxPlot } from "../packages/victory-box-plot/src/index";
-import { VictoryChart } from "../packages/victory-chart/src/index";
-import { VictoryTooltip } from "../packages/victory-tooltip/src/index";
-import {
-  VictoryTheme,
-  Box,
-  Whisker,
-  LineSegment
-} from "../packages/victory-core/src/index";
+import { VictoryBoxPlot } from "victory-box-plot";
+import { VictoryChart } from "victory-chart";
+import { VictoryTooltip } from "victory-tooltip";
+import { VictoryTheme, Box, Whisker, LineSegment } from "victory-core";
 import { range } from "lodash";
 import seedrandom from "seedrandom";
 import { getArrayData } from "./data";

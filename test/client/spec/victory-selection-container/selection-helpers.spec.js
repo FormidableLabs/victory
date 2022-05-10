@@ -1,10 +1,10 @@
 /* eslint no-unused-expressions: 0 */
 /* eslint max-nested-callbacks: 0 */
 
-import { SelectionHelpers } from "packages/victory-selection-container/src/index";
-import { VictoryBar } from "packages/victory-bar/src/index";
+import { SelectionHelpers } from "victory-selection-container";
+import { VictoryBar } from "victory-bar";
 import React from "react";
-import * as d3Scale from "d3-scale";
+import * as d3Scale from "victory-vendor/d3-scale";
 import { assign } from "lodash";
 
 const scale = { x: d3Scale.scaleLinear(), y: d3Scale.scaleLinear() };

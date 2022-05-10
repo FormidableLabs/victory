@@ -3,22 +3,22 @@
 import React from "react";
 import PropTypes from "prop-types";
 import { range, merge, random, minBy, maxBy, last } from "lodash";
-import { VictoryChart } from "Packages/victory-chart/src/index";
-import { VictoryStack } from "Packages/victory-stack/src/index";
-import { VictoryGroup } from "Packages/victory-group/src/index";
-import { VictoryAxis } from "Packages/victory-axis/src/index";
-import { VictoryArea } from "Packages/victory-area/src/index";
-import { VictoryBar } from "Packages/victory-bar/src/index";
-import { VictoryLine } from "Packages/victory-line/src/index";
-import { VictoryScatter } from "Packages/victory-scatter/src/index";
-import { VictoryZoomContainer } from "Packages/victory-zoom-container/src/index";
-import { VictoryTooltip } from "Packages/victory-tooltip/src/index";
-import { VictoryLegend } from "Packages/victory-legend/src/index";
+import { VictoryChart } from "victory-chart/src/index";
+import { VictoryStack } from "victory-stack/src/index";
+import { VictoryGroup } from "victory-group/src/index";
+import { VictoryAxis } from "victory-axis/src/index";
+import { VictoryArea } from "victory-area/src/index";
+import { VictoryBar } from "victory-bar/src/index";
+import { VictoryLine } from "victory-line/src/index";
+import { VictoryScatter } from "victory-scatter/src/index";
+import { VictoryZoomContainer } from "victory-zoom-container/src/index";
+import { VictoryTooltip } from "victory-tooltip/src/index";
+import { VictoryLegend } from "victory-legend/src/index";
 import {
   VictoryTheme,
   VictoryClipContainer,
   VictoryPortal
-} from "Packages/victory-core/src/index";
+} from "victory-core/src/index";
 
 const allData = range(0, 10, 0.001).map((x) => ({
   x,

@@ -1,7 +1,7 @@
 "use strict";
 
-var config = require("./webpack.config");
-var LodashModuleReplacementPlugin = require("lodash-webpack-plugin");
+const config = require("./webpack.config");
+const LodashModuleReplacementPlugin = require("lodash-webpack-plugin");
 
 // **WARNING**: Mutates base configuration.
 // We do this because lodash isn't available in `production` mode.

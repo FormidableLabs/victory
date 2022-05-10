@@ -1,7 +1,7 @@
 /* eslint no-unused-expressions: 0 */
 /* eslint max-nested-callbacks: 0 */
 import React from "react";
-import { Domain, VictoryPortal } from "packages/victory-core/src/index";
+import { Domain, VictoryPortal } from "victory-core";
 
 /*
   createDomainFunction,

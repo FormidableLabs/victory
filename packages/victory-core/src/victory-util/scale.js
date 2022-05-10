@@ -3,7 +3,7 @@
 import { includes, isFunction, isPlainObject } from "lodash";
 import * as Helpers from "./helpers";
 import * as Collection from "./collection";
-import * as d3Scale from "d3-scale";
+import * as d3Scale from "victory-vendor/d3-scale";
 
 const supportedScaleStrings = ["linear", "time", "log", "sqrt"];
 
@@ -110,19 +110,28 @@ export function getScaleType(props, axis) {
   );
 }
 
+// Ordered type inference off of function fields.
+// **Note**: Brittle because reliant on d3 internals.
+const DUCK_TYPES = [
+  { name: "quantile", method: "quantiles" },
+  { name: "log", method: "base" }
+  // TODO(2214): Re-evaluate (1) duck typing approach, and (2) if duck typing,
+  //   do we need a different approach? (Multiple keys? Stringifying functions?)
+  // https://github.com/FormidableLabs/victory/issues/2214
+  // Below are matches that don't seem to otherwise occur in Victory code base.
+  // { name: "ordinal", method: "unknown" },
+  // { name: "pow-sqrt", method: "exponent" },
+  // { name: "quantize-threshold", method: "invertExtent" }
+];
+
 export function getType(scale) {
   if (typeof scale === "string") {
     return scale;
   }
-  const duckTypes = [
-    { name: "log", method: "base" },
-    { name: "ordinal", method: "unknown" },
-    { name: "pow-sqrt", method: "exponent" },
-    { name: "quantile", method: "quantiles" },
-    { name: "quantize-threshold", method: "invertExtent" }
-  ];
-  const scaleType = duckTypes.filter((type) => {
+
+  const scaleType = DUCK_TYPES.filter((type) => {
     return scale[type.method] !== undefined;
   })[0];
+
   return scaleType ? scaleType.name : undefined;
 }

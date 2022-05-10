@@ -1,7 +1,8 @@
 /* eslint no-unused-expressions: 0 */
+/* eslint-disable max-nested-callbacks */
 
-import { Scale } from "packages/victory-core/src/index";
-import * as d3Scale from "d3-scale";
+import { Scale } from "victory-core";
+import * as d3Scale from "victory-vendor/d3-scale";
 
 describe("victory-util/scale", () => {
   describe("getBaseScale", () => {
@@ -99,6 +100,33 @@ describe("victory-util/scale", () => {
       };
       const scaleType = Scale.getScaleType(props, "x");
       expect(scaleType).to.equal("time");
+    });
+  });
+
+  describe("getType", () => {
+    it("returns undefined on unknown function type", () => {
+      const scaleType = Scale.getType(function () {});
+      expect(scaleType).to.equal(undefined);
+    });
+
+    it("returns a string value given a string prop", () => {
+      const scaleType = Scale.getType("linear");
+      expect(scaleType).to.equal("linear");
+    });
+
+    it("returns 'log' for log scales", () => {
+      const scaleType = Scale.getType(d3Scale.scaleLog());
+      expect(scaleType).to.equal("log");
+    });
+
+    it("matches 'quantile'", () => {
+      const scaleType = Scale.getType(d3Scale.scaleQuantile());
+      expect(scaleType).to.equal("quantile");
+    });
+
+    it("returns undefined for scaleLinear", () => {
+      const scaleType = Scale.getType(d3Scale.scaleLinear());
+      expect(scaleType).to.equal(undefined);
     });
   });
 });

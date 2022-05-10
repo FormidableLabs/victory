@@ -1,8 +1,8 @@
 /*eslint-disable no-magic-numbers*/
 /*eslint-disable react/no-multi-comp*/
 import React from "react";
-import { VictoryBar } from "../packages/victory-bar/src/index";
-import { VictoryTooltip, Flyout } from "../packages/victory-tooltip/src/index";
+import { VictoryBar } from "victory-bar";
+import { VictoryTooltip, Flyout } from "victory-tooltip";
 import { VictoryLabel } from "victory-core/src";
 import { getData, getMixedData } from "./data";
 import styled from "styled-components";

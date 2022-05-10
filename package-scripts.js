@@ -1,4 +1,7 @@
-var npsUtils = require("nps-utils");
+const os = require("os");
+// Can override with, e.g., `CONCURRENCY=2 yarn nps build-package-dists`.
+const CONCURRENCY = parseInt(process.env.CONCURRENCY || os.cpus().length, 10);
+const npsUtils = require("nps-utils");
 
 module.exports = {
   scripts: {
@@ -21,10 +24,13 @@ module.exports = {
       native: "jest --config=jest-native-config.js",
       default: "cross-env BABEL_ENV=commonjs jest --config=jest-config.js"
     },
+    "test-node": {
+      default: "mocha ./test/node"
+    },
     test: {
       cov: npsUtils.series.nps("build-package-libs", "karma.cov"),
       dev: "karma start ./config/karma/karma.conf.dev.js",
-      watch: npsUtils.series.nps("build-package-libs", "karma.watch"),
+      watch: npsUtils.concurrent.nps("watch", "karma.watch"),
       default: npsUtils.series.nps("build-package-libs", "karma")
     },
     storybook: {
@@ -36,22 +42,34 @@ module.exports = {
       default: npsUtils.concurrent.nps("watch", "server.dev", "server.test")
     },
     lint: {
-      src: "lerna exec --stream -- eslint --color --ext .js,.jsx,.ts,.tsx src",
-      demo: "eslint --color --ext .js,.jsx,.ts,.tsx demo",
-      docs: "eslint --color --ext .js,.jsx docs",
-      stories: "eslint --color stories",
-      test: "eslint --color test",
+      // Note: Using a base `nps` command with extra args.
+      // 1. You need to add double quotes around the extra part (e.g. `test` below)
+      // 2. If going through a `lerna exec` you need to escape with an extra backslash `\` (e.g. `src` below)
+      base: "yarn eslint --color --ext .js,.jsx,.ts,.tsx",
+      fix: "yarn eslint --color --ext .js,.jsx,.ts,.tsx --fix",
+      src: 'lerna exec --ignore victory-vendor --stream -- yarn nps \\"lint.base src\\"',
+      vendor:
+        'lerna exec --scope victory-vendor -- yarn nps \\"lint.base scripts\\"',
+      config: 'yarn nps "lint.base package-scripts.js config"',
+      demo: 'yarn nps "lint.base demo"',
+      docs: 'yarn nps "lint.base docs"',
+      stories: 'yarn nps "lint.base stories"',
+      test: 'yarn nps "lint.base test"',
       ts: npsUtils.series.nps("build-package-libs", "compile-ts"),
       default: npsUtils.series.nps(
+        "lint.config",
         "lint.test",
         "lint.stories",
         "lint.demo",
+        // TODO: Needs `docs` install to work -- "lint.docs",
+        "lint.vendor",
         "lint.src"
       )
     },
     format: {
-      default: 'prettier --write "./**/*.{js,jsx,json,ts,tsx}"',
-      ci: 'prettier --list-different "./**/*.{js,jsx,json,ts,tsx}"'
+      fix: 'prettier --write "./**/*.{js,jsx,json,ts,tsx}"',
+      ci: 'prettier --list-different "./**/*.{js,jsx,json,ts,tsx}"',
+      default: "yarn nps format.fix"
     },
     check: {
       ci: npsUtils.series.nps(
@@ -59,9 +77,10 @@ module.exports = {
         "lint",
         "build-package-libs",
         "build-package-dists",
-        "karma.ci",
+        "test-node",
         "jest",
         "jest.native",
+        "karma.ci",
         "compile-ts"
       ),
       cov: npsUtils.series.nps("lint", "test.cov"),
@@ -69,9 +88,11 @@ module.exports = {
       default: npsUtils.series.nps("lint", "test")
     },
     watch: {
-      es: "lerna exec --parallel -- cross-env BABEL_ENV=es babel src --out-dir es --copy-files --watch",
-      lib: "lerna exec --parallel -- cross-env BABEL_ENV=commonjs babel src --out-dir lib --copy-files --watch",
-      default: npsUtils.concurrent.nps("watch.es", "watch.lib")
+      es: "lerna exec --parallel --ignore victory-native --ignore victory-vendor -- cross-env BABEL_ENV=es babel src --out-dir es --config-file ../../.babelrc.js --copy-files --watch",
+      lib: "lerna exec --parallel --ignore victory-native --ignore victory-vendor -- cross-env BABEL_ENV=commonjs babel src --out-dir lib --config-file ../../.babelrc.js --copy-files --watch",
+      core: npsUtils.concurrent.nps("watch.es", "watch.lib"),
+      // `victory-vendor` is built 1x up front and not watched.
+      default: npsUtils.series.nps("build-package-libs-vendor", "watch.core")
     },
     clean: {
       lib: "rimraf lib",
@@ -85,22 +106,27 @@ module.exports = {
     "lerna-dry-run":
       "lerna version --no-git-tag-version --no-push --loglevel silly",
     // TODO: organize build scripts once build perf is sorted out
-    "babel-es": "cross-env BABEL_ENV=es babel src --out-dir es --copy-files",
+    "babel-es":
+      "cross-env BABEL_ENV=es babel src --out-dir es --config-file ../../.babelrc.js --copy-files",
     "babel-lib":
-      "cross-env BABEL_ENV=commonjs babel src --out-dir lib --copy-files",
+      "cross-env BABEL_ENV=commonjs babel src --out-dir lib --config-file ../../.babelrc.js --copy-files",
     "build-es": npsUtils.series.nps("clean.es", "babel-es"),
     "build-lib": npsUtils.series.nps("clean.lib", "babel-lib"),
     "build-libs": npsUtils.series.nps("build-lib", "build-es"),
-    "build-package-libs":
-      "lerna exec --parallel --ignore victory-native -- nps build-libs",
+    "build-package-libs-core": `lerna exec --concurrency ${CONCURRENCY} --stream --ignore victory-native --ignore victory-vendor -- nps build-libs`,
+    "build-package-libs-vendor":
+      "lerna exec --scope victory-vendor -- yarn build",
+    "build-package-libs": npsUtils.series.nps(
+      "build-package-libs-core",
+      "build-package-libs-vendor"
+    ),
     "build-dist-dev":
       "webpack --bail --config ../../config/webpack/webpack.config.dev.js",
     "build-dist-min":
       "webpack --bail --config ../../config/webpack/webpack.config.js",
     "build-dists": npsUtils.concurrent.nps("build-dist-min", "build-dist-dev"),
     "build-dist": npsUtils.series.nps("clean.dist", "build-dists"),
-    "build-package-dists":
-      "lerna exec --parallel --ignore victory-native -- nps build-dists",
+    "build-package-dists": `lerna exec --concurrency ${CONCURRENCY} --stream --ignore victory-native --ignore victory-vendor -- nps build-dists`,
     bootstrap: "lerna bootstrap",
     "link-parent-bin": "link-parent-bin"
   }

@@ -1,14 +1,9 @@
 "use strict";
-var path = require("path");
+const path = require("path");
 
-var MAIN_PATH = path.join(process.cwd(), "test/client/main.js");
-var POLYFILL_PATH = path.join(
-  path.dirname(require.resolve("core-js/package.json")),
-  "es6/**/*.js"
-);
-var PREPROCESSORS = {};
+const MAIN_PATH = path.resolve("test/client/main.js");
+const PREPROCESSORS = {};
 PREPROCESSORS[MAIN_PATH] = ["webpack"];
-PREPROCESSORS[POLYFILL_PATH] = ["webpack"];
 
 /*
  * Karma Configuration: "dev" version.
@@ -35,10 +30,6 @@ module.exports = function (config) {
     files: [
       // Sinon has issues with webpack. Do global include.
       require.resolve("sinon/pkg/sinon"),
-
-      // Polyfills for PhantomJS in React 16.
-      require.resolve("core-js/es6/map"),
-      require.resolve("core-js/es6/set"),
 
       // Test bundle (must be created via `npm run dev|hot|server-test`)
       "http://127.0.0.1:3001/assets/main.js"

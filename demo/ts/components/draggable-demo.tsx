@@ -2,20 +2,20 @@
 
 import React from "react";
 import { merge } from "lodash";
-import { VictoryChart } from "@packages/victory-chart";
-import { VictoryAxis } from "@packages/victory-axis";
-import { VictoryBar } from "@packages/victory-bar";
-import { VictoryBrushLine } from "@packages/victory-brush-line";
-import { VictoryScatter } from "@packages/victory-scatter";
+import { VictoryChart } from "victory-chart";
+import { VictoryAxis } from "victory-axis";
+import { VictoryBar } from "victory-bar";
+import { VictoryBrushLine } from "victory-brush-line";
+import { VictoryScatter } from "victory-scatter";
 import {
   DomainTuple,
   DomainPropObjectType,
   VictoryClipContainer,
   Point,
   Selection
-} from "@packages/victory-core";
-import { VictoryZoomContainer } from "@packages/victory-zoom-container";
-import { VictoryBrushContainer } from "@packages/victory-brush-container";
+} from "victory-core";
+import { VictoryZoomContainer } from "victory-zoom-container";
+import { VictoryBrushContainer } from "victory-brush-container";
 
 type BarDataType = {
   name: string;

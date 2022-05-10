@@ -9,7 +9,11 @@ import {
   isNil
 } from "lodash";
 import { Helpers, Scale, Domain, Data, Collection } from "victory-core";
-import { min as d3Min, max as d3Max, quantile as d3Quantile } from "d3-array";
+import {
+  min as d3Min,
+  max as d3Max,
+  quantile as d3Quantile
+} from "victory-vendor/d3-array";
 
 const TYPES = ["max", "min", "median", "q1", "q3"];
 

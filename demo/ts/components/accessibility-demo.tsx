@@ -1,18 +1,18 @@
 /*eslint-disable no-magic-numbers */
 import React from "react";
 import { isNumber } from "lodash";
-import { VictoryGroup } from "@packages/victory-group";
-import { VictoryStack } from "@packages/victory-stack";
-import { VictoryChart } from "@packages/victory-chart";
-import { VictoryScatter } from "@packages/victory-scatter";
-import { VictoryBoxPlot } from "@packages/victory-box-plot";
-import { VictoryBar, Bar } from "@packages/victory-bar";
-import { VictoryPie, Slice } from "@packages/victory-pie";
-import { VictoryArea, Area } from "@packages/victory-area";
-import { VictoryLine, Curve } from "@packages/victory-line";
-import { VictoryVoronoi, Voronoi } from "@packages/victory-voronoi";
-import { ErrorBar, VictoryErrorBar } from "@packages/victory-errorbar";
-import { Candle, VictoryCandlestick } from "@packages/victory-candlestick";
+import { VictoryGroup } from "victory-group";
+import { VictoryStack } from "victory-stack";
+import { VictoryChart } from "victory-chart";
+import { VictoryScatter } from "victory-scatter";
+import { VictoryBoxPlot } from "victory-box-plot";
+import { VictoryBar, Bar } from "victory-bar";
+import { VictoryPie, Slice } from "victory-pie";
+import { VictoryArea, Area } from "victory-area";
+import { VictoryLine, Curve } from "victory-line";
+import { VictoryVoronoi, Voronoi } from "victory-voronoi";
+import { ErrorBar, VictoryErrorBar } from "victory-errorbar";
+import { Candle, VictoryCandlestick } from "victory-candlestick";
 import {
   LineSegment,
   Whisker,
@@ -20,7 +20,7 @@ import {
   Point,
   VictoryLabel,
   VictoryAccessibleGroup
-} from "@packages/victory-core";
+} from "victory-core";
 import {
   accessibilityBarData,
   accessibilityBoxData,

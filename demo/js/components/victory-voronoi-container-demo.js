@@ -1,17 +1,17 @@
 /*global window:false*/
 /*eslint-disable no-magic-numbers */
 import React from "react";
-import { VictoryChart } from "Packages/victory-chart/src/index";
-import { VictoryStack } from "Packages/victory-stack/src/index";
-import { VictoryGroup } from "Packages/victory-group/src/index";
-import { VictoryBar } from "Packages/victory-bar/src/index";
-import { VictoryLine } from "Packages/victory-line/src/index";
-import { VictoryScatter } from "Packages/victory-scatter/src/index";
-import { VictoryVoronoiContainer } from "Packages/victory-voronoi-container/src/index";
+import { VictoryChart } from "victory-chart/src/index";
+import { VictoryStack } from "victory-stack/src/index";
+import { VictoryGroup } from "victory-group/src/index";
+import { VictoryBar } from "victory-bar/src/index";
+import { VictoryLine } from "victory-line/src/index";
+import { VictoryScatter } from "victory-scatter/src/index";
+import { VictoryVoronoiContainer } from "victory-voronoi-container/src/index";
 import { random, range } from "lodash";
-import { Flyout, VictoryTooltip } from "Packages/victory-tooltip/src/index";
-import { VictoryLegend } from "Packages/victory-legend/src/index";
-import { VictoryLabel, VictoryTheme } from "Packages/victory-core/src/index";
+import { Flyout, VictoryTooltip } from "victory-tooltip/src/index";
+import { VictoryLegend } from "victory-legend/src/index";
+import { VictoryLabel, VictoryTheme } from "victory-core/src/index";
 
 const series1 = [
   { x: 0, y: 2500 },

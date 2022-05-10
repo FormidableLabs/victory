@@ -1,5 +1,5 @@
 /* eslint no-unused-expressions: 0 */
-import * as Helpers from "packages/victory-core/src/victory-util/helpers";
+import { Helpers } from "victory-core";
 
 describe("victory-util/helpers", () => {
   describe("omit", () => {

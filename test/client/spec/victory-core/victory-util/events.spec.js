@@ -1,7 +1,7 @@
 /* eslint no-unused-expressions: 0 */
 /* global sinon */
 
-import { Events } from "packages/victory-core/src/index";
+import { Events } from "victory-core";
 
 describe("victory-util/events", () => {
   describe("getPartialEvents", () => {

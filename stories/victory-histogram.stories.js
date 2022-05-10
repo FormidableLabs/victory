@@ -1,20 +1,20 @@
 /*eslint-disable no-magic-numbers*/
 /*eslint-disable react/no-multi-comp*/
 import React from "react";
-import { VictoryHistogram } from "../packages/victory-histogram/src";
-import { VictoryChart } from "../packages/victory-chart/src";
-import { VictoryLine } from "../packages/victory-line/src";
-import { VictoryScatter } from "../packages/victory-scatter/src";
-import { VictoryTooltip } from "../packages/victory-tooltip/src";
-import { VictoryStack } from "../packages/victory-stack/src";
-import { VictoryTheme } from "../packages/victory-core/src";
+import { VictoryHistogram } from "victory-histogram";
+import { VictoryChart } from "victory-chart";
+import { VictoryLine } from "victory-line";
+import { VictoryScatter } from "victory-scatter";
+import { VictoryTooltip } from "victory-tooltip";
+import { VictoryStack } from "victory-stack";
+import { VictoryTheme } from "victory-core";
 import { getData } from "./data";
 import { data, timeData } from "./victory-histogram-data";
-import { Bar } from "../packages/victory-bar/src";
+import { Bar } from "victory-bar";
 
-import * as d3Array from "d3-array";
-import * as d3Scale from "d3-scale";
-import * as d3Time from "d3-time";
+import * as d3Array from "victory-vendor/d3-array";
+import * as d3Scale from "victory-vendor/d3-scale";
+import * as d3Time from "victory-vendor/d3-time";
 import styled from "styled-components";
 
 const containerStyle = {

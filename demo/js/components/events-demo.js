@@ -1,11 +1,11 @@
 /*eslint-disable no-magic-numbers */
 import React from "react";
-import { VictoryChart } from "Packages/victory-chart/src/index";
-import { VictoryStack } from "Packages/victory-stack/src/index";
-import { VictoryArea } from "Packages/victory-area/src/index";
-import { VictoryBar } from "Packages/victory-bar/src/index";
-import { VictoryLine } from "Packages/victory-line/src/index";
-import { VictoryTheme, VictoryLabel } from "Packages/victory-core/src/index";
+import { VictoryChart } from "victory-chart/src/index";
+import { VictoryStack } from "victory-stack/src/index";
+import { VictoryArea } from "victory-area/src/index";
+import { VictoryBar } from "victory-bar/src/index";
+import { VictoryLine } from "victory-line/src/index";
+import { VictoryTheme, VictoryLabel } from "victory-core/src/index";
 import { merge } from "lodash";
 
 class App extends React.Component {

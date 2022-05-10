@@ -1,10 +1,10 @@
 /* eslint-disable react/no-multi-comp */
 import React from "react";
-import { CanvasGroup, CanvasCurve } from "../packages/victory-canvas/src";
-import { VictoryChart } from "../packages/victory-chart/src/index";
-import { VictoryTheme, VictoryLabel } from "../packages/victory-core/src/index";
-import { VictoryLine } from "../packages/victory-line/src";
-import { VictoryStack } from "../packages/victory-stack/src/index";
+import { CanvasGroup, CanvasCurve } from "victory-canvas";
+import { VictoryChart } from "victory-chart";
+import { VictoryTheme, VictoryLabel } from "victory-core";
+import { VictoryLine } from "victory-line";
+import { VictoryStack } from "victory-stack";
 import { getData, getMixedData } from "./data";
 
 const containerStyle = {

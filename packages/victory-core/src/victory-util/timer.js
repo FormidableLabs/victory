@@ -1,4 +1,4 @@
-import { timer, now } from "d3-timer";
+import { timer, now } from "victory-vendor/d3-timer";
 
 export default class Timer {
   constructor() {

@@ -1,10 +1,10 @@
 /*global window:false */
 /*eslint-disable no-magic-numbers */
 import React from "react";
-import { VictoryVoronoi } from "@packages/victory-voronoi";
-import { VictoryTooltip } from "@packages/victory-tooltip";
-import { VictoryChart } from "@packages/victory-chart";
-import { VictoryScatter } from "@packages/victory-scatter";
+import { VictoryVoronoi } from "victory-voronoi";
+import { VictoryTooltip } from "victory-tooltip";
+import { VictoryChart } from "victory-chart";
+import { VictoryScatter } from "victory-scatter";
 import { range, random } from "lodash";
 
 type dataType = {

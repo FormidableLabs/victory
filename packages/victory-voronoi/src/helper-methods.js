@@ -1,6 +1,10 @@
 import { assign, without, isNil } from "lodash";
+// victory-vendor note: This module is still CommonJS, so not part of victory-vendor.
 import { voronoi as d3Voronoi } from "d3-voronoi";
 import { Helpers, LabelHelpers, Scale, Domain, Data } from "victory-core";
+
+// Re-export for tests
+export { d3Voronoi as _internalD3Voronoi };
 
 const getVoronoi = (props, range, scale) => {
   const minRange = [Math.min(...range.x), Math.min(...range.y)];
@@ -50,6 +54,18 @@ const getCalculatedValues = (props) => {
 
   let data = Data.getData(props);
   data = Data.formatDataFromDomain(data, domain);
+  // Manually remove data with null _x or _y values.
+  // Otherwise, we hit null error in: d3-voronoi/src/Cell.js
+  data = data.filter((datum) => {
+    if (datum._x === null) {
+      return false;
+    }
+    if (datum._y === null) {
+      return false;
+    }
+
+    return true;
+  });
 
   const voronoi = getVoronoi(props, range, scale);
   const polygons = voronoi.polygons(data);

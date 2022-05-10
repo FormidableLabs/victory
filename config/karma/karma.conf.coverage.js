@@ -5,11 +5,11 @@
  *
  * This configuration is the same as basic one-shot version, just with coverage.
  */
-var path = require("path");
-var webpackCovCfg = require("../webpack/webpack.config.coverage");
+const path = require("path");
+const webpackCovCfg = require("../webpack/webpack.config.coverage");
 
 // Replace with `__dirname` if using in project root.
-var ROOT = process.cwd();
+const ROOT = process.cwd();
 
 module.exports = function (config) {
   /* eslint-disable global-require */

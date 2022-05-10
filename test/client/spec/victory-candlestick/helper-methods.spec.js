@@ -1,9 +1,6 @@
 /* eslint no-unused-expressions: 0 */
 /* eslint max-nested-callbacks: 0 */
-import {
-  getData,
-  getDomain
-} from "packages/victory-candlestick/src/helper-methods";
+import { getData, getDomain } from "victory-candlestick/es/helper-methods";
 import { range } from "lodash";
 import { fromJS } from "immutable";
 

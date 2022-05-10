@@ -2,11 +2,11 @@
 /*eslint-disable react/no-multi-comp*/
 
 import React from "react";
-import { VictoryStack } from "../packages/victory-stack/src/index";
-import { VictoryScatter } from "../packages/victory-scatter/src/index";
-import { VictoryChart } from "../packages/victory-chart/src/index";
-import { VictoryTooltip } from "../packages/victory-tooltip/src/index";
-import { VictoryTheme, Point } from "../packages/victory-core/src/index";
+import { VictoryStack } from "victory-stack";
+import { VictoryScatter } from "victory-scatter";
+import { VictoryChart } from "victory-chart";
+import { VictoryTooltip } from "victory-tooltip";
+import { VictoryTheme, Point } from "victory-core";
 import { getData, getMixedData, getTimeData, getLogData } from "./data";
 import { fromJS } from "immutable";
 import styled from "styled-components";

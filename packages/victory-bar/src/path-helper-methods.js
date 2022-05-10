@@ -1,4 +1,4 @@
-import * as d3Shape from "d3-shape";
+import * as d3Shape from "victory-vendor/d3-shape";
 
 import { circle, point } from "./geometry-helper-methods";
 

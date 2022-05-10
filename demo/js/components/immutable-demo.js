@@ -8,27 +8,27 @@ import {
   VictoryClipContainer,
   VictoryLabel,
   VictoryTheme
-} from "Packages/victory-core/src/index";
+} from "victory-core/src/index";
 
-import { VictoryChart } from "Packages/victory-chart/src/index";
-import { VictoryStack } from "Packages/victory-stack/src/index";
-import { VictoryGroup } from "Packages/victory-group/src/index";
-import { VictoryArea } from "Packages/victory-area/src/index";
-import { VictoryAxis } from "Packages/victory-axis/src/index";
-import { VictoryPolarAxis } from "Packages/victory-polar-axis/src/index";
-import { VictoryBar } from "Packages/victory-bar/src/index";
-import { VictoryLine } from "Packages/victory-line/src/index";
-import { VictoryScatter } from "Packages/victory-scatter/src/index";
-import { VictoryErrorBar } from "Packages/victory-errorbar/src/index";
-import { VictoryCandlestick } from "Packages/victory-candlestick/src/index";
-import { VictoryVoronoi } from "Packages/victory-voronoi/src/index";
-import { VictoryZoomContainer } from "Packages/victory-zoom-container/src/index";
-import { VictoryVoronoiContainer } from "Packages/victory-voronoi-container/src/index";
-import { VictorySelectionContainer } from "Packages/victory-selection-container/src/index";
-import { VictoryCursorContainer } from "Packages/victory-cursor-container/src/index";
-import { VictoryBrushContainer } from "Packages/victory-brush-container/src/index";
-import { VictoryTooltip } from "Packages/victory-tooltip/src/index";
-import { VictoryLegend } from "Packages/victory-legend/src/index";
+import { VictoryChart } from "victory-chart/src/index";
+import { VictoryStack } from "victory-stack/src/index";
+import { VictoryGroup } from "victory-group/src/index";
+import { VictoryArea } from "victory-area/src/index";
+import { VictoryAxis } from "victory-axis/src/index";
+import { VictoryPolarAxis } from "victory-polar-axis/src/index";
+import { VictoryBar } from "victory-bar/src/index";
+import { VictoryLine } from "victory-line/src/index";
+import { VictoryScatter } from "victory-scatter/src/index";
+import { VictoryErrorBar } from "victory-errorbar/src/index";
+import { VictoryCandlestick } from "victory-candlestick/src/index";
+import { VictoryVoronoi } from "victory-voronoi/src/index";
+import { VictoryZoomContainer } from "victory-zoom-container/src/index";
+import { VictoryVoronoiContainer } from "victory-voronoi-container/src/index";
+import { VictorySelectionContainer } from "victory-selection-container/src/index";
+import { VictoryCursorContainer } from "victory-cursor-container/src/index";
+import { VictoryBrushContainer } from "victory-brush-container/src/index";
+import { VictoryTooltip } from "victory-tooltip/src/index";
+import { VictoryLegend } from "victory-legend/src/index";
 
 class Wrapper extends React.Component {
   static propTypes = {

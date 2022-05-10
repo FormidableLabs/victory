@@ -1,4 +1,4 @@
-import * as Style from "packages/victory-core/src/victory-util/style";
+import { Style } from "victory-core";
 
 describe("toTransformString", () => {
   it("returns an empty string if no transform definitions are given", () => {

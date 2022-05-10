@@ -2,7 +2,7 @@ import React from "react";
 import PropTypes from "prop-types";
 import { Helpers, CommonProps, Path } from "victory-core";
 import { defaults, isFunction, assign } from "lodash";
-import * as d3Shape from "d3-shape";
+import * as d3Shape from "victory-vendor/d3-shape";
 
 const getPath = (props) => {
   const { slice, radius, innerRadius, cornerRadius } = props;

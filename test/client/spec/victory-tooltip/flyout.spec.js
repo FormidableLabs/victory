@@ -1,7 +1,7 @@
 /*eslint-disable max-nested-callbacks,no-unused-expressions,max-len */
 import React from "react";
 import { mount } from "enzyme";
-import Flyout from "packages/victory-tooltip/src/flyout";
+import { Flyout } from "victory-tooltip";
 import SvgTestHelper from "../svg-test-helper";
 
 describe("victory-primitives/flyout", () => {

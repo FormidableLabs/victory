@@ -1,6 +1,6 @@
-{
-  "presets": ["@babel/react"],
-  "plugins": [
+module.exports = {
+  presets: ["@babel/preset-react"],
+  plugins: [
     "lodash",
     "@babel/proposal-class-properties",
     "@babel/transform-arrow-functions",
@@ -15,25 +15,17 @@
     "@babel/proposal-object-rest-spread",
     "@babel/plugin-proposal-export-namespace-from"
   ],
-  "env": {
-    "commonjs": {
-      "plugins": [
+  env: {
+    commonjs: {
+      plugins: [
         [
           "@babel/transform-modules-commonjs",
           {
-            "strict": false,
-            "allowTopLevelThis": true
-          }
-        ],
-        [
-          "module-resolver",
-          {
-            "alias": {
-              "^victory-(.+)/es/(.+)": "^victory-\\1/lib/\\2"
-            }
+            strict: false,
+            allowTopLevelThis: true
           }
         ]
       ]
     }
   }
-}
+};

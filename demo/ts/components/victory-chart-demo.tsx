@@ -1,19 +1,19 @@
 import React from "react";
 import { assign, merge, random, range, omit } from "lodash";
-import { VictoryChart } from "@packages/victory-chart";
-import { VictoryStack } from "@packages/victory-stack";
-import { VictoryGroup } from "@packages/victory-group";
-import { VictoryAxis } from "@packages/victory-axis";
-import { VictoryArea } from "@packages/victory-area";
-import { VictoryBar } from "@packages/victory-bar";
-import { VictoryLine } from "@packages/victory-line";
-import { VictoryScatter } from "@packages/victory-scatter";
+import { VictoryChart } from "victory-chart";
+import { VictoryStack } from "victory-stack";
+import { VictoryGroup } from "victory-group";
+import { VictoryAxis } from "victory-axis";
+import { VictoryArea } from "victory-area";
+import { VictoryBar } from "victory-bar";
+import { VictoryLine } from "victory-line";
+import { VictoryScatter } from "victory-scatter";
 import {
   VictoryLabel,
   VictoryTheme,
   VictoryClipContainer,
   VictoryThemeDefinition
-} from "@packages/victory-core";
+} from "victory-core";
 
 const UPDATE_INTERVAL = 3000;
 

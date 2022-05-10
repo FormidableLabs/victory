@@ -1,6 +1,6 @@
-import * as d3Scale from "d3-scale";
-import * as d3Shape from "d3-shape";
-import { voronoi as d3Voronoi } from "d3-voronoi";
+import * as d3Scale from "victory-vendor/d3-scale";
+import * as d3Shape from "victory-vendor/d3-shape";
+import { _internalD3Voronoi as d3Voronoi } from "victory-voronoi/lib/helper-methods";
 import { without, min, max, property } from "lodash";
 
 const RECTANGULAR_SEQUENCE = ["M", "A", "L", "A", "L", "A", "L", "A", "z"];

@@ -1,23 +1,23 @@
 "use strict";
 
-var path = require("path");
-var webpack = require("webpack");
-var LodashModuleReplacementPlugin = require("lodash-webpack-plugin");
+const path = require("path");
+const webpack = require("webpack");
+const LodashModuleReplacementPlugin = require("lodash-webpack-plugin");
 
-var SRC = path.resolve("src");
+const SRC = path.resolve("src");
 
 // **Little Hacky**: Infer the filename and library name from the package name.
 //
 // Assumptions:
 // - `package.json`'s `name` field is name of dist files.
 // - PascalCased version of that name is exported class name.
-var PKG = require(path.resolve("package.json"));
-var libPath = (PKG.name || "").toLowerCase();
+const PKG = require(path.resolve("package.json"));
+const libPath = (PKG.name || "").toLowerCase();
 if (!libPath) {
   throw new Error("Need package.json:name field");
 }
 // PascalCase (with first character capitalized).
-var libName = libPath
+const libName = libPath
   .replace(/^\s+|\s+$/g, "")
   .replace(/(^|[-_ ])+(.)/g, function (match, first, second) {
     // Second match group is the character we want to change. Throw away first.
@@ -40,7 +40,7 @@ module.exports = {
   ],
   output: {
     path: path.resolve("dist"),
-    filename: libPath + ".min.js",
+    filename: `${libPath}.min.js`,
     library: libName,
     libraryTarget: "umd"
   },
@@ -52,7 +52,11 @@ module.exports = {
         // Use include specifically of our sources.
         // Do _not_ use an `exclude` here.
         include: [SRC],
-        loader: require.resolve("babel-loader")
+        use: {
+          loader: "babel-loader",
+          // eslint-disable-next-line global-require
+          options: require("../../.babelrc.js")
+        }
       }
     ]
   },

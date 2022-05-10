@@ -8,10 +8,10 @@
 import React from "react";
 import { omit, random, range } from "lodash";
 import { shallow, mount } from "enzyme";
-import { curveCatmullRom } from "d3-shape";
+import { curveCatmullRom } from "victory-vendor/d3-shape";
 import SvgTestHelper from "../svg-test-helper";
-import { VictoryLine, Curve } from "packages/victory-line/src/index";
-import { VictoryLabel } from "packages/victory-core";
+import { VictoryLine, Curve } from "victory-line";
+import { VictoryLabel } from "victory-core";
 
 class MyLineSegment extends React.Component {
   render() {}

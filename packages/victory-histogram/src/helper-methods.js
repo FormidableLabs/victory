@@ -2,8 +2,8 @@ import { assign, isNil } from "lodash";
 import { Helpers, LabelHelpers, Data, Domain, Scale } from "victory-core";
 import { getBarPosition } from "victory-bar";
 import isEqual from "react-fast-compare";
-import * as d3Array from "d3-array";
-import * as d3Scale from "d3-scale";
+import * as d3Array from "victory-vendor/d3-array";
+import * as d3Scale from "victory-vendor/d3-scale";
 
 const cacheLastValue = (func) => {
   let called = false;

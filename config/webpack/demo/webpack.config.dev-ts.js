@@ -1,23 +1,20 @@
 "use strict";
 
-var path = require("path");
-var glob = require("glob");
-var LodashModuleReplacementPlugin = require("lodash-webpack-plugin");
+const path = require("path");
+const glob = require("glob");
+const LodashModuleReplacementPlugin = require("lodash-webpack-plugin");
 
-var ROOT = process.cwd();
-var PACKAGES = glob.sync("packages/*/src", { root: ROOT });
-var FILES = PACKAGES.map(function (p) {
+const ROOT = process.cwd();
+const PACKAGES = glob.sync("packages/*/src", { root: ROOT });
+const FILES = PACKAGES.map(function (p) {
   return path.join(ROOT, p);
 });
-var DEMO = path.resolve("demo");
-var WDS_PORT = 3000;
+const DEMO = path.resolve("demo");
+const WDS_PORT = 3000;
 
 module.exports = {
   mode: "development",
   resolve: {
-    alias: {
-      "@packages": path.resolve("packages")
-    },
     extensions: [".ts", ".tsx", ".js", ".json"]
   },
   entry: "./demo/ts/app.tsx",
@@ -45,7 +42,11 @@ module.exports = {
         // Use include specifically of our sources.
         // Do _not_ use an `exclude` here.
         include: FILES,
-        loader: "babel-loader"
+        use: {
+          loader: "babel-loader",
+          // eslint-disable-next-line global-require
+          options: require("../../../.babelrc.js")
+        }
       }
     ]
   },

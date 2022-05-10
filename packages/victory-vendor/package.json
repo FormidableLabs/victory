@@ -1,0 +1,42 @@
+{
+  "name": "victory-vendor",
+  "version": "36.3.2",
+  "description": "Vendored dependencies for Victory",
+  "keywords": [
+    "data visualization",
+    "React",
+    "d3",
+    "charting"
+  ],
+  "repository": {
+    "type": "git",
+    "url": "https://github.com/formidablelabs/victory.git"
+  },
+  "homepage": "https://formidable.com/open-source/victory",
+  "author": "Formidable",
+  "license": "MIT AND ISC",
+  "exports": {
+    "./d3-*": {
+      "import": "./es/d3-*.js",
+      "default": "./lib/d3-*.js"
+    }
+  },
+  "scripts": {
+    "version": "yarn run build",
+    "build": "node ./scripts/build.js"
+  },
+  "dependencies": {
+    "d3-array": "^3.1.6",
+    "d3-ease": "^3.0.1",
+    "d3-interpolate": "^3.0.1",
+    "d3-scale": "^4.0.2",
+    "d3-shape": "^3.1.0",
+    "d3-time": "^3.0.0",
+    "d3-timer": "^3.0.1"
+  },
+  "devDependencies": {
+    "execa": "^6.1.0",
+    "rimraf": "^3.0.2"
+  },
+  "sideEffects": false
+}

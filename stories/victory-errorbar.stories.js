@@ -1,13 +1,10 @@
 /*eslint-disable no-magic-numbers*/
 /*eslint-disable react/no-multi-comp*/
 import React from "react";
-import {
-  VictoryErrorBar,
-  ErrorBar
-} from "../packages/victory-errorbar/src/index";
-import { VictoryChart } from "../packages/victory-chart/src/index";
-import { VictoryTooltip } from "../packages/victory-tooltip/src/index";
-import { VictoryTheme } from "../packages/victory-core/src/index";
+import { VictoryErrorBar, ErrorBar } from "victory-errorbar";
+import { VictoryChart } from "victory-chart";
+import { VictoryTooltip } from "victory-tooltip";
+import { VictoryTheme } from "victory-core";
 import { range } from "lodash";
 import seedrandom from "seedrandom";
 import { fromJS } from "immutable";

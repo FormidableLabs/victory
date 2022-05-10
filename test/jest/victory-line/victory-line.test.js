@@ -2,7 +2,7 @@ import React from "react";
 import { fireEvent, render, screen } from "@testing-library/react";
 import { VictoryLine, Curve } from "victory-line";
 import { calculateD3Path } from "../../svg-test-helper";
-import { curveCatmullRom } from "d3-shape";
+import { curveCatmullRom } from "victory-vendor/d3-shape";
 import { range, random } from "lodash";
 
 describe("components/victory-line", () => {

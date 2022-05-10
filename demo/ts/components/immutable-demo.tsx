@@ -3,32 +3,32 @@
 import React from "react";
 import { assign, merge, keys, random, range, round } from "lodash";
 import { fromJS } from "immutable";
-import { VictoryChart } from "@packages/victory-chart";
-import { VictoryStack } from "@packages/victory-stack";
-import { VictoryGroup } from "@packages/victory-group";
-import { VictoryArea } from "@packages/victory-area";
-import { VictoryAxis } from "@packages/victory-axis";
-import { VictoryPolarAxis } from "@packages/victory-polar-axis";
-import { VictoryBar } from "@packages/victory-bar";
-import { VictoryLine } from "@packages/victory-line";
-import { VictoryScatter } from "@packages/victory-scatter";
-import { VictoryErrorBar } from "@packages/victory-errorbar";
-import { VictoryCandlestick } from "@packages/victory-candlestick";
-import { VictoryVoronoi } from "@packages/victory-voronoi";
-import { VictoryZoomContainer } from "@packages/victory-zoom-container";
-import { VictoryVoronoiContainer } from "@packages/victory-voronoi-container";
-import { VictorySelectionContainer } from "@packages/victory-selection-container";
-import { VictoryCursorContainer } from "@packages/victory-cursor-container";
-import { VictoryBrushContainer } from "@packages/victory-brush-container";
-import { VictoryTooltip } from "@packages/victory-tooltip";
-import { VictoryLegend } from "@packages/victory-legend";
+import { VictoryChart } from "victory-chart";
+import { VictoryStack } from "victory-stack";
+import { VictoryGroup } from "victory-group";
+import { VictoryArea } from "victory-area";
+import { VictoryAxis } from "victory-axis";
+import { VictoryPolarAxis } from "victory-polar-axis";
+import { VictoryBar } from "victory-bar";
+import { VictoryLine } from "victory-line";
+import { VictoryScatter } from "victory-scatter";
+import { VictoryErrorBar } from "victory-errorbar";
+import { VictoryCandlestick } from "victory-candlestick";
+import { VictoryVoronoi } from "victory-voronoi";
+import { VictoryZoomContainer } from "victory-zoom-container";
+import { VictoryVoronoiContainer } from "victory-voronoi-container";
+import { VictorySelectionContainer } from "victory-selection-container";
+import { VictoryCursorContainer } from "victory-cursor-container";
+import { VictoryBrushContainer } from "victory-brush-container";
+import { VictoryTooltip } from "victory-tooltip";
+import { VictoryLegend } from "victory-legend";
 import {
   DomainTuple,
   VictoryClipContainer,
   VictoryLabel,
   VictoryStyleInterface,
   VictoryTheme
-} from "@packages/victory-core";
+} from "victory-core";
 
 interface WrapperProps {
   children?: React.ReactElement | React.ReactElement[];
