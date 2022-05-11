@@ -19,8 +19,7 @@ Victory Native is compatible with React Native 0.50 or higher.
 To add Victory Native to your React Native app install `victory-native`.
 
 ```bash
-$ yarn add victory-native # or
-$ npm install --save victory-native
+$ yarn add victory-native # or npm install --save victory-native
 ```
 
 #### 2. Add React Native SVG to your app
@@ -29,6 +28,14 @@ If you are building a project with native code, you will need to link the native
 
 This step is not required if you are using Expo (SDK 23.0.0 or higher) as it is already included.
 
+React Native 0.60 or newer:
+```bash
+$ yarn add react-native-svg  # or npm install --save react-native-svg
+$ cd ios
+$ pod install
+```
+
+React Native below 0.60:
 ```bash
 $ react-native install react-native-svg
 ```
@@ -75,7 +82,27 @@ const styles = StyleSheet.create({
 });
 ```
 
-#### 4. Testing Components that use Victory Native
+#### 4. Ignoring require cycles
+
+- see https://github.com/FormidableLabs/victory/issues/2230
+
+As of victory@36.4.0, React Native apps (on both iOS and Android) will warn about require cycles.
+
+These warnings will not affect the functionality of `victory-native` or your app, and can be safely disabled.
+
+To disable the warnings, modify your app's entry point (usually `index.js`) to include
+
+```js
+LogBox.ignoreLogs([
+  "Require cycle: node_modules/victory",
+]);
+```
+as shown below
+
+![Example screenshot](/require-cycles.png)
+
+
+#### 5. Testing Components that use Victory Native
 
 You can test your components that render Victory Native using Jest and React Test Renderer which is included out–of–the box with React Native. The `jest` configuration section in `package.json` will need to be modified to ensure dependencies are transformed otherwise you will see an error when tests are run.
 
