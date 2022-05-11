@@ -99,7 +99,7 @@ LogBox.ignoreLogs([
 ```
 as shown below
 
-![Example screenshot](/require-cycles.png)
+![Example screenshot](/open-source/victory/require-cycles.png)
 
 
 #### 5. Testing Components that use Victory Native
