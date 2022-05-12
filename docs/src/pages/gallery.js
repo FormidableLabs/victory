@@ -5,7 +5,7 @@ import ReactDOM from "react-dom";
 import { withRouteData } from "react-static";
 import { Link } from "react-router-dom";
 import * as Victory from "victory";
-// TODO(2220): Switch deps to `victory-vendor/d3-*`
+// NOTE(2220): Keep on old CommonJS-supported D3 versions
 // https://github.com/FormidableLabs/victory/issues/2220
 import * as d3Scale from "d3-scale";
 import {

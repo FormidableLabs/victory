@@ -1,6 +1,6 @@
 /*eslint-disable no-magic-numbers */
 import _ from "lodash";
-// TODO(2220): Switch deps to `victory-vendor/d3-*`
+// NOTE(2220): Keep on old CommonJS-supported D3 versions
 // https://github.com/FormidableLabs/victory/issues/2220
 import * as d3Array from "d3-array";
 import * as d3Scale from "d3-scale";
