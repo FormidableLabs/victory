@@ -7956,7 +7956,7 @@ core-js-pure@^3.0.1, core-js-pure@^3.16.0:
   resolved "https://registry.npmjs.org/core-js-pure/-/core-js-pure-3.18.1.tgz"
   integrity sha512-kmW/k8MaSuqpvA1xm2l3TVlBuvW+XBkcaOroFUpO3D4lsTGQWBTb/tBDCf/PNkkPLrwgrkQRIYNPB0CeqGJWGQ==
 
-core-js@^2.4.0, core-js@^2.5.1:
+core-js@^2.4.0:
   version "2.6.12"
   resolved "https://registry.npmjs.org/core-js/-/core-js-2.6.12.tgz"
   integrity sha512-Kb2wC0fvsWfQrgk8HU5lW6U/Lcs8+9aaYcy4ZFc6DDlo4nZ7n70dEgE5rtR0oG6ufKDUnrwfWL1mXR5ljDatrQ==
@@ -14187,11 +14187,6 @@ marky@^1.2.2:
   version "1.2.2"
   resolved "https://registry.npmjs.org/marky/-/marky-1.2.2.tgz"
   integrity sha512-k1dB2HNeaNyORco8ulVEhctyEGkKHb2YWAhDsxeFlW2nROIirsctBYzKwwS3Vza+sKTS1zO4Z+n9/+9WbGLIxQ==
-
-match-str@^0.2.1:
-  version "0.2.1"
-  resolved "https://registry.npmjs.org/match-str/-/match-str-0.2.1.tgz"
-  integrity sha512-WTkDOdZN98k/PsY+3tP9jmCcsPoDCxUr/K4AWmC1G3KhRRTyRcYTjh/MQWUoiMlBQg3B6s7Eyopn9mVV29rSgg==
 
 matcher@^3.0.0:
   version "3.0.0"
