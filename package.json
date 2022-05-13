@@ -119,7 +119,7 @@
     "nps": "^5.9.0",
     "nps-utils": "^1.5.0",
     "prettier": "^2.3.1",
-    "prop-types": "^15.5.8",
+    "prop-types": "^15.8.1",
     "react": "^16.13.1",
     "react-dom": "^16.13.1",
     "react-hot-loader": "v2.0.0-alpha-4",
