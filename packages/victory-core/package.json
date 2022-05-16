@@ -28,7 +28,9 @@
     "react": "^16.6.0 || ^17.0.0"
   },
   "scripts": {
-    "version": "yarn run nps build-libs && nps build-dists"
+    "version": "echo TODO(nx): Add a standalone build for both lib and dist",
+    "build:lib": "echo TODO BUILD LIB",
+    "build:dist": "echo TODO BUILD DIST"
   },
   "sideEffects": false
 }

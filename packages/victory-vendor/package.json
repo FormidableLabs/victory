@@ -23,7 +23,7 @@
   },
   "scripts": {
     "version": "yarn run build",
-    "build": "node ./scripts/build.js"
+    "build": "echo TODO REENABLE node ./scripts/build.js"
   },
   "dependencies": {
     "d3-array": "^3.1.6",

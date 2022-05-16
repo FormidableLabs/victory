@@ -1,0 +1,11 @@
+{
+  "root": "packages/victory-vendor",
+  "sourceRoot": "packages/victory-vendor/node_modules",
+  "projectType": "library",
+  "tags": [], // TODO(nx): TAGS - WEB
+  "targets": {
+    // TODO(nx): Build with dep on node_modules
+    // TODO(nx): build:lib -> refactor to actual thing?
+    // TODO(nx): build:dist -> noop?
+  }
+}

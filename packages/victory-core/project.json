@@ -1,0 +1,11 @@
+{
+  "root": "packages/victory-core",
+  "sourceRoot": "packages/victory-core/src",
+  "projectType": "library",
+  "tags": [], // TODO(nx): TAGS - WEB
+  "targets": {
+    // TODO(nx): Build with dep on node_modules
+    // TODO(nx): build:lib
+    // TODO(nx): build:dist
+  }
+}

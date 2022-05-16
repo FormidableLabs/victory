@@ -88,6 +88,7 @@ const main = async () => {
       VendorBasePath,
       path.resolve(__dirname, "../d3-*")
     ].map((libPath) =>
+      // TODO: Don't mkdir d3-*
       rimrafP(libPath).then(() => fs.mkdir(libPath, { recursive: true }))
     )
   );
