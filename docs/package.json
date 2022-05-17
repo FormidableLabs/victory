@@ -27,7 +27,7 @@
     "fuse.js": "^3.2.1",
     "lodash": "^4.17.19",
     "prismjs": "^1.15.0",
-    "prop-types": "^15.6.2",
+    "prop-types": "^15.8.1",
     "react": "^16.8.0",
     "react-cool-inview": "^0.5.14",
     "react-copy-to-clipboard": "^5.0.2",
