@@ -1,12 +1,7 @@
-/**
- * Client tests
- */
 import * as Victory from "victory";
 
 describe("victory", () => {
-  // eslint-disable-line max-statements
   describe("exports victory components", () => {
-    // eslint-disable-line max-statements
     it("exports VictoryAnimation", () => {
       expect(Victory.VictoryAnimation).toBeDefined();
     });
@@ -159,7 +154,6 @@ describe("victory", () => {
     });
   });
   describe("exports helper components", () => {
-    // eslint-disable-line max-statements
     it("exports addEvents", () => {
       expect(Victory.addEvents).toBeDefined();
     });
