@@ -2,7 +2,6 @@ import { getChildComponents } from "victory-chart/lib/helper-methods";
 import React from "react";
 import { VictoryAxis } from "victory-axis";
 import { VictoryLine } from "victory-line";
-import { Log } from "victory-core";
 
 describe("victory-chart/helpers-methods", () => {
   const getVictoryLine = (props) => React.createElement(VictoryLine, props);
@@ -13,13 +12,6 @@ describe("victory-chart/helpers-methods", () => {
       independent: getVictoryAxis({}),
       dependent: getVictoryAxis({ dependentAxis: true })
     };
-    beforeEach(() => {
-      jest.spyOn(Log, "warn");
-    });
-
-    afterEach(() => {
-      jest.clearAllMocks();
-    });
 
     it("returns a pair of default axes when no children are given", () => {
       const children = [];
