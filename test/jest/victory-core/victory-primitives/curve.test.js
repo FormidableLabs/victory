@@ -1,7 +1,7 @@
 import React from "react";
 import { Curve } from "victory-line";
 import { renderInSvg } from "../../rendering-utils";
-import * as d3Scale from "victory-vendor/lib/d3-scale";
+import * as d3Scale from "victory-vendor/d3-scale";
 
 describe("victory-primitives/curve", () => {
   const baseProps = {
