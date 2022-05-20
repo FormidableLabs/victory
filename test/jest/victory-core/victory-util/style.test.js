@@ -21,6 +21,8 @@ describe("toTransformString", () => {
   });
 
   it("returns at least the subsequent transforms if the first is undefined", () => {
-    expect(Style.toTransformString(undefined, { skewY: [65] })).toEqual("skewY(65)");
+    expect(Style.toTransformString(undefined, { skewY: [65] })).toEqual(
+      "skewY(65)"
+    );
   });
 });
