@@ -1,21 +1,5 @@
-/* eslint no-unused-expressions: 0 */
-/* eslint max-nested-callbacks: 0 */
 import React from "react";
 import { Domain, VictoryPortal } from "victory-core";
-
-/*
-  createDomainFunction,
-  formatDomain,
-  getDomain,
-  getDomainFromCategories,
-  getDomainFromData,
-  getDomainFromMinMax,
-  getDomainFromProps,
-  getDomainWithZero,
-  getMaxFromProps,
-  getMinFromProps,
-  getSymmetricDomain
-*/
 
 describe("victory-util/domain", () => {
   describe("createDomainFunction", () => {

@@ -1,25 +1,28 @@
-/* eslint no-unused-expressions: 0 */
 import { Helpers } from "victory-core";
 
 describe("victory-util/helpers", () => {
   describe("omit", () => {
     const data = { x: 3, y: 2, z: 1 };
+
     it("removes omitted keys and preserves all others", () => {
       const newData = Helpers.omit(data, ["x"]);
       expect(newData.x).toBeUndefined();
       expect(newData.y).toEqual(2);
       expect(newData.z).toEqual(1);
     });
+
     it("creates a copy of the original object", () => {
       const newData = Helpers.omit(data, []);
       newData.x = 10;
       expect(data.x).toEqual(3);
       expect(newData.x).toEqual(10);
     });
+
     it("defaults to an empty object", () => {
       const newData = Helpers.omit();
       expect(newData).toEqual({});
     });
+
     it("defaults to simple shallow copy", () => {
       const newData = Helpers.omit(data);
       expect(newData).toEqual(data);
@@ -30,6 +33,7 @@ describe("victory-util/helpers", () => {
     it("defaults to an empty object", () => {
       expect(Helpers.modifyProps({})).toEqual({});
     });
+
     it("removes the theme role's style", () => {
       const role = "legend";
       const props = {
@@ -51,6 +55,7 @@ describe("victory-util/helpers", () => {
         modifiedProps
       );
     });
+
     it("uses fallbackProps", () => {
       const props = { x: 2, y: 3 };
       const fallbackProps = { x: 12, y: 13, z: 14 };
@@ -61,10 +66,12 @@ describe("victory-util/helpers", () => {
 
   describe("evaluateProp", () => {
     const data = { x: 3, y: 2 };
+
     it("evaluates functional props", () => {
       const testProp = (datum) => (datum.y > 0 ? "red" : "blue");
       expect(Helpers.evaluateProp(testProp, data)).toEqual("red");
     });
+
     it("doesn't alter non-functional props", () => {
       const testProp = "blue";
       expect(Helpers.evaluateProp(testProp, data)).toEqual("blue");
@@ -73,6 +80,7 @@ describe("victory-util/helpers", () => {
 
   describe("evaluateStyle", () => {
     const data = { x: 3, y: 2 };
+
     it("evaluates functional styles, without altering others", () => {
       const style = {
         color: (datum) => (datum.y > 0 ? "red" : "blue"),
@@ -83,6 +91,7 @@ describe("victory-util/helpers", () => {
         size: 5
       });
     });
+
     it("returns no styles if disableInlineStyles is true", () => {
       const style = {
         color: "blue"
@@ -100,6 +109,7 @@ describe("victory-util/helpers", () => {
       height: 200,
       padding: 0
     };
+
     it("returns a range based on props and axis", () => {
       const x = Helpers.getRange(props, "x");
       expect(Array.isArray(x)).toBe(true);
@@ -119,6 +129,7 @@ describe("victory-util/helpers", () => {
       data: { fill: "blue", stroke: "black" },
       labels: { fontSize: 10, fontFamily: "Helvetica" }
     };
+
     it("merges styles", () => {
       const style = { data: { fill: "red" }, labels: { fontSize: 12 } };
       const styles = Helpers.getStyles(style, defaultStyles);
@@ -145,12 +156,14 @@ describe("victory-util/helpers", () => {
         right: 40
       });
     });
+
     it("sets padding from a complete object", () => {
       const props = {
         padding: { top: 20, bottom: 40, left: 60, right: 80 }
       };
       expect(Helpers.getPadding(props)).toEqual(props.padding);
     });
+
     it("fills missing values with 0", () => {
       const props = {
         padding: { top: 40, bottom: 40 }

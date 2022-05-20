@@ -1,5 +1,4 @@
 /* eslint-disable max-nested-callbacks */
-
 import { Scale } from "victory-core";
 import * as d3Scale from "victory-vendor/d3-scale";
 
