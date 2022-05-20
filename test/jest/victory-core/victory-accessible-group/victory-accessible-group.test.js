@@ -1,7 +1,6 @@
 import React from "react";
 import { renderInSvg } from "../../rendering-utils";
 import { VictoryAccessibleGroup } from "victory-core";
-// This prevents the warnings about the `g` attribute being unrecognized outside of an SVG container.
 
 describe("components/victory-accessible-group", () => {
   it("renders an g with an aria-label", () => {
