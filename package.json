@@ -41,7 +41,7 @@
     "build-storybook": "build-storybook",
     "chromatic": "chromatic",
     "chromatic-ci": "build-storybook && chromatic --ci --exit-zero-on-changes",
-    "test": "jest --config=jest-config.js"
+    "test": "echo \"Please run 'yarn nps test' instead\" && exit 1"
   },
   "devDependencies": {
     "@babel/cli": "7.17.10",
