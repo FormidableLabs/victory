@@ -1,7 +1,7 @@
 /* eslint max-nested-callbacks: 0 */
-import { helperMethods } from "victory-candlestick";
 import { range } from "lodash";
 import { fromJS } from "immutable";
+import { getData, getDomain } from "victory-candlestick/lib/helper-methods";
 
 const immutableGetDataTest = {
   createData: (x) => fromJS(x),
@@ -11,8 +11,6 @@ const getDataTest = {
   createData: (x) => x,
   testLabel: "with js data"
 };
-
-const { getData, getDomain } = helperMethods;
 
 [getDataTest, immutableGetDataTest].forEach(({ createData, testLabel }) => {
   describe(`victory-candlestick/helper-methods ${testLabel}`, () => {
