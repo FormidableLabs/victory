@@ -1,10 +1,10 @@
 /**
  * Client tests
  */
+/* global console */
 import React from "react";
-import { mount } from "enzyme";
-import { VictoryTooltip, Flyout } from "victory-tooltip";
-import { VictoryLabel } from "victory-core";
+import { VictoryTooltip } from "victory-tooltip";
+import { fireEvent, render, screen } from "@testing-library/react";
 
 describe("components/victory-tooltip", () => {
   const baseProps = {
@@ -15,41 +15,38 @@ describe("components/victory-tooltip", () => {
     active: true,
     text: "such text, wow"
   };
+  beforeAll(() => {
+    jest.spyOn(console, "warn").mockImplementation(() => {});
+    jest.spyOn(console, "error").mockImplementation(() => {});
+  });
 
   it("renders nothing when not active", () => {
-    const wrapper = mount(<VictoryTooltip {...baseProps} active={false} />);
-    const output = wrapper.find("text");
-    expect(output.length).toEqual(0);
+    render(<VictoryTooltip {...baseProps} active={false} />);
+    const output = screen.findByText(baseProps.text);
+    expect(output).toBeDefined();
   });
 
   it("has expected text", () => {
-    const wrapper = mount(<VictoryTooltip {...baseProps} />);
-    const output = wrapper.find("text");
-    expect(output.html()).toMatch(baseProps.text);
+    render(<VictoryTooltip {...baseProps} />);
+    const output = screen.findByText(baseProps.text);
+    expect(output).toBeDefined();
   });
 
   it("renders a flyout and a label", () => {
-    const wrapper = mount(<VictoryTooltip {...baseProps} />);
-    const label = wrapper.find(VictoryLabel);
-    const flyout = wrapper.find(Flyout);
-    expect(label.length).toEqual(1);
-    expect(flyout.length).toEqual(1);
-  });
-
-  it("passes datum and index to flyout component", () => {
-    const wrapper = mount(<VictoryTooltip {...baseProps} />);
-    const flyout = wrapper.find(Flyout);
-    expect(flyout.prop("datum")).toEqual({ some: "object" });
-    expect(flyout.prop("index")).toEqual(3);
+    const { container } = render(<VictoryTooltip {...baseProps} />);
+    const label = container.querySelector("text");
+    const flyout = container.querySelector("path");
+    expect(label).toBeDefined();
+    expect(flyout).toBeDefined();
   });
 
   describe("event handling", () => {
     it("attaches an to the flyout object", () => {
       const clickHandler = jest.fn();
-      const wrapper = mount(
+      const { container } = render(
         <VictoryTooltip {...baseProps} events={{ onClick: clickHandler }} />
       );
-      wrapper.find("path").simulate("click");
+      fireEvent.click(container.querySelector("path"));
       expect(clickHandler).toBeCalled();
     });
   });
