@@ -19,22 +19,22 @@ describe("components/victory-voronoi", () => {
       );
 
       const svgNode = wrapper.find("svg").at(0).getDOMNode();
-      expect(svgNode.getAttribute("data-testid")).to.equal("victory-voronoi");
-      expect(svgNode.getAttribute("aria-label")).to.equal("Chart");
+      expect(svgNode.getAttribute("data-testid")).toEqual("victory-voronoi");
+      expect(svgNode.getAttribute("aria-label")).toEqual("Chart");
     });
 
     it("renders an svg with the correct width and height", () => {
       const wrapper = mount(<VictoryVoronoi />);
       const svg = wrapper.find("svg").at(0);
-      expect(svg.prop("style").width).to.equal("100%");
-      expect(svg.prop("style").height).to.equal("100%");
+      expect(svg.prop("style").width).toEqual("100%");
+      expect(svg.prop("style").height).toEqual("100%");
     });
 
     it("renders an svg with the correct viewbox", () => {
       const wrapper = mount(<VictoryVoronoi />);
       const svg = wrapper.find("svg").at(0);
       const viewBoxValue = `0 0 ${450} ${300}`;
-      expect(svg.prop("viewBox")).to.equal(viewBoxValue);
+      expect(svg.prop("viewBox")).toEqual(viewBoxValue);
     });
   });
 
@@ -68,7 +68,7 @@ describe("components/victory-voronoi", () => {
       const xValues = wrapper
         .find(Voronoi)
         .map((voronoi) => voronoi.prop("datum")._x);
-      expect(xValues).to.eql([0, 1, 2, 3, 4]);
+      expect(xValues).toEqual([0, 1, 2, 3, 4]);
     });
 
     it("reverses sorted data with the sortOrder prop", () => {
@@ -82,7 +82,7 @@ describe("components/victory-voronoi", () => {
       const xValues = wrapper
         .find(Voronoi)
         .map((voronoi) => voronoi.prop("datum")._x);
-      expect(xValues).to.eql([4, 3, 2, 1, 0]);
+      expect(xValues).toEqual([4, 3, 2, 1, 0]);
     });
 
     it("does not render data with null x or y values", () => {
@@ -92,7 +92,7 @@ describe("components/victory-voronoi", () => {
         { x: 5, y: null }
       ];
       const wrapper = mount(<VictoryVoronoi data={data} />);
-      expect(wrapper.find(Voronoi).length).to.equal(1);
+      expect(wrapper.find(Voronoi).length).toEqual(1);
     });
   });
 
@@ -111,15 +111,9 @@ describe("components/victory-voronoi", () => {
       );
       const svg = wrapper.find("svg").at(0);
       svg.simulate("click");
-      expect(clickHandler).called;
+      expect(clickHandler).toBeCalled();
       // the first argument is the standard evt object
-      expect(clickHandler.args[0][1]).to.include.keys(
-        "data",
-        "scale",
-        "width",
-        "height",
-        "style"
-      );
+      expect(Object.keys(clickHandler.args[0][1])).toEqual(expect.arrayContaining(["data", "scale", "width", "height", "style"]));
     });
 
     it("attaches an event to data", () => {
@@ -138,12 +132,10 @@ describe("components/victory-voronoi", () => {
       Data.forEach((node, index) => {
         const initialProps = Data.at(index).props();
         node.simulate("click");
-        expect(clickHandler.called).to.equal(true);
+        expect(clickHandler).toBeCalled();
         // the first argument is the standard evt object
-        expect(omit(clickHandler.args[index][1], ["events", "key"])).to.eql(
-          omit(initialProps, ["events", "key"])
-        );
-        expect(`${clickHandler.args[index][2]}`).to.eql(`${index}`);
+        expect(omit(clickHandler.args[index][1], ["events", "key"])).toEqual(omit(initialProps, ["events", "key"]));
+        expect(`${clickHandler.args[index][2]}`).toEqual(`${index}`);
       });
     });
 
@@ -163,9 +155,9 @@ describe("components/victory-voronoi", () => {
       const Labels = wrapper.find(VictoryLabel);
       Labels.forEach((node, index) => {
         node.childAt(0).simulate("click");
-        expect(clickHandler).called;
+        expect(clickHandler).toBeCalled();
         // the first argument is the standard evt object
-        expect(clickHandler.args[index][1]).to.contain({ text: "okay" });
+        expect(clickHandler.args[index][1]).toMatchObject({ text: "okay" });
       });
     });
   });
@@ -176,8 +168,8 @@ describe("components/victory-voronoi", () => {
       wrapper.find("path").forEach((p) => {
         const roleValue = p.prop("role");
         if (roleValue) {
-          expect(roleValue).to.be.a("string");
-          expect(roleValue).to.equal("presentation");
+          expect(typeof roleValue).toBe("string");
+          expect(roleValue).toEqual("presentation");
         }
       });
     });
@@ -195,10 +187,10 @@ describe("components/victory-voronoi", () => {
           }
         />
       );
-      expect(wrapper.find("path")).to.have.length(3);
+      expect(wrapper.find("path")).toHaveLength(3);
       wrapper.find("path").forEach((p, i) => {
-        expect(p.prop("aria-label")).to.equal(`${data[i].x}`);
-        expect(p.prop("tabIndex")).to.equal(i + 6);
+        expect(p.prop("aria-label")).toEqual(`${data[i].x}`);
+        expect(p.prop("tabIndex")).toEqual(i + 6);
       });
     });
   });
