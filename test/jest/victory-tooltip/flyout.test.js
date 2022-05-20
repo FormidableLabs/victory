@@ -1,8 +1,7 @@
 /*eslint-disable max-nested-callbacks,no-unused-expressions,max-len */
 import React from "react";
-import { mount } from "enzyme";
 import { Flyout } from "victory-tooltip";
-import SvgTestHelper from "../svg-test-helper";
+import { render } from "@testing-library/react";
 
 describe("victory-primitives/flyout", () => {
   const baseProps = {
@@ -18,8 +17,28 @@ describe("victory-primitives/flyout", () => {
   };
   describe("rendering", () => {
     it("renders a flyout path", () => {
-      const wrapper = mount(<Flyout {...baseProps} />);
-      SvgTestHelper.expectIsFlyout(wrapper);
+      const { container } = render(<Flyout {...baseProps} />);
+      const path = container.querySelector("path");
+
+      // Make sure the path is rendered:
+      expect(path).toMatchInlineSnapshot(`
+        <path
+          d="M -5, -25
+            L 5, -25
+            L 5, -25
+            L 20, -25
+            A 5 5 0 0 1 25, -20
+            L 25, 20
+            A 5 5 0 0 1 20, 25
+            L -20, 25
+            A 5 5 0 0 1 -25, 20
+            L -25, -20
+            A 5 5 0 0 1 -20, -25
+            z"
+          role="presentation"
+          shape-rendering="auto"
+        />
+      `);
     });
   });
 });
