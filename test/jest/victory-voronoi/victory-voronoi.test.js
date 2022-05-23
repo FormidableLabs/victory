@@ -2,12 +2,11 @@
  * Client tests
  */
 /*eslint-disable max-nested-callbacks */
-/* eslint no-unused-expressions: 0 */
 import React from "react";
 import { range, random } from "lodash";
 import { calculateD3Path } from "../../svg-test-helper";
 import { VictoryVoronoi, Voronoi } from "victory-voronoi";
-import { fireEvent, render } from '@testing-library/react';
+import { fireEvent, render } from "@testing-library/react";
 
 describe("components/victory-voronoi", () => {
   describe("default component rendering", () => {
@@ -87,10 +86,10 @@ describe("components/victory-voronoi", () => {
         { x: 1, y: 2 },
         { x: null, y: 4 },
         { x: 5, y: null },
-        { x: 1, y: 2 },
+        { x: 1, y: 2 }
       ];
       const { container } = render(<VictoryVoronoi data={data} />);
-      expect(container.querySelectorAll('path')).toHaveLength(2);
+      expect(container.querySelectorAll("path")).toHaveLength(2);
     });
   });
 
@@ -128,7 +127,7 @@ describe("components/victory-voronoi", () => {
           ]}
         />
       );
-      const data = container.querySelectorAll('path');
+      const data = container.querySelectorAll("path");
       [...data].forEach((node, index) => {
         clickHandler.mockClear();
 
@@ -137,7 +136,7 @@ describe("components/victory-voronoi", () => {
         expect(clickHandler).toBeCalled();
         // the first argument is the standard evt object
         const [, evProps, evIndex] = clickHandler.mock.calls[0];
-        expect(evProps).toMatchObject({ id: `voronoi-data-${index}`});
+        expect(evProps).toMatchObject({ id: `voronoi-data-${index}` });
         expect(evIndex).toEqual(`${index}`);
       });
     });
@@ -155,7 +154,7 @@ describe("components/victory-voronoi", () => {
           ]}
         />
       );
-      const labels = container.querySelectorAll('text');
+      const labels = container.querySelectorAll("text");
       [...labels].forEach((node, index) => {
         clickHandler.mockClear();
 
@@ -163,7 +162,7 @@ describe("components/victory-voronoi", () => {
 
         expect(clickHandler).toBeCalled();
         // the first argument is the standard evt object
-        const [, evProps, evIndex ] = clickHandler.mock.calls[0];
+        const [, evProps, evIndex] = clickHandler.mock.calls[0];
         expect(evProps).toMatchObject({ text: "okay" });
         expect(evIndex).toEqual(`${index}`);
       });
