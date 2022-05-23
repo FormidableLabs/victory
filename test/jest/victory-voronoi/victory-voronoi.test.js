@@ -4,10 +4,9 @@
 /*eslint-disable max-nested-callbacks */
 /* eslint no-unused-expressions: 0 */
 import React from "react";
-import { range, omit, random } from "lodash";
-import SvgTestHelper, { calculateD3Path } from "../../svg-test-helper";
+import { range, random } from "lodash";
+import { calculateD3Path } from "../../svg-test-helper";
 import { VictoryVoronoi, Voronoi } from "victory-voronoi";
-import { VictoryLabel } from "victory-core";
 import { fireEvent, render } from '@testing-library/react';
 
 describe("components/victory-voronoi", () => {
