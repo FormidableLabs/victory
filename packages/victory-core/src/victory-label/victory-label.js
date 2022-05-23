@@ -12,6 +12,7 @@ import * as Log from "../victory-util/log";
 import * as CustomPropTypes from "../victory-util/prop-types";
 import * as Style from "../victory-util/style";
 import * as TextSize from "../victory-util/textsize";
+import * as UserProps from "../victory-util/user-props";
 
 const defaultStyles = {
   fill: "#252525",
@@ -487,6 +488,7 @@ const renderLabel = (calculatedProps, tspanValues) => {
     tspanComponent,
     textComponent
   } = calculatedProps;
+  const userProps = UserProps.getSafeUserProps(calculatedProps);
 
   const textProps = {
     "aria-label": ariaLabel,
@@ -501,7 +503,8 @@ const renderLabel = (calculatedProps, tspanValues) => {
     title,
     desc: Helpers.evaluateProp(desc, calculatedProps),
     tabIndex: Helpers.evaluateProp(tabIndex, calculatedProps),
-    id
+    id,
+    ...userProps
   };
 
   const tspans = text.map((line, i) => {
@@ -528,6 +531,7 @@ const VictoryLabel = (props) => {
     return null;
   }
   const calculatedProps = getCalculatedProps(props);
+
   const { text, style, capHeight, backgroundPadding, lineHeight } =
     calculatedProps;
 
