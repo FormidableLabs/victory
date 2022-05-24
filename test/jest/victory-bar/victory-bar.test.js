@@ -3,6 +3,7 @@
 import React from "react";
 import { render, fireEvent, screen } from "@testing-library/react";
 import { range } from "lodash";
+import { VictoryChart } from "victory-chart";
 import { VictoryBar, Bar } from "victory-bar";
 import { isBar, getBarHeight } from "../../svg-test-helper";
 import "@testing-library/jest-dom";
@@ -18,11 +19,26 @@ describe("components/victory-bar", () => {
         />
       );
 
-      expect(screen.getByTestId("victory-bar")).toBeDefined();
+      const container = screen.getByTestId("victory-bar");
       expect(screen.getByLabelText("Chart")).toBeDefined();
-      expect(screen.getByTestId("victory-bar")).not.toHaveAttribute(
-        "unsafe-prop"
+      expect(container).not.toHaveAttribute("unsafe-prop");
+      expect(container.tagName).toEqual("svg");
+    });
+
+    it("attaches safe user props to the group component if the component is rendered inside a VictoryChart", () => {
+      render(
+        <VictoryBar
+          data-testid="victory-bar"
+          aria-label="Chart"
+          unsafe-prop="test"
+        />,
+        { wrapper: VictoryChart }
       );
+
+      const container = screen.getByTestId("victory-bar");
+      expect(screen.getByLabelText("Chart")).toBeDefined();
+      expect(container).not.toHaveAttribute("unsafe-prop");
+      expect(container.tagName).toEqual("g");
     });
 
     it("renders an svg with the correct width and height", () => {

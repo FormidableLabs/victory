@@ -1,8 +1,10 @@
 /*eslint-disable max-nested-callbacks */
-import React from "react";
-import { render, screen, fireEvent } from "@testing-library/react";
+import "@testing-library/jest-dom";
+import { fireEvent, render, screen } from "@testing-library/react";
 import { range } from "lodash";
-import { VictoryCandlestick, Candle } from "victory-candlestick";
+import React from "react";
+import { Candle, VictoryCandlestick } from "victory-candlestick";
+import { VictoryChart } from "victory-chart";
 
 const MyCandle = () => <div data-testid="my-candle" />;
 
@@ -13,16 +15,35 @@ const dataSet = [
 
 describe("components/victory-candlestick", () => {
   describe("default component rendering", () => {
-    it("accepts user props", () => {
+    it("attaches safe user props to the container component", () => {
       render(
         <VictoryCandlestick
           data-testid="victory-candlestick"
           aria-label="Chart"
+          unsafe-prop="test"
         />
       );
 
-      const svgNode = screen.getByTestId("victory-candlestick");
-      expect(svgNode.getAttribute("aria-label")).toEqual("Chart");
+      const container = screen.getByTestId("victory-candlestick");
+      expect(screen.getByLabelText("Chart")).toBeDefined();
+      expect(container).not.toHaveAttribute("unsafe-prop");
+      expect(container.nodeName).toEqual("svg");
+    });
+
+    it("attaches safe user props to the group component if the component is rendered inside a VictoryChart", () => {
+      render(
+        <VictoryCandlestick
+          data-testid="victory-candlestick"
+          aria-label="Chart"
+          unsafe-prop="test"
+        />,
+        { wrapper: VictoryChart }
+      );
+
+      const container = screen.getByTestId("victory-candlestick");
+      expect(screen.getByLabelText("Chart")).toBeDefined();
+      expect(container).not.toHaveAttribute("unsafe-prop");
+      expect(container.nodeName).toEqual("g");
     });
 
     it("renders an svg with the correct width and height", () => {

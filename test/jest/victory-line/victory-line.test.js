@@ -1,10 +1,11 @@
-import React from "react";
-import { fireEvent, render, screen } from "@testing-library/react";
-import { VictoryLine, Curve } from "victory-line";
-import { calculateD3Path } from "../../svg-test-helper";
-import { curveCatmullRom } from "victory-vendor/d3-shape";
-import { range, random } from "lodash";
 import "@testing-library/jest-dom";
+import { fireEvent, render, screen } from "@testing-library/react";
+import { random, range } from "lodash";
+import React from "react";
+import { VictoryChart } from "victory-chart";
+import { Curve, VictoryLine } from "victory-line";
+import { curveCatmullRom } from "victory-vendor/d3-shape";
+import { calculateD3Path } from "../../svg-test-helper";
 
 describe("components/victory-line", () => {
   describe("default component rendering", () => {
@@ -17,11 +18,26 @@ describe("components/victory-line", () => {
         />
       );
 
-      expect(screen.getByTestId("victory-line")).toBeDefined();
+      const container = screen.getByTestId("victory-line");
       expect(screen.getByLabelText("Chart")).toBeDefined();
-      expect(screen.getByTestId("victory-line")).not.toHaveAttribute(
-        "unsafe-prop"
+      expect(container).not.toHaveAttribute("unsafe-prop");
+      expect(container.nodeName).toEqual("svg");
+    });
+
+    it("attaches safe user props to the group component if the component is rendered inside a VictoryChart", () => {
+      render(
+        <VictoryLine
+          data-testid="victory-line"
+          aria-label="Chart"
+          unsafe-prop="test"
+        />,
+        { wrapper: VictoryChart }
       );
+
+      const container = screen.getByTestId("victory-line");
+      expect(screen.getByLabelText("Chart")).toBeDefined();
+      expect(container).not.toHaveAttribute("unsafe-prop");
+      expect(container.tagName).toEqual("g");
     });
 
     it("renders an svg with the correct viewBox", () => {

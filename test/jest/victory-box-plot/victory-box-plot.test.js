@@ -1,8 +1,10 @@
 /*eslint-disable react/prop-types */
-import React from "react";
+import "@testing-library/jest-dom";
 import { render, screen } from "@testing-library/react";
+import React from "react";
 import { VictoryBoxPlot } from "victory-box-plot";
-import { LineSegment, Whisker, Border } from "victory-core";
+import { VictoryChart } from "victory-chart";
+import { Border, LineSegment, Whisker } from "victory-core";
 
 const TEST_GROUP_ID = "test-group-id";
 const dataset = [
@@ -26,12 +28,35 @@ const renderWithTestGroup = (data = dataset) => {
 
 describe("components/victory-box-plot", () => {
   describe("default component rendering", () => {
-    it("accepts user props", () => {
+    it("attaches safe user props to the container component", () => {
       render(
-        <VictoryBoxPlot data-testid="victory-boxplot" aria-label="Chart" />
+        <VictoryBoxPlot
+          data-testid="victory-boxplot"
+          aria-label="Chart"
+          unsafe-prop="test"
+        />
       );
 
+      const container = screen.getByTestId("victory-boxplot");
       expect(screen.getByLabelText("Chart")).toBeDefined();
+      expect(container).not.toHaveAttribute("unsafe-prop");
+      expect(container.nodeName).toEqual("svg");
+    });
+
+    it("attaches safe user props to the group component if the component is rendered inside a VictoryChart", () => {
+      render(
+        <VictoryBoxPlot
+          data-testid="victory-boxplot"
+          aria-label="Chart"
+          unsafe-prop="test"
+        />,
+        { wrapper: VictoryChart }
+      );
+
+      const container = screen.getByTestId("victory-boxplot");
+      expect(screen.getByLabelText("Chart")).toBeDefined();
+      expect(container).not.toHaveAttribute("unsafe-prop");
+      expect(container.nodeName).toEqual("g");
     });
 
     it("renders an svg with the correct width and height", () => {
