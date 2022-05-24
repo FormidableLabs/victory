@@ -1,7 +1,7 @@
 /*eslint no-magic-numbers: ["error", { "ignore": [-1, 0, 1, 2] }]*/
 import React from "react";
 import PropTypes from "prop-types";
-import { Helpers, CommonProps, Path } from "victory-core";
+import { Helpers, CommonProps, Path, UserProps } from "victory-core";
 import { isPlainObject, assign } from "lodash";
 
 const getVerticalPath = (props) => {
@@ -87,9 +87,11 @@ const evaluateProps = (props) => {
 
 const Flyout = (props) => {
   props = evaluateProps(props);
+  const userProps = UserProps.getSafeUserProps(props);
 
   return React.cloneElement(props.pathComponent, {
     ...props.events,
+    ...userProps,
     style: props.style,
     d: getFlyoutPath(props),
     className: props.className,
