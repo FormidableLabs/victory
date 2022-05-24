@@ -3,7 +3,7 @@
  */
 /*eslint-disable max-nested-callbacks */
 import React from "react";
-import { range, random } from "lodash";
+import { random, range } from "lodash";
 import { calculateD3Path } from "../../svg-test-helper";
 import { VictoryVoronoi, Voronoi } from "victory-voronoi";
 import { fireEvent, render } from "@testing-library/react";
@@ -16,8 +16,8 @@ describe("components/victory-voronoi", () => {
       );
 
       const svgNode = container.querySelector("svg");
-      expect(svgNode.getAttribute("data-testid")).toEqual("victory-voronoi");
-      expect(svgNode.getAttribute("aria-label")).toEqual("Chart");
+      expect(svgNode).toHaveAttribute("data-testid", "victory-voronoi");
+      expect(svgNode).toHaveAttribute("aria-label", "Chart");
     });
 
     it("renders an svg with the correct width and height", () => {
@@ -31,7 +31,7 @@ describe("components/victory-voronoi", () => {
       const { container } = render(<VictoryVoronoi />);
       const svg = container.querySelector("svg");
       const viewBoxValue = `0 0 ${450} ${300}`;
-      expect(svg.getAttribute("viewBox")).toEqual(viewBoxValue);
+      expect(svg).toHaveAttribute("viewBox", viewBoxValue);
     });
   });
 
@@ -50,7 +50,8 @@ describe("components/victory-voronoi", () => {
       };
       const { container } = render(<VictoryVoronoi {...props} />);
 
-      expect(container.querySelector("path").getAttribute("d")).toEqual(
+      expect(container.querySelector("path")).toHaveAttribute(
+        "d",
         calculateD3Path(props, "voronoi", 0)
       );
     });
@@ -173,8 +174,7 @@ describe("components/victory-voronoi", () => {
     it("adds an aria role to the path area", () => {
       const { container } = render(<VictoryVoronoi />);
       container.querySelectorAll("path").forEach((p) => {
-        const roleValue = p.getAttribute("role");
-        expect(roleValue).toEqual("presentation");
+        expect(p).toHaveAttribute("role", "presentation");
       });
     });
 
@@ -193,8 +193,8 @@ describe("components/victory-voronoi", () => {
       );
       expect(container.querySelectorAll("path")).toHaveLength(3);
       container.querySelectorAll("path").forEach((p, i) => {
-        expect(p.getAttribute("aria-label")).toEqual(`${data[i].x}`);
-        expect(p.getAttribute("tabindex")).toEqual(`${i + 6}`);
+        expect(p).toHaveAttribute("aria-label", `${data[i].x}`);
+        expect(p).toHaveAttribute("tabindex", `${i + 6}`);
       });
     });
   });
