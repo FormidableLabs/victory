@@ -243,7 +243,7 @@ describe("components/victory-bar", () => {
         />
       );
 
-      Array.from(container.querySelectorAll("path")).forEach((bar, index) => {
+      container.querySelectorAll("path").forEach((bar, index) => {
         expect(parseInt(bar.getAttribute("tabindex"))).toEqual(index + 1);
         expect(bar.getAttribute("aria-label")).toEqual(`x: ${data[index].x}`);
       });

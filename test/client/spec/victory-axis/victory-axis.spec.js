@@ -15,6 +15,15 @@ import { _approximateTextSizeInternal } from "victory-core/es/victory-util/texts
 
 describe("components/victory-axis", () => {
   describe("default component rendering", () => {
+    it("accepts user props", () => {
+      const wrapper = mount(
+        <VictoryAxis data-testid="victory-axis" aria-label="Axis" />
+      );
+      const svgNode = wrapper.find("svg").at(0).getDOMNode();
+      expect(svgNode.getAttribute("data-testid")).to.equal("victory-axis");
+      expect(svgNode.getAttribute("aria-label")).to.equal("Axis");
+    });
+
     it("renders an svg with the correct width and height", () => {
       const wrapper = mount(<VictoryAxis />);
       const svg = wrapper.find("svg").at(0);

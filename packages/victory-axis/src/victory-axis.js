@@ -10,7 +10,8 @@ import {
   LineSegment,
   TextSize,
   addEvents,
-  Axis
+  Axis,
+  UserProps
 } from "victory-core";
 import { getBaseProps, getStyles } from "./helper-methods";
 
@@ -268,6 +269,7 @@ class VictoryAxis extends React.Component {
   render() {
     const { animationWhitelist } = VictoryAxis;
     const props = Axis.modifyProps(this.props, fallbackProps);
+    const userProps = UserProps.getSafeUserProps(this.props);
 
     if (this.shouldAnimate()) {
       return this.animateComponent(props, animationWhitelist);
@@ -282,9 +284,10 @@ class VictoryAxis extends React.Component {
       this.renderLabel(props),
       ...modifiedGridAndTicks
     ];
+    const container = React.cloneElement(props.containerComponent, userProps);
     return props.standalone
-      ? this.renderContainer(props.containerComponent, children)
-      : React.cloneElement(props.groupComponent, {}, children);
+      ? this.renderContainer(container, children)
+      : React.cloneElement(props.groupComponent, userProps, children);
   }
 }
 
