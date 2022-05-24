@@ -1,7 +1,7 @@
 /*eslint-disable max-nested-callbacks,no-unused-expressions,max-len */
 import React from "react";
 import { Flyout } from "victory-tooltip";
-import { render } from "@testing-library/react";
+import { renderInSvg } from "../rendering-utils";
 
 describe("victory-primitives/flyout", () => {
   const baseProps = {
@@ -17,7 +17,7 @@ describe("victory-primitives/flyout", () => {
   };
   describe("rendering", () => {
     it("renders a flyout path", () => {
-      const { container } = render(<Flyout {...baseProps} />);
+      const { container } = renderInSvg(<Flyout {...baseProps} />);
       const path = container.querySelector("path");
 
       // Make sure the path is rendered:
