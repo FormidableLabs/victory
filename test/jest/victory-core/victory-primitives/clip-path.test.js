@@ -1,6 +1,6 @@
+import { render } from "@testing-library/react";
 import React from "react";
 import { ClipPath } from "victory-core";
-import { renderInSvg } from "../../rendering-utils";
 
 describe("victory-primitives/clip-path", () => {
   const baseProps = {
@@ -18,10 +18,11 @@ describe("victory-primitives/clip-path", () => {
   };
 
   it("should render a children", () => {
-    const { container } = renderInSvg(
+    const { container } = render(
       <ClipPath {...baseProps}>
         <rect data-testid="rect" />
-      </ClipPath>
+      </ClipPath>,
+      { wrapper: "svg" }
     );
 
     expect(container.querySelector("clipPath")).toMatchInlineSnapshot(`
@@ -36,7 +37,9 @@ describe("victory-primitives/clip-path", () => {
   });
 
   it("should render a clipPath with the passed id", () => {
-    const { container } = renderInSvg(<ClipPath {...baseProps} />);
+    const { container } = render(<ClipPath {...baseProps} />, {
+      wrapper: "svg"
+    });
 
     expect(container.querySelector("clipPath")).toMatchInlineSnapshot(`
       <clippath
