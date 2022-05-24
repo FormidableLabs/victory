@@ -110,7 +110,8 @@ describe("components/victory-voronoi", () => {
         { x: 1, y: 2 }
       ];
       const { container } = render(<VictoryVoronoi data={data} />);
-      expect(container.querySelectorAll("path")).toHaveLength(2);
+      const paths = container.querySelectorAll("path");
+      expect(paths).toHaveLength(2);
     });
   });
 
@@ -149,7 +150,8 @@ describe("components/victory-voronoi", () => {
         />
       );
       const data = container.querySelectorAll("path");
-      [...data].forEach((node, index) => {
+      expect(data).toHaveLength(51);
+      data.forEach((node, index) => {
         clickHandler.mockClear();
 
         fireEvent.click(node);
@@ -175,8 +177,13 @@ describe("components/victory-voronoi", () => {
           ]}
         />
       );
+
       const labels = container.querySelectorAll("text");
-      [...labels].forEach((node, index) => {
+
+      // TODO: figure out why there's no labels rendering?
+      expect(labels).toHaveLength(0);
+
+      labels.forEach((node, index) => {
         clickHandler.mockClear();
 
         fireEvent.click(node);
@@ -193,7 +200,9 @@ describe("components/victory-voronoi", () => {
   describe("accessibility", () => {
     it("adds an aria role to the path area", () => {
       const { container } = render(<VictoryVoronoi />);
-      container.querySelectorAll("path").forEach((p) => {
+      const paths = container.querySelectorAll("path");
+      expect(paths).toHaveLength(51);
+      paths.forEach((p) => {
         expect(p).toHaveAttribute("role", "presentation");
       });
     });
@@ -211,8 +220,9 @@ describe("components/victory-voronoi", () => {
           }
         />
       );
-      expect(container.querySelectorAll("path")).toHaveLength(3);
-      container.querySelectorAll("path").forEach((p, i) => {
+      const paths = container.querySelectorAll("path");
+      expect(paths).toHaveLength(3);
+      paths.forEach((p, i) => {
         expect(p).toHaveAttribute("aria-label", `${data[i].x}`);
         expect(p).toHaveAttribute("tabindex", `${i + 6}`);
       });
