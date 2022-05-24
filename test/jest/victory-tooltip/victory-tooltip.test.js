@@ -1,10 +1,10 @@
 /**
  * Client tests
  */
-/* global console */
 import React from "react";
 import { VictoryTooltip } from "victory-tooltip";
-import { fireEvent, render, screen } from "@testing-library/react";
+import { fireEvent, screen } from "@testing-library/react";
+import { renderInSvg } from "../rendering-utils";
 
 describe("components/victory-tooltip", () => {
   const baseProps = {
@@ -15,25 +15,21 @@ describe("components/victory-tooltip", () => {
     active: true,
     text: "such text, wow"
   };
-  beforeAll(() => {
-    jest.spyOn(console, "warn").mockImplementation(() => {});
-    jest.spyOn(console, "error").mockImplementation(() => {});
-  });
 
   it("renders nothing when not active", () => {
-    render(<VictoryTooltip {...baseProps} active={false} />);
+    renderInSvg(<VictoryTooltip {...baseProps} active={false} />);
     const output = screen.findByText(baseProps.text);
     expect(output).toBeDefined();
   });
 
   it("has expected text", () => {
-    render(<VictoryTooltip {...baseProps} />);
+    renderInSvg(<VictoryTooltip {...baseProps} />);
     const output = screen.findByText(baseProps.text);
     expect(output).toBeDefined();
   });
 
   it("renders a flyout and a label", () => {
-    const { container } = render(<VictoryTooltip {...baseProps} />);
+    const { container } = renderInSvg(<VictoryTooltip {...baseProps} />);
     const label = container.querySelector("text");
     const flyout = container.querySelector("path");
     expect(label).toBeDefined();
@@ -43,7 +39,7 @@ describe("components/victory-tooltip", () => {
   describe("event handling", () => {
     it("attaches an to the flyout object", () => {
       const clickHandler = jest.fn();
-      const { container } = render(
+      const { container } = renderInSvg(
         <VictoryTooltip {...baseProps} events={{ onClick: clickHandler }} />
       );
       fireEvent.click(container.querySelector("path"));
