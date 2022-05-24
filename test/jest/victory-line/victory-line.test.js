@@ -4,14 +4,24 @@ import { VictoryLine, Curve } from "victory-line";
 import { calculateD3Path } from "../../svg-test-helper";
 import { curveCatmullRom } from "victory-vendor/d3-shape";
 import { range, random } from "lodash";
+import "@testing-library/jest-dom";
 
 describe("components/victory-line", () => {
   describe("default component rendering", () => {
-    it("accepts user props", () => {
-      render(<VictoryLine data-testid="victory-line" aria-label="Chart" />);
+    it("attaches safe user props to the container component", () => {
+      render(
+        <VictoryLine
+          data-testid="victory-line"
+          aria-label="Chart"
+          unsafe-prop="test"
+        />
+      );
 
-      expect(screen.queryByTestId("victory-line")).toBeDefined();
+      expect(screen.getByTestId("victory-line")).toBeDefined();
       expect(screen.getByLabelText("Chart")).toBeDefined();
+      expect(screen.getByTestId("victory-line")).not.toHaveAttribute(
+        "unsafe-prop"
+      );
     });
 
     it("renders an svg with the correct viewBox", () => {

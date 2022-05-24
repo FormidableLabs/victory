@@ -14,7 +14,6 @@ import {
 import * as Events from "./events";
 import isEqual from "react-fast-compare";
 import VictoryTransition from "../victory-transition/victory-transition";
-import * as UserProps from "../victory-util/user-props";
 
 const datumHasXandY = (datum) => {
   return !isNil(datum._x) && !isNil(datum._y);
@@ -330,7 +329,6 @@ export default (WrappedComponent, options) => {
 
     renderData(props, shouldRenderDatum = datumHasXandY) {
       const { dataComponent, labelComponent, groupComponent } = props;
-      const userProps = UserProps.getSafeUserProps(props);
       const dataComponents = this.dataKeys.reduce(
         (validDataComponents, _dataKey, index) => {
           const dataProps = this.getComponentProps(
@@ -363,8 +361,7 @@ export default (WrappedComponent, options) => {
         .filter(Boolean);
 
       const children = [...dataComponents, ...labelComponents];
-      const group = React.cloneElement(groupComponent, userProps, children);
-      return this.renderContainer(group, children);
+      return this.renderContainer(groupComponent, children);
     }
   };
 };

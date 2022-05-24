@@ -5,12 +5,24 @@ import { render, fireEvent, screen } from "@testing-library/react";
 import { range } from "lodash";
 import { VictoryBar, Bar } from "victory-bar";
 import { isBar, getBarHeight } from "../../svg-test-helper";
+import "@testing-library/jest-dom";
 
 describe("components/victory-bar", () => {
   describe("default component rendering", () => {
-    it("accepts user props", () => {
-      render(<VictoryBar data-testid="victory-bar" aria-label="Chart" />);
-      expect(screen.getAllByLabelText("Chart")).toBeDefined();
+    it("attaches safe user props to the container component", () => {
+      render(
+        <VictoryBar
+          data-testid="victory-bar"
+          aria-label="Chart"
+          unsafe-prop="test"
+        />
+      );
+
+      expect(screen.getByTestId("victory-bar")).toBeDefined();
+      expect(screen.getByLabelText("Chart")).toBeDefined();
+      expect(screen.getByTestId("victory-bar")).not.toHaveAttribute(
+        "unsafe-prop"
+      );
     });
 
     it("renders an svg with the correct width and height", () => {
