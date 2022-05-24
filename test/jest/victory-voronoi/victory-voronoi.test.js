@@ -6,7 +6,7 @@ import React from "react";
 import { random, range } from "lodash";
 import { calculateD3Path } from "../../svg-test-helper";
 import { VictoryVoronoi, Voronoi } from "victory-voronoi";
-import { fireEvent, render } from "@testing-library/react";
+import { fireEvent, render, screen } from "@testing-library/react";
 
 describe("components/victory-voronoi", () => {
   describe("default component rendering", () => {
@@ -56,30 +56,50 @@ describe("components/victory-voronoi", () => {
       );
     });
 
-    it.skip("sorts data by sortKey prop", () => {
+    it("sorts data by sortKey prop", () => {
       const data = range(5)
         .map((i) => ({ x: i, y: i }))
         .reverse();
-      const { container } = render(<VictoryVoronoi data={data} sortKey="x" />);
-
-      const xValues = container
-        .find(Voronoi)
-        .map((voronoi) => voronoi.prop("datum")._x);
-      expect(xValues).toEqual([0, 1, 2, 3, 4]);
-    });
-
-    it.skip("reverses sorted data with the sortOrder prop", () => {
-      const data = range(5)
-        .map((i) => ({ x: i, y: i }))
-        .reverse();
-      const { container } = render(
-        <VictoryVoronoi data={data} sortKey="x" sortOrder="descending" />
+      render(
+        <VictoryVoronoi
+          data={data}
+          sortKey="x"
+          dataComponent={
+            <Voronoi data-testid="voronoi-1" data-props-json={JSON.stringify} />
+          }
+        />
       );
 
-      const xValues = container
-        .find(Voronoi)
-        .map((voronoi) => voronoi.prop("datum")._x);
-      expect(xValues).toEqual([4, 3, 2, 1, 0]);
+      const renderedDataProps = screen
+        .getAllByTestId("voronoi-1")
+        .map((node) => JSON.parse(node.getAttribute("data-props-json")));
+      expect(renderedDataProps.map((props) => props.datum._x)).toEqual([
+        0, 1, 2, 3, 4
+      ]);
+    });
+
+    it("reverses sorted data with the sortOrder prop", () => {
+      const data = range(5)
+        .map((i) => ({ x: i, y: i }))
+        .reverse();
+      render(
+        <VictoryVoronoi
+          data={data}
+          sortKey="x"
+          sortOrder="descending"
+          dataComponent={
+            <Voronoi data-testid="voronoi-1" data-props-json={JSON.stringify} />
+          }
+        />
+      );
+
+      const renderedDataProps = screen
+        .getAllByTestId("voronoi-1")
+        .map((node) => JSON.parse(node.getAttribute("data-props-json")));
+
+      expect(renderedDataProps.map((props) => props.datum._x)).toEqual([
+        4, 3, 2, 1, 0
+      ]);
     });
 
     it("does not render data with null x or y values", () => {
