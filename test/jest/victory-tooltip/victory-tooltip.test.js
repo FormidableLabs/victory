@@ -16,24 +16,28 @@ describe("components/victory-tooltip", () => {
     text: "such text, wow"
   };
 
-  it("renders nothing when not active", () => {
-    renderInSvg(<VictoryTooltip {...baseProps} active={false} />);
-    const output = screen.findByText(baseProps.text);
-    expect(output).toBeDefined();
+  it("renders the expected text", () => {
+    renderInSvg(<VictoryTooltip {...baseProps} />);
+    const output = screen.getByText(baseProps.text);
+    expect(output).toBeInTheDocument();
+    expect(output).toBeVisible();
   });
 
-  it("has expected text", () => {
-    renderInSvg(<VictoryTooltip {...baseProps} />);
-    const output = screen.findByText(baseProps.text);
-    expect(output).toBeDefined();
+  it("renders nothing when not active", () => {
+    const { container } = renderInSvg(
+      <VictoryTooltip {...baseProps} active={false} />
+    );
+    const output = container.querySelector("text");
+    expect(output).toBeInTheDocument();
+    expect(output).not.toBeVisible();
   });
 
   it("renders a flyout and a label", () => {
     const { container } = renderInSvg(<VictoryTooltip {...baseProps} />);
     const label = container.querySelector("text");
     const flyout = container.querySelector("path");
-    expect(label).toBeDefined();
-    expect(flyout).toBeDefined();
+    expect(label).toBeInTheDocument();
+    expect(flyout).toBeInTheDocument();
   });
 
   describe("event handling", () => {
