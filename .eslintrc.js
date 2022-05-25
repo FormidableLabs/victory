@@ -42,15 +42,7 @@ module.exports = {
         project: ["./tsconfig.json"],
         tsconfigRootDir: __dirname
       },
-      plugins: ["@typescript-eslint"],
-      rules: {
-        "@typescript-eslint/no-explicit-any": "off",
-        "@typescript-eslint/explicit-function-return-type": "off",
-        "no-magic-numbers": "off",
-        "import/no-duplicates": "off",
-        "react/no-multi-comp": "off",
-        "react/sort-comp": "off"
-      }
+      plugins: ["@typescript-eslint"]
     }
   ]
 };
