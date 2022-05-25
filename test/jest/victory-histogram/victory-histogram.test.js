@@ -14,7 +14,7 @@ describe("components/victory-histogram", () => {
         <VictoryHistogram data-testid="victory-histogram" aria-label="Chart" />
       );
 
-      const [svgNode] = screen.getAllByTestId("victory-histogram");
+      const svgNode = screen.getByTestId("victory-histogram");
       expect(svgNode.getAttribute("aria-label")).toEqual("Chart");
     });
 
