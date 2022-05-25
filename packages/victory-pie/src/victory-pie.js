@@ -120,7 +120,7 @@ class VictoryPie extends React.Component {
     ),
     externalEventMutations: PropTypes.arrayOf(
       PropTypes.shape({
-        callback: PropTypes.function,
+        callback: PropTypes.func,
         childName: PropTypes.oneOfType([PropTypes.string, PropTypes.array]),
         eventKey: PropTypes.oneOfType([
           PropTypes.array,
@@ -130,7 +130,7 @@ class VictoryPie extends React.Component {
           ]),
           PropTypes.string
         ]),
-        mutation: PropTypes.function,
+        mutation: PropTypes.func,
         target: PropTypes.oneOfType([PropTypes.string, PropTypes.array])
       })
     ),
@@ -256,13 +256,12 @@ class VictoryPie extends React.Component {
     }
 
     const children = this.renderData(props);
-    const container = React.cloneElement(
-      props.containerComponent,
-      UserProps.getSafeUserProps(props)
-    );
-    return props.standalone
-      ? this.renderContainer(container, children)
+
+    const component = props.standalone
+      ? this.renderContainer(props.containerComponent, children)
       : children;
+
+    return UserProps.withSafeUserProps(component, props);
   }
 }
 

@@ -3,14 +3,41 @@
 import React from "react";
 import { render, fireEvent, screen } from "@testing-library/react";
 import { range } from "lodash";
+import { VictoryChart } from "victory-chart";
 import { VictoryBar, Bar } from "victory-bar";
 import { isBar, getBarHeight } from "../../svg-test-helper";
 
 describe("components/victory-bar", () => {
   describe("default component rendering", () => {
-    it("accepts user props", () => {
-      render(<VictoryBar data-testid="victory-bar" aria-label="Chart" />);
-      expect(screen.getAllByLabelText("Chart")).toBeDefined();
+    it("attaches safe user props to the container component", () => {
+      render(
+        <VictoryBar
+          data-testid="victory-bar"
+          aria-label="Chart"
+          unsafe-prop="test"
+        />
+      );
+
+      const container = screen.getByTestId("victory-bar");
+      expect(screen.getByLabelText("Chart")).toBeDefined();
+      expect(container).not.toHaveAttribute("unsafe-prop");
+      expect(container.tagName).toEqual("svg");
+    });
+
+    it("attaches safe user props to the group component if the component is rendered inside a VictoryChart", () => {
+      render(
+        <VictoryBar
+          data-testid="victory-bar"
+          aria-label="Chart"
+          unsafe-prop="test"
+        />,
+        { wrapper: VictoryChart }
+      );
+
+      const container = screen.getByTestId("victory-bar");
+      expect(screen.getByLabelText("Chart")).toBeDefined();
+      expect(container).not.toHaveAttribute("unsafe-prop");
+      expect(container.tagName).toEqual("g");
     });
 
     it("renders an svg with the correct width and height", () => {

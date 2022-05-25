@@ -1244,7 +1244,7 @@ VictoryCore
   - `externalEventMutations` prop format:
   ````js
   externalEventMutations: PropTypes.arrayOf(PropTypes.shape({
-   callback: PropTypes.function,
+   callback: PropTypes.func,
    childName: PropTypes.oneOfType([
      PropTypes.string,
      PropTypes.array
@@ -1254,7 +1254,7 @@ VictoryCore
      CustomPropTypes.allOfType([CustomPropTypes.integer, CustomPropTypes.nonNegative]),
      PropTypes.string
    ]),
-   mutation: PropTypes.function,
+   mutation: PropTypes.func,
    target: PropTypes.oneOfType([
      PropTypes.string,
      PropTypes.array

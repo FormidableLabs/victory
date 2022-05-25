@@ -402,14 +402,14 @@ Occasionally is it necessary to trigger events in Victory's event system from so
 ```jsx
 externalEventMutations: PropTypes.arrayOf(
   PropTypes.shape({
-    callback: PropTypes.function,
+    callback: PropTypes.func,
     childName: PropTypes.oneOfType([PropTypes.string, PropTypes.array]),
     eventKey: PropTypes.oneOfType([
       PropTypes.array,
       CustomPropTypes.allOfType([CustomPropTypes.integer, CustomPropTypes.nonNegative]),
       PropTypes.string
     ]),
-    mutation: PropTypes.function,
+    mutation: PropTypes.func,
     target: PropTypes.oneOfType([PropTypes.string, PropTypes.array])
   })
 );
@@ -763,9 +763,9 @@ _examples:_
   />
 </VictoryChart>
 ```
-In this example, a [discontinous scale plugin from d3fc](https://github.com/d3fc/d3fc/blob/master/packages/d3fc-discontinuous-scale/README.md) can be used to create a custom scale function to skip weekends along the x-axis. 
+In this example, a [discontinous scale plugin from d3fc](https://github.com/d3fc/d3fc/blob/master/packages/d3fc-discontinuous-scale/README.md) can be used to create a custom scale function to skip weekends along the x-axis.
 
-_note_: The data set has already been filtered to only include weekdays. 
+_note_: The data set has already been filtered to only include weekdays.
 
 ```playground_norender
 function App() {
@@ -787,9 +787,9 @@ function App() {
 
   return (
     <VictoryChart scale={{ x: discontinuousScale }}>
-      <VictoryArea 
-        data={data} 
-        style={{data: { fill: 'lightblue', stroke: 'teal' }}} 
+      <VictoryArea
+        data={data}
+        style={{data: { fill: 'lightblue', stroke: 'teal' }}}
       />
     </VictoryChart>
   );

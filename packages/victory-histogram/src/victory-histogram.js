@@ -122,14 +122,11 @@ export class VictoryHistogram extends React.Component {
 
     const children = this.renderData(props);
 
-    const container = React.cloneElement(
-      props.containerComponent,
-      UserProps.getSafeUserProps(this.props)
-    );
-
-    return props.standalone
-      ? this.renderContainer(container, children)
+    const component = props.standalone
+      ? this.renderContainer(props.containerComponent, children)
       : children;
+
+    return UserProps.withSafeUserProps(component, props);
   }
 }
 
