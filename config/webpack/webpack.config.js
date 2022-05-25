@@ -38,6 +38,9 @@ module.exports = {
       }
     }
   ],
+  resolve: {
+    extensions: [".ts", ".tsx", ".js", ".jsx"]
+  },
   output: {
     path: path.resolve("dist"),
     filename: `${libPath}.min.js`,
@@ -48,7 +51,7 @@ module.exports = {
     rules: [
       {
         // Transform source
-        test: /\.js$/,
+        test: /(\.js|\.tsx?)$/,
         // Use include specifically of our sources.
         // Do _not_ use an `exclude` here.
         include: [SRC],
