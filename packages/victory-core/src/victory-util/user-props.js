@@ -1,3 +1,5 @@
+import * as React from "react";
+
 /*
   USER_PROPS_SAFELIST is to contain any string deemed safe for user props.
   The startsWidth array will contain the start of any accepted user-prop that 
@@ -78,4 +80,15 @@ export const getSafeUserProps = (props) => {
         return [key, getValue(value, props)];
       })
   );
+};
+
+/**
+ * Wraps a component and adds safe user props
+ *
+ * @param {ReactNode} component: parent component
+ * @param {Object} props: props to be filtered
+ * @returns {ReactNode} modified component
+ */
+export const withSafeUserProps = (component, props) => {
+  return React.cloneElement(component, getSafeUserProps(props));
 };

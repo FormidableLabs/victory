@@ -2,6 +2,7 @@ import React from "react";
 import PropTypes from "prop-types";
 import * as CustomPropTypes from "../victory-util/prop-types";
 import * as Helpers from "../victory-util/helpers";
+import * as UserProps from "../victory-util/user-props";
 import { assign, defaults, isObject, uniqueId } from "lodash";
 import ClipPath from "../victory-primitives/clip-path";
 import Circle from "../victory-primitives/circle";
@@ -84,6 +85,7 @@ export default class VictoryClipContainer extends React.Component {
   }
 
   renderClippedGroup(props, clipId) {
+    const userProps = UserProps.getSafeUserProps(props);
     const {
       style,
       events,
@@ -106,7 +108,7 @@ export default class VictoryClipContainer extends React.Component {
     );
     return React.cloneElement(
       groupComponent,
-      { ...groupProps, "aria-label": props["aria-label"], tabIndex },
+      { ...groupProps, tabIndex, ...userProps },
       [clipComponent, ...React.Children.toArray(children)]
     );
   }
