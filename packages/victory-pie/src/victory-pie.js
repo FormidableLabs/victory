@@ -120,7 +120,7 @@ class VictoryPie extends React.Component {
     ),
     externalEventMutations: PropTypes.arrayOf(
       PropTypes.shape({
-        callback: PropTypes.function,
+        callback: PropTypes.func,
         childName: PropTypes.oneOfType([PropTypes.string, PropTypes.array]),
         eventKey: PropTypes.oneOfType([
           PropTypes.array,
@@ -130,7 +130,7 @@ class VictoryPie extends React.Component {
           ]),
           PropTypes.string
         ]),
-        mutation: PropTypes.function,
+        mutation: PropTypes.func,
         target: PropTypes.oneOfType([PropTypes.string, PropTypes.array])
       })
     ),

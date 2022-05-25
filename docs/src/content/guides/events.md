@@ -167,14 +167,14 @@ Occasionally is it necessary to trigger events in Victory's event system from so
 ```jsx
 externalEventMutations: PropTypes.arrayOf(
   PropTypes.shape({
-    callback: PropTypes.function,
+    callback: PropTypes.func,
     childName: PropTypes.oneOfType([PropTypes.string, PropTypes.array]),
     eventKey: PropTypes.oneOfType([
       PropTypes.array,
       CustomPropTypes.allOfType([CustomPropTypes.integer, CustomPropTypes.nonNegative]),
       PropTypes.string
     ]),
-    mutation: PropTypes.function,
+    mutation: PropTypes.func,
     target: PropTypes.oneOfType([PropTypes.string, PropTypes.array])
   })
 );
