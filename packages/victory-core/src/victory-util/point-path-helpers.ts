@@ -2,14 +2,14 @@
 import { range } from "lodash";
 
 export default {
-  circle(x, y, size) {
+  circle(x: number, y: number, size: number) {
     return `M ${x}, ${y}
       m ${-size}, 0
       a ${size}, ${size} 0 1,0 ${size * 2},0
       a ${size}, ${size} 0 1,0 ${-size * 2},0`;
   },
 
-  square(x, y, size) {
+  square(x: number, y: number, size: number) {
     const baseSize = 0.87 * size; // eslint-disable-line no-magic-numbers
     const x0 = x - baseSize;
     const y1 = y + baseSize;
@@ -21,7 +21,7 @@ export default {
       z`;
   },
 
-  diamond(x, y, size) {
+  diamond(x: number, y: number, size: number) {
     const baseSize = 0.87 * size; // eslint-disable-line no-magic-numbers
     const length = Math.sqrt(2 * (baseSize * baseSize));
     return `M ${x}, ${y + length}
@@ -32,7 +32,7 @@ export default {
       z`;
   },
 
-  triangleDown(x, y, size) {
+  triangleDown(x: number, y: number, size: number) {
     const height = (size / 2) * Math.sqrt(3);
     const x0 = x - size;
     const x1 = x + size;
@@ -44,7 +44,7 @@ export default {
       z`;
   },
 
-  triangleUp(x, y, size) {
+  triangleUp(x: number, y: number, size: number) {
     const height = (size / 2) * Math.sqrt(3);
     const x0 = x - size;
     const x1 = x + size;
@@ -56,7 +56,7 @@ export default {
       z`;
   },
 
-  plus(x, y, size) {
+  plus(x: number, y: number, size: number) {
     const baseSize = 1.1 * size; // eslint-disable-line no-magic-numbers
     const distance = baseSize / 1.5; // eslint-disable-line no-magic-numbers
     return `
@@ -75,7 +75,7 @@ export default {
       z`;
   },
 
-  cross(x, y, size) {
+  cross(x: number, y: number, size: number) {
     const baseSize = 0.8 * size; // eslint-disable-line no-magic-numbers
     const distance = baseSize / 1.5; // eslint-disable-line no-magic-numbers
     return `
@@ -94,7 +94,7 @@ export default {
       z`;
   },
 
-  minus(x, y, size) {
+  minus(x: number, y: number, size: number) {
     const baseSize = 1.1 * size; // eslint-disable-line no-magic-numbers
     const lineHeight = baseSize - baseSize * 0.3; // eslint-disable-line no-magic-numbers
     const x0 = x - baseSize;
@@ -107,7 +107,7 @@ export default {
       z`;
   },
 
-  star(x, y, size) {
+  star(x: number, y: number, size: number) {
     const baseSize = 1.35 * size; // eslint-disable-line no-magic-numbers
     const angle = Math.PI / 5; // eslint-disable-line no-magic-numbers
     // eslint-disable-next-line no-magic-numbers

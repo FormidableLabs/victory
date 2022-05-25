@@ -1,5 +1,5 @@
 module.exports = {
-  presets: ["@babel/preset-react"],
+  presets: ["@babel/preset-react", "@babel/preset-typescript"],
   plugins: [
     "lodash",
     "@babel/proposal-class-properties",
@@ -15,6 +15,7 @@ module.exports = {
     "@babel/proposal-object-rest-spread",
     "@babel/plugin-proposal-export-namespace-from"
   ],
+  ignore: ["**/*.d.ts"],
   env: {
     commonjs: {
       plugins: [

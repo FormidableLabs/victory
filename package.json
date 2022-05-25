@@ -60,6 +60,7 @@
     "@babel/plugin-transform-spread": "7.16.7",
     "@babel/plugin-transform-template-literals": "7.16.7",
     "@babel/preset-react": "7.16.7",
+    "@babel/preset-typescript": "^7.17.12",
     "@storybook/addon-actions": "^5.3.18",
     "@storybook/addon-options": "^5.3.18",
     "@storybook/addon-storysource": "^5.3.19",

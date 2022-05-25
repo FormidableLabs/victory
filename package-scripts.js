@@ -88,8 +88,8 @@ module.exports = {
       default: npsUtils.series.nps("lint", "test")
     },
     watch: {
-      es: "lerna exec --parallel --ignore victory-native --ignore victory-vendor -- cross-env BABEL_ENV=es babel src --out-dir es --config-file ../../.babelrc.js --copy-files --watch",
-      lib: "lerna exec --parallel --ignore victory-native --ignore victory-vendor -- cross-env BABEL_ENV=commonjs babel src --out-dir lib --config-file ../../.babelrc.js --copy-files --watch",
+      es: "lerna exec --parallel --ignore victory-native --ignore victory-vendor -- cross-env BABEL_ENV=es babel src --out-dir es --config-file ../../.babelrc.js --copy-files --extensions .tsx,.ts,.jsx,.js --watch",
+      lib: "lerna exec --parallel --ignore victory-native --ignore victory-vendor -- cross-env BABEL_ENV=commonjs babel src --out-dir lib --config-file ../../.babelrc.js --copy-files --extensions .tsx,.ts,.jsx,.js --watch",
       core: npsUtils.concurrent.nps("watch.es", "watch.lib"),
       // `victory-vendor` is built 1x up front and not watched.
       default: npsUtils.series.nps("build-package-libs-vendor", "watch.core")
@@ -107,9 +107,9 @@ module.exports = {
       "lerna version --no-git-tag-version --no-push --loglevel silly",
     // TODO: organize build scripts once build perf is sorted out
     "babel-es":
-      "cross-env BABEL_ENV=es babel src --out-dir es --config-file ../../.babelrc.js --copy-files",
+      "cross-env BABEL_ENV=es babel src --out-dir es --config-file ../../.babelrc.js --copy-files --extensions .tsx,.ts,.jsx,.js",
     "babel-lib":
-      "cross-env BABEL_ENV=commonjs babel src --out-dir lib --config-file ../../.babelrc.js --copy-files",
+      "cross-env BABEL_ENV=commonjs babel src --out-dir lib --config-file ../../.babelrc.js --copy-files --extensions .tsx,.ts,.jsx,.js",
     "build-es": npsUtils.series.nps("clean.es", "babel-es"),
     "build-lib": npsUtils.series.nps("clean.lib", "babel-lib"),
     "build-libs": npsUtils.series.nps("build-lib", "build-es"),
