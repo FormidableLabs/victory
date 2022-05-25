@@ -1,5 +1,4 @@
 /*eslint-disable max-nested-callbacks */
-import "@testing-library/jest-dom";
 import { fireEvent, render, screen } from "@testing-library/react";
 import { range } from "lodash";
 import React from "react";

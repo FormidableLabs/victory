@@ -6,7 +6,6 @@ import { range } from "lodash";
 import { VictoryChart } from "victory-chart";
 import { VictoryBar, Bar } from "victory-bar";
 import { isBar, getBarHeight } from "../../svg-test-helper";
-import "@testing-library/jest-dom";
 
 describe("components/victory-bar", () => {
   describe("default component rendering", () => {
