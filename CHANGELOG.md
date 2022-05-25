@@ -1,5 +1,22 @@
 # Victory Changelog
 
+## 36.4.1 (2022-05-25)
+* Dev: Switch to ye olde yarn1 by @ryan-roemer in https://github.com/FormidableLabs/victory/pull/2228
+* [docs]: update victory-native introduction by @jpdriver in https://github.com/FormidableLabs/victory/pull/2231
+* brush container helper jest tests by @heythisispaul in https://github.com/FormidableLabs/victory/pull/2229
+* Infra: Node updates by @ryan-roemer in https://github.com/FormidableLabs/victory/pull/2235
+* Docs: Upgrade to latest victory@36.4.0 by @ryan-roemer in https://github.com/FormidableLabs/victory/pull/2234
+* Upgrade dependencies by @ryan-roemer in https://github.com/FormidableLabs/victory/pull/2238
+* Added helpful error message to 'test' script by @scottrippey in https://github.com/FormidableLabs/victory/pull/2248
+* Convert victory and victory-chart tests to jest by @becca-bailey in https://github.com/FormidableLabs/victory/pull/2246
+* Feature/jest candlestick tests by @heythisispaul in https://github.com/FormidableLabs/victory/pull/2247
+* Add victory core tests by @becca-bailey in https://github.com/FormidableLabs/victory/pull/2249
+* Add tests for victory-stack, victory-group, and victory-selection-container by @becca-bailey in https://github.com/FormidableLabs/victory/pull/2253
+* Test migration: victory-tooltip, victory-voronoi by @scottrippey in https://github.com/FormidableLabs/victory/pull/2252
+* [FIX] Replace references to non-existent PropTypes.function with PropTypes.func by @gustaff-weldon in https://github.com/FormidableLabs/victory/pull/2257
+* Fix duplicate user props by @becca-bailey in https://github.com/FormidableLabs/victory/pull/2256
+* migrate existing legend tests to jest by @heythisispaul in https://github.com/FormidableLabs/victory/pull/2259
+
 ## 36.4.0 (2022-05-10)
 
 * Added the ability to add victory charts title and desc props for better accessibility by @shankstee in https://github.com/FormidableLabs/victory/pull/2199
