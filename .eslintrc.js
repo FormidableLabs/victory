@@ -31,6 +31,7 @@ module.exports = {
   overrides: [
     {
       files: ["*.ts", "*.tsx"],
+      excludedFiles: ["*.d.ts"],
       extends: [
         "plugin:@typescript-eslint/eslint-recommended",
         "plugin:@typescript-eslint/recommended",
@@ -38,7 +39,7 @@ module.exports = {
       ],
       parser: "@typescript-eslint/parser",
       parserOptions: {
-        project: "./tsconfig.json",
+        project: ["./tsconfig.json"],
         tsconfigRootDir: __dirname
       },
       plugins: ["@typescript-eslint"],
