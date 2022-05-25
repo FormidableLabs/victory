@@ -2,7 +2,14 @@
 import React from "react";
 import PropTypes from "prop-types";
 import { assign } from "lodash";
-import { Helpers, CommonProps, ClipPath, Path, Circle } from "victory-core";
+import {
+  Helpers,
+  CommonProps,
+  ClipPath,
+  Path,
+  Circle,
+  UserProps
+} from "victory-core";
 
 const getVoronoiPath = (props) => {
   const { polygon } = props;
@@ -53,6 +60,7 @@ const Voronoi = (props) => {
     transform,
     ...events
   };
+  const userProps = UserProps.getSafeUserProps(props);
 
   if (size) {
     const circle = React.cloneElement(props.circleComponent, {
@@ -78,6 +86,7 @@ const Voronoi = (props) => {
 
   return React.cloneElement(props.pathComponent, {
     ...sharedProps,
+    ...userProps,
     d: voronoiPath
   });
 };

@@ -5,5 +5,6 @@ module.exports = {
   testPathIgnorePatterns: ["victory-native"],
   transform: {
     "^.+/test/.+\\.(js|jsx)$": ["babel-jest", { configFile: "./.babelrc.js" }]
-  }
+  },
+  setupFilesAfterEnv: ["<rootDir>/test/jest-setup.js"]
 };

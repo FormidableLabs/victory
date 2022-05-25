@@ -85,7 +85,8 @@ Projects using Victory should also depend on [React][]. Victory works with React
 
 Victory Native shares most of its code with Victory, and has a nearly identical API! To learn more, check out the [Victory Native package REAMDE](./packages/victory-native/README.md).
 
-## [Contributing](CONTRIBUTING.md)
+## Contributing
+Please see the [Contributing guide](CONTRIBUTING.md).
 
 ## Maintenance Status
 
