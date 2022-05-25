@@ -71,10 +71,17 @@ module.exports = {
       ci: 'prettier --list-different "./**/*.{js,jsx,json,ts,tsx}"',
       default: "yarn nps format.fix"
     },
+    typecheck: {
+      default: npsUtils.series.nps("typecheck.core"),
+      base: "tsc --noEmit",
+      demo: "tsc -p ./demo/tsconfig.json --noEmit",
+      core: "lerna exec --scope victory-core -- nps typecheck.base"
+    },
     check: {
       ci: npsUtils.series.nps(
         "format.ci",
         "lint",
+        "typecheck",
         "build-package-libs",
         "build-package-dists",
         "test-node",
