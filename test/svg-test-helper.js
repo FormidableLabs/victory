@@ -4,6 +4,8 @@ import { _internalD3Voronoi as d3Voronoi } from "victory-voronoi/lib/helper-meth
 import { without, min, max, property } from "lodash";
 
 const RECTANGULAR_SEQUENCE = ["M", "A", "L", "A", "L", "A", "L", "A", "z"];
+const CIRCULAR_SEQUENCE = ["M", "m", "a", "a"];
+const TRIANGULAR_SEQUENCE = ["M", "L", "L", "z"];
 
 export const calculateD3Path = (props, pathType, index = 0) => {
   const { width, height, padding, scale, interpolation, data, domain } = props;
@@ -161,3 +163,21 @@ export const getBarShape = (path) => {
  */
 export const isBar = (commandString) =>
   exhibitsShapeSequence(commandString, RECTANGULAR_SEQUENCE);
+
+/**
+ * Determines if a circular shape is produced from the provided path command.
+ *
+ * @param {String} commandString - The command attribute of a `path` element.
+ * @returns {Boolean}            - Boolean indicating if the command string produces a circular shape.
+ */
+export const isCircle = (commandString) =>
+  exhibitsShapeSequence(commandString, CIRCULAR_SEQUENCE);
+
+/**
+ * Determines if a triangular shape is produced from the provided path command.
+ *
+ * @param {String} commandString - The command attribute of a `path` element.
+ * @returns {Boolean}            - Boolean indicating if the command string produces a triangular shape.
+ */
+export const isTriangle = (commandString) =>
+  exhibitsShapeSequence(commandString, TRIANGULAR_SEQUENCE);
