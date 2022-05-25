@@ -897,6 +897,8 @@ export interface PointProps extends VictoryCommonPrimitiveProps {
 
 export class Point extends React.Component<PointProps> {}
 
+export const PointPathHelpers: any;
+
 export interface TextProps extends VictoryCommonPrimitiveProps {
   children?: React.ReactNode;
   desc?: string;
