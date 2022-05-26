@@ -55,7 +55,6 @@ module.exports = {
       docs: 'yarn nps "lint.base docs"',
       stories: 'yarn nps "lint.base stories"',
       test: 'yarn nps "lint.base test"',
-      ts: npsUtils.series.nps("build-package-libs", "compile-ts"),
       default: npsUtils.series.nps(
         "lint.config",
         "lint.test",
@@ -87,8 +86,7 @@ module.exports = {
         "test-node",
         "jest",
         "jest.native",
-        "karma.ci",
-        "compile-ts"
+        "karma.ci"
       ),
       cov: npsUtils.series.nps("lint", "test.cov"),
       dev: npsUtils.series.nps("lint", "test.dev"),
@@ -108,7 +106,6 @@ module.exports = {
       default: npsUtils.concurrent.nps("clean.es", "clean.lib", "clean.dist"),
       all: "lerna exec --parallel -- nps clean"
     },
-    "compile-ts": "tsc --project tsconfig.json --noEmit",
     // Version testing helpers
     "lerna-dry-run":
       "lerna version --no-git-tag-version --no-push --loglevel silly",
