@@ -2,7 +2,7 @@ module.exports = {
   presets: ["@babel/preset-react", "@babel/preset-typescript"],
   plugins: [
     "lodash",
-    "@babel/proposal-class-properties",
+    ["@babel/proposal-class-properties", { loose: true }],
     "@babel/transform-arrow-functions",
     "@babel/transform-block-scoping",
     "@babel/transform-classes",
