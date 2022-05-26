@@ -20,10 +20,7 @@ module.exports = {
   },
 
   devServer: {
-    port: WDS_PORT,
-    static: {
-      directory: "./demo/js"
-    }
+    port: WDS_PORT
   },
 
   output: {
@@ -35,7 +32,6 @@ module.exports = {
 
   cache: true,
   devtool: "source-map",
-  entry: "./demo/js/app",
   stats: {
     colors: true,
     reasons: true

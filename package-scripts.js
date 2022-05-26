@@ -7,9 +7,9 @@ module.exports = {
   scripts: {
     server: {
       dev: {
-        ts: "webpack serve --config ./config/webpack/demo/webpack.config.dev-ts.js",
+        ts: "webpack serve --config ./config/webpack/demo/webpack.config.dev.js --static demo/ts --entry ./demo/ts/app",
         default:
-          "webpack serve --config ./config/webpack/demo/webpack.config.dev.js --content-base demo/js"
+          "webpack serve --config ./config/webpack/demo/webpack.config.dev.js --static demo/js --entry ./demo/js/app"
       },
       hot: "webpack serve --config ./config/webpack/demo/webpack.config.hot.js --inline --hot --content-base demo/js",
       test: "webpack serve --config ./config/webpack/webpack.config.test.js"
