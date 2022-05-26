@@ -15,10 +15,15 @@ const WDS_PORT = 3000;
 module.exports = {
   mode: "development",
 
+  resolve: {
+    extensions: [".ts", ".tsx", ".js", ".json"]
+  },
+
   devServer: {
     port: WDS_PORT,
-    contentBase: "./demo/js",
-    noInfo: false
+    static: {
+      directory: "./demo/js"
+    }
   },
 
   output: {
@@ -30,9 +35,7 @@ module.exports = {
 
   cache: true,
   devtool: "source-map",
-  entry: {
-    app: ["./demo/js/app"]
-  },
+  entry: "./demo/js/app",
   stats: {
     colors: true,
     reasons: true
@@ -41,10 +44,10 @@ module.exports = {
     rules: [
       {
         // Transform source
-        test: /\.js$/,
+        test: /(\.js|\.tsx?)$/,
         // Use include specifically of our sources.
         // Do _not_ use an `exclude` here.
-        include: FILES.concat([path.join(DEMO, "js")]),
+        include: [DEMO, ...FILES],
         use: {
           loader: "babel-loader",
           // eslint-disable-next-line global-require

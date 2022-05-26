@@ -29,7 +29,7 @@ module.exports = {
     rules: [
       {
         // Transform source
-        test: /\.js$/,
+        test: /(\.js|\.tsx?)$/,
         // We only transform **test** files.
         // Our source files should be built separately with babel.
         include: [path.resolve("test")],
