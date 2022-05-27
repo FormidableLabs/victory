@@ -73,8 +73,14 @@ module.exports = {
     typecheck: {
       default: npsUtils.series.nps("typecheck.core"),
       base: "tsc --noEmit",
-      demo: "tsc -p ./demo/tsconfig.json --noEmit",
-      core: "lerna exec --scope victory-core -- nps typecheck.base"
+      core: "lerna exec --scope victory-core -- nps typecheck.base",
+      demo: "tsc -p ./demo/tsconfig.json --noEmit"
+    },
+    types: {
+      base: "tsc --emitDeclarationOnly --rootDir src",
+      lib: "nps types.base -- -- --outDir lib",
+      es: "nps types.base -- -- --outDir es",
+      dist: "nps types.base -- -- --outFile dist/index"
     },
     check: {
       ci: npsUtils.series.nps(
@@ -114,8 +120,8 @@ module.exports = {
       "cross-env BABEL_ENV=es babel src --out-dir es --config-file ../../.babelrc.js --copy-files --extensions .tsx,.ts,.jsx,.js",
     "babel-lib":
       "cross-env BABEL_ENV=commonjs babel src --out-dir lib --config-file ../../.babelrc.js --copy-files --extensions .tsx,.ts,.jsx,.js",
-    "build-es": npsUtils.series.nps("clean.es", "babel-es"),
-    "build-lib": npsUtils.series.nps("clean.lib", "babel-lib"),
+    "build-es": npsUtils.series.nps("clean.es", "babel-es", "types.es"),
+    "build-lib": npsUtils.series.nps("clean.lib", "babel-lib", "types.lib"),
     "build-libs": npsUtils.series.nps("build-lib", "build-es"),
     "build-package-libs-core": `lerna exec --concurrency ${CONCURRENCY} --stream --ignore victory-native --ignore victory-vendor -- nps build-libs`,
     "build-package-libs-vendor":
