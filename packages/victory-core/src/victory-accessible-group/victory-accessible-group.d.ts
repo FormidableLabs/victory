@@ -9,7 +9,7 @@ export interface VictoryAccessibleGroupProps {
   tabIndex?: number;
 }
 
-export class VictoryAccessibleGroup extends React.Component<
+export default class VictoryAccessibleGroup extends React.Component<
   VictoryAccessibleGroupProps,
   any
 > {}

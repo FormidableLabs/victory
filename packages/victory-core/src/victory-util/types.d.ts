@@ -5,10 +5,7 @@ import {
   PaddingProps,
   VictoryThemeDefinition
 } from "../victory-theme/victory-theme";
-import {
-  StringOrCallback,
-  StringOrNumberOrCallback,
-} from "../index";
+import { StringOrCallback, StringOrNumberOrCallback } from "../index";
 
 export type StringOrNumberOrList = string | number | (string | number)[];
 
@@ -232,25 +229,6 @@ export interface VictorySingleLabelableProps extends VictoryLabelableProps {
   label?: string | { (data: any): string | number | null };
 }
 
-export namespace Selection {
-  export function getParentSVG(evt: React.SyntheticEvent): string;
-  export function getSVGEventCoordinates(
-    evt: React.SyntheticEvent,
-    svg?: SVGElement
-  ): SVGCoordinateType;
-  export function getDomainCoordinates(
-    props: any,
-    domain?: DomainPropType
-  ): DomainPropType;
-  export function getDataCoordinates(
-    props: any,
-    scale: ScalePropType,
-    x: number,
-    y: number
-  ): SVGCoordinateType;
-  export function getBounds(props: any): SVGCoordinateType;
-}
-
 export interface TextSizeStyleInterface {
   angle?: number;
   characterConstant?: string;
@@ -258,15 +236,4 @@ export interface TextSizeStyleInterface {
   fontSize?: number | string;
   letterSpacing?: string;
   lineHeight?: number;
-}
-
-export namespace TextSize {
-  export function approximateTextSize(
-    text: string,
-    style?: TextSizeStyleInterface
-  ): { width: number; height: number };
-  export function convertLengthToPixels(
-    length: string,
-    fontSize: number
-  ): number;
 }

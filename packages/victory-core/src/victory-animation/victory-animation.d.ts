@@ -60,7 +60,7 @@ export interface VictoryAnimationProps {
   data?: AnimationData;
 }
 
-export class VictoryAnimation extends React.Component<
+export default class VictoryAnimation extends React.Component<
   VictoryAnimationProps,
   any
 > {}

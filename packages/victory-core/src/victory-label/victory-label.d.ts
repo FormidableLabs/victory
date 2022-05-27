@@ -48,4 +48,7 @@ export interface VictoryLabelProps {
   dy?: StringOrNumberOrCallback;
 }
 
-export class VictoryLabel extends React.Component<VictoryLabelProps, any> {}
+export default class VictoryLabel extends React.Component<
+  VictoryLabelProps,
+  any
+> {}

@@ -269,4 +269,5 @@ export interface VictoryThemeInterface {
   material: VictoryThemeDefinition;
 }
 
-export const VictoryTheme: VictoryThemeInterface;
+const VictoryTheme: VictoryThemeInterface;
+export default VictoryTheme;
