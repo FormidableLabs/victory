@@ -330,6 +330,7 @@ describe("components/victory-errorbar", () => {
             ]);
 
           const bars = screen.getAllByTestId("error-bar");
+          expect(bars).toHaveLength(3);
           bars.forEach((node, i) => {
             const errorY = yScale(data[i].y - data[i].errorY);
             const yScaleMax = yScale.range()[0];
@@ -379,6 +380,7 @@ describe("components/victory-errorbar", () => {
             ]);
 
           const bars = screen.getAllByTestId("error-bar");
+          expect(bars).toHaveLength(3);
           bars.forEach((node, i) => {
             const errorY = yScale(data[i].y - data[i].errorY);
             const yScaleMax = yScale.range()[0];
@@ -428,6 +430,7 @@ describe("components/victory-errorbar", () => {
             ]);
 
           const bars = screen.getAllByTestId("error-bar");
+          expect(bars).toHaveLength(3);
           bars.forEach((node, i) => {
             const errorY = yScale(data[i].y + data[i].errorY);
             const yScaleMin = yScale.range()[1];
@@ -477,6 +480,7 @@ describe("components/victory-errorbar", () => {
             ]);
 
           const bars = screen.getAllByTestId("error-bar");
+          expect(bars).toHaveLength(3);
           bars.forEach((node, i) => {
             const errorX = xScale(data[i].x - data[i].errorX);
             const xScaleMin = xScale.range()[0];
@@ -526,6 +530,7 @@ describe("components/victory-errorbar", () => {
             ]);
 
           const bars = screen.getAllByTestId("error-bar");
+          expect(bars).toHaveLength(3);
           bars.forEach((node, i) => {
             const errorX = xScale(data[i].errorX + data[i].x);
             const xScaleMax = xScale.range()[1];
@@ -622,6 +627,7 @@ describe("components/victory-errorbar", () => {
             ]);
 
           const bars = screen.getAllByTestId("error-bar");
+          expect(bars).toHaveLength(3);
           bars.forEach((node, i) => {
             const errorX = xScale(data[i].x + data[i].errorX[0]);
             const xScaleMax = xScale.range()[1];
@@ -673,6 +679,7 @@ describe("components/victory-errorbar", () => {
             ]);
 
           const bars = screen.getAllByTestId("error-bar");
+          expect(bars).toHaveLength(3);
           bars.forEach((node, i) => {
             const errorX = xScale(data[i].x - data[i].errorX[1]);
             const xScaleMin = xScale.range()[0];
@@ -724,6 +731,7 @@ describe("components/victory-errorbar", () => {
             ]);
 
           const bars = screen.getAllByTestId("error-bar");
+          expect(bars).toHaveLength(3);
           bars.forEach((node, i) => {
             const errorY = yScale(data[i].y + data[i].errorY[0]);
             const yScaleMin = yScale.range()[1];
@@ -775,6 +783,7 @@ describe("components/victory-errorbar", () => {
             ]);
 
           const bars = screen.getAllByTestId("error-bar");
+          expect(bars).toHaveLength(3);
           bars.forEach((node, i) => {
             const errorY = yScale(data[i].y - data[i].errorY[1]);
             const yScaleMax = yScale.range()[0];
@@ -824,6 +833,7 @@ describe("components/victory-errorbar", () => {
             ]);
 
           const bars = screen.getAllByTestId("error-bar");
+          expect(bars).toHaveLength(3);
           bars.forEach((node, i) => {
             const errorY = yScale(data[i].y - data[i].errorY[1]);
             const yScaleMax = yScale.range()[0];
@@ -873,6 +883,7 @@ describe("components/victory-errorbar", () => {
             ]);
 
           const bars = screen.getAllByTestId("error-bar");
+          expect(bars).toHaveLength(3);
           bars.forEach((node, i) => {
             const errorY = yScale(data[i].y + data[i].errorY[0]);
             const yScaleMin = yScale.range()[1];
@@ -922,6 +933,7 @@ describe("components/victory-errorbar", () => {
             ]);
 
           const bars = screen.getAllByTestId("error-bar");
+          expect(bars).toHaveLength(3);
           bars.forEach((node, i) => {
             const errorX = xScale(data[i].x - data[i].errorX[1]);
             const xScaleMin = xScale.range()[0];
@@ -971,6 +983,7 @@ describe("components/victory-errorbar", () => {
             ]);
 
           const bars = screen.getAllByTestId("error-bar");
+          expect(bars).toHaveLength(3);
           bars.forEach((node, i) => {
             const errorX = xScale(data[i].x + data[i].errorX[0]);
             const xScaleMax = xScale.range()[1];
