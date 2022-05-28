@@ -19,8 +19,8 @@ describe("victory-primitives/error-bar", () => {
 
   const compareLineCoordinates = (line, coordinates) => {
     forEach(coordinates, (coordinateValue, coordinateName) => {
-      expect(parseFloat(line.getAttribute(coordinateName), 10)).toEqual(
-        parseFloat(coordinateValue, 10)
+      expect(parseFloat(line.getAttribute(coordinateName))).toEqual(
+        parseFloat(coordinateValue)
       );
     });
   };
@@ -50,7 +50,7 @@ describe("victory-primitives/error-bar", () => {
       { x1: 4, x2: 4, y1: 5, y2: 2 }
     ];
 
-    expect(lines.length).toEqual(8);
+    expect(lines).toHaveLength(8);
     lines.forEach((line, i) => {
       compareLineCoordinates(line, expectedCoordinates[i]);
     });
