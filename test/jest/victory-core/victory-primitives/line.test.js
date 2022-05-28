@@ -1,6 +1,6 @@
 import React from "react";
 import { Line } from "victory-core";
-import { renderInSvg } from "../../rendering-utils";
+import { render } from "@testing-library/react";
 
 describe("victory-primitives/line", () => {
   const baseProps = {
@@ -11,7 +11,7 @@ describe("victory-primitives/line", () => {
   };
 
   it("should render a line element with the correct coordinates", () => {
-    const { container } = renderInSvg(<Line {...baseProps} />);
+    const { container } = render(<Line {...baseProps} />, { wrapper: "svg" });
     expect(container.querySelector("line")).toMatchInlineSnapshot(`
       <line
         vector-effect="non-scaling-stroke"

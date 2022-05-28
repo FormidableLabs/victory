@@ -1,11 +1,12 @@
+import { render } from "@testing-library/react";
 import React from "react";
-import { renderInSvg } from "../../rendering-utils";
 import { VictoryAccessibleGroup } from "victory-core";
 
 describe("components/victory-accessible-group", () => {
   it("renders an g with an aria-label", () => {
-    const { container } = renderInSvg(
-      <VictoryAccessibleGroup aria-label="test-aria-label" />
+    const { container } = render(
+      <VictoryAccessibleGroup aria-label="test-aria-label" />,
+      { wrapper: "svg" }
     );
     expect(container.querySelector("g")).toMatchInlineSnapshot(`
       <g
@@ -16,8 +17,9 @@ describe("components/victory-accessible-group", () => {
   });
 
   it("renders an g with a tabIndex and className", () => {
-    const { container } = renderInSvg(
-      <VictoryAccessibleGroup tabIndex={5} className="accessibility" />
+    const { container } = render(
+      <VictoryAccessibleGroup tabIndex={5} className="accessibility" />,
+      { wrapper: "svg" }
     );
     expect(container.querySelector("g")).toMatchInlineSnapshot(`
       <g
@@ -28,12 +30,13 @@ describe("components/victory-accessible-group", () => {
   });
 
   it("renders an g with a desc node if given", () => {
-    const { container } = renderInSvg(
+    const { container } = render(
       <VictoryAccessibleGroup
         aria-label="desc node tests"
         desc="test description"
         aria-describedby="describes group"
-      />
+      />,
+      { wrapper: "svg" }
     );
     expect(container.querySelector("g")).toMatchInlineSnapshot(`
       <g
@@ -51,11 +54,12 @@ describe("components/victory-accessible-group", () => {
   });
 
   it("uses the desc getAttribute value for descId and aria-describedby if no aria-describedby getAttribute value", () => {
-    const { container } = renderInSvg(
+    const { container } = render(
       <VictoryAccessibleGroup
         aria-label="desc node tests"
         desc="applies to both aria-describeby and descId"
-      />
+      />,
+      { wrapper: "svg" }
     );
     expect(container.querySelector("g")).toMatchInlineSnapshot(`
       <g
