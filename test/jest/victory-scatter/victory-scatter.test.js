@@ -78,32 +78,6 @@ describe("components/victory-scatter", () => {
       expect(points).toHaveLength(10);
     });
 
-    // TODO: Does sorting data even matter for a scatter plot?
-
-    // it("sorts data by sortKey prop", () => {
-    //   const data = range(5)
-    //     .map((i) => ({ x: i, y: i }))
-    //     .reverse();
-    //   const { container } = render(<VictoryScatter data={data} sortKey="x" />);
-    //   const xValues = container
-    //     .querySelector(Point)
-    //     .map((point) => point.getAttribute("datum")._x);
-    //   expect(xValues).toEqual([0, 1, 2, 3, 4]);
-    // });
-
-    // it("reverses sorted data with the sortOrder prop", () => {
-    //   const data = range(5)
-    //     .map((i) => ({ x: i, y: i }))
-    //     .reverse();
-    //   const { container } = render(
-    //     <VictoryScatter data={data} sortKey="x" sortOrder="descending" />
-    //   );
-    //   const xValues = container
-    //     .querySelector(Point)
-    //     .map((point) => point.getAttribute("datum")._x);
-    //   expect(xValues).toEqual([4, 3, 2, 1, 0]);
-    // });
-
     it("renders points for array-shaped data", () => {
       const data = range(4).map((i) => [i, i]);
       const { container } = render(<VictoryScatter data={data} x={0} y={1} />);
