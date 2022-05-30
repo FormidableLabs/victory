@@ -1,7 +1,6 @@
 {
-  "extends": ["formidable/configurations/es6-react", "prettier"],
+  "extends": ["../.eslintrc.js"],
   "rules": {
-    "no-magic-numbers": 0,
-    "import/no-unresolved": 0
+    "no-magic-numbers": 0
   }
 }

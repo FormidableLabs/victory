@@ -1,5 +1,5 @@
 {
-  "extends": ["formidable/configurations/es6-react", "prettier"],
+  "extends": ["../.eslintrc.js"],
   "env": { "mocha": true },
   "plugins": ["mocha"],
   "rules": {

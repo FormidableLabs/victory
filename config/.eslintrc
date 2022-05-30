@@ -1,5 +1,5 @@
 {
-  "extends": ["formidable/configurations/es6-node", "prettier"],
-  "rules": {},
+  "extends": ["../.eslintrc.js"],
+  "rules": { "strict":  "off" },
   "globals": {}
 }

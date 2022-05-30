@@ -7,9 +7,9 @@ module.exports = {
   scripts: {
     server: {
       dev: {
-        ts: "webpack serve --config ./config/webpack/demo/webpack.config.dev-ts.js",
+        ts: "webpack serve --config ./config/webpack/demo/webpack.config.dev.js --static demo/ts --entry ./demo/ts/app",
         default:
-          "webpack serve --config ./config/webpack/demo/webpack.config.dev.js --content-base demo/js"
+          "webpack serve --config ./config/webpack/demo/webpack.config.dev.js --static demo/js --entry ./demo/js/app"
       },
       hot: "webpack serve --config ./config/webpack/demo/webpack.config.hot.js --inline --hot --content-base demo/js",
       test: "webpack serve --config ./config/webpack/webpack.config.test.js"
@@ -45,8 +45,8 @@ module.exports = {
       // Note: Using a base `nps` command with extra args.
       // 1. You need to add double quotes around the extra part (e.g. `test` below)
       // 2. If going through a `lerna exec` you need to escape with an extra backslash `\` (e.g. `src` below)
-      base: "yarn eslint --color --ext .js,.jsx,.ts,.tsx",
-      fix: "yarn eslint --color --ext .js,.jsx,.ts,.tsx --fix",
+      base: "yarn eslint --color",
+      fix: "yarn eslint --color --fix",
       src: 'lerna exec --ignore victory-vendor --stream -- yarn nps \\"lint.base src\\"',
       vendor:
         'lerna exec --scope victory-vendor -- yarn nps \\"lint.base scripts\\"',
@@ -55,7 +55,6 @@ module.exports = {
       docs: 'yarn nps "lint.base docs"',
       stories: 'yarn nps "lint.base stories"',
       test: 'yarn nps "lint.base test"',
-      ts: npsUtils.series.nps("build-package-libs", "compile-ts"),
       default: npsUtils.series.nps(
         "lint.config",
         "lint.test",
@@ -71,25 +70,31 @@ module.exports = {
       ci: 'prettier --list-different "./**/*.{js,jsx,json,ts,tsx}"',
       default: "yarn nps format.fix"
     },
+    typecheck: {
+      default: npsUtils.series.nps("typecheck.core"),
+      base: "tsc --noEmit",
+      demo: "tsc -p ./demo/tsconfig.json --noEmit",
+      core: "lerna exec --scope victory-core -- nps typecheck.base"
+    },
     check: {
       ci: npsUtils.series.nps(
         "format.ci",
         "lint",
+        "typecheck",
         "build-package-libs",
         "build-package-dists",
         "test-node",
         "jest",
         "jest.native",
-        "karma.ci",
-        "compile-ts"
+        "karma.ci"
       ),
       cov: npsUtils.series.nps("lint", "test.cov"),
       dev: npsUtils.series.nps("lint", "test.dev"),
       default: npsUtils.series.nps("lint", "test")
     },
     watch: {
-      es: "lerna exec --parallel --ignore victory-native --ignore victory-vendor -- cross-env BABEL_ENV=es babel src --out-dir es --config-file ../../.babelrc.js --copy-files --watch",
-      lib: "lerna exec --parallel --ignore victory-native --ignore victory-vendor -- cross-env BABEL_ENV=commonjs babel src --out-dir lib --config-file ../../.babelrc.js --copy-files --watch",
+      es: "lerna exec --parallel --ignore victory-native --ignore victory-vendor -- cross-env BABEL_ENV=es babel src --out-dir es --config-file ../../.babelrc.js --copy-files --extensions .tsx,.ts,.jsx,.js --watch",
+      lib: "lerna exec --parallel --ignore victory-native --ignore victory-vendor -- cross-env BABEL_ENV=commonjs babel src --out-dir lib --config-file ../../.babelrc.js --copy-files --extensions .tsx,.ts,.jsx,.js --watch",
       core: npsUtils.concurrent.nps("watch.es", "watch.lib"),
       // `victory-vendor` is built 1x up front and not watched.
       default: npsUtils.series.nps("build-package-libs-vendor", "watch.core")
@@ -101,15 +106,14 @@ module.exports = {
       default: npsUtils.concurrent.nps("clean.es", "clean.lib", "clean.dist"),
       all: "lerna exec --parallel -- nps clean"
     },
-    "compile-ts": "tsc --project tsconfig.json --noEmit",
     // Version testing helpers
     "lerna-dry-run":
       "lerna version --no-git-tag-version --no-push --loglevel silly",
     // TODO: organize build scripts once build perf is sorted out
     "babel-es":
-      "cross-env BABEL_ENV=es babel src --out-dir es --config-file ../../.babelrc.js --copy-files",
+      "cross-env BABEL_ENV=es babel src --out-dir es --config-file ../../.babelrc.js --copy-files --extensions .tsx,.ts,.jsx,.js",
     "babel-lib":
-      "cross-env BABEL_ENV=commonjs babel src --out-dir lib --config-file ../../.babelrc.js --copy-files",
+      "cross-env BABEL_ENV=commonjs babel src --out-dir lib --config-file ../../.babelrc.js --copy-files --extensions .tsx,.ts,.jsx,.js",
     "build-es": npsUtils.series.nps("clean.es", "babel-es"),
     "build-lib": npsUtils.series.nps("clean.lib", "babel-lib"),
     "build-libs": npsUtils.series.nps("build-lib", "build-es"),
