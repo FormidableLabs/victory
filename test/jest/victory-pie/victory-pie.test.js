@@ -6,7 +6,7 @@ import { render, screen, fireEvent } from "@testing-library/react";
 import { Style } from "victory-core";
 import { VictoryPie, Slice } from "victory-pie";
 import {
-  isCurcularSector,
+  isCircularSector,
   getSvgCoordinatesAngleFromCartesianYAxis,
   getSliceArcStart,
   parseSvgPathCommands,
@@ -34,7 +34,7 @@ describe("components/victory-pie", () => {
 
       const svgNode = screen.getByTestId("victory-pie");
 
-      expect(svgNode.getAttribute("aria-label")).toEqual("Chart");
+      expect(svgNode).toHaveAttribute("aria-label", "Chart");
     });
 
     it("renders an svg with the correct width and height", () => {
@@ -62,7 +62,7 @@ describe("components/victory-pie", () => {
       const slices = container.querySelectorAll("path");
       slices.forEach((slice) => {
         const sliceCommandString = slice.getAttribute("d");
-        expect(isCurcularSector(sliceCommandString)).toBeTruthy();
+        expect(isCircularSector(sliceCommandString)).toBeTruthy();
       });
     });
 
@@ -397,10 +397,9 @@ describe("components/victory-pie", () => {
 
       const slices = container.querySelectorAll("path");
       slices.forEach((slice, index) => {
-        clickHandler.mockReset();
         fireEvent.click(slice);
 
-        const contextualArg = clickHandler.mock.calls[0][1];
+        const contextualArg = clickHandler.mock.calls[index][1];
         expect(contextualArg.key).toEqual(`pie-data-${index}`);
       });
     });
@@ -418,13 +417,11 @@ describe("components/victory-pie", () => {
         />
       );
 
-      labeledData.forEach((dataPoint) => {
-        clickHandler.mockReset();
+      labeledData.forEach((dataPoint, index) => {
         const label = screen.getByText(dataPoint.x);
         fireEvent.click(label);
 
-        expect(clickHandler).toHaveBeenCalled();
-        const contextualArg = clickHandler.mock.calls[0][1];
+        const contextualArg = clickHandler.mock.calls[index][1];
         expect(contextualArg.slice.data._y).toEqual(dataPoint.y);
       });
     });

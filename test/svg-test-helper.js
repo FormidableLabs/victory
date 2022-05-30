@@ -257,5 +257,5 @@ export const isTriangle = (commandString) =>
  * @param {String} commandString - The command attribute of a `path` element.
  * @returns {Boolean}            - Boolean indicating if the command string produces a circular sector shape.
  */
-export const isCurcularSector = (commandString) =>
+export const isCircularSector = (commandString) =>
   exhibitsShapeSequence(commandString, CIRCULAR_SECTOR_SEQUENCE);
