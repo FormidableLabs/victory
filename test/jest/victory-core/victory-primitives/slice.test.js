@@ -1,6 +1,6 @@
+import { render } from "@testing-library/react";
 import React from "react";
 import { Slice } from "victory-pie";
-import { renderInSvg } from "../../rendering-utils";
 
 describe("victory-primitives/slice", () => {
   describe("rendering", () => {
@@ -14,8 +14,9 @@ describe("victory-primitives/slice", () => {
         return EXPECTED_D_ATTR;
       };
 
-      const { container } = renderInSvg(
-        <Slice pathFunction={pathFunction} slice={slice} />
+      const { container } = render(
+        <Slice pathFunction={pathFunction} slice={slice} />,
+        { wrapper: "svg" }
       );
 
       expect(container.querySelector("path")).toMatchInlineSnapshot(`

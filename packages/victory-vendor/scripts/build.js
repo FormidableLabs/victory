@@ -80,16 +80,14 @@ const main = async () => {
   const EsmBasePath = path.resolve(__dirname, `../es`);
   const CjsBasePath = path.resolve(__dirname, `../lib`);
   const VendorBasePath = path.resolve(__dirname, `../lib-vendor`);
+  const baseDirs = [EsmBasePath, CjsBasePath, VendorBasePath];
+  const cleanGlobs = [].concat(baseDirs, path.resolve(__dirname, "../d3-*"));
+
   log("Cleaning old vendor directories.");
+  await Promise.all(cleanGlobs.map((glob) => rimrafP(glob)));
+  log("Creating empty vendor directories.");
   await Promise.all(
-    [
-      EsmBasePath,
-      CjsBasePath,
-      VendorBasePath,
-      path.resolve(__dirname, "../d3-*")
-    ].map((libPath) =>
-      rimrafP(libPath).then(() => fs.mkdir(libPath, { recursive: true }))
-    )
+    baseDirs.map((libPath) => fs.mkdir(libPath, { recursive: true }))
   );
 
   // Transpile.

@@ -1,7 +1,7 @@
+import { render } from "@testing-library/react";
 import { assign } from "lodash";
 import React from "react";
 import { Point, PointPathHelpers as pathHelpers } from "victory-core";
-import { renderInSvg } from "../../rendering-utils";
 
 describe("victory-primitives/point", () => {
   const baseProps = {
@@ -27,7 +27,7 @@ describe("victory-primitives/point", () => {
         // eslint-disable-next-line max-nested-callbacks
         .mockImplementation(() => `${symbol} symbol`);
       const props = assign({}, baseProps, { symbol });
-      const { container } = renderInSvg(<Point {...props} />);
+      const { container } = render(<Point {...props} />, { wrapper: "svg" });
       const directions = container.querySelector("path").getAttribute("d");
 
       expect(stub).toHaveBeenCalledTimes(1);

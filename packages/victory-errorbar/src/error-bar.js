@@ -1,7 +1,7 @@
 /* eslint-disable max-statements */
 import React from "react";
 import PropTypes from "prop-types";
-import { Helpers, CommonProps, Line } from "victory-core";
+import { Helpers, CommonProps, Line, UserProps } from "victory-core";
 import { assign } from "lodash";
 
 const renderBorder = (props, error, type) => {
@@ -17,7 +17,8 @@ const renderBorder = (props, error, type) => {
     x1: vertical ? error[type] : props.x - props.borderWidth,
     x2: vertical ? error[type] : props.x + props.borderWidth,
     y1: vertical ? props.y - props.borderWidth : error[type],
-    y2: vertical ? props.y + props.borderWidth : error[type]
+    y2: vertical ? props.y + props.borderWidth : error[type],
+    "data-type": `border-${type}`
   });
 };
 
@@ -34,7 +35,8 @@ const renderCross = (props, error, type) => {
     x1: props.x,
     x2: vertical ? props.x : error[type],
     y1: props.y,
-    y2: vertical ? error[type] : props.y
+    y2: vertical ? error[type] : props.y,
+    "data-type": `cross-${type}`
   });
 };
 
@@ -80,7 +82,8 @@ const evaluateProps = (props) => {
 
 const ErrorBar = (props) => {
   props = evaluateProps(props);
-  const { ariaLabel, tabIndex } = props;
+  const userProps = UserProps.getSafeUserProps(props);
+  const { tabIndex, ariaLabel } = props;
   const error = calculateError(props);
   const children = [
     error.right ? renderBorder(props, error, "right") : null,
@@ -94,7 +97,7 @@ const ErrorBar = (props) => {
   ].filter(Boolean);
   return React.cloneElement(
     props.groupComponent,
-    { "aria-label": ariaLabel, tabIndex },
+    { tabIndex, "aria-label": ariaLabel, ...userProps },
     children
   );
 };

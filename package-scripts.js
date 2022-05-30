@@ -110,7 +110,7 @@ module.exports = {
       es: "rimraf es",
       dist: "rimraf dist",
       default: npsUtils.concurrent.nps("clean.es", "clean.lib", "clean.dist"),
-      all: "lerna exec --parallel -- nps clean"
+      all: "lerna exec --parallel --ignore victory-vendor -- nps clean"
     },
     // Version testing helpers
     "lerna-dry-run":
