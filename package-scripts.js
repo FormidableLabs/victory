@@ -79,8 +79,7 @@ module.exports = {
     types: {
       base: "tsc --emitDeclarationOnly --rootDir src",
       lib: "nps types.base -- -- --outDir lib",
-      es: "nps types.base -- -- --outDir es",
-      dist: "nps types.base -- -- --outFile dist/index"
+      es: "nps types.base -- -- --outDir es"
     },
     check: {
       ci: npsUtils.series.nps(
