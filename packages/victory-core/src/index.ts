@@ -37,15 +37,14 @@ export * as Scale from "./victory-util/scale";
 export * as Selection from "./victory-util/selection";
 export * as Style from "./victory-util/style";
 export * as TextSize from "./victory-util/textsize";
-export { default as Timer } from "./victory-util/timer";
 export * as Transitions from "./victory-util/transitions";
 export * as UserProps from "./victory-util/user-props";
 export * as CommonProps from "./victory-util/common-props";
 export * as Wrapper from "./victory-util/wrapper";
 export * as Axis from "./victory-util/axis";
-export { default as TimerContext } from "./victory-util/timer-context";
-export { default as PortalContext } from "./victory-portal/portal-context";
 export * as Hooks from "./victory-util/hooks";
 export * as LineHelpers from "./victory-util/line-helpers";
-// TODO: Fix this default export
+export { default as PortalContext } from "./victory-portal/portal-context";
+export { default as Timer } from "./victory-util/timer";
 export { default as PointPathHelpers } from "./victory-util/point-path-helpers";
+export { default as TimerContext } from "./victory-util/timer-context";

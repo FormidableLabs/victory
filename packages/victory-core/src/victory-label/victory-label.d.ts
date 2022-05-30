@@ -5,7 +5,7 @@ import {
   VerticalAnchorType,
   VictoryLabelStyleObject
 } from "../victory-theme/victory-theme";
-import { StringOrCallback, StringOrNumberOrCallback } from "../index";
+import type { StringOrCallback, StringOrNumberOrCallback } from "../types";
 
 export type TextAnchorType = "start" | "middle" | "end" | "inherit";
 export type OriginType = { x: number; y: number };
@@ -48,7 +48,5 @@ export interface VictoryLabelProps {
   dy?: StringOrNumberOrCallback;
 }
 
-export default class VictoryLabel extends React.Component<
-  VictoryLabelProps,
-  any
-> {}
+const VictoryLabel: React.FC<VictoryLabelProps>;
+export default VictoryLabel;
