@@ -6,6 +6,7 @@ import { without, min, max, property } from "lodash";
 const RECTANGULAR_SEQUENCE = ["M", "A", "L", "A", "L", "A", "L", "A", "z"];
 const CIRCULAR_SEQUENCE = ["M", "m", "a", "a"];
 const TRIANGULAR_SEQUENCE = ["M", "L", "L", "z"];
+const CIRCULAR_SECTOR_SEQUENCE = ["M", "A", "L", "Z"];
 
 export const calculateD3Path = (props, pathType, index = 0) => {
   const { width, height, padding, scale, interpolation, data, domain } = props;
@@ -155,6 +156,74 @@ export const getBarShape = (path) => {
   };
 };
 
+export const getDistanceFromOrigin = (coord) => {
+  return Math.sqrt(Math.pow(coord.x, 2) + Math.pow(coord.y, 2));
+};
+
+/**
+ * Get the angle between 2 arbitrary SVG coordinates,
+ * using 0, 0 as origin
+ *
+ * @param {{x: number, y: number}} coord1 SVG coordinates for point 1
+ * @param {{x: number, y: number}} coord2 SVG coordinates for point 2
+ * @return {number} Degrees, 0 - 360
+ */
+export const getAngleBetweenSVGCoordinates = (coord1, coord2) => {
+  const cartesianY1 = coord1.y * -1;
+  const cartesianY2 = coord2.y * -1;
+
+  const radians =
+    Math.atan2(cartesianY1, coord1.x) - Math.atan2(cartesianY2, coord2.x);
+  const theta = radians * (180 / Math.PI);
+
+  return theta < 0 ? 360 + theta : theta;
+};
+
+/**
+ * Get the initial coordinates of the arc drawn in an SVG pie slice
+ *
+ * @param {String} sliceCommandString The command attribute of a `path` element
+ * @return {{x: number, y: number}}   SVG coordinates
+ */
+export const getSliceArcStart = (sliceCommandString) => {
+  const cmds = parseSvgPathCommands(sliceCommandString);
+
+  return {
+    x: cmds[0].args[0],
+    y: cmds[0].args[1]
+  };
+};
+
+/**
+ * Get the final coordinates of the arc drawn in an SVG pie slice
+ *
+ * @param {String} sliceCommandString The command attribute of a `path` element
+ * @return {{x: number, y: number}}   SVG coordinates
+ */
+export const getSliceArcEnd = (sliceCommandString) => {
+  const cmds = parseSvgPathCommands(sliceCommandString);
+
+  // @see https://developer.mozilla.org/en-US/docs/Web/SVG/Attribute/d#Arcto
+  return {
+    x: cmds[1].args[5],
+    y: cmds[1].args[6]
+  };
+};
+
+/**
+ * Translate SVG coordinates to cartesian system and get clockwise
+ * from positive Y axis
+ *
+ * @param {{x: number, y: number}} coord X & Y values in SVG coordinate system
+ * @return {number}                      Degrees from normal Cartesian positive Y axis axis, counter clockwise
+ */
+export const getSvgCoordinatesAngleFromCartesianYAxis = (coord) => {
+  const cartesianY = coord.y * -1; // Y coordinate in SVG system is inverse of normal Cartesian
+  const theta = Math.atan2(coord.x, cartesianY) * (180 / Math.PI);
+
+  return theta < 0 ? 360 + theta : theta;
+};
+
 /**
  * Determines if a rectangular shape is produced from the provided path command.
  *
@@ -181,3 +250,12 @@ export const isCircle = (commandString) =>
  */
 export const isTriangle = (commandString) =>
   exhibitsShapeSequence(commandString, TRIANGULAR_SEQUENCE);
+
+/**
+ * Determines if a circular sector (slice of pie) shape is produced from the provided path command.
+ *
+ * @param {String} commandString - The command attribute of a `path` element.
+ * @returns {Boolean}            - Boolean indicating if the command string produces a circular sector shape.
+ */
+export const isCircularSector = (commandString) =>
+  exhibitsShapeSequence(commandString, CIRCULAR_SECTOR_SEQUENCE);
