@@ -74,7 +74,8 @@ module.exports = {
       default: npsUtils.series.nps("typecheck.core"),
       base: "tsc --noEmit",
       core: "lerna exec --scope victory-core -- nps typecheck.base",
-      demo: "tsc -p ./demo/tsconfig.json --noEmit"
+      demo: "tsc -p ./demo/tsconfig.json --noEmit",
+      all: "lerna exec -- nps typecheck.base"
     },
     types: {
       base: "tsc --emitDeclarationOnly --rootDir src",
