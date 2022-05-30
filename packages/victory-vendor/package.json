@@ -20,9 +20,7 @@
     "./d3-*": {
       "import": "./es/d3-*.js",
       "default": "./lib/d3-*.js"
-    },
-    "./es/d3-*": "./es/d3-*.js",
-    "./lib/d3-*": "./lib/d3-*.js"
+    }
   },
   "scripts": {
     "version": "yarn run build",
