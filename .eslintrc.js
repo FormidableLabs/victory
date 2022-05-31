@@ -48,7 +48,14 @@ module.exports = {
         "no-use-before-define": "off",
         "@typescript-eslint/no-use-before-define": [
           "error",
-          { typedefs: false }
+          {
+            // Relax this rule; still prevents errors:
+            variables: false,
+            classes: false,
+            functions: false,
+            enums: false,
+            typedefs: false
+          }
         ],
 
         "@typescript-eslint/no-unsafe-argument": "warn",
