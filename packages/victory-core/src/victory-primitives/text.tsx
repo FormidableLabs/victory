@@ -1,9 +1,17 @@
 import React from "react";
 import PropTypes from "prop-types";
+import { VictoryCommonPrimitiveProps } from "../victory-util/types";
 
-const Text = (props) => {
+export interface TextProps extends VictoryCommonPrimitiveProps {
+  children?: React.ReactNode;
+  desc?: string;
+  title?: string;
+}
+
+const Text = (props: TextProps) => {
   const { children, title, desc, ...rest } = props;
   return (
+    // @ts-expect-error FIXME: "id cannot be a number"
     <text {...rest}>
       {title && <title>{title}</title>}
       {desc && <desc>{desc}</desc>}
