@@ -176,6 +176,7 @@ describe("components/victory-scatter", () => {
         />
       );
       const Data = container.querySelectorAll("path");
+      expect(Data).not.toHaveLength(0);
       Data.forEach((node, index) => {
         fireEvent.click(node);
         expect(clickHandler).toHaveBeenCalled();
