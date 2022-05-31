@@ -1,4 +1,3 @@
-/* eslint no-unused-expressions: 0 */
 import * as Helpers from "victory-scatter/lib/helper-methods";
 
 describe("victory-scatter/helper-methods", () => {
@@ -26,13 +25,13 @@ describe("victory-scatter/helper-methods", () => {
     it("returns 1 if the size attribute is less than one", () => {
       const point = { size: -2, ...datum };
       const sizeResult = Helpers.getSize(point, {});
-      expect(Helpers.getBubbleSize).notCalled;
+      expect(Helpers.getBubbleSize).not.toHaveBeenCalled();
       expect(sizeResult).toEqual(1);
     });
 
     it("returns size from props, if no size is set on data", () => {
       const sizeResult = Helpers.getSize(datum, { data, size: 2 });
-      expect(Helpers.getBubbleSize).notCalled;
+      expect(Helpers.getBubbleSize).not.toHaveBeenCalled();
       expect(sizeResult).toEqual(2);
     });
 
