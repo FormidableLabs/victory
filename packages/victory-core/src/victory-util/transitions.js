@@ -1,4 +1,3 @@
-/* eslint-disable func-style */
 import { assign, defaults, identity, keys } from "lodash";
 import React from "react";
 

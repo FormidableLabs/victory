@@ -15,6 +15,7 @@ module.exports = {
     "plugin:react-hooks/recommended"
   ],
   rules: {
+    "func-style": "off",
     "react/sort-comp": "off",
     "import/no-unresolved": [2, { ignore: ["victory*"] }],
     "max-statements": 0,
