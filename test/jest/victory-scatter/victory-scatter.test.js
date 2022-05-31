@@ -142,8 +142,17 @@ describe("components/victory-scatter", () => {
   });
 
   describe("event handling", () => {
+    let clickHandler;
+
+    beforeEach(() => {
+      clickHandler = jest.fn();
+    });
+
+    afterEach(() => {
+      clickHandler.mockClear();
+    });
+
     it("attaches an event to the parent svg", () => {
-      const clickHandler = jest.fn();
       const { container } = render(
         <VictoryScatter
           events={[
@@ -164,7 +173,6 @@ describe("components/victory-scatter", () => {
     });
 
     it("attaches an event to data", () => {
-      const clickHandler = jest.fn();
       const { container } = render(
         <VictoryScatter
           events={[
@@ -185,7 +193,6 @@ describe("components/victory-scatter", () => {
     });
 
     it("attaches an event to a label", () => {
-      const clickHandler = jest.fn();
       const data = [
         { eventKey: 0, _x: 0, _y: 0, x: 0, y: 0, label: "0" },
         { eventKey: 1, _x: 1, _y: 1, x: 1, y: 1, label: "1" },
