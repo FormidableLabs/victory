@@ -48,3 +48,5 @@ export { default as PortalContext } from "./victory-portal/portal-context";
 export { default as Timer } from "./victory-util/timer";
 export { default as PointPathHelpers } from "./victory-util/point-path-helpers";
 export { default as TimerContext } from "./victory-util/timer-context";
+export * from "./victory-util/types";
+export * from "./victory-primitives/types";
