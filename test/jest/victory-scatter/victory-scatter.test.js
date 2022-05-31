@@ -38,7 +38,7 @@ describe("components/victory-scatter", () => {
       const { container } = render(<VictoryScatter />);
       const svg = container.querySelector("svg");
       const viewBoxValue = `0 0 ${450} ${300}`;
-      expect(svg.getAttribute("viewBox")).toEqual(viewBoxValue);
+      expect(svg).toHaveAttribute("viewBox", viewBoxValue);
     });
 
     it("renders 51 points", () => {
