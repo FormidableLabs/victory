@@ -118,7 +118,7 @@ class App extends React.Component<any, BrushLineDemoState> {
 
     return this.state.datasets
       .map((dataset) => (isActive(dataset) ? dataset.name : null))
-      .filter(Boolean) as string[];
+      .filter(Boolean);
   }
 
   onDomainChange(domain: DomainPropType, props: any) {
