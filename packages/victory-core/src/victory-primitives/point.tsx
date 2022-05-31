@@ -12,7 +12,9 @@ export interface PointProps extends VictoryCommonPrimitiveProps {
   datum?: any;
   getPath?: (x: number, y: number, size: number) => string;
   pathComponent?: React.ReactElement;
+  // eslint-disable-next-line @typescript-eslint/ban-types
   size?: number | Function;
+  // eslint-disable-next-line @typescript-eslint/ban-types
   symbol?: ScatterSymbolType | Function;
   x?: number;
   y?: number;
