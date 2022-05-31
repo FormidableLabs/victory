@@ -5,7 +5,11 @@ import {
   PaddingProps,
   VictoryThemeDefinition
 } from "../victory-theme/victory-theme";
-import { StringOrCallback, StringOrNumberOrCallback } from "../index";
+import { StringOrCallback, StringOrNumberOrCallback } from "../types";
+import {
+  AnimationEasing,
+  AnimationStyle
+} from "../victory-animation/victory-animation";
 
 export type StringOrNumberOrList = string | number | (string | number)[];
 
@@ -105,6 +109,7 @@ export type DataGetterPropType =
   | string
   | string[]
   | { (data: any): number | string | string[] }
+  // eslint-disable-next-line @typescript-eslint/ban-types
   | Function;
 
 export type InterpolationPropType =
@@ -169,6 +174,7 @@ export interface VictoryCommonThemeProps {
         x?: ScalePropType | D3Scale;
         y?: ScalePropType | D3Scale;
       };
+  // eslint-disable-next-line @typescript-eslint/ban-types
   sharedEvents?: { events: any[]; getEventState: Function };
   singleQuadrantDomainPadding?: boolean | { x?: boolean; y?: boolean };
   standalone?: boolean;
@@ -185,9 +191,11 @@ export interface VictoryCommonPrimitiveProps {
   className?: string;
   clipPath?: string;
   data?: any;
+  // eslint-disable-next-line @typescript-eslint/ban-types
   desc?: string | Function;
   disableInlineStyles?: boolean;
   events?: object;
+  // eslint-disable-next-line @typescript-eslint/ban-types
   id?: number | string | Function;
   index?: number | string;
   origin?: OriginType;

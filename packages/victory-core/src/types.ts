@@ -5,6 +5,8 @@
  * Note that additional properties here like `scale`, `x`, `y`, etc are resolved
  * values of properties from the VictoryXXXProps for each component.
  */
+import { D3Scale } from "./victory-util/types";
+
 export interface CallbackArgs {
   active?: boolean;
   data?: any;
@@ -32,9 +34,10 @@ export type StringOrNumberOrCallback =
   | VictoryStringOrNumberCallback;
 export type StringOrCallback = string | VictoryStringCallback;
 
-export type SliceNumberOrCallback<T, P = null> =
-  | number
-  | ((props: Omit<T, P>) => number);
+export type SliceNumberOrCallback<
+  T,
+  P extends string | number | symbol = never
+> = number | ((props: Omit<T, P>) => number);
 
 export type CoordinatesPropType = {
   x: number;
