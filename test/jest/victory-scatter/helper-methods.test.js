@@ -19,7 +19,7 @@ describe("victory-scatter/helper-methods", () => {
     it("returns a size attribute from data", () => {
       const point = { size: 3, ...datum };
       const sizeResult = Helpers.getSize(point, {});
-      expect(Helpers.getBubbleSize).notCalled;
+      expect(Helpers.getBubbleSize).not.toHaveBeenCalled();
       expect(sizeResult).toEqual(3);
     });
 
