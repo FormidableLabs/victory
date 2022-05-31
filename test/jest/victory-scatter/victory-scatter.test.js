@@ -100,7 +100,7 @@ describe("components/victory-scatter", () => {
         <VictoryScatter data={data} x={null} y={null} />
       );
       const points = container.querySelectorAll("path");
-      expect(points.length).toEqual(30);
+      expect(points).toHaveLength(30);
     });
 
     it("renders points in the correct positions", () => {
