@@ -2,7 +2,7 @@
 import { assign, defaults, isEmpty } from "lodash";
 import PropTypes from "prop-types";
 import React from "react";
-import VictoryPortal from "../victory-portal/victory-portal";
+import { VictoryPortal } from "../victory-portal/victory-portal";
 import Rect from "../victory-primitives/rect";
 import Text from "../victory-primitives/text";
 import TSpan from "../victory-primitives/tspan";
