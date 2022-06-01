@@ -168,7 +168,7 @@ export default class VictoryTransition extends React.Component<
   private pickDomainProps(props: VictoryTransitionProps) {
     const parentState = props.animate?.parentState;
     if (parentState && parentState.nodesWillExit) {
-      return this.continous || parentState.continuous
+      return this.continuous || parentState.continuous
         ? parentState.nextProps || this.state.nextProps || props
         : props;
     }
