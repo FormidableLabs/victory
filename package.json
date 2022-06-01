@@ -118,8 +118,6 @@
     "react-test-renderer": "^16.13.1",
     "rimraf": "^3.0.2",
     "seedrandom": "^2.4.3",
-    "sinon": "^11.1.2",
-    "sinon-chai": "^3.7.0",
     "storybook-addon-performance": "^0.10.0",
     "ts-jest": "^28.0.3",
     "ts-loader": "^9.3.0",
