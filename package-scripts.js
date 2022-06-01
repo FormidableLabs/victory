@@ -20,7 +20,7 @@ module.exports = {
       watch: "cross-env BABEL_ENV=commonjs jest --watch --config=jest-config.js"
     },
     "test-node": {
-      default: "mocha ./test/node"
+      default: "jest ./test/node"
     },
     test: {
       watch: npsUtils.concurrent.nps("watch", "jest.watch"),
