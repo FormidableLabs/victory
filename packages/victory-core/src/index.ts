@@ -5,7 +5,7 @@ export { default as VictoryAnimation } from "./victory-animation/victory-animati
 export { default as VictoryContainer } from "./victory-container/victory-container";
 export { default as VictoryLabel } from "./victory-label/victory-label";
 export { default as VictoryTransition } from "./victory-transition/victory-transition";
-export { default as VictoryClipContainer } from "./victory-clip-container/victory-clip-container";
+export * from "./victory-clip-container/victory-clip-container";
 export * from "./victory-theme/victory-theme";
 export { default as VictoryPortal } from "./victory-portal/victory-portal";
 export { default as Portal } from "./victory-portal/portal";

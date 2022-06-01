@@ -8,7 +8,30 @@ import ClipPath from "../victory-primitives/clip-path";
 import Circle from "../victory-primitives/circle";
 import Rect from "../victory-primitives/rect";
 
-export default class VictoryClipContainer extends React.Component {
+import { BlockProps } from "../victory-theme/victory-theme";
+import { OriginType } from "../victory-label/victory-label";
+
+export interface VictoryClipContainerProps {
+  "aria-label"?: string;
+  children?: React.ReactElement | React.ReactElement[];
+  circleComponent?: React.ReactElement;
+  className?: string;
+  clipHeight?: number;
+  clipId?: number | string;
+  clipPadding?: BlockProps;
+  clipPathComponent?: React.ReactElement;
+  clipWidth?: number;
+  events?: React.DOMAttributes<any>;
+  groupComponent?: React.ReactElement;
+  origin?: OriginType;
+  polar?: boolean;
+  radius?: number;
+  rectComponent?: React.ReactElement;
+  translateX?: number;
+  translateY?: number;
+}
+
+export class VictoryClipContainer extends React.Component<VictoryClipContainerProps> {
   static displayName = "VictoryClipContainer";
   static role = "container";
   static propTypes = {
@@ -50,8 +73,9 @@ export default class VictoryClipContainer extends React.Component {
     clipPathComponent: <ClipPath />,
     groupComponent: <g />
   };
+  private clipId: VictoryClipContainerProps["clipId"];
 
-  constructor(props) {
+  constructor(props: VictoryClipContainerProps) {
     super(props);
     this.clipId =
       !isObject(props) || props.clipId === undefined
