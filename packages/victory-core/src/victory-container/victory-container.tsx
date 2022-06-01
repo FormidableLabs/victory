@@ -2,13 +2,48 @@ import React from "react";
 import PropTypes from "prop-types";
 import * as CustomPropTypes from "../victory-util/prop-types";
 import { assign, defaults, uniqueId, isObject, isFunction } from "lodash";
-import Portal from "../victory-portal/portal";
+import { Portal } from "../victory-portal/portal";
 import PortalContext from "../victory-portal/portal-context";
 import TimerContext from "../victory-util/timer-context";
 import * as Helpers from "../victory-util/helpers";
 import * as UserProps from "../victory-util/user-props";
+import { OriginType } from "../victory-label/victory-label";
+import { D3Scale } from "../victory-util/types";
+import { VictoryThemeDefinition } from "../victory-theme/victory-theme-definition";
 
-export default class VictoryContainer extends React.Component {
+export interface VictoryContainerProps {
+  "aria-describedby"?: string;
+  "aria-labelledby"?: string;
+  children?: React.ReactElement | React.ReactElement[];
+  className?: string;
+  containerId?: number | string;
+  containerRef?: React.Ref<HTMLElement>;
+  desc?: string;
+  events?: React.DOMAttributes<any>;
+  height?: number;
+  name?: string;
+  origin?: OriginType;
+  ouiaId?: number | string;
+  ouiaSafe?: boolean;
+  ouiaType?: string;
+  polar?: boolean;
+  portalComponent?: React.ReactElement;
+  portalZIndex?: number;
+  preserveAspectRatio?: string;
+  responsive?: boolean;
+  role?: string;
+  scale?: {
+    x?: D3Scale;
+    y?: D3Scale;
+  };
+  style?: React.CSSProperties;
+  tabIndex?: number;
+  theme?: VictoryThemeDefinition;
+  title?: string;
+  width?: number;
+}
+
+export default class VictoryContainer extends React.Component<VictoryContainerProps> {
   static displayName = "VictoryContainer";
   static role = "container";
   static propTypes = {
@@ -54,34 +89,39 @@ export default class VictoryContainer extends React.Component {
   };
 
   static contextType = TimerContext;
+  private containerId: VictoryContainerProps["containerId"];
+  // @ts-expect-error Ref will be initialized on mount
+  private portalRef: Portal;
+  // @ts-expect-error Ref will be initialized on mount
+  private containerRef: HTMLElement;
+  private shouldHandleWheel: boolean;
 
-  constructor(props) {
+  constructor(props: VictoryContainerProps) {
     super(props);
     this.containerId =
       !isObject(props) || props.containerId === undefined
         ? uniqueId("victory-container-")
         : props.containerId;
-    this.savePortalRef = (portal) => {
-      this.portalRef = portal;
-      return portal;
-    };
-    this.portalUpdate = (key, el) => this.portalRef.portalUpdate(key, el);
-    this.portalRegister = () => this.portalRef.portalRegister();
-    this.portalDeregister = (key) => this.portalRef.portalDeregister(key);
 
-    this.saveContainerRef =
-      props && isFunction(props.containerRef)
-        ? props.containerRef
-        : (container) => {
-            this.containerRef = container;
-            return container;
-          };
-
-    this.shouldHandleWheel = props && props.events && props.events.onWheel;
-    if (this.shouldHandleWheel) {
-      this.handleWheel = (e) => e.preventDefault();
-    }
+    this.shouldHandleWheel = !!(props && props.events && props.events.onWheel);
   }
+  savePortalRef = (portal) => {
+    this.portalRef = portal;
+    return portal;
+  };
+  portalUpdate = (key, el) => this.portalRef.portalUpdate(key, el);
+  portalRegister = () => this.portalRef.portalRegister();
+  portalDeregister = (key) => this.portalRef.portalDeregister(key);
+
+  saveContainerRef = (container: HTMLElement) => {
+    if (isFunction(this.props.containerRef)) {
+      this.props.containerRef(container);
+    }
+    this.containerRef = container;
+    return container;
+  };
+
+  handleWheel = (e) => e.preventDefault();
 
   componentDidMount() {
     if (this.shouldHandleWheel && this.containerRef) {
@@ -131,11 +171,15 @@ export default class VictoryContainer extends React.Component {
       ? { width: "100%", height: "100%" }
       : { width, height };
     const divStyle = assign(
-      { pointerEvents: "none", touchAction: "none", position: "relative" },
+      {
+        pointerEvents: "none",
+        touchAction: "none",
+        position: "relative"
+      } as const,
       dimensions
     );
     const portalDivStyle = assign(
-      { zIndex: portalZIndex, position: "absolute", top: 0, left: 0 },
+      { zIndex: portalZIndex, position: "absolute", top: 0, left: 0 } as const,
       dimensions
     );
     const svgStyle = assign({ pointerEvents: "all" }, dimensions);
