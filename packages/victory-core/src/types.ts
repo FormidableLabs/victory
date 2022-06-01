@@ -5,7 +5,7 @@
  * Note that additional properties here like `scale`, `x`, `y`, etc are resolved
  * values of properties from the VictoryXXXProps for each component.
  */
-import { D3Scale } from "./victory-util/types";
+import type { D3Scale } from "./victory-util/types";
 
 export interface CallbackArgs {
   active?: boolean;

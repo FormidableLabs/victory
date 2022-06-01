@@ -5,6 +5,18 @@ import * as Helpers from "../victory-util/helpers";
 import * as CommonProps from "../victory-util/common-props";
 import Rect from "./rect";
 import Circle from "./circle";
+import { VictoryCommonPrimitiveProps } from "../victory-util/types";
+
+export interface BackgroundProps extends VictoryCommonPrimitiveProps {
+  circleComponent?: React.ReactElement;
+  height?: number;
+  rectComponent?: React.ReactElement;
+  rx?: number;
+  ry?: number;
+  width?: number;
+  x?: number;
+  y?: number;
+}
 
 const evaluateProps = (props) => {
   /**
@@ -16,11 +28,11 @@ const evaluateProps = (props) => {
   return assign({}, props, { id });
 };
 
-const Background = (props) => {
+const Background = (props: BackgroundProps) => {
   props = evaluateProps(props);
 
   return props.polar
-    ? React.cloneElement(props.circleComponent, {
+    ? React.cloneElement(props.circleComponent!, {
         ...props.events,
         style: props.style,
         role: props.role,
@@ -30,7 +42,7 @@ const Background = (props) => {
         r: props.height,
         className: props.className
       })
-    : React.cloneElement(props.rectComponent, {
+    : React.cloneElement(props.rectComponent!, {
         ...props.events,
         style: props.style,
         role: props.role,

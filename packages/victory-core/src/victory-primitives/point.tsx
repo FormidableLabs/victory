@@ -1,28 +1,32 @@
 import { assign } from "lodash";
 import PropTypes from "prop-types";
 import React from "react";
-import * as CommonProps from "../victory-util/common-props";
 import * as Helpers from "../victory-util/helpers";
-import pathHelpers from "../victory-util/point-path-helpers";
+import * as pathHelpers from "../victory-util/point-path-helpers";
+import * as CommonProps from "../victory-util/common-props";
 import * as UserProps from "../victory-util/user-props";
 import Path from "./path";
+import { VictoryCommonPrimitiveProps } from "../victory-util/types";
+import { ScatterSymbolType } from "./types";
+
+export interface PointProps extends VictoryCommonPrimitiveProps {
+  datum?: any;
+  getPath?: (x: number, y: number, size: number) => string;
+  pathComponent?: React.ReactElement;
+  // eslint-disable-next-line @typescript-eslint/ban-types
+  size?: number | Function;
+  // eslint-disable-next-line @typescript-eslint/ban-types
+  symbol?: ScatterSymbolType | Function;
+  x?: number;
+  y?: number;
+}
 
 const getPath = (props) => {
   const { x, y, size, symbol } = props;
   if (props.getPath) {
     return props.getPath(x, y, size);
   }
-  const pathFunctions = {
-    circle: pathHelpers.circle,
-    square: pathHelpers.square,
-    diamond: pathHelpers.diamond,
-    triangleDown: pathHelpers.triangleDown,
-    triangleUp: pathHelpers.triangleUp,
-    plus: pathHelpers.plus,
-    minus: pathHelpers.minus,
-    star: pathHelpers.star,
-    cross: pathHelpers.cross
-  };
+  const pathFunctions = pathHelpers;
   const symbolFunction =
     typeof pathFunctions[symbol] === "function"
       ? pathFunctions[symbol]
@@ -60,11 +64,11 @@ const evaluateProps = (props) => {
   });
 };
 
-const Point = (props) => {
+const Point = (props: PointProps) => {
   props = evaluateProps(props);
   const userProps = UserProps.getSafeUserProps(props);
 
-  return React.cloneElement(props.pathComponent, {
+  return React.cloneElement(props.pathComponent!, {
     ...props.events,
     "aria-label": props.ariaLabel,
     d: getPath(props),

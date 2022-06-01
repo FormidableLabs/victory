@@ -13,6 +13,55 @@ import * as CustomPropTypes from "../victory-util/prop-types";
 import * as Style from "../victory-util/style";
 import * as TextSize from "../victory-util/textsize";
 import * as UserProps from "../victory-util/user-props";
+import { StringOrCallback, StringOrNumberOrCallback } from "../types";
+import {
+  NumberOrCallback,
+  PaddingProps,
+  VerticalAnchorType,
+  VictoryLabelStyleObject
+} from "../victory-theme/victory-theme";
+
+export type TextAnchorType = "start" | "middle" | "end" | "inherit";
+export type OriginType = { x: number; y: number };
+export type LabelOrientationType = "parallel" | "perpendicular" | "vertical";
+
+export interface VictoryLabelProps {
+  angle?: StringOrNumberOrCallback;
+  ariaLabel?: StringOrCallback;
+  backgroundComponent?: React.ReactElement;
+  backgroundStyle?: VictoryLabelStyleObject | VictoryLabelStyleObject[];
+  backgroundPadding?: PaddingProps | PaddingProps[];
+  capHeight?: StringOrNumberOrCallback;
+  children?: StringOrNumberOrCallback;
+  className?: string;
+  datum?: object;
+  data?: any[];
+  desc?: string;
+  direction?: string;
+  disableInlineStyles?: boolean;
+  events?: React.DOMAttributes<any>;
+  groupComponent?: React.ReactElement;
+  id?: StringOrNumberOrCallback;
+  inline?: boolean;
+  labelPlacement?: LabelOrientationType;
+  lineHeight?: StringOrNumberOrCallback | (string | number)[];
+  origin?: OriginType;
+  polar?: boolean;
+  renderInPortal?: boolean;
+  style?: VictoryLabelStyleObject | VictoryLabelStyleObject[];
+  tabIndex?: NumberOrCallback;
+  text?: string[] | StringOrNumberOrCallback;
+  textComponent?: React.ReactElement;
+  textAnchor?: TextAnchorType | { (): TextAnchorType };
+  title?: string;
+  transform?: string | object | (() => string | object);
+  tspanComponent?: React.ReactElement;
+  verticalAnchor?: VerticalAnchorType | { (): VerticalAnchorType };
+  x?: number;
+  y?: number;
+  dx?: StringOrNumberOrCallback;
+  dy?: StringOrNumberOrCallback;
+}
 
 const defaultStyles = {
   fill: "#252525",
@@ -48,7 +97,7 @@ const getFontSize = (style) => {
   return defaultStyles.fontSize;
 };
 
-const getSingleValue = (prop, index = 0) => {
+const getSingleValue = <T,>(prop: T | T[], index = 0): T => {
   return Array.isArray(prop) ? prop[index] || prop[0] : prop;
 };
 
@@ -433,9 +482,9 @@ const evaluateProps = (props) => {
   });
 };
 
-const getCalculatedProps = (props) => {
+const getCalculatedProps = <T extends VictoryLabelProps>(props: T) => {
   const ariaLabel = Helpers.evaluateProp(props.ariaLabel, props);
-  const style = getSingleValue(props.style);
+  const style = getSingleValue(props.style!);
   const lineHeight = getLineHeight(props);
   const direction = props.direction
     ? Helpers.evaluateProp(props.direction, props)
@@ -524,7 +573,10 @@ const renderLabel = (calculatedProps, tspanValues) => {
   return React.cloneElement(textComponent, textProps, tspans);
 };
 
-const VictoryLabel = (props) => {
+const VictoryLabel: {
+  role: string;
+  defaultStyles: typeof defaultStyles;
+} & React.FC<VictoryLabelProps> = (props) => {
   props = evaluateProps(props);
 
   if (props.text === null || props.text === undefined) {
@@ -535,8 +587,8 @@ const VictoryLabel = (props) => {
   const { text, style, capHeight, backgroundPadding, lineHeight } =
     calculatedProps;
 
-  const tspanValues = text.map((line, i) => {
-    const currentStyle = getSingleValue(style, i);
+  const tspanValues = (text as string[]).map((line, i) => {
+    const currentStyle = getSingleValue(style!, i);
     const capHeightPx = TextSize.convertLengthToPixels(
       `${capHeight}em`,
       currentStyle.fontSize
@@ -562,7 +614,7 @@ const VictoryLabel = (props) => {
     );
     const children = [backgroundElement, label];
     const backgroundWithLabel = React.cloneElement(
-      props.groupComponent,
+      props.groupComponent!,
       {},
       children
     );
@@ -603,6 +655,7 @@ VictoryLabel.propTypes = {
   className: PropTypes.string,
   data: PropTypes.array,
   datum: PropTypes.any,
+  // @ts-expect-error "Function is not assignable to string"
   desc: PropTypes.oneOfType([PropTypes.string, PropTypes.func]),
   direction: PropTypes.oneOf(["rtl", "ltr", "inherit"]),
   dx: PropTypes.oneOfType([PropTypes.number, PropTypes.string, PropTypes.func]),
@@ -619,6 +672,7 @@ VictoryLabel.propTypes = {
     PropTypes.func,
     PropTypes.array
   ]),
+  // @ts-expect-error "x is required in origin"
   origin: PropTypes.shape({
     x: CustomPropTypes.nonNegative,
     y: CustomPropTypes.nonNegative
@@ -637,6 +691,7 @@ VictoryLabel.propTypes = {
     PropTypes.func,
     PropTypes.array
   ]),
+  // @ts-expect-error Function is not assignable to string"
   textAnchor: PropTypes.oneOfType([
     PropTypes.oneOf(["start", "middle", "end", "inherit"]),
     PropTypes.func
@@ -649,11 +704,14 @@ VictoryLabel.propTypes = {
     PropTypes.func
   ]),
   tspanComponent: PropTypes.element,
+  // @ts-expect-error Function is not assignable to string"
   verticalAnchor: PropTypes.oneOfType([
     PropTypes.oneOf(["start", "middle", "end"]),
     PropTypes.func
   ]),
+  // @ts-expect-error Number is not assignable to string
   x: PropTypes.oneOfType([PropTypes.number, PropTypes.string]),
+  // @ts-expect-error Number is not assignable to string
   y: PropTypes.oneOfType([PropTypes.number, PropTypes.string])
 };
 

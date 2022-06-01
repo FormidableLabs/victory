@@ -4,6 +4,21 @@ import PropTypes from "prop-types";
 import * as Helpers from "../victory-util/helpers";
 import * as CommonProps from "../victory-util/common-props";
 import Line from "./line";
+import { VictoryCommonPrimitiveProps } from "../victory-util/types";
+
+export type WhiskerAxes = {
+  x1?: number;
+  x2?: number;
+  y1?: number;
+  y2?: number;
+};
+
+export interface WhiskerProps extends VictoryCommonPrimitiveProps {
+  groupComponent?: React.ReactElement;
+  lineComponent?: React.ReactElement;
+  majorWhisker?: WhiskerAxes;
+  minorWhisker?: WhiskerAxes;
+}
 
 const evaluateProps = (props) => {
   /**
@@ -23,7 +38,7 @@ const evaluateProps = (props) => {
   return assign({}, props, { ariaLabel, desc, id, style, tabIndex });
 };
 
-const Whisker = (props) => {
+const Whisker = (props: WhiskerProps) => {
   props = evaluateProps(props);
   const {
     ariaLabel,
@@ -53,9 +68,9 @@ const Whisker = (props) => {
     shapeRendering
   };
 
-  return React.cloneElement(groupComponent, {}, [
+  return React.cloneElement(groupComponent!, {}, [
     React.cloneElement(
-      lineComponent,
+      lineComponent!,
       assign(
         { key: "major-whisker", "aria-label": ariaLabel },
         baseProps,
@@ -63,7 +78,7 @@ const Whisker = (props) => {
       )
     ),
     React.cloneElement(
-      lineComponent,
+      lineComponent!,
       assign(
         { key: "minor-whisker", "aria-label": ariaLabel },
         baseProps,

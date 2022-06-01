@@ -5,6 +5,18 @@ import * as Helpers from "../victory-util/helpers";
 import { assign } from "lodash";
 import * as CommonProps from "../victory-util/common-props";
 import Path from "./path";
+import { VictoryCommonPrimitiveProps } from "../victory-util/types";
+
+export interface ArcProps extends VictoryCommonPrimitiveProps {
+  closedPath?: boolean;
+  cx?: number;
+  cy?: number;
+  datum?: any;
+  endAngle?: number;
+  pathComponent?: React.ReactElement;
+  r?: number;
+  startAngle?: number;
+}
 
 const getArcPath = (props) => {
   const { cx, cy, r, startAngle, endAngle, closedPath } = props;
@@ -48,10 +60,10 @@ const evaluateProps = (props) => {
   return assign({}, props, { ariaLabel, desc, id, style, tabIndex });
 };
 
-const Arc = (props) => {
+const Arc = (props: ArcProps) => {
   props = evaluateProps(props);
 
-  return React.cloneElement(props.pathComponent, {
+  return React.cloneElement(props.pathComponent!, {
     ...props.events,
     "aria-label": props.ariaLabel,
     d: getArcPath(props),

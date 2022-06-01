@@ -3,7 +3,17 @@ import PropTypes from "prop-types";
 import * as Helpers from "../victory-util/helpers";
 import { assign } from "lodash";
 import * as CommonProps from "../victory-util/common-props";
-import Rect from "./rect";
+import Line from "./line";
+import { VictoryCommonPrimitiveProps } from "../victory-util/types";
+
+export interface LineSegmentProps extends VictoryCommonPrimitiveProps {
+  datum?: any;
+  lineComponent?: React.ReactElement;
+  x1?: number;
+  x2?: number;
+  y1?: number;
+  y2?: number;
+}
 
 const evaluateProps = (props) => {
   /**
@@ -18,7 +28,7 @@ const evaluateProps = (props) => {
   const desc = Helpers.evaluateProp(props.desc, props);
   const id = Helpers.evaluateProp(props.id, props);
   const style = Helpers.evaluateStyle(
-    assign({ fill: "none" }, props.style),
+    assign({ stroke: "black" }, props.style),
     props
   );
   const tabIndex = Helpers.evaluateProp(props.tabIndex, props);
@@ -26,40 +36,41 @@ const evaluateProps = (props) => {
   return assign({}, props, { ariaLabel, desc, id, style, tabIndex });
 };
 
-const Border = (props) => {
+const LineSegment = (props: LineSegmentProps) => {
   props = evaluateProps(props);
 
-  return React.cloneElement(props.rectComponent, {
+  return React.cloneElement(props.lineComponent!, {
     ...props.events,
     "aria-label": props.ariaLabel,
     style: props.style,
     desc: props.desc,
     tabIndex: props.tabIndex,
-    transform: props.transform,
     className: props.className,
     role: props.role,
     shapeRendering: props.shapeRendering,
-    x: props.x,
-    y: props.y,
-    width: props.width,
-    height: props.height,
+    x1: props.x1,
+    x2: props.x2,
+    y1: props.y1,
+    y2: props.y2,
+    transform: props.transform,
     clipPath: props.clipPath
   });
 };
 
-Border.propTypes = {
+LineSegment.propTypes = {
   ...CommonProps.primitiveProps,
-  height: PropTypes.number,
-  rectComponent: PropTypes.element,
-  width: PropTypes.number,
-  x: PropTypes.number,
-  y: PropTypes.number
+  datum: PropTypes.any,
+  lineComponent: PropTypes.element,
+  x1: PropTypes.number,
+  x2: PropTypes.number,
+  y1: PropTypes.number,
+  y2: PropTypes.number
 };
 
-Border.defaultProps = {
-  rectComponent: <Rect />,
+LineSegment.defaultProps = {
+  lineComponent: <Line />,
   role: "presentation",
   shapeRendering: "auto"
 };
 
-export default Border;
+export default LineSegment;
