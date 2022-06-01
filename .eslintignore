@@ -8,3 +8,4 @@ public
 artifacts
 tmp
 demo/rn
+**/*.d.ts

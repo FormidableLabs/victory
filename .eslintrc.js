@@ -34,7 +34,7 @@ module.exports = {
       excludedFiles: ["*.d.ts"],
       parser: "@typescript-eslint/parser",
       parserOptions: {
-        project: ["./tsconfig.json"],
+        project: ["./tsconfig.base.json"],
         tsconfigRootDir: __dirname
       },
       plugins: ["@typescript-eslint"],

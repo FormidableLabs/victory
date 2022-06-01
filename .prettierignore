@@ -12,5 +12,6 @@ yarn-error.log*
 .cache
 lerna.json
 tsconfig.json
+tsconfig.*.json
 storybook-static
 public
