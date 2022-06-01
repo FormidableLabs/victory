@@ -1,9 +1,10 @@
-import React from "react";
-import PropTypes from "prop-types";
 import { assign } from "lodash";
+import PropTypes from "prop-types";
+import React from "react";
 import * as Helpers from "../victory-util/helpers";
 import * as pathHelpers from "../victory-util/point-path-helpers";
 import * as CommonProps from "../victory-util/common-props";
+import * as UserProps from "../victory-util/user-props";
 import Path from "./path";
 import { VictoryCommonPrimitiveProps } from "../victory-util/types";
 import { ScatterSymbolType } from "./types";
@@ -65,6 +66,7 @@ const evaluateProps = (props) => {
 
 const Point = (props: PointProps) => {
   props = evaluateProps(props);
+  const userProps = UserProps.getSafeUserProps(props);
 
   return React.cloneElement(props.pathComponent!, {
     ...props.events,
@@ -77,7 +79,8 @@ const Point = (props: PointProps) => {
     shapeRendering: props.shapeRendering,
     className: props.className,
     transform: props.transform,
-    clipPath: props.clipPath
+    clipPath: props.clipPath,
+    ...userProps
   });
 };
 

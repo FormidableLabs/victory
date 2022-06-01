@@ -2,7 +2,7 @@ module.exports = {
   preset: "ts-jest",
   testEnvironment: "jsdom",
   moduleFileExtensions: ["ts", "tsx", "js", "jsx", "json", "node"],
-  testMatch: ["**/jest/**/?(*.)+(spec|test).[jt]s?(x)"],
+  testMatch: ["**/jest/**/?(*.)+(test).[jt]s?(x)"],
   testPathIgnorePatterns: ["victory-native"],
   transform: {
     "^.+/test/.+\\.(ts|tsx|js|jsx)$": [
