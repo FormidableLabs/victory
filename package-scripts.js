@@ -22,16 +22,15 @@ module.exports = {
     },
     jest: {
       native: "jest --config=jest-native-config.js",
-      default: "cross-env BABEL_ENV=commonjs jest --config=jest-config.js"
+      default: "cross-env BABEL_ENV=commonjs jest --config=jest-config.js",
+      watch: "cross-env BABEL_ENV=commonjs jest --watch --config=jest-config.js"
     },
     "test-node": {
       default: "mocha ./test/node"
     },
     test: {
-      cov: npsUtils.series.nps("build-package-libs", "karma.cov"),
-      dev: "karma start ./config/karma/karma.conf.dev.js",
-      watch: npsUtils.concurrent.nps("watch", "karma.watch"),
-      default: npsUtils.series.nps("build-package-libs", "karma")
+      watch: npsUtils.concurrent.nps("watch", "jest.watch"),
+      default: npsUtils.series.nps("build-package-libs", "jest.default")
     },
     storybook: {
       server: "start-storybook -p 6006",
@@ -91,8 +90,7 @@ module.exports = {
         "build-package-dists",
         "test-node",
         "jest",
-        "jest.native",
-        "karma.ci"
+        "jest.native"
       ),
       cov: npsUtils.series.nps("lint", "test.cov"),
       dev: npsUtils.series.nps("lint", "test.dev"),
