@@ -1,6 +1,6 @@
 // This rule doesn't play well with namespaced exports
 /* eslint-disable import/export */
-export { default as VictoryAccessibleGroup } from "./victory-accessible-group/victory-accessible-group";
+export * from "./victory-accessible-group/victory-accessible-group";
 export { default as VictoryAnimation } from "./victory-animation/victory-animation";
 export { default as VictoryContainer } from "./victory-container/victory-container";
 export { default as VictoryLabel } from "./victory-label/victory-label";
