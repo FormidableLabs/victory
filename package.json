@@ -88,6 +88,7 @@
     "eslint": "^7.32.0",
     "eslint-config-formidable": "^2.0.1",
     "eslint-config-prettier": "^6.0.0",
+    "eslint-plugin-eslint-comments": "^3.2.0",
     "eslint-plugin-filenames": "^1.2.0",
     "eslint-plugin-import": "^2.20.1",
     "eslint-plugin-jest": "^25.2.2",
