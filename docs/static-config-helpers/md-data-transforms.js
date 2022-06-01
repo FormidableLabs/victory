@@ -1,5 +1,4 @@
 /*eslint no-magic-numbers: ["error", { "ignore": [0, 1, 2, 3] }]*/
-/*eslint-disable func-style*/
 const _ = require("lodash");
 const getMdFiles = require("./get-md-files");
 

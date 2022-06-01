@@ -1,4 +1,4 @@
-/* eslint-disable func-style,no-use-before-define */
+/* eslint-disable no-use-before-define */
 import {
   assign,
   isEmpty,

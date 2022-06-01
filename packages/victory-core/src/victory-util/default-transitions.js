@@ -1,4 +1,3 @@
-/* eslint-disable func-style */
 export function continuousTransitions() {
   return {
     onLoad: {
