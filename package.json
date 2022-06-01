@@ -94,8 +94,6 @@
     "eslint-plugin-react-hooks": "^4.2.0",
     "glob": "7.1.2",
     "immutable": "^3.8.2",
-    "istanbul": "^0.4.5",
-    "istanbul-instrumenter-loader": "^3.0.0",
     "jest": "^28.1.0",
     "jest-environment-jsdom": "^28.1.0",
     "json-loader": "^0.5.4",

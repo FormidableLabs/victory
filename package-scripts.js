@@ -17,14 +17,17 @@ module.exports = {
     jest: {
       native: "jest --config=jest-native-config.js",
       default: "cross-env BABEL_ENV=commonjs jest --config=jest-config.js",
-      watch: "cross-env BABEL_ENV=commonjs jest --watch --config=jest-config.js"
+      watch:
+        "cross-env BABEL_ENV=commonjs jest --watch --config=jest-config.js",
+      cov: "cross-env BABEL_ENV=commonjs jest --coverage --config=jest-config.js"
     },
     "test-node": {
       default: "jest ./test/node"
     },
     test: {
+      cov: npsUtils.series.nps("build-package-libs", "jest.default"),
       watch: npsUtils.concurrent.nps("watch", "jest.watch"),
-      default: npsUtils.series.nps("build-package-libs", "jest.default")
+      default: npsUtils.series.nps("build-package-libs", "jest.cov")
     },
     storybook: {
       server: "start-storybook -p 6006",
