@@ -1,4 +1,3 @@
-/* eslint-disable func-style */
 const fs = require("fs");
 const klaw = require("klaw");
 const path = require("path");

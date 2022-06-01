@@ -1,4 +1,3 @@
-/* eslint-disable func-style */
 export const IMMUTABLE_ITERABLE = "@@__IMMUTABLE_ITERABLE__@@";
 export const IMMUTABLE_RECORD = "@@__IMMUTABLE_RECORD__@@";
 export const IMMUTABLE_LIST = "@@__IMMUTABLE_LIST__@@";

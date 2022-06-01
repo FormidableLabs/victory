@@ -19,7 +19,7 @@ const defaultProps = {
 const getCoordinatesForLineWithType = (node, type) => {
   const line = node.querySelector(`line[data-type="${type}"]`);
   return ["x1", "x2", "y1", "y2"].map((attr) =>
-    parseFloat(line.getAttribute(attr), 10)
+    parseFloat(line.getAttribute(attr))
   );
 };
 

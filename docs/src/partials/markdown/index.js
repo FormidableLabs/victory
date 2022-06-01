@@ -1,6 +1,4 @@
 /* eslint-disable react/no-multi-comp */
-/* eslint-disable func-style */
-/* eslint-disable react/no-multi-comp */
 /* eslint-disable no-magic-numbers */
 import React from "react";
 import ReactDOM from "react-dom";

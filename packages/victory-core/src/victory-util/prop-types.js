@@ -1,4 +1,3 @@
-/* eslint-disable func-style */
 /*eslint no-magic-numbers: ["error", { "ignore": [-1, 0, 1, 2] }]*/
 import { isFunction, find, isRegExp } from "lodash";
 import * as Log from "./log";
