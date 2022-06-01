@@ -1,10 +1,9 @@
 import * as React from "react";
 import {
-  CallbackArgs,
-  StringOrNumberOrCallback,
   VictoryCommonThemeProps,
   VictoryDatableProps
 } from "../index";
+import { CallbackArgs, StringOrNumberOrCallback } from "../types";
 
 export type BlockProps = {
   top?: number;
@@ -263,11 +262,3 @@ export interface VictoryThemeDefinition {
   } & VictoryCommonThemeProps &
     VictoryDatableProps;
 }
-
-export interface VictoryThemeInterface {
-  grayscale: VictoryThemeDefinition;
-  material: VictoryThemeDefinition;
-}
-
-const VictoryTheme: VictoryThemeInterface;
-export default VictoryTheme;
