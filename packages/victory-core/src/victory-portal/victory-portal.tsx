@@ -34,8 +34,6 @@ export class VictoryPortal extends React.Component<VictoryPortalProps> {
   // @ts-expect-error Initialized on mount
   private portalKey: number;
 
-  declare context: React.ContextType<typeof PortalContext>;
-
   componentDidMount() {
     if (!this.checkedContext) {
       if (typeof this.context?.portalUpdate !== "function") {
