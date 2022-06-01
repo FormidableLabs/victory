@@ -21,7 +21,6 @@ import {
   VictoryVoronoi
 } from "victory-native";
 import { render } from "@testing-library/react-native";
-import { Log } from "victory-core";
 
 const components = [
   { component: VictoryArea, name: "VictoryArea" },
@@ -48,8 +47,14 @@ const components = [
 describe("Default render", () => {
   beforeEach(() => {
     // This suppresses the warning `renderInPortal` is not supported outside of `VictoryContainer`.
-    jest.spyOn(Log, "warn").mockImplementation(() => {});
+    jest.spyOn(console, "warn").mockImplementation((message) => {
+      if (message.includes("renderInPortal")) {
+        return;
+      }
+      return console.warn(message);
+    });
   });
+
   components.forEach((C) => {
     it(`should work for ${C.name}`, () => {
       const { container } = render(React.createElement(C.component));
