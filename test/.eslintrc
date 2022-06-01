@@ -5,7 +5,8 @@
     "react/sort-comp": "off",
     "no-magic-numbers": 0,
     "max-statements": 0,
-    "import/no-unresolved": 0
+    "import/no-unresolved": 0,
+    "no-undef": "off"
   },
   "globals": { "expect": false }
 }

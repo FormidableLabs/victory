@@ -51,7 +51,8 @@ describe("Default render", () => {
       if (message.includes("renderInPortal")) {
         return;
       }
-      return console.warn(message);
+      /* eslint-disable no-console */
+      console.warn(message);
     });
   });
 
