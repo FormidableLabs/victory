@@ -14,12 +14,6 @@ module.exports = {
       hot: "webpack serve --config ./config/webpack/demo/webpack.config.hot.js --inline --hot --content-base demo/js",
       test: "webpack serve --config ./config/webpack/webpack.config.test.js"
     },
-    karma: {
-      ci: "karma start --browsers ChromeHeadlessCustom,Firefox ./config/karma/karma.conf.coverage.js",
-      cov: "karma start ./config/karma/karma.conf.coverage.js",
-      watch: "karma start --auto-watch ./config/karma/karma.conf.js",
-      default: "karma start ./config/karma/karma.conf.js"
-    },
     jest: {
       native: "jest --config=jest-native-config.js",
       default: "cross-env BABEL_ENV=commonjs jest --config=jest-config.js",
