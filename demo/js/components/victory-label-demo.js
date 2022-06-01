@@ -262,7 +262,6 @@ export default class App extends React.Component {
                 "as an array."
               ]}
               style={[{ fontSize: 20, fill: "green" }, { fontSize: 30 }]}
-              // eslint-disable-next-line no-magic-numbers
               lineHeight={[2, 2, 3, 1]}
               verticalAnchor="middle"
             />

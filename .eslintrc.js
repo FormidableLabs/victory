@@ -12,9 +12,11 @@ module.exports = {
   extends: [
     "formidable/configurations/es6-react",
     "prettier",
-    "plugin:react-hooks/recommended"
+    "plugin:react-hooks/recommended",
+    "plugin:eslint-comments/recommended"
   ],
   rules: {
+    "eslint-comments/disable-enable-pair": "off",
     "func-style": "off",
     "react/sort-comp": "off",
     "import/no-unresolved": [2, { ignore: ["victory*"] }],

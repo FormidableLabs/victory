@@ -128,7 +128,6 @@ const checkBehaviorName = (behavior, behaviors) => {
 const makeCreateContainerFunction =
   (mixinMap, Container) =>
   (behaviorA, behaviorB, ...invalid) => {
-    // eslint-disable-line
     const behaviors = keys(mixinMap);
 
     checkBehaviorName(behaviorA, behaviors);
