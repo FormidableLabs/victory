@@ -1,11 +1,11 @@
-import React, { Component } from "react";
+import React from "react";
 import PropTypes from "prop-types";
 import VictoryAnimation from "../victory-animation/victory-animation";
 import * as Collection from "../victory-util/collection";
 import * as Helpers from "../victory-util/helpers";
 import TimerContext from "../victory-util/timer-context";
 import * as Transitions from "../victory-util/transitions";
-import { defaults, isFunction, isObject, pick } from "lodash";
+import { defaults, isFunction, pick } from "lodash";
 import isEqual from "react-fast-compare";
 import Timer from "../victory-util/timer";
 
@@ -18,7 +18,7 @@ type VictoryTransitionChild = React.ReactElement<
   },
   // Type:
   {
-    new (props: any): Component<any, any>;
+    new (props: any): React.Component<any, any>;
     continuous?: boolean;
   }
 >;
