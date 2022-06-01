@@ -29,7 +29,7 @@ interface VictoryTransitionProps {
 }
 
 interface VictoryTransitionState {
-  oldProps?: VictoryTransitionProps;
+  oldProps?: VictoryTransitionProps | null;
   nextProps?: VictoryTransitionProps;
   nodesShouldLoad?: boolean;
   nodesDoneLoad?: boolean;
@@ -95,7 +95,7 @@ export default class VictoryTransition extends React.Component<
       return {};
     } else if (animate.parentState) {
       const state = animate.parentState;
-      const oldProps = state.nodesWillExit ? props : undefined;
+      const oldProps = state.nodesWillExit ? props : null;
       return { oldProps, nextProps };
     } else {
       const oldChildren = React.Children.toArray(props.children);
@@ -111,7 +111,7 @@ export default class VictoryTransition extends React.Component<
         nodesWillEnter,
         childrenTransitions,
         nodesShouldEnter,
-        oldProps: nodesWillExit ? props : undefined,
+        oldProps: nodesWillExit ? props : null,
         nextProps
       };
     }
