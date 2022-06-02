@@ -86,8 +86,8 @@ module.exports = {
       ci: npsUtils.series.nps(
         "format.ci",
         "lint",
-        "typecheck",
         "build-package-libs",
+        "typecheck",
         "build-package-dists",
         "test-node",
         "jest",
