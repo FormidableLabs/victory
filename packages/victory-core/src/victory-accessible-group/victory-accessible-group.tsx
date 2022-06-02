@@ -4,7 +4,7 @@ import PropTypes from "prop-types";
 export interface VictoryAccessibleGroupProps {
   desc?: string;
   "aria-describedby"?: string;
-  "aria-label": string;
+  "aria-label"?: string;
   children?: React.ReactElement | React.ReactElement[];
   className?: string;
   tabIndex?: number;

@@ -8,7 +8,7 @@ export interface TextProps extends VictoryCommonPrimitiveProps {
   title?: string;
 }
 
-const Text = (props: TextProps) => {
+export const Text = (props: TextProps) => {
   const { children, title, desc, ...rest } = props;
   return (
     // @ts-expect-error FIXME: "id cannot be a number"
@@ -25,5 +25,3 @@ Text.propTypes = {
   desc: PropTypes.string,
   title: PropTypes.string
 };
-
-export default Text;

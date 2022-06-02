@@ -4,9 +4,9 @@ import * as CustomPropTypes from "../victory-util/prop-types";
 import * as Helpers from "../victory-util/helpers";
 import * as UserProps from "../victory-util/user-props";
 import { assign, defaults, isObject, uniqueId } from "lodash";
-import ClipPath from "../victory-primitives/clip-path";
-import Circle from "../victory-primitives/circle";
-import Rect from "../victory-primitives/rect";
+import { ClipPath } from "../victory-primitives/clip-path";
+import { Circle } from "../victory-primitives/circle";
+import { Rect } from "../victory-primitives/rect";
 
 import { BlockProps } from "../victory-theme/victory-theme";
 import { OriginType } from "../victory-label/victory-label";

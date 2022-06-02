@@ -1,7 +1,7 @@
 import React from "react";
 import { VictoryPrimitiveShapeProps } from "./types";
 
-const Rect = (props: VictoryPrimitiveShapeProps) => {
+export const Rect = (props: VictoryPrimitiveShapeProps) => {
   // eslint-disable-next-line react/prop-types
   const { desc, ...rest } = props;
   return desc ? (
@@ -14,4 +14,3 @@ const Rect = (props: VictoryPrimitiveShapeProps) => {
     <rect vectorEffect="non-scaling-stroke" {...rest} />
   );
 };
-export default Rect;

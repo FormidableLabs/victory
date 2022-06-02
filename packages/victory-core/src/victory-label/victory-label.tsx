@@ -3,9 +3,9 @@ import { assign, defaults, isEmpty } from "lodash";
 import PropTypes from "prop-types";
 import React from "react";
 import { VictoryPortal } from "../victory-portal/victory-portal";
-import Rect from "../victory-primitives/rect";
-import Text from "../victory-primitives/text";
-import TSpan from "../victory-primitives/tspan";
+import { Rect } from "../victory-primitives/rect";
+import { Text } from "../victory-primitives/text";
+import { TSpan } from "../victory-primitives/tspan";
 import * as Helpers from "../victory-util/helpers";
 import * as LabelHelpers from "../victory-util/label-helpers";
 import * as Log from "../victory-util/log";
@@ -573,7 +573,7 @@ const renderLabel = (calculatedProps, tspanValues) => {
   return React.cloneElement(textComponent, textProps, tspans);
 };
 
-const VictoryLabel: {
+export const VictoryLabel: {
   role: string;
   defaultStyles: typeof defaultStyles;
 } & React.FC<VictoryLabelProps> = (props) => {
@@ -725,5 +725,3 @@ VictoryLabel.defaultProps = {
   capHeight: 0.71, // Magic number from d3.
   lineHeight: 1
 };
-
-export default VictoryLabel;

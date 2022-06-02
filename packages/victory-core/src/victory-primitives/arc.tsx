@@ -4,7 +4,7 @@ import PropTypes from "prop-types";
 import * as Helpers from "../victory-util/helpers";
 import { assign } from "lodash";
 import * as CommonProps from "../victory-util/common-props";
-import Path from "./path";
+import { Path } from "./path";
 import { VictoryCommonPrimitiveProps } from "../victory-util/types";
 
 export interface ArcProps extends VictoryCommonPrimitiveProps {
@@ -60,7 +60,7 @@ const evaluateProps = (props) => {
   return assign({}, props, { ariaLabel, desc, id, style, tabIndex });
 };
 
-const Arc = (props: ArcProps) => {
+export const Arc = (props: ArcProps) => {
   props = evaluateProps(props);
 
   return React.cloneElement(props.pathComponent!, {
@@ -95,5 +95,3 @@ Arc.defaultProps = {
   role: "presentation",
   shapeRendering: "auto"
 };
-
-export default Arc;

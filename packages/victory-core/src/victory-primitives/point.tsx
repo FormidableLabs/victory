@@ -5,7 +5,7 @@ import * as Helpers from "../victory-util/helpers";
 import * as pathHelpers from "../victory-util/point-path-helpers";
 import * as CommonProps from "../victory-util/common-props";
 import * as UserProps from "../victory-util/user-props";
-import Path from "./path";
+import { Path } from "./path";
 import { VictoryCommonPrimitiveProps } from "../victory-util/types";
 import { ScatterSymbolType } from "./types";
 
@@ -64,7 +64,7 @@ const evaluateProps = (props) => {
   });
 };
 
-const Point = (props: PointProps) => {
+export const Point = (props: PointProps) => {
   props = evaluateProps(props);
   const userProps = UserProps.getSafeUserProps(props);
 
@@ -113,5 +113,3 @@ Point.defaultProps = {
   role: "presentation",
   shapeRendering: "auto"
 };
-
-export default Point;

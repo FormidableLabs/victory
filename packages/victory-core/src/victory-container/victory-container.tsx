@@ -3,7 +3,7 @@ import PropTypes from "prop-types";
 import * as CustomPropTypes from "../victory-util/prop-types";
 import { assign, defaults, uniqueId, isObject, isFunction } from "lodash";
 import { Portal } from "../victory-portal/portal";
-import PortalContext from "../victory-portal/portal-context";
+import { PortalContext } from "../victory-portal/portal-context";
 import TimerContext from "../victory-util/timer-context";
 import * as Helpers from "../victory-util/helpers";
 import * as UserProps from "../victory-util/user-props";
@@ -43,7 +43,7 @@ export interface VictoryContainerProps {
   width?: number;
 }
 
-export default class VictoryContainer extends React.Component<VictoryContainerProps> {
+export class VictoryContainer extends React.Component<VictoryContainerProps> {
   static displayName = "VictoryContainer";
   static role = "container";
   static propTypes = {

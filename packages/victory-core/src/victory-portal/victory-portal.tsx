@@ -3,7 +3,7 @@ import PropTypes from "prop-types";
 import { defaults } from "lodash";
 import * as Log from "../victory-util/log";
 import * as Helpers from "../victory-util/helpers";
-import PortalContext from "./portal-context";
+import { PortalContext } from "./portal-context";
 
 export interface VictoryPortalProps {
   children?: React.ReactElement;
