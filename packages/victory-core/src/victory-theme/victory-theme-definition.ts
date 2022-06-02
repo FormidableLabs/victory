@@ -1,8 +1,5 @@
 import * as React from "react";
-import {
-  VictoryCommonThemeProps,
-  VictoryDatableProps
-} from "../index";
+import { VictoryCommonThemeProps, VictoryDatableProps } from "../index";
 import { CallbackArgs, StringOrNumberOrCallback } from "../types";
 
 export type BlockProps = {
