@@ -22,7 +22,8 @@
     "clsx": "^1.1.1",
     "prism-react-renderer": "^1.3.3",
     "react": "^17.0.2",
-    "react-dom": "^17.0.2"
+    "react-dom": "^17.0.2",
+    "victory": "^36.4.1"
   },
   "devDependencies": {
     "@docusaurus/module-type-aliases": "2.0.0-beta.21",
