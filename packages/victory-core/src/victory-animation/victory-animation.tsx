@@ -5,8 +5,81 @@ import * as d3Ease from "victory-vendor/d3-ease";
 import { victoryInterpolator } from "./util";
 import TimerContext from "../victory-util/timer-context";
 import isEqual from "react-fast-compare";
+import type Timer from "../victory-util/timer";
 
-export default class VictoryAnimation extends React.Component {
+/**
+ * Single animation object to interpolate
+ */
+export type AnimationStyle = { [key: string]: string | number };
+/**
+ * Animation styles to interpolate
+ */
+
+export type AnimationData = AnimationStyle | AnimationStyle[];
+export type AnimationEasing =
+  | "back"
+  | "backIn"
+  | "backOut"
+  | "backInOut"
+  | "bounce"
+  | "bounceIn"
+  | "bounceOut"
+  | "bounceInOut"
+  | "circle"
+  | "circleIn"
+  | "circleOut"
+  | "circleInOut"
+  | "linear"
+  | "linearIn"
+  | "linearOut"
+  | "linearInOut"
+  | "cubic"
+  | "cubicIn"
+  | "cubicOut"
+  | "cubicInOut"
+  | "elastic"
+  | "elasticIn"
+  | "elasticOut"
+  | "elasticInOut"
+  | "exp"
+  | "expIn"
+  | "expOut"
+  | "expInOut"
+  | "poly"
+  | "polyIn"
+  | "polyOut"
+  | "polyInOut"
+  | "quad"
+  | "quadIn"
+  | "quadOut"
+  | "quadInOut"
+  | "sin"
+  | "sinIn"
+  | "sinOut"
+  | "sinInOut";
+
+export interface VictoryAnimationProps {
+  children: (style: AnimationStyle, info: AnimationInfo) => React.ReactNode;
+  duration?: number;
+  easing?: AnimationEasing;
+  delay?: number;
+  onEnd?: () => void;
+  data: AnimationData;
+}
+export interface VictoryAnimationState {
+  data: AnimationStyle;
+  animationInfo: AnimationInfo;
+}
+export interface AnimationInfo {
+  progress: number;
+  animating: boolean;
+  terminating?: boolean;
+}
+
+export default class VictoryAnimation extends React.Component<
+  VictoryAnimationProps,
+  VictoryAnimationState
+> {
   static displayName = "VictoryAnimation";
 
   static propTypes = {
@@ -67,6 +140,11 @@ export default class VictoryAnimation extends React.Component {
   };
 
   static contextType = TimerContext;
+  private interpolator: null | ((value: number) => AnimationStyle);
+  private queue: AnimationStyle[];
+  private ease: any;
+  private timer: Timer;
+  private loopID?: number;
 
   constructor(props, context) {
     super(props, context);
@@ -84,11 +162,6 @@ export default class VictoryAnimation extends React.Component {
     this.queue = Array.isArray(this.props.data) ? this.props.data.slice(1) : [];
     /* build easing function */
     this.ease = d3Ease[this.toNewName(this.props.easing)];
-    /*
-      There is no autobinding of this in ES6 classes
-      so we bind functionToBeRunEachFrame to current instance of victory animation class
-    */
-    this.functionToBeRunEachFrame = this.functionToBeRunEachFrame.bind(this);
     this.timer = this.context.animationTimer;
   }
 
@@ -163,13 +236,13 @@ export default class VictoryAnimation extends React.Component {
         setTimeout(() => {
           this.loopID = this.timer.subscribe(
             this.functionToBeRunEachFrame,
-            this.props.duration
+            this.props.duration!
           );
         }, this.props.delay);
       } else {
         this.loopID = this.timer.subscribe(
           this.functionToBeRunEachFrame,
-          this.props.duration
+          this.props.duration!
         );
       }
     } else if (this.props.onEnd) {
@@ -177,7 +250,7 @@ export default class VictoryAnimation extends React.Component {
     }
   }
   /* every frame we... */
-  functionToBeRunEachFrame(elapsed, duration) {
+  functionToBeRunEachFrame = (elapsed, duration) => {
     /*
       step can generate imprecise values, sometimes greater than 1
       if this happens set the state to 1 and return, cancelling the timer
@@ -186,7 +259,7 @@ export default class VictoryAnimation extends React.Component {
     const step = duration ? elapsed / duration : 1;
     if (step >= 1) {
       this.setState({
-        data: this.interpolator(1),
+        data: this.interpolator!(1),
         animationInfo: {
           progress: 1,
           animating: false,
@@ -206,13 +279,13 @@ export default class VictoryAnimation extends React.Component {
       interpolator, which is cached for performance whenever props are received
     */
     this.setState({
-      data: this.interpolator(this.ease(step)),
+      data: this.interpolator!(this.ease(step)),
       animationInfo: {
         progress: step,
         animating: step < 1
       }
     });
-  }
+  };
 
   render() {
     return this.props.children(this.state.data, this.state.animationInfo);

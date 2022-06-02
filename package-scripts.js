@@ -82,8 +82,8 @@ module.exports = {
       ci: npsUtils.series.nps(
         "format.ci",
         "lint",
-        "typecheck",
         "build-package-libs",
+        "typecheck",
         "build-package-dists",
         "test-node",
         "jest",
@@ -122,8 +122,8 @@ module.exports = {
     "build-package-libs-vendor":
       "lerna exec --scope victory-vendor -- yarn build",
     "build-package-libs": npsUtils.series.nps(
-      "build-package-libs-core",
-      "build-package-libs-vendor"
+      "build-package-libs-vendor",
+      "build-package-libs-core"
     ),
     "build-dist-dev":
       "webpack --bail --config ../../config/webpack/webpack.config.dev.js",

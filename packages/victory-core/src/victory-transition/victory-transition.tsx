@@ -5,10 +5,44 @@ import * as Collection from "../victory-util/collection";
 import * as Helpers from "../victory-util/helpers";
 import TimerContext from "../victory-util/timer-context";
 import * as Transitions from "../victory-util/transitions";
-import { defaults, isFunction, pick, isObject } from "lodash";
+import { defaults, isFunction, pick } from "lodash";
 import isEqual from "react-fast-compare";
+import Timer from "../victory-util/timer";
 
-export default class VictoryTransition extends React.Component {
+type VictoryTransitionChild = React.ReactElement<
+  // Props:
+  {
+    polar?: boolean;
+    domain?: number[] | { x: number[]; y: number[] };
+    groupComponent?: React.ReactElement;
+  },
+  // Type:
+  {
+    new (props: any): React.Component<any, any>;
+    continuous?: boolean;
+  }
+>;
+interface VictoryTransitionProps {
+  animate?: boolean | any;
+  animationWhitelist?: string[];
+  children: VictoryTransitionChild;
+}
+
+interface VictoryTransitionState {
+  oldProps?: VictoryTransitionProps | null;
+  nextProps?: VictoryTransitionProps;
+  nodesShouldLoad?: boolean;
+  nodesDoneLoad?: boolean;
+  nodesWillExit?: boolean;
+  nodesWillEnter?: boolean;
+  nodesShouldEnter?: boolean;
+  childrenTransitions?: unknown;
+}
+
+export default class VictoryTransition extends React.Component<
+  VictoryTransitionProps,
+  VictoryTransitionState
+> {
   static displayName = "VictoryTransition";
 
   static propTypes = {
@@ -18,6 +52,9 @@ export default class VictoryTransition extends React.Component {
   };
 
   static contextType = TimerContext;
+  private continuous: boolean;
+  private timer: Timer;
+  private transitionProps: any;
 
   constructor(props, context) {
     super(props, context);
@@ -28,7 +65,6 @@ export default class VictoryTransition extends React.Component {
     const child = this.props.children;
     const polar = child.props.polar;
     this.continuous = !polar && child.type && child.type.continuous === true;
-    this.getTransitionState = this.getTransitionState.bind(this);
     this.timer = this.context.transitionTimer;
   }
 
@@ -36,7 +72,7 @@ export default class VictoryTransition extends React.Component {
     this.setState({ nodesShouldLoad: true }); //eslint-disable-line react/no-did-mount-set-state
   }
 
-  shouldComponentUpdate(nextProps) {
+  shouldComponentUpdate(nextProps: VictoryTransitionProps) {
     if (!isEqual(this.props, nextProps)) {
       this.timer.bypassAnimation();
       this.setState(this.getTransitionState(this.props, nextProps), () =>
@@ -50,7 +86,10 @@ export default class VictoryTransition extends React.Component {
     this.timer.stop();
   }
 
-  getTransitionState(props, nextProps) {
+  private getTransitionState(
+    props: VictoryTransitionProps,
+    nextProps: VictoryTransitionProps
+  ): VictoryTransitionState {
     const { animate } = props;
     if (!animate) {
       return {};
@@ -78,7 +117,10 @@ export default class VictoryTransition extends React.Component {
     }
   }
 
-  getDomainFromChildren(props, axis) {
+  private getDomainFromChildren(
+    props: VictoryTransitionProps,
+    axis: "x" | "y"
+  ) {
     const getChildDomains = (children) => {
       return children.reduce((memo, child) => {
         if (child.type && isFunction(child.type.getDomain)) {
@@ -94,8 +136,10 @@ export default class VictoryTransition extends React.Component {
       }, []);
     };
 
-    const child = React.Children.toArray(props.children)[0];
-    const childProps = child.props || {};
+    const child = React.Children.toArray(
+      props.children
+    )[0] as VictoryTransitionChild;
+    const childProps: any = child.props || {};
     const domain = Array.isArray(childProps.domain)
       ? childProps.domain
       : childProps.domain && childProps.domain[axis];
@@ -121,10 +165,10 @@ export default class VictoryTransition extends React.Component {
       : this.props;
   }
 
-  pickDomainProps(props) {
-    const parentState = isObject(props.animate) && props.animate.parentState;
+  private pickDomainProps(props: VictoryTransitionProps) {
+    const parentState = props.animate?.parentState;
     if (parentState && parentState.nodesWillExit) {
-      return this.continous || parentState.continuous
+      return this.continuous || parentState.continuous
         ? parentState.nextProps || this.state.nextProps || props
         : props;
     }
@@ -146,13 +190,14 @@ export default class VictoryTransition extends React.Component {
 
   render() {
     const props = this.pickProps();
-    const getTransitionProps =
-      isObject(this.props.animate) && this.props.animate.getTransitions
-        ? this.props.animate.getTransitions
-        : Transitions.getTransitionPropsFactory(props, this.state, (newState) =>
-            this.setState(newState)
-          );
-    const child = React.Children.toArray(props.children)[0];
+    const getTransitionProps = this.props.animate?.getTransitions
+      ? this.props.animate.getTransitions
+      : Transitions.getTransitionPropsFactory(props, this.state, (newState) =>
+          this.setState(newState)
+        );
+    const child = React.Children.toArray(
+      props.children
+    )[0] as VictoryTransitionChild;
     const transitionProps = getTransitionProps(child);
     this.transitionProps = transitionProps;
     const domain = {
