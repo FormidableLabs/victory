@@ -1,4 +1,3 @@
-/* eslint-disable func-style */
 /* eslint-disable no-use-before-define */
 import React from "react";
 import { defaults, isFunction, property, pick, assign, keys } from "lodash";

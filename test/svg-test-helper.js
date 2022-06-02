@@ -109,7 +109,7 @@ export const parseSvgPathCommands = (commandStr) => {
 };
 
 export const getPathCommandsFromContainer = (container) => {
-  const commandStr = container.querySelector("path").getAttribute("d");
+  const commandStr = container.getAttribute("d");
   return parseSvgPathCommands(commandStr);
 };
 
@@ -259,3 +259,43 @@ export const isTriangle = (commandString) =>
  */
 export const isCircularSector = (commandString) =>
   exhibitsShapeSequence(commandString, CIRCULAR_SECTOR_SEQUENCE);
+export const getSvgPointCoordinates = (container) => {
+  const commands = getPathCommandsFromContainer(container);
+  return commands[0].args;
+};
+
+/**
+ * Convert the raw svg coordinates to scaled Cartesian coordinates.
+ *
+ * @param {Array} coords - The x and y coordinates, respectively.
+ * @param {Object} svgDimensions - The width, height, and padding of the svg.
+ * @param {Number} svgDimensions.width - The width of the svg.
+ * @param {Number} svgDimensions.height - The height of the svg.
+ * @param {Number} svgDimensions.padding - The space between the edge of the
+ *   svg and the chart area.
+ * @param {Object} domain - The x and y domains.
+ * @param {Array} domain.x - The lower and upper x bounds, respectively.
+ * @param {Array} domain.y - The lower and upper y bounds, respectively.
+ * @returns {Array} The Cartesian x and y coordinates, respectively.
+ */
+export const convertSvgCoordinatesToCartesian = (
+  coords,
+  svgDimensions,
+  domain
+) => {
+  const { width, height, padding } = svgDimensions;
+
+  const cartesianX = coords[0] - padding;
+  const cartesianY = height - coords[1] - padding;
+
+  const chartWidth = width - padding * 2;
+  const chartHeight = height - padding * 2;
+
+  const scaledX = (cartesianX / chartWidth) * (domain.x[1] - domain.x[0]);
+  const scaledY = (cartesianY / chartHeight) * (domain.y[1] - domain.y[0]);
+
+  const shiftedX = scaledX + domain.x[0];
+  const shiftedY = scaledY + domain.y[0];
+
+  return [shiftedX, shiftedY];
+};

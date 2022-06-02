@@ -1,4 +1,3 @@
-/* eslint-disable func-style */
 /* eslint-disable no-use-before-define */
 
 function isNonEmptyArray(collection) {

@@ -1,49 +1,38 @@
-/* global sinon */
-
 import React from "react";
 import { shallow } from "enzyme";
 import { assign } from "lodash";
 import { Point, Path, PointPathHelpers as pathHelpers } from "victory-core";
 
 describe("victory-primitives/point", () => {
-  let sandbox;
-  let baseProps;
+  const baseProps = {
+    x: 5,
+    y: 10,
+    size: 1
+  };
 
-  beforeEach(() => {
-    sandbox = sinon.createSandbox();
-    baseProps = {
-      x: 5,
-      y: 10,
-      size: 1
-    };
-  });
-
-  afterEach(() => {
-    sandbox.restore();
-  });
-
-  it("should render the appropriate symbol", () => {
-    [
-      "circle",
-      "square",
-      "diamond",
-      "triangleDown",
-      "triangleUp",
-      "plus",
-      "minus",
-      "star",
-      "cross"
-    ].forEach((symbol) => {
-      const stub = sandbox
-        .stub(pathHelpers, symbol)
-        .returns(`${symbol} symbol`);
+  [
+    "circle",
+    "square",
+    "diamond",
+    "triangleDown",
+    "triangleUp",
+    "plus",
+    "minus",
+    "star",
+    "cross"
+  ].forEach((symbol) => {
+    it(`should render the appropriate symbol "${symbol}"`, () => {
       const props = assign({}, baseProps, { symbol });
       const wrapper = shallow(<Point {...props} />);
       const directions = wrapper.find(Path).prop("d");
 
-      expect(stub.callCount).to.eql(1);
-      expect(stub.getCall(0).args).to.eql([5, 10, 1]);
-      expect(directions).to.eql(`${symbol} symbol`);
+      const expected = pathHelpers[symbol](
+        baseProps.x,
+        baseProps.y,
+        baseProps.size
+      );
+
+      expect(directions).to.eql(expected);
     });
   });
 });

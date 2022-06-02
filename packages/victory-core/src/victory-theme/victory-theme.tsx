@@ -1,3 +1,5 @@
-export * from "./material";
-export * from "./grayscale";
-export * from './victory-theme-definition';
+import { grayscale } from "./grayscale";
+import { material } from "./material";
+export * from "./victory-theme-definition";
+
+export const VictoryTheme = { grayscale, material };
