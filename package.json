@@ -70,6 +70,7 @@
     "@testing-library/react-native": "^9.1.0",
     "@types/jest": "^28.1.0",
     "@types/lodash": "^4.14.149",
+    "@types/react": "^18.0.10",
     "@types/react-dom": "^18.0.5",
     "@typescript-eslint/eslint-plugin": "^5.26.0",
     "@typescript-eslint/parser": "^5.26.0",
