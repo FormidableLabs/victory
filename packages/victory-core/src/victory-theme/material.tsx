@@ -1,34 +1,41 @@
 import { assign } from "lodash";
+import { VictoryThemeDefinition } from "./victory-theme-definition";
 
 // *
 // * Colors
 // *
+const yellow200 = "#FFF59D";
+const deepOrange600 = "#F4511E";
+const lime300 = "#DCE775";
+const lightGreen500 = "#8BC34A";
+const teal700 = "#00796B";
+const cyan900 = "#006064";
 const colors = [
-  "#252525",
-  "#525252",
-  "#737373",
-  "#969696",
-  "#bdbdbd",
-  "#d9d9d9",
-  "#f0f0f0"
+  deepOrange600,
+  yellow200,
+  lime300,
+  lightGreen500,
+  teal700,
+  cyan900
 ];
-
-const charcoal = "#252525";
-const grey = "#969696";
+const blueGrey50 = "#ECEFF1";
+const blueGrey300 = "#90A4AE";
+const blueGrey700 = "#455A64";
+const grey900 = "#212121";
 // *
 // * Typography
 // *
-const sansSerif = "'Gill Sans', 'Seravek', 'Trebuchet MS', sans-serif";
+const sansSerif = "'Helvetica Neue', 'Helvetica', sans-serif";
 const letterSpacing = "normal";
-const fontSize = 14;
+const fontSize = 12;
 // *
 // * Layout
 // *
+const padding = 8;
 const baseProps = {
-  width: 450,
-  height: 300,
-  padding: 50,
-  colorScale: colors
+  width: 350,
+  height: 350,
+  padding: 50
 };
 // *
 // * Labels
@@ -37,24 +44,26 @@ const baseLabelStyles = {
   fontFamily: sansSerif,
   fontSize,
   letterSpacing,
-  padding: 10,
-  fill: charcoal,
-  stroke: "transparent"
+  padding,
+  fill: blueGrey700,
+  stroke: "transparent",
+  strokeWidth: 0
 };
 
 const centeredLabelStyles = assign({ textAnchor: "middle" }, baseLabelStyles);
 // *
 // * Strokes
 // *
+const strokeDasharray = "10, 5";
 const strokeLinecap = "round";
 const strokeLinejoin = "round";
 
-export default {
+export const material: VictoryThemeDefinition = {
   area: assign(
     {
       style: {
         data: {
-          fill: charcoal
+          fill: grey900
         },
         labels: baseLabelStyles
       }
@@ -66,35 +75,53 @@ export default {
       style: {
         axis: {
           fill: "transparent",
-          stroke: charcoal,
-          strokeWidth: 1,
+          stroke: blueGrey300,
+          strokeWidth: 2,
           strokeLinecap,
           strokeLinejoin
         },
         axisLabel: assign({}, centeredLabelStyles, {
-          padding: 25
+          padding,
+          stroke: "transparent"
         }),
         grid: {
           fill: "none",
-          stroke: "none",
+          stroke: blueGrey50,
+          strokeDasharray,
+          strokeLinecap,
+          strokeLinejoin,
           pointerEvents: "painted"
         },
         ticks: {
           fill: "transparent",
-          size: 1,
-          stroke: "transparent"
+          size: 5,
+          stroke: blueGrey300,
+          strokeWidth: 1,
+          strokeLinecap,
+          strokeLinejoin
         },
-        tickLabels: baseLabelStyles
+        tickLabels: assign({}, baseLabelStyles, {
+          fill: blueGrey700
+        })
       }
     },
     baseProps
   ),
+  polarDependentAxis: assign({
+    style: {
+      ticks: {
+        fill: "transparent",
+        size: 1,
+        stroke: "transparent"
+      }
+    }
+  }),
   bar: assign(
     {
       style: {
         data: {
-          fill: charcoal,
-          padding: 8,
+          fill: blueGrey700,
+          padding,
           strokeWidth: 0
         },
         labels: baseLabelStyles
@@ -105,15 +132,15 @@ export default {
   boxplot: assign(
     {
       style: {
-        max: { padding: 8, stroke: charcoal, strokeWidth: 1 },
+        max: { padding, stroke: blueGrey700, strokeWidth: 1 },
         maxLabels: assign({}, baseLabelStyles, { padding: 3 }),
-        median: { padding: 8, stroke: charcoal, strokeWidth: 1 },
+        median: { padding, stroke: blueGrey700, strokeWidth: 1 },
         medianLabels: assign({}, baseLabelStyles, { padding: 3 }),
-        min: { padding: 8, stroke: charcoal, strokeWidth: 1 },
+        min: { padding, stroke: blueGrey700, strokeWidth: 1 },
         minLabels: assign({}, baseLabelStyles, { padding: 3 }),
-        q1: { padding: 8, fill: grey },
+        q1: { padding, fill: blueGrey700 },
         q1Labels: assign({}, baseLabelStyles, { padding: 3 }),
-        q3: { padding: 8, fill: grey },
+        q3: { padding, fill: blueGrey700 },
         q3Labels: assign({}, baseLabelStyles, { padding: 3 })
       },
       boxWidth: 20
@@ -124,14 +151,13 @@ export default {
     {
       style: {
         data: {
-          stroke: charcoal,
-          strokeWidth: 1
+          stroke: blueGrey700
         },
         labels: assign({}, baseLabelStyles, { padding: 5 })
       },
       candleColors: {
         positive: "#ffffff",
-        negative: charcoal
+        negative: blueGrey700
       }
     },
     baseProps
@@ -143,7 +169,8 @@ export default {
       style: {
         data: {
           fill: "transparent",
-          stroke: charcoal,
+          opacity: 1,
+          stroke: blueGrey700,
           strokeWidth: 2
         },
         labels: baseLabelStyles
@@ -161,8 +188,8 @@ export default {
     {
       style: {
         data: {
-          fill: grey,
-          stroke: charcoal,
+          fill: blueGrey700,
+          stroke: grey900,
           strokeWidth: 2
         },
         labels: baseLabelStyles
@@ -188,7 +215,8 @@ export default {
       style: {
         data: {
           fill: "transparent",
-          stroke: charcoal,
+          opacity: 1,
+          stroke: blueGrey700,
           strokeWidth: 2
         },
         labels: baseLabelStyles
@@ -196,25 +224,26 @@ export default {
     },
     baseProps
   ),
-  pie: {
-    style: {
-      data: {
-        padding: 10,
-        stroke: "transparent",
-        strokeWidth: 1
-      },
-      labels: assign({}, baseLabelStyles, { padding: 20 })
+  pie: assign(
+    {
+      colorScale: colors,
+      style: {
+        data: {
+          padding,
+          stroke: blueGrey50,
+          strokeWidth: 1
+        },
+        labels: assign({}, baseLabelStyles, { padding: 20 })
+      }
     },
-    colorScale: colors,
-    width: 400,
-    height: 400,
-    padding: 50
-  },
+    baseProps
+  ),
   scatter: assign(
     {
       style: {
         data: {
-          fill: charcoal,
+          fill: blueGrey700,
+          opacity: 1,
           stroke: "transparent",
           strokeWidth: 0
         },
@@ -232,7 +261,7 @@ export default {
   tooltip: {
     style: assign({}, baseLabelStyles, { padding: 0, pointerEvents: "none" }),
     flyoutStyle: {
-      stroke: charcoal,
+      stroke: grey900,
       strokeWidth: 1,
       fill: "#f0f0f0",
       pointerEvents: "none"
@@ -254,7 +283,7 @@ export default {
           pointerEvents: "none"
         }),
         flyout: {
-          stroke: charcoal,
+          stroke: grey900,
           strokeWidth: 1,
           fill: "#f0f0f0",
           pointerEvents: "none"

@@ -59,6 +59,8 @@ module.exports = {
             typedefs: false
           }
         ],
+        "no-invalid-this": "off",
+        "@typescript-eslint/no-invalid-this": ["error"],
 
         "@typescript-eslint/no-unsafe-argument": "warn",
         "@typescript-eslint/no-unsafe-assignment": "warn",

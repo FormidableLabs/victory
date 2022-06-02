@@ -82,8 +82,8 @@ export const interpolateFunction = function (a, b) {
     if (t >= 1) {
       return b;
     }
-    return function () {
-      /* eslint-disable no-invalid-this */
+    return function (this: unknown) {
+      /* eslint-disable no-invalid-this, prefer-rest-params */
       const aval = typeof a === "function" ? a.apply(this, arguments) : a;
       const bval = typeof b === "function" ? b.apply(this, arguments) : b;
       return interpolate(aval, bval)(t);

@@ -1,10 +1,25 @@
 import { timer, now } from "victory-vendor/d3-timer";
 
+interface D3Timer {
+  new (callback): void;
+  stop(): void;
+}
+
+type Callback = (elapsed: number, duration: number) => void;
+
 export default class Timer {
+  private shouldAnimate: boolean;
+  private readonly subscribers: Array<{
+    callback: Callback;
+    startTime: number;
+    duration: number;
+  }>;
+  private activeSubscriptions: number;
+  private timer: D3Timer | null;
+
   constructor() {
     this.shouldAnimate = true;
     this.subscribers = [];
-    this.loop = this.loop.bind(this);
     this.timer = null;
     this.activeSubscriptions = 0;
   }
@@ -17,11 +32,11 @@ export default class Timer {
     this.shouldAnimate = true;
   }
 
-  loop() {
+  loop = () => {
     this.subscribers.forEach((s) => {
       s.callback(now() - s.startTime, s.duration);
     });
-  }
+  };
 
   start() {
     if (!this.timer) {
@@ -36,7 +51,7 @@ export default class Timer {
     }
   }
 
-  subscribe(callback, duration) {
+  subscribe(callback: Callback, duration: number) {
     duration = this.shouldAnimate ? duration : 0;
     const subscriptionID = this.subscribers.push({
       startTime: now(),

@@ -591,7 +591,7 @@ const VictoryLabel: {
     const currentStyle = getSingleValue(style!, i);
     const capHeightPx = TextSize.convertLengthToPixels(
       `${capHeight}em`,
-      currentStyle.fontSize
+      currentStyle.fontSize as number
     );
     const currentLineHeight = getSingleValue(lineHeight, i);
     return {
@@ -599,6 +599,7 @@ const VictoryLabel: {
       fontSize: currentStyle.fontSize || defaultStyles.fontSize,
       capHeight: capHeightPx,
       text: line,
+      // @ts-expect-error TODO: This looks like a bug:
       textSize: TextSize.approximateTextSize(line, currentStyle),
       lineHeight: currentLineHeight,
       backgroundPadding: getSingleValue(backgroundPadding, i)
