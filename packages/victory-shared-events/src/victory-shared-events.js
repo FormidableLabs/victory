@@ -19,6 +19,11 @@ import {
 import isEqual from "react-fast-compare";
 import stringify from "json-stringify-safe";
 
+// DISCLAIMER:
+// This file is not currently tested, and it is first on the list of files
+// to refactor in our current refactoring effort. Please do not make changes
+// to this file without manual testing and/or refactoring and adding tests.
+
 export default class VictorySharedEvents extends React.Component {
   static displayName = "VictorySharedEvents";
 
