@@ -20,10 +20,7 @@ import {
   VictoryTooltip,
   VictoryVoronoi
 } from "victory-native";
-import enzyme from "enzyme";
-import Adapter from "enzyme-adapter-react-16";
-
-enzyme.configure({ adapter: new Adapter() });
+import { render } from "@testing-library/react-native";
 
 const components = [
   { component: VictoryArea, name: "VictoryArea" },
@@ -48,10 +45,21 @@ const components = [
 ];
 
 describe("Default render", () => {
+  beforeEach(() => {
+    // This suppresses the warning `renderInPortal` is not supported outside of `VictoryContainer`.
+    jest.spyOn(console, "warn").mockImplementation((message) => {
+      if (message.includes("renderInPortal")) {
+        return;
+      }
+      /* eslint-disable no-console */
+      console.warn(message);
+    });
+  });
+
   components.forEach((C) => {
     it(`should work for ${C.name}`, () => {
-      const wrapper = enzyme.shallow(React.createElement(C.component));
-      expect(wrapper).toHaveLength(1);
+      const { container } = render(React.createElement(C.component));
+      expect(container).toBeDefined();
     });
   });
 });

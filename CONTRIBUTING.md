@@ -41,7 +41,7 @@ Use [Yarn](https://yarnpkg.com/) to install dependencies:
 $ yarn install
 ```
 
-> *Note*: We use Yarn 1 and not the newer, different Yarn 2+ projects. Please use at least the minimum `yarn` version specified in `package.json:engines.yarn`.
+> _Note_: We use Yarn 1 and not the newer, different Yarn 2+ projects. Please use at least the minimum `yarn` version specified in `package.json:engines.yarn`.
 
 Run a development server and check out the demos. This command will also build and watch `lib/` and `es/` directories in all packages, so your demos will always be in sync with code changes.
 
@@ -60,32 +60,24 @@ $ lerna exec --scope victory-core -- yarn nps build-libs
 
 ## Checks, Tests
 
-When running a development server, tests will be served automatically at http://localhost:3001/test/client/test.html
-
-Tests may also be run in the terminal with:
+Tests can be run in the terminal with:
 
 ```sh
 # Build and run all tests.
 $ yarn nps test
 
-# Run just Karma tests (packages must be already built).
-$ yarn nps karma
-$ KARMA_CAPTURE_CONSOLE=true yarn nps karma # Same, but enable console logging in CLI
+# Run a watch script for tests and packages.
+$ yarn nps test.watch
 ```
 
-If your terminal is under a proxy, you should turn off the proxy, or ChromeHeadless will not start properly.
-
-If you are debugging tests with Karma, it's usually easier to debug in a real browser. An example workflow:
+You can also run the watch script in a separate terminal window to add arguments or isolate specific tests.
 
 ```sh
 # In one terminal run a watch on library files
 $ yarn nps watch
 
-# In another terminal the browser Karma server
-$ yarn nps server.test
-
-# Open a browser
-$ open http://localhost:3001/test/client/test.html
+# In another terminal the jest script
+$ yarn nps "jest <module> --watch"
 ```
 
 Victory uses eslint and prettier to maintain code style consistency. Before creating a pull request, please lint and format your changes with the following commands:
