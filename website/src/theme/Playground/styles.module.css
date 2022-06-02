@@ -1,0 +1,32 @@
+.playgroundContainer {
+  margin-bottom: var(--ifm-leading);
+  border-radius: var(--ifm-global-radius);
+  box-shadow: var(--ifm-global-shadow-lw);
+  overflow: hidden;
+  display: flex;
+}
+
+.playgroundContainer > div {
+  flex: 1;
+}
+
+.playgroundHeader {
+  letter-spacing: 0.15rem;
+  padding: 0.75rem;
+  text-transform: uppercase;
+  color: rgb(112, 128, 144);
+  font-size: var(--ifm-code-font-size);
+  text-align: center;
+}
+
+.playgroundEditor {
+  font: var(--ifm-code-font-size) / var(--ifm-pre-line-height)
+    var(--ifm-font-family-monospace) !important;
+  /* rtl:ignore */
+  direction: ltr;
+  height: 100%;
+}
+
+.playgroundPreview {
+  padding: 1rem;
+}
