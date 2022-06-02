@@ -14,24 +14,20 @@ module.exports = {
       hot: "webpack serve --config ./config/webpack/demo/webpack.config.hot.js --inline --hot --content-base demo/js",
       test: "webpack serve --config ./config/webpack/webpack.config.test.js"
     },
-    karma: {
-      ci: "karma start --browsers ChromeHeadlessCustom,Firefox ./config/karma/karma.conf.coverage.js",
-      cov: "karma start ./config/karma/karma.conf.coverage.js",
-      watch: "karma start --auto-watch ./config/karma/karma.conf.js",
-      default: "karma start ./config/karma/karma.conf.js"
-    },
     jest: {
       native: "jest --config=jest-native-config.js",
-      default: "cross-env BABEL_ENV=commonjs jest --config=jest-config.js"
+      default: "cross-env BABEL_ENV=commonjs jest --config=jest-config.js",
+      watch:
+        "cross-env BABEL_ENV=commonjs jest --watch --config=jest-config.js",
+      cov: "cross-env BABEL_ENV=commonjs jest --coverage --config=jest-config.js"
     },
     "test-node": {
-      default: "mocha ./test/node"
+      default: "jest ./test/node"
     },
     test: {
-      cov: npsUtils.series.nps("build-package-libs", "karma.cov"),
-      dev: "karma start ./config/karma/karma.conf.dev.js",
-      watch: npsUtils.concurrent.nps("watch", "karma.watch"),
-      default: npsUtils.series.nps("build-package-libs", "karma")
+      cov: npsUtils.series.nps("build-package-libs", "jest.default"),
+      watch: npsUtils.concurrent.nps("watch", "jest.watch"),
+      default: npsUtils.series.nps("build-package-libs", "jest.cov")
     },
     storybook: {
       server: "start-storybook -p 6006",
@@ -91,8 +87,7 @@ module.exports = {
         "build-package-dists",
         "test-node",
         "jest",
-        "jest.native",
-        "karma.ci"
+        "jest.native"
       ),
       cov: npsUtils.series.nps("lint", "test.cov"),
       dev: npsUtils.series.nps("lint", "test.dev"),
