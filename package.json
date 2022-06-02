@@ -122,8 +122,5 @@
     "webpack-dev-server": "^4.9.0",
     "webpack-stats-plugin": "^1.0.3"
   },
-  "resolutions": {
-    "@types/react": "^16.14.26"
-  },
   "sideEffects": false
 }
