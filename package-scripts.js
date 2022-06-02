@@ -98,7 +98,11 @@ module.exports = {
       lib: "lerna exec --parallel --ignore victory-native --ignore victory-vendor -- cross-env BABEL_ENV=commonjs babel src --out-dir lib --config-file ../../.babelrc.js --copy-files --extensions .tsx,.ts,.jsx,.js --watch",
       core: npsUtils.concurrent.nps("watch.es", "watch.lib"),
       // `victory-vendor` is built 1x up front and not watched.
-      default: npsUtils.series.nps("build-package-libs-vendor", "watch.core")
+      default: npsUtils.series.nps(
+        "clean.all",
+        "build-package-libs-vendor",
+        "watch.core"
+      )
     },
     clean: {
       lib: "rimraf lib",

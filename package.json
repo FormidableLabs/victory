@@ -68,6 +68,7 @@
     "@storybook/react": "^6.5.6",
     "@testing-library/jest-dom": "^5.16.4",
     "@testing-library/react": "^13.3.0",
+    "@testing-library/react-hooks": "^8.0.0",
     "@testing-library/react-native": "^9.1.0",
     "@types/jest": "^28.1.0",
     "@types/lodash": "^4.14.149",
