@@ -13,7 +13,7 @@ import {
 } from "lodash";
 import * as Events from "./events";
 import isEqual from "react-fast-compare";
-import VictoryTransition from "../victory-transition/victory-transition";
+import { VictoryTransition } from "../victory-transition/victory-transition";
 
 // DISCLAIMER:
 // This file is not currently tested, and it is first on the list of files
