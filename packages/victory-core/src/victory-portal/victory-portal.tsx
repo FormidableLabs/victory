@@ -25,14 +25,11 @@ export class VictoryPortal extends React.Component<VictoryPortalProps> {
   };
 
   static contextType = PortalContext;
-  // @ts-expect-error Initialized on mount
-  private checkedContext: boolean;
-  // @ts-expect-error Initialized on mount
-  private renderInPlace: boolean;
-  // @ts-expect-error Initialized on mount
-  private element: React.ReactElement;
-  // @ts-expect-error Initialized on mount
-  private portalKey: number;
+  context!: React.ContextType<typeof PortalContext>;
+  private checkedContext!: boolean;
+  private renderInPlace!: boolean;
+  private element!: React.ReactElement;
+  private portalKey!: number;
 
   componentDidMount() {
     if (!this.checkedContext) {
