@@ -3,8 +3,8 @@ import PropTypes from "prop-types";
 import { assign } from "lodash";
 import * as Helpers from "../victory-util/helpers";
 import * as CommonProps from "../victory-util/common-props";
-import Rect from "./rect";
-import Circle from "./circle";
+import { Rect } from "./rect";
+import { Circle } from "./circle";
 import { VictoryCommonPrimitiveProps } from "../victory-util/types";
 
 export interface BackgroundProps extends VictoryCommonPrimitiveProps {
@@ -28,7 +28,7 @@ const evaluateProps = (props) => {
   return assign({}, props, { id });
 };
 
-const Background = (props: BackgroundProps) => {
+export const Background = (props: BackgroundProps) => {
   props = evaluateProps(props);
 
   return props.polar
@@ -75,5 +75,3 @@ Background.defaultProps = {
   role: "presentation",
   shapeRendering: "auto"
 };
-
-export default Background;

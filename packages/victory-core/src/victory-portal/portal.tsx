@@ -2,8 +2,20 @@ import React from "react";
 import PropTypes from "prop-types";
 import * as CustomPropTypes from "../victory-util/prop-types";
 import { keys } from "lodash";
+import { PortalContextValue } from "./portal-context";
 
-export default class Portal extends React.Component {
+export interface PortalProps {
+  className?: string;
+  height?: number;
+  style?: React.CSSProperties;
+  viewBox?: string;
+  width?: number;
+}
+
+export class Portal
+  extends React.Component<PortalProps>
+  implements PortalContextValue
+{
   static displayName = "Portal";
 
   static propTypes = {
@@ -13,31 +25,30 @@ export default class Portal extends React.Component {
     viewBox: PropTypes.string,
     width: CustomPropTypes.nonNegative
   };
+  private readonly map: Record<string, React.ReactElement>;
+  private index: number;
 
-  constructor(props) {
+  constructor(props: PortalProps) {
     super(props);
     this.map = {};
     this.index = 1;
-    this.portalUpdate = this.portalUpdate.bind(this);
-    this.portalRegister = this.portalRegister.bind(this);
-    this.portalDeregister = this.portalDeregister.bind(this);
   }
 
-  portalRegister() {
+  public portalRegister = (): number => {
     return ++this.index;
-  }
+  };
 
-  portalUpdate(key, element) {
+  public portalUpdate = (key: number, element: React.ReactElement) => {
     this.map[key] = element;
     this.forceUpdate();
-  }
+  };
 
-  portalDeregister(key) {
+  public portalDeregister = (key: number) => {
     delete this.map[key];
     this.forceUpdate();
-  }
+  };
 
-  getChildren() {
+  private getChildren() {
     return keys(this.map).map((key) => {
       const el = this.map[key];
       return el ? React.cloneElement(el, { key }) : el;

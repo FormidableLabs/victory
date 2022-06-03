@@ -6,7 +6,8 @@
     "no-magic-numbers": 0,
     "max-statements": 0,
     "import/no-unresolved": 0,
-    "no-undef": "off"
+    "no-undef": "off",
+    "@typescript-eslint/no-empty-function": "off"
   },
   "globals": { "expect": false }
 }

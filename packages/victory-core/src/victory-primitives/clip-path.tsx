@@ -7,7 +7,7 @@ export interface ClipPathProps extends VictoryCommonPrimitiveProps {
   clipId?: number | string;
 }
 
-const ClipPath = (props: ClipPathProps) => (
+export const ClipPath = (props: ClipPathProps) => (
   <defs>
     {
       // @ts-expect-error FIXME: "id cannot be a number"
@@ -23,5 +23,3 @@ ClipPath.propTypes = {
   ]),
   clipId: PropTypes.oneOfType([PropTypes.number, PropTypes.string])
 };
-
-export default ClipPath;

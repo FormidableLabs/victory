@@ -3,9 +3,14 @@ import PropTypes from "prop-types";
 import { defaults } from "lodash";
 import * as Log from "../victory-util/log";
 import * as Helpers from "../victory-util/helpers";
-import PortalContext from "./portal-context";
+import { PortalContext } from "./portal-context";
 
-export default class VictoryPortal extends React.Component {
+export interface VictoryPortalProps {
+  children?: React.ReactElement;
+  groupComponent?: React.ReactElement;
+}
+
+export class VictoryPortal extends React.Component<VictoryPortalProps> {
   static displayName = "VictoryPortal";
 
   static role = "portal";
@@ -20,10 +25,15 @@ export default class VictoryPortal extends React.Component {
   };
 
   static contextType = PortalContext;
+  context!: React.ContextType<typeof PortalContext>;
+  private checkedContext!: boolean;
+  private renderInPlace!: boolean;
+  private element!: React.ReactElement;
+  private portalKey!: number;
 
   componentDidMount() {
     if (!this.checkedContext) {
-      if (typeof this.context.portalUpdate !== "function") {
+      if (typeof this.context?.portalUpdate !== "function") {
         const msg =
           "`renderInPortal` is not supported outside of `VictoryContainer`. " +
           "Component will be rendered in place";
@@ -49,7 +59,7 @@ export default class VictoryPortal extends React.Component {
   }
 
   // Overridden in victory-core-native
-  renderPortal(child) {
+  renderPortal(child: React.ReactElement) {
     if (this.renderInPlace) {
       return child;
     }
@@ -58,9 +68,11 @@ export default class VictoryPortal extends React.Component {
   }
 
   render() {
-    const children = Array.isArray(this.props.children)
-      ? this.props.children[0]
-      : this.props.children;
+    const children = (
+      Array.isArray(this.props.children)
+        ? this.props.children[0]
+        : this.props.children
+    ) as React.ReactElement;
     const { groupComponent } = this.props;
     const childProps = (children && children.props) || {};
     const standardProps = childProps.groupComponent

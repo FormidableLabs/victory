@@ -3,7 +3,7 @@ import PropTypes from "prop-types";
 import * as Helpers from "../victory-util/helpers";
 import { assign } from "lodash";
 import * as CommonProps from "../victory-util/common-props";
-import Rect from "./rect";
+import { Rect } from "./rect";
 import { VictoryCommonPrimitiveProps } from "../victory-util/types";
 
 export interface BorderProps extends VictoryCommonPrimitiveProps {
@@ -35,7 +35,7 @@ const evaluateProps = (props) => {
   return assign({}, props, { ariaLabel, desc, id, style, tabIndex });
 };
 
-const Border = (props: BorderProps) => {
+export const Border = (props: BorderProps) => {
   props = evaluateProps(props);
 
   return React.cloneElement(props.rectComponent!, {
@@ -70,5 +70,3 @@ Border.defaultProps = {
   role: "presentation",
   shapeRendering: "auto"
 };
-
-export default Border;

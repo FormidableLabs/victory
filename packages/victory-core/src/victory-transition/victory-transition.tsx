@@ -1,6 +1,6 @@
 import React from "react";
 import PropTypes from "prop-types";
-import VictoryAnimation from "../victory-animation/victory-animation";
+import { VictoryAnimation } from "../victory-animation/victory-animation";
 import * as Collection from "../victory-util/collection";
 import * as Helpers from "../victory-util/helpers";
 import TimerContext from "../victory-util/timer-context";
@@ -39,7 +39,7 @@ interface VictoryTransitionState {
   childrenTransitions?: unknown;
 }
 
-export default class VictoryTransition extends React.Component<
+export class VictoryTransition extends React.Component<
   VictoryTransitionProps,
   VictoryTransitionState
 > {

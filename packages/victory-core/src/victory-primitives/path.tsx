@@ -1,7 +1,7 @@
 import React from "react";
 import { VictoryPrimitiveShapeProps } from "./types";
 
-const Path = (props: VictoryPrimitiveShapeProps) => {
+export const Path = (props: VictoryPrimitiveShapeProps) => {
   // eslint-disable-next-line react/prop-types
   const { desc, ...rest } = props;
   return desc ? (
@@ -14,5 +14,3 @@ const Path = (props: VictoryPrimitiveShapeProps) => {
     <path {...rest} />
   );
 };
-
-export default Path;

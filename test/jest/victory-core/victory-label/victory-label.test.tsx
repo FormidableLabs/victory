@@ -21,7 +21,7 @@ describe("components/victory-label", () => {
     const { container } = render(<VictoryLabel text="such text, wow" />, {
       wrapper: "svg"
     });
-    expect(container.querySelector("tspan").innerHTML).toMatchInlineSnapshot(
+    expect(container.querySelector("tspan")!.innerHTML).toMatchInlineSnapshot(
       `"such text, wow"`
     );
   });
@@ -31,7 +31,7 @@ describe("components/victory-label", () => {
       <VictoryLabel dx={30} dy={30} text="such text, wow" />,
       { wrapper: "svg" }
     );
-    const output = container.querySelector("text");
+    const output = container.querySelector("text")!;
     expect(output.getAttribute("dx")).toEqual("30");
     // dy = props.dy + (capHeight(0.71) / 2 + (0.5 - length(1) / 2) * lineHeight(1)) * fontSize(14);
     expect(output.getAttribute("dy")).toBeNull();
@@ -39,12 +39,13 @@ describe("components/victory-label", () => {
 
   it("sets x and y for text element", () => {
     const { container } = render(
+      // @ts-expect-error "type string is not assignable to number"
       <VictoryLabel x="100%" y={30} text="such text, wow" />,
       { wrapper: "svg" }
     );
-    const output = container.querySelector("text");
+    const output = container.querySelector("text")!;
     expect(output.getAttribute("x")).toEqual("100%");
-    expect(parseFloat(output.getAttribute("y"))).toEqual(34.97);
+    expect(parseFloat(output.getAttribute("y")!)).toEqual(34.97);
   });
 
   it("has a transform property that rotates the text to match the labelAngle getAttribute", () => {
@@ -52,7 +53,7 @@ describe("components/victory-label", () => {
       <VictoryLabel angle={46} text="such text, wow" />,
       { wrapper: "svg" }
     );
-    const output = container.querySelector("text");
+    const output = container.querySelector("text")!;
     expect(output.getAttribute("transform")).toContain("rotate(46");
   });
 
@@ -61,7 +62,7 @@ describe("components/victory-label", () => {
       <VictoryLabel angle={() => 46} text="such text, wow" />,
       { wrapper: "svg" }
     );
-    const output = container.querySelector("text");
+    const output = container.querySelector("text")!;
     expect(output.getAttribute("transform")).toContain("rotate(46");
   });
 
@@ -74,7 +75,7 @@ describe("components/victory-label", () => {
       />,
       { wrapper: "svg" }
     );
-    const output = container.querySelector("text");
+    const output = container.querySelector("text")!;
     expect(output.getAttribute("data-font-size")).toEqual("10");
   });
 
@@ -86,7 +87,7 @@ describe("components/victory-label", () => {
       <VictoryLabel style={{ fontSize: "foo" }} text="such text, wow" />,
       { wrapper: "svg" }
     );
-    const output = container.querySelector("tspan");
+    const output = container.querySelector("tspan")!;
     expect(output.getAttribute("style")).toContain("font-size: 14px");
   });
 
@@ -153,7 +154,7 @@ describe("components/victory-label", () => {
         <VictoryLabel text="hi" events={{ onClick: clickHandler }} />,
         { wrapper: "svg" }
       );
-      fireEvent.click(container.querySelector("text"));
+      fireEvent.click(container.querySelector("text")!);
       expect(clickHandler).toHaveBeenCalled();
     });
   });
@@ -192,7 +193,7 @@ describe("components/victory-label", () => {
       to calculate dy:
       ((this.lineHeight[i] + (this.lineHeight[i - 1] || this.lineHeight[0])) / 2)
       */
-      expect(parseInt(tspan.getAttribute("dy"))).toEqual(expectedDy[index]);
+      expect(parseInt(tspan.getAttribute("dy")!)).toEqual(expectedDy[index]);
     });
   });
 
@@ -208,7 +209,7 @@ describe("components/victory-label", () => {
 
     const output = container.querySelectorAll("tspan");
     output.forEach((tspan, index) => {
-      expect(parseInt(tspan.getAttribute("dy"))).toEqual(expectedDy[index]);
+      expect(parseInt(tspan.getAttribute("dy")!)).toEqual(expectedDy[index]);
     });
   });
 
@@ -219,7 +220,7 @@ describe("components/victory-label", () => {
     );
 
     expect(
-      container.querySelector("tspan").getAttribute("style")
+      container.querySelector("tspan")!.getAttribute("style")
     ).toMatchInlineSnapshot(
       `"fill: #252525; font-size: 14px; font-family: 'Gill Sans', 'Gill Sans MT', 'Ser­avek', 'Trebuchet MS', sans-serif; stroke: transparent;"`
     );

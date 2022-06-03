@@ -10,7 +10,7 @@ describe("victory-primitives/point", () => {
     size: 1
   };
 
-  it("should render the appropriate symbol", () => {
+  (
     [
       "circle",
       "square",
@@ -21,14 +21,16 @@ describe("victory-primitives/point", () => {
       "minus",
       "star",
       "cross"
-    ].forEach((symbol) => {
+    ] as const
+  ).forEach((symbol) => {
+    it(`should render the appropriate symbol for "${symbol}"`, () => {
       const stub = jest
         .spyOn(pathHelpers, symbol)
         // eslint-disable-next-line max-nested-callbacks
         .mockImplementation(() => `${symbol} symbol`);
       const props = assign({}, baseProps, { symbol });
       const { container } = render(<Point {...props} />, { wrapper: "svg" });
-      const directions = container.querySelector("path").getAttribute("d");
+      const directions = container.querySelector("path")!.getAttribute("d");
 
       expect(stub).toHaveBeenCalledTimes(1);
       expect(stub).toHaveBeenCalledWith(5, 10, 1);

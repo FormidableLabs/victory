@@ -182,7 +182,7 @@ export const interpolateString = function (a, b) {
  * @param {any} b - End value.
  * @returns {Function|undefined} An interpolation function, if necessary.
  */
-export const victoryInterpolator = function (a, b) {
+export const victoryInterpolator = function <T>(a: T, b: T): (t: number) => T {
   // If the values are strictly equal, or either value is not interpolatable,
   // just use either the start value `a` or end value `b` at every step, as
   // there is no reasonable in-between value.
@@ -193,6 +193,7 @@ export const victoryInterpolator = function (a, b) {
     return interpolateFunction(a, b);
   }
   if (isPlainObject(a) || isPlainObject(b)) {
+    // @ts-expect-error These generics are tough, but they work ok?
     return interpolateObject(a, b);
   }
   if (typeof a === "string" || typeof b === "string") {

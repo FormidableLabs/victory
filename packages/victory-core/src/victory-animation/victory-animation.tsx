@@ -76,7 +76,7 @@ export interface AnimationInfo {
   terminating?: boolean;
 }
 
-export default class VictoryAnimation extends React.Component<
+export class VictoryAnimation extends React.Component<
   VictoryAnimationProps,
   VictoryAnimationState
 > {

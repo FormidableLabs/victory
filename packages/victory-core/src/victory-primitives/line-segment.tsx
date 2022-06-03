@@ -3,7 +3,7 @@ import PropTypes from "prop-types";
 import * as Helpers from "../victory-util/helpers";
 import { assign } from "lodash";
 import * as CommonProps from "../victory-util/common-props";
-import Line from "./line";
+import { Line } from "./line";
 import { VictoryCommonPrimitiveProps } from "../victory-util/types";
 
 export interface LineSegmentProps extends VictoryCommonPrimitiveProps {
@@ -36,7 +36,7 @@ const evaluateProps = (props) => {
   return assign({}, props, { ariaLabel, desc, id, style, tabIndex });
 };
 
-const LineSegment = (props: LineSegmentProps) => {
+export const LineSegment = (props: LineSegmentProps) => {
   props = evaluateProps(props);
 
   return React.cloneElement(props.lineComponent!, {
@@ -72,5 +72,3 @@ LineSegment.defaultProps = {
   role: "presentation",
   shapeRendering: "auto"
 };
-
-export default LineSegment;

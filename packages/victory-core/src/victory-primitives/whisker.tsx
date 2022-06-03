@@ -3,7 +3,7 @@ import { assign } from "lodash";
 import PropTypes from "prop-types";
 import * as Helpers from "../victory-util/helpers";
 import * as CommonProps from "../victory-util/common-props";
-import Line from "./line";
+import { Line } from "./line";
 import { VictoryCommonPrimitiveProps } from "../victory-util/types";
 
 export type WhiskerAxes = {
@@ -38,7 +38,7 @@ const evaluateProps = (props) => {
   return assign({}, props, { ariaLabel, desc, id, style, tabIndex });
 };
 
-const Whisker = (props: WhiskerProps) => {
+export const Whisker = (props: WhiskerProps) => {
   props = evaluateProps(props);
   const {
     ariaLabel,
@@ -112,5 +112,3 @@ Whisker.defaultProps = {
   role: "presentation",
   shapeRendering: "auto"
 };
-
-export default Whisker;
