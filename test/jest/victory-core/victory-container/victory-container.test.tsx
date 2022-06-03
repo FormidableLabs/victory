@@ -5,13 +5,13 @@ import { fireEvent, render } from "@testing-library/react";
 describe("components/victory-container", () => {
   it("renders an svg with a role of img", () => {
     const { container } = render(<VictoryContainer />);
-    const output = container.querySelector("svg");
+    const output = container.querySelector("svg")!;
     expect(output.getAttribute("role")).toContain("img");
   });
 
   it("renders an svg with a custom role", () => {
     const { container } = render(<VictoryContainer role="presentation" />);
-    expect(container.querySelector("svg").getAttribute("role")).toEqual(
+    expect(container.querySelector("svg")!.getAttribute("role")).toEqual(
       "presentation"
     );
   });
@@ -64,7 +64,7 @@ describe("components/victory-container", () => {
     const { container } = render(
       <VictoryContainer width={width} height={height} />
     );
-    const svg = container.querySelector("svg");
+    const svg = container.querySelector("svg")!;
     const viewBoxValue = `0 0 ${width} ${height}`;
     expect(svg.getAttribute("viewBox")).toEqual(viewBoxValue);
   });
@@ -74,7 +74,7 @@ describe("components/victory-container", () => {
     const { container } = render(
       <VictoryContainer events={{ onClick: clickHandler }} />
     );
-    const svg = container.querySelector("svg");
+    const svg = container.querySelector("svg")!;
     fireEvent.click(svg);
     expect(clickHandler).toBeCalled();
   });

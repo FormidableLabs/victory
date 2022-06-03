@@ -15,6 +15,7 @@ describe("victory-primitives/slice", () => {
       };
 
       const { container } = render(
+        // @ts-expect-error "slice has no properties in common with property slice"
         <Slice pathFunction={pathFunction} slice={slice} />,
         { wrapper: "svg" }
       );

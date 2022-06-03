@@ -57,20 +57,20 @@ describe("components/victory-accessible-group", () => {
     const { container } = render(
       <VictoryAccessibleGroup
         aria-label="desc node tests"
-        desc="applies to both aria-describeby and descId"
+        desc="applies to both aria-describedby and descId"
       />,
       { wrapper: "svg" }
     );
     expect(container.querySelector("g")).toMatchInlineSnapshot(`
       <g
-        aria-describedby="applies-to-both-aria-describeby-and-descId"
+        aria-describedby="applies-to-both-aria-describedby-and-descId"
         aria-label="desc node tests"
         class="VictoryAccessibleGroup"
       >
         <desc
-          id="applies-to-both-aria-describeby-and-descId"
+          id="applies-to-both-aria-describedby-and-descId"
         >
-          applies to both aria-describeby and descId
+          applies to both aria-describedby and descId
         </desc>
       </g>
     `);
