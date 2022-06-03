@@ -13,6 +13,7 @@ module.exports = {
     "@babel/transform-spread",
     "@babel/transform-template-literals",
     "@babel/proposal-object-rest-spread",
+    "@babel/proposal-optional-chaining",
     "@babel/plugin-proposal-export-namespace-from"
   ],
   ignore: ["**/*.d.ts"],
