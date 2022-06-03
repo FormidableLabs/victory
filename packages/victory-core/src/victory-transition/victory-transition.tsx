@@ -52,7 +52,7 @@ export default class VictoryTransition extends React.Component<
   };
 
   static contextType = TimerContext;
-  context!: React.ContextType<typeof TimerContext>
+  context!: React.ContextType<typeof TimerContext>;
   private continuous: boolean;
   private timer: Timer;
   private transitionProps: any;
