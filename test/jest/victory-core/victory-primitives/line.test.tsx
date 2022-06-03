@@ -12,7 +12,7 @@ describe("victory-primitives/line", () => {
 
   it("should render a line element with the correct coordinates", () => {
     // @ts-expect-error "baseProps has no properties in common with VictoryPrimitiveShapeProps"
-    const { container } = render(<Line {...baseProps} />);
+    const { container } = render(<Line {...baseProps} />, { wrapper: "svg" });
     expect(container.querySelector("line")).toMatchInlineSnapshot(`
       <line
         vector-effect="non-scaling-stroke"
