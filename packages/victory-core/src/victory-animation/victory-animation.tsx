@@ -76,6 +76,10 @@ export interface AnimationInfo {
   terminating?: boolean;
 }
 
+export interface VictoryAnimation {
+  context: React.ContextType<typeof TimerContext>;
+}
+
 export class VictoryAnimation extends React.Component<
   VictoryAnimationProps,
   VictoryAnimationState
@@ -140,7 +144,6 @@ export class VictoryAnimation extends React.Component<
   };
 
   static contextType = TimerContext;
-  context!: React.ContextType<typeof TimerContext>;
   private interpolator: null | ((value: number) => AnimationStyle);
   private queue: AnimationStyle[];
   private ease: any;

@@ -10,6 +10,10 @@ export interface VictoryPortalProps {
   groupComponent?: React.ReactElement;
 }
 
+export interface VictoryPortal {
+  context: React.ContextType<typeof PortalContext>;
+}
+
 export class VictoryPortal extends React.Component<VictoryPortalProps> {
   static displayName = "VictoryPortal";
 
@@ -25,7 +29,6 @@ export class VictoryPortal extends React.Component<VictoryPortalProps> {
   };
 
   static contextType = PortalContext;
-  context!: React.ContextType<typeof PortalContext>;
   private checkedContext!: boolean;
   private renderInPlace!: boolean;
   private element!: React.ReactElement;
@@ -33,7 +36,7 @@ export class VictoryPortal extends React.Component<VictoryPortalProps> {
 
   componentDidMount() {
     if (!this.checkedContext) {
-      if (typeof this.context?.portalUpdate !== "function") {
+      if (typeof this.context.portalUpdate !== "function") {
         const msg =
           "`renderInPortal` is not supported outside of `VictoryContainer`. " +
           "Component will be rendered in place";
