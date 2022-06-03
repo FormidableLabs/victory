@@ -1,8 +1,8 @@
 /*global Path2D:false */
-import { assign, omit } from "lodash";
+import { assign } from "lodash";
+import PropTypes from "prop-types";
 import React from "react";
 import {
-  Bar,
   getBarPath,
   getBarWidth,
   getCornerRadius,
@@ -10,6 +10,7 @@ import {
   getStyle
 } from "victory-bar";
 import { useCanvasContext } from "./hooks/use-canvas-context";
+import { CommonProps } from "victory-core";
 
 const evaluateProps = (props) => {
   /**
@@ -108,6 +109,30 @@ const CanvasBar = (initialProps) => {
   return null;
 };
 
-CanvasBar.propTypes = omit(Bar.propTypes, "pathComponent");
+CanvasBar.propTypes = {
+  ...CommonProps.primitiveProps,
+  alignment: PropTypes.oneOf(["start", "middle", "end"]),
+  barRatio: PropTypes.number,
+  barWidth: PropTypes.oneOfType([PropTypes.number, PropTypes.func]),
+  cornerRadius: PropTypes.oneOfType([
+    PropTypes.number,
+    PropTypes.func,
+    PropTypes.shape({
+      top: PropTypes.oneOfType([PropTypes.number, PropTypes.func]),
+      topLeft: PropTypes.oneOfType([PropTypes.number, PropTypes.func]),
+      topRight: PropTypes.oneOfType([PropTypes.number, PropTypes.func]),
+      bottom: PropTypes.oneOfType([PropTypes.number, PropTypes.func]),
+      bottomLeft: PropTypes.oneOfType([PropTypes.number, PropTypes.func]),
+      bottomRight: PropTypes.oneOfType([PropTypes.number, PropTypes.func])
+    })
+  ]),
+  datum: PropTypes.object,
+  getPath: PropTypes.func,
+  horizontal: PropTypes.bool,
+  width: PropTypes.number,
+  x: PropTypes.number,
+  y: PropTypes.number,
+  y0: PropTypes.number
+};
 
 export default CanvasBar;

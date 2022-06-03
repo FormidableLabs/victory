@@ -1,3 +1,4 @@
+/* eslint-disable react/no-multi-comp */
 import React from "react";
 import { flow } from "lodash";
 import {
