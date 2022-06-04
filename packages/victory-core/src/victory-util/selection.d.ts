@@ -1,7 +1,9 @@
 import * as React from "react";
-import { DomainPropType, ScalePropType, SVGCoordinateType } from "./types";
+import { DomainPropType, ScalePropType } from "../types/prop-types";
 
 export function getParentSVG(evt: React.SyntheticEvent): string;
+
+export type SVGCoordinateType = { x: number; y: number };
 
 export function getSVGEventCoordinates(
   evt: React.SyntheticEvent,
