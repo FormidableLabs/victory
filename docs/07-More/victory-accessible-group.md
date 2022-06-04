@@ -5,6 +5,7 @@ category: more
 sidebar: true
 type: docs
 scope: null
+slug: /docs/victory-accessible-group
 ---
 
 # VictoryAccessibleGroup

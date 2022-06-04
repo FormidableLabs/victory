@@ -4,6 +4,7 @@ title: VictoryTransition
 category: more
 type: docs
 scope: null
+slug: /docs/victory-transition
 ---
 
 # VictoryTransition

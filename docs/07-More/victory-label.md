@@ -4,6 +4,7 @@ title: VictoryLabel
 category: more
 type: docs
 scope: null
+slug: /docs/victory-label
 ---
 
 # VictoryLabel

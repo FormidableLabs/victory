@@ -6,6 +6,7 @@ type: docs
 scope:
   - sampleData
   - range
+slug: /docs/victory-line
 ---
 
 # VictoryLine

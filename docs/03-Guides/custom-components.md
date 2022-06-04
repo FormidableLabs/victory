@@ -1,5 +1,4 @@
 ---
-id: 4
 title: Custom Components
 category: guides
 scope:

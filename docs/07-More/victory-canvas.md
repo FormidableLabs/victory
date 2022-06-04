@@ -4,6 +4,7 @@ title: VictoryCanvas
 category: more
 type: docs
 scope: null
+slug: /docs/victory-canvas
 ---
 
 # Victory Canvas

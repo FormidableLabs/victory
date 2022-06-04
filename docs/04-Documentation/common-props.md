@@ -9,6 +9,7 @@ scope:
   - d3Scale
   - scaleDiscontinuous
   - discontinuitySkipWeekends
+slug: /docs/common-props
 ---
 
 # Common Props

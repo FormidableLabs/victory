@@ -5,6 +5,7 @@ category: charts
 type: docs
 scope:
   - sampleData
+slug: /docs/victory-chart
 ---
 
 # VictoryChart

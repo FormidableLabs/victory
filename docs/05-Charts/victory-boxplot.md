@@ -3,6 +3,7 @@ id: 0
 title: VictoryBoxPlot
 category: charts
 type: docs
+slug: /docs/victory-boxplot
 ---
 
 # VictoryBoxPlot

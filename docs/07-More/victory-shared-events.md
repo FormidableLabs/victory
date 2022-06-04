@@ -4,6 +4,7 @@ title: VictorySharedEvents
 category: more
 type: docs
 scope: null
+slug: /docs/victory-shared-events
 ---
 
 # VictorySharedEvents

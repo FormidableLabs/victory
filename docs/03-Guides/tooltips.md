@@ -1,5 +1,4 @@
 ---
-id: 10
 title: Tooltips
 category: guides
 scope: null

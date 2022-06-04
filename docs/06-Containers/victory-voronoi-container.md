@@ -5,6 +5,7 @@ category: containers
 type: docs
 scope:
   - round
+slug: /docs/victory-voronoi-container
 ---
 
 # VictoryVoronoiContainer

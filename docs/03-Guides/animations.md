@@ -1,5 +1,4 @@
 ---
-id: 1
 title: Animations
 category: guides
 scope:

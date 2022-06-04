@@ -6,6 +6,7 @@ type: docs
 scope:
   - random
   - range
+slug: /docs/create-container
 ---
 # createContainer
 

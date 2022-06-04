@@ -1,5 +1,4 @@
 ---
-id: 2
 title: Brush and Zoom
 category: guides
 scope:

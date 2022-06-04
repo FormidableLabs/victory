@@ -4,6 +4,7 @@ title: VictoryBrushContainer
 category: containers
 type: docs
 scope: null
+slug: /docs/victory-brush-container
 ---
 
 # VictoryBrushContainer

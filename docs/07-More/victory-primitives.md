@@ -4,6 +4,7 @@ title: VictoryPrimitives
 category: more
 type: docs
 scope: null
+slug: /docs/victory-primitives
 ---
 
 # Victory Primitives

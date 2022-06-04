@@ -5,6 +5,7 @@ category: charts
 type: docs
 scope:
   - sampleDataDates
+slug: /docs/victory-candlestick
 ---
 
 # VictoryCandlestick

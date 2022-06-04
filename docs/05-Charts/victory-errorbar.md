@@ -5,6 +5,7 @@ category: charts
 type: docs
 scope:
   - sampleErrorData
+slug: /docs/victory-errorbar
 ---
 
 # VictoryErrorBar

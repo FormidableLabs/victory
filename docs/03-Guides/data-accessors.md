@@ -1,5 +1,4 @@
 ---
-id: 5
 title: Data Accessors
 category: guides
 scope:

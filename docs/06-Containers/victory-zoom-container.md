@@ -4,6 +4,7 @@ title: VictoryZoomContainer
 category: containers
 type: docs
 scope: null
+slug: /docs/victory-zoom-container
 ---
 
 # VictoryZoomContainer

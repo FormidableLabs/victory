@@ -4,6 +4,7 @@ title: VictoryLegend
 category: more
 type: docs
 scope: null
+slug: /docs/victory-legend
 ---
 
 # VictoryLegend

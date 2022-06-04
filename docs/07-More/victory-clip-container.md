@@ -4,6 +4,7 @@ title: VictoryClipContainer
 category: more
 type: docs
 scope: null
+slug: /docs/victory-clip-container
 ---
 
 # VictoryClipContainer

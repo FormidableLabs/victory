@@ -1,5 +1,4 @@
 ---
-id: 3
 title: Custom Charts
 category: guides
 scope:

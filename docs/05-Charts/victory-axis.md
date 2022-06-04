@@ -4,6 +4,7 @@ title: VictoryAxis
 category: charts
 type: docs
 scope: null
+slug: /docs/victory-axis
 ---
 
 # VictoryAxis

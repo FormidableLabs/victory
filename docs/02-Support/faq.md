@@ -4,7 +4,7 @@ title: FAQs
 category: support
 type: docs
 scope: null
-slug: faq
+slug: /docs/faq
 ---
 # Frequently Asked Questions (FAQ)
 

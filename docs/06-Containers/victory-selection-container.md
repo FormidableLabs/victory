@@ -4,6 +4,7 @@ title: VictorySelectionContainer
 category: containers
 type: docs
 scope: null
+slug: /docs/victory-selection-container
 ---
 
 # VictorySelectionContainer

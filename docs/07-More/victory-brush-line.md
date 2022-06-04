@@ -4,6 +4,7 @@ title: VictoryBrushLine
 category: more
 type: docs
 scope: null
+slug: /docs/victory-brush-line
 ---
 
 # VictoryBrushLine

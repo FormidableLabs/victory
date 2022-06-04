@@ -1,5 +1,4 @@
 ---
-id: 6
 title: Events
 category: guides
 scope:

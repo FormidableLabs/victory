@@ -1,5 +1,4 @@
 ---
-id: 7
 title: Layout
 category: guides
 scope: null

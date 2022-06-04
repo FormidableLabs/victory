@@ -4,6 +4,7 @@ title: VictoryTheme
 category: more
 type: docs
 scope: null
+slug: /docs/victory-theme
 ---
 # VictoryTheme
 

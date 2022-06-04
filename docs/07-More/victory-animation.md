@@ -4,6 +4,7 @@ title: VictoryAnimation
 category: more
 scope: null
 type: docs
+slug: /docs/victory-animation
 ---
 
 # VictoryAnimation

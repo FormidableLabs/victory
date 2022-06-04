@@ -4,6 +4,7 @@ title: Native
 category: introduction
 type: docs
 scope: null
+slug: /docs/native
 ---
 
 # Getting Started with Victory Native

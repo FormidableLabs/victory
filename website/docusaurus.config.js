@@ -56,6 +56,7 @@ const config = {
       ({
         docs: {
           path: '../docs',
+          routeBasePath: '/',
           sidebarPath: require.resolve('./sidebars.js'),
           // Please change this to your repo.
           // Remove this to remove the "edit this page" links.
@@ -95,6 +96,7 @@ const config = {
             position: 'left',
             label: 'Docs',
           },
+          {to: '/gallery', label: 'Gallery', position: 'left'},
           {
             type: 'doc',
             docId: 'Support/1',

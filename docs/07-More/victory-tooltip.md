@@ -5,6 +5,7 @@ category: more
 type: docs
 scope:
   - sampleData
+slug: /docs/victory-tooltip
 ---
 
 # VictoryTooltip

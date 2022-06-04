@@ -2,7 +2,7 @@
 id: 2
 title: New Features
 category: introduction
-slug: new
+slug: /docs/new
 type: docs
 scope:
   - range

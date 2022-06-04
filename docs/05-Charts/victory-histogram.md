@@ -9,6 +9,7 @@ scope:
   - d3Scale
   - d3Time
   - d3Array
+slug: /docs/victory-histogram
 ---
 
 # VictoryHistogram

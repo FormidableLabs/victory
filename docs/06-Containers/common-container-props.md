@@ -5,6 +5,7 @@ category: containers
 sidebar: true
 scope: null
 type: docs
+slug: /docs/common-container-props
 ---
 
 # Common Container Props

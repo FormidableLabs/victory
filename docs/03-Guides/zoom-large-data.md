@@ -1,5 +1,4 @@
 ---
-id: 11
 title: Zoom on Large Datasets
 category: guides
 scope:

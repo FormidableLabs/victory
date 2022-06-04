@@ -1,5 +1,4 @@
 ---
-id: 8
 title: Polar Charts
 category: guides
 scope:
