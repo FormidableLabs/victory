@@ -17,6 +17,17 @@ jobs:
     runs-on: ubuntu-latest
 
     steps:
+      - name: TODO REMOVE DEBUG STUFF
+        # TODO: UNDO THIS DEBUGGING STUFF
+        run: |
+          echo FORMIDEPLOY_GIT_SHA ${{ github.event.pull_request.head.sha }}
+          echo FORMIDEPLOY_PULL_REQUEST $FORMIDEPLOY_PULL_REQUEST
+          echo GITHUB_REF $GITHUB_REF
+          echo GITHUB_EVENT_PATH $GITHUB_EVENT_PATH
+          echo EXTRACTED GITHUB_EVENT_PATH $(jq --raw-output .pull_request.number "$GITHUB_EVENT_PATH")
+          echo github.event.number ${{ github.event.number }}
+          echo
+
       - uses: actions/checkout@v2
 
       - name: AWS CLI version
@@ -44,22 +55,13 @@ jobs:
 
       - name: Deploy docs (staging)
         if: github.ref != 'refs/heads/main'
-        # TODO: UNDO THIS DEBUGGING STUFF
-        run: |
-          echo FORMIDEPLOY_GIT_SHA ${{ github.event.pull_request.head.sha }}
-          echo FORMIDEPLOY_PULL_REQUEST $FORMIDEPLOY_PULL_REQUEST
-          echo GITHUB_REF $GITHUB_REF
-          echo GITHUB_EVENT_PATH $GITHUB_EVENT_PATH
-          echo EXTRACTED GITHUB_EVENT_PATH $(jq --raw-output .pull_request.number "$GITHUB_EVENT_PATH")
-          echo github.event.number ${{ github.event.number }}
-          echo
-          yarn deploy:stage
+        run: yarn deploy:stage
         working-directory: ./website
         env:
           # GH actions have a PR merge commit that _isn't_ our actual commits.
           # Manually infer correct branch and sha for pull requests.
           FORMIDEPLOY_GIT_SHA: ${{ github.event.pull_request.head.sha }}
-          FORMIDEPLOY_PULL_REQUEST: ${{ github.event.number }}
+          FORMIDEPLOY_PULL_REQUEST: ${{ github.event.number }} # TODO: REMOVE / FIX?
           GITHUB_DEPLOYMENT_TOKEN: ${{ secrets.GITHUB_TOKEN }}
           SURGE_LOGIN: ${{ secrets.SURGE_LOGIN }}
           SURGE_TOKEN: ${{ secrets.SURGE_TOKEN }}
