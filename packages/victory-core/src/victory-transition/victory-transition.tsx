@@ -39,6 +39,10 @@ interface VictoryTransitionState {
   childrenTransitions?: unknown;
 }
 
+export interface VictoryTransition {
+  context: React.ContextType<typeof TimerContext>;
+}
+
 export class VictoryTransition extends React.Component<
   VictoryTransitionProps,
   VictoryTransitionState
@@ -52,7 +56,6 @@ export class VictoryTransition extends React.Component<
   };
 
   static contextType = TimerContext;
-  context!: React.ContextType<typeof TimerContext>;
   private continuous: boolean;
   private timer: Timer;
   private transitionProps: any;
