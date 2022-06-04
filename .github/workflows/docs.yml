@@ -19,6 +19,33 @@ jobs:
     steps:
       - uses: actions/checkout@v2
 
+      # Use action to infer PR information.
+      - id: pr_info
+        uses: jwalton/gh-find-current-pr@v1
+
+      # Alternate way.
+      # https://stackoverflow.com/a/70102700
+      - name: Get Pull Request Number
+        id: pr
+        run: echo "::set-output name=pull_request_number::$(gh pr view --json number -q .number || echo "")"
+        env:
+          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+
+      # TODO: HERE -- Test out multiple PRs bug with _another_ PR
+      # https://github.com/jwalton/gh-find-current-pr/issues/18
+      - name: TODO REMOVE DEBUG STUFF
+        # TODO: UNDO THIS DEBUGGING STUFF
+        run: |
+          echo FORMIDEPLOY_GIT_SHA ${{ github.event.pull_request.head.sha }}
+          echo FORMIDEPLOY_PULL_REQUEST $FORMIDEPLOY_PULL_REQUEST
+          echo GITHUB_REF $GITHUB_REF
+          echo GITHUB_EVENT_PATH $GITHUB_EVENT_PATH
+          echo EXTRACTED GITHUB_EVENT_PATH $(jq --raw-output .pull_request.number "$GITHUB_EVENT_PATH")
+          echo github.event.number ${{ github.event.number }}
+          echo steps.pr_info.outputs.number ${{ steps.pr_info.outputs.number }}
+          echo steps.pr.outputs.pull_request_number ${{ steps.pr.outputs.pull_request_number }}
+          echo
+
       - name: AWS CLI version
         run: "aws --version"
 
@@ -42,32 +69,6 @@ jobs:
         run: yarn build
         working-directory: ./website
 
-      # Use action to infer PR information.
-      - id: pr_info
-        uses: jwalton/gh-find-current-pr@v1
-
-      # Alternate way.
-      - name: Get Pull Request Number
-        id: pr
-        run: echo "::set-output name=pull_request_number::$(gh pr view --json number -q .number || echo "")"
-        env:
-          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
-
-      # TODO: HERE -- Test out multiple PRs bug with _another_ PR
-      # https://github.com/jwalton/gh-find-current-pr/issues/18
-      - name: TODO REMOVE DEBUG STUFF
-        # TODO: UNDO THIS DEBUGGING STUFF
-        run: |
-          echo FORMIDEPLOY_GIT_SHA ${{ github.event.pull_request.head.sha }}
-          echo FORMIDEPLOY_PULL_REQUEST $FORMIDEPLOY_PULL_REQUEST
-          echo GITHUB_REF $GITHUB_REF
-          echo GITHUB_EVENT_PATH $GITHUB_EVENT_PATH
-          echo EXTRACTED GITHUB_EVENT_PATH $(jq --raw-output .pull_request.number "$GITHUB_EVENT_PATH")
-          echo github.event.number ${{ github.event.number }}
-          echo steps.pr_info.outputs.number ${{ steps.pr_info.outputs.number }}
-          echo steps.pr.outputs.pull_request_number ${{ steps.pr.outputs.pull_request_number }}
-          echo
-
       - name: Deploy docs (staging)
         if: github.ref != 'refs/heads/main'
         run: yarn deploy:stage
@@ -76,7 +77,7 @@ jobs:
           # GH actions have a PR merge commit that _isn't_ our actual commits.
           # Manually infer correct branch and sha for pull requests.
           FORMIDEPLOY_GIT_SHA: ${{ github.event.pull_request.head.sha }}
-          FORMIDEPLOY_PULL_REQUEST: ${{ steps.pr_info.outputs.number }} # TODO: REMOVE / FIX?
+          # FORMIDEPLOY_PULL_REQUEST: ${{ steps.pr_info.outputs.number }} # TODO: REMOVE / FIX?
           GITHUB_DEPLOYMENT_TOKEN: ${{ secrets.GITHUB_TOKEN }}
           SURGE_LOGIN: ${{ secrets.SURGE_LOGIN }}
           SURGE_TOKEN: ${{ secrets.SURGE_TOKEN }}
