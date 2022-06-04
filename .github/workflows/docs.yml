@@ -50,6 +50,7 @@ jobs:
           echo FORMIDEPLOY_PULL_REQUEST $FORMIDEPLOY_PULL_REQUEST
           echo GITHUB_REF $GITHUB_REF
           echo GITHUB_EVENT_PATH $GITHUB_EVENT_PATH
+          echo EXTRACTED GITHUB_EVENT_PATH $(jq --raw-output .pull_request.number "$GITHUB_EVENT_PATH")
           echo
           yarn deploy:stage
         working-directory: ./website
