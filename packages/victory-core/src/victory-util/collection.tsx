@@ -1,5 +1,3 @@
-/* eslint-disable no-use-before-define */
-
 function isNonEmptyArray(collection) {
   return Array.isArray(collection) && collection.length > 0;
 }
