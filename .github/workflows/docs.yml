@@ -46,6 +46,13 @@ jobs:
       - id: pr_info
         uses: jwalton/gh-find-current-pr@v1
 
+      # Alternate way.
+      - name: Get Pull Request Number
+        id: pr
+        run: echo "::set-output name=pull_request_number::$(gh pr view --json number -q .number || echo "")"
+        env:
+          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+
       # TODO: HERE -- Test out multiple PRs bug with _another_ PR
       # https://github.com/jwalton/gh-find-current-pr/issues/18
       - name: TODO REMOVE DEBUG STUFF
@@ -58,6 +65,7 @@ jobs:
           echo EXTRACTED GITHUB_EVENT_PATH $(jq --raw-output .pull_request.number "$GITHUB_EVENT_PATH")
           echo github.event.number ${{ github.event.number }}
           echo steps.pr_info.outputs.number ${{ steps.pr_info.outputs.number }}
+          echo steps.pr.outputs.pull_request_number ${{ steps.pr.outputs.pull_request_number }}
           echo
 
       - name: Deploy docs (staging)

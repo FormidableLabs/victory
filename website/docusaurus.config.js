@@ -1,7 +1,7 @@
 // @ts-check
 // Note: type annotations allow type checking and IDEs autocompletion
 
-// TODO: REMOVE -- FORCE CHANGE FOR GH ACTIONS 007
+// TODO: REMOVE -- FORCE CHANGE FOR GH ACTIONS 008
 const path = require('path');
 
 const lightCodeTheme = require('prism-react-renderer/themes/github');
