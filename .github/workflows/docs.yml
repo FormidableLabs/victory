@@ -44,7 +44,13 @@ jobs:
 
       - name: Deploy docs (staging)
         if: github.ref != 'refs/heads/main'
-        run: yarn deploy:stage
+        # TODO: UNDO THIS DEBUGGING STUFF
+        run: |
+          echo FORMIDEPLOY_GIT_SHA ${{ github.event.pull_request.head.sha }}
+          echo FORMIDEPLOY_PULL_REQUEST $FORMIDEPLOY_PULL_REQUEST
+          echo GITHUB_REF $GITHUB_REF
+          echo
+          yarn deploy:stage
         working-directory: ./website
         env:
           # GH actions have a PR merge commit that _isn't_ our actual commits.
