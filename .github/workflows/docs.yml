@@ -17,22 +17,6 @@ jobs:
     runs-on: ubuntu-latest
 
     steps:
-      # Use action to infer PR information.
-      - id: pr_info
-        uses: jwalton/gh-find-current-pr@v1
-
-      - name: TODO REMOVE DEBUG STUFF
-        # TODO: UNDO THIS DEBUGGING STUFF
-        run: |
-          echo FORMIDEPLOY_GIT_SHA ${{ github.event.pull_request.head.sha }}
-          echo FORMIDEPLOY_PULL_REQUEST $FORMIDEPLOY_PULL_REQUEST
-          echo GITHUB_REF $GITHUB_REF
-          echo GITHUB_EVENT_PATH $GITHUB_EVENT_PATH
-          echo EXTRACTED GITHUB_EVENT_PATH $(jq --raw-output .pull_request.number "$GITHUB_EVENT_PATH")
-          echo github.event.number ${{ github.event.number }}
-          echo steps.pr_info.outputs.number ${{ steps.pr_info.outputs.number }}
-          echo
-
       - uses: actions/checkout@v2
 
       - name: AWS CLI version
@@ -57,6 +41,24 @@ jobs:
       - name: Build the website
         run: yarn build
         working-directory: ./website
+
+      # Use action to infer PR information.
+      - id: pr_info
+        uses: jwalton/gh-find-current-pr@v1
+
+      # TODO: HERE -- Test out multiple PRs bug with _another_ PR
+      # https://github.com/jwalton/gh-find-current-pr/issues/18
+      - name: TODO REMOVE DEBUG STUFF
+        # TODO: UNDO THIS DEBUGGING STUFF
+        run: |
+          echo FORMIDEPLOY_GIT_SHA ${{ github.event.pull_request.head.sha }}
+          echo FORMIDEPLOY_PULL_REQUEST $FORMIDEPLOY_PULL_REQUEST
+          echo GITHUB_REF $GITHUB_REF
+          echo GITHUB_EVENT_PATH $GITHUB_EVENT_PATH
+          echo EXTRACTED GITHUB_EVENT_PATH $(jq --raw-output .pull_request.number "$GITHUB_EVENT_PATH")
+          echo github.event.number ${{ github.event.number }}
+          echo steps.pr_info.outputs.number ${{ steps.pr_info.outputs.number }}
+          echo
 
       - name: Deploy docs (staging)
         if: github.ref != 'refs/heads/main'
