@@ -1,6 +1,6 @@
 const path = require("path");
-const { getDefaultConfig } = require("@expo/metro-config");
-const blacklist = require("metro-config/src/defaults/blacklist");
+const { getDefaultConfig } = require("expo/metro-config");
+const blacklist = require("metro-config/src/defaults/exclusionList");
 const escape = require("escape-string-regexp");
 
 /**
