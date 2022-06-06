@@ -2,7 +2,7 @@ function isNonEmptyArray(collection) {
   return Array.isArray(collection) && collection.length > 0;
 }
 
-export function containsStrings(collection) {
+export function containsStrings<T>(collection: Array<T>) {
   return (
     Array.isArray(collection) &&
     collection.some((value) => typeof value === "string")
