@@ -1,3 +1,4 @@
+export * from "./types/callbacks";
 export * from "./types/prop-types";
 export * from "./victory-accessible-group/victory-accessible-group";
 export * from "./victory-animation/victory-animation";
