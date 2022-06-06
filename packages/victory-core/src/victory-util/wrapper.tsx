@@ -136,10 +136,10 @@ export function getData(props, childComponents) {
     return Data.getData(props);
   }
   childComponents = childComponents || React.Children.toArray(props.children);
-  return getDataFromChildren(childComponents);
+  return getDataFromChildren(props, childComponents);
 }
 
-export function getWidth(props, groupLength, seriesLength) {
+export function getWidth(props, groupLength?, seriesLength?) {
   const { datasets, horizontal } = props;
   const range = horizontal
     ? Helpers.getRange(props, "y")
