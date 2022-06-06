@@ -147,7 +147,7 @@ const _getFontData = (fontFamily) => {
   return fonts[fontMatch];
 };
 
-const _splitToLines = (text) => {
+const _splitToLines = (text: string | string[]) => {
   return Array.isArray(text) ? text : text.toString().split(/\r\n|\r|\n/g);
 };
 
@@ -203,7 +203,7 @@ const _prepareParams = (inputStyle, index) => {
   });
 };
 
-const _approximateTextWidthInternal = (text, style) => {
+const _approximateTextWidthInternal = (text: string | string[], style) => {
   if (text === undefined || text === "" || text === null) {
     return 0;
   }
@@ -230,7 +230,7 @@ const _approximateTextWidthInternal = (text, style) => {
   return Math.max(...widths);
 };
 
-const _approximateTextHeightInternal = (text, style) => {
+const _approximateTextHeightInternal = (text: string | string[], style) => {
   if (text === undefined || text === "" || text === null) {
     return 0;
   }
@@ -255,7 +255,7 @@ export interface TextSizeStyleInterface {
 
 // Stubbable implementation.
 export const _approximateTextSizeInternal = {
-  impl: (text: string, style?: TextSizeStyleInterface) => {
+  impl: (text: string | string[], style?: TextSizeStyleInterface) => {
     const angle = Array.isArray(style)
       ? style[0] && style[0].angle
       : style && style.angle;
@@ -276,7 +276,7 @@ export const _approximateTextSizeInternal = {
 
 /**
  * Predict text size by font params.
- * @param {string} text Content for width calculation.
+ * @param {string|string[]} text Content for width calculation.
  * @param {Object} style Text styles, ,fontFamily, fontSize, etc.
  * @param {string} style.fontFamily Text fontFamily.
  * @param {(number|string)} style.fontSize Text fontSize.
@@ -286,7 +286,7 @@ export const _approximateTextSizeInternal = {
  * @returns {number} Approximate text label height.
  */
 export const approximateTextSize = (
-  text: string,
+  text: string | string[],
   style?: TextSizeStyleInterface
 ): { width: number; height: number } =>
   _approximateTextSizeInternal.impl(text, style);

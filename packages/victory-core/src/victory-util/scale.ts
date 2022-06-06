@@ -3,18 +3,26 @@ import { includes, isFunction, isPlainObject } from "lodash";
 import * as Helpers from "./helpers";
 import * as Collection from "./collection";
 import * as d3Scale from "victory-vendor/d3-scale";
+import { D3Scale, ScaleName } from "../types/prop-types";
 
-const supportedScaleStrings = ["linear", "time", "log", "sqrt"];
+const supportedScaleStrings = ["linear", "time", "log", "sqrt"] as const;
+
+interface D3ScaleMethods {
+  scaleLinear(): D3Scale;
+  scaleTime(): D3Scale;
+  scaleLog(): D3Scale;
+  scaleSqrt(): D3Scale;
+}
 
 // Private Functions
 
-function toNewName(scale) {
+function toNewName(scale: ScaleName): keyof D3ScaleMethods {
   // d3 scale changed the naming scheme for scale from "linear" -> "scaleLinear" etc.
   const capitalize = (s) => s && s[0].toUpperCase() + s.slice(1);
-  return `scale${capitalize(scale)}`;
+  return `scale${capitalize(scale)}` as keyof D3ScaleMethods;
 }
 
-function validScale(scale) {
+function validScale(scale: string | D3Scale): scale is ScaleName | D3Scale {
   if (typeof scale === "function") {
     return (
       isFunction(scale.copy) &&
@@ -27,7 +35,7 @@ function validScale(scale) {
   return false;
 }
 
-function isScaleDefined(props, axis) {
+function isScaleDefined(props, axis: "x" | "y") {
   if (!props.scale) {
     return false;
   } else if (props.scale.x || props.scale.y) {
@@ -36,7 +44,7 @@ function isScaleDefined(props, axis) {
   return true;
 }
 
-function getScaleTypeFromProps(props, axis) {
+function getScaleTypeFromProps(props, axis: "x" | "y"): string | undefined {
   if (!isScaleDefined(props, axis)) {
     return undefined;
   }
@@ -44,7 +52,7 @@ function getScaleTypeFromProps(props, axis) {
   return typeof scale === "string" ? scale : getType(scale);
 }
 
-function getScaleFromDomain(props, axis) {
+function getScaleFromDomain(props, axis: "x" | "y"): ScaleName | undefined {
   let domain;
   if (props.domain && props.domain[axis]) {
     domain = props.domain[axis];
@@ -57,7 +65,7 @@ function getScaleFromDomain(props, axis) {
   return Collection.containsDates(domain) ? "time" : "linear";
 }
 
-function getScaleTypeFromData(props, axis) {
+function getScaleTypeFromData(props, axis): ScaleName {
   if (!props.data) {
     return "linear";
   }
@@ -73,11 +81,13 @@ function getScaleTypeFromData(props, axis) {
 
 // Exported Functions
 
-export function getScaleFromName(name) {
-  return validScale(name) ? d3Scale[toNewName(name)]() : d3Scale.scaleLinear();
+export function getScaleFromName(name: string): D3Scale {
+  return validScale(name)
+    ? d3Scale[toNewName(name as ScaleName)]()
+    : d3Scale.scaleLinear();
 }
 
-export function getBaseScale(props, axis) {
+export function getBaseScale(props, axis: "x" | "y") {
   const scale = getScaleFromProps(props, axis);
   if (scale) {
     return typeof scale === "string" ? getScaleFromName(scale) : scale;
@@ -91,7 +101,7 @@ export function getDefaultScale() {
   return d3Scale.scaleLinear();
 }
 
-export function getScaleFromProps(props, axis) {
+export function getScaleFromProps(props, axis): D3Scale | undefined {
   if (!isScaleDefined(props, axis)) {
     return undefined;
   }
@@ -102,7 +112,7 @@ export function getScaleFromProps(props, axis) {
   return undefined;
 }
 
-export function getScaleType(props, axis) {
+export function getScaleType(props, axis): string {
   // if the scale was not given in props, it will be set to linear or time depending on data
   return (
     getScaleTypeFromProps(props, axis) || getScaleTypeFromData(props, axis)

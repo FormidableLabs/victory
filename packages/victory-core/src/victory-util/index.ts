@@ -16,6 +16,7 @@ export * as PointPathHelpers from "./point-path-helpers";
 export * as PropTypes from "./prop-types";
 export * as Scale from "./scale";
 export * as Selection from "./selection";
+export type { SVGCoordinateType, SVGCoordinateBounds } from "./selection";
 export * as Style from "./style";
 export * as TextSize from "./textsize";
 export type { TextSizeStyleInterface } from "./textsize";

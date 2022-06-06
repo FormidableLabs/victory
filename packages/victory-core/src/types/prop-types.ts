@@ -78,16 +78,23 @@ export type RangeTuple = [number, number];
 export type RangePropType = RangeTuple | { x?: RangeTuple; y?: RangeTuple };
 
 /**
- * D3 scale function shape. Don"t want to introduce typing dependency to d3
+ * D3 scale function shape. Don't want to introduce typing dependency to d3
  */
 export interface D3Scale {
   (input: string | number): number;
-  domain: () => any;
+
+  domain: () => [number, number];
   range: () => any;
   copy: () => any;
+  invert: (value: number) => number;
 }
 
-export type ScalePropType = "linear" | "time" | "log" | "sqrt";
+export type ScaleName = "linear" | "time" | "log" | "sqrt";
+export type ScalePropType = ScaleName;
+export type ScaleXYPropType = {
+  x: D3Scale;
+  y: D3Scale;
+};
 
 export type CategoryPropType =
   | string[]

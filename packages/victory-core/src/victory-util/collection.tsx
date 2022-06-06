@@ -9,7 +9,7 @@ export function containsStrings(collection) {
   );
 }
 
-export function containsDates(collection) {
+export function containsDates(collection: Array<number | Date>): boolean {
   return (
     Array.isArray(collection) &&
     collection.some((value) => value instanceof Date)
@@ -38,15 +38,23 @@ export function removeUndefined(arr) {
   return arr.filter((el) => el !== undefined);
 }
 
-export function getMaxValue(arr, ...values) {
-  const array = arr.concat(values);
+export function getMaxValue<T extends number | Date>(
+  arr: T[],
+  ...values: T[]
+): T {
+  const array: any[] = arr.concat(values);
+  // @ts-expect-error "Date is not assignable to number"
   return containsDates(array)
     ? new Date(Math.max(...array))
     : Math.max(...array);
 }
 
-export function getMinValue(arr, ...values) {
-  const array = arr.concat(values);
+export function getMinValue<T extends number | Date>(
+  arr: T[],
+  ...values: T[]
+): T {
+  const array: any[] = arr.concat(values);
+  // @ts-expect-error "Date is not assignable to number"
   return containsDates(array)
     ? new Date(Math.min(...array))
     : Math.min(...array);
