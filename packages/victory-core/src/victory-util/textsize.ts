@@ -169,8 +169,7 @@ export const convertLengthToPixels = (
   length: string,
   fontSize?: number
 ): number => {
-  const attribute =
-    length.match(/[a-zA-Z%]+/) && length.match(/[a-zA-Z%]+/)![0];
+  const attribute = length.match(/[a-zA-Z%]+/)?.[0];
   const value = Number(length.match(/[0-9.,]+/));
   let result;
   if (!attribute) {
