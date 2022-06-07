@@ -85,7 +85,7 @@ export function useDomain(
   }, [props.minDomain, axis, min]);
 
   const maxDomain = React.useMemo(() => {
-    return getValueForAxis(props.maxDomain, axis) || max;
+    return getValueForAxis<number>(props.maxDomain, axis) || max;
   }, [props.maxDomain, axis, max]);
 
   const domainFromProps = React.useMemo(() => {
