@@ -5,12 +5,25 @@ import {
   PaddingProps,
   VictoryThemeDefinition
 } from "../victory-theme/victory-theme";
-import { StringOrCallback, StringOrNumberOrCallback } from "../types";
+import {
+  StringOrCallback,
+  StringOrNumberOrCallback,
+  Tuple,
+  ValueOrAccessor,
+  ValueOrAxesObject
+} from "../types";
 import {
   AnimationEasing,
   AnimationStyle
 } from "../victory-animation/victory-animation";
 
+export type DomainPaddingPropType = ValueOrAxesObject<PaddingType>;
+export type DomainPropType = ValueOrAxesObject<DomainTuple>;
+export type DomainTuple = Tuple<DomainValue>;
+export type DomainValue = number | Date;
+export type PaddingType = number | Tuple<number>;
+export type RangePropType = ValueOrAxesObject<RangeTuple>;
+export type RangeTuple = Tuple<number>;
 export type StringOrNumberOrList = string | number | (string | number)[];
 
 export interface AnimatePropTypeInterface {
@@ -66,31 +79,14 @@ export interface EventPropTypeInterface<TTarget, TEventKey> {
   };
 }
 
-export type DomainTuple = [number, number] | [Date, Date];
-export type DomainPropObjectType =
-  | { x?: DomainTuple; y: DomainTuple }
-  | { x: DomainTuple; y?: DomainTuple };
-export type DomainPropType = DomainPropObjectType | DomainTuple;
-
-export type PaddingType = number | [number, number];
-export type DomainPaddingPropType =
-  | PaddingType
-  | {
-      x?: PaddingType;
-      y?: PaddingType;
-    };
-
-export type RangeTuple = [number, number];
-export type RangePropType = RangeTuple | { x?: RangeTuple; y?: RangeTuple };
-
 /**
- * D3 scale function shape. Don"t want to introduce typing dependency to d3
+ * D3 scale function shape. Don't want to introduce typing dependency to d3
  */
 export interface D3Scale {
   (input: string | number): number;
-  domain: () => any;
-  range: () => any;
-  copy: () => any;
+  domain: () => Tuple<number>;
+  range: () => Tuple<number>;
+  copy: () => D3Scale;
 }
 
 export type ScalePropType = "linear" | "time" | "log" | "sqrt";
@@ -104,13 +100,7 @@ export type CategoryPropType =
       y: string[];
     };
 
-export type DataGetterPropType =
-  | number
-  | string
-  | string[]
-  | { (data: any): number | string | string[] }
-  // eslint-disable-next-line @typescript-eslint/ban-types
-  | Function;
+export type DataGetterPropType = ValueOrAccessor<string | number | number[]>;
 
 export type InterpolationPropType =
   | "basis"
@@ -160,23 +150,17 @@ export interface VictoryCommonThemeProps {
   groupComponent?: React.ReactElement;
   height?: number;
   horizontal?: boolean;
-  maxDomain?: number | { x?: number; y?: number };
-  minDomain?: number | { x?: number; y?: number };
+  maxDomain?: ValueOrAxesObject<number>;
+  minDomain?: ValueOrAxesObject<number>;
   name?: string;
   origin?: OriginType;
   padding?: PaddingProps;
   polar?: boolean;
   range?: RangePropType;
-  scale?:
-    | ScalePropType
-    | D3Scale
-    | {
-        x?: ScalePropType | D3Scale;
-        y?: ScalePropType | D3Scale;
-      };
+  scale?: ValueOrAxesObject<ScalePropType | D3Scale>;
   // eslint-disable-next-line @typescript-eslint/ban-types
   sharedEvents?: { events: any[]; getEventState: Function };
-  singleQuadrantDomainPadding?: boolean | { x?: boolean; y?: boolean };
+  singleQuadrantDomainPadding?: ValueOrAxesObject<boolean>;
   standalone?: boolean;
   width?: number;
 }

@@ -7,12 +7,22 @@
  */
 import type { D3Scale } from "./victory-util/types";
 
+export type Axis = "x" | "y";
+export type Datum = object;
+export type ForAxes<T> = T | { x?: T; y?: T };
+export type ID = number | string;
+export type ValueOrAccessor<ValueType = unknown, PropsType = object> =
+  | ValueType
+  | ((props: PropsType) => ValueType);
+export type Tuple<T> = [T, T];
+export type ValueOrAxesObject<T> = T | ForAxes<T>;
+
 export interface CallbackArgs {
   active?: boolean;
-  data?: any;
-  datum?: any;
+  data?: Datum[];
+  datum?: Datum;
   horizontal?: boolean;
-  index: number | string;
+  index: ID;
   x?: number;
   y?: number;
   scale?: {
@@ -27,6 +37,7 @@ export interface CallbackArgs {
 export type VictoryStringOrNumberCallback = (
   args: CallbackArgs
 ) => string | number;
+
 export type VictoryStringCallback = (args: CallbackArgs) => string;
 export type StringOrNumberOrCallback =
   | string

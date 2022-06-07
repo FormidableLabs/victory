@@ -1,17 +1,8 @@
 import * as React from "react";
 import * as d3Array from "victory-vendor/d3-array";
+import { Axis, ForAxes, Tuple, ValueOrAxesObject } from "../../types";
 import { PaddingProps } from "../../victory-theme/victory-theme";
-
-// TODO: Move this to ../types.ts
-type ForAxes<T> = T | { x?: T; y?: T };
-type Tuple<T> = [T, T];
-type Axis = "x" | "y";
-type ValueOrAxesObject<T> = T | ForAxes<T>;
-
-// TODO: There may be other types of data
-type Datum = number | Date;
-type Dataset = { x: Datum; y: Datum }[];
-type DomainTuple = Tuple<Datum>;
+import { DomainTuple, DomainValue } from "../types";
 
 interface DomainProps {
   domain?: ValueOrAxesObject<DomainTuple>;
@@ -27,7 +18,7 @@ interface DomainProps {
   // was logic for converting this data back from preformatted
   // data, and it would be better to standardize the data format
   // and share the same formatted data between all modules.
-  data?: Dataset;
+  data?: { x: DomainValue; y: DomainValue }[];
 }
 
 function hasValueForAxis<T = unknown>(
@@ -54,7 +45,10 @@ function getValueForAxis<T = unknown>(
   return value;
 }
 
-function getDomainFromMinMax(min: Datum, max: Datum): Tuple<Datum> {
+function getDomainFromMinMax(
+  min: DomainValue,
+  max: DomainValue
+): Tuple<DomainValue> {
   // TODO: Victoy currently has some really specific logic in getDomainFromMinMax
   // that adds or subtracts a very small number from each domain to avoid the min
   // and max being the same value. This has resulted in some weird behavior in the
@@ -74,7 +68,7 @@ export function useDomain(
         acc.push(value);
       }
       return acc;
-    }, [] as Datum[]);
+    }, [] as DomainValue[]);
     if (includeZero && axis === "y") {
       nonNullValues.push(0);
     }
@@ -82,6 +76,7 @@ export function useDomain(
   }, [data, axis, includeZero]);
 
   const [min, max] = React.useMemo(() => {
+    // TODO: Get typings for d3Array
     return d3Array.extent(allValues) as Tuple<number> | Tuple<Date>;
   }, [allValues]);
 
