@@ -13,8 +13,8 @@ function transformTarget(
   return dimension === "y" ? d * target + f : a * target + e;
 }
 
-function getTransformationMatrix(svg: SVGElement): DOMMatrix {
-  return (svg as SVGGraphicsElement).getScreenCTM()!.inverse();
+function getTransformationMatrix(svg: SVGGraphicsElement): DOMMatrix {
+  return svg.getScreenCTM()!.inverse();
 }
 
 interface ReactNativeTouchEvent extends Event {
@@ -73,7 +73,7 @@ export function getSVGEventCoordinates(
     ? evt.changedTouches[0]
     : (evt as React.MouseEvent);
   svg = svg || getParentSVG(location);
-  const matrix = getTransformationMatrix(svg);
+  const matrix = getTransformationMatrix(svg as SVGGraphicsElement);
   return {
     x: transformTarget(location.clientX, matrix, "x"),
     y: transformTarget(location.clientY, matrix, "y")
@@ -133,8 +133,8 @@ export function getBounds(props: ComputedCommonProps): SVGCoordinateBounds {
   const point2 = getDataCoordinates(props, scale, x2, y2);
   const makeBound = (a: number, b: number) => {
     return [
-      Collection.getMinValue([a, b]),
-      Collection.getMaxValue([a, b])
+      Collection.getMinValue([a, b]) as number,
+      Collection.getMaxValue([a, b]) as number
     ] as const;
   };
   return {
