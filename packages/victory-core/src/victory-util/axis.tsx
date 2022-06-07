@@ -248,9 +248,9 @@ export function getTickFormat(props, scale) {
     return defaultTickFormat || scaleTickFormat;
   } else if (tickFormat && Array.isArray(tickFormat)) {
     const tickArray = getTickArray(props);
-    const tickArrayIndices = tickArray!.map((v) => v.index);
+    const tickArrayIndices = tickArray?.map((v) => v.index);
     const filteredTickFormat = tickFormat.filter((t, index) =>
-      tickArrayIndices.includes(index)
+      tickArrayIndices?.includes(index)
     );
     return (x, index) => filteredTickFormat[index];
   } else if (tickFormat && isFunction(tickFormat)) {
