@@ -82,10 +82,10 @@ module.exports = {
     check: {
       ci: npsUtils.series.nps(
         "format.ci",
-        "lint",
         "build-package-libs",
-        "typecheck",
         "build-package-dists",
+        "lint",
+        "typecheck",
         "test-node",
         "jest",
         "jest.native"
