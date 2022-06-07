@@ -1,12 +1,17 @@
 import * as React from "react";
+import * as d3Array from "victory-vendor/d3-array";
 import { PaddingProps } from "../../victory-theme/victory-theme";
 
 // TODO: Move this to ../types.ts
 type ForAxes<T> = T | { x?: T; y?: T };
 type Tuple<T> = [T, T];
 type Axis = "x" | "y";
-type DomainTuple = Tuple<number> | Tuple<Date>;
 type ValueOrAxesObject<T> = T | ForAxes<T>;
+
+// TODO: There may be other types of data
+type Datum = number | Date;
+type Dataset = { x: Datum; y: Datum }[];
+type DomainTuple = Tuple<Datum>;
 
 interface DomainProps {
   domain?: ValueOrAxesObject<DomainTuple>;
@@ -16,9 +21,14 @@ interface DomainProps {
   width?: number;
   height?: number;
   padding?: PaddingProps;
+  // This should be a flattened list of all chart data.
+  // This data should be cleaned and formatted at the top-level
+  // before being passed into this component. Previously there
+  // was logic for converting this data back from preformatted
+  // data, and it would be better to standardize the data format
+  // and share the same formatted data between all modules.
+  data?: Dataset;
 }
-
-export type DomainResult = { x: DomainTuple; y: DomainTuple };
 
 function hasValueForAxis<T = unknown>(
   value: unknown | ForAxes<T>,
@@ -44,46 +54,52 @@ function getValueForAxis<T = unknown>(
   return value;
 }
 
-export function useDomain(props: DomainProps): DomainResult {
-  const getDomainPadding = React.useCallback(
-    (axis: Axis) => {
-      const domainPadding = getValueForAxis<number | Tuple<number>>(
-        props.domainPadding,
-        axis
-      );
-      if (isTuple(domainPadding)) {
-        const [left, right] = domainPadding;
-        return { left, right };
+function getDomainFromMinMax(min: Datum, max: Datum): Tuple<Datum> {
+  // TODO: Victoy currently has some really specific logic in getDomainFromMinMax
+  // that adds or subtracts a very small number from each domain to avoid the min
+  // and max being the same value. This has resulted in some weird behavior in the
+  // past, so we should revisit this.
+  return [min, max];
+}
+
+export function useDomain(
+  { data = [], ...props }: DomainProps,
+  axis: Axis,
+  includeZero = false
+): DomainTuple {
+  const allValues = React.useMemo(() => {
+    const nonNullValues = data.reduce((acc, datum) => {
+      const value = datum[axis];
+      if (value) {
+        acc.push(value);
       }
-      return { left: domainPadding, right: domainPadding };
-    },
-    [props.domainPadding]
-  );
+      return acc;
+    }, [] as Datum[]);
+    if (includeZero && axis === "y") {
+      nonNullValues.push(0);
+    }
+    return nonNullValues;
+  }, [data, axis, includeZero]);
 
-  const getDomainFromProps = React.useCallback(
-    (axis: Axis) => {
-      const domain = getValueForAxis<DomainTuple>(props.domain, axis);
-      if (isTuple(domain)) {
-        return domain;
-      }
-      // TODO: Victoy currently has some really specific logic in getDomainFromMinMax
-      // that adds or subtracts a very small number from each domain to avoid the min
-      // and max being the same value. This has resulted in some weird behavior in the
-      // past, so we should revisit this.
-      const minDomain = getValueForAxis<number>(props.minDomain, axis) || 0;
-      const maxDomain = getValueForAxis<number>(props.maxDomain, axis) || 0;
-      return [minDomain, maxDomain] as Tuple<number>;
-    },
-    [props.domain, props.minDomain, props.maxDomain]
-  );
+  const [min, max] = React.useMemo(() => {
+    return d3Array.extent(allValues) as Tuple<number> | Tuple<Date>;
+  }, [allValues]);
 
-  const x = React.useMemo(() => {
-    return getDomainFromProps("x");
-  }, [getDomainFromProps]);
+  const minDomain = React.useMemo(() => {
+    return getValueForAxis<number>(props.minDomain, axis) || min;
+  }, [props.minDomain, axis, min]);
 
-  const y = React.useMemo(() => {
-    return getDomainFromProps("y");
-  }, [getDomainFromProps]);
+  const maxDomain = React.useMemo(() => {
+    return getValueForAxis(props.maxDomain, axis) || max;
+  }, [props.maxDomain, axis, max]);
 
-  return { x, y };
+  const domainFromProps = React.useMemo(() => {
+    return getValueForAxis<DomainTuple>(props.domain, axis);
+  }, [props.domain, axis]);
+
+  if (isTuple(domainFromProps)) {
+    return domainFromProps;
+  }
+
+  return getDomainFromMinMax(minDomain, maxDomain);
 }
