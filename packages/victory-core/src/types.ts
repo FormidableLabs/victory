@@ -15,7 +15,7 @@ export type ValueOrAccessor<ValueType = unknown, PropsType = object> =
   | ValueType
   | ((props: PropsType) => ValueType);
 export type Tuple<T> = [T, T];
-export type ValueOrAxesObject<T> = T | ForAxes<T>;
+export type ValueOrAxes<T> = T | ForAxes<T>;
 
 export interface CallbackArgs {
   active?: boolean;

@@ -10,19 +10,19 @@ import {
   StringOrNumberOrCallback,
   Tuple,
   ValueOrAccessor,
-  ValueOrAxesObject
+  ValueOrAxes
 } from "../types";
 import {
   AnimationEasing,
   AnimationStyle
 } from "../victory-animation/victory-animation";
 
-export type DomainPaddingPropType = ValueOrAxesObject<PaddingType>;
-export type DomainPropType = ValueOrAxesObject<DomainTuple>;
+export type DomainPaddingPropType = ValueOrAxes<PaddingType>;
+export type DomainPropType = ValueOrAxes<DomainTuple>;
 export type DomainTuple = Tuple<DomainValue>;
 export type DomainValue = number | Date;
 export type PaddingType = number | Tuple<number>;
-export type RangePropType = ValueOrAxesObject<RangeTuple>;
+export type RangePropType = ValueOrAxes<RangeTuple>;
 export type RangeTuple = Tuple<number>;
 export type StringOrNumberOrList = string | number | (string | number)[];
 
@@ -150,17 +150,17 @@ export interface VictoryCommonThemeProps {
   groupComponent?: React.ReactElement;
   height?: number;
   horizontal?: boolean;
-  maxDomain?: ValueOrAxesObject<number>;
-  minDomain?: ValueOrAxesObject<number>;
+  maxDomain?: ValueOrAxes<number>;
+  minDomain?: ValueOrAxes<number>;
   name?: string;
   origin?: OriginType;
   padding?: PaddingProps;
   polar?: boolean;
   range?: RangePropType;
-  scale?: ValueOrAxesObject<ScalePropType | D3Scale>;
+  scale?: ValueOrAxes<ScalePropType | D3Scale>;
   // eslint-disable-next-line @typescript-eslint/ban-types
   sharedEvents?: { events: any[]; getEventState: Function };
-  singleQuadrantDomainPadding?: ValueOrAxesObject<boolean>;
+  singleQuadrantDomainPadding?: ValueOrAxes<boolean>;
   standalone?: boolean;
   width?: number;
 }

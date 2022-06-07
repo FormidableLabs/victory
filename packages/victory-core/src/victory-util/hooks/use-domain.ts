@@ -1,14 +1,14 @@
 import * as React from "react";
 import * as d3Array from "victory-vendor/d3-array";
-import { Axis, ForAxes, Tuple, ValueOrAxesObject } from "../../types";
+import { Axis, ForAxes, Tuple, ValueOrAxes } from "../../types";
 import { PaddingProps } from "../../victory-theme/victory-theme";
 import { DomainTuple, DomainValue } from "../types";
 
 interface DomainProps {
-  domain?: ValueOrAxesObject<DomainTuple>;
-  maxDomain?: ValueOrAxesObject<number>;
-  minDomain?: ValueOrAxesObject<number>;
-  domainPadding?: ValueOrAxesObject<number | Tuple<number>>;
+  domain?: ValueOrAxes<DomainTuple>;
+  maxDomain?: ValueOrAxes<number>;
+  minDomain?: ValueOrAxes<number>;
+  domainPadding?: ValueOrAxes<number | Tuple<number>>;
   width?: number;
   height?: number;
   padding?: PaddingProps;
