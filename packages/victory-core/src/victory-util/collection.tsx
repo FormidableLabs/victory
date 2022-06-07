@@ -38,24 +38,22 @@ export function removeUndefined(arr) {
   return arr.filter((el) => el !== undefined);
 }
 
-export function getMaxValue<T extends number | Date>(
-  arr: T[],
-  ...values: T[]
-): T {
-  const array: any[] = arr.concat(values);
-  // @ts-expect-error "Date is not assignable to number"
+export function getMaxValue(
+  arr: Array<number | Date>,
+  ...values: Array<number | Date>
+): number | Date {
+  const array = arr.concat(values) as number[];
   return containsDates(array)
-    ? new Date(Math.max(...array))
+    ? new Date(Math.max(...array)) // Dates will be coerced to numbers
     : Math.max(...array);
 }
 
-export function getMinValue<T extends number | Date>(
-  arr: T[],
-  ...values: T[]
-): T {
-  const array: any[] = arr.concat(values);
-  // @ts-expect-error "Date is not assignable to number"
+export function getMinValue(
+  arr: Array<number | Date>,
+  ...values: Array<number | Date>
+): number | Date {
+  const array = arr.concat(values) as number[];
   return containsDates(array)
-    ? new Date(Math.min(...array))
+    ? new Date(Math.min(...array)) // Dates will be coerced to numbers
     : Math.min(...array);
 }
