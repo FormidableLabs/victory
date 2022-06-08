@@ -8,7 +8,8 @@
 import type { D3Scale } from "./victory-util/types";
 
 export type Axis = "x" | "y";
-export type Datum = object;
+export type DatumValue = number | string | Date | null | undefined;
+export type Datum = { [key: string]: DatumValue };
 export type ForAxes<T> = T | { x?: T; y?: T };
 export type ID = number | string;
 export type ValueOrAccessor<ValueType = unknown, PropsType = object> =
