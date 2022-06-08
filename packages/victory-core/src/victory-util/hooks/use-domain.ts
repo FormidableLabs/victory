@@ -1,8 +1,10 @@
 import * as React from "react";
 import * as d3Array from "victory-vendor/d3-array";
-import { Axis, ForAxes, Tuple, ValueOrAxes } from "../../types";
+import { Axis, Tuple, ValueOrAxes } from "../../types";
 import { PaddingProps } from "../../victory-theme/victory-theme";
+import { getValueForAxis, isTuple } from "../type-helpers";
 import { DomainTuple, DomainValue } from "../types";
+import { useAxisData } from "./use-axis-data";
 
 interface DomainProps {
   domain?: ValueOrAxes<DomainTuple>;
@@ -21,30 +23,6 @@ interface DomainProps {
   data?: { x: DomainValue; y: DomainValue }[];
 }
 
-function hasValueForAxis<T = unknown>(
-  value: unknown | ForAxes<T>,
-  axis: Axis
-): value is ForAxes<T> {
-  if (typeof value === "object" && value !== null) {
-    return axis in value;
-  }
-  return false;
-}
-
-function isTuple<T = unknown>(value: unknown): value is Tuple<T> {
-  return Array.isArray(value) && value.length === 2;
-}
-
-function getValueForAxis<T = unknown>(
-  value: T | ForAxes<T> | undefined,
-  axis: Axis
-): T | undefined {
-  if (hasValueForAxis<T>(value, axis)) {
-    return value[axis] as T;
-  }
-  return value;
-}
-
 function getDomainFromMinMax(
   min: DomainValue,
   max: DomainValue
@@ -61,24 +39,19 @@ export function useDomain(
   axis: Axis,
   includeZero = false
 ): DomainTuple {
-  const allValues = React.useMemo(() => {
-    const nonNullValues = data.reduce((acc, datum) => {
-      const value = datum[axis];
-      if (value) {
-        acc.push(value);
-      }
-      return acc;
-    }, [] as DomainValue[]);
+  const _axisData = useAxisData(data, axis);
+
+  const axisData = React.useMemo(() => {
     if (includeZero && axis === "y") {
-      nonNullValues.push(0);
+      return [..._axisData, 0];
     }
-    return nonNullValues;
-  }, [data, axis, includeZero]);
+    return _axisData;
+  }, [axis, _axisData, includeZero]);
 
   const [min, max] = React.useMemo(() => {
     // TODO: Get typings for d3Array
-    return d3Array.extent(allValues) as Tuple<number> | Tuple<Date>;
-  }, [allValues]);
+    return d3Array.extent(axisData) as Tuple<number> | Tuple<Date>;
+  }, [axisData]);
 
   const minDomain = React.useMemo(() => {
     return getValueForAxis<number>(props.minDomain, axis) || min;
