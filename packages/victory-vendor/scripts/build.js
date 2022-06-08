@@ -53,6 +53,13 @@ const getCjsRootIndex = (pkg) => `
 module.exports = require("./lib/${pkg.name}");
 `;
 
+const getTypeDefinitionFile = (pkg) => `
+// \`victory-vendor/${pkg.name}\` (TypeScript)
+//
+// Export the type definitions for this package:
+export * from "${pkg.name}";
+`;
+
 // Main.
 const main = async () => {
   // Lazy ESM imports.
@@ -81,7 +88,7 @@ const main = async () => {
   const CjsBasePath = path.resolve(__dirname, `../lib`);
   const VendorBasePath = path.resolve(__dirname, `../lib-vendor`);
   const baseDirs = [EsmBasePath, CjsBasePath, VendorBasePath];
-  const cleanGlobs = [].concat(baseDirs, path.resolve(__dirname, "../d3-*.js"));
+  const cleanGlobs = [].concat(baseDirs, path.resolve(__dirname, "../d3-*"));
 
   log("Cleaning old vendor directories.");
   await Promise.all(cleanGlobs.map((glob) => rimrafP(glob)));
@@ -127,13 +134,20 @@ const main = async () => {
         path.join(pkgBase, "LICENSE"),
         path.join(libVendorPath, "LICENSE")
       ),
-      // Root hack file for non package.json:exports systems
-      VENDOR_PKGS.has(pkgName)
-        ? fs.writeFile(
-            path.resolve(__dirname, `../${pkgName}.js`),
-            getCjsRootIndex(pkg)
-          )
-        : Promise.resolve()
+      ...(VENDOR_PKGS.has(pkgName)
+        ? [
+            // Root hack file for non package.json:exports systems
+            fs.writeFile(
+              path.resolve(__dirname, `../${pkgName}.js`),
+              getCjsRootIndex(pkg)
+            ),
+            // Generate TypeScript definitions
+            fs.writeFile(
+              path.resolve(__dirname, `../${pkgName}.d.ts`),
+              getTypeDefinitionFile(pkg)
+            )
+          ]
+        : [])
     ]);
   }
 };
