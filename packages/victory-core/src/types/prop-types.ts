@@ -1,11 +1,5 @@
 import * as React from "react";
-import { OriginType } from "../victory-label/victory-label";
-import {
-  NumberOrCallback,
-  PaddingProps,
-  VictoryThemeDefinition
-} from "../victory-theme/victory-theme";
-import { StringOrCallback, StringOrNumberOrCallback } from "../types";
+import { StringOrNumberOrCallback } from "./callbacks";
 import {
   AnimationEasing,
   AnimationStyle
@@ -84,16 +78,23 @@ export type RangeTuple = [number, number];
 export type RangePropType = RangeTuple | { x?: RangeTuple; y?: RangeTuple };
 
 /**
- * D3 scale function shape. Don"t want to introduce typing dependency to d3
+ * D3 scale function shape. Don't want to introduce typing dependency to d3
  */
 export interface D3Scale {
   (input: string | number): number;
-  domain: () => any;
+
+  domain: () => [number, number];
   range: () => any;
   copy: () => any;
+  invert: (value: number) => number;
 }
 
-export type ScalePropType = "linear" | "time" | "log" | "sqrt";
+export type ScaleName = "linear" | "time" | "log" | "sqrt";
+export type ScalePropType = ScaleName;
+export type ScaleXYPropType = {
+  x: D3Scale;
+  y: D3Scale;
+};
 
 export type CategoryPropType =
   | string[]
@@ -146,82 +147,6 @@ export type ColorScalePropType =
 
 export type SortOrderPropType = "ascending" | "descending";
 
-export type SVGCoordinateType = { x: number; y: number };
-
-export interface VictoryCommonThemeProps {
-  animate?: boolean | AnimatePropTypeInterface;
-  colorScale?: ColorScalePropType;
-  containerComponent?: React.ReactElement;
-  domainPadding?: DomainPaddingPropType;
-  externalEventMutations?: EventCallbackInterface<
-    string | string[],
-    StringOrNumberOrList
-  >[];
-  groupComponent?: React.ReactElement;
-  height?: number;
-  horizontal?: boolean;
-  maxDomain?: number | { x?: number; y?: number };
-  minDomain?: number | { x?: number; y?: number };
-  name?: string;
-  origin?: OriginType;
-  padding?: PaddingProps;
-  polar?: boolean;
-  range?: RangePropType;
-  scale?:
-    | ScalePropType
-    | D3Scale
-    | {
-        x?: ScalePropType | D3Scale;
-        y?: ScalePropType | D3Scale;
-      };
-  // eslint-disable-next-line @typescript-eslint/ban-types
-  sharedEvents?: { events: any[]; getEventState: Function };
-  singleQuadrantDomainPadding?: boolean | { x?: boolean; y?: boolean };
-  standalone?: boolean;
-  width?: number;
-}
-
-export interface VictoryCommonProps extends VictoryCommonThemeProps {
-  theme?: VictoryThemeDefinition;
-}
-
-export interface VictoryCommonPrimitiveProps {
-  active?: boolean;
-  ariaLabel?: StringOrCallback;
-  className?: string;
-  clipPath?: string;
-  data?: any;
-  // eslint-disable-next-line @typescript-eslint/ban-types
-  desc?: string | Function;
-  disableInlineStyles?: boolean;
-  events?: object;
-  // eslint-disable-next-line @typescript-eslint/ban-types
-  id?: number | string | Function;
-  index?: number | string;
-  origin?: OriginType;
-  polar?: boolean;
-  role?: string;
-  scale?: any;
-  shapeRendering?: string;
-  style?: any;
-  tabIndex?: NumberOrCallback;
-  transform?: string;
-}
-
-export interface VictoryDatableProps {
-  categories?: CategoryPropType;
-  data?: any[];
-  dataComponent?: React.ReactElement;
-  domain?: DomainPropType;
-  domainPadding?: DomainPaddingPropType;
-  samples?: number;
-  sortKey?: DataGetterPropType;
-  sortOrder?: SortOrderPropType;
-  x?: DataGetterPropType;
-  y?: DataGetterPropType;
-  y0?: DataGetterPropType;
-}
-
 export interface VictoryLabelableProps {
   labelComponent?: React.ReactElement;
 }
@@ -237,11 +162,7 @@ export interface VictorySingleLabelableProps extends VictoryLabelableProps {
   label?: string | { (data: any): string | number | null };
 }
 
-export interface TextSizeStyleInterface {
-  angle?: number;
-  characterConstant?: string;
-  fontFamily?: string;
-  fontSize?: number | string;
-  letterSpacing?: string;
-  lineHeight?: number;
-}
+export type CoordinatesPropType = {
+  x: number;
+  y: number;
+};

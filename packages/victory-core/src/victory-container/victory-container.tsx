@@ -8,8 +8,8 @@ import TimerContext from "../victory-util/timer-context";
 import * as Helpers from "../victory-util/helpers";
 import * as UserProps from "../victory-util/user-props";
 import { OriginType } from "../victory-label/victory-label";
-import { D3Scale } from "../victory-util/types";
-import { VictoryThemeDefinition } from "../victory-theme/victory-theme-definition";
+import { D3Scale } from "../types/prop-types";
+import { VictoryThemeDefinition } from "../victory-theme/types";
 
 export interface VictoryContainerProps {
   "aria-describedby"?: string;

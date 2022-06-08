@@ -1,6 +1,14 @@
 import * as React from "react";
-import { VictoryCommonThemeProps, VictoryDatableProps } from "../index";
-import { CallbackArgs, StringOrNumberOrCallback } from "../types";
+import {
+  VictoryCommonThemeProps,
+  VictoryDatableProps
+} from "../victory-util/common-props";
+import {
+  NumberOrCallback,
+  OrientationOrCallback,
+  PaddingOrCallback,
+  StringOrNumberOrCallback
+} from "../types/callbacks";
 
 export type BlockProps = {
   top?: number;
@@ -10,18 +18,6 @@ export type BlockProps = {
 };
 export type PaddingProps = number | BlockProps;
 export type OrientationTypes = "top" | "bottom" | "left" | "right";
-export type VictoryNumberCallback = (args: CallbackArgs) => number;
-export type VictoryPaddingCallback = (
-  args: CallbackArgs
-) => number | BlockProps;
-export type VictoryOrientationCallback = (
-  args: CallbackArgs
-) => OrientationTypes;
-export type NumberOrCallback = number | VictoryNumberCallback;
-export type PaddingOrCallback = number | BlockProps | VictoryPaddingCallback;
-export type OrientationOrCallback =
-  | OrientationTypes
-  | VictoryOrientationCallback;
 export type VictoryStyleObject = {
   [K in keyof React.CSSProperties]: StringOrNumberOrCallback;
 };

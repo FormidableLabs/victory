@@ -3,6 +3,7 @@ import { Collection } from "victory-core";
 describe("victory-util/collection", () => {
   describe("containsStrings", () => {
     it("handles empty argument", () => {
+      // @ts-expect-error "Method expects 1 argument"
       expect(Collection.containsStrings()).toEqual(false);
     });
 
@@ -25,6 +26,7 @@ describe("victory-util/collection", () => {
 
   describe("containsOnlyStrings", () => {
     it("handles empty argument", () => {
+      // @ts-expect-error "Method expects 1 argument"
       expect(Collection.containsOnlyStrings()).toEqual(false);
     });
 
@@ -58,6 +60,7 @@ describe("victory-util/collection", () => {
 
   describe("isArrayOfArrays", () => {
     it("handles empty argument", () => {
+      // @ts-expect-error "Method expects 1 argument"
       expect(Collection.isArrayOfArrays()).toEqual(false);
     });
 

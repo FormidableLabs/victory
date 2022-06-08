@@ -5,12 +5,12 @@ interface D3Timer {
   stop(): void;
 }
 
-type Callback = (elapsed: number, duration: number) => void;
+type TimerCallback = (elapsed: number, duration: number) => void;
 
 export default class Timer {
   private shouldAnimate: boolean;
   private readonly subscribers: Array<{
-    callback: Callback;
+    callback: TimerCallback;
     startTime: number;
     duration: number;
   }>;
@@ -51,7 +51,7 @@ export default class Timer {
     }
   }
 
-  subscribe(callback: Callback, duration: number) {
+  subscribe(callback: TimerCallback, duration: number) {
     duration = this.shouldAnimate ? duration : 0;
     const subscriptionID = this.subscribers.push({
       startTime: now(),

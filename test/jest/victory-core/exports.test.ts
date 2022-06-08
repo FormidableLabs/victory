@@ -1,8 +1,12 @@
 import * as VictoryCore from "victory-core";
 
 /* eslint-disable @typescript-eslint/no-unused-vars */
+/* eslint-disable import/named */ // We don't need eslint to validate imports; TypeScript handles that for us.
+
 // Import EVERYTHING from 'victory-core' to ensure it's getting exported correctly:
 import {
+  // @ts-expect-error TEST_EXPORTS should not be defined, so it should error!
+  TEST_EXPORTS,
   AnimatePropTypeInterface,
   AnimationData,
   AnimationEasing,
@@ -17,6 +21,7 @@ import {
   Border,
   BorderProps,
   Box,
+  CallbackArgs,
   CategoryPropType,
   Circle,
   ClipPath,
@@ -24,6 +29,7 @@ import {
   Collection,
   ColorScalePropType,
   CommonProps,
+  CoordinatesPropType,
   D3Scale,
   Data,
   DataGetterPropType,
@@ -67,12 +73,18 @@ import {
   RangePropType,
   RangeTuple,
   Rect,
+  SVGCoordinateBounds,
   SVGCoordinateType,
   Scale,
+  ScaleName,
   ScalePropType,
+  ScaleXYPropType,
   ScatterSymbolType,
   Selection,
+  SliceNumberOrCallback,
   SortOrderPropType,
+  StringOrCallback,
+  StringOrNumberOrCallback,
   StringOrNumberOrList,
   Style,
   TSpan,
@@ -113,6 +125,8 @@ import {
   VictoryPortalProps,
   VictoryPrimitiveShapeProps,
   VictorySingleLabelableProps,
+  VictoryStringCallback,
+  VictoryStringOrNumberCallback,
   VictoryStyleInterface,
   VictoryStyleObject,
   VictoryTheme,
@@ -127,6 +141,10 @@ import {
 } from "victory-core";
 
 describe("victory-core", () => {
+  it("exports addEvents", () => {
+    // This test exists to ensure we don't have an "unused import" error
+    expect(addEvents).toBeInstanceOf(Function);
+  });
   it("should export everything", () => {
     expect(Object.keys(VictoryCore).sort()).toMatchInlineSnapshot(`
       Array [

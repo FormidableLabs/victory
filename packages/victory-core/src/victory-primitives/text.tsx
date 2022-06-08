@@ -1,6 +1,6 @@
 import React from "react";
 import PropTypes from "prop-types";
-import { VictoryCommonPrimitiveProps } from "../victory-util/types";
+import { VictoryCommonPrimitiveProps } from "../victory-util/common-props";
 
 export interface TextProps extends VictoryCommonPrimitiveProps {
   children?: React.ReactNode;

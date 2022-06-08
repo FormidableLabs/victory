@@ -1,17 +1,15 @@
-/* eslint-disable no-use-before-define */
-
 function isNonEmptyArray(collection) {
   return Array.isArray(collection) && collection.length > 0;
 }
 
-export function containsStrings(collection) {
+export function containsStrings<T>(collection: Array<T>) {
   return (
     Array.isArray(collection) &&
     collection.some((value) => typeof value === "string")
   );
 }
 
-export function containsDates(collection) {
+export function containsDates(collection: Array<number | Date>): boolean {
   return (
     Array.isArray(collection) &&
     collection.some((value) => value instanceof Date)
@@ -40,16 +38,22 @@ export function removeUndefined(arr) {
   return arr.filter((el) => el !== undefined);
 }
 
-export function getMaxValue(arr, ...values) {
-  const array = arr.concat(values);
+export function getMaxValue(
+  arr: Array<number | Date>,
+  ...values: Array<number | Date>
+): number | Date {
+  const array = arr.concat(values) as number[];
   return containsDates(array)
-    ? new Date(Math.max(...array))
+    ? new Date(Math.max(...array)) // Dates will be coerced to numbers
     : Math.max(...array);
 }
 
-export function getMinValue(arr, ...values) {
-  const array = arr.concat(values);
+export function getMinValue(
+  arr: Array<number | Date>,
+  ...values: Array<number | Date>
+): number | Date {
+  const array = arr.concat(values) as number[];
   return containsDates(array)
-    ? new Date(Math.min(...array))
+    ? new Date(Math.min(...array)) // Dates will be coerced to numbers
     : Math.min(...array);
 }

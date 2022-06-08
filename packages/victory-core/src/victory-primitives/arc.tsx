@@ -3,9 +3,11 @@ import React from "react";
 import PropTypes from "prop-types";
 import * as Helpers from "../victory-util/helpers";
 import { assign } from "lodash";
-import * as CommonProps from "../victory-util/common-props";
+import {
+  CommonProps,
+  VictoryCommonPrimitiveProps
+} from "../victory-util/common-props";
 import { Path } from "./path";
-import { VictoryCommonPrimitiveProps } from "../victory-util/types";
 
 export interface ArcProps extends VictoryCommonPrimitiveProps {
   closedPath?: boolean;

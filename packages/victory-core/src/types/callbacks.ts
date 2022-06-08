@@ -1,3 +1,6 @@
+import { D3Scale } from "./prop-types";
+import { BlockProps, OrientationTypes } from "../victory-theme/types";
+
 /**
  * This is the first parameter of a callback when a callback is used to
  * resolve the value of a property instead of a concrete value.
@@ -5,8 +8,6 @@
  * Note that additional properties here like `scale`, `x`, `y`, etc are resolved
  * values of properties from the VictoryXXXProps for each component.
  */
-import type { D3Scale } from "./victory-util/types";
-
 export interface CallbackArgs {
   active?: boolean;
   data?: any;
@@ -33,13 +34,19 @@ export type StringOrNumberOrCallback =
   | number
   | VictoryStringOrNumberCallback;
 export type StringOrCallback = string | VictoryStringCallback;
-
 export type SliceNumberOrCallback<
   T,
   P extends string | number | symbol = never
 > = number | ((props: Omit<T, P>) => number);
-
-export type CoordinatesPropType = {
-  x: number;
-  y: number;
-};
+export type VictoryNumberCallback = (args: CallbackArgs) => number;
+export type VictoryPaddingCallback = (
+  args: CallbackArgs
+) => number | BlockProps;
+export type VictoryOrientationCallback = (
+  args: CallbackArgs
+) => OrientationTypes;
+export type NumberOrCallback = number | VictoryNumberCallback;
+export type PaddingOrCallback = number | BlockProps | VictoryPaddingCallback;
+export type OrientationOrCallback =
+  | OrientationTypes
+  | VictoryOrientationCallback;

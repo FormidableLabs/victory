@@ -7,6 +7,7 @@
     "max-statements": 0,
     "import/no-unresolved": 0,
     "no-undef": "off",
+    "max-nested-callbacks": "off",
     "@typescript-eslint/no-empty-function": "off"
   },
   "globals": { "expect": false }
