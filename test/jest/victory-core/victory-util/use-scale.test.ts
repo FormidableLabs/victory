@@ -1,4 +1,3 @@
-/* eslint-disable max-nested-callbacks */
 import { Hooks } from "victory-core";
 import { renderHook } from "@testing-library/react-hooks";
 import * as d3Scale from "victory-vendor/d3-scale";
