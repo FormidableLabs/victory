@@ -27,6 +27,13 @@
     "build": "node ./scripts/build.js"
   },
   "dependencies": {
+    "@types/d3-array": "^3.0.3",
+    "@types/d3-ease": "^3.0.0",
+    "@types/d3-interpolate": "^3.0.1",
+    "@types/d3-scale": "^4.0.2",
+    "@types/d3-shape": "^3.1.0",
+    "@types/d3-time": "^3.0.0",
+    "@types/d3-timer": "^3.0.0",
     "d3-array": "^3.1.6",
     "d3-ease": "^3.0.1",
     "d3-interpolate": "^3.0.1",
