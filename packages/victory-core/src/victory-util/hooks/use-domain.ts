@@ -1,4 +1,3 @@
-import * as React from "react";
 import * as d3Array from "victory-vendor/d3-array";
 import { Axis, Tuple, ValueOrAxes } from "../../types";
 import { PaddingProps } from "../../victory-theme/victory-theme";

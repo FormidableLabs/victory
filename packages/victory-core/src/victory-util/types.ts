@@ -26,6 +26,13 @@ export type RangePropType = ValueOrAxes<RangeTuple>;
 export type RangeTuple = Tuple<number>;
 export type StringOrNumberOrList = string | number | (string | number)[];
 
+export interface Padding {
+  top: number;
+  bottom: number;
+  left: number;
+  right: number;
+}
+
 export interface AnimatePropTypeInterface {
   duration?: number;
   onEnd?: () => void;

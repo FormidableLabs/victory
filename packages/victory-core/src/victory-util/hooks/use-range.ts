@@ -1,9 +1,8 @@
-import * as React from "react";
 import { Axis, Tuple, ValueOrAxes } from "../../types";
 import { PaddingProps } from "../../victory-theme/victory-theme-definition";
 import { getValueForAxis, isTuple } from "../type-helpers";
-import { RangeTuple } from "../types";
-import { usePadding } from "./use-padding";
+import { Padding, RangeTuple } from "../types";
+import { getPadding } from "../helpers";
 
 interface RangeProps {
   range?: ValueOrAxes<RangeTuple>;
@@ -27,12 +26,13 @@ export function useRange(
   axis: Axis
 ) {
   const rangeFromProps = getValueForAxis<RangeTuple>(range, axis);
-  const padding = usePadding(props.padding);
 
   if (isTuple(rangeFromProps)) {
     return rangeFromProps;
   }
 
+  // TODO: Convert this to TS
+  const padding = getPadding({ padding: props.padding }) as Padding;
   const rangeForAxis = {
     x: [padding.left, width - padding.right],
     y: [height - padding.top, padding.bottom]
