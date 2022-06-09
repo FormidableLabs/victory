@@ -7,14 +7,16 @@ describe("victory-util/scale", () => {
       const props = { scale: "log" };
       const baseScale = Scale.getBaseScale(props, "x");
       expect(baseScale).toBeInstanceOf(Function);
-      expect(baseScale.base).toBeInstanceOf(Function); // This is a unique check for log scales
+      // @ts-expect-error This is a unique check for log scales
+      expect(baseScale.base).toBeInstanceOf(Function);
     });
 
     it("returns a scale from `getScaleFromProps` when a d3 scale is provided", () => {
       const props = { scale: d3Scale.scaleLog() };
       const baseScale = Scale.getBaseScale(props, "x");
       expect(baseScale).toBeInstanceOf(Function);
-      expect(baseScale.base).toBeInstanceOf(Function); // This is a unique check for log scales
+      // @ts-expect-error This is a unique check for log scales
+      expect(baseScale.base).toBeInstanceOf(Function);
     });
 
     it("returns a default scale when data is provided", () => {

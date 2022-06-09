@@ -7,12 +7,10 @@ import { D3Scale, ScaleName } from "../types/prop-types";
 
 const supportedScaleStrings = ["linear", "time", "log", "sqrt"] as const;
 
-interface D3ScaleMethods {
-  scaleLinear(): D3Scale;
-  scaleTime(): D3Scale;
-  scaleLog(): D3Scale;
-  scaleSqrt(): D3Scale;
-}
+type D3ScaleMethods = Pick<
+  typeof d3Scale,
+  "scaleLinear" | "scaleTime" | "scaleLog" | "scaleSqrt"
+>;
 
 // Private Functions
 
@@ -81,10 +79,14 @@ function getScaleTypeFromData(props, axis): ScaleName {
 
 // Exported Functions
 
-export function getScaleFromName(name: string): D3Scale {
-  return validScale(name)
-    ? d3Scale[toNewName(name as ScaleName)]()
-    : d3Scale.scaleLinear();
+export function getScaleFromName(name: ScaleName | string): D3Scale {
+  if (validScale(name)) {
+    const methodName = toNewName(name as ScaleName);
+    // @ts-expect-error D3Scale is a simplified return type
+    return d3Scale[methodName]();
+  }
+  // @ts-expect-error D3Scale is a simplified return type
+  return d3Scale.scaleLinear();
 }
 
 export function getBaseScale(props, axis: "x" | "y") {
@@ -94,7 +96,7 @@ export function getBaseScale(props, axis: "x" | "y") {
   }
   const defaultScale =
     getScaleFromDomain(props, axis) || getScaleTypeFromData(props, axis);
-  return d3Scale[toNewName(defaultScale)]();
+  return getScaleFromName(defaultScale);
 }
 
 export function getDefaultScale() {
@@ -107,7 +109,7 @@ export function getScaleFromProps(props, axis): D3Scale | undefined {
   }
   const scale = props.scale[axis] || props.scale;
   if (validScale(scale)) {
-    return isFunction(scale) ? scale : d3Scale[toNewName(scale)]();
+    return isFunction(scale) ? scale : getScaleFromName(scale);
   }
   return undefined;
 }

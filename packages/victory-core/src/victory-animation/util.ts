@@ -34,7 +34,7 @@ export const isInterpolatable = function (obj) {
         // component is only going to call the function (in which case it's
         // safely interpolatable) or if it's going to access special properties
         // (in which case our function generated from `interpolateFunction` will
-        // most likely cause an error. We could check for enumerable properties
+        // most likely cause an error). We could check for enumerable properties
         // on the function object here to see if it's a "plain" function, but
         // let's just require that components prevent such function props from
         // being animated in the first place.
@@ -193,11 +193,12 @@ export const victoryInterpolator = function <T>(a: T, b: T): (t: number) => T {
     return interpolateFunction(a, b);
   }
   if (isPlainObject(a) || isPlainObject(b)) {
-    // @ts-expect-error These generics are tough, but they work ok?
+    // @ts-expect-error These generics are tough, but they work :)
     return interpolateObject(a, b);
   }
   if (typeof a === "string" || typeof b === "string") {
     return interpolateString(a, b);
   }
+  // @ts-expect-error These generics are tough, but they work :)
   return interpolate(a, b);
 };

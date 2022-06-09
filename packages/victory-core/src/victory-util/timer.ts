@@ -1,9 +1,4 @@
-import { timer, now } from "victory-vendor/d3-timer";
-
-interface D3Timer {
-  new (callback): void;
-  stop(): void;
-}
+import { timer, now, Timer as D3Timer } from "victory-vendor/d3-timer";
 
 type TimerCallback = (elapsed: number, duration: number) => void;
 
