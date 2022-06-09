@@ -39,35 +39,20 @@ export function useDomain(
   axis: Axis,
   includeZero = false
 ): DomainTuple {
-  const _axisData = useAxisData(data, axis);
+  const domainFromProps = getValueForAxis<DomainTuple>(props.domain, axis);
+  const axisData = useAxisData(data, axis);
 
-  const axisData = React.useMemo(() => {
-    if (includeZero && axis === "y") {
-      return [..._axisData, 0];
-    }
-    return _axisData;
-  }, [axis, _axisData, includeZero]);
-
-  const [min, max] = React.useMemo(() => {
-    // TODO: Get typings for d3Array
-    return d3Array.extent(axisData) as Tuple<number> | Tuple<Date>;
-  }, [axisData]);
-
-  const minDomain = React.useMemo(() => {
-    return getValueForAxis<number>(props.minDomain, axis) || min;
-  }, [props.minDomain, axis, min]);
-
-  const maxDomain = React.useMemo(() => {
-    return getValueForAxis<number>(props.maxDomain, axis) || max;
-  }, [props.maxDomain, axis, max]);
-
-  const domainFromProps = React.useMemo(() => {
-    return getValueForAxis<DomainTuple>(props.domain, axis);
-  }, [props.domain, axis]);
+  if (includeZero && axis === "y") {
+    axisData.push(0);
+  }
 
   if (isTuple(domainFromProps)) {
     return domainFromProps;
   }
+
+  const [min, max] = d3Array.extent(axisData) as Tuple<number> | Tuple<Date>;
+  const minDomain = getValueForAxis<number>(props.minDomain, axis) || min;
+  const maxDomain = getValueForAxis<number>(props.maxDomain, axis) || max;
 
   return getDomainFromMinMax(minDomain, maxDomain);
 }

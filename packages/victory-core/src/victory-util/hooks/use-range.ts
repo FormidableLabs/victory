@@ -26,23 +26,16 @@ export function useRange(
   }: RangeProps,
   axis: Axis
 ) {
-  const rangeFromProps = React.useMemo(() => {
-    return getValueForAxis<RangeTuple>(range, axis);
-  }, [range, axis]);
-
+  const rangeFromProps = getValueForAxis<RangeTuple>(range, axis);
   const padding = usePadding(props.padding);
-
-  const cartesianRange = React.useMemo<Tuple<number>>(() => {
-    const vertical = axis === "y";
-    if (vertical) {
-      return [height - padding.bottom, padding.top];
-    }
-    return [padding.left, width - padding.right];
-  }, [axis, height, width, padding]);
 
   if (isTuple(rangeFromProps)) {
     return rangeFromProps;
   }
 
-  return cartesianRange;
+  const vertical = axis === "y";
+  if (vertical) {
+    return [height - padding.bottom, padding.top];
+  }
+  return [padding.left, width - padding.right];
 }

@@ -57,13 +57,10 @@ export function useData({
     });
   }, [data, xAccessor, yAccessor]);
 
-  const sortedData = React.useMemo(() => {
-    if (sortKey) {
-      const order = sortOrder === "descending" ? "desc" : "asc";
-      return orderBy(formattedData, sortKey, order);
-    }
-    return formattedData;
-  }, [formattedData, sortKey, sortOrder]);
+  if (sortKey) {
+    const order = sortOrder === "descending" ? "desc" : "asc";
+    return orderBy(formattedData, sortKey, order);
+  }
 
-  return sortedData;
+  return formattedData;
 }
