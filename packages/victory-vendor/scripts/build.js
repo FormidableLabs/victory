@@ -134,20 +134,18 @@ const main = async () => {
         path.join(pkgBase, "LICENSE"),
         path.join(libVendorPath, "LICENSE")
       ),
-      ...(VENDOR_PKGS.has(pkgName)
-        ? [
-            // Root hack file for non package.json:exports systems
-            fs.writeFile(
-              path.resolve(__dirname, `../${pkgName}.js`),
-              getCjsRootIndex(pkg)
-            ),
-            // Generate TypeScript definitions
-            fs.writeFile(
-              path.resolve(__dirname, `../${pkgName}.d.ts`),
-              getTypeDefinitionFile(pkg)
-            )
-          ]
-        : [])
+      // Root hack file for non package.json:exports systems
+      VENDOR_PKGS.has(pkgName) &&
+        fs.writeFile(
+          path.resolve(__dirname, `../${pkgName}.js`),
+          getCjsRootIndex(pkg)
+        ),
+      // Generate TypeScript definitions
+      VENDOR_PKGS.has(pkgName) &&
+        fs.writeFile(
+          path.resolve(__dirname, `../${pkgName}.d.ts`),
+          getTypeDefinitionFile(pkg)
+        )
     ]);
   }
 };

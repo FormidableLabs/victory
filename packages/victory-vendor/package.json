@@ -18,6 +18,7 @@
   "exports": {
     "./package.json": "./package.json",
     "./d3-*": {
+      "types": "./d3-*.d.ts",
       "import": "./es/d3-*.js",
       "default": "./lib/d3-*.js"
     }
