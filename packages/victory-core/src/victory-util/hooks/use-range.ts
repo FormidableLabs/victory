@@ -33,9 +33,10 @@ export function useRange(
     return rangeFromProps;
   }
 
-  const vertical = axis === "y";
-  if (vertical) {
-    return [height - padding.bottom, padding.top];
-  }
-  return [padding.left, width - padding.right];
+  const rangeForAxis = {
+    x: [padding.left, width - padding.right],
+    y: [height - padding.top, padding.bottom]
+  };
+
+  return rangeForAxis[axis];
 }
