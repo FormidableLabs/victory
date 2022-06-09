@@ -255,7 +255,7 @@ export function getDomain(props, axis, childComponents) {
     const maxDomain = Domain.getMaxFromProps(props, axis);
     const dataset = (props.data || props.y) && Data.getData(props);
     const dataDomain = dataset
-      ? Domain.getDomainFromData(props, axis, dataset)
+      ? Domain.getDomainFromData(props, axis, dataset)!
       : [];
     const childDomain = getDomainFromChildren(props, axis, childComponents);
     const min =
