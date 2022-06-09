@@ -1,13 +1,17 @@
 import { orderBy } from "lodash";
 import * as React from "react";
 import { Datum, DatumValue } from "../../types";
+import { DomainTuple } from "../types";
+import { generateData } from "../data";
 
+import * as d3Array from "victory-vendor/d3-array";
 interface DataProps {
   data?: Datum[];
   x?: string;
   y?: string;
   sortKey?: string;
   sortOrder?: "ascending" | "descending";
+  samples?: number;
 }
 
 interface FormattedDatum extends Datum {
@@ -30,13 +34,28 @@ function getNumericValue(value: DatumValue, fallback: number): number | Date {
   return fallback;
 }
 
-export function useData({
-  data = [],
-  x: xAccessor = "x",
-  y: yAccessor = "y",
-  sortKey,
-  sortOrder = "ascending"
-}: DataProps) {
+export function useData(
+  {
+    x: xAccessor = "x",
+    y: yAccessor = "y",
+    sortKey,
+    sortOrder = "ascending",
+    samples = 1,
+    ...props
+  }: DataProps,
+  domain?: { x: DomainTuple; y: DomainTuple }
+) {
+  const data = React.useMemo<Datum[]>(() => {
+    if (props.data) {
+      return props.data;
+    }
+    if (domain) {
+      // TODO: Move this file or convert to TS
+      return generateData({ domain, samples });
+    }
+    return [];
+  }, [props.data, domain, samples]);
+
   const formattedData = React.useMemo<FormattedDatum[]>(() => {
     return data.map((datum, index) => {
       const x = getValue(datum, xAccessor);
