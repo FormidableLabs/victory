@@ -40,3 +40,5 @@ export { default as Timer } from "./victory-util/timer";
 export * as PointPathHelpers from "./victory-util/point-path-helpers";
 export { default as TimerContext } from "./victory-util/timer-context";
 export * from "./victory-util/types";
+export * from "./victory-state";
+export * from "./victory-state/types";

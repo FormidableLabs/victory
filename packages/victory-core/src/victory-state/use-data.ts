@@ -1,20 +1,16 @@
 import { orderBy } from "lodash";
 import * as React from "react";
-import { Datum, DatumValue } from "../../types";
-import { DomainTuple } from "../types";
-import { generateData } from "../data";
+import { Datum, DatumValue } from "../types";
+import { DomainTuple } from "../victory-util/types";
+import { generateData } from "../victory-util/data";
+import { VictoryProviderProps } from "./types";
 
-import * as d3Array from "victory-vendor/d3-array";
-interface DataProps {
-  data?: Datum[];
-  x?: string;
-  y?: string;
-  sortKey?: string;
-  sortOrder?: "ascending" | "descending";
-  samples?: number;
-}
+type DataProps = Pick<
+  VictoryProviderProps,
+  "data" | "x" | "y" | "sortKey" | "sortOrder" | "samples"
+>;
 
-interface FormattedDatum extends Datum {
+export interface FormattedDatum extends Datum {
   x: DatumValue;
   y: DatumValue;
   _x: number | Date;

@@ -1,13 +1,18 @@
 /* eslint-disable max-nested-callbacks */
-import { Hooks } from "victory-core";
 import { renderHook } from "@testing-library/react-hooks";
+import { useDomain } from "victory-core";
 
 describe("useDomain", () => {
+  it("returns a default domain if no data is provided", () => {
+    const { result } = renderHook(() => useDomain({}, "x"));
+    expect(result.current).toEqual([0, 1]);
+  });
+
   it("gets the domain from props", () => {
     const props = {
       domain: [0, 1]
     };
-    const { result } = renderHook(() => Hooks.useDomain(props, "x"));
+    const { result } = renderHook(() => useDomain(props, "x"));
     expect(result.current).toEqual([0, 1]);
   });
 
@@ -15,7 +20,7 @@ describe("useDomain", () => {
     const props = {
       domain: { x: [0, 1] }
     };
-    const { result } = renderHook(() => Hooks.useDomain(props, "x"));
+    const { result } = renderHook(() => useDomain(props, "x"));
     expect(result.current).toEqual([0, 1]);
   });
 
@@ -27,7 +32,7 @@ describe("useDomain", () => {
         { x: 3, y: 5 }
       ]
     };
-    const { result } = renderHook(() => Hooks.useDomain(props, "x"));
+    const { result } = renderHook(() => useDomain(props, "x"));
     expect(result.current).toEqual([1, 3]);
   });
 
@@ -39,7 +44,7 @@ describe("useDomain", () => {
         { x: new Date(2022, 0, 1), y: 2 }
       ]
     };
-    const { result } = renderHook(() => Hooks.useDomain(props, "x"));
+    const { result } = renderHook(() => useDomain(props, "x"));
     expect(result.current).toEqual([
       new Date(2022, 0, 1),
       new Date(2022, 0, 10)
@@ -48,7 +53,7 @@ describe("useDomain", () => {
 
   it("returns a domain from minDomain and maxDomain if both are defined", () => {
     const props = { minDomain: 1, maxDomain: 10 };
-    const { result } = renderHook(() => Hooks.useDomain(props, "x"));
+    const { result } = renderHook(() => useDomain(props, "x"));
     expect(result.current).toEqual([1, 10]);
   });
 
@@ -57,7 +62,7 @@ describe("useDomain", () => {
       minDomain: { x: 1, y: 2 },
       maxDomain: { x: 10, y: 20 }
     };
-    const { result } = renderHook(() => Hooks.useDomain(props, "x"));
+    const { result } = renderHook(() => useDomain(props, "x"));
     expect(result.current).toEqual([1, 10]);
   });
 
@@ -69,7 +74,7 @@ describe("useDomain", () => {
           { x: 3, y: 5 }
         ]
       };
-      const { result } = renderHook(() => Hooks.useDomain(props, "y", true));
+      const { result } = renderHook(() => useDomain(props, "y", true));
       expect(result.current).toEqual([0, 5]);
     });
 
@@ -80,7 +85,7 @@ describe("useDomain", () => {
           { x: 3, y: 5 }
         ]
       };
-      const { result } = renderHook(() => Hooks.useDomain(props, "y", true));
+      const { result } = renderHook(() => useDomain(props, "y", true));
       expect(result.current).toEqual([-3, 5]);
     });
 
@@ -93,7 +98,7 @@ describe("useDomain", () => {
           { x: 3, y: 5, y0: 3 }
         ]
       };
-      const { result } = renderHook(() => Hooks.useDomain(props, "y", true));
+      const { result } = renderHook(() => useDomain(props, "y", true));
       expect(result.current).toEqual([2, 5]);
     });
   });
