@@ -7,22 +7,24 @@ import {
 
 export type StringOrNumberOrList = string | number | (string | number)[];
 
+type Datum = any;
+
 export interface AnimatePropTypeInterface {
   duration?: number;
   onEnd?: () => void;
   onExit?: {
     duration?: number;
-    before?: (datum: any) => AnimationStyle;
+    before?: (datum: Datum, index: number, data: Datum[]) => AnimationStyle;
   };
   onEnter?: {
     duration?: number;
-    before?: (datum: any) => AnimationStyle;
-    after?: (datum: any) => AnimationStyle;
+    before?: (datum: Datum, index: number, data: Datum[]) => AnimationStyle;
+    after?: (datum: Datum, index: number, data: Datum[]) => AnimationStyle;
   };
   onLoad?: {
     duration?: number;
-    before?: (datum: any) => AnimationStyle;
-    after?: (datum: any) => AnimationStyle;
+    before?: (datum: Datum, index: number, data: Datum[]) => AnimationStyle;
+    after?: (datum: Datum, index: number, data: Datum[]) => AnimationStyle;
   };
   easing?: AnimationEasing;
   animationWhitelist?: string[];

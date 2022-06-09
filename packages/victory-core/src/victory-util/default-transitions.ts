@@ -1,4 +1,6 @@
-export function continuousTransitions() {
+import { AnimatePropTypeInterface } from "../types/prop-types";
+
+export function continuousTransitions(): AnimatePropTypeInterface {
   return {
     onLoad: {
       duration: 2000
@@ -12,7 +14,7 @@ export function continuousTransitions() {
   };
 }
 
-export function continuousPolarTransitions() {
+export function continuousPolarTransitions(): AnimatePropTypeInterface {
   return {
     onLoad: {
       duration: 2000,
@@ -56,7 +58,7 @@ export function continuousPolarTransitions() {
   };
 }
 
-export function discreteTransitions() {
+export function discreteTransitions(): AnimatePropTypeInterface {
   return {
     onLoad: {
       duration: 2000,
