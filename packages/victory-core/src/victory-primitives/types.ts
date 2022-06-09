@@ -1,4 +1,4 @@
-import { VictoryCommonPrimitiveProps } from "../victory-util/types";
+import { VictoryCommonPrimitiveProps } from "../victory-util/common-props";
 
 export type ScatterSymbolType =
   | "circle"

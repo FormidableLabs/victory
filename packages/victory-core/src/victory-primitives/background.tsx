@@ -2,10 +2,12 @@ import React from "react";
 import PropTypes from "prop-types";
 import { assign } from "lodash";
 import * as Helpers from "../victory-util/helpers";
-import * as CommonProps from "../victory-util/common-props";
+import {
+  CommonProps,
+  VictoryCommonPrimitiveProps
+} from "../victory-util/common-props";
 import { Rect } from "./rect";
 import { Circle } from "./circle";
-import { VictoryCommonPrimitiveProps } from "../victory-util/types";
 
 export interface BackgroundProps extends VictoryCommonPrimitiveProps {
   circleComponent?: React.ReactElement;

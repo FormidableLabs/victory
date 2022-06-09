@@ -1,15 +1,13 @@
 import * as React from "react";
 import { createContext, useContextSelector } from "use-context-selector";
-import { ForAxes } from "../types";
+import { D3Scale, ForAxes } from "../types/prop-types";
 import { VictoryProviderProps } from "./types";
 import { FormattedDatum, useData } from "./use-data";
 import { useDomain } from "./use-domain";
 import { useRange } from "./use-range";
 import { useScale } from "./use-scale";
-import { ScaleLinear } from "victory-vendor/d3-scale";
 
 // TODO: fix D3Scale type
-type D3Scale = ScaleLinear<number, number>;
 
 interface ContextType {
   data: FormattedDatum[];
@@ -27,8 +25,8 @@ export function VictoryProvider({ children, ...props }: VictoryProviderProps) {
   const xRange = useRange(props, "x");
   const yRange = useRange(props, "y");
 
-  const xBaseScaleFn: D3Scale = useScale(props, "x");
-  const yBaseScaleFn: D3Scale = useScale(props, "y");
+  const xBaseScaleFn = useScale(props, "x");
+  const yBaseScaleFn = useScale(props, "y");
 
   const xScaleFn = xBaseScaleFn().domain(xDomain).range(xRange);
   const yScaleFn = yBaseScaleFn().domain(yDomain).range(yRange);

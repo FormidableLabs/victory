@@ -4,7 +4,7 @@ dist
 lib
 lib-vendor
 es
-packages/victory-vendor/d3-*.js
+packages/victory-vendor/d3-*
 node_modules
 npm-debug.log*
 lerna-debug.log*
@@ -15,3 +15,4 @@ tsconfig.json
 tsconfig.*.json
 storybook-static
 public
+.expo

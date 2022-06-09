@@ -67,11 +67,12 @@ module.exports = {
       default: "yarn nps format.fix"
     },
     typecheck: {
-      default: npsUtils.series.nps("typecheck.core"),
+      default: npsUtils.series.nps("typecheck.packages", "typecheck.test"),
       base: "tsc --noEmit",
       core: "lerna exec --scope victory-core -- nps typecheck.base",
       demo: "tsc -p ./demo/tsconfig.json --noEmit",
-      all: "lerna exec -- nps typecheck.base"
+      test: "tsc -p ./test/tsconfig.json --noEmit",
+      packages: "lerna exec --ignore victory-vendor -- nps typecheck.base"
     },
     types: {
       base: "tsc --emitDeclarationOnly --rootDir src",
@@ -81,10 +82,10 @@ module.exports = {
     check: {
       ci: npsUtils.series.nps(
         "format.ci",
-        "lint",
         "build-package-libs",
-        "typecheck",
         "build-package-dists",
+        "lint",
+        "typecheck",
         "test-node",
         "jest",
         "jest.native"

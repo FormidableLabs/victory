@@ -1,8 +1,7 @@
 import * as React from "react";
-import { Axis, Datum } from "../types";
-import { DomainValue } from "../victory-util/types";
+import { AxisType, Datum, DomainValue } from "../types/prop-types";
 
-export function useAxisData(data: Datum[], axis: Axis) {
+export function useAxisData(data: Datum[], axis: AxisType) {
   const axisData = React.useMemo(() => {
     const nonNullValues = data.reduce((acc, datum) => {
       const value = datum[axis];

@@ -1,16 +1,11 @@
-import { timer, now } from "victory-vendor/d3-timer";
+import { timer, now, Timer as D3Timer } from "victory-vendor/d3-timer";
 
-interface D3Timer {
-  new (callback): void;
-  stop(): void;
-}
-
-type Callback = (elapsed: number, duration: number) => void;
+type TimerCallback = (elapsed: number, duration: number) => void;
 
 export default class Timer {
   private shouldAnimate: boolean;
   private readonly subscribers: Array<{
-    callback: Callback;
+    callback: TimerCallback;
     startTime: number;
     duration: number;
   }>;
@@ -51,7 +46,7 @@ export default class Timer {
     }
   }
 
-  subscribe(callback: Callback, duration: number) {
+  subscribe(callback: TimerCallback, duration: number) {
     duration = this.shouldAnimate ? duration : 0;
     const subscriptionID = this.subscribers.push({
       startTime: now(),

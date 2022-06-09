@@ -1,5 +1,23 @@
 # Victory Changelog
 
+## 36.5.0 (2022-06-07)
+* victory-histogram jest tests by @heythisispaul in https://github.com/FormidableLabs/victory/pull/2255
+* Convert tests for victory error bar by @becca-bailey in https://github.com/FormidableLabs/victory/pull/2266
+* Typescript Phase 1: Build configuration by @scottrippey in https://github.com/FormidableLabs/victory/pull/2260
+* victory-vendor: script cleanup and exports enhancements by @ryan-roemer in https://github.com/FormidableLabs/victory/pull/2264
+* victory-pie jest/rtl tests by @heythisispaul in https://github.com/FormidableLabs/victory/pull/2268
+* Typescript: Generate proper .d.ts files for Core by @scottrippey in https://github.com/FormidableLabs/victory/pull/2271
+* Disable func-style eslint rule by @becca-bailey in https://github.com/FormidableLabs/victory/pull/2275
+* Add victory-scatter tests by @becca-bailey in https://github.com/FormidableLabs/victory/pull/2269
+* TS migration: victory-primitives by @scottrippey in https://github.com/FormidableLabs/victory/pull/2274
+* Enable `eslint-comments` by @scottrippey in https://github.com/FormidableLabs/victory/pull/2277
+* Remove karma tests by @becca-bailey in https://github.com/FormidableLabs/victory/pull/2279
+* ts-migration: migrated core components to TS by @scottrippey in https://github.com/FormidableLabs/victory/pull/2278
+* Upgrade React to v18 by @becca-bailey in https://github.com/FormidableLabs/victory/pull/2280
+* ts-migration: more core by @scottrippey in https://github.com/FormidableLabs/victory/pull/2284
+* TypeScript: fix a few build issues by @scottrippey in https://github.com/FormidableLabs/victory/pull/2285
+* [Demo]: Upgrade React Native demo app by @jpdriver in https://github.com/FormidableLabs/victory/pull/2288
+
 ## 36.4.1 (2022-05-25)
 * Dev: Switch to ye olde yarn1 by @ryan-roemer in https://github.com/FormidableLabs/victory/pull/2228
 * [docs]: update victory-native introduction by @jpdriver in https://github.com/FormidableLabs/victory/pull/2231

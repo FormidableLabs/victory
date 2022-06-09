@@ -1,7 +1,6 @@
 import { orderBy } from "lodash";
 import * as React from "react";
-import { Datum, DatumValue } from "../types";
-import { DomainTuple } from "../victory-util/types";
+import { Datum, DatumValue, DomainTuple } from "../types/prop-types";
 import { generateData } from "../victory-util/data";
 import { VictoryProviderProps } from "./types";
 

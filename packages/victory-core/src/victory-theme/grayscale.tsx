@@ -1,5 +1,5 @@
 import { assign } from "lodash";
-import { VictoryThemeDefinition } from "./victory-theme-definition";
+import { VictoryThemeDefinition } from "./types";
 
 // *
 // * Colors

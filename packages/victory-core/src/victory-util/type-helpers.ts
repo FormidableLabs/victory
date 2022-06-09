@@ -1,8 +1,8 @@
-import { ForAxes, Axis, Tuple } from "../types";
+import { ForAxes, AxisType, Tuple } from "../types/prop-types";
 
 export function hasValueForAxis<T = unknown>(
   value: unknown | ForAxes<T>,
-  axis: Axis
+  axis: AxisType
 ): value is ForAxes<T> {
   if (typeof value === "object" && value !== null) {
     return axis in value;
@@ -16,7 +16,7 @@ export function isTuple<T = unknown>(value: unknown): value is Tuple<T> {
 
 export function getValueForAxis<T = unknown>(
   value: T | ForAxes<T> | undefined,
-  axis: Axis
+  axis: AxisType
 ): T | undefined {
   if (hasValueForAxis<T>(value, axis)) {
     return value[axis] as T;

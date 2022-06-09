@@ -13,9 +13,12 @@ import * as CustomPropTypes from "../victory-util/prop-types";
 import * as Style from "../victory-util/style";
 import * as TextSize from "../victory-util/textsize";
 import * as UserProps from "../victory-util/user-props";
-import { StringOrCallback, StringOrNumberOrCallback } from "../types";
 import {
   NumberOrCallback,
+  StringOrCallback,
+  StringOrNumberOrCallback
+} from "../types/callbacks";
+import {
   PaddingProps,
   VerticalAnchorType,
   VictoryLabelStyleObject

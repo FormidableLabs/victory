@@ -136,10 +136,10 @@ export function getData(props, childComponents) {
     return Data.getData(props);
   }
   childComponents = childComponents || React.Children.toArray(props.children);
-  return getDataFromChildren(childComponents);
+  return getDataFromChildren(props, childComponents);
 }
 
-export function getWidth(props, groupLength, seriesLength) {
+export function getWidth(props, groupLength?, seriesLength?) {
   const { datasets, horizontal } = props;
   const range = horizontal
     ? Helpers.getRange(props, "y")
@@ -280,9 +280,11 @@ export function getScale(props, axis, childComponents) {
     });
     return Scale.getScaleType(sharedProps, axis);
   };
-  const childScale = uniq(Helpers.reduceChildren(children, iteratee, props));
-  // default to linear scale if more than one uniq scale type is given by children
+  const childScale: string[] = uniq(
+    Helpers.reduceChildren(children, iteratee, props)
+  );
 
+  // default to linear scale if more than one uniq scale type is given by children
   return childScale.length > 1
     ? Scale.getScaleFromName("linear")
     : Scale.getScaleFromName(childScale[0]);

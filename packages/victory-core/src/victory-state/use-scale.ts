@@ -1,9 +1,13 @@
 import * as React from "react";
-import * as d3Scale from "victory-vendor/d3-scale";
-import { Axis } from "../types";
+import {
+  scaleLinear,
+  scaleTime,
+  scaleLog,
+  scaleSqrt
+} from "victory-vendor/d3-scale";
+import { AxisType, D3Scale, ScalePropType } from "../types/prop-types";
 import * as Collection from "../victory-util/collection";
 import { getValueForAxis, isFunction } from "../victory-util/type-helpers";
-import { D3Scale, ScalePropType } from "../victory-util/types";
 import { VictoryProviderProps } from "./types";
 import { useAxisData } from "./use-axis-data";
 
@@ -11,16 +15,13 @@ type Scale = ScalePropType | D3Scale;
 
 type ScaleProps = Pick<VictoryProviderProps, "data" | "scale">;
 
-const DEFAULT_SCALE: D3Scale = d3Scale.scaleLinear;
+const DEFAULT_SCALE = scaleLinear;
 
 function isD3Scale(scale?: Scale): scale is D3Scale {
   return (
     isFunction(scale) &&
-    // @ts-expect-error fix scale type
     isFunction(scale().copy) &&
-    // @ts-expect-error fix scale type
     isFunction(scale().domain) &&
-    // @ts-expect-error fix scale type
     isFunction(scale().range)
   );
 }
@@ -28,13 +29,13 @@ function isD3Scale(scale?: Scale): scale is D3Scale {
 function getD3ScaleFromString(scale: ScalePropType): D3Scale {
   switch (scale) {
     case "linear":
-      return d3Scale.scaleLinear;
+      return scaleLinear;
     case "time":
-      return d3Scale.scaleTime;
+      return scaleTime;
     case "log":
-      return d3Scale.scaleLog;
+      return scaleLog;
     case "sqrt":
-      return d3Scale.scaleSqrt;
+      return scaleSqrt;
     default:
       return DEFAULT_SCALE;
   }
@@ -42,7 +43,7 @@ function getD3ScaleFromString(scale: ScalePropType): D3Scale {
 
 export function useScale(
   { data = [], scale }: ScaleProps,
-  axis: Axis
+  axis: AxisType
 ): D3Scale {
   const axisData = useAxisData(data, axis);
 
@@ -59,7 +60,7 @@ export function useScale(
   }
 
   if (Collection.containsDates(axisData)) {
-    return d3Scale.scaleTime;
+    return scaleTime;
   }
 
   return DEFAULT_SCALE;

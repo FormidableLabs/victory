@@ -1,11 +1,12 @@
-import { Datum, ValueOrAxes } from "../types";
-import { PaddingProps } from "../victory-theme/victory-theme-definition";
 import {
   D3Scale,
+  Datum,
   DomainTuple,
   RangeTuple,
-  ScalePropType
-} from "../victory-util/types";
+  ScalePropType,
+  ValueOrAxes
+} from "../types/prop-types";
+import { PaddingProps } from "../victory-theme/types";
 
 export interface VictoryProviderProps {
   children?: React.ReactNode;

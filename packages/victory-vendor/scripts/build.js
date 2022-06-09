@@ -53,6 +53,13 @@ const getCjsRootIndex = (pkg) => `
 module.exports = require("./lib/${pkg.name}");
 `;
 
+const getTypeDefinitionFile = (pkg) => `
+// \`victory-vendor/${pkg.name}\` (TypeScript)
+//
+// Export the type definitions for this package:
+export * from "@types/${pkg.name}";
+`;
+
 // Main.
 const main = async () => {
   // Lazy ESM imports.
@@ -128,12 +135,17 @@ const main = async () => {
         path.join(libVendorPath, "LICENSE")
       ),
       // Root hack file for non package.json:exports systems
-      VENDOR_PKGS.has(pkgName)
-        ? fs.writeFile(
-            path.resolve(__dirname, `../${pkgName}.js`),
-            getCjsRootIndex(pkg)
-          )
-        : Promise.resolve()
+      VENDOR_PKGS.has(pkgName) &&
+        fs.writeFile(
+          path.resolve(__dirname, `../${pkgName}.js`),
+          getCjsRootIndex(pkg)
+        ),
+      // Generate TypeScript definitions
+      VENDOR_PKGS.has(pkgName) &&
+        fs.writeFile(
+          path.resolve(__dirname, `../${pkgName}.d.ts`),
+          getTypeDefinitionFile(pkg)
+        )
     ]);
   }
 };

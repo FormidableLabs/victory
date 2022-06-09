@@ -1,7 +1,6 @@
-import { Axis } from "../types";
+import { AxisType, Padding, RangeTuple } from "../types/prop-types";
 import { getPadding } from "../victory-util/helpers";
 import { getValueForAxis, isTuple } from "../victory-util/type-helpers";
-import { Padding, RangeTuple } from "../victory-util/types";
 import { VictoryProviderProps } from "./types";
 
 type RangeProps = Pick<
@@ -21,7 +20,7 @@ export function useRange(
     width = DEFAULT_WIDTH,
     ...props
   }: RangeProps,
-  axis: Axis
+  axis: AxisType
 ) {
   const rangeFromProps = getValueForAxis<RangeTuple>(range, axis);
 

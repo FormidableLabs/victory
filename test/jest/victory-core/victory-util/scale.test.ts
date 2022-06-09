@@ -1,4 +1,3 @@
-/* eslint-disable max-nested-callbacks */
 import { Scale } from "victory-core";
 import * as d3Scale from "victory-vendor/d3-scale";
 
@@ -8,14 +7,16 @@ describe("victory-util/scale", () => {
       const props = { scale: "log" };
       const baseScale = Scale.getBaseScale(props, "x");
       expect(baseScale).toBeInstanceOf(Function);
-      expect(baseScale.base).toBeInstanceOf(Function); // This is a unique check for log scales
+      // @ts-expect-error This is a unique check for log scales
+      expect(baseScale.base).toBeInstanceOf(Function);
     });
 
     it("returns a scale from `getScaleFromProps` when a d3 scale is provided", () => {
       const props = { scale: d3Scale.scaleLog() };
       const baseScale = Scale.getBaseScale(props, "x");
       expect(baseScale).toBeInstanceOf(Function);
-      expect(baseScale.base).toBeInstanceOf(Function); // This is a unique check for log scales
+      // @ts-expect-error This is a unique check for log scales
+      expect(baseScale.base).toBeInstanceOf(Function);
     });
 
     it("returns a default scale when data is provided", () => {
@@ -37,14 +38,16 @@ describe("victory-util/scale", () => {
       const props = { scale: "log" };
       const propsScale = Scale.getScaleFromProps(props, "x");
       expect(propsScale).toBeInstanceOf(Function);
-      expect(propsScale.base).toBeInstanceOf(Function); // This is a unique check for log scales
+      // @ts-expect-error This is a unique check for log scales:
+      expect(propsScale.base).toBeInstanceOf(Function);
     });
 
     it("returns a scale when a scale object contains a scale for an axis", () => {
       const props = { scale: { x: "log" } };
       const propsScale = Scale.getScaleFromProps(props, "x");
       expect(propsScale).toBeInstanceOf(Function);
-      expect(propsScale.base).toBeInstanceOf(Function); // This is a unique check for log scales
+      // @ts-expect-error This is a unique check for log scales:
+      expect(propsScale.base).toBeInstanceOf(Function);
     });
 
     it("returns undefined when a scale object does not contain a scale for an axis", () => {
@@ -103,7 +106,7 @@ describe("victory-util/scale", () => {
 
   describe("getType", () => {
     it("returns undefined on unknown function type", () => {
-      const scaleType = Scale.getType(function () {});
+      const scaleType = Scale.getType(() => {});
       expect(scaleType).toBeUndefined();
     });
 

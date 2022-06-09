@@ -3,10 +3,12 @@ import PropTypes from "prop-types";
 import React from "react";
 import * as Helpers from "../victory-util/helpers";
 import * as pathHelpers from "../victory-util/point-path-helpers";
-import * as CommonProps from "../victory-util/common-props";
+import {
+  CommonProps,
+  VictoryCommonPrimitiveProps
+} from "../victory-util/common-props";
 import * as UserProps from "../victory-util/user-props";
 import { Path } from "./path";
-import { VictoryCommonPrimitiveProps } from "../victory-util/types";
 import { ScatterSymbolType } from "./types";
 
 export interface PointProps extends VictoryCommonPrimitiveProps {

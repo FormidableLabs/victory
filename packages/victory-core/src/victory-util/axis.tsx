@@ -201,9 +201,9 @@ function getTickArray(props) {
       ? tickValues.map((tick) => stringMap[tick])
       : range(1, tickValues.length + 1);
   }
-  const tickArray = ticks ? uniq(ticks) : getTicksFromFormat(props);
-  const buildTickArray = (arr) => {
-    const newTickArray = [];
+  const tickArray = ticks ? uniq(ticks) : getTicksFromFormat();
+  const buildTickArray = (arr: number[]) => {
+    const newTickArray = [] as Array<{ value: number; index: number }>;
     const domain = (props.domain && props.domain[axis]) || props.domain;
     if (arr) {
       arr.forEach(function (t, index) {
@@ -248,11 +248,9 @@ export function getTickFormat(props, scale) {
     return defaultTickFormat || scaleTickFormat;
   } else if (tickFormat && Array.isArray(tickFormat)) {
     const tickArray = getTickArray(props);
-    const tickArrayIndices = tickArray
-      ? tickArray.map((v) => v.index)
-      : undefined;
+    const tickArrayIndices = tickArray?.map((v) => v.index);
     const filteredTickFormat = tickFormat.filter((t, index) =>
-      tickArrayIndices.includes(index)
+      tickArrayIndices?.includes(index)
     );
     return (x, index) => filteredTickFormat[index];
   } else if (tickFormat && isFunction(tickFormat)) {

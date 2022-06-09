@@ -2,9 +2,11 @@ import React from "react";
 import PropTypes from "prop-types";
 import * as Helpers from "../victory-util/helpers";
 import { assign } from "lodash";
-import * as CommonProps from "../victory-util/common-props";
+import {
+  CommonProps,
+  VictoryCommonPrimitiveProps
+} from "../victory-util/common-props";
 import { Line } from "./line";
-import { VictoryCommonPrimitiveProps } from "../victory-util/types";
 
 export interface LineSegmentProps extends VictoryCommonPrimitiveProps {
   datum?: any;
