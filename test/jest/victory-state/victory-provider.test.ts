@@ -7,22 +7,8 @@ describe("useVictoryContext", () => {
       wrapper: VictoryProvider
     });
 
-    expect(result.current.data).toMatchInlineSnapshot(`
-      Array [
-        Object {
-          "_x": 0,
-          "_y": 0,
-          "x": 0,
-          "y": 0,
-        },
-        Object {
-          "_x": 1,
-          "_y": 1,
-          "x": 1,
-          "y": 1,
-        },
-      ]
-    `);
+    // Data is generated from domain
+    expect(result.current.data).toHaveLength(2);
 
     const { x, y } = result.current.scale;
     expect(x.domain()).toEqual([0, 1]);
