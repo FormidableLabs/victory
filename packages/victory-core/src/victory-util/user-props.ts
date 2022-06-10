@@ -2,14 +2,16 @@ import * as React from "react";
 
 /*
   USER_PROPS_SAFELIST is to contain any string deemed safe for user props.
-  The startsWidth array will contain the start of any accepted user-prop that 
+  The startsWidth array will contain the start of any accepted user-prop that
   starts with these characters.
   The exactMatch will contain a list of exact prop names that are accepted.
 */
 const USER_PROPS_SAFELIST = {
-  startsWith: ["data-", "aria-"],
-  exactMatch: []
+  startsWith: ["data-", "aria-"] as const,
+  exactMatch: [] as string[]
 };
+
+type SafeAttribute = `data-${string}` | `aria-${string}`;
 
 /**
  * doesPropStartWith: Function that takes a prop's key and runs it against all
@@ -19,7 +21,7 @@ const USER_PROPS_SAFELIST = {
  * @returns {Boolean}: returns true if the key starts with an option or false if
  * otherwise
  */
-const doesPropStartWith = (key) => {
+const doesPropStartWith = (key: string): key is SafeAttribute => {
   let startsWith = false;
 
   USER_PROPS_SAFELIST.startsWith.forEach((starterString) => {
@@ -38,14 +40,15 @@ const doesPropStartWith = (key) => {
  * @returns {Boolean}: return true if whitelist contains that key, otherwise
  * returns false.
  */
-const isExactMatch = (key) => USER_PROPS_SAFELIST.exactMatch.includes(key);
+const isExactMatch = (key: string): key is SafeAttribute =>
+  USER_PROPS_SAFELIST.exactMatch.includes(key);
 
 /**
  * testIfSafeProp: tests prop's key against both startsWith and exactMatch values
  * @param {String} key: prop key to be tested against the whitelist
  * @returns {Boolean}: returns true if found in whitelist, otherwise returns false
  */
-const testIfSafeProp = (key) => {
+const testIfSafeProp = (key: string): key is SafeAttribute => {
   if (doesPropStartWith(key) || isExactMatch(key)) return true;
   return false;
 };
@@ -71,7 +74,9 @@ const getValue = (value, props) => {
  * @param {Object} props: props to be filtered against USER_PROPS_SAFELIST
  * @returns {Object}: object containing remaining acceptable props
  */
-export const getSafeUserProps = (props) => {
+export const getSafeUserProps = <T>(
+  props: T
+): Record<SafeAttribute, string> => {
   const propsToFilter = { ...props };
   return Object.fromEntries(
     Object.entries(propsToFilter)
@@ -85,10 +90,10 @@ export const getSafeUserProps = (props) => {
 /**
  * Wraps a component and adds safe user props
  *
- * @param {ReactNode} component: parent component
+ * @param {ReactElement} component: parent component
  * @param {Object} props: props to be filtered
- * @returns {ReactNode} modified component
+ * @returns {ReactElement} modified component
  */
-export const withSafeUserProps = (component, props) => {
+export const withSafeUserProps = (component: React.ReactElement, props) => {
   return React.cloneElement(component, getSafeUserProps(props));
 };
