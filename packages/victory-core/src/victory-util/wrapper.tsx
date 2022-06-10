@@ -387,8 +387,11 @@ export function getStringsFromData(childComponents) {
     return data.map((d) => ({ x: d.xName, y: d.yName }));
   };
 
-  const initialMemo = { x: [], y: [] };
-  const combine = (memo, datum) => {
+  const initialMemo = { x: [] as number[], y: [] as number[] };
+  const combine = (
+    memo: typeof initialMemo,
+    datum: NonNullable<ReturnType<typeof iteratee>>
+  ) => {
     const x = Array.isArray(datum)
       ? datum.map((d) => d.x).filter(Boolean)
       : datum.x;

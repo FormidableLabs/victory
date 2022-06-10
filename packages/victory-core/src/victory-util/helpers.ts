@@ -218,13 +218,24 @@ export function getCurrentAxis(axis, horizontal) {
  * @returns {Array} returns an array of results from calling the iteratee on all nested children
  */
 /* eslint-disable max-params */
-export function reduceChildren(
-  children: Array<React.ReactNode>,
-  iteratee,
+export function reduceChildren<
+  TChildren extends React.ReactNode,
+  TItem,
+  TResult = TItem[]
+>(
+  children: TChildren[],
+  iteratee: (
+    child: TChildren,
+    childName: string,
+    parent?: TChildren
+  ) => TItem | null,
   parentProps = {},
-  initialMemo = [],
-  combine = (memo, item) => memo.concat(item)
-) {
+  // @ts-expect-error These defaults are hard to type
+  initialMemo: TResult = [],
+  combine: (memo: TResult, item: TItem) => TResult = (memo, item) =>
+    // @ts-expect-error These defaults are hard to type
+    memo.concat(item)
+): TResult {
   const sharedProps = [
     "data",
     "domain",
