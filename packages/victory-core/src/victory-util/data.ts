@@ -228,7 +228,11 @@ export function downsample(data, maxPoints, startingIndex = 0) {
  * @param {Array} expectedKeys: an array of expected data keys
  * @returns {Array} the formatted data
  */
-export function formatData(dataset: any[], props: any, expectedKeys?: string[]) {
+export function formatData(
+  dataset: any[],
+  props: any,
+  expectedKeys?: string[]
+) {
   const isArrayOrIterable =
     Array.isArray(dataset) || Immutable.isIterable(dataset);
   if (!isArrayOrIterable || getLength(dataset) < 1) {
