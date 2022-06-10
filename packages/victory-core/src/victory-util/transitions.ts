@@ -59,7 +59,7 @@ function getChildData(child) {
 
 /**
  * If a parent component has animation enabled, calculate the transitions
- * for any data of any child component that supports data transitions
+ * for any data of any child component that supports data transitions.
  * Data transitions are defined as any two datasets where data nodes exist
  * in the first set and not the second, in the second and not the first,
  * or both.
@@ -169,7 +169,7 @@ function getChildPropsOnExit(animate, child, data, exitingNodes, cb) {
 
   if (exitingNodes) {
     // After the exit transition occurs, trigger the animations for
-    // nodes that are neither exiting or entering.
+    // nodes that are neither exiting nor entering.
     animate.onEnd = cb;
     const before =
       animate.onExit && animate.onExit.before
@@ -243,7 +243,7 @@ function getChildPropsOnEnter(animate, data, enteringNodes, cb) {
  * and its index in the parent's children array.
  *
  * In particular, this will include an `animate` object that is set appropriately
- * so that each child will be synchoronized for each stage of a transition
+ * so that each child will be synchronized for each stage of a transition
  * animation.  It will also include a transformed `data` object, where each datum
  * is transformed by `animate.onExit` and `animate.onEnter` `before` and `after`
  * functions.
