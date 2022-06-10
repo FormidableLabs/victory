@@ -32,10 +32,14 @@ function getPolarRange(props, axis) {
  * @param {Array<String>} ks: an array of keys to omit from the new object
  * @returns {Object} new object with same properties as originalObject
  */
-export function omit(originalObject, ks: string[] = []) {
+export function omit<T, Keys extends keyof T>(
+  originalObject: T,
+  ks: Array<Keys> = []
+): Omit<T, Keys> {
   // code based on babel's _objectWithoutProperties
-  const newObject = {};
+  const newObject = {} as T;
   for (const key in originalObject) {
+    // @ts-expect-error String is not assignable to Key
     if (ks.indexOf(key) >= 0) {
       continue;
     }
@@ -189,7 +193,7 @@ export function createAccessor(key) {
   return property(key);
 }
 
-export function modifyProps(props, fallbackProps, role) {
+export function modifyProps(props, fallbackProps?, role?) {
   const theme = props.theme && props.theme[role] ? props.theme[role] : {};
   const themeProps = omit(theme, ["style"]);
   const horizontal = isHorizontal(props);
