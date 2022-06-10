@@ -27,12 +27,12 @@ function getPolarRange(props, axis) {
 
 /**
  * creates an object with some keys excluded
- * replacement for lodash.omit for performance. does not mimick the entire lodash.omit api
+ * replacement for lodash.omit for performance. does not mimic the entire lodash.omit api
  * @param {Object} originalObject: created object will be based on this object
  * @param {Array<String>} ks: an array of keys to omit from the new object
  * @returns {Object} new object with same properties as originalObject
  */
-export function omit(originalObject, ks = []) {
+export function omit(originalObject, ks: string[] = []) {
   // code based on babel's _objectWithoutProperties
   const newObject = {};
   for (const key in originalObject) {
@@ -219,7 +219,7 @@ export function getCurrentAxis(axis, horizontal) {
  */
 /* eslint-disable max-params */
 export function reduceChildren(
-  children,
+  children: Array<React.ReactNode>,
   iteratee,
   parentProps = {},
   initialMemo = [],
@@ -236,7 +236,7 @@ export function reduceChildren(
     "maxDomain",
     "horizontal"
   ];
-  const traverseChildren = (childArray, names, parent) => {
+  const traverseChildren = (childArray, names, parent?) => {
     return childArray.reduce((memo, child, index) => {
       const childRole = child.type && child.type.role;
       const childName = child.props.name || `${childRole}-${names[index]}`;
@@ -252,7 +252,11 @@ export function reduceChildren(
           child.type.role === "stack" &&
           isFunction(child.type.getChildren)
             ? child.type.getChildren(childProps)
-            : React.Children.toArray(child.props.children).map((c) => {
+            : (
+                React.Children.toArray(
+                  child.props.children
+                ) as Array<React.ReactElement>
+              ).map((c) => {
                 const nestedChildProps = assign(
                   {},
                   c.props,
@@ -284,7 +288,7 @@ export function reduceChildren(
 /**
  * @param {Object} props: the props object
  * @returns {Boolean} returns true if the props object contains `horizontal: true` of if any
- * children or nested children are hoizontal
+ * children or nested children are horizontal
  */
 export function isHorizontal(props) {
   if (props.horizontal !== undefined || !props.children) {
