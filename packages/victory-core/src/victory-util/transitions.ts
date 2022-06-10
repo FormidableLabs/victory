@@ -1,5 +1,6 @@
 import { assign, defaults, identity, keys } from "lodash";
 import React from "react";
+import { AnimatePropTypeInterface } from "../types/prop-types";
 
 function getDatumKey(datum, idx) {
   return (datum.key || idx).toString();
@@ -120,7 +121,13 @@ export function getInitialTransitionState(oldChildren, nextChildren) {
   };
 }
 
-function getInitialChildProps(animate, data) {
+type TransitionProps = {
+  data;
+  animate?: AnimatePropTypeInterface;
+  clipWidth?: number;
+};
+
+function getInitialChildProps(animate, data): TransitionProps {
   const after =
     animate.onEnter && animate.onEnter.after ? animate.onEnter.after : identity;
   return {
@@ -129,7 +136,7 @@ function getInitialChildProps(animate, data) {
 }
 
 // eslint-disable-next-line max-params
-function getChildBeforeLoad(animate, child, data, cb) {
+function getChildBeforeLoad(animate, child, data, cb): TransitionProps {
   animate = assign({}, animate, { onEnd: cb });
   if (animate && animate.onLoad && !animate.onLoad.duration) {
     return { animate, data };
@@ -145,7 +152,7 @@ function getChildBeforeLoad(animate, child, data, cb) {
 }
 
 // eslint-disable-next-line max-params
-function getChildOnLoad(animate, data, cb) {
+function getChildOnLoad(animate, data, cb): TransitionProps {
   animate = assign({}, animate, { onEnd: cb });
   if (animate && animate.onLoad && !animate.onLoad.duration) {
     return { animate, data };
@@ -161,7 +168,13 @@ function getChildOnLoad(animate, data, cb) {
 }
 
 // eslint-disable-next-line max-params, max-len
-function getChildPropsOnExit(animate, child, data, exitingNodes, cb) {
+function getChildPropsOnExit(
+  animate,
+  child,
+  data,
+  exitingNodes,
+  cb
+): TransitionProps {
   // Whether or not _this_ child has exiting nodes, we want the exit-
   // transition for all children to have the same duration, delay, etc.
   const onExit = animate && animate.onExit;
@@ -188,7 +201,13 @@ function getChildPropsOnExit(animate, child, data, exitingNodes, cb) {
 }
 
 // eslint-disable-next-line max-params,max-len
-function getChildPropsBeforeEnter(animate, child, data, enteringNodes, cb) {
+function getChildPropsBeforeEnter(
+  animate,
+  child,
+  data,
+  enteringNodes,
+  cb
+): TransitionProps {
   if (enteringNodes) {
     // Perform a normal animation here, except - when it finishes - trigger
     // the transition for entering nodes.
@@ -212,7 +231,12 @@ function getChildPropsBeforeEnter(animate, child, data, enteringNodes, cb) {
 }
 
 // eslint-disable-next-line max-params, max-len
-function getChildPropsOnEnter(animate, data, enteringNodes, cb) {
+function getChildPropsOnEnter(
+  animate,
+  data,
+  enteringNodes,
+  cb
+): TransitionProps {
   // Whether or not _this_ child has entering nodes, we want the entering-
   // transition for all children to have the same duration, delay, etc.
   const onEnter = animate && animate.onEnter;
@@ -324,9 +348,13 @@ export function getTransitionPropsFactory(props, state, setState) {
   };
 
   // eslint-disable-next-line max-statements, complexity, max-len
-  return function getTransitionProps(child, index) {
+  return function getTransitionProps(child, index): TransitionProps {
     const data = getChildData(child) || [];
-    const animate = defaults({}, props.animate, child.props.animate);
+    const animate: AnimatePropTypeInterface = defaults(
+      {},
+      props.animate,
+      child.props.animate
+    );
     const defaultTransitions = child.props.polar
       ? child.type.defaultPolarTransitions || child.type.defaultTransitions
       : child.type.defaultTransitions;
