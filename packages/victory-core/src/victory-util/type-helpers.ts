@@ -28,3 +28,7 @@ export function getValueForAxis<T = unknown>(
 export function isFunction<T = Function>(func?: unknown): func is T {
   return typeof func === "function";
 }
+
+export function isDate(value: unknown): value is Date {
+  return value instanceof Date;
+}

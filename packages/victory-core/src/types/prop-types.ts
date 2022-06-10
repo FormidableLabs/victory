@@ -1,10 +1,5 @@
 import * as React from "react";
 import {
-  ScaleLinear,
-  ScaleLogarithmic,
-  ScaleTime
-} from "victory-vendor/d3-scale";
-import {
   AnimationEasing,
   AnimationStyle
 } from "../victory-animation/victory-animation";
@@ -23,11 +18,11 @@ export type ValueOrAxes<T> = T | ForAxes<T>;
 
 export type DomainPaddingPropType = ValueOrAxes<PaddingType>;
 export type DomainPropType = ValueOrAxes<DomainTuple>;
-export type DomainTuple = Tuple<DomainValue>;
 export type DomainValue = number | Date;
+export type DomainTuple = number[] | Date[];
 export type PaddingType = number | Tuple<number>;
 export type RangePropType = ValueOrAxes<RangeTuple>;
-export type RangeTuple = Tuple<number>;
+export type RangeTuple = number[];
 export type StringOrNumberOrList = string | number | (string | number)[];
 
 export interface Padding {
@@ -90,10 +85,8 @@ export interface EventPropTypeInterface<TTarget, TEventKey> {
   };
 }
 
-export type D3Scale =
-  | ScaleLinear<number, number>
-  | ScaleLogarithmic<number, number>
-  | ScaleTime<number, number>;
+// TODO: Figure out how to type this. Both the previous typing and the D3 Types are causing errors
+export type D3Scale = any;
 
 export type ScaleName = "linear" | "time" | "log" | "sqrt";
 export type ScalePropType = ScaleName;

@@ -36,7 +36,6 @@ import {
   DefaultTransitions,
   Domain,
   DomainPaddingPropType,
-  DomainPropObjectType,
   DomainPropType,
   DomainTuple,
   EventCallbackInterface,

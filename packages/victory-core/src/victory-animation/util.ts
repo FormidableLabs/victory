@@ -199,5 +199,6 @@ export const victoryInterpolator = function <T>(a: T, b: T): (t: number) => T {
   if (typeof a === "string" || typeof b === "string") {
     return interpolateString(a, b);
   }
+  // @ts-expect-error These generics are tough, but they work :)
   return interpolate(a, b);
 };
