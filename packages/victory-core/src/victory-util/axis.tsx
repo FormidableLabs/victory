@@ -16,6 +16,7 @@ import {
 import * as Collection from "./collection";
 import * as Domain from "./domain";
 import * as Helpers from "./helpers";
+import { D3Scale } from "../types/prop-types";
 
 /**
  * Returns the axis (x or y) of a particular axis component
@@ -265,7 +266,7 @@ export function getTickFormat(props, scale) {
   }
 }
 
-function downsampleTicks(ticks, tickCount) {
+function downsampleTicks(ticks: number[], tickCount: number) {
   if (!tickCount || !Array.isArray(ticks) || ticks.length <= tickCount) {
     return ticks;
   }
@@ -273,7 +274,7 @@ function downsampleTicks(ticks, tickCount) {
   return ticks.filter((d, i) => i % k === 0);
 }
 
-export function getTicks(props, scale, filterZero) {
+export function getTicks(props, scale: D3Scale, filterZero = false) {
   const { tickCount } = props;
   const tickArray = getTickArray(props);
   const tickValues = tickArray ? tickArray.map((v) => v.value) : undefined;
@@ -333,7 +334,7 @@ function getDomainFromData(props, axis) {
 }
 
 // exposed for use by VictoryChart
-export function getDomain(props, axis) {
+export function getDomain(props, axis?) {
   const inherentAxis = getAxis(props);
   if (axis && axis !== inherentAxis) {
     return undefined;

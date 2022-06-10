@@ -85,6 +85,8 @@ export type RangePropType = RangeTuple | { x?: RangeTuple; y?: RangeTuple };
 export interface D3Scale {
   (input: string | number): number;
 
+  ticks: (count: number) => number[];
+  tickFormat: (value: number) => number;
   domain: () => [number, number];
   range: () => any;
   copy: () => any;

@@ -75,6 +75,7 @@ describe("helpers/axis", () => {
     const bar = getVictoryBar({});
 
     beforeEach(() => {
+      // @ts-expect-error This will error until we convert `victory-axis`
       jest.spyOn(dependentAxis.type, "getAxis");
     });
 
@@ -85,7 +86,9 @@ describe("helpers/axis", () => {
     it("returns the independent axis when called with 'x'", () => {
       const childComponents = [dependentAxis, independentAxis, bar];
       const componentResult = Axis.getAxisComponent(childComponents, "x");
+      // @ts-expect-error This will error until we convert `victory-axis`
       expect(dependentAxis.type.getAxis).toBeCalledWith(dependentAxis.props);
+      // @ts-expect-error This will error until we convert `victory-axis`
       expect(independentAxis.type.getAxis).toBeCalledWith(
         independentAxis.props
       );
@@ -148,13 +151,13 @@ describe("helpers/axis", () => {
 
     it("returns tickValues from props", () => {
       const props = { tickValues: [1, 2, 3] };
-      const tickResult = Axis.getTicks(props);
+      const tickResult = Axis.getTicks(props, scale);
       expect(tickResult).toEqual(props.tickValues);
     });
 
     it("returns converts string tickValues to numbers", () => {
       const props = { tickValues: ["a", "b", "c", "d"] };
-      const tickResult = Axis.getTicks(props);
+      const tickResult = Axis.getTicks(props, scale);
       expect(tickResult).toEqual([1, 2, 3, 4]);
     });
 
