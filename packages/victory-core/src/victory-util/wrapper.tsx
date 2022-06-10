@@ -199,7 +199,7 @@ export function getDomainFromChildren(props, axis, childComponents) {
   const children = childComponents
     ? childComponents.slice(0)
     : React.Children.toArray(props.children);
-  const parentData = props.data ? Data.getData(props, axis) : undefined;
+  const parentData = props.data ? Data.getData(props) : undefined;
   const {
     polar,
     startAngle,

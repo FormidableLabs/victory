@@ -145,7 +145,7 @@ export function getPolarVerticalAnchor(props, degrees) {
   return orientation === "top" ? "end" : "start";
 }
 
-export function getPolarAngle(props, baseAngle) {
+export function getPolarAngle(props, baseAngle?) {
   const { labelPlacement, datum } = props;
   if (!labelPlacement || labelPlacement === "vertical") {
     return 0;
