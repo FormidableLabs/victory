@@ -6,7 +6,7 @@ import { Tuple, AxisType, DomainTuple, DomainValue } from "../types/prop-types";
 
 type DomainProps = Pick<
   VictoryProviderProps,
-  "data" | "domain" | "maxDomain" | "minDomain" | "padding" | "width" | "height"
+  "data" | "domain" | "maxDomain" | "minDomain"
 >;
 
 // TODO: What should this default value be?
