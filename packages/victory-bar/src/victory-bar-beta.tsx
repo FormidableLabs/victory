@@ -13,12 +13,19 @@ import {
 import Bar from "./bar";
 import { getBarPosition } from "./helper-methods";
 
-const defaultData = [
-  { x: 1, y: 1 },
-  { x: 2, y: 2 },
-  { x: 3, y: 3 },
-  { x: 4, y: 4 }
-];
+const defaultProps = {
+  data: [
+    { x: 1, y: 1 },
+    { x: 2, y: 2 },
+    { x: 3, y: 3 },
+    { x: 4, y: 4 }
+  ],
+  height: 300,
+  includeZero: true,
+  padding: 50,
+  sortOrder: "ascending",
+  width: 450
+};
 
 export type VictoryBarAlignmentType = "start" | "middle" | "end";
 export interface VictoryBarProps
@@ -52,12 +59,6 @@ export function withContainer<Props extends VictoryCommonProps>(
       ...props,
       ...initialProviderProps
     };
-    // TODO: Figure out how to default this
-    const containerProps = {
-      ...props,
-      width: 450,
-      height: 300
-    };
     const { standalone = true, containerComponent = <VictoryContainer /> } =
       props;
     if (standalone) {
@@ -65,7 +66,7 @@ export function withContainer<Props extends VictoryCommonProps>(
         <VictoryProvider {...providerProps}>
           {React.cloneElement(
             containerComponent,
-            containerProps,
+            props,
             <WrappedComponent {...props} />
           )}
         </VictoryProvider>
@@ -113,8 +114,4 @@ function VictoryBar({
   return React.cloneElement(groupComponent, {}, children);
 }
 
-export default withContainer<VictoryBarProps>(VictoryBar, {
-  data: defaultData,
-  includeZero: true,
-  padding: 50
-});
+export default withContainer<VictoryBarProps>(VictoryBar, defaultProps);
