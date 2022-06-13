@@ -13,6 +13,7 @@ export interface VictoryProviderProps {
   data?: Datum[];
   domain?: ValueOrAxes<DomainTuple>;
   height?: number;
+  includeZero?: boolean;
   maxDomain?: ValueOrAxes<number>;
   minDomain?: ValueOrAxes<number>;
   padding?: PaddingProps;

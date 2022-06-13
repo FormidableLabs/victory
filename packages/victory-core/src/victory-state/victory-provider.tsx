@@ -1,6 +1,11 @@
 import * as React from "react";
 import { createContext, useContextSelector } from "use-context-selector";
-import { D3Scale, ForAxes } from "../types/prop-types";
+import {
+  D3Scale,
+  DomainTuple,
+  DomainValue,
+  ForAxes
+} from "../types/prop-types";
 import { VictoryProviderProps } from "./types";
 import { FormattedDatum, useData } from "./use-data";
 import { useDomain } from "./use-domain";
@@ -12,14 +17,19 @@ import { useScale } from "./use-scale";
 interface ContextType {
   data: FormattedDatum[];
   scale: Required<ForAxes<D3Scale>>;
+  domain: Required<ForAxes<DomainTuple>>;
 }
 
 const VictoryContext = createContext<ContextType | null>(null);
 
-export function VictoryProvider({ children, ...props }: VictoryProviderProps) {
+export function VictoryProvider({
+  children,
+  includeZero,
+  ...props
+}: VictoryProviderProps) {
   // TODO: Get data
-  const xDomain = useDomain(props, "x");
-  const yDomain = useDomain(props, "y");
+  const xDomain = useDomain(props, "x", includeZero);
+  const yDomain = useDomain(props, "y", includeZero);
   const domain = { x: xDomain, y: yDomain };
 
   const xRange = useRange(props, "x");
@@ -40,7 +50,8 @@ export function VictoryProvider({ children, ...props }: VictoryProviderProps) {
 
   const value = {
     scale,
-    data
+    data,
+    domain
   };
 
   return (
