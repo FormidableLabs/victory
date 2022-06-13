@@ -20,7 +20,9 @@ function toNewName(scale: ScaleName): keyof D3ScaleMethods {
   return `scale${capitalize(scale)}` as keyof D3ScaleMethods;
 }
 
-function validScale(scale: string | D3Scale): scale is ScaleName | D3Scale {
+export function validScale(
+  scale: string | D3Scale
+): scale is ScaleName | D3Scale {
   if (typeof scale === "function") {
     return (
       isFunction(scale.copy) &&

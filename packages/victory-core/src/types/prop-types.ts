@@ -114,9 +114,7 @@ export type DataGetterPropType =
   | number
   | string
   | string[]
-  | { (data: any): number | string | string[] }
-  // eslint-disable-next-line @typescript-eslint/ban-types
-  | Function;
+  | ((data: any) => number | string | string[]);
 
 export type InterpolationPropType =
   | "basis"
