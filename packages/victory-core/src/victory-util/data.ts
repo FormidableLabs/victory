@@ -228,7 +228,11 @@ export function downsample(data, maxPoints, startingIndex = 0) {
  * @param {Array} expectedKeys: an array of expected data keys
  * @returns {Array} the formatted data
  */
-export function formatData(dataset, props, expectedKeys) {
+export function formatData(
+  dataset: any[],
+  props: any,
+  expectedKeys?: string[]
+) {
   const isArrayOrIterable =
     Array.isArray(dataset) || Immutable.isIterable(dataset);
   if (!isArrayOrIterable || getLength(dataset) < 1) {
@@ -280,7 +284,7 @@ export function formatData(dataset, props, expectedKeys) {
         // eslint-disable-line complexity
         datum = parseDatum(datum);
         const fallbackValues = { x: index, y: datum };
-        const processedValues = expectedKeys.reduce((memo, type) => {
+        const processedValues = expectedKeys!.reduce((memo, type) => {
           const processedValue = accessor[type](datum);
           const value =
             processedValue !== undefined

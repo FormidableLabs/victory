@@ -199,7 +199,7 @@ export function getDomainFromChildren(props, axis, childComponents) {
   const children = childComponents
     ? childComponents.slice(0)
     : React.Children.toArray(props.children);
-  const parentData = props.data ? Data.getData(props, axis) : undefined;
+  const parentData = props.data ? Data.getData(props) : undefined;
   const {
     polar,
     startAngle,
@@ -255,7 +255,7 @@ export function getDomain(props, axis, childComponents) {
     const maxDomain = Domain.getMaxFromProps(props, axis);
     const dataset = (props.data || props.y) && Data.getData(props);
     const dataDomain = dataset
-      ? Domain.getDomainFromData(props, axis, dataset)
+      ? Domain.getDomainFromData(props, axis, dataset)!
       : [];
     const childDomain = getDomainFromChildren(props, axis, childComponents);
     const min =
@@ -387,8 +387,11 @@ export function getStringsFromData(childComponents) {
     return data.map((d) => ({ x: d.xName, y: d.yName }));
   };
 
-  const initialMemo = { x: [], y: [] };
-  const combine = (memo, datum) => {
+  const initialMemo = { x: [] as number[], y: [] as number[] };
+  const combine = (
+    memo: typeof initialMemo,
+    datum: NonNullable<ReturnType<typeof iteratee>>
+  ) => {
     const x = Array.isArray(datum)
       ? datum.map((d) => d.x).filter(Boolean)
       : datum.x;

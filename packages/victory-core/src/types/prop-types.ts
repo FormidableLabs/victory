@@ -7,22 +7,24 @@ import {
 
 export type StringOrNumberOrList = string | number | (string | number)[];
 
+type Datum = any;
+
 export interface AnimatePropTypeInterface {
   duration?: number;
   onEnd?: () => void;
   onExit?: {
     duration?: number;
-    before?: (datum: any) => AnimationStyle;
+    before?: (datum: Datum, index: number, data: Datum[]) => AnimationStyle;
   };
   onEnter?: {
     duration?: number;
-    before?: (datum: any) => AnimationStyle;
-    after?: (datum: any) => AnimationStyle;
+    before?: (datum: Datum, index: number, data: Datum[]) => AnimationStyle;
+    after?: (datum: Datum, index: number, data: Datum[]) => AnimationStyle;
   };
   onLoad?: {
     duration?: number;
-    before?: (datum: any) => AnimationStyle;
-    after?: (datum: any) => AnimationStyle;
+    before?: (datum: Datum, index: number, data: Datum[]) => AnimationStyle;
+    after?: (datum: Datum, index: number, data: Datum[]) => AnimationStyle;
   };
   easing?: AnimationEasing;
   animationWhitelist?: string[];
@@ -77,15 +79,18 @@ export type DomainPaddingPropType =
 export type RangeTuple = [number, number];
 export type RangePropType = RangeTuple | { x?: RangeTuple; y?: RangeTuple };
 
+type NumberValue = number | { valueOf(): number };
 /**
  * D3 scale function shape. Don't want to introduce typing dependency to d3
  */
-export interface D3Scale {
-  (input: string | number): number;
+export interface D3Scale<TRange = any> {
+  (input: NumberValue): number;
 
-  domain: () => [number, number];
-  range: () => any;
-  copy: () => any;
+  ticks: (count?: number) => number[];
+  tickFormat: (count?: number) => (d: number) => string;
+  domain: () => number[];
+  range: () => TRange[];
+  copy: () => this;
   invert: (value: number) => number;
 }
 

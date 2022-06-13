@@ -82,10 +82,9 @@ function getScaleTypeFromData(props, axis): ScaleName {
 export function getScaleFromName(name: ScaleName | string): D3Scale {
   if (validScale(name)) {
     const methodName = toNewName(name as ScaleName);
-    // @ts-expect-error D3Scale is a simplified return type
+    // @ts-expect-error scaleTime is not directly compatible with our D3Scale definition
     return d3Scale[methodName]();
   }
-  // @ts-expect-error D3Scale is a simplified return type
   return d3Scale.scaleLinear();
 }
 

@@ -6,6 +6,7 @@ describe("victory-util/helpers", () => {
 
     it("removes omitted keys and preserves all others", () => {
       const newData = Helpers.omit(data, ["x"]);
+      // @ts-expect-error This property is deleted, as expected
       expect(newData.x).toBeUndefined();
       expect(newData.y).toEqual(2);
       expect(newData.z).toEqual(1);
@@ -19,6 +20,7 @@ describe("victory-util/helpers", () => {
     });
 
     it("defaults to an empty object", () => {
+      // @ts-expect-error This should complain
       const newData = Helpers.omit();
       expect(newData).toEqual({});
     });
