@@ -7,7 +7,7 @@
 }
 
 .playgroundContainer > div {
-  flex: 1;
+  width: 50%;
 }
 
 .playgroundHeader {
@@ -25,6 +25,10 @@
   /* rtl:ignore */
   direction: ltr;
   height: 100%;
+}
+
+.playgroundEditor > pre {
+  white-space: nowrap !important;
 }
 
 .playgroundPreview {
