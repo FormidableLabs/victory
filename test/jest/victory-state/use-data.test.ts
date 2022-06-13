@@ -1,5 +1,6 @@
 /* eslint-disable max-nested-callbacks */
 import { renderHook } from "@testing-library/react-hooks";
+import { range } from "lodash";
 import { useData } from "victory-core";
 
 describe("useData", () => {
@@ -62,6 +63,25 @@ describe("useData", () => {
         },
       ]
     `);
+  });
+
+  it("filters data with null x and y values", () => {
+    const data = [
+      {
+        x: null,
+        y: 1
+      },
+      {
+        y: 2,
+        x: null
+      },
+      {
+        x: 3,
+        y: 3
+      }
+    ];
+    const { result } = renderHook(() => useData({ data }));
+    expect(result.current).toHaveLength(1);
   });
 
   it("returns formatted data with accessors", () => {
@@ -140,6 +160,28 @@ describe("useData", () => {
       { _x: 2, x: 2, _y: 2, y: 2, order: 3 },
       { _x: 1, x: 1, _y: 1, y: 1, order: 2 },
       { _x: 3, x: 3, _y: 3, y: 3, order: 1 }
+    ]);
+  });
+
+  it("formats deeply nested data", () => {
+    const data = range(8).map((i) => ({ a: { b: [{ x: i, y: i }] } }));
+
+    const { result } = renderHook(() =>
+      useData({ data, x: "a.b[0].x", y: "a.b[0].y" })
+    );
+
+    expect(result.current).toHaveLength(8);
+  });
+
+  it("formats data from a range", () => {
+    const data = range(3);
+
+    const { result } = renderHook(() => useData({ data }));
+
+    expect(result.current).toEqual([
+      { _x: 0, x: 0, _y: 0, y: 0 },
+      { _x: 1, x: 1, _y: 1, y: 1 },
+      { _x: 2, x: 2, _y: 2, y: 2 }
     ]);
   });
 });

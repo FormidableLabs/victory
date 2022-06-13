@@ -7,7 +7,7 @@ import { StringOrNumberOrCallback } from "./callbacks";
 
 export type AxisType = "x" | "y";
 export type DatumValue = number | string | Date | null | undefined;
-export type Datum = { [key: string]: DatumValue };
+export type Datum = DatumValue | { [key: string]: DatumValue };
 export type ForAxes<T> = T | { x?: T; y?: T };
 export type ID = number | string;
 export type ValueOrAccessor<ValueType = unknown, PropsType = object> =

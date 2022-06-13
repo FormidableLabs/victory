@@ -1,4 +1,4 @@
-import { orderBy } from "lodash";
+import { get, isNil, orderBy } from "lodash";
 import * as React from "react";
 import { Datum, DatumValue } from "../types/prop-types";
 import { VictoryProviderProps } from "./types";
@@ -8,17 +8,21 @@ type DataProps = Pick<
   "data" | "x" | "y" | "sortKey" | "sortOrder" | "samples"
 >;
 
-export interface FormattedDatum extends Datum {
+export interface FormattedDatum {
   x: DatumValue;
   y: DatumValue;
   _x: number | Date;
   _y: number | Date;
   xName?: string;
   yName?: string;
+  [key: string]: DatumValue;
 }
 
-function getValue(datum: Datum, key: keyof Datum) {
-  return datum[key];
+function getValue(datum: Datum, key: string): DatumValue {
+  if (typeof datum === "object") {
+    return get(datum, key);
+  }
+  return datum;
 }
 
 function getNumericValue(value: DatumValue, fallback: number): number | Date {
@@ -26,6 +30,16 @@ function getNumericValue(value: DatumValue, fallback: number): number | Date {
     return value;
   }
   return fallback;
+}
+
+function isKeyValueObject(
+  datum: Datum
+): datum is { [key: string]: DatumValue } {
+  return (
+    typeof datum === "object" &&
+    !Array.isArray(datum) &&
+    !(datum instanceof Date)
+  );
 }
 
 export function useData({
@@ -43,25 +57,35 @@ export function useData({
   }, [props.data]);
 
   const formattedData = React.useMemo<FormattedDatum[]>(() => {
-    return data.map((datum, index) => {
+    return data.reduce((nonNullData, datum, index) => {
       const x = getValue(datum, xAccessor);
       const y = getValue(datum, yAccessor);
+      if (isNil(x) || isNil(y)) {
+        return nonNullData;
+      }
       const _x = getNumericValue(x, index + 1);
       const _y = getNumericValue(y, index + 1);
+
       // TODO: Get this value if it is different
       const xName = typeof x === "string" ? x : undefined;
       const yName = typeof y === "string" ? y : undefined;
-      return {
-        x,
-        y,
-        _x,
-        _y,
-        // Only set these properties if they exist
-        ...(xName ? { xName } : {}),
-        ...(yName ? { yName } : {}),
-        ...datum
-      };
-    });
+
+      const additionalProperties = isKeyValueObject(datum) ? datum : {};
+
+      return [
+        ...nonNullData,
+        {
+          x,
+          y,
+          _x,
+          _y,
+          // Only set these properties if they exist
+          ...(xName ? { xName } : {}),
+          ...(yName ? { yName } : {}),
+          ...additionalProperties
+        }
+      ];
+    }, [] as FormattedDatum[]);
   }, [data, xAccessor, yAccessor]);
 
   if (sortKey) {

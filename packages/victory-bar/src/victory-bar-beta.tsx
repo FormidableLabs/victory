@@ -13,6 +13,10 @@ import {
 import Bar from "./bar";
 import { getBarPosition } from "./helper-methods";
 
+// This is a demo component that uses VictoryProvider to access calculated props and state.
+// This component does not include events, animations, or styling.
+// To test this out, swap out the VictoryBar export in ./index.js and run `yarn storybook`.
+
 const defaultProps = {
   data: [
     { x: 1, y: 1 },
@@ -56,8 +60,8 @@ export function withContainer<Props extends VictoryCommonProps>(
 ) {
   return (props: Props) => {
     const providerProps = {
-      ...props,
-      ...initialProviderProps
+      ...initialProviderProps,
+      ...props
     };
     const { standalone = true, containerComponent = <VictoryContainer /> } =
       props;
@@ -66,7 +70,7 @@ export function withContainer<Props extends VictoryCommonProps>(
         <VictoryProvider {...providerProps}>
           {React.cloneElement(
             containerComponent,
-            props,
+            providerProps,
             <WrappedComponent {...props} />
           )}
         </VictoryProvider>
@@ -107,7 +111,8 @@ function VictoryBar({
       x,
       y,
       x0,
-      y0
+      y0,
+      datum
     };
     return React.cloneElement(dataComponent, dataProps);
   });
