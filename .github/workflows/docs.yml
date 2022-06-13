@@ -42,6 +42,16 @@ jobs:
         run: yarn build
         working-directory: ./website
 
+      # Use `gh` tool to infer more information about the pull request.
+      # The underlying issue here is pushes to a non-mergeable/main target branch
+      # don't have the PR number easily available.
+      # https://stackoverflow.com/a/70102700
+      - name: Get pull request info
+        id: pr_info
+        run: echo "::set-output name=pull_request_number::$(gh pr view --json number -q .number || echo "")"
+        env:
+          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+
       - name: Deploy docs (staging)
         if: github.ref != 'refs/heads/main'
         run: yarn deploy:stage
@@ -50,6 +60,7 @@ jobs:
           # GH actions have a PR merge commit that _isn't_ our actual commits.
           # Manually infer correct branch and sha for pull requests.
           FORMIDEPLOY_GIT_SHA: ${{ github.event.pull_request.head.sha }}
+          FORMIDEPLOY_PULL_REQUEST: ${{ steps.pr_info.outputs.pull_request_number }}
           GITHUB_DEPLOYMENT_TOKEN: ${{ secrets.GITHUB_TOKEN }}
           SURGE_LOGIN: ${{ secrets.SURGE_LOGIN }}
           SURGE_TOKEN: ${{ secrets.SURGE_TOKEN }}
