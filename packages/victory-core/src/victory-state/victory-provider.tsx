@@ -46,7 +46,7 @@ export function VictoryProvider({
     y: yScaleFn
   };
 
-  const data = useData(props, domain);
+  const data = useData(props);
 
   const value = {
     scale,
