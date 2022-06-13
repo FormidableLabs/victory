@@ -7,8 +7,7 @@ describe("useVictoryContext", () => {
       wrapper: VictoryProvider
     });
 
-    // Data is generated from domain
-    expect(result.current.data).toHaveLength(2);
+    expect(result.current.data).toHaveLength(0);
 
     const { x, y } = result.current.scale;
     expect(x.domain()).toEqual([0, 1]);

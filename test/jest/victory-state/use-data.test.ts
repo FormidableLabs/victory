@@ -88,27 +88,4 @@ describe("useData", () => {
       { _x: 3, x: 3, _y: 3, y: 3, order: 1 }
     ]);
   });
-
-  describe("with domain", () => {
-    it("generates a dataset from the domain if no data is passed in", () => {
-      const expectedValues = [0, 10];
-      const domain = { x: [0, 10], y: [0, 10] };
-      const { result } = renderHook(() => useData({}, domain));
-      expect(result.current).toEqual(
-        expectedValues.map((v) => ({ _x: v, x: v, _y: v, y: v }))
-      );
-    });
-
-    it("generates a dataset from domain and samples", () => {
-      const expectedValues = [0, 5, 10];
-      const domain = {
-        x: [0, 10],
-        y: [0, 10]
-      };
-      const { result } = renderHook(() => useData({ samples: 2 }, domain));
-      expect(result.current).toEqual(
-        expectedValues.map((v) => ({ _x: v, x: v, _y: v, y: v }))
-      );
-    });
-  });
 });

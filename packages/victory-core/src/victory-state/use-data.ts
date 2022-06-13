@@ -1,7 +1,6 @@
 import { orderBy } from "lodash";
 import * as React from "react";
-import { Datum, DatumValue, DomainTuple } from "../types/prop-types";
-import { generateData } from "../victory-util/data";
+import { Datum, DatumValue } from "../types/prop-types";
 import { VictoryProviderProps } from "./types";
 
 type DataProps = Pick<
@@ -29,27 +28,19 @@ function getNumericValue(value: DatumValue, fallback: number): number | Date {
   return fallback;
 }
 
-export function useData(
-  {
-    x: xAccessor = "x",
-    y: yAccessor = "y",
-    sortKey,
-    sortOrder = "ascending",
-    samples = 1,
-    ...props
-  }: DataProps,
-  domain?: { x: DomainTuple; y: DomainTuple }
-) {
+export function useData({
+  x: xAccessor = "x",
+  y: yAccessor = "y",
+  sortKey,
+  sortOrder = "ascending",
+  ...props
+}: DataProps) {
   const data = React.useMemo<Datum[]>(() => {
     if (props.data) {
       return props.data;
     }
-    if (domain) {
-      // TODO: Move this file or convert to TS
-      return generateData({ domain, samples });
-    }
     return [];
-  }, [props.data, domain, samples]);
+  }, [props.data]);
 
   const formattedData = React.useMemo<FormattedDatum[]>(() => {
     return data.map((datum, index) => {
