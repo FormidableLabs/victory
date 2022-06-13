@@ -27,15 +27,19 @@ function getPolarRange(props, axis) {
 
 /**
  * creates an object with some keys excluded
- * replacement for lodash.omit for performance. does not mimick the entire lodash.omit api
+ * replacement for lodash.omit for performance. does not mimic the entire lodash.omit api
  * @param {Object} originalObject: created object will be based on this object
  * @param {Array<String>} ks: an array of keys to omit from the new object
  * @returns {Object} new object with same properties as originalObject
  */
-export function omit(originalObject, ks = []) {
+export function omit<T, Keys extends keyof T>(
+  originalObject: T,
+  ks: Array<Keys> = []
+): Omit<T, Keys> {
   // code based on babel's _objectWithoutProperties
-  const newObject = {};
+  const newObject = {} as T;
   for (const key in originalObject) {
+    // @ts-expect-error String is not assignable to Key
     if (ks.indexOf(key) >= 0) {
       continue;
     }
@@ -189,7 +193,7 @@ export function createAccessor(key) {
   return property(key);
 }
 
-export function modifyProps(props, fallbackProps, role) {
+export function modifyProps(props, fallbackProps?, role?) {
   const theme = props.theme && props.theme[role] ? props.theme[role] : {};
   const themeProps = omit(theme, ["style"]);
   const horizontal = isHorizontal(props);
@@ -218,13 +222,24 @@ export function getCurrentAxis(axis, horizontal) {
  * @returns {Array} returns an array of results from calling the iteratee on all nested children
  */
 /* eslint-disable max-params */
-export function reduceChildren(
-  children,
-  iteratee,
+export function reduceChildren<
+  TChildren extends React.ReactNode,
+  TItem,
+  TResult = TItem[]
+>(
+  children: TChildren[],
+  iteratee: (
+    child: TChildren,
+    childName: string,
+    parent?: TChildren
+  ) => TItem | null,
   parentProps = {},
-  initialMemo = [],
-  combine = (memo, item) => memo.concat(item)
-) {
+  // @ts-expect-error These defaults are hard to type
+  initialMemo: TResult = [],
+  combine: (memo: TResult, item: TItem) => TResult = (memo, item) =>
+    // @ts-expect-error These defaults are hard to type
+    memo.concat(item)
+): TResult {
   const sharedProps = [
     "data",
     "domain",
@@ -236,7 +251,7 @@ export function reduceChildren(
     "maxDomain",
     "horizontal"
   ];
-  const traverseChildren = (childArray, names, parent) => {
+  const traverseChildren = (childArray, names, parent?) => {
     return childArray.reduce((memo, child, index) => {
       const childRole = child.type && child.type.role;
       const childName = child.props.name || `${childRole}-${names[index]}`;
@@ -252,7 +267,11 @@ export function reduceChildren(
           child.type.role === "stack" &&
           isFunction(child.type.getChildren)
             ? child.type.getChildren(childProps)
-            : React.Children.toArray(child.props.children).map((c) => {
+            : (
+                React.Children.toArray(
+                  child.props.children
+                ) as Array<React.ReactElement>
+              ).map((c) => {
                 const nestedChildProps = assign(
                   {},
                   c.props,
@@ -284,7 +303,7 @@ export function reduceChildren(
 /**
  * @param {Object} props: the props object
  * @returns {Boolean} returns true if the props object contains `horizontal: true` of if any
- * children or nested children are hoizontal
+ * children or nested children are horizontal
  */
 export function isHorizontal(props) {
   if (props.horizontal !== undefined || !props.children) {

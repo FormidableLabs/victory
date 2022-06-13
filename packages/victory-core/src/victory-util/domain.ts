@@ -47,11 +47,12 @@ function getDomainPadding(props, axis) {
     : formatPadding(props.domainPadding);
 }
 
-function getFlatData(dataset, axis) {
-  return flatten(dataset).map((datum) => {
-    return datum[`_${axis}`] && datum[`_${axis}`][1] !== undefined
-      ? datum[`_${axis}`][1]
-      : datum[`_${axis}`];
+function getFlatData(dataset, axis: "x" | "y") {
+  const axisKey = `_${axis}`;
+  return flatten(dataset).map((datum: any) => {
+    return datum[axisKey] && datum[axisKey][1] !== undefined
+      ? datum[axisKey][1]
+      : datum[axisKey];
   });
 }
 
@@ -60,7 +61,7 @@ function getExtremeFromData(dataset, axis, type = "min") {
     type === "max" ? Math.max(...arr) : Math.min(...arr);
   const initialValue = type === "max" ? -Infinity : Infinity;
   let containsDate = false;
-  const result = flatten(dataset).reduce((memo, datum) => {
+  const result = flatten(dataset).reduce((memo: number, datum: any) => {
     const current0 =
       datum[`_${axis}0`] !== undefined ? datum[`_${axis}0`] : datum[`_${axis}`];
     const current1 =
@@ -128,7 +129,9 @@ function padDomain(domain, props, axis) {
   if (addsQuadrants && singleQuadrantDomainPadding !== false) {
     // Naive initial padding calculation
     const initialPadding = {
+      // @ts-expect-error `max/min` might be dates
       left: (Math.abs(max - min) * padding.left) / rangeExtent,
+      // @ts-expect-error `max/min` might be dates
       right: (Math.abs(max - min) * padding.right) / rangeExtent
     };
 
@@ -177,8 +180,8 @@ function padDomain(domain, props, axis) {
  * @returns {Function} a function that takes props and axis and returns a formatted domain
  */
 export function createDomainFunction(
-  getDomainFromDataFunction,
-  formatDomainFunction
+  getDomainFromDataFunction?,
+  formatDomainFunction?
 ) {
   getDomainFromDataFunction = isFunction(getDomainFromDataFunction)
     ? getDomainFromDataFunction
@@ -227,7 +230,7 @@ export function getDomain(props, axis) {
  * @param {Array} categories: an array of categories corresponding to a given axis
  * @returns {Array|undefined} returns a domain from categories or undefined
  */
-export function getDomainFromCategories(props, axis, categories) {
+export function getDomainFromCategories(props, axis, categories?) {
   categories = categories || Data.getCategories(props, axis);
   const { polar, startAngle = 0, endAngle = 360 } = props;
   if (!categories) {
@@ -428,7 +431,7 @@ export function getMinFromProps(props, axis) {
  * for a given dimension i.e. only x values.
  * @returns {Array} the symmetric domain
  */
-export function getSymmetricDomain(domain, values) {
+export function getSymmetricDomain(domain, values: number[]) {
   const processedData = sortedUniq(values.sort((a, b) => a - b));
   const step = processedData[1] - processedData[0];
   return [domain[0], domain[1] + step];

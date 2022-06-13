@@ -95,7 +95,7 @@ describe("getTransitionPropsFactory", () => {
       { x: 1, y: 1 },
       { x: 2, y: 3 }
     ]);
-    const calledResult = result(child);
+    const calledResult = result(child, 0);
     expect(result).toBeInstanceOf(Function);
     expect(Object.keys(calledResult)).toEqual(
       expect.arrayContaining(["animate", "data"])
@@ -104,7 +104,7 @@ describe("getTransitionPropsFactory", () => {
       { x: 1, y: 1 },
       { x: 2, y: 0 }
     ]);
-    expect(calledResult.animate.duration).toEqual(
+    expect(calledResult.animate!.duration).toEqual(
       child.type.defaultTransitions.onExit.duration
     );
   });
@@ -127,7 +127,7 @@ describe("getTransitionPropsFactory", () => {
       { x: 1, y: 1 },
       { x: 2, y: 3 }
     ]);
-    const calledResult = result(child);
+    const calledResult = result(child, 0);
     expect(result).toBeInstanceOf(Function);
     expect(calledResult).toBeInstanceOf(Object);
     expect(calledResult).toBeInstanceOf(Object);

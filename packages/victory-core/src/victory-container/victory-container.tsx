@@ -240,7 +240,7 @@ export class VictoryContainer extends React.Component<VictoryContainerProps> {
 
     const style = responsive
       ? this.props.style
-      : Helpers.omit(this.props.style, ["height", "width"]);
+      : Helpers.omit(this.props.style!, ["height", "width"]);
 
     const userProps = UserProps.getSafeUserProps(this.props);
 

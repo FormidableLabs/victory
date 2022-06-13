@@ -19,7 +19,7 @@ export type ValueOrAxes<T> = T | ForAxes<T>;
 export type DomainPaddingPropType = ValueOrAxes<PaddingType>;
 export type DomainPropType = ValueOrAxes<DomainTuple>;
 export type DomainValue = number | Date;
-export type DomainTuple = number[] | Date[];
+export type DomainTuple = [number, number] | [Date, Date];
 export type PaddingType = number | Tuple<number>;
 export type RangePropType = ValueOrAxes<RangeTuple>;
 export type RangeTuple = number[];
@@ -37,17 +37,17 @@ export interface AnimatePropTypeInterface {
   onEnd?: () => void;
   onExit?: {
     duration?: number;
-    before?: (datum: any) => AnimationStyle;
+    before?: (datum: Datum, index: number, data: Datum[]) => AnimationStyle;
   };
   onEnter?: {
     duration?: number;
-    before?: (datum: any) => AnimationStyle;
-    after?: (datum: any) => AnimationStyle;
+    before?: (datum: Datum, index: number, data: Datum[]) => AnimationStyle;
+    after?: (datum: Datum, index: number, data: Datum[]) => AnimationStyle;
   };
   onLoad?: {
     duration?: number;
-    before?: (datum: any) => AnimationStyle;
-    after?: (datum: any) => AnimationStyle;
+    before?: (datum: Datum, index: number, data: Datum[]) => AnimationStyle;
+    after?: (datum: Datum, index: number, data: Datum[]) => AnimationStyle;
   };
   easing?: AnimationEasing;
   animationWhitelist?: string[];
@@ -85,8 +85,20 @@ export interface EventPropTypeInterface<TTarget, TEventKey> {
   };
 }
 
-// TODO: Figure out how to type this. Both the previous typing and the D3 Types are causing errors
-export type D3Scale = any;
+type NumberValue = number | { valueOf(): number };
+/**
+ * D3 scale function shape. Don't want to introduce typing dependency to d3
+ */
+export interface D3Scale<TRange = any> {
+  (input: NumberValue): number;
+
+  ticks: (count?: number) => number[];
+  tickFormat: (count?: number) => (d: number) => string;
+  domain: () => number[];
+  range: () => TRange[];
+  copy: () => this;
+  invert: (value: number) => number;
+}
 
 export type ScaleName = "linear" | "time" | "log" | "sqrt";
 export type ScalePropType = ScaleName;

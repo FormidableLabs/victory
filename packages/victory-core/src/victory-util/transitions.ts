@@ -1,5 +1,6 @@
 import { assign, defaults, identity, keys } from "lodash";
 import React from "react";
+import { AnimatePropTypeInterface } from "../types/prop-types";
 
 function getDatumKey(datum, idx) {
   return (datum.key || idx).toString();
@@ -59,7 +60,7 @@ function getChildData(child) {
 
 /**
  * If a parent component has animation enabled, calculate the transitions
- * for any data of any child component that supports data transitions
+ * for any data of any child component that supports data transitions.
  * Data transitions are defined as any two datasets where data nodes exist
  * in the first set and not the second, in the second and not the first,
  * or both.
@@ -120,7 +121,13 @@ export function getInitialTransitionState(oldChildren, nextChildren) {
   };
 }
 
-function getInitialChildProps(animate, data) {
+type TransitionProps = {
+  data;
+  animate?: AnimatePropTypeInterface;
+  clipWidth?: number;
+};
+
+function getInitialChildProps(animate, data): TransitionProps {
   const after =
     animate.onEnter && animate.onEnter.after ? animate.onEnter.after : identity;
   return {
@@ -129,7 +136,7 @@ function getInitialChildProps(animate, data) {
 }
 
 // eslint-disable-next-line max-params
-function getChildBeforeLoad(animate, child, data, cb) {
+function getChildBeforeLoad(animate, child, data, cb): TransitionProps {
   animate = assign({}, animate, { onEnd: cb });
   if (animate && animate.onLoad && !animate.onLoad.duration) {
     return { animate, data };
@@ -145,7 +152,7 @@ function getChildBeforeLoad(animate, child, data, cb) {
 }
 
 // eslint-disable-next-line max-params
-function getChildOnLoad(animate, data, cb) {
+function getChildOnLoad(animate, data, cb): TransitionProps {
   animate = assign({}, animate, { onEnd: cb });
   if (animate && animate.onLoad && !animate.onLoad.duration) {
     return { animate, data };
@@ -161,7 +168,13 @@ function getChildOnLoad(animate, data, cb) {
 }
 
 // eslint-disable-next-line max-params, max-len
-function getChildPropsOnExit(animate, child, data, exitingNodes, cb) {
+function getChildPropsOnExit(
+  animate,
+  child,
+  data,
+  exitingNodes,
+  cb
+): TransitionProps {
   // Whether or not _this_ child has exiting nodes, we want the exit-
   // transition for all children to have the same duration, delay, etc.
   const onExit = animate && animate.onExit;
@@ -169,7 +182,7 @@ function getChildPropsOnExit(animate, child, data, exitingNodes, cb) {
 
   if (exitingNodes) {
     // After the exit transition occurs, trigger the animations for
-    // nodes that are neither exiting or entering.
+    // nodes that are neither exiting nor entering.
     animate.onEnd = cb;
     const before =
       animate.onExit && animate.onExit.before
@@ -188,7 +201,13 @@ function getChildPropsOnExit(animate, child, data, exitingNodes, cb) {
 }
 
 // eslint-disable-next-line max-params,max-len
-function getChildPropsBeforeEnter(animate, child, data, enteringNodes, cb) {
+function getChildPropsBeforeEnter(
+  animate,
+  child,
+  data,
+  enteringNodes,
+  cb
+): TransitionProps {
   if (enteringNodes) {
     // Perform a normal animation here, except - when it finishes - trigger
     // the transition for entering nodes.
@@ -212,7 +231,12 @@ function getChildPropsBeforeEnter(animate, child, data, enteringNodes, cb) {
 }
 
 // eslint-disable-next-line max-params, max-len
-function getChildPropsOnEnter(animate, data, enteringNodes, cb) {
+function getChildPropsOnEnter(
+  animate,
+  data,
+  enteringNodes,
+  cb
+): TransitionProps {
   // Whether or not _this_ child has entering nodes, we want the entering-
   // transition for all children to have the same duration, delay, etc.
   const onEnter = animate && animate.onEnter;
@@ -243,7 +267,7 @@ function getChildPropsOnEnter(animate, data, enteringNodes, cb) {
  * and its index in the parent's children array.
  *
  * In particular, this will include an `animate` object that is set appropriately
- * so that each child will be synchoronized for each stage of a transition
+ * so that each child will be synchronized for each stage of a transition
  * animation.  It will also include a transformed `data` object, where each datum
  * is transformed by `animate.onExit` and `animate.onEnter` `before` and `after`
  * functions.
@@ -324,9 +348,13 @@ export function getTransitionPropsFactory(props, state, setState) {
   };
 
   // eslint-disable-next-line max-statements, complexity, max-len
-  return function getTransitionProps(child, index) {
+  return function getTransitionProps(child, index): TransitionProps {
     const data = getChildData(child) || [];
-    const animate = defaults({}, props.animate, child.props.animate);
+    const animate: AnimatePropTypeInterface = defaults(
+      {},
+      props.animate,
+      child.props.animate
+    );
     const defaultTransitions = child.props.polar
       ? child.type.defaultPolarTransitions || child.type.defaultTransitions
       : child.type.defaultTransitions;
