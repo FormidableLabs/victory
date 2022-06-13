@@ -1,13 +1,16 @@
 /* eslint-disable react/no-multi-comp */
 import * as React from "react";
 import {
+  Datum,
+  NumberOrCallback,
   useVictoryContext,
   VictoryCommonProps,
   VictoryContainer,
+  VictoryDatableProps,
   VictoryProvider,
   VictoryProviderProps
 } from "victory-core";
-import { Bar, VictoryBarProps } from "./index";
+import Bar from "./bar";
 import { getBarPosition } from "./helper-methods";
 
 const defaultData = [
@@ -16,6 +19,28 @@ const defaultData = [
   { x: 3, y: 3 },
   { x: 4, y: 4 }
 ];
+
+export type VictoryBarAlignmentType = "start" | "middle" | "end";
+export interface VictoryBarProps
+  extends VictoryCommonProps,
+    VictoryDatableProps {
+  alignment?: VictoryBarAlignmentType;
+  barRatio?: number;
+  barWidth?: NumberOrCallback;
+  cornerRadius?:
+    | NumberOrCallback
+    | {
+        top?: NumberOrCallback;
+        topLeft?: NumberOrCallback;
+        topRight?: NumberOrCallback;
+        bottom?: NumberOrCallback;
+        bottomLeft?: NumberOrCallback;
+        bottomRight?: NumberOrCallback;
+      };
+  dataComponent?: React.ReactElement;
+  groupComponent?: React.ReactElement;
+  horizontal?: boolean;
+}
 
 // TODO: This would be a shared helper that allows us to access context values in the base component
 export function withContainer<Props extends VictoryCommonProps>(
@@ -64,7 +89,7 @@ function VictoryBar({
   horizontal = false
 }: VictoryBarProps) {
   const { scale, data, domain } = useVictoryContext();
-  const children = data.map((datum, i) => {
+  const children = data.map((datum: Datum, i: number) => {
     const { x, y, x0, y0 } = getBarPosition(
       { domain, scale, horizontal },
       datum
