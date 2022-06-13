@@ -14,10 +14,54 @@ describe("useData", () => {
       { x: "cats", y: 5 }
     ];
     const { result } = renderHook(() => useData({ data }));
-    expect(result.current).toEqual([
-      { _x: 1, x: "kittens", xName: "kittens", _y: 3, y: 3 },
-      { _x: 2, x: "cats", xName: "cats", _y: 5, y: 5 }
-    ]);
+    expect(result.current).toMatchInlineSnapshot(`
+      Array [
+        Object {
+          "_x": 1,
+          "_y": 3,
+          "x": "kittens",
+          "xName": "kittens",
+          "y": 3,
+        },
+        Object {
+          "_x": 2,
+          "_y": 5,
+          "x": "cats",
+          "xName": "cats",
+          "y": 5,
+        },
+      ]
+    `);
+  });
+
+  it("accepts date values", () => {
+    const data = [
+      {
+        x: new Date(2022, 0, 1),
+        y: 10
+      },
+      {
+        x: new Date(2022, 0, 2),
+        y: 20
+      }
+    ];
+    const { result } = renderHook(() => useData({ data }));
+    expect(result.current).toMatchInlineSnapshot(`
+      Array [
+        Object {
+          "_x": 2022-01-01T08:00:00.000Z,
+          "_y": 10,
+          "x": 2022-01-01T08:00:00.000Z,
+          "y": 10,
+        },
+        Object {
+          "_x": 2022-01-02T08:00:00.000Z,
+          "_y": 20,
+          "x": 2022-01-02T08:00:00.000Z,
+          "y": 20,
+        },
+      ]
+    `);
   });
 
   it("returns formatted data with accessors", () => {
@@ -26,18 +70,28 @@ describe("useData", () => {
       { one: "cats", two: 5 }
     ];
     const { result } = renderHook(() => useData({ data, x: "one", y: "two" }));
-    expect(result.current).toEqual([
-      {
-        _x: 1,
-        x: "kittens",
-        xName: "kittens",
-        _y: 3,
-        y: 3,
-        one: "kittens",
-        two: 3
-      },
-      { _x: 2, x: "cats", xName: "cats", _y: 5, y: 5, one: "cats", two: 5 }
-    ]);
+    expect(result.current).toMatchInlineSnapshot(`
+      Array [
+        Object {
+          "_x": 1,
+          "_y": 3,
+          "one": "kittens",
+          "two": 3,
+          "x": "kittens",
+          "xName": "kittens",
+          "y": 3,
+        },
+        Object {
+          "_x": 2,
+          "_y": 5,
+          "one": "cats",
+          "two": 5,
+          "x": "cats",
+          "xName": "cats",
+          "y": 5,
+        },
+      ]
+    `);
   });
 
   it("does not sort data by default", () => {

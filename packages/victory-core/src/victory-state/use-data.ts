@@ -9,10 +9,10 @@ type DataProps = Pick<
 >;
 
 export interface FormattedDatum extends Datum {
-  x: number;
-  y: number;
-  _x: number;
-  _y: number;
+  x: DatumValue;
+  y: DatumValue;
+  _x: number | Date;
+  _y: number | Date;
   xName?: string;
   yName?: string;
 }
@@ -44,10 +44,10 @@ export function useData({
 
   const formattedData = React.useMemo<FormattedDatum[]>(() => {
     return data.map((datum, index) => {
-      const x = getValue(datum, xAccessor) as number;
-      const y = getValue(datum, yAccessor) as number;
-      const _x = getNumericValue(x, index + 1) as number;
-      const _y = getNumericValue(y, index + 1) as number;
+      const x = getValue(datum, xAccessor);
+      const y = getValue(datum, yAccessor);
+      const _x = getNumericValue(x, index + 1);
+      const _y = getNumericValue(y, index + 1);
       // TODO: Get this value if it is different
       const xName = typeof x === "string" ? x : undefined;
       const yName = typeof y === "string" ? y : undefined;
@@ -56,6 +56,7 @@ export function useData({
         y,
         _x,
         _y,
+        // Only set these properties if they exist
         ...(xName ? { xName } : {}),
         ...(yName ? { yName } : {}),
         ...datum

@@ -1,11 +1,6 @@
 import * as React from "react";
 import { createContext, useContextSelector } from "use-context-selector";
-import {
-  D3Scale,
-  DomainTuple,
-  DomainValue,
-  ForAxes
-} from "../types/prop-types";
+import { D3Scale, DomainTuple, ForAxes } from "../types/prop-types";
 import { VictoryProviderProps } from "./types";
 import { FormattedDatum, useData } from "./use-data";
 import { useDomain } from "./use-domain";
