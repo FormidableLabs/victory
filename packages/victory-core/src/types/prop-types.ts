@@ -79,17 +79,18 @@ export type DomainPaddingPropType =
 export type RangeTuple = [number, number];
 export type RangePropType = RangeTuple | { x?: RangeTuple; y?: RangeTuple };
 
+type NumberValue = number | { valueOf(): number };
 /**
  * D3 scale function shape. Don't want to introduce typing dependency to d3
  */
-export interface D3Scale {
-  (input: string | number): number;
+export interface D3Scale<TRange = any> {
+  (input: NumberValue): number;
 
-  ticks: (count: number) => number[];
-  tickFormat: (value: number) => number;
-  domain: () => [number, number];
-  range: () => any;
-  copy: () => any;
+  ticks: (count?: number) => number[];
+  tickFormat: (count?: number) => (d: number) => string;
+  domain: () => number[];
+  range: () => TRange[];
+  copy: () => this;
   invert: (value: number) => number;
 }
 
