@@ -33,11 +33,25 @@ module.exports = {
   },
   overrides: [
     {
+      files: ["**/*.test.*"],
+      rules: {
+        "react/sort-comp": "off",
+        "no-magic-numbers": 0,
+        "max-statements": 0,
+        "import/no-unresolved": 0,
+        "no-undef": "off",
+        "max-nested-callbacks": "off",
+        "@typescript-eslint/no-empty-function": "off",
+        "react/prop-types": "off"
+      }
+    },
+    {
       files: ["*.ts", "*.tsx"],
       excludedFiles: ["*.d.ts"],
       parser: "@typescript-eslint/parser",
       parserOptions: {
         project: ["./tsconfig.base.json"],
+        // eslint-disable-next-line no-undef
         tsconfigRootDir: __dirname
       },
       plugins: ["@typescript-eslint"],
