@@ -5,19 +5,19 @@ import {
   scaleLog,
   scaleSqrt
 } from "victory-vendor/d3-scale";
-import { AxisType, D3Scale, ScalePropType } from "../types/prop-types";
+import { AxisType, D3ScaleFn, ScalePropType } from "../types/prop-types";
 import * as Collection from "../victory-util/collection";
 import { getValueForAxis, isFunction } from "../victory-util/type-helpers";
 import { VictoryProviderProps } from "./types";
 import { useAxisData } from "./use-axis-data";
 
-type Scale = ScalePropType | D3Scale;
+type Scale = ScalePropType | D3ScaleFn;
 
 type ScaleProps = Pick<VictoryProviderProps, "data" | "scale">;
 
 const DEFAULT_SCALE = scaleLinear;
 
-function isD3Scale(scale?: Scale): scale is D3Scale {
+function isD3Scale(scale?: unknown): scale is D3ScaleFn {
   return (
     isFunction(scale) &&
     isFunction(scale().copy) &&
@@ -26,7 +26,7 @@ function isD3Scale(scale?: Scale): scale is D3Scale {
   );
 }
 
-function getD3ScaleFromString(scale: ScalePropType): D3Scale {
+function getD3ScaleFromString(scale: ScalePropType): D3ScaleFn {
   switch (scale) {
     case "linear":
       return scaleLinear;
@@ -44,7 +44,7 @@ function getD3ScaleFromString(scale: ScalePropType): D3Scale {
 export function useScale(
   { data = [], scale }: ScaleProps,
   axis: AxisType
-): D3Scale {
+): D3ScaleFn {
   const axisData = useAxisData(data, axis);
 
   const scaleFromProps = React.useMemo(() => {

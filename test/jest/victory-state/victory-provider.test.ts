@@ -9,6 +9,7 @@ describe("useVictoryContext", () => {
 
     expect(result.current.data).toHaveLength(0);
 
+    // @ts-expect-error I have no idea why x and y do not exist on this type
     const { x, y } = result.current.scale;
     expect(x.domain()).toEqual([0, 1]);
     expect(y.domain()).toEqual([0, 1]);

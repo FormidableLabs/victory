@@ -1,5 +1,5 @@
 import {
-  D3Scale,
+  D3ScaleFn,
   Datum,
   DomainTuple,
   RangeTuple,
@@ -19,7 +19,7 @@ export interface VictoryProviderProps {
   padding?: PaddingProps;
   range?: ValueOrAxes<RangeTuple>;
   samples?: number;
-  scale?: ValueOrAxes<ScalePropType | D3Scale>;
+  scale?: ValueOrAxes<ScalePropType | D3ScaleFn>;
   sortKey?: string;
   sortOrder?: "ascending" | "descending";
   width?: number;

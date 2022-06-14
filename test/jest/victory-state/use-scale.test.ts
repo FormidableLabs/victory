@@ -4,21 +4,17 @@ import * as d3Scale from "victory-vendor/d3-scale";
 
 describe("useScale", () => {
   it("gets the d3 scale from props", () => {
-    const props = {
-      // eslint-disable-next-line @typescript-eslint/no-unsafe-assignment
-      scale: d3Scale.scaleLog
-    };
-    const { result } = renderHook(() => useScale(props, "x"));
-    expect(result.current).toEqual(props.scale);
+    const { result } = renderHook(() =>
+      useScale({ scale: d3Scale.scaleLog }, "x")
+    );
+    expect(result.current).toEqual(d3Scale.scaleLog);
   });
 
   it("gets the d3 scale from props for an axis", () => {
-    const props = {
-      // eslint-disable-next-line @typescript-eslint/no-unsafe-assignment
-      scale: { x: d3Scale.scaleLog }
-    };
-    const { result } = renderHook(() => useScale(props, "x"));
-    expect(result.current).toEqual(props.scale.x);
+    const { result } = renderHook(() =>
+      useScale({ scale: { x: d3Scale.scaleLog } }, "x")
+    );
+    expect(result.current).toEqual(d3Scale.scaleLog);
   });
 
   it("returns a default scale when data is provided", () => {
@@ -39,11 +35,7 @@ describe("useScale", () => {
   });
 
   it("returns a scale when a single scale string is provided in props", () => {
-    const props = {
-      // eslint-disable-next-line @typescript-eslint/no-unsafe-assignment
-      scale: "log"
-    };
-    const { result } = renderHook(() => useScale(props, "x"));
+    const { result } = renderHook(() => useScale({ scale: "log" }, "x"));
     expect(result.current).toBeInstanceOf(Function);
     // Scale should be d3Scale.scaleLog
     expect(result.current().domain()).toEqual(d3Scale.scaleLog().domain());
@@ -51,11 +43,7 @@ describe("useScale", () => {
   });
 
   it("returns a scale when a scale string is provided in props for an axis", () => {
-    const props = {
-      // eslint-disable-next-line @typescript-eslint/no-unsafe-assignment
-      scale: { x: "log" }
-    };
-    const { result } = renderHook(() => useScale(props, "x"));
+    const { result } = renderHook(() => useScale({ scale: { x: "log" } }, "x"));
     expect(result.current).toBeInstanceOf(Function);
     // Scale should be d3Scale.scaleLog
     expect(result.current().domain()).toEqual(d3Scale.scaleLog().domain());

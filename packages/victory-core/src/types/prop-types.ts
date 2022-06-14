@@ -1,6 +1,12 @@
 import { any } from "prop-types";
 import * as React from "react";
 import {
+  ScaleLinear,
+  ScaleLogarithmic,
+  ScalePower,
+  ScaleTime
+} from "victory-vendor/d3-scale";
+import {
   AnimationEasing,
   AnimationStyle
 } from "../victory-animation/victory-animation";
@@ -88,21 +94,26 @@ export interface EventPropTypeInterface<TTarget, TEventKey> {
   };
 }
 
-// type NumberValue = number | { valueOf(): number };
+type NumberValue = number | { valueOf(): number };
 /**
  * D3 scale function shape. Don't want to introduce typing dependency to d3
  */
-// export interface D3Scale<TRange = any> {
-//   (input: NumberValue): number;
+export interface D3Scale<TRange = any> {
+  (numberValue: NumberValue): number;
+  base?: () => number;
+  ticks: (count?: number) => number[];
+  tickFormat: (count?: number) => (d: number) => string;
+  domain: () => number[];
+  range: () => TRange[];
+  copy: () => this;
+  invert: (value: number) => number;
+}
 
-//   ticks: (count?: number) => number[];
-//   tickFormat: (count?: number) => (d: number) => string;
-//   domain: () => number[];
-//   range: () => TRange[];
-//   copy: () => this;
-//   invert: (value: number) => number;
-// }
-export type D3Scale = any;
+export type D3ScaleFn<TRange = any, TOutput = any> = () =>
+  | ScaleLinear<TRange, TOutput, unknown>
+  | ScaleLogarithmic<TRange, TOutput, unknown>
+  | ScaleTime<TRange, TOutput, unknown>
+  | ScalePower<TRange, TOutput, unknown>;
 
 export type ScaleName = "linear" | "time" | "log" | "sqrt";
 export type ScalePropType = ScaleName;

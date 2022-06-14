@@ -1,6 +1,6 @@
 import * as React from "react";
 import { createContext, useContextSelector } from "use-context-selector";
-import { D3Scale, DomainTuple, ForAxes } from "../types/prop-types";
+import { D3ScaleFn, DomainTuple, ForAxes } from "../types/prop-types";
 import { VictoryProviderProps } from "./types";
 import { FormattedDatum, useData } from "./use-data";
 import { useDomain } from "./use-domain";
@@ -9,7 +9,7 @@ import { useScale } from "./use-scale";
 
 interface ContextType {
   data: FormattedDatum[];
-  scale: Required<ForAxes<D3Scale>>;
+  scale: Required<ForAxes<D3ScaleFn>>;
   domain: Required<ForAxes<DomainTuple>>;
 }
 
@@ -31,7 +31,9 @@ export function VictoryProvider({
   const xBaseScaleFn = useScale(props, "x");
   const yBaseScaleFn = useScale(props, "y");
 
+  // @ts-expect-error: This is a valid scale function
   const xScaleFn = xBaseScaleFn().domain(xDomain).range(xRange);
+  // @ts-expect-error: This is a valid scale function
   const yScaleFn = yBaseScaleFn().domain(yDomain).range(yRange);
 
   const scale = {
