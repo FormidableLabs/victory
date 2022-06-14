@@ -27,7 +27,6 @@ const defaultProps: VictoryProviderProps = {
   height: 300,
   includeZero: true,
   padding: 50,
-  // TODO: Why do I have to cast this?
   sortOrder: "ascending" as const,
   width: 450
 };
