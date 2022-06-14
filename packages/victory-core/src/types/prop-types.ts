@@ -1,4 +1,3 @@
-import { any } from "prop-types";
 import * as React from "react";
 import {
   ScaleLinear,
