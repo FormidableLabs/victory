@@ -38,11 +38,11 @@ describe("useData", () => {
   it("accepts date values", () => {
     const data = [
       {
-        x: new Date(2022, 0, 1),
+        x: new Date(Date.UTC(2022, 0, 1)),
         y: 10
       },
       {
-        x: new Date(2022, 0, 2),
+        x: new Date(Date.UTC(2022, 0, 2)),
         y: 20
       }
     ];
@@ -50,15 +50,15 @@ describe("useData", () => {
     expect(result.current).toMatchInlineSnapshot(`
       Array [
         Object {
-          "_x": 2022-01-01T08:00:00.000Z,
+          "_x": 2022-01-01T00:00:00.000Z,
           "_y": 10,
-          "x": 2022-01-01T08:00:00.000Z,
+          "x": 2022-01-01T00:00:00.000Z,
           "y": 10,
         },
         Object {
-          "_x": 2022-01-02T08:00:00.000Z,
+          "_x": 2022-01-02T00:00:00.000Z,
           "_y": 20,
-          "x": 2022-01-02T08:00:00.000Z,
+          "x": 2022-01-02T00:00:00.000Z,
           "y": 20,
         },
       ]
