@@ -1,9 +1,74 @@
 /* global console */
 /* eslint no-unused-expressions: 0 */
+import React from "react";
 import PropTypes from "prop-types";
 import { PropTypes as CustomPropTypes } from "victory-core";
 
 describe("victory-util/prop-types", () => {
+  const rest = ["location", "propFullName"] as const;
+
+  describe("should be type-safe", () => {
+    const TestComp: React.FC<{
+      number: number;
+      string: string;
+      optional?: string;
+    }> = () => null;
+
+    it("check regular PropTypes", () => {
+      // Correct usage:
+      TestComp.propTypes = { number: PropTypes.number.isRequired };
+      // @ts-expect-error Incorrect usage:
+      TestComp.propTypes = { number: PropTypes.number };
+
+      // Correct usage:
+      TestComp.propTypes = { string: PropTypes.string.isRequired };
+      // @ts-expect-error Incorrect usage:
+      TestComp.propTypes = { string: PropTypes.number };
+      // @ts-expect-error Incorrect usage:
+      TestComp.propTypes = { string: PropTypes.number.isRequired };
+
+      // Correct usage:
+      TestComp.propTypes = { optional: PropTypes.string };
+      // @ts-expect-error Incorrect usage:
+      TestComp.propTypes = { optional: PropTypes.number };
+    });
+
+    it("CustomPropTypes.integer", () => {
+      // Correct usage:
+      TestComp.propTypes = { number: CustomPropTypes.integer.isRequired };
+      // @ts-expect-error Incorrect usage:
+      TestComp.propTypes = { number: CustomPropTypes.integer };
+      // @ts-expect-error Incorrect usage:
+      TestComp.propTypes = { string: CustomPropTypes.integer.isRequired };
+      // @ts-expect-error Incorrect usage:
+      TestComp.propTypes = { string: CustomPropTypes.integer };
+    });
+    it("CustomPropTypes.greaterThanZero", () => {
+      // Correct usage:
+      TestComp.propTypes = {
+        number: CustomPropTypes.greaterThanZero.isRequired
+      };
+      // @ts-expect-error Incorrect usage:
+      TestComp.propTypes = { number: CustomPropTypes.greaterThanZero };
+      TestComp.propTypes = {
+        // @ts-expect-error Incorrect usage:
+        string: CustomPropTypes.greaterThanZero.isRequired
+      };
+      // @ts-expect-error Incorrect usage:
+      TestComp.propTypes = { string: CustomPropTypes.greaterThanZero };
+    });
+    it("CustomPropTypes.nonNegative", () => {
+      // Correct usage:
+      TestComp.propTypes = { number: CustomPropTypes.nonNegative.isRequired };
+      // @ts-expect-error Incorrect usage:
+      TestComp.propTypes = { number: CustomPropTypes.nonNegative };
+      // @ts-expect-error Incorrect usage:
+      TestComp.propTypes = { string: CustomPropTypes.nonNegative.isRequired };
+      // @ts-expect-error Incorrect usage:
+      TestComp.propTypes = { string: CustomPropTypes.nonNegative };
+    });
+  });
+
   /* eslint-disable no-console */
   describe("deprecated", () => {
     const shouldWarn = (message) => {
@@ -17,7 +82,7 @@ describe("victory-util/prop-types", () => {
     };
 
     const shouldNotError = () => {
-      expect(console.error).notCalled;
+      expect(console.error).not.toHaveBeenCalled();
     };
 
     const validate = (prop) => {
@@ -26,8 +91,9 @@ describe("victory-util/prop-types", () => {
           pName: prop
         },
         "pName",
-        "ComponentName"
-      );
+        "ComponentName",
+        ...rest
+      )!;
     };
 
     beforeEach(() => {
@@ -63,10 +129,16 @@ describe("victory-util/prop-types", () => {
 
   describe("allOfType", () => {
     const validate = function (prop) {
-      return CustomPropTypes.allOfType([
+      const validator = CustomPropTypes.allOfType([
         CustomPropTypes.nonNegative,
         CustomPropTypes.integer
-      ])({ testProp: prop }, "testProp", "TestComponent");
+      ]);
+      return validator(
+        { testProp: prop },
+        "testProp",
+        "TestComponent",
+        ...rest
+      )!;
     };
 
     it("returns an error if the first validator is false", () => {
@@ -96,8 +168,9 @@ describe("victory-util/prop-types", () => {
       return CustomPropTypes.nonNegative(
         { testProp: prop },
         "testProp",
-        "TestComponent"
-      );
+        "TestComponent",
+        ...rest
+      )!;
     };
 
     it("returns an error for non numeric values", () => {
@@ -132,8 +205,9 @@ describe("victory-util/prop-types", () => {
       return CustomPropTypes.integer(
         { testProp: prop },
         "testProp",
-        "TestComponent"
-      );
+        "TestComponent",
+        ...rest
+      )!;
     };
 
     it("returns an error for non numeric values", () => {
@@ -167,8 +241,9 @@ describe("victory-util/prop-types", () => {
       return CustomPropTypes.greaterThanZero(
         { testProp: prop },
         "testProp",
-        "TestComponent"
-      );
+        "TestComponent",
+        ...rest
+      )!;
     };
 
     it("returns an error for non numeric values", () => {
@@ -210,8 +285,9 @@ describe("victory-util/prop-types", () => {
       return CustomPropTypes.domain(
         { testProp: prop },
         "testProp",
-        "TestComponent"
-      );
+        "TestComponent",
+        ...rest
+      )!;
     };
 
     it("returns an error for non array values", () => {
@@ -259,8 +335,9 @@ describe("victory-util/prop-types", () => {
       return CustomPropTypes.scale(
         { testProp: prop },
         "testProp",
-        "TestComponent"
-      );
+        "TestComponent",
+        ...rest
+      )!;
     };
 
     it("returns an error for non function values", () => {
@@ -272,9 +349,8 @@ describe("victory-util/prop-types", () => {
     });
 
     it("returns an error when the function does not have a domain, range, and copy methods", () => {
-      const testFunc = () => {
-        "oops";
-      };
+      const testFunc = () => "oops";
+
       const result = validate(testFunc);
       expect(result).toBeInstanceOf(Error);
       expect(result.message).toContain(
@@ -294,8 +370,9 @@ describe("victory-util/prop-types", () => {
       return CustomPropTypes.homogeneousArray(
         { testProp: prop },
         "testProp",
-        "TestComponent"
-      );
+        "TestComponent",
+        ...rest
+      )!;
     };
 
     it("returns an error for non array values", () => {
@@ -332,13 +409,14 @@ describe("victory-util/prop-types", () => {
   });
 
   describe("matchDataLength", () => {
-    const validate = function (prop, dataProp) {
+    const validate = function (prop?, dataProp?) {
       const props = { testProp: prop, data: dataProp };
       return CustomPropTypes.matchDataLength(
         props,
         "testProp",
-        "TestComponent"
-      );
+        "TestComponent",
+        ...rest
+      )!;
     };
 
     it("does not return an error when prop is undefined", () => {
