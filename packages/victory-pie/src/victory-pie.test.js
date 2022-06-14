@@ -11,7 +11,7 @@ import {
   parseSvgPathCommands,
   getDistanceFromOrigin,
   getSliceArcEnd
-} from "../../../test/svg-test-helper";
+} from "../../../test/helpers";
 
 const pizzaSliceInnerText = "Pizza Slice";
 const PizzaSlice = ({ datum: { x } }) => (

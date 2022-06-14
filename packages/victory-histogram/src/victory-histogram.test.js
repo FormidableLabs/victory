@@ -2,7 +2,7 @@ import React from "react";
 import { render, screen, fireEvent } from "@testing-library/react";
 import { range } from "lodash";
 import VictoryHistogram from "./victory-histogram";
-import { isBar, getBarHeight } from "../../../test/svg-test-helper";
+import { isBar, getBarHeight } from "../../../test/helpers";
 
 describe("components/victory-histogram", () => {
   const DATA_COMPONENT_ID = "data-component-id";

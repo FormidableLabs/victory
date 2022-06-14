@@ -4,7 +4,7 @@ import { range } from "lodash";
 import { VictoryChart } from "victory-chart";
 import VictoryBar from "./victory-bar";
 import Bar from "./bar";
-import { isBar, getBarHeight } from "../../../test/svg-test-helper";
+import { isBar, getBarHeight } from "../../../test/helpers";
 
 describe("components/victory-bar", () => {
   describe("default component rendering", () => {

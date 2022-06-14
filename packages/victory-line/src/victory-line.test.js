@@ -5,7 +5,7 @@ import { VictoryChart } from "victory-chart";
 import Curve from "./curve";
 import VictoryLine from "./victory-line";
 import { curveCatmullRom } from "victory-vendor/d3-shape";
-import { calculateD3Path } from "../../../test/svg-test-helper";
+import { calculateD3Path } from "../../../test/helpers";
 
 describe("components/victory-line", () => {
   describe("default component rendering", () => {

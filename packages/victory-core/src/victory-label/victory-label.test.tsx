@@ -2,7 +2,7 @@ import React from "react";
 import { VictoryLabel } from "./victory-label";
 import { Log } from "victory-core";
 import { screen, fireEvent, render } from "@testing-library/react";
-import { SVGWrapper } from "@test-helpers/wrappers";
+import { SVGWrapper } from "../../../../test/helpers";
 
 describe("components/victory-label", () => {
   it("accepts user props", () => {

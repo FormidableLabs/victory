@@ -2,7 +2,7 @@ import { render } from "@testing-library/react";
 import { assign } from "lodash";
 import React from "react";
 import { PointPathHelpers as pathHelpers, Point } from "victory-core";
-import { SVGWrapper } from "../../../../test/wrappers";
+import { SVGWrapper } from "../../../../test/helpers";
 
 describe("victory-primitives/point", () => {
   const baseProps = {

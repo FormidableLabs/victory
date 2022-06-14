@@ -1,6 +1,6 @@
 import React from "react";
 import { random, range } from "lodash";
-import { calculateD3Path } from "../../../test/svg-test-helper";
+import { calculateD3Path } from "../../../test/helpers";
 import Voronoi from "./voronoi";
 import VictoryVoronoi from "./victory-voronoi";
 import { fireEvent, render, screen } from "@testing-library/react";

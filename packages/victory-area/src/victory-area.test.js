@@ -4,7 +4,7 @@ import React from "react";
 import { Area, VictoryArea } from "victory-area";
 import { VictoryChart } from "victory-chart";
 import { curveCatmullRom } from "victory-vendor/d3-shape";
-import { calculateD3Path } from "../../../test/svg-test-helper";
+import { calculateD3Path } from "../../../test/helpers";
 
 describe("components/victory-area", () => {
   describe("default component rendering", () => {

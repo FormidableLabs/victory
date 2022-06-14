@@ -1,6 +1,6 @@
 import { render } from "@testing-library/react";
 import React from "react";
-import { SVGWrapper } from "../../../../test/wrappers";
+import { SVGWrapper } from "../../../../test/helpers";
 import { ClipPath } from "./clip-path";
 
 describe("victory-primitives/clip-path", () => {

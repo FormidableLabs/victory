@@ -7,7 +7,7 @@ import {
   convertSvgCoordinatesToCartesian,
   getSvgPointCoordinates,
   isCircle
-} from "../../../test/svg-test-helper";
+} from "../../../test/helpers";
 
 describe("components/victory-scatter", () => {
   describe("default component rendering", () => {
