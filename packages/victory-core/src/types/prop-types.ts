@@ -130,7 +130,9 @@ export type CategoryPropType =
       y: string[];
     };
 
-export type DataGetterPropType = ValueOrAccessor<string | number | number[]>;
+export type DataGetterPropType = ValueOrAccessor<
+  string | string[] | number | number[]
+>;
 
 export type InterpolationPropType =
   | "basis"
