@@ -9,42 +9,46 @@ describe("useDomain", () => {
   });
 
   it("gets the domain from props", () => {
-    const props = {
-      domain: [0, 1]
-    };
-    const { result } = renderHook(() => useDomain(props, "x"));
+    const { result } = renderHook(() => useDomain({ domain: [0, 1] }, "x"));
     expect(result.current).toEqual([0, 1]);
   });
 
   it("gets the domain from props for x and y", () => {
-    const props = {
-      domain: { x: [0, 1] }
-    };
-    const { result } = renderHook(() => useDomain(props, "x"));
+    const { result } = renderHook(() =>
+      useDomain({ domain: { x: [0, 1] } }, "x")
+    );
     expect(result.current).toEqual([0, 1]);
   });
 
   it("gets the domain from data if props don't exist for a particular axis", () => {
-    const props = {
-      domain: { y: [1, 2] },
-      data: [
-        { x: 1, y: 3 },
-        { x: 3, y: 5 }
-      ]
-    };
-    const { result } = renderHook(() => useDomain(props, "x"));
+    const { result } = renderHook(() =>
+      useDomain(
+        {
+          domain: { y: [1, 2] },
+          data: [
+            { x: 1, y: 3 },
+            { x: 3, y: 5 }
+          ]
+        },
+        "x"
+      )
+    );
     expect(result.current).toEqual([1, 3]);
   });
 
   it("gets the domain from data with dates", () => {
-    const props = {
-      domain: { y: [1, 2] },
-      data: [
-        { x: new Date(2022, 0, 10), y: 1 },
-        { x: new Date(2022, 0, 1), y: 2 }
-      ]
-    };
-    const { result } = renderHook(() => useDomain(props, "x"));
+    const { result } = renderHook(() =>
+      useDomain(
+        {
+          domain: { y: [1, 2] },
+          data: [
+            { x: new Date(2022, 0, 10), y: 1 },
+            { x: new Date(2022, 0, 1), y: 2 }
+          ]
+        },
+        "x"
+      )
+    );
     expect(result.current).toEqual([
       new Date(2022, 0, 1),
       new Date(2022, 0, 10)

@@ -22,7 +22,7 @@ export type DomainPropType = ValueOrAxes<DomainTuple>;
 export type DomainValue = number | Date;
 // This should be a tuple type, but every time we use it, it fails with a type error.
 // type number[] is not assignable to type [number, number] | [Date, Date].
-export type DomainTuple = number[] | Date[];
+export type DomainTuple = Tuple<number> | Tuple<Date>;
 export type PaddingType = number | Tuple<number>;
 export type RangePropType = ValueOrAxes<RangeTuple>;
 export type RangeTuple = number[];
