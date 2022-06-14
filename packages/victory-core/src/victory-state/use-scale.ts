@@ -20,11 +20,8 @@ const DEFAULT_SCALE = scaleLinear;
 function isD3Scale(scale?: Scale): scale is D3Scale {
   return (
     isFunction(scale) &&
-    // @ts-expect-error TODO: fix d3 scale definition
     isFunction(scale().copy) &&
-    // @ts-expect-error TODO: fix d3 scale definition
     isFunction(scale().domain) &&
-    // @ts-expect-error TODO: fix d3 scale definition
     isFunction(scale().range)
   );
 }
@@ -32,19 +29,14 @@ function isD3Scale(scale?: Scale): scale is D3Scale {
 function getD3ScaleFromString(scale: ScalePropType): D3Scale {
   switch (scale) {
     case "linear":
-      // @ts-expect-error TODO: fix d3 scale definition
       return scaleLinear;
     case "time":
-      // @ts-expect-error TODO: fix d3 scale definition
       return scaleTime;
     case "log":
-      // @ts-expect-error TODO: fix d3 scale definition
       return scaleLog;
     case "sqrt":
-      // @ts-expect-error TODO: fix d3 scale definition
       return scaleSqrt;
     default:
-      // @ts-expect-error TODO: fix d3 scale definition
       return DEFAULT_SCALE;
   }
 }
@@ -68,10 +60,8 @@ export function useScale(
   }
 
   if (Collection.containsDates(axisData)) {
-    // @ts-expect-error TODO: fix d3 scale definition
     return scaleTime;
   }
 
-  // @ts-expect-error TODO: fix d3 scale definition
   return DEFAULT_SCALE;
 }

@@ -17,7 +17,7 @@ import { getBarPosition } from "./helper-methods";
 // This component does not include events, animations, or styling.
 // To test this out, swap out the VictoryBar export in ./index.js and run `yarn storybook`.
 
-const defaultProps = {
+const defaultProps: VictoryProviderProps = {
   data: [
     { x: 1, y: 1 },
     { x: 2, y: 2 },
@@ -27,7 +27,8 @@ const defaultProps = {
   height: 300,
   includeZero: true,
   padding: 50,
-  sortOrder: "ascending",
+  // TODO: Why do I have to cast this?
+  sortOrder: "ascending" as "ascending" | "descending",
   width: 450
 };
 

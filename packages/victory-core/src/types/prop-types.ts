@@ -1,3 +1,4 @@
+import { any } from "prop-types";
 import * as React from "react";
 import {
   AnimationEasing,
@@ -7,7 +8,7 @@ import { StringOrNumberOrCallback } from "./callbacks";
 
 export type AxisType = "x" | "y";
 export type DatumValue = number | string | Date | null | undefined;
-export type Datum = DatumValue | { [key: string]: DatumValue };
+export type Datum = any;
 export type ForAxes<T> = T | { x?: T; y?: T };
 export type ID = number | string;
 export type ValueOrAccessor<ValueType = unknown, PropsType = object> =
@@ -19,7 +20,9 @@ export type ValueOrAxes<T> = T | ForAxes<T>;
 export type DomainPaddingPropType = ValueOrAxes<PaddingType>;
 export type DomainPropType = ValueOrAxes<DomainTuple>;
 export type DomainValue = number | Date;
-export type DomainTuple = [number, number] | [Date, Date];
+// This should be a tuple type, but every time we use it, it fails with a type error.
+// type number[] is not assignable to type [number, number] | [Date, Date].
+export type DomainTuple = number[] | Date[];
 export type PaddingType = number | Tuple<number>;
 export type RangePropType = ValueOrAxes<RangeTuple>;
 export type RangeTuple = number[];
@@ -85,20 +88,21 @@ export interface EventPropTypeInterface<TTarget, TEventKey> {
   };
 }
 
-type NumberValue = number | { valueOf(): number };
+// type NumberValue = number | { valueOf(): number };
 /**
  * D3 scale function shape. Don't want to introduce typing dependency to d3
  */
-export interface D3Scale<TRange = any> {
-  (input: NumberValue): number;
+// export interface D3Scale<TRange = any> {
+//   (input: NumberValue): number;
 
-  ticks: (count?: number) => number[];
-  tickFormat: (count?: number) => (d: number) => string;
-  domain: () => number[];
-  range: () => TRange[];
-  copy: () => this;
-  invert: (value: number) => number;
-}
+//   ticks: (count?: number) => number[];
+//   tickFormat: (count?: number) => (d: number) => string;
+//   domain: () => number[];
+//   range: () => TRange[];
+//   copy: () => this;
+//   invert: (value: number) => number;
+// }
+export type D3Scale = any;
 
 export type ScaleName = "linear" | "time" | "log" | "sqrt";
 export type ScalePropType = ScaleName;

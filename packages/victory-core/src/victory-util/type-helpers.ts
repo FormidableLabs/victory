@@ -1,4 +1,10 @@
-import { ForAxes, AxisType, Tuple } from "../types/prop-types";
+import {
+  ForAxes,
+  AxisType,
+  Tuple,
+  Datum,
+  DatumValue
+} from "../types/prop-types";
 
 export function hasValueForAxis<T = unknown>(
   value: unknown | ForAxes<T>,
@@ -31,4 +37,14 @@ export function isFunction<T = Function>(func?: unknown): func is T {
 
 export function isDate(value: unknown): value is Date {
   return value instanceof Date;
+}
+
+export function isKeyValueObject(
+  datum: Datum
+): datum is { [key: string]: DatumValue } {
+  return (
+    typeof datum === "object" &&
+    !Array.isArray(datum) &&
+    !(datum instanceof Date)
+  );
 }

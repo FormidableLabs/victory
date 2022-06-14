@@ -1,6 +1,7 @@
 import { get, isNil, orderBy } from "lodash";
 import * as React from "react";
 import { Datum, DatumValue } from "../types/prop-types";
+import { isKeyValueObject } from "../victory-util/type-helpers";
 import { VictoryProviderProps } from "./types";
 
 type DataProps = Pick<
@@ -30,16 +31,6 @@ function getNumericValue(value: DatumValue, fallback: number): number | Date {
     return value;
   }
   return fallback;
-}
-
-function isKeyValueObject(
-  datum: Datum
-): datum is { [key: string]: DatumValue } {
-  return (
-    typeof datum === "object" &&
-    !Array.isArray(datum) &&
-    !(datum instanceof Date)
-  );
 }
 
 export function useData({

@@ -7,8 +7,6 @@ import { useDomain } from "./use-domain";
 import { useRange } from "./use-range";
 import { useScale } from "./use-scale";
 
-// TODO: fix D3Scale type
-
 interface ContextType {
   data: FormattedDatum[];
   scale: Required<ForAxes<D3Scale>>;
@@ -33,9 +31,7 @@ export function VictoryProvider({
   const xBaseScaleFn = useScale(props, "x");
   const yBaseScaleFn = useScale(props, "y");
 
-  // @ts-expect-error TODO: fix d3 scale definition
   const xScaleFn = xBaseScaleFn().domain(xDomain).range(xRange);
-  // @ts-expect-error TODO: fix d3 scale definition
   const yScaleFn = yBaseScaleFn().domain(yDomain).range(yRange);
 
   const scale = {
