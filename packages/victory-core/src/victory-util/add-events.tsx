@@ -47,7 +47,7 @@ interface CommonProps {
 
 export type EventsMixinInterface = ReturnType<typeof addEvents>["prototype"];
 
-function addEvents<
+export function addEvents<
   TBase extends {
     new (props: TProps): React.Component<TProps> & ComponentWithEvents;
     getBaseProps?(props: TProps): ComponentWithEvents["baseProps"];
@@ -405,5 +405,3 @@ function addEvents<
     }
   };
 }
-
-export default addEvents;
