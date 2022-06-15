@@ -14,6 +14,7 @@ import {
 import * as Events from "./events";
 import isEqual from "react-fast-compare";
 import { VictoryTransition } from "../victory-transition/victory-transition";
+import { ComponentWithEvents } from "./events";
 
 // DISCLAIMER:
 // This file is not currently tested, and it is first on the list of files
@@ -25,31 +26,61 @@ const datumHasXandY = (datum) => {
 };
 
 //  used for checking state changes. Expected components can be passed in via options
-const defaultComponents = [
+const defaultComponents: NonNullable<MixinOptions["components"]> = [
   { name: "parent", index: "parent" },
   { name: "data" },
   { name: "labels" }
 ];
 
-export default (WrappedComponent, options) => {
-  return class addEvents extends WrappedComponent {
-    constructor(props) {
+export type MixinOptions = {
+  components?: Array<{
+    name: string;
+    index?: string;
+  }>;
+};
+
+interface CommonProps {
+  animate?: boolean;
+  animating?: boolean;
+  name?: string;
+}
+
+export type EventsMixinInterface = ReturnType<typeof addEvents>["prototype"];
+
+function addEvents<
+  TBase extends {
+    new (props: TProps): React.Component<TProps> & ComponentWithEvents;
+    getBaseProps?(props: TProps): ComponentWithEvents["baseProps"];
+    role?: string;
+    expectedComponents?: string[];
+  },
+  TProps extends CommonProps
+>(WrappedComponent: TBase, options: MixinOptions = {}) {
+  // @ts-expect-error "TS2545: A mixin class must have a constructor with a single rest parameter of type 'any[]'."
+  return class AddEventsMixin extends WrappedComponent {
+    constructor(props: TProps) {
       super(props);
-      const getScopedEvents = Events.getScopedEvents.bind(this);
-      const boundGetEvents = Events.getEvents.bind(this);
-      this.state = {};
-      this.getEvents = (p, target, eventKey) => {
-        return boundGetEvents(p, target, eventKey, getScopedEvents);
-      };
-      this.getEventState = Events.getEventState.bind(this);
+
       const calculatedValues = this.getCalculatedValues(props);
       this.cacheValues(calculatedValues);
-      this.externalMutations = this.getExternalMutations(props);
-      this.calculatedState = this.getStateChanges(props);
-      this.globalEvents = {};
-      this.prevGlobalEventKeys = [];
-      this.boundGlobalEvents = {};
     }
+    state = {};
+    getEventState = Events.getEventState.bind(this);
+    getScopedEvents = Events.getScopedEvents.bind(this);
+    getEvents = (p, target, eventKey) => {
+      return Events.getEvents.call(
+        this,
+        p,
+        target,
+        eventKey,
+        this.getScopedEvents
+      );
+    };
+    externalMutations = this.getExternalMutations(this.props);
+    calculatedState = this.getStateChanges(this.props);
+    globalEvents = {};
+    prevGlobalEventKeys: string[] = [];
+    boundGlobalEvents = {};
 
     shouldComponentUpdate(nextProps) {
       const externalMutations = this.getExternalMutations(nextProps);
@@ -135,7 +166,6 @@ export default (WrappedComponent, options) => {
         return isEmpty(result) ? undefined : result;
       };
 
-      options = options || {};
       const components = options.components || defaultComponents;
       const stateChanges = components
         .map((component) => {
@@ -174,7 +204,9 @@ export default (WrappedComponent, options) => {
       }
     }
 
-    getCalculatedValues(props) {
+    getCalculatedValues(
+      props
+    ): Omit<ComponentWithEvents, "state" | "setState"> {
       const { sharedEvents } = props;
       const components = WrappedComponent.expectedComponents;
       const componentEvents = Events.getComponentEvents(props, components);
@@ -213,8 +245,9 @@ export default (WrappedComponent, options) => {
       });
     }
 
-    getBaseProps(props, getSharedEventState) {
-      getSharedEventState = getSharedEventState || this.getSharedEventState;
+    getBaseProps(props, getSharedEventState): ComponentWithEvents["baseProps"] {
+      getSharedEventState =
+        getSharedEventState || this.getSharedEventState.bind(this);
       const sharedParentState = getSharedEventState("parent", "parent");
       const parentState = this.getEventState("parent", "parent");
       const baseParentProps = defaults({}, parentState, sharedParentState);
@@ -224,7 +257,7 @@ export default (WrappedComponent, options) => {
         : {};
       const modifiedProps = defaults({}, parentProps, props);
 
-      return isFunction(WrappedComponent.getBaseProps)
+      return typeof WrappedComponent.getBaseProps === "function"
         ? WrappedComponent.getBaseProps(modifiedProps)
         : {};
     }
@@ -294,12 +327,14 @@ export default (WrappedComponent, options) => {
           ? props.animate.animationWhitelist
           : defaultAnimationWhitelist;
 
+      const Comp = this.constructor;
+
       return (
         <VictoryTransition
           animate={props.animate}
           animationWhitelist={animationWhitelist}
         >
-          {React.createElement(this.constructor, props)}
+          <Comp {...props} />
         </VictoryTransition>
       );
     }
@@ -322,7 +357,7 @@ export default (WrappedComponent, options) => {
           memo = memo.concat(React.cloneElement(labelComponent, labelProps));
         }
         return memo;
-      }, []);
+      }, [] as React.ReactElement[]);
 
       const dataProps = this.getComponentProps(dataComponent, "data", "all");
       const children = [
@@ -348,7 +383,7 @@ export default (WrappedComponent, options) => {
           }
           return validDataComponents;
         },
-        []
+        [] as React.ReactElement[]
       );
 
       const labelComponents = this.dataKeys
@@ -369,4 +404,6 @@ export default (WrappedComponent, options) => {
       return this.renderContainer(groupComponent, children);
     }
   };
-};
+}
+
+export default addEvents;

@@ -13,14 +13,33 @@ import {
 
 const GLOBAL_EVENT_REGEX = /^onGlobal(.*)$/;
 
+export interface ComponentWithEvents {
+  componentEvents: unknown;
+  getSharedEventState(key: string, value: string): unknown;
+  baseProps: Record<string, object>;
+  dataKeys: string[];
+  hasEvents: unknown;
+  events: unknown;
+
+  state;
+  setState;
+}
+
 /* Returns all own and shared events that should be attached to a single target element,
  * i.e. an individual bar specified by target: "data", eventKey: [index].
  * Returned events are scoped to the appropriate state. Either that of the component itself
  * (i.e. VictoryBar) in the case of own events, or that of the parent component
  * (i.e. VictoryChart) in the case of shared events
  */
-// eslint-disable-next-line max-params,no-shadow
-export function getEvents(props, target, eventKey, getScopedEvents) {
+// eslint-disable-next-line max-params
+export function getEvents(
+  this: ComponentWithEvents,
+  props,
+  target,
+  eventKey,
+  // eslint-disable-next-line no-shadow
+  getScopedEvents
+) {
   // Returns all events that apply to a particular target element
   const getEventsByTarget = (events) => {
     const getSelectedEvents = () => {
@@ -92,7 +111,13 @@ export function getEvents(props, target, eventKey, getScopedEvents) {
  * element.
  */
 // eslint-disable-next-line max-params
-export function getScopedEvents(events, namespace, childType, baseProps) {
+export function getScopedEvents(
+  this: ComponentWithEvents,
+  events,
+  namespace,
+  childType,
+  baseProps
+) {
   if (isEmpty(events)) {
     return {};
   }
@@ -266,7 +291,13 @@ export function getPartialEvents(events, eventKey, childProps) {
 /* Returns the property of the state object corresponding to event changes for
  * a particular element
  */
-export function getEventState(eventKey, namespace, childType) {
+// eslint-disable-next-line max-params
+export function getEventState(
+  this: ComponentWithEvents,
+  eventKey: string,
+  namespace: string,
+  childType?: string
+) {
   // Mandatory usage: `getEventState.bind(this)`
   // eslint-disable-next-line no-invalid-this
   const state = this.state || {};
@@ -330,7 +361,7 @@ export function getExternalMutations(
   mutations,
   baseProps,
   baseState,
-  childName
+  childName?
 ) {
   baseProps = baseProps || {};
   baseState = baseState || {};
