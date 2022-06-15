@@ -1,4 +1,4 @@
 module.exports = {
   extends: "./.babelrc.js",
-  ignore: ["**/*.d.ts", /^.*(.test.)[j|t]sx?$/]
+  ignore: [/^.*(.test.)[j|t]sx?$/]
 };
