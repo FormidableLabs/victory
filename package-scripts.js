@@ -68,14 +68,14 @@ module.exports = {
     },
     typecheck: {
       default: npsUtils.series.nps("typecheck.packages", "typecheck.test"),
-      base: "tsc --noEmit",
-      core: "lerna exec --scope victory-core -- nps typecheck.base",
+      src: "tsc --noEmit",
       demo: "tsc -p ./demo/tsconfig.json --noEmit",
       test: "tsc -p ./test/tsconfig.json --noEmit",
-      packages: "lerna exec --ignore victory-vendor -- nps typecheck.base"
+      core: "lerna exec --scope victory-core -- nps typecheck.src",
+      packages: "lerna exec --ignore victory-vendor -- nps typecheck.src"
     },
     types: {
-      base: "tsc --emitDeclarationOnly --rootDir src",
+      base: "tsc -p ./tsconfig.build.json --emitDeclarationOnly --rootDir src",
       lib: "nps types.base -- -- --outDir lib",
       es: "nps types.base -- -- --outDir es"
     },
