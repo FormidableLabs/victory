@@ -1,6 +1,7 @@
 import { render } from "@testing-library/react";
 import React from "react";
 import Slice from "./slice";
+import { SVGWrapper } from "../../../test/helpers";
 
 describe("victory-primitives/slice", () => {
   describe("rendering", () => {
@@ -15,9 +16,8 @@ describe("victory-primitives/slice", () => {
       };
 
       const { container } = render(
-        // @ts-expect-error "slice has no properties in common with property slice"
         <Slice pathFunction={pathFunction} slice={slice} />,
-        { wrapper: "svg" }
+        { wrapper: SVGWrapper }
       );
 
       expect(container.querySelector("path")).toMatchInlineSnapshot(`

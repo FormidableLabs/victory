@@ -7,6 +7,7 @@ describe("victory-util/scale", () => {
       const props = { scale: "log" };
       const baseScale = Scale.getBaseScale(props, "x");
       expect(baseScale).toBeInstanceOf(Function);
+      // @ts-expect-error This is a unique check for log scales
       expect(baseScale.base).toBeInstanceOf(Function);
     });
 
@@ -14,6 +15,7 @@ describe("victory-util/scale", () => {
       const props = { scale: d3Scale.scaleLog() };
       const baseScale = Scale.getBaseScale(props, "x");
       expect(baseScale).toBeInstanceOf(Function);
+      // @ts-expect-error This is a unique check for log scales
       expect(baseScale.base).toBeInstanceOf(Function);
     });
 
@@ -36,6 +38,7 @@ describe("victory-util/scale", () => {
       const props = { scale: "log" };
       const propsScale = Scale.getScaleFromProps(props, "x");
       expect(propsScale).toBeInstanceOf(Function);
+      // @ts-expect-error This is a unique check for log scales
       expect(propsScale.base).toBeInstanceOf(Function);
     });
 
@@ -43,6 +46,7 @@ describe("victory-util/scale", () => {
       const props = { scale: { x: "log" } };
       const propsScale = Scale.getScaleFromProps(props, "x");
       expect(propsScale).toBeInstanceOf(Function);
+      // @ts-expect-error This is a unique check for log scales
       expect(propsScale.base).toBeInstanceOf(Function);
     });
 
