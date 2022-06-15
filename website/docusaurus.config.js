@@ -76,6 +76,13 @@ const config = {
   themeConfig:
     /** @type {import('@docusaurus/preset-classic').ThemeConfig} */
     ({
+      algolia: {
+        appId: 'XN95N6SC70',
+        apiKey: '76f93b78a4b5050477d4ab0444101844',
+        indexName: 'formidable',
+        contextualSearch: true,
+        searchPagePath: 'search',
+      },
       docs: {
         sidebar: {
           hideable: true,
