@@ -33,7 +33,7 @@ module.exports = {
   },
   overrides: [
     {
-      files: ["**/*.test.*"],
+      files: ["**/*.test.*", "./test/**/*"],
       rules: {
         "react/sort-comp": "off",
         "no-magic-numbers": 0,
