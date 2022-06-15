@@ -117,9 +117,9 @@ module.exports = {
       "lerna version --no-git-tag-version --no-push --loglevel silly",
     // TODO: organize build scripts once build perf is sorted out
     "babel-es":
-      "cross-env BABEL_ENV=es babel src --out-dir es --config-file ../../.babelrc.js --copy-files --extensions .tsx,.ts,.jsx,.js",
+      "cross-env BABEL_ENV=es babel src --out-dir es --config-file ../../.babelrc.js --copy-files --extensions .tsx,.ts,.jsx,.js --source-maps",
     "babel-lib":
-      "cross-env BABEL_ENV=commonjs babel src --out-dir lib --config-file ../../.babelrc.js --copy-files --extensions .tsx,.ts,.jsx,.js",
+      "cross-env BABEL_ENV=commonjs babel src --out-dir lib --config-file ../../.babelrc.js --copy-files --extensions .tsx,.ts,.jsx,.js --source-maps",
     "build-es": npsUtils.series.nps("clean.es", "babel-es", "types.es"),
     "build-lib": npsUtils.series.nps("clean.lib", "babel-lib", "types.lib"),
     "build-libs": npsUtils.series.nps("build-lib", "build-es"),
