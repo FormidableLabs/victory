@@ -21,27 +21,38 @@ export function VictoryProvider({
   ...props
 }: VictoryProviderProps) {
   // TODO: Get data
-  const xDomain = getDomain(props, "x", includeZero);
-  const yDomain = getDomain(props, "y", includeZero);
-  const domain = { x: xDomain, y: yDomain };
+  const domain = React.useMemo(
+    () => ({
+      x: getDomain(props, "x", includeZero),
+      y: getDomain(props, "y", includeZero)
+    }),
+    [props, includeZero]
+  );
 
-  const xRange = getRange(props, "x");
-  const yRange = getRange(props, "y");
+  const range = React.useMemo(
+    () => ({
+      x: getRange(props, "x"),
+      y: getRange(props, "y")
+    }),
+    [props]
+  );
 
-  const xBaseScaleFn = getScale(props, "x");
-  const yBaseScaleFn = getScale(props, "y");
+  const scale = React.useMemo(() => {
+    const xBaseScaleFn = getScale(props, "x");
+    const yBaseScaleFn = getScale(props, "y");
 
-  // @ts-expect-error: This is a valid scale function
-  const xScaleFn = xBaseScaleFn().domain(xDomain).range(xRange);
-  // @ts-expect-error: This is a valid scale function
-  const yScaleFn = yBaseScaleFn().domain(yDomain).range(yRange);
+    // @ts-expect-error: This is a valid scale function
+    const xScaleFn = xBaseScaleFn().domain(domain.x).range(range.x);
+    // @ts-expect-error: This is a valid scale function
+    const yScaleFn = yBaseScaleFn().domain(domain.y).range(range.y);
 
-  const scale = {
-    x: xScaleFn,
-    y: yScaleFn
-  };
+    return {
+      x: xScaleFn,
+      y: yScaleFn
+    };
+  }, [props, domain, range]);
 
-  const data = getData(props);
+  const data = React.useMemo(() => getData(props), [props]);
 
   const value = {
     scale,
