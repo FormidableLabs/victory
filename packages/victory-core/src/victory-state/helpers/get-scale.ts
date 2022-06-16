@@ -1,15 +1,14 @@
-import * as React from "react";
 import {
   scaleLinear,
   scaleTime,
   scaleLog,
   scaleSqrt
 } from "victory-vendor/d3-scale";
-import { AxisType, D3ScaleFn, ScalePropType } from "../types/prop-types";
-import * as Collection from "../victory-util/collection";
-import { getValueForAxis, isFunction } from "../victory-util/type-helpers";
-import { VictoryProviderProps } from "./types";
-import { useAxisData } from "./use-axis-data";
+import { AxisType, D3ScaleFn, ScalePropType } from "../../types/prop-types";
+import * as Collection from "../../victory-util/collection";
+import { getValueForAxis, isFunction } from "../../victory-util/type-helpers";
+import { VictoryProviderProps } from "../types";
+import { getAxisData } from "./get-axis-data";
 
 type Scale = ScalePropType | D3ScaleFn;
 
@@ -41,23 +40,21 @@ function getD3ScaleFromString(scale: ScalePropType): D3ScaleFn {
   }
 }
 
-export function useScale(
-  { data = [], scale }: ScaleProps,
+export function getScale(
+  { data = [], ...props }: ScaleProps,
   axis: AxisType
 ): D3ScaleFn {
-  const axisData = useAxisData(data, axis);
+  const scale = getValueForAxis<Scale>(props.scale, axis);
 
-  const scaleFromProps = React.useMemo(() => {
-    return getValueForAxis<Scale>(scale, axis);
-  }, [scale, axis]);
-
-  if (isD3Scale(scaleFromProps)) {
-    return scaleFromProps;
+  if (isD3Scale(scale)) {
+    return scale;
   }
 
-  if (typeof scaleFromProps === "string") {
-    return getD3ScaleFromString(scaleFromProps);
+  if (typeof scale === "string") {
+    return getD3ScaleFromString(scale);
   }
+
+  const axisData = getAxisData(data, axis);
 
   if (Collection.containsDates(axisData)) {
     return scaleTime;

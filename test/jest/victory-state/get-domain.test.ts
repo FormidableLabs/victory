@@ -1,28 +1,24 @@
-/* eslint-disable max-nested-callbacks */
-import { renderHook } from "@testing-library/react-hooks";
-import { useDomain } from "victory-core";
+import { getDomain } from "victory-core/lib/victory-state/helpers/get-domain";
 
-describe("useDomain", () => {
+describe("getDomain", () => {
   it("returns a default domain if no data is provided", () => {
-    const { result } = renderHook(() => useDomain({}, "x"));
-    expect(result.current).toEqual([0, 1]);
+    expect(getDomain({}, "x")).toEqual([0, 1]);
+    expect(getDomain({}, "y")).toEqual([0, 1]);
   });
 
   it("gets the domain from props", () => {
-    const { result } = renderHook(() => useDomain({ domain: [0, 1] }, "x"));
-    expect(result.current).toEqual([0, 1]);
+    expect(getDomain({ domain: [0, 1] }, "x")).toEqual([0, 1]);
+    expect(getDomain({ domain: [0, 1] }, "y")).toEqual([0, 1]);
   });
 
   it("gets the domain from props for x and y", () => {
-    const { result } = renderHook(() =>
-      useDomain({ domain: { x: [0, 1] } }, "x")
-    );
-    expect(result.current).toEqual([0, 1]);
+    expect(getDomain({ domain: { x: [0, 1] } }, "x")).toEqual([0, 1]);
+    expect(getDomain({ domain: { y: [1, 2] } }, "y")).toEqual([1, 2]);
   });
 
   it("gets the domain from data if props don't exist for a particular axis", () => {
-    const { result } = renderHook(() =>
-      useDomain(
+    expect(
+      getDomain(
         {
           domain: { y: [1, 2] },
           data: [
@@ -32,13 +28,12 @@ describe("useDomain", () => {
         },
         "x"
       )
-    );
-    expect(result.current).toEqual([1, 3]);
+    ).toEqual([1, 3]);
   });
 
   it("gets the domain from data with dates", () => {
-    const { result } = renderHook(() =>
-      useDomain(
+    expect(
+      getDomain(
         {
           domain: { y: [1, 2] },
           data: [
@@ -48,17 +43,12 @@ describe("useDomain", () => {
         },
         "x"
       )
-    );
-    expect(result.current).toEqual([
-      new Date(2022, 0, 1),
-      new Date(2022, 0, 10)
-    ]);
+    ).toEqual([new Date(2022, 0, 1), new Date(2022, 0, 10)]);
   });
 
   it("returns a domain from minDomain and maxDomain if both are defined", () => {
     const props = { minDomain: 1, maxDomain: 10 };
-    const { result } = renderHook(() => useDomain(props, "x"));
-    expect(result.current).toEqual([1, 10]);
+    expect(getDomain(props, "x")).toEqual([1, 10]);
   });
 
   it("returns a domain from minDoman and maxDomain if both are defined for x and y", () => {
@@ -66,8 +56,7 @@ describe("useDomain", () => {
       minDomain: { x: 1, y: 2 },
       maxDomain: { x: 10, y: 20 }
     };
-    const { result } = renderHook(() => useDomain(props, "x"));
-    expect(result.current).toEqual([1, 10]);
+    expect(getDomain(props, "x")).toEqual([1, 10]);
   });
 
   describe("with zero", () => {
@@ -78,8 +67,7 @@ describe("useDomain", () => {
           { x: 3, y: 5 }
         ]
       };
-      const { result } = renderHook(() => useDomain(props, "y", true));
-      expect(result.current).toEqual([0, 5]);
+      expect(getDomain(props, "y", true)).toEqual([0, 5]);
     });
 
     it("allows minimum domain values less than zero", () => {
@@ -89,8 +77,7 @@ describe("useDomain", () => {
           { x: 3, y: 5 }
         ]
       };
-      const { result } = renderHook(() => useDomain(props, "y", true));
-      expect(result.current).toEqual([-3, 5]);
+      expect(getDomain(props, "y", true)).toEqual([-3, 5]);
     });
 
     // TODO: Investigate this more
@@ -102,8 +89,7 @@ describe("useDomain", () => {
           { x: 3, y: 5, y0: 3 }
         ]
       };
-      const { result } = renderHook(() => useDomain(props, "y", true));
-      expect(result.current).toEqual([2, 5]);
+      expect(getDomain(props, "y", true)).toEqual([2, 5]);
     });
   });
 });

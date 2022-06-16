@@ -2,10 +2,10 @@ import * as React from "react";
 import { createContext, useContextSelector } from "use-context-selector";
 import { D3ScaleFn, DomainTuple, ForAxes } from "../types/prop-types";
 import { VictoryProviderProps } from "./types";
-import { FormattedDatum, useData } from "./use-data";
-import { useDomain } from "./use-domain";
-import { useRange } from "./use-range";
-import { useScale } from "./use-scale";
+import { FormattedDatum, getData } from "./helpers/get-data";
+import { getDomain } from "./helpers/get-domain";
+import { getRange } from "./helpers/get-range";
+import { getScale } from "./helpers/get-scale";
 
 interface ContextType {
   data: FormattedDatum[];
@@ -21,15 +21,15 @@ export function VictoryProvider({
   ...props
 }: VictoryProviderProps) {
   // TODO: Get data
-  const xDomain = useDomain(props, "x", includeZero);
-  const yDomain = useDomain(props, "y", includeZero);
+  const xDomain = getDomain(props, "x", includeZero);
+  const yDomain = getDomain(props, "y", includeZero);
   const domain = { x: xDomain, y: yDomain };
 
-  const xRange = useRange(props, "x");
-  const yRange = useRange(props, "y");
+  const xRange = getRange(props, "x");
+  const yRange = getRange(props, "y");
 
-  const xBaseScaleFn = useScale(props, "x");
-  const yBaseScaleFn = useScale(props, "y");
+  const xBaseScaleFn = getScale(props, "x");
+  const yBaseScaleFn = getScale(props, "y");
 
   // @ts-expect-error: This is a valid scale function
   const xScaleFn = xBaseScaleFn().domain(xDomain).range(xRange);
@@ -41,7 +41,7 @@ export function VictoryProvider({
     y: yScaleFn
   };
 
-  const data = useData(props);
+  const data = getData(props);
 
   const value = {
     scale,

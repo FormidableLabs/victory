@@ -1,8 +1,17 @@
 import * as d3Array from "victory-vendor/d3-array";
-import { useAxisData } from "./use-axis-data";
-import { getValueForAxis, isDate, isTuple } from "../victory-util/type-helpers";
-import { VictoryProviderProps } from "./types";
-import { Tuple, AxisType, DomainTuple, DomainValue } from "../types/prop-types";
+import { getAxisData } from "./get-axis-data";
+import {
+  getValueForAxis,
+  isDate,
+  isTuple
+} from "../../victory-util/type-helpers";
+import { VictoryProviderProps } from "../types";
+import {
+  Tuple,
+  AxisType,
+  DomainTuple,
+  DomainValue
+} from "../../types/prop-types";
 
 type DomainProps = Pick<
   VictoryProviderProps,
@@ -24,13 +33,13 @@ function getDomainFromMinMax(
   return [min, max];
 }
 
-export function useDomain(
+export function getDomain(
   { data = [], ...props }: DomainProps,
   axis: AxisType,
   includeZero = false
 ): DomainTuple {
   const domainFromProps = getValueForAxis<DomainTuple>(props.domain, axis);
-  const axisData = useAxisData(data, axis);
+  const axisData = getAxisData(data, axis);
 
   if (includeZero && axis === "y") {
     axisData.push(0);

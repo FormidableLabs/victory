@@ -1,7 +1,7 @@
-import { AxisType, Padding, RangeTuple } from "../types/prop-types";
-import { getPadding } from "../victory-util/helpers";
-import { getValueForAxis, isTuple } from "../victory-util/type-helpers";
-import { VictoryProviderProps } from "./types";
+import { AxisType, Padding, RangeTuple } from "../../types/prop-types";
+import { getPadding } from "../../victory-util/helpers";
+import { getValueForAxis, isTuple } from "../../victory-util/type-helpers";
+import { VictoryProviderProps } from "../types";
 
 type RangeProps = Pick<
   VictoryProviderProps,
@@ -13,7 +13,7 @@ const DEFAULT_HEIGHT = 300;
 const DEFAULT_WIDTH = 450;
 
 // TODO: This does not include polar range
-export function useRange(
+export function getRange(
   {
     range,
     height = DEFAULT_HEIGHT,
