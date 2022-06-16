@@ -40,12 +40,7 @@ export function useData({
   sortOrder = "ascending",
   ...props
 }: DataProps) {
-  const data = React.useMemo<Datum[]>(() => {
-    if (props.data) {
-      return props.data;
-    }
-    return [];
-  }, [props.data]);
+  const data = props.data || [];
 
   const formattedData = React.useMemo<FormattedDatum[]>(() => {
     return data.reduce((nonNullData, datum, index) => {
