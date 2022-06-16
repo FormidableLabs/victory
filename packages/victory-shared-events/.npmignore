@@ -8,3 +8,4 @@ dist/*.map
 !CHANGELOG.md
 !README.md
 !package.json
+**/*.test.*
