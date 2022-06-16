@@ -7,10 +7,13 @@ import { getDomain } from "./helpers/get-domain";
 import { getRange } from "./helpers/get-range";
 import { getScale } from "./helpers/get-scale";
 
-interface ContextType {
+type ScaleType = Required<ForAxes<D3ScaleFn>>;
+type DomainType = Required<ForAxes<DomainTuple>>;
+
+export interface ContextType {
   data: FormattedDatum[];
-  scale: Required<ForAxes<D3ScaleFn>>;
-  domain: Required<ForAxes<DomainTuple>>;
+  scale: ScaleType;
+  domain: DomainType;
 }
 
 const VictoryContext = createContext<ContextType | null>(null);
@@ -65,15 +68,29 @@ export function VictoryProvider({
   );
 }
 
-export function useVictoryContext() {
-  const context = useContextSelector<ContextType | null, ContextType | null>(
+type ContextValue = ContextType | null;
+
+export function useVictoryContext<T>(selector: (value: ContextValue) => T): T {
+  const context = useContextSelector<ContextValue, ContextValue>(
     VictoryContext,
-    (c) => c
+    (v) => v
   );
 
   if (!context) {
-    throw new Error("useVictoryState must be used within a VictoryProvider");
+    throw new Error("useVictoryContext must be used within a VictoryProvider");
   }
 
-  return context;
+  return useContextSelector<ContextValue, T>(VictoryContext, selector);
+}
+
+export function useScale() {
+  return useVictoryContext<ScaleType>((value) => value!.scale);
+}
+
+export function useData() {
+  return useVictoryContext<FormattedDatum[]>((value) => value!.data);
+}
+
+export function useDomain() {
+  return useVictoryContext<DomainType>((value) => value!.domain);
 }

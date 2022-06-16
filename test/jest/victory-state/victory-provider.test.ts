@@ -1,9 +1,9 @@
 import { useVictoryContext, VictoryProvider } from "victory-core";
 import { renderHook } from "@testing-library/react-hooks";
 
-describe("useVictoryContext", () => {
+describe("Victory Provider", () => {
   it("returns default values", () => {
-    const { result } = renderHook(() => useVictoryContext(), {
+    const { result } = renderHook(() => useVictoryContext((c) => c), {
       wrapper: VictoryProvider
     });
 

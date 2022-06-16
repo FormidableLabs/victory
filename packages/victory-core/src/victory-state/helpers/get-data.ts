@@ -39,7 +39,7 @@ export function getData({
   sortKey,
   sortOrder = "ascending",
   data = []
-}: DataProps = {}) {
+}: DataProps = {}): FormattedDatum[] {
   const formattedData = data.reduce((nonNullData, datum, index) => {
     const x = getValue(datum, xAccessor);
     const y = getValue(datum, yAccessor);

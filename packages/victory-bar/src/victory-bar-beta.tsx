@@ -3,7 +3,9 @@ import * as React from "react";
 import {
   Datum,
   NumberOrCallback,
-  useVictoryContext,
+  useData,
+  useDomain,
+  useScale,
   VictoryCommonProps,
   VictoryContainer,
   VictoryDatableProps,
@@ -93,7 +95,10 @@ function VictoryBar({
   cornerRadius,
   horizontal = false
 }: VictoryBarProps) {
-  const { scale, data, domain } = useVictoryContext();
+  const scale = useScale();
+  const data = useData();
+  const domain = useDomain();
+
   const children = data.map((datum: Datum, i: number) => {
     const { x, y, x0, y0 } = getBarPosition(
       { domain, scale, horizontal },

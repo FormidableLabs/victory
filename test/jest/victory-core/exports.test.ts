@@ -197,6 +197,9 @@ describe("victory-core", () => {
         "Whisker",
         "Wrapper",
         "addEvents",
+        "useData",
+        "useDomain",
+        "useScale",
         "useVictoryContext",
       ]
     `);
