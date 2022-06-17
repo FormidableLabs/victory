@@ -1,7 +1,7 @@
 import PropTypes from "prop-types";
 import React from "react";
 import { getBaseProps } from "./helper-methods";
-import Curve from "./curve";
+import { Curve } from "./curve";
 import {
   PropTypes as CustomPropTypes,
   Helpers,
