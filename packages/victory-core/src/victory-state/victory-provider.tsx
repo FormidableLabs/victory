@@ -23,7 +23,6 @@ export function VictoryProvider({
   includeZero,
   ...props
 }: VictoryProviderProps) {
-  // TODO: Get data
   const domain = React.useMemo(
     () => ({
       x: getDomain(props, "x", includeZero),
@@ -70,27 +69,25 @@ export function VictoryProvider({
 
 type ContextValue = ContextType | null;
 
-export function useVictoryContext<T>(selector: (value: ContextValue) => T): T {
-  const context = useContextSelector<ContextValue, ContextValue>(
-    VictoryContext,
-    (v) => v
-  );
-
-  if (!context) {
-    throw new Error("useVictoryContext must be used within a VictoryProvider");
-  }
-
-  return useContextSelector<ContextValue, T>(VictoryContext, selector);
+export function useVictoryContext<T>(selector: (value: ContextType) => T): T {
+  return useContextSelector<ContextValue, T>(VictoryContext, (context) => {
+    if (!context) {
+      throw new Error(
+        "useVictoryContext must be used within a VictoryProvider"
+      );
+    }
+    return selector(context);
+  });
 }
 
 export function useScale() {
-  return useVictoryContext<ScaleType>((value) => value!.scale);
+  return useVictoryContext<ScaleType>((value) => value.scale);
 }
 
 export function useData() {
-  return useVictoryContext<FormattedDatum[]>((value) => value!.data);
+  return useVictoryContext<FormattedDatum[]>((value) => value.data);
 }
 
 export function useDomain() {
-  return useVictoryContext<DomainType>((value) => value!.domain);
+  return useVictoryContext<DomainType>((value) => value.domain);
 }
