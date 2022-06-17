@@ -77,11 +77,11 @@ module.exports = {
     types: {
       create:
         "tsc -p ./tsconfig.build.json --emitDeclarationOnly --rootDir src",
-      "create-lib": 'nps "types.create --outDir lib"',
-      "create-es": 'nps "types.create --outDir es"',
+      "create-lib": "nps types.create -- -- --outDir lib",
+      "create-es": "nps types.create -- -- --outDir es",
       copy: "cpx 'src/**/*.d.ts'",
-      "copy-lib": 'nps "types.copy lib"',
-      "copy-es": 'nps "types.copy es"',
+      "copy-lib": "nps types.copy -- -- lib",
+      "copy-es": "nps types.copy -- -- es",
       lib: npsUtils.concurrent.nps("types.create-lib", "types.copy-lib"),
       es: npsUtils.concurrent.nps("types.create-es", "types.copy-es")
     },
@@ -101,20 +101,10 @@ module.exports = {
       default: npsUtils.series.nps("lint", "test")
     },
     watch: {
-      debug:
-        'lerna exec --scope victory-area -- nps \\"types.copy es --watch\\"',
-      "types-create-lib":
-        'lerna exec --parallel --ignore victory-native --ignore victory-vendor -- nps \\"types.create --outDir lib --watch\\"',
-      "types-create-es":
-        'lerna exec --parallel --ignore victory-native --ignore victory-vendor -- nps \\"types.create --outDir es --watch\\"',
-      "types-copy-lib":
-        'lerna exec --parallel --ignore victory-native --ignore victory-vendor -- nps \\"types.copy lib --watch\\"',
-      "types-copy-es":
-        'lerna exec --parallel --ignore victory-native --ignore victory-vendor -- nps \\"types.copy es --watch\\"',
-      "babel-es":
-        "lerna exec --parallel --ignore victory-native --ignore victory-vendor -- cross-env BABEL_ENV=es babel src --out-dir es --config-file ../../.babelrc.build.js --extensions .tsx,.ts,.jsx,.js --watch",
-      "babel-lib":
-        "lerna exec --parallel --ignore victory-native --ignore victory-vendor -- cross-env BABEL_ENV=commonjs babel src --out-dir lib --config-file ../../.babelrc.build.js --extensions .tsx,.ts,.jsx,.js --watch",
+      // `victory-vendor` is built 1x up front and not watched.
+      default: npsUtils.series.nps("build-package-libs-vendor", "watch.all"),
+      all: 'lerna exec --parallel --ignore victory-native --ignore victory-vendor "nps watch.core"',
+      core: npsUtils.concurrent.nps("watch.es", "watch.lib"),
       lib: npsUtils.concurrent.nps(
         "watch.babel-lib",
         "watch.types-create-lib",
@@ -125,9 +115,12 @@ module.exports = {
         "watch.types-create-es",
         "watch.types-copy-es"
       ),
-      core: npsUtils.concurrent.nps("watch.es", "watch.lib"),
-      // `victory-vendor` is built 1x up front and not watched.
-      default: npsUtils.series.nps("build-package-libs-vendor", "watch.core")
+      "types-create-lib": "nps types.create-lib -- -- --watch",
+      "types-create-es": "nps types.create-es -- -- --watch",
+      "types-copy-lib": "nps types.copy-lib -- -- --watch",
+      "types-copy-es": "nps types.copy-es -- -- --watch",
+      "babel-es": "nps babel-es -- -- --watch",
+      "babel-lib": "nps babel-lib -- -- --watch"
     },
     clean: {
       lib: "rimraf lib",
