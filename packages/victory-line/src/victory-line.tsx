@@ -14,7 +14,16 @@ import {
   Data,
   Domain,
   CommonProps,
-  UserProps
+  UserProps,
+  EventPropTypeInterface,
+  InterpolationPropType,
+  StringOrNumberOrCallback,
+  VictoryCommonProps,
+  VictoryDatableProps,
+  VictoryMultiLabelableProps,
+  VictoryLabelableProps,
+  VictoryStyleInterface,
+  EventsMixinClass
 } from "victory-core";
 
 const fallbackProps = {
@@ -32,7 +41,14 @@ const options = {
   ]
 };
 
-class VictoryLine extends React.Component {
+// eslint-disable-next-line @typescript-eslint/no-empty-interface
+interface VictoryLineBase extends EventsMixinClass<VictoryLineProps> {}
+
+class VictoryLineBase extends React.Component<VictoryLineProps> {
+  constructor(props) {
+    super(props);
+  }
+
   static animationWhitelist = [
     "data",
     "domain",
@@ -103,7 +119,7 @@ class VictoryLine extends React.Component {
   }
 
   render() {
-    const { animationWhitelist, role } = VictoryLine;
+    const { animationWhitelist, role } = VictoryLineBase;
     const props = Helpers.modifyProps(this.props, fallbackProps, role);
 
     if (this.shouldAnimate()) {
@@ -119,4 +135,20 @@ class VictoryLine extends React.Component {
     return UserProps.withSafeUserProps(component, props);
   }
 }
-export default addEvents(VictoryLine, options);
+export const VictoryLine = addEvents(VictoryLineBase, options);
+
+export type VictoryLineTTargetType = "data" | "labels" | "parent";
+
+export interface VictoryLineProps
+  extends VictoryCommonProps,
+    VictoryDatableProps,
+    VictoryLabelableProps,
+    VictoryMultiLabelableProps {
+  events?: EventPropTypeInterface<VictoryLineTTargetType, number | string>[];
+  eventKey?: StringOrNumberOrCallback | string[];
+  // eslint-disable-next-line @typescript-eslint/ban-types
+  interpolation?: InterpolationPropType | Function;
+  samples?: number;
+  style?: VictoryStyleInterface;
+  animate?: boolean;
+}
