@@ -10,17 +10,28 @@ import {
   includes,
   keys
 } from "lodash";
+import type { EventsMixinBaseInterface } from "./add-events";
 
 const GLOBAL_EVENT_REGEX = /^onGlobal(.*)$/;
 
-export interface ComponentWithEvents {
-  componentEvents: unknown;
-  getSharedEventState(key: string, value: string): unknown;
-  baseProps: Record<string, object>;
-  dataKeys: string[];
-  hasEvents: unknown;
-  events: unknown;
+type ComponentEventKey = string;
+export interface ComponentEvent {
+  target?: "parent" | string;
+  eventKey?: ComponentEventKey | ComponentEventKey[];
+  eventHandlers: ComponentEventHandlers;
+}
+export type ComponentEventName = `on${Capitalize<string>}`;
+export interface ComponentEventHandlers {
+  [k: ComponentEventName]: ComponentEventHandler;
+}
+export type ComponentEventHandler = (
+  evt: React.SyntheticEvent,
+  childProps: unknown,
+  eventKey: ComponentEventKey,
+  eventName: ComponentEventName
+) => unknown;
 
+interface ComponentWithEvents extends EventsMixinBaseInterface {
   state;
   setState;
 }
@@ -41,7 +52,7 @@ export function getEvents(
   getScopedEvents
 ) {
   // Returns all events that apply to a particular target element
-  const getEventsByTarget = (events) => {
+  const getEventsByTarget = (events: Array<ComponentEvent>) => {
     const getSelectedEvents = () => {
       const targetEvents = events.reduce((memo, event) => {
         if (event.target !== undefined) {
@@ -51,7 +62,7 @@ export function getEvents(
           return matchesTarget ? memo.concat(event) : memo;
         }
         return memo.concat(event);
-      }, []);
+      }, [] as ComponentEvent[]);
 
       if (eventKey !== undefined && target !== "parent") {
         return targetEvents.filter((obj) => {
@@ -70,7 +81,7 @@ export function getEvents(
       Array.isArray(selectedEvents) &&
       selectedEvents.reduce((memo, event) => {
         return event ? assign(memo, event.eventHandlers) : memo;
-      }, {})
+      }, {} as ComponentEvent["eventHandlers"])
     );
   };
 
@@ -277,14 +288,18 @@ export function getScopedEvents(
 /* Returns a partially applied event handler for a specific target element
  * This allows event handlers to have access to props controlling each element
  */
-export function getPartialEvents(events, eventKey, childProps) {
+export function getPartialEvents(
+  events: ComponentEventHandlers,
+  eventKey: ComponentEventKey,
+  childProps: unknown
+) {
   return events
     ? keys(events).reduce((memo, eventName) => {
         const appliedEvent = (evt) =>
           events[eventName](evt, childProps, eventKey, eventName);
         memo[eventName] = appliedEvent;
         return memo;
-      }, {})
+      }, {} as ComponentEventHandlers)
     : {};
 }
 
@@ -294,7 +309,7 @@ export function getPartialEvents(events, eventKey, childProps) {
 // eslint-disable-next-line max-params
 export function getEventState(
   this: ComponentWithEvents,
-  eventKey: string,
+  eventKey: ComponentEventKey,
   namespace: string,
   childType?: string
 ) {

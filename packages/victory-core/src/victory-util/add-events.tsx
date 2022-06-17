@@ -14,7 +14,9 @@ import {
 import * as Events from "./events";
 import isEqual from "react-fast-compare";
 import { VictoryTransition } from "../victory-transition/victory-transition";
-import { ComponentWithEvents } from "./events";
+import { VictoryCommonProps, VictoryDatableProps } from "./common-props";
+import { VictoryLabelableProps } from "../types/prop-types";
+import type { ComponentEvent } from "./events";
 
 // DISCLAIMER:
 // This file is not currently tested, and it is first on the list of files
@@ -39,25 +41,62 @@ export type MixinOptions = {
   }>;
 };
 
-interface CommonProps {
-  animate?: boolean;
-  animating?: boolean;
-  name?: string;
+export interface EventMixinCommonProps
+  extends VictoryCommonProps,
+    VictoryDatableProps,
+    VictoryLabelableProps {}
+
+/**
+ * These methods must be implemented by the Wrapped Component
+ */
+export type EventsMixinBaseInterface = {
+  componentEvents?: Array<ComponentEvent>;
+  getSharedEventState?(key: string, value: string): unknown;
+  baseProps?: Record<string, object>;
+  dataKeys?: string[];
+  hasEvents?: unknown;
+  events?: unknown;
+};
+
+/**
+ * These methods will be implemented by the Mixin,
+ * and are accessible to the Wrapped Component.
+ *
+ * To make your Wrapped Component type-safe, use "interface merging" like so:
+ * @example
+ *    interface MyComponent extends EventsMixinClass<MyProps> {}
+ *    class MyComponent extends React.Component<MyProps> { ... }
+ */
+export interface EventsMixinClass<TProps> {
+  renderContainer(
+    component: React.ReactElement,
+    children: React.ReactElement[]
+  ): React.ReactElement;
+  cacheValues<TThis>(this: TThis, obj: Partial<TThis>): void;
+  getEventState: typeof Events.getEventState;
+  renderContinuousData(props: TProps);
+  animateComponent(props: TProps, defaultAnimationWhitelist);
 }
 
-export type EventsMixinInterface = ReturnType<typeof addEvents>["prototype"];
+/**
+ * This represents the class itself, including static fields
+ */
+export interface WrappedComponentClass<TProps> {
+  new (props: TProps): React.Component<TProps> & EventsMixinBaseInterface;
+  getBaseProps?(props: TProps): EventsMixinBaseInterface["baseProps"];
+  role?: string;
+  expectedComponents?: string[];
+}
 
 export function addEvents<
-  TBase extends {
-    new (props: TProps): React.Component<TProps> & ComponentWithEvents;
-    getBaseProps?(props: TProps): ComponentWithEvents["baseProps"];
-    role?: string;
-    expectedComponents?: string[];
-  },
-  TProps extends CommonProps
+  TBase extends WrappedComponentClass<TProps>,
+  TProps extends EventMixinCommonProps
 >(WrappedComponent: TBase, options: MixinOptions = {}) {
   // @ts-expect-error "TS2545: A mixin class must have a constructor with a single rest parameter of type 'any[]'."
-  return class AddEventsMixin extends WrappedComponent {
+  return class AddEventsMixin
+    extends WrappedComponent
+    implements EventsMixinClass<TProps>
+  {
     constructor(props: TProps) {
       super(props);
 
@@ -82,8 +121,9 @@ export function addEvents<
     prevGlobalEventKeys: string[] = [];
     boundGlobalEvents = {};
 
-    shouldComponentUpdate(nextProps) {
+    shouldComponentUpdate(nextProps: TProps) {
       const externalMutations = this.getExternalMutations(nextProps);
+      // @ts-expect-error "Property 'animating' does not exist on type EventMixinCommonProps"
       const animating = this.props.animating || this.props.animate;
       const newMutation = !isEqual(externalMutations, this.externalMutations);
       if (animating || newMutation) {
@@ -193,7 +233,7 @@ export function addEvents<
               : memo;
             return memo;
           },
-          []
+          [] as Array<() => void>
         );
         const compiledCallbacks = callbacks.length
           ? () => {
@@ -204,9 +244,7 @@ export function addEvents<
       }
     }
 
-    getCalculatedValues(
-      props
-    ): Omit<ComponentWithEvents, "state" | "setState"> {
+    getCalculatedValues(props): EventsMixinBaseInterface {
       const { sharedEvents } = props;
       const components = WrappedComponent.expectedComponents;
       const componentEvents = Events.getComponentEvents(props, components);
@@ -228,7 +266,7 @@ export function addEvents<
       };
     }
 
-    getExternalMutations(props) {
+    getExternalMutations(props: TProps) {
       const { sharedEvents, externalEventMutations } = props;
       return isEmpty(externalEventMutations) || sharedEvents
         ? undefined
@@ -245,7 +283,10 @@ export function addEvents<
       });
     }
 
-    getBaseProps(props, getSharedEventState): ComponentWithEvents["baseProps"] {
+    getBaseProps(
+      props,
+      getSharedEventState
+    ): EventsMixinBaseInterface["baseProps"] {
       getSharedEventState =
         getSharedEventState || this.getSharedEventState.bind(this);
       const sharedParentState = getSharedEventState("parent", "parent");
@@ -321,9 +362,11 @@ export function addEvents<
       return React.cloneElement(component, parentProps, children);
     }
 
-    animateComponent(props, defaultAnimationWhitelist) {
+    animateComponent(props: TProps, defaultAnimationWhitelist: string[]) {
       const animationWhitelist =
-        props.animate && props.animate.animationWhitelist
+        typeof props.animate === "object" &&
+        props.animate &&
+        props.animate.animationWhitelist
           ? props.animate.animationWhitelist
           : defaultAnimationWhitelist;
 
@@ -340,7 +383,7 @@ export function addEvents<
     }
 
     // Used by `VictoryLine` and `VictoryArea`
-    renderContinuousData(props) {
+    renderContinuousData(props: TProps) {
       const { dataComponent, labelComponent, groupComponent } = props;
       const dataKeys = without(this.dataKeys, "all");
       const labelComponents = dataKeys.reduce((memo, key) => {
@@ -354,14 +397,14 @@ export function addEvents<
           labelProps.text !== undefined &&
           labelProps.text !== null
         ) {
-          memo = memo.concat(React.cloneElement(labelComponent, labelProps));
+          memo = memo.concat(React.cloneElement(labelComponent!, labelProps));
         }
         return memo;
       }, [] as React.ReactElement[]);
 
       const dataProps = this.getComponentProps(dataComponent, "data", "all");
       const children = [
-        React.cloneElement(dataComponent, dataProps),
+        React.cloneElement(dataComponent!, dataProps),
         ...labelComponents
       ];
       return this.renderContainer(groupComponent, children);
