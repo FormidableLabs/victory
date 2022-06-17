@@ -10,7 +10,7 @@ import {
   includes,
   keys
 } from "lodash";
-import type { EventsMixinBaseInterface } from "./add-events";
+import type { EventMixinCalculatedValues } from "./add-events";
 
 const GLOBAL_EVENT_REGEX = /^onGlobal(.*)$/;
 
@@ -31,7 +31,7 @@ export type ComponentEventHandler = (
   eventName: ComponentEventName
 ) => unknown;
 
-interface ComponentWithEvents extends EventsMixinBaseInterface {
+interface ComponentWithEvents extends EventMixinCalculatedValues {
   state;
   setState;
 }
@@ -490,7 +490,7 @@ export function getComponentEvents(props, components) {
         ? memo.concat(...componentEvents)
         : memo;
       return memo;
-    }, []);
+    }, [] as ComponentEvent[]);
   return events && events.length ? events : undefined;
 }
 

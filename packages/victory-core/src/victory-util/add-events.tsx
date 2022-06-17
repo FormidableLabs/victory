@@ -1,22 +1,22 @@
 /*global window:false */
 import React from "react";
 import {
-  defaults,
   assign,
-  keys,
-  isFunction,
-  pick,
-  without,
+  defaults,
+  difference,
   isEmpty,
+  isFunction,
   isNil,
-  difference
+  keys,
+  pick,
+  without
 } from "lodash";
+import type { ComponentEvent } from "./events";
 import * as Events from "./events";
 import isEqual from "react-fast-compare";
 import { VictoryTransition } from "../victory-transition/victory-transition";
 import { VictoryCommonProps, VictoryDatableProps } from "./common-props";
 import { VictoryLabelableProps } from "../types/prop-types";
-import type { ComponentEvent } from "./events";
 
 // DISCLAIMER:
 // This file is not currently tested, and it is first on the list of files
@@ -47,18 +47,6 @@ export interface EventMixinCommonProps
     VictoryLabelableProps {}
 
 /**
- * These methods must be implemented by the Wrapped Component
- */
-export type EventsMixinBaseInterface = {
-  componentEvents?: Array<ComponentEvent>;
-  getSharedEventState?(key: string, value: string): unknown;
-  baseProps?: Record<string, object>;
-  dataKeys?: string[];
-  hasEvents?: unknown;
-  events?: unknown;
-};
-
-/**
  * These methods will be implemented by the Mixin,
  * and are accessible to the Wrapped Component.
  *
@@ -79,11 +67,23 @@ export interface EventsMixinClass<TProps> {
 }
 
 /**
+ * These fields are calculated by the Mixin
+ */
+export interface EventMixinCalculatedValues {
+  componentEvents: Array<ComponentEvent>;
+  getSharedEventState: (key: string, value: string) => unknown;
+  baseProps: Record<string, object>;
+  dataKeys: string[];
+  hasEvents: unknown;
+  events: unknown;
+}
+
+/**
  * This represents the class itself, including static fields
  */
 export interface WrappedComponentClass<TProps> {
-  new (props: TProps): React.Component<TProps> & EventsMixinBaseInterface;
-  getBaseProps?(props: TProps): EventsMixinBaseInterface["baseProps"];
+  new (props: TProps): React.Component<TProps>;
+  getBaseProps?(props: TProps): EventMixinCalculatedValues["baseProps"];
   role?: string;
   expectedComponents?: string[];
 }
@@ -92,16 +92,18 @@ export function addEvents<
   TBase extends WrappedComponentClass<TProps>,
   TProps extends EventMixinCommonProps
 >(WrappedComponent: TBase, options: MixinOptions = {}) {
+  // eslint-disable-next-line @typescript-eslint/no-empty-interface
+  interface AddEventsMixin extends EventMixinCalculatedValues {}
+
   // @ts-expect-error "TS2545: A mixin class must have a constructor with a single rest parameter of type 'any[]'."
-  return class AddEventsMixin
+  class AddEventsMixin
     extends WrappedComponent
     implements EventsMixinClass<TProps>
   {
     constructor(props: TProps) {
       super(props);
 
-      const calculatedValues = this.getCalculatedValues(props);
-      this.cacheValues(calculatedValues);
+      this.cacheValues(this.getCalculatedValues(props));
     }
     state = {};
     getEventState = Events.getEventState.bind(this);
@@ -244,7 +246,7 @@ export function addEvents<
       }
     }
 
-    getCalculatedValues(props): EventsMixinBaseInterface {
+    getCalculatedValues(props): EventMixinCalculatedValues {
       const { sharedEvents } = props;
       const components = WrappedComponent.expectedComponents;
       const componentEvents = Events.getComponentEvents(props, components);
@@ -283,10 +285,7 @@ export function addEvents<
       });
     }
 
-    getBaseProps(
-      props,
-      getSharedEventState
-    ): EventsMixinBaseInterface["baseProps"] {
+    getBaseProps(props, getSharedEventState): this["baseProps"] {
       getSharedEventState =
         getSharedEventState || this.getSharedEventState.bind(this);
       const sharedParentState = getSharedEventState("parent", "parent");
@@ -446,5 +445,7 @@ export function addEvents<
       const children = [...dataComponents, ...labelComponents];
       return this.renderContainer(groupComponent, children);
     }
-  };
+  }
+
+  return AddEventsMixin;
 }
