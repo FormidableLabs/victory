@@ -14,3 +14,4 @@ export * from "./victory-portal/victory-portal";
 export * from "./victory-primitives";
 export { Border as Box } from "./victory-primitives";
 export * from "./victory-util";
+export * from "./victory-state";

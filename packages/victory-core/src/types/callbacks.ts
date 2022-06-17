@@ -1,4 +1,4 @@
-import { D3Scale } from "./prop-types";
+import { D3Scale, Datum, ID } from "./prop-types";
 import { BlockProps, OrientationTypes } from "../victory-theme/types";
 
 /**
@@ -10,10 +10,10 @@ import { BlockProps, OrientationTypes } from "../victory-theme/types";
  */
 export interface CallbackArgs {
   active?: boolean;
-  data?: any;
-  datum?: any;
+  data?: Datum[];
+  datum?: Datum;
   horizontal?: boolean;
-  index: number | string;
+  index: ID;
   x?: number;
   y?: number;
   scale?: {
@@ -28,6 +28,7 @@ export interface CallbackArgs {
 export type VictoryStringOrNumberCallback = (
   args: CallbackArgs
 ) => string | number;
+
 export type VictoryStringCallback = (args: CallbackArgs) => string;
 export type StringOrNumberOrCallback =
   | string
