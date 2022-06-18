@@ -14,7 +14,7 @@ import type { EventMixinCalculatedValues } from "./add-events";
 
 const GLOBAL_EVENT_REGEX = /^onGlobal(.*)$/;
 
-type ComponentEventKey = string;
+type ComponentEventKey = string | number;
 export interface ComponentEvent {
   target?: "parent" | string;
   eventKey?: ComponentEventKey | ComponentEventKey[];

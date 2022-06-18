@@ -68,7 +68,7 @@ describe("victory-util/events", () => {
       expect(Object.keys(partialEvents)).toEqual(
         expect.arrayContaining(["onClick"])
       );
-      partialEvents.onClick();
+      partialEvents.onClick({} as React.SyntheticEvent);
       expect(fake.setState).toReturnWith({
         [index]: {
           data: { foo: "foo" }
