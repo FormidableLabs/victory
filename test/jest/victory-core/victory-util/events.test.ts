@@ -8,15 +8,18 @@ describe("victory-util/events", () => {
           return { evt, childProps, index };
         }
       };
-      const index = 0;
+      const evt = {} as React.SyntheticEvent;
+      const index = "TEST_INDEX";
       const childProps = { style: { fill: "green" } };
       const result = Events.getPartialEvents(events, index, childProps);
-      expect(Object.keys(result)).toEqual(expect.arrayContaining(["onClick"]));
-      expect(Object.keys(result.onClick())).toEqual(
-        expect.arrayContaining(["evt", "childProps", "index"])
-      );
-      expect(result.onClick().index).toEqual(index);
-      expect(result.onClick().childProps).toEqual(childProps);
+      expect(Object.keys(result)).toEqual(["onClick"]);
+      expect(Object.keys(result.onClick(evt))).toEqual([
+        "evt",
+        "childProps",
+        "index"
+      ]);
+      expect(result.onClick(evt).index).toEqual(index);
+      expect(result.onClick(evt).childProps).toEqual(childProps);
     });
   });
 

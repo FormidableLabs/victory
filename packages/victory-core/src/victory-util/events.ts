@@ -29,7 +29,8 @@ export type ComponentEventHandler = (
   childProps: unknown,
   eventKey: ComponentEventKey,
   eventName: ComponentEventName
-) => unknown;
+) => UpdatedProps;
+export type UpdatedProps = any;
 
 interface ComponentWithEvents extends EventMixinCalculatedValues {
   state;
@@ -285,22 +286,26 @@ export function getScopedEvents(
   }, {});
 }
 
-/* Returns a partially applied event handler for a specific target element
+/*
+ * Returns a partially applied event handler for a specific target element
  * This allows event handlers to have access to props controlling each element
  */
 export function getPartialEvents(
   events: ComponentEventHandlers,
   eventKey: ComponentEventKey,
   childProps: unknown
-) {
-  return events
-    ? keys(events).reduce((memo, eventName) => {
-        const appliedEvent = (evt) =>
-          events[eventName](evt, childProps, eventKey, eventName);
-        memo[eventName] = appliedEvent;
-        return memo;
-      }, {} as ComponentEventHandlers)
-    : {};
+): PartialEvents {
+  if (!events) return {};
+
+  return keys(events).reduce((memo, eventName) => {
+    const appliedEvent = (evt) =>
+      events[eventName](evt, childProps, eventKey, eventName);
+    memo[eventName] = appliedEvent;
+    return memo;
+  }, {} as PartialEvents);
+}
+export interface PartialEvents {
+  [eventName: ComponentEventName]: (evt: React.SyntheticEvent) => UpdatedProps;
 }
 
 /* Returns the property of the state object corresponding to event changes for
