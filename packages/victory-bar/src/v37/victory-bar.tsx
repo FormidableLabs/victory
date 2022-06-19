@@ -7,13 +7,12 @@ import {
   useDomain,
   useScale,
   VictoryCommonProps,
-  VictoryContainer,
   VictoryDatableProps,
-  VictoryProvider,
-  VictoryProviderProps
+  VictoryProviderProps,
+  withContainer
 } from "victory-core";
-import Bar from "./bar";
-import { getBarPosition } from "./helper-methods";
+import Bar from "../bar";
+import { getBarPosition } from "../helper-methods";
 
 // This is a demo component that uses VictoryProvider to access calculated props and state.
 // This component does not include events, animations, or styling.
@@ -56,36 +55,6 @@ export interface VictoryBarProps
 }
 
 // TODO: This would be a shared helper that allows us to access context values in the base component
-export function withContainer<Props extends VictoryCommonProps>(
-  WrappedComponent: (props: Props) => React.ReactElement,
-  initialProviderProps: Partial<VictoryProviderProps> = {}
-) {
-  return (props: Props) => {
-    const providerProps = {
-      ...initialProviderProps,
-      ...props
-    };
-    const { standalone = true, containerComponent = <VictoryContainer /> } =
-      props;
-    if (standalone) {
-      return (
-        <VictoryProvider {...providerProps}>
-          {React.cloneElement(
-            containerComponent,
-            providerProps,
-            <WrappedComponent {...props} />
-          )}
-        </VictoryProvider>
-      );
-    }
-    return (
-      <VictoryProvider {...providerProps}>
-        <WrappedComponent {...props} />
-      </VictoryProvider>
-    );
-  };
-}
-
 function VictoryBar({
   dataComponent = <Bar />,
   groupComponent = <g role="presentation" />,

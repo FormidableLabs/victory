@@ -1,0 +1,90 @@
+import * as React from "react";
+import {
+  CategoryPropType,
+  DomainPropType,
+  EventPropTypeInterface,
+  StringOrNumberOrCallback,
+  VictoryCommonProps,
+  VictoryStyleInterface,
+  VictoryStyleObject,
+  withContainer,
+  useDomain,
+  useScale,
+  useData
+} from "victory-core";
+import { AxesType } from "..";
+import { VictoryAxis } from "victory-axis";
+
+interface VictoryChartProps extends VictoryCommonProps {
+  backgroundComponent?: React.ReactElement;
+  categories?: CategoryPropType;
+  children?: React.ReactNode | React.ReactNode[];
+  desc?: string;
+  defaultAxes?: AxesType;
+  defaultPolarAxes?: AxesType;
+  domain?: DomainPropType;
+  endAngle?: number;
+  eventKey?: StringOrNumberOrCallback;
+  events?: EventPropTypeInterface<
+    string,
+    string[] | number[] | string | number
+  >[];
+  innerRadius?: number;
+  prependDefaultAxes?: boolean;
+  startAngle?: number;
+  style?: Pick<VictoryStyleInterface, "parent"> & {
+    background?: VictoryStyleObject;
+  };
+  title?: string;
+}
+
+const DEFAULT_AXES = {
+  independent: <VictoryAxis />,
+  dependent: <VictoryAxis dependentAxis />
+};
+
+const defaultProps = {
+  height: 300,
+  width: 450,
+  standalone: true
+};
+
+const VictoryChart = ({
+  defaultAxes = DEFAULT_AXES,
+  groupComponent = <g />,
+  children
+}: VictoryChartProps) => {
+  const scale = useScale();
+  const data = useData();
+  const domain = useDomain();
+
+  const axes = React.useMemo(() => {
+    const { dependent, independent } = {
+      ...defaultAxes,
+      ...DEFAULT_AXES
+    };
+    const axisProps = {
+      data,
+      domain,
+      scale,
+      standalone: false
+    };
+    return [
+      React.cloneElement(dependent, { ...axisProps, key: "dependent-axis" }),
+      React.cloneElement(independent, { ...axisProps, key: "independent-axis" })
+    ];
+  }, [defaultAxes, domain, scale, data]);
+
+  const childComponents = React.Children.map(children, (child, index) => {
+    // @ts-expect-error Why is this throwing a type error?
+    return React.cloneElement(child, {
+      key: `${child}-index`,
+      index,
+      standalone: false
+    });
+  });
+
+  return React.cloneElement(groupComponent, {}, axes, childComponents);
+};
+
+export default withContainer(VictoryChart, defaultProps);
