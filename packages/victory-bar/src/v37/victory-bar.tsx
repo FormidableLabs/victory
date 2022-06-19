@@ -49,6 +49,7 @@ export interface VictoryBarProps
         bottomLeft?: NumberOrCallback;
         bottomRight?: NumberOrCallback;
       };
+  data?: Datum[];
   dataComponent?: React.ReactElement;
   groupComponent?: React.ReactElement;
   horizontal?: boolean;
@@ -56,6 +57,7 @@ export interface VictoryBarProps
 
 // TODO: This would be a shared helper that allows us to access context values in the base component
 function VictoryBar({
+  data: dataFromProps = defaultProps.data,
   dataComponent = <Bar />,
   groupComponent = <g role="presentation" />,
   alignment,
@@ -65,8 +67,14 @@ function VictoryBar({
   horizontal = false
 }: VictoryBarProps) {
   const scale = useScale();
-  const data = useData();
+  const [data, setData] = useData();
   const domain = useDomain();
+
+  React.useEffect(() => {
+    if (dataFromProps && data !== dataFromProps) {
+      setData(dataFromProps);
+    }
+  }, [dataFromProps, data, setData]);
 
   const children = data.map((datum: Datum, i: number) => {
     const { x, y, x0, y0 } = getBarPosition(

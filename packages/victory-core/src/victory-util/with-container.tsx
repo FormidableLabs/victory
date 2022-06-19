@@ -28,10 +28,6 @@ export function withContainer<Props extends VictoryCommonProps>(
         </VictoryProvider>
       );
     }
-    return (
-      <VictoryProvider {...providerProps}>
-        <WrappedComponent {...props} />
-      </VictoryProvider>
-    );
+    return <WrappedComponent {...props} />;
   };
 }

@@ -55,7 +55,7 @@ const VictoryChart = ({
   children
 }: VictoryChartProps) => {
   const scale = useScale();
-  const data = useData();
+  const [data] = useData();
   const domain = useDomain();
 
   const axes = React.useMemo(() => {
