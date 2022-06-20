@@ -160,7 +160,7 @@ export function getChildren(props, childComponents, calculatedProps) {
   });
 }
 
-export const getChildComponents = (props, defaultAxes) => {
+export const getChildComponents = (props, defaultAxes?) => {
   const childComponents = React.Children.toArray(props.children);
   let newChildComponents = [...childComponents];
 

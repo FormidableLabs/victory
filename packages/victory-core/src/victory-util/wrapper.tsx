@@ -267,7 +267,7 @@ export function getDomain(props, axis, childComponents) {
   return Domain.formatDomain(domain, assign({ domainPadding }, props), axis);
 }
 
-export function getScale(props, axis, childComponents) {
+export function getScale(props, axis, childComponents?) {
   if (props.data) {
     return Scale.getBaseScale(props, axis);
   }
