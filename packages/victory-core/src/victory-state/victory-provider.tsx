@@ -1,70 +1,54 @@
 import * as React from "react";
 import { createContext, useContextSelector } from "use-context-selector";
-import { D3ScaleFn, Datum, DomainTuple, ForAxes } from "../types/prop-types";
-import { VictoryProviderProps } from "./types";
+import { D3ScaleFn, DomainTuple, ForAxes } from "../types/prop-types";
 import { FormattedDatum, getData } from "./helpers/get-data";
 import { getDomain } from "./helpers/get-domain";
 import { getRange } from "./helpers/get-range";
 import { getScale } from "./helpers/get-scale";
-import { rollups } from "victory-vendor/d3-array";
+import { VictoryComponentProps, VictoryProviderProps } from "./types";
 
 type ScaleType = Required<ForAxes<D3ScaleFn>>;
 type DomainType = Required<ForAxes<DomainTuple>>;
 
 export interface ContextType {
   data: FormattedDatum[];
-  setData: (data: Datum[]) => void;
   scale: ScaleType;
   domain: DomainType;
+  setProps: (props: VictoryProviderProps) => void;
 }
 
 const VictoryContext = createContext<ContextType | null>(null);
 
-export function VictoryProvider({
-  children,
-  includeZero,
-  maxDomain,
-  minDomain,
-  x,
-  y,
-  sortKey,
-  sortOrder,
-  ...props
-}: VictoryProviderProps) {
-  const [data, _setData] = React.useState(getData(props));
+export function VictoryProvider({ children, ...props }: VictoryProviderProps) {
+  // We need to store the props in state so they can be overwritten by child components
+  const [_props, _setProps] = React.useState(props);
 
-  const setData = React.useCallback(
-    (value: Datum[]) => {
-      const normalizedData = getData({ data: value, x, y, sortKey, sortOrder });
-      _setData(normalizedData);
-    },
-    [x, y, sortKey, sortOrder]
-  );
+  const setProps = React.useCallback((newProps: VictoryComponentProps) => {
+    _setProps((prevProps) => ({ ...prevProps, ...newProps }));
+  }, []);
+
+  const data = React.useMemo(() => {
+    return getData(_props);
+  }, [_props]);
 
   const domain = React.useMemo(() => {
-    const domainProps = {
-      data,
-      domain: props.domain,
-      maxDomain,
-      minDomain
-    };
     return {
-      x: getDomain(domainProps, "x", includeZero),
-      y: getDomain(domainProps, "y", includeZero)
+      x: getDomain(_props, "x"),
+      y: getDomain(_props, "y")
     };
-  }, [data, props.domain, maxDomain, minDomain, includeZero]);
+  }, [_props]);
 
   const range = React.useMemo(
     () => ({
-      x: getRange(props, "x"),
-      y: getRange(props, "y")
+      x: getRange(_props, "x"),
+      y: getRange(_props, "y")
     }),
-    [props]
+    [_props]
   );
 
   const scale = React.useMemo(() => {
-    const xBaseScaleFn = getScale(props, "x");
-    const yBaseScaleFn = getScale(props, "y");
+    const xBaseScaleFn = getScale(_props, "x");
+    const yBaseScaleFn = getScale(_props, "y");
 
     // @ts-expect-error: This is a valid scale function
     const xScaleFn = xBaseScaleFn().domain(domain.x).range(range.x);
@@ -75,13 +59,13 @@ export function VictoryProvider({
       x: xScaleFn,
       y: yScaleFn
     };
-  }, [props, domain, range]);
+  }, [_props, domain, range]);
 
   const value = {
     scale,
     data,
     domain,
-    setData
+    setProps
   };
 
   return (
@@ -107,11 +91,28 @@ export function useScale() {
 }
 
 export function useData() {
-  return useVictoryContext<[FormattedDatum[], (data: Datum[]) => void]>(
-    (value) => [value.data, value.setData]
-  );
+  return useVictoryContext<FormattedDatum[]>((value) => value.data);
 }
 
 export function useDomain() {
   return useVictoryContext<DomainType>((value) => value.domain);
+}
+
+// This function keeps props in sync betwen the VictoryProvider and child components
+export function useVictoryProps<
+  T extends VictoryComponentProps,
+  TRequired extends keyof T
+>(id: string, props: T, defaults: T & Required<Pick<T, TRequired>>) {
+  const setProps = useVictoryContext((value) => value.setProps);
+
+  const propsWithDefaults = {
+    ...defaults,
+    ...props
+  };
+
+  React.useEffect(() => {
+    setProps(propsWithDefaults);
+  }, []);
+
+  return propsWithDefaults;
 }

@@ -43,19 +43,13 @@ const DEFAULT_AXES = {
   dependent: <VictoryAxis dependentAxis />
 };
 
-const defaultProps = {
-  height: 300,
-  width: 450,
-  standalone: true
-};
-
 const VictoryChart = ({
   defaultAxes = DEFAULT_AXES,
   groupComponent = <g />,
   children
 }: VictoryChartProps) => {
   const scale = useScale();
-  const [data] = useData();
+  const data = useData();
   const domain = useDomain();
 
   const axes = React.useMemo(() => {
@@ -87,4 +81,4 @@ const VictoryChart = ({
   return React.cloneElement(groupComponent, {}, axes, childComponents);
 };
 
-export default withContainer(VictoryChart, defaultProps);
+export default withContainer(VictoryChart);

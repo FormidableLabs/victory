@@ -6,36 +6,15 @@ import {
   useData,
   useDomain,
   useScale,
-  VictoryCommonProps,
-  VictoryDatableProps,
-  VictoryProviderProps,
+  useVictoryProps,
+  VictoryComponentProps,
   withContainer
 } from "victory-core";
 import Bar from "../bar";
 import { getBarPosition } from "../helper-methods";
 
-// This is a demo component that uses VictoryProvider to access calculated props and state.
-// This component does not include events, animations, or styling.
-// To test this out, swap out the VictoryBar export in ./index.js and run `yarn storybook`.
-
-const defaultProps: VictoryProviderProps = {
-  data: [
-    { x: 1, y: 1 },
-    { x: 2, y: 2 },
-    { x: 3, y: 3 },
-    { x: 4, y: 4 }
-  ],
-  height: 300,
-  includeZero: true,
-  padding: 50,
-  sortOrder: "ascending" as const,
-  width: 450
-};
-
 export type VictoryBarAlignmentType = "start" | "middle" | "end";
-export interface VictoryBarProps
-  extends VictoryCommonProps,
-    VictoryDatableProps {
+export interface VictoryBarProps extends VictoryComponentProps {
   alignment?: VictoryBarAlignmentType;
   barRatio?: number;
   barWidth?: NumberOrCallback;
@@ -55,28 +34,41 @@ export interface VictoryBarProps
   horizontal?: boolean;
 }
 
+const defaultProps: VictoryBarProps = {
+  data: [
+    { x: 1, y: 1 },
+    { x: 2, y: 2 },
+    { x: 3, y: 3 },
+    { x: 4, y: 4 }
+  ],
+  dataComponent: <Bar />,
+  groupComponent: <g role="presentation" />,
+  includeZero: true,
+  horizontal: false,
+  sortOrder: "ascending" as const
+};
+
 // TODO: This would be a shared helper that allows us to access context values in the base component
-function VictoryBar({
-  data: dataFromProps = defaultProps.data,
-  dataComponent = <Bar />,
-  groupComponent = <g role="presentation" />,
-  alignment,
-  barRatio,
-  barWidth,
-  cornerRadius,
-  horizontal = false
-}: VictoryBarProps) {
+function VictoryBar(props: VictoryBarProps) {
+  const {
+    alignment,
+    barRatio,
+    barWidth,
+    dataComponent,
+    cornerRadius,
+    horizontal,
+    groupComponent,
+    data
+  } = useVictoryProps<VictoryBarProps, "dataComponent" | "groupComponent">(
+    "bar",
+    props,
+    defaultProps
+  );
   const scale = useScale();
-  const [data, setData] = useData();
+  const formattedData = useData();
   const domain = useDomain();
 
-  React.useEffect(() => {
-    if (dataFromProps && data !== dataFromProps) {
-      setData(dataFromProps);
-    }
-  }, [dataFromProps, data, setData]);
-
-  const children = data.map((datum: Datum, i: number) => {
+  const children = formattedData.map((datum: Datum, i: number) => {
     const { x, y, x0, y0 } = getBarPosition(
       { domain, scale, horizontal },
       datum
@@ -101,4 +93,4 @@ function VictoryBar({
   return React.cloneElement(groupComponent, {}, children);
 }
 
-export default withContainer<VictoryBarProps>(VictoryBar, defaultProps);
+export default withContainer<VictoryBarProps>(VictoryBar);

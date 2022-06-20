@@ -6,12 +6,20 @@ import {
   VictoryContainer
 } from "victory-core";
 
+const defaultProviderProps = {
+  width: 450,
+  height: 300,
+  padding: 50,
+  data: []
+};
+
 export function withContainer<Props extends VictoryCommonProps>(
   WrappedComponent: (props: Props) => React.ReactElement,
   initialProviderProps: Partial<VictoryProviderProps> = {}
 ) {
   return (props: Props) => {
     const providerProps = {
+      ...defaultProviderProps,
       ...initialProviderProps,
       ...props
     };

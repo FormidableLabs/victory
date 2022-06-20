@@ -8,8 +8,7 @@ import {
 } from "../types/prop-types";
 import { PaddingProps } from "../victory-theme/types";
 
-export interface VictoryProviderProps {
-  children?: React.ReactNode;
+export interface VictoryComponentProps {
   data?: Datum[];
   domain?: ValueOrAxes<DomainTuple>;
   height?: number;
@@ -25,4 +24,8 @@ export interface VictoryProviderProps {
   width?: number;
   x?: string;
   y?: string;
+}
+
+export interface VictoryProviderProps extends VictoryComponentProps {
+  children?: React.ReactNode;
 }
