@@ -21,7 +21,8 @@ import {
   VictoryCommonProps,
   VictoryDatableProps,
   VictoryMultiLabelableProps,
-  VictoryStyleInterface
+  VictoryStyleInterface,
+  EventsMixinClass
 } from "victory-core";
 
 const fallbackProps = {
@@ -47,13 +48,18 @@ export interface VictoryAreaProps
     VictoryMultiLabelableProps {
   eventKey?: string[] | number[] | StringOrNumberOrCallback;
   events?: EventPropTypeInterface<VictoryAreaTTargetType, string | number>[];
+  // eslint-disable-next-line @typescript-eslint/ban-types
   interpolation?: InterpolationPropType | Function;
   samples?: number;
   style?: VictoryStyleInterface;
 }
 
+// eslint-disable-next-line @typescript-eslint/no-empty-interface
+interface VictoryAreaBase extends EventsMixinClass<VictoryAreaProps> {}
+
+// eslint-disable-next-line valid-jsdoc
 /**
- * Draw area charts with React. VictoryArea is a composable component, so it doesn"t include axes.
+ * Draw area charts with React. VictoryArea is a composable component, so it doesn't include axes.
  * Add VictoryArea as a child of VictoryChart for a complete chart.
  */
 class VictoryAreaBase extends React.Component<VictoryAreaProps> {
