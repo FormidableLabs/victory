@@ -9,7 +9,9 @@ import {
   Path,
   UserProps,
   VictoryCommonPrimitiveProps,
+  LineHelpers
 } from "victory-core";
+import { VictoryCommonThemeProps } from "victory-core/src";
 
 const defined = (d) => {
   const y = d._y1 !== undefined ? d._y1 : d._y;
@@ -35,74 +37,41 @@ const getAngleAccessor = (scale) => {
   };
 };
 
-const toNewName = (interpolation) => {
-  // d3 shape changed the naming scheme for interpolators from "basis" -> "curveBasis" etc.
-  const capitalize = (s) => s && s[0].toUpperCase() + s.slice(1);
-  return `curve${capitalize(interpolation)}`;
-};
-
-const getLineFunction = (props) => {
-  const { polar, scale, horizontal } = props;
-  const interpolationFunction =
-    typeof props.interpolation === "function" && props.interpolation;
-  const interpolationName =
-    typeof props.interpolation === "string" && toNewName(props.interpolation);
-  return polar
-    ? d3Shape
-        .lineRadial()
-        .defined(defined)
-        .curve(interpolationFunction || d3Shape[`${interpolationName}Closed`])
-        .angle(getAngleAccessor(scale))
-        .radius(getYAccessor(scale))
-    : d3Shape
-        .line()
-        .defined(defined)
-        .curve(interpolationFunction || d3Shape[interpolationName])
-        .x(horizontal ? getYAccessor(scale) : getXAccessor(scale))
-        .y(horizontal ? getXAccessor(scale) : getYAccessor(scale));
-};
-
-const getCartesianArea = (props, interpolation) => {
+const getCartesianArea = (props: AreaProps) => {
   const { horizontal, scale } = props;
-  const interpolationFunction =
-    typeof interpolation === "function" && interpolation;
-  const interpolationName = typeof interpolation === "string" && interpolation;
+  const interpolationFunction = LineHelpers.getInterpolationFunction(props);
   return horizontal
     ? d3Shape
         .area()
         .defined(defined)
-        .curve(interpolationFunction || d3Shape[interpolationName])
+        .curve(interpolationFunction)
         .x0(getY0Accessor(scale))
         .x1(getYAccessor(scale))
         .y(getXAccessor(scale))
     : d3Shape
         .area()
         .defined(defined)
-        .curve(interpolationFunction || d3Shape[interpolationName])
+        .curve(interpolationFunction)
         .x(getXAccessor(scale))
         .y1(getYAccessor(scale))
         .y0(getY0Accessor(scale));
 };
 
-const getAreaFunction = (props) => {
+const getAreaFunction = (props: AreaProps) => {
   const { polar, scale } = props;
-  const interpolationFunction =
-    typeof props.interpolation === "function" && props.interpolation;
-  const interpolationName =
-    typeof props.interpolation === "string" && toNewName(props.interpolation);
-  const interpolation = interpolationFunction || interpolationName;
+  const interpolationFunction = LineHelpers.getInterpolationFunction(props);
   return polar
     ? d3Shape
         .radialArea()
         .defined(defined)
-        .curve(interpolationFunction || d3Shape[`${interpolationName}Closed`])
+        .curve(interpolationFunction)
         .angle(getAngleAccessor(scale))
         .outerRadius(getYAccessor(scale))
         .innerRadius(getY0Accessor(scale))
-    : getCartesianArea(props, interpolation);
+    : getCartesianArea(props);
 };
 
-const evaluateProps = (props) => {
+const evaluateProps = (props: AreaProps) => {
   /**
    * Potential evaluated props are:
    * `ariaLabel`
@@ -123,6 +92,7 @@ const evaluateProps = (props) => {
   return assign({}, props, { ariaLabel, desc, id, style, tabIndex });
 };
 
+// eslint-disable-next-line valid-jsdoc
 /**
  * The area primitive used by VictoryArea
  */
@@ -152,7 +122,7 @@ export const Area: React.FC<AreaProps> = (props) => {
   const renderLine =
     style.stroke && style.stroke !== "none" && style.stroke !== "transparent";
   const areaFunction = getAreaFunction(props);
-  const lineFunction = renderLine && getLineFunction(props);
+  const lineFunction = renderLine && LineHelpers.getLineFunction(props);
 
   const areaStroke = style.stroke ? "none" : style.fill;
 
@@ -168,7 +138,7 @@ export const Area: React.FC<AreaProps> = (props) => {
   };
 
   const area = React.cloneElement(
-    pathComponent,
+    pathComponent!,
     assign(
       {
         key: `${id}-area`,
@@ -184,7 +154,7 @@ export const Area: React.FC<AreaProps> = (props) => {
 
   const line = renderLine
     ? React.cloneElement(
-        pathComponent,
+        pathComponent!,
         assign(
           {
             key: `${id}-area-stroke`,
@@ -197,7 +167,7 @@ export const Area: React.FC<AreaProps> = (props) => {
     : null;
 
   return renderLine
-    ? React.cloneElement(groupComponent, userProps, [area, line])
+    ? React.cloneElement(groupComponent!, userProps, [area, line])
     : area;
 };
 
@@ -216,7 +186,9 @@ Area.defaultProps = {
 };
 
 export interface AreaProps extends VictoryCommonPrimitiveProps {
+  horizontal?: VictoryCommonThemeProps["horizontal"];
   groupComponent?: React.ReactElement;
+  // eslint-disable-next-line @typescript-eslint/ban-types
   interpolation?: string | Function;
   pathComponent?: React.ReactElement;
 }

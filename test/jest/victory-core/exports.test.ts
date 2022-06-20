@@ -348,6 +348,7 @@ describe("victory-core", () => {
             "getText": [Function],
           },
           "LineHelpers": Object {
+            "getInterpolationFunction": [Function],
             "getLineFunction": [Function],
           },
           "Log": Object {
