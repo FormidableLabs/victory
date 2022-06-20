@@ -9,9 +9,9 @@ import {
   Path,
   UserProps,
   VictoryCommonPrimitiveProps,
-  LineHelpers
+  LineHelpers,
+  VictoryCommonThemeProps
 } from "victory-core";
-import { VictoryCommonThemeProps } from "victory-core/src";
 
 const defined = (d) => {
   const y = d._y1 !== undefined ? d._y1 : d._y;
