@@ -91,7 +91,6 @@ const dataProps: React.WeakValidationMap<VictoryDatableProps> = {
     PropTypes.arrayOf(PropTypes.string.isRequired)
   ])
 };
-
 export interface VictoryCommonThemeProps {
   animate?: boolean | AnimatePropTypeInterface;
   colorScale?: ColorScalePropType;

@@ -7,14 +7,14 @@ import {
   useDomain,
   useScale,
   useVictoryProps,
-  VictoryComponentProps,
+  VictoryCalculatedStateProps,
   withContainer
 } from "victory-core";
 import Bar from "../bar";
 import { getBarPosition } from "../helper-methods";
 
 export type VictoryBarAlignmentType = "start" | "middle" | "end";
-export interface VictoryBarProps extends VictoryComponentProps {
+export interface VictoryBarProps extends VictoryCalculatedStateProps {
   alignment?: VictoryBarAlignmentType;
   barRatio?: number;
   barWidth?: NumberOrCallback;
@@ -48,7 +48,6 @@ const defaultProps: VictoryBarProps = {
   sortOrder: "ascending" as const
 };
 
-// TODO: This would be a shared helper that allows us to access context values in the base component
 function VictoryBar(props: VictoryBarProps) {
   const {
     alignment,
@@ -59,11 +58,7 @@ function VictoryBar(props: VictoryBarProps) {
     horizontal,
     groupComponent,
     data
-  } = useVictoryProps<VictoryBarProps, "dataComponent" | "groupComponent">(
-    "bar",
-    props,
-    defaultProps
-  );
+  } = useVictoryProps<VictoryBarProps>("bar", props, defaultProps);
   const scale = useScale();
   const formattedData = useData();
   const domain = useDomain();
@@ -88,9 +83,11 @@ function VictoryBar(props: VictoryBarProps) {
       y0,
       datum
     };
-    return React.cloneElement(dataComponent, dataProps);
+    // TODO: Figure out how to type this properly
+    return React.cloneElement(dataComponent!, dataProps);
   });
-  return React.cloneElement(groupComponent, {}, children);
+  return React.cloneElement(groupComponent!, {}, children);
 }
 
+// @ts-expect-error
 export default withContainer<VictoryBarProps>(VictoryBar);

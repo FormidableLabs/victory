@@ -8,7 +8,8 @@ import {
 } from "../types/prop-types";
 import { PaddingProps } from "../victory-theme/types";
 
-export interface VictoryComponentProps {
+// These are all the props that are used to calculate data, domain, range, and scale
+export interface VictoryCalculatedStateProps {
   data?: Datum[];
   domain?: ValueOrAxes<DomainTuple>;
   height?: number;
@@ -26,6 +27,6 @@ export interface VictoryComponentProps {
   y?: string;
 }
 
-export interface VictoryProviderProps extends VictoryComponentProps {
+export interface VictoryProviderProps extends VictoryCalculatedStateProps {
   children?: React.ReactNode;
 }

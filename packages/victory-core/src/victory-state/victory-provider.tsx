@@ -5,7 +5,7 @@ import { FormattedDatum, getData } from "./helpers/get-data";
 import { getDomain } from "./helpers/get-domain";
 import { getRange } from "./helpers/get-range";
 import { getScale } from "./helpers/get-scale";
-import { VictoryComponentProps, VictoryProviderProps } from "./types";
+import { VictoryCalculatedStateProps, VictoryProviderProps } from "./types";
 
 type ScaleType = Required<ForAxes<D3ScaleFn>>;
 type DomainType = Required<ForAxes<DomainTuple>>;
@@ -23,9 +23,12 @@ export function VictoryProvider({ children, ...props }: VictoryProviderProps) {
   // We need to store the props in state so they can be overwritten by child components
   const [_props, _setProps] = React.useState(props);
 
-  const setProps = React.useCallback((newProps: VictoryComponentProps) => {
-    _setProps((prevProps) => ({ ...prevProps, ...newProps }));
-  }, []);
+  const setProps = React.useCallback(
+    (newProps: VictoryCalculatedStateProps) => {
+      _setProps((prevProps) => ({ ...prevProps, ...newProps }));
+    },
+    []
+  );
 
   const data = React.useMemo(() => {
     return getData(_props);
@@ -99,10 +102,11 @@ export function useDomain() {
 }
 
 // This function keeps props in sync betwen the VictoryProvider and child components
-export function useVictoryProps<
-  T extends VictoryComponentProps,
-  TRequired extends keyof T
->(id: string, props: T, defaults: T & Required<Pick<T, TRequired>>) {
+export function useVictoryProps<T extends VictoryCalculatedStateProps>(
+  id: string,
+  props: T,
+  defaults: T
+) {
   const setProps = useVictoryContext((value) => value.setProps);
 
   const propsWithDefaults = {
