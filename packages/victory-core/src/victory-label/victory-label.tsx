@@ -676,10 +676,9 @@ VictoryLabel.propTypes = {
     PropTypes.func,
     PropTypes.array
   ]),
-  // @ts-expect-error "x is required in origin"
   origin: PropTypes.shape({
-    x: CustomPropTypes.nonNegative,
-    y: CustomPropTypes.nonNegative
+    x: CustomPropTypes.nonNegative.isRequired,
+    y: CustomPropTypes.nonNegative.isRequired
   }),
   polar: PropTypes.bool,
   renderInPortal: PropTypes.bool,

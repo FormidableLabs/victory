@@ -1,4 +1,4 @@
-export { default as addEvents } from "./add-events";
+export * from "./add-events";
 export * as Axis from "./axis";
 export * as Collection from "./collection";
 export * from "./common-props";

@@ -21,7 +21,7 @@ import { NumberOrCallback, StringOrCallback } from "../types/callbacks";
 
 export interface VictoryDatableProps {
   categories?: CategoryPropType;
-  data?: any[];
+  data?: readonly any[];
   dataComponent?: React.ReactElement;
   domain?: DomainPropType;
   domainPadding?: DomainPaddingPropType;
@@ -55,7 +55,7 @@ const dataProps: React.WeakValidationMap<VictoryDatableProps> = {
       CustomPropTypes.nonNegative
     ]),
     PropTypes.string,
-    PropTypes.arrayOf(PropTypes.string)
+    PropTypes.arrayOf(PropTypes.string.isRequired)
   ]),
   sortOrder: PropTypes.oneOf(["ascending", "descending"]),
   style: PropTypes.shape({
@@ -70,7 +70,7 @@ const dataProps: React.WeakValidationMap<VictoryDatableProps> = {
       CustomPropTypes.nonNegative
     ]),
     PropTypes.string,
-    PropTypes.arrayOf(PropTypes.string)
+    PropTypes.arrayOf(PropTypes.string.isRequired)
   ]),
   y: PropTypes.oneOfType([
     PropTypes.func,
@@ -79,7 +79,7 @@ const dataProps: React.WeakValidationMap<VictoryDatableProps> = {
       CustomPropTypes.nonNegative
     ]),
     PropTypes.string,
-    PropTypes.arrayOf(PropTypes.string)
+    PropTypes.arrayOf(PropTypes.string.isRequired)
   ]),
   y0: PropTypes.oneOfType([
     PropTypes.func,
@@ -88,7 +88,7 @@ const dataProps: React.WeakValidationMap<VictoryDatableProps> = {
       CustomPropTypes.nonNegative
     ]),
     PropTypes.string,
-    PropTypes.arrayOf(PropTypes.string)
+    PropTypes.arrayOf(PropTypes.string.isRequired)
   ])
 };
 
@@ -224,11 +224,17 @@ const baseProps: React.WeakValidationMap<VictoryCommonProps> = {
   polar: PropTypes.bool,
   range: PropTypes.oneOfType([
     CustomPropTypes.domain,
-    PropTypes.shape({ x: CustomPropTypes.domain, y: CustomPropTypes.domain })
+    PropTypes.shape({
+      x: CustomPropTypes.domain.isRequired,
+      y: CustomPropTypes.domain.isRequired
+    })
   ]),
   scale: PropTypes.oneOfType([
     CustomPropTypes.scale,
-    PropTypes.shape({ x: CustomPropTypes.scale, y: CustomPropTypes.scale })
+    PropTypes.shape({
+      x: CustomPropTypes.scale.isRequired,
+      y: CustomPropTypes.scale.isRequired
+    })
   ]),
   // @ts-expect-error TODO: synchronize the type with this PropTypes
   sharedEvents: PropTypes.shape({

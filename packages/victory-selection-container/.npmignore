@@ -1,6 +1,5 @@
 /*
 !/dist
-dist/*.map
 !/es
 !/lib
 !/src
@@ -8,4 +7,5 @@ dist/*.map
 !CHANGELOG.md
 !README.md
 !package.json
+*.map
 **/*.test.*

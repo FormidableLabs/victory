@@ -1,7 +1,11 @@
-/*eslint no-magic-numbers: ["error", { "ignore": [-1, 0, 1, 2] }]*/
-import { isFunction, find, isRegExp } from "lodash";
+/* eslint no-magic-numbers: ["error", { "ignore": [-1, 0, 1, 2] }] */
+/* eslint-disable max-params */
+
+import { find, isRegExp } from "lodash";
 import * as Log from "./log";
 import PropTypes from "prop-types";
+import * as Scale from "./scale";
+import { D3Scale, ScaleName } from "../types/prop-types";
 
 /**
  * Return a new validator based on `validator` but with the option to chain
@@ -10,29 +14,25 @@ import PropTypes from "prop-types";
  * @param {Function} validator Validation function.
  * @returns {Function} Validator with `isRequired` option.
  */
-const makeChainable = function (validator) {
-  /* eslint-disable max-params */
-  const _chainable = function (
-    isRequired,
-    props,
-    propName,
-    componentName,
-    ...rest
-  ) {
-    const value = props[propName];
-    if (value === undefined || value === null) {
-      if (isRequired) {
-        return new Error(
-          `Required \`${propName}\` was not specified in \`${componentName}\`.`
-        );
+const makeChainable = function <T>(validator: PropTypes.Validator<T>) {
+  const createChainable =
+    (isRequired: boolean): PropTypes.Validator<T | undefined> =>
+    (props, propName, componentName, ...rest) => {
+      const value = props[propName];
+      if (value === undefined || value === null) {
+        if (isRequired) {
+          return new Error(
+            `Required \`${propName}\` was not specified in \`${componentName}\`.`
+          );
+        }
+        return null;
       }
-      return null;
-    }
-    return validator(props, propName, componentName, ...rest);
-  };
-  const chainable = _chainable.bind(null, false);
-  chainable.isRequired = _chainable.bind(null, true);
-  return chainable;
+      return validator(props, propName, componentName, ...rest);
+    };
+  const chainable = Object.assign(createChainable(false), {
+    isRequired: createChainable(true)
+  });
+  return chainable as PropTypes.Requireable<T | undefined>;
 };
 
 const nullConstructor = () => null;
@@ -56,7 +56,7 @@ const getConstructor = (value) => {
 
 /**
  * Get the name of the constructor used to create `value`, using
- * `Object.protoype.toString`. If the value is null or undefined, return
+ * `Object.prototype.toString`. If the value is null or undefined, return
  * "null" or "undefined", respectively.
  * @param {*} value Instance to return the constructor name of.
  * @returns {String} Name of the constructor.
@@ -77,7 +77,10 @@ const getConstructorName = (value) => {
  * @param {String} explanation The message to provide the user of the deprecated propType.
  * @returns {Function} Validator which logs usage of this propType
  */
-export function deprecated(propType, explanation) {
+export function deprecated<T>(
+  propType: PropTypes.Validator<T>,
+  explanation: string
+): PropTypes.Validator<T> {
   return (props, propName, componentName) => {
     const value = props[propName];
     if (value !== null && value !== undefined) {
@@ -85,12 +88,13 @@ export function deprecated(propType, explanation) {
         `"${propName}" property of "${componentName}" has been deprecated ${explanation}`
       );
     }
-    return PropTypes.checkPropTypes(
+    PropTypes.checkPropTypes(
       { [propName]: propType },
       props,
       propName,
       componentName
     );
+    return null;
   };
 }
 
@@ -101,46 +105,50 @@ export function deprecated(propType, explanation) {
  * @param {Array} validators Validation functions.
  * @returns {Function} Combined validator function
  */
-export function allOfType(validators) {
-  return makeChainable((props, propName, componentName, ...rest) =>
-    validators.reduce(
+export function allOfType<T>(validators: Array<PropTypes.Validator<T>>) {
+  return makeChainable<T>((props, propName, componentName, ...rest) => {
+    return validators.reduce<null | Error>(
       (result, validator) =>
         result || validator(props, propName, componentName, ...rest),
-      undefined
-    )
-  );
+      null
+    );
+  });
 }
 
 /**
  * Check that the value is a non-negative number.
  */
-export const nonNegative = makeChainable((props, propName, componentName) => {
-  const value = props[propName];
-  if (typeof value !== "number" || value < 0) {
-    return new Error(
-      `\`${propName}\` in \`${componentName}\` must be a non-negative number.`
-    );
+export const nonNegative = makeChainable<number>(
+  (props, propName, componentName) => {
+    const value = props[propName];
+    if (typeof value !== "number" || value < 0) {
+      return new Error(
+        `\`${propName}\` in \`${componentName}\` must be a non-negative number.`
+      );
+    }
+    return null;
   }
-  return undefined;
-});
+);
 
 /**
  * Check that the value is an integer.
  */
-export const integer = makeChainable((props, propName, componentName) => {
-  const value = props[propName];
-  if (typeof value !== "number" || value % 1 !== 0) {
-    return new Error(
-      `\`${propName}\` in \`${componentName}\` must be an integer.`
-    );
+export const integer = makeChainable<number>(
+  (props, propName, componentName) => {
+    const value = props[propName];
+    if (typeof value !== "number" || value % 1 !== 0) {
+      return new Error(
+        `\`${propName}\` in \`${componentName}\` must be an integer.`
+      );
+    }
+    return null;
   }
-  return undefined;
-});
+);
 
 /**
  * Check that the value is greater than zero.
  */
-export const greaterThanZero = makeChainable(
+export const greaterThanZero = makeChainable<number>(
   (props, propName, componentName) => {
     const value = props[propName];
     if (typeof value !== "number" || value <= 0) {
@@ -148,52 +156,44 @@ export const greaterThanZero = makeChainable(
         `\`${propName}\` in \`${componentName}\` must be a number greater than zero.`
       );
     }
-    return undefined;
+    return null;
   }
 );
 
 /**
  * Check that the value is an Array of two unique values.
  */
-export const domain = makeChainable((props, propName, componentName) => {
-  const value = props[propName];
-  if (!Array.isArray(value) || value.length !== 2 || value[1] === value[0]) {
-    return new Error(
-      `\`${propName}\` in \`${componentName}\` must be an array of two unique numeric values.`
-    );
+export const domain = makeChainable<[number, number]>(
+  (props, propName, componentName) => {
+    const value = props[propName];
+    if (!Array.isArray(value) || value.length !== 2 || value[1] === value[0]) {
+      return new Error(
+        `\`${propName}\` in \`${componentName}\` must be an array of two unique numeric values.`
+      );
+    }
+    return null;
   }
-  return undefined;
-});
+);
 
 /**
  * Check that the value looks like a d3 `scale` function.
  */
-export const scale = makeChainable((props, propName, componentName) => {
-  const supportedScaleStrings = ["linear", "time", "log", "sqrt"];
-  const validScale = (scl) => {
-    if (isFunction(scl)) {
-      return (
-        isFunction(scl.copy) && isFunction(scl.domain) && isFunction(scl.range)
+export const scale = makeChainable<ScaleName | D3Scale>(
+  (props, propName, componentName) => {
+    const value = props[propName];
+    if (!Scale.validScale(value)) {
+      return new Error(
+        `\`${propName}\` in \`${componentName}\` must be a d3 scale.`
       );
-    } else if (typeof scl === "string") {
-      return supportedScaleStrings.indexOf(scl) !== -1;
     }
-    return false;
-  };
-
-  const value = props[propName];
-  if (!validScale(value)) {
-    return new Error(
-      `\`${propName}\` in \`${componentName}\` must be a d3 scale.`
-    );
+    return null;
   }
-  return undefined;
-});
+);
 
 /**
  * Check that an array contains items of the same type.
  */
-export const homogeneousArray = makeChainable(
+export const homogeneousArray = makeChainable<unknown[]>(
   (props, propName, componentName) => {
     const values = props[propName];
     if (!Array.isArray(values)) {
@@ -203,7 +203,7 @@ export const homogeneousArray = makeChainable(
     }
 
     if (values.length < 2) {
-      return undefined;
+      return null;
     }
 
     const comparisonConstructor = getConstructor(values[0]);
@@ -222,14 +222,14 @@ export const homogeneousArray = makeChainable(
           `\`${otherConstructorName}\`.`
       );
     }
-    return undefined;
+    return null;
   }
 );
 
 /**
  * Check that array prop length matches props.data.length
  */
-export const matchDataLength = makeChainable((props, propName) => {
+export const matchDataLength = makeChainable<unknown[]>((props, propName) => {
   if (
     props[propName] &&
     Array.isArray(props[propName]) &&
@@ -237,17 +237,19 @@ export const matchDataLength = makeChainable((props, propName) => {
   ) {
     return new Error(`Length of data and ${propName} arrays must match.`);
   }
-  return undefined;
+  return null;
 });
 
 /**
  * Check that the value is a regular expression
  */
-export const regExp = makeChainable((props, propName, componentName) => {
-  if (props[propName] && !isRegExp(props[propName])) {
-    return new Error(
-      `\`${propName}\` in \`${componentName}\` must be a regular expression.`
-    );
+export const regExp = makeChainable<RegExp>(
+  (props, propName, componentName) => {
+    if (props[propName] && !isRegExp(props[propName])) {
+      return new Error(
+        `\`${propName}\` in \`${componentName}\` must be a regular expression.`
+      );
+    }
+    return null;
   }
-  return undefined;
-});
+);
