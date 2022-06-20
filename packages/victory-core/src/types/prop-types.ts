@@ -1,13 +1,44 @@
 import * as React from "react";
-import { StringOrNumberOrCallback } from "./callbacks";
+import {
+  ScaleLinear,
+  ScaleLogarithmic,
+  ScalePower,
+  ScaleTime
+} from "victory-vendor/d3-scale";
 import {
   AnimationEasing,
   AnimationStyle
 } from "../victory-animation/victory-animation";
+import { StringOrNumberOrCallback } from "./callbacks";
 
+export type AxisType = "x" | "y";
+export type DatumValue = number | string | Date | null | undefined;
+export type Datum = any;
+export type ForAxes<T> = T | { x?: T; y?: T };
+export type ID = number | string;
+export type ValueOrAccessor<ValueType = unknown, PropsType = object> =
+  | ValueType
+  | ((props: PropsType) => ValueType);
+export type Tuple<T> = [T, T];
+export type ValueOrAxes<T> = T | ForAxes<T>;
+
+export type DomainPaddingPropType = ValueOrAxes<PaddingType>;
+export type DomainPropType = ValueOrAxes<DomainTuple>;
+export type DomainValue = number | Date;
+// This should be a tuple type, but every time we use it, it fails with a type error.
+// type number[] is not assignable to type [number, number] | [Date, Date].
+export type DomainTuple = Tuple<number> | Tuple<Date>;
+export type PaddingType = number | Tuple<number>;
+export type RangePropType = ValueOrAxes<RangeTuple>;
+export type RangeTuple = number[];
 export type StringOrNumberOrList = string | number | (string | number)[];
 
-type Datum = any;
+export interface Padding {
+  top: number;
+  bottom: number;
+  left: number;
+  right: number;
+}
 
 export interface AnimatePropTypeInterface {
   duration?: number;
@@ -62,30 +93,13 @@ export interface EventPropTypeInterface<TTarget, TEventKey> {
   };
 }
 
-export type DomainTuple = [number, number] | [Date, Date];
-export type DomainPropObjectType =
-  | { x?: DomainTuple; y: DomainTuple }
-  | { x: DomainTuple; y?: DomainTuple };
-export type DomainPropType = DomainPropObjectType | DomainTuple;
-
-export type PaddingType = number | [number, number];
-export type DomainPaddingPropType =
-  | PaddingType
-  | {
-      x?: PaddingType;
-      y?: PaddingType;
-    };
-
-export type RangeTuple = [number, number];
-export type RangePropType = RangeTuple | { x?: RangeTuple; y?: RangeTuple };
-
 type NumberValue = number | { valueOf(): number };
 /**
  * D3 scale function shape. Don't want to introduce typing dependency to d3
  */
 export interface D3Scale<TRange = any> {
-  (input: NumberValue): number;
-
+  (numberValue: NumberValue): number;
+  base?: () => number;
   ticks: (count?: number) => number[];
   tickFormat: (count?: number) => (d: number) => string;
   domain: {
@@ -99,6 +113,12 @@ export interface D3Scale<TRange = any> {
   copy: () => this;
   invert: (value: number) => number;
 }
+
+export type D3ScaleFn<TRange = any, TOutput = any> = () =>
+  | ScaleLinear<TRange, TOutput, unknown>
+  | ScaleLogarithmic<TRange, TOutput, unknown>
+  | ScaleTime<TRange, TOutput, unknown>
+  | ScalePower<TRange, TOutput, unknown>;
 
 export type ScaleName = "linear" | "time" | "log" | "sqrt";
 export type ScalePropType = ScaleName;
@@ -116,11 +136,9 @@ export type CategoryPropType =
       y: string[];
     };
 
-export type DataGetterPropType =
-  | number
-  | string
-  | string[]
-  | ((data: any) => number | string | string[]);
+export type DataGetterPropType = ValueOrAccessor<
+  string | string[] | number | number[]
+>;
 
 export type InterpolationPropType =
   | "basis"

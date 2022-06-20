@@ -1,6 +1,6 @@
 /*
 !/dist
-dist/*.map
+*.map
 !/es
 !/lib
 !/src

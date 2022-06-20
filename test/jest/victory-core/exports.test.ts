@@ -36,7 +36,6 @@ import {
   DefaultTransitions,
   Domain,
   DomainPaddingPropType,
-  DomainPropObjectType,
   DomainPropType,
   DomainTuple,
   EventCallbackInterface,
@@ -193,11 +192,16 @@ describe("victory-core", () => {
         "VictoryContainer",
         "VictoryLabel",
         "VictoryPortal",
+        "VictoryProvider",
         "VictoryTheme",
         "VictoryTransition",
         "Whisker",
         "Wrapper",
         "addEvents",
+        "useData",
+        "useDomain",
+        "useScale",
+        "useVictoryContext",
       ]
     `);
   });
