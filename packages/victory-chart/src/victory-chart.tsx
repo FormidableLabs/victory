@@ -71,7 +71,7 @@ const VictoryChartImpl: React.FC<VictoryChartProps> = (initialProps) => {
     () => getCalculatedProps(modifiedProps, childComponents),
     [modifiedProps, childComponents]
   );
-  const { domain, scale, style, origin, radius, horizontal } = calculatedProps;
+  const { domain, scale, style, origin, horizontal } = calculatedProps;
 
   const newChildren = React.useMemo(() => {
     const children = getChildren(props, childComponents, calculatedProps);
@@ -107,7 +107,6 @@ const VictoryChartImpl: React.FC<VictoryChartProps> = (initialProps) => {
         name,
         origin: polar ? origin : undefined,
         polar,
-        radius,
         theme,
         title,
         scale,
@@ -124,7 +123,6 @@ const VictoryChartImpl: React.FC<VictoryChartProps> = (initialProps) => {
     name,
     origin,
     polar,
-    radius,
     scale,
     standalone,
     style,
