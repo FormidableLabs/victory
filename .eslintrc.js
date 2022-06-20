@@ -48,6 +48,7 @@ module.exports = {
       ],
       rules: {
         "no-use-before-define": "off",
+        "valid-jsdoc": "off",
         "@typescript-eslint/no-use-before-define": [
           "error",
           {

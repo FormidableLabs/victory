@@ -57,7 +57,6 @@ export interface VictoryAreaProps
 // eslint-disable-next-line @typescript-eslint/no-empty-interface
 interface VictoryAreaBase extends EventsMixinClass<VictoryAreaProps> {}
 
-// eslint-disable-next-line valid-jsdoc
 /**
  * Draw area charts with React. VictoryArea is a composable component, so it doesn't include axes.
  * Add VictoryArea as a child of VictoryChart for a complete chart.

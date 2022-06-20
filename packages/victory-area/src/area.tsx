@@ -92,7 +92,6 @@ const evaluateProps = (props: AreaProps) => {
   return assign({}, props, { ariaLabel, desc, id, style, tabIndex });
 };
 
-// eslint-disable-next-line valid-jsdoc
 /**
  * The area primitive used by VictoryArea
  */
