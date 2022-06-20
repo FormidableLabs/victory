@@ -1,19 +1,22 @@
 /*global window:false */
 import React from "react";
 import {
-  defaults,
   assign,
-  keys,
-  isFunction,
-  pick,
-  without,
+  defaults,
+  difference,
   isEmpty,
+  isFunction,
   isNil,
-  difference
+  keys,
+  pick,
+  without
 } from "lodash";
+import type { ComponentEvent } from "./events";
 import * as Events from "./events";
 import isEqual from "react-fast-compare";
 import { VictoryTransition } from "../victory-transition/victory-transition";
+import { VictoryCommonProps, VictoryDatableProps } from "./common-props";
+import { VictoryLabelableProps } from "../types/prop-types";
 
 // DISCLAIMER:
 // This file is not currently tested, and it is first on the list of files
@@ -25,34 +28,104 @@ const datumHasXandY = (datum) => {
 };
 
 //  used for checking state changes. Expected components can be passed in via options
-const defaultComponents = [
+const defaultComponents: NonNullable<MixinOptions["components"]> = [
   { name: "parent", index: "parent" },
   { name: "data" },
   { name: "labels" }
 ];
 
-export default (WrappedComponent, options) => {
-  return class addEvents extends WrappedComponent {
-    constructor(props) {
-      super(props);
-      const getScopedEvents = Events.getScopedEvents.bind(this);
-      const boundGetEvents = Events.getEvents.bind(this);
-      this.state = {};
-      this.getEvents = (p, target, eventKey) => {
-        return boundGetEvents(p, target, eventKey, getScopedEvents);
-      };
-      this.getEventState = Events.getEventState.bind(this);
-      const calculatedValues = this.getCalculatedValues(props);
-      this.cacheValues(calculatedValues);
-      this.externalMutations = this.getExternalMutations(props);
-      this.calculatedState = this.getStateChanges(props);
-      this.globalEvents = {};
-      this.prevGlobalEventKeys = [];
-      this.boundGlobalEvents = {};
-    }
+export type MixinOptions = {
+  components?: Array<{
+    name: string;
+    index?: string;
+  }>;
+};
 
-    shouldComponentUpdate(nextProps) {
+export interface EventMixinCommonProps
+  extends VictoryCommonProps,
+    VictoryDatableProps,
+    VictoryLabelableProps {}
+
+/**
+ * These methods will be implemented by the Mixin,
+ * and are accessible to the Wrapped Component.
+ *
+ * To make your Wrapped Component type-safe, use "interface merging" like so:
+ * @example
+ *    interface MyComponent extends EventsMixinClass<MyProps> {}
+ *    class MyComponent extends React.Component<MyProps> { ... }
+ */
+export interface EventsMixinClass<TProps> {
+  renderContainer(
+    component: React.ReactElement,
+    children: React.ReactElement[]
+  ): React.ReactElement;
+  cacheValues<TThis>(this: TThis, obj: Partial<TThis>): void;
+  getEventState: typeof Events.getEventState;
+  renderContinuousData(props: TProps);
+  animateComponent(props: TProps, defaultAnimationWhitelist);
+}
+
+/**
+ * These fields are calculated by the Mixin
+ */
+export interface EventMixinCalculatedValues {
+  componentEvents: Array<ComponentEvent>;
+  getSharedEventState: (key: string, value: string) => unknown;
+  baseProps: Record<string, object>;
+  dataKeys: string[];
+  hasEvents: unknown;
+  events: unknown;
+}
+
+/**
+ * This represents the class itself, including static fields
+ */
+export interface WrappedComponentClass<TProps> {
+  new (props: TProps): React.Component<TProps>;
+  getBaseProps?(props: TProps): EventMixinCalculatedValues["baseProps"];
+  role?: string;
+  expectedComponents?: string[];
+}
+
+export function addEvents<
+  TBase extends WrappedComponentClass<TProps>,
+  TProps extends EventMixinCommonProps
+>(WrappedComponent: TBase, options: MixinOptions = {}) {
+  // eslint-disable-next-line @typescript-eslint/no-empty-interface
+  interface AddEventsMixin extends EventMixinCalculatedValues {}
+
+  // @ts-expect-error "TS2545: A mixin class must have a constructor with a single rest parameter of type 'any[]'."
+  class AddEventsMixin
+    extends WrappedComponent
+    implements EventsMixinClass<TProps>
+  {
+    constructor(props: TProps) {
+      super(props);
+
+      this.cacheValues(this.getCalculatedValues(props));
+    }
+    state = {};
+    getEventState = Events.getEventState.bind(this);
+    getScopedEvents = Events.getScopedEvents.bind(this);
+    getEvents = (p, target, eventKey) => {
+      return Events.getEvents.call(
+        this,
+        p,
+        target,
+        eventKey,
+        this.getScopedEvents
+      );
+    };
+    externalMutations = this.getExternalMutations(this.props);
+    calculatedState = this.getStateChanges(this.props);
+    globalEvents = {};
+    prevGlobalEventKeys: string[] = [];
+    boundGlobalEvents = {};
+
+    shouldComponentUpdate(nextProps: TProps) {
       const externalMutations = this.getExternalMutations(nextProps);
+      // @ts-expect-error "Property 'animating' does not exist on type EventMixinCommonProps"
       const animating = this.props.animating || this.props.animate;
       const newMutation = !isEqual(externalMutations, this.externalMutations);
       if (animating || newMutation) {
@@ -135,7 +208,6 @@ export default (WrappedComponent, options) => {
         return isEmpty(result) ? undefined : result;
       };
 
-      options = options || {};
       const components = options.components || defaultComponents;
       const stateChanges = components
         .map((component) => {
@@ -163,7 +235,7 @@ export default (WrappedComponent, options) => {
               : memo;
             return memo;
           },
-          []
+          [] as Array<() => void>
         );
         const compiledCallbacks = callbacks.length
           ? () => {
@@ -174,7 +246,7 @@ export default (WrappedComponent, options) => {
       }
     }
 
-    getCalculatedValues(props) {
+    getCalculatedValues(props): EventMixinCalculatedValues {
       const { sharedEvents } = props;
       const components = WrappedComponent.expectedComponents;
       const componentEvents = Events.getComponentEvents(props, components);
@@ -196,7 +268,7 @@ export default (WrappedComponent, options) => {
       };
     }
 
-    getExternalMutations(props) {
+    getExternalMutations(props: TProps) {
       const { sharedEvents, externalEventMutations } = props;
       return isEmpty(externalEventMutations) || sharedEvents
         ? undefined
@@ -213,8 +285,9 @@ export default (WrappedComponent, options) => {
       });
     }
 
-    getBaseProps(props, getSharedEventState) {
-      getSharedEventState = getSharedEventState || this.getSharedEventState;
+    getBaseProps(props, getSharedEventState): this["baseProps"] {
+      getSharedEventState =
+        getSharedEventState || this.getSharedEventState.bind(this);
       const sharedParentState = getSharedEventState("parent", "parent");
       const parentState = this.getEventState("parent", "parent");
       const baseParentProps = defaults({}, parentState, sharedParentState);
@@ -224,7 +297,7 @@ export default (WrappedComponent, options) => {
         : {};
       const modifiedProps = defaults({}, parentProps, props);
 
-      return isFunction(WrappedComponent.getBaseProps)
+      return typeof WrappedComponent.getBaseProps === "function"
         ? WrappedComponent.getBaseProps(modifiedProps)
         : {};
     }
@@ -288,24 +361,26 @@ export default (WrappedComponent, options) => {
       return React.cloneElement(component, parentProps, children);
     }
 
-    animateComponent(props, defaultAnimationWhitelist) {
+    animateComponent(props: TProps, defaultAnimationWhitelist: string[]) {
       const animationWhitelist =
-        props.animate && props.animate.animationWhitelist
-          ? props.animate.animationWhitelist
-          : defaultAnimationWhitelist;
+        (typeof props.animate === "object" &&
+          props.animate?.animationWhitelist) ||
+        defaultAnimationWhitelist;
+
+      const Comp = this.constructor;
 
       return (
         <VictoryTransition
           animate={props.animate}
           animationWhitelist={animationWhitelist}
         >
-          {React.createElement(this.constructor, props)}
+          <Comp {...props} />
         </VictoryTransition>
       );
     }
 
     // Used by `VictoryLine` and `VictoryArea`
-    renderContinuousData(props) {
+    renderContinuousData(props: TProps) {
       const { dataComponent, labelComponent, groupComponent } = props;
       const dataKeys = without(this.dataKeys, "all");
       const labelComponents = dataKeys.reduce((memo, key) => {
@@ -319,14 +394,14 @@ export default (WrappedComponent, options) => {
           labelProps.text !== undefined &&
           labelProps.text !== null
         ) {
-          memo = memo.concat(React.cloneElement(labelComponent, labelProps));
+          memo = memo.concat(React.cloneElement(labelComponent!, labelProps));
         }
         return memo;
-      }, []);
+      }, [] as React.ReactElement[]);
 
       const dataProps = this.getComponentProps(dataComponent, "data", "all");
       const children = [
-        React.cloneElement(dataComponent, dataProps),
+        React.cloneElement(dataComponent!, dataProps),
         ...labelComponents
       ];
       return this.renderContainer(groupComponent, children);
@@ -348,7 +423,7 @@ export default (WrappedComponent, options) => {
           }
           return validDataComponents;
         },
-        []
+        [] as React.ReactElement[]
       );
 
       const labelComponents = this.dataKeys
@@ -368,5 +443,7 @@ export default (WrappedComponent, options) => {
       const children = [...dataComponents, ...labelComponents];
       return this.renderContainer(groupComponent, children);
     }
-  };
-};
+  }
+
+  return AddEventsMixin;
+}

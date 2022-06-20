@@ -102,8 +102,14 @@ export interface D3Scale<TRange = any> {
   base?: () => number;
   ticks: (count?: number) => number[];
   tickFormat: (count?: number) => (d: number) => string;
-  domain: () => number[];
-  range: () => TRange[];
+  domain: {
+    (): number[];
+    (domain: NumberValue[]): D3Scale<TRange>;
+  };
+  range: {
+    (): TRange[];
+    (range: TRange): D3Scale<TRange>;
+  };
   copy: () => this;
   invert: (value: number) => number;
 }

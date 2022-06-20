@@ -7,7 +7,10 @@ import {
   CommonProps,
   Path,
   LineHelpers,
-  UserProps
+  UserProps,
+  StringOrCallback,
+  NumberOrCallback,
+  VictoryCommonPrimitiveProps
 } from "victory-core";
 
 const evaluateProps = (props) => {
@@ -29,7 +32,7 @@ const evaluateProps = (props) => {
   return assign({}, props, { ariaLabel, id, style, tabIndex });
 };
 
-const Curve = (props) => {
+export const Curve: React.FC<CurveProps> = (props) => {
   props = evaluateProps(props);
   const userProps = UserProps.getSafeUserProps(props);
   const { polar, origin } = props;
@@ -37,7 +40,7 @@ const Curve = (props) => {
   const defaultTransform =
     polar && origin ? `translate(${origin.x}, ${origin.y})` : undefined;
 
-  return React.cloneElement(props.pathComponent, {
+  return React.cloneElement(props.pathComponent!, {
     ...props.events,
     ...userProps,
     "aria-label": props.ariaLabel,
@@ -56,7 +59,10 @@ Curve.propTypes = {
   ...CommonProps.primitiveProps,
   interpolation: PropTypes.oneOfType([PropTypes.string, PropTypes.func]),
   openCurve: PropTypes.bool,
-  origin: PropTypes.object,
+  origin: PropTypes.shape({
+    x: PropTypes.number.isRequired,
+    y: PropTypes.number.isRequired
+  }),
   pathComponent: PropTypes.element,
   polar: PropTypes.bool
 };
@@ -67,4 +73,11 @@ Curve.defaultProps = {
   shapeRendering: "auto"
 };
 
-export default Curve;
+export interface CurveProps extends VictoryCommonPrimitiveProps {
+  ariaLabel?: StringOrCallback;
+  // eslint-disable-next-line @typescript-eslint/ban-types
+  interpolation?: string | Function;
+  openCurve?: boolean;
+  pathComponent?: React.ReactElement;
+  tabIndex?: NumberOrCallback;
+}
