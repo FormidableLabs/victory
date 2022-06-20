@@ -30,7 +30,7 @@ describe("components/victory-area", () => {
           aria-label="Chart"
           unsafe-prop="test"
         />,
-        { wrapper: VictoryChart }
+        { wrapper: VictoryChart as any }
       );
 
       const container = screen.getByTestId("victory-area");
