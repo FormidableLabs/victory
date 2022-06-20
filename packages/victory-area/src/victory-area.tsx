@@ -1,7 +1,7 @@
 import PropTypes from "prop-types";
 import React from "react";
 import { getBaseProps } from "./helper-methods";
-import Area from "./area";
+import { Area } from "./area";
 import {
   PropTypes as CustomPropTypes,
   Helpers,
@@ -14,7 +14,14 @@ import {
   VictoryTheme,
   Data,
   Domain,
-  UserProps
+  UserProps,
+  EventPropTypeInterface,
+  InterpolationPropType,
+  StringOrNumberOrCallback,
+  VictoryCommonProps,
+  VictoryDatableProps,
+  VictoryMultiLabelableProps,
+  VictoryStyleInterface
 } from "victory-core";
 
 const fallbackProps = {
@@ -32,7 +39,24 @@ const options = {
   ]
 };
 
-class VictoryArea extends React.Component {
+export type VictoryAreaTTargetType = "data" | "labels" | "parent";
+
+export interface VictoryAreaProps
+  extends VictoryCommonProps,
+    VictoryDatableProps,
+    VictoryMultiLabelableProps {
+  eventKey?: string[] | number[] | StringOrNumberOrCallback;
+  events?: EventPropTypeInterface<VictoryAreaTTargetType, string | number>[];
+  interpolation?: InterpolationPropType | Function;
+  samples?: number;
+  style?: VictoryStyleInterface;
+}
+
+/**
+ * Draw area charts with React. VictoryArea is a composable component, so it doesn"t include axes.
+ * Add VictoryArea as a child of VictoryChart for a complete chart.
+ */
+class VictoryAreaBase extends React.Component<VictoryAreaProps> {
   static animationWhitelist = [
     "data",
     "domain",
@@ -100,7 +124,7 @@ class VictoryArea extends React.Component {
   }
 
   render() {
-    const { animationWhitelist, role } = VictoryArea;
+    const { animationWhitelist, role } = VictoryAreaBase;
     const props = Helpers.modifyProps(this.props, fallbackProps, role);
 
     if (this.shouldAnimate()) {
@@ -116,4 +140,4 @@ class VictoryArea extends React.Component {
   }
 }
 
-export default addEvents(VictoryArea, options);
+export const VictoryArea = addEvents(VictoryAreaBase, options);

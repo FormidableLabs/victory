@@ -3,7 +3,13 @@ import React from "react";
 import PropTypes from "prop-types";
 import { assign } from "lodash";
 import * as d3Shape from "victory-vendor/d3-shape";
-import { Helpers, CommonProps, Path, UserProps } from "victory-core";
+import {
+  Helpers,
+  CommonProps,
+  Path,
+  UserProps,
+  VictoryCommonPrimitiveProps,
+} from "victory-core";
 
 const defined = (d) => {
   const y = d._y1 !== undefined ? d._y1 : d._y;
@@ -117,7 +123,10 @@ const evaluateProps = (props) => {
   return assign({}, props, { ariaLabel, desc, id, style, tabIndex });
 };
 
-const Area = (props) => {
+/**
+ * The area primitive used by VictoryArea
+ */
+export const Area: React.FC<AreaProps> = (props) => {
   props = evaluateProps(props);
   const {
     ariaLabel,
@@ -206,4 +215,8 @@ Area.defaultProps = {
   shapeRendering: "auto"
 };
 
-export default Area;
+export interface AreaProps extends VictoryCommonPrimitiveProps {
+  groupComponent?: React.ReactElement;
+  interpolation?: string | Function;
+  pathComponent?: React.ReactElement;
+}
