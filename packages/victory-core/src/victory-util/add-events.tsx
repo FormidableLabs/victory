@@ -363,11 +363,9 @@ export function addEvents<
 
     animateComponent(props: TProps, defaultAnimationWhitelist: string[]) {
       const animationWhitelist =
-        typeof props.animate === "object" &&
-        props.animate &&
-        props.animate.animationWhitelist
-          ? props.animate.animationWhitelist
-          : defaultAnimationWhitelist;
+        (typeof props.animate === "object" &&
+          props.animate?.animationWhitelist) ||
+        defaultAnimationWhitelist;
 
       const Comp = this.constructor;
 
