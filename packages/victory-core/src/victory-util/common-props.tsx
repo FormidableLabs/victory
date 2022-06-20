@@ -21,7 +21,7 @@ import { NumberOrCallback, StringOrCallback } from "../types/callbacks";
 
 export interface VictoryDatableProps {
   categories?: CategoryPropType;
-  data?: any[];
+  data?: readonly any[];
   dataComponent?: React.ReactElement;
   domain?: DomainPropType;
   domainPadding?: DomainPaddingPropType;
