@@ -12,5 +12,6 @@ module.exports = {
   transform: {
     "\\.[jt]sx?$": ["babel-jest", { configFile: "./.babelrc.js" }]
   },
+  transformIgnorePatterns: ["/node_modules/", "/es/", "/lib/"],
   setupFilesAfterEnv: ["<rootDir>/test/jest-setup.js"]
 };
