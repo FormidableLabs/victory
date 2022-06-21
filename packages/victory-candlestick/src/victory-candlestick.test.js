@@ -1,8 +1,7 @@
 import { fireEvent, render, screen } from "@testing-library/react";
 import { range } from "lodash";
 import React from "react";
-import Candle from "./candle";
-import VictoryCandlestick from "./victory-candlestick";
+import { Candle, VictoryCandlestick } from "victory-candlestick";
 import { VictoryChart } from "victory-chart";
 
 const MyCandle = () => <div data-testid="my-candle" />;

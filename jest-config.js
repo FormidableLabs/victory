@@ -10,7 +10,7 @@ module.exports = {
     "/lib/"
   ],
   transform: {
-    "\\.[jt]sx?$": ["babel-jest", { configFile: "./.babelrc.js" }]
+    "^.+test.*[jt]sx?$": ["babel-jest", { configFile: "./.babelrc.js" }]
   },
   transformIgnorePatterns: ["/node_modules/", "/es/", "/lib/"],
   setupFilesAfterEnv: ["<rootDir>/test/jest-setup.js"]

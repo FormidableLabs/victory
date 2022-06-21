@@ -2,8 +2,7 @@ import React from "react";
 import { range } from "lodash";
 import { render, screen, fireEvent } from "@testing-library/react";
 import { Style } from "victory-core";
-import Slice from "./slice";
-import VictoryPie from "./victory-pie";
+import { Slice, VictoryPie } from "victory-pie";
 import {
   isCircularSector,
   getSvgCoordinatesAngleFromCartesianYAxis,

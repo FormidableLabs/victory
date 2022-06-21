@@ -1,6 +1,6 @@
 import { render } from "@testing-library/react";
 import React from "react";
-import Slice from "./slice";
+import { Slice } from "victory-pie";
 import { SVGWrapper } from "../../../test/helpers";
 
 describe("victory-primitives/slice", () => {

@@ -1,5 +1,5 @@
 import React from "react";
-import { VictoryContainer } from "./victory-container";
+import { VictoryContainer } from "victory-core";
 import { fireEvent, render } from "@testing-library/react";
 
 describe("components/victory-container", () => {

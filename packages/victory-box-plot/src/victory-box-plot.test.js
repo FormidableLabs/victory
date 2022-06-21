@@ -1,6 +1,6 @@
 import { render, screen } from "@testing-library/react";
 import React from "react";
-import VictoryBoxPlot from "./victory-box-plot";
+import { VictoryBoxPlot } from "victory-box-plot";
 import { VictoryChart } from "victory-chart";
 import { Border, LineSegment, Whisker } from "victory-core";
 

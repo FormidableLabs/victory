@@ -2,8 +2,7 @@ import { fireEvent, render, screen } from "@testing-library/react";
 import { random, range } from "lodash";
 import React from "react";
 import { VictoryChart } from "victory-chart";
-import { Curve } from "./curve";
-import { VictoryLine } from "./victory-line";
+import { Curve, VictoryLine } from "victory-line";
 import { curveCatmullRom } from "victory-vendor/d3-shape";
 import { calculateD3Path } from "../../../test/helpers";
 

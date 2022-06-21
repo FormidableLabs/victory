@@ -1,6 +1,6 @@
 import { render } from "@testing-library/react";
 import React from "react";
-import { VictoryAccessibleGroup } from "./victory-accessible-group";
+import { VictoryAccessibleGroup } from "victory-core";
 import { SVGWrapper } from "../../../../test/helpers";
 
 describe("components/victory-accessible-group", () => {

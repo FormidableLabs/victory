@@ -1,6 +1,5 @@
 import React from "react";
-import { VictoryLabel } from "./victory-label";
-import { Log } from "victory-core";
+import { Log, VictoryLabel } from "victory-core";
 import { screen, fireEvent, render } from "@testing-library/react";
 import { SVGWrapper } from "../../../../test/helpers";
 

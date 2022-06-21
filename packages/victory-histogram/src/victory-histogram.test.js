@@ -1,7 +1,7 @@
 import React from "react";
 import { render, screen, fireEvent } from "@testing-library/react";
 import { range } from "lodash";
-import VictoryHistogram from "./victory-histogram";
+import { VictoryHistogram } from "victory-histogram";
 import { isBar, getBarHeight } from "../../../test/helpers";
 
 describe("components/victory-histogram", () => {

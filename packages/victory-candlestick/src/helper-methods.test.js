@@ -1,6 +1,6 @@
 import { range } from "lodash";
 import { fromJS } from "immutable";
-import { getData, getDomain } from "./helper-methods";
+import { getData, getDomain } from "victory-candlestick/lib/helper-methods";
 
 const immutableGetDataTest = {
   createData: (x) => fromJS(x),

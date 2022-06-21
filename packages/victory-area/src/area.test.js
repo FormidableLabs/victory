@@ -1,5 +1,5 @@
 import React from "react";
-import Area from "./area";
+import { Area } from "victory-area";
 import { merge } from "lodash";
 import { render } from "@testing-library/react";
 import { VictoryContainer } from "victory-core";

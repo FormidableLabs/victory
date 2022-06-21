@@ -1,5 +1,5 @@
 import React from "react";
-import Flyout from "./flyout";
+import { Flyout } from "victory-tooltip";
 import { render } from "@testing-library/react";
 
 describe("victory-primitives/flyout", () => {

@@ -2,7 +2,7 @@ import { fireEvent, render, screen } from "@testing-library/react";
 import { range } from "lodash";
 import React from "react";
 import { Point, VictoryLabel } from "victory-core";
-import VictoryScatter from "./victory-scatter";
+import { VictoryScatter } from "victory-scatter";
 import {
   convertSvgCoordinatesToCartesian,
   getSvgPointCoordinates,

@@ -1,6 +1,5 @@
 import React from "react";
-import * as Domain from "./domain";
-import { VictoryPortal } from "victory-core";
+import { Domain, VictoryPortal } from "victory-core";
 
 describe("victory-util/domain", () => {
   describe("createDomainFunction", () => {

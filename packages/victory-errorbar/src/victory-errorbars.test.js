@@ -2,8 +2,7 @@ import { fireEvent, render, screen } from "@testing-library/react";
 import { fromJS } from "immutable";
 import { range } from "lodash";
 import React from "react";
-import ErrorBar from "./error-bar";
-import VictoryErrorBar from "./victory-errorbar";
+import { ErrorBar, VictoryErrorBar } from "victory-errorbar";
 import * as d3Scale from "victory-vendor/d3-scale";
 
 const defaultProps = {

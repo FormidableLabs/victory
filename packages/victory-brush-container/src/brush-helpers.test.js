@@ -1,4 +1,4 @@
-import Helpers from "./brush-helpers";
+import Helpers from "victory-brush-container/lib/brush-helpers";
 
 describe("containers/brush-helpers", () => {
   const { withinBounds, constrainBox } = Helpers;

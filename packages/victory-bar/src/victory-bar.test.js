@@ -2,8 +2,7 @@ import * as React from "react";
 import { render, fireEvent, screen } from "@testing-library/react";
 import { range } from "lodash";
 import { VictoryChart } from "victory-chart";
-import VictoryBar from "./victory-bar";
-import Bar from "./bar";
+import { Bar, VictoryBar } from "victory-bar";
 import { isBar, getBarHeight } from "../../../test/helpers";
 
 describe("components/victory-bar", () => {

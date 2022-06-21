@@ -1,7 +1,7 @@
 /* eslint-disable max-nested-callbacks */
 import React from "react";
 import { render, screen } from "@testing-library/react";
-import VictoryLegend from "./victory-legend";
+import { VictoryLegend } from "victory-legend";
 import { isCircle, isTriangle } from "../../../test/helpers";
 
 describe("components/victory-legend", () => {

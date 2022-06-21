@@ -1,4 +1,4 @@
-import { getChildComponents } from "./helper-methods";
+import { getChildComponents } from "victory-chart/lib/helper-methods";
 import React from "react";
 import { VictoryAxis } from "victory-axis";
 import { VictoryLine } from "victory-line";

@@ -1,8 +1,7 @@
 import React from "react";
 import { VictoryAxis } from "victory-axis";
 import { VictoryBar } from "victory-bar";
-import * as Axis from "./axis";
-import * as Scale from "./scale";
+import { Axis, Scale } from "victory-core";
 
 describe("helpers/axis", () => {
   const getVictoryAxis = (props) => React.createElement(VictoryAxis, props);
