@@ -251,7 +251,9 @@ describe("components/victory-area", () => {
           data={ariaTestData}
           dataComponent={
             <Area
-              ariaLabel={({ data }) => `data point 1's x value is ${data![0].x}`}
+              ariaLabel={({ data }) =>
+                `data point 1's x value is ${data![0].x}`
+              }
               tabIndex={4}
             />
           }
