@@ -30,8 +30,8 @@ export const PieScreen: React.FC = () => {
         style={{
           data: {
             stroke: "none",
-            opacity: 0.3
-          }
+            opacity: 0.3,
+          },
         }}
       />
       <VictoryPie innerRadius={90} />
@@ -48,8 +48,8 @@ export const PieScreen: React.FC = () => {
             fill: "white",
             stroke: "none",
             fontSize: 15,
-            fontWeight: "bold"
-          }
+            fontWeight: "bold",
+          },
         }}
         data={[
           { x: "<5", y: 6279 },
@@ -58,7 +58,7 @@ export const PieScreen: React.FC = () => {
           { x: "18-24", y: 7164 },
           { x: "25-44", y: 6716 },
           { x: "45-64", y: 4263 },
-          { x: "≥65", y: 7502 }
+          { x: "≥65", y: 7502 },
         ]}
         innerRadius={70}
         labelRadius={100}
@@ -69,21 +69,21 @@ export const PieScreen: React.FC = () => {
           "#D73C4C",
           "#FFAF59",
           "#E28300",
-          "#F6A57F"
+          "#F6A57F",
         ]}
       />
       <VictoryPie
         style={{
           data: {
             stroke: ({ datum }) => (datum.y > 75 ? "black" : "none"),
-            opacity: ({ datum }) => (datum.y > 75 ? 1 : 0.4)
-          }
+            opacity: ({ datum }) => (datum.y > 75 ? 1 : 0.4),
+          },
         }}
         data={[
           { x: "Cat", y: 62 },
           { x: "Dog", y: 91 },
           { x: "Fish", y: 55 },
-          { x: "Bird", y: 55 }
+          { x: "Bird", y: 55 },
         ]}
       />
     </ScrollView>

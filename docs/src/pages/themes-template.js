@@ -51,7 +51,7 @@ const ThemesTemplate = (props) => {
 
   const themeTexts = {
     grayscale: GrayscaleExample,
-    material: MaterialExample
+    material: MaterialExample,
   };
 
   const processCodeText = (text) => {
@@ -121,7 +121,7 @@ const ThemesTemplate = (props) => {
                   React,
                   ReactDOM,
                   assign,
-                  DemoComponent
+                  DemoComponent,
                 }}
                 theme="elegant"
                 noRender={false}
@@ -137,9 +137,9 @@ const ThemesTemplate = (props) => {
 ThemesTemplate.propTypes = {
   children: PropTypes.array,
   doc: PropTypes.shape({
-    data: PropTypes.object
+    data: PropTypes.object,
   }),
-  sidebarContent: PropTypes.array
+  sidebarContent: PropTypes.array,
 };
 
 export default withRouteData(ThemesTemplate);

@@ -10,12 +10,12 @@ describe("victory-primitives/clip-path", () => {
       top: 2,
       bottom: 2,
       left: 2,
-      right: 2
+      right: 2,
     },
     clipHeight: 30,
     clipWidth: 20,
     translateX: 3,
-    translateY: 8
+    translateY: 8,
   };
 
   it("should render a children", () => {
@@ -23,7 +23,7 @@ describe("victory-primitives/clip-path", () => {
       <ClipPath {...baseProps}>
         <rect data-testid="rect" />
       </ClipPath>,
-      { wrapper: SVGWrapper }
+      { wrapper: SVGWrapper },
     );
 
     expect(container.querySelector("clipPath")).toMatchInlineSnapshot(`
@@ -39,7 +39,7 @@ describe("victory-primitives/clip-path", () => {
 
   it("should render a clipPath with the passed id", () => {
     const { container } = render(<ClipPath {...baseProps} />, {
-      wrapper: SVGWrapper
+      wrapper: SVGWrapper,
     });
 
     expect(container.querySelector("clipPath")).toMatchInlineSnapshot(`

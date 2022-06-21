@@ -22,7 +22,7 @@ const evaluateProps = (props) => {
   const barWidth = getBarWidth(props.barWidth, assign({}, props, { style }));
   const cornerRadius = getCornerRadius(
     props.cornerRadius,
-    assign({}, props, { style, barWidth })
+    assign({}, props, { style, barWidth }),
   );
 
   const ariaLabel = Helpers.evaluateProp(props.ariaLabel, props);
@@ -37,7 +37,7 @@ const evaluateProps = (props) => {
     cornerRadius,
     desc,
     id,
-    tabIndex
+    tabIndex,
   });
 };
 
@@ -62,7 +62,7 @@ const Bar = (props) => {
     role: props.role,
     shapeRendering: props.shapeRendering,
     transform: props.transform || defaultTransform,
-    tabIndex: props.tabIndex
+    tabIndex: props.tabIndex,
   });
 };
 
@@ -80,8 +80,8 @@ Bar.propTypes = {
       topRight: PropTypes.oneOfType([PropTypes.number, PropTypes.func]),
       bottom: PropTypes.oneOfType([PropTypes.number, PropTypes.func]),
       bottomLeft: PropTypes.oneOfType([PropTypes.number, PropTypes.func]),
-      bottomRight: PropTypes.oneOfType([PropTypes.number, PropTypes.func])
-    })
+      bottomRight: PropTypes.oneOfType([PropTypes.number, PropTypes.func]),
+    }),
   ]),
   datum: PropTypes.object,
   getPath: PropTypes.func,
@@ -90,14 +90,14 @@ Bar.propTypes = {
   width: PropTypes.number,
   x: PropTypes.number,
   y: PropTypes.number,
-  y0: PropTypes.number
+  y0: PropTypes.number,
 };
 
 Bar.defaultProps = {
   defaultBarWidth: 8,
   pathComponent: <Path />,
   role: "presentation",
-  shapeRendering: "auto"
+  shapeRendering: "auto",
 };
 
 export default Bar;

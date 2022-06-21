@@ -37,21 +37,21 @@ const theme = {
       punctuation: "#999",
       selector: "#007a71",
       variable: "#e90",
-      tag: "#905"
-    }
+      tag: "#905",
+    },
   },
 
   font: {
     primary: "Helvetica, sans-serif",
     secondary: "Castledown-Bold, sans-serif",
     monospace: "Monaco, Courier, monospace",
-    bold: "Helvetica-Bold, sans-serif"
+    bold: "Helvetica-Bold, sans-serif",
   },
   typography: {
     lineHeight: {
       sidebarHeading: "2.3rem",
-      sidebarItem: "2.8rem"
-    }
+      sidebarItem: "2.8rem",
+    },
   },
 
   layout: {
@@ -75,14 +75,14 @@ const theme = {
       pageGutterLeft: "6rem",
       pageGutterRight: "7.5rem",
       pageGutterTop: "4rem",
-      pageGutterBottom: "4.5rem"
-    }
+      pageGutterBottom: "4.5rem",
+    },
   },
 
   mediaQuery: {
     sm: "only screen and (min-width: 650px)",
     md: "only screen and (min-width: 960px)",
-    lg: "only screen and (min-width: 1200px)"
+    lg: "only screen and (min-width: 1200px)",
   },
 
   spacing: {
@@ -90,8 +90,8 @@ const theme = {
     sm: "1.5rem",
     md: "2.75rem",
     lg: "4.75rem",
-    xl: "8.2rem"
-  }
+    xl: "8.2rem",
+  },
 };
 
 export default theme;

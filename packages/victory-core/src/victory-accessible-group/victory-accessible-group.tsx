@@ -17,15 +17,15 @@ export class VictoryAccessibleGroup extends React.Component<VictoryAccessibleGro
     "aria-label": PropTypes.string,
     children: PropTypes.oneOfType([
       PropTypes.arrayOf(PropTypes.node),
-      PropTypes.node
+      PropTypes.node,
     ]),
     className: PropTypes.string,
     desc: PropTypes.string,
-    tabIndex: PropTypes.number
+    tabIndex: PropTypes.number,
   };
 
   static defaultProps = {
-    className: "VictoryAccessibleGroup"
+    className: "VictoryAccessibleGroup",
   };
 
   render() {

@@ -12,7 +12,7 @@ import {
   DomainPropObjectType,
   VictoryClipContainer,
   Point,
-  Selection
+  Selection,
 } from "victory-core";
 import { VictoryZoomContainer } from "victory-zoom-container";
 import { VictoryBrushContainer } from "victory-brush-container";
@@ -45,14 +45,14 @@ const bars: BarDataType[] = [
   { name: "SEA", range: [new Date(2013, 1, 1), new Date(2019, 1, 1)] },
   { name: "HKG", range: [new Date(2015, 1, 1), new Date(2015, 5, 1)] },
   { name: "LHR", range: [new Date(2016, 5, 1), new Date(2019, 1, 1)] },
-  { name: "DEN", range: [new Date(2018, 8, 1), new Date(2019, 1, 1)] }
+  { name: "DEN", range: [new Date(2018, 8, 1), new Date(2019, 1, 1)] },
 ];
 
 const points: PointDataType[] = [
   { name: "SEA", date: new Date(2012, 9, 1) },
   { name: "HKG", date: new Date(2014, 3, 1) },
   { name: "LHR", date: new Date(2015, 6, 1) },
-  { name: "DEN", date: new Date(2018, 3, 1) }
+  { name: "DEN", date: new Date(2018, 3, 1) },
 ];
 
 class DraggablePoint extends React.Component<TargetPropsInterface, any> {
@@ -63,15 +63,15 @@ class DraggablePoint extends React.Component<TargetPropsInterface, any> {
         onMouseOver: (evt: any, targetProps: TargetPropsInterface) => {
           return [
             {
-              mutation: () => merge(targetProps, { active: true })
-            }
+              mutation: () => merge(targetProps, { active: true }),
+            },
           ];
         },
         onMouseDown: (evt: any, targetProps: TargetPropsInterface) => {
           return [
             {
-              mutation: () => merge(targetProps, { dragging: true })
-            }
+              mutation: () => merge(targetProps, { dragging: true }),
+            },
           ];
         },
         onMouseMove: (evt: React.SyntheticEvent, targetProps: any) => {
@@ -86,8 +86,8 @@ class DraggablePoint extends React.Component<TargetPropsInterface, any> {
 
             return [
               {
-                mutation: () => merge(targetProps, { x })
-              }
+                mutation: () => merge(targetProps, { x }),
+              },
             ];
           }
           return null;
@@ -96,20 +96,20 @@ class DraggablePoint extends React.Component<TargetPropsInterface, any> {
           return [
             {
               mutation: () =>
-                merge(targetProps, { dragging: false, active: false })
-            }
+                merge(targetProps, { dragging: false, active: false }),
+            },
           ];
         },
         onMouseLeave: (evt: any, targetProps: any) => {
           return [
             {
               mutation: () =>
-                merge(targetProps, { dragging: false, active: false })
-            }
+                merge(targetProps, { dragging: false, active: false }),
+            },
           ];
-        }
-      }
-    }
+        },
+      },
+    },
   ];
 
   render() {
@@ -130,7 +130,7 @@ class App extends React.Component<any, DraggableDemoInterface> {
   onDomainChange(domain: DomainTuple, props: any) {
     const { name } = props;
     const newBars = this.state.bars.map((bar) =>
-      bar.name === name ? { name, range: domain } : bar
+      bar.name === name ? { name, range: domain } : bar,
     );
 
     this.setState({ bars: newBars });
@@ -138,7 +138,7 @@ class App extends React.Component<any, DraggableDemoInterface> {
 
   onPointChange(point: PointDataType) {
     const newPoints = this.state.points.map((p) =>
-      p.name === point.name ? point : p
+      p.name === point.name ? point : p,
     );
     this.setState({ points: newPoints });
   }
@@ -149,17 +149,17 @@ class App extends React.Component<any, DraggableDemoInterface> {
       flexDirection: "row",
       flexWrap: "wrap",
       alignItems: "center",
-      justifyContent: "center"
+      justifyContent: "center",
     };
 
     const domain: ZoomDomainType = {
       y: [new Date(2012, 1, 1), new Date(2019, 1, 1)],
-      x: [0.5, 4.5]
+      x: [0.5, 4.5],
     };
 
     const sharedProps = {
       width: 800,
-      domain
+      domain,
     };
 
     return (
@@ -184,7 +184,7 @@ class App extends React.Component<any, DraggableDemoInterface> {
         >
           <VictoryAxis
             style={{
-              axis: { stroke: "none" }
+              axis: { stroke: "none" },
             }}
           />
 
@@ -201,12 +201,12 @@ class App extends React.Component<any, DraggableDemoInterface> {
                   onBrushDomainChange={this.onDomainChange.bind(this)}
                   brushStyle={{
                     fill: "skyBlue",
-                    opacity: ({ active }) => (active ? 1 : 0.5)
+                    opacity: ({ active }) => (active ? 1 : 0.5),
                   }}
                 />
               }
               style={{
-                axis: { stroke: "none" }
+                axis: { stroke: "none" },
               }}
               axisValue={bar.name}
               tickFormat={() => ""}
@@ -221,8 +221,8 @@ class App extends React.Component<any, DraggableDemoInterface> {
               data: {
                 fill: "skyBlue",
                 opacity: ({ active }) => (active ? 1 : 0.5),
-                cursor: "move"
-              }
+                cursor: "move",
+              },
             }}
             x="name"
             y="date"
@@ -246,7 +246,7 @@ class App extends React.Component<any, DraggableDemoInterface> {
         >
           <VictoryAxis
             style={{
-              axis: { stroke: "none" }
+              axis: { stroke: "none" },
             }}
           />
           <VictoryAxis
@@ -254,7 +254,7 @@ class App extends React.Component<any, DraggableDemoInterface> {
             orientation="top"
             style={{
               axis: { stroke: "none" },
-              tickLabels: { fontSize: 20 }
+              tickLabels: { fontSize: 20 },
             }}
             tickCount={3}
             tickFormat={(t) => t.getFullYear()}
@@ -263,14 +263,14 @@ class App extends React.Component<any, DraggableDemoInterface> {
             data={this.state.points}
             size={5}
             style={{
-              data: { fill: "skyBlue" }
+              data: { fill: "skyBlue" },
             }}
             x="name"
             y="date"
           />
           <VictoryBar
             style={{
-              data: { fill: "skyBlue" }
+              data: { fill: "skyBlue" },
             }}
             data={this.state.bars}
             x="name"

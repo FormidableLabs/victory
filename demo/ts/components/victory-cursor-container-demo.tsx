@@ -33,7 +33,7 @@ class App extends React.Component<any, VictoryCursorContainerStateInterface> {
     this.state = {
       data: this.getData(),
       cursorValue: this.defaultCursorValue,
-      bigData: makeData()
+      bigData: makeData(),
     };
   }
 
@@ -41,7 +41,7 @@ class App extends React.Component<any, VictoryCursorContainerStateInterface> {
     /* eslint-disable react/no-did-mount-set-state */
     this.setStateInterval = window.setInterval(() => {
       this.setState({
-        data: this.getData()
+        data: this.getData(),
       });
     }, 3000);
   }
@@ -63,11 +63,11 @@ class App extends React.Component<any, VictoryCursorContainerStateInterface> {
       flexDirection: "row",
       flexWrap: "wrap",
       alignItems: "center",
-      justifyContent: "center"
+      justifyContent: "center",
     };
 
     const chartStyle = {
-      parent: { border: "1px solid #ccc", margin: "2%", maxWidth: "40%" }
+      parent: { border: "1px solid #ccc", margin: "2%", maxWidth: "40%" },
     };
 
     const cursorLabel = (datum: CoordinatesPropType) => round(datum.x, 2);
@@ -95,7 +95,7 @@ class App extends React.Component<any, VictoryCursorContainerStateInterface> {
               data={[
                 { name: "One", symbol: { fill: "tomato" } },
                 { name: "Two", symbol: { fill: "orange" } },
-                { name: "Three", symbol: { fill: "gold" } }
+                { name: "Three", symbol: { fill: "gold" } },
               ]}
             />
             <VictoryLine data={this.state.bigData} />
@@ -119,10 +119,10 @@ class App extends React.Component<any, VictoryCursorContainerStateInterface> {
                 data={[
                   { x: 1, y: 5, l: "one" },
                   { x: 2, y: 4, l: "two" },
-                  { x: 3, y: -2, l: "three" }
+                  { x: 3, y: -2, l: "three" },
                 ]}
                 style={{
-                  labels: { fill: "tomato" }
+                  labels: { fill: "tomato" },
                 }}
               />
 
@@ -130,10 +130,10 @@ class App extends React.Component<any, VictoryCursorContainerStateInterface> {
                 data={[
                   { x: 1, y: -3, l: "red" },
                   { x: 2, y: 5, l: "green" },
-                  { x: 3, y: 3, l: "blue" }
+                  { x: 3, y: 3, l: "blue" },
                 ]}
                 style={{
-                  labels: { fill: "blue" }
+                  labels: { fill: "blue" },
                 }}
               />
 
@@ -141,10 +141,10 @@ class App extends React.Component<any, VictoryCursorContainerStateInterface> {
                 data={[
                   { x: 1, y: 5, l: "cat" },
                   { x: 2, y: -4, l: "dog" },
-                  { x: 3, y: -2, l: "bird" }
+                  { x: 3, y: -2, l: "bird" },
                 ]}
                 style={{
-                  labels: { fill: "black" }
+                  labels: { fill: "black" },
                 }}
               />
             </VictoryGroup>
@@ -155,8 +155,8 @@ class App extends React.Component<any, VictoryCursorContainerStateInterface> {
             style={{
               parent: chartStyle.parent,
               data: {
-                fill: ({ active }) => (active ? "tomato" : "black")
-              }
+                fill: ({ active }) => (active ? "tomato" : "black"),
+              },
             }}
             containerComponent={
               <VictoryCursorContainer
@@ -175,8 +175,8 @@ class App extends React.Component<any, VictoryCursorContainerStateInterface> {
             style={{
               parent: chartStyle.parent,
               data: {
-                fill: ({ active }) => (active ? "tomato" : "black")
-              }
+                fill: ({ active }) => (active ? "tomato" : "black"),
+              },
             }}
             containerComponent={
               <VictoryCursorContainer
@@ -184,7 +184,7 @@ class App extends React.Component<any, VictoryCursorContainerStateInterface> {
                   stroke: "tomato",
                   strokeWidth: 2,
                   fill: "tomato",
-                  fillOpacity: 0.1
+                  fillOpacity: 0.1,
                 }}
               />
             }
@@ -206,7 +206,7 @@ class App extends React.Component<any, VictoryCursorContainerStateInterface> {
             <VictoryGroup style={chartStyle}>
               <VictoryScatter
                 style={{
-                  data: { fill: "tomato" }
+                  data: { fill: "tomato" },
                 }}
                 size={({ active }) => (active ? 5 : 3)}
                 labels={({ datum }) => datum.y}
@@ -218,12 +218,12 @@ class App extends React.Component<any, VictoryCursorContainerStateInterface> {
                   { x: 4, y: 0 },
                   { x: 5, y: 1 },
                   { x: 6, y: -3 },
-                  { x: 7, y: 3 }
+                  { x: 7, y: 3 },
                 ]}
               />
               <VictoryScatter
                 style={{
-                  data: { fill: "blue" }
+                  data: { fill: "blue" },
                 }}
                 size={({ active }) => (active ? 5 : 3)}
                 labels={({ datum }) => datum.y}
@@ -235,7 +235,7 @@ class App extends React.Component<any, VictoryCursorContainerStateInterface> {
                   { x: 4, y: 0 },
                   { x: 5, y: -2 },
                   { x: 6, y: -2 },
-                  { x: 7, y: 5 }
+                  { x: 7, y: 5 },
                 ]}
               />
               <VictoryScatter
@@ -246,7 +246,7 @@ class App extends React.Component<any, VictoryCursorContainerStateInterface> {
                   { x: 4, y: -3 },
                   { x: 5, y: -1 },
                   { x: 6, y: 3 },
-                  { x: 7, y: -3 }
+                  { x: 7, y: -3 },
                 ]}
                 labels={(d) => d.y}
                 labelComponent={<VictoryTooltip />}
@@ -264,8 +264,8 @@ class App extends React.Component<any, VictoryCursorContainerStateInterface> {
                 data: {
                   fill: "tomato",
                   stroke: ({ active }) => (active ? "black" : "none"),
-                  strokeWidth: 2
-                }
+                  strokeWidth: 2,
+                },
               }}
               data={[
                 { x: 1, y: -5 },
@@ -274,7 +274,7 @@ class App extends React.Component<any, VictoryCursorContainerStateInterface> {
                 { x: 4, y: 3 },
                 { x: 5, y: 1 },
                 { x: 6, y: -3 },
-                { x: 7, y: 3 }
+                { x: 7, y: 3 },
               ]}
             />
             <VictoryBar
@@ -282,8 +282,8 @@ class App extends React.Component<any, VictoryCursorContainerStateInterface> {
                 data: {
                   fill: "orange",
                   stroke: ({ active }) => (active ? "black" : "none"),
-                  strokeWidth: 2
-                }
+                  strokeWidth: 2,
+                },
               }}
               data={[
                 { x: 1, y: -3 },
@@ -292,7 +292,7 @@ class App extends React.Component<any, VictoryCursorContainerStateInterface> {
                 { x: 4, y: 0 },
                 { x: 5, y: -2 },
                 { x: 6, y: -2 },
-                { x: 7, y: 5 }
+                { x: 7, y: 5 },
               ]}
             />
             <VictoryBar
@@ -300,8 +300,8 @@ class App extends React.Component<any, VictoryCursorContainerStateInterface> {
                 data: {
                   fill: "gold",
                   stroke: ({ active }) => (active ? "black" : "none"),
-                  strokeWidth: 2
-                }
+                  strokeWidth: 2,
+                },
               }}
               data={[
                 { x: 1, y: 5 },
@@ -310,7 +310,7 @@ class App extends React.Component<any, VictoryCursorContainerStateInterface> {
                 { x: 4, y: -3 },
                 { x: 5, y: -1 },
                 { x: 6, y: 3 },
-                { x: 7, y: -3 }
+                { x: 7, y: -3 },
               ]}
             />
           </VictoryStack>

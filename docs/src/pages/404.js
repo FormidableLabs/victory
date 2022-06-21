@@ -41,7 +41,7 @@ const NotFound = (props) => {
 };
 
 NotFound.propTypes = {
-  sidebarContent: PropTypes.arrayOf(PropTypes.object)
+  sidebarContent: PropTypes.arrayOf(PropTypes.object),
 };
 
 export default withRouteData(NotFound);

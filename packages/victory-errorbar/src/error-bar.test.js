@@ -12,22 +12,22 @@ describe("victory-primitives/error-bar", () => {
     errorY: [0.2, 2],
     scale: {
       x: d3Scale.scaleLinear(),
-      y: d3Scale.scaleLinear()
+      y: d3Scale.scaleLinear(),
     },
-    borderWidth: 20
+    borderWidth: 20,
   };
 
   const compareLineCoordinates = (line, coordinates) => {
     forEach(coordinates, (coordinateValue, coordinateName) => {
       expect(parseFloat(line.getAttribute(coordinateName))).toEqual(
-        parseFloat(coordinateValue)
+        parseFloat(coordinateValue),
       );
     });
   };
 
   it("should render eight lines", () => {
     const { container } = render(<ErrorBar {...baseProps} />, {
-      wrapper: "svg"
+      wrapper: "svg",
     });
     const lines = container.querySelectorAll("line");
 
@@ -47,7 +47,7 @@ describe("victory-primitives/error-bar", () => {
       // Bottom Cross(x, x, y, negativeErrorY)
       { x1: 4, x2: 4, y1: 5, y2: 0.2 },
       // Bottom Cross(x, x, y, positiveErrorY)
-      { x1: 4, x2: 4, y1: 5, y2: 2 }
+      { x1: 4, x2: 4, y1: 5, y2: 2 },
     ];
 
     expect(lines).toHaveLength(8);
@@ -60,7 +60,7 @@ describe("victory-primitives/error-bar", () => {
     const xErrorProps = omit(baseProps, ["errorY"]);
 
     const { container } = render(<ErrorBar {...xErrorProps} />, {
-      wrapper: "svg"
+      wrapper: "svg",
     });
     const lines = container.querySelectorAll("line");
 
@@ -72,7 +72,7 @@ describe("victory-primitives/error-bar", () => {
       // Right Cross(x, positiveErrorX, y, y)
       { x1: 4, x2: 1, y1: 5, y2: 5 },
       // Left Cross(x, negativeErrorX, y, y)
-      { x1: 4, x2: 3, y1: 5, y2: 5 }
+      { x1: 4, x2: 3, y1: 5, y2: 5 },
     ];
 
     expect(lines.length).toEqual(4);
@@ -85,7 +85,7 @@ describe("victory-primitives/error-bar", () => {
     const yErrorProps = omit(baseProps, ["errorX"]);
 
     const { container } = render(<ErrorBar {...yErrorProps} />, {
-      wrapper: "svg"
+      wrapper: "svg",
     });
     const lines = container.querySelectorAll("line");
 
@@ -97,7 +97,7 @@ describe("victory-primitives/error-bar", () => {
       // Bottom Cross(x, x, y, negativeErrorY)
       { x1: 4, x2: 4, y1: 5, y2: 0.2 },
       // Bottom Cross(x, x, y, positiveErrorY)
-      { x1: 4, x2: 4, y1: 5, y2: 2 }
+      { x1: 4, x2: 4, y1: 5, y2: 2 },
     ];
 
     expect(lines.length).toEqual(4);

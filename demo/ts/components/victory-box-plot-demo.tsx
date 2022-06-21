@@ -22,14 +22,14 @@ export default class VictoryBoxPlotDemo extends React.Component<
   constructor(props: any) {
     super(props);
     this.state = {
-      data: this.getData()
+      data: this.getData(),
     };
   }
 
   componentDidMount() {
     this.setStateInterval = window.setInterval(() => {
       this.setState({
-        data: this.getData()
+        data: this.getData(),
       });
     }, 3000);
   }
@@ -42,7 +42,7 @@ export default class VictoryBoxPlotDemo extends React.Component<
     return range(5).map((i) => {
       return {
         x: i,
-        y: range(20).map(() => random(1, 100))
+        y: range(20).map(() => random(1, 100)),
       };
     });
   }
@@ -53,11 +53,11 @@ export default class VictoryBoxPlotDemo extends React.Component<
       flexDirection: "row",
       flexWrap: "wrap",
       alignItems: "center",
-      justifyContent: "center"
+      justifyContent: "center",
     };
 
     const chartStyle = {
-      parent: { border: "1px solid #ccc", margin: "2%", maxWidth: "40%" }
+      parent: { border: "1px solid #ccc", margin: "2%", maxWidth: "40%" },
     };
 
     return (
@@ -75,7 +75,7 @@ export default class VictoryBoxPlotDemo extends React.Component<
               { x: "blue", y: [1, 15, 6, 8] },
               { x: "green", y: [3, 5, 6, 9] },
               { x: "yellow", y: [5, 20, 8, 12] },
-              { x: "white", y: [2, 11, 12, 13] }
+              { x: "white", y: [2, 11, 12, 13] },
             ]}
           />
         </VictoryChart>
@@ -85,7 +85,7 @@ export default class VictoryBoxPlotDemo extends React.Component<
               { x: 1, y: 10 },
               { x: 1, y: 7 },
               { x: 1, y: 3 },
-              { x: 1, y: 5 }
+              { x: 1, y: 5 },
             ]}
           />
         </VictoryChart>
@@ -95,7 +95,7 @@ export default class VictoryBoxPlotDemo extends React.Component<
             labels
             data={[
               { x: 1, y: [5, 10, 9, 2] },
-              { x: 2, y: [1, 15, 6, 8] }
+              { x: 2, y: [1, 15, 6, 8] },
             ]}
             style={{
               min: { stroke: "black", strokeWidth: 2 },
@@ -107,7 +107,7 @@ export default class VictoryBoxPlotDemo extends React.Component<
               maxLabels: { fill: "orange", padding: 10 },
               q1Labels: { padding: 10 },
               q3Labels: { padding: 10 },
-              medianLabels: { padding: 10 }
+              medianLabels: { padding: 10 },
             }}
           />
         </VictoryChart>
@@ -124,7 +124,7 @@ export default class VictoryBoxPlotDemo extends React.Component<
             whiskerWidth={50}
             data={[
               { x: 1, y: [5, 10, 9, 2] },
-              { x: 2, y: [1, 15, 6, 8] }
+              { x: 2, y: [1, 15, 6, 8] },
             ]}
             boxWidth={20}
             labelOrientation={"top"}
@@ -136,12 +136,12 @@ export default class VictoryBoxPlotDemo extends React.Component<
                     return [
                       {
                         target: "q1Labels",
-                        mutation: () => ({ text: "LABEL!" })
-                      }
+                        mutation: () => ({ text: "LABEL!" }),
+                      },
                     ];
-                  }
-                }
-              }
+                  },
+                },
+              },
             ]}
             style={{
               min: { stroke: "black", strokeWidth: 2 },
@@ -150,7 +150,7 @@ export default class VictoryBoxPlotDemo extends React.Component<
               q3: { fill: "#2bbee0", fillOpacity: 0.5 },
               median: { stroke: "#fff", strokeWidth: 2 },
               minLabels: { fill: "green", padding: 10 },
-              maxLabels: { fill: "orange", padding: 10 }
+              maxLabels: { fill: "orange", padding: 10 },
             }}
           />
         </VictoryChart>
@@ -165,7 +165,7 @@ export default class VictoryBoxPlotDemo extends React.Component<
               { x: new Date(1990, 1, 1), y: [1, 15, 6, 8] },
               { x: new Date(2000, 1, 1), y: [3, 5, 6, 9] },
               { x: new Date(2010, 1, 1), y: [5, 20, 8, 12] },
-              { x: new Date(2020, 1, 1), y: [2, 11, 12, 13] }
+              { x: new Date(2020, 1, 1), y: [2, 11, 12, 13] },
             ]}
           />
         </VictoryChart>
@@ -179,7 +179,7 @@ export default class VictoryBoxPlotDemo extends React.Component<
               { x: "blue", y: [1, 15, 6, 8] },
               { x: "green", y: [3, 5, 6, 9] },
               { x: "yellow", y: [5, 20, 8, 12] },
-              { x: "white", y: [2, 11, 12, 13] }
+              { x: "white", y: [2, 11, 12, 13] },
             ]}
           />
         </VictoryChart>
@@ -197,7 +197,7 @@ export default class VictoryBoxPlotDemo extends React.Component<
               { x: 2, y: 7 },
               { x: 3, y: 3 },
               { x: 3, y: 8 },
-              { x: 3, y: 5 }
+              { x: 3, y: 5 },
             ]}
           />
         </VictoryChart>
@@ -210,14 +210,14 @@ export default class VictoryBoxPlotDemo extends React.Component<
             data={[
               { type: 1, min: 1, max: 18, median: 8, q1: 5, q3: 15 },
               { type: 2, min: 4, max: 20, median: 10, q1: 7, q3: 15 },
-              { type: 3, min: 3, max: 12, median: 6, q1: 5, q3: 10 }
+              { type: 3, min: 3, max: 12, median: 6, q1: 5, q3: 10 },
             ]}
             labelOrientation={{
               q1: "top",
               q3: "top",
               min: "bottom",
               max: "bottom",
-              median: "bottom"
+              median: "bottom",
             }}
           />
         </VictoryChart>

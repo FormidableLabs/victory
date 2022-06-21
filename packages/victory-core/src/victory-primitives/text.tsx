@@ -23,5 +23,5 @@ export const Text = (props: TextProps) => {
 Text.propTypes = {
   children: PropTypes.node,
   desc: PropTypes.string,
-  title: PropTypes.string
+  title: PropTypes.string,
 };

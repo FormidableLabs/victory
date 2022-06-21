@@ -7,11 +7,11 @@ module.exports = {
     "node_modules",
     "config",
     "/es/",
-    "/lib/"
+    "/lib/",
   ],
   transform: {
-    "^.+test.*[jt]sx?$": ["babel-jest", { configFile: "./.babelrc.js" }]
+    "^.+test.*[jt]sx?$": ["babel-jest", { configFile: "./.babelrc.js" }],
   },
   transformIgnorePatterns: ["/node_modules/", "/es/", "/lib/"],
-  setupFilesAfterEnv: ["<rootDir>/test/jest-setup.js"]
+  setupFilesAfterEnv: ["<rootDir>/test/jest-setup.js"],
 };

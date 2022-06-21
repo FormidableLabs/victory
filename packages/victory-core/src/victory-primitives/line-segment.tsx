@@ -4,7 +4,7 @@ import * as Helpers from "../victory-util/helpers";
 import { assign } from "lodash";
 import {
   CommonProps,
-  VictoryCommonPrimitiveProps
+  VictoryCommonPrimitiveProps,
 } from "../victory-util/common-props";
 import { Line } from "./line";
 
@@ -31,7 +31,7 @@ const evaluateProps = (props) => {
   const id = Helpers.evaluateProp(props.id, props);
   const style = Helpers.evaluateStyle(
     assign({ stroke: "black" }, props.style),
-    props
+    props,
   );
   const tabIndex = Helpers.evaluateProp(props.tabIndex, props);
 
@@ -55,7 +55,7 @@ export const LineSegment = (props: LineSegmentProps) => {
     y1: props.y1,
     y2: props.y2,
     transform: props.transform,
-    clipPath: props.clipPath
+    clipPath: props.clipPath,
   });
 };
 
@@ -66,11 +66,11 @@ LineSegment.propTypes = {
   x1: PropTypes.number,
   x2: PropTypes.number,
   y1: PropTypes.number,
-  y2: PropTypes.number
+  y2: PropTypes.number,
 };
 
 LineSegment.defaultProps = {
   lineComponent: <Line />,
   role: "presentation",
-  shapeRendering: "auto"
+  shapeRendering: "auto",
 };

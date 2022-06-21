@@ -14,7 +14,7 @@ describe("components/victory-area", () => {
           data-testid="victory-area"
           aria-label="Chart"
           unsafe-prop="test"
-        />
+        />,
       );
 
       const container = screen.getByTestId("victory-area");
@@ -30,7 +30,7 @@ describe("components/victory-area", () => {
           aria-label="Chart"
           unsafe-prop="test"
         />,
-        { wrapper: VictoryChart }
+        { wrapper: VictoryChart },
       );
 
       const container = screen.getByTestId("victory-area");
@@ -43,7 +43,7 @@ describe("components/victory-area", () => {
       const { container } = render(<VictoryArea />);
       const viewBoxValue = `0 0 ${450} ${300}`;
       expect(container.querySelector("svg").getAttribute("viewBox")).toEqual(
-        viewBoxValue
+        viewBoxValue,
       );
     });
   });
@@ -59,12 +59,12 @@ describe("components/victory-area", () => {
         data: [
           { x: 0, y: 0, y0: 0 },
           { x: 2, y: 3, y0: 0 },
-          { x: 4, y: 1, y0: 0 }
-        ]
+          { x: 4, y: 1, y0: 0 },
+        ],
       };
       const { container } = render(<VictoryArea {...props} />);
       expect(container.querySelector("path").getAttribute("d")).toEqual(
-        calculateD3Path(props, "area")
+        calculateD3Path(props, "area"),
       );
     });
 
@@ -78,14 +78,14 @@ describe("components/victory-area", () => {
         data: [
           { x: 0, y: 0, y0: 0 },
           { x: 2, y: 3, y0: 0 },
-          { x: 4, y: 1, y0: 0 }
-        ]
+          { x: 4, y: 1, y0: 0 },
+        ],
       };
 
       const { container } = render(<VictoryArea {...props} />);
 
       expect(container.querySelector("path").getAttribute("d")).toEqual(
-        calculateD3Path(props, "area")
+        calculateD3Path(props, "area"),
       );
     });
 
@@ -99,14 +99,14 @@ describe("components/victory-area", () => {
         data: [
           { x: 0, y: 0, y0: 0 },
           { x: 2, y: 3, y0: 0 },
-          { x: 4, y: 1, y0: 0 }
-        ]
+          { x: 4, y: 1, y0: 0 },
+        ],
       };
 
       const { container } = render(<VictoryArea {...props} />);
 
       expect(container.querySelector("path").getAttribute("d")).toEqual(
-        calculateD3Path(props, "area")
+        calculateD3Path(props, "area"),
       );
     });
 
@@ -118,7 +118,7 @@ describe("components/victory-area", () => {
         data: range(5)
           // eslint-disable-next-line max-nested-callbacks
           .map((i) => ({ x: i, y: i, y0: 0 }))
-          .reverse()
+          .reverse(),
       };
       render(
         <VictoryArea
@@ -129,7 +129,7 @@ describe("components/victory-area", () => {
               data-json={({ data }) => JSON.stringify(data)}
             />
           }
-        />
+        />,
       );
 
       const area = screen.getByTestId("area");
@@ -147,7 +147,7 @@ describe("components/victory-area", () => {
         sortOrder: "descending",
         data: range(5)
           .map((i) => ({ x: i, y: i, y0: 0 }))
-          .reverse()
+          .reverse(),
       };
       render(
         <VictoryArea
@@ -158,7 +158,7 @@ describe("components/victory-area", () => {
               data-json={({ data }) => JSON.stringify(data)}
             />
           }
-        />
+        />,
       );
 
       const area = screen.getByTestId("area");
@@ -178,10 +178,10 @@ describe("components/victory-area", () => {
           events={[
             {
               target: "parent",
-              eventHandlers: { onClick: clickHandler }
-            }
+              eventHandlers: { onClick: clickHandler },
+            },
           ]}
-        />
+        />,
       );
       const svg = screen.getByTestId("container");
       fireEvent.click(svg);
@@ -196,10 +196,10 @@ describe("components/victory-area", () => {
           events={[
             {
               target: "data",
-              eventHandlers: { onClick: clickHandler }
-            }
+              eventHandlers: { onClick: clickHandler },
+            },
           ]}
-        />
+        />,
       );
       const dataComponent = screen.getByTestId("data");
 
@@ -213,16 +213,16 @@ describe("components/victory-area", () => {
         <VictoryArea
           data={[
             { x: 1, y: 1 },
-            { x: 2, y: 2 }
+            { x: 2, y: 2 },
           ]}
           labels={({ datum }) => datum.x}
           events={[
             {
               target: "labels",
-              eventHandlers: { onClick: clickHandler }
-            }
+              eventHandlers: { onClick: clickHandler },
+            },
           ]}
-        />
+        />,
       );
       fireEvent.click(screen.getByText("1"));
 
@@ -244,7 +244,7 @@ describe("components/victory-area", () => {
         { x: 2, y: 3 },
         { x: 3, y: 5 },
         { x: 4, y: 4 },
-        { x: 5, y: 7 }
+        { x: 5, y: 7 },
       ];
       const { container } = render(
         <VictoryArea
@@ -255,12 +255,12 @@ describe("components/victory-area", () => {
               tabIndex={4}
             />
           }
-        />
+        />,
       );
 
       container.querySelectorAll("path").forEach((p, i) => {
         expect(p.getAttribute("aria-label")).toEqual(
-          `data point 1's x value is ${ariaTestData[i].x}`
+          `data point 1's x value is ${ariaTestData[i].x}`,
         );
         expect(parseInt(p.getAttribute("tabindex"))).toEqual(4);
       });

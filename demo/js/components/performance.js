@@ -7,14 +7,14 @@ import { VictoryChart } from "victory-chart/src/index";
 
 const scatterData = range(4000).map(() => ({
   x: Math.random(),
-  y: Math.random()
+  y: Math.random(),
 }));
 
 class App extends React.Component {
   constructor() {
     super();
     this.state = {
-      points: []
+      points: [],
     };
   }
 
@@ -49,11 +49,11 @@ class App extends React.Component {
       flexDirection: "row",
       flexWrap: "wrap",
       alignItems: "center",
-      justifyContent: "center"
+      justifyContent: "center",
     };
 
     const chartStyle = {
-      parent: { border: "1px solid #ccc", margin: "2%", maxWidth: "40%" }
+      parent: { border: "1px solid #ccc", margin: "2%", maxWidth: "40%" },
     };
 
     return (
@@ -66,7 +66,7 @@ class App extends React.Component {
                   stroke: "tomato",
                   strokeWidth: 2,
                   fill: "tomato",
-                  fillOpacity: 0.1
+                  fillOpacity: 0.1,
                 }}
               />
             }
@@ -75,8 +75,8 @@ class App extends React.Component {
             <VictoryScatter
               style={{
                 data: {
-                  fill: ({ active }) => (active ? "tomato" : "black")
-                }
+                  fill: ({ active }) => (active ? "tomato" : "black"),
+                },
               }}
               data={scatterData}
             />

@@ -4,7 +4,7 @@ import PropTypes from "prop-types";
 import * as Helpers from "../victory-util/helpers";
 import {
   CommonProps,
-  VictoryCommonPrimitiveProps
+  VictoryCommonPrimitiveProps,
 } from "../victory-util/common-props";
 import { Line } from "./line";
 
@@ -56,7 +56,7 @@ export const Whisker = (props: WhiskerProps) => {
     shapeRendering,
     style,
     desc,
-    tabIndex
+    tabIndex,
   } = props;
   const baseProps = {
     ...events,
@@ -67,7 +67,7 @@ export const Whisker = (props: WhiskerProps) => {
     transform,
     clipPath,
     role,
-    shapeRendering
+    shapeRendering,
   };
 
   return React.cloneElement(groupComponent!, {}, [
@@ -76,17 +76,17 @@ export const Whisker = (props: WhiskerProps) => {
       assign(
         { key: "major-whisker", "aria-label": ariaLabel },
         baseProps,
-        majorWhisker
-      )
+        majorWhisker,
+      ),
     ),
     React.cloneElement(
       lineComponent!,
       assign(
         { key: "minor-whisker", "aria-label": ariaLabel },
         baseProps,
-        minorWhisker
-      )
-    )
+        minorWhisker,
+      ),
+    ),
   ]);
 };
 
@@ -98,19 +98,19 @@ Whisker.propTypes = {
     x1: PropTypes.number,
     x2: PropTypes.number,
     y1: PropTypes.number,
-    y2: PropTypes.number
+    y2: PropTypes.number,
   }),
   minorWhisker: PropTypes.shape({
     x1: PropTypes.number,
     x2: PropTypes.number,
     y1: PropTypes.number,
-    y2: PropTypes.number
-  })
+    y2: PropTypes.number,
+  }),
 };
 
 Whisker.defaultProps = {
   groupComponent: <g />,
   lineComponent: <Line />,
   role: "presentation",
-  shapeRendering: "auto"
+  shapeRendering: "auto",
 };

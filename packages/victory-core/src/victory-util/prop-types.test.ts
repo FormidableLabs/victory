@@ -46,13 +46,13 @@ describe("victory-util/prop-types", () => {
     it("CustomPropTypes.greaterThanZero", () => {
       // Correct usage:
       TestComp.propTypes = {
-        number: CustomPropTypes.greaterThanZero.isRequired
+        number: CustomPropTypes.greaterThanZero.isRequired,
       };
       // @ts-expect-error Incorrect usage:
       TestComp.propTypes = { number: CustomPropTypes.greaterThanZero };
       TestComp.propTypes = {
         // @ts-expect-error Incorrect usage:
-        string: CustomPropTypes.greaterThanZero.isRequired
+        string: CustomPropTypes.greaterThanZero.isRequired,
       };
       // @ts-expect-error Incorrect usage:
       TestComp.propTypes = { string: CustomPropTypes.greaterThanZero };
@@ -88,11 +88,11 @@ describe("victory-util/prop-types", () => {
     const validate = (prop) => {
       return CustomPropTypes.deprecated(PropTypes.string, "Read more at link")(
         {
-          pName: prop
+          pName: prop,
         },
         "pName",
         "ComponentName",
-        ...rest
+        ...rest,
       )!;
     };
 
@@ -108,7 +108,7 @@ describe("victory-util/prop-types", () => {
     it("Should warn about deprecation and validate OK", () => {
       validate("value");
       shouldWarn(
-        '"pName" property of "ComponentName" has been deprecated Read more at link'
+        '"pName" property of "ComponentName" has been deprecated Read more at link',
       );
       shouldNotError();
     });
@@ -117,11 +117,11 @@ describe("victory-util/prop-types", () => {
        value is not OK`, () => {
       validate({});
       shouldWarn(
-        '"pName" property of "ComponentName" has been deprecated Read more at link'
+        '"pName" property of "ComponentName" has been deprecated Read more at link',
       );
       shouldError(
         "Warning: Failed pName type: Invalid pName `pName` of type `object` supplied to " +
-          "`ComponentName`, expected `string`."
+          "`ComponentName`, expected `string`.",
       );
     });
   });
@@ -131,13 +131,13 @@ describe("victory-util/prop-types", () => {
     const validate = function (prop) {
       const validator = CustomPropTypes.allOfType([
         CustomPropTypes.nonNegative,
-        CustomPropTypes.integer
+        CustomPropTypes.integer,
       ]);
       return validator(
         { testProp: prop },
         "testProp",
         "TestComponent",
-        ...rest
+        ...rest,
       )!;
     };
 
@@ -145,7 +145,7 @@ describe("victory-util/prop-types", () => {
       const result = validate(-1);
       expect(result).toBeInstanceOf(Error);
       expect(result.message).toContain(
-        "`testProp` in `TestComponent` must be a non-negative number."
+        "`testProp` in `TestComponent` must be a non-negative number.",
       );
     });
 
@@ -153,7 +153,7 @@ describe("victory-util/prop-types", () => {
       const result = validate(1.3);
       expect(result).toBeInstanceOf(Error);
       expect(result.message).toContain(
-        "`testProp` in `TestComponent` must be an integer."
+        "`testProp` in `TestComponent` must be an integer.",
       );
     });
 
@@ -169,7 +169,7 @@ describe("victory-util/prop-types", () => {
         { testProp: prop },
         "testProp",
         "TestComponent",
-        ...rest
+        ...rest,
       )!;
     };
 
@@ -177,7 +177,7 @@ describe("victory-util/prop-types", () => {
       const result = validate("a");
       expect(result).toBeInstanceOf(Error);
       expect(result.message).toContain(
-        "`testProp` in `TestComponent` must be a non-negative number."
+        "`testProp` in `TestComponent` must be a non-negative number.",
       );
     });
 
@@ -185,7 +185,7 @@ describe("victory-util/prop-types", () => {
       const result = validate(-1);
       expect(result).toBeInstanceOf(Error);
       expect(result.message).toContain(
-        "`testProp` in `TestComponent` must be a non-negative number."
+        "`testProp` in `TestComponent` must be a non-negative number.",
       );
     });
 
@@ -206,7 +206,7 @@ describe("victory-util/prop-types", () => {
         { testProp: prop },
         "testProp",
         "TestComponent",
-        ...rest
+        ...rest,
       )!;
     };
 
@@ -214,7 +214,7 @@ describe("victory-util/prop-types", () => {
       const result = validate("a");
       expect(result).toBeInstanceOf(Error);
       expect(result.message).toContain(
-        "`testProp` in `TestComponent` must be an integer."
+        "`testProp` in `TestComponent` must be an integer.",
       );
     });
 
@@ -222,7 +222,7 @@ describe("victory-util/prop-types", () => {
       const result = validate(2.4);
       expect(result).toBeInstanceOf(Error);
       expect(result.message).toContain(
-        "`testProp` in `TestComponent` must be an integer."
+        "`testProp` in `TestComponent` must be an integer.",
       );
     });
 
@@ -242,7 +242,7 @@ describe("victory-util/prop-types", () => {
         { testProp: prop },
         "testProp",
         "TestComponent",
-        ...rest
+        ...rest,
       )!;
     };
 
@@ -250,7 +250,7 @@ describe("victory-util/prop-types", () => {
       const result = validate("a");
       expect(result).toBeInstanceOf(Error);
       expect(result.message).toContain(
-        "`testProp` in `TestComponent` must be a number greater than zero."
+        "`testProp` in `TestComponent` must be a number greater than zero.",
       );
     });
 
@@ -258,7 +258,7 @@ describe("victory-util/prop-types", () => {
       const result = validate(0);
       expect(result).toBeInstanceOf(Error);
       expect(result.message).toContain(
-        "`testProp` in `TestComponent` must be a number greater than zero."
+        "`testProp` in `TestComponent` must be a number greater than zero.",
       );
     });
 
@@ -266,7 +266,7 @@ describe("victory-util/prop-types", () => {
       const result = validate(-3);
       expect(result).toBeInstanceOf(Error);
       expect(result.message).toContain(
-        "`testProp` in `TestComponent` must be a number greater than zero."
+        "`testProp` in `TestComponent` must be a number greater than zero.",
       );
     });
 
@@ -286,7 +286,7 @@ describe("victory-util/prop-types", () => {
         { testProp: prop },
         "testProp",
         "TestComponent",
-        ...rest
+        ...rest,
       )!;
     };
 
@@ -294,7 +294,7 @@ describe("victory-util/prop-types", () => {
       const result = validate("a");
       expect(result).toBeInstanceOf(Error);
       expect(result.message).toContain(
-        "`testProp` in `TestComponent` must be an array of two unique numeric values."
+        "`testProp` in `TestComponent` must be an array of two unique numeric values.",
       );
     });
 
@@ -302,7 +302,7 @@ describe("victory-util/prop-types", () => {
       const result = validate([1]);
       expect(result).toBeInstanceOf(Error);
       expect(result.message).toContain(
-        "`testProp` in `TestComponent` must be an array of two unique numeric values."
+        "`testProp` in `TestComponent` must be an array of two unique numeric values.",
       );
     });
 
@@ -310,7 +310,7 @@ describe("victory-util/prop-types", () => {
       const result = validate([1, 1]);
       expect(result).toBeInstanceOf(Error);
       expect(result.message).toContain(
-        "`testProp` in `TestComponent` must be an array of two unique numeric values."
+        "`testProp` in `TestComponent` must be an array of two unique numeric values.",
       );
     });
 
@@ -336,7 +336,7 @@ describe("victory-util/prop-types", () => {
         { testProp: prop },
         "testProp",
         "TestComponent",
-        ...rest
+        ...rest,
       )!;
     };
 
@@ -344,7 +344,7 @@ describe("victory-util/prop-types", () => {
       const result = validate("a");
       expect(result).toBeInstanceOf(Error);
       expect(result.message).toContain(
-        "`testProp` in `TestComponent` must be a d3 scale."
+        "`testProp` in `TestComponent` must be a d3 scale.",
       );
     });
 
@@ -354,7 +354,7 @@ describe("victory-util/prop-types", () => {
       const result = validate(testFunc);
       expect(result).toBeInstanceOf(Error);
       expect(result.message).toContain(
-        "`testProp` in `TestComponent` must be a d3 scale."
+        "`testProp` in `TestComponent` must be a d3 scale.",
       );
     });
 
@@ -371,7 +371,7 @@ describe("victory-util/prop-types", () => {
         { testProp: prop },
         "testProp",
         "TestComponent",
-        ...rest
+        ...rest,
       )!;
     };
 
@@ -379,7 +379,7 @@ describe("victory-util/prop-types", () => {
       const result = validate("a");
       expect(result).toBeInstanceOf(Error);
       expect(result.message).toContain(
-        "`testProp` in `TestComponent` must be an array."
+        "`testProp` in `TestComponent` must be an array.",
       );
     });
 
@@ -388,7 +388,7 @@ describe("victory-util/prop-types", () => {
       expect(result).toBeInstanceOf(Error);
       expect(result.message).toEqual(
         "Expected `testProp` in `TestComponent` to be a homogeneous array, but found " +
-          "types `Number` and `String`."
+          "types `Number` and `String`.",
       );
     });
 
@@ -415,7 +415,7 @@ describe("victory-util/prop-types", () => {
         props,
         "testProp",
         "TestComponent",
-        ...rest
+        ...rest,
       )!;
     };
 
@@ -432,7 +432,7 @@ describe("victory-util/prop-types", () => {
       expect(result).toBeInstanceOf(Error);
       expect(result).toHaveProperty(
         "message",
-        "Length of data and testProp arrays must match."
+        "Length of data and testProp arrays must match.",
       );
     });
   });

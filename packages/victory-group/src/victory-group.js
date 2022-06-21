@@ -8,7 +8,7 @@ import {
   UserProps,
   VictoryContainer,
   VictoryTheme,
-  Wrapper
+  Wrapper,
 } from "victory-core";
 import { VictorySharedEvents } from "victory-shared-events";
 import { getChildren, useMemoizedProps } from "./helper-methods";
@@ -18,7 +18,7 @@ const fallbackProps = {
   width: 450,
   height: 300,
   padding: 50,
-  offset: 0
+  offset: 0,
 };
 
 const VictoryGroup = (initialProps) => {
@@ -40,7 +40,7 @@ const VictoryGroup = (initialProps) => {
     theme,
     polar,
     horizontal,
-    name
+    name,
   } = modifiedProps;
 
   const childComponents = React.Children.toArray(modifiedProps.children);
@@ -52,7 +52,7 @@ const VictoryGroup = (initialProps) => {
     return children.map((child, index) => {
       const childProps = assign(
         { animate: getAnimationProps(props, child, index, "victory-group") },
-        child.props
+        child.props,
       );
       return React.cloneElement(child, childProps);
     });
@@ -71,7 +71,7 @@ const VictoryGroup = (initialProps) => {
         horizontal,
         polar,
         origin,
-        name
+        name,
       };
     }
     return {};
@@ -86,12 +86,12 @@ const VictoryGroup = (initialProps) => {
     horizontal,
     polar,
     origin,
-    name
+    name,
   ]);
 
   const userProps = React.useMemo(
     () => UserProps.getSafeUserProps(initialProps),
-    [initialProps]
+    [initialProps],
   );
 
   const container = React.useMemo(() => {
@@ -100,7 +100,7 @@ const VictoryGroup = (initialProps) => {
         {},
         containerComponent.props,
         containerProps,
-        userProps
+        userProps,
       );
       return React.cloneElement(containerComponent, defaultContainerProps);
     }
@@ -111,7 +111,7 @@ const VictoryGroup = (initialProps) => {
     standalone,
     containerComponent,
     containerProps,
-    userProps
+    userProps,
   ]);
 
   const events = React.useMemo(() => {
@@ -149,7 +149,7 @@ VictoryGroup.propTypes = {
   ...CommonProps.dataProps,
   children: PropTypes.oneOfType([
     PropTypes.arrayOf(PropTypes.node),
-    PropTypes.node
+    PropTypes.node,
   ]),
   color: PropTypes.oneOfType([PropTypes.string, PropTypes.func]),
   colorScale: PropTypes.oneOfType([
@@ -162,11 +162,11 @@ VictoryGroup.propTypes = {
       "cool",
       "red",
       "green",
-      "blue"
-    ])
+      "blue",
+    ]),
   ]),
   horizontal: PropTypes.bool,
-  offset: PropTypes.number
+  offset: PropTypes.number,
 };
 
 VictoryGroup.defaultProps = {
@@ -175,7 +175,7 @@ VictoryGroup.defaultProps = {
   samples: 50,
   sortOrder: "ascending",
   standalone: true,
-  theme: VictoryTheme.grayscale
+  theme: VictoryTheme.grayscale,
 };
 
 // We need to attatch the static properties to the memoized version, or else
@@ -188,7 +188,7 @@ VictoryGroupMemo.role = "group";
 VictoryGroupMemo.expectedComponents = [
   "groupComponent",
   "containerComponent",
-  "labelComponent"
+  "labelComponent",
 ];
 
 VictoryGroupMemo.getChildren = getChildren;

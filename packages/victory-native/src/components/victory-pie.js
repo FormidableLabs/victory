@@ -15,8 +15,8 @@ const NativeVictoryPie = wrapCoreComponent({
     containerComponent: <VictoryContainer />,
     groupComponent: <G />,
     height: Dimensions.get("window").width,
-    width: Dimensions.get("window").width
-  })
+    width: Dimensions.get("window").width,
+  }),
 });
 
 export default NativeVictoryPie;

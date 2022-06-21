@@ -9,7 +9,7 @@ describe("victory-primitives/bar", () => {
   const baseProps = {
     data: [
       { _x: 2, x: 2, _y: 4, y: 4, eventKey: 0 },
-      { _x: 3, x: 3, _y: 5, y: 5, eventKey: 1 }
+      { _x: 3, x: 3, _y: 5, y: 5, eventKey: 1 },
     ],
     datum: { _x: 2, x: 2, _y: 4, y: 4, eventKey: 0 },
     x: 2,
@@ -18,8 +18,8 @@ describe("victory-primitives/bar", () => {
     y0: 0,
     scale: {
       x: d3Scale.scaleLinear(),
-      y: d3Scale.scaleLinear()
-    }
+      y: d3Scale.scaleLinear(),
+    },
   };
 
   const renderBarSvg = (props = {}) => {
@@ -27,7 +27,7 @@ describe("victory-primitives/bar", () => {
     const { container } = render(
       <VictoryContainer>
         <Bar {...combinedProps} />
-      </VictoryContainer>
+      </VictoryContainer>,
     );
     return container.querySelector("path");
   };
@@ -51,7 +51,7 @@ describe("victory-primitives/bar", () => {
     const props = {
       width: 10,
       padding: 1,
-      data: Array(4)
+      data: Array(4),
     };
 
     const bar = renderBarSvg(props);
@@ -72,7 +72,7 @@ describe("victory-primitives/bar", () => {
   it("should allow modification of width by passing barRatio", () => {
     const props = {
       data: [{ _x: 2, x: 2, _y: 4, y: 4, eventKey: 0 }],
-      barRatio: 3
+      barRatio: 3,
     };
 
     const bar = renderBarSvg(props);

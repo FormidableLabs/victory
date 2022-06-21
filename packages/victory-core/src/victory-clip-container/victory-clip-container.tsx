@@ -38,7 +38,7 @@ export class VictoryClipContainer extends React.Component<VictoryClipContainerPr
     "aria-label": PropTypes.string,
     children: PropTypes.oneOfType([
       PropTypes.arrayOf(PropTypes.node),
-      PropTypes.node
+      PropTypes.node,
     ]),
     circleComponent: PropTypes.element,
     className: PropTypes.string,
@@ -48,7 +48,7 @@ export class VictoryClipContainer extends React.Component<VictoryClipContainerPr
       top: PropTypes.number,
       bottom: PropTypes.number,
       left: PropTypes.number,
-      right: PropTypes.number
+      right: PropTypes.number,
     }),
     clipPathComponent: PropTypes.element,
     clipWidth: CustomPropTypes.nonNegative,
@@ -56,7 +56,7 @@ export class VictoryClipContainer extends React.Component<VictoryClipContainerPr
     groupComponent: PropTypes.element,
     origin: PropTypes.shape({
       x: CustomPropTypes.nonNegative,
-      y: CustomPropTypes.nonNegative
+      y: CustomPropTypes.nonNegative,
     }),
     polar: PropTypes.bool,
     radius: CustomPropTypes.nonNegative,
@@ -64,14 +64,14 @@ export class VictoryClipContainer extends React.Component<VictoryClipContainerPr
     tabIndex: PropTypes.number,
     transform: PropTypes.string,
     translateX: PropTypes.number,
-    translateY: PropTypes.number
+    translateY: PropTypes.number,
   };
 
   static defaultProps = {
     circleComponent: <Circle />,
     rectComponent: <Rect />,
     clipPathComponent: <ClipPath />,
-    groupComponent: <g />
+    groupComponent: <g />,
   };
   private clipId: VictoryClipContainerProps["clipId"];
 
@@ -90,7 +90,7 @@ export class VictoryClipContainer extends React.Component<VictoryClipContainerPr
       clipWidth = 0,
       clipHeight = 0,
       translateX = 0,
-      translateY = 0
+      translateY = 0,
     } = props;
     const clipPadding = Helpers.getPadding({ padding: props.clipPadding });
     const radius = props.radius || Helpers.getRadius(props);
@@ -99,12 +99,12 @@ export class VictoryClipContainer extends React.Component<VictoryClipContainerPr
       y: (polar ? origin.y : translateY) - clipPadding.top,
       width: Math.max(
         (polar ? radius : clipWidth) + clipPadding.left + clipPadding.right,
-        0
+        0,
       ),
       height: Math.max(
         (polar ? radius : clipHeight) + clipPadding.top + clipPadding.bottom,
-        0
-      )
+        0,
+      ),
     };
   }
 
@@ -117,7 +117,7 @@ export class VictoryClipContainer extends React.Component<VictoryClipContainerPr
       children,
       className,
       groupComponent,
-      tabIndex
+      tabIndex,
     } = props;
     const clipComponent = this.renderClipComponent(props, clipId);
     const groupProps = assign(
@@ -126,14 +126,14 @@ export class VictoryClipContainer extends React.Component<VictoryClipContainerPr
         style,
         transform,
         key: `clipped-group-${clipId}`,
-        clipPath: `url(#${clipId})`
+        clipPath: `url(#${clipId})`,
       },
-      events
+      events,
     );
     return React.cloneElement(
       groupComponent,
       { ...groupProps, tabIndex, ...userProps },
-      [clipComponent, ...React.Children.toArray(children)]
+      [clipComponent, ...React.Children.toArray(children)],
     );
   }
 
@@ -145,7 +145,7 @@ export class VictoryClipContainer extends React.Component<VictoryClipContainerPr
       children,
       className,
       groupComponent,
-      tabIndex
+      tabIndex,
     } = props;
     return React.cloneElement(
       groupComponent,
@@ -155,11 +155,11 @@ export class VictoryClipContainer extends React.Component<VictoryClipContainerPr
           style,
           transform,
           "aria-label": props["aria-label"],
-          tabIndex
+          tabIndex,
         },
-        events
+        events,
       ),
-      children
+      children,
     );
   }
 
@@ -173,10 +173,10 @@ export class VictoryClipContainer extends React.Component<VictoryClipContainerPr
       translateY = 0,
       circleComponent,
       rectComponent,
-      clipPathComponent
+      clipPathComponent,
     } = props;
     const { top, bottom, left, right } = Helpers.getPadding({
-      padding: props.clipPadding
+      padding: props.clipPadding,
     });
     let child;
     if (polar) {
@@ -184,7 +184,7 @@ export class VictoryClipContainer extends React.Component<VictoryClipContainerPr
       const circleProps = {
         r: Math.max(radius + left + right, radius + top + bottom, 0),
         cx: origin.x - left,
-        cy: origin.y - top
+        cy: origin.y - top,
       };
       child = React.cloneElement(circleComponent, circleProps);
     } else {
@@ -192,7 +192,7 @@ export class VictoryClipContainer extends React.Component<VictoryClipContainerPr
         x: translateX - left,
         y: translateY - top,
         width: Math.max(clipWidth + left + right, 0),
-        height: Math.max(clipHeight + top + bottom, 0)
+        height: Math.max(clipHeight + top + bottom, 0),
       };
       child = React.cloneElement(rectComponent, rectProps);
     }
@@ -200,7 +200,7 @@ export class VictoryClipContainer extends React.Component<VictoryClipContainerPr
     return React.cloneElement(
       clipPathComponent,
       assign({ key: `clip-path-${clipId}` }, props, { clipId }),
-      child
+      child,
     );
   }
 
@@ -233,7 +233,7 @@ export class VictoryClipContainer extends React.Component<VictoryClipContainerPr
       clipHeight,
       clipWidth,
       translateX,
-      translateY
+      translateY,
     });
     return this.renderClippedGroup(clipProps, this.clipId);
   }

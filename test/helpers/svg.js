@@ -36,12 +36,12 @@ export const calculateD3Path = (props, pathType, index = 0) => {
 
       return prev;
     },
-    { x: [0, 0], y: [0, 0] }
+    { x: [0, 0], y: [0, 0] },
   );
 
   const range = {
     x: [padding, width - padding],
-    y: [height - padding, padding]
+    y: [height - padding, padding],
   };
 
   const scaleX = d3Scale[scaleType]()
@@ -88,7 +88,7 @@ export const calculateD3Path = (props, pathType, index = 0) => {
 
 export const parseSvgPathCommands = (commandStr) => {
   const matches = commandStr.match(
-    /[MmLlHhVvCcSsQqTtAaZz]+[^MmLlHhVvCcSsQqTtAaZz]*/g
+    /[MmLlHhVvCcSsQqTtAaZz]+[^MmLlHhVvCcSsQqTtAaZz]*/g,
   );
 
   return matches.map((match) => {
@@ -103,7 +103,7 @@ export const parseSvgPathCommands = (commandStr) => {
     return {
       raw: match,
       name,
-      args
+      args,
     };
   });
 };
@@ -116,7 +116,7 @@ export const getPathCommandsFromContainer = (container) => {
 export const exhibitsShapeSequence = (commandString, shapeSeqeuence) => {
   const commands = parseSvgPathCommands(commandString);
   return commands.every(
-    (command, index) => command.name === shapeSeqeuence[index]
+    (command, index) => command.name === shapeSeqeuence[index],
   );
 };
 
@@ -152,7 +152,7 @@ export const getBarShape = (path) => {
 
   return {
     height,
-    width
+    width,
   };
 };
 
@@ -190,7 +190,7 @@ export const getSliceArcStart = (sliceCommandString) => {
 
   return {
     x: cmds[0].args[0],
-    y: cmds[0].args[1]
+    y: cmds[0].args[1],
   };
 };
 
@@ -206,7 +206,7 @@ export const getSliceArcEnd = (sliceCommandString) => {
   // @see https://developer.mozilla.org/en-US/docs/Web/SVG/Attribute/d#Arcto
   return {
     x: cmds[1].args[5],
-    y: cmds[1].args[6]
+    y: cmds[1].args[6],
   };
 };
 
@@ -281,7 +281,7 @@ export const getSvgPointCoordinates = (container) => {
 export const convertSvgCoordinatesToCartesian = (
   coords,
   svgDimensions,
-  domain
+  domain,
 ) => {
   const { width, height, padding } = svgDimensions;
 

@@ -9,7 +9,7 @@ import {
   Arc,
   Area,
   arc,
-  area
+  area,
 } from "victory-vendor/d3-shape";
 
 describe("d3-shape", () => {

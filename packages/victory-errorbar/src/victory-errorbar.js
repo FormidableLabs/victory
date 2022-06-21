@@ -9,7 +9,7 @@ import {
   VictoryTheme,
   DefaultTransitions,
   CommonProps,
-  UserProps
+  UserProps,
 } from "victory-core";
 import ErrorBar from "./error-bar";
 import { getBaseProps, getDomain, getData } from "./helper-methods";
@@ -17,14 +17,14 @@ import { getBaseProps, getDomain, getData } from "./helper-methods";
 const fallbackProps = {
   width: 450,
   height: 300,
-  padding: 50
+  padding: 50,
 };
 
 const defaultData = [
   { x: 1, y: 1, errorX: 0.1, errorY: 0.1 },
   { x: 2, y: 2, errorX: 0.2, errorY: 0.2 },
   { x: 3, y: 3, errorX: 0.3, errorY: 0.3 },
-  { x: 4, y: 4, errorX: 0.4, errorY: 0.4 }
+  { x: 4, y: 4, errorX: 0.4, errorY: 0.4 },
 ];
 
 class VictoryErrorBar extends React.Component {
@@ -38,7 +38,7 @@ class VictoryErrorBar extends React.Component {
     "width",
     "errorX",
     "errorY",
-    "borderWidth"
+    "borderWidth",
   ];
 
   static displayName = "VictoryErrorBar";
@@ -53,21 +53,21 @@ class VictoryErrorBar extends React.Component {
       PropTypes.func,
       CustomPropTypes.allOfType([
         CustomPropTypes.integer,
-        CustomPropTypes.nonNegative
+        CustomPropTypes.nonNegative,
       ]),
       PropTypes.string,
-      PropTypes.arrayOf(PropTypes.string)
+      PropTypes.arrayOf(PropTypes.string),
     ]),
     errorY: PropTypes.oneOfType([
       PropTypes.func,
       CustomPropTypes.allOfType([
         CustomPropTypes.integer,
-        CustomPropTypes.nonNegative
+        CustomPropTypes.nonNegative,
       ]),
       PropTypes.string,
-      PropTypes.arrayOf(PropTypes.string)
+      PropTypes.arrayOf(PropTypes.string),
     ]),
-    horizontal: PropTypes.bool
+    horizontal: PropTypes.bool,
   };
 
   static defaultProps = {
@@ -79,7 +79,7 @@ class VictoryErrorBar extends React.Component {
     samples: 50,
     sortOrder: "ascending",
     standalone: true,
-    theme: VictoryTheme.grayscale
+    theme: VictoryTheme.grayscale,
   };
 
   static getDomain = getDomain;
@@ -89,7 +89,7 @@ class VictoryErrorBar extends React.Component {
     "dataComponent",
     "labelComponent",
     "groupComponent",
-    "containerComponent"
+    "containerComponent",
   ];
 
   // Overridden in native versions

@@ -16,15 +16,15 @@ export interface VictoryBrushContainerProps extends VictoryContainerProps {
   handleWidth?: number;
   onBrushCleared?: (
     domain: { x: DomainTuple; y: DomainTuple },
-    props: VictoryBrushContainerProps
+    props: VictoryBrushContainerProps,
   ) => void;
   onBrushDomainChange?: (
     domain: { x: DomainTuple; y: DomainTuple },
-    props: VictoryBrushContainerProps
+    props: VictoryBrushContainerProps,
   ) => void;
   onBrushDomainChangeEnd?: (
     domain: { x: DomainTuple; y: DomainTuple },
-    props: VictoryBrushContainerProps
+    props: VictoryBrushContainerProps,
   ) => void;
 }
 

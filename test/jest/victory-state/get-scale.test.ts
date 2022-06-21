@@ -4,19 +4,19 @@ import { getScale } from "victory-core/lib/victory-state/helpers/get-scale";
 describe("getScale", () => {
   it("gets the d3 scale from props", () => {
     expect(getScale({ scale: d3Scale.scaleLog }, "x")).toEqual(
-      d3Scale.scaleLog
+      d3Scale.scaleLog,
     );
   });
 
   it("gets the d3 scale from props for an axis", () => {
     expect(getScale({ scale: { x: d3Scale.scaleLog } }, "x")).toEqual(
-      d3Scale.scaleLog
+      d3Scale.scaleLog,
     );
   });
 
   it("returns a default scale when data is provided", () => {
     const props = {
-      data: [{ x: 0, y: 1 }]
+      data: [{ x: 0, y: 1 }],
     };
     const scale = getScale(props, "x");
     expect(scale).toBeInstanceOf(Function);
@@ -51,7 +51,7 @@ describe("getScale", () => {
 
   it("returns a time scale when data contains dates", () => {
     const props = {
-      data: [{ x: new Date("2016-01-13"), y: 1 }]
+      data: [{ x: new Date("2016-01-13"), y: 1 }],
     };
     const scale = getScale(props, "x");
     expect(scale).toBeInstanceOf(Function);

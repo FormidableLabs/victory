@@ -17,21 +17,21 @@ const containerStyle = {
   flexDirection: "row",
   flexWrap: "wrap",
   alignItems: "center",
-  justifyContent: "center"
+  justifyContent: "center",
 };
 
 const parentStyle = {
-  parent: { border: "1px solid #ccc", margin: "2%", maxWidth: "40%" }
+  parent: { border: "1px solid #ccc", margin: "2%", maxWidth: "40%" },
 };
 
 const defaultChartProps = {
   style: parentStyle,
-  theme: VictoryTheme.material
+  theme: VictoryTheme.material,
 };
 
 export default {
   title: "Victory Canvas/Bar",
-  component: VictoryBar
+  component: VictoryBar,
 };
 
 export const DefaultRendering = () => {
@@ -454,7 +454,7 @@ export const CornerRadius = () => {
             topLeft: 5,
             topRight: 20,
             bottomLeft: 20,
-            bottomRight: 0
+            bottomRight: 0,
           }}
         />
       </VictoryChart>
@@ -468,7 +468,7 @@ export const CornerRadius = () => {
             topLeft: 5,
             topRight: 20,
             bottomLeft: 20,
-            bottomRight: 0
+            bottomRight: 0,
           }}
         />
       </VictoryChart>
@@ -482,14 +482,14 @@ export const CornerRadius = () => {
             { x: 135, y: 65 },
             { x: 180, y: 50 },
             { x: 270, y: 40 },
-            { x: 315, y: 30 }
+            { x: 315, y: 30 },
           ]}
           style={{ data: { fill: "tomato", width: 40 } }}
           cornerRadius={{
             topRight: 1,
             topLeft: 20,
             bottomRight: 5,
-            bottomLeft: 0
+            bottomLeft: 0,
           }}
         />
         <VictoryPolarAxis
@@ -507,14 +507,14 @@ export const CornerRadius = () => {
             { x: 135, y: 65 },
             { x: 180, y: 50 },
             { x: 270, y: 40 },
-            { x: 315, y: 30 }
+            { x: 315, y: 30 },
           ]}
           style={{ data: { fill: "tomato", width: 40 } }}
           cornerRadius={{
             topRight: 1,
             topLeft: 20,
             bottomRight: 5,
-            bottomLeft: 0
+            bottomLeft: 0,
           }}
         />
         <VictoryPolarAxis
@@ -537,7 +537,7 @@ export const Data = () => {
             { animal: "Cat", pet: 45, wild: 17 },
             { animal: "Dog", pet: 85, wild: 6 },
             { animal: "Fish", pet: 55, wild: 0 },
-            { animal: "Bird", pet: 15, wild: 40 }
+            { animal: "Bird", pet: 15, wild: 40 },
           ]}
           x={"animal"}
           y={(data) => data.pet + data.wild}
@@ -566,7 +566,7 @@ export const Data = () => {
           data={[
             { a: { b: { c: 1, d: 1 } } },
             { a: { b: { c: 2, d: 3 } } },
-            { a: { b: { c: 3, d: 2 } } }
+            { a: { b: { c: 3, d: 2 } } },
           ]}
           x={"a.b.c"}
           y={"a.b.d"}
@@ -581,7 +581,7 @@ export const Data = () => {
             { x: 2, y: 5, label: "dog" },
             { x: 3, y: 3, label: "dog" },
             { x: 4, y: -2, label: "bird" },
-            { x: 5, y: -5, label: "cat" }
+            { x: 5, y: -5, label: "cat" },
           ])}
         />
       </VictoryChart>
@@ -617,7 +617,7 @@ export const Labels = () => {
             { x: 2, y: 5, label: "dog" },
             { x: 3, y: 3, label: "dog" },
             { x: 4, y: -2, label: "bird" },
-            { x: 5, y: -5, label: "cat" }
+            { x: 5, y: -5, label: "cat" },
           ]}
         />
       </VictoryChart>
@@ -630,7 +630,7 @@ export const Labels = () => {
             { x: 2, y: 5, label: "dog" },
             { x: 3, y: 3, label: "dog" },
             { x: 4, y: 2, label: "bird" },
-            { x: 5, y: 5, label: "cat" }
+            { x: 5, y: 5, label: "cat" },
           ]}
         />
         <VictoryPolarAxis />
@@ -716,8 +716,8 @@ export const Style = () => {
               fill: "tomato",
               fillOpacity: 0.7,
               stroke: "tomato",
-              strokeWidth: 2
-            }
+              strokeWidth: 2,
+            },
           }}
         />
       </VictoryChart>
@@ -727,20 +727,20 @@ export const Style = () => {
           dataComponent={<CanvasBar />}
           style={{
             labels: {
-              fill: ({ datum }) => (datum.x === "Dog" ? "red" : "black")
+              fill: ({ datum }) => (datum.x === "Dog" ? "red" : "black"),
             },
             data: {
               stroke: ({ datum }) => (datum.y > 75 ? "red" : "transparent"),
               strokeWidth: 3,
-              opacity: ({ datum }) => (datum.y > 75 ? 1 : 0.4)
-            }
+              opacity: ({ datum }) => (datum.y > 75 ? 1 : 0.4),
+            },
           }}
           labels={({ datum }) => datum.x}
           data={[
             { x: "Cat", y: 62 },
             { x: "Dog", y: 91 },
             { x: "Fish", y: 55 },
-            { x: "Bird", y: 55 }
+            { x: "Bird", y: 55 },
           ]}
         />
       </VictoryChart>
@@ -1230,7 +1230,7 @@ export const PolarBars = () => {
             { x: "Dog", y: 91 },
             { x: "Fish", y: 55 },
             { x: "Bird", y: 55 },
-            { x: "Frog", y: 75 }
+            { x: "Frog", y: 75 },
           ]}
         />
         <VictoryPolarAxis />
@@ -1245,7 +1245,7 @@ export const PolarBars = () => {
             { x: "Dog", y: 91 },
             { x: "Fish", y: 55 },
             { x: "Bird", y: 55 },
-            { x: "Frog", y: 75 }
+            { x: "Frog", y: 75 },
           ]}
         />
         <VictoryPolarAxis />

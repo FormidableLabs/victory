@@ -14,7 +14,7 @@ describe("components/victory-stack", () => {
         <VictoryStack>
           <VictoryBar />
           <VictoryBar />
-        </VictoryStack>
+        </VictoryStack>,
       );
       const svg = container.querySelector("svg");
       expect(svg.style.width).toEqual("100%");
@@ -26,7 +26,7 @@ describe("components/victory-stack", () => {
         <VictoryStack>
           <VictoryBar />
           <VictoryBar />
-        </VictoryStack>
+        </VictoryStack>,
       );
       const svg = container.querySelector("svg");
       const viewBoxValue = `0 0 ${450} ${300}`;
@@ -38,7 +38,7 @@ describe("components/victory-stack", () => {
         <VictoryStack data-testid="victory-stack" aria-label="Stack">
           <VictoryBar />
           <VictoryBar />
-        </VictoryStack>
+        </VictoryStack>,
       );
 
       const svgNode = container.querySelector("svg");
@@ -61,11 +61,11 @@ describe("components/victory-stack", () => {
         <VictoryStack>
           <VictoryHistogram />
           <VictoryBar />
-        </VictoryStack>
+        </VictoryStack>,
       );
 
       expect(console.warn).toHaveBeenCalledWith(
-        "VictoryHistogram only supports being stacked with other VictoryHistogram components. Check to make sure that you are only passing VictoryHistogram components to VictoryStack"
+        "VictoryHistogram only supports being stacked with other VictoryHistogram components. Check to make sure that you are only passing VictoryHistogram components to VictoryStack",
       );
     });
 
@@ -74,7 +74,7 @@ describe("components/victory-stack", () => {
         <VictoryStack>
           <VictoryHistogram />
           <VictoryHistogram />
-        </VictoryStack>
+        </VictoryStack>,
       );
 
       expect(console.warn).not.toHaveBeenCalled();

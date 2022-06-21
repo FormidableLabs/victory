@@ -38,7 +38,7 @@ export {
   VictoryTheme,
   VictoryTransition,
   Whisker,
-  Wrapper
+  Wrapper,
 } from "victory-core";
 
 export { VictoryChart } from "victory-chart";
@@ -58,33 +58,33 @@ export { VictoryBrushLine } from "victory-brush-line";
 export {
   VictoryBrushContainer,
   BrushHelpers,
-  brushContainerMixin
+  brushContainerMixin,
 } from "victory-brush-container";
 export {
   VictoryCursorContainer,
   CursorHelpers,
-  cursorContainerMixin
+  cursorContainerMixin,
 } from "victory-cursor-container";
 export {
   VictorySelectionContainer,
   SelectionHelpers,
-  selectionContainerMixin
+  selectionContainerMixin,
 } from "victory-selection-container";
 export {
   VictoryVoronoiContainer,
   VoronoiHelpers,
-  voronoiContainerMixin
+  voronoiContainerMixin,
 } from "victory-voronoi-container";
 export {
   VictoryZoomContainer,
   ZoomHelpers,
   zoomContainerMixin,
-  RawZoomHelpers
+  RawZoomHelpers,
 } from "victory-zoom-container";
 export {
   combineContainerMixins,
   makeCreateContainerFunction,
-  createContainer
+  createContainer,
 } from "victory-create-container";
 
 export { VictoryTooltip, Flyout } from "victory-tooltip";
@@ -97,5 +97,5 @@ export {
   CanvasCurve,
   CanvasPoint,
   CanvasBar,
-  useCanvasContext
+  useCanvasContext,
 } from "victory-canvas";

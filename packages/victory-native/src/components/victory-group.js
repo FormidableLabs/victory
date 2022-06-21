@@ -10,8 +10,8 @@ const NativeVictoryGroup = wrapCoreComponent({
   defaultProps: Object.assign({}, VictoryGroup.defaultProps, {
     containerComponent: <VictoryContainer />,
     groupComponent: <G />,
-    width: Dimensions.get("window").width
-  })
+    width: Dimensions.get("window").width,
+  }),
 });
 
 export default NativeVictoryGroup;

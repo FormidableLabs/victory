@@ -14,7 +14,7 @@ export const getTransitionData = () => {
   return range(n).map((i) => {
     return {
       x: i,
-      y: random(2, 10)
+      y: random(2, 10),
     };
   });
 };
@@ -29,6 +29,6 @@ export const getStyles = () => {
   const colors = ["red", "orange", "magenta", "gold", "blue", "purple"];
   return {
     stroke: colors[random(0, 5)],
-    strokeWidth: random(1, 5)
+    strokeWidth: random(1, 5),
   };
 };

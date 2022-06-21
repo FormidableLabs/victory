@@ -16,7 +16,7 @@ import {
   easeBounceOut,
   easeCircle,
   easeCircleOut,
-  easeLinear
+  easeLinear,
 } from "victory-vendor/d3-ease";
 
 describe("d3-ease", () => {

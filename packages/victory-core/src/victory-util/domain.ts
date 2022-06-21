@@ -6,7 +6,7 @@ import {
   sortedUniq,
   isFunction,
   includes,
-  isDate
+  isDate,
 } from "lodash";
 import * as Data from "./data";
 import * as Scale from "./scale";
@@ -95,23 +95,23 @@ function padDomain(domain, props, axis) {
 
   const paddedRangeExtent = Math.max(
     rangeExtent - padding.left - padding.right,
-    1
+    1,
   );
   const paddedDomainExtent =
     (Math.abs(max.valueOf() - min.valueOf()) / paddedRangeExtent) * rangeExtent;
 
   const simplePadding = {
     left: (paddedDomainExtent * padding.left) / rangeExtent,
-    right: (paddedDomainExtent * padding.right) / rangeExtent
+    right: (paddedDomainExtent * padding.right) / rangeExtent,
   };
 
   let paddedDomain = {
     min: min.valueOf() - simplePadding.left,
-    max: max.valueOf() + simplePadding.right
+    max: max.valueOf() + simplePadding.right,
   };
 
   const singleQuadrantDomainPadding = isPlainObject(
-    props.singleQuadrantDomainPadding
+    props.singleQuadrantDomainPadding,
   )
     ? props.singleQuadrantDomainPadding[axis]
     : props.singleQuadrantDomainPadding;
@@ -132,13 +132,13 @@ function padDomain(domain, props, axis) {
       // @ts-expect-error `max/min` might be dates
       left: (Math.abs(max - min) * padding.left) / rangeExtent,
       // @ts-expect-error `max/min` might be dates
-      right: (Math.abs(max - min) * padding.right) / rangeExtent
+      right: (Math.abs(max - min) * padding.right) / rangeExtent,
     };
 
     // Adjust the domain by the initial padding
     const adjustedDomain = {
       min: adjust(min.valueOf() - initialPadding.left, "min"),
-      max: adjust(max.valueOf() + initialPadding.right, "max")
+      max: adjust(max.valueOf() + initialPadding.right, "max"),
     };
 
     // re-calculate padding, taking the adjusted domain into account
@@ -148,20 +148,20 @@ function padDomain(domain, props, axis) {
         rangeExtent,
       right:
         (Math.abs(adjustedDomain.max - adjustedDomain.min) * padding.right) /
-        rangeExtent
+        rangeExtent,
     };
 
     // Adjust the domain by the final padding
     paddedDomain = {
       min: adjust(min.valueOf() - finalPadding.left, "min"),
-      max: adjust(max.valueOf() + finalPadding.right, "max")
+      max: adjust(max.valueOf() + finalPadding.right, "max"),
     };
   }
 
   // default to minDomain / maxDomain if they exist
   const finalDomain = {
     min: minDomain !== undefined ? minDomain : paddedDomain.min,
-    max: maxDomain !== undefined ? maxDomain : paddedDomain.max
+    max: maxDomain !== undefined ? maxDomain : paddedDomain.max,
   };
 
   return min instanceof Date || max instanceof Date
@@ -181,7 +181,7 @@ function padDomain(domain, props, axis) {
  */
 export function createDomainFunction(
   getDomainFromDataFunction?,
-  formatDomainFunction?
+  formatDomainFunction?,
 ) {
   getDomainFromDataFunction = isFunction(getDomainFromDataFunction)
     ? getDomainFromDataFunction
@@ -357,7 +357,7 @@ export function getDomainWithZero(props, axis) {
   const dataset = Data.getData(props);
   const y0Min = dataset.reduce(
     (min, datum) => (datum._y0 < min ? datum._y0 : min),
-    Infinity
+    Infinity,
   );
 
   const ensureZero = (domain) => {
@@ -390,7 +390,7 @@ export function getDomainWithZero(props, axis) {
 
   return createDomainFunction(getDomainFunction, formatDomainFunction)(
     props,
-    axis
+    axis,
   );
 }
 
@@ -464,7 +464,7 @@ export function isDomainComponent(component) {
     "pie",
     "scatter",
     "stack",
-    "voronoi"
+    "voronoi",
   ];
   return includes(whitelist, role);
 }

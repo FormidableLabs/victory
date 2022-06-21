@@ -14,7 +14,7 @@ export default class extends VictoryContainer {
   static propTypes = assign({}, VictoryContainer.propTypes, {
     disableContainerEvents: PropTypes.bool,
     onTouchEnd: PropTypes.func,
-    onTouchStart: PropTypes.func
+    onTouchStart: PropTypes.func,
   });
 
   constructor(props) {
@@ -55,7 +55,7 @@ export default class extends VictoryContainer {
       // The user has released all touches
       onPanResponderRelease: this.handleResponderEnd.bind(this),
       // Another component has become the responder
-      onPanResponderTerminate: this.handleResponderEnd.bind(this)
+      onPanResponderTerminate: this.handleResponderEnd.bind(this),
     });
   }
 
@@ -100,7 +100,7 @@ export default class extends VictoryContainer {
       height,
       portalZIndex,
       responsive,
-      disableContainerEvents
+      disableContainerEvents,
     } = props;
     const children = this.getChildren(props);
     const dimensions = responsive
@@ -112,14 +112,14 @@ export default class extends VictoryContainer {
       zIndex: portalZIndex,
       position: "absolute",
       top: 0,
-      left: 0
+      left: 0,
     };
     const portalSvgStyle = assign({ overflow: "visible" }, dimensions);
     const portalProps = {
       width,
       height,
       viewBox: svgProps.viewBox,
-      style: portalSvgStyle
+      style: portalSvgStyle,
     };
     const handlers = disableContainerEvents
       ? {}

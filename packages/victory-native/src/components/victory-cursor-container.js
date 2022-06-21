@@ -3,7 +3,7 @@ import { flow } from "lodash";
 import {
   VictoryCursorContainer,
   CursorHelpers,
-  cursorContainerMixin as originalCursorMixin
+  cursorContainerMixin as originalCursorMixin,
 } from "victory-cursor-container";
 import VictoryLabel from "./victory-label";
 import VictoryContainer from "./victory-container";
@@ -16,7 +16,7 @@ const nativeCursorMixin = (base) =>
     static defaultProps = {
       ...VictoryCursorContainer.defaultProps,
       cursorLabelComponent: <VictoryLabel />,
-      cursorComponent: <LineSegment />
+      cursorComponent: <LineSegment />,
     };
 
     // overrides all web events with native specific events
@@ -39,9 +39,9 @@ const nativeCursorMixin = (base) =>
               return props.disable
                 ? {}
                 : CursorHelpers.onTouchEnd(evt, targetProps);
-            }
-          }
-        }
+            },
+          },
+        },
       ];
     };
   };

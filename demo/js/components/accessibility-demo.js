@@ -18,7 +18,7 @@ import {
   Border,
   Point,
   VictoryLabel,
-  VictoryAccessibleGroup
+  VictoryAccessibleGroup,
 } from "victory-core";
 import {
   accessibilityBarData,
@@ -30,7 +30,7 @@ import {
   accessibilityScatterData,
   accessibilityVoronoiData,
   accessibilityErrorBarData,
-  accessibilityCandlestickData
+  accessibilityCandlestickData,
 } from "../../demo-data.ts";
 
 const pageHeadingStyle = {
@@ -38,13 +38,13 @@ const pageHeadingStyle = {
   flexDirection: "row",
   width: "100%",
   alignItems: "center",
-  justifyContent: "center"
+  justifyContent: "center",
 };
 
 const chartHeadingStyle = {
   marginBottom: "0px",
   marginTop: "25px",
-  fontSize: "calc(1vw + 5px)"
+  fontSize: "calc(1vw + 5px)",
 };
 
 const containerStyle = {
@@ -52,7 +52,7 @@ const containerStyle = {
   flexFlow: "row wrap",
   alignItems: "center",
   justifyContent: "flex-start",
-  maxWidth: "1300px"
+  maxWidth: "1300px",
 };
 
 const chartContainerStyle = {
@@ -61,7 +61,7 @@ const chartContainerStyle = {
   alignItems: "center",
   width: "50%",
   height: "50%",
-  padding: "25px"
+  padding: "25px",
 };
 
 export default class App extends React.Component {
@@ -222,7 +222,7 @@ export default class App extends React.Component {
                         (dataPoint, i) =>
                           `data point ${i + 1} x value is ${
                             dataPoint.x
-                          } and y value is ${dataPoint.y}`
+                          } and y value is ${dataPoint.y}`,
                       )
                     }
                   />

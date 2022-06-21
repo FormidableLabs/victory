@@ -8,13 +8,13 @@ const containerStyle = {
   flexDirection: "row",
   flexWrap: "wrap",
   alignItems: "center",
-  justifyContent: "center"
+  justifyContent: "center",
 };
 
 const style = {
   parent: { border: "1px solid #ccc", margin: "1%", maxWidth: "25%" },
   labels: { padding: 0 },
-  data: { fill: "gold" }
+  data: { fill: "gold" },
 };
 
 const defaultScatterProps = {
@@ -24,7 +24,7 @@ const defaultScatterProps = {
   domain: [-10, 10],
   data: [{ x: 0, y: 0 }],
   labels: () => "Label",
-  size: 5
+  size: 5,
 };
 
 export default class App extends React.Component {
@@ -209,7 +209,7 @@ export default class App extends React.Component {
               backgroundStyle={{ fill: "lavender" }}
               text={[
                 "Victory is awesome.",
-                "This is inline styling for labels."
+                "This is inline styling for labels.",
               ]}
               inline
               verticalAnchor="end"
@@ -253,13 +253,13 @@ export default class App extends React.Component {
                 { fill: "pink", opacity: 0.4 },
                 { fill: "blue", opacity: 0.4 },
                 { fill: "purple", opacity: 0.4 },
-                { fill: "red", opacity: 0.4 }
+                { fill: "red", opacity: 0.4 },
               ]}
               text={[
                 "Victory is awesome.",
                 "This is variable",
                 "lineHeight",
-                "as an array."
+                "as an array.",
               ]}
               style={[{ fontSize: 20, fill: "green" }, { fontSize: 30 }]}
               lineHeight={[2, 2, 3, 1]}
@@ -274,19 +274,19 @@ export default class App extends React.Component {
               angle={20}
               backgroundStyle={[
                 { fill: "pink", opacity: 0.5 },
-                { fill: "lavender", opacity: 0.5 }
+                { fill: "lavender", opacity: 0.5 },
               ]}
               text={[
                 "Victory is awesome.",
                 "Victory is awesome.",
                 "Victory is awesome.",
-                "Victory is awesome."
+                "Victory is awesome.",
               ]}
               backgroundPadding={[
                 { left: -10 },
                 { right: -20 },
                 { right: 0 },
-                { right: -20, left: -10 }
+                { right: -20, left: -10 },
               ]}
               verticalAnchor="middle"
             />
@@ -304,12 +304,12 @@ export default class App extends React.Component {
               backgroundStyle={[
                 { fill: "pink", opacity: 0.5 },
                 { fill: "orange", opacity: 0.2 },
-                { fill: "cyan", opacity: 0.2 }
+                { fill: "cyan", opacity: 0.2 },
               ]}
               text={[
                 "Victory is awesome. ",
                 "inline labels ",
-                "with multiple backgrounds"
+                "with multiple backgrounds",
               ]}
               lineHeight={[1, 2, 2]}
               verticalAnchor="start"
@@ -326,12 +326,12 @@ export default class App extends React.Component {
               backgroundStyle={[
                 { fill: "pink", opacity: 0.5 },
                 { fill: "orange", opacity: 0.2 },
-                { fill: "cyan", opacity: 0.2 }
+                { fill: "cyan", opacity: 0.2 },
               ]}
               text={[
                 "Victory is awesome. ",
                 "inline labels ",
-                "with multiple backgrounds"
+                "with multiple backgrounds",
               ]}
               verticalAnchor="middle"
             />
@@ -348,12 +348,12 @@ export default class App extends React.Component {
               backgroundStyle={[
                 { fill: "pink", opacity: 0.5 },
                 { fill: "orange", opacity: 0.2 },
-                { fill: "cyan", opacity: 0.2 }
+                { fill: "cyan", opacity: 0.2 },
               ]}
               text={[
                 "Victory is awesome!!!! ",
                 "inline labels ",
-                "+ backgrounds"
+                "+ backgrounds",
               ]}
               lineHeight={[1, 2, 2]}
               verticalAnchor="start"
@@ -370,12 +370,12 @@ export default class App extends React.Component {
               backgroundStyle={[
                 { fill: "pink", opacity: 0.5 },
                 { fill: "orange", opacity: 0.2 },
-                { fill: "green", opacity: 0.2 }
+                { fill: "green", opacity: 0.2 },
               ]}
               text={[
                 "Victory is awesome. ",
                 "inline labels ",
-                "with multiple backgrounds"
+                "with multiple backgrounds",
               ]}
               lineHeight={[1, 2, 2]}
               verticalAnchor="end"
@@ -392,12 +392,12 @@ export default class App extends React.Component {
               backgroundStyle={[
                 { fill: "pink", opacity: 0.5 },
                 { fill: "orange", opacity: 0.2 },
-                { fill: "cyan", opacity: 0.2 }
+                { fill: "cyan", opacity: 0.2 },
               ]}
               text={[
                 "Victory is awesome. ",
                 "inline labels ",
-                "with multiple backgrounds"
+                "with multiple backgrounds",
               ]}
               lineHeight={[1, 2, 2]}
               verticalAnchor="start"
@@ -413,12 +413,12 @@ export default class App extends React.Component {
               backgroundStyle={[
                 { fill: "pink", opacity: 0.5 },
                 { fill: "orange", opacity: 0.2 },
-                { fill: "cyan", opacity: 0.2 }
+                { fill: "cyan", opacity: 0.2 },
               ]}
               text={[
                 "Victory is awesome. ",
                 "inline labels ",
-                "with multiple backgrounds"
+                "with multiple backgrounds",
               ]}
               lineHeight={[1, 2, 2]}
               verticalAnchor="start"
@@ -433,17 +433,17 @@ export default class App extends React.Component {
               backgroundStyle={[
                 { fill: "pink", opacity: 0.5 },
                 { fill: "orange", opacity: 0.2 },
-                { fill: "cyan", opacity: 0.2 }
+                { fill: "cyan", opacity: 0.2 },
               ]}
               style={[
                 { letterSpacing: 2, fontSize: 15 },
                 { fontSize: 20 },
-                { fontSize: 12 }
+                { fontSize: 12 },
               ]}
               text={[
                 "Victory is awesome. ",
                 "inline labels ",
-                "with multiple backgrounds"
+                "with multiple backgrounds",
               ]}
               lineHeight={[1, 2, 2]}
               verticalAnchor="start"

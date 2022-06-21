@@ -11,14 +11,14 @@ import {
   TextSize,
   addEvents,
   Axis,
-  UserProps
+  UserProps,
 } from "victory-core";
 import { getBaseProps, getStyles } from "./helper-methods";
 
 const fallbackProps = {
   width: 450,
   height: 300,
-  padding: 50
+  padding: 50,
 };
 
 const options = {
@@ -28,8 +28,8 @@ const options = {
     { name: "grid" },
     { name: "parent", index: "parent" },
     { name: "ticks" },
-    { name: "tickLabels" }
-  ]
+    { name: "tickLabels" },
+  ],
 };
 
 class VictoryAxis extends React.Component {
@@ -43,7 +43,7 @@ class VictoryAxis extends React.Component {
     "offsetY",
     "padding",
     "width",
-    "height"
+    "height",
   ];
 
   static displayName = "VictoryAxis";
@@ -52,11 +52,11 @@ class VictoryAxis extends React.Component {
 
   static defaultTransitions = {
     onExit: {
-      duration: 500
+      duration: 500,
     },
     onEnter: {
-      duration: 500
-    }
+      duration: 500,
+    },
   };
 
   static propTypes = {
@@ -66,14 +66,14 @@ class VictoryAxis extends React.Component {
     axisValue: PropTypes.oneOfType([
       PropTypes.number,
       PropTypes.string,
-      PropTypes.object
+      PropTypes.object,
     ]),
     categories: PropTypes.oneOfType([
       PropTypes.arrayOf(PropTypes.string),
       PropTypes.shape({
         x: PropTypes.arrayOf(PropTypes.string),
-        y: PropTypes.arrayOf(PropTypes.string)
-      })
+        y: PropTypes.arrayOf(PropTypes.string),
+      }),
     ]),
     crossAxis: PropTypes.bool,
     dependentAxis: PropTypes.bool,
@@ -84,18 +84,18 @@ class VictoryAxis extends React.Component {
           "axisLabel",
           "grid",
           "ticks",
-          "tickLabels"
+          "tickLabels",
         ]),
         eventKey: PropTypes.oneOfType([
           PropTypes.array,
           CustomPropTypes.allOfType([
             CustomPropTypes.integer,
-            CustomPropTypes.nonNegative
+            CustomPropTypes.nonNegative,
           ]),
-          PropTypes.string
+          PropTypes.string,
         ]),
-        eventHandlers: PropTypes.object
-      })
+        eventHandlers: PropTypes.object,
+      }),
     ),
     fixLabelOverlap: PropTypes.bool,
     gridComponent: PropTypes.element,
@@ -113,19 +113,19 @@ class VictoryAxis extends React.Component {
       axisLabel: PropTypes.object,
       grid: PropTypes.object,
       ticks: PropTypes.object,
-      tickLabels: PropTypes.object
+      tickLabels: PropTypes.object,
     }),
     tickComponent: PropTypes.element,
     tickCount: CustomPropTypes.allOfType([
       CustomPropTypes.integer,
-      CustomPropTypes.greaterThanZero
+      CustomPropTypes.greaterThanZero,
     ]),
     tickFormat: PropTypes.oneOfType([
       PropTypes.func,
-      CustomPropTypes.homogeneousArray
+      CustomPropTypes.homogeneousArray,
     ]),
     tickLabelComponent: PropTypes.element,
-    tickValues: CustomPropTypes.homogeneousArray
+    tickValues: CustomPropTypes.homogeneousArray,
   };
 
   static defaultProps = {
@@ -138,7 +138,7 @@ class VictoryAxis extends React.Component {
     theme: VictoryTheme.grayscale,
     containerComponent: <VictoryContainer />,
     groupComponent: <g role="presentation" />,
-    fixLabelOverlap: false
+    fixLabelOverlap: false,
   };
 
   static getDomain = Axis.getDomain;
@@ -152,7 +152,7 @@ class VictoryAxis extends React.Component {
     "containerComponent",
     "tickComponent",
     "tickLabelComponent",
-    "gridComponent"
+    "gridComponent",
   ];
 
   renderLine(props) {
@@ -169,7 +169,7 @@ class VictoryAxis extends React.Component {
     const axisLabelProps = this.getComponentProps(
       axisLabelComponent,
       "axisLabel",
-      0
+      0,
     );
     return React.cloneElement(axisLabelComponent, axisLabelProps);
   }
@@ -199,16 +199,16 @@ class VictoryAxis extends React.Component {
       const tickLabelProps = this.getComponentProps(
         tickLabelComponent,
         "tickLabels",
-        index
+        index,
       );
       const TickLabel = React.cloneElement(tickLabelComponent, tickLabelProps);
       const children = [GridComponent, TickComponent, TickLabel].filter(
-        Boolean
+        Boolean,
       );
       return React.cloneElement(
         props.groupComponent,
         { key: `${name}-tick-group-${key}` },
-        children
+        children,
       );
     });
   }
@@ -232,7 +232,7 @@ class VictoryAxis extends React.Component {
         angle: label.angle,
         fontSize: label.style.fontSize,
         letterSpacing: label.style.letterSpacing,
-        fontFamily: label.style.fontFamily
+        fontFamily: label.style.fontFamily,
       });
       return (
         sum +
@@ -242,7 +242,7 @@ class VictoryAxis extends React.Component {
       );
     }, 0);
     const availiableLabelCount = Math.floor(
-      (size * gridAndTicks.length) / labelsSumSize
+      (size * gridAndTicks.length) / labelsSumSize,
     );
     const divider = Math.ceil(gridAndTicks.length / availiableLabelCount) || 1;
     const getLabelCoord = (gridAndTick) =>
@@ -250,13 +250,13 @@ class VictoryAxis extends React.Component {
         .filter(isVictoryLabel)
         .reduce(
           (prev, child) => (isVertical ? child.props.y : child.props.x) || 0,
-          0
+          0,
         );
     const sorted = gridAndTicks.sort(
       (a, b) =>
         isVertical
           ? getLabelCoord(b) - getLabelCoord(a) //ordinary axis has top-bottom orientation
-          : getLabelCoord(a) - getLabelCoord(b) //ordinary axis has left-right orientation
+          : getLabelCoord(a) - getLabelCoord(b), //ordinary axis has left-right orientation
     );
     return sorted.filter((gridAndTick, index) => index % divider === 0);
   }
@@ -282,7 +282,7 @@ class VictoryAxis extends React.Component {
     const children = [
       this.renderLine(props),
       this.renderLabel(props),
-      ...modifiedGridAndTicks
+      ...modifiedGridAndTicks,
     ];
     const container = React.cloneElement(props.containerComponent, userProps);
     return props.standalone

@@ -16,7 +16,7 @@ export const selectionContainerMixin = (base) =>
       selectionBlacklist: PropTypes.arrayOf(PropTypes.string),
       selectionComponent: PropTypes.element,
       selectionDimension: PropTypes.oneOf(["x", "y"]),
-      selectionStyle: PropTypes.object
+      selectionStyle: PropTypes.object,
     };
     static defaultProps = {
       ...VictoryContainer.defaultProps,
@@ -26,8 +26,8 @@ export const selectionContainerMixin = (base) =>
       selectionStyle: {
         stroke: "transparent",
         fill: "black",
-        fillOpacity: 0.1
-      }
+        fillOpacity: 0.1,
+      },
     };
 
     static defaultEvents = (props) => {
@@ -64,9 +64,9 @@ export const selectionContainerMixin = (base) =>
               return props.disable
                 ? {}
                 : SelectionHelpers.onMouseUp(evt, targetProps);
-            }
-          }
-        }
+            },
+          },
+        },
       ];
     };
 
@@ -84,7 +84,7 @@ export const selectionContainerMixin = (base) =>
             y,
             width,
             height,
-            style: selectionStyle
+            style: selectionStyle,
           })
         : null;
     }

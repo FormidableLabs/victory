@@ -10,7 +10,7 @@ import {
   VictoryDatableProps,
   VictorySingleLabelableProps,
   VictoryStyleInterface,
-  VictoryLabelStyleObject
+  VictoryLabelStyleObject,
 } from "victory-core";
 
 export type VictoryLegendTTargetType = "data" | "labels" | "parent";

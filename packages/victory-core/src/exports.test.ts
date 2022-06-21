@@ -136,7 +136,7 @@ import {
   WhiskerAxes,
   WhiskerProps,
   Wrapper,
-  addEvents
+  addEvents,
 } from "victory-core";
 
 describe("victory-core", () => {

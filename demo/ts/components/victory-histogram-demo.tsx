@@ -11,7 +11,7 @@ import { VictoryVoronoiContainer } from "victory-voronoi-container";
 
 const randomDate = (start: Date, end: Date) => {
   return new Date(
-    start.getTime() + Math.random() * (end.getTime() - start.getTime())
+    start.getTime() + Math.random() * (end.getTime() - start.getTime()),
   );
 };
 
@@ -19,7 +19,7 @@ const getData = ({
   length = 100,
   min = 0,
   max = 10,
-  dates = false
+  dates = false,
 }: {
   length?: number;
   min?: number | Date | any;
@@ -28,7 +28,7 @@ const getData = ({
 } = {}) => {
   const randomDataFunc = dates ? randomDate : random;
   return range(length).map(() => ({
-    x: randomDataFunc(min, max)
+    x: randomDataFunc(min, max),
   }));
 };
 
@@ -60,7 +60,7 @@ export default class App extends React.Component<{}, VictoryBarDemoState> {
   dateData = getData({
     dates: true,
     min: new Date(2012, 0, 1),
-    max: new Date(2014, 0, 1)
+    max: new Date(2014, 0, 1),
   });
 
   constructor(props: any) {
@@ -68,53 +68,57 @@ export default class App extends React.Component<{}, VictoryBarDemoState> {
     this.state = {
       dataLoadedInWithBins: {
         data: undefined,
-        bins: [0, 25, 50, 100]
+        bins: [0, 25, 50, 100],
       },
 
       dataLoadedInWithoutBins: {
         data: undefined,
-        bins: undefined
+        bins: undefined,
       },
 
       dynamicBinsBasedOnData: {
         data: getData({ max: 100 }),
-        bins: undefined
+        bins: undefined,
       },
 
       dynamicBins: {
         data: getData({ max: 100 }),
-        bins: range(0, 100, 20)
+        bins: range(0, 100, 20),
       },
 
       dateDataLoadedInWithBins: {
         data: undefined,
-        bins: [new Date(2012, 0, 1), new Date(2013, 0, 1), new Date(2014, 0, 1)]
+        bins: [
+          new Date(2012, 0, 1),
+          new Date(2013, 0, 1),
+          new Date(2014, 0, 1),
+        ],
       },
 
       dateDataLoadedInWithoutBins: {
         data: undefined,
-        bins: [new Date(2012, 0, 1), new Date(2013, 0, 1)]
+        bins: [new Date(2012, 0, 1), new Date(2013, 0, 1)],
       },
 
       dateDynamicBinsBasedOnData: {
         data: getData({
           dates: true,
           min: new Date(2012, 2, 1),
-          max: new Date(2015, 1, 1)
+          max: new Date(2015, 1, 1),
         }),
-        bins: undefined
+        bins: undefined,
       },
 
       dateDynamicBins: {
         data: getData({
           dates: true,
           min: new Date(2012, 0, 1),
-          max: new Date(2012, 12, 1)
+          max: new Date(2012, 12, 1),
         }),
-        bins: range(random(1, 12)).map((i) => new Date(2012, i, 1))
+        bins: range(random(1, 12)).map((i) => new Date(2012, i, 1)),
       },
 
-      style: this.getStyles()
+      style: this.getStyles(),
     };
   }
 
@@ -126,65 +130,65 @@ export default class App extends React.Component<{}, VictoryBarDemoState> {
       this.setState({
         dataLoadedInWithBins: {
           data: getData({ max: 100 }),
-          bins: [0, 25, 50, 100]
+          bins: [0, 25, 50, 100],
         },
 
         dataLoadedInWithoutBins: {
           data: getData({ max: 100 }),
-          bins: undefined
+          bins: undefined,
         },
 
         dynamicBinsBasedOnData: {
           data: getData({ max: random(100) }),
-          bins: undefined
+          bins: undefined,
         },
 
         dynamicBins: {
           data: getData({ max: randomValue }),
-          bins: range(0, randomValue, 10)
+          bins: range(0, randomValue, 10),
         },
 
         dateDataLoadedInWithBins: {
           data: getData({
             dates: true,
             min: new Date(2012, 0, 1),
-            max: new Date(2014, 0, 1)
+            max: new Date(2014, 0, 1),
           }),
           bins: [
             new Date(2012, 0, 1),
             new Date(2013, 0, 1),
-            new Date(2014, 0, 1)
-          ]
+            new Date(2014, 0, 1),
+          ],
         },
 
         dateDataLoadedInWithoutBins: {
           data: getData({
             dates: true,
             min: new Date(2012, 0, 1),
-            max: new Date(2014, 0, 1)
+            max: new Date(2014, 0, 1),
           }),
-          bins: undefined
+          bins: undefined,
         },
 
         dateDynamicBinsBasedOnData: {
           data: getData({
             dates: true,
             min: new Date(2012, 2, 1),
-            max: new Date(random(2013, 2020), 1, 1)
+            max: new Date(random(2013, 2020), 1, 1),
           }),
-          bins: undefined
+          bins: undefined,
         },
 
         dateDynamicBins: {
           data: getData({
             dates: true,
             min: new Date(2012, 0, 1),
-            max: new Date(2012, 12, 1)
+            max: new Date(2012, 12, 1),
           }),
-          bins: range(random(1, 12)).map((i) => new Date(2012, i, 1))
+          bins: range(random(1, 12)).map((i) => new Date(2012, i, 1)),
         },
 
-        style: this.getStyles()
+        style: this.getStyles(),
       });
     }, 4000);
   }
@@ -200,11 +204,11 @@ export default class App extends React.Component<{}, VictoryBarDemoState> {
       "cyan",
       "green",
       "blue",
-      "purple"
+      "purple",
     ];
     return {
       stroke: colors[random(0, 5)],
-      strokeWidth: random(1, 5)
+      strokeWidth: random(1, 5),
     };
   }
 
@@ -212,14 +216,14 @@ export default class App extends React.Component<{}, VictoryBarDemoState> {
     const parentStyle = {
       border: "1px solid #ccc",
       margin: "2%",
-      maxWidth: "40%"
+      maxWidth: "40%",
     };
     const containerStyle: React.CSSProperties = {
       display: "flex",
       flexDirection: "row",
       flexWrap: "wrap",
       alignItems: "center",
-      justifyContent: "center"
+      justifyContent: "center",
     };
 
     return (
@@ -235,22 +239,22 @@ export default class App extends React.Component<{}, VictoryBarDemoState> {
                   {
                     mutation: (props) => {
                       return {
-                        style: merge({}, props.style, { fill: "pink" })
+                        style: merge({}, props.style, { fill: "pink" }),
                       };
-                    }
-                  }
+                    },
+                  },
                 ],
                 onMouseOut: () => [
                   {
                     mutation: (props) => {
                       return {
-                        style: merge({}, props.style, { fill: "yellow" })
+                        style: merge({}, props.style, { fill: "yellow" }),
                       };
-                    }
-                  }
-                ]
-              }
-            }
+                    },
+                  },
+                ],
+              },
+            },
           ]}
         />
 
@@ -258,7 +262,7 @@ export default class App extends React.Component<{}, VictoryBarDemoState> {
           horizontal
           style={{
             parent: parentStyle,
-            data: { stroke: "#1f4068", strokeWidth: 4, fill: "#e43f5a" }
+            data: { stroke: "#1f4068", strokeWidth: 4, fill: "#e43f5a" },
           }}
           data={this.data.map(({ x }) => ({ value: x }))}
           x="value"
@@ -269,7 +273,7 @@ export default class App extends React.Component<{}, VictoryBarDemoState> {
           cornerRadius={10}
           style={{
             parent: parentStyle,
-            data: { stroke: "#f67280", strokeWidth: 3, fill: "#355c7d" }
+            data: { stroke: "#f67280", strokeWidth: 3, fill: "#355c7d" },
           }}
           data={this.data}
         />
@@ -278,7 +282,7 @@ export default class App extends React.Component<{}, VictoryBarDemoState> {
           binSpacing={5}
           style={{
             parent: parentStyle,
-            data: { stroke: "#f67280", strokeWidth: 3, fill: "#355c7d" }
+            data: { stroke: "#f67280", strokeWidth: 3, fill: "#355c7d" },
           }}
           data={this.data2}
         />
@@ -287,7 +291,7 @@ export default class App extends React.Component<{}, VictoryBarDemoState> {
           binSpacing={50}
           style={{
             parent: parentStyle,
-            data: this.state.style
+            data: this.state.style,
           }}
           animate={{ duration: 800 }}
           data={this.data2}
@@ -297,7 +301,7 @@ export default class App extends React.Component<{}, VictoryBarDemoState> {
           bins={3}
           style={{
             parent: parentStyle,
-            data: { stroke: "#f67280", strokeWidth: 3, fill: "#355c7d" }
+            data: { stroke: "#f67280", strokeWidth: 3, fill: "#355c7d" },
           }}
           data={this.data2}
         />
@@ -306,7 +310,7 @@ export default class App extends React.Component<{}, VictoryBarDemoState> {
           bins={100}
           style={{
             parent: parentStyle,
-            data: { stroke: "#f67280", strokeWidth: 3, fill: "#355c7d" }
+            data: { stroke: "#f67280", strokeWidth: 3, fill: "#355c7d" },
           }}
           data={this.data2}
         />
@@ -316,7 +320,7 @@ export default class App extends React.Component<{}, VictoryBarDemoState> {
           bins={100}
           style={{
             parent: parentStyle,
-            data: { stroke: "#f67280", strokeWidth: 3, fill: "#355c7d" }
+            data: { stroke: "#f67280", strokeWidth: 3, fill: "#355c7d" },
           }}
           data={this.data2}
         />
@@ -325,7 +329,7 @@ export default class App extends React.Component<{}, VictoryBarDemoState> {
           bins={[0, 20, 50, 500]}
           style={{
             parent: parentStyle,
-            data: { stroke: "#f67280", strokeWidth: 3, fill: "#355c7d" }
+            data: { stroke: "#f67280", strokeWidth: 3, fill: "#355c7d" },
           }}
           data={this.data2}
         />
@@ -333,7 +337,7 @@ export default class App extends React.Component<{}, VictoryBarDemoState> {
         <VictoryHistogram
           style={{
             parent: parentStyle,
-            data: { stroke: "#f67280", strokeWidth: 1, fill: "#355c7d" }
+            data: { stroke: "#f67280", strokeWidth: 1, fill: "#355c7d" },
           }}
           events={[
             {
@@ -344,21 +348,21 @@ export default class App extends React.Component<{}, VictoryBarDemoState> {
                     {
                       mutation: (props) => {
                         return {
-                          style: merge({}, props.style, { fill: "pink" })
+                          style: merge({}, props.style, { fill: "pink" }),
                         };
-                      }
+                      },
                     },
                     {
                       target: "labels",
                       eventKey: 99,
                       mutation: () => {
                         return { text: "hey" };
-                      }
-                    }
+                      },
+                    },
                   ];
-                }
-              }
-            }
+                },
+              },
+            },
           ]}
           data={this.data2}
         />
@@ -367,7 +371,7 @@ export default class App extends React.Component<{}, VictoryBarDemoState> {
           bins={[0, 20, 50, 500]}
           style={{
             parent: parentStyle,
-            data: { stroke: "#f67280", strokeWidth: 3, fill: "#355c7d" }
+            data: { stroke: "#f67280", strokeWidth: 3, fill: "#355c7d" },
           }}
           data={this.data2}
           labels={({ datum }) => `${datum.x0} - ${datum.x1}`}
@@ -377,7 +381,7 @@ export default class App extends React.Component<{}, VictoryBarDemoState> {
           bins={[0, 20, 50, 500]}
           style={{
             parent: parentStyle,
-            data: { stroke: "#f67280", strokeWidth: 3, fill: "#355c7d" }
+            data: { stroke: "#f67280", strokeWidth: 3, fill: "#355c7d" },
           }}
           data={this.data2}
           labels={({ datum }) => `${datum.x0} - ${datum.x1}`}
@@ -388,7 +392,7 @@ export default class App extends React.Component<{}, VictoryBarDemoState> {
           bins={[0, 20, 50, 500]}
           style={{
             parent: parentStyle,
-            data: { stroke: "#f67280", strokeWidth: 3, fill: "#355c7d" }
+            data: { stroke: "#f67280", strokeWidth: 3, fill: "#355c7d" },
           }}
           data={this.data2}
           labels={({ datum }) =>
@@ -410,7 +414,7 @@ export default class App extends React.Component<{}, VictoryBarDemoState> {
           <VictoryHistogram
             bins={[0, 20, 50, 70, 100]}
             style={{
-              data: { stroke: "#f67280", strokeWidth: 3, fill: "#355c7d" }
+              data: { stroke: "#f67280", strokeWidth: 3, fill: "#355c7d" },
             }}
             data={this.data2}
           />
@@ -424,7 +428,7 @@ export default class App extends React.Component<{}, VictoryBarDemoState> {
               { x: 50, y: 2 },
               { x: 60, y: 4 },
               { x: 80, y: 50 },
-              { x: 120, y: 8 }
+              { x: 120, y: 8 },
             ]}
           />
         </VictoryChart>
@@ -441,7 +445,7 @@ export default class App extends React.Component<{}, VictoryBarDemoState> {
         >
           <VictoryHistogram
             style={{
-              data: { stroke: "#f67280", strokeWidth: 3, fill: "#355c7d" }
+              data: { stroke: "#f67280", strokeWidth: 3, fill: "#355c7d" },
             }}
             data={this.dateData}
           />
@@ -460,7 +464,7 @@ export default class App extends React.Component<{}, VictoryBarDemoState> {
           <VictoryHistogram
             horizontal
             style={{
-              data: { stroke: "#f67280", strokeWidth: 3, fill: "#355c7d" }
+              data: { stroke: "#f67280", strokeWidth: 3, fill: "#355c7d" },
             }}
             data={this.dateData}
           />
@@ -470,7 +474,7 @@ export default class App extends React.Component<{}, VictoryBarDemoState> {
           <VictoryHistogram
             bins={[0, 20, 50, 70, 100]}
             style={{
-              data: { stroke: "#f67280", strokeWidth: 3, fill: "#355c7d" }
+              data: { stroke: "#f67280", strokeWidth: 3, fill: "#355c7d" },
             }}
             data={this.data2}
           />
@@ -484,7 +488,7 @@ export default class App extends React.Component<{}, VictoryBarDemoState> {
               { x: 50, y: 2 },
               { x: 60, y: 4 },
               { x: 80, y: 12 },
-              { x: 120, y: 8 }
+              { x: 120, y: 8 },
             ]}
           />
         </VictoryChart>
@@ -494,7 +498,7 @@ export default class App extends React.Component<{}, VictoryBarDemoState> {
             horizontal
             bins={[0, 20, 50, 70, 100]}
             style={{
-              data: { stroke: "#f67280", strokeWidth: 3, fill: "#355c7d" }
+              data: { stroke: "#f67280", strokeWidth: 3, fill: "#355c7d" },
             }}
             data={this.data2}
           />
@@ -507,7 +511,7 @@ export default class App extends React.Component<{}, VictoryBarDemoState> {
               { x: 50, y: 2 },
               { x: 60, y: 4 },
               { x: 80, y: 50 },
-              { x: 120, y: 8 }
+              { x: 120, y: 8 },
             ]}
           />
         </VictoryChart>
@@ -532,7 +536,7 @@ export default class App extends React.Component<{}, VictoryBarDemoState> {
               { x: 50, y: 2 },
               { x: 60, y: 4 },
               { x: 80, y: 50 },
-              { x: 120, y: 8 }
+              { x: 120, y: 8 },
             ]}
           />
         </VictoryChart>
@@ -579,7 +583,7 @@ export default class App extends React.Component<{}, VictoryBarDemoState> {
         >
           <VictoryHistogram
             style={{
-              data: { stroke: "#fc85ae", strokeWidth: 3, fill: "#574b90" }
+              data: { stroke: "#fc85ae", strokeWidth: 3, fill: "#574b90" },
             }}
             data={this.state.dateDataLoadedInWithBins.data}
             bins={this.state.dateDataLoadedInWithBins.bins}
@@ -594,7 +598,7 @@ export default class App extends React.Component<{}, VictoryBarDemoState> {
         >
           <VictoryHistogram
             style={{
-              data: { stroke: "#833B61", strokeWidth: 3, fill: "#F67E7D" }
+              data: { stroke: "#833B61", strokeWidth: 3, fill: "#F67E7D" },
             }}
             data={this.state.dateDataLoadedInWithoutBins.data}
             bins={this.state.dateDataLoadedInWithoutBins.bins}
@@ -605,7 +609,7 @@ export default class App extends React.Component<{}, VictoryBarDemoState> {
         <VictoryChart style={{ parent: parentStyle }}>
           <VictoryHistogram
             style={{
-              data: { stroke: "#833B61", strokeWidth: 3, fill: "#F67E7D" }
+              data: { stroke: "#833B61", strokeWidth: 3, fill: "#F67E7D" },
             }}
             data={this.state.dateDynamicBinsBasedOnData.data}
             bins={this.state.dateDynamicBinsBasedOnData.bins}
@@ -616,7 +620,7 @@ export default class App extends React.Component<{}, VictoryBarDemoState> {
         <VictoryChart style={{ parent: parentStyle }}>
           <VictoryHistogram
             style={{
-              data: { stroke: "#833B61", strokeWidth: 3, fill: "#F67E7D" }
+              data: { stroke: "#833B61", strokeWidth: 3, fill: "#F67E7D" },
             }}
             data={this.state.dateDynamicBins.data}
             bins={this.state.dateDynamicBins.bins}
@@ -628,7 +632,7 @@ export default class App extends React.Component<{}, VictoryBarDemoState> {
           <VictoryStack colorScale="qualitative">
             <VictoryHistogram
               style={{
-                data: { stroke: "#833B61" }
+                data: { stroke: "#833B61" },
               }}
               data={this.state.dateDynamicBins.data}
               bins={this.state.dateDynamicBins.bins}
@@ -636,7 +640,7 @@ export default class App extends React.Component<{}, VictoryBarDemoState> {
             />
             <VictoryHistogram
               style={{
-                data: { stroke: "#833B61" }
+                data: { stroke: "#833B61" },
               }}
               data={this.state.dateDynamicBins.data}
               bins={this.state.dateDynamicBins.bins}

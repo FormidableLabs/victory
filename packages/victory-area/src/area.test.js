@@ -12,29 +12,29 @@ describe("victory-primitives/area", () => {
       { _x1: 2, x1: 2, _y1: 5, y1: 5, _y0: 0, eventKey: 1 },
       { _x1: 3, x1: 3, _y1: 7, y1: 7, _y0: 0, eventKey: 2 },
       { _x1: 4, x1: 4, _y1: 10, y1: 10, _y0: 0, eventKey: 3 },
-      { _x1: 5, x1: 5, _y1: 15, y1: 15, _y0: 0, eventKey: 4 }
+      { _x1: 5, x1: 5, _y1: 15, y1: 15, _y0: 0, eventKey: 4 },
     ],
     scale: {
       x: d3Scale.scaleLinear(),
-      y: d3Scale.scaleLinear()
+      y: d3Scale.scaleLinear(),
     },
     interpolation: "basis",
     style: {
-      stroke: "tomato"
-    }
+      stroke: "tomato",
+    },
   };
 
   it("should render a single area and no line when no line style is given", () => {
     const props = merge({}, baseProps, {
       style: {
-        stroke: "none"
-      }
+        stroke: "none",
+      },
     });
 
     const { container } = render(
       <VictoryContainer>
         <Area {...props} />
-      </VictoryContainer>
+      </VictoryContainer>,
     );
     expect(container.querySelectorAll("path")).toHaveLength(1);
   });
@@ -43,7 +43,7 @@ describe("victory-primitives/area", () => {
     const { container } = render(
       <VictoryContainer>
         <Area {...baseProps} />
-      </VictoryContainer>
+      </VictoryContainer>,
     );
     // multiple paths should be grouped
     expect(container.querySelectorAll("path")).toHaveLength(2);

@@ -12,8 +12,8 @@ const NativeVictoryErrorBar = wrapCoreComponent({
     dataComponent: <ErrorBar />,
     containerComponent: <VictoryContainer />,
     groupComponent: <G />,
-    width: Dimensions.get("window").width
-  })
+    width: Dimensions.get("window").width,
+  }),
 });
 
 export default NativeVictoryErrorBar;

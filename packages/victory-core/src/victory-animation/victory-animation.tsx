@@ -131,16 +131,16 @@ export class VictoryAnimation extends React.Component<
       "sin",
       "sinIn",
       "sinOut",
-      "sinInOut"
+      "sinInOut",
     ]),
-    onEnd: PropTypes.func
+    onEnd: PropTypes.func,
   };
 
   static defaultProps = {
     data: {},
     delay: 0,
     duration: 1000,
-    easing: "quadInOut"
+    easing: "quadInOut",
   };
 
   static contextType = TimerContext;
@@ -159,8 +159,8 @@ export class VictoryAnimation extends React.Component<
         : this.props.data,
       animationInfo: {
         progress: 0,
-        animating: false
-      }
+        animating: false,
+      },
     };
     this.interpolator = null;
     this.queue = Array.isArray(this.props.data) ? this.props.data.slice(1) : [];
@@ -191,8 +191,8 @@ export class VictoryAnimation extends React.Component<
           animationInfo: {
             progress: 1,
             animating: false,
-            terminating: true
-          }
+            terminating: true,
+          },
         });
       } else {
         /* cancel existing loop if it exists */
@@ -240,13 +240,13 @@ export class VictoryAnimation extends React.Component<
         setTimeout(() => {
           this.loopID = this.timer.subscribe(
             this.functionToBeRunEachFrame,
-            this.props.duration!
+            this.props.duration!,
           );
         }, this.props.delay);
       } else {
         this.loopID = this.timer.subscribe(
           this.functionToBeRunEachFrame,
-          this.props.duration!
+          this.props.duration!,
         );
       }
     } else if (this.props.onEnd) {
@@ -267,8 +267,8 @@ export class VictoryAnimation extends React.Component<
         animationInfo: {
           progress: 1,
           animating: false,
-          terminating: true
-        }
+          terminating: true,
+        },
       });
       if (this.loopID) {
         this.timer.unsubscribe(this.loopID);
@@ -286,8 +286,8 @@ export class VictoryAnimation extends React.Component<
       data: this.interpolator!(this.ease(step)),
       animationInfo: {
         progress: step,
-        animating: step < 1
-      }
+        animating: step < 1,
+      },
     });
   };
 

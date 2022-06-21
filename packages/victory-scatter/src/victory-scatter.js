@@ -12,7 +12,7 @@ import {
   Data,
   Domain,
   Point,
-  UserProps
+  UserProps,
 } from "victory-core";
 import { getBaseProps } from "./helper-methods";
 
@@ -21,7 +21,7 @@ const fallbackProps = {
   height: 300,
   padding: 50,
   size: 3,
-  symbol: "circle"
+  symbol: "circle",
 };
 
 class VictoryScatter extends React.Component {
@@ -34,7 +34,7 @@ class VictoryScatter extends React.Component {
     "samples",
     "size",
     "style",
-    "width"
+    "width",
   ];
 
   static displayName = "VictoryScatter";
@@ -58,10 +58,10 @@ class VictoryScatter extends React.Component {
         "square",
         "star",
         "triangleDown",
-        "triangleUp"
+        "triangleUp",
       ]),
-      PropTypes.func
-    ])
+      PropTypes.func,
+    ]),
   };
 
   static defaultProps = {
@@ -72,7 +72,7 @@ class VictoryScatter extends React.Component {
     samples: 50,
     sortOrder: "ascending",
     standalone: true,
-    theme: VictoryTheme.grayscale
+    theme: VictoryTheme.grayscale,
   };
 
   static getDomain = Domain.getDomain;
@@ -82,7 +82,7 @@ class VictoryScatter extends React.Component {
     "dataComponent",
     "labelComponent",
     "groupComponent",
-    "containerComponent"
+    "containerComponent",
   ];
 
   // Overridden in native versions

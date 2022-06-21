@@ -22,7 +22,7 @@ const makeChainable = function <T>(validator: PropTypes.Validator<T>) {
       if (value === undefined || value === null) {
         if (isRequired) {
           return new Error(
-            `Required \`${propName}\` was not specified in \`${componentName}\`.`
+            `Required \`${propName}\` was not specified in \`${componentName}\`.`,
           );
         }
         return null;
@@ -30,7 +30,7 @@ const makeChainable = function <T>(validator: PropTypes.Validator<T>) {
       return validator(props, propName, componentName, ...rest);
     };
   const chainable = Object.assign(createChainable(false), {
-    isRequired: createChainable(true)
+    isRequired: createChainable(true),
   });
   return chainable as PropTypes.Requireable<T | undefined>;
 };
@@ -79,20 +79,20 @@ const getConstructorName = (value) => {
  */
 export function deprecated<T>(
   propType: PropTypes.Validator<T>,
-  explanation: string
+  explanation: string,
 ): PropTypes.Validator<T> {
   return (props, propName, componentName) => {
     const value = props[propName];
     if (value !== null && value !== undefined) {
       Log.warn(
-        `"${propName}" property of "${componentName}" has been deprecated ${explanation}`
+        `"${propName}" property of "${componentName}" has been deprecated ${explanation}`,
       );
     }
     PropTypes.checkPropTypes(
       { [propName]: propType },
       props,
       propName,
-      componentName
+      componentName,
     );
     return null;
   };
@@ -110,7 +110,7 @@ export function allOfType<T>(validators: Array<PropTypes.Validator<T>>) {
     return validators.reduce<null | Error>(
       (result, validator) =>
         result || validator(props, propName, componentName, ...rest),
-      null
+      null,
     );
   });
 }
@@ -123,11 +123,11 @@ export const nonNegative = makeChainable<number>(
     const value = props[propName];
     if (typeof value !== "number" || value < 0) {
       return new Error(
-        `\`${propName}\` in \`${componentName}\` must be a non-negative number.`
+        `\`${propName}\` in \`${componentName}\` must be a non-negative number.`,
       );
     }
     return null;
-  }
+  },
 );
 
 /**
@@ -138,11 +138,11 @@ export const integer = makeChainable<number>(
     const value = props[propName];
     if (typeof value !== "number" || value % 1 !== 0) {
       return new Error(
-        `\`${propName}\` in \`${componentName}\` must be an integer.`
+        `\`${propName}\` in \`${componentName}\` must be an integer.`,
       );
     }
     return null;
-  }
+  },
 );
 
 /**
@@ -153,11 +153,11 @@ export const greaterThanZero = makeChainable<number>(
     const value = props[propName];
     if (typeof value !== "number" || value <= 0) {
       return new Error(
-        `\`${propName}\` in \`${componentName}\` must be a number greater than zero.`
+        `\`${propName}\` in \`${componentName}\` must be a number greater than zero.`,
       );
     }
     return null;
-  }
+  },
 );
 
 /**
@@ -168,11 +168,11 @@ export const domain = makeChainable<[number, number]>(
     const value = props[propName];
     if (!Array.isArray(value) || value.length !== 2 || value[1] === value[0]) {
       return new Error(
-        `\`${propName}\` in \`${componentName}\` must be an array of two unique numeric values.`
+        `\`${propName}\` in \`${componentName}\` must be an array of two unique numeric values.`,
       );
     }
     return null;
-  }
+  },
 );
 
 /**
@@ -183,11 +183,11 @@ export const scale = makeChainable<ScaleName | D3Scale>(
     const value = props[propName];
     if (!Scale.validScale(value)) {
       return new Error(
-        `\`${propName}\` in \`${componentName}\` must be a d3 scale.`
+        `\`${propName}\` in \`${componentName}\` must be a d3 scale.`,
       );
     }
     return null;
-  }
+  },
 );
 
 /**
@@ -198,7 +198,7 @@ export const homogeneousArray = makeChainable<unknown[]>(
     const values = props[propName];
     if (!Array.isArray(values)) {
       return new Error(
-        `\`${propName}\` in \`${componentName}\` must be an array.`
+        `\`${propName}\` in \`${componentName}\` must be an array.`,
       );
     }
 
@@ -219,11 +219,11 @@ export const homogeneousArray = makeChainable<unknown[]>(
       return new Error(
         `Expected \`${propName}\` in \`${componentName}\` to be a ` +
           `homogeneous array, but found types \`${constructorName}\` and ` +
-          `\`${otherConstructorName}\`.`
+          `\`${otherConstructorName}\`.`,
       );
     }
     return null;
-  }
+  },
 );
 
 /**
@@ -247,9 +247,9 @@ export const regExp = makeChainable<RegExp>(
   (props, propName, componentName) => {
     if (props[propName] && !isRegExp(props[propName])) {
       return new Error(
-        `\`${propName}\` in \`${componentName}\` must be a regular expression.`
+        `\`${propName}\` in \`${componentName}\` must be a regular expression.`,
       );
     }
     return null;
-  }
+  },
 );

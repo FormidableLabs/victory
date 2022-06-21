@@ -35,5 +35,5 @@ VRect.propTypes = {
   transform: PropTypes.string,
   width: PropTypes.number,
   x: PropTypes.number,
-  y: PropTypes.number
+  y: PropTypes.number,
 };

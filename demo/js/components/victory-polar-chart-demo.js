@@ -19,7 +19,7 @@ import { VictoryTheme, VictoryLabel } from "victory-core/src/index";
 const multiAxisData = [
   { strength: 1, intelligence: 250, stealth: 45 },
   { strength: 2, intelligence: 300, stealth: 75 },
-  { strength: 5, intelligence: 225, stealth: 60 }
+  { strength: 5, intelligence: 225, stealth: 60 },
 ];
 
 class App extends React.Component {
@@ -29,7 +29,7 @@ class App extends React.Component {
       data: this.getData(),
       staticData: this.getStaticData(),
       multiAxisData: this.processMultiAxisData(multiAxisData),
-      multiAxisMaxima: this.getMaxData(multiAxisData)
+      multiAxisMaxima: this.getMaxData(multiAxisData),
     };
   }
 
@@ -38,7 +38,7 @@ class App extends React.Component {
     this.setStateInterval = window.setInterval(() => {
       this.setState({
         data: this.getData(),
-        staticData: this.getStaticData()
+        staticData: this.getStaticData(),
       });
     }, 3000);
   }
@@ -91,11 +91,11 @@ class App extends React.Component {
       flexDirection: "row",
       flexWrap: "wrap",
       alignItems: "center",
-      justifyContent: "center"
+      justifyContent: "center",
     };
 
     const chartStyle = {
-      parent: { border: "1px solid #ccc", margin: "2%", maxWidth: "40%" }
+      parent: { border: "1px solid #ccc", margin: "2%", maxWidth: "40%" },
     };
 
     return (
@@ -113,7 +113,7 @@ class App extends React.Component {
                   key={i}
                   dependentAxis
                   style={{
-                    axisLabel: { padding: 10 }
+                    axisLabel: { padding: 10 },
                   }}
                   tickLabelComponent={
                     <VictoryLabel labelPlacement="vertical" />
@@ -147,13 +147,13 @@ class App extends React.Component {
                 { x: 2, y: 3 },
                 { x: 3, y: 1 },
                 { x: 4, y: 2 },
-                { x: 5, y: 4 }
+                { x: 5, y: 4 },
               ]}
             >
               <VictoryLine style={{ data: { stroke: "tomato" } }} />
               <VictoryScatter
                 style={{
-                  data: { fill: ({ active }) => (active ? "tomato" : "gray") }
+                  data: { fill: ({ active }) => (active ? "tomato" : "gray") },
                 }}
                 labels={({ datum }) => datum.y}
                 labelComponent={<VictoryTooltip />}
@@ -167,13 +167,13 @@ class App extends React.Component {
                 { x: 3, y: 3 },
                 { x: 3, y: 2 },
                 { x: 4, y: 2 },
-                { x: 5, y: 1 }
+                { x: 5, y: 1 },
               ]}
             >
               <VictoryLine style={{ data: { stroke: "blue" } }} />
               <VictoryScatter
                 style={{
-                  data: { fill: ({ active }) => (active ? "blue" : "gray") }
+                  data: { fill: ({ active }) => (active ? "blue" : "gray") },
                 }}
                 labels={({ datum }) => `y: ${datum.y}`}
                 labelComponent={<VictoryTooltip />}
@@ -186,13 +186,13 @@ class App extends React.Component {
                 { x: 2, y: 4 },
                 { x: 3, y: 2 },
                 { x: 4, y: 4 },
-                { x: 5, y: 2 }
+                { x: 5, y: 2 },
               ]}
             >
               <VictoryLine style={{ data: { stroke: "black" } }} />
               <VictoryScatter
                 style={{
-                  data: { fill: ({ active }) => (active ? "black" : "gray") }
+                  data: { fill: ({ active }) => (active ? "black" : "gray") },
                 }}
                 labels={({ datum }) => datum.y}
                 labelComponent={<VictoryTooltip />}
@@ -213,21 +213,21 @@ class App extends React.Component {
                 data={[
                   { x: 1, y: 1 },
                   { x: 2, y: 2 },
-                  { x: 3, y: 5 }
+                  { x: 3, y: 5 },
                 ]}
               />
               <VictoryBar
                 data={[
                   { x: 1, y: 2 },
                   { x: 2, y: 1 },
-                  { x: 3, y: 7 }
+                  { x: 3, y: 7 },
                 ]}
               />
               <VictoryBar
                 data={[
                   { x: 1, y: 3 },
                   { x: 2, y: 4 },
-                  { x: 3, y: 9 }
+                  { x: 3, y: 9 },
                 ]}
               />
             </VictoryGroup>
@@ -253,8 +253,8 @@ class App extends React.Component {
                   fill: ({ active }) => (active ? "blue" : "tomato"),
                   fillOpacity: 0.6,
                   stroke: ({ active }) => (active ? "blue" : "tomato"),
-                  strokeWidth: 2
-                }
+                  strokeWidth: 2,
+                },
               }}
               labelComponent={<VictoryTooltip />}
               data={[
@@ -262,7 +262,7 @@ class App extends React.Component {
                 { x: "intelligence", y: 25, label: "two" },
                 { x: "stealth", y: 40, label: "three" },
                 { x: "luck", y: 50, label: "four" },
-                { x: "charisma", y: 50, label: "five" }
+                { x: "charisma", y: 50, label: "five" },
               ]}
             />
           </VictoryChart>
@@ -283,15 +283,15 @@ class App extends React.Component {
                   width: 10,
                   fillOpacity: 0.6,
                   stroke: "tomato",
-                  strokeWidth: 2
-                }
+                  strokeWidth: 2,
+                },
               }}
               data={[
                 { x: "strength", y: 10 },
                 { x: "intelligence", y: 25 },
                 { x: "stealth", y: 40 },
                 { x: "luck", y: 50 },
-                { x: "charisma", y: 50 }
+                { x: "charisma", y: 50 },
               ]}
             />
           </VictoryChart>
@@ -313,18 +313,18 @@ class App extends React.Component {
                         childName: "bar-2",
                         mutation: () => {
                           return {
-                            style: merge({}, props.style, { fill: "cyan" })
+                            style: merge({}, props.style, { fill: "cyan" }),
                           };
-                        }
+                        },
                       },
                       {
                         childName: "bar-3",
                         mutation: () => {
                           return {
-                            style: merge({}, props.style, { fill: "blue" })
+                            style: merge({}, props.style, { fill: "blue" }),
                           };
-                        }
-                      }
+                        },
+                      },
                     ];
                   },
                   onMouseOut: () => {
@@ -333,12 +333,12 @@ class App extends React.Component {
                         childName: "all",
                         mutation: () => {
                           return { style: undefined };
-                        }
-                      }
+                        },
+                      },
                     ];
-                  }
-                }
-              }
+                  },
+                },
+              },
             ]}
           >
             <VictoryPolarAxis
@@ -361,7 +361,7 @@ class App extends React.Component {
                   { x: 135, y: 65 },
                   { x: 180, y: 50 },
                   { x: 270, y: 40 },
-                  { x: 315, y: 30 }
+                  { x: 315, y: 30 },
                 ]}
               />
               <VictoryBar
@@ -373,7 +373,7 @@ class App extends React.Component {
                   { x: 135, y: 65 },
                   { x: 180, y: 50 },
                   { x: 270, y: 40 },
-                  { x: 315, y: 30 }
+                  { x: 315, y: 30 },
                 ]}
               />
               <VictoryBar
@@ -386,7 +386,7 @@ class App extends React.Component {
                   { x: 135, y: 65 },
                   { x: 180, y: 50 },
                   { x: 270, y: 40 },
-                  { x: 315, y: 30 }
+                  { x: 315, y: 30 },
                 ]}
               />
             </VictoryStack>
@@ -409,11 +409,11 @@ class App extends React.Component {
                           return {
                             style: merge({}, props.style, {
                               fill: "cyan",
-                              stroke: "cyan"
-                            })
+                              stroke: "cyan",
+                            }),
                           };
-                        }
-                      }
+                        },
+                      },
                     ];
                   },
                   onMouseOut: () => {
@@ -421,12 +421,12 @@ class App extends React.Component {
                       {
                         mutation: () => {
                           return { style: undefined };
-                        }
-                      }
+                        },
+                      },
                     ];
-                  }
-                }
-              }
+                  },
+                },
+              },
             ]}
           >
             <VictoryPolarAxis
@@ -448,8 +448,8 @@ class App extends React.Component {
                     fill: "tomato",
                     stroke: "tomato",
                     fillOpacity: 0.5,
-                    strokeWidth: 2
-                  }
+                    strokeWidth: 2,
+                  },
                 }}
                 data={[
                   { x: 45, y: 20 },
@@ -457,7 +457,7 @@ class App extends React.Component {
                   { x: 135, y: 65 },
                   { x: 180, y: 50 },
                   { x: 270, y: 40 },
-                  { x: 315, y: 30 }
+                  { x: 315, y: 30 },
                 ]}
               />
               <VictoryArea
@@ -468,8 +468,8 @@ class App extends React.Component {
                     fill: "orange",
                     stroke: "orange",
                     fillOpacity: 0.5,
-                    strokeWidth: 2
-                  }
+                    strokeWidth: 2,
+                  },
                 }}
                 data={[
                   { x: 45, y: 20 },
@@ -477,7 +477,7 @@ class App extends React.Component {
                   { x: 135, y: 65 },
                   { x: 180, y: 50 },
                   { x: 270, y: 40 },
-                  { x: 315, y: 30 }
+                  { x: 315, y: 30 },
                 ]}
               />
               <VictoryArea
@@ -488,8 +488,8 @@ class App extends React.Component {
                     fill: "gold",
                     stroke: "gold",
                     fillOpacity: 0.5,
-                    strokeWidth: 2
-                  }
+                    strokeWidth: 2,
+                  },
                 }}
                 data={[
                   { x: 45, y: 20 },
@@ -497,7 +497,7 @@ class App extends React.Component {
                   { x: 135, y: 65 },
                   { x: 180, y: 50 },
                   { x: 270, y: 40 },
-                  { x: 315, y: 30 }
+                  { x: 315, y: 30 },
                 ]}
               />
             </VictoryStack>
@@ -520,7 +520,7 @@ class App extends React.Component {
             <VictoryArea
               interpolation="catmullRom"
               style={{
-                data: { fill: "tomato" }
+                data: { fill: "tomato" },
               }}
               data={this.state.data}
             />
@@ -546,7 +546,7 @@ class App extends React.Component {
               labels={({ datum }) => `y: ${Math.round(datum.y)}`}
               interpolation="linear"
               style={{
-                data: { stroke: "tomato", strokeWidth: 2 }
+                data: { stroke: "tomato", strokeWidth: 2 },
               }}
               data={this.state.data}
             />
@@ -572,8 +572,8 @@ class App extends React.Component {
                   width: 10,
                   fillOpacity: 0.4,
                   stroke: "tomato",
-                  strokeWidth: 2
-                }
+                  strokeWidth: 2,
+                },
               }}
               data={this.state.staticData}
             />
@@ -598,8 +598,8 @@ class App extends React.Component {
                   fill: "tomato",
                   fillOpacity: 0.4,
                   stroke: "tomato",
-                  strokeWidth: 2
-                }
+                  strokeWidth: 2,
+                },
               }}
               data={this.state.staticData}
             />
@@ -626,7 +626,7 @@ class App extends React.Component {
             <VictoryBar
               alignment="start"
               style={{
-                data: { fill: ({ datum }) => datum.fill, opacity: 0.5 }
+                data: { fill: ({ datum }) => datum.fill, opacity: 0.5 },
               }}
               data={[
                 { x: 45, y: 20, label: 1, fill: "red" },
@@ -634,7 +634,7 @@ class App extends React.Component {
                 { x: 135, y: 65, label: 3, fill: "gold" },
                 { x: 250, y: 50, label: 4, fill: "blue" },
                 { x: 270, y: 40, label: 5, fill: "cyan" },
-                { x: 295, y: 30, label: 6, fill: "green" }
+                { x: 295, y: 30, label: 6, fill: "green" },
               ]}
             />
             <VictoryScatter
@@ -645,7 +645,7 @@ class App extends React.Component {
                 { x: 135, y: 65 },
                 { x: 250, y: 50 },
                 { x: 270, y: 40 },
-                { x: 295, y: 30 }
+                { x: 295, y: 30 },
               ]}
             />
           </VictoryChart>
@@ -654,7 +654,7 @@ class App extends React.Component {
             <VictoryBar
               alignment="start"
               style={{
-                data: { fill: ({ datum }) => datum.fill, opacity: 0.5 }
+                data: { fill: ({ datum }) => datum.fill, opacity: 0.5 },
               }}
               data={[
                 { x: 15, y: 20, label: 1, fill: "red" },
@@ -662,7 +662,7 @@ class App extends React.Component {
                 { x: 35, y: 65, label: 3, fill: "gold" },
                 { x: 40, y: 50, label: 4, fill: "blue" },
                 { x: 45, y: 40, label: 5, fill: "cyan" },
-                { x: 50, y: 30, label: 6, fill: "green" }
+                { x: 50, y: 30, label: 6, fill: "green" },
               ]}
             />
             <VictoryScatter
@@ -673,7 +673,7 @@ class App extends React.Component {
                 { x: 35, y: 65 },
                 { x: 40, y: 50 },
                 { x: 45, y: 40 },
-                { x: 50, y: 30 }
+                { x: 50, y: 30 },
               ]}
             />
           </VictoryChart>
@@ -687,7 +687,7 @@ class App extends React.Component {
                 { x: 3, y: 6, label: 3, fill: "gold" },
                 { x: 4, y: 5, label: 4, fill: "blue" },
                 { x: 5, y: 4, label: 5, fill: "cyan" },
-                { x: 6, y: 3, label: 6, fill: "green" }
+                { x: 6, y: 3, label: 6, fill: "green" },
               ]}
             />
             <VictoryScatter
@@ -698,7 +698,7 @@ class App extends React.Component {
                 { x: 3, y: 6 },
                 { x: 4, y: 5 },
                 { x: 5, y: 4 },
-                { x: 6, y: 3 }
+                { x: 6, y: 3 },
               ]}
             />
           </VictoryChart>
@@ -723,7 +723,7 @@ class App extends React.Component {
                 { x: 90, y: 30, label: 2 },
                 { x: 135, y: 75, label: 3 },
                 { x: 180, y: 50, label: 4 },
-                { x: 270, y: 40, label: 5 }
+                { x: 270, y: 40, label: 5 },
               ]}
             />
 
@@ -734,7 +734,7 @@ class App extends React.Component {
                 { x: 90, y: 30 },
                 { x: 135, y: 75 },
                 { x: 180, y: 50 },
-                { x: 270, y: 40 }
+                { x: 270, y: 40 },
               ]}
             />
 
@@ -745,7 +745,7 @@ class App extends React.Component {
                 { x: 90, y: 30 },
                 { x: 135, y: 75 },
                 { x: 180, y: 50 },
-                { x: 270, y: 40 }
+                { x: 270, y: 40 },
               ]}
             />
           </VictoryChart>
@@ -765,7 +765,7 @@ class App extends React.Component {
                 "intelligence",
                 "stealth",
                 "luck",
-                "charisma"
+                "charisma",
               ]}
             />
             <VictoryScatter
@@ -776,7 +776,7 @@ class App extends React.Component {
                 { x: 2, y: 25 },
                 { x: 3, y: 40 },
                 { x: 4, y: 50 },
-                { x: 5, y: 50 }
+                { x: 5, y: 50 },
               ]}
             />
             <VictoryArea
@@ -786,7 +786,7 @@ class App extends React.Component {
                 { x: 2, y: 25 },
                 { x: 3, y: 40 },
                 { x: 4, y: 50 },
-                { x: 5, y: 50 }
+                { x: 5, y: 50 },
               ]}
             />
           </VictoryChart>
@@ -799,7 +799,7 @@ class App extends React.Component {
             endAngle={380}
             domain={[0, 360]}
             tickValues={[
-              0, 20, 45, 65, 90, 120, 135, 180, 225, 250, 270, 300, 315
+              0, 20, 45, 65, 90, 120, 135, 180, 225, 250, 270, 300, 315,
             ]}
           />
 

@@ -9,7 +9,7 @@ import {
   VictoryContainer,
   VictoryLabel,
   VictoryTheme,
-  UserProps
+  UserProps,
 } from "victory-core";
 import Slice from "./slice";
 import { getBaseProps } from "./helper-methods";
@@ -32,9 +32,9 @@ const fallbackProps = {
     "#737373",
     "#525252",
     "#252525",
-    "#000000"
+    "#000000",
   ],
-  labelPosition: "centroid"
+  labelPosition: "centroid",
 };
 
 class VictoryPie extends React.Component {
@@ -49,7 +49,7 @@ class VictoryPie extends React.Component {
     "colorScale",
     "startAngle",
     "style",
-    "width"
+    "width",
   ];
 
   static displayName = "VictoryPie";
@@ -59,16 +59,16 @@ class VictoryPie extends React.Component {
   static defaultTransitions = {
     onExit: {
       duration: 500,
-      before: () => ({ _y: 0, label: " " })
+      before: () => ({ _y: 0, label: " " }),
     },
     onEnter: {
       duration: 500,
       before: () => ({ _y: 0, label: " " }),
       after: (datum) => ({
         y_: datum._y,
-        label: datum.label
-      })
-    }
+        label: datum.label,
+      }),
+    },
   };
 
   static propTypes = {
@@ -83,13 +83,13 @@ class VictoryPie extends React.Component {
         "cool",
         "red",
         "green",
-        "blue"
-      ])
+        "blue",
+      ]),
     ]),
     containerComponent: PropTypes.element,
     cornerRadius: PropTypes.oneOfType([
       CustomPropTypes.nonNegative,
-      PropTypes.func
+      PropTypes.func,
     ]),
     data: PropTypes.array,
     dataComponent: PropTypes.element,
@@ -99,9 +99,9 @@ class VictoryPie extends React.Component {
       PropTypes.func,
       CustomPropTypes.allOfType([
         CustomPropTypes.integer,
-        CustomPropTypes.nonNegative
+        CustomPropTypes.nonNegative,
       ]),
-      PropTypes.string
+      PropTypes.string,
     ]),
     events: PropTypes.arrayOf(
       PropTypes.shape({
@@ -111,12 +111,12 @@ class VictoryPie extends React.Component {
           PropTypes.func,
           CustomPropTypes.allOfType([
             CustomPropTypes.integer,
-            CustomPropTypes.nonNegative
+            CustomPropTypes.nonNegative,
           ]),
-          PropTypes.string
+          PropTypes.string,
         ]),
-        eventHandlers: PropTypes.object
-      })
+        eventHandlers: PropTypes.object,
+      }),
     ),
     externalEventMutations: PropTypes.arrayOf(
       PropTypes.shape({
@@ -126,42 +126,42 @@ class VictoryPie extends React.Component {
           PropTypes.array,
           CustomPropTypes.allOfType([
             CustomPropTypes.integer,
-            CustomPropTypes.nonNegative
+            CustomPropTypes.nonNegative,
           ]),
-          PropTypes.string
+          PropTypes.string,
         ]),
         mutation: PropTypes.func,
-        target: PropTypes.oneOfType([PropTypes.string, PropTypes.array])
-      })
+        target: PropTypes.oneOfType([PropTypes.string, PropTypes.array]),
+      }),
     ),
     groupComponent: PropTypes.element,
     height: CustomPropTypes.nonNegative,
     innerRadius: PropTypes.oneOfType([
       CustomPropTypes.nonNegative,
-      PropTypes.func
+      PropTypes.func,
     ]),
     labelComponent: PropTypes.element,
     labelPlacement: PropTypes.oneOfType([
       PropTypes.func,
-      PropTypes.oneOf(["parallel", "perpendicular", "vertical"])
+      PropTypes.oneOf(["parallel", "perpendicular", "vertical"]),
     ]),
     labelPosition: PropTypes.oneOfType([
       PropTypes.func,
-      PropTypes.oneOf(["startAngle", "centroid", "endAngle"])
+      PropTypes.oneOf(["startAngle", "centroid", "endAngle"]),
     ]),
     labelRadius: PropTypes.oneOfType([
       CustomPropTypes.nonNegative,
-      PropTypes.func
+      PropTypes.func,
     ]),
     labels: PropTypes.oneOfType([PropTypes.func, PropTypes.array]),
     name: PropTypes.string,
     origin: PropTypes.shape({
       x: CustomPropTypes.nonNegative,
-      y: CustomPropTypes.nonNegative
+      y: CustomPropTypes.nonNegative,
     }),
     padAngle: PropTypes.oneOfType([
       CustomPropTypes.nonNegative,
-      PropTypes.func
+      PropTypes.func,
     ]),
     padding: PropTypes.oneOfType([
       PropTypes.number,
@@ -169,22 +169,22 @@ class VictoryPie extends React.Component {
         top: PropTypes.number,
         bottom: PropTypes.number,
         left: PropTypes.number,
-        right: PropTypes.number
-      })
+        right: PropTypes.number,
+      }),
     ]),
     radius: PropTypes.oneOfType([CustomPropTypes.nonNegative, PropTypes.func]),
     sharedEvents: PropTypes.shape({
       events: PropTypes.array,
-      getEventState: PropTypes.func
+      getEventState: PropTypes.func,
     }),
     sortKey: PropTypes.oneOfType([
       PropTypes.func,
       CustomPropTypes.allOfType([
         CustomPropTypes.integer,
-        CustomPropTypes.nonNegative
+        CustomPropTypes.nonNegative,
       ]),
       PropTypes.string,
-      PropTypes.arrayOf(PropTypes.string)
+      PropTypes.arrayOf(PropTypes.string),
     ]),
     sortOrder: PropTypes.oneOf(["ascending", "descending"]),
     standalone: PropTypes.bool,
@@ -192,7 +192,7 @@ class VictoryPie extends React.Component {
     style: PropTypes.shape({
       parent: PropTypes.object,
       data: PropTypes.object,
-      labels: PropTypes.object
+      labels: PropTypes.object,
     }),
     theme: PropTypes.object,
     width: CustomPropTypes.nonNegative,
@@ -200,20 +200,20 @@ class VictoryPie extends React.Component {
       PropTypes.func,
       CustomPropTypes.allOfType([
         CustomPropTypes.integer,
-        CustomPropTypes.nonNegative
+        CustomPropTypes.nonNegative,
       ]),
       PropTypes.string,
-      PropTypes.arrayOf(PropTypes.string)
+      PropTypes.arrayOf(PropTypes.string),
     ]),
     y: PropTypes.oneOfType([
       PropTypes.func,
       CustomPropTypes.allOfType([
         CustomPropTypes.integer,
-        CustomPropTypes.nonNegative
+        CustomPropTypes.nonNegative,
       ]),
       PropTypes.string,
-      PropTypes.arrayOf(PropTypes.string)
-    ])
+      PropTypes.arrayOf(PropTypes.string),
+    ]),
   };
 
   static defaultProps = {
@@ -222,7 +222,7 @@ class VictoryPie extends React.Component {
       { x: "B", y: 2 },
       { x: "C", y: 3 },
       { x: "D", y: 1 },
-      { x: "E", y: 2 }
+      { x: "E", y: 2 },
     ],
     standalone: true,
     dataComponent: <Slice />,
@@ -230,7 +230,7 @@ class VictoryPie extends React.Component {
     containerComponent: <VictoryContainer />,
     groupComponent: <g />,
     sortOrder: "ascending",
-    theme: VictoryTheme.grayscale
+    theme: VictoryTheme.grayscale,
   };
 
   static getBaseProps = (props) => getBaseProps(props, fallbackProps);
@@ -239,7 +239,7 @@ class VictoryPie extends React.Component {
     "dataComponent",
     "labelComponent",
     "groupComponent",
-    "containerComponent"
+    "containerComponent",
   ];
 
   // Overridden in victory-native

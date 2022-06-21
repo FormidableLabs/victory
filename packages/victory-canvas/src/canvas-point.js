@@ -18,7 +18,7 @@ const getPath = (props) => {
     plus: PointPathHelpers.plus,
     minus: PointPathHelpers.minus,
     star: PointPathHelpers.star,
-    cross: PointPathHelpers.cross
+    cross: PointPathHelpers.cross,
   };
   const symbolFunction =
     typeof pathFunctions[symbol] === "function"
@@ -41,7 +41,7 @@ const evaluateProps = (props) => {
   return assign({}, props, {
     size,
     style,
-    symbol
+    symbol,
   });
 };
 
@@ -58,7 +58,7 @@ const CanvasPoint = (initialProps) => {
       const path2d = new Path2D(path);
       ctx.fill(path2d);
     },
-    [props]
+    [props],
   );
 
   React.useEffect(() => {
@@ -75,7 +75,7 @@ CanvasPoint.propTypes = {
   datum: PropTypes.object,
   size: PropTypes.oneOfType([PropTypes.number, PropTypes.func]),
   x: PropTypes.number,
-  y: PropTypes.number
+  y: PropTypes.number,
 };
 
 export default CanvasPoint;

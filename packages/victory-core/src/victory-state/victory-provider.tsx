@@ -26,17 +26,17 @@ export function VictoryProvider({
   const domain = React.useMemo(
     () => ({
       x: getDomain(props, "x", includeZero),
-      y: getDomain(props, "y", includeZero)
+      y: getDomain(props, "y", includeZero),
     }),
-    [props, includeZero]
+    [props, includeZero],
   );
 
   const range = React.useMemo(
     () => ({
       x: getRange(props, "x"),
-      y: getRange(props, "y")
+      y: getRange(props, "y"),
     }),
-    [props]
+    [props],
   );
 
   const scale = React.useMemo(() => {
@@ -50,7 +50,7 @@ export function VictoryProvider({
 
     return {
       x: xScaleFn,
-      y: yScaleFn
+      y: yScaleFn,
     };
   }, [props, domain, range]);
 
@@ -59,7 +59,7 @@ export function VictoryProvider({
   const value = {
     scale,
     data,
-    domain
+    domain,
   };
 
   return (
@@ -73,7 +73,7 @@ export function useVictoryContext<T>(selector: (value: ContextType) => T): T {
   return useContextSelector<ContextValue, T>(VictoryContext, (context) => {
     if (!context) {
       throw new Error(
-        "useVictoryContext must be used within a VictoryProvider"
+        "useVictoryContext must be used within a VictoryProvider",
       );
     }
     return selector(context);

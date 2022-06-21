@@ -7,7 +7,7 @@ import {
   // @ts-expect-error Make sure invalid imports fail:
   INVALID_TYPE,
   interpolate,
-  NumberArray
+  NumberArray,
 } from "victory-vendor/d3-interpolate";
 
 describe("d3-interpolate", () => {

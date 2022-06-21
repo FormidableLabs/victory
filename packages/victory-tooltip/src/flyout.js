@@ -98,7 +98,7 @@ const Flyout = (props) => {
     shapeRendering: props.shapeRendering,
     role: props.role,
     transform: props.transform,
-    clipPath: props.clipPath
+    clipPath: props.clipPath,
   });
 };
 
@@ -116,13 +116,13 @@ Flyout.propTypes = {
   pointerWidth: PropTypes.number,
   width: PropTypes.number,
   x: PropTypes.number,
-  y: PropTypes.number
+  y: PropTypes.number,
 };
 
 Flyout.defaultProps = {
   pathComponent: <Path />,
   role: "presentation",
-  shapeRendering: "auto"
+  shapeRendering: "auto",
 };
 
 export default Flyout;

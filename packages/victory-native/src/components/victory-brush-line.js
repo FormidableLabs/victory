@@ -14,7 +14,7 @@ const RectWithStyle = ({ style, ...otherProps }) => (
 );
 
 RectWithStyle.propTypes = {
-  style: PropTypes.object
+  style: PropTypes.object,
 };
 
 const yes = () => true;
@@ -35,9 +35,9 @@ class VictoryNativeBrushLine extends VictoryBrushLine {
         eventHandlers: {
           onTouchStart: existingEventHandlers.onMouseDown,
           onTouchMove: existingEventHandlers.onMouseMove,
-          onTouchEnd: existingEventHandlers.onMouseUp
-        }
-      }
+          onTouchEnd: existingEventHandlers.onMouseUp,
+        },
+      },
     ];
   };
 
@@ -66,7 +66,7 @@ class VictoryNativeBrushLine extends VictoryBrushLine {
       onPanResponderGrant: this.handleResponderGrant.bind(this),
       onPanResponderMove: this.handleResponderMove.bind(this),
       onPanResponderRelease: this.handleResponderEnd.bind(this),
-      onPanResponderTerminate: this.handleResponderEnd.bind(this)
+      onPanResponderTerminate: this.handleResponderEnd.bind(this),
     });
   }
 
@@ -120,8 +120,8 @@ const NativeVictoryBrushLine = wrapCoreComponent({
     brushAreaComponent: <RectWithStyle />,
     handleComponent: <RectWithStyle />,
     groupComponent: <G />,
-    lineComponent: <LineSegment />
-  })
+    lineComponent: <LineSegment />,
+  }),
 });
 
 export default NativeVictoryBrushLine;

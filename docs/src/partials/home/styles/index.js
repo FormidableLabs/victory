@@ -9,5 +9,5 @@ export {
   LandingSectionWrapper,
   LandingSectionContent,
   DropShadow,
-  BounceAnimation
+  BounceAnimation,
 };

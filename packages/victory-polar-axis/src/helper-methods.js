@@ -20,7 +20,7 @@ const getEvaluatedStyles = (style, props) => {
   return {
     tickStyle: Helpers.evaluateStyle(style.ticks, props),
     labelStyle: Helpers.evaluateStyle(style.tickLabels, props),
-    gridStyle: Helpers.evaluateStyle(style.grid, props)
+    gridStyle: Helpers.evaluateStyle(style.grid, props),
   };
 };
 
@@ -44,13 +44,13 @@ const getStyleObject = (props) => {
       "grid",
       "parent",
       "tickLabels",
-      "ticks"
+      "ticks",
     ];
     return styleNamespaces.reduce((memo, curr) => {
       memo[curr] = defaults(
         {},
         specificAxisStyle[curr],
-        generalAxisStyle[curr]
+        generalAxisStyle[curr],
       );
       return memo;
     }, {});
@@ -108,7 +108,7 @@ export const getStyles = (props, styleObject) => {
     axisLabel: defaults({}, style.axisLabel, styleObject.axisLabel),
     grid: defaults({}, style.grid, styleObject.grid),
     ticks: defaults({}, style.ticks, styleObject.ticks),
-    tickLabels: defaults({}, style.tickLabels, styleObject.tickLabels)
+    tickLabels: defaults({}, style.tickLabels, styleObject.tickLabels),
   };
 };
 
@@ -132,7 +132,7 @@ const getTickProps = (props, calculatedValues, tickValue, index) => {
     stringTicks,
     ticks,
     tickFormat,
-    origin
+    origin,
   } = calculatedValues;
   const text = tickFormat(tickValue, index, ticks);
   const tick = stringTicks ? stringTicks[index] : tickValue;
@@ -145,7 +145,7 @@ const getTickProps = (props, calculatedValues, tickValue, index) => {
     radius,
     scale,
     axisType,
-    text
+    text,
   });
   const axisAngle =
     axisType === "radial" ? getAxisAngle(props, scale) : undefined;
@@ -165,7 +165,7 @@ const getTickProps = (props, calculatedValues, tickValue, index) => {
         x1: getPosition(tickRadius, tickAngle, "x") + origin.x,
         y1: getPosition(tickRadius, tickAngle, "y") + origin.y,
         x2: getPosition(tickRadius + tickPadding, tickAngle, "x") + origin.x,
-        y2: getPosition(tickRadius + tickPadding, tickAngle, "y") + origin.y
+        y2: getPosition(tickRadius + tickPadding, tickAngle, "y") + origin.y,
       }
     : {
         index,
@@ -186,7 +186,7 @@ const getTickProps = (props, calculatedValues, tickValue, index) => {
         y2:
           tickRadius * Math.sin(tickAngle) -
           Math.sin(padAngle) * tickPadding +
-          origin.y
+          origin.y,
       };
 };
 
@@ -200,7 +200,7 @@ const getTickLabelProps = (props, calculatedValues, tickValue, index) => {
     scale,
     ticks,
     stringTicks,
-    origin
+    origin,
   } = calculatedValues;
   const text = tickFormat(tickValue, index, ticks);
   const tick = stringTicks ? stringTicks[index] : tickValue;
@@ -213,7 +213,7 @@ const getTickLabelProps = (props, calculatedValues, tickValue, index) => {
     stringTicks,
     radius,
     scale,
-    axisType
+    axisType,
   });
   const { tickLabelComponent } = props;
   const labelPlacement =
@@ -232,7 +232,7 @@ const getTickLabelProps = (props, calculatedValues, tickValue, index) => {
     labelStyle.angle === undefined
       ? LabelHelpers.getPolarAngle(
           assign({}, props, { labelPlacement }),
-          labelAngle
+          labelAngle,
         )
       : labelStyle.angle;
   const labelRadius =
@@ -241,7 +241,7 @@ const getTickLabelProps = (props, calculatedValues, tickValue, index) => {
     labelStyle.textAnchor ||
     LabelHelpers.getPolarTextAnchor(
       assign({}, props, { labelPlacement }),
-      labelAngle
+      labelAngle,
     );
   return {
     index,
@@ -251,7 +251,7 @@ const getTickLabelProps = (props, calculatedValues, tickValue, index) => {
     textAnchor,
     text,
     x: labelRadius * Math.cos(Helpers.degreesToRadians(labelAngle)) + origin.x,
-    y: -labelRadius * Math.sin(Helpers.degreesToRadians(labelAngle)) + origin.y
+    y: -labelRadius * Math.sin(Helpers.degreesToRadians(labelAngle)) + origin.y,
   };
 };
 
@@ -265,7 +265,7 @@ const getGridProps = (props, calculatedValues, tickValue, index) => {
     stringTicks,
     ticks,
     tickFormat,
-    origin
+    origin,
   } = calculatedValues;
   const text = tickFormat(tickValue, index, ticks);
   const { startAngle, endAngle, innerRadius = 0 } = props;
@@ -279,7 +279,7 @@ const getGridProps = (props, calculatedValues, tickValue, index) => {
     radius,
     scale,
     axisType,
-    text
+    text,
   });
   const angle = scale(tickValue);
   return axisType === "angular"
@@ -290,7 +290,7 @@ const getGridProps = (props, calculatedValues, tickValue, index) => {
         x1: getPosition(radius, angle, "x") + origin.x,
         y1: getPosition(radius, angle, "y") + origin.y,
         x2: getPosition(innerRadius, angle, "x") + origin.x,
-        y2: getPosition(innerRadius, angle, "y") + origin.y
+        y2: getPosition(innerRadius, angle, "y") + origin.y,
       }
     : {
         style: gridStyle,
@@ -300,7 +300,7 @@ const getGridProps = (props, calculatedValues, tickValue, index) => {
         cy: origin.y,
         r: scale(tickValue),
         startAngle,
-        endAngle
+        endAngle,
       };
 };
 
@@ -321,7 +321,7 @@ const getAxisLabelProps = (props, calculatedValues) => {
     labelStyle.angle === undefined
       ? LabelHelpers.getPolarAngle(
           assign({}, props, { labelPlacement }),
-          axisAngle
+          axisAngle,
         )
       : labelStyle.angle;
   const labelRadius = radius + (labelStyle.padding || 0);
@@ -329,13 +329,13 @@ const getAxisLabelProps = (props, calculatedValues) => {
     labelStyle.textAnchor ||
     LabelHelpers.getPolarTextAnchor(
       assign({}, props, { labelPlacement }),
-      axisAngle
+      axisAngle,
     );
   const verticalAnchor =
     labelStyle.verticalAnchor ||
     LabelHelpers.getPolarVerticalAnchor(
       assign({}, props, { labelPlacement }),
-      axisAngle
+      axisAngle,
     );
   return {
     style: labelStyle,
@@ -348,7 +348,7 @@ const getAxisLabelProps = (props, calculatedValues) => {
       origin.x,
     y:
       getPosition(labelRadius, Helpers.degreesToRadians(axisAngle), "y") +
-      origin.y
+      origin.y,
   };
 };
 
@@ -365,7 +365,7 @@ const getAxisProps = (modifiedProps, calculatedValues) => {
         x1: getPosition(innerRadius, axisAngle, "x") + origin.x,
         x2: getPosition(radius, axisAngle, "x") + origin.x,
         y1: getPosition(innerRadius, axisAngle, "y") + origin.y,
-        y2: getPosition(radius, axisAngle, "y") + origin.y
+        y2: getPosition(radius, axisAngle, "y") + origin.y,
       }
     : {
         style: style.axis,
@@ -373,7 +373,7 @@ const getAxisProps = (modifiedProps, calculatedValues) => {
         cy: origin.y,
         r: radius,
         startAngle,
-        endAngle
+        endAngle,
       };
 };
 
@@ -406,7 +406,7 @@ const getCalculatedValues = (props) => {
     domain,
     range,
     radius,
-    origin
+    origin,
   };
 };
 
@@ -427,8 +427,8 @@ export const getBaseProps = (props, fallbackProps) => {
       domain,
       standalone,
       theme,
-      name
-    }
+      name,
+    },
   };
 
   return ticks.reduce((childProps, tick, index) => {
@@ -437,7 +437,7 @@ export const getBaseProps = (props, fallbackProps) => {
       axisLabel: axisLabelProps,
       ticks: getTickProps(props, calculatedValues, tick, index),
       tickLabels: getTickLabelProps(props, calculatedValues, tick, index),
-      grid: getGridProps(props, calculatedValues, tick, index)
+      grid: getGridProps(props, calculatedValues, tick, index),
     };
 
     return childProps;

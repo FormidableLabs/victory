@@ -16,7 +16,7 @@ const CanvasCurve = (props) => {
       line.context(ctx)(data);
       ctx.stroke();
     },
-    [data, props, stroke, strokeWidth]
+    [data, props, stroke, strokeWidth],
   );
 
   React.useEffect(() => {
@@ -34,7 +34,7 @@ CanvasCurve.propTypes = {
   interpolation: PropTypes.oneOfType([PropTypes.string, PropTypes.func]),
   openCurve: PropTypes.bool,
   origin: PropTypes.object,
-  polar: PropTypes.bool
+  polar: PropTypes.bool,
 };
 
 export default CanvasCurve;

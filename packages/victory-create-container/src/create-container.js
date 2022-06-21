@@ -6,7 +6,7 @@ import {
   flow,
   isEmpty,
   isFunction,
-  keys
+  keys,
 } from "lodash";
 import { VictoryContainer, Log } from "victory-core";
 import { voronoiContainerMixin } from "victory-voronoi-container";
@@ -59,8 +59,8 @@ const combineDefaultEvents = (defaultEvents) => {
       : {
           target,
           eventHandlers: combineEventHandlers(
-            eventsArray.map((event) => event.eventHandlers)
-          )
+            eventsArray.map((event) => event.eventHandlers),
+          ),
           // note: does not currently handle eventKey or childName
         };
   });
@@ -87,12 +87,12 @@ const combineContainerMixins = (mixins, Container) => {
 
     static propTypes = Classes.reduce(
       (propTypes, Class) => ({ ...propTypes, ...Class.propTypes }),
-      {}
+      {},
     );
 
     static defaultProps = Classes.reduce(
       (defaultProps, Class) => ({ ...defaultProps, ...Class.defaultProps }),
-      {}
+      {},
     );
 
     static defaultEvents = (props) => {
@@ -102,14 +102,14 @@ const combineContainerMixins = (mixins, Container) => {
             ? Class.defaultEvents(props)
             : Class.defaultEvents;
           return [...defaultEvents, ...events];
-        }, [])
+        }, []),
       );
     };
 
     getChildren(props) {
       return instances.reduce(
         (children, instance) => instance.getChildren({ ...props, children }),
-        props.children
+        props.children,
       );
     }
   };
@@ -119,8 +119,8 @@ const checkBehaviorName = (behavior, behaviors) => {
   if (behavior && !includes(behaviors, behavior)) {
     Log.warn(
       `"${behavior}" is not a valid behavior. Choose from [${behaviors.join(
-        ", "
-      )}].`
+        ", ",
+      )}].`,
     );
   }
 };
@@ -135,7 +135,7 @@ const makeCreateContainerFunction =
 
     if (invalid.length) {
       Log.warn(
-        "too many arguments given to createContainer (maximum accepted: 2)."
+        "too many arguments given to createContainer (maximum accepted: 2).",
       );
     }
 
@@ -155,9 +155,9 @@ const createContainer = makeCreateContainerFunction(
     voronoi: [voronoiContainerMixin],
     selection: [selectionContainerMixin],
     cursor: [cursorContainerMixin],
-    brush: [brushContainerMixin]
+    brush: [brushContainerMixin],
   },
-  VictoryContainer
+  VictoryContainer,
 );
 
 export { createContainer, makeCreateContainerFunction, combineContainerMixins };

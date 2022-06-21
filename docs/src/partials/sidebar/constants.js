@@ -5,5 +5,5 @@ export const TABLE_OF_CONTENTS_SECTIONS = [
   { type: "docs", category: "documentation" },
   { type: "guides", category: "guides" },
   { type: "docs", category: "more" },
-  { type: "docs", category: "support" }
+  { type: "docs", category: "support" },
 ];

@@ -8,7 +8,7 @@ const TEST_GROUP_ID = "test-group-id";
 const dataset = [
   { x: 1, min: 1, max: 18, median: 8, q1: 5, q3: 15 },
   { x: 2, min: 4, max: 20, median: 10, q1: 7, q3: 15 },
-  { x: 3, min: 3, max: 12, median: 6, q1: 5, q3: 10 }
+  { x: 3, min: 3, max: 12, median: 6, q1: 5, q3: 10 },
 ];
 
 const TestGroup = ({ children }) => {
@@ -17,7 +17,7 @@ const TestGroup = ({ children }) => {
 
 const renderWithTestGroup = (data = dataset) => {
   const { container } = render(
-    <VictoryBoxPlot data={data} groupComponent={<TestGroup />} />
+    <VictoryBoxPlot data={data} groupComponent={<TestGroup />} />,
   );
   const groups = screen.getAllByTestId(TEST_GROUP_ID);
 
@@ -32,7 +32,7 @@ describe("components/victory-box-plot", () => {
           data-testid="victory-boxplot"
           aria-label="Chart"
           unsafe-prop="test"
-        />
+        />,
       );
 
       const container = screen.getByTestId("victory-boxplot");
@@ -48,7 +48,7 @@ describe("components/victory-box-plot", () => {
           aria-label="Chart"
           unsafe-prop="test"
         />,
-        { wrapper: VictoryChart }
+        { wrapper: VictoryChart },
       );
 
       const container = screen.getByTestId("victory-boxplot");
@@ -85,7 +85,7 @@ describe("components/victory-box-plot", () => {
       { x: null, y: 2 },
       { x: null, y: 3 },
       { x: 2, y: null },
-      { x: 2, y: null }
+      { x: 2, y: null },
     ];
     const { groups } = renderWithTestGroup(data);
 
@@ -95,7 +95,7 @@ describe("components/victory-box-plot", () => {
   it("does not render data with null y values when given an array", () => {
     const data = [
       { x: 1, y: [1, 2, 3] },
-      { x: 1, y: [null, 2, 5] }
+      { x: 1, y: [null, 2, 5] },
     ];
 
     const { groups } = renderWithTestGroup(data);
@@ -110,7 +110,7 @@ describe("components/victory-box-plot", () => {
       { x: 3, min: 1, median: null, max: 12, q1: 4, q3: 10 },
       { x: 4, min: 3, median: 9, max: null, q1: 5, q3: 13 },
       { x: 5, min: 2, median: 8, max: 15, q1: null, q3: 12 },
-      { x: 5, min: 2, median: 10, max: 20, q1: 8, q3: null }
+      { x: 5, min: 2, median: 10, max: 20, q1: 8, q3: null },
     ];
 
     const { groups } = renderWithTestGroup(data);
@@ -138,7 +138,7 @@ describe("components/victory-box-plot", () => {
               tabIndex={({ index }) => index + 1}
             />
           }
-        />
+        />,
       );
 
       dataset
@@ -147,7 +147,7 @@ describe("components/victory-box-plot", () => {
           const [labeledWhisker] = screen.getAllByLabelText(label);
           expect(labeledWhisker).toBeDefined();
           expect(labeledWhisker.getAttribute("tabindex")).toEqual(
-            `${index + 1}`
+            `${index + 1}`,
           );
         });
     });
@@ -162,7 +162,7 @@ describe("components/victory-box-plot", () => {
               tabIndex={({ index }) => index + 1}
             />
           }
-        />
+        />,
       );
 
       dataset
@@ -171,7 +171,7 @@ describe("components/victory-box-plot", () => {
           const labeledBorder = screen.getByLabelText(label);
           expect(labeledBorder).toBeDefined();
           expect(labeledBorder.getAttribute("tabindex")).toEqual(
-            `${index + 1}`
+            `${index + 1}`,
           );
         });
     });
@@ -186,7 +186,7 @@ describe("components/victory-box-plot", () => {
               tabIndex={({ index }) => index + 1}
             />
           }
-        />
+        />,
       );
 
       dataset

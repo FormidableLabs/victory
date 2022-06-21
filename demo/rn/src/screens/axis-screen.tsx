@@ -17,7 +17,7 @@ export const AxisScreen: React.FC = () => {
           new Date(1990, 1, 1),
           new Date(2000, 1, 1),
           new Date(2010, 1, 1),
-          new Date(2020, 1, 1)
+          new Date(2020, 1, 1),
         ]}
         tickFormat={(x) => x.getFullYear()}
       />

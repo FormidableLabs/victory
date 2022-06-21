@@ -18,7 +18,7 @@ const renderBorder = (props, error, type) => {
     x2: vertical ? error[type] : props.x + props.borderWidth,
     y1: vertical ? props.y - props.borderWidth : error[type],
     y2: vertical ? props.y + props.borderWidth : error[type],
-    "data-type": `border-${type}`
+    "data-type": `border-${type}`,
   });
 };
 
@@ -36,7 +36,7 @@ const renderCross = (props, error, type) => {
     x2: vertical ? props.x : error[type],
     y1: props.y,
     y2: vertical ? error[type] : props.y,
-    "data-type": `cross-${type}`
+    "data-type": `cross-${type}`,
   });
 };
 
@@ -46,7 +46,7 @@ const calculateError = (props) => {
     right: { error: errorX, errorIndex: 0 },
     left: { error: errorX, errorIndex: 1 },
     top: { error: errorY, errorIndex: 1 },
-    bottom: { error: errorY, errorIndex: 0 }
+    bottom: { error: errorY, errorIndex: 0 },
   };
 
   const getError = (direction) => {
@@ -73,7 +73,7 @@ const evaluateProps = (props) => {
   const id = Helpers.evaluateProp(props.id, props);
   const style = Helpers.evaluateStyle(
     assign({ stroke: "black" }, props.style),
-    props
+    props,
   );
   const tabIndex = Helpers.evaluateProp(props.tabIndex, props);
 
@@ -93,12 +93,12 @@ const ErrorBar = (props) => {
     error.right ? renderCross(props, error, "right") : null,
     error.left ? renderCross(props, error, "left") : null,
     error.bottom ? renderCross(props, error, "bottom") : null,
-    error.top ? renderCross(props, error, "top") : null
+    error.top ? renderCross(props, error, "top") : null,
   ].filter(Boolean);
   return React.cloneElement(
     props.groupComponent,
     { tabIndex, "aria-label": ariaLabel, ...userProps },
-    children
+    children,
   );
 };
 
@@ -109,24 +109,24 @@ ErrorBar.propTypes = {
   errorX: PropTypes.oneOfType([
     PropTypes.number,
     PropTypes.array,
-    PropTypes.bool
+    PropTypes.bool,
   ]),
   errorY: PropTypes.oneOfType([
     PropTypes.number,
     PropTypes.array,
-    PropTypes.bool
+    PropTypes.bool,
   ]),
   groupComponent: PropTypes.element,
   lineComponent: PropTypes.element,
   x: PropTypes.number,
-  y: PropTypes.number
+  y: PropTypes.number,
 };
 
 ErrorBar.defaultProps = {
   groupComponent: <g />,
   lineComponent: <Line />,
   role: "presentation",
-  shapeRendering: "auto"
+  shapeRendering: "auto",
 };
 
 export default ErrorBar;

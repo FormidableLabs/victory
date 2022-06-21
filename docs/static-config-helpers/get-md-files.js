@@ -15,7 +15,7 @@ function defaultSort(items) {
 
 const subHeadingRangeDefaults = {
   start: 1,
-  end: 3
+  end: 3,
 };
 
 function setYamlToFile(subHeadingRange = subHeadingRangeDefaults) {
@@ -32,7 +32,7 @@ function setYamlToFile(subHeadingRange = subHeadingRangeDefaults) {
       // set file content to be everything minus frontmatter
       Object.defineProperty(file, "content", {
         value: matter(file.contents).content,
-        enumerable: true
+        enumerable: true,
       });
 
       // store subheading data for sidebar
@@ -41,13 +41,13 @@ function setYamlToFile(subHeadingRange = subHeadingRangeDefaults) {
           (c) =>
             c.type === "heading" &&
             c.depth >= subHeadingRange.start &&
-            c.depth <= subHeadingRange.end
+            c.depth <= subHeadingRange.end,
         )
         .map((c) => ({
           type: c.type,
           value: c.children[0].value,
           depth: c.depth,
-          slug: _.kebabCase(c.children[0].value).toLowerCase()
+          slug: _.kebabCase(c.children[0].value).toLowerCase(),
         }));
     }
   }

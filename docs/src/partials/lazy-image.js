@@ -6,7 +6,7 @@ const LazyImage = ({ height, width, minHeight, ...props }) => {
   const ref = useRef();
   const { inView } = useInView(ref, {
     unobserveOnEnter: true,
-    rootMargin: "20px"
+    rootMargin: "20px",
   });
 
   return (
@@ -19,7 +19,7 @@ const LazyImage = ({ height, width, minHeight, ...props }) => {
 LazyImage.propTypes = {
   height: PropTypes.number,
   minHeight: PropTypes.number,
-  width: PropTypes.number
+  width: PropTypes.number,
 };
 
 export default LazyImage;

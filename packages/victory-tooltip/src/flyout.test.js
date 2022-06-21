@@ -12,12 +12,12 @@ describe("victory-primitives/flyout", () => {
     height: 50,
     cornerRadius: 5,
     pointerLength: 10,
-    pointerWidth: 10
+    pointerWidth: 10,
   };
   describe("rendering", () => {
     it("renders a flyout path", () => {
       const { container } = render(<Flyout {...baseProps} />, {
-        wrapper: "svg"
+        wrapper: "svg",
       });
       const path = container.querySelector("path");
 

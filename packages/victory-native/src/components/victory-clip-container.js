@@ -11,7 +11,7 @@ export default class extends VictoryClipContainer {
     groupComponent: <G />,
     rectComponent: <Rect />,
     clipPathComponent: <ClipPath />,
-    circleComponent: <Circle />
+    circleComponent: <Circle />,
   });
 
   // There seems to be a caching issue with clip paths.

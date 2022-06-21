@@ -22,7 +22,7 @@ if (typeof document !== "undefined") {
       <AppContainer>
         <Comp />
       </AppContainer>,
-      target
+      target,
     );
   };
 

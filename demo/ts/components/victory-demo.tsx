@@ -14,7 +14,7 @@ import { VictorySelectionContainer } from "victory-selection-container";
 export default class App extends React.Component {
   render() {
     const style = {
-      parent: { border: "1px solid #ccc", margin: "2%", maxWidth: "40%" }
+      parent: { border: "1px solid #ccc", margin: "2%", maxWidth: "40%" },
     };
     return (
       <div className="demo">
@@ -51,7 +51,7 @@ export default class App extends React.Component {
                       target: "labels",
                       mutation: () => {
                         return { text: "o shit" };
-                      }
+                      },
                     },
                     {
                       childName: "line",
@@ -59,7 +59,7 @@ export default class App extends React.Component {
                       target: "data",
                       mutation: () => {
                         return { style: { stroke: "lime" } };
-                      }
+                      },
                     },
                     {
                       childName: "line",
@@ -68,14 +68,14 @@ export default class App extends React.Component {
                       mutation: () => {
                         return {
                           style: { fill: "green" },
-                          text: "waddup"
+                          text: "waddup",
                         };
-                      }
-                    }
+                      },
+                    },
                   ];
-                }
-              }
-            }
+                },
+              },
+            },
           ]}
         >
           <VictoryBar
@@ -94,7 +94,7 @@ export default class App extends React.Component {
               { x: 10, y: 2 },
               { x: 11, y: 3 },
               { x: 12, y: 2 },
-              { x: 13, y: 1 }
+              { x: 13, y: 1 },
             ]}
           />
           <VictoryLine
@@ -114,7 +114,7 @@ export default class App extends React.Component {
             style={{
               axis: { stroke: "black", strokeWidth: 2 },
               ticks: { stroke: "transparent" },
-              tickLabels: { fill: "black" }
+              tickLabels: { fill: "black" },
             }}
           />
           <VictoryAxis
@@ -124,7 +124,7 @@ export default class App extends React.Component {
             style={{
               grid: { strokeWidth: 1 },
               axis: { stroke: "transparent" },
-              ticks: { stroke: "transparent", padding: 15 }
+              ticks: { stroke: "transparent", padding: 15 },
             }}
           />
           <VictoryBar
@@ -142,7 +142,7 @@ export default class App extends React.Component {
               { x: 10, y: 2 },
               { x: 11, y: 3 },
               { x: 12, y: 2 },
-              { x: 13, y: 1 }
+              { x: 13, y: 1 },
             ]}
           />
           <VictoryLine
@@ -184,14 +184,14 @@ export default class App extends React.Component {
                 stroke: "tomato",
                 strokeWidth: 2,
                 fill: "tomato",
-                fillOpacity: 0.1
+                fillOpacity: 0.1,
               }}
             />
           }
         >
           <VictoryScatter
             style={{
-              data: { fill: "tomato" }
+              data: { fill: "tomato" },
             }}
             size={({ active }) => (active ? 5 : 3)}
             data={[
@@ -201,12 +201,12 @@ export default class App extends React.Component {
               { x: 4, y: 3 },
               { x: 5, y: 1 },
               { x: 6, y: -3 },
-              { x: 7, y: 3 }
+              { x: 7, y: 3 },
             ]}
           />
           <VictoryScatter
             style={{
-              data: { fill: "blue" }
+              data: { fill: "blue" },
             }}
             size={({ active }) => (active ? 5 : 3)}
             data={[
@@ -216,7 +216,7 @@ export default class App extends React.Component {
               { x: 4, y: 0 },
               { x: 5, y: -2 },
               { x: 6, y: -2 },
-              { x: 7, y: 5 }
+              { x: 7, y: 5 },
             ]}
           />
           <VictoryScatter
@@ -227,7 +227,7 @@ export default class App extends React.Component {
               { x: 4, y: -3 },
               { x: 5, y: -1 },
               { x: 6, y: 3 },
-              { x: 7, y: -3 }
+              { x: 7, y: -3 },
             ]}
             size={({ active }) => (active ? 5 : 3)}
           />
@@ -241,7 +241,7 @@ export default class App extends React.Component {
                 stroke: "tomato",
                 strokeWidth: 2,
                 fill: "tomato",
-                fillOpacity: 0.1
+                fillOpacity: 0.1,
               }}
             />
           }
@@ -251,8 +251,8 @@ export default class App extends React.Component {
               data: {
                 fill: "tomato",
                 stroke: ({ active }) => (active ? "black" : "none"),
-                strokeWidth: 2
-              }
+                strokeWidth: 2,
+              },
             }}
             data={[
               { x: 1, y: -5 },
@@ -261,7 +261,7 @@ export default class App extends React.Component {
               { x: 4, y: 3 },
               { x: 5, y: 1 },
               { x: 6, y: -3 },
-              { x: 7, y: 3 }
+              { x: 7, y: 3 },
             ]}
           />
           <VictoryBar
@@ -269,8 +269,8 @@ export default class App extends React.Component {
               data: {
                 fill: "orange",
                 stroke: ({ active }) => (active ? "black" : "none"),
-                strokeWidth: 2
-              }
+                strokeWidth: 2,
+              },
             }}
             data={[
               { x: 1, y: -3 },
@@ -279,7 +279,7 @@ export default class App extends React.Component {
               { x: 4, y: 0 },
               { x: 5, y: -2 },
               { x: 6, y: -2 },
-              { x: 7, y: 5 }
+              { x: 7, y: 5 },
             ]}
           />
           <VictoryBar
@@ -287,8 +287,8 @@ export default class App extends React.Component {
               data: {
                 fill: "gold",
                 stroke: ({ active }) => (active ? "black" : "none"),
-                strokeWidth: 2
-              }
+                strokeWidth: 2,
+              },
             }}
             data={[
               { x: 1, y: 5 },
@@ -297,7 +297,7 @@ export default class App extends React.Component {
               { x: 4, y: -3 },
               { x: 5, y: -1 },
               { x: 6, y: 3 },
-              { x: 7, y: -3 }
+              { x: 7, y: -3 },
             ]}
           />
         </VictoryStack>

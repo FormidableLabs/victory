@@ -9,19 +9,19 @@ import {
   CommonProps,
   addEvents,
   PropTypes as CustomPropTypes,
-  UserProps
+  UserProps,
 } from "victory-core";
 import {
   getBaseProps,
   getData,
   getDomain,
-  getFormattedData
+  getFormattedData,
 } from "./helper-methods";
 
 const fallbackProps = {
   width: 450,
   height: 300,
-  padding: 50
+  padding: 50,
 };
 
 const defaultData = [];
@@ -33,7 +33,7 @@ export class VictoryHistogram extends React.Component {
     "height",
     "padding",
     "style",
-    "width"
+    "width",
   ];
 
   static displayName = "VictoryHistogram";
@@ -44,17 +44,17 @@ export class VictoryHistogram extends React.Component {
     onLoad: {
       duration: 2000,
       before: () => ({ _y: 0, _y1: 0, _y0: 0 }),
-      after: (datum) => ({ _y: datum._y, _y1: datum._y1, _y0: datum._y0 })
+      after: (datum) => ({ _y: datum._y, _y1: datum._y1, _y0: datum._y0 }),
     },
     onExit: {
       duration: 500,
-      before: () => ({ _y: 0, yOffset: 0 })
+      before: () => ({ _y: 0, yOffset: 0 }),
     },
     onEnter: {
       duration: 500,
       before: () => ({ _y: 0, _y1: 0, _y0: 0 }),
-      after: (datum) => ({ _y: datum._y, _y1: datum._y1, _y0: datum._y0 })
-    }
+      after: (datum) => ({ _y: datum._y, _y1: datum._y1, _y0: datum._y0 }),
+    },
   };
 
   static getFormattedData = getFormattedData;
@@ -65,9 +65,9 @@ export class VictoryHistogram extends React.Component {
     binSpacing: CustomPropTypes.nonNegative,
     bins: PropTypes.oneOfType([
       PropTypes.arrayOf(
-        PropTypes.oneOfType([PropTypes.number, PropTypes.instanceOf(Date)])
+        PropTypes.oneOfType([PropTypes.number, PropTypes.instanceOf(Date)]),
       ),
-      CustomPropTypes.nonNegative
+      CustomPropTypes.nonNegative,
     ]),
     cornerRadius: PropTypes.oneOfType([
       PropTypes.number,
@@ -78,11 +78,11 @@ export class VictoryHistogram extends React.Component {
         topRight: PropTypes.oneOfType([PropTypes.number, PropTypes.func]),
         bottom: PropTypes.oneOfType([PropTypes.number, PropTypes.func]),
         bottomLeft: PropTypes.oneOfType([PropTypes.number, PropTypes.func]),
-        bottomRight: PropTypes.oneOfType([PropTypes.number, PropTypes.func])
-      })
+        bottomRight: PropTypes.oneOfType([PropTypes.number, PropTypes.func]),
+      }),
     ]),
     getPath: PropTypes.func,
-    horizontal: PropTypes.bool
+    horizontal: PropTypes.bool,
   };
 
   static defaultProps = {
@@ -94,7 +94,7 @@ export class VictoryHistogram extends React.Component {
     samples: 50,
     sortOrder: "ascending",
     standalone: true,
-    theme: VictoryTheme.grayscale
+    theme: VictoryTheme.grayscale,
   };
 
   static getDomain = getDomain;
@@ -104,7 +104,7 @@ export class VictoryHistogram extends React.Component {
     "dataComponent",
     "labelComponent",
     "groupComponent",
-    "containerComponent"
+    "containerComponent",
   ];
 
   // Overridden in native versions

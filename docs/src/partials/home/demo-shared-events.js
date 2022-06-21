@@ -6,7 +6,7 @@ import {
   VictoryBar,
   VictoryPie,
   VictorySharedEvents,
-  VictoryLabel
+  VictoryLabel,
 } from "victory";
 
 class SharedEvents extends React.Component {
@@ -18,8 +18,8 @@ class SharedEvents extends React.Component {
         margin: "0 auto",
         padding: 0,
         width: "100%",
-        height: "auto"
-      }
+        height: "auto",
+      },
     };
   }
 
@@ -38,19 +38,19 @@ class SharedEvents extends React.Component {
                     childName: ["pie", "bar"],
                     mutation: (props) => ({
                       style: Object.assign({}, props.style, {
-                        fill: "tomato"
-                      })
-                    })
-                  }
+                        fill: "tomato",
+                      }),
+                    }),
+                  },
                 ],
                 onMouseOut: () => [
                   {
                     childName: ["pie", "bar"],
-                    mutation: () => null
-                  }
-                ]
-              }
-            }
+                    mutation: () => null,
+                  },
+                ],
+              },
+            },
           ]}
         >
           <g transform="translate(150, 50)">
@@ -60,25 +60,25 @@ class SharedEvents extends React.Component {
               standalone={false}
               style={{
                 data: { width: 20 },
-                labels: { fontSize: 25 }
+                labels: { fontSize: 25 },
               }}
               data={[
                 {
                   x: "a",
-                  y: 2
+                  y: 2,
                 },
                 {
                   x: "b",
-                  y: 3
+                  y: 3,
                 },
                 {
                   x: "c",
-                  y: 5
+                  y: 5,
                 },
                 {
                   x: "d",
-                  y: 4
-                }
+                  y: 4,
+                },
               ]}
               labels={["a", "b", "c", "d"]}
               labelComponent={<VictoryLabel y={290} />}
@@ -92,26 +92,26 @@ class SharedEvents extends React.Component {
               style={{
                 labels: {
                   fontSize: 25,
-                  padding: 10
-                }
+                  padding: 10,
+                },
               }}
               data={[
                 {
                   x: "a",
-                  y: 1
+                  y: 1,
                 },
                 {
                   x: "b",
-                  y: 4
+                  y: 4,
                 },
                 {
                   x: "c",
-                  y: 5
+                  y: 5,
                 },
                 {
                   x: "d",
-                  y: 7
-                }
+                  y: 7,
+                },
               ]}
             />
           </g>

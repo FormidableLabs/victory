@@ -20,8 +20,8 @@ class Icon extends React.Component {
         width: "15px",
         height: "15px",
         display: "inline-block",
-        verticalAlign: "-4px"
-      }
+        verticalAlign: "-4px",
+      },
     };
   }
   render() {
@@ -35,7 +35,7 @@ class Icon extends React.Component {
             style={{
               ...styles.base,
               ...style,
-              background: `url("${IconBack}")`
+              background: `url("${IconBack}")`,
             }}
           />
         );
@@ -46,7 +46,7 @@ class Icon extends React.Component {
             style={{
               ...styles.base,
               ...style,
-              background: `url("${IconBarrier}")`
+              background: `url("${IconBarrier}")`,
             }}
           />
         );
@@ -57,7 +57,7 @@ class Icon extends React.Component {
             style={{
               ...styles.base,
               ...style,
-              background: `url("${IconExternalLink}")`
+              background: `url("${IconExternalLink}")`,
             }}
           />
         );
@@ -68,7 +68,7 @@ class Icon extends React.Component {
             style={{
               ...styles.base,
               ...style,
-              background: `url("${IconInternalLink}")`
+              background: `url("${IconInternalLink}")`,
             }}
           />
         );
@@ -83,13 +83,13 @@ Icon.propTypes = {
     "back",
     "coming-soon",
     "external-link",
-    "internal-link"
+    "internal-link",
   ]),
-  style: PropTypes.object
+  style: PropTypes.object,
 };
 
 Icon.defaultProps = {
-  glyph: "link"
+  glyph: "link",
 };
 
 export default Icon;

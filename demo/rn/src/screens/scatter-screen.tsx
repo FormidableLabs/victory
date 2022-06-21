@@ -31,7 +31,7 @@ export const ScatterScreen: React.FC = () => {
             { x: 2, y: 5 },
             { x: 3, y: 4 },
             { x: 4, y: 2 },
-            { x: 5, y: 5 }
+            { x: 5, y: 5 },
           ]}
           size={8}
           symbol="star"
@@ -39,16 +39,16 @@ export const ScatterScreen: React.FC = () => {
             data: {
               fill: "gold",
               stroke: "orange",
-              strokeWidth: 3
-            }
+              strokeWidth: 3,
+            },
           }}
         />
 
         <VictoryScatter
           style={{
             data: {
-              fill: ({ datum }) => (datum.y > 0 ? "red" : "blue")
-            }
+              fill: ({ datum }) => (datum.y > 0 ? "red" : "blue"),
+            },
           }}
           symbol={({ datum }) => (datum.y > 0 ? "triangleUp" : "triangleDown")}
           y={(d) => Math.sin(2 * Math.PI * d.x)}

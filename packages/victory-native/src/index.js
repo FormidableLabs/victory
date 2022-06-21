@@ -18,7 +18,7 @@ export {
   Selection,
   LabelHelpers,
   Axis,
-  Wrapper
+  Wrapper,
 } from "victory-core";
 
 export { VictorySharedEvents } from "victory-shared-events";
@@ -35,7 +35,7 @@ export { default as Background } from "./components/victory-primitives/backgroun
 export { default as Bar } from "./components/victory-primitives/bar";
 export {
   default as Border,
-  default as Box
+  default as Box,
 } from "./components/victory-primitives/border";
 export { default as Candle } from "./components/victory-primitives/candle";
 export { default as ClipPath } from "./components/victory-primitives/clip-path";
@@ -74,22 +74,22 @@ export { default as NativeHelpers } from "./helpers/native-helpers";
 export { default as NativeZoomHelpers } from "./helpers/native-zoom-helpers";
 export {
   zoomContainerMixin,
-  default as VictoryZoomContainer
+  default as VictoryZoomContainer,
 } from "./components/victory-zoom-container";
 export {
   voronoiContainerMixin,
-  default as VictoryVoronoiContainer
+  default as VictoryVoronoiContainer,
 } from "./components/victory-voronoi-container";
 export {
   selectionContainerMixin,
-  default as VictorySelectionContainer
+  default as VictorySelectionContainer,
 } from "./components/victory-selection-container";
 export {
   cursorContainerMixin,
-  default as VictoryCursorContainer
+  default as VictoryCursorContainer,
 } from "./components/victory-cursor-container";
 export {
   brushContainerMixin,
-  default as VictoryBrushContainer
+  default as VictoryBrushContainer,
 } from "./components/victory-brush-container";
 export { createContainer } from "./helpers/create-container";

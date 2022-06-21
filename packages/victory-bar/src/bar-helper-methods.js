@@ -22,18 +22,18 @@ const getCornerRadiusFromObject = (cornerRadius, props) => {
     topLeft: 0,
     topRight: 0,
     bottomLeft: 0,
-    bottomRight: 0
+    bottomRight: 0,
   };
   const updateCornerRadius = (corner, fallback) => {
     if (!isNil(cornerRadius[corner])) {
       realCornerRadius[corner] = Helpers.evaluateProp(
         cornerRadius[corner],
-        props
+        props,
       );
     } else if (!isNil(cornerRadius[fallback])) {
       realCornerRadius[corner] = Helpers.evaluateProp(
         cornerRadius[fallback],
-        props
+        props,
       );
     }
   };
@@ -49,7 +49,7 @@ export const getCornerRadius = (cornerRadius, props) => {
     topLeft: 0,
     topRight: 0,
     bottomLeft: 0,
-    bottomRight: 0
+    bottomRight: 0,
   };
   if (!cornerRadius) {
     return realCornerRadius;

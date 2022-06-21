@@ -18,7 +18,7 @@ import {
   VictoryScatter,
   VictoryStack,
   VictoryTooltip,
-  VictoryVoronoi
+  VictoryVoronoi,
 } from "victory-native";
 import { render } from "@testing-library/react-native";
 
@@ -41,7 +41,7 @@ const components = [
   { component: VictoryScatter, name: "VictoryScatter" },
   { component: VictoryStack, name: "VictoryStack" },
   { component: VictoryTooltip, name: "VictoryTooltip" },
-  { component: VictoryVoronoi, name: "VictoryVoronoi" }
+  { component: VictoryVoronoi, name: "VictoryVoronoi" },
 ];
 
 describe("Default render", () => {

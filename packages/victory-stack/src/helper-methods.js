@@ -7,7 +7,7 @@ import isEqual from "react-fast-compare";
 const fallbackProps = {
   width: 450,
   height: 300,
-  padding: 50
+  padding: 50,
 };
 
 // Assumes data in `datasets` is sorted by `Data.getData`.
@@ -65,9 +65,9 @@ function getY0(datum, index, datasets) {
         .filter((previousDatum) =>
           datum._x instanceof Date
             ? previousDatum._x.getTime() === datum._x.getTime()
-            : previousDatum._x === datum._x
+            : previousDatum._x === datum._x,
         )
-        .map((previousDatum) => previousDatum._y || 0)
+        .map((previousDatum) => previousDatum._y || 0),
     );
   }, []);
 
@@ -104,7 +104,7 @@ function addLayoutData(props, datasets, index) {
           ? null
           : datum._x instanceof Date
           ? new Date(+datum._x + +xOffset)
-          : datum._x + xOffset
+          : datum._x + xOffset,
     });
   });
 }
@@ -113,7 +113,7 @@ function addLayoutData(props, datasets, index) {
 function stackData(props, childComponents) {
   const dataFromChildren = Wrapper.getDataFromChildren(props, childComponents);
   const filterNullChildData = dataFromChildren.map((dataset) =>
-    dataset.filter((datum) => datum._x !== null && datum._y !== null)
+    dataset.filter((datum) => datum._x !== null && datum._y !== null),
   );
   const datasets = fillData(props, filterNullChildData);
   return datasets.map((d, i) => addLayoutData(props, datasets, i));
@@ -132,19 +132,19 @@ export function getCalculatedProps(props, childComponents) {
   });
   const domain = {
     x: Wrapper.getDomain(assign({}, props, { categories }), "x", children),
-    y: Wrapper.getDomain(assign({}, props, { categories }), "y", children)
+    y: Wrapper.getDomain(assign({}, props, { categories }), "y", children),
   };
   const range = props.range || {
     x: Helpers.getRange(props, "x"),
-    y: Helpers.getRange(props, "y")
+    y: Helpers.getRange(props, "y"),
   };
   const baseScale = {
     x: Scale.getScaleFromProps(props, "x") || Wrapper.getScale(props, "x"),
-    y: Scale.getScaleFromProps(props, "y") || Wrapper.getScale(props, "y")
+    y: Scale.getScaleFromProps(props, "y") || Wrapper.getScale(props, "y"),
   };
   const scale = {
     x: baseScale.x.domain(domain.x).range(props.horizontal ? range.y : range.x),
-    y: baseScale.y.domain(domain.y).range(props.horizontal ? range.x : range.y)
+    y: baseScale.y.domain(domain.y).range(props.horizontal ? range.x : range.y),
   };
   const { colorScale, horizontal } = props;
   return {
@@ -156,7 +156,7 @@ export function getCalculatedProps(props, childComponents) {
     scale,
     style,
     colorScale,
-    role
+    role,
   };
 }
 
@@ -167,7 +167,7 @@ const withoutSharedEvents = (props) => {
   const modifiedChildren = React.Children.toArray(children).map((child) => {
     return {
       ...child,
-      props: Helpers.omit(child.props, ["sharedEvents"])
+      props: Helpers.omit(child.props, ["sharedEvents"]),
     };
   });
   props.children = modifiedChildren;
@@ -210,7 +210,7 @@ export function getChildProps(props, calculatedProps) {
     domain,
     range,
     scale,
-    horizontal
+    horizontal,
   };
 }
 
@@ -254,10 +254,10 @@ export function getChildren(props, childComponents, calculatedProps) {
           style,
           colorScale: getColorScale(props, child),
           data,
-          polar: props.polar
+          polar: props.polar,
         },
-        childProps
-      )
+        childProps,
+      ),
     );
   });
 }

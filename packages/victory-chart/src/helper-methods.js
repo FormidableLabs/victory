@@ -7,7 +7,7 @@ import { defaults, assign } from "lodash";
 const fallbackProps = {
   width: 450,
   height: 300,
-  padding: 50
+  padding: 50,
 };
 
 function getAxisProps(child, props, calculatedProps) {
@@ -20,7 +20,7 @@ function getAxisProps(child, props, calculatedProps) {
     endAngle: props.endAngle,
     innerRadius: props.innerRadius,
     domain,
-    scale
+    scale,
   };
 }
 
@@ -51,12 +51,12 @@ export function getBackgroundWithProps(props, calculatedProps) {
     x: xCoordinate,
     y: yCoordinate,
     key: `${parentName}-background`,
-    width
+    width,
   };
 
   return React.cloneElement(
     backgroundElement,
-    defaults({}, backgroundElement.props, backgroundProps)
+    defaults({}, backgroundElement.props, backgroundProps),
   );
 }
 
@@ -77,8 +77,8 @@ function getStyles(props) {
     parent: defaults({}, styleProps, {
       height: "100%",
       width: "100%",
-      userSelect: "none"
-    })
+      userSelect: "none",
+    }),
   };
 }
 
@@ -91,20 +91,20 @@ export function getCalculatedProps(props, childComponents) {
   const stringMap = createStringMap(props, childComponents, allStrings);
   const domain = {
     x: getDomain(assign({}, props, { categories }), "x", childComponents),
-    y: getDomain(assign({}, props, { categories }), "y", childComponents)
+    y: getDomain(assign({}, props, { categories }), "y", childComponents),
   };
 
   const range = {
     x: Helpers.getRange(props, "x"),
-    y: Helpers.getRange(props, "y")
+    y: Helpers.getRange(props, "y"),
   };
   const baseScale = {
     x: Scale.getScaleFromProps(props, "x") || Wrapper.getScale(props, "x"),
-    y: Scale.getScaleFromProps(props, "y") || Wrapper.getScale(props, "y")
+    y: Scale.getScaleFromProps(props, "y") || Wrapper.getScale(props, "y"),
   };
   const scale = {
     x: baseScale.x.domain(domain.x).range(horizontal ? range.y : range.x),
-    y: baseScale.y.domain(domain.y).range(horizontal ? range.x : range.y)
+    y: baseScale.y.domain(domain.y).range(horizontal ? range.x : range.y),
   };
 
   const origin = polar ? Helpers.getPolarOrigin(props) : Axis.getOrigin(domain);
@@ -120,7 +120,7 @@ export function getCalculatedProps(props, childComponents) {
     stringMap,
     style,
     origin,
-    padding
+    padding,
   };
 }
 
@@ -152,9 +152,9 @@ export function getChildren(props, childComponents, calculatedProps) {
         origin: polar ? origin : undefined,
         padding: calculatedProps.padding,
         key: `${name}-key-${index}`,
-        standalone: false
+        standalone: false,
       },
-      childProps
+      childProps,
     );
     return React.cloneElement(child, newProps);
   });
@@ -171,8 +171,8 @@ export const getChildComponents = (props, defaultAxes) => {
       dependent: Axis.getAxisComponentsWithParent(childComponents, "dependent"),
       independent: Axis.getAxisComponentsWithParent(
         childComponents,
-        "independent"
-      )
+        "independent",
+      ),
     };
 
     if (
@@ -181,11 +181,11 @@ export const getChildComponents = (props, defaultAxes) => {
     ) {
       newChildComponents = props.prependDefaultAxes
         ? [defaultAxes.independent, defaultAxes.dependent].concat(
-            newChildComponents
+            newChildComponents,
           )
         : newChildComponents.concat([
             defaultAxes.independent,
-            defaultAxes.dependent
+            defaultAxes.dependent,
           ]);
     }
   }

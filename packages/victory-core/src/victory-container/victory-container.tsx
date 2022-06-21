@@ -51,7 +51,7 @@ export class VictoryContainer extends React.Component<VictoryContainerProps> {
     "aria-labelledby": PropTypes.string,
     children: PropTypes.oneOfType([
       PropTypes.arrayOf(PropTypes.node),
-      PropTypes.node
+      PropTypes.node,
     ]),
     className: PropTypes.string,
     containerId: PropTypes.oneOfType([PropTypes.number, PropTypes.string]),
@@ -62,7 +62,7 @@ export class VictoryContainer extends React.Component<VictoryContainerProps> {
     name: PropTypes.string,
     origin: PropTypes.shape({
       x: CustomPropTypes.nonNegative,
-      y: CustomPropTypes.nonNegative
+      y: CustomPropTypes.nonNegative,
     }),
     ouiaId: PropTypes.oneOfType([PropTypes.number, PropTypes.string]),
     ouiaSafe: PropTypes.bool,
@@ -77,7 +77,7 @@ export class VictoryContainer extends React.Component<VictoryContainerProps> {
     tabIndex: PropTypes.number,
     theme: PropTypes.object,
     title: PropTypes.string,
-    width: CustomPropTypes.nonNegative
+    width: CustomPropTypes.nonNegative,
   };
 
   static defaultProps = {
@@ -85,7 +85,7 @@ export class VictoryContainer extends React.Component<VictoryContainerProps> {
     portalComponent: <Portal />,
     portalZIndex: 99,
     responsive: true,
-    role: "img"
+    role: "img",
   };
 
   static contextType = TimerContext;
@@ -151,7 +151,7 @@ export class VictoryContainer extends React.Component<VictoryContainerProps> {
     return {
       ...(ouiaId && { "data-ouia-component-id": ouiaId }),
       ...(ouiaType && { "data-ouia-component-type": ouiaType }),
-      ...(ouiaSafe !== undefined && { "data-ouia-safe": ouiaSafe })
+      ...(ouiaSafe !== undefined && { "data-ouia-safe": ouiaSafe }),
     };
   }
 
@@ -164,7 +164,7 @@ export class VictoryContainer extends React.Component<VictoryContainerProps> {
       width,
       height,
       portalZIndex,
-      responsive
+      responsive,
     } = props;
     const children = this.getChildren(props);
     const dimensions = responsive
@@ -174,13 +174,13 @@ export class VictoryContainer extends React.Component<VictoryContainerProps> {
       {
         pointerEvents: "none",
         touchAction: "none",
-        position: "relative"
+        position: "relative",
       } as const,
-      dimensions
+      dimensions,
     );
     const portalDivStyle = assign(
       { zIndex: portalZIndex, position: "absolute", top: 0, left: 0 } as const,
-      dimensions
+      dimensions,
     );
     const svgStyle = assign({ pointerEvents: "all" }, dimensions);
     const portalSvgStyle = assign({ overflow: "visible" }, dimensions);
@@ -189,14 +189,14 @@ export class VictoryContainer extends React.Component<VictoryContainerProps> {
       height,
       viewBox: svgProps.viewBox,
       preserveAspectRatio: svgProps.preserveAspectRatio,
-      style: portalSvgStyle
+      style: portalSvgStyle,
     };
     return (
       <PortalContext.Provider
         value={{
           portalUpdate: this.portalUpdate,
           portalRegister: this.portalRegister,
-          portalDeregister: this.portalDeregister
+          portalDeregister: this.portalDeregister,
         }}
       >
         <div
@@ -217,7 +217,7 @@ export class VictoryContainer extends React.Component<VictoryContainerProps> {
           <div style={portalDivStyle}>
             {React.cloneElement(portalComponent, {
               ...portalProps,
-              ref: this.savePortalRef
+              ref: this.savePortalRef,
             })}
           </div>
         </div>
@@ -235,7 +235,7 @@ export class VictoryContainer extends React.Component<VictoryContainerProps> {
       desc,
       tabIndex,
       preserveAspectRatio,
-      role
+      role,
     } = this.props;
 
     const style = responsive
@@ -253,7 +253,7 @@ export class VictoryContainer extends React.Component<VictoryContainerProps> {
         "aria-labelledby":
           [
             title && this.getIdForElement("title"),
-            this.props["aria-labelledby"]
+            this.props["aria-labelledby"],
           ]
             .filter(Boolean)
             .join(" ") || undefined,
@@ -263,9 +263,9 @@ export class VictoryContainer extends React.Component<VictoryContainerProps> {
             .join(" ") || undefined,
         viewBox: responsive ? `0 0 ${width} ${height}` : undefined,
         preserveAspectRatio: responsive ? preserveAspectRatio : undefined,
-        ...userProps
+        ...userProps,
       },
-      events
+      events,
     );
     return this.renderContainer(this.props, svgProps, style);
   }

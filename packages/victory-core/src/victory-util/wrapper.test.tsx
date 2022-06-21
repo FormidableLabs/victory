@@ -32,8 +32,8 @@ describe("helpers/wrapper", () => {
         data: [
           { x: "one", y: 1 },
           { x: "red", y: 2 },
-          { x: "cat", y: 3 }
-        ]
+          { x: "cat", y: 3 },
+        ],
       };
       const childComponents = [getVictoryLine(props)];
       const dataStrings = Wrapper.getStringsFromData(childComponents).x;
@@ -45,10 +45,10 @@ describe("helpers/wrapper", () => {
         data: [
           ["one", 1],
           ["red", 2],
-          ["cat", 3]
+          ["cat", 3],
         ],
         x: 0,
-        y: 1
+        y: 1,
       };
       const childComponents = [getVictoryLine(props)];
       const dataStrings = Wrapper.getStringsFromData(childComponents).x;
@@ -59,8 +59,8 @@ describe("helpers/wrapper", () => {
       const props = {
         data: [
           { x: 1, y: 1 },
-          { x: "three", y: 3 }
-        ]
+          { x: "three", y: 3 },
+        ],
       };
       const childComponents = [getVictoryLine(props)];
       expect(Wrapper.getStringsFromData(childComponents).x).toEqual(["three"]);
@@ -70,8 +70,8 @@ describe("helpers/wrapper", () => {
       const props = {
         data: [
           { x: 1, y: 1 },
-          { x: 3, y: 3 }
-        ]
+          { x: 3, y: 3 },
+        ],
       };
       const childComponents = [getVictoryLine(props)];
       expect(Wrapper.getStringsFromData(childComponents).x).toEqual([]);

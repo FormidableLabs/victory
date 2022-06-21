@@ -16,15 +16,15 @@ const NativeVictoryChart = wrapCoreComponent({
     groupComponent: <G />,
     defaultAxes: {
       independent: <VictoryAxis />,
-      dependent: <VictoryAxis dependentAxis />
+      dependent: <VictoryAxis dependentAxis />,
     },
     defaultPolarAxes: {
       independent: <VictoryPolarAxis />,
-      dependent: <VictoryPolarAxis dependentAxis />
+      dependent: <VictoryPolarAxis dependentAxis />,
     },
     prependDefaultAxes: true,
-    width: Dimensions.get("window").width
-  })
+    width: Dimensions.get("window").width,
+  }),
 });
 
 export default NativeVictoryChart;

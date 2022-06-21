@@ -19,7 +19,7 @@ const getEsmIndex = (pkg) => `
 // \`victory-vendor/${pkg.name}\` (ESM)
 // See upstream license: ${pkg.repository.url.replace(
   /\.git$/,
-  ""
+  "",
 )}/blob/main/LICENSE
 //
 // Our ESM package uses the underlying installed dependencies of \`node_modules/${
@@ -32,7 +32,7 @@ const getCjsIndex = (pkg) => `
 // \`victory-vendor/${pkg.name}\` (CommonJS)
 // See upstream license: ${pkg.repository.url.replace(
   /\.git$/,
-  ""
+  "",
 )}/blob/main/LICENSE
 //
 // Our CommonJS package relies on transpiled vendor files in \`lib-vendor/${
@@ -45,7 +45,7 @@ const getCjsRootIndex = (pkg) => `
 // \`victory-vendor/${pkg.name}\` (CommonJS)
 // See upstream license: ${pkg.repository.url.replace(
   /\.git$/,
-  ""
+  "",
 )}/blob/main/LICENSE
 //
 // This file only exists for tooling that doesn't work yet with package.json:exports
@@ -75,7 +75,7 @@ const main = async () => {
   for (const pkgName of pkgs) {
     const pkgModsPath = path.resolve(
       __dirname,
-      `../node_modules/git${pkgName}/node_modules`
+      `../node_modules/git${pkgName}/node_modules`,
     );
     const stat = await fs.lstat(pkgModsPath).catch(() => null);
     if (stat) {
@@ -94,7 +94,7 @@ const main = async () => {
   await Promise.all(cleanGlobs.map((glob) => rimrafP(glob)));
   log("Creating empty vendor directories.");
   await Promise.all(
-    baseDirs.map((libPath) => fs.mkdir(libPath, { recursive: true }))
+    baseDirs.map((libPath) => fs.mkdir(libPath, { recursive: true })),
   );
 
   // Transpile.
@@ -107,11 +107,11 @@ const main = async () => {
       path.resolve(__dirname, "../.babelrc.js"),
       "-d",
       path.resolve(__dirname, "../lib-vendor"),
-      path.resolve(__dirname, "../node_modules")
+      path.resolve(__dirname, "../node_modules"),
     ],
     {
-      stdio: "inherit"
-    }
+      stdio: "inherit",
+    },
   );
 
   // Iterate and generate index files.
@@ -132,20 +132,20 @@ const main = async () => {
       fs.writeFile(path.join(CjsBasePath, `${pkgName}.js`), getCjsIndex(pkg)),
       fs.copyFile(
         path.join(pkgBase, "LICENSE"),
-        path.join(libVendorPath, "LICENSE")
+        path.join(libVendorPath, "LICENSE"),
       ),
       // Root hack file for non package.json:exports systems
       VENDOR_PKGS.has(pkgName) &&
         fs.writeFile(
           path.resolve(__dirname, `../${pkgName}.js`),
-          getCjsRootIndex(pkg)
+          getCjsRootIndex(pkg),
         ),
       // Generate TypeScript definitions
       VENDOR_PKGS.has(pkgName) &&
         fs.writeFile(
           path.resolve(__dirname, `../${pkgName}.d.ts`),
-          getTypeDefinitionFile(pkg)
-        )
+          getTypeDefinitionFile(pkg),
+        ),
     ]);
   }
 };

@@ -8,7 +8,7 @@ import * as React from "react";
 */
 const USER_PROPS_SAFELIST = {
   startsWith: ["data-", "aria-"] as const,
-  exactMatch: [] as string[]
+  exactMatch: [] as string[],
 };
 
 type SafeAttribute = `data-${string}` | `aria-${string}`;
@@ -75,7 +75,7 @@ const getValue = (value, props) => {
  * @returns {Object}: object containing remaining acceptable props
  */
 export const getSafeUserProps = <T>(
-  props: T
+  props: T,
 ): Record<SafeAttribute, string> => {
   const propsToFilter = { ...props };
   return Object.fromEntries(
@@ -83,7 +83,7 @@ export const getSafeUserProps = <T>(
       .filter(([key]) => testIfSafeProp(key))
       .map(([key, value]) => {
         return [key, getValue(value, props)];
-      })
+      }),
   );
 };
 

@@ -5,16 +5,16 @@ import viewStyles from "../styles/view-styles";
 
 const randomDate = (start: Date, end: Date) => {
   return new Date(
-    start.getTime() + Math.random() * (end.getTime() - start.getTime())
+    start.getTime() + Math.random() * (end.getTime() - start.getTime()),
   );
 };
 const getRandomDateData = () =>
   Array.from({ length: 100 }, () => ({
-    x: randomDate(new Date(2016, 0, 1), new Date(2020, 5, 1))
+    x: randomDate(new Date(2016, 0, 1), new Date(2020, 5, 1)),
   }));
 const getRandomData = () =>
   Array.from({ length: 100 }, () => ({
-    x: Math.floor(Math.random() * 100)
+    x: Math.floor(Math.random() * 100),
   }));
 
 const numericData = getRandomData();
@@ -28,7 +28,7 @@ export const HistogramScreen: React.FC = () => {
       <VictoryHistogram
         data={numericData}
         style={{
-          data: { stroke: "#833B61", strokeWidth: 3, fill: "#F67E7D" }
+          data: { stroke: "#833B61", strokeWidth: 3, fill: "#F67E7D" },
         }}
         cornerRadius={10}
       />
@@ -36,7 +36,7 @@ export const HistogramScreen: React.FC = () => {
       <VictoryHistogram
         data={numericData}
         style={{
-          data: { stroke: "#833B61", strokeWidth: 3, fill: "#F67E7D" }
+          data: { stroke: "#833B61", strokeWidth: 3, fill: "#F67E7D" },
         }}
         binSpacing={20}
       />
@@ -50,7 +50,7 @@ export const HistogramScreen: React.FC = () => {
           new Date(2017, 0, 1),
           new Date(2018, 0, 1),
           new Date(2019, 0, 1),
-          new Date(2020, 0, 1)
+          new Date(2020, 0, 1),
         ]}
       />
 

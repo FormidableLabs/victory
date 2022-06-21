@@ -12,13 +12,13 @@ const defaultProps = {
       data-x={(props) => props.datum._x}
       data-y={(props) => props.datum._y}
     />
-  )
+  ),
 };
 
 const getCoordinatesForLineWithType = (node, type) => {
   const line = node.querySelector(`line[data-type="${type}"]`);
   return ["x1", "x2", "y1", "y2"].map((attr) =>
-    parseFloat(line.getAttribute(attr))
+    parseFloat(line.getAttribute(attr)),
   );
 };
 
@@ -26,7 +26,7 @@ describe("components/victory-errorbar", () => {
   describe("default component rendering", () => {
     it("accepts user props", () => {
       render(
-        <VictoryErrorBar data-testid="victory-errorbar" aria-label="Chart" />
+        <VictoryErrorBar data-testid="victory-errorbar" aria-label="Chart" />,
       );
 
       expect(screen.getByTestId("victory-errorbar")).toBeDefined();
@@ -58,7 +58,7 @@ describe("components/victory-errorbar", () => {
     const data = [
       { x: 15, y: 35, errorX: 1, errorY: 3 },
       { x: null, y: 42, errorX: 3, errorY: 2 },
-      { x: 25, y: null, errorX: 5, errorY: 5 }
+      { x: 25, y: null, errorX: 5, errorY: 5 },
     ];
     render(<VictoryErrorBar data={data} {...defaultProps} />);
     expect(screen.getAllByTestId("error-bar")).toHaveLength(1);
@@ -66,11 +66,11 @@ describe("components/victory-errorbar", () => {
 
   const immutableRenderDataTest = {
     createData: (x) => fromJS(x),
-    testLabel: "with immutable data"
+    testLabel: "with immutable data",
   };
   const renderDataTest = {
     createData: (x) => x,
-    testLabel: "with js data"
+    testLabel: "with js data",
   };
 
   [renderDataTest, immutableRenderDataTest].forEach(
@@ -78,7 +78,7 @@ describe("components/victory-errorbar", () => {
       describe(`symmetric error, rendering data ${testLabel}`, () => {
         it("renders injected errors for {x, y}", () => {
           const data = createData(
-            range(10).map((i) => ({ x: i, y: i, errorX: 0.1, errorY: 0.2 }))
+            range(10).map((i) => ({ x: i, y: i, errorX: 0.1, errorY: 0.2 })),
           );
           render(<VictoryErrorBar data={data} {...defaultProps} />);
 
@@ -88,7 +88,7 @@ describe("components/victory-errorbar", () => {
 
         it("renders errors for {x, y}", () => {
           const data = createData(
-            range(10).map((i) => ({ x: i, y: i, errorX: 0.1, errorY: 0.2 }))
+            range(10).map((i) => ({ x: i, y: i, errorX: 0.1, errorY: 0.2 })),
           );
           render(<VictoryErrorBar data={data} {...defaultProps} />);
           const errors = screen.getAllByTestId("error-bar");
@@ -99,7 +99,7 @@ describe("components/victory-errorbar", () => {
           const data = createData(
             range(5)
               .map((i) => ({ x: i, y: i, errorX: 0.1, errorY: 0.2 }))
-              .reverse()
+              .reverse(),
           );
           render(<VictoryErrorBar data={data} sortKey="x" {...defaultProps} />);
           const xValues = screen
@@ -112,7 +112,7 @@ describe("components/victory-errorbar", () => {
           const data = createData(
             range(5)
               .map((i) => ({ x: i, y: i, errorX: 0.1, errorY: 0.2 }))
-              .reverse()
+              .reverse(),
           );
           render(
             <VictoryErrorBar
@@ -120,7 +120,7 @@ describe("components/victory-errorbar", () => {
               sortKey="x"
               sortOrder="descending"
               {...defaultProps}
-            />
+            />,
           );
           const yValues = screen
             .getAllByTestId("error-bar")
@@ -135,10 +135,10 @@ describe("components/victory-errorbar", () => {
               data={createData([
                 { x: 0, y: 0, errorX: 0.1, errorY: 0.2 },
                 { x: 2, y: 3, errorX: 0.1, errorY: 0.2 },
-                { x: 5, y: 5, errorX: 0.1, errorY: 0.2 }
+                { x: 5, y: 5, errorX: 0.1, errorY: 0.2 },
               ])}
               {...svgDimensions}
-            />
+            />,
           );
           expect(container.querySelectorAll("line")).toHaveLength(24);
         });
@@ -149,7 +149,7 @@ describe("components/victory-errorbar", () => {
           const data = [
             { x: 0, y: 0, errorX: 0.1, errorY: 0.2 },
             { x: 2, y: 3, errorX: 0.1, errorY: 0.2 },
-            { x: 5, y: 5, errorX: 0.1, errorY: 0.2 }
+            { x: 5, y: 5, errorX: 0.1, errorY: 0.2 },
           ];
           render(
             <VictoryErrorBar
@@ -158,7 +158,7 @@ describe("components/victory-errorbar", () => {
               name="error"
               {...svgDimensions}
               {...defaultProps}
-            />
+            />,
           );
 
           const xScale = d3Scale
@@ -166,7 +166,7 @@ describe("components/victory-errorbar", () => {
             .domain([-0.1, 5.1])
             .range([
               svgDimensions.padding,
-              svgDimensions.width - svgDimensions.padding
+              svgDimensions.width - svgDimensions.padding,
             ]);
 
           const yScale = d3Scale
@@ -174,7 +174,7 @@ describe("components/victory-errorbar", () => {
             .domain([-0.2, 5.2])
             .range([
               svgDimensions.height - svgDimensions.padding,
-              svgDimensions.padding
+              svgDimensions.padding,
             ]);
 
           const bars = screen.getAllByTestId("error-bar");
@@ -185,7 +185,7 @@ describe("components/victory-errorbar", () => {
 
             const [x1, x2, y1, y2] = getCoordinatesForLineWithType(
               node,
-              "border-right"
+              "border-right",
             );
             expect(x1).toEqual(positiveErrorX);
             expect(x2).toEqual(positiveErrorX);
@@ -200,7 +200,7 @@ describe("components/victory-errorbar", () => {
           const data = [
             { x: 0, y: 0, errorX: 0.1, errorY: 0.2 },
             { x: 2, y: 3, errorX: 0.1, errorY: 0.2 },
-            { x: 5, y: 5, errorX: 0.1, errorY: 0.2 }
+            { x: 5, y: 5, errorX: 0.1, errorY: 0.2 },
           ];
           render(
             <VictoryErrorBar
@@ -208,7 +208,7 @@ describe("components/victory-errorbar", () => {
               borderWidth={borderWidth}
               {...svgDimensions}
               {...defaultProps}
-            />
+            />,
           );
 
           const xScale = d3Scale
@@ -216,7 +216,7 @@ describe("components/victory-errorbar", () => {
             .domain([-0.1, 5.1])
             .range([
               svgDimensions.padding,
-              svgDimensions.width - svgDimensions.padding
+              svgDimensions.width - svgDimensions.padding,
             ]);
 
           const yScale = d3Scale
@@ -224,7 +224,7 @@ describe("components/victory-errorbar", () => {
             .domain([-0.2, 5.2])
             .range([
               svgDimensions.height - svgDimensions.padding,
-              svgDimensions.padding
+              svgDimensions.padding,
             ]);
 
           const bars = screen.getAllByTestId("error-bar");
@@ -235,7 +235,7 @@ describe("components/victory-errorbar", () => {
 
             const [x1, x2, y1, y2] = getCoordinatesForLineWithType(
               node,
-              "border-left"
+              "border-left",
             );
             expect(x1).toEqual(negativeErrorX);
             expect(x2).toEqual(negativeErrorX);
@@ -250,7 +250,7 @@ describe("components/victory-errorbar", () => {
           const data = [
             { x: 0, y: 0, errorX: 0.1, errorY: 0.2 },
             { x: 2, y: 3, errorX: 0.1, errorY: 0.2 },
-            { x: 5, y: 5, errorX: 0.1, errorY: 0.2 }
+            { x: 5, y: 5, errorX: 0.1, errorY: 0.2 },
           ];
           render(
             <VictoryErrorBar
@@ -258,7 +258,7 @@ describe("components/victory-errorbar", () => {
               borderWidth={borderWidth}
               {...svgDimensions}
               {...defaultProps}
-            />
+            />,
           );
 
           const xScale = d3Scale
@@ -266,7 +266,7 @@ describe("components/victory-errorbar", () => {
             .domain([-0.1, 5.1])
             .range([
               svgDimensions.padding,
-              svgDimensions.width - svgDimensions.padding
+              svgDimensions.width - svgDimensions.padding,
             ]);
 
           const yScale = d3Scale
@@ -274,7 +274,7 @@ describe("components/victory-errorbar", () => {
             .domain([-0.2, 5.2])
             .range([
               svgDimensions.height - svgDimensions.padding,
-              svgDimensions.padding
+              svgDimensions.padding,
             ]);
 
           const bars = screen.getAllByTestId("error-bar");
@@ -285,7 +285,7 @@ describe("components/victory-errorbar", () => {
 
             const [x1, x2, y1, y2] = getCoordinatesForLineWithType(
               node,
-              "border-bottom"
+              "border-bottom",
             );
 
             expect(x1).toEqual(xScale(data[i].x) - borderWidth);
@@ -301,7 +301,7 @@ describe("components/victory-errorbar", () => {
           const data = [
             { x: 0, y: 0, errorX: 0.1, errorY: 0.2 },
             { x: 2, y: 3, errorX: 0.1, errorY: 0.2 },
-            { x: 5, y: 5, errorX: 0.1, errorY: 0.2 }
+            { x: 5, y: 5, errorX: 0.1, errorY: 0.2 },
           ];
           render(
             <VictoryErrorBar
@@ -309,7 +309,7 @@ describe("components/victory-errorbar", () => {
               borderWidth={borderWidth}
               {...svgDimensions}
               {...defaultProps}
-            />
+            />,
           );
 
           const xScale = d3Scale
@@ -317,7 +317,7 @@ describe("components/victory-errorbar", () => {
             .domain([-0.1, 5.1])
             .range([
               svgDimensions.padding,
-              svgDimensions.width - svgDimensions.padding
+              svgDimensions.width - svgDimensions.padding,
             ]);
 
           const yScale = d3Scale
@@ -325,7 +325,7 @@ describe("components/victory-errorbar", () => {
             .domain([-0.2, 5.2])
             .range([
               svgDimensions.height - svgDimensions.padding,
-              svgDimensions.padding
+              svgDimensions.padding,
             ]);
 
           const bars = screen.getAllByTestId("error-bar");
@@ -337,7 +337,7 @@ describe("components/victory-errorbar", () => {
 
             const [x1, x2, y1, y2] = getCoordinatesForLineWithType(
               node,
-              "border-top"
+              "border-top",
             );
 
             expect(x1).toEqual(xScale(data[i].x) - borderWidth);
@@ -352,14 +352,14 @@ describe("components/victory-errorbar", () => {
           const data = [
             { x: 0, y: 0, errorX: 0.1, errorY: 0.2 },
             { x: 2, y: 3, errorX: 0.1, errorY: 0.2 },
-            { x: 5, y: 5, errorX: 0.1, errorY: 0.2 }
+            { x: 5, y: 5, errorX: 0.1, errorY: 0.2 },
           ];
           render(
             <VictoryErrorBar
               data={createData(data)}
               {...svgDimensions}
               {...defaultProps}
-            />
+            />,
           );
 
           const xScale = d3Scale
@@ -367,7 +367,7 @@ describe("components/victory-errorbar", () => {
             .domain([-0.1, 5.1])
             .range([
               svgDimensions.padding,
-              svgDimensions.width - svgDimensions.padding
+              svgDimensions.width - svgDimensions.padding,
             ]);
 
           const yScale = d3Scale
@@ -375,7 +375,7 @@ describe("components/victory-errorbar", () => {
             .domain([-0.2, 5.2])
             .range([
               svgDimensions.height - svgDimensions.padding,
-              svgDimensions.padding
+              svgDimensions.padding,
             ]);
 
           const bars = screen.getAllByTestId("error-bar");
@@ -387,7 +387,7 @@ describe("components/victory-errorbar", () => {
 
             const [x1, x2, y1, y2] = getCoordinatesForLineWithType(
               node,
-              "cross-top"
+              "cross-top",
             );
 
             expect(x1).toEqual(xScale(data[i].x));
@@ -402,14 +402,14 @@ describe("components/victory-errorbar", () => {
           const data = [
             { x: 0, y: 0, errorX: 0.1, errorY: 0.2 },
             { x: 2, y: 3, errorX: 0.1, errorY: 0.2 },
-            { x: 5, y: 5, errorX: 0.1, errorY: 0.2 }
+            { x: 5, y: 5, errorX: 0.1, errorY: 0.2 },
           ];
           render(
             <VictoryErrorBar
               data={createData(data)}
               {...svgDimensions}
               {...defaultProps}
-            />
+            />,
           );
 
           const xScale = d3Scale
@@ -417,7 +417,7 @@ describe("components/victory-errorbar", () => {
             .domain([-0.1, 5.1])
             .range([
               svgDimensions.padding,
-              svgDimensions.width - svgDimensions.padding
+              svgDimensions.width - svgDimensions.padding,
             ]);
 
           const yScale = d3Scale
@@ -425,7 +425,7 @@ describe("components/victory-errorbar", () => {
             .domain([-0.2, 5.2])
             .range([
               svgDimensions.height - svgDimensions.padding,
-              svgDimensions.padding
+              svgDimensions.padding,
             ]);
 
           const bars = screen.getAllByTestId("error-bar");
@@ -437,7 +437,7 @@ describe("components/victory-errorbar", () => {
 
             const [x1, x2, y1, y2] = getCoordinatesForLineWithType(
               node,
-              "cross-bottom"
+              "cross-bottom",
             );
 
             expect(x1).toEqual(xScale(data[i].x));
@@ -452,14 +452,14 @@ describe("components/victory-errorbar", () => {
           const data = [
             { x: 0, y: 0, errorX: 0.1, errorY: 0.2 },
             { x: 2, y: 3, errorX: 0.1, errorY: 0.2 },
-            { x: 5, y: 5, errorX: 0.1, errorY: 0.2 }
+            { x: 5, y: 5, errorX: 0.1, errorY: 0.2 },
           ];
           render(
             <VictoryErrorBar
               data={createData(data)}
               {...svgDimensions}
               {...defaultProps}
-            />
+            />,
           );
 
           const xScale = d3Scale
@@ -467,7 +467,7 @@ describe("components/victory-errorbar", () => {
             .domain([-0.1, 5.1])
             .range([
               svgDimensions.padding,
-              svgDimensions.width - svgDimensions.padding
+              svgDimensions.width - svgDimensions.padding,
             ]);
 
           const yScale = d3Scale
@@ -475,7 +475,7 @@ describe("components/victory-errorbar", () => {
             .domain([-0.2, 5.2])
             .range([
               svgDimensions.height - svgDimensions.padding,
-              svgDimensions.padding
+              svgDimensions.padding,
             ]);
 
           const bars = screen.getAllByTestId("error-bar");
@@ -487,7 +487,7 @@ describe("components/victory-errorbar", () => {
 
             const [x1, x2, y1, y2] = getCoordinatesForLineWithType(
               node,
-              "cross-left"
+              "cross-left",
             );
 
             expect(x1).toEqual(xScale(data[i].x));
@@ -502,14 +502,14 @@ describe("components/victory-errorbar", () => {
           const data = [
             { x: 0, y: 0, errorX: 0.1, errorY: 0.2 },
             { x: 2, y: 3, errorX: 0.1, errorY: 0.2 },
-            { x: 5, y: 5, errorX: 0.1, errorY: 0.2 }
+            { x: 5, y: 5, errorX: 0.1, errorY: 0.2 },
           ];
           render(
             <VictoryErrorBar
               data={createData(data)}
               {...svgDimensions}
               {...defaultProps}
-            />
+            />,
           );
 
           const xScale = d3Scale
@@ -517,7 +517,7 @@ describe("components/victory-errorbar", () => {
             .domain([-0.1, 5.1])
             .range([
               svgDimensions.padding,
-              svgDimensions.width - svgDimensions.padding
+              svgDimensions.width - svgDimensions.padding,
             ]);
 
           const yScale = d3Scale
@@ -525,7 +525,7 @@ describe("components/victory-errorbar", () => {
             .domain([-0.2, 5.2])
             .range([
               svgDimensions.height - svgDimensions.padding,
-              svgDimensions.padding
+              svgDimensions.padding,
             ]);
 
           const bars = screen.getAllByTestId("error-bar");
@@ -537,7 +537,7 @@ describe("components/victory-errorbar", () => {
 
             const [x1, x2, y1, y2] = getCoordinatesForLineWithType(
               node,
-              "cross-right"
+              "cross-right",
             );
             expect(x1).toEqual(xScale(data[i].x));
             expect(x2).toEqual(positiveErrorX);
@@ -554,8 +554,8 @@ describe("components/victory-errorbar", () => {
               x: i,
               y: i,
               errorX: [0.1, 0.2],
-              errorY: [0.2, 0.5]
-            }))
+              errorY: [0.2, 0.5],
+            })),
           );
           render(<VictoryErrorBar data={data} {...defaultProps} />);
 
@@ -569,8 +569,8 @@ describe("components/victory-errorbar", () => {
               x: i,
               y: i,
               errorX: [0.1, 0.2],
-              errorY: [0.2, 1]
-            }))
+              errorY: [0.2, 1],
+            })),
           );
           render(<VictoryErrorBar data={data} {...defaultProps} />);
           const errors = screen.getAllByTestId("error-bar");
@@ -584,10 +584,10 @@ describe("components/victory-errorbar", () => {
               data={createData([
                 { x: 0, y: 0, errorX: [0.1, 0.5], errorY: [0.2, 0.3] },
                 { x: 2, y: 3, errorX: [0.1, 0.5], errorY: [0.2, 0.4] },
-                { x: 5, y: 5, errorX: [0.1, 0.5], errorY: [0.2, 0.1] }
+                { x: 5, y: 5, errorX: [0.1, 0.5], errorY: [0.2, 0.1] },
               ])}
               {...svgDimensions}
-            />
+            />,
           );
           expect(container.querySelectorAll("line")).toHaveLength(24);
         });
@@ -598,7 +598,7 @@ describe("components/victory-errorbar", () => {
           const data = [
             { x: 0, y: 0, errorX: [0.1, 0.3], errorY: [0.2, 0.5] },
             { x: 2, y: 3, errorX: [0.1, 0.2], errorY: [0.2, 0.3] },
-            { x: 5, y: 5, errorX: [0.1, 0.6], errorY: [0.2, 0.1] }
+            { x: 5, y: 5, errorX: [0.1, 0.6], errorY: [0.2, 0.1] },
           ];
           render(
             <VictoryErrorBar
@@ -606,7 +606,7 @@ describe("components/victory-errorbar", () => {
               borderWidth={borderWidth}
               {...svgDimensions}
               {...defaultProps}
-            />
+            />,
           );
 
           const xScale = d3Scale
@@ -614,7 +614,7 @@ describe("components/victory-errorbar", () => {
             .domain([-0.3, 5.1])
             .range([
               svgDimensions.padding,
-              svgDimensions.width - svgDimensions.padding
+              svgDimensions.width - svgDimensions.padding,
             ]);
 
           const yScale = d3Scale
@@ -622,7 +622,7 @@ describe("components/victory-errorbar", () => {
             .domain([-0.5, 5.2])
             .range([
               svgDimensions.height - svgDimensions.padding,
-              svgDimensions.padding
+              svgDimensions.padding,
             ]);
 
           const bars = screen.getAllByTestId("error-bar");
@@ -634,7 +634,7 @@ describe("components/victory-errorbar", () => {
 
             const [x1, x2, y1, y2] = getCoordinatesForLineWithType(
               node,
-              "border-right"
+              "border-right",
             );
 
             expect(x1).toEqual(positiveErrorX);
@@ -650,7 +650,7 @@ describe("components/victory-errorbar", () => {
           const data = [
             { x: 0, y: 0, errorX: [0.1, 0.3], errorY: [0.2, 0.5] },
             { x: 2, y: 3, errorX: [0.1, 0.2], errorY: [0.2, 0.3] },
-            { x: 5, y: 5, errorX: [0.1, 0.6], errorY: [0.2, 0.1] }
+            { x: 5, y: 5, errorX: [0.1, 0.6], errorY: [0.2, 0.1] },
           ];
           render(
             <VictoryErrorBar
@@ -658,7 +658,7 @@ describe("components/victory-errorbar", () => {
               borderWidth={borderWidth}
               {...svgDimensions}
               {...defaultProps}
-            />
+            />,
           );
 
           const xScale = d3Scale
@@ -666,7 +666,7 @@ describe("components/victory-errorbar", () => {
             .domain([-0.3, 5.1])
             .range([
               svgDimensions.padding,
-              svgDimensions.width - svgDimensions.padding
+              svgDimensions.width - svgDimensions.padding,
             ]);
 
           const yScale = d3Scale
@@ -674,7 +674,7 @@ describe("components/victory-errorbar", () => {
             .domain([-0.5, 5.2])
             .range([
               svgDimensions.height - svgDimensions.padding,
-              svgDimensions.padding
+              svgDimensions.padding,
             ]);
 
           const bars = screen.getAllByTestId("error-bar");
@@ -686,7 +686,7 @@ describe("components/victory-errorbar", () => {
 
             const [x1, x2, y1, y2] = getCoordinatesForLineWithType(
               node,
-              "border-left"
+              "border-left",
             );
 
             expect(x1).toEqual(negativeErrorX);
@@ -702,7 +702,7 @@ describe("components/victory-errorbar", () => {
           const data = [
             { x: 0, y: 0, errorX: [0.1, 0.3], errorY: [0.2, 0.5] },
             { x: 2, y: 3, errorX: [0.1, 0.2], errorY: [0.2, 0.3] },
-            { x: 5, y: 5, errorX: [0.1, 0.6], errorY: [0.2, 0.1] }
+            { x: 5, y: 5, errorX: [0.1, 0.6], errorY: [0.2, 0.1] },
           ];
           render(
             <VictoryErrorBar
@@ -710,7 +710,7 @@ describe("components/victory-errorbar", () => {
               borderWidth={borderWidth}
               {...svgDimensions}
               {...defaultProps}
-            />
+            />,
           );
 
           const xScale = d3Scale
@@ -718,7 +718,7 @@ describe("components/victory-errorbar", () => {
             .domain([-0.3, 5.1])
             .range([
               svgDimensions.padding,
-              svgDimensions.width - svgDimensions.padding
+              svgDimensions.width - svgDimensions.padding,
             ]);
 
           const yScale = d3Scale
@@ -726,7 +726,7 @@ describe("components/victory-errorbar", () => {
             .domain([-0.5, 5.2])
             .range([
               svgDimensions.height - svgDimensions.padding,
-              svgDimensions.padding
+              svgDimensions.padding,
             ]);
 
           const bars = screen.getAllByTestId("error-bar");
@@ -738,7 +738,7 @@ describe("components/victory-errorbar", () => {
 
             const [x1, x2, y1, y2] = getCoordinatesForLineWithType(
               node,
-              "border-bottom"
+              "border-bottom",
             );
 
             expect(x1).toEqual(xScale(data[i].x) - borderWidth);
@@ -754,7 +754,7 @@ describe("components/victory-errorbar", () => {
           const data = [
             { x: 0, y: 0, errorX: [0.1, 0.3], errorY: [0.2, 0.5] },
             { x: 2, y: 3, errorX: [0.1, 0.2], errorY: [0.2, 0.3] },
-            { x: 5, y: 5, errorX: [0.1, 0.6], errorY: [0.2, 0.1] }
+            { x: 5, y: 5, errorX: [0.1, 0.6], errorY: [0.2, 0.1] },
           ];
           render(
             <VictoryErrorBar
@@ -762,7 +762,7 @@ describe("components/victory-errorbar", () => {
               borderWidth={borderWidth}
               {...svgDimensions}
               {...defaultProps}
-            />
+            />,
           );
 
           const xScale = d3Scale
@@ -770,7 +770,7 @@ describe("components/victory-errorbar", () => {
             .domain([-0.3, 5.1])
             .range([
               svgDimensions.padding,
-              svgDimensions.width - svgDimensions.padding
+              svgDimensions.width - svgDimensions.padding,
             ]);
 
           const yScale = d3Scale
@@ -778,7 +778,7 @@ describe("components/victory-errorbar", () => {
             .domain([-0.5, 5.2])
             .range([
               svgDimensions.height - svgDimensions.padding,
-              svgDimensions.padding
+              svgDimensions.padding,
             ]);
 
           const bars = screen.getAllByTestId("error-bar");
@@ -790,7 +790,7 @@ describe("components/victory-errorbar", () => {
 
             const [x1, x2, y1, y2] = getCoordinatesForLineWithType(
               node,
-              "border-top"
+              "border-top",
             );
 
             expect(x1).toEqual(xScale(data[i].x) - borderWidth);
@@ -805,14 +805,14 @@ describe("components/victory-errorbar", () => {
           const data = [
             { x: 0, y: 0, errorX: [0.1, 0.3], errorY: [0.2, 0.5] },
             { x: 2, y: 3, errorX: [0.1, 0.2], errorY: [0.2, 0.3] },
-            { x: 5, y: 5, errorX: [0.1, 0.6], errorY: [0.2, 0.1] }
+            { x: 5, y: 5, errorX: [0.1, 0.6], errorY: [0.2, 0.1] },
           ];
           render(
             <VictoryErrorBar
               data={createData(data)}
               {...svgDimensions}
               {...defaultProps}
-            />
+            />,
           );
 
           const xScale = d3Scale
@@ -820,7 +820,7 @@ describe("components/victory-errorbar", () => {
             .domain([-0.3, 5.1])
             .range([
               svgDimensions.padding,
-              svgDimensions.width - svgDimensions.padding
+              svgDimensions.width - svgDimensions.padding,
             ]);
 
           const yScale = d3Scale
@@ -828,7 +828,7 @@ describe("components/victory-errorbar", () => {
             .domain([-0.5, 5.2])
             .range([
               svgDimensions.height - svgDimensions.padding,
-              svgDimensions.padding
+              svgDimensions.padding,
             ]);
 
           const bars = screen.getAllByTestId("error-bar");
@@ -840,7 +840,7 @@ describe("components/victory-errorbar", () => {
 
             const [x1, x2, y1, y2] = getCoordinatesForLineWithType(
               node,
-              "cross-top"
+              "cross-top",
             );
 
             expect(x1).toEqual(xScale(data[i].x));
@@ -855,14 +855,14 @@ describe("components/victory-errorbar", () => {
           const data = [
             { x: 0, y: 0, errorX: [0.1, 0.3], errorY: [0.2, 0.5] },
             { x: 2, y: 3, errorX: [0.1, 0.2], errorY: [0.2, 0.3] },
-            { x: 5, y: 5, errorX: [0.1, 0.6], errorY: [0.2, 0.1] }
+            { x: 5, y: 5, errorX: [0.1, 0.6], errorY: [0.2, 0.1] },
           ];
           render(
             <VictoryErrorBar
               data={createData(data)}
               {...svgDimensions}
               {...defaultProps}
-            />
+            />,
           );
 
           const xScale = d3Scale
@@ -870,7 +870,7 @@ describe("components/victory-errorbar", () => {
             .domain([-0.3, 5.1])
             .range([
               svgDimensions.padding,
-              svgDimensions.width - svgDimensions.padding
+              svgDimensions.width - svgDimensions.padding,
             ]);
 
           const yScale = d3Scale
@@ -878,7 +878,7 @@ describe("components/victory-errorbar", () => {
             .domain([-0.5, 5.2])
             .range([
               svgDimensions.height - svgDimensions.padding,
-              svgDimensions.padding
+              svgDimensions.padding,
             ]);
 
           const bars = screen.getAllByTestId("error-bar");
@@ -890,7 +890,7 @@ describe("components/victory-errorbar", () => {
 
             const [x1, x2, y1, y2] = getCoordinatesForLineWithType(
               node,
-              "cross-bottom"
+              "cross-bottom",
             );
 
             expect(x1).toEqual(xScale(data[i].x));
@@ -905,14 +905,14 @@ describe("components/victory-errorbar", () => {
           const data = [
             { x: 0, y: 0, errorX: [0.1, 0.3], errorY: [0.2, 0.5] },
             { x: 2, y: 3, errorX: [0.1, 0.2], errorY: [0.2, 0.3] },
-            { x: 5, y: 5, errorX: [0.1, 0.6], errorY: [0.2, 0.1] }
+            { x: 5, y: 5, errorX: [0.1, 0.6], errorY: [0.2, 0.1] },
           ];
           render(
             <VictoryErrorBar
               data={createData(data)}
               {...svgDimensions}
               {...defaultProps}
-            />
+            />,
           );
 
           const xScale = d3Scale
@@ -920,7 +920,7 @@ describe("components/victory-errorbar", () => {
             .domain([-0.3, 5.1])
             .range([
               svgDimensions.padding,
-              svgDimensions.width - svgDimensions.padding
+              svgDimensions.width - svgDimensions.padding,
             ]);
 
           const yScale = d3Scale
@@ -928,7 +928,7 @@ describe("components/victory-errorbar", () => {
             .domain([-0.5, 5.2])
             .range([
               svgDimensions.height - svgDimensions.padding,
-              svgDimensions.padding
+              svgDimensions.padding,
             ]);
 
           const bars = screen.getAllByTestId("error-bar");
@@ -940,7 +940,7 @@ describe("components/victory-errorbar", () => {
 
             const [x1, x2, y1, y2] = getCoordinatesForLineWithType(
               node,
-              "cross-left"
+              "cross-left",
             );
 
             expect(x1).toEqual(xScale(data[i].x));
@@ -955,14 +955,14 @@ describe("components/victory-errorbar", () => {
           const data = [
             { x: 0, y: 0, errorX: [0.1, 0.3], errorY: [0.2, 0.5] },
             { x: 2, y: 3, errorX: [0.1, 0.2], errorY: [0.2, 0.3] },
-            { x: 5, y: 5, errorX: [0.1, 0.6], errorY: [0.2, 0.1] }
+            { x: 5, y: 5, errorX: [0.1, 0.6], errorY: [0.2, 0.1] },
           ];
           render(
             <VictoryErrorBar
               data={createData(data)}
               {...svgDimensions}
               {...defaultProps}
-            />
+            />,
           );
 
           const xScale = d3Scale
@@ -970,7 +970,7 @@ describe("components/victory-errorbar", () => {
             .domain([-0.3, 5.1])
             .range([
               svgDimensions.padding,
-              svgDimensions.width - svgDimensions.padding
+              svgDimensions.width - svgDimensions.padding,
             ]);
 
           const yScale = d3Scale
@@ -978,7 +978,7 @@ describe("components/victory-errorbar", () => {
             .domain([-0.5, 5.2])
             .range([
               svgDimensions.height - svgDimensions.padding,
-              svgDimensions.padding
+              svgDimensions.padding,
             ]);
 
           const bars = screen.getAllByTestId("error-bar");
@@ -990,7 +990,7 @@ describe("components/victory-errorbar", () => {
 
             const [x1, x2, y1, y2] = getCoordinatesForLineWithType(
               node,
-              "cross-right"
+              "cross-right",
             );
 
             expect(x1).toEqual(xScale(data[i].x));
@@ -1000,7 +1000,7 @@ describe("components/victory-errorbar", () => {
           });
         });
       });
-    }
+    },
   );
 
   describe("event handling", () => {
@@ -1011,10 +1011,10 @@ describe("components/victory-errorbar", () => {
           events={[
             {
               target: "parent",
-              eventHandlers: { onClick: clickHandler }
-            }
+              eventHandlers: { onClick: clickHandler },
+            },
           ]}
-        />
+        />,
       );
       const svg = container.querySelector("svg");
       fireEvent.click(svg);
@@ -1028,11 +1028,11 @@ describe("components/victory-errorbar", () => {
           events={[
             {
               target: "data",
-              eventHandlers: { onClick: clickHandler }
-            }
+              eventHandlers: { onClick: clickHandler },
+            },
           ]}
           {...defaultProps}
-        />
+        />,
       );
       const bars = screen.getAllByTestId("error-bar");
       bars.forEach((node) => {
@@ -1050,11 +1050,11 @@ describe("components/victory-errorbar", () => {
           events={[
             {
               target: "data",
-              eventHandlers: { onClick: clickHandler }
-            }
+              eventHandlers: { onClick: clickHandler },
+            },
           ]}
           {...defaultProps}
-        />
+        />,
       );
       const bars = screen.getAllByTestId("error-bar");
       bars.forEach((node) => {
@@ -1069,7 +1069,7 @@ describe("components/victory-errorbar", () => {
         const data = [
           { x: 35, y: 50, error: 0.2 },
           { x: 10, y: 43, error: 0.15 },
-          { x: 45, y: 65, error: 0.5 }
+          { x: 45, y: 65, error: 0.5 },
         ];
         const { container } = render(
           <VictoryErrorBar
@@ -1081,7 +1081,7 @@ describe("components/victory-errorbar", () => {
                 tabIndex={({ index }) => index + 2}
               />
             }
-          />
+          />,
         );
 
         expect(container.querySelectorAll("g")).toHaveLength(4);
@@ -1089,7 +1089,7 @@ describe("components/victory-errorbar", () => {
 
         screen.getAllByTestId("error-bar").forEach((g, i) => {
           expect(g.getAttribute("aria-label")).toEqual(
-            `error bar chart, x ${data[i].x}`
+            `error bar chart, x ${data[i].x}`,
           );
           expect(parseInt(g.getAttribute("tabindex"), 10)).toEqual(i + 2);
         });

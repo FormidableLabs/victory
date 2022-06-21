@@ -8,7 +8,7 @@ describe("victory-primitives/point", () => {
   const baseProps = {
     x: 5,
     y: 10,
-    size: 1
+    size: 1,
   };
 
   (
@@ -21,7 +21,7 @@ describe("victory-primitives/point", () => {
       "plus",
       "minus",
       "star",
-      "cross"
+      "cross",
     ] as const
   ).forEach((symbol) => {
     it(`should render the appropriate symbol for "${symbol}"`, () => {
@@ -31,7 +31,7 @@ describe("victory-primitives/point", () => {
         .mockImplementation(() => `${symbol} symbol`);
       const props = assign({}, baseProps, { symbol });
       const { container } = render(<Point {...props} />, {
-        wrapper: SVGWrapper
+        wrapper: SVGWrapper,
       });
       const directions = container.querySelector("path")!.getAttribute("d");
 

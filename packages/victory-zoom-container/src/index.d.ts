@@ -12,7 +12,7 @@ export interface VictoryZoomContainerProps extends VictoryContainerProps {
   minimumZoom?: { x?: number; y?: number };
   onZoomDomainChange?: (
     domain: { x: DomainTuple; y: DomainTuple },
-    props: VictoryZoomContainerProps
+    props: VictoryZoomContainerProps,
   ) => void;
   zoomDimension?: ZoomDimensionType;
   zoomDomain?: { x?: DomainTuple; y?: DomainTuple };

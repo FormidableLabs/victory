@@ -29,7 +29,7 @@ export const LineScreen: React.FC = () => {
           { x: 2, y: 2 },
           { x: 3, y: 4 },
           { x: 4, y: 3 },
-          { x: 5, y: 5 }
+          { x: 5, y: 5 },
         ]}
       />
 
@@ -39,7 +39,7 @@ export const LineScreen: React.FC = () => {
           { amount: 2, yield: 2, error: 1.1 },
           { amount: 3, yield: 3, error: 0 },
           { amount: 4, yield: 2, error: 0.1 },
-          { amount: 5, yield: 1, error: 1.5 }
+          { amount: 5, yield: 1, error: 1.5 },
         ]}
         x={"amount"}
         y={(data) => data.yield + data.error}
@@ -57,23 +57,23 @@ export const LineScreen: React.FC = () => {
           { x: 2, y: 2 },
           { x: 3, y: 4 },
           { x: 4, y: 3 },
-          { x: 5, y: 5 }
+          { x: 5, y: 5 },
         ]}
         interpolation="cardinal"
         labels={() => "LINE"}
         style={{
           data: {
             stroke: "#822722",
-            strokeWidth: 3
+            strokeWidth: 3,
           },
-          labels: { fontSize: 12 }
+          labels: { fontSize: 12 },
         }}
       />
 
       <VictoryLine
         width={300}
         style={{
-          data: { stroke: "blue", strokeWidth: 4 }
+          data: { stroke: "blue", strokeWidth: 4 },
         }}
         data={[
           { x: 0, y: 1 },
@@ -81,13 +81,13 @@ export const LineScreen: React.FC = () => {
           { x: 2, y: 2 },
           { x: 3, y: 4 },
           { x: 4, y: 3 },
-          { x: 5, y: 5 }
+          { x: 5, y: 5 },
         ]}
       />
 
       <VictoryLine
         style={{
-          data: { stroke: "red", strokeWidth: 9 }
+          data: { stroke: "red", strokeWidth: 9 },
         }}
         interpolation={"linear"}
         data={[
@@ -96,7 +96,7 @@ export const LineScreen: React.FC = () => {
           { x: 2, y: 2 },
           { x: 3, y: 4 },
           { x: 4, y: 3 },
-          { x: 5, y: 5 }
+          { x: 5, y: 5 },
         ]}
       />
 

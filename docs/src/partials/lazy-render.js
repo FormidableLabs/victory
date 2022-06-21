@@ -6,7 +6,7 @@ const LazyRender = ({ LazyRenderedComponent, className, ...rest }) => {
   const ref = useRef();
   const { inView } = useInView(ref, {
     unobserveOnEnter: true,
-    rootMargin: "20px"
+    rootMargin: "20px",
   });
 
   return (
@@ -18,7 +18,7 @@ const LazyRender = ({ LazyRenderedComponent, className, ...rest }) => {
 
 LazyRender.propTypes = {
   LazyRenderedComponent: PropTypes.elementType.isRequired,
-  className: PropTypes.string.isRequired
+  className: PropTypes.string.isRequired,
 };
 
 export default LazyRender;

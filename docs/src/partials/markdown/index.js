@@ -10,7 +10,7 @@ import * as Victory from "victory";
 import styled, { withTheme } from "styled-components";
 import {
   scaleDiscontinuous,
-  discontinuitySkipWeekends
+  discontinuitySkipWeekends,
 } from "@d3fc/d3fc-discontinuous-scale";
 import scopeMap from "./scope-map";
 import PlaygroundContainer from "./playground-container";
@@ -37,7 +37,7 @@ const renderPlayground = (props, scope, theme) => {
     (scope &&
       scope.reduce(
         (obj, key) => Object.assign(obj, { [key]: scopeMap[key] }),
-        {}
+        {},
       )) ||
     {};
 
@@ -47,7 +47,7 @@ const renderPlayground = (props, scope, theme) => {
     scaleDiscontinuous,
     discontinuitySkipWeekends,
     React,
-    ReactDOM
+    ReactDOM,
   });
 
   /* eslint-disable react/prop-types */
@@ -86,7 +86,7 @@ export function renderCodeBlock(props, scope, theme) {
 }
 renderCodeBlock.propTypes = {
   language: PropTypes.any,
-  value: PropTypes.any
+  value: PropTypes.any,
 };
 
 export function renderHeading(props) {
@@ -134,7 +134,7 @@ export function renderHeading(props) {
 
 renderHeading.propTypes = {
   children: PropTypes.any,
-  level: PropTypes.number
+  level: PropTypes.number,
 };
 
 /**
@@ -158,7 +158,7 @@ export const renderLink = ({ href, children }) => {
 
 renderLink.propTypes = {
   children: PropTypes.any,
-  href: PropTypes.string
+  href: PropTypes.string,
 };
 
 /* eslint-enable react/prop-types, no-magic-numbers */
@@ -169,7 +169,7 @@ const Markdown = (props) => {
     link: renderLink,
     linkReference: renderLink,
     heading: renderHeading,
-    code: (p) => renderCodeBlock(p, scope, theme)
+    code: (p) => renderCodeBlock(p, scope, theme),
   };
 
   return (
@@ -187,7 +187,7 @@ Markdown.propTypes = {
   renderers: PropTypes.object,
   scope: PropTypes.array,
   source: PropTypes.string,
-  theme: PropTypes.object
+  theme: PropTypes.object,
 };
 
 export default withTheme(Markdown);

@@ -7,7 +7,7 @@ import * as Transitions from "../transitions";
 const INITIAL_STATE = {
   nodesShouldLoad: false,
   nodesDoneLoad: false,
-  animating: true
+  animating: true,
 };
 
 export const useAnimationState = (initialState = INITIAL_STATE) => {
@@ -18,7 +18,7 @@ export const useAnimationState = (initialState = INITIAL_STATE) => {
     (newState) => {
       _setState((oldState) => ({ ...oldState, ...newState }));
     },
-    [_setState]
+    [_setState],
   );
 
   // This is a copy of Wrapper.getAnimationProps
@@ -43,7 +43,7 @@ export const useAnimationState = (initialState = INITIAL_STATE) => {
         const getTransitionProps = Transitions.getTransitionPropsFactory(
           props,
           filteredState,
-          (newState) => setState(newState)
+          (newState) => setState(newState),
         );
         getTransitions = (childComponent) =>
           getTransitionProps(childComponent, index);
@@ -51,10 +51,10 @@ export const useAnimationState = (initialState = INITIAL_STATE) => {
       return defaults(
         { getTransitions, parentState },
         props.animate,
-        child.props.animate
+        child.props.animate,
       );
     },
-    [state, setState]
+    [state, setState],
   );
 
   // This is a copy of Wrapper.setAnimationState
@@ -68,7 +68,7 @@ export const useAnimationState = (initialState = INITIAL_STATE) => {
         const oldProps = nodesWillExit ? props : null;
         const newState = defaults(
           { oldProps, nextProps },
-          props.animate.parentState
+          props.animate.parentState,
         );
         setState(newState);
       } else {
@@ -91,7 +91,7 @@ export const useAnimationState = (initialState = INITIAL_STATE) => {
           nodesWillExit,
           nodesWillEnter,
           childrenTransitions,
-          nodesShouldEnter
+          nodesShouldEnter,
         } = Transitions.getInitialTransitionState(oldChildren, nextChildren);
 
         setState({
@@ -103,11 +103,11 @@ export const useAnimationState = (initialState = INITIAL_STATE) => {
             : childrenTransitions,
           oldProps: nodesWillExit ? props : null,
           nextProps,
-          continuous
+          continuous,
         });
       }
     },
-    [setState]
+    [setState],
   );
 
   const getProps = React.useCallback(
@@ -116,7 +116,7 @@ export const useAnimationState = (initialState = INITIAL_STATE) => {
         ? state.oldProps || initialProps
         : initialProps;
     },
-    [state]
+    [state],
   );
 
   return { state, setState, getAnimationProps, setAnimationState, getProps };

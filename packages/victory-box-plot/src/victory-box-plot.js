@@ -13,7 +13,7 @@ import {
   Whisker,
   DefaultTransitions,
   CommonProps,
-  UserProps
+  UserProps,
 } from "victory-core";
 import { getDomain, getData, getBaseProps } from "./helper-methods";
 
@@ -24,13 +24,13 @@ const fallbackProps = {
     top: 20,
     right: 20,
     bottom: 20,
-    left: 20
-  }
+    left: 20,
+  },
 };
 
 const defaultData = [
   { x: 1, min: 5, q1: 7, median: 12, q3: 18, max: 20 },
-  { x: 2, min: 2, q1: 5, median: 8, q3: 12, max: 15 }
+  { x: 2, min: 2, q1: 5, median: 8, q3: 12, max: 15 },
 ];
 
 const options = {
@@ -45,8 +45,8 @@ const options = {
     { name: "q1Labels" },
     { name: "q3" },
     { name: "q3Labels" },
-    { name: "parent", index: "parent" }
-  ]
+    { name: "parent", index: "parent" },
+  ],
 };
 
 class VictoryBoxPlot extends React.Component {
@@ -56,7 +56,7 @@ class VictoryBoxPlot extends React.Component {
     "height",
     "padding",
     "style",
-    "width"
+    "width",
   ];
 
   static displayName = "VictoryBoxPlot";
@@ -79,18 +79,18 @@ class VictoryBoxPlot extends React.Component {
           "q1Labels",
           "q3",
           "q3Labels",
-          "parent"
+          "parent",
         ]),
         eventKey: PropTypes.oneOfType([
           PropTypes.array,
           CustomPropTypes.allOfType([
             CustomPropTypes.integer,
-            CustomPropTypes.nonNegative
+            CustomPropTypes.nonNegative,
           ]),
-          PropTypes.string
+          PropTypes.string,
         ]),
-        eventHandlers: PropTypes.object
-      })
+        eventHandlers: PropTypes.object,
+      }),
     ),
     horizontal: PropTypes.bool,
     labelOrientation: PropTypes.oneOfType([
@@ -100,89 +100,89 @@ class VictoryBoxPlot extends React.Component {
         q3: PropTypes.oneOf(["top", "bottom", "left", "right"]),
         min: PropTypes.oneOf(["top", "bottom", "left", "right"]),
         max: PropTypes.oneOf(["top", "bottom", "left", "right"]),
-        median: PropTypes.oneOf(["top", "bottom", "left", "right"])
-      })
+        median: PropTypes.oneOf(["top", "bottom", "left", "right"]),
+      }),
     ]),
     labels: PropTypes.bool,
     max: PropTypes.oneOfType([
       PropTypes.func,
       CustomPropTypes.allOfType([
         CustomPropTypes.integer,
-        CustomPropTypes.nonNegative
+        CustomPropTypes.nonNegative,
       ]),
       PropTypes.string,
-      PropTypes.arrayOf(PropTypes.string)
+      PropTypes.arrayOf(PropTypes.string),
     ]),
     maxComponent: PropTypes.element,
     maxLabelComponent: PropTypes.element,
     maxLabels: PropTypes.oneOfType([
       PropTypes.func,
       PropTypes.array,
-      PropTypes.bool
+      PropTypes.bool,
     ]),
     median: PropTypes.oneOfType([
       PropTypes.func,
       CustomPropTypes.allOfType([
         CustomPropTypes.integer,
-        CustomPropTypes.nonNegative
+        CustomPropTypes.nonNegative,
       ]),
       PropTypes.string,
-      PropTypes.arrayOf(PropTypes.string)
+      PropTypes.arrayOf(PropTypes.string),
     ]),
     medianComponent: PropTypes.element,
     medianLabelComponent: PropTypes.element,
     medianLabels: PropTypes.oneOfType([
       PropTypes.func,
       PropTypes.array,
-      PropTypes.bool
+      PropTypes.bool,
     ]),
     min: PropTypes.oneOfType([
       PropTypes.func,
       CustomPropTypes.allOfType([
         CustomPropTypes.integer,
-        CustomPropTypes.nonNegative
+        CustomPropTypes.nonNegative,
       ]),
       PropTypes.string,
-      PropTypes.arrayOf(PropTypes.string)
+      PropTypes.arrayOf(PropTypes.string),
     ]),
     minComponent: PropTypes.element,
     minLabelComponent: PropTypes.element,
     minLabels: PropTypes.oneOfType([
       PropTypes.func,
       PropTypes.array,
-      PropTypes.bool
+      PropTypes.bool,
     ]),
     q1: PropTypes.oneOfType([
       PropTypes.func,
       CustomPropTypes.allOfType([
         CustomPropTypes.integer,
-        CustomPropTypes.nonNegative
+        CustomPropTypes.nonNegative,
       ]),
       PropTypes.string,
-      PropTypes.arrayOf(PropTypes.string)
+      PropTypes.arrayOf(PropTypes.string),
     ]),
     q1Component: PropTypes.element,
     q1LabelComponent: PropTypes.element,
     q1Labels: PropTypes.oneOfType([
       PropTypes.func,
       PropTypes.array,
-      PropTypes.bool
+      PropTypes.bool,
     ]),
     q3: PropTypes.oneOfType([
       PropTypes.func,
       CustomPropTypes.allOfType([
         CustomPropTypes.integer,
-        CustomPropTypes.nonNegative
+        CustomPropTypes.nonNegative,
       ]),
       PropTypes.string,
-      PropTypes.arrayOf(PropTypes.string)
+      PropTypes.arrayOf(PropTypes.string),
     ]),
     q3Component: PropTypes.element,
     q3LabelComponent: PropTypes.element,
     q3Labels: PropTypes.oneOfType([
       PropTypes.func,
       PropTypes.array,
-      PropTypes.bool
+      PropTypes.bool,
     ]),
     style: PropTypes.shape({
       boxes: PropTypes.object,
@@ -198,9 +198,9 @@ class VictoryBoxPlot extends React.Component {
       q1Labels: PropTypes.object,
       q3: PropTypes.object,
       q3Labels: PropTypes.object,
-      whiskers: PropTypes.object
+      whiskers: PropTypes.object,
     }),
-    whiskerWidth: PropTypes.number
+    whiskerWidth: PropTypes.number,
   };
 
   static defaultProps = {
@@ -222,7 +222,7 @@ class VictoryBoxPlot extends React.Component {
     sortKey: "x",
     sortOrder: "ascending",
     standalone: true,
-    theme: VictoryTheme.grayscale
+    theme: VictoryTheme.grayscale,
   };
 
   static getDomain = getDomain;
@@ -240,7 +240,7 @@ class VictoryBoxPlot extends React.Component {
     "q3Component",
     "q3LabelComponent",
     "groupComponent",
-    "containerComponent"
+    "containerComponent",
   ];
 
   renderBoxPlot(props) {
@@ -252,16 +252,16 @@ class VictoryBoxPlot extends React.Component {
           const componentProps = this.getComponentProps(
             baseComponent,
             type,
-            index
+            index,
           );
           if (this.shouldRenderDatum(componentProps.datum)) {
             validDataComponents.push(
-              React.cloneElement(baseComponent, componentProps)
+              React.cloneElement(baseComponent, componentProps),
             );
           }
           return validDataComponents;
         }, []);
-      })
+      }),
     );
 
     const labelComponents = flatten(
@@ -276,7 +276,7 @@ class VictoryBoxPlot extends React.Component {
           return undefined;
         });
         return components.filter(Boolean);
-      })
+      }),
     );
     const children = [...dataComponents, ...labelComponents];
     return this.renderContainer(props.groupComponent, children);
