@@ -1,2 +1,0 @@
---require ./test/node/setup.js
---recursive true

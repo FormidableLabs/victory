@@ -2,13 +2,16 @@ module.exports = {
   preset: "ts-jest",
   testEnvironment: "jsdom",
   moduleFileExtensions: ["ts", "tsx", "js", "jsx", "json", "node"],
-  testMatch: ["**/jest/**/?(*.)+(test).[jt]s?(x)"],
-  testPathIgnorePatterns: ["victory-native"],
+  testPathIgnorePatterns: [
+    "victory-native",
+    "node_modules",
+    "config",
+    "/es/",
+    "/lib/"
+  ],
   transform: {
-    "^.+/test/.+\\.(ts|tsx|js|jsx)$": [
-      "babel-jest",
-      { configFile: "./.babelrc.js" }
-    ]
+    "^.+test.*[jt]sx?$": ["babel-jest", { configFile: "./.babelrc.js" }]
   },
+  transformIgnorePatterns: ["/node_modules/", "/es/", "/lib/"],
   setupFilesAfterEnv: ["<rootDir>/test/jest-setup.js"]
 };
