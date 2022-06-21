@@ -1,5 +1,5 @@
 import React from "react";
-import Curve from "./curve";
+import { Curve } from "./curve";
 import * as d3Scale from "victory-vendor/d3-scale";
 import { render } from "@testing-library/react";
 import { SVGWrapper } from "../../../test/helpers";
