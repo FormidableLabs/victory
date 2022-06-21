@@ -79,8 +79,10 @@ module.exports = {
       es: npsUtils.concurrent.nps("types.create-es", "types.copy-es"),
       create:
         "tsc -p ./tsconfig.build.json --emitDeclarationOnly --rootDir src",
-      "create-lib": "nps types.create -- -- --outDir lib",
-      "create-es": "nps types.create -- -- --outDir es",
+      "create-lib":
+        'nps types.create -- -- --outDir lib || echo "Ignoring TypeScript Errors"',
+      "create-es":
+        'nps types.create -- -- --outDir es || echo "Ignoring TypeScript Errors"',
       "create-lib-watch": "nps types.create -- -- --outDir lib --watch",
       "create-es-watch": "nps types.create -- -- --outDir es --watch",
       copy: "cpx 'src/**/*.d.ts'",
