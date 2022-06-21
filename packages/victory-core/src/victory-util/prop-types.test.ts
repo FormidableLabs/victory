@@ -97,8 +97,8 @@ describe("victory-util/prop-types", () => {
     };
 
     beforeEach(() => {
-      jest.spyOn(console, "warn").mockImplementation(() => {});
-      jest.spyOn(console, "error").mockImplementation(() => {});
+      jest.spyOn(console, "warn").mockImplementation(() => null);
+      jest.spyOn(console, "error").mockImplementation(() => null);
     });
 
     afterEach(() => {
