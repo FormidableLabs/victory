@@ -10,7 +10,7 @@ import {
   UserProps,
   VictoryCommonPrimitiveProps,
   LineHelpers,
-  VictoryCommonThemeProps
+  VictoryCommonThemeProps,
 } from "victory-core";
 
 const defined = (d) => {

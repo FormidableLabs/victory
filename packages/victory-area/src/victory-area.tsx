@@ -22,7 +22,7 @@ import {
   VictoryDatableProps,
   VictoryMultiLabelableProps,
   VictoryStyleInterface,
-  EventsMixinClass
+  EventsMixinClass,
 } from "victory-core";
 
 const fallbackProps = {

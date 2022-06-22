@@ -229,7 +229,7 @@ describe("victory-core", () => {
       "TextSize",
       "Transitions",
       "UserProps",
-      "Wrapper"
+      "Wrapper",
     ];
 
     it("should export all namespaces", () => {

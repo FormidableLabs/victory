@@ -17,7 +17,7 @@ import {
   StringOrNumberOrCallback,
   VictoryCommonProps,
   VictoryStyleInterface,
-  VictoryStyleObject
+  VictoryStyleObject,
 } from "victory-core";
 import { VictorySharedEvents } from "victory-shared-events";
 import { VictoryAxis } from "victory-axis";
