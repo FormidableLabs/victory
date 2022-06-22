@@ -24,8 +24,8 @@ const NativeVictoryBoxPlot = wrapCoreComponent({
     q3LabelComponent: <VictoryLabel />,
     containerComponent: <VictoryContainer />,
     groupComponent: <G />,
-    width: Dimensions.get("window").width
-  })
+    width: Dimensions.get("window").width,
+  }),
 });
 
 export default NativeVictoryBoxPlot;

@@ -25,7 +25,7 @@ describe("point-path-helpers", () => {
       const baseSize = 0.87 * size;
       const length = Math.sqrt(2 * (baseSize * baseSize));
       expect(pathResult).toContain(
-        `M ${Math.round(x)}, ${Math.round(y + length)}`
+        `M ${Math.round(x)}, ${Math.round(y + length)}`,
       );
     });
   });

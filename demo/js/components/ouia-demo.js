@@ -14,10 +14,10 @@ class App extends React.Component {
       flexDirection: "row",
       flexWrap: "wrap",
       alignItems: "center",
-      justifyContent: "center"
+      justifyContent: "center",
     };
     const chartStyle = {
-      parent: { border: "1px solid #ccc", margin: "2%", maxWidth: "40%" }
+      parent: { border: "1px solid #ccc", margin: "2%", maxWidth: "40%" },
     };
 
     return (

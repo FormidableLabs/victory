@@ -13,7 +13,7 @@ import {
   isEqual,
   includes,
   isUndefined,
-  omitBy
+  omitBy,
 } from "lodash";
 import * as Helpers from "./helpers";
 import * as Collection from "./collection";
@@ -25,7 +25,7 @@ import * as Immutable from "./immutable";
 function parseDatum(datum) {
   const immutableDatumWhitelist = {
     errorX: true,
-    errorY: true
+    errorY: true,
   };
 
   return Immutable.isImmutable(datum)
@@ -70,7 +70,7 @@ function cleanData(dataset, props) {
   const smallNumber = 1 / Number.MAX_SAFE_INTEGER;
   const scaleType = {
     x: Scale.getScaleType(props, "x"),
-    y: Scale.getScaleType(props, "y")
+    y: Scale.getScaleType(props, "y"),
   };
   if (scaleType.x !== "log" && scaleType.y !== "log") {
     return dataset;
@@ -188,7 +188,7 @@ export function createStringMap(props, axis) {
   const allStrings = uniq([
     ...stringsFromAxes,
     ...stringsFromCategories,
-    ...stringsFromData
+    ...stringsFromData,
   ]);
   return allStrings.length === 0
     ? null
@@ -215,7 +215,7 @@ export function downsample(data, maxPoints, startingIndex = 0) {
     const k = Math.pow(2, Math.ceil(Math.log2(dataLength / maxPoints)));
     return data.filter(
       // ensure modulo is always calculated from same reference: i + startingIndex
-      (d, i) => (i + startingIndex) % k === 0
+      (d, i) => (i + startingIndex) % k === 0,
     );
   }
   return data;
@@ -231,7 +231,7 @@ export function downsample(data, maxPoints, startingIndex = 0) {
 export function formatData(
   dataset: any[],
   props: any,
-  expectedKeys?: string[]
+  expectedKeys?: string[],
 ) {
   const isArrayOrIterable =
     Array.isArray(dataset) || Immutable.isIterable(dataset);
@@ -244,7 +244,7 @@ export function formatData(
 
   const createAccessor = (name) => {
     return Helpers.createAccessor(
-      props[name] !== undefined ? props[name] : name
+      props[name] !== undefined ? props[name] : name,
     );
   };
 
@@ -274,7 +274,7 @@ export function formatData(
       y0:
         expectedKeys.indexOf("y0") !== -1
           ? createStringMap(props, "y")
-          : undefined
+          : undefined,
     };
   }
 
@@ -450,7 +450,7 @@ export function isDataComponent(component) {
     "pie",
     "scatter",
     "stack",
-    "voronoi"
+    "voronoi",
   ];
   return includes(whitelist, role);
 }

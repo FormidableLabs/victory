@@ -5,7 +5,7 @@ import {
   VictoryTooltip,
   VictoryChart,
   VictoryLine,
-  VictoryAxis
+  VictoryAxis,
 } from "victory";
 
 import importedTheme from "../../styles/theme";
@@ -17,8 +17,8 @@ export default class App extends React.Component {
         boxSizing: "border-box",
         display: "block",
         margin: "0 auto",
-        padding: 0
-      }
+        padding: 0,
+      },
     };
   }
 
@@ -51,30 +51,30 @@ export default class App extends React.Component {
             {
               x: 1,
               y: 5,
-              l: "one"
+              l: "one",
             },
             {
               x: 1.5,
               y: 5,
-              l: "one point five"
+              l: "one point five",
             },
             {
               x: 2,
               y: 4,
-              l: "two"
+              l: "two",
             },
             {
               x: 3,
               y: -2,
-              l: "three"
-            }
+              l: "three",
+            },
           ]}
           style={{
             data: {
               stroke: importedTheme.color.red,
-              strokeWidth: ({ active }) => (active ? 5 : 3)
+              strokeWidth: ({ active }) => (active ? 5 : 3),
             },
-            labels: { fill: importedTheme.color.red }
+            labels: { fill: importedTheme.color.red },
           }}
         />
 
@@ -83,25 +83,25 @@ export default class App extends React.Component {
             {
               x: 1,
               y: -3,
-              l: "red"
+              l: "red",
             },
             {
               x: 2,
               y: 5,
-              l: "green"
+              l: "green",
             },
             {
               x: 3,
               y: 3,
-              l: "blue"
-            }
+              l: "blue",
+            },
           ]}
           style={{
             data: {
               stroke: importedTheme.color.gray,
-              strokeWidth: ({ active }) => (active ? 5 : 3)
+              strokeWidth: ({ active }) => (active ? 5 : 3),
             },
-            labels: { fill: importedTheme.color.gray }
+            labels: { fill: importedTheme.color.gray },
           }}
         />
 
@@ -110,25 +110,25 @@ export default class App extends React.Component {
             {
               x: 1,
               y: 5,
-              l: "cat"
+              l: "cat",
             },
             {
               x: 2,
               y: -4,
-              l: "dog"
+              l: "dog",
             },
             {
               x: 3,
               y: -2,
-              l: "bird"
-            }
+              l: "bird",
+            },
           ]}
           style={{
             data: {
               stroke: importedTheme.color.black,
-              strokeWidth: ({ active }) => (active ? 5 : 3)
+              strokeWidth: ({ active }) => (active ? 5 : 3),
             },
-            labels: { fill: importedTheme.color.black }
+            labels: { fill: importedTheme.color.black },
           }}
         />
       </VictoryChart>

@@ -1,7 +1,7 @@
 import { render, screen } from "@testing-library/react";
 import React from "react";
 import { VictoryBar } from "victory-bar";
-import VictoryGroup from "./victory-group";
+import { VictoryGroup } from "victory-group";
 
 describe("components/victory-group", () => {
   it("has a static role", () => {
@@ -14,7 +14,7 @@ describe("components/victory-group", () => {
         <VictoryGroup>
           <VictoryBar />
           <VictoryBar />
-        </VictoryGroup>
+        </VictoryGroup>,
       );
       const svg = container.querySelector("svg");
       expect(svg.style.width).toEqual("100%");
@@ -26,7 +26,7 @@ describe("components/victory-group", () => {
         <VictoryGroup>
           <VictoryBar />
           <VictoryBar />
-        </VictoryGroup>
+        </VictoryGroup>,
       );
       const svg = container.querySelector("svg");
       const viewBoxValue = `0 0 ${450} ${300}`;
@@ -38,7 +38,7 @@ describe("components/victory-group", () => {
         <VictoryGroup data-testid="victory-group" aria-label="Group">
           <VictoryBar />
           <VictoryBar />
-        </VictoryGroup>
+        </VictoryGroup>,
       );
 
       expect(screen.getByTestId("victory-group")).toBeDefined();

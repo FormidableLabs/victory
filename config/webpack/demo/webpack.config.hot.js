@@ -17,8 +17,8 @@ firstLoader.loader = null;
 
 module.exports = _.merge({}, _.omit(base, "entry", "module"), {
   entry: {
-    app: [require.resolve("webpack/hot/only-dev-server"), "./demo/js/app"]
+    app: [require.resolve("webpack/hot/only-dev-server"), "./demo/js/app"],
   },
 
-  module: mod
+  module: mod,
 });

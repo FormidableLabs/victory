@@ -30,7 +30,7 @@ const unsupportedAndStrokeProps = [
   "strokeDashoffset",
   "strokeLinecap",
   "strokeLinejoin",
-  ...unsupportedProps
+  ...unsupportedProps,
 ];
 
 const getStyle = (style, extraOmitProperties) => {
@@ -48,12 +48,12 @@ const getStyle = (style, extraOmitProperties) => {
 };
 
 export default {
-  getStyle
+  getStyle,
 };
 
 export const useGetNativeStyle = (style, extraOmitProperties) => {
   return React.useMemo(
     () => getStyle(style, extraOmitProperties),
-    [style, extraOmitProperties]
+    [style, extraOmitProperties],
   );
 };

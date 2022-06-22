@@ -18,7 +18,7 @@ const getRepeatData = (num, samples) => {
   return range(num).reduce((memo, curr) => {
     const sampleData = range(samples).map(() => ({
       x: curr + 1,
-      y: rand()
+      y: rand(),
     }));
     return memo.concat(sampleData);
   }, []);
@@ -43,21 +43,21 @@ const containerStyle = {
   flexDirection: "row",
   flexWrap: "wrap",
   alignItems: "center",
-  justifyContent: "center"
+  justifyContent: "center",
 };
 
 const parentStyle = {
-  parent: { border: "1px solid #ccc", margin: "2%", maxWidth: "40%" }
+  parent: { border: "1px solid #ccc", margin: "2%", maxWidth: "40%" },
 };
 
 const defaultChartProps = {
   style: parentStyle,
-  domainPadding: 25
+  domainPadding: 25,
 };
 
 export default {
   title: "VictoryBoxPlot",
-  component: VictoryBoxPlot
+  component: VictoryBoxPlot,
 };
 
 export const DefaultRendering = () => {
@@ -127,7 +127,7 @@ export const Data = () => {
           data={[
             { type: 1, Min: 1, Max: 18, Median: 8, Q1: 5, Q3: 15 },
             { type: 2, Min: 4, Max: 20, Median: 10, Q1: 7, Q3: 15 },
-            { type: 3, Min: 3, Max: 12, Median: 6, Q1: 5, Q3: 10 }
+            { type: 3, Min: 3, Max: 12, Median: 6, Q1: 5, Q3: 10 },
           ]}
           x="type"
           min="Min"
@@ -142,7 +142,7 @@ export const Data = () => {
           data={[
             { type: 1, Min: 1, Max: 18, Median: 8, Q1: 5, Q3: 15 },
             { type: 2, Min: 4, Max: 20, Median: 10, Q1: 7, Q3: 15 },
-            { type: 3, Min: 3, Max: 12, Median: 6, Q1: 5, Q3: 10 }
+            { type: 3, Min: 3, Max: 12, Median: 6, Q1: 5, Q3: 10 },
           ]}
           x="type"
           min="Min"
@@ -207,7 +207,7 @@ export const Labels = () => {
             q3: "left",
             min: "right",
             max: "right",
-            median: "right"
+            median: "right",
           }}
         />
       </VictoryChart>
@@ -220,7 +220,7 @@ export const Labels = () => {
             q3: "top",
             min: "bottom",
             max: "bottom",
-            median: "bottom"
+            median: "bottom",
           }}
         />
       </VictoryChart>
@@ -242,7 +242,7 @@ export const Tooltips = () => {
             q3: "left",
             min: "right",
             max: "right",
-            median: "right"
+            median: "right",
           }}
         />
       </VictoryChart>
@@ -257,7 +257,7 @@ export const Tooltips = () => {
             q3: "top",
             min: "bottom",
             max: "bottom",
-            median: "bottom"
+            median: "bottom",
           }}
         />
       </VictoryChart>
@@ -279,7 +279,7 @@ export const Style = () => {
             q3: { fill: "#2bbee0", fillOpacity: 0.5 },
             median: { stroke: "#fff", strokeWidth: 2 },
             minLabels: { fill: "#FF530D", padding: 10 },
-            maxLabels: { fill: "#2bbee0", padding: 10 }
+            maxLabels: { fill: "#2bbee0", padding: 10 },
           }}
         />
       </VictoryChart>
@@ -292,15 +292,15 @@ export const Style = () => {
             max: { stroke: "#2bbee0", strokeWidth: 2 },
             q1: {
               fill: "#FF530D",
-              fillOpacity: ({ datum }) => (datum.q1 < 10 ? 1 : 0.5)
+              fillOpacity: ({ datum }) => (datum.q1 < 10 ? 1 : 0.5),
             },
             q3: {
               fill: "#2bbee0",
-              fillOpacity: ({ datum }) => (datum.q3 > 15 ? 1 : 0.5)
+              fillOpacity: ({ datum }) => (datum.q3 > 15 ? 1 : 0.5),
             },
             median: { stroke: "#fff", strokeWidth: 2 },
             minLabels: { fill: "#FF530D", padding: 10 },
-            maxLabels: { fill: "#2bbee0", padding: 10 }
+            maxLabels: { fill: "#2bbee0", padding: 10 },
           }}
         />
       </VictoryChart>

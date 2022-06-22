@@ -1,15 +1,14 @@
 import { fireEvent, render, screen } from "@testing-library/react";
 import { range } from "lodash";
 import React from "react";
-import Candle from "./candle";
-import VictoryCandlestick from "./victory-candlestick";
+import { Candle, VictoryCandlestick } from "victory-candlestick";
 import { VictoryChart } from "victory-chart";
 
 const MyCandle = () => <div data-testid="my-candle" />;
 
 const dataSet = [
   { x: 5, open: 10, close: 20, high: 25, low: 5 },
-  { x: 1, open: 80, close: 40, high: 120, low: 10, label: "1" }
+  { x: 1, open: 80, close: 40, high: 120, low: 10, label: "1" },
 ];
 
 describe("components/victory-candlestick", () => {
@@ -20,7 +19,7 @@ describe("components/victory-candlestick", () => {
           data-testid="victory-candlestick"
           aria-label="Chart"
           unsafe-prop="test"
-        />
+        />,
       );
 
       const container = screen.getByTestId("victory-candlestick");
@@ -36,7 +35,7 @@ describe("components/victory-candlestick", () => {
           aria-label="Chart"
           unsafe-prop="test"
         />,
-        { wrapper: VictoryChart }
+        { wrapper: VictoryChart },
       );
 
       const container = screen.getByTestId("victory-candlestick");
@@ -72,7 +71,7 @@ describe("components/victory-candlestick", () => {
         open: i,
         close: i,
         high: i,
-        low: i
+        low: i,
       }));
       render(<VictoryCandlestick data={data} dataComponent={<MyCandle />} />);
 
@@ -86,7 +85,7 @@ describe("components/victory-candlestick", () => {
         open: i,
         close: i,
         high: i,
-        low: i
+        low: i,
       }));
       const { container } = render(<VictoryCandlestick data={data} />);
       const points = container.querySelectorAll("rect");
@@ -98,7 +97,7 @@ describe("components/victory-candlestick", () => {
         .map((i) => ({ x: i, open: i, close: i, high: i, low: i }))
         .reverse();
       const { container } = render(
-        <VictoryCandlestick data={data} sortKey="x" />
+        <VictoryCandlestick data={data} sortKey="x" />,
       );
       const candles = container.querySelectorAll("rect");
       const xValues = Array.from(candles).map((bar) => bar.getAttribute("x"));
@@ -111,7 +110,7 @@ describe("components/victory-candlestick", () => {
         .map((i) => ({ x: i, open: i, close: i, high: i, low: i }))
         .reverse();
       const { container } = render(
-        <VictoryCandlestick data={data} sortKey="x" sortOrder="descending" />
+        <VictoryCandlestick data={data} sortKey="x" sortOrder="descending" />,
       );
       const candles = container.querySelectorAll("rect");
       const xValues = Array.from(candles).map((bar) => bar.getAttribute("x"));
@@ -129,7 +128,7 @@ describe("components/victory-candlestick", () => {
           close={2}
           high={3}
           low={4}
-        />
+        />,
       );
       const points = container.querySelectorAll("rect");
       expect(points).toHaveLength(10);
@@ -137,7 +136,7 @@ describe("components/victory-candlestick", () => {
 
     it("renders points for deeply-nested data", () => {
       const data = range(20).map((i) => ({
-        a: { b: [{ x: i, open: i, close: i, high: i, low: i }] }
+        a: { b: [{ x: i, open: i, close: i, high: i, low: i }] },
       }));
       const { container } = render(
         <VictoryCandlestick
@@ -147,7 +146,7 @@ describe("components/victory-candlestick", () => {
           close="a.b[0].close"
           high="a.b[0].high"
           low="a.b[0].low"
-        />
+        />,
       );
       const points = container.querySelectorAll("rect");
       expect(points).toHaveLength(20);
@@ -163,7 +162,7 @@ describe("components/victory-candlestick", () => {
           close={null}
           high={null}
           low={null}
-        />
+        />,
       );
       const points = container.querySelectorAll("rect");
       expect(points).toHaveLength(10);
@@ -176,7 +175,7 @@ describe("components/victory-candlestick", () => {
         { x: 2, open: null, close: 17, high: 17, low: 17 },
         { x: 3, open: 17, close: null, high: 17, low: 17 },
         { x: 4, open: 17, close: 17, high: null, low: 17 },
-        { x: 5, open: 17, close: 17, high: 17, low: null }
+        { x: 5, open: 17, close: 17, high: 17, low: null },
       ];
       const { container } = render(<VictoryCandlestick data={data} />);
       const points = container.querySelectorAll("rect");
@@ -198,10 +197,10 @@ describe("components/victory-candlestick", () => {
           events={[
             {
               target: "data",
-              eventHandlers: { onClick: clickHandler }
-            }
+              eventHandlers: { onClick: clickHandler },
+            },
           ]}
-        />
+        />,
       );
 
       const data = container.querySelectorAll("rect");
@@ -220,7 +219,7 @@ describe("components/victory-candlestick", () => {
       const data = [
         { x: 0, open: 9, close: 30, high: 56, low: 7 },
         { x: 1, open: 80, close: 40, high: 120, low: 10 },
-        { x: 2, open: 50, close: 80, high: 90, low: 20 }
+        { x: 2, open: 50, close: 80, high: 90, low: 20 },
       ];
       render(<VictoryCandlestick data={data} />);
 
@@ -234,7 +233,7 @@ describe("components/victory-candlestick", () => {
       const data = [
         { x: new Date(2016, 6, 1), open: 20, close: 43, high: 66, low: 7 },
         { x: new Date(2016, 6, 2), open: 80, close: 40, high: 120, low: 10 },
-        { x: new Date(2016, 6, 3), open: 50, close: 80, high: 90, low: 20 }
+        { x: new Date(2016, 6, 3), open: 50, close: 80, high: 90, low: 20 },
       ];
       const { container } = render(
         <VictoryCandlestick
@@ -248,7 +247,7 @@ describe("components/victory-candlestick", () => {
               tabIndex={({ index }) => index + 5}
             />
           }
-        />
+        />,
       );
 
       container.querySelectorAll("rect").forEach((node, index) => {

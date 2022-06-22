@@ -1,6 +1,6 @@
 import { render } from "@testing-library/react";
 import React from "react";
-import Slice from "./slice";
+import { Slice } from "victory-pie";
 import { SVGWrapper } from "../../../test/helpers";
 
 describe("victory-primitives/slice", () => {
@@ -16,8 +16,9 @@ describe("victory-primitives/slice", () => {
       };
 
       const { container } = render(
+        // @ts-expect-error there is a prop mismatch here between the slice definition and the prop
         <Slice pathFunction={pathFunction} slice={slice} />,
-        { wrapper: SVGWrapper }
+        { wrapper: SVGWrapper },
       );
 
       expect(container.querySelector("path")).toMatchInlineSnapshot(`

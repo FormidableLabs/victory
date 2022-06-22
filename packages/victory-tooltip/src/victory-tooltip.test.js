@@ -1,6 +1,5 @@
 import React from "react";
-import Flyout from "./flyout";
-import VictoryTooltip from "./victory-tooltip";
+import { Flyout, VictoryTooltip } from "victory-tooltip";
 import { VictoryContainer, VictoryLabel } from "victory-core";
 import { fireEvent, screen, render } from "@testing-library/react";
 
@@ -17,12 +16,12 @@ describe("components/victory-tooltip", () => {
     active: true,
     text: "such text, wow",
     flyoutComponent: <Flyout data-testid={flyoutId} />,
-    labelComponent: <VictoryLabel data-testid={labelId} />
+    labelComponent: <VictoryLabel data-testid={labelId} />,
   };
 
   it("renders nothing when not active", () => {
     render(<VictoryTooltip {...baseProps} active={false} />, {
-      wrapper: VictoryContainer
+      wrapper: VictoryContainer,
     });
     const output = screen.queryByTestId(labelId);
     expect(output).not.toBeInTheDocument();
@@ -49,7 +48,7 @@ describe("components/victory-tooltip", () => {
       const clickHandler = jest.fn();
       render(
         <VictoryTooltip {...baseProps} events={{ onClick: clickHandler }} />,
-        { wrapper: VictoryContainer }
+        { wrapper: VictoryContainer },
       );
       fireEvent.click(screen.getByTestId(flyoutId));
       expect(clickHandler).toBeCalled();

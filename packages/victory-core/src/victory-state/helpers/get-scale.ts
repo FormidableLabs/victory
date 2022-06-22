@@ -2,7 +2,7 @@ import {
   scaleLinear,
   scaleTime,
   scaleLog,
-  scaleSqrt
+  scaleSqrt,
 } from "victory-vendor/d3-scale";
 import { AxisType, D3ScaleFn, ScalePropType } from "../../types/prop-types";
 import * as Collection from "../../victory-util/collection";
@@ -42,7 +42,7 @@ function getD3ScaleFromString(scale: ScalePropType): D3ScaleFn {
 
 export function getScale(
   { data = [], ...props }: ScaleProps,
-  axis: AxisType
+  axis: AxisType,
 ): D3ScaleFn {
   const scale = getValueForAxis<Scale>(props.scale, axis);
 

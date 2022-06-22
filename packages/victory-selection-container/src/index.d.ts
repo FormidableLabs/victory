@@ -14,7 +14,7 @@ interface VictorySelectionContainerProps extends VictoryContainerProps {
   onSelection?: (
     points: PointsInterface[],
     bounds: { x: number | Date; y: number | Date }[],
-    props: VictorySelectionContainerProps
+    props: VictorySelectionContainerProps,
   ) => void;
   onSelectionCleared?: (props: VictorySelectionContainerProps) => void;
   selectionBlacklist?: string[];

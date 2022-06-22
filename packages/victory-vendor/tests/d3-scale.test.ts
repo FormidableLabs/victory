@@ -50,7 +50,7 @@ import {
   scaleThreshold,
   scaleTime,
   scaleUtc,
-  tickFormat
+  tickFormat,
 } from "victory-vendor/d3-scale";
 
 describe("d3-scale", () => {

@@ -1,4 +1,4 @@
-import * as Collection from "./collection";
+import { Collection } from "victory-core";
 
 describe("victory-util/collection", () => {
   describe("containsStrings", () => {
@@ -37,7 +37,7 @@ describe("victory-util/collection", () => {
     it("returns false for collections of non-strings", () => {
       expect(Collection.containsOnlyStrings([0, 1])).toEqual(false);
       expect(Collection.containsOnlyStrings([undefined, null, NaN])).toEqual(
-        false
+        false,
       );
       expect(Collection.containsOnlyStrings([{}, { a: "foo" }])).toEqual(false);
     });
@@ -45,10 +45,10 @@ describe("victory-util/collection", () => {
     it("returns false for collections with some strings", () => {
       expect(Collection.containsOnlyStrings(["hello", 0])).toEqual(false);
       expect(Collection.containsOnlyStrings(["hello", ["not me"]])).toEqual(
-        false
+        false,
       );
       expect(Collection.containsOnlyStrings([0, "hello", {}, null])).toEqual(
-        false
+        false,
       );
     });
 
@@ -107,7 +107,7 @@ describe("victory-util/collection", () => {
         false,
         null,
         NaN,
-        undefined
+        undefined,
       ];
       const expectedArray = [0, {}, false, null, NaN];
       expect(Collection.removeUndefined(testArray)).toEqual(expectedArray);
@@ -136,7 +136,7 @@ describe("victory-util/collection", () => {
       const array = [
         new Date(2016, 3, 6),
         new Date(2017, 5, 3),
-        new Date(2015, 11, 4)
+        new Date(2015, 11, 4),
       ];
       expect(Collection.getMinValue(array)).toEqual(new Date(2015, 11, 4));
     });

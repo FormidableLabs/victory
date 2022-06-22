@@ -9,7 +9,7 @@ import {
   CountableTimeInterval,
   TimeInterval,
   timeDay,
-  timeInterval
+  timeInterval,
 } from "victory-vendor/d3-time";
 
 describe("d3-time", () => {

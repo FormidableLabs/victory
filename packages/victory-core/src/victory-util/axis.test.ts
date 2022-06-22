@@ -1,8 +1,7 @@
 import React from "react";
 import { VictoryAxis } from "victory-axis";
 import { VictoryBar } from "victory-bar";
-import * as Axis from "./axis";
-import * as Scale from "./scale";
+import { Axis, Scale } from "victory-core";
 
 describe("helpers/axis", () => {
   const getVictoryAxis = (props) => React.createElement(VictoryAxis, props);
@@ -91,7 +90,7 @@ describe("helpers/axis", () => {
       expect(dependentAxis.type.getAxis).toBeCalledWith(dependentAxis.props);
       // @ts-expect-error This will error until we convert `victory-axis`
       expect(independentAxis.type.getAxis).toBeCalledWith(
-        independentAxis.props
+        independentAxis.props,
       );
       expect(componentResult).toEqual(independentAxis);
     });

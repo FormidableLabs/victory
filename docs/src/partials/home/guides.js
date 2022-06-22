@@ -5,7 +5,7 @@ import LazyRender from "../lazy-render";
 import {
   LandingSectionWrapper,
   LandingSectionContent,
-  DropShadow
+  DropShadow,
 } from "./styles";
 
 import createPath from "../../helpers/path-helpers";

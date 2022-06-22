@@ -188,7 +188,7 @@ export default class App extends React.Component<any, {}> {
               "to",
               "shift",
               "labels",
-              "relative to one another."
+              "relative to one another.",
             ]}
             inline
             dx={10}
@@ -206,14 +206,14 @@ export default class App extends React.Component<any, {}> {
               { fill: "pink" },
               { fill: "blue" },
               { fill: "purple" },
-              { fill: "red" }
+              { fill: "red" },
             ]}
             backgroundPadding={[{ right: -25 }, { right: -80, bottom: -30 }]}
             text={[
               "Victory is awesome.",
               "This is variable",
               "lineHeight",
-              "as an array."
+              "as an array.",
             ]}
             style={[{ fontSize: 50, fill: "green" }, { fontSize: 60 }]}
             lineHeight={[2, 2, 3, 1]}
@@ -231,7 +231,7 @@ export default class App extends React.Component<any, {}> {
               "Victory is awesome.",
               "Even if we leave blank arrays",
               "for style or lineHeight,",
-              "Victory will save us with defaults."
+              "Victory will save us with defaults.",
             ]}
             style={[]}
             lineHeight={[1, 2, 2]}

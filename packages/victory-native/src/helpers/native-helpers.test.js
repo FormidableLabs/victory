@@ -21,8 +21,8 @@ describe("getStyle", () => {
         strokeDasharray: 1,
         strokeDashoffset: 1,
         strokeLinecap: 1,
-        strokeLinejoin: 1
-      })
+        strokeLinejoin: 1,
+      }),
     ).toEqual({
       fill: "black",
       stroke: "grey",
@@ -31,7 +31,7 @@ describe("getStyle", () => {
       strokeDasharray: 1,
       strokeDashoffset: 1,
       strokeLinecap: 1,
-      strokeLinejoin: 1
+      strokeLinejoin: 1,
     });
   });
 
@@ -51,8 +51,8 @@ describe("getStyle", () => {
         strokeDasharray: 1,
         strokeDashoffset: 1,
         strokeLinecap: 1,
-        strokeLinejoin: 1
-      })
+        strokeLinejoin: 1,
+      }),
     ).toEqual({ fill: "black" });
   });
 
@@ -72,8 +72,8 @@ describe("getStyle", () => {
         strokeDasharray: 1,
         strokeDashoffset: 1,
         strokeLinecap: 1,
-        strokeLinejoin: 1
-      })
+        strokeLinejoin: 1,
+      }),
     ).toEqual({ fill: "black" });
   });
 
@@ -81,8 +81,8 @@ describe("getStyle", () => {
     expect(
       NativeHelpers.getStyle({ width: 100, height: 100, depth: 100 }, [
         "width",
-        "depth"
-      ])
+        "depth",
+      ]),
     ).toEqual({ height: 100 });
   });
 });

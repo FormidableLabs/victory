@@ -1,5 +1,5 @@
 import React from "react";
-import { Curve } from "./curve";
+import { Curve } from "victory-line";
 import * as d3Scale from "victory-vendor/d3-scale";
 import { render } from "@testing-library/react";
 import { SVGWrapper } from "../../../test/helpers";
@@ -11,18 +11,18 @@ describe("victory-primitives/curve", () => {
       { _x1: 2, x1: 2, _y1: 5, y1: 5, eventKey: 1 },
       { _x1: 3, x1: 3, _y1: 7, y1: 7, eventKey: 2 },
       { _x1: 4, x1: 4, _y1: 10, y1: 10, eventKey: 3 },
-      { _x1: 5, x1: 5, _y1: 15, y1: 15, eventKey: 4 }
+      { _x1: 5, x1: 5, _y1: 15, y1: 15, eventKey: 4 },
     ],
     scale: {
       x: d3Scale.scaleLinear(),
-      y: d3Scale.scaleLinear()
+      y: d3Scale.scaleLinear(),
     },
-    interpolation: "basis"
+    interpolation: "basis",
   };
 
   it("should render a single curve for consecutive data", () => {
     const { container } = render(<Curve {...baseProps} />, {
-      wrapper: SVGWrapper
+      wrapper: SVGWrapper,
     });
     expect(container.querySelector("path")).toMatchInlineSnapshot(`
       <path

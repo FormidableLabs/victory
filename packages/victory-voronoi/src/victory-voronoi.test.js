@@ -1,15 +1,14 @@
 import React from "react";
 import { random, range } from "lodash";
 import { calculateD3Path } from "../../../test/helpers";
-import Voronoi from "./voronoi";
-import VictoryVoronoi from "./victory-voronoi";
+import { VictoryVoronoi, Voronoi } from "victory-voronoi";
 import { fireEvent, render, screen } from "@testing-library/react";
 
 describe("components/victory-voronoi", () => {
   describe("default component rendering", () => {
     it("accepts user props", () => {
       const { container } = render(
-        <VictoryVoronoi data-testid="victory-voronoi" aria-label="Chart" />
+        <VictoryVoronoi data-testid="victory-voronoi" aria-label="Chart" />,
       );
 
       const svgNode = container.querySelector("svg");
@@ -42,14 +41,14 @@ describe("components/victory-voronoi", () => {
         data: [
           { x: 0, y: 0 },
           { x: 2, y: 3 },
-          { x: 4, y: 1 }
-        ]
+          { x: 4, y: 1 },
+        ],
       };
       const { container } = render(<VictoryVoronoi {...props} />);
 
       expect(container.querySelector("path")).toHaveAttribute(
         "d",
-        calculateD3Path(props, "voronoi", 0)
+        calculateD3Path(props, "voronoi", 0),
       );
     });
 
@@ -64,14 +63,14 @@ describe("components/victory-voronoi", () => {
           dataComponent={
             <Voronoi data-testid="voronoi-1" data-props-json={JSON.stringify} />
           }
-        />
+        />,
       );
 
       const renderedDataProps = screen
         .getAllByTestId("voronoi-1")
         .map((node) => JSON.parse(node.getAttribute("data-props-json")));
       expect(renderedDataProps.map((props) => props.datum._x)).toEqual([
-        0, 1, 2, 3, 4
+        0, 1, 2, 3, 4,
       ]);
     });
 
@@ -87,7 +86,7 @@ describe("components/victory-voronoi", () => {
           dataComponent={
             <Voronoi data-testid="voronoi-1" data-props-json={JSON.stringify} />
           }
-        />
+        />,
       );
 
       const renderedDataProps = screen
@@ -95,7 +94,7 @@ describe("components/victory-voronoi", () => {
         .map((node) => JSON.parse(node.getAttribute("data-props-json")));
 
       expect(renderedDataProps.map((props) => props.datum._x)).toEqual([
-        4, 3, 2, 1, 0
+        4, 3, 2, 1, 0,
       ]);
     });
 
@@ -104,7 +103,7 @@ describe("components/victory-voronoi", () => {
         { x: 1, y: 2 },
         { x: null, y: 4 },
         { x: 5, y: null },
-        { x: 1, y: 2 }
+        { x: 1, y: 2 },
       ];
       const { container } = render(<VictoryVoronoi data={data} />);
       const paths = container.querySelectorAll("path");
@@ -120,17 +119,17 @@ describe("components/victory-voronoi", () => {
           events={[
             {
               target: "parent",
-              eventHandlers: { onClick: clickHandler }
-            }
+              eventHandlers: { onClick: clickHandler },
+            },
           ]}
-        />
+        />,
       );
       const svg = container.querySelector("svg");
       fireEvent.click(svg);
       expect(clickHandler).toBeCalled();
       // the first argument is the standard evt object
       expect(Object.keys(clickHandler.mock.calls[0][1])).toEqual(
-        expect.arrayContaining(["data", "scale", "width", "height", "style"])
+        expect.arrayContaining(["data", "scale", "width", "height", "style"]),
       );
     });
 
@@ -141,10 +140,10 @@ describe("components/victory-voronoi", () => {
           events={[
             {
               target: "data",
-              eventHandlers: { onClick: clickHandler }
-            }
+              eventHandlers: { onClick: clickHandler },
+            },
           ]}
-        />
+        />,
       );
       const data = container.querySelectorAll("path");
       expect(data).toHaveLength(51);
@@ -169,10 +168,10 @@ describe("components/victory-voronoi", () => {
           events={[
             {
               target: "labels",
-              eventHandlers: { onClick: clickHandler }
-            }
+              eventHandlers: { onClick: clickHandler },
+            },
           ]}
-        />
+        />,
       );
 
       const labels = container.querySelectorAll("text");
@@ -215,7 +214,7 @@ describe("components/victory-voronoi", () => {
               tabIndex={({ index }) => index + 6}
             />
           }
-        />
+        />,
       );
       const paths = container.querySelectorAll("path");
       expect(paths).toHaveLength(3);

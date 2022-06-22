@@ -16,7 +16,7 @@ const data = [
   { name: "Casey", strength: 4, intelligence: 15, speed: 80, luck: 1 },
   { name: "Drew", strength: 3, intelligence: 25, speed: 600, luck: 5 },
   { name: "Erin", strength: 9, intelligence: 50, speed: 350, luck: 4 },
-  { name: "Francis", strength: 2, intelligence: 40, speed: 200, luck: 2 }
+  { name: "Francis", strength: 2, intelligence: 40, speed: 200, luck: 2 },
 ];
 
 const attributes = ["strength", "intelligence", "speed", "luck"];
@@ -35,7 +35,7 @@ class App extends React.Component {
       filters: {},
       activeDatasets: [],
       isFiltered: false,
-      externalMutation: undefined
+      externalMutation: undefined,
     };
   }
 
@@ -53,8 +53,8 @@ class App extends React.Component {
       name: datum.name,
       data: attributes.map((attribute, i) => ({
         x: attribute,
-        y: datum[attribute] / maximumValues[i]
-      }))
+        y: datum[attribute] / maximumValues[i],
+      })),
     }));
   }
 
@@ -111,7 +111,7 @@ class App extends React.Component {
 
   removeMutation() {
     this.setState({
-      externalMutation: undefined
+      externalMutation: undefined,
     });
   }
 
@@ -129,9 +129,9 @@ class App extends React.Component {
           mutation: () => {
             return { brushDomain: [0, 1 / Number.MAX_SAFE_INTEGER] };
           },
-          callback
-        }
-      ]
+          callback,
+        },
+      ],
     });
   }
 
@@ -141,10 +141,10 @@ class App extends React.Component {
       flexDirection: "row",
       flexWrap: "wrap",
       alignItems: "center",
-      justifyContent: "center"
+      justifyContent: "center",
     };
     const chartStyle = {
-      parent: { border: "1px solid #ccc", margin: "2%", maxWidth: "40%" }
+      parent: { border: "1px solid #ccc", margin: "2%", maxWidth: "40%" },
     };
     return (
       <div className="demo">
@@ -161,7 +161,7 @@ class App extends React.Component {
             <VictoryAxis
               style={{
                 tickLabels: { fontSize: 20 },
-                axis: { stroke: "none" }
+                axis: { stroke: "none" },
               }}
               tickLabelComponent={<VictoryLabel y={padding.top - 40} />}
             />
@@ -174,8 +174,8 @@ class App extends React.Component {
                 style={{
                   data: {
                     stroke: "tomato",
-                    opacity: this.isActive(dataset) ? 1 : 0.2
-                  }
+                    opacity: this.isActive(dataset) ? 1 : 0.2,
+                  },
                 }}
               />
             ))}
@@ -197,8 +197,8 @@ class App extends React.Component {
                   tickLabels: {
                     fontSize: 15,
                     padding: 15,
-                    pointerEvents: "none"
-                  }
+                    pointerEvents: "none",
+                  },
                 }}
                 tickValues={[0.2, 0.4, 0.6, 0.8, 1]}
                 tickFormat={(tick) =>
@@ -214,7 +214,7 @@ class App extends React.Component {
               data={[
                 { x: "one", y: 4 },
                 { x: "two", y: 5 },
-                { x: "three", y: 6 }
+                { x: "three", y: 6 },
               ]}
             />
             <VictoryAxis
@@ -227,7 +227,7 @@ class App extends React.Component {
               data={[
                 { x: "one", y: 4 },
                 { x: "two", y: 5 },
-                { x: "three", y: 6 }
+                { x: "three", y: 6 },
               ]}
             />
             <VictoryAxis
@@ -242,7 +242,7 @@ class App extends React.Component {
               data={[
                 { x: "one", y: 0 },
                 { x: "two", y: 2 },
-                { x: "three", y: 4 }
+                { x: "three", y: 4 },
               ]}
             />
             <VictoryAxis gridComponent={<VictoryBrushLine brushWidth={20} />} />
@@ -252,7 +252,7 @@ class App extends React.Component {
               data={[
                 { x: "one", y: 0 },
                 { x: "two", y: 2 },
-                { x: "three", y: 4 }
+                { x: "three", y: 4 },
               ]}
             />
             <VictoryAxis

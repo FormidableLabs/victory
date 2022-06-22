@@ -10,11 +10,11 @@ const basicData = [
   { x: 2, y: 2, errorX: [1, 3], errorY: 0.1 },
   { x: 3, y: 3, errorX: [1, 3], errorY: [0.2, 0.3] },
   { x: 4, y: 2, errorX: [1, 0.5], errorY: 0.1 },
-  { x: 5, y: 1, errorX: [1, 0.5], errorY: 0.2 }
+  { x: 5, y: 1, errorX: [1, 0.5], errorY: 0.2 },
 ];
 
 const style = {
-  parent: { border: "1px solid #ccc", margin: "2%", maxWidth: "40%" }
+  parent: { border: "1px solid #ccc", margin: "2%", maxWidth: "40%" },
 };
 
 type dataType = {
@@ -40,7 +40,7 @@ export default class VictoryErrorBarDemo extends React.Component<
 
     this.state = {
       data: this.getData(),
-      hoverStyle: { stroke: "gold " }
+      hoverStyle: { stroke: "gold " },
     };
   }
 
@@ -48,7 +48,7 @@ export default class VictoryErrorBarDemo extends React.Component<
     /* eslint-disable react/no-did-mount-set-state */
     this.setStateInterval = window.setInterval(() => {
       this.setState({
-        data: this.getData()
+        data: this.getData(),
       });
     }, 2000);
   }
@@ -63,7 +63,7 @@ export default class VictoryErrorBarDemo extends React.Component<
         x: random(6),
         y: random(6),
         errorX: [random(1, true), random(3, true)],
-        errorY: [random(2, true), random(2, true)]
+        errorY: [random(2, true), random(2, true)],
       };
     });
   };
@@ -77,7 +77,7 @@ export default class VictoryErrorBarDemo extends React.Component<
           flexDirection: "row",
           flexWrap: "wrap",
           alignItems: "center",
-          justifyContent: "center"
+          justifyContent: "center",
         }}
       >
         <VictoryChart style={style}>
@@ -118,7 +118,7 @@ export default class VictoryErrorBarDemo extends React.Component<
         <VictoryErrorBar
           style={{
             parent: { border: "1px solid #ccc", margin: "2%", maxWidth: "40%" },
-            data: { fill: ({ datum }) => (datum.y > 0 ? "red" : "blue") }
+            data: { fill: ({ datum }) => (datum.y > 0 ? "red" : "blue") },
           }}
           width={500}
           height={500}
@@ -127,7 +127,7 @@ export default class VictoryErrorBarDemo extends React.Component<
         <VictoryErrorBar
           style={{
             parent: { border: "1px solid #ccc", margin: "2%", maxWidth: "40%" },
-            data: { stroke: "blue", opacity: 0.7, strokeWidth: 3 }
+            data: { stroke: "blue", opacity: 0.7, strokeWidth: 3 },
           }}
           width={500}
           height={500}
@@ -150,14 +150,14 @@ export default class VictoryErrorBarDemo extends React.Component<
                     {
                       mutation: (props: any) => {
                         return {
-                          style: merge({}, props.style, { stroke: "orange" })
+                          style: merge({}, props.style, { stroke: "orange" }),
                         };
-                      }
-                    }
+                      },
+                    },
                   ];
-                }
-              }
-            }
+                },
+              },
+            },
           ]}
         />
 

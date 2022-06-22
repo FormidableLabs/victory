@@ -6,7 +6,7 @@ import {
   SectionListRenderItem,
   Text,
   TouchableOpacity,
-  View
+  View,
 } from "react-native";
 import styles from "../styles/container-view-styles";
 import { useNavigation } from "@react-navigation/native";
@@ -43,7 +43,7 @@ export const ComponentsScreen: React.FC = () => {
         </View>
       );
     },
-    []
+    [],
   );
 
   return (
@@ -75,9 +75,9 @@ const sections: SectionItem[] = [
       { key: "BoxPlot", title: "VictoryBoxPlot" },
       { key: "ErrorBar", title: "VictoryErrorBar" },
       { key: "Voronoi", title: "VictoryVoronoi" },
-      { key: "BrushLine", title: "VictoryBrushLine" }
+      { key: "BrushLine", title: "VictoryBrushLine" },
     ],
-    title: "Charts"
+    title: "Charts",
   },
   // {
   //   data: [
@@ -90,9 +90,9 @@ const sections: SectionItem[] = [
     data: [
       { key: "Legends", title: "Legends" },
       { key: "Axis", title: "Axis" },
-      { key: "PolarAxis", title: "VictoryPolarAxis" }
+      { key: "PolarAxis", title: "VictoryPolarAxis" },
       // { key: "ErrorsTooltipsView", title: "Errors & Tooltips" }
     ],
-    title: "Other"
-  }
+    title: "Other",
+  },
 ];

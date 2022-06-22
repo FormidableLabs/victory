@@ -10,7 +10,7 @@ import * as Victory from "victory";
 import * as d3Scale from "d3-scale";
 import {
   scaleDiscontinuous,
-  discontinuitySkipWeekends
+  discontinuitySkipWeekends,
 } from "@d3fc/d3fc-discontinuous-scale";
 
 import createPath from "../helpers/path-helpers";
@@ -111,7 +111,7 @@ const Gallery = ({ gallery, sidebarContent }) => {
                 listeningData,
                 d3Scale,
                 scaleDiscontinuous,
-                discontinuitySkipWeekends
+                discontinuitySkipWeekends,
               }}
             />
           )}
@@ -144,11 +144,11 @@ const Gallery = ({ gallery, sidebarContent }) => {
 Gallery.propTypes = {
   data: PropTypes.object,
   gallery: PropTypes.array,
-  sidebarContent: PropTypes.array
+  sidebarContent: PropTypes.array,
 };
 
 Gallery.defaultProps = {
-  params: null
+  params: null,
 };
 
 export default withRouteData(Gallery);

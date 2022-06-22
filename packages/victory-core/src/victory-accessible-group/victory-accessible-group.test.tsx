@@ -1,13 +1,13 @@
 import { render } from "@testing-library/react";
 import React from "react";
-import { VictoryAccessibleGroup } from "./victory-accessible-group";
+import { VictoryAccessibleGroup } from "victory-core";
 import { SVGWrapper } from "../../../../test/helpers";
 
 describe("components/victory-accessible-group", () => {
   it("renders an g with an aria-label", () => {
     const { container } = render(
       <VictoryAccessibleGroup aria-label="test-aria-label" />,
-      { wrapper: SVGWrapper }
+      { wrapper: SVGWrapper },
     );
     expect(container.querySelector("g")).toMatchInlineSnapshot(`
       <g
@@ -20,7 +20,7 @@ describe("components/victory-accessible-group", () => {
   it("renders an g with a tabIndex and className", () => {
     const { container } = render(
       <VictoryAccessibleGroup tabIndex={5} className="accessibility" />,
-      { wrapper: SVGWrapper }
+      { wrapper: SVGWrapper },
     );
     expect(container.querySelector("g")).toMatchInlineSnapshot(`
       <g
@@ -37,7 +37,7 @@ describe("components/victory-accessible-group", () => {
         desc="test description"
         aria-describedby="describes group"
       />,
-      { wrapper: SVGWrapper }
+      { wrapper: SVGWrapper },
     );
     expect(container.querySelector("g")).toMatchInlineSnapshot(`
       <g
@@ -60,7 +60,7 @@ describe("components/victory-accessible-group", () => {
         aria-label="desc node tests"
         desc="applies to both aria-describedby and descId"
       />,
-      { wrapper: SVGWrapper }
+      { wrapper: SVGWrapper },
     );
     expect(container.querySelector("g")).toMatchInlineSnapshot(`
       <g

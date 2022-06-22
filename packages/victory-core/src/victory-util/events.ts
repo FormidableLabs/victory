@@ -8,7 +8,7 @@ import {
   omitBy,
   uniq,
   includes,
-  keys
+  keys,
 } from "lodash";
 import type { EventMixinCalculatedValues } from "./add-events";
 
@@ -28,7 +28,7 @@ export type ComponentEventHandler = (
   evt: React.SyntheticEvent,
   childProps: unknown,
   eventKey: ComponentEventKey,
-  eventName: ComponentEventName
+  eventName: ComponentEventName,
 ) => UpdatedProps;
 export type UpdatedProps = any;
 
@@ -50,7 +50,7 @@ export function getEvents(
   target,
   eventKey,
   // eslint-disable-next-line no-shadow
-  getScopedEvents
+  getScopedEvents,
 ) {
   // Returns all events that apply to a particular target element
   const getEventsByTarget = (events: Array<ComponentEvent>) => {
@@ -128,7 +128,7 @@ export function getScopedEvents(
   events,
   namespace,
   childType,
-  baseProps
+  baseProps,
 ) {
   if (isEmpty(events)) {
     return {};
@@ -186,15 +186,15 @@ export function getScopedEvents(
       }
       const mutationTargetProps = getTargetProps(
         { childName, key, target },
-        "props"
+        "props",
       );
       const mutationTargetState = getTargetProps(
         { childName, key, target },
-        "state"
+        "state",
       );
       const mutatedProps = eventReturn.mutation(
         assign({}, mutationTargetProps, mutationTargetState),
-        baseProps
+        baseProps,
       );
       const childState = baseState[childName] || {};
 
@@ -212,7 +212,7 @@ export function getScopedEvents(
         return target === "parent"
           ? assign(state, { [key]: assign(state[key], mutatedProps) })
           : assign(state, {
-              [key]: assign(state[key], { [target]: mutatedProps })
+              [key]: assign(state[key], { [target]: mutatedProps }),
             });
       };
 
@@ -293,7 +293,7 @@ export function getScopedEvents(
 export function getPartialEvents(
   events: ComponentEventHandlers,
   eventKey: ComponentEventKey,
-  childProps: unknown
+  childProps: unknown,
 ): PartialEvents {
   if (!events) return {};
 
@@ -316,7 +316,7 @@ export function getEventState(
   this: ComponentWithEvents,
   eventKey: ComponentEventKey,
   namespace: string,
-  childType?: string
+  childType?: string,
 ) {
   // Mandatory usage: `getEventState.bind(this)`
   // eslint-disable-next-line no-invalid-this
@@ -348,7 +348,7 @@ export function getExternalMutationsWithChildren(
   mutations,
   baseProps,
   baseState,
-  childNames
+  childNames,
 ) {
   baseProps = baseProps || {};
   baseState = baseState || {};
@@ -359,7 +359,7 @@ export function getExternalMutationsWithChildren(
       mutations,
       baseProps[childName],
       baseState[childName],
-      childName
+      childName,
     );
     memo[childName] = mutation ? mutation : childState;
     return pickBy(memo, (v) => !isEmpty(v));
@@ -381,7 +381,7 @@ export function getExternalMutations(
   mutations,
   baseProps,
   baseState,
-  childName?
+  childName?,
 ) {
   baseProps = baseProps || {};
   baseState = baseState || {};
@@ -396,7 +396,7 @@ export function getExternalMutations(
         mutations,
         keyProps,
         keyState,
-        identifier
+        identifier,
       );
       memo[eventKey] =
         mutation !== undefined ? assign({}, keyState, mutation) : keyState;
@@ -410,7 +410,7 @@ export function getExternalMutations(
           mutations,
           keyProps[target],
           keyState[target],
-          identifier
+          identifier,
         );
         m[target] =
           mutation !== undefined
@@ -438,7 +438,7 @@ export function getExternalMutation(
   mutations,
   baseProps,
   baseState,
-  identifier
+  identifier,
 ) {
   const filterMutations = (mutation, type) => {
     if (typeof mutation[type] === "string") {
@@ -459,13 +459,13 @@ export function getExternalMutation(
   }
   // find any mutation objects that match the target
   const targetMutations = scopedMutations.filter((m) =>
-    filterMutations(m, "target")
+    filterMutations(m, "target"),
   );
   if (isEmpty(targetMutations)) {
     return undefined;
   }
   const keyMutations = targetMutations.filter((m) =>
-    filterMutations(m, "eventKey")
+    filterMutations(m, "eventKey"),
   );
   if (isEmpty(keyMutations)) {
     return undefined;

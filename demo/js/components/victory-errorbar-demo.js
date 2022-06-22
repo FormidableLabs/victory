@@ -14,7 +14,7 @@ const getData = () => {
       x: random(6),
       y: random(6),
       errorX: [random(1, true), random(3, true)],
-      errorY: [random(2, true), random(2, true)]
+      errorY: [random(2, true), random(2, true)],
     };
   });
 };
@@ -24,11 +24,11 @@ const basicData = [
   { x: 2, y: 2, errorX: [1, 3], errorY: 0.1 },
   { x: 3, y: 3, errorX: [1, 3], errorY: [0.2, 0.3] },
   { x: 4, y: 2, errorX: [1, 0.5], errorY: 0.1 },
-  { x: 5, y: 1, errorX: [1, 0.5], errorY: 0.2 }
+  { x: 5, y: 1, errorX: [1, 0.5], errorY: 0.2 },
 ];
 
 const style = {
-  parent: { border: "1px solid #ccc", margin: "2%", maxWidth: "40%" }
+  parent: { border: "1px solid #ccc", margin: "2%", maxWidth: "40%" },
 };
 
 export default class App extends React.Component {
@@ -36,7 +36,7 @@ export default class App extends React.Component {
     super(props);
     this.state = {
       hoverStyle: { stroke: "gold" },
-      data: props.data
+      data: props.data,
     };
   }
 
@@ -44,7 +44,7 @@ export default class App extends React.Component {
     /* eslint-disable react/no-did-mount-set-state */
     this.setStateInterval = window.setInterval(() => {
       this.setState({
-        data: getData()
+        data: getData(),
       });
     }, 2000);
   }
@@ -59,7 +59,7 @@ export default class App extends React.Component {
       flexDirection: "row",
       flexWrap: "wrap",
       alignItems: "center",
-      justifyContent: "center"
+      justifyContent: "center",
     };
 
     return (
@@ -103,7 +103,7 @@ export default class App extends React.Component {
         <VictoryErrorBar
           style={{
             parent: style.parent,
-            data: { fill: ({ datum }) => (datum.y > 0 ? "red" : "blue") }
+            data: { fill: ({ datum }) => (datum.y > 0 ? "red" : "blue") },
           }}
           width={500}
           height={500}
@@ -112,7 +112,7 @@ export default class App extends React.Component {
         <VictoryErrorBar
           style={{
             parent: style.parent,
-            data: { stroke: "blue", opacity: 0.7, strokeWidth: 3 }
+            data: { stroke: "blue", opacity: 0.7, strokeWidth: 3 },
           }}
           width={500}
           height={500}
@@ -135,14 +135,14 @@ export default class App extends React.Component {
                     {
                       mutation: (props) => {
                         return {
-                          style: merge({}, props.style, { stroke: "orange" })
+                          style: merge({}, props.style, { stroke: "orange" }),
                         };
-                      }
-                    }
+                      },
+                    },
                   ];
-                }
-              }
-            }
+                },
+              },
+            },
           ]}
         />
 
@@ -159,9 +159,9 @@ export default class App extends React.Component {
 }
 
 App.propTypes = {
-  data: PropTypes.arrayOf(PropTypes.object)
+  data: PropTypes.arrayOf(PropTypes.object),
 };
 
 App.defaultProps = {
-  data: getData()
+  data: getData(),
 };

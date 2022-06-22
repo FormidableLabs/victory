@@ -3,14 +3,14 @@ import { getAxisData } from "./get-axis-data";
 import {
   getValueForAxis,
   isDate,
-  isTuple
+  isTuple,
 } from "../../victory-util/type-helpers";
 import { VictoryProviderProps } from "../types";
 import {
   Tuple,
   AxisType,
   DomainTuple,
-  DomainValue
+  DomainValue,
 } from "../../types/prop-types";
 
 type DomainProps = Pick<
@@ -24,7 +24,7 @@ const DEFAULT_MAX = 1;
 
 function getDomainFromMinMax(
   min: number = DEFAULT_MIN,
-  max: number = DEFAULT_MAX
+  max: number = DEFAULT_MAX,
 ): Tuple<number> {
   // TODO: Victoy currently has some really specific logic in getDomainFromMinMax
   // that adds or subtracts a very small number from each domain to avoid the min
@@ -36,7 +36,7 @@ function getDomainFromMinMax(
 export function getDomain(
   { data = [], ...props }: DomainProps,
   axis: AxisType,
-  includeZero = false
+  includeZero = false,
 ): DomainTuple {
   const domainFromProps = getValueForAxis<DomainTuple>(props.domain, axis);
   const axisData = getAxisData(data, axis);

@@ -3,7 +3,7 @@ import { getRange } from "victory-core/lib/victory-state/helpers/get-range";
 describe("getRange", () => {
   it("returns a range from props", () => {
     const props = {
-      range: [0, 1]
+      range: [0, 1],
     };
     expect(getRange(props, "x")).toEqual([0, 1]);
   });
@@ -12,7 +12,7 @@ describe("getRange", () => {
     const props = {
       width: 100,
       height: 200,
-      padding: 0
+      padding: 0,
     };
     const x = getRange(props, "x");
     expect(Array.isArray(x)).toBe(true);

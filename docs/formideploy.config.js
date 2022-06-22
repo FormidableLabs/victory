@@ -3,6 +3,6 @@
  */
 module.exports = {
   lander: {
-    name: "victory"
-  }
+    name: "victory",
+  },
 };

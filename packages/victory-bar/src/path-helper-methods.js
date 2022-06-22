@@ -12,7 +12,7 @@ const getPosition = (props, width) => {
       x0,
       x1: x,
       y0: alignment === "start" ? y : y - sign * size,
-      y1: alignment === "end" ? y : y + sign * size
+      y1: alignment === "end" ? y : y + sign * size,
     };
   }
 
@@ -20,7 +20,7 @@ const getPosition = (props, width) => {
     x0: alignment === "start" ? x : x - sign * size,
     x1: alignment === "end" ? x : x + sign * size,
     y0,
-    y1: y
+    y1: y,
   };
 };
 
@@ -100,7 +100,7 @@ const mapPointsToPath = (coords, cornerRadius, direction) => {
     "L",
     `A ${topRightPath},`,
     "L",
-    `A ${bottomRightPath},`
+    `A ${bottomRightPath},`,
   ];
   const path = commands.reduce((acc, command, i) => {
     acc += `${command} ${coords[i].x}, ${coords[i].y} \n`;
@@ -128,12 +128,12 @@ const getVerticalBarPoints = (position, sign, cr) => {
     if (hasIntersection) {
       const topCenter = point(
         x + signL * cr[`top${side}`],
-        y1 + sign * cr[`top${side}`]
+        y1 + sign * cr[`top${side}`],
       );
       const topCircle = circle(topCenter, cr[`top${side}`]);
       const bottomCenter = point(
         x + signL * cr[`bottom${side}`],
-        y0 - sign * cr[`bottom${side}`]
+        y0 - sign * cr[`bottom${side}`],
       );
       const bottomCircle = circle(bottomCenter, cr[`bottom${side}`]);
       const circleIntersection = topCircle.intersection(bottomCircle);
@@ -183,12 +183,12 @@ const getHorizontalBarPoints = (position, sign, cr) => {
     if (hasIntersection) {
       const leftCenter = point(
         x0 + cr[`${side}Left`],
-        y - signL * cr[`${side}Left`]
+        y - signL * cr[`${side}Left`],
       );
       const leftCircle = circle(leftCenter, cr[`${side}Left`]);
       const rightCenter = point(
         x1 - cr[`${side}Right`],
-        y - signL * cr[`${side}Right`]
+        y - signL * cr[`${side}Right`],
       );
       const rightCircle = circle(rightCenter, cr[`${side}Right`]);
       const circleIntersection = leftCircle.intersection(rightCircle);
@@ -223,7 +223,7 @@ const getHorizontalBarPoints = (position, sign, cr) => {
     ...topPoints,
     // eslint-disable-next-line no-magic-numbers
     bottomPoints[3],
-    bottomPoints[2]
+    bottomPoints[2],
   ];
 };
 
@@ -247,7 +247,7 @@ export const getHorizontalBarPath = (props, width, cornerRadius) => {
     topRight: sign > 0 ? cornerRadius.topLeft : cornerRadius.bottomLeft,
     bottomRight: sign > 0 ? cornerRadius.topRight : cornerRadius.bottomRight,
     bottomLeft: sign > 0 ? cornerRadius.bottomRight : cornerRadius.topRight,
-    topLeft: sign > 0 ? cornerRadius.bottomLeft : cornerRadius.topLeft
+    topLeft: sign > 0 ? cornerRadius.bottomLeft : cornerRadius.topLeft,
   };
   const points = getHorizontalBarPoints(position, sign, cr);
   return mapPointsToPath(points, cr, direction);
@@ -296,7 +296,7 @@ export const getVerticalPolarBarPath = (props, cornerRadius) => {
       rightMiddle,
       leftMoves,
       leftCoords,
-      leftMiddle
+      leftMiddle,
     };
   };
 
@@ -310,7 +310,7 @@ export const getVerticalPolarBarPath = (props, cornerRadius) => {
       rightMiddle,
       leftMoves,
       leftCoords,
-      leftMiddle
+      leftMiddle,
     } = getPathData("top");
     let moves;
     let coords;
@@ -333,11 +333,11 @@ export const getVerticalPolarBarPath = (props, cornerRadius) => {
       }
       moves = [
         ...rightMoves.slice(0, rightOffset),
-        ...leftMoves.slice(leftOffset)
+        ...leftMoves.slice(leftOffset),
       ];
       coords = [
         ...rightCoords.slice(0, rightOffset),
-        ...leftCoords.slice(leftOffset)
+        ...leftCoords.slice(leftOffset),
       ];
     }
 
@@ -346,7 +346,7 @@ export const getVerticalPolarBarPath = (props, cornerRadius) => {
     const subCoords = coords.slice(0, middle);
     return subMoves.map((m, i) => ({
       command: m,
-      coords: subCoords[i].split(",")
+      coords: subCoords[i].split(","),
     }));
   };
 
@@ -360,7 +360,7 @@ export const getVerticalPolarBarPath = (props, cornerRadius) => {
       rightMiddle,
       leftMoves,
       leftCoords,
-      leftMiddle
+      leftMiddle,
     } = getPathData("bottom");
     let moves;
     let coords;
@@ -382,11 +382,11 @@ export const getVerticalPolarBarPath = (props, cornerRadius) => {
 
       moves = [
         ...leftMoves.slice(0, leftMiddle + 2),
-        ...rightMoves.slice(rightOffset)
+        ...rightMoves.slice(rightOffset),
       ];
       coords = [
         ...leftCoords.slice(0, leftMiddle + 2),
-        ...rightCoords.slice(rightOffset)
+        ...rightCoords.slice(rightOffset),
       ];
     }
     const middle = moves.indexOf("L");
@@ -394,7 +394,7 @@ export const getVerticalPolarBarPath = (props, cornerRadius) => {
     const subCoords = coords.slice(middle, -1);
     return subMoves.map((m, i) => ({
       command: m,
-      coords: subCoords[i].split(",")
+      coords: subCoords[i].split(","),
     }));
   };
 

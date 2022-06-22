@@ -9,68 +9,68 @@ class MultipleAxes extends React.Component {
     return [
       {
         x: new Date(2000, 1, 1),
-        y: 12
+        y: 12,
       },
       {
         x: new Date(2000, 6, 1),
-        y: 10
+        y: 10,
       },
       {
         x: new Date(2000, 12, 1),
-        y: 11
+        y: 11,
       },
       {
         x: new Date(2001, 1, 1),
-        y: 5
+        y: 5,
       },
       {
         x: new Date(2002, 1, 1),
-        y: 4
+        y: 4,
       },
       {
         x: new Date(2003, 1, 1),
-        y: 6
+        y: 6,
       },
       {
         x: new Date(2004, 1, 1),
-        y: 5
+        y: 5,
       },
       {
         x: new Date(2005, 1, 1),
-        y: 7
+        y: 7,
       },
       {
         x: new Date(2006, 1, 1),
-        y: 8
+        y: 8,
       },
       {
         x: new Date(2007, 1, 1),
-        y: 9
+        y: 9,
       },
       {
         x: new Date(2008, 1, 1),
-        y: -8.5
+        y: -8.5,
       },
       {
         x: new Date(2009, 1, 1),
-        y: -9
+        y: -9,
       },
       {
         x: new Date(2010, 1, 1),
-        y: 5
+        y: 5,
       },
       {
         x: new Date(2013, 1, 1),
-        y: 1
+        y: 1,
       },
       {
         x: new Date(2014, 1, 1),
-        y: 2
+        y: 2,
       },
       {
         x: new Date(2015, 1, 1),
-        y: -5
-      }
+        y: -5,
+      },
     ];
   }
 
@@ -78,48 +78,48 @@ class MultipleAxes extends React.Component {
     return [
       {
         x: new Date(2000, 1, 1),
-        y: 5
+        y: 5,
       },
       {
         x: new Date(2003, 1, 1),
-        y: 6
+        y: 6,
       },
       {
         x: new Date(2004, 1, 1),
-        y: 4
+        y: 4,
       },
       {
         x: new Date(2005, 1, 1),
-        y: 10
+        y: 10,
       },
       {
         x: new Date(2006, 1, 1),
-        y: 12
+        y: 12,
       },
       {
         x: new Date(2007, 2, 1),
-        y: 48
+        y: 48,
       },
       {
         x: new Date(2008, 1, 1),
-        y: 19
+        y: 19,
       },
       {
         x: new Date(2009, 1, 1),
-        y: 31
+        y: 31,
       },
       {
         x: new Date(2011, 1, 1),
-        y: 49
+        y: 49,
       },
       {
         x: new Date(2014, 1, 1),
-        y: 40
+        y: 40,
       },
       {
         x: new Date(2015, 1, 1),
-        y: 21
-      }
+        y: 21,
+      },
     ];
   }
 
@@ -142,7 +142,7 @@ class MultipleAxes extends React.Component {
       new Date(2013, 1, 1),
       new Date(2014, 1, 1),
       new Date(2015, 1, 1),
-      new Date(2016, 1, 1)
+      new Date(2016, 1, 1),
     ];
   }
 
@@ -155,7 +155,7 @@ class MultipleAxes extends React.Component {
         padding: 0,
         fontFamily: "Helvetica Neue', Helvetica, sans-serif",
         width: "100%",
-        height: "auto"
+        height: "auto",
       },
       title: {
         textAnchor: "start",
@@ -163,20 +163,20 @@ class MultipleAxes extends React.Component {
         fill: importedTheme.color.black,
         fontFamily: "inherit",
         fontSize: "18px",
-        fontWeight: "bold"
+        fontWeight: "bold",
       },
       labelNumber: {
         textAnchor: "middle",
         fill: importedTheme.color.white,
         fontFamily: "inherit",
-        fontSize: "14px"
+        fontSize: "14px",
       },
 
       // INDEPENDENT AXIS
       axisYears: {
         axis: {
           stroke: "black",
-          strokeWidth: 1
+          strokeWidth: 1,
         },
         ticks: {
           size: ({ tick }) => {
@@ -184,84 +184,84 @@ class MultipleAxes extends React.Component {
             return tickSize;
           },
           stroke: "black",
-          strokeWidth: 1
+          strokeWidth: 1,
         },
         tickLabels: {
           fill: "black",
           fontFamily: "inherit",
-          fontSize: 16
-        }
+          fontSize: 16,
+        },
       },
 
       // DATA SET ONE
       axisOne: {
         grid: {
           stroke: ({ tick }) => (tick === -10 ? "transparent" : "#ffffff"),
-          strokeWidth: 2
+          strokeWidth: 2,
         },
         axis: {
           stroke: importedTheme.color.red,
-          strokeWidth: 0
+          strokeWidth: 0,
         },
         ticks: { strokeWidth: 0 },
         tickLabels: {
           fill: importedTheme.color.red,
           fontFamily: "inherit",
-          fontSize: 16
-        }
+          fontSize: 16,
+        },
       },
       labelOne: {
         fill: importedTheme.color.red,
         fontFamily: "inherit",
         fontSize: 12,
-        fontStyle: "italic"
+        fontStyle: "italic",
       },
       lineOne: {
         data: {
           stroke: importedTheme.color.red,
-          strokeWidth: 4.5
-        }
+          strokeWidth: 4.5,
+        },
       },
       axisOneCustomLabel: {
         fill: importedTheme.color.red,
         fontFamily: "inherit",
         fontWeight: 300,
-        fontSize: 21
+        fontSize: 21,
       },
 
       // DATA SET TWO
       axisTwo: {
         axis: {
           stroke: importedTheme.color.black,
-          strokeWidth: 0
+          strokeWidth: 0,
         },
         tickLabels: {
           fill: importedTheme.color.black,
           fontFamily: "inherit",
-          fontSize: 16
-        }
+          fontSize: 16,
+        },
       },
       labelTwo: {
         textAnchor: "end",
         fill: importedTheme.color.black,
         fontFamily: "inherit",
         fontSize: 12,
-        fontStyle: "italic"
+        fontStyle: "italic",
       },
       lineTwo: {
         data: {
           stroke: importedTheme.color.black,
-          strokeWidth: 4.5
-        }
+          strokeWidth: 4.5,
+        },
       },
 
       // HORIZONTAL LINE
       lineThree: {
         data: {
           stroke: "#e95f46",
-          strokeWidth: 2
-        }
-      }
+          strokeWidth: 2,
+        },
+      },
     };
   }
 
@@ -341,20 +341,20 @@ class MultipleAxes extends React.Component {
             data={[
               {
                 x: new Date(1999, 1, 1),
-                y: 0
+                y: 0,
               },
               {
                 x: new Date(2014, 6, 1),
-                y: 0
-              }
+                y: 0,
+              },
             ]}
             domain={{
               x: [new Date(1999, 1, 1), new Date(2016, 1, 1)],
-              y: [-10, 15]
+              y: [-10, 15],
             }}
             scale={{
               x: "time",
-              y: "linear"
+              y: "linear",
             }}
             standalone={false}
             style={styles.lineThree}
@@ -365,12 +365,12 @@ class MultipleAxes extends React.Component {
             data={dataSetOne}
             domain={{
               x: [new Date(1999, 1, 1), new Date(2016, 1, 1)],
-              y: [-10, 15]
+              y: [-10, 15],
             }}
             interpolation="monotoneX"
             scale={{
               x: "time",
-              y: "linear"
+              y: "linear",
             }}
             standalone={false}
             style={styles.lineOne}
@@ -393,12 +393,12 @@ class MultipleAxes extends React.Component {
             data={dataSetTwo}
             domain={{
               x: [new Date(1999, 1, 1), new Date(2016, 1, 1)],
-              y: [0, 50]
+              y: [0, 50],
             }}
             interpolation="monotoneX"
             scale={{
               x: "time",
-              y: "linear"
+              y: "linear",
             }}
             standalone={false}
             style={styles.lineTwo}

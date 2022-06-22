@@ -14,8 +14,8 @@ const NativeVictoryHistogram = wrapCoreComponent({
     labelComponent: <VictoryLabel />,
     containerComponent: <VictoryContainer />,
     groupComponent: <G />,
-    width: Dimensions.get("window").width
-  })
+    width: Dimensions.get("window").width,
+  }),
 });
 
 export default NativeVictoryHistogram;

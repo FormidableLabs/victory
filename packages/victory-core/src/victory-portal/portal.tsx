@@ -23,7 +23,7 @@ export class Portal
     height: CustomPropTypes.nonNegative,
     style: PropTypes.object,
     viewBox: PropTypes.string,
-    width: CustomPropTypes.nonNegative
+    width: CustomPropTypes.nonNegative,
   };
   private readonly map: Record<string, React.ReactElement>;
   private index: number;

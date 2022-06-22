@@ -13,18 +13,18 @@ const containerStyle = {
   flexDirection: "row",
   flexWrap: "wrap",
   alignItems: "center",
-  justifyContent: "center"
+  justifyContent: "center",
 };
 
 const parentStyle = {
-  parent: { border: "1px solid #ccc", margin: "2%", maxWidth: "40%" }
+  parent: { border: "1px solid #ccc", margin: "2%", maxWidth: "40%" },
 };
 
 const defaultAxisProps = { style: parentStyle, theme: VictoryTheme.material };
 
 export default {
   title: "VictoryPolarAxis",
-  component: VictoryPolarAxis
+  component: VictoryPolarAxis,
 };
 
 const getTimeValues = (num) => {
@@ -301,7 +301,7 @@ export const Style = () => {
           axisLabel: { fontSize: 20, padding: 30 },
           grid: { stroke: ({ tick }) => (tick > 0.5 ? "red" : "grey") },
           ticks: { stroke: "grey", size: 5 },
-          tickLabels: { fontSize: 15, padding: 5 }
+          tickLabels: { fontSize: 15, padding: 5 },
         }}
       />
       <VictoryPolarAxis
@@ -313,7 +313,7 @@ export const Style = () => {
           axisLabel: { fontSize: 20, padding: 30 },
           grid: { stroke: ({ tick }) => (tick > 0.5 ? "red" : "grey") },
           ticks: { stroke: "grey", size: 5 },
-          tickLabels: { fontSize: 15, padding: 5 }
+          tickLabels: { fontSize: 15, padding: 5 },
         }}
       />
     </div>

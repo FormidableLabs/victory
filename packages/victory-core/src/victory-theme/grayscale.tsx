@@ -11,7 +11,7 @@ const colors = [
   "#969696",
   "#bdbdbd",
   "#d9d9d9",
-  "#f0f0f0"
+  "#f0f0f0",
 ];
 
 const charcoal = "#252525";
@@ -29,7 +29,7 @@ const baseProps = {
   width: 450,
   height: 300,
   padding: 50,
-  colorScale: colors
+  colorScale: colors,
 };
 // *
 // * Labels
@@ -40,7 +40,7 @@ const baseLabelStyles = {
   letterSpacing,
   padding: 10,
   fill: charcoal,
-  stroke: "transparent"
+  stroke: "transparent",
 };
 
 const centeredLabelStyles = assign({ textAnchor: "middle" }, baseLabelStyles);
@@ -55,12 +55,12 @@ export const grayscale: VictoryThemeDefinition = {
     {
       style: {
         data: {
-          fill: charcoal
+          fill: charcoal,
         },
-        labels: baseLabelStyles
-      }
+        labels: baseLabelStyles,
+      },
     },
-    baseProps
+    baseProps,
   ),
   axis: assign(
     {
@@ -70,25 +70,25 @@ export const grayscale: VictoryThemeDefinition = {
           stroke: charcoal,
           strokeWidth: 1,
           strokeLinecap,
-          strokeLinejoin
+          strokeLinejoin,
         },
         axisLabel: assign({}, centeredLabelStyles, {
-          padding: 25
+          padding: 25,
         }),
         grid: {
           fill: "none",
           stroke: "none",
-          pointerEvents: "painted"
+          pointerEvents: "painted",
         },
         ticks: {
           fill: "transparent",
           size: 1,
-          stroke: "transparent"
+          stroke: "transparent",
         },
-        tickLabels: baseLabelStyles
-      }
+        tickLabels: baseLabelStyles,
+      },
     },
-    baseProps
+    baseProps,
   ),
   bar: assign(
     {
@@ -96,12 +96,12 @@ export const grayscale: VictoryThemeDefinition = {
         data: {
           fill: charcoal,
           padding: 8,
-          strokeWidth: 0
+          strokeWidth: 0,
         },
-        labels: baseLabelStyles
-      }
+        labels: baseLabelStyles,
+      },
     },
-    baseProps
+    baseProps,
   ),
   boxplot: assign(
     {
@@ -115,27 +115,27 @@ export const grayscale: VictoryThemeDefinition = {
         q1: { padding: 8, fill: grey },
         q1Labels: assign({}, baseLabelStyles, { padding: 3 }),
         q3: { padding: 8, fill: grey },
-        q3Labels: assign({}, baseLabelStyles, { padding: 3 })
+        q3Labels: assign({}, baseLabelStyles, { padding: 3 }),
       },
-      boxWidth: 20
+      boxWidth: 20,
     },
-    baseProps
+    baseProps,
   ),
   candlestick: assign(
     {
       style: {
         data: {
           stroke: charcoal,
-          strokeWidth: 1
+          strokeWidth: 1,
         },
-        labels: assign({}, baseLabelStyles, { padding: 5 })
+        labels: assign({}, baseLabelStyles, { padding: 5 }),
       },
       candleColors: {
         positive: "#ffffff",
-        negative: charcoal
-      }
+        negative: charcoal,
+      },
     },
-    baseProps
+    baseProps,
   ),
   chart: baseProps,
   errorbar: assign(
@@ -145,18 +145,18 @@ export const grayscale: VictoryThemeDefinition = {
         data: {
           fill: "transparent",
           stroke: charcoal,
-          strokeWidth: 2
+          strokeWidth: 2,
         },
-        labels: baseLabelStyles
-      }
+        labels: baseLabelStyles,
+      },
     },
-    baseProps
+    baseProps,
   ),
   group: assign(
     {
-      colorScale: colors
+      colorScale: colors,
     },
-    baseProps
+    baseProps,
   ),
   histogram: assign(
     {
@@ -164,12 +164,12 @@ export const grayscale: VictoryThemeDefinition = {
         data: {
           fill: grey,
           stroke: charcoal,
-          strokeWidth: 2
+          strokeWidth: 2,
         },
-        labels: baseLabelStyles
-      }
+        labels: baseLabelStyles,
+      },
     },
-    baseProps
+    baseProps,
   ),
   legend: {
     colorScale: colors,
@@ -178,11 +178,11 @@ export const grayscale: VictoryThemeDefinition = {
     titleOrientation: "top",
     style: {
       data: {
-        type: "circle"
+        type: "circle",
       },
       labels: baseLabelStyles,
-      title: assign({}, baseLabelStyles, { padding: 5 })
-    }
+      title: assign({}, baseLabelStyles, { padding: 5 }),
+    },
   },
   line: assign(
     {
@@ -190,26 +190,26 @@ export const grayscale: VictoryThemeDefinition = {
         data: {
           fill: "transparent",
           stroke: charcoal,
-          strokeWidth: 2
+          strokeWidth: 2,
         },
-        labels: baseLabelStyles
-      }
+        labels: baseLabelStyles,
+      },
     },
-    baseProps
+    baseProps,
   ),
   pie: {
     style: {
       data: {
         padding: 10,
         stroke: "transparent",
-        strokeWidth: 1
+        strokeWidth: 1,
       },
-      labels: assign({}, baseLabelStyles, { padding: 20 })
+      labels: assign({}, baseLabelStyles, { padding: 20 }),
     },
     colorScale: colors,
     width: 400,
     height: 400,
-    padding: 50
+    padding: 50,
   },
   scatter: assign(
     {
@@ -217,18 +217,18 @@ export const grayscale: VictoryThemeDefinition = {
         data: {
           fill: charcoal,
           stroke: "transparent",
-          strokeWidth: 0
+          strokeWidth: 0,
         },
-        labels: baseLabelStyles
-      }
+        labels: baseLabelStyles,
+      },
     },
-    baseProps
+    baseProps,
   ),
   stack: assign(
     {
-      colorScale: colors
+      colorScale: colors,
     },
-    baseProps
+    baseProps,
   ),
   tooltip: {
     style: assign({}, baseLabelStyles, { padding: 0, pointerEvents: "none" }),
@@ -236,11 +236,11 @@ export const grayscale: VictoryThemeDefinition = {
       stroke: charcoal,
       strokeWidth: 1,
       fill: "#f0f0f0",
-      pointerEvents: "none"
+      pointerEvents: "none",
     },
     flyoutPadding: 5,
     cornerRadius: 5,
-    pointerLength: 10
+    pointerLength: 10,
   },
   voronoi: assign(
     {
@@ -248,20 +248,20 @@ export const grayscale: VictoryThemeDefinition = {
         data: {
           fill: "transparent",
           stroke: "transparent",
-          strokeWidth: 0
+          strokeWidth: 0,
         },
         labels: assign({}, baseLabelStyles, {
           padding: 5,
-          pointerEvents: "none"
+          pointerEvents: "none",
         }),
         flyout: {
           stroke: charcoal,
           strokeWidth: 1,
           fill: "#f0f0f0",
-          pointerEvents: "none"
-        }
-      }
+          pointerEvents: "none",
+        },
+      },
     },
-    baseProps
-  )
+    baseProps,
+  ),
 };

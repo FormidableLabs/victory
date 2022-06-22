@@ -8,9 +8,9 @@ export default () => ({
     // https://github.com/react-static/react-static/issues/1423
     config.resolve.modules = [
       ...config.resolve.modules.filter((mod) => !mod.endsWith("node_modules")),
-      "node_modules"
+      "node_modules",
     ];
 
     return config;
-  }
+  },
 });

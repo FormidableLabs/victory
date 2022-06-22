@@ -1,5 +1,5 @@
 import React from "react";
-import { Line } from "./line";
+import { Line } from "victory-core";
 import { render } from "@testing-library/react";
 
 describe("victory-primitives/line", () => {
@@ -7,7 +7,7 @@ describe("victory-primitives/line", () => {
     x1: 0,
     y1: 1,
     x2: 2,
-    y2: 4
+    y2: 4,
   };
 
   it("should render a line element with the correct coordinates", () => {

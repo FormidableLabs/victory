@@ -6,7 +6,7 @@ describe("victory-util/events", () => {
       const events = {
         onClick: (evt, childProps, index) => {
           return { evt, childProps, index };
-        }
+        },
       };
       const evt = {} as React.SyntheticEvent;
       const index = "TEST_INDEX";
@@ -16,7 +16,7 @@ describe("victory-util/events", () => {
       expect(Object.keys(result.onClick(evt))).toEqual([
         "evt",
         "childProps",
-        "index"
+        "index",
       ]);
       expect(result.onClick(evt).index).toEqual(index);
       expect(result.onClick(evt).childProps).toEqual(childProps);
@@ -36,20 +36,20 @@ describe("victory-util/events", () => {
                   return {
                     mutation: () => {
                       return { foo: "foo" };
-                    }
+                    },
                   };
-                }
-              }
-            }
-          ]
+                },
+              },
+            },
+          ],
         },
         baseProps: {
           0: {
-            data: { foo: "bar" }
-          }
+            data: { foo: "bar" },
+          },
         },
         setState: (x) => x,
-        state: {}
+        state: {},
       };
       jest.spyOn(fake, "setState");
     });
@@ -66,13 +66,13 @@ describe("victory-util/events", () => {
       expect(Object.keys(result)).toEqual(expect.arrayContaining(["onClick"]));
       const partialEvents = Events.getPartialEvents(result, index, {});
       expect(Object.keys(partialEvents)).toEqual(
-        expect.arrayContaining(["onClick"])
+        expect.arrayContaining(["onClick"]),
       );
       partialEvents.onClick({} as React.SyntheticEvent);
       expect(fake.setState).toReturnWith({
         [index]: {
-          data: { foo: "foo" }
-        }
+          data: { foo: "foo" },
+        },
       });
     });
   });

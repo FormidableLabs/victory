@@ -14,8 +14,8 @@ module.exports = {
       "@babel/transform-modules-commonjs",
       {
         strict: false,
-        allowTopLevelThis: true
-      }
+        allowTopLevelThis: true,
+      },
     ],
     [
       "module-resolver",
@@ -31,7 +31,7 @@ module.exports = {
             // - With no path components (like "d3-<whatever>/path/to.js")
             if (match.groups.path) {
               throw new Error(
-                `Unable to process ${sourcePath} import in ${currentFile}`
+                `Unable to process ${sourcePath} import in ${currentFile}`,
               );
             }
 
@@ -46,19 +46,19 @@ module.exports = {
             // - `../../d3-color`
             const currentFileVendor = currentFile.replace(
               /^node_modules/,
-              "lib-vendor"
+              "lib-vendor",
             );
             const relPathToPkg = path.relative(
               path.dirname(currentFileVendor),
-              vendorPkg
+              vendorPkg,
             );
 
             return relPathToPkg;
           }
 
           return sourcePath;
-        }
-      }
-    ]
-  ]
+        },
+      },
+    ],
+  ],
 };

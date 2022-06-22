@@ -14,8 +14,8 @@ config.plugins = [
     flattening: true,
     paths: true,
     placeholders: true,
-    shorthands: true
-  })
+    shorthands: true,
+  }),
 ];
 
 // Export mutated base.

@@ -25,11 +25,11 @@ const containerStyle: React.CSSProperties = {
   flexDirection: "row",
   flexWrap: "wrap",
   alignItems: "center",
-  justifyContent: "center"
+  justifyContent: "center",
 };
 
 const chartStyle: { [key: string]: React.CSSProperties } = {
-  parent: { border: "1px solid #ccc", margin: "2%", maxWidth: "40%" }
+  parent: { border: "1px solid #ccc", margin: "2%", maxWidth: "40%" },
 };
 
 export default class VictoryVoronoiContainerDemo extends React.Component<
@@ -41,7 +41,7 @@ export default class VictoryVoronoiContainerDemo extends React.Component<
   constructor(props: any) {
     super(props);
     this.state = {
-      data: this.getData()
+      data: this.getData(),
     };
   }
 
@@ -49,7 +49,7 @@ export default class VictoryVoronoiContainerDemo extends React.Component<
     /* eslint-disable react/no-did-mount-set-state */
     this.setStateInterval = window.setInterval(() => {
       this.setState({
-        data: this.getData()
+        data: this.getData(),
       });
     }, 3000);
   }
@@ -114,7 +114,7 @@ export default class VictoryVoronoiContainerDemo extends React.Component<
                 { x: 0, y: 2 },
                 { x: 2, y: 3 },
                 { x: 4, y: 4 },
-                { x: 6, y: 5 }
+                { x: 6, y: 5 },
               ]}
             />
             <VictoryScatter
@@ -122,7 +122,7 @@ export default class VictoryVoronoiContainerDemo extends React.Component<
                 { x: 2, y: 2 },
                 { x: 4, y: 3 },
                 { x: 6, y: 4 },
-                { x: 8, y: 5 }
+                { x: 8, y: 5 },
               ]}
             />
           </VictoryChart>
@@ -148,10 +148,10 @@ export default class VictoryVoronoiContainerDemo extends React.Component<
                 { x: 4, y: 0 },
                 { x: 5, y: 0 },
                 { x: 6, y: 0 },
-                { x: 7, y: 0 }
+                { x: 7, y: 0 },
               ]}
               style={{
-                data: { fill: "blue" }
+                data: { fill: "blue" },
               }}
               size={({ active }) => (active ? 8 : 3)}
             />
@@ -163,10 +163,10 @@ export default class VictoryVoronoiContainerDemo extends React.Component<
                 { x: 4, y: 0 },
                 { x: 5, y: 0 },
                 { x: 6, y: 0 },
-                { x: 7, y: 0 }
+                { x: 7, y: 0 },
               ]}
               style={{
-                data: { fill: "red" }
+                data: { fill: "red" },
               }}
               size={({ active }) => (active ? 5 : 3)}
             />
@@ -188,10 +188,10 @@ export default class VictoryVoronoiContainerDemo extends React.Component<
                 { x: 4, y: 0 },
                 { x: 5, y: 0 },
                 { x: 6, y: 0 },
-                { x: 7, y: 0 }
+                { x: 7, y: 0 },
               ]}
               style={{
-                data: { fill: "blue" }
+                data: { fill: "blue" },
               }}
               size={({ active }) => (active ? 5 : 3)}
             />
@@ -221,14 +221,14 @@ export default class VictoryVoronoiContainerDemo extends React.Component<
                 { x: 1, y: 5, l: "one" },
                 { x: 1.5, y: 5, l: "one point five" },
                 { x: 2, y: 4, l: "two" },
-                { x: 3, y: -2, l: "three" }
+                { x: 3, y: -2, l: "three" },
               ]}
               style={{
                 data: {
                   stroke: "tomato",
-                  strokeWidth: ({ active }) => (active ? 4 : 2)
+                  strokeWidth: ({ active }) => (active ? 4 : 2),
                 },
-                labels: { fill: "tomato" }
+                labels: { fill: "tomato" },
               }}
             />
 
@@ -237,14 +237,14 @@ export default class VictoryVoronoiContainerDemo extends React.Component<
               data={[
                 { x: 1, y: -3, l: "red" },
                 { x: 2, y: 5, l: "green" },
-                { x: 3, y: 3, l: "blue" }
+                { x: 3, y: 3, l: "blue" },
               ]}
               style={{
                 data: {
                   stroke: "blue",
-                  strokeWidth: ({ active }) => (active ? 4 : 2)
+                  strokeWidth: ({ active }) => (active ? 4 : 2),
                 },
-                labels: { fill: "blue" }
+                labels: { fill: "blue" },
               }}
             />
 
@@ -253,14 +253,14 @@ export default class VictoryVoronoiContainerDemo extends React.Component<
               data={[
                 { x: 1, y: 5, l: "cat" },
                 { x: 2, y: -4, l: "dog" },
-                { x: 3, y: -2, l: "bird" }
+                { x: 3, y: -2, l: "bird" },
               ]}
               style={{
                 data: {
                   stroke: "black",
-                  strokeWidth: ({ active }) => (active ? 4 : 2)
+                  strokeWidth: ({ active }) => (active ? 4 : 2),
                 },
-                labels: { fill: "black" }
+                labels: { fill: "black" },
               }}
             />
           </VictoryChart>
@@ -270,8 +270,8 @@ export default class VictoryVoronoiContainerDemo extends React.Component<
             style={{
               parent: chartStyle.parent,
               data: {
-                fill: ({ active }) => (active ? "tomato" : "black")
-              }
+                fill: ({ active }) => (active ? "tomato" : "black"),
+              },
             }}
             containerComponent={
               <VictoryVoronoiContainer
@@ -299,8 +299,8 @@ export default class VictoryVoronoiContainerDemo extends React.Component<
               style={{
                 data: {
                   fill: "gray",
-                  opacity: 0.2
-                }
+                  opacity: 0.2,
+                },
               }}
               size={20}
               y={(d) => d.x * d.x}
@@ -308,8 +308,8 @@ export default class VictoryVoronoiContainerDemo extends React.Component<
             <VictoryScatter
               style={{
                 data: {
-                  fill: ({ active }) => (active ? "tomato" : "black")
-                }
+                  fill: ({ active }) => (active ? "tomato" : "black"),
+                },
               }}
               size={({ active }) => (active ? 5 : 3)}
               y={(d) => d.x * d.x}
@@ -337,12 +337,12 @@ export default class VictoryVoronoiContainerDemo extends React.Component<
                 { x: 4, y: 0 },
                 { x: 5, y: 1 },
                 { x: 6, y: -3 },
-                { x: 7, y: 3 }
+                { x: 7, y: 3 },
               ]}
             >
               <VictoryScatter
                 style={{
-                  data: { fill: "tomato" }
+                  data: { fill: "tomato" },
                 }}
                 size={({ active }) => (active ? 8 : 3)}
               />
@@ -359,12 +359,12 @@ export default class VictoryVoronoiContainerDemo extends React.Component<
                 { x: 4, y: 0 },
                 { x: 5, y: -2 },
                 { x: 6, y: -2 },
-                { x: 7, y: 5 }
+                { x: 7, y: 5 },
               ]}
             >
               <VictoryScatter
                 style={{
-                  data: { fill: "blue" }
+                  data: { fill: "blue" },
                 }}
                 size={({ active }) => (active ? 5 : 3)}
               />
@@ -378,7 +378,7 @@ export default class VictoryVoronoiContainerDemo extends React.Component<
                 { x: 4, y: 0 },
                 { x: 5, y: -1 },
                 { x: 6, y: 3 },
-                { x: 7, y: -3 }
+                { x: 7, y: -3 },
               ]}
             >
               <VictoryScatter size={({ active }) => (active ? 5 : 3)} />
@@ -405,14 +405,14 @@ export default class VictoryVoronoiContainerDemo extends React.Component<
               data={[
                 { name: "One", symbol: { fill: "tomato" } },
                 { name: "Two", symbol: { fill: "orange" } },
-                { name: "Three", symbol: { fill: "gold" } }
+                { name: "Three", symbol: { fill: "gold" } },
               ]}
             />
             <VictoryGroup style={chartStyle}>
               <VictoryScatter
                 name="red"
                 style={{
-                  data: { fill: "tomato" }
+                  data: { fill: "tomato" },
                 }}
                 size={({ active }) => (active ? 5 : 3)}
                 labels={({ datum }) => datum.y}
@@ -424,12 +424,12 @@ export default class VictoryVoronoiContainerDemo extends React.Component<
                   { x: 4, y: 0 },
                   { x: 5, y: 1 },
                   { x: 6, y: -3 },
-                  { x: 7, y: 3 }
+                  { x: 7, y: 3 },
                 ]}
               />
               <VictoryScatter
                 style={{
-                  data: { fill: "blue" }
+                  data: { fill: "blue" },
                 }}
                 size={({ active }) => (active ? 5 : 3)}
                 labels={({ datum }) => datum.y}
@@ -441,7 +441,7 @@ export default class VictoryVoronoiContainerDemo extends React.Component<
                   { x: 4, y: 0 },
                   { x: 5, y: -2 },
                   { x: 6, y: -2 },
-                  { x: 7, y: 5 }
+                  { x: 7, y: 5 },
                 ]}
               />
               <VictoryScatter
@@ -452,7 +452,7 @@ export default class VictoryVoronoiContainerDemo extends React.Component<
                   { x: 4, y: 0 },
                   { x: 5, y: -1 },
                   { x: 6, y: 3 },
-                  { x: 7, y: -3 }
+                  { x: 7, y: -3 },
                 ]}
                 labels={({ datum }) => datum.y}
                 labelComponent={<VictoryTooltip />}
@@ -474,8 +474,8 @@ export default class VictoryVoronoiContainerDemo extends React.Component<
                   data: {
                     fill: "tomato",
                     stroke: ({ active }) => (active ? "black" : "none"),
-                    strokeWidth: 2
-                  }
+                    strokeWidth: 2,
+                  },
                 }}
                 data={[
                   { x: 1, y: -5 },
@@ -484,7 +484,7 @@ export default class VictoryVoronoiContainerDemo extends React.Component<
                   { x: 4, y: 3 },
                   { x: 5, y: 1 },
                   { x: 6, y: -3 },
-                  { x: 7, y: 3 }
+                  { x: 7, y: 3 },
                 ]}
               />
               <VictoryBar
@@ -492,8 +492,8 @@ export default class VictoryVoronoiContainerDemo extends React.Component<
                   data: {
                     fill: "orange",
                     stroke: ({ active }) => (active ? "black" : "none"),
-                    strokeWidth: 2
-                  }
+                    strokeWidth: 2,
+                  },
                 }}
                 data={[
                   { x: 1, y: -3 },
@@ -502,7 +502,7 @@ export default class VictoryVoronoiContainerDemo extends React.Component<
                   { x: 4, y: 0 },
                   { x: 5, y: -2 },
                   { x: 6, y: -2 },
-                  { x: 7, y: 5 }
+                  { x: 7, y: 5 },
                 ]}
               />
               <VictoryBar
@@ -510,8 +510,8 @@ export default class VictoryVoronoiContainerDemo extends React.Component<
                   data: {
                     fill: "gold",
                     stroke: ({ active }) => (active ? "black" : "none"),
-                    strokeWidth: 2
-                  }
+                    strokeWidth: 2,
+                  },
                 }}
                 data={[
                   { x: 1, y: 5 },
@@ -520,7 +520,7 @@ export default class VictoryVoronoiContainerDemo extends React.Component<
                   { x: 4, y: -3 },
                   { x: 5, y: -1 },
                   { x: 6, y: 3 },
-                  { x: 7, y: -3 }
+                  { x: 7, y: -3 },
                 ]}
               />
             </VictoryStack>
@@ -535,8 +535,8 @@ export default class VictoryVoronoiContainerDemo extends React.Component<
                 data: {
                   fill: "tomato",
                   stroke: ({ active }) => (active ? "black" : "none"),
-                  strokeWidth: 2
-                }
+                  strokeWidth: 2,
+                },
               }}
               data={[
                 { x: 1, y: -5 },
@@ -545,7 +545,7 @@ export default class VictoryVoronoiContainerDemo extends React.Component<
                 { x: 4, y: 3 },
                 { x: 5, y: 1 },
                 { x: 6, y: -3 },
-                { x: 7, y: 3 }
+                { x: 7, y: 3 },
               ]}
             />
             <VictoryBar
@@ -553,8 +553,8 @@ export default class VictoryVoronoiContainerDemo extends React.Component<
                 data: {
                   fill: "orange",
                   stroke: ({ active }) => (active ? "black" : "none"),
-                  strokeWidth: 2
-                }
+                  strokeWidth: 2,
+                },
               }}
               data={[
                 { x: 1, y: -3 },
@@ -563,7 +563,7 @@ export default class VictoryVoronoiContainerDemo extends React.Component<
                 { x: 4, y: 0 },
                 { x: 5, y: -2 },
                 { x: 6, y: -2 },
-                { x: 7, y: 5 }
+                { x: 7, y: 5 },
               ]}
             />
             <VictoryBar
@@ -571,8 +571,8 @@ export default class VictoryVoronoiContainerDemo extends React.Component<
                 data: {
                   fill: "gold",
                   stroke: ({ active }) => (active ? "black" : "none"),
-                  strokeWidth: 2
-                }
+                  strokeWidth: 2,
+                },
               }}
               data={[
                 { x: 1, y: 5 },
@@ -581,7 +581,7 @@ export default class VictoryVoronoiContainerDemo extends React.Component<
                 { x: 4, y: -3 },
                 { x: 5, y: -1 },
                 { x: 6, y: 3 },
-                { x: 7, y: -3 }
+                { x: 7, y: -3 },
               ]}
             />
           </VictoryStack>
@@ -608,13 +608,13 @@ export default class VictoryVoronoiContainerDemo extends React.Component<
               data={[
                 { x: 1, y: 5, c: "red", l: "error" },
                 { x: 2, y: 4, c: "red", l: "error" },
-                { x: 3, y: 0, c: "red", l: "error" }
+                { x: 3, y: 0, c: "red", l: "error" },
               ]}
               style={{
                 data: {
                   stroke: "red",
-                  strokeWidth: ({ active }) => (active ? 4 : 2)
-                }
+                  strokeWidth: ({ active }) => (active ? 4 : 2),
+                },
               }}
             />
 
@@ -623,13 +623,13 @@ export default class VictoryVoronoiContainerDemo extends React.Component<
               data={[
                 { x: 1, y: 0, c: "green", l: "success" },
                 { x: 2, y: 4, c: "green", l: "success" },
-                { x: 3, y: 3, c: "green", l: "success" }
+                { x: 3, y: 3, c: "green", l: "success" },
               ]}
               style={{
                 data: {
                   stroke: "green",
-                  strokeWidth: ({ active }) => (active ? 4 : 2)
-                }
+                  strokeWidth: ({ active }) => (active ? 4 : 2),
+                },
               }}
             />
           </VictoryChart>
@@ -648,7 +648,7 @@ export default class VictoryVoronoiContainerDemo extends React.Component<
                   bottom: 50,
                   left: 50,
                   right: 50,
-                  top: 100
+                  top: 100,
                 }}
               />
             }
@@ -663,7 +663,7 @@ export default class VictoryVoronoiContainerDemo extends React.Component<
               style={{ border: { stroke: "black" }, title: { fontSize: 20 } }}
               data={[
                 { name: "One", symbol: { fill: "tomato" } },
-                { name: "Two", symbol: { fill: "orange" } }
+                { name: "Two", symbol: { fill: "orange" } },
               ]}
             />
             <VictoryScatter
@@ -672,7 +672,7 @@ export default class VictoryVoronoiContainerDemo extends React.Component<
                 { x: 0, y: 2 },
                 { x: 2, y: 3 },
                 { x: 4, y: 4 },
-                { x: 6, y: 5 }
+                { x: 6, y: 5 },
               ]}
             />
             <VictoryScatter
@@ -681,7 +681,7 @@ export default class VictoryVoronoiContainerDemo extends React.Component<
                 { x: 2, y: 2 },
                 { x: 4, y: 3 },
                 { x: 6, y: 4 },
-                { x: 8, y: 5 }
+                { x: 8, y: 5 },
               ]}
             />
           </VictoryChart>

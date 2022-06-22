@@ -16,25 +16,25 @@ module.exports = {
   mode: "development",
 
   resolve: {
-    extensions: [".ts", ".tsx", ".js", ".json"]
+    extensions: [".ts", ".tsx", ".js", ".json"],
   },
 
   devServer: {
-    port: WDS_PORT
+    port: WDS_PORT,
   },
 
   output: {
     path: DEMO,
     pathinfo: true,
     filename: "main.js",
-    publicPath: "/assets/"
+    publicPath: "/assets/",
   },
 
   cache: true,
   devtool: "source-map",
   stats: {
     colors: true,
-    reasons: true
+    reasons: true,
   },
   module: {
     rules: [
@@ -47,10 +47,10 @@ module.exports = {
         use: {
           loader: "babel-loader",
           // eslint-disable-next-line global-require
-          options: require("../../../.babelrc.js")
-        }
-      }
-    ]
+          options: require("../../../.babelrc.js"),
+        },
+      },
+    ],
   },
   plugins: [
     new LodashModuleReplacementPlugin({
@@ -58,7 +58,7 @@ module.exports = {
       currying: true,
       flattening: true,
       paths: true,
-      placeholders: true
-    })
-  ]
+      placeholders: true,
+    }),
+  ],
 };

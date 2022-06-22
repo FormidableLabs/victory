@@ -1,7 +1,7 @@
 import React from "react";
 import { render, screen, fireEvent } from "@testing-library/react";
 import { range } from "lodash";
-import VictoryHistogram from "./victory-histogram";
+import { VictoryHistogram } from "victory-histogram";
 import { isBar, getBarHeight } from "../../../test/helpers";
 
 describe("components/victory-histogram", () => {
@@ -11,7 +11,7 @@ describe("components/victory-histogram", () => {
   describe("default component rendering", () => {
     it("accepts user props", () => {
       render(
-        <VictoryHistogram data-testid="victory-histogram" aria-label="Chart" />
+        <VictoryHistogram data-testid="victory-histogram" aria-label="Chart" />,
       );
 
       const svgNode = screen.getByTestId("victory-histogram");
@@ -39,7 +39,7 @@ describe("components/victory-histogram", () => {
 
     it("renders 4 bars", () => {
       const { container } = render(
-        <VictoryHistogram bins={[0, 10, 40, 50, 100]} />
+        <VictoryHistogram bins={[0, 10, 40, 50, 100]} />,
       );
       const bars = container.querySelectorAll("path");
       expect(bars).toHaveLength(4);
@@ -48,7 +48,7 @@ describe("components/victory-histogram", () => {
     it("renders each bar as a rectangle", () => {
       const { container } = render(<VictoryHistogram bins={[0, 10, 40, 50]} />);
       const barCommandStrings = Array.from(
-        container.querySelectorAll("path")
+        container.querySelectorAll("path"),
       ).map((bar) => bar.getAttribute("d"));
 
       barCommandStrings.forEach((commandString) => {
@@ -68,7 +68,7 @@ describe("components/victory-histogram", () => {
     it("renders bars for deeply-nested data", () => {
       const data = range(5).map((i) => ({ a: { b: [{ x: i }] } }));
       const { container } = render(
-        <VictoryHistogram data={data} x="a.b[0].x" />
+        <VictoryHistogram data={data} x="a.b[0].x" />,
       );
       const bars = container.querySelectorAll("path");
       expect(bars.length).toEqual(4);
@@ -77,11 +77,11 @@ describe("components/victory-histogram", () => {
     it("renders 2 bars of equal height", () => {
       const data = [{ x: 2 }, { x: 3 }];
       const { container } = render(
-        <VictoryHistogram data={data} bins={[2, 2.5, 3]} />
+        <VictoryHistogram data={data} bins={[2, 2.5, 3]} />,
       );
       const bars = Array.from(container.querySelectorAll("path"));
       const [height1, height2] = bars.map((bar) =>
-        getBarHeight(bar.getAttribute("d"))
+        getBarHeight(bar.getAttribute("d")),
       );
 
       expect(bars).toHaveLength(2);
@@ -97,7 +97,7 @@ describe("components/victory-histogram", () => {
           x={null}
           y={null}
           dataComponent={<DataComponent />}
-        />
+        />,
       );
       const bars = screen.getAllByTestId(DATA_COMPONENT_ID);
       expect(bars.length).toBeGreaterThan(0);
@@ -108,11 +108,11 @@ describe("components/victory-histogram", () => {
         <VictoryHistogram
           data={[{ x: 1 }, { x: 2 }, { x: 2 }, { x: 3 }, { x: 3 }, { x: 3 }]}
           bins={[1, 2, 3, 4]}
-        />
+        />,
       );
       const bars = Array.from(container.querySelectorAll("path"));
       const [height1, height2, height3] = bars.map((bar) =>
-        getBarHeight(bar.getAttribute("d"))
+        getBarHeight(bar.getAttribute("d")),
       );
 
       expect(height2 / 2).toBeCloseTo(height1);
@@ -133,10 +133,10 @@ describe("components/victory-histogram", () => {
           events={[
             {
               target: "parent",
-              eventHandlers: { onClick: clickHandler }
-            }
+              eventHandlers: { onClick: clickHandler },
+            },
           ]}
-        />
+        />,
       );
       const svg = container.querySelector("svg");
       fireEvent.click(svg);
@@ -155,10 +155,10 @@ describe("components/victory-histogram", () => {
           events={[
             {
               target: "data",
-              eventHandlers: { onClick: clickHandler }
-            }
+              eventHandlers: { onClick: clickHandler },
+            },
           ]}
-        />
+        />,
       );
 
       const data = container.querySelectorAll("path");
@@ -182,11 +182,11 @@ describe("components/victory-histogram", () => {
           events={[
             {
               target: "labels",
-              eventHandlers: { onClick: clickHandler }
-            }
+              eventHandlers: { onClick: clickHandler },
+            },
           ]}
           labels={({ datum }) => `Label: ${datum.x}`}
-        />
+        />,
       );
 
       data.forEach((datum) => {

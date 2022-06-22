@@ -9,7 +9,7 @@ import {
   UserProps,
   VictoryContainer,
   VictoryTheme,
-  Wrapper
+  Wrapper,
 } from "victory-core";
 import { VictorySharedEvents } from "victory-shared-events";
 import { getChildren, useMemoizedProps } from "./helper-methods";
@@ -18,7 +18,7 @@ import isEqual from "react-fast-compare";
 const fallbackProps = {
   width: 450,
   height: 300,
-  padding: 50
+  padding: 50,
 };
 
 const VictoryStack = (initialProps) => {
@@ -41,7 +41,7 @@ const VictoryStack = (initialProps) => {
     theme,
     polar,
     horizontal,
-    name
+    name,
   } = modifiedProps;
 
   const childComponents = React.Children.toArray(modifiedProps.children);
@@ -53,7 +53,7 @@ const VictoryStack = (initialProps) => {
     const orderedChildren = children.map((child, index) => {
       const childProps = assign(
         { animate: getAnimationProps(props, child, index, "victory-stack") },
-        child.props
+        child.props,
       );
       return React.cloneElement(child, childProps);
     });
@@ -78,7 +78,7 @@ const VictoryStack = (initialProps) => {
         horizontal,
         polar,
         origin,
-        name
+        name,
       };
     }
     return {};
@@ -93,11 +93,11 @@ const VictoryStack = (initialProps) => {
     horizontal,
     polar,
     origin,
-    name
+    name,
   ]);
   const userProps = React.useMemo(
     () => UserProps.getSafeUserProps(initialProps),
-    [initialProps]
+    [initialProps],
   );
 
   const container = React.useMemo(() => {
@@ -106,7 +106,7 @@ const VictoryStack = (initialProps) => {
         {},
         containerComponent.props,
         containerProps,
-        userProps
+        userProps,
       );
       return React.cloneElement(containerComponent, defaultContainerProps);
     }
@@ -116,7 +116,7 @@ const VictoryStack = (initialProps) => {
     standalone,
     containerComponent,
     containerProps,
-    userProps
+    userProps,
   ]);
 
   const events = React.useMemo(() => {
@@ -156,21 +156,21 @@ VictoryStack.propTypes = {
     PropTypes.arrayOf(
       PropTypes.oneOfType([
         CustomPropTypes.nonNegative,
-        PropTypes.instanceOf(Date)
-      ])
+        PropTypes.instanceOf(Date),
+      ]),
     ),
-    CustomPropTypes.nonNegative
+    CustomPropTypes.nonNegative,
   ]),
   categories: PropTypes.oneOfType([
     PropTypes.arrayOf(PropTypes.string),
     PropTypes.shape({
       x: PropTypes.arrayOf(PropTypes.string),
-      y: PropTypes.arrayOf(PropTypes.string)
-    })
+      y: PropTypes.arrayOf(PropTypes.string),
+    }),
   ]),
   children: PropTypes.oneOfType([
     PropTypes.arrayOf(PropTypes.node),
-    PropTypes.node
+    PropTypes.node,
   ]),
   colorScale: PropTypes.oneOfType([
     PropTypes.arrayOf(PropTypes.string),
@@ -182,8 +182,8 @@ VictoryStack.propTypes = {
       "cool",
       "red",
       "green",
-      "blue"
-    ])
+      "blue",
+    ]),
   ]),
   fillInMissingData: PropTypes.bool,
   horizontal: PropTypes.bool,
@@ -192,9 +192,9 @@ VictoryStack.propTypes = {
   style: PropTypes.shape({
     parent: PropTypes.object,
     data: PropTypes.object,
-    labels: PropTypes.object
+    labels: PropTypes.object,
   }),
-  xOffset: PropTypes.number
+  xOffset: PropTypes.number,
 };
 
 VictoryStack.defaultProps = {
@@ -202,7 +202,7 @@ VictoryStack.defaultProps = {
   groupComponent: <g />,
   standalone: true,
   theme: VictoryTheme.grayscale,
-  fillInMissingData: true
+  fillInMissingData: true,
 };
 
 const VictoryStackMemo = React.memo(VictoryStack, isEqual);
@@ -213,7 +213,7 @@ VictoryStackMemo.role = "stack";
 VictoryStackMemo.expectedComponents = [
   "groupComponent",
   "containerComponent",
-  "labelComponent"
+  "labelComponent",
 ];
 
 VictoryStackMemo.getChildren = getChildren;

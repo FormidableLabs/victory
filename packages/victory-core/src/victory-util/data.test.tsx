@@ -1,17 +1,16 @@
 /* eslint no-unused-expressions: 0, max-nested-callbacks: 0 */
 import React from "react";
-import * as Data from "./data";
-import { VictoryPortal } from "victory-core";
+import { Data, VictoryPortal } from "victory-core";
 import { fromJS } from "immutable";
 
 const immutableDataTest = {
   createData: (data) => fromJS(data),
-  testLabel: "data in immutable"
+  testLabel: "data in immutable",
 };
 
 const dataTest = {
   createData: (data) => data,
-  testLabel: "data in js"
+  testLabel: "data in js",
 };
 
 describe("victory-util/data", () => {
@@ -36,7 +35,7 @@ describe("victory-util/data", () => {
         const data = createData([
           { x: "one", y: 1 },
           { x: "red", y: 2 },
-          { x: "cat", y: 3 }
+          { x: "cat", y: 3 },
         ]);
 
         it("returns a string map from strings in data", () => {
@@ -53,7 +52,7 @@ describe("victory-util/data", () => {
             two: 2,
             three: 3,
             red: 4,
-            cat: 5
+            cat: 5,
           });
         });
       });
@@ -67,8 +66,8 @@ describe("victory-util/data", () => {
           data: createData([
             { x: "one", y: 1 },
             { x: "red", y: 2 },
-            { x: "cat", y: 3 }
-          ])
+            { x: "cat", y: 3 },
+          ]),
         };
         const dataStrings = Data.getStringsFromData(props, "x");
         expect(dataStrings).toEqual(["one", "red", "cat"]);
@@ -79,10 +78,10 @@ describe("victory-util/data", () => {
           data: createData([
             ["one", 1],
             ["red", 2],
-            ["cat", 3]
+            ["cat", 3],
           ]),
           x: 0,
-          y: 1
+          y: 1,
         };
         const dataStrings = Data.getStringsFromData(props, "x");
         expect(dataStrings).toEqual(["one", "red", "cat"]);
@@ -92,8 +91,8 @@ describe("victory-util/data", () => {
         const props = {
           data: createData([
             { x: 1, y: 1 },
-            { x: "three", y: 3 }
-          ])
+            { x: "three", y: 3 },
+          ]),
         };
         expect(Data.getStringsFromData(props, "x")).toEqual(["three"]);
       });
@@ -102,8 +101,8 @@ describe("victory-util/data", () => {
         const props = {
           data: createData([
             { x: 1, y: 1 },
-            { x: 3, y: 3 }
-          ])
+            { x: 3, y: 3 },
+          ]),
         };
         expect(Data.getStringsFromData(props, "x")).toEqual([]);
       });
@@ -156,13 +155,13 @@ describe("victory-util/data", () => {
       it("formats a single dataset", () => {
         const dataset = [
           { _x: 1, _y: 3, x: 1, y: 3 },
-          { _x: 2, _y: 5, x: 2, y: 5 }
+          { _x: 2, _y: 5, x: 2, y: 5 },
         ];
         const props = { data: createData(dataset) };
         const formatted = Data.formatData(dataset, props);
         expect(Array.isArray(formatted)).toBeTruthy();
         expect(Object.keys(formatted[0])).toEqual(
-          expect.arrayContaining(["_x", "_y", "x", "y"])
+          expect.arrayContaining(["_x", "_y", "x", "y"]),
         );
       });
     });
@@ -174,12 +173,12 @@ describe("victory-util/data", () => {
         it("formats and returns the data prop", () => {
           const data = createData([
             { x: "kittens", y: 3 },
-            { x: "cats", y: 5 }
+            { x: "cats", y: 5 },
           ]);
           const props = { data, x: "x", y: "y" };
           const expectedReturnWithEventKeys = [
             { _x: 1, x: "kittens", xName: "kittens", _y: 3, y: 3 },
-            { _x: 2, x: "cats", xName: "cats", _y: 5, y: 5 }
+            { _x: 2, x: "cats", xName: "cats", _y: 5, y: 5 },
           ];
           const returnData = Data.getData(props);
           expect(returnData).toEqual(expectedReturnWithEventKeys);
@@ -189,7 +188,7 @@ describe("victory-util/data", () => {
           const data = createData([
             { x: 2, y: 2, eventKey: 13 },
             { x: 1, y: 3, eventKey: 21 },
-            { x: 3, y: 1, eventKey: 11 }
+            { x: 3, y: 1, eventKey: 11 },
           ]);
 
           const returnData = Data.getData({ data });
@@ -197,7 +196,7 @@ describe("victory-util/data", () => {
           expect(returnData).toEqual([
             { _x: 2, x: 2, _y: 2, y: 2, eventKey: 13 },
             { _x: 1, x: 1, _y: 3, y: 3, eventKey: 21 },
-            { _x: 3, x: 3, _y: 1, y: 1, eventKey: 11 }
+            { _x: 3, x: 3, _y: 1, y: 1, eventKey: 11 },
           ]);
         });
 
@@ -205,7 +204,7 @@ describe("victory-util/data", () => {
           const data = createData([
             { x: 2, y: 2, myEventKey: 3 },
             { x: 1, y: 3, myEventKey: 2 },
-            { x: 3, y: 1, myEventKey: 1 }
+            { x: 3, y: 1, myEventKey: 1 },
           ]);
 
           const returnData = Data.getData({ data, eventKey: "myEventKey" });
@@ -213,7 +212,7 @@ describe("victory-util/data", () => {
           expect(returnData).toEqual([
             { _x: 2, x: 2, _y: 2, y: 2, eventKey: 3, myEventKey: 3 },
             { _x: 1, x: 1, _y: 3, y: 3, eventKey: 2, myEventKey: 2 },
-            { _x: 3, x: 3, _y: 1, y: 1, eventKey: 1, myEventKey: 1 }
+            { _x: 3, x: 3, _y: 1, y: 1, eventKey: 1, myEventKey: 1 },
           ]);
         });
 
@@ -221,7 +220,7 @@ describe("victory-util/data", () => {
           const data = createData([
             { x: 2, y: 2 },
             { x: 1, y: 3 },
-            { x: 3, y: 1 }
+            { x: 3, y: 1 },
           ]);
 
           const returnData = Data.getData({ data, eventKey: (d) => d.x });
@@ -229,7 +228,7 @@ describe("victory-util/data", () => {
           expect(returnData).toEqual([
             { _x: 2, x: 2, _y: 2, y: 2, eventKey: 2 },
             { _x: 1, x: 1, _y: 3, y: 3, eventKey: 1 },
-            { _x: 3, x: 3, _y: 1, y: 1, eventKey: 3 }
+            { _x: 3, x: 3, _y: 1, y: 1, eventKey: 3 },
           ]);
         });
 
@@ -237,7 +236,7 @@ describe("victory-util/data", () => {
           const data = createData([
             { x: 2, y: 2 },
             { x: 1, y: 3 },
-            { x: 3, y: 1 }
+            { x: 3, y: 1 },
           ]);
 
           const returnData = Data.getData({ data, eventKey: (d, i) => i });
@@ -245,7 +244,7 @@ describe("victory-util/data", () => {
           expect(returnData).toEqual([
             { _x: 2, x: 2, _y: 2, y: 2, eventKey: 0 },
             { _x: 1, x: 1, _y: 3, y: 3, eventKey: 1 },
-            { _x: 3, x: 3, _y: 1, y: 1, eventKey: 2 }
+            { _x: 3, x: 3, _y: 1, y: 1, eventKey: 2 },
           ]);
         });
 
@@ -253,7 +252,7 @@ describe("victory-util/data", () => {
           const data = createData([
             { x: 2, y: 2 },
             { x: 1, y: 3 },
-            { x: 3, y: 1 }
+            { x: 3, y: 1 },
           ]);
 
           const returnData = Data.getData({ data });
@@ -261,7 +260,7 @@ describe("victory-util/data", () => {
           expect(returnData).toEqual([
             { _x: 2, x: 2, _y: 2, y: 2 },
             { _x: 1, x: 1, _y: 3, y: 3 },
-            { _x: 3, x: 3, _y: 1, y: 1 }
+            { _x: 3, x: 3, _y: 1, y: 1 },
           ]);
         });
 
@@ -269,7 +268,7 @@ describe("victory-util/data", () => {
           const data = createData([
             { x: 1, y: 1, order: 2 },
             { x: 3, y: 3, order: 1 },
-            { x: 2, y: 2, order: 3 }
+            { x: 2, y: 2, order: 3 },
           ]);
 
           const returnData = Data.getData({ data, sortKey: "order" });
@@ -277,7 +276,7 @@ describe("victory-util/data", () => {
           expect(returnData).toEqual([
             { _x: 3, x: 3, _y: 3, y: 3, order: 1 },
             { _x: 1, x: 1, _y: 1, y: 1, order: 2 },
-            { _x: 2, x: 2, _y: 2, y: 2, order: 3 }
+            { _x: 2, x: 2, _y: 2, y: 2, order: 3 },
           ]);
         });
 
@@ -285,19 +284,19 @@ describe("victory-util/data", () => {
           const data = createData([
             { x: 1, y: 1, order: 2 },
             { x: 3, y: 3, order: 1 },
-            { x: 2, y: 2, order: 3 }
+            { x: 2, y: 2, order: 3 },
           ]);
 
           const returnData = Data.getData({
             data,
             sortKey: "order",
-            sortOrder: "descending"
+            sortOrder: "descending",
           });
 
           expect(returnData).toEqual([
             { _x: 2, x: 2, _y: 2, y: 2, order: 3 },
             { _x: 1, x: 1, _y: 1, y: 1, order: 2 },
-            { _x: 3, x: 3, _y: 3, y: 3, order: 1 }
+            { _x: 3, x: 3, _y: 3, y: 3, order: 1 },
           ]);
         });
 
@@ -306,7 +305,7 @@ describe("victory-util/data", () => {
           const data = createData([
             { _x: 2, x: 10, _y: 2, y: 10 },
             { _x: 1, x: 20, _y: 3, y: 20 },
-            { _x: 3, x: 30, _y: 1, y: 30 }
+            { _x: 3, x: 30, _y: 1, y: 30 },
           ]);
 
           const returnDataX = Data.getData({ data, sortKey: "x" });
@@ -314,14 +313,14 @@ describe("victory-util/data", () => {
           expect(returnDataX).toEqual([
             { _x: 1, x: 20, _y: 3, y: 20 },
             { _x: 2, x: 10, _y: 2, y: 10 },
-            { _x: 3, x: 30, _y: 1, y: 30 }
+            { _x: 3, x: 30, _y: 1, y: 30 },
           ]);
 
           const returnDataY = Data.getData({ data, sortKey: "y" });
           expect(returnDataY).toEqual([
             { _x: 3, x: 30, _y: 1, y: 30 },
             { _x: 2, x: 10, _y: 2, y: 10 },
-            { _x: 1, x: 20, _y: 3, y: 20 }
+            { _x: 1, x: 20, _y: 3, y: 20 },
           ]);
         });
       });
@@ -330,7 +329,7 @@ describe("victory-util/data", () => {
     it("generates a dataset from domain", () => {
       const generatedReturn = [
         { x: 0, y: 0 },
-        { x: 10, y: 10 }
+        { x: 10, y: 10 },
       ];
       const props = { x: "x", y: "y", domain: { x: [0, 10], y: [0, 10] } };
       const returnData = Data.generateData(props);
@@ -341,13 +340,13 @@ describe("victory-util/data", () => {
       const generatedReturn = [
         { x: 0, y: 0 },
         { x: 5, y: 5 },
-        { x: 10, y: 10 }
+        { x: 10, y: 10 },
       ];
       const props = {
         x: "x",
         y: "y",
         domain: { x: [0, 10], y: [0, 10] },
-        samples: 2
+        samples: 2,
       };
       const returnData = Data.generateData(props);
       expect(returnData).toEqual(generatedReturn);
@@ -375,8 +374,8 @@ describe("victory-util/data", () => {
         Data.isDataComponent(
           <VictoryPortal>
             <TestDataComponent />
-          </VictoryPortal>
-        )
+          </VictoryPortal>,
+        ),
       ).toBe(true);
     });
   });

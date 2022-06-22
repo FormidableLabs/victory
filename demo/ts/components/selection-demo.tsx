@@ -25,7 +25,7 @@ export default class SelectionDemo extends React.Component<
   constructor(props: any) {
     super(props);
     this.state = {
-      points: []
+      points: [],
     };
   }
 
@@ -45,7 +45,7 @@ export default class SelectionDemo extends React.Component<
     const points = this.state.points.map(
       (point: { x: number; y: number }, index: number) => {
         return <li key={index}>{`${point.x}, ${point.y}`}</li>;
-      }
+      },
     );
 
     return (
@@ -62,11 +62,11 @@ export default class SelectionDemo extends React.Component<
       flexDirection: "row",
       flexWrap: "wrap",
       alignItems: "center",
-      justifyContent: "center"
+      justifyContent: "center",
     };
 
     const chartStyle = {
-      parent: { border: "1px solid #ccc", margin: "2%", maxWidth: "40%" }
+      parent: { border: "1px solid #ccc", margin: "2%", maxWidth: "40%" },
     };
 
     return (
@@ -84,7 +84,7 @@ export default class SelectionDemo extends React.Component<
                   stroke: "tomato",
                   strokeWidth: 2,
                   fill: "tomato",
-                  fillOpacity: 0.1
+                  fillOpacity: 0.1,
                 }}
                 onSelection={this.handleSelection.bind(this)}
                 onSelectionCleared={this.handleClearSelection.bind(this)}
@@ -102,12 +102,12 @@ export default class SelectionDemo extends React.Component<
               data={[
                 { name: "One", symbol: { fill: "tomato" } },
                 { name: "Two", symbol: { fill: "orange" } },
-                { name: "Three", symbol: { fill: "gold" } }
+                { name: "Three", symbol: { fill: "gold" } },
               ]}
             />
             <VictoryLine
               style={{
-                data: { stroke: "tomato" }
+                data: { stroke: "tomato" },
               }}
               data={[
                 { x: 1, y: -5 },
@@ -116,12 +116,12 @@ export default class SelectionDemo extends React.Component<
                 { x: 4, y: 3 },
                 { x: 5, y: 1 },
                 { x: 6, y: -3 },
-                { x: 7, y: 3 }
+                { x: 7, y: 3 },
               ]}
             />
             <VictoryLine
               style={{
-                data: { stroke: "blue" }
+                data: { stroke: "blue" },
               }}
               data={[
                 { x: 1, y: -3 },
@@ -130,7 +130,7 @@ export default class SelectionDemo extends React.Component<
                 { x: 4, y: 0 },
                 { x: 5, y: -2 },
                 { x: 6, y: -2 },
-                { x: 7, y: 5 }
+                { x: 7, y: 5 },
               ]}
             />
             <VictoryLine
@@ -141,7 +141,7 @@ export default class SelectionDemo extends React.Component<
                 { x: 4, y: -3 },
                 { x: 5, y: -1 },
                 { x: 6, y: 3 },
-                { x: 7, y: -3 }
+                { x: 7, y: -3 },
               ]}
             />
           </VictoryChart>
@@ -154,13 +154,13 @@ export default class SelectionDemo extends React.Component<
               data={[
                 { x: 1, y: 5 },
                 { x: 2, y: 4 },
-                { x: 3, y: -2 }
+                { x: 3, y: -2 },
               ]}
             >
               <VictoryLine style={{ data: { stroke: "tomato" } }} />
               <VictoryScatter
                 style={{
-                  data: { fill: ({ active }) => (active ? "tomato" : "gray") }
+                  data: { fill: ({ active }) => (active ? "tomato" : "gray") },
                 }}
                 labels={({ datum }) => datum.y}
                 labelComponent={<VictoryTooltip />}
@@ -171,13 +171,13 @@ export default class SelectionDemo extends React.Component<
               data={[
                 { x: 1, y: -3 },
                 { x: 2, y: 5 },
-                { x: 3, y: 3 }
+                { x: 3, y: 3 },
               ]}
             >
               <VictoryLine style={{ data: { stroke: "blue" } }} />
               <VictoryScatter
                 style={{
-                  data: { fill: ({ active }) => (active ? "blue" : "gray") }
+                  data: { fill: ({ active }) => (active ? "blue" : "gray") },
                 }}
                 labels={({ datum }) => datum.y}
                 labelComponent={<VictoryTooltip />}
@@ -188,13 +188,13 @@ export default class SelectionDemo extends React.Component<
               data={[
                 { x: 1, y: 5 },
                 { x: 2, y: -4 },
-                { x: 3, y: -2 }
+                { x: 3, y: -2 },
               ]}
             >
               <VictoryLine style={{ data: { stroke: "black" } }} />
               <VictoryScatter
                 style={{
-                  data: { fill: ({ active }) => (active ? "black" : "gray") }
+                  data: { fill: ({ active }) => (active ? "black" : "gray") },
                 }}
                 labels={({ datum }) => datum.y}
                 labelComponent={<VictoryTooltip />}
@@ -206,8 +206,8 @@ export default class SelectionDemo extends React.Component<
             style={{
               parent: chartStyle.parent,
               data: {
-                fill: ({ active }) => (active ? "tomato" : "black")
-              }
+                fill: ({ active }) => (active ? "tomato" : "black"),
+              },
             }}
             containerComponent={
               <VictorySelectionContainer
@@ -215,7 +215,7 @@ export default class SelectionDemo extends React.Component<
                   stroke: "tomato",
                   strokeWidth: 2,
                   fill: "tomato",
-                  fillOpacity: 0.1
+                  fillOpacity: 0.1,
                 }}
               />
             }
@@ -227,7 +227,7 @@ export default class SelectionDemo extends React.Component<
               { x: 4, y: 3 },
               { x: 5, y: 1 },
               { x: 6, y: -3 },
-              { x: 7, y: 3 }
+              { x: 7, y: 3 },
             ]}
           />
 
@@ -235,8 +235,8 @@ export default class SelectionDemo extends React.Component<
             style={{
               parent: chartStyle.parent,
               data: {
-                fill: ({ active }) => (active ? "tomato" : "black")
-              }
+                fill: ({ active }) => (active ? "tomato" : "black"),
+              },
             }}
             containerComponent={
               <VictorySelectionContainer
@@ -244,7 +244,7 @@ export default class SelectionDemo extends React.Component<
                   stroke: "tomato",
                   strokeWidth: 2,
                   fill: "tomato",
-                  fillOpacity: 0.1
+                  fillOpacity: 0.1,
                 }}
               />
             }
@@ -260,14 +260,14 @@ export default class SelectionDemo extends React.Component<
                   stroke: "tomato",
                   strokeWidth: 2,
                   fill: "tomato",
-                  fillOpacity: 0.1
+                  fillOpacity: 0.1,
                 }}
               />
             }
           >
             <VictoryScatter
               style={{
-                data: { fill: "tomato" }
+                data: { fill: "tomato" },
               }}
               size={({ active }) => (active ? 5 : 3)}
               data={[
@@ -277,12 +277,12 @@ export default class SelectionDemo extends React.Component<
                 { x: 4, y: 3 },
                 { x: 5, y: 1 },
                 { x: 6, y: -3 },
-                { x: 7, y: 3 }
+                { x: 7, y: 3 },
               ]}
             />
             <VictoryScatter
               style={{
-                data: { fill: "blue" }
+                data: { fill: "blue" },
               }}
               size={({ active }) => (active ? 5 : 3)}
               data={[
@@ -292,7 +292,7 @@ export default class SelectionDemo extends React.Component<
                 { x: 4, y: 0 },
                 { x: 5, y: -2 },
                 { x: 6, y: -2 },
-                { x: 7, y: 5 }
+                { x: 7, y: 5 },
               ]}
             />
             <VictoryScatter
@@ -303,7 +303,7 @@ export default class SelectionDemo extends React.Component<
                 { x: 4, y: -3 },
                 { x: 5, y: -1 },
                 { x: 6, y: 3 },
-                { x: 7, y: -3 }
+                { x: 7, y: -3 },
               ]}
               size={({ active }) => (active ? 5 : 3)}
             />
@@ -319,7 +319,7 @@ export default class SelectionDemo extends React.Component<
                   stroke: "tomato",
                   strokeWidth: 2,
                   fill: "tomato",
-                  fillOpacity: 0.1
+                  fillOpacity: 0.1,
                 }}
               />
             }
@@ -330,8 +330,8 @@ export default class SelectionDemo extends React.Component<
                   data: {
                     fill: "tomato",
                     stroke: ({ active }) => (active ? "black" : "none"),
-                    strokeWidth: 2
-                  }
+                    strokeWidth: 2,
+                  },
                 }}
                 data={[
                   { x: 1, y: -5 },
@@ -340,7 +340,7 @@ export default class SelectionDemo extends React.Component<
                   { x: 4, y: 3 },
                   { x: 5, y: 1 },
                   { x: 6, y: -3 },
-                  { x: 7, y: 3 }
+                  { x: 7, y: 3 },
                 ]}
               />
               <VictoryBar
@@ -348,8 +348,8 @@ export default class SelectionDemo extends React.Component<
                   data: {
                     fill: "orange",
                     stroke: ({ active }) => (active ? "black" : "none"),
-                    strokeWidth: 2
-                  }
+                    strokeWidth: 2,
+                  },
                 }}
                 data={[
                   { x: 1, y: -3 },
@@ -358,7 +358,7 @@ export default class SelectionDemo extends React.Component<
                   { x: 4, y: 0 },
                   { x: 5, y: -2 },
                   { x: 6, y: -2 },
-                  { x: 7, y: 5 }
+                  { x: 7, y: 5 },
                 ]}
               />
               <VictoryBar
@@ -366,8 +366,8 @@ export default class SelectionDemo extends React.Component<
                   data: {
                     fill: "gold",
                     stroke: ({ active }) => (active ? "black" : "none"),
-                    strokeWidth: 2
-                  }
+                    strokeWidth: 2,
+                  },
                 }}
                 data={[
                   { x: 1, y: 5 },
@@ -376,7 +376,7 @@ export default class SelectionDemo extends React.Component<
                   { x: 4, y: -3 },
                   { x: 5, y: -1 },
                   { x: 6, y: 3 },
-                  { x: 7, y: -3 }
+                  { x: 7, y: -3 },
                 ]}
               />
             </VictoryStack>

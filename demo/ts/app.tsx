@@ -45,7 +45,7 @@ const MAP = {
   "/box-plot": { component: BoxPlotDemo, name: "BoxPlotDemo" },
   "/brush-container": {
     component: BrushContainerDemo,
-    name: "BrushContainerDemo"
+    name: "BrushContainerDemo",
   },
   "/brush-line": { component: BrushLineDemo, name: "BrushLineDemo" },
   "/group-demo": { component: GroupDemo, name: "GroupDemo" },
@@ -55,7 +55,7 @@ const MAP = {
   "/chart": { component: ChartDemo, name: "ChartDemo" },
   "/cursor-container": {
     component: CursorContainerDemo,
-    name: "CursorContainerDemo"
+    name: "CursorContainerDemo",
   },
   "/draggable-demo": { component: DraggableDemo, name: "DraggableDemo" },
   "/error-bar": { component: ErrorBarDemo, name: "ErrorBarDemo" },
@@ -74,22 +74,22 @@ const MAP = {
   "/victory-demo": { component: VictoryDemo, name: "VictoryDemo" },
   "/victory-selection-container": {
     component: VictorySelectionContainerDemo,
-    name: "VictorySelectionContainerDemo"
+    name: "VictorySelectionContainerDemo",
   },
   "/victory-shared-events": {
     component: VictorySharedEventsDemo,
-    name: "VictorySharedEventsDemo"
+    name: "VictorySharedEventsDemo",
   },
   "/voronoi": { component: VoronoiDemo, name: "VoronoiDemo" },
   "/voronoi-container": {
     component: VoronoiContainerDemo,
-    name: "VoronoiContainerDemo"
+    name: "VoronoiContainerDemo",
   },
   "/zoom-container": {
     component: ZoomContainerDemo,
-    name: "ZoomContainerDemo"
+    name: "ZoomContainerDemo",
   },
-  "/ouia-demo": { component: OuiaDemo, name: "OuiaDemo" }
+  "/ouia-demo": { component: OuiaDemo, name: "OuiaDemo" },
 };
 
 class Home extends React.Component {
@@ -107,14 +107,14 @@ class App extends React.Component<any, AppState> {
     super(props);
 
     this.state = {
-      route: window.location.hash.substr(1)
+      route: window.location.hash.substr(1),
     };
   }
 
   componentDidMount() {
     window.addEventListener("hashchange", () => {
       this.setState({
-        route: window.location.hash.substr(1)
+        route: window.location.hash.substr(1),
       });
     });
   }

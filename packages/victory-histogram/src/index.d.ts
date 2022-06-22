@@ -6,7 +6,7 @@ import {
   VictoryCommonProps,
   VictoryDatableProps,
   VictoryMultiLabelableProps,
-  VictoryStyleInterface
+  VictoryStyleInterface,
 } from "victory-core";
 
 export type VictoryHistogramTargetType = "data" | "labels" | "parent";

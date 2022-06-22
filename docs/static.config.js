@@ -7,7 +7,7 @@ const {
   getIntroduction,
   getGallery,
   getGuides,
-  getCommonProps
+  getCommonProps,
 } = require("./static-config-helpers/md-data-transforms");
 const { stage, landerBasePath } = require("./static-config-helpers/constants");
 
@@ -29,7 +29,7 @@ module.exports.default = {
     buildArtifacts: "node_modules/.cache/react-static/artifacts/",
     devDist: "node_modules/.cache/react-static/dist/",
     temp: "node_modules/.cache/react-static/temp/",
-    public: "public" // The public directory (files copied to dist during build)
+    public: "public", // The public directory (files copied to dist during build)
   },
   generateSourceMaps: false,
   basePath: landerBasePath,
@@ -38,7 +38,7 @@ module.exports.default = {
   plugins: [
     "react-static-plugin-react-router",
     "react-static-plugin-sitemap",
-    "react-static-plugin-styled-components"
+    "react-static-plugin-styled-components",
   ],
   // eslint-disable-next-line max-statements
   getRoutes: async () => {
@@ -62,7 +62,7 @@ module.exports.default = {
       ...faq,
       ...guides,
       commonPropsIntro,
-      ...trueDocs
+      ...trueDocs,
     ];
 
     // eslint-disable-next-line max-params
@@ -94,7 +94,7 @@ module.exports.default = {
         commonPropsIntro,
         ...charts,
         ...containers,
-        ...more
+        ...more,
       ];
     };
     const sbContent = convertToSidebarArray(sidebarContent);
@@ -103,12 +103,12 @@ module.exports.default = {
     return [
       {
         path: "/",
-        template: "src/pages/index"
+        template: "src/pages/index",
       },
       {
         path: "/about",
         template: "src/pages/about",
-        sharedData: { sidebarContent: sharedSidebarContent }
+        sharedData: { sidebarContent: sharedSidebarContent },
       },
       {
         // The "/guides" URL used to be a page, but is no longer. Because it is linked to from other documentation,
@@ -126,9 +126,9 @@ module.exports.default = {
           getData: () => ({
             doc: g,
             title: `Victory | ${g.name}`,
-            sidebarContent: sbContent
-          })
-        }))
+            sidebarContent: sbContent,
+          }),
+        })),
       },
       {
         path: "/docs",
@@ -136,23 +136,23 @@ module.exports.default = {
         getData: () => ({
           doc: homeIntro,
           docs: trueDocs,
-          sidebarContent: sbContent
+          sidebarContent: sbContent,
         }),
         children: docSubroutes.map((doc) => ({
           path: `/${doc.data.slug}`,
           template: "src/pages/docs-template",
-          getData: () => ({ doc, sidebarContent: sbContent })
-        }))
+          getData: () => ({ doc, sidebarContent: sbContent }),
+        })),
       },
       {
         path: "docs/faq",
         template: "src/pages/docs-template",
-        getData: () => ({ doc: faqIntro, sidebarContent: sbContent })
+        getData: () => ({ doc: faqIntro, sidebarContent: sbContent }),
       },
       {
         path: "docs/common-props",
         template: "src/pages/docs-template",
-        getData: () => ({ doc: commonPropsIntro, sidebarContent: sbContent })
+        getData: () => ({ doc: commonPropsIntro, sidebarContent: sbContent }),
       },
       {
         path: "/gallery",
@@ -162,16 +162,16 @@ module.exports.default = {
         children: gallery.map((galleryItem) => ({
           path: `/${galleryItem.data.slug}/`,
           template: "src/pages/gallery-item-template",
-          getData: () => ({ galleryItem })
-        }))
+          getData: () => ({ galleryItem }),
+        })),
       },
       // 404 Not Found
       {
         path: "/404",
         template: "src/pages/404",
-        sharedData: { sidebarContent: sharedSidebarContent }
-      }
+        sharedData: { sidebarContent: sharedSidebarContent },
+      },
     ];
   },
-  Document: require("./src/html").default
+  Document: require("./src/html").default,
 };

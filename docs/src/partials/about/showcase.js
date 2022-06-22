@@ -11,38 +11,38 @@ const showcaseAppData = [
     company: "FiveThirtyEight",
     screenshot: {
       src: IMG538,
-      alt: "FiveThirtyEight screenshot"
+      alt: "FiveThirtyEight screenshot",
     },
     description:
-      "FiveThirtyEight uses Victory for data visualizations, including this one about the history of sumo wrestling."
+      "FiveThirtyEight uses Victory for data visualizations, including this one about the history of sumo wrestling.",
   },
   {
     company: "Postmark",
     screenshot: {
       src: IMGPOSTMARK,
-      alt: "Postmark screenshot"
+      alt: "Postmark screenshot",
     },
     description:
-      "Postmark uses Victory on its status page to let users know how their service is performing."
+      "Postmark uses Victory on its status page to let users know how their service is performing.",
   },
   {
     company: "Tune",
     screenshot: {
       src: IMGTUNE,
-      alt: "Tune screenshot"
+      alt: "Tune screenshot",
     },
     description:
-      "Tune uses Victory in its Marketing Console, a tool for marketers to track all of their mobile data."
+      "Tune uses Victory in its Marketing Console, a tool for marketers to track all of their mobile data.",
   },
   {
     company: "Cumul8",
     screenshot: {
       src: IMGCUMUL8,
-      alt: "Cumul8 screenshot"
+      alt: "Cumul8 screenshot",
     },
     description:
-      "Cumul8 uses Victory for Cirrus, a SaaS platform for businesses to manage their internal data."
-  }
+      "Cumul8 uses Victory for Cirrus, a SaaS platform for businesses to manage their internal data.",
+  },
 ];
 
 const Showcase = () => {

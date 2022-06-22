@@ -22,7 +22,7 @@ export const AreaScreen: React.FC = () => {
         interpolation="basis"
         animate={{
           onLoad: { duration: 3500 },
-          duration: 1500
+          duration: 1500,
         }}
         data={data}
       />
@@ -37,7 +37,7 @@ export const AreaScreen: React.FC = () => {
           { x: 4, y: 1 },
           { x: 5, y: 3 },
           { x: 6, y: 4 },
-          { x: 7, y: 2 }
+          { x: 7, y: 2 },
         ]}
       />
 
@@ -47,7 +47,7 @@ export const AreaScreen: React.FC = () => {
           { amount: 2, yield: 2, error: 1.1 },
           { amount: 3, yield: 3, error: 0 },
           { amount: 4, yield: 2, error: 0.1 },
-          { amount: 5, yield: 1, error: 1.5 }
+          { amount: 5, yield: 1, error: 1.5 },
         ]}
         x={"amount"}
         y={(d) => d.yield + d.error}
@@ -58,21 +58,21 @@ export const AreaScreen: React.FC = () => {
           data={[
             { x: 1, y: 1 },
             { x: 2, y: 2 },
-            { x: 3, y: 3 }
+            { x: 3, y: 3 },
           ]}
         />
         <VictoryArea
           data={[
             { x: 1, y: 2 },
             { x: 2, y: 1 },
-            { x: 3, y: 1 }
+            { x: 3, y: 1 },
           ]}
         />
         <VictoryArea
           data={[
             { x: 1, y: 3 },
             { x: 2, y: 4 },
-            { x: 3, y: 2 }
+            { x: 3, y: 2 },
           ]}
         />
       </VictoryGroup>
@@ -82,21 +82,21 @@ export const AreaScreen: React.FC = () => {
           data={[
             { x: 1, y: 1 },
             { x: 2, y: 2 },
-            { x: 3, y: 3 }
+            { x: 3, y: 3 },
           ]}
         />
         <VictoryArea
           data={[
             { x: 1, y: 2 },
             { x: 2, y: 1 },
-            { x: 3, y: 1 }
+            { x: 3, y: 1 },
           ]}
         />
         <VictoryArea
           data={[
             { x: 1, y: 3 },
             { x: 2, y: 4 },
-            { x: 3, y: 2 }
+            { x: 3, y: 2 },
           ]}
         />
       </VictoryStack>
@@ -108,47 +108,47 @@ export const AreaScreen: React.FC = () => {
           data: {
             strokeDasharray: "5,5",
             strokeWidth: 2,
-            fillOpacity: 0.4
-          }
+            fillOpacity: 0.4,
+          },
         }}
       >
         <VictoryArea
           style={{
             data: {
               fill: "tomato",
-              stroke: "tomato"
-            }
+              stroke: "tomato",
+            },
           }}
           data={[
             { x: 1, y: 1 },
             { x: 2, y: 2 },
-            { x: 3, y: 3 }
+            { x: 3, y: 3 },
           ]}
         />
         <VictoryArea
           style={{
             data: {
               fill: "orange",
-              stroke: "orange"
-            }
+              stroke: "orange",
+            },
           }}
           data={[
             { x: 1, y: 2 },
             { x: 2, y: 1 },
-            { x: 3, y: 1 }
+            { x: 3, y: 1 },
           ]}
         />
         <VictoryArea
           style={{
             data: {
               fill: "gold",
-              stroke: "gold"
-            }
+              stroke: "gold",
+            },
           }}
           data={[
             { x: 1, y: 3 },
             { x: 2, y: 4 },
-            { x: 3, y: 2 }
+            { x: 3, y: 2 },
           ]}
         />
       </VictoryStack>

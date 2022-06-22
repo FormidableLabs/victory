@@ -8,5 +8,5 @@ export type ContainerType =
   | "zoom";
 export function createContainer<V, W>(
   c1: ContainerType,
-  c2: ContainerType
+  c2: ContainerType,
 ): React.ComponentType<V & W>;

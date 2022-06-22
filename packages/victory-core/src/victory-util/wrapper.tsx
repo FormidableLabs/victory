@@ -7,7 +7,7 @@ import {
   groupBy,
   uniqBy,
   values,
-  isPlainObject
+  isPlainObject,
 } from "lodash";
 import React from "react";
 import * as Axis from "./axis";
@@ -24,7 +24,7 @@ export function addBinsToParentPropsIfHistogram({
   children,
   props,
   childComponents,
-  parentProps
+  parentProps,
 }) {
   const someChildrenAreHistograms = children.some((child) => {
     return child.type && child.type.role === "histogram";
@@ -39,7 +39,7 @@ export function addBinsToParentPropsIfHistogram({
 
   if (someChildrenAreHistograms && !allChildrenAreHistograms) {
     Log.warn(
-      "VictoryHistogram only supports being stacked with other VictoryHistogram components. Check to make sure that you are only passing VictoryHistogram components to VictoryStack"
+      "VictoryHistogram only supports being stacked with other VictoryHistogram components. Check to make sure that you are only passing VictoryHistogram components to VictoryStack",
     );
   }
 
@@ -56,7 +56,7 @@ export function addBinsToParentPropsIfHistogram({
     const combinedData = children.reduce((memo, child) => {
       const xAccessor = Helpers.createAccessor(child.props.x || "x");
       return memo.concat(
-        child.props.data.map((datum) => ({ x: xAccessor(datum) }))
+        child.props.data.map((datum) => ({ x: xAccessor(datum) })),
       );
     }, []);
 
@@ -65,11 +65,11 @@ export function addBinsToParentPropsIfHistogram({
     const getFormattedHistogramData = children[0].type.getFormattedData;
     childBins = getFormattedHistogramData({
       data: combinedData,
-      bins: childBins
+      bins: childBins,
     }).reduce(
       (memo, { x0, x1 }, index) =>
         index === 0 ? memo.concat([x0, x1]) : memo.concat(x1),
-      []
+      [],
     );
   }
 
@@ -85,7 +85,7 @@ export function getDataFromChildren(props, childComponents) {
     endAngle,
     categories,
     minDomain,
-    maxDomain
+    maxDomain,
   };
   let stack = 0;
   const children = childComponents
@@ -96,7 +96,7 @@ export function getDataFromChildren(props, childComponents) {
     children,
     props,
     childComponents,
-    parentProps
+    parentProps,
   });
 
   const iteratee = (child, childName, parent) => {
@@ -112,12 +112,12 @@ export function getDataFromChildren(props, childComponents) {
     }
     stack += 1;
     return childData.map((datum, index) =>
-      assign({ _stack: stack, _group: index }, datum)
+      assign({ _stack: stack, _group: index }, datum),
     );
   };
 
   const stacked = children.filter(
-    (c) => c.type && c.type.role === "stack"
+    (c) => c.type && c.type.role === "stack",
   ).length;
   const combine = (memo, val) => memo.concat(uniqBy(val, "_group"));
   const datasets = Helpers.reduceChildren(
@@ -125,7 +125,7 @@ export function getDataFromChildren(props, childComponents) {
     iteratee,
     props,
     [],
-    combine
+    combine,
   );
   const group = stacked ? "_group" : "_stack";
   return values(groupBy(datasets, group));
@@ -190,7 +190,7 @@ export function getDefaultDomainPadding(props, axis, childComponents) {
   return {
     x:
       (width * children.length) / 2 +
-      (offset - width * ((children.length - 1) / 2))
+      (offset - width * ((children.length - 1) / 2)),
   };
 }
 
@@ -207,7 +207,7 @@ export function getDomainFromChildren(props, axis, childComponents) {
     categories,
     minDomain,
     maxDomain,
-    horizontal
+    horizontal,
   } = props;
   const baseParentProps = {
     horizontal,
@@ -216,7 +216,7 @@ export function getDomainFromChildren(props, axis, childComponents) {
     endAngle,
     minDomain,
     maxDomain,
-    categories
+    categories,
   };
   const parentProps = parentData
     ? assign(baseParentProps, { data: parentData })
@@ -276,12 +276,12 @@ export function getScale(props, axis, childComponents) {
     : React.Children.toArray(props.children);
   const iteratee = (child) => {
     const sharedProps = assign({}, child.props, {
-      horizontal: props.horizontal
+      horizontal: props.horizontal,
     });
     return Scale.getScaleType(sharedProps, axis);
   };
   const childScale: string[] = uniq(
-    Helpers.reduceChildren(children, iteratee, props)
+    Helpers.reduceChildren(children, iteratee, props),
   );
 
   // default to linear scale if more than one uniq scale type is given by children
@@ -345,13 +345,13 @@ export function getChildStyle(child, index, calculatedProps) {
   const dataStyle = defaults(
     {},
     childStyle.data,
-    assign({}, dataWidth, style.data, defaultColor)
+    assign({}, dataWidth, style.data, defaultColor),
   );
   const labelsStyle = defaults({}, childStyle.labels, style.labels);
   return {
     parent: style.parent,
     data: dataStyle,
-    labels: labelsStyle
+    labels: labelsStyle,
   };
 }
 
@@ -390,7 +390,7 @@ export function getStringsFromData(childComponents) {
   const initialMemo = { x: [] as number[], y: [] as number[] };
   const combine = (
     memo: typeof initialMemo,
-    datum: NonNullable<ReturnType<typeof iteratee>>
+    datum: NonNullable<ReturnType<typeof iteratee>>,
   ) => {
     const x = Array.isArray(datum)
       ? datum.map((d) => d.x).filter(Boolean)
@@ -400,7 +400,7 @@ export function getStringsFromData(childComponents) {
       : datum.y;
     return {
       x: x !== undefined ? memo.x.concat(x) : memo.x,
-      y: y !== undefined ? memo.y.concat(y) : memo.y
+      y: y !== undefined ? memo.y.concat(y) : memo.y,
     };
   };
   return Helpers.reduceChildren(
@@ -408,14 +408,14 @@ export function getStringsFromData(childComponents) {
     iteratee,
     {},
     initialMemo,
-    combine
+    combine,
   );
 }
 
 export function getCategoryAndAxisStringsFromChildren(
   props,
   axis,
-  childComponents
+  childComponents,
 ) {
   const categories = isPlainObject(props.categories)
     ? props.categories[axis]
@@ -435,19 +435,19 @@ export function getStringsFromChildren(props, childComponents) {
   const xStrings = getCategoryAndAxisStringsFromChildren(
     props,
     "x",
-    childComponents
+    childComponents,
   );
   const yStrings = getCategoryAndAxisStringsFromChildren(
     props,
     "y",
-    childComponents
+    childComponents,
   );
 
   const dataStrings = getStringsFromData(childComponents);
 
   return {
     x: uniq(flatten([...xStrings, ...dataStrings.x])),
-    y: uniq(flatten([...yStrings, ...dataStrings.y]))
+    y: uniq(flatten([...yStrings, ...dataStrings.y])),
   };
 }
 
@@ -473,6 +473,6 @@ export function getCategories(props, childComponents, allStrings) {
 
   return {
     x: xCategories.length > 0 ? xCategories : undefined,
-    y: yCategories.length > 0 ? yCategories : undefined
+    y: yCategories.length > 0 ? yCategories : undefined,
   };
 }

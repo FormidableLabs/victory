@@ -9,7 +9,7 @@ export default class App extends React.Component {
   constructor(props) {
     super(props);
     this.state = {
-      scatterData: this.getScatterData()
+      scatterData: this.getScatterData(),
     };
   }
 
@@ -18,7 +18,7 @@ export default class App extends React.Component {
     if (typeof window !== "undefined") {
       this.setStateInterval = window.setInterval(() => {
         this.setState({
-          scatterData: this.getScatterData()
+          scatterData: this.getScatterData(),
         });
       }, 3000);
     }
@@ -34,7 +34,7 @@ export default class App extends React.Component {
     const colors = [
       ...importedTheme.color.homeCharts,
       importedTheme.color.red,
-      importedTheme.color.accentBrown
+      importedTheme.color.accentBrown,
     ];
     const symbols = [
       "circle",
@@ -43,7 +43,7 @@ export default class App extends React.Component {
       "triangleUp",
       "triangleDown",
       "diamond",
-      "plus"
+      "plus",
     ];
     return range(25).map((index) => {
       const scaledIndex = Math.floor(index % 7);
@@ -52,7 +52,7 @@ export default class App extends React.Component {
         y: random(2, 100),
         size: random(8) + 3,
         symbol: symbols[scaledIndex],
-        fill: colors[random(0, 6)]
+        fill: colors[random(0, 6)],
       };
     });
   }
@@ -63,8 +63,8 @@ export default class App extends React.Component {
         boxSizing: "border-box",
         display: "block",
         margin: "0 auto",
-        padding: 0
-      }
+        padding: 0,
+      },
     };
   }
 
@@ -83,8 +83,8 @@ export default class App extends React.Component {
           style={{
             data: {
               fill: ({ datum }) => datum.fill,
-              opacity: 0.6
-            }
+              opacity: 0.6,
+            },
           }}
         />
       </VictoryChart>

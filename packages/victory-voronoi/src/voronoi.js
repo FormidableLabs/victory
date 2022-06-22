@@ -8,7 +8,7 @@ import {
   ClipPath,
   Path,
   Circle,
-  UserProps
+  UserProps,
 } from "victory-core";
 
 const getVoronoiPath = (props) => {
@@ -47,7 +47,7 @@ const Voronoi = (props) => {
     transform,
     style,
     size,
-    tabIndex
+    tabIndex,
   } = props;
   const voronoiPath = getVoronoiPath(props);
   const sharedProps = {
@@ -58,7 +58,7 @@ const Voronoi = (props) => {
     style,
     tabIndex,
     transform,
-    ...events
+    ...events,
   };
   const userProps = UserProps.getSafeUserProps(props);
 
@@ -69,25 +69,25 @@ const Voronoi = (props) => {
       clipPath: `url(#${props.clipId})`,
       cx: props.x,
       cy: props.y,
-      r: size
+      r: size,
     });
 
     const voronoiClipPath = React.cloneElement(
       props.clipPathComponent,
       { key: `${props.id}-voronoi-clip`, clipId: props.clipId },
-      React.cloneElement(props.pathComponent, { d: voronoiPath, className })
+      React.cloneElement(props.pathComponent, { d: voronoiPath, className }),
     );
 
     return React.cloneElement(props.groupComponent, {}, [
       voronoiClipPath,
-      circle
+      circle,
     ]);
   }
 
   return React.cloneElement(props.pathComponent, {
     ...sharedProps,
     ...userProps,
-    d: voronoiPath
+    d: voronoiPath,
   });
 };
 
@@ -102,7 +102,7 @@ Voronoi.propTypes = {
   polygon: PropTypes.array,
   size: PropTypes.number,
   x: PropTypes.number,
-  y: PropTypes.number
+  y: PropTypes.number,
 };
 
 Voronoi.defaultProps = {
@@ -111,7 +111,7 @@ Voronoi.defaultProps = {
   clipPathComponent: <ClipPath />,
   groupComponent: <g />,
   role: "presentation",
-  shapeRendering: "auto"
+  shapeRendering: "auto",
 };
 
 export default Voronoi;

@@ -13,16 +13,16 @@ const containerStyle = {
   flexDirection: "row",
   flexWrap: "wrap",
   alignItems: "center",
-  justifyContent: "center"
+  justifyContent: "center",
 };
 
 const parentStyle = {
-  parent: { border: "1px solid #ccc", margin: "2%", maxWidth: "40%" }
+  parent: { border: "1px solid #ccc", margin: "2%", maxWidth: "40%" },
 };
 
 export default {
   title: "VictoryPie",
-  component: VictoryPie
+  component: VictoryPie,
 };
 
 export const DefaultRendering = () => {
@@ -43,7 +43,7 @@ export const Data = () => {
           { x: "Cat", y: 63 },
           { x: "Dog", y: 91 },
           { x: "Fish", y: 55 },
-          { x: "Bird", y: 55 }
+          { x: "Bird", y: 55 },
         ]}
       />
       <VictoryPie
@@ -52,7 +52,7 @@ export const Data = () => {
           { animal: "Cat", pet: 45, wild: 17 },
           { animal: "Dog", pet: 85, wild: 6 },
           { animal: "Fish", pet: 55, wild: 0 },
-          { animal: "Bird", pet: 15, wild: 40 }
+          { animal: "Bird", pet: 15, wild: 40 },
         ]}
         x={"animal"}
         y={(data) => data.pet + data.wild}
@@ -63,7 +63,7 @@ export const Data = () => {
           { x: "Cat", y: 62 },
           { x: "Dog", y: 91 },
           { x: "Fish", y: 55 },
-          { x: "Bird", y: 55 }
+          { x: "Bird", y: 55 },
         ])}
       />
     </div>
@@ -82,7 +82,7 @@ export const Radius = () => {
           { x: 2, y: 3, radius: 120 },
           { x: 3, y: 5, radius: 140 },
           { x: 4, y: 2, radius: 150 },
-          { x: 5, y: 3, radius: 130 }
+          { x: 5, y: 3, radius: 130 },
         ]}
       />
       <VictoryPie
@@ -90,13 +90,13 @@ export const Radius = () => {
         labelRadius={({ datum }) => datum.y + 50}
         style={{
           ...parentStyle,
-          labels: { fill: "white" }
+          labels: { fill: "white" },
         }}
         data={[
           { x: "Cat", y: 62 },
           { x: "Dog", y: 91 },
           { x: "Fish", y: 55 },
-          { x: "Bird", y: 25 }
+          { x: "Bird", y: 25 },
         ]}
       />
       <VictoryPie
@@ -105,13 +105,13 @@ export const Radius = () => {
         labelRadius={({ datum }) => datum.y + 65}
         style={{
           ...parentStyle,
-          labels: { fill: "white" }
+          labels: { fill: "white" },
         }}
         data={[
           { x: "Cat", y: 62 },
           { x: "Dog", y: 91 },
           { x: "Fish", y: 55 },
-          { x: "Bird", y: 25 }
+          { x: "Bird", y: 25 },
         ]}
       />
     </div>
@@ -131,7 +131,7 @@ export const InnerRadius = () => {
           { x: 2, y: 3, radius: 120 },
           { x: 3, y: 5, radius: 140 },
           { x: 4, y: 2, radius: 150 },
-          { x: 5, y: 3, radius: 130 }
+          { x: 5, y: 3, radius: 130 },
         ]}
       />
       <VictoryPie
@@ -142,7 +142,7 @@ export const InnerRadius = () => {
           { x: "Cat", y: 62 },
           { x: "Dog", y: 91 },
           { x: "Fish", y: 55 },
-          { x: "Bird", y: 25 }
+          { x: "Bird", y: 25 },
         ]}
       />
       <VictoryPie
@@ -153,7 +153,7 @@ export const InnerRadius = () => {
           { x: 2, y: 3 },
           { x: 3, y: 5 },
           { x: 4, y: 2 },
-          { x: 5, y: 3 }
+          { x: 5, y: 3 },
         ]}
       />
     </div>
@@ -174,7 +174,7 @@ export const CornerRadius = () => {
           { x: 2, y: 3 },
           { x: 3, y: 5 },
           { x: 4, y: 2 },
-          { x: 5, y: 3 }
+          { x: 5, y: 3 },
         ]}
       />
       <VictoryPie
@@ -186,7 +186,7 @@ export const CornerRadius = () => {
           { x: 2, y: 3 },
           { x: 3, y: 5, r: 15 },
           { x: 4, y: 2 },
-          { x: 5, y: 3 }
+          { x: 5, y: 3 },
         ]}
       />
     </div>
@@ -207,7 +207,7 @@ export const PadAngle = () => {
           { x: 2, y: 3 },
           { x: 3, y: 5 },
           { x: 4, y: 2 },
-          { x: 5, y: 3 }
+          { x: 5, y: 3 },
         ]}
       />
       <VictoryPie
@@ -219,7 +219,7 @@ export const PadAngle = () => {
           { x: 2, y: 3 },
           { x: 3, y: 5, r: 8 },
           { x: 4, y: 2 },
-          { x: 5, y: 3 }
+          { x: 5, y: 3 },
         ]}
       />
     </div>
@@ -313,7 +313,7 @@ export const LabelRadius = () => {
           { x: 2, y: 130 },
           { x: 3, y: 150 },
           { x: 4, y: 120 },
-          { x: 5, y: 130 }
+          { x: 5, y: 130 },
         ]}
       />
       <VictoryPie
@@ -325,7 +325,7 @@ export const LabelRadius = () => {
           { x: 2, y: 130 },
           { x: 3, y: 150, r: 80 },
           { x: 4, y: 120 },
-          { x: 5, y: 130 }
+          { x: 5, y: 130 },
         ]}
       />
       <VictoryPie
@@ -338,7 +338,7 @@ export const LabelRadius = () => {
           { x: 2, y: 130 },
           { x: 3, y: 150, r: 80 },
           { x: 4, y: 120 },
-          { x: 5, y: 130 }
+          { x: 5, y: 130 },
         ]}
       />
     </div>
@@ -355,8 +355,8 @@ export const Styles = () => {
           data: {
             stroke: "red",
             strokeWidth: 3,
-            fillOpacity: 0.3
-          }
+            fillOpacity: 0.3,
+          },
         }}
       />
       <VictoryPie
@@ -365,20 +365,20 @@ export const Styles = () => {
           ...parentStyle,
           labels: { fontSize: 20 },
           data: {
-            fillOpacity: 0.3
-          }
+            fillOpacity: 0.3,
+          },
         }}
       />
       <VictoryPie
         style={{
           ...parentStyle,
           labels: {
-            fontSize: ({ index }) => (index === 4 ? 25 : 15)
+            fontSize: ({ index }) => (index === 4 ? 25 : 15),
           },
           data: {
             stroke: ({ index }) => (index === 4 ? "red" : undefined),
-            strokeWidth: 3
-          }
+            strokeWidth: 3,
+          },
         }}
       />
       <VictoryPie
@@ -387,8 +387,8 @@ export const Styles = () => {
           labels: {
             fill: "white",
             fontSize: 12,
-            fontWeight: "bold"
-          }
+            fontWeight: "bold",
+          },
         }}
         data={[
           { x: "<5", y: 6279 },
@@ -397,7 +397,7 @@ export const Styles = () => {
           { x: "18-24", y: 7164 },
           { x: "25-44", y: 6716 },
           { x: "45-64", y: 4263 },
-          { x: "≥65", y: 7502 }
+          { x: "≥65", y: 7502 },
         ]}
         innerRadius={100}
         labelRadius={110}
@@ -408,7 +408,7 @@ export const Styles = () => {
           "#D73C4C",
           "#FFAF59",
           "#E28300",
-          "#F6A57F"
+          "#F6A57F",
         ]}
       />
     </div>
@@ -442,7 +442,7 @@ export const StartAndEndAngles = () => {
           { x: "Cat", y: 62, innerRadius: 0, radius: 30 },
           { x: "Dog", y: 91, innerRadius: 35, radius: 65 },
           { x: "Fish", y: 55, innerRadius: 70, radius: 100 },
-          { x: "Bird", y: 55, innerRadius: 105, radius: 135, endAngle: 360 }
+          { x: "Bird", y: 55, innerRadius: 105, radius: 135, endAngle: 360 },
         ]}
       />
       <VictoryPie
@@ -463,7 +463,7 @@ export const StartAndEndAngles = () => {
           { x: "Cat", y: 62, innerRadius: 0, radius: 30 },
           { x: "Dog", y: 91, innerRadius: 35, radius: 65 },
           { x: "Fish", y: 55, innerRadius: 70, radius: 100 },
-          { x: "Bird", y: 55, innerRadius: 105, radius: 135 }
+          { x: "Bird", y: 55, innerRadius: 105, radius: 135 },
         ]}
       />
     </div>
@@ -513,7 +513,7 @@ export const LabelPlacement = () => {
           { x: 5, y: 1, l: 180 },
           { x: 6, y: 1, l: 225 },
           { x: 7, y: 1, l: 270 },
-          { x: 8, y: 1, l: 315 }
+          { x: 8, y: 1, l: 315 },
         ]}
       />
       <VictoryPie
@@ -529,7 +529,7 @@ export const LabelPlacement = () => {
           { x: 5, y: 1, l: 180 },
           { x: 6, y: 1, l: 225 },
           { x: 7, y: 1, l: 270 },
-          { x: 8, y: 1, l: 315 }
+          { x: 8, y: 1, l: 315 },
         ]}
       />
       <VictoryPie
@@ -546,7 +546,7 @@ export const LabelPlacement = () => {
           { x: 5, y: 1, l: 180 },
           { x: 6, y: 1, l: 225 },
           { x: 7, y: 1, l: 270 },
-          { x: 8, y: 1, l: 315 }
+          { x: 8, y: 1, l: 315 },
         ]}
       />
       <VictoryPie
@@ -564,7 +564,7 @@ export const LabelPlacement = () => {
           { x: 5, y: 1, l: 180 },
           { x: 6, y: 1, l: 225 },
           { x: 7, y: 1, l: 270 },
-          { x: 8, y: 1, l: 315 }
+          { x: 8, y: 1, l: 315 },
         ]}
       />
     </div>

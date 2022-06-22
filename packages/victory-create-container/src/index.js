@@ -1,5 +1,5 @@
 export {
   combineContainerMixins,
   makeCreateContainerFunction,
-  createContainer
+  createContainer,
 } from "./create-container";

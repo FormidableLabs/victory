@@ -5,7 +5,7 @@ import {
   Domain,
   Data,
   LabelHelpers,
-  Collection
+  Collection,
 } from "victory-core";
 
 const TYPES = ["close", "open", "high", "low"];
@@ -70,10 +70,10 @@ const getStyles = (props, style, defaultStyles = {}) => {
       {
         parent: {
           height,
-          width
-        }
+          width,
+        },
       },
-      defaultStyles
+      defaultStyles,
     );
   }
 
@@ -84,7 +84,7 @@ const getStyles = (props, style, defaultStyles = {}) => {
   return {
     parent: defaults({}, style.parent, defaultParent, {
       width,
-      height
+      height,
     }),
     labels: labelStyle,
     data: defaults({}, style.data, defaultData),
@@ -92,26 +92,26 @@ const getStyles = (props, style, defaultStyles = {}) => {
       {},
       style.openLabels,
       getLabelStyle(props, defaultStyles, "open"),
-      labelStyle
+      labelStyle,
     ),
     closeLabels: defaults(
       {},
       style.closeLabels,
       getLabelStyle(props, defaultStyles, "close"),
-      labelStyle
+      labelStyle,
     ),
     lowLabels: defaults(
       {},
       style.lowLabels,
       getLabelStyle(props, defaultStyles, "low"),
-      labelStyle
+      labelStyle,
     ),
     highLabels: defaults(
       {},
       style.highLabels,
       getLabelStyle(props, defaultStyles, "high"),
-      labelStyle
-    )
+      labelStyle,
+    ),
   };
 };
 
@@ -153,11 +153,11 @@ const getCalculatedValues = (props) => {
   const data = getData(props);
   const range = {
     x: Helpers.getRange(props, "x"),
-    y: Helpers.getRange(props, "y")
+    y: Helpers.getRange(props, "y"),
   };
   const domain = {
     x: getDomain(props, "x"),
-    y: getDomain(props, "y")
+    y: getDomain(props, "y"),
   };
   const scale = {
     x: Scale.getBaseScale(props, "x")
@@ -165,7 +165,7 @@ const getCalculatedValues = (props) => {
       .range(props.horizontal ? range.y : range.x),
     y: Scale.getBaseScale(props, "y")
       .domain(domain.y)
-      .range(props.horizontal ? range.x : range.y)
+      .range(props.horizontal ? range.x : range.y),
   };
   const origin = polar
     ? props.origin || Helpers.getPolarOrigin(props)
@@ -240,7 +240,7 @@ const calculatePlotValues = (props) => {
     horizontal,
     computedType,
     candleWidth,
-    orientation
+    orientation,
   } = props;
   positions.labels = (positions.open + positions.close) / 2;
 
@@ -296,7 +296,7 @@ const getLabelProps = (props, text, style, type) => {
     horizontal,
     candleWidth,
     labelOrientation,
-    theme
+    theme,
   } = props;
 
   const component = props[`${type}LabelComponent`] || props.labelComponent;
@@ -312,13 +312,13 @@ const getLabelProps = (props, text, style, type) => {
     top: "end",
     bottom: "start",
     left: "middle",
-    right: "middle"
+    right: "middle",
   };
   const defaultTextAnchors = {
     left: "end",
     right: "start",
     top: "middle",
-    bottom: "middle"
+    bottom: "middle",
   };
   const computedType = type ? type : "labels";
 
@@ -329,7 +329,7 @@ const getLabelProps = (props, text, style, type) => {
     horizontal,
     computedType,
     candleWidth,
-    orientation
+    orientation,
   };
   const { yValue, xValue, dx, dy } = calculatePlotValues(plotProps);
 
@@ -349,7 +349,7 @@ const getLabelProps = (props, text, style, type) => {
     verticalAnchor:
       labelStyle.verticalAnchor || defaultVerticalAnchors[orientation],
     angle: labelStyle.angle,
-    horizontal
+    horizontal,
   };
 
   if (!Helpers.isTooltip(component)) {
@@ -382,7 +382,7 @@ export const getBaseProps = (props, fallbackProps) => {
     events,
     sharedEvents,
     horizontal,
-    disableInlineStyles
+    disableInlineStyles,
   } = props;
   const initialChildProps = {
     parent: {
@@ -398,8 +398,8 @@ export const getBaseProps = (props, fallbackProps) => {
       name,
       style: style.parent,
       padding,
-      horizontal
-    }
+      horizontal,
+    },
   };
 
   // eslint-disable-next-line complexity
@@ -434,13 +434,13 @@ export const getBaseProps = (props, fallbackProps) => {
       close,
       horizontal,
       labelOrientation,
-      disableInlineStyles
+      disableInlineStyles,
     };
     dataProps.candleWidth = getCandleWidth(dataProps);
     const extendedProps = defaults(Object.assign({}, dataProps), props);
 
     childProps[eventKey] = {
-      data: dataProps
+      data: dataProps,
     };
 
     if (labels) {
@@ -465,7 +465,7 @@ export const getBaseProps = (props, fallbackProps) => {
           extendedProps,
           labelText,
           style,
-          type
+          type,
         );
       }
     });

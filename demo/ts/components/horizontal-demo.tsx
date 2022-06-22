@@ -20,7 +20,7 @@ const errorData = [
   { x: 2, y: 20, errorX: [0.5, 3], errorY: 1 },
   { x: 3, y: 30, errorX: [1, 3], errorY: [2, 3] },
   { x: 4, y: 20, errorX: [1, 0], errorY: 2 },
-  { x: 5, y: 10, errorX: [1, 0.5], errorY: 2 }
+  { x: 5, y: 10, errorX: [1, 0.5], errorY: 2 },
 ];
 
 class App extends React.Component {
@@ -29,7 +29,7 @@ class App extends React.Component {
       return [
         { x: "cat", y: random(10) },
         { x: "dog", y: random(10) },
-        { x: "bird", y: random(10) }
+        { x: "bird", y: random(10) },
       ];
     });
   }
@@ -40,11 +40,11 @@ class App extends React.Component {
       flexDirection: "row",
       flexWrap: "wrap",
       alignItems: "center",
-      justifyContent: "center"
+      justifyContent: "center",
     };
 
     const chartStyle = {
-      parent: { border: "1px solid #ccc", margin: "2%", maxWidth: "40%" }
+      parent: { border: "1px solid #ccc", margin: "2%", maxWidth: "40%" },
     };
     return (
       <div style={containerStyle}>
@@ -59,7 +59,7 @@ class App extends React.Component {
               { x: 5, y: 0.1 },
               { x: 6, y: 1 },
               { x: 7, y: 10 },
-              { x: 8, y: 100 }
+              { x: 8, y: 100 },
             ]}
           />
         </VictoryChart>
@@ -73,7 +73,7 @@ class App extends React.Component {
               { x: 5, y: 0.1 },
               { x: 6, y: 1 },
               { x: 7, y: 10 },
-              { x: 8, y: 100 }
+              { x: 8, y: 100 },
             ]}
           />
         </VictoryChart>
@@ -83,7 +83,7 @@ class App extends React.Component {
             data={[
               { x: "low", y: 1, sort: 1 },
               { x: "med", y: 2, sort: 2 },
-              { x: "high", y: 3, sort: 3 }
+              { x: "high", y: 3, sort: 3 },
             ]}
             sortKey={"sort"}
             labels={() => "hi"}
@@ -93,7 +93,7 @@ class App extends React.Component {
             data={[
               { x: "low", y: 1, sort: 1 },
               { x: "med", y: 2, sort: 2 },
-              { x: "high", y: 4, sort: 3 }
+              { x: "high", y: 4, sort: 3 },
             ]}
             sortKey={"sort"}
           />
@@ -102,7 +102,7 @@ class App extends React.Component {
             data={[
               { x: "low", y: 1, sort: 1 },
               { x: "med", y: 2, sort: 2 },
-              { x: "high", y: 4, sort: 3 }
+              { x: "high", y: 4, sort: 3 },
             ]}
             sortKey={"sort"}
           />
@@ -113,7 +113,7 @@ class App extends React.Component {
             data={[
               { x: "low", y: 1, sort: 3 },
               { x: "med", y: 2, sort: 2 },
-              { x: "high", y: 3, sort: 1 }
+              { x: "high", y: 3, sort: 1 },
             ]}
             sortKey={"sort"}
           />
@@ -127,7 +127,7 @@ class App extends React.Component {
               { x: 2, y: "Echo" },
               { x: 6, y: "Foxtrot" },
               { x: 3, y: "Golf" },
-              { x: 4, y: "Hotel" }
+              { x: 4, y: "Hotel" },
             ]}
           />
         </VictoryChart>
@@ -158,21 +158,21 @@ class App extends React.Component {
               data={[
                 { x: "a", y: 1 },
                 { x: "b", y: 2 },
-                { x: "c", y: 5 }
+                { x: "c", y: 5 },
               ]}
             />
             <VictoryBar
               data={[
                 { x: "a", y: 2 },
                 { x: "b", y: 1 },
-                { x: "c", y: 7 }
+                { x: "c", y: 7 },
               ]}
             />
             <VictoryBar
               data={[
                 { x: "a", y: 3 },
                 { x: "b", y: 4 },
-                { x: "c", y: 9 }
+                { x: "c", y: 9 },
               ]}
             />
           </VictoryStack>
@@ -188,21 +188,21 @@ class App extends React.Component {
               data={[
                 { x: 1, y: 1 },
                 { x: 2, y: 2 },
-                { x: 3, y: 5 }
+                { x: 3, y: 5 },
               ]}
             />
             <VictoryBar
               data={[
                 { x: 1, y: 2 },
                 { x: 2, y: 1 },
-                { x: 3, y: 7 }
+                { x: 3, y: 7 },
               ]}
             />
             <VictoryBar
               data={[
                 { x: 1, y: 3 },
                 { x: 2, y: 4 },
-                { x: 3, y: 9 }
+                { x: 3, y: 9 },
               ]}
             />
           </VictoryGroup>
@@ -219,21 +219,21 @@ class App extends React.Component {
             data={[
               { x: 1, y: 1 },
               { x: 2, y: 2 },
-              { x: 3, y: 5 }
+              { x: 3, y: 5 },
             ]}
           />
           <VictoryBar
             data={[
               { x: 1, y: 2 },
               { x: 2, y: 1 },
-              { x: 3, y: 7 }
+              { x: 3, y: 7 },
             ]}
           />
           <VictoryBar
             data={[
               { x: 1, y: 3 },
               { x: 2, y: 4 },
-              { x: 3, y: 9 }
+              { x: 3, y: 9 },
             ]}
           />
         </VictoryGroup>
@@ -242,7 +242,7 @@ class App extends React.Component {
           horizontal
           style={{
             parent: chartStyle.parent,
-            data: { stroke: "red", strokeWidth: 2 }
+            data: { stroke: "red", strokeWidth: 2 },
           }}
           labels={() => "yo"}
           data={[
@@ -253,13 +253,13 @@ class App extends React.Component {
             { x: new Date(2001, 1, 1), y: null },
             { x: new Date(2005, 1, 1), y: 305 },
             { x: new Date(2011, 1, 1), y: 270 },
-            { x: new Date(2015, 1, 1), y: 470 }
+            { x: new Date(2015, 1, 1), y: 470 },
           ]}
         />
         <VictoryChart horizontal style={chartStyle} scale={{ x: "time" }}>
           <VictoryLine
             style={{
-              data: { stroke: "red", strokeWidth: 2 }
+              data: { stroke: "red", strokeWidth: 2 },
             }}
             labels={() => "yo"}
             data={[
@@ -270,7 +270,7 @@ class App extends React.Component {
               { x: new Date(2001, 1, 1), y: null },
               { x: new Date(2005, 1, 1), y: 305 },
               { x: new Date(2011, 1, 1), y: 270 },
-              { x: new Date(2015, 1, 1), y: 470 }
+              { x: new Date(2015, 1, 1), y: 470 },
             ]}
           />
         </VictoryChart>
@@ -286,7 +286,7 @@ class App extends React.Component {
             { x: new Date(2001, 1, 1), y: 132 },
             { x: new Date(2005, 1, 1), y: 305 },
             { x: new Date(2011, 1, 1), y: 270 },
-            { x: new Date(2015, 1, 1), y: 470 }
+            { x: new Date(2015, 1, 1), y: 470 },
           ]}
         />
         <VictoryChart horizontal style={chartStyle}>
@@ -297,7 +297,7 @@ class App extends React.Component {
                 { x: 2, y: 3 },
                 { x: 3, y: 5 },
                 { x: 4, y: 4 },
-                { x: 5, y: 7 }
+                { x: 5, y: 7 },
               ]}
             />
             <VictoryArea
@@ -306,7 +306,7 @@ class App extends React.Component {
                 { x: 2, y: 4 },
                 { x: 3, y: 5 },
                 { x: 4, y: 7 },
-                { x: 5, y: 5 }
+                { x: 5, y: 5 },
               ]}
             />
             <VictoryArea
@@ -315,7 +315,7 @@ class App extends React.Component {
                 { x: 2, y: 2 },
                 { x: 3, y: 6 },
                 { x: 4, y: 2 },
-                { x: 5, y: 6 }
+                { x: 5, y: 6 },
               ]}
             />
             <VictoryArea
@@ -324,7 +324,7 @@ class App extends React.Component {
                 { x: 2, y: 3 },
                 { x: 3, y: 3 },
                 { x: 4, y: 4 },
-                { x: 5, y: 7 }
+                { x: 5, y: 7 },
               ]}
             />
           </VictoryStack>
@@ -337,7 +337,7 @@ class App extends React.Component {
               { x: 2, y: 3 },
               { x: 3, y: 5 },
               { x: 4, y: 4 },
-              { x: 5, y: 7 }
+              { x: 5, y: 7 },
             ]}
           />
           <VictoryArea
@@ -346,7 +346,7 @@ class App extends React.Component {
               { x: 2, y: 4 },
               { x: 3, y: 5 },
               { x: 4, y: 7 },
-              { x: 5, y: 5 }
+              { x: 5, y: 5 },
             ]}
           />
           <VictoryArea
@@ -355,7 +355,7 @@ class App extends React.Component {
               { x: 2, y: 2 },
               { x: 3, y: 6 },
               { x: 4, y: 2 },
-              { x: 5, y: 6 }
+              { x: 5, y: 6 },
             ]}
           />
           <VictoryArea
@@ -364,7 +364,7 @@ class App extends React.Component {
               { x: 2, y: 3 },
               { x: 3, y: 3 },
               { x: 4, y: 4 },
-              { x: 5, y: 7 }
+              { x: 5, y: 7 },
             ]}
           />
         </VictoryStack>
@@ -379,50 +379,50 @@ class App extends React.Component {
                 open: 80,
                 close: 40,
                 high: 120,
-                low: 10
+                low: 10,
               },
               {
                 x: new Date(2016, 6, 3),
                 open: 50,
                 close: 80,
                 high: 90,
-                low: 20
+                low: 20,
               },
               {
                 x: new Date(2017, 6, 4),
                 open: 70,
                 close: 22,
                 high: 70,
-                low: 5
+                low: 5,
               },
               {
                 x: new Date(2018, 6, 5),
                 open: 20,
                 close: 35,
                 high: 50,
-                low: 10
+                low: 10,
               },
               {
                 x: new Date(2019, 6, 6),
                 open: 35,
                 close: 30,
                 high: 40,
-                low: 3
+                low: 3,
               },
               {
                 x: new Date(2020, 6, 7),
                 open: 30,
                 close: 90,
                 high: 95,
-                low: 30
+                low: 30,
               },
               {
                 x: new Date(2021, 6, 8),
                 open: 80,
                 close: 81,
                 high: 83,
-                low: 75
-              }
+                low: 75,
+              },
             ]}
           />
         </VictoryChart>
@@ -444,7 +444,7 @@ class App extends React.Component {
         <VictoryChart horizontal style={chartStyle} domain={{ y: [100, 550] }}>
           <VictoryBar
             style={{
-              data: { stroke: "red", strokeWidth: 2 }
+              data: { stroke: "red", strokeWidth: 2 },
             }}
             labels={() => "yo"}
             data={[
@@ -455,7 +455,7 @@ class App extends React.Component {
               { x: new Date(2001, 1, 1), y: null },
               { x: new Date(2005, 1, 1), y: 305 },
               { x: new Date(2011, 1, 1), y: 270 },
-              { x: new Date(2015, 1, 1), y: 470 }
+              { x: new Date(2015, 1, 1), y: 470 },
             ]}
           />
         </VictoryChart>
@@ -469,7 +469,7 @@ class App extends React.Component {
               { x: 6, y: "E" },
               { x: 2, y: "F" },
               { x: 7, y: "G" },
-              { x: 3, y: "H" }
+              { x: 3, y: "H" },
             ]}
           />
         </VictoryChart>
@@ -483,7 +483,7 @@ class App extends React.Component {
               { x: new Date(1990, 1, 1), y: [1, 15, 6, 8] },
               { x: new Date(2000, 1, 1), y: [3, 5, 6, 9] },
               { x: new Date(2010, 1, 1), y: [5, 20, 8, 12] },
-              { x: new Date(2020, 1, 1), y: [2, 11, 12, 13] }
+              { x: new Date(2020, 1, 1), y: [2, 11, 12, 13] },
             ]}
           />
         </VictoryChart>
@@ -496,7 +496,7 @@ class App extends React.Component {
         >
           <VictoryLine
             style={{
-              data: { stroke: "tomato" }
+              data: { stroke: "tomato" },
             }}
             data={[
               { x: 1, y: -5 },
@@ -505,12 +505,12 @@ class App extends React.Component {
               { x: 4, y: 3 },
               { x: 5, y: 1 },
               { x: 6, y: -3 },
-              { x: 7, y: 3 }
+              { x: 7, y: 3 },
             ]}
           />
           <VictoryLine
             style={{
-              data: { stroke: "blue" }
+              data: { stroke: "blue" },
             }}
             data={[
               { x: 1, y: -3 },
@@ -519,7 +519,7 @@ class App extends React.Component {
               { x: 4, y: 0 },
               { x: 5, y: -2 },
               { x: 6, y: -2 },
-              { x: 7, y: 5 }
+              { x: 7, y: 5 },
             ]}
           />
           <VictoryLine
@@ -530,7 +530,7 @@ class App extends React.Component {
               { x: 4, y: -3 },
               { x: 5, y: -1 },
               { x: 6, y: 3 },
-              { x: 7, y: -3 }
+              { x: 7, y: -3 },
             ]}
           />
         </VictoryChart>
@@ -543,7 +543,7 @@ class App extends React.Component {
               new Date(1995, 1, 1),
               new Date(2000, 1, 1),
               new Date(2005, 1, 1),
-              new Date(2010, 1, 1)
+              new Date(2010, 1, 1),
             ]}
             tickFormat={(x) => new Date(x).getFullYear()}
           />

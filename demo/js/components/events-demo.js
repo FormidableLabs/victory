@@ -15,11 +15,11 @@ class App extends React.Component {
       flexDirection: "row",
       flexWrap: "wrap",
       alignItems: "center",
-      justifyContent: "center"
+      justifyContent: "center",
     };
 
     const chartStyle = {
-      parent: { border: "1px solid #ccc", margin: "2%", maxWidth: "40%" }
+      parent: { border: "1px solid #ccc", margin: "2%", maxWidth: "40%" },
     };
 
     return (
@@ -29,7 +29,7 @@ class App extends React.Component {
             style={{
               parent: chartStyle.parent,
               data: { fill: "blue", width: 20 },
-              labels: { fontSize: 20 }
+              labels: { fontSize: 20 },
             }}
             labels={["a", "b", "c", "d", "e"]}
             data={[
@@ -37,7 +37,7 @@ class App extends React.Component {
               { x: 2, y: 2 },
               { x: 3, y: 3, label: "click me" },
               { x: 4, y: 2 },
-              { x: 5, y: 1 }
+              { x: 5, y: 1 },
             ]}
             events={[
               {
@@ -50,18 +50,18 @@ class App extends React.Component {
                       {
                         mutation: () => {
                           return { style: { fill: "orange", width: 20 } };
-                        }
+                        },
                       },
                       {
                         target: "labels",
                         eventKey: 3,
                         mutation: () => {
                           return { text: "now click me" };
-                        }
-                      }
+                        },
+                      },
                     ];
-                  }
-                }
+                  },
+                },
               },
               {
                 target: "parent",
@@ -72,12 +72,12 @@ class App extends React.Component {
                         target: "data",
                         mutation: () => {
                           return { style: { fill: "tomato", width: 10 } };
-                        }
-                      }
+                        },
+                      },
                     ];
-                  }
-                }
-              }
+                  },
+                },
+              },
             ]}
           />
 
@@ -97,16 +97,16 @@ class App extends React.Component {
                         eventKey: [3, 4, 5],
                         mutation: () => {
                           return { text: "o shit" };
-                        }
+                        },
                       },
                       {
                         childName: "line",
                         target: "data",
                         mutation: (props) => {
                           return {
-                            style: merge({}, props.style, { stroke: "lime" })
+                            style: merge({}, props.style, { stroke: "lime" }),
                           };
-                        }
+                        },
                       },
                       {
                         childName: "line",
@@ -114,14 +114,14 @@ class App extends React.Component {
                         mutation: (props) => {
                           return {
                             style: merge({}, props.style, { fill: "green" }),
-                            text: "waddup"
+                            text: "waddup",
                           };
-                        }
-                      }
+                        },
+                      },
                     ];
-                  }
-                }
-              }
+                  },
+                },
+              },
             ]}
           >
             <VictoryBar
@@ -141,7 +141,7 @@ class App extends React.Component {
                 { x: 10, y: 2 },
                 { x: 11, y: 3 },
                 { x: 12, y: 2 },
-                { x: 13, y: 1 }
+                { x: 13, y: 1 },
               ]}
             />
             <VictoryLine
@@ -164,11 +164,11 @@ class App extends React.Component {
                       {
                         mutation: () => {
                           return { style: { fill: "orange" } };
-                        }
-                      }
+                        },
+                      },
                     ];
-                  }
-                }
+                  },
+                },
               },
               {
                 target: "parent",
@@ -180,12 +180,12 @@ class App extends React.Component {
                         target: "labels",
                         mutation: () => {
                           return { text: "o shit" };
-                        }
-                      }
+                        },
+                      },
                     ];
-                  }
-                }
-              }
+                  },
+                },
+              },
             ]}
           >
             <VictoryLabel text="Parent Events" y={50} x={150} />
@@ -210,12 +210,12 @@ class App extends React.Component {
                           return fill === "gold"
                             ? null
                             : { style: { fill: "gold" } };
-                        }
-                      }
+                        },
+                      },
                     ];
-                  }
-                }
-              }
+                  },
+                },
+              },
             ]}
           >
             <VictoryStack>
@@ -226,7 +226,7 @@ class App extends React.Component {
                   { x: "b", y: 3 },
                   { x: "c", y: 5 },
                   { x: "d", y: 4 },
-                  { x: "e", y: 7 }
+                  { x: "e", y: 7 },
                 ]}
               />
               <VictoryArea
@@ -236,7 +236,7 @@ class App extends React.Component {
                   { x: "b", y: 4 },
                   { x: "c", y: 5 },
                   { x: "d", y: 7 },
-                  { x: "e", y: 5 }
+                  { x: "e", y: 5 },
                 ]}
               />
               <VictoryArea
@@ -246,7 +246,7 @@ class App extends React.Component {
                   { x: "b", y: 2 },
                   { x: "c", y: 6 },
                   { x: "d", y: 2 },
-                  { x: "e", y: 6 }
+                  { x: "e", y: 6 },
                 ]}
               />
               <VictoryArea
@@ -256,7 +256,7 @@ class App extends React.Component {
                   { x: "b", y: 3 },
                   { x: "c", y: 3 },
                   { x: "d", y: 4 },
-                  { x: "e", y: 7 }
+                  { x: "e", y: 7 },
                 ]}
               />
             </VictoryStack>

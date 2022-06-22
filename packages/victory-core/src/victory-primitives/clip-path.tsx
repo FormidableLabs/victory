@@ -19,7 +19,7 @@ export const ClipPath = (props: ClipPathProps) => (
 ClipPath.propTypes = {
   children: PropTypes.oneOfType([
     PropTypes.arrayOf(PropTypes.node),
-    PropTypes.node
+    PropTypes.node,
   ]),
-  clipId: PropTypes.oneOfType([PropTypes.number, PropTypes.string])
+  clipId: PropTypes.oneOfType([PropTypes.number, PropTypes.string]),
 };

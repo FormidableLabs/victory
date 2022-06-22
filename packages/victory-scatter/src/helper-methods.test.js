@@ -1,4 +1,4 @@
-import * as Helpers from "./helper-methods";
+import * as Helpers from "victory-scatter/lib/helper-methods";
 
 describe("victory-scatter/helper-methods", () => {
   describe("getSize", () => {
@@ -12,7 +12,7 @@ describe("victory-scatter/helper-methods", () => {
 
     const data = [
       { x: 1, y: 2, z: 1, t: 4 },
-      { x: 2, y: 3, z: 1, t: 2 }
+      { x: 2, y: 3, z: 1, t: 2 },
     ];
     const datum = data[0];
     it("returns a size attribute from data", () => {
@@ -45,7 +45,7 @@ describe("victory-scatter/helper-methods", () => {
     it("determines the size of a point", () => {
       const data = [
         { x: 1, y: 2, z: 5 },
-        { x: 2, y: 3, z: 1 }
+        { x: 2, y: 3, z: 1 },
       ];
       const props = { data, z: "z" };
       const sizeResult = Helpers.getBubbleSize(data[0], props);
@@ -59,7 +59,7 @@ describe("victory-scatter/helper-methods", () => {
     it("returns 'circle' for bubble plots", () => {
       const symbolResult = Helpers.getSymbol(
         {},
-        { ...props, bubbleProperty: "z" }
+        { ...props, bubbleProperty: "z" },
       );
       expect(symbolResult).toEqual("circle");
     });

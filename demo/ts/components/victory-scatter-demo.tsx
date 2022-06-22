@@ -8,7 +8,7 @@ import {
   ScatterSymbolType,
   VictoryLabel,
   VictoryContainer,
-  VictoryTheme
+  VictoryTheme,
 } from "victory-core/src/index";
 import bubbleData from "./bubble-data";
 import symbolData from "./symbol-data";
@@ -43,7 +43,7 @@ const getData = () => {
     "orange",
     "turquoise",
     "tomato",
-    "greenyellow"
+    "greenyellow",
   ];
   const symbols = [
     "circle",
@@ -52,7 +52,7 @@ const getData = () => {
     "triangleUp",
     "triangleDown",
     "diamond",
-    "plus"
+    "plus",
   ];
   // symbol: symbols[scaledIndex],
   return range(100).map((index) => {
@@ -63,7 +63,7 @@ const getData = () => {
       size: random(15) + 3,
       symbol: symbols[scaledIndex],
       fill: colors[random(0, 6)],
-      opacity: random(0.3, 1)
+      opacity: random(0.3, 1),
     };
   });
 };
@@ -72,8 +72,8 @@ const style: { [key: string]: React.CSSProperties } = {
   parent: {
     border: "1px solid #ccc",
     margin: "2%",
-    maxWidth: "40%"
-  }
+    maxWidth: "40%",
+  },
 };
 
 const containerStyle: React.CSSProperties = {
@@ -81,26 +81,26 @@ const containerStyle: React.CSSProperties = {
   flexDirection: "row",
   flexWrap: "wrap",
   alignItems: "center",
-  justifyContent: "center"
+  justifyContent: "center",
 };
 
 const symbolStyle = {
   parent: { border: "1px solid #ccc", margin: "2%", maxWidth: "40%" },
   data: {
-    fill: "red"
+    fill: "red",
   },
   labels: {
     padding: 15,
     fontSize: 15,
-    fill: "grey"
-  }
+    fill: "grey",
+  },
 };
 
 class CatPoint extends React.Component<any, CatPointInterface> {
   static propTypes = {
     symbol: PropTypes.string,
     x: PropTypes.number,
-    y: PropTypes.number
+    y: PropTypes.number,
   };
 
   static symbolMap = {
@@ -110,7 +110,7 @@ class CatPoint extends React.Component<any, CatPointInterface> {
     square: 0x1f63a,
     star: 0x1f63b,
     triangleDown: 0x1f63c,
-    triangleUp: 0x1f63d
+    triangleUp: 0x1f63d,
   };
 
   renderSymbol(symbol: ScatterSymbolType): string {
@@ -122,7 +122,7 @@ class CatPoint extends React.Component<any, CatPointInterface> {
 
     return String.fromCharCode(
       codePointHigh(symbolCode),
-      codePointLow(symbolCode)
+      codePointLow(symbolCode),
     );
   }
 
@@ -146,7 +146,7 @@ export default class VictoryScatterDemo extends React.Component<
     super(props);
     this.state = {
       hoverStyle: { fill: "gold" },
-      data: props.data
+      data: props.data,
     };
   }
 
@@ -154,7 +154,7 @@ export default class VictoryScatterDemo extends React.Component<
     /* eslint-disable react/no-did-mount-set-state */
     this.setStateInterval = window.setInterval(() => {
       this.setState({
-        data: getData()
+        data: getData(),
       });
     }, 2000);
   }
@@ -188,8 +188,8 @@ export default class VictoryScatterDemo extends React.Component<
             parent: style.parent,
             data: {
               fill: ({ datum }) => datum.fill,
-              opacity: ({ datum }) => datum.opacity
-            }
+              opacity: ({ datum }) => datum.opacity,
+            },
           }}
           width={500}
           height={500}
@@ -201,7 +201,7 @@ export default class VictoryScatterDemo extends React.Component<
         <VictoryScatter
           style={{
             parent: style.parent,
-            data: { fill: ({ datum }) => (datum.y > 0 ? "red" : "blue") }
+            data: { fill: ({ datum }) => (datum.y > 0 ? "red" : "blue") },
           }}
           width={500}
           height={500}
@@ -222,7 +222,7 @@ export default class VictoryScatterDemo extends React.Component<
         <VictoryScatter
           style={{
             parent: style.parent,
-            data: { fill: "blue", opacity: 0.7 }
+            data: { fill: "blue", opacity: 0.7 },
           }}
           width={500}
           height={500}
@@ -246,7 +246,7 @@ export default class VictoryScatterDemo extends React.Component<
             { x: new Date(2001, 1, 1), y: 132 },
             { x: new Date(2005, 1, 1), y: 305 },
             { x: new Date(2011, 1, 1), y: 270 },
-            { x: new Date(2015, 1, 1), y: 470 }
+            { x: new Date(2015, 1, 1), y: 470 },
           ]}
           events={[
             {
@@ -258,20 +258,20 @@ export default class VictoryScatterDemo extends React.Component<
                       mutation: (props) => {
                         return {
                           style: merge({}, props.style, { fill: "orange" }),
-                          symbol: "circle"
+                          symbol: "circle",
                         };
-                      }
+                      },
                     },
                     {
                       target: "labels",
                       mutation: () => {
                         return { text: "hey" };
-                      }
-                    }
+                      },
+                    },
                   ];
-                }
-              }
-            }
+                },
+              },
+            },
           ]}
           symbol={"star"}
           size={8}
@@ -282,7 +282,7 @@ export default class VictoryScatterDemo extends React.Component<
           theme={VictoryTheme.material}
           data={range(0, 200).map((i) => {
             return {
-              a: { b: [{ y: i * Math.sin(i * 0.3) }], x: Math.cos(i * 0.3) }
+              a: { b: [{ y: i * Math.sin(i * 0.3) }], x: Math.cos(i * 0.3) },
             };
           })}
           x="a.x"

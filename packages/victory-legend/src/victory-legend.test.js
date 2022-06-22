@@ -1,7 +1,7 @@
 /* eslint-disable max-nested-callbacks */
 import React from "react";
 import { render, screen } from "@testing-library/react";
-import VictoryLegend from "./victory-legend";
+import { VictoryLegend } from "victory-legend";
 import { isCircle, isTriangle } from "../../../test/helpers";
 
 describe("components/victory-legend", () => {
@@ -9,19 +9,19 @@ describe("components/victory-legend", () => {
     {
       name: "Series 1",
       symbol: {
-        type: "circle"
-      }
+        type: "circle",
+      },
     },
     {
       name: "Series 2",
       labels: {
-        fill: "red"
+        fill: "red",
       },
       symbol: {
         type: "triangleUp",
-        fill: "blue"
-      }
-    }
+        fill: "blue",
+      },
+    },
   ];
 
   it("renders provided data correctly", () => {
@@ -33,7 +33,7 @@ describe("components/victory-legend", () => {
 
   it("has expected horizontal label position", () => {
     const { container } = render(
-      <VictoryLegend data={initialData} orientation="horizontal" />
+      <VictoryLegend data={initialData} orientation="horizontal" />,
     );
 
     const [label1, label2] = container.querySelectorAll("text");
@@ -43,7 +43,7 @@ describe("components/victory-legend", () => {
 
   it("has expected vertical symbol position", () => {
     const { container } = render(
-      <VictoryLegend data={initialData} orientation="vertical" />
+      <VictoryLegend data={initialData} orientation="vertical" />,
     );
 
     const [label1, label2] = container.querySelectorAll("text");
@@ -56,23 +56,23 @@ describe("components/victory-legend", () => {
       {
         name: "Series 1",
         labels: {
-          fontSize: 10
+          fontSize: 10,
         },
         symbol: {
           type: "circle",
-          fill: "red"
-        }
+          fill: "red",
+        },
       },
       {
         name: "Long Series Name",
         labels: {
-          fontSize: 12
+          fontSize: 12,
         },
         symbol: {
           type: "triangleUp",
-          fill: "blue"
-        }
-      }
+          fill: "blue",
+        },
+      },
     ];
 
     it("has expected symbols length", () => {
@@ -94,7 +94,7 @@ describe("components/victory-legend", () => {
     it("has expected symbol type", () => {
       const { container } = render(<VictoryLegend data={legendData} />);
       const [circleSymbol, triangleSymbol] = Array.from(
-        container.querySelectorAll("path")
+        container.querySelectorAll("path"),
       ).map((symbol) => symbol.getAttribute("d"));
 
       expect(isCircle(circleSymbol)).toBeTruthy();
@@ -105,26 +105,26 @@ describe("components/victory-legend", () => {
   describe("legend style prop", () => {
     const legendData = [
       {
-        name: "Thing 1"
+        name: "Thing 1",
       },
       {
-        name: "Thing 2"
-      }
+        name: "Thing 2",
+      },
     ];
 
     const styleObject = {
       data: {
         type: "triangleUp",
-        fill: "green"
+        fill: "green",
       },
       labels: {
-        fontSize: 16
-      }
+        fontSize: 16,
+      },
     };
 
     it("has expected symbol type", () => {
       const { container } = render(
-        <VictoryLegend data={legendData} style={styleObject} />
+        <VictoryLegend data={legendData} style={styleObject} />,
       );
 
       container.querySelectorAll("path").forEach((symbol) => {
@@ -135,7 +135,7 @@ describe("components/victory-legend", () => {
 
     it("has expected symbol colors", () => {
       const { container } = render(
-        <VictoryLegend data={legendData} style={styleObject} />
+        <VictoryLegend data={legendData} style={styleObject} />,
       );
 
       container.querySelectorAll("path").forEach((item) => {
@@ -156,23 +156,23 @@ describe("components/victory-legend", () => {
   describe("itemsPerRow", () => {
     const legendData = [
       {
-        name: "Thing 1"
+        name: "Thing 1",
       },
       {
-        name: "Thing 2"
+        name: "Thing 2",
       },
       {
-        name: "Thing 3"
+        name: "Thing 3",
       },
       {
-        name: "Thing 4"
+        name: "Thing 4",
       },
       {
-        name: "Thing 5"
+        name: "Thing 5",
       },
       {
-        name: "Thing 6"
-      }
+        name: "Thing 6",
+      },
     ];
 
     const splitArrayAtIndex = (array, index) => {
@@ -183,7 +183,7 @@ describe("components/victory-legend", () => {
 
     it("aligns items in columns", () => {
       const { container } = render(
-        <VictoryLegend data={legendData} itemsPerRow={3} />
+        <VictoryLegend data={legendData} itemsPerRow={3} />,
       );
       const labels = Array.from(container.querySelectorAll("text"));
 
@@ -204,7 +204,7 @@ describe("components/victory-legend", () => {
           data={legendData}
           itemsPerRow={3}
           orientation="horizontal"
-        />
+        />,
       );
 
       const labels = Array.from(container.querySelectorAll("text"));
@@ -217,7 +217,7 @@ describe("components/victory-legend", () => {
       rows.forEach((row) => {
         const rowYValue = row[0].getAttribute("y");
         const allInSameRow = row.every(
-          (item) => item.getAttribute("y") === rowYValue
+          (item) => item.getAttribute("y") === rowYValue,
         );
         expect(allInSameRow).toBeTruthy();
       });

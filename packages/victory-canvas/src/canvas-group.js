@@ -11,7 +11,7 @@ const CanvasGroup = (props) => {
     (ctx) => {
       return ctx.clearRect(0, 0, width, height);
     },
-    [width, height]
+    [width, height],
   );
 
   // This needs to be called in the child component to ensure it is called after the
@@ -23,10 +23,10 @@ const CanvasGroup = (props) => {
         width - padding.right,
         0,
         (maxClipWidth - clipWidth) * -1,
-        height
+        height,
       );
     },
-    [width, height, padding, clipWidth]
+    [width, height, padding, clipWidth],
   );
 
   return (
@@ -34,7 +34,7 @@ const CanvasGroup = (props) => {
       value={{
         canvasRef,
         clear,
-        clip
+        clip,
       }}
     >
       <foreignObject width={width} height={height} x={0} y={0}>
@@ -49,7 +49,7 @@ CanvasGroup.propTypes = {
   "aria-label": PropTypes.string,
   children: PropTypes.oneOfType([
     PropTypes.arrayOf(PropTypes.node),
-    PropTypes.node
+    PropTypes.node,
   ]),
   className: PropTypes.string,
   clipWidth: CustomPropTypes.nonNegative,
@@ -60,10 +60,10 @@ CanvasGroup.propTypes = {
       top: PropTypes.number,
       bottom: PropTypes.number,
       left: PropTypes.number,
-      right: PropTypes.number
-    })
+      right: PropTypes.number,
+    }),
   ]),
-  width: PropTypes.number
+  width: PropTypes.number,
 };
 CanvasGroup.role = "container";
 CanvasGroup.displayName = "CanvasGroup";

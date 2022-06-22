@@ -10,7 +10,7 @@ import {
   VictoryContainer,
   VictoryDatableProps,
   VictoryProvider,
-  VictoryProviderProps
+  VictoryProviderProps,
 } from "victory-core";
 import Bar from "./bar";
 import { getBarPosition } from "./helper-methods";
@@ -24,13 +24,13 @@ const defaultProps: VictoryProviderProps = {
     { x: 1, y: 1 },
     { x: 2, y: 2 },
     { x: 3, y: 3 },
-    { x: 4, y: 4 }
+    { x: 4, y: 4 },
   ],
   height: 300,
   includeZero: true,
   padding: 50,
   sortOrder: "ascending" as const,
-  width: 450
+  width: 450,
 };
 
 export type VictoryBarAlignmentType = "start" | "middle" | "end";
@@ -58,12 +58,12 @@ export interface VictoryBarProps
 // TODO: This would be a shared helper that allows us to access context values in the base component
 export function withContainer<Props extends VictoryCommonProps>(
   WrappedComponent: (props: Props) => React.ReactElement,
-  initialProviderProps: Partial<VictoryProviderProps> = {}
+  initialProviderProps: Partial<VictoryProviderProps> = {},
 ) {
   return (props: Props) => {
     const providerProps = {
       ...initialProviderProps,
-      ...props
+      ...props,
     };
     const { standalone = true, containerComponent = <VictoryContainer /> } =
       props;
@@ -73,7 +73,7 @@ export function withContainer<Props extends VictoryCommonProps>(
           {React.cloneElement(
             containerComponent,
             providerProps,
-            <WrappedComponent {...props} />
+            <WrappedComponent {...props} />,
           )}
         </VictoryProvider>
       );
@@ -93,7 +93,7 @@ function VictoryBar({
   barRatio,
   barWidth,
   cornerRadius,
-  horizontal = false
+  horizontal = false,
 }: VictoryBarProps) {
   const scale = useScale();
   const data = useData();
@@ -102,7 +102,7 @@ function VictoryBar({
   const children = data.map((datum: Datum, i: number) => {
     const { x, y, x0, y0 } = getBarPosition(
       { domain, scale, horizontal },
-      datum
+      datum,
     );
     const dataProps = {
       index: i,
@@ -117,7 +117,7 @@ function VictoryBar({
       y,
       x0,
       y0,
-      datum
+      datum,
     };
     return React.cloneElement(dataComponent, dataProps);
   });

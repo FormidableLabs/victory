@@ -9,7 +9,7 @@ import {
   VictoryTheme,
   DefaultTransitions,
   CommonProps,
-  UserProps
+  UserProps,
 } from "victory-core";
 import { isNil, flatten } from "lodash";
 import Candle from "./candle";
@@ -22,8 +22,8 @@ const fallbackProps = {
   padding: 50,
   candleColors: {
     positive: "#ffffff",
-    negative: "#252525"
-  }
+    negative: "#252525",
+  },
 };
 
 const options = {
@@ -34,8 +34,8 @@ const options = {
     { name: "closeLabels" },
     { name: "labels" },
     { name: "data" },
-    { name: "parent", index: "parent" }
-  ]
+    { name: "parent", index: "parent" },
+  ],
 };
 
 const defaultData = [
@@ -46,7 +46,7 @@ const defaultData = [
   { x: new Date(2016, 6, 5), open: 25, close: 30, high: 35, low: 20 },
   { x: new Date(2016, 6, 6), open: 30, close: 35, high: 40, low: 25 },
   { x: new Date(2016, 6, 7), open: 35, close: 40, high: 45, low: 30 },
-  { x: new Date(2016, 6, 8), open: 40, close: 45, high: 50, low: 35 }
+  { x: new Date(2016, 6, 8), open: 40, close: 45, high: 50, low: 35 },
 ];
 /*eslint-enable no-magic-numbers */
 const datumHasXandY = (datum) => {
@@ -62,7 +62,7 @@ class VictoryCandlestick extends React.Component {
     "samples",
     "size",
     "style",
-    "width"
+    "width",
   ];
 
   static displayName = "VictoryCandlestick";
@@ -74,7 +74,7 @@ class VictoryCandlestick extends React.Component {
     ...CommonProps.dataProps,
     candleColors: PropTypes.shape({
       positive: PropTypes.string,
-      negative: PropTypes.string
+      negative: PropTypes.string,
     }),
     candleRatio: PropTypes.number,
     candleWidth: PropTypes.oneOfType([PropTypes.func, PropTypes.number]),
@@ -82,16 +82,16 @@ class VictoryCandlestick extends React.Component {
       PropTypes.func,
       CustomPropTypes.allOfType([
         CustomPropTypes.integer,
-        CustomPropTypes.nonNegative
+        CustomPropTypes.nonNegative,
       ]),
       PropTypes.string,
-      PropTypes.arrayOf(PropTypes.string)
+      PropTypes.arrayOf(PropTypes.string),
     ]),
     closeLabelComponent: PropTypes.element,
     closeLabels: PropTypes.oneOfType([
       PropTypes.func,
       PropTypes.array,
-      PropTypes.bool
+      PropTypes.bool,
     ]),
     events: PropTypes.arrayOf(
       PropTypes.shape({
@@ -105,33 +105,33 @@ class VictoryCandlestick extends React.Component {
           "low",
           "lowLabels",
           "high",
-          "highLabels"
+          "highLabels",
         ]),
         eventKey: PropTypes.oneOfType([
           PropTypes.array,
           CustomPropTypes.allOfType([
             CustomPropTypes.integer,
-            CustomPropTypes.nonNegative
+            CustomPropTypes.nonNegative,
           ]),
-          PropTypes.string
+          PropTypes.string,
         ]),
-        eventHandlers: PropTypes.object
-      })
+        eventHandlers: PropTypes.object,
+      }),
     ),
     high: PropTypes.oneOfType([
       PropTypes.func,
       CustomPropTypes.allOfType([
         CustomPropTypes.integer,
-        CustomPropTypes.nonNegative
+        CustomPropTypes.nonNegative,
       ]),
       PropTypes.string,
-      PropTypes.arrayOf(PropTypes.string)
+      PropTypes.arrayOf(PropTypes.string),
     ]),
     highLabelComponent: PropTypes.element,
     highLabels: PropTypes.oneOfType([
       PropTypes.func,
       PropTypes.array,
-      PropTypes.bool
+      PropTypes.bool,
     ]),
     labelOrientation: PropTypes.oneOfType([
       PropTypes.oneOf(["top", "bottom", "left", "right"]),
@@ -139,38 +139,38 @@ class VictoryCandlestick extends React.Component {
         open: PropTypes.oneOf(["top", "bottom", "left", "right"]),
         close: PropTypes.oneOf(["top", "bottom", "left", "right"]),
         low: PropTypes.oneOf(["top", "bottom", "left", "right"]),
-        high: PropTypes.oneOf(["top", "bottom", "left", "right"])
-      })
+        high: PropTypes.oneOf(["top", "bottom", "left", "right"]),
+      }),
     ]),
     low: PropTypes.oneOfType([
       PropTypes.func,
       CustomPropTypes.allOfType([
         CustomPropTypes.integer,
-        CustomPropTypes.nonNegative
+        CustomPropTypes.nonNegative,
       ]),
       PropTypes.string,
-      PropTypes.arrayOf(PropTypes.string)
+      PropTypes.arrayOf(PropTypes.string),
     ]),
     lowLabelComponent: PropTypes.element,
     lowLabels: PropTypes.oneOfType([
       PropTypes.func,
       PropTypes.array,
-      PropTypes.bool
+      PropTypes.bool,
     ]),
     open: PropTypes.oneOfType([
       PropTypes.func,
       CustomPropTypes.allOfType([
         CustomPropTypes.integer,
-        CustomPropTypes.nonNegative
+        CustomPropTypes.nonNegative,
       ]),
       PropTypes.string,
-      PropTypes.arrayOf(PropTypes.string)
+      PropTypes.arrayOf(PropTypes.string),
     ]),
     openLabelComponent: PropTypes.element,
     openLabels: PropTypes.oneOfType([
       PropTypes.func,
       PropTypes.array,
-      PropTypes.bool
+      PropTypes.bool,
     ]),
     style: PropTypes.shape({
       data: PropTypes.object,
@@ -182,9 +182,9 @@ class VictoryCandlestick extends React.Component {
       high: PropTypes.object,
       highLabels: PropTypes.object,
       low: PropTypes.object,
-      lowLabels: PropTypes.object
+      lowLabels: PropTypes.object,
     }),
-    wickStrokeWidth: PropTypes.number
+    wickStrokeWidth: PropTypes.number,
   };
 
   static defaultProps = {
@@ -201,7 +201,7 @@ class VictoryCandlestick extends React.Component {
     samples: 50,
     sortOrder: "ascending",
     standalone: true,
-    theme: VictoryTheme.grayscale
+    theme: VictoryTheme.grayscale,
   };
 
   static getDomain = getDomain;
@@ -215,7 +215,7 @@ class VictoryCandlestick extends React.Component {
     "dataComponent",
     "labelComponent",
     "groupComponent",
-    "containerComponent"
+    "containerComponent",
   ];
 
   // Overridden in native versions
@@ -242,12 +242,12 @@ class VictoryCandlestick extends React.Component {
         const dataProps = this.getComponentProps(dataComponent, "data", index);
         if (shouldRenderDatum(dataProps.datum)) {
           validDataComponents.push(
-            React.cloneElement(dataComponent, dataProps)
+            React.cloneElement(dataComponent, dataProps),
           );
         }
         return validDataComponents;
       },
-      []
+      [],
     );
 
     const labelComponents = flatten(
@@ -262,7 +262,7 @@ class VictoryCandlestick extends React.Component {
           return undefined;
         });
         return components.filter(Boolean);
-      })
+      }),
     );
 
     const labelsComponents = this.dataKeys
@@ -270,7 +270,7 @@ class VictoryCandlestick extends React.Component {
         const labelProps = this.getComponentProps(
           labelComponent,
           "labels",
-          index
+          index,
         );
         if (labelProps.text !== undefined && labelProps.text !== null) {
           return React.cloneElement(labelComponent, labelProps);
@@ -282,7 +282,7 @@ class VictoryCandlestick extends React.Component {
     const children = [
       ...dataComponents,
       ...labelComponents,
-      ...labelsComponents
+      ...labelsComponents,
     ];
     return this.renderContainer(groupComponent, children);
   }

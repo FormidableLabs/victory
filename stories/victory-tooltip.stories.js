@@ -12,13 +12,13 @@ const containerStyle = {
   flexDirection: "row",
   flexWrap: "wrap",
   alignItems: "center",
-  justifyContent: "center"
+  justifyContent: "center",
 };
 
 const style = {
   parent: { border: "1px solid #ccc", margin: "1%", maxWidth: "25%" },
   labels: { fontFamily: "arial" },
-  data: { fill: "gold", width: 20 }
+  data: { fill: "gold", width: 20 },
 };
 
 const defaultBarProps = {
@@ -28,7 +28,7 @@ const defaultBarProps = {
   domainPadding: { y: 25 },
   data: getMixedData(5),
   labels: () => "Label",
-  size: 5
+  size: 5,
 };
 
 const polarBarProps = {
@@ -39,15 +39,15 @@ const polarBarProps = {
   domainPadding: { y: 25 },
   data: getData(5),
   labels: () => "Label",
-  size: 5
+  size: 5,
 };
 
 export default {
   title: "VictoryTooltip",
   component: VictoryTooltip,
   parameters: {
-    chromatic: { viewports: [1200] }
-  }
+    chromatic: { viewports: [1200] },
+  },
 };
 
 export const DefaultRendering = () => {
@@ -160,7 +160,7 @@ export const CenterOffset = () => {
             active
             centerOffset={{
               x: ({ datum }) => (datum.y < 0 ? -10 : 10),
-              y: -10
+              y: -10,
             }}
             text={`function\noffset`}
           />
@@ -203,7 +203,7 @@ export const PointerOrientation = () => {
             active
             centerOffset={{
               y: ({ datum }) => (datum.y > 0 ? -40 : 40),
-              x: ({ datum }) => (datum.y > 0 ? -20 : 20)
+              x: ({ datum }) => (datum.y > 0 ? -20 : 20),
             }}
             pointerOrientation={({ datum }) => (datum.y > 0 ? "bottom" : "top")}
             text={({ datum }) =>
@@ -230,7 +230,7 @@ export const PointerOrientation = () => {
           <VictoryTooltip
             active
             centerOffset={{
-              x: ({ datum }) => (datum.y > 0 ? 55 : -55)
+              x: ({ datum }) => (datum.y > 0 ? 55 : -55),
             }}
             pointerOrientation={({ datum }) => (datum.y > 0 ? "left" : "right")}
             text={({ datum }) =>
@@ -285,7 +285,7 @@ export const ConstrainToVisibleArea = () => {
             constrainToVisibleArea
             centerOffset={{
               y: ({ datum }) => (datum.y > 0 ? -40 : 40),
-              x: ({ datum }) => (datum.y > 0 ? -20 : 20)
+              x: ({ datum }) => (datum.y > 0 ? -20 : 20),
             }}
             pointerOrientation={({ datum }) => (datum.y > 0 ? "bottom" : "top")}
             text={`constrain\nto\nvisible\narea`}
@@ -301,7 +301,7 @@ export const ConstrainToVisibleArea = () => {
             constrainToVisibleArea
             centerOffset={{
               y: ({ datum }) => (datum.y > 0 ? -60 : 60),
-              x: ({ datum }) => (datum.y > 0 ? -10 : 10)
+              x: ({ datum }) => (datum.y > 0 ? -10 : 10),
             }}
             pointerOrientation={({ datum }) => (datum.y > 0 ? "bottom" : "top")}
             text={`constrain to\nvisible area`}
@@ -316,7 +316,7 @@ export const ConstrainToVisibleArea = () => {
             constrainToVisibleArea
             centerOffset={{
               x: ({ datum }) => (datum.y > 0 ? 70 : -70),
-              y: ({ datum }) => (datum.y > 0 ? -10 : 10)
+              y: ({ datum }) => (datum.y > 0 ? -10 : 10),
             }}
             pointerOrientation={({ datum }) => (datum.y > 0 ? "left" : "right")}
             text={`constrain to\nvisible area`}
@@ -332,7 +332,7 @@ export const ConstrainToVisibleArea = () => {
             constrainToVisibleArea
             centerOffset={{
               x: ({ datum }) => (datum.y > 0 ? 70 : -70),
-              y: ({ datum }) => (datum.y > 0 ? -10 : 10)
+              y: ({ datum }) => (datum.y > 0 ? -10 : 10),
             }}
             pointerOrientation={({ datum }) => (datum.y > 0 ? "left" : "right")}
             text={`constrain\nto\nvisible\narea`}
@@ -523,7 +523,7 @@ export const PointerWidth = () => {
           <VictoryTooltip
             active
             centerOffset={{
-              x: ({ index }) => (index === 0 || index === 4 ? 20 : null)
+              x: ({ index }) => (index === 0 || index === 4 ? 20 : null),
             }}
             pointerWidth={({ text }) => (text === "skinny" ? 0 : 20)}
             text={({ index }) => (index > 2 ? "skinny" : "wide ")}
@@ -600,7 +600,7 @@ export const PointerLength = () => {
           <VictoryTooltip
             active
             centerOffset={{
-              x: ({ index }) => (index === 0 || index === 4 ? 20 : null)
+              x: ({ index }) => (index === 0 || index === 4 ? 20 : null),
             }}
             pointerLength={({ text }) => (text === "short" ? 1 : 30)}
             text={({ index }) => (index > 2 ? "short" : "long ")}
@@ -680,7 +680,7 @@ export const FlyoutStyle = () => {
             flyoutStyle={{
               stroke: "red",
               strokeWidth: 2,
-              strokeDasharray: "1, 2"
+              strokeDasharray: "1, 2",
             }}
             text={`flyoutStyle`}
           />
@@ -697,7 +697,7 @@ export const FlyoutStyle = () => {
               fill: "pink",
               strokeWidth: 0,
               opacity: 0.5,
-              padding: 10
+              padding: 10,
             }}
             text={`flyoutStyle`}
           />

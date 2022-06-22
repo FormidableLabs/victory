@@ -1,5 +1,5 @@
 import React from "react";
-import { VictoryContainer } from "./victory-container";
+import { VictoryContainer } from "victory-core";
 import { fireEvent, render } from "@testing-library/react";
 
 describe("components/victory-container", () => {
@@ -12,7 +12,7 @@ describe("components/victory-container", () => {
   it("renders an svg with a custom role", () => {
     const { container } = render(<VictoryContainer role="presentation" />);
     expect(container.querySelector("svg")!.getAttribute("role")).toEqual(
-      "presentation"
+      "presentation",
     );
   });
 
@@ -40,20 +40,20 @@ describe("components/victory-container", () => {
 
   it("renders an svg with an aria-describedby attribute", () => {
     const { container } = render(
-      <VictoryContainer aria-describedby="testid" desc="description" />
+      <VictoryContainer aria-describedby="testid" desc="description" />,
     );
     const describedElement = container.querySelector(
-      `svg[aria-describedby~="testid"]`
+      `svg[aria-describedby~="testid"]`,
     );
     expect(describedElement).toBeDefined();
   });
 
   it("renders an svg with an aria-labelledby attribute", () => {
     const { container } = render(
-      <VictoryContainer aria-labelledby="testid" title="title" />
+      <VictoryContainer aria-labelledby="testid" title="title" />,
     );
     const describedElement = container.querySelector(
-      `svg[aria-labelledby~="testid"]`
+      `svg[aria-labelledby~="testid"]`,
     );
     expect(describedElement).toBeDefined();
   });
@@ -62,7 +62,7 @@ describe("components/victory-container", () => {
     const width = 300;
     const height = 300;
     const { container } = render(
-      <VictoryContainer width={width} height={height} />
+      <VictoryContainer width={width} height={height} />,
     );
     const svg = container.querySelector("svg")!;
     const viewBoxValue = `0 0 ${width} ${height}`;
@@ -72,7 +72,7 @@ describe("components/victory-container", () => {
   it("attaches an event to the container", () => {
     const clickHandler = jest.fn();
     const { container } = render(
-      <VictoryContainer events={{ onClick: clickHandler }} />
+      <VictoryContainer events={{ onClick: clickHandler }} />,
     );
     const svg = container.querySelector("svg")!;
     fireEvent.click(svg);

@@ -19,10 +19,10 @@ const Charts = ({ behaviors }) => {
     flexDirection: "row",
     flexWrap: "wrap",
     alignItems: "center",
-    justifyContent: "center"
+    justifyContent: "center",
   };
   const chartStyle = {
-    parent: { border: "1px solid #ccc", margin: "2%", maxWidth: "40%" }
+    parent: { border: "1px solid #ccc", margin: "2%", maxWidth: "40%" },
   };
   const CustomContainer = createContainer(...behaviors);
   const behaviorsList = behaviors.map((behavior) => `"${behavior}"`).join(", ");
@@ -62,7 +62,7 @@ const Charts = ({ behaviors }) => {
             data={[
               { name: "One", symbol: { fill: "tomato" } },
               { name: "Two", symbol: { fill: "orange" } },
-              { name: "Three", symbol: { fill: "gold" } }
+              { name: "Three", symbol: { fill: "gold" } },
             ]}
           />
           <VictoryLine
@@ -70,14 +70,14 @@ const Charts = ({ behaviors }) => {
               { x: 1, y: 5, l: "one" },
               { x: 1.5, y: 5, l: "one point five" },
               { x: 2, y: 4, l: "two" },
-              { x: 3, y: -2, l: "three" }
+              { x: 3, y: -2, l: "three" },
             ]}
             style={{
               data: {
                 stroke: "tomato",
-                strokeWidth: ({ active }) => (active ? 4 : 2)
+                strokeWidth: ({ active }) => (active ? 4 : 2),
               },
-              labels: { fill: "tomato" }
+              labels: { fill: "tomato" },
             }}
           />
 
@@ -85,14 +85,14 @@ const Charts = ({ behaviors }) => {
             data={[
               { x: 1, y: -3, l: "red" },
               { x: 2, y: 5, l: "green" },
-              { x: 3, y: 3, l: "blue" }
+              { x: 3, y: 3, l: "blue" },
             ]}
             style={{
               data: {
                 stroke: "blue",
-                strokeWidth: ({ active }) => (active ? 4 : 2)
+                strokeWidth: ({ active }) => (active ? 4 : 2),
               },
-              labels: { fill: "blue" }
+              labels: { fill: "blue" },
             }}
           />
 
@@ -100,14 +100,14 @@ const Charts = ({ behaviors }) => {
             data={[
               { x: 1, y: 5, l: "cat" },
               { x: 2, y: -4, l: "dog" },
-              { x: 3, y: -2, l: "bird" }
+              { x: 3, y: -2, l: "bird" },
             ]}
             style={{
               data: {
                 stroke: "black",
-                strokeWidth: ({ active }) => (active ? 4 : 2)
+                strokeWidth: ({ active }) => (active ? 4 : 2),
               },
-              labels: { fill: "black" }
+              labels: { fill: "black" },
             }}
           />
         </VictoryChart>
@@ -123,7 +123,7 @@ const Charts = ({ behaviors }) => {
                 stroke: "tomato",
                 strokeWidth: 2,
                 fill: "tomato",
-                fillOpacity: 0.1
+                fillOpacity: 0.1,
               }}
               selectedDomain={{ x: [0.4, 0.95], y: [0.5, 0.8] }}
               defaultCursorValue={0.99}
@@ -133,8 +133,8 @@ const Charts = ({ behaviors }) => {
           <VictoryScatter
             style={{
               data: {
-                fill: ({ active }) => (active ? "tomato" : "black")
-              }
+                fill: ({ active }) => (active ? "tomato" : "black"),
+              },
             }}
             size={({ active }) => (active ? 5 : 3)}
             y={(d) => d.x * d.x}
@@ -151,7 +151,7 @@ const Charts = ({ behaviors }) => {
           <VictoryGroup style={chartStyle}>
             <VictoryScatter
               style={{
-                data: { fill: "tomato" }
+                data: { fill: "tomato" },
               }}
               size={({ active }) => (active ? 5 : 3)}
               labels={({ datum }) => datum.y}
@@ -163,12 +163,12 @@ const Charts = ({ behaviors }) => {
                 { x: 4, y: 0 },
                 { x: 5, y: 1 },
                 { x: 6, y: -3 },
-                { x: 7, y: 3 }
+                { x: 7, y: 3 },
               ]}
             />
             <VictoryScatter
               style={{
-                data: { fill: "blue" }
+                data: { fill: "blue" },
               }}
               size={({ active }) => (active ? 5 : 3)}
               labels={({ datum }) => datum.y}
@@ -180,7 +180,7 @@ const Charts = ({ behaviors }) => {
                 { x: 4, y: 0 },
                 { x: 5, y: -2 },
                 { x: 6, y: -2 },
-                { x: 7, y: 5 }
+                { x: 7, y: 5 },
               ]}
             />
             <VictoryScatter
@@ -191,7 +191,7 @@ const Charts = ({ behaviors }) => {
                 { x: 4, y: -3 },
                 { x: 5, y: -1 },
                 { x: 6, y: 3 },
-                { x: 7, y: -3 }
+                { x: 7, y: -3 },
               ]}
               labels={({ datum }) => datum.y}
               labelComponent={<VictoryTooltip />}
@@ -212,8 +212,8 @@ const Charts = ({ behaviors }) => {
               data: {
                 fill: "tomato",
                 stroke: ({ active }) => (active ? "black" : "none"),
-                strokeWidth: 2
-              }
+                strokeWidth: 2,
+              },
             }}
             size={({ active }) => (active ? 5 : 3)}
             data={[
@@ -223,7 +223,7 @@ const Charts = ({ behaviors }) => {
               { x: 4, y: 3 },
               { x: 5, y: 1 },
               { x: 6, y: -3 },
-              { x: 7, y: 3 }
+              { x: 7, y: 3 },
             ]}
           />
           <VictoryBar
@@ -231,8 +231,8 @@ const Charts = ({ behaviors }) => {
               data: {
                 fill: "orange",
                 stroke: ({ active }) => (active ? "black" : "none"),
-                strokeWidth: 2
-              }
+                strokeWidth: 2,
+              },
             }}
             size={({ active }) => (active ? 5 : 3)}
             data={[
@@ -242,7 +242,7 @@ const Charts = ({ behaviors }) => {
               { x: 4, y: 0 },
               { x: 5, y: -2 },
               { x: 6, y: -2 },
-              { x: 7, y: 5 }
+              { x: 7, y: 5 },
             ]}
           />
           <VictoryBar
@@ -250,8 +250,8 @@ const Charts = ({ behaviors }) => {
               data: {
                 fill: "gold",
                 stroke: ({ active }) => (active ? "black" : "none"),
-                strokeWidth: 2
-              }
+                strokeWidth: 2,
+              },
             }}
             data={[
               { x: 1, y: 5 },
@@ -260,7 +260,7 @@ const Charts = ({ behaviors }) => {
               { x: 4, y: -3 },
               { x: 5, y: -1 },
               { x: 6, y: 3 },
-              { x: 7, y: -3 }
+              { x: 7, y: -3 },
             ]}
           />
         </VictoryStack>
@@ -270,7 +270,7 @@ const Charts = ({ behaviors }) => {
 };
 
 Charts.propTypes = {
-  behaviors: PropTypes.arrayOf(PropTypes.string).isRequired
+  behaviors: PropTypes.arrayOf(PropTypes.string).isRequired,
 };
 
 class App extends React.Component {

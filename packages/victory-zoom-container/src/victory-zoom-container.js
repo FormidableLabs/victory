@@ -6,7 +6,7 @@ import {
   VictoryContainer,
   VictoryClipContainer,
   Data,
-  PropTypes as CustomPropTypes
+  PropTypes as CustomPropTypes,
 } from "victory-core";
 
 const DEFAULT_DOWNSAMPLE = 150;
@@ -24,14 +24,14 @@ export const zoomContainerMixin = (base) =>
       downsample: PropTypes.oneOfType([PropTypes.bool, PropTypes.number]),
       minimumZoom: PropTypes.shape({
         x: PropTypes.number,
-        y: PropTypes.number
+        y: PropTypes.number,
       }),
       onZoomDomainChange: PropTypes.func,
       zoomDimension: PropTypes.oneOf(["x", "y"]),
       zoomDomain: PropTypes.shape({
         x: CustomPropTypes.domain,
-        y: CustomPropTypes.domain
-      })
+        y: CustomPropTypes.domain,
+      }),
     };
 
     static defaultProps = {
@@ -39,7 +39,7 @@ export const zoomContainerMixin = (base) =>
       clipContainerComponent: <VictoryClipContainer />,
       allowPan: true,
       allowZoom: true,
-      zoomActive: false
+      zoomActive: false,
     };
 
     static defaultEvents = (props) => {
@@ -94,9 +94,9 @@ export const zoomContainerMixin = (base) =>
             },
             ...(props.disable || !props.allowZoom
               ? {}
-              : { onWheel: ZoomHelpers.onWheel })
-          }
-        }
+              : { onWheel: ZoomHelpers.onWheel }),
+          },
+        },
       ];
     };
 
@@ -116,7 +116,7 @@ export const zoomContainerMixin = (base) =>
         polar,
         origin: polar ? origin : undefined,
         radius: polar ? radius : undefined,
-        ...clipContainerComponent.props
+        ...clipContainerComponent.props,
       });
       return React.Children.toArray(children).map((child) => {
         if (!Data.isDataComponent(child)) {
@@ -131,7 +131,7 @@ export const zoomContainerMixin = (base) =>
       // Only zoom the radius of polar charts. Zooming angles is very confusing
       return {
         x: originalDomain.x,
-        y: [0, domain.y[1]]
+        y: [0, domain.y[1]],
       };
     }
 
@@ -163,7 +163,7 @@ export const zoomContainerMixin = (base) =>
       // important: assumes data is ordered by dimension
       // get the start and end of the data that is in the current visible domain
       let startIndex = data.findIndex(
-        (d) => d[dimension] >= domain[dimension][0]
+        (d) => d[dimension] >= domain[dimension][0],
       );
       let endIndex = data.findIndex((d) => d[dimension] > domain[dimension][1]);
       // pick one more point (if available) at each end so that VictoryLine, VictoryArea connect
@@ -191,7 +191,7 @@ export const zoomContainerMixin = (base) =>
         const cachedZoomDomain = defaults(
           {},
           props.cachedZoomDomain,
-          props.domain
+          props.domain,
         );
         let domain;
         if (!ZoomHelpers.checkDomainEquality(zoomDomain, cachedZoomDomain)) {
@@ -212,7 +212,7 @@ export const zoomContainerMixin = (base) =>
           // if zooming is restricted to a dimension, don't squash changes to zoomDomain in other dim
           newDomain = {
             ...zoomDomain,
-            [props.zoomDimension]: newDomain[props.zoomDimension]
+            [props.zoomDimension]: newDomain[props.zoomDimension],
           };
         }
         // don't downsample stacked data
@@ -220,7 +220,7 @@ export const zoomContainerMixin = (base) =>
           isDataComponent && role !== "stack"
             ? {
                 domain: newDomain,
-                data: this.downsampleZoomData(props, child, newDomain)
+                data: this.downsampleZoomData(props, child, newDomain),
               }
             : { domain: newDomain };
         return React.cloneElement(child, defaults(newProps, child.props));

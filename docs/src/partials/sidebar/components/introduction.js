@@ -9,7 +9,7 @@ import {
   SidebarSectionList,
   SidebarListItem,
   SidebarListItemLink,
-  SidebarListItemAnchorLink
+  SidebarListItemAnchorLink,
 } from "../styles";
 
 const MobileSidebarLinks = styled.div`
@@ -53,7 +53,7 @@ const Introduction = ({ content }) => {
     { slug: "/about", title: "About" },
     { slug: "/gallery", title: "Gallery" },
     { slug: "https://github.com/FormidableLabs/victory", title: "Github" },
-    { slug: "/docs/faq", title: "FAQs" }
+    { slug: "/docs/faq", title: "FAQs" },
   ];
   return (
     <>
@@ -69,7 +69,7 @@ const Introduction = ({ content }) => {
 };
 
 Introduction.propTypes = {
-  content: PropTypes.array
+  content: PropTypes.array,
 };
 
 export default Introduction;

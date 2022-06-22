@@ -10,7 +10,7 @@ import {
   UserProps,
   VictoryContainer,
   VictoryTheme,
-  Wrapper
+  Wrapper,
 } from "victory-core";
 import { VictorySharedEvents } from "victory-shared-events";
 import { VictoryAxis } from "victory-axis";
@@ -19,14 +19,14 @@ import {
   getBackgroundWithProps,
   getChildComponents,
   getCalculatedProps,
-  getChildren
+  getChildren,
 } from "./helper-methods";
 import isEqual from "react-fast-compare";
 
 const fallbackProps = {
   width: 450,
   height: 300,
-  padding: 50
+  padding: 50,
 };
 
 const VictoryChart = (initialProps) => {
@@ -48,7 +48,7 @@ const VictoryChart = (initialProps) => {
     theme,
     polar,
     name,
-    title
+    title,
   } = modifiedProps;
 
   const axes = props.polar
@@ -57,12 +57,12 @@ const VictoryChart = (initialProps) => {
 
   const childComponents = React.useMemo(
     () => getChildComponents(modifiedProps, axes),
-    [modifiedProps, axes]
+    [modifiedProps, axes],
   );
 
   const calculatedProps = React.useMemo(
     () => getCalculatedProps(modifiedProps, childComponents),
-    [modifiedProps, childComponents]
+    [modifiedProps, childComponents],
   );
   const { domain, scale, style, origin, radius, horizontal } = calculatedProps;
 
@@ -72,7 +72,7 @@ const VictoryChart = (initialProps) => {
     const mappedChildren = children.map((child, index) => {
       const childProps = assign(
         { animate: getAnimationProps(props, child, index, "victory chart") },
-        child.props
+        child.props,
       );
       return React.cloneElement(child, childProps);
     });
@@ -80,7 +80,7 @@ const VictoryChart = (initialProps) => {
     if (props.style && props.style.background) {
       const backgroundComponent = getBackgroundWithProps(
         props,
-        calculatedProps
+        calculatedProps,
       );
 
       mappedChildren.unshift(backgroundComponent);
@@ -105,7 +105,7 @@ const VictoryChart = (initialProps) => {
         title,
         scale,
         standalone,
-        style: style.parent
+        style: style.parent,
       };
     }
     return {};
@@ -123,7 +123,7 @@ const VictoryChart = (initialProps) => {
     style,
     title,
     theme,
-    width
+    width,
   ]);
 
   const container = React.useMemo(() => {
@@ -132,7 +132,7 @@ const VictoryChart = (initialProps) => {
         {},
         containerComponent.props,
         containerProps,
-        UserProps.getSafeUserProps(initialProps)
+        UserProps.getSafeUserProps(initialProps),
       );
       return React.cloneElement(containerComponent, defaultContainerProps);
     }
@@ -142,7 +142,7 @@ const VictoryChart = (initialProps) => {
     standalone,
     containerComponent,
     containerProps,
-    initialProps
+    initialProps,
   ]);
 
   const events = React.useMemo(() => {
@@ -180,20 +180,20 @@ VictoryChart.propTypes = {
   backgroundComponent: PropTypes.element,
   children: PropTypes.oneOfType([
     PropTypes.arrayOf(PropTypes.node),
-    PropTypes.node
+    PropTypes.node,
   ]),
   defaultAxes: PropTypes.shape({
     independent: PropTypes.element,
-    dependent: PropTypes.element
+    dependent: PropTypes.element,
   }),
   defaultPolarAxes: PropTypes.shape({
     independent: PropTypes.element,
-    dependent: PropTypes.element
+    dependent: PropTypes.element,
   }),
   endAngle: PropTypes.number,
   innerRadius: CustomPropTypes.nonNegative,
   prependDefaultAxes: PropTypes.bool,
-  startAngle: PropTypes.number
+  startAngle: PropTypes.number,
 };
 
 VictoryChart.defaultProps = {
@@ -201,15 +201,15 @@ VictoryChart.defaultProps = {
   containerComponent: <VictoryContainer />,
   defaultAxes: {
     independent: <VictoryAxis />,
-    dependent: <VictoryAxis dependentAxis />
+    dependent: <VictoryAxis dependentAxis />,
   },
   defaultPolarAxes: {
     independent: <VictoryPolarAxis />,
-    dependent: <VictoryPolarAxis dependentAxis />
+    dependent: <VictoryPolarAxis dependentAxis />,
   },
   groupComponent: <g />,
   standalone: true,
-  theme: VictoryTheme.grayscale
+  theme: VictoryTheme.grayscale,
 };
 
 const VictoryChartMemo = React.memo(VictoryChart, isEqual);

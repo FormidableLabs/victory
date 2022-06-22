@@ -20,8 +20,8 @@ const NativeVictoryPolarAxis = wrapCoreComponent({
     gridComponent: <LineSegment />,
     containerComponent: <VictoryContainer />,
     groupComponent: <G />,
-    width: Dimensions.get("window").width
-  })
+    width: Dimensions.get("window").width,
+  }),
 });
 
 export default NativeVictoryPolarAxis;

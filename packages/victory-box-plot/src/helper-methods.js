@@ -6,13 +6,13 @@ import {
   groupBy,
   keys,
   isNaN,
-  isNil
+  isNil,
 } from "lodash";
 import { Helpers, Scale, Domain, Data, Collection } from "victory-core";
 import {
   min as d3Min,
   max as d3Max,
-  quantile as d3Quantile
+  quantile as d3Quantile,
 } from "victory-vendor/d3-array";
 
 const TYPES = ["max", "min", "median", "q1", "q3"];
@@ -47,7 +47,7 @@ const getSummaryStatistics = (data) => {
     _q3: nanToNull(d3Quantile(dependentVars, 0.75)), // eslint-disable-line no-magic-numbers
     _min: nanToNull(d3Min(dependentVars)),
     _median: nanToNull(d3Quantile(dependentVars, 0.5)),
-    _max: nanToNull(d3Max(dependentVars))
+    _max: nanToNull(d3Max(dependentVars)),
   };
 
   return assign({}, data[0], quartiles, { _y: data[0]._y });
@@ -72,7 +72,7 @@ const processData = (data) => {
       the depedentVarArray and process each datum separately */
       return data.map((datum) => {
         const dataArray = datum[sortKey].map((d) =>
-          assign({}, datum, { [sortKey]: d })
+          assign({}, datum, { [sortKey]: d }),
         );
         const sortedData = orderBy(dataArray, sortKey);
         return getSummaryStatistics(sortedData);
@@ -172,7 +172,7 @@ const getStyles = (props, styleObject) => {
   const labelStyles = defaults(
     {},
     style.labels,
-    getLabelStyle(props, styleObject)
+    getLabelStyle(props, styleObject),
   );
   const boxStyles = defaults({}, style.boxes, styleObject.boxes);
   const whiskerStyles = defaults({}, style.whiskers, styleObject.whiskers);
@@ -185,37 +185,37 @@ const getStyles = (props, styleObject) => {
       {},
       style.maxLabels,
       getLabelStyle(props, styleObject, "max"),
-      labelStyles
+      labelStyles,
     ),
     median: defaults({}, style.median, styleObject.median, whiskerStyles),
     medianLabels: defaults(
       {},
       style.medianLabels,
       getLabelStyle(props, styleObject, "median"),
-      labelStyles
+      labelStyles,
     ),
     min: defaults({}, style.min, styleObject.min, whiskerStyles),
     minLabels: defaults(
       {},
       style.minLabels,
       getLabelStyle(props, styleObject, "min"),
-      labelStyles
+      labelStyles,
     ),
     q1: defaults({}, style.q1, styleObject.q1, boxStyles),
     q1Labels: defaults(
       {},
       style.q1Labels,
       getLabelStyle(props, styleObject, "q1"),
-      labelStyles
+      labelStyles,
     ),
     q3: defaults({}, style.q3, styleObject.q3, boxStyles),
     q3Labels: defaults(
       {},
       style.q3Labels,
       getLabelStyle(props, styleObject, "q3"),
-      labelStyles
+      labelStyles,
     ),
-    whiskers: whiskerStyles
+    whiskers: whiskerStyles,
   };
 };
 
@@ -224,11 +224,11 @@ const getCalculatedValues = (props) => {
   const data = getData(props);
   const range = {
     x: Helpers.getRange(props, "x"),
-    y: Helpers.getRange(props, "y")
+    y: Helpers.getRange(props, "y"),
   };
   const domain = {
     x: getDomain(props, "x"),
-    y: getDomain(props, "y")
+    y: getDomain(props, "y"),
   };
   const scale = {
     x: Scale.getBaseScale(props, "x")
@@ -236,7 +236,7 @@ const getCalculatedValues = (props) => {
       .range(props.horizontal ? range.y : range.x),
     y: Scale.getBaseScale(props, "y")
       .domain(domain.y)
-      .range(props.horizontal ? range.x : range.y)
+      .range(props.horizontal ? range.x : range.y),
   };
   const defaultStyles =
     theme && theme.boxplot && theme.boxplot.style ? theme.boxplot.style : {};
@@ -257,7 +257,7 @@ const getWhiskerProps = (props, type) => {
     datum,
     scale,
     index,
-    disableInlineStyles
+    disableInlineStyles,
   } = props;
   const { min, max, q1, q3, x, y } = props.positions;
   const boxValue = type === "min" ? q1 : q3;
@@ -271,16 +271,16 @@ const getWhiskerProps = (props, type) => {
       x1: horizontal ? boxValue : x,
       y1: horizontal ? y : boxValue,
       x2: horizontal ? whiskerValue : x,
-      y2: horizontal ? y : whiskerValue
+      y2: horizontal ? y : whiskerValue,
     },
     minorWhisker: {
       x1: horizontal ? whiskerValue : x - width / 2,
       y1: horizontal ? y - width / 2 : whiskerValue,
       x2: horizontal ? whiskerValue : x + width / 2,
-      y2: horizontal ? y + width / 2 : whiskerValue
+      y2: horizontal ? y + width / 2 : whiskerValue,
     },
     style: disableInlineStyles ? {} : style[type] || style.whisker,
-    disableInlineStyles
+    disableInlineStyles,
   };
 };
 
@@ -292,7 +292,7 @@ const getBoxProps = (props, type) => {
     scale,
     datum,
     index,
-    disableInlineStyles
+    disableInlineStyles,
   } = props;
   const { median, q1, q3, x, y } = props.positions;
   const defaultX = type === "q1" ? q1 : median;
@@ -308,7 +308,7 @@ const getBoxProps = (props, type) => {
     width: horizontal ? defaultWidth : boxWidth,
     height: horizontal ? boxWidth : defaultHeight,
     style: disableInlineStyles ? {} : style[type] || style.boxes,
-    disableInlineStyles
+    disableInlineStyles,
   };
 };
 
@@ -320,7 +320,7 @@ const getMedianProps = (props) => {
     datum,
     scale,
     index,
-    disableInlineStyles
+    disableInlineStyles,
   } = props;
   const { median, x, y } = props.positions;
   return {
@@ -332,7 +332,7 @@ const getMedianProps = (props) => {
     x2: horizontal ? median : x + boxWidth / 2,
     y2: horizontal ? y + boxWidth / 2 : median,
     style: disableInlineStyles ? {} : style.median,
-    disableInlineStyles
+    disableInlineStyles,
   };
 };
 
@@ -363,7 +363,7 @@ const getLabelProps = (props, text, type) => {
     labelOrientation,
     style,
     theme,
-    disableInlineStyles
+    disableInlineStyles,
   } = props;
   const orientation = getOrientation(labelOrientation, type);
   const namespace = `${type}Labels`;
@@ -372,13 +372,13 @@ const getLabelProps = (props, text, type) => {
     top: "end",
     bottom: "start",
     left: "middle",
-    right: "middle"
+    right: "middle",
   };
   const defaultTextAnchors = {
     left: "end",
     right: "start",
     top: "middle",
-    bottom: "middle"
+    bottom: "middle",
   };
   const whiskerWidth =
     typeof props.whiskerWidth === "number" ? props.whiskerWidth : boxWidth;
@@ -387,7 +387,7 @@ const getLabelProps = (props, text, type) => {
   const getOffset = (coord) => {
     const sign = {
       x: orientation === "left" ? -1 : 1,
-      y: orientation === "top" ? -1 : 1
+      y: orientation === "top" ? -1 : 1,
     };
     return (sign[coord] * width) / 2 + sign[coord] * (labelStyle.padding || 0);
   };
@@ -407,7 +407,7 @@ const getLabelProps = (props, text, type) => {
       labelStyle.verticalAnchor || defaultVerticalAnchors[orientation],
     angle: labelStyle.angle,
     horizontal,
-    disableInlineStyles
+    disableInlineStyles,
   };
 
   const component = props[`${type}LabelComponent`];
@@ -474,7 +474,7 @@ export const getBaseProps = (props, fallbackProps) => {
     data,
     style,
     domain,
-    name
+    name,
   } = props;
   const initialChildProps = {
     parent: {
@@ -489,8 +489,8 @@ export const getBaseProps = (props, fallbackProps) => {
       style: style.parent || {},
       padding,
       groupComponent,
-      horizontal
-    }
+      horizontal,
+    },
   };
   const boxScale = scale.y;
   return data.reduce((acc, datum, index) => {
@@ -505,7 +505,7 @@ export const getBaseProps = (props, fallbackProps) => {
       max: boxScale(datum._max),
       median: boxScale(datum._median),
       q1: boxScale(datum._q1),
-      q3: boxScale(datum._q3)
+      q3: boxScale(datum._q3),
     };
     const dataProps = assign({ index, datum, positions }, props);
     const dataObj = TYPES.reduce((memo, type) => {
@@ -526,7 +526,7 @@ export const getBaseProps = (props, fallbackProps) => {
         acc[eventKey][target] = getLabelProps(
           assign({}, props, dataProps),
           labelText,
-          type
+          type,
         );
       }
     });

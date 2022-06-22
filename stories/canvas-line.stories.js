@@ -12,16 +12,16 @@ const containerStyle = {
   flexDirection: "row",
   flexWrap: "wrap",
   alignItems: "center",
-  justifyContent: "center"
+  justifyContent: "center",
 };
 
 const parentStyle = {
-  parent: { border: "1px solid #ccc", margin: "2%", maxWidth: "40%" }
+  parent: { border: "1px solid #ccc", margin: "2%", maxWidth: "40%" },
 };
 
 const defaultChartProps = {
   style: parentStyle,
-  theme: VictoryTheme.material
+  theme: VictoryTheme.material,
 };
 
 export const DefaultRendering = () => {
@@ -165,7 +165,7 @@ export const Interpolation = () => {
         "natural",
         "step",
         "stepAfter",
-        "stepBefore"
+        "stepBefore",
       ].map((interpolation) => makeInterpolationChart(interpolation))}
     </div>
   );
@@ -173,5 +173,5 @@ export const Interpolation = () => {
 
 export default {
   title: "Victory Canvas/Line",
-  component: VictoryLine
+  component: VictoryLine,
 };

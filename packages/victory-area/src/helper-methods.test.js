@@ -1,15 +1,15 @@
-import { getDataWithBaseline } from "./helper-methods";
+import { getDataWithBaseline } from "victory-area/lib/helper-methods";
 import * as d3Scale from "victory-vendor/d3-scale";
 
 describe("victory-area/helper-methods", () => {
   describe("getDataWithBaseline", () => {
     const data = [
       { _x: 1, _y: 1 },
-      { _x: 2, _y: 1 }
+      { _x: 2, _y: 1 },
     ];
     const stackedData = [
       { _x: 1, _x0: 0, _x1: 1, _y: 1, _y0: 1, _y1: 2 },
-      { _x: 2, _x0: 0, _x1: 2, _y: 1, _y0: 1, _y1: 2 }
+      { _x: 2, _x0: 0, _x1: 2, _y: 1, _y0: 1, _y1: 2 },
     ];
     const defaultDomain = { x: [0, 10], y: [0, 10] };
     const nonZeroDomain = { x: [0, 10], y: [1, 10] };
@@ -17,7 +17,7 @@ describe("victory-area/helper-methods", () => {
     const scale = (domain) => {
       return {
         x: d3Scale.scaleLinear().domain(domain.x),
-        y: d3Scale.scaleLinear().domain(domain.y)
+        y: d3Scale.scaleLinear().domain(domain.y),
       };
     };
 
@@ -26,7 +26,7 @@ describe("victory-area/helper-methods", () => {
       const result = getDataWithBaseline(props, scale(defaultDomain));
       const expectedResult = [
         { _y0: 0, _y1: 1, _y: 1, _x: 1, _x0: 0, _x1: 1 },
-        { _y0: 0, _y1: 1, _y: 1, _x: 2, _x0: 0, _x1: 2 }
+        { _y0: 0, _y1: 1, _y: 1, _x: 2, _x0: 0, _x1: 2 },
       ];
       expect(result).toEqual(expectedResult);
     });
@@ -36,7 +36,7 @@ describe("victory-area/helper-methods", () => {
       const result = getDataWithBaseline(props, scale(nonZeroDomain));
       const expectedResult = [
         { _y0: 1, _y1: 1, _y: 1, _x: 1, _x0: 0, _x1: 1 },
-        { _y0: 1, _y1: 1, _y: 1, _x: 2, _x0: 0, _x1: 2 }
+        { _y0: 1, _y1: 1, _y: 1, _x: 2, _x0: 0, _x1: 2 },
       ];
       expect(result).toEqual(expectedResult);
     });
@@ -46,7 +46,7 @@ describe("victory-area/helper-methods", () => {
       const result = getDataWithBaseline(props, scale(negativeDomain));
       const expectedResult = [
         { _y0: 0, _y1: 1, _y: 1, _x: 1, _x0: 0, _x1: 1 },
-        { _y0: 0, _y1: 1, _y: 1, _x: 2, _x0: 0, _x1: 2 }
+        { _y0: 0, _y1: 1, _y: 1, _x: 2, _x0: 0, _x1: 2 },
       ];
       expect(result).toEqual(expectedResult);
     });

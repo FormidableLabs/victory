@@ -1,4 +1,4 @@
-import { getChildComponents } from "./helper-methods";
+import { getChildComponents } from "victory-chart/lib/helper-methods";
 import React from "react";
 import { VictoryAxis } from "victory-axis";
 import { VictoryLine } from "victory-line";
@@ -10,7 +10,7 @@ describe("victory-chart/helpers-methods", () => {
   describe("getChildComponents", () => {
     const defaultAxes = {
       independent: getVictoryAxis({}),
-      dependent: getVictoryAxis({ dependentAxis: true })
+      dependent: getVictoryAxis({ dependentAxis: true }),
     };
 
     it("returns a pair of default axes when no children are given", () => {

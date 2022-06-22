@@ -26,7 +26,7 @@ const getRadius = (props, padding) => {
   return (
     Math.min(
       props.width - padding.left - padding.right,
-      props.height - padding.top - padding.bottom
+      props.height - padding.top - padding.bottom,
     ) / 2
   );
 };
@@ -42,7 +42,7 @@ const getOrigin = (props, padding) => {
     y:
       origin.y !== undefined
         ? origin.y
-        : (padding.top - padding.bottom + height) / 2
+        : (padding.top - padding.bottom + height) / 2,
   };
 };
 
@@ -79,7 +79,7 @@ const getCalculatedValues = (props) => {
     defaultRadius,
     data,
     slices,
-    origin
+    origin,
   });
 };
 
@@ -110,7 +110,7 @@ const getLabelArc = (radius, labelRadius, style) => {
 const getLabelPosition = (arc, slice, position) => {
   const construct = {
     startAngle: position === "startAngle" ? slice.startAngle : slice.endAngle,
-    endAngle: position === "endAngle" ? slice.endAngle : slice.startAngle
+    endAngle: position === "endAngle" ? slice.endAngle : slice.startAngle,
   };
   const clonedArc = assign({}, slice, construct);
   return arc.centroid(clonedArc);
@@ -153,7 +153,7 @@ const getBaseLabelAngle = (slice, labelPosition, labelStyle) => {
     baseAngle = labelStyle.angle;
   } else if (labelPosition === "centroid") {
     baseAngle = Helpers.radiansToDegrees(
-      (slice.startAngle + slice.endAngle) / 2
+      (slice.startAngle + slice.endAngle) / 2,
     );
   } else {
     baseAngle =
@@ -180,22 +180,22 @@ const getLabelProps = (text, dataProps, calculatedValues) => {
   const { style, defaultRadius, origin, width, height } = calculatedValues;
   const labelRadius = Helpers.evaluateProp(
     calculatedValues.labelRadius,
-    assign({ text }, dataProps)
+    assign({ text }, dataProps),
   );
   const labelPosition =
     Helpers.evaluateProp(
       calculatedValues.labelPosition,
-      assign({ text }, dataProps)
+      assign({ text }, dataProps),
     ) || "centroid";
   const labelPlacement =
     Helpers.evaluateProp(
       calculatedValues.labelPlacement,
-      assign({ text }, dataProps)
+      assign({ text }, dataProps),
     ) || "vertical";
   const labelStyle = assign({ padding: 0 }, style.labels);
   const evaluatedStyle = Helpers.evaluateStyle(
     labelStyle,
-    assign({ labelRadius, text }, dataProps)
+    assign({ labelRadius, text }, dataProps),
   );
   const labelArc = getLabelArc(defaultRadius, labelRadius, evaluatedStyle);
   const position = getLabelPosition(labelArc, slice, labelPosition);
@@ -220,7 +220,7 @@ const getLabelProps = (text, dataProps, calculatedValues) => {
     y: Math.round(position[1]) + origin.y,
     textAnchor,
     verticalAnchor,
-    angle: labelAngle
+    angle: labelAngle,
   };
 
   if (!Helpers.isTooltip(labelComponent)) {
@@ -249,18 +249,18 @@ export const getBaseProps = (props, fallbackProps) => {
     innerRadius,
     cornerRadius,
     padAngle,
-    disableInlineStyles
+    disableInlineStyles,
   } = calculatedValues;
   const radius = props.radius || defaultRadius;
   const initialChildProps = {
-    parent: { standalone, height, width, slices, name, style: style.parent }
+    parent: { standalone, height, width, slices, name, style: style.parent },
   };
 
   return slices.reduce((childProps, slice, index) => {
     const datum = defaults({}, data[index], {
       startAngle: Helpers.radiansToDegrees(slice.startAngle),
       endAngle: Helpers.radiansToDegrees(slice.endAngle),
-      padAngle: Helpers.radiansToDegrees(slice.padAngle)
+      padAngle: Helpers.radiansToDegrees(slice.padAngle),
     });
     const eventKey = !isNil(datum.eventKey) ? datum.eventKey : index;
     const dataProps = {
@@ -274,10 +274,10 @@ export const getBaseProps = (props, fallbackProps) => {
       cornerRadius,
       padAngle,
       style: disableInlineStyles ? {} : getSliceStyle(index, calculatedValues),
-      disableInlineStyles
+      disableInlineStyles,
     };
     childProps[eventKey] = {
-      data: dataProps
+      data: dataProps,
     };
     const text = getLabelText(props, datum, index);
     if (
@@ -288,7 +288,7 @@ export const getBaseProps = (props, fallbackProps) => {
       childProps[eventKey].labels = getLabelProps(
         evaluatedText,
         assign({}, props, dataProps),
-        calculatedValues
+        calculatedValues,
       );
     }
     return childProps;
