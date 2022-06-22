@@ -10,7 +10,7 @@ import {
   withContainer,
   useDomain,
   useScale,
-  useData
+  useData,
 } from "victory-core";
 import { AxesType } from "..";
 import { VictoryAxis } from "victory-axis";
@@ -40,13 +40,13 @@ interface VictoryChartProps extends VictoryCommonProps {
 
 const DEFAULT_AXES = {
   independent: <VictoryAxis />,
-  dependent: <VictoryAxis dependentAxis />
+  dependent: <VictoryAxis dependentAxis />,
 };
 
 const VictoryChart = ({
   defaultAxes = DEFAULT_AXES,
   groupComponent = <g />,
-  children
+  children,
 }: VictoryChartProps) => {
   const scale = useScale();
   const data = useData();
@@ -55,17 +55,20 @@ const VictoryChart = ({
   const axes = React.useMemo(() => {
     const { dependent, independent } = {
       ...defaultAxes,
-      ...DEFAULT_AXES
+      ...DEFAULT_AXES,
     };
     const axisProps = {
       data,
       domain,
       scale,
-      standalone: false
+      standalone: false,
     };
     return [
       React.cloneElement(dependent, { ...axisProps, key: "dependent-axis" }),
-      React.cloneElement(independent, { ...axisProps, key: "independent-axis" })
+      React.cloneElement(independent, {
+        ...axisProps,
+        key: "independent-axis",
+      }),
     ];
   }, [defaultAxes, domain, scale, data]);
 
@@ -74,7 +77,7 @@ const VictoryChart = ({
     return React.cloneElement(child, {
       key: `${child}-index`,
       index,
-      standalone: false
+      standalone: false,
     });
   });
 

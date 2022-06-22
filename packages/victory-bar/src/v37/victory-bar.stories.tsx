@@ -5,7 +5,7 @@ import VictoryChart from "victory-chart/lib/v37/victory-chart";
 
 export default {
   title: "v37/VictoryBar",
-  component: VictoryBar
+  component: VictoryBar,
 };
 
 export const Demo = (props) => {
@@ -21,5 +21,5 @@ export const WithChart = (props) => {
 };
 
 Demo.args = {
-  barRatio: 0.5
+  barRatio: 0.5,
 };

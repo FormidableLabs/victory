@@ -2,7 +2,7 @@ import React from "react";
 import {
   VictoryProvider,
   VictoryProviderProps,
-  VictoryContainer
+  VictoryContainer,
 } from "victory-core";
 import { VictoryCommonProps } from "./common-props";
 
@@ -10,18 +10,18 @@ const defaultProviderProps = {
   width: 450,
   height: 300,
   padding: 50,
-  data: []
+  data: [],
 };
 
 export function withContainer<Props extends VictoryCommonProps>(
   WrappedComponent: (props: Props) => React.ReactElement,
-  initialProviderProps: Partial<VictoryProviderProps> = {}
+  initialProviderProps: Partial<VictoryProviderProps> = {},
 ) {
   return (props: Props) => {
     const providerProps = {
       ...defaultProviderProps,
       ...initialProviderProps,
-      ...props
+      ...props,
     };
     const { standalone = true, containerComponent = <VictoryContainer /> } =
       props;
@@ -31,7 +31,7 @@ export function withContainer<Props extends VictoryCommonProps>(
           {React.cloneElement(
             containerComponent,
             providerProps,
-            <WrappedComponent {...props} />
+            <WrappedComponent {...props} />,
           )}
         </VictoryProvider>
       );
