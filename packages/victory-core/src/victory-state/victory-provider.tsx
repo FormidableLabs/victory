@@ -14,44 +14,52 @@ export interface ContextType {
   data: FormattedDatum[];
   scale: ScaleType;
   domain: DomainType;
-  setProps: (props: VictoryProviderProps) => void;
+  setChildProps: (id: string, props: VictoryProviderProps) => void;
 }
 
 const VictoryContext = createContext<ContextType | null>(null);
 
-export function VictoryProvider({ children, ...props }: VictoryProviderProps) {
+export function VictoryProvider({
+  children,
+  ...initialProps
+}: VictoryProviderProps) {
   // We need to store the props in state so they can be overwritten by child components
-  const [_props, _setProps] = React.useState(props);
+  const [props, setProps] = React.useState(initialProps);
 
-  const setProps = React.useCallback(
-    (newProps: VictoryCalculatedStateProps) => {
-      _setProps((prevProps) => ({ ...prevProps, ...newProps }));
+  const setChildProps = React.useCallback(
+    (id: string, newProps: VictoryCalculatedStateProps) => {
+      setProps((prevProps) => {
+        const currentData = prevProps.data || [];
+        const nextData = newProps.data || [];
+        const allChildData = Array.from(new Set([...currentData, ...nextData]));
+        return { ...prevProps, ...newProps, data: allChildData };
+      });
     },
     [],
   );
 
   const data = React.useMemo(() => {
-    return getData(_props);
-  }, [_props]);
+    return getData(props);
+  }, [props]);
 
   const domain = React.useMemo(() => {
     return {
-      x: getDomain(_props, "x"),
-      y: getDomain(_props, "y"),
+      x: getDomain(props, "x"),
+      y: getDomain(props, "y"),
     };
-  }, [_props]);
+  }, [props]);
 
   const range = React.useMemo(
     () => ({
-      x: getRange(_props, "x"),
-      y: getRange(_props, "y"),
+      x: getRange(props, "x"),
+      y: getRange(props, "y"),
     }),
-    [_props],
+    [props],
   );
 
   const scale = React.useMemo(() => {
-    const xBaseScaleFn = getScale(_props, "x");
-    const yBaseScaleFn = getScale(_props, "y");
+    const xBaseScaleFn = getScale(props, "x");
+    const yBaseScaleFn = getScale(props, "y");
 
     // @ts-expect-error: This is a valid scale function
     const xScaleFn = xBaseScaleFn().domain(domain.x).range(range.x);
@@ -62,13 +70,13 @@ export function VictoryProvider({ children, ...props }: VictoryProviderProps) {
       x: xScaleFn,
       y: yScaleFn,
     };
-  }, [_props, domain, range]);
+  }, [props, domain, range]);
 
   const value = {
     scale,
     data,
     domain,
-    setProps,
+    setChildProps,
   };
 
   return (
@@ -106,10 +114,10 @@ export function useVictoryProviderSync(
   id: string,
   props: VictoryCalculatedStateProps,
 ) {
-  const setProps = useVictoryContext((value) => value.setProps);
+  const setChildProps = useVictoryContext((value) => value.setChildProps);
 
   React.useEffect(() => {
-    setProps(props);
+    setChildProps(id, props);
   }, []);
 
   return props;
