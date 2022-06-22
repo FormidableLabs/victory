@@ -38,7 +38,7 @@ export {
   VictoryTheme,
   VictoryTransition,
   Whisker,
-  Wrapper
+  Wrapper,
 } from "victory-core";
 
 export { VictoryChart } from "victory-chart";
@@ -60,28 +60,28 @@ export {
   // @ts-expect-error Missing types for this export
   BrushHelpers,
   // @ts-expect-error Missing types for this export
-  brushContainerMixin
+  brushContainerMixin,
 } from "victory-brush-container";
 export {
   VictoryCursorContainer,
   // @ts-expect-error Missing types for this export
   CursorHelpers,
   // @ts-expect-error Missing types for this export
-  cursorContainerMixin
+  cursorContainerMixin,
 } from "victory-cursor-container";
 export {
   VictorySelectionContainer,
   // @ts-expect-error Missing types for this export
   SelectionHelpers,
   // @ts-expect-error Missing types for this export
-  selectionContainerMixin
+  selectionContainerMixin,
 } from "victory-selection-container";
 export {
   VictoryVoronoiContainer,
   // @ts-expect-error Missing types for this export
   VoronoiHelpers,
   // @ts-expect-error Missing types for this export
-  voronoiContainerMixin
+  voronoiContainerMixin,
 } from "victory-voronoi-container";
 export {
   VictoryZoomContainer,
@@ -90,14 +90,14 @@ export {
   // @ts-expect-error Missing types for this export
   zoomContainerMixin,
   // @ts-expect-error Missing types for this export
-  RawZoomHelpers
+  RawZoomHelpers,
 } from "victory-zoom-container";
 export {
   // @ts-expect-error Missing types for this export
   combineContainerMixins,
   // @ts-expect-error Missing types for this export
   makeCreateContainerFunction,
-  createContainer
+  createContainer,
 } from "victory-create-container";
 
 export { VictoryTooltip, Flyout } from "victory-tooltip";
@@ -111,5 +111,5 @@ export {
   CanvasPoint,
   CanvasBar,
   // @ts-expect-error Missing types for this export
-  useCanvasContext
+  useCanvasContext,
 } from "victory-canvas";

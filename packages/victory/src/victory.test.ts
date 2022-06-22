@@ -91,7 +91,7 @@ import {
   selectionContainerMixin,
   useCanvasContext,
   voronoiContainerMixin,
-  zoomContainerMixin
+  zoomContainerMixin,
 } from "victory";
 
 describe("victory", () => {
