@@ -8,7 +8,7 @@ import {
   useScale,
   useVictoryProps,
   VictoryCalculatedStateProps,
-  withContainer
+  withContainer,
 } from "victory-core";
 import Bar from "../bar";
 import { getBarPosition } from "../helper-methods";
@@ -39,13 +39,13 @@ const defaultProps: VictoryBarProps = {
     { x: 1, y: 1 },
     { x: 2, y: 2 },
     { x: 3, y: 3 },
-    { x: 4, y: 4 }
+    { x: 4, y: 4 },
   ],
   dataComponent: <Bar />,
   groupComponent: <g role="presentation" />,
   includeZero: true,
   horizontal: false,
-  sortOrder: "ascending" as const
+  sortOrder: "ascending" as const,
 };
 
 function VictoryBar(props: VictoryBarProps) {
@@ -57,7 +57,7 @@ function VictoryBar(props: VictoryBarProps) {
     cornerRadius,
     horizontal,
     groupComponent,
-    data
+    data,
   } = useVictoryProps<VictoryBarProps>("bar", props, defaultProps);
   const scale = useScale();
   const formattedData = useData();
@@ -66,7 +66,7 @@ function VictoryBar(props: VictoryBarProps) {
   const children = formattedData.map((datum: Datum, i: number) => {
     const { x, y, x0, y0 } = getBarPosition(
       { domain, scale, horizontal },
-      datum
+      datum,
     );
     const dataProps = {
       index: i,
@@ -81,7 +81,7 @@ function VictoryBar(props: VictoryBarProps) {
       y,
       x0,
       y0,
-      datum
+      datum,
     };
     // TODO: Figure out how to type this properly
     return React.cloneElement(dataComponent!, dataProps);
@@ -89,5 +89,5 @@ function VictoryBar(props: VictoryBarProps) {
   return React.cloneElement(groupComponent!, {}, children);
 }
 
-// @ts-expect-error
+// @ts-expect-error we need to work out what props this withContainer wrapper accepts
 export default withContainer<VictoryBarProps>(VictoryBar);
