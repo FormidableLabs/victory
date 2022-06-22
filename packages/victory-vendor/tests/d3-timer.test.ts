@@ -11,7 +11,7 @@ import {
   timer,
   timerFlush,
   timeout,
-  interval
+  interval,
 } from "victory-vendor/d3-timer";
 
 describe("d3-timer", () => {

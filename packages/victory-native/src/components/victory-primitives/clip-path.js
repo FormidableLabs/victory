@@ -6,9 +6,9 @@ export default class VClipPath extends React.Component {
   static propTypes = {
     children: PropTypes.oneOfType([
       PropTypes.arrayOf(PropTypes.node),
-      PropTypes.node
+      PropTypes.node,
     ]),
-    clipId: PropTypes.oneOfType([PropTypes.number, PropTypes.string])
+    clipId: PropTypes.oneOfType([PropTypes.number, PropTypes.string]),
   };
 
   render() {

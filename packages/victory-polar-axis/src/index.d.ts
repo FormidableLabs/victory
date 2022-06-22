@@ -16,7 +16,7 @@ import {
   LabelOrientationType,
   VictoryAxisCommonProps,
   VictoryCommonProps,
-  VictorySingleLabelableProps
+  VictorySingleLabelableProps,
 } from "victory-core";
 
 export type VictoryPolarAxisTTargetType =

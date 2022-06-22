@@ -115,7 +115,7 @@ const About = ({ sidebarContent }) => {
 };
 
 About.propTypes = {
-  sidebarContent: PropTypes.array
+  sidebarContent: PropTypes.array,
 };
 
 export default withRouteData(About);

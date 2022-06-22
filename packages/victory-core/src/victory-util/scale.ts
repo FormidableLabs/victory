@@ -21,7 +21,7 @@ function toNewName(scale: ScaleName): keyof D3ScaleMethods {
 }
 
 export function validScale(
-  scale: string | D3Scale
+  scale: string | D3Scale,
 ): scale is ScaleName | D3Scale {
   if (typeof scale === "function") {
     return (
@@ -126,7 +126,7 @@ export function getScaleType(props, axis): string {
 // **Note**: Brittle because reliant on d3 internals.
 const DUCK_TYPES = [
   { name: "quantile", method: "quantiles" },
-  { name: "log", method: "base" }
+  { name: "log", method: "base" },
   // TODO(2214): Re-evaluate (1) duck typing approach, and (2) if duck typing,
   //   do we need a different approach? (Multiple keys? Stringifying functions?)
   // https://github.com/FormidableLabs/victory/issues/2214

@@ -32,5 +32,5 @@ VCircle.propTypes = {
   role: PropTypes.string,
   shapeRendering: PropTypes.string,
   style: PropTypes.object,
-  transform: PropTypes.string
+  transform: PropTypes.string,
 };

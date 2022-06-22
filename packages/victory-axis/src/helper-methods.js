@@ -5,7 +5,7 @@ const orientationSign = {
   top: -1,
   left: -1,
   right: 1,
-  bottom: 1
+  bottom: 1,
 };
 
 const exists = (val) => val !== null && val !== undefined;
@@ -44,13 +44,13 @@ const getStyleObject = (props) => {
       "grid",
       "parent",
       "tickLabels",
-      "ticks"
+      "ticks",
     ];
     return styleNamespaces.reduce((memo, curr) => {
       memo[curr] = defaults(
         {},
         specificAxisStyle[curr],
-        generalAxisStyle[curr]
+        generalAxisStyle[curr],
       );
       return memo;
     }, {});
@@ -71,7 +71,7 @@ export const getStyles = (props, styleObject) => {
     axisLabel: defaults({}, style.axisLabel, styleObject.axisLabel),
     grid: defaults({}, style.grid, styleObject.grid),
     ticks: defaults({}, style.ticks, styleObject.ticks),
-    tickLabels: defaults({}, style.tickLabels, styleObject.tickLabels)
+    tickLabels: defaults({}, style.tickLabels, styleObject.tickLabels),
   };
 };
 
@@ -83,7 +83,7 @@ const getTickProps = (layout, style, datum) => {
     x2: transform.x + position.x2,
     y2: transform.y + position.y2,
     style,
-    datum
+    datum,
   };
 };
 
@@ -98,7 +98,7 @@ const getTickLabelProps = (layout, style, anchors, datum, text) => {
     textAnchor: anchors.textAnchor,
     angle: style.angle,
     text,
-    datum
+    datum,
   };
 };
 
@@ -110,7 +110,7 @@ const getGridProps = (layout, style, datum) => {
     x2: edge.x + transform.x,
     y2: edge.y + transform.y,
     style,
-    datum
+    datum,
   };
 };
 
@@ -126,7 +126,7 @@ const getAxisProps = (modifiedProps, calculatedValues, globalTransform) => {
     y1: isVertical ? padding.top + globalTransform.y : globalTransform.y,
     y2: isVertical
       ? height - padding.bottom + globalTransform.y
-      : globalTransform.y
+      : globalTransform.y,
   };
 };
 
@@ -134,7 +134,7 @@ const getEvaluatedStyles = (style, props) => {
   return {
     tickStyle: Helpers.evaluateStyle(style.ticks, props),
     labelStyle: Helpers.evaluateStyle(style.tickLabels, props),
-    gridStyle: Helpers.evaluateStyle(style.grid, props)
+    gridStyle: Helpers.evaluateStyle(style.grid, props),
   };
 };
 
@@ -161,7 +161,7 @@ const getAxisLabelProps = (props, calculatedValues, globalTransform) => {
     textAnchor: labelStyle.textAnchor || "middle",
     angle: labelStyle.angle === undefined ? angle : labelStyle.angle,
     style: labelStyle,
-    text: props.label
+    text: props.label,
   };
 };
 
@@ -170,12 +170,12 @@ const getAnchors = (orientation, isVertical) => {
     top: "end",
     left: "end",
     right: "start",
-    bottom: "start"
+    bottom: "start",
   };
   const anchor = anchorOrientation[orientation];
   return {
     textAnchor: isVertical ? anchor : "middle",
-    verticalAnchor: isVertical ? "middle" : anchor
+    verticalAnchor: isVertical ? "middle" : anchor,
   };
 };
 
@@ -196,11 +196,11 @@ const getDefaultOrientations = (axis, originSign, horizontal) => {
   const sign = originSign || "positive";
   const orientations = {
     positive: { x: "bottom", y: "left" },
-    negative: { x: "top", y: "right" }
+    negative: { x: "top", y: "right" },
   };
   const horizontalOrientations = {
     positive: { x: "left", y: "bottom" },
-    negative: { x: "right", y: "top" }
+    negative: { x: "right", y: "top" },
   };
   return horizontal
     ? horizontalOrientations[sign][axis]
@@ -217,7 +217,7 @@ const getStandaloneOffset = (props, calculatedValues) => {
     ticks,
     stringTicks,
     isVertical,
-    labelPadding
+    labelPadding,
   } = calculatedValues;
   const { polar, horizontal } = props;
   const sharedProps = {
@@ -225,7 +225,7 @@ const getStandaloneOffset = (props, calculatedValues) => {
     polar,
     horizontal,
     ticks,
-    stringTicks
+    stringTicks,
   };
   const xPadding = orientation === "right" ? padding.right : padding.left;
   const yPadding = orientation === "top" ? padding.top : padding.bottom;
@@ -242,7 +242,7 @@ const getStandaloneOffset = (props, calculatedValues) => {
     const tick = stringTicks ? props.tickValues[data - 1] : data;
     const tickStyle = Helpers.evaluateStyle(
       style.ticks,
-      assign({}, sharedProps, { tick, index })
+      assign({}, sharedProps, { tick, index }),
     );
     return tickStyle.size || 0;
   });
@@ -253,7 +253,7 @@ const getStandaloneOffset = (props, calculatedValues) => {
 
   return {
     x: offsetX !== null && offsetX !== undefined ? offsetX : x,
-    y: offsetY !== null && offsetY !== undefined ? offsetY : y
+    y: offsetY !== null && offsetY !== undefined ? offsetY : y,
   };
 };
 
@@ -271,17 +271,17 @@ const getOffset = (props, calculatedValues) => {
     y:
       orientation === "left" || orientation === "right"
         ? orientation
-        : orientations.y
+        : orientations.y,
   };
 
   // make the axes line up, and cross when appropriate
   const orientationOffset = {
     x: calculatedOrientation.y === "left" ? left : right,
-    y: calculatedOrientation.x === "bottom" ? bottom : top
+    y: calculatedOrientation.x === "bottom" ? bottom : top,
   };
   const originOffset = {
     x: calculatedOrientation.y === "left" ? 0 : props.width,
-    y: calculatedOrientation.x === "bottom" ? props.height : 0
+    y: calculatedOrientation.x === "bottom" ? props.height : 0,
   };
   const originPosition = {
     x:
@@ -291,7 +291,7 @@ const getOffset = (props, calculatedValues) => {
     y:
       origin.y === domain.y[0] || origin.y === domain.y[1]
         ? 0
-        : scale.y(origin.y)
+        : scale.y(origin.y),
   };
 
   const x = originPosition.x
@@ -305,7 +305,7 @@ const getOffset = (props, calculatedValues) => {
 
   return {
     x: offsetX,
-    y: offsetY
+    y: offsetY,
   };
 };
 
@@ -323,17 +323,17 @@ const getHorizontalOffset = (props, calculatedValues) => {
     x:
       orientation === "left" || orientation === "right"
         ? orientation
-        : orientations.y
+        : orientations.y,
   };
 
   // make the axes line up, and cross when appropriate
   const orientationOffset = {
     x: calculatedOrientation.y === "bottom" ? bottom : top,
-    y: calculatedOrientation.x === "left" ? left : right
+    y: calculatedOrientation.x === "left" ? left : right,
   };
   const originOffset = {
     y: calculatedOrientation.x === "left" ? 0 : props.width,
-    x: calculatedOrientation.y === "bottom" ? props.height : 0
+    x: calculatedOrientation.y === "bottom" ? props.height : 0,
   };
   const originPosition = {
     x:
@@ -343,7 +343,7 @@ const getHorizontalOffset = (props, calculatedValues) => {
     y:
       origin.y === domain.y[0] || origin.y === domain.y[1]
         ? 0
-        : scale.y(origin.y)
+        : scale.y(origin.y),
   };
 
   const y = originPosition.x
@@ -357,7 +357,7 @@ const getHorizontalOffset = (props, calculatedValues) => {
 
   return {
     x: offsetX,
-    y: offsetY
+    y: offsetY,
   };
 };
 
@@ -367,20 +367,20 @@ const getTransform = (props, calculatedValues, offset) => {
   return {
     top: {
       x: 0,
-      y: axisValue !== undefined ? axisValue : offset.y
+      y: axisValue !== undefined ? axisValue : offset.y,
     },
     bottom: {
       x: 0,
-      y: axisValue !== undefined ? axisValue : props.height - offset.y
+      y: axisValue !== undefined ? axisValue : props.height - offset.y,
     },
     left: {
       x: axisValue !== undefined ? axisValue : offset.x,
-      y: 0
+      y: 0,
     },
     right: {
       x: axisValue !== undefined ? axisValue : props.width - offset.x,
-      y: 0
-    }
+      y: 0,
+    },
   }[orientation];
 };
 
@@ -395,14 +395,14 @@ const getTickPosition = (style, orientation, isVertical) => {
     x: isVertical ? sign * tickSpacing : 0,
     x2: isVertical ? sign * size : 0,
     y: isVertical ? 0 : sign * tickSpacing,
-    y2: isVertical ? 0 : sign * size
+    y2: isVertical ? 0 : sign * size,
   };
 };
 
 const getTickTransform = (tick, globalTransform, isVertical) => {
   return {
     x: isVertical ? globalTransform.x : tick + globalTransform.x,
-    y: isVertical ? tick + globalTransform.y : globalTransform.y
+    y: isVertical ? tick + globalTransform.y : globalTransform.y,
   };
 };
 
@@ -424,7 +424,7 @@ const getGridOffset = (calculatedValues, offset) => {
   const yPadding = orientation === "top" ? padding.top : padding.bottom;
   return {
     x: crossAxis ? offset.x - xPadding : 0,
-    y: crossAxis ? offset.y - yPadding : 0
+    y: crossAxis ? offset.y - yPadding : 0,
   };
 };
 
@@ -440,7 +440,7 @@ const getLayoutProps = (modifiedProps, calculatedValues) => {
   return {
     globalTransform: getTransform(modifiedProps, calculatedValues, offset),
     gridOffset: getGridOffset(calculatedValues, offset),
-    gridEdge: getGridEdge(modifiedProps, calculatedValues)
+    gridEdge: getGridEdge(modifiedProps, calculatedValues),
   };
 };
 
@@ -450,7 +450,7 @@ const getOrientation = (props) => {
   }
   const defaultOrientations = {
     dependent: props.horizontal ? "bottom" : "left",
-    independent: props.horizontal ? "left" : "bottom"
+    independent: props.horizontal ? "left" : "bottom",
   };
   return props.dependentAxis
     ? defaultOrientations.dependent
@@ -477,13 +477,13 @@ const getCalculatedValues = (props) => {
   const tickFormat = Axis.getTickFormat(props, axisScale);
   const range = {
     x: Helpers.getRange(props, "x"),
-    y: Helpers.getRange(props, "y")
+    y: Helpers.getRange(props, "y"),
   };
   // use full domain if passed in from parent,
   // otherwise use the just the one axis available
   const domain = {
     x: props.domain && props.domain.x ? props.domain.x : xAxisDomain,
-    y: props.domain && props.domain.y ? props.domain.y : yAxisDomain
+    y: props.domain && props.domain.y ? props.domain.y : yAxisDomain,
   };
   // use full scale if passed in from parent,
   // otherwise use the just the one axis available
@@ -499,19 +499,19 @@ const getCalculatedValues = (props) => {
         ? Scale.getBaseScale(props, "y")
             .domain(props.domain.y)
             .range(props.horizontal ? range.x : range.y)
-        : yAxisScale
+        : yAxisScale,
   };
   const origin = domain.x && domain.y ? Axis.getOrigin(domain) : undefined;
   const originSign = origin
     ? {
         x: Axis.getOriginSign(origin.x, domain.x),
-        y: Axis.getOriginSign(origin.y, domain.y)
+        y: Axis.getOriginSign(origin.y, domain.y),
       }
     : undefined;
   const orientations = originSign
     ? {
         x: getDefaultOrientations("x", originSign.y, props.horizontal),
-        y: getDefaultOrientations("y", originSign.x, props.horizontal)
+        y: getDefaultOrientations("y", originSign.x, props.horizontal),
       }
     : undefined;
   const orientation = orientations
@@ -534,7 +534,7 @@ const getCalculatedValues = (props) => {
     stringTicks,
     style,
     tickFormat,
-    ticks
+    ticks,
   };
 };
 
@@ -552,27 +552,27 @@ export const getBaseProps = (props, fallbackProps) => {
     anchors,
     domain,
     stringTicks,
-    name
+    name,
   } = calculatedValues;
   const otherAxis = axis === "x" ? "y" : "x";
   const { width, height, standalone, theme, polar, padding, horizontal } =
     props;
   const { globalTransform, gridOffset, gridEdge } = getLayoutProps(
     props,
-    calculatedValues
+    calculatedValues,
   );
   const sharedProps = {
     scale: { [axis]: scale[axis] },
     polar,
     horizontal,
     ticks,
-    stringTicks
+    stringTicks,
   };
   const axisProps = getAxisProps(props, calculatedValues, globalTransform);
   const axisLabelProps = getAxisLabelProps(
     props,
     calculatedValues,
-    globalTransform
+    globalTransform,
   );
   const initialChildProps = {
     parent: assign(
@@ -585,10 +585,10 @@ export const getBaseProps = (props, fallbackProps) => {
         height,
         padding,
         domain,
-        name
+        name,
       },
-      sharedProps
-    )
+      sharedProps,
+    ),
   };
   const gridProps = {
     dimension: otherAxis,
@@ -596,22 +596,22 @@ export const getBaseProps = (props, fallbackProps) => {
     scale:
       props.scale && props.scale[otherAxis]
         ? { [otherAxis]: props.scale[otherAxis] }
-        : undefined
+        : undefined,
   };
   return ticks.reduce((childProps, tickValue, index) => {
     const tick = stringTicks ? stringTicks[index] : tickValue;
     const text = tickFormat(tickValue, index, ticks);
     const styles = getEvaluatedStyles(
       style,
-      assign({}, sharedProps, { tick, tickValue, index, text })
+      assign({}, sharedProps, { tick, tickValue, index, text }),
     );
     const tickLayout = {
       position: getTickPosition(styles, orientation, isVertical),
       transform: getTickTransform(
         scale[axis](tickValue),
         globalTransform,
-        isVertical
-      )
+        isVertical,
+      ),
     };
 
     const gridLayout = {
@@ -622,8 +622,8 @@ export const getBaseProps = (props, fallbackProps) => {
           : scale[axis](tickValue) + globalTransform.x,
         y: isVertical
           ? scale[axis](tickValue) + globalTransform.y
-          : gridOffset.y + globalTransform.y
-      }
+          : gridOffset.y + globalTransform.y,
+      },
     };
     childProps[index] = {
       axis: assign({ dimension: axis }, sharedProps, axisProps),
@@ -631,7 +631,7 @@ export const getBaseProps = (props, fallbackProps) => {
       ticks: assign(
         {},
         sharedProps,
-        getTickProps(tickLayout, styles.tickStyle, tickValue)
+        getTickProps(tickLayout, styles.tickStyle, tickValue),
       ),
       tickLabels: assign(
         {},
@@ -641,15 +641,15 @@ export const getBaseProps = (props, fallbackProps) => {
           styles.labelStyle,
           anchors,
           tickValue,
-          text
-        )
+          text,
+        ),
       ),
       grid: assign(
         {},
         sharedProps,
         gridProps,
-        getGridProps(gridLayout, styles.gridStyle, tickValue)
-      )
+        getGridProps(gridLayout, styles.gridStyle, tickValue),
+      ),
     };
     return childProps;
   }, initialChildProps);

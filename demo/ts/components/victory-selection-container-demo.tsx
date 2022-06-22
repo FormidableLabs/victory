@@ -9,7 +9,7 @@ import { VictorySelectionContainer } from "victory-selection-container";
 import {
   VictoryTheme,
   VictoryLabel,
-  VictoryStyleInterface
+  VictoryStyleInterface,
 } from "victory-core";
 import { VictoryVoronoiContainer } from "victory-voronoi-container";
 import { VictoryZoomContainer } from "victory-zoom-container";
@@ -24,7 +24,7 @@ type multiAxisDataListType = {
 const multiAxisData: multiAxisDataListType = [
   { strength: 1, intelligence: 250, stealth: 45 },
   { strength: 2, intelligence: 300, stealth: 75 },
-  { strength: 5, intelligence: 225, stealth: 60 }
+  { strength: 5, intelligence: 225, stealth: 60 },
 ];
 
 class VictorySelectionContainerDemo extends React.Component<any, any> {
@@ -37,7 +37,7 @@ class VictorySelectionContainerDemo extends React.Component<any, any> {
       data: this.getData(),
       staticData: this.getStaticData(),
       multiAxisData: this.processMultiAxisData(multiAxisData),
-      multiAxisMaxima: this.getMaxData(multiAxisData)
+      multiAxisMaxima: this.getMaxData(multiAxisData),
     };
   }
 
@@ -46,7 +46,7 @@ class VictorySelectionContainerDemo extends React.Component<any, any> {
     this.setStateInterval = window.setInterval(() => {
       this.setState({
         data: this.getData(),
-        staticData: this.getStaticData()
+        staticData: this.getStaticData(),
       });
     }, 3000);
   }
@@ -79,7 +79,7 @@ class VictorySelectionContainerDemo extends React.Component<any, any> {
 
         return memo;
       },
-      {}
+      {},
     );
 
     return keys(groupedData).reduce((memo: any, key: string | number) => {
@@ -106,11 +106,11 @@ class VictorySelectionContainerDemo extends React.Component<any, any> {
       flexDirection: "row",
       flexWrap: "wrap",
       alignItems: "center",
-      justifyContent: "center"
+      justifyContent: "center",
     };
 
     const chartStyle: VictoryStyleInterface = {
-      parent: { border: "1px solid #ccc", margin: "2%", maxWidth: "40%" }
+      parent: { border: "1px solid #ccc", margin: "2%", maxWidth: "40%" },
     };
 
     return (
@@ -134,7 +134,7 @@ class VictorySelectionContainerDemo extends React.Component<any, any> {
             <VictoryArea
               interpolation="catmullRom"
               style={{
-                data: { fill: "tomato" }
+                data: { fill: "tomato" },
               }}
               data={this.state.data}
             />
@@ -160,7 +160,7 @@ class VictorySelectionContainerDemo extends React.Component<any, any> {
               labels={({ datum }: any) => `y: ${Math.round(datum.y)}`}
               interpolation="linear"
               style={{
-                data: { stroke: "tomato", strokeWidth: 2 }
+                data: { stroke: "tomato", strokeWidth: 2 },
               }}
               data={this.state.data}
             />
@@ -186,8 +186,8 @@ class VictorySelectionContainerDemo extends React.Component<any, any> {
                   width: 10,
                   fillOpacity: 0.4,
                   stroke: "tomato",
-                  strokeWidth: 2
-                }
+                  strokeWidth: 2,
+                },
               }}
               data={this.state.staticData}
             />
@@ -212,8 +212,8 @@ class VictorySelectionContainerDemo extends React.Component<any, any> {
                   fill: "tomato",
                   fillOpacity: 0.4,
                   stroke: "tomato",
-                  strokeWidth: 2
-                }
+                  strokeWidth: 2,
+                },
               }}
               data={this.state.staticData}
             />
@@ -240,7 +240,7 @@ class VictorySelectionContainerDemo extends React.Component<any, any> {
             <VictoryBar
               alignment="start"
               style={{
-                data: { fill: ({ datum }) => datum.fill, opacity: 0.5 }
+                data: { fill: ({ datum }) => datum.fill, opacity: 0.5 },
               }}
               data={[
                 { x: 45, y: 20, label: 1, fill: "red" },
@@ -248,7 +248,7 @@ class VictorySelectionContainerDemo extends React.Component<any, any> {
                 { x: 135, y: 65, label: 3, fill: "gold" },
                 { x: 250, y: 50, label: 4, fill: "blue" },
                 { x: 270, y: 40, label: 5, fill: "cyan" },
-                { x: 295, y: 30, label: 6, fill: "green" }
+                { x: 295, y: 30, label: 6, fill: "green" },
               ]}
             />
             <VictoryScatter
@@ -259,7 +259,7 @@ class VictorySelectionContainerDemo extends React.Component<any, any> {
                 { x: 135, y: 65 },
                 { x: 250, y: 50 },
                 { x: 270, y: 40 },
-                { x: 295, y: 30 }
+                { x: 295, y: 30 },
               ]}
             />
           </VictoryChart>
@@ -268,7 +268,7 @@ class VictorySelectionContainerDemo extends React.Component<any, any> {
             <VictoryBar
               alignment="start"
               style={{
-                data: { fill: ({ datum }) => datum.fill, opacity: 0.5 }
+                data: { fill: ({ datum }) => datum.fill, opacity: 0.5 },
               }}
               data={[
                 { x: 15, y: 20, label: 1, fill: "red" },
@@ -276,7 +276,7 @@ class VictorySelectionContainerDemo extends React.Component<any, any> {
                 { x: 35, y: 65, label: 3, fill: "gold" },
                 { x: 40, y: 50, label: 4, fill: "blue" },
                 { x: 45, y: 40, label: 5, fill: "cyan" },
-                { x: 50, y: 30, label: 6, fill: "green" }
+                { x: 50, y: 30, label: 6, fill: "green" },
               ]}
             />
             <VictoryScatter
@@ -287,7 +287,7 @@ class VictorySelectionContainerDemo extends React.Component<any, any> {
                 { x: 35, y: 65 },
                 { x: 40, y: 50 },
                 { x: 45, y: 40 },
-                { x: 50, y: 30 }
+                { x: 50, y: 30 },
               ]}
             />
           </VictoryChart>
@@ -301,7 +301,7 @@ class VictorySelectionContainerDemo extends React.Component<any, any> {
                 { x: 3, y: 6, label: 3, fill: "gold" },
                 { x: 4, y: 5, label: 4, fill: "blue" },
                 { x: 5, y: 4, label: 5, fill: "cyan" },
-                { x: 6, y: 3, label: 6, fill: "green" }
+                { x: 6, y: 3, label: 6, fill: "green" },
               ]}
             />
             <VictoryScatter
@@ -312,7 +312,7 @@ class VictorySelectionContainerDemo extends React.Component<any, any> {
                 { x: 3, y: 6 },
                 { x: 4, y: 5 },
                 { x: 5, y: 4 },
-                { x: 6, y: 3 }
+                { x: 6, y: 3 },
               ]}
             />
           </VictoryChart>
@@ -337,7 +337,7 @@ class VictorySelectionContainerDemo extends React.Component<any, any> {
                 { x: 90, y: 30, label: 2 },
                 { x: 135, y: 75, label: 3 },
                 { x: 180, y: 50, label: 4 },
-                { x: 270, y: 40, label: 5 }
+                { x: 270, y: 40, label: 5 },
               ]}
             />
 
@@ -348,7 +348,7 @@ class VictorySelectionContainerDemo extends React.Component<any, any> {
                 { x: 90, y: 30 },
                 { x: 135, y: 75 },
                 { x: 180, y: 50 },
-                { x: 270, y: 40 }
+                { x: 270, y: 40 },
               ]}
             />
 
@@ -359,7 +359,7 @@ class VictorySelectionContainerDemo extends React.Component<any, any> {
                 { x: 90, y: 30 },
                 { x: 135, y: 75 },
                 { x: 180, y: 50 },
-                { x: 270, y: 40 }
+                { x: 270, y: 40 },
               ]}
             />
           </VictoryChart>
@@ -379,7 +379,7 @@ class VictorySelectionContainerDemo extends React.Component<any, any> {
                 "intelligence",
                 "stealth",
                 "luck",
-                "charisma"
+                "charisma",
               ]}
             />
             <VictoryScatter
@@ -390,7 +390,7 @@ class VictorySelectionContainerDemo extends React.Component<any, any> {
                 { x: 2, y: 25 },
                 { x: 3, y: 40 },
                 { x: 4, y: 50 },
-                { x: 5, y: 50 }
+                { x: 5, y: 50 },
               ]}
             />
             <VictoryArea
@@ -400,7 +400,7 @@ class VictorySelectionContainerDemo extends React.Component<any, any> {
                 { x: 2, y: 25 },
                 { x: 3, y: 40 },
                 { x: 4, y: 50 },
-                { x: 5, y: 50 }
+                { x: 5, y: 50 },
               ]}
             />
           </VictoryChart>
@@ -413,7 +413,7 @@ class VictorySelectionContainerDemo extends React.Component<any, any> {
             endAngle={380}
             domain={[0, 360]}
             tickValues={[
-              0, 20, 45, 65, 90, 120, 135, 180, 225, 250, 270, 300, 315
+              0, 20, 45, 65, 90, 120, 135, 180, 225, 250, 270, 300, 315,
             ]}
           />
 

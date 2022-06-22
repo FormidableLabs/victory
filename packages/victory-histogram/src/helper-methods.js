@@ -96,7 +96,7 @@ export const getFormattedData = cacheLastValue(({ data = [], x, bins }) => {
         ? new Date((x0.getTime() + x1.getTime()) / 2)
         : (x0 + x1) / 2,
       y: bin.length,
-      binnedData: [...bin]
+      binnedData: [...bin],
     };
   });
 
@@ -126,7 +126,7 @@ export const getDomain = (props, axis) => {
 
     return Domain.getDomainWithZero(
       { ...props, data: [{ x: firstBin.x0 }, { x: lastBin.x1 }], x: "x" },
-      "x"
+      "x",
     );
   }
 
@@ -141,12 +141,12 @@ const getCalculatedValues = (props) => {
 
   const range = props.range || {
     x: Helpers.getRange(props, "x"),
-    y: Helpers.getRange(props, "y")
+    y: Helpers.getRange(props, "y"),
   };
 
   const domain = {
     x: getDomain(props, "x"),
-    y: getDomain(props, "y")
+    y: getDomain(props, "y"),
   };
 
   let data = getData(props);
@@ -158,7 +158,7 @@ const getCalculatedValues = (props) => {
       .range(props.horizontal ? range.y : range.x),
     y: Scale.getBaseScale(props, "y")
       .domain(domain.y)
-      .range(props.horizontal ? range.x : range.y)
+      .range(props.horizontal ? range.x : range.y),
   };
 
   return { style, data, scale, domain };
@@ -186,7 +186,7 @@ export const getBaseProps = (props, fallbackProps) => {
     labels,
     name,
     getPath,
-    disableInlineStyles
+    disableInlineStyles,
   } = props;
   const initialChildProps = {
     parent: {
@@ -200,8 +200,8 @@ export const getBaseProps = (props, fallbackProps) => {
       name,
       theme,
       padding,
-      style: style.parent
-    }
+      style: style.parent,
+    },
   };
 
   const getDistance = (datum) => {
@@ -241,11 +241,11 @@ export const getBaseProps = (props, fallbackProps) => {
       y0,
       x0,
       getPath,
-      disableInlineStyles
+      disableInlineStyles,
     };
 
     childProps[eventKey] = {
-      data: dataProps
+      data: dataProps,
     };
 
     const text = LabelHelpers.getText(props, datum, index);

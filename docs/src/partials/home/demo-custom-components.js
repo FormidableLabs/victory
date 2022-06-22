@@ -7,7 +7,7 @@ import {
   VictoryArea,
   VictoryAxis,
   VictoryChart,
-  VictoryLine
+  VictoryLine,
 } from "victory";
 
 import importedTheme from "../../styles/theme";
@@ -31,7 +31,7 @@ const GradientPath = (props) => {
   const loc = isBrowser ? window.location.href : "";
   const areaStyle = Object.assign({}, style, {
     fill: `url(${loc}#${gradientId})`,
-    stroke: "none"
+    stroke: "none",
   });
 
   return (
@@ -61,8 +61,8 @@ export default class App extends React.Component {
       range(26).map((j) => ({
         x: j,
         y: (10 - i) * random(10 - i, 20 - 2 * i),
-        _y0: -1 * (10 - i) * random(10 - i, 20 - 2 * i)
-      }))
+        _y0: -1 * (10 - i) * random(10 - i, 20 - 2 * i),
+      })),
     );
   }
 
@@ -72,8 +72,8 @@ export default class App extends React.Component {
         boxSizing: "border-box",
         display: "block",
         margin: "0 auto",
-        padding: 0
-      }
+        padding: 0,
+      },
     };
   }
 
@@ -83,7 +83,7 @@ export default class App extends React.Component {
     const colors = [
       ...importedTheme.color.homeCharts,
       importedTheme.color.red,
-      importedTheme.color.accentBrown
+      importedTheme.color.accentBrown,
     ];
 
     const styles = this.getStyles();
@@ -95,21 +95,21 @@ export default class App extends React.Component {
         style={{ parent: styles.parent }}
         domain={{
           x: [0, 25],
-          y: [-300, 300]
+          y: [-300, 300],
         }}
       >
         <VictoryAxis
           style={{
             axis: { stroke: "none" },
             tickLabels: { fill: "none" },
-            grid: { stroke: importedTheme.color.gray }
+            grid: { stroke: importedTheme.color.gray },
           }}
           tickValues={[2, 4, 6, 8, 10, 12, 14, 17, 19, 21, 23, 25]}
         />
         <VictoryAxis
           dependentAxis
           style={{
-            tickLabels: { fontSize: 15, fill: importedTheme.color.nearBlack }
+            tickLabels: { fontSize: 15, fill: importedTheme.color.nearBlack },
           }}
           crossAxis={false}
         />
@@ -131,18 +131,18 @@ export default class App extends React.Component {
           style={{
             data: {
               stroke: importedTheme.color.nearBlack,
-              strokeWidth: 3
-            }
+              strokeWidth: 3,
+            },
           }}
           data={[
             {
               x: (25 * this.state.percent) / 100,
-              y: -300
+              y: -300,
             },
             {
               x: (25 * this.state.percent) / 100,
-              y: 300
-            }
+              y: 300,
+            },
           ]}
         />
       </VictoryChart>

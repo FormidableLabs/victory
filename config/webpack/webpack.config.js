@@ -34,18 +34,18 @@ module.exports = {
         root: "React",
         commonjs2: "react",
         commonjs: "react",
-        amd: "react"
-      }
-    }
+        amd: "react",
+      },
+    },
   ],
   resolve: {
-    extensions: [".ts", ".tsx", ".js", ".jsx"]
+    extensions: [".ts", ".tsx", ".js", ".jsx"],
   },
   output: {
     path: path.resolve("dist"),
     filename: `${libPath}.min.js`,
     library: libName,
-    libraryTarget: "umd"
+    libraryTarget: "umd",
   },
   module: {
     rules: [
@@ -58,10 +58,10 @@ module.exports = {
         use: {
           loader: "babel-loader",
           // eslint-disable-next-line global-require
-          options: require("../../.babelrc.js")
-        }
-      }
-    ]
+          options: require("../../.babelrc.js"),
+        },
+      },
+    ],
   },
   mode: "production",
   plugins: [
@@ -70,15 +70,15 @@ module.exports = {
       flattening: true,
       paths: true,
       placeholders: true,
-      shorthands: true
+      shorthands: true,
     }),
     new webpack.DefinePlugin({
       // Signal production, so that webpack removes non-production code that
       // is in condtionals like: `if (process.env.NODE_ENV === "production")`
-      "process.env.NODE_ENV": JSON.stringify("production")
+      "process.env.NODE_ENV": JSON.stringify("production"),
     }),
     new webpack.SourceMapDevToolPlugin({
-      filename: "[file].map"
-    })
-  ]
+      filename: "[file].map",
+    }),
+  ],
 };

@@ -36,7 +36,7 @@ export {
   // Style,
   TextSize,
   // Transitions,
-  Selection // LabelHelpers, // Axis, // Wrapper
+  Selection, // LabelHelpers, // Axis, // Wrapper
 } from "victory-core";
 
 export { VictoryChart } from "victory-chart";
@@ -63,21 +63,21 @@ export { default as VictoryContainer } from "./components/victory-container";
 //   export { default as NativeZoomHelpers } from "./helpers/native-zoom-helpers";
 export {
   zoomContainerMixin,
-  default as VictoryZoomContainer
+  default as VictoryZoomContainer,
 } from "./components/victory-zoom-container";
 export {
   voronoiContainerMixin,
-  default as VictoryVoronoiContainer
+  default as VictoryVoronoiContainer,
 } from "./components/victory-voronoi-container";
 //   export {
 //     selectionContainerMixin, default as VictorySelectionContainer
 //   } from "./components/victory-selection-container";
 export {
   cursorContainerMixin,
-  default as VictoryCursorContainer
+  default as VictoryCursorContainer,
 } from "./components/victory-cursor-container";
 export {
   brushContainerMixin,
-  default as VictoryBrushContainer
+  default as VictoryBrushContainer,
 } from "./components/victory-brush-container";
 export { createContainer } from "victory-create-container";

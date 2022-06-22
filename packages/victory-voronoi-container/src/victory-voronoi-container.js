@@ -6,7 +6,7 @@ import { VictoryTooltip } from "victory-tooltip";
 import {
   VictoryContainer,
   Helpers,
-  PropTypes as CustomPropTypes
+  PropTypes as CustomPropTypes,
 } from "victory-core";
 import VoronoiHelpers from "./voronoi-helpers";
 
@@ -25,7 +25,7 @@ export const voronoiContainerMixin = (base) =>
       onDeactivated: PropTypes.func,
       radius: PropTypes.number,
       voronoiBlacklist: PropTypes.arrayOf(
-        PropTypes.oneOfType([PropTypes.string, CustomPropTypes.regExp])
+        PropTypes.oneOfType([PropTypes.string, CustomPropTypes.regExp]),
       ),
       voronoiDimension: PropTypes.oneOf(["x", "y"]),
       voronoiPadding: PropTypes.oneOfType([
@@ -34,16 +34,16 @@ export const voronoiContainerMixin = (base) =>
           top: PropTypes.number,
           bottom: PropTypes.number,
           left: PropTypes.number,
-          right: PropTypes.number
-        })
-      ])
+          right: PropTypes.number,
+        }),
+      ]),
     };
     static defaultProps = {
       ...VictoryContainer.defaultProps,
       activateData: true,
       activateLabels: true,
       labelComponent: <VictoryTooltip />,
-      voronoiPadding: 5
+      voronoiPadding: 5,
     };
 
     static defaultEvents = (props) => {
@@ -70,8 +70,8 @@ export const voronoiContainerMixin = (base) =>
               return props.disable
                 ? {}
                 : VoronoiHelpers.onMouseMove(evt, targetProps);
-            }
-          }
+            },
+          },
         },
         {
           target: "data",
@@ -80,9 +80,9 @@ export const voronoiContainerMixin = (base) =>
             : {
                 onMouseOver: () => null,
                 onMouseOut: () => null,
-                onMouseMove: () => null
-              }
-        }
+                onMouseMove: () => null,
+              },
+        },
       ];
     };
 
@@ -109,7 +109,7 @@ export const voronoiContainerMixin = (base) =>
       if (!voronoiDimension || points.length < 2) {
         return {
           ...basePosition,
-          center: defaults({}, labelProps.center, center)
+          center: defaults({}, labelProps.center, center),
         };
       }
 
@@ -131,7 +131,7 @@ export const voronoiContainerMixin = (base) =>
       return points.reduce((memo, datum, index) => {
         const labelProps = defaults({}, componentProps, {
           datum,
-          active: true
+          active: true,
         });
         const text = isFunction(labels) ? labels(labelProps) : undefined;
         const textArray = text !== undefined ? `${text}`.split("\n") : [];
@@ -141,7 +141,7 @@ export const voronoiContainerMixin = (base) =>
           : componentStyleArray;
         const style = Helpers.evaluateStyle(
           defaults({}, componentStyle, baseStyle, themeStyles[type]),
-          labelProps
+          labelProps,
         );
         const styleArray = textArray.length
           ? textArray.map(() => style)
@@ -166,7 +166,7 @@ export const voronoiContainerMixin = (base) =>
         orientation,
         pointerLength: multiPoint ? 0 : undefined,
         constrainToVisibleArea:
-          multiPoint || mouseFollowTooltips ? true : undefined
+          multiPoint || mouseFollowTooltips ? true : undefined,
       };
     }
 
@@ -176,7 +176,7 @@ export const voronoiContainerMixin = (base) =>
       const text = points.reduce((memo, datum) => {
         const labelProps = defaults({}, componentProps, {
           datum,
-          active: true
+          active: true,
         });
         const t = isFunction(labels) ? labels(labelProps) : null;
         if (t === null || t === undefined) {
@@ -200,7 +200,7 @@ export const voronoiContainerMixin = (base) =>
           activePoints: points,
           datum,
           scale,
-          theme
+          theme,
         },
         componentProps,
         {
@@ -208,9 +208,9 @@ export const voronoiContainerMixin = (base) =>
           width,
           height,
           style: this.getStyle(props, points, "labels"),
-          flyoutStyle: this.getStyle(props, points, "flyout")[0]
+          flyoutStyle: this.getStyle(props, points, "flyout")[0],
         },
-        this.getDefaultLabelProps(props, points)
+        this.getDefaultLabelProps(props, points),
       );
       const labelPosition = this.getLabelPosition(props, labelProps, points);
       return defaults({}, labelPosition, labelProps);
@@ -239,7 +239,7 @@ export const voronoiContainerMixin = (base) =>
     getChildren(props) {
       return [
         ...React.Children.toArray(props.children),
-        this.getTooltip(props)
+        this.getTooltip(props),
       ];
     }
   };

@@ -11,7 +11,7 @@ describe("components/victory-label", () => {
         aria-label="test-aria-label"
         text="label"
       />,
-      { wrapper: SVGWrapper }
+      { wrapper: SVGWrapper },
     );
 
     expect(screen.getByTestId("victory-label")).toBeDefined();
@@ -20,17 +20,17 @@ describe("components/victory-label", () => {
 
   it("has expected content with render", () => {
     const { container } = render(<VictoryLabel text="such text, wow" />, {
-      wrapper: SVGWrapper
+      wrapper: SVGWrapper,
     });
     expect(container.querySelector("tspan")!.innerHTML).toMatchInlineSnapshot(
-      `"such text, wow"`
+      `"such text, wow"`,
     );
   });
 
   it("sets dx and dy for text element", () => {
     const { container } = render(
       <VictoryLabel dx={30} dy={30} text="such text, wow" />,
-      { wrapper: SVGWrapper }
+      { wrapper: SVGWrapper },
     );
     const output = container.querySelector("text")!;
     expect(output.getAttribute("dx")).toEqual("30");
@@ -42,7 +42,7 @@ describe("components/victory-label", () => {
     const { container } = render(
       // @ts-expect-error "type string is not assignable to number"
       <VictoryLabel x="100%" y={30} text="such text, wow" />,
-      { wrapper: SVGWrapper }
+      { wrapper: SVGWrapper },
     );
     const output = container.querySelector("text")!;
     expect(output.getAttribute("x")).toEqual("100%");
@@ -52,7 +52,7 @@ describe("components/victory-label", () => {
   it("has a transform property that rotates the text to match the labelAngle getAttribute", () => {
     const { container } = render(
       <VictoryLabel angle={46} text="such text, wow" />,
-      { wrapper: SVGWrapper }
+      { wrapper: SVGWrapper },
     );
     const output = container.querySelector("text")!;
     expect(output.getAttribute("transform")).toContain("rotate(46");
@@ -61,7 +61,7 @@ describe("components/victory-label", () => {
   it("accepts the angle getAttribute as a function", () => {
     const { container } = render(
       <VictoryLabel angle={() => 46} text="such text, wow" />,
-      { wrapper: SVGWrapper }
+      { wrapper: SVGWrapper },
     );
     const output = container.querySelector("text")!;
     expect(output.getAttribute("transform")).toContain("rotate(46");
@@ -78,7 +78,7 @@ describe("components/victory-label", () => {
         text="such text, wow"
         data-font-size={(props) => props.style.fontSize}
       />,
-      { wrapper: SVGWrapper }
+      { wrapper: SVGWrapper },
     );
     const output = container.querySelector("text")!;
     expect(output.getAttribute("data-font-size")).toEqual("10");
@@ -92,7 +92,7 @@ describe("components/victory-label", () => {
 
     const { container } = render(
       <VictoryLabel style={{ fontSize: "foo" }} text="such text, wow" />,
-      { wrapper: SVGWrapper }
+      { wrapper: SVGWrapper },
     );
     const output = container.querySelector("tspan")!;
     expect(output.getAttribute("style")).toContain("font-size: 14px");
@@ -101,7 +101,7 @@ describe("components/victory-label", () => {
   it("renders an array of text as seperate tspans", () => {
     const { container } = render(
       <VictoryLabel text={["one", "two", "three"]} />,
-      { wrapper: SVGWrapper }
+      { wrapper: SVGWrapper },
     );
     const output = container.querySelectorAll("tspan");
     expect(output.length).toEqual(3);
@@ -109,7 +109,7 @@ describe("components/victory-label", () => {
 
   it("renders splits newlines into tspans", () => {
     const { container } = render(<VictoryLabel text={"one\ntwo\nthree"} />, {
-      wrapper: SVGWrapper
+      wrapper: SVGWrapper,
     });
     const output = container.querySelectorAll("tspan");
     expect(output.length).toEqual(3);
@@ -118,12 +118,12 @@ describe("components/victory-label", () => {
   it("renders title and desc if provided ", () => {
     const { container } = render(
       <VictoryLabel text="title and desc" title="title" desc="desc" />,
-      { wrapper: SVGWrapper }
+      { wrapper: SVGWrapper },
     );
 
     const { container: container2 } = render(
       <VictoryLabel text="title and desc" />,
-      { wrapper: SVGWrapper }
+      { wrapper: SVGWrapper },
     );
 
     const title = container.querySelectorAll("title");
@@ -146,7 +146,7 @@ describe("components/victory-label", () => {
         text={"one\ntwo\nthree"}
         style={[{ fill: fill[0] }, { fill: fill[1] }, { fill: fill[2] }]}
       />,
-      { wrapper: SVGWrapper }
+      { wrapper: SVGWrapper },
     );
     const output = container.querySelectorAll("tspan");
     output.forEach((tspan, index) => {
@@ -159,7 +159,7 @@ describe("components/victory-label", () => {
       const clickHandler = jest.fn();
       const { container } = render(
         <VictoryLabel text="hi" events={{ onClick: clickHandler }} />,
-        { wrapper: SVGWrapper }
+        { wrapper: SVGWrapper },
       );
       fireEvent.click(container.querySelector("text")!);
       expect(clickHandler).toHaveBeenCalled();
@@ -169,7 +169,7 @@ describe("components/victory-label", () => {
   it("renders 'tspan' elements inline when `inline` getAttribute is passed", () => {
     const { container } = render(
       <VictoryLabel text={["Inline", "label", "testing"]} inline dx={5} />,
-      { wrapper: SVGWrapper }
+      { wrapper: SVGWrapper },
     );
 
     const output = container.querySelectorAll("tspan");
@@ -177,7 +177,7 @@ describe("components/victory-label", () => {
       // passing `inline` sets x and dy to undefined
       expect(tspan.getAttribute("x")).toBeNull();
       expect(
-        tspan.getAttribute("dy") === null || tspan.getAttribute("dy") === "0"
+        tspan.getAttribute("dy") === null || tspan.getAttribute("dy") === "0",
       ).toBeTruthy();
       expect(tspan.getAttribute("dx")).toEqual("5");
     });
@@ -191,7 +191,7 @@ describe("components/victory-label", () => {
         text={["lineHeight", "array", "testing"]}
         lineHeight={lineHeight}
       />,
-      { wrapper: SVGWrapper }
+      { wrapper: SVGWrapper },
     );
 
     const output = container.querySelectorAll("tspan");
@@ -211,7 +211,7 @@ describe("components/victory-label", () => {
         text={["lineHeight", "empty", "array", "testing"]}
         lineHeight={[]}
       />,
-      { wrapper: SVGWrapper }
+      { wrapper: SVGWrapper },
     );
 
     const output = container.querySelectorAll("tspan");
@@ -223,20 +223,20 @@ describe("components/victory-label", () => {
   it("defaults style to `defaultStyles` if an empty array is provided for `style`", () => {
     const { container } = render(
       <VictoryLabel text={["style", "empty", "array", "testing"]} style={[]} />,
-      { wrapper: SVGWrapper }
+      { wrapper: SVGWrapper },
     );
 
     expect(
-      container.querySelector("tspan")!.getAttribute("style")
+      container.querySelector("tspan")!.getAttribute("style"),
     ).toMatchInlineSnapshot(
-      `"fill: #252525; font-size: 14px; font-family: 'Gill Sans', 'Gill Sans MT', 'Ser­avek', 'Trebuchet MS', sans-serif; stroke: transparent;"`
+      `"fill: #252525; font-size: 14px; font-family: 'Gill Sans', 'Gill Sans MT', 'Ser­avek', 'Trebuchet MS', sans-serif; stroke: transparent;"`,
     );
   });
 
   it("passes id if provided as a string", () => {
     const { container } = render(
       <VictoryLabel text="Some VictoryLabel" id="my-custom-id" />,
-      { wrapper: SVGWrapper }
+      { wrapper: SVGWrapper },
     );
 
     const output = container.querySelectorAll("text");
@@ -248,7 +248,7 @@ describe("components/victory-label", () => {
   it("passes id if provided as a number", () => {
     const { container } = render(
       <VictoryLabel text="Some VictoryLabel" id={12345} />,
-      { wrapper: SVGWrapper }
+      { wrapper: SVGWrapper },
     );
 
     const output = container.querySelectorAll("text");
@@ -263,7 +263,7 @@ describe("components/victory-label", () => {
         text="Some VictoryLabel"
         id={() => `created-in-function-${Math.random()}`}
       />,
-      { wrapper: SVGWrapper }
+      { wrapper: SVGWrapper },
     );
 
     const output = container.querySelectorAll("text");

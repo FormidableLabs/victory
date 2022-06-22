@@ -19,7 +19,7 @@ const getData = (num, symmetric, seed) => {
       x: v + 3,
       y: baseSeed.quick() * 20 + 5,
       errorX: symmetric ? rand() : [rand(), rand()],
-      errorY: symmetric ? rand() : [rand(), rand()]
+      errorY: symmetric ? rand() : [rand(), rand()],
     };
   });
 };
@@ -29,16 +29,16 @@ const containerStyle = {
   flexDirection: "row",
   flexWrap: "wrap",
   alignItems: "center",
-  justifyContent: "center"
+  justifyContent: "center",
 };
 
 const parentStyle = {
-  parent: { border: "1px solid #ccc", margin: "2%", maxWidth: "40%" }
+  parent: { border: "1px solid #ccc", margin: "2%", maxWidth: "40%" },
 };
 
 export default {
   title: "VictoryErrorBar",
-  component: VictoryErrorBar
+  component: VictoryErrorBar,
 };
 
 export const DefaultRendering = () => {
@@ -79,7 +79,7 @@ export const Data = () => {
             { x: 2, y: 2, errorX: [1, 3], errorY: 0.1 },
             { x: 3, y: 3, errorX: [1, 3], errorY: [0.2, 0.3] },
             { x: 4, y: 2, errorX: [1, 0.5], errorY: 0.1 },
-            { x: 5, y: 1, errorX: [1, 0.5], errorY: 0.2 }
+            { x: 5, y: 1, errorX: [1, 0.5], errorY: 0.2 },
           ]}
         />
       </VictoryChart>
@@ -90,7 +90,7 @@ export const Data = () => {
             { series: 2, value: 80, error: 4 },
             { series: 3, value: 50, error: 8 },
             { series: 4, value: 70, error: 2 },
-            { series: 5, value: 20, error: 3 }
+            { series: 5, value: 20, error: 3 },
           ]}
           x="series"
           y="value"
@@ -104,7 +104,7 @@ export const Data = () => {
             { series: 2, value: 80, error: 4 },
             { series: 3, value: 50, error: 8 },
             { series: 4, value: 70, error: 2 },
-            { series: 5, value: 20, error: 3 }
+            { series: 5, value: 20, error: 3 },
           ]}
           x="series"
           y="value"
@@ -118,7 +118,7 @@ export const Data = () => {
             { x: 2, y: 80, error: 4 },
             { x: 3, y: 50, error: 8 },
             { x: 4, y: 70, error: 2 },
-            { x: 5, y: 20, error: 3 }
+            { x: 5, y: 20, error: 3 },
           ])}
           errorY={(d) => [d.error, d.error + 2]}
         />
@@ -150,7 +150,7 @@ export const Labels = () => {
             { x: 2, y: 80, errorX: 0.5, errorY: 2 },
             { x: 3, y: 50, errorX: 1.1, errorY: 2, label: "third" },
             { x: 4, y: 70, errorX: 0.2, errorY: 3 },
-            { x: 5, y: 20, errorX: 0.3, errorY: 2, label: ["last", "label"] }
+            { x: 5, y: 20, errorX: 0.3, errorY: 2, label: ["last", "label"] },
           ]}
         />
       </VictoryChart>
@@ -161,7 +161,7 @@ export const Labels = () => {
             { x: 2, y: 80, errorX: 0.5, errorY: 2 },
             { x: 3, y: 50, errorX: 1.1, errorY: 2, label: "third" },
             { x: 4, y: 70, errorX: 0.2, errorY: 3 },
-            { x: 5, y: 20, errorX: 0.3, errorY: 2, label: ["last", "label"] }
+            { x: 5, y: 20, errorX: 0.3, errorY: 2, label: ["last", "label"] },
           ]}
           labelComponent={<VictoryTooltip active />}
         />
@@ -173,7 +173,7 @@ export const Labels = () => {
             { x: 2, y: 80, error: 4 },
             { x: 3, y: 50, error: 8 },
             { x: 4, y: 70, error: 2 },
-            { x: 5, y: 20, error: 3 }
+            { x: 5, y: 20, error: 3 },
           ])}
           errorY={(d) => [d.error, d.error + 2]}
         />
@@ -195,8 +195,8 @@ export const Style = () => {
               fill: "tomato",
               fillOpacity: 0.7,
               stroke: "tomato",
-              strokeWidth: 2
-            }
+              strokeWidth: 2,
+            },
           }}
         />
       </VictoryChart>
@@ -205,12 +205,12 @@ export const Style = () => {
           style={{
             labels: {
               fill: ({ datum }) =>
-                datum.errorX > datum.errorY ? "red" : "black"
+                datum.errorX > datum.errorY ? "red" : "black",
             },
             data: {
               stroke: ({ datum }) =>
-                datum.errorX > datum.errorY ? "red" : "black"
-            }
+                datum.errorX > datum.errorY ? "red" : "black",
+            },
           }}
           labels={({ datum }) => datum.x}
           data={getData(4, "symmetric")}
@@ -231,7 +231,7 @@ export const Domain = () => {
           { x: 2, y: 80, errorX: 0.5, errorY: 2 },
           { x: 3, y: 50, errorX: 1.1, errorY: 2 },
           { x: 4, y: 70, errorX: 0.2, errorY: 3 },
-          { x: 5, y: 20, errorX: 0.3, errorY: 2 }
+          { x: 5, y: 20, errorX: 0.3, errorY: 2 },
         ]}
       />
       <VictoryChart style={parentStyle} domain={{ x: [2, 5], y: [25, 100] }}>
@@ -241,7 +241,7 @@ export const Domain = () => {
             { x: 2, y: 80, errorX: 0.5, errorY: 2 },
             { x: 3, y: 50, errorX: 1.1, errorY: 2 },
             { x: 4, y: 70, errorX: 0.2, errorY: 3 },
-            { x: 5, y: 20, errorX: 0.3, errorY: 2 }
+            { x: 5, y: 20, errorX: 0.3, errorY: 2 },
           ]}
         />
       </VictoryChart>
@@ -252,7 +252,7 @@ export const Domain = () => {
             { x: 2, y: 80, errorX: 0.5, errorY: 2 },
             { x: 3, y: 50, errorX: 1.1, errorY: 2 },
             { x: 4, y: 70, errorX: 0.2, errorY: 3 },
-            { x: 5, y: 20, errorX: 0.3, errorY: 2 }
+            { x: 5, y: 20, errorX: 0.3, errorY: 2 },
           ]}
         />
       </VictoryChart>
@@ -263,7 +263,7 @@ export const Domain = () => {
             { x: 2, y: 80, errorX: 0.5, errorY: 2 },
             { x: 3, y: 50, errorX: 1.1, errorY: 2 },
             { x: 4, y: 70, errorX: 0.2, errorY: 3 },
-            { x: 5, y: 20, errorX: 0.3, errorY: 2 }
+            { x: 5, y: 20, errorX: 0.3, errorY: 2 },
           ]}
         />
       </VictoryChart>

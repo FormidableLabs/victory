@@ -4,7 +4,7 @@ import { flow } from "lodash";
 import {
   VictoryVoronoiContainer,
   VoronoiHelpers,
-  voronoiContainerMixin as originalVoronoiMixin
+  voronoiContainerMixin as originalVoronoiMixin,
 } from "victory-voronoi-container";
 import VictoryContainer from "./victory-container";
 import VictoryTooltip from "./victory-tooltip";
@@ -17,7 +17,7 @@ const nativeVoronoiMixin = (base) =>
       activateData: true,
       activateLabels: true,
       labelComponent: <VictoryTooltip />,
-      voronoiPadding: 5
+      voronoiPadding: 5,
     };
 
     // overrides all web events with native specific events
@@ -40,8 +40,8 @@ const nativeVoronoiMixin = (base) =>
               return props.disable
                 ? {}
                 : VoronoiHelpers.onMouseLeave(evt, targetProps);
-            }
-          }
+            },
+          },
         },
         {
           target: "data",
@@ -50,9 +50,9 @@ const nativeVoronoiMixin = (base) =>
             : {
                 onTouchStart: () => null,
                 onTouchMove: () => null,
-                onTouchEnd: () => null
-              }
-        }
+                onTouchEnd: () => null,
+              },
+        },
       ];
     };
   };

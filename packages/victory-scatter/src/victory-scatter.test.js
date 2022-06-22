@@ -6,7 +6,7 @@ import { VictoryScatter } from "victory-scatter";
 import {
   convertSvgCoordinatesToCartesian,
   getSvgPointCoordinates,
-  isCircle
+  isCircle,
 } from "../../../test/helpers";
 
 describe("components/victory-scatter", () => {
@@ -17,7 +17,7 @@ describe("components/victory-scatter", () => {
           data-testid="victory-scatter"
           aria-label="Chart"
           unsafe-prop="test"
-        />
+        />,
       );
 
       const container = screen.getByTestId("victory-scatter");
@@ -63,7 +63,7 @@ describe("components/victory-scatter", () => {
         <VictoryScatter
           data={data}
           dataComponent={<Point data-testid="point" />}
-        />
+        />,
       );
 
       const points = screen.getAllByTestId("point");
@@ -87,7 +87,7 @@ describe("components/victory-scatter", () => {
     it("renders points for deeply-nested data", () => {
       const data = range(4).map((i) => ({ a: { b: [{ x: i, y: i }] } }));
       const { container } = render(
-        <VictoryScatter data={data} x="a.b[0].x" y="a.b[0].y" />
+        <VictoryScatter data={data} x="a.b[0].x" y="a.b[0].y" />,
       );
       const points = container.querySelectorAll("path");
       expect(points).toHaveLength(4);
@@ -96,7 +96,7 @@ describe("components/victory-scatter", () => {
     it("renders data values with null accessor", () => {
       const data = range(30);
       const { container } = render(
-        <VictoryScatter data={data} x={null} y={null} />
+        <VictoryScatter data={data} x={null} y={null} />,
       );
       const points = container.querySelectorAll("path");
       expect(points).toHaveLength(30);
@@ -109,10 +109,10 @@ describe("components/victory-scatter", () => {
           data={[
             { x: 0, y: 0 },
             { x: 2, y: 3 },
-            { x: 5, y: 5 }
+            { x: 5, y: 5 },
           ]}
           {...svgDimensions}
-        />
+        />,
       );
       const domain = { x: [0, 5], y: [0, 5] };
 
@@ -125,7 +125,7 @@ describe("components/victory-scatter", () => {
       expect(coordinates).toEqual([
         [0, 0],
         [2, 3],
-        [5, 5]
+        [5, 5],
       ]);
     });
 
@@ -133,7 +133,7 @@ describe("components/victory-scatter", () => {
       const data = [
         { x: 1, y: 2 },
         { x: null, y: 4 },
-        { x: 5, y: null }
+        { x: 5, y: null },
       ];
       const { container } = render(<VictoryScatter data={data} />);
       expect(container.querySelectorAll("path")).toHaveLength(1);
@@ -157,17 +157,17 @@ describe("components/victory-scatter", () => {
           events={[
             {
               target: "parent",
-              eventHandlers: { onClick: clickHandler }
-            }
+              eventHandlers: { onClick: clickHandler },
+            },
           ]}
-        />
+        />,
       );
       const svg = container.querySelector("svg");
       fireEvent.click(svg);
       expect(clickHandler).toBeCalled();
       // the first argument is the standard evt object
       expect(Object.keys(clickHandler.mock.calls[0][1])).toEqual(
-        expect.arrayContaining(["data", "scale", "width", "height", "style"])
+        expect.arrayContaining(["data", "scale", "width", "height", "style"]),
       );
     });
 
@@ -177,10 +177,10 @@ describe("components/victory-scatter", () => {
           events={[
             {
               target: "data",
-              eventHandlers: { onClick: clickHandler }
-            }
+              eventHandlers: { onClick: clickHandler },
+            },
           ]}
-        />
+        />,
       );
       const Data = container.querySelectorAll("path");
       expect(Data).not.toHaveLength(0);
@@ -195,7 +195,7 @@ describe("components/victory-scatter", () => {
       const data = [
         { eventKey: 0, _x: 0, _y: 0, x: 0, y: 0, label: "0" },
         { eventKey: 1, _x: 1, _y: 1, x: 1, y: 1, label: "1" },
-        { eventKey: 2, _x: 2, _y: 2, x: 2, y: 2, label: "2" }
+        { eventKey: 2, _x: 2, _y: 2, x: 2, y: 2, label: "2" },
       ];
       render(
         <VictoryScatter
@@ -204,10 +204,10 @@ describe("components/victory-scatter", () => {
           events={[
             {
               target: "labels",
-              eventHandlers: { onClick: clickHandler }
-            }
+              eventHandlers: { onClick: clickHandler },
+            },
           ]}
-        />
+        />,
       );
       const Labels = screen.getAllByTestId("label");
       Labels.forEach((node, index) => {
@@ -242,13 +242,13 @@ describe("components/victory-scatter", () => {
               tabIndex={({ index }) => index + 10}
             />
           }
-        />
+        />,
       );
       const points = screen.getAllByTestId("point");
       expect(points).toHaveLength(5);
       points.forEach((p, i) => {
         expect(p.getAttribute("aria-label")).toEqual(
-          `scatter point x: ${data[i].x}, y:${data[i].y}`
+          `scatter point x: ${data[i].x}, y:${data[i].y}`,
         );
         expect(parseInt(p.getAttribute("tabindex"), 10)).toEqual(i + 10);
       });

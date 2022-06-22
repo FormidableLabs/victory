@@ -14,7 +14,7 @@ const sampleData = [
   { x: 1, open: 9, close: 30, high: 56, low: 7 },
   { x: 2, open: 80, close: 40, high: 120, low: 10 },
   { x: 3, open: 50, close: 80, high: 90, low: 20 },
-  { x: 4, open: 70, close: 22, high: 70, low: 5 }
+  { x: 4, open: 70, close: 22, high: 70, low: 5 },
 ];
 const getTimeData = (num, seed) => {
   seed = seed || "getTimeData";
@@ -30,7 +30,7 @@ const getTimeData = (num, seed) => {
       high,
       low,
       open,
-      close
+      close,
     };
   });
 };
@@ -52,21 +52,21 @@ const containerStyle = {
   flexDirection: "row",
   flexWrap: "wrap",
   alignItems: "center",
-  justifyContent: "center"
+  justifyContent: "center",
 };
 
 const parentStyle = {
-  parent: { border: "1px solid #ccc", margin: "2%", maxWidth: "40%" }
+  parent: { border: "1px solid #ccc", margin: "2%", maxWidth: "40%" },
 };
 
 const defaultChartProps = {
   style: parentStyle,
-  domainPadding: 25
+  domainPadding: 25,
 };
 
 export default {
   title: "VictoryCandlestick",
-  component: VictoryCandlestick
+  component: VictoryCandlestick,
 };
 
 export const DefaultRendering = () => {
@@ -97,7 +97,7 @@ export const CandleColors = () => {
         <VictoryCandlestick
           data={getData(7)}
           style={{
-            data: { fill: "tomato" }
+            data: { fill: "tomato" },
           }}
           candleColors={{ positive: "#8BC34A", negative: "#C62828" }}
         />
@@ -117,7 +117,7 @@ export const WickStrokeWidth = () => {
           data={getData(7)}
           data={getData(7)}
           style={{
-            data: { stroke: "tomato", strokeWidth: 5 }
+            data: { stroke: "tomato", strokeWidth: 5 },
           }}
           wickStrokeWidth={2}
         />
@@ -136,7 +136,7 @@ export const Data = () => {
             { series: 2, start: 80, close: 40, big: 1200, low: 10 },
             { series: 3, start: 50, close: 80, big: 900, low: 20 },
             { series: 4, start: 70, close: 22, big: 700, low: 5 },
-            { series: 5, start: 20, close: 35, big: 500, low: 10 }
+            { series: 5, start: 20, close: 35, big: 500, low: 10 },
           ]}
           x="series"
           open="start"
@@ -150,7 +150,7 @@ export const Data = () => {
             { series: 2, start: 80, close: 40, big: 1200, low: 10 },
             { series: 3, start: 50, close: 80, big: 900, low: 20 },
             { series: 4, start: 70, close: 22, big: 700, low: 5 },
-            { series: 5, start: 20, close: 35, big: 500, low: 10 }
+            { series: 5, start: 20, close: 35, big: 500, low: 10 },
           ]}
           x="series"
           open="start"
@@ -164,7 +164,7 @@ export const Data = () => {
             { x: 2, open: 80, close: 40, high: 120, low: 10 },
             { x: 3, open: 50, close: 80, high: 90, low: 20 },
             { x: 4, open: 70, close: 22, high: 70, low: 5 },
-            { x: 5, open: 20, close: 35, high: 50, low: 10 }
+            { x: 5, open: 20, close: 35, high: 50, low: 10 },
           ])}
         />
       </VictoryChart>
@@ -293,8 +293,8 @@ export const Style = () => {
               fill: "tomato",
               fillOpacity: 0.7,
               stroke: "tomato",
-              strokeWidth: 2
-            }
+              strokeWidth: 2,
+            },
           }}
         />
       </VictoryChart>
@@ -302,12 +302,12 @@ export const Style = () => {
         <VictoryCandlestick
           style={{
             labels: {
-              fill: ({ datum }) => (datum.x === 3 ? "red" : "black")
+              fill: ({ datum }) => (datum.x === 3 ? "red" : "black"),
             },
             data: {
               stroke: ({ datum }) =>
-                datum.open > datum.close ? "red" : "black"
-            }
+                datum.open > datum.close ? "red" : "black",
+            },
           }}
           labels={({ datum }) => datum.x}
           data={getData(7)}
@@ -348,7 +348,7 @@ export const Domain = () => {
           { x: 2, open: 80, close: 40, high: 120, low: 10 },
           { x: 3, open: 50, close: 80, high: 90, low: 20 },
           { x: 4, open: 70, close: 22, high: 70, low: 5 },
-          { x: 5, open: 20, close: 35, high: 50, low: 10 }
+          { x: 5, open: 20, close: 35, high: 50, low: 10 },
         ])}
       />
       <VictoryChart domain={{ x: [2, 5], y: [50, 150] }} {...defaultChartProps}>
@@ -358,7 +358,7 @@ export const Domain = () => {
             { x: 2, open: 80, close: 40, high: 120, low: 10 },
             { x: 3, open: 50, close: 80, high: 90, low: 20 },
             { x: 4, open: 70, close: 22, high: 70, low: 5 },
-            { x: 5, open: 20, close: 35, high: 50, low: 10 }
+            { x: 5, open: 20, close: 35, high: 50, low: 10 },
           ])}
         />
       </VictoryChart>
@@ -369,7 +369,7 @@ export const Domain = () => {
             { x: 2, open: 80, close: 40, high: 120, low: 10 },
             { x: 3, open: 50, close: 80, high: 90, low: 20 },
             { x: 4, open: 70, close: 22, high: 70, low: 5 },
-            { x: 5, open: 20, close: 35, high: 50, low: 10 }
+            { x: 5, open: 20, close: 35, high: 50, low: 10 },
           ])}
         />
       </VictoryChart>
@@ -380,7 +380,7 @@ export const Domain = () => {
             { x: 2, open: 80, close: 40, high: 120, low: 10 },
             { x: 3, open: 50, close: 80, high: 90, low: 20 },
             { x: 4, open: 70, close: 22, high: 70, low: 5 },
-            { x: 5, open: 20, close: 35, high: 50, low: 10 }
+            { x: 5, open: 20, close: 35, high: 50, low: 10 },
           ])}
         />
       </VictoryChart>

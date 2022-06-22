@@ -1,13 +1,13 @@
 import * as React from "react";
 import {
   VictoryCommonThemeProps,
-  VictoryDatableProps
+  VictoryDatableProps,
 } from "../victory-util/common-props";
 import {
   NumberOrCallback,
   OrientationOrCallback,
   PaddingOrCallback,
-  StringOrNumberOrCallback
+  StringOrNumberOrCallback,
 } from "../types/callbacks";
 
 export type BlockProps = {

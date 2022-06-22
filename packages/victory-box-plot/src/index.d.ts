@@ -8,7 +8,7 @@ import {
   VictoryDatableProps,
   VictoryCommonProps,
   VictoryStyleObject,
-  VictoryLabelStyleObject
+  VictoryLabelStyleObject,
 } from "victory-core";
 
 export type VictoryBoxPlotLabelType =

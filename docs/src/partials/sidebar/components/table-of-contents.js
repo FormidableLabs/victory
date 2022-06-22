@@ -14,14 +14,14 @@ const getLinkStylesByDepth = (depth, theme) => {
       "font-size": "1.4rem",
       height: "3rem",
       color: theme.color.otherBrown,
-      "letter-spacing": "0.53px"
+      "letter-spacing": "0.53px",
     };
   }
 
   if (depth === 3) {
     return {
       "font-size": "1.2rem",
-      color: theme.color.nearBlack
+      color: theme.color.nearBlack,
     };
   }
   return {};
@@ -36,15 +36,15 @@ const SubItemListItem = styled.li`
   hyphens: auto;
 `;
 SubItemListItem.propTypes = {
-  depth: PropTypes.number.isRequired
+  depth: PropTypes.number.isRequired,
 };
 
 const SubItemLink = styled(NavLink)((props) => ({
   ...getLinkStylesByDepth(props.depth, props.theme),
-  "font-family": props.theme.font.bold
+  "font-family": props.theme.font.bold,
 }));
 SubItemLink.propTypes = {
-  depth: PropTypes.number.isRequired
+  depth: PropTypes.number.isRequired,
 };
 
 const TableOfContents = ({ active, link, headings }) => {
@@ -140,7 +140,7 @@ TableOfContents.propTypes = {
   active: PropTypes.bool,
   headings: PropTypes.array,
   link: PropTypes.object,
-  searchTerm: PropTypes.string
+  searchTerm: PropTypes.string,
 };
 
 export default TableOfContents;

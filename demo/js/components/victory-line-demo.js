@@ -9,7 +9,7 @@ import { VictoryContainer, VictoryTheme, Point } from "victory-core/src/index";
 
 class PointedLine extends React.Component {
   static propTypes = {
-    index: PropTypes.oneOfType([PropTypes.string, PropTypes.number])
+    index: PropTypes.oneOfType([PropTypes.string, PropTypes.number]),
   };
 
   renderLine(props) {
@@ -23,7 +23,7 @@ class PointedLine extends React.Component {
 
       const position = {
         x: scale.x(_x),
-        y: scale.y(_y)
+        y: scale.y(_y),
       };
 
       return (
@@ -60,8 +60,8 @@ export default class App extends React.Component {
       arrayData: this.getArrayData(),
       style: {
         stroke: "blue",
-        strokeWidth: 2
-      }
+        strokeWidth: 2,
+      },
     };
   }
 
@@ -71,7 +71,7 @@ export default class App extends React.Component {
       this.setState({
         data: this.getData(),
         transitionData: this.getTransitionData(),
-        style: this.getStyles()
+        style: this.getStyles(),
       });
     }, 3000);
   }
@@ -91,7 +91,7 @@ export default class App extends React.Component {
     return range(100).map((i) => {
       return {
         x: i,
-        y: Math.random()
+        y: Math.random(),
       };
     });
   }
@@ -103,7 +103,7 @@ export default class App extends React.Component {
     const colors = ["red", "orange", "cyan", "green", "blue", "purple"];
     return {
       stroke: colors[random(0, 5)],
-      strokeWidth: random(1, 5)
+      strokeWidth: random(1, 5),
     };
   }
 
@@ -111,14 +111,14 @@ export default class App extends React.Component {
     const parentStyle = {
       border: "1px solid #ccc",
       margin: "2%",
-      maxWidth: "40%"
+      maxWidth: "40%",
     };
     const containerStyle = {
       display: "flex",
       flexDirection: "row",
       flexWrap: "wrap",
       alignItems: "center",
-      justifyContent: "center"
+      justifyContent: "center",
     };
 
     return (
@@ -132,7 +132,7 @@ export default class App extends React.Component {
         <VictoryLine
           style={{
             parent: parentStyle,
-            data: { stroke: "red", strokeWidth: 6 }
+            data: { stroke: "red", strokeWidth: 6 },
           }}
           events={[
             {
@@ -143,21 +143,21 @@ export default class App extends React.Component {
                     {
                       mutation: (props) => {
                         return {
-                          style: merge({}, props.style, { stroke: "orange" })
+                          style: merge({}, props.style, { stroke: "orange" }),
                         };
-                      }
+                      },
                     },
                     {
                       target: "labels",
                       eventKey: 99,
                       mutation: () => {
                         return { text: "hey" };
-                      }
-                    }
+                      },
+                    },
                   ];
-                }
-              }
-            }
+                },
+              },
+            },
           ]}
           data={range(0, 100)}
           y={(d) => d * d}
@@ -189,7 +189,7 @@ export default class App extends React.Component {
             { x: new Date(2001, 1, 1), y: 132 },
             { x: new Date(2005, 1, 1), y: 305 },
             { x: new Date(2011, 1, 1), y: 270 },
-            { x: new Date(2015, 1, 1), y: 470 }
+            { x: new Date(2015, 1, 1), y: 470 },
           ]}
         />
 
@@ -205,7 +205,7 @@ export default class App extends React.Component {
             { x: 7, y: 6 },
             { x: 8, y: 7 },
             { x: 9, y: 8 },
-            { x: 10, y: 12 }
+            { x: 10, y: 12 },
           ]}
         />
 
@@ -235,7 +235,7 @@ export default class App extends React.Component {
           style={{ parent: parentStyle }}
           height={450}
           scale={{
-            x: "time"
+            x: "time",
           }}
         >
           <VictoryLine
@@ -247,7 +247,7 @@ export default class App extends React.Component {
               { x: new Date(2001, 1, 1), y: 132 },
               { x: new Date(2005, 1, 1), y: 305 },
               { x: new Date(2011, 1, 1), y: 270 },
-              { x: new Date(2015, 1, 1), y: 470 }
+              { x: new Date(2015, 1, 1), y: 470 },
             ]}
           />
         </VictoryChart>
@@ -264,7 +264,7 @@ export default class App extends React.Component {
             { x: 7, y: 6 },
             { x: 8, y: 7 },
             { x: 9, y: 8 },
-            { x: 10, y: 12 }
+            { x: 10, y: 12 },
           ]}
         />
 

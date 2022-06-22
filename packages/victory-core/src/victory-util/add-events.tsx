@@ -9,7 +9,7 @@ import {
   isNil,
   keys,
   pick,
-  without
+  without,
 } from "lodash";
 import type { ComponentEvent } from "./events";
 import * as Events from "./events";
@@ -31,7 +31,7 @@ const datumHasXandY = (datum) => {
 const defaultComponents: NonNullable<MixinOptions["components"]> = [
   { name: "parent", index: "parent" },
   { name: "data" },
-  { name: "labels" }
+  { name: "labels" },
 ];
 
 export type MixinOptions = {
@@ -58,7 +58,7 @@ export interface EventMixinCommonProps
 export interface EventsMixinClass<TProps> {
   renderContainer(
     component: React.ReactElement,
-    children: React.ReactElement[]
+    children: React.ReactElement[],
   ): React.ReactElement;
   cacheValues<TThis>(this: TThis, obj: Partial<TThis>): void;
   getEventState: typeof Events.getEventState;
@@ -90,7 +90,7 @@ export interface WrappedComponentClass<TProps> {
 
 export function addEvents<
   TBase extends WrappedComponentClass<TProps>,
-  TProps extends EventMixinCommonProps
+  TProps extends EventMixinCommonProps,
 >(WrappedComponent: TBase, options: MixinOptions = {}) {
   // eslint-disable-next-line @typescript-eslint/no-empty-interface
   interface AddEventsMixin extends EventMixinCalculatedValues {}
@@ -114,7 +114,7 @@ export function addEvents<
         p,
         target,
         eventKey,
-        this.getScopedEvents
+        this.getScopedEvents,
       );
     };
     externalMutations = this.getExternalMutations(this.props);
@@ -158,12 +158,12 @@ export function addEvents<
       const globalEventKeys = keys(this.globalEvents);
       const removedGlobalEventKeys = difference(
         this.prevGlobalEventKeys,
-        globalEventKeys
+        globalEventKeys,
       );
       removedGlobalEventKeys.forEach((key) => this.removeGlobalListener(key));
       const addedGlobalEventKeys = difference(
         globalEventKeys,
-        this.prevGlobalEventKeys
+        this.prevGlobalEventKeys,
       );
       addedGlobalEventKeys.forEach((key) => this.addGlobalListener(key));
       this.prevGlobalEventKeys = globalEventKeys;
@@ -181,14 +181,14 @@ export function addEvents<
       this.boundGlobalEvents[key] = boundListener;
       window.addEventListener(
         Events.getGlobalEventNameFromKey(key),
-        boundListener
+        boundListener,
       );
     }
 
     removeGlobalListener(key) {
       window.removeEventListener(
         Events.getGlobalEventNameFromKey(key),
-        this.boundGlobalEvents[key]
+        this.boundGlobalEvents[key],
       );
     }
 
@@ -203,7 +203,7 @@ export function addEvents<
         const result = defaults(
           {},
           this.getEventState(key, type),
-          this.getSharedEventState(key, type)
+          this.getSharedEventState(key, type),
         );
         return isEmpty(result) ? undefined : result;
       };
@@ -235,7 +235,7 @@ export function addEvents<
               : memo;
             return memo;
           },
-          [] as Array<() => void>
+          [] as Array<() => void>,
         );
         const compiledCallbacks = callbacks.length
           ? () => {
@@ -264,7 +264,7 @@ export function addEvents<
         baseProps,
         dataKeys,
         hasEvents,
-        events
+        events,
       };
     }
 
@@ -275,7 +275,7 @@ export function addEvents<
         : Events.getExternalMutations(
             externalEventMutations,
             this.baseProps,
-            this.state
+            this.state,
           );
     }
 
@@ -332,13 +332,13 @@ export function addEvents<
           this.getSharedEventState(key, type),
           component.props,
           baseProps,
-          { id }
+          { id },
         );
 
         const events = defaults(
           {},
           Events.getPartialEvents(baseEvents, key, componentProps),
-          componentProps.events
+          componentProps.events,
         );
 
         return assign({}, componentProps, { events });
@@ -387,7 +387,7 @@ export function addEvents<
         const labelProps = this.getComponentProps(
           labelComponent,
           "labels",
-          key
+          key,
         );
         if (
           labelProps &&
@@ -402,7 +402,7 @@ export function addEvents<
       const dataProps = this.getComponentProps(dataComponent, "data", "all");
       const children = [
         React.cloneElement(dataComponent!, dataProps),
-        ...labelComponents
+        ...labelComponents,
       ];
       return this.renderContainer(groupComponent, children);
     }
@@ -414,16 +414,16 @@ export function addEvents<
           const dataProps = this.getComponentProps(
             dataComponent,
             "data",
-            index
+            index,
           );
           if (shouldRenderDatum(dataProps.datum)) {
             validDataComponents.push(
-              React.cloneElement(dataComponent, dataProps)
+              React.cloneElement(dataComponent, dataProps),
             );
           }
           return validDataComponents;
         },
-        [] as React.ReactElement[]
+        [] as React.ReactElement[],
       );
 
       const labelComponents = this.dataKeys
@@ -431,7 +431,7 @@ export function addEvents<
           const labelProps = this.getComponentProps(
             labelComponent,
             "labels",
-            index
+            index,
           );
           if (labelProps.text !== undefined && labelProps.text !== null) {
             return React.cloneElement(labelComponent, labelProps);

@@ -53,7 +53,7 @@ declare module "victory" {
     // Style,
     TextSize,
     // Transitions,
-    Selection
+    Selection,
     // LabelHelpers,
     // Axis,
     // Wrapper
@@ -70,20 +70,20 @@ declare module "victory" {
     VictoryCandlestick,
     VictoryCandlestickProps,
     Candle,
-    CandleProps
+    CandleProps,
   } from "victory-candlestick";
   import {
     VictoryErrorBar,
     ErrorBar,
     VictoryErrorBarProps,
-    ErrorBarProps
+    ErrorBarProps,
   } from "victory-errorbar";
 
   import {
     VictoryLine,
     Curve,
     VictoryLineProps,
-    CurveProps
+    CurveProps,
   } from "victory-line";
   import { VictoryHistogram, VictoryHistogramProps } from "victory-histogram";
   import { VictoryScatter, VictoryScatterProps } from "victory-scatter";
@@ -93,18 +93,18 @@ declare module "victory" {
     Voronoi,
     VictoryVoronoi,
     VoronoiProps,
-    VictoryVoronoiProps
+    VictoryVoronoiProps,
   } from "victory-voronoi";
 
   import {
     VictoryBrushContainer,
-    VictoryBrushContainerProps
+    VictoryBrushContainerProps,
     // BrushHelpers,
     // brushContainerMixin
   } from "victory-brush-container";
   import {
     VictoryCursorContainer,
-    VictoryCursorContainerProps
+    VictoryCursorContainerProps,
     // CursorHelpers,
     // cursorContainerMixin
   } from "victory-cursor-container";
@@ -117,13 +117,13 @@ declare module "victory" {
 
   import {
     VictoryVoronoiContainer,
-    VictoryVoronoiContainerProps
+    VictoryVoronoiContainerProps,
     // VoronoiHelpers,
     // voronoiContainerMixin
   } from "victory-voronoi-container";
   import {
     VictoryZoomContainer,
-    VictoryZoomContainerProps
+    VictoryZoomContainerProps,
     // ZoomHelpers,
     // zoomContainerMixin,
     // RawZoomHelpers
@@ -131,14 +131,14 @@ declare module "victory" {
   import {
     // combineContainerMixins,
     // makeCreateContainerFunction,
-    createContainer
+    createContainer,
   } from "victory-create-container";
 
   import {
     VictoryTooltip,
     Flyout,
     VictoryTooltipProps,
-    FlyoutProps
+    FlyoutProps,
   } from "victory-tooltip";
   import { VictoryLegend, VictoryLegendProps } from "victory-legend";
 
@@ -274,7 +274,7 @@ declare module "victory" {
     // Style,
     TextSize,
     // Transitions,
-    Selection
+    Selection,
     // LabelHelpers,
     // Axis,
     // Wrapper

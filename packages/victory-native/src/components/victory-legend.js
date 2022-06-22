@@ -17,8 +17,8 @@ const NativeVictoryLegend = wrapCoreComponent({
     groupComponent: <G />,
     labelComponent: <VictoryLabel />,
     titleComponent: <VictoryLabel />,
-    width: Dimensions.get("window").width
-  })
+    width: Dimensions.get("window").width,
+  }),
 });
 
 export default NativeVictoryLegend;

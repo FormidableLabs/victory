@@ -5,7 +5,7 @@ import {
   OrientationTypes,
   VictoryAxisCommonProps,
   VictoryCommonProps,
-  VictorySingleLabelableProps
+  VictorySingleLabelableProps,
 } from "victory-core";
 
 export type VictoryAxisTTargetType =

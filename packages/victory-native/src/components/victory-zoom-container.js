@@ -4,7 +4,7 @@ import VictoryContainer from "./victory-container";
 import VictoryClipContainer from "./victory-clip-container";
 import {
   VictoryZoomContainer,
-  zoomContainerMixin as originalZoomMixin
+  zoomContainerMixin as originalZoomMixin,
 } from "victory-zoom-container";
 import NativeZoomHelpers from "../helpers/native-zoom-helpers";
 
@@ -13,7 +13,7 @@ const nativeZoomMixin = (base) =>
     // assign native specific defaultProps over web `VictoryZoomContainer` defaultProps
     static defaultProps = {
       ...VictoryZoomContainer.defaultProps,
-      clipContainerComponent: <VictoryClipContainer />
+      clipContainerComponent: <VictoryClipContainer />,
     };
 
     // overrides all web events with native specific events
@@ -31,7 +31,7 @@ const nativeZoomMixin = (base) =>
                     evt,
                     targetProps,
                     eventKey,
-                    ctx
+                    ctx,
                   );
             },
             // eslint-disable-next-line max-params
@@ -42,7 +42,7 @@ const nativeZoomMixin = (base) =>
                     evt,
                     targetProps,
                     eventKey,
-                    ctx
+                    ctx,
                   );
             },
             // eslint-disable-next-line max-params
@@ -59,11 +59,11 @@ const nativeZoomMixin = (base) =>
                     evt,
                     targetProps,
                     eventKey,
-                    ctx
+                    ctx,
                   );
-            }
-          }
-        }
+            },
+          },
+        },
       ];
     };
   };

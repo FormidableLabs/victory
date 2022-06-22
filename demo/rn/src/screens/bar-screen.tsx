@@ -15,7 +15,7 @@ export const BarScreen: React.FC = () => {
           { x: 2, y: 2 },
           { x: 3, y: 3 },
           { x: 4, y: 2 },
-          { x: 5, y: 1 }
+          { x: 5, y: 1 },
         ]}
       />
 
@@ -29,21 +29,21 @@ export const BarScreen: React.FC = () => {
           data={[
             { x: 1, y: 1 },
             { x: 2, y: 2 },
-            { x: 3, y: 3 }
+            { x: 3, y: 3 },
           ]}
         />
         <VictoryBar
           data={[
             { x: 1, y: 2 },
             { x: 2, y: 1 },
-            { x: 3, y: 1 }
+            { x: 3, y: 1 },
           ]}
         />
         <VictoryBar
           data={[
             { x: 1, y: 3 },
             { x: 2, y: 4 },
-            { x: 3, y: 2 }
+            { x: 3, y: 2 },
           ]}
         />
       </VictoryGroup>
@@ -53,21 +53,21 @@ export const BarScreen: React.FC = () => {
           data={[
             { x: 1, y: 1 },
             { x: 2, y: 2 },
-            { x: 3, y: 3 }
+            { x: 3, y: 3 },
           ]}
         />
         <VictoryBar
           data={[
             { x: 1, y: 2 },
             { x: 2, y: 1 },
-            { x: 3, y: 1 }
+            { x: 3, y: 1 },
           ]}
         />
         <VictoryBar
           data={[
             { x: 1, y: 3 },
             { x: 2, y: 4 },
-            { x: 3, y: 2 }
+            { x: 3, y: 2 },
           ]}
         />
       </VictoryStack>
@@ -78,15 +78,15 @@ export const BarScreen: React.FC = () => {
         style={{
           data: {
             fill: ({ datum }: { datum: { y: number } }) =>
-              datum.y > 2 ? "red" : "blue"
-          }
+              datum.y > 2 ? "red" : "blue",
+          },
         }}
         data={[
           { x: 1, y: 1 },
           { x: 2, y: 2 },
           { x: 3, y: 3 },
           { x: 4, y: 2 },
-          { x: 5, y: 1 }
+          { x: 5, y: 1 },
         ]}
       />
     </ScrollView>

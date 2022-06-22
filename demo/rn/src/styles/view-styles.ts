@@ -2,17 +2,17 @@ import { Platform, StyleSheet } from "react-native";
 
 export default StyleSheet.create({
   container: {
-    flex: 1
+    flex: 1,
   },
   monospace: {
-    fontFamily: Platform.OS === "ios" ? "Menlo" : "monospace"
+    fontFamily: Platform.OS === "ios" ? "Menlo" : "monospace",
   },
   contentContainer: {
-    alignItems: "center"
+    alignItems: "center",
   },
   header: {
     fontWeight: "600",
     padding: 15,
-    fontSize: 18
-  }
+    fontSize: 18,
+  },
 });

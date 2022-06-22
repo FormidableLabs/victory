@@ -7,13 +7,13 @@ const containerStyle: React.CSSProperties = {
   flexDirection: "row",
   flexWrap: "wrap",
   alignItems: "center",
-  justifyContent: "center"
+  justifyContent: "center",
 };
 
 const legendStyle = {
   labels: { fontSize: 14, fontFamily: "Palatino" },
   border: { stroke: "black", strokeWidth: 2 },
-  title: { padding: 5, fill: "red" }
+  title: { padding: 5, fill: "red" },
 };
 
 const symbolSize = 5;
@@ -24,61 +24,61 @@ const data = [
     symbol: {
       size: symbolSize,
       type: "circle",
-      fill: "green"
-    }
+      fill: "green",
+    },
   },
   {
     name: "Long Series Name -- so long",
     symbol: {
       size: symbolSize,
       type: "triangleUp",
-      fill: "blue"
-    }
+      fill: "blue",
+    },
   },
   {
     name: "Series 3",
     symbol: {
       size: symbolSize,
       type: "diamond",
-      fill: "pink"
-    }
+      fill: "pink",
+    },
   },
   {
     name: "Series 4",
     symbol: {
       size: symbolSize,
-      type: "plus"
-    }
+      type: "plus",
+    },
   },
   {
     name: "Series 4: minus",
     symbol: {
       size: symbolSize,
-      type: "minus"
-    }
+      type: "minus",
+    },
   },
   {
     name: "Series 5",
     symbol: {
       size: symbolSize,
       type: "star",
-      fill: "red"
+      fill: "red",
     },
     labels: {
-      fill: "purple"
-    }
+      fill: "purple",
+    },
   },
   {
     name: "Series 6: also quite long",
     symbol: {
       size: symbolSize,
       type: "circle",
-      fill: "orange"
+      fill: "orange",
     },
     labels: {
-      fill: "blue"
-    }
-  }
+      fill: "blue",
+    },
+  },
 ];
 
 const LegendDemo = () => (
@@ -103,12 +103,12 @@ const LegendDemo = () => (
               onClick: () => {
                 return [
                   {
-                    mutation: () => ({ symbol: "star" })
-                  }
+                    mutation: () => ({ symbol: "star" }),
+                  },
                 ];
-              }
-            }
-          }
+              },
+            },
+          },
         ]}
       />
       <VictoryLegend

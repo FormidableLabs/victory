@@ -21,11 +21,11 @@ export class VictoryPortal extends React.Component<VictoryPortalProps> {
 
   static propTypes = {
     children: PropTypes.node,
-    groupComponent: PropTypes.element
+    groupComponent: PropTypes.element,
   };
 
   static defaultProps = {
-    groupComponent: <g />
+    groupComponent: <g />,
   };
 
   static contextType = PortalContext;
@@ -84,7 +84,7 @@ export class VictoryPortal extends React.Component<VictoryPortalProps> {
     const newProps = defaults(
       standardProps,
       childProps,
-      Helpers.omit(this.props, ["children", "groupComponent"])
+      Helpers.omit(this.props, ["children", "groupComponent"]),
     );
     const child = children && React.cloneElement(children, newProps);
     return this.renderPortal(child);

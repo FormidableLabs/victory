@@ -15,21 +15,21 @@ const containerStyle = {
   flexDirection: "row",
   flexWrap: "wrap",
   alignItems: "center",
-  justifyContent: "center"
+  justifyContent: "center",
 };
 
 const parentStyle = {
-  parent: { border: "1px solid #ccc", margin: "2%", maxWidth: "40%" }
+  parent: { border: "1px solid #ccc", margin: "2%", maxWidth: "40%" },
 };
 
 const defaultChartProps = {
   style: parentStyle,
-  theme: VictoryTheme.material
+  theme: VictoryTheme.material,
 };
 
 export default {
   title: "VictoryLine",
-  component: VictoryLine
+  component: VictoryLine,
 };
 
 export const DefaultRendering = () => {
@@ -103,7 +103,7 @@ export const Interpolation = () => {
         "natural",
         "step",
         "stepAfter",
-        "stepBefore"
+        "stepBefore",
       ].map((interpolation) => makeInterpolationChart(interpolation))}
     </div>
   );
@@ -124,7 +124,7 @@ export const PolarInterpolation = () => {
   return (
     <div style={containerStyle}>
       {["basis", "cardinal", "catmullRom", "linear"].map((interpolation) =>
-        makeInterpolationChart(interpolation)
+        makeInterpolationChart(interpolation),
       )}
     </div>
   );
@@ -140,7 +140,7 @@ export const DataAccessors = () => {
             { animal: "Dog", pet: 85, wild: 6 },
             { animal: "Fish", pet: 55, wild: 0 },
             { animal: "Bird", pet: 15, wild: 40 },
-            { animal: "Monkey", pet: 5, wild: 40 }
+            { animal: "Monkey", pet: 5, wild: 40 },
           ]}
           x={"animal"}
           y={(data) => data.pet + data.wild}
@@ -153,7 +153,7 @@ export const DataAccessors = () => {
             { animal: "Dog", pet: 85, wild: 6 },
             { animal: "Fish", pet: 55, wild: 0 },
             { animal: "Bird", pet: 15, wild: 40 },
-            { animal: "Monkey", pet: 5, wild: 40 }
+            { animal: "Monkey", pet: 5, wild: 40 },
           ]}
           x={"animal"}
           y={(data) => data.pet + data.wild}
@@ -166,7 +166,7 @@ export const DataAccessors = () => {
             { animal: "Dog", pet: 85, wild: 6 },
             { animal: "Fish", pet: 55, wild: 0 },
             { animal: "Bird", pet: 15, wild: 40 },
-            { animal: "Monkey", pet: 5, wild: 40 }
+            { animal: "Monkey", pet: 5, wild: 40 },
           ]}
           x={"animal"}
           y={(data) => data.pet + data.wild}
@@ -183,7 +183,7 @@ export const DataAccessors = () => {
           data={[
             { a: { b: { c: 1, d: 1 } } },
             { a: { b: { c: 2, d: 3 } } },
-            { a: { b: { c: 3, d: 2 } } }
+            { a: { b: { c: 3, d: 2 } } },
           ]}
           x={"a.b.c"}
           y={"a.b.d"}
@@ -195,7 +195,7 @@ export const DataAccessors = () => {
             { x: "Cat", y: 45, y0: 17 },
             { x: "Dog", y: 85, y0: 6 },
             { x: "Fish", y: 55, y0: 9 },
-            { x: "Bird", y: 15, y0: 4 }
+            { x: "Bird", y: 15, y0: 4 },
           ])}
         />
       </VictoryChart>
@@ -260,7 +260,7 @@ export const Labels = () => {
             { x: 2, y: 5, label: "dog" },
             { x: 3, y: 3, label: "dog" },
             { x: 4, y: -2, label: "bird" },
-            { x: 5, y: -5, label: "cat" }
+            { x: 5, y: -5, label: "cat" },
           ]}
         />
       </VictoryChart>
@@ -312,7 +312,7 @@ export const Styles = () => {
           labels={({ datum }) => datum.x}
           style={{
             labels: { fontSize: 20, fill: "tomato", fontFamily: "monospace" },
-            data: { stroke: "tomato", strokeWidth: 2 }
+            data: { stroke: "tomato", strokeWidth: 2 },
           }}
         />
       </VictoryChart>
@@ -320,15 +320,15 @@ export const Styles = () => {
         <VictoryLine
           style={{
             labels: {
-              fill: ({ datum }) => (datum.x === "Dog" ? "red" : "black")
-            }
+              fill: ({ datum }) => (datum.x === "Dog" ? "red" : "black"),
+            },
           }}
           labels={({ datum }) => datum.x}
           data={[
             { x: "Cat", y: 62 },
             { x: "Dog", y: 91 },
             { x: "Fish", y: 55 },
-            { x: "Bird", y: 55 }
+            { x: "Bird", y: 55 },
           ]}
         />
       </VictoryChart>
@@ -455,7 +455,7 @@ export const Polar = () => {
             { x: "Dog", y: 91 },
             { x: "Fish", y: 55 },
             { x: "Bird", y: 55 },
-            { x: "Frog", y: 75 }
+            { x: "Frog", y: 75 },
           ]}
         />
       </VictoryChart>
@@ -466,7 +466,7 @@ export const Polar = () => {
             { x: "Dog", y: 91 },
             { x: "Fish", y: 55 },
             { x: "Bird", y: 55 },
-            { x: "Frog", y: 75 }
+            { x: "Frog", y: 75 },
           ]}
         />
       </VictoryChart>

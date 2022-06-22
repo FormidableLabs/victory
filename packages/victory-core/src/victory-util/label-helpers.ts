@@ -45,7 +45,7 @@ function getPadding(props, datum) {
   const sign = datum._y < 0 ? -1 : 1;
   return {
     x: horizontal ? sign * defaultPadding : 0,
-    y: horizontal ? 0 : -1 * sign * defaultPadding
+    y: horizontal ? 0 : -1 * sign * defaultPadding,
   };
 }
 
@@ -57,7 +57,7 @@ function getOffset(props, datum) {
 
   return {
     dx: padding.x,
-    dy: padding.y
+    dy: padding.y,
   };
 }
 
@@ -70,7 +70,7 @@ function getPosition(props, datum) {
     const polarPadding = getPolarPadding(props, datum);
     return {
       x: x + polarPadding.x,
-      y: y + polarPadding.y
+      y: y + polarPadding.y,
     };
   }
 }
@@ -83,7 +83,7 @@ function getPolarPadding(props, datum) {
   const angle = Helpers.degreesToRadians(degrees);
   return {
     x: padding * Math.cos(angle),
-    y: -padding * Math.sin(angle)
+    y: -padding * Math.sin(angle),
   };
 }
 
@@ -181,7 +181,7 @@ export function getProps(props, index) {
     height,
     theme,
     labelComponent,
-    disableInlineStyles
+    disableInlineStyles,
   } = props;
   const datum = data[index];
   const degrees = getDegrees(props, datum);
@@ -215,7 +215,7 @@ export function getProps(props, index) {
     dy,
     width,
     height,
-    style: style.labels
+    style: style.labels,
   };
   if (!Helpers.isTooltip(labelComponent)) {
     return labelProps;

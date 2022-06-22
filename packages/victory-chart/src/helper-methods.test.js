@@ -10,7 +10,7 @@ describe("victory-chart/helpers-methods", () => {
   describe("getChildComponents", () => {
     const defaultAxes = {
       independent: getVictoryAxis({}),
-      dependent: getVictoryAxis({ dependentAxis: true })
+      dependent: getVictoryAxis({ dependentAxis: true }),
     };
 
     it("returns a pair of default axes when no children are given", () => {

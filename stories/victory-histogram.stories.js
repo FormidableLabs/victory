@@ -22,16 +22,16 @@ const containerStyle = {
   flexDirection: "row",
   flexWrap: "wrap",
   alignItems: "center",
-  justifyContent: "center"
+  justifyContent: "center",
 };
 
 const parentStyle = {
-  parent: { border: "1px solid #ccc", margin: "2%", maxWidth: "40%" }
+  parent: { border: "1px solid #ccc", margin: "2%", maxWidth: "40%" },
 };
 
 export default {
   title: "VictoryHistogram",
-  component: VictoryHistogram
+  component: VictoryHistogram,
 };
 
 export const DefaultRendering = () => {
@@ -140,7 +140,7 @@ export const EmptyData = () => {
           bins={[
             new Date(2015, 0, 1),
             new Date(2020, 0, 1),
-            new Date(2025, 0, 1)
+            new Date(2025, 0, 1),
           ]}
         />
       </VictoryChart>
@@ -151,7 +151,7 @@ export const EmptyData = () => {
           bins={[
             new Date(2015, 0, 1),
             new Date(2020, 0, 1),
-            new Date(2025, 0, 1)
+            new Date(2025, 0, 1),
           ]}
         />
       </VictoryChart>
@@ -173,7 +173,7 @@ export const DateBins = () => {
           bins={[
             new Date(2010, 0, 1),
             new Date(2020, 5, 1),
-            new Date(2021, 0, 1)
+            new Date(2021, 0, 1),
           ]}
         />
       </VictoryChart>
@@ -183,7 +183,7 @@ export const DateBins = () => {
           bins={[
             new Date(2010, 0, 1),
             new Date(2020, 5, 1),
-            new Date(2021, 0, 1)
+            new Date(2021, 0, 1),
           ]}
         />
       </VictoryChart>
@@ -271,7 +271,7 @@ export const Styles = () => {
         <VictoryHistogram
           data={data}
           style={{
-            data: { transform: "translate(0px, -20px) skew(2deg, 2deg)" }
+            data: { transform: "translate(0px, -20px) skew(2deg, 2deg)" },
           }}
         />
       </VictoryChart>
@@ -283,13 +283,13 @@ export const Styles = () => {
               fill: ({ datum }) =>
                 datum.binnedData.some(({ x }) => x === 22)
                   ? "palevioletred"
-                  : "black"
+                  : "black",
             },
             data: {
               stroke: ({ datum }) => (datum.y > 3 ? "red" : "transparent"),
               strokeWidth: 3,
-              opacity: ({ datum }) => (datum.y > 3 ? 1 : 0.4)
-            }
+              opacity: ({ datum }) => (datum.y > 3 ? 1 : 0.4),
+            },
           }}
           labels={["one", "two", "three", "four", "five"]}
         />
@@ -467,7 +467,7 @@ export const MixedCharts = () => {
             { x: 50, y: 2 },
             { x: 60, y: 4 },
             { x: 80, y: 12 },
-            { x: 120, y: 8 }
+            { x: 120, y: 8 },
           ]}
         />
       </VictoryChart>
@@ -482,7 +482,7 @@ export const MixedCharts = () => {
             { x: 50, y: 2 },
             { x: 60, y: 4 },
             { x: 80, y: 12 },
-            { x: 120, y: 8 }
+            { x: 120, y: 8 },
           ]}
         />
       </VictoryChart>
@@ -493,9 +493,9 @@ export const MixedCharts = () => {
 export const Stacked = () => {
   const stackedData = [
     ...[50, 30, 100, 32, 50, 10, 49, 78, 20].map((count) =>
-      getData(count, count, 100)
+      getData(count, count, 100),
     ),
-    [{ x: 1 }, { x: 3 }, { x: 1 }, { x: 2 }]
+    [{ x: 1 }, { x: 3 }, { x: 1 }, { x: 2 }],
   ];
 
   return (

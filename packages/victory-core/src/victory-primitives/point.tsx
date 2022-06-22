@@ -5,7 +5,7 @@ import * as Helpers from "../victory-util/helpers";
 import * as pathHelpers from "../victory-util/point-path-helpers";
 import {
   CommonProps,
-  VictoryCommonPrimitiveProps
+  VictoryCommonPrimitiveProps,
 } from "../victory-util/common-props";
 import * as UserProps from "../victory-util/user-props";
 import { Path } from "./path";
@@ -62,7 +62,7 @@ const evaluateProps = (props) => {
     size,
     style,
     symbol,
-    tabIndex
+    tabIndex,
   });
 };
 
@@ -82,7 +82,7 @@ export const Point = (props: PointProps) => {
     className: props.className,
     transform: props.transform,
     clipPath: props.clipPath,
-    ...userProps
+    ...userProps,
   });
 };
 
@@ -102,16 +102,16 @@ Point.propTypes = {
       "square",
       "star",
       "triangleDown",
-      "triangleUp"
+      "triangleUp",
     ]),
-    PropTypes.func
+    PropTypes.func,
   ]),
   x: PropTypes.number,
-  y: PropTypes.number
+  y: PropTypes.number,
 };
 
 Point.defaultProps = {
   pathComponent: <Path />,
   role: "presentation",
-  shapeRendering: "auto"
+  shapeRendering: "auto",
 };

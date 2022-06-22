@@ -10,20 +10,20 @@ const containerStyle = {
   flexDirection: "row",
   flexWrap: "wrap",
   alignItems: "center",
-  justifyContent: "center"
+  justifyContent: "center",
 };
 
 const style = {
-  parent: { border: "1px solid #ccc", margin: "1%", maxWidth: "45%" }
+  parent: { border: "1px solid #ccc", margin: "1%", maxWidth: "45%" },
 };
 
 const responsiveStyle = {
-  parent: { border: "1px solid #ccc", margin: "1%", maxWidth: "30%" }
+  parent: { border: "1px solid #ccc", margin: "1%", maxWidth: "30%" },
 };
 
 export default {
   title: "VictoryContainer",
-  component: VictoryContainer
+  component: VictoryContainer,
 };
 
 export const PreserveAspectRatio = () => {

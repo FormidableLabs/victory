@@ -38,7 +38,7 @@ export const data = [
   { x: 18 },
   { x: 28 },
   { x: 79 },
-  { x: 44 }
+  { x: 44 },
 ];
 
 export const timeData = [
@@ -541,5 +541,5 @@ export const timeData = [
   { x: new Date("2012-02-20T08:00:00.000Z") },
   { x: new Date("2010-04-07T07:00:00.000Z") },
   { x: new Date("2019-07-21T07:00:00.000Z") },
-  { x: new Date("2014-06-15T07:00:00.000Z") }
+  { x: new Date("2014-06-15T07:00:00.000Z") },
 ];

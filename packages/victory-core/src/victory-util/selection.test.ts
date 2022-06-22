@@ -19,7 +19,7 @@ describe("helpers/selection", () => {
     it("returns coordinates corresponding to domain min max", () => {
       const scale = {
         x: d3Scale.scaleLinear(),
-        y: d3Scale.scaleLinear()
+        y: d3Scale.scaleLinear(),
       };
       const coords = Selection.getDomainCoordinates({ scale });
       expect(coords).toEqual({ x: [0, 1], y: [0, 1] });
@@ -30,7 +30,7 @@ describe("helpers/selection", () => {
     it("returns coordinates corresponding to point x, y", () => {
       const scale = {
         x: d3Scale.scaleLinear(),
-        y: d3Scale.scaleLinear()
+        y: d3Scale.scaleLinear(),
       };
       const coords = Selection.getDataCoordinates({}, scale, 1, 1);
       expect(coords).toEqual({ x: 1, y: 1 });
@@ -38,7 +38,7 @@ describe("helpers/selection", () => {
     it("returns polar coordinates corresponding to point x, y", () => {
       const scale = {
         x: d3Scale.scaleLinear().range([0, Math.PI * 2]),
-        y: d3Scale.scaleLinear()
+        y: d3Scale.scaleLinear(),
       };
       const x = Math.PI;
       const y = 0;

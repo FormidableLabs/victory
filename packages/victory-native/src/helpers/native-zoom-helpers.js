@@ -8,7 +8,7 @@ const hypotenuse = (x, y) => Math.sqrt(Math.pow(x, 2) + Math.pow(y, 2));
 
 const screenSize = hypotenuse(
   Dimensions.get("window").width,
-  Dimensions.get("window").height
+  Dimensions.get("window").height,
 );
 
 const Helpers = {
@@ -19,8 +19,8 @@ const Helpers = {
         target: "parent",
         mutation: () => {
           return { panning: false, originalPinchDistance: null };
-        }
-      }
+        },
+      },
     ];
   },
 
@@ -36,7 +36,7 @@ const Helpers = {
     const lastDomain = defaults(
       {},
       targetProps.currentDomain || zoomDomain || originalDomain,
-      domain
+      domain,
     );
     const { x, y } = lastDomain;
     const currentDomain = {
@@ -47,7 +47,7 @@ const Helpers = {
       y:
         zoomDimension === "x"
           ? lastDomain.y
-          : this.scaleNative(y, evt, targetProps, "y")
+          : this.scaleNative(y, evt, targetProps, "y"),
     };
     const resumeAnimation = this.handleAnimation(ctx);
     const pinchDistance = this.getPinchDistance(touches);
@@ -75,10 +75,10 @@ const Helpers = {
             parentControlledProps: ["domain"],
             panning: false,
             originalPinchDistance,
-            zoomActive
+            zoomActive,
           };
-        }
-      }
+        },
+      },
     ];
   },
   getPinchDistance([a, b]) {
@@ -110,11 +110,11 @@ const Helpers = {
     const [newMin, newMax] = this.getScaledDomain(
       currentDomain,
       factor,
-      percent
+      percent,
     );
     const newDomain = [
       newMin > fromBound && newMin < toBound ? newMin : fromBound,
-      newMax < toBound && newMax > fromBound ? newMax : toBound
+      newMax < toBound && newMax > fromBound ? newMax : toBound,
     ];
     const domain =
       Math.abs(minDomain[1] - minDomain[0]) >
@@ -124,7 +124,7 @@ const Helpers = {
     return Collection.containsDates([fromBound, toBound])
       ? [new Date(domain[0]), new Date(domain[1])]
       : domain;
-  }
+  },
 };
 
 const makeThrottledHandler = (handler) => {
@@ -142,5 +142,5 @@ export default {
   onTouchStart: Helpers.onMouseDown.bind(Helpers),
   onTouchEnd: Helpers.onTouchEnd.bind(Helpers),
   onTouchMove: makeThrottledHandler(Helpers.onMouseMove.bind(Helpers)),
-  onTouchPinch: makeThrottledHandler(Helpers.onTouchPinch.bind(Helpers))
+  onTouchPinch: makeThrottledHandler(Helpers.onTouchPinch.bind(Helpers)),
 };

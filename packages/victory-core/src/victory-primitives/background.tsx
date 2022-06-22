@@ -4,7 +4,7 @@ import { assign } from "lodash";
 import * as Helpers from "../victory-util/helpers";
 import {
   CommonProps,
-  VictoryCommonPrimitiveProps
+  VictoryCommonPrimitiveProps,
 } from "../victory-util/common-props";
 import { Rect } from "./rect";
 import { Circle } from "./circle";
@@ -42,7 +42,7 @@ export const Background = (props: BackgroundProps) => {
         cx: props.x,
         cy: props.y,
         r: props.height,
-        className: props.className
+        className: props.className,
       })
     : React.cloneElement(props.rectComponent!, {
         ...props.events,
@@ -55,7 +55,7 @@ export const Background = (props: BackgroundProps) => {
         ry: props.ry,
         width: props.width,
         height: props.height,
-        className: props.className
+        className: props.className,
       });
 };
 
@@ -68,12 +68,12 @@ Background.propTypes = {
   ry: PropTypes.number,
   width: PropTypes.number,
   x: PropTypes.number,
-  y: PropTypes.number
+  y: PropTypes.number,
 };
 
 Background.defaultProps = {
   circleComponent: <Circle />,
   rectComponent: <Rect />,
   role: "presentation",
-  shapeRendering: "auto"
+  shapeRendering: "auto",
 };

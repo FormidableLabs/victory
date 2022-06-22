@@ -23,7 +23,7 @@ const ROUTES = ["docs", "faq", "guides"];
 
 const scrollContent = async (
   hash,
-  contentPaneClass = DEFAULT_PAGE_CONTENT_CLASS
+  contentPaneClass = DEFAULT_PAGE_CONTENT_CLASS,
 ) => {
   const item = document.querySelector(`${contentPaneClass} ${hash}`);
 
@@ -40,7 +40,7 @@ const scrollContent = async (
   scroll.scrollTo(truePosition, {
     duration: 200,
     delay: 0,
-    smooth: "easeOutQuad"
+    smooth: "easeOutQuad",
   });
 };
 
@@ -80,7 +80,7 @@ const ScrollToCurrentSection = ({ location, children }) => {
 
 ScrollToCurrentSection.propTypes = {
   children: PropTypes.oneOfType([PropTypes.object, PropTypes.array]),
-  location: PropTypes.object
+  location: PropTypes.object,
 };
 
 // eslint-disable-next-line react/no-multi-comp

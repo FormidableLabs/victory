@@ -23,22 +23,22 @@ import {
   VictoryMultiLabelableProps,
   VictoryLabelableProps,
   VictoryStyleInterface,
-  EventsMixinClass
+  EventsMixinClass,
 } from "victory-core";
 
 const fallbackProps = {
   width: 450,
   height: 300,
   padding: 50,
-  interpolation: "linear"
+  interpolation: "linear",
 };
 
 const options = {
   components: [
     { name: "parent", index: "parent" },
     { name: "data", index: "all" },
-    { name: "labels" }
-  ]
+    { name: "labels" },
+  ],
 };
 
 // eslint-disable-next-line @typescript-eslint/no-empty-interface
@@ -56,7 +56,7 @@ class VictoryLineBase extends React.Component<VictoryLineProps> {
     "padding",
     "samples",
     "style",
-    "width"
+    "width",
   ];
 
   static displayName = "VictoryLine";
@@ -81,14 +81,14 @@ class VictoryLineBase extends React.Component<VictoryLineProps> {
         "natural",
         "step",
         "stepAfter",
-        "stepBefore"
+        "stepBefore",
       ]),
-      PropTypes.func
+      PropTypes.func,
     ]),
     label: CustomPropTypes.deprecated(
       PropTypes.string,
-      "Use `labels` instead for individual data labels"
-    )
+      "Use `labels` instead for individual data labels",
+    ),
   };
 
   static defaultProps = {
@@ -100,7 +100,7 @@ class VictoryLineBase extends React.Component<VictoryLineProps> {
     sortKey: "x",
     sortOrder: "ascending",
     standalone: true,
-    theme: VictoryTheme.grayscale
+    theme: VictoryTheme.grayscale,
   };
 
   static getDomain = Domain.getDomain;
@@ -110,7 +110,7 @@ class VictoryLineBase extends React.Component<VictoryLineProps> {
     "dataComponent",
     "labelComponent",
     "groupComponent",
-    "containerComponent"
+    "containerComponent",
   ];
 
   // Overridden in native versions

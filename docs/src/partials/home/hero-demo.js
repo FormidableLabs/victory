@@ -11,7 +11,7 @@ import {
   VictoryAxis,
   VictoryScatter,
   VictoryVoronoiContainer,
-  Point
+  Point,
 } from "victory";
 import styled from "styled-components";
 import importedTheme from "../../styles/theme";
@@ -33,7 +33,7 @@ const HeroDemoContainer = styled.div`
 const font = (color) => ({
   fill: color || importedTheme.color.brown,
   fontSize: 20,
-  fontFamily: "Helvetica"
+  fontFamily: "Helvetica",
 });
 
 const numberWithCommas = (x) =>
@@ -46,7 +46,7 @@ const groupDownloadsByWeek = (dates) => {
   dates.forEach((date) => {
     const start = format(
       startOfWeek(parse(date.day, "yyyy-MM-dd", today)),
-      "yyyy-MM-dd"
+      "yyyy-MM-dd",
     );
 
     downloadsGroupedByPeriod[start] = downloadsGroupedByPeriod[start]
@@ -57,8 +57,8 @@ const groupDownloadsByWeek = (dates) => {
   const weeklyDownloads = Object.entries(downloadsGroupedByPeriod).map(
     ([key, value]) => ({
       date: key,
-      downloads: value
-    })
+      downloads: value,
+    }),
   );
   // remove the last element in the array, as it may not be a full week
   weeklyDownloads.pop();
@@ -106,7 +106,7 @@ const VoronoiLabel = (props) => {
     fontSize: 20,
     fontFamily: "Helvetica",
     textAnchor: "middle",
-    fontWeight: "bold"
+    fontWeight: "bold",
   };
   return (
     <g>
@@ -157,8 +157,8 @@ const HeroDemo = () => {
             display: "flex",
             justifyContent: "center",
             paddingTop: "2rem",
-            cursor: "crosshair"
-          }
+            cursor: "crosshair",
+          },
         }}
         containerComponent={
           <VictoryVoronoiContainer
@@ -199,7 +199,7 @@ const HeroDemo = () => {
         <VictoryAxis
           tickFormat={() => ""}
           style={{
-            axis: { stroke: importedTheme.color.brown, strokeWidth: 3 }
+            axis: { stroke: importedTheme.color.brown, strokeWidth: 3 },
           }}
           scale={{ x: "time" }}
         />
@@ -212,8 +212,8 @@ const HeroDemo = () => {
             style={{
               data: {
                 stroke: importedTheme.color.red,
-                strokeWidth: v.label ? 3 : 1
-              }
+                strokeWidth: v.label ? 3 : 1,
+              },
             }}
             labels={() => v.label}
             labelComponent={<LinkLabel version={v} />}
@@ -227,7 +227,7 @@ const HeroDemo = () => {
           y="downloads"
           x={(d) => new Date(d.date)}
           style={{
-            data: { stroke: importedTheme.color.white, strokeWidth: 4 }
+            data: { stroke: importedTheme.color.white, strokeWidth: 4 },
           }}
         />
         <VictoryScatter
@@ -238,7 +238,7 @@ const HeroDemo = () => {
           size={6}
           style={{
             data: { fill: importedTheme.color.white },
-            labels: { verticalAnchor: "start" }
+            labels: { verticalAnchor: "start" },
           }}
           labelComponent={
             <VictoryLabel
@@ -251,14 +251,14 @@ const HeroDemo = () => {
                   fontSize: 20,
                   fontWeight: "bold",
                   fontFamily: "Helvetica",
-                  textAnchor: "start"
+                  textAnchor: "start",
                 },
                 {
                   fill: importedTheme.color.white,
                   fontSize: 15,
                   fontFamily: "Helvetica",
-                  textAnchor: "start"
-                }
+                  textAnchor: "start",
+                },
               ]}
             />
           }

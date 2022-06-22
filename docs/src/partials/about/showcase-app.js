@@ -44,8 +44,8 @@ ShowcaseApp.propTypes = {
   description: PropTypes.string.isRequired,
   screenshot: PropTypes.shape({
     src: PropTypes.string.isRequired,
-    alt: PropTypes.string.isRequired
-  })
+    alt: PropTypes.string.isRequired,
+  }),
 };
 
 export default ShowcaseApp;

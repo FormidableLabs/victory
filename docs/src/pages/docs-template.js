@@ -26,9 +26,9 @@ DocsTemplate.propTypes = {
   children: PropTypes.array,
   doc: PropTypes.shape({
     data: PropTypes.object,
-    content: PropTypes.string
+    content: PropTypes.string,
   }),
-  sidebarContent: PropTypes.array
+  sidebarContent: PropTypes.array,
 };
 
 export default withRouteData(DocsTemplate);

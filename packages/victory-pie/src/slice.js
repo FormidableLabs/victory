@@ -39,11 +39,11 @@ const evaluateProps = (props) => {
   const style = Helpers.evaluateStyle(props.style, props);
   const radius = Helpers.evaluateProp(
     props.radius,
-    assign({}, props, { style })
+    assign({}, props, { style }),
   );
   const innerRadius = Helpers.evaluateProp(
     props.innerRadius,
-    assign({}, props, { style, radius })
+    assign({}, props, { style, radius }),
   );
 
   const ariaLabel = Helpers.evaluateProp(props.ariaLabel, props);
@@ -64,7 +64,7 @@ const evaluateProps = (props) => {
     padAngle,
     sliceStartAngle,
     sliceEndAngle,
-    tabIndex
+    tabIndex,
   });
 };
 
@@ -84,7 +84,7 @@ const Slice = (props) => {
     role: props.role,
     shapeRendering: props.shapeRendering,
     clipPath: props.clipPath,
-    tabIndex: props.tabIndex
+    tabIndex: props.tabIndex,
   });
 };
 
@@ -99,13 +99,13 @@ Slice.propTypes = {
   radius: PropTypes.oneOfType([PropTypes.number, PropTypes.func]),
   slice: PropTypes.object,
   sliceEndAngle: PropTypes.oneOfType([PropTypes.number, PropTypes.func]),
-  sliceStartAngle: PropTypes.oneOfType([PropTypes.number, PropTypes.func])
+  sliceStartAngle: PropTypes.oneOfType([PropTypes.number, PropTypes.func]),
 };
 
 Slice.defaultProps = {
   pathComponent: <Path />,
   role: "presentation",
-  shapeRendering: "auto"
+  shapeRendering: "auto",
 };
 
 export default Slice;

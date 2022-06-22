@@ -16,12 +16,12 @@ import * as UserProps from "../victory-util/user-props";
 import {
   NumberOrCallback,
   StringOrCallback,
-  StringOrNumberOrCallback
+  StringOrNumberOrCallback,
 } from "../types/callbacks";
 import {
   PaddingProps,
   VerticalAnchorType,
-  VictoryLabelStyleObject
+  VictoryLabelStyleObject,
 } from "../victory-theme/victory-theme";
 
 export type TextAnchorType = "start" | "middle" | "end" | "inherit";
@@ -71,7 +71,7 @@ const defaultStyles = {
   fontSize: 14,
   fontFamily:
     "'Gill Sans', 'Gill Sans MT', 'Ser­avek', 'Trebuchet MS', sans-serif",
-  stroke: "transparent"
+  stroke: "transparent",
 };
 
 const getPosition = (props, dimension) => {
@@ -117,7 +117,7 @@ const getStyles = (style, props) => {
     const baseStyles = Helpers.evaluateStyle(style, props);
     return {
       // Font size is necessary to calculate the y position of the label
-      fontSize: getFontSize(baseStyles)
+      fontSize: getFontSize(baseStyles),
     };
   }
   const getSingleStyle = (s) => {
@@ -183,10 +183,10 @@ const getDy = (props, verticalAnchor, lineHeight) => {
     ? Helpers.evaluateProp(verticalAnchor, props)
     : "middle";
   const fontSizes = [...Array(length).keys()].map(
-    (i) => getSingleValue(props.style, i).fontSize
+    (i) => getSingleValue(props.style, i).fontSize,
   );
   const lineHeights = [...Array(length).keys()].map((i) =>
-    getSingleValue(lineHeight, i)
+    getSingleValue(lineHeight, i),
   );
 
   if (anchor === "start") {
@@ -273,7 +273,7 @@ const getFullBackground = (calculatedProps, tspanValues) => {
     backgroundStyle,
     inline,
     backgroundPadding,
-    capHeight
+    capHeight,
   } = calculatedProps;
   const textSizes = tspanValues.map((tspan) => {
     return tspan.textSize;
@@ -307,12 +307,12 @@ const getFullBackground = (calculatedProps, tspanValues) => {
     x: inline
       ? xCoordinate - backgroundPadding.left
       : xCoordinate + dx - backgroundPadding.left,
-    y: yCoordinate
+    y: yCoordinate,
   };
 
   return React.cloneElement(
     backgroundComponent,
-    defaults({}, backgroundComponent.props, backgroundProps)
+    defaults({}, backgroundComponent.props, backgroundProps),
   );
 };
 
@@ -351,7 +351,7 @@ const getChildBackgrounds = (calculatedProps, tspanValues) => {
     backgroundPadding,
     backgroundComponent,
     inline,
-    y
+    y,
   } = calculatedProps;
 
   const textElements = tspanValues.map((current, i) => {
@@ -378,14 +378,14 @@ const getChildBackgrounds = (calculatedProps, tspanValues) => {
         labelSize.width + padding.left + padding.right + xOffset,
       y,
       fontSize: current.fontSize,
-      dy: childDy
+      dy: childDy,
     };
   });
 
   return textElements.map((textElement, i) => {
     const xCoordinate = getXCoordinate(
       calculatedProps,
-      textElement.labelSize.width
+      textElement.labelSize.width,
     );
     const yCoordinate = textElements.slice(0, i + 1).reduce((prev, curr) => {
       return prev + curr.dy;
@@ -407,12 +407,12 @@ const getChildBackgrounds = (calculatedProps, tspanValues) => {
       width: textElement.widthWithPadding,
       transform,
       x: xCoord - padding.left,
-      y: yCoord
+      y: yCoord,
     };
 
     return React.cloneElement(
       backgroundComponent,
-      defaults({}, backgroundComponent.props, backgroundProps)
+      defaults({}, backgroundComponent.props, backgroundProps),
     );
   });
 };
@@ -470,10 +470,10 @@ const evaluateProps = (props) => {
   const style = getStyles(props.style, assign({}, props, { text }));
   const backgroundStyle = getBackgroundStyles(
     props.backgroundStyle,
-    assign({}, props, { text, style })
+    assign({}, props, { text, style }),
   );
   const backgroundPadding = getBackgroundPadding(
-    assign({}, props, { text, style, backgroundStyle })
+    assign({}, props, { text, style, backgroundStyle }),
   );
   const id = Helpers.evaluateProp(props.id, props);
   return assign({}, props, {
@@ -481,7 +481,7 @@ const evaluateProps = (props) => {
     backgroundPadding,
     style,
     text,
-    id
+    id,
   });
 };
 
@@ -515,7 +515,7 @@ const getCalculatedProps = <T extends VictoryLabelProps>(props: T) => {
     originalDy: props.dy,
     transform,
     x,
-    y
+    y,
   });
 };
 
@@ -538,7 +538,7 @@ const renderLabel = (calculatedProps, tspanValues) => {
     id,
     tabIndex,
     tspanComponent,
-    textComponent
+    textComponent,
   } = calculatedProps;
   const userProps = UserProps.getSafeUserProps(calculatedProps);
 
@@ -556,7 +556,7 @@ const renderLabel = (calculatedProps, tspanValues) => {
     desc: Helpers.evaluateProp(desc, calculatedProps),
     tabIndex: Helpers.evaluateProp(tabIndex, calculatedProps),
     id,
-    ...userProps
+    ...userProps,
   };
 
   const tspans = text.map((line, i) => {
@@ -568,7 +568,7 @@ const renderLabel = (calculatedProps, tspanValues) => {
       dy: getTSpanDy(tspanValues, calculatedProps, i),
       textAnchor: currentStyle.textAnchor || textAnchor,
       style: currentStyle,
-      children: line
+      children: line,
     };
     return React.cloneElement(tspanComponent, tspanProps);
   });
@@ -594,7 +594,7 @@ export const VictoryLabel: {
     const currentStyle = getSingleValue(style!, i);
     const capHeightPx = TextSize.convertLengthToPixels(
       `${capHeight}em`,
-      currentStyle.fontSize as number
+      currentStyle.fontSize as number,
     );
     const currentLineHeight = getSingleValue(lineHeight, i);
     return {
@@ -605,7 +605,7 @@ export const VictoryLabel: {
       // @ts-expect-error TODO: This looks like a bug:
       textSize: TextSize.approximateTextSize(line, currentStyle),
       lineHeight: currentLineHeight,
-      backgroundPadding: getSingleValue(backgroundPadding, i)
+      backgroundPadding: getSingleValue(backgroundPadding, i),
     };
   });
 
@@ -614,13 +614,13 @@ export const VictoryLabel: {
   if (props.backgroundStyle) {
     const backgroundElement = getBackgroundElement(
       calculatedProps,
-      tspanValues
+      tspanValues,
     );
     const children = [backgroundElement, label];
     const backgroundWithLabel = React.cloneElement(
       props.groupComponent!,
       {},
-      children
+      children,
     );
 
     return props.renderInPortal ? (
@@ -641,20 +641,20 @@ VictoryLabel.propTypes = {
   angle: PropTypes.oneOfType([
     PropTypes.string,
     PropTypes.number,
-    PropTypes.func
+    PropTypes.func,
   ]),
   ariaLabel: PropTypes.oneOfType([PropTypes.string, PropTypes.func]),
   backgroundComponent: PropTypes.element,
   backgroundPadding: PropTypes.oneOfType([
     PropTypes.number,
     PropTypes.object,
-    PropTypes.array
+    PropTypes.array,
   ]),
   backgroundStyle: PropTypes.oneOfType([PropTypes.object, PropTypes.array]),
   capHeight: PropTypes.oneOfType([
     PropTypes.string,
     CustomPropTypes.nonNegative,
-    PropTypes.func
+    PropTypes.func,
   ]),
   className: PropTypes.string,
   data: PropTypes.array,
@@ -674,17 +674,17 @@ VictoryLabel.propTypes = {
     PropTypes.string,
     CustomPropTypes.nonNegative,
     PropTypes.func,
-    PropTypes.array
+    PropTypes.array,
   ]),
   origin: PropTypes.shape({
     x: CustomPropTypes.nonNegative.isRequired,
-    y: CustomPropTypes.nonNegative.isRequired
+    y: CustomPropTypes.nonNegative.isRequired,
   }),
   polar: PropTypes.bool,
   renderInPortal: PropTypes.bool,
   scale: PropTypes.shape({
     x: CustomPropTypes.scale,
-    y: CustomPropTypes.scale
+    y: CustomPropTypes.scale,
   }),
   style: PropTypes.oneOfType([PropTypes.object, PropTypes.array]),
   tabIndex: PropTypes.oneOfType([PropTypes.number, PropTypes.func]),
@@ -692,30 +692,30 @@ VictoryLabel.propTypes = {
     PropTypes.string,
     PropTypes.number,
     PropTypes.func,
-    PropTypes.array
+    PropTypes.array,
   ]),
   // @ts-expect-error Function is not assignable to string"
   textAnchor: PropTypes.oneOfType([
     PropTypes.oneOf(["start", "middle", "end", "inherit"]),
-    PropTypes.func
+    PropTypes.func,
   ]),
   textComponent: PropTypes.element,
   title: PropTypes.string,
   transform: PropTypes.oneOfType([
     PropTypes.string,
     PropTypes.object,
-    PropTypes.func
+    PropTypes.func,
   ]),
   tspanComponent: PropTypes.element,
   // @ts-expect-error Function is not assignable to string"
   verticalAnchor: PropTypes.oneOfType([
     PropTypes.oneOf(["start", "middle", "end"]),
-    PropTypes.func
+    PropTypes.func,
   ]),
   // @ts-expect-error Number is not assignable to string
   x: PropTypes.oneOfType([PropTypes.number, PropTypes.string]),
   // @ts-expect-error Number is not assignable to string
-  y: PropTypes.oneOfType([PropTypes.number, PropTypes.string])
+  y: PropTypes.oneOfType([PropTypes.number, PropTypes.string]),
 };
 
 VictoryLabel.defaultProps = {
@@ -725,5 +725,5 @@ VictoryLabel.defaultProps = {
   textComponent: <Text />,
   tspanComponent: <TSpan />,
   capHeight: 0.71, // Magic number from d3.
-  lineHeight: 1
+  lineHeight: 1,
 };

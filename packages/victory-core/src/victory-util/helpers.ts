@@ -34,7 +34,7 @@ function getPolarRange(props, axis) {
  */
 export function omit<T, Keys extends keyof T>(
   originalObject: T,
-  ks: Array<Keys> = []
+  ks: Array<Keys> = [],
 ): Omit<T, Keys> {
   // code based on babel's _objectWithoutProperties
   const newObject = {} as T;
@@ -60,7 +60,7 @@ export function getPoint(datum) {
     x: exists(_voronoiX) ? _voronoiX : defaultX,
     x0: exists(_x0) ? _x0 : _x,
     y: exists(_voronoiY) ? _voronoiY : defaultY,
-    y0: exists(_y0) ? _y0 : _y
+    y0: exists(_y0) ? _y0 : _y,
   };
   return defaults({}, point, datum);
 }
@@ -77,7 +77,7 @@ export function scalePoint(props, datum) {
     x: polar ? y * Math.cos(x) + origin.x : x,
     x0: polar ? y0 * Math.cos(x0) + origin.x : x0,
     y: polar ? -y * Math.sin(x) + origin.y : y,
-    y0: polar ? -y0 * Math.sin(x0) + origin.x : y0
+    y0: polar ? -y0 * Math.sin(x0) + origin.x : y0,
   };
 }
 
@@ -89,7 +89,7 @@ export function getPadding(props, name = "padding") {
     top: paddingObj.top || paddingVal,
     bottom: paddingObj.bottom || paddingVal,
     left: paddingObj.left || paddingVal,
-    right: paddingObj.right || paddingVal
+    right: paddingObj.right || paddingVal,
   };
 }
 
@@ -122,7 +122,7 @@ export function getStyles(style, defaultStyles) {
   return {
     parent: defaults({}, parent, defaultParent, { width, height }),
     labels: defaults({}, labels, defaultLabels),
-    data: defaults({}, data, defaultData)
+    data: defaults({}, data, defaultData),
   };
 }
 
@@ -165,7 +165,7 @@ export function getPolarOrigin(props) {
   const offsetHeight = height / 2 + top - bottom;
   return {
     x: offsetWidth + radius > width ? radius + left - right : offsetWidth,
-    y: offsetHeight + radius > height ? radius + top - bottom : offsetHeight
+    y: offsetHeight + radius > height ? radius + top - bottom : offsetHeight,
   };
 }
 
@@ -225,20 +225,20 @@ export function getCurrentAxis(axis, horizontal) {
 export function reduceChildren<
   TChildren extends React.ReactNode,
   TItem,
-  TResult = TItem[]
+  TResult = TItem[],
 >(
   children: TChildren[],
   iteratee: (
     child: TChildren,
     childName: string,
-    parent?: TChildren
+    parent?: TChildren,
   ) => TItem | null,
   parentProps = {},
   // @ts-expect-error These defaults are hard to type
   initialMemo: TResult = [],
   combine: (memo: TResult, item: TItem) => TResult = (memo, item) =>
     // @ts-expect-error These defaults are hard to type
-    memo.concat(item)
+    memo.concat(item),
 ): TResult {
   const sharedProps = [
     "data",
@@ -249,7 +249,7 @@ export function reduceChildren<
     "endAngle",
     "minDomain",
     "maxDomain",
-    "horizontal"
+    "horizontal",
   ];
   const traverseChildren = (childArray, names, parent?) => {
     return childArray.reduce((memo, child, index) => {
@@ -259,7 +259,7 @@ export function reduceChildren<
         const childProps = assign(
           {},
           child.props,
-          pick(parentProps, sharedProps)
+          pick(parentProps, sharedProps),
         );
 
         const nestedChildren =
@@ -269,13 +269,13 @@ export function reduceChildren<
             ? child.type.getChildren(childProps)
             : (
                 React.Children.toArray(
-                  child.props.children
+                  child.props.children,
                 ) as Array<React.ReactElement>
               ).map((c) => {
                 const nestedChildProps = assign(
                   {},
                   c.props,
-                  pick(childProps, sharedProps)
+                  pick(childProps, sharedProps),
                 );
                 return React.cloneElement(c, nestedChildProps);
               });
@@ -284,7 +284,7 @@ export function reduceChildren<
         const nestedResults = traverseChildren(
           nestedChildren,
           childNames,
-          child
+          child,
         );
         memo = combine(memo, nestedResults);
       } else {

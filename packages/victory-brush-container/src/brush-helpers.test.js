@@ -25,7 +25,7 @@ describe("containers/brush-helpers", () => {
         x1: new Date("1/1/2022"),
         x2: new Date("2/1/2022"),
         y1: 0,
-        y2: 2
+        y2: 2,
       };
       const isWithinBoundsResults = withinBounds(point, bounds);
 
@@ -38,7 +38,7 @@ describe("containers/brush-helpers", () => {
         x1: new Date("1/1/2022"),
         x2: new Date("2/1/2022"),
         y1: 0,
-        y2: 2
+        y2: 2,
       };
       const isWithinBoundsResults = withinBounds(point, bounds);
 
@@ -60,13 +60,13 @@ describe("containers/brush-helpers", () => {
         x1: new Date("1/2/2022 PST"),
         x2: new Date("2/1/2022 PST"),
         y1: 0,
-        y2: 2
+        y2: 2,
       };
       const box = {
         x1: new Date("1/1/2022 PST"),
         x2: new Date("1/10/2022 PST"),
         y1: 1,
-        y2: 2
+        y2: 2,
       };
       const constrainBoxResult = constrainBox(box, fullDomainBox);
 
@@ -74,7 +74,7 @@ describe("containers/brush-helpers", () => {
         x1: 1641110400000,
         y1: 1,
         x2: 1641888000000,
-        y2: 2
+        y2: 2,
       });
     });
   });

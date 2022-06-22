@@ -12,28 +12,28 @@ describe("getInitialTransitionState", () => {
       childrenTransitions: [],
       nodesWillExit: false,
       nodesWillEnter: false,
-      nodesShouldEnter: false
+      nodesShouldEnter: false,
     });
   });
 
   it("it returns childTransitions entering and exiting false for identical data", () => {
     const child = makeChild([
       { x: 1, y: 1 },
-      { x: 2, y: 3 }
+      { x: 2, y: 3 },
     ]);
     const result = Transitions.getInitialTransitionState(child, child);
     expect(result).toEqual({
       childrenTransitions: [{ entering: false, exiting: false }],
       nodesWillExit: false,
       nodesWillEnter: false,
-      nodesShouldEnter: false
+      nodesShouldEnter: false,
     });
   });
 
   it("it returns childTransitions with exiting data", () => {
     const child1 = makeChild([
       { x: 1, y: 1 },
-      { x: 2, y: 3 }
+      { x: 2, y: 3 },
     ]);
     const child2 = makeChild([{ x: 1, y: 1 }]);
     const result = Transitions.getInitialTransitionState(child1, child2);
@@ -41,7 +41,7 @@ describe("getInitialTransitionState", () => {
       childrenTransitions: [{ entering: false, exiting: { 1: true } }],
       nodesWillExit: true,
       nodesWillEnter: false,
-      nodesShouldEnter: false
+      nodesShouldEnter: false,
     });
   });
 
@@ -49,14 +49,14 @@ describe("getInitialTransitionState", () => {
     const child1 = makeChild([{ x: 1, y: 1 }]);
     const child2 = makeChild([
       { x: 1, y: 1 },
-      { x: 2, y: 3 }
+      { x: 2, y: 3 },
     ]);
     const result = Transitions.getInitialTransitionState(child1, child2);
     expect(result).toEqual({
       childrenTransitions: [{ entering: { 1: true }, exiting: false }],
       nodesWillExit: false,
       nodesWillEnter: true,
-      nodesShouldEnter: false
+      nodesShouldEnter: false,
     });
   });
 });
@@ -68,10 +68,10 @@ describe("getTransitionPropsFactory", () => {
       type: {
         defaultTransitions: {
           onExit: { duration: 1, before: toZero },
-          onEnter: { duration: 2, before: toZero }
-        }
+          onEnter: { duration: 2, before: toZero },
+        },
       },
-      props: { data, animate: { duration: 0 } }
+      props: { data, animate: { duration: 0 } },
     };
   };
 
@@ -84,28 +84,28 @@ describe("getTransitionPropsFactory", () => {
       nodesWillEnter: false,
       nodesShouldEnter: false,
       nodesShouldLoad: true,
-      nodesDoneLoad: true
+      nodesDoneLoad: true,
     };
     const result = Transitions.getTransitionPropsFactory(
       {},
       exitingState,
-      callback
+      callback,
     );
     const child = makeChild([
       { x: 1, y: 1 },
-      { x: 2, y: 3 }
+      { x: 2, y: 3 },
     ]);
     const calledResult = result(child, 0);
     expect(result).toBeInstanceOf(Function);
     expect(Object.keys(calledResult)).toEqual(
-      expect.arrayContaining(["animate", "data"])
+      expect.arrayContaining(["animate", "data"]),
     );
     expect(calledResult.data).toEqual([
       { x: 1, y: 1 },
-      { x: 2, y: 0 }
+      { x: 2, y: 0 },
     ]);
     expect(calledResult.animate!.duration).toEqual(
-      child.type.defaultTransitions.onExit.duration
+      child.type.defaultTransitions.onExit.duration,
     );
   });
 
@@ -116,28 +116,28 @@ describe("getTransitionPropsFactory", () => {
       nodesWillEnter: true,
       nodesShouldEnter: false,
       nodesShouldLoad: true,
-      nodesDoneLoad: true
+      nodesDoneLoad: true,
     };
     const result = Transitions.getTransitionPropsFactory(
       {},
       enteringState,
-      callback
+      callback,
     );
     const child = makeChild([
       { x: 1, y: 1 },
-      { x: 2, y: 3 }
+      { x: 2, y: 3 },
     ]);
     const calledResult = result(child, 0);
     expect(result).toBeInstanceOf(Function);
     expect(calledResult).toBeInstanceOf(Object);
     expect(calledResult).toBeInstanceOf(Object);
     expect(Object.keys(calledResult)).toEqual(
-      expect.arrayContaining(["animate", "data"])
+      expect.arrayContaining(["animate", "data"]),
     );
 
     expect(calledResult.data).toEqual([
       { x: 1, y: 1 },
-      { x: 2, y: 0 }
+      { x: 2, y: 0 },
     ]);
   });
 });

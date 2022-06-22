@@ -14,7 +14,7 @@ const symbolData: {
     symbol: "circle",
     label: "circle",
     fill: "red",
-    opacity: 0.8
+    opacity: 0.8,
   },
   {
     x: 2,
@@ -23,7 +23,7 @@ const symbolData: {
     symbol: "diamond",
     label: "diamond",
     fill: "red",
-    opacity: 0.8
+    opacity: 0.8,
   },
   {
     x: 3,
@@ -32,7 +32,7 @@ const symbolData: {
     symbol: "plus",
     label: "plus",
     fill: "red",
-    opacity: 0.8
+    opacity: 0.8,
   },
   {
     x: 4,
@@ -41,7 +41,7 @@ const symbolData: {
     symbol: "square",
     label: "square",
     fill: "red",
-    opacity: 0.8
+    opacity: 0.8,
   },
   {
     x: 5,
@@ -50,7 +50,7 @@ const symbolData: {
     symbol: "star",
     label: "star",
     fill: "red",
-    opacity: 0.8
+    opacity: 0.8,
   },
   {
     x: 6,
@@ -59,7 +59,7 @@ const symbolData: {
     symbol: "triangleDown",
     label: "triangleDown",
     fill: "red",
-    opacity: 0.8
+    opacity: 0.8,
   },
   {
     x: 7,
@@ -68,7 +68,7 @@ const symbolData: {
     symbol: "triangleUp",
     label: "triangleUp",
     fill: "red",
-    opacity: 0.8
+    opacity: 0.8,
   },
   {
     x: 8,
@@ -77,8 +77,8 @@ const symbolData: {
     symbol: "cross",
     label: "cross",
     fill: "red",
-    opacity: 0.8
-  }
+    opacity: 0.8,
+  },
 ];
 
 export default symbolData;

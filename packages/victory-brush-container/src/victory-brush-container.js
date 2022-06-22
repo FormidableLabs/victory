@@ -17,7 +17,7 @@ export const brushContainerMixin = (base) =>
       brushDimension: PropTypes.oneOf(["x", "y"]),
       brushDomain: PropTypes.shape({
         x: PropTypes.array,
-        y: PropTypes.array
+        y: PropTypes.array,
       }),
       brushStyle: PropTypes.object,
       defaultBrushArea: PropTypes.oneOf(["all", "disable", "none", "move"]),
@@ -27,7 +27,7 @@ export const brushContainerMixin = (base) =>
       handleWidth: PropTypes.number,
       onBrushCleared: PropTypes.func,
       onBrushDomainChange: PropTypes.func,
-      onBrushDomainChangeEnd: PropTypes.func
+      onBrushDomainChangeEnd: PropTypes.func,
     };
     static defaultProps = {
       ...VictoryContainer.defaultProps,
@@ -38,15 +38,15 @@ export const brushContainerMixin = (base) =>
       brushStyle: {
         stroke: "transparent",
         fill: "black",
-        fillOpacity: 0.1
+        fillOpacity: 0.1,
       },
       handleComponent: <Rect />,
       handleStyle: {
         stroke: "transparent",
-        fill: "transparent"
+        fill: "transparent",
       },
       handleWidth: 8,
-      mouseMoveThreshold: 0
+      mouseMoveThreshold: 0,
     };
 
     static defaultEvents = (props) => {
@@ -90,9 +90,9 @@ export const brushContainerMixin = (base) =>
               return props.disable
                 ? {}
                 : BrushHelpers.onGlobalMouseUp(evt, targetProps);
-            }
-          }
-        }
+            },
+          },
+        },
       ];
     };
 
@@ -110,7 +110,7 @@ export const brushContainerMixin = (base) =>
             x: Math.min(x[0], x[1]),
             y: Math.min(y[0], y[1]),
             cursor,
-            style: defaults({}, brushComponentStyle, brushStyle)
+            style: defaults({}, brushComponentStyle, brushStyle),
           })
         : null;
     }
@@ -118,7 +118,7 @@ export const brushContainerMixin = (base) =>
     getCursorPointers(props) {
       const cursors = {
         yProps: "ns-resize",
-        xProps: "ew-resize"
+        xProps: "ew-resize",
       };
       if (!props.allowResize && props.allowDrag) {
         cursors.xProps = "move";
@@ -136,7 +136,7 @@ export const brushContainerMixin = (base) =>
       const { x1, x2, y1, y2 } = domainBox;
       const { top, bottom, left, right } = BrushHelpers.getHandles(
         props,
-        domainBox
+        domainBox,
       );
       const width = Math.abs(x2 - x1) || 1;
       const height = Math.abs(y2 - y1) || 1;
@@ -149,20 +149,20 @@ export const brushContainerMixin = (base) =>
         style,
         width,
         height: handleWidth,
-        cursor: cursors.yProps
+        cursor: cursors.yProps,
       };
       const xProps = {
         style,
         width: handleWidth,
         height,
-        cursor: cursors.xProps
+        cursor: cursors.xProps,
       };
 
       const handleProps = {
         top: top && assign({ x: top.x1, y: top.y1 }, yProps),
         bottom: bottom && assign({ x: bottom.x1, y: bottom.y1 }, yProps),
         left: left && assign({ y: left.y1, x: left.x1 }, xProps),
-        right: right && assign({ y: right.y1, x: right.x1 }, xProps)
+        right: right && assign({ y: right.y1, x: right.x1 }, xProps),
       };
       const handles = ["top", "bottom", "left", "right"].reduce(
         (memo, curr) => {
@@ -170,13 +170,13 @@ export const brushContainerMixin = (base) =>
             ? memo.concat(
                 React.cloneElement(
                   handleComponent,
-                  assign({ key: `${name}-handle-${curr}` }, handleProps[curr])
-                )
+                  assign({ key: `${name}-handle-${curr}` }, handleProps[curr]),
+                ),
               )
             : memo;
           return memo;
         },
-        []
+        [],
       );
       return handles.length ? handles : null;
     }
@@ -196,7 +196,7 @@ export const brushContainerMixin = (base) =>
     getChildren(props) {
       return [
         ...React.Children.toArray(props.children),
-        ...this.getRect(props)
+        ...this.getRect(props),
       ];
     }
   };

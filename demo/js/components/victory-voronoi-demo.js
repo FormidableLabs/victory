@@ -12,7 +12,7 @@ const getData = () => {
     return {
       x: random(600),
       y: random(600),
-      i
+      i,
     };
   });
 };
@@ -21,7 +21,7 @@ class App extends React.Component {
   constructor(props) {
     super(props);
     this.state = {
-      data: getData()
+      data: getData(),
     };
   }
 
@@ -29,7 +29,7 @@ class App extends React.Component {
     /* eslint-disable react/no-did-mount-set-state */
     this.setStateInterval = window.setInterval(() => {
       this.setState({
-        data: getData()
+        data: getData(),
       });
     }, 3000);
   }
@@ -44,19 +44,19 @@ class App extends React.Component {
       flexDirection: "row",
       flexWrap: "wrap",
       alignItems: "center",
-      justifyContent: "center"
+      justifyContent: "center",
     };
 
     const parentStyle = {
       border: "1px solid #ccc",
       margin: "2%",
-      maxWidth: "40%"
+      maxWidth: "40%",
     };
     const visible = {
       fill: "gray",
       opacity: 0.1,
       stroke: "black",
-      strokeWidth: 2
+      strokeWidth: 2,
     };
 
     return (
@@ -71,7 +71,7 @@ class App extends React.Component {
               { x: 2, y: 2 },
               { x: 3, y: 3 },
               { x: 4, y: 2 },
-              { x: 5, y: 1 }
+              { x: 5, y: 1 },
             ]}
             events={[
               {
@@ -82,12 +82,12 @@ class App extends React.Component {
                       {
                         mutation: () => {
                           return { style: { fill: "orange" } };
-                        }
-                      }
+                        },
+                      },
                     ];
-                  }
-                }
-              }
+                  },
+                },
+              },
             ]}
           />
 
@@ -99,7 +99,7 @@ class App extends React.Component {
               { x: 2, y: 2 },
               { x: 3, y: 3 },
               { x: 4, y: 2 },
-              { x: 5, y: 1 }
+              { x: 5, y: 1 },
             ]}
           />
 

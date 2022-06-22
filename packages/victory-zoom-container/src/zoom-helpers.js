@@ -41,11 +41,11 @@ const RawZoomHelpers = {
     const [newMin, newMax] = this.getScaledDomain(
       currentDomain,
       factor,
-      percent
+      percent,
     );
     const newDomain = [
       newMin > fromBound && newMin < toBound ? newMin : fromBound,
-      newMax < toBound && newMax > fromBound ? newMax : toBound
+      newMax < toBound && newMax > fromBound ? newMax : toBound,
     ];
     const domain =
       Math.abs(minDomain[1] - minDomain[0]) >
@@ -76,7 +76,7 @@ const RawZoomHelpers = {
     const maxExtent = point + extent / 2;
     return [
       minExtent > from && minExtent < to ? minExtent : from,
-      maxExtent < to && maxExtent > from ? maxExtent : +from + extent / 2
+      maxExtent < to && maxExtent > from ? maxExtent : +from + extent / 2,
     ];
   },
 
@@ -102,7 +102,7 @@ const RawZoomHelpers = {
     const { x, y } = Selection.getSVGEventCoordinates(evt);
     const originalScale = {
       x: props.scale.x.domain(originalDomain.x),
-      y: props.scale.y.domain(originalDomain.y)
+      y: props.scale.y.domain(originalDomain.y),
     };
     return Selection.getDataCoordinates(props, originalScale, x, y);
   },
@@ -179,12 +179,12 @@ const RawZoomHelpers = {
             [zoomDimension]: Wrapper.getDomainFromChildren(
               props,
               zoomDimension,
-              childComponents
-            )
+              childComponents,
+            ),
           }
         : {
             x: Wrapper.getDomainFromChildren(props, "x", childComponents),
-            y: Wrapper.getDomainFromChildren(props, "y", childComponents)
+            y: Wrapper.getDomainFromChildren(props, "y", childComponents),
           };
     }
     return defaults({}, childrenDomain, originalDomain, domain);
@@ -206,10 +206,10 @@ const RawZoomHelpers = {
             startY: y,
             panning: true,
             parentSVG,
-            parentControlledProps: ["domain"]
+            parentControlledProps: ["domain"],
           };
-        }
-      }
+        },
+      },
     ];
   },
 
@@ -222,8 +222,8 @@ const RawZoomHelpers = {
         target: "parent",
         mutation: () => {
           return { panning: false };
-        }
-      }
+        },
+      },
     ];
   },
 
@@ -236,8 +236,8 @@ const RawZoomHelpers = {
         target: "parent",
         mutation: () => {
           return { panning: false };
-        }
-      }
+        },
+      },
     ];
   },
 
@@ -251,7 +251,7 @@ const RawZoomHelpers = {
         onZoomDomainChange,
         zoomDomain,
         zoomDimension,
-        horizontal
+        horizontal,
       } = targetProps;
       const parentSVG = targetProps.parentSVG || Selection.getParentSVG(evt);
       const { x, y } = Selection.getSVGEventCoordinates(evt, parentSVG);
@@ -269,7 +269,7 @@ const RawZoomHelpers = {
         y:
           zoomDimension === "x"
             ? originalDomain.y
-            : this.pan(lastDomain.y, originalDomain.y, dy)
+            : this.pan(lastDomain.y, originalDomain.y, dy),
       };
       const resumeAnimation = this.handleAnimation(ctx);
 
@@ -283,21 +283,21 @@ const RawZoomHelpers = {
         currentDomain,
         originalDomain,
         cachedZoomDomain: zoomDomain,
-        zoomActive
+        zoomActive,
       };
 
       if (isFunction(onZoomDomainChange)) {
         onZoomDomainChange(
           currentDomain,
-          defaults({}, mutatedProps, targetProps)
+          defaults({}, mutatedProps, targetProps),
         );
       }
       return [
         {
           target: "parent",
           callback: resumeAnimation,
-          mutation: () => mutatedProps
-        }
+          mutation: () => mutatedProps,
+        },
       ];
     }
     return undefined;
@@ -320,7 +320,7 @@ const RawZoomHelpers = {
       y:
         zoomDimension === "x"
           ? lastDomain.y
-          : this.scale(y, evt, targetProps, "y")
+          : this.scale(y, evt, targetProps, "y"),
     };
     const resumeAnimation = this.handleAnimation(ctx);
 
@@ -336,13 +336,13 @@ const RawZoomHelpers = {
       cachedZoomDomain: zoomDomain,
       parentControlledProps: ["domain"],
       panning: false,
-      zoomActive
+      zoomActive,
     };
 
     if (isFunction(onZoomDomainChange)) {
       onZoomDomainChange(
         currentDomain,
-        defaults({}, mutatedProps, targetProps)
+        defaults({}, mutatedProps, targetProps),
       );
     }
 
@@ -350,10 +350,10 @@ const RawZoomHelpers = {
       {
         target: "parent",
         callback: resumeAnimation,
-        mutation: () => mutatedProps
-      }
+        mutation: () => mutatedProps,
+      },
     ];
-  }
+  },
 };
 
 export { RawZoomHelpers }; // allow victory-native to extend these helpers
@@ -366,11 +366,11 @@ export default {
   onMouseMove: throttle(
     RawZoomHelpers.onMouseMove.bind(RawZoomHelpers),
     16, // eslint-disable-line no-magic-numbers
-    { leading: true, trailing: false }
+    { leading: true, trailing: false },
   ),
   onWheel: throttle(
     RawZoomHelpers.onWheel.bind(RawZoomHelpers),
     16, // eslint-disable-line no-magic-numbers
-    { leading: true, trailing: false }
-  )
+    { leading: true, trailing: false },
+  ),
 };

@@ -21,5 +21,5 @@ export default class PureRender extends React.Component {
 }
 
 PureRender.propTypes = {
-  children: PropTypes.any
+  children: PropTypes.any,
 };

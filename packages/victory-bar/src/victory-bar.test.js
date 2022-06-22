@@ -13,7 +13,7 @@ describe("components/victory-bar", () => {
           data-testid="victory-bar"
           aria-label="Chart"
           unsafe-prop="test"
-        />
+        />,
       );
 
       const container = screen.getByTestId("victory-bar");
@@ -29,7 +29,7 @@ describe("components/victory-bar", () => {
           aria-label="Chart"
           unsafe-prop="test"
         />,
-        { wrapper: VictoryChart }
+        { wrapper: VictoryChart },
       );
 
       const container = screen.getByTestId("victory-bar");
@@ -60,7 +60,7 @@ describe("components/victory-bar", () => {
     it("renders each bar as a rectangle", () => {
       const { container } = render(<VictoryBar />);
       const barCommandStrings = Array.from(
-        container.querySelectorAll("path")
+        container.querySelectorAll("path"),
       ).map((bar) => bar.getAttribute("d"));
       barCommandStrings.forEach((commandString) => {
         expect(isBar(commandString)).toBeTruthy();
@@ -85,7 +85,7 @@ describe("components/victory-bar", () => {
         (bar) => {
           const commandString = bar.getAttribute("d");
           return getBarHeight(commandString);
-        }
+        },
       );
 
       const ascendingBars = [...barHeight].sort((a, b) => a - b);
@@ -98,13 +98,13 @@ describe("components/victory-bar", () => {
         .map((i) => ({ x: i, y: i }))
         .reverse();
       const { container } = render(
-        <VictoryBar data={data} sortKey="x" sortOrder="descending" />
+        <VictoryBar data={data} sortKey="x" sortOrder="descending" />,
       );
       const barHeight = Array.from(container.querySelectorAll("path")).map(
         (bar) => {
           const commandString = bar.getAttribute("d");
           return getBarHeight(commandString);
-        }
+        },
       );
       const descendingBars = [...barHeight].sort((a, b) => b - a);
 
@@ -121,7 +121,7 @@ describe("components/victory-bar", () => {
     it("renders bars for deeply-nested data", () => {
       const data = range(8).map((i) => ({ a: { b: [{ x: i, y: i }] } }));
       const { container } = render(
-        <VictoryBar data={data} x="a.b[0].x" y="a.b[0].y" />
+        <VictoryBar data={data} x="a.b[0].x" y="a.b[0].y" />,
       );
       const bars = container.querySelectorAll("path");
       expect(bars).toHaveLength(8);
@@ -130,7 +130,7 @@ describe("components/victory-bar", () => {
     it("renders bars values with null accessor", () => {
       const data = range(8);
       const { container } = render(
-        <VictoryBar data={data} x={null} y={null} />
+        <VictoryBar data={data} x={null} y={null} />,
       );
       const bars = container.querySelectorAll("path");
       expect(bars).toHaveLength(8);
@@ -142,9 +142,9 @@ describe("components/victory-bar", () => {
           data={[
             { x: 1, y: 1 },
             { x: 2, y: 2 },
-            { x: 3, y: 3 }
+            { x: 3, y: 3 },
           ]}
-        />
+        />,
       );
       const bars = Array.from(container.querySelectorAll("path"));
       const heights = bars.map((bar) => {
@@ -160,7 +160,7 @@ describe("components/victory-bar", () => {
       const data = [
         { x: 1, y: 2 },
         { x: null, y: 4 },
-        { x: 5, y: null }
+        { x: 5, y: null },
       ];
       const { container } = render(<VictoryBar data={data} />);
       expect(container.querySelectorAll("path")).toHaveLength(1);
@@ -180,10 +180,10 @@ describe("components/victory-bar", () => {
           events={[
             {
               target: "parent",
-              eventHandlers: { onClick: clickHandler }
-            }
+              eventHandlers: { onClick: clickHandler },
+            },
           ]}
-        />
+        />,
       );
       const bar = container.querySelector("path");
       fireEvent.click(bar);
@@ -195,7 +195,7 @@ describe("components/victory-bar", () => {
       const data = [
         { x: 0, y: 0, label: "0" },
         { x: 1, y: 1, label: "1" },
-        { x: 2, y: 2, label: "2" }
+        { x: 2, y: 2, label: "2" },
       ];
       const { container } = render(
         <VictoryBar
@@ -203,10 +203,10 @@ describe("components/victory-bar", () => {
           events={[
             {
               target: "data",
-              eventHandlers: { onClick: clickHandler }
-            }
+              eventHandlers: { onClick: clickHandler },
+            },
           ]}
-        />
+        />,
       );
       const bars = container.querySelectorAll("path");
       bars.forEach((bar, index) => {
@@ -223,7 +223,7 @@ describe("components/victory-bar", () => {
       const data = [
         { x: 0, y: 0, label: "label 0" },
         { x: 1, y: 1, label: "label 1" },
-        { x: 2, y: 2, label: "label 2" }
+        { x: 2, y: 2, label: "label 2" },
       ];
 
       render(
@@ -233,10 +233,10 @@ describe("components/victory-bar", () => {
           events={[
             {
               target: "labels",
-              eventHandlers: { onClick: clickHandler }
-            }
+              eventHandlers: { onClick: clickHandler },
+            },
           ]}
-        />
+        />,
       );
       const label = screen.getByText("label 1");
 
@@ -265,7 +265,7 @@ describe("components/victory-bar", () => {
               tabIndex={({ index }) => index + 1}
             />
           }
-        />
+        />,
       );
 
       container.querySelectorAll("path").forEach((bar, index) => {

@@ -26,8 +26,8 @@ describe("components/victory-chart", () => {
       const props = {
         defaultAxes: {
           independent: <VictoryAxis data-testid="axis" />,
-          dependent: <VictoryAxis data-testid="axis" dependentAxis />
-        }
+          dependent: <VictoryAxis data-testid="axis" dependentAxis />,
+        },
       };
       render(<VictoryChart {...props} />);
 
@@ -40,7 +40,7 @@ describe("components/victory-chart", () => {
       render(
         <VictoryChart>
           <VictoryAxis data-testid="axis" />
-        </VictoryChart>
+        </VictoryChart>,
       );
       const axes = screen.getAllByTestId("axis");
 
@@ -61,7 +61,7 @@ describe("components/victory-chart", () => {
             data-offset-x={(props) => props.offsetX}
             data-offset-y={(props) => props.offsetY}
           />
-        </VictoryChart>
+        </VictoryChart>,
       );
       const axis = screen.getByTestId("axis");
 
@@ -86,10 +86,10 @@ describe("components/victory-chart", () => {
           events={[
             {
               target: "parent",
-              eventHandlers: { onClick: clickHandler }
-            }
+              eventHandlers: { onClick: clickHandler },
+            },
           ]}
-        />
+        />,
       );
       const svg = container.querySelector("svg");
 

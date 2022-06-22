@@ -4,7 +4,7 @@ import {
   NumberOrCallback,
   StringOrCallback,
   ScatterSymbolType,
-  PaddingProps
+  PaddingProps,
 } from "victory-core";
 import * as React from "react";
 

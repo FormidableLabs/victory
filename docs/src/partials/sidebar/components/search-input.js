@@ -33,7 +33,7 @@ const SidebarSearchInput = ({ content, onHandleInputChange, searchText }) => (
 SidebarSearchInput.propTypes = {
   content: PropTypes.array,
   onHandleInputChange: PropTypes.func,
-  searchText: PropTypes.string
+  searchText: PropTypes.string,
 };
 
 export default SidebarSearchInput;

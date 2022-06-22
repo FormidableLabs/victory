@@ -18,7 +18,7 @@ import { TABLE_OF_CONTENTS_SECTIONS } from "./constants";
 import {
   SidebarSectionHeading,
   SidebarListItemLink,
-  SidebarListItem
+  SidebarListItem,
 } from "./styles";
 
 // was gonna pass this but I'm leaning towards this being an internal detail since at the end of the day the proper
@@ -78,7 +78,7 @@ const getMatchTree = (link, filterTerm) => {
     keys: ["value", "subHeadings.value", "subHeadings.subHeadings.value"],
     threshold: 0.2,
     findAllMatches: true,
-    distance: 100
+    distance: 100,
   };
   const fuse = new Fuse(link.subHeadings, options);
   const matches = fuse.search(filterTerm);
@@ -86,8 +86,8 @@ const getMatchTree = (link, filterTerm) => {
     const maxDepth = maxBy(matches, "depth").depth;
     let matchIndices = matches.map((match) =>
       findIndex(link.subHeadings, (heading) =>
-        includes(heading.value, match.value)
-      )
+        includes(heading.value, match.value),
+      ),
     );
 
     matchIndices = matchIndices.sort((a, b) => a - b);
@@ -118,7 +118,7 @@ const Sidebar = ({ className, content, onCloseClick }) => {
       keys: ["data.subHeadings.value", "data.title", "data.category"],
       threshold: 0.2,
       findAllMatches: true,
-      distance: 100
+      distance: 100,
     };
 
     const fuse = new Fuse(content, options);
@@ -144,7 +144,7 @@ const Sidebar = ({ className, content, onCloseClick }) => {
       return filteredEdges
         ? (filteredByCategory[[sectionCategory.category]] =
             filteredEdges.filter((edge) =>
-              sectionCategory.category.includes(edge.data.category)
+              sectionCategory.category.includes(edge.data.category),
             ))
         : null;
     });
@@ -232,16 +232,16 @@ const Sidebar = ({ className, content, onCloseClick }) => {
             subCategories={[
               {
                 title: "Charts",
-                content: linksLists.charts
+                content: linksLists.charts,
               },
               {
                 title: "Containers",
-                content: linksLists.containers
+                content: linksLists.containers,
               },
               {
                 title: "More",
-                content: linksLists.more
-              }
+                content: linksLists.more,
+              },
             ]}
           />
         </>
@@ -254,11 +254,11 @@ Sidebar.propTypes = {
   className: PropTypes.string,
   content: PropTypes.array,
   hideCloseButton: PropTypes.bool,
-  onCloseClick: PropTypes.func
+  onCloseClick: PropTypes.func,
 };
 
 Sidebar.defaultProps = {
-  className: ""
+  className: "",
 };
 
 export default withRouteData(Sidebar);

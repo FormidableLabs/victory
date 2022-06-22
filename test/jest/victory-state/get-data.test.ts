@@ -9,7 +9,7 @@ describe("getData", () => {
   it("returns formatted data", () => {
     const data = [
       { x: "kittens", y: 3 },
-      { x: "cats", y: 5 }
+      { x: "cats", y: 5 },
     ];
     expect(getData({ data })).toMatchInlineSnapshot(`
       Array [
@@ -35,12 +35,12 @@ describe("getData", () => {
     const data = [
       {
         x: new Date(Date.UTC(2022, 0, 1)),
-        y: 10
+        y: 10,
       },
       {
         x: new Date(Date.UTC(2022, 0, 2)),
-        y: 20
-      }
+        y: 20,
+      },
     ];
     expect(getData({ data })).toMatchInlineSnapshot(`
       Array [
@@ -64,16 +64,16 @@ describe("getData", () => {
     const data = [
       {
         x: null,
-        y: 1
+        y: 1,
       },
       {
         y: 2,
-        x: null
+        x: null,
       },
       {
         x: 3,
-        y: 3
-      }
+        y: 3,
+      },
     ];
     expect(getData({ data })).toHaveLength(1);
   });
@@ -81,7 +81,7 @@ describe("getData", () => {
   it("returns formatted data witfh accessors", () => {
     const data = [
       { one: "kittens", two: 3 },
-      { one: "cats", two: 5 }
+      { one: "cats", two: 5 },
     ];
     expect(getData({ data, x: "one", y: "two" })).toMatchInlineSnapshot(`
       Array [
@@ -111,13 +111,13 @@ describe("getData", () => {
     const data = [
       { x: 2, y: 2 },
       { x: 1, y: 3 },
-      { x: 3, y: 1 }
+      { x: 3, y: 1 },
     ];
 
     expect(getData({ data })).toEqual([
       { _x: 2, x: 2, _y: 2, y: 2 },
       { _x: 1, x: 1, _y: 3, y: 3 },
-      { _x: 3, x: 3, _y: 1, y: 1 }
+      { _x: 3, x: 3, _y: 1, y: 1 },
     ]);
   });
 
@@ -125,13 +125,13 @@ describe("getData", () => {
     const data = [
       { x: 1, y: 1, order: 2 },
       { x: 3, y: 3, order: 1 },
-      { x: 2, y: 2, order: 3 }
+      { x: 2, y: 2, order: 3 },
     ];
 
     expect(getData({ data, sortKey: "order" })).toEqual([
       { _x: 3, x: 3, _y: 3, y: 3, order: 1 },
       { _x: 1, x: 1, _y: 1, y: 1, order: 2 },
-      { _x: 2, x: 2, _y: 2, y: 2, order: 3 }
+      { _x: 2, x: 2, _y: 2, y: 2, order: 3 },
     ]);
   });
 
@@ -139,15 +139,15 @@ describe("getData", () => {
     const data = [
       { x: 1, y: 1, order: 2 },
       { x: 3, y: 3, order: 1 },
-      { x: 2, y: 2, order: 3 }
+      { x: 2, y: 2, order: 3 },
     ];
 
     expect(
-      getData({ data, sortKey: "order", sortOrder: "descending" })
+      getData({ data, sortKey: "order", sortOrder: "descending" }),
     ).toEqual([
       { _x: 2, x: 2, _y: 2, y: 2, order: 3 },
       { _x: 1, x: 1, _y: 1, y: 1, order: 2 },
-      { _x: 3, x: 3, _y: 3, y: 3, order: 1 }
+      { _x: 3, x: 3, _y: 3, y: 3, order: 1 },
     ]);
   });
 
@@ -163,7 +163,7 @@ describe("getData", () => {
     expect(getData({ data })).toEqual([
       { _x: 0, x: 0, _y: 0, y: 0 },
       { _x: 1, x: 1, _y: 1, y: 1 },
-      { _x: 2, x: 2, _y: 2, y: 2 }
+      { _x: 2, x: 2, _y: 2, y: 2 },
     ]);
   });
 });

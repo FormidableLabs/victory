@@ -28,7 +28,7 @@ export const BoxPlotScreen: React.FC = () => {
             { x: "blue", y: [1, 15, 6, 8] },
             { x: "green", y: [3, 5, 6, 9] },
             { x: "yellow", y: [5, 20, 8, 12] },
-            { x: "white", y: [2, 11, 12, 13] }
+            { x: "white", y: [2, 11, 12, 13] },
           ]}
         />
       </VictoryChart>
@@ -41,7 +41,7 @@ export const BoxPlotScreen: React.FC = () => {
           data={[
             { type: 1, min: 1, max: 18, median: 8, q1: 5, q3: 15 },
             { type: 2, min: 4, max: 20, median: 10, q1: 7, q3: 15 },
-            { type: 3, min: 3, max: 12, median: 6, q1: 5, q3: 10 }
+            { type: 3, min: 3, max: 12, median: 6, q1: 5, q3: 10 },
           ]}
         />
       </VictoryChart>

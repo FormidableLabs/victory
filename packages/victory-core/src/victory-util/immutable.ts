@@ -14,7 +14,7 @@ export function isRecord(x): x is Record<string, unknown> {
 }
 
 export function isImmutable(
-  x
+  x,
 ): x is Iterable<unknown, unknown> | Record<string, unknown> {
   return isIterable(x) || isRecord(x);
 }
@@ -37,7 +37,7 @@ export function shallowToJS(x, whitelist?: Record<string, boolean | unknown>) {
           result[key] = curr;
           return result;
         },
-        isList(x) ? [] : {}
+        isList(x) ? [] : {},
       )
     : x;
 }

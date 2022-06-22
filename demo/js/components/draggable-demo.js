@@ -14,14 +14,14 @@ const bars = [
   { name: "SEA", range: [new Date(2013, 1, 1), new Date(2019, 1, 1)] },
   { name: "HKG", range: [new Date(2015, 1, 1), new Date(2015, 5, 1)] },
   { name: "LHR", range: [new Date(2016, 5, 1), new Date(2019, 1, 1)] },
-  { name: "DEN", range: [new Date(2018, 8, 1), new Date(2019, 1, 1)] }
+  { name: "DEN", range: [new Date(2018, 8, 1), new Date(2019, 1, 1)] },
 ];
 
 const points = [
   { name: "SEA", date: new Date(2012, 9, 1) },
   { name: "HKG", date: new Date(2014, 3, 1) },
   { name: "LHR", date: new Date(2015, 6, 1) },
-  { name: "DEN", date: new Date(2018, 3, 1) }
+  { name: "DEN", date: new Date(2018, 3, 1) },
 ];
 
 class DraggablePoint extends React.Component {
@@ -32,15 +32,16 @@ class DraggablePoint extends React.Component {
         onMouseOver: (evt, targetProps) => {
           return [
             {
-              mutation: () => Object.assign({}, targetProps, { active: true })
-            }
+              mutation: () => Object.assign({}, targetProps, { active: true }),
+            },
           ];
         },
         onMouseDown: (evt, targetProps) => {
           return [
             {
-              mutation: () => Object.assign({}, targetProps, { dragging: true })
-            }
+              mutation: () =>
+                Object.assign({}, targetProps, { dragging: true }),
+            },
           ];
         },
         onMouseMove: (evt, targetProps) => {
@@ -52,8 +53,8 @@ class DraggablePoint extends React.Component {
             onPointChange({ name, date: point });
             return [
               {
-                mutation: () => Object.assign({}, targetProps, { x })
-              }
+                mutation: () => Object.assign({}, targetProps, { x }),
+              },
             ];
           }
           return null;
@@ -64,9 +65,9 @@ class DraggablePoint extends React.Component {
               mutation: () =>
                 Object.assign({}, targetProps, {
                   dragging: false,
-                  active: false
-                })
-            }
+                  active: false,
+                }),
+            },
           ];
         },
         onMouseLeave: (evt, targetProps) => {
@@ -75,13 +76,13 @@ class DraggablePoint extends React.Component {
               mutation: () =>
                 Object.assign({}, targetProps, {
                   dragging: false,
-                  active: false
-                })
-            }
+                  active: false,
+                }),
+            },
           ];
-        }
-      }
-    }
+        },
+      },
+    },
   ];
 
   render() {
@@ -102,14 +103,14 @@ class App extends React.Component {
   onDomainChange(domain, props) {
     const { name } = props;
     const newBars = this.state.bars.map((bar) =>
-      bar.name === name ? { name, range: domain } : bar
+      bar.name === name ? { name, range: domain } : bar,
     );
     this.setState({ bars: newBars });
   }
 
   onPointChange(point) {
     const newPoints = this.state.points.map((p) =>
-      p.name === point.name ? point : p
+      p.name === point.name ? point : p,
     );
     this.setState({ points: newPoints });
   }
@@ -120,12 +121,15 @@ class App extends React.Component {
       flexDirection: "row",
       flexWrap: "wrap",
       alignItems: "center",
-      justifyContent: "center"
+      justifyContent: "center",
     };
 
     const sharedProps = {
       width: 800,
-      domain: { y: [new Date(2012, 1, 1), new Date(2019, 1, 1)], x: [0.5, 4.5] }
+      domain: {
+        y: [new Date(2012, 1, 1), new Date(2019, 1, 1)],
+        x: [0.5, 4.5],
+      },
     };
 
     return (
@@ -150,7 +154,7 @@ class App extends React.Component {
         >
           <VictoryAxis
             style={{
-              axis: { stroke: "none" }
+              axis: { stroke: "none" },
             }}
           />
 
@@ -167,12 +171,12 @@ class App extends React.Component {
                   onBrushDomainChange={this.onDomainChange.bind(this)}
                   brushStyle={{
                     fill: "skyBlue",
-                    opacity: ({ active }) => (active ? 1 : 0.5)
+                    opacity: ({ active }) => (active ? 1 : 0.5),
                   }}
                 />
               }
               style={{
-                axis: { stroke: "none" }
+                axis: { stroke: "none" },
               }}
               axisValue={bar.name}
               tickFormat={() => ""}
@@ -187,8 +191,8 @@ class App extends React.Component {
               data: {
                 fill: "skyBlue",
                 opacity: ({ active }) => (active ? 1 : 0.5),
-                cursor: "move"
-              }
+                cursor: "move",
+              },
             }}
             x="name"
             y="date"
@@ -212,7 +216,7 @@ class App extends React.Component {
         >
           <VictoryAxis
             style={{
-              axis: { stroke: "none" }
+              axis: { stroke: "none" },
             }}
           />
           <VictoryAxis
@@ -220,7 +224,7 @@ class App extends React.Component {
             orientation="top"
             style={{
               axis: { stroke: "none" },
-              tickLabels: { fontSize: 20 }
+              tickLabels: { fontSize: 20 },
             }}
             tickCount={3}
             tickFormat={(t) => t.getFullYear()}
@@ -229,14 +233,14 @@ class App extends React.Component {
             data={this.state.points}
             size={5}
             style={{
-              data: { fill: "skyBlue" }
+              data: { fill: "skyBlue" },
             }}
             x="name"
             y="date"
           />
           <VictoryBar
             style={{
-              data: { fill: "skyBlue" }
+              data: { fill: "skyBlue" },
             }}
             data={this.state.bars}
             x="name"

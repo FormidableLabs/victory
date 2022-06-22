@@ -8,7 +8,7 @@ import {
   VictoryLine,
   VictoryLabel,
   VictoryBar,
-  VictoryContainer
+  VictoryContainer,
 } from "victory-native";
 import { DomainTuple } from "victory-core";
 import _ from "lodash";
@@ -35,7 +35,7 @@ const data: DataType = [
   { name: "Casey", strength: 4, intelligence: 15, speed: 80, luck: 1 },
   { name: "Drew", strength: 3, intelligence: 25, speed: 600, luck: 5 },
   { name: "Erin", strength: 9, intelligence: 50, speed: 350, luck: 4 },
-  { name: "Francis", strength: 2, intelligence: 40, speed: 200, luck: 2 }
+  { name: "Francis", strength: 2, intelligence: 40, speed: 200, luck: 2 },
 ];
 
 type Attribute = "strength" | "intelligence" | "speed" | "luck";
@@ -48,7 +48,7 @@ const padding: { [key: string]: number } = {
   top: 100,
   left: 50,
   right: 50,
-  bottom: 50
+  bottom: 50,
 };
 
 function normalizeData(maximumValues: number[]) {
@@ -57,8 +57,8 @@ function normalizeData(maximumValues: number[]) {
     name: datum.name,
     data: attributes.map((attribute, i) => ({
       x: attribute,
-      y: datum[attribute] / maximumValues[i]
-    }))
+      y: datum[attribute] / maximumValues[i],
+    })),
   }));
 }
 
@@ -83,14 +83,14 @@ export const BrushLineScreen: React.FC = () => {
     intelligence: undefined,
     strength: undefined,
     luck: undefined,
-    speed: undefined
+    speed: undefined,
   });
   const [isFiltered, setIsFiltered] = React.useState(false);
   const [activeDatasets, setActiveDatasets] = React.useState<string[]>([]);
 
   const onDomainChange = (
     domain: DomainTuple,
-    props: VictoryBrushLineProps | undefined
+    props: VictoryBrushLineProps | undefined,
   ) => {
     const filters = addNewFilters(domain, props);
     const isFiltered = !_.isEmpty(_.values(filters).filter(Boolean));
@@ -104,7 +104,7 @@ export const BrushLineScreen: React.FC = () => {
 
   const addNewFilters = (
     domain: DomainTuple,
-    props: VictoryBrushLineProps | undefined
+    props: VictoryBrushLineProps | undefined,
   ): Filter => {
     if (!domain) return filters;
     if (typeof domain[0] != "number") return filters;
@@ -169,7 +169,7 @@ export const BrushLineScreen: React.FC = () => {
         <VictoryAxis
           style={{
             tickLabels: { fontSize: 20 },
-            axis: { stroke: "none" }
+            axis: { stroke: "none" },
           }}
           tickLabelComponent={<VictoryLabel y={padding.top - 40} />}
         />
@@ -181,8 +181,8 @@ export const BrushLineScreen: React.FC = () => {
             style={{
               data: {
                 stroke: "tomato",
-                opacity: isActive(dataset) ? 1 : 0.2
-              }
+                opacity: isActive(dataset) ? 1 : 0.2,
+              },
             }}
           />
         ))}
@@ -205,8 +205,8 @@ export const BrushLineScreen: React.FC = () => {
               tickLabels: {
                 fontSize: 15,
                 padding: 15,
-                pointerEvents: "none"
-              }
+                pointerEvents: "none",
+              },
             }}
             tickValues={[0.2, 0.4, 0.6, 0.8, 1]}
             tickFormat={(tick) => Math.round(tick * max[index])}
@@ -218,7 +218,7 @@ export const BrushLineScreen: React.FC = () => {
           data={[
             { x: "one", y: 0 },
             { x: "two", y: 2 },
-            { x: "three", y: 4 }
+            { x: "three", y: 4 },
           ]}
         />
         <VictoryAxis
@@ -236,7 +236,7 @@ export const BrushLineScreen: React.FC = () => {
           data={[
             { x: "one", y: 4 },
             { x: "two", y: 5 },
-            { x: "three", y: 6 }
+            { x: "three", y: 6 },
           ]}
         />
         <VictoryAxis
@@ -258,7 +258,7 @@ export const BrushLineScreen: React.FC = () => {
           data={[
             { x: 1, y: 1 },
             { x: 2, y: 2 },
-            { x: 3, y: 4 }
+            { x: 3, y: 4 },
           ]}
         />
         <VictoryAxis

@@ -15,7 +15,7 @@ import {
   bisectLeft,
   bisectRight,
   bisector,
-  count
+  count,
 } from "victory-vendor/d3-array";
 
 describe("d3-array", () => {

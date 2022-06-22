@@ -42,19 +42,19 @@ describe("victory-util/helpers", () => {
         theme: {
           legend: {
             style: {
-              color: "blue"
+              color: "blue",
             },
-            data: 42
-          }
-        }
+            data: 42,
+          },
+        },
       };
       const fallbackProps = {};
       const modifiedProps = {
         ...props,
-        data: 42
+        data: 42,
       };
       expect(Helpers.modifyProps(props, fallbackProps, role)).toEqual(
-        modifiedProps
+        modifiedProps,
       );
     });
 
@@ -86,20 +86,20 @@ describe("victory-util/helpers", () => {
     it("evaluates functional styles, without altering others", () => {
       const style = {
         color: (datum) => (datum.y > 0 ? "red" : "blue"),
-        size: 5
+        size: 5,
       };
       expect(Helpers.evaluateStyle(style, data)).toEqual({
         color: "red",
-        size: 5
+        size: 5,
       });
     });
 
     it("returns no styles if disableInlineStyles is true", () => {
       const style = {
-        color: "blue"
+        color: "blue",
       };
       const props = {
-        disableInlineStyles: true
+        disableInlineStyles: true,
       };
       expect(Helpers.evaluateStyle(style, props)).toEqual({});
     });
@@ -109,7 +109,7 @@ describe("victory-util/helpers", () => {
     const props = {
       width: 100,
       height: 200,
-      padding: 0
+      padding: 0,
     };
 
     it("returns a range based on props and axis", () => {
@@ -129,7 +129,7 @@ describe("victory-util/helpers", () => {
     const defaultStyles = {
       parent: { border: "black" },
       data: { fill: "blue", stroke: "black" },
-      labels: { fontSize: 10, fontFamily: "Helvetica" }
+      labels: { fontSize: 10, fontFamily: "Helvetica" },
     };
 
     it("merges styles", () => {
@@ -138,12 +138,12 @@ describe("victory-util/helpers", () => {
       expect(styles.parent).toEqual({
         border: "black",
         width: "100%",
-        height: "100%"
+        height: "100%",
       });
       expect(styles.data).toEqual({ fill: "red", stroke: "black" });
       expect(styles.labels).toEqual({
         fontSize: 12,
-        fontFamily: "Helvetica"
+        fontFamily: "Helvetica",
       });
     });
   });
@@ -155,26 +155,26 @@ describe("victory-util/helpers", () => {
         top: 40,
         bottom: 40,
         left: 40,
-        right: 40
+        right: 40,
       });
     });
 
     it("sets padding from a complete object", () => {
       const props = {
-        padding: { top: 20, bottom: 40, left: 60, right: 80 }
+        padding: { top: 20, bottom: 40, left: 60, right: 80 },
       };
       expect(Helpers.getPadding(props)).toEqual(props.padding);
     });
 
     it("fills missing values with 0", () => {
       const props = {
-        padding: { top: 40, bottom: 40 }
+        padding: { top: 40, bottom: 40 },
       };
       expect(Helpers.getPadding(props)).toEqual({
         top: 40,
         bottom: 40,
         left: 0,
-        right: 0
+        right: 0,
       });
     });
   });

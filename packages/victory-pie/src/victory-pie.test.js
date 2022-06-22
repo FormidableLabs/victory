@@ -9,7 +9,7 @@ import {
   getSliceArcStart,
   parseSvgPathCommands,
   getDistanceFromOrigin,
-  getSliceArcEnd
+  getSliceArcEnd,
 } from "../../../test/helpers";
 
 const pizzaSliceInnerText = "Pizza Slice";
@@ -23,7 +23,7 @@ describe("components/victory-pie", () => {
   const labeledData = [
     { x: "Cats", y: 35 },
     { x: "Dogs", y: 40 },
-    { x: "Birds", y: 55 }
+    { x: "Birds", y: 55 },
   ];
 
   describe("default component rendering", () => {
@@ -115,7 +115,7 @@ describe("components/victory-pie", () => {
     it("renders points for deeply-nested data", () => {
       const data = range(7).map((i) => ({ a: { b: [{ x: i, y: i }] } }));
       const { container } = render(
-        <VictoryPie data={data} x="a.b[0].x" y="a.b[0].y" />
+        <VictoryPie data={data} x="a.b[0].x" y="a.b[0].y" />,
       );
       const slices = container.querySelectorAll("path");
 
@@ -125,7 +125,7 @@ describe("components/victory-pie", () => {
     it("renders data values with null accessor", () => {
       const data = range(8);
       const { container } = render(
-        <VictoryPie data={data} x={null} y={null} />
+        <VictoryPie data={data} x={null} y={null} />,
       );
       const slices = container.querySelectorAll("path");
 
@@ -139,7 +139,7 @@ describe("components/victory-pie", () => {
       const xValues = Array.from(screen.getAllByText(pizzaSliceInnerText)).map(
         (slice) => {
           return parseInt(slice.getAttribute("xvalue"));
-        }
+        },
       );
 
       const xValuesFromGivenData = data.map(({ x }) => x);
@@ -153,12 +153,12 @@ describe("components/victory-pie", () => {
         .reverse();
 
       render(
-        <VictoryPie data={data} sortKey={"x"} dataComponent={<PizzaSlice />} />
+        <VictoryPie data={data} sortKey={"x"} dataComponent={<PizzaSlice />} />,
       );
       const xValues = Array.from(screen.getAllByText(pizzaSliceInnerText)).map(
         (slice) => {
           return parseInt(slice.getAttribute("xvalue"));
-        }
+        },
       );
 
       const xValuesFromDataAscending = data
@@ -177,12 +177,12 @@ describe("components/victory-pie", () => {
           sortKey={"x"}
           sortOrder={"descending"}
           dataComponent={<PizzaSlice />}
-        />
+        />,
       );
       const xValues = Array.from(screen.getAllByText(pizzaSliceInnerText)).map(
         (slice) => {
           return parseInt(slice.getAttribute("xvalue"));
-        }
+        },
       );
 
       const xValuesFromDataDescending = data
@@ -196,7 +196,7 @@ describe("components/victory-pie", () => {
       const data = [
         { x: 1, y: 2 },
         { x: null, y: 4 },
-        { x: 5, y: null }
+        { x: 5, y: null },
       ];
       const { container } = render(<VictoryPie data={data} />);
       const slices = container.querySelectorAll("path");
@@ -230,15 +230,15 @@ describe("components/victory-pie", () => {
         const commands = parseSvgPathCommands(slice.getAttribute("d"));
         const startOfInnerArc = {
           x: commands[2].args[0],
-          y: commands[2].args[1]
+          y: commands[2].args[1],
         };
         const endOfInnerArc = {
           x: commands[3].args[5],
-          y: commands[3].args[6]
+          y: commands[3].args[6],
         };
 
         expect(getDistanceFromOrigin(startOfInnerArc)).toBeCloseTo(
-          getDistanceFromOrigin(endOfInnerArc)
+          getDistanceFromOrigin(endOfInnerArc),
         );
       });
     });
@@ -252,7 +252,7 @@ describe("components/victory-pie", () => {
         const commands = parseSvgPathCommands(slice.getAttribute("d"));
         const startOfInnerArc = {
           x: commands[2].args[0],
-          y: commands[2].args[1]
+          y: commands[2].args[1],
         };
 
         const innerRadius = getDistanceFromOrigin(startOfInnerArc);
@@ -265,7 +265,7 @@ describe("components/victory-pie", () => {
   describe("`startAngle` in conjunction with `endAngle`", () => {
     it("renders a portion of a chart from `startAngle` to `endAngle`", () => {
       const { container } = render(
-        <VictoryPie startAngle={-90} endAngle={90} />
+        <VictoryPie startAngle={-90} endAngle={90} />,
       );
 
       const slices = container.querySelectorAll("path");
@@ -275,7 +275,7 @@ describe("components/victory-pie", () => {
       const arcEnd = getSliceArcEnd(lastSlice.getAttribute("d"));
 
       expect(getSvgCoordinatesAngleFromCartesianYAxis(arcStart)).toBeCloseTo(
-        270
+        270,
       );
       expect(getSvgCoordinatesAngleFromCartesianYAxis(arcEnd)).toBeCloseTo(90);
     });
@@ -305,14 +305,14 @@ describe("components/victory-pie", () => {
         const data = range(5);
         const colorScale = ["#fffff", "#eeeee", "#ddddd"];
         const { container } = render(
-          <VictoryPie data={data} colorScale={colorScale} />
+          <VictoryPie data={data} colorScale={colorScale} />,
         );
 
         const slices = container.querySelectorAll("path");
         expect(slices).toHaveLength(5);
         slices.forEach((slice, index) => {
           expect(slice.getAttribute("style")).toContain(
-            colorScale[index % colorScale.length]
+            colorScale[index % colorScale.length],
           );
         });
       });
@@ -329,14 +329,14 @@ describe("components/victory-pie", () => {
             "cool",
             "red",
             "green",
-            "blue"
+            "blue",
           ];
 
           VALID_VICTORY_COLOR_SCALE_NAMES.map((colorScaleName) => {
             const colorScale = Style.getColorScale(colorScaleName);
             const data = range(colorScale.length + 1);
             const { container } = render(
-              <VictoryPie colorScale={colorScale} data={data} />
+              <VictoryPie colorScale={colorScale} data={data} />,
             );
 
             Array.from(container.querySelectorAll("path")).map(
@@ -344,9 +344,9 @@ describe("components/victory-pie", () => {
                 const expectedColorScheme =
                   colorScale[index % colorScale.length];
                 expect(slice.getAttribute("style")).toContain(
-                  expectedColorScheme
+                  expectedColorScheme,
                 );
-              }
+              },
             );
           });
         });
@@ -367,10 +367,10 @@ describe("components/victory-pie", () => {
           events={[
             {
               target: "parent",
-              eventHandlers: { onClick: clickHandler }
-            }
+              eventHandlers: { onClick: clickHandler },
+            },
           ]}
-        />
+        />,
       );
       const svg = container.querySelector("svg");
       fireEvent.click(svg);
@@ -387,10 +387,10 @@ describe("components/victory-pie", () => {
           events={[
             {
               target: "data",
-              eventHandlers: { onClick: clickHandler }
-            }
+              eventHandlers: { onClick: clickHandler },
+            },
           ]}
-        />
+        />,
       );
 
       const slices = container.querySelectorAll("path");
@@ -409,10 +409,10 @@ describe("components/victory-pie", () => {
           events={[
             {
               target: "labels",
-              eventHandlers: { onClick: clickHandler }
-            }
+              eventHandlers: { onClick: clickHandler },
+            },
           ]}
-        />
+        />,
       );
 
       labeledData.forEach((dataPoint, index) => {
@@ -436,7 +436,7 @@ describe("components/victory-pie", () => {
               tabIndex={({ index }) => index + 5}
             />
           }
-        />
+        />,
       );
 
       const slices = container.querySelectorAll("path");

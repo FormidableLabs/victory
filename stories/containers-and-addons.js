@@ -105,7 +105,7 @@ storiesOf("Containers and Addons.VictoryCursorContainer", module)
           />
         }
       />
-    )
+    ),
   );
 
 storiesOf("Containers and Addons.VictoryZoomContainer", module).add(
@@ -122,7 +122,7 @@ storiesOf("Containers and Addons.VictoryZoomContainer", module).add(
     >
       <VictoryLine
         style={{
-          data: { stroke: "red", strokeWidth: 5 }
+          data: { stroke: "red", strokeWidth: 5 },
         }}
         data={[
           { x: new Date(1982, 1, 1), y: 125 },
@@ -132,9 +132,9 @@ storiesOf("Containers and Addons.VictoryZoomContainer", module).add(
           { x: new Date(2001, 1, 1), y: 132 },
           { x: new Date(2005, 1, 1), y: 305 },
           { x: new Date(2011, 1, 1), y: 270 },
-          { x: new Date(2015, 1, 1), y: 470 }
+          { x: new Date(2015, 1, 1), y: 470 },
         ]}
       />
     </VictoryChart>
-  )
+  ),
 );

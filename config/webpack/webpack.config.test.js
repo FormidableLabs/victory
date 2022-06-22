@@ -18,12 +18,12 @@ module.exports = {
   entry: "./main",
   output: {
     filename: "main.js",
-    publicPath: "/assets/"
+    publicPath: "/assets/",
   },
   resolve: {
     fallback: {
-      stream: false
-    }
+      stream: false,
+    },
   },
   module: {
     rules: [
@@ -36,24 +36,24 @@ module.exports = {
         use: {
           loader: "babel-loader",
           // eslint-disable-next-line global-require
-          options: require("../../.babelrc.js")
-        }
-      }
-    ]
+          options: require("../../.babelrc.js"),
+        },
+      },
+    ],
   },
   devServer: {
-    port: WDS_PORT
+    port: WDS_PORT,
   },
   // https://stackoverflow.com/questions/64475910/replacing-polyfill-for-process-in-webpack-v5-from-v4
   plugins: [
     new webpack.DefinePlugin({
       "process.env.NODE_DEBUG": JSON.stringify(process.env.NODE_DEBUG),
       "process.type": JSON.stringify(process.type),
-      "process.version": JSON.stringify(process.version)
+      "process.version": JSON.stringify(process.version),
     }),
     new webpack.ProvidePlugin({
-      Buffer: ["buffer", "Buffer"]
+      Buffer: ["buffer", "Buffer"],
     }),
-    new NodePolyfillPlugin()
-  ]
+    new NodePolyfillPlugin(),
+  ],
 };

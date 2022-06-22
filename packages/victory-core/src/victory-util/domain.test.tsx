@@ -10,8 +10,8 @@ describe("victory-util/domain", () => {
         domain: { y: [1, 2] },
         data: [
           { x: 1, y: 3 },
-          { x: 3, y: 5 }
-        ]
+          { x: 3, y: 5 },
+        ],
       };
       const domainGetter = Domain.createDomainFunction();
       expect(domainGetter(props, "x")).toEqual(Domain.getDomain(props, "x"));
@@ -23,8 +23,8 @@ describe("victory-util/domain", () => {
         y: "y",
         data: [
           { x: 1, y: 3 },
-          { x: 3, y: 5 }
-        ]
+          { x: 3, y: 5 },
+        ],
       };
       const getDomainFromData = () => [0, 10];
       const domainGetter = Domain.createDomainFunction(getDomainFromData);
@@ -84,8 +84,8 @@ describe("victory-util/domain", () => {
         domain: { y: [1, 2] },
         data: [
           { x: 1, y: 3 },
-          { x: 3, y: 5 }
-        ]
+          { x: 3, y: 5 },
+        ],
       };
       const resultDomain = Domain.getDomain(props, "x");
       expect(resultDomain).toEqual([1, 3]);
@@ -116,7 +116,7 @@ describe("victory-util/domain", () => {
     it("returns a domain from a dataset", () => {
       const dataset = [
         { _x: 1, _y: 3 },
-        { _x: 3, _y: 5 }
+        { _x: 3, _y: 5 },
       ];
       const resultDomain = Domain.getDomainFromData({}, "x", dataset);
       expect(resultDomain).toEqual([1, 3]);
@@ -203,8 +203,8 @@ describe("victory-util/domain", () => {
       const props = {
         data: [
           { x: 1, y: 3 },
-          { x: 3, y: 5 }
-        ]
+          { x: 3, y: 5 },
+        ],
       };
       const resultDomain = Domain.getDomainWithZero(props, "y");
       expect(resultDomain).toEqual([0, 5]);
@@ -214,8 +214,8 @@ describe("victory-util/domain", () => {
       const props = {
         data: [
           { x: 1, y: -3 },
-          { x: 3, y: 5 }
-        ]
+          { x: 3, y: 5 },
+        ],
       };
       const resultDomain = Domain.getDomainWithZero(props, "y");
       expect(resultDomain).toEqual([-3, 5]);
@@ -225,8 +225,8 @@ describe("victory-util/domain", () => {
       const props = {
         data: [
           { x: 1, y: 3, y0: 2 },
-          { x: 3, y: 5, y0: 3 }
-        ]
+          { x: 3, y: 5, y0: 3 },
+        ],
       };
       const resultDomain = Domain.getDomainWithZero(props, "y");
       expect(resultDomain).toEqual([2, 5]);
@@ -236,8 +236,8 @@ describe("victory-util/domain", () => {
       const props = {
         data: [
           { x: 1, y: -3, y0: -7 },
-          { x: 3, y: -5, y0: -7 }
-        ]
+          { x: 3, y: -5, y0: -7 },
+        ],
       };
       const resultDomain = Domain.getDomainWithZero(props, "y");
       expect(resultDomain).toEqual([-7, -3]);
@@ -247,9 +247,9 @@ describe("victory-util/domain", () => {
       const props = {
         data: [
           { x: 1, y: 3, y0: 2 },
-          { x: 3, y: 5, y0: 2 }
+          { x: 3, y: 5, y0: 2 },
         ],
-        minDomain: { y: 4 }
+        minDomain: { y: 4 },
       };
       const resultDomain = Domain.getDomainWithZero(props, "y");
       expect(resultDomain).toEqual([4, 5]);
@@ -259,8 +259,8 @@ describe("victory-util/domain", () => {
       const props = {
         data: [
           { x: 1, y: 3 },
-          { x: 3, y: 5 }
-        ]
+          { x: 3, y: 5 },
+        ],
       };
       const resultDomain = Domain.getDomainWithZero(props, "x");
       expect(resultDomain).toEqual([1, 3]);
@@ -337,8 +337,8 @@ describe("victory-util/domain", () => {
         Domain.isDomainComponent(
           <VictoryPortal>
             <TestDomainComponent />
-          </VictoryPortal>
-        )
+          </VictoryPortal>,
+        ),
       ).toBe(true);
     });
   });

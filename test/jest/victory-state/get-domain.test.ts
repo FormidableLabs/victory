@@ -23,11 +23,11 @@ describe("getDomain", () => {
           domain: { y: [1, 2] },
           data: [
             { x: 1, y: 3 },
-            { x: 3, y: 5 }
-          ]
+            { x: 3, y: 5 },
+          ],
         },
-        "x"
-      )
+        "x",
+      ),
     ).toEqual([1, 3]);
   });
 
@@ -38,11 +38,11 @@ describe("getDomain", () => {
           domain: { y: [1, 2] },
           data: [
             { x: new Date(2022, 0, 10), y: 1 },
-            { x: new Date(2022, 0, 1), y: 2 }
-          ]
+            { x: new Date(2022, 0, 1), y: 2 },
+          ],
         },
-        "x"
-      )
+        "x",
+      ),
     ).toEqual([new Date(2022, 0, 1), new Date(2022, 0, 10)]);
   });
 
@@ -54,7 +54,7 @@ describe("getDomain", () => {
   it("returns a domain from minDoman and maxDomain if both are defined for x and y", () => {
     const props = {
       minDomain: { x: 1, y: 2 },
-      maxDomain: { x: 10, y: 20 }
+      maxDomain: { x: 10, y: 20 },
     };
     expect(getDomain(props, "x")).toEqual([1, 10]);
   });
@@ -64,8 +64,8 @@ describe("getDomain", () => {
       const props = {
         data: [
           { x: 1, y: 3 },
-          { x: 3, y: 5 }
-        ]
+          { x: 3, y: 5 },
+        ],
       };
       expect(getDomain(props, "y", true)).toEqual([0, 5]);
     });
@@ -74,8 +74,8 @@ describe("getDomain", () => {
       const props = {
         data: [
           { x: 1, y: -3 },
-          { x: 3, y: 5 }
-        ]
+          { x: 3, y: 5 },
+        ],
       };
       expect(getDomain(props, "y", true)).toEqual([-3, 5]);
     });
@@ -86,8 +86,8 @@ describe("getDomain", () => {
       const props = {
         data: [
           { x: 1, y: 3, y0: 2 },
-          { x: 3, y: 5, y0: 3 }
-        ]
+          { x: 3, y: 5, y0: 3 },
+        ],
       };
       expect(getDomain(props, "y", true)).toEqual([2, 5]);
     });

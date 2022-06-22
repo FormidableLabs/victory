@@ -5,7 +5,7 @@ import {
   Scale,
   Domain,
   Data,
-  Collection
+  Collection,
 } from "victory-core";
 
 const getErrors = (props, datum, axis) => {
@@ -26,7 +26,7 @@ const getErrors = (props, datum, axis) => {
   return Array.isArray(errors)
     ? [
         errors[0] === 0 ? false : scale(errors[0] + datum[`_${axis}`]),
-        errors[1] === 0 ? false : scale(datum[`_${axis}`] - errors[1])
+        errors[1] === 0 ? false : scale(datum[`_${axis}`] - errors[1]),
       ]
     : [scale(errors + datum[`_${axis}`]), scale(datum[`_${axis}`] - errors)];
 };
@@ -98,11 +98,11 @@ const getCalculatedValues = (props) => {
   const data = getData(props);
   const range = {
     x: Helpers.getRange(props, "x"),
-    y: Helpers.getRange(props, "y")
+    y: Helpers.getRange(props, "y"),
   };
   const domain = {
     x: getDomain(props, "x"),
-    y: getDomain(props, "y")
+    y: getDomain(props, "y"),
   };
   const scale = {
     x: Scale.getBaseScale(props, "x")
@@ -110,7 +110,7 @@ const getCalculatedValues = (props) => {
       .range(props.horizontal ? range.y : range.x),
     y: Scale.getBaseScale(props, "y")
       .domain(domain.y)
-      .range(props.horizontal ? range.x : range.y)
+      .range(props.horizontal ? range.x : range.y),
   };
   const origin = props.polar
     ? props.origin || Helpers.getPolarOrigin(props)
@@ -129,7 +129,7 @@ const getLabelProps = (dataProps, text, style) => {
     horizontal,
     labelComponent,
     theme,
-    disableInlineStyles
+    disableInlineStyles,
   } = dataProps;
   const getError = (type = "x") => {
     const baseError = type === "y" ? errorY : errorX;
@@ -156,7 +156,7 @@ const getLabelProps = (dataProps, text, style) => {
     verticalAnchor: labelStyle.verticalAnchor || verticalAnchor,
     angle: labelStyle.angle,
     horizontal,
-    disableInlineStyles
+    disableInlineStyles,
   };
 
   if (!Helpers.isTooltip(labelComponent)) {
@@ -188,7 +188,7 @@ export const getBaseProps = (props, fallbackProps) => {
     style,
     theme,
     width,
-    disableInlineStyles
+    disableInlineStyles,
   } = props;
   const initialChildProps = {
     parent: {
@@ -204,8 +204,8 @@ export const getBaseProps = (props, fallbackProps) => {
       standalone,
       style: style.parent,
       theme,
-      width
-    }
+      width,
+    },
   };
 
   return data.reduce((childProps, datum, index) => {
@@ -227,11 +227,11 @@ export const getBaseProps = (props, fallbackProps) => {
       style: disableInlineStyles ? {} : style.data,
       x,
       y,
-      disableInlineStyles
+      disableInlineStyles,
     };
 
     childProps[eventKey] = {
-      data: dataProps
+      data: dataProps,
     };
     const text = LabelHelpers.getText(props, datum, index);
     if (
@@ -241,7 +241,7 @@ export const getBaseProps = (props, fallbackProps) => {
       childProps[eventKey].labels = getLabelProps(
         assign({}, props, dataProps),
         text,
-        style
+        style,
       );
     }
 

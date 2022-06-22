@@ -10,60 +10,60 @@ const content = {
     code: "npm install victory",
     link: {
       text: "DOCUMENTATION",
-      location: "docs"
+      location: "docs",
     },
     linksArray: [
       {
         text: "ABOUT",
-        location: "about"
+        location: "about",
       },
       {
         text: "DOCS",
-        location: "docs"
+        location: "docs",
       },
       {
         text: "GALLERY",
-        location: "gallery"
+        location: "gallery",
       },
       {
         text: "GITHUB",
         location: "https://github.com/FormidableLabs/victory",
-        external: true
+        external: true,
       },
       {
         text: "FAQS",
-        location: "docs/faq"
-      }
-    ]
+        location: "docs/faq",
+      },
+    ],
   },
   features: [
     {
       title: "Robust",
       description:
         "Area charts. Scatter plots. Voronoi polygons. Easy-to-use components for complex charting.",
-      icon: require("../../../static/feature-robust.svg")
+      icon: require("../../../static/feature-robust.svg"),
     },
     {
       title: "Flexible",
       description:
         "Fully contained, reusable data visualization elements are responsible for their own styles and behaviors.",
-      icon: require("../../../static/feature-flexible.svg")
+      icon: require("../../../static/feature-flexible.svg"),
     },
     {
       title: "Native",
       description:
         "Extend the Victory experience on Android and iOS platforms with an identical API.",
       code: "npm install victory-native",
-      icon: require("../../../static/feature-native.png")
-    }
+      icon: require("../../../static/feature-native.png"),
+    },
   ],
   getStarted: {
     description:
       "Victory is an opinionated, but fully overridable, ecosystem of composable React components. Check out the docs to see how you can get started building interactive data visualizations.",
     link: {
       text: "DOCUMENTATION",
-      location: "docs"
-    }
+      location: "docs",
+    },
   },
   oss: {
     ossArray: [
@@ -72,21 +72,21 @@ const content = {
         description:
           "A React.js based library for creating sleek presentations using JSX syntax with the ability to live demo your code!",
         link: "https://formidable.com/open-source/spectacle",
-        featured: true
+        featured: true,
       },
       {
         title: "Urql",
         description:
           "Universal React Query Library is a blazing-fast GraphQL client, exposed as a set of ReactJS components.",
         link: "https://formidable.com/open-source/urql",
-        featured: true
+        featured: true,
       },
       {
         title: "Renature",
         description:
           "A physics-based animation library for React inspired by the natural world.",
         link: "https://formidable.com/open-source/renature",
-        featured: true
+        featured: true,
       },
       {
         title: "Runpkg",
@@ -94,14 +94,14 @@ const content = {
           "Explore, learn about, and perform static analysis on npm packages in the browser.          ",
         link: "https://runpkg.com",
         abbreviation: "Rp",
-        color: "#80EAC7"
-      }
+        color: "#80EAC7",
+      },
     ],
     link: {
       text: "VIEW ALL",
-      location: "https://formidable.com/open-source"
-    }
-  }
+      location: "https://formidable.com/open-source",
+    },
+  },
 };
 
 export default content;

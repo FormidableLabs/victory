@@ -6,8 +6,8 @@ module.exports = {
     // https://github.com/FormidableLabs/victory/issues/2215
     "^.+\\.(js|jsx)$": [
       "babel-jest",
-      { configFile: "./babel-native-config.js" }
-    ]
+      { configFile: "./babel-native-config.js" },
+    ],
   },
-  setupFiles: ["./jest-native-setup.js"]
+  setupFiles: ["./jest-native-setup.js"],
 };

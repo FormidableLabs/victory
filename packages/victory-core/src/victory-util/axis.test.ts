@@ -90,7 +90,7 @@ describe("helpers/axis", () => {
       expect(dependentAxis.type.getAxis).toBeCalledWith(dependentAxis.props);
       // @ts-expect-error This will error until we convert `victory-axis`
       expect(independentAxis.type.getAxis).toBeCalledWith(
-        independentAxis.props
+        independentAxis.props,
       );
       expect(componentResult).toEqual(independentAxis);
     });

@@ -110,7 +110,7 @@ const evaluateProps = (props) => {
   const id = Helpers.evaluateProp(props.id, props);
   const style = Helpers.evaluateStyle(
     assign({ fill: "black" }, props.style),
-    props
+    props,
   );
   const tabIndex = Helpers.evaluateProp(props.tabIndex, props);
 
@@ -134,7 +134,7 @@ const Area = (props) => {
     id,
     style,
     desc,
-    tabIndex
+    tabIndex,
   } = props;
   const userProps = UserProps.getSafeUserProps(props);
   const defaultTransform =
@@ -155,7 +155,7 @@ const Area = (props) => {
     transform,
     ...events,
     clipPath,
-    tabIndex
+    tabIndex,
   };
 
   const area = React.cloneElement(
@@ -166,11 +166,11 @@ const Area = (props) => {
         style: assign({}, style, { stroke: areaStroke }),
         d: areaFunction(data),
         desc,
-        tabIndex
+        tabIndex,
       },
       sharedProps,
-      userProps
-    )
+      userProps,
+    ),
   );
 
   const line = renderLine
@@ -180,10 +180,10 @@ const Area = (props) => {
           {
             key: `${id}-area-stroke`,
             style: assign({}, style, { fill: "none" }),
-            d: lineFunction(data)
+            d: lineFunction(data),
           },
-          sharedProps
-        )
+          sharedProps,
+        ),
       )
     : null;
 
@@ -196,14 +196,14 @@ Area.propTypes = {
   ...CommonProps.primitiveProps,
   groupComponent: PropTypes.element,
   interpolation: PropTypes.oneOfType([PropTypes.string, PropTypes.func]),
-  pathComponent: PropTypes.element
+  pathComponent: PropTypes.element,
 };
 
 Area.defaultProps = {
   groupComponent: <g />,
   pathComponent: <Path />,
   role: "presentation",
-  shapeRendering: "auto"
+  shapeRendering: "auto",
 };
 
 export default Area;

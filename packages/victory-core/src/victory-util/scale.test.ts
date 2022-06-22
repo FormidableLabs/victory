@@ -93,7 +93,7 @@ describe("victory-util/scale", () => {
       const props = {
         x: "x",
         y: "y",
-        data: [{ x: new Date("2016-01-13"), y: 1 }]
+        data: [{ x: new Date("2016-01-13"), y: 1 }],
       };
       const scaleType = Scale.getScaleType(props, "x");
       expect(scaleType).toEqual("time");

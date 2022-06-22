@@ -8,7 +8,7 @@ import {
   VictoryCommonProps,
   VictoryLabelableProps,
   VictoryMultiLabelableProps,
-  VictoryStyleInterface
+  VictoryStyleInterface,
 } from "victory-core";
 
 export type VictoryStackTTargetType = "data" | "labels" | "parent";

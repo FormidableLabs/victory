@@ -9,7 +9,7 @@ import {
   VictoryStyleObject,
   VictoryLabelStyleObject,
   PaddingOrCallback,
-  EventPropTypeInterface
+  EventPropTypeInterface,
 } from "victory-core";
 
 export interface VictoryTooltipProps extends VictoryLabelableProps {

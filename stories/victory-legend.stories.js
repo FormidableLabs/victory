@@ -11,29 +11,29 @@ const containerStyle = {
   flexDirection: "row",
   flexWrap: "wrap",
   alignItems: "center",
-  justifyContent: "center"
+  justifyContent: "center",
 };
 
 const style = {
   parent: { border: "1px solid #ccc", margin: "1%", maxWidth: "25%" },
-  data: { fill: "gold", width: 20 }
+  data: { fill: "gold", width: 20 },
 };
 
 const defaultChartProps = {
   style,
   width: 300,
   height: 300,
-  domain: [0, 10]
+  domain: [0, 10],
 };
 
 export default {
   title: "VictoryLegend",
-  component: VictoryLegend
+  component: VictoryLegend,
 };
 
 const legendStyle = {
   labels: { fontSize: 14, fontFamily: "Arial" },
-  border: { fill: "pink", opacity: 0.4 }
+  border: { fill: "pink", opacity: 0.4 },
 };
 
 const getData = (num, { getName, getSize, getSymbol, getFill } = {}) => {
@@ -42,8 +42,8 @@ const getData = (num, { getName, getSize, getSymbol, getFill } = {}) => {
     symbol: {
       size: isFunction(getSize) ? getSize(v) : 5,
       type: isFunction(getSymbol) ? getSymbol(v) : "circle",
-      fill: isFunction(getFill) ? getFill(v) : undefined
-    }
+      fill: isFunction(getFill) ? getFill(v) : undefined,
+    },
   }));
 };
 

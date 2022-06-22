@@ -3,11 +3,11 @@ import {
   ScaleLinear,
   ScaleLogarithmic,
   ScalePower,
-  ScaleTime
+  ScaleTime,
 } from "victory-vendor/d3-scale";
 import {
   AnimationEasing,
-  AnimationStyle
+  AnimationStyle,
 } from "../victory-animation/victory-animation";
 import { StringOrNumberOrCallback } from "./callbacks";
 
@@ -78,13 +78,13 @@ export interface EventPropTypeInterface<TTarget, TEventKey> {
       | {
           (
             event: React.SyntheticEvent<any>,
-            props?: any
+            props?: any,
           ): EventCallbackInterface<TTarget, TEventKey>;
         }
       | {
           (
             event: React.SyntheticEvent<any>,
-            props?: any
+            props?: any,
           ): EventCallbackInterface<TTarget, TEventKey>[];
         }
       | {

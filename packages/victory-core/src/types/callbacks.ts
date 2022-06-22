@@ -26,7 +26,7 @@ export interface CallbackArgs {
 }
 
 export type VictoryStringOrNumberCallback = (
-  args: CallbackArgs
+  args: CallbackArgs,
 ) => string | number;
 
 export type VictoryStringCallback = (args: CallbackArgs) => string;
@@ -37,14 +37,14 @@ export type StringOrNumberOrCallback =
 export type StringOrCallback = string | VictoryStringCallback;
 export type SliceNumberOrCallback<
   T,
-  P extends string | number | symbol = never
+  P extends string | number | symbol = never,
 > = number | ((props: Omit<T, P>) => number);
 export type VictoryNumberCallback = (args: CallbackArgs) => number;
 export type VictoryPaddingCallback = (
-  args: CallbackArgs
+  args: CallbackArgs,
 ) => number | BlockProps;
 export type VictoryOrientationCallback = (
-  args: CallbackArgs
+  args: CallbackArgs,
 ) => OrientationTypes;
 export type NumberOrCallback = number | VictoryNumberCallback;
 export type PaddingOrCallback = number | BlockProps | VictoryPaddingCallback;
